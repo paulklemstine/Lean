@@ -1,291 +1,262 @@
-#!/usr/bin/env python3
 """
-Quantum Circuit Rewriting — Real-World Applications
+Quantum Tensor Rewriting: Applications
 
-This module demonstrates practical applications of the distributive normalization
-theory for quantum circuit optimization and analysis.
+Demonstrates real-world applications of distributive tensor normalization
+for quantum circuit optimization and equivalence checking.
 
 Applications:
-1. Circuit Simplification: Detect and exploit algebraic identities
-2. Gate Count Optimization: Find minimal representations
-3. Circuit Comparison: Fast equivalence checking for quantum compilers
-4. Entanglement Analysis: Classify circuits by their entangling power
+1. Circuit optimization via distributive expansion
+2. Equivalence checking of quantum circuits
+3. Superposition analysis: counting terms in distributive normal form
 """
 
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Optional
+from enum import Enum
 import numpy as np
-from typing import List, Dict, Tuple, Optional
-from collections import Counter
-import itertools
 
 
-# ─── Core Types (self-contained) ───
+# ============================================================
+# Inlined core types (self-contained)
+# ============================================================
 
-class QExpr:
-    """Quantum expression base class."""
-    pass
+class QGate(Enum):
+    H = "H"; T = "T"; CNOT = "CNOT"
 
-class Gate(QExpr):
-    def __init__(self, n: int):
-        self.n = n
-    def __repr__(self):
-        names = {0:"H⊗I", 1:"I⊗H", 2:"T⊗I", 3:"I⊗T", 4:"CNOT"}
-        return names.get(self.n, f"G{self.n}")
-    def __eq__(self, other): return isinstance(other, Gate) and self.n == other.n
-    def __hash__(self): return hash(("g", self.n))
+class QTE: pass
 
-class Seq(QExpr):
-    def __init__(self, a, b):
-        self.a, self.b = a, b
-    def __repr__(self): return f"({self.a} ; {self.b})"
-    def __eq__(self, other): return isinstance(other, Seq) and self.a == other.a and self.b == other.b
-    def __hash__(self): return hash(("seq", self.a, self.b))
+@dataclass(frozen=True)
+class Gate(QTE):
+    gate: QGate
+    def __repr__(self): return self.gate.value
 
-class Add(QExpr):
-    def __init__(self, a, b):
-        self.a, self.b = a, b
-    def __repr__(self): return f"({self.a} + {self.b})"
-    def __eq__(self, other): return isinstance(other, Add) and self.a == other.a and self.b == other.b
-    def __hash__(self): return hash(("add", self.a, self.b))
-
-class One(QExpr):
+@dataclass(frozen=True)
+class Ident(QTE):
     def __repr__(self): return "I"
-    def __eq__(self, other): return isinstance(other, One)
-    def __hash__(self): return hash("one")
+
+@dataclass(frozen=True)
+class Seq(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ; {self.right})"
+
+@dataclass(frozen=True)
+class Par(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ⊗ {self.right})"
+
+@dataclass(frozen=True)
+class Add(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} + {self.right})"
 
 
-# Gate matrices
-I2 = np.eye(2, dtype=complex)
-H_1q = (1/np.sqrt(2)) * np.array([[1, 1], [1, -1]], dtype=complex)
-T_1q = np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]], dtype=complex)
-CNOT_mat = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
+def poly_interp(e):
+    if isinstance(e, (Gate, Ident)): return 2
+    if isinstance(e, (Seq, Par)): return poly_interp(e.left) * poly_interp(e.right)
+    if isinstance(e, Add): return poly_interp(e.left) + poly_interp(e.right) + 1
 
-GATES = {
-    0: np.kron(H_1q, I2), 1: np.kron(I2, H_1q),
-    2: np.kron(T_1q, I2), 3: np.kron(I2, T_1q),
-    4: CNOT_mat,
-}
-GATE_NAMES = {0:"H⊗I", 1:"I⊗H", 2:"T⊗I", 3:"I⊗T", 4:"CNOT"}
+def norm_step(e):
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        return Add(Par(e.left.left, e.right), Par(e.left.right, e.right))
+    if isinstance(e, Par) and isinstance(e.right, Add):
+        return Add(Par(e.left, e.right.left), Par(e.left, e.right.right))
+    if isinstance(e, Seq) and isinstance(e.right, Add):
+        return Add(Seq(e.left, e.right.left), Seq(e.left, e.right.right))
+    return e
+
+def norm_step_deep(e):
+    if isinstance(e, (Gate, Ident)): return e
+    if isinstance(e, Seq): return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Par): return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Add): return Add(norm_step_deep(e.left), norm_step_deep(e.right))
+
+def normalize(e, max_iters=None):
+    if max_iters is None: max_iters = poly_interp(e)
+    for _ in range(max_iters):
+        e_new = norm_step_deep(e)
+        if e_new == e: return e
+        e = e_new
+    return e
+
+def collect_summands(e):
+    if isinstance(e, Add): return collect_summands(e.left) + collect_summands(e.right)
+    return [e]
+
+def expr_size(e):
+    if isinstance(e, (Gate, Ident)): return 1
+    return 1 + expr_size(e.left) + expr_size(e.right)
+
+def is_normal_form(e):
+    if isinstance(e, (Gate, Ident)): return True
+    if isinstance(e, Seq): return not isinstance(e.right, Add) and is_normal_form(e.left) and is_normal_form(e.right)
+    if isinstance(e, Par): return not isinstance(e.left, Add) and not isinstance(e.right, Add) and is_normal_form(e.left) and is_normal_form(e.right)
+    if isinstance(e, Add): return is_normal_form(e.left) and is_normal_form(e.right)
 
 
-def expand(expr):
-    if isinstance(expr, Gate): return [[expr.n]]
-    if isinstance(expr, One): return [[]]
-    if isinstance(expr, Add): return expand(expr.a) + expand(expr.b)
-    if isinstance(expr, Seq):
-        return [p+q for p in expand(expr.a) for q in expand(expr.b)]
-    return [[]]
+H_MAT = np.array([[1,1],[1,-1]], dtype=complex) / np.sqrt(2)
+T_MAT = np.array([[1,0],[0,np.exp(1j*np.pi/4)]], dtype=complex)
+I_MAT = np.eye(2, dtype=complex)
+CNOT_MAT = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
+GATE_MATS = {QGate.H: H_MAT, QGate.T: T_MAT, QGate.CNOT: CNOT_MAT}
 
-def denote_matrix(expr):
-    if isinstance(expr, Gate): return GATES[expr.n].copy()
-    if isinstance(expr, One): return np.eye(4, dtype=complex)
-    if isinstance(expr, Seq): return denote_matrix(expr.a) @ denote_matrix(expr.b)
-    if isinstance(expr, Add): return denote_matrix(expr.a) + denote_matrix(expr.b)
-    return np.eye(4, dtype=complex)
-
-def normalize(expr):
-    return tuple(sorted(tuple(m) for m in expand(expr)))
-
-def mono_to_str(m):
-    if not m: return "I"
-    return "·".join(GATE_NAMES.get(g, f"G{g}") for g in m)
+def denote_matrix(e):
+    if isinstance(e, Gate): return GATE_MATS[e.gate].copy()
+    if isinstance(e, Ident): return I_MAT.copy()
+    if isinstance(e, Seq): return denote_matrix(e.left) @ denote_matrix(e.right)
+    if isinstance(e, Par): return np.kron(denote_matrix(e.left), denote_matrix(e.right))
+    if isinstance(e, Add): return denote_matrix(e.left) + denote_matrix(e.right)
 
 
-# ─── Application 1: Circuit Simplification ───
+# ============================================================
+# Application 1: Superposition Analysis
+# ============================================================
 
-def find_identity_circuits(max_depth: int = 3) -> List:
+def superposition_analysis(e: QTE) -> dict:
     """
-    Find circuits that are equivalent to the identity.
-    These represent "do-nothing" sequences that can be eliminated.
+    Analyze the superposition structure of a quantum circuit expression.
+    
+    The distributive normal form reveals how many independent computational
+    paths exist in the circuit. Each summand in the normal form corresponds
+    to one branch of the quantum parallelism.
+    
+    Returns a dictionary with analysis results.
     """
-    print("\n" + "="*60)
-    print("  APPLICATION 1: Identity Circuit Detection")
-    print("="*60)
-
-    identity = np.eye(4, dtype=complex)
-    identity_circuits = []
-
-    # Generate depth-limited product circuits
-    gates = [0, 1, 2, 3, 4]
-
-    for depth in range(2, max_depth + 1):
-        for combo in itertools.product(gates, repeat=depth):
-            expr = Gate(combo[0])
-            for g in combo[1:]:
-                expr = Seq(expr, Gate(g))
-            mat = denote_matrix(expr)
-            if np.allclose(mat, identity, atol=1e-10):
-                identity_circuits.append((combo, expr))
-
-    print(f"\n  Found {len(identity_circuits)} identity circuits (depth ≤ {max_depth}):")
-    for combo, expr in identity_circuits[:10]:
-        names = [GATE_NAMES[g] for g in combo]
-        print(f"    {'·'.join(names)} = I")
-
-    if len(identity_circuits) > 10:
-        print(f"    ... and {len(identity_circuits) - 10} more")
-
-    return identity_circuits
+    nf = normalize(e)
+    summands = collect_summands(nf)
+    
+    return {
+        "expression": str(e),
+        "normal_form": str(nf),
+        "num_summands": len(summands),
+        "summands": [str(s) for s in summands],
+        "original_size": expr_size(e),
+        "normal_form_size": expr_size(nf),
+        "is_normal_form": is_normal_form(nf),
+    }
 
 
-# ─── Application 2: Gate Count Optimization ───
+# ============================================================
+# Application 2: Circuit Equivalence Checker
+# ============================================================
 
-def optimize_gate_count(expr: QExpr) -> Tuple[int, int]:
+def check_equivalence(e1: QTE, e2: QTE) -> dict:
     """
-    Compare the original expression's gate count with its normal form's gate count.
-    Returns (original_count, normalized_count).
+    Check if two circuit expressions are distributively equivalent.
+    
+    Two circuits are distributively equivalent if their normal forms
+    have the same summands (as multisets). This is a necessary condition
+    for semantic equivalence and sufficient within the distributive fragment.
     """
-    nf = expand(expr)
-
-    def count_gates(e):
-        if isinstance(e, Gate): return 1
-        if isinstance(e, One): return 0
-        if isinstance(e, Seq): return count_gates(e.a) + count_gates(e.b)
-        if isinstance(e, Add): return count_gates(e.a) + count_gates(e.b)
-        return 0
-
-    orig_count = count_gates(expr)
-    nf_count = sum(len(m) for m in nf)
-
-    return orig_count, nf_count
-
-
-def demo_optimization():
-    """Demonstrate gate count analysis."""
-    print("\n" + "="*60)
-    print("  APPLICATION 2: Gate Count Analysis")
-    print("="*60)
-
-    examples = [
-        ("Simple seq", Seq(Gate(0), Gate(4))),
-        ("With identity", Seq(Seq(One(), Gate(0)), Gate(4))),
-        ("Small distribution", Seq(Add(Gate(0), Gate(1)), Gate(4))),
-        ("Double distribution",
-         Seq(Add(Gate(0), Gate(1)), Add(Gate(2), Gate(3)))),
-        ("Triple chain",
-         Seq(Seq(Add(Gate(0), Gate(1)), Gate(4)), Add(Gate(2), Gate(3)))),
-    ]
-
-    for name, expr in examples:
-        orig, nf_count = optimize_gate_count(expr)
-        nf = expand(expr)
-        print(f"\n  {name}: {expr}")
-        print(f"    Original gates: {orig}")
-        print(f"    NF monomials: {len(nf)}, total NF gates: {nf_count}")
-        print(f"    NF: {' + '.join(mono_to_str(m) for m in nf)}")
+    nf1 = normalize(e1)
+    nf2 = normalize(e2)
+    
+    s1 = sorted(str(x) for x in collect_summands(nf1))
+    s2 = sorted(str(x) for x in collect_summands(nf2))
+    
+    syntactic_eq = nf1 == nf2
+    multiset_eq = s1 == s2
+    
+    return {
+        "e1": str(e1),
+        "e2": str(e2),
+        "nf1": str(nf1),
+        "nf2": str(nf2),
+        "syntactically_equal": syntactic_eq,
+        "multiset_equal": multiset_eq,
+        "verdict": "EQUIVALENT" if multiset_eq else "NOT EQUIVALENT (by this test)",
+    }
 
 
-# ─── Application 3: Circuit Comparison ───
+# ============================================================
+# Application 3: Optimization Statistics
+# ============================================================
 
-def compare_circuits(circuits: List[Tuple[str, QExpr]]):
-    """Compare a list of named circuits for equivalence."""
-    print("\n" + "="*60)
-    print("  APPLICATION 3: Circuit Equivalence Checking")
-    print("="*60)
-
-    nfs = [(name, normalize(expr)) for name, expr in circuits]
-
-    # Group by normal form
-    groups = {}
-    for name, nf in nfs:
-        if nf not in groups:
-            groups[nf] = []
-        groups[nf].append(name)
-
-    print(f"\n  {len(circuits)} circuits → {len(groups)} equivalence classes:")
-    for i, (nf, names) in enumerate(groups.items()):
-        print(f"\n  Class {i+1}: {', '.join(names)}")
-        print(f"    NF: {' + '.join(mono_to_str(list(m)) for m in nf)}")
-
-    # Pairwise comparison
-    print(f"\n  Pairwise equivalence matrix:")
-    names = [name for name, _ in circuits]
-    print(f"    {'':>12}", end="")
-    for n in names:
-        print(f" {n:>10}", end="")
-    print()
-    for i, (n1, nf1) in enumerate(nfs):
-        print(f"    {n1:>12}", end="")
-        for j, (n2, nf2) in enumerate(nfs):
-            eq = "≡" if nf1 == nf2 else "≠"
-            print(f" {eq:>10}", end="")
-        print()
-
-
-def demo_comparison():
-    """Demonstrate circuit comparison."""
-    circuits = [
-        ("C1", Seq(Add(Gate(0), Gate(1)), Gate(4))),
-        ("C2", Add(Seq(Gate(0), Gate(4)), Seq(Gate(1), Gate(4)))),
-        ("C3", Seq(Gate(0), Gate(4))),
-        ("C4", Seq(Gate(4), Add(Gate(0), Gate(1)))),
-        ("C5", Add(Seq(Gate(4), Gate(0)), Seq(Gate(4), Gate(1)))),
-    ]
-    compare_circuits(circuits)
-
-
-# ─── Application 4: Entanglement Analysis ───
-
-def compute_schmidt_rank(mat: np.ndarray, tol: float = 1e-10) -> int:
+def optimization_stats(circuits: list[QTE]) -> dict:
     """
-    Compute the Schmidt rank of a 2-qubit operator.
-    Reshape 4×4 into 2×2 blocks and analyze the singular values.
+    Compute optimization statistics for a batch of circuits.
     """
-    # Reshape operator as tensor with indices (i1,i2,j1,j2)
-    tensor = mat.reshape(2, 2, 2, 2)
-    # Reshape to (i1*j1, i2*j2) for SVD
-    bipartite = tensor.transpose(0, 2, 1, 3).reshape(4, 4)
-    svd = np.linalg.svd(bipartite, compute_uv=False)
-    return int(np.sum(svd > tol))
+    total = len(circuits)
+    total_original_size = 0
+    total_nf_size = 0
+    max_expansion = 0
+    
+    for e in circuits:
+        nf = normalize(e)
+        orig = expr_size(e)
+        nf_sz = expr_size(nf)
+        total_original_size += orig
+        total_nf_size += nf_sz
+        ratio = nf_sz / orig if orig > 0 else 1
+        if ratio > max_expansion:
+            max_expansion = ratio
+    
+    return {
+        "total_circuits": total,
+        "avg_original_size": total_original_size / total if total > 0 else 0,
+        "avg_nf_size": total_nf_size / total if total > 0 else 0,
+        "max_expansion_ratio": max_expansion,
+    }
 
 
-def analyze_entanglement():
-    """Analyze the entangling power of various circuit expressions."""
-    print("\n" + "="*60)
-    print("  APPLICATION 4: Entanglement Analysis")
-    print("="*60)
-
-    circuits = [
-        ("I", One()),
-        ("H⊗I", Gate(0)),
-        ("I⊗H", Gate(1)),
-        ("CNOT", Gate(4)),
-        ("H⊗I ; CNOT", Seq(Gate(0), Gate(4))),
-        ("CNOT ; H⊗I", Seq(Gate(4), Gate(0))),
-        ("(H⊗I + I⊗H)", Add(Gate(0), Gate(1))),
-        ("(H⊗I + I⊗H);CNOT", Seq(Add(Gate(0), Gate(1)), Gate(4))),
-    ]
-
-    print(f"\n  {'Circuit':<25} {'Schmidt rank':>15} {'Unitary?':>10}")
-    print(f"  {'-'*50}")
-
-    for name, expr in circuits:
-        mat = denote_matrix(expr)
-        rank = compute_schmidt_rank(mat)
-        # Check unitarity (only for non-sum expressions)
-        is_unitary = np.allclose(mat @ mat.conj().T, np.eye(4), atol=1e-10)
-        uni_str = "Yes" if is_unitary else "No"
-        print(f"  {name:<25} {rank:>15} {uni_str:>10}")
-
-
-# ─── Main ───
-
-def main():
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  QUANTUM CIRCUIT REWRITING — APPLICATIONS               ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    find_identity_circuits(max_depth=3)
-    demo_optimization()
-    demo_comparison()
-    analyze_entanglement()
-
-    print("\n" + "="*60)
-    print("  All applications demonstrated successfully.")
-    print("="*60)
-
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    main()
+    H = Gate(QGate.H)
+    T = Gate(QGate.T)
+    I = Ident()
+    
+    print("=" * 60)
+    print("Application 1: Superposition Analysis")
+    print("=" * 60)
+    
+    exprs = [
+        Par(H, Add(T, H)),
+        Par(Add(H, T), Add(H, T)),
+        Par(Add(H, Add(T, H)), T),
+    ]
+    
+    for e in exprs:
+        result = superposition_analysis(e)
+        print(f"\n  Expression: {result['expression']}")
+        print(f"  Normal form: {result['normal_form']}")
+        print(f"  # summands (= parallel paths): {result['num_summands']}")
+        for i, s in enumerate(result['summands']):
+            print(f"    Path {i+1}: {s}")
+    
+    print("\n" + "=" * 60)
+    print("Application 2: Circuit Equivalence Checking")
+    print("=" * 60)
+    
+    pairs = [
+        (Par(Add(H, T), I), Add(Par(H, I), Par(T, I))),
+        (Par(H, Add(T, H)), Add(Par(H, T), Par(H, H))),
+        (Par(H, T), Par(T, H)),
+    ]
+    
+    for e1, e2 in pairs:
+        result = check_equivalence(e1, e2)
+        print(f"\n  {result['e1']}  vs  {result['e2']}")
+        print(f"  NF1: {result['nf1']}")
+        print(f"  NF2: {result['nf2']}")
+        print(f"  Verdict: {result['verdict']}")
+    
+    print("\n" + "=" * 60)
+    print("Application 3: Batch Optimization Statistics")
+    print("=" * 60)
+    
+    batch = [Par(Add(H, T), Add(H, T)),
+             Seq(H, Add(T, H)),
+             Par(H, Add(T, H)),
+             Par(Add(H, T), I)]
+    
+    stats = optimization_stats(batch)
+    print(f"\n  Circuits processed: {stats['total_circuits']}")
+    print(f"  Avg original size:  {stats['avg_original_size']:.1f}")
+    print(f"  Avg NF size:        {stats['avg_nf_size']:.1f}")
+    print(f"  Max expansion ratio: {stats['max_expansion_ratio']:.2f}x")
 
 
 #!/usr/bin/env python3
@@ -293,857 +264,910 @@ if __name__ == "__main__":
 Quantum Circuit Rewriting via Tensor Distributivity — Interactive Demo
 
 This demo:
-1. Constructs sample 2-qubit circuits as QExpr trees.
-2. Prints their tensor-expression form.
-3. Runs distributive normalization (expansion to sum-of-products).
-4. Compares denotations numerically using complex matrix semantics.
-5. Explores all circuits up to a chosen depth and reports:
-   - Number of syntactic circuits
-   - Number of distinct normal forms
-   - Any discovered confluence failures / candidate counterexamples
+1. Constructs sample 2-qubit circuits
+2. Prints their tensor-expression form
+3. Runs distributive normalization
+4. Compares denotations numerically
+5. Explores all circuits up to a chosen depth and reports statistics
+
+Usage:
+    python demo.py              # Run with default settings
+    python demo.py --depth 3    # Set maximum circuit depth
+    python demo.py --gates H T  # Use subset of gates
 """
 
-import numpy as np
-from itertools import product as cartesian_product
-from collections import Counter
+from __future__ import annotations
+import argparse
 import sys
+import time
+from dataclasses import dataclass
+from typing import Optional
+from enum import Enum
+import numpy as np
 
-# ─── Gate Definitions (2-qubit, 4×4 complex matrices) ───
 
-I2 = np.eye(2, dtype=complex)
+# ============================================================
+# Core data structures (self-contained, no local imports)
+# ============================================================
 
-H_1q = (1/np.sqrt(2)) * np.array([[1, 1], [1, -1]], dtype=complex)
+class QGate(Enum):
+    H = "H"
+    T = "T"
+    CNOT = "CNOT"
 
-T_1q = np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]], dtype=complex)
 
-CNOT = np.array([
-    [1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0],
-], dtype=complex)
-
-# 2-qubit gates via Kronecker product
-H_I  = np.kron(H_1q, I2)    # H ⊗ I   (gate index 0)
-I_H  = np.kron(I2, H_1q)    # I ⊗ H   (gate index 1)
-T_I  = np.kron(T_1q, I2)    # T ⊗ I   (gate index 2)
-I_T  = np.kron(I2, T_1q)    # I ⊗ T   (gate index 3)
-CNOT_gate = CNOT             # CNOT    (gate index 4)
-
-GATE_SET = {
-    0: ("H⊗I", H_I),
-    1: ("I⊗H", I_H),
-    2: ("T⊗I", T_I),
-    3: ("I⊗T", I_T),
-    4: ("CNOT", CNOT_gate),
-}
-
-GATE_NAMES = {k: v[0] for k, v in GATE_SET.items()}
-GATE_MATRICES = {k: v[1] for k, v in GATE_SET.items()}
-
-# ─── QExpr: Quantum Expression AST ───
-
-class QExpr:
-    """Abstract syntax tree for quantum tensor expressions."""
+class QuantumTensorExpr:
     pass
 
-class Gate(QExpr):
-    def __init__(self, n: int):
-        self.n = n
-    def __repr__(self):
-        return GATE_NAMES.get(self.n, f"G{self.n}")
-    def __eq__(self, other):
-        return isinstance(other, Gate) and self.n == other.n
-    def __hash__(self):
-        return hash(("gate", self.n))
 
-class Seq(QExpr):
-    def __init__(self, a: QExpr, b: QExpr):
-        self.a, self.b = a, b
-    def __repr__(self):
-        return f"({self.a} ; {self.b})"
-    def __eq__(self, other):
-        return isinstance(other, Seq) and self.a == other.a and self.b == other.b
-    def __hash__(self):
-        return hash(("seq", self.a, self.b))
+@dataclass(frozen=True)
+class Gate(QuantumTensorExpr):
+    gate: QGate
+    def __repr__(self): return self.gate.value
 
-class Add(QExpr):
-    def __init__(self, a: QExpr, b: QExpr):
-        self.a, self.b = a, b
-    def __repr__(self):
-        return f"({self.a} + {self.b})"
-    def __eq__(self, other):
-        return isinstance(other, Add) and self.a == other.a and self.b == other.b
-    def __hash__(self):
-        return hash(("add", self.a, self.b))
 
-class One(QExpr):
-    def __repr__(self):
-        return "I"
-    def __eq__(self, other):
-        return isinstance(other, One)
-    def __hash__(self):
-        return hash("one")
+@dataclass(frozen=True)
+class Ident(QuantumTensorExpr):
+    def __repr__(self): return "I"
 
-# ─── Denotation: QExpr → 4×4 complex matrix ───
 
-def denote(expr: QExpr) -> np.ndarray:
-    """Evaluate a QExpr into a 4×4 complex matrix."""
-    if isinstance(expr, Gate):
-        return GATE_MATRICES[expr.n]
-    elif isinstance(expr, Seq):
-        return denote(expr.a) @ denote(expr.b)
-    elif isinstance(expr, Add):
-        return denote(expr.a) + denote(expr.b)
-    elif isinstance(expr, One):
-        return np.eye(4, dtype=complex)
-    else:
-        raise ValueError(f"Unknown QExpr type: {type(expr)}")
+@dataclass(frozen=True)
+class Seq(QuantumTensorExpr):
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self): return f"({self.left} ; {self.right})"
 
-# ─── Distributive Expansion (Normalization) ───
 
-def expand(expr: QExpr) -> list:
-    """
-    Expand a QExpr into sum-of-products normal form.
-    Returns a list of monomials, where each monomial is a list of gate indices.
-    """
-    if isinstance(expr, Gate):
-        return [[expr.n]]
-    elif isinstance(expr, One):
-        return [[]]
-    elif isinstance(expr, Add):
-        return expand(expr.a) + expand(expr.b)
-    elif isinstance(expr, Seq):
-        result = []
-        for p in expand(expr.a):
-            for q in expand(expr.b):
-                result.append(p + q)
-        return result
-    else:
-        raise ValueError(f"Unknown QExpr type: {type(expr)}")
+@dataclass(frozen=True)
+class Par(QuantumTensorExpr):
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self): return f"({self.left} ⊗ {self.right})"
 
-def denote_monomial(mono: list) -> np.ndarray:
-    """Evaluate a monomial (list of gate indices) as a matrix product."""
-    result = np.eye(4, dtype=complex)
-    for g in mono:
-        result = result @ GATE_MATRICES[g]
-    return result
 
-def denote_nf(nf: list) -> np.ndarray:
-    """Evaluate a normal form (list of monomials) as a sum of products."""
-    result = np.zeros((4, 4), dtype=complex)
-    for mono in nf:
-        result += denote_monomial(mono)
-    return result
+@dataclass(frozen=True)
+class Add(QuantumTensorExpr):
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self): return f"({self.left} + {self.right})"
 
-def nf_to_canonical(nf: list) -> tuple:
-    """Convert a normal form to a canonical (sorted) representation for comparison."""
-    return tuple(sorted(tuple(m) for m in nf))
 
-def mono_to_str(mono: list) -> str:
-    """Pretty-print a monomial."""
-    if not mono:
-        return "I"
-    return " · ".join(GATE_NAMES.get(g, f"G{g}") for g in mono)
+# ============================================================
+# Algorithms (inlined for self-containment)
+# ============================================================
 
-def nf_to_str(nf: list) -> str:
-    """Pretty-print a normal form."""
-    if not nf:
-        return "0"
-    return " + ".join(mono_to_str(m) for m in nf)
+def poly_interp(e):
+    if isinstance(e, (Gate, Ident)): return 2
+    if isinstance(e, (Seq, Par)): return poly_interp(e.left) * poly_interp(e.right)
+    if isinstance(e, Add): return poly_interp(e.left) + poly_interp(e.right) + 1
+    raise TypeError
 
-# ─── Circuit Generation ───
 
-def generate_circuits(depth: int, gate_indices: list = None) -> list:
-    """Generate all circuits up to a given depth using the gate set."""
-    if gate_indices is None:
-        gate_indices = list(GATE_SET.keys())
+def norm_step(e):
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        return Add(Par(e.left.left, e.right), Par(e.left.right, e.right))
+    if isinstance(e, Par) and isinstance(e.right, Add):
+        return Add(Par(e.left, e.right.left), Par(e.left, e.right.right))
+    if isinstance(e, Seq) and isinstance(e.right, Add):
+        return Add(Seq(e.left, e.right.left), Seq(e.left, e.right.right))
+    return e
 
-    if depth == 0:
-        return [One()]
 
-    if depth == 1:
-        return [Gate(g) for g in gate_indices] + [One()]
+def norm_step_deep(e):
+    if isinstance(e, (Gate, Ident)): return e
+    if isinstance(e, Seq): return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Par): return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Add): return Add(norm_step_deep(e.left), norm_step_deep(e.right))
+    raise TypeError
 
-    prev = generate_circuits(depth - 1, gate_indices)
-    atoms = [Gate(g) for g in gate_indices] + [One()]
 
-    circuits = set()
-    # All circuits from previous depth
-    for c in prev:
-        circuits.add(c)
-    # Sequential composition: atom ; prev_circuit
-    for a in atoms:
-        for c in prev:
-            circuits.add(Seq(a, c))
-    # Add: pairs from previous depth
-    for c1 in prev[:10]:  # limit to avoid explosion
-        for c2 in prev[:10]:
-            circuits.add(Add(c1, c2))
+def normalize(e, max_iters=None):
+    if max_iters is None: max_iters = poly_interp(e)
+    for _ in range(max_iters):
+        e_new = norm_step_deep(e)
+        if e_new == e: return e
+        e = e_new
+    return e
 
-    return list(circuits)
 
-def generate_product_circuits(depth: int, gate_indices: list = None) -> list:
-    """Generate all product circuits (no Add) up to a given depth."""
-    if gate_indices is None:
-        gate_indices = list(GATE_SET.keys())
+def is_normal_form(e):
+    if isinstance(e, (Gate, Ident)): return True
+    if isinstance(e, Seq):
+        return not isinstance(e.right, Add) and is_normal_form(e.left) and is_normal_form(e.right)
+    if isinstance(e, Par):
+        return not isinstance(e.left, Add) and not isinstance(e.right, Add) and is_normal_form(e.left) and is_normal_form(e.right)
+    if isinstance(e, Add):
+        return is_normal_form(e.left) and is_normal_form(e.right)
+    raise TypeError
 
-    if depth <= 0:
-        return [One()]
 
-    if depth == 1:
-        return [Gate(g) for g in gate_indices]
+def expr_size(e):
+    if isinstance(e, (Gate, Ident)): return 1
+    return 1 + expr_size(e.left) + expr_size(e.right)
 
-    result = [Gate(g) for g in gate_indices]
-    prev = generate_product_circuits(depth - 1, gate_indices)
-    for a in [Gate(g) for g in gate_indices]:
-        for c in prev:
-            result.append(Seq(a, c))
-    return result
 
-# ─── Verification Procedures ───
+H_MAT = np.array([[1, 1], [1, -1]], dtype=complex) / np.sqrt(2)
+T_MAT = np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]], dtype=complex)
+I_MAT = np.eye(2, dtype=complex)
+CNOT_MAT = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
+GATE_MATS = {QGate.H: H_MAT, QGate.T: T_MAT, QGate.CNOT: CNOT_MAT}
 
-def verify_soundness(expr: QExpr, verbose: bool = True) -> bool:
-    """Verify that expand(expr) has the same denotation as expr."""
-    mat_orig = denote(expr)
-    nf = expand(expr)
-    mat_nf = denote_nf(nf)
-    diff = np.max(np.abs(mat_orig - mat_nf))
-    ok = diff < 1e-10
-    if verbose:
-        status = "✓ SOUND" if ok else "✗ UNSOUND"
-        print(f"  {status}  |  expr = {expr}")
-        print(f"           |  NF = {nf_to_str(nf)}")
-        print(f"           |  max|Δ| = {diff:.2e}")
-    return ok
 
-def search_confluence_failures(depth: int, gate_indices: list = None,
-                                verbose: bool = True) -> dict:
-    """
-    Search for confluence failures by generating circuits,
-    normalizing them, and checking for counterexamples.
-    """
-    if gate_indices is None:
-        gate_indices = list(GATE_SET.keys())
+def denote_matrix(e):
+    if isinstance(e, Gate): return GATE_MATS[e.gate].copy()
+    if isinstance(e, Ident): return I_MAT.copy()
+    if isinstance(e, Seq): return denote_matrix(e.left) @ denote_matrix(e.right)
+    if isinstance(e, Par): return np.kron(denote_matrix(e.left), denote_matrix(e.right))
+    if isinstance(e, Add): return denote_matrix(e.left) + denote_matrix(e.right)
+    raise TypeError
 
-    circuits = generate_product_circuits(depth, gate_indices)
 
-    # Also add some circuits with Add nodes
-    add_circuits = []
-    for i, c1 in enumerate(circuits[:20]):
-        for j, c2 in enumerate(circuits[:20]):
-            if i != j:
-                add_circuits.append(Add(c1, c2))
-                add_circuits.append(Seq(Add(c1, c2), Gate(gate_indices[0])))
+def matrices_equal(m1, m2, tol=1e-10):
+    return np.allclose(m1, m2, atol=tol)
 
-    all_circuits = circuits + add_circuits
 
-    nf_map = {}  # canonical NF -> list of expressions
-    soundness_failures = []
-    confluence_failures = []
+def collect_summands(e):
+    if isinstance(e, Add): return collect_summands(e.left) + collect_summands(e.right)
+    return [e]
 
-    for expr in all_circuits:
-        # Check soundness
-        mat_orig = denote(expr)
-        nf = expand(expr)
-        mat_nf = denote_nf(nf)
-        diff = np.max(np.abs(mat_orig - mat_nf))
-        if diff > 1e-10:
-            soundness_failures.append((expr, diff))
 
-        # Track normal forms
-        canonical = nf_to_canonical(nf)
-        if canonical not in nf_map:
-            nf_map[canonical] = []
-        nf_map[canonical].append(expr)
+def summands_match(e1, e2):
+    s1 = sorted(str(x) for x in collect_summands(e1))
+    s2 = sorted(str(x) for x in collect_summands(e2))
+    return s1 == s2
 
-    # Check confluence: expressions with same denotation should have
-    # "compatible" normal forms (same as multiset)
-    # Group by approximate matrix value
-    mat_groups = {}
-    for expr in all_circuits:
-        mat = denote(expr)
-        key = tuple(np.round(mat.flatten(), 8))
-        if key not in mat_groups:
-            mat_groups[key] = []
-        mat_groups[key].append(expr)
 
-    for key, group in mat_groups.items():
-        nfs = [nf_to_canonical(expand(e)) for e in group]
-        # Within rewrite-connected components, NFs should be the same
-        # (This is a heuristic check - we check if same-denotation exprs
-        #  that differ only by distributivity have the same NF)
+# ============================================================
+# Demo functions
+# ============================================================
 
-    results = {
-        "total_circuits": len(all_circuits),
-        "total_product_circuits": len(circuits),
-        "distinct_normal_forms": len(nf_map),
-        "soundness_failures": len(soundness_failures),
-        "distinct_denotations": len(mat_groups),
-    }
+def demo_basic_normalization():
+    """Demonstrate basic normalization on sample circuits."""
+    print("=" * 70)
+    print("DEMO 1: Basic Normalization")
+    print("=" * 70)
+    
+    H = Gate(QGate.H)
+    T = Gate(QGate.T)
+    CNOT = Gate(QGate.CNOT)
+    I = Ident()
+    
+    examples = [
+        ("H ⊗ (T + H)", Par(H, Add(T, H))),
+        ("(H + T) ⊗ CNOT", Par(Add(H, T), CNOT)),
+        ("H ; (T + H)", Seq(H, Add(T, H))),
+        ("(H + T) ⊗ (H + T)", Par(Add(H, T), Add(H, T))),
+        ("((T + H) ⊗ I)", Par(Add(T, H), I)),
+        ("((H + T) ⊗ (I + H))", Par(Add(H, T), Add(I, H))),
+    ]
+    
+    for name, expr in examples:
+        print(f"\n--- {name} ---")
+        print(f"  Expression:  {expr}")
+        print(f"  Size:        {expr_size(expr)}")
+        print(f"  Poly interp: {poly_interp(expr)}")
+        print(f"  Normal form? {is_normal_form(expr)}")
+        
+        nf = normalize(expr)
+        print(f"  Normalized:  {nf}")
+        print(f"  NF size:     {expr_size(nf)}")
+        print(f"  Is NF?       {is_normal_form(nf)}")
+        
+        m_orig = denote_matrix(expr)
+        m_norm = denote_matrix(nf)
+        preserved = matrices_equal(m_orig, m_norm)
+        print(f"  Semantics preserved: {preserved}")
+        if not preserved:
+            print(f"  *** SOUNDNESS VIOLATION DETECTED ***")
 
-    if verbose:
-        print(f"\n{'='*60}")
-        print(f"  CONFLUENCE SEARCH RESULTS (depth ≤ {depth})")
-        print(f"{'='*60}")
-        print(f"  Total circuits examined:    {results['total_circuits']}")
-        print(f"  Product circuits:           {results['total_product_circuits']}")
-        print(f"  Distinct normal forms:      {results['distinct_normal_forms']}")
-        print(f"  Distinct denotations:       {results['distinct_denotations']}")
-        print(f"  Soundness failures:         {results['soundness_failures']}")
-        if soundness_failures:
-            print(f"\n  ⚠ SOUNDNESS FAILURES FOUND:")
-            for expr, diff in soundness_failures[:5]:
-                print(f"    expr = {expr}, max|Δ| = {diff:.2e}")
-        else:
-            print(f"\n  ✓ All circuits passed soundness check")
-        print(f"{'='*60}")
 
-    return results
+def demo_equivalence_checking():
+    """Demonstrate equivalence checking via normalization."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Circuit Equivalence Checking")
+    print("=" * 70)
+    
+    H = Gate(QGate.H)
+    T = Gate(QGate.T)
+    I = Ident()
+    
+    # These should be equivalent after normalization
+    e1 = Par(Add(H, T), I)    # (H + T) ⊗ I
+    e2 = Add(Par(H, I), Par(T, I))  # (H ⊗ I) + (T ⊗ I)
+    
+    nf1 = normalize(e1)
+    nf2 = normalize(e2)
+    
+    print(f"\n  e1 = {e1}")
+    print(f"  e2 = {e2}")
+    print(f"  NF(e1) = {nf1}")
+    print(f"  NF(e2) = {nf2}")
+    print(f"  Syntactically equal NFs: {nf1 == nf2}")
+    print(f"  Summand-multiset equal:  {summands_match(nf1, nf2)}")
+    print(f"  Semantically equal:      {matrices_equal(denote_matrix(e1), denote_matrix(e2))}")
+    
+    # Non-equivalent circuits
+    e3 = Par(H, T)
+    e4 = Par(T, H)
+    nf3 = normalize(e3)
+    nf4 = normalize(e4)
+    print(f"\n  e3 = {e3}")
+    print(f"  e4 = {e4}")
+    print(f"  NF(e3) = {nf3}")
+    print(f"  NF(e4) = {nf4}")
+    print(f"  Syntactically equal: {nf3 == nf4}")
+    print(f"  Semantically equal:  {matrices_equal(denote_matrix(e3), denote_matrix(e4))}")
 
-# ─── Interactive Demo ───
 
-def demo_basic_examples():
-    """Demonstrate basic circuit normalization."""
-    print("\n" + "="*60)
-    print("  QUANTUM CIRCUIT REWRITING — BASIC EXAMPLES")
-    print("="*60)
-
-    # Example 1: Simple distribution
-    # (H⊗I + I⊗H) ; CNOT  →  (H⊗I ; CNOT) + (I⊗H ; CNOT)
-    e1 = Seq(Add(Gate(0), Gate(1)), Gate(4))
-    print(f"\nExample 1: Left distribution")
-    print(f"  Expression: {e1}")
-    nf1 = expand(e1)
-    print(f"  Normal form: {nf_to_str(nf1)}")
-    verify_soundness(e1)
-
-    # Example 2: Right distribution
-    # CNOT ; (T⊗I + I⊗T)  →  (CNOT ; T⊗I) + (CNOT ; I⊗T)
-    e2 = Seq(Gate(4), Add(Gate(2), Gate(3)))
-    print(f"\nExample 2: Right distribution")
-    print(f"  Expression: {e2}")
-    nf2 = expand(e2)
-    print(f"  Normal form: {nf_to_str(nf2)}")
-    verify_soundness(e2)
-
-    # Example 3: Nested distribution
-    # (H⊗I + I⊗H) ; (T⊗I + I⊗T)
-    e3 = Seq(Add(Gate(0), Gate(1)), Add(Gate(2), Gate(3)))
-    print(f"\nExample 3: Double distribution (4 monomials)")
-    print(f"  Expression: {e3}")
-    nf3 = expand(e3)
-    print(f"  Normal form: {nf_to_str(nf3)}")
-    print(f"  Number of monomials: {len(nf3)}")
-    verify_soundness(e3)
-
-    # Example 4: Triple composition with distribution
-    e4 = Seq(Seq(Add(Gate(0), Gate(1)), Gate(4)), Add(Gate(2), Gate(3)))
-    print(f"\nExample 4: Triple composition with distribution")
-    print(f"  Expression: {e4}")
-    nf4 = expand(e4)
-    print(f"  Normal form: {nf_to_str(nf4)}")
-    print(f"  Number of monomials: {len(nf4)}")
-    verify_soundness(e4)
-
-    # Example 5: Identity elimination
-    e5 = Seq(One(), Gate(4))
-    print(f"\nExample 5: Identity elimination")
-    print(f"  Expression: {e5}")
-    nf5 = expand(e5)
-    print(f"  Normal form: {nf_to_str(nf5)}")
-    verify_soundness(e5)
-
-def demo_confluence():
-    """Demonstrate confluence: different rewrite paths yield same normal form."""
-    print("\n" + "="*60)
-    print("  CONFLUENCE DEMONSTRATION")
-    print("="*60)
-
-    # Two different ways to reach the same expression:
-    # Path 1: First distribute left, then distribute right
-    # Path 2: First distribute right, then distribute left
-    a, b, c, d = Gate(0), Gate(1), Gate(2), Gate(3)
-
-    # (a + b) ; (c + d)
-    expr = Seq(Add(a, b), Add(c, d))
+def demo_termination_measure():
+    """Demonstrate the polynomial interpretation measure."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Polynomial Interpretation (Termination Measure)")
+    print("=" * 70)
+    
+    H = Gate(QGate.H)
+    T = Gate(QGate.T)
+    
+    expr = Par(Add(H, T), Add(H, T))
     print(f"\n  Starting expression: {expr}")
+    print(f"  poly_interp = {poly_interp(expr)}")
+    
+    step = 0
+    e = expr
+    while True:
+        e_new = norm_step_deep(e)
+        if e_new == e:
+            break
+        step += 1
+        pi_old = poly_interp(e)
+        pi_new = poly_interp(e_new)
+        print(f"  Step {step}: {e} → {e_new}")
+        print(f"    poly_interp: {pi_old} → {pi_new} (decreased by {pi_old - pi_new})")
+        e = e_new
+    
+    print(f"  Final (normal form): {e}")
+    print(f"  Total steps: {step}")
 
-    # Manual rewrite path 1: distribute left first
-    # → (a;(c+d)) + (b;(c+d)) → (a;c + a;d) + (b;c + b;d)
-    step1a = Add(Seq(a, Add(c, d)), Seq(b, Add(c, d)))
-    step2a = Add(Add(Seq(a, c), Seq(a, d)), Add(Seq(b, c), Seq(b, d)))
-    print(f"\n  Path 1 (left-first):")
-    print(f"    Step 1: {step1a}")
-    print(f"    Step 2: {step2a}")
 
-    # Manual rewrite path 2: distribute right first
-    # → (a+b);c + (a+b);d → (a;c + b;c) + (a;d + b;d)
-    step1b = Add(Seq(Add(a, b), c), Seq(Add(a, b), d))
-    step2b = Add(Add(Seq(a, c), Seq(b, c)), Add(Seq(a, d), Seq(b, d)))
-    print(f"\n  Path 2 (right-first):")
-    print(f"    Step 1: {step1b}")
-    print(f"    Step 2: {step2b}")
+def demo_exhaustive_search(depth: int = 2, gates: list = None):
+    """
+    Exhaustive search for confluence violations up to a given depth.
+    
+    For each expression:
+    1. Normalize it
+    2. Check that semantics are preserved
+    3. Check that the result is in normal form
+    4. Report statistics
+    """
+    if gates is None:
+        gates = [QGate.H, QGate.T, QGate.CNOT]
+    
+    print("\n" + "=" * 70)
+    print(f"DEMO 4: Exhaustive Search (depth ≤ {depth})")
+    print("=" * 70)
+    
+    gate_names = [g.value for g in gates]
+    print(f"  Gate set: {{{', '.join(gate_names)}}}")
+    
+    # Generate circuits
+    t0 = time.time()
+    base_exprs = [Gate(g) for g in gates] + [Ident()]
+    
+    all_exprs = list(base_exprs)
+    prev_level = list(base_exprs)
+    
+    for d in range(2, depth + 1):
+        new_level = []
+        for a in prev_level:
+            for b in base_exprs:
+                new_level.extend([Seq(a, b), Par(a, b), Add(a, b),
+                                  Seq(b, a), Par(b, a), Add(b, a)])
+        all_exprs.extend(new_level)
+        prev_level = new_level
+    
+    # Remove duplicates
+    seen = set()
+    unique_exprs = []
+    for e in all_exprs:
+        key = repr(e)
+        if key not in seen:
+            seen.add(key)
+            unique_exprs.append(e)
+    
+    gen_time = time.time() - t0
+    print(f"  Generated {len(unique_exprs)} unique expressions in {gen_time:.3f}s")
+    
+    # Normalize all
+    t0 = time.time()
+    soundness_violations = 0
+    not_normal_form = 0
+    normal_forms_seen = set()
+    
+    for e in unique_exprs:
+        try:
+            nf = normalize(e, max_iters=1000)
+            
+            # Check soundness
+            m_orig = denote_matrix(e)
+            m_norm = denote_matrix(nf)
+            if not matrices_equal(m_orig, m_norm):
+                soundness_violations += 1
+                print(f"  *** SOUNDNESS VIOLATION: {e} ***")
+            
+            # Check normal form
+            if not is_normal_form(nf):
+                not_normal_form += 1
+            
+            normal_forms_seen.add(repr(nf))
+        except Exception as ex:
+            print(f"  Error on {e}: {ex}")
+    
+    norm_time = time.time() - t0
+    
+    print(f"\n  Results:")
+    print(f"    Total expressions:      {len(unique_exprs)}")
+    print(f"    Distinct normal forms:  {len(normal_forms_seen)}")
+    print(f"    Soundness violations:   {soundness_violations}")
+    print(f"    Not-in-NF after norm:   {not_normal_form}")
+    print(f"    Normalization time:     {norm_time:.3f}s")
+    
+    if soundness_violations == 0:
+        print(f"\n  ✓ All {len(unique_exprs)} expressions normalized with semantics preserved!")
+    else:
+        print(f"\n  ✗ {soundness_violations} soundness violations detected!")
+    
+    return soundness_violations
 
-    # Check that both paths give the same normal form (up to permutation)
-    nf_orig = expand(expr)
-    nf_path1 = expand(step2a)
-    nf_path2 = expand(step2b)
 
-    canonical_orig = nf_to_canonical(nf_orig)
-    canonical_p1 = nf_to_canonical(nf_path1)
-    canonical_p2 = nf_to_canonical(nf_path2)
+def demo_conjecture_test(depth: int = 3, gates: list = None):
+    """
+    Test the conjecture: for circuits of depth ≤ depth over the gate set,
+    distributive normalization yields a unique normal form modulo AC of add.
+    
+    We test this by normalizing each expression and checking that expressions
+    with the same denotation have AC-equivalent normal forms.
+    """
+    if gates is None:
+        gates = [QGate.H, QGate.T]
+    
+    print("\n" + "=" * 70)
+    print(f"DEMO 5: Conjecture Test — Unique NF mod AC (depth ≤ {depth})")
+    print("=" * 70)
+    
+    gate_names = [g.value for g in gates]
+    print(f"  Gate set: {{{', '.join(gate_names)}}}")
+    
+    base_exprs = [Gate(g) for g in gates] + [Ident()]
+    all_exprs = list(base_exprs)
+    prev_level = list(base_exprs)
+    
+    for d in range(2, depth + 1):
+        new_level = []
+        for a in prev_level:
+            for b in base_exprs:
+                new_level.extend([Seq(a, b), Par(a, b), Add(a, b)])
+        all_exprs.extend(new_level)
+        prev_level = new_level
+    
+    # Normalize and group by denotation
+    denotation_groups: dict[str, list] = {}
+    
+    for e in all_exprs:
+        try:
+            nf = normalize(e, max_iters=500)
+            m = denote_matrix(e)
+            # Round for grouping
+            key = str(np.round(m, decimals=8))
+            if key not in denotation_groups:
+                denotation_groups[key] = []
+            denotation_groups[key].append((e, nf))
+        except Exception:
+            pass
+    
+    # Check: within each group, do all NFs have the same summand multiset?
+    violations = 0
+    total_groups = len(denotation_groups)
+    
+    for key, group in denotation_groups.items():
+        if len(group) < 2:
+            continue
+        
+        nfs = [nf for _, nf in group]
+        ref_summands = sorted(str(x) for x in collect_summands(nfs[0]))
+        
+        for nf in nfs[1:]:
+            summands = sorted(str(x) for x in collect_summands(nf))
+            if summands != ref_summands:
+                violations += 1
+                if violations <= 3:
+                    print(f"\n  Potential violation:")
+                    print(f"    NF1: {nfs[0]}")
+                    print(f"    NF2: {nf}")
+                    print(f"    (from same denotation class)")
+    
+    print(f"\n  Denotation equivalence classes: {total_groups}")
+    print(f"  AC-uniqueness violations: {violations}")
+    
+    if violations == 0:
+        print(f"  ✓ Conjecture holds for depth ≤ {depth} with gates {{{', '.join(gate_names)}}}")
+    else:
+        print(f"  ✗ {violations} violations found — conjecture may need refinement")
+    
+    return violations
 
-    print(f"\n  Normal forms (canonical):")
-    print(f"    Original: {nf_to_str(nf_orig)}")
-    print(f"    Path 1:   {nf_to_str(nf_path1)}")
-    print(f"    Path 2:   {nf_to_str(nf_path2)}")
-
-    print(f"\n  Canonical NF match (orig ≡ path1): {canonical_orig == canonical_p1}")
-    print(f"  Canonical NF match (orig ≡ path2): {canonical_orig == canonical_p2}")
-    print(f"  Canonical NF match (path1 ≡ path2): {canonical_p1 == canonical_p2}")
-
-    # Numerical verification
-    mat_orig = denote(expr)
-    mat_p1 = denote(step2a)
-    mat_p2 = denote(step2b)
-
-    print(f"\n  Numerical verification:")
-    print(f"    |orig - path1| = {np.max(np.abs(mat_orig - mat_p1)):.2e}")
-    print(f"    |orig - path2| = {np.max(np.abs(mat_orig - mat_p2)):.2e}")
-    print(f"    |path1 - path2| = {np.max(np.abs(mat_p1 - mat_p2)):.2e}")
-
-def demo_search(max_depth: int = 3):
-    """Search for counterexamples to the confluence conjecture."""
-    print("\n" + "="*60)
-    print(f"  COUNTEREXAMPLE SEARCH (depth ≤ {max_depth})")
-    print("="*60)
-
-    for depth in range(1, max_depth + 1):
-        print(f"\n--- Depth {depth} ---")
-        results = search_confluence_failures(depth, verbose=True)
 
 def main():
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  QUANTUM CIRCUIT REWRITING VIA TENSOR DISTRIBUTIVITY    ║")
-    print("║  Interactive Demo                                       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+    parser = argparse.ArgumentParser(
+        description="Quantum Circuit Rewriting via Tensor Distributivity")
+    parser.add_argument("--depth", type=int, default=2,
+                        help="Maximum circuit depth for exhaustive search (default: 2)")
+    parser.add_argument("--gates", nargs="+", default=["H", "T", "CNOT"],
+                        choices=["H", "T", "CNOT"],
+                        help="Gate set to use (default: H T CNOT)")
+    args = parser.parse_args()
+    
+    gates = [QGate[g] for g in args.gates]
+    
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Quantum Circuit Rewriting via Tensor Distributivity               ║")
+    print("║  Interactive Demo                                                  ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    
+    demo_basic_normalization()
+    demo_equivalence_checking()
+    demo_termination_measure()
+    demo_exhaustive_search(depth=args.depth, gates=gates)
+    demo_conjecture_test(depth=min(args.depth, 3), gates=gates[:2] if len(gates) > 2 else gates)
+    
+    print("\n" + "=" * 70)
+    print("All demos complete.")
+    print("=" * 70)
 
-    if len(sys.argv) > 1:
-        max_depth = int(sys.argv[1])
-    else:
-        max_depth = 3
-
-    demo_basic_examples()
-    demo_confluence()
-    demo_search(max_depth)
-
-    print("\n" + "="*60)
-    print("  SUMMARY")
-    print("="*60)
-    print("  All demonstrations completed successfully.")
-    print("  Key results verified:")
-    print("  • Soundness: normalization preserves matrix semantics")
-    print("  • Confluence: different rewrite paths yield same NF (mod AC)")
-    print("  • No counterexamples found in search space")
-    print("="*60)
 
 if __name__ == "__main__":
     main()
 
 
-#!/usr/bin/env python3
 """
-Visualization 2: Confluence Diamond
+Visualization: Expression Growth Under Distributive Expansion
 
-Visualizes the confluence property of distributive rewriting: two different
-rewrite paths from the same expression converge to the same normal form
-(modulo reordering of summands).
-
-This illustrates the central theorem: distributive normalization is confluent.
+This script visualizes how the number of summands (terms) in the
+distributive normal form grows as expressions become more complex.
+It demonstrates the combinatorial structure underlying quantum
+parallelism: each tensor product of sums multiplies the number of paths.
 """
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-fig, ax = plt.subplots(1, 1, figsize=(14, 10))
-ax.set_xlim(-6, 6)
-ax.set_ylim(-1, 11)
-ax.axis('off')
-
-def draw_box(ax, x, y, text, color='#2196F3', width=4.5, height=0.7, fontsize=10):
-    rect = mpatches.FancyBboxPatch(
-        (x - width/2, y - height/2), width, height,
-        boxstyle="round,pad=0.15", facecolor=color, alpha=0.15,
-        edgecolor=color, linewidth=2)
-    ax.add_patch(rect)
-    ax.text(x, y, text, ha='center', va='center', fontsize=fontsize,
-            fontweight='bold', color=color)
-
-def draw_arrow(ax, x1, y1, x2, y2, color='#666', label='', label_side='left'):
-    ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle='->', color=color, lw=2.5,
-                               connectionstyle='arc3,rad=0.1'))
-    if label:
-        mx, my = (x1+x2)/2, (y1+y2)/2
-        offset = -0.6 if label_side == 'left' else 0.6
-        ax.text(mx + offset, my, label, ha='center', va='center',
-                fontsize=9, color=color, style='italic')
-
-# Title
-ax.text(0, 10.5, 'Confluence of Distributive Rewriting',
-        ha='center', va='center', fontsize=16, fontweight='bold', color='#333')
-ax.text(0, 9.9, 'Two rewrite paths from the same source converge to AC-equivalent normal forms',
-        ha='center', va='center', fontsize=11, color='#666', style='italic')
-
-# Top: original expression
-draw_box(ax, 0, 9, '(H⊗I + I⊗H) ; (T⊗I + I⊗T)', '#FF5722', width=5)
-
-# Left path: distribute left first
-draw_arrow(ax, -1.5, 8.6, -3, 7.5, '#2196F3', 'dist_left', 'left')
-draw_box(ax, -3, 7, '(H⊗I;(T⊗I+I⊗T)) + (I⊗H;(T⊗I+I⊗T))', '#2196F3', width=5.5, fontsize=8)
-
-draw_arrow(ax, -3, 6.6, -3, 5.5, '#2196F3', 'dist_right ×2', 'left')
-draw_box(ax, -3, 5, '(H⊗I·T⊗I + H⊗I·I⊗T)\n+ (I⊗H·T⊗I + I⊗H·I⊗T)', '#2196F3', width=5, height=1.0, fontsize=9)
-
-# Right path: distribute right first
-draw_arrow(ax, 1.5, 8.6, 3, 7.5, '#4CAF50', 'dist_right', 'right')
-draw_box(ax, 3, 7, '((H⊗I+I⊗H);T⊗I) + ((H⊗I+I⊗H);I⊗T)', '#4CAF50', width=5.5, fontsize=8)
-
-draw_arrow(ax, 3, 6.6, 3, 5.5, '#4CAF50', 'dist_left ×2', 'right')
-draw_box(ax, 3, 5, '(H⊗I·T⊗I + I⊗H·T⊗I)\n+ (H⊗I·I⊗T + I⊗H·I⊗T)', '#4CAF50', width=5, height=1.0, fontsize=9)
-
-# Convergence arrows
-draw_arrow(ax, -3, 4.4, -1, 3.2, '#FF9800', '', 'left')
-draw_arrow(ax, 3, 4.4, 1, 3.2, '#FF9800', '', 'right')
-
-# Normal form
-draw_box(ax, 0, 2.8, 'Same multiset of monomials (mod AC)', '#FF9800', width=5.5, fontsize=10)
-
-# The canonical form
-ax.text(0, 1.8, '{ H⊗I·T⊗I ,  H⊗I·I⊗T ,  I⊗H·T⊗I ,  I⊗H·I⊗T }',
-        ha='center', va='center', fontsize=12, fontweight='bold',
-        color='#333',
-        bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFF3E0',
-                  edgecolor='#FF9800', linewidth=2))
-
-# Bottom annotation
-ax.text(0, 0.5, 'The order of summands may differ, but the multiset is identical.\n'
-        'This is ParallelACEq: permutation equivalence of monomials.',
-        ha='center', va='center', fontsize=10, color='#666', style='italic')
-
-# Key insight box
-key_box = mpatches.FancyBboxPatch(
-    (-5, -0.8), 10, 0.9,
-    boxstyle="round,pad=0.2", facecolor='#E8F5E9',
-    edgecolor='#4CAF50', linewidth=2)
-ax.add_patch(key_box)
-ax.text(0, -0.35, 'Key Theorem: Distributive normalization is confluent modulo AC —\n'
-        'every quantum expression has a unique canonical sum-of-products representation.',
-        ha='center', va='center', fontsize=10, fontweight='bold', color='#2E7D32')
-
-plt.tight_layout()
-plt.savefig('viz_confluence.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-plt.close()
-print("Saved viz_confluence.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: Distributive Expansion Tree
-
-Visualizes how a quantum circuit expression expands into its sum-of-products
-normal form through distributive rewriting. Shows the tree structure of the
-original expression and the resulting flat list of monomials, with color-coded
-paths through the computation.
-
-This illustrates the core theorem: distributive expansion preserves semantics
-while producing a canonical representation.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-# ─── Left panel: Expression tree ───
-ax1 = axes[0]
-ax1.set_xlim(-3, 3)
-ax1.set_ylim(-0.5, 5.5)
-ax1.set_aspect('equal')
-ax1.axis('off')
-ax1.set_title('Expression Tree\n(H⊗I + I⊗H) ; (T⊗I + I⊗T)', fontsize=14, fontweight='bold')
-
-# Draw tree nodes
-def draw_node(ax, x, y, text, color='#2196F3', size=0.35):
-    circle = plt.Circle((x, y), size, color=color, alpha=0.85, zorder=3)
-    ax.add_patch(circle)
-    ax.text(x, y, text, ha='center', va='center', fontsize=10,
-            fontweight='bold', color='white', zorder=4)
-
-def draw_edge(ax, x1, y1, x2, y2, color='#666', lw=2):
-    ax.plot([x1, x2], [y1, y2], color=color, linewidth=lw, zorder=1)
-
-# Tree: seq(add(H⊗I, I⊗H), add(T⊗I, I⊗T))
-# Root: ;
-draw_node(ax1, 0, 5, ';', '#FF5722', 0.4)
-
-# Left child: +
-draw_edge(ax1, 0, 5, -1.5, 3.5)
-draw_node(ax1, -1.5, 3.5, '+', '#4CAF50', 0.4)
-
-# Right child: +
-draw_edge(ax1, 0, 5, 1.5, 3.5)
-draw_node(ax1, 1.5, 3.5, '+', '#4CAF50', 0.4)
-
-# Leaves of left +
-draw_edge(ax1, -1.5, 3.5, -2.3, 2)
-draw_node(ax1, -2.3, 2, 'H⊗I', '#2196F3', 0.45)
-draw_edge(ax1, -1.5, 3.5, -0.7, 2)
-draw_node(ax1, -0.7, 2, 'I⊗H', '#9C27B0', 0.45)
-
-# Leaves of right +
-draw_edge(ax1, 1.5, 3.5, 0.7, 2)
-draw_node(ax1, 0.7, 2, 'T⊗I', '#FF9800', 0.45)
-draw_edge(ax1, 1.5, 3.5, 2.3, 2)
-draw_node(ax1, 2.3, 2, 'I⊗T', '#E91E63', 0.45)
-
-# Legend
-ax1.text(0, 0.3, 'Sequential composition distributes\nover addition (superposition)',
-         ha='center', va='center', fontsize=11, style='italic', color='#555')
-
-# ─── Right panel: Normal form (sum of products) ───
-ax2 = axes[1]
-ax2.set_xlim(-1, 5)
-ax2.set_ylim(-0.5, 5.5)
-ax2.axis('off')
-ax2.set_title('Distributive Normal Form\n(Sum of Products)', fontsize=14, fontweight='bold')
-
-monomials = [
-    ('H⊗I · T⊗I', '#2196F3', '#FF9800'),
-    ('H⊗I · I⊗T', '#2196F3', '#E91E63'),
-    ('I⊗H · T⊗I', '#9C27B0', '#FF9800'),
-    ('I⊗H · I⊗T', '#9C27B0', '#E91E63'),
-]
-
-y_positions = [4.5, 3.3, 2.1, 0.9]
-
-for i, (label, c1, c2) in enumerate(monomials):
-    y = y_positions[i]
-
-    # Draw monomial box
-    rect = mpatches.FancyBboxPatch((0.3, y-0.25), 3.4, 0.5,
-                                     boxstyle="round,pad=0.1",
-                                     facecolor='#f5f5f5',
-                                     edgecolor='#999', linewidth=1.5)
-    ax2.add_patch(rect)
-
-    # Draw colored gate indicators
-    gate1 = plt.Circle((1.2, y), 0.18, color=c1, alpha=0.9, zorder=3)
-    gate2 = plt.Circle((2.8, y), 0.18, color=c2, alpha=0.9, zorder=3)
-    ax2.add_patch(gate1)
-    ax2.add_patch(gate2)
-
-    ax2.text(2.0, y, label, ha='center', va='center', fontsize=11,
-             fontweight='bold', color='#333')
-
-    if i < len(monomials) - 1:
-        ax2.text(2.0, y - 0.55, '+', ha='center', va='center',
-                fontsize=16, color='#4CAF50', fontweight='bold')
-
-# Arrow from left to right
-fig.patches.append(mpatches.FancyArrowPatch(
-    (0.48, 0.5), (0.52, 0.5),
-    transform=fig.transFigure,
-    arrowstyle='->', mutation_scale=30,
-    color='#FF5722', linewidth=3,
-    connectionstyle='arc3,rad=0'))
-
-fig.text(0.50, 0.53, 'expand', ha='center', va='bottom',
-         fontsize=13, fontweight='bold', color='#FF5722',
-         transform=fig.transFigure)
-
-# Bottom annotation
-fig.text(0.5, 0.02,
-         'Quantum linearity is distributivity: each path through the superposition becomes a separate monomial',
-         ha='center', va='bottom', fontsize=11, style='italic', color='#666',
-         transform=fig.transFigure)
-
-plt.tight_layout()
-plt.savefig('viz_expansion_tree.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-plt.close()
-print("Saved viz_expansion_tree.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 3: Normal Form Landscape
-
-Visualizes the landscape of canonical normal forms for 2-qubit circuits:
-how many syntactically distinct circuits map to each equivalence class,
-and the distribution of monomial counts across circuit expressions.
-
-This illustrates how normalization compresses the space of circuit descriptions.
-"""
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from collections import Counter
-import itertools
+from dataclasses import dataclass
+from enum import Enum
 
-# ─── Inline QExpr implementation ───
 
-class QExpr:
-    pass
+# --- Inlined core types ---
+class QGate(Enum):
+    H = "H"; T = "T"
 
-class Gate(QExpr):
-    def __init__(self, n):
-        self.n = n
-    def __eq__(self, o): return isinstance(o, Gate) and self.n == o.n
-    def __hash__(self): return hash(("g", self.n))
+class QTE: pass
 
-class Seq(QExpr):
-    def __init__(self, a, b):
-        self.a, self.b = a, b
-    def __eq__(self, o): return isinstance(o, Seq) and self.a == o.a and self.b == o.b
-    def __hash__(self): return hash(("s", self.a, self.b))
+@dataclass(frozen=True)
+class Gate(QTE):
+    gate: QGate
+    def __repr__(self): return self.gate.value
 
-class Add(QExpr):
-    def __init__(self, a, b):
-        self.a, self.b = a, b
-    def __eq__(self, o): return isinstance(o, Add) and self.a == o.a and self.b == o.b
-    def __hash__(self): return hash(("a", self.a, self.b))
+@dataclass(frozen=True)
+class Ident(QTE):
+    def __repr__(self): return "I"
 
-class One(QExpr):
-    def __eq__(self, o): return isinstance(o, One)
-    def __hash__(self): return hash("one")
+@dataclass(frozen=True)
+class Seq(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ; {self.right})"
 
-def expand(e):
-    if isinstance(e, Gate): return [[e.n]]
-    if isinstance(e, One): return [[]]
-    if isinstance(e, Add): return expand(e.a) + expand(e.b)
-    if isinstance(e, Seq): return [p+q for p in expand(e.a) for q in expand(e.b)]
-    return [[]]
+@dataclass(frozen=True)
+class Par(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ⊗ {self.right})"
+
+@dataclass(frozen=True)
+class Add(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} + {self.right})"
+
+def poly_interp(e):
+    if isinstance(e, (Gate, Ident)): return 2
+    if isinstance(e, (Seq, Par)): return poly_interp(e.left) * poly_interp(e.right)
+    if isinstance(e, Add): return poly_interp(e.left) + poly_interp(e.right) + 1
+
+def norm_step(e):
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        return Add(Par(e.left.left, e.right), Par(e.left.right, e.right))
+    if isinstance(e, Par) and isinstance(e.right, Add):
+        return Add(Par(e.left, e.right.left), Par(e.left, e.right.right))
+    if isinstance(e, Seq) and isinstance(e.right, Add):
+        return Add(Seq(e.left, e.right.left), Seq(e.left, e.right.right))
+    return e
+
+def norm_step_deep(e):
+    if isinstance(e, (Gate, Ident)): return e
+    if isinstance(e, Seq): return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Par): return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Add): return Add(norm_step_deep(e.left), norm_step_deep(e.right))
 
 def normalize(e):
-    return tuple(sorted(tuple(m) for m in expand(e)))
+    for _ in range(poly_interp(e)):
+        e_new = norm_step_deep(e)
+        if e_new == e: return e
+        e = e_new
+    return e
 
-# ─── Generate circuits ───
+def collect_summands(e):
+    if isinstance(e, Add): return collect_summands(e.left) + collect_summands(e.right)
+    return [e]
 
-GATE_IDS = [0, 1, 2, 3, 4]
-GATE_NAMES = {0:"H⊗I", 1:"I⊗H", 2:"T⊗I", 3:"I⊗T", 4:"CNOT"}
+def expr_size(e):
+    if isinstance(e, (Gate, Ident)): return 1
+    return 1 + expr_size(e.left) + expr_size(e.right)
 
-def gen_product_circuits(depth):
-    """Generate product circuits (no Add) up to given depth."""
-    if depth <= 0:
-        return [One()]
-    if depth == 1:
-        return [Gate(g) for g in GATE_IDS]
-    result = [Gate(g) for g in GATE_IDS]
-    prev = gen_product_circuits(depth - 1)
-    for g in GATE_IDS:
-        for c in prev:
-            result.append(Seq(Gate(g), c))
-    return result
 
-def gen_circuits_with_add(depth):
-    """Generate circuits including Add nodes."""
-    products = gen_product_circuits(depth)
-    all_circuits = list(products)
-    # Add combinations of product circuits
-    for i in range(min(len(products), 15)):
-        for j in range(min(len(products), 15)):
-            if i != j:
-                all_circuits.append(Add(products[i], products[j]))
-                # Also seq with an add
-                if len(GATE_IDS) > 0:
-                    all_circuits.append(Seq(Add(products[i], products[j]), Gate(GATE_IDS[0])))
-    return all_circuits
+# --- Build test families ---
+H = Gate(QGate.H)
+T = Gate(QGate.T)
 
-# ─── Compute data ───
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('Normal Form Landscape for 2-Qubit Circuits',
-             fontsize=16, fontweight='bold', y=0.98)
+# 1. Iterated tensor products of (H+T)
+# (H+T)^⊗n has 2^n summands
+ax = axes[0]
+ns = list(range(1, 8))
+summand_counts = []
+sizes_orig = []
+sizes_nf = []
 
-# Panel 1: Circuit count vs NF count by depth
-ax1 = axes[0, 0]
-depths = range(1, 5)
-circuit_counts = []
-nf_counts = []
+for n in ns:
+    e = Add(H, T)
+    for _ in range(n - 1):
+        e = Par(e, Add(H, T))
+    nf = normalize(e)
+    sc = len(collect_summands(nf))
+    summand_counts.append(sc)
+    sizes_orig.append(expr_size(e))
+    sizes_nf.append(expr_size(nf))
 
-for d in depths:
-    circuits = gen_circuits_with_add(d)
-    nfs = set()
-    for c in circuits:
-        nfs.add(normalize(c))
-    circuit_counts.append(len(circuits))
-    nf_counts.append(len(nfs))
+ax.semilogy(ns, summand_counts, 'o-', color='blue', linewidth=2, 
+            markersize=8, label='# summands')
+ax.semilogy(ns, [2**n for n in ns], 's--', color='red', linewidth=1.5, 
+            markersize=6, alpha=0.7, label='$2^n$ (predicted)')
+ax.set_xlabel('n (tensor factors)', fontsize=12)
+ax.set_ylabel('Number of summands (log scale)', fontsize=12)
+ax.set_title('Summands in (H+T)$^{⊗n}$', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-x = np.arange(len(list(depths)))
-width = 0.35
-bars1 = ax1.bar(x - width/2, circuit_counts, width, label='Syntactic circuits',
-                color='#2196F3', alpha=0.8)
-bars2 = ax1.bar(x + width/2, nf_counts, width, label='Distinct normal forms',
-                color='#FF9800', alpha=0.8)
-ax1.set_xlabel('Circuit Depth')
-ax1.set_ylabel('Count')
-ax1.set_title('Compression: Circuits → Normal Forms')
-ax1.set_xticks(x)
-ax1.set_xticklabels([str(d) for d in depths])
-ax1.legend()
-ax1.set_yscale('log')
+# 2. Size growth
+ax = axes[1]
+ax.plot(ns, sizes_orig, 'o-', color='green', linewidth=2, markersize=8, 
+        label='Original size')
+ax.plot(ns, sizes_nf, 's-', color='purple', linewidth=2, markersize=8, 
+        label='Normal form size')
+ax.set_xlabel('n (tensor factors)', fontsize=12)
+ax.set_ylabel('AST node count', fontsize=12)
+ax.set_title('Expression Size Growth', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-# Panel 2: Monomial count distribution
-ax2 = axes[0, 1]
-circuits = gen_circuits_with_add(3)
-mono_counts = [len(expand(c)) for c in circuits]
-counts = Counter(mono_counts)
-xs = sorted(counts.keys())
-ys = [counts[x] for x in xs]
-ax2.bar(xs, ys, color='#4CAF50', alpha=0.8, edgecolor='#2E7D32')
-ax2.set_xlabel('Number of Monomials in Expansion')
-ax2.set_ylabel('Number of Circuits')
-ax2.set_title('Distribution of Expansion Sizes (depth ≤ 3)')
+# 3. polyInterp values
+ax = axes[2]
+pi_values = []
+for n in ns:
+    e = Add(H, T)
+    for _ in range(n - 1):
+        e = Par(e, Add(H, T))
+    pi_values.append(poly_interp(e))
 
-# Panel 3: Equivalence class sizes
-ax3 = axes[1, 0]
-circuits = gen_circuits_with_add(3)
-nf_groups = {}
-for c in circuits:
-    nf = normalize(c)
-    if nf not in nf_groups:
-        nf_groups[nf] = 0
-    nf_groups[nf] += 1
+ax.semilogy(ns, pi_values, 'D-', color='orange', linewidth=2, markersize=8,
+            label='polyInterp')
+# Theoretical: (2+2+1)^n = 5^n
+ax.semilogy(ns, [5**n for n in ns], 'v--', color='gray', linewidth=1.5,
+            markersize=6, alpha=0.7, label='$5^n$ (theoretical)')
+ax.set_xlabel('n (tensor factors)', fontsize=12)
+ax.set_ylabel('polyInterp value (log scale)', fontsize=12)
+ax.set_title('Termination Measure Growth', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-class_sizes = sorted(nf_groups.values(), reverse=True)
-ax3.bar(range(min(30, len(class_sizes))), class_sizes[:30],
-        color='#9C27B0', alpha=0.8, edgecolor='#6A1B9A')
-ax3.set_xlabel('Equivalence Class (ranked by size)')
-ax3.set_ylabel('Number of Circuits in Class')
-ax3.set_title('Top 30 Equivalence Classes by Size')
+plt.suptitle('Distributive Expansion: Quantum Parallelism as Combinatorial Growth\n'
+             '"Each ⊗ of sums multiplies the number of computational paths"',
+             fontsize=14, fontweight='bold', y=1.03)
+plt.tight_layout()
+plt.savefig('viz_expansion.png', dpi=150, bbox_inches='tight')
+print("Saved viz_expansion.png")
 
-# Panel 4: Compression ratio
-ax4 = axes[1, 1]
-compression = [c/n if n > 0 else 1 for c, n in zip(circuit_counts, nf_counts)]
-ax4.plot(list(depths), compression, 'o-', color='#E91E63', linewidth=2.5,
-         markersize=10, markerfacecolor='white', markeredgewidth=2)
-ax4.set_xlabel('Circuit Depth')
-ax4.set_ylabel('Compression Ratio (circuits / normal forms)')
-ax4.set_title('Normalization Compression Ratio')
-ax4.grid(True, alpha=0.3)
 
-for i, (d, cr) in enumerate(zip(depths, compression)):
-    ax4.annotate(f'{cr:.1f}×', (d, cr), textcoords="offset points",
-                xytext=(0, 12), ha='center', fontsize=10, fontweight='bold',
-                color='#E91E63')
+"""
+Visualization: Distributive Normalization as Matrix Preservation
+
+This script visualizes how the normalization process transforms quantum
+circuit expressions while preserving their matrix semantics. It shows
+the before/after matrices as heatmaps, demonstrating soundness visually.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from dataclasses import dataclass
+from enum import Enum
+
+
+# --- Inlined core types ---
+class QGate(Enum):
+    H = "H"; T = "T"; CNOT = "CNOT"
+
+class QTE: pass
+
+@dataclass(frozen=True)
+class Gate(QTE):
+    gate: QGate
+    def __repr__(self): return self.gate.value
+
+@dataclass(frozen=True)
+class Ident(QTE):
+    def __repr__(self): return "I"
+
+@dataclass(frozen=True)
+class Seq(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ; {self.right})"
+
+@dataclass(frozen=True)
+class Par(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ⊗ {self.right})"
+
+@dataclass(frozen=True)
+class Add(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} + {self.right})"
+
+
+def norm_step(e):
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        return Add(Par(e.left.left, e.right), Par(e.left.right, e.right))
+    if isinstance(e, Par) and isinstance(e.right, Add):
+        return Add(Par(e.left, e.right.left), Par(e.left, e.right.right))
+    if isinstance(e, Seq) and isinstance(e.right, Add):
+        return Add(Seq(e.left, e.right.left), Seq(e.left, e.right.right))
+    return e
+
+def norm_step_deep(e):
+    if isinstance(e, (Gate, Ident)): return e
+    if isinstance(e, Seq): return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Par): return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Add): return Add(norm_step_deep(e.left), norm_step_deep(e.right))
+
+def poly_interp(e):
+    if isinstance(e, (Gate, Ident)): return 2
+    if isinstance(e, (Seq, Par)): return poly_interp(e.left) * poly_interp(e.right)
+    if isinstance(e, Add): return poly_interp(e.left) + poly_interp(e.right) + 1
+
+def normalize(e):
+    for _ in range(poly_interp(e)):
+        e_new = norm_step_deep(e)
+        if e_new == e: return e
+        e = e_new
+    return e
+
+H_MAT = np.array([[1,1],[1,-1]], dtype=complex) / np.sqrt(2)
+T_MAT = np.array([[1,0],[0,np.exp(1j*np.pi/4)]], dtype=complex)
+I_MAT = np.eye(2, dtype=complex)
+CNOT_MAT = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
+GATE_MATS = {QGate.H: H_MAT, QGate.T: T_MAT, QGate.CNOT: CNOT_MAT}
+
+def denote_matrix(e):
+    if isinstance(e, Gate): return GATE_MATS[e.gate].copy()
+    if isinstance(e, Ident): return I_MAT.copy()
+    if isinstance(e, Seq): return denote_matrix(e.left) @ denote_matrix(e.right)
+    if isinstance(e, Par): return np.kron(denote_matrix(e.left), denote_matrix(e.right))
+    if isinstance(e, Add): return denote_matrix(e.left) + denote_matrix(e.right)
+
+
+# --- Build examples ---
+H = Gate(QGate.H)
+T = Gate(QGate.T)
+I = Ident()
+
+examples = [
+    ("(H+T) ⊗ (H+T)", Par(Add(H, T), Add(H, T))),
+    ("H ⊗ (T+H)", Par(H, Add(T, H))),
+    ("(H+T) ⊗ I", Par(Add(H, T), I)),
+]
+
+fig, axes = plt.subplots(len(examples), 4, figsize=(16, 4 * len(examples)))
+
+for row, (name, expr) in enumerate(examples):
+    nf = normalize(expr)
+    m_orig = denote_matrix(expr)
+    m_norm = denote_matrix(nf)
+    diff = np.abs(m_orig - m_norm)
+    
+    # Original matrix (magnitude)
+    ax = axes[row, 0]
+    im = ax.imshow(np.abs(m_orig), cmap='viridis', aspect='equal')
+    ax.set_title(f'|Original|\n{name}', fontsize=10)
+    plt.colorbar(im, ax=ax, fraction=0.046)
+    
+    # Original matrix (phase)
+    ax = axes[row, 1]
+    im = ax.imshow(np.angle(m_orig), cmap='twilight', aspect='equal', 
+                    vmin=-np.pi, vmax=np.pi)
+    ax.set_title(f'Phase(Original)', fontsize=10)
+    plt.colorbar(im, ax=ax, fraction=0.046)
+    
+    # Normalized matrix (magnitude)
+    ax = axes[row, 2]
+    im = ax.imshow(np.abs(m_norm), cmap='viridis', aspect='equal')
+    ax.set_title(f'|Normal Form|\n{str(nf)[:40]}...', fontsize=10)
+    plt.colorbar(im, ax=ax, fraction=0.046)
+    
+    # Difference (should be zero)
+    ax = axes[row, 3]
+    im = ax.imshow(diff, cmap='hot', aspect='equal')
+    ax.set_title(f'|Difference|\nmax={np.max(diff):.2e}', fontsize=10)
+    plt.colorbar(im, ax=ax, fraction=0.046)
+
+plt.suptitle('Distributive Normalization Preserves Matrix Semantics\n(Soundness Theorem — Visual Verification)', 
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_normalization.png', dpi=150, bbox_inches='tight')
+print("Saved viz_normalization.png")
+
+
+"""
+Visualization: Polynomial Interpretation Termination Measure
+
+This script visualizes how the polynomial interpretation (polyInterp)
+decreases with each normalization step, proving termination of the
+distributive rewrite system for quantum circuits.
+
+It shows the "penalized addition" trick: by assigning add nodes a
+cost of a + b + 1 instead of a + b, distributing multiplication
+over addition strictly decreases the total measure.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from dataclasses import dataclass
+from enum import Enum
+
+
+# --- Inlined core types ---
+class QGate(Enum):
+    H = "H"; T = "T"; CNOT = "CNOT"
+
+class QTE: pass
+
+@dataclass(frozen=True)
+class Gate(QTE):
+    gate: QGate
+    def __repr__(self): return self.gate.value
+
+@dataclass(frozen=True)
+class Ident(QTE):
+    def __repr__(self): return "I"
+
+@dataclass(frozen=True)
+class Seq(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ; {self.right})"
+
+@dataclass(frozen=True)
+class Par(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} ⊗ {self.right})"
+
+@dataclass(frozen=True)
+class Add(QTE):
+    left: QTE; right: QTE
+    def __repr__(self): return f"({self.left} + {self.right})"
+
+
+def poly_interp(e):
+    if isinstance(e, (Gate, Ident)): return 2
+    if isinstance(e, (Seq, Par)): return poly_interp(e.left) * poly_interp(e.right)
+    if isinstance(e, Add): return poly_interp(e.left) + poly_interp(e.right) + 1
+
+def norm_step(e):
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        return Add(Par(e.left.left, e.right), Par(e.left.right, e.right))
+    if isinstance(e, Par) and isinstance(e.right, Add):
+        return Add(Par(e.left, e.right.left), Par(e.left, e.right.right))
+    if isinstance(e, Seq) and isinstance(e.right, Add):
+        return Add(Seq(e.left, e.right.left), Seq(e.left, e.right.right))
+    return e
+
+def norm_step_deep(e):
+    if isinstance(e, (Gate, Ident)): return e
+    if isinstance(e, Seq): return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Par): return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    if isinstance(e, Add): return Add(norm_step_deep(e.left), norm_step_deep(e.right))
+
+
+# --- Build test expressions ---
+H = Gate(QGate.H)
+T = Gate(QGate.T)
+I = Ident()
+
+test_cases = [
+    ("(H+T) ⊗ (H+T)", Par(Add(H, T), Add(H, T))),
+    ("H ⊗ (T+H)", Par(H, Add(T, H))),
+    ("(H+T) ⊗ ((H+T) ⊗ H)", Par(Add(H, T), Par(Add(H, T), H))),
+    ("H ; (T+H)", Seq(H, Add(T, H))),
+    ("((H+T)⊗I) ⊗ (H+T)", Par(Par(Add(H, T), I), Add(H, T))),
+]
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Left plot: step-by-step measure decrease
+ax = axes[0]
+colors = plt.cm.Set2(np.linspace(0, 1, len(test_cases)))
+
+for idx, (name, expr) in enumerate(test_cases):
+    measures = [poly_interp(expr)]
+    e = expr
+    for _ in range(20):
+        e_new = norm_step_deep(e)
+        if e_new == e:
+            break
+        e = e_new
+        measures.append(poly_interp(e))
+    
+    steps = list(range(len(measures)))
+    ax.plot(steps, measures, 'o-', color=colors[idx], label=name, 
+            markersize=8, linewidth=2)
+
+ax.set_xlabel('Normalization Step', fontsize=12)
+ax.set_ylabel('polyInterp (Termination Measure)', fontsize=12)
+ax.set_title('Strict Decrease of Polynomial Interpretation', fontsize=13)
+ax.legend(fontsize=9, loc='upper right')
+ax.grid(True, alpha=0.3)
+
+# Right plot: comparison of standard vs penalized interpretation
+ax = axes[1]
+
+# Show why standard ring interpretation gives equality
+# but penalized interpretation gives strict decrease
+n_values = range(2, 12)
+standard = []  # (a+b) * c with standard add
+penalized_lhs = []  # (a+b+1) * c
+penalized_rhs = []  # a*c + b*c + 1
+
+a, b = 2, 2  # atoms
+for c in n_values:
+    standard.append((a + b) * c)
+    penalized_lhs.append((a + b + 1) * c)
+    penalized_rhs.append(a * c + b * c + 1)
+
+ax.plot(list(n_values), standard, 's--', color='gray', label='Standard: (a+b)·c', 
+        markersize=6, linewidth=1.5)
+ax.plot(list(n_values), penalized_lhs, 'o-', color='red', 
+        label='Penalized LHS: (a+b+1)·c', markersize=7, linewidth=2)
+ax.plot(list(n_values), penalized_rhs, '^-', color='blue', 
+        label='Penalized RHS: a·c + b·c + 1', markersize=7, linewidth=2)
+
+# Fill the gap showing strict decrease
+ax.fill_between(list(n_values), penalized_rhs, penalized_lhs, 
+                alpha=0.2, color='green', label='Strict decrease gap')
+
+ax.set_xlabel('c (factor size)', fontsize=12)
+ax.set_ylabel('Measure value', fontsize=12)
+ax.set_title('The "+1 Penalty" Trick for Termination\n(a=b=2: atom values)', fontsize=13)
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('viz_normal_form_landscape.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-plt.close()
-print("Saved viz_normal_form_landscape.png")
+plt.savefig('viz_termination.png', dpi=150, bbox_inches='tight')
+print("Saved viz_termination.png")

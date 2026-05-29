@@ -1,345 +1,345 @@
-#!/usr/bin/env python3
 """
-Quantum Circuit Rewriting — Core Algorithms
+Quantum Tensor Rewriting: Core Algorithms
 
-This module implements the core algorithms for distributive normalization
-of quantum circuit expressions, following the formal theory developed in
-the Lean 4 formalization.
+Implements the verified normalization algorithm for quantum circuit expressions
+using distributive tensor rewriting. This module provides:
 
-Algorithms:
-1. Distributive Expansion (expand): O(product of branch factors) time
-2. Canonical Normal Form (normalize): expansion + sorting
-3. Equivalence Checking (equiv_check): normalize and compare
-4. Circuit Depth Analysis: compute circuit depth and monomial count
+1. QuantumTensorExpr - AST for quantum circuit expressions
+2. normalize() - Canonical normalization via distributive expansion
+3. denote() - Denotational semantics via symbolic matrix evaluation
+4. polyInterp() - Polynomial interpretation (termination measure)
+
+All algorithms correspond to formally verified Lean 4 implementations.
 """
 
-import numpy as np
-from typing import List, Tuple, Dict, Optional, Set
+from __future__ import annotations
 from dataclasses import dataclass
-from enum import Enum, auto
-from collections import Counter
+from typing import Union, Callable, Any
+from enum import Enum
+import numpy as np
 
 
-# ─── Core Data Types ───
+class QGate(Enum):
+    """Gate set for 2-qubit quantum circuits."""
+    H = "H"        # Hadamard gate
+    T = "T"        # T gate (π/8 phase)
+    CNOT = "CNOT"  # Controlled-NOT
 
-class ExprType(Enum):
-    GATE = auto()
-    SEQ = auto()
-    ADD = auto()
-    ONE = auto()
+
+# --- AST for Quantum Tensor Expressions ---
+
+class QuantumTensorExpr:
+    """Base class for quantum tensor expressions."""
+    pass
 
 
 @dataclass(frozen=True)
-class QExpr:
-    """Quantum tensor expression AST node."""
-    type: ExprType
-    gate_id: Optional[int] = None
-    left: Optional['QExpr'] = None
-    right: Optional['QExpr'] = None
-
+class Gate(QuantumTensorExpr):
+    """A primitive quantum gate."""
+    gate: QGate
     def __repr__(self) -> str:
-        if self.type == ExprType.GATE:
-            return f"g{self.gate_id}"
-        elif self.type == ExprType.SEQ:
-            return f"({self.left} ; {self.right})"
-        elif self.type == ExprType.ADD:
-            return f"({self.left} + {self.right})"
-        elif self.type == ExprType.ONE:
-            return "I"
-        return "?"
+        return self.gate.value
 
 
-def gate(n: int) -> QExpr:
-    """Create a gate expression."""
-    return QExpr(ExprType.GATE, gate_id=n)
-
-def seq(a: QExpr, b: QExpr) -> QExpr:
-    """Create a sequential composition."""
-    return QExpr(ExprType.SEQ, left=a, right=b)
-
-def add(a: QExpr, b: QExpr) -> QExpr:
-    """Create an addition (superposition)."""
-    return QExpr(ExprType.ADD, left=a, right=b)
-
-def one() -> QExpr:
-    """Create an identity expression."""
-    return QExpr(ExprType.ONE)
+@dataclass(frozen=True)
+class Ident(QuantumTensorExpr):
+    """The identity gate."""
+    def __repr__(self) -> str:
+        return "I"
 
 
-# ─── Type Aliases ───
+@dataclass(frozen=True)
+class Seq(QuantumTensorExpr):
+    """Sequential composition (matrix product)."""
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self) -> str:
+        return f"({self.left} ; {self.right})"
 
-Monomial = Tuple[int, ...]  # Tuple of gate indices
-NormalForm = Tuple[Monomial, ...]  # Sorted tuple of monomials
+
+@dataclass(frozen=True)
+class Par(QuantumTensorExpr):
+    """Parallel composition (tensor product)."""
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self) -> str:
+        return f"({self.left} ⊗ {self.right})"
 
 
-# ─── Algorithm 1: Distributive Expansion ───
+@dataclass(frozen=True)
+class Add(QuantumTensorExpr):
+    """Formal sum (distributive expansion node)."""
+    left: QuantumTensorExpr
+    right: QuantumTensorExpr
+    def __repr__(self) -> str:
+        return f"({self.left} + {self.right})"
 
-def expand(expr: QExpr) -> List[List[int]]:
+
+# --- Polynomial Interpretation (Termination Measure) ---
+
+def poly_interp(e: QuantumTensorExpr) -> int:
     """
-    Distributive expansion of a quantum expression into sum-of-products form.
-
-    Algorithm:
-    - gate(n) → [[n]]
-    - one → [[]]
-    - add(a, b) → expand(a) ++ expand(b)
-    - seq(a, b) → [p ++ q | p ∈ expand(a), q ∈ expand(b)]
-
-    Time complexity: O(|expand(a)| × |expand(b)|) for seq nodes,
-    where the product of all branch factors gives the total monomial count.
-
-    Space complexity: O(total monomials × average monomial length)
-
-    This is the core algorithm: it fully distributes sequential composition
-    over addition, producing a flat list of monomials.
-
-    >>> expand(gate(0))
-    [[0]]
-    >>> expand(add(gate(0), gate(1)))
-    [[0], [1]]
-    >>> expand(seq(add(gate(0), gate(1)), gate(2)))
-    [[0, 2], [1, 2]]
+    Polynomial interpretation: the termination measure.
+    
+    - Atoms map to 2
+    - seq/par map to multiplication  
+    - add maps to a + b + 1 (penalized addition)
+    
+    Key property: distributing multiplication over penalized addition
+    strictly decreases this measure, proving termination.
+    
+    Time complexity: O(n) where n is the number of AST nodes.
+    Space complexity: O(d) where d is the depth of the expression tree.
     """
-    if expr.type == ExprType.GATE:
-        return [[expr.gate_id]]
-    elif expr.type == ExprType.ONE:
-        return [[]]
-    elif expr.type == ExprType.ADD:
-        return expand(expr.left) + expand(expr.right)
-    elif expr.type == ExprType.SEQ:
-        result = []
-        for p in expand(expr.left):
-            for q in expand(expr.right):
-                result.append(p + q)
-        return result
-    else:
-        raise ValueError(f"Unknown expression type: {expr.type}")
+    if isinstance(e, (Gate, Ident)):
+        return 2
+    elif isinstance(e, Seq):
+        return poly_interp(e.left) * poly_interp(e.right)
+    elif isinstance(e, Par):
+        return poly_interp(e.left) * poly_interp(e.right)
+    elif isinstance(e, Add):
+        return poly_interp(e.left) + poly_interp(e.right) + 1
+    raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-# ─── Algorithm 2: Canonical Normal Form ───
+# --- Normalization Algorithm ---
 
-def normalize(expr: QExpr) -> NormalForm:
+def norm_step(e: QuantumTensorExpr) -> QuantumTensorExpr:
     """
-    Compute the canonical normal form of a quantum expression.
-
-    The normal form is a sorted tuple of monomials (each a tuple of gate indices).
-    Two expressions have the same normal form if and only if they are equivalent
-    modulo the distributive rewrite rules plus commutativity of addition.
-
-    Algorithm:
-    1. Expand to sum-of-products via distributive expansion.
-    2. Convert each monomial to a tuple (immutable, hashable).
-    3. Sort lexicographically to obtain a canonical representative.
-
-    Time complexity: O(E log E) where E = number of monomials in expansion
-    Space complexity: O(E × L) where L = average monomial length
-
-    >>> normalize(seq(add(gate(1), gate(0)), gate(2)))
-    ((0, 2), (1, 2))
+    One-step top-level normalization: apply the first applicable
+    distributivity rule at the root.
+    
+    Rules:
+    - par (add a b) c  →  add (par a c) (par b c)    [left-distributivity of ⊗]
+    - par a (add b c)  →  add (par a b) (par a c)    [right-distributivity of ⊗]
+    - seq a (add b c)  →  add (seq a b) (seq a c)    [right-distributivity of ;]
+    
+    Returns the input unchanged if no rule applies.
+    
+    Time complexity: O(1) per call.
     """
-    monomials = expand(expr)
-    sorted_monos = sorted(tuple(m) for m in monomials)
-    return tuple(sorted_monos)
+    if isinstance(e, Par) and isinstance(e.left, Add):
+        a, b, c = e.left.left, e.left.right, e.right
+        return Add(Par(a, c), Par(b, c))
+    elif isinstance(e, Par) and isinstance(e.right, Add):
+        a, b, c = e.left, e.right.left, e.right.right
+        return Add(Par(a, b), Par(a, c))
+    elif isinstance(e, Seq) and isinstance(e.right, Add):
+        a, b, c = e.left, e.right.left, e.right.right
+        return Add(Seq(a, b), Seq(a, c))
+    return e
 
 
-# ─── Algorithm 3: Equivalence Checking ───
-
-def equiv_check(e1: QExpr, e2: QExpr) -> bool:
+def norm_step_deep(e: QuantumTensorExpr) -> QuantumTensorExpr:
     """
-    Check if two quantum expressions are equivalent under distributive rewriting.
-
-    Two expressions are equivalent if they have the same canonical normal form.
-    This is sound: if equiv_check returns True, the expressions have the same
-    denotation in every semiring.
-
-    For the converse (completeness relative to the free algebra), two expressions
-    with different normal forms are distinguished by the free semiring interpretation.
-
-    Time complexity: O(E1 log E1 + E2 log E2) where Ei = expansion size of ei
-    Space complexity: O(max(E1, E2) × L)
-
-    >>> equiv_check(seq(one(), gate(0)), gate(0))
-    True
-    >>> equiv_check(gate(0), gate(1))
-    False
+    Deep normalization: recursively normalize children, then apply
+    norm_step at the root. This is a single bottom-up pass.
+    
+    Time complexity: O(n) per call where n is the number of AST nodes.
+    Space complexity: O(d) where d is the depth.
     """
-    return normalize(e1) == normalize(e2)
+    if isinstance(e, (Gate, Ident)):
+        return e
+    elif isinstance(e, Seq):
+        return norm_step(Seq(norm_step_deep(e.left), norm_step_deep(e.right)))
+    elif isinstance(e, Par):
+        return norm_step(Par(norm_step_deep(e.left), norm_step_deep(e.right)))
+    elif isinstance(e, Add):
+        return Add(norm_step_deep(e.left), norm_step_deep(e.right))
+    raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-# ─── Algorithm 4: Expression Analysis ───
-
-def expr_depth(expr: QExpr) -> int:
+def normalize(e: QuantumTensorExpr, max_iters: int = None) -> QuantumTensorExpr:
     """
-    Compute the depth of a quantum expression tree.
-
-    >>> expr_depth(gate(0))
-    0
-    >>> expr_depth(seq(gate(0), gate(1)))
-    1
+    Full normalization by iterating norm_step_deep until convergence.
+    
+    Guaranteed to terminate because each productive step strictly
+    decreases the polynomial interpretation (formally verified).
+    
+    Args:
+        e: Expression to normalize
+        max_iters: Maximum iterations (default: poly_interp(e))
+    
+    Returns:
+        The canonical normal form of e.
+    
+    Time complexity: O(n * k) where n = AST size, k = number of iterations.
+        k is bounded by poly_interp(e), which is at most exponential in n.
+        In practice, k is usually small (linear in the number of add nodes).
     """
-    if expr.type in (ExprType.GATE, ExprType.ONE):
+    if max_iters is None:
+        max_iters = poly_interp(e)
+    
+    for _ in range(max_iters):
+        e_new = norm_step_deep(e)
+        if e_new == e:
+            return e
+        e = e_new
+    return e
+
+
+# --- Size and Complexity ---
+
+def expr_size(e: QuantumTensorExpr) -> int:
+    """Number of nodes in the expression tree."""
+    if isinstance(e, (Gate, Ident)):
+        return 1
+    elif isinstance(e, (Seq, Par, Add)):
+        return 1 + expr_size(e.left) + expr_size(e.right)
+    raise TypeError(f"Unknown expression type: {type(e)}")
+
+
+def count_add_nodes(e: QuantumTensorExpr) -> int:
+    """Count the number of Add nodes in the expression."""
+    if isinstance(e, (Gate, Ident)):
         return 0
-    return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    elif isinstance(e, Add):
+        return 1 + count_add_nodes(e.left) + count_add_nodes(e.right)
+    elif isinstance(e, (Seq, Par)):
+        return count_add_nodes(e.left) + count_add_nodes(e.right)
+    raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-def expr_size(expr: QExpr) -> int:
+def is_normal_form(e: QuantumTensorExpr) -> bool:
     """
-    Compute the number of nodes in a quantum expression tree.
-
-    >>> expr_size(gate(0))
-    1
-    >>> expr_size(seq(gate(0), gate(1)))
-    3
+    Check if an expression is in normal form:
+    no Add node appears as a direct child of Par or Seq.
     """
-    if expr.type in (ExprType.GATE, ExprType.ONE):
-        return 1
-    return 1 + expr_size(expr.left) + expr_size(expr.right)
+    if isinstance(e, (Gate, Ident)):
+        return True
+    elif isinstance(e, Seq):
+        if isinstance(e.right, Add):
+            return False
+        return is_normal_form(e.left) and is_normal_form(e.right)
+    elif isinstance(e, Par):
+        if isinstance(e.left, Add) or isinstance(e.right, Add):
+            return False
+        return is_normal_form(e.left) and is_normal_form(e.right)
+    elif isinstance(e, Add):
+        return is_normal_form(e.left) and is_normal_form(e.right)
+    raise TypeError(f"Unknown expression type: {type(e)}")
 
 
-def monomial_count(expr: QExpr) -> int:
-    """
-    Compute the number of monomials in the expansion without materializing them.
+# --- Denotational Semantics ---
 
-    This is much more efficient than len(expand(expr)) for large expressions.
-
-    Algorithm:
-    - gate/one → 1
-    - add(a, b) → mc(a) + mc(b)
-    - seq(a, b) → mc(a) × mc(b)
-
-    >>> monomial_count(seq(add(gate(0), gate(1)), add(gate(2), gate(3))))
-    4
-    """
-    if expr.type in (ExprType.GATE, ExprType.ONE):
-        return 1
-    elif expr.type == ExprType.ADD:
-        return monomial_count(expr.left) + monomial_count(expr.right)
-    elif expr.type == ExprType.SEQ:
-        return monomial_count(expr.left) * monomial_count(expr.right)
-    return 0
-
-
-# ─── Algorithm 5: Denotation (Numerical Evaluation) ───
-
-# Standard 2-qubit gate matrices
-I2 = np.eye(2, dtype=complex)
-H_1q = (1/np.sqrt(2)) * np.array([[1, 1], [1, -1]], dtype=complex)
-T_1q = np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]], dtype=complex)
-CNOT_mat = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
+# Concrete 2x2 gate matrices
+H_MATRIX = np.array([[1, 1], [1, -1]], dtype=complex) / np.sqrt(2)
+T_MATRIX = np.array([[1, 0], [0, np.exp(1j * np.pi / 4)]], dtype=complex)
+I_MATRIX = np.eye(2, dtype=complex)
+CNOT_MATRIX = np.array([
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [0, 0, 1, 0]
+], dtype=complex)
 
 GATE_MATRICES = {
-    0: np.kron(H_1q, I2),   # H ⊗ I
-    1: np.kron(I2, H_1q),   # I ⊗ H
-    2: np.kron(T_1q, I2),   # T ⊗ I
-    3: np.kron(I2, T_1q),   # I ⊗ T
-    4: CNOT_mat,             # CNOT
+    QGate.H: H_MATRIX,
+    QGate.T: T_MATRIX,
+    QGate.CNOT: CNOT_MATRIX,
 }
 
 
-def denote(expr: QExpr, env: Dict[int, np.ndarray] = None) -> np.ndarray:
+def denote_matrix(e: QuantumTensorExpr) -> np.ndarray:
     """
-    Evaluate a quantum expression into a 4×4 complex matrix.
-
-    Uses the standard 2-qubit gate set {H⊗I, I⊗H, T⊗I, I⊗T, CNOT} by default.
-
-    >>> denote(gate(0)).shape
-    (4, 4)
+    Denotational semantics: evaluate an expression as a complex matrix.
+    
+    - gate g  →  gate matrix
+    - ident   →  identity matrix
+    - seq a b →  matrix product (a @ b)
+    - par a b →  Kronecker product (a ⊗ b)
+    - add a b →  matrix sum (a + b)
+    
+    Returns a complex numpy matrix.
     """
-    if env is None:
-        env = GATE_MATRICES
+    if isinstance(e, Gate):
+        return GATE_MATRICES[e.gate].copy()
+    elif isinstance(e, Ident):
+        return I_MATRIX.copy()
+    elif isinstance(e, Seq):
+        return denote_matrix(e.left) @ denote_matrix(e.right)
+    elif isinstance(e, Par):
+        return np.kron(denote_matrix(e.left), denote_matrix(e.right))
+    elif isinstance(e, Add):
+        return denote_matrix(e.left) + denote_matrix(e.right)
+    raise TypeError(f"Unknown expression type: {type(e)}")
 
-    if expr.type == ExprType.GATE:
-        return env[expr.gate_id].copy()
-    elif expr.type == ExprType.SEQ:
-        return denote(expr.left, env) @ denote(expr.right, env)
-    elif expr.type == ExprType.ADD:
-        return denote(expr.left, env) + denote(expr.right, env)
-    elif expr.type == ExprType.ONE:
-        return np.eye(4, dtype=complex)
-    raise ValueError(f"Unknown type: {expr.type}")
+
+def matrices_equal(m1: np.ndarray, m2: np.ndarray, tol: float = 1e-10) -> bool:
+    """Check if two matrices are approximately equal."""
+    return np.allclose(m1, m2, atol=tol)
 
 
-def denote_nf(nf: NormalForm, env: Dict[int, np.ndarray] = None) -> np.ndarray:
-    """Evaluate a normal form (tuple of monomials) into a matrix."""
-    if env is None:
-        env = GATE_MATRICES
-    result = np.zeros((4, 4), dtype=complex)
-    for mono in nf:
-        mat = np.eye(4, dtype=complex)
-        for g in mono:
-            mat = mat @ env[g]
-        result += mat
+# --- Circuit Generation ---
+
+def generate_circuits(depth: int, gates: list[QGate] = None) -> list[QuantumTensorExpr]:
+    """
+    Generate all circuit expressions up to a given depth over a gate set.
+    
+    Args:
+        depth: Maximum depth of the expression tree
+        gates: Gate set to use (default: {H, T, CNOT})
+    
+    Returns:
+        List of all expressions up to the given depth.
+    """
+    if gates is None:
+        gates = [QGate.H, QGate.T, QGate.CNOT]
+    
+    if depth <= 0:
+        return []
+    
+    # Base expressions
+    base = [Gate(g) for g in gates] + [Ident()]
+    
+    if depth == 1:
+        return base
+    
+    # Recursive: build from smaller expressions
+    smaller = generate_circuits(depth - 1, gates)
+    result = list(base)  # depth-1 expressions are included
+    
+    for a in smaller:
+        for b in smaller:
+            result.append(Seq(a, b))
+            result.append(Par(a, b))
+            result.append(Add(a, b))
+    
     return result
 
 
-def verify_soundness(expr: QExpr) -> float:
-    """
-    Verify expansion soundness for a given expression.
-    Returns the maximum absolute difference between original and expanded denotation.
-
-    >>> verify_soundness(seq(add(gate(0), gate(1)), gate(4))) < 1e-10
-    True
-    """
-    mat_orig = denote(expr)
-    nf = normalize(expr)
-    mat_nf = denote_nf(nf)
-    return float(np.max(np.abs(mat_orig - mat_nf)))
+def collect_summands(e: QuantumTensorExpr) -> list[QuantumTensorExpr]:
+    """Flatten an Add-tree into a list of summands."""
+    if isinstance(e, Add):
+        return collect_summands(e.left) + collect_summands(e.right)
+    return [e]
 
 
-# ─── Algorithm 6: Batch Equivalence Classification ───
+def summands_match_as_multisets(e1: QuantumTensorExpr, e2: QuantumTensorExpr) -> bool:
+    """Check if two expressions have the same summands as multisets."""
+    s1 = sorted(str(x) for x in collect_summands(e1))
+    s2 = sorted(str(x) for x in collect_summands(e2))
+    return s1 == s2
 
-def classify_circuits(exprs: List[QExpr]) -> Dict[NormalForm, List[int]]:
-    """
-    Classify a list of circuits by their normal form.
-
-    Returns a dictionary mapping each distinct normal form to the indices
-    of expressions that normalize to it.
-
-    Time complexity: O(n × E_max × log E_max) where n = len(exprs)
-
-    >>> exprs = [gate(0), seq(one(), gate(0)), gate(1)]
-    >>> classes = classify_circuits(exprs)
-    >>> len(classes)
-    2
-    """
-    classes: Dict[NormalForm, List[int]] = {}
-    for i, expr in enumerate(exprs):
-        nf = normalize(expr)
-        if nf not in classes:
-            classes[nf] = []
-        classes[nf].append(i)
-    return classes
-
-
-# ─── Main: Example Usage ───
 
 if __name__ == "__main__":
-    print("Quantum Circuit Rewriting — Algorithm Demonstrations\n")
-
-    # Example 1: Basic expansion
-    e = seq(add(gate(0), gate(1)), add(gate(2), gate(3)))
-    print(f"Expression: {e}")
-    print(f"Monomial count: {monomial_count(e)}")
-    print(f"Expansion: {expand(e)}")
-    print(f"Normal form: {normalize(e)}")
-    print(f"Soundness error: {verify_soundness(e):.2e}")
-
-    # Example 2: Equivalence checking
-    e1 = seq(one(), gate(0))
-    e2 = gate(0)
-    print(f"\nEquiv({e1}, {e2}): {equiv_check(e1, e2)}")
-
-    e3 = seq(add(gate(0), gate(1)), gate(2))
-    e4 = add(seq(gate(0), gate(2)), seq(gate(1), gate(2)))
-    print(f"Equiv({e3}, {e4}): {equiv_check(e3, e4)}")
-
-    # Example 3: Classification
-    exprs = [
-        gate(0), seq(one(), gate(0)),
-        gate(1), seq(gate(0), one()),
-        add(gate(0), gate(1)),
-        add(gate(1), gate(0)),
-    ]
-    classes = classify_circuits(exprs)
-    print(f"\nCircuit classification ({len(exprs)} circuits → {len(classes)} classes):")
-    for nf, indices in classes.items():
-        print(f"  NF {nf}: circuits {indices}")
+    # Example usage
+    H = Gate(QGate.H)
+    T = Gate(QGate.T)
+    CNOT = Gate(QGate.CNOT)
+    I = Ident()
+    
+    # A circuit with superposition: H ⊗ (T + H)
+    expr = Par(H, Add(T, H))
+    print(f"Expression: {expr}")
+    print(f"Poly interp: {poly_interp(expr)}")
+    print(f"Is normal form: {is_normal_form(expr)}")
+    
+    nf = normalize(expr)
+    print(f"Normal form: {nf}")
+    print(f"Is normal form: {is_normal_form(nf)}")
+    
+    # Verify semantics preservation
+    m_orig = denote_matrix(expr)
+    m_norm = denote_matrix(nf)
+    print(f"Semantics preserved: {matrices_equal(m_orig, m_norm)}")
