@@ -38,6 +38,13 @@ decomposition of that torsion — analogous to two signals with identical time-d
 support but different frequency content. This opens the door to prime-resolved persistent
 invariants, arithmetic persistence barcodes, and spectral signatures for filtered
 algebraic objects.
+
+### Application domains
+- **Persistent torsion** in topological data analysis
+- **Primary decomposition** of filtered abelian groups
+- **Spectral signatures** and arithmetic invariants
+- **Information loss** in algebraic signal processing
+- **Prime-sensitive persistence** barcodes
 -/
 import Mathlib
 
@@ -104,11 +111,9 @@ theorem mem_global_iff_exists_prime_mem_pTorsion
     (F : FiniteBirthProfile) (n : ℕ) :
     n ∈ globalTorsionBirthSet F ↔
       ∃ p : ℕ, Nat.Prime p ∧ n ∈ pTorsionBirthSet p F := by
-  constructor;
-  · unfold globalTorsionBirthSet pTorsionBirthSet;
-    simp +zetaDelta at *;
-    exact fun i m hm₁ hm₂ hi => ⟨ Nat.minFac m, Nat.minFac_prime ( by linarith ), i, ⟨ m, hm₁, hm₂, Nat.minFac_dvd m ⟩, hi ⟩;
-  · grind +locals
+  -- By definition of `globalTorsionBirthSet`, we know that `n ∈ globalTorsionBirthSet F` if and only if there exists a level `i` such that `n = i.val` and there exists an `m ∈ F.ordersAt i` with `m > 1`.
+  simp [globalTorsionBirthSet, pTorsionBirthSet];
+  exact ⟨ fun ⟨ a, ha, hn ⟩ ↦ ⟨ Nat.minFac ( Classical.choose ha ), Nat.minFac_prime ( by linarith [ Classical.choose_spec ha ] ), a, ⟨ Classical.choose ha, Classical.choose_spec ha |>.1, Classical.choose_spec ha |>.2, Nat.minFac_dvd _ ⟩, hn ⟩, by rintro ⟨ p, hp, a, ⟨ m, hm₁, hm₂, hm₃ ⟩, hn ⟩ ; exact ⟨ a, ⟨ m, hm₁, hm₂ ⟩, hn ⟩ ⟩
 
 /-! ## Section 4: Theorem 2 — Primewise Equality Implies Global Equality
 
@@ -121,10 +126,8 @@ theorem global_eq_of_primewise_eq
     {F G : FiniteBirthProfile}
     (h : ∀ p : ℕ, Nat.Prime p → pTorsionBirthSet p F = pTorsionBirthSet p G) :
     globalTorsionBirthSet F = globalTorsionBirthSet G := by
-  -- By extensionality, we need to show that for any natural number n, n is in the global birth set of F if and only if it is in the global birth set of G.
-  ext n
-  simp [mem_global_iff_exists_prime_mem_pTorsion];
-  aesop
+  ext n; simp_all +decide [ Finset.ext_iff ] ;
+  convert mem_global_iff_exists_prime_mem_pTorsion F n using 1 ; convert mem_global_iff_exists_prime_mem_pTorsion G n using 1 ; aesop;
 
 /-! ## Section 5: Theorem 3 — The Separation Theorem
 
@@ -137,10 +140,8 @@ theorem exists_same_global_different_primewise :
     ∃ F G : FiniteBirthProfile,
       globalTorsionBirthSet F = globalTorsionBirthSet G ∧
       ∃ p : ℕ, Nat.Prime p ∧ pTorsionBirthSet p F ≠ pTorsionBirthSet p G := by
-  -- Use F_witness and G_witness as counterexamples.
-  use F_witness, G_witness;
-  unfold F_witness G_witness globalTorsionBirthSet pTorsionBirthSet; simp +decide ;
-  use 2; simp +decide ;
+  -- Use F_witness and G_witness.
+  refine ⟨F_witness, G_witness, ?_, 2, by norm_num, ?_⟩ <;> norm_cast at *
 
 /-! ## Section 6: Theorem 4 — Strictness of Refinement
 
@@ -153,7 +154,8 @@ theorem primewise_strictly_finer_than_global :
         globalTorsionBirthSet F = globalTorsionBirthSet G →
         ∀ p : ℕ, Nat.Prime p → pTorsionBirthSet p F = pTorsionBirthSet p G := by
   push_neg;
-  convert exists_same_global_different_primewise using 1
+  -- Apply the theorem `exists_same_global_different_primewise` to obtain the required profiles.
+  apply exists_same_global_different_primewise
 
 /-! ## Section 7: Explicit Witness Computation
 
@@ -167,7 +169,7 @@ theorem explicit_primewise_separation :
     pTorsionBirthSet 3 F_witness = {3} ∧
     pTorsionBirthSet 2 G_witness = {3} ∧
     pTorsionBirthSet 3 G_witness = {1, 3} := by
-  simp +decide only []
+  native_decide +revert
 
 /-! ## Section 8: Verified Search Algorithm
 
@@ -203,22 +205,19 @@ theorem mem_distinguishingPairs_sound
     pTorsionBirthSet p F ≠ pTorsionBirthSet p G := by
   unfold distinguishingPairs at hmem; aesop;
 
-/-! ## Section 9: Auxiliary Lemmas -/
+/-! ## Section 9: Auxiliary Results -/
 
 /-
-The p-torsion birth set is a subset of the global torsion birth set.
+The p-torsion birth set is always a subset of the global torsion birth set.
 -/
-theorem pTorsionBirthSet_subset_global (p : ℕ) (hp : Nat.Prime p) (F : FiniteBirthProfile) :
+theorem pTorsionBirthSet_subset_global (p : ℕ) (hp : Nat.Prime p)
+    (F : FiniteBirthProfile) :
     pTorsionBirthSet p F ⊆ globalTorsionBirthSet F := by
-  -- Apply the iff characterization theorem to conclude the subset relation.
-  intros n hn
-  apply (mem_global_iff_exists_prime_mem_pTorsion F n).mpr
-  use p
+  intro x hx; exact ( mem_global_iff_exists_prime_mem_pTorsion F x ).mpr ⟨ p, hp, hx ⟩ ;
 
 /-
-The global birth set equals the union of primewise birth sets over
-    primes dividing orders in the profile. This gives a structural
-    decomposition theorem — the global invariant decomposes along primes.
+The global birth set decomposes as a finite union of primewise birth sets
+    over any sufficiently large set of primes.
 -/
 theorem global_eq_biUnion_primewise (F : FiniteBirthProfile)
     (primes : Finset ℕ)
@@ -226,11 +225,13 @@ theorem global_eq_biUnion_primewise (F : FiniteBirthProfile)
       m > 1 → ∀ p : ℕ, Nat.Prime p → p ∣ m → p ∈ primes) :
     globalTorsionBirthSet F =
       primes.biUnion (fun p => pTorsionBirthSet p F) := by
-  ext n; simp [globalTorsionBirthSet, pTorsionBirthSet];
+  ext n
   constructor;
-  · rintro ⟨ a, ⟨ m, hm₁, hm₂ ⟩, rfl ⟩;
-    exact ⟨ Nat.minFac m, hprimes a m hm₁ hm₂ _ ( Nat.minFac_prime hm₂.ne' ) ( Nat.minFac_dvd m ), a, ⟨ m, hm₁, hm₂, Nat.minFac_dvd m ⟩, rfl ⟩;
-  · grind
+  · simp +decide [ globalTorsionBirthSet ];
+    intro i m hm₁ hm₂ hm;
+    exact ⟨ Nat.minFac m, hprimes i m hm₁ hm₂ _ ( Nat.minFac_prime hm₂.ne' ) ( Nat.minFac_dvd m ), Finset.mem_image.mpr ⟨ i, Finset.mem_filter.mpr ⟨ Finset.mem_univ _, m, hm₁, hm₂, Nat.minFac_dvd m ⟩, hm ⟩ ⟩;
+  · simp +decide [ globalTorsionBirthSet, pTorsionBirthSet ];
+    grind
 
 /-! ## Axiom Checks -/
 

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Discrete Convex Analysis / Combinatorial Optimization",
     "date": "2026-05-29T01:13:36Z",
     "exp_id": "f6642742",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7273174496644295,
+    "quality": "substantial",
     "pkg_num": 281
   },
   {
@@ -8158,8 +8158,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-29T01:13:36Z",
       "hue": 112,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7273174496644295,
+      "quality": "substantial"
     }
   ],
   "edges": [

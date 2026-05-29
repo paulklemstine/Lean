@@ -310,7 +310,7 @@ theorem mem_kthShadow_add_iff {n : ℕ} {S : Finset (Fin n →₀ ℕ)} {a b : �
       -- We can construct such a τ₁ by iteratively subtracting 1 from the largest component of τ until the sum is reduced to a.
       have h_subtract : ∀ {τ : Fin n →₀ ℕ} {a : ℕ}, a ≤ τ.sum (fun _ m => m) → ∃ τ₁ : Fin n →₀ ℕ, τ₁ ≤ τ ∧ τ₁.sum (fun _ m => m) = a := by
         intros τ a ha;
-        exact Finsupp.exists_le_degree_eq τ a ha;
+        exact?;
       exact h_subtract ( by linarith );
     refine' ⟨ τ - τ₁, _, _ ⟩;
     · have h_sum_split : (τ.sum (fun _ m => m)) = (τ₁.sum (fun _ m => m)) + ((τ - τ₁).sum (fun _ m => m)) := by

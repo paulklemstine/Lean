@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "7106d29a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -379,10 +379,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "14405854",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -735,10 +735,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1c0f9c4",
     "timestamp": "2026-05-27T12:50:23.836779+00:00"
   },
   {
@@ -1188,27 +1188,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T21:46:03.276610+00:00"
   },
   {
-    "id": "fd_1949",
-    "title": "Direction 2: M-Convex Support Compression Beyond Matroids",
-    "description": "**Conjecture:** For any homogeneous polynomial with nonneg coefficients whose Newton support is M-convex (satisfies the symmetric exchange property), the nonzero quadratic leaf count is at most $\\binom{\\omega}{d-2}$ where $\\omega$ is the support width (number of active coordinates) and $d$ is the degree. Moreover, the M-convex exchange structure provides a recursive decomposition of the leaf set that enables sublinear-time certification.\n\n**Test:** Construct M-convex supports that are not matroid basis supports (e.g., from generalized permutohedra, polymatroid rank functions, or valuated matroid theory). Compute leaf counts and verify the $\\binom{\\omega}{d-2}$ bound. Search for M-convex supports where the bound is tight.\n\n**Impact:** This would extend support compression from matroids to the full class of M-convex polynomials, which includes Schur polynomials, volume polynomials of polytopes, and multivariate Tutte polynomials. It would establish discrete convex analysis as a universal tool for Lorentzian certification.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Catalog/Pythagorean/SupportCertificateCompression.lean`: `supportCompressedLeafCount_le_active_choose`\n\n**Proof Strategy:** Use the M-convex exchange property to show that the \"shadow\" of the support at depth $d - 2$ (the set of $(d-2)$-level finsupps dominated by some support element) is contained in the $(d-2)$-skeleton of the convex hull of active coordinates. The exchange property guarantees that this shadow is itself M-convex or at least hereditary.\n\n**Domain Bridges:** Discrete convex analysis (Murota's theory), tropical geometry (tropical convexity of support sets), algebraic combinatorics (Schur positivity and Lorentzianity).\n\n**Lineage:** Directly extends the active variable bound (Theorem 4) using the M-convex structure from the existing catalog.\n\n**Ambition:** Grand challenge \u2014 this would unify matroid-specific and general support compression.\n\n**The key insight is** that M-convex exchange is not just a combinatorial axiom but a pruning principle for derivative search trees, and the shadow of an M-convex set inherits structural properties that control its size.\n\n**Why now?** The `IsMConvexExchangeNat` definition and the `lorentzian_quadratic_support_mconvex` theorem (currently sorry'd in the catalog) provide the starting point. Completing this theorem would immediately yield the M-convex compression bound.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "fcd58d33",
-    "consumed_by_exp_id": "f6642742",
-    "timestamp": "2026-05-28T21:46:22.088675+00:00"
-  },
-  {
     "id": "fd_1957",
     "title": "Direction 4: Quantum Error Correction via Torsion Channel Codes",
     "description": "**Conjecture:** The primewise decomposition of torsion persistence provides a natural framework for constructing quantum error-correcting codes with arithmetic structure. Specifically, a persistence module with torsion at multiple primes can be used to construct a *prime-channel code* where errors at different primes are corrected independently, analogous to the use of Chinese Remainder Theorem codes in classical coding theory.\n\n**The key insight is** that prime localization decomposes the torsion signal into independent channels (proved as `prime_channel_independence`), and independent channels are exactly what error-correcting codes need: errors in one channel don't affect others.\n\n**Why now?** The localization framework provides the mathematical infrastructure to construct and analyze these codes. The interleaving stability theorem guarantees that small perturbations (errors) at the code level produce small changes in the decoded signal.\n\n**Test:** Construct a toy code using $\\mathbb{Z}/6\\mathbb{Z} \\cong \\mathbb{Z}/2 \\oplus \\mathbb{Z}/3$ as the alphabet. Encode a message in the 2-channel and 3-channel independently. Introduce random errors and decode using the localization projection. Measure the error-correction rate.\n\n**Impact:** This would bridge quantum information theory and topological data analysis via the arithmetic structure of persistence modules. If the codes have good parameters, it would be of practical interest for quantum computing.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_witness_improvement`, `GlobTorDet_iff_exists_prime`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `prime_channel_independence`\n\n**Proof Strategy:** Define the code space as a tensor product of prime-channel persistence modules. Use the interleaving stability bound as the minimum distance of the code. Apply the localization functor as the decoding map.\n\n**Domain Bridges:** Quantum error correction \u2194 commutative algebra \u2194 topological data analysis.\n\n**Lineage:** Builds on Theorem 4 (witness improvement) and prime channel independence.\n\n**Ambition:** Grand challenge \u2014 speculative but with concrete testable predictions.\n\n---",
@@ -1339,6 +1318,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1994",
+    "title": "Direction 1: Shadow Hodge Theory and Ultra-Log-Concavity",
+    "description": "**Conjecture:** For any M-convex finite set S \u2286 \u2115\u207f (equivalently, any discrete exchange family), the shadow profile sequence a_k = |Sh_k(S)| is ultra-log-concave:\n\n    a_k\u00b2 / C(D,k)\u00b2 \u2265 (a_{k-1} / C(D,k-1)) \u00b7 (a_{k+1} / C(D,k+1))\n\nwhere D = max{|\u03b1| : \u03b1 \u2208 S} and C is the binomial coefficient.\n\n**Test:** Compute shadow profiles for all matroid basis supports U(r,n) with n \u2264 12 and verify the ultra-log-concavity inequality. A single counterexample falsifies. If it holds, attempt to prove it for uniform matroids using the explicit combinatorial structure of their shadow profiles.\n\n**Impact:** This would establish a new route to ultra-log-concavity inequalities, complementing the algebraic methods of Br\u00e4nd\u00e9n\u2013Huh. It would show that the shadow operator encodes Hodge-theoretic positivity in a purely combinatorial way, without requiring the polynomial realization.\n\n**Catalog References:**\n- `Speculative/AutoResearch/IteratedShadowGeometry.lean` \u2014 kthShadow_add, mem_kthShadow_iff_exists_iteratedDerivative\n- `Speculative/AutoResearch/UltraLogConcave.lean` (if exists)\n\n**Proof Strategy:** Use the semigroup law to express shadow profiles as convolutions. The log-concavity of convolutions of log-concave sequences is well-known (Walkup\u2013Wets, 1969); the challenge is to identify the right decomposition. For uniform matroids, the shadow profile equals C(n,r-k), which is log-concave by the binomial coefficient inequality.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 Discrete convex analysis \u2194 Polynomial algebra\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial theory via combinatorial shadow route.\n\n**Ambition:** Grand challenge \u2014 would prove a new class of log-concavity results using only shadow combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c559d0f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T00:39:38.870551+00:00"
   },
   {
     "id": "seed_013",
@@ -2041,26 +2040,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T19:57:56.338721+00:00"
-  },
-  {
-    "id": "fd_1994",
-    "title": "Direction 1: Shadow Hodge Theory and Ultra-Log-Concavity",
-    "description": "**Conjecture:** For any M-convex finite set S \u2286 \u2115\u207f (equivalently, any discrete exchange family), the shadow profile sequence a_k = |Sh_k(S)| is ultra-log-concave:\n\n    a_k\u00b2 / C(D,k)\u00b2 \u2265 (a_{k-1} / C(D,k-1)) \u00b7 (a_{k+1} / C(D,k+1))\n\nwhere D = max{|\u03b1| : \u03b1 \u2208 S} and C is the binomial coefficient.\n\n**Test:** Compute shadow profiles for all matroid basis supports U(r,n) with n \u2264 12 and verify the ultra-log-concavity inequality. A single counterexample falsifies. If it holds, attempt to prove it for uniform matroids using the explicit combinatorial structure of their shadow profiles.\n\n**Impact:** This would establish a new route to ultra-log-concavity inequalities, complementing the algebraic methods of Br\u00e4nd\u00e9n\u2013Huh. It would show that the shadow operator encodes Hodge-theoretic positivity in a purely combinatorial way, without requiring the polynomial realization.\n\n**Catalog References:**\n- `Speculative/AutoResearch/IteratedShadowGeometry.lean` \u2014 kthShadow_add, mem_kthShadow_iff_exists_iteratedDerivative\n- `Speculative/AutoResearch/UltraLogConcave.lean` (if exists)\n\n**Proof Strategy:** Use the semigroup law to express shadow profiles as convolutions. The log-concavity of convolutions of log-concave sequences is well-known (Walkup\u2013Wets, 1969); the challenge is to identify the right decomposition. For uniform matroids, the shadow profile equals C(n,r-k), which is log-concave by the binomial coefficient inequality.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 Discrete convex analysis \u2194 Polynomial algebra\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial theory via combinatorial shadow route.\n\n**Ambition:** Grand challenge \u2014 would prove a new class of log-concavity results using only shadow combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c559d0f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-29T00:39:38.870551+00:00"
   },
   {
     "id": "seed_032",
