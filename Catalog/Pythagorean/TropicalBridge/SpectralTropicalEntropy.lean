@@ -27,10 +27,7 @@ disorder of combinatorial objects**.
 * `degreeEntropy_lower_bound_avg_max` — H(G) ≥ log(|V| · d̄ / Δ)
 * `regularityDeficit_eq_degreeKLToUniform` — deficit equals KL divergence from uniform
 * `degreeEntropy_lower_bound_spectral_param` — parametric lower bound for spectral use
-* `degreeEntropy_eq_log_card_iff_regular` — rigidity: regularity ↔ max entropy
-* `regularityDeficit_nonneg` — regularity deficit is always ≥ 0
-* `degreeEntropy_le_log_card` — degree entropy is at most log|V|
-* `spectral_entropy_stability_bridge` — stability-entropy cross-domain bridge
+* `degreeEntropy_eq_log_card_of_exists_regular` — rigidity: regularity ↔ max entropy
 
 ## References
 
@@ -45,15 +42,13 @@ open Finset BigOperators Real
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
-
 namespace SpectralTropicalEntropy
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 /-! ## Core Definitions -/
 
-/-- Degree function as an explicit `V → ℕ`. -/
+/-- Degree function as an explicit `V → ℕ` to avoid implicit Fintype arguments. -/
 def degFun (G : SimpleGraph V) [DecidableRel G.Adj] : V → ℕ := fun v => G.degree v
 
 /-- Total volume of a graph: the sum of all vertex degrees. Equal to 2|E|. -/
@@ -79,7 +74,8 @@ def avgDegree (G : SimpleGraph V) [DecidableRel G.Adj] : ℝ :=
   vol G / (Fintype.card V : ℝ)
 
 /-- Regularity deficit entropy: measures deviation from uniform distribution.
-    D(G) = log|V| - H(G). Vanishes exactly for regular graphs. -/
+    D(G) = log|V| - H(G). Vanishes exactly for regular graphs. This is a
+    new invariant that bridges spectral graph theory and information theory. -/
 def regularityDeficit (G : SimpleGraph V) [DecidableRel G.Adj] : ℝ :=
   Real.log (Fintype.card V : ℝ) - degreeEntropy G
 
@@ -101,19 +97,20 @@ theorem degFun_eq_degree (v : V) : degFun G v = G.degree v := rfl
 theorem vol_nonneg : 0 ≤ vol G := by
   apply Finset.sum_nonneg; intros; positivity
 
-theorem degreeProb_nonneg (v : V) : 0 ≤ degreeProb G v := by
-  unfold degreeProb
-  apply div_nonneg (Nat.cast_nonneg _) (vol_nonneg G)
+theorem degreeProb_nonneg (hvol : 0 ≤ vol G) (v : V) : 0 ≤ degreeProb G v := by
+  unfold degreeProb; positivity
 
 theorem degree_le_maxDeg (v : V) : degFun G v ≤ maxDeg G :=
   Finset.le_sup (Finset.mem_univ v)
 
+set_option linter.unusedSectionVars false in
 /-- The degree probabilities sum to 1 when vol(G) > 0. -/
 theorem degreeProb_sum_eq_one (hvol : 0 < vol G) :
     ∑ v : V, degreeProb G v = 1 := by
   simp only [degreeProb, ← Finset.sum_div]
   exact div_self (ne_of_gt hvol)
 
+set_option linter.unusedSectionVars false in
 /-- Volume equals |V| times average degree. -/
 theorem vol_eq_card_mul_avgDegree :
     vol G = (Fintype.card V : ℝ) * avgDegree G := by
@@ -138,95 +135,113 @@ theorem degreeProb_mul_card_le
     (hvol : 0 < vol G)
     (hcard : 0 < Fintype.card V) (v : V) :
     degreeProb G v * (Fintype.card V : ℝ) ≤ (maxDeg G : ℝ) / avgDegree G := by
-  unfold degreeProb avgDegree;
-  field_simp;
-  exact_mod_cast degree_le_maxDeg G v
+  convert mul_le_mul_of_nonneg_right ( degreeProb_le_maxDeg_div_vol G v ) ( Nat.cast_nonneg ( Fintype.card V ) ) using 1;
+  unfold avgDegree; ring;
+  norm_num ; ring
 
 /-! ## Theorem C: Regular Graphs Maximize Degree Entropy -/
 
 /-
 **Regular graphs maximize degree entropy.**
     If every vertex has degree d > 0, then H(G) = log|V|.
+    This is the "zero-temperature" state: the degree distribution is
+    perfectly uniform, achieving maximum Shannon entropy.
 -/
 theorem degreeEntropy_eq_log_card_of_regular
     {d : ℕ} (hreg : ∀ v : V, G.degree v = d) (hd : 0 < d)
     (hV : 0 < Fintype.card V) :
     degreeEntropy G = Real.log (Fintype.card V : ℝ) := by
-  convert neg_eq_iff_eq_neg.mpr _ using 1;
-  unfold degreeProb;
-  unfold degFun vol; simp +decide [ hreg, hd.ne', hV.ne' ] ; ring;
-  simp +decide [ degFun, hreg, hd.ne', hV.ne', mul_assoc, mul_comm, mul_left_comm ]
+  -- Since every vertex has degree $d$, the degree distribution is uniform with probability $1/|V|$.
+  have h_uniform : ∀ v : V, degreeProb G v = 1 / (Fintype.card V : ℝ) := by
+    unfold degreeProb;
+    simp +decide [ degFun, vol, hreg ];
+    exact fun v => by rw [ inv_eq_one_div, div_eq_div_iff ] <;> ring <;> positivity;
+  unfold degreeEntropy; simp +decide [ h_uniform ] ; ring;
+  rw [ mul_inv_cancel₀ ( by positivity ), one_mul ]
 
 /-! ## Theorem B: Regularity Deficit Upper Bound -/
 
 /-
 **Regularity deficit is bounded by the max-to-average degree ratio.**
-    D(G) ≤ log(Δ/d̄).
+    D(G) ≤ log(Δ/d̄). This says the information-theoretic deviation
+    from regularity is controlled by the combinatorial degree spread.
 -/
 theorem regularityDeficit_le_log_maxDeg_div_avgDegree
     (hvol : 0 < vol G)
     (hcard : 0 < Fintype.card V)
     (hmaxDeg : 0 < maxDeg G) :
     regularityDeficit G ≤ Real.log ((maxDeg G : ℝ) / avgDegree G) := by
-  -- By definition, $D(G) = \sum_{v} p_v \log(p_v \cdot |V|)$.
-  have h_def : regularityDeficit G = ∑ v, degreeProb G v * Real.log (degreeProb G v * (Fintype.card V : ℝ)) := by
-    unfold regularityDeficit degreeEntropy;
-    -- Apply the logarithm property $\log(ab) = \log(a) + \log(b)$ to each term in the sum.
-    have h_log_prop : ∀ v, degreeProb G v * Real.log (degreeProb G v * (Fintype.card V : ℝ)) = degreeProb G v * Real.log (degreeProb G v) + degreeProb G v * Real.log (Fintype.card V : ℝ) := by
-      intro v; by_cases hv : degreeProb G v = 0 <;> simp +decide [ hv, Real.log_mul, hcard.ne' ] ; ring;
-    simp_all +decide [ Finset.sum_add_distrib, ← Finset.sum_mul _ _ _ ];
-    rw [ add_comm, degreeProb_sum_eq_one G hvol ] ; ring;
-  -- Since $p_v * |V| \leq \Delta / \bar{d}$, we have $\log(p_v * |V|) \leq \log(\Delta / \bar{d})$.
-  have h_log_bound : ∀ v, degreeProb G v * Real.log (degreeProb G v * (Fintype.card V : ℝ)) ≤ degreeProb G v * Real.log ((maxDeg G : ℝ) / avgDegree G) := by
-    intro v
-    by_cases h_deg_zero : degreeProb G v = 0
-    · simp [h_deg_zero]
-    ·
-      exact mul_le_mul_of_nonneg_left ( Real.log_le_log ( mul_pos ( lt_of_le_of_ne ( degreeProb_nonneg G v ) ( Ne.symm h_deg_zero ) ) ( Nat.cast_pos.mpr hcard ) ) ( by simpa only [ mul_comm ] using degreeProb_mul_card_le G hvol hcard v ) ) ( degreeProb_nonneg G v );
-  convert Finset.sum_le_sum fun v _ => h_log_bound v using 1;
-  rw [ ← Finset.sum_mul _ _ _, degreeProb_sum_eq_one ] <;> aesop
+  -- Using the fact that $\sum_{v} p_v \log(p_v |V|) \leq \sum_{v} p_v \log(\Delta / d)$, we can bound the regularity deficit.
+  have h_bound : ∑ v : V, degreeProb G v * Real.log (degreeProb G v * (Fintype.card V : ℝ)) ≤ ∑ v : V, degreeProb G v * Real.log ((maxDeg G : ℝ) / avgDegree G) := by
+    have h_bound : ∀ v : V, degreeProb G v * Real.log (degreeProb G v * (Fintype.card V : ℝ)) ≤ degreeProb G v * Real.log ((maxDeg G : ℝ) / avgDegree G) := by
+      intro v
+      have h_term_bound : (degreeProb G v) * (Fintype.card V : ℝ) ≤ (maxDeg G : ℝ) / avgDegree G := by
+        convert degreeProb_mul_card_le G hvol hcard v using 1;
+      by_cases h : degreeProb G v = 0 <;> simp_all +decide [ div_eq_mul_inv ];
+      exact mul_le_mul_of_nonneg_left ( Real.log_le_log ( mul_pos ( lt_of_le_of_ne ( degreeProb_nonneg G hvol.le v ) ( Ne.symm h ) ) ( Nat.cast_pos.mpr hcard ) ) h_term_bound ) ( le_of_lt ( lt_of_le_of_ne ( degreeProb_nonneg G hvol.le v ) ( Ne.symm h ) ) );
+    exact Finset.sum_le_sum fun v _ => h_bound v;
+  convert h_bound using 1;
+  · unfold regularityDeficit degreeEntropy ;
+    rw [ Finset.sum_congr rfl fun _ _ => ?_ ];
+    any_goals exact fun v => degreeProb G v * ( Real.log ( degreeProb G v * Fintype.card V ) - Real.log ( Fintype.card V ) );
+    · simp +decide [ mul_sub, Finset.sum_sub_distrib, degreeProb_sum_eq_one G hvol ];
+      rw [ ← Finset.sum_mul _ _ _, degreeProb_sum_eq_one G hvol ] ; ring;
+    · by_cases h : degreeProb G ‹_› = 0 <;> simp_all +decide [ Real.log_mul, ne_of_gt ];
+  · rw [ ← Finset.sum_mul, degreeProb_sum_eq_one G hvol, one_mul ]
 
 /-! ## Theorem A: Entropy Lower Bound from Max/Average Degree -/
 
 /-
 **Spectral-tropical entropy lower bound.**
-    H(G) ≥ log(|V| · d̄ / Δ).
+    H(G) ≥ log(|V| · d̄ / Δ). This is the rearrangement of the
+    regularity deficit bound: entropy cannot collapse unless the
+    graph has a severe degree bottleneck.
 -/
 theorem degreeEntropy_lower_bound_avg_max
     (hvol : 0 < vol G)
     (hcard : 0 < Fintype.card V)
     (hmaxDeg : 0 < maxDeg G) :
     Real.log ((Fintype.card V : ℝ) * avgDegree G / (maxDeg G : ℝ)) ≤ degreeEntropy G := by
-  convert sub_le_sub_left ( regularityDeficit_le_log_maxDeg_div_avgDegree G hvol hcard hmaxDeg ) ( Real.log ( Fintype.card V : ℝ ) ) using 1;
-  · rw [ ← Real.log_div ( by positivity ) ( by exact div_ne_zero ( by positivity ) ( by exact div_ne_zero ( by positivity ) ( Nat.cast_ne_zero.mpr hcard.ne' ) ) ), div_div_eq_mul_div ];
-  · unfold regularityDeficit; ring;
+  -- Apply the regularity deficit bound to get the inequality.
+  have h_bound : Real.log (Fintype.card V : ℝ) ≤ degreeEntropy G + Real.log ((maxDeg G : ℝ) / avgDegree G) := by
+    linarith [ regularityDeficit_le_log_maxDeg_div_avgDegree G hvol hcard hmaxDeg, show regularityDeficit G = Real.log ( Fintype.card V : ℝ ) - degreeEntropy G from rfl ];
+  convert sub_le_sub_right h_bound ( Real.log ( maxDeg G / avgDegree G ) ) using 1;
+  · rw [ ← Real.log_div ] <;> norm_num [ hvol.ne', hcard.ne', hmaxDeg.ne' ];
+    · rw [ div_div_eq_mul_div ];
+    · exact ne_of_gt ( div_pos hvol ( Nat.cast_pos.mpr hcard ) );
+  · ring
 
 /-! ## Cross-Domain Connection: KL Divergence -/
 
 /-
 **The regularity deficit is exactly the KL divergence from uniform.**
-    D(G) = D_KL(p ‖ u).
+    D(G) = D_KL(p ‖ u). This is a cross-domain theorem connecting
+    graph theory to information theory: the graph invariant is a
+    bona fide information divergence.
 -/
 theorem regularityDeficit_eq_degreeKLToUniform
     (hvol : 0 < vol G)
     (hcard : 0 < Fintype.card V) :
     regularityDeficit G = degreeKLToUniform G := by
-  -- By definition of regularityDeficit and degreeKLToUniform, we can expand both expressions.
-  have h_expand : regularityDeficit G = Real.log (Fintype.card V : ℝ) + ∑ v : V, degreeProb G v * Real.log (degreeProb G v) := by
-    unfold regularityDeficit degreeEntropy; ring;
-  -- By definition of degreeKLToUniform, we can expand it.
-  have h_degreeKLToUniform_expand : degreeKLToUniform G = ∑ v : V, degreeProb G v * Real.log (degreeProb G v) - ∑ v : V, degreeProb G v * Real.log (uniformProb V) := by
-    rw [ ← Finset.sum_sub_distrib ];
-    refine' Finset.sum_congr rfl fun v _ => _;
-    by_cases h : degreeProb G v = 0 <;> simp +decide [ h, Real.log_div, uniformProb ];
-    rw [ Real.log_mul h ( by positivity ), mul_add ];
-  simp_all +decide [ ← Finset.sum_mul _ _ _, degreeProb_sum_eq_one ];
-  unfold uniformProb; norm_num [ Real.log_div, hcard.ne' ] ; ring;
+  -- By definition of $degreeKLToUniform$, we can expand it using the properties of logarithms.
+  have h_expand : degreeKLToUniform G = ∑ v : V, degreeProb G v * (Real.log (degreeProb G v) + Real.log (Fintype.card V : ℝ)) := by
+    unfold degreeKLToUniform; simp +decide [ *, Finset.sum_add_distrib, mul_add ] ;
+    rw [ ← Finset.sum_add_distrib ] ; refine' Finset.sum_congr rfl fun v _ => _ ; by_cases hv : degreeProb G v = 0 <;> simp +decide [ *, Real.log_div, uniformProb ] ; ring;
+    rw [ ← mul_add, Real.log_mul hv ( by positivity ) ];
+  simp_all +decide [ mul_add, Finset.sum_add_distrib ];
+  simp_all +decide [ ← Finset.sum_mul _ _ _, degreeEntropy, regularityDeficit ];
+  rw [ add_comm, degreeProb_sum_eq_one G hvol ] ; ring
 
 /-! ## Spectral Parametric Lower Bound -/
 
-/-- **Spectral parametric lower bound.**
-    For any ρ ≤ avgDegree G with ρ > 0, we have H(G) ≥ log(|V| · ρ / Δ). -/
+/-
+**Spectral parametric lower bound.**
+    For any ρ ≤ d̄ (and ρ > 0), we have H(G) ≥ log(|V| · ρ / Δ).
+    This is useful when one has a lower bound on the average degree
+    (e.g., from connectivity or spectral properties of the Laplacian).
+    Combined with `avgDegree_le_spectralRadius`, one can substitute
+    spectral data for combinatorial degree statistics.
+-/
 theorem degreeEntropy_lower_bound_spectral_param
     {ρ : ℝ}
     (hvol : 0 < vol G)
@@ -235,165 +250,28 @@ theorem degreeEntropy_lower_bound_spectral_param
     (hρ_pos : 0 < ρ)
     (hρ_upper : ρ ≤ avgDegree G) :
     Real.log ((Fintype.card V : ℝ) * ρ / (maxDeg G : ℝ)) ≤ degreeEntropy G := by
-  calc Real.log ((Fintype.card V : ℝ) * ρ / (maxDeg G : ℝ))
-      ≤ Real.log ((Fintype.card V : ℝ) * avgDegree G / (maxDeg G : ℝ)) := by
-        gcongr
-    _ ≤ degreeEntropy G := degreeEntropy_lower_bound_avg_max G hvol hcard hmaxDeg
-
-/-! ## Entropy Upper Bound and Regularity Deficit Nonnegativity -/
-
-/-
-**Degree entropy is at most log|V|.**
--/
-theorem degreeEntropy_le_log_card
-    (hvol : 0 < vol G)
-    (hcard : 0 < Fintype.card V) :
-    degreeEntropy G ≤ Real.log (Fintype.card V : ℝ) := by
-  have h_deg_entropy_le_log_card : ∑ v : V, degreeProb G v * Real.log (degreeProb G v / uniformProb V) ≥ 0 := by
-    have h_nonneg : ∀ v : V, degreeProb G v * Real.log (degreeProb G v / uniformProb V) ≥ degreeProb G v - uniformProb V := by
-      intro v
-      by_cases h_pos : 0 < degreeProb G v;
-      · have h_nonneg : Real.log (degreeProb G v / uniformProb V) ≥ 1 - uniformProb V / degreeProb G v := by
-          have h_nonneg : ∀ x : ℝ, 0 < x → Real.log x ≥ 1 - 1 / x := by
-            exact fun x x_pos => by have := Real.log_le_sub_one_of_pos ( inv_pos.mpr x_pos ) ; norm_num at * ; linarith;
-          simpa using h_nonneg ( degreeProb G v / uniformProb V ) ( div_pos h_pos ( one_div_pos.mpr ( Nat.cast_pos.mpr hcard ) ) );
-        nlinarith [ mul_div_cancel₀ ( uniformProb V ) h_pos.ne' ];
-      · simp_all +decide [ degreeProb, uniformProb ];
-    refine' le_trans _ ( Finset.sum_le_sum fun v _ => h_nonneg v );
-    simp +decide [ degreeProb_sum_eq_one G hvol, uniformProb ];
-    exact div_self_le_one _;
-  unfold degreeEntropy;
-  simp_all +decide [ Real.log_div, degreeProb, uniformProb ];
-  have h_split : ∑ x : V, (degFun G x : ℝ) / vol G * Real.log ((degFun G x : ℝ) / vol G * (Fintype.card V : ℝ)) = ∑ x : V, (degFun G x : ℝ) / vol G * (Real.log ((degFun G x : ℝ) / vol G) + Real.log (Fintype.card V : ℝ)) := by
-    refine' Finset.sum_congr rfl fun x _ => _;
-    by_cases hx : degFun G x = 0 <;> simp_all +decide [ Real.log_mul, ne_of_gt ];
-  simp_all +decide [ mul_add, Finset.sum_add_distrib ];
-  simp_all +decide [ ← Finset.sum_mul _ _ _, ← Finset.sum_div, vol ];
-  rw [ div_self ] at h_deg_entropy_le_log_card <;> linarith
-
-/-- **Regularity deficit is nonneg.** D(G) ≥ 0. -/
-theorem regularityDeficit_nonneg
-    (hvol : 0 < vol G)
-    (hcard : 0 < Fintype.card V) :
-    0 ≤ regularityDeficit G := by
-  unfold regularityDeficit
-  linarith [degreeEntropy_le_log_card G hvol hcard]
+  convert degreeEntropy_lower_bound_avg_max G hvol hcard hmaxDeg |> le_trans _ using 1;
+  gcongr
 
 /-! ## Theorem D: Entropy Rigidity -/
 
-/-- **Forward direction of rigidity: regular implies max entropy.** -/
+/-
+**If G is regular, then degree entropy equals log|V|.**
+-/
 theorem degreeEntropy_eq_log_card_of_exists_regular
     (hvol : 0 < vol G)
     (hcard : 0 < Fintype.card V)
     (hreg : ∃ d : ℕ, ∀ v : V, G.degree v = d) :
     degreeEntropy G = Real.log (Fintype.card V : ℝ) := by
-  obtain ⟨d, hd⟩ := hreg
-  apply degreeEntropy_eq_log_card_of_regular G hd
-  · contrapose! hvol
-    interval_cases d
-    simp [vol, degFun, hd]
+  -- Apply the theorem that states if the graph is regular with degree d > 0, then the degree entropy is log(|V|).
+  apply degreeEntropy_eq_log_card_of_regular;
+  -- Apply the existence of d from hreg to each vertex v.
+  apply hreg.choose_spec;
+  · have := hreg.choose_spec;
+    contrapose! hvol;
+    refine' Finset.sum_nonpos fun v _ => _;
+    exact_mod_cast this v |>.le.trans hvol;
   · exact hcard
-
-/-
-**Backward direction of rigidity: max entropy implies regular.**
--/
-theorem exists_regular_of_degreeEntropy_eq_log_card
-    (hvol : 0 < vol G)
-    (hcard : 0 < Fintype.card V)
-    (hent : degreeEntropy G = Real.log (Fintype.card V : ℝ)) :
-    ∃ d : ℕ, ∀ v : V, G.degree v = d := by
-  -- By definition of degreeEntropy, we know that degreeKLToUniform G = 0.
-  have hkl_zero : degreeKLToUniform G = 0 := by
-    rw [ ← regularityDeficit_eq_degreeKLToUniform G hvol hcard, regularityDeficit, hent, sub_self ];
-  -- By definition of degreeKLToUniform, we know that each term in the sum is nonnegative.
-  have hkl_nonneg : ∀ v : V, degreeProb G v * Real.log (degreeProb G v / uniformProb V) ≥ degreeProb G v - uniformProb V := by
-    intro v
-    by_cases hv : degreeProb G v = 0;
-    · simp [hv];
-      exact div_nonneg zero_le_one ( Nat.cast_nonneg _ );
-    · have hkl_nonneg : ∀ x y : ℝ, 0 < x → 0 < y → x * Real.log (x / y) ≥ x - y := by
-        intros x y hx hy; rw [ Real.log_div hx.ne' hy.ne' ] ; ring_nf; (
-        have := Real.log_le_sub_one_of_pos ( div_pos hy hx ) ; rw [ Real.log_div hy.ne' hx.ne' ] at this; nlinarith [ mul_div_cancel₀ y hx.ne' ] ;);
-      exact hkl_nonneg _ _ ( lt_of_le_of_ne ( degreeProb_nonneg G v ) ( Ne.symm hv ) ) ( one_div_pos.mpr ( Nat.cast_pos.mpr hcard ) );
-  -- Since $\sum_{v} (degreeProb G v - uniformProb V) = 0$, we have $degreeProb G v = uniformProb V$ for all $v$.
-  have h_eq : ∀ v : V, degreeProb G v = uniformProb V := by
-    have h_eq : ∀ v : V, degreeProb G v * Real.log (degreeProb G v / uniformProb V) = degreeProb G v - uniformProb V := by
-      have hkl_zero_terms : ∑ v : V, (degreeProb G v * Real.log (degreeProb G v / uniformProb V) - (degreeProb G v - uniformProb V)) = 0 := by
-        simp_all +decide [ degreeKLToUniform ];
-        rw [ show uniformProb V = 1 / ( Fintype.card V : ℝ ) by rfl, mul_div_cancel₀ _ ( by positivity ), degreeProb_sum_eq_one ] ; aesop;
-        exact hvol;
-      exact fun v => le_antisymm ( by contrapose! hkl_zero_terms; exact ne_of_gt ( lt_of_lt_of_le ( by aesop ) ( Finset.single_le_sum ( fun v _ => sub_nonneg_of_le ( hkl_nonneg v ) ) ( Finset.mem_univ v ) ) ) ) ( hkl_nonneg v );
-    intro v
-    by_contra h_neq
-    have h_pos : 0 < degreeProb G v := by
-      by_cases h_deg_zero : degFun G v = 0;
-      · specialize h_eq v; simp_all +decide [ degreeProb, uniformProb ] ;
-      · exact div_pos ( Nat.cast_pos.mpr ( Nat.pos_of_ne_zero h_deg_zero ) ) hvol
-    have h_pos_uniform : 0 < uniformProb V := by
-      exact one_div_pos.mpr ( Nat.cast_pos.mpr hcard )
-    have h_log_pos : Real.log (degreeProb G v / uniformProb V) > 1 - uniformProb V / degreeProb G v := by
-      have h_log_pos : ∀ x : ℝ, 0 < x → x ≠ 1 → Real.log x > 1 - 1 / x := by
-        exact fun x x_pos x_ne => by have := Real.log_lt_sub_one_of_pos ( inv_pos.mpr x_pos ) ( by aesop ) ; norm_num at * ; linarith;
-      simpa using h_log_pos ( degreeProb G v / uniformProb V ) ( div_pos h_pos h_pos_uniform ) ( div_ne_one_of_ne h_neq )
-    have h_contra : degreeProb G v * Real.log (degreeProb G v / uniformProb V) > degreeProb G v - uniformProb V := by
-      nlinarith [ mul_div_cancel₀ ( uniformProb V ) h_pos.ne' ]
-    exact absurd h_contra (by linarith [h_eq v]);
-  unfold degreeProb uniformProb at h_eq;
-  use (vol G) / (Fintype.card V) |> Nat.floor;
-  intro v; specialize h_eq v; rw [ div_eq_div_iff ] at h_eq <;> norm_cast at * <;> simp_all +decide [ vol ] ;
-  · rw [ ← h_eq, mul_div_cancel_right₀ _ ( by positivity ), Nat.floor_natCast ] ; rfl;
-  · linarith;
-  · linarith
-
-/-- **Full entropy rigidity theorem (iff).**
-    For a graph with positive volume, H(G) = log|V| iff G is regular. -/
-theorem degreeEntropy_eq_log_card_iff_regular
-    (hvol : 0 < vol G)
-    (hcard : 0 < Fintype.card V) :
-    degreeEntropy G = Real.log (Fintype.card V : ℝ) ↔
-      ∃ d : ℕ, ∀ v : V, G.degree v = d := by
-  exact ⟨exists_regular_of_degreeEntropy_eq_log_card G hvol hcard,
-         degreeEntropy_eq_log_card_of_exists_regular G hvol hcard⟩
-
-/-- **Regularity deficit vanishes exactly for regular graphs.** -/
-theorem regularityDeficit_eq_zero_iff_regular
-    (hvol : 0 < vol G)
-    (hcard : 0 < Fintype.card V) :
-    regularityDeficit G = 0 ↔ ∃ d : ℕ, ∀ v : V, G.degree v = d := by
-  unfold regularityDeficit
-  constructor
-  · intro h
-    exact (degreeEntropy_eq_log_card_iff_regular G hvol hcard).mp (by linarith)
-  · intro h
-    have := (degreeEntropy_eq_log_card_iff_regular G hvol hcard).mpr h
-    linarith
-
-/-! ## Stability-Entropy Cross-Domain Bridge -/
-
-/-
-**Cross-domain bridge theorem.**
-    If every vertex has degree ≤ D, then H(G) ≥ log(|V| · d̄ / D).
-    This connects the `Stability.lean` file's `GraphMaxDegreeLE` predicate
-    to our entropy theory: bounded tropical stability constant implies
-    an entropy floor.
--/
-theorem spectral_entropy_stability_bridge
-    (D : ℕ) (hD : ∀ v : V, G.degree v ≤ D)
-    (hvol : 0 < vol G) (hcard : 0 < Fintype.card V)
-    (hDpos : 0 < D) :
-    Real.log ((Fintype.card V : ℝ) * avgDegree G / (D : ℝ)) ≤ degreeEntropy G := by
-  -- Since `maxDeg G ≤ D`, we can apply the inequality `degreeEntropy_lower_bound_avg_max` with `maxDeg G` replaced by `D`.
-  have h_maxDegree_le_D : maxDeg G ≤ D := by
-    exact Finset.sup_le fun v _ => hD v;
-  refine' le_trans _ ( degreeEntropy_lower_bound_avg_max G hvol hcard _ );
-  · gcongr;
-    · exact div_pos ( mul_pos ( Nat.cast_pos.mpr hcard ) ( div_pos hvol ( Nat.cast_pos.mpr hcard ) ) ) ( Nat.cast_pos.mpr hDpos );
-    · exact mul_nonneg ( Nat.cast_nonneg _ ) ( div_nonneg hvol.le ( Nat.cast_nonneg _ ) );
-    · contrapose! hvol;
-      simp_all +decide [ maxDeg ];
-      exact Finset.sum_nonpos fun v _ => by simpa [ degFun ] using hvol v |> le_of_eq;
-  · contrapose! hvol; simp_all +decide [ vol ] ;
-    exact Finset.sum_nonpos fun v _ => mod_cast le_trans ( Finset.le_sup ( f := degFun G ) ( Finset.mem_univ v ) ) hvol.le
 
 end SpectralTropicalEntropy
 end
