@@ -1,45 +1,59 @@
 {
   "forecasts": {
     "chat": {
-      "avg_cost": 0.24221729,
-      "avg_cost_per_char": 3.0358468e-05,
-      "avg_cost_per_output_char": 0.00013196972,
-      "avg_input_chars": 7300.456,
-      "avg_output_chars": 5962.836,
-      "count": 4969,
-      "last_cost": 0.151728,
+      "avg_cost": 0.12241045,
+      "avg_cost_per_char": 1.6190537e-05,
+      "avg_cost_per_output_char": 0.000121771216,
+      "avg_input_chars": 6471.859,
+      "avg_output_chars": 11554.526,
+      "count": 4980,
+      "last_cost": 0.186624,
       "last_input_chars": 8192,
-      "last_output_chars": 16920,
+      "last_output_chars": 19149,
       "last_predicted_cost": 0.4,
       "max_cost": 0.4,
-      "updated_at": 1780054430.7792802
+      "updated_at": 1780056983.6540754
     }
   },
   "reserved": {
-    "210cd1eac408": {
+    "41a678578abf": {
       "balance_before": null,
       "cost": 0.4,
-      "created_at": 1780053843.8362808,
-      "input_chars": 2229,
+      "created_at": 1780056351.2313616,
+      "input_chars": 2247,
       "kind": "chat"
     },
-    "f83651f64dfa": {
+    "8bdbd984c22b": {
       "balance_before": null,
       "cost": 0.4,
-      "created_at": 1780053885.5347927,
-      "input_chars": 2229,
+      "created_at": 1780056430.1481369,
+      "input_chars": 2247,
       "kind": "chat"
     },
-    "ff4097a05557": {
+    "be0e6acbf578": {
       "balance_before": null,
       "cost": 0.4,
-      "created_at": 1780053807.1232743,
-      "input_chars": 2229,
+      "created_at": 1780056698.5349112,
+      "input_chars": 2239,
+      "kind": "chat"
+    },
+    "ced04d68865c": {
+      "balance_before": null,
+      "cost": 0.4,
+      "created_at": 1780056388.27274,
+      "input_chars": 2247,
+      "kind": "chat"
+    },
+    "eb61b0285d9c": {
+      "balance_before": null,
+      "cost": 0.4,
+      "created_at": 1780056466.5479586,
+      "input_chars": 960,
       "kind": "chat"
     }
   },
-  "spent": 0.286544,
-  "updated_at": 1780054430.7785056,
-  "used": 0.286544,
-  "window_start": 1780052400
+  "spent": 0.736928,
+  "updated_at": 1780056983.6537862,
+  "used": 0.736928,
+  "window_start": 1780056000
 }

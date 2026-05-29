@@ -1,0 +1,1 @@
+../../Bridges/Catalog/Pythagorean/Sp2nExpansionDeep.lean

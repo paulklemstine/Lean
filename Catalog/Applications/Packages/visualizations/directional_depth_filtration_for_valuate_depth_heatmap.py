@@ -1,22 +1,28 @@
 """
-Visualization: Depth Filtration Heatmap
+Visualization 1: Depth Heatmap across Function Families
 
-Visualizes the directional depth of weight functions across parameter families,
-showing how depth varies with the parameters of the weight function. The heatmap
-reveals the boundary between finite and infinite depth regions, illustrating the
-Depth Dichotomy Conjecture.
+Visualizes the directional depth of various function families as a heatmap,
+showing how depth varies with dimension (n) and degree (d). This reveals
+the Depth Dichotomy: most natural families cluster at depth 1 or high depth,
+with few intermediate values.
 """
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+
 import math
-from typing import Dict, Tuple, List
+import numpy as np
+import matplotlib.pyplot as plt
+from typing import Dict, Tuple, List, Optional
 
-Multiset = Tuple[int, ...]
-WeightFn = Dict[Multiset, float]
+MultiIndex = Tuple[int, ...]
 
-def degree_slice(n, d):
+def basis_vector(n: int, i: int) -> Tuple[int, ...]:
+    v = [0] * n
+    v[i] = 1
+    return tuple(v)
+
+def add_mi(a: MultiIndex, b: MultiIndex) -> MultiIndex:
+    return tuple(x + y for x, y in zip(a, b))
+
+def degree_slice(n: int, d: int) -> List[MultiIndex]:
     if n == 0: return [()] if d == 0 else []
     if n == 1: return [(d,)]
     result = []
@@ -25,129 +31,107 @@ def degree_slice(n, d):
             result.append((k,) + rest)
     return result
 
-def unit_vector(n, i):
-    return tuple(1 if j == i else 0 for j in range(n))
-
-def add_multisets(m, e):
-    return tuple(a + b for a, b in zip(m, e))
-
-def lookup(wf, m):
-    return wf.get(m, 0.0)
-
-def make_weight_fn(f, n, max_deg):
-    wf = {}
-    for d in range(max_deg + 1):
-        for m in degree_slice(n, d):
-            wf[m] = f(m)
-    return wf
-
-def is_directional_log_concave(wf, n):
-    for m, fm in wf.items():
-        if fm <= 1e-15: continue
+def check_dlc(f: Dict[MultiIndex, float], n: int, tol: float = -1e-10):
+    for m in f:
         for i in range(n):
-            ei = unit_vector(n, i)
-            m1 = add_multisets(m, ei)
-            m2 = add_multisets(m1, ei)
-            f1 = lookup(wf, m1)
-            f2 = lookup(wf, m2)
-            if fm * f2 > f1 * f1 + 1e-12:
-                return False
+            ei = basis_vector(n, i)
+            mi = add_mi(m, ei)
+            for j in range(i, n):
+                ej = basis_vector(n, j)
+                mj = add_mi(m, ej)
+                mij = add_mi(mi, ej)
+                if f.get(mi, 0.0)*f.get(mj, 0.0) - f.get(m, 0.0)*f.get(mij, 0.0) < tol:
+                    return False
     return True
 
-def ratio_transform_fn(wf, n, i):
+def ratio_transform(f, i, n):
+    ei = basis_vector(n, i)
+    return {m: (f.get(add_mi(m, ei), 0.0)/fm if abs(fm) > 1e-15 else 0.0) for m, fm in f.items()}
+
+def compute_depth(f, n, max_depth=10, tol=-1e-10):
+    if max_depth == 0: return 0
+    if not check_dlc(f, n, tol): return 0
+    ms = max_depth - 1
+    for i in range(n):
+        ri = {m: v for m, v in ratio_transform(f, i, n).items() if abs(v) > 1e-15}
+        if not ri: ms = 0; break
+        ms = min(ms, compute_depth(ri, n, max_depth-1, tol))
+        if ms == 0: break
+    return 1 + ms
+
+def multinomial(n, d):
     result = {}
-    ei = unit_vector(n, i)
-    for m, fm in wf.items():
-        if abs(fm) > 1e-15:
-            result[m] = lookup(wf, add_multisets(m, ei)) / fm
+    for m in degree_slice(n, d):
+        val = math.factorial(d)
+        for mi in m: val /= math.factorial(mi)
+        result[m] = float(val)
     return result
 
-def directional_depth_at_least(wf, n, k):
-    if k == 0: return True
-    if not is_directional_log_concave(wf, n): return False
-    for i in range(n):
-        ri = ratio_transform_fn(wf, n, i)
-        if not directional_depth_at_least(ri, n, k - 1):
-            return False
-    return True
+def product_val(weights, d):
+    n = len(weights)
+    result = {}
+    for m in degree_slice(n, d):
+        val = 1.0
+        for i in range(n): val *= weights[i]**m[i]
+        result[m] = val
+    return result
 
-def compute_depth(wf, n, max_k=6):
-    for k in range(max_k + 1):
-        if not directional_depth_at_least(wf, n, k):
-            return k - 1
-    return max_k
+def uniform_matroid(n, r):
+    result = {}
+    for m in degree_slice(n, r):
+        if all(mi <= 1 for mi in m):
+            result[m] = 1.0
+    return result
 
-# ── Main visualization ────────────────────────────────────────────────
+# Compute depth data
+families = {
+    'Multinomial': lambda n, d: multinomial(n, d),
+    'Product': lambda n, d: product_val([1.0 + 0.5*i for i in range(n)], d),
+    'Uniform': lambda n, d: uniform_matroid(n, d) if d <= n else {},
+}
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+ns = range(2, 6)
+ds = range(2, 7)
+max_d = 5
 
-# Panel 1: Depth of f(m) = exp(-a·m₁² - b·m₂²) as a,b vary
-n_dim = 2
-max_deg = 6
-a_vals = np.linspace(0.1, 3.0, 15)
-b_vals = np.linspace(0.1, 3.0, 15)
-depth_grid = np.zeros((len(b_vals), len(a_vals)))
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-for ia, a in enumerate(a_vals):
-    for ib, b in enumerate(b_vals):
-        def f(m, a=a, b=b):
-            return math.exp(-a * m[0]**2 - b * m[1]**2)
-        wf = make_weight_fn(f, n_dim, max_deg)
-        depth_grid[ib, ia] = compute_depth(wf, n_dim, max_k=5)
+for idx, (name, family_fn) in enumerate(families.items()):
+    data = np.zeros((len(list(ns)), len(list(ds))))
+    for ni, n in enumerate(ns):
+        for di, d in enumerate(ds):
+            f = family_fn(n, d)
+            if f:
+                depth = compute_depth(f, n, max_depth=max_d)
+                data[ni, di] = depth
+            else:
+                data[ni, di] = -1  # invalid
 
-im1 = axes[0].imshow(depth_grid, extent=[a_vals[0], a_vals[-1], b_vals[0], b_vals[-1]],
-                       origin='lower', cmap='viridis', aspect='auto', vmin=0, vmax=5)
-axes[0].set_xlabel('Parameter a', fontsize=12)
-axes[0].set_ylabel('Parameter b', fontsize=12)
-axes[0].set_title('Depth of exp(-a·m₁² - b·m₂²)', fontsize=13)
-plt.colorbar(im1, ax=axes[0], label='Depth')
+    ax = axes[idx]
+    im = ax.imshow(data, cmap='YlOrRd', aspect='auto', vmin=0, vmax=max_d,
+                    interpolation='nearest')
+    ax.set_xticks(range(len(list(ds))))
+    ax.set_xticklabels([str(d) for d in ds])
+    ax.set_yticks(range(len(list(ns))))
+    ax.set_yticklabels([str(n) for n in ns])
+    ax.set_xlabel('Degree d')
+    ax.set_ylabel('Dimension n')
+    ax.set_title(f'{name}\nCoefficients')
 
-# Panel 2: Depth of mixture f(m) = c·exp(-m₁²) + (1-c)·exp(-m₂²)
-c_vals = np.linspace(0.01, 0.99, 20)
-sigma_vals = np.linspace(0.3, 3.0, 15)
-depth_grid2 = np.zeros((len(sigma_vals), len(c_vals)))
+    # Annotate cells
+    for ni in range(data.shape[0]):
+        for di in range(data.shape[1]):
+            val = int(data[ni, di])
+            if val >= 0:
+                label = f'≥{val}' if val == max_d else str(val)
+                color = 'white' if val >= 3 else 'black'
+                ax.text(di, ni, label, ha='center', va='center',
+                        fontsize=11, fontweight='bold', color=color)
 
-for ic, c in enumerate(c_vals):
-    for isig, sig in enumerate(sigma_vals):
-        def f(m, c=c, sig=sig):
-            return c * math.exp(-m[0]**2 / (2*sig**2)) + (1-c) * math.exp(-m[1]**2 / (2*sig**2))
-        wf = make_weight_fn(f, n_dim, max_deg)
-        depth_grid2[isig, ic] = compute_depth(wf, n_dim, max_k=5)
-
-im2 = axes[1].imshow(depth_grid2, extent=[c_vals[0], c_vals[-1], sigma_vals[0], sigma_vals[-1]],
-                       origin='lower', cmap='plasma', aspect='auto', vmin=0, vmax=5)
-axes[1].set_xlabel('Mixture weight c', fontsize=12)
-axes[1].set_ylabel('Width σ', fontsize=12)
-axes[1].set_title('Depth of c·G₁ + (1-c)·G₂', fontsize=13)
-plt.colorbar(im2, ax=axes[1], label='Depth')
-
-# Panel 3: Ratio transform decay along direction 0
-fig3_data = []
-for sigma in [0.5, 1.0, 2.0, 3.0]:
-    def f(m, s=sigma):
-        return math.exp(-sum(x**2 for x in m) / (2*s**2))
-    wf = make_weight_fn(f, 2, 10)
-    ratios = []
-    for k in range(8):
-        m = (k, 0)
-        fm = lookup(wf, m)
-        fm1 = lookup(wf, (k+1, 0))
-        if fm > 1e-15:
-            ratios.append(fm1 / fm)
-        else:
-            ratios.append(0)
-    fig3_data.append((sigma, ratios))
-
-for sigma, ratios in fig3_data:
-    axes[2].plot(range(len(ratios)), ratios, 'o-', label=f'σ={sigma}', markersize=5)
-axes[2].set_xlabel('Position m₁', fontsize=12)
-axes[2].set_ylabel('R₀f(m₁, 0)', fontsize=12)
-axes[2].set_title('Ratio Transform R₀f (Gaussian)', fontsize=13)
-axes[2].legend(fontsize=10)
-axes[2].set_yscale('log')
-axes[2].grid(True, alpha=0.3)
-
-plt.suptitle('Directional Depth Filtration: Parameter Landscape', fontsize=15, y=1.02)
+fig.suptitle('Directional Depth across Function Families\n'
+             '(Higher depth = stronger log-concavity structure)',
+             fontsize=14, fontweight='bold')
+plt.colorbar(im, ax=axes, label='Depth', shrink=0.8)
 plt.tight_layout()
-plt.savefig('viz_depth_heatmap.png', dpi=150, bbox_inches='tight')
-print("Saved viz_depth_heatmap.png")
+plt.savefig('depth_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved depth_heatmap.png")
