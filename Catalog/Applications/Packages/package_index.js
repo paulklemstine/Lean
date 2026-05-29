@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Persistence Theory / Topological Data Analysis",
     "date": "2026-05-29T02:20:12Z",
     "exp_id": "7106d29a",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7125461421563912,
+    "quality": "substantial",
     "pkg_num": 283
   },
   {
@@ -8216,8 +8216,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T02:20:12Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7125461421563912,
+      "quality": "substantial"
     }
   ],
   "edges": [

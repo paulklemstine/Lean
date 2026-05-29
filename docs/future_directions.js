@@ -249,10 +249,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "1286fbc6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -379,10 +379,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "8c1a4c4e",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "afddf6c2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
@@ -735,10 +735,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "1bc7e344",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:50:23.836779+00:00"
   },
   {
@@ -1166,6 +1166,40 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-29T00:39:38.870551+00:00"
   },
   {
+    "id": "seed_128",
+    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code",
+    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
+    "domains": [
+      "Novelty",
+      "Physics",
+      "Computation",
+      "Cryptography"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.712014+00:00"
+  },
+  {
+    "id": "seed_118",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Physics",
+      "Algebra"
+    ],
+    "priority_score": 0.91,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:19.805962+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1179,6 +1213,55 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
+  },
+  {
+    "id": "seed_115",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "NumberTheory"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:19.544634+00:00"
+  },
+  {
+    "id": "seed_108",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.89,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:18.924456+00:00"
+  },
+  {
+    "id": "seed_127",
+    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function",
+    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "NumberTheory"
+    ],
+    "priority_score": 0.89,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.613473+00:00"
   },
   {
     "id": "seed_013",
@@ -1211,6 +1294,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.679862+00:00"
   },
   {
+    "id": "seed_123",
+    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?",
+    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Computation",
+      "Logic"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.261048+00:00"
+  },
+  {
     "id": "seed_024",
     "title": "Legendre's Conjecture",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
@@ -1225,6 +1325,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.470511+00:00"
   },
   {
+    "id": "seed_134",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.87,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:21.275037+00:00"
+  },
+  {
     "id": "seed_025",
     "title": "Primes of the Form n\u00b2+1",
     "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
@@ -1237,6 +1354,23 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.477681+00:00"
+  },
+  {
+    "id": "seed_132",
+    "title": "The L-Function Universe: A Cosmic Census of All L-Functions",
+    "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Algebra",
+      "Analysis"
+    ],
+    "priority_score": 0.86,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:21.082866+00:00"
   },
   {
     "id": "seed_033",
@@ -1285,6 +1419,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.553079+00:00"
   },
   {
+    "id": "seed_120",
+    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)",
+    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Geometry",
+      "Logic"
+    ],
+    "priority_score": 0.84,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:19.984429+00:00"
+  },
+  {
     "id": "seed_037",
     "title": "Cram\u00e9r's Conjecture on Prime Gaps",
     "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
@@ -1297,6 +1448,40 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.567677+00:00"
+  },
+  {
+    "id": "seed_121",
+    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?",
+    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Topology",
+      "Analysis"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.071943+00:00"
+  },
+  {
+    "id": "seed_126",
+    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs",
+    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Analysis",
+      "Logic"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.527334+00:00"
   },
   {
     "id": "seed_010",
@@ -1341,6 +1526,22 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.559748+00:00"
+  },
+  {
+    "id": "seed_131",
+    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time",
+    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.82,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "8273a6c0",
+    "timestamp": "2026-05-29T02:19:20.992919+00:00"
   },
   {
     "id": "seed_011",
@@ -1944,6 +2145,69 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-29T01:50:00.555919+00:00"
   },
   {
+    "id": "seed_113",
+    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back",
+    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:19.367906+00:00"
+  },
+  {
+    "id": "seed_125",
+    "title": "The Unreasonable Effectiveness of the Number 163",
+    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:20.439098+00:00"
+  },
+  {
+    "id": "fd_2037",
+    "title": "Persistent Homology Detects Secondary Terms in Chebotarev Prime Splitting",
+    "description": "Conjecture: There exists an explicit functorial construction assigning to each finite Galois extension K/Q with Galois group G and each conjugacy class union C subseteq G a filtered simplicial complex X_C(T) built from primes p <= T with Frobenius class in C, such that after centering by the main Chebotarev density term |C|/|G|, the stable barcode statistics of the family {X_C(T)}_T determine whether the associated Artin L-functions have a real exceptional zero or nontrivial low-lying zero bias. In particular, two pairs (K,C) and (K',C') with identical natural density |C|/|G| = |C'|/|G'| but different secondary Chebotarev error terms yield asymptotically different barcode summaries. Test: Compute the complexes for explicit number fields with matched splitting densities but provably different low-lying Artin zero behavior; confirm that barcode observables separate the families with statistical significance and fail to separate control pairs with matching secondary terms. Refutation occurs if no functorial prime-splitting complex yields asymptotically distinct persistence signatures beyond density. Impact: This would create a topological probe of fine analytic number theory, giving a new observable for Artin L-function phenomena and a bridge between persistence, prime distributions, and Galois representations.",
+    "domains": [
+      "Analytic Number Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:20:32.754351+00:00"
+  },
+  {
+    "id": "seed_135",
+    "title": "The Prime Number Crossword: Filling the Gaps in the Primes",
+    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 0.78,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:21.364545+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -1956,6 +2220,22 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "seed_111",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T02:19:19.187841+00:00"
   },
   {
     "id": "seed_007",

@@ -1,176 +1,155 @@
-#!/usr/bin/env python3
 """
-Visualization: Witness Improvement via Localization
+Visualization 2: Witness Improvement via Localization
 
-Illustrates Theorem 4: localization at a prime can strictly improve
-interleaving witnesses by removing mixed-prime torsion obstructions.
-
-Shows a heatmap of interleaving distances across different primes for
-randomly generated persistence module pairs, highlighting cases where
-localization produces a tighter bound.
+Shows the distribution of interleaving distance improvements
+achieved by localizing at different primes. Demonstrates that
+localization can strictly reduce the interleaving distance.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+from dataclasses import dataclass, field
+from typing import List, Set, Optional, Dict, Tuple
 
-def p_primary_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
+# Inline all needed classes and functions
+@dataclass
+class FGAbGroup:
+    free_rank: int = 0
+    torsion_factors: List[int] = field(default_factory=list)
+    def __post_init__(self):
+        self.torsion_factors = sorted([d for d in self.torsion_factors if d >= 2])
+    def has_p_torsion(self, p: int) -> bool:
+        return any(d % p == 0 for d in self.torsion_factors)
+    def has_global_torsion(self) -> bool:
+        return len(self.torsion_factors) > 0
+    def p_primary_component(self, p: int) -> 'FGAbGroup':
+        p_factors = []
+        for d in self.torsion_factors:
+            pk = 1; temp = d
+            while temp % p == 0: pk *= p; temp //= p
+            if pk > 1: p_factors.append(pk)
+        return FGAbGroup(free_rank=0, torsion_factors=p_factors)
 
-def prime_factors(n):
-    factors = set()
-    d = 2
-    while d * d <= n:
-        if n % d == 0:
-            factors.add(d)
-            while n % d == 0:
-                n //= d
-        d += 1
-    if n > 1:
-        factors.add(n)
-    return factors
+@dataclass
+class PersistenceModule:
+    groups: List[FGAbGroup]
+    def global_torsion_birth(self) -> Optional[int]:
+        for i, g in enumerate(self.groups):
+            if g.has_global_torsion(): return i
+        return None
+    def localize_at(self, p: int) -> 'PersistenceModule':
+        return PersistenceModule([g.p_primary_component(p) for g in self.groups])
 
-def has_p_torsion(invariant_factors, p):
-    return any(d % p == 0 for d in invariant_factors)
-
-def random_module(length=8, primes=[2,3,5]):
-    """Generate a random persistence module."""
-    levels = []
-    torsion = []
+def random_persistence_module(length=10, primes=(2,3,5), max_power=2):
+    groups = []; acc_torsion = []; cur_free = random.randint(0, 2)
     for i in range(length):
-        if random.random() < 0.35:
-            p = random.choice(primes)
-            k = random.randint(1, 2)
-            torsion.append(p ** k)
-        levels.append(list(torsion))
-    return levels
+        if random.random() < 0.3:
+            p = random.choice(primes); k = random.randint(1, max_power)
+            acc_torsion.append(p ** k)
+        if random.random() < 0.2: cur_free += 1
+        groups.append(FGAbGroup(free_rank=cur_free, torsion_factors=list(acc_torsion)))
+    return PersistenceModule(groups=groups)
 
-def torsion_birth(levels, p):
-    """First level where p-torsion appears."""
-    for i, factors in enumerate(levels):
-        if has_p_torsion(factors, p):
-            return i
-    return None
+# Run experiment
+random.seed(2025)
+n_trials = 2000
+primes = [2, 3, 5, 7]
+improvements: Dict[int, List[int]] = {p: [] for p in primes}
+all_original_dists = []
+all_best_localized = []
 
-def global_birth(levels):
-    for i, factors in enumerate(levels):
-        if factors:
-            return i
-    return None
+for _ in range(n_trials):
+    F = random_persistence_module(length=12, primes=(2, 3, 5, 7))
+    G = random_persistence_module(length=12, primes=(2, 3, 5, 7))
+    gb_F = F.global_torsion_birth()
+    gb_G = G.global_torsion_birth()
+    if gb_F is None or gb_G is None: continue
+    global_dist = abs(gb_F - gb_G)
+    all_original_dists.append(global_dist)
 
-random.seed(42)
-
-# Generate many pairs and compute distances
-n_pairs = 50
-primes = [2, 3, 5]
-results = []
-
-for trial in range(n_pairs):
-    F = random_module(length=8)
-    G = random_module(length=8)
-    
-    gb_F = global_birth(F)
-    gb_G = global_birth(G)
-    global_dist = abs(gb_F - gb_G) if gb_F is not None and gb_G is not None else -1
-    
-    prime_dists = {}
+    best_loc_dist = global_dist
     for p in primes:
-        b_F = torsion_birth(F, p)
-        b_G = torsion_birth(G, p)
-        if b_F is not None and b_G is not None:
-            prime_dists[p] = abs(b_F - b_G)
-        else:
-            prime_dists[p] = -1  # undefined
-    
-    results.append({
-        'global': global_dist,
-        'primes': prime_dists,
-        'improvement': any(prime_dists[p] < global_dist and prime_dists[p] >= 0 
-                           for p in primes if global_dist >= 0)
-    })
+        F_loc = F.localize_at(p); G_loc = G.localize_at(p)
+        fb = F_loc.global_torsion_birth(); gb = G_loc.global_torsion_birth()
+        if fb is None and gb is None: loc_dist = 0
+        elif fb is not None and gb is not None: loc_dist = abs(fb - gb)
+        else: continue
+        if loc_dist < global_dist:
+            improvements[p].append(global_dist - loc_dist)
+        best_loc_dist = min(best_loc_dist, loc_dist)
+    all_best_localized.append(best_loc_dist)
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 6))
+# Create visualization
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Panel 1: Distance comparison heatmap
-ax = axes[0]
-ax.set_title('Birth Distance by Prime\n(50 random module pairs)', fontsize=11, fontweight='bold')
+# Plot 1: Improvement distribution by prime
+ax1 = axes[0, 0]
+colors = ['#E91E63', '#2196F3', '#4CAF50', '#FF9800']
+positions = []
+data_to_plot = []
+for i, p in enumerate(primes):
+    if improvements[p]:
+        data_to_plot.append(improvements[p])
+        positions.append(i)
 
-# Build matrix: rows = trials, columns = [global, p=2, p=3, p=5]
-labels = ['Global', 'p=2', 'p=3', 'p=5']
-matrix = np.zeros((n_pairs, 4))
-for i, r in enumerate(results):
-    matrix[i, 0] = r['global'] if r['global'] >= 0 else np.nan
-    for j, p in enumerate(primes):
-        matrix[i, j+1] = r['primes'][p] if r['primes'][p] >= 0 else np.nan
+bp = ax1.boxplot(data_to_plot, positions=positions, patch_artist=True, widths=0.6)
+for patch, color in zip(bp['boxes'], colors[:len(data_to_plot)]):
+    patch.set_facecolor(color)
+    patch.set_alpha(0.6)
+ax1.set_xticks(range(len(primes)))
+ax1.set_xticklabels([f'p={p}' for p in primes])
+ax1.set_ylabel('Distance Improvement')
+ax1.set_title('Distribution of Improvements by Prime', fontweight='bold')
+ax1.grid(axis='y', alpha=0.3)
 
-# Sort by global distance
-valid_mask = ~np.isnan(matrix[:, 0])
-valid_indices = np.where(valid_mask)[0]
-sorted_indices = valid_indices[np.argsort(matrix[valid_indices, 0])]
+# Plot 2: Number of improvements by prime
+ax2 = axes[0, 1]
+counts = [len(improvements[p]) for p in primes]
+bars = ax2.bar([f'p={p}' for p in primes], counts, color=colors, alpha=0.7)
+for bar, count in zip(bars, counts):
+    ax2.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 5,
+             str(count), ha='center', va='bottom', fontweight='bold')
+ax2.set_ylabel('Number of Improvements')
+ax2.set_title(f'Frequency of Strict Improvement ({n_trials} trials)', fontweight='bold')
+ax2.grid(axis='y', alpha=0.3)
 
-display_matrix = matrix[sorted_indices[:30]]  # Show top 30
+# Plot 3: Original vs best localized distance
+ax3 = axes[1, 0]
+max_dist = max(max(all_original_dists), max(all_best_localized)) + 1
+ax3.scatter(all_original_dists, all_best_localized, alpha=0.1, s=10, c='#2196F3')
+ax3.plot([0, max_dist], [0, max_dist], 'r--', linewidth=1, label='No improvement')
+ax3.set_xlabel('Original Global Distance')
+ax3.set_ylabel('Best Localized Distance')
+ax3.set_title('Global vs Best Localized Distance', fontweight='bold')
+ax3.legend()
+ax3.grid(alpha=0.3)
+ax3.set_xlim(-0.5, max_dist)
+ax3.set_ylim(-0.5, max_dist)
 
-im = ax.imshow(display_matrix.T, aspect='auto', cmap='YlOrRd', interpolation='nearest')
-ax.set_yticks(range(4))
-ax.set_yticklabels(labels)
-ax.set_xlabel('Module pair index (sorted by global distance)')
-plt.colorbar(im, ax=ax, label='Birth distance', shrink=0.8)
+# Plot 4: Histogram of improvement ratios
+ax4 = axes[1, 1]
+ratios = []
+for orig, loc in zip(all_original_dists, all_best_localized):
+    if orig > 0:
+        ratios.append(1 - loc / orig)
+if ratios:
+    ax4.hist(ratios, bins=30, color='#9C27B0', alpha=0.7, edgecolor='white')
+    mean_ratio = np.mean(ratios)
+    ax4.axvline(mean_ratio, color='red', linestyle='--', linewidth=2,
+                label=f'Mean: {mean_ratio:.2%}')
+    ax4.legend()
+ax4.set_xlabel('Relative Improvement (1 - localized/original)')
+ax4.set_ylabel('Frequency')
+ax4.set_title('Distribution of Relative Improvement', fontweight='bold')
+ax4.grid(axis='y', alpha=0.3)
 
-# Panel 2: Improvement frequency
-ax = axes[1]
-ax.set_title('Localization Improvement\nFrequency', fontsize=11, fontweight='bold')
-
-n_improved = sum(1 for r in results if r['improvement'])
-n_total = len([r for r in results if r['global'] >= 0])
-
-bars = ax.bar(['No\nimprovement', 'Strict\nimprovement'], 
-              [n_total - n_improved, n_improved],
-              color=['#bdc3c7', '#2ecc71'], edgecolor='black', linewidth=1)
-ax.set_ylabel('Number of pairs')
-for bar, val in zip(bars, [n_total - n_improved, n_improved]):
-    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-            str(val), ha='center', fontweight='bold')
-ax.set_ylim(0, max(n_total - n_improved, n_improved) + 5)
-
-# Panel 3: Per-prime improvement magnitude
-ax = axes[2]
-ax.set_title('Improvement Magnitude\nby Prime', fontsize=11, fontweight='bold')
-
-improvements = {p: [] for p in primes}
-for r in results:
-    if r['global'] >= 0:
-        for p in primes:
-            if r['primes'][p] >= 0:
-                diff = r['global'] - r['primes'][p]
-                if diff > 0:
-                    improvements[p].append(diff)
-
-positions = range(len(primes))
-colors = ['#e74c3c', '#3498db', '#2ecc71']
-
-for i, (p, c) in enumerate(zip(primes, colors)):
-    data = improvements[p]
-    if data:
-        # Jitter plot
-        jittered_x = [i + random.uniform(-0.15, 0.15) for _ in data]
-        ax.scatter(jittered_x, data, c=c, alpha=0.6, s=40, edgecolors='black', linewidth=0.5)
-        ax.plot([i - 0.2, i + 0.2], [np.mean(data)] * 2, c='black', lw=2)
-        ax.text(i, max(data) + 0.3, f'n={len(data)}', ha='center', fontsize=9)
-
-ax.set_xticks(range(len(primes)))
-ax.set_xticklabels([f'p={p}' for p in primes])
-ax.set_ylabel('Distance improvement (global − localized)')
-ax.set_ylim(-0.5, None)
-ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-
-plt.suptitle('Witness Improvement via Prime Localization\n'
-             'Localization can strictly sharpen interleaving distances',
-             fontsize=13, fontweight='bold', y=1.02)
+fig.suptitle('Witness Improvement via Prime Localization\n'
+             'Localization can strictly reduce interleaving distances',
+             fontsize=14, fontweight='bold', y=1.02)
 
 plt.tight_layout()
 plt.savefig('viz_witness_improvement.png', dpi=150, bbox_inches='tight')
-print("Saved: viz_witness_improvement.png")
+print("Saved viz_witness_improvement.png")
