@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7106d29a",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -209,10 +209,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "0bb77cbc",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -379,10 +379,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14405854",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -460,10 +460,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7e5283ed",
-    "consumed_by_exp_id": "965bbbf0",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
@@ -498,10 +498,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "44c14611",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
@@ -1097,10 +1097,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7a00ed5d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f061b65c",
     "timestamp": "2026-05-28T17:54:29.077276+00:00"
   },
   {
@@ -1301,7 +1301,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2a2a2c28",
@@ -2041,6 +2041,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T19:57:56.338721+00:00"
+  },
+  {
+    "id": "fd_1994",
+    "title": "Direction 1: Shadow Hodge Theory and Ultra-Log-Concavity",
+    "description": "**Conjecture:** For any M-convex finite set S \u2286 \u2115\u207f (equivalently, any discrete exchange family), the shadow profile sequence a_k = |Sh_k(S)| is ultra-log-concave:\n\n    a_k\u00b2 / C(D,k)\u00b2 \u2265 (a_{k-1} / C(D,k-1)) \u00b7 (a_{k+1} / C(D,k+1))\n\nwhere D = max{|\u03b1| : \u03b1 \u2208 S} and C is the binomial coefficient.\n\n**Test:** Compute shadow profiles for all matroid basis supports U(r,n) with n \u2264 12 and verify the ultra-log-concavity inequality. A single counterexample falsifies. If it holds, attempt to prove it for uniform matroids using the explicit combinatorial structure of their shadow profiles.\n\n**Impact:** This would establish a new route to ultra-log-concavity inequalities, complementing the algebraic methods of Br\u00e4nd\u00e9n\u2013Huh. It would show that the shadow operator encodes Hodge-theoretic positivity in a purely combinatorial way, without requiring the polynomial realization.\n\n**Catalog References:**\n- `Speculative/AutoResearch/IteratedShadowGeometry.lean` \u2014 kthShadow_add, mem_kthShadow_iff_exists_iteratedDerivative\n- `Speculative/AutoResearch/UltraLogConcave.lean` (if exists)\n\n**Proof Strategy:** Use the semigroup law to express shadow profiles as convolutions. The log-concavity of convolutions of log-concave sequences is well-known (Walkup\u2013Wets, 1969); the challenge is to identify the right decomposition. For uniform matroids, the shadow profile equals C(n,r-k), which is log-concave by the binomial coefficient inequality.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 Discrete convex analysis \u2194 Polynomial algebra\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial theory via combinatorial shadow route.\n\n**Ambition:** Grand challenge \u2014 would prove a new class of log-concavity results using only shadow combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c559d0f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T00:39:38.870551+00:00"
   },
   {
     "id": "seed_032",

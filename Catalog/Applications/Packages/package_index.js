@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra / Persistent Homology / Arithmetic Invariants",
     "date": "2026-05-29T00:39:56Z",
     "exp_id": "f6994231",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6380586838709679,
+    "quality": "partial",
     "pkg_num": 280
   },
   {
@@ -8129,8 +8129,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-29T00:39:56Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6380586838709679,
+      "quality": "partial"
     }
   ],
   "edges": [

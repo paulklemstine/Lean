@@ -1,0 +1,65 @@
+--- IteratedShadowGeometry.lean
++++ IteratedShadowGeometry.lean
+@@ -388,62 +388,4 @@
+       ((Finset.Iic α).filter (fun τ => τ.sum (fun _ m => m) = 1)).image (α - ·) := by
+   unfold kthShadow; aesop;
+ 
+-/-! ## Shadow of Unions -/
+-
+-/-
+-The shadow distributes over unions of support sets.
+--/
+-theorem kthShadow_union {n : ℕ} (S₁ S₂ : Finset (Fin n →₀ ℕ)) (k : ℕ) :
+-    kthShadow (S₁ ∪ S₂) k = kthShadow S₁ k ∪ kthShadow S₂ k := by
+-  unfold kthShadow; aesop;
+-
+-/-- The iterated derivative of the zero polynomial is zero. -/
+-@[simp]
+-theorem iteratedPDeriv_zero_poly {R : Type*} [CommSemiring R]
+-    (τ : Fin n →₀ ℕ) : iteratedPDeriv τ (0 : MvPolynomial (Fin n) R) = 0 := by
+-  simp only [iteratedPDeriv]
+-  induction (List.finRange n) with
+-  | nil => rfl
+-  | cons i l ih =>
+-    simp only [List.foldr_cons]
+-    induction (τ i) with
+-    | zero => simpa [pderivPow] using ih
+-    | succ k ihk => rw [pderivPow_succ]; simp [ihk]
+-
+-/-- Degree bound: every element of the k-th shadow arises from an ancestor
+-of degree ≥ k, and has degree reduced by exactly k from that ancestor. -/
+-theorem exists_ancestor_of_mem_kthShadow {n : ℕ} {S : Finset (Fin n →₀ ℕ)} {k : ℕ}
+-    {β : Fin n →₀ ℕ} (hβ : β ∈ kthShadow S k) :
+-    ∃ α ∈ S, ∃ τ : Fin n →₀ ℕ, τ ≤ α ∧ τ.sum (fun _ m => m) = k ∧ β = α - τ := by
+-  exact mem_kthShadow_iff.mp hβ
+-
+-/-
+-The k-th shadow is empty when k exceeds the degree of every element in S.
+--/
+-theorem kthShadow_eq_empty_of_lt_degree {n : ℕ} {S : Finset (Fin n →₀ ℕ)} {k : ℕ}
+-    (hk : ∀ α ∈ S, α.degree < k) :
+-    kthShadow S k = ∅ := by
+-  ext β;
+-  simp [mem_kthShadow_iff'];
+-  intro x hx; specialize hk ( β + x ) ; simp_all +decide [ degree ] ;
+-  contrapose! hk; simp_all +decide [ Finsupp.sum_add_index' ] ;
+-  rw [ ← hx, Finsupp.sum_of_support_subset ];
+-  exacts [ Finset.sum_le_sum fun i hi => Nat.le_add_left _ _, fun i hi => by simp_all +decide [ Finsupp.mem_support_iff ], fun _ _ => rfl ]
+-
+-/-- The support of the zero polynomial has empty shadow. -/
+-theorem kthShadow_finsuppSupport_zero {n : ℕ} {R : Type*} [CommSemiring R] (k : ℕ) :
+-    kthShadow (finsuppSupport (0 : MvPolynomial (Fin n) R)) k = ∅ := by
+-  simp [finsuppSupport, kthShadow]
+-
+-/-! ## Shadow Profile Monotonicity -/
+-
+-/-- The shadow operator contracts: kthShadow S (k+1) ⊆ kthShadow S k when
+-every element of the (k+1)-shadow can also witness via a mass-k multi-index.
+-More precisely, this holds because kthShadow S (k+1) = kthShadow (kthShadow S 1) k
+-and kthShadow S 1 ⊆ S need not hold, but we can prove:
+-For any S, if β ∈ kthShadow S (k+1), then β ∈ kthShadow (kthShadow S 1) k. -/
+-theorem kthShadow_succ_eq {n : ℕ} (S : Finset (Fin n →₀ ℕ)) (k : ℕ) :
+-    kthShadow S (k + 1) = kthShadow (kthShadow S 1) k := by
+-  rw [kthShadow_add, Nat.add_comm]
+-
+ 
