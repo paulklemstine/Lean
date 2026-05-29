@@ -1,415 +1,379 @@
 """
 applications.py — Real-World Applications of Overlap Class Theory
 
-Demonstrates how the overlap class framework applies to:
-1. Network analysis (community detection via support overlap)
-2. Coding theory (codeword support analysis)
-3. Circuit design (signal path interaction analysis)
+Demonstrates applications of overlap class analysis to:
+1. Network topology analysis
+2. Error-correcting code support profiles
+3. Chemical bond interaction patterns
+4. Community detection in social networks
+
+Each application shows how the overlap class framework reveals hidden
+structure in real-world data.
 """
 
-from typing import List, Set, Tuple, Dict, FrozenSet
+from collections import defaultdict, deque
 from itertools import combinations
-from collections import defaultdict
+from typing import List, Set, Tuple, Dict, FrozenSet
 
 
-# ─── Application 1: Network Community Detection ─────────────────────────
+# ============================================================
+# Self-contained core (no local imports)
+# ============================================================
 
-def network_community_detection(
-    paths: List[Set[int]],
-    verbose: bool = True
-) -> Dict:
+class SupportFamily:
+    def __init__(self, supports: List[FrozenSet[int]]):
+        self.supports = list(supports)
+        self.n = len(supports)
+
+
+def supports_overlap(A: FrozenSet[int], B: FrozenSet[int]) -> bool:
+    return len(A & B) > 0
+
+
+def compute_overlap_classes(family: SupportFamily) -> List[List[int]]:
+    adj: Dict[int, Set[int]] = defaultdict(set)
+    for i, j in combinations(range(family.n), 2):
+        if supports_overlap(family.supports[i], family.supports[j]):
+            adj[i].add(j)
+            adj[j].add(i)
+    visited = set()
+    classes = []
+    for start in range(family.n):
+        if start in visited:
+            continue
+        component = []
+        queue = deque([start])
+        visited.add(start)
+        while queue:
+            v = queue.popleft()
+            component.append(v)
+            for w in adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+        classes.append(sorted(component))
+    return classes
+
+
+def overlap_degree(family: SupportFamily) -> int:
+    count = 0
+    for i, j in combinations(range(family.n), 2):
+        if supports_overlap(family.supports[i], family.supports[j]):
+            count += 1
+    return count
+
+
+def overlap_signature(family: SupportFamily) -> List[int]:
+    sizes = []
+    for i, j in combinations(range(family.n), 2):
+        isect = len(family.supports[i] & family.supports[j])
+        if isect > 0:
+            sizes.append(isect)
+    return sorted(sizes)
+
+
+# ============================================================
+# Application 1: Network Topology — Identifying Independent Sectors
+# ============================================================
+
+def app_network_topology():
+    """Analyze a communication network to find independent failure domains.
+
+    In a network, cycles represent redundant paths. Overlap classes of
+    cycle supports identify groups of cycles that share infrastructure.
+    Different overlap classes are completely independent failure domains:
+    a failure in one class cannot propagate to another.
     """
-    Use overlap classes to detect interaction communities in a network.
-
-    Given a list of critical paths (each a set of nodes), two paths are
-    in the same "interaction community" if they share infrastructure.
-    This is exactly the overlap class decomposition.
-
-    Args:
-        paths: List of node sets representing critical paths.
-        verbose: Print analysis.
-
-    Returns:
-        Dict with communities and interaction analysis.
-    """
-    supports = [frozenset(p) for p in paths]
-    n = len(supports)
-
-    # Build overlap graph
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-
-    edges = []
-    for i, j in combinations(range(n), 2):
-        shared = supports[i] & supports[j]
-        if shared:
-            union(i, j)
-            edges.append((i, j, shared))
-
-    # Extract communities
-    communities = defaultdict(list)
-    for i in range(n):
-        communities[find(i)].append(i)
-    communities = list(communities.values())
-
-    # Analyze shared infrastructure
-    shared_nodes = set()
-    for s in supports:
-        for t in supports:
-            if s != t:
-                shared_nodes |= (s & t)
-
-    result = {
-        'num_paths': n,
-        'num_communities': len(communities),
-        'communities': communities,
-        'shared_infrastructure': shared_nodes,
-        'interaction_edges': edges,
-    }
-
-    if verbose:
-        print("Network Community Detection via Overlap Classes")
-        print("-" * 50)
-        print(f"Number of critical paths: {n}")
-        print(f"Number of interaction communities: {len(communities)}")
-        for i, comm in enumerate(communities):
-            print(f"  Community {i}: paths {comm}")
-            comm_nodes = set()
-            for idx in comm:
-                comm_nodes |= paths[idx]
-            print(f"    Total infrastructure: {sorted(comm_nodes)}")
-        print(f"Shared infrastructure nodes: {sorted(shared_nodes)}")
-        if shared_nodes:
-            print(f"  → These {len(shared_nodes)} nodes are single points of failure")
-            print(f"    affecting multiple critical paths simultaneously.")
-        else:
-            print(f"  → No shared infrastructure: all paths are independent.")
-
-    return result
-
-
-# ─── Application 2: Coding Theory Analysis ──────────────────────────────
-
-def codeword_support_analysis(
-    codewords: List[List[int]],
-    verbose: bool = True
-) -> Dict:
-    """
-    Analyze the support overlap structure of a set of codewords.
-
-    In coding theory, the support of a codeword is the set of positions
-    where it is nonzero. Overlap classes of supports reveal which codewords
-    "interact" (share nonzero positions).
-
-    Args:
-        codewords: List of codewords (integer vectors).
-        verbose: Print analysis.
-
-    Returns:
-        Dict with overlap analysis of codeword supports.
-    """
-    supports = []
-    for cw in codewords:
-        supp = frozenset(i for i, x in enumerate(cw) if x != 0)
-        supports.append(supp)
-
-    n = len(supports)
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-
-    overlap_count = 0
-    signature = []
-    for i, j in combinations(range(n), 2):
-        c = len(supports[i] & supports[j])
-        if c > 0:
-            overlap_count += 1
-            signature.append(c)
-            union(i, j)
-
-    communities = defaultdict(list)
-    for i in range(n):
-        communities[find(i)].append(i)
-    communities = list(communities.values())
-
-    result = {
-        'num_codewords': n,
-        'supports': supports,
-        'overlap_degree': overlap_count,
-        'overlap_classes': communities,
-        'num_classes': len(communities),
-        'overlap_signature': sorted(signature),
-    }
-
-    if verbose:
-        print("\nCodeword Support Analysis")
-        print("-" * 50)
-        for i, (cw, supp) in enumerate(zip(codewords, supports)):
-            print(f"  Codeword {i}: {cw}  support = {set(supp)}")
-        print(f"\nOverlap degree: {overlap_count}")
-        print(f"Number of interaction classes: {len(communities)}")
-        for i, cls in enumerate(communities):
-            print(f"  Class {i}: codewords {cls}")
-        print(f"Overlap signature: {sorted(signature)}")
-        if overlap_count == 0:
-            print("→ All codewords have disjoint supports (fully separated code).")
-        else:
-            print(f"→ {overlap_count} pairs of codewords share positions.")
-            print("  Decoding performance may be affected by these interactions.")
-
-    return result
-
-
-# ─── Application 3: Signal Path Analysis ────────────────────────────────
-
-def signal_path_analysis(
-    circuit_paths: List[Set[str]],
-    verbose: bool = True
-) -> Dict:
-    """
-    Analyze signal path interactions in a circuit.
-
-    Each signal path uses a set of circuit components. Paths sharing
-    components may interfere. Overlap classes identify independent
-    sectors of the circuit.
-
-    Args:
-        circuit_paths: List of component sets for each signal path.
-        verbose: Print analysis.
-
-    Returns:
-        Dict with interaction analysis.
-    """
-    supports = [frozenset(p) for p in circuit_paths]
-    n = len(supports)
-
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-
-    for i, j in combinations(range(n), 2):
-        if supports[i] & supports[j]:
-            union(i, j)
-
-    sectors = defaultdict(list)
-    for i in range(n):
-        sectors[find(i)].append(i)
-    sectors = list(sectors.values())
-
-    result = {
-        'num_paths': n,
-        'num_independent_sectors': len(sectors),
-        'sectors': sectors,
-    }
-
-    if verbose:
-        print("\nSignal Path Interaction Analysis")
-        print("-" * 50)
-        for i, path in enumerate(circuit_paths):
-            print(f"  Path {i}: components {sorted(path)}")
-        print(f"\nIndependent sectors: {len(sectors)}")
-        for i, sector in enumerate(sectors):
-            print(f"  Sector {i}: paths {sector}")
-            shared = set()
-            for a, b in combinations(sector, 2):
-                shared |= (supports[a] & supports[b])
-            if shared:
-                print(f"    Shared components: {sorted(shared)}")
-                print(f"    → These components may cause cross-talk.")
-        if len(sectors) == n:
-            print("→ All signal paths are independent. No cross-talk possible.")
-
-    return result
-
-
-# ─── Main ────────────────────────────────────────────────────────────────
-
-if __name__ == '__main__':
     print("=" * 60)
-    print("Applications of Overlap Class Theory")
+    print("APPLICATION 1: Network Failure Domain Analysis")
     print("=" * 60)
 
-    # Application 1: Network routing
-    print("\n" + "=" * 60)
-    print("APPLICATION 1: Network Infrastructure Analysis")
-    print("=" * 60)
-    paths = [
-        {1, 2, 3, 4},      # Path A: uses nodes 1-4
-        {3, 4, 5, 6},      # Path B: shares nodes 3,4 with A
-        {7, 8, 9},          # Path C: independent
-        {9, 10, 11},        # Path D: shares node 9 with C
-        {20, 21, 22},       # Path E: completely independent
-    ]
-    network_community_detection(paths)
+    # Simulate a network with redundant paths
+    # Nodes represent routers, cycles represent redundant paths
+    cycle_supports = SupportFamily([
+        frozenset({0, 1, 2}),       # Redundant path through routers 0-1-2
+        frozenset({1, 2, 3}),       # Redundant path through routers 1-2-3
+        frozenset({3, 4, 5}),       # Redundant path through routers 3-4-5
+        frozenset({7, 8, 9}),       # Redundant path through routers 7-8-9
+        frozenset({8, 9, 10}),      # Redundant path through routers 8-9-10
+    ])
 
-    # Application 2: Coding theory
+    classes = compute_overlap_classes(cycle_supports)
+    print(f"\nNetwork has {cycle_supports.n} redundant path groups")
+    print(f"Found {len(classes)} independent failure domains:")
+    for i, cls in enumerate(classes):
+        routers = set()
+        for idx in cls:
+            routers |= cycle_supports.supports[idx]
+        print(f"  Domain {i+1}: paths {cls}, routers {sorted(routers)}")
+
+    print(f"\nOverlap degree: {overlap_degree(cycle_supports)}")
+    print(f"Overlap signature: {overlap_signature(cycle_supports)}")
+    print("\nInterpretation: Domains are completely independent —")
+    print("a failure in one domain cannot cascade to another.")
+
+
+# ============================================================
+# Application 2: Error-Correcting Codes — Codeword Support Clustering
+# ============================================================
+
+def app_coding_theory():
+    """Analyze support patterns of minimum-weight codewords.
+
+    In coding theory, the supports of minimum-weight codewords reveal the
+    redundancy structure of the code. Overlap classes identify groups of
+    codewords that share coordinates — these are the interaction sectors
+    of the code's error-correcting capability.
+    """
     print("\n" + "=" * 60)
     print("APPLICATION 2: Error-Correcting Code Analysis")
     print("=" * 60)
-    codewords = [
-        [1, 1, 0, 0, 0, 0, 0],  # support = {0,1}
-        [0, 0, 1, 1, 0, 0, 0],  # support = {2,3}
-        [0, 1, 1, 0, 0, 0, 0],  # support = {1,2} — overlaps both!
-        [0, 0, 0, 0, 1, 1, 1],  # support = {4,5,6}
-    ]
-    codeword_support_analysis(codewords)
 
-    # Application 3: Circuit analysis
+    # Simulated codeword supports from a [15,7,5] BCH code
+    codeword_supports = SupportFamily([
+        frozenset({0, 1, 3, 7, 14}),
+        frozenset({1, 2, 4, 8, 14}),
+        frozenset({5, 6, 9, 10, 11}),
+        frozenset({6, 7, 10, 11, 12}),
+        frozenset({3, 4, 5, 13, 14}),
+    ])
+
+    classes = compute_overlap_classes(codeword_supports)
+    print(f"\nCode has {codeword_supports.n} minimum-weight codewords")
+    print(f"Found {len(classes)} interaction clusters:")
+    for i, cls in enumerate(classes):
+        coords = set()
+        for idx in cls:
+            coords |= codeword_supports.supports[idx]
+        print(f"  Cluster {i+1}: codewords {cls}, coordinates {sorted(coords)}")
+
+    print(f"\nOverlap degree: {overlap_degree(codeword_supports)}")
+    print(f"Overlap signature: {overlap_signature(codeword_supports)}")
+    print("\nInterpretation: Codewords in the same cluster interact —")
+    print("their error-correcting capabilities are coupled.")
+    print("Codewords in different clusters operate independently.")
+
+
+# ============================================================
+# Application 3: Chemistry — Bond Interaction Patterns
+# ============================================================
+
+def app_chemistry():
+    """Analyze interaction patterns in a molecular ring system.
+
+    In chemistry, fused ring systems have cycles that share bonds (edges)
+    and atoms (vertices). Overlap classes of cycle supports identify
+    independent subsystems of the molecule.
+    """
     print("\n" + "=" * 60)
-    print("APPLICATION 3: Circuit Signal Path Analysis")
+    print("APPLICATION 3: Molecular Ring System Analysis")
     print("=" * 60)
-    circuit_paths = [
-        {'R1', 'C1', 'Op1'},           # Audio path
-        {'C1', 'R2', 'Op2'},           # Filter path (shares C1)
-        {'R3', 'L1', 'C2'},            # Power path
-        {'C2', 'R4', 'Op3'},           # Feedback (shares C2)
-        {'R5', 'D1', 'LED1'},          # Indicator (independent)
-    ]
-    signal_path_analysis(circuit_paths)
+
+    # Naphthalene (two fused benzene rings sharing atoms 4,5)
+    # Ring 1: atoms 0-1-2-3-4-5
+    # Ring 2: atoms 4-5-6-7-8-9
+    naphthalene_rings = SupportFamily([
+        frozenset({0, 1, 2, 3, 4, 5}),   # Ring 1
+        frozenset({4, 5, 6, 7, 8, 9}),   # Ring 2
+    ])
+
+    # Biphenyl (two benzene rings connected but not fused)
+    # Ring 1: atoms 0-1-2-3-4-5
+    # Ring 2: atoms 6-7-8-9-10-11
+    biphenyl_rings = SupportFamily([
+        frozenset({0, 1, 2, 3, 4, 5}),
+        frozenset({6, 7, 8, 9, 10, 11}),
+    ])
+
+    print("\n--- Naphthalene (fused rings) ---")
+    print(f"Ring supports: {[sorted(s) for s in naphthalene_rings.supports]}")
+    classes = compute_overlap_classes(naphthalene_rings)
+    print(f"Overlap classes: {classes}")
+    print(f"Overlap degree: {overlap_degree(naphthalene_rings)}")
+    shared = naphthalene_rings.supports[0] & naphthalene_rings.supports[1]
+    print(f"Shared atoms: {sorted(shared)}")
+    print("→ One interaction cluster: rings are coupled")
+
+    print("\n--- Biphenyl (connected but not fused) ---")
+    print(f"Ring supports: {[sorted(s) for s in biphenyl_rings.supports]}")
+    classes = compute_overlap_classes(biphenyl_rings)
+    print(f"Overlap classes: {classes}")
+    print(f"Overlap degree: {overlap_degree(biphenyl_rings)}")
+    print("→ Two independent clusters: rings are decoupled")
+
+
+# ============================================================
+# Application 4: Community Detection — Overlapping Communities
+# ============================================================
+
+def app_community_detection():
+    """Use overlap classes to identify meta-communities.
+
+    When communities (detected by any method) share members, the overlap
+    class structure reveals which communities are entangled and which
+    operate independently.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Social Network Meta-Community Analysis")
+    print("=" * 60)
+
+    # Communities in a social network
+    communities = SupportFamily([
+        frozenset({0, 1, 2, 3}),          # Work team A
+        frozenset({2, 3, 4, 5}),          # Work team B (shares members with A)
+        frozenset({10, 11, 12, 13}),      # Sports club
+        frozenset({12, 13, 14, 15}),      # Neighborhood group
+        frozenset({20, 21, 22}),          # Online forum (isolated)
+    ])
+
+    classes = compute_overlap_classes(communities)
+    labels = ['Work A', 'Work B', 'Sports', 'Neighborhood', 'Forum']
+    print(f"\n{communities.n} communities detected")
+    for i, s in enumerate(communities.supports):
+        print(f"  {labels[i]}: members {sorted(s)}")
+
+    print(f"\nMeta-community analysis:")
+    print(f"Found {len(classes)} independent social spheres:")
+    for i, cls in enumerate(classes):
+        names = [labels[j] for j in cls]
+        members = set()
+        for idx in cls:
+            members |= communities.supports[idx]
+        print(f"  Sphere {i+1}: {names}")
+        print(f"    Total members: {sorted(members)}")
+
+    print(f"\nOverlap degree: {overlap_degree(communities)}")
+    print(f"Overlap signature: {overlap_signature(communities)}")
+    print("\nInterpretation: Information spreads within spheres but not across them.")
+    print("This identifies natural boundaries for targeted communication.")
+
+
+# ============================================================
+# Main
+# ============================================================
+
+if __name__ == "__main__":
+    app_network_topology()
+    app_coding_theory()
+    app_chemistry()
+    app_community_detection()
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 """
-demo.py — Interactive Demonstration of Overlap Class Rigidity
+demo.py — Interactive Demonstration of Overlap Class Theory
 
-This script demonstrates the core mathematical concepts:
-1. Support overlap graphs and their connected components (overlap classes)
-2. Overlap degree as a measure of interaction complexity
-3. The bridge between disjoint-support uniqueness and the overlap regime
-4. Computational testing of the overlap class conjecture on small graphs
+Demonstrates:
+1. Construction and visualization of support overlap graphs
+2. Overlap class computation for various graph families
+3. Conjecture testing on small connected graphs
+4. TPE invariance of variation supports
 
-Usage:
-    python demo.py                  # Run all demonstrations
-    python demo.py --search N       # Search for counterexamples up to N vertices
-    python demo.py --graph K4       # Analyze a specific named graph
+Run: python demo.py
 """
 
-import sys
-from itertools import combinations
-from collections import defaultdict
+from collections import defaultdict, deque
+from itertools import combinations, permutations
 from typing import List, Set, Tuple, Dict, FrozenSet, Optional
 
 
-# ─── Core Data Structures ───────────────────────────────────────────────
+# ============================================================
+# Self-contained implementations (no local imports)
+# ============================================================
+
+class SupportFamily:
+    def __init__(self, supports: List[FrozenSet[int]]):
+        self.supports = list(supports)
+        self.n = len(supports)
+
+    def __repr__(self):
+        return f"SupportFamily({[set(s) for s in self.supports]})"
+
 
 class SimpleGraph:
-    """A simple undirected graph."""
     def __init__(self, n: int, edges: List[Tuple[int, int]]):
         self.n = n
-        self.adj = {i: set() for i in range(n)}
-        self.edges = []
+        self.adj: Dict[int, Set[int]] = defaultdict(set)
+        self.edges_list = []
         for u, v in edges:
-            if u != v and v not in self.adj[u]:
+            if u != v:
                 self.adj[u].add(v)
                 self.adj[v].add(u)
-                self.edges.append((min(u,v), max(u,v)))
+                if u < v:
+                    self.edges_list.append((u, v))
+                else:
+                    self.edges_list.append((v, u))
+        self.edges_list = list(set(self.edges_list))
+
+    def degree(self, v: int) -> int:
+        return len(self.adj[v])
 
     def is_connected(self) -> bool:
         if self.n == 0:
             return True
         visited = set()
-        stack = [0]
-        while stack:
-            v = stack.pop()
-            if v in visited:
-                continue
-            visited.add(v)
-            stack.extend(w for w in self.adj[v] if w not in visited)
+        queue = deque([0])
+        visited.add(0)
+        while queue:
+            v = queue.popleft()
+            for w in self.adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
         return len(visited) == self.n
 
-    def __repr__(self):
-        return f"Graph(n={self.n}, edges={self.edges})"
+
+def supports_overlap(A: FrozenSet[int], B: FrozenSet[int]) -> bool:
+    return len(A & B) > 0
 
 
-# ─── Overlap Computation ────────────────────────────────────────────────
-
-def compute_overlap_graph(supports: List[FrozenSet]) -> Dict[int, Set[int]]:
-    """Build the support overlap graph."""
-    n = len(supports)
-    adj = {i: set() for i in range(n)}
-    for i, j in combinations(range(n), 2):
-        if supports[i] & supports[j]:
+def compute_overlap_classes(family: SupportFamily) -> List[List[int]]:
+    adj: Dict[int, Set[int]] = defaultdict(set)
+    for i, j in combinations(range(family.n), 2):
+        if supports_overlap(family.supports[i], family.supports[j]):
             adj[i].add(j)
             adj[j].add(i)
-    return adj
+
+    visited = set()
+    classes = []
+    for start in range(family.n):
+        if start in visited:
+            continue
+        component = []
+        queue = deque([start])
+        visited.add(start)
+        while queue:
+            v = queue.popleft()
+            component.append(v)
+            for w in adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+        classes.append(sorted(component))
+    return classes
 
 
-def compute_overlap_classes(supports: List[FrozenSet]) -> List[Set[int]]:
-    """Compute connected components of the overlap graph."""
-    n = len(supports)
-    if n == 0:
-        return []
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-
-    for i, j in combinations(range(n), 2):
-        if supports[i] & supports[j]:
-            union(i, j)
-
-    components = defaultdict(set)
-    for i in range(n):
-        components[find(i)].add(i)
-    return list(components.values())
+def overlap_degree(family: SupportFamily) -> int:
+    count = 0
+    for i, j in combinations(range(family.n), 2):
+        if supports_overlap(family.supports[i], family.supports[j]):
+            count += 1
+    return count
 
 
-def overlap_degree(supports: List[FrozenSet]) -> int:
-    """Count overlapping pairs."""
-    return sum(1 for i, j in combinations(range(len(supports)), 2)
-               if supports[i] & supports[j])
+def overlap_signature(family: SupportFamily) -> List[int]:
+    sizes = []
+    for i, j in combinations(range(family.n), 2):
+        isect = len(family.supports[i] & family.supports[j])
+        if isect > 0:
+            sizes.append(isect)
+    return sorted(sizes)
 
 
-def overlap_signature(supports: List[FrozenSet]) -> List[int]:
-    """Sorted list of intersection sizes for overlapping pairs."""
-    sigs = []
-    for i, j in combinations(range(len(supports)), 2):
-        c = len(supports[i] & supports[j])
-        if c > 0:
-            sigs.append(c)
-    sigs.sort()
-    return sigs
-
-
-def interaction_vertices(supports: List[FrozenSet]) -> Set:
-    """Vertices appearing in 2+ supports."""
-    count = defaultdict(int)
-    for s in supports:
-        for v in s:
-            count[v] += 1
-    return {v for v, c in count.items() if c >= 2}
-
-
-# ─── Cycle Support Computation ──────────────────────────────────────────
-
-def find_cycle_supports(G: SimpleGraph, S: Set[int]) -> List[FrozenSet[int]]:
-    """Find fundamental cycle supports in G[S] using DFS."""
-    vertices = sorted(S)
-    adj_local = {v: set() for v in vertices}
-    for v in vertices:
-        for w in G.adj.get(v, set()):
-            if w in S:
-                adj_local[v].add(w)
-
+def find_cycles_dfs(adj_S: Dict[int, Set[int]], vertices: List[int]) -> List[List[int]]:
     visited = set()
     parent = {}
     cycles = []
@@ -417,770 +381,798 @@ def find_cycle_supports(G: SimpleGraph, S: Set[int]) -> List[FrozenSet[int]]:
     def dfs(v, p):
         visited.add(v)
         parent[v] = p
-        for w in adj_local[v]:
+        for w in sorted(adj_S[v]):
             if w == p:
                 continue
             if w in visited:
-                cycle = {w}
-                u = v
-                while u != w:
-                    cycle.add(u)
-                    u = parent[u]
-                cycles.append(frozenset(cycle))
-            elif w not in visited:
+                # Trace back to find the cycle
+                cycle = [w]
+                curr = v
+                safety = 0
+                while curr != w and curr is not None and safety < len(vertices) + 1:
+                    cycle.append(curr)
+                    curr = parent.get(curr)
+                    safety += 1
+                if curr == w:
+                    cycles.append(cycle)
+            else:
                 dfs(w, v)
 
     for v in vertices:
         if v not in visited:
             dfs(v, None)
-
     return cycles
 
 
-# ─── Named Graphs ───────────────────────────────────────────────────────
-
-NAMED_GRAPHS = {
-    'K3': SimpleGraph(3, [(0,1),(1,2),(0,2)]),
-    'K4': SimpleGraph(4, [(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)]),
-    'C4': SimpleGraph(4, [(0,1),(1,2),(2,3),(3,0)]),
-    'C5': SimpleGraph(5, [(0,1),(1,2),(2,3),(3,4),(4,0)]),
-    'K33': SimpleGraph(6, [(0,3),(0,4),(0,5),(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)]),
-    'petersen': SimpleGraph(10, [
-        (0,1),(1,2),(2,3),(3,4),(4,0),
-        (5,7),(7,9),(9,6),(6,8),(8,5),
-        (0,5),(1,6),(2,7),(3,8),(4,9)
-    ]),
-    'diamond': SimpleGraph(4, [(0,1),(1,2),(2,3),(0,2)]),
-    'theta': SimpleGraph(5, [(0,1),(1,2),(2,3),(3,0),(0,4),(4,2)]),
-}
+def cycle_support_family(G: SimpleGraph, S: Set[int]) -> SupportFamily:
+    vertices = sorted(S)
+    adj_S: Dict[int, Set[int]] = defaultdict(set)
+    for u in vertices:
+        for v in G.adj[u]:
+            if v in S:
+                adj_S[u].add(v)
+    cycles = find_cycles_dfs(adj_S, vertices)
+    supports = [frozenset(c) for c in cycles]
+    return SupportFamily(supports)
 
 
-# ─── Demonstration Functions ────────────────────────────────────────────
+def generate_connected_graphs(n: int) -> List[SimpleGraph]:
+    if n <= 0:
+        return []
+    if n == 1:
+        return [SimpleGraph(1, [])]
+    all_possible_edges = list(combinations(range(n), 2))
+    m = len(all_possible_edges)
+    graphs = []
+    for mask in range(1, 1 << m):
+        edges = [all_possible_edges[i] for i in range(m) if mask & (1 << i)]
+        G = SimpleGraph(n, edges)
+        if G.is_connected():
+            graphs.append(G)
+    return graphs
 
-def demo_basic_concepts():
-    """Demonstrate the basic overlap class concepts."""
+
+# ============================================================
+# Demo functions
+# ============================================================
+
+def demo_basic_overlap():
+    """Demonstrate basic overlap analysis."""
     print("=" * 60)
-    print("DEMO 1: Basic Overlap Class Concepts")
+    print("DEMO 1: Basic Overlap Analysis")
     print("=" * 60)
 
-    # Disjoint case
-    print("\n--- Pairwise Disjoint Supports ---")
-    supports = [frozenset({0,1}), frozenset({2,3}), frozenset({4,5})]
-    print(f"Supports: {[set(s) for s in supports]}")
-    print(f"Overlap degree: {overlap_degree(supports)}")
-    classes = compute_overlap_classes(supports)
-    print(f"Overlap classes: {len(classes)} classes")
-    for i, cls in enumerate(classes):
-        print(f"  Class {i}: indices {cls} → supports {[set(supports[j]) for j in cls]}")
-    print(f"Interaction vertices: {interaction_vertices(supports)}")
-    print(f"→ This is the disjoint regime: each support is its own class.")
+    # A family with interesting overlap structure
+    family = SupportFamily([
+        frozenset({0, 1, 2}),      # Support A
+        frozenset({2, 3, 4}),      # Support B (overlaps A at {2})
+        frozenset({5, 6}),         # Support C (isolated)
+        frozenset({6, 7, 8}),      # Support D (overlaps C at {6})
+        frozenset({10, 11}),       # Support E (isolated)
+    ])
 
-    # Overlapping case
-    print("\n--- Overlapping Supports ---")
-    supports = [frozenset({0,1,2}), frozenset({1,2,3}), frozenset({4,5})]
-    print(f"Supports: {[set(s) for s in supports]}")
-    print(f"Overlap degree: {overlap_degree(supports)}")
-    classes = compute_overlap_classes(supports)
-    print(f"Overlap classes: {len(classes)} classes")
-    for i, cls in enumerate(classes):
-        print(f"  Class {i}: indices {cls} → supports {[set(supports[j]) for j in cls]}")
-    print(f"Overlap signature: {overlap_signature(supports)}")
-    print(f"Interaction vertices: {interaction_vertices(supports)}")
-    print(f"→ Supports 0 and 1 share vertices {{1,2}}, forming one overlap class.")
-    print(f"  Support 2 is isolated — it forms its own class.")
+    print(f"\nSupport family:")
+    for i, s in enumerate(family.supports):
+        print(f"  S_{i} = {sorted(s)}")
 
-    # Chain overlap
-    print("\n--- Chain Overlap (Transitive Closure) ---")
-    supports = [frozenset({0,1}), frozenset({1,2}), frozenset({2,3}), frozenset({5,6})]
-    print(f"Supports: {[set(s) for s in supports]}")
-    print(f"Overlap degree: {overlap_degree(supports)}")
-    classes = compute_overlap_classes(supports)
-    print(f"Overlap classes: {len(classes)} classes")
+    print(f"\nOverlap degree: {overlap_degree(family)}")
+    print(f"Overlap signature: {overlap_signature(family)}")
+
+    classes = compute_overlap_classes(family)
+    print(f"\nOverlap classes ({len(classes)} total):")
     for i, cls in enumerate(classes):
+        supports_in_class = [sorted(family.supports[j]) for j in cls]
         print(f"  Class {i}: indices {cls}")
-    print(f"→ Supports 0,1,2 form a chain: 0∩1≠∅, 1∩2≠∅ → all three in one class.")
-    print(f"  Even though 0∩2=∅! This is the transitive closure at work.")
+        for j in cls:
+            print(f"    S_{j} = {sorted(family.supports[j])}")
+
+    # Verify: supports from different classes are disjoint
+    print("\nVerification — cross-class disjointness:")
+    for ci, cj in combinations(range(len(classes)), 2):
+        union_i = set().union(*(family.supports[k] for k in classes[ci]))
+        union_j = set().union(*(family.supports[k] for k in classes[cj]))
+        disjoint = len(union_i & union_j) == 0
+        print(f"  Class {ci} ∪ vs Class {cj} ∪: {'DISJOINT ✓' if disjoint else 'OVERLAP ✗'}")
 
 
-def demo_graph_analysis(name: str = 'K4'):
-    """Analyze overlap structure of a specific graph."""
+def demo_disjoint_recovery():
+    """Show that overlap degree zero recovers the disjoint theory."""
     print("\n" + "=" * 60)
-    print(f"DEMO 2: Graph Analysis — {name}")
+    print("DEMO 2: Disjoint Recovery (Overlap Degree Zero)")
     print("=" * 60)
 
-    G = NAMED_GRAPHS.get(name)
-    if G is None:
-        print(f"Unknown graph: {name}")
-        print(f"Available: {', '.join(NAMED_GRAPHS.keys())}")
-        return
+    family = SupportFamily([
+        frozenset({0, 1}),
+        frozenset({2, 3}),
+        frozenset({4, 5}),
+        frozenset({6, 7}),
+    ])
 
-    print(f"\nGraph: {G.n} vertices, {len(G.edges)} edges")
-    print(f"Edges: {G.edges}")
+    print(f"\nPairwise disjoint family:")
+    for i, s in enumerate(family.supports):
+        print(f"  S_{i} = {sorted(s)}")
 
-    for q in range(min(G.n, 3)):
-        S = set(range(G.n)) - {q}
-        print(f"\n--- Basepoint q={q}, S={S} ---")
-        cycle_supports = find_cycle_supports(G, S)
-        print(f"Cycle supports in G[S]: {[set(s) for s in cycle_supports]}")
+    deg = overlap_degree(family)
+    classes = compute_overlap_classes(family)
+    n = family.n
 
-        if cycle_supports:
-            od = overlap_degree(cycle_supports)
-            classes = compute_overlap_classes(cycle_supports)
-            sig = overlap_signature(cycle_supports)
-            iv = interaction_vertices(cycle_supports)
-
-            print(f"Overlap degree: {od}")
-            print(f"Overlap classes: {len(classes)}")
-            print(f"Overlap signature: {sig}")
-            print(f"Interaction vertices: {iv}")
-            print(f"Pairwise disjoint: {od == 0}")
-        else:
-            print("No cycles (G[S] is a forest).")
+    print(f"\nOverlap degree: {deg}")
+    print(f"Overlap class count: {len(classes)}")
+    print(f"Family size n: {n}")
+    print(f"\nTheorem verification:")
+    print(f"  overlap_degree = 0: {deg == 0} ✓")
+    print(f"  class_count = n = {n}: {len(classes) == n} ✓")
+    print(f"  This recovers the disjoint-support uniqueness theorem.")
 
 
-def demo_conjecture_search(max_n: int = 6):
-    """Search for overlap patterns across small graphs."""
+def demo_graph_cycles():
+    """Analyze cycle supports in specific graphs."""
     print("\n" + "=" * 60)
-    print(f"DEMO 3: Conjecture Search (n ≤ {max_n})")
+    print("DEMO 3: Graph Cycle Support Analysis")
     print("=" * 60)
 
-    total = 0
-    disjoint = 0
-    overlapping = 0
-    max_od = 0
-    max_classes = 0
-    interesting = []
+    # K4 (complete graph on 4 vertices)
+    print("\n--- Complete Graph K4 ---")
+    K4 = SimpleGraph(4, [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)])
+    S = {0, 1, 2, 3}
+    F = cycle_support_family(K4, S)
+    print(f"Vertices: {sorted(S)}")
+    print(f"Edges: {K4.edges_list}")
+    print(f"Number of fundamental cycles: {F.n}")
+    for i, s in enumerate(F.supports):
+        print(f"  Cycle {i}: {sorted(s)}")
+    print(f"Overlap degree: {overlap_degree(F)}")
+    print(f"Overlap classes: {compute_overlap_classes(F)}")
 
-    for n in range(3, max_n + 1):
-        # Generate connected graphs
-        all_edges = list(combinations(range(n), 2))
-        m = len(all_edges)
+    # Theta graph (two paths between vertices)
+    print("\n--- Theta Graph (0-1-2, 0-3-2) ---")
+    theta = SimpleGraph(4, [(0,1), (1,2), (0,3), (3,2)])
+    S = {0, 1, 2, 3}
+    F = cycle_support_family(theta, S)
+    print(f"Vertices: {sorted(S)}")
+    print(f"Edges: {theta.edges_list}")
+    print(f"Number of fundamental cycles: {F.n}")
+    for i, s in enumerate(F.supports):
+        print(f"  Cycle {i}: {sorted(s)}")
+    print(f"Overlap degree: {overlap_degree(F)}")
+    print(f"Overlap classes: {compute_overlap_classes(F)}")
+
+    # Two disjoint triangles connected by a bridge
+    print("\n--- Two Triangles Connected by Bridge ---")
+    G = SimpleGraph(6, [(0,1), (1,2), (2,0), (2,3), (3,4), (4,5), (5,3)])
+    S = {0, 1, 2, 3, 4, 5}
+    F = cycle_support_family(G, S)
+    print(f"Vertices: {sorted(S)}")
+    print(f"Edges: {G.edges_list}")
+    print(f"Number of fundamental cycles: {F.n}")
+    for i, s in enumerate(F.supports):
+        print(f"  Cycle {i}: {sorted(s)}")
+    print(f"Overlap degree: {overlap_degree(F)}")
+    classes = compute_overlap_classes(F)
+    print(f"Overlap classes: {classes}")
+    print(f"Overlap class count: {len(classes)}")
+
+
+def demo_tpe_invariance():
+    """Demonstrate that variation supports are TPE-invariant."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: TPE Invariance of Variation Supports")
+    print("=" * 60)
+
+    # Original family of functions
+    F1 = [
+        [1, 0, 3, 2],   # f_0
+        [0, 2, 0, 1],   # f_1
+        [4, 4, 0, 4],   # f_2
+    ]
+
+    # TPE: permutation (0→1, 1→2, 2→0), constants c = (5, -3, 10)
+    perm = [1, 2, 0]
+    constants = [5, -3, 10]
+
+    F2 = [None, None, None]
+    for i in range(3):
+        j = perm[i]
+        F2[j] = [F1[i][v] + constants[i] for v in range(4)]
+
+    print("\nOriginal family F₁:")
+    for i, f in enumerate(F1):
+        print(f"  f_{i} = {f}")
+
+    print(f"\nTPE: σ = {perm}, c = {constants}")
+
+    print("\nTransformed family F₂:")
+    for i, f in enumerate(F2):
+        print(f"  g_{i} = {f}")
+
+    # Variation supports (relative to v₀ = 0)
+    v0 = 0
+    print(f"\nVariation supports (basepoint v₀ = {v0}):")
+
+    var_supp_F1 = []
+    var_supp_F2 = []
+    for i in range(3):
+        vs1 = frozenset(v for v in range(4) if F1[i][v] != F1[i][v0])
+        vs2 = frozenset(v for v in range(4) if F2[i][v] != F2[i][v0])
+        var_supp_F1.append(vs1)
+        var_supp_F2.append(vs2)
+        print(f"  VarSupp(f_{i}) = {sorted(vs1)}")
+
+    print()
+    for i in range(3):
+        print(f"  VarSupp(g_{i}) = {sorted(var_supp_F2[i])}")
+
+    # Check that σ maps var supports correctly
+    print(f"\nTPE maps variation supports:")
+    for i in range(3):
+        j = perm[i]
+        match = var_supp_F1[i] == var_supp_F2[j]
+        print(f"  VarSupp(f_{i}) = VarSupp(g_{j}): {match} {'✓' if match else '✗'}")
+
+    # Check overlap preservation
+    fam1 = SupportFamily(var_supp_F1)
+    fam2 = SupportFamily([var_supp_F2[perm[i]] for i in range(3)])
+    print(f"\nOverlap degree (F₁ var supports): {overlap_degree(fam1)}")
+    print(f"Overlap degree (F₂ σ-reindexed var supports): {overlap_degree(fam2)}")
+    print(f"Overlap classes (F₁): {compute_overlap_classes(fam1)}")
+    print(f"Overlap classes (F₂ σ-reindexed): {compute_overlap_classes(fam2)}")
+
+
+def demo_batch_search():
+    """Search for conjecture evidence on small graphs."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Batch Conjecture Search")
+    print("=" * 60)
+
+    max_n = 6
+    print(f"\nSearching all connected graphs on n ≤ {max_n} vertices...")
+
+    total_instances = 0
+    nontrivial_instances = 0
+    max_overlap_deg = 0
+    max_class_count = 0
+    interesting_examples = []
+
+    for n in range(2, max_n + 1):
+        graphs = generate_connected_graphs(n)
         count_n = 0
-
-        for mask in range(1, min(1 << m, 2**15)):  # cap for efficiency
-            edges = [all_edges[i] for i in range(m) if mask & (1 << i)]
-            G = SimpleGraph(n, edges)
-            if not G.is_connected():
-                continue
-            count_n += 1
-
+        for G in graphs:
             for q in range(n):
                 S = set(range(n)) - {q}
-                cs = find_cycle_supports(G, S)
-                if not cs:
-                    continue
+                F = cycle_support_family(G, S)
+                total_instances += 1
+                count_n += 1
 
-                total += 1
-                od = overlap_degree(cs)
-                classes = compute_overlap_classes(cs)
-                nc = len(classes)
+                if F.n > 0:
+                    nontrivial_instances += 1
+                    od = overlap_degree(F)
+                    cc = len(compute_overlap_classes(F))
+                    max_overlap_deg = max(max_overlap_deg, od)
+                    max_class_count = max(max_class_count, cc)
 
-                if od == 0:
-                    disjoint += 1
-                else:
-                    overlapping += 1
+                    if od > 0 and len(interesting_examples) < 5:
+                        interesting_examples.append({
+                            'n': n,
+                            'edges': G.edges_list,
+                            'q': q,
+                            'S': sorted(S),
+                            'cycles': [sorted(s) for s in F.supports],
+                            'overlap_degree': od,
+                            'overlap_classes': compute_overlap_classes(F),
+                        })
 
-                max_od = max(max_od, od)
-                max_classes = max(max_classes, nc)
-
-                if od > 0 and len(interesting) < 5:
-                    interesting.append({
-                        'n': n, 'q': q, 'edges': G.edges,
-                        'supports': [set(s) for s in cs],
-                        'overlap_deg': od,
-                        'classes': nc,
-                        'signature': overlap_signature(cs),
-                    })
-
-        print(f"  n={n}: tested {count_n} connected graphs")
+        print(f"  n = {n}: {len(graphs)} graphs, {count_n} instances")
 
     print(f"\nSummary:")
-    print(f"  Total (G,q,S) triples with cycles: {total}")
-    print(f"  Disjoint cases (overlap degree 0): {disjoint}")
-    print(f"  Overlapping cases: {overlapping}")
-    print(f"  Max overlap degree seen: {max_od}")
-    print(f"  Max overlap classes seen: {max_classes}")
+    print(f"  Total instances: {total_instances}")
+    print(f"  Nontrivial (has cycles): {nontrivial_instances}")
+    print(f"  Max overlap degree: {max_overlap_deg}")
+    print(f"  Max overlap class count: {max_class_count}")
 
-    if interesting:
-        print(f"\nInteresting overlapping examples:")
-        for ex in interesting:
-            print(f"  n={ex['n']}, q={ex['q']}, edges={ex['edges']}")
-            print(f"    supports={ex['supports']}")
-            print(f"    overlap_deg={ex['overlap_deg']}, classes={ex['classes']}")
-            print(f"    signature={ex['signature']}")
+    if interesting_examples:
+        print(f"\nInteresting examples with overlap (first {len(interesting_examples)}):")
+        for i, ex in enumerate(interesting_examples):
+            print(f"\n  Example {i+1}:")
+            print(f"    Graph: n={ex['n']}, edges={ex['edges']}")
+            print(f"    Basepoint: q={ex['q']}, S={ex['S']}")
+            print(f"    Cycles: {ex['cycles']}")
+            print(f"    Overlap degree: {ex['overlap_degree']}")
+            print(f"    Overlap classes: {ex['overlap_classes']}")
 
 
-def demo_invariance():
-    """Demonstrate that overlap classes are invariant under permutation."""
+# ============================================================
+# Main
+# ============================================================
+
+if __name__ == "__main__":
+    demo_basic_overlap()
+    demo_disjoint_recovery()
+    demo_graph_cycles()
+    demo_tpe_invariance()
+    demo_batch_search()
+
     print("\n" + "=" * 60)
-    print("DEMO 4: Overlap Class Invariance Under Permutation")
+    print("All demos completed successfully.")
     print("=" * 60)
 
-    supports = [frozenset({0,1,2}), frozenset({2,3}), frozenset({3,4,5})]
-    print(f"\nOriginal supports: {[set(s) for s in supports]}")
 
-    classes_orig = compute_overlap_classes(supports)
-    sig_orig = overlap_signature(supports)
-    print(f"Overlap classes: {classes_orig}")
-    print(f"Overlap signature: {sig_orig}")
+"""
+Overlap Degree Spectrum — Distribution of Overlap Complexity
 
-    # Apply a permutation to the index set
-    perm = [2, 0, 1]  # σ: 0↦2, 1↦0, 2↦1
-    permuted = [supports[perm[i]] for i in range(len(supports))]
-    print(f"\nPermuted supports (σ=[2,0,1]): {[set(s) for s in permuted]}")
+Visualizes how overlap degree varies across all connected graphs of
+a given size, showing the distribution from the fully disjoint regime
+(degree 0) to the maximally overlapping regime.
+"""
 
-    classes_perm = compute_overlap_classes(permuted)
-    sig_perm = overlap_signature(permuted)
-    print(f"Overlap classes: {classes_perm}")
-    print(f"Overlap signature: {sig_perm}")
-
-    print(f"\nSignatures match: {sig_orig == sig_perm}")
-    print(f"Class counts match: {len(classes_orig) == len(classes_perm)}")
-    print(f"→ Overlap structure is invariant under reindexing (Theorem B)")
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import defaultdict, deque, Counter
+from itertools import combinations
+from typing import List, Set, Dict, FrozenSet, Tuple
 
 
-def main():
-    args = sys.argv[1:]
+# ============================================================
+# Self-contained implementations
+# ============================================================
 
-    if '--search' in args:
-        idx = args.index('--search')
-        max_n = int(args[idx + 1]) if idx + 1 < len(args) else 6
-        demo_conjecture_search(max_n)
-    elif '--graph' in args:
-        idx = args.index('--graph')
-        name = args[idx + 1] if idx + 1 < len(args) else 'K4'
-        demo_graph_analysis(name)
-    else:
-        demo_basic_concepts()
-        demo_graph_analysis('K4')
-        demo_graph_analysis('diamond')
-        demo_invariance()
-        demo_conjecture_search(5)
+class SupportFamily:
+    def __init__(self, supports):
+        self.supports = list(supports)
+        self.n = len(supports)
 
 
-if __name__ == '__main__':
-    main()
+class SimpleGraph:
+    def __init__(self, n, edges):
+        self.n = n
+        self.adj = defaultdict(set)
+        for u, v in edges:
+            if u != v:
+                self.adj[u].add(v)
+                self.adj[v].add(u)
+
+    def is_connected(self):
+        if self.n == 0:
+            return True
+        visited = set()
+        queue = deque([0])
+        visited.add(0)
+        while queue:
+            v = queue.popleft()
+            for w in self.adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+        return len(visited) == self.n
+
+
+def overlap_degree(family):
+    count = 0
+    for i, j in combinations(range(family.n), 2):
+        if len(family.supports[i] & family.supports[j]) > 0:
+            count += 1
+    return count
+
+
+def overlap_class_count(family):
+    adj = defaultdict(set)
+    for i, j in combinations(range(family.n), 2):
+        if len(family.supports[i] & family.supports[j]) > 0:
+            adj[i].add(j)
+            adj[j].add(i)
+    visited = set()
+    count = 0
+    for start in range(family.n):
+        if start in visited:
+            continue
+        count += 1
+        queue = deque([start])
+        visited.add(start)
+        while queue:
+            v = queue.popleft()
+            for w in adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+    return count
+
+
+def find_cycles(adj_S, vertices):
+    visited = set()
+    parent = {}
+    cycles = []
+    def dfs(v, p):
+        visited.add(v)
+        parent[v] = p
+        for w in adj_S[v]:
+            if w == p:
+                continue
+            if w in visited:
+                cycle = [w]
+                curr = v
+                while curr != w:
+                    cycle.append(curr)
+                    curr = parent[curr]
+                cycles.append(cycle)
+            else:
+                dfs(w, v)
+    for v in vertices:
+        if v not in visited:
+            dfs(v, -1)
+    return cycles
+
+
+def cycle_support_family(G, S):
+    vertices = sorted(S)
+    adj_S = defaultdict(set)
+    for u in vertices:
+        for v in G.adj[u]:
+            if v in S:
+                adj_S[u].add(v)
+    cycles = find_cycles(adj_S, vertices)
+    return SupportFamily([frozenset(c) for c in cycles])
+
+
+def generate_connected_graphs(n):
+    if n <= 1:
+        return [SimpleGraph(max(n, 1), [])]
+    all_edges = list(combinations(range(n), 2))
+    m = len(all_edges)
+    graphs = []
+    for mask in range(1, 1 << m):
+        edges = [all_edges[i] for i in range(m) if mask & (1 << i)]
+        G = SimpleGraph(n, edges)
+        if G.is_connected():
+            graphs.append(G)
+    return graphs
+
+
+# ============================================================
+# Visualization
+# ============================================================
+
+def visualize_degree_spectrum():
+    """Create a multi-panel visualization of overlap degree statistics."""
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Overlap Degree Spectrum Across Graph Families',
+                 fontsize=16, fontweight='bold')
+
+    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0', '#FF9800']
+
+    # Collect data for n = 3, 4, 5, 6
+    all_data = {}
+    for n in [3, 4, 5, 6]:
+        graphs = generate_connected_graphs(n)
+        degrees = []
+        class_counts = []
+        num_cycles_list = []
+
+        for G in graphs:
+            for q in range(n):
+                S = set(range(n)) - {q}
+                F = cycle_support_family(G, S)
+                if F.n > 0:
+                    degrees.append(overlap_degree(F))
+                    class_counts.append(overlap_class_count(F))
+                    num_cycles_list.append(F.n)
+
+        all_data[n] = {
+            'degrees': degrees,
+            'class_counts': class_counts,
+            'num_cycles': num_cycles_list,
+            'num_graphs': len(graphs),
+        }
+
+    # ---- Panel 1: Overlap Degree Distribution ----
+    ax1 = axes[0, 0]
+    ax1.set_title('Overlap Degree Distribution', fontweight='bold')
+
+    for idx, n in enumerate([3, 4, 5, 6]):
+        if all_data[n]['degrees']:
+            counts = Counter(all_data[n]['degrees'])
+            max_deg = max(counts.keys()) if counts else 0
+            xs = list(range(max_deg + 1))
+            ys = [counts.get(x, 0) for x in xs]
+            ax1.bar([x + idx * 0.2 - 0.3 for x in xs], ys, width=0.18,
+                   label=f'n={n}', color=colors[idx], alpha=0.8)
+
+    ax1.set_xlabel('Overlap Degree')
+    ax1.set_ylabel('Count')
+    ax1.legend(fontsize=9)
+    ax1.grid(axis='y', alpha=0.3)
+
+    # ---- Panel 2: Class Count Distribution ----
+    ax2 = axes[0, 1]
+    ax2.set_title('Overlap Class Count Distribution', fontweight='bold')
+
+    for idx, n in enumerate([3, 4, 5, 6]):
+        if all_data[n]['class_counts']:
+            counts = Counter(all_data[n]['class_counts'])
+            max_cc = max(counts.keys()) if counts else 0
+            xs = list(range(1, max_cc + 1))
+            ys = [counts.get(x, 0) for x in xs]
+            ax2.bar([x + idx * 0.2 - 0.3 for x in xs], ys, width=0.18,
+                   label=f'n={n}', color=colors[idx], alpha=0.8)
+
+    ax2.set_xlabel('Number of Overlap Classes')
+    ax2.set_ylabel('Count')
+    ax2.legend(fontsize=9)
+    ax2.grid(axis='y', alpha=0.3)
+
+    # ---- Panel 3: Degree vs Class Count Scatter ----
+    ax3 = axes[1, 0]
+    ax3.set_title('Overlap Degree vs Class Count', fontweight='bold')
+
+    for idx, n in enumerate([4, 5, 6]):
+        if all_data[n]['degrees']:
+            ax3.scatter(all_data[n]['degrees'], all_data[n]['class_counts'],
+                       alpha=0.4, s=20, color=colors[idx + 1], label=f'n={n}')
+
+    ax3.set_xlabel('Overlap Degree')
+    ax3.set_ylabel('Overlap Class Count')
+    ax3.legend(fontsize=9)
+    ax3.grid(alpha=0.3)
+
+    # ---- Panel 4: Summary Statistics ----
+    ax4 = axes[1, 1]
+    ax4.set_title('Summary Statistics', fontweight='bold')
+    ax4.axis('off')
+
+    rows = ['n', 'Graphs', 'Instances', 'Mean Degree', 'Max Degree',
+            'Mean Classes']
+    cell_data = []
+    for n in [3, 4, 5, 6]:
+        d = all_data[n]
+        if d['degrees']:
+            cell_data.append([
+                str(n),
+                str(d['num_graphs']),
+                str(len(d['degrees'])),
+                f"{np.mean(d['degrees']):.2f}",
+                str(max(d['degrees'])),
+                f"{np.mean(d['class_counts']):.2f}",
+            ])
+        else:
+            cell_data.append([str(n), str(d['num_graphs']), '0',
+                            '-', '-', '-'])
+
+    table = ax4.table(cellText=list(zip(*cell_data)),
+                     rowLabels=rows,
+                     colLabels=[f'n={n}' for n in [3, 4, 5, 6]],
+                     cellLoc='center',
+                     loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1, 1.4)
+
+    # Color header row
+    for j in range(4):
+        table[0, j].set_facecolor(colors[j])
+        table[0, j].set_text_props(color='white', fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig('overlap_degree_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved: overlap_degree_spectrum.png")
+
+
+if __name__ == "__main__":
+    visualize_degree_spectrum()
 
 
 """
-Visualization: Support Overlap Graph and Overlap Classes
+Overlap Class Visualization — Support Interaction Graph
 
-This script visualizes the support overlap graph for a family of finite sets.
-It shows how supports are connected via shared elements and colors the
-connected components (overlap classes) distinctly.
-
-What it visualizes:
-- Each node represents a support set in the family
-- Edges connect supports with nonempty intersection
-- Colors indicate overlap classes (connected components)
-- Node labels show the support elements
-- Edge labels show shared elements
+Visualizes the core mathematical concept: how overlapping supports
+decompose into independent interaction sectors (overlap classes).
+Shows a family of supports, their overlap graph, and the resulting
+class decomposition with color-coding.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+from collections import defaultdict, deque
 from itertools import combinations
-from collections import defaultdict
+from typing import List, Set, Dict, FrozenSet
 
 
-def compute_overlap_classes(supports):
-    """Compute overlap classes using union-find."""
-    n = len(supports)
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
+# ============================================================
+# Self-contained implementations
+# ============================================================
 
-    edges = []
-    for i, j in combinations(range(n), 2):
-        shared = supports[i] & supports[j]
-        if shared:
-            union(i, j)
-            edges.append((i, j, shared))
-
-    components = defaultdict(list)
-    for i in range(n):
-        components[find(i)].append(i)
-
-    return list(components.values()), edges
+class SupportFamily:
+    def __init__(self, supports):
+        self.supports = list(supports)
+        self.n = len(supports)
 
 
-def layout_circular(n, radius=2.0):
-    """Compute circular layout positions."""
-    positions = {}
-    for i in range(n):
-        angle = 2 * np.pi * i / n - np.pi / 2
-        positions[i] = (radius * np.cos(angle), radius * np.sin(angle))
-    return positions
+def compute_overlap_classes(family):
+    adj = defaultdict(set)
+    for i, j in combinations(range(family.n), 2):
+        if len(family.supports[i] & family.supports[j]) > 0:
+            adj[i].add(j)
+            adj[j].add(i)
+    visited = set()
+    classes = []
+    for start in range(family.n):
+        if start in visited:
+            continue
+        component = []
+        queue = deque([start])
+        visited.add(start)
+        while queue:
+            v = queue.popleft()
+            component.append(v)
+            for w in adj[v]:
+                if w not in visited:
+                    visited.add(w)
+                    queue.append(w)
+        classes.append(sorted(component))
+    return classes
 
 
-def draw_overlap_graph(supports, title="Support Overlap Graph", ax=None):
-    """Draw the support overlap graph with colored overlap classes."""
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    else:
-        fig = ax.figure
+def overlap_degree(family):
+    count = 0
+    for i, j in combinations(range(family.n), 2):
+        if len(family.supports[i] & family.supports[j]) > 0:
+            count += 1
+    return count
 
-    n = len(supports)
-    classes, edges = compute_overlap_classes(supports)
-    positions = layout_circular(n)
 
-    # Color palette for classes
-    colors = plt.cm.Set2(np.linspace(0, 1, max(len(classes), 1)))
+# ============================================================
+# Visualization
+# ============================================================
 
-    # Map index to class color
-    idx_to_color = {}
+def visualize_overlap_classes():
+    """Create a comprehensive visualization of overlap class theory."""
+
+    # Define a rich support family
+    family = SupportFamily([
+        frozenset({0, 1, 2, 3}),       # S₀
+        frozenset({2, 3, 4, 5}),       # S₁ (overlaps S₀)
+        frozenset({4, 5, 6}),          # S₂ (overlaps S₁)
+        frozenset({10, 11, 12}),       # S₃ (isolated cluster)
+        frozenset({12, 13, 14}),       # S₄ (overlaps S₃)
+        frozenset({20, 21}),           # S₅ (singleton class)
+    ])
+
+    classes = compute_overlap_classes(family)
+
+    # Color scheme for classes
+    class_colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0', '#FF9800']
+    idx_to_class = {}
     for ci, cls in enumerate(classes):
         for idx in cls:
-            idx_to_color[idx] = colors[ci]
+            idx_to_class[idx] = ci
+
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle('Overlap Class Decomposition of Support Families',
+                 fontsize=16, fontweight='bold', y=0.98)
+
+    # ---- Panel 1: Support Sets as Intervals ----
+    ax1 = axes[0]
+    ax1.set_title('Support Family', fontsize=13, fontweight='bold')
+
+    all_elements = set()
+    for s in family.supports:
+        all_elements |= s
+    elem_list = sorted(all_elements)
+    elem_to_x = {e: i for i, e in enumerate(elem_list)}
+
+    for i in range(family.n):
+        color = class_colors[idx_to_class[i] % len(class_colors)]
+        y = family.n - 1 - i
+        elements = sorted(family.supports[i])
+        xs = [elem_to_x[e] for e in elements]
+        ax1.scatter(xs, [y] * len(xs), color=color, s=80, zorder=5,
+                   edgecolors='black', linewidths=0.5)
+        # Connect elements with a line
+        if len(xs) > 1:
+            ax1.plot([min(xs) - 0.2, max(xs) + 0.2], [y, y],
+                    color=color, linewidth=3, alpha=0.3)
+        ax1.text(-1.5, y, f'S{i}', fontsize=11, ha='right', va='center',
+                fontweight='bold', color=color)
+
+    ax1.set_xlim(-2.5, len(elem_list))
+    ax1.set_ylim(-0.5, family.n - 0.5)
+    ax1.set_xlabel('Ground Set Elements', fontsize=10)
+    ax1.set_xticks(range(len(elem_list)))
+    ax1.set_xticklabels(elem_list, fontsize=8)
+    ax1.set_yticks([])
+    ax1.spines['top'].set_visible(False)
+    ax1.spines['right'].set_visible(False)
+    ax1.spines['left'].set_visible(False)
+
+    # ---- Panel 2: Overlap Graph ----
+    ax2 = axes[1]
+    ax2.set_title('Support Overlap Graph', fontsize=13, fontweight='bold')
+
+    # Position nodes in a circle
+    n = family.n
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False) - np.pi/2
+    radius = 1.5
+    positions = [(radius * np.cos(a), radius * np.sin(a)) for a in angles]
 
     # Draw edges
-    for i, j, shared in edges:
-        x = [positions[i][0], positions[j][0]]
-        y = [positions[i][1], positions[j][1]]
-        ax.plot(x, y, 'k-', alpha=0.4, linewidth=2)
-        # Label edge with shared elements
-        mx, my = (x[0]+x[1])/2, (y[0]+y[1])/2
-        ax.annotate(f"∩={set(shared)}", (mx, my),
-                   fontsize=7, ha='center', va='center',
-                   bbox=dict(boxstyle='round,pad=0.2', facecolor='lightyellow', alpha=0.8))
+    for i, j in combinations(range(n), 2):
+        if len(family.supports[i] & family.supports[j]) > 0:
+            isect_size = len(family.supports[i] & family.supports[j])
+            x1, y1 = positions[i]
+            x2, y2 = positions[j]
+            ax2.plot([x1, x2], [y1, y2], 'k-', linewidth=1 + isect_size,
+                    alpha=0.3, zorder=1)
+            # Label edge with intersection size
+            mx, my = (x1+x2)/2, (y1+y2)/2
+            ax2.text(mx, my + 0.15, f'{isect_size}', fontsize=8,
+                    ha='center', va='center',
+                    bbox=dict(boxstyle='round,pad=0.2', facecolor='white',
+                            edgecolor='gray', alpha=0.8))
 
     # Draw nodes
     for i in range(n):
+        color = class_colors[idx_to_class[i] % len(class_colors)]
         x, y = positions[i]
-        circle = plt.Circle((x, y), 0.4, color=idx_to_color[i],
-                           ec='black', linewidth=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, f"S{i}\n{set(supports[i])}", ha='center', va='center',
-               fontsize=8, fontweight='bold', zorder=6)
+        circle = plt.Circle((x, y), 0.25, color=color, ec='black',
+                           linewidth=1.5, zorder=5)
+        ax2.add_patch(circle)
+        ax2.text(x, y, f'S{i}', fontsize=10, ha='center', va='center',
+                fontweight='bold', color='white', zorder=6)
 
-    # Legend
-    legend_patches = []
+    ax2.set_xlim(-2.5, 2.5)
+    ax2.set_ylim(-2.5, 2.5)
+    ax2.set_aspect('equal')
+    ax2.axis('off')
+
+    # ---- Panel 3: Class Decomposition ----
+    ax3 = axes[2]
+    ax3.set_title('Overlap Classes', fontsize=13, fontweight='bold')
+
     for ci, cls in enumerate(classes):
-        patch = mpatches.Patch(color=colors[ci],
-                              label=f"Class {ci}: indices {cls}")
-        legend_patches.append(patch)
-    ax.legend(handles=legend_patches, loc='upper left', fontsize=9)
-
-    ax.set_xlim(-3.5, 3.5)
-    ax.set_ylim(-3.5, 3.5)
-    ax.set_aspect('equal')
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    return fig, ax
-
-
-# Create the visualization
-fig, axes = plt.subplots(2, 2, figsize=(16, 14))
-fig.suptitle("Support Overlap Graphs and Overlap Classes", fontsize=16, fontweight='bold')
-
-# Example 1: Fully disjoint
-supports1 = [
-    frozenset({0, 1}),
-    frozenset({2, 3}),
-    frozenset({4, 5}),
-    frozenset({6, 7}),
-]
-draw_overlap_graph(supports1, "Pairwise Disjoint\n(4 classes, 0 edges)", axes[0, 0])
-
-# Example 2: Single overlap
-supports2 = [
-    frozenset({0, 1, 2}),
-    frozenset({2, 3, 4}),
-    frozenset({5, 6}),
-    frozenset({7, 8}),
-]
-draw_overlap_graph(supports2, "Single Overlap\n(3 classes, 1 edge)", axes[0, 1])
-
-# Example 3: Chain overlap
-supports3 = [
-    frozenset({0, 1}),
-    frozenset({1, 2}),
-    frozenset({2, 3}),
-    frozenset({5, 6}),
-]
-draw_overlap_graph(supports3, "Chain Overlap\n(2 classes, 2 edges)", axes[1, 0])
-
-# Example 4: Dense overlap
-supports4 = [
-    frozenset({0, 1, 2}),
-    frozenset({1, 2, 3}),
-    frozenset({2, 3, 4}),
-    frozenset({0, 4}),
-]
-draw_overlap_graph(supports4, "Dense Overlap\n(1 class, 5 edges)", axes[1, 1])
-
-plt.tight_layout()
-plt.savefig('overlap_graph_visualization.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved overlap_graph_visualization.png")
-
-
-"""
-Visualization: Cross-Overlap Count Heatmap
-
-This script creates a heatmap showing the pairwise intersection sizes
-between supports in a family. The heatmap makes the overlap pattern
-immediately visible: disjoint pairs appear as zeros (white), while
-overlapping pairs show the intersection cardinality (colored).
-
-What it visualizes:
-- Pairwise intersection cardinalities between all supports
-- Darker colors indicate larger intersections
-- Block-diagonal structure reveals overlap classes
-- Annotations show exact intersection sizes
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import combinations
-from collections import defaultdict
-
-
-def compute_cross_overlap_matrix(supports):
-    """Compute the matrix of pairwise intersection sizes."""
-    n = len(supports)
-    matrix = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(n):
-            matrix[i, j] = len(supports[i] & supports[j])
-    return matrix
-
-
-def compute_overlap_classes(supports):
-    """Compute overlap classes using union-find."""
-    n = len(supports)
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-
-    for i, j in combinations(range(n), 2):
-        if supports[i] & supports[j]:
-            union(i, j)
-
-    components = defaultdict(list)
-    for i in range(n):
-        components[find(i)].append(i)
-    return list(components.values())
-
-
-def reorder_by_classes(supports, classes):
-    """Reorder indices so that overlap classes are contiguous."""
-    order = []
-    for cls in classes:
-        order.extend(sorted(cls))
-    return order
-
-
-def draw_heatmap(supports, title, ax):
-    """Draw the cross-overlap heatmap."""
-    classes = compute_overlap_classes(supports)
-    order = reorder_by_classes(supports, classes)
-    n = len(supports)
-
-    reordered = [supports[i] for i in order]
-    matrix = compute_cross_overlap_matrix(reordered)
-
-    # Zero out diagonal for cleaner visualization
-    np.fill_diagonal(matrix, 0)
-
-    im = ax.imshow(matrix, cmap='YlOrRd', aspect='equal', vmin=0)
-
-    # Add text annotations
-    for i in range(n):
-        for j in range(n):
-            val = matrix[i, j]
-            color = 'white' if val > 2 else 'black'
-            ax.text(j, i, str(val), ha='center', va='center',
-                   fontsize=10, fontweight='bold', color=color)
-
-    # Labels
-    labels = [f"S{order[i]}" for i in range(n)]
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels(labels, fontsize=9)
-    ax.set_yticklabels(labels, fontsize=9)
-
-    # Draw class boundaries
-    pos = 0
-    for cls in classes:
-        size = len(cls)
-        if pos > 0:
-            ax.axhline(y=pos - 0.5, color='blue', linewidth=2, linestyle='--')
-            ax.axvline(x=pos - 0.5, color='blue', linewidth=2, linestyle='--')
-        pos += size
-
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    return im
-
-
-# Create the visualization
-fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-fig.suptitle("Cross-Overlap Count Heatmaps\n(Blue dashed lines separate overlap classes)",
-             fontsize=14, fontweight='bold')
-
-# Example 1: Fully disjoint (6 supports)
-supports1 = [
-    frozenset({0, 1}), frozenset({2, 3}), frozenset({4, 5}),
-    frozenset({6, 7}), frozenset({8, 9}), frozenset({10, 11}),
-]
-draw_heatmap(supports1, "Disjoint: 6 classes", axes[0, 0])
-
-# Example 2: Two clusters
-supports2 = [
-    frozenset({0, 1, 2}), frozenset({1, 2, 3}), frozenset({2, 3, 4}),
-    frozenset({10, 11}), frozenset({11, 12}), frozenset({20, 21}),
-]
-draw_heatmap(supports2, "Two clusters + isolated", axes[0, 1])
-
-# Example 3: Chain
-supports3 = [
-    frozenset({0, 1}), frozenset({1, 2}), frozenset({2, 3}),
-    frozenset({3, 4}), frozenset({4, 5}), frozenset({10, 11}),
-]
-draw_heatmap(supports3, "Chain + isolated", axes[1, 0])
-
-# Example 4: Star
-supports4 = [
-    frozenset({0, 1, 2, 3}),
-    frozenset({0, 4, 5}),
-    frozenset({0, 6, 7}),
-    frozenset({0, 8, 9}),
-    frozenset({0, 10, 11}),
-    frozenset({20, 21}),
-]
-draw_heatmap(supports4, "Star pattern + isolated", axes[1, 1])
-
-plt.tight_layout()
-plt.savefig('overlap_heatmap.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved overlap_heatmap.png")
-
-
-"""
-Visualization: Overlap Degree Statistics Across Small Graphs
-
-This script generates statistics about overlap patterns across all
-connected graphs on n vertices, showing how overlap degree distributes
-and how the number of overlap classes varies with graph structure.
-
-What it visualizes:
-- Distribution of overlap degrees across small graphs
-- Relationship between graph density and overlap degree
-- Number of overlap classes vs number of cycle supports
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import combinations
-from collections import defaultdict
-
-
-def find_cycle_supports_local(n_vertices, edges, S):
-    """Find cycle supports in the induced subgraph."""
-    vertices = sorted(S)
-    adj = {v: set() for v in vertices}
-    for u, v in edges:
-        if u in S and v in S:
-            adj[u].add(v)
-            adj[v].add(u)
-
-    visited = set()
-    parent = {}
-    cycles = []
-
-    def dfs(v, p):
-        visited.add(v)
-        parent[v] = p
-        for w in adj[v]:
-            if w == p:
-                continue
-            if w in visited:
-                cycle = {w}
-                u = v
-                while u != w:
-                    cycle.add(u)
-                    u = parent[u]
-                cycles.append(frozenset(cycle))
-            elif w not in visited:
-                dfs(w, v)
-
-    for v in vertices:
-        if v not in visited:
-            dfs(v, None)
-    return cycles
-
-
-def overlap_degree_local(supports):
-    """Count overlapping pairs."""
-    return sum(1 for i, j in combinations(range(len(supports)), 2)
-               if supports[i] & supports[j])
-
-
-def overlap_classes_local(supports):
-    """Count overlap classes."""
-    n = len(supports)
-    if n == 0:
-        return 0
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        parent[find(x)] = find(y)
-    for i, j in combinations(range(n), 2):
-        if supports[i] & supports[j]:
-            union(i, j)
-    return len(set(find(i) for i in range(n)))
-
-
-def is_connected(n, edges):
-    """Check if graph is connected."""
-    if n <= 1:
-        return True
-    adj = {i: set() for i in range(n)}
-    for u, v in edges:
-        adj[u].add(v)
-        adj[v].add(u)
-    visited = set()
-    stack = [0]
-    while stack:
-        v = stack.pop()
-        if v in visited:
-            continue
-        visited.add(v)
-        stack.extend(w for w in adj[v] if w not in visited)
-    return len(visited) == n
-
-
-# Collect statistics
-print("Computing overlap statistics for small graphs...")
-
-overlap_degrees = []
-class_counts = []
-support_counts = []
-graph_densities = []
-
-for n in range(3, 7):
-    all_edges = list(combinations(range(n), 2))
-    max_edges = len(all_edges)
-
-    for mask in range(1, min(1 << max_edges, 2**13)):
-        edges = [all_edges[i] for i in range(max_edges) if mask & (1 << i)]
-        if not is_connected(n, edges):
-            continue
-
-        density = len(edges) / max_edges
-
-        for q in range(n):
-            S = set(range(n)) - {q}
-            cs = find_cycle_supports_local(n, edges, S)
-            if not cs:
-                continue
-
-            od = overlap_degree_local(cs)
-            nc = overlap_classes_local(cs)
-
-            overlap_degrees.append(od)
-            class_counts.append(nc)
-            support_counts.append(len(cs))
-            graph_densities.append(density)
-
-print(f"Collected {len(overlap_degrees)} data points")
-
-# Create the visualization
-fig, axes = plt.subplots(2, 2, figsize=(14, 11))
-fig.suptitle("Overlap Structure Statistics Across Small Graphs (n ≤ 6)",
-             fontsize=14, fontweight='bold')
-
-# Plot 1: Distribution of overlap degrees
-ax = axes[0, 0]
-max_od = max(overlap_degrees) if overlap_degrees else 0
-bins = range(0, max_od + 2)
-ax.hist(overlap_degrees, bins=bins, color='steelblue', edgecolor='black', alpha=0.8, align='left')
-ax.set_xlabel('Overlap Degree', fontsize=11)
-ax.set_ylabel('Frequency', fontsize=11)
-ax.set_title('Distribution of Overlap Degrees', fontsize=12, fontweight='bold')
-ax.axvline(x=0, color='red', linestyle='--', alpha=0.5, label='Disjoint regime')
-ax.legend(fontsize=9)
-
-# Plot 2: Overlap degree vs graph density
-ax = axes[0, 1]
-ax.scatter(graph_densities, overlap_degrees, alpha=0.15, s=10, c='steelblue')
-ax.set_xlabel('Graph Density (|E|/max|E|)', fontsize=11)
-ax.set_ylabel('Overlap Degree', fontsize=11)
-ax.set_title('Overlap Degree vs Graph Density', fontsize=12, fontweight='bold')
-
-# Add trend line
-if graph_densities:
-    z = np.polyfit(graph_densities, overlap_degrees, 2)
-    p = np.poly1d(z)
-    xs = np.linspace(min(graph_densities), max(graph_densities), 100)
-    ax.plot(xs, p(xs), 'r-', linewidth=2, alpha=0.7, label='Quadratic fit')
-    ax.legend(fontsize=9)
-
-# Plot 3: Number of overlap classes vs number of supports
-ax = axes[1, 0]
-ax.scatter(support_counts, class_counts, alpha=0.2, s=15, c='green')
-# Add y = x line
-max_sc = max(support_counts) if support_counts else 1
-ax.plot([0, max_sc], [0, max_sc], 'r--', alpha=0.5, label='Classes = Supports (all disjoint)')
-ax.set_xlabel('Number of Cycle Supports', fontsize=11)
-ax.set_ylabel('Number of Overlap Classes', fontsize=11)
-ax.set_title('Overlap Classes vs Cycle Supports', fontsize=12, fontweight='bold')
-ax.legend(fontsize=9)
-
-# Plot 4: Fraction of overlapping cases by n
-ax = axes[1, 1]
-fracs = {}
-for n in range(3, 7):
-    all_edges = list(combinations(range(n), 2))
-    max_edges = len(all_edges)
-    total = 0
-    overlapping = 0
-    for mask in range(1, min(1 << max_edges, 2**13)):
-        edges = [all_edges[i] for i in range(max_edges) if mask & (1 << i)]
-        if not is_connected(n, edges):
-            continue
-        for q in range(n):
-            S = set(range(n)) - {q}
-            cs = find_cycle_supports_local(n, edges, S)
-            if cs:
-                total += 1
-                if overlap_degree_local(cs) > 0:
-                    overlapping += 1
-    if total > 0:
-        fracs[n] = overlapping / total
-
-ns = sorted(fracs.keys())
-vals = [fracs[n] for n in ns]
-ax.bar(ns, vals, color='coral', edgecolor='black', alpha=0.8)
-ax.set_xlabel('Number of Vertices (n)', fontsize=11)
-ax.set_ylabel('Fraction with Overlap', fontsize=11)
-ax.set_title('Fraction of Overlapping Instances by n', fontsize=12, fontweight='bold')
-for i, (n, v) in enumerate(zip(ns, vals)):
-    ax.text(n, v + 0.01, f'{v:.2%}', ha='center', fontsize=10)
-
-plt.tight_layout()
-plt.savefig('overlap_statistics.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved overlap_statistics.png")
+        color = class_colors[ci % len(class_colors)]
+        y_base = len(classes) - 1 - ci
+
+        # Draw class box
+        rect = mpatches.FancyBboxPatch(
+            (0.1, y_base - 0.35), 3.8, 0.7,
+            boxstyle="round,pad=0.1",
+            facecolor=color, alpha=0.15, edgecolor=color, linewidth=2
+        )
+        ax3.add_patch(rect)
+
+        # Class label
+        ax3.text(0.3, y_base + 0.15, f'Class {ci+1}',
+                fontsize=11, fontweight='bold', color=color)
+
+        # Members
+        members = ', '.join(f'S{j}' for j in cls)
+        ax3.text(0.3, y_base - 0.15, members,
+                fontsize=10, color='black')
+
+        # Union of supports
+        union = set()
+        for idx in cls:
+            union |= family.supports[idx]
+        ax3.text(2.5, y_base, f'∪ = {sorted(union)}',
+                fontsize=8, color='gray', va='center')
+
+    ax3.set_xlim(0, 4)
+    ax3.set_ylim(-0.5, len(classes) - 0.5)
+    ax3.axis('off')
+
+    # Add summary text
+    od = overlap_degree(family)
+    fig.text(0.5, 0.02,
+            f'Family size: {n} supports | Overlap degree: {od} | '
+            f'Overlap classes: {len(classes)} | '
+            f'Key theorem: supports across classes are disjoint',
+            ha='center', fontsize=10, style='italic',
+            bbox=dict(boxstyle='round', facecolor='lightyellow',
+                     edgecolor='orange', alpha=0.8))
+
+    plt.tight_layout(rect=[0, 0.06, 1, 0.95])
+    plt.savefig('overlap_classes_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: overlap_classes_visualization.png")
+
+
+if __name__ == "__main__":
+    visualize_overlap_classes()
