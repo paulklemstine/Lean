@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Riemannian Geometry / Information Geometry",
     "date": "2026-05-29T21:16:38Z",
     "exp_id": "d1799142",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7145512903225808,
+    "quality": "substantial",
     "pkg_num": 350
   },
   {
@@ -10159,8 +10159,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-29T21:16:38Z",
       "hue": 292,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7145512903225808,
+      "quality": "substantial"
     }
   ],
   "edges": [
