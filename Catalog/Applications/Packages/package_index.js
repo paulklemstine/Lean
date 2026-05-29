@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Quantum Many-Body Theory / Lorentzian Polynomials / Markov Chain Expansion",
     "date": "2026-05-29T16:25:03Z",
     "exp_id": "638966d7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7207637333333334,
+    "quality": "substantial",
     "pkg_num": 324
   },
   {
@@ -9405,8 +9405,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-29T16:25:03Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7207637333333334,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -973,5 +973,8 @@
   "ab24e124": "galois_monodromy_from_persistent_homology_of_newto.json",
   "bc40a9b7": "euler_mascheroni_constant_irrationality.json",
   "12e461c7": "direction_1_overlap_class_conjecture__beyond_disjo.json",
-  "eeaa50bf": "schanuels_conjecture.json"
+  "eeaa50bf": "schanuels_conjecture.json",
+  "b235eb8d": "direction_3_quantum_circuit_rewriting_via_tensor_d.json",
+  "cc1d1576": "direction_1_uniform_spectral_gap_bound_for_gl_q.json",
+  "638966d7": "direction_4_robust_log_concavity_for_quantum_many_.json"
 }
