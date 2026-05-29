@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2049 of the highest-quality
+A curated collection of 2050 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2049
+Total files: 2050
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1994,6 +1994,7 @@ import FINAL.Tropical.TropicalDeepResearch
 import FINAL.Tropical.TropicalDegreeRobustness
 import FINAL.Tropical.TropicalElGamal
 import FINAL.Tropical.TropicalEntropyCompact
+import FINAL.Tropical.TropicalF1Skeleton
 import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
