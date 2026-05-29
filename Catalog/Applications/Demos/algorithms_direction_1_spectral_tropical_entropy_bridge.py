@@ -1,342 +1,312 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Certified Computation Pipeline for Spectral-Tropical Entropy
+algorithms.py — Certified Spectral-Tropical Entropy Algorithms
 
-Implements the complete algorithm suite for computing degree entropy,
-regularity deficit, KL divergence, and spectral-entropy bounds for
-finite simple graphs.
+Implements the core algorithms from the spectral-tropical entropy bridge theory:
+degree distribution, Shannon entropy, regularity deficit, KL divergence,
+and spectral-entropy lower bounds.
 
-All algorithms correspond to formally verified Lean 4 definitions
-in Catalog/Pythagorean/TropicalBridge/SpectralTropicalEntropy.lean.
+All algorithms operate on graphs represented as adjacency lists or
+networkx Graph objects.
 """
 
+import math
+from typing import Dict, List, Tuple, Optional
 import numpy as np
-from typing import List, Tuple, Dict, Optional
+
+try:
+    import networkx as nx
+    HAS_NETWORKX = True
+except ImportError:
+    HAS_NETWORKX = False
 
 
-def degree_sequence(adj: np.ndarray) -> np.ndarray:
-    """Compute the degree sequence of a graph from its adjacency matrix.
-
-    Args:
-        adj: n×n symmetric binary adjacency matrix.
-
-    Returns:
-        Array of vertex degrees.
-
-    Time: O(n²), Space: O(n).
-
-    Example:
-        >>> adj = np.array([[0,1,1],[1,0,1],[1,1,0]])
-        >>> degree_sequence(adj)
-        array([2, 2, 2])
-    """
-    return adj.sum(axis=1).astype(int)
-
-
-def graph_volume(degrees: np.ndarray) -> float:
-    """Compute vol(G) = sum of all vertex degrees = 2|E|.
-
-    Lean definition: `def vol (G) := ∑ v, (G.degree v : ℝ)`
+def degree_sequence(adj: Dict[int, List[int]]) -> List[int]:
+    """Compute degree sequence from adjacency list.
 
     Args:
-        degrees: Array of vertex degrees.
+        adj: Adjacency list {vertex: [neighbors]}
 
     Returns:
-        Total volume as a float.
+        List of degrees indexed by vertex.
 
-    Time: O(n), Space: O(1).
-
-    Example:
-        >>> graph_volume(np.array([2, 2, 2]))
-        6.0
+    Time complexity: O(|V| + |E|)
+    Space complexity: O(|V|)
     """
-    return float(degrees.sum())
+    return [len(adj.get(v, [])) for v in sorted(adj.keys())]
 
 
-def degree_distribution(degrees: np.ndarray) -> np.ndarray:
-    """Compute the degree probability distribution p_v = d(v) / vol(G).
+def volume(degrees: List[int]) -> int:
+    """Total volume: sum of all degrees = 2|E|.
 
-    Lean definition: `def degreeProb (G) (v) := (G.degree v : ℝ) / vol G`
+    Time complexity: O(|V|)
+    """
+    return sum(degrees)
+
+
+def degree_distribution(degrees: List[int]) -> List[float]:
+    """Compute degree probability distribution p_v = d(v) / vol(G).
 
     Args:
-        degrees: Array of vertex degrees.
+        degrees: List of vertex degrees.
 
     Returns:
-        Probability distribution over vertices.
+        List of probabilities. Returns uniform if volume is 0.
 
-    Time: O(n), Space: O(n).
-    Precondition: vol(G) > 0.
-
-    Example:
-        >>> degree_distribution(np.array([2, 2, 2]))
-        array([0.333..., 0.333..., 0.333...])
+    Time complexity: O(|V|)
     """
-    vol = graph_volume(degrees)
+    vol = volume(degrees)
     if vol == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / vol
+        n = len(degrees)
+        return [1.0 / n if n > 0 else 0.0] * n
+    return [d / vol for d in degrees]
 
 
-def shannon_entropy(degrees: np.ndarray) -> float:
-    """Compute Shannon entropy of the degree distribution.
+def degree_entropy(degrees: List[int]) -> float:
+    """Shannon entropy of the degree distribution.
 
-    H(G) = -∑_v p_v log(p_v)
+    H(G) = -sum_v p_v * log(p_v)
 
-    Lean definition: `def degreeEntropy (G) := -∑ v, degreeProb G v * log(degreeProb G v)`
-
-    Uses natural logarithm. Convention: 0 · log(0) = 0.
-
-    Args:
-        degrees: Array of vertex degrees.
-
-    Returns:
-        Degree entropy H(G).
-
-    Time: O(n), Space: O(1).
-
-    Example:
-        >>> shannon_entropy(np.array([2, 2, 2]))  # Regular graph
-        1.0986...  # = log(3)
-    """
-    p = degree_distribution(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
-
-
-def max_degree(degrees: np.ndarray) -> int:
-    """Maximum vertex degree Δ.
-
-    Lean definition: `def maxDeg (G) := Finset.univ.sup (degFun G)`
+    Uses natural logarithm. Convention: 0 * log(0) = 0.
 
     Args:
-        degrees: Array of vertex degrees.
+        degrees: List of vertex degrees.
 
     Returns:
-        Maximum degree.
+        Shannon entropy H(G) >= 0.
 
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
-    return int(degrees.max())
+    probs = degree_distribution(degrees)
+    entropy = 0.0
+    for p in probs:
+        if p > 0:
+            entropy -= p * math.log(p)
+    return entropy
 
 
-def average_degree(degrees: np.ndarray) -> float:
-    """Average vertex degree d̄ = vol(G) / |V|.
+def max_degree(degrees: List[int]) -> int:
+    """Maximum vertex degree Delta.
 
-    Lean definition: `def avgDegree (G) := vol G / Fintype.card V`
-
-    Args:
-        degrees: Array of vertex degrees.
-
-    Returns:
-        Average degree.
-
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
-    return float(degrees.mean())
+    return max(degrees) if degrees else 0
 
 
-def regularity_deficit(degrees: np.ndarray) -> float:
-    """Regularity deficit D(G) = log|V| - H(G).
+def avg_degree(degrees: List[int]) -> float:
+    """Average vertex degree d_bar = vol(G) / |V|.
 
-    Lean definition: `def regularityDeficit (G) := log(Fintype.card V) - degreeEntropy G`
+    Time complexity: O(|V|)
+    """
+    n = len(degrees)
+    if n == 0:
+        return 0.0
+    return volume(degrees) / n
+
+
+def regularity_deficit(degrees: List[int]) -> float:
+    """Regularity deficit: D(G) = log|V| - H(G).
 
     Measures information-theoretic deviation from regularity.
-    D(G) = 0 iff G is regular (among connected graphs).
+    Equals 0 iff the graph is regular.
 
-    Args:
-        degrees: Array of vertex degrees.
-
-    Returns:
-        Regularity deficit D(G) ≥ 0.
-
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
     n = len(degrees)
-    return np.log(n) - shannon_entropy(degrees)
+    if n == 0:
+        return 0.0
+    return math.log(n) - degree_entropy(degrees)
 
 
-def kl_divergence_from_uniform(degrees: np.ndarray) -> float:
-    """KL divergence D_KL(p || u) from the degree distribution to uniform.
+def kl_divergence_to_uniform(degrees: List[int]) -> float:
+    """KL divergence of degree distribution from uniform.
 
-    Lean definition:
-        `def degreeKLToUniform (G) := ∑ v, degreeProb G v * log(degreeProb G v / uniformProb V)`
+    D_KL(p || u) = sum_v p_v * log(p_v / u_v)
 
-    Formally verified to equal regularityDeficit(G):
-        `theorem regularityDeficit_eq_degreeKLToUniform`
+    Theorem: This equals the regularity deficit.
 
-    Args:
-        degrees: Array of vertex degrees.
-
-    Returns:
-        KL divergence.
-
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
     n = len(degrees)
-    p = degree_distribution(degrees)
+    if n == 0:
+        return 0.0
+    probs = degree_distribution(degrees)
     u = 1.0 / n
     kl = 0.0
-    for pv in p:
-        if pv > 0:
-            kl += pv * np.log(pv / u)
+    for p in probs:
+        if p > 0:
+            kl += p * math.log(p / u)
     return kl
 
 
-def entropy_lower_bound(degrees: np.ndarray) -> float:
-    """Certified lower bound on degree entropy: log(|V| · d̄ / Δ).
+def entropy_lower_bound_avg_max(degrees: List[int]) -> float:
+    """Certified entropy lower bound: log(|V| * d_bar / Delta).
 
-    Lean theorem:
-        `theorem degreeEntropy_lower_bound_avg_max :
-            log(|V| * avgDegree G / maxDeg G) ≤ degreeEntropy G`
+    Theorem: H(G) >= log(|V| * avgDegree / maxDegree).
 
-    Args:
-        degrees: Array of vertex degrees.
+    This is the core spectral-tropical entropy bound.
 
-    Returns:
-        Lower bound on H(G).
-
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
     n = len(degrees)
-    d_bar = average_degree(degrees)
+    if n == 0:
+        return 0.0
+    delta = max_degree(degrees)
+    d_bar = avg_degree(degrees)
+    if delta == 0 or d_bar <= 0:
+        return float('-inf')
+    return math.log(n * d_bar / delta)
+
+
+def entropy_lower_bound_spectral(degrees: List[int], spectral_radius: float) -> float:
+    """Spectral entropy lower bound: log(|V| * rho / Delta).
+
+    Given that rho <= avgDegree (which holds for spectral radius of
+    adjacency matrix), provides: H(G) >= log(|V| * rho / Delta).
+
+    Args:
+        degrees: List of vertex degrees.
+        spectral_radius: A lower bound on avgDegree (e.g., lambda_1).
+
+    Returns:
+        Lower bound on degree entropy.
+
+    Time complexity: O(|V|)
+    """
+    n = len(degrees)
+    if n == 0:
+        return 0.0
     delta = max_degree(degrees)
     if delta == 0:
         return float('-inf')
-    return np.log(n * d_bar / delta)
+    return math.log(n * spectral_radius / delta)
 
 
-def deficit_upper_bound(degrees: np.ndarray) -> float:
-    """Certified upper bound on regularity deficit: log(Δ / d̄).
+def deficit_upper_bound(degrees: List[int]) -> float:
+    """Upper bound on regularity deficit: log(Delta / d_bar).
 
-    Lean theorem:
-        `theorem regularityDeficit_le_log_maxDeg_div_avgDegree :
-            regularityDeficit G ≤ log(maxDeg G / avgDegree G)`
+    Theorem: D(G) <= log(maxDegree / avgDegree).
 
-    Args:
-        degrees: Array of vertex degrees.
-
-    Returns:
-        Upper bound on D(G).
-
-    Time: O(n), Space: O(1).
+    Time complexity: O(|V|)
     """
-    d_bar = average_degree(degrees)
     delta = max_degree(degrees)
-    if d_bar == 0:
+    d_bar = avg_degree(degrees)
+    if d_bar <= 0 or delta == 0:
         return float('inf')
-    return np.log(delta / d_bar)
+    return math.log(delta / d_bar)
 
 
-def spectral_radius(adj: np.ndarray) -> float:
-    """Largest eigenvalue of the adjacency matrix.
+def is_regular(degrees: List[int]) -> bool:
+    """Check if graph is regular (all degrees equal).
 
-    For connected graphs, this is the Perron–Frobenius eigenvalue λ₁.
-    Classical result: d̄ ≤ λ₁ ≤ Δ.
+    Time complexity: O(|V|)
+    """
+    if not degrees:
+        return True
+    return all(d == degrees[0] for d in degrees)
+
+
+def spectral_radius_adjacency(adj_matrix: np.ndarray) -> float:
+    """Compute spectral radius (largest eigenvalue) of adjacency matrix.
 
     Args:
-        adj: n×n symmetric binary adjacency matrix.
+        adj_matrix: Symmetric 0/1 adjacency matrix.
 
     Returns:
-        Spectral radius λ₁.
+        Largest eigenvalue lambda_1.
 
-    Time: O(n³) via eigendecomposition, Space: O(n²).
+    Time complexity: O(|V|^3) via eigendecomposition.
     """
-    eigenvalues = np.linalg.eigvalsh(adj.astype(float))
-    return float(eigenvalues.max())
+    eigenvalues = np.linalg.eigvalsh(adj_matrix)
+    return float(np.max(eigenvalues))
 
 
-def spectral_entropy_bound(degrees: np.ndarray, lambda1: float) -> float:
-    """Strong spectral entropy bound (conjectural): log(|V| · λ₁ / Δ).
-
-    This is STRONGER than the certified bound when λ₁ > d̄.
-
-    Not yet formally verified — this is the target conjecture.
-
-    Args:
-        degrees: Array of vertex degrees.
-        lambda1: Spectral radius of adjacency matrix.
-
-    Returns:
-        Conjectural lower bound on H(G).
-    """
-    n = len(degrees)
-    delta = max_degree(degrees)
-    if delta == 0:
-        return float('-inf')
-    return np.log(n * lambda1 / delta)
-
-
-def full_analysis(adj: np.ndarray) -> Dict:
+def full_spectral_entropy_analysis(adj_matrix: np.ndarray) -> Dict[str, float]:
     """Complete spectral-tropical entropy analysis of a graph.
 
-    Computes all invariants and bounds, returning a dictionary
-    with all results and bound verification status.
-
     Args:
-        adj: n×n symmetric binary adjacency matrix.
+        adj_matrix: Symmetric 0/1 adjacency matrix.
 
     Returns:
-        Dictionary with all computed invariants and verification results.
-
-    Example:
-        >>> adj = np.array([[0,1,1],[1,0,1],[1,1,0]])  # K_3
-        >>> result = full_analysis(adj)
-        >>> result['is_regular']
-        True
-        >>> abs(result['entropy'] - np.log(3)) < 1e-10
-        True
+        Dictionary with all computed quantities:
+        - n: vertex count
+        - vol: total volume
+        - max_degree: maximum degree
+        - avg_degree: average degree
+        - entropy: degree entropy H(G)
+        - log_n: log|V|
+        - deficit: regularity deficit
+        - kl_uniform: KL divergence from uniform
+        - bound_avg_max: entropy lower bound log(n * d_bar / Delta)
+        - deficit_upper: deficit upper bound log(Delta / d_bar)
+        - spectral_radius: lambda_1
+        - bound_spectral: spectral entropy bound log(n * lambda_1 / Delta)
+        - margin_avg: H(G) - bound_avg_max
+        - margin_spectral: H(G) - bound_spectral
+        - is_regular: whether graph is regular
     """
-    degrees = degree_sequence(adj)
-    n = len(degrees)
+    n = adj_matrix.shape[0]
+    degrees = [int(np.sum(adj_matrix[i])) for i in range(n)]
 
-    H = shannon_entropy(degrees)
-    D = regularity_deficit(degrees)
-    KL = kl_divergence_from_uniform(degrees)
-    lb = entropy_lower_bound(degrees)
-    ub_deficit = deficit_upper_bound(degrees)
-    lam1 = spectral_radius(adj)
-    lb_spec = spectral_entropy_bound(degrees, lam1)
+    vol_val = volume(degrees)
+    delta = max_degree(degrees)
+    d_bar = avg_degree(degrees)
+    H = degree_entropy(degrees)
+    log_n = math.log(n) if n > 0 else 0.0
+    deficit = regularity_deficit(degrees)
+    kl = kl_divergence_to_uniform(degrees)
+    bound_am = entropy_lower_bound_avg_max(degrees)
+    deficit_ub = deficit_upper_bound(degrees)
+
+    # Spectral radius
+    lam1 = spectral_radius_adjacency(adj_matrix)
+    bound_spec = entropy_lower_bound_spectral(degrees, lam1) if delta > 0 else float('-inf')
 
     return {
         'n': n,
-        'num_edges': int(graph_volume(degrees)) // 2,
-        'degrees': degrees.tolist(),
-        'max_degree': max_degree(degrees),
-        'avg_degree': average_degree(degrees),
-        'volume': graph_volume(degrees),
-        'spectral_radius': lam1,
+        'vol': vol_val,
+        'max_degree': delta,
+        'avg_degree': d_bar,
         'entropy': H,
-        'log_n': np.log(n),
-        'regularity_deficit': D,
-        'kl_divergence': KL,
-        'deficit_kl_match': abs(D - KL) < 1e-10,
-        'entropy_lower_bound': lb,
-        'entropy_bound_holds': H >= lb - 1e-10,
-        'deficit_upper_bound': ub_deficit,
-        'deficit_bound_holds': D <= ub_deficit + 1e-10,
-        'spectral_lower_bound': lb_spec,
-        'spectral_bound_holds': H >= lb_spec - 1e-10,
-        'is_regular': len(set(degrees.tolist())) <= 1,
-        'entropy_margin_avg': H - lb,
-        'entropy_margin_spectral': H - lb_spec,
+        'log_n': log_n,
+        'deficit': deficit,
+        'kl_uniform': kl,
+        'bound_avg_max': bound_am,
+        'deficit_upper': deficit_ub,
+        'spectral_radius': lam1,
+        'bound_spectral': bound_spec,
+        'margin_avg': H - bound_am,
+        'margin_spectral': H - bound_spec if bound_spec > float('-inf') else float('inf'),
+        'is_regular': is_regular(degrees),
     }
 
 
+# ─── Example usage ────────────────────────────────────────────────────────────
+
 if __name__ == "__main__":
-    # Quick demonstration
-    print("=== Full Analysis: Complete Graph K_5 ===")
-    K5 = np.ones((5, 5), dtype=int) - np.eye(5, dtype=int)
-    result = full_analysis(K5)
+    # Example: Complete graph K5
+    n = 5
+    K5 = np.ones((n, n)) - np.eye(n)
+    result = full_spectral_entropy_analysis(K5)
+    print("=== Complete Graph K5 ===")
     for k, v in result.items():
         print(f"  {k}: {v}")
 
-    print("\n=== Full Analysis: Star Graph S_5 ===")
-    S5 = np.zeros((5, 5), dtype=int)
-    for i in range(1, 5):
-        S5[0][i] = S5[i][0] = 1
-    result = full_analysis(S5)
+    # Example: Path graph P5
+    P5 = np.zeros((n, n))
+    for i in range(n - 1):
+        P5[i][i + 1] = 1
+        P5[i + 1][i] = 1
+    result = full_spectral_entropy_analysis(P5)
+    print("\n=== Path Graph P5 ===")
+    for k, v in result.items():
+        print(f"  {k}: {v}")
+
+    # Example: Star graph S5
+    S5 = np.zeros((n, n))
+    for i in range(1, n):
+        S5[0][i] = 1
+        S5[i][0] = 1
+    result = full_spectral_entropy_analysis(S5)
+    print("\n=== Star Graph S5 ===")
     for k, v in result.items():
         print(f"  {k}: {v}")

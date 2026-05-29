@@ -2,68 +2,55 @@
 """
 applications.py — Real-World Applications of the Spectral-Tropical Entropy Bridge
 
-Demonstrates how the certified entropy bounds can be applied to:
-1. Network analysis — detecting graph irregularity
-2. Community structure — entropy as a regularity probe
-3. Random graph models — comparing entropy profiles
-4. Architecture analysis — graph-based circuit/network design
+Demonstrates practical applications of the spectral-entropy theorems:
+1. Network anomaly detection using entropy bounds
+2. Graph classification via regularity deficit
+3. Network robustness estimation from spectral certificates
 """
 
-import numpy as np
+import math
 import random
+import numpy as np
+from typing import List, Dict, Tuple
 
-random.seed(42)
-np.random.seed(42)
 
+# ─── Core Functions (self-contained) ─────────────────────────────────────────
 
-# ============================================================
-# Core functions (self-contained)
-# ============================================================
-
-def degree_sequence(adj):
-    return adj.sum(axis=1).astype(int)
-
-def graph_volume(degrees):
-    return float(degrees.sum())
-
-def degree_distribution(degrees):
-    vol = graph_volume(degrees)
+def degree_entropy(degrees: List[int]) -> float:
+    vol = sum(degrees)
     if vol == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / vol
+        return 0.0
+    H = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            H -= p * math.log(p)
+    return H
 
-def shannon_entropy(degrees):
-    p = degree_distribution(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
 
-def max_degree(degrees):
-    return int(degrees.max())
-
-def average_degree(degrees):
-    return float(degrees.mean())
-
-def regularity_deficit(degrees):
+def regularity_deficit(degrees: List[int]) -> float:
     n = len(degrees)
-    return np.log(n) - shannon_entropy(degrees)
+    if n == 0:
+        return 0.0
+    return math.log(n) - degree_entropy(degrees)
 
-def entropy_lower_bound(degrees):
+
+def entropy_lower_bound(degrees: List[int]) -> float:
     n = len(degrees)
-    d_bar = average_degree(degrees)
-    delta = max_degree(degrees)
-    if delta == 0:
+    vol = sum(degrees)
+    delta = max(degrees) if degrees else 0
+    if n == 0 or vol == 0 or delta == 0:
         return float('-inf')
-    return np.log(n * d_bar / delta)
+    d_bar = vol / n
+    return math.log(n * d_bar / delta)
 
-def spectral_radius(adj):
-    eigenvalues = np.linalg.eigvalsh(adj.astype(float))
-    return float(eigenvalues.max())
 
-def generate_erdos_renyi(n, p):
-    adj = np.zeros((n, n), dtype=int)
+def spectral_radius(adj: np.ndarray) -> float:
+    return float(np.max(np.linalg.eigvalsh(adj)))
+
+
+def generate_erdos_renyi(n: int, p: float) -> np.ndarray:
+    adj = np.zeros((n, n))
     for i in range(n):
         for j in range(i + 1, n):
             if random.random() < p:
@@ -71,319 +58,320 @@ def generate_erdos_renyi(n, p):
     return adj
 
 
-# ============================================================
-# Application 1: Network Irregularity Detection
-# ============================================================
+# ─── Application 1: Network Anomaly Detection ───────────────────────────────
 
-def network_irregularity_score(adj):
-    """Compute an irregularity score for a network using the regularity deficit.
-
-    The regularity deficit D(G) = log|V| - H(G) is a certified measure of
-    how far a network is from being regular. By our verified theorem:
-        D(G) ≤ log(Δ/d̄)
-
-    This provides a normalized irregularity score in [0, 1]:
-        score = D(G) / log(Δ/d̄)
-
-    A score near 0 means nearly regular; near 1 means maximally irregular
-    relative to the degree spread.
-
-    Returns:
-        (score, deficit, upper_bound)
+def app_anomaly_detection():
     """
-    degrees = degree_sequence(adj)
-    D = regularity_deficit(degrees)
-    d_bar = average_degree(degrees)
-    delta = max_degree(degrees)
-    if d_bar <= 0 or delta <= 0 or delta == d_bar:
-        return 0.0, D, 0.0
-    ub = np.log(delta / d_bar)
-    score = D / ub if ub > 0 else 0.0
-    return min(score, 1.0), D, ub
+    Detect structural anomalies in networks by comparing entropy to bounds.
 
-
-def demo_network_irregularity():
-    """Demonstrate network irregularity detection on various topologies."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 1: Network Irregularity Detection")
-    print("=" * 60)
-
-    # Scale-free-like network (preferential attachment)
-    n = 50
-    adj_pref = np.zeros((n, n), dtype=int)
-    for i in range(1, n):
-        # Connect to existing vertices with probability proportional to degree + 1
-        degrees = adj_pref[:i].sum(axis=1) + 1
-        probs = degrees / degrees.sum()
-        targets = np.random.choice(i, size=min(2, i), replace=False, p=probs)
-        for t in targets:
-            adj_pref[i][t] = adj_pref[t][i] = 1
-
-    # Regular-ish network (Erdős–Rényi dense)
-    adj_er = generate_erdos_renyi(n, 0.5)
-
-    # Hub-and-spoke
-    adj_hub = np.zeros((n, n), dtype=int)
-    # 5 hubs connected to all others
-    for hub in range(5):
-        for i in range(5, n):
-            adj_hub[hub][i] = adj_hub[i][hub] = 1
-
-    networks = [
-        ("Preferential Attachment", adj_pref),
-        ("Erdős–Rényi G(50,0.5)", adj_er),
-        ("Hub-and-Spoke (5 hubs)", adj_hub),
-    ]
-
-    for name, adj in networks:
-        score, D, ub = network_irregularity_score(adj)
-        degrees = degree_sequence(adj)
-        print(f"\n  {name}:")
-        print(f"    Degrees: min={degrees.min()}, max={degrees.max()}, avg={degrees.mean():.1f}")
-        print(f"    Regularity deficit D(G) = {D:.4f}")
-        print(f"    Upper bound log(Δ/d̄)   = {ub:.4f}")
-        print(f"    Irregularity score      = {score:.4f}")
-
-
-# ============================================================
-# Application 2: Entropy-Based Community Detection Probe
-# ============================================================
-
-def entropy_community_probe(adj, partition):
-    """Use entropy to assess how well a partition captures community structure.
-
-    For each community in the partition, compute:
-    - Internal entropy (within-community degree entropy)
-    - The regularity deficit (how far from regular)
-
-    Regular communities have D ≈ 0; irregular ones signal structural heterogeneity.
+    Idea: A network whose entropy is close to its lower bound has a severe
+    degree bottleneck — a hub-and-spoke structure that concentrates
+    connectivity. This is often a sign of attack, failure, or design flaw.
     """
-    results = []
-    for comm_idx, community in enumerate(partition):
-        if len(community) < 2:
-            continue
-        # Extract subgraph
-        sub_adj = adj[np.ix_(community, community)]
-        degrees = degree_sequence(sub_adj)
-        if graph_volume(degrees) == 0:
-            continue
-        H = shannon_entropy(degrees)
-        D = regularity_deficit(degrees)
-        lb = entropy_lower_bound(degrees)
-        results.append({
-            'community': comm_idx,
-            'size': len(community),
-            'entropy': H,
-            'log_n': np.log(len(community)),
-            'deficit': D,
-            'lower_bound': lb,
-        })
-    return results
+    print("=" * 70)
+    print("APPLICATION 1: NETWORK ANOMALY DETECTION")
+    print("=" * 70)
+    print()
+    print("Scenario: Monitor a network over time. When the entropy margin")
+    print("(H - bound) drops below a threshold, flag it as anomalous.")
+    print()
 
-
-def demo_community_probe():
-    """Demonstrate entropy-based community structure analysis."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 2: Entropy-Based Community Probe")
-    print("=" * 60)
-
-    # Create a planted partition graph
-    n_per = 20
-    n = 3 * n_per
-    adj = np.zeros((n, n), dtype=int)
-
-    # Dense within communities, sparse between
-    p_in, p_out = 0.7, 0.05
-    for i in range(n):
-        for j in range(i + 1, n):
-            comm_i, comm_j = i // n_per, j // n_per
-            p = p_in if comm_i == comm_j else p_out
-            if random.random() < p:
-                adj[i][j] = adj[j][i] = 1
-
-    # True partition
-    partition = [list(range(k * n_per, (k + 1) * n_per)) for k in range(3)]
-
-    results = entropy_community_probe(adj, partition)
-    for r in results:
-        print(f"\n  Community {r['community']} (size {r['size']}):")
-        print(f"    H(sub)     = {r['entropy']:.4f}")
-        print(f"    log|V_sub| = {r['log_n']:.4f}")
-        print(f"    D(sub)     = {r['deficit']:.4f}")
-        print(f"    LB         = {r['lower_bound']:.4f}")
-        print(f"    H ≥ LB?    = {'✓' if r['entropy'] >= r['lower_bound'] - 1e-10 else '✗'}")
-
-
-# ============================================================
-# Application 3: Random Graph Model Comparison
-# ============================================================
-
-def demo_random_model_comparison():
-    """Compare entropy profiles across random graph models."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 3: Random Graph Model Comparison")
-    print("=" * 60)
-
-    n = 40
-    n_trials = 100
-
-    models = {
-        'ER(0.1)': lambda: generate_erdos_renyi(n, 0.1),
-        'ER(0.3)': lambda: generate_erdos_renyi(n, 0.3),
-        'ER(0.5)': lambda: generate_erdos_renyi(n, 0.5),
-    }
-
-    for model_name, gen_fn in models.items():
-        entropies = []
-        deficits = []
-        margins = []
-        for _ in range(n_trials):
-            adj = gen_fn()
-            degrees = degree_sequence(adj)
-            if graph_volume(degrees) == 0:
-                continue
-            H = shannon_entropy(degrees)
-            D = regularity_deficit(degrees)
-            lb = entropy_lower_bound(degrees)
-            entropies.append(H)
-            deficits.append(D)
-            margins.append(H - lb)
-
-        entropies = np.array(entropies)
-        deficits = np.array(deficits)
-        margins = np.array(margins)
-
-        print(f"\n  Model: {model_name}")
-        print(f"    Entropy:  mean={entropies.mean():.4f} ± {entropies.std():.4f}")
-        print(f"    log(40) = {np.log(40):.4f}")
-        print(f"    Deficit:  mean={deficits.mean():.4f} ± {deficits.std():.4f}")
-        print(f"    Margin:   mean={margins.mean():.4f}, min={margins.min():.4f}")
-        print(f"    All bounds hold: {'✓' if margins.min() >= -1e-10 else '✗'}")
-
-
-# ============================================================
-# Application 4: Design Quality Metric for Network Architectures
-# ============================================================
-
-def network_quality_metrics(adj):
-    """Compute quality metrics for network architecture design.
-
-    Uses the spectral-tropical entropy framework to assess:
-    - Information capacity (entropy)
-    - Structural balance (regularity deficit)
-    - Spectral certificate quality (bound tightness)
-    """
-    degrees = degree_sequence(adj)
-    n = len(degrees)
-    if graph_volume(degrees) == 0:
-        return None
-
-    H = shannon_entropy(degrees)
-    D = regularity_deficit(degrees)
-    lb = entropy_lower_bound(degrees)
-    lam1 = spectral_radius(adj)
-    d_bar = average_degree(degrees)
-    delta = max_degree(degrees)
-
-    return {
-        'entropy': H,
-        'max_entropy': np.log(n),
-        'efficiency': H / np.log(n) if n > 1 else 1.0,  # How close to max entropy
-        'deficit': D,
-        'spectral_radius': lam1,
-        'spectral_gap': lam1 - d_bar,  # λ₁ - d̄
-        'bound_margin': H - lb,
-        'degree_ratio': delta / d_bar if d_bar > 0 else float('inf'),
-    }
-
-
-def demo_architecture_quality():
-    """Compare network architectures using entropy quality metrics."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 4: Network Architecture Quality")
-    print("=" * 60)
+    random.seed(42)
+    np.random.seed(42)
 
     n = 30
 
-    # Mesh (regular)
-    adj_mesh = np.zeros((n, n), dtype=int)
+    # Generate a "healthy" network (moderately connected)
+    healthy = generate_erdos_renyi(n, 0.3)
+    degrees_h = [int(np.sum(healthy[i])) for i in range(n)]
+    H_h = degree_entropy(degrees_h)
+    bound_h = entropy_lower_bound(degrees_h)
+    margin_h = H_h - bound_h
+
+    # Generate an "attacked" network: add a super-hub
+    attacked = healthy.copy()
+    hub = 0
+    for i in range(1, n):
+        attacked[hub][i] = attacked[i][hub] = 1
+    degrees_a = [int(np.sum(attacked[i])) for i in range(n)]
+    H_a = degree_entropy(degrees_a)
+    bound_a = entropy_lower_bound(degrees_a)
+    margin_a = H_a - bound_a
+
+    # Generate a "degraded" network: remove many edges from some nodes
+    degraded = healthy.copy()
+    for v in range(n // 3):
+        for j in range(n):
+            if random.random() < 0.7:
+                degraded[v][j] = degraded[j][v] = 0
+    degrees_d = [int(np.sum(degraded[i])) for i in range(n)]
+    H_d = degree_entropy(degrees_d)
+    bound_d = entropy_lower_bound(degrees_d)
+    margin_d = H_d - bound_d
+
+    print(f"  {'Network':<20} {'Entropy':<10} {'Bound':<10} {'Margin':<10} {'Status':<15}")
+    print("  " + "-" * 65)
+    threshold = 0.3
+    for name, H, bound, margin in [
+        ("Healthy", H_h, bound_h, margin_h),
+        ("Hub-attacked", H_a, bound_a, margin_a),
+        ("Degraded", H_d, bound_d, margin_d)
+    ]:
+        status = "NORMAL" if margin > threshold else "⚠ ANOMALOUS"
+        print(f"  {name:<20} {H:<10.4f} {bound:<10.4f} {margin:<10.4f} {status:<15}")
+
+    print()
+    print(f"  Threshold: margin < {threshold} → flag as anomalous")
+    print("  Key insight: The entropy bound provides a principled baseline.")
+
+
+# ─── Application 2: Graph Classification ────────────────────────────────────
+
+def app_graph_classification():
+    """
+    Classify graphs by regularity deficit into categories:
+    - Regular (deficit ≈ 0)
+    - Near-regular (small deficit)
+    - Moderately irregular
+    - Highly irregular (large deficit)
+    """
+    print()
+    print("=" * 70)
+    print("APPLICATION 2: GRAPH CLASSIFICATION BY REGULARITY DEFICIT")
+    print("=" * 70)
+    print()
+
+    random.seed(123)
+    np.random.seed(123)
+
+    n = 15
+    graphs = []
+
+    # Complete (regular)
+    K = np.ones((n, n)) - np.eye(n)
+    graphs.append(("Complete K15", K))
+
+    # Cycle (regular)
+    C = np.zeros((n, n))
     for i in range(n):
-        for d in [1, 2, 3]:
-            adj_mesh[i][(i + d) % n] = adj_mesh[(i + d) % n][i] = 1
+        C[i][(i + 1) % n] = C[(i + 1) % n][i] = 1
+    graphs.append(("Cycle C15", C))
 
-    # Ring (sparse regular)
-    adj_ring = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        adj_ring[i][(i + 1) % n] = adj_ring[(i + 1) % n][i] = 1
+    # Random dense (near-regular)
+    G1 = generate_erdos_renyi(n, 0.7)
+    graphs.append(("G(15,0.7)", G1))
 
-    # Random (dense ER)
-    adj_rand = generate_erdos_renyi(n, 0.4)
+    # Random medium
+    G2 = generate_erdos_renyi(n, 0.3)
+    graphs.append(("G(15,0.3)", G2))
 
-    architectures = [
-        ("6-regular mesh", adj_mesh),
-        ("Ring (2-regular)", adj_ring),
-        ("Random ER(30, 0.4)", adj_rand),
-    ]
+    # Random sparse
+    G3 = generate_erdos_renyi(n, 0.1)
+    graphs.append(("G(15,0.1)", G3))
 
-    for name, adj in architectures:
-        metrics = network_quality_metrics(adj)
-        if metrics is None:
-            print(f"\n  {name}: No edges")
+    # Star (highly irregular)
+    S = np.zeros((n, n))
+    for i in range(1, n):
+        S[0][i] = S[i][0] = 1
+    graphs.append(("Star S15", S))
+
+    # Path
+    P = np.zeros((n, n))
+    for i in range(n - 1):
+        P[i][i + 1] = P[i + 1][i] = 1
+    graphs.append(("Path P15", P))
+
+    print(f"  {'Graph':<20} {'Deficit':<10} {'Category':<25} {'Delta/dbar':<10}")
+    print("  " + "-" * 65)
+
+    for name, adj in graphs:
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
             continue
-        print(f"\n  {name}:")
-        print(f"    Entropy efficiency: {metrics['efficiency']:.4f} (1.0 = perfectly regular)")
-        print(f"    Regularity deficit: {metrics['deficit']:.4f}")
-        print(f"    Spectral gap λ₁-d̄: {metrics['spectral_gap']:.4f}")
-        print(f"    Degree ratio Δ/d̄:  {metrics['degree_ratio']:.4f}")
-        print(f"    Bound margin:       {metrics['bound_margin']:.4f}")
+        deficit = regularity_deficit(degrees)
+        delta = max(degrees)
+        d_bar = sum(degrees) / n
+        ratio = delta / d_bar if d_bar > 0 else float('inf')
+
+        if deficit < 1e-10:
+            cat = "Regular"
+        elif deficit < 0.05:
+            cat = "Near-regular"
+        elif deficit < 0.3:
+            cat = "Moderately irregular"
+        else:
+            cat = "Highly irregular"
+
+        print(f"  {name:<20} {deficit:<10.6f} {cat:<25} {ratio:<10.2f}")
 
 
-# ============================================================
-# Main
-# ============================================================
+# ─── Application 3: Network Robustness ──────────────────────────────────────
+
+def app_robustness_estimation():
+    """
+    Estimate network robustness using spectral-entropy certificates.
+
+    Principle: Networks with high entropy (close to log|V|) distribute
+    connectivity evenly and are more robust to random vertex/edge removal.
+    The spectral bound provides a certificate of minimum entropy without
+    computing the full degree distribution.
+    """
+    print()
+    print("=" * 70)
+    print("APPLICATION 3: ROBUSTNESS ESTIMATION VIA SPECTRAL CERTIFICATES")
+    print("=" * 70)
+    print()
+
+    random.seed(42)
+    np.random.seed(42)
+
+    n = 25
+
+    print("Comparing robustness of different network topologies:")
+    print(f"  Remove 20% of edges randomly, measure connectivity drop.")
+    print()
+
+    topologies = []
+
+    # Complete
+    K = np.ones((n, n)) - np.eye(n)
+    topologies.append(("Complete", K))
+
+    # Cycle
+    C = np.zeros((n, n))
+    for i in range(n):
+        C[i][(i + 1) % n] = C[(i + 1) % n][i] = 1
+    topologies.append(("Cycle", C))
+
+    # Dense random
+    G1 = generate_erdos_renyi(n, 0.5)
+    topologies.append(("G(n,0.5)", G1))
+
+    # Sparse random
+    G2 = generate_erdos_renyi(n, 0.15)
+    topologies.append(("G(n,0.15)", G2))
+
+    # Star
+    S = np.zeros((n, n))
+    for i in range(1, n):
+        S[0][i] = S[i][0] = 1
+    topologies.append(("Star", S))
+
+    print(f"  {'Topology':<15} {'H(G)':<8} {'Deficit':<10} {'lambda1':<10} "
+          f"{'Post-removal H':<16} {'Robustness':<12}")
+    print("  " + "-" * 70)
+
+    for name, adj in topologies:
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
+            continue
+        H = degree_entropy(degrees)
+        deficit = regularity_deficit(degrees)
+        lam1 = spectral_radius(adj)
+
+        # Simulate edge removal
+        degraded = adj.copy()
+        edges = [(i, j) for i in range(n) for j in range(i + 1, n) if adj[i][j] == 1]
+        num_remove = max(1, len(edges) // 5)
+        removed = random.sample(edges, min(num_remove, len(edges)))
+        for i, j in removed:
+            degraded[i][j] = degraded[j][i] = 0
+        degrees_d = [int(np.sum(degraded[i])) for i in range(n)]
+        H_d = degree_entropy(degrees_d) if sum(degrees_d) > 0 else 0
+
+        robustness = H_d / H if H > 0 else 0
+
+        print(f"  {name:<15} {H:<8.4f} {deficit:<10.4f} {lam1:<10.4f} "
+              f"{H_d:<16.4f} {robustness:<12.4f}")
+
+    print()
+    print("  Key insight: High-entropy (low-deficit) graphs maintain their")
+    print("  information structure better under random damage.")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("  SPECTRAL-TROPICAL ENTROPY: APPLICATIONS")
-    print("=" * 60)
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  SPECTRAL-TROPICAL ENTROPY BRIDGE — REAL-WORLD APPLICATIONS        ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
 
-    demo_network_irregularity()
-    demo_community_probe()
-    demo_random_model_comparison()
-    demo_architecture_quality()
+    app_anomaly_detection()
+    app_graph_classification()
+    app_robustness_estimation()
 
-    print("\n" + "=" * 60)
-    print("  All applications demonstrated successfully.")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("ALL APPLICATIONS COMPLETE")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Spectral-Tropical Entropy Bridge: Interactive Demonstration
+demo.py — Spectral-Tropical Entropy Bridge: Demonstration & Conjecture Testing
 
-This script demonstrates the main theorems relating graph spectra,
-Shannon entropy of degree distributions, and information-theoretic
-measures of graph irregularity.
+Generates random graphs, computes entropy and spectral bounds, tests the
+strong conjecture H(G) >= log(|V| * lambda_1 / Delta), and displays results
+for regular, near-regular, and highly irregular graphs.
 
-Key results tested:
-  1. H(G) >= log(|V| * d_bar / Delta)   [Entropy lower bound]
-  2. D(G) <= log(Delta / d_bar)          [Regularity deficit bound]
-  3. H(G) = log|V| iff G is regular      [Entropy rigidity]
-  4. D(G) = D_KL(p || uniform)           [KL divergence identity]
-  5. Strong conjecture: H(G) >= log(|V| * lambda_1 / Delta)
+Usage:
+    python demo.py
 """
 
-import numpy as np
-from collections import Counter
+import math
 import random
+import numpy as np
+from typing import List, Tuple, Dict
 
-random.seed(42)
-np.random.seed(42)
+
+# ─── Core Functions (self-contained) ─────────────────────────────────────────
+
+def degree_entropy(degrees: List[int]) -> float:
+    """Shannon entropy of the degree distribution."""
+    vol = sum(degrees)
+    if vol == 0:
+        return 0.0
+    H = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            H -= p * math.log(p)
+    return H
 
 
-def generate_erdos_renyi(n, p):
-    """Generate an Erdős–Rényi random graph G(n, p)."""
-    adj = np.zeros((n, n), dtype=int)
+def regularity_deficit(degrees: List[int]) -> float:
+    """D(G) = log|V| - H(G)."""
+    n = len(degrees)
+    if n == 0:
+        return 0.0
+    return math.log(n) - degree_entropy(degrees)
+
+
+def kl_to_uniform(degrees: List[int]) -> float:
+    """KL divergence from uniform."""
+    n = len(degrees)
+    vol = sum(degrees)
+    if n == 0 or vol == 0:
+        return 0.0
+    u = 1.0 / n
+    kl = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            kl += p * math.log(p / u)
+    return kl
+
+
+def spectral_radius(adj: np.ndarray) -> float:
+    """Largest eigenvalue of adjacency matrix."""
+    eigs = np.linalg.eigvalsh(adj)
+    return float(np.max(eigs))
+
+
+def generate_erdos_renyi(n: int, p: float) -> np.ndarray:
+    """Generate Erdos-Renyi G(n,p) adjacency matrix."""
+    adj = np.zeros((n, n))
     for i in range(n):
         for j in range(i + 1, n):
             if random.random() < p:
@@ -392,634 +380,350 @@ def generate_erdos_renyi(n, p):
     return adj
 
 
-def generate_regular_graph(n, d):
-    """Generate a d-regular graph on n vertices (approximately).
-    Uses the pairing model with retry."""
-    if n * d % 2 != 0:
-        d = d - 1
-    for _ in range(100):
-        stubs = []
-        for v in range(n):
-            stubs.extend([v] * d)
-        random.shuffle(stubs)
-        adj = np.zeros((n, n), dtype=int)
-        valid = True
-        for i in range(0, len(stubs), 2):
-            u, v = stubs[i], stubs[i + 1]
-            if u == v or adj[u][v] == 1:
-                valid = False
-                break
-            adj[u][v] = 1
-            adj[v][u] = 1
-        if valid:
-            return adj
-    # Fallback: cycle graph
-    adj = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        adj[i][(i + 1) % n] = 1
-        adj[(i + 1) % n][i] = 1
-    return adj
-
-
-def generate_star_graph(n):
-    """Generate a star graph on n vertices (maximally irregular)."""
-    adj = np.zeros((n, n), dtype=int)
-    for i in range(1, n):
-        adj[0][i] = 1
-        adj[i][0] = 1
-    return adj
-
-
-def degree_sequence(adj):
-    """Compute degree sequence from adjacency matrix."""
-    return adj.sum(axis=1)
-
-
-def graph_vol(degrees):
-    """Total volume: sum of degrees."""
-    return float(degrees.sum())
-
-
-def degree_prob(degrees):
-    """Degree probability distribution."""
-    v = graph_vol(degrees)
-    if v == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / v
-
-
-def degree_entropy(degrees):
-    """Shannon entropy H(G) = -sum p_v log(p_v)."""
-    p = degree_prob(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
-
-
-def max_degree(degrees):
-    """Maximum degree Delta."""
-    return int(degrees.max())
-
-
-def avg_degree(degrees):
-    """Average degree d_bar."""
-    return float(degrees.mean())
-
-
-def regularity_deficit(degrees):
-    """Regularity deficit D(G) = log|V| - H(G)."""
-    n = len(degrees)
-    return np.log(n) - degree_entropy(degrees)
-
-
-def kl_divergence_from_uniform(degrees):
-    """KL divergence D_KL(p || uniform)."""
-    n = len(degrees)
-    p = degree_prob(degrees)
-    u = 1.0 / n
-    kl = 0.0
-    for pv in p:
-        if pv > 0:
-            kl += pv * np.log(pv / u)
-    return kl
-
-
-def entropy_lower_bound_avg_max(degrees):
-    """Lower bound: log(|V| * d_bar / Delta)."""
-    n = len(degrees)
-    d_bar = avg_degree(degrees)
-    delta = max_degree(degrees)
-    if delta == 0:
-        return float('-inf')
-    return np.log(n * d_bar / delta)
-
-
-def spectral_radius(adj):
-    """Largest eigenvalue of adjacency matrix."""
-    eigenvalues = np.linalg.eigvalsh(adj.astype(float))
-    return float(eigenvalues.max())
-
-
-def entropy_lower_bound_spectral(degrees, lambda1):
-    """Strong conjecture bound: log(|V| * lambda_1 / Delta)."""
-    n = len(degrees)
-    delta = max_degree(degrees)
-    if delta == 0:
-        return float('-inf')
-    return np.log(n * lambda1 / delta)
-
-
-def analyze_graph(name, adj):
+def analyze_graph(adj: np.ndarray) -> Dict[str, float]:
     """Full analysis of a graph."""
-    degrees = degree_sequence(adj)
-    n = len(degrees)
-    vol = graph_vol(degrees)
-    d_bar = avg_degree(degrees)
-    delta = max_degree(degrees)
+    n = adj.shape[0]
+    degrees = [int(np.sum(adj[i])) for i in range(n)]
+    vol = sum(degrees)
+    delta = max(degrees) if degrees else 0
+    d_bar = vol / n if n > 0 else 0
     H = degree_entropy(degrees)
-    D = regularity_deficit(degrees)
-    KL = kl_divergence_from_uniform(degrees)
-    lb_avg = entropy_lower_bound_avg_max(degrees)
+    log_n = math.log(n) if n > 0 else 0
+    deficit = log_n - H
     lam1 = spectral_radius(adj)
-    lb_spec = entropy_lower_bound_spectral(degrees, lam1)
 
-    print(f"\n{'=' * 60}")
-    print(f"  Graph: {name}")
-    print(f"{'=' * 60}")
-    print(f"  |V| = {n},  |E| = {int(vol / 2)}")
-    print(f"  Degree sequence: {sorted(degrees, reverse=True)[:10]}{'...' if n > 10 else ''}")
-    print(f"  Delta (max deg)  = {delta}")
-    print(f"  d_bar (avg deg)  = {d_bar:.4f}")
-    print(f"  lambda_1 (spec)  = {lam1:.4f}")
-    print(f"  vol(G)           = {vol:.0f}")
-    print()
-    print(f"  --- Information-Theoretic Measures ---")
-    print(f"  H(G)             = {H:.6f}")
-    print(f"  log|V|           = {np.log(n):.6f}")
-    print(f"  D(G)             = {D:.6f}")
-    print(f"  D_KL(p||u)       = {KL:.6f}")
-    print(f"  |D(G) - D_KL|    = {abs(D - KL):.2e}  (should be ≈ 0)")
-    print()
-    print(f"  --- Bounds Verification ---")
-    print(f"  Bound: log(|V|*d_bar/Delta) = {lb_avg:.6f}")
-    print(f"  H(G) - bound               = {H - lb_avg:.6f}  (should be ≥ 0)")
-    print(f"  Bound: log(Delta/d_bar)     = {np.log(delta / d_bar) if d_bar > 0 else float('inf'):.6f}")
-    print(f"  D(G) - bound               = {D - np.log(delta / d_bar) if d_bar > 0 else 0:.6f}  (should be ≤ 0)")
-    print()
-    print(f"  --- Strong Spectral Conjecture ---")
-    print(f"  Bound: log(|V|*lambda_1/Delta) = {lb_spec:.6f}")
-    print(f"  H(G) - spectral bound          = {H - lb_spec:.6f}  {'✓' if H >= lb_spec - 1e-10 else '✗ COUNTEREXAMPLE!'}")
+    # Bounds
+    if delta > 0 and d_bar > 0:
+        bound_avg = math.log(n * d_bar / delta)
+        bound_spec = math.log(n * lam1 / delta) if lam1 > 0 else float('-inf')
+    else:
+        bound_avg = float('-inf')
+        bound_spec = float('-inf')
 
     return {
-        'name': name, 'n': n, 'H': H, 'D': D, 'KL': KL,
-        'delta': delta, 'd_bar': d_bar, 'lambda1': lam1,
-        'lb_avg': lb_avg, 'lb_spec': lb_spec,
-        'margin_avg': H - lb_avg, 'margin_spec': H - lb_spec
+        'n': n,
+        'vol': vol,
+        'delta': delta,
+        'd_bar': d_bar,
+        'H': H,
+        'log_n': log_n,
+        'deficit': deficit,
+        'kl': kl_to_uniform(degrees),
+        'lambda1': lam1,
+        'bound_avg': bound_avg,
+        'bound_spec': bound_spec,
+        'margin_avg': H - bound_avg if bound_avg > float('-inf') else float('inf'),
+        'margin_spec': H - bound_spec if bound_spec > float('-inf') else float('inf'),
+        'is_regular': len(set(degrees)) <= 1,
     }
 
 
-def main():
-    print("=" * 60)
-    print("  SPECTRAL-TROPICAL ENTROPY BRIDGE")
-    print("  Demonstration of Formally Verified Theorems")
-    print("=" * 60)
+# ─── Demo Functions ──────────────────────────────────────────────────────────
 
-    # --- Demo 1: Specific graph families ---
-    print("\n\n" + "#" * 60)
-    print("  PART 1: Canonical Graph Families")
-    print("#" * 60)
+def demo_specific_graphs():
+    """Demonstrate with specific graph families."""
+    print("=" * 70)
+    print("PART 1: SPECIFIC GRAPH FAMILIES")
+    print("=" * 70)
 
-    # Complete graph K_10 (regular)
     n = 10
-    adj_complete = np.ones((n, n), dtype=int) - np.eye(n, dtype=int)
-    analyze_graph("K_10 (complete, 9-regular)", adj_complete)
 
-    # Cycle graph C_10 (regular)
-    adj_cycle = np.zeros((n, n), dtype=int)
+    # Complete graph K_n
+    Kn = np.ones((n, n)) - np.eye(n)
+    r = analyze_graph(Kn)
+    print(f"\n--- Complete Graph K{n} (regular, d={n-1}) ---")
+    print(f"  H(G) = {r['H']:.6f},  log|V| = {r['log_n']:.6f}")
+    print(f"  Deficit D(G) = {r['deficit']:.6f}  (should be 0)")
+    print(f"  KL(p||u) = {r['kl']:.6f}  (should equal deficit)")
+    print(f"  lambda_1 = {r['lambda1']:.4f},  Delta = {r['delta']},  d_bar = {r['d_bar']:.2f}")
+    print(f"  Bound (avg/max): {r['bound_avg']:.6f},  margin: {r['margin_avg']:.6f}")
+    print(f"  Bound (spectral): {r['bound_spec']:.6f},  margin: {r['margin_spec']:.6f}")
+    print(f"  Regular: {r['is_regular']}")
+
+    # Cycle C_n
+    Cn = np.zeros((n, n))
     for i in range(n):
-        adj_cycle[i][(i + 1) % n] = 1
-        adj_cycle[(i + 1) % n][i] = 1
-    analyze_graph("C_10 (cycle, 2-regular)", adj_cycle)
+        Cn[i][(i + 1) % n] = 1
+        Cn[(i + 1) % n][i] = 1
+    r = analyze_graph(Cn)
+    print(f"\n--- Cycle C{n} (regular, d=2) ---")
+    print(f"  H(G) = {r['H']:.6f},  log|V| = {r['log_n']:.6f}")
+    print(f"  Deficit = {r['deficit']:.6f},  KL = {r['kl']:.6f}")
+    print(f"  lambda_1 = {r['lambda1']:.4f},  Delta = {r['delta']},  d_bar = {r['d_bar']:.2f}")
+    print(f"  Bound (avg/max): {r['bound_avg']:.6f},  margin: {r['margin_avg']:.6f}")
+    print(f"  Regular: {r['is_regular']}")
 
-    # Star graph S_10 (maximally irregular)
-    adj_star = generate_star_graph(n)
-    analyze_graph("S_10 (star, highly irregular)", adj_star)
+    # Star graph S_n
+    Sn = np.zeros((n, n))
+    for i in range(1, n):
+        Sn[0][i] = 1
+        Sn[i][0] = 1
+    r = analyze_graph(Sn)
+    print(f"\n--- Star S{n} (highly irregular) ---")
+    print(f"  H(G) = {r['H']:.6f},  log|V| = {r['log_n']:.6f}")
+    print(f"  Deficit = {r['deficit']:.6f},  KL = {r['kl']:.6f}")
+    print(f"  lambda_1 = {r['lambda1']:.4f},  Delta = {r['delta']},  d_bar = {r['d_bar']:.2f}")
+    print(f"  Bound (avg/max): {r['bound_avg']:.6f},  margin: {r['margin_avg']:.6f}")
+    print(f"  Bound (spectral): {r['bound_spec']:.6f},  margin: {r['margin_spec']:.6f}")
+    print(f"  Regular: {r['is_regular']}")
 
-    # Path graph P_10
-    adj_path = np.zeros((n, n), dtype=int)
+    # Path graph P_n
+    Pn = np.zeros((n, n))
     for i in range(n - 1):
-        adj_path[i][i + 1] = 1
-        adj_path[i + 1][i] = 1
-    analyze_graph("P_10 (path)", adj_path)
+        Pn[i][i + 1] = 1
+        Pn[i + 1][i] = 1
+    r = analyze_graph(Pn)
+    print(f"\n--- Path P{n} (slightly irregular) ---")
+    print(f"  H(G) = {r['H']:.6f},  log|V| = {r['log_n']:.6f}")
+    print(f"  Deficit = {r['deficit']:.6f},  KL = {r['kl']:.6f}")
+    print(f"  lambda_1 = {r['lambda1']:.4f},  Delta = {r['delta']},  d_bar = {r['d_bar']:.2f}")
+    print(f"  Bound (avg/max): {r['bound_avg']:.6f},  margin: {r['margin_avg']:.6f}")
+    print(f"  Regular: {r['is_regular']}")
 
-    # --- Demo 2: Random graph testing ---
-    print("\n\n" + "#" * 60)
-    print("  PART 2: Random Graph Testing (Strong Conjecture)")
-    print("#" * 60)
 
-    for p_val in [0.1, 0.3, 0.5]:
-        print(f"\n--- G(50, {p_val}) ---")
-        n_tests = 200
+def demo_conjecture_testing():
+    """Test the strong conjecture on random graphs."""
+    print("\n" + "=" * 70)
+    print("PART 2: STRONG CONJECTURE TESTING")
+    print("H(G) >= log(|V| * lambda_1 / Delta)")
+    print("=" * 70)
+
+    random.seed(42)
+    np.random.seed(42)
+
+    n = 50
+    num_trials = 200
+    probabilities = [0.1, 0.3, 0.5]
+
+    for p in probabilities:
         margins_avg = []
         margins_spec = []
-        counterexamples = 0
+        violations = 0
 
-        for trial in range(n_tests):
-            adj = generate_erdos_renyi(50, p_val)
-            degrees = degree_sequence(adj)
-            if graph_vol(degrees) == 0:
+        for _ in range(num_trials):
+            adj = generate_erdos_renyi(n, p)
+            # Ensure connected (skip isolated vertices for this test)
+            degrees = [int(np.sum(adj[i])) for i in range(n)]
+            if max(degrees) == 0:
                 continue
-            H = degree_entropy(degrees)
-            lb_avg = entropy_lower_bound_avg_max(degrees)
-            lam1 = spectral_radius(adj)
-            lb_spec = entropy_lower_bound_spectral(degrees, lam1)
+            r = analyze_graph(adj)
+            margins_avg.append(r['margin_avg'])
+            margins_spec.append(r['margin_spec'])
+            if r['margin_spec'] < -1e-10:
+                violations += 1
 
-            margins_avg.append(H - lb_avg)
-            margins_spec.append(H - lb_spec)
-            if H < lb_spec - 1e-10:
-                counterexamples += 1
+        if margins_avg:
+            print(f"\n--- G({n}, {p}): {len(margins_avg)} graphs tested ---")
+            print(f"  Average margin (avg/max bound):  mean={np.mean(margins_avg):.6f}, "
+                  f"min={np.min(margins_avg):.6f}, max={np.max(margins_avg):.6f}")
+            print(f"  Average margin (spectral bound): mean={np.mean(margins_spec):.6f}, "
+                  f"min={np.min(margins_spec):.6f}, max={np.max(margins_spec):.6f}")
+            print(f"  Strong conjecture violations: {violations}/{len(margins_spec)}")
+            if violations == 0:
+                print(f"  ✓ Strong conjecture HOLDS for all tested graphs")
+            else:
+                print(f"  ✗ Strong conjecture VIOLATED in {violations} cases")
 
-        margins_avg = np.array(margins_avg)
-        margins_spec = np.array(margins_spec)
 
-        print(f"  Tested {n_tests} graphs")
-        print(f"  Avg-max bound margins:  mean={margins_avg.mean():.6f}, min={margins_avg.min():.6f}")
-        print(f"  Spectral bound margins: mean={margins_spec.mean():.6f}, min={margins_spec.min():.6f}")
-        print(f"  Strong conjecture counterexamples: {counterexamples}")
-        print(f"  Strong conjecture holds: {'✓ YES' if counterexamples == 0 else '✗ NO'}")
+def demo_deficit_kl_equality():
+    """Verify that regularity deficit equals KL divergence."""
+    print("\n" + "=" * 70)
+    print("PART 3: VERIFIED THEOREM — D(G) = D_KL(p || u)")
+    print("=" * 70)
 
-    # --- Demo 3: Regularity and entropy ---
-    print("\n\n" + "#" * 60)
-    print("  PART 3: Entropy Rigidity (Regular ↔ Max Entropy)")
-    print("#" * 60)
+    random.seed(123)
+    np.random.seed(123)
 
-    for d in [3, 5, 8]:
-        adj = generate_regular_graph(20, d)
-        degrees = degree_sequence(adj)
-        H = degree_entropy(degrees)
-        log_n = np.log(20)
-        is_regular = len(set(degrees)) == 1
-        print(f"\n  {d}-regular graph on 20 vertices:")
-        print(f"    Actually regular: {is_regular}")
-        print(f"    H(G)    = {H:.6f}")
-        print(f"    log|V|  = {log_n:.6f}")
-        print(f"    |H - log|V|| = {abs(H - log_n):.2e}")
-
-    # --- Demo 4: KL divergence identity ---
-    print("\n\n" + "#" * 60)
-    print("  PART 4: D(G) = D_KL(p || uniform)")
-    print("#" * 60)
-
-    for _ in range(5):
-        adj = generate_erdos_renyi(30, 0.3)
-        degrees = degree_sequence(adj)
-        if graph_vol(degrees) == 0:
+    print("\nChecking deficit = KL divergence for 100 random graphs:")
+    max_error = 0.0
+    for _ in range(100):
+        n = random.randint(5, 30)
+        p = random.uniform(0.1, 0.9)
+        adj = generate_erdos_renyi(n, p)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
             continue
-        D = regularity_deficit(degrees)
-        KL = kl_divergence_from_uniform(degrees)
-        print(f"  D(G) = {D:.10f},  D_KL = {KL:.10f},  |diff| = {abs(D - KL):.2e}")
+        deficit = regularity_deficit(degrees)
+        kl = kl_to_uniform(degrees)
+        error = abs(deficit - kl)
+        max_error = max(max_error, error)
 
-    print("\n" + "=" * 60)
-    print("  All demonstrations complete.")
-    print("=" * 60)
+    print(f"  Max |D(G) - KL(p||u)|: {max_error:.2e}")
+    print(f"  ✓ Equality verified to machine precision" if max_error < 1e-12
+          else f"  ✗ Discrepancy detected")
 
+
+def demo_regularity_rigidity():
+    """Demonstrate entropy rigidity: H = log|V| iff regular."""
+    print("\n" + "=" * 70)
+    print("PART 4: ENTROPY RIGIDITY")
+    print("H(G) = log|V| iff G is regular")
+    print("=" * 70)
+
+    # Regular graphs
+    print("\nRegular graphs (should have deficit = 0):")
+    for name, n, d in [("K5", 5, 4), ("C8", 8, 2), ("Petersen", 10, 3)]:
+        if name == "K5":
+            adj = np.ones((n, n)) - np.eye(n)
+        elif name == "C8":
+            adj = np.zeros((n, n))
+            for i in range(n):
+                adj[i][(i + 1) % n] = 1
+                adj[(i + 1) % n][i] = 1
+        else:  # Petersen graph
+            adj = np.zeros((10, 10))
+            # Outer cycle
+            for i in range(5):
+                adj[i][(i + 1) % 5] = adj[(i + 1) % 5][i] = 1
+            # Inner pentagram
+            for i in range(5):
+                adj[5 + i][5 + (i + 2) % 5] = adj[5 + (i + 2) % 5][5 + i] = 1
+            # Spokes
+            for i in range(5):
+                adj[i][5 + i] = adj[5 + i][i] = 1
+        degrees = [int(np.sum(adj[i])) for i in range(adj.shape[0])]
+        H = degree_entropy(degrees)
+        log_n = math.log(adj.shape[0])
+        print(f"  {name}: H={H:.6f}, log|V|={log_n:.6f}, diff={abs(H-log_n):.2e}, "
+              f"regular={len(set(degrees))<=1}")
+
+    # Irregular graphs
+    print("\nIrregular graphs (should have deficit > 0):")
+    for name in ["Star S8", "Path P8", "Random G(8,0.5)"]:
+        n = 8
+        if "Star" in name:
+            adj = np.zeros((n, n))
+            for i in range(1, n):
+                adj[0][i] = adj[i][0] = 1
+        elif "Path" in name:
+            adj = np.zeros((n, n))
+            for i in range(n - 1):
+                adj[i][i + 1] = adj[i + 1][i] = 1
+        else:
+            random.seed(999)
+            adj = generate_erdos_renyi(n, 0.5)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        H = degree_entropy(degrees)
+        log_n = math.log(n)
+        deficit = log_n - H
+        print(f"  {name}: H={H:.6f}, log|V|={log_n:.6f}, deficit={deficit:.6f}, "
+              f"regular={len(set(degrees))<=1}")
+
+
+def demo_bound_comparison():
+    """Compare the avg/max bound with the spectral bound."""
+    print("\n" + "=" * 70)
+    print("PART 5: BOUND COMPARISON — avg/max vs spectral")
+    print("=" * 70)
+
+    random.seed(777)
+    np.random.seed(777)
+
+    n = 20
+    print(f"\nGraphs on {n} vertices:")
+    print(f"  {'Type':<20} {'H(G)':<10} {'Bound(a/m)':<12} {'Bound(spec)':<12} "
+          f"{'Margin(a/m)':<12} {'Margin(sp)':<12}")
+    print("  " + "-" * 78)
+
+    graphs = []
+
+    # Complete
+    K = np.ones((n, n)) - np.eye(n)
+    graphs.append(("Complete", K))
+
+    # Cycle
+    C = np.zeros((n, n))
+    for i in range(n):
+        C[i][(i + 1) % n] = C[(i + 1) % n][i] = 1
+    graphs.append(("Cycle", C))
+
+    # Star
+    S = np.zeros((n, n))
+    for i in range(1, n):
+        S[0][i] = S[i][0] = 1
+    graphs.append(("Star", S))
+
+    # Path
+    P = np.zeros((n, n))
+    for i in range(n - 1):
+        P[i][i + 1] = P[i + 1][i] = 1
+    graphs.append(("Path", P))
+
+    # Random graphs
+    for p_val in [0.1, 0.3, 0.5, 0.7]:
+        G = generate_erdos_renyi(n, p_val)
+        graphs.append((f"G(n,{p_val})", G))
+
+    for name, adj in graphs:
+        r = analyze_graph(adj)
+        if r['delta'] > 0:
+            print(f"  {name:<20} {r['H']:<10.4f} {r['bound_avg']:<12.4f} "
+                  f"{r['bound_spec']:<12.4f} {r['margin_avg']:<12.4f} "
+                  f"{r['margin_spec']:<12.4f}")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    main()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     SPECTRAL-TROPICAL ENTROPY BRIDGE — DEMONSTRATION SUITE         ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+
+    demo_specific_graphs()
+    demo_conjecture_testing()
+    demo_deficit_kl_equality()
+    demo_regularity_rigidity()
+    demo_bound_comparison()
+
+    print("\n" + "=" * 70)
+    print("DEMO COMPLETE")
+    print("=" * 70)
 
 
-#!/usr/bin/env python3
 """
-Visualization 1: Entropy Landscape
+Visualization 1: Entropy Landscape — Degree Entropy vs. Regularity Deficit
 
-Visualizes the degree entropy H(G) vs the certified lower bound log(|V|d̄/Δ)
-across random graphs of varying density. Shows that the bound always holds
-and is tight for near-regular graphs.
-
-Key insight: The entropy floor rises as graphs become denser (more regular),
-demonstrating that spectral regularity forces information-theoretic regularity.
+Visualizes how different graph families occupy the entropy-deficit space.
+Regular graphs sit at deficit=0 (maximum entropy), while irregular graphs
+have positive deficit. The certified upper bound log(Delta/d_bar) is shown
+as a boundary line.
 """
 
+import math
+import random
 import numpy as np
 import matplotlib.pyplot as plt
-import random
-
-random.seed(42)
-np.random.seed(42)
 
 
-def generate_erdos_renyi(n, p):
-    adj = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if random.random() < p:
-                adj[i][j] = adj[j][i] = 1
-    return adj
-
-
-def degree_sequence(adj):
-    return adj.sum(axis=1).astype(int)
-
-
-def graph_volume(degrees):
-    return float(degrees.sum())
-
-
-def degree_distribution(degrees):
-    vol = graph_volume(degrees)
+def degree_entropy(degrees):
+    vol = sum(degrees)
     if vol == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / vol
-
-
-def shannon_entropy(degrees):
-    p = degree_distribution(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
-
-
-def entropy_lower_bound(degrees):
-    n = len(degrees)
-    d_bar = float(degrees.mean())
-    delta = int(degrees.max())
-    if delta == 0:
-        return float('-inf')
-    return np.log(n * d_bar / delta)
-
-
-def spectral_radius(adj):
-    eigenvalues = np.linalg.eigvalsh(adj.astype(float))
-    return float(eigenvalues.max())
-
-
-# Generate data
-n = 40
-p_values = np.linspace(0.05, 0.95, 50)
-n_samples = 30
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Plot 1: Entropy vs Lower Bound scatter
-all_H = []
-all_LB = []
-all_p = []
-
-for p_val in p_values:
-    for _ in range(n_samples):
-        adj = generate_erdos_renyi(n, p_val)
-        degrees = degree_sequence(adj)
-        if graph_volume(degrees) == 0:
-            continue
-        H = shannon_entropy(degrees)
-        lb = entropy_lower_bound(degrees)
-        all_H.append(H)
-        all_LB.append(lb)
-        all_p.append(p_val)
-
-all_H = np.array(all_H)
-all_LB = np.array(all_LB)
-all_p = np.array(all_p)
-
-sc = axes[0].scatter(all_LB, all_H, c=all_p, cmap='viridis', alpha=0.4, s=8)
-axes[0].plot([0, np.log(n)], [0, np.log(n)], 'r--', linewidth=2, label='H = bound (equality)')
-axes[0].set_xlabel('Lower Bound: log(|V|·d̄/Δ)', fontsize=12)
-axes[0].set_ylabel('Degree Entropy H(G)', fontsize=12)
-axes[0].set_title('Entropy vs Certified Lower Bound', fontsize=13)
-axes[0].legend(fontsize=10)
-plt.colorbar(sc, ax=axes[0], label='Edge probability p')
-
-# Plot 2: Entropy margin by density
-p_bins = np.linspace(0.05, 0.95, 20)
-mean_margins = []
-min_margins = []
-for i in range(len(p_bins) - 1):
-    mask = (all_p >= p_bins[i]) & (all_p < p_bins[i + 1])
-    if mask.any():
-        margins = all_H[mask] - all_LB[mask]
-        mean_margins.append(margins.mean())
-        min_margins.append(margins.min())
-    else:
-        mean_margins.append(0)
-        min_margins.append(0)
-
-bin_centers = (p_bins[:-1] + p_bins[1:]) / 2
-axes[1].fill_between(bin_centers, 0, mean_margins, alpha=0.3, color='blue', label='Mean margin')
-axes[1].plot(bin_centers, mean_margins, 'b-', linewidth=2)
-axes[1].plot(bin_centers, min_margins, 'r-', linewidth=2, label='Min margin')
-axes[1].axhline(y=0, color='k', linewidth=0.5, linestyle='--')
-axes[1].set_xlabel('Edge Probability p', fontsize=12)
-axes[1].set_ylabel('H(G) − log(|V|·d̄/Δ)', fontsize=12)
-axes[1].set_title('Bound Margin vs Graph Density', fontsize=13)
-axes[1].legend(fontsize=10)
-
-# Plot 3: Regularity deficit
-all_D = np.log(n) - all_H
-all_UB = []
-for H_val, p_val in zip(all_H, all_p):
-    adj = generate_erdos_renyi(n, p_val)
-    degrees = degree_sequence(adj)
-    d_bar = float(degrees.mean())
-    delta = int(degrees.max())
-    if d_bar > 0 and delta > 0:
-        all_UB.append(np.log(delta / d_bar))
-    else:
-        all_UB.append(0)
-all_UB = np.array(all_UB)
-
-axes[2].scatter(all_p, all_D, c='steelblue', alpha=0.3, s=8, label='D(G)')
-axes[2].set_xlabel('Edge Probability p', fontsize=12)
-axes[2].set_ylabel('Regularity Deficit D(G)', fontsize=12)
-axes[2].set_title('Deficit Decreases with Density', fontsize=13)
-axes[2].legend(fontsize=10)
-
-plt.tight_layout()
-plt.savefig('entropy_landscape.png', dpi=150, bbox_inches='tight')
-print("Saved entropy_landscape.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 3: KL Divergence Identity and Entropy Rigidity
-
-Visualizes two key results:
-1. D(G) = D_KL(p || uniform) — the regularity deficit IS a KL divergence
-2. Regular graphs uniquely maximize entropy (rigidity theorem)
-
-Shows how the degree distribution of regular vs irregular graphs
-relates to the uniform distribution, and how entropy changes as
-graphs are perturbed away from regularity.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import random
-
-random.seed(42)
-np.random.seed(42)
-
-
-def degree_sequence(adj):
-    return adj.sum(axis=1).astype(int)
-
-
-def graph_volume(degrees):
-    return float(degrees.sum())
-
-
-def degree_distribution(degrees):
-    vol = graph_volume(degrees)
-    if vol == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / vol
-
-
-def shannon_entropy(degrees):
-    p = degree_distribution(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
+        return 0.0
+    H = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            H -= p * math.log(p)
+    return H
 
 
 def regularity_deficit(degrees):
     n = len(degrees)
-    return np.log(n) - shannon_entropy(degrees)
+    if n == 0:
+        return 0.0
+    return math.log(n) - degree_entropy(degrees)
 
 
-def kl_divergence_from_uniform(degrees):
-    n = len(degrees)
-    p = degree_distribution(degrees)
-    u = 1.0 / n
-    kl = 0.0
-    for pv in p:
-        if pv > 0:
-            kl += pv * np.log(pv / u)
-    return kl
-
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# --- Plot 1: D(G) vs D_KL(p || u) ---
-n_graphs = 300
-deficits = []
-kl_divs = []
-
-for _ in range(n_graphs):
-    n = random.choice([20, 30, 40, 50])
-    p = random.uniform(0.05, 0.9)
-    adj = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if random.random() < p:
-                adj[i][j] = adj[j][i] = 1
-    degrees = degree_sequence(adj)
-    if graph_volume(degrees) == 0:
-        continue
-    D = regularity_deficit(degrees)
-    KL = kl_divergence_from_uniform(degrees)
-    deficits.append(D)
-    kl_divs.append(KL)
-
-deficits = np.array(deficits)
-kl_divs = np.array(kl_divs)
-
-axes[0].scatter(kl_divs, deficits, c='steelblue', alpha=0.5, s=15)
-axes[0].plot([0, deficits.max()], [0, deficits.max()], 'r-', linewidth=2, label='D = D_KL (identity)')
-axes[0].set_xlabel('D_KL(p || uniform)', fontsize=12)
-axes[0].set_ylabel('Regularity Deficit D(G)', fontsize=12)
-axes[0].set_title('Verified: D(G) ≡ D_KL(p || u)', fontsize=13)
-axes[0].legend(fontsize=11)
-max_err = np.max(np.abs(deficits - kl_divs))
-axes[0].text(0.05, 0.9, f'Max |D - D_KL| = {max_err:.2e}',
-             transform=axes[0].transAxes, fontsize=10,
-             bbox=dict(boxstyle='round', facecolor='lightyellow'))
-
-# --- Plot 2: Entropy rigidity - perturbing from regular ---
-n = 30
-# Start with a 6-regular graph (cycle with 3 neighbors each side)
-adj_base = np.zeros((n, n), dtype=int)
-for i in range(n):
-    for d in [1, 2, 3]:
-        adj_base[i][(i + d) % n] = adj_base[(i + d) % n][i] = 1
-
-perturbation_levels = np.linspace(0, 0.5, 30)
-mean_entropies = []
-mean_deficits = []
-
-for pert in perturbation_levels:
-    trial_H = []
-    trial_D = []
-    for _ in range(50):
-        adj = adj_base.copy()
-        # Randomly add/remove edges
-        for i in range(n):
-            for j in range(i + 1, n):
-                if random.random() < pert:
-                    adj[i][j] = 1 - adj[i][j]
-                    adj[j][i] = adj[i][j]
-        # Ensure simple graph
-        np.fill_diagonal(adj, 0)
-        degrees = degree_sequence(adj)
-        if graph_volume(degrees) == 0:
-            continue
-        trial_H.append(shannon_entropy(degrees))
-        trial_D.append(regularity_deficit(degrees))
-    if trial_H:
-        mean_entropies.append(np.mean(trial_H))
-        mean_deficits.append(np.mean(trial_D))
-    else:
-        mean_entropies.append(0)
-        mean_deficits.append(0)
-
-axes[1].plot(perturbation_levels, mean_entropies, 'b-', linewidth=2, label='H(G)')
-axes[1].axhline(y=np.log(n), color='r', linewidth=1, linestyle='--', label='log|V| (max entropy)')
-axes[1].set_xlabel('Perturbation Level', fontsize=12)
-axes[1].set_ylabel('Degree Entropy H(G)', fontsize=12)
-axes[1].set_title('Entropy Rigidity: Perturbing from Regular', fontsize=13)
-axes[1].legend(fontsize=10)
-
-# --- Plot 3: Degree distribution comparison ---
-# Regular graph
-degrees_reg = degree_sequence(adj_base)
-p_reg = degree_distribution(degrees_reg)
-
-# Highly irregular graph (star + some random)
-adj_irreg = np.zeros((n, n), dtype=int)
-for i in range(1, n):
-    adj_irreg[0][i] = adj_irreg[i][0] = 1
-for i in range(1, n):
-    for j in range(i + 1, n):
-        if random.random() < 0.1:
-            adj_irreg[i][j] = adj_irreg[j][i] = 1
-degrees_irreg = degree_sequence(adj_irreg)
-p_irreg = degree_distribution(degrees_irreg)
-
-uniform = np.ones(n) / n
-
-x = np.arange(n)
-width = 0.25
-axes[2].bar(x - width, sorted(p_reg, reverse=True), width, color='steelblue', alpha=0.7, label='Regular graph')
-axes[2].bar(x, sorted(p_irreg, reverse=True), width, color='coral', alpha=0.7, label='Irregular graph')
-axes[2].bar(x + width, uniform, width, color='gray', alpha=0.4, label='Uniform 1/|V|')
-axes[2].set_xlabel('Vertex (sorted by degree)', fontsize=12)
-axes[2].set_ylabel('Probability p_v', fontsize=12)
-axes[2].set_title('Degree Distribution vs Uniform', fontsize=13)
-axes[2].legend(fontsize=10)
-axes[2].set_xlim(-1, n)
-
-plt.tight_layout()
-plt.savefig('kl_divergence_rigidity.png', dpi=150, bbox_inches='tight')
-print("Saved kl_divergence_rigidity.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 2: Testing the Strong Spectral Conjecture
-
-Tests the conjecture H(G) ≥ log(|V|·λ₁/Δ) across random graphs.
-The certified bound uses d̄ instead of λ₁; the conjecture replaces d̄
-with the spectral radius λ₁ ≥ d̄ (a STRONGER claim).
-
-Displays empirical evidence for/against the conjecture across
-different graph families and densities.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import random
-
-random.seed(42)
-np.random.seed(42)
+def deficit_upper_bound(degrees):
+    delta = max(degrees) if degrees else 0
+    d_bar = sum(degrees) / len(degrees) if degrees else 0
+    if d_bar <= 0 or delta == 0:
+        return float('inf')
+    return math.log(delta / d_bar)
 
 
 def generate_erdos_renyi(n, p):
-    adj = np.zeros((n, n), dtype=int)
+    adj = np.zeros((n, n))
     for i in range(n):
         for j in range(i + 1, n):
             if random.random() < p:
@@ -1027,102 +731,457 @@ def generate_erdos_renyi(n, p):
     return adj
 
 
-def degree_sequence(adj):
-    return adj.sum(axis=1).astype(int)
+random.seed(42)
+np.random.seed(42)
+n = 20
 
+# Collect data points
+categories = {
+    'Regular': {'H': [], 'D': [], 'color': '#2196F3', 'marker': 's'},
+    'Near-regular': {'H': [], 'D': [], 'color': '#4CAF50', 'marker': 'o'},
+    'Irregular': {'H': [], 'D': [], 'color': '#FF9800', 'marker': '^'},
+    'Highly irregular': {'H': [], 'D': [], 'color': '#F44336', 'marker': 'D'},
+}
 
-def graph_volume(degrees):
-    return float(degrees.sum())
+# Complete graph (regular)
+K = np.ones((n, n)) - np.eye(n)
+degrees = [int(np.sum(K[i])) for i in range(n)]
+categories['Regular']['H'].append(degree_entropy(degrees))
+categories['Regular']['D'].append(regularity_deficit(degrees))
 
+# Cycle (regular)
+C_adj = np.zeros((n, n))
+for i in range(n):
+    C_adj[i][(i + 1) % n] = C_adj[(i + 1) % n][i] = 1
+degrees = [int(np.sum(C_adj[i])) for i in range(n)]
+categories['Regular']['H'].append(degree_entropy(degrees))
+categories['Regular']['D'].append(regularity_deficit(degrees))
 
-def degree_distribution(degrees):
-    vol = graph_volume(degrees)
-    if vol == 0:
-        return np.zeros_like(degrees, dtype=float)
-    return degrees.astype(float) / vol
-
-
-def shannon_entropy(degrees):
-    p = degree_distribution(degrees)
-    h = 0.0
-    for pv in p:
-        if pv > 0:
-            h -= pv * np.log(pv)
-    return h
-
-
-def spectral_radius(adj):
-    eigenvalues = np.linalg.eigvalsh(adj.astype(float))
-    return float(eigenvalues.max())
-
-
-n = 50
-p_values = [0.1, 0.3, 0.5, 0.7]
-n_samples = 250
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-
-for idx, p_val in enumerate(p_values):
-    ax = axes[idx // 2][idx % 2]
-
-    entropies = []
-    certified_bounds = []
-    spectral_bounds = []
-    counterexamples_x = []
-    counterexamples_y = []
-
-    for _ in range(n_samples):
-        adj = generate_erdos_renyi(n, p_val)
-        degrees = degree_sequence(adj)
-        if graph_volume(degrees) == 0:
+# Random graphs at various densities
+for p in [0.6, 0.7, 0.8]:
+    for _ in range(15):
+        adj = generate_erdos_renyi(n, p)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
             continue
+        categories['Near-regular']['H'].append(degree_entropy(degrees))
+        categories['Near-regular']['D'].append(regularity_deficit(degrees))
 
-        H = shannon_entropy(degrees)
-        d_bar = float(degrees.mean())
-        delta = int(degrees.max())
-        lam1 = spectral_radius(adj)
-
-        if delta == 0:
+for p in [0.2, 0.3, 0.4]:
+    for _ in range(15):
+        adj = generate_erdos_renyi(n, p)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
             continue
+        categories['Irregular']['H'].append(degree_entropy(degrees))
+        categories['Irregular']['D'].append(regularity_deficit(degrees))
 
-        lb_cert = np.log(n * d_bar / delta)
-        lb_spec = np.log(n * lam1 / delta)
+# Star (highly irregular)
+S = np.zeros((n, n))
+for i in range(1, n):
+    S[0][i] = S[i][0] = 1
+degrees = [int(np.sum(S[i])) for i in range(n)]
+categories['Highly irregular']['H'].append(degree_entropy(degrees))
+categories['Highly irregular']['D'].append(regularity_deficit(degrees))
 
-        entropies.append(H)
-        certified_bounds.append(lb_cert)
-        spectral_bounds.append(lb_spec)
+# Path
+P_adj = np.zeros((n, n))
+for i in range(n - 1):
+    P_adj[i][i + 1] = P_adj[i + 1][i] = 1
+degrees = [int(np.sum(P_adj[i])) for i in range(n)]
+categories['Highly irregular']['H'].append(degree_entropy(degrees))
+categories['Highly irregular']['D'].append(regularity_deficit(degrees))
 
-        if H < lb_spec - 1e-10:
-            counterexamples_x.append(lb_spec)
-            counterexamples_y.append(H)
+# Very sparse random
+for p in [0.05, 0.1]:
+    for _ in range(10):
+        adj = generate_erdos_renyi(n, p)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        if sum(degrees) == 0:
+            continue
+        categories['Highly irregular']['H'].append(degree_entropy(degrees))
+        categories['Highly irregular']['D'].append(regularity_deficit(degrees))
 
-    entropies = np.array(entropies)
-    certified_bounds = np.array(certified_bounds)
-    spectral_bounds = np.array(spectral_bounds)
+# Plot
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
 
-    # Plot certified bound
-    ax.scatter(certified_bounds, entropies, c='steelblue', alpha=0.3, s=12, label='Certified bound (d̄)')
-    # Plot spectral bound
-    ax.scatter(spectral_bounds, entropies, c='orange', alpha=0.3, s=12, label='Spectral bound (λ₁)')
+for cat, data in categories.items():
+    if data['H']:
+        ax.scatter(data['D'], data['H'], c=data['color'], marker=data['marker'],
+                   s=80, label=cat, alpha=0.8, edgecolors='white', linewidth=0.5)
 
-    if len(counterexamples_x) > 0:
-        ax.scatter(counterexamples_x, counterexamples_y, c='red', s=50, marker='x',
-                   label=f'Counterexamples: {len(counterexamples_x)}', zorder=5)
+# Add log|V| line
+log_n = math.log(n)
+ax.axhline(y=log_n, color='gray', linestyle='--', alpha=0.5, label=f'H = log|V| = {log_n:.2f}')
 
-    # Equality line
-    lims = [min(certified_bounds.min(), spectral_bounds.min()) - 0.1,
-            max(entropies.max(), spectral_bounds.max()) + 0.1]
-    ax.plot(lims, lims, 'k--', linewidth=1, alpha=0.5)
+# Add the bound region
+D_vals = np.linspace(0, 2.5, 100)
+H_bound = [log_n - D for D in D_vals]
+ax.plot(D_vals, H_bound, 'k-', alpha=0.3, linewidth=2, label='H = log|V| - D(G)')
 
-    margin_cert = (entropies - certified_bounds).min()
-    margin_spec = (entropies - spectral_bounds).min()
+ax.set_xlabel('Regularity Deficit D(G) = log|V| - H(G)', fontsize=13)
+ax.set_ylabel('Degree Entropy H(G)', fontsize=13)
+ax.set_title('Entropy Landscape: Graph Families in the (Deficit, Entropy) Plane\n'
+             f'n = {n} vertices', fontsize=14)
+ax.legend(loc='upper right', fontsize=10)
+ax.set_xlim(-0.05, 2.0)
+ax.set_ylim(0, log_n + 0.3)
+ax.grid(True, alpha=0.3)
 
-    ax.set_xlabel('Lower Bound', fontsize=11)
-    ax.set_ylabel('Entropy H(G)', fontsize=11)
-    ax.set_title(f'G({n}, {p_val}): min margin (cert)={margin_cert:.4f}, (spec)={margin_spec:.4f}', fontsize=12)
-    ax.legend(fontsize=9, loc='upper left')
+# Annotate special graphs
+ax.annotate('Complete K₂₀', xy=(0, log_n), fontsize=9,
+            xytext=(0.3, log_n + 0.15), arrowprops=dict(arrowstyle='->', color='gray'))
+ax.annotate('Star S₂₀', xy=(categories['Highly irregular']['D'][0],
+            categories['Highly irregular']['H'][0]), fontsize=9,
+            xytext=(1.2, 1.0), arrowprops=dict(arrowstyle='->', color='gray'))
 
-plt.suptitle('Strong Spectral Conjecture: H(G) ≥ log(|V|·λ₁/Δ)', fontsize=15, y=1.02)
 plt.tight_layout()
-plt.savefig('spectral_conjecture.png', dpi=150, bbox_inches='tight')
-print("Saved spectral_conjecture.png")
+plt.savefig('viz_entropy_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_entropy_landscape.png")
+
+
+"""
+Visualization 3: Entropy Rigidity — Regular Graphs as Entropy Maximizers
+
+Demonstrates the rigidity theorem: H(G) = log|V| if and only if G is regular.
+Shows how perturbing a regular graph away from regularity always decreases entropy,
+and how the deficit correlates with the degree variance.
+"""
+
+import math
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def degree_entropy(degrees):
+    vol = sum(degrees)
+    if vol == 0:
+        return 0.0
+    H = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            H -= p * math.log(p)
+    return H
+
+
+def regularity_deficit(degrees):
+    n = len(degrees)
+    if n == 0:
+        return 0.0
+    return math.log(n) - degree_entropy(degrees)
+
+
+random.seed(42)
+np.random.seed(42)
+
+n = 20
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# --- Panel 1: Perturbation from regularity ---
+ax1 = axes[0]
+
+# Start from a regular graph (complete graph)
+K = np.ones((n, n)) - np.eye(n)
+perturbation_levels = range(0, n * (n - 1) // 4, 2)
+deficits = []
+variances = []
+
+for num_removals in perturbation_levels:
+    adj = K.copy()
+    edges = [(i, j) for i in range(n) for j in range(i + 1, n) if adj[i][j] == 1]
+    random.shuffle(edges)
+    for k in range(min(num_removals, len(edges))):
+        i, j = edges[k]
+        adj[i][j] = adj[j][i] = 0
+    degrees = [int(np.sum(adj[i])) for i in range(n)]
+    if sum(degrees) == 0:
+        break
+    deficit = regularity_deficit(degrees)
+    var = np.var(degrees)
+    deficits.append(deficit)
+    variances.append(var)
+
+ax1.plot(list(perturbation_levels)[:len(deficits)], deficits, 'b-o',
+         markersize=4, label='Deficit D(G)')
+ax1.set_xlabel('Edges removed from K₂₀', fontsize=11)
+ax1.set_ylabel('Regularity deficit D(G)', fontsize=11)
+ax1.set_title('Perturbation from Regularity', fontsize=12)
+ax1.axhline(y=0, color='green', linestyle='--', alpha=0.5, label='D=0 (regular)')
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+
+# --- Panel 2: Deficit vs Degree Variance ---
+ax2 = axes[1]
+
+all_deficits = []
+all_variances = []
+all_types = []
+
+# Generate various graphs
+for _ in range(200):
+    p = random.uniform(0.05, 0.95)
+    adj = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if random.random() < p:
+                adj[i][j] = adj[j][i] = 1
+    degrees = [int(np.sum(adj[i])) for i in range(n)]
+    if sum(degrees) == 0:
+        continue
+    d = regularity_deficit(degrees)
+    v = np.var(degrees)
+    all_deficits.append(d)
+    all_variances.append(v)
+
+ax2.scatter(all_variances, all_deficits, c='steelblue', s=20, alpha=0.5)
+ax2.set_xlabel('Degree Variance σ²', fontsize=11)
+ax2.set_ylabel('Regularity Deficit D(G)', fontsize=11)
+ax2.set_title('Deficit ↔ Degree Variance', fontsize=12)
+ax2.grid(True, alpha=0.3)
+
+# Add trendline
+if all_variances:
+    z = np.polyfit(all_variances, all_deficits, 2)
+    x_fit = np.linspace(0, max(all_variances), 100)
+    y_fit = np.polyval(z, x_fit)
+    ax2.plot(x_fit, y_fit, 'r-', alpha=0.7, linewidth=2, label='Quadratic fit')
+    ax2.legend(fontsize=9)
+
+# --- Panel 3: Entropy bar chart for graph families ---
+ax3 = axes[2]
+
+families = []
+
+# Complete
+degrees = [n - 1] * n
+families.append(('Complete\nK₂₀', degree_entropy(degrees), True))
+
+# Cycle
+degrees = [2] * n
+families.append(('Cycle\nC₂₀', degree_entropy(degrees), True))
+
+# Petersen-like (3-regular)
+degrees = [3] * n
+families.append(('3-Regular', degree_entropy(degrees), True))
+
+# Dense random
+adj = np.zeros((n, n))
+random.seed(100)
+for i in range(n):
+    for j in range(i + 1, n):
+        if random.random() < 0.6:
+            adj[i][j] = adj[j][i] = 1
+degrees = [int(np.sum(adj[i])) for i in range(n)]
+families.append(('G(n,0.6)', degree_entropy(degrees), False))
+
+# Sparse random
+adj = np.zeros((n, n))
+random.seed(200)
+for i in range(n):
+    for j in range(i + 1, n):
+        if random.random() < 0.2:
+            adj[i][j] = adj[j][i] = 1
+degrees = [int(np.sum(adj[i])) for i in range(n)]
+families.append(('G(n,0.2)', degree_entropy(degrees), False))
+
+# Path
+degrees = [1] + [2] * (n - 2) + [1]
+families.append(('Path\nP₂₀', degree_entropy(degrees), False))
+
+# Star
+degrees = [n - 1] + [1] * (n - 1)
+families.append(('Star\nS₂₀', degree_entropy(degrees), False))
+
+names = [f[0] for f in families]
+entropies = [f[1] for f in families]
+is_reg = [f[2] for f in families]
+colors = ['#2196F3' if r else '#FF9800' for r in is_reg]
+
+bars = ax3.bar(names, entropies, color=colors, edgecolor='white', linewidth=0.5)
+ax3.axhline(y=math.log(n), color='red', linestyle='--', alpha=0.7,
+            label=f'log|V| = {math.log(n):.2f}')
+ax3.set_ylabel('Degree Entropy H(G)', fontsize=11)
+ax3.set_title('Entropy Rigidity:\nH = log|V| ⟺ Regular', fontsize=12)
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3, axis='y')
+
+# Custom legend
+from matplotlib.patches import Patch
+legend_elements = [Patch(facecolor='#2196F3', label='Regular'),
+                   Patch(facecolor='#FF9800', label='Irregular')]
+ax3.legend(handles=legend_elements + [plt.Line2D([0], [0], color='red',
+           linestyle='--', label=f'log|V| = {math.log(n):.2f}')],
+           fontsize=9, loc='lower left')
+
+plt.suptitle('Entropy Rigidity: Regular Graphs as Information-Theoretic Extrema',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_rigidity.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_rigidity.png")
+
+
+"""
+Visualization 2: Spectral Bound Verification
+
+Shows the relationship between spectral radius lambda_1, average degree,
+and the entropy lower bound for random graphs. Verifies that the bound
+H(G) >= log(|V| * d_bar / Delta) holds universally, and tests the stronger
+spectral conjecture H(G) >= log(|V| * lambda_1 / Delta).
+"""
+
+import math
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def degree_entropy(degrees):
+    vol = sum(degrees)
+    if vol == 0:
+        return 0.0
+    H = 0.0
+    for d in degrees:
+        if d > 0:
+            p = d / vol
+            H -= p * math.log(p)
+    return H
+
+
+def generate_erdos_renyi(n, p):
+    adj = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if random.random() < p:
+                adj[i][j] = adj[j][i] = 1
+    return adj
+
+
+random.seed(42)
+np.random.seed(42)
+
+n = 30
+num_per_p = 80
+p_values = np.linspace(0.05, 0.95, 19)
+
+data = {pv: {'H': [], 'bound_avg': [], 'bound_spec': [], 'lambda1': [], 'd_bar': []}
+        for pv in p_values}
+
+for pv in p_values:
+    for _ in range(num_per_p):
+        adj = generate_erdos_renyi(n, pv)
+        degrees = [int(np.sum(adj[i])) for i in range(n)]
+        vol = sum(degrees)
+        if vol == 0:
+            continue
+        delta = max(degrees)
+        d_bar = vol / n
+        H = degree_entropy(degrees)
+        lam1 = float(np.max(np.linalg.eigvalsh(adj)))
+
+        if delta > 0 and d_bar > 0:
+            bound_avg = math.log(n * d_bar / delta)
+            bound_spec = math.log(n * lam1 / delta) if lam1 > 0 else float('-inf')
+        else:
+            continue
+
+        data[pv]['H'].append(H)
+        data[pv]['bound_avg'].append(bound_avg)
+        data[pv]['bound_spec'].append(bound_spec)
+        data[pv]['lambda1'].append(lam1)
+        data[pv]['d_bar'].append(d_bar)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Plot 1: Entropy vs avg/max bound
+ax1 = axes[0, 0]
+all_H = []
+all_bound_avg = []
+colors_p = []
+for pv in p_values:
+    for H, ba in zip(data[pv]['H'], data[pv]['bound_avg']):
+        all_H.append(H)
+        all_bound_avg.append(ba)
+        colors_p.append(pv)
+
+sc1 = ax1.scatter(all_bound_avg, all_H, c=colors_p, cmap='viridis', s=15, alpha=0.6)
+lo, hi = min(all_bound_avg + all_H), max(all_bound_avg + all_H)
+ax1.plot([lo, hi], [lo, hi], 'r--', alpha=0.5, label='y = x (tight)')
+ax1.set_xlabel('Lower bound: log(|V|·d̄/Δ)')
+ax1.set_ylabel('Actual entropy H(G)')
+ax1.set_title('Theorem A: H(G) ≥ log(|V|·d̄/Δ)')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+plt.colorbar(sc1, ax=ax1, label='Edge probability p')
+
+# Plot 2: Entropy margin distribution
+ax2 = axes[0, 1]
+margins_by_p = {}
+for pv in p_values:
+    margins = [H - ba for H, ba in zip(data[pv]['H'], data[pv]['bound_avg'])]
+    if margins:
+        margins_by_p[pv] = margins
+
+selected_p = [0.1, 0.3, 0.5, 0.7, 0.9]
+colors = ['#F44336', '#FF9800', '#4CAF50', '#2196F3', '#9C27B0']
+for i, sp in enumerate(selected_p):
+    closest_p = min(p_values, key=lambda x: abs(x - sp))
+    if closest_p in margins_by_p:
+        ax2.hist(margins_by_p[closest_p], bins=15, alpha=0.5,
+                 label=f'p={sp:.1f}', color=colors[i])
+ax2.axvline(x=0, color='red', linestyle='--', alpha=0.5, label='Bound = H')
+ax2.set_xlabel('Margin: H(G) - bound')
+ax2.set_ylabel('Count')
+ax2.set_title('Distribution of Entropy Margins')
+ax2.legend(fontsize=8)
+ax2.grid(True, alpha=0.3)
+
+# Plot 3: Spectral radius vs average degree
+ax3 = axes[1, 0]
+all_lam = []
+all_dbar = []
+all_colors = []
+for pv in p_values:
+    for l, d in zip(data[pv]['lambda1'], data[pv]['d_bar']):
+        all_lam.append(l)
+        all_dbar.append(d)
+        all_colors.append(pv)
+sc3 = ax3.scatter(all_dbar, all_lam, c=all_colors, cmap='viridis', s=15, alpha=0.6)
+lo, hi = 0, max(max(all_lam), max(all_dbar))
+ax3.plot([0, hi], [0, hi], 'r--', alpha=0.5, label='λ₁ = d̄')
+ax3.set_xlabel('Average degree d̄')
+ax3.set_ylabel('Spectral radius λ₁')
+ax3.set_title('λ₁ ≥ d̄ (Collatz–Sinogowitz)')
+ax3.legend()
+ax3.grid(True, alpha=0.3)
+plt.colorbar(sc3, ax=ax3, label='Edge probability p')
+
+# Plot 4: Strong conjecture margin
+ax4 = axes[1, 1]
+all_spec_margins = []
+all_colors_spec = []
+for pv in p_values:
+    for H, bs in zip(data[pv]['H'], data[pv]['bound_spec']):
+        if bs > float('-inf'):
+            all_spec_margins.append(H - bs)
+            all_colors_spec.append(pv)
+sc4 = ax4.scatter(all_colors_spec, all_spec_margins, c=all_colors_spec,
+                  cmap='viridis', s=15, alpha=0.6)
+ax4.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+ax4.set_xlabel('Edge probability p')
+ax4.set_ylabel('H(G) - log(|V|·λ₁/Δ)')
+ax4.set_title('Strong Conjecture: H(G) ≥ log(|V|·λ₁/Δ)')
+ax4.grid(True, alpha=0.3)
+violations = sum(1 for m in all_spec_margins if m < -1e-10)
+ax4.text(0.5, 0.95, f'Violations: {violations}/{len(all_spec_margins)}',
+         transform=ax4.transAxes, ha='center', va='top',
+         fontsize=11, color='green' if violations == 0 else 'red',
+         bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+
+plt.suptitle(f'Spectral-Tropical Entropy Bounds — G(n={n}, p) Random Graphs',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_spectral_bound.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_spectral_bound.png")
