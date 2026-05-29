@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Combinatorics / Graph Theory",
     "date": "2026-05-29T15:17:34Z",
     "exp_id": "12e461c7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7311741395348836,
+    "quality": "substantial",
     "pkg_num": 323
   },
   {
@@ -9376,8 +9376,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-29T15:17:34Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7311741395348836,
+      "quality": "substantial"
     }
   ],
   "edges": [

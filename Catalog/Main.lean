@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2066 of the highest-quality
+A curated collection of 2068 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2066
+Total files: 2068
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -31,6 +31,7 @@ import FINAL.Algebra.CanonicalTree
 import FINAL.Algebra.CategoryTheory
 import FINAL.Algebra.CausalCertification
 import FINAL.Algebra.CayleyDicksonHierarchy
+import FINAL.Algebra.Certificates
 import FINAL.Algebra.ChainFactoring
 import FINAL.Algebra.Channel5Sedenions
 import FINAL.Algebra.Channel6Research
@@ -184,6 +185,7 @@ import FINAL.Algebra.ParityCensus
 import FINAL.Algebra.ParityCylinders
 import FINAL.Algebra.Percolation
 import FINAL.Algebra.Periodic
+import FINAL.Algebra.PeriodicSums
 import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
