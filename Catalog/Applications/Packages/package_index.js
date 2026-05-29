@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Dynamical Systems / Computational Mathematics",
     "date": "2026-05-29T06:11:53Z",
     "exp_id": "e9711576",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6897280571428572,
+    "quality": "partial",
     "pkg_num": 298
   },
   {
@@ -8651,8 +8651,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-05-29T06:11:53Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6897280571428572,
+      "quality": "partial"
     }
   ],
   "edges": [
