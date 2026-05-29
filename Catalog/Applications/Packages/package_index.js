@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Dynamics / Topological Data Analysis",
     "date": "2026-05-29T10:35:46Z",
     "exp_id": "0f96d042",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6450838181818184,
+    "quality": "partial",
     "pkg_num": 312
   },
   {
@@ -9057,8 +9057,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T10:35:46Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6450838181818184,
+      "quality": "partial"
     }
   ],
   "edges": [
