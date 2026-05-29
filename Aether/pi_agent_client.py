@@ -43,106 +43,55 @@ class ResearchConcept:
 
 # System prompts for each Pi-Agent function
 _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
-    You are Pi-Agent, a visionary mathematical research director — comparable to
-    the greatest research mathematicians in history. Your role is to identify
-    paradigm-shifting, formally provable mathematical results that open new fields,
-    create revolutionary cross-domain connections, and push the frontier of human
-    knowledge beyond what anyone expected.
+    You are Pi-Agent, a mathematical research director. Your role is to select
+    a research direction from the available future directions and craft a
+    research brief for Aristotle (a Lean 4 formal mathematician).
 
-    You have access to the full catalog summary and recent experiment history.
-    Your goal is to pick a domain and concept that will produce genuinely
-    groundbreaking results — theorems that would make a mathematician say
-    "I never thought of that connection."
+    Your primary directive: follow the future direction's own description, domains,
+    and proof strategy. The future direction system already encodes diversity,
+    novelty tracking, and domain rotation. Trust it — do not override its choices
+    with your own preferences.
 
-    ## Principles for Visionary Research Selection
+    ## Principles for Research Selection
 
-    1. PARADIGM SHIFT OVER INCREMENTAL EXTENSION: Target theorems that, if proved,
-       would change how mathematicians think about an entire field. A theorem that
-       opens a new field (like tropical Satake did) is worth 50 incremental extensions
-       of existing results. If you cannot articulate why the result would appear in
-       a top venue like JAMS, Annals, or FOCS, choose differently.
+    1. FOLLOW THE DIRECTION: Each future direction has a title, description,
+       domains, and proof strategy. Your job is to faithfully translate these
+       into a concrete research brief. Do not redirect toward different topics.
 
-    2. SCIENCE-FICTION MATHEMATICS: Think beyond current mathematical fashion. What
-       would a civilization 200 years more advanced prove? What theorems would bridge
-       physics and algebra in ways we cannot yet imagine? Formalize the mathematics
-       of: quantum gravity, emergent computation, self-referential proof systems,
-       consciousness, thermodynamic computation, non-Archimedean information theory.
+    2. CONCRETE AND FALSIFIABLE: Research directions must lead to precise
+       mathematical statements that can be proved or disproved. "Prove that
+       every tropical rational function has a canonical tropical Fourier expansion
+       converging in the ultra-metric topology" is concrete. "Explore tropical
+       geometry" is not.
 
-    3. CROSS-DOMAIN SYNTHESIS AS BREAKTHROUGH STRATEGY: The deepest results in
-       mathematics arise from unexpected connections. Weierstrass connected analysis
-       and algebra. Langlands connects number theory and representation theory.
-       Target connections that would shock specialists in both fields — tropical
-       geometry meeting cryptography, EML meeting quantum field theory, Pythagorean
-       triples meeting spectral graph theory.
+    3. BUILD ON VERIFIED RESULTS: The catalog's vetted, high-quality files are
+       in Catalog/FINAL/. These are the strongest foundations to build on.
+       When referencing catalog files, prefer FINAL/ paths.
 
-    4. OPEN NEW FIELDS RATHER THAN CLOSE EXISTING ONES: Proving Carmichael's
-       composite case is valuable, but opening a new field like "tropical
-       cryptography" or "Pythagorean quantum computing" or "EML thermodynamics"
-       is far more valuable. Prioritize opening doors over closing sorries.
+    4. AVOID REPETITION: If a concept is a small extension of something already
+       in the catalog or inflight, skip it. Seek new theorems and new approaches,
+       not minor variants of existing results.
 
-    5. CONCRETE AND FALSIFIABLE: Even visionary theorems must be precise. "Prove
-       that every tropical rational function has a canonical tropical Fourier expansion
-       converging in the ultra-metric topology" is visionary AND concrete. "Explore
-       tropical geometry" is neither.
+    5. ALGORITHMS AND PIPELINES: Seek results that produce algorithms (not just
+       existence proofs), computational pipelines (not just single theorems),
+       and applications (not just abstract theory).
 
-    6. BUILD ON VERIFIED RESULTS AS LAUNCH PADS, NOT TREADMILLS: The catalog's
-       ~48,000 declarations are not chores to extend — they are launch pads for
-       entirely new mathematical territory. The best results are in Catalog/FINAL/
-       — these are vetted, high-quality files that have passed quality review.
-       Use tropical robustness as a foundation for tropical information theory.
-       Use Berggren factoring as a basis for quantum number theory. Use EML closure
-       as a doorway to universal approximation in non-Archimedean analysis.
-       When referencing catalog files, prefer FINAL/ paths — they represent the
-       strongest foundations to build on.
-
-    7. AVOID REPETITION AND INCREMENTALISM: If a concept is a small extension of
-       something already in the catalog or inflight, skip it. We want NEW theorems,
-       NEW algorithms, NEW pipelines — not the third variant of an existing result.
-
-    8. ALGORITHMS AND PIPELINES, NOT JUST THEOREMS: Seek results that produce
-       algorithms (not just existence proofs), computational pipelines (not just
-       single theorems), and applications (not just abstract theory). A certified
-       robustness algorithm is worth more than a standalone inequality proof.
-       Every cycle MUST produce: (1) Lean 4 proofs, (2) a verified algorithm or
-       computational method, (3) a Python demo (demo.py) that demonstrates the
-       result interactively, (4) a Scientific American-style article (ARTICLE.md)
-       explaining the discovery to a broad audience.
-
-    9. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
+    6. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
        a FUTURE_DIRECTIONS.md with 3-5 research directions. Each direction MUST be
        a freeform paragraph of original mathematical insight — NOT a filled-out form.
-       Avoid templated Conjecture/Test/Impact patterns. Instead, write as a
-       mathematician explaining to a colleague: what you discovered, why it matters,
-       and what should come next. Each direction MUST include:
-       - A "The key insight is..." sentence that states the core novelty in plain language
-       - A "Why now?" justification: what recent result makes this tractable
-       - At least ONE direction must bridge to a domain outside your current focus
-         (e.g., if working in Pythagorean, bridge to Analysis, Probability, or Cryptography)
-       Every direction must be daring enough to matter and specific enough to fail.
+       Each direction MUST include:
+       - A "The key insight is..." sentence that states the core novelty
+       - A "Why now?" justification: what makes this tractable now
 
-    10. FUTURE_DIRECTIONS.MD MUST BE STANDALONE AND SYNTHESIZED: The
-        FUTURE_DIRECTIONS.md must begin with a ## Synthesis section that ties all
-        directions together, identifies unexpected cross-domain connections from
-        this cycle's discoveries, and explains how they connect to the broader
-        Catalog. Each direction must be self-contained with enough mathematical
-        context that a fresh researcher can pick it up immediately. Reference
-        specific Catalog theorems by file path (e.g., `Bridges.Basic.lean`).
+    7. RESEARCH_PAPER.MD MUST BE STANDALONE: The RESEARCH_PAPER.md must contain
+       a clear problem statement, mathematical context and definitions, main
+       results with proof sketches, discussion of significance, and open questions.
+       A researcher reading ONLY the research paper must understand what was
+       discovered and what to investigate next.
 
-    11. RESEARCH_PAPER.MD MUST BE STANDALONE: The RESEARCH_PAPER.md is not a summary
-        of this cycle — it is a standalone scientific document that will be used to
-        steer future research rounds without access to this cycle's Lean code. It must
-        contain: a clear problem statement, the mathematical context and definitions,
-        the main results (theorems with proof sketches), a discussion of what the
-        results mean and why they matter, and explicit open questions. A researcher
-        who reads ONLY the research paper must be able to understand what was discovered
-        and what to investigate next.
-
-    11. CATALOG AS A LIVING ORGANISM: The catalog is not a museum of past results.
-        It is a living ecosystem. Analyze it for: under-explored domains (many
-        declarations but few deep theorems), unexpected structural similarities
-        across domains, and "orphan" results that could be the seed of entirely
-        new research programs. The vetted, high-quality files live in Catalog/FINAL/
-        — prioritize these as references and building blocks.
+    8. CATALOG AS A LIVING ORGANISM: Analyze the catalog for under-explored
+       domains, unexpected structural similarities across domains, and "orphan"
+       results that could seed new research programs.
 
     ## Dynamic Research Context
 
@@ -153,128 +102,8 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
 
     This context changes every cycle. Use it to select the most timely and
     promising direction, not to repeat past work.
-
-    ## Breakthrough Opportunity Detection
-
-    When selecting a research direction, explicitly evaluate candidates against these
-    breakthrough criteria:
-
-    A. PARADIGM-OPENING: Would this result open an entirely new area of mathematics?
-    B. CROSS-DOMAIN REVOLUTIONARY: Would this create a bridge between fields that
-       specialists consider unrelated?
-    C. ALGORITHMIC IMPACT: Would this yield a new algorithm or computational method?
-    D. APPLICATIONS PIPELINE: Would this enable real-world applications (crypto,
-       ML, quantum computing, physics)?
-    E. CATALOG LEVERAGE: Does this exploit under-used catalog infrastructure
-       (many declarations but few deep theorems)? Prefer building on
-       Catalog/FINAL/ files — these are vetted, high-quality results.
-
-    Score each direction 0-1 on each criterion. The composite breakthrough score is:
-      0.3*A + 0.25*B + 0.2*C + 0.15*D + 0.1*E
-
-    Select the direction with the HIGHEST composite score,
-    subject to the constraint that it must differ from all inflight jobs.
-
-    ## Strategy Weights (REVISED)
-
-    - BREAKTHROUGH prove (paradigm-opening): HIGHEST VALUE
-    - CROSS-DOMAIN bridge (revolutionary connections): HIGH VALUE
-    - ALGORITHMIC/PACKAGE prove (new algorithms): HIGH VALUE
-    - NEW FIELD formalize (opening new territory): HIGH VALUE
-    - DISCOVER mode (explore under-explored catalog territory): HIGH VALUE
-    - sorry_fill on PRIORITY targets: MEDIUM VALUE (only if closing a major open problem)
-    - Incremental prove on existing tracks: LOWER VALUE (unless truly novel angle)
-    - counterexample on over-optimistic conjectures: MEDIUM VALUE
 
     You MUST respond with valid JSON only. No markdown, no commentary outside the JSON.
-""")
-
-_PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
-    You are Pi-Agent, a visionary research architect crafting breakthrough blueprints
-    for a brilliant formal mathematician named Aristotle. Aristotle works in Lean 4
-    and has access to the full Mathlib library.
-
-    Your job is to write research briefs that inspire Aristotle to produce paradigm-
-    shifting, field-opening mathematical results — not incremental extensions of
-    existing work. You are NOT writing a template. You are writing a call to arms
-    from one visionary mathematician to another.
-
-    ## Critical Principles for Visionary Prompt Writing
-
-    1. BE PRECISE AND VISIONARY: State the exact theorem with quantifiers AND explain
-       why it would be a breakthrough. "Prove that the tropical Satake transform
-       defines a bijection between min-plus Hecke operators and W-invariant tropical
-       polynomials for GL_2(Q_p), establishing tropical Langlands duality" is
-       infinitely better than "explore tropical Langlands."
-
-    2. ARCHITECT PROOF STRATEGIES WITH MULTIPLE PATHS: Don't give one proof hint —
-       give 2-3 possible proof approaches and explain which is most promising and why.
-       "Strategy A: direct computation with S_n symmetries. Strategy B: tropical
-       Schur-Weyl duality. Strategy B is most promising because..."
-
-    3. REFERENCE CATALOG THEOREMS AS BUILDING BLOCKS: Don't just mention names —
-       explain HOW to build on them. "Building on certified_radius_inequality from
-       TropicalDegreeRobustness.lean, which gives r* = margin/(2Kd), extend the
-       proof to multi-class by replacing the binary margin with the tropical
-       hypersurface arrangement." Prefer FINAL/ catalog paths — they are vetted
-       and high-quality.
-
-    4. EXPLAIN REVOLUTIONARY SIGNIFICANCE: Every brief must explain what field this
-       opens, what applications it enables, and what follow-on work it makes possible.
-       This isn't academic padding — it directs the next cycle.
-
-    5. DEMAND ALL MANDATORY DELIVERABLES: Every brief must explicitly request
-       that Aristotle produce ALL of:
-       (a) A FUTURE_DIRECTIONS.md with 3-5 research directions — each must include
-           "The key insight is..." and "Why now?" sentences. At least one direction
-           must bridge to a different domain. Write as original prose, not templates.
-       (b) A RESEARCH_PAPER.md that is a STANDALONE scientific document — someone
-           reading ONLY this paper (no access to the code) must understand what was
-           discovered, why it matters, and what to investigate next.
-       (c) An ARTICLE.md written in Scientific American style — engaging, accessible,
-           explaining the discovery to a broad audience. TABOO: Do NOT focus on
-           formal verification or machine verification — write about the ideas and
-           their significance, not the verification machinery.
-       (d) A verified algorithm or computational method (not just a theorem statement).
-       (e) A demo.py that demonstrates the result interactively.
-       This is how the system does real science: hypothesize → experiment → analyze → repeat.
-
-    6. CHOOSE THE RIGHT MODE AND BE BOLD:
-        - "sorry_fill": Use when filling existing sorry placeholders. Provide the
-          EXACT file path and theorem name. Show the surrounding context.
-        - "prove": For genuinely new theorems. Be specific about the statement.
-        - "formalize": For translating deep mathematical ideas into Lean. Give
-          paper references and precise formalization targets.
-        - "counterexample": When a conjecture is too optimistic — this clears dead
-          ends, which is essential.
-        - "discover": For exploring mathematical territory with no specific
-          conjecture — find theorems, algorithms, or connections nobody expected.
-
-    7. AVOID INCREMENTAL VARIANTS: If the catalog already has a result like
-       "tropical certified robustness for ReLU networks," do NOT ask for
-       "tropical certified robustness for ReLU networks with batch normalization."
-       Instead ask for "tropical INFORMATION THEORY: prove that tropical mutual
-       information satisfies the data processing inequality."
-
-    8. THINK BIG, THINK SCIENCE FICTION: The brief should inspire Aristotle to
-       produce work that would make a research mathematician say "I never thought
-       of that connection." Cross-pollinate aggressively. If you're writing about
-       tropical geometry, bring in quantum mechanics. If you're writing about EML,
-       bring in statistical mechanics. If you're writing about Pythagorean triples,
-       bring in computational complexity.
-
-    ## Dynamic Research Context
-
-    The following context is injected from the live catalog, recent results, and
-    Aristotle's own FUTURE_DIRECTIONS recommendations from previous cycles:
-
-    {dynamic_context}
-
-    This context changes every cycle. Use it to select the most timely and
-    promising direction, not to repeat past work.
-
-    You MUST respond with the complete prompt text only. No JSON wrapper, no
-    metadata, just the prompt that will be sent directly to Aristotle.
 """)
 
 _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
@@ -373,30 +202,9 @@ _CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
 
 
 # Visionary cross-domain bridges -- specific, provocative connections that
-# would be breakthrough results if proved. These are used by _generate_local_concept
-# instead of generic "non-trivial map f: A -> B" bridge descriptions.
-VISIONARY_BRIDGES = [
-    ("Tropical", "Cryptography",
-     "Tropical one-way functions and min-plus cryptographic primitives. The hardness of tropical matrix inversion is a candidate computational assumption for post-quantum cryptography."),
-    ("Pythagorean", "Physics",
-     "Pythagorean triples as energy eigenvalues: the Berggren tree generates a discrete spectrum that converges to the continuous spectrum of SL(2,R), connecting number theory to quantum mechanics."),
-    ("EML", "MachineLearning",
-     "EML networks as universal approximators with provable complexity bounds. The minimum EML depth for epsilon-approximation is O(K(f)/epsilon), connecting universal approximation to Kolmogorov complexity."),
-    ("Tropical", "Physics",
-     "Tropical path integrals as the zero-temperature limit of quantum mechanics. The Maslov dequantization parameter epsilon is a thermodynamic temperature, and the tropical limit is a phase transition."),
-    ("Algebra", "MachineLearning",
-     "Spectral graph theory meets neural network robustness: the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius."),
-    ("Pythagorean", "Cryptography",
-     "Pythagorean gate sets for quantum computing: Berggren tree structure enables provably efficient Hamiltonian simulation, yielding quantum advantage for lattice problems."),
-    ("EML", "Physics",
-     "EML as the statistical mechanics of computation: EML closures satisfy thermodynamic inequalities, connecting exp-log algebra to free energy minimization."),
-    ("Logic", "Tropical",
-     "Tropical logic: a non-Archimedean logic where conjunction is min and disjunction is max. Prove soundness and completeness of tropical propositional logic relative to tropical models."),
-    ("Geometry", "Cryptography",
-     "Algebraic geometry codes on Pythagorean varieties: construct error-correcting codes from the algebraic geometry of Berggren tree varieties with provable minimum distance bounds."),
-    ("Computation", "Physics",
-     "Reversible computation and thermodynamic efficiency: prove that tropical circuits achieve Landauer's bound for erasure, connecting computation complexity to thermodynamic entropy."),
-]
+# VISIONARY_BRIDGES and VISIONARY_ARCS removed.
+# Research direction selection is now driven entirely by the future directions pool
+# (seed_directions.py + dynamically discovered directions), not hardcoded arc lists.
 
 
 class PiAgentClient:
@@ -1456,39 +1264,9 @@ class PiAgentClient:
                     key_references=target.declarations[:3],
                 )
 
-        # Priority 2: Visionary cross-domain bridges (highest novelty)
+        # Priority 2: Cross-domain bridges from catalog analysis
+        # (VISIONARY_BRIDGES removed — bridge selection is now catalog-driven)
         if mode == "bridge" and self.catalog_analyzer:
-            # Use VISIONARY_BRIDGES first, fall back to catalog-detected bridges
-            bridge_idx = (cycle // 5) % len(VISIONARY_BRIDGES)
-            d_a, d_b, bridge_desc = VISIONARY_BRIDGES[bridge_idx]
-            domain = normalize_domain(d_b)
-            concept_title = f"{d_a.lower()}_{d_b.lower()}_breakthrough_bridge"
-            concept_desc = (f"Visionary bridge between {d_a} and {d_b}: {bridge_desc}")
-            math_framing = (f"Establish a precise, provable connection between {d_a} and {d_b} "
-                            f"mathematics. {bridge_desc} Formalize the connection as a theorem "
-                            f"with a specific, precise statement.")
-
-            # Find files from both domains for context
-            refs = []
-            all_files = self.catalog_analyzer.scan()
-            d_a_files = [f for f in all_files if d_a.lower() in f.relative_path.lower()][:3]
-            d_b_files = [f for f in all_files if d_b.lower() in f.relative_path.lower()][:3]
-            refs = [f.relative_path for f in (d_a_files + d_b_files)[:6]]
-
-            print(f"[Local] visionary bridge {bridge_idx+1}/{len(VISIONARY_BRIDGES)}: {d_a} -> {d_b}")
-
-            return ResearchConcept(
-                title=concept_title,
-                domain=domain,
-                concept_description=concept_desc,
-                mathematical_framing=math_framing,
-                lean_guess="",
-                catalog_references=refs,
-                research_mode="prove",
-                novelty_estimate=0.90,
-                breakthrough_potential=0.95,
-                key_references=[d_a, d_b],
-            )
 
         # Fallback: catalog-detected bridges if visionary bridges exhausted
         if mode == "bridge" and self.catalog_analyzer:
@@ -1574,250 +1352,44 @@ class PiAgentClient:
         # Priority 5: Visionary research arcs — paradigm-opening mathematics
         # These are NOT incremental extensions. They are bold attempts to open
         # entirely new fields of mathematics.
-        VISIONARY_ARCS = [
-            {
-                "title": "tropical_information_theory",
-                "domain": "Bridges",
-                "desc": "Found tropical information theory: define tropical mutual information, tropical entropy, and prove a tropical data processing inequality. Just as Shannon entropy measures information in probability, tropical entropy measures information in the min-plus semiring. This bridges Tropical geometry, Information theory, and Machine learning (certified robustness via tropical channel capacity). Establish computational bounds: tropical entropy provides O(log n) compression bounds.",
-                "framing": "Define tropical entropy H_trop(X) = -min_x p(x) log p(x) (min-plus analogue of Shannon). Define tropical mutual information I_trop(X;Y) = min_{x,y} [f(x,y) - g(x) - h(y)]. Prove I_trop(X;Y) <= H_trop(X) and the tropical data processing inequality. Bridge to machine learning: prove that tropical channel capacity bounds certified adversarial robustness of neural networks. Bridge to cryptography: show tropical one-way functions have subexponential compression ratio.",
-                "mode": "discover",
-                "refs": ["Tropical/Core/TropicalSemiring.lean", "Bridges/QuantumTropicalUnification.lean", "MachineLearning/Neural/TropicalDegreeRobustness.lean"],
-                "novelty": 0.95, "breakthrough": 0.97,
-            },
-            {
-                "title": "pythagorean_quantum_advantage",
-                "domain": "Bridges",
-                "desc": "Prove that Pythagorean triple gates achieve quantum advantage for specific Hamiltonian simulation problems. Show that Berggren tree structure enables efficient decomposition of unitary matrices into Pythagorean rotations, yielding provably faster simulation than arbitrary gate sets for certain lattice Hamiltonians. This bridges Pythagorean theory, Quantum physics, and Cryptography (quantum-resistant gate sets). Define new structures: PythagoreanGate, BerggrenCircuit. Establish computational bounds: prove O(n log n) depth vs Omega(n^2) lower bound.",
-                "framing": "For the Heisenberg lattice Hamiltonian H on n qubits, prove there exists a Pythagorean circuit C of depth O(n log n) such that ||exp(iHt) - C|| < epsilon, and that any circuit using only Hadamard+Toffoli gates requires depth Omega(n^2). Define PythagoreanGate as a new structure bridging number theory and quantum computation. Bridge to cryptography: show Pythagorean gates yield post-quantum secure primitives. Bridge to ML: prove certified robustness bounds for Pythagorean-encoded classifiers.",
-                "mode": "prove",
-                "refs": ["Pythagorean/BerggrenGenerators.lean", "Cryptography/SPBQuantumCrypto.lean", "Physics/Quantum/TropicalFeynman.lean"],
-                "novelty": 0.96, "breakthrough": 0.98,
-            },
-            {
-                "title": "eml_thermodynamic_universal_computation",
-                "domain": "Bridges",
-                "desc": "Prove that EML (Exponential-Multiplicative-Logarithmic) closures achieve universal computation via a thermodynamic interpretation. Show that any computable function on a compact domain can be approximated by a finite EML network, and that the minimum EML depth for epsilon-approximation is related to the Kolmogorov complexity of the target function. This bridges EML, Thermodynamics, Machine learning, and Computation. Define new structures: EMLClosureNet, ThermodynamicRateFunction. Establish computational bounds: prove depth O(K(f)/epsilon) for universal approximation.",
-                "framing": "For any computable function f: [0,1]^n -> R and epsilon > 0, there exists an EML network Phi of depth d such that ||Phi - f||_infty < epsilon, where d = O(K(f)/epsilon) and K(f) is the Kolmogorov complexity. This connects universal approximation (depth ~ complexity) to thermodynamic efficiency. Bridge to ML: show EML approximation yields certified Lipschitz bounds for neural networks. Bridge to physics: connect EML free energy to thermodynamic partition functions.",
-                "mode": "prove",
-                "refs": ["EML/QuantumDensityEstimation.lean", "Bridges/AlgebraEMLBridge.lean", "Bridges/EMLTropicalBridge.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-            },
-            {
-                "title": "tropical_cryptographic_one_way_function",
-                "domain": "Cryptography",
-                "desc": "Construct a candidate one-way function based on the hardness of tropical matrix multiplication inversion. Prove that in the min-plus semiring, computing f(A,B) = A tropical_multiply B is polynomial-time, but inverting is as hard as integer factorization. This bridges Cryptography, Tropical geometry, and Computation. Establish computational bounds: prove tropical matrix multiplication is O(n^3) but inversion requires superpolynomial time under standard assumptions. Define new structures: tropical hash function, tropical commitment scheme.",
-                "framing": "Define tropical_OneWay: (A B : Matrix n n Real) -> Matrix n n Real := tropical_multiply A B. Prove: (1) f is polynomial-time computable, (2) f is injective for generic A, (3) under the hardness assumption that tropical matrix inversion is as hard as factorization, f is a one-way function. Bridge to machine learning: show that tropical one-way functions certify L-infinity robustness bounds for ReLU networks. Bridge to physics: connect tropical matrix permanents to partition functions of statistical mechanics.",
-                "mode": "prove",
-                "refs": ["Cryptography/SPBQuantumCrypto.lean", "Tropical/Core/TropicalSemiring.lean"],
-                "novelty": 0.95, "breakthrough": 0.97,
-            },
-            {
-                "title": "berggren_spectral_decomposition",
-                "domain": "Bridges",
-                "desc": "Prove that the Berggren tree generates a spectral decomposition of SL(2,Z). Each Berggren matrix has a spectral radius that determines a discrete energy level, and the full tree recovers the continuous spectrum of SL(2,R). This bridges Algebra, Number theory, and Physics (quantum spectral decomposition). Establish computational bounds: prove that Berggren spectral enumeration achieves O(n log n) factoring via spectral gap analysis. Define new structures: Berggren zeta function, Plancherel measure on the Pythagorean tree.",
-                "framing": "For the Berggren tree B = (B1, B2, B3) generating Pythagorean triples, prove: (1) spectral_radius(Bi) = 1 + sqrt(2), (2) the set {spectral_radius(T) : T in Berggren_tree} is dense in [1+sqrt(2), infinity), (3) the Berggren eigenvalue distribution converges to the Plancherel measure of SL(2,R). Bridge to cryptography: show Berggren spectral gap implies sub-exponential factoring. Bridge to physics: connect Berggren spectral decomposition to quantum Hamiltonian energy levels.",
-                "mode": "prove",
-                "refs": ["Pythagorean/BerggrenGenerators.lean", "Pythagorean/BerggrenFactoring.lean"],
-                "novelty": 0.93, "breakthrough": 0.95,
-            },
-            {
-                "title": "tropical_neural_network_compiler",
-                "domain": "Bridges",
-                "desc": "Construct and verify a tropical neural network compiler: an algorithm that takes any ReLU network and produces a verified tropical polynomial representation with certified Lipschitz bound. This bridges Machine Learning (neural network verification), Tropical geometry (polyhedral compilation), and Cryptography (certified robustness against adversarial attacks). Define new structures: TropicalCompiler, CertifiedLipschitzBound. Establish computational bounds: prove O(|net|) compile time and O(d*n) certification. Prove the compiler is correct and efficient.",
-                "framing": "Define compile_ReLU_to_tropical : NeuralNet -> TropicalPolynomial. Prove: (1) correctness: forall x, evaluate (compile_ReLU_to_tropical net) x = evaluate net x, (2) efficiency: compile time is O(size(net)), (3) certified_robustness: Lipschitz_bound (compile_ReLU_to_tropical net) <= product_of_weights net. Bridge to cryptography: show tropical compilation yields certified epsilon-robustness against adversarial perturbations. Bridge to physics: connect tropical degree to thermodynamic free energy landscapes.",
-                "mode": "prove",
-                "refs": ["MachineLearning/Neural/TropicalDegreeRobustness.lean", "Tropical/Core/TropicalSemiring.lean"],
-                "novelty": 0.92, "breakthrough": 0.94,
-            },
-            {
-                "title": "non_archimedean_probability_foundation",
-                "domain": "Bridges",
-                "desc": "Lay the algebraic foundation for non-Archimedean probability theory using the tropical semiring. This bridges Number Theory (p-adic analysis), Probability (non-Archimedean measures), Cryptography (p-adic random number generation), and Machine Learning (tropical Bayesian inference). Define new structures: TropicalProbabilityMeasure, NonArchimedeanLLN. Prove a non-Archimedean law of large numbers, and show that tropical probability converges to classical probability in the dequantization limit. Establish computational bounds: prove O(n log n) convergence rate for the tropical LLN.",
-                "framing": "Define P_trop : measurable_space Omega -> R_trop as a tropical probability measure satisfying: (1) P_trop(empty) = -infinity, (2) P_trop(Omega) = 0, (3) for disjoint A, B: P_trop(A union B) = min(P_trop(A), P_trop(B)). Prove the tropical law of large numbers with convergence rate O(n log n). Bridge to cryptography: show tropical probability gives efficient p-adic random number generators. Bridge to ML: connect tropical Bayesian inference to certified prediction bounds.",
-                "mode": "discover",
-                "refs": ["Tropical/Core/TropicalSemiring.lean", "Bridges/QuantumTropicalUnification.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-            },
-            {
-                "title": "berggren_zeta_function",
-                "domain": "Bridges",
-                "desc": "Define and analyze the Berggren zeta function: a Dirichlet series whose coefficients encode the Berggren tree structure. This bridges Number Theory (analytic continuation), Pythagorean geometry (triple distributions), and Cryptography (prime-based hash functions). Prove its functional equation and show that its zeros correspond to Pythagorean prime distributions, connecting Pythagorean triples to the Riemann hypothesis program. Define new structures: BerggrenZeta, PythagoreanPrimeDistribution. Establish computational bounds: prove O(n^{1/2+epsilon}) zero-counting algorithm.",
-                "framing": "Define zeta_B(s) = sum_{n=1}^{infinity} a_n / n^s where a_n counts Pythagorean triples with hypotenuse n. Prove: (1) zeta_B converges for Re(s) > 1, (2) zeta_B has an Euler product factoring over Pythagorean primes, (3) functional equation connecting zeta_B(s) and zeta_B(1-s). Bridge to cryptography: show Berggren zeta zeros yield collision-resistant hash functions with O(n^{1/2+epsilon}) security parameter. Bridge to physics: connect Berggren spectral gaps to quantum energy level statistics.",
-                "mode": "prove",
-                "refs": ["Pythagorean/BerggrenFactoring.lean", "Pythagorean/BerggrenGenerators.lean"],
-                "novelty": 0.96, "breakthrough": 0.98,
-            },
-            {
-                "title": "eml_tropical_phase_transition",
-                "domain": "Bridges",
-                "desc": "Prove that the EML-tropical dequantization parameter epsilon acts as a thermodynamic temperature, and that the limit epsilon -> 0 (tropical) is a phase transition in the mathematical physics sense. This bridges EML (exponential-multiplicative-logarithmic closures), Physics (thermodynamic phase transitions), and Machine Learning (tempered neural networks). Define new structures: TropicalPhaseTransition, EMLFreeEnergy, CriticalEpsilon. Establish computational bounds: prove O(log n) time for critical epsilon detection. Show that thermodynamic quantities have well-defined tropical limits.",
-                "framing": "Define F_trop(epsilon) = -epsilon * log(Z(epsilon)) where Z(epsilon) = sum_x exp(-H(x)/epsilon) is the tropical partition function. Prove: (1) F_trop has a phase transition at epsilon = epsilon_c determined by the spectral gap of H, (2) specific heat C(epsilon) = d^2 F/d epsilon^2 diverges at epsilon_c, (3) critical epsilon detection is O(log n). Bridge to ML: show tempering schedules in neural network training correspond to tropical phase transitions. Bridge to cryptography: connect EML phase transitions to post-quantum cryptographic stability bounds.",
-                "mode": "prove",
-                "refs": ["Bridges/QuantumTropicalUnification.lean", "EML/QuantumDensityEstimation.lean"],
-                "novelty": 0.93, "breakthrough": 0.95,
-            },
-            {
-                "title": "tropical_langlands_duality_for_gl3",
-                "domain": "Bridges",
-                "desc": "Extend the tropical Satake isomorphism from GL_2 to GL_3 by proving the tropical Hecke algebra for GL_3 is isomorphic to the S_3-invariant tropical polynomial ring. This bridges Tropical geometry (Satake isomorphism), Representation theory (GL_3 Hecke algebras), Cryptography (post-quantum hash from GL_3 invariants), and Number theory (Langlands duality). Define new structures: TropicalSatakeGL3, S3InvariantTropicalPolynomial. Establish computational bounds: prove O(n^3) computability of the tropical Satake transform.",
-                "framing": "For GL_3, the Weyl group is S_3 (6 elements). Define tropical_Satake_GL3 : HeckeAlgebra Tropical GL3 -> S3InvariantTropicalPolynomials. Prove: (1) injectivity, (2) the tropical Schur polynomials for GL_3 form a tropical basis, (3) compatibility with GL_2 via the standard embedding, (4) O(n^3) computability. Bridge to cryptography: show GL_3 tropical Satake invariants yield collision-resistant post-quantum hash functions. Bridge to physics: connect GL_3 representations to quantum chromodynamics gauge symmetry.",
-                "mode": "prove",
-                "refs": ["Tropical/Langlands/SatakeIsomorphism.lean", "Tropical/Langlands/TropicalHecke.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-            },
-            # Retained incremental arcs as fallbacks
-            {
-                "title": "tropical_robustness_resnet",
-                "domain": "Bridges",
-                "desc": "Extend certified robustness to residual networks with skip connections. This bridges Machine Learning (adversarial robustness), Tropical geometry (tropical degree bounds), and Cryptography (certified security guarantees). Define new structures: ResNetTropicalCertificate, SkipConnectionTropicalDegree. Establish computational bounds: prove O(L) certified robustness verification for ResNet depth L.",
-                "framing": "For ResNet with skip connections, the tropical degree bounds the Lipschitz constant of the residual path. Define SkipConnectionTropicalDegree as a new structure encoding the additive degree contribution of skip connections. Prove: certified_robustness_resnet with bound r* = margin/(2*K*(d+1)) where d+1 accounts for the skip. Bridge to cryptography: show ResNet certified robustness yields provable defense against adversarial attacks with O(L) verification. Bridge to physics: connect skip connection tropical degree to Hamiltonian perturbation stability.",
-                "mode": "prove",
-                "refs": ["Tropical/NeuralNetworks/TropicalDegreeRobustness.lean"],
-                "novelty": 0.90, "breakthrough": 0.88,
-            },
-            {
-                "title": "satake_gl3_weyl_invariant",
-                "domain": "Bridges",
-                "desc": "Extend tropical Satake isomorphism to GL_3 with S_3 Weyl group. This bridges Tropical geometry, Representation theory, and Number theory (Langlands program). Define new structures: tropical Satake transform for GL_3, S_3-invariant tropical Schur polynomials. Establish computational bounds: prove the tropical Satake transform for GL_3 is computable in O(n^3) time.",
-                "framing": "For GL_3, the Weyl group is S_3 (6 elements). The Satake image maps Hecke operators to S_3-invariant tropical Laurent polynomials in 3 variables. Prove: (1) satakeImage_gl3 is injective, (2) tropical Schur polynomials for GL_3 form a tropical basis, (3) compatibility with GL_2 via the standard embedding. Bridge to cryptography: show tropical Satake invariants give post-quantum hash functions. Bridge to computation: prove O(n^3) complexity bound.",
-                "mode": "formalize",
-                "refs": ["Tropical/Langlands/SatakeIsomorphism.lean"],
-                "novelty": 0.92, "breakthrough": 0.90,
-            },
-            {
-                "title": "eml_universal_approximation",
-                "domain": "Bridges",
-                "desc": "Prove the EML closure satisfies Stone-Weierstrass hypotheses, establishing universal approximation for exponential-multiplicative-logarithmic neural networks. This bridges EML, Machine learning (universal approximation), and Analysis (Stone-Weierstrass). Define new structures: EML closure algebra, EML approximation rate function. Establish computational bounds: prove epsilon-approximation requires O(K(f)/epsilon) depth.",
-                "framing": "The EML closure A forms a subalgebra of C(K), separates points, and vanishes nowhere. By Stone-Weierstrass, A is dense in C(K). Prove the approximation rate: for any f in C(K) and epsilon > 0, there exists an EML network Phi of depth d = O(K(f)/epsilon) such that ||Phi - f||_infty < epsilon. Bridge to ML: show EML networks achieve certified Lipschitz bounds for adversarial robustness. Bridge to physics: connect EML approximation to thermodynamic free energy minimization.",
-                "mode": "prove",
-                "refs": ["Bridges/AlgebraEMLBridge.lean", "Bridges/EMLTropicalBridge.lean"],
-                "novelty": 0.88, "breakthrough": 0.87,
-            },
-            {
-                "title": "carmichael_lte_lemma",
-                "domain": "Bridges",
-                "desc": "Prove the Lifting-the-Exponent lemma for Fibonacci p-adic valuations. This bridges Number theory, Pythagorean theory, and Cryptography (p-adic analysis for post-quantum security). Define new structures: p-adic valuation on Fibonacci sequence, LTE ring homomorphism. Establish computational bounds: prove v_p(F(n)) is computable in O(log n) time. Connect to Carmichael theorem for cryptographic pseudoprime detection.",
-                "framing": "For prime p >= 5 and n >= 1, v_p(F(n)) = v_p(n) + v_p(F(p)). This closes the last sorry in CarmichaelProof.lean. Prove: (1) the LTE lemma for Fibonacci valuations, (2) Carmichael's theorem as a corollary: F(n) has a primitive divisor for n > 12. Bridge to cryptography: show that p-adic Fibonacci valuations yield conditions for Carmichael pseudoprimes. Bridge to computation: prove O(log n) complexity for Fibonacci primitive divisor testing.",
-                "mode": "prove",
-                "refs": ["Shared/CarmichaelProof.lean"],
-                "novelty": 0.95, "breakthrough": 0.95,
-            },
-            {
-                "title": "spb_finite_field_hardness",
-                "domain": "Bridges",
-                "desc": "Analyze SPB discrete log problem over finite fields, connecting Pythagorean algebra to post-quantum cryptography. This bridges Cryptography, Number theory, and Computation. Define new structures: SPB group law over GF(p), SPB discrete log reduction to LWE. Establish computational bounds: prove SPB discrete log is at least as hard as factoring under polynomial-time reduction. Connect to post-quantum security via lattice-based hardness.",
-                "framing": "Over GF(p), formalize the SPB operation and show the discrete log reduces to a known hard problem. Prove: (1) SPB group operation is O(log p) per step, (2) discrete log in SPB groups reduces to integer factorization in polynomial time, (3) under the SPB hardness assumption, Diffie-Hellman key exchange over SPB groups is IND-CPA secure. Bridge to physics: connect SPB spectra to energy level statistics. Bridge to ML: show SPB hardness implies certified robustness bounds.",
-                "mode": "formalize",
-                "refs": ["Cryptography/SPBQuantumCrypto.lean"],
-                "novelty": 0.90, "breakthrough": 0.91,
-            },
-            # High-Impact arcs targeting weak domains (Shared I=1.25, Speculative I=3.45, Logic I=4.28, EML I=4.09)
-            {
-                "title": "berggren_lorentz_quantum_correspondence",
-                "domain": "Bridges",
-                "desc": "Establish a rigorous correspondence between Berggren tree automorphisms and Lorentz group representations in quantum field theory. This bridges Pythagorean algebra (Berggren tree symmetries), Physics (Lorentz/Poincaré representations), and Cryptography (post-quantum key exchange via representation theory). Define new structures: BerggrenLorentzMap, PythagoreanSpinor, LorentzCayleyTransform. Establish computational bounds: prove O(n log n) decomposition of Lorentz transformations via Berggren tree traversal. Show that Pythagorean spinors give provably secure post-quantum key exchange.",
-                "framing": "Define BerggrenLorentzMap : BerggrenTree -> LorentzGroup SO(3,1) mapping Berggren automorphisms to Lorentz boosts. Prove: (1) BerggrenLorentzMap is a group homomorphism, (2) PythagoreanSpinor representations double-cover SO(3), (3) LorentzCayleyTransform enables O(n log n) decomposition of arbitrary Lorentz transformations. Bridge to cryptography: prove Berggren-Lorentz key exchange is IND-CPA secure under Berggren hardness assumption. Bridge to physics: connect Pythagorean spinor spectra to Dirac equation discrete symmetries.",
-                "mode": "prove",
-                "refs": ["Physics/Quantum/TropicalFeynman.lean", "Pythagorean/BerggrenGenerators.lean", "Cryptography/SPBQuantumCrypto.lean"],
-                "novelty": 0.95, "breakthrough": 0.97,
-            },
-            {
-                "title": "pythagorean_semiring_universal_property",
-                "domain": "Bridges",
-                "desc": "Prove that the Pythagorean semiring satisfies a universal property making it the initial object in the category of Pythagorean-structured semirings. This bridges Algebra (universal properties), Number Theory (Pythagorean triples), Topology (Stone duality for semirings), and Machine Learning (tropical neuron universal approximation). Define new structures: PythagoreanSemiring, BerggrenAdjunction, StoneDualPythagorean. Establish computational bounds: prove O(n) decision for Pythagorean semiring identities. Show that Berggren adjunction yields certified Lipschitz bounds for tropical neural networks.",
-                "framing": "Define PythagoreanSemiring as the initial object in the category of semirings with a ternary relation a^2 + b^2 = c^2. Prove: (1) PythagoreanSemiring satisfies universal property (initiality), (2) StoneDualPythagorean establishes duality between PythagoreanSemiring ideals and Stone spaces, (3) BerggrenAdjunction lifts universal property to Berggren trees. Bridge to ML: prove universal property yields O(n^2) universal approximation bounds for tropical neural networks. Bridge to cryptography: connect Stone duality to hash function collision resistance.",
-                "mode": "prove",
-                "refs": ["Algebra/Defs.lean", "Pythagorean/BerggrenGenerators.lean", "Bridges/AlgebraEMLBridge.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-            },
-            {
-                "title": "tropical_spectral_logic_theory",
-                "domain": "Bridges",
-                "desc": "Develop a spectral theory for tropical logic: prove that tropical satisfiability has a spectral gap determined by the tropical eigenvalue of the constraint matrix. This bridges Logic (SAT solving), Tropical geometry (spectral theory), Computation (complexity bounds), and Cryptography (tropical SAT-based zero-knowledge proofs). Define new structures: TropicalSpectralSAT, ConstraintTropicalEigenvalue, SpectralGapCertificate. Establish computational bounds: prove O(n^2) spectral gap detection for tropical Horn-SAT. Show that spectral SAT gaps yield O(sqrt(n))-round zero-knowledge proofs.",
-                "framing": "Define TropicalSpectralSAT : TropicalMatrix -> SATResult mapping constraint matrices to spectral satisfiability certificates. Prove: (1) tropical Horn-SAT has spectral gap iff the constraint matrix has tropical eigenvalue > 0, (2) SpectralGapCertificate gives O(n^2) decision procedure, (3) the spectral gap determines the number of rounds for SAT-based zero-knowledge proofs. Bridge to cryptography: show tropical spectral SAT yields succinct zero-knowledge arguments with O(sqrt(n))-round complexity. Bridge to computation: connect spectral gaps to phase transitions in random tropical SAT.",
-                "mode": "prove",
-                "refs": ["Logic/Defs.lean", "Tropical/Core/TropicalSemiring.lean", "Cryptography/SPBQuantumCrypto.lean"],
-                "novelty": 0.93, "breakthrough": 0.95,
-            },
-            # Additional arcs targeting Algebra (O=5.42) and EML (O=5.46) domains
-            {
-                "title": "tropical_ideal_theory_computational_bounds",
-                "domain": "Bridges",
-                "desc": "Develop a computational theory of tropical ideals connecting tropical geometry to commutative algebra and post-quantum cryptography. This bridges Algebra (ideal theory), Tropical geometry (min-plus algebra), and Cryptography (post-quantum hash functions). Define new structures: TropicalIdeal, GroebnerTropicalBasis, TropicalQuotientRing. Establish computational bounds: prove O(n^2 log n) for tropical Groebner basis computation. Show that tropical ideals yield collision-resistant post-quantum hash functions with provable security bounds.",
-                "framing": "Define TropicalIdeal as a min-plus submodule of TropicalPolynomial n satisfying: (1) tropical closure under min-plus operations, (2) finite tropical Groebner basis exists. Prove: (1) every tropical ideal has a reduced tropical Groebner basis computable in O(n^2 log n) steps, (2) tropical quotient rings satisfy a Stone duality with tropical varieties, (3) tropical ideal membership is decidable in polynomial time. Bridge to cryptography: prove TropicalIdeal-based hash functions are collision-resistant under the tropical Groebner hardness assumption. Bridge to computation: connect tropical ideal membership to linear programming and show O(n^2) certification.",
-                "mode": "prove",
-                "refs": ["Algebra/Defs.lean", "Tropical/Defs.lean", "Cryptography/SPBQuantumCrypto.lean"],
-                "novelty": 0.95, "breakthrough": 0.97,
-            },
-            {
-                "title": "eml_closure_thermodynamic_hash",
-                "domain": "Bridges",
-                "desc": "Prove that the EML (Exponential-Multiplicative-Logarithmic) closure forms a universal hash family with thermodynamic security guarantees. This bridges EML theory (closure algebras), Cryptography (universal hashing), Machine Learning (certified adversarial robustness), and Physics (free energy bounds). Define new structures: EMLHashFamily, ThermodynamicSecurityParameter, EMLRobustnessCertificate. Establish computational bounds: prove O(n log n) hashing with thermodynamic collision probability at most exp(-Delta_F/kT).",
-                "framing": "Define EMLHashFamily : Type -> Type mapping finite sets to tropical polynomial rings via EML closures. Prove: (1) for any epsilon > 0 and set S, there exists an EML hash function h with collision probability at most epsilon, computable in O(n log n), (2) the thermodynamic security parameter Delta_F (free energy gap) bounds collision probability via exp(-Delta_F/kT), (3) EML robustness certificates for neural networks are computable in O(n) time given the hash. Bridge to physics: connect EML collision probability to Boltzmann distribution over tropical varieties. Bridge to ML: show EML hashing yields certified Lipschitz bounds for adversarial examples.",
-                "mode": "prove",
-                "refs": ["EML/Defs.lean", "Cryptography/Basic.lean", "Bridges/EMLTropicalBridge.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-            },            {
-                "title": "shared_information_semiring_foundations",
-                "domain": "Shared",
-                "desc": "FOUNDATIONS: Define the information semiring — a shared algebraic structure unifying Shannon entropy, tropical entropy, and Kolmogorov complexity. PROVE: (1) all three are homomorphisms from probability distributions to the information semiring, (2) the shared entropy measure satisfies a data processing inequality, (3) Kolmogorov shared content bounds compression ratio. BRIDGES: Cryptography (shared secret key generation from shared randomness), Physics (thermodynamic shared observables), ML (shared representations in neural networks). TARGET: Shared Impact=2.65 → 8+ by connecting to 3+ applied domains. Establish O(n log n) bounds for shared key generation.",
-                "framing": "Define InformationSemiring (R, min, +) as the shared algebraic backbone of information theory. Define SharedEntropy(X,Y) = min(H(X), H(Y), K(XY)) as the shared information measure. Prove: SharedEntropy(X,Y) <= H(X), SharedEntropy(X,Y) <= H(Y) (data processing), and compression_ratio(X) >= SharedEntropy(X,Y)/H(X). Bridge to cryptography: prove that shared entropy yields O(n log n) shared secret key generation from public randomness. Bridge to physics: show that shared thermodynamic observables satisfy a free energy inequality. Bridge to ML: prove that shared representations minimize worst-case loss in federated learning.",
-                "mode": "prove",
-                "refs": ["Shared/Fib_gcd_identity.lean", "Cryptography/Basic.lean", "Bridges/AlgebraCryptographyTropicalBridge.lean", "Tropical/Core/TropicalSemiring.lean"],
-                "novelty": 0.97, "breakthrough": 0.99,
-                "target_weakness": "Shared Impact=2.65",
-                "target_pillars": {"I": 10, "O": 8, "U": 9},
-            },
-            {
-                "title": "logic_post_quantum_verified_zk",
-                "domain": "Logic",
-                "desc": "FOUNDATIONS: Define verified zero-knowledge proof systems for post-quantum lattice-based cryptography in Lean 4. PROVE: (1) completeness: honest provers always convince verifiers, (2) soundness: malicious provers succeed with negligible probability, (3) zero-knowledge: simulator produces indistinguishable transcripts. BRIDGES: Cryptography (lattice-based post-quantum security with Module-SIS and Module-LWE assumptions), ML (verified neural network inference bounds), Computation (decidability of ZK verification in polynomial time). TARGET: Logic Impact=5.36 → 9+ by connecting to crypto, ML, computation. Establish O(n^2) verification time bound.",
-                "framing": "Define VerifiedZKCircuit(S, R) : Type where S is the statement and R is the relation. Define PostQuantumSoundness(lambda, n) : Prop stating that for any quantum adversary with lambda qubits, soundness error is at most 2^{-n}. Prove: (1) verified_completeness: for all (x, w) in R, Prob[verify(prove(x, w), x)] = 1, (2) verified_soundness: for all malicious provers P, Prob[verify(P(x), x)] <= 2^{-n}, (3) verified_zero_knowledge: exists simulator S such that |Pr[verify(P(x,w), x)] - Pr[verify(S(x), x)]| <= negl(n). Bridge to crypto: prove Module-SIS based commitment schemes satisfy verified soundness. Bridge to ML: show verified ZK circuits yield O(n^2) certified robustness bounds for neural networks.",
-                "mode": "prove",
-                "refs": ["Logic/SpectralCollapse.lean", "Cryptography/Basic.lean", "Bridges/AlgebraCryptographyTropicalBridge.lean"],
-                "novelty": 0.96, "breakthrough": 0.98,
-                "target_weakness": "Logic Impact=5.36",
-                "target_pillars": {"I": 10, "U": 9, "O": 8},
-            },
-            {
-                "title": "physics_verified_thermodynamic_bounds",
-                "domain": "Physics",
-                "desc": "FOUNDATIONS: Establish verified computational bounds for simulating thermodynamic phase transitions. PROVE: (1) O(n log n) algorithm for computing free energy landscapes of polynomial Hamiltonians, (2) convergence rate O(exp(-1/epsilon)) for tropical dequantization, (3) certified bounds on specific heat near critical points. BRIDGES: ML (temperature-based optimization with certified convergence), Cryptography (thermal noise analysis for random number generation), EML (exponential-multiplicative closure thermodynamic limits), Tropical (min-plus phase transitions). TARGET: Physics Utility=5.38 → 9+ by establishing explicit O() bounds. Define VerifiedFreeEnergy, ConvergenceRateBound, ThermodynamicPhaseTransition.",
-                "framing": "Define VerifiedFreeEnergy(H, epsilon) : Prop stating that |F_computed(H) - F_exact(H)| < epsilon where F is the free energy. Prove: (1) free_energy_convergence_rate: for Hamiltonian H on n sites, the tropical dequantization converges at rate O(exp(-1/epsilon)), (2) phase_transition_detection: critical point detection is O(n log n) via tropical eigenvalue analysis, (3) specific_heat_bound: certified_robustness(C, T_c, delta) bounds specific heat within delta of T_c. Bridge to ML: show that annealing schedules provably find global minima when F is verified. Bridge to crypto: prove that thermal noise in TRNGs has O(sqrt(n)) statistical distance from uniform. Bridge to EML: show EML closure depth equals thermodynamic depth.",
-                "mode": "prove",
-                "refs": ["Physics/QuantumE8ModularForms.lean", "Bridges/EMLTropicalBridge.lean", "Tropical/StoneWeierstrassMinPlus.lean", "EML/Defs.lean"],
-                "novelty": 0.95, "breakthrough": 0.97,
-                "target_weakness": "Physics Utility=5.38",
-                "target_pillars": {"U": 10, "I": 10, "O": 8},
-            },
-            {
-                "title": "eml_verified_universal_approximation",
-                "domain": "EML",
-                "desc": "FOUNDATIONS: Prove the verified universal approximation theorem for EML networks with explicit depth-complexity bounds. PROVE: (1) for any continuous f on compact domain and epsilon > 0, exists EML network Phi with ||Phi - f|| < epsilon, (2) depth(Phi) = O(K(f)/epsilon) where K(f) is Kolmogorov complexity, (3) construction is polynomial-time computable. BRIDGES: ML (verified neural approximation with Lipschitz bounds), Cryptography (EML-based cryptographic hash functions), Physics (EML thermodynamic limits), Information Theory (EML compression bounds). TARGET: EML Impact=5.43 → 9+ by connecting to ML, crypto, physics. Establish O(K(f)/epsilon) depth bound.",
-                "framing": "Define VerifiedEMLApproximation(f, epsilon) : Prop stating that exists Phi : EMLClosureNet such that forall x, |Phi(x) - f(x)| < epsilon AND depth(Phi) <= C * K(f) / epsilon AND construction_time(Phi) <= polynomial(K(f), 1/epsilon). Prove: (1) eml_universal_approximation: forall f continuous on compact domain, forall epsilon > 0, VerifiedEMLApproximation(f, epsilon), (2) eml_depth_bound: depth(Phi) = O(K(f)/epsilon), (3) eml_lipschitz_bound: if f is L-Lipschitz, then Phi is (L+epsilon)-Lipschitz. Bridge to ML: show verified EML approximation yields certified adversarial robustness for ReLU networks. Bridge to crypto: prove EML hash functions are collision-resistant with O(2^{n/2}) security. Bridge to physics: connect EML depth to thermodynamic free energy.",
-                "mode": "prove",
-                "refs": ["EML/Defs.lean", "MachineLearning/Neural/VerifiedRobustness.lean", "Bridges/EMLTropicalBridge.lean", "Cryptography/Basic.lean"],
-                "novelty": 0.94, "breakthrough": 0.96,
-                "target_weakness": "EML Impact=5.43",
-                "target_pillars": {"I": 10, "U": 9, "O": 8},
-            },
+        # VISIONARY_ARCS removed — research direction selection is now driven
+        # entirely by the future directions pool (seed_directions.py + discovered
+        # directions). When no future direction is available, fall back to a
+        # random selection from the catalog.
 
-        ]
-
-        # Use VISIONARY_ARCS round-robin
-        arc = VISIONARY_ARCS[cycle % len(VISIONARY_ARCS)]
-        return ResearchConcept(
-            title=arc["title"],
-            domain=normalize_domain(arc["domain"]),
-            concept_description=arc["desc"],
-            mathematical_framing=arc["framing"],
-            lean_guess="",
-            catalog_references=arc["refs"],
-            research_mode=arc["mode"],
-            novelty_estimate=arc["novelty"],
-            breakthrough_potential=arc["breakthrough"],
-            key_references=arc["refs"][:3],
-        )
+        # Fallback: pick a random available direction from the future directions pool
+        import random
+        from research_memory import FutureDirectionsManager
+        fd_manager = FutureDirectionsManager(self.workspace)
+        available = [d for d in fd_manager._directions if d.status == "available"]
+        if available:
+            direction = random.choice(available)
+            return ResearchConcept(
+                title=direction.title,
+                domain=normalize_domain(direction.domains[0] if direction.domains else "Bridges"),
+                concept_description=direction.description,
+                mathematical_framing=direction.proof_strategy or "",
+                lean_guess="",
+                catalog_references=[],
+                research_mode="discover",
+                novelty_estimate=direction.priority_score,
+                breakthrough_potential=direction.priority_score,
+                key_references=[],
+            )
+        else:
+            # No available directions — return a generic research concept
+            return ResearchConcept(
+                title="exploratory_mathematics",
+                domain="Bridges",
+                concept_description="Explore an under-explored area of the catalog and prove new theorems.",
+                mathematical_framing="Identify an area with many declarations but few deep theorems and prove a non-trivial result.",
+                lean_guess="",
+                catalog_references=[],
+                research_mode="discover",
+                novelty_estimate=0.7,
+                breakthrough_potential=0.7,
+                key_references=[],
+            )
     # ------------------------------------------------------------------
     # Extract concepts from Aristotle's FUTURE_DIRECTIONS reports
     # ------------------------------------------------------------------
@@ -2356,57 +1928,9 @@ class PiAgentClient:
         if len(direct_prompt) > PROMPT_BUDGET:
             direct_prompt = direct_prompt[:PROMPT_BUDGET] + "\n\n[... truncated for size budget ...]"
 
-        # LLM enrichment: add mathematical depth and precision
-        prompt_summary = direct_prompt[:3000]
-        enrichment_request = textwrap.dedent(f"""\
-            Enrich this Aristotle research prompt with deeper mathematical insight.
-            Add: precise theorem statement with Lean 4 type signature, 2-3 proof
-            strategy steps, cross-domain connections, application keywords.
-
-            ---
-            {prompt_summary}
-            ---
-
-            Output ONLY the enriched content. No preamble.
-        """)
-
-        if self.compact:
-            short_enrichment = textwrap.dedent(f"""\
-                Add mathematical precision to this concept:
-                Title: {concept.title}
-                Domain: {concept.domain}
-                Description: {concept.concept_description[:400]}
-
-                Output: enriched theorem statement with Lean 4 signature, 2-3 proof steps,
-                cross-domain bridges. No preamble.
-            """)
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=3000)
-        else:
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=4000)
-
-        use_enriched = raw and not raw.startswith(("[OLLAMA", "[API_")) and "TIMEOUT" not in raw
-        if use_enriched:
-            cleaned = self._strip_llm_preamble(raw)
-            if cleaned and len(cleaned) > 100:
-                # Validate that enrichment contains actual mathematical content
-                math_markers = ['theorem', 'lemma', 'def ', 'instance ', 'inductive ', 'structure ']
-                has_math = any(m in cleaned for m in math_markers)
-                has_strategy = any(s in cleaned.lower() for s in ['proof strategy', 'approach', 'key insight', 'induction', 'construction', 'contrapositive', 'witness'])
-                if has_math or has_strategy:
-                    catalog_section_text = ""
-                    if "### Catalog Reference Files" in direct_prompt:
-                        idx = direct_prompt.find("### Catalog Reference Files")
-                        catalog_section_text = "\n\n" + direct_prompt[idx:idx+5000]
-
-                    enriched_prompt = cleaned + catalog_section_text
-                    # Enriched prompt must also respect the budget
-                    if len(enriched_prompt) > PROMPT_BUDGET:
-                        enriched_prompt = enriched_prompt[:PROMPT_BUDGET] + "\n\n[... truncated for size budget ...]"
-                    return enriched_prompt
-                else:
-                    print("[Pi-Agent] Enrichment lacked mathematical content, using direct prompt")
-
-        print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'returned insufficient content'})")
+        # Direct prompt — no LLM enrichment pass.
+        # The future direction's own description, proof strategy, and domains
+        # provide all the context needed. No second LLM call that could add bias.
         return direct_prompt
 
     @staticmethod
