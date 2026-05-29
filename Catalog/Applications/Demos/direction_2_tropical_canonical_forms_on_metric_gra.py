@@ -1,1265 +1,1067 @@
-#!/usr/bin/env python3
 """
-Applications of Canonical Kernel Theory on Metric Graphs
+Applications of Canonical Kernel Calculus on Metric Graphs
 
 Demonstrates real-world applications:
-1. Electrical network analysis — effective resistance computation
-2. Tropical Jacobian computation — algorithmic Abel-Jacobi
-3. Network Gaussian free field — covariance kernel computation
+  1. Electrical network analysis — effective resistance computation
+  2. Tropical Jacobian computation — Abel-Jacobi coordinates
+  3. Gaussian free field covariance — statistical mechanics
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional
-from dataclasses import dataclass, field
+from algorithms import (
+    MetricGraphModel, cycle_graph, theta_graph, lollipop_graph,
+    solve_normalized_kernel, compute_kernel_matrix, compute_energy_pairing,
+    prune_pendant_trees
+)
 
 
-# ─── Inline implementations ─────────────────────────────────────────────
+def app_electrical_networks():
+    """Application 1: Electrical Network Analysis
 
-@dataclass
-class MetricGraphModel:
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
-
-    def degree(self, v: int) -> int:
-        return len(self.adj[v])
-
-
-def build_weighted_laplacian(M: MetricGraphModel) -> np.ndarray:
-    n = M.n_vertices
-    L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c
-        L[j, i] = -c
-        L[i, i] += c
-        L[j, j] += c
-    return L
-
-
-def cycle_graph(n, lengths=None):
-    if lengths is None:
-        lengths = [1.0] * n
-    edges = [(i, (i + 1) % n, lengths[i]) for i in range(n)]
-    return MetricGraphModel(n, edges)
-
-
-# ─── Application 1: Effective Resistance ─────────────────────────────────
-
-def compute_effective_resistance(M: MetricGraphModel, s: int, t: int) -> float:
-    """Compute the effective resistance between vertices s and t.
-
-    The effective resistance R(s,t) equals the Dirichlet energy of the
-    unit-current flow from s to t. In canonical kernel theory, this is:
-        R(s,t) = k_s(s) + k_t(t) - k_s(t) - k_t(s)
-    where k_s, k_t are canonical kernel generators.
-
-    This connects the Laplacian formulation to electrical network theory:
-    the metric graph acts as a resistor network with resistance = edge length.
-
-    Args:
-        M: Metric graph model (edge lengths = resistances)
-        s, t: Terminal vertices
-
-    Returns:
-        Effective resistance (always ≥ 0)
-
-    Example:
-        >>> M = cycle_graph(4, [1.0, 2.0, 3.0, 4.0])
-        >>> R = compute_effective_resistance(M, 0, 2)
+    The Dirichlet energy form computes effective resistances between
+    terminal pairs in an electrical network. Edge conductances are
+    1/ℓ(e) where ℓ(e) is the edge length (= resistance).
     """
-    n = M.n_vertices
-    L = build_weighted_laplacian(M)
+    print("=" * 70)
+    print("APPLICATION 1: Electrical Network — Effective Resistance")
+    print("=" * 70)
 
-    # Solve Lf = e_s - e_t with mean-zero normalization
-    b = np.zeros(n)
-    b[s] = 1.0
-    b[t] = -1.0
+    # Wheatstone bridge network
+    # Vertices: 0 (source), 3 (sink), 1 and 2 (internal)
+    edges = [
+        (0, 1, 1.0),  # R = 1Ω
+        (0, 2, 2.0),  # R = 2Ω
+        (1, 3, 3.0),  # R = 3Ω
+        (2, 3, 4.0),  # R = 4Ω
+        (1, 2, 5.0),  # R = 5Ω (bridge)
+    ]
+    G = MetricGraphModel(4, edges)
 
-    A = L.copy()
-    A[-1, :] = 1.0
-    b_aug = b.copy()
-    b_aug[-1] = 0.0
+    print(f"\nWheatstone bridge network:")
+    print(f"  0 --[1Ω]-- 1 --[3Ω]-- 3")
+    print(f"  |          |          |")
+    print(f"  [2Ω]      [5Ω]      [4Ω]")
+    print(f"  |          |          |")
+    print(f"  0 --[2Ω]-- 2 --[4Ω]-- 3")
 
-    try:
-        f = np.linalg.solve(A, b_aug)
-        return f[s] - f[t]
-    except np.linalg.LinAlgError:
-        return float('inf')
+    # Compute effective resistance between 0 and 3
+    S = [0, 1, 2, 3]
+    D = np.zeros(4)
+    D[0] = 1.0  # Current source at 0
+    D[3] = -1.0  # Current sink at 3
+    f = solve_normalized_kernel(G, S, D, "mean_zero")
+
+    if f is not None:
+        R_eff = G.dirichlet_energy(f)
+        print(f"\n  Voltage distribution: {f}")
+        print(f"  Effective resistance R(0,3) = {R_eff:.4f} Ω")
+
+    # All pairwise effective resistances
+    print(f"\n  Pairwise effective resistances:")
+    for i in range(4):
+        for j in range(i+1, 4):
+            D = np.zeros(4)
+            D[i] = 1.0
+            D[j] = -1.0
+            f = solve_normalized_kernel(G, S, D, "mean_zero")
+            if f is not None:
+                R = G.dirichlet_energy(f)
+                print(f"    R({i},{j}) = {R:.4f} Ω")
 
 
-def compute_resistance_matrix(M: MetricGraphModel) -> np.ndarray:
-    """Compute the full effective resistance matrix R[i,j].
+def app_tropical_jacobian():
+    """Application 2: Tropical Jacobian Computation
 
-    The resistance matrix satisfies:
-    - R[i,i] = 0 (zero self-resistance)
-    - R[i,j] = R[j,i] (symmetry)
-    - R[i,j] ≤ R[i,k] + R[k,j] (triangle inequality)
-    - R[i,j] > 0 for i ≠ j in connected graph
-
-    This is related to the Kirchhoff index and random walk commute time.
+    Computes the tropical Jacobian of a metric graph via the
+    canonical kernel quotient. The Jacobian is J(Γ) ≅ ℝ^g/Λ
+    where g is the genus and Λ is the period lattice.
     """
-    n = M.n_vertices
-    R = np.zeros((n, n))
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Tropical Jacobian — Abel-Jacobi Coordinates")
+    print("=" * 70)
+
+    # Genus-2 theta graph
+    G = theta_graph((1.0, 2.0, 3.0))
+    genus = G.first_betti_number()
+    print(f"\nTheta graph with path lengths (1, 2, 3)")
+    print(f"  Genus: {genus}")
+
+    # Use all vertices as support
+    S = list(range(G.n_vertices))
+    K = compute_kernel_matrix(G, S)
+    Q = compute_energy_pairing(G, S)
+
+    print(f"\n  Kernel matrix (Abel-Jacobi coordinates):")
+    print(f"  {np.array2string(K, precision=4)}")
+
+    print(f"\n  Energy pairing (tropical polarization):")
+    print(f"  {np.array2string(Q, precision=4)}")
+
+    # Eigendecomposition of Q reveals the Jacobian structure
+    eigenvalues, eigenvectors = np.linalg.eigh(Q)
+    print(f"\n  Energy eigenvalues: {eigenvalues}")
+    print(f"  Non-zero eigenvalues (genus-many): "
+          f"{eigenvalues[eigenvalues > 1e-8]}")
+
+    # The tropical Abel-Jacobi map sends a divisor D to its class in J(Γ)
+    # via the canonical kernel pairing
+    print(f"\n  Abel-Jacobi image of unit divisor δ₁ - δ₀:")
+    D = np.zeros(G.n_vertices)
+    D[1] = 1.0
+    D[0] = -1.0
+    f = solve_normalized_kernel(G, S, D, "mean_zero")
+    if f is not None:
+        print(f"    Potential: {f}")
+        print(f"    Energy: {G.dirichlet_energy(f):.4f}")
+        print(f"    S-values: {[f[s] for s in S]}")
+
+
+def app_gaussian_free_field():
+    """Application 3: Gaussian Free Field Covariance
+
+    The canonical kernel matrix is the covariance kernel of the
+    pinned Gaussian free field on the metric graph. The Dirichlet
+    energy form defines the precision matrix.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Gaussian Free Field — Covariance Kernel")
+    print("=" * 70)
+
+    # Cycle graph C₆
+    G = cycle_graph(6, [1.0, 1.0, 2.0, 2.0, 1.0, 1.0])
+    S = list(range(6))
+
+    print(f"\nCycle graph C₆ with edge lengths [1,1,2,2,1,1]")
+    print(f"  Total length: {sum([1,1,2,2,1,1])}")
+
+    # The Green's function G(x,y) is the canonical kernel
+    K = compute_kernel_matrix(G, S)
+    Q = compute_energy_pairing(G, S)
+
+    print(f"\n  Green's function matrix (covariance kernel):")
+    print(f"  {np.array2string(K, precision=4)}")
+
+    # Sample from the Gaussian free field
+    # The covariance is the pseudoinverse of the Laplacian
+    L = G.laplacian
+    # Remove constant mode: project onto mean-zero subspace
+    n = G.n_vertices
+    P = np.eye(n) - np.ones((n, n)) / n  # Projection to mean-zero
+    L_proj = P @ L @ P
+    # Pseudoinverse as covariance
+    eigvals, eigvecs = np.linalg.eigh(L_proj)
+    cov = np.zeros((n, n))
     for i in range(n):
-        for j in range(i + 1, n):
-            R[i, j] = compute_effective_resistance(M, i, j)
-            R[j, i] = R[i, j]
-    return R
+        if eigvals[i] > 1e-10:
+            cov += np.outer(eigvecs[:, i], eigvecs[:, i]) / eigvals[i]
 
+    print(f"\n  GFF covariance matrix (pseudoinverse of L):")
+    print(f"  {np.array2string(cov, precision=4)}")
 
-# ─── Application 2: Tropical Jacobian ────────────────────────────────────
+    # Sample GFF configurations
+    np.random.seed(42)
+    n_samples = 10000
+    samples = np.random.multivariate_normal(np.zeros(n), cov, size=n_samples)
+    # Project to mean-zero
+    samples -= samples.mean(axis=1, keepdims=True)
 
-def compute_tropical_jacobian_generators(
-    M: MetricGraphModel,
-    S: List[int]
-) -> Tuple[np.ndarray, List[np.ndarray]]:
-    """Compute generators of the S-supported tropical Jacobian.
+    empirical_cov = np.cov(samples.T)
+    print(f"\n  Empirical covariance (10000 samples):")
+    print(f"  {np.array2string(empirical_cov, precision=4)}")
 
-    Returns the kernel matrix and the list of generator potentials.
-    The Jacobian quotient Div⁰_S / Prin_S is generated by the
-    divisor classes [Δk_s - Δk_{s₀}] for s ∈ S \\ {s₀}.
-
-    Args:
-        M: Metric graph model
-        S: Support set
-
-    Returns:
-        (kernel_matrix, generator_potentials)
-    """
-    n = M.n_vertices
-    m = len(S)
-    L = build_weighted_laplacian(M)
-
-    generators = []
-    K = np.zeros((m, m))
-
-    for idx in range(1, m):
-        b = np.zeros(n)
-        b[S[idx]] = 1.0
-        b[S[0]] = -1.0
-
-        A = L.copy()
-        A[-1, :] = 1.0
-        b[-1] = 0.0
-
-        try:
-            f = np.linalg.solve(A, b)
-            generators.append(f)
-            for j in range(m):
-                K[idx, j] = f[S[j]]
-        except np.linalg.LinAlgError:
-            generators.append(np.zeros(n))
-
-    return K, generators
-
-
-# ─── Application 3: Network Gaussian Free Field ──────────────────────────
-
-def compute_gff_covariance(M: MetricGraphModel) -> np.ndarray:
-    """Compute the covariance matrix of the Gaussian Free Field on M.
-
-    The GFF on a metric graph has covariance kernel given by the
-    pseudoinverse of the Laplacian. For mean-zero fields, this is:
-        Cov(f(i), f(j)) = L⁺(i,j)
-
-    where L⁺ is the Moore-Penrose pseudoinverse of L.
-
-    This connects canonical kernel theory to statistical mechanics:
-    the canonical kernel generators are the principal modes of the GFF.
-
-    Args:
-        M: Metric graph model
-
-    Returns:
-        n×n covariance matrix (symmetric, positive semidefinite)
-    """
-    L = build_weighted_laplacian(M)
-    return np.linalg.pinv(L)
-
-
-# ─── Main ─────────────────────────────────────────────────────────────────
-
-def main():
-    print("=" * 70)
-    print("Application 1: Electrical Network — Effective Resistance")
-    print("=" * 70)
-    print()
-
-    M = cycle_graph(4, [1.0, 2.0, 3.0, 4.0])
-    print(f"Cycle C_4 with resistances [1, 2, 3, 4] Ω")
-
-    R = compute_resistance_matrix(M)
-    print(f"\nEffective resistance matrix (Ω):")
-    for i in range(M.n_vertices):
-        print("  " + "  ".join(f"{R[i,j]:6.4f}" for j in range(M.n_vertices)))
-
-    # Verify: for cycle, R(0,2) = (1+2)(3+4)/(1+2+3+4) = 21/10 = 2.1
-    print(f"\nR(0,2) = {R[0,2]:.4f}")
-    print(f"  Expected (parallel combination): "
-          f"{(1+2)*(3+4)/(1+2+3+4):.4f}")
-
-    # Triangle inequality check
-    print(f"\nTriangle inequality R(0,2) ≤ R(0,1) + R(1,2):")
-    print(f"  {R[0,2]:.4f} ≤ {R[0,1]:.4f} + {R[1,2]:.4f} = {R[0,1]+R[1,2]:.4f}")
-    print(f"  {'✓' if R[0,2] <= R[0,1] + R[1,2] + 1e-10 else '✗'}")
-    print()
-
-    print("=" * 70)
-    print("Application 2: Tropical Jacobian Computation")
-    print("=" * 70)
-    print()
-
-    M = cycle_graph(5, [1.0, 1.0, 1.0, 1.0, 1.0])
-    S = [0, 1, 2, 3, 4]
-    K, gens = compute_tropical_jacobian_generators(M, S)
-
-    print(f"Cycle C_5 (unit lengths), S = all vertices")
-    print(f"Kernel matrix K:")
-    for row in K:
-        print("  " + "  ".join(f"{x:8.4f}" for x in row))
-
-    # The Jacobian of C_n is Z/nZ (has n elements for unit cycle)
-    n_edges = len(M.edges)
-    beta = n_edges - M.n_vertices + 1
-    print(f"\nFirst Betti number: β₁ = {beta}")
-    print(f"Expected Jacobian: Z/{M.n_vertices}Z")
-    print()
-
-    print("=" * 70)
-    print("Application 3: Network Gaussian Free Field Covariance")
-    print("=" * 70)
-    print()
-
-    M = cycle_graph(4, [1.0, 1.0, 1.0, 1.0])
-    Cov = compute_gff_covariance(M)
-    print(f"Cycle C_4 (unit lengths)")
-    print(f"GFF covariance matrix (L⁺):")
-    for row in Cov:
-        print("  " + "  ".join(f"{x:8.4f}" for x in row))
-
-    eigvals = np.linalg.eigvalsh(Cov)
-    print(f"\nEigenvalues: {np.round(eigvals, 6)}")
-    print(f"  Positive semidefinite: {'✓' if np.all(eigvals >= -1e-10) else '✗'}")
-    print(f"  Rank (n-1 = {M.n_vertices-1}): {np.sum(eigvals > 1e-10)}")
-    print()
+    # Variance at each vertex
+    print(f"\n  Variance at each vertex:")
+    for v in range(n):
+        print(f"    Var(f({v})) = {empirical_cov[v,v]:.4f} "
+              f"(theory: {cov[v,v]:.4f})")
 
 
 if __name__ == "__main__":
-    main()
+    app_electrical_networks()
+    app_tropical_jacobian()
+    app_gaussian_free_field()
 
 
-#!/usr/bin/env python3
 """
-Interactive Demo: Canonical Kernel Theory on Metric Graphs
+Interactive Demo: Canonical Kernel Calculus on Metric Graphs
 
-Demonstrates the mathematically verified results:
-1. Cycle graph — kernel generators and energy pairing
-2. Theta graph — support placement comparison
-3. Pendant-tree pruning — metric leaf rigidity
-4. Conjecture tester — refinement convergence
+Demonstrates the core theorems and algorithms for computing harmonic
+representatives, Jacobian classes, and energy pairings on metric graph models.
+
+Includes:
+  1. Cycle graph demo — kernel generators and energy pairing
+  2. Theta graph demo — comparing support placements
+  3. Pendant-tree pruning demo — leaf rigidity in action
+  4. Conjecture tester — resolution-stable kernel convergence
 """
 
 import numpy as np
-from typing import List, Optional, Dict, Tuple, Set
-from dataclasses import dataclass, field
+from algorithms import (
+    MetricGraphModel, cycle_graph, theta_graph, lollipop_graph,
+    solve_normalized_kernel, compute_kernel_matrix, compute_energy_pairing,
+    prune_pendant_trees, subdivide_edge
+)
 
-
-# ─── Inline implementation (self-contained) ──────────────────────────────
-
-@dataclass
-class MetricGraphModel:
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
-
-    def degree(self, v: int) -> int:
-        return len(self.adj[v])
-
-    def is_leaf(self, v: int) -> bool:
-        return self.degree(v) == 1
-
-    def conductance(self, i: int, j: int) -> float:
-        for nb, length in self.adj[i]:
-            if nb == j:
-                return 1.0 / length
-        return 0.0
-
-
-def build_weighted_laplacian(M: MetricGraphModel) -> np.ndarray:
-    n = M.n_vertices
-    L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c
-        L[j, i] = -c
-        L[i, i] += c
-        L[j, j] += c
-    return L
-
-
-def solve_normalized_kernel(M, S, D, normalization="mean_zero"):
-    n = M.n_vertices
-    L = build_weighted_laplacian(M)
-    if abs(np.sum(D)) > 1e-10:
-        return None
-    b = np.zeros(n)
-    for idx, v in enumerate(S):
-        b[v] = D[idx]
-    A = L.copy()
-    A[-1, :] = 1.0
-    b[-1] = 0.0
-    try:
-        f = np.linalg.solve(A, b)
-        return f
-    except np.linalg.LinAlgError:
-        return None
-
-
-def compute_canonical_kernel_matrix(M, S):
-    m = len(S)
-    K = np.zeros((m, m))
-    for idx in range(1, m):
-        D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
-        f = solve_normalized_kernel(M, S, D)
-        if f is not None:
-            for j in range(m):
-                K[idx, j] = f[S[j]]
-    return K
-
-
-def compute_dirichlet_energy(M, f):
-    energy = 0.0
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        energy += c * (f[i] - f[j]) ** 2
-    return energy / 2.0
-
-
-def compute_energy_pairing(M, S):
-    m = len(S)
-    generators = []
-    for idx in range(1, m):
-        D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
-        f = solve_normalized_kernel(M, S, D)
-        if f is not None:
-            generators.append(f)
-    r = len(generators)
-    Q = np.zeros((r, r))
-    L = build_weighted_laplacian(M)
-    for i in range(r):
-        for j in range(r):
-            Q[i, j] = generators[i] @ L @ generators[j]
-    return Q
-
-
-def prune_pendant_trees(M):
-    n = M.n_vertices
-    degree = [M.degree(v) for v in range(n)]
-    removed = [False] * n
-    queue = [v for v in range(n) if degree[v] <= 1]
-    while queue:
-        v = queue.pop()
-        if removed[v]:
-            continue
-        if degree[v] > 1:
-            continue
-        removed[v] = True
-        for nb, _ in M.adj[v]:
-            if not removed[nb]:
-                degree[nb] -= 1
-                if degree[nb] <= 1:
-                    queue.append(nb)
-    core_vertices = [v for v in range(n) if not removed[v]]
-    if len(core_vertices) == 0:
-        return MetricGraphModel(0, []), {}
-    vertex_map = {new: old for new, old in enumerate(core_vertices)}
-    inv_map = {old: new for new, old in enumerate(core_vertices)}
-    core_edges = []
-    seen = set()
-    for i, j, length in M.edges:
-        if not removed[i] and not removed[j]:
-            key = (min(i, j), max(i, j))
-            if key not in seen:
-                seen.add(key)
-                core_edges.append((inv_map[i], inv_map[j], length))
-    return MetricGraphModel(len(core_vertices), core_edges), vertex_map
-
-
-def uniform_subdivision(M, n_per_edge):
-    new_edges = []
-    next_v = M.n_vertices
-    for i, j, length in M.edges:
-        seg = length / (n_per_edge + 1)
-        prev = i
-        for _ in range(n_per_edge):
-            new_edges.append((prev, next_v, seg))
-            prev = next_v
-            next_v += 1
-        new_edges.append((prev, j, seg))
-    return MetricGraphModel(next_v, new_edges)
-
-
-def first_betti_number(M):
-    n_edges = len(M.edges)
-    visited = [False] * M.n_vertices
-    components = 0
-    for start in range(M.n_vertices):
-        if visited[start]:
-            continue
-        components += 1
-        queue = [start]
-        visited[start] = True
-        while queue:
-            v = queue.pop()
-            for nb, _ in M.adj[v]:
-                if not visited[nb]:
-                    visited[nb] = True
-                    queue.append(nb)
-    return n_edges - M.n_vertices + components
-
-
-def cycle_graph(n, lengths=None):
-    if lengths is None:
-        lengths = [1.0] * n
-    edges = [(i, (i + 1) % n, lengths[i]) for i in range(n)]
-    return MetricGraphModel(n, edges)
-
-
-def theta_graph(l1, l2, l3):
-    edges = [
-        (0, 2, l1 / 2), (2, 1, l1 / 2),
-        (0, 3, l2 / 2), (3, 1, l2 / 2),
-        (0, 4, l3 / 2), (4, 1, l3 / 2),
-    ]
-    return MetricGraphModel(5, edges)
-
-
-def lollipop_graph(cycle_size, stick_length, cycle_lengths=None):
-    if cycle_lengths is None:
-        cycle_lengths = [1.0] * cycle_size
-    edges = [(i, (i + 1) % cycle_size, cycle_lengths[i]) for i in range(cycle_size)]
-    edges.append((0, cycle_size, stick_length))
-    return MetricGraphModel(cycle_size + 1, edges)
-
-
-# ─── Demo 1: Cycle Graph ─────────────────────────────────────────────────
 
 def demo_cycle_graph():
-    print("=" * 70)
-    print("DEMO 1: Cycle Graph — Canonical Kernels and Energy Pairing")
-    print("=" * 70)
-    print()
+    """Demo 1: Canonical kernels on a cycle graph.
 
-    lengths = [1.0, 2.0, 1.5, 2.5]
-    M = cycle_graph(4, lengths)
+    Illustrates:
+    - Kernel generator computation
+    - Energy pairing matrix (positive semidefinite)
+    - Symmetry of the energy form
+    - Connection to effective resistance in electrical networks
+    """
+    print("=" * 70)
+    print("DEMO 1: Cycle Graph C₄ with edge lengths [1, 2, 1, 2]")
+    print("=" * 70)
+
+    C4 = cycle_graph(4, [1.0, 2.0, 1.0, 2.0])
     S = [0, 1, 2, 3]
 
-    print(f"Graph: C_4 with edge lengths {lengths}")
+    print(f"\nVertices: {C4.n_vertices}")
     print(f"Support set S = {S}")
-    print(f"First Betti number β₁ = {first_betti_number(M)}")
-    print()
+    print(f"First Betti number (genus): {C4.first_betti_number()}")
 
-    L = build_weighted_laplacian(M)
-    print("Weighted Laplacian L:")
-    for row in L:
-        print("  " + "  ".join(f"{x:8.4f}" for x in row))
-    print()
+    print("\nMetric Laplacian matrix:")
+    print(np.array2string(C4.laplacian, precision=4, suppress_small=True))
 
     # Verify row-sum-zero (Theorem: mL_row_sum_zero)
-    row_sums = np.sum(L, axis=1)
-    print(f"Row sums (should be ≈ 0): {np.round(row_sums, 10)}")
-    print(f"  ✓ Row-sum-zero verified!" if np.allclose(row_sums, 0) else "  ✗ FAILED")
-    print()
+    row_sums = C4.laplacian.sum(axis=1)
+    print(f"\nRow sums (should be 0): {row_sums}")
 
     # Verify symmetry (Theorem: mL_symm)
-    print(f"Symmetry ||L - L^T|| = {np.linalg.norm(L - L.T):.2e}")
-    print(f"  ✓ Symmetry verified!" if np.allclose(L, L.T) else "  ✗ FAILED")
-    print()
+    print(f"Symmetric: {np.allclose(C4.laplacian, C4.laplacian.T)}")
 
-    K = compute_canonical_kernel_matrix(M, S)
-    print("Canonical kernel matrix K[i,j] = k_i(S[j]):")
-    for row in K:
-        print("  " + "  ".join(f"{x:8.4f}" for x in row))
-    print()
+    # Compute kernel matrix
+    K = compute_kernel_matrix(C4, S)
+    print("\nCanonical kernel matrix K[i,j] = k_i(s_j):")
+    print(np.array2string(K, precision=4, suppress_small=True))
 
-    Q = compute_energy_pairing(M, S)
-    print(f"Energy pairing matrix Q ({Q.shape[0]}×{Q.shape[1]}):")
-    for row in Q:
-        print("  " + "  ".join(f"{x:8.4f}" for x in row))
+    # Compute energy pairing
+    Q = compute_energy_pairing(C4, S)
+    print("\nEnergy pairing matrix Q (effective resistance form):")
+    print(np.array2string(Q, precision=4, suppress_small=True))
 
-    # Verify positive semidefiniteness (Theorem: energyBilin_psd)
-    eigvals = np.linalg.eigvalsh(Q)
-    print(f"\nEigenvalues of Q: {np.round(eigvals, 6)}")
-    print(f"  ✓ Positive semidefinite!" if np.all(eigvals >= -1e-10) else "  ✗ FAILED")
+    # Verify positive semidefiniteness (Theorem: energy_nonneg)
+    eigenvalues = np.linalg.eigvalsh(Q)
+    print(f"\nEnergy eigenvalues: {eigenvalues}")
+    print(f"All non-negative: {np.all(eigenvalues >= -1e-10)}")
 
-    # Verify symmetry of energy form (Theorem: energyBilin_symm)
-    print(f"  ||Q - Q^T|| = {np.linalg.norm(Q - Q.T):.2e}")
-    print()
+    # Verify symmetry (Theorem: energyForm_symm)
+    print(f"Q symmetric: {np.allclose(Q, Q.T)}")
 
+    # Compute effective resistance between vertices 0 and 2
+    D = np.zeros(4)
+    D[0] = 1.0
+    D[2] = -1.0
+    f = solve_normalized_kernel(C4, S, D, "mean_zero")
+    if f is not None:
+        R_eff = C4.dirichlet_energy(f)
+        print(f"\nEffective resistance R(0,2) = {R_eff:.4f}")
+        print(f"  (parallel combination of paths 0→1→2 and 0→3→2)")
+        R_path1 = 1.0 + 2.0  # via vertex 1
+        R_path2 = 2.0 + 1.0  # via vertex 3
+        R_parallel = 1.0 / (1.0/R_path1 + 1.0/R_path2)
+        print(f"  Expected: 1/(1/{R_path1} + 1/{R_path2}) = {R_parallel:.4f}")
 
-# ─── Demo 2: Theta Graph ─────────────────────────────────────────────────
 
 def demo_theta_graph():
+    """Demo 2: Canonical kernels on a theta graph.
+
+    Illustrates:
+    - Genus-2 computation
+    - Effect of asymmetric edge lengths
+    - Comparing different support placements
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 2: Theta Graph (genus 2)")
     print("=" * 70)
-    print("DEMO 2: Theta Graph — Support Placement Comparison")
-    print("=" * 70)
-    print()
 
-    for l1, l2, l3 in [(1.0, 1.0, 1.0), (1.0, 2.0, 3.0), (1.0, 1.41, 1.73)]:
-        print(f"Theta graph with path lengths ({l1}, {l2}, {l3})")
-        M = theta_graph(l1, l2, l3)
-        print(f"  Vertices: {M.n_vertices}, Edges: {len(M.edges)}")
-        print(f"  β₁ = {first_betti_number(M)}")
+    # Theta graph with three paths of lengths 2, 3, 5
+    G = theta_graph((2.0, 3.0, 5.0))
+    print(f"\nVertices: {G.n_vertices} (2 poles + 3 midpoints)")
+    print(f"First Betti number: {G.first_betti_number()}")
 
-        # Support at endpoints
-        S1 = [0, 1]
-        K1 = compute_canonical_kernel_matrix(M, S1)
-        Q1 = compute_energy_pairing(M, S1)
-        print(f"  S = {{0, 1}} (endpoints): kernel dim = {K1.shape[0]}")
-        if Q1.size > 0:
-            print(f"    Energy pairing: {np.round(Q1, 4)}")
+    # Support set 1: poles only
+    S1 = [0, 1]
+    K1 = compute_kernel_matrix(G, S1)
+    Q1 = compute_energy_pairing(G, S1)
+    print(f"\nSupport S₁ = {S1} (poles)")
+    print(f"Energy pairing: {Q1}")
 
-        # Support at all vertices
-        S2 = list(range(M.n_vertices))
-        Q2 = compute_energy_pairing(M, S2)
-        if Q2.size > 0:
-            rank = np.sum(np.abs(np.linalg.eigvalsh(Q2)) > 1e-10)
-            print(f"  S = all vertices: energy pairing rank = {rank}")
+    # Support set 2: poles + one midpoint
+    S2 = [0, 1, 2]
+    K2 = compute_kernel_matrix(G, S2)
+    Q2 = compute_energy_pairing(G, S2)
+    print(f"\nSupport S₂ = {S2} (poles + midpoint)")
+    print(f"Energy pairing:\n{np.array2string(Q2, precision=4)}")
+    eigs2 = np.linalg.eigvalsh(Q2)
+    print(f"Eigenvalues: {eigs2}")
 
-        print()
+    # Support set 3: all vertices
+    S3 = [0, 1, 2, 3, 4]
+    K3 = compute_kernel_matrix(G, S3)
+    Q3 = compute_energy_pairing(G, S3)
+    print(f"\nSupport S₃ = {S3} (all vertices)")
+    print(f"Energy pairing:\n{np.array2string(Q3, precision=4)}")
+    eigs3 = np.linalg.eigvalsh(Q3)
+    print(f"Eigenvalues: {eigs3}")
+    print(f"Rank of Q₃: {np.linalg.matrix_rank(Q3, tol=1e-8)}")
+    print(f"Expected rank (= genus): {G.first_betti_number()}")
 
-
-# ─── Demo 3: Pendant-Tree Pruning ────────────────────────────────────────
 
 def demo_pendant_pruning():
+    """Demo 3: Pendant-tree pruning and leaf rigidity.
+
+    Illustrates:
+    - Theorem: metric_leaf_eq_neighbor
+    - Harmonic functions are constant on pendant edges
+    - Pruning does not change the Jacobian
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 3: Pendant-Tree Pruning (Leaf Rigidity)")
     print("=" * 70)
-    print("DEMO 3: Pendant-Tree Pruning — Metric Leaf Rigidity")
+
+    # Create a cycle with a pendant stick
+    lollipop = lollipop_graph(4.0, 3.0, n_cycle=4)
+    print(f"\nLollipop graph: {lollipop.n_vertices} vertices")
+    print(f"  Cycle: vertices 0-3, pendant stick: vertex 4")
+    print(f"  Stick length: 3.0")
+
+    # Show that leaf vertex 4 has degree 1
+    print(f"\n  Vertex 4 degree: {lollipop.degree(4)} (leaf)")
+    print(f"  Vertex 4 is leaf: {lollipop.is_leaf(4)}")
+
+    # Solve a harmonic function with source at vertex 1
+    S = [1]  # Support on vertex 1
+    D = np.zeros(5)
+    D[1] = 0.0  # Harmonic everywhere except vertex 1
+
+    # Use a potential that is harmonic at vertices 0, 2, 3, 4
+    # with some source at vertex 1
+    D_test = np.zeros(5)
+    D_test[1] = 1.0
+    D_test[3] = -1.0
+    f = solve_normalized_kernel(lollipop, [0, 1, 2, 3, 4], D_test, "mean_zero")
+
+    if f is not None:
+        print(f"\n  Harmonic potential f (source at 1, sink at 3):")
+        for v in range(5):
+            label = "leaf" if lollipop.is_leaf(v) else "    "
+            Lf_v = float(lollipop.apply_laplacian(f)[v])
+            print(f"    f({v}) = {f[v]:+.4f}  Lf({v}) = {Lf_v:+.4f}  {label}")
+
+        # Verify leaf rigidity: f(4) should equal f(0) since Lf(4) = 0
+        print(f"\n  Leaf rigidity check:")
+        print(f"    f(4) = {f[4]:.6f}")
+        print(f"    f(0) = {f[0]:.6f}  (neighbor of leaf 4)")
+        print(f"    |f(4) - f(0)| = {abs(f[4] - f[0]):.2e}  (should be ~0)")
+
+    # Prune pendant trees
+    core, leaf_map = prune_pendant_trees(lollipop)
+    print(f"\n  Core vertices (2-core): {core}")
+    print(f"  Pruned leaves: {leaf_map}")
+
+    # Compare energy on full graph vs core-only
+    print(f"\n  Attaching longer sticks doesn't change core Jacobian:")
+    for stick_len in [1.0, 5.0, 10.0, 100.0]:
+        G = lollipop_graph(4.0, stick_len, n_cycle=4)
+        S_core = [0, 1, 2, 3]
+        Q = compute_energy_pairing(G, S_core)
+        eigs = sorted(np.linalg.eigvalsh(Q))
+        print(f"    Stick length {stick_len:6.1f}: eigenvalues = "
+              f"[{eigs[0]:.4f}, {eigs[1]:.4f}, {eigs[2]:.4f}]")
+
+
+def demo_conjecture_tester():
+    """Demo 4: Conjecture tester — resolution-stable kernel convergence.
+
+    Tests Conjecture A: For any compact metric graph Γ and finite separated
+    support S, the canonical kernel matrices K_n computed on uniform subdivisions
+    G_n converge entrywise to a limit K_∞ independent of the subdivision scheme.
+
+    Tests Conjecture B: If S meets every cycle of Γ, then the canonical kernel
+    quotient realizes the full Jacobian J(Γ).
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 4: Conjecture Tester — Resolution Stability")
     print("=" * 70)
-    print()
 
-    print("Theorem (harmonic_leaf_propagation): Attaching trees does not")
-    print("change the Jacobian class. Harmonic functions are constant on")
-    print("pendant edges.")
-    print()
+    # --- Conjecture A: Kernel convergence under subdivision ---
+    print("\n--- Conjecture A: Kernel Convergence ---")
+    print("Testing on C₃ with edge lengths [1, √2 approx, π/2 approx]")
 
-    # Show that kernel matrices are invariant under tree attachment
-    base = cycle_graph(3, [1.0, 1.0, 1.0])
-    S_base = [0, 1, 2]
-    K_base = compute_canonical_kernel_matrix(base, S_base)
-    Q_base = compute_energy_pairing(base, S_base)
+    base_lengths = [1.0, 1.4142, 1.5708]  # Approximations of 1, √2, π/2
 
-    print("Base: Triangle with unit edge lengths")
-    print(f"  Kernel matrix:\n{np.round(K_base, 6)}")
-    print(f"  Energy pairing:\n{np.round(Q_base, 6)}")
-    print()
+    # Track kernel matrix at support vertices under successive subdivisions
+    prev_K = None
+    for n_subdivisions in [0, 1, 2, 3, 4]:
+        # Build subdivided graph
+        n = 3 * (2 ** n_subdivisions)
+        lengths = []
+        for i in range(3):
+            sub_len = base_lengths[i] / (2 ** n_subdivisions)
+            lengths.extend([sub_len] * (2 ** n_subdivisions))
 
-    for stick_len in [1.0, 5.0, 100.0]:
-        M_lol = lollipop_graph(3, stick_len)
-        core, vmap = prune_pendant_trees(M_lol)
+        G = cycle_graph(n, lengths)
 
-        # Solve on the full graph with S = {0, 1, 2} (cycle vertices only)
-        S_lol = [0, 1, 2]
-        K_lol = compute_canonical_kernel_matrix(M_lol, S_lol)
-        Q_lol = compute_energy_pairing(M_lol, S_lol)
+        # Support set: original 3 vertices (at positions 0, 2^n, 2*2^n)
+        step = 2 ** n_subdivisions
+        S = [0, step, 2 * step]
 
-        diff = np.max(np.abs(Q_base - Q_lol))
-        print(f"  + pendant of length {stick_len:6.1f}: "
-              f"max |Q_diff| = {diff:.2e}  "
-              f"{'✓ invariant' if diff < 1e-10 else '✗ CHANGED'}")
+        K = compute_kernel_matrix(G, S)
+        Q = compute_energy_pairing(G, S)
 
-    print()
-    print("  → Pendant trees do not affect the S-supported Jacobian!")
-    print("    (Theorem: harmonic_leaf_propagation)")
-    print()
+        if prev_K is not None:
+            diff = np.max(np.abs(K - prev_K))
+            print(f"  Subdivision level {n_subdivisions}: "
+                  f"|K - K_prev| = {diff:.2e}, "
+                  f"Q eigenvalues = {sorted(np.linalg.eigvalsh(Q))}")
+        else:
+            print(f"  Subdivision level {n_subdivisions}: "
+                  f"K =\n{np.array2string(K, precision=6)}")
 
+        prev_K = K.copy()
 
-# ─── Demo 4: Refinement Convergence Conjecture Tester ────────────────────
+    # --- Conjecture B: Core-support sufficiency ---
+    print("\n--- Conjecture B: Core-Support Sufficiency ---")
+    print("Testing: does S meeting every cycle give full Jacobian rank?")
+
+    # Test on theta graph (genus 2)
+    G = theta_graph((2.0, 3.0, 5.0))
+    genus = G.first_betti_number()
+
+    # S = poles (meet all 3 cycles)
+    S_poles = [0, 1]
+    Q_poles = compute_energy_pairing(G, S_poles)
+    rank_poles = np.linalg.matrix_rank(Q_poles, tol=1e-8)
+    print(f"\n  Theta graph genus = {genus}")
+    print(f"  S = poles {S_poles}: rank(Q) = {rank_poles}, expected ≥ {genus}")
+
+    # S = all vertices
+    S_all = [0, 1, 2, 3, 4]
+    Q_all = compute_energy_pairing(G, S_all)
+    rank_all = np.linalg.matrix_rank(Q_all, tol=1e-8)
+    print(f"  S = all {S_all}: rank(Q) = {rank_all}, expected = {genus}")
+
+    if rank_poles < genus:
+        print(f"\n  ⚠ POTENTIAL COUNTEREXAMPLE: Poles alone give rank {rank_poles} < genus {genus}")
+        print(f"  Conjecture B may need additional conditions.")
+    else:
+        print(f"\n  ✓ Conjecture B holds for this case.")
+
 
 def demo_refinement_convergence():
+    """Test refinement convergence on multiple graph types."""
+    print("\n" + "=" * 70)
+    print("DEMO 5: Refinement Convergence Across Graph Types")
     print("=" * 70)
-    print("DEMO 4: Conjecture Test — Resolution-Stable Kernel Convergence")
-    print("=" * 70)
-    print()
 
-    print("CONJECTURE: For any compact metric graph Γ and finite separated")
-    print("support S, the canonical kernel matrices K_n computed on uniform")
-    print("subdivisions G_n converge entrywise to a limit independent of")
-    print("the subdivision scheme.")
-    print()
+    # Test on lollipop (genus 1 + pendant)
+    print("\n--- Lollipop graph (genus 1 + pendant tree) ---")
+    for n_sub in range(5):
+        n = 4 * (2 ** n_sub)
+        edge_len = 4.0 / n
+        edges = [(i, (i + 1) % n, edge_len) for i in range(n)]
+        # Add pendant at vertex 0
+        edges.append((0, n, 3.0))
+        G = MetricGraphModel(n + 1, edges)
 
-    # Test on cycle graph
-    lengths = [1.0, 2.0, 1.5]
-    M_base = cycle_graph(3, lengths)
-    S_base = [0, 1, 2]
-
-    print(f"Test graph: C_3 with lengths {lengths}")
-    print(f"Support S = {S_base}")
-    print()
-
-    K_prev = None
-    print(f"{'Subdivisions':>14} {'Max entry change':>18} {'Max |K|':>10}")
-    print("-" * 46)
-
-    for n_sub in [0, 1, 2, 4, 8, 16]:
-        if n_sub == 0:
-            M_sub = M_base
-            S_sub = S_base
-        else:
-            M_sub = uniform_subdivision(M_base, n_sub)
-            S_sub = S_base  # Original vertices are preserved
-
-        K = compute_canonical_kernel_matrix(M_sub, S_sub)
-
-        if K_prev is not None:
-            change = np.max(np.abs(K - K_prev))
-            print(f"{n_sub:>14d} {change:>18.2e} {np.max(np.abs(K)):>10.4f}")
-        else:
-            print(f"{n_sub:>14d} {'(baseline)':>18} {np.max(np.abs(K)):>10.4f}")
-
-        K_prev = K.copy()
-
-    print()
-    print("  → Kernel matrices converge (subdivision-invariant) ✓")
-    print("  → No counterexample found. Conjecture holds on this test case.")
-    print()
-
-    # Test on theta graph
-    print("Test graph: Theta(1, √2, √3)")
-    M_theta = theta_graph(1.0, np.sqrt(2), np.sqrt(3))
-    S_theta = [0, 1]
-
-    K_prev = None
-    print(f"{'Subdivisions':>14} {'Max entry change':>18}")
-    print("-" * 36)
-
-    for n_sub in [0, 1, 2, 4, 8]:
-        if n_sub == 0:
-            M_sub = M_theta
-        else:
-            M_sub = uniform_subdivision(M_theta, n_sub)
-
-        K = compute_canonical_kernel_matrix(M_sub, S_theta)
-
-        if K_prev is not None:
-            change = np.max(np.abs(K - K_prev))
-            print(f"{n_sub:>14d} {change:>18.2e}")
-        else:
-            print(f"{n_sub:>14d} {'(baseline)':>18}")
-
-        K_prev = K.copy()
-
-    print()
-
-    # Conjecture B: Core-support sufficiency
-    print("CONJECTURE B: If S meets every cycle, the canonical kernel")
-    print("quotient realizes the full Jacobian.")
-    print()
-
-    test_cases = [
-        ("C_4", cycle_graph(4), [0, 2], 1),
-        ("C_4", cycle_graph(4), [0, 1, 2, 3], 1),
-        ("Theta(1,1,1)", theta_graph(1, 1, 1), [0, 1], 2),
-    ]
-
-    for name, M, S, expected_beta in test_cases:
-        Q = compute_energy_pairing(M, S)
-        if Q.size > 0:
-            rank = np.sum(np.abs(np.linalg.eigvalsh(Q)) > 1e-10)
-        else:
-            rank = 0
-        beta = first_betti_number(M)
-        status = "✓" if rank == min(len(S) - 1, beta) else "✗ potential counterexample!"
-        print(f"  {name}, S={S}: rank={rank}, β₁={beta}, |S|-1={len(S)-1} {status}")
-
-    print()
+        step = 2 ** n_sub
+        S = [0, step, 2 * step, 3 * step]
+        Q = compute_energy_pairing(G, S)
+        eigs = sorted(np.linalg.eigvalsh(Q))
+        print(f"  Level {n_sub} ({n+1} vertices): Q eigenvalues = "
+              f"[{eigs[0]:.6f}, {eigs[1]:.6f}, {eigs[2]:.6f}]")
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────
-
-def main():
-    print()
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║  Canonical Kernel Theory on Metric Graphs — Interactive Demo    ║")
-    print("║  Tropical Canonical Forms for Jacobian Computation              ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
+if __name__ == "__main__":
     demo_cycle_graph()
     demo_theta_graph()
     demo_pendant_pruning()
+    demo_conjecture_tester()
     demo_refinement_convergence()
 
-    print("=" * 70)
-    print("All demos complete.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
 
 """
-Visualization: S-Supported Jacobian Structure and Pruning
+Visualization: Energy Landscape and Canonical Kernels on Metric Graphs
 
-Visualizes how the S-supported Jacobian quotient changes with different
-support sets, and how pendant-tree pruning reduces computation without
-altering the Jacobian structure. This is the core algorithmic insight
-of canonical kernel theory.
+Visualizes the Dirichlet energy landscape on a cycle graph and the
+canonical kernel generators, illustrating key theorems:
+  - Energy non-negativity (energy_nonneg)
+  - Constants have zero energy (energy_zero_of_constant)
+  - Energy pairing and effective resistance
+
+This script is fully self-contained — all needed functions are inlined.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import List, Tuple, Dict
-from dataclasses import dataclass, field
+import matplotlib.gridspec as gridspec
 
 
-@dataclass
-class MetricGraphModel:
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
-
-    def degree(self, v): return len(self.adj[v])
-    def is_leaf(self, v): return self.degree(v) == 1
-
-
-def build_weighted_laplacian(M):
-    n = M.n_vertices
+def build_cycle_laplacian(n, lengths):
+    """Build the metric Laplacian for a cycle graph."""
     L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c; L[j, i] = -c; L[i, i] += c; L[j, j] += c
+    for i in range(n):
+        j = (i + 1) % n
+        cond = 1.0 / lengths[i]
+        L[i, i] += cond
+        L[j, j] += cond
+        L[i, j] -= cond
+        L[j, i] -= cond
     return L
 
 
-def prune_pendant_trees(M):
-    n = M.n_vertices
-    degree = [M.degree(v) for v in range(n)]
-    removed = [False] * n
-    queue = [v for v in range(n) if degree[v] <= 1]
-    while queue:
-        v = queue.pop()
-        if removed[v] or degree[v] > 1: continue
-        removed[v] = True
-        for nb, _ in M.adj[v]:
-            if not removed[nb]:
-                degree[nb] -= 1
-                if degree[nb] <= 1: queue.append(nb)
-    core_verts = [v for v in range(n) if not removed[v]]
-    if not core_verts: return MetricGraphModel(0, []), {}
-    vmap = {new: old for new, old in enumerate(core_verts)}
-    inv = {old: new for new, old in enumerate(core_verts)}
-    edges = []
-    seen = set()
-    for i, j, l in M.edges:
-        if not removed[i] and not removed[j]:
-            k = (min(i,j), max(i,j))
-            if k not in seen: seen.add(k); edges.append((inv[i], inv[j], l))
-    return MetricGraphModel(len(core_verts), edges), vmap
-
-
-def first_betti(M):
-    visited = [False]*M.n_vertices; comps = 0
-    for s in range(M.n_vertices):
-        if visited[s]: continue
-        comps += 1; q = [s]; visited[s] = True
-        while q:
-            v = q.pop()
-            for nb, _ in M.adj[v]:
-                if not visited[nb]: visited[nb] = True; q.append(nb)
-    return len(M.edges) - M.n_vertices + comps
-
-
-fig, axes = plt.subplots(2, 2, figsize=(13, 11))
-fig.suptitle('S-Supported Jacobian Structure and Pendant-Tree Pruning\n'
-             'Canonical Kernel Theory on Metric Graphs',
-             fontsize=14, fontweight='bold')
-
-# Panel 1: Jacobian rank vs support size
-ax = axes[0, 0]
-for n_cycle, label in [(4, 'C₄'), (6, 'C₆'), (8, 'C₈')]:
-    M = MetricGraphModel(n_cycle,
-        [(i, (i+1)%n_cycle, 1.0) for i in range(n_cycle)])
-    beta = first_betti(M)
-    sizes = range(2, n_cycle + 1)
-    ranks = []
-    for s in sizes:
-        S = list(range(s))
-        L = build_weighted_laplacian(M)
-        L_S = L[np.ix_(S, S)]
-        eigs = np.linalg.eigvalsh(L_S)
-        rank = int(np.sum(np.abs(eigs) > 1e-10))
-        ranks.append(min(rank, s-1))
-    ax.plot(list(sizes), ranks, 'o-', label=f'{label} (β₁={beta})', markersize=6)
-    ax.axhline(y=beta, linestyle='--', alpha=0.3)
-
-ax.set_xlabel('|S| (support size)')
-ax.set_ylabel('Jacobian rank')
-ax.set_title('Jacobian Rank vs Support Size', fontsize=12)
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-# Panel 2: Pruning effect on different graphs
-ax = axes[0, 1]
-graph_data = []
-
-# Tree (path graph)
-for n in range(3, 12):
-    M = MetricGraphModel(n, [(i, i+1, 1.0) for i in range(n-1)])
-    core, _ = prune_pendant_trees(M)
-    graph_data.append(('Path', n, first_betti(M), core.n_vertices, first_betti(core) if core.n_vertices > 0 else 0))
-
-# Cycle + pendant
-for n_pend in range(0, 8):
-    edges = [(i, (i+1)%4, 1.0) for i in range(4)]
-    prev = 0
-    for k in range(n_pend):
-        edges.append((prev if k == 0 else 4+k-1, 4+k, 1.0))
-    M = MetricGraphModel(4 + n_pend, edges)
-    core, _ = prune_pendant_trees(M)
-    graph_data.append(('C₄+path', n_pend,
-        first_betti(M), core.n_vertices,
-        first_betti(core) if core.n_vertices > 0 else 0))
-
-paths = [(d[1], d[2]) for d in graph_data if d[0] == 'Path']
-cyc_p = [(d[1], d[4]) for d in graph_data if d[0] == 'C₄+path']
-
-ax.bar([p[0]-0.15 for p in paths], [p[1] for p in paths], 0.3,
-       label='Path graph β₁', color='tab:blue', alpha=0.7)
-ax.bar([p[0]+0.15 for p in cyc_p], [p[1] for p in cyc_p], 0.3,
-       label='C₄+path core β₁', color='tab:orange', alpha=0.7)
-ax.set_xlabel('Parameter (path length / pendant length)')
-ax.set_ylabel('Betti number')
-ax.set_title('Pruning Preserves Cycle Structure', fontsize=12)
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-# Panel 3: Energy spectrum comparison before/after pruning
-ax = axes[1, 0]
-n_cycle = 5
-base_edges = [(i, (i+1)%n_cycle, 1.0 + 0.5*i) for i in range(n_cycle)]
-M_base = MetricGraphModel(n_cycle, base_edges)
-
-configs = [
-    ("No pendant", []),
-    ("+1 leaf", [(0, n_cycle, 2.0)]),
-    ("+2 leaves", [(0, n_cycle, 2.0), (2, n_cycle+1, 3.0)]),
-    ("+3 leaves", [(0, n_cycle, 2.0), (2, n_cycle+1, 3.0), (4, n_cycle+2, 1.0)]),
-]
-
-S = list(range(n_cycle))
-spectra_labels = []
-
-for idx, (label, extra_edges) in enumerate(configs):
-    all_edges = list(base_edges) + extra_edges
-    n_total = n_cycle + len(extra_edges)
-    M = MetricGraphModel(n_total, all_edges)
-    L = build_weighted_laplacian(M)
-
-    generators = []
-    for k in range(1, len(S)):
-        D = np.zeros(len(S))
-        D[k] = 1.0; D[0] = -1.0
-        b = np.zeros(n_total)
-        for ki, v in enumerate(S): b[v] = D[ki]
-        A = L.copy(); A[-1, :] = 1.0; b[-1] = 0.0
-        f = np.linalg.solve(A, b)
-        generators.append(f)
-
-    r = len(generators)
-    Q = np.zeros((r, r))
-    for i in range(r):
-        for j in range(r):
-            Q[i, j] = generators[i] @ L @ generators[j]
-
-    eigvals = np.sort(np.linalg.eigvalsh(Q))
-    x = np.arange(len(eigvals)) + idx * 0.2 - 0.3
-    ax.bar(x, eigvals, 0.18, label=label, alpha=0.8)
-
-ax.set_xlabel('Eigenvalue index')
-ax.set_ylabel('Energy eigenvalue')
-ax.set_title('Energy Spectrum: Pendant Invariance', fontsize=12)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-
-# Panel 4: Laplacian eigenvalue distribution
-ax = axes[1, 1]
-for n_cycle, ls, label in [
-    (5, [1]*5, 'C₅ uniform'),
-    (5, [1,2,3,4,5], 'C₅ graded'),
-    (8, [1]*8, 'C₈ uniform'),
-]:
-    M = MetricGraphModel(n_cycle,
-        [(i, (i+1)%n_cycle, ls[i]) for i in range(n_cycle)])
-    L = build_weighted_laplacian(M)
-    eigs = np.sort(np.linalg.eigvalsh(L))
-    ax.plot(range(len(eigs)), eigs, 'o-', label=label, markersize=5)
-
-ax.set_xlabel('Index')
-ax.set_ylabel('Eigenvalue')
-ax.set_title('Laplacian Spectrum\n(always ≥ 0, kernel = constants)', fontsize=12)
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('viz_jacobian_structure.png', dpi=150, bbox_inches='tight')
-print("Saved viz_jacobian_structure.png")
-
-
-"""
-Visualization: Canonical Kernel Matrix Heatmap and Energy Pairing
-
-Visualizes the canonical kernel matrix K and the energy pairing matrix Q
-for a cycle graph with varying edge lengths, showing how the harmonic
-structure encodes the metric geometry of the graph.
-
-The kernel matrix K[i,j] = k_i(S[j]) gives the value of the i-th canonical
-kernel generator at the j-th support point. The energy pairing Q = K^T L K
-gives the tropical polarization on the Jacobian.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from typing import List, Tuple, Dict
-from dataclasses import dataclass, field
-
-
-@dataclass
-class MetricGraphModel:
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
-
-
-def build_weighted_laplacian(M):
-    n = M.n_vertices
-    L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c
-        L[j, i] = -c
-        L[i, i] += c
-        L[j, j] += c
-    return L
-
-
-def solve_normalized_kernel(M, S, D):
-    n = M.n_vertices
-    L = build_weighted_laplacian(M)
-    b = np.zeros(n)
-    for idx, v in enumerate(S):
-        b[v] = D[idx]
+def solve_kernel(L, D):
+    """Solve Lf = D with mean-zero normalization."""
+    n = L.shape[0]
     A = L.copy()
+    b = D.copy()
     A[-1, :] = 1.0
     b[-1] = 0.0
     return np.linalg.solve(A, b)
 
 
-def compute_canonical_kernel_matrix(M, S):
-    m = len(S)
-    K = np.zeros((m, m))
-    for idx in range(1, m):
+# --- Setup ---
+n = 5
+lengths = [1.0, 1.5, 2.0, 1.5, 1.0]
+L = build_cycle_laplacian(n, lengths)
+
+fig = plt.figure(figsize=(16, 12))
+gs = gridspec.GridSpec(2, 2, hspace=0.35, wspace=0.3)
+
+# --- Panel 1: Energy as function of perturbation ---
+ax1 = fig.add_subplot(gs[0, 0])
+# Start from a kernel generator and perturb
+D = np.zeros(n)
+D[0] = 1.0
+D[2] = -1.0
+f0 = solve_kernel(L, D)
+
+# Perturb in random direction (mean-zero)
+np.random.seed(42)
+direction = np.random.randn(n)
+direction -= direction.mean()
+direction /= np.linalg.norm(direction)
+
+ts = np.linspace(-2, 2, 200)
+energies = []
+for t in ts:
+    f = f0 + t * direction
+    E = f @ L @ f
+    energies.append(E)
+
+ax1.plot(ts, energies, 'b-', linewidth=2)
+ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+ax1.axvline(x=0, color='r', linestyle='--', alpha=0.5, label='Canonical kernel')
+E0 = f0 @ L @ f0
+ax1.plot(0, E0, 'ro', markersize=10, zorder=5, label=f'E(f₀) = {E0:.3f}')
+ax1.set_xlabel('Perturbation parameter t', fontsize=12)
+ax1.set_ylabel('Dirichlet Energy E(f₀ + t·δ)', fontsize=12)
+ax1.set_title('Energy Landscape (Convexity)', fontsize=14)
+ax1.legend(fontsize=10)
+
+# --- Panel 2: Kernel generators ---
+ax2 = fig.add_subplot(gs[0, 1])
+colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+x_positions = np.arange(n)
+
+for src in range(1, n):
+    D = np.zeros(n)
+    D[src] = 1.0
+    D[0] = -1.0
+    f = solve_kernel(L, D)
+
+    ax2.plot(x_positions, f, 'o-', color=colors[src], linewidth=2,
+             markersize=8, label=f'k_{src} (source at {src})')
+
+ax2.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+ax2.set_xlabel('Vertex', fontsize=12)
+ax2.set_ylabel('Potential value', fontsize=12)
+ax2.set_title('Canonical Kernel Generators', fontsize=14)
+ax2.legend(fontsize=9)
+ax2.set_xticks(range(n))
+
+# --- Panel 3: Energy pairing matrix (heatmap) ---
+ax3 = fig.add_subplot(gs[1, 0])
+S = list(range(n))
+k = len(S)
+kernels = []
+for idx in range(1, k):
+    D = np.zeros(n)
+    D[S[idx]] = 1.0
+    D[S[0]] = -1.0
+    f = solve_kernel(L, D)
+    kernels.append(f)
+
+Q = np.zeros((k-1, k-1))
+for i in range(k-1):
+    for j in range(k-1):
+        Q[i, j] = kernels[i] @ L @ kernels[j]
+
+im = ax3.imshow(Q, cmap='YlOrRd', aspect='equal')
+plt.colorbar(im, ax=ax3)
+ax3.set_xticks(range(k-1))
+ax3.set_yticks(range(k-1))
+ax3.set_xticklabels([f'k_{i+1}' for i in range(k-1)])
+ax3.set_yticklabels([f'k_{i+1}' for i in range(k-1)])
+ax3.set_title('Energy Pairing Matrix\n(Tropical Polarization)', fontsize=14)
+
+# Annotate values
+for i in range(k-1):
+    for j in range(k-1):
+        ax3.text(j, i, f'{Q[i,j]:.2f}', ha='center', va='center',
+                 color='black' if Q[i,j] < Q.max()*0.7 else 'white', fontsize=10)
+
+# --- Panel 4: Refinement convergence ---
+ax4 = fig.add_subplot(gs[1, 1])
+base_lengths = [1.0, 1.618, 2.236]  # 1, golden ratio, √5
+
+levels = range(6)
+eig_traces = [[] for _ in range(2)]
+
+for level in levels:
+    m = 3 * (2 ** level)
+    sublengths = []
+    for i in range(3):
+        sub = base_lengths[i] / (2 ** level)
+        sublengths.extend([sub] * (2 ** level))
+
+    L_sub = build_cycle_laplacian(m, sublengths)
+    step = 2 ** level
+    S_sub = [0, step, 2 * step]
+
+    # Compute kernel generators at support vertices
+    ks = []
+    for idx in range(1, 3):
         D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
-        f = solve_normalized_kernel(M, S, D)
-        for j in range(m):
-            K[idx, j] = f[S[j]]
-    return K
+        D[S_sub[idx]] = 1.0
+        D[S_sub[0]] = -1.0
+        f = solve_kernel(L_sub, D)
+        ks.append(f)
 
+    Q_sub = np.zeros((2, 2))
+    for i in range(2):
+        for j in range(2):
+            Q_sub[i, j] = ks[i] @ L_sub @ ks[j]
 
-def compute_energy_pairing(M, S):
-    m = len(S)
-    generators = []
-    L = build_weighted_laplacian(M)
-    for idx in range(1, m):
-        D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
-        f = solve_normalized_kernel(M, S, D)
-        generators.append(f)
-    r = len(generators)
-    Q = np.zeros((r, r))
-    for i in range(r):
-        for j in range(r):
-            Q[i, j] = generators[i] @ L @ generators[j]
-    return Q
+    eigs = sorted(np.linalg.eigvalsh(Q_sub))
+    for k_idx in range(2):
+        eig_traces[k_idx].append(eigs[k_idx])
 
+for k_idx in range(2):
+    ax4.plot(list(levels), eig_traces[k_idx], 'o-', linewidth=2,
+             markersize=8, label=f'λ_{k_idx+1}')
 
-def cycle_graph(n, lengths=None):
-    if lengths is None:
-        lengths = [1.0] * n
-    edges = [(i, (i + 1) % n, lengths[i]) for i in range(n)]
-    return MetricGraphModel(n, edges)
+ax4.set_xlabel('Subdivision level', fontsize=12)
+ax4.set_ylabel('Energy eigenvalue', fontsize=12)
+ax4.set_title('Refinement Convergence\n(Subdivision Stability)', fontsize=14)
+ax4.legend(fontsize=10)
 
-
-# Create figure
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-fig.suptitle('Canonical Kernel Theory on Metric Graphs\n'
-             'Kernel Matrices K and Energy Pairings Q',
-             fontsize=14, fontweight='bold')
-
-configs = [
-    ("C₅ uniform", [1, 1, 1, 1, 1]),
-    ("C₅ asymmetric", [1, 2, 3, 4, 5]),
-    ("C₅ extreme", [0.1, 0.1, 0.1, 0.1, 10]),
-]
-
-for col, (title, lengths) in enumerate(configs):
-    M = cycle_graph(5, lengths)
-    S = list(range(5))
-
-    K = compute_canonical_kernel_matrix(M, S)
-    Q = compute_energy_pairing(M, S)
-
-    # Kernel matrix
-    ax = axes[0, col]
-    im = ax.imshow(K, cmap='RdBu_r', aspect='equal',
-                   vmin=-np.max(np.abs(K)), vmax=np.max(np.abs(K)))
-    ax.set_title(f'{title}\nKernel Matrix K', fontsize=11)
-    ax.set_xlabel('Support point j')
-    ax.set_ylabel('Generator i')
-    ax.set_xticks(range(5))
-    ax.set_yticks(range(5))
-    plt.colorbar(im, ax=ax, shrink=0.8)
-
-    # Energy pairing
-    ax = axes[1, col]
-    im = ax.imshow(Q, cmap='viridis', aspect='equal')
-    ax.set_title(f'Energy Pairing Q\nℓ = {lengths}', fontsize=11)
-    ax.set_xlabel('Generator j')
-    ax.set_ylabel('Generator i')
-    ax.set_xticks(range(Q.shape[0]))
-    ax.set_yticks(range(Q.shape[1]))
-    plt.colorbar(im, ax=ax, shrink=0.8)
-
-    # Annotate eigenvalues
-    eigvals = np.linalg.eigvalsh(Q)
-    ax.text(0.02, -0.15, f'λ = {np.round(eigvals, 3)}',
-            transform=ax.transAxes, fontsize=8, style='italic')
-
-plt.tight_layout()
-plt.savefig('viz_kernel_heatmap.png', dpi=150, bbox_inches='tight')
-print("Saved viz_kernel_heatmap.png")
+fig.suptitle('Canonical Kernel Calculus on Metric Graphs', fontsize=16, y=0.98)
+plt.savefig('viz_energy_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved viz_energy_landscape.png")
 
 
 """
-Visualization: Effective Resistance Network and Refinement Convergence
+Visualization: Tropical Jacobian Structure and Abel-Jacobi Coordinates
 
-Shows how effective resistance (a key cross-domain quantity linking
-tropical geometry, electrical networks, and quantum graphs) is computed
-via canonical kernels, and how it remains stable under mesh refinement.
+Illustrates the S-supported Jacobian quotient structure on metric graphs.
+Shows how the canonical kernel quotient captures the tropical Jacobian,
+and how the energy pairing encodes effective resistances.
+
+This script is fully self-contained.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import List, Tuple, Dict
-from dataclasses import dataclass, field
+import matplotlib.gridspec as gridspec
 
 
-@dataclass
-class MetricGraphModel:
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
-
-
-def build_weighted_laplacian(M):
-    n = M.n_vertices
+def build_graph_laplacian(n, edges):
+    """Build metric Laplacian from edge list."""
     L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c
-        L[j, i] = -c
-        L[i, i] += c
-        L[j, j] += c
+    for i, j, length in edges:
+        cond = 1.0 / length
+        L[i, i] += cond
+        L[j, j] += cond
+        L[i, j] -= cond
+        L[j, i] -= cond
     return L
 
 
-def compute_effective_resistance(M, s, t):
-    n = M.n_vertices
-    L = build_weighted_laplacian(M)
-    b = np.zeros(n)
-    b[s] = 1.0
-    b[t] = -1.0
+def solve_kernel(L, D):
+    n = L.shape[0]
     A = L.copy()
+    b = D.copy()
     A[-1, :] = 1.0
     b[-1] = 0.0
-    f = np.linalg.solve(A, b)
-    return f[s] - f[t]
+    return np.linalg.solve(A, b)
 
 
-def uniform_subdivision(M, n_per_edge):
-    new_edges = []
-    next_v = M.n_vertices
-    for i, j, length in M.edges:
-        seg = length / (n_per_edge + 1)
-        prev = i
-        for _ in range(n_per_edge):
-            new_edges.append((prev, next_v, seg))
-            prev = next_v
-            next_v += 1
-        new_edges.append((prev, j, seg))
-    return MetricGraphModel(next_v, new_edges)
-
-
-def cycle_graph(n, lengths=None):
-    if lengths is None:
-        lengths = [1.0] * n
-    return MetricGraphModel(n, [(i, (i+1)%n, lengths[i]) for i in range(n)])
-
-
-def theta_graph(l1, l2, l3):
+def theta_graph_laplacian(l1, l2, l3):
+    """Theta graph: vertices 0,1 (poles), 2,3,4 (midpoints)."""
     edges = [
         (0, 2, l1/2), (2, 1, l1/2),
         (0, 3, l2/2), (3, 1, l2/2),
         (0, 4, l3/2), (4, 1, l3/2),
     ]
-    return MetricGraphModel(5, edges)
+    return build_graph_laplacian(5, edges), 5
 
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-fig.suptitle('Effective Resistance and Refinement Stability\n'
-             'Cross-domain: Tropical Geometry ↔ Electrical Networks ↔ Quantum Graphs',
-             fontsize=13, fontweight='bold')
+fig = plt.figure(figsize=(16, 12))
+gs = gridspec.GridSpec(2, 2, hspace=0.4, wspace=0.3)
 
-# Panel 1: Resistance matrix for cycle graph
-ax = axes[0]
-M = cycle_graph(6, [1.0, 1.5, 2.0, 0.5, 1.0, 3.0])
-n = M.n_vertices
-R = np.zeros((n, n))
-for i in range(n):
-    for j in range(i+1, n):
-        R[i, j] = compute_effective_resistance(M, i, j)
-        R[j, i] = R[i, j]
+# --- Panel 1: Abel-Jacobi coordinates on theta graph ---
+ax1 = fig.add_subplot(gs[0, 0])
 
-im = ax.imshow(R, cmap='hot_r', aspect='equal')
-ax.set_title('Effective Resistance\nC₆ with ℓ=[1, 1.5, 2, 0.5, 1, 3]', fontsize=11)
-ax.set_xlabel('Vertex j')
-ax.set_ylabel('Vertex i')
-ax.set_xticks(range(n))
-ax.set_yticks(range(n))
-for i in range(n):
-    for j in range(n):
-        ax.text(j, i, f'{R[i,j]:.2f}', ha='center', va='center', fontsize=8,
-                color='white' if R[i,j] > np.max(R)*0.6 else 'black')
-plt.colorbar(im, ax=ax, shrink=0.8, label='Resistance (Ω)')
+L, n = theta_graph_laplacian(1.0, 2.0, 3.0)
+S = list(range(n))
+s0 = 0
 
-# Panel 2: Refinement convergence
-ax = axes[1]
-test_graphs = [
-    ("C₃ [1,2,1.5]", cycle_graph(3, [1.0, 2.0, 1.5]), 0, 1),
-    ("C₄ [1,1,1,1]", cycle_graph(4), 0, 2),
-    ("Θ(1,√2,√3)", theta_graph(1.0, np.sqrt(2), np.sqrt(3)), 0, 1),
-]
+# Compute kernel generators
+kernels = []
+for idx in range(1, n):
+    D = np.zeros(n)
+    D[idx] = 1.0
+    D[s0] = -1.0
+    kernels.append(solve_kernel(L, D))
 
-subdivisions = [0, 1, 2, 4, 8, 16, 32]
-for name, M_base, s, t in test_graphs:
-    R_exact = compute_effective_resistance(M_base, s, t)
-    resistances = []
-    for n_sub in subdivisions:
-        if n_sub == 0:
-            M_sub = M_base
-        else:
-            M_sub = uniform_subdivision(M_base, n_sub)
-        R_sub = compute_effective_resistance(M_sub, s, t)
-        resistances.append(R_sub)
-    errors = [abs(r - R_exact) for r in resistances]
-    ax.plot(subdivisions, errors, 'o-', label=f'{name}, R({s},{t})', markersize=4)
+# Project onto 2D via first two kernel generators
+k1 = kernels[0]
+k2 = kernels[1]
 
-ax.set_xlabel('Subdivision level')
-ax.set_ylabel('|R_subdivided - R_exact|')
-ax.set_title('Refinement Invariance\nof Effective Resistance', fontsize=11)
-ax.set_yscale('log')
-ax.set_ylim(bottom=1e-16, top=1e-10)
-ax.legend(fontsize=8)
-ax.grid(True, alpha=0.3)
-ax.text(0.5, 0.02, 'Machine precision → subdivision-invariant',
-        transform=ax.transAxes, ha='center', fontsize=9, style='italic')
+# Plot the Abel-Jacobi image of each vertex
+aj_x = [k[1] for k in kernels]  # Value at vertex 1
+aj_y = [k[2] for k in kernels]  # Value at vertex 2
 
-# Panel 3: Energy spectrum under pendant attachment
-ax = axes[2]
-base = cycle_graph(4, [1.0, 1.5, 2.0, 2.5])
-S = [0, 1, 2, 3]
+colors_pts = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+for idx in range(len(kernels)):
+    ax1.scatter(aj_x[idx], aj_y[idx], c=colors_pts[idx], s=200,
+               edgecolors='black', linewidths=1.5, zorder=5,
+               label=f'δ_{idx+1} - δ₀')
 
-pendant_lengths = np.logspace(-2, 2, 20)
-spectra = []
+ax1.scatter(0, 0, c='gray', s=200, marker='x', linewidths=3, zorder=5,
+           label='Origin (δ₀ - δ₀)')
+ax1.set_xlabel('k₁ coordinate', fontsize=12)
+ax1.set_ylabel('k₂ coordinate', fontsize=12)
+ax1.set_title('Abel-Jacobi Coordinates\n(Theta Graph, genus 2)', fontsize=13)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+ax1.set_aspect('equal')
 
-for stick_len in pendant_lengths:
-    edges = list(base.edges) + [(0, 4, stick_len)]
-    M_lol = MetricGraphModel(5, edges)
-    L = build_weighted_laplacian(M_lol)
-    # Energy pairing on S
-    generators = []
-    for idx in range(1, len(S)):
-        D = np.zeros(len(S))
+# --- Panel 2: Energy pairing vs edge lengths ---
+ax2 = fig.add_subplot(gs[0, 1])
+
+# Vary one edge length and track energy eigenvalues
+l3_values = np.linspace(0.5, 10.0, 50)
+eig_traces = [[], []]
+
+for l3 in l3_values:
+    L_var, n_var = theta_graph_laplacian(1.0, 2.0, l3)
+    S_var = list(range(n_var))
+    ks = []
+    for idx in range(1, n_var):
+        D = np.zeros(n_var)
         D[idx] = 1.0
         D[0] = -1.0
-        b = np.zeros(5)
-        for k, v in enumerate(S):
-            b[v] = D[k]
-        A = L.copy()
-        A[-1, :] = 1.0
-        b[-1] = 0.0
-        f = np.linalg.solve(A, b)
-        generators.append(f)
-    r = len(generators)
-    Q = np.zeros((r, r))
-    for i in range(r):
-        for j in range(r):
-            Q[i, j] = generators[i] @ L @ generators[j]
-    eigvals = np.sort(np.linalg.eigvalsh(Q))
-    spectra.append(eigvals)
+        ks.append(solve_kernel(L_var, D))
+    Q = np.zeros((n_var-1, n_var-1))
+    for i in range(n_var-1):
+        for j in range(n_var-1):
+            Q[i,j] = ks[i] @ L_var @ ks[j]
+    eigs = sorted(np.linalg.eigvalsh(Q))
+    for k_idx in range(2):
+        eig_traces[k_idx].append(eigs[k_idx])
 
-spectra = np.array(spectra)
-for k in range(spectra.shape[1]):
-    ax.plot(pendant_lengths, spectra[:, k], '-', linewidth=2,
-            label=f'λ_{k+1}')
+ax2.plot(l3_values, eig_traces[0], 'b-', linewidth=2, label='λ₁ (smallest)')
+ax2.plot(l3_values, eig_traces[1], 'r-', linewidth=2, label='λ₂')
+ax2.set_xlabel('Third path length ℓ₃', fontsize=12)
+ax2.set_ylabel('Energy eigenvalue', fontsize=12)
+ax2.set_title('Energy Spectrum vs Edge Length\n(Theta Graph)', fontsize=13)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
 
-ax.set_xscale('log')
-ax.set_xlabel('Pendant edge length')
-ax.set_ylabel('Energy eigenvalue')
-ax.set_title('Energy Spectrum Stability\nunder Pendant Attachment', fontsize=11)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-ax.text(0.5, 0.02, 'Spectrum invariant → pendant trees irrelevant',
-        transform=ax.transAxes, ha='center', fontsize=9, style='italic')
+# --- Panel 3: S-Jacobian rank vs support size ---
+ax3 = fig.add_subplot(gs[1, 0])
 
-plt.tight_layout()
-plt.savefig('viz_resistance_network.png', dpi=150, bbox_inches='tight')
-print("Saved viz_resistance_network.png")
+# Compute Jacobian rank for different support sizes on various graphs
+# Graph: complete graph K4 with varying edge lengths
+K4_edges = [
+    (0, 1, 1.0), (0, 2, 1.5), (0, 3, 2.0),
+    (1, 2, 1.2), (1, 3, 1.8), (2, 3, 1.4)
+]
+L_K4 = build_graph_laplacian(4, K4_edges)
+
+# For each support size, compute rank of energy pairing
+support_sizes = []
+ranks = []
+for size in range(2, 5):
+    # Use first 'size' vertices as support
+    S = list(range(size))
+    ks = []
+    for idx in range(1, size):
+        D = np.zeros(4)
+        D[S[idx]] = 1.0
+        D[S[0]] = -1.0
+        ks.append(solve_kernel(L_K4, D))
+    Q = np.zeros((size-1, size-1))
+    for i in range(size-1):
+        for j in range(size-1):
+            Q[i,j] = ks[i] @ L_K4 @ ks[j]
+    rank = np.linalg.matrix_rank(Q, tol=1e-8)
+    support_sizes.append(size)
+    ranks.append(rank)
+
+# Also compute genus
+n_edges_K4 = 6
+genus_K4 = n_edges_K4 - 4 + 1
+ax3.bar(support_sizes, ranks, color='steelblue', edgecolor='black', alpha=0.8)
+ax3.axhline(y=genus_K4, color='red', linestyle='--', linewidth=2,
+            label=f'Genus = {genus_K4}')
+ax3.set_xlabel('Support size |S|', fontsize=12)
+ax3.set_ylabel('Rank of Q (Jacobian dimension)', fontsize=12)
+ax3.set_title('S-Jacobian Rank vs Support Size\n(K₄ graph)', fontsize=13)
+ax3.legend(fontsize=10)
+ax3.set_xticks(support_sizes)
+
+# --- Panel 4: Effective resistance network visualization ---
+ax4 = fig.add_subplot(gs[1, 1])
+
+# Compute all pairwise effective resistances on K4
+R_eff = np.zeros((4, 4))
+for i in range(4):
+    for j in range(i+1, 4):
+        D = np.zeros(4)
+        D[i] = 1.0
+        D[j] = -1.0
+        f = solve_kernel(L_K4, D)
+        R_eff[i,j] = f @ L_K4 @ f
+        R_eff[j,i] = R_eff[i,j]
+
+im = ax4.imshow(R_eff, cmap='YlOrRd', aspect='equal')
+plt.colorbar(im, ax=ax4, label='Effective resistance (Ω)')
+ax4.set_xticks(range(4))
+ax4.set_yticks(range(4))
+ax4.set_xlabel('Vertex j', fontsize=12)
+ax4.set_ylabel('Vertex i', fontsize=12)
+ax4.set_title('Effective Resistance Matrix\n(K₄ with heterogeneous edges)', fontsize=13)
+
+for i in range(4):
+    for j in range(4):
+        ax4.text(j, i, f'{R_eff[i,j]:.2f}', ha='center', va='center',
+                fontsize=10, color='black' if R_eff[i,j] < R_eff.max()*0.6 else 'white')
+
+fig.suptitle('Tropical Jacobian Structure and Energy Pairings', fontsize=15, y=0.98)
+plt.savefig('viz_jacobian_structure.png', dpi=150, bbox_inches='tight')
+print("Saved viz_jacobian_structure.png")
+
+
+"""
+Visualization: Leaf Rigidity and Pendant-Tree Pruning
+
+Illustrates the metric leaf rigidity theorem: harmonic functions on pendant
+edges must be constant. Shows how attaching longer pendant trees does not
+change the canonical kernel data on the cycle core.
+
+This script is fully self-contained.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+
+def build_lollipop_laplacian(n_cycle, cycle_len, stick_len):
+    """Build Laplacian for a lollipop graph (cycle + pendant stick)."""
+    n = n_cycle + 1
+    L = np.zeros((n, n))
+    edge_len = cycle_len / n_cycle
+    # Cycle edges
+    for i in range(n_cycle):
+        j = (i + 1) % n_cycle
+        cond = 1.0 / edge_len
+        L[i, i] += cond
+        L[j, j] += cond
+        L[i, j] -= cond
+        L[j, i] -= cond
+    # Pendant stick: vertex n_cycle attached to vertex 0
+    cond_stick = 1.0 / stick_len
+    L[0, 0] += cond_stick
+    L[n_cycle, n_cycle] += cond_stick
+    L[0, n_cycle] -= cond_stick
+    L[n_cycle, 0] -= cond_stick
+    return L, n
+
+
+def build_tree_laplacian(n_cycle, cycle_len, tree_lengths):
+    """Build Laplacian for cycle + multi-node pendant tree."""
+    n_tree = len(tree_lengths)
+    n = n_cycle + n_tree
+    L = np.zeros((n, n))
+    edge_len = cycle_len / n_cycle
+    for i in range(n_cycle):
+        j = (i + 1) % n_cycle
+        cond = 1.0 / edge_len
+        L[i, i] += cond
+        L[j, j] += cond
+        L[i, j] -= cond
+        L[j, i] -= cond
+    # Tree: chain from vertex 0 through n_cycle, n_cycle+1, ...
+    prev = 0
+    for k, tl in enumerate(tree_lengths):
+        cur = n_cycle + k
+        cond = 1.0 / tl
+        L[prev, prev] += cond
+        L[cur, cur] += cond
+        L[prev, cur] -= cond
+        L[cur, prev] -= cond
+        prev = cur
+    return L, n
+
+
+def solve_kernel(L, D):
+    n = L.shape[0]
+    A = L.copy()
+    b = D.copy()
+    A[-1, :] = 1.0
+    b[-1] = 0.0
+    return np.linalg.solve(A, b)
+
+
+fig = plt.figure(figsize=(16, 10))
+gs = gridspec.GridSpec(2, 2, hspace=0.4, wspace=0.3)
+
+# --- Panel 1: Harmonic function on lollipop (showing leaf constancy) ---
+ax1 = fig.add_subplot(gs[0, 0])
+
+n_cycle = 6
+cycle_len = 6.0
+stick_len = 3.0
+L, n = build_lollipop_laplacian(n_cycle, cycle_len, stick_len)
+
+# Source at vertex 1, sink at vertex 4
+D = np.zeros(n)
+D[1] = 1.0
+D[4] = -1.0
+f = solve_kernel(L, D)
+
+# Plot vertex positions on a circle + stick
+angles = np.linspace(0, 2*np.pi, n_cycle, endpoint=False)
+x_pos = np.cos(angles)
+y_pos = np.sin(angles)
+# Stick extends from vertex 0
+x_pos = np.append(x_pos, x_pos[0] + 0.5)
+y_pos = np.append(y_pos, y_pos[0] + 0.5)
+
+scatter = ax1.scatter(x_pos, y_pos, c=f, cmap='RdBu_r', s=200,
+                       edgecolors='black', linewidths=1.5, zorder=5,
+                       vmin=-max(abs(f)), vmax=max(abs(f)))
+plt.colorbar(scatter, ax=ax1, label='Potential f(v)')
+
+# Draw edges
+for i in range(n_cycle):
+    j = (i + 1) % n_cycle
+    ax1.plot([x_pos[i], x_pos[j]], [y_pos[i], y_pos[j]], 'k-', linewidth=1)
+ax1.plot([x_pos[0], x_pos[n_cycle]], [y_pos[0], y_pos[n_cycle]], 'k--', linewidth=2)
+
+# Label vertices
+for i in range(n):
+    label = f'{i}' + (' (leaf)' if i == n_cycle else '')
+    ax1.annotate(label, (x_pos[i], y_pos[i]), textcoords="offset points",
+                xytext=(10, 5), fontsize=9)
+
+# Highlight leaf rigidity
+ax1.annotate(f'f({n_cycle}) = {f[n_cycle]:.4f}\nf(0) = {f[0]:.4f}\n→ Equal!',
+            xy=(x_pos[n_cycle], y_pos[n_cycle]),
+            xytext=(x_pos[n_cycle]+0.3, y_pos[n_cycle]+0.5),
+            fontsize=10, color='red',
+            arrowprops=dict(arrowstyle='->', color='red'))
+
+ax1.set_title('Leaf Rigidity: f(leaf) = f(neighbor)', fontsize=13)
+ax1.set_aspect('equal')
+ax1.grid(True, alpha=0.3)
+
+# --- Panel 2: Potential profile showing constancy on pendant ---
+ax2 = fig.add_subplot(gs[0, 1])
+
+# Build a longer tree: cycle + chain of 5 pendant vertices
+tree_lengths = [1.0, 1.0, 1.0, 1.0, 1.0]
+L_tree, n_tree = build_tree_laplacian(n_cycle, cycle_len, tree_lengths)
+D_tree = np.zeros(n_tree)
+D_tree[1] = 1.0
+D_tree[4] = -1.0
+f_tree = solve_kernel(L_tree, D_tree)
+
+# Plot the potential along the tree path
+tree_path = list(range(n_cycle)) + list(range(n_cycle, n_tree))
+labels = [f'cycle {i}' for i in range(n_cycle)] + [f'tree {i-n_cycle}' for i in range(n_cycle, n_tree)]
+
+ax2.bar(range(n_tree), f_tree, color=['steelblue']*n_cycle + ['coral']*len(tree_lengths),
+        edgecolor='black', linewidth=0.5)
+ax2.axhline(y=f_tree[0], color='red', linestyle='--', alpha=0.7,
+            label=f'f(attachment) = {f_tree[0]:.4f}')
+ax2.set_xticks(range(n_tree))
+ax2.set_xticklabels([str(i) for i in range(n_tree)], rotation=45)
+ax2.set_xlabel('Vertex index', fontsize=12)
+ax2.set_ylabel('Potential f(v)', fontsize=12)
+ax2.set_title('Potential Profile: Constant on Tree', fontsize=13)
+ax2.legend(fontsize=10)
+
+# --- Panel 3: Core Jacobian invariance under tree attachment ---
+ax3 = fig.add_subplot(gs[1, 0])
+
+stick_lengths = np.linspace(0.1, 50, 100)
+eig1_vals = []
+eig2_vals = []
+
+for sl in stick_lengths:
+    L_lol, n_lol = build_lollipop_laplacian(4, 4.0, sl)
+    # Kernel generators on core
+    S = [0, 1, 2, 3]
+    ks = []
+    for idx in range(1, 4):
+        D = np.zeros(n_lol)
+        D[S[idx]] = 1.0
+        D[S[0]] = -1.0
+        ks.append(solve_kernel(L_lol, D))
+    Q = np.zeros((3, 3))
+    for i in range(3):
+        for j in range(3):
+            Q[i,j] = ks[i] @ L_lol @ ks[j]
+    eigs = sorted(np.linalg.eigvalsh(Q))
+    eig1_vals.append(eigs[0])
+    eig2_vals.append(eigs[1])
+
+ax3.plot(stick_lengths, eig1_vals, 'b-', linewidth=2, label='λ₁')
+ax3.plot(stick_lengths, eig2_vals, 'r-', linewidth=2, label='λ₂')
+ax3.set_xlabel('Pendant stick length', fontsize=12)
+ax3.set_ylabel('Energy eigenvalue', fontsize=12)
+ax3.set_title('Core Jacobian: Invariant Under\nPendant Attachment', fontsize=13)
+ax3.legend(fontsize=11)
+ax3.grid(True, alpha=0.3)
+
+# --- Panel 4: Laplacian structure ---
+ax4 = fig.add_subplot(gs[1, 1])
+
+L_show, _ = build_lollipop_laplacian(5, 5.0, 2.0)
+im = ax4.imshow(L_show, cmap='RdBu_r', aspect='equal',
+                vmin=-max(abs(L_show.flatten())),
+                vmax=max(abs(L_show.flatten())))
+plt.colorbar(im, ax=ax4)
+ax4.set_title('Metric Laplacian Matrix\n(Row-Sum-Zero, Symmetric)', fontsize=13)
+ax4.set_xlabel('Column (vertex j)', fontsize=11)
+ax4.set_ylabel('Row (vertex i)', fontsize=11)
+
+for i in range(L_show.shape[0]):
+    for j in range(L_show.shape[1]):
+        val = L_show[i, j]
+        if abs(val) > 0.01:
+            ax4.text(j, i, f'{val:.1f}', ha='center', va='center',
+                     fontsize=8, color='white' if abs(val) > 0.8 else 'black')
+
+fig.suptitle('Pendant-Edge Rigidity and Metric Graph Harmonic Theory', fontsize=15, y=0.98)
+plt.savefig('viz_leaf_rigidity.png', dpi=150, bbox_inches='tight')
+print("Saved viz_leaf_rigidity.png")

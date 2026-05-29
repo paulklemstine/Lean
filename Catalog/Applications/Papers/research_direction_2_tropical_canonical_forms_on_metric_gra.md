@@ -1,10 +1,10 @@
-# Canonical Kernel Theory on Metric Graphs: Tropical Canonical Forms and Algorithmic Jacobian Computation
+# Canonical Kernel Calculus on Metric Graph Models: A Formal Foundation for Tropical Jacobian Computation
 
 ## Abstract
 
-We develop a formally verified theory of canonical harmonic kernels on finite metric graph models, establishing the foundational results for a computational canonical-form approach to tropical Jacobians. Starting from the weighted Laplacian of a metric graph model with positive symmetric edge lengths (conductance weights), we prove: (1) pendant-edge rigidity — harmonic functions are constant on pendant edges, generalizing discrete leaf-rigidity theorems; (2) existence and uniqueness of normalized harmonic representatives under mean-zero normalization; (3) non-negativity and structural properties of the Dirichlet energy bilinear form; (4) S-supported Jacobian quotient structure via a formally verified equivalence relation on divisor classes; (5) subdivision invariance of canonical kernels; and (6) cross-domain connections linking the canonical kernel pairing to effective resistance in electrical networks, covariance kernels of Gaussian free fields, and tropical polarizations. All core theorems are machine-verified in Lean 4 with the Mathlib library, ensuring full logical soundness. We implement a complete computational pipeline and demonstrate convergence under refinement, pendant-tree pruning reduction, and Jacobian rank computation on cycle, theta, and lollipop graph families.
+We develop the first formally verified canonical kernel calculus for metric graph models, establishing the foundational theory for computing harmonic representatives, Jacobian classes, and energy pairings on compact metric graphs. Working with finite weighted graph models (finite simple graphs equipped with positive symmetric edge lengths), we prove: (1) pendant-edge rigidity — harmonic functions on pendant edges are constant; (2) Dirichlet energy non-negativity and its characterization of constant functions on connected graphs; (3) uniqueness of normalized harmonic kernels under mean-zero normalization; (4) the degree-zero property of S-principal divisors; and (5) symmetry of the energy bilinear form. All theorems are formally verified in Lean 4 with Mathlib, using only standard axioms. We provide efficient algorithms for canonical kernel computation, pendant-tree pruning, and subdivision refinement, along with computational demonstrations on cycle, theta, and lollipop graphs. The theory connects discrete chip-firing / Laplacian combinatorics with tropical geometry, electrical network theory, and quantum graph spectral theory.
 
-**Keywords:** tropical Jacobian, metric graph Laplacian, canonical kernel, chip-firing, Baker–Norine, effective resistance, Dirichlet energy, subdivision invariance, tropical Hodge theory, algorithmic tropical geometry
+**Keywords:** tropical Jacobian, metric graph Laplacian, chip-firing, Baker–Norine, Abel–Jacobi, electrical networks, effective resistance, quantum graphs, Dirichlet energy, piecewise-linear harmonic functions, subdivision invariance, tropical Hodge theory
 
 ---
 
@@ -12,44 +12,35 @@ We develop a formally verified theory of canonical harmonic kernels on finite me
 
 ### 1.1 Motivation
 
-The interplay between discrete graph theory and tropical geometry has been a major theme in contemporary mathematics since the foundational work of Baker and Norine [1], who established a graph-theoretic analogue of the Riemann–Roch theorem. Their theory, based on chip-firing dynamics on finite graphs, demonstrated that the combinatorial Jacobian of a graph — the quotient of degree-zero divisors by principal divisors — behaves in many ways like the Jacobian variety of an algebraic curve.
+The theory of divisors on finite graphs, initiated by Baker and Norine [BN07], establishes a striking analogy between Riemann surfaces and graphs. The graph Laplacian plays the role of the ∂∂̄-operator, principal divisors are images of the Laplacian, and the Jacobian group Jac(G) ≅ ℤ^n / Im(L) captures the essential algebraic geometry.
 
-A natural question arises: can this discrete theory be extended to *metric graphs* — graphs with positive real edge lengths — in a way that is computationally explicit, canonically normalized, and stable under subdivision? Such an extension would bridge:
-
-- **Discrete chip-firing** (finite Laplacian, graph Jacobian),
-- **Tropical geometry** (metric graphs as tropical curves, tropical Abel–Jacobi),
-- **Potential theory** (harmonic functions, Dirichlet energy, Green's functions),
-- **Electrical network theory** (effective resistance, current flow, Rayleigh reciprocity).
+However, the passage from finite combinatorial graphs to *metric graphs* (also known as tropical curves or abstract tropical varieties) introduces continuous geometry: edge lengths, piecewise-linear functions, slopes, and a continuous Laplacian. This passage is essential for tropical geometry [MZ08, BF11] but has lacked formal computational foundations.
 
 ### 1.2 Contributions
 
 This paper makes the following contributions:
 
-1. **Formal definitions** of metric graph models, weighted Laplacians with conductance weights, S-supported divisors, and S-principal divisors.
+1. **Formal definitions.** We introduce the `WMGraph` structure (weighted metric graph model) with positive symmetric edge lengths, metric Laplacian, Dirichlet energy, S-supported principal divisors, and energy bilinear form.
 
-2. **Pendant-edge rigidity theorem** (Theorem 1): harmonic functions on metric graph models are constant along pendant edges, generalizing the discrete leaf-rigidity theorem.
+2. **Core algebraic theory.** We prove row-sum-zero, symmetry, linearity of the Laplacian operator, degree-zero property of principal divisors, and the harmonic function algebra.
 
-3. **Normalized kernel uniqueness** (Theorem 2): for connected metric graph models, two mean-zero potentials with the same Laplacian image are identical.
+3. **Pendant-edge rigidity.** We prove that harmonic functions on pendant edges are forced constant — the metric analogue of the discrete leaf rigidity theorem.
 
-4. **Dirichlet energy theory** (Theorems 3–5): non-negativity, symmetry, and positive semidefiniteness of the energy bilinear form, with energy zero characterizing constant functions.
+4. **Energy theory.** We prove non-negativity of Dirichlet energy, its characterization of constant functions on connected graphs, and symmetry of the energy bilinear form.
 
-5. **S-supported Jacobian structure** (Theorems 6–8): the S-equivalence relation on divisors is a formally verified equivalence relation; the S-principal divisor lattice is closed under addition, negation, and scalar multiplication.
+5. **Uniqueness theorem.** We prove that mean-zero normalized kernels are uniquely determined by their Laplacian source data on connected graphs.
 
-6. **Energy descent** (Theorem 9): the energy bilinear form is invariant under constant shifts and thus descends to divisor classes modulo constants.
+6. **Algorithms.** We implement canonical kernel solvers, pendant-tree pruning, and subdivision refinement, with computational demonstrations.
 
-7. **Subdivision invariance** (computational verification): canonical kernel matrices are invariant under mesh refinement to machine precision.
-
-8. **Complete verified implementation**: algorithms for Laplacian construction, kernel computation, energy pairing, pendant pruning, and Jacobian rank estimation.
-
-All theorems in items 1–6 are machine-verified in Lean 4 using the Mathlib library.
+7. **Formal verification.** All theorems are verified in Lean 4 with Mathlib. Proofs use only the standard axioms (propext, Classical.choice, Quot.sound).
 
 ### 1.3 Related Work
 
-Baker and Norine [1] established the Riemann–Roch theorem for finite graphs. Baker and Faber [2] extended the Laplacian framework to metrized graphs. Mikhalkin and Zharkov [3] developed the theory of tropical Jacobians and theta functions. Gathmann and Kerber [4] connected tropical intersection theory to divisor classes on metric graphs.
+**Chip-firing and graph Jacobians.** Baker and Norine [BN07] proved the Riemann-Roch theorem for graphs. Dhar [Dha90] introduced chip-firing games. The Jacobian group of a graph is isomorphic to the critical group / sandpile group.
 
-On the computational side, Dhar's burning algorithm [5] provides efficient chip-firing reduction on finite graphs. The Matrix-Tree theorem and Kirchhoff's theorem connect graph Laplacians to spanning trees and effective resistance [6].
+**Tropical geometry.** Mikhalkin and Zharkov [MZ08] developed the theory of tropical curves and their Jacobians. Baker and Faber [BF06] studied metrized graphs and their Laplacians.
 
-Our contribution is distinguished by its emphasis on *canonicality* (unique normalized representatives), *computability* (explicit algorithms), and *formal verification* (machine-checked proofs).
+**Formal mathematics.** Mathlib [Mat24] provides extensive formalized mathematics in Lean 4. Prior formal work on graph theory includes formalization of Euler's theorem and various combinatorial results.
 
 ---
 
@@ -57,124 +48,113 @@ Our contribution is distinguished by its emphasis on *canonicality* (unique norm
 
 ### 2.1 Metric Graph Model
 
-A **metric graph model** $M = (V, G, \ell)$ consists of:
-- A finite set $V$ of vertices,
-- A simple graph $G$ on $V$,
-- A positive symmetric edge length function $\ell : V \times V \to \mathbb{R}_{>0}$ defined on adjacent pairs, with $\ell(i,j) = \ell(j,i)$.
+**Definition 2.1 (WMGraph).** A *weighted metric graph model* M = (V, G, ℓ) consists of:
+- A finite set V of vertices with |V| = n
+- A simple graph G = (V, E) with decidable adjacency
+- A symmetric edge length function ℓ: V × V → ℝ with ℓ(i,j) > 0 for all {i,j} ∈ E and ℓ(i,j) = ℓ(j,i)
 
-The **conductance** of an edge $(i,j)$ is $c(i,j) = 1/\ell(i,j)$.
+**Definition 2.2 (Conductance).** The *conductance* of edge {i,j} is σ(i,j) = 1/ℓ(i,j).
 
-### 2.2 Weighted Laplacian
+**Definition 2.3 (Metric Laplacian).** The *metric Laplacian matrix* L ∈ ℝ^{V×V} is:
 
-The **metric Laplacian** $L$ is the $|V| \times |V|$ matrix:
-$$
-L(i,j) = \begin{cases}
-\sum_{k \sim i} c(i,k) & \text{if } i = j, \\
--c(i,j) & \text{if } i \sim j, \\
-0 & \text{otherwise.}
-\end{cases}
-$$
+$$L_{ij} = \begin{cases} \sum_{k \sim i} \sigma(i,k) & \text{if } i = j \\ -\sigma(i,j) & \text{if } i \sim j \\ 0 & \text{otherwise} \end{cases}$$
 
-### 2.3 Laplacian Application and Harmonicity
+**Definition 2.4 (Laplacian operator).** For f: V → ℝ, define (Lf)(v) = ∑_j L_{vj} f(j).
 
-For a vertex function $f : V \to \mathbb{R}$, the **Laplacian application** is:
-$$
-(Lf)(v) = \sum_{j \in V} L(v,j) \cdot f(j) = \sum_{j \sim v} c(v,j)(f(v) - f(j)).
-$$
+**Definition 2.5 (Harmonicity).** A function f is *harmonic on T ⊆ V* if (Lf)(v) = 0 for all v ∈ T.
 
-A function $f$ is **harmonic on** a set $S \subseteq V$ if $(Lf)(v) = 0$ for all $v \in S$.
+**Definition 2.6 (Dirichlet Energy).** The *Dirichlet energy* of f: V → ℝ is E(f) = f^T L f = ∑_{i,j} L_{ij} f(i) f(j).
 
-### 2.4 Dirichlet Energy
+**Definition 2.7 (Mean-zero normalization).** A function f is *mean-zero* if ∑_v f(v) = 0.
 
-The **Dirichlet energy** of $f$ is:
-$$
-E(f) = f^T L f = \sum_{i,j} L(i,j) f(i) f(j) = \frac{1}{2} \sum_{i \sim j} c(i,j)(f(i) - f(j))^2.
-$$
+**Definition 2.8 (S-principal divisor).** A function D: V → ℝ is *S-principal* if there exists f: V → ℝ such that (Lf)(v) = 0 for all v ∉ S and (Lf)(v) = D(v) for all v.
 
-### 2.5 S-Supported Divisors
+**Definition 2.9 (Energy bilinear form).** The *energy form* is ⟨f,g⟩_L = f^T L g = ∑_{i,j} L_{ij} f(i) g(j).
 
-A **divisor** is a function $D : V \to \mathbb{R}$. It has **degree zero** if $\sum_v D(v) = 0$.
+### 2.2 Leaf and Pendant Predicates
 
-A divisor is **S-supported** if $D(v) = 0$ for $v \notin S$.
+**Definition 2.10.** A vertex v is a *leaf* if deg(v) = 1.
 
-A divisor is **S-principal** if there exists $f : V \to \mathbb{R}$ such that $f$ is harmonic on $V \setminus S$ and $Lf = D$.
-
-Two S-supported divisors $D_1, D_2$ are **S-equivalent** if $D_1 - D_2$ is S-principal.
-
-### 2.6 Energy Bilinear Form
-
-The **energy bilinear form** is:
-$$
-B(f, g) = \sum_{i,j} L(i,j) f(i) g(j).
-$$
+**Definition 2.11.** An edge {v,w} is a *pendant edge* if w is a leaf.
 
 ---
 
 ## 3. Main Results
 
-### Theorem 1: Pendant-Edge Rigidity
+### 3.1 Algebraic Properties of the Metric Laplacian
 
-**Statement.** Let $M$ be a metric graph model, $w$ a leaf vertex (degree 1) with unique neighbor $v$, and $f : V \to \mathbb{R}$ a function with $(Lf)(w) = 0$. Then $f(w) = f(v)$.
+**Theorem 3.1 (Row-sum-zero).** For all i ∈ V, ∑_j L_{ij} = 0.
 
-**Proof sketch.** Since $w$ has degree 1, the neighbor set $\{k : k \sim w\} = \{v\}$. The Laplacian equation at $w$ gives:
-$$
-c(w,v) \cdot f(w) + (-c(w,v)) \cdot f(v) = 0
-$$
-which simplifies to $c(w,v)(f(w) - f(v)) = 0$. Since $c(w,v) = 1/\ell(w,v) > 0$ by positivity of edge lengths, we conclude $f(w) = f(v)$. ∎
+*Proof sketch.* The diagonal entry L_{ii} = ∑_{k~i} σ(i,k) exactly cancels the off-diagonal entries −σ(i,j) for j ∼ i. Non-adjacent entries are zero. □
 
-**Significance.** This theorem generalizes the discrete catalog result `harmonic_at_leaf_eq_neighbor` to the weighted setting. The weight (edge length) does not affect the rigidity — only the positivity matters.
+**Theorem 3.2 (Symmetry).** L_{ij} = L_{ji} for all i, j.
 
-### Theorem 2: Energy Non-Negativity
+*Proof sketch.* Case analysis: if i = j, both sides equal the weighted degree. If i ∼ j, both sides equal −σ(i,j) = −σ(j,i) by symmetry of edge lengths. If i ≁ j, both sides are zero. □
 
-**Statement.** For any metric graph model $M$ and vertex function $f : V \to \mathbb{R}$:
-$$
-E(f) = f^T L f \geq 0.
-$$
+**Theorem 3.3 (Constants in kernel).** For any constant c, (L·**c**)(v) = 0.
 
-**Proof sketch.** We show that $E(f) = \frac{1}{2}\sum_{i \sim j} c(i,j)(f(i) - f(j))^2$. Since each conductance $c(i,j) > 0$ and each squared difference is $\geq 0$, every term is non-negative. ∎
+*Proof.* (L·**c**)(v) = c · ∑_j L_{vj} = c · 0 = 0 by row-sum-zero. □
 
-### Theorem 3: Principal Divisors Have Degree Zero
+**Theorem 3.4 (Linearity).** The Laplacian operator is linear:
+- L(f + g) = Lf + Lg
+- L(cf) = c · Lf
+- L(f − g) = Lf − Lg
 
-**Statement.** If $D = Lf$ for some $f$, then $\sum_v D(v) = 0$.
+**Theorem 3.5 (Degree-zero).** For any f: V → ℝ, ∑_v (Lf)(v) = 0.
 
-**Proof.** $\sum_v D(v) = \sum_v (Lf)(v) = \sum_v \sum_j L(v,j) f(j) = \sum_j (\sum_v L(v,j)) f(j) = 0$, using the column-sum-zero property (which follows from row-sum-zero plus symmetry). ∎
+*Proof.* ∑_v (Lf)(v) = ∑_v ∑_j L_{vj} f(j) = ∑_j f(j) · (∑_v L_{vj}) = ∑_j f(j) · (∑_v L_{jv}) = ∑_j f(j) · 0 = 0, using symmetry and row-sum-zero. □
 
-### Theorem 4: Normalized Kernel Uniqueness
+**Theorem 3.6 (Off-diagonal non-positivity).** For i ≠ j, L_{ij} ≤ 0.
 
-**Statement.** Let $M$ be a connected metric graph model. If $f_1, f_2 : V \to \mathbb{R}$ satisfy $Lf_1 = Lf_2$ and $\sum_v f_1(v) = \sum_v f_2(v) = 0$, then $f_1 = f_2$.
+### 3.2 Pendant-Edge Rigidity
 
-**Proof sketch.** Let $h = f_1 - f_2$. Then $Lh = 0$ (globally harmonic) and $\sum_v h(v) = 0$ (mean zero). Since $Lh = 0$, the energy $E(h) = h^T L h = 0$. By the energy decomposition, $\sum_{i \sim j} c(i,j)(h(i) - h(j))^2 = 0$, so $h(i) = h(j)$ for all adjacent pairs. By connectedness, $h$ is constant, and by mean-zero, $h = 0$. ∎
+**Theorem 3.7 (Metric leaf rigidity).** Let w be a leaf vertex with unique neighbor v. If f is harmonic at w (i.e., (Lf)(w) = 0), then f(w) = f(v).
 
-### Theorem 5: S-Principal Divisor Lattice Structure
+*Proof sketch.* Since deg(w) = 1, the neighbor set of w is {v}. The Laplacian equation at w reduces to σ(w,v) · (f(w) − f(v)) = 0. Since σ(w,v) = 1/ℓ(w,v) > 0, we conclude f(w) = f(v). □
 
-**Statement.** The set of S-principal divisors is:
-- closed under addition,
-- closed under negation,
-- closed under scalar multiplication,
-- contained in the set of degree-zero, S-supported divisors.
+*Remark.* This is the metric-graph generalization of the discrete `harmonic_at_leaf_eq_neighbor` theorem from the catalog. The weight affects the *rate* of propagation but not the *value* constraint.
 
-**Proof.** Closure under addition: if $D_1 = Lf_1$ and $D_2 = Lf_2$ with $f_1, f_2$ harmonic on $V \setminus S$, then $D_1 + D_2 = L(f_1 + f_2)$ and $f_1 + f_2$ is harmonic on $V \setminus S$ by linearity of $L$. Similarly for negation and scaling. Degree-zero follows from Theorem 3; S-support from harmonicity on $V \setminus S$. ∎
+**Theorem 3.8 (S-complement leaf rigidity).** If f is harmonic on S^c and w ∉ S is a leaf with neighbor v, then f(w) = f(v).
 
-### Theorem 6: S-Equivalence is an Equivalence Relation
+*Proof.* Since w ∉ S, we have w ∈ S^c, so (Lf)(w) = 0. Apply Theorem 3.7. □
 
-**Statement.** The relation $D_1 \sim_S D_2 \iff D_1 - D_2$ is S-principal is reflexive, symmetric, and transitive.
+### 3.3 Dirichlet Energy Theory
 
-**Proof.** Reflexivity: $D - D = 0 = L(0)$. Symmetry: if $D_1 - D_2 = Lf$, then $D_2 - D_1 = L(-f)$. Transitivity: if $D_1 - D_2 = Lf$ and $D_2 - D_3 = Lg$, then $D_1 - D_3 = L(f + g)$. ∎
+**Theorem 3.9 (Energy non-negativity).** E(f) ≥ 0 for all f: V → ℝ.
 
-### Theorem 7: Energy Bilinear Form Properties
+*Proof sketch.* We show that 2E(f) = ∑_{i~j} σ(i,j) · (f(i) − f(j))². Each term is non-negative since σ > 0 and squares are non-negative. □
 
-**Statement.** The energy bilinear form $B(f,g) = \sum_{i,j} L(i,j) f(i) g(j)$ satisfies:
-1. $B(f,g) = B(g,f)$ (symmetry),
-2. $B(f,f) \geq 0$ (positive semidefiniteness),
-3. $B(f + c, g) = B(f, g)$ for constant $c$ (shift invariance).
+*Cross-domain significance:*
+- **Electrical networks:** Power dissipation is non-negative.
+- **Statistical mechanics:** The action functional is bounded below.
+- **Quantum graphs:** The Hamiltonian is bounded below (stability).
 
-**Proof sketch.** Symmetry follows from $L(i,j) = L(j,i)$ and interchange of summation indices. Positive semidefiniteness follows from $B(f,f) = E(f) \geq 0$ (Theorem 2). Shift invariance uses the column-sum-zero property. ∎
+**Theorem 3.10 (Zero energy characterization).** On a connected graph, E(f) = 0 if and only if f is constant.
 
-### Theorem 8: Harmonic Leaf Propagation
+*Proof sketch.* (⇐) Follows from E(**c**) = 0 since L·**c** = 0.
+(⇒) If E(f) = 0, then each term σ(i,j)(f(i)−f(j))² = 0 for adjacent pairs. Since σ > 0, f(i) = f(j) whenever i ∼ j. Connectedness propagates equality to all vertex pairs. □
 
-**Statement.** If $f$ is harmonic on $V \setminus S$ and $w \notin S$ is a leaf with neighbor $v$, then $f(w) = f(v)$.
+**Theorem 3.11 (Energy form symmetry).** ⟨f,g⟩_L = ⟨g,f⟩_L.
 
-**Proof.** This is a direct corollary of Theorem 1: since $w \notin S$, harmonicity gives $(Lf)(w) = 0$, and leaf rigidity gives $f(w) = f(v)$. ∎
+*Proof.* Swap summation indices and use L_{ij} = L_{ji}. □
+
+### 3.4 Harmonic Uniqueness
+
+**Theorem 3.12 (Harmonic mean-zero implies zero).** On a connected graph, if f is globally harmonic ((Lf)(v) = 0 for all v) and mean-zero (∑ f(v) = 0), then f ≡ 0.
+
+*Proof sketch.* Since f is harmonic, E(f) = ∑ f(v)(Lf)(v) = 0. By Theorem 3.10, f is constant: f = **c**. The mean-zero condition gives n·c = 0, so c = 0 (assuming V is nonempty; otherwise f is vacuously zero). □
+
+**Theorem 3.13 (Normalized kernel uniqueness).** On a connected graph, if f₁ and f₂ are mean-zero and Lf₁ = Lf₂, then f₁ = f₂.
+
+*Proof.* Let h = f₁ − f₂. Then Lh = Lf₁ − Lf₂ = 0 (linearity) and h is mean-zero. By Theorem 3.12, h ≡ 0, so f₁ = f₂. □
+
+*Significance:* This is the rigidity theorem that makes canonical kernels well-defined. Combined with existence (guaranteed by linear algebra), it establishes the canonical kernel correspondence: each degree-zero S-supported divisor has a unique mean-zero harmonic representative.
+
+### 3.5 S-Supported Jacobian Theory
+
+**Theorem 3.14 (S-principal divisors have degree zero).** If D is S-principal, then ∑_v D(v) = 0.
+
+*Proof.* By definition, D = Lf for some f. By Theorem 3.5, ∑ D(v) = ∑ (Lf)(v) = 0. □
 
 ---
 
@@ -182,174 +162,187 @@ $$
 
 ### 4.1 Canonical Kernel Solver
 
-**Input:** Metric graph model $M$, support set $S = \{s_0, s_1, \ldots, s_{m-1}\}$, degree-zero S-supported divisor $D$.
-
-**Output:** Mean-zero vertex potential $f$ with $Lf|_S = D$.
+**Algorithm 1: Normalized Kernel Computation**
 
 ```
-function SOLVE_NORMALIZED_KERNEL(M, S, D):
-    L ← BUILD_WEIGHTED_LAPLACIAN(M)       // O(n + m)
-    b ← zero vector of length n
-    for each (idx, v) in enumerate(S):
-        b[v] ← D[idx]
-    A ← copy of L
-    A[n-1, :] ← [1, 1, ..., 1]            // replace last row
-    b[n-1] ← 0                            // mean-zero constraint
-    f ← SOLVE_LINEAR_SYSTEM(A, b)          // O(n³)
-    return f
+Input: Metric graph model M, support set S, degree-zero divisor D
+Output: Mean-zero potential f with Lf = D
+
+1. Build metric Laplacian L using conductances 1/ℓ(e)
+2. Set up system A·f = D where A = L
+3. Replace last row of A with [1, 1, ..., 1] (mean-zero constraint)
+4. Set last entry of D to 0
+5. Solve A·f = D via Gaussian elimination
+6. Return f
 ```
 
 **Complexity:** O(n³) time, O(n²) space.
 
-### 4.2 Canonical Kernel Matrix
+**Correctness:** By Theorem 3.13, the solution is unique. Existence is guaranteed when deg(D) = 0 by the rank-nullity theorem (L has rank n−1 on connected graphs).
 
-**Input:** Metric graph model $M$, support set $S$.
+### 4.2 Pendant-Tree Pruning
 
-**Output:** $|S| \times |S|$ kernel matrix $K$.
-
-```
-function COMPUTE_KERNEL_MATRIX(M, S):
-    K ← zero matrix of size |S| × |S|
-    for idx from 1 to |S|-1:
-        D ← unit source at S[idx], unit sink at S[0]
-        f ← SOLVE_NORMALIZED_KERNEL(M, S, D)
-        for j from 0 to |S|-1:
-            K[idx, j] ← f[S[j]]
-    return K
-```
-
-**Complexity:** O(|S| · n³) time.
-
-### 4.3 Pendant-Tree Pruning
-
-**Input:** Metric graph model $M$.
-
-**Output:** Core model (2-core) and vertex mapping.
+**Algorithm 2: Core Extraction**
 
 ```
-function PRUNE_PENDANT_TREES(M):
-    degree ← [deg(v) for v in V]
-    queue ← {v : degree[v] ≤ 1}
-    while queue is not empty:
-        v ← queue.pop()
-        if degree[v] > 1: continue
-        mark v as removed
-        for each neighbor u of v:
-            degree[u] ← degree[u] - 1
-            if degree[u] ≤ 1: queue.add(u)
-    return subgraph induced by non-removed vertices
+Input: Metric graph model M
+Output: Core vertices, leaf-to-attachment map
+
+1. Initialize degrees = [deg(v) for v in V]
+2. Initialize pruned = ∅, leaf_map = {}
+3. Repeat until no changes:
+   a. For each unpruned vertex v:
+      i. Compute effective degree (excluding pruned neighbors)
+      ii. If effective degree ≤ 1: mark v as pruned,
+          record attachment in leaf_map
+4. Return unpruned vertices, leaf_map
 ```
 
-**Complexity:** O(n + m) time.
+**Complexity:** O(|V| + |E|) time.
+
+**Justification:** By Theorem 3.7, harmonic functions on pendant edges are constant. Pruning pendant trees does not change the space of harmonic functions restricted to the core, hence preserves the S-Jacobian for any S contained in the core.
+
+### 4.3 Subdivision Refinement
+
+**Algorithm 3: Edge Subdivision**
+
+```
+Input: Metric graph model M, edge (u,v), ratio r ∈ (0,1)
+Output: Refined model M' with new vertex w
+
+1. Create new vertex w
+2. Remove edge (u,v) with length ℓ
+3. Add edge (u,w) with length r·ℓ
+4. Add edge (w,v) with length (1-r)·ℓ
+5. Rebuild Laplacian
+6. Return M'
+```
+
+**Key property:** The canonical kernel matrix at original support vertices is exactly preserved under subdivision (verified computationally; see Section 6).
 
 ---
 
-## 5. Computational Experiments
+## 5. Cross-Domain Connections
 
-### 5.1 Cycle Graph C₄
+### 5.1 Electrical Networks
 
-For $C_4$ with edge lengths $\ell = (1, 2, 1.5, 2.5)$ and full support $S = V$:
+The metric Laplacian with conductances σ(i,j) = 1/ℓ(i,j) is precisely the conductance matrix of an electrical network. The canonical kernel k_s is the voltage distribution when unit current is injected at s and extracted at the base point. The energy form ⟨k_s, k_t⟩_L computes the effective resistance between terminals.
 
-| Quantity | Value |
-|----------|-------|
-| β₁ (Betti number) | 1 |
-| Kernel matrix rank | 3 |
-| Energy eigenvalues | 0.485, 0.750, 2.943 |
-| Row sum of L | 0 (verified) |
-| Symmetry of Q | ‖Q − Q^T‖ < 10⁻¹⁵ |
+### 5.2 Tropical Geometry
 
-### 5.2 Pendant-Tree Invariance
+The S-supported Jacobian quotient Div⁰_S(Γ)/Prin_S(Γ) is the computational realization of the tropical Jacobian restricted to S. The canonical kernel generators provide explicit Abel-Jacobi coordinates. The energy pairing descends to the tropical polarization form.
 
-For a triangle with unit edges and pendant edges of varying length:
+### 5.3 Quantum Graphs
 
-| Pendant length | max|Q_base − Q_pendant| |
-|---------------|-------------------------|
-| 1.0 | 2.2 × 10⁻¹⁶ |
-| 5.0 | 1.1 × 10⁻¹⁶ |
-| 100.0 | 1.7 × 10⁻¹⁶ |
+The metric Laplacian is the Hamiltonian operator governing quantum dynamics on wire networks. The canonical kernels serve as combinatorial Green's functions, and the energy spectrum encodes quantum transport properties.
 
-The energy pairing is invariant under pendant attachment to machine precision, confirming Theorem 8.
+### 5.4 Statistical Mechanics
 
-### 5.3 Refinement Convergence
-
-For $C_3$ with lengths $(1, 2, 1.5)$, uniform subdivision with $k$ subdivisions per edge:
-
-| Subdivisions | max|K_{k} − K_{k-1}| |
-|-------------|----------------------|
-| 1 | 6.9 × 10⁻¹⁷ |
-| 2 | 1.1 × 10⁻¹⁶ |
-| 4 | 3.3 × 10⁻¹⁶ |
-| 8 | 2.8 × 10⁻¹⁶ |
-| 16 | 1.0 × 10⁻¹⁵ |
-
-The kernel matrices are subdivision-invariant to machine precision, validating the conjecture on resolution-stable kernel convergence.
+The Dirichlet energy form defines the precision matrix of the pinned Gaussian free field on the network. The canonical kernel matrix is the covariance kernel, with entries giving the correlation between field values at support vertices.
 
 ---
 
-## 6. Cross-Domain Connections
+## 6. Computational Experiments
 
-### 6.1 Electrical Networks
+### 6.1 Cycle Graph C₄
 
-The canonical kernel pairing $B(k_s, k_t)$ computes the effective resistance between terminals $s$ and $t$. This identification follows from the energy interpretation: the Dirichlet energy of the unit-current flow from $s$ to $t$ equals the voltage drop, which is the effective resistance.
+Edge lengths [1, 2, 1, 2]. Support S = {0, 1, 2, 3}. Genus = 1.
 
-### 6.2 Tropical Geometry
+**Energy pairing matrix:**
+| | k₁ | k₂ | k₃ |
+|---|---|---|---|
+| k₁ | 0.833 | 0.500 | 0.333 |
+| k₂ | 0.500 | 1.500 | 1.000 |
+| k₃ | 0.333 | 1.000 | 1.333 |
 
-The S-equivalence quotient $\text{Div}^0_S / \text{Prin}_S$ is the S-supported tropical Jacobian. When $S$ meets every cycle of $\Gamma$, the canonical kernel quotient recovers the full Jacobian $J(\Gamma)$.
+Eigenvalues: [0.382, 0.667, 2.618]. All positive, confirming energy non-negativity.
 
-### 6.3 Quantum Graphs
+Effective resistance R(0,2) = 1.500 = 1/(1/3 + 1/3), confirming the parallel resistance formula.
 
-The metric Laplacian $L$ is the finite-dimensional approximation to the Laplacian operator on a quantum graph. Canonical kernels correspond to Green's functions of the quantum graph Hamiltonian, and the energy spectrum is related to the spectral zeta function.
+### 6.2 Theta Graph (Genus 2)
 
-### 6.4 Statistical Mechanics
+Path lengths (2, 3, 5). Genus = 2.
 
-The pseudoinverse $L^+$ of the Laplacian is the covariance kernel of the Gaussian free field on the graph. The canonical kernel generators are the principal modes of this field, and the energy pairing encodes pairwise correlations.
+Poles-only support S = {0,1}: rank(Q) = 1 < 2 = genus. This demonstrates that the support set must be sufficiently large to capture full Jacobian information.
+
+Full support S = {0,1,2,3,4}: rank(Q) = 4 > genus. The extra rank reflects S-support structure beyond topological genus.
+
+### 6.3 Pendant-Tree Pruning
+
+Lollipop graph (cycle C₄ + pendant stick). Energy eigenvalues on core vertices:
+
+| Stick length | λ₁ | λ₂ | λ₃ |
+|---|---|---|---|
+| 1.0 | 0.2929 | 0.5000 | 1.7071 |
+| 10.0 | 0.2929 | 0.5000 | 1.7071 |
+| 100.0 | 0.2929 | 0.5000 | 1.7071 |
+
+Eigenvalues are *exactly* invariant under pendant attachment, confirming Theorem 3.7.
+
+### 6.4 Subdivision Convergence
+
+Cycle C₃ with edge lengths [1, √2, π/2] under uniform subdivision:
+
+| Level | |K - K_prev| | λ₁ | λ₂ |
+|---|---|---|---|
+| 0 | — | 0.4434 | 1.2573 |
+| 1 | 5.6×10⁻¹⁷ | 0.4434 | 1.2573 |
+| 2 | 3.3×10⁻¹⁶ | 0.4434 | 1.2573 |
+| 3 | 4.4×10⁻¹⁶ | 0.4434 | 1.2573 |
+
+Kernel matrices are preserved to machine precision under subdivision.
 
 ---
 
-## 7. Formal Verification
+## 7. Discussion
 
-All core theorems are verified in Lean 4 with the Mathlib library. The verification covers:
+### 7.1 Significance
 
-- 40+ theorems in the Advanced module (all sorry-free)
-- 18 theorems in the base Theorems module (all sorry-free)
-- Standard axioms only (propext, Classical.choice, Quot.sound)
+This work provides the first formally verified computational framework for canonical kernels on metric graph models. The key contributions are:
 
-The formal development introduces the `MGM` structure (metric graph model) with attributes for vertex type, graph structure, edge lengths, positivity, and symmetry. Key constructions include the conductance function, metric Laplacian matrix, Laplacian application, harmonicity predicate, Dirichlet energy, mean-zero condition, S-principality, and S-equivalence.
+1. **Formal rigor:** All core theorems verified in Lean 4 with standard axioms only.
+2. **Algorithmic utility:** Pendant-tree pruning reduces computation to the cycle core.
+3. **Cross-domain unification:** A single mathematical framework connects electrical networks, tropical geometry, quantum graphs, and statistical mechanics.
+4. **Subdivision stability:** Canonical kernel data is intrinsic to the metric graph, independent of discretization.
+
+### 7.2 Limitations
+
+- The current formalization works with vertex-based models. Full metric graph theory (points on edge interiors) would require additional infrastructure.
+- Existence of normalized kernels is not formally proved (it follows from linear algebra / rank-nullity, which we verify computationally).
+- The Jacobian quotient isomorphism is stated but not fully formalized.
+
+### 7.3 Conjectures
+
+**Conjecture A (Resolution stability).** The canonical kernel matrices K_n computed on uniform subdivisions converge to a limit K_∞ independent of the subdivision scheme.
+
+*Status:* Computationally confirmed to machine precision. A formal proof would require extending the theory to continuous metric graphs.
+
+**Conjecture B (Core-support sufficiency).** If S meets every cycle of Γ, then the canonical kernel quotient realizes the full Jacobian J(Γ).
+
+*Status:* Partially falsified — the theta graph with poles-only support gives rank 1 < genus 2. The conjecture needs strengthening to require sufficiently many points on each cycle.
 
 ---
 
-## 8. Discussion and Future Work
+## 8. Future Work
 
-### 8.1 Limitations
-
-The current formalization works at the level of finite vertex-edge models. The passage to genuine continuous metric graphs (where points in the interior of edges are first-class citizens) requires additional infrastructure for piecewise-linear functions and their slope-sum Laplacians at interior points.
-
-### 8.2 Open Conjectures
-
-**Conjecture A (Resolution-stable convergence):** The canonical kernel matrices are exactly subdivision-invariant, not merely convergent. Computational evidence strongly supports this.
-
-**Conjecture B (Core-support sufficiency):** If $S$ meets every cycle, the S-supported Jacobian realizes the full Jacobian. Our experiments show this holds when $|S| - 1 \geq \beta_1$, but the precise relationship requires further investigation.
-
-### 8.3 Future Directions
-
-1. **Tropical Hodge theory:** Extend to a full Hodge decomposition for PL functions on metric graphs, with canonical kernels as harmonic representatives.
-
-2. **Arithmetic applications:** Connect to non-Archimedean skeleta and the arithmetic Jacobian.
-
-3. **Algorithmic scaling:** Develop sparse linear algebra methods for canonical kernel computation on large graphs, potentially using the pruning reduction as a preconditioner.
+1. Formalize existence of normalized kernels via matrix rank theory in Lean 4.
+2. Extend to continuous metric graphs (points on edge interiors) with PL functions.
+3. Prove the full Jacobian quotient isomorphism.
+4. Connect to Baker-Norine Riemann-Roch via the canonical kernel calculus.
+5. Develop certified tropical Abel-Jacobi algorithms for genus ≥ 3.
 
 ---
 
 ## References
 
-[1] Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph." *Advances in Mathematics* 215(2):766–788, 2007.
+[BF06] Baker, M. and Faber, X. "Metrized graphs, Laplacian operators, and electrical networks." *Quantum Graphs and Their Applications*, Contemporary Mathematics 415 (2006).
 
-[2] Baker, M. and Faber, X. "Metrized graphs, Laplacian operators, and electrical networks." *Contemporary Mathematics* 415:15–33, 2006.
+[BN07] Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph." *Advances in Mathematics* 215 (2007), 766–788.
 
-[3] Mikhalkin, G. and Zharkov, I. "Tropical curves, their Jacobians and theta functions." *Curves and Abelian Varieties*, Contemporary Mathematics 465:203–230, 2008.
+[BF11] Baker, M. and Faber, X. "Metric properties of the tropical Abel-Jacobi map." *Journal of Algebraic Combinatorics* 33 (2011), 349–381.
 
-[4] Gathmann, A. and Kerber, M. "A Riemann–Roch theorem in tropical geometry." *Mathematische Zeitschrift* 259:217–230, 2008.
+[Dha90] Dhar, D. "Self-organized critical state of sandpile automaton models." *Physical Review Letters* 64 (1990), 1613.
 
-[5] Dhar, D. "Self-organized critical state of sandpile automaton models." *Physical Review Letters* 64(14):1613, 1990.
+[Mat24] The Mathlib Community. "Mathlib: the Lean mathematical library." 2024.
 
-[6] Kirchhoff, G. "Ueber die Auflösung der Gleichungen, auf welche man bei der Untersuchung der linearen Vertheilung galvanischer Ströme geführt wird." *Annalen der Physik* 148(12):497–508, 1847.
+[MZ08] Mikhalkin, G. and Zharkov, I. "Tropical curves, their Jacobians and theta functions." *Curves and Abelian Varieties*, Contemporary Mathematics 465 (2008), 203–230.
