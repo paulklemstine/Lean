@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra / Transcendence Theory",
     "date": "2026-05-29T15:51:42Z",
     "exp_id": "eeaa50bf",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6380097090909091,
+    "quality": "partial",
     "pkg_num": 324
   },
   {
@@ -9405,8 +9405,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-29T15:51:42Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6380097090909091,
+      "quality": "partial"
     }
   ],
   "edges": [
