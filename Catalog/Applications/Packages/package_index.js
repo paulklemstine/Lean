@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Fractal Geometry / Information Theory",
     "date": "2026-05-29T21:51:54Z",
     "exp_id": "0e5d0395",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6549574265734266,
+    "quality": "partial",
     "pkg_num": 352
   },
   {
@@ -10217,8 +10217,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-29T21:51:54Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6549574265734266,
+      "quality": "partial"
     }
   ],
   "edges": [
