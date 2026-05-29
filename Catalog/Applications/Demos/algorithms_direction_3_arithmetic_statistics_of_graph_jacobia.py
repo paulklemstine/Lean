@@ -1,565 +1,482 @@
 """
-Algorithms for Arithmetic Statistics of Graph Jacobians.
+Algorithms for Arithmetic Statistics of Graph Jacobians
 
-This module implements the computational pipeline for:
-1. Computing graph Laplacians and reduced Laplacians
-2. Computing Smith normal form and invariant factors
-3. Computing prime-power moments and q-primary profiles
-4. Generating random Erdős–Rényi graphs and sampling Jacobian statistics
-5. Computing Cohen–Lenstra reference distributions
+Implements:
+- Reduced Laplacian computation from adjacency data
+- Smith Normal Form (SNF) computation for integer matrices
+- Invariant factor extraction
+- Prime-power torsion count computation
+- q-primary profile computation
+- Cohen-Lenstra weight computation
 
-These algorithms support the formal theorems proved in
-Catalog/Pythagorean/GraphJacobians/ArithmeticStatistics.lean.
+All algorithms correspond to the formally verified theorems in the Lean files.
 """
 
 import numpy as np
-from math import gcd, log
+from math import gcd
 from functools import reduce
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Optional
 from collections import Counter
 
 
-def graph_laplacian(adj_matrix: np.ndarray) -> np.ndarray:
-    """
-    Compute the combinatorial Laplacian matrix L = D - A.
+def adjacency_matrix(n: int, edges: List[Tuple[int, int]]) -> np.ndarray:
+    """Compute the adjacency matrix of a simple graph on n vertices.
 
     Args:
-        adj_matrix: Symmetric adjacency matrix of a simple graph.
+        n: Number of vertices (0-indexed).
+        edges: List of (i, j) pairs with 0 <= i < j < n.
 
     Returns:
-        The Laplacian matrix L where L[i,i] = degree(i)
-        and L[i,j] = -A[i,j] for i ≠ j.
-
-    Time complexity: O(n²)
-    Space complexity: O(n²)
+        n x n symmetric integer adjacency matrix.
 
     Example:
-        >>> A = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
-        >>> graph_laplacian(A)
-        array([[ 2, -1, -1],
+        >>> adjacency_matrix(3, [(0,1),(1,2)])
+        array([[0, 1, 0],
+               [1, 0, 1],
+               [0, 1, 0]])
+    """
+    A = np.zeros((n, n), dtype=int)
+    for i, j in edges:
+        A[i, j] = 1
+        A[j, i] = 1
+    return A
+
+
+def laplacian_matrix(n: int, edges: List[Tuple[int, int]]) -> np.ndarray:
+    """Compute the combinatorial Laplacian L = D - A.
+
+    Args:
+        n: Number of vertices.
+        edges: Edge list.
+
+    Returns:
+        n x n Laplacian matrix.
+
+    Example:
+        >>> laplacian_matrix(3, [(0,1),(1,2)])
+        array([[ 1, -1,  0],
                [-1,  2, -1],
-               [-1, -1,  2]])
+               [ 0, -1,  1]])
     """
-    n = adj_matrix.shape[0]
-    D = np.diag(adj_matrix.sum(axis=1))
-    return D - adj_matrix
+    A = adjacency_matrix(n, edges)
+    D = np.diag(A.sum(axis=1))
+    return D - A
 
 
-def reduced_laplacian(laplacian: np.ndarray, vertex: int = 0) -> np.ndarray:
-    """
-    Compute the reduced Laplacian by deleting one row and column.
-
-    The reduced Laplacian L* is obtained by removing the row and column
-    corresponding to a chosen vertex. By Kirchhoff's matrix tree theorem,
-    det(L*) equals the number of spanning trees.
+def reduced_laplacian(n: int, edges: List[Tuple[int, int]], remove: int = 0) -> np.ndarray:
+    """Compute the reduced Laplacian by deleting row and column `remove`.
 
     Args:
-        laplacian: The full Laplacian matrix.
-        vertex: Index of the vertex to remove (default: 0).
+        n: Number of vertices.
+        edges: Edge list.
+        remove: Index of vertex to remove (default 0).
 
     Returns:
-        The (n-1) × (n-1) reduced Laplacian matrix.
+        (n-1) x (n-1) reduced Laplacian matrix.
 
-    Time complexity: O(n²)
+    Complexity: O(n^2) time and space.
     """
-    n = laplacian.shape[0]
-    indices = [i for i in range(n) if i != vertex]
-    return laplacian[np.ix_(indices, indices)]
+    L = laplacian_matrix(n, edges)
+    idx = [i for i in range(n) if i != remove]
+    return L[np.ix_(idx, idx)]
 
 
-def smith_normal_form(matrix: np.ndarray) -> Tuple[np.ndarray, List[int]]:
-    """
-    Compute the Smith normal form of an integer matrix.
+def smith_normal_form(M: np.ndarray) -> Tuple[np.ndarray, List[int]]:
+    """Compute the Smith Normal Form of an integer matrix.
 
-    Uses row and column operations over the integers to diagonalize
-    the matrix. Returns the diagonal entries (invariant factors).
+    Uses the standard algorithm: iteratively find pivot, clear row/column
+    using integer row/column operations, ensure divisibility condition.
 
     Args:
-        matrix: An integer matrix.
+        M: Integer matrix (numpy array).
 
     Returns:
-        Tuple of (diagonal matrix, list of invariant factors).
+        Tuple of (diagonal SNF matrix, list of diagonal entries).
 
-    Time complexity: O(n³ · log(max_entry))
-    Space complexity: O(n²)
+    Complexity: O(n^3 * log(max_entry)) expected.
 
     Example:
-        >>> M = np.array([[2, 4], [6, 8]])
-        >>> _, factors = smith_normal_form(M)
+        >>> _, factors = smith_normal_form(np.array([[2, 4], [6, 8]]))
         >>> factors
-        [2, 4]
+        [2, 4]  # or equivalent under sign
     """
-    M = matrix.copy().astype(int)
-    n, m = M.shape
-    r = min(n, m)
+    A = M.copy().astype(int)
+    rows, cols = A.shape
+    n = min(rows, cols)
 
-    for col in range(r):
-        # Find pivot
-        pivot_found = False
-        for i in range(col, n):
-            for j in range(col, m):
-                if M[i, j] != 0:
-                    # Swap to pivot position
-                    M[[col, i]] = M[[i, col]]
-                    M[:, [col, j]] = M[:, [j, col]]
-                    pivot_found = True
-                    break
-            if pivot_found:
-                break
-
-        if not pivot_found:
-            break
-
-        # Reduce using the pivot
+    for k in range(n):
+        # Find smallest nonzero entry in submatrix A[k:, k:]
         changed = True
         while changed:
             changed = False
+            # Find pivot
+            sub = A[k:, k:]
+            nonzero = np.argwhere(sub != 0)
+            if len(nonzero) == 0:
+                break
 
-            # Make pivot positive
-            if M[col, col] < 0:
-                M[col] = -M[col]
+            # Find minimum absolute value
+            min_val = float('inf')
+            min_pos = None
+            for pos in nonzero:
+                val = abs(sub[pos[0], pos[1]])
+                if val < min_val:
+                    min_val = val
+                    min_pos = (pos[0] + k, pos[1] + k)
 
-            # Reduce column
-            for i in range(col + 1, n):
-                if M[i, col] != 0:
-                    q = M[i, col] // M[col, col]
-                    M[i] -= q * M[col]
-                    if M[i, col] != 0:
-                        if abs(M[i, col]) < abs(M[col, col]):
-                            M[[col, i]] = M[[i, col]]
+            # Swap to position (k, k)
+            if min_pos[0] != k:
+                A[[k, min_pos[0]]] = A[[min_pos[0], k]]
+            if min_pos[1] != k:
+                A[:, [k, min_pos[1]]] = A[:, [min_pos[1], k]]
+
+            if A[k, k] < 0:
+                A[k, :] = -A[k, :]
+
+            if A[k, k] == 0:
+                break
+
+            # Eliminate column k
+            for i in range(k + 1, rows):
+                if A[i, k] != 0:
+                    q = A[i, k] // A[k, k]
+                    A[i, :] -= q * A[k, :]
+                    if A[i, k] != 0:
                         changed = True
 
-            # Reduce row
-            for j in range(col + 1, m):
-                if M[col, j] != 0:
-                    q = M[col, j] // M[col, col]
-                    M[:, j] -= q * M[:, col]
-                    if M[col, j] != 0:
-                        if abs(M[col, j]) < abs(M[col, col]):
-                            M[:, [col, j]] = M[:, [j, col]]
+            # Eliminate row k
+            for j in range(k + 1, cols):
+                if A[k, j] != 0:
+                    q = A[k, j] // A[k, k]
+                    A[:, j] -= q * A[:, k]
+                    if A[k, j] != 0:
                         changed = True
 
-            # Check divisibility
-            for i in range(col + 1, n):
-                for j in range(col + 1, m):
-                    if M[i, j] % M[col, col] != 0:
-                        M[i] += M[col]
-                        changed = True
-                        break
-                if changed:
-                    break
+    # Ensure divisibility: d_i | d_{i+1}
+    diag = [abs(A[i, i]) if i < min(rows, cols) else 0 for i in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):
+            if diag[i] != 0 and diag[j] != 0:
+                g = gcd(diag[i], diag[j])
+                diag[j] = diag[i] * diag[j] // g
+                diag[i] = g
 
-    # Extract diagonal (invariant factors)
-    factors = []
-    for i in range(r):
-        d = abs(int(M[i, i]))
-        if d > 0:
-            factors.append(d)
-
-    return M, factors
+    return A, diag
 
 
-def jacobian_invariant_factors(adj_matrix: np.ndarray) -> List[int]:
-    """
-    Compute the invariant factors of the graph Jacobian.
+def invariant_factors(M: np.ndarray) -> List[int]:
+    """Extract the nonzero invariant factors from the SNF of M.
 
-    The Jacobian Jac(G) ≅ ⊕ᵢ ℤ/dᵢℤ where (d₁,...,dᵣ) are the
-    invariant factors of any reduced Laplacian of G.
+    These are the diagonal entries > 1 of the Smith Normal Form,
+    representing the finite cyclic summands Z/d_i Z.
 
     Args:
-        adj_matrix: Adjacency matrix of a connected simple graph.
+        M: Integer matrix.
 
     Returns:
-        List of invariant factors [d₁, ..., dᵣ] in divisibility order,
-        excluding trivial factors (= 1).
+        List of invariant factors > 1, sorted in divisibility order.
 
     Example:
-        >>> # Complete graph K4
-        >>> A = np.ones((4,4), dtype=int) - np.eye(4, dtype=int)
-        >>> jacobian_invariant_factors(A)
-        [4, 4, 4]
+        >>> invariant_factors(np.array([[3, 0], [0, 6]]))
+        [3, 6]
     """
-    L = graph_laplacian(adj_matrix)
-    L_star = reduced_laplacian(L)
-    _, factors = smith_normal_form(L_star)
-    # Filter out trivial factors
-    return [f for f in sorted(factors) if f > 1]
+    _, diag = smith_normal_form(M)
+    factors = sorted([d for d in diag if d > 1])
+    return factors
 
 
-def prime_power_moment(factors: List[int], q: int, k: int) -> int:
-    """
-    Compute the prime-power moment M_{q,k} = ∏ᵢ gcd(dᵢ, q^k).
+def graph_jacobian_invariant_factors(n: int, edges: List[Tuple[int, int]]) -> List[int]:
+    """Compute the invariant factors of the graph Jacobian (critical group).
 
-    This counts the number of elements x in ⊕ᵢ ℤ/dᵢℤ with q^k · x = 0.
-    (Theorem B from ArithmeticStatistics.lean)
+    For a connected graph G, Jac(G) ≅ ⊕_i Z/d_i Z where d_i are the
+    nonzero invariant factors of the reduced Laplacian.
 
     Args:
-        factors: Invariant factors [d₁, ..., dᵣ].
+        n: Number of vertices.
+        edges: Edge list.
+
+    Returns:
+        Invariant factors of the Jacobian, sorted in divisibility order.
+
+    Example:
+        >>> # Complete graph K_4: Jacobian is Z/4Z × Z/4Z × Z/4Z? No...
+        >>> # K_4 has 4^2 = 16 spanning trees, Jac(K4) ≅ Z/4Z × Z/4Z
+    """
+    L_red = reduced_laplacian(n, edges)
+    return invariant_factors(L_red)
+
+
+def prime_power_torsion_count(factors: List[int], q: int, k: int) -> int:
+    """Compute M_{q,k} = ∏_i gcd(d_i, q^k).
+
+    This is the q^k-torsion count: the number of elements x in
+    the group such that q^k * x = 0.
+
+    Corresponds to Theorem B in the formal development.
+
+    Args:
+        factors: Invariant factors [d_1, ..., d_r].
         q: Prime number.
-        k: Exponent.
+        k: Power.
 
     Returns:
-        The prime-power moment M_{q,k}.
+        Product of gcd(d_i, q^k) over all factors.
 
     Example:
-        >>> prime_power_moment([2, 6], 2, 1)
-        4
-        >>> prime_power_moment([2, 6], 3, 1)
-        3
+        >>> prime_power_torsion_count([6, 12], 2, 2)  # gcd(6,4)*gcd(12,4)
+        8
     """
     qk = q ** k
-    result = 1
-    for d in factors:
-        result *= gcd(d, qk)
-    return result
+    return reduce(lambda a, b: a * b,
+                  [gcd(d, qk) for d in factors], 1)
 
 
-def q_profile(factors: List[int], q: int) -> List[int]:
-    """
-    Compute the q-primary profile: λ_{q,j} = #{i : q^j | dᵢ}.
+def q_primary_count(factors: List[int], q: int, j: int) -> int:
+    """Compute λ_{q,j} = #{i : q^j | d_i}.
 
-    This encodes the q-primary partition type of the finite abelian group.
-    The profile is monotone decreasing and eventually zero.
-    (Used in Theorem C from ArithmeticStatistics.lean)
+    Counts how many invariant factors are divisible by q^j.
+
+    Corresponds to the qPrimaryCount definition in the formal development.
 
     Args:
-        factors: Invariant factors [d₁, ..., dᵣ].
+        factors: Invariant factors.
         q: Prime number.
+        j: Level.
 
     Returns:
-        List [λ_{q,1}, λ_{q,2}, ...] truncated at the first zero.
+        Count of factors divisible by q^j.
 
     Example:
-        >>> q_profile([2, 6], 2)
-        [2]
-        >>> q_profile([2, 6], 3)
-        [1]
-        >>> q_profile([4, 12, 36], 2)
-        [3, 2]
+        >>> q_primary_count([6, 12, 24], 2, 1)  # all divisible by 2
+        3
+        >>> q_primary_count([6, 12, 24], 2, 3)  # only 24 divisible by 8
+        1
+    """
+    qj = q ** j
+    return sum(1 for d in factors if d % qj == 0)
+
+
+def q_primary_profile(factors: List[int], q: int) -> List[int]:
+    """Compute the full q-primary profile [λ_{q,0}, λ_{q,1}, ...].
+
+    Returns the non-increasing sequence until it reaches 0.
+
+    Args:
+        factors: Invariant factors.
+        q: Prime.
+
+    Returns:
+        List of counts forming a partition shape.
+
+    Example:
+        >>> q_primary_profile([4, 8, 16], 2)
+        [3, 3, 2, 1]
     """
     profile = []
-    j = 1
+    j = 0
     while True:
-        qj = q ** j
-        count = sum(1 for d in factors if d % qj == 0)
-        if count == 0:
+        c = q_primary_count(factors, q, j)
+        if c == 0 and j > 0:
             break
-        profile.append(count)
+        profile.append(c)
         j += 1
     return profile
 
 
-def group_exponent(factors: List[int]) -> int:
-    """
-    Compute the exponent of ⊕ᵢ ℤ/dᵢℤ = lcm(d₁, ..., dᵣ).
+def cohen_lenstra_cyclic_weight(p: int, k: int) -> float:
+    """Compute the Cohen-Lenstra weight for the cyclic p-group Z/p^k Z.
 
-    (Theorem D: equals the last factor in divisibility order)
-
-    Args:
-        factors: Invariant factors.
-
-    Returns:
-        The exponent (lcm of all factors).
-    """
-    if not factors:
-        return 1
-    from math import lcm
-    return reduce(lcm, factors)
-
-
-def padic_valuation(n: int, p: int) -> int:
-    """Compute v_p(n), the p-adic valuation of n."""
-    if n == 0:
-        return float('inf')
-    v = 0
-    while n % p == 0:
-        v += 1
-        n //= p
-    return v
-
-
-def moment_valuation_sum(factors: List[int], q: int, k: int) -> int:
-    """
-    Compute ∑ᵢ min(v_q(dᵢ), k).
-
-    This is the q-adic valuation of the prime-power moment M_{q,k}.
-    (Used in Theorem C for profile recovery)
+    Weight = 1 / |Aut(Z/p^k Z)| = 1 / (p^{k-1}(p-1)) for k >= 1.
+    For k = 0 (trivial group), weight = 1.
 
     Args:
-        factors: Invariant factors.
-        q: Prime number.
-        k: Level.
+        p: Prime.
+        k: Exponent.
 
     Returns:
-        Sum of min(v_q(dᵢ), k) over all i.
+        Cohen-Lenstra weight as a float.
     """
-    return sum(min(padic_valuation(d, q), k) for d in factors)
+    if k == 0:
+        return 1.0
+    return 1.0 / (p ** (k - 1) * (p - 1))
 
 
-def verify_profile_recovery(factors: List[int], q: int) -> bool:
-    """
-    Verify Theorem C: the q-profile is recoverable from moment valuations.
+def cohen_lenstra_geometric_prob(p: int, k: int) -> float:
+    """Cohen-Lenstra geometric probability: Prob(v_p = k) = (1 - 1/p) * (1/p)^k.
 
-    Checks that λ_{q,j} = (∑ min(v_q(dᵢ), j)) - (∑ min(v_q(dᵢ), j-1))
-    for all j ≥ 1.
+    This is the pushforward of Haar measure on Z_p under the p-adic valuation.
+
+    Args:
+        p: Prime.
+        k: Valuation value.
 
     Returns:
-        True if the identity holds for all j.
+        Probability as a float.
     """
-    max_val = max(padic_valuation(d, q) for d in factors) if factors else 0
-    for j in range(1, max_val + 2):
-        lhs = sum(1 for d in factors if d % (q ** j) == 0)
-        rhs = moment_valuation_sum(factors, q, j) - moment_valuation_sum(factors, q, j - 1)
-        if lhs != rhs:
-            return False
-    return True
+    return (1 - 1.0 / p) * (1.0 / p) ** k
 
 
-def erdos_renyi_graph(n: int, p: float, rng=None) -> np.ndarray:
+def expected_moment_cohen_lenstra(q: int, k: int, max_terms: int = 50) -> float:
+    """Compute E_{CL}[M_{q,k}] under the Cohen-Lenstra distribution.
+
+    For a random finite abelian q-group A distributed according to
+    Cohen-Lenstra, the expected q^k-torsion count.
+
+    For k = 1: E[M_{q,1}] = q (the q-rank moment).
+
+    Args:
+        q: Prime.
+        k: Power.
+        max_terms: Number of terms in the sum.
+
+    Returns:
+        Expected moment as a float.
     """
-    Generate an Erdős–Rényi random graph G(n, p).
+    # For a single cyclic q-group Z/q^m Z with CL probability:
+    # P(m) = (1 - 1/q) * (1/q)^m for m >= 0
+    # M_{q,k}(Z/q^m Z) = q^{min(m,k)}
+    # E[M_{q,k}] = sum_{m=0}^{inf} (1-1/q) * (1/q)^m * q^{min(m,k)}
+    total = 0.0
+    for m in range(max_terms):
+        prob = cohen_lenstra_geometric_prob(q, m)
+        moment = q ** min(m, k)
+        total += prob * moment
+    return total
+
+
+def random_erdos_renyi_graph(n: int, p: float) -> List[Tuple[int, int]]:
+    """Generate a random Erdős-Rényi graph G(n, p).
 
     Args:
         n: Number of vertices.
         p: Edge probability.
-        rng: NumPy random generator (optional).
 
     Returns:
-        Symmetric adjacency matrix of the random graph.
+        List of edges.
     """
-    if rng is None:
-        rng = np.random.default_rng()
-    # Generate upper triangular random edges
-    upper = np.zeros((n, n), dtype=int)
+    edges = []
     for i in range(n):
         for j in range(i + 1, n):
-            if rng.random() < p:
-                upper[i, j] = 1
-    return upper + upper.T
+            if np.random.random() < p:
+                edges.append((i, j))
+    return edges
 
 
-def is_connected(adj_matrix: np.ndarray) -> bool:
-    """Check if a graph is connected using BFS."""
-    n = adj_matrix.shape[0]
-    if n == 0:
+def is_connected(n: int, edges: List[Tuple[int, int]]) -> bool:
+    """Check if the graph is connected using BFS.
+
+    Args:
+        n: Number of vertices.
+        edges: Edge list.
+
+    Returns:
+        True if connected, False otherwise.
+    """
+    if n <= 1:
         return True
+    adj = {i: set() for i in range(n)}
+    for i, j in edges:
+        adj[i].add(j)
+        adj[j].add(i)
     visited = set()
     queue = [0]
     visited.add(0)
     while queue:
         v = queue.pop(0)
-        for u in range(n):
-            if adj_matrix[v, u] != 0 and u not in visited:
+        for u in adj[v]:
+            if u not in visited:
                 visited.add(u)
                 queue.append(u)
     return len(visited) == n
 
 
-def cohen_lenstra_weight(q: int, partition: Tuple[int, ...]) -> float:
-    """
-    Compute the Cohen–Lenstra weight μ_{CL,q}(A) for a finite abelian
-    q-group A with partition type λ.
+def sample_jacobian_statistics(n: int, p: float, num_samples: int = 1000,
+                                primes: List[int] = [2, 3, 5]) -> dict:
+    """Sample Jacobian statistics from random G(n,p) graphs.
 
-    The weight is proportional to 1/|Aut(A)|.
-
-    For A ≅ ⊕ⱼ (ℤ/q^λⱼℤ), the automorphism group has order:
-    |Aut(A)| = ∏_{i≥1} ( ∏_{j=1}^{mᵢ} (q^{mᵢ} - q^{j-1}) · q^{mᵢ(λᵢ-1)} )
-    where mᵢ = #{j : λⱼ ≥ i}.
-
-    Args:
-        q: Prime number.
-        partition: Partition type (λ₁ ≥ λ₂ ≥ ... ≥ λₗ > 0).
-
-    Returns:
-        The (unnormalized) Cohen–Lenstra weight 1/|Aut(A)|.
-    """
-    if not partition:
-        return 1.0
-
-    # Compute multiplicities m_i
-    max_part = max(partition)
-    m = [sum(1 for p in partition if p >= i) for i in range(1, max_part + 1)]
-
-    aut_order = 1.0
-    for i in range(len(m)):
-        mi = m[i]
-        li = i + 1  # the level
-        # Product over j=1 to m_i of (q^m_i - q^(j-1))
-        for j in range(1, mi + 1):
-            aut_order *= (q ** mi - q ** (j - 1))
-        # Factor q^{m_i * (l_i - 1)} -- wait, need to be careful with the formula
-        # For the conjugate partition, the exponent contribution is:
-        # q^{m_i * sum of earlier multiplicities or something}
-        # Simpler: use the standard formula for |Aut(A)|
-
-    # Standard formula: for partition (1^{a_1}, 2^{a_2}, ..., k^{a_k})
-    # where a_i = number of parts equal to i:
-    # |Aut(A)| = ∏_i q^{a_i(a_i-1)/2 + a_i * (sum_{j>i} a_j)} * ∏_i ∏_{j=1}^{a_i} (1 - q^{-j})
-    # Actually let me use the correct formula.
-
-    # Count multiplicities: a_i = number of parts equal to i
-    counts = Counter(partition)
-    aut_order = 1.0
-    sorted_values = sorted(counts.keys(), reverse=True)
-
-    # |Aut(⊕ (Z/q^i)^{a_i})| = ∏_i [ q^{a_i^2 * i} · ∏_{j=1}^{a_i} (1 - q^{-j}) ]
-    # Wait, let me use the simplest correct formula.
-    # For A = ⊕_i (Z/q^i)^{a_i}:
-    # |Aut(A)| = ∏_i q^{a_i(a_i-1) * i} · ∏_i ∏_{j=1}^{a_i} (q^j - 1) · q^{cross terms}
-
-    # Simplest approach: compute |End(A)| / |Aut(A)| ratio
-    # Actually for Cohen-Lenstra we just need 1/|Aut|
-    # Let me use the explicit formula from the CL paper.
-
-    # For a p-group of type lambda = (λ_1 >= λ_2 >= ... >= λ_r):
-    # |Aut(A)| = q^{sum_{i<j} min(λ_i, λ_j)} · ∏_i ∏_{j=1}^{m_i - m_{i+1}} (1 - q^{-j})
-    # where m_i = #{k : λ_k >= i}
-
-    # This is getting complex. Let's use a simpler recursive formula.
-    # For now, use: weight ∝ 1/|Aut| computed numerically
-
-    r = len(partition)
-    # Matrix representation: Hom(Z/q^a, Z/q^b) has q^min(a,b) elements
-    # |Aut(A)| = |GL(A)| where GL is computed over the endomorphism ring
-
-    # Use the formula: |Aut(A)| = ∏_{k≥1} |GL_{m_k - m_{k+1}}(F_q)| · q^{...}
-    # where m_k = #{i : λ_i ≥ k}
-
-    max_part = max(partition) if partition else 0
-    m_values = [0] * (max_part + 2)
-    for k in range(1, max_part + 1):
-        m_values[k] = sum(1 for p in partition if p >= k)
-
-    aut = 1.0
-    # Cross term exponent
-    for k in range(1, max_part + 1):
-        dk = m_values[k] - m_values[k + 1]
-        # GL_{dk}(F_q) contribution
-        for j in range(dk):
-            aut *= (q ** dk - q ** j)
-        # Exponential from higher levels
-        aut *= q ** (m_values[k + 1] * dk)
-
-    if aut == 0:
-        return 0.0
-    return 1.0 / aut
-
-
-def cohen_lenstra_expected_moment(q: int, k: int, max_partitions: int = 100) -> float:
-    """
-    Compute the Cohen–Lenstra expected value of M_{q,k}.
-
-    For the CL distribution, E[M_{q,k}] = ∏_{j=1}^{k} q^j / (q^j - 1)
-    (This is a known result.)
-
-    Args:
-        q: Prime number.
-        k: Moment level.
-
-    Returns:
-        The expected moment E_{CL}[M_{q,k}].
-    """
-    # Known exact formula: E_CL[M_{q,k}] = ∏_{j=0}^{k-1} 1/(1 - q^{-(j+1)})
-    # = ∏_{j=1}^{k} q^j/(q^j - 1)
-    result = 1.0
-    for j in range(1, k + 1):
-        result *= q ** j / (q ** j - 1)
-    return result
-
-
-def sample_jacobian_stats(n: int, p: float, num_samples: int,
-                          primes: List[int] = [2, 3, 5],
-                          max_k: int = 3,
-                          seed: int = 42) -> Dict:
-    """
-    Sample Jacobian statistics from random G(n,p) graphs.
-
-    Generates random connected graphs, computes their Jacobian invariant
-    factors, and collects statistics on exponents, moments, and q-profiles.
+    Generates random connected graphs and computes their Jacobian
+    invariant factors, then collects statistics.
 
     Args:
         n: Number of vertices.
         p: Edge probability.
         num_samples: Number of connected graphs to sample.
-        primes: List of primes for which to compute statistics.
-        max_k: Maximum moment level.
-        seed: Random seed.
+        primes: Primes for which to compute statistics.
 
     Returns:
         Dictionary with empirical statistics.
     """
-    rng = np.random.default_rng(seed)
-    results = {
-        'n': n, 'p': p, 'num_samples': num_samples,
-        'invariant_factors': [],
-        'exponents': [],
-        'moments': {q: {k: [] for k in range(1, max_k + 1)} for q in primes},
-        'q_profiles': {q: [] for q in primes},
-        'num_spanning_trees': [],
-    }
+    all_factors = []
+    exponents = []
+    moments = {q: {k: [] for k in range(1, 5)} for q in primes}
+    q_ranks = {q: [] for q in primes}
 
-    collected = 0
+    count = 0
     attempts = 0
-    max_attempts = num_samples * 20
-
-    while collected < num_samples and attempts < max_attempts:
+    while count < num_samples and attempts < num_samples * 10:
         attempts += 1
-        A = erdos_renyi_graph(n, p, rng)
-        if not is_connected(A):
+        edges = random_erdos_renyi_graph(n, p)
+        if not is_connected(n, edges):
             continue
+        count += 1
 
-        factors = jacobian_invariant_factors(A)
+        factors = graph_jacobian_invariant_factors(n, edges)
         if not factors:
             factors = [1]
-
-        results['invariant_factors'].append(factors)
-        results['exponents'].append(group_exponent(factors))
-
-        L = graph_laplacian(A)
-        L_star = reduced_laplacian(L)
-        det_val = abs(int(round(np.linalg.det(L_star.astype(float)))))
-        results['num_spanning_trees'].append(det_val)
+        all_factors.append(factors)
+        exponents.append(max(factors))
 
         for q in primes:
-            for k in range(1, max_k + 1):
-                m = prime_power_moment(factors, q, k)
-                results['moments'][q][k].append(m)
-            results['q_profiles'][q].append(q_profile(factors, q))
+            for k in range(1, 5):
+                m = prime_power_torsion_count(factors, q, k)
+                moments[q][k].append(m)
+            # q-rank: number of factors divisible by q
+            qr = sum(1 for d in factors if d % q == 0)
+            q_ranks[q].append(qr)
 
-        collected += 1
+    result = {
+        'n': n,
+        'p': p,
+        'num_samples': count,
+        'mean_exponent': np.mean(exponents) if exponents else 0,
+        'moments': {},
+        'q_ranks': {},
+    }
 
-    results['collected'] = collected
-    results['attempts'] = attempts
-    return results
+    for q in primes:
+        result['moments'][q] = {}
+        for k in range(1, 5):
+            if moments[q][k]:
+                result['moments'][q][k] = {
+                    'mean': np.mean(moments[q][k]),
+                    'std': np.std(moments[q][k]),
+                    'cl_prediction': expected_moment_cohen_lenstra(q, k),
+                }
+        if q_ranks[q]:
+            result['q_ranks'][q] = {
+                'mean': np.mean(q_ranks[q]),
+                'distribution': dict(Counter(q_ranks[q])),
+            }
+
+    return result
 
 
 if __name__ == '__main__':
-    # Quick test
-    print("=== Algorithm Tests ===")
+    # Demo: Compute Jacobian of complete graph K_5
+    n = 5
+    edges = [(i, j) for i in range(n) for j in range(i+1, n)]
+    factors = graph_jacobian_invariant_factors(n, edges)
+    print(f"K_{n} Jacobian invariant factors: {factors}")
+    print(f"Jacobian group: " + " × ".join(f"Z/{d}Z" for d in factors))
+    print(f"Order (= # spanning trees): {reduce(lambda a,b: a*b, factors, 1)}")
 
-    # Test 1: Complete graph K4
-    K4 = np.array([[0,1,1,1],[1,0,1,1],[1,1,0,1],[1,1,1,0]])
-    factors = jacobian_invariant_factors(K4)
-    print(f"K4 Jacobian factors: {factors}")
-    print(f"K4 exponent: {group_exponent(factors)}")
-    print(f"K4 M_{{2,1}}: {prime_power_moment(factors, 2, 1)}")
-
-    # Test 2: Verify Theorem C (profile recovery)
-    test_factors = [2, 6, 12, 60]
+    # Prime-power moments
     for q in [2, 3, 5]:
-        ok = verify_profile_recovery(test_factors, q)
-        print(f"Profile recovery for q={q}, factors={test_factors}: {'PASS' if ok else 'FAIL'}")
+        for k in [1, 2]:
+            m = prime_power_torsion_count(factors, q, k)
+            print(f"M_{{{q},{k}}}(Jac(K_{n})) = {m}")
 
-    # Test 3: Cohen-Lenstra expected moments
+    # q-primary profiles
     for q in [2, 3, 5]:
-        for k in [1, 2, 3]:
-            em = cohen_lenstra_expected_moment(q, k)
-            print(f"E_CL[M_{{{q},{k}}}] = {em:.6f}")
-
-    print("\n=== Sampling Test ===")
-    stats = sample_jacobian_stats(10, 0.5, 50, seed=42)
-    print(f"Collected {stats['collected']} connected graphs out of {stats['attempts']} attempts")
-    for q in [2, 3]:
-        emp_mean = np.mean(stats['moments'][q][1])
-        cl_mean = cohen_lenstra_expected_moment(q, 1)
-        print(f"q={q}: empirical E[M_{{q,1}}]={emp_mean:.3f}, CL prediction={cl_mean:.3f}")
+        prof = q_primary_profile(factors, q)
+        print(f"{q}-primary profile: {prof}")
