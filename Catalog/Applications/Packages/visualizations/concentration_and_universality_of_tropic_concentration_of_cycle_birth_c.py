@@ -1,19 +1,23 @@
 """
-Visualization: Concentration of Cycle-Birth CDFs.
+Visualization: Concentration of Tropical Critical Distributions
 
 This script visualizes the concentration phenomenon for cycle-birth CDFs
-in Erdős-Rényi random graphs. As n increases, the empirical CDFs from
-independent trials converge to a common limit, confirming that tropical
-critical values behave like a concentrated spectral observable.
+in random Erdős-Rényi graphs. Multiple independent trials of G(n,p) with
+uniform random weights produce cycle-birth CDFs that concentrate around
+a deterministic limit as n grows.
 
-What it visualizes: Multiple overlaid empirical CDFs for different graph sizes,
-showing convergence. This is the visual analogue of the semicircle law converging
-for random matrix eigenvalues.
+The plot shows overlaid empirical CDFs from independent trials at different
+graph sizes, demonstrating tighter concentration at larger n.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
+
+# ============================================================
+# Inline implementations (self-contained)
+# ============================================================
 
 class UnionFind:
     def __init__(self, n):
@@ -21,9 +25,10 @@ class UnionFind:
         self.rank = [0] * n
 
     def find(self, x):
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
 
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
@@ -37,54 +42,82 @@ class UnionFind:
         return True
 
 
-def compute_cycle_births(n, p, rng):
+def erdos_renyi(n, p, rng):
     edges = []
     for i in range(n):
         for j in range(i + 1, n):
             if rng.random() < p:
-                edges.append((i, j, rng.random()))
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+                edges.append((i, j))
+    return edges
+
+
+def compute_cycle_births(n, edges, weights):
+    order = np.argsort(weights)
     uf = UnionFind(n)
-    births = []
-    for u, v, w in sorted_edges:
+    cb_weights = []
+    for idx in order:
+        u, v = edges[idx]
         if not uf.union(u, v):
-            births.append(w)
-    return np.array(births)
+            cb_weights.append(weights[idx])
+    return np.array(cb_weights)
 
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('Concentration of Tropical Critical Distributions\n'
-             'Cycle-Birth CDFs in G(n, 0.15) with Uniform Weights',
-             fontsize=14, fontweight='bold')
+# ============================================================
+# Generate data
+# ============================================================
 
+rng = np.random.default_rng(42)
 p = 0.15
 n_values = [50, 100, 200, 500]
 num_trials = 15
-rng = np.random.default_rng(42)
-grid = np.linspace(0, 1, 300)
+t_grid = np.linspace(0, 1, 300)
+
+# ============================================================
+# Create figure
+# ============================================================
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig.suptitle('Concentration of Cycle-Birth CDFs in G(n, p)',
+             fontsize=16, fontweight='bold', y=0.98)
+
 colors = plt.cm.viridis(np.linspace(0.2, 0.8, num_trials))
 
-for idx, n in enumerate(n_values):
-    ax = axes[idx // 2, idx % 2]
-
+for ax_idx, (ax, n) in enumerate(zip(axes.flat, n_values)):
+    cdfs = []
     for trial in range(num_trials):
-        births = compute_cycle_births(n, p, rng)
-        if len(births) > 0:
-            cdf = np.array([np.mean(births <= t) for t in grid])
-            ax.plot(grid, cdf, color=colors[trial], alpha=0.5, linewidth=0.8)
+        edges = erdos_renyi(n, p, rng)
+        if len(edges) == 0:
+            continue
+        weights = rng.uniform(0, 1, len(edges))
+        cb = compute_cycle_births(n, edges, weights)
+        if len(cb) > 0:
+            cdf = np.searchsorted(np.sort(cb), t_grid, side='right') / len(cb)
+            cdfs.append(cdf)
+            ax.plot(t_grid, cdf, color=colors[trial], alpha=0.4, linewidth=0.8)
 
-    ax.set_title(f'n = {n}', fontsize=12, fontweight='bold')
-    ax.set_xlabel('Weight threshold t')
-    ax.set_ylabel('Empirical CDF F(t)')
+    if cdfs:
+        mean_cdf = np.mean(cdfs, axis=0)
+        ax.plot(t_grid, mean_cdf, 'k-', linewidth=2.5, label='Mean CDF')
+
+        # Shade ±1 std
+        std_cdf = np.std(cdfs, axis=0)
+        ax.fill_between(t_grid, mean_cdf - std_cdf, mean_cdf + std_cdf,
+                        alpha=0.2, color='steelblue', label='±1 std')
+
+    ax.set_title(f'n = {n}  (p = {p})', fontsize=13, fontweight='bold')
+    ax.set_xlabel('Threshold t', fontsize=11)
+    ax.set_ylabel('Empirical CDF', fontsize=11)
     ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    ax.set_ylim(-0.05, 1.05)
+    ax.legend(loc='lower right', fontsize=9)
     ax.grid(True, alpha=0.3)
 
-    # Add annotation about spread
-    ax.text(0.05, 0.92, f'{num_trials} independent trials',
-            transform=ax.transAxes, fontsize=9,
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    if cdfs:
+        max_std = np.max(std_cdf)
+        ax.text(0.05, 0.92, f'max std = {max_std:.3f}',
+                transform=ax.transAxes, fontsize=10,
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
-plt.tight_layout()
-plt.savefig('concentration_plot.png', dpi=150, bbox_inches='tight')
-print("Saved concentration_plot.png")
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig('viz_concentration.png', dpi=150, bbox_inches='tight')
+print("Saved viz_concentration.png")

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Probabilistic Tropical Topology",
     "date": "2026-05-29T09:56:48Z",
     "exp_id": "5d4d4313",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6783325669291338,
+    "quality": "partial",
     "pkg_num": 308
   },
   {
@@ -8941,8 +8941,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-29T09:56:48Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6783325669291338,
+      "quality": "partial"
     }
   ],
   "edges": [
