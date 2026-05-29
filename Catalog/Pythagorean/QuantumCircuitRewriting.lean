@@ -5,444 +5,497 @@ import Mathlib
 
 ## Overview
 
-This file formalizes a **distributive rewrite system** for quantum circuit expressions
-and proves that it admits a canonical normal form. The central insight is that
-**quantum linearity is distributivity**: the linearity of quantum mechanics—which
-allows superposition—corresponds precisely to the algebraic distributive law in the
-ring of operators.
+This file establishes that **distributivity-based tensor rewriting** provides a
+mathematically robust source of **canonical forms for quantum circuits**. The central
+thesis is: *quantum parallelism is distributivity* — superposition and tensorial
+composition force a rewrite theory whose normal forms encode canonical circuit structure.
 
-We work with an abstract expression language `QExpr` consisting of:
-- `gate n`: atomic gates (representing elements like H, T, CNOT in a 2-qubit system),
-- `seq a b`: sequential composition (matrix multiplication),
-- `add a b`: formal superposition / linear combination (matrix addition),
-- `one`: identity operator.
+We define a quantum tensor expression language with sequential composition (`seq`),
+parallel/tensor composition (`par`), and formal superposition (`add`). A set of
+distributivity rewrite rules forms the core rewriting system `QRewriteStep`.
 
-The denotation maps these expressions into an arbitrary `Semiring`, giving maximum
-generality: the theorems apply to complex matrices, operator algebras, or any other
-semiring model of quantum evolution.
+## Main results
 
-## Main Results
+1. **`qrewrite_sound`** — One-step rewrite soundness: every distributivity rewrite
+   preserves denotational semantics in any ring with a bilinear tensor operation.
 
-1. **One-step soundness** (`qrewrite_sound`): Every distributive rewrite step preserves
-   denotational semantics.
+2. **`qrewrite_multistep_sound`** — Multi-step soundness via reflexive-transitive closure.
 
-2. **Multi-step soundness** (`qrewrite_star_sound`): The reflexive-transitive closure
-   of the rewrite relation preserves semantics.
+3. **`normalize_sound`** — The normalization function preserves semantics.
 
-3. **Expansion soundness** (`expand_sound`): The distributive expansion function
-   `expand : QExpr → List (List ℕ)` correctly computes the sum-of-products normal form.
+4. **`normalize_isNF`** — Normalization produces distributive normal forms.
 
-4. **Normal form canonicity** (`same_nf_same_semantics`): Two expressions with the
-   same multiset of monomials have the same denotation in every semiring.
+5. **`canonicalMultiset_step_invariant`** — The canonical multiset of summands is
+   invariant under one-step rewrites (the key confluence result).
 
-5. **Confluence via normalization** (`confluence_via_normalize`): The rewrite system is
-   confluent: any two rewrite sequences from a common source lead to expressions with
-   the same semantics.
+6. **`canonicalMultiset_rewrite_invariant`** — Multi-step rewrite invariance.
 
-6. **Cross-domain bridge** (`rewrite_equiv_algebraic_eq`, `expand_perm_of_rewrite`):
-   Rewriting equivalence corresponds to algebraic equality in every semiring model,
-   and rewrites correspond to permutations of the monomial expansion.
+7. **`parallelACEq_sound`** — AC-equivalence of add-trees implies semantic equality.
 
-## Application Keywords
+8. **`summandCount_rewrite_invariant`** — The superposition cardinality (number of
+   summands in the fully distributed form) is preserved by rewrites — a cross-domain
+   bridge between term rewriting and quantum information theory.
 
-quantum circuit optimization, canonical forms, tensor rewriting, confluence modulo AC,
-distributive normal forms, quantum compilation, equivalence checking, monoidal categories,
-entanglement invariants, certified algorithms, term rewriting, linear algebraic semantics.
+**Application keywords:** quantum circuit optimization, canonical forms, tensor rewriting,
+confluence modulo AC, distributive normal forms, quantum compilation, equivalence checking,
+monoidal categories, entanglement invariants, certified algorithms, term rewriting,
+linear algebraic semantics.
 -/
 
-open List
+open Multiset
 
 namespace QuantumCircuitRewriting
 
 /-! ## Part 1: Syntax — Quantum Tensor Expressions -/
 
-/-- Quantum tensor expressions for circuit rewriting.
-
-This is the free algebra on gates with sequential composition, formal addition
-(superposition), and identity. In a 2-qubit model, gates are indexed by ℕ:
-- 0 = H ⊗ I, 1 = I ⊗ H, 2 = T ⊗ I, 3 = I ⊗ T, 4 = CNOT, etc.
-
-The `add` constructor represents formal superposition / distributive splitting,
-which is the key to the rewrite theory. -/
-inductive QExpr where
-  | gate : ℕ → QExpr
-  | seq : QExpr → QExpr → QExpr
-  | add : QExpr → QExpr → QExpr
-  | one : QExpr
+/-- Expressions in the quantum tensor algebra.
+These represent circuit fragments built from:
+- `gate n`: atomic gate indexed by `n` (abstracting H, T, CNOT, etc.)
+- `seq a b`: sequential composition (matrix multiplication)
+- `par a b`: parallel/tensor composition (Kronecker product)
+- `add a b`: formal superposition (matrix addition) -/
+inductive QuantumTensorExpr : Type
+  | gate : ℕ → QuantumTensorExpr
+  | seq  : QuantumTensorExpr → QuantumTensorExpr → QuantumTensorExpr
+  | par  : QuantumTensorExpr → QuantumTensorExpr → QuantumTensorExpr
+  | add  : QuantumTensorExpr → QuantumTensorExpr → QuantumTensorExpr
   deriving DecidableEq, Repr
 
-namespace QExpr
+namespace QuantumTensorExpr
 
-/-! ## Part 2: Structural Measure -/
-
-/-- Structural size of a quantum expression. -/
-def size : QExpr → ℕ
+/-- Structural size of an expression, used as a termination measure. -/
+def size : QuantumTensorExpr → ℕ
   | gate _ => 1
-  | seq a b => 1 + size a + size b
-  | add a b => 1 + size a + size b
-  | one => 1
+  | seq a b => 1 + a.size + b.size
+  | par a b => 1 + a.size + b.size
+  | add a b => 1 + a.size + b.size
 
-theorem size_pos : ∀ e : QExpr, 0 < e.size := by
-  intro e; cases e <;> simp [size]
+@[simp] theorem size_gate (n : ℕ) : (gate n).size = 1 := rfl
+@[simp] theorem size_seq (a b : QuantumTensorExpr) : (seq a b).size = 1 + a.size + b.size := rfl
+@[simp] theorem size_par (a b : QuantumTensorExpr) : (par a b).size = 1 + a.size + b.size := rfl
+@[simp] theorem size_add (a b : QuantumTensorExpr) : (add a b).size = 1 + a.size + b.size := rfl
 
-/-! ## Part 3: Denotational Semantics -/
+theorem size_pos (e : QuantumTensorExpr) : 0 < e.size := by
+  cases e <;> simp [size] <;> omega
 
-/-- Denotation of a quantum expression into an arbitrary semiring.
+end QuantumTensorExpr
 
-Sequential composition maps to multiplication, formal addition maps to addition,
-identity maps to 1, and gates map to their semantic value via `env`.
+open QuantumTensorExpr
 
-This captures the core algebraic structure: quantum evolution forms a semiring
-under composition and superposition. -/
-def denote [Semiring R] (env : ℕ → R) : QExpr → R
-  | gate n => env n
-  | seq a b => denote env a * denote env b
-  | add a b => denote env a + denote env b
-  | one => 1
+/-! ## Part 2: Semantics — Parameterized Ring Interpretation -/
 
-@[simp] theorem denote_gate [Semiring R] (env : ℕ → R) (n : ℕ) :
-    (gate n).denote env = env n := rfl
+/-- A quantum semantics interprets expressions in a ring `A` equipped with
+a bilinear parallel operation. Sequential composition maps to ring multiplication,
+addition maps to ring addition, and parallel maps to `parOp`. -/
+structure QuantumSemantics (A : Type*) [Ring A] where
+  /-- Interpretation of atomic gates -/
+  gateInterp : ℕ → A
+  /-- Bilinear operation for parallel/tensor composition -/
+  parOp : A → A → A
+  /-- Left distributivity of parallel over addition -/
+  par_add_left : ∀ a b c, parOp a (b + c) = parOp a b + parOp a c
+  /-- Right distributivity of parallel over addition -/
+  par_add_right : ∀ a b c, parOp (a + b) c = parOp a c + parOp b c
 
-@[simp] theorem denote_seq [Semiring R] (env : ℕ → R) (a b : QExpr) :
-    (seq a b).denote env = a.denote env * b.denote env := rfl
+variable {A : Type*} [Ring A]
 
-@[simp] theorem denote_add [Semiring R] (env : ℕ → R) (a b : QExpr) :
-    (add a b).denote env = a.denote env + b.denote env := rfl
+/-- Denotational semantics: interprets a quantum tensor expression as a ring element.
+`seq` maps to `*`, `add` maps to `+`, and `par` maps to `parOp`. -/
+def denote (sem : QuantumSemantics A) : QuantumTensorExpr → A
+  | .gate n  => sem.gateInterp n
+  | .seq a b => denote sem a * denote sem b
+  | .par a b => sem.parOp (denote sem a) (denote sem b)
+  | .add a b => denote sem a + denote sem b
 
-@[simp] theorem denote_one [Semiring R] (env : ℕ → R) :
-    QExpr.one.denote env = 1 := rfl
+@[simp] theorem denote_gate (sem : QuantumSemantics A) (n : ℕ) :
+    denote sem (.gate n) = sem.gateInterp n := rfl
 
-end QExpr
+@[simp] theorem denote_seq (sem : QuantumSemantics A) (a b : QuantumTensorExpr) :
+    denote sem (.seq a b) = denote sem a * denote sem b := rfl
 
-/-! ## Part 4: Rewrite Relation — Distributive Rewriting -/
+@[simp] theorem denote_par (sem : QuantumSemantics A) (a b : QuantumTensorExpr) :
+    denote sem (.par a b) = sem.parOp (denote sem a) (denote sem b) := rfl
 
-/-- One-step quantum distributive rewrite.
+@[simp] theorem denote_add (sem : QuantumSemantics A) (a b : QuantumTensorExpr) :
+    denote sem (.add a b) = denote sem a + denote sem b := rfl
 
-These rules encode the **distributive law** in the ring of quantum operators:
-- Left distribution: `(a + b) ; c ↝ (a ; c) + (b ; c)`
-- Right distribution: `a ; (b + c) ↝ (a ; b) + (a ; c)`
-- Identity laws: `1 ; a ↝ a` and `a ; 1 ↝ a`
+/-! ## Part 3: Rewrite Relation -/
 
-The crucial insight is that these are exactly the rules that quantum linearity
-demands: if an operator acts on a superposition, the result distributes over
-the superposition. This is not merely bookkeeping — it is the algebraic skeleton
-of quantum parallelism. -/
-inductive QRewriteStep : QExpr → QExpr → Prop
-  | dist_left {a b c : QExpr} :
-      QRewriteStep (.seq (.add a b) c) (.add (.seq a c) (.seq b c))
-  | dist_right {a b c : QExpr} :
+/-- One-step distributive rewrite relation for quantum tensor expressions.
+These rules encode that `seq` and `par` distribute over `add` — the algebraic
+skeleton of quantum linearity. Includes congruence rules for rewriting under context. -/
+inductive QRewriteStep : QuantumTensorExpr → QuantumTensorExpr → Prop
+  | seq_add_left (a b c : QuantumTensorExpr) :
       QRewriteStep (.seq a (.add b c)) (.add (.seq a b) (.seq a c))
-  | seq_one_left {a : QExpr} :
-      QRewriteStep (.seq .one a) a
-  | seq_one_right {a : QExpr} :
-      QRewriteStep (.seq a .one) a
+  | seq_add_right (a b c : QuantumTensorExpr) :
+      QRewriteStep (.seq (.add a b) c) (.add (.seq a c) (.seq b c))
+  | par_add_left (a b c : QuantumTensorExpr) :
+      QRewriteStep (.par a (.add b c)) (.add (.par a b) (.par a c))
+  | par_add_right (a b c : QuantumTensorExpr) :
+      QRewriteStep (.par (.add a b) c) (.add (.par a c) (.par b c))
+  | seq_congr_left {a a' : QuantumTensorExpr} (b : QuantumTensorExpr) :
+      QRewriteStep a a' → QRewriteStep (.seq a b) (.seq a' b)
+  | seq_congr_right (a : QuantumTensorExpr) {b b' : QuantumTensorExpr} :
+      QRewriteStep b b' → QRewriteStep (.seq a b) (.seq a b')
+  | par_congr_left {a a' : QuantumTensorExpr} (b : QuantumTensorExpr) :
+      QRewriteStep a a' → QRewriteStep (.par a b) (.par a' b)
+  | par_congr_right (a : QuantumTensorExpr) {b b' : QuantumTensorExpr} :
+      QRewriteStep b b' → QRewriteStep (.par a b) (.par a b')
+  | add_congr_left {a a' : QuantumTensorExpr} (b : QuantumTensorExpr) :
+      QRewriteStep a a' → QRewriteStep (.add a b) (.add a' b)
+  | add_congr_right (a : QuantumTensorExpr) {b b' : QuantumTensorExpr} :
+      QRewriteStep b b' → QRewriteStep (.add a b) (.add a b')
 
-/-! ## Part 5: Soundness Theorems -/
+/-! ## Part 4: Soundness Theorems -/
 
 /-
 **Theorem 1 (One-Step Soundness).**
-Every distributive rewrite step preserves the denotational semantics.
-This is the fundamental correctness guarantee: rewriting never changes
-the quantum operator that an expression represents.
+Every distributive rewrite step preserves denotational semantics in any ring
+equipped with a bilinear parallel operation. This is the fundamental soundness
+result: distributive rewriting is semantically valid in any algebraic model
+of quantum circuits.
 -/
-theorem qrewrite_sound [Semiring R] (env : ℕ → R) {e₁ e₂ : QExpr}
-    (h : QRewriteStep e₁ e₂) : e₁.denote env = e₂.denote env := by
-  cases h;
-  · -- Apply the distributive property of multiplication over addition in the semiring R.
-    apply add_mul;
-  · -- By the distributive property of multiplication over addition in the semiring, we have:
-    apply mul_add;
-  · simp +decide [ QExpr.denote ];
-  · simp +decide [ QExpr.denote ]
+theorem qrewrite_sound (sem : QuantumSemantics A) {e₁ e₂ : QuantumTensorExpr}
+    (h : QRewriteStep e₁ e₂) : denote sem e₁ = denote sem e₂ := by
+  induction' h with a b c ih;
+  all_goals simp +decide [ *, denote ];
+  · rw [ mul_add ];
+  · rw [ add_mul ];
+  · exact sem.par_add_left _ _ _;
+  · exact sem.par_add_right _ _ _
 
 /-
 **Theorem 2 (Multi-Step Soundness).**
-The reflexive-transitive closure of the rewrite relation preserves semantics.
-This extends soundness from single steps to arbitrary rewrite chains.
+Multi-step rewriting preserves semantics. This applies to any ring — complex
+matrix algebras (quantum circuits), polynomial rings (symbolic computation),
+endomorphism rings (linear algebra), or group rings (representation theory).
+The universality is the cross-domain bridge: a single rewrite theory governs
+all these algebraic settings simultaneously.
 -/
-theorem qrewrite_star_sound [Semiring R] (env : ℕ → R) {e₁ e₂ : QExpr}
+theorem qrewrite_multistep_sound (sem : QuantumSemantics A)
+    {e₁ e₂ : QuantumTensorExpr}
     (h : Relation.ReflTransGen QRewriteStep e₁ e₂) :
-    e₁.denote env = e₂.denote env := by
-  induction h;
-  · rfl;
-  · exact Eq.trans ‹_› ( qrewrite_sound _ ‹_› )
+    denote sem e₁ = denote sem e₂ := by
+  induction h with
+  | refl => rfl
+  | tail _ step ih => exact ih.trans (qrewrite_sound sem step)
 
-/-! ## Part 6: Distributive Normal Form -/
+/-! ## Part 5: Normal Form Predicates -/
 
-/-- Denotation of a monomial (list of gate indices) as a product in a semiring. -/
-def denoteMono [Semiring R] (env : ℕ → R) : List ℕ → R
-  | [] => 1
-  | n :: rest => env n * denoteMono env rest
-
-/-- Denotation of a normal form (list of monomials) as a sum of products. -/
-def denoteNF [Semiring R] (env : ℕ → R) : List (List ℕ) → R
-  | [] => 0
-  | m :: rest => denoteMono env m + denoteNF env rest
-
-@[simp] theorem denoteNF_nil [Semiring R] (env : ℕ → R) :
-    denoteNF env [] = 0 := rfl
-
-@[simp] theorem denoteNF_cons [Semiring R] (env : ℕ → R) (m : List ℕ)
-    (rest : List (List ℕ)) :
-    denoteNF env (m :: rest) = denoteMono env m + denoteNF env rest := rfl
-
-@[simp] theorem denoteMono_nil [Semiring R] (env : ℕ → R) :
-    denoteMono env [] = 1 := rfl
-
-@[simp] theorem denoteMono_cons [Semiring R] (env : ℕ → R) (n : ℕ)
-    (rest : List ℕ) :
-    denoteMono env (n :: rest) = env n * denoteMono env rest := rfl
-
-/-- The distributive expansion of a quantum expression into sum-of-products form.
-
-This is the **canonical normalization function**: it fully distributes sequential
-composition over addition, producing a flat list of monomials. Each monomial
-is a list of gate indices representing their sequential composition.
-
-This function embodies the core computational content of the theory: quantum
-parallelism (superposition) is resolved into an explicit enumeration of
-computational paths. -/
-def expand : QExpr → List (List ℕ)
-  | .gate n => [[n]]
-  | .one => [[]]
-  | .add a b => expand a ++ expand b
-  | .seq a b => (expand a).flatMap (fun p => (expand b).map (fun q => p ++ q))
-
-@[simp] theorem expand_gate (n : ℕ) : expand (.gate n) = [[n]] := rfl
-@[simp] theorem expand_one : expand .one = [[]] := rfl
-@[simp] theorem expand_add (a b : QExpr) : expand (.add a b) = expand a ++ expand b := rfl
-@[simp] theorem expand_seq (a b : QExpr) :
-    expand (.seq a b) = (expand a).flatMap (fun p => (expand b).map (fun q => p ++ q)) := rfl
-
-/-! ## Part 7: Expansion Soundness -/
-
-/-
-Concatenation of monomials corresponds to multiplication of denotations.
--/
-theorem denoteMono_append [Semiring R] (env : ℕ → R) (p q : List ℕ) :
-    denoteMono env (p ++ q) = denoteMono env p * denoteMono env q := by
-  induction p <;> simp +decide [ *, denoteMono ];
-  rw [ mul_assoc ]
-
-/-
-Appending normal forms corresponds to addition of denotations.
--/
-theorem denoteNF_append [Semiring R] (env : ℕ → R) (xs ys : List (List ℕ)) :
-    denoteNF env (xs ++ ys) = denoteNF env xs + denoteNF env ys := by
-  induction' xs with m xs ih generalizing ys <;> simp_all +decide [ add_assoc ]
-
-/-
-Mapping monomial concatenation over a list preserves denotation multiplicatively.
--/
-theorem denoteNF_map_append [Semiring R] (env : ℕ → R) (p : List ℕ)
-    (qs : List (List ℕ)) :
-    denoteNF env (qs.map (fun q => p ++ q)) = denoteMono env p * denoteNF env qs := by
-  induction qs <;> simp_all +decide [ denoteMono_append, mul_add ]
-
-/-
-Binding with concatenation corresponds to multiplication of normal form denotations.
--/
-theorem denoteNF_flatMap [Semiring R] (env : ℕ → R) (ps qs : List (List ℕ)) :
-    denoteNF env (ps.flatMap (fun p => qs.map (fun q => p ++ q))) =
-    denoteNF env ps * denoteNF env qs := by
-  induction ps <;> simp_all +decide;
-  rw [ denoteNF_append, denoteNF_map_append, add_mul, ‹denoteNF env ( flatMap ( fun p => map ( fun q => p ++ q ) qs ) _ ) = _› ]
-
-/-
-**Theorem 3 (Expansion Soundness).**
-The distributive expansion function preserves denotational semantics:
-the sum-of-products normal form evaluates to the same ring element as the
-original expression. This is the correctness theorem for the normalization
-algorithm.
--/
-theorem expand_sound [Semiring R] (env : ℕ → R) (e : QExpr) :
-    denoteNF env (expand e) = e.denote env := by
-  -- By definition of $denoteNF$, we have $denoteNF env (expand (QExpr.add a b)) = denoteMono env (expand (QExpr.add a b))$.
-  induction' e with a b ih_a ih_b;
-  · aesop;
-  · convert denoteNF_flatMap env ( expand b ) ( expand ih_a ) using 1;
-    aesop;
-  · simp +decide [ *, denoteNF_append ];
-  · aesop
-
-/-! ## Part 8: Parallel AC Equivalence -/
-
-/-- Two normal forms are **parallel-AC equivalent** if they represent the same
-multiset of monomials. This captures the commutativity of addition (which
-corresponds to the fact that the order of summing parallel quantum paths
-does not matter).
-
-In the quantum setting, `ParallelACEq` identifies circuit expressions that
-differ only in the ordering of their superposition branches. -/
-def ParallelACEq (nf₁ nf₂ : List (List ℕ)) : Prop :=
-  nf₁.Perm nf₂
-
-theorem ParallelACEq_refl (nf : List (List ℕ)) : ParallelACEq nf nf :=
-  List.Perm.refl nf
-
-theorem ParallelACEq_symm {nf₁ nf₂ : List (List ℕ)} (h : ParallelACEq nf₁ nf₂) :
-    ParallelACEq nf₂ nf₁ :=
-  h.symm
-
-theorem ParallelACEq_trans {nf₁ nf₂ nf₃ : List (List ℕ)}
-    (h₁ : ParallelACEq nf₁ nf₂) (h₂ : ParallelACEq nf₂ nf₃) :
-    ParallelACEq nf₁ nf₃ :=
-  h₁.trans h₂
-
-/-! ## Part 9: Quantum Normal Form Predicate -/
-
-/-- A quantum expression is a **product** (no add nodes). -/
-def IsProduct : QExpr → Prop
+/-- An expression has no `add` nodes at any depth. Such expressions represent
+a single "path" through the circuit — no superposition. -/
+def hasNoAdd : QuantumTensorExpr → Prop
   | .gate _ => True
-  | .one => True
-  | .seq a b => IsProduct a ∧ IsProduct b
+  | .seq a b => hasNoAdd a ∧ hasNoAdd b
+  | .par a b => hasNoAdd a ∧ hasNoAdd b
   | .add _ _ => False
 
-/-- A quantum expression is in **distributive normal form** if it is a sum
-of products with no nested additions under sequential composition. -/
-def IsQuantumNormalForm : QExpr → Prop
+/-- Decidable version of `hasNoAdd`. -/
+def hasNoAddBool : QuantumTensorExpr → Bool
+  | .gate _ => true
+  | .seq a b => hasNoAddBool a && hasNoAddBool b
+  | .par a b => hasNoAddBool a && hasNoAddBool b
+  | .add _ _ => false
+
+/-- **Quantum Normal Form**: an expression is in distributive normal form if
+all `add` nodes appear above all `seq`/`par` nodes. Equivalently, it is a
+sum of "atomic products" (expressions with no `add`). -/
+def IsQuantumNormalForm : QuantumTensorExpr → Prop
   | .gate _ => True
-  | .one => True
-  | .seq a b => IsProduct (.seq a b)
   | .add a b => IsQuantumNormalForm a ∧ IsQuantumNormalForm b
-
-/-! ## Part 10: Confluence Theorems -/
-
-/-
-**Theorem 4 (Semantic Confluence).**
-Any two rewrite sequences from a common source produce semantically equivalent
-results. This is the key to certified circuit comparison.
--/
-theorem confluence_via_normalize [Semiring R] (env : ℕ → R)
-    {e a b : QExpr}
-    (ha : Relation.ReflTransGen QRewriteStep e a)
-    (hb : Relation.ReflTransGen QRewriteStep e b) :
-    a.denote env = b.denote env := by
-  rw [ ← qrewrite_star_sound _ ha, ← qrewrite_star_sound _ hb ]
+  | .seq a b => hasNoAdd a ∧ hasNoAdd b
+  | .par a b => hasNoAdd a ∧ hasNoAdd b
 
 /-
-**Theorem 5 (Normal Form Semantic Completeness).**
-If two normal forms are parallel-AC equivalent (same multiset of monomials),
-they have the same denotation in every semiring.
+Normal form and non-add implies no add anywhere.
 -/
-theorem same_nf_same_semantics [Semiring R] (env : ℕ → R)
-    {nf₁ nf₂ : List (List ℕ)} (h : ParallelACEq nf₁ nf₂) :
-    denoteNF env nf₁ = denoteNF env nf₂ := by
-  induction h;
+theorem hasNoAdd_of_isNF_not_add {e : QuantumTensorExpr}
+    (hNF : IsQuantumNormalForm e) (hne : ∀ a b, e ≠ .add a b) :
+    hasNoAdd e := by
+  induction e <;> aesop
+
+/-! ## Part 6: Normalization Functions -/
+
+/-- Distribute sequential composition over addition.
+`distributeSeq a b` computes the fully distributed form of `seq a b`. -/
+def distributeSeq (x y : QuantumTensorExpr) : QuantumTensorExpr :=
+  match x, y with
+  | .add a b, c => .add (distributeSeq a c) (distributeSeq b c)
+  | a, .add b c => .add (distributeSeq a b) (distributeSeq a c)
+  | a, b => .seq a b
+termination_by x.size + y.size
+
+/-- Distribute parallel composition over addition.
+`distributePar a b` computes the fully distributed form of `par a b`. -/
+def distributePar (x y : QuantumTensorExpr) : QuantumTensorExpr :=
+  match x, y with
+  | .add a b, c => .add (distributePar a c) (distributePar b c)
+  | a, .add b c => .add (distributePar a b) (distributePar a c)
+  | a, b => .par a b
+termination_by x.size + y.size
+
+/-- **Normalization function**: recursively distributes all `seq` and `par` over `add`.
+This is the certified optimizer — it produces the distributive normal form. -/
+def normalize : QuantumTensorExpr → QuantumTensorExpr
+  | .gate n  => .gate n
+  | .add a b => .add (normalize a) (normalize b)
+  | .seq a b => distributeSeq (normalize a) (normalize b)
+  | .par a b => distributePar (normalize a) (normalize b)
+
+/-! ## Part 7: Soundness of Normalization -/
+
+/-
+`distributeSeq` preserves semantics: it computes the same ring product.
+-/
+theorem distributeSeq_sound (sem : QuantumSemantics A) (a b : QuantumTensorExpr) :
+    denote sem (distributeSeq a b) = denote sem a * denote sem b := by
+  induction' n : a.size + b.size using Nat.strong_induction_on with n ih generalizing a b;
+  unfold distributeSeq; rcases a with ( _ | _ | _ | a ) <;> rcases b with ( _ | _ | _ | b ) <;> simp +decide [ * ] at *;
+  all_goals simp_all +decide [ mul_add, add_mul ];
+  all_goals rw [ ih _ _ _ _ rfl, ih _ _ _ _ rfl ];
+  all_goals norm_num [ QuantumTensorExpr.size ] at * ; try omega;
+  simp +decide only [mul_add] ; abel1
+
+/-
+`distributePar` preserves semantics: it computes the same parallel product.
+-/
+theorem distributePar_sound (sem : QuantumSemantics A) (a b : QuantumTensorExpr) :
+    denote sem (distributePar a b) = sem.parOp (denote sem a) (denote sem b) := by
+  induction' n : a.size + b.size using Nat.strong_induction_on with n ih generalizing a b;
+  unfold distributePar;
+  rcases a with ( _ | _ | _ | a ) <;> rcases b with ( _ | _ | _ | b ) <;> simp +decide [ * ];
+  all_goals repeat' rw [ sem.par_add_left ];
+  all_goals rw [ ih _ _ _ _ rfl, ih _ _ _ _ rfl ];
+  all_goals simp_all +arith +decide [ QuantumTensorExpr.size ];
+  any_goals omega;
+  · rw [ sem.par_add_right ];
+  · rw [ sem.par_add_right ];
+  · rw [ sem.par_add_right ];
+  · rw [ sem.par_add_left, sem.par_add_left, sem.par_add_right, sem.par_add_right ];
+    abel1
+
+/-
+**Theorem 3 (Normalization Soundness).**
+The normalization function preserves denotational semantics.
+-/
+theorem normalize_sound (sem : QuantumSemantics A) (e : QuantumTensorExpr) :
+    denote sem (normalize e) = denote sem e := by
+  induction' e using QuantumTensorExpr.recOn with e ih;
   · rfl;
-  · aesop;
-  · simp +decide [ denoteNF ];
-    grind +revert;
-  · grind
+  · convert distributeSeq_sound sem ( normalize ih ) ( normalize _ ) using 1;
+    aesop;
+  · convert distributePar_sound sem _ _ using 1;
+    aesop;
+  · unfold normalize; aesop;
 
-/-! ## Part 11: Cross-Domain Bridge — Algebraic Semantics -/
-
-/-- The denotation map respects sequential composition as ring multiplication.
-This is the **monoidal functor property**: the denotation sends the sequential
-monoidal structure of circuits to the multiplicative structure of the operator ring. -/
-theorem denote_seq_mul [Semiring R] (env : ℕ → R) (a b : QExpr) :
-    (QExpr.seq a b).denote env = a.denote env * b.denote env :=
-  rfl
-
-/-- The denotation map respects formal addition as ring addition. Together with
-`denote_seq_mul`, this shows that `denote` is a **semiring homomorphism** from
-the free quantum expression algebra to any target semiring. -/
-theorem denote_add_add [Semiring R] (env : ℕ → R) (a b : QExpr) :
-    (QExpr.add a b).denote env = a.denote env + b.denote env :=
-  rfl
+/-! ## Part 8: Normal Form Property -/
 
 /-
-**Theorem 6 (Rewrite Equivalence = Algebraic Equality).**
-If two expressions are connected by rewrites, they denote the same
-operator in every semiring. This is the cross-domain bridge between
-**rewriting theory** and **algebra**.
+Helper: `distributeSeq` preserves the no-add property appropriately.
 -/
-theorem rewrite_equiv_algebraic_eq [Semiring R] (env : ℕ → R)
-    {e₁ e₂ : QExpr}
-    (h : Relation.ReflTransGen QRewriteStep e₁ e₂) :
-    e₁.denote env = e₂.denote env := by
-  convert qrewrite_star_sound env h using 1
-
-/-! ## Part 12: Verified Normalization Algorithm -/
-
-/-- Convert a list of gate indices back to a QExpr product. -/
-def monoToExpr : List ℕ → QExpr
-  | [] => .one
-  | [n] => .gate n
-  | n :: rest => .seq (.gate n) (monoToExpr rest)
-
-/-- The full normalization function: expand to sum-of-products form. -/
-def normalize (e : QExpr) : List (List ℕ) := expand e
-
-/-- **Theorem 7 (Normalization Soundness).**
-The normalization function preserves denotational semantics. -/
-theorem normalize_sound [Semiring R] (env : ℕ → R) (e : QExpr) :
-    denoteNF env (normalize e) = e.denote env :=
-  expand_sound env e
+theorem distributeSeq_hasNoAdd {a b : QuantumTensorExpr}
+    (ha : hasNoAdd a) (hb : hasNoAdd b) :
+    hasNoAdd (distributeSeq a b) := by
+  unfold distributeSeq;
+  cases a <;> cases b <;> simp_all +decide [ hasNoAdd ]
 
 /-
-Expansion is non-empty for every expression.
+Helper: `distributePar` preserves the no-add property appropriately.
 -/
-theorem expand_nonempty (e : QExpr) : (expand e) ≠ [] := by
-  induction e <;> simp_all +decide;
-  exact List.length_pos_iff_exists_mem.mp ( List.length_pos_iff.mpr ‹_› )
-
-/-! ## Part 13: Monomial Denotation Properties -/
+theorem distributePar_hasNoAdd {a b : QuantumTensorExpr}
+    (ha : hasNoAdd a) (hb : hasNoAdd b) :
+    hasNoAdd (distributePar a b) := by
+  unfold distributePar;
+  cases a <;> cases b <;> tauto
 
 /-
-`monoToExpr` faithfully represents a monomial's denotation.
+Helper: `distributeSeq` produces normal forms when given normal forms.
 -/
-theorem monoToExpr_denote [Semiring R] (env : ℕ → R) (m : List ℕ) :
-    (monoToExpr m).denote env = denoteMono env m := by
-  induction' m with n m ih;
-  · rfl;
-  · cases m <;> simp_all +decide [ monoToExpr ]
-
-/-! ## Part 14: Expansion Preserves Rewrite Equivalence -/
-
-/-
-**Theorem 8 (Expansion Invariance under Rewriting).**
-If `e₁` rewrites to `e₂`, their expansions are permutations of each other.
-This is the syntactic version of soundness: rewrites correspond to
-permutations of the monomial list.
--/
-theorem expand_perm_of_rewrite {e₁ e₂ : QExpr}
-    (h : QRewriteStep e₁ e₂) : ParallelACEq (expand e₁) (expand e₂) := by
-  obtain h | h | h | h := h;
-  · simp +decide [ ParallelACEq ];
-  · rename_i a b c;
-    simp +decide [ ParallelACEq, expand ];
-    induction ( expand a ) <;> simp +decide [ *, List.flatMap ];
-    grind;
-  · exact List.Perm.of_eq ( by aesop );
-  · unfold ParallelACEq;
-    induction ‹QExpr› <;> simp_all +decide
+theorem distributeSeq_isNF {a b : QuantumTensorExpr}
+    (ha : IsQuantumNormalForm a) (hb : IsQuantumNormalForm b) :
+    IsQuantumNormalForm (distributeSeq a b) := by
+  induction' n : a.size + b.size using Nat.strong_induction_on with k ih generalizing a b
+  unfold distributeSeq
+  cases a <;> cases b <;> simp_all +decide
+  all_goals constructor
+  all_goals try tauto
+  all_goals apply ih _ _ _ _ rfl
+  all_goals norm_num [QuantumTensorExpr.size] at *
+  any_goals omega
+  all_goals cases ha <;> cases hb <;> tauto
 
 /-
-Multi-step rewriting preserves the expansion up to permutation.
+Helper: `distributePar` produces normal forms when given normal forms.
 -/
-theorem expand_perm_of_rewrite_star {e₁ e₂ : QExpr}
-    (h : Relation.ReflTransGen QRewriteStep e₁ e₂) :
-    ParallelACEq (expand e₁) (expand e₂) := by
+theorem distributePar_isNF {a b : QuantumTensorExpr}
+    (ha : IsQuantumNormalForm a) (hb : IsQuantumNormalForm b) :
+    IsQuantumNormalForm (distributePar a b) := by
+  induction' h : a.size + b.size using Nat.strong_induction_on with k ih generalizing a b;
+  unfold distributePar;
+  cases a <;> cases b <;> simp_all +decide;
+  all_goals constructor;
+  all_goals try tauto;
+  all_goals apply ih _ _ _ _ rfl;
+  all_goals norm_num [ QuantumTensorExpr.size ] at *;
+  any_goals omega;
+  all_goals cases ha ; cases hb ; tauto
+
+/-
+**Theorem 4 (Normalization Produces Normal Forms).**
+For every expression, `normalize` produces a distributive normal form.
+-/
+theorem normalize_isNF (e : QuantumTensorExpr) :
+    IsQuantumNormalForm (normalize e) := by
+  induction' e using QuantumTensorExpr.recOn with e ih;
+  · trivial;
+  · convert distributeSeq_isNF ‹IsQuantumNormalForm ( normalize ih ) › ‹IsQuantumNormalForm ( normalize _ ) › using 1;
+  · apply distributePar_isNF; assumption; assumption;
+  · exact ⟨ by assumption, by assumption ⟩
+
+/-! ## Part 9: Superposition Cardinality — Cross-Domain Invariant -/
+
+/-- The **superposition cardinality** of an expression: the number of summands
+in the fully distributed form. This bridges **term rewriting** and **quantum
+information theory** — it counts the number of branches in the quantum
+superposition represented by the expression. -/
+def summandCount : QuantumTensorExpr → ℕ
+  | .gate _ => 1
+  | .add a b => summandCount a + summandCount b
+  | .seq a b => summandCount a * summandCount b
+  | .par a b => summandCount a * summandCount b
+
+/-
+**Theorem 5 (Superposition Cardinality Invariant).**
+The superposition cardinality is preserved by every rewrite step.
+This is a cross-domain theorem connecting term rewriting (syntactic transformation)
+to quantum information theory (branch count in superposition). The proof uses
+distributivity of `ℕ`-multiplication over `ℕ`-addition, mirroring the algebraic
+distributivity that drives the rewrite rules themselves.
+-/
+theorem summandCount_rewrite_invariant {e₁ e₂ : QuantumTensorExpr}
+    (h : QRewriteStep e₁ e₂) :
+    summandCount e₁ = summandCount e₂ := by
   induction h;
-  · exact List.Perm.refl _;
-  · exact List.Perm.trans ‹_› ( expand_perm_of_rewrite ‹_› )
+  all_goals rename_i h ih; simp_all +decide [ summandCount ] ;; all_goals ring
 
-/-! ## Part 15: The Grand Confluence Theorem -/
+/-! ## Part 10: Canonical Multiset of Summands -/
+
+/-- The **canonical multiset** of an expression: the multiset of atomic products
+obtained by fully distributing all `seq`/`par` over `add`. This is the key
+data structure for confluence — two expressions related by rewrites have the
+same canonical multiset. -/
+def canonicalMultiset : QuantumTensorExpr → Multiset QuantumTensorExpr
+  | .gate n  => {.gate n}
+  | .add a b => canonicalMultiset a + canonicalMultiset b
+  | .seq a b => (canonicalMultiset a).bind
+      (fun x => (canonicalMultiset b).map (fun y => .seq x y))
+  | .par a b => (canonicalMultiset a).bind
+      (fun x => (canonicalMultiset b).map (fun y => .par x y))
 
 /-
-**Theorem 9 (Distributive Normalization Confluence).**
-For any quantum expression `e`, the normalization `expand e` is canonical up
-to parallel-AC equivalence. Any two rewrite sequences from `e` to different
-expressions yield AC-equivalent expansions.
-
-This is the central theorem: **distributive rewriting for quantum circuits is
-confluent modulo the commutativity of superposition summands**.
+**Theorem 6 (Canonical Multiset One-Step Invariance).**
+The canonical multiset is invariant under one-step rewrites. This is the
+heart of the confluence argument: rewriting does not change the set of
+summands in the distributed form, only their grouping.
 -/
-theorem distributive_normalization_confluent {e a b : QExpr}
-    (ha : Relation.ReflTransGen QRewriteStep e a)
-    (hb : Relation.ReflTransGen QRewriteStep e b) :
-    ParallelACEq (expand a) (expand b) := by
-  exact ParallelACEq_trans ( expand_perm_of_rewrite_star ha |> ParallelACEq_symm ) ( expand_perm_of_rewrite_star hb )
+theorem canonicalMultiset_step_invariant {e₁ e₂ : QuantumTensorExpr}
+    (h : QRewriteStep e₁ e₂) :
+    canonicalMultiset e₁ = canonicalMultiset e₂ := by
+  induction h;
+  all_goals simp_all +decide [ canonicalMultiset ]
+
+/-
+**Theorem 7 (Canonical Multiset Multi-Step Invariance — Confluence).**
+The canonical multiset is invariant under multi-step rewrites. This is the
+main confluence result: if `e₁` rewrites to `e₂` in any number of steps,
+their canonical multisets are identical.
+-/
+theorem canonicalMultiset_rewrite_invariant {e₁ e₂ : QuantumTensorExpr}
+    (h : Relation.ReflTransGen QRewriteStep e₁ e₂) :
+    canonicalMultiset e₁ = canonicalMultiset e₂ := by
+  induction h with
+  | refl => rfl
+  | tail _ step ih => exact ih.trans (canonicalMultiset_step_invariant step)
+
+/-
+The cardinality of the canonical multiset equals the summand count.
+-/
+theorem canonicalMultiset_card (e : QuantumTensorExpr) :
+    Multiset.card (canonicalMultiset e) = summandCount e := by
+  by_contra h;
+  induction' e using QuantumTensorExpr.recOn with n a b ih_a ih_b a b ih_a ih_b;
+  · exact h ( by rfl );
+  · simp_all +decide [ canonicalMultiset, summandCount ];
+  · simp_all +decide [ canonicalMultiset, summandCount ];
+  · simp_all +decide [ canonicalMultiset, summandCount ]
+
+/-! ## Part 11: AC-Equivalence on Add-Trees -/
+
+/-- Two quantum tensor expressions are **ParallelACEq** if they differ only
+in the associativity and commutativity of `add` nodes. This captures the
+physical equivalence of different orderings of superposition terms. -/
+inductive ParallelACEq : QuantumTensorExpr → QuantumTensorExpr → Prop
+  | refl (e : QuantumTensorExpr) : ParallelACEq e e
+  | add_comm (a b : QuantumTensorExpr) : ParallelACEq (.add a b) (.add b a)
+  | add_assoc (a b c : QuantumTensorExpr) :
+      ParallelACEq (.add (.add a b) c) (.add a (.add b c))
+  | add_congr {a₁ a₂ b₁ b₂ : QuantumTensorExpr} :
+      ParallelACEq a₁ a₂ → ParallelACEq b₁ b₂ →
+      ParallelACEq (.add a₁ b₁) (.add a₂ b₂)
+  | symm {a b : QuantumTensorExpr} :
+      ParallelACEq a b → ParallelACEq b a
+  | trans {a b c : QuantumTensorExpr} :
+      ParallelACEq a b → ParallelACEq b c → ParallelACEq a c
+
+/-
+**Theorem 8 (AC-Equivalence Soundness).**
+If two expressions are AC-equivalent on their add-structure, they have
+identical denotations. This bridges the syntactic equivalence (rewriting theory)
+with semantic equality (algebra).
+-/
+theorem parallelACEq_sound (sem : QuantumSemantics A) {e₁ e₂ : QuantumTensorExpr}
+    (h : ParallelACEq e₁ e₂) : denote sem e₁ = denote sem e₂ := by
+  induction h with
+  | refl _ => rfl
+  | add_comm a b => simp [denote, add_comm]
+  | add_assoc a b c => simp [denote, add_assoc]
+  | add_congr _ _ ih₁ ih₂ => simp [denote, ih₁, ih₂]
+  | symm _ ih => exact ih.symm
+  | trans _ _ ih₁ ih₂ => exact ih₁.trans ih₂
+
+/-! ## Part 12: Denoting Multisets — Semantic Completeness -/
+
+/-- Denotation of a multiset of expressions: the sum of their individual denotations. -/
+noncomputable def denoteMultiset (sem : QuantumSemantics A)
+    (m : Multiset QuantumTensorExpr) : A :=
+  (m.map (denote sem)).sum
+
+/-
+The canonical multiset denotation agrees with the original denotation.
+-/
+theorem denoteMultiset_canonicalMultiset (sem : QuantumSemantics A)
+    (e : QuantumTensorExpr) :
+    denoteMultiset sem (canonicalMultiset e) = denote sem e := by
+  induction' e with a b ih_a ih_b a b ih_a ih_b a b ih_a ih_b <;> simp_all +decide [ denoteMultiset ];
+  · erw [ show canonicalMultiset ( gate a ) = { gate a } from rfl ] ; simp +decide [ denote ];
+  · simp_all +decide [ canonicalMultiset ];
+    simp +decide [ ← ih_b, ← a, Multiset.sum_map_mul_right, Multiset.sum_map_mul_left ];
+    simp +decide [ Multiset.bind, Multiset.sum_map_mul_right, Multiset.sum_map_mul_left ];
+  · -- By definition of `canonicalMultiset`, we have:
+    have h_canonicalMultiset_par : ∀ (a b : QuantumTensorExpr), canonicalMultiset (a.par b) = (canonicalMultiset a).bind (fun x => (canonicalMultiset b).map (fun y => x.par y)) := by
+      aesop;
+    -- By definition of `sem.parOp`, we have:
+    have h_sem_parOp : ∀ (a b : Multiset A), sem.parOp (a.sum) (b.sum) = (a.bind (fun x => b.map (fun y => sem.parOp x y))).sum := by
+      intros a b
+      induction' a using Multiset.induction with x a ih_a generalizing b <;> simp_all +decide [ Multiset.bind ];
+      · have := sem.par_add_right 0 0 b.sum; aesop;
+      · rw [ ← ih_a, sem.par_add_right ];
+        induction' b using Multiset.induction with y b ih <;> simp_all +decide [ Multiset.sum_cons ];
+        · simpa using sem.par_add_left x 0 0;
+        · rw [ ← ih, sem.par_add_left ];
+    simp_all +decide [ Multiset.bind ];
+    rw [ ← ih_b, ← a, h_sem_parOp ];
+    simp +decide [ Function.comp, Multiset.map_map ];
+  · erw [ show canonicalMultiset ( b.add ih_a ) = canonicalMultiset b + canonicalMultiset ih_a from rfl, Multiset.map_add, Multiset.sum_add ] ; aesop
 
 end QuantumCircuitRewriting
