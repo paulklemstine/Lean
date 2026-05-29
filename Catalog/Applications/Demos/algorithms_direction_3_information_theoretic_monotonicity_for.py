@@ -1,266 +1,337 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for auditing information-theoretic profiles
-of robustly Lorentzian measures.
+Information-Theoretic Monotonicity for Robustly Lorentzian Measures
+===================================================================
 
-Implements:
-1. Coordinate marginal computation
-2. Pairwise covariance computation
-3. Pairwise mutual information computation
-4. Deletion pushforward entropy
-5. Robustness gap estimation
-6. Full information profile audit
+Algorithms for computing entropy, mutual information, susceptibility,
+and auditing the robustness properties of finite subset laws.
 
-All algorithms correspond to definitions in the Lean formalization
-(InfoTheoreticMonotonicity.lean).
+Implements the core computational pipeline described in the research paper:
+  FinsetLaw → coordinate marginals → covariances → MI bounds → susceptibility
 """
 
 import numpy as np
+from math import comb, log, sqrt
+from typing import List, Tuple, Dict, Optional
 from itertools import combinations
-from math import log, comb
-from typing import Dict, List, Tuple, Optional, NamedTuple
 from dataclasses import dataclass, field
+
+
+@dataclass
+class FinsetLaw:
+    """A probability law on subsets of [n].
+    
+    Attributes:
+        n: Number of coordinates.
+        weights: Dictionary mapping frozensets to probabilities.
+    """
+    n: int
+    weights: Dict[frozenset, float]
+
+    def __post_init__(self):
+        total = sum(self.weights.values())
+        assert abs(total - 1.0) < 1e-10, f"Weights must sum to 1, got {total}"
+        for w in self.weights.values():
+            assert w >= -1e-15, f"Weights must be nonneg, got {w}"
+
+    @classmethod
+    def uniform_matroid(cls, n: int, k: int) -> 'FinsetLaw':
+        """Uniform distribution on k-element subsets of [n]."""
+        c = comb(n, k)
+        weights = {}
+        for subset in combinations(range(n), k):
+            weights[frozenset(subset)] = 1.0 / c
+        return cls(n=n, weights=weights)
+
+    @classmethod
+    def perturbed_matroid(cls, n: int, k: int, epsilon: float = 0.1) -> 'FinsetLaw':
+        """Perturbed uniform matroid: adds random noise to weights."""
+        np.random.seed(42)
+        c = comb(n, k)
+        base_weight = 1.0 / c
+        weights = {}
+        for subset in combinations(range(n), k):
+            noise = np.random.uniform(-epsilon * base_weight, epsilon * base_weight)
+            weights[frozenset(subset)] = max(base_weight + noise, 1e-15)
+        total = sum(weights.values())
+        weights = {k: v / total for k, v in weights.items()}
+        return cls(n=n, weights=weights)
+
+
+def coord_prob(mu: FinsetLaw, i: int) -> float:
+    """Marginal probability P(i ∈ S)."""
+    return sum(w for s, w in mu.weights.items() if i in s)
+
+
+def pair_joint_prob(mu: FinsetLaw, i: int, j: int) -> float:
+    """Joint probability P(i ∈ S ∧ j ∈ S)."""
+    return sum(w for s, w in mu.weights.items() if i in s and j in s)
+
+
+def coord_cov(mu: FinsetLaw, i: int, j: int) -> float:
+    """Covariance Cov(1_{i∈S}, 1_{j∈S})."""
+    return pair_joint_prob(mu, i, j) - coord_prob(mu, i) * coord_prob(mu, j)
+
+
+def total_entropy(mu: FinsetLaw) -> float:
+    """Shannon entropy H(μ) = -∑ w log w."""
+    return -sum(w * log(w) for w in mu.weights.values() if w > 1e-30)
+
+
+def binary_entropy(p: float) -> float:
+    """Binary entropy H(p) = -p log p - (1-p) log(1-p)."""
+    if p <= 0 or p >= 1:
+        return 0.0
+    return -p * log(p) - (1 - p) * log(1 - p)
+
+
+def chi_sq_binary_pair(p: float, q: float, c: float) -> float:
+    """Chi-squared divergence c² / (p(1-p)q(1-q))."""
+    denom = p * (1 - p) * q * (1 - q)
+    if denom < 1e-30:
+        return float('inf')
+    return c**2 / denom
+
+
+def mutual_info_coord(mu: FinsetLaw, i: int, j: int) -> float:
+    """Mutual information I(X_i; X_j) between coordinate indicators.
+    
+    Computed from the 2x2 joint distribution.
+    """
+    pi = coord_prob(mu, i)
+    pj = coord_prob(mu, j)
+    pij = pair_joint_prob(mu, i, j)
+    
+    # 2x2 table
+    p11 = pij
+    p10 = pi - pij
+    p01 = pj - pij
+    p00 = 1 - pi - pj + pij
+    
+    mi = 0.0
+    for pxy, px, py in [(p11, pi, pj), (p10, pi, 1-pj),
+                         (p01, 1-pi, pj), (p00, 1-pi, 1-pj)]:
+        if pxy > 1e-30 and px > 1e-30 and py > 1e-30:
+            mi += pxy * log(pxy / (px * py))
+    return max(mi, 0.0)
+
+
+def spin_susceptibility(mu: FinsetLaw) -> float:
+    """Total off-diagonal covariance magnitude χ = ∑_{i≠j} |Cov(i,j)|."""
+    chi = 0.0
+    for i in range(mu.n):
+        for j in range(mu.n):
+            if i != j:
+                chi += abs(coord_cov(mu, i, j))
+    return chi
+
+
+def set_size_variance(mu: FinsetLaw) -> float:
+    """Variance of the set size |S|."""
+    mean = sum(w * len(s) for s, w in mu.weights.items())
+    second_moment = sum(w * len(s)**2 for s, w in mu.weights.items())
+    return second_moment - mean**2
+
+
+def susceptibility_bound(mu: FinsetLaw, epsilon: float) -> float:
+    """Susceptibility bound: ε * (∑ pᵢ)²."""
+    total_p = sum(coord_prob(mu, i) for i in range(mu.n))
+    return epsilon * total_p**2
+
+
+def fisher_info_bound(mu: FinsetLaw, epsilon: float) -> float:
+    """Fisher information bound: ∑ pᵢ(1-pᵢ) + ε * (∑ pᵢ)²."""
+    diag = sum(coord_prob(mu, i) * (1 - coord_prob(mu, i)) for i in range(mu.n))
+    total_p = sum(coord_prob(mu, i) for i in range(mu.n))
+    return diag + epsilon * total_p**2
 
 
 @dataclass
 class InfoProfile:
     """Complete information-theoretic profile of a FinsetLaw.
-
-    Fields mirror the Lean `auditRobustLorentzianInfoProfile` specification:
-    - entropy: Shannon entropy H(μ) in nats
-    - coord_probs: marginal probabilities p_i = P(i ∈ S)
-    - covariances: covariance matrix Cov(1_{i∈S}, 1_{j∈S})
-    - mutual_infos: pairwise MI matrix I(X_i; X_j)
-    - chi_sq_bounds: chi-squared bounds on MI
-    - susceptibility: total off-diagonal covariance χ
-    - susceptibility_bound: certified upper bound ε·(Σp_i)²
-    - deleted_entropies: entropies after deleting each coordinate
-    - robustness_gap: estimated ε
-    - mi_le_chisq_holds: whether MI ≤ χ² for all pairs
+    
+    Fields:
+        n: number of coordinates
+        entropy: Shannon entropy H(μ)
+        coord_probs: marginal probabilities
+        covariances: pairwise covariance matrix
+        mutual_infos: pairwise MI matrix
+        chi_sq_values: pairwise chi-squared divergences
+        susceptibility: total off-diagonal |Cov|
+        set_size_var: Var(|S|)
+        sum_marginal_variances: ∑ pᵢ(1-pᵢ)
+        epsilon_estimate: estimated robustness gap
+        bounds_satisfied: dict of bound name → bool
     """
     n: int
     entropy: float
-    coord_probs: List[float] = field(default_factory=list)
-    covariances: List[List[float]] = field(default_factory=list)
-    mutual_infos: List[List[float]] = field(default_factory=list)
-    chi_sq_bounds: List[List[float]] = field(default_factory=list)
-    susceptibility: float = 0.0
-    susceptibility_bound: float = 0.0
-    deleted_entropies: List[float] = field(default_factory=list)
-    robustness_gap: float = 0.0
-    mi_le_chisq_holds: bool = True
+    coord_probs: List[float]
+    covariances: List[List[float]]
+    mutual_infos: List[List[float]]
+    chi_sq_values: List[List[float]]
+    susceptibility: float
+    set_size_var: float
+    sum_marginal_variances: float
+    epsilon_estimate: float
+    bounds_satisfied: Dict[str, bool] = field(default_factory=dict)
 
 
-def compute_coord_prob(n: int, weights: Dict[frozenset, float], i: int) -> float:
-    """Compute P(i ∈ S) = Σ_{S ∋ i} μ(S).
-
-    Complexity: O(|supp(μ)|)
+def estimate_lorentzian_gap(mu: FinsetLaw) -> float:
+    """Estimate the robustness gap ε from the data.
+    
+    ε is the smallest value such that |Cov(i,j)| ≤ ε * pᵢ * pⱼ for all i≠j.
     """
-    return sum(w for s, w in weights.items() if i in s)
+    eps = 0.0
+    for i in range(mu.n):
+        for j in range(i + 1, mu.n):
+            pi = coord_prob(mu, i)
+            pj = coord_prob(mu, j)
+            cov = abs(coord_cov(mu, i, j))
+            if pi * pj > 1e-15:
+                eps = max(eps, cov / (pi * pj))
+    return eps
 
 
-def compute_pair_joint_prob(n: int, weights: Dict[frozenset, float],
-                           i: int, j: int) -> float:
-    """Compute P(i ∈ S ∧ j ∈ S) = Σ_{S ∋ i,j} μ(S).
+def check_negative_dependence(mu: FinsetLaw) -> bool:
+    """Check if all off-diagonal covariances are ≤ 0."""
+    for i in range(mu.n):
+        for j in range(i + 1, mu.n):
+            if coord_cov(mu, i, j) > 1e-10:
+                return False
+    return True
 
-    Complexity: O(|supp(μ)|)
+
+def audit_robust_lorentzian_info_profile(mu: FinsetLaw) -> InfoProfile:
+    """Complete audit of information-theoretic properties.
+    
+    Computes all quantities and checks all theorem bounds.
+    
+    Time complexity: O(2^n * n²) — enumerate all subsets and pairs.
+    Space complexity: O(n²) for the matrices.
     """
-    return sum(w for s, w in weights.items() if i in s and j in s)
-
-
-def compute_coord_cov(n: int, weights: Dict[frozenset, float],
-                     i: int, j: int) -> float:
-    """Compute Cov(1_{i∈S}, 1_{j∈S}) = P(i,j ∈ S) - P(i ∈ S)·P(j ∈ S).
-
-    Complexity: O(|supp(μ)|)
-    """
-    return (compute_pair_joint_prob(n, weights, i, j) -
-            compute_coord_prob(n, weights, i) * compute_coord_prob(n, weights, j))
-
-
-def compute_entropy(weights: Dict[frozenset, float]) -> float:
-    """Compute Shannon entropy H(μ) = -Σ μ(S) log μ(S) (nats).
-
-    Uses convention 0·log(0) = 0.
-    Complexity: O(|supp(μ)|)
-    """
-    return -sum(w * log(w) for w in weights.values() if w > 0)
-
-
-def compute_pairwise_mi(n: int, weights: Dict[frozenset, float],
-                        i: int, j: int) -> float:
-    """Compute mutual information I(X_i; X_j) for binary coordinate indicators.
-
-    I(X_i; X_j) = Σ_{x,y} P(X_i=x, X_j=y) log(P(X_i=x, X_j=y) / (P(X_i=x)P(X_j=y)))
-
-    This is the KL divergence D_KL(P_{ij} || P_i ⊗ P_j).
-
-    Complexity: O(|supp(μ)|)
-    """
-    p = compute_coord_prob(n, weights, i)
-    q = compute_coord_prob(n, weights, j)
-    r = compute_pair_joint_prob(n, weights, i, j)
-
-    mi = 0.0
-    atoms = [
-        (r, p * q),
-        (p - r, p * (1 - q)),
-        (q - r, (1 - p) * q),
-        (1 - p - q + r, (1 - p) * (1 - q)),
-    ]
-    for pxy, pxpy in atoms:
-        if pxy > 1e-15 and pxpy > 1e-15:
-            mi += pxy * log(pxy / pxpy)
-    return max(0.0, mi)
-
-
-def compute_chi_sq_pair(n: int, weights: Dict[frozenset, float],
-                        i: int, j: int) -> float:
-    """Compute chi-squared divergence for coordinate pair (i,j).
-
-    χ²(i,j) = c² / (p_i(1-p_i) · p_j(1-p_j))
-    where c = Cov(X_i, X_j).
-
-    This is the certified upper bound on MI from kl_le_chi_sq_four.
-
-    Complexity: O(|supp(μ)|)
-    """
-    c = compute_coord_cov(n, weights, i, j)
-    p = compute_coord_prob(n, weights, i)
-    q = compute_coord_prob(n, weights, j)
-    denom = p * (1 - p) * q * (1 - q)
-    if denom < 1e-15:
-        return float('inf')
-    return c**2 / denom
-
-
-def compute_deletion_pushforward(n: int, weights: Dict[frozenset, float],
-                                 k: int) -> Dict[frozenset, float]:
-    """Compute the pushforward of μ under deletion of coordinate k.
-
-    For each subset S, map S to S \ {k} with appropriate reindexing.
-
-    Complexity: O(|supp(μ)| · n)
-    """
-    new_weights: Dict[frozenset, float] = {}
-    for s, w in weights.items():
-        new_s = frozenset(i if i < k else i - 1 for i in s if i != k)
-        new_weights[new_s] = new_weights.get(new_s, 0.0) + w
-    return new_weights
-
-
-def compute_robustness_gap(n: int, weights: Dict[frozenset, float]) -> float:
-    """Estimate the robustness gap ε = max_{i≠j} |Cov(i,j)| / (p_i · p_j).
-
-    This is the tightest ε such that RobustlyLorentzian μ ε could hold
-    (assuming negative dependence).
-
-    Complexity: O(n² · |supp(μ)|)
-    """
-    max_ratio = 0.0
-    for i in range(n):
-        pi = compute_coord_prob(n, weights, i)
-        for j in range(i + 1, n):
-            pj = compute_coord_prob(n, weights, j)
-            if pi > 0 and pj > 0:
-                cov = abs(compute_coord_cov(n, weights, i, j))
-                ratio = cov / (pi * pj)
-                max_ratio = max(max_ratio, ratio)
-    return max_ratio
-
-
-def compute_susceptibility(n: int, weights: Dict[frozenset, float]) -> float:
-    """Compute spin susceptibility χ = Σ_{i≠j} |Cov(X_i, X_j)|.
-
-    Complexity: O(n² · |supp(μ)|)
-    """
-    result = 0.0
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                result += abs(compute_coord_cov(n, weights, i, j))
-    return result
-
-
-def audit_robust_lorentzian_info_profile(
-    n: int, weights: Dict[frozenset, float]
-) -> InfoProfile:
-    """Full information-theoretic audit of a FinsetLaw.
-
-    Computes all quantities in the InfoProfile structure, checking
-    certified bounds from the Lean theorems.
-
-    Complexity: O(n² · |supp(μ)| + n · 2^n) for deletion entropies.
-
-    Example:
-        >>> from itertools import combinations
-        >>> n, r = 4, 2
-        >>> weights = {frozenset(s): 1/comb(n,r) for s in combinations(range(n), r)}
-        >>> profile = audit_robust_lorentzian_info_profile(n, weights)
-        >>> print(f"Entropy: {profile.entropy:.4f}")
-        Entropy: 1.7918
-    """
-    profile = InfoProfile(n=n, entropy=compute_entropy(weights))
-
-    # Marginals
-    profile.coord_probs = [compute_coord_prob(n, weights, i) for i in range(n)]
-
-    # Covariances
-    profile.covariances = [
-        [compute_coord_cov(n, weights, i, j) for j in range(n)]
-        for i in range(n)
-    ]
-
-    # Mutual informations
-    profile.mutual_infos = [
-        [compute_pairwise_mi(n, weights, i, j) if i != j else 0.0
-         for j in range(n)]
-        for i in range(n)
-    ]
-
-    # Chi-squared bounds
-    profile.chi_sq_bounds = [
-        [compute_chi_sq_pair(n, weights, i, j) if i != j else 0.0
-         for j in range(n)]
-        for i in range(n)
-    ]
-
-    # Susceptibility
-    profile.susceptibility = compute_susceptibility(n, weights)
-
-    # Robustness gap
-    profile.robustness_gap = compute_robustness_gap(n, weights)
-
-    # Susceptibility bound
-    sum_probs = sum(profile.coord_probs)
-    profile.susceptibility_bound = profile.robustness_gap * sum_probs**2
-
-    # Deletion entropies
-    for k in range(n):
-        del_weights = compute_deletion_pushforward(n, weights, k)
-        profile.deleted_entropies.append(compute_entropy(del_weights))
-
-    # Check MI ≤ χ²
-    profile.mi_le_chisq_holds = all(
-        profile.mutual_infos[i][j] <= profile.chi_sq_bounds[i][j] + 1e-10
+    n = mu.n
+    
+    # Coordinate marginals
+    probs = [coord_prob(mu, i) for i in range(n)]
+    
+    # Covariance matrix
+    covs = [[coord_cov(mu, i, j) for j in range(n)] for i in range(n)]
+    
+    # Mutual information matrix
+    mis = [[mutual_info_coord(mu, i, j) if i != j else 0.0 for j in range(n)]
+           for i in range(n)]
+    
+    # Chi-squared divergence matrix
+    chis = [[chi_sq_binary_pair(probs[i], probs[j], covs[i][j])
+             if i != j else 0.0 for j in range(n)]
+            for i in range(n)]
+    
+    # Scalar quantities
+    ent = total_entropy(mu)
+    chi = spin_susceptibility(mu)
+    var_s = set_size_variance(mu)
+    sum_marg_var = sum(p * (1 - p) for p in probs)
+    eps = estimate_lorentzian_gap(mu)
+    
+    # Check bounds
+    bounds = {}
+    
+    # Theorem 1: Susceptibility bound χ ≤ ε * (∑ pᵢ)²
+    susc_bound = susceptibility_bound(mu, eps)
+    bounds['susceptibility_le_bound'] = chi <= susc_bound + 1e-10
+    
+    # Theorem 7: Off-diagonal covariance sum ≤ 0
+    offdiag_sum = sum(covs[i][j] for i in range(n) for j in range(n) if i != j)
+    bounds['offdiag_cov_nonpos'] = offdiag_sum <= 1e-10
+    
+    # Theorem 8: |Cov(i,j)| ≤ ε
+    bounds['pairwise_cov_uniform'] = all(
+        abs(covs[i][j]) <= eps + 1e-10
         for i in range(n) for j in range(n) if i != j
     )
+    
+    # Theorem 9: χ ≤ ε * n²
+    bounds['susceptibility_le_eps_n_sq'] = chi <= eps * n**2 + 1e-10
+    
+    # Theorem 12: Fisher info bound
+    fisher = fisher_info_bound(mu, eps)
+    bounds['fisher_info_bound'] = chi + sum_marg_var <= fisher + 1e-10
+    
+    # Negative dependence
+    bounds['negative_dependence'] = check_negative_dependence(mu)
+    
+    # MI ≤ χ² for all pairs
+    bounds['mi_le_chi_sq'] = all(
+        mis[i][j] <= chis[i][j] + 1e-10
+        for i in range(n) for j in range(n) if i != j
+    )
+    
+    # Variance concentration: Var(|S|) ≤ ∑ pᵢ(1-pᵢ) (under neg dep)
+    if bounds['negative_dependence']:
+        bounds['variance_concentration'] = var_s <= sum_marg_var + 1e-10
+    
+    return InfoProfile(
+        n=n,
+        entropy=ent,
+        coord_probs=probs,
+        covariances=covs,
+        mutual_infos=mis,
+        chi_sq_values=chis,
+        susceptibility=chi,
+        set_size_var=var_s,
+        sum_marginal_variances=sum_marg_var,
+        epsilon_estimate=eps,
+        bounds_satisfied=bounds,
+    )
 
-    return profile
+
+def deletion_entropy(mu: FinsetLaw, k: int) -> float:
+    """Entropy of the law after deleting coordinate k.
+    
+    The deletion pushforward maps S → S \\ {k}, collapsing subsets
+    that differ only in the presence/absence of k.
+    """
+    new_weights: Dict[frozenset, float] = {}
+    for s, w in mu.weights.items():
+        projected = frozenset(x for x in s if x != k)
+        new_weights[projected] = new_weights.get(projected, 0.0) + w
+    return -sum(w * log(w) for w in new_weights.values() if w > 1e-30)
 
 
-# Example usage
+def projection_entropy(mu: FinsetLaw, coords: frozenset) -> float:
+    """Entropy of the marginal law on a subset of coordinates.
+    
+    Projects each S to S ∩ coords.
+    """
+    new_weights: Dict[frozenset, float] = {}
+    for s, w in mu.weights.items():
+        projected = s & coords
+        new_weights[projected] = new_weights.get(projected, 0.0) + w
+    return -sum(w * log(w) for w in new_weights.values() if w > 1e-30)
+
+
 if __name__ == "__main__":
-    from math import comb
-
-    print("Algorithm demo: Uniform matroid U(5,2)")
-    n, r = 5, 2
-    weights = {frozenset(s): 1.0/comb(n, r) for s in combinations(range(n), r)}
-    profile = audit_robust_lorentzian_info_profile(n, weights)
-
-    print(f"  Entropy: {profile.entropy:.6f} nats")
-    print(f"  Gap ε: {profile.robustness_gap:.6f}")
-    print(f"  Susceptibility: {profile.susceptibility:.6f}")
-    print(f"  Susceptibility bound: {profile.susceptibility_bound:.6f}")
-    print(f"  MI ≤ χ² holds: {profile.mi_le_chisq_holds}")
-    print(f"  All negative covariance: {all(profile.covariances[i][j] <= 1e-10 for i in range(n) for j in range(n) if i != j)}")
+    print("=" * 70)
+    print("Information-Theoretic Audit: Uniform Matroid U(3,6)")
+    print("=" * 70)
+    
+    mu = FinsetLaw.uniform_matroid(6, 3)
+    profile = audit_robust_lorentzian_info_profile(mu)
+    
+    print(f"\nEntropy: {profile.entropy:.6f}")
+    print(f"Estimated ε: {profile.epsilon_estimate:.6f}")
+    print(f"Susceptibility: {profile.susceptibility:.6f}")
+    print(f"Set size variance: {profile.set_size_var:.6f}")
+    print(f"∑ pᵢ(1-pᵢ): {profile.sum_marginal_variances:.6f}")
+    
+    print("\nCoordinate probabilities:")
+    print(f"  {[f'{p:.4f}' for p in profile.coord_probs]}")
+    
+    print("\nBound satisfaction:")
+    for name, satisfied in profile.bounds_satisfied.items():
+        status = "✓" if satisfied else "✗"
+        print(f"  {status} {name}")
+    
+    print(f"\nDeletion entropies (removing each coordinate):")
+    for k in range(mu.n):
+        de = deletion_entropy(mu, k)
+        print(f"  Delete coord {k}: H = {de:.6f} (drop = {profile.entropy - de:.6f})")
