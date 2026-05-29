@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Topological Data Analysis",
     "date": "2026-05-29T22:59:55Z",
     "exp_id": "d999811d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7130613432835822,
+    "quality": "substantial",
     "pkg_num": 358
   },
   {
@@ -10391,8 +10391,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T22:59:55Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7130613432835822,
+      "quality": "substantial"
     }
   ],
   "edges": [
