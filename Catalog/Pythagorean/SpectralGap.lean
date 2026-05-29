@@ -1,291 +1,252 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+
+# Spectral Gap Theorems for Certified Cayley Graphs
+
+This file proves the spectral gap theorems connecting harmonic triviality
+to quantitative expansion:
+
+1. **Dirichlet energy nonnegativity**
+2. **Maximum principle → harmonic constancy**
+3. **Dirichlet energy zero → constancy**
+4. **Positive Dirichlet energy for nonzero mean-zero functions**
+5. **Connected Cayley graphs have positive spectral gap**
+-/
+
 import Mathlib
+import GL2Expander.Defs
 
-/-!
-# Spectral Gap Detection of Compositeness via Arithmetic Dynamics
+open Finset BigOperators
 
-The squaring endomorphism `x ↦ x²` on `ZMod n` defines a canonical dynamical system
-whose fixed-point structure encodes the factorization of `n`. This file develops the
-**arithmetic-to-graph fragmentation** paradigm: factorization of `n` into multiple
-prime factors creates graph bottlenecks in the functional graph of squaring, which
-in turn suppress spectral expansion.
+variable {G : Type*} [Group G] [Fintype G] [DecidableEq G]
 
-## Key Definitions
+/-! ## Dirichlet Energy Properties -/
 
-* `sqMap n` — the squaring map on `ZMod n`
-* `SqAdj n` — undirected squaring adjacency
-* `sqBasin n e` — forward basin of an element under squaring iteration
-* `IdempotentSeparated n` — disjointness of basins of distinct idempotents
-* `sqEdgeBoundary n S` — edge boundary in the squaring graph
-* `sqConductance n S` — Cheeger-style conductance proxy
+theorem dirichlet_energy_nonneg
+    (S : Finset G) (f : G → ℝ) :
+    0 ≤ DirichletEnergy S f := by
+  exact mul_nonneg (inv_nonneg.2 <| Nat.cast_nonneg _)
+    (Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _)
 
-## Main Results
+theorem dirichlet_energy_add_const
+    (S : Finset G) (f : G → ℝ) (c : ℝ) :
+    DirichletEnergy S (fun x => f x + c) = DirichletEnergy S f := by
+  unfold DirichletEnergy; simp [add_sub_add_right_eq_sub]
 
-* `prime_sq_idempotents_eq_zero_or_one` — primes have only trivial idempotents
-* `prime_idempotentSubtype_card` — primes have exactly 2 idempotents
-* `exists_two_distinct_idempotents` — composites with ≥2 prime factors have ≥2 distinct idempotents
-* `idempotents_not_sq_adj` — distinct idempotents are never adjacent in the squaring graph
-* `sqBasin_disjoint_of_ne_idempotent` — basins of distinct idempotents are disjoint
-* `idempotent_separated` — `IdempotentSeparated n` holds for all `n`
-* `arithmetic_fragmentation_theorem` — arithmetic fragmentation creates disjoint nonempty basins
+/-! ## Averaging Operator Properties -/
 
-## References
+theorem avgOp_preserves_sum
+    (S : Finset G) (hS : S.Nonempty) (f : G → ℝ) :
+    ∑ x : G, avgOp S f x = ∑ x : G, f x := by
+  unfold avgOp
+  simp only [← Finset.mul_sum _ _ _]
+  rw [inv_mul_eq_div, div_eq_iff (Nat.cast_ne_zero.mpr hS.card_pos.ne')]
+  rw [Finset.sum_comm, mul_comm]
+  exact Eq.trans (Finset.sum_congr rfl fun _ _ => Equiv.sum_comp (Equiv.mulRight _) _) (by simp)
 
-* Catalog: `Pythagorean/DynamicalSquaring.lean`
-* Catalog: `Speculative/AutoResearch/PrimalityTesting/WitnessTheorems.lean`
--/
+/-! ## Maximum Principle -/
 
-open Finset Nat BigOperators Function
+theorem harmonic_max_neighbors_eq
+    (S : Finset G) (hS : S.Nonempty)
+    (f : G → ℝ) (x : G) (M : ℝ)
+    (hfx : f x = M) (hmax : ∀ y : G, f y ≤ M)
+    (havg : f x = avgOp S f x) :
+    ∀ s ∈ S, f (x * s) = M := by
+  unfold avgOp at havg
+  intro s hs
+  by_contra hne
+  have hlt : f (x * s) < M := lt_of_le_of_ne (hmax _) hne
+  have : (↑S.card : ℝ)⁻¹ * ∑ t ∈ S, f (x * t) < M := by
+    rw [inv_mul_lt_iff₀ (Nat.cast_pos.mpr hS.card_pos)]
+    calc ∑ t ∈ S, f (x * t)
+        < ∑ _t ∈ S, M := Finset.sum_lt_sum (fun a _ => hmax (x * a)) ⟨s, hs, hlt⟩
+      _ = S.card * M := by simp [mul_comm]
+  linarith [havg, hfx]
 
-noncomputable section
+theorem right_mul_closed_eq_univ'
+    (S : Finset G) (A : Finset G)
+    (_hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (hA : A.Nonempty)
+    (hclosed : ∀ a ∈ A, ∀ s ∈ S, a * s ∈ A) :
+    A = Finset.univ := by
+  set H : Subgroup G := Subgroup.closure (S : Set G)
+  have h_mul_subset : ∀ g ∈ H, ∀ a ∈ A, a * g ∈ A := by
+    refine' fun g hg => Subgroup.closure_induction (fun s hs => _) _ _ _ hg
+    · exact fun a ha => hclosed a ha s hs
+    · aesop
+    · exact fun x y hx hy hx' hy' a ha => by simpa only [mul_assoc] using hy' _ (hx' _ ha)
+    · intro x hx ih a ha
+      have h_inv : Finset.image (fun b => b * x) A = A :=
+        Finset.eq_of_subset_of_card_le (Finset.image_subset_iff.mpr ih)
+          (by rw [Finset.card_image_of_injective _ fun a b h => mul_right_cancel h])
+      replace h_inv := Finset.ext_iff.mp h_inv a; aesop
+  have h_top : ∀ g : G, g ∈ H := by aesop
+  obtain ⟨a, ha⟩ : ∃ a, a ∈ A := hA
+  exact Finset.eq_univ_of_forall fun g => by simpa using h_mul_subset (a⁻¹ * g) (h_top _) a ha
 
-/-! ## §1. The Squaring Map and Adjacency -/
+theorem harmonic_eq_const
+    (S : Finset G) (hS : S.Nonempty)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (f : G → ℝ) (hf : IsHarmonicOn S f) :
+    ∃ c : ℝ, ∀ x : G, f x = c := by
+  obtain ⟨M, hM⟩ : ∃ M, M ∈ Set.range f ∧ ∀ y ∈ Set.range f, y ≤ M := by
+    exact ⟨Finset.max' (Set.range f |> Set.toFinset)
+      ⟨_, Set.mem_toFinset.mpr (Set.mem_range_self 1)⟩,
+      Set.mem_toFinset.mp (Finset.max'_mem _ _),
+      fun y hy => Finset.le_max' _ _ (Set.mem_toFinset.mpr hy)⟩
+  have hA_nonempty : (Finset.filter (fun x => f x = M) Finset.univ).Nonempty :=
+    ⟨hM.1.choose, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hM.1.choose_spec⟩⟩
+  have hA_closed : ∀ a ∈ Finset.filter (fun x => f x = M) Finset.univ,
+      ∀ s ∈ S, a * s ∈ Finset.filter (fun x => f x = M) Finset.univ := by
+    intro a ha s hs
+    have := harmonic_max_neighbors_eq S hS f a M ?_ ?_ ?_ <;> aesop
+  exact ⟨M, fun x => by
+    have := right_mul_closed_eq_univ' S (Finset.filter (fun x => f x = M) Finset.univ)
+      hsym hgen (by simpa using hA_nonempty) (by simpa using hA_closed)
+    replace this := Finset.ext_iff.mp this x; aesop⟩
 
-/-- The squaring map on `ZMod n`. -/
-def sqMap (n : ℕ) : ZMod n → ZMod n := fun x => x ^ 2
+theorem harmonic_meanzero_eq_zero'
+    (S : Finset G) (hS : S.Nonempty)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (f : G → ℝ) (hf : IsHarmonicOn S f) (hmz : IsMeanZeroOn f) :
+    f = 0 := by
+  obtain ⟨c, hc⟩ := harmonic_eq_const S hS hsym hgen f hf
+  simp_all [funext_iff, IsMeanZeroOn]
 
-/-- Undirected squaring adjacency: `x` and `y` are adjacent if one maps to the other
-    and they are distinct. -/
-def SqAdj (n : ℕ) (x y : ZMod n) : Prop :=
-  x ≠ y ∧ (sqMap n x = y ∨ sqMap n y = x)
+/-! ## L² Norm Properties -/
 
-/-- The squaring map equals `x * x`. -/
-theorem sqMap_eq_mul_self {n : ℕ} (x : ZMod n) : sqMap n x = x * x := by
-  simp [sqMap, sq]
+omit [Group G] [DecidableEq G] in
+theorem l2NormSq_nonneg' (f : G → ℝ) : 0 ≤ l2NormSq' f :=
+  Finset.sum_nonneg fun _ _ => sq_nonneg _
 
-/-- Fixed points of the squaring map are exactly idempotents. -/
-theorem sqMap_fixed_iff {n : ℕ} (x : ZMod n) : sqMap n x = x ↔ x ^ 2 = x := by
-  simp [sqMap]
+omit [Group G] [DecidableEq G] in
+theorem l2NormSq_eq_zero_iff' (f : G → ℝ) : l2NormSq' f = 0 ↔ f = 0 := by
+  unfold l2NormSq'
+  rw [Finset.sum_eq_zero_iff_of_nonneg fun _ _ => sq_nonneg _]; aesop
 
-/-! ## §2. Idempotent Structure of Prime Moduli -/
-
-/-
-**Theorem 1 (Prime Rigidity)**: In `ZMod p` for prime `p`,
-    every idempotent is `0` or `1`. This follows from `ZMod p` being a field:
-    `x² = x` implies `x(x-1) = 0`, and fields have no zero divisors.
--/
-theorem prime_sq_idempotents_eq_zero_or_one
-    {p : ℕ} (hp : Nat.Prime p) (x : ZMod p) (hx : x ^ 2 = x) :
-    x = 0 ∨ x = 1 := by
-  haveI := Fact.mk hp; exact or_iff_not_imp_left.mpr fun h => mul_left_cancel₀ h <| by linear_combination' hx;
-
-/-
-**Theorem 2 (Prime Idempotent Count)**: A prime modulus has exactly 2 idempotents.
--/
-theorem prime_idempotentSubtype_card
-    {p : ℕ} (hp : Nat.Prime p) :
-    haveI : NeZero p := ⟨hp.ne_zero⟩
-    (Finset.univ.filter (fun x : ZMod p => x ^ 2 = x)).card = 2 := by
-  haveI := Fact.mk hp; rw [ Finset.card_eq_two ] ;
-  refine' ⟨ 0, 1, _, _ ⟩ <;> norm_num [ Finset.ext_iff ];
-  exact fun a => ⟨ fun h => or_iff_not_imp_left.mpr fun ha => mul_left_cancel₀ ha <| by linear_combination h, fun h => h.elim ( fun ha => by simp +decide [ ha ] ) fun ha => by simp +decide [ ha ] ⟩
-
-/-! ## §3. Nontrivial Idempotents from Factorization -/
-
-/-
-CRT produces a nontrivial idempotent from coprime factorization.
-    The element mapping to `(1, 0)` under CRT is idempotent but ≠ 0 and ≠ 1.
--/
-theorem nontrivial_idempotent_of_coprime_factors (m k : ℕ) (hm : 1 < m) (hk : 1 < k)
-    (hcop : Nat.Coprime m k) :
-    ∃ e : ZMod (m * k), e ^ 2 = e ∧ e ≠ 0 ∧ e ≠ 1 := by
-  obtain ⟨e, he⟩ : ∃ e : ZMod (m * k), e ≠ 0 ∧ e ≠ 1 ∧ e^2 = e := by
-    -- By the Chinese Remainder Theorem, there exists an element $e$ in $ZMod (m * k)$ such that $e \equiv 1 \pmod{m}$ and $e \equiv 0 \pmod{k}$.
-    obtain ⟨e, he⟩ : ∃ e : ZMod (m * k), e.val ≡ 1 [MOD m] ∧ e.val ≡ 0 [MOD k] := by
-      -- By the Chinese Remainder Theorem, there exists an integer $e$ such that $e \equiv 1 \pmod{m}$ and $e \equiv 0 \pmod{k}$.
-      obtain ⟨e, he⟩ : ∃ e : ℕ, e ≡ 1 [MOD m] ∧ e ≡ 0 [MOD k] ∧ e < m * k := by
-        have := Nat.chineseRemainder hcop 1 0;
-        exact ⟨ this.val % ( m * k ), by simpa [ Nat.ModEq, Nat.mod_mod ] using this.2.1, by simpa [ Nat.ModEq, Nat.mod_mod ] using this.2.2, Nat.mod_lt _ ( by positivity ) ⟩;
-      use e;
-      simp_all +decide [ Nat.mod_eq_of_lt ];
-    refine' ⟨ e, _, _, _ ⟩;
-    · intro h; simp_all +decide [ Nat.ModEq ];
-    · intro h; have := he.2; simp_all +decide [ Nat.ModEq, Nat.mod_eq_of_lt hm, Nat.mod_eq_of_lt hk ] ;
-      rcases m with ( _ | _ | m ) <;> rcases k with ( _ | _ | k ) <;> simp_all +decide [ ZMod.val ];
-      cases he.2;
-    · have h_e_sq : e.val ^ 2 ≡ e.val [MOD (m * k)] := by
-        rw [ ← Nat.modEq_and_modEq_iff_modEq_mul ];
-        · simp_all +decide [ ← ZMod.natCast_eq_natCast_iff ];
-        · assumption;
-      simp_all +decide [ ← ZMod.natCast_eq_natCast_iff ];
-      cases m <;> cases k <;> aesop;
-  exact ⟨ e, he.2.2, he.1, he.2.1 ⟩
-
-/-
-Helper: a number with ≥2 distinct prime factors admits a coprime factorization.
--/
-theorem exists_coprime_split {n : ℕ} (hn : 1 < n)
-    (hω : 2 ≤ (Nat.factorization n).support.card) :
-    ∃ m k, 1 < m ∧ 1 < k ∧ n = m * k ∧ Nat.Coprime m k := by
-  -- Since n has ≥2 distinct prime factors, pick any prime p dividing n. Let a = p^(v_p(n)) be the p-part, k = n/a the coprime complement.
-  obtain ⟨p, hp⟩ : ∃ p, Nat.Prime p ∧ p ∣ n := by
-    exact Nat.exists_prime_and_dvd hn.ne'
-  obtain ⟨k, hk⟩ : ∃ k, n = p ^ (n.factorization p) * k ∧ Nat.Coprime (p ^ (n.factorization p)) k := by
-    exact ⟨ n / p ^ n.factorization p, by rw [ Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ], by exact Nat.Coprime.pow_left _ <| hp.left.coprime_iff_not_dvd.mpr <| Nat.not_dvd_ordCompl ( by aesop ) <| by aesop ⟩;
-  refine ⟨ p ^ n.factorization p, k, ?_, ?_, hk.1, hk.2 ⟩ <;> contrapose! hω <;> norm_num at *;
-  · exact absurd hω ( not_le_of_gt ( pow_lt_pow_right₀ hp.1.one_lt ( Nat.pos_of_ne_zero ( Finsupp.mem_support_iff.mp ( by { exact Nat.mem_primeFactors.mpr ⟨ hp.1, hp.2, by linarith ⟩ } ) ) ) ) );
-  · interval_cases k <;> norm_num at *;
-    · linarith;
-    · rw [ hk, Nat.primeFactors_pow ] <;> norm_num [ hp.1 ];
-      exact Finsupp.mem_support_iff.mp ( by contrapose! hk; simp_all +singlePass [ Nat.factorization_eq_zero_iff ] )
+/-! ## Dirichlet Energy Zero Implies Constancy -/
 
 /-
-**Theorem 3 (Composite Fragmentation)**: If `n` has at least two distinct prime factors,
-    there exist two distinct idempotents in `ZMod n`.
+If the Dirichlet energy is zero, then `f(x) = f(x*s)` for all `x` and `s ∈ S`.
 -/
-theorem exists_two_distinct_idempotents
-    {n : ℕ} (hn : 1 < n)
-    (hω : 2 ≤ (Nat.factorization n).support.card) :
-    ∃ e₁ e₂ : ZMod n, e₁ ≠ e₂ ∧ e₁ ^ 2 = e₁ ∧ e₂ ^ 2 = e₂ := by
-  -- Use `exists_coprime_split` to get m, k with 1 < m, 1 < k, n = m*k, coprime.
-  obtain ⟨m, k, hm, hk, hn_eq, hcop⟩ : ∃ m k : ℕ, 1 < m ∧ 1 < k ∧ n = m * k ∧ Nat.Coprime m k := exists_coprime_split hn hω;
-  -- Use `nontrivial_idempotent_of_coprime_factors` to get e with e^2 = e, e ≠ 0, e ≠ 1.
-  obtain ⟨e, he⟩ : ∃ e : ZMod (m * k), e ^ 2 = e ∧ e ≠ 0 ∧ e ≠ 1 := nontrivial_idempotent_of_coprime_factors m k hm hk hcop;
-  subst hn_eq; use 0, e; aesop;
-
-/-! ## §4. Isolation of Idempotents in the Squaring Graph -/
+omit [DecidableEq G] in
+theorem dirichlet_zero_implies_neighbor_eq
+    (S : Finset G) (hS : S.Nonempty) (f : G → ℝ)
+    (hE : DirichletEnergy S f = 0) :
+    ∀ (x : G) (s : G), s ∈ S → f x = f (x * s) := by
+  -- By definition of Dirichlet energy, we have that $\sum_{x \in G} \sum_{s \in S} (f(x) - f(xs))^2 = 0$.
+  have h_sum_zero : ∑ x : G, ∑ s ∈ S, (f x - f (x * s)) ^ 2 = 0 := by
+    unfold DirichletEnergy at hE;
+    aesop;
+  rw [ Finset.sum_eq_zero_iff_of_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _ ] at h_sum_zero;
+  simp_all +decide [ Finset.sum_eq_zero_iff_of_nonneg, sq_nonneg, sub_eq_zero ];
+  exact fun x s hs => h_sum_zero x s hs
 
 /-
-**Theorem 4 (Idempotent Isolation)**: Distinct idempotents are never adjacent
-    in the undirected squaring graph. If `e₁² = e₁` and `e₂² = e₂` and `e₁ ≠ e₂`,
-    then neither `e₁² = e₂` nor `e₂² = e₁` can hold, since `eᵢ² = eᵢ`.
+If `f(x) = f(x*s)` for all `x, s ∈ S`, then `f` is harmonic.
 -/
-theorem idempotents_not_sq_adj
-    {n : ℕ} {e₁ e₂ : ZMod n}
-    (h₁ : e₁ ^ 2 = e₁) (h₂ : e₂ ^ 2 = e₂) (hne : e₁ ≠ e₂) :
-    ¬ SqAdj n e₁ e₂ := by
-  -- By definition of `SqAdj`, we need to show that `e₁` and `e₂` are not adjacent in the squaring graph.
-  unfold SqAdj;
-  unfold sqMap; aesop;
-
-/-! ## §5. Basin Decomposition -/
-
-/-- The forward basin of `e` under the squaring map: all elements whose
-    iterated squaring eventually reaches `e`. -/
-def sqBasin (n : ℕ) (e : ZMod n) : Set (ZMod n) :=
-  {x | ∃ k : ℕ, (sqMap n)^[k] x = e}
+omit [DecidableEq G] in
+theorem neighbor_eq_implies_harmonic
+    (S : Finset G) (hS : S.Nonempty) (f : G → ℝ)
+    (heq : ∀ (x : G) (s : G), s ∈ S → f x = f (x * s)) :
+    IsHarmonicOn S f := by
+  intro x
+  unfold avgOp
+  have h_sum_eq : ∑ s ∈ S, f (x * s) = S.card * f x := by
+    rw [ Finset.sum_congr rfl fun s hs => heq x s hs |> Eq.symm, Finset.sum_const, nsmul_eq_mul ]
+  simp [h_sum_eq];
+  rw [ ← mul_assoc, inv_mul_cancel₀ ( Nat.cast_ne_zero.mpr hS.card_pos.ne' ), one_mul ]
 
 /-
-Once an orbit reaches an idempotent, it stays there forever.
+**Theorem (Positive Dirichlet energy for nonzero mean-zero functions).**
+
+On a connected Cayley graph, the Dirichlet energy of any nonzero mean-zero
+function is strictly positive. This is the core qualitative spectral gap result.
+
+*Proof.* If E(f) = 0, then f(x) = f(x*s) for all generators s. By the
+maximum principle (via harmonic constancy), f is constant. Being mean-zero
+and constant, f = 0.
 -/
-theorem sqMap_iterate_of_idempotent {n : ℕ} {e : ZMod n} (he : e ^ 2 = e)
-    (k : ℕ) : (sqMap n)^[k] e = e := by
-  induction k <;> simp_all +decide [ Function.iterate_succ_apply', sqMap ]
+theorem dirichlet_pos_of_meanzero_nonzero
+    (S : Finset G) (hS : S.Nonempty)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (f : G → ℝ) (hmz : IsMeanZeroOn f) (hf : f ≠ 0) :
+    0 < DirichletEnergy S f := by
+  contrapose! hf;
+  apply harmonic_meanzero_eq_zero' S hS hsym hgen f (neighbor_eq_implies_harmonic S hS f (dirichlet_zero_implies_neighbor_eq S hS f (le_antisymm hf (dirichlet_energy_nonneg S f)) )) hmz
+
+/-! ## Spectral Gap Positivity -/
 
 /-
-**Theorem 5 (Basin Disjointness)**: Basins of distinct idempotents are disjoint.
-    If `x` iterates to `e₁` in `k₁` steps and to `e₂` in `k₂` steps, then
-    applying more squaring from `e₁` gives `e₁` (by idempotency), but also
-    must give `e₂`, forcing `e₁ = e₂`.
+**Theorem (Harmonic triviality implies positive spectral gap).**
+
+This is the quantitative bridge from harmonic analysis to spectral expansion.
+The spectral gap `spectralGap' S` — defined as the infimum of
+`E(f)/‖f‖²` over nonzero mean-zero functions — is strictly positive
+whenever the Cayley graph is connected.
+
+*Proof.* The spectral gap equals the minimum eigenvalue of the Laplacian
+restricted to the mean-zero subspace. Since harmonic triviality implies
+this eigenvalue is positive, the spectral gap is positive.
+
+In the finite-dimensional setting, this minimum is attained (the set
+of unit-norm mean-zero functions is compact), so the infimum is
+actually a minimum.
 -/
-theorem sqBasin_disjoint_of_ne_idempotent {n : ℕ} {e₁ e₂ : ZMod n}
-    (h₁ : e₁ ^ 2 = e₁) (h₂ : e₂ ^ 2 = e₂) (hne : e₁ ≠ e₂) :
-    Disjoint (sqBasin n e₁) (sqBasin n e₂) := by
-  refine' Set.disjoint_left.mpr _;
-  intro x hx₁ hx₂; obtain ⟨ k₁, hk₁ ⟩ := hx₁; obtain ⟨ k₂, hk₂ ⟩ := hx₂; cases le_total k₁ k₂ <;> have := sqMap_iterate_of_idempotent h₁ <;> have := sqMap_iterate_of_idempotent h₂ <;> simp_all +decide [ Function.iterate_add_apply ] ;
-  · have := Function.iterate_add_apply ( sqMap n ) ( k₂ - k₁ ) k₁ x; simp_all +decide [ Nat.add_sub_of_le ‹k₁ ≤ k₂› ] ;
-  · have := Function.iterate_add_apply ( sqMap n ) k₂ ( k₁ - k₂ ) x; simp_all +decide [ Nat.add_sub_of_le ‹_› ] ;
-    have h_eq : (sqMap n)^[k₂] ((sqMap n)^[k₁ - k₂] x) = (sqMap n)^[k₁ - k₂] ((sqMap n)^[k₂] x) := by
-      rw [ ← Function.iterate_add_apply, add_comm, Function.iterate_add_apply ];
-    aesop
+theorem harmonic_trivial_implies_gap_pos'
+    (S : Finset G) (hS : S.Nonempty)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (hcard : 1 < Fintype.card G)
+    (hharm : ∀ f : G → ℝ, IsHarmonicOn S f → IsMeanZeroOn f → f = 0) :
+    0 < spectralGap' S := by
+  -- By definition of $spectralGap'$ �,� we know that it is the infimum of $ DirichletEnergy S$ over nonzero mean-zero functions.
+  have h_inf_pos : ∃ f : G → ℝ, IsMeanZeroOn f ∧ l2NormSq' f = 1 ∧ 0 < DirichletEnergy S f := by
+    -- Let's choose any $f$ that � is� mean-zero and has unit $L^2$ norm.
+    obtain ⟨f, hf_mean_zero, hf_norm⟩ : ∃ f : G → ℝ, IsMeanZeroOn f ∧ l2NormSq' f = 1 := by
+      -- Let's choose any two distinct � elements� $a$ and $b$ in $G$.
+      obtain ⟨a, b, hab⟩ : ∃ a b : G, a ≠ b := by
+        exact Fintype.one_lt_card_iff.1 hcard;
+      -- Define the function $f$ such that $f(a) = \frac{1}{\sqrt{2}}$, $f(b) = -\frac{1}{\sqrt �{�2}}$, and $f(x) = 0$ for all other $x \in G$.
+      use fun x => if x = a then 1 / Real.sqrt 2 else if x = b then -1 / Real.sqrt 2 else 0;
+      unfold IsMeanZeroOn l2NormSq';
+      norm_num [ Finset.sum_ite, Finset.filter_eq', Finset.filter_ne', hab ];
+      grind;
+    grind +suggestions;
+  -- Since the set of mean-zero functions is compact and the� Dir�ich �let� energy is continuous, the infimum is attained.
+  have h_compact : IsCompact {f : G → ℝ | IsMeanZeroOn f ∧ l2NormSq' f = 1} := by
+    have h_closed : IsClosed {f : G → ℝ | IsMeanZeroOn f ∧ l2NormSq' f = 1} := by
+      exact IsClosed.inter ( isClosed_eq ( continuous_finset_sum _ fun _ _ => continuous_apply _ ) continuous_const ) ( isClosed_eq ( continuous_finset_sum _ fun _ _ => continuous_apply _ |> Continuous.pow <| 2 ) continuous_const );
+    exact CompactIccSpace.isCompact_Icc.of_isClosed_subset h_closed fun f hf => ⟨ fun i => neg_le_of_abs_le <| by simpa using Real.abs_le_sqrt <| show f i ^ 2 ≤ 1 by have := hf.2; rw [ show l2NormSq' f = ∑ i, f i ^ 2 from rfl ] at this; exact this ▸ Finset.single_le_sum ( fun i _ => sq_nonneg ( f i ) ) ( Finset.mem_univ i ), fun i => le_of_abs_le <| by simpa using Real.abs_le_sqrt <| show f i ^ 2 ≤ 1 by have := hf.2; rw [ show l2NormSq' f = ∑ i, f i ^ 2 from rfl ] at this; exact this ▸ Finset.single_le_sum ( fun i _ => sq_nonneg ( f i ) ) ( Finset.mem_univ i ) ⟩;
+  -- By the extreme value theorem, the infimum of $ DirichletEnergy S$ over nonzero mean-zero functions is attained.
+  obtain ⟨f, hf⟩ : ∃ f ∈ {f : G → ℝ | IsMeanZeroOn f ∧ l2NormSq' f = 1}, ∀ g ∈ {f : G → ℝ | IsMeanZeroOn f ∧ l2NormSq' f = 1}, DirichletEnergy S f ≤ DirichletEnergy S g := by
+    have h_continuous : ContinuousOn (fun f : G → ℝ => DirichletEnergy S f) {f : G → ℝ | IsMeanZeroOn f ∧ l2NormSq' f = 1} := by
+      refine' Continuous.continuousOn _;
+      refine' continuous_const.mul _;
+      fun_prop;
+    exact h_compact.exists_isMinOn ⟨ h_inf_pos.choose, h_inf_pos.choose_spec.1, h_inf_pos.choose_spec.2.1 ⟩ h_continuous;
+  refine' lt_of_lt_of_le _ ( le_csInf _ _ );
+  any_goals exact Set.Nonempty.image _ ⟨ f, hf.1 ⟩;
+  convert dirichlet_pos_of_meanzero_nonzero S hS hsym hgen f hf.1.1 _;
+  · rintro rfl; simp_all +decide [ l2NormSq' ];
+  · grind +qlia
 
-/-- The basin separation property holds universally. -/
-def IdempotentSeparated (n : ℕ) : Prop :=
-  ∀ ⦃e₁ e₂ : ZMod n⦄, e₁ ≠ e₂ →
-    e₁ ^ 2 = e₁ → e₂ ^ 2 = e₂ →
-    Disjoint (sqBasin n e₁) (sqBasin n e₂)
+/--
+**Master Theorem (Connected Cayley graphs have positive spectral gap).**
 
-/-- **Corollary**: `IdempotentSeparated n` holds for all `n`. -/
-theorem idempotent_separated (n : ℕ) : IdempotentSeparated n := by
-  intro e₁ e₂ hne h₁ h₂
-  exact sqBasin_disjoint_of_ne_idempotent h₁ h₂ hne
-
-/-! ## §6. Edge Boundary and Conductance Proxy -/
-
-/-- The edge boundary of a subset `S` in the squaring graph:
-    elements of `S` whose squaring image lies outside `S`. -/
-def sqEdgeBoundary (n : ℕ) [NeZero n] (S : Finset (ZMod n)) : Finset (ZMod n) :=
-  S.filter fun x => sqMap n x ∉ S
-
-/-- Edge boundary size as a natural number. -/
-def sqEdgeBoundaryCard (n : ℕ) [NeZero n] (S : Finset (ZMod n)) : ℕ :=
-  (sqEdgeBoundary n S).card
-
-/-- Conductance proxy: ratio of edge boundary to subset size. -/
-def sqConductance (n : ℕ) [NeZero n] (S : Finset (ZMod n)) : ℚ :=
-  if S.card = 0 then 0
-  else (sqEdgeBoundaryCard n S : ℚ) / (S.card : ℚ)
-
-/-- Verified edge boundary bound: the edge boundary is always at most the set itself. -/
-theorem sqEdgeBoundary_card_le (n : ℕ) [NeZero n] (S : Finset (ZMod n)) :
-    sqEdgeBoundaryCard n S ≤ S.card :=
-  Finset.card_filter_le S _
-
-/-- Conductance is bounded above by 1. -/
-theorem sqConductance_le_one (n : ℕ) [NeZero n] (S : Finset (ZMod n)) :
-    sqConductance n S ≤ 1 := by
-  simp only [sqConductance]
-  split_ifs with h
-  · norm_num
-  · rw [div_le_one (by positivity)]
-    exact_mod_cast sqEdgeBoundary_card_le n S
-
-/-! ## §7. Cross-Domain Bridge: Arithmetic Fragmentation → Graph Structure -/
-
-/-- Every idempotent is in its own basin. -/
-theorem mem_sqBasin_self {n : ℕ} (e : ZMod n) : e ∈ sqBasin n e :=
-  ⟨0, rfl⟩
-
-/-- Zero is always an idempotent. -/
-theorem zero_idempotent (n : ℕ) : (0 : ZMod n) ^ 2 = 0 := by ring
-
-/-- One is always an idempotent. -/
-theorem one_idempotent (n : ℕ) : (1 : ZMod n) ^ 2 = 1 := by ring
-
-/-- **Theorem 6 (Arithmetic Fragmentation Bridge)**: When `n` has at least two distinct
-    prime factors, the functional graph of squaring decomposes into at least two disjoint
-    nonempty basins. This is the formal bridge from number theory (factorization) to
-    spectral graph theory (graph fragmentation): compositeness creates phase-space
-    decomposition in the squaring dynamics. -/
-theorem arithmetic_fragmentation_theorem
-    {n : ℕ} (hn : 1 < n)
-    (hω : 2 ≤ (Nat.factorization n).support.card) :
-    ∃ e₁ e₂ : ZMod n, e₁ ≠ e₂ ∧
-      e₁ ^ 2 = e₁ ∧ e₂ ^ 2 = e₂ ∧
-      Disjoint (sqBasin n e₁) (sqBasin n e₂) ∧
-      e₁ ∈ sqBasin n e₁ ∧ e₂ ∈ sqBasin n e₂ := by
-  obtain ⟨e₁, e₂, hne, h₁, h₂⟩ := exists_two_distinct_idempotents hn hω
-  exact ⟨e₁, e₂, hne, h₁, h₂,
-    sqBasin_disjoint_of_ne_idempotent h₁ h₂ hne,
-    mem_sqBasin_self e₁, mem_sqBasin_self e₂⟩
-
-/-! ## §8. Verified Computational Method -/
-
-/-- Compute the set of idempotents as a `Finset`. -/
-def computeIdempotents (n : ℕ) [NeZero n] : Finset (ZMod n) :=
-  Finset.univ.filter (fun x => x ^ 2 = x)
-
-/-- Every element reported by `computeIdempotents` is truly idempotent. -/
-theorem computeIdempotents_correct (n : ℕ) [NeZero n] (x : ZMod n)
-    (hx : x ∈ computeIdempotents n) : x ^ 2 = x := by
-  simp [computeIdempotents] at hx; exact hx
-
-/-- The computed idempotent set contains all idempotents. -/
-theorem computeIdempotents_complete (n : ℕ) [NeZero n] (x : ZMod n)
-    (hx : x ^ 2 = x) : x ∈ computeIdempotents n := by
-  simp [computeIdempotents]; exact hx
-
-/-- Iterate squaring `k` times. -/
-def sqIterate (n : ℕ) (k : ℕ) (x : ZMod n) : ZMod n :=
-  (sqMap n)^[k] x
-
-/-- Verify that a claimed basin membership is correct. -/
-def verifyBasinMembership (n : ℕ) [NeZero n] (x e : ZMod n) (k : ℕ) : Bool :=
-  decide ((sqMap n)^[k] x = e)
-
-/-- The basin membership verifier is sound. -/
-theorem verifyBasinMembership_sound (n : ℕ) [NeZero n] (x e : ZMod n) (k : ℕ)
-    (h : verifyBasinMembership n x e k = true) : x ∈ sqBasin n e := by
-  simp [verifyBasinMembership] at h
-  exact ⟨k, h⟩
-
-end
+For any symmetric generating set of a finite group with |G| > 1,
+the Cayley graph has positive spectral gap.
+-/
+theorem connected_cayley_spectral_gap_pos'
+    (S : Finset G) (hS : S.Nonempty)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (hcard : 1 < Fintype.card G) :
+    0 < spectralGap' S :=
+  harmonic_trivial_implies_gap_pos' S hS hsym hgen hcard
+    (harmonic_meanzero_eq_zero' S hS hsym hgen)
