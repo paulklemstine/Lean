@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2070 of the highest-quality
+A curated collection of 2073 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2070
+Total files: 2073
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -851,6 +851,7 @@ import FINAL.Bridges.WeightedDescentLorentzian
 import FINAL.Bridges.WeightedTropicalHodge
 import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.WreathONanScott
+import FINAL.Bridges.WreathPressure
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
@@ -1336,6 +1337,7 @@ import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinCutPrinciple
 import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.ModelShrinkage
+import FINAL.MachineLearning.MotivicPersistence
 import FINAL.MachineLearning.MultiHead
 import FINAL.MachineLearning.MulticlassMargin
 import FINAL.MachineLearning.NNCompilationTheory
@@ -1356,6 +1358,7 @@ import FINAL.MachineLearning.PigeonholeFamily
 import FINAL.MachineLearning.PluralityRobust
 import FINAL.MachineLearning.PresheafIdentifiability
 import FINAL.MachineLearning.PrimeGapFramework
+import FINAL.MachineLearning.PrimeTorsionEcho
 import FINAL.MachineLearning.PrimitiveReduction
 import FINAL.MachineLearning.ProdBounds
 import FINAL.MachineLearning.ProfileDepthGap

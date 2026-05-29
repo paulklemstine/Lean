@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Topology / Pythagorean",
     "date": "2026-05-29T17:13:37Z",
     "exp_id": "a5ff655f",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7093077399380805,
+    "quality": "substantial",
     "pkg_num": 329
   },
   {
@@ -9550,8 +9550,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-29T17:13:37Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7093077399380805,
+      "quality": "substantial"
     }
   ],
   "edges": [
