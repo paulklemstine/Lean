@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Probability / Tropical Geometry / Astrobiology",
     "date": "2026-05-29T20:42:20Z",
     "exp_id": "49229093",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.701114705882353,
+    "quality": "substantial",
     "pkg_num": 346
   },
   {
@@ -10043,8 +10043,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-29T20:42:20Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.701114705882353,
+      "quality": "substantial"
     }
   ],
   "edges": [
