@@ -1807,7 +1807,7 @@ Research mode: {concept.research_mode}
     def _cleanup_future_directions(self) -> None:
         """Ask Pi-Agent to prune junk directions and brainstorm a novel new one.
 
-        Reviews the future directions list, removes dead/useless/boring entries,
+        Reviews the future directions list in batches, removes dead/useless/boring entries,
         and adds one fresh, interesting direction. Runs every ~10 cycles to save pollen.
         """
         from research_memory import FutureDirectionsManager, FutureDirection
@@ -1820,71 +1820,108 @@ Research mode: {concept.research_mode}
         if self.cycle_count % 10 != 0 and self.cycle_count > 0:
             return
 
-        print(f"[Cleanup] Asking Pi-Agent to review {len(available)} future directions...")
+        # Batch the review to avoid prompt truncation: review in chunks of 80 directions
+        BATCH_SIZE = 80
+        all_removed_ids = set()
 
-        # Build a compact listing
-        dir_lines = []
-        for d in available:
-            desc_preview = d.description[:150].replace("\n", " ").strip()
-            dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}) {d.title}: {desc_preview}")
-        directions_text = "\n".join(dir_lines)
+        for batch_start in range(0, len(available), BATCH_SIZE):
+            batch = available[batch_start:batch_start + BATCH_SIZE]
 
-        system = (
+            print(f"[Cleanup] Asking Pi-Agent to review batch {batch_start // BATCH_SIZE + 1}: {len(batch)} of {len(available)} directions...")
+
+            # Build a compact listing
+            dir_lines = []
+            for d in batch:
+                desc_preview = d.description[:150].replace("\n", " ").strip()
+                dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}) {d.title}: {desc_preview}")
+            directions_text = "\n".join(dir_lines)
+
+            system = (
+                "You are a research direction curator for the Aether autonomous math research system.\n\n"
+                "TASK — PRUNE: Review the future directions below. Identify entries that are:\n"
+                "- JUNK: vague, trivially obvious, nonsensical, or not real mathematics\n"
+                "- BORING: rephrasings of common knowledge with no novel angle\n"
+                "- DEAD: duplicates of other entries or already-proved results\n"
+                "Return their IDs in the \"remove\" array.\n\n"
+                "Be CONSERVATIVE with removals — only remove clear junk/boring/dead entries.\n"
+                "Do NOT remove entries just because they seem speculative or unusual.\n"
+                "Do NOT remove entries with priority >= 0.85 — these are important directions.\n\n"
+                "Respond in this exact JSON format:\n"
+                '{\n'
+                '  "remove": ["dir_id_1", "dir_id_2"],\n'
+                '  "notes": "brief summary of what was removed and why"\n'
+                '}'
+            )
+
+            user = f"Here are {len(batch)} available future research directions (batch {batch_start // BATCH_SIZE + 1}):\n\n{directions_text}"
+
+            try:
+                raw = self.pi_agent._call_ollama(system, user, timeout=60)
+            except Exception as e:
+                print(f"[Cleanup] Pi-Agent call failed for batch: {e}")
+                continue
+
+            result = self.pi_agent._parse_json_response(raw)
+            if not result:
+                print(f"[Cleanup] Could not parse Pi-Agent cleanup response for batch")
+                continue
+
+            for dir_id in result.get("remove", []):
+                all_removed_ids.add(dir_id)
+
+        # Only brainstorm a new direction once, after all batches are reviewed
+        # Build a compact listing of all available directions for brainstorming context
+        existing_titles = [d.title for d in available]
+        existing_titles_preview = existing_titles[:30]  # Just send titles to avoid truncation
+
+        brainstorm_system = (
             "You are a research direction curator for the Aether autonomous math research system.\n\n"
-            "TASK 1 — PRUNE: Review the future directions below. Identify entries that are:\n"
-            "- JUNK: vague, trivially obvious, nonsensical, or not real mathematics\n"
-            "- BORING: rephrasings of common knowledge with no novel angle\n"
-            "- DEAD: duplicates of other entries or already-proved results\n"
-            "Return their IDs in the \"remove\" array.\n\n"
-            "TASK 2 — BRAINSTORM: Invent ONE novel, interesting, exciting new research direction\n"
-            "that is NOT covered by any existing entry. It should be a testable scientific hypothesis:\n"
-            "a falsifiable conjecture with a clear test. Be bold and creative — cross domains,\n"
-            "think sci-fi, aim for paradigm-shifting ideas. Put it in the \"new_direction\" object.\n\n"
-            "Be conservative with removals (only clear junk/boring/dead). Be creative with the new direction.\n\n"
+            "Invent ONE novel, interesting, exciting new research direction that is NOT covered by any existing entry.\n"
+            "It should be a testable scientific hypothesis: a falsifiable conjecture with a clear test.\n"
+            "Draw from frontier mathematics, physics, computation, and speculative ideas.\n\n"
             "Respond in this exact JSON format:\n"
             '{\n'
-            '  "remove": ["dir_id_1", "dir_id_2"],\n'
             '  "new_direction": {\n'
             '    "title": "...",\n'
             '    "description": "Conjecture: [precise falsifiable statement]. Test: [what confirms/refutes]. Impact: [what this enables]",\n'
             '    "domains": ["Domain1", "Domain2"]\n'
-            '  },\n'
-            '  "notes": "brief summary"\n'
+            '  }\n'
             '}'
         )
 
-        user = f"Here are {len(available)} available future research directions:\n\n{directions_text}"
+        brainstorm_user = f"Here are some existing research direction titles (do NOT duplicate these):\n" + "\n".join(f"- {t}" for t in existing_titles_preview)
 
+        new_direction_data = None
         try:
-            raw = self.pi_agent._call_ollama(system, user, timeout=60)
+            raw = self.pi_agent._call_ollama(brainstorm_system, brainstorm_user, timeout=60)
+            result = self.pi_agent._parse_json_response(raw)
+            if result:
+                new_direction_data = result.get("new_direction")
         except Exception as e:
-            print(f"[Cleanup] Pi-Agent call failed: {e}")
-            return
-
-        result = self.pi_agent._parse_json_response(raw)
-        if not result:
-            print(f"[Cleanup] Could not parse Pi-Agent cleanup response")
-            return
+            print(f"[Cleanup] Pi-Agent brainstorm call failed: {e}")
 
         # Remove junk (prune ALL directions matching each ID, not just the first)
         removed = 0
-        for dir_id in result.get("remove", []):
+        for dir_id in all_removed_ids:
             for d in fd_manager._directions:
                 if d.id == dir_id and d.status == "available":
+                    # Protect high-priority directions from removal
+                    if d.priority_score >= 0.85:
+                        print(f"[Cleanup] Skipping removal of {d.id} (priority={d.priority_score:.2f}): {d.title[:50]}")
+                        continue
                     d.status = "pruned"
                     removed += 1
 
         # Add brainstormed direction
-        new_dir = result.get("new_direction")
         added_new = False
-        if new_dir and new_dir.get("title") and new_dir.get("description"):
+        if new_direction_data and new_direction_data.get("title") and new_direction_data.get("description"):
             fd = FutureDirection(
                 id=fd_manager._next_id(),
-                title=new_dir["title"][:80],
-                description=new_dir["description"][:2000],
+                title=new_direction_data["title"][:80],
+                description=new_direction_data["description"][:2000],
                 source_exp_id="pi_brainstorm",
                 source_path="brainstorm",
-                domains=new_dir.get("domains", ["Bridges"]),
+                domains=new_direction_data.get("domains", ["Bridges"]),
                 depth_estimate=3,
                 priority_score=0.80,
             )

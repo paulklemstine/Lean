@@ -360,7 +360,7 @@ class PiAgentClient:
 
         # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
         # This is a last-resort safety net — upstream budgeting should keep prompts well under this
-        MAX_PROMPT_CHARS = 40000
+        MAX_PROMPT_CHARS = 120000
         if input_chars > MAX_PROMPT_CHARS:
             print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
             user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
@@ -1883,7 +1883,7 @@ class PiAgentClient:
         """)
 
         # Prompt size budget enforcement: cap at 30K chars
-        PROMPT_BUDGET = 30000
+        PROMPT_BUDGET = 100000
         if len(direct_prompt) > PROMPT_BUDGET:
             original_len = len(direct_prompt)
             # Progressively truncate lower-priority sections
