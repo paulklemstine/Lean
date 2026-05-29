@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Topology / Network Science",
     "date": "2026-05-29T20:08:40Z",
     "exp_id": "24837962",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6528458620689657,
+    "quality": "partial",
     "pkg_num": 344
   },
   {
@@ -9985,8 +9985,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-29T20:08:40Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6528458620689657,
+      "quality": "partial"
     }
   ],
   "edges": [
