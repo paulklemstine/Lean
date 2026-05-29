@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Mathematical Physics",
     "date": "2026-05-29T04:57:04Z",
     "exp_id": "4dd1f7b8",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6845928615384616,
+    "quality": "partial",
     "pkg_num": 293
   },
   {
@@ -8506,8 +8506,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-05-29T04:57:04Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6845928615384616,
+      "quality": "partial"
     }
   ],
   "edges": [
