@@ -61,16 +61,21 @@ class QualityScore:
 
     @property
     def composite(self) -> float:
-        """Weighted composite score (9 axes)."""
+        """Weighted composite score (9 axes).
+
+        Cross-domain weight increased from 0.10 to 0.14 to reward genuine
+        cross-domain connections and penalize narrow incremental work.
+        Proof depth weight increased from 0.15 to 0.17 to reward depth.
+        """
         return (
-            0.15 * self.proof_depth +
+            0.17 * self.proof_depth +
             0.12 * self.novelty +
-            0.10 * self.cross_domain +
+            0.14 * self.cross_domain +
             0.05 * self.artifact_richness +
             0.06 * self.actionability +
-            0.18 * self.importance +
+            0.16 * self.importance +
             0.12 * self.usefulness +
-            0.14 * self.applications +
+            0.10 * self.applications +
             0.08 * self.catalog_anchoring
         )
 
@@ -164,6 +169,46 @@ class QualityEvaluator:
         score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
         score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
         score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
+
+        # Domain overlap penalty: if this package's domains are already heavily
+        # represented in existing_titles, reduce the composite score
+        if existing_titles and concept_title:
+            overlap_count = 0
+            title_lower = concept_title.lower()
+            # Count how many existing titles share significant words (>5 chars)
+            title_words = set(w for w in title_lower.split() if len(w) > 5)
+            for et in existing_titles:
+                et_words = set(w for w in et.lower().split() if len(w) > 5)
+                if len(title_words & et_words) >= 2:
+                    overlap_count += 1
+            # Heavy overlap penalty: if >5 existing titles share 2+ significant words
+            if overlap_count > 20:
+                score.importance *= 0.70
+                score.applications *= 0.80
+            elif overlap_count > 10:
+                score.importance *= 0.85
+                score.applications *= 0.90
+
+        # Jargon penalty: penalize excessive use of narrow jargon without substance
+        # (many domain-specific terms but few definitions/theorems to back them up)
+        if lean_source:
+            # Count unique multi-character words in the Lean source
+            all_words = set(re.findall(r'[a-zA-Z_]\w{4,}', lean_source.lower()))
+            # Jargon-heavy domains have specific keyword clusters
+            jargon_clusters = {
+                'tropical_lorentzian': {'tropical', 'lorentzian', 'hessian', 'certificate', 'shadow'},
+                'matroid_dpp': {'matroid', 'exchange', 'dpp', 'determinantal', 'partition'},
+                'spectral_expander': {'spectral', 'expander', 'eigenvalue', 'gap', 'ramanujan'},
+            }
+            jargon_overlap = 0
+            for cluster_words in jargon_clusters.values():
+                overlap = len(all_words & cluster_words)
+                if overlap >= 3:
+                    jargon_overlap += 1
+            # If the source hits 2+ jargon clusters but has low proof depth, penalize
+            if jargon_overlap >= 2 and score.proof_depth < 0.4:
+                score.novelty *= 0.80
+                score.importance *= 0.85
 
         return score
 

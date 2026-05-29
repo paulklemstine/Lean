@@ -70,8 +70,11 @@ def check_tick_rate_limit() -> bool:
     return True
 
 
-async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
-    """Run one tick inside a single event loop."""
+async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
+    """Run one tick inside a single event loop.
+
+    novelty_slots: number of dispatch slots reserved for novelty/wild directions
+    """
     # Rate limit: max 2 ticks per hour
     if not check_tick_rate_limit():
         return
@@ -141,16 +144,20 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
-    # 3. Dispatch new jobs up to max_inflight
+    # 3. Dispatch new jobs up to max_inflight (with novelty track)
     current_inflight = len([j for j in extractor.inflight.values()
                            if j.status not in ("completed", "failed", "integrated", "rejected")])
     slots_available = max_inflight - current_inflight
 
     if slots_available > 0:
-        print(f"[Tick] {slots_available} dispatch slots available")
-        for _ in range(slots_available):
+        standard_slots = max(0, slots_available - novelty_slots)
+        wild_slots = min(novelty_slots, slots_available)
+        print(f"[Tick] {slots_available} dispatch slots available ({standard_slots} standard, {wild_slots} novelty)")
+
+        # Dispatch standard directions
+        for _ in range(standard_slots):
             try:
-                job = extractor.discover()
+                job = extractor.discover(domain_filter=None, exclude_domains=["Novelty"])
                 job = await extractor.dispatch_async(job)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
@@ -158,6 +165,29 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
+            except Exception as e:
+                extractor._release_direction(job)
+                print(f"[Tick] Dispatch error: {e}, direction released")
+
+        # Dispatch novelty/wild directions
+        for _ in range(wild_slots):
+            try:
+                job = extractor.discover(domain_filter="Novelty")
+                job = await extractor.dispatch_async(job)
+                if job.project_id:
+                    extractor.inflight[job.project_id] = job
+                    print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
+                else:
+                    extractor._release_direction(job)
+                    # Fallback: try any available direction if no novelty direction found
+                    print(f"[Tick] No novelty direction available, trying standard fallback")
+                    job = extractor.discover()
+                    job = await extractor.dispatch_async(job)
+                    if job.project_id:
+                        extractor.inflight[job.project_id] = job
+                        print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
+                    else:
+                        extractor._release_direction(job)
             except Exception as e:
                 extractor._release_direction(job)
                 print(f"[Tick] Dispatch error: {e}, direction released")
@@ -265,6 +295,8 @@ def rebuild_commit_push() -> bool:
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
     parser.add_argument("--max-inflight", type=int, default=9)
+    parser.add_argument("--novelty-slots", type=int, default=3,
+                        help="Number of dispatch slots reserved for novelty/wild directions (default: 3)")
     parser.add_argument("--config", type=str, default=None)
     parser.add_argument("--ollama-cloud", action="store_true")
     parser.add_argument("--loop", action="store_true",
@@ -289,15 +321,15 @@ def main():
             print(f"\n{'='*60}")
             print(f"[Tick] Aether tick starting at {datetime.now(timezone.utc).isoformat()}")
             try:
-                asyncio.run(tick(extractor, args.max_inflight))
+                asyncio.run(tick(extractor, args.max_inflight, args.novelty_slots))
             except Exception as e:
                 print(f"[Tick] Tick error: {e}")
             rebuild_commit_push()
             print(f"[Tick] Sleeping {args.interval}s until next tick...")
             time.sleep(args.interval)
     else:
-        print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}")
-        asyncio.run(tick(extractor, args.max_inflight))
+        print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}, novelty_slots={args.novelty_slots}")
+        asyncio.run(tick(extractor, args.max_inflight, args.novelty_slots))
         rebuild_commit_push()
 
 

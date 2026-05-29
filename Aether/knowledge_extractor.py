@@ -265,11 +265,14 @@ class KnowledgeExtractor:
             return True
         return cycle_share > catalog_share * 3.0
 
-    def discover(self, forced_domain: Optional[str] = None) -> ResearchJob:
+    def discover(self, forced_domain: Optional[str] = None, domain_filter: Optional[str] = None, exclude_domains: Optional[list] = None) -> ResearchJob:
         """Pi analyzes the catalog and selects a research direction.
 
         Uses Aristotle Loop (UCB) for principled domain selection,
         then Pi-Agent for specific concept generation.
+
+        domain_filter: if set, only select future directions in this domain (e.g. "Novelty")
+        exclude_domains: if set, exclude future directions in these domains
         """
         self.cycle_count += 1
         cycle_n = self.cycle_count
@@ -373,9 +376,12 @@ class KnowledgeExtractor:
         # Get recent domain quality for quality-guided selection
         recent_domain_quality = fd_manager.get_recent_domain_quality(n=10, memory=self.memory)
         # Try domain-filtered selection first, fall back to unfiltered
-        best_dir = fd_manager.select_direction_weighted(domain_filter=loop_result['domain'], recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer)
+        # If domain_filter is specified, use it (e.g. "Novelty" for wild directions)
+        # If exclude_domains is specified, filter those out
+        effective_filter = domain_filter or loop_result['domain']
+        best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)
         if not best_dir:
-            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer)
+            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)
 
         if best_dir:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)

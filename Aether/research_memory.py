@@ -296,6 +296,7 @@ class FutureDirectionsManager:
         self._directions: List[FutureDirection] = []
         self._pruned: List[FutureDirection] = []
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
+        self._recent_domain_counts: Dict[str, int] = {}  # domain -> count in recent completions
         self._load()
 
     def _next_id(self) -> str:
@@ -352,6 +353,7 @@ class FutureDirectionsManager:
                 self._directions = [FutureDirection.from_dict(d) for d in data.get("directions", [])]
                 self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
                 self._cycle_syntheses = data.get("cycle_syntheses", {})
+                self._recent_domain_counts = data.get("recent_domain_counts", {})
         except Exception:
             self._directions = []
             self._pruned = []
@@ -405,6 +407,7 @@ class FutureDirectionsManager:
                 "directions": [d.to_dict() for d in self._directions],
                 "pruned": [d.to_dict() for d in self._pruned],
                 "cycle_syntheses": self._cycle_syntheses,
+                "recent_domain_counts": self._recent_domain_counts,
             }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
@@ -716,16 +719,22 @@ class FutureDirectionsManager:
         self, domain_filter: Optional[str] = None,
         recent_domain_quality: Optional[Dict[str, float]] = None,
         catalog_analyzer=None,
+        exclude_domains: Optional[list] = None,
     ) -> Optional[FutureDirection]:
         """Select a direction weighted by computed quality score (not just priority).
 
         Domains with recent high-quality results get boosted via outcome_bonus.
         Domains with recent low-quality results get penalized.
         No forced breadth — quality signal guides selection.
+
+        domain_filter: only select directions containing this domain
+        exclude_domains: exclude directions containing any of these domains
         """
         available = [d for d in self._directions if d.status == "available"]
         if domain_filter:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
+        if exclude_domains:
+            available = [d for d in available if not any(ex in d.domains for ex in exclude_domains)]
         if not available:
             return None
         import random
@@ -761,8 +770,15 @@ class FutureDirectionsManager:
         for d in self._directions:
             if d.id == direction_id:
                 d.status = "completed"
+                # Track domain in recent completions for soft decay
+                for domain in d.domains:
+                    self._recent_domain_counts[domain] = self._recent_domain_counts.get(domain, 0) + 1
                 break
         self._save()
+
+    def set_recent_domain_counts(self, counts: Dict[str, int]) -> None:
+        """Set recent domain completion counts from external tracking (e.g., catalog analysis)."""
+        self._recent_domain_counts = counts
 
     def mark_direction_abandoned(self, direction_id: str) -> None:
         """Mark a direction as abandoned (e.g., trivial proof).
@@ -1093,6 +1109,20 @@ class FutureDirectionsManager:
                 domain_diversity_penalty = -0.1
                 break
 
+        # soft domain decay: penalize directions whose domains are overrepresented
+        # in recent outputs. Each domain that appears in >5 recent completions
+        # gets a multiplicative penalty: 0.5^min(1, (count-5)/10)
+        domain_decay = 1.0
+        if self._recent_domain_counts:
+            for d in direction.domains:
+                recent_count = self._recent_domain_counts.get(d, 0)
+                if recent_count > 5:
+                    decay = 0.5 ** min(1.0, (recent_count - 5) / 10.0)
+                    domain_decay = min(domain_decay, decay)
+
+        # novelty_bonus: wild/frontier directions tagged "Novelty" get a boost
+        novelty_bonus = 0.10 if "Novelty" in direction.domains else 0.0
+
         # arxiv_boost: directions sourced from ArXiv mining get +0.15
         arxiv_boost = 0.15 if direction.source_exp_id and direction.source_exp_id.startswith("arxiv") else 0.0
 
@@ -1110,7 +1140,8 @@ class FutureDirectionsManager:
             + bridge_bonus
             + domain_diversity_penalty
             + arxiv_boost
-        )
+            + novelty_bonus
+        ) * domain_decay
 
     def prune_directions(
         self,
