@@ -897,5 +897,9 @@
   "44a490ac": "direction_1_partition_matroid_spectral_stability.json",
   "61d0d828": "direction_2_lorentzian_condition_numbers_and_certi.json",
   "4bb846ce": "direction_3_tropical_shadows_of_lorentzian_stabili.json",
-  "929047ba": "direction_2_tropical_differential_entropy_via_newt.json"
+  "929047ba": "direction_2_tropical_differential_entropy_via_newt.json",
+  "2a2a2c28": "direction_4_shadow_based_circuit_lower_bounds_for_.json",
+  "f94ba84a": "direction_2_nron_component_groups_via_tropical_jac.json",
+  "c7862f71": "direction_3_certified_optimization_via_exchange_co.json",
+  "7d1e68d2": "direction_4_entropy_production_under_differentiati.json"
 }

@@ -77,10 +77,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "f6994231",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.506271+00:00"
   },
   {
@@ -209,10 +209,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bb77cbc",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -419,10 +419,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "e6db5e11",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T23:33:15.543578+00:00"
   },
   {
@@ -460,10 +460,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7e5283ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "965bbbf0",
     "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
@@ -498,10 +498,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44c14611",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
@@ -637,10 +637,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "c559d0f2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -798,25 +798,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
   },
   {
-    "id": "fd_1685",
-    "title": "Direction 4: Entropy Production Under Differentiation",
-    "description": "**Conjecture:** Define the **shadow entropy** of a family $S$ as $H(S) = \\log |\\mathrm{Sh}_1(S)| - \\log |S|$. For polynomials computed by circuits of size $s$:\n\n$$H(\\mathrm{supp}(f)) \\le O(\\log s)$$\n\nwhile for the permanent:\n\n$$H(\\mathrm{PermSupp}(m)) \\ge \\Omega(\\log m)$$\n\n**Test:** Compute $H$ for all circuits of size $\\le 8$ in $n \\le 4$ variables. Verify the logarithmic bound. Compare with the permanent's entropy for $m = 2, \\ldots, 6$.\n\n**Impact:** An information-theoretic formulation would connect the shadow-gap program to communication complexity, information complexity, and the entropy method in combinatorics.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_le_mul_card`\n\n**Proof Strategy:** The key insight is that the bound $|\\mathrm{Sh}_1(S)| \\le n \\cdot |S|$ gives $H(S) \\le \\log n$ universally. For circuits, the multiplicative structure should constrain $H$ more tightly. Each add gate increases $|S|$ additively; each mul gate increases it multiplicatively. The entropy $H$ should decompose along the circuit DAG, giving a bound in terms of circuit depth and width.\n\n**Why now?** The general bound $|\\mathrm{Sh}_1| \\le n|S|$ is proved. The circuit bound theorem provides the recursive structure needed for an entropy decomposition. The connection to statistical physics (support as microcanonical ensemble, shadow as accessible states) provides physical intuition.\n\n**Domain Bridges:** Algebraic complexity \u2192 information theory \u2192 statistical physics.\n\n**Lineage:** Builds on entropy methods in combinatorics (Shearer's lemma, entropy compression).\n\n**Ambition:** Solid extension with speculative connections to physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "7d1e68d2",
-    "timestamp": "2026-05-28T06:14:19.083806+00:00"
-  },
-  {
     "id": "fd_1687",
     "title": "Direction 1: Full Probabilistic Universality via Lindeberg Comparison",
     "description": "**Conjecture:** For any centered, variance-one, independent sub-Gaussian entry model with parameter \u03c3, there exists a centering sequence a_n and scale b_n ~ \u221a(log n) such that\n```\nP(tropMargin(W_n) \u2265 0) = \u03a6((\u03bc - a_n) / b_n) + o(1)\n```\nwhere \u03a6 is a universal profile function independent of the entry distribution.\n\n**Test:** Generate n\u00d7n matrices with Gaussian, Rademacher, uniform, and exponential entries for n = 10, 20, 50, 100. After centering and \u221a(log n) scaling, fit the empirical P(tropMargin \u2265 0) curves. Measure the Kolmogorov-Smirnov distance between all sub-Gaussian pairs. The conjecture is falsified if the KS distance remains bounded away from zero as n \u2192 \u221e.\n\n**Impact:** Would establish the first formal universality theorem for a non-spectral random matrix observable, opening a new universality class.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalPhaseTransition.lean` (tropMargin_lipschitz, tropMargin_lower_bound_signal_noise), `Pythagorean/TropicalUniversality.lean` (telescoping_bound, tropMargin_entrywise_replacement_bound)\n\n**Proof Strategy:** Use the telescoping replacement bound to replace entries one at a time from distribution \u03bc to distribution \u03bd. Each replacement step contributes at most 4|entry change| to the margin difference. By Lindeberg's method, the cumulative effect is controlled by the third-moment matching condition. The key technical challenge is bounding the remainder term using the sub-Gaussian tail control from SubGaussianEntryModel.\n\n**Domain Bridges:** Probability theory (Lindeberg method), extreme-value theory (Gumbel convergence)\n\n**Lineage:** Extends tropMargin_telescoping_bound and tropMargin_entrywise_replacement_bound\n\n**Ambition:** Grand challenge \u2014 would require novel probabilistic machinery adapted to the tropical setting\n\n---",
@@ -855,25 +836,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "69370675",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T06:15:00.424598+00:00"
-  },
-  {
-    "id": "fd_1787",
-    "title": "Direction 4: Shadow-Based Circuit Lower Bounds for the Permanent",
-    "description": "**Conjecture:** The shadow lower bound |Sh\u2082(supp(Perm_n))| grows at least as fast as 2^{n/2}, and the non-cancellation certificate holds for the permanent polynomial Perm_n for all n \u2265 3. Consequently, any arithmetic circuit computing Perm_n has size at least 2^{n/2} / poly(n), improving the best known lower bounds.\n\n**Test:** Compute |Sh\u2082(supp(Perm_n))| for n = 3, 4, 5, 6, 7 and extrapolate the growth rate. Verify the certificate for Perm_n (the support is the set of permutation matrices with coefficients \u00b11; the shadow closure question reduces to a combinatorial property of permutation matrices).\n\n**Impact:** An exponential circuit lower bound for the permanent would resolve a major open problem in computational complexity (Valiant's conjecture, VP \u2260 VNP). Even a new lower bound (improving the current \u03a9(n\u00b2/2) of Shpilka\u2013Wigderson) would be a significant advance.\n\n**Catalog References:**\n- `Algebra/AlgebraicCircuitComplexity.lean` \u2014 circuit complexity definitions\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate and shadow lower bound\n\n**Proof Strategy:** Analyze the combinatorics of permutation supports under the shadow map. The key question is whether |Sh\u2082(Perm_n)| grows exponentially. This is a purely combinatorial question about permutations, independent of the algebraic framework.\n\n**Domain Bridges:** Combinatorics (permutation statistics), computational complexity (VP vs VNP), representation theory (symmetric group).\n\n**Lineage:** Grand-challenge application of the entire framework to the central open problem in algebraic complexity.\n\n**Ambition:** Grand challenge \u2014 this is equivalent to a major open problem. Even partial progress (new lower bounds, tight shadow computation) would be highly significant.\n\n**The key insight is** that the non-cancellation certificate reduces the permanent lower bound problem to a purely combinatorial question about the shadow growth of permutation supports, separating the algebraic difficulty from the combinatorial difficulty.\n\n**Why now?** The certificate framework is now formalized and verified. The combinatorial question about permutation shadows is well-defined and computationally tractable for small n, enabling systematic experimental investigation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "2a2a2c28",
-    "timestamp": "2026-05-28T11:04:38.767855+00:00"
   },
   {
     "id": "fd_1800",
@@ -1156,10 +1118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7a00ed5d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b12744ab",
     "timestamp": "2026-05-28T17:54:29.270864+00:00"
   },
   {
@@ -1281,7 +1243,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "44a490ac",
@@ -1300,7 +1262,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "44a490ac",
@@ -1322,12 +1284,29 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "44a490ac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T23:28:59.421709+00:00"
+  },
+  {
+    "id": "fd_1974",
+    "title": "Direction 1: Complete Proof of the Higher Shadow Formula",
+    "description": "**Conjecture.** For all 0 \u2264 k \u2264 n,\n\n|Sh_k(suppPerm(n))| = C(n,k)\u00b2 \u00b7 (n-k)!\n\nand every (n-k)-partial permutation support extends to exactly k! full permutations.\n\n**Test.** Already verified computationally for n \u2264 8, k \u2264 n. A formal proof would require showing: (a) the k-shadow characterization (generalizing Theorem 1), (b) the completion multiplicity equals k! (generalizing Theorem 3), and (c) the double-counting identity n! \u00b7 C(n,k) = C(n,k)\u00b2 \u00b7 (n-k)! \u00b7 k!.\n\n**Impact.** Would provide a complete shadow profile of the permanent support \u2014 the first such result for any non-trivial polynomial family. Would yield sharper conditional lower bounds at multiple shadow depths.\n\n**Catalog References.** `Pythagorean/PermanentShadow.lean` (Theorems 1-3), `Pythagorean/NonCancellationCertificate.lean`.\n\n**Proof Strategy.** Generalize the defect analysis: an (n-k)-partial permutation support has k defect rows and k defect columns, and completion requires a bijection between them \u2014 k! choices. The double-counting identity follows from C(n,k) \u00b7 k! \u00b7 (n-k)! = n!.\n\n**Domain Bridges.** Combinatorics \u2194 Complexity theory; rook polynomial theory \u2194 shadow enumeration.\n\n**Lineage.** Direct extension of the k=2 case proved in `PermanentShadow.lean`.\n\n**Ambition.** solid_extension \u2014 extends the core theorem package to all depths.\n\n**\"The key insight is...\"** that the completion multiplicity k! is exactly the number of bijections between k-element sets, making the counting argument uniform across all shadow levels.\n\n**\"Why now?\"** The k=2 case is formally verified, and the proof method (defect analysis + double counting) generalizes mechanically.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2a2a2c28",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-29T00:03:48.256545+00:00"
   },
   {
     "id": "fd_0806",
