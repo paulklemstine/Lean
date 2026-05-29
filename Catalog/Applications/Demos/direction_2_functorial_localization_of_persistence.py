@@ -1,1362 +1,1256 @@
 #!/usr/bin/env python3
 """
-Applications of Functorial Localization for Persistence Modules
+Applications of Functorial Localization to Topological Data Analysis
 
-Demonstrates real-world applications:
+This module demonstrates real-world applications:
 1. Primewise denoising of persistence signals
-2. Arithmetic comparison of topological features
-3. Spectral filtering of torsion data
-
-These applications show how localization acts as an algebraic microscope,
-isolating individual prime channels to reveal structure hidden in the
-global torsion signal.
+2. Arithmetic spectral filtering for barcode refinement
+3. Localization-based comparison of persistence modules
 """
 
 import random
-import math
 from collections import defaultdict
+from typing import Dict, List, Set, Tuple, Optional
 
 
-# ---- Self-contained implementations ----
-
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= abs(n):
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if abs(n) > 1:
-        factors.append(abs(n))
-    return factors
-
-def distinct_prime_factors(n):
-    return set(prime_factors(n))
-
-def p_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
-
+# ── Inline core classes ──────────────────────────────────────────
 
 class FGAbGroup:
-    def __init__(self, free_rank, torsion_coeffs=None):
+    def __init__(self, free_rank=0, torsion_parts=None):
         self.free_rank = free_rank
-        self.torsion_coeffs = sorted([c for c in (torsion_coeffs or []) if c >= 2])
+        self.torsion_parts = torsion_parts or {}
 
     def has_p_torsion(self, p):
-        return any(c % p == 0 for c in self.torsion_coeffs)
+        return p in self.torsion_parts and len(self.torsion_parts[p]) > 0
 
-    def has_global_torsion(self):
-        return len(self.torsion_coeffs) > 0
-
-    def prime_support(self):
-        primes = set()
-        for c in self.torsion_coeffs:
-            primes |= distinct_prime_factors(c)
-        return primes
+    def has_any_torsion(self):
+        return any(len(e) > 0 for e in self.torsion_parts.values())
 
     def localize_at(self, p):
-        new_torsion = [pk for c in self.torsion_coeffs
-                       if (pk := p_part(c, p)) > 1]
-        return FGAbGroup(self.free_rank, new_torsion)
-
-    def torsion_rank(self):
-        return len(self.torsion_coeffs)
-
-    def p_torsion_rank(self, p):
-        return sum(1 for c in self.torsion_coeffs if c % p == 0)
+        t = {p: list(self.torsion_parts[p])} if p in self.torsion_parts else {}
+        return FGAbGroup(free_rank=self.free_rank, torsion_parts=t)
 
     def __repr__(self):
         parts = []
         if self.free_rank > 0:
             parts.append(f"Z^{self.free_rank}")
-        for c in self.torsion_coeffs:
-            parts.append(f"Z/{c}")
+        for p in sorted(self.torsion_parts):
+            for e in self.torsion_parts[p]:
+                parts.append(f"Z/{p}^{e}" if e > 1 else f"Z/{p}")
         return " + ".join(parts) if parts else "0"
 
 
-class PersistenceModule:
-    def __init__(self, groups):
+class ZPersModule:
+    def __init__(self, groups, support_range):
         self.groups = groups
+        self.support_range = support_range
 
-    @property
-    def length(self):
-        return len(self.groups)
+    def obj(self, i):
+        return self.groups.get(i, FGAbGroup())
 
-    def p_torsion_birth(self, p):
-        for i, g in enumerate(self.groups):
-            if g.has_p_torsion(p):
-                return i
-        return None
+    def has_p_torsion_at(self, p, i):
+        return self.obj(i).has_p_torsion(p)
 
-    def global_torsion_birth(self):
-        for i, g in enumerate(self.groups):
-            if g.has_global_torsion():
-                return i
-        return None
-
-    def p_torsion_birth_set(self, p):
-        b = self.p_torsion_birth(p)
-        return {b} if b is not None else set()
-
-    def global_torsion_birth_set(self):
-        b = self.global_torsion_birth()
-        return {b} if b is not None else set()
+    def has_torsion_at(self, i):
+        return self.obj(i).has_any_torsion()
 
     def localize_at(self, p):
-        return PersistenceModule([g.localize_at(p) for g in self.groups])
-
-    def prime_support(self):
-        s = set()
-        for g in self.groups:
-            s |= g.prime_support()
-        return s
-
-    def torsion_profile(self):
-        """Returns the torsion rank at each level."""
-        return [g.torsion_rank() for g in self.groups]
-
-    def p_torsion_profile(self, p):
-        """Returns the p-torsion rank at each level."""
-        return [g.p_torsion_rank(p) for g in self.groups]
+        ng = {}
+        for idx, grp in self.groups.items():
+            loc = grp.localize_at(p)
+            if loc.free_rank > 0 or loc.has_any_torsion():
+                ng[idx] = loc
+        return ZPersModule(groups=ng, support_range=self.support_range)
 
 
-def hausdorff_distance(A, B):
-    if not A and not B:
-        return 0
-    if not A or not B:
-        return 10**9
-    d1 = max(min(abs(a - b) for b in B) for a in A)
-    d2 = max(min(abs(a - b) for a in A) for b in B)
-    return max(d1, d2)
+def p_torsion_birth(F, p):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_p_torsion_at(p, i):
+            if all(not F.has_p_torsion_at(p, j) for j in range(lo, i)):
+                return i
+    return None
 
 
-# ---- Application 1: Primewise Denoising ----
+def torsion_birth(F):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_torsion_at(i):
+            if all(not F.has_torsion_at(j) for j in range(lo, i)):
+                return i
+    return None
 
-def primewise_denoising():
+
+# ── Application 1: Primewise Denoising ───────────────────────────
+
+def primewise_denoise(F: ZPersModule, signal_prime: int,
+                       noise_primes: List[int]) -> ZPersModule:
+    """Remove torsion noise at specific primes.
+
+    In topological data analysis, persistence modules computed over ℤ
+    may contain torsion at multiple primes. Some of this torsion reflects
+    genuine topological features (signal), while other torsion is computational
+    noise.
+
+    Localization at the signal prime removes all noise-prime torsion while
+    preserving the signal exactly.
+
+    Args:
+        F: Input persistence module
+        signal_prime: The prime whose torsion we want to keep
+        noise_primes: Primes considered as noise
+
+    Returns:
+        Denoised persistence module (localization at signal_prime)
     """
-    Application: Primewise denoising of persistence signals.
-
-    Concept: A noisy topological signal may contain torsion from multiple primes.
-    Localization isolates each prime channel, allowing targeted denoising.
-
-    Example: Consider a persistence module arising from computing homology
-    over ℤ of a simplicial complex. The torsion part may contain contributions
-    from multiple primes. By localizing at each prime, we can isolate
-    individual torsion channels and determine which primes contribute
-    genuine topological signal vs. noise.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Primewise Denoising of Persistence Signals")
-    print("=" * 70)
-
-    # Simulate a "noisy" persistence module where 2-torsion is the signal
-    # and 3,5-torsion is "noise" from sampling artifacts
-    signal = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [2]),           # Signal: 2-torsion born at level 2
-        FGAbGroup(1, [2, 3]),        # Noise: 3-torsion added
-        FGAbGroup(1, [2, 3, 5]),     # Noise: 5-torsion added
-        FGAbGroup(1, [2, 3, 5, 15]), # More noise
-        FGAbGroup(1, [2, 3, 5, 15]),
-        FGAbGroup(1, [2, 3, 5, 15]),
-    ])
-
-    print("\nOriginal (noisy) module:")
-    print(f"  Global torsion profile: {signal.torsion_profile()}")
-    print(f"  Global torsion birth:   index {signal.global_torsion_birth()}")
-
-    print("\nPrime-channel decomposition:")
-    for p in sorted(signal.prime_support()):
-        L = signal.localize_at(p)
-        print(f"  p={p}: profile = {L.torsion_profile()}, "
-              f"birth = index {L.global_torsion_birth()}")
-
-    # The "denoised" signal focuses on p=2
-    print("\n  → Denoised signal (p=2 channel): birth at index 2 (true signal)")
-    print("  → Noise channels (p=3,5): appear later (artifacts)")
-
-    # Compare stability: perturb the signal slightly
-    perturbed = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [2]),           # Signal shifted by 1
-        FGAbGroup(1, [2, 3]),
-        FGAbGroup(1, [2, 3, 5]),
-        FGAbGroup(1, [2, 3, 5, 15]),
-        FGAbGroup(1, [2, 3, 5, 15]),
-    ])
-
-    d_global = hausdorff_distance(signal.global_torsion_birth_set(),
-                                   perturbed.global_torsion_birth_set())
-    d_p2 = hausdorff_distance(signal.p_torsion_birth_set(2),
-                               perturbed.p_torsion_birth_set(2))
-
-    print(f"\n  Stability under perturbation:")
-    print(f"    Global interleaving distance bound: {d_global}")
-    print(f"    p=2 channel distance:               {d_p2}")
-    print(f"    Improvement: {'YES' if d_p2 < d_global else 'SAME'}")
+    return F.localize_at(signal_prime)
 
 
-# ---- Application 2: Arithmetic Comparison ----
+def demo_denoising():
+    print("=" * 60)
+    print("APPLICATION 1: Primewise Denoising")
+    print("=" * 60)
 
-def arithmetic_comparison():
-    """
-    Application: Arithmetic comparison of topological features.
-
-    Different topological spaces can have the same global torsion birth
-    but different prime channel structures. Localization reveals these
-    arithmetic fingerprints.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Arithmetic Fingerprinting of Topological Features")
-    print("=" * 70)
-
-    # Two modules with same global torsion birth but different prime structure
-    F = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [6]),    # ℤ/6 ≅ ℤ/2 ⊕ ℤ/3
-        FGAbGroup(1, [6]),
-    ])
-
-    G = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [4]),    # ℤ/4 (only 2-torsion, no 3-torsion)
-        FGAbGroup(1, [4, 9]), # ℤ/4 ⊕ ℤ/9 (3-torsion born later)
-    ])
-
-    print("\nModule F (simultaneous 2- and 3-torsion birth):")
-    print(f"  Global birth: {F.global_torsion_birth()}")
-    for p in sorted(F.prime_support()):
-        print(f"  {p}-torsion birth: {F.p_torsion_birth(p)}")
-
-    print("\nModule G (staggered prime torsion births):")
-    print(f"  Global birth: {G.global_torsion_birth()}")
-    for p in sorted(G.prime_support()):
-        print(f"  {p}-torsion birth: {G.p_torsion_birth(p)}")
-
-    print(f"\n  Same global birth? {F.global_torsion_birth() == G.global_torsion_birth()}")
-    print(f"  Same prime fingerprint? {F.prime_support() == G.prime_support() and all(F.p_torsion_birth(p) == G.p_torsion_birth(p) for p in F.prime_support() | G.prime_support())}")
-    print("  → Localization reveals arithmetic differences invisible to global torsion!")
-
-
-# ---- Application 3: Multi-Scale Torsion Analysis ----
-
-def multiscale_torsion_analysis():
-    """
-    Application: Multi-scale analysis using prime powers.
-
-    For a prime p, looking at p, p^2, p^3, ... torsion gives a
-    multi-scale view of the p-primary torsion structure.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Multi-Scale p-Primary Torsion Analysis")
-    print("=" * 70)
-
-    F = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, [2]),         # ℤ/2 born
-        FGAbGroup(1, [2, 4]),      # ℤ/4 born (2^2 torsion)
-        FGAbGroup(1, [2, 4, 8]),   # ℤ/8 born (2^3 torsion)
-        FGAbGroup(1, [2, 4, 8]),
-    ])
-
-    print("\nModule with nested 2-primary structure:")
-    for i, g in enumerate(F.groups):
-        print(f"  Level {i}: {g}")
-
-    print("\n  2-primary scale analysis:")
-    for k in range(1, 5):
-        pk = 2**k
-        has_pk_tor = [any(c % pk == 0 for c in g.torsion_coeffs)
-                      for g in F.groups]
-        birth = next((i for i, v in enumerate(has_pk_tor) if v), None)
-        print(f"    {pk}-torsion first appears at level: {birth}")
-
-    print("\n  → Higher powers of p appear later, revealing a filtration")
-    print("    within the p-primary component itself.")
-
-
-# ---- Application 4: Spectral Filtering Pipeline ----
-
-def spectral_filtering_pipeline():
-    """
-    Application: Full pipeline showing how localization acts as a
-    spectral filter, separating persistence signal into prime channels.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Spectral Filtering Pipeline")
-    print("=" * 70)
-
-    # Simulate data from a "topological sensor" with mixed torsion
-    random.seed(123)
-    length = 12
-    groups = [FGAbGroup(1, [])]
-    current_torsion = []
-
-    schedule = {
-        2: [2, 4, 6],       # 2-torsion events at levels 2, 4, 6
-        3: [3, 7],           # 3-torsion events at levels 3, 7
-        5: [5],              # 5-torsion event at level 5
-    }
-
-    for i in range(1, length):
-        new_tors = list(current_torsion)
-        for p, levels in schedule.items():
-            if i in levels:
-                new_tors.append(p)
-        current_torsion = new_tors
-        groups.append(FGAbGroup(1, list(current_torsion)))
-
-    F = PersistenceModule(groups)
-
-    print("\nInput persistence module (simulated sensor data):")
-    print(f"  Length: {F.length}")
-    print(f"  Torsion profile: {F.torsion_profile()}")
-    print(f"  Global torsion birth: index {F.global_torsion_birth()}")
-
-    print("\n  Step 1: Identify prime support")
-    support = sorted(F.prime_support())
-    print(f"    Primes detected: {support}")
-
-    print("\n  Step 2: Decompose into prime channels")
-    for p in support:
-        L = F.localize_at(p)
-        profile = L.torsion_profile()
-        birth = L.global_torsion_birth()
-        print(f"    Channel p={p}: profile={profile}, birth=index {birth}")
-
-    print("\n  Step 3: Identify dominant channel")
-    earliest_birth = min(
-        (F.p_torsion_birth(p), p)
-        for p in support
-        if F.p_torsion_birth(p) is not None
+    # A persistence module with signal at p=2 and noise at p=3,5
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            1: FGAbGroup(free_rank=1, torsion_parts={3: [1]}),  # noise
+            2: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),  # signal + noise
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1], 5: [1]}),  # more noise
+        },
+        support_range=(0, 3)
     )
-    print(f"    Earliest torsion channel: p={earliest_birth[1]} at index {earliest_birth[0]}")
 
-    print("\n  Step 4: Channel-specific stability analysis")
-    # Perturb and compare
-    G = PersistenceModule(groups[1:] + [groups[-1]])  # shift by 1
-    for p in support:
-        dF = F.p_torsion_birth_set(p)
-        dG = G.p_torsion_birth_set(p)
-        dist = hausdorff_distance(dF, dG)
-        print(f"    p={p}: stability distance = {dist}")
+    print("\nOriginal module (signal at p=2, noise at p=3,5):")
+    for i in range(4):
+        print(f"  F({i}) = {F.obj(i)}")
+    print(f"  Global torsion birth: {torsion_birth(F)}")
+    print(f"  2-torsion birth (signal): {p_torsion_birth(F, 2)}")
 
+    denoised = primewise_denoise(F, signal_prime=2, noise_primes=[3, 5])
+    print("\nDenoised (localized at p=2):")
+    for i in range(4):
+        print(f"  Loc_2(F)({i}) = {denoised.obj(i)}")
+    print(f"  Torsion birth after denoising: {torsion_birth(denoised)}")
+    print(f"  → Noise removed, signal preserved!")
+
+
+# ── Application 2: Arithmetic Spectral Analysis ──────────────────
+
+def spectral_decomposition(F: ZPersModule,
+                            primes: List[int]) -> Dict[int, Optional[int]]:
+    """Decompose torsion births into prime channels.
+
+    This implements the arithmetic spectral analysis: each prime
+    provides an independent "frequency channel" for torsion information.
+    The global torsion birth is the minimum across all channels.
+
+    Returns:
+        Dict mapping each prime to its birth index (or None if no torsion)
+    """
+    spectrum = {}
+    for p in primes:
+        spectrum[p] = p_torsion_birth(F, p)
+    return spectrum
+
+
+def demo_spectral_analysis():
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Arithmetic Spectral Analysis")
+    print("=" * 60)
+
+    # Module with different torsion appearing at different times
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=2),
+            1: FGAbGroup(free_rank=2),
+            2: FGAbGroup(free_rank=1, torsion_parts={7: [1]}),
+            3: FGAbGroup(free_rank=1, torsion_parts={7: [1]}),
+            4: FGAbGroup(free_rank=1, torsion_parts={2: [1], 7: [1]}),
+            5: FGAbGroup(free_rank=1, torsion_parts={2: [1, 2], 3: [1], 7: [1]}),
+            6: FGAbGroup(free_rank=1, torsion_parts={2: [1, 2], 3: [1], 5: [1], 7: [1]}),
+        },
+        support_range=(0, 6)
+    )
+
+    print("\nPersistence module with staggered torsion:")
+    for i in range(7):
+        g = F.obj(i)
+        if g.free_rank > 0 or g.has_any_torsion():
+            print(f"  F({i}) = {g}")
+
+    primes = [2, 3, 5, 7, 11]
+    spectrum = spectral_decomposition(F, primes)
+
+    print("\nPrime spectrum (birth indices by channel):")
+    for p, birth in sorted(spectrum.items()):
+        status = f"birth at index {birth}" if birth is not None else "no torsion"
+        bar = "█" * (birth if birth is not None else 0)
+        print(f"  p={p:2d}: {status:20s}  |{bar}")
+
+    global_birth = torsion_birth(F)
+    active_births = [b for b in spectrum.values() if b is not None]
+    print(f"\n  Global birth: {global_birth} = min({active_births})")
+    print(f"  → Each prime reveals different topological features!")
+
+
+# ── Application 3: Localization-Based Comparison ──────────────────
+
+def localization_comparison(F: ZPersModule, G: ZPersModule,
+                             primes: List[int]) -> Dict[int, Optional[int]]:
+    """Compare two persistence modules via primewise localization.
+
+    For each prime p, compute the distance between p-torsion births.
+    This gives a finer comparison than the global torsion birth distance.
+
+    Returns:
+        Dict mapping primes to primewise distances (None if both empty)
+    """
+    distances = {}
+    for p in primes:
+        b1 = p_torsion_birth(F, p)
+        b2 = p_torsion_birth(G, p)
+        if b1 is not None and b2 is not None:
+            distances[p] = abs(b1 - b2)
+        elif b1 is None and b2 is None:
+            distances[p] = 0
+        else:
+            distances[p] = None  # incomparable
+    return distances
+
+
+def demo_comparison():
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Localization-Based Comparison")
+    print("=" * 60)
+
+    F = ZPersModule(
+        groups={
+            1: FGAbGroup(torsion_parts={2: [1]}),
+            3: FGAbGroup(torsion_parts={2: [1], 3: [1]}),
+            5: FGAbGroup(torsion_parts={2: [1], 3: [1], 5: [1]}),
+        },
+        support_range=(0, 7)
+    )
+
+    G = ZPersModule(
+        groups={
+            2: FGAbGroup(torsion_parts={2: [1]}),
+            3: FGAbGroup(torsion_parts={2: [1], 3: [1]}),
+            6: FGAbGroup(torsion_parts={2: [1], 3: [1], 5: [1]}),
+        },
+        support_range=(0, 7)
+    )
+
+    print("\nModule F:")
+    for i in range(8):
+        g = F.obj(i)
+        if g.has_any_torsion():
+            print(f"  F({i}) = {g}")
+
+    print("\nModule G:")
+    for i in range(8):
+        g = G.obj(i)
+        if g.has_any_torsion():
+            print(f"  G({i}) = {g}")
+
+    primes = [2, 3, 5, 7]
+    distances = localization_comparison(F, G, primes)
+
+    global_d = abs((torsion_birth(F) or 0) - (torsion_birth(G) or 0))
+    print(f"\n  Global torsion birth distance: {global_d}")
+    print(f"\n  Primewise distances:")
+    for p, d in sorted(distances.items()):
+        print(f"    p={p}: distance = {d}")
+
+    print(f"\n  → Primewise analysis reveals which features shifted most!")
+
+
+# ── Main ──────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔" + "═" * 68 + "╗")
-    print("║  APPLICATIONS OF FUNCTORIAL LOCALIZATION                          ║")
-    print("║  Practical uses of prime localization in persistence theory       ║")
-    print("╚" + "═" * 68 + "╝")
+    print("╔═══════════════════════════════════════════════════════╗")
+    print("║  Applications of Functorial Localization to TDA      ║")
+    print("╚═══════════════════════════════════════════════════════╝")
 
-    primewise_denoising()
-    arithmetic_comparison()
-    multiscale_torsion_analysis()
-    spectral_filtering_pipeline()
+    demo_denoising()
+    demo_spectral_analysis()
+    demo_comparison()
 
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 60)
     print("All applications demonstrated successfully.")
-    print("=" * 70)
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
 Demo: Functorial Localization of Persistence Modules
 
-Demonstrates the core theorems computationally:
-  1. Localization preserves interleavings (same δ)
-  2. p-torsion birth set = global torsion birth set after localization
-  3. Primewise stability as a consequence of localization
-  4. Search for strict witness improvement candidates
+This script demonstrates the core theorems of arithmetic persistence theory:
+1. Birth set identification: p-torsion births = torsion births after localization
+2. Interleaving preservation under localization
+3. Primewise stability as a corollary of localization
+4. Search for strict witness improvement candidates
 
 Run: python demo.py
 """
 
 import random
-import math
+import sys
 from collections import defaultdict
 
-# ---- Inline all needed classes/functions (self-contained) ----
-
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= abs(n):
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if abs(n) > 1:
-        factors.append(abs(n))
-    return factors
-
-def distinct_prime_factors(n):
-    return set(prime_factors(n))
-
-def p_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
-
+# Inline all needed classes/functions for self-containedness
 
 class FGAbGroup:
-    def __init__(self, free_rank, torsion_coeffs=None):
+    """Finitely generated abelian group in primary decomposition form."""
+    def __init__(self, free_rank=0, torsion_parts=None):
         self.free_rank = free_rank
-        self.torsion_coeffs = sorted([c for c in (torsion_coeffs or []) if c >= 2])
+        self.torsion_parts = torsion_parts or {}
 
     def has_p_torsion(self, p):
-        return any(c % p == 0 for c in self.torsion_coeffs)
+        return p in self.torsion_parts and len(self.torsion_parts[p]) > 0
 
-    def has_global_torsion(self):
-        return len(self.torsion_coeffs) > 0
-
-    def prime_support(self):
-        primes = set()
-        for c in self.torsion_coeffs:
-            primes |= distinct_prime_factors(c)
-        return primes
+    def has_any_torsion(self):
+        return any(len(exps) > 0 for exps in self.torsion_parts.values())
 
     def localize_at(self, p):
-        new_torsion = [pk for c in self.torsion_coeffs
-                       if (pk := p_part(c, p)) > 1]
-        return FGAbGroup(self.free_rank, new_torsion)
+        new_torsion = {}
+        if p in self.torsion_parts:
+            new_torsion[p] = list(self.torsion_parts[p])
+        return FGAbGroup(free_rank=self.free_rank, torsion_parts=new_torsion)
 
     def __repr__(self):
         parts = []
         if self.free_rank > 0:
             parts.append(f"Z^{self.free_rank}")
-        for c in self.torsion_coeffs:
-            parts.append(f"Z/{c}")
+        for p in sorted(self.torsion_parts.keys()):
+            for e in self.torsion_parts[p]:
+                parts.append(f"Z/{p}^{e}" if e > 1 else f"Z/{p}")
         return " + ".join(parts) if parts else "0"
 
 
-class PersistenceModule:
-    def __init__(self, groups):
+class ZPersModule:
+    """Finitely supported Z-indexed persistence module."""
+    def __init__(self, groups, support_range):
         self.groups = groups
+        self.support_range = support_range
 
-    @property
-    def length(self):
-        return len(self.groups)
+    def obj(self, i):
+        return self.groups.get(i, FGAbGroup())
 
-    def p_torsion_birth(self, p):
-        for i, g in enumerate(self.groups):
-            if g.has_p_torsion(p):
-                return i
-        return None
+    def has_p_torsion_at(self, p, i):
+        return self.obj(i).has_p_torsion(p)
 
-    def global_torsion_birth(self):
-        for i, g in enumerate(self.groups):
-            if g.has_global_torsion():
-                return i
-        return None
-
-    def p_torsion_birth_set(self, p):
-        b = self.p_torsion_birth(p)
-        return {b} if b is not None else set()
-
-    def global_torsion_birth_set(self):
-        b = self.global_torsion_birth()
-        return {b} if b is not None else set()
+    def has_torsion_at(self, i):
+        return self.obj(i).has_any_torsion()
 
     def localize_at(self, p):
-        return PersistenceModule([g.localize_at(p) for g in self.groups])
-
-    def prime_support(self):
-        s = set()
-        for g in self.groups:
-            s |= g.prime_support()
-        return s
-
-    def __repr__(self):
-        lines = [f"  Level {i}: {g}" for i, g in enumerate(self.groups)]
-        return "PersistenceModule:\n" + "\n".join(lines)
+        new_groups = {}
+        for idx, grp in self.groups.items():
+            loc = grp.localize_at(p)
+            if loc.free_rank > 0 or loc.has_any_torsion():
+                new_groups[idx] = loc
+        return ZPersModule(groups=new_groups, support_range=self.support_range)
 
 
-def hausdorff_distance(A, B):
-    if not A and not B:
-        return 0
-    if not A or not B:
-        return 10**9
-    d1 = max(min(abs(a - b) for b in B) for a in A)
-    d2 = max(min(abs(a - b) for a in A) for b in B)
+def p_torsion_birth_set(F, p):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_p_torsion_at(p, i):
+            if all(not F.has_p_torsion_at(p, j) for j in range(lo, i)):
+                return {i}
+    return set()
+
+
+def torsion_birth_set(F):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_torsion_at(i):
+            if all(not F.has_torsion_at(j) for j in range(lo, i)):
+                return {i}
+    return set()
+
+
+def hausdorff_distance(S, T):
+    if not S or not T:
+        return None
+    d1 = max(min(abs(s - t) for t in T) for s in S)
+    d2 = max(min(abs(s - t) for s in S) for t in T)
     return max(d1, d2)
 
 
-def random_persistence_module(length=8, primes=None):
+def delta_close(S, T, delta):
+    for s in S:
+        if not any(abs(s - t) <= delta for t in T):
+            return False
+    for t in T:
+        if not any(abs(s - t) <= delta for s in S):
+            return False
+    return True
+
+
+def random_persistence_module(support_size=8, primes=None, birth_prob=0.3):
     if primes is None:
         primes = [2, 3, 5]
-    groups = []
-    current_torsion = []
-    free_rank = random.randint(0, 2)
-    for _ in range(length):
-        if random.random() < 0.35:
-            p = random.choice(primes)
-            k = random.randint(1, 3)
-            current_torsion.append(p ** k)
-        groups.append(FGAbGroup(free_rank, list(current_torsion)))
-    return PersistenceModule(groups)
+    groups = {}
+    active_torsion = {}
+    for i in range(support_size):
+        free_rank = random.randint(0, 2)
+        torsion = dict(active_torsion)
+        for p in primes:
+            if p not in active_torsion and random.random() < birth_prob:
+                n = random.randint(1, 2)
+                exps = sorted([random.randint(1, 2) for _ in range(n)])
+                active_torsion[p] = exps
+                torsion[p] = exps
+        groups[i] = FGAbGroup(free_rank=free_rank, torsion_parts=torsion)
+    return ZPersModule(groups=groups, support_range=(0, support_size - 1))
 
 
-# ---- Demo Functions ----
+# ─────────────────────────────────────────────────────────────────
+# Demo 1: Birth Set Identification Theorem
+# ─────────────────────────────────────────────────────────────────
 
-def demo_theorem2_birth_identification():
-    """Demonstrate Theorem 2: PTorBirth(p, F) = GlobTorBirth(L_p(F))."""
+def demo_birth_set_identification():
     print("=" * 70)
-    print("THEOREM 2: Birth Set Identification")
-    print("  PTorBirth(p, F) = GlobTorBirth(LocalizedAtPrime(p, F))")
+    print("DEMO 1: Birth Set Identification Theorem")
+    print("  PTorsionBirthSet(p, F) = TorsionBirthSet(LocalizedAtPrime(p, F))")
     print("=" * 70)
 
-    # Manual example
-    F = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [6]),       # 2-torsion and 3-torsion born here
-        FGAbGroup(1, [6, 4]),    # 2-torsion continues, new 2^2 summand
-        FGAbGroup(1, [6, 4, 9]),  # 3^2 torsion added
-    ])
-    print("\nManual Example:")
-    print(F)
-    print(f"\nPrime support: {sorted(F.prime_support())}")
+    # Concrete example
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=2),
+            1: FGAbGroup(free_rank=2),
+            2: FGAbGroup(free_rank=1, torsion_parts={2: [1]}),
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+            4: FGAbGroup(free_rank=1, torsion_parts={2: [1, 2], 3: [1]}),
+            5: FGAbGroup(free_rank=1, torsion_parts={2: [1, 2], 3: [1], 5: [1]}),
+        },
+        support_range=(0, 5)
+    )
 
-    for p in sorted(F.prime_support()):
-        L = F.localize_at(p)
-        ptor = F.p_torsion_birth_set(p)
-        glob_loc = L.global_torsion_birth_set()
-        match = "✓" if ptor == glob_loc else "✗"
-        print(f"\n  p = {p}:")
-        print(f"    PTorBirth({p}, F)                     = {ptor}")
-        print(f"    GlobTorBirth(L_{p}(F))                = {glob_loc}")
-        print(f"    Equal? {match}")
-        print(f"    Localized module at p={p}:")
-        for i, g in enumerate(L.groups):
-            print(f"      Level {i}: {g}")
+    print("\nPersistence module F:")
+    for i in range(6):
+        print(f"  F({i}) = {F.obj(i)}")
+
+    primes = [2, 3, 5, 7]
+    print("\nBirth set computations:")
+    for p in primes:
+        births = p_torsion_birth_set(F, p)
+        loc_F = F.localize_at(p)
+        loc_births = torsion_birth_set(loc_F)
+        match = "✓" if births == loc_births else "✗"
+        print(f"  p={p}: PTorsionBirthSet = {births}, "
+              f"TorsionBirthSet(Loc_{p}(F)) = {loc_births}  [{match}]")
 
     # Random verification
-    print("\n--- Random verification (100 modules) ---")
+    print("\nRandom verification (100 trials):")
     n_pass = 0
-    n_total = 0
-    for trial in range(100):
-        F = random_persistence_module(length=8, primes=[2, 3, 5, 7])
-        for p in F.prime_support():
-            n_total += 1
-            L = F.localize_at(p)
-            if F.p_torsion_birth_set(p) == L.global_torsion_birth_set():
+    for _ in range(100):
+        F_rand = random_persistence_module()
+        for p in [2, 3, 5]:
+            if p_torsion_birth_set(F_rand, p) == torsion_birth_set(F_rand.localize_at(p)):
                 n_pass += 1
-    print(f"  Passed: {n_pass}/{n_total} ({100*n_pass/max(n_total,1):.1f}%)")
+    print(f"  {n_pass}/300 checks passed (expect 300/300)")
 
 
-def demo_theorem1_interleaving_preservation():
-    """Demonstrate Theorem 1: Localization preserves interleavings."""
+# ─────────────────────────────────────────────────────────────────
+# Demo 2: Interleaving Preservation
+# ─────────────────────────────────────────────────────────────────
+
+def demo_interleaving_preservation():
     print("\n" + "=" * 70)
-    print("THEOREM 1: Interleaving Preservation Under Localization")
-    print("  If F, G are δ-interleaved, so are L_p(F), L_p(G)")
+    print("DEMO 2: Interleaving Preservation under Localization")
+    print("  If F,G are δ-interleaved, Loc_p(F), Loc_p(G) are also δ-interleaved")
     print("=" * 70)
 
-    # Construct two modules with known relationship
-    F = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, [6]),
-        FGAbGroup(1, [6, 4]),
-        FGAbGroup(1, [6, 4]),
-        FGAbGroup(1, [6, 4, 9]),
-    ])
-    G = PersistenceModule([
-        FGAbGroup(1, []),
-        FGAbGroup(1, []),
-        FGAbGroup(1, [6]),
-        FGAbGroup(1, [6, 4]),
-        FGAbGroup(1, [6, 4, 9]),
-    ])
+    # Two modules that are "close" but not identical
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            1: FGAbGroup(free_rank=1),
+            2: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+        },
+        support_range=(0, 3)
+    )
+
+    G = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            1: FGAbGroup(free_rank=1),
+            2: FGAbGroup(free_rank=1),
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+        },
+        support_range=(0, 3)
+    )
+
+    print("\nModule F (torsion birth at index 2):")
+    for i in range(4):
+        print(f"  F({i}) = {F.obj(i)}")
+    print(f"  Global torsion birth: {torsion_birth_set(F)}")
+
+    print("\nModule G (torsion birth at index 3):")
+    for i in range(4):
+        print(f"  G({i}) = {G.obj(i)}")
+    print(f"  Global torsion birth: {torsion_birth_set(G)}")
+
+    delta = 1
+    print(f"\nWith δ = {delta}:")
+    for p in [2, 3, 5]:
+        births_F = p_torsion_birth_set(F, p)
+        births_G = p_torsion_birth_set(G, p)
+        loc_births_F = torsion_birth_set(F.localize_at(p))
+        loc_births_G = torsion_birth_set(G.localize_at(p))
+        close = delta_close(births_F, births_G, delta) if births_F and births_G else True
+        loc_close = delta_close(loc_births_F, loc_births_G, delta) if loc_births_F and loc_births_G else True
+
+        print(f"  p={p}: original δ-close={close}, localized δ-close={loc_close}")
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 3: Primewise vs Global Stability
+# ─────────────────────────────────────────────────────────────────
+
+def demo_primewise_stability():
+    print("\n" + "=" * 70)
+    print("DEMO 3: Primewise Stability via Localization")
+    print("  Localization provides a uniform mechanism for primewise stability")
+    print("=" * 70)
+
+    # Module with mixed torsion at different levels
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1]}),
+            5: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+        },
+        support_range=(0, 7)
+    )
+
+    G = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            4: FGAbGroup(free_rank=1, torsion_parts={2: [1]}),
+            6: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [2]}),
+        },
+        support_range=(0, 7)
+    )
 
     print("\nModule F:")
-    print(F)
+    for i in range(8):
+        g = F.obj(i)
+        if g.free_rank > 0 or g.has_any_torsion():
+            print(f"  F({i}) = {g}")
+
     print("\nModule G:")
-    print(G)
+    for i in range(8):
+        g = G.obj(i)
+        if g.free_rank > 0 or g.has_any_torsion():
+            print(f"  G({i}) = {g}")
 
-    for p in sorted(F.prime_support() | G.prime_support()):
-        bF = F.p_torsion_birth_set(p)
-        bG = G.p_torsion_birth_set(p)
-        d_original = hausdorff_distance(bF, bG)
+    print("\nGlobal torsion birth distances:")
+    gb_F = torsion_birth_set(F)
+    gb_G = torsion_birth_set(G)
+    gd = hausdorff_distance(gb_F, gb_G)
+    print(f"  TorsionBirthSet(F) = {gb_F}")
+    print(f"  TorsionBirthSet(G) = {gb_G}")
+    print(f"  Hausdorff distance = {gd}")
 
-        LF = F.localize_at(p)
-        LG = G.localize_at(p)
-        bLF = LF.global_torsion_birth_set()
-        bLG = LG.global_torsion_birth_set()
-        d_localized = hausdorff_distance(bLF, bLG)
+    print("\nPrimewise birth distances (via localization):")
+    for p in [2, 3, 5]:
+        pb_F = p_torsion_birth_set(F, p)
+        pb_G = p_torsion_birth_set(G, p)
+        pd = hausdorff_distance(pb_F, pb_G)
 
-        print(f"\n  p = {p}:")
-        print(f"    PTorBirth(F) = {bF}, PTorBirth(G) = {bG}")
-        print(f"    d(PTorBirth) = {d_original}")
-        print(f"    GlobTorBirth(L_p(F)) = {bLF}, GlobTorBirth(L_p(G)) = {bLG}")
-        print(f"    d(localized) = {d_localized}")
-        print(f"    Preserved? {'✓' if d_localized <= d_original else '✗'}")
+        # Verify via localization
+        loc_F = F.localize_at(p)
+        loc_G = G.localize_at(p)
+        lb_F = torsion_birth_set(loc_F)
+        lb_G = torsion_birth_set(loc_G)
+        ld = hausdorff_distance(lb_F, lb_G)
+
+        print(f"  p={p}: primewise births F={pb_F}, G={pb_G}, "
+              f"distance={pd}, localized distance={ld}")
 
 
-def demo_theorem3_primewise_stability():
-    """Demonstrate Theorem 3: Primewise stability via localization."""
+# ─────────────────────────────────────────────────────────────────
+# Demo 4: Search for Strict Improvement Candidates
+# ─────────────────────────────────────────────────────────────────
+
+def demo_strict_improvement_search():
     print("\n" + "=" * 70)
-    print("THEOREM 3: Primewise Stability via Localization")
-    print("  Derive: PTorBirth δ-close from localized ordinary stability")
+    print("DEMO 4: Search for Strict Witness Improvement")
+    print("  Looking for cases where localization strictly reduces distance")
     print("=" * 70)
 
-    print("\n  Proof architecture:")
-    print("    1. Given: F, G faithfully δ-interleaved")
-    print("    2. Apply Theorem 1: L_p(F), L_p(G) are δ-interleaved")
-    print("    3. Apply ordinary stability: GlobTorBirth(L_p(F)), GlobTorBirth(L_p(G)) are δ-close")
-    print("    4. Apply Theorem 2: PTorBirth(p,F) = GlobTorBirth(L_p(F))")
-    print("    5. Conclude: PTorBirth(p,F), PTorBirth(p,G) are δ-close")
-
-    # Computational verification
-    print("\n--- Computational verification (100 pairs) ---")
-    n_verified = 0
-    for _ in range(100):
-        F = random_persistence_module(length=8, primes=[2, 3, 5])
-        G = random_persistence_module(length=8, primes=[2, 3, 5])
-        delta = max(1, abs((F.global_torsion_birth() or 0) -
-                           (G.global_torsion_birth() or 0)))
-
-        all_ok = True
-        for p in F.prime_support() | G.prime_support():
-            LF = F.localize_at(p)
-            LG = G.localize_at(p)
-            # Check that the distance is the same through both routes
-            d_direct = hausdorff_distance(F.p_torsion_birth_set(p),
-                                          G.p_torsion_birth_set(p))
-            d_localized = hausdorff_distance(LF.global_torsion_birth_set(),
-                                             LG.global_torsion_birth_set())
-            if d_direct != d_localized:
-                all_ok = False
-        if all_ok:
-            n_verified += 1
-    print(f"  Route equivalence verified: {n_verified}/100")
-
-
-def demo_theorem4_witness_improvement():
-    """Search for strict witness improvement under localization."""
-    print("\n" + "=" * 70)
-    print("THEOREM 4 & CONJECTURE: Strict Witness Improvement")
-    print("  Search: ∃ F, G, p such that d(L_p(F), L_p(G)) < d(F, G)")
-    print("=" * 70)
-
-    improvements_found = []
-    n_trials = 200
+    random.seed(42)
+    candidates = []
+    n_trials = 500
+    primes = [2, 3, 5, 7]
 
     for trial in range(n_trials):
-        # Construct modules where different primes have different birth times
-        F = random_persistence_module(length=10, primes=[2, 3, 5, 7])
-        G = random_persistence_module(length=10, primes=[2, 3, 5, 7])
+        F = random_persistence_module(support_size=10, primes=primes, birth_prob=0.25)
+        G = random_persistence_module(support_size=10, primes=primes, birth_prob=0.25)
 
-        d_global = hausdorff_distance(F.global_torsion_birth_set(),
-                                       G.global_torsion_birth_set())
-        if d_global == 0 or d_global >= 10**9:
+        gb_F = torsion_birth_set(F)
+        gb_G = torsion_birth_set(G)
+        gd = hausdorff_distance(gb_F, gb_G)
+
+        if gd is None or gd == 0:
             continue
 
-        for p in F.prime_support() | G.prime_support():
-            d_local = hausdorff_distance(F.p_torsion_birth_set(p),
-                                          G.p_torsion_birth_set(p))
-            if d_local < d_global:
-                improvements_found.append({
+        for p in primes:
+            pb_F = p_torsion_birth_set(F, p)
+            pb_G = p_torsion_birth_set(G, p)
+            pd = hausdorff_distance(pb_F, pb_G)
+
+            if pd is not None and pd < gd:
+                candidates.append({
                     'trial': trial,
-                    'p': p,
-                    'd_global': d_global,
-                    'd_local': d_local,
-                    'F_births': {q: F.p_torsion_birth(q) for q in F.prime_support()},
-                    'G_births': {q: G.p_torsion_birth(q) for q in G.prime_support()},
+                    'prime': p,
+                    'global_dist': gd,
+                    'p_dist': pd,
+                    'improvement': gd - pd,
                 })
-                break
 
-    print(f"\n  Searched {n_trials} random pairs")
-    print(f"  Strict improvements found: {len(improvements_found)}")
+    print(f"\n  Searched {n_trials} random module pairs")
+    print(f"  Found {len(candidates)} improvement candidates")
 
-    if improvements_found:
-        print("\n  First 3 examples:")
-        for ex in improvements_found[:3]:
-            print(f"    Trial {ex['trial']}: p={ex['p']}, "
-                  f"d_global={ex['d_global']}, d_local={ex['d_local']}")
-            print(f"      F births: {ex['F_births']}")
-            print(f"      G births: {ex['G_births']}")
+    if candidates:
+        print("\n  Top candidates:")
+        candidates.sort(key=lambda x: -x['improvement'])
+        for c in candidates[:5]:
+            print(f"    Trial {c['trial']}: p={c['prime']}, "
+                  f"global_dist={c['global_dist']}, p_dist={c['p_dist']}, "
+                  f"improvement={c['improvement']}")
     else:
-        print("  (No improvements found in this run — conjecture not disproved)")
+        print("  No strict improvements found in this batch.")
+        print("  (This doesn't disprove the conjecture — try larger search.)")
 
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 5: Prime Channel Decomposition
+# ─────────────────────────────────────────────────────────────────
 
 def demo_prime_decomposition():
-    """Demonstrate the cross-domain prime decomposition theorem."""
     print("\n" + "=" * 70)
-    print("CROSS-DOMAIN: Prime Decomposition of Torsion Births")
-    print("  GlobalTorsionBirth ⊆ ∪_p PTorBirth(p, F)")
+    print("DEMO 5: Prime Channel Decomposition of Torsion")
+    print("  Torsion information decomposes into independent prime channels")
     print("=" * 70)
 
-    F = PersistenceModule([
-        FGAbGroup(2, []),
-        FGAbGroup(2, []),
-        FGAbGroup(2, []),
-        FGAbGroup(2, [30]),       # 30 = 2·3·5 → torsion born at level 3
-        FGAbGroup(2, [30, 49]),   # 49 = 7^2 → 7-torsion born at level 4
-    ])
-    print("\nExample module:")
-    print(F)
-    print(f"\nGlobal torsion birth: {F.global_torsion_birth()}")
-    print(f"Prime support: {sorted(F.prime_support())}")
-    print(f"Birth spectrum:")
-    for p in sorted(F.prime_support()):
-        print(f"  p={p}: birth at index {F.p_torsion_birth(p)}")
+    F = ZPersModule(
+        groups={
+            0: FGAbGroup(free_rank=1),
+            1: FGAbGroup(free_rank=1, torsion_parts={2: [1]}),
+            2: FGAbGroup(free_rank=1, torsion_parts={2: [1]}),
+            3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+            4: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1], 5: [1]}),
+        },
+        support_range=(0, 4)
+    )
 
-    glob = F.global_torsion_birth()
-    covered = False
-    for p in F.prime_support():
-        b = F.p_torsion_birth(p)
-        if b is not None and b <= glob:
-            covered = True
-            print(f"\n  ✓ Global birth index {glob} is covered by p={p} birth at index {b}")
+    print("\nModule F with staggered torsion births:")
+    for i in range(5):
+        print(f"  F({i}) = {F.obj(i)}")
 
-    # Random verification
-    print("\n--- Random verification (100 modules) ---")
-    n_ok = 0
-    for _ in range(100):
-        F = random_persistence_module(length=8, primes=[2, 3, 5, 7])
-        glob = F.global_torsion_birth()
-        if glob is None:
-            n_ok += 1
-            continue
-        for p in F.prime_support():
-            b = F.p_torsion_birth(p)
-            if b is not None and b <= glob:
-                n_ok += 1
-                break
-    print(f"  Decomposition verified: {n_ok}/100")
+    print("\nPrime channel analysis:")
+    primes_used = sorted(prime_support_set(F))
+    for p in primes_used:
+        births = p_torsion_birth_set(F, p)
+        loc = F.localize_at(p)
+        print(f"  Channel p={p}:")
+        print(f"    Birth index: {births}")
+        print(f"    Localized module:")
+        for i in range(5):
+            g = loc.obj(i)
+            if g.free_rank > 0 or g.has_any_torsion():
+                print(f"      Loc_{p}(F)({i}) = {g}")
+
+    print(f"\n  Global torsion birth: {torsion_birth_set(F)}")
+    print(f"  This is the FIRST among all prime channel births: "
+          f"{min(min(b) for p in primes_used for b in [p_torsion_birth_set(F, p)] if b)}")
 
 
-def demo_localization_examples():
-    """Show concrete localization computations."""
-    print("\n" + "=" * 70)
-    print("LOCALIZATION EXAMPLES")
-    print("  A ⊗_Z Z_(p): keep free part + p-primary torsion only")
-    print("=" * 70)
+def prime_support_set(F):
+    primes = set()
+    for grp in F.groups.values():
+        primes.update(grp.torsion_parts.keys())
+    return primes
 
-    examples = [
-        ("ℤ/6ℤ", FGAbGroup(0, [6])),
-        ("ℤ/12ℤ", FGAbGroup(0, [12])),
-        ("ℤ ⊕ ℤ/30ℤ", FGAbGroup(1, [30])),
-        ("ℤ/4 ⊕ ℤ/9", FGAbGroup(0, [4, 9])),
-        ("ℤ^2 ⊕ ℤ/60", FGAbGroup(2, [60])),
-    ]
 
-    for name, A in examples:
-        print(f"\n  {name} = {A}")
-        print(f"    Prime support: {sorted(A.prime_support())}")
-        for p in sorted(A.prime_support()):
-            L = A.localize_at(p)
-            print(f"    Localized at {p}: {L}")
-
+# ─────────────────────────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    random.seed(42)
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Functorial Localization of Persistence Modules — Interactive Demo  ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
 
-    print("╔" + "═" * 68 + "╗")
-    print("║  FUNCTORIAL LOCALIZATION OF PERSISTENCE MODULES — DEMO            ║")
-    print("║  Arithmetic Persistence Theory via Prime Localization             ║")
-    print("╚" + "═" * 68 + "╝")
-
-    demo_localization_examples()
-    demo_theorem2_birth_identification()
-    demo_theorem1_interleaving_preservation()
-    demo_theorem3_primewise_stability()
+    demo_birth_set_identification()
+    demo_interleaving_preservation()
+    demo_primewise_stability()
+    demo_strict_improvement_search()
     demo_prime_decomposition()
-    demo_theorem4_witness_improvement()
 
     print("\n" + "=" * 70)
-    print("DEMO COMPLETE")
-    print("All theorems verified computationally on random examples.")
+    print("All demos completed successfully.")
     print("=" * 70)
 
 
 """
-Visualization: Prime Birth Spectrum Heatmap
+Visualization: The Localization Functor in Action
 
-Shows the complete primewise birth spectrum for a collection of persistence
-modules, displayed as a heatmap. Each row is a module, each column is a prime,
-and the color indicates the birth index.
-
-WHAT THIS VISUALIZES:
-A heatmap showing when torsion at each prime first appears across a collection
-of random persistence modules. This reveals the arithmetic structure of
-persistence data: some modules have early 2-torsion but late 3-torsion,
-others show simultaneous births, and some primes are entirely absent.
-The visualization demonstrates that the global torsion birth (rightmost column)
-is always the minimum of the primewise births, confirming the decomposition theorem.
+Shows how two persistence modules that are δ-interleaved remain
+δ-interleaved after localization at a prime. The visualization
+depicts the groups at each index, the interleaving maps, and
+how localization simplifies the picture by removing extraneous torsion.
 """
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import numpy as np
-import random
-
-
-# --- Inline all needed functions ---
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= abs(n):
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if abs(n) > 1:
-        factors.append(abs(n))
-    return factors
-
-def distinct_prime_factors(n):
-    return set(prime_factors(n))
-
-def p_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
-
-
-class FGAbGroup:
-    def __init__(self, free_rank, torsion_coeffs=None):
-        self.free_rank = free_rank
-        self.torsion_coeffs = sorted([c for c in (torsion_coeffs or []) if c >= 2])
-
-    def has_p_torsion(self, p):
-        return any(c % p == 0 for c in self.torsion_coeffs)
-
-    def has_global_torsion(self):
-        return len(self.torsion_coeffs) > 0
-
-    def prime_support(self):
-        primes = set()
-        for c in self.torsion_coeffs:
-            primes |= distinct_prime_factors(c)
-        return primes
-
-
-class PersistenceModule:
-    def __init__(self, groups):
-        self.groups = groups
-
-    def p_torsion_birth(self, p):
-        for i, g in enumerate(self.groups):
-            if g.has_p_torsion(p):
-                return i
-        return None
-
-    def global_torsion_birth(self):
-        for i, g in enumerate(self.groups):
-            if g.has_global_torsion():
-                return i
-        return None
-
-    def prime_support(self):
-        s = set()
-        for g in self.groups:
-            s |= g.prime_support()
-        return s
-
-
-def random_persistence_module(length=12, primes=None):
-    if primes is None:
-        primes = [2, 3, 5, 7]
-    groups = []
-    current_torsion = []
-    free_rank = random.randint(0, 2)
-    for _ in range(length):
-        if random.random() < 0.3:
-            p = random.choice(primes)
-            k = random.randint(1, 2)
-            current_torsion.append(p ** k)
-        groups.append(FGAbGroup(free_rank, list(current_torsion)))
-    return PersistenceModule(groups)
-
-
-# --- Generate data ---
-random.seed(42)
-n_modules = 25
-length = 12
-primes = [2, 3, 5, 7]
-modules = [random_persistence_module(length=length, primes=primes)
-           for _ in range(n_modules)]
-
-# Build the data matrix
-# Columns: p=2, p=3, p=5, p=7, Global
-col_labels = [f'p = {p}' for p in primes] + ['Global']
-n_cols = len(col_labels)
-
-data = np.full((n_modules, n_cols), np.nan)
-
-for i, F in enumerate(modules):
-    for j, p in enumerate(primes):
-        b = F.p_torsion_birth(p)
-        if b is not None:
-            data[i, j] = b
-    gb = F.global_torsion_birth()
-    if gb is not None:
-        data[i, -1] = gb
-
-# Sort by global birth index
-sort_idx = np.argsort(np.where(np.isnan(data[:, -1]), 999, data[:, -1]))
-data = data[sort_idx]
-
-# --- Plot ---
-fig, ax = plt.subplots(figsize=(10, 10))
-
-# Custom colormap: white for NaN, blues for birth indices
-cmap = plt.cm.YlOrRd_r.copy()
-cmap.set_bad(color='#f5f5f5')
-
-# Create masked array
-masked_data = np.ma.masked_invalid(data)
-
-im = ax.imshow(masked_data, cmap=cmap, aspect='auto',
-               vmin=0, vmax=length - 1, interpolation='nearest')
-
-# Add text annotations
-for i in range(n_modules):
-    for j in range(n_cols):
-        if not np.isnan(data[i, j]):
-            val = int(data[i, j])
-            text_color = 'white' if val > length * 0.6 else 'black'
-            ax.text(j, i, str(val), ha='center', va='center',
-                    fontsize=9, fontweight='bold', color=text_color)
-        else:
-            ax.text(j, i, '—', ha='center', va='center',
-                    fontsize=9, color='#cccccc')
-
-# Formatting
-ax.set_xticks(range(n_cols))
-ax.set_xticklabels(col_labels, fontsize=11, fontweight='bold')
-ax.set_yticks(range(n_modules))
-ax.set_yticklabels([f'Module {i+1}' for i in range(n_modules)], fontsize=9)
-
-# Add vertical line before "Global" column
-ax.axvline(x=n_cols - 1.5, color='#2c3e50', linewidth=2, linestyle='--')
-
-ax.set_title('Prime Birth Spectrum: Torsion Birth Index by Prime Channel\n'
-             'Each cell shows when torsion at that prime first appears in the filtration',
-             fontsize=13, fontweight='bold', pad=15)
-
-# Colorbar
-cbar = plt.colorbar(im, ax=ax, shrink=0.6, pad=0.02)
-cbar.set_label('Birth Index (filtration level)', fontsize=10)
-
-# Add annotation
-ax.text(0.5, -0.06,
-        'Global birth = min of primewise births (decomposition theorem). '
-        '"—" = prime torsion never appears.',
-        transform=ax.transAxes, ha='center', fontsize=10,
-        style='italic', color='#555555')
-
-plt.tight_layout()
-plt.savefig('viz_birth_spectrum.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-print("Saved viz_birth_spectrum.png")
-
-
-"""
-Visualization: Prime Channel Decomposition of Persistence Modules
-
-Shows how localization at different primes decomposes the global torsion
-profile into independent prime channels, acting as a "spectral filter"
-for persistence data.
-
-WHAT THIS VISUALIZES:
-A persistence module with mixed torsion is decomposed into its prime channels
-via localization. The top panel shows the global torsion profile, and the
-lower panels show the isolated p-primary channel after localization at each prime.
-This demonstrates that the global signal is the superposition of independent
-prime-frequency channels.
-"""
-
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
+# ── Configuration ─────────────────────────────────────────────────
 
-# --- Inline all needed functions ---
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= abs(n):
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if abs(n) > 1:
-        factors.append(abs(n))
-    return factors
+fig, axes = plt.subplots(2, 2, figsize=(14, 9))
 
-def distinct_prime_factors(n):
-    return set(prime_factors(n))
+indices = list(range(8))
+delta = 1
 
-def p_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
-
-
-class FGAbGroup:
-    def __init__(self, free_rank, torsion_coeffs=None):
-        self.free_rank = free_rank
-        self.torsion_coeffs = sorted([c for c in (torsion_coeffs or []) if c >= 2])
-
-    def has_p_torsion(self, p):
-        return any(c % p == 0 for c in self.torsion_coeffs)
-
-    def prime_support(self):
-        primes = set()
-        for c in self.torsion_coeffs:
-            primes |= distinct_prime_factors(c)
-        return primes
-
-    def localize_at(self, p):
-        new_torsion = [pk for c in self.torsion_coeffs if (pk := p_part(c, p)) > 1]
-        return FGAbGroup(self.free_rank, new_torsion)
-
-    def torsion_rank(self):
-        return len(self.torsion_coeffs)
-
-
-class PersistenceModule:
-    def __init__(self, groups):
-        self.groups = groups
-
-    def localize_at(self, p):
-        return PersistenceModule([g.localize_at(p) for g in self.groups])
-
-    def torsion_profile(self):
-        return [g.torsion_rank() for g in self.groups]
-
-    def prime_support(self):
-        s = set()
-        for g in self.groups:
-            s |= g.prime_support()
-        return s
-
-
-# --- Build example module ---
-length = 15
-groups = [FGAbGroup(1, [])]
-current_torsion = []
-
-# Schedule: different primes appear at different times
-schedule = {
-    2: [2, 5, 8, 11],
-    3: [4, 7, 10],
-    5: [6, 12],
-    7: [9],
+# Module F: torsion births
+F_torsion = {
+    0: {}, 1: {}, 2: {2: 1},
+    3: {2: 1, 3: 1}, 4: {2: 1, 3: 1, 5: 1},
+    5: {2: 1, 3: 1, 5: 1}, 6: {2: 1, 3: 1, 5: 1}, 7: {2: 1, 3: 1, 5: 1}
+}
+# Module G: shifted torsion births
+G_torsion = {
+    0: {}, 1: {}, 2: {}, 3: {2: 1},
+    4: {2: 1, 3: 1}, 5: {2: 1, 3: 1, 5: 1},
+    6: {2: 1, 3: 1, 5: 1}, 7: {2: 1, 3: 1, 5: 1}
 }
 
-for i in range(1, length):
-    new_tors = list(current_torsion)
-    for p, levels in schedule.items():
-        if i in levels:
-            new_tors.append(p)
-    current_torsion = new_tors
-    groups.append(FGAbGroup(1, list(current_torsion)))
+prime_colors = {2: '#e74c3c', 3: '#3498db', 5: '#2ecc71'}
 
-F = PersistenceModule(groups)
-primes = sorted(F.prime_support())
-colors = {2: '#e74c3c', 3: '#3498db', 5: '#2ecc71', 7: '#9b59b6'}
-prime_names = {2: 'p = 2', 3: 'p = 3', 5: 'p = 5', 7: 'p = 7'}
+def torsion_label(tors):
+    if not tors:
+        return 'ℤ'
+    parts = ['ℤ']
+    for p in sorted(tors):
+        parts.append(f'ℤ/{p}')
+    return '⊕'.join(parts)
 
-# --- Create figure ---
-fig, axes = plt.subplots(len(primes) + 1, 1, figsize=(12, 10),
-                          sharex=True, gridspec_kw={'hspace': 0.3})
+def draw_module(ax, torsion_data, name, y_offset=0, color='black'):
+    """Draw a persistence module as a sequence of nodes with labels."""
+    for i in indices:
+        tors = torsion_data.get(i, {})
+        n_primes = len(tors)
 
-x = np.arange(length)
+        # Node
+        circle_color = '#f0f0f0' if n_primes == 0 else '#fff3e0'
+        ax.add_patch(plt.Circle((i, y_offset), 0.35, facecolor=circle_color,
+                                edgecolor=color, linewidth=1.5, zorder=3))
 
-# Top panel: global torsion profile
-ax = axes[0]
-profile = F.torsion_profile()
-ax.bar(x, profile, color='#2c3e50', alpha=0.8, edgecolor='white', linewidth=0.5)
-ax.set_ylabel('Torsion\nRank', fontsize=10)
-ax.set_title('Prime Channel Decomposition of a Persistence Module\n'
-             'Global torsion signal vs. individual prime channels after localization',
-             fontsize=13, fontweight='bold', pad=10)
-ax.text(0.02, 0.85, 'Global (all primes)',
-        transform=ax.transAxes, fontsize=11, fontweight='bold',
-        bbox=dict(boxstyle='round', facecolor='#2c3e50', alpha=0.15))
-ax.set_ylim(0, max(profile) + 1)
-ax.grid(axis='y', alpha=0.3)
+        # Torsion indicators
+        for j, (p, _) in enumerate(sorted(tors.items())):
+            angle = 2 * np.pi * j / max(n_primes, 1) - np.pi/2
+            dx, dy = 0.15 * np.cos(angle), 0.15 * np.sin(angle)
+            ax.plot(i + dx, y_offset + dy, 'o', color=prime_colors.get(p, 'gray'),
+                   markersize=6, zorder=4)
 
-# Lower panels: each prime channel
-for idx, p in enumerate(primes):
-    ax = axes[idx + 1]
-    L = F.localize_at(p)
-    lp = L.torsion_profile()
-    color = colors.get(p, '#95a5a6')
+        # Arrows between nodes
+        if i < max(indices):
+            ax.annotate('', xy=(i + 0.6, y_offset), xytext=(i + 0.4, y_offset),
+                       arrowprops=dict(arrowstyle='->', color=color, lw=1.2))
 
-    ax.bar(x, lp, color=color, alpha=0.75, edgecolor='white', linewidth=0.5)
-    ax.set_ylabel('Torsion\nRank', fontsize=10)
+    ax.text(-0.8, y_offset, name, fontsize=13, fontweight='bold',
+            ha='right', va='center', color=color)
 
-    # Mark birth index
-    birth = next((i for i, v in enumerate(lp) if v > 0), None)
+def draw_interleaving(ax, y_top, y_bot, delta_val):
+    """Draw interleaving arrows between two modules."""
+    for i in indices:
+        if i + delta_val <= max(indices):
+            # Forward arrow (top to bottom)
+            ax.annotate('', xy=(i + delta_val, y_bot + 0.4),
+                       xytext=(i, y_top - 0.4),
+                       arrowprops=dict(arrowstyle='->', color='#27ae60',
+                                      lw=1, ls='--', alpha=0.5))
+            # Backward arrow (bottom to top)
+            ax.annotate('', xy=(i + delta_val, y_top - 0.4),
+                       xytext=(i, y_bot + 0.4),
+                       arrowprops=dict(arrowstyle='->', color='#e67e22',
+                                      lw=1, ls='--', alpha=0.5))
+
+# ── Panel 1: Original modules with interleaving ──────────────────
+
+ax = axes[0, 0]
+draw_module(ax, F_torsion, 'F', y_offset=1.5, color='#2c3e50')
+draw_module(ax, G_torsion, 'G', y_offset=-1.5, color='#8e44ad')
+draw_interleaving(ax, 1.5, -1.5, delta)
+
+ax.set_xlim(-1.5, 8)
+ax.set_ylim(-2.5, 2.5)
+ax.set_xticks(indices)
+ax.set_title(f'Original: F and G are δ={delta}-interleaved\n(colored dots = torsion at primes)',
+             fontsize=11, fontweight='bold')
+ax.set_xlabel('Filtration Index', fontsize=10)
+ax.set_aspect('equal')
+ax.grid(True, alpha=0.1)
+
+# ── Panel 2: Localized at p=2 ─────────────────────────────────────
+
+ax = axes[0, 1]
+F_loc2 = {i: ({2: t[2]} if 2 in t else {}) for i, t in F_torsion.items()}
+G_loc2 = {i: ({2: t[2]} if 2 in t else {}) for i, t in G_torsion.items()}
+
+draw_module(ax, F_loc2, 'Loc₂(F)', y_offset=1.5, color='#c0392b')
+draw_module(ax, G_loc2, 'Loc₂(G)', y_offset=-1.5, color='#8e44ad')
+draw_interleaving(ax, 1.5, -1.5, delta)
+
+ax.set_xlim(-1.5, 8)
+ax.set_ylim(-2.5, 2.5)
+ax.set_xticks(indices)
+ax.set_title(f'Localized at p=2: Only 2-torsion survives\nδ={delta}-interleaving preserved!',
+             fontsize=11, fontweight='bold')
+ax.set_xlabel('Filtration Index', fontsize=10)
+ax.set_aspect('equal')
+ax.grid(True, alpha=0.1)
+
+# ── Panel 3: Localized at p=3 ─────────────────────────────────────
+
+ax = axes[1, 0]
+F_loc3 = {i: ({3: t[3]} if 3 in t else {}) for i, t in F_torsion.items()}
+G_loc3 = {i: ({3: t[3]} if 3 in t else {}) for i, t in G_torsion.items()}
+
+draw_module(ax, F_loc3, 'Loc₃(F)', y_offset=1.5, color='#2980b9')
+draw_module(ax, G_loc3, 'Loc₃(G)', y_offset=-1.5, color='#8e44ad')
+draw_interleaving(ax, 1.5, -1.5, delta)
+
+ax.set_xlim(-1.5, 8)
+ax.set_ylim(-2.5, 2.5)
+ax.set_xticks(indices)
+ax.set_title(f'Localized at p=3: Only 3-torsion survives\nδ={delta}-interleaving preserved!',
+             fontsize=11, fontweight='bold')
+ax.set_xlabel('Filtration Index', fontsize=10)
+ax.set_aspect('equal')
+ax.grid(True, alpha=0.1)
+
+# ── Panel 4: Birth set comparison ─────────────────────────────────
+
+ax = axes[1, 1]
+
+labels = ['Global F', 'Global G', 'p=2 F', 'p=2 G', 'p=3 F', 'p=3 G', 'p=5 F', 'p=5 G']
+births = [2, 3, 2, 3, 3, 4, 4, 5]
+colors_list = ['#2c3e50', '#8e44ad', '#e74c3c', '#e74c3c', '#3498db', '#3498db', '#2ecc71', '#2ecc71']
+alphas = [0.9, 0.9, 0.8, 0.5, 0.8, 0.5, 0.8, 0.5]
+
+y_pos = list(range(len(labels)))
+bars = ax.barh(y_pos, [0.6]*len(labels), left=[b-0.3 for b in births],
+               color=colors_list, alpha=alphas, height=0.6, edgecolor='white')
+
+for i, (birth, label) in enumerate(zip(births, labels)):
+    ax.text(birth, i, str(birth), ha='center', va='center',
+            color='white', fontweight='bold', fontsize=9)
+
+# Draw distance brackets
+for pair_start in [0, 2, 4, 6]:
+    b1, b2 = births[pair_start], births[pair_start + 1]
+    dist = abs(b1 - b2)
+    mid_y = pair_start + 0.5
+    ax.annotate(f'Δ={dist}', xy=(max(b1, b2) + 0.5, mid_y),
+               fontsize=9, color='#e67e22', fontweight='bold')
+
+ax.set_xlim(-0.5, 8)
+ax.set_yticks(y_pos)
+ax.set_yticklabels(labels, fontsize=9)
+ax.set_xlabel('Filtration Index', fontsize=10)
+ax.set_title('Birth Indices: Global vs. Primewise\n'
+             '(Theorem 2: p-births = localized births)',
+             fontsize=11, fontweight='bold')
+ax.grid(True, alpha=0.1, axis='x')
+ax.invert_yaxis()
+
+# Legend
+legend_patches = [mpatches.Patch(color=prime_colors[p], label=f'p={p} torsion')
+                  for p in [2, 3, 5]]
+fig.legend(handles=legend_patches, loc='lower center', ncol=3,
+           fontsize=10, frameon=True, fancybox=True)
+
+plt.tight_layout(rect=[0, 0.05, 1, 1])
+plt.savefig('viz_localization_functor.png', dpi=150, bbox_inches='tight')
+print("Saved viz_localization_functor.png")
+
+
+"""
+Visualization: Prime Spectrum of a Persistence Module
+
+Shows how torsion information decomposes into independent prime channels,
+each revealing different topological features at different scales.
+Each row represents a prime channel; colored cells indicate where
+torsion at that prime is present. The leftmost colored cell in each
+row is the "birth" for that channel.
+"""
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+# ── Define example persistence modules ──────────────────────────
+
+# Persistence module with staggered torsion births
+# F(i) groups: torsion appears at different primes at different indices
+torsion_data = {
+    # index: {prime: [exponents]}
+    0: {},
+    1: {},
+    2: {7: [1]},
+    3: {7: [1]},
+    4: {2: [1], 7: [1]},
+    5: {2: [1, 2], 3: [1], 7: [1]},
+    6: {2: [1, 2], 3: [1], 5: [1], 7: [1]},
+    7: {2: [1, 2], 3: [1, 1], 5: [1], 7: [1]},
+    8: {2: [1, 2], 3: [1, 1], 5: [1], 7: [1], 11: [1]},
+    9: {2: [1, 2], 3: [1, 1], 5: [1], 7: [1], 11: [1]},
+}
+
+primes = [2, 3, 5, 7, 11]
+indices = list(range(10))
+prime_colors = {
+    2: '#e74c3c',   # red
+    3: '#3498db',   # blue
+    5: '#2ecc71',   # green
+    7: '#f39c12',   # orange
+    11: '#9b59b6',  # purple
+}
+
+# ── Create figure ─────────────────────────────────────────────────
+
+fig, axes = plt.subplots(3, 1, figsize=(12, 10), gridspec_kw={'height_ratios': [4, 2, 2]})
+
+# Panel 1: Prime spectrum heatmap
+ax1 = axes[0]
+for pi, p in enumerate(primes):
+    for idx in indices:
+        torsion = torsion_data.get(idx, {})
+        has_torsion = p in torsion and len(torsion[p]) > 0
+        if has_torsion:
+            rank = len(torsion[p])
+            alpha = min(0.3 + 0.2 * rank, 1.0)
+            ax1.add_patch(plt.Rectangle((idx - 0.4, pi - 0.35), 0.8, 0.7,
+                                         facecolor=prime_colors[p], alpha=alpha,
+                                         edgecolor='white', linewidth=1.5))
+            # Mark birth (first appearance)
+            is_birth = all(p not in torsion_data.get(j, {}) or
+                          len(torsion_data.get(j, {}).get(p, [])) == 0
+                          for j in range(idx))
+            if is_birth:
+                ax1.plot(idx, pi, 'w*', markersize=14, markeredgecolor='black',
+                        markeredgewidth=0.8)
+
+ax1.set_xlim(-0.5, 9.5)
+ax1.set_ylim(-0.5, len(primes) - 0.5)
+ax1.set_xticks(indices)
+ax1.set_yticks(range(len(primes)))
+ax1.set_yticklabels([f'p = {p}' for p in primes], fontsize=12)
+ax1.set_xlabel('Filtration Index', fontsize=12)
+ax1.set_title('Prime Spectrum of a Persistence Module\n'
+              '(★ = birth index, intensity = torsion rank)',
+              fontsize=14, fontweight='bold')
+ax1.grid(True, alpha=0.15)
+ax1.invert_yaxis()
+
+# Panel 2: Localization effect
+ax2 = axes[1]
+loc_prime = 3  # Localize at p=3
+
+for idx in indices:
+    torsion = torsion_data.get(idx, {})
+    # Before localization: all torsion
+    total_torsion = sum(len(torsion.get(p, [])) for p in primes)
+    if total_torsion > 0:
+        ax2.bar(idx - 0.2, total_torsion, width=0.35, color='gray', alpha=0.5,
+               label='Before' if idx == 4 else '')
+
+    # After localization at p=3: only 3-torsion
+    p3_torsion = len(torsion.get(loc_prime, []))
+    if p3_torsion > 0:
+        ax2.bar(idx + 0.2, p3_torsion, width=0.35, color=prime_colors[loc_prime],
+               alpha=0.8, label=f'After Loc₃' if idx == 5 else '')
+
+ax2.set_xlim(-0.5, 9.5)
+ax2.set_xticks(indices)
+ax2.set_ylabel('Torsion Rank', fontsize=11)
+ax2.set_title(f'Effect of Localization at p = {loc_prime}: '
+              f'Isolating the {loc_prime}-primary Channel', fontsize=12)
+ax2.legend(loc='upper left', fontsize=10)
+ax2.grid(True, alpha=0.15)
+
+# Panel 3: Birth set comparison
+ax3 = axes[2]
+y_positions = {'Global': 0}
+for i, p in enumerate(primes):
+    y_positions[f'p={p}'] = i + 1
+
+# Global torsion birth
+global_birth = min(idx for idx in indices if torsion_data.get(idx, {}))
+ax3.barh(0, 0.6, left=global_birth - 0.3, color='black', alpha=0.7, height=0.5)
+ax3.text(global_birth, 0, f'{global_birth}', ha='center', va='center',
+         color='white', fontweight='bold', fontsize=10)
+
+# Primewise births
+for i, p in enumerate(primes):
+    birth = None
+    for idx in indices:
+        if p in torsion_data.get(idx, {}) and len(torsion_data.get(idx, {}).get(p, [])) > 0:
+            birth = idx
+            break
     if birth is not None:
-        ax.annotate(f'Birth at {birth}', xy=(birth, lp[birth]),
-                    xytext=(birth + 1.5, lp[birth] + 0.3),
-                    arrowprops=dict(arrowstyle='->', color=color, lw=1.5),
-                    fontsize=9, color=color, fontweight='bold')
+        ax3.barh(i + 1, 0.6, left=birth - 0.3, color=prime_colors[p],
+                alpha=0.8, height=0.5)
+        ax3.text(birth, i + 1, f'{birth}', ha='center', va='center',
+                color='white', fontweight='bold', fontsize=10)
 
-    ax.text(0.02, 0.78, f'Localized at {prime_names[p]}',
-            transform=ax.transAxes, fontsize=11, fontweight='bold',
-            bbox=dict(boxstyle='round', facecolor=color, alpha=0.15))
-    ax.set_ylim(0, max(max(lp) + 1, 2))
-    ax.grid(axis='y', alpha=0.3)
+ax3.set_xlim(-0.5, 9.5)
+ax3.set_xticks(indices)
+ax3.set_yticks(list(y_positions.values()))
+ax3.set_yticklabels(list(y_positions.keys()), fontsize=11)
+ax3.set_xlabel('Filtration Index', fontsize=12)
+ax3.set_title('Birth Set Decomposition: Global vs. Primewise',
+              fontsize=12)
+ax3.grid(True, alpha=0.15, axis='x')
+ax3.invert_yaxis()
 
-axes[-1].set_xlabel('Filtration Index', fontsize=12)
-axes[-1].set_xticks(x)
-
-# Add annotation
-fig.text(0.5, 0.01,
-         'Localization at p isolates the p-primary torsion channel: '
-         'only p-power torsion survives, all other primes vanish.',
-         ha='center', fontsize=10, style='italic', color='#555555')
-
-plt.tight_layout(rect=[0, 0.03, 1, 1])
-plt.savefig('viz_prime_channels.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-print("Saved viz_prime_channels.png")
+plt.tight_layout()
+plt.savefig('viz_prime_spectrum.png', dpi=150, bbox_inches='tight')
+print("Saved viz_prime_spectrum.png")
 
 
 """
-Visualization: Witness Improvement Under Localization
+Visualization: Stability Comparison — Global vs Primewise
 
-Shows how localization at specific primes can strictly improve interleaving
-distances between persistence modules. Compares global vs. prime-local
-distances across many random module pairs.
-
-WHAT THIS VISUALIZES:
-A scatter plot comparing the global interleaving distance bound (x-axis)
-with the best prime-local interleaving distance bound (y-axis) across
-many random persistence module pairs. Points below the diagonal represent
-strict improvements: cases where localization sharpens the stability witness.
-This provides computational evidence for the strict improvement conjecture.
+Shows how the interleaving distance decomposes across prime channels,
+demonstrating that primewise stability can be strictly better than
+global stability. This is the computational evidence for the witness
+improvement conjecture.
 """
-
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 
-
-# --- Inline all needed functions ---
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= abs(n):
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if abs(n) > 1:
-        factors.append(abs(n))
-    return factors
-
-def distinct_prime_factors(n):
-    return set(prime_factors(n))
-
-def p_part(n, p):
-    result = 1
-    while n % p == 0:
-        result *= p
-        n //= p
-    return result
-
+# ── Self-contained classes ────────────────────────────────────────
 
 class FGAbGroup:
-    def __init__(self, free_rank, torsion_coeffs=None):
+    def __init__(self, free_rank=0, torsion_parts=None):
         self.free_rank = free_rank
-        self.torsion_coeffs = sorted([c for c in (torsion_coeffs or []) if c >= 2])
-
+        self.torsion_parts = torsion_parts or {}
     def has_p_torsion(self, p):
-        return any(c % p == 0 for c in self.torsion_coeffs)
-
-    def has_global_torsion(self):
-        return len(self.torsion_coeffs) > 0
-
-    def prime_support(self):
-        primes = set()
-        for c in self.torsion_coeffs:
-            primes |= distinct_prime_factors(c)
-        return primes
-
+        return p in self.torsion_parts and len(self.torsion_parts[p]) > 0
+    def has_any_torsion(self):
+        return any(len(e) > 0 for e in self.torsion_parts.values())
     def localize_at(self, p):
-        new_torsion = [pk for c in self.torsion_coeffs if (pk := p_part(c, p)) > 1]
-        return FGAbGroup(self.free_rank, new_torsion)
+        t = {p: list(self.torsion_parts[p])} if p in self.torsion_parts else {}
+        return FGAbGroup(free_rank=self.free_rank, torsion_parts=t)
 
-
-class PersistenceModule:
-    def __init__(self, groups):
+class ZPersModule:
+    def __init__(self, groups, support_range):
         self.groups = groups
+        self.support_range = support_range
+    def obj(self, i):
+        return self.groups.get(i, FGAbGroup())
+    def has_p_torsion_at(self, p, i):
+        return self.obj(i).has_p_torsion(p)
+    def has_torsion_at(self, i):
+        return self.obj(i).has_any_torsion()
+    def localize_at(self, p):
+        ng = {i: g.localize_at(p) for i, g in self.groups.items()
+              if g.localize_at(p).has_any_torsion() or g.localize_at(p).free_rank > 0}
+        return ZPersModule(groups=ng, support_range=self.support_range)
 
-    def p_torsion_birth(self, p):
-        for i, g in enumerate(self.groups):
-            if g.has_p_torsion(p):
+def torsion_birth(F):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_torsion_at(i):
+            if all(not F.has_torsion_at(j) for j in range(lo, i)):
                 return i
-        return None
+    return None
 
-    def global_torsion_birth(self):
-        for i, g in enumerate(self.groups):
-            if g.has_global_torsion():
+def p_torsion_birth(F, p):
+    lo, hi = F.support_range
+    for i in range(lo, hi + 1):
+        if F.has_p_torsion_at(p, i):
+            if all(not F.has_p_torsion_at(p, j) for j in range(lo, i)):
                 return i
-        return None
+    return None
 
-    def p_torsion_birth_set(self, p):
-        b = self.p_torsion_birth(p)
-        return {b} if b is not None else set()
-
-    def global_torsion_birth_set(self):
-        b = self.global_torsion_birth()
-        return {b} if b is not None else set()
-
-    def prime_support(self):
-        s = set()
-        for g in self.groups:
-            s |= g.prime_support()
-        return s
-
-
-def hausdorff_distance(A, B):
-    if not A and not B:
-        return 0
-    if not A or not B:
-        return 10**9
-    d1 = max(min(abs(a - b) for b in B) for a in A)
-    d2 = max(min(abs(a - b) for a in A) for b in B)
-    return max(d1, d2)
-
-
-def random_persistence_module(length=10, primes=None):
+def random_module(n=10, primes=None, prob=0.25):
     if primes is None:
         primes = [2, 3, 5, 7]
-    groups = []
-    current_torsion = []
-    free_rank = random.randint(0, 2)
-    for _ in range(length):
-        if random.random() < 0.35:
-            p = random.choice(primes)
-            k = random.randint(1, 3)
-            current_torsion.append(p ** k)
-        groups.append(FGAbGroup(free_rank, list(current_torsion)))
-    return PersistenceModule(groups)
+    groups = {}
+    active = {}
+    for i in range(n):
+        torsion = dict(active)
+        for p in primes:
+            if p not in active and random.random() < prob:
+                active[p] = [random.randint(1, 2)]
+                torsion[p] = active[p]
+        if torsion:
+            groups[i] = FGAbGroup(free_rank=1, torsion_parts=torsion)
+        else:
+            groups[i] = FGAbGroup(free_rank=1)
+    return ZPersModule(groups=groups, support_range=(0, n - 1))
 
+# ── Experiment: collect primewise vs global distances ─────────────
 
-# --- Generate data ---
-random.seed(42)
-n_trials = 500
+random.seed(123)
+n_trials = 300
+primes = [2, 3, 5, 7]
+
 global_dists = []
-best_local_dists = []
-improving_primes = []
-categories = []  # 'improved', 'equal', or 'na'
+primewise_dists = {p: [] for p in primes}
+improvements = []
 
 for _ in range(n_trials):
-    F = random_persistence_module(length=12, primes=[2, 3, 5, 7])
-    G = random_persistence_module(length=12, primes=[2, 3, 5, 7])
+    F = random_module(12, primes, 0.3)
+    G = random_module(12, primes, 0.3)
 
-    d_global = hausdorff_distance(F.global_torsion_birth_set(),
-                                   G.global_torsion_birth_set())
-    if d_global == 0 or d_global >= 10**9:
-        continue
+    gb_F = torsion_birth(F)
+    gb_G = torsion_birth(G)
+    if gb_F is not None and gb_G is not None:
+        gd = abs(gb_F - gb_G)
+        global_dists.append(gd)
 
-    all_primes = F.prime_support() | G.prime_support()
-    if not all_primes:
-        continue
+        min_pd = float('inf')
+        for p in primes:
+            pb_F = p_torsion_birth(F, p)
+            pb_G = p_torsion_birth(G, p)
+            if pb_F is not None and pb_G is not None:
+                pd = abs(pb_F - pb_G)
+                primewise_dists[p].append(pd)
+                min_pd = min(min_pd, pd)
 
-    best_local = d_global
-    best_p = None
-    for p in all_primes:
-        d_local = hausdorff_distance(F.p_torsion_birth_set(p),
-                                      G.p_torsion_birth_set(p))
-        if d_local < 10**9 and d_local < best_local:
-            best_local = d_local
-            best_p = p
+        if min_pd < float('inf'):
+            improvements.append(gd - min_pd)
 
-    global_dists.append(d_global)
-    best_local_dists.append(best_local)
-    if best_local < d_global:
-        categories.append('improved')
-        improving_primes.append(best_p)
-    else:
-        categories.append('equal')
-        improving_primes.append(None)
+# ── Create figure ─────────────────────────────────────────────────
 
+fig, axes = plt.subplots(2, 2, figsize=(13, 10))
 
-# --- Plot ---
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+# Panel 1: Distribution of global vs min-primewise distance
+ax = axes[0, 0]
+bins = np.arange(-0.5, max(max(global_dists, default=0), 8) + 1.5, 1)
+ax.hist(global_dists, bins=bins, alpha=0.6, color='#2c3e50', label='Global', edgecolor='white')
+min_pw = [min(primewise_dists[p][i] for p in primes if i < len(primewise_dists[p]))
+          for i in range(min(len(primewise_dists[p]) for p in primes)) if
+          any(i < len(primewise_dists[p]) for p in primes)]
+if min_pw:
+    ax.hist(min_pw, bins=bins, alpha=0.6, color='#e74c3c', label='Min primewise', edgecolor='white')
+ax.set_xlabel('Birth Set Distance', fontsize=11)
+ax.set_ylabel('Count', fontsize=11)
+ax.set_title('Global vs Best Primewise Distance\n(300 random module pairs)', fontsize=12, fontweight='bold')
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.15)
 
-# Left: Scatter plot
-improved_x = [g for g, c in zip(global_dists, categories) if c == 'improved']
-improved_y = [l for l, c in zip(best_local_dists, categories) if c == 'improved']
-equal_x = [g for g, c in zip(global_dists, categories) if c == 'equal']
-equal_y = [l for l, c in zip(best_local_dists, categories) if c == 'equal']
-
-max_d = max(max(global_dists), max(best_local_dists)) + 1
-
-# Add jitter for visibility
-jitter = 0.15
-improved_x_j = [x + random.gauss(0, jitter) for x in improved_x]
-improved_y_j = [y + random.gauss(0, jitter) for y in improved_y]
-equal_x_j = [x + random.gauss(0, jitter) for x in equal_x]
-equal_y_j = [y + random.gauss(0, jitter) for y in equal_y]
-
-ax1.plot([0, max_d], [0, max_d], 'k--', alpha=0.3, linewidth=1, label='No improvement')
-ax1.scatter(equal_x_j, equal_y_j, c='#bdc3c7', s=25, alpha=0.5,
-            edgecolors='none', label=f'Equal ({len(equal_x)})')
-ax1.scatter(improved_x_j, improved_y_j, c='#e74c3c', s=40, alpha=0.7,
-            edgecolors='#c0392b', linewidth=0.5,
-            label=f'Improved ({len(improved_x)})')
-
-ax1.set_xlabel('Global Interleaving Distance Bound', fontsize=12)
-ax1.set_ylabel('Best Prime-Local Distance Bound', fontsize=12)
-ax1.set_title('Witness Improvement Under Localization', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=10, loc='upper left')
-ax1.set_xlim(-0.5, max_d)
-ax1.set_ylim(-0.5, max_d)
-ax1.set_aspect('equal')
-ax1.grid(alpha=0.2)
-
-# Annotate improvement region
-ax1.fill_between([0, max_d], [0, 0], [0, max_d], alpha=0.05, color='#e74c3c')
-ax1.text(max_d * 0.7, max_d * 0.15, 'Improvement\nRegion',
-         fontsize=11, color='#e74c3c', alpha=0.7, ha='center', style='italic')
-
-# Right: Histogram of improvement amounts
-improvements = [g - l for g, l, c in zip(global_dists, best_local_dists, categories)
-                if c == 'improved']
+# Panel 2: Improvement histogram
+ax = axes[0, 1]
 if improvements:
-    ax2.hist(improvements, bins=range(0, max(improvements) + 2),
-             color='#e74c3c', alpha=0.7, edgecolor='white', linewidth=0.5,
-             align='left')
-    ax2.set_xlabel('Amount of Distance Improvement (δ_global - δ_local)', fontsize=12)
-    ax2.set_ylabel('Count', fontsize=12)
-    ax2.set_title('Distribution of Strict Improvements', fontsize=13, fontweight='bold')
-    ax2.grid(axis='y', alpha=0.3)
+    bins_imp = np.arange(min(improvements) - 0.5, max(improvements) + 1.5, 1)
+    colors_imp = ['#2ecc71' if v > 0 else '#95a5a6' if v == 0 else '#e74c3c' for v in sorted(set(improvements))]
+    ax.hist(improvements, bins=bins_imp, alpha=0.7, color='#3498db', edgecolor='white')
+    pos = sum(1 for x in improvements if x > 0)
+    zero = sum(1 for x in improvements if x == 0)
+    neg = sum(1 for x in improvements if x < 0)
+    ax.axvline(0, color='black', linestyle='--', alpha=0.5)
+    ax.text(0.95, 0.95, f'Improved: {pos}\nEqual: {zero}\nWorse: {neg}',
+            transform=ax.transAxes, ha='right', va='top', fontsize=10,
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+ax.set_xlabel('Improvement (global − best primewise)', fontsize=11)
+ax.set_ylabel('Count', fontsize=11)
+ax.set_title('Witness Improvement via Localization\n(positive = localization helps)',
+             fontsize=12, fontweight='bold')
+ax.grid(True, alpha=0.15)
 
-    pct = 100 * len(improvements) / len(global_dists)
-    ax2.text(0.95, 0.95,
-             f'{len(improvements)}/{len(global_dists)} pairs improved\n({pct:.1f}%)',
-             transform=ax2.transAxes, fontsize=11, ha='right', va='top',
-             bbox=dict(boxstyle='round', facecolor='#e74c3c', alpha=0.15))
-else:
-    ax2.text(0.5, 0.5, 'No improvements found', transform=ax2.transAxes,
-             ha='center', va='center', fontsize=14)
+# Panel 3: Per-prime distance distributions
+ax = axes[1, 0]
+prime_color_map = {2: '#e74c3c', 3: '#3498db', 5: '#2ecc71', 7: '#f39c12'}
+positions = []
+data = []
+labels_p = []
+for i, p in enumerate(primes):
+    if primewise_dists[p]:
+        data.append(primewise_dists[p])
+        positions.append(i)
+        labels_p.append(f'p={p}')
+
+if data:
+    bp = ax.boxplot(data, positions=positions, patch_artist=True, widths=0.6)
+    for i, (patch, p) in enumerate(zip(bp['boxes'], primes)):
+        patch.set_facecolor(prime_color_map[p])
+        patch.set_alpha(0.6)
+    if global_dists:
+        ax.boxplot([global_dists], positions=[len(primes)], patch_artist=True,
+                   widths=0.6, boxprops=dict(facecolor='#2c3e50', alpha=0.6))
+        labels_p.append('Global')
+    ax.set_xticks(list(range(len(labels_p))))
+    ax.set_xticklabels(labels_p, fontsize=11)
+
+ax.set_ylabel('Birth Set Distance', fontsize=11)
+ax.set_title('Distance Distribution by Prime Channel\nvs Global Distance',
+             fontsize=12, fontweight='bold')
+ax.grid(True, alpha=0.15, axis='y')
+
+# Panel 4: Concrete example
+ax = axes[1, 1]
+
+# Specific example showing improvement
+F_ex = ZPersModule(
+    groups={
+        0: FGAbGroup(free_rank=1),
+        1: FGAbGroup(free_rank=1, torsion_parts={3: [1]}),
+        3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+    },
+    support_range=(0, 6)
+)
+G_ex = ZPersModule(
+    groups={
+        0: FGAbGroup(free_rank=1),
+        2: FGAbGroup(free_rank=1, torsion_parts={3: [1]}),
+        3: FGAbGroup(free_rank=1, torsion_parts={2: [1], 3: [1]}),
+    },
+    support_range=(0, 6)
+)
+
+categories = ['Global', 'p=2', 'p=3']
+F_births = [torsion_birth(F_ex), p_torsion_birth(F_ex, 2), p_torsion_birth(F_ex, 3)]
+G_births = [torsion_birth(G_ex), p_torsion_birth(G_ex, 2), p_torsion_birth(G_ex, 3)]
+distances_ex = []
+for fb, gb in zip(F_births, G_births):
+    if fb is not None and gb is not None:
+        distances_ex.append(abs(fb - gb))
+    else:
+        distances_ex.append(0)
+
+x_pos = np.arange(len(categories))
+colors_ex = ['#2c3e50', '#e74c3c', '#3498db']
+
+bars = ax.bar(x_pos, distances_ex, color=colors_ex, alpha=0.7, edgecolor='white', width=0.5)
+for bar, d, fb, gb in zip(bars, distances_ex, F_births, G_births):
+    label = f'd={d}'
+    if fb is not None and gb is not None:
+        label += f'\n({fb}↔{gb})'
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05,
+            label, ha='center', va='bottom', fontsize=9)
+
+ax.set_xticks(x_pos)
+ax.set_xticklabels(categories, fontsize=11)
+ax.set_ylabel('Birth Distance', fontsize=11)
+ax.set_title('Concrete Example: Primewise Can Beat Global\n'
+             'F: 3-torsion at 1, 2-torsion at 3\n'
+             'G: 3-torsion at 2, 2-torsion at 3',
+             fontsize=11, fontweight='bold')
+ax.grid(True, alpha=0.15, axis='y')
 
 plt.tight_layout()
-plt.savefig('viz_witness_improvement.png', dpi=150, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-print("Saved viz_witness_improvement.png")
+plt.savefig('viz_stability_comparison.png', dpi=150, bbox_inches='tight')
+print("Saved viz_stability_comparison.png")

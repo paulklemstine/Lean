@@ -1,354 +1,297 @@
-# Functorial Localization of Persistence Modules: Arithmetic Stability via Prime Decomposition
+# Functorial Localization of Persistence Modules: Arithmetic Decomposition of Torsion Stability
 
 ## Abstract
 
-We construct a localization functor at a prime $p$ on $\mathbb{N}$-indexed persistence modules valued in abelian groups, prove that it preserves faithful interleavings with the same shift parameter, and show that the $p$-torsion birth set of a module equals the global torsion birth set of its localization. These results provide a functorial explanation for primewise torsion stability: rather than being a bespoke theorem, primewise stability emerges as ordinary stability viewed through the localization functor. We further formalize an improvement criterion showing that localization can strictly reduce interleaving distances, and verify this computationally. All theorems are machine-verified. Computational experiments on 500 random module pairs show strict improvement in approximately 22% of cases.
+We construct and analyze a localization functor at a prime p on ℤ-indexed persistence modules valued in abelian groups. The functor quotients each level by the subgroup of elements whose additive order is coprime to p, yielding a persistence module whose torsion is purely p-primary. We prove three main theorems: (1) localization preserves faithful δ-interleavings with the same shift parameter, (2) the p-torsion birth set of a persistence module equals the global torsion birth set of its localization at p, and (3) primewise torsion stability follows as a formal consequence of ordinary torsion stability composed with localization. We formalize a witness improvement criterion showing conditions under which localization can sharpen interleaving bounds. All results are machine-verified. Computational experiments on random finite persistence modules confirm the theorems and search for strict improvement candidates.
 
-**Keywords:** persistence modules, localization functor, $p$-primary torsion, interleaving stability, flat base change, topological data analysis, arithmetic decomposition
+**Keywords:** persistence modules, localization, p-primary torsion, interleaving stability, flat base change, topological data analysis, arithmetic decomposition
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+### 1.1 Motivation
 
-Persistent homology is the central tool of topological data analysis (TDA), providing multi-scale topological summaries of data. The algebraic stability theorem [1] guarantees that small perturbations to input data produce small changes in persistence barcodes, making the theory practically useful.
+Persistent homology with coefficients in a field is well-understood: the structure theorem for graded modules over a PID yields a barcode decomposition, and the algebraic stability theorem guarantees that barcodes vary continuously with the input. Over the integers, the situation is richer. Integer homology groups carry torsion, and this torsion decomposes canonically into p-primary components by the structure theorem for finitely generated abelian groups.
 
-The classical theory works over fields, where the structure theorem for finitely generated modules over a PID yields a complete barcode decomposition. When working over the integers $\mathbb{Z}$ — the natural coefficient ring for computing simplicial or singular homology — the resulting persistence modules are sequences of finitely generated abelian groups, and the barcode picture becomes richer: it includes both free and torsion components.
-
-Recent work [2] established that torsion birth sets are stable under interleavings, and moreover that this stability decomposes primewise: for each prime $p$, the set of indices where $p$-primary torsion first appears is Hausdorff-close under $\delta$-interleavings, with the same parameter $\delta$. However, this was proved by direct argument without revealing the underlying algebraic mechanism.
+Recent work on primewise torsion stability [Catalog: `Pythagorean/PrimewiseTorsionStability.lean`] established that p-torsion birth sets of interleaved persistence modules are δ-close, independently for each prime p. However, these results were proved by direct arguments that did not expose the underlying algebraic mechanism.
 
 ### 1.2 Contributions
 
-We identify that mechanism. Our contributions are:
+We show that primewise torsion stability is not a bespoke theorem but a shadow of a functorial localization principle. Our contributions are:
 
-1. **Localization functor** (Definition 3, Section 4): We define a functor $L_p$ that replaces each group in a persistence module by its $p$-primary subgroup, modeling the torsion part of localization $A \otimes_{\mathbb{Z}} \mathbb{Z}_{(p)}$.
+1. **Construction.** We define a localization functor `LocalizedAtPrime p` on ℤ-indexed persistence modules by quotienting each level by the coprime torsion subgroup. We prove functoriality (composition and identity axioms).
 
-2. **Interleaving preservation** (Theorem 1, Section 5): We prove that $L_p$ preserves faithful $\delta$-interleavings with the same shift parameter. This is the functorial core of the theory.
+2. **Interleaving preservation (Theorem 1).** We prove that localization preserves faithful δ-interleavings with the same shift parameter. The key ingredient is that the quotient by the coprime torsion subgroup preserves injectivity of group homomorphisms — the concrete manifestation of flatness.
 
-3. **Birth set identification** (Theorem 2, Section 6): We prove $\text{PTorBirth}(p, F) = \text{GlobTorBirth}(L_p(F))$, converting a prime-filtered invariant into an ordinary invariant after localization.
+3. **Birth set identification (Theorem 2).** We prove that PTorsionBirthSet(p, F) = TorsionBirthSet(LocalizedAtPrime(p, F)). This converts a prime-filtered invariant into an ordinary invariant after base change.
 
-4. **Primewise stability rederivation** (Theorem 3, Section 7): We derive primewise torsion stability as a corollary of ordinary stability applied to localized modules, showing the theory subsumes prior results.
+4. **Primewise stability (Theorem 3).** We rederive primewise torsion stability as a three-step corollary: localize, preserve interleaving, apply ordinary stability.
 
-5. **Witness improvement criterion** (Theorem 4, Section 8): We prove that when a tighter interleaving exists at the localized level, the primewise birth sets are correspondingly closer.
+5. **Witness improvement (Theorem 4).** We formalize a criterion under which localization yields strictly better interleaving bounds for primewise torsion.
 
-6. **Computational experiments** (Section 10): We verify all theorems on 500 random module pairs and exhibit strict improvement examples in ~22% of cases.
+6. **Cross-domain theorems.** We prove that global torsion detection factorizes over primes, connecting persistence theory to arithmetic prime decomposition.
 
-### 1.3 Mathematical Context
+### 1.3 Relationship to Prior Work
 
-For a finitely generated abelian group $A$, localization at a prime $p$ gives:
-$$A \otimes_{\mathbb{Z}} \mathbb{Z}_{(p)} \cong \mathbb{Z}_{(p)}^r \oplus A[p^\infty]$$
-where $r$ is the free rank and $A[p^\infty]$ is the $p$-primary subgroup. The torsion part of the localization is precisely the $p$-primary subgroup. This classical fact from commutative algebra becomes our main tool.
+The primewise torsion stability results in `PrimewiseTorsionStability.lean` established the key stability facts using ℕ-indexed filtration families with faithful interleavings. Our work:
+- Extends to ℤ-indexed persistence modules
+- Provides a functorial explanation via localization
+- Subsumes the birth-set identification as a consequence of the localization equivalence
+- Opens the path to derived localization and sheaf-theoretic extensions
 
 ---
 
 ## 2. Definitions and Setup
 
-### 2.1 Filtration Families
+### 2.1 ℤ-Persistence Modules
 
-**Definition 1 (Filtration Family).** A *filtration family* $F$ consists of:
-- A sequence of abelian groups $(F_i)_{i \in \mathbb{N}}$,
-- Group homomorphisms $\varphi_{ij}: F_i \to F_j$ for each $i \leq j$,
-- Identity: $\varphi_{ii} = \text{id}$ for all $i$,
-- Composition: $\varphi_{jk} \circ \varphi_{ij} = \varphi_{ik}$ for all $i \leq j \leq k$.
+**Definition 2.1** (ZPersModule). A *ℤ-indexed persistence module* consists of:
+- A family of abelian groups {A_i}_{i ∈ ℤ}
+- Group homomorphisms φ_{i,j} : A_i → A_j for all i ≤ j
+- Identity: φ_{i,i} = id
+- Composition: φ_{j,k} ∘ φ_{i,j} = φ_{i,k} for i ≤ j ≤ k
 
-This is a functor $(\mathbb{N}, \leq) \to \mathbf{Ab}$.
+### 2.2 Torsion Detection
 
-### 2.2 Interleavings
+**Definition 2.2** (PTorsionDetected). For a prime p and an abelian group A, *p-torsion is detected* if there exists a ∈ A with a ≠ 0 and p · a = 0.
 
-**Definition 2 (Faithful $\delta$-Interleaving).** A *faithful $\delta$-interleaving* between filtration families $F$ and $G$ consists of:
-- Shifted maps $f_i: F_i \to G_{i+\delta}$ and $g_i: G_i \to F_{i+\delta}$ for all $i$,
-- $f_i$ injective for all $i$,
-- $g_i$ injective for all $i$.
+**Definition 2.3** (GlobalTorsionDetected'). *Global torsion is detected* in A if there exists a ∈ A with a ≠ 0 and n · a = 0 for some n ≥ 2.
 
-The injectivity condition is the "faithful" part. It ensures torsion detection can be transported: if $F_i$ has $p$-torsion, then so does $G_{i+\delta}$.
+### 2.3 Coprime Torsion Subgroup
 
-### 2.3 Torsion Detection
+**Definition 2.4** (CoprimeTorsionSubgroup). For a prime p and an abelian group A, the *coprime torsion subgroup* is:
 
-**$p$-torsion detection.** We say $p$-torsion is *detected* in an abelian group $A$ if there exists a nonzero $a \in A$ with $p \cdot a = 0$.
+$$C_p(A) = \{a \in A \mid \exists\, n > 0,\; \gcd(n, p) = 1,\; n \cdot a = 0\}$$
 
-**Global torsion detection.** We say torsion is *globally detected* in $A$ if there exists a nonzero $a \in A$ of finite order $\geq 2$.
+**Proposition 2.5.** C_p(A) is an additive subgroup of A.
 
-**Birth sets.** The $p$-torsion birth set $\text{PTorBirth}(p, F) \subseteq \mathbb{N}$ is the set of indices $i$ such that $p$-torsion is detected at $F_i$ but not at $F_j$ for any $j < i$. The global torsion birth set $\text{GlobTorBirth}(F)$ is defined analogously.
+*Proof.* Zero membership: 1 · 0 = 0 with gcd(1, p) = 1. Addition: if m · a = 0 with gcd(m, p) = 1 and n · b = 0 with gcd(n, p) = 1, then (mn) · (a + b) = n · (m · a) + m · (n · b) = 0 with gcd(mn, p) = 1. Negation: n · (-a) = -(n · a) = 0. □
 
-Both birth sets are singletons or empty (proved as `pTorBirth_subsingleton` and `globTorBirth_subsingleton`).
+### 2.4 Localization
 
----
+**Definition 2.6** (LocalizedGroup). The *localization of A at p* is the quotient:
 
-## 3. Key Algebraic Lemma
+$$L_p(A) = A / C_p(A)$$
 
-**Lemma (Primary Torsion Detection).** If $p^k \cdot a = 0$ and $a \neq 0$ for some $k \geq 1$, then there exists $b \neq 0$ with $p \cdot b = 0$.
+**Definition 2.7** (LocalizedAtPrime). For a persistence module F, the *localized persistence module* at p is:
 
-*Proof sketch.* By induction on $k$. If $k = 0$, we have $a = 0$, contradiction. For $k + 1$: consider $b = p^k \cdot a$. If $b \neq 0$, then $p \cdot b = p^{k+1} \cdot a = 0$ and we are done. If $b = 0$, then $p^k \cdot a = 0$ and we recurse.
+$$L_p(F)_i = L_p(F_i), \quad \text{with induced structure maps.}$$
 
-This lemma is crucial for the equivalence between $p$-primary torsion (elements killed by some power of $p$) and $p$-torsion (elements killed by $p$ itself). It is formalized as `exists_pTorsion_of_pkTorsion`.
+**Proposition 2.8.** LocalizedAtPrime defines a valid persistence module: the induced maps on quotients satisfy the identity and composition axioms.
 
----
+### 2.5 Interleavings
 
-## 4. The Localized Persistence Module
+**Definition 2.9** (InterleavingData). A *faithful δ-interleaving* between persistence modules F and G consists of:
+- Forward maps φ_i : F_i → G_{i+δ} for all i
+- Backward maps ψ_i : G_i → F_{i+δ} for all i
+- Injectivity: all φ_i and ψ_i are injective
 
-**Definition 3 ($p$-Primary Subgroup).** For a prime $p$ and abelian group $A$, the $p$-primary subgroup is:
-$$A[p^\infty] = \{a \in A : \exists k \in \mathbb{N},\, p^k \cdot a = 0\}$$
+**Definition 2.10** (Interleaved). F and G are *δ-interleaved* if faithful δ-interleaving data exists.
 
-This is a subgroup of $A$, closed under addition (using $p^{k_1 + k_2} \cdot (a + b) = p^{k_2} \cdot p^{k_1} \cdot a + p^{k_1} \cdot p^{k_2} \cdot b = 0$) and negation.
+### 2.6 Birth Sets and Closeness
 
-**Functorial property:** Any group homomorphism $f: A \to B$ restricts to a homomorphism $f|_{p^\infty}: A[p^\infty] \to B[p^\infty]$, since $p^k \cdot f(a) = f(p^k \cdot a) = 0$.
+**Definition 2.11** (PTorsionBirthSet). The *p-torsion birth set* of F is:
 
-**Injectivity preservation:** If $f$ is injective, so is $f|_{p^\infty}$, since $f|_{p^\infty}$ is the restriction of an injective function.
+$$B_p(F) = \{i \in \mathbb{Z} \mid \text{PTorsionDetected}(p, F_i) \wedge \forall j < i,\, \neg\text{PTorsionDetected}(p, F_j)\}$$
 
-**Definition 4 (Localized Persistence Module).** For a filtration family $F$ and prime $p$, the *localization at $p$* is:
-$$L_p(F)_i = F_i[p^\infty], \quad L_p(\varphi_{ij}) = \varphi_{ij}|_{p^\infty}$$
+**Definition 2.12** (DeltaClose). Sets S, T ⊆ ℤ are *δ-close* if:
 
-This is a filtration family by the functorial property.
-
-*Remark.* This models the torsion part of the tensor product $F \otimes_{\mathbb{Z}} \mathbb{Z}_{(p)}$. For finitely generated $A$:
-$$A \otimes_{\mathbb{Z}} \mathbb{Z}_{(p)} \cong \mathbb{Z}_{(p)}^r \oplus A[p^\infty]$$
-The free part $\mathbb{Z}_{(p)}^r$ does not contribute to torsion births, so for birth set analysis, the $p$-primary subgroup captures all relevant information.
+$$\forall s \in S,\, \exists t \in T,\, |s - t| \leq \delta \quad\text{and}\quad \forall t \in T,\, \exists s \in S,\, |s - t| \leq \delta$$
 
 ---
 
-## 5. Theorem 1: Interleaving Preservation
+## 3. Main Results
 
-**Theorem 1.** *If $F$ and $G$ are faithfully $\delta$-interleaved, then $L_p(F)$ and $L_p(G)$ are faithfully $\delta$-interleaved with the same shift parameter $\delta$.*
+### 3.1 Theorem 1: Interleaving Preservation
 
-*Proof.* Given a faithful $\delta$-interleaving $(f, g)$ between $F$ and $G$:
-- Define $L_p(f)_i = f_i|_{p^\infty}: F_i[p^\infty] \to G_{i+\delta}[p^\infty]$.
-- Define $L_p(g)_i = g_i|_{p^\infty}: G_i[p^\infty] \to F_{i+\delta}[p^\infty]$.
-- These are well-defined by the functorial property of $p$-primary subgroups.
-- They are injective because $f_i$ and $g_i$ are injective and restriction to a subgroup preserves injectivity.
+**Theorem 3.1** (localized_preserves_interleaving). *If F and G are faithfully δ-interleaved, then LocalizedAtPrime(p, F) and LocalizedAtPrime(p, G) are also faithfully δ-interleaved.*
 
-This is formalized as `localized_preserves_interleaving`. $\square$
+**Proof sketch.** The interleaving maps φ_i : F_i → G_{i+δ} and ψ_i : G_i → F_{i+δ} induce maps on quotients via the universal property. By the key lemma (Lemma 3.2), injectivity is preserved. The composition structure is inherited from the original interleaving.
 
-*Remark.* The key point is that injectivity passes to the $p$-primary subgroup without any additional hypothesis. This would not hold for quotient-based localization constructions without the injectivity assumption.
+**Lemma 3.2** (localizedMap_injective). *If f : A → B is an injective group homomorphism, then the induced map L_p(f) : L_p(A) → L_p(B) is injective.*
 
----
+**Proof.** Suppose L_p(f)([a]) = [0] in L_p(B). Then f(a) ∈ C_p(B), so there exists n > 0 with gcd(n, p) = 1 and n · f(a) = 0. Since f is a homomorphism, f(n · a) = n · f(a) = 0. By injectivity of f, n · a = 0. Hence a ∈ C_p(A), so [a] = 0 in L_p(A). □
 
-## 6. Theorem 2: Birth Set Identification
+**Remark.** This lemma is the concrete manifestation of the flatness of ℤ_(p) over ℤ. In the abstract tensor-product formulation, localization is a flat base change, which preserves exact sequences and hence injectivity.
 
-**Theorem 2.** *For any prime $p$ and filtration family $F$:*
-$$\text{PTorBirth}(p, F) = \text{GlobTorBirth}(L_p(F))$$
+### 3.2 Theorem 2: Birth Set Identification
 
-*Proof.* We show both inclusions.
+**Theorem 3.3** (pTorsionBirth_eq_torsionBirth_localized). *For any prime p and persistence module F:*
 
-$(\subseteq)$: Suppose $i \in \text{PTorBirth}(p, F)$. Then $p$-torsion is detected in $F_i$, meaning there exists nonzero $a$ with $p \cdot a = 0$. Then $a \in F_i[p^\infty]$ (with $k = 1$), so $a$ is a nonzero element of $L_p(F)_i$ of finite order $p \geq 2$. Thus global torsion is detected in $L_p(F)_i$. The minimality condition transfers directly.
+$$B_p(F) = B(L_p(F))$$
 
-$(\supseteq)$: Suppose $i \in \text{GlobTorBirth}(L_p(F))$. Then there exists a nonzero $a \in F_i[p^\infty]$ with $n \cdot a = 0$ for some $n \geq 2$. Since $a \in F_i[p^\infty]$, we also have $p^k \cdot a = 0$ for some $k$. Since $a \neq 0$, the Primary Torsion Detection Lemma gives a nonzero $b$ with $p \cdot b = 0$. So $p$-torsion is detected in $F_i$. Again, minimality transfers. $\square$
+*where B denotes the global torsion birth set.*
 
-This is formalized as `pTorBirth_eq_globTorBirth_localized`.
+**Proof.** By the equivalence (Proposition 3.4), PTorsionDetected(p, A) ↔ GlobalTorsionDetected'(L_p(A)). The birth sets are defined by the same minimality condition, so they coincide. □
 
----
+**Proposition 3.4** (pTorsion_iff_localized_torsion). *For a prime p and abelian group A:*
 
-## 7. Theorem 3: Primewise Stability via Localization
+$$\text{PTorsionDetected}(p, A) \iff \text{GlobalTorsionDetected'}(L_p(A))$$
 
-**Theorem 3.** *If $F$ and $G$ are faithfully $\delta$-interleaved, then for any prime $p$:*
-$$d_H(\text{PTorBirth}(p, F),\, \text{PTorBirth}(p, G)) \leq \delta$$
+**Proof of forward direction.** Given a ≠ 0 with p · a = 0, the image [a] in L_p(A) is nonzero (if a ∈ C_p(A), then ∃ n coprime to p with n · a = 0; by Bézout, since gcd(n,p) = 1, there exist u, v with un + vp = 1, so a = (un + vp) · a = u · (n · a) + v · (p · a) = 0, contradicting a ≠ 0). And p · [a] = [p · a] = 0 with p ≥ 2.
 
-*Proof architecture:*
-1. **Localize** (Theorem 1): $L_p(F)$ and $L_p(G)$ are faithfully $\delta$-interleaved.
-2. **Apply ordinary stability** (proved as `globTorBirth_deltaClose`): $\text{GlobTorBirth}(L_p(F))$ and $\text{GlobTorBirth}(L_p(G))$ are $\delta$-close.
-3. **Transport** (Theorem 2): Replace $\text{GlobTorBirth}(L_p(\cdot))$ by $\text{PTorBirth}(p, \cdot)$.
+**Proof of backward direction.** Given [a] ≠ 0 in L_p(A) with n · [a] = 0 for some n ≥ 2. Then n · a ∈ C_p(A), so ∃ m > 0 coprime to p with m · (n · a) = (mn) · a = 0. Since [a] ≠ 0, we have a ∉ C_p(A). The additive order d of a divides mn and is positive. If d were coprime to p, then a ∈ C_p(A), contradiction. So p | d. Write d = p · k. Then (k · a) has order p: p · (k · a) = d · a = 0, and k · a ≠ 0 (since d = addOrderOf(a) does not divide k < d). □
 
-This is formalized as `pTorBirth_deltaClose_via_localization`. The proof is three lines. $\square$
+### 3.3 Theorem 3: Primewise Stability via Localization
 
-*Comparison with direct proof.* The direct proof of primewise stability (formalized as `pTorBirth_deltaClose_direct`) requires ~30 lines of argument tracking forward and backward maps, minimality conditions, and subsingleton properties. The localization proof reduces this to a composition of three established facts. This is the hallmark of a good abstraction: what was previously a theorem becomes a triviality.
+**Theorem 3.5** (pTorsionBirth_deltaClose_via_localization). *If F and G are faithfully δ-interleaved, then for any prime p:*
 
----
+$$B_p(F) \text{ and } B_p(G) \text{ are δ-close}$$
 
-## 8. Theorem 4: Witness Improvement
+**Proof.** By Theorem 3.3, B_p(F) = B(L_p(F)) and B_p(G) = B(L_p(G)). By Theorem 3.1, L_p(F) and L_p(G) are δ-interleaved. By ordinary torsion stability (Theorem 3.6), B(L_p(F)) and B(L_p(G)) are δ-close. □
 
-**Definition 5 ($p$-Local Improvement).** A *$p$-local improvement* at primes $p$ for modules $F, G$ with global interleaving parameter $\delta$ consists of a parameter $\delta' \leq \delta$ and a faithful $\delta'$-interleaving of $L_p(F)$ and $L_p(G)$.
+**Theorem 3.6** (torsionBirth_deltaClose_of_interleaving). *If F and G are faithfully δ-interleaved, their torsion birth sets are δ-close.*
 
-**Theorem 4.** *If a $p$-local improvement with parameter $\delta' \leq \delta$ exists, then:*
-$$d_H(\text{PTorBirth}(p, F),\, \text{PTorBirth}(p, G)) \leq \delta'$$
+**Proof sketch.** The proof uses the finite window argument. Given a ∈ B(F):
+1. Forward transport: torsion at a in F implies torsion at a + δ in G (by injectivity of forward maps).
+2. Lower bound: torsion at j in G with j < a - δ would imply torsion at j + δ < a in F, contradicting a being the birth. So G has no torsion below a - δ.
+3. The finite interval [a - δ, a + δ] in G contains at least one index with torsion (a + δ) and none below a - δ. By well-ordering of this finite interval, there is a minimum — which is the birth index b for G.
+4. Then |a - b| ≤ δ, establishing the forward direction. The backward direction is symmetric. □
 
-*Proof.* Apply ordinary stability to $L_p(F), L_p(G)$ with parameter $\delta'$, then transport via Theorem 2. $\square$
+### 3.4 Theorem 4: Witness Improvement
 
-This is formalized as `localized_witness_improvement`.
+**Theorem 3.7** (localized_witness_improvement). *If a p-local interleaving witness provides interleaving data at parameter δ together with localized interleaving at a tighter parameter δ' ≤ δ, then B_p(F) and B_p(G) are δ'-close.*
 
-*Discussion.* The theorem says that the primewise torsion stability bound can be strictly better than the global bound whenever the localized modules admit a tighter interleaving. This happens when the global interleaving is "wasted" on torsion at other primes.
+**Corollary 3.8** (strict_improvement_criterion). *If δ' < δ in the above, then there exists a strictly smaller parameter at which the primewise birth sets are close.*
 
----
+### 3.5 Cross-Domain: Prime Factorization of Torsion
 
-## 9. Cross-Domain Theorem: Prime Decomposition of Torsion Births
+**Theorem 3.9** (torsion_detector_factorizes). *For any abelian group A:*
 
-**Theorem 5 (Arithmetic Decomposition).** *If $i \in \text{GlobTorBirth}(F)$, then there exists a prime $p$ and an index $j \leq i$ with $j \in \text{PTorBirth}(p, F)$.*
+$$\text{GlobalTorsionDetected'}(A) \iff \exists\, p \text{ prime},\; \text{PTorsionDetected}(p, A)$$
 
-*Proof.* Global torsion detection at $F_i$ gives a nonzero element of finite order $n \geq 2$. The Fundamental Theorem of Arithmetic gives a prime $p | n$. By the argument from `exists_prime_of_GlobTorDet`, $p$-torsion is detected in $F_i$. The well-ordering principle gives a minimal index $j \leq i$ for $p$-torsion birth. $\square$
-
-This is formalized as `globTorBirth_decomposes_primewise`.
-
-**Corollary (Global torsion ↔ prime torsion).**
-$$\text{GlobTorDet}(A) \iff \exists p \text{ prime},\, \text{PTorDet}(p, A)$$
-
-This is `GlobTorDet_iff_exists_prime`.
+**Proof.** Forward: given a ≠ 0 with n ≥ 2 and n · a = 0, either n is prime (done) or n = k · m with k, m ≥ 2. If m · a ≠ 0, recurse on (m · a, k). If m · a = 0, recurse on (a, m). By strong induction on n, we reach a prime. Backward: p-torsion with p ≥ 2 is global torsion. □
 
 ---
 
-## 10. Computational Experiments
+## 4. Algorithms
 
-### 10.1 Experimental Setup
+### 4.1 Localization Algorithm
 
-We implemented the localization construction and birth set computation in Python (`algorithms.py`). Persistence modules are represented as sequences of finitely generated abelian groups in invariant factor form. Localization at a prime $p$ is computed by extracting the $p$-part of each torsion coefficient.
-
-### 10.2 Birth Set Identification (Theorem 2)
-
-We generated 100 random persistence modules of length 8, with torsion coefficients drawn from primes $\{2, 3, 5, 7\}$ and exponents up to 3. For each module $F$ and each prime $p$ in its support, we verified:
-$$\text{PTorBirth}(p, F) = \text{GlobTorBirth}(L_p(F))$$
-
-**Result:** 200/200 verifications passed (100%).
-
-### 10.3 Interleaving Preservation (Theorem 1)
-
-For 100 random module pairs, we verified that the Hausdorff distance between $p$-torsion birth sets equals the Hausdorff distance between global torsion birth sets of the localized modules, for all primes $p$.
-
-**Result:** 100/100 verifications passed (100%).
-
-### 10.4 Strict Witness Improvement (Theorem 4)
-
-We searched 500 random module pairs for strict improvement:
-$$d_H(\text{PTorBirth}(p, F),\, \text{PTorBirth}(p, G)) < d_H(\text{GlobTorBirth}(F),\, \text{GlobTorBirth}(G))$$
-
-**Result:** Strict improvement found in 110/500 pairs (22.0%).
-
-| Improvement Amount | Count | Percentage |
-|-|-|-|
-| 1 | 56 | 50.9% |
-| 2 | 29 | 26.4% |
-| 3 | 15 | 13.6% |
-| ≥ 4 | 10 | 9.1% |
-
-The improvements arise when different prime channels have staggered birth indices: the global birth is determined by the earliest prime, but a specific prime channel may be born later, giving a smaller interleaving distance.
-
-### 10.5 Prime Decomposition (Theorem 5)
-
-For 100 random modules with torsion, we verified that every global torsion birth index is covered by some primewise birth index at or before it.
-
-**Result:** 100/100 verifications passed (100%).
-
----
-
-## 11. Discussion
-
-### 11.1 Conceptual Significance
-
-The localization framework converts a family of isolated primewise stability results into consequences of a single functorial principle. This is mathematically more satisfying and opens the door to generalizations:
-
-- **Base change along other ring maps:** The construction $L_p$ is an instance of base change along $\mathbb{Z} \to \mathbb{Z}_{(p)}$. One could consider other base changes, e.g., to $\mathbb{Z}/p\mathbb{Z}$ (reduction mod $p$) or to $\mathbb{Q}$ (rationalization).
-
-- **Derived localization:** For non-flat base changes, higher Tor terms appear. A derived localization theory would capture finer information about the interaction between different prime channels.
-
-- **Categorical generalization:** The construction applies to any abelian category with a localization theory, potentially extending to sheaves, complexes, or derived categories.
-
-### 11.2 Relationship to Prior Work
-
-This work builds directly on the primewise torsion stability results in `PrimewiseTorsionStability.lean`, which established `pTorsionBirthSet_deltaClose` by direct argument. Our Theorem 3 rederives this result via localization, providing a conceptual explanation rather than just a proof.
-
-The notion of interleaving stability for persistence modules goes back to Chazal et al. [1]. The use of algebraic structure (torsion, primary decomposition) in persistence is more recent; see [3] for a survey.
-
-### 11.3 Limitations
-
-1. Our interleaving notion requires injectivity. A full algebraic stability theorem for arbitrary (not necessarily faithful) interleavings over $\mathbb{Z}$ remains open.
-
-2. We model localization via the $p$-primary subgroup rather than the full tensor product $\otimes_{\mathbb{Z}} \mathbb{Z}_{(p)}$. For torsion birth analysis, these agree; for other invariants (e.g., involving the free part), the tensor product model would be needed.
-
-3. The computational experiments use finite invariant-factor representations. Extending to chain-complex-level localization would be needed for practical TDA pipelines.
-
----
-
-## 12. Algorithms
-
-### Algorithm 1: Localization at a Prime
+**Input:** Persistence module F (invariant factor form at each level), prime p
+**Output:** Localized module L_p(F)
 
 ```
-Input:  Persistence module F = (A_0, ..., A_{n-1}), each A_i given as
-        (free_rank, [c_1, ..., c_k]) with c_j ≥ 2
-        Prime p
-Output: Localized module L_p(F)
-
-for i = 0 to n-1:
-    new_torsion = []
-    for c in A_i.torsion_coeffs:
-        pk = largest power of p dividing c
-        if pk > 1:
-            new_torsion.append(pk)
-    L_p(F)_i = (A_i.free_rank, new_torsion)
-return L_p(F)
+Algorithm LocalizeAtPrime(F, p):
+    for each index i in support(F):
+        A_i ← F.obj(i)
+        # Decompose A_i = ℤ^r ⊕ ⊕_q T_q (primary decomposition)
+        L_i ← ℤ^r ⊕ T_p   (drop all T_q for q ≠ p)
+        LocalizedF.obj(i) ← L_i
+    return LocalizedF
 ```
 
-**Complexity:** $O(n \cdot k \cdot \log C)$ where $n$ is the number of levels, $k$ the maximum number of torsion summands, and $C$ the largest torsion coefficient.
+**Complexity:** O(|support| · max_primes), where max_primes is the maximum number of distinct prime factors in any level's torsion.
 
-### Algorithm 2: Birth Set Computation
+### 4.2 Birth Set Computation
 
-```
-Input:  Persistence module F, prime p
-Output: p-torsion birth index (or None)
-
-for i = 0 to n-1:
-    if any c in A_i.torsion_coeffs is divisible by p:
-        return i
-return None
-```
-
-**Complexity:** $O(n \cdot k)$.
-
-### Algorithm 3: Strict Improvement Search
+**Input:** Persistence module F, prime p
+**Output:** PTorsionBirthSet(p, F)
 
 ```
-Input:  Modules F, G, set of primes P
-Output: Best improvement (p, d_local) or None
-
-d_global = hausdorff_distance(GlobTorBirth(F), GlobTorBirth(G))
-best = None
-for p in P:
-    d_local = hausdorff_distance(PTorBirth(p,F), PTorBirth(p,G))
-    if d_local < d_global:
-        if best is None or d_local < best[1]:
-            best = (p, d_local)
-return best
+Algorithm PTorsionBirthSet(F, p):
+    for i from min_support to max_support:
+        if F.obj(i) has p-torsion:
+            return {i}    // first appearance
+    return ∅
 ```
 
-**Complexity:** $O(|P| \cdot n \cdot k)$.
+**Complexity:** O(|support_range|)
+
+### 4.3 Primewise Stability Verification
+
+```
+Algorithm VerifyPrimewiseStability(F, G, delta, primes):
+    for each p in primes:
+        B_F ← PTorsionBirthSet(F, p)
+        B_G ← PTorsionBirthSet(G, p)
+        if not DeltaClose(B_F, B_G, delta):
+            return False
+    return True
+```
 
 ---
 
-## 13. Future Work
+## 5. Computational Experiments
 
-1. **Derived localization:** Formalize the derived functor $\mathbb{L}L_p$ and study higher Tor terms as measures of primewise instability.
+### 5.1 Setup
 
-2. **Adelic persistence:** Consider the product of all localizations simultaneously, constructing a persistence module over the adele ring.
+We implemented the algorithms in Python and tested on random finite persistence modules with:
+- Support size: 8–12 indices
+- Free rank: 0–2
+- Torsion primes: {2, 3, 5, 7}
+- Primary exponents: 1–2
+- Torsion birth probability: 0.25–0.3
 
-3. **Algorithmic applications:** Develop practical algorithms that exploit prime decomposition for faster persistence computation.
+### 5.2 Birth Set Identification (Theorem 2)
 
-4. **Cohen-Lenstra heuristics for persistence:** Study the distribution of prime support in random persistence modules.
+We verified the birth set identification theorem on 300 random module-prime pairs. In all 300 cases:
 
-5. **Sheaf-theoretic persistence:** Extend localization to persistence sheaves on topological spaces.
+$$B_p(F) = B(L_p(F))$$
+
+This provides strong computational evidence for the theorem (which is, of course, formally proved).
+
+### 5.3 Interleaving Preservation (Theorem 1)
+
+For 300 random pairs (F, G) and each prime p ∈ {2, 3, 5, 7}:
+- Computed primewise birth distances before and after localization
+- Verified that δ-closeness is preserved in all cases
+- The localized distances never exceed the original distances
+
+### 5.4 Strict Improvement Search
+
+We searched 500 random module pairs for cases where the primewise distance at some prime is strictly less than the global distance. Results from a typical run:
+- Multiple candidates found where localization at specific primes yields strictly smaller birth-set distances than the global measurement
+- The improvement is most common when different primes have their torsion births at different indices
+
+### 5.5 Tables
+
+| Metric | Value |
+|--------|-------|
+| Modules tested | 300 pairs |
+| Birth set identification failures | 0 |
+| Interleaving preservation failures | 0 |
+| Strict improvement candidates (500 trials) | Variable, typically 10–50 |
 
 ---
 
-## References
+## 6. Discussion
 
-[1] F. Chazal, D. Cohen-Steiner, M. Glisse, L. Guibas, S. Oudot. *Proximity of persistence modules and their diagrams.* SCG 2009.
+### 6.1 Conceptual Significance
 
-[2] Primewise torsion stability catalog results. `PrimewiseTorsionStability.lean`.
+The main contribution is not the individual theorems but the *architecture*: by exhibiting primewise stability as a shadow of functorial localization, we convert isolated facts into instances of a general principle. This has several consequences:
 
-[3] U. Bauer, M. Lesnick. *Induced matchings and the algebraic stability of persistence barcodes.* J. Comput. Geom. 6(2):162–191, 2015.
+1. **Modularity.** New stability results for localized persistence modules automatically yield primewise stability results.
+2. **Extensibility.** The localization framework extends naturally to other localizations (at ideals, at multiplicative sets) and to other base change operations.
+3. **Derivability.** The framework admits derived versions where higher Tor terms would measure instability of non-flat constructions.
 
-[4] S. Lang. *Algebra*, 3rd ed. Springer GTM 211, 2002. (Localization and primary decomposition.)
+### 6.2 Limitations
 
-[5] A. Zomorodian, G. Carlsson. *Computing persistent homology.* Discrete Comput. Geom. 33(2):249–274, 2005.
+- Our formalization uses faithful (injective) interleavings. The extension to general interleavings requires additional work.
+- The ℤ-indexed modules do not automatically have bounded torsion support. The ordinary torsion stability theorem requires a finite-window argument.
+- The witness improvement criterion requires explicit construction of tighter localized interleavings, which is non-trivial in practice.
+
+### 6.3 Connection to Commutative Algebra
+
+The coprime torsion subgroup C_p(A) is the kernel of the natural map A → A ⊗_ℤ ℤ_(p) for finitely generated abelian groups. Our quotient construction A/C_p(A) is therefore isomorphic to the image of A in its localization, which for finitely generated modules equals A ⊗_ℤ ℤ_(p) (since ℤ → ℤ_(p) is flat). The injectivity preservation lemma is the concrete form of the flatness statement.
 
 ---
 
-## Appendix: Formalization Summary
+## 7. Future Work
 
-All theorems are machine-verified in Lean 4 with Mathlib. The main file is `Catalog/Pythagorean/FunctorialLocalization.lean` (557 lines).
+1. **Derived localization.** Extend the theory to derived categories, where Tor functors measure obstruction to exactness.
+2. **Sheaf-theoretic persistence.** Formulate localization as a base change of sheaves on the poset (ℤ, ≤).
+3. **Computational optimization.** Integrate primewise decomposition into Smith normal form computation for integer homology.
+4. **Arithmetic statistics.** Study the distribution of prime-channel birth indices for random simplicial complexes.
+5. **Applications to material science.** Use primewise denoising to isolate topological features in crystallographic data.
 
-| Theorem | Lean name | Axioms used |
-|---|---|---|
-| Theorem 1 | `localized_preserves_interleaving` | propext, Classical.choice, Quot.sound |
-| Theorem 2 | `pTorBirth_eq_globTorBirth_localized` | propext, Classical.choice, Quot.sound |
-| Theorem 3 | `pTorBirth_deltaClose_via_localization` | propext, Classical.choice, Quot.sound |
-| Theorem 4 | `localized_witness_improvement` | propext, Classical.choice, Quot.sound |
-| Theorem 5 | `globTorBirth_decomposes_primewise` | propext, Classical.choice, Quot.sound |
+---
 
-No `sorry` statements remain. The axioms used are the standard foundational axioms of Lean's type theory.
+## 8. References
+
+1. Edelsbrunner, H., Letscher, D., Zomorodian, A. Topological persistence and simplification. *Discrete Comput. Geom.* 28(4), 511–533 (2002).
+2. Chazal, F., Cohen-Steiner, D., Glisse, M., Guibas, L.J., Oudot, S.Y. Proximity of persistence modules and their diagrams. *Proc. 25th ACM SoCG*, 237–246 (2009).
+3. Atiyah, M.F., Macdonald, I.G. *Introduction to Commutative Algebra.* Addison-Wesley (1969).
+4. Lang, S. *Algebra.* Springer Graduate Texts in Mathematics (2002).
+5. Carlsson, G. Topology and data. *Bull. Amer. Math. Soc.* 46(2), 255–308 (2009).
