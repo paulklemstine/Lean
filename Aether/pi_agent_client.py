@@ -1208,7 +1208,7 @@ class PiAgentClient:
         import random
 
         # Determine which type of concept to generate this cycle
-        # Visionary distribution: minimize sorry_fill, maximize breakthrough potential
+        # Mode distribution: balanced across research modes
         # 5% sorry_fill, 25% bridge, 30% arc, 25% discovery, 15% future
         cycle = PiAgentClient._concept_cycle_index
         PiAgentClient._concept_cycle_index += 1
@@ -1225,15 +1225,8 @@ class PiAgentClient:
         else:
             mode = "future"
 
-        # When forced_domain is not Pythagorean, skip sorry_fill entirely.
-        # We want novel theorems, not just sorry fixes.
-        is_pythagorean = forced_domain is not None and forced_domain.lower() in (
-            "pythagorean", "epythagorean", "shared", "number_theory"
-        )
-        if mode == "sorry_fill" and not is_pythagorean:
-            mode = "discover"
-
-        # Priority 1: sorry_fill on priority targets (only when domain matches)
+        # sorry_fill is now domain-agnostic — any domain can fill sorry targets
+        # Priority 1: sorry_fill on priority targets
         if mode == "sorry_fill" and self.catalog_analyzer:
             sorry_files = self.catalog_analyzer.get_priority_sorry_targets()
             if sorry_files:

@@ -127,10 +127,12 @@ class UCBSelector:
             return forced_domain, score
 
         if self.total_selections == 0:
-            # Cold start: prioritize domains with open problems
-            # CarmichaelComposite is in Pythagorean, Fib_gcd_identity is in Shared
-            priority = ["Pythagorean", "Shared", "Tropical", "Cryptography", "EML"]
-            return priority[0], float('inf')  # UCB = infinity for unexplored
+            # Cold start: no domain preference — let future directions drive selection
+            # Return the first available domain with infinite UCB (explore first)
+            if self.domain_stats:
+                first_domain = next(iter(self.domain_stats.keys()))
+                return first_domain, float('inf')
+            return "Bridges", float('inf')
 
         best_domain = None
         best_score = -float('inf')
@@ -157,8 +159,7 @@ class UCBSelector:
 
         Returns (mode_name, score).
         """
-        # Check if this domain has sorry targets
-        sorry_domains = {"Pythagorean", "Shared", "Computation", "Speculative"}
+        # All domains are eligible for sorry_fill — no domain restrictions
 
         scores = {}
         for mode, stats in self.mode_stats.items():
@@ -171,8 +172,8 @@ class UCBSelector:
                 )
                 scores[mode] = base + exploration
 
-            # Bonus for sorry_fill on domains with open problems
-            if mode == "sorry_fill" and domain in sorry_domains:
+            # Bonus for sorry_fill when there are sorry targets (domain-agnostic)
+            if mode == "sorry_fill":
                 scores[mode] = scores.get(mode, 0) + 0.15
 
         # Select mode with highest score
