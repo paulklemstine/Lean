@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Logic / Game Theory / Tropical Algebra",
     "date": "2026-05-29T22:25:45Z",
     "exp_id": "17847bda",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7299928571428571,
+    "quality": "substantial",
     "pkg_num": 355
   },
   {
@@ -10304,8 +10304,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T22:25:45Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7299928571428571,
+      "quality": "substantial"
     }
   ],
   "edges": [
