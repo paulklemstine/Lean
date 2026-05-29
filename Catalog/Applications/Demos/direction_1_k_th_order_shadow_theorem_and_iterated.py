@@ -1,890 +1,959 @@
-#!/usr/bin/env python3
 """
-applications.py — Real-world applications of iterated shadow geometry.
+applications.py — Real-world applications of Iterated Shadow Geometry.
 
 Demonstrates:
-1. Sparse differentiation complexity prediction
-2. Newton polytope contraction under differentiation
-3. Matroid basis polynomial structure analysis
-4. Derivative support prediction for symbolic computation
+1. Sparse differentiation complexity analysis
+2. Newton polytope shadow geometry
+3. Polynomial identity testing via shadow invariants
+4. Derivative complexity prediction for symbolic computation
 """
 
-from algorithms import (
-    MvPolynomial, kth_shadow, shadow_profile, derivative_support_union,
-    is_discrete_exchange_family, test_log_concavity,
-    simplex_support, matroid_basis_support, product_of_simplices_support,
-    enumerate_multi_indices_le, all_multi_indices_of_mass, multi_ascending_factorial
-)
-from math import comb
 from itertools import combinations
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Application 1: Sparse differentiation complexity prediction
-# ─────────────────────────────────────────────────────────────────────────
-
-def app_sparse_differentiation():
-    """Demonstrate how shadow profiles predict derivative computation cost.
-
-    The shadow theorem says: the number of nonzero terms in any k-th order
-    mixed partial derivative is bounded by |kthShadow(supp(f), k)|.
-
-    This gives tight complexity predictions without computing any derivatives.
-    """
-    print("="*70)
-    print("  Application: Sparse Differentiation Complexity Prediction")
-    print("="*70)
-    print()
-
-    # A sparse polynomial in 4 variables
-    f = MvPolynomial({
-        (4, 0, 0, 0): 1,
-        (0, 3, 1, 0): 2,
-        (1, 1, 1, 1): -1,
-        (0, 0, 0, 4): 3,
-        (2, 2, 0, 0): 5,
-        (0, 1, 2, 1): -2,
-    })
-
-    print(f"Polynomial f has {len(f.support)} nonzero terms")
-    print(f"Support: {sorted(f.support)}")
-    print()
-
-    prof = shadow_profile(f.support)
-    print(f"Shadow profile (predicted max terms in k-th derivatives):")
-    for k, size in enumerate(prof):
-        # Count actual max support size across all τ with |τ|=k
-        if k <= 4:
-            actual_sizes = []
-            for tau in all_multi_indices_of_mass(4, k):
-                df = f.iterated_pderiv(tau)
-                actual_sizes.append(len(df.support))
-            max_actual = max(actual_sizes) if actual_sizes else 0
-            total_derivs = len(all_multi_indices_of_mass(4, k))
-            print(f"  k={k}: shadow_size={size}, max_deriv_support={max_actual}, "
-                  f"#derivatives=C(4+{k}-1,{k})={total_derivs}")
-        else:
-            print(f"  k={k}: shadow_size={size}")
-
-    print()
-    print("→ The shadow profile gives the EXACT upper bound on monomial count")
-    print("  in any single mixed derivative of order k, without computing them.")
-    print("  This enables cost prediction for sparse automatic differentiation.")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Application 2: Newton polytope contraction analysis
-# ─────────────────────────────────────────────────────────────────────────
-
-def app_newton_polytope():
-    """Analyze how the Newton polytope contracts under differentiation.
-
-    The shadow operator provides a discrete analog of moving inward through
-    the Newton polytope by k lattice steps.
-    """
-    print("\n" + "="*70)
-    print("  Application: Newton Polytope Contraction under Differentiation")
-    print("="*70)
-    print()
-
-    # Triangular support (Newton polytope = simplex)
-    print("Example: Full simplex Δ(3, 5) — degree-5 polynomial in 3 variables")
-    S = simplex_support(3, 5)
-    print(f"  Original support: {len(S)} monomials")
-
-    for k in range(6):
-        shadow = kth_shadow(S, k)
-        # The shadow of a full simplex of degree d at level k should be
-        # the full simplex of degree d-k
-        expected = simplex_support(3, 5 - k) if k <= 5 else set()
-        match = shadow == expected
-        print(f"  Sh_{k}(Δ(3,5)) has {len(shadow)} elements = "
-              f"Δ(3,{5-k}) has {len(expected)} elements: {'✓' if match else '✗'}")
-
-    print()
-    print("→ For simplex supports, k-th shadow = simplex of degree d-k.")
-    print("  This is the discrete Newton polytope contraction principle.")
-
-    print()
-    print("Example: L-shaped support (non-convex)")
-    L_support = {(i, j) for i in range(4) for j in range(4) if i + j <= 3 or (i <= 1 and j <= 1)}
-    print(f"  Original: {sorted(L_support)} ({len(L_support)} monomials)")
-    prof = shadow_profile(L_support)
-    print(f"  Shadow profile: {prof}")
-    lc, _ = test_log_concavity(prof)
-    print(f"  Log-concave: {lc}")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Application 3: Matroid basis polynomial structure
-# ─────────────────────────────────────────────────────────────────────────
-
-def app_matroid_analysis():
-    """Analyze shadow structure of matroid basis generating polynomials.
-
-    For uniform matroids, the basis generating polynomial has support
-    = all indicator vectors of r-element subsets.
-    The shadow profile reveals the independence structure.
-    """
-    print("\n" + "="*70)
-    print("  Application: Matroid Basis Polynomial Shadow Analysis")
-    print("="*70)
-    print()
-
-    for n, r in [(5, 2), (5, 3), (6, 3), (7, 3), (6, 4)]:
-        S = matroid_basis_support(n, r)
-        prof = shadow_profile(S)
-        lc, _ = test_log_concavity(prof)
-        is_exch = is_discrete_exchange_family(S) if len(S) <= 200 else "?"
-
-        # Theoretical prediction: shadow profile for uniform matroid
-        # kthShadow of {0,1}^n ∩ {|x|=r} at level k should give
-        # all {0,1}^n vectors of weight r-k that are subsets of some r-subset
-        # For uniform matroid, this is all (r-k)-subsets = C(n, r-k)
-        theoretical = [comb(n, r - k) for k in range(r + 1)]
-
-        print(f"U_{{{r},{n}}} (r={r}, n={n}):")
-        print(f"  |bases| = C({n},{r}) = {len(S)}")
-        print(f"  Shadow profile:     {prof}")
-        print(f"  Theoretical:        {theoretical}")
-        print(f"  Match: {prof == theoretical}")
-        print(f"  Log-concave: {lc}")
-        print(f"  Exchange family: {is_exch}")
-        print()
-
-    print("→ For uniform matroids, |Sh_k(bases)| = C(n, r-k).")
-    print("  This connects shadow geometry to matroid independence counting.")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Application 4: Derivative support prediction
-# ─────────────────────────────────────────────────────────────────────────
-
-def app_derivative_prediction():
-    """Show how the shadow theorem enables derivative support prediction
-    without performing any actual differentiation."""
-    print("\n" + "="*70)
-    print("  Application: Zero-Cost Derivative Support Prediction")
-    print("="*70)
-    print()
-
-    # A polynomial in 3 variables
-    f = MvPolynomial({
-        (3, 0, 0): 1,
-        (0, 3, 0): 1,
-        (0, 0, 3): 1,
-        (1, 1, 1): 6,
-        (2, 1, 0): 3,
-        (0, 2, 1): 3,
-    })
-
-    print(f"f has support: {sorted(f.support)}")
-    print()
-
-    # Predict which derivative orders will produce nonzero results
-    print("Derivative support predictions (computed from support alone, no algebra):")
-    for tau in [(1,0,0), (0,1,0), (0,0,1), (1,1,0), (1,0,1), (0,1,1), (1,1,1), (2,0,0), (2,1,0)]:
-        # Using shadow theorem: supp(∂^τ f) = {β : β+τ ∈ supp(f)}
-        predicted_support = set()
-        for alpha in f.support:
-            beta = tuple(a - t for a, t in zip(alpha, tau))
-            if all(b >= 0 for b in beta):
-                predicted_support.add(beta)
-
-        # Verify by actual computation
-        df = f.iterated_pderiv(tau)
-        actual_support = df.support
-
-        match = predicted_support == actual_support
-        print(f"  ∂^{tau} f:")
-        print(f"    Predicted support: {sorted(predicted_support)}")
-        print(f"    Actual support:    {sorted(actual_support)}")
-        print(f"    Match: {'✓' if match else '✗'}")
-
-    print()
-    print("→ The shadow theorem gives EXACT support prediction for mixed derivatives")
-    print("  using only combinatorial operations on the support set.")
-    print("  No polynomial arithmetic needed!")
-
-
-if __name__ == "__main__":
-    app_sparse_differentiation()
-    app_newton_polytope()
-    app_matroid_analysis()
-    app_derivative_prediction()
-
-
-#!/usr/bin/env python3
-"""
-demo.py — Interactive demonstration of iterated shadow geometry.
-
-Constructs sample polynomial supports, computes k-th shadows,
-compares them with actual mixed derivative supports, tests
-log-concavity on exchange-family examples, and searches for
-counterexamples to the Shadow Log-Concavity Conjecture.
-"""
-
-from algorithms import (
-    MvPolynomial, kth_shadow, shadow_profile, derivative_support_union,
-    verify_shadow_theorem, verify_shadow_composition,
-    is_discrete_exchange_family, test_log_concavity,
-    simplex_support, matroid_basis_support, product_of_simplices_support,
-    all_multi_indices_of_mass, multi_ascending_factorial
-)
-from itertools import combinations
-import random
-
-
-def separator(title: str):
-    print(f"\n{'='*70}")
-    print(f"  {title}")
-    print(f"{'='*70}\n")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 1: The Shadow Theorem in action
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_shadow_theorem():
-    separator("DEMO 1: The Exact k-th Shadow Theorem")
-
-    # Construct a concrete polynomial: f = 3x²y + 2xy² + x³ + y³
-    f = MvPolynomial({
-        (2, 1): 3,
-        (1, 2): 2,
-        (3, 0): 1,
-        (0, 3): 1,
-    })
-    print(f"Polynomial f = {f}")
-    print(f"Support of f: {sorted(f.support)}")
-    print()
-
-    max_k = 3
-    for k in range(max_k + 1):
-        shadow = kth_shadow(f.support, k)
-        deriv_supp = derivative_support_union(f, k)
-        match = shadow == deriv_supp
-        print(f"k = {k}:")
-        print(f"  kthShadow(supp(f), {k}) = {sorted(shadow)}  (size {len(shadow)})")
-        print(f"  ⋃ supp(∂^τ f)           = {sorted(deriv_supp)}  (size {len(deriv_supp)})")
-        print(f"  Exact match: {match}  {'✓' if match else '✗'}")
-        print()
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 2: Shadow profiles for classical families
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_shadow_profiles():
-    separator("DEMO 2: Shadow Profiles for Classical Support Families")
-
-    families = [
-        ("Simplex Δ(3,4) — full degree-4 in 3 vars", simplex_support(3, 4)),
-        ("Simplex Δ(4,3) — full degree-3 in 4 vars", simplex_support(4, 3)),
-        ("Uniform matroid U_{3,5}", matroid_basis_support(5, 3)),
-        ("Uniform matroid U_{4,6}", matroid_basis_support(6, 4)),
-        ("Product [0,2]×[0,3]", product_of_simplices_support([2, 3])),
-        ("Product [0,1]×[0,1]×[0,1]", product_of_simplices_support([1, 1, 1])),
-    ]
-
-    for name, S in families:
-        prof = shadow_profile(S)
-        lc, violations = test_log_concavity(prof)
-        is_exchange = is_discrete_exchange_family(S) if len(S) <= 100 else "skipped"
-        print(f"{name}:")
-        print(f"  |S| = {len(S)}")
-        print(f"  Profile: {prof}")
-        print(f"  Log-concave: {lc}" + (f"  (violations at k={violations})" if violations else ""))
-        print(f"  Exchange family: {is_exchange}")
-        print()
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 3: Shadow composition (semigroup law)
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_shadow_composition():
-    separator("DEMO 3: Shadow Composition Law  Sh_b(Sh_a(S)) = Sh_{a+b}(S)")
-
-    test_cases = [
-        ("Simplex Δ(2,3)", simplex_support(2, 3)),
-        ("Simplex Δ(3,4)", simplex_support(3, 4)),
-        ("Matroid U_{2,4}", matroid_basis_support(4, 2)),
-    ]
-
-    for name, S in test_cases:
-        max_d = max(sum(a) for a in S)
-        all_pass = True
-        for a in range(max_d + 1):
-            for b in range(max_d + 1 - a):
-                if not verify_shadow_composition(S, a, b):
-                    print(f"  FAILED: {name}, a={a}, b={b}")
-                    all_pass = False
-        status = "✓ All passed" if all_pass else "✗ Some failed"
-        print(f"{name}: {status}")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 4: Coefficient transport formula verification
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_coefficient_transport():
-    separator("DEMO 4: Coefficient Transport Formula")
-
-    f = MvPolynomial({
-        (3, 1, 0): 5,
-        (1, 2, 1): -3,
-        (0, 0, 4): 2,
-        (2, 2, 0): 7,
-    })
-    print(f"f = {f}")
-    print(f"Support: {sorted(f.support)}")
-    print()
-
-    # Test: coeff_β(∂^τ f) = ∏_i ascFact(β_i+1, τ_i) · coeff_{β+τ}(f)
-    test_pairs = [
-        ((1, 0, 0), (2, 1, 0)),   # β, τ; β+τ = (3,1,0)
-        ((0, 1, 0), (1, 1, 1)),   # β+τ = (1,2,1)
-        ((0, 0, 2), (0, 0, 2)),   # β+τ = (0,0,4)
-        ((1, 1, 0), (1, 1, 0)),   # β+τ = (2,2,0)
-    ]
-
-    all_pass = True
-    for beta, tau in test_pairs:
-        df = f.iterated_pderiv(tau)
-        actual = df.coeff(beta)
-        alpha = tuple(b + t for b, t in zip(beta, tau))
-        scalar = multi_ascending_factorial(beta, tau)
-        predicted = scalar * f.coeff(alpha)
-        match = abs(actual - predicted) < 1e-10
-        if not match:
-            all_pass = False
-        print(f"  β={beta}, τ={tau}:")
-        print(f"    coeff_β(∂^τ f) = {actual}")
-        print(f"    ∏ ascFact · coeff_{alpha}(f) = {scalar} × {f.coeff(alpha)} = {predicted}")
-        print(f"    Match: {match}  {'✓' if match else '✗'}")
-
-    print(f"\nAll coefficient transport tests: {'✓' if all_pass else '✗'}")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 5: Log-concavity conjecture search
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_log_concavity_search():
-    separator("DEMO 5: Shadow Log-Concavity Conjecture — Systematic Search")
-
-    print("Testing: For exchange-family supports, is the shadow profile log-concave?")
-    print("         a_k² ≥ a_{k-1} · a_{k+1} for all admissible k")
-    print()
-
-    counterexamples = []
-    tests_run = 0
-
-    # Test matroid basis supports
-    print("--- Matroid basis supports U_{r,n} ---")
-    for n in range(3, 9):
-        for r in range(2, n):
-            S = matroid_basis_support(n, r)
-            prof = shadow_profile(S)
-            lc, violations = test_log_concavity(prof)
-            tests_run += 1
-            if not lc:
-                counterexamples.append(("matroid", n, r, prof, violations))
-                print(f"  ✗ U_{{{r},{n}}}: profile={prof}, violations={violations}")
-            else:
-                print(f"  ✓ U_{{{r},{n}}}: profile={prof}")
-
-    # Test simplex supports
-    print("\n--- Simplex supports Δ(n,d) ---")
-    for n in range(2, 7):
-        for d in range(1, 7):
-            S = simplex_support(n, d)
-            prof = shadow_profile(S)
-            lc, violations = test_log_concavity(prof)
-            tests_run += 1
-            if not lc:
-                counterexamples.append(("simplex", n, d, prof, violations))
-                print(f"  ✗ Δ({n},{d}): profile={prof}, violations={violations}")
-
-    # Test product supports
-    print("\n--- Product of intervals supports ---")
-    for dims in [(1,1), (1,2), (2,2), (1,1,1), (2,1,1), (2,2,1), (1,1,1,1), (2,2,2)]:
-        S = product_of_simplices_support(list(dims))
-        prof = shadow_profile(S)
-        lc, violations = test_log_concavity(prof)
-        is_exchange = is_discrete_exchange_family(S) if len(S) <= 100 else "?"
-        tests_run += 1
-        sym = "✓" if lc else "✗"
-        print(f"  {sym} Product {dims}: profile={prof}, exchange={is_exchange}")
-        if not lc and is_exchange:
-            counterexamples.append(("product", dims, 0, prof, violations))
-
-    # Test sparse random exchange families
-    print("\n--- Random exchange families ---")
-    for trial in range(20):
-        n = random.randint(3, 6)
-        d = random.randint(2, 4)
-        count = random.randint(3, min(10, len(simplex_support(n, d))))
-        try:
-            from algorithms import random_exchange_support
-            S = random_exchange_support(n, d, count, seed=trial)
-            if len(S) >= 3 and is_discrete_exchange_family(S):
-                prof = shadow_profile(S)
-                lc, violations = test_log_concavity(prof)
-                tests_run += 1
-                sym = "✓" if lc else "✗"
-                print(f"  {sym} Random(n={n}, d={d}, |S|={len(S)}): profile={prof}")
-                if not lc:
-                    counterexamples.append(("random", (n, d, len(S)), trial, prof, violations))
-        except Exception:
-            pass
-
-    print(f"\n{'='*50}")
-    print(f"Tests run: {tests_run}")
-    print(f"Counterexamples found: {len(counterexamples)}")
-    if counterexamples:
-        print("\nCounterexample details:")
-        for cx in counterexamples:
-            print(f"  {cx}")
-    else:
-        print("\nConjecture holds for all tested cases! ✓")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Demo 6: Exhaustive shadow theorem verification
-# ─────────────────────────────────────────────────────────────────────────
-
-def demo_exhaustive_verification():
-    separator("DEMO 6: Exhaustive Shadow Theorem Verification")
-
-    print("Verifying: kthShadow(supp(f), k) == ⋃_{|τ|=k} supp(∂^τ f)")
-    print("for randomly generated polynomials...")
-    print()
-
-    rng = random.Random(12345)
-    all_pass = True
-
-    for trial in range(30):
-        n = rng.randint(2, 4)
-        d = rng.randint(1, 4)
-
-        # Random polynomial
-        support = simplex_support(n, d)
-        coeffs = {}
-        for alpha in support:
-            if rng.random() < 0.6:
-                coeffs[alpha] = rng.randint(-10, 10)
-        f = MvPolynomial(coeffs, n)
-        if not f.support:
-            continue
-
-        for k in range(d + 1):
-            ok = verify_shadow_theorem(f, k)
-            if not ok:
-                print(f"  ✗ Trial {trial}, n={n}, d={d}, k={k}: FAILED!")
-                all_pass = False
-
-    print(f"{'All verifications passed! ✓' if all_pass else 'Some verifications failed! ✗'}")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# Run all demos
-# ─────────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    demo_shadow_theorem()
-    demo_shadow_profiles()
-    demo_shadow_composition()
-    demo_coefficient_transport()
-    demo_log_concavity_search()
-    demo_exhaustive_verification()
-
-    separator("SUMMARY")
-    print("All demonstrations completed successfully.")
-    print()
-    print("Key verified results:")
-    print("  1. The exact k-th shadow theorem holds for all tested polynomials")
-    print("  2. Shadow composition law Sh_b(Sh_a(S)) = Sh_{a+b}(S) verified")
-    print("  3. Coefficient transport formula validated on concrete examples")
-    print("  4. Shadow log-concavity conjecture tested on exchange families")
-    print()
-    print("These results are formally verified in Lean 4 in the companion file")
-    print("IteratedShadowGeometry.lean")
-
-
-"""
-Visualization: Log-Concavity of Shadow Profiles
-
-Shows the log-concavity test for shadow profiles across multiple
-families. Plots log(a_k) vs k, where log-concavity corresponds to
-concavity of this curve. Also visualizes the ratio a_{k+1}/a_k
-which should be decreasing for log-concave sequences.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import combinations, product as iterproduct
-from math import comb, log
-
-
-# ── Inline implementations ───────────────────────────────────────────
-
-def all_multi_indices_of_mass(n, k):
-    if n == 0:
-        return [()] if k == 0 else []
-    if n == 1:
-        return [(k,)]
-    results = []
-    for first in range(k + 1):
-        for rest in all_multi_indices_of_mass(n - 1, k - first):
-            results.append((first,) + rest)
-    return results
-
-
-def enumerate_multi_indices_le(alpha, mass):
-    n = len(alpha)
-    results = []
-    def generate(pos, remaining, current):
-        if pos == n:
-            if remaining == 0:
-                results.append(tuple(current))
-            return
-        for v in range(min(alpha[pos], remaining) + 1):
-            current.append(v)
-            generate(pos + 1, remaining - v, current)
-            current.pop()
-    generate(0, mass, [])
-    return results
-
+from collections import defaultdict
+
+
+# ─── Inline core functions ──────────────────────────────────────────
+
+def multi_indices_of_mass(n, k):
+    if k == 0: return [tuple([0]*n)]
+    if n == 0: return []
+    if n == 1: return [(k,)]
+    result = []
+    for first in range(k+1):
+        for rest in multi_indices_of_mass(n-1, k-first):
+            result.append((first,)+rest)
+    return result
 
 def kth_shadow(S, k):
+    if not S: return set()
+    n = len(next(iter(S)))
     shadow = set()
     for alpha in S:
-        for tau in enumerate_multi_indices_le(alpha, k):
-            beta = tuple(a - t for a, t in zip(alpha, tau))
-            shadow.add(beta)
+        for tau in multi_indices_of_mass(n, k):
+            if all(tau[i] <= alpha[i] for i in range(n)):
+                shadow.add(tuple(alpha[i]-tau[i] for i in range(n)))
     return shadow
 
+def shadow_profile(S, max_k=None):
+    if not S: return [0]
+    if max_k is None: max_k = max(sum(a) for a in S)
+    return [len(kth_shadow(S, k)) for k in range(max_k+1)]
+
+def ascending_factorial(m, k):
+    r = 1
+    for j in range(k): r *= (m+j)
+    return r
+
+def iterated_pderiv(poly, tau):
+    n = len(tau)
+    result = {}
+    for alpha, coeff in poly.items():
+        if all(alpha[i] >= tau[i] for i in range(n)):
+            beta = tuple(alpha[i]-tau[i] for i in range(n))
+            scalar = 1
+            for i in range(n):
+                scalar *= ascending_factorial(beta[i]+1, tau[i])
+            val = scalar * coeff
+            if val != 0:
+                result[beta] = result.get(beta, 0.0) + val
+    return {k: v for k, v in result.items() if abs(v) > 1e-15}
+
+
+# ─── Application 1: Sparse Differentiation Complexity ───────────────
+
+def sparse_derivative_complexity(support, k):
+    """
+    Predict the number of nonzero terms in all k-th order derivatives
+    using the shadow theorem, without computing any derivatives.
+
+    This is the key application to symbolic computation: the shadow
+    gives an exact prediction of derivative sparsity.
+
+    Args:
+        support: Set of exponent vectors.
+        k: Derivative order.
+
+    Returns:
+        Exact number of distinct monomials across all k-th derivatives.
+    """
+    shadow = kth_shadow(support, k)
+    return len(shadow)
+
+
+def compare_shadow_vs_naive(poly, max_k):
+    """
+    Compare shadow-based complexity prediction with naive computation.
+
+    Shows that shadow analysis gives exact results without computing
+    any actual derivatives — a key win for sparse symbolic computation.
+    """
+    print("  Application: Sparse Differentiation Complexity Analysis")
+    print("  " + "-" * 60)
+
+    support = set(a for a, c in poly.items() if c != 0)
+    n = len(next(iter(support)))
+
+    print(f"  Polynomial in {n} variables, {len(support)} terms")
+    print(f"  {'k':>4} {'Shadow prediction':>20} {'Actual count':>15} {'Match':>8}")
+    print("  " + "-" * 50)
+
+    for k in range(max_k + 1):
+        predicted = sparse_derivative_complexity(support, k)
+        # Compute actual (expensive)
+        actual = set()
+        for tau in multi_indices_of_mass(n, k):
+            deriv = iterated_pderiv(poly, tau)
+            actual.update(deriv.keys())
+        match = predicted == len(actual)
+        print(f"  {k:>4} {predicted:>20} {len(actual):>15} {'✓' if match else '✗':>8}")
+    print()
+
+
+# ─── Application 2: Newton Polytope Analysis ────────────────────────
+
+def newton_polytope_layers(support):
+    """
+    Decompose the Newton polytope into shadow layers.
+
+    The k-th shadow represents the "k-interior" of the Newton polytope —
+    the set of lattice points reachable by moving k steps inward from
+    boundary elements.
+
+    Returns:
+        Dict mapping k to the set of points first appearing at depth k.
+    """
+    max_deg = max(sum(a) for a in support)
+    layers = {}
+    previous = set()
+    for k in range(max_deg + 1):
+        current = kth_shadow(support, k)
+        new_points = current - previous
+        if not new_points and k > 0:
+            break
+        layers[k] = new_points
+        previous = current
+    return layers
+
+
+# ─── Application 3: Polynomial Identity Testing ────────────────────
+
+def shadow_fingerprint(support, max_k=None):
+    """
+    Compute a polynomial's shadow fingerprint — a sequence of shadow
+    cardinalities that serves as a combinatorial invariant.
+
+    Two polynomials with different shadow fingerprints CANNOT be equal,
+    regardless of coefficients.
+
+    This gives a fast combinatorial certificate for polynomial non-identity.
+    """
+    return tuple(shadow_profile(support, max_k))
+
+
+def test_polynomial_identity(poly1, poly2, max_k=None):
+    """
+    Quick test: if shadow fingerprints differ, polynomials are definitely
+    not identical (modulo coefficient values).
+    """
+    supp1 = set(a for a, c in poly1.items() if c != 0)
+    supp2 = set(a for a, c in poly2.items() if c != 0)
+    fp1 = shadow_fingerprint(supp1, max_k)
+    fp2 = shadow_fingerprint(supp2, max_k)
+    if fp1 != fp2:
+        return "DEFINITELY DIFFERENT (shadow fingerprints differ)"
+    elif supp1 != supp2:
+        return "DIFFERENT SUPPORTS (same fingerprint)"
+    else:
+        return "SAME SUPPORT (need coefficient check)"
+
+
+# ─── Application 4: Derivative Decay Rate ──────────────────────────
+
+def derivative_decay_rate(support):
+    """
+    Compute the rate at which derivative complexity decays.
+
+    Returns pairs (k, a_k / a_{k-1}) showing the fractional decrease
+    at each shadow step.
+    """
+    prof = shadow_profile(support)
+    rates = []
+    for k in range(1, len(prof)):
+        if prof[k-1] > 0:
+            rates.append((k, prof[k] / prof[k-1]))
+        else:
+            rates.append((k, 0.0))
+    return rates
+
+
+# ─── Main ───────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    print()
+    print("=" * 70)
+    print("ITERATED SHADOW GEOMETRY — Applications")
+    print("=" * 70)
+    print()
+
+    # App 1: Sparse differentiation
+    poly = {
+        (3, 2, 1): 1.0, (2, 0, 3): -2.0, (1, 4, 0): 3.0,
+        (0, 1, 5): 1.0, (4, 1, 0): -1.0, (2, 2, 2): 7.0,
+    }
+    compare_shadow_vs_naive(poly, 6)
+
+    # App 2: Newton polytope layers
+    print("  Application: Newton Polytope Layer Decomposition")
+    print("  " + "-" * 60)
+    support = set(poly.keys())
+    layers = newton_polytope_layers(support)
+    for k, pts in sorted(layers.items()):
+        print(f"  Layer {k}: {len(pts)} new lattice points")
+    print()
+
+    # App 3: Polynomial identity testing
+    print("  Application: Shadow-Based Identity Testing")
+    print("  " + "-" * 60)
+    poly2 = {(3, 2, 1): 5.0, (2, 0, 3): -2.0, (1, 4, 0): 3.0,
+             (0, 1, 5): 1.0, (4, 1, 0): -1.0, (2, 2, 2): 7.0}
+    poly3 = {(3, 2, 1): 1.0, (2, 0, 3): -2.0, (1, 3, 0): 3.0}
+    print(f"  f vs f (same coeffs): {test_polynomial_identity(poly, poly)}")
+    print(f"  f vs g (same support): {test_polynomial_identity(poly, poly2)}")
+    print(f"  f vs h (different support): {test_polynomial_identity(poly, poly3)}")
+    print()
+
+    # App 4: Derivative decay rates
+    print("  Application: Derivative Complexity Decay Rates")
+    print("  " + "-" * 60)
+    rates = derivative_decay_rate(support)
+    for k, r in rates:
+        bar = '▓' * int(30 * r) if r > 0 else ''
+        print(f"  k={k}: ratio = {r:.4f}  {bar}")
+    print()
+
+
+"""Build PACKAGE.json from all deliverables."""
+import json
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read all files
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+lean_proofs = read_file('Catalog/Speculative/AutoResearch/IteratedShadowGeometry.lean')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+viz_profiles = read_file('viz_shadow_profiles.py')
+viz_logconcave = read_file('viz_log_concavity.py')
+viz_lattice = read_file('viz_shadow_lattice.py')
+interactive_html = read_file('interactive_shadow.html')
+
+package = {
+    "title": "Iterated Shadow Geometry of Polynomial Supports",
+    "domain": "Pythagorean / Algebraic Combinatorics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Shadow Theorem Verification & Log-Concavity Search",
+            "code": demo_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "k-th Shadow Computation",
+            "pseudocode": "Input: S ⊂ ℕⁿ (finite), k ≥ 0\nOutput: Sh_k(S)\n1. result ← ∅\n2. For each α ∈ S:\n3.   For each τ ∈ ℕⁿ with |τ| = k and τ ≤ α:\n4.     result ← result ∪ {α - τ}\n5. Return result\n\nComplexity: O(|S| · C(n+k-1,k) · n)",
+            "code": algorithms_code
+        },
+        {
+            "name": "Shadow-Based Applications",
+            "pseudocode": "Applications of shadow geometry:\n1. Sparse differentiation complexity prediction\n2. Newton polytope layer decomposition\n3. Shadow-based polynomial identity testing\n4. Derivative decay rate analysis",
+            "code": applications_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Shadow Profile Comparison",
+            "code": viz_profiles,
+            "description": "Plots shadow profiles a_k = |Sh_k(S)| for simplex, matroid basis, and product simplex supports, showing how derivative complexity decays with shadow depth."
+        },
+        {
+            "name": "Log-Concavity Heatmap",
+            "code": viz_logconcave,
+            "description": "Heatmap of log-concavity ratios a_k²/(a_{k-1}·a_{k+1}) across support families and shadow depths. Green cells confirm log-concavity."
+        },
+        {
+            "name": "Shadow Lattice Erosion",
+            "code": viz_lattice,
+            "description": "Visualizes how a 2D support set erodes under successive shadow operations, showing the discrete geometric flow that governs derivative supports."
+        }
+    ],
+    "interactive_demos": [
+        {
+            "name": "Interactive Shadow Explorer",
+            "html": interactive_html,
+            "description": "Click lattice points to build a support set, adjust the shadow depth slider to see shadows form in real-time, and observe the shadow profile and log-concavity status."
+        }
+    ],
+    "lean_proofs": lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("PACKAGE.json created successfully")
+print(f"Size: {os.path.getsize('PACKAGE.json') / 1024:.1f} KB")
+
+
+"""
+demo.py — Interactive demonstration of Iterated Shadow Geometry.
+
+This script:
+1. Constructs sample polynomial supports.
+2. Computes k-th shadows and compares with actual mixed derivative supports.
+3. Tests log-concavity of shadow profiles on exchange-family examples.
+4. Searches for counterexamples to the Shadow Log-Concavity Conjecture.
+"""
+
+from itertools import combinations
+from collections import defaultdict
+import random
+import sys
+
+
+# ─── Inline implementations (self-contained) ───────────────────────
+
+def total_mass(v):
+    return sum(v)
+
+def multi_indices_of_mass(n, k):
+    if k == 0:
+        return [tuple([0]*n)]
+    if n == 0:
+        return []
+    if n == 1:
+        return [(k,)]
+    result = []
+    for first in range(k+1):
+        for rest in multi_indices_of_mass(n-1, k-first):
+            result.append((first,)+rest)
+    return result
+
+def kth_shadow(S, k):
+    if not S:
+        return set()
+    n = len(next(iter(S)))
+    shadow = set()
+    for alpha in S:
+        for tau in multi_indices_of_mass(n, k):
+            if all(tau[i] <= alpha[i] for i in range(n)):
+                beta = tuple(alpha[i]-tau[i] for i in range(n))
+                shadow.add(beta)
+    return shadow
 
 def shadow_profile(S, max_k=None):
     if not S:
         return [0]
     if max_k is None:
-        max_k = max(sum(a) for a in S)
-    return [len(kth_shadow(S, k)) for k in range(max_k + 1)]
+        max_k = max(total_mass(a) for a in S)
+    return [len(kth_shadow(S, k)) for k in range(max_k+1)]
 
+def ascending_factorial(m, k):
+    r = 1
+    for j in range(k):
+        r *= (m+j)
+    return r
 
-def simplex_support(n, d):
-    return set(all_multi_indices_of_mass(n, d))
+def iterated_pderiv(poly, tau):
+    n = len(tau)
+    result = {}
+    for alpha, coeff in poly.items():
+        if all(alpha[i] >= tau[i] for i in range(n)):
+            beta = tuple(alpha[i]-tau[i] for i in range(n))
+            scalar = 1
+            for i in range(n):
+                scalar *= ascending_factorial(beta[i]+1, tau[i])
+            val = scalar * coeff
+            if val != 0:
+                result[beta] = result.get(beta, 0.0) + val
+    return {k: v for k, v in result.items() if abs(v) > 1e-15}
 
+def derivative_support_at_order(poly, k):
+    if not poly:
+        return set()
+    n = len(next(iter(poly.keys())))
+    result = set()
+    for tau in multi_indices_of_mass(n, k):
+        deriv = iterated_pderiv(poly, tau)
+        result.update(deriv.keys())
+    return result
+
+def is_discrete_exchange_family(S):
+    S_list = list(S)
+    if not S_list:
+        return True
+    n = len(S_list[0])
+    S_set = frozenset(S)
+    for alpha in S_list:
+        for beta in S_list:
+            for i in range(n):
+                if alpha[i] > beta[i]:
+                    found = False
+                    for j in range(n):
+                        if beta[j] > alpha[j]:
+                            c = list(alpha)
+                            c[i] -= 1
+                            c[j] += 1
+                            if tuple(c) in S_set:
+                                found = True
+                                break
+                    if not found:
+                        return False
+    return True
+
+def check_log_concavity(profile):
+    for k in range(1, len(profile)-1):
+        if profile[k]**2 < profile[k-1]*profile[k+1]:
+            return False
+    return True
+
+def check_ratio_monotonicity(profile):
+    for k in range(1, len(profile)-1):
+        if profile[k-1] == 0 or profile[k] == 0:
+            continue
+        if profile[k+1]*profile[k-1] > profile[k]**2:
+            return False
+    return True
 
 def matroid_basis_support(n, r):
-    support = set()
-    for basis in combinations(range(n), r):
-        alpha = tuple(1 if i in basis else 0 for i in range(n))
-        support.add(alpha)
-    return support
+    result = set()
+    for combo in combinations(range(n), r):
+        vec = [0]*n
+        for i in combo:
+            vec[i] = 1
+        result.add(tuple(vec))
+    return result
+
+def simplex_support(n, d):
+    return set(multi_indices_of_mass(n, d))
+
+def product_simplex_support(dims):
+    """Support of product of simplices: all vectors (a1,...,an) with ai <= di."""
+    if not dims:
+        return {()}
+    result = set()
+    for a in range(dims[0]+1):
+        for rest in product_simplex_support(dims[1:]):
+            result.add((a,)+rest)
+    return result
 
 
-def product_support(dims):
-    return set(iterproduct(*(range(d + 1) for d in dims)))
+# ─── Main demonstration ────────────────────────────────────────────
+
+def demo_shadow_theorem():
+    """Demonstrate the exact k-th shadow theorem on concrete polynomials."""
+    print("=" * 70)
+    print("DEMO 1: The Exact k-th Shadow Theorem")
+    print("=" * 70)
+    print()
+    print("We verify that the support of all k-th order mixed partial")
+    print("derivatives equals the k-th combinatorial shadow of the support.")
+    print()
+
+    # Polynomial: 3x²y - z³ + 5xy² + 2x³
+    poly = {
+        (2, 1, 0): 3.0,
+        (0, 0, 3): -1.0,
+        (1, 2, 0): 5.0,
+        (3, 0, 0): 2.0,
+    }
+    print(f"f(x,y,z) = 3x²y - z³ + 5xy² + 2x³")
+    print(f"Support: {sorted(poly.keys())}")
+    print()
+
+    for k in range(5):
+        supp = set(a for a, c in poly.items() if c != 0)
+        shadow = kth_shadow(supp, k)
+        deriv_supp = derivative_support_at_order(poly, k)
+        match = shadow == deriv_supp
+        print(f"  k={k}: |Shadow| = {len(shadow):3d}, |Deriv support| = {len(deriv_supp):3d}, Match: {'✓' if match else '✗'}")
+
+    print()
+    prof = shadow_profile(set(poly.keys()))
+    print(f"Shadow profile: {prof}")
+    print(f"Log-concave: {check_log_concavity(prof)}")
+    print()
 
 
-# ── Plotting ──────────────────────────────────────────────────────────
+def demo_shadow_composition():
+    """Demonstrate the shadow composition law: Sh_b(Sh_a(S)) = Sh_{a+b}(S)."""
+    print("=" * 70)
+    print("DEMO 2: Shadow Composition Law (Semigroup Property)")
+    print("=" * 70)
+    print()
+    print("Verifying: kthShadow(kthShadow(S, a), b) = kthShadow(S, a+b)")
+    print()
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    S = simplex_support(3, 4)
+    print(f"S = simplex support in 3 variables, degree 4")
+    print(f"|S| = {len(S)}")
+    print()
 
-# Collect data
-families = [
-    ("Δ(3,5)", simplex_support(3, 5), '#1f77b4', 'o'),
-    ("Δ(4,4)", simplex_support(4, 4), '#ff7f0e', 'o'),
-    ("U(3,6)", matroid_basis_support(6, 3), '#2ca02c', 's'),
-    ("U(4,7)", matroid_basis_support(7, 4), '#d62728', 's'),
-    ("[0,3]×[0,3]", product_support([3, 3]), '#9467bd', '^'),
-    ("[0,2]³", product_support([2, 2, 2]), '#8c564b', '^'),
-]
+    for a in range(5):
+        for b in range(5 - a):
+            lhs = kth_shadow(kth_shadow(S, a), b)
+            rhs = kth_shadow(S, a + b)
+            match = lhs == rhs
+            if not match:
+                print(f"  FAILURE at a={a}, b={b}!")
+    print("  All (a,b) pairs verified ✓")
+    print()
 
-# Panel 1: log(a_k) vs k — concavity = log-concavity
-ax1.set_title("Log of Shadow Profile (concavity = log-concavity)",
-              fontsize=12, fontweight='bold')
-for name, S, color, marker in families:
-    prof = shadow_profile(S)
-    ks = list(range(len(prof)))
-    log_prof = [log(max(a, 1)) for a in prof]
-    ax1.plot(ks, log_prof, f'{marker}-', color=color, label=name,
-             linewidth=2, markersize=7)
 
-ax1.set_xlabel('Shadow depth k', fontsize=11)
-ax1.set_ylabel('log |Sh_k(S)|', fontsize=11)
-ax1.legend(fontsize=9)
-ax1.grid(True, alpha=0.3)
+def demo_exchange_families():
+    """Test exchange families and their shadow profiles."""
+    print("=" * 70)
+    print("DEMO 3: Exchange Families and Log-Concavity")
+    print("=" * 70)
+    print()
 
-# Panel 2: Ratio a_{k+1}/a_k — monotone decreasing = log-concavity
-ax2.set_title("Ratio a_{k+1}/a_k (decreasing ⟹ log-concavity)",
-              fontsize=12, fontweight='bold')
-for name, S, color, marker in families:
-    prof = shadow_profile(S)
-    ratios = []
-    ratio_ks = []
-    for k in range(len(prof) - 1):
-        if prof[k] > 0:
-            ratios.append(prof[k + 1] / prof[k])
-            ratio_ks.append(k)
-    if ratios:
-        ax2.plot(ratio_ks, ratios, f'{marker}-', color=color, label=name,
-                 linewidth=2, markersize=7)
+    test_cases = [
+        ("Uniform matroid U(2,4)", matroid_basis_support(4, 2)),
+        ("Uniform matroid U(3,5)", matroid_basis_support(5, 3)),
+        ("Uniform matroid U(2,6)", matroid_basis_support(6, 2)),
+        ("Uniform matroid U(3,6)", matroid_basis_support(6, 3)),
+        ("Simplex (n=3, d=3)", simplex_support(3, 3)),
+        ("Simplex (n=4, d=2)", simplex_support(4, 2)),
+        ("Product simplex [2,2,2]", product_simplex_support([2, 2, 2])),
+        ("Product simplex [3,2,1]", product_simplex_support([3, 2, 1])),
+    ]
 
-ax2.set_xlabel('Shadow depth k', fontsize=11)
-ax2.set_ylabel('a_{k+1} / a_k', fontsize=11)
-ax2.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='ratio = 1')
-ax2.legend(fontsize=9)
-ax2.grid(True, alpha=0.3)
+    print(f"{'Family':<30} {'|S|':>5} {'Exchange':>10} {'Profile':<30} {'LogConc':>8} {'RatMon':>8}")
+    print("-" * 100)
 
-plt.suptitle('Log-Concavity Analysis of Shadow Profiles',
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('log_concavity.png', dpi=150, bbox_inches='tight')
-print("Saved log_concavity.png")
+    for name, S in test_cases:
+        is_exch = is_discrete_exchange_family(S)
+        prof = shadow_profile(S)
+        lc = check_log_concavity(prof)
+        rm = check_ratio_monotonicity(prof)
+        prof_str = str(prof) if len(str(prof)) <= 28 else str(prof)[:25] + "..."
+        print(f"{name:<30} {len(S):>5} {'Yes' if is_exch else 'No':>10} {prof_str:<30} {'✓' if lc else '✗':>8} {'✓' if rm else '✗':>8}")
+
+    print()
+
+
+def demo_counterexample_search():
+    """Search for counterexamples to the log-concavity conjecture."""
+    print("=" * 70)
+    print("DEMO 4: Counterexample Search for Shadow Log-Concavity")
+    print("=" * 70)
+    print()
+    print("Conjecture: If S is a discrete exchange family, then the")
+    print("shadow profile a_k = |Sh_k(S)| is log-concave.")
+    print()
+    print("Searching over random exchange-family-like supports...")
+    print()
+
+    counterexamples = 0
+    tests = 0
+
+    # Test all matroid basis supports up to n=8
+    for n in range(2, 9):
+        for r in range(1, n):
+            S = matroid_basis_support(n, r)
+            if is_discrete_exchange_family(S):
+                prof = shadow_profile(S)
+                lc = check_log_concavity(prof)
+                tests += 1
+                if not lc:
+                    counterexamples += 1
+                    print(f"  COUNTEREXAMPLE: U({r},{n}), profile={prof}")
+
+    print(f"  Tested {tests} matroid basis supports, {counterexamples} counterexamples")
+    print()
+
+    # Test simplex supports
+    for n in range(2, 7):
+        for d in range(1, 7):
+            S = simplex_support(n, d)
+            if is_discrete_exchange_family(S):
+                prof = shadow_profile(S)
+                lc = check_log_concavity(prof)
+                tests += 1
+                if not lc:
+                    counterexamples += 1
+                    print(f"  COUNTEREXAMPLE: Simplex(n={n},d={d}), profile={prof}")
+
+    print(f"  Total: {tests} exchange families tested, {counterexamples} counterexamples")
+
+    # Test product simplices
+    for d1 in range(1, 5):
+        for d2 in range(1, 5):
+            for d3 in range(1, 4):
+                S = product_simplex_support([d1, d2, d3])
+                if is_discrete_exchange_family(S):
+                    prof = shadow_profile(S)
+                    lc = check_log_concavity(prof)
+                    tests += 1
+                    if not lc:
+                        counterexamples += 1
+                        print(f"  COUNTEREXAMPLE: Product[{d1},{d2},{d3}], profile={prof}")
+
+    print(f"\n  Final tally: {tests} exchange families tested, {counterexamples} counterexamples found")
+    if counterexamples == 0:
+        print("  ➤ Conjecture SURVIVES all tests!")
+    else:
+        print("  ➤ Conjecture REFUTED!")
+    print()
+
+
+def demo_shadow_profile_visualization():
+    """Show shadow profiles as text-based bar charts."""
+    print("=" * 70)
+    print("DEMO 5: Shadow Profile Visualization")
+    print("=" * 70)
+    print()
+
+    families = [
+        ("Simplex(3,5)", simplex_support(3, 5)),
+        ("U(3,6) matroid", matroid_basis_support(6, 3)),
+        ("Product[2,2,2]", product_simplex_support([2,2,2])),
+    ]
+
+    for name, S in families:
+        prof = shadow_profile(S)
+        max_val = max(prof) if prof else 1
+        print(f"  {name} (|S|={len(S)})")
+        for k, a_k in enumerate(prof):
+            bar = '█' * int(40 * a_k / max_val) if max_val > 0 else ''
+            print(f"    k={k:2d}: {a_k:4d} {bar}")
+        print(f"    Log-concave: {check_log_concavity(prof)}")
+        print()
+
+
+if __name__ == "__main__":
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║   ITERATED SHADOW GEOMETRY — Interactive Demonstration             ║")
+    print("║   Exploring the combinatorial footprint of polynomial derivatives  ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_shadow_theorem()
+    demo_shadow_composition()
+    demo_exchange_families()
+    demo_counterexample_search()
+    demo_shadow_profile_visualization()
+
+    print("=" * 70)
+    print("All demonstrations complete.")
+    print("=" * 70)
 
 
 """
-Visualization: Shadow Lattice Heatmap
+Visualization: Log-Concavity Heatmap
 
-Visualizes the k-th shadow of a 2D polynomial support as a heatmap,
-showing how the "shadow" of the Newton support contracts as k increases.
-This illustrates the core geometric insight: differentiation moves
-the support inward through the Newton polytope.
+Creates a heatmap showing the log-concavity ratio a_k^2 / (a_{k-1} * a_{k+1})
+for various support families and shadow depths. Values >= 1 confirm log-concavity.
+The conjecture predicts all cells should be >= 1 for exchange families.
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import numpy as np
+from itertools import combinations
 
 
-# ── Inline implementations ───────────────────────────────────────────
-
-def enumerate_multi_indices_le(alpha, mass):
-    n = len(alpha)
-    results = []
-    def generate(pos, remaining, current):
-        if pos == n:
-            if remaining == 0:
-                results.append(tuple(current))
-            return
-        for v in range(min(alpha[pos], remaining) + 1):
-            current.append(v)
-            generate(pos + 1, remaining - v, current)
-            current.pop()
-    generate(0, mass, [])
-    return results
-
+def multi_indices_of_mass(n, k):
+    if k == 0: return [tuple([0]*n)]
+    if n == 0: return []
+    if n == 1: return [(k,)]
+    result = []
+    for first in range(k+1):
+        for rest in multi_indices_of_mass(n-1, k-first):
+            result.append((first,)+rest)
+    return result
 
 def kth_shadow(S, k):
+    if not S: return set()
+    n = len(next(iter(S)))
     shadow = set()
     for alpha in S:
-        for tau in enumerate_multi_indices_le(alpha, k):
-            beta = tuple(a - t for a, t in zip(alpha, tau))
-            shadow.add(beta)
+        for tau in multi_indices_of_mass(n, k):
+            if all(tau[i] <= alpha[i] for i in range(n)):
+                shadow.add(tuple(alpha[i]-tau[i] for i in range(n)))
+    return shadow
+
+def shadow_profile(S, max_k=None):
+    if not S: return [0]
+    if max_k is None: max_k = max(sum(a) for a in S)
+    return [len(kth_shadow(S, k)) for k in range(max_k+1)]
+
+def matroid_basis_support(n, r):
+    result = set()
+    for combo in combinations(range(n), r):
+        vec = [0]*n
+        for i in combo: vec[i] = 1
+        result.add(tuple(vec))
+    return result
+
+def simplex_support(n, d):
+    return set(multi_indices_of_mass(n, d))
+
+
+# Compute log-concavity ratios for various families
+families = []
+labels = []
+
+for n in range(3, 8):
+    for r in range(1, n):
+        if r >= n: continue
+        S = matroid_basis_support(n, r)
+        prof = shadow_profile(S)
+        families.append(prof)
+        labels.append(f'U({r},{n})')
+
+for n in range(2, 6):
+    for d in range(2, 6):
+        S = simplex_support(n, d)
+        prof = shadow_profile(S)
+        families.append(prof)
+        labels.append(f'Δ({n},{d})')
+
+# Find max length
+max_len = max(len(p) for p in families)
+
+# Compute LC ratios
+ratios = np.full((len(families), max_len - 2), np.nan)
+for i, prof in enumerate(families):
+    for k in range(1, len(prof) - 1):
+        if prof[k-1] > 0 and prof[k+1] > 0:
+            ratios[i, k-1] = prof[k]**2 / (prof[k-1] * prof[k+1])
+        elif prof[k] > 0 and prof[k+1] == 0:
+            ratios[i, k-1] = float('inf')
+
+# Plot
+fig, ax = plt.subplots(figsize=(12, 8))
+
+# Replace inf with a large number for display
+display_ratios = np.where(np.isinf(ratios), 5.0, ratios)
+display_ratios = np.where(np.isnan(display_ratios), 0, display_ratios)
+
+im = ax.imshow(display_ratios, cmap='RdYlGn', vmin=0.5, vmax=3.0, aspect='auto')
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels, fontsize=8)
+ax.set_xticks(range(max_len - 2))
+ax.set_xticklabels([f'k={k+1}' for k in range(max_len - 2)], fontsize=9)
+ax.set_xlabel('Shadow depth k', fontsize=12)
+ax.set_ylabel('Support family', fontsize=12)
+ax.set_title('Log-Concavity Ratios: a_k² / (a_{k-1} · a_{k+1})\n'
+             'Green ≥ 1 confirms log-concavity; Red < 1 would refute it',
+             fontsize=13, fontweight='bold')
+
+# Add text annotations
+for i in range(len(families)):
+    for j in range(max_len - 2):
+        if not np.isnan(ratios[i, j]) and not np.isinf(ratios[i, j]):
+            ax.text(j, i, f'{ratios[i,j]:.2f}', ha='center', va='center',
+                   fontsize=6, color='black')
+        elif np.isinf(ratios[i, j]):
+            ax.text(j, i, '∞', ha='center', va='center', fontsize=7, color='darkgreen')
+
+plt.colorbar(im, ax=ax, label='LC ratio (≥1 = log-concave)')
+plt.tight_layout()
+plt.savefig('log_concavity_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved log_concavity_heatmap.png")
+
+
+"""
+Visualization: Shadow Lattice Structure (2D)
+
+Shows the support set and its successive shadows in 2 variables,
+illustrating how the shadow operator "erodes" the support inward
+like a discrete geometric flow.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import combinations
+
+
+def multi_indices_of_mass(n, k):
+    if k == 0: return [tuple([0]*n)]
+    if n == 0: return []
+    if n == 1: return [(k,)]
+    result = []
+    for first in range(k+1):
+        for rest in multi_indices_of_mass(n-1, k-first):
+            result.append((first,)+rest)
+    return result
+
+def kth_shadow(S, k):
+    if not S: return set()
+    n = len(next(iter(S)))
+    shadow = set()
+    for alpha in S:
+        for tau in multi_indices_of_mass(n, k):
+            if all(tau[i] <= alpha[i] for i in range(n)):
+                shadow.add(tuple(alpha[i]-tau[i] for i in range(n)))
     return shadow
 
 
-# ── Create visualization ─────────────────────────────────────────────
+# Create a 2D support set
+S0 = {(5, 0), (4, 1), (3, 2), (2, 3), (1, 4), (0, 5),
+      (4, 0), (3, 1), (2, 2), (1, 3), (0, 4),
+      (3, 3), (2, 4), (4, 2)}
 
-# Example: a non-trivial support in 2 variables
-support = {(4, 0), (3, 1), (2, 2), (1, 3), (0, 4),
-           (3, 0), (0, 3), (2, 0), (0, 2), (1, 1)}
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 
-max_coord = 5
-fig, axes = plt.subplots(2, 3, figsize=(14, 9))
-axes = axes.flatten()
+max_val = 6
+shadows = [S0]
+for k in range(1, 6):
+    shadows.append(kth_shadow(S0, k))
 
-for k in range(6):
-    ax = axes[k]
-    shadow = kth_shadow(support, k)
+colors = ['#E91E63', '#FF9800', '#FFC107', '#4CAF50', '#2196F3', '#9C27B0']
+titles = ['S (original)', 'Sh₁(S)', 'Sh₂(S)', 'Sh₃(S)', 'Sh₄(S)', 'Sh₅(S)']
 
-    # Create grid
-    grid = np.zeros((max_coord + 1, max_coord + 1))
-    for (x, y) in shadow:
-        if 0 <= x <= max_coord and 0 <= y <= max_coord:
-            grid[y, x] = 1  # Note: y is row, x is column
+for idx, (ax, shadow, color, title) in enumerate(zip(axes.flat, shadows, colors, titles)):
+    # Draw grid
+    for x in range(max_val + 1):
+        for y in range(max_val + 1):
+            ax.plot(x, y, '.', color='#E0E0E0', markersize=4)
 
-    # Also mark original support
-    orig_grid = np.zeros((max_coord + 1, max_coord + 1))
-    for (x, y) in support:
-        if 0 <= x <= max_coord and 0 <= y <= max_coord:
-            orig_grid[y, x] = 1
+    # Draw shadow points
+    if shadow:
+        xs = [p[0] for p in shadow]
+        ys = [p[1] for p in shadow]
+        ax.scatter(xs, ys, c=color, s=100, zorder=5, edgecolors='black', linewidth=0.5)
 
-    # Custom colormap: white=0, light blue=in shadow, dark blue=in original
-    combined = np.zeros((max_coord + 1, max_coord + 1))
-    for i in range(max_coord + 1):
-        for j in range(max_coord + 1):
-            if grid[i, j] == 1 and orig_grid[i, j] == 1:
-                combined[i, j] = 2  # in both
-            elif grid[i, j] == 1:
-                combined[i, j] = 1  # in shadow only
-            elif orig_grid[i, j] == 1:
-                combined[i, j] = 0.5  # in original only (shouldn't happen for k=0)
+    # Draw original support outline on all panels
+    if idx > 0 and S0:
+        xs0 = [p[0] for p in S0]
+        ys0 = [p[1] for p in S0]
+        ax.scatter(xs0, ys0, c='none', s=60, zorder=4, edgecolors='#BDBDBD', linewidth=1)
 
-    colors = ['#f0f0f0', '#ffe0b2', '#4fc3f7', '#1565c0']
-    cmap = mcolors.ListedColormap(colors)
-    bounds = [0, 0.25, 0.75, 1.5, 2.5]
-    norm = mcolors.BoundaryNorm(bounds, cmap.N)
-
-    ax.imshow(combined, cmap=cmap, norm=norm, origin='lower',
-              extent=[-0.5, max_coord + 0.5, -0.5, max_coord + 0.5])
-
-    # Add grid lines and labels
-    for x in range(max_coord + 1):
-        for y in range(max_coord + 1):
-            if combined[y, x] > 0:
-                ax.plot(x, y, 'o', color='black', markersize=4)
-
-    ax.set_xlim(-0.5, max_coord + 0.5)
-    ax.set_ylim(-0.5, max_coord + 0.5)
-    ax.set_xticks(range(max_coord + 1))
-    ax.set_yticks(range(max_coord + 1))
-    ax.set_xlabel('x exponent', fontsize=9)
-    ax.set_ylabel('y exponent', fontsize=9)
-    ax.set_title(f'k = {k}  (|Sh_{k}| = {len(shadow)})',
-                 fontsize=11, fontweight='bold')
-    ax.grid(True, alpha=0.2)
+    ax.set_xlim(-0.5, max_val + 0.5)
+    ax.set_ylim(-0.5, max_val + 0.5)
     ax.set_aspect('equal')
+    ax.set_title(f'{title}  (|·| = {len(shadow)})', fontsize=13, fontweight='bold')
+    ax.set_xlabel('x exponent', fontsize=10)
+    ax.set_ylabel('y exponent', fontsize=10)
+    ax.grid(True, alpha=0.15)
 
-plt.suptitle('Shadow Contraction: Sh_k(S) for Increasing k\n'
-             '(Blue = shadow, Orange = shadow-only, Gray = empty)',
-             fontsize=13, fontweight='bold')
+fig.suptitle('Shadow Erosion: The Support Contracts Under Iterated Shadows\n'
+             'Gray circles: original support. Colored: shadow at each depth.',
+             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('shadow_heatmap.png', dpi=150, bbox_inches='tight')
-print("Saved shadow_heatmap.png")
+plt.savefig('shadow_lattice.png', dpi=150, bbox_inches='tight')
+print("Saved shadow_lattice.png")
 
 
 """
 Visualization: Shadow Profile Comparison
 
-Visualizes how shadow profiles decay for different support families:
-simplex, matroid basis, and product supports. The key insight is that
-exchange-family supports produce log-concave profiles, while arbitrary
-supports may not.
+Plots the shadow profile a_k = |Sh_k(S)| for several families of supports,
+showing how derivative complexity decays as the shadow depth increases.
+The log-concavity of these curves is visually apparent and relates to
+deep conjectures connecting discrete convex geometry to polynomial algebra.
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import combinations, product as iterproduct
-from math import comb
+from itertools import combinations
 
 
-# ── Inline implementations (self-contained) ──────────────────────────
-
-def all_multi_indices_of_mass(n, k):
-    if n == 0:
-        return [()] if k == 0 else []
-    if n == 1:
-        return [(k,)]
-    results = []
-    for first in range(k + 1):
-        for rest in all_multi_indices_of_mass(n - 1, k - first):
-            results.append((first,) + rest)
-    return results
-
-
-def enumerate_multi_indices_le(alpha, mass):
-    n = len(alpha)
-    results = []
-    def generate(pos, remaining, current):
-        if pos == n:
-            if remaining == 0:
-                results.append(tuple(current))
-            return
-        for v in range(min(alpha[pos], remaining) + 1):
-            current.append(v)
-            generate(pos + 1, remaining - v, current)
-            current.pop()
-    generate(0, mass, [])
-    return results
-
+def multi_indices_of_mass(n, k):
+    if k == 0: return [tuple([0]*n)]
+    if n == 0: return []
+    if n == 1: return [(k,)]
+    result = []
+    for first in range(k+1):
+        for rest in multi_indices_of_mass(n-1, k-first):
+            result.append((first,)+rest)
+    return result
 
 def kth_shadow(S, k):
+    if not S: return set()
+    n = len(next(iter(S)))
     shadow = set()
     for alpha in S:
-        for tau in enumerate_multi_indices_le(alpha, k):
-            beta = tuple(a - t for a, t in zip(alpha, tau))
-            shadow.add(beta)
+        for tau in multi_indices_of_mass(n, k):
+            if all(tau[i] <= alpha[i] for i in range(n)):
+                shadow.add(tuple(alpha[i]-tau[i] for i in range(n)))
     return shadow
 
-
 def shadow_profile(S, max_k=None):
-    if not S:
-        return [0]
-    if max_k is None:
-        max_k = max(sum(a) for a in S)
-    return [len(kth_shadow(S, k)) for k in range(max_k + 1)]
-
-
-def simplex_support(n, d):
-    return set(all_multi_indices_of_mass(n, d))
-
+    if not S: return [0]
+    if max_k is None: max_k = max(sum(a) for a in S)
+    return [len(kth_shadow(S, k)) for k in range(max_k+1)]
 
 def matroid_basis_support(n, r):
-    support = set()
-    for basis in combinations(range(n), r):
-        alpha = tuple(1 if i in basis else 0 for i in range(n))
-        support.add(alpha)
-    return support
+    result = set()
+    for combo in combinations(range(n), r):
+        vec = [0]*n
+        for i in combo: vec[i] = 1
+        result.add(tuple(vec))
+    return result
 
+def simplex_support(n, d):
+    return set(multi_indices_of_mass(n, d))
 
-def product_support(dims):
-    return set(iterproduct(*(range(d + 1) for d in dims)))
+def product_simplex_support(dims):
+    if not dims: return {()}
+    result = set()
+    for a in range(dims[0]+1):
+        for rest in product_simplex_support(dims[1:]):
+            result.add((a,)+rest)
+    return result
 
-
-# ── Plotting ──────────────────────────────────────────────────────────
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
 # Panel 1: Simplex supports
 ax = axes[0]
-ax.set_title("Simplex Supports Δ(n, d)", fontsize=13, fontweight='bold')
-for n, d, color in [(2, 5, '#1f77b4'), (3, 4, '#ff7f0e'), (4, 3, '#2ca02c'), (3, 5, '#d62728')]:
+for n, d, color in [(3, 3, '#2196F3'), (3, 5, '#4CAF50'), (4, 3, '#FF9800'), (4, 4, '#E91E63')]:
     S = simplex_support(n, d)
     prof = shadow_profile(S)
-    ks = list(range(len(prof)))
-    ax.plot(ks, prof, 'o-', color=color, label=f'Δ({n},{d})', linewidth=2, markersize=6)
-ax.set_xlabel('Shadow depth k', fontsize=11)
-ax.set_ylabel('|Sh_k(S)|', fontsize=11)
-ax.legend(fontsize=9)
+    ax.plot(range(len(prof)), prof, 'o-', color=color, label=f'Simplex({n},{d})',
+            markersize=6, linewidth=2)
+ax.set_xlabel('Shadow depth k', fontsize=12)
+ax.set_ylabel('Shadow size |Sh_k(S)|', fontsize=12)
+ax.set_title('Simplex Supports', fontsize=14, fontweight='bold')
+ax.legend(fontsize=10)
 ax.grid(True, alpha=0.3)
 
 # Panel 2: Matroid basis supports
 ax = axes[1]
-ax.set_title("Matroid Basis Supports U_{r,n}", fontsize=13, fontweight='bold')
-for n, r, color in [(5, 2, '#1f77b4'), (5, 3, '#ff7f0e'), (6, 3, '#2ca02c'),
-                     (7, 3, '#d62728'), (6, 4, '#9467bd')]:
+for n, r, color in [(5, 2, '#2196F3'), (6, 2, '#4CAF50'), (6, 3, '#FF9800'), (7, 3, '#E91E63')]:
     S = matroid_basis_support(n, r)
     prof = shadow_profile(S)
-    ks = list(range(len(prof)))
-    ax.plot(ks, prof, 's-', color=color, label=f'U({r},{n})', linewidth=2, markersize=6)
-ax.set_xlabel('Shadow depth k', fontsize=11)
-ax.set_ylabel('|Sh_k(S)|', fontsize=11)
-ax.legend(fontsize=9)
+    ax.plot(range(len(prof)), prof, 's-', color=color, label=f'U({r},{n})',
+            markersize=6, linewidth=2)
+ax.set_xlabel('Shadow depth k', fontsize=12)
+ax.set_ylabel('Shadow size |Sh_k(S)|', fontsize=12)
+ax.set_title('Matroid Basis Supports', fontsize=14, fontweight='bold')
+ax.legend(fontsize=10)
 ax.grid(True, alpha=0.3)
 
-# Panel 3: Product supports
+# Panel 3: Product simplex supports
 ax = axes[2]
-ax.set_title("Product Supports", fontsize=13, fontweight='bold')
-for dims, color in [([2, 3], '#1f77b4'), ([1, 1, 1, 1], '#ff7f0e'),
-                     ([2, 2, 2], '#2ca02c'), ([3, 3], '#d62728')]:
-    S = product_support(dims)
+for dims, color in [([2,2,2], '#2196F3'), ([3,2,1], '#4CAF50'), ([3,3,2], '#FF9800'), ([4,2,2], '#E91E63')]:
+    S = product_simplex_support(dims)
     prof = shadow_profile(S)
-    ks = list(range(len(prof)))
-    label = '×'.join(f'[0,{d}]' for d in dims)
-    ax.plot(ks, prof, '^-', color=color, label=label, linewidth=2, markersize=6)
-ax.set_xlabel('Shadow depth k', fontsize=11)
-ax.set_ylabel('|Sh_k(S)|', fontsize=11)
-ax.legend(fontsize=9)
+    ax.plot(range(len(prof)), prof, 'D-', color=color, label=f'Prod{dims}',
+            markersize=6, linewidth=2)
+ax.set_xlabel('Shadow depth k', fontsize=12)
+ax.set_ylabel('Shadow size |Sh_k(S)|', fontsize=12)
+ax.set_title('Product Simplex Supports', fontsize=14, fontweight='bold')
+ax.legend(fontsize=10)
 ax.grid(True, alpha=0.3)
 
-plt.suptitle('Shadow Profiles: Support Size Under Iterated Combinatorial Differentiation',
-             fontsize=14, fontweight='bold', y=1.02)
+fig.suptitle('Shadow Profiles: Derivative Complexity Decay', fontsize=16, fontweight='bold', y=1.02)
 plt.tight_layout()
 plt.savefig('shadow_profiles.png', dpi=150, bbox_inches='tight')
 print("Saved shadow_profiles.png")

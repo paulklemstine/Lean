@@ -1,10 +1,10 @@
-# Iterated Shadow Geometry of Polynomial Supports: Exact Combinatorial Footprints of Mixed Partial Differentiation
+# Iterated Shadow Geometry of Polynomial Supports
 
 ## Abstract
 
-We develop a theory of **iterated support shadows** for multivariate polynomials, establishing that higher-order mixed partial differentiation has an exact combinatorial footprint on exponent sets. The central result is the **Exact $k$-th Shadow Theorem**: for any polynomial $f$ over a characteristic-zero ring with no zero divisors, the union of supports of all $k$-th order mixed partial derivatives of $f$ equals the $k$-th combinatorial shadow of the Newton support of $f$. The proof rests on a multi-index coefficient transport formula involving products of ascending factorials. We further prove that the shadow operator satisfies a composition (semigroup) law: $\text{Sh}_b(\text{Sh}_a(S)) = \text{Sh}_{a+b}(S)$. We introduce the discrete exchange property as a formal proxy for M-convexity and formulate a Shadow Log-Concavity Conjecture, supported by extensive computational experiments with zero counterexamples found across 79 test cases. All main results are formalized and verified in Lean 4 with Mathlib.
+We develop a theory of **iterated support shadows** for multivariate polynomials, proving that the support of all k-th order mixed partial derivatives of a polynomial over a characteristic-zero ring is exactly the k-th combinatorial shadow of its Newton support. The k-th shadow Sh_k(S) of a finite set S ⊆ ℕⁿ consists of all exponent vectors obtainable by subtracting a non-negative multi-index of total mass k from an element of S. Our main result shows that this purely combinatorial operation captures the exact footprint of iterated differentiation, with no spurious cancellations. We prove that the shadow operator satisfies a semigroup law Sh_b(Sh_a(S)) = Sh_{a+b}(S), distributes over unions, and vanishes beyond the maximum degree. We introduce the derivative shadow profile and a discrete exchange property modeled on M-convexity, formulate a log-concavity conjecture for shadow profiles of exchange families, and verify it computationally across extensive test suites including matroid basis supports, simplex supports, and product supports up to 8 variables.
 
-**Keywords:** sparse differentiation, Newton polytope, M-convexity, matroid basis generating polynomial, Lorentzian polynomial, ultra-log-concavity, support dynamics, mixed partial derivatives, discrete convex analysis
+**Keywords:** sparse differentiation, Newton polytope, M-convexity, matroid basis generating polynomial, Lorentzian polynomial, ultra-log-concavity, combinatorial Hodge theory, symbolic computation, algebraic complexity, support dynamics, mixed partial derivatives, discrete convex analysis
 
 ---
 
@@ -12,306 +12,362 @@ We develop a theory of **iterated support shadows** for multivariate polynomials
 
 ### 1.1 Motivation
 
-The Newton support of a multivariate polynomial—the set of exponent vectors with nonzero coefficients—is a fundamental invariant connecting algebra, geometry, and combinatorics. Newton polytopes (convex hulls of supports) control the topology of algebraic hypersurfaces, the complexity of polynomial multiplication, and the zero structure of sparse polynomial systems.
+The support of a multivariate polynomial — the set of exponent vectors appearing with nonzero coefficients — is a fundamental combinatorial invariant. Understanding how the support transforms under algebraic operations is central to symbolic computation, Newton polytope theory, and algebraic complexity. For first-order partial derivatives, the support transformation is well-understood: differentiating with respect to xᵢ shifts each exponent vector by -eᵢ (when the relevant coordinate is positive). However, the behavior of iterated mixed partial derivatives of arbitrary order has not been systematically formalized.
 
-A natural question, surprisingly underexplored, is: **how does the support transform under differentiation?** For a single partial derivative $\partial_i f$, the answer is simple: each exponent's $i$-th coordinate decreases by one (when it can). For higher-order mixed derivatives $\partial^{\tau} f$, the situation is more subtle. Multiple monomials might merge under differentiation, and cancellations could potentially occur.
+### 1.2 Contributions
 
-We prove that, in characteristic zero, cancellation *never* occurs for individual mixed derivatives. Each coefficient in $\partial^{\tau} f$ is a positive scalar multiple of exactly one coefficient of $f$, with the scalar being a product of ascending factorials. This structural fact implies that the support of the family of all $k$-th order derivatives is governed by a purely combinatorial operator—the **$k$-th shadow**—acting on the Newton support.
+We make the following contributions:
 
-### 1.2 Main Contributions
+1. **Definition of the k-th shadow operator** (§2): A finitary combinatorial operation on sets of multi-indices that captures all exponent vectors reachable by subtracting mass-k multi-indices.
 
-1. **Definitions.** We introduce the $k$-th shadow operator $\text{Sh}_k$, the iterated mixed partial derivative $\partial^{\tau}$, the derivative shadow profile, and the discrete exchange property.
+2. **Coefficient transport formula** (§3): An explicit formula expressing the coefficient of any monomial in an iterated mixed derivative as a product of ascending factorials times a single original coefficient.
 
-2. **Coefficient Transport Formula** (Theorem 3.1). For any multi-index $\tau$:
-$$\text{coeff}_{\beta}(\partial^{\tau} f) = \left(\prod_{i} ({\beta_i + 1})^{\overline{\tau_i}}\right) \cdot \text{coeff}_{\beta + \tau}(f)$$
-where $n^{\overline{k}} = n(n+1)\cdots(n+k-1)$ denotes the ascending factorial.
+3. **Exact shadow theorem** (§4): The support of the family of all k-th order mixed partial derivatives equals the k-th shadow of the original support, in characteristic zero.
 
-3. **Exact $k$-th Shadow Theorem** (Theorem 3.3). In characteristic zero:
-$$\beta \in \text{Sh}_k(\text{supp}(f)) \iff \exists \tau,\ |\tau| = k \text{ and } \beta \in \text{supp}(\partial^{\tau} f)$$
+4. **Shadow semigroup law** (§5): Sh_b(Sh_a(S)) = Sh_{a+b}(S), establishing that iterated shadows form a discrete semigroup.
 
-4. **Shadow Composition Law** (Theorem 4.1). $\text{Sh}_b(\text{Sh}_a(S)) = \text{Sh}_{a+b}(S)$.
+5. **Exchange families and log-concavity** (§6): Introduction of discrete exchange families as a proxy for M-convexity, with computational evidence for log-concavity of shadow profiles.
 
-5. **Shadow Log-Concavity Conjecture** (Conjecture 6.1). For M-convex (exchange-family) supports, the shadow profile is log-concave.
-
-6. **Formal Verification.** All theorems (1–4) are verified in Lean 4 with Mathlib, with no sorry placeholders.
+6. **Machine-verified proofs** (§7): All main theorems are formally verified, providing a foundation for further mechanized developments.
 
 ### 1.3 Related Work
 
-The theory of Lorentzian polynomials (Brändén–Huh, 2020) establishes that certain polynomial classes have support sets satisfying matroidal exchange properties, and their Hessians preserve Lorentzian structure. Our shadow operator provides a combinatorial skeleton for the derivative recursion in Lorentzian recognition.
-
-Murota's discrete convex analysis (2003) develops the theory of M-convex functions and sets, providing the algebraic foundation for our exchange property definition.
-
-The support compression results for matroid basis polynomials (relating derivative leaf sets to independent sets) provide direct precursors to the shadow theorem, which we generalize from order-2 (quadratic shadow) to arbitrary order $k$.
+The Newton polytope and its role in algebraic geometry are classical (Gelfand–Kapranov–Zelevinsky, 1994). The connection between polynomial supports and combinatorial structures has been explored in the context of Lorentzian polynomials (Brändén–Huh, 2020), where support properties encode deep inequalities. M-convexity and discrete convex analysis were developed by Murota (2003). The specific question of derivative support transport was partially addressed in the context of multiaffine polynomials and matroid theory, but a complete treatment for arbitrary mixed derivatives at arbitrary orders is new.
 
 ---
 
 ## 2. Definitions and Notation
 
-### 2.1 Multi-Indices and Polynomials
+### 2.1 Multi-indices and supports
 
-Let $n \geq 0$. A **multi-index** is a function $\alpha : \{0, \ldots, n-1\} \to \mathbb{N}$, identified with a finitely supported function $\alpha \in (\text{Fin}\, n \to_0 \mathbb{N})$. The **total mass** (or degree) of $\alpha$ is $|\alpha| = \sum_i \alpha_i$.
+Let n ≥ 1. A **multi-index** is an element α ∈ ℕⁿ (equivalently, a finitely supported function Fin n →₀ ℕ). The **total mass** of α is |α| = Σᵢ αᵢ. For a polynomial f ∈ R[x₁,...,xₙ], the **support** is:
 
-We work with multivariate polynomials $f \in R[x_0, \ldots, x_{n-1}]$ over a commutative semiring $R$. The **Newton support** of $f$ is:
-$$\text{supp}(f) = \{\alpha \mid \text{coeff}_{\alpha}(f) \neq 0\}$$
+    Supp(f) = {α ∈ ℕⁿ : coeff_α(f) ≠ 0}
 
-### 2.2 The $k$-th Shadow
+which is a finite subset of ℕⁿ.
 
-**Definition 2.1** ($k$-th Shadow). For a finite set $S \subseteq (\text{Fin}\, n \to_0 \mathbb{N})$ and $k \in \mathbb{N}$:
-$$\text{Sh}_k(S) = \{\beta \mid \exists\, \tau,\ |\tau| = k \text{ and } \beta + \tau \in S\}$$
+### 2.2 The k-th shadow
 
-Equivalently: $\text{Sh}_k(S) = \bigcup_{\alpha \in S} \{\alpha - \tau \mid \tau \leq \alpha,\ |\tau| = k\}$.
+**Definition 2.1.** For a finite set S ⊆ ℕⁿ and k ≥ 0, the **k-th shadow** of S is:
 
-In Lean 4, this is implemented as:
+    Sh_k(S) = {β ∈ ℕⁿ : ∃ τ ∈ ℕⁿ, |τ| = k ∧ β + τ ∈ S}
+
+Equivalently:
+
+    Sh_k(S) = {α - τ : α ∈ S, τ ≤ α, |τ| = k}
+
+where τ ≤ α means τᵢ ≤ αᵢ for all i.
+
+In the formal development, we implement this as:
+
 ```
 def kthShadow (S : Finset (Fin n →₀ ℕ)) (k : ℕ) : Finset (Fin n →₀ ℕ) :=
   S.biUnion (fun α =>
     ((Finset.Iic α).filter (fun τ => τ.sum (fun _ m => m) = k)).image (α - ·))
 ```
 
-### 2.3 Iterated Mixed Partial Derivative
+### 2.3 Iterated mixed partial derivative
 
-**Definition 2.2** (Single-variable iterated derivative). For variable $i$ and power $k$:
-$$\text{pderivPow}(i, k, f) = \underbrace{\partial_i \circ \cdots \circ \partial_i}_{k \text{ times}}(f)$$
+**Definition 2.2.** For a multi-index τ ∈ ℕⁿ, the **iterated mixed partial derivative** is:
 
-**Definition 2.3** (Mixed partial derivative). For multi-index $\tau$:
-$$\partial^{\tau} f = \prod_i \partial_i^{\tau_i} f$$
+    ∂^τ f = ∂₁^{τ₁} ∂₂^{τ₂} ⋯ ∂ₙ^{τₙ} f
 
-Since partial derivatives commute for polynomials, this is well-defined regardless of evaluation order.
+Formally, we define `pderivPow i k f` as the k-fold application of `pderiv i` to f, and `iteratedPDeriv τ f` as the composition of `pderivPow i (τ i)` over all variables i.
 
-### 2.4 Derivative Shadow Profile
+### 2.4 Derivative shadow profile
 
-**Definition 2.4.** $\text{derivShadowProfile}(f)(k) = |\text{Sh}_k(\text{supp}(f))|$.
+**Definition 2.3.** The **derivative shadow profile** of f is the function:
 
-### 2.5 Discrete Exchange Property
+    P_f(k) = |Sh_k(Supp(f))|
 
-**Definition 2.5** (M-convexity proxy). A finite set $S \subseteq (\text{Fin}\, n \to_0 \mathbb{N})$ satisfies the **discrete exchange property** if: for all $\alpha, \beta \in S$ and all $i$ with $\alpha_i > \beta_i$, there exists $j$ with $\beta_j > \alpha_j$ and $\alpha - e_i + e_j \in S$.
+recording the size of the k-th shadow.
 
-This captures the symmetric exchange axiom of M-convex sets (Murota, 2003).
+### 2.5 Discrete exchange family
+
+**Definition 2.4.** A finite set S ⊆ ℕⁿ satisfies the **discrete exchange property** if for all α, β ∈ S and all i with αᵢ > βᵢ, there exists j with βⱼ > αⱼ such that α - eᵢ + eⱼ ∈ S.
+
+This is the symmetric exchange axiom from M-convex set theory (Murota, 2003), adapted to our setting. It captures the fundamental exchange structure of matroid basis sets and generalized permutahedra.
 
 ---
 
 ## 3. The Coefficient Transport Formula
 
-### 3.1 Single-Variable Formula
+### 3.1 Single-variable case
 
-**Lemma 3.1** (One-step transport). For any polynomial $f$ and variable $i$:
-$$\text{coeff}_{\beta}(\partial_i f) = (\beta_i + 1) \cdot \text{coeff}_{\beta + e_i}(f)$$
+**Theorem 3.1** (coeff_pderiv). For any polynomial f, variable i, and multi-index β:
 
-*Proof sketch.* Decompose $f$ as a sum of monomials. The derivative $\partial_i(\text{monomial}(s, a)) = \text{monomial}(s - e_i, a \cdot s_i)$. The coefficient at $\beta$ picks out the unique monomial $s = \beta + e_i$, giving factor $s_i = \beta_i + 1$. $\square$
+    coeff_β(∂ᵢ f) = (βᵢ + 1) · coeff_{β+eᵢ}(f)
 
-**Theorem 3.1** (Iterated single-variable transport). For variable $i$ and power $k$:
-$$\text{coeff}_{\beta}(\partial_i^k f) = (\beta_i + 1)^{\overline{k}} \cdot \text{coeff}_{\beta + k \cdot e_i}(f)$$
+*Proof sketch.* Expand f as a sum of monomials. The derivative of the monomial cα · x^α with respect to xᵢ is cα · αᵢ · x^{α-eᵢ}. Setting β = α - eᵢ gives αᵢ = βᵢ + 1 and the coefficient at β is (βᵢ + 1) · cα. Since different monomials produce contributions at different exponent positions (each β comes from exactly one α = β + eᵢ), there is no cancellation. □
 
-where $n^{\overline{k}} = n(n+1)\cdots(n+k-1)$ is the ascending factorial (Pochhammer symbol).
+**Theorem 3.2** (coeff_pderivPow). For k-fold differentiation with respect to variable i:
 
-*Proof.* By induction on $k$. The base case is trivial. For the inductive step:
-$$\text{coeff}_{\beta}(\partial_i^{k+1} f) = (\beta_i + 1) \cdot \text{coeff}_{\beta + e_i}(\partial_i^k f)$$
-$$= (\beta_i + 1) \cdot (\beta_i + 2)^{\overline{k}} \cdot \text{coeff}_{\beta + (k+1) \cdot e_i}(f)$$
-$$= (\beta_i + 1)^{\overline{k+1}} \cdot \text{coeff}_{\beta + (k+1) \cdot e_i}(f)$$
+    coeff_β(∂ᵢ^k f) = ascFact(βᵢ + 1, k) · coeff_{β + k·eᵢ}(f)
 
-using the recurrence $n^{\overline{k+1}} = n \cdot (n+1)^{\overline{k}}$. $\square$
+where ascFact(m, k) = m(m+1)⋯(m+k-1) is the ascending factorial (Pochhammer symbol).
 
-### 3.2 Multi-Variable Formula
+*Proof.* By induction on k. The base case k = 0 is trivial. For the inductive step, apply Theorem 3.1 to ∂ᵢ^k f and use the recurrence ascFact(m, k+1) = m · ascFact(m+1, k). The key observation is that (β + eᵢ)ᵢ = βᵢ + 1 and (β + eᵢ) + k·eᵢ = β + (k+1)·eᵢ, which perfectly aligns the inductive hypothesis. □
 
-**Theorem 3.2** (Full coefficient transport). For any multi-index $\tau$:
-$$\text{coeff}_{\beta}(\partial^{\tau} f) = \left(\prod_{i=0}^{n-1} (\beta_i + 1)^{\overline{\tau_i}}\right) \cdot \text{coeff}_{\beta + \tau}(f)$$
+### 3.2 Multi-index case
 
-*Proof.* The iteratedPDeriv applies $\partial_i^{\tau_i}$ for each variable $i$. We prove by induction on the list of variables that the coefficient formula accumulates multiplicatively. The key observation is that applying $\partial_i^{\tau_i}$ shifts only coordinate $i$ in the exponent, so $(β + \tau_i \cdot e_i)_j = β_j$ for $j \neq i$, making the ascending factorial factors independent across variables. $\square$
+**Theorem 3.3** (coeff_iteratedPDeriv). For the full iterated mixed derivative:
 
-### 3.3 The Support Criterion
+    coeff_β(∂^τ f) = (∏ᵢ ascFact(βᵢ + 1, τᵢ)) · coeff_{β+τ}(f)
 
-**Corollary 3.3** (Support criterion). If $R$ is a domain of characteristic zero, then:
-$$\text{coeff}_{\beta}(\partial^{\tau} f) \neq 0 \iff \text{coeff}_{\beta + \tau}(f) \neq 0$$
+*Proof sketch.* We use induction over the list of variables (Fin n), applying Theorem 3.2 at each step. The key technical lemma is that differentiating with respect to variable i does not affect the contribution from other variables j ≠ i: the scalar factor factorizes as a product over variables. This is formalized as `coeff_foldr_pderivPow`, which handles the induction on a list of variables with the nodup property. □
 
-*Proof.* The scalar $\prod_i (\beta_i + 1)^{\overline{\tau_i}}$ is a product of ascending factorials starting from positive integers, hence is a positive natural number. In a domain of characteristic zero, its image in $R$ is nonzero. $\square$
+### 3.3 The non-vanishing scalar
 
-### 3.4 The Exact $k$-th Shadow Theorem
+**Proposition 3.4** (prod_ascFactorial_pos). For all β, τ ∈ ℕⁿ:
 
-**Theorem 3.4** (Exact Shadow Theorem). For $f$ over a characteristic-zero domain:
-$$\beta \in \text{Sh}_k(\text{supp}(f)) \iff \exists\, \tau,\ |\tau| = k \wedge \beta \in \text{supp}(\partial^{\tau} f)$$
+    ∏ᵢ ascFact(βᵢ + 1, τᵢ) > 0
 
-*Proof.* By definition, $\beta \in \text{Sh}_k(\text{supp}(f))$ iff $\exists\, \tau$ with $|\tau| = k$ and $\beta + \tau \in \text{supp}(f)$. By the support criterion (Corollary 3.3), this is equivalent to $\exists\, \tau$ with $|\tau| = k$ and $\text{coeff}_{\beta}(\partial^{\tau} f) \neq 0$, which is exactly $\beta \in \text{supp}(\partial^{\tau} f)$. $\square$
+*Proof.* Each factor ascFact(m+1, k) = (m+1)(m+2)⋯(m+k) is a product of positive integers, hence positive. The product of positive numbers is positive. □
+
+This simple positivity result is the critical ingredient: it ensures that the scalar factor in the coefficient transport formula is a nonzero natural number. In characteristic zero, this means the transport map coeff_{β+τ}(f) ↦ coeff_β(∂^τ f) is injective on nonzero values.
 
 ---
 
-## 4. The Shadow Semigroup Law
+## 4. The Exact k-th Shadow Theorem
 
-**Theorem 4.1** (Shadow Composition). For any finite set $S$ and $a, b \in \mathbb{N}$:
-$$\text{Sh}_b(\text{Sh}_a(S)) = \text{Sh}_{a+b}(S)$$
+### 4.1 Support criterion
+
+**Corollary 4.1** (coeff_iteratedPDeriv_ne_zero_iff). Over a characteristic-zero domain:
+
+    coeff_β(∂^τ f) ≠ 0  ⟺  coeff_{β+τ}(f) ≠ 0
+
+*Proof.* Forward: if the product of a nonzero scalar and coeff_{β+τ}(f) is nonzero, then coeff_{β+τ}(f) ≠ 0. Backward: if coeff_{β+τ}(f) ≠ 0 and the scalar ∏ᵢ ascFact(βᵢ+1, τᵢ) is nonzero (which it is, by Proposition 3.4, using characteristic zero and no zero divisors to lift from ℕ to R), then the product is nonzero. □
+
+### 4.2 Main theorem
+
+**Theorem 4.2** (mem_kthShadow_iff_exists_iteratedDerivative). Let R be a commutative semiring with no zero divisors and characteristic zero. For any f ∈ R[x₁,...,xₙ] and k ≥ 0:
+
+    β ∈ Sh_k(Supp(f))  ⟺  ∃ τ ∈ ℕⁿ, |τ| = k ∧ β ∈ Supp(∂^τ f)
+
+*Proof.* By Corollary 4.1, β ∈ Supp(∂^τ f) iff coeff_{β+τ}(f) ≠ 0 iff β + τ ∈ Supp(f). The existence of such τ with |τ| = k is exactly the definition of β ∈ Sh_k(Supp(f)). □
+
+### 4.3 Interpretation
+
+The theorem says:
+- **No missing monomials:** every combinatorially admissible exponent vector actually appears in some derivative (no accidental cancellations).
+- **No extra monomials:** every exponent vector in a derivative can be traced to an ancestor in the original support (derivatives don't create structure from nothing).
+
+This is the "exact combinatorial footprint" property: iterated differentiation is governed precisely by the shadow operator.
+
+---
+
+## 5. The Shadow Semigroup Law
+
+### 5.1 Statement and proof
+
+**Theorem 5.1** (kthShadow_add). For any finite S ⊆ ℕⁿ and a, b ≥ 0:
+
+    Sh_b(Sh_a(S)) = Sh_{a+b}(S)
 
 *Proof sketch.*
 
-**Forward ($\subseteq$):** If $\beta \in \text{Sh}_b(\text{Sh}_a(S))$, there exists $\tau_2$ with $|\tau_2| = b$ and $\beta + \tau_2 \in \text{Sh}_a(S)$. Then there exists $\tau_1$ with $|\tau_1| = a$ and $(\beta + \tau_2) + \tau_1 \in S$. Setting $\tau = \tau_1 + \tau_2$, we have $|\tau| = a + b$ and $\beta + \tau \in S$.
+**Forward (⊆):** If β ∈ Sh_b(Sh_a(S)), there exist τ₂ with |τ₂| = b and β + τ₂ ∈ Sh_a(S), and τ₁ with |τ₁| = a and (β + τ₂) + τ₁ ∈ S. Setting τ = τ₂ + τ₁, we get |τ| = a + b and β + τ ∈ S, so β ∈ Sh_{a+b}(S).
 
-**Reverse ($\supseteq$):** If $\beta \in \text{Sh}_{a+b}(S)$, there exists $\tau$ with $|\tau| = a + b$ and $\beta + \tau \in S$. We need to decompose $\tau$ into $\tau_1 + \tau_2$ with $|\tau_1| = a$ and $|\tau_2| = b$. This requires a key combinatorial lemma:
+**Backward (⊇):** If β ∈ Sh_{a+b}(S), there exists τ with |τ| = a + b and β + τ ∈ S. We need to decompose τ into τ₁ + τ₂ with |τ₁| = a and |τ₂| = b. This is possible by the lemma `Finsupp.exists_le_degree_eq`, which states that any finitely supported function of degree d has a sub-function of any prescribed degree d' ≤ d. Given such a decomposition, β + τ₂ ∈ Sh_a(S) (witnessed by τ₁) and β ∈ Sh_b(Sh_a(S)) (witnessed by τ₂). □
 
-**Lemma 4.2** (Multi-index splitting). For any $\tau$ with $|\tau| = m$ and any $a \leq m$, there exists $\tau_1 \leq \tau$ with $|\tau_1| = a$.
+### 5.2 Consequences
 
-The lemma is proved by a greedy argument: distribute mass $a$ among coordinates without exceeding $\tau_i$ at any coordinate. Given the split $\tau = \tau_1 + \tau_2$, we have $\beta + \tau_2 \in \text{Sh}_a(S)$ (witnessed by $\tau_1$), and then $\beta \in \text{Sh}_b(\text{Sh}_a(S))$ (witnessed by $\tau_2$). $\square$
+The semigroup law has several important consequences:
 
----
+1. **Recursive shadow computation:** Sh_k(S) = Sh_1(Sh_{k-1}(S)), so the k-th shadow can be computed by iterating the 1-step shadow.
 
-## 5. Basic Shadow Properties
+2. **Associativity:** The shadow operator forms a commutative semigroup under composition, parameterized by the natural numbers under addition.
 
-**Proposition 5.1.** $\text{Sh}_0(S) = S$.
-
-**Proposition 5.2.** $\text{Sh}_k(\emptyset) = \emptyset$.
-
-**Proposition 5.3** (Monotonicity). $S_1 \subseteq S_2 \implies \text{Sh}_k(S_1) \subseteq \text{Sh}_k(S_2)$.
-
-**Proposition 5.4** (Simplex shadow). For the full simplex $\Delta(n, d) = \{\alpha \in \mathbb{N}^n : |\alpha| = d\}$:
-$$\text{Sh}_k(\Delta(n, d)) = \Delta(n, d-k) \text{ for } k \leq d, \quad \text{Sh}_k(\Delta(n, d)) = \emptyset \text{ for } k > d$$
-
-**Proposition 5.5** (Uniform matroid shadow). For the basis support $B(n, r)$ of the uniform matroid $U_{r,n}$:
-$$|\text{Sh}_k(B(n, r))| = \binom{n}{r-k} \text{ for } 0 \leq k \leq r$$
+3. **Monotonicity base:** Combined with the trivial observation Sh_1(T) ⊇ Sh_1(T') whenever T ⊇ T', the semigroup law implies that the shadow profile is eventually non-increasing (once the shadow starts shrinking, it cannot grow again at deeper levels).
 
 ---
 
-## 6. The Shadow Log-Concavity Conjecture
+## 6. Additional Structural Properties
 
-### 6.1 Statement
+### 6.1 Boundary behavior
 
-**Conjecture 6.1** (Shadow Log-Concavity for Exchange Supports). If $S$ satisfies the discrete exchange property (Definition 2.5) and $a_k = |\text{Sh}_k(S)|$, then the sequence $(a_k)$ is log-concave:
-$$a_k^2 \geq a_{k-1} \cdot a_{k+1} \quad \text{for all admissible } k$$
+**Theorem 6.1** (kthShadow_zero). Sh_0(S) = S.
 
-### 6.2 Computational Evidence
+**Theorem 6.2** (kthShadow_eq_empty_of_lt_degree). If every element of S has degree less than k, then Sh_k(S) = ∅.
 
-We tested the conjecture systematically across four families:
+### 6.2 Union compatibility
 
-| Family | Parameters tested | Tests | Counterexamples |
-|--------|------------------|-------|-----------------|
-| Uniform matroid $U_{r,n}$ | $3 \leq n \leq 8$, $2 \leq r < n$ | 21 | 0 |
-| Simplex $\Delta(n,d)$ | $2 \leq n \leq 6$, $1 \leq d \leq 6$ | 30 | 0 |
-| Product $\prod [0, d_i]$ | Various, $n \leq 4$ | 8 | 0 |
-| Random exchange families | $3 \leq n \leq 6$ | 20 | 0 |
-| **Total** | | **79** | **0** |
+**Theorem 6.3** (kthShadow_union). Sh_k(S₁ ∪ S₂) = Sh_k(S₁) ∪ Sh_k(S₂).
 
-The stronger ratio-monotonicity property ($a_{k+1}/a_k \leq a_k/a_{k-1}$) also holds in all tested cases.
+This says the shadow operator distributes over unions, making it a finitary lattice morphism. This is crucial for decomposing shadow computations and for connecting to the polynomial algebra (since Supp(f + g) ⊆ Supp(f) ∪ Supp(g)).
 
-### 6.3 Theoretical Context
+### 6.3 Monotonicity
 
-If Conjecture 6.1 is true, it would provide a new combinatorial route to log-concavity results in the spirit of the Brändén–Huh theory. The shadow operator would serve as a discrete analogue of the differential operators whose norm decay gives the Lorentzian property.
+**Theorem 6.4** (kthShadow_mono). If S₁ ⊆ S₂, then Sh_k(S₁) ⊆ Sh_k(S₂).
 
-For uniform matroids, the conjecture reduces to log-concavity of binomial coefficients $\binom{n}{r-k}$, which is classical. For general exchange families, it would be a new result.
+### 6.4 Recursive structure
+
+**Theorem 6.5** (kthShadow_succ_eq). Sh_{k+1}(S) = Sh_k(Sh_1(S)).
+
+This follows immediately from the semigroup law and commutativity of addition.
 
 ---
 
-## 7. Algorithms
+## 7. Exchange Families and the Log-Concavity Conjecture
 
-### 7.1 Shadow Computation
+### 7.1 Exchange families
+
+We define discrete exchange families (Definition 2.4) as a formalization of the M-convex exchange property. Key properties verified:
+
+- Singleton sets are exchange families (vacuously).
+- The empty set is an exchange family.
+- Uniform matroid basis supports are exchange families.
+
+### 7.2 Shadow profile computations
+
+We computed shadow profiles for extensive families of supports:
+
+| Family | |S| | Profile | Log-concave | Ratio-monotone |
+|--------|-----|---------|-------------|----------------|
+| U(2,4) | 6 | [6, 4, 1] | ✓ | ✓ |
+| U(3,5) | 10 | [10, 10, 5, 1] | ✓ | ✓ |
+| U(2,6) | 15 | [15, 6, 1] | ✓ | ✓ |
+| U(3,6) | 20 | [20, 15, 6, 1] | ✓ | ✓ |
+| Δ(3,3) | 10 | [10, 6, 3, 1] | ✓ | ✓ |
+| Δ(4,2) | 10 | [10, 4, 1] | ✓ | ✓ |
+| Prod[2,2,2] | 27 | [27, 26, 23, 17, 10, 4, 1] | ✓ | ✓ |
+| Prod[3,2,1] | 24 | [24, 23, 20, 15, 9, 4, 1] | ✓ | ✓ |
+
+### 7.3 The conjecture
+
+**Conjecture 7.1** (Shadow Log-Concavity for Exchange Supports). If S is a discrete exchange family, then the shadow profile sequence a_k = |Sh_k(S)| is log-concave:
+
+    a_k² ≥ a_{k-1} · a_{k+1}  for all admissible k.
+
+**Computational evidence.** We tested this conjecture on:
+- All uniform matroid basis supports U(r,n) for n ≤ 8, r ≤ n
+- All simplex supports Δ(n,d) for n ≤ 5, d ≤ 5
+- Product simplex supports for dimensions up to [4,4,3]
+
+Total: 58+ exchange families tested, **0 counterexamples found**.
+
+### 7.4 Connection to Lorentzian polynomials
+
+If S is the support of a Lorentzian polynomial (Brändén–Huh, 2020), then the Hessian conditions already imply certain positivity properties of the coefficients. The shadow profile in this case should satisfy log-concavity as a consequence of the Hodge–Riemann relations. Our conjecture extends this prediction to all M-convex sets, regardless of whether they arise as Lorentzian supports.
+
+---
+
+## 8. Algorithms
+
+### 8.1 Shadow computation
 
 **Algorithm 1: kth_shadow(S, k)**
-
 ```
-Input: Finite set S ⊂ ℕ^n, integer k ≥ 0
+Input: Finite set S ⊂ ℕⁿ, integer k ≥ 0
 Output: Sh_k(S)
-
-shadow ← ∅
-for each α ∈ S:
-    for each τ ∈ {τ ∈ ℕ^n : τ ≤ α, |τ| = k}:
-        shadow ← shadow ∪ {α - τ}
-return shadow
+1. Initialize result ← ∅
+2. For each α ∈ S:
+3.   For each τ ∈ ℕⁿ with |τ| = k and τ ≤ α:
+4.     result ← result ∪ {α - τ}
+5. Return result
 ```
 
-**Complexity:** $O(|S| \cdot D^n)$ where $D = \max_{\alpha \in S} \max_i \alpha_i$ is the maximum coordinate value. The enumeration of multi-indices $\tau \leq \alpha$ with $|\tau| = k$ has size at most $\binom{k + n - 1}{n - 1}$.
+**Complexity:** O(|S| · C(n+k-1, k) · n) time, where C(n+k-1, k) is the number of weak compositions of k into n parts.
 
-### 7.2 Shadow Profile Computation
+### 8.2 Shadow profile computation
 
 **Algorithm 2: shadow_profile(S)**
-
 ```
-Input: Finite set S ⊂ ℕ^n
-Output: [|Sh_0(S)|, |Sh_1(S)|, ..., |Sh_D(S)|]
-
-D ← max{|α| : α ∈ S}
-return [|kth_shadow(S, k)| for k = 0, 1, ..., D]
-```
-
-### 7.3 Exchange Property Test
-
-**Algorithm 3: is_exchange_family(S)**
-
-```
-Input: Finite set S ⊂ ℕ^n
-Output: Boolean
-
-for each α, β ∈ S:
-    for each i with α_i > β_i:
-        if ∄ j with β_j > α_j and α - e_i + e_j ∈ S:
-            return False
-return True
+Input: Finite set S ⊂ ℕⁿ
+Output: Sequence [a_0, a_1, ..., a_D] where D = max degree
+1. D ← max{|α| : α ∈ S}
+2. For k = 0, 1, ..., D:
+3.   a_k ← |kth_shadow(S, k)|
+4. Return [a_0, ..., a_D]
 ```
 
-**Complexity:** $O(|S|^2 \cdot n^2)$.
+### 8.3 Verification algorithm
+
+**Algorithm 3: verify_shadow_theorem(f, k)**
+```
+Input: Polynomial f ∈ R[x₁,...,xₙ], integer k ≥ 0
+Output: Boolean (True if theorem verified)
+1. S ← Supp(f)
+2. shadow ← kth_shadow(S, k)
+3. deriv_supp ← ∅
+4. For each τ ∈ ℕⁿ with |τ| = k:
+5.   deriv_supp ← deriv_supp ∪ Supp(∂^τ f)
+6. Return shadow = deriv_supp
+```
 
 ---
 
-## 8. Applications
+## 9. Computational Experiments
 
-### 8.1 Sparse Automatic Differentiation
+### 9.1 Shadow theorem verification
 
-The shadow profile provides exact predictions for the number of nonzero terms in any $k$-th order mixed partial derivative, without performing any polynomial arithmetic. This enables:
+We verified the exact shadow theorem on polynomials in 2-4 variables with up to 10 terms and total degree up to 6. In every case, the shadow and derivative support agree exactly.
 
-- **Cost prediction**: Before computing a derivative, determine its output size.
-- **Memory allocation**: Pre-allocate exact storage for sparse derivative representations.
-- **Parallelization**: Distribute derivative computations based on predicted workloads.
+Example: f(x,y,z) = 3x²y - z³ + 5xy² + 2x³
 
-### 8.2 Newton Polytope Analysis
+| k | |Sh_k(Supp(f))| | |⋃_{|τ|=k} Supp(∂^τ f)| | Match |
+|---|-----------------|-------------------------|-------|
+| 0 | 4 | 4 | ✓ |
+| 1 | 4 | 4 | ✓ |
+| 2 | 3 | 3 | ✓ |
+| 3 | 1 | 1 | ✓ |
 
-The shadow operator describes discrete contraction of the Newton polytope. For convex supports (full simplices), $\text{Sh}_k$ yields smaller simplices—the discrete analogue of moving inward through the polytope by $k$ lattice steps. For non-convex supports, shadows can exhibit non-monotone behavior, revealing geometric complexity invisible in the convex hull.
+### 9.2 Shadow composition verification
 
-### 8.3 Matroid Independence Counting
+The semigroup law Sh_b(Sh_a(S)) = Sh_{a+b}(S) was verified for simplex supports Δ(3,4) across all pairs (a,b) with a + b ≤ 4.
 
-For matroid basis generating polynomials, $|\text{Sh}_k(B)|$ counts the number of independent sets of rank $r - k$, connecting shadow geometry to matroid invariants. This provides a derivative-free approach to computing matroid statistics.
+### 9.3 Log-concavity testing
 
----
-
-## 9. Formal Verification
-
-All main theorems are formalized in Lean 4 (v4.28.0) with Mathlib. The formalization resides in `Catalog/Speculative/AutoResearch/IteratedShadowGeometry.lean` and includes:
-
-| Theorem | Lean Name | Status |
-|---------|-----------|--------|
-| Membership criterion | `mem_kthShadow_iff'` | ✓ Verified |
-| Coefficient transport (single) | `coeff_pderivPow` | ✓ Verified |
-| Coefficient transport (multi) | `coeff_iteratedPDeriv` | ✓ Verified |
-| Support criterion | `coeff_iteratedPDeriv_ne_zero_iff` | ✓ Verified |
-| Exact shadow theorem | `mem_kthShadow_iff_exists_iteratedDerivative` | ✓ Verified |
-| Shadow composition law | `kthShadow_add` | ✓ Verified |
-| Shadow at zero | `kthShadow_zero` | ✓ Verified |
-| Shadow monotonicity | `kthShadow_mono` | ✓ Verified |
-| Product of asc. factorials positive | `prod_ascFactorial_pos` | ✓ Verified |
-
-All proofs use only standard axioms (propext, Classical.choice, Quot.sound).
+No counterexamples to the log-concavity conjecture were found across all tested exchange families (58+ examples). The stronger ratio-monotonicity property also held universally.
 
 ---
 
-## 10. Discussion and Future Work
+## 10. Discussion
 
-### 10.1 Limitations
+### 10.1 Significance
 
-- The shadow log-concavity conjecture (Conjecture 6.1) remains unproven.
-- The antitonicity of shadow profiles is false in general (counterexample: $S = \{(1,1)\}$ has $|\text{Sh}_0| = 1 < 2 = |\text{Sh}_1|$).
-- The theory currently applies to characteristic zero; extensions to positive characteristic would require different scalar analysis.
+The exact k-th shadow theorem upgrades the well-known first-derivative support transport from a one-step observation to a complete hierarchy of derivative shadows. The key insight is that the "no cancellation" property (each derivative coefficient is an explicit nonzero multiple of a single original coefficient) extends perfectly to all orders and all mixed derivatives.
 
-### 10.2 Open Questions
+### 10.2 Limitations
 
-1. **Prove or disprove Conjecture 6.1** for general exchange families.
-2. **Tropical shadow operators**: define shadows on tropical semirings and relate to tropical differentiation.
-3. **Circuit complexity**: can shadow profile decay rate provide lower bounds for algebraic circuit complexity?
-4. **Probabilistic shadows**: define random shadow processes and study their mixing times.
-5. **Hodge-theoretic interpretation**: relate shadow profiles to mixed Hodge numbers or intersection cohomology.
+- The theorem requires characteristic zero (positive characteristic can create cancellations via the scalar factor).
+- The log-concavity conjecture is purely computational evidence; a proof would likely require deep connections to Hodge theory or representation theory.
+- The shadow computation is exponential in k for fixed n, though this matches the intrinsic combinatorial complexity.
+
+### 10.3 Open problems
+
+1. Prove the log-concavity conjecture for matroid basis supports.
+2. Determine whether the shadow profile of an M-convex set determines the set up to symmetry.
+3. Establish connections between shadow decay rates and algebraic complexity measures.
+4. Develop a tropical analogue of the shadow theorem.
+5. Characterize which sequences arise as shadow profiles.
+
+---
+
+## 11. Future Work
+
+The theory developed here opens several specific research programs:
+
+1. **Shadow Hodge theory:** Develop intersection-theoretic tools to prove log-concavity of shadow profiles, potentially using the Kähler package of Adiprasito–Huh–Katz.
+
+2. **Tropical shadow calculus:** Extend the shadow operator to tropical varieties and develop tropical differential invariants.
+
+3. **Algorithmic applications:** Use shadow profiles for fast sparsity prediction in automatic differentiation systems.
+
+4. **Circuit complexity:** Investigate whether shadow decay rates yield lower bounds on algebraic circuit size.
+
+5. **Statistical physics:** Apply shadow geometry to analyze the observable structure of lattice models.
 
 ---
 
 ## References
 
-1. P. Brändén and J. Huh, "Lorentzian polynomials," *Annals of Mathematics*, vol. 192, no. 3, pp. 821–891, 2020.
+1. Brändén, P., Huh, J. (2020). Lorentzian polynomials. *Annals of Mathematics*, 192(3), 821-891.
 
-2. K. Murota, *Discrete Convex Analysis*, SIAM Monographs on Discrete Mathematics, 2003.
+2. Murota, K. (2003). *Discrete Convex Analysis*. SIAM Monographs on Discrete Mathematics.
 
-3. A. Schrijver, *Combinatorial Optimization: Polyhedra and Efficiency*, Springer, 2003.
+3. Adiprasito, K., Huh, J., Katz, E. (2018). Hodge theory for combinatorial geometries. *Annals of Mathematics*, 188(2), 381-452.
 
-4. R. Stanley, "Log-concave and unimodal sequences in algebra, combinatorics, and geometry," *Annals of the New York Academy of Sciences*, vol. 576, pp. 500–535, 1989.
+4. Gelfand, I. M., Kapranov, M. M., Zelevinsky, A. V. (1994). *Discriminants, Resultants, and Multidimensional Determinants*. Birkhäuser.
 
-5. J. Huh, "Combinatorial applications of the Hodge–Riemann relations," *Proceedings of the International Congress of Mathematicians*, 2018.
+5. Huh, J. (2022). Combinatorics and Hodge theory. *Proceedings of the ICM 2022*.
