@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Quantum Statistical Geometry",
     "date": "2026-05-29T13:26:41Z",
     "exp_id": "7c0339e8",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7315417142857144,
+    "quality": "substantial",
     "pkg_num": 316
   },
   {
@@ -9173,8 +9173,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-29T13:26:41Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7315417142857144,
+      "quality": "substantial"
     }
   ],
   "edges": [
