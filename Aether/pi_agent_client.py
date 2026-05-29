@@ -166,17 +166,15 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     - +0.05: Has a well-structured proof with clear comments
     - +0.05: Produces artifacts beyond just Lean (paper, demo, article)
 
-    ## Visionary Boosting Factors (additional, for breakthrough results)
+    ## Quality Boosting Factors (additional, for strong results)
     - +0.15: Opens an entirely new mathematical field (not just extends existing work)
     - +0.15: Produces a verified algorithm or computational pipeline (not just a theorem)
-    - +0.10: Connects domains that specialists consider unrelated (e.g., tropical geometry
-      AND cryptography, Pythagorean triples AND quantum computing)
+    - +0.10: Connects domains in a natural way (as indicated by the research direction's domains)
     - +0.10: Produces a high-quality FUTURE_DIRECTIONS.md with 3+ testable scientific
       hypotheses (falsifiable conjectures with clear tests, not vague "explore X")
     - +0.10: Produces a standalone RESEARCH_PAPER.md (problem statement, context,
       results, discussion, open questions — usable without access to code)
-    - +0.05: Produces a standalone ARTICLE.md (Scientific American style — engaging,
-      accessible, broad audience)
+    - +0.05: Produces a standalone ARTICLE.md (engaging, accessible, broad audience)
 
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,

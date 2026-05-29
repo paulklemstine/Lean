@@ -59,25 +59,75 @@ class QualityScore:
     applications: float = 0.0
     catalog_anchoring: float = 0.0
 
+    # Default weights (direction-driven weights override these)
+    _BASE_WEIGHTS = {
+        "proof_depth": 0.15,
+        "novelty": 0.15,
+        "cross_domain": 0.10,
+        "artifact_richness": 0.10,
+        "actionability": 0.10,
+        "importance": 0.15,
+        "usefulness": 0.10,
+        "applications": 0.10,
+        "catalog_anchoring": 0.05,
+    }
+
+    def composite_with_domains(self, domains: list = None) -> float:
+        """Direction-driven weighted composite score.
+
+        When the research direction has domain tags, adjust weights to
+        reward qualities relevant to that domain:
+        - NumberTheory/Analysis: boost proof_depth, novelty
+        - Computation/Logic: boost actionability, applications
+        - Novelty/Speculative: boost novelty
+        - Physics: boost applications, cross_domain
+        - Algebra/Geometry: boost proof_depth, importance
+        Default (no domains): uniform weights.
+        """
+        w = dict(self._BASE_WEIGHTS)
+
+        if domains:
+            domain_set = set(d.lower() for d in domains)
+            # Boost proof_depth for theoretical domains
+            if domain_set & {"numbertheory", "analysis", "algebra", "geometry", "logic"}:
+                w["proof_depth"] = w.get("proof_depth", 0.15) + 0.05
+                w["novelty"] = w.get("novelty", 0.15) + 0.03
+            # Boost applications for applied domains
+            if domain_set & {"computation", "machinelearning", "physics", "cryptography"}:
+                w["applications"] = w.get("applications", 0.10) + 0.05
+                w["actionability"] = w.get("actionability", 0.10) + 0.03
+            # Boost novelty for speculative/novelty domains
+            if domain_set & {"novelty", "speculative"}:
+                w["novelty"] = w.get("novelty", 0.15) + 0.08
+            # Boost cross_domain for bridges
+            if "bridges" in domain_set:
+                w["cross_domain"] = w.get("cross_domain", 0.10) + 0.05
+
+        # Normalize weights to sum to 1.0
+        total = sum(w.values())
+        if total == 0:
+            total = 1.0
+        w = {k: v / total for k, v in w.items()}
+
+        return (
+            w["proof_depth"] * self.proof_depth +
+            w["novelty"] * self.novelty +
+            w["cross_domain"] * self.cross_domain +
+            w["artifact_richness"] * self.artifact_richness +
+            w["actionability"] * self.actionability +
+            w["importance"] * self.importance +
+            w["usefulness"] * self.usefulness +
+            w["applications"] * self.applications +
+            w["catalog_anchoring"] * self.catalog_anchoring
+        )
+
     @property
     def composite(self) -> float:
-        """Weighted composite score (9 axes).
+        """Weighted composite score (9 axes) using uniform default weights.
 
-        Cross-domain weight increased from 0.10 to 0.14 to reward genuine
-        cross-domain connections and penalize narrow incremental work.
-        Proof depth weight increased from 0.15 to 0.17 to reward depth.
+        Use composite_with_domains(domains) for direction-driven scoring.
         """
-        return (
-            0.17 * self.proof_depth +
-            0.12 * self.novelty +
-            0.14 * self.cross_domain +
-            0.05 * self.artifact_richness +
-            0.06 * self.actionability +
-            0.16 * self.importance +
-            0.12 * self.usefulness +
-            0.10 * self.applications +
-            0.08 * self.catalog_anchoring
-        )
+        return self.composite_with_domains(domains=None)
 
     @property
     def grade(self) -> str:

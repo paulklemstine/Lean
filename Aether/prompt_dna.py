@@ -46,12 +46,9 @@ _DEFAULT_CREATIVITY_BOOSTERS = [
     "What would this theorem say in homotopy type theory?",
     "Can you encode the theorem as a type and the proof as a program?",
     "Look for an adjunction: left adjoints preserve colimits, right adjoints preserve limits.",
-    "If this result is true, what entirely new field does it open? Prove that first.",
     "Every deep theorem has a computational shadow. Find the algorithm that computes it.",
-    "What would a 22nd-century mathematician prove about this?",
     "Every inequality has an equality case. What does equality imply?",
     "If this is true for dimension n, what happens in dimension infinity?",
-    "What would Shannon, Turing, or Wiles do?",
 ]
 
 
@@ -291,14 +288,14 @@ class PromptDNA:
             weakest_score = feedback[weakest_dim]
 
             mutation_hints = {
-                "proof_depth": "Focus on DEEP proofs with multiple lemmas and non-trivial tactic chains. Avoid one-liner proofs.",
-                "novelty": "Seek genuinely NEW connections. Avoid rephrasing known results. Combine ideas from different fields.",
-                "cross_domain": "Bridge at least 2 distinct mathematical areas. Find unexpected structural similarities.",
-                "importance": "Aim for results that would appear in top journals. Ask: would this change how mathematicians think?",
-                "usefulness": "Seek results with practical applications. Algorithms are more useful than pure existence proofs.",
-                "applications": "Consider real-world domains: cryptography, ML, physics, engineering. What problems does this solve?",
-                "artifact_richness": "Produce rich artifacts: detailed research reports, working demos, clear diagrams.",
-                "actionability": "Produce specific, falsifiable future directions. Not 'explore X' but 'prove Y using technique Z'.",
+                "proof_depth": "Improve proof depth: use multiple lemmas, non-trivial tactic chains, and clear proof structure.",
+                "novelty": "Improve novelty: avoid rephrasing known results, pursue the direction's own novel claims.",
+                "cross_domain": "Improve cross-domain connections: follow the direction's domain tags for natural bridges.",
+                "importance": "Improve importance: prove results that advance the specific research direction.",
+                "usefulness": "Improve usefulness: produce results with clear applicability to the direction's domain.",
+                "applications": "Improve applications: connect results to the direction's stated application areas.",
+                "artifact_richness": "Improve artifact richness: produce detailed research reports and working demonstrations.",
+                "actionability": "Improve actionability: produce specific, falsifiable future directions tied to the current work.",
             }
 
             hint = mutation_hints.get(weakest_dim, "")
