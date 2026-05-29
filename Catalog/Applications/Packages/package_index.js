@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Algebraic Combinatorics / Matroid Theory",
     "date": "2026-05-29T11:25:25Z",
     "exp_id": "86bca171",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7768673267326733,
+    "quality": "substantial",
     "pkg_num": 313
   },
   {
@@ -9086,8 +9086,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-29T11:25:25Z",
       "hue": 101,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7768673267326733,
+      "quality": "substantial"
     }
   ],
   "edges": [
