@@ -1,136 +1,175 @@
 """
-Canonical Kernel Solver on Metric Graph Models
+Canonical Kernel Solver for Metric Graph Models
 
-Implements the verified computational pipeline for tropical canonical forms:
-- Weighted Laplacian construction from edge lengths
-- Canonical kernel generator computation
-- S-supported Jacobian quotient calculation
-- Pendant-tree pruning reduction
-- Dirichlet energy computation
+Implements the canonical kernel calculus for computing harmonic representatives,
+Jacobian classes, and energy pairings on metric graph models (finite weighted graphs
+with positive edge lengths).
 
-The algorithm solves for normalized harmonic representatives on finite
-metric graph models, computing the canonical kernel matrix and energy pairing.
+The core algorithm solves the metric Laplacian system to find normalized harmonic
+potentials, which serve as canonical representatives of divisor classes in the
+S-supported Jacobian quotient.
+
+Cross-domain applications:
+  - Electrical networks: computes effective resistances via Dirichlet energy
+  - Tropical geometry: realizes the tropical Abel-Jacobi map on finite support sets
+  - Quantum graphs: provides combinatorial Green's functions
+  - Statistical mechanics: computes Gaussian free field covariance kernels
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional, Set
-from dataclasses import dataclass, field
+from typing import Optional
 
 
-@dataclass
 class MetricGraphModel:
-    """A finite metric graph model: vertices, edges with positive lengths.
+    """A finite weighted graph model for a compact metric graph.
 
     Attributes:
-        n_vertices: Number of vertices
-        edges: List of (i, j, length) triples
-        adj: Adjacency dict mapping vertex -> list of (neighbor, edge_length)
+        n_vertices: Number of vertices.
+        adj: Adjacency matrix (boolean).
+        edge_lengths: Matrix of positive edge lengths (symmetric).
+        conductance: Matrix of conductances 1/ℓ(e).
+        laplacian: The metric Laplacian matrix L.
     """
-    n_vertices: int
-    edges: List[Tuple[int, int, float]]
-    adj: Dict[int, List[Tuple[int, float]]] = field(default_factory=dict)
 
-    def __post_init__(self):
-        self.adj = {i: [] for i in range(self.n_vertices)}
-        for i, j, length in self.edges:
+    def __init__(self, n_vertices: int, edges: list[tuple[int, int, float]]):
+        """Initialize a metric graph model.
+
+        Args:
+            n_vertices: Number of vertices.
+            edges: List of (i, j, length) tuples with length > 0.
+        """
+        self.n_vertices = n_vertices
+        self.adj = np.zeros((n_vertices, n_vertices), dtype=bool)
+        self.edge_lengths = np.zeros((n_vertices, n_vertices))
+        self.conductance = np.zeros((n_vertices, n_vertices))
+
+        for i, j, length in edges:
             assert length > 0, f"Edge length must be positive, got {length}"
-            self.adj[i].append((j, length))
-            self.adj[j].append((i, length))
+            self.adj[i, j] = True
+            self.adj[j, i] = True
+            self.edge_lengths[i, j] = length
+            self.edge_lengths[j, i] = length
+            self.conductance[i, j] = 1.0 / length
+            self.conductance[j, i] = 1.0 / length
 
-    def degree(self, v: int) -> int:
-        """Degree of vertex v."""
-        return len(self.adj[v])
+        self.laplacian = self._build_laplacian()
+
+    def _build_laplacian(self) -> np.ndarray:
+        """Build the metric Laplacian matrix.
+
+        L[i,j] = -cond(i,j) if i != j and i ~ j
+        L[i,i] = sum_{k ~ i} cond(i,k)
+        L[i,j] = 0 otherwise
+        """
+        n = self.n_vertices
+        L = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                if i != j and self.adj[i, j]:
+                    L[i, j] = -self.conductance[i, j]
+                    L[i, i] += self.conductance[i, j]
+        return L
+
+    def apply_laplacian(self, f: np.ndarray) -> np.ndarray:
+        """Apply the Laplacian to a vertex potential. Lf(v) = sum_j L[v,j]*f[j]."""
+        return self.laplacian @ f
+
+    def dirichlet_energy(self, f: np.ndarray) -> float:
+        """Compute Dirichlet energy E(f) = f^T L f."""
+        return float(f @ self.laplacian @ f)
+
+    def energy_form(self, f: np.ndarray, g: np.ndarray) -> float:
+        """Compute the energy bilinear form <f,g>_L = f^T L g."""
+        return float(f @ self.laplacian @ g)
 
     def is_leaf(self, v: int) -> bool:
-        """Whether v is a leaf (degree 1)."""
-        return self.degree(v) == 1
+        """Check if vertex v is a leaf (degree 1)."""
+        return int(np.sum(self.adj[v])) == 1
 
-    def leaves(self) -> List[int]:
-        """All leaf vertices."""
-        return [v for v in range(self.n_vertices) if self.is_leaf(v)]
+    def degree(self, v: int) -> int:
+        """Return the degree of vertex v."""
+        return int(np.sum(self.adj[v]))
 
-    def conductance(self, i: int, j: int) -> float:
-        """Conductance weight = 1/length for adjacent vertices."""
-        for nb, length in self.adj[i]:
-            if nb == j:
-                return 1.0 / length
-        return 0.0
+    def neighbors(self, v: int) -> list[int]:
+        """Return the neighbors of vertex v."""
+        return [j for j in range(self.n_vertices) if self.adj[v, j]]
 
-
-def build_weighted_laplacian(M: MetricGraphModel) -> np.ndarray:
-    """Build the weighted Laplacian matrix L with conductance weights.
-
-    L(i,i) = sum of conductances of incident edges
-    L(i,j) = -conductance(i,j) if i ~ j
-    L(i,j) = 0 otherwise
-
-    Args:
-        M: A metric graph model
-
-    Returns:
-        n×n numpy array, the weighted Laplacian matrix
-
-    Time complexity: O(n + m) where m = number of edges
-    Space complexity: O(n²)
-    """
-    n = M.n_vertices
-    L = np.zeros((n, n))
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        L[i, j] = -c
-        L[j, i] = -c
-        L[i, i] += c
-        L[j, j] += c
-    return L
+    def first_betti_number(self) -> int:
+        """Compute the first Betti number (cycle rank) = |E| - |V| + components."""
+        n_edges = int(np.sum(self.adj)) // 2
+        # Count connected components via BFS
+        visited = set()
+        components = 0
+        for start in range(self.n_vertices):
+            if start not in visited:
+                components += 1
+                queue = [start]
+                while queue:
+                    v = queue.pop(0)
+                    if v in visited:
+                        continue
+                    visited.add(v)
+                    queue.extend(self.neighbors(v))
+        return n_edges - self.n_vertices + components
 
 
 def solve_normalized_kernel(
-    M: MetricGraphModel,
-    S: List[int],
-    D: np.ndarray,
+    model: MetricGraphModel,
+    support_set: list[int],
+    divisor: np.ndarray,
     normalization: str = "mean_zero"
 ) -> Optional[np.ndarray]:
-    """Solve for the unique normalized vertex potential f such that:
-    - f is harmonic on V \\ S (i.e., Lf(v) = 0 for v not in S)
-    - Lf restricted to S equals D
-    - f satisfies the chosen normalization
+    """Solve for the unique normalized harmonic potential with prescribed Laplacian.
+
+    Given a degree-zero divisor D supported on S, finds the unique function f such that:
+      1. f is harmonic on V \\ S (i.e., Lf(v) = 0 for v not in S)
+      2. Lf(v) = D(v) for v in S
+      3. f satisfies normalization (mean-zero or f(s0) = 0)
+
+    This implements the canonical kernel correspondence: the normalized harmonic
+    representative is uniquely determined by its source divisor.
 
     Args:
-        M: Metric graph model
-        S: Support set (list of vertex indices)
-        D: Degree-zero divisor supported on S (array of length |S|)
-        normalization: "mean_zero" for sum(f) = 0
+        model: The metric graph model.
+        support_set: The support set S (list of vertex indices).
+        divisor: Degree-zero divisor D (array of length n_vertices).
+        normalization: "mean_zero" or "base_zero" (pin f(S[0]) = 0).
 
     Returns:
-        Vertex potential f as numpy array, or None if no solution exists
+        The normalized potential f, or None if no solution exists.
 
-    Time complexity: O(n³) for the linear solve
-    Space complexity: O(n²)
+    Complexity:
+        Time: O(n^3) for solving the linear system.
+        Space: O(n^2) for the Laplacian matrix.
     """
-    n = M.n_vertices
-    L = build_weighted_laplacian(M)
+    n = model.n_vertices
+    S = set(support_set)
 
     # Check degree zero
-    if abs(np.sum(D)) > 1e-10:
+    if abs(np.sum(divisor)) > 1e-10:
         return None
 
-    S_set = set(S)
-    S_comp = [v for v in range(n) if v not in S_set]
+    # Build the augmented system:
+    # For v not in S: Lf(v) = 0 (harmonicity)
+    # For v in S: Lf(v) = D(v) (source condition)
+    # Plus one normalization constraint replacing one equation
 
-    # Build the system: Lf = D_extended
-    # where D_extended(v) = D[S.index(v)] if v in S, else 0
-    # But we also need harmonicity on S^c: Lf(v) = 0 for v not in S
-    # This is automatically satisfied by Lf = D_extended
+    # The full system is just Lf = D where D is zero outside S
+    # But L is singular (kernel = constants), so we add normalization
 
-    # The full system is Lf = b where b(v) = D[idx] if v in S, 0 otherwise
-    b = np.zeros(n)
-    for idx, v in enumerate(S):
-        b[v] = D[idx]
+    A = model.laplacian.copy()
+    b = divisor.copy()
 
-    # Add mean-zero constraint: replace last row with all-ones
-    A = L.copy()
-    A[-1, :] = 1.0
-    b[-1] = 0.0
+    if normalization == "mean_zero":
+        # Replace last row with mean-zero constraint: sum f(v) = 0
+        A[-1, :] = 1.0
+        b[-1] = 0.0
+    elif normalization == "base_zero":
+        # Replace row for S[0] with f(S[0]) = 0
+        s0 = support_set[0]
+        A[s0, :] = 0.0
+        A[s0, s0] = 1.0
+        b[s0] = 0.0
 
     try:
         f = np.linalg.solve(A, b)
@@ -139,280 +178,196 @@ def solve_normalized_kernel(
         return None
 
 
-def compute_canonical_kernel_matrix(
-    M: MetricGraphModel,
-    S: List[int]
+def compute_kernel_matrix(
+    model: MetricGraphModel,
+    support_set: list[int],
+    normalization: str = "mean_zero"
 ) -> np.ndarray:
-    """Compute the canonical kernel matrix K on support set S.
+    """Compute the canonical kernel matrix on the support set S.
 
-    For each s in S, compute the normalized kernel generator k_s:
-    the unique mean-zero function harmonic on V\\S with unit source at s
-    and distributed sink at s₀ (the first element of S).
+    For each s in S, computes the normalized harmonic function k_s whose
+    Laplacian is the unit source divisor delta_s - delta_{s0}.
 
-    The kernel matrix K[i,j] = k_{S[i]}(S[j]).
+    The kernel matrix K[i,j] = k_{s_i}(s_j) encodes all canonical kernel data.
 
     Args:
-        M: Metric graph model
-        S: Support set (list of vertex indices)
+        model: The metric graph model.
+        support_set: The support set S.
+        normalization: Normalization method.
 
     Returns:
-        |S| × |S| kernel matrix
-
-    Time complexity: O(|S| · n³)
-    Space complexity: O(n² + |S|²)
+        Kernel matrix of shape (|S|, |S|).
     """
-    m = len(S)
-    K = np.zeros((m, m))
+    n = model.n_vertices
+    S = support_set
+    k = len(S)
+    K = np.zeros((k, k))
 
-    for idx in range(1, m):
-        # Unit source at S[idx], unit sink at S[0]
-        D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
+    s0 = S[0]  # Base point
 
-        f = solve_normalized_kernel(M, S, D)
+    for idx, s in enumerate(S):
+        if idx == 0:
+            continue  # k_{s0} = 0 by convention
+
+        # Divisor: +1 at s, -1 at s0
+        D = np.zeros(n)
+        D[s] = 1.0
+        D[s0] = -1.0
+
+        f = solve_normalized_kernel(model, S, D, normalization)
         if f is not None:
-            for j in range(m):
-                K[idx, j] = f[S[j]]
+            for jdx, t in enumerate(S):
+                K[idx, jdx] = f[t]
 
     return K
 
 
-def compute_dirichlet_energy(M: MetricGraphModel, f: np.ndarray) -> float:
-    """Compute the Dirichlet energy E(f) = f^T L f = (1/2) sum_{i~j} c(i,j)(f(i)-f(j))².
-
-    This is the total power dissipation in the electrical network interpretation.
-
-    Args:
-        M: Metric graph model
-        f: Vertex potential
-
-    Returns:
-        Non-negative real number
-
-    Time complexity: O(m) where m = number of edges
-    """
-    energy = 0.0
-    for i, j, length in M.edges:
-        c = 1.0 / length
-        energy += c * (f[i] - f[j]) ** 2
-    return energy / 2.0
-
-
 def compute_energy_pairing(
-    M: MetricGraphModel,
-    S: List[int]
+    model: MetricGraphModel,
+    support_set: list[int],
+    normalization: str = "mean_zero"
 ) -> np.ndarray:
-    """Compute the energy pairing matrix Q on kernel generators.
+    """Compute the Dirichlet energy pairing matrix on S-supported divisor classes.
 
-    Q[i,j] = B(k_i, k_j) where B is the energy bilinear form
-    and k_i are canonical kernel generators.
+    Q[i,j] = <k_i, k_j>_L where k_i are canonical kernel generators.
+    This matrix is positive semidefinite and symmetric.
 
-    This matrix descends to the tropical polarization on the Jacobian.
+    In electrical network theory, Q encodes effective resistances.
+    In tropical geometry, Q is the tropical polarization form.
 
     Args:
-        M: Metric graph model
-        S: Support set
+        model: The metric graph model.
+        support_set: The support set S.
+        normalization: Normalization method.
 
     Returns:
-        (|S|-1) × (|S|-1) symmetric positive semidefinite matrix
+        Energy pairing matrix of shape (|S|-1, |S|-1).
     """
-    m = len(S)
-    K_generators = []
+    n = model.n_vertices
+    S = support_set
+    k = len(S)
+    s0 = S[0]
 
-    for idx in range(1, m):
-        D = np.zeros(m)
-        D[idx] = 1.0
-        D[0] = -1.0
-        f = solve_normalized_kernel(M, S, D)
-        if f is not None:
-            K_generators.append(f)
+    # Compute all kernel generators
+    kernels = []
+    for idx in range(1, k):
+        s = S[idx]
+        D = np.zeros(n)
+        D[s] = 1.0
+        D[s0] = -1.0
+        f = solve_normalized_kernel(model, S, D, normalization)
+        kernels.append(f)
 
-    r = len(K_generators)
-    Q = np.zeros((r, r))
-    L = build_weighted_laplacian(M)
-
-    for i in range(r):
-        for j in range(r):
-            Q[i, j] = K_generators[i] @ L @ K_generators[j]
+    # Build energy pairing matrix
+    Q = np.zeros((k - 1, k - 1))
+    for i in range(k - 1):
+        for j in range(k - 1):
+            if kernels[i] is not None and kernels[j] is not None:
+                Q[i, j] = model.energy_form(kernels[i], kernels[j])
 
     return Q
 
 
-def prune_pendant_trees(M: MetricGraphModel) -> Tuple[MetricGraphModel, Dict[int, int]]:
-    """Prune all pendant trees from the graph, returning the 2-core.
+def prune_pendant_trees(model: MetricGraphModel) -> tuple[list[int], dict[int, int]]:
+    """Prune pendant trees from the graph, returning the 2-core vertices.
 
-    This implements the core-pruning reduction: pendant trees carry no
-    independent Jacobian classes, so they can be removed without changing
-    the Jacobian structure. Harmonic functions are constant on pruned edges.
+    Pendant tree pruning is justified by the leaf rigidity theorem:
+    harmonic functions are constant on pendant edges, so pendant trees
+    carry no independent Jacobian information.
+
+    This is a key algorithmic optimization: the Jacobian computation
+    reduces to the cycle core.
 
     Args:
-        M: Metric graph model
+        model: The metric graph model.
 
     Returns:
-        (core_model, vertex_map) where vertex_map maps core vertex indices
-        to original vertex indices
+        core_vertices: List of vertices in the 2-core.
+        leaf_map: Maps each pruned leaf to its attachment vertex.
 
-    Time complexity: O(n + m)
+    Complexity:
+        Time: O(|V| + |E|) via iterative leaf removal.
     """
-    n = M.n_vertices
-    degree = [M.degree(v) for v in range(n)]
-    removed = [False] * n
+    degrees = np.array([model.degree(v) for v in range(model.n_vertices)])
+    leaf_map = {}
+    pruned = set()
 
     # Iteratively remove leaves
-    queue = [v for v in range(n) if degree[v] <= 1]
-    while queue:
-        v = queue.pop()
-        if removed[v]:
-            continue
-        if degree[v] > 1:
-            continue
-        removed[v] = True
-        for nb, _ in M.adj[v]:
-            if not removed[nb]:
-                degree[nb] -= 1
-                if degree[nb] <= 1:
-                    queue.append(nb)
+    changed = True
+    while changed:
+        changed = False
+        for v in range(model.n_vertices):
+            if v in pruned:
+                continue
+            # Recompute effective degree (excluding pruned vertices)
+            eff_deg = sum(1 for j in model.neighbors(v) if j not in pruned)
+            if eff_deg <= 1 and eff_deg > 0:
+                # v is effectively a leaf; find its attachment
+                attachment = [j for j in model.neighbors(v) if j not in pruned][0]
+                leaf_map[v] = attachment
+                pruned.add(v)
+                changed = True
+            elif eff_deg == 0 and model.n_vertices > 1:
+                pruned.add(v)
+                changed = True
 
-    # Build core model
-    core_vertices = [v for v in range(n) if not removed[v]]
-    if len(core_vertices) == 0:
-        # Graph is a tree - core is empty, Jacobian is trivial
-        return MetricGraphModel(0, []), {}
-
-    vertex_map = {new_idx: old_idx for new_idx, old_idx in enumerate(core_vertices)}
-    inv_map = {old_idx: new_idx for new_idx, old_idx in enumerate(core_vertices)}
-
-    core_edges = []
-    seen = set()
-    for i, j, length in M.edges:
-        if not removed[i] and not removed[j]:
-            edge_key = (min(i, j), max(i, j))
-            if edge_key not in seen:
-                seen.add(edge_key)
-                core_edges.append((inv_map[i], inv_map[j], length))
-
-    core_model = MetricGraphModel(len(core_vertices), core_edges)
-    return core_model, vertex_map
-
-
-def compute_jacobian_rank(M: MetricGraphModel, S: List[int]) -> int:
-    """Compute the rank of the S-supported Jacobian quotient.
-
-    For a connected graph, this equals min(|S|-1, first_betti_number).
-
-    Args:
-        M: Metric graph model
-        S: Support set
-
-    Returns:
-        Rank of the Jacobian quotient
-    """
-    L = build_weighted_laplacian(M)
-
-    # Extract the S-restricted Laplacian
-    S_arr = np.array(S)
-    L_S = L[np.ix_(S_arr, S_arr)]
-
-    # Rank = number of non-zero eigenvalues
-    eigenvalues = np.linalg.eigvalsh(L_S)
-    rank = np.sum(np.abs(eigenvalues) > 1e-10)
-    return int(rank)
-
-
-def first_betti_number(M: MetricGraphModel) -> int:
-    """Compute the first Betti number (cycle rank) of the graph.
-
-    β₁ = |E| - |V| + number of connected components
-
-    For a connected graph, β₁ = |E| - |V| + 1.
-    """
-    n_edges = len(M.edges)
-    # Count connected components via BFS
-    visited = [False] * M.n_vertices
-    components = 0
-    for start in range(M.n_vertices):
-        if visited[start]:
-            continue
-        components += 1
-        queue = [start]
-        visited[start] = True
-        while queue:
-            v = queue.pop()
-            for nb, _ in M.adj[v]:
-                if not visited[nb]:
-                    visited[nb] = True
-                    queue.append(nb)
-    return n_edges - M.n_vertices + components
+    core_vertices = [v for v in range(model.n_vertices) if v not in pruned]
+    return core_vertices, leaf_map
 
 
 def subdivide_edge(
-    M: MetricGraphModel,
-    edge_idx: int,
-    n_subdivisions: int = 1
+    model: MetricGraphModel,
+    edge: tuple[int, int],
+    ratio: float = 0.5
 ) -> MetricGraphModel:
-    """Subdivide a single edge into n_subdivisions + 1 equal parts.
+    """Subdivide an edge by inserting a new vertex.
+
+    The edge (u, v) with length ℓ is replaced by two edges:
+      (u, w) with length ratio * ℓ
+      (w, v) with length (1 - ratio) * ℓ
+
+    This preserves harmonic functions: if f was harmonic at interior points,
+    the subdivided model has f(w) = linear interpolation.
 
     Args:
-        M: Original metric graph model
-        edge_idx: Index of the edge to subdivide
-        n_subdivisions: Number of new vertices to insert
+        model: The original metric graph model.
+        edge: The edge (u, v) to subdivide.
+        ratio: Where to place the new vertex (0 < ratio < 1).
 
     Returns:
-        New metric graph model with the edge subdivided
+        A new MetricGraphModel with the subdivision.
     """
-    i, j, length = M.edges[edge_idx]
-    new_length = length / (n_subdivisions + 1)
+    u, v = edge
+    assert model.adj[u, v], f"Edge ({u}, {v}) does not exist"
+    assert 0 < ratio < 1
 
-    # Keep all other edges
-    new_edges = [e for idx, e in enumerate(M.edges) if idx != edge_idx]
+    orig_length = model.edge_lengths[u, v]
+    n_new = model.n_vertices + 1
+    w = model.n_vertices  # New vertex index
 
-    # Add new vertices and edges
-    n = M.n_vertices
-    prev = i
-    for k in range(n_subdivisions):
-        new_v = n + k
-        new_edges.append((prev, new_v, new_length))
-        prev = new_v
-    new_edges.append((prev, j, new_length))
-
-    return MetricGraphModel(n + n_subdivisions, new_edges)
-
-
-def uniform_subdivision(M: MetricGraphModel, n_per_edge: int) -> MetricGraphModel:
-    """Uniformly subdivide all edges, inserting n_per_edge new vertices per edge.
-
-    Args:
-        M: Original metric graph model
-        n_per_edge: Number of subdivision points per edge
-
-    Returns:
-        Subdivided metric graph model
-    """
+    # Collect edges, replacing (u,v) with (u,w) and (w,v)
     new_edges = []
-    n = M.n_vertices
-    next_v = n
+    for i in range(model.n_vertices):
+        for j in range(i + 1, model.n_vertices):
+            if model.adj[i, j]:
+                if (i, j) == (u, v) or (i, j) == (v, u):
+                    continue  # Skip the subdivided edge
+                new_edges.append((i, j, model.edge_lengths[i, j]))
 
-    for i, j, length in M.edges:
-        seg_length = length / (n_per_edge + 1)
-        prev = i
-        for _ in range(n_per_edge):
-            new_edges.append((prev, next_v, seg_length))
-            prev = next_v
-            next_v += 1
-        new_edges.append((prev, j, seg_length))
+    new_edges.append((u, w, ratio * orig_length))
+    new_edges.append((w, v, (1 - ratio) * orig_length))
 
-    return MetricGraphModel(next_v, new_edges)
+    return MetricGraphModel(n_new, new_edges)
 
 
-# ─── Example graph constructors ───────────────────────────────────────────
+# ─── Standard Graph Constructors ───
 
-def cycle_graph(n: int, lengths: Optional[List[float]] = None) -> MetricGraphModel:
-    """Construct a cycle graph C_n with given edge lengths.
+def cycle_graph(n: int, lengths: Optional[list[float]] = None) -> MetricGraphModel:
+    """Create a cycle graph C_n with specified edge lengths.
 
     Args:
-        n: Number of vertices
-        lengths: Edge lengths (default: all 1.0)
+        n: Number of vertices (>= 3).
+        lengths: Edge lengths (default: all 1.0).
     """
     if lengths is None:
         lengths = [1.0] * n
@@ -421,69 +376,51 @@ def cycle_graph(n: int, lengths: Optional[List[float]] = None) -> MetricGraphMod
     return MetricGraphModel(n, edges)
 
 
-def theta_graph(l1: float, l2: float, l3: float) -> MetricGraphModel:
-    """Construct a theta graph: two vertices connected by three paths.
+def theta_graph(lengths: tuple[float, float, float]) -> MetricGraphModel:
+    """Create a theta graph (two vertices connected by 3 parallel paths).
 
-    The three paths have lengths l1, l2, l3 respectively.
-    Each path is a single edge (the metric is encoded in edge lengths).
+    The theta graph has genus 2 and is a fundamental test case for
+    tropical Jacobian computation.
 
     Args:
-        l1, l2, l3: Lengths of the three paths
+        lengths: Lengths of the three paths (each subdivided into a single edge).
     """
-    # Vertices 0 and 1, connected by three edges
-    # We need intermediate vertices for multi-edges in a simple graph
+    # Vertices 0 and 1 are the poles; vertices 2, 3, 4 are midpoints of the three paths
     edges = [
-        (0, 2, l1 / 2), (2, 1, l1 / 2),  # path 1 through vertex 2
-        (0, 3, l2 / 2), (3, 1, l2 / 2),  # path 2 through vertex 3
-        (0, 4, l3 / 2), (4, 1, l3 / 2),  # path 3 through vertex 4
+        (0, 2, lengths[0] / 2), (2, 1, lengths[0] / 2),
+        (0, 3, lengths[1] / 2), (3, 1, lengths[1] / 2),
+        (0, 4, lengths[2] / 2), (4, 1, lengths[2] / 2),
     ]
     return MetricGraphModel(5, edges)
 
 
-def lollipop_graph(
-    cycle_size: int,
-    stick_length: float,
-    cycle_lengths: Optional[List[float]] = None
-) -> MetricGraphModel:
-    """Construct a lollipop graph: a cycle with a pendant path attached.
+def lollipop_graph(cycle_length: float, stick_length: float, n_cycle: int = 4) -> MetricGraphModel:
+    """Create a lollipop graph: a cycle with a pendant stick attached.
+
+    This is the key test case for pendant tree pruning: the stick contributes
+    nothing to the Jacobian.
 
     Args:
-        cycle_size: Number of vertices in the cycle
-        stick_length: Length of the pendant edge
-        cycle_lengths: Edge lengths in the cycle (default: all 1.0)
+        cycle_length: Total length of the cycle.
+        stick_length: Length of the pendant stick.
+        n_cycle: Number of vertices in the cycle.
     """
-    if cycle_lengths is None:
-        cycle_lengths = [1.0] * cycle_size
-
-    edges = [(i, (i + 1) % cycle_size, cycle_lengths[i]) for i in range(cycle_size)]
-    # Attach pendant edge at vertex 0
-    edges.append((0, cycle_size, stick_length))
-    return MetricGraphModel(cycle_size + 1, edges)
+    edge_len = cycle_length / n_cycle
+    edges = [(i, (i + 1) % n_cycle, edge_len) for i in range(n_cycle)]
+    # Attach pendant stick at vertex 0
+    edges.append((0, n_cycle, stick_length))
+    return MetricGraphModel(n_cycle + 1, edges)
 
 
 if __name__ == "__main__":
-    print("=== Canonical Kernel Solver Demo ===\n")
-
-    # Cycle graph example
-    M = cycle_graph(4, [1.0, 2.0, 1.0, 2.0])
+    # Quick test
+    C4 = cycle_graph(4, [1.0, 2.0, 1.0, 2.0])
     S = [0, 1, 2, 3]
-    print(f"Cycle graph C_4 with lengths [1, 2, 1, 2]")
-    print(f"  Betti number: {first_betti_number(M)}")
-
-    L = build_weighted_laplacian(M)
-    print(f"  Weighted Laplacian:\n{np.round(L, 4)}\n")
-
-    K = compute_canonical_kernel_matrix(M, S)
-    print(f"  Canonical kernel matrix:\n{np.round(K, 4)}\n")
-
-    Q = compute_energy_pairing(M, S)
-    print(f"  Energy pairing matrix:\n{np.round(Q, 4)}\n")
-
-    # Lollipop - pendant pruning
-    M_lol = lollipop_graph(3, 5.0)
-    print(f"Lollipop graph (triangle + pendant of length 5)")
-    print(f"  Original Betti number: {first_betti_number(M_lol)}")
-
-    core, vmap = prune_pendant_trees(M_lol)
-    print(f"  Core vertices: {list(vmap.values())}")
-    print(f"  Core Betti number: {first_betti_number(core)}")
+    K = compute_kernel_matrix(C4, S)
+    Q = compute_energy_pairing(C4, S)
+    print("Kernel matrix on C4:")
+    print(K)
+    print("\nEnergy pairing matrix on C4:")
+    print(Q)
+    print(f"\nEnergy pairing eigenvalues: {np.linalg.eigvalsh(Q)}")
+    print(f"First Betti number: {C4.first_betti_number()}")
