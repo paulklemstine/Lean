@@ -1,323 +1,374 @@
 #!/usr/bin/env python3
 """
-Algorithms for Pseudofinite Transfer Analysis
+Algorithms for Pseudofinite Transfer via Definable Ultraproducts
 
-Implements the core computational methods for:
-1. Finite field matrix arithmetic
-2. Definable family evaluation
-3. Doubling ratio computation
-4. Candidate subgroup search
-5. Coset covering analysis
+Implements the core computational methods for analyzing definable families
+over finite fields and tracking doubling/control data.
 
-These algorithms support the computational predictions of the
-pseudofinite transfer principle.
+Algorithms:
+  1. DefinableFamilyAnalyzer - analyze polynomial-definable GL(2) subsets
+  2. CosetControlFinder - find minimal coset covers
+  3. TransferEvidenceCollector - aggregate evidence for transfer conjecture
 """
 
-from itertools import product as cart_product
-from typing import List, Tuple, Set, Dict, Optional, Callable
+from typing import List, Tuple, Set, Dict, Optional
+from dataclasses import dataclass
+import numpy as np
 
 
-# Type aliases
-Matrix2x2 = List[List[int]]
-MatTuple = Tuple[int, int, int, int]
+# ─── Type aliases ────────────────────────────────────────────────────
+Matrix2x2 = Tuple[Tuple[int, int], Tuple[int, int]]
 
 
-class FiniteField:
-    """Arithmetic in GF(p) for prime p.
+# ─── Core matrix arithmetic ─────────────────────────────────────────
 
-    Provides modular arithmetic operations needed for GL(2, F_p) computations.
+def mat_mul_mod(m1: Matrix2x2, m2: Matrix2x2, q: int) -> Matrix2x2:
+    """Multiply two 2x2 matrices mod q.
 
-    Time complexity: O(log p) for inversion (via Fermat's little theorem).
-    Space complexity: O(1) per operation.
+    Time: O(1)
+    Space: O(1)
+
+    >>> mat_mul_mod(((1,1),(0,1)), ((1,1),(0,1)), 5)
+    ((1, 2), (0, 1))
+    """
+    (a, b), (c, d) = m1
+    (e, f), (g, h) = m2
+    return (((a*e + b*g) % q, (a*f + b*h) % q),
+            ((c*e + d*g) % q, (c*f + d*h) % q))
+
+
+def mat_inv_mod(m: Matrix2x2, q: int) -> Optional[Matrix2x2]:
+    """Compute the inverse of a 2x2 matrix mod q (prime q).
+
+    Time: O(log q) for modular inverse
+    Space: O(1)
+    """
+    (a, b), (c, d) = m
+    det = (a * d - b * c) % q
+    if det == 0:
+        return None
+    det_inv = pow(det, q - 2, q)
+    return ((d * det_inv % q, (-b * det_inv) % q),
+            ((-c * det_inv) % q, a * det_inv % q))
+
+
+def mat_trace_mod(m: Matrix2x2, q: int) -> int:
+    """Trace of a 2x2 matrix mod q."""
+    return (m[0][0] + m[1][1]) % q
+
+
+def mat_det_mod(m: Matrix2x2, q: int) -> int:
+    """Determinant of a 2x2 matrix mod q."""
+    return (m[0][0] * m[1][1] - m[0][1] * m[1][0]) % q
+
+
+# ─── Algorithm 1: Definable Family Analyzer ─────────────────────────
+
+@dataclass
+class FamilyAnalysis:
+    """Result of analyzing a definable family over F_q."""
+    q: int
+    family_size: int
+    product_size: int
+    doubling_ratio: float
+    controlling_subgroup_size: int
+    coset_count: int
+    is_bounded: bool
+
+
+class DefinableFamilyAnalyzer:
+    """Analyze polynomially definable subsets of GL(2, F_q).
+
+    Given a membership predicate (a Python function), computes:
+    - |A_q|, |A_q²|
+    - Doubling ratio |A_q²|/|A_q|
+    - Candidate controlling subgroup
+    - Number of cosets needed for control
+
+    Complexity:
+      Time: O(|A_q|² · q) for product set computation
+      Space: O(|A_q|² + q²) for storing matrices
 
     Example:
-        >>> F = FiniteField(7)
-        >>> F.mul(3, 5)
-        1
-        >>> F.inv(3)
-        5
+        >>> def upper_tri(m, q): return m[1][0] == 0
+        >>> analyzer = DefinableFamilyAnalyzer(upper_tri)
+        >>> result = analyzer.analyze(5)
+        >>> result.doubling_ratio < 10
+        True
     """
 
-    def __init__(self, p: int):
-        """Initialize GF(p). Assumes p is prime."""
-        self.p = p
-        self.elements = list(range(p))
+    def __init__(self, membership_pred):
+        """
+        Args:
+            membership_pred: function(matrix, q) -> bool
+                Tests whether a matrix belongs to the family over F_q
+        """
+        self.pred = membership_pred
 
-    def add(self, a: int, b: int) -> int:
-        return (a + b) % self.p
+    def _enumerate_family(self, q: int) -> Set[Matrix2x2]:
+        """Enumerate all family members over F_q."""
+        members = set()
+        for a in range(q):
+            for b in range(q):
+                for c in range(q):
+                    for d in range(q):
+                        if (a * d - b * c) % q != 0:
+                            m = ((a, b), (c, d))
+                            if self.pred(m, q):
+                                members.add(m)
+        return members
 
-    def mul(self, a: int, b: int) -> int:
-        return (a * b) % self.p
+    def _product_set(self, S: Set[Matrix2x2], q: int) -> Set[Matrix2x2]:
+        """Compute S · S."""
+        return {mat_mul_mod(a, b, q) for a in S for b in S}
 
-    def neg(self, a: int) -> int:
-        return (-a) % self.p
+    def analyze(self, q: int, doubling_threshold: float = 10.0) -> FamilyAnalysis:
+        """Analyze the family over F_q.
 
-    def inv(self, a: int) -> Optional[int]:
-        """Multiplicative inverse via Fermat's little theorem."""
-        if a == 0:
-            return None
-        return pow(a, self.p - 2, self.p)
+        Args:
+            q: prime field size
+            doubling_threshold: bound for "bounded doubling"
 
-    def sub(self, a: int, b: int) -> int:
-        return (a - b) % self.p
+        Returns:
+            FamilyAnalysis with all computed data
+        """
+        A = self._enumerate_family(q)
+        A_size = len(A)
+        if A_size == 0:
+            return FamilyAnalysis(q, 0, 0, float('inf'), 0, 0, False)
+
+        AA = self._product_set(A, q)
+        AA_size = len(AA)
+        ratio = AA_size / A_size
+
+        # Find controlling subgroup
+        ctrl = CosetControlFinder(q)
+        H_size, cosets = ctrl.find_best_control(A)
+
+        return FamilyAnalysis(
+            q=q,
+            family_size=A_size,
+            product_size=AA_size,
+            doubling_ratio=ratio,
+            controlling_subgroup_size=H_size,
+            coset_count=cosets,
+            is_bounded=(ratio <= doubling_threshold)
+        )
 
 
-class GL2Computer:
-    """Computational engine for GL(2, F_p) operations.
+# ─── Algorithm 2: Coset Control Finder ──────────────────────────────
 
-    Supports matrix multiplication, determinant, trace, and
-    enumeration of group elements and standard subgroups.
+class CosetControlFinder:
+    """Find minimal coset covers for subsets of GL(2, F_q).
 
-    Time complexity:
-        - mat_mul: O(1) field operations
-        - all_elements: O(p^4) to enumerate
-        - product_set: O(|A|^2) multiplications
-    Space complexity: O(p^4) for full group storage.
+    Tries several natural subgroup candidates and returns the one
+    requiring the fewest cosets to cover the target set.
 
-    Example:
-        >>> gl2 = GL2Computer(FiniteField(5))
-        >>> A = [[1, 2], [0, 1]]
-        >>> B = [[1, 0], [3, 1]]
-        >>> gl2.mat_mul(A, B)
-        [[2, 2], [3, 1]]
+    Complexity:
+      Time: O(|A| · q) per candidate subgroup
+      Space: O(|A| + q)
+
+    Pseudocode:
+      1. Generate candidate subgroups H₁, H₂, ...
+      2. For each Hₖ:
+         a. remaining ← A
+         b. cosets ← 0
+         c. While remaining ≠ ∅:
+            - Pick representative r ∈ remaining
+            - Compute coset r·Hₖ
+            - remaining ← remaining ∖ (r·Hₖ)
+            - cosets ← cosets + 1
+         d. Record (|Hₖ|, cosets)
+      3. Return candidate with min cosets
     """
 
-    def __init__(self, field: FiniteField):
-        self.F = field
-        self.p = field.p
+    def __init__(self, q: int):
+        self.q = q
 
-    def mat_mul(self, A: Matrix2x2, B: Matrix2x2) -> Matrix2x2:
-        """Multiply two 2x2 matrices over F_p."""
-        p = self.p
-        return [
-            [(A[0][0] * B[0][0] + A[0][1] * B[1][0]) % p,
-             (A[0][0] * B[0][1] + A[0][1] * B[1][1]) % p],
-            [(A[1][0] * B[0][0] + A[1][1] * B[1][0]) % p,
-             (A[1][0] * B[0][1] + A[1][1] * B[1][1]) % p],
+    def _unipotent_subgroup(self) -> Set[Matrix2x2]:
+        """The unipotent subgroup U = {[[1,t],[0,1]] : t ∈ F_q}."""
+        return {((1, t), (0, 1)) for t in range(self.q)}
+
+    def _diagonal_subgroup(self) -> Set[Matrix2x2]:
+        """The diagonal subgroup D = {[[a,0],[0,d]] : a,d ≠ 0}."""
+        return {((a, 0), (0, d))
+                for a in range(1, self.q)
+                for d in range(1, self.q)}
+
+    def _upper_triangular_subgroup(self) -> Set[Matrix2x2]:
+        """The upper triangular subgroup B = {[[a,b],[0,d]] : a,d ≠ 0}."""
+        return {((a, b), (0, d))
+                for a in range(1, self.q)
+                for b in range(self.q)
+                for d in range(1, self.q)}
+
+    def _coset_cover(self, A: Set[Matrix2x2],
+                     H: Set[Matrix2x2]) -> int:
+        """Count left cosets of H needed to cover A.
+
+        Greedy algorithm: pick an uncovered element, compute its coset,
+        remove covered elements, repeat.
+        """
+        remaining = set(A)
+        cosets = 0
+        while remaining:
+            rep = next(iter(remaining))
+            coset = {mat_mul_mod(rep, h, self.q) for h in H}
+            remaining -= coset
+            cosets += 1
+        return cosets
+
+    def find_best_control(self, A: Set[Matrix2x2]) -> Tuple[int, int]:
+        """Find the subgroup giving the fewest cosets.
+
+        Returns:
+            (subgroup_size, num_cosets)
+        """
+        candidates = [
+            ("Unipotent", self._unipotent_subgroup()),
+            ("Diagonal", self._diagonal_subgroup()),
         ]
 
-    def det(self, A: Matrix2x2) -> int:
-        """Determinant of a 2x2 matrix."""
-        return (A[0][0] * A[1][1] - A[0][1] * A[1][0]) % self.p
+        # Only add upper triangular if q is small enough
+        if self.q <= 23:
+            candidates.append(
+                ("Upper tri", self._upper_triangular_subgroup())
+            )
 
-    def trace(self, A: Matrix2x2) -> int:
-        """Trace of a 2x2 matrix."""
-        return (A[0][0] + A[1][1]) % self.p
+        best_size, best_cosets = 1, len(A)
+        for name, H in candidates:
+            cosets = self._coset_cover(A, H)
+            if cosets < best_cosets:
+                best_size = len(H)
+                best_cosets = cosets
 
-    @staticmethod
-    def to_tuple(A: Matrix2x2) -> MatTuple:
-        """Convert matrix to hashable tuple."""
-        return (A[0][0], A[0][1], A[1][0], A[1][1])
-
-    @staticmethod
-    def from_tuple(t: MatTuple) -> Matrix2x2:
-        """Convert tuple back to matrix."""
-        return [[t[0], t[1]], [t[2], t[3]]]
-
-    def all_elements(self) -> List[Matrix2x2]:
-        """Enumerate all elements of GL(2, F_p).
-
-        Returns matrices with nonzero determinant.
-        Time: O(p^4), Space: O(|GL(2,p)|) = O(p^4).
-        """
-        elems = self.F.elements
-        result = []
-        for a, b, c, d in cart_product(elems, repeat=4):
-            if (a * d - b * c) % self.p != 0:
-                result.append([[a, b], [c, d]])
-        return result
-
-    def product_set(self, A: List[Matrix2x2]) -> Set[MatTuple]:
-        """Compute A·A = {a₁·a₂ : a₁, a₂ ∈ A}.
-
-        Time: O(|A|²), Space: O(|A·A|).
-        """
-        result = set()
-        for a1 in A:
-            for a2 in A:
-                result.add(self.to_tuple(self.mat_mul(a1, a2)))
-        return result
-
-    def doubling_ratio(self, A: List[Matrix2x2]) -> float:
-        """Compute the doubling ratio |A²|/|A|.
-
-        This is the key invariant tracked by the transfer principle.
-        Time: O(|A|²).
-        """
-        if len(A) == 0:
-            return float('inf')
-        A_sq = self.product_set(A)
-        return len(A_sq) / len(A)
+        return best_size, best_cosets
 
 
-class SubgroupAnalyzer:
-    """Analyze coset-control properties of subsets of GL(2, F_p).
+# ─── Algorithm 3: Transfer Evidence Collector ────────────────────────
 
-    Given a subset A, finds candidate controlling subgroups from
-    the standard subgroup lattice and computes the minimal number
-    of cosets needed for covering.
+@dataclass
+class TransferEvidence:
+    """Aggregated evidence for the transfer conjecture."""
+    family_name: str
+    analyses: List[FamilyAnalysis]
+    ratio_trend: str  # "bounded", "growing", "oscillating"
+    control_trend: str
+    supports_conjecture: bool
+    summary: str
 
-    Time complexity: O(|A| · |H|) per candidate subgroup H.
-    Space complexity: O(|A| + |H|).
 
-    Example:
-        >>> F = FiniteField(7)
-        >>> gl2 = GL2Computer(F)
-        >>> analyzer = SubgroupAnalyzer(gl2)
-        >>> A = [[[1, t], [0, 1]] for t in range(7)]
-        >>> results = analyzer.analyze(A)
-        >>> results['Unipotent']['cosets_needed']
-        1
+class TransferEvidenceCollector:
+    """Collect and analyze evidence for the pseudofinite transfer conjecture.
+
+    The conjecture predicts that for uniformly polynomially definable
+    families A_q ⊆ GL(2, F_q), if |A_q²| ≤ K|A_q| for ultrafilter-many q,
+    then in the pseudofinite ultraproduct, A_ω is controlled by a definable
+    subgroup of complexity bounded solely by K and formula complexity.
+
+    Complexity:
+      Time: O(Σ_q |A_q|² · q) across all fields
+      Space: O(max_q |A_q|² + q²)
+
+    Pseudocode:
+      1. For each prime q in test range:
+         a. Compute A_q, A_q², doubling ratio
+         b. Find best controlling subgroup
+         c. Record FamilyAnalysis
+      2. Classify ratio trend (bounded/growing/oscillating)
+      3. Classify control trend
+      4. Determine if evidence supports conjecture
     """
 
-    def __init__(self, gl2: GL2Computer):
-        self.gl2 = gl2
-        self.F = gl2.F
+    def __init__(self, primes: List[int]):
+        self.primes = primes
 
-    def borel_subgroup(self) -> Set[MatTuple]:
-        """Upper triangular invertible matrices."""
-        p = self.F.p
-        result = set()
-        for a, b, d in cart_product(self.F.elements, repeat=3):
-            if (a * d) % p != 0:
-                result.add((a, b, 0, d))
-        return result
+    def _classify_trend(self, values: List[float],
+                        threshold: float = 2.0) -> str:
+        """Classify a sequence as bounded, growing, or oscillating."""
+        if not values:
+            return "empty"
+        if max(values) / max(min(values), 0.01) < threshold:
+            return "bounded"
+        # Check monotonicity
+        diffs = [values[i+1] - values[i] for i in range(len(values)-1)]
+        if all(d >= 0 for d in diffs):
+            return "growing"
+        return "oscillating"
 
-    def unipotent_subgroup(self) -> Set[MatTuple]:
-        """Upper triangular unipotent matrices."""
-        result = set()
-        for b in self.F.elements:
-            result.add((1, b, 0, 1))
-        return result
+    def collect(self, name: str,
+                membership_pred) -> TransferEvidence:
+        """Collect evidence for a family.
 
-    def diagonal_subgroup(self) -> Set[MatTuple]:
-        """Diagonal invertible matrices (split torus)."""
-        p = self.F.p
-        result = set()
-        for a, d in cart_product(self.F.elements, repeat=2):
-            if (a * d) % p != 0:
-                result.add((a, 0, 0, d))
-        return result
+        Args:
+            name: family name
+            membership_pred: function(matrix, q) -> bool
 
-    def scalar_subgroup(self) -> Set[MatTuple]:
-        """Scalar matrices aI, a ≠ 0."""
-        result = set()
-        for a in self.F.elements:
-            if a != 0:
-                result.add((a, 0, 0, a))
-        return result
-
-    def coset_cover_count(self, A_set: Set[MatTuple],
-                          H: Set[MatTuple]) -> int:
-        """Compute minimum left cosets of H needed to cover A.
-
-        Algorithm: greedy coset covering.
-        Time: O(|A| · |H|).
-
-        This is a key ingredient for checking whether a set is
-        C-controlled by a subgroup — the transfer principle predicts
-        C remains bounded in definable families.
+        Returns:
+            TransferEvidence with full analysis
         """
-        uncovered = A_set.copy()
-        count = 0
-        while uncovered:
-            rep_t = next(iter(uncovered))
-            rep = self.gl2.from_tuple(rep_t)
-            coset = set()
-            for h_t in H:
-                h = self.gl2.from_tuple(h_t)
-                prod = self.gl2.mat_mul(rep, h)
-                coset.add(self.gl2.to_tuple(prod))
-            uncovered -= coset
-            count += 1
-        return count
+        analyzer = DefinableFamilyAnalyzer(membership_pred)
+        analyses = []
+        for q in self.primes:
+            result = analyzer.analyze(q)
+            analyses.append(result)
 
-    def analyze(self, A: List[Matrix2x2]) -> Dict[str, Dict]:
-        """Full subgroup control analysis.
+        ratios = [a.doubling_ratio for a in analyses if a.family_size > 0]
+        controls = [float(a.coset_count) for a in analyses if a.family_size > 0]
 
-        Tests all standard subgroups and returns covering data.
-        """
-        A_set = set(self.gl2.to_tuple(m) for m in A)
-        candidates = {
-            'Borel': self.borel_subgroup(),
-            'Unipotent': self.unipotent_subgroup(),
-            'Diagonal': self.diagonal_subgroup(),
-            'Scalar': self.scalar_subgroup(),
-        }
+        ratio_trend = self._classify_trend(ratios)
+        control_trend = self._classify_trend(controls)
 
-        results = {}
-        for name, H in candidates.items():
-            cosets = self.coset_cover_count(A_set, H)
-            results[name] = {
-                'subgroup_size': len(H),
-                'cosets_needed': cosets,
-                'control_ratio': cosets / len(A) if len(A) > 0 else 0,
-            }
-        return results
+        supports = (ratio_trend == "bounded" and control_trend == "bounded")
+
+        summary = (
+            f"Family '{name}': {len(analyses)} fields analyzed. "
+            f"Doubling: {ratio_trend} (range [{min(ratios):.1f}, {max(ratios):.1f}]). "
+            f"Control: {control_trend} (range [{min(controls):.0f}, {max(controls):.0f}]). "
+            f"{'SUPPORTS' if supports else 'DOES NOT SUPPORT'} conjecture."
+        )
+
+        return TransferEvidence(
+            family_name=name,
+            analyses=analyses,
+            ratio_trend=ratio_trend,
+            control_trend=control_trend,
+            supports_conjecture=supports,
+            summary=summary
+        )
 
 
-def analyze_definable_family(
-    family_func: Callable[[FiniteField], List[Matrix2x2]],
-    primes: List[int],
-    family_name: str = "Family"
-) -> Dict[int, Dict]:
-    """Complete analysis pipeline for a definable family.
-
-    Args:
-        family_func: Function mapping a finite field to a list of matrices
-        primes: List of primes to test
-        family_name: Human-readable name
-
-    Returns:
-        Dictionary mapping each prime to analysis results including
-        set sizes, doubling ratios, and subgroup control data.
-
-    Example:
-        >>> def upper_unipotent(F):
-        ...     return [[[1, t], [0, 1]] for t in F.elements]
-        >>> results = analyze_definable_family(upper_unipotent, [3, 5, 7])
-    """
-    all_results = {}
-
-    for p in primes:
-        F = FiniteField(p)
-        gl2 = GL2Computer(F)
-        analyzer = SubgroupAnalyzer(gl2)
-
-        A = family_func(F)
-        if len(A) == 0:
-            all_results[p] = {'empty': True}
-            continue
-
-        ratio = gl2.doubling_ratio(A)
-        control = analyzer.analyze(A)
-        best_name = min(control, key=lambda k: control[k]['cosets_needed'])
-
-        all_results[p] = {
-            'empty': False,
-            'set_size': len(A),
-            'product_set_size': len(gl2.product_set(A)),
-            'doubling_ratio': ratio,
-            'gl2_size': p * (p - 1) * (p**2 - 1),
-            'control': control,
-            'best_controller': best_name,
-            'best_cosets': control[best_name]['cosets_needed'],
-        }
-
-    return all_results
-
+# ─── Main ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Example usage
-    def unipotent_family(F):
-        return [[[1, t], [0, 1]] for t in F.elements]
+    primes = [3, 5, 7, 11, 13]
+    collector = TransferEvidenceCollector(primes)
 
-    results = analyze_definable_family(unipotent_family, [3, 5, 7, 11, 13],
-                                        "Unipotent matrices")
-    for p, data in results.items():
-        if not data.get('empty', False):
-            print(f"p={p}: |A|={data['set_size']}, "
-                  f"|A²|={data['product_set_size']}, "
-                  f"ratio={data['doubling_ratio']:.3f}, "
-                  f"controller={data['best_controller']} "
-                  f"({data['best_cosets']} cosets)")
+    # Family 1: Upper triangular
+    def upper_tri(m, q):
+        return m[1][0] == 0
+
+    ev1 = collector.collect("Upper Triangular", upper_tri)
+    print(ev1.summary)
+
+    # Family 2: Unipotent with quadratic coordinate
+    def unipotent_quad(m, q):
+        if m[0][0] != 1 or m[1][0] != 0 or m[1][1] != 1:
+            return False
+        t = m[0][1]
+        return any((x * x) % q == t for x in range(q))
+
+    ev2 = collector.collect("Unipotent Quadratic", unipotent_quad)
+    print(ev2.summary)
+
+    # Family 3: Diagonal-times-unipotent
+    def diag_unipotent(m, q):
+        if m[1][0] != 0 or m[0][0] != m[1][1]:
+            return False
+        if m[0][0] == 0:
+            return False
+        t = m[0][1]
+        return any((x * x) % q == t for x in range(q))
+
+    ev3 = collector.collect("Diagonal × Unipotent", diag_unipotent)
+    print(ev3.summary)
