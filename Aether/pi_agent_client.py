@@ -1258,9 +1258,6 @@ class PiAgentClient:
         # Priority 2: Cross-domain bridges from catalog analysis
         # (VISIONARY_BRIDGES removed — bridge selection is now catalog-driven)
         if mode == "bridge" and self.catalog_analyzer:
-
-        # Fallback: catalog-detected bridges if visionary bridges exhausted
-        if mode == "bridge" and self.catalog_analyzer:
             bridges = self.catalog_analyzer.find_missing_bridges(limit=20)
             if bridges:
 
