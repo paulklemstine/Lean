@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set
 
 # Default maximum number of available non-seed directions to keep
-DEFAULT_DIRECTION_CAP = 100
+DEFAULT_DIRECTION_CAP = 300
 
 
 @dataclass
@@ -1110,15 +1110,25 @@ class FutureDirectionsManager:
                 break
 
         # soft domain decay: penalize directions whose domains are overrepresented
-        # in recent outputs. Each domain that appears in >5 recent completions
-        # gets a multiplicative penalty: 0.5^min(1, (count-5)/10)
+        # in recent outputs. Each domain that appears in >3 recent completions
+        # gets a multiplicative penalty: 0.3^min(1, (count-3)/8)
+        # (stronger decay than before: 0.3 instead of 0.5, threshold lowered from 5 to 3)
         domain_decay = 1.0
         if self._recent_domain_counts:
             for d in direction.domains:
                 recent_count = self._recent_domain_counts.get(d, 0)
-                if recent_count > 5:
-                    decay = 0.5 ** min(1.0, (recent_count - 5) / 10.0)
+                if recent_count > 3:
+                    decay = 0.3 ** min(1.0, (recent_count - 3) / 8.0)
                     domain_decay = min(domain_decay, decay)
+
+        # first_time_domain_bonus: boost directions in domains with 0-1 completions
+        # (encourages exploration of new territory)
+        first_time_bonus = 0.0
+        if self._recent_domain_counts:
+            for d in direction.domains:
+                if self._recent_domain_counts.get(d, 0) <= 1:
+                    first_time_bonus = 0.10
+                    break
 
         # novelty_bonus: wild/frontier directions tagged "Novelty" get a boost
         novelty_bonus = 0.10 if "Novelty" in direction.domains else 0.0
@@ -1141,6 +1151,7 @@ class FutureDirectionsManager:
             + domain_diversity_penalty
             + arxiv_boost
             + novelty_bonus
+            + first_time_bonus
         ) * domain_decay
 
     def prune_directions(
