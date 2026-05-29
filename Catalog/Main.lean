@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2041 of the highest-quality
+A curated collection of 2046 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2041
+Total files: 2046
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1544,6 +1544,7 @@ import FINAL.Pythagorean.CompressionSpectrumStructure
 import FINAL.Pythagorean.CompressionStability
 import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.Concentration
+import FINAL.Pythagorean.ConcentrationUniversality
 import FINAL.Pythagorean.ConcreteTermAlgebra
 import FINAL.Pythagorean.ConfigGraphPathwidth
 import FINAL.Pythagorean.Configurations
@@ -1619,6 +1620,7 @@ import FINAL.Pythagorean.HigherDimQuadruples
 import FINAL.Pythagorean.HigherHomology
 import FINAL.Pythagorean.HigherOrderLogConcavity
 import FINAL.Pythagorean.HigherOrderMinorPerturbation
+import FINAL.Pythagorean.HigherOrderShadowCertificates
 import FINAL.Pythagorean.HybridWalk
 import FINAL.Pythagorean.HypergraphTransversal
 import FINAL.Pythagorean.InfoTheoreticMonotonicity
@@ -1737,6 +1739,7 @@ import FINAL.Pythagorean.SunflowerPruning
 import FINAL.Pythagorean.SupportMinorTheory
 import FINAL.Pythagorean.SupportRigidityCircuitBounds
 import FINAL.Pythagorean.SupportTuttePolynomial
+import FINAL.Pythagorean.SupportTutteUniversal
 import FINAL.Pythagorean.TensorExtractionOptimality
 import FINAL.Pythagorean.TensorSortedRewrite
 import FINAL.Pythagorean.Theorems
@@ -1757,6 +1760,7 @@ import FINAL.Pythagorean.TropicalMConvexity
 import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren
 import FINAL.Pythagorean.TropicalPhaseTransition
+import FINAL.Pythagorean.TropicalShadowDuality
 import FINAL.Pythagorean.TropicalShadows
 import FINAL.Pythagorean.TropicalSpectralMatroid
 import FINAL.Pythagorean.TropicalTensorDistributivity
@@ -1770,6 +1774,7 @@ import FINAL.Pythagorean.UniformitySharpness
 import FINAL.Pythagorean.UniversalCertifiedAlgebraicComputation
 import FINAL.Pythagorean.UniversalParent
 import FINAL.Pythagorean.UniversalSupportTutte
+import FINAL.Pythagorean.ValuatedMConvexExchange
 import FINAL.Pythagorean.ValuatedMatroidExchange
 import FINAL.Pythagorean.VerifiedCompilerSynthesis
 import FINAL.Pythagorean.WeightedDefect
