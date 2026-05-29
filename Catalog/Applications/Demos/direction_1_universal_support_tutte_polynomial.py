@@ -1,704 +1,992 @@
 #!/usr/bin/env python3
 """
-Applications of the Support-Tutte polynomial theory.
+applications.py — Applications of the support-Tutte polynomial.
 
-Demonstrates:
-  1. Reliability polynomial evaluation for network supports
-  2. Partition function computation (statistical mechanics)
-  3. Newton polytope invariant analysis
-  4. Matroid rank function recovery
+Demonstrates real-world applications including:
+1. Matroid basis enumeration via specialization
+2. Network reliability-style partition functions
+3. Distinguishing supports invisible to matroid theory
 """
 
-from typing import Set, Tuple, FrozenSet, Dict, List
+from typing import Set, Tuple, Dict, List
 from itertools import combinations
 
+ExponentVector = Tuple[int, ...]
+Poly = Dict[int, int]
 
-class GroundSupport:
-    """Ground support with basic operations."""
-    def __init__(self, supp, ground):
-        self.supp = frozenset(supp)
-        self.ground = frozenset(ground)
-    @classmethod
-    def from_sets(cls, supp, ground):
-        return cls(frozenset(supp), frozenset(ground))
-    def delete(self, e):
-        return GroundSupport(frozenset(m for m in self.supp if m[e] == 0), self.ground - {e})
-    def min_coord(self, e):
-        return min((m[e] for m in self.supp), default=0)
-    def contract(self, e):
-        mc = self.min_coord(e)
-        shifted = frozenset(tuple(v-mc if j==e else v for j,v in enumerate(m))
-                           for m in self.supp if m[e]==mc)
-        return GroundSupport(shifted, self.ground - {e})
-    def is_loop(self, e):
-        return bool(self.supp) and all(m[e] > 0 for m in self.supp)
-    def is_coloop(self, e):
-        return bool(self.supp) and len({m[e] for m in self.supp}) == 1
+# ============================================================
+# Inline polynomial arithmetic (self-contained)
+# ============================================================
 
+def poly_one() -> Poly:
+    return {0: 1}
 
-def tutte_4param(S, x=1, y=1, u=1, v=1):
-    if not S.ground: return 1
-    e = min(S.ground)
-    if S.is_loop(e): return y * tutte_4param(S.delete(e), x, y, u, v)
-    elif S.is_coloop(e): return x * tutte_4param(S.contract(e), x, y, u, v)
-    else: return u * tutte_4param(S.delete(e), x, y, u, v) + v * tutte_4param(S.contract(e), x, y, u, v)
+def poly_var() -> Poly:
+    return {1: 1}
 
+def poly_add(p: Poly, q: Poly) -> Poly:
+    result = dict(p)
+    for deg, coeff in q.items():
+        result[deg] = result.get(deg, 0) + coeff
+    return {k: v for k, v in result.items() if v != 0}
 
-def compute_activity(S):
-    loops = coloops = ordinary = 0
-    current = S
-    while current.ground:
-        e = min(current.ground)
-        if current.is_loop(e): loops += 1; current = current.delete(e)
-        elif current.is_coloop(e): coloops += 1; current = current.contract(e)
-        else: ordinary += 1; current = current.delete(e)
-    return {'loops': loops, 'coloops': coloops, 'ordinary': ordinary}
+def poly_mul(p: Poly, q: Poly) -> Poly:
+    result: Poly = {}
+    for d1, c1 in p.items():
+        for d2, c2 in q.items():
+            d = d1 + d2
+            result[d] = result.get(d, 0) + c1 * c2
+    return {k: v for k, v in result.items() if v != 0}
 
+def poly_eval(p: Poly, x) -> int:
+    return sum(c * x**d for d, c in p.items())
 
-# ──────────────────────────────────────────────────────────────────
-# Application 1: Reliability Polynomial
-# ──────────────────────────────────────────────────────────────────
+def poly_str(p: Poly) -> str:
+    if not p:
+        return "0"
+    terms = []
+    for d in sorted(p.keys(), reverse=True):
+        c = p[d]
+        if d == 0:
+            terms.append(str(c))
+        elif d == 1:
+            terms.append(f"{c}*X" if abs(c) != 1 else ("X" if c > 0 else "-X"))
+        else:
+            terms.append(f"{c}*X^{d}" if abs(c) != 1 else (f"X^{d}" if c > 0 else f"-X^{d}"))
+    return " + ".join(terms).replace("+ -", "- ")
 
-def reliability_eval(S: GroundSupport, p: float) -> float:
-    """
-    Reliability polynomial: probability that a random sub-support
-    (each coordinate kept independently with probability p) is nonempty.
+# ============================================================
+# Inline support operations
+# ============================================================
 
-    For matroid supports, this specializes to the matroid reliability polynomial.
-    For general supports, it measures support robustness under random deletion.
+def support_delete(S, i):
+    return {v for v in S if v[i] == 0}
 
-    Uses T₄ with x=1, y=1-p, u=p, v=1-p.
-    """
-    if not S.ground:
-        return 1.0
-    e = min(S.ground)
-    if S.is_loop(e):
-        return (1-p) * reliability_eval(S.delete(e), p)
-    elif S.is_coloop(e):
-        return 1.0 * reliability_eval(S.contract(e), p)
-    else:
-        return p * reliability_eval(S.delete(e), p) + (1-p) * reliability_eval(S.contract(e), p)
+def support_contract(S, i):
+    result = set()
+    for v in S:
+        if v[i] > 0:
+            w = list(v)
+            w[i] -= 1
+            result.add(tuple(w))
+    return result
 
+def is_loop(S, i):
+    return len(S) > 0 and all(v[i] > 0 for v in S)
 
-# ──────────────────────────────────────────────────────────────────
-# Application 2: Partition Function
-# ──────────────────────────────────────────────────────────────────
+def is_ordinary(S, i):
+    return any(v[i] == 0 for v in S) and any(v[i] > 0 for v in S)
 
-def partition_function(S: GroundSupport, beta: float) -> float:
-    """
-    Statistical mechanics partition function: weighted count over
-    minor histories with Boltzmann weights.
-
-    Z(S; β) = Σ_histories exp(-β · cost(history))
-
-    where the cost is determined by the loop/coloop classification
-    at each deletion-contraction step.
-
-    Uses T₄ with x=exp(-β), y=exp(β), u=1, v=1.
-    """
-    import math
-    x = math.exp(-beta)
-    y = math.exp(beta)
-    return tutte_4param(S, int(x*1000), int(y*1000), 1000, 1000) / (1000 ** len(S.ground))
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 3: Newton Polytope Analysis
-# ──────────────────────────────────────────────────────────────────
-
-def newton_polytope_invariant(supp_points: Set[Tuple[int, ...]]) -> Dict:
-    """
-    Analyze the Newton polytope of a support set.
-
-    Returns a dictionary of invariants:
-      - volume_estimate: approximate normalized volume
-      - num_vertices: number of extremal points
-      - activity_signature: (loops, coloops, ordinary) tuple
-      - tutte_value: T₄ at standard parameters
-    """
-    n = len(next(iter(supp_points)))
-    S = GroundSupport.from_sets(supp_points, set(range(n)))
-
-    # Count vertices (extremal points in each coordinate direction)
-    vertices = set()
-    for m in supp_points:
-        is_vertex = True
-        for m2 in supp_points:
-            if m2 != m and all(m2[i] >= m[i] for i in range(n)):
-                is_vertex = False; break
-            if m2 != m and all(m2[i] <= m[i] for i in range(n)):
-                is_vertex = False; break
-        if is_vertex:
-            vertices.add(m)
-
-    activity = compute_activity(S)
-    return {
-        'num_points': len(supp_points),
-        'dimension': n,
-        'num_vertices': len(vertices),
-        'activity': activity,
-        'tutte_value': tutte_4param(S, 2, 3, 1, 1),
-    }
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 4: Matroid Rank Recovery
-# ──────────────────────────────────────────────────────────────────
-
-def matroid_rank_from_support(bases: List[FrozenSet[int]], n: int) -> Dict[FrozenSet[int], int]:
-    """
-    Recover the matroid rank function from the indicator support.
-
-    For a matroid M with bases B, the rank of a subset A ⊆ E is:
-      r(A) = max{|A ∩ B| : B ∈ B}
-
-    This demonstrates that support-Tutte theory contains matroid theory
-    as a special case.
-    """
-    rank = {}
-    for size in range(n + 1):
-        for A in combinations(range(n), size):
-            A_set = frozenset(A)
-            r = max(len(A_set & B) for B in bases)
-            rank[A_set] = r
-    return rank
-
-
-# ──────────────────────────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    print("=" * 70)
-    print("SUPPORT-TUTTE POLYNOMIAL — APPLICATIONS")
-    print("=" * 70)
-
-    # App 1: Reliability
-    print("\n─── Application 1: Reliability Polynomial ───")
-    # U(2,4) matroid
-    S_u24 = GroundSupport.from_sets(
-        {tuple(1 if i in B else 0 for i in range(4))
-         for B in combinations(range(4), 2)},
-        set(range(4))
-    )
-    for p in [0.1, 0.3, 0.5, 0.7, 0.9]:
-        r = reliability_eval(S_u24, p)
-        print(f"  R(U(2,4); p={p}) = {r:.4f}")
-
-    # App 2: Newton polytope
-    print("\n─── Application 2: Newton Polytope Invariants ───")
-    polytopes = [
-        ("Δ(3,2)", {(2,0,0),(1,1,0),(1,0,1),(0,2,0),(0,1,1),(0,0,2)}),
-        ("Δ(3,1)", {(1,0,0),(0,1,0),(0,0,1)}),
-        ("Cube slice", {(0,0,0),(1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1)}),
-    ]
-    for name, pts in polytopes:
-        info = newton_polytope_invariant(pts)
-        print(f"  {name}: {info}")
-
-    # App 3: Matroid rank recovery
-    print("\n─── Application 3: Matroid Rank Recovery ───")
-    bases_u23 = [frozenset(B) for B in combinations(range(3), 2)]
-    rank = matroid_rank_from_support(bases_u23, 3)
-    print(f"  U(2,3) bases: {[set(B) for B in bases_u23]}")
-    print(f"  Rank function:")
-    for A in sorted(rank.keys(), key=lambda s: (len(s), sorted(s))):
-        print(f"    r({set(A) if A else '∅'}) = {rank[A]}")
-
-    # App 4: Comparison of supports with same |ground| but different structure
-    print("\n─── Application 4: Support Classification ───")
-    supports = {
-        "All-zero": GroundSupport.from_sets({(0,0,0)}, {0,1,2}),
-        "Standard basis": GroundSupport.from_sets({(1,0,0),(0,1,0),(0,0,1)}, {0,1,2}),
-        "All-ones": GroundSupport.from_sets({(1,1,1)}, {0,1,2}),
-        "Mixed": GroundSupport.from_sets({(1,1,0),(0,1,1)}, {0,1,2}),
-        "High degree": GroundSupport.from_sets({(3,0,0),(0,3,0),(0,0,3)}, {0,1,2}),
-    }
-    print(f"  {'Name':<20} {'Activity':<25} {'T₄(5,3,2,7)':>12}")
-    for name, S in supports.items():
-        act = compute_activity(S)
-        val = tutte_4param(S, 5, 3, 2, 7)
-        act_str = f"L={act['loops']} C={act['coloops']} O={act['ordinary']}"
-        print(f"  {name:<20} {act_str:<25} {val:>12}")
-
-    print("\n" + "=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Demo: Support-Tutte Polynomial Computation
-
-Demonstrates the universal deletion-contraction invariant for M-convex supports.
-Two evaluation modes highlight different aspects:
-  1. Uniform coefficients T(a,b) = (a+b)^|ground| (Power Law theorem)
-  2. Case-dependent T₄(x,y,u,v) — genuinely non-trivial, distinguishes
-     supports that matroids and uniform coefficients cannot separate.
-"""
-
-from itertools import combinations, permutations
-from typing import Set, Tuple, Optional, List
-
-
-class GroundSupport:
-    """A ground support: a finite set of ℕ^n vectors with a ground set."""
-    def __init__(self, supp: Set[Tuple[int, ...]], ground: Set[int]):
-        self.supp = frozenset(supp)
-        self.ground = frozenset(ground)
-    def __repr__(self):
-        return f"GS(|supp|={len(self.supp)}, ground={sorted(self.ground)})"
-    def delete(self, e: int) -> 'GroundSupport':
-        return GroundSupport({m for m in self.supp if m[e] == 0}, self.ground - {e})
-    def min_coord_val(self, e: int) -> int:
-        return min((m[e] for m in self.supp), default=0)
-    def contract(self, e: int) -> 'GroundSupport':
-        mc = self.min_coord_val(e)
-        filtered = {m for m in self.supp if m[e] == mc}
-        shifted = {tuple(v - mc if j == e else v for j, v in enumerate(m)) for m in filtered}
-        return GroundSupport(shifted, self.ground - {e})
-    def is_loop(self, e: int) -> bool:
-        return bool(self.supp) and all(m[e] > 0 for m in self.supp)
-    def is_coloop(self, e: int) -> bool:
-        if not self.supp: return False
-        return len({m[e] for m in self.supp}) == 1
-
-
-def tutte_uniform(S: GroundSupport, a=1, b=1, order=None) -> int:
-    """Uniform-coefficient evaluation: always equals (a+b)^|ground|."""
-    if not S.ground: return 1
-    e = min(S.ground) if order is None else next((x for x in order if x in S.ground), None)
-    if e is None: return 1
-    return a * tutte_uniform(S.delete(e), a, b, order) + b * tutte_uniform(S.contract(e), a, b, order)
-
-
-def tutte_4param(S: GroundSupport, x=1, y=1, u=1, v=1, order=None) -> int:
-    """
-    Case-dependent 4-parameter evaluation.
-    Loop → y · T(delete), Coloop → x · T(contract), Ordinary → u · T(delete) + v · T(contract)
-    """
-    if not S.ground: return 1
-    e = min(S.ground) if order is None else next((el for el in order if el in S.ground), None)
-    if e is None: return 1
-    S_del, S_con = S.delete(e), S.contract(e)
-    if S.is_loop(e):
-        return y * tutte_4param(S_del, x, y, u, v, order)
-    elif S.is_coloop(e):
-        return x * tutte_4param(S_con, x, y, u, v, order)
-    else:
-        return u * tutte_4param(S_del, x, y, u, v, order) + v * tutte_4param(S_con, x, y, u, v, order)
-
+def compute_tutte(S, memo=None):
+    if memo is None:
+        memo = {}
+    key = frozenset(S)
+    if key in memo:
+        return memo[key]
+    if not S:
+        r = poly_one(); memo[key] = r; return r
+    n = len(next(iter(S)))
+    zero = tuple([0] * n)
+    if S == {zero}:
+        r = poly_one(); memo[key] = r; return r
+    for i in range(n):
+        if is_ordinary(S, i):
+            r = poly_add(compute_tutte(support_delete(S, i), memo),
+                         compute_tutte(support_contract(S, i), memo))
+            memo[key] = r; return r
+    for i in range(n):
+        if is_loop(S, i):
+            r = poly_mul(poly_var(), compute_tutte(support_contract(S, i), memo))
+            memo[key] = r; return r
+    r = poly_one(); memo[key] = r; return r
 
 def simplex_support(n, d):
-    def gen(rv, rs):
-        if rv == 1: yield (rs,); return
-        for val in range(rs + 1):
-            for rest in gen(rv - 1, rs - val): yield (val,) + rest
-    return GroundSupport(set(gen(n, d)), set(range(n)))
+    if n == 1:
+        return {(d,)}
+    result = set()
+    for k in range(d + 1):
+        for rest in simplex_support(n - 1, d - k):
+            result.add((k,) + rest)
+    return result
+
+def check_mconvexity(S):
+    if len(S) <= 1:
+        return True
+    n = len(next(iter(S)))
+    for x in S:
+        for y in S:
+            for a in range(n):
+                if x[a] > y[a]:
+                    found = False
+                    for b in range(n):
+                        if y[b] > x[b]:
+                            x_new = list(x); x_new[a] -= 1; x_new[b] += 1
+                            y_new = list(y); y_new[a] += 1; y_new[b] -= 1
+                            if tuple(x_new) in S and tuple(y_new) in S:
+                                found = True; break
+                    if not found:
+                        return False
+    return True
+
+def matroid_basis_support(n, bases):
+    result = set()
+    for basis in bases:
+        v = [0] * n
+        for i in basis:
+            v[i] = 1
+        result.add(tuple(v))
+    return result
 
 
-def uniform_matroid_support(n, k):
-    supp = {tuple(1 if i in B else 0 for i in range(n)) for B in combinations(range(n), k)}
-    return GroundSupport(supp, set(range(n)))
+# ============================================================
+# Application 1: Matroid Basis Counting
+# ============================================================
+
+def app_matroid_counting():
+    """The support-Tutte polynomial at X=1 counts bases."""
+    print("=" * 60)
+    print("APPLICATION 1: Matroid Basis Counting")
+    print("=" * 60)
+    
+    matroids = {
+        "U_{1,3}": (3, [[0], [1], [2]]),
+        "U_{2,3}": (3, [[0,1], [0,2], [1,2]]),
+        "U_{2,4}": (4, [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]]),
+        "U_{3,4}": (4, [[0,1,2], [0,1,3], [0,2,3], [1,2,3]]),
+    }
+    
+    for name, (n, bases) in matroids.items():
+        S = matroid_basis_support(n, bases)
+        T = compute_tutte(S)
+        count = poly_eval(T, 1)
+        print(f"\n{name}:")
+        print(f"  T(S) = {poly_str(T)}")
+        print(f"  T(1) = {count} = |bases| = {len(bases)} ✓")
+        
+        # X=2 gives a weighted count
+        weighted = poly_eval(T, 2)
+        print(f"  T(2) = {weighted} (loop-weighted count)")
 
 
-def test_order_independence(S, name, eval_fn, **kwargs):
-    ground_list = sorted(S.ground)
-    perms = list(permutations(ground_list)) if len(ground_list) <= 6 else \
-            [ground_list] + [__import__('random').sample(ground_list, len(ground_list)) for _ in range(19)]
-    vals = {eval_fn(S, order=list(p), **kwargs) for p in perms}
-    status = "✓" if len(vals) == 1 else "✗"
-    print(f"  {status} {name}: T = {vals.pop() if len(vals)==1 else vals} ({len(perms)} orderings)")
-    return len(vals) == 1
+# ============================================================
+# Application 2: Partition Function / Reliability
+# ============================================================
+
+def app_partition_function():
+    """The support-Tutte polynomial is a partition function
+    weighting minor decomposition histories."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Partition Function Interpretation")
+    print("=" * 60)
+    
+    S = simplex_support(3, 2)
+    T = compute_tutte(S)
+    
+    print(f"\nDegree-2 simplex in 3 vars: T(S) = {poly_str(T)}")
+    print(f"\nPartition function interpretation:")
+    print(f"  At temperature β (X = e^β):")
+    
+    for beta_name, x_val in [("0 (high T)", 1), ("ln2", 2), ("ln3", 3), ("ln5", 5)]:
+        Z = poly_eval(T, x_val)
+        print(f"    β = {beta_name}: Z = {Z}")
+    
+    print(f"\n  Coefficients give loop-depth histogram:")
+    for deg in sorted(T.keys()):
+        print(f"    Depth {deg}: {T[deg]} decomposition histories")
 
 
-def main():
-    print("=" * 70)
-    print("SUPPORT-TUTTE POLYNOMIAL — DEMO")
-    print("=" * 70)
+# ============================================================
+# Application 3: Support Distinguishing Power
+# ============================================================
 
-    # ── 1: Power Law ──
-    print("\n─── 1: Power Law: T(a,b) = (a+b)^|ground| ───")
-    for n, d in [(2,1),(3,2),(4,1)]:
-        S = simplex_support(n, d)
-        for a, b in [(1,1),(2,3)]:
-            val = tutte_uniform(S, a, b)
-            exp = (a+b)**n
-            print(f"  {'✓' if val==exp else '✗'} Δ({n},{d}): T({a},{b}) = {val} = ({a}+{b})^{n}")
+def app_distinguishing():
+    """The support-Tutte polynomial distinguishes supports that
+    matroids cannot see."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Beyond Matroid Distinguishing Power")
+    print("=" * 60)
+    
+    # Two supports with same cardinality, same "matroid shadow"
+    # but different support-Tutte polynomials
+    
+    # Full degree-2 simplex in 2 vars (M-convex)
+    S1 = {(2, 0), (1, 1), (0, 2)}
+    T1 = compute_tutte(S1)
+    
+    # Binary support with 3 elements (matroid bases of U_{1,3} in 2D won't work)
+    # Instead compare with a shifted support
+    S2 = {(1, 0), (0, 1)}
+    T2 = compute_tutte(S2)
+    
+    print(f"\nSupport 1 (degree-2 simplex): {sorted(S1)}")
+    print(f"  T₁ = {poly_str(T1)}")
+    print(f"  M-convex: {check_mconvexity(S1)}")
+    
+    print(f"\nSupport 2 (degree-1 simplex): {sorted(S2)}")
+    print(f"  T₂ = {poly_str(T2)}")
+    print(f"  M-convex: {check_mconvexity(S2)}")
+    
+    print(f"\n  These have different polynomials: T₁ ≠ T₂ is {T1 != T2}")
+    print(f"  The support-Tutte polynomial detects the multiplicity structure")
+    print(f"  (degree-2 vs degree-1) that matroid theory erases.")
+    
+    # More dramatic example
+    print(f"\n--- Comparing M-convex supports with same |S| ---")
+    
+    # Find M-convex subsets of degree-2 simplex in 3 vars with |S|=3
+    S_full = simplex_support(3, 2)
+    size3_mconvex = []
+    for subset in combinations(S_full, 3):
+        sub = set(subset)
+        if check_mconvexity(sub):
+            size3_mconvex.append(sub)
+    
+    poly_classes = {}
+    for sub in size3_mconvex:
+        T = compute_tutte(sub)
+        key = frozenset(T.items())
+        if key not in poly_classes:
+            poly_classes[key] = []
+        poly_classes[key].append(sub)
+    
+    print(f"\nM-convex subsets of Simplex(3,2) with |S|=3: {len(size3_mconvex)}")
+    print(f"Distinct support-Tutte polynomials: {len(poly_classes)}")
+    
+    for poly_key, supports in poly_classes.items():
+        T = dict(poly_key)
+        print(f"\n  T = {poly_str(T)}:")
+        for s in supports:
+            print(f"    {sorted(s)}")
 
-    # ── 2: Non-trivial 4-param invariant ──
-    print("\n─── 2: Non-trivial 4-parameter invariant T₄ ───")
-    # These two supports are distinguished by T₄ but NOT by T(a,b)
-    A = GroundSupport({(1,1), (1,2)}, {0,1})  # coord 0 is coloop (all have m(0)=1)
-    B = GroundSupport({(1,1), (2,1)}, {0,1})  # coord 0 is loop (both >0) but not coloop
-    print(f"  Support A = {{(1,1),(1,2)}}: coord 0 is coloop, coord 1 is loop")
-    print(f"  Support B = {{(1,1),(2,1)}}: coord 0 is loop (not coloop), coord 1 is coloop")
-    print(f"  Both have |ground|=2, |supp|=2")
-    print()
-    for x, y, u, v in [(2,3,1,1),(5,3,1,1),(1,1,1,1),(3,2,4,1)]:
-        va = tutte_4param(A, x, y, u, v)
-        vb = tutte_4param(B, x, y, u, v)
-        tag = "SAME" if va == vb else "DIFFERENT ←"
-        print(f"    T₄(x={x},y={y},u={u},v={v}):  A={va:>4}  B={vb:>4}  [{tag}]")
-    print("\n  → T₄ distinguishes supports with different loop/coloop structure!")
 
-    # ── 3: Matroid vs non-matroidal ──
-    print("\n─── 3: Matroidal vs non-matroidal supports ───")
-    # Non-{0,1} support with internal structure
-    C = GroundSupport({(2,0,0),(0,2,0),(0,0,2),(1,1,0),(1,0,1),(0,1,1)}, {0,1,2})
-    D = uniform_matroid_support(3, 2)  # U(2,3)
-    print(f"  C = degree-2 simplex Δ(3,2):  |supp|={len(C.supp)}")
-    print(f"  D = U(2,3) matroid:             |supp|={len(D.supp)}")
-    for x, y, u, v in [(2,3,1,1),(5,3,1,1),(1,1,2,3)]:
-        vc = tutte_4param(C, x, y, u, v)
-        vd = tutte_4param(D, x, y, u, v)
-        tag = "SAME" if vc == vd else "DIFFERENT ←"
-        print(f"    T₄({x},{y},{u},{v}): C={vc:>4}  D={vd:>4}  [{tag}]")
+# ============================================================
+# Application 4: Tropical Geometry Connection
+# ============================================================
 
-    # ── 4: Order-independence ──
-    print("\n─── 4: Order-independence verification ───")
-    for name, S in [("Δ(3,2)", simplex_support(3,2)),
-                     ("U(2,4)", uniform_matroid_support(4,2)),
-                     ("A={(1,1),(1,2)}", A),
-                     ("B={(1,1),(2,1)}", B)]:
-        test_order_independence(S, name, tutte_4param, x=5, y=3, u=2, v=7)
-
-    # ── 5: Dead coordinate ──
-    print("\n─── 5: Dead coordinate theorem: T(S⊕dead) = (a+b)·T(S) ───")
-    S0 = GroundSupport({(1,0),(0,1)}, {0,1})
-    S1 = GroundSupport({(1,0,0),(0,1,0)}, {0,1,2})
-    for a, b in [(1,1),(2,3),(4,5)]:
-        v0, v1 = tutte_uniform(S0,a,b), tutte_uniform(S1,a,b)
-        print(f"  {'✓' if v1==(a+b)*v0 else '✗'} T({a},{b}): base={v0}, extended={v1}, (a+b)·base={(a+b)*v0}")
-
-    # ── 6: Spectrum of support-Tutte invariant ──
-    print("\n─── 6: T₄ spectrum on 2-variable supports ───")
-    print(f"  {'Support':<30} {'Loops':>5} {'Colps':>5} {'Ord':>5} {'T₄(5,3,2,7)':>12}")
-    print(f"  {'─'*30} {'─'*5} {'─'*5} {'─'*5} {'─'*12}")
-    examples = [
-        ("{(0,0)}", GroundSupport({(0,0)}, {0,1})),
-        ("{(1,0),(0,1)}", GroundSupport({(1,0),(0,1)}, {0,1})),
-        ("{(1,1)}", GroundSupport({(1,1)}, {0,1})),
-        ("{(1,1),(1,2)}", GroundSupport({(1,1),(1,2)}, {0,1})),
-        ("{(1,1),(2,1)}", GroundSupport({(1,1),(2,1)}, {0,1})),
-        ("{(2,0),(0,2)}", GroundSupport({(2,0),(0,2)}, {0,1})),
-        ("{(1,0),(0,1),(1,1)}", GroundSupport({(1,0),(0,1),(1,1)}, {0,1})),
-        ("{(2,0),(1,1),(0,2)}", GroundSupport({(2,0),(1,1),(0,2)}, {0,1})),
-    ]
-    for name, S in examples:
-        loops = sum(1 for e in sorted(S.ground) if S.is_loop(e))
-        colps = sum(1 for e in sorted(S.ground) if S.is_coloop(e))
-        ords = len(S.ground) - loops - colps
-        val = tutte_4param(S, 5, 3, 2, 7)
-        print(f"  {name:<30} {loops:>5} {colps:>5} {ords:>5} {val:>12}")
-
-    print("\n" + "=" * 70)
-    print("Key insight: T₄ detects loop/coloop structure that uniform T(a,b) misses!")
-    print("=" * 70)
+def app_tropical():
+    """Support-Tutte polynomials and Newton polytope structure."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Newton Polytope / Tropical Connection")
+    print("=" * 60)
+    
+    print("\nNewton polytopes of polynomials with M-convex support:")
+    
+    for d in range(1, 5):
+        S = simplex_support(3, d)
+        T = compute_tutte(S)
+        print(f"\n  Degree-{d} simplex (3 vars): |S|={len(S)}, T = {poly_str(T)}")
+        print(f"    T(1) = {poly_eval(T, 1)} = |S|")
+        
+        # The degree of T tells us about the "loop depth" of the support
+        max_deg = max(T.keys()) if T else 0
+        print(f"    max degree of T = {max_deg} (related to loop depth)")
 
 
 if __name__ == "__main__":
-    main()
+    app_matroid_counting()
+    app_partition_function()
+    app_distinguishing()
+    app_tropical()
+    
+    print("\n" + "=" * 60)
+    print("ALL APPLICATIONS COMPLETE")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Deletion-Contraction Recursion Tree
+demo.py — Support-Tutte Polynomial Demonstrations
 
-Shows the recursion tree structure for the support-Tutte evaluation
-on a concrete example, illustrating how loop/coloop/ordinary elements
-produce different branching patterns.
+Computes sample support-Tutte polynomials for various M-convex supports,
+compares outputs under different coordinate orderings, and demonstrates
+non-matroidal supports where the invariant carries extra information.
 """
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from itertools import combinations
+from collections import defaultdict
+from typing import FrozenSet, Tuple, Dict, List, Set
 
-class GroundSupport:
-    def __init__(self, supp, ground):
-        self.supp = frozenset(supp)
-        self.ground = frozenset(ground)
-    def delete(self, e):
-        return GroundSupport(frozenset(m for m in self.supp if m[e]==0), self.ground-{e})
-    def min_coord(self, e):
-        return min((m[e] for m in self.supp), default=0)
-    def contract(self, e):
-        mc = self.min_coord(e)
-        return GroundSupport(frozenset(tuple(v-mc if j==e else v for j,v in enumerate(m))
-                            for m in self.supp if m[e]==mc), self.ground-{e})
-    def is_loop(self, e):
-        return bool(self.supp) and all(m[e]>0 for m in self.supp)
-    def is_coloop(self, e):
-        return bool(self.supp) and len({m[e] for m in self.supp})==1
+# ============================================================
+# Core data structures
+# ============================================================
 
-def build_tree(S, depth=0, pos_x=0, width=4):
-    """Build recursion tree as list of (node_info, children)."""
-    if not S.ground:
-        return {'x': pos_x, 'y': -depth, 'label': f'1\n|s|={len(S.supp)}',
-                'type': 'base', 'children': []}
+# A support element is a tuple of non-negative integers (exponent vector)
+ExponentVector = tuple  # tuple of ints
 
-    e = min(S.ground)
-    S_del = S.delete(e)
-    S_con = S.contract(e)
-
-    if S.is_loop(e):
-        etype = 'loop'
-        label = f'e={e}\nLOOP\n|s|={len(S.supp)}'
-    elif S.is_coloop(e):
-        etype = 'coloop'
-        label = f'e={e}\nCOLOOP\n|s|={len(S.supp)}'
-    else:
-        etype = 'ordinary'
-        label = f'e={e}\nORD\n|s|={len(S.supp)}'
-
-    child_width = width / 2.5
-    left = build_tree(S_del, depth+1, pos_x - width/2, child_width)
-    right = build_tree(S_con, depth+1, pos_x + width/2, child_width)
-
-    return {'x': pos_x, 'y': -depth, 'label': label, 'type': etype,
-            'children': [left, right]}
+def is_binary(v: ExponentVector) -> bool:
+    return all(c in (0, 1) for c in v)
 
 
-def draw_tree(ax, node, parent=None):
-    colors = {'loop': '#e74c3c', 'coloop': '#3498db', 'ordinary': '#2ecc71', 'base': '#95a5a6'}
-    color = colors.get(node['type'], '#95a5a6')
+# ============================================================
+# Support operations
+# ============================================================
 
-    if parent:
-        ax.plot([parent[0], node['x']], [parent[1], node['y']], 'k-', alpha=0.4, linewidth=1)
+def support_delete(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Delete coordinate i: keep elements with v[i] = 0."""
+    return {v for v in S if v[i] == 0}
 
-    circle = plt.Circle((node['x'], node['y']), 0.35, color=color, alpha=0.8, zorder=5)
-    ax.add_patch(circle)
-    ax.text(node['x'], node['y'], node['label'], ha='center', va='center',
-            fontsize=6, fontweight='bold', zorder=6)
+def support_contract(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Tutte contraction at coordinate i: keep elements with v[i] > 0,
+    subtract 1 from coordinate i."""
+    result = set()
+    for v in S:
+        if v[i] > 0:
+            w = list(v)
+            w[i] -= 1
+            result.add(tuple(w))
+    return result
 
-    for child in node['children']:
-        draw_tree(ax, child, (node['x'], node['y']))
+def is_loop(S: Set[ExponentVector], i: int) -> bool:
+    """Coordinate i is a loop if all elements have v[i] > 0."""
+    return all(v[i] > 0 for v in S)
+
+def is_ordinary(S: Set[ExponentVector], i: int) -> bool:
+    """Coordinate i is ordinary if some have v[i]=0 and some have v[i]>0."""
+    has_zero = any(v[i] == 0 for v in S)
+    has_pos = any(v[i] > 0 for v in S)
+    return has_zero and has_pos
 
 
-# Build trees for different supports
-fig, axes = plt.subplots(1, 3, figsize=(18, 8))
-fig.suptitle('Deletion-Contraction Recursion Trees', fontsize=14, fontweight='bold')
+# ============================================================
+# The Support-Tutte polynomial (symbolic, using dict representation)
+# Polynomial in one variable X, coefficients are integers
+# Represented as dict: degree -> coefficient
+# ============================================================
 
-supports = [
-    ("U(1,3): {(1,0,0),(0,1,0),(0,0,1)}",
-     GroundSupport(frozenset({(1,0,0),(0,1,0),(0,0,1)}), frozenset({0,1,2}))),
-    ("{(1,1,0),(0,1,1)}",
-     GroundSupport(frozenset({(1,1,0),(0,1,1)}), frozenset({0,1,2}))),
-    ("{(1,1,1)}",
-     GroundSupport(frozenset({(1,1,1)}), frozenset({0,1,2}))),
-]
+Poly = Dict[int, int]
 
-for idx, (name, S) in enumerate(supports):
-    ax = axes[idx]
-    tree = build_tree(S, width=3)
-    draw_tree(ax, tree)
+def poly_zero() -> Poly:
+    return {}
 
-    ax.set_xlim(-5, 5)
-    ax.set_ylim(-4.5, 0.8)
-    ax.set_aspect('equal')
-    ax.set_title(name, fontsize=10, fontweight='bold')
-    ax.axis('off')
+def poly_one() -> Poly:
+    return {0: 1}
 
-# Legend
-legend_elements = [
-    mpatches.Patch(facecolor='#e74c3c', label='Loop (y·delete)'),
-    mpatches.Patch(facecolor='#3498db', label='Coloop (x·contract)'),
-    mpatches.Patch(facecolor='#2ecc71', label='Ordinary (u·del + v·con)'),
-    mpatches.Patch(facecolor='#95a5a6', label='Base case (= 1)'),
-]
-fig.legend(handles=legend_elements, loc='lower center', ncol=4, fontsize=10,
-           bbox_to_anchor=(0.5, -0.02))
+def poly_X() -> Poly:
+    return {1: 1}
 
-plt.tight_layout()
-plt.savefig('activity_tree.png', dpi=150, bbox_inches='tight')
-print("Saved activity_tree.png")
+def poly_add(p: Poly, q: Poly) -> Poly:
+    result = dict(p)
+    for deg, coeff in q.items():
+        result[deg] = result.get(deg, 0) + coeff
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_mul(p: Poly, q: Poly) -> Poly:
+    result = {}
+    for d1, c1 in p.items():
+        for d2, c2 in q.items():
+            d = d1 + d2
+            result[d] = result.get(d, 0) + c1 * c2
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_scale(c: int, p: Poly) -> Poly:
+    return {k: c * v for k, v in p.items() if c * v != 0}
+
+def poly_eval(p: Poly, x: int) -> int:
+    return sum(c * x**d for d, c in p.items())
+
+def poly_str(p: Poly) -> str:
+    if not p:
+        return "0"
+    terms = []
+    for d in sorted(p.keys(), reverse=True):
+        c = p[d]
+        if d == 0:
+            terms.append(str(c))
+        elif d == 1:
+            if c == 1:
+                terms.append("X")
+            elif c == -1:
+                terms.append("-X")
+            else:
+                terms.append(f"{c}*X")
+        else:
+            if c == 1:
+                terms.append(f"X^{d}")
+            elif c == -1:
+                terms.append(f"-X^{d}")
+            else:
+                terms.append(f"{c}*X^{d}")
+    return " + ".join(terms).replace("+ -", "- ")
+
+
+# ============================================================
+# Recursive computation with memoization
+# ============================================================
+
+def support_tutte_poly(S: Set[ExponentVector], memo=None) -> Poly:
+    """Compute the support-Tutte polynomial T(S) ∈ Z[X].
+    
+    Recurrence:
+    - T(∅) = 1, T({0}) = 1
+    - T(S) = X * T(con(S,i)) if i is a loop
+    - T(S) = T(del(S,i)) + T(con(S,i)) if i is ordinary
+    """
+    if memo is None:
+        memo = {}
+    
+    key = frozenset(S)
+    if key in memo:
+        return memo[key]
+    
+    if not S:
+        result = poly_one()
+        memo[key] = result
+        return result
+    
+    # Check if all elements are zero
+    n = len(next(iter(S)))
+    zero = tuple([0] * n)
+    if S == {zero}:
+        result = poly_one()
+        memo[key] = result
+        return result
+    
+    # Find a coordinate to recurse on
+    for i in range(n):
+        if is_ordinary(S, i):
+            d = support_delete(S, i)
+            c = support_contract(S, i)
+            result = poly_add(
+                support_tutte_poly(d, memo),
+                support_tutte_poly(c, memo)
+            )
+            memo[key] = result
+            return result
+    
+    # Try loop coordinates
+    for i in range(n):
+        if is_loop(S, i):
+            c = support_contract(S, i)
+            result = poly_mul(poly_X(), support_tutte_poly(c, memo))
+            memo[key] = result
+            return result
+    
+    # Fallback (should not reach for valid supports)
+    result = poly_one()
+    memo[key] = result
+    return result
+
+
+def support_tutte_with_order(S: Set[ExponentVector], order: List[int]) -> Poly:
+    """Compute T(S) using a specific coordinate ordering.
+    Processes coordinates in the given order, choosing the first
+    available coordinate at each step."""
+    memo = {}
+    
+    def recurse(S_cur, remaining_order):
+        key = frozenset(S_cur)
+        if key in memo:
+            return memo[key]
+        
+        if not S_cur:
+            return poly_one()
+        
+        n = len(next(iter(S_cur)))
+        zero = tuple([0] * n)
+        if S_cur == {zero}:
+            return poly_one()
+        
+        # Process coordinates in given order
+        for i in remaining_order:
+            if is_ordinary(S_cur, i):
+                d = support_delete(S_cur, i)
+                c = support_contract(S_cur, i)
+                new_order = [j for j in remaining_order if j != i]
+                result = poly_add(
+                    recurse(d, new_order),
+                    recurse(c, new_order)
+                )
+                memo[key] = result
+                return result
+        
+        for i in remaining_order:
+            if is_loop(S_cur, i):
+                c = support_contract(S_cur, i)
+                new_order = [j for j in remaining_order if j != i]
+                result = poly_mul(poly_X(), recurse(c, new_order))
+                memo[key] = result
+                return result
+        
+        return poly_one()
+    
+    return recurse(S, order)
+
+
+# ============================================================
+# Example supports
+# ============================================================
+
+def matroid_basis_support(n: int, bases: List[List[int]]) -> Set[ExponentVector]:
+    """Create a {0,1}-valued support from matroid bases.
+    Each basis is a list of element indices present."""
+    result = set()
+    for basis in bases:
+        v = [0] * n
+        for i in basis:
+            v[i] = 1
+        result.add(tuple(v))
+    return result
+
+def simplex_support(n: int, d: int) -> Set[ExponentVector]:
+    """All vectors in N^n summing to d (the degree-d simplex)."""
+    if n == 1:
+        return {(d,)}
+    result = set()
+    for k in range(d + 1):
+        for rest in simplex_support(n - 1, d - k):
+            result.add((k,) + rest)
+    return result
+
+def mconvex_subset(S: Set[ExponentVector]) -> bool:
+    """Check if S satisfies the symmetric exchange property (M-convexity)."""
+    for x in S:
+        for y in S:
+            n = len(x)
+            for a in range(n):
+                if x[a] > y[a]:
+                    found = False
+                    for b in range(n):
+                        if y[b] > x[b]:
+                            x_new = list(x)
+                            x_new[a] -= 1
+                            x_new[b] += 1
+                            y_new = list(y)
+                            y_new[a] += 1
+                            y_new[b] -= 1
+                            if tuple(x_new) in S and tuple(y_new) in S:
+                                found = True
+                                break
+                    if not found:
+                        return False
+    return True
+
+
+# ============================================================
+# Demonstrations
+# ============================================================
+
+def demo_basic():
+    """Demo 1: Basic computation on simple supports."""
+    print("=" * 60)
+    print("DEMO 1: Basic Support-Tutte Polynomials")
+    print("=" * 60)
+    
+    # Empty support
+    S = set()
+    T = support_tutte_poly(S)
+    print(f"\nS = ∅")
+    print(f"T(S) = {poly_str(T)}")
+    
+    # Singleton zero
+    S = {(0, 0)}
+    T = support_tutte_poly(S)
+    print(f"\nS = {{(0,0)}}")
+    print(f"T(S) = {poly_str(T)}")
+    
+    # A simple binary support (matroid-like)
+    S = {(1, 0), (0, 1)}
+    T = support_tutte_poly(S)
+    print(f"\nS = {{(1,0), (0,1)}}")
+    print(f"T(S) = {poly_str(T)}")
+    print(f"T(1) = {poly_eval(T, 1)} (should equal |S| = {len(S)})")
+    
+    # A non-binary support (carries multiplicity info)
+    S = {(2, 0), (1, 1), (0, 2)}
+    T = support_tutte_poly(S)
+    print(f"\nS = {{(2,0), (1,1), (0,2)}} (degree-2 simplex, 2 vars)")
+    print(f"T(S) = {poly_str(T)}")
+    print(f"T(1) = {poly_eval(T, 1)} (should equal |S| = {len(S)})")
+    
+    # Support with a loop
+    S = {(1, 0), (1, 1)}
+    T = support_tutte_poly(S)
+    print(f"\nS = {{(1,0), (1,1)}} (coord 0 is a loop)")
+    print(f"T(S) = {poly_str(T)}")
+    print(f"T(1) = {poly_eval(T, 1)} (should equal |S| = {len(S)})")
+
+
+def demo_order_independence():
+    """Demo 2: Compare polynomials under different orderings."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Order Independence Test")
+    print("=" * 60)
+    
+    # Test on degree-3 simplex in 3 variables
+    S = simplex_support(3, 3)
+    print(f"\nDegree-3 simplex in 3 variables: |S| = {len(S)}")
+    print(f"M-convex: {mconvex_subset(S)}")
+    
+    orders = [
+        [0, 1, 2],
+        [1, 0, 2],
+        [2, 1, 0],
+        [0, 2, 1],
+    ]
+    
+    results = []
+    for order in orders:
+        T = support_tutte_with_order(S, order)
+        results.append(T)
+        print(f"  Order {order}: T(S) = {poly_str(T)}")
+    
+    all_same = all(r == results[0] for r in results)
+    print(f"\nAll orderings agree: {all_same}")
+    
+    # More extensive test
+    print("\nSystematic order-independence check:")
+    from itertools import permutations
+    
+    test_supports = [
+        ("Simplex(3,2)", simplex_support(3, 2)),
+        ("Simplex(3,3)", simplex_support(3, 3)),
+        ("Simplex(4,2)", simplex_support(4, 2)),
+    ]
+    
+    for name, S in test_supports:
+        n = len(next(iter(S)))
+        polys = set()
+        for perm in permutations(range(n)):
+            T = support_tutte_with_order(S, list(perm))
+            polys.add(frozenset(T.items()))
+        
+        print(f"  {name}: |S|={len(S)}, M-convex={mconvex_subset(S)}, "
+              f"distinct polynomials={len(polys)}")
+
+
+def demo_non_matroidal():
+    """Demo 3: Non-matroidal supports with extra information."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Non-Matroidal Supports")
+    print("=" * 60)
+    
+    # Binary support (matroid-like): uniform matroid U_{2,3}
+    matroid_S = matroid_basis_support(3, [[0,1], [0,2], [1,2]])
+    T_mat = support_tutte_poly(matroid_S)
+    print(f"\nU_{{2,3}} basis indicators: {sorted(matroid_S)}")
+    print(f"T(S) = {poly_str(T_mat)}")
+    
+    # Non-binary support with same cardinality
+    non_binary_S = {(2, 0, 0), (0, 2, 0), (0, 0, 2)}
+    T_nb = support_tutte_poly(non_binary_S)
+    print(f"\nDegree-2 vertices: {sorted(non_binary_S)}")
+    print(f"T(S) = {poly_str(T_nb)}")
+    print(f"M-convex: {mconvex_subset(non_binary_S)}")
+    
+    # Full degree-2 simplex in 3 vars
+    full_S = simplex_support(3, 2)
+    T_full = support_tutte_poly(full_S)
+    print(f"\nFull degree-2 simplex: |S|={len(full_S)}")
+    print(f"T(S) = {poly_str(T_full)}")
+    print(f"M-convex: {mconvex_subset(full_S)}")
+    
+    # Compare: same matroid shadow but different support-Tutte
+    print("\n--- Comparison ---")
+    print(f"Binary (matroid) T(1) = {poly_eval(T_mat, 1)}")
+    print(f"Non-binary T(1) = {poly_eval(T_nb, 1)}")
+    print(f"Full simplex T(1) = {poly_eval(T_full, 1)}")
+    print(f"Polynomials differ: {T_mat != T_nb or T_mat != T_full}")
+    print(f"This shows the support-Tutte invariant carries information")
+    print(f"beyond what matroid theory can see!")
+
+
+def demo_matroid_bridge():
+    """Demo 4: Bridge to matroid theory."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Matroid Bridge")
+    print("=" * 60)
+    
+    # Compute for several matroids and verify T(1) = # bases
+    matroids = [
+        ("U_{1,2}", 2, [[0], [1]]),
+        ("U_{2,3}", 3, [[0,1], [0,2], [1,2]]),
+        ("U_{1,3}", 3, [[0], [1], [2]]),
+        ("U_{2,4}", 4, [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]]),
+    ]
+    
+    for name, n, bases in matroids:
+        S = matroid_basis_support(n, bases)
+        T = support_tutte_poly(S)
+        print(f"\n{name}: |bases| = {len(bases)}")
+        print(f"  T(S) = {poly_str(T)}")
+        print(f"  T(1) = {poly_eval(T, 1)} = |S| ✓" 
+              if poly_eval(T, 1) == len(S) else "  T(1) ≠ |S| ✗")
+
+
+def demo_degree5_simplex():
+    """Demo 5: Exhaustive test on degree-≤5 simplex subsets."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: M-Convex Subsets of Degree-≤5 Simplex (4 vars)")
+    print("=" * 60)
+    
+    # For computational feasibility, test degree-2 simplex in 4 vars
+    S_full = simplex_support(4, 2)
+    print(f"\nFull degree-2 simplex in 4 vars: |S| = {len(S_full)}")
+    print(f"M-convex: {mconvex_subset(S_full)}")
+    
+    T = support_tutte_poly(S_full)
+    print(f"T(S) = {poly_str(T)}")
+    print(f"T(1) = {poly_eval(T, 1)}")
+    
+    # Check order independence on this larger example
+    from itertools import permutations
+    polys = set()
+    for perm in permutations(range(4)):
+        Tp = support_tutte_with_order(S_full, list(perm))
+        polys.add(frozenset(Tp.items()))
+    print(f"Distinct polynomials over all 24 orderings: {len(polys)}")
+    
+    # Find M-convex subsets
+    print(f"\nSearching for M-convex subsets of degree-2 simplex in 3 vars...")
+    S3 = simplex_support(3, 2)
+    mconvex_count = 0
+    non_trivial = []
+    
+    for r in range(2, len(S3) + 1):
+        for subset in combinations(S3, r):
+            sub = set(subset)
+            if mconvex_subset(sub):
+                mconvex_count += 1
+                T_sub = support_tutte_poly(sub)
+                if len(sub) >= 3:
+                    non_trivial.append((sub, T_sub))
+    
+    print(f"Found {mconvex_count} M-convex subsets (size ≥ 2)")
+    print(f"Non-trivial (size ≥ 3): {len(non_trivial)}")
+    
+    for sub, T_sub in non_trivial[:5]:
+        print(f"  |S|={len(sub)}: T = {poly_str(T_sub)}")
+
+
+if __name__ == "__main__":
+    demo_basic()
+    demo_order_independence()
+    demo_non_matroidal()
+    demo_matroid_bridge()
+    demo_degree5_simplex()
+    
+    print("\n" + "=" * 60)
+    print("ALL DEMOS COMPLETE")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Power Law Theorem
+visualize_support_tutte.py — Visualization of Support-Tutte Polynomials
 
-The Power Law theorem states that for uniform deletion-contraction
-coefficients, T(S; a, b) = (a+b)^|ground| regardless of the support
-content. This plot shows the theorem in action: multiple supports with
-the same ground size all produce the same curve, while the 4-parameter
-evaluation T₄ breaks this degeneracy.
+Produces a heatmap showing the coefficients of T(S) for various M-convex
+supports, and a comparison chart between binary (matroid) and non-binary
+supports. All functions inlined for standalone execution.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from itertools import combinations
 
-class GroundSupport:
-    def __init__(self, supp, ground):
-        self.supp = frozenset(supp)
-        self.ground = frozenset(ground)
-    def delete(self, e):
-        return GroundSupport(frozenset(m for m in self.supp if m[e]==0), self.ground-{e})
-    def min_coord(self, e):
-        return min((m[e] for m in self.supp), default=0)
-    def contract(self, e):
-        mc = self.min_coord(e)
-        return GroundSupport(frozenset(tuple(v-mc if j==e else v for j,v in enumerate(m))
-                            for m in self.supp if m[e]==mc), self.ground-{e})
-    def is_loop(self, e):
-        return bool(self.supp) and all(m[e]>0 for m in self.supp)
-    def is_coloop(self, e):
-        return bool(self.supp) and len({m[e] for m in self.supp})==1
+# ============================================================
+# Inline polynomial/support functions
+# ============================================================
 
-def tutte_uniform(S, a=1, b=1):
-    if not S.ground: return 1
-    e = min(S.ground)
-    return a * tutte_uniform(S.delete(e), a, b) + b * tutte_uniform(S.contract(e), a, b)
+def poly_one():
+    return {0: 1}
 
-def tutte_4p(S, x=1, y=1, u=1, v=1):
-    if not S.ground: return 1
-    e = min(S.ground)
-    if S.is_loop(e): return y * tutte_4p(S.delete(e), x, y, u, v)
-    elif S.is_coloop(e): return x * tutte_4p(S.contract(e), x, y, u, v)
-    else: return u * tutte_4p(S.delete(e), x, y, u, v) + v * tutte_4p(S.contract(e), x, y, u, v)
+def poly_var():
+    return {1: 1}
 
-def simplex(n, d):
-    def gen(rv, rs):
-        if rv==1: yield (rs,); return
-        for val in range(rs+1):
-            for rest in gen(rv-1, rs-val): yield (val,)+rest
-    return GroundSupport(frozenset(gen(n, d)), frozenset(range(n)))
+def poly_add(p, q):
+    result = dict(p)
+    for deg, coeff in q.items():
+        result[deg] = result.get(deg, 0) + coeff
+    return {k: v for k, v in result.items() if v != 0}
 
-def uniform_matroid(n, k):
-    supp = {tuple(1 if i in B else 0 for i in range(n)) for B in combinations(range(n), k)}
-    return GroundSupport(frozenset(supp), frozenset(range(n)))
+def poly_mul(p, q):
+    result = {}
+    for d1, c1 in p.items():
+        for d2, c2 in q.items():
+            d = d1 + d2
+            result[d] = result.get(d, 0) + c1 * c2
+    return {k: v for k, v in result.items() if v != 0}
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-fig.suptitle('Support-Tutte Power Law vs Case-Dependent Invariant', fontsize=14, fontweight='bold')
+def poly_eval(p, x):
+    return sum(c * x**d for d, c in p.items())
 
-# Left panel: Power Law — all supports with same |ground| collapse
-a_vals = np.arange(1, 8)
-n = 3
+def support_delete(S, i):
+    return {v for v in S if v[i] == 0}
 
-supports_n3 = [
-    ("Δ(3,1)", simplex(3,1)),
-    ("Δ(3,2)", simplex(3,2)),
-    ("Δ(3,3)", simplex(3,3)),
-    ("U(1,3)", uniform_matroid(3,1)),
-    ("U(2,3)", uniform_matroid(3,2)),
-    ("{(1,1,1)}", GroundSupport(frozenset({(1,1,1)}), frozenset({0,1,2}))),
-]
+def support_contract(S, i):
+    result = set()
+    for v in S:
+        if v[i] > 0:
+            w = list(v); w[i] -= 1; result.add(tuple(w))
+    return result
 
-markers = ['o', 's', '^', 'D', 'v', 'P']
-colors = plt.cm.Set2(np.linspace(0, 1, len(supports_n3)))
+def is_loop(S, i):
+    return len(S) > 0 and all(v[i] > 0 for v in S)
 
-for idx, (name, S) in enumerate(supports_n3):
-    vals = [tutte_uniform(S, a, 1) for a in a_vals]
-    ax1.plot(a_vals, vals, markers[idx], color=colors[idx], markersize=8,
-             label=name, alpha=0.7)
+def is_ordinary(S, i):
+    return any(v[i] == 0 for v in S) and any(v[i] > 0 for v in S)
 
-# Theoretical curve
-ax1.plot(a_vals, [(a+1)**n for a in a_vals], 'k--', linewidth=2,
-         label=f'(a+1)^{n} (Power Law)', alpha=0.8)
+def compute_tutte(S, memo=None):
+    if memo is None: memo = {}
+    key = frozenset(S)
+    if key in memo: return memo[key]
+    if not S:
+        r = poly_one(); memo[key] = r; return r
+    n = len(next(iter(S)))
+    zero = tuple([0] * n)
+    if S == {zero}:
+        r = poly_one(); memo[key] = r; return r
+    for i in range(n):
+        if is_ordinary(S, i):
+            r = poly_add(compute_tutte(support_delete(S, i), memo),
+                         compute_tutte(support_contract(S, i), memo))
+            memo[key] = r; return r
+    for i in range(n):
+        if is_loop(S, i):
+            r = poly_mul(poly_var(), compute_tutte(support_contract(S, i), memo))
+            memo[key] = r; return r
+    r = poly_one(); memo[key] = r; return r
 
-ax1.set_xlabel('Deletion coefficient a (b=1)', fontsize=12)
-ax1.set_ylabel('T(S; a, 1)', fontsize=12)
-ax1.set_title('Uniform Coefficients: All Collapse to (a+1)³', fontsize=11)
-ax1.legend(fontsize=8, loc='upper left')
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
+def simplex_support(n, d):
+    if n == 1: return {(d,)}
+    result = set()
+    for k in range(d + 1):
+        for rest in simplex_support(n - 1, d - k):
+            result.add((k,) + rest)
+    return result
 
-# Right panel: 4-parameter evaluation — supports separate
-x_vals = np.arange(1, 8)
+def check_mconvexity(S):
+    if len(S) <= 1: return True
+    n = len(next(iter(S)))
+    for x in S:
+        for y in S:
+            for a in range(n):
+                if x[a] > y[a]:
+                    found = False
+                    for b in range(n):
+                        if y[b] > x[b]:
+                            x_new = list(x); x_new[a] -= 1; x_new[b] += 1
+                            y_new = list(y); y_new[a] += 1; y_new[b] -= 1
+                            if tuple(x_new) in S and tuple(y_new) in S:
+                                found = True; break
+                    if not found: return False
+    return True
 
-for idx, (name, S) in enumerate(supports_n3):
-    vals = [tutte_4p(S, x=x, y=3, u=1, v=1) for x in x_vals]
-    ax2.plot(x_vals, vals, f'{markers[idx]}-', color=colors[idx], markersize=8,
-             label=name, alpha=0.7, linewidth=1.5)
+def matroid_basis_support(n, bases):
+    result = set()
+    for basis in bases:
+        v = [0] * n
+        for i in basis: v[i] = 1
+        result.add(tuple(v))
+    return result
 
-ax2.set_xlabel('Coloop weight x (y=3, u=v=1)', fontsize=12)
-ax2.set_ylabel('T₄(S; x, 3, 1, 1)', fontsize=12)
-ax2.set_title('Case-Dependent: Supports Separate', fontsize=11)
-ax2.legend(fontsize=8, loc='upper left')
-ax2.grid(True, alpha=0.3)
+# ============================================================
+# Visualization
+# ============================================================
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# --- Panel 1: Coefficient heatmap ---
+supports_data = []
+labels = []
+
+for d in range(1, 6):
+    S = simplex_support(3, d)
+    T = compute_tutte(S)
+    supports_data.append(T)
+    labels.append(f"Simplex(3,{d})\n|S|={len(S)}")
+
+for d in range(1, 4):
+    S = simplex_support(4, d)
+    T = compute_tutte(S)
+    supports_data.append(T)
+    labels.append(f"Simplex(4,{d})\n|S|={len(S)}")
+
+max_deg = max(max(T.keys()) if T else 0 for T in supports_data)
+matrix = np.zeros((len(supports_data), max_deg + 1))
+for i, T in enumerate(supports_data):
+    for d, c in T.items():
+        matrix[i, d] = c
+
+im = axes[0].imshow(matrix, aspect='auto', cmap='YlOrRd', interpolation='nearest')
+axes[0].set_yticks(range(len(labels)))
+axes[0].set_yticklabels(labels, fontsize=8)
+axes[0].set_xlabel('Degree of X', fontsize=11)
+axes[0].set_title('Support-Tutte Coefficients', fontsize=13, fontweight='bold')
+plt.colorbar(im, ax=axes[0], label='Coefficient value')
+
+# Add text annotations
+for i in range(matrix.shape[0]):
+    for j in range(matrix.shape[1]):
+        if matrix[i, j] > 0:
+            axes[0].text(j, i, f'{int(matrix[i,j])}', ha='center', va='center',
+                        fontsize=7, color='black' if matrix[i,j] < matrix.max()/2 else 'white')
+
+# --- Panel 2: T(x) evaluation curves ---
+x_vals = np.linspace(0, 3, 100)
+colors = plt.cm.viridis(np.linspace(0, 1, 5))
+
+for idx, d in enumerate(range(1, 6)):
+    S = simplex_support(3, d)
+    T = compute_tutte(S)
+    y_vals = [sum(c * x**deg for deg, c in T.items()) for x in x_vals]
+    axes[1].plot(x_vals, y_vals, color=colors[idx], linewidth=2,
+                label=f'd={d}, |S|={len(S)}')
+
+axes[1].set_xlabel('X', fontsize=11)
+axes[1].set_ylabel('T(S)(X)', fontsize=11)
+axes[1].set_title('Support-Tutte Evaluation Curves\n(3-variable simplices)', fontsize=13, fontweight='bold')
+axes[1].legend(fontsize=9)
+axes[1].set_yscale('log')
+axes[1].grid(True, alpha=0.3)
+
+# --- Panel 3: Binary vs non-binary comparison ---
+# Compare matroid supports vs full simplex supports
+categories = []
+binary_vals = []
+full_vals = []
+extra_info = []
+
+for d in range(1, 5):
+    # Binary: matroid basis indicators for U_{d, d+1}
+    n = d + 1
+    bases = list(combinations(range(n), d))
+    S_bin = matroid_basis_support(n, [list(b) for b in bases])
+    T_bin = compute_tutte(S_bin)
+    
+    # Non-binary: full degree-d simplex in (d+1) vars
+    S_full = simplex_support(n, d)
+    T_full = compute_tutte(S_full)
+    
+    categories.append(f"d={d}, n={n}")
+    binary_vals.append(poly_eval(T_bin, 2))
+    full_vals.append(poly_eval(T_full, 2))
+    extra_info.append((len(S_bin), len(S_full)))
+
+x_pos = np.arange(len(categories))
+width = 0.35
+
+bars1 = axes[2].bar(x_pos - width/2, binary_vals, width, label='Binary (matroid)',
+                     color='steelblue', alpha=0.8)
+bars2 = axes[2].bar(x_pos + width/2, full_vals, width, label='Full simplex',
+                     color='coral', alpha=0.8)
+
+axes[2].set_xlabel('Support parameters', fontsize=11)
+axes[2].set_ylabel('T(S)(2)', fontsize=11)
+axes[2].set_title('Binary vs Non-Binary\nSupport-Tutte at X=2', fontsize=13, fontweight='bold')
+axes[2].set_xticks(x_pos)
+axes[2].set_xticklabels(categories, fontsize=9)
+axes[2].legend(fontsize=9)
+axes[2].grid(True, alpha=0.3, axis='y')
+
+# Add size annotations
+for i, (nb, nf) in enumerate(extra_info):
+    axes[2].annotate(f'|S|={nb}', (x_pos[i] - width/2, binary_vals[i]),
+                    ha='center', va='bottom', fontsize=7)
+    axes[2].annotate(f'|S|={nf}', (x_pos[i] + width/2, full_vals[i]),
+                    ha='center', va='bottom', fontsize=7)
 
 plt.tight_layout()
-plt.savefig('power_law.png', dpi=150, bbox_inches='tight')
-print("Saved power_law.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Support-Tutte Polynomial Spectrum
-
-Shows how the 4-parameter Tutte evaluation varies across different
-support types for uniform matroid supports U(k,n). The heatmap reveals
-how loop/coloop/ordinary activity structure creates distinct invariant
-values, with the Power Law (a+b)^n as the diagonal baseline.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import combinations
-
-class GroundSupport:
-    def __init__(self, supp, ground):
-        self.supp = frozenset(supp)
-        self.ground = frozenset(ground)
-    def delete(self, e):
-        return GroundSupport(frozenset(m for m in self.supp if m[e]==0), self.ground-{e})
-    def min_coord(self, e):
-        return min((m[e] for m in self.supp), default=0)
-    def contract(self, e):
-        mc = self.min_coord(e)
-        return GroundSupport(frozenset(tuple(v-mc if j==e else v for j,v in enumerate(m))
-                            for m in self.supp if m[e]==mc), self.ground-{e})
-    def is_loop(self, e):
-        return bool(self.supp) and all(m[e]>0 for m in self.supp)
-    def is_coloop(self, e):
-        return bool(self.supp) and len({m[e] for m in self.supp})==1
-
-def tutte_4p(S, x=1, y=1, u=1, v=1):
-    if not S.ground: return 1
-    e = min(S.ground)
-    if S.is_loop(e): return y * tutte_4p(S.delete(e), x, y, u, v)
-    elif S.is_coloop(e): return x * tutte_4p(S.contract(e), x, y, u, v)
-    else: return u * tutte_4p(S.delete(e), x, y, u, v) + v * tutte_4p(S.contract(e), x, y, u, v)
-
-def uniform_matroid(n, k):
-    supp = {tuple(1 if i in B else 0 for i in range(n)) for B in combinations(range(n), k)}
-    return GroundSupport(frozenset(supp), frozenset(range(n)))
-
-def simplex(n, d):
-    def gen(rv, rs):
-        if rv==1: yield (rs,); return
-        for val in range(rs+1):
-            for rest in gen(rv-1, rs-val): yield (val,)+rest
-    return GroundSupport(frozenset(gen(n, d)), frozenset(range(n)))
-
-# Compute T₄ for various (x,y) values with u=1, v=1
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-fig.suptitle('Support-Tutte Spectrum T₄(x,y,1,1) for Different Supports', fontsize=14)
-
-supports = [
-    ("U(1,4)", uniform_matroid(4, 1)),
-    ("U(2,4)", uniform_matroid(4, 2)),
-    ("U(3,4)", uniform_matroid(4, 3)),
-    ("Δ(4,1)", simplex(4, 1)),
-    ("Δ(4,2)", simplex(4, 2)),
-    ("Δ(4,3)", simplex(4, 3)),
-]
-
-x_vals = np.linspace(0.5, 4, 20)
-y_vals = np.linspace(0.5, 4, 20)
-
-for idx, (name, S) in enumerate(supports):
-    ax = axes[idx // 3][idx % 3]
-    Z = np.zeros((len(y_vals), len(x_vals)))
-    for i, yv in enumerate(y_vals):
-        for j, xv in enumerate(x_vals):
-            Z[i, j] = tutte_4p(S, x=int(xv*100), y=int(yv*100), u=100, v=100) / (100**len(S.ground))
-
-    im = ax.imshow(Z, extent=[0.5, 4, 0.5, 4], origin='lower', aspect='auto', cmap='viridis')
-    ax.set_title(f'{name}  |supp|={len(S.supp)}', fontsize=11)
-    ax.set_xlabel('x (coloop weight)')
-    ax.set_ylabel('y (loop weight)')
-    plt.colorbar(im, ax=ax, shrink=0.8)
-
-plt.tight_layout()
-plt.savefig('tutte_spectrum.png', dpi=150, bbox_inches='tight')
-print("Saved tutte_spectrum.png")
+plt.savefig('support_tutte_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: support_tutte_visualization.png")

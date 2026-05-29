@@ -1,263 +1,324 @@
 #!/usr/bin/env python3
 """
-Algorithms for computing support-Tutte polynomials.
+algorithms.py — Core algorithms for support-Tutte polynomial computation.
 
-Implements:
-  1. Recursive deletion-contraction evaluation (exact)
-  2. Memoized version with canonical hashing
-  3. Activity-based expansion
-  4. Symbolic polynomial computation using sympy
+Implements the recursive deletion-contraction algorithm with memoization,
+M-convexity verification, and activity counting.
 """
 
-from typing import Set, Tuple, FrozenSet, Dict, Optional, List
-from functools import lru_cache
+from typing import Set, Tuple, Dict, List, Optional, FrozenSet
+from itertools import combinations, permutations
 from collections import defaultdict
 
-
-# ──────────────────────────────────────────────────────────────────
-# Core Data Structures
-# ──────────────────────────────────────────────────────────────────
-
-class GroundSupport:
-    """
-    A ground support: (supp, ground) where supp ⊆ ℕ^n is a finite set of
-    nonneg integer vectors and ground ⊆ {0,...,n-1} is the active coordinate set.
-
-    Invariant: for all m in supp, m[i] ≠ 0 ⟹ i ∈ ground.
-
-    Time complexity of operations:
-      - delete(e): O(|supp|)
-      - contract(e): O(|supp|)
-      - is_loop(e): O(|supp|)
-      - is_coloop(e): O(|supp|)
-    """
-
-    def __init__(self, supp: FrozenSet[Tuple[int, ...]], ground: FrozenSet[int]):
-        self.supp = supp
-        self.ground = ground
-        self._hash = hash((self.supp, self.ground))
-
-    @classmethod
-    def from_sets(cls, supp: Set[Tuple[int, ...]], ground: Set[int]) -> 'GroundSupport':
-        return cls(frozenset(supp), frozenset(ground))
-
-    def __hash__(self):
-        return self._hash
-
-    def __eq__(self, other):
-        return self.supp == other.supp and self.ground == other.ground
-
-    def __repr__(self):
-        return f"GS(|supp|={len(self.supp)}, |ground|={len(self.ground)})"
-
-    def delete(self, e: int) -> 'GroundSupport':
-        """Deletion: keep m with m[e] = 0, remove e from ground. O(|supp|)."""
-        new_supp = frozenset(m for m in self.supp if m[e] == 0)
-        return GroundSupport(new_supp, self.ground - {e})
-
-    def min_coord(self, e: int) -> int:
-        """Min value at coordinate e. O(|supp|)."""
-        return min((m[e] for m in self.supp), default=0)
-
-    def contract(self, e: int) -> 'GroundSupport':
-        """Contraction: filter to min at e, shift, remove e. O(|supp|)."""
-        mc = self.min_coord(e)
-        filtered = [m for m in self.supp if m[e] == mc]
-        shifted = frozenset(
-            tuple(v - mc if j == e else v for j, v in enumerate(m))
-            for m in filtered
-        )
-        return GroundSupport(shifted, self.ground - {e})
-
-    def is_loop(self, e: int) -> bool:
-        """All elements have m[e] > 0. O(|supp|)."""
-        return bool(self.supp) and all(m[e] > 0 for m in self.supp)
-
-    def is_coloop(self, e: int) -> bool:
-        """All elements share the same m[e] value. O(|supp|)."""
-        if not self.supp:
-            return False
-        vals = {m[e] for m in self.supp}
-        return len(vals) == 1
+ExponentVector = Tuple[int, ...]
+Poly = Dict[int, int]
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 1: Basic Recursive Evaluation
-# ──────────────────────────────────────────────────────────────────
+# ============================================================
+# Polynomial arithmetic
+# ============================================================
 
-def tutte_eval_recursive(S: GroundSupport, a: int = 1, b: int = 1) -> int:
-    """
-    Compute T(S; a, b) via the uniform deletion-contraction recurrence.
+def poly_zero() -> Poly:
+    """The zero polynomial."""
+    return {}
 
-    T(S) = 1                                    if ground = ∅
-    T(S) = a · T(S\\e) + b · T(S/e)            otherwise
+def poly_one() -> Poly:
+    """The constant polynomial 1."""
+    return {0: 1}
 
-    Time: O(2^|ground|) worst case (exponential in ground set size).
-    Space: O(|ground|) stack depth.
+def poly_var() -> Poly:
+    """The variable X."""
+    return {1: 1}
 
-    Result: always equals (a + b)^|ground| (Power Law theorem).
-    """
-    if not S.ground:
-        return 1
-    e = min(S.ground)
-    return a * tutte_eval_recursive(S.delete(e), a, b) + \
-           b * tutte_eval_recursive(S.contract(e), a, b)
+def poly_add(p: Poly, q: Poly) -> Poly:
+    """Add two polynomials."""
+    result = dict(p)
+    for deg, coeff in q.items():
+        result[deg] = result.get(deg, 0) + coeff
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_mul(p: Poly, q: Poly) -> Poly:
+    """Multiply two polynomials."""
+    result: Poly = {}
+    for d1, c1 in p.items():
+        for d2, c2 in q.items():
+            d = d1 + d2
+            result[d] = result.get(d, 0) + c1 * c2
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_eval(p: Poly, x: int) -> int:
+    """Evaluate polynomial at integer x."""
+    return sum(c * x**d for d, c in p.items())
+
+def poly_str(p: Poly) -> str:
+    """Pretty-print a polynomial."""
+    if not p:
+        return "0"
+    terms = []
+    for d in sorted(p.keys(), reverse=True):
+        c = p[d]
+        if d == 0:
+            terms.append(str(c))
+        elif d == 1:
+            terms.append(f"{c}*X" if abs(c) != 1 else ("X" if c > 0 else "-X"))
+        else:
+            terms.append(f"{c}*X^{d}" if abs(c) != 1 else (f"X^{d}" if c > 0 else f"-X^{d}"))
+    return " + ".join(terms).replace("+ -", "- ")
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 2: Memoized Evaluation
-# ──────────────────────────────────────────────────────────────────
+# ============================================================
+# Support operations
+# ============================================================
 
-def tutte_eval_memoized(S: GroundSupport, a: int = 1, b: int = 1,
-                         memo: Optional[Dict] = None) -> int:
-    """
-    Memoized version: caches results by canonical support representation.
+def support_delete(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Delete coordinate i: retain elements with v[i] = 0."""
+    return {v for v in S if v[i] == 0}
 
-    Time: O(|distinct sub-supports| · |supp|) with memoization.
-    Space: O(|distinct sub-supports|).
-    """
-    if memo is None:
-        memo = {}
-    key = (S.supp, S.ground, a, b)
-    if key in memo:
-        return memo[key]
-    if not S.ground:
-        result = 1
-    else:
-        e = min(S.ground)
-        result = a * tutte_eval_memoized(S.delete(e), a, b, memo) + \
-                 b * tutte_eval_memoized(S.contract(e), a, b, memo)
-    memo[key] = result
+def support_contract(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Tutte-style contraction at coordinate i: retain elements with
+    v[i] > 0, subtract 1 from coordinate i."""
+    result = set()
+    for v in S:
+        if v[i] > 0:
+            w = list(v)
+            w[i] -= 1
+            result.add(tuple(w))
     return result
 
+def is_loop(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is a loop (all elements positive)."""
+    return len(S) > 0 and all(v[i] > 0 for v in S)
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 3: 4-Parameter Case-Dependent Evaluation
-# ──────────────────────────────────────────────────────────────────
+def is_ordinary(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is ordinary (both zero and positive values exist)."""
+    has_zero = any(v[i] == 0 for v in S)
+    has_pos = any(v[i] > 0 for v in S)
+    return has_zero and has_pos
 
-def tutte_eval_4param(S: GroundSupport, x: int = 1, y: int = 1,
-                       u: int = 1, v: int = 1) -> int:
+def is_trivial_coord(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is trivial (all elements zero)."""
+    return all(v[i] == 0 for v in S)
+
+
+# ============================================================
+# M-convexity verification
+# ============================================================
+
+def check_mconvexity(S: Set[ExponentVector]) -> bool:
+    """Verify the symmetric exchange property (M-convexity).
+    
+    For every x, y in S and coordinate a with x[a] > y[a],
+    there exists b with y[b] > x[b] such that both
+    x - e_a + e_b and y + e_a - e_b are in S.
+    
+    Time complexity: O(|S|^2 * n^2) where n is the dimension.
     """
-    Case-dependent 4-parameter evaluation.
+    if len(S) <= 1:
+        return True
+    
+    n = len(next(iter(S)))
+    for x in S:
+        for y in S:
+            for a in range(n):
+                if x[a] > y[a]:
+                    found = False
+                    for b in range(n):
+                        if y[b] > x[b]:
+                            x_new = list(x)
+                            x_new[a] -= 1
+                            x_new[b] += 1
+                            y_new = list(y)
+                            y_new[a] += 1
+                            y_new[b] -= 1
+                            if tuple(x_new) in S and tuple(y_new) in S:
+                                found = True
+                                break
+                    if not found:
+                        return False
+    return True
 
-    T(S) = 1                                    if ground = ∅
-    T(S) = y · T(S\\e)                          if e is a loop
-    T(S) = x · T(S/e)                           if e is a coloop
-    T(S) = u · T(S\\e) + v · T(S/e)            if e is ordinary
 
-    The loop/coloop classification makes this non-trivial: different
-    supports with the same ground set may get different T₄ values.
+# ============================================================
+# Support-Tutte polynomial computation
+# ============================================================
 
-    Time: O(|ground|) per path (no branching since ordinary del = con).
+class SupportTutteComputer:
+    """Memoized computation of the support-Tutte polynomial.
+    
+    Algorithm:
+        Recursive deletion-contraction with memoization.
+        At each step, choose the first ordinary or loop coordinate.
+    
+    Correctness:
+        Formally verified in Lean 4 (see SupportTutteUniversality.lean).
+        The universality theorem proves this recursion produces the
+        unique invariant satisfying the deletion-contraction rules.
+    
+    Complexity:
+        Time: O(2^k) where k = number of ordinary coordinates
+        Space: O(2^k) for memoization table
     """
-    if not S.ground:
-        return 1
-    e = min(S.ground)
-    if S.is_loop(e):
-        return y * tutte_eval_4param(S.delete(e), x, y, u, v)
-    elif S.is_coloop(e):
-        return x * tutte_eval_4param(S.contract(e), x, y, u, v)
-    else:
-        return u * tutte_eval_4param(S.delete(e), x, y, u, v) + \
-               v * tutte_eval_4param(S.contract(e), x, y, u, v)
+    
+    def __init__(self):
+        self.memo: Dict[FrozenSet[ExponentVector], Poly] = {}
+        self.call_count = 0
+    
+    def compute(self, S: Set[ExponentVector]) -> Poly:
+        """Compute T(S) with memoization."""
+        self.call_count += 1
+        key = frozenset(S)
+        
+        if key in self.memo:
+            return self.memo[key]
+        
+        result = self._compute_impl(S)
+        self.memo[key] = result
+        return result
+    
+    def _compute_impl(self, S: Set[ExponentVector]) -> Poly:
+        if not S:
+            return poly_one()
+        
+        n = len(next(iter(S)))
+        zero = tuple([0] * n)
+        if S == {zero}:
+            return poly_one()
+        
+        # Try ordinary coordinates first
+        for i in range(n):
+            if is_ordinary(S, i):
+                d = support_delete(S, i)
+                c = support_contract(S, i)
+                return poly_add(self.compute(d), self.compute(c))
+        
+        # Then loop coordinates
+        for i in range(n):
+            if is_loop(S, i):
+                c = support_contract(S, i)
+                return poly_mul(poly_var(), self.compute(c))
+        
+        return poly_one()
+    
+    def activity_data(self, S: Set[ExponentVector]) -> Dict[str, int]:
+        """Count loops, ordinary, and trivial coordinates."""
+        if not S:
+            return {"loops": 0, "ordinary": 0, "trivial": 0}
+        
+        n = len(next(iter(S)))
+        loops = sum(1 for i in range(n) if is_loop(S, i))
+        ordinary = sum(1 for i in range(n) if is_ordinary(S, i))
+        trivial = sum(1 for i in range(n) if is_trivial_coord(S, i))
+        return {"loops": loops, "ordinary": ordinary, "trivial": trivial}
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 4: Activity Expansion
-# ──────────────────────────────────────────────────────────────────
+def compute_support_tutte(S: Set[ExponentVector]) -> Poly:
+    """Convenience function to compute T(S)."""
+    computer = SupportTutteComputer()
+    return computer.compute(S)
 
-def compute_activity_data(S: GroundSupport) -> Dict[str, int]:
+
+# ============================================================
+# Order-independence verification
+# ============================================================
+
+def verify_order_independence(S: Set[ExponentVector],
+                              verbose: bool = False) -> bool:
+    """Verify that the support-Tutte polynomial is independent of
+    the coordinate processing order.
+    
+    Tests all n! permutations of coordinates.
     """
-    Compute the activity data for a ground support under canonical ordering.
-
-    Returns dict with keys: 'loops', 'coloops', 'ordinary', 'total'.
-    Each counts how many coordinates fall into each category during
-    the canonical (min-first) recursion.
-
-    Time: O(|ground| · |supp|).
-    """
-    loops = 0
-    coloops = 0
-    ordinary = 0
-    current = S
-    while current.ground:
-        e = min(current.ground)
-        if current.is_loop(e):
-            loops += 1
-            current = current.delete(e)
-        elif current.is_coloop(e):
-            coloops += 1
-            current = current.contract(e)
-        else:
-            ordinary += 1
-            # For ordinary elements, delete = contract (since min = 0)
-            current = current.delete(e)
-    return {'loops': loops, 'coloops': coloops, 'ordinary': ordinary,
-            'total': loops + coloops + ordinary}
+    if not S:
+        return True
+    
+    n = len(next(iter(S)))
+    results = set()
+    
+    for perm in permutations(range(n)):
+        memo: Dict[FrozenSet, Poly] = {}
+        T = _compute_with_order(S, list(perm), memo)
+        results.add(frozenset(T.items()))
+        if verbose:
+            print(f"  Order {list(perm)}: {poly_str(T)}")
+    
+    return len(results) == 1
 
 
-def tutte_from_activity(activity: Dict[str, int], x=1, y=1, u=1, v=1) -> int:
-    """
-    Compute T₄ from activity data. Since the recursion never branches,
-    T₄ = x^coloops · y^loops · (u+v)^ordinary.
+def _compute_with_order(S: Set[ExponentVector],
+                         order: List[int],
+                         memo: Dict) -> Poly:
+    """Compute T(S) with a specified coordinate processing order."""
+    key = frozenset(S)
+    if key in memo:
+        return memo[key]
+    
+    if not S:
+        return poly_one()
+    
+    n = len(next(iter(S)))
+    zero = tuple([0] * n)
+    if S == {zero}:
+        return poly_one()
+    
+    for i in order:
+        if is_ordinary(S, i):
+            d = support_delete(S, i)
+            c = support_contract(S, i)
+            new_order = [j for j in order if j != i]
+            result = poly_add(
+                _compute_with_order(d, new_order, memo),
+                _compute_with_order(c, new_order, memo)
+            )
+            memo[key] = result
+            return result
+    
+    for i in order:
+        if is_loop(S, i):
+            c = support_contract(S, i)
+            new_order = [j for j in order if j != i]
+            result = poly_mul(poly_var(), _compute_with_order(c, new_order, memo))
+            memo[key] = result
+            return result
+    
+    return poly_one()
 
-    Time: O(1) given activity data.
-    """
-    return (x ** activity['coloops'] *
-            y ** activity['loops'] *
-            (u + v) ** activity['ordinary'])
 
+# ============================================================
+# Enumeration tools
+# ============================================================
 
-# ──────────────────────────────────────────────────────────────────
-# Support Constructors
-# ──────────────────────────────────────────────────────────────────
+def simplex_support(n: int, d: int) -> Set[ExponentVector]:
+    """Generate all vectors in N^n summing to d."""
+    if n == 1:
+        return {(d,)}
+    result = set()
+    for k in range(d + 1):
+        for rest in simplex_support(n - 1, d - k):
+            result.add((k,) + rest)
+    return result
 
-def simplex_support(n: int, d: int) -> GroundSupport:
-    """Degree-d simplex on n variables: {x ∈ ℕ^n : Σx_i = d}."""
-    def gen(rv, rs):
-        if rv == 1: yield (rs,); return
-        for val in range(rs + 1):
-            for rest in gen(rv - 1, rs - val): yield (val,) + rest
-    return GroundSupport.from_sets(set(gen(n, d)), set(range(n)))
+def enumerate_mconvex_subsets(S: Set[ExponentVector],
+                               min_size: int = 2) -> List[Set[ExponentVector]]:
+    """Find all M-convex subsets of S with at least min_size elements."""
+    results = []
+    for r in range(min_size, len(S) + 1):
+        for subset in combinations(S, r):
+            sub = set(subset)
+            if check_mconvexity(sub):
+                results.append(sub)
+    return results
 
-
-def uniform_matroid_support(n: int, k: int) -> GroundSupport:
-    """U(k,n) uniform matroid indicator vectors."""
-    from itertools import combinations
-    supp = {tuple(1 if i in B else 0 for i in range(n))
-            for B in combinations(range(n), k)}
-    return GroundSupport.from_sets(supp, set(range(n)))
-
-
-# ──────────────────────────────────────────────────────────────────
-# Example Usage
-# ──────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
-
-    # Algorithm 1: Basic recursive
-    S = simplex_support(4, 3)
-    print(f"Simplex Δ(4,3): |supp|={len(S.supp)}, |ground|={len(S.ground)}")
-    print(f"  Recursive T(1,1) = {tutte_eval_recursive(S, 1, 1)}")
-    print(f"  Memoized  T(1,1) = {tutte_eval_memoized(S, 1, 1)}")
-    print(f"  Expected  (1+1)^4 = {2**4}")
-
-    # Algorithm 3: 4-parameter
-    print(f"\n  T₄(x=2,y=3,u=1,v=1) = {tutte_eval_4param(S, 2, 3, 1, 1)}")
-
-    # Algorithm 4: Activity expansion
-    act = compute_activity_data(S)
-    print(f"\n  Activity data: {act}")
-    print(f"  T₄ from activity: {tutte_from_activity(act, 2, 3, 1, 1)}")
-    print(f"  Matches direct: {tutte_eval_4param(S, 2, 3, 1, 1) == tutte_from_activity(act, 2, 3, 1, 1)}")
-
-    # Comparison table
-    print(f"\n{'Support':<20} {'Loops':>5} {'Colps':>5} {'Ord':>5} {'T₄(5,3,2,7)':>12}")
-    print(f"{'─'*20} {'─'*5} {'─'*5} {'─'*5} {'─'*12}")
-    for n in range(2, 6):
-        for k in range(1, n):
-            S = uniform_matroid_support(n, k)
-            act = compute_activity_data(S)
-            val = tutte_from_activity(act, 5, 3, 2, 7)
-            print(f"U({k},{n}){'':<14} {act['loops']:>5} {act['coloops']:>5} {act['ordinary']:>5} {val:>12}")
+    # Quick self-test
+    print("Self-test of algorithms.py")
+    
+    S = simplex_support(3, 2)
+    computer = SupportTutteComputer()
+    T = computer.compute(S)
+    print(f"Simplex(3,2): T = {poly_str(T)}, T(1) = {poly_eval(T, 1)}, |S| = {len(S)}")
+    assert poly_eval(T, 1) == len(S), "Cardinality check failed!"
+    
+    assert verify_order_independence(S), "Order independence failed!"
+    
+    print("All self-tests passed!")
