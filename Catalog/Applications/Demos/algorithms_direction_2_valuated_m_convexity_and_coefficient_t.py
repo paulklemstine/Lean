@@ -1,383 +1,314 @@
 #!/usr/bin/env python3
 """
-Algorithms for Valuated M-Convex Exchange Analysis
+algorithms.py — Algorithms for Valuated M-Convex Exchange Analysis
 
-Implements algorithms for:
-1. Computing minimal exchange constants
-2. Checking valuated exchange properties
-3. Derivative transport analysis
-4. Log-concavity verification along exchange rays
-
-All algorithms use exact rational arithmetic for mathematical correctness.
+Implements:
+1. ValuatedExchangeChecker: verify exchange property with optimal K
+2. DerivativeTransportAnalyzer: compute transport constants under differentiation
+3. LogConcavityVerifier: check reversed log-concavity on exchange slices
 """
 
-import itertools
-from fractions import Fraction
+from itertools import combinations
 from typing import Dict, Tuple, List, Optional, Set
+import math
+
+
+# ─── Core Types ────────────────────────────────────────────────────────────
 
 Exponent = Tuple[int, ...]
-CoeffMap = Dict[Exponent, Fraction]
+Polynomial = Dict[Exponent, float]
 
+
+# ─── Algorithm 1: Valuated Exchange Checker ────────────────────────────────
 
 class ValuatedExchangeChecker:
-    """Algorithm for checking and analyzing the valuated M-convex exchange property.
-    
-    Given a polynomial represented as a coefficient map, this class provides
-    methods to:
-    - Check if ValuatedExchange(p, K) holds
-    - Compute the minimal K
-    - Analyze exchange configurations
-    - Verify log-concavity along exchange rays
-    
-    Time complexity:
-        check_exchange: O(|supp|^2 * n^2) where n = number of variables
-        minimal_K: O(|supp|^2 * n^2)
-        
-    Space complexity: O(|supp|)
     """
-    
-    def __init__(self, poly: CoeffMap, n: int):
-        """Initialize with a polynomial and number of variables.
-        
-        Args:
-            poly: Dictionary mapping exponent tuples to coefficients
-            n: Number of variables
-        """
-        self.poly = {k: v for k, v in poly.items() if v != 0}
-        self.n = n
+    Check the valuated exchange property for a polynomial.
+
+    Given p with support S and coefficients c, verifies:
+      ∀ a,b ∈ S, ∀ i with b_i < a_i:
+        ∃ j with a_j < b_j such that
+          c(a)·c(b) ≤ K · c(a')·c(b')
+    where a' = a - e_i + e_j, b' = b + e_i - e_j.
+
+    Time complexity: O(|S|² · n²) where n = number of variables
+    Space complexity: O(|S|)
+    """
+
+    def __init__(self, poly: Polynomial):
+        """Initialize with a polynomial (dict: exponent -> coefficient)."""
+        self.poly = {k: v for k, v in poly.items() if abs(v) > 1e-15}
         self.support = list(self.poly.keys())
-    
-    def coeff(self, exp: Exponent) -> Fraction:
-        """Get coefficient of exponent vector."""
-        return self.poly.get(exp, Fraction(0))
-    
-    @staticmethod
-    def exchange_down(a: Exponent, i: int, j: int) -> Optional[Exponent]:
-        """Compute a - e_i + e_j (decrease i, increase j)."""
-        if a[i] < 1:
+        self.n = len(self.support[0]) if self.support else 0
+
+    def exchange_down(self, a: Exponent, i: int, j: int) -> Optional[Exponent]:
+        """Compute a - e_i + e_j, None if a[i] == 0."""
+        if a[i] == 0:
             return None
-        result = list(a)
-        result[i] -= 1
-        result[j] += 1
-        return tuple(result)
-    
-    @staticmethod
-    def exchange_up(b: Exponent, i: int, j: int) -> Optional[Exponent]:
-        """Compute b + e_i - e_j (increase i, decrease j)."""
-        if b[j] < 1:
+        v = list(a)
+        v[i] -= 1
+        v[j] += 1
+        return tuple(v)
+
+    def exchange_up(self, b: Exponent, i: int, j: int) -> Optional[Exponent]:
+        """Compute b + e_i - e_j, None if b[j] == 0."""
+        if b[j] == 0:
             return None
-        result = list(b)
-        result[i] += 1
-        result[j] -= 1
-        return tuple(result)
-    
-    def check_exchange(self, K: Fraction) -> Tuple[bool, List[dict]]:
-        """Check if ValuatedExchange(p, K) holds.
-        
-        Algorithm:
-            For each pair (a, b) in support × support:
-                For each coordinate i with b_i < a_i:
-                    Search for exchange witness j with a_j < b_j
-                    such that the four-point inequality holds.
-        
-        Args:
-            K: Exchange constant
-            
-        Returns:
-            (success, violations) where violations is a list of
-            dicts describing any failed exchange configurations.
+        v = list(b)
+        v[i] += 1
+        v[j] -= 1
+        return tuple(v)
+
+    def check(self, K: float = 1.0) -> Tuple[bool, float, List[dict]]:
         """
+        Check ValuatedExchange(p, K).
+
+        Returns:
+            (holds, optimal_K, violations)
+            - holds: whether the property holds with constant K
+            - optimal_K: minimal K for which it holds
+            - violations: list of exchange squares where K is tight
+
+        Pseudocode:
+            optimal_K ← 0
+            for each (a, b) in S × S:
+                for each i with b[i] < a[i]:
+                    best_ratio ← ∞
+                    for each j with a[j] < b[j]:
+                        a' ← exchange_down(a, i, j)
+                        b' ← exchange_up(b, i, j)
+                        if a' ∈ S and b' ∈ S:
+                            ratio ← c(a)·c(b) / (c(a')·c(b'))
+                            best_ratio ← min(best_ratio, ratio)
+                    optimal_K ← max(optimal_K, best_ratio)
+            return (optimal_K ≤ K, optimal_K)
+        """
+        optimal_K = 0.0
         violations = []
-        
+
         for a in self.support:
             for b in self.support:
                 for i in range(self.n):
                     if b[i] >= a[i]:
                         continue
-                    
-                    found_witness = False
+                    best_ratio = float('inf')
+                    best_witness = None
                     for j in range(self.n):
                         if a[j] >= b[j]:
                             continue
-                        
                         a_prime = self.exchange_down(a, i, j)
                         b_prime = self.exchange_up(b, i, j)
-                        
                         if a_prime is None or b_prime is None:
                             continue
-                        
-                        ca = self.coeff(a)
-                        cb = self.coeff(b)
-                        ca_prime = self.coeff(a_prime)
-                        cb_prime = self.coeff(b_prime)
-                        
-                        if ca_prime != 0 and cb_prime != 0:
-                            if ca * cb <= K * ca_prime * cb_prime:
-                                found_witness = True
-                                break
-                    
-                    if not found_witness:
-                        violations.append({
-                            'a': a, 'b': b, 'coord': i,
-                            'ca': self.coeff(a), 'cb': self.coeff(b)
-                        })
-                        return False, violations
-        
-        return True, violations
-    
-    def minimal_K(self) -> Fraction:
-        """Compute the minimal exchange constant K.
-        
-        Algorithm:
-            For each exchange configuration (a, b, i), compute the minimum
-            ratio ca*cb / (ca'*cb') over all valid witnesses j.
-            Return the maximum such minimum ratio.
-        
-        Time: O(|supp|^2 * n^2)
-        
-        Returns:
-            Minimal K such that ValuatedExchange(p, K) holds,
-            or Fraction(0) if no non-trivial exchange configurations exist.
-        """
-        max_ratio = Fraction(0)
-        
-        for a in self.support:
-            for b in self.support:
-                for i in range(self.n):
-                    if b[i] >= a[i]:
-                        continue
-                    
-                    best_ratio_for_config = None
-                    
-                    for j in range(self.n):
-                        if a[j] >= b[j]:
+                        if a_prime not in self.poly or b_prime not in self.poly:
                             continue
-                        
-                        a_prime = self.exchange_down(a, i, j)
-                        b_prime = self.exchange_up(b, i, j)
-                        
-                        if a_prime is None or b_prime is None:
-                            continue
-                        
-                        ca_prime = self.coeff(a_prime)
-                        cb_prime = self.coeff(b_prime)
-                        
-                        if ca_prime != 0 and cb_prime != 0:
-                            ca = self.coeff(a)
-                            cb = self.coeff(b)
-                            ratio = (ca * cb) / (ca_prime * cb_prime)
-                            if best_ratio_for_config is None or ratio < best_ratio_for_config:
-                                best_ratio_for_config = ratio
-                    
-                    if best_ratio_for_config is not None:
-                        max_ratio = max(max_ratio, best_ratio_for_config)
-        
-        return max_ratio
-    
-    def exchange_configurations(self) -> List[dict]:
-        """Enumerate all exchange configurations with their ratios.
-        
-        Returns a list of dicts, each containing:
-            a, b: exponent vectors
-            i: coordinate with b_i < a_i
-            witnesses: list of (j, a', b', ratio) for each valid witness
-        """
-        configs = []
-        
-        for a in self.support:
-            for b in self.support:
-                for i in range(self.n):
-                    if b[i] >= a[i]:
-                        continue
-                    
-                    witnesses = []
-                    for j in range(self.n):
-                        if a[j] >= b[j]:
-                            continue
-                        
-                        a_prime = self.exchange_down(a, i, j)
-                        b_prime = self.exchange_up(b, i, j)
-                        
-                        if a_prime is None or b_prime is None:
-                            continue
-                        
-                        ca = self.coeff(a)
-                        cb = self.coeff(b)
-                        ca_prime = self.coeff(a_prime)
-                        cb_prime = self.coeff(b_prime)
-                        
-                        if ca_prime != 0 and cb_prime != 0:
-                            ratio = (ca * cb) / (ca_prime * cb_prime)
-                            witnesses.append({
-                                'j': j,
-                                'a_prime': a_prime,
-                                'b_prime': b_prime,
-                                'ratio': ratio
+                        lhs = self.poly[a] * self.poly[b]
+                        rhs = self.poly[a_prime] * self.poly[b_prime]
+                        if abs(rhs) > 1e-15:
+                            ratio = lhs / rhs
+                            if ratio < best_ratio:
+                                best_ratio = ratio
+                                best_witness = (j, a_prime, b_prime, ratio)
+
+                    if best_ratio != float('inf'):
+                        optimal_K = max(optimal_K, best_ratio)
+                        if best_ratio > K + 1e-12:
+                            violations.append({
+                                'a': a, 'b': b, 'i': i,
+                                'witness': best_witness,
+                                'ratio': best_ratio
                             })
-                    
-                    if witnesses:
-                        configs.append({
-                            'a': a, 'b': b, 'i': i,
-                            'witnesses': witnesses
-                        })
-        
-        return configs
-    
-    def check_slice_logconcavity(self, i: int, j: int) -> List[dict]:
-        """Check log-concavity along the (i,j)-exchange ray.
-        
-        For each exponent m in the support with m_i ≥ 1 and m_j ≥ 1,
-        check whether:
-            coeff(m)^2 ≤ K * coeff(m - e_i + e_j) * coeff(m + e_i - e_j)
-            
-        This is the slice log-concavity condition that bridges valuated
-        exchange to Lorentzian polynomial theory.
-        
-        Args:
-            i, j: Coordinate pair defining the exchange ray
-            
-        Returns:
-            List of dicts with exponent, LHS, RHS, and whether inequality holds
+
+        return (optimal_K <= K + 1e-12, optimal_K, violations)
+
+
+# ─── Algorithm 2: Derivative Transport Analyzer ───────────────────────────
+
+class DerivativeTransportAnalyzer:
+    """
+    Analyze how the valuated exchange constant transforms under differentiation.
+
+    Uses the coefficient transport identity:
+        coeff_m(∂_i p) = (m_i + 1) · coeff_{m + e_i}(p)
+
+    to predict the derivative exchange constant from the original.
+
+    Time complexity: O(|S| · n) for derivative computation +
+                     O(|S'|² · n²) for exchange checking
+    """
+
+    def __init__(self, poly: Polynomial):
+        self.poly = {k: v for k, v in poly.items() if abs(v) > 1e-15}
+        self.n = len(list(self.poly.keys())[0]) if self.poly else 0
+
+    def partial_derivative(self, var: int) -> Polynomial:
+        """Compute ∂_{var} p using the coefficient transport identity."""
+        result: Polynomial = {}
+        for exp, coeff in self.poly.items():
+            if exp[var] > 0:
+                new_exp = list(exp)
+                new_exp[var] -= 1
+                new_exp_t = tuple(new_exp)
+                c = coeff * exp[var]
+                result[new_exp_t] = result.get(new_exp_t, 0.0) + c
+        return {k: v for k, v in result.items() if abs(v) > 1e-15}
+
+    def analyze_transport(self) -> Dict[int, dict]:
         """
-        results = []
-        
-        for m in self.support:
-            if m[i] < 1 or m[j] < 1:
+        For each variable, compute derivative and check exchange property.
+
+        Returns dict: var -> {
+            'derivative': Polynomial,
+            'optimal_K': float,
+            'holds_K1': bool,
+            'rescaling_bound': float  # theoretical upper bound
+        }
+        """
+        results = {}
+        # First check original
+        checker = ValuatedExchangeChecker(self.poly)
+        _, orig_K, _ = checker.check()
+
+        for var in range(self.n):
+            dp = self.partial_derivative(var)
+            if not dp:
+                results[var] = {
+                    'derivative': dp,
+                    'optimal_K': 0.0,
+                    'holds_K1': True,
+                    'original_K': orig_K,
+                }
                 continue
-            
-            cm = self.coeff(m)
-            
-            m_down = self.exchange_down(m, i, j)
-            m_up = self.exchange_up(m, i, j)
-            
-            if m_down is None or m_up is None:
-                continue
-            
-            c_down = self.coeff(m_down)
-            c_up = self.coeff(m_up)
-            
-            lhs = cm * cm
-            rhs = c_down * c_up
-            
-            results.append({
-                'exponent': m,
-                'coeff': cm,
-                'coeff_down': c_down,
-                'coeff_up': c_up,
-                'lhs': lhs,
-                'rhs': rhs,
-                'logconcave': lhs <= rhs if rhs > 0 else (lhs == 0)
-            })
-        
+
+            dp_checker = ValuatedExchangeChecker(dp)
+            _, dp_K, _ = dp_checker.check()
+
+            results[var] = {
+                'derivative': dp,
+                'optimal_K': dp_K,
+                'holds_K1': dp_K <= 1.0 + 1e-12,
+                'original_K': orig_K,
+            }
+
         return results
 
 
-def partial_derivative(poly: CoeffMap, var: int, n: int) -> CoeffMap:
-    """Compute partial derivative using coefficient transport.
-    
-    Uses the identity: coeff_m(∂_i p) = (m_i + 1) * coeff_{m+e_i}(p)
-    
-    Time: O(|supp|)
-    Space: O(|supp|)
+# ─── Algorithm 3: Log-Concavity Verifier ──────────────────────────────────
+
+class LogConcavityVerifier:
     """
-    result: CoeffMap = {}
-    for exp, coeff in poly.items():
-        if exp[var] > 0:
-            new_exp = list(exp)
-            new_exp[var] -= 1
-            new_exp = tuple(new_exp)
-            factor = Fraction(exp[var])
-            if new_exp in result:
-                result[new_exp] += coeff * factor
-            else:
-                result[new_exp] = coeff * factor
-    return {k: v for k, v in result.items() if v != 0}
+    Verify the reversed log-concavity consequence of valuated exchange.
 
+    For each m in support and pair (i,j), checks:
+        c(m + e_i - e_j) · c(m - e_i + e_j) ≤ K · c(m)²
 
-def derivative_transport_analysis(poly: CoeffMap, n: int) -> dict:
-    """Analyze how exchange constants transform under all partial derivatives.
-    
-    Algorithm:
-        1. Compute minimal K for the original polynomial.
-        2. For each variable i, compute ∂_i p and its minimal K.
-        3. Report the scaling ratio K(∂_i p) / K(p).
-    
-    Returns:
-        Dictionary with original K, derivative K values, and scaling ratios.
+    This is the Lorentzian signature condition on exchange slices.
     """
-    checker = ValuatedExchangeChecker(poly, n)
-    K_orig = checker.minimal_K()
-    
-    results = {'K_original': K_orig, 'derivatives': []}
-    
-    for var in range(n):
-        dp = partial_derivative(poly, var, n)
-        dp_checker = ValuatedExchangeChecker(dp, n)
-        K_deriv = dp_checker.minimal_K()
-        
-        ratio = float(K_deriv / K_orig) if K_orig > 0 else 0.0
-        
-        results['derivatives'].append({
-            'variable': var,
-            'K_derivative': K_deriv,
-            'ratio': ratio,
-            'preserves_K1': K_deriv <= Fraction(1)
-        })
-    
-    return results
+
+    def __init__(self, poly: Polynomial):
+        self.poly = {k: v for k, v in poly.items() if abs(v) > 1e-15}
+        self.support = set(self.poly.keys())
+        self.n = len(list(self.poly.keys())[0]) if self.poly else 0
+
+    def check_slice_logconcavity(self, K: float = 1.0) -> Tuple[bool, float, List[dict]]:
+        """
+        Check reversed log-concavity on all exchange slices.
+
+        Returns (holds, optimal_K, tight_cases).
+        """
+        optimal_K = 0.0
+        tight_cases = []
+
+        for m in self.support:
+            for i in range(self.n):
+                for j in range(self.n):
+                    if i == j:
+                        continue
+                    if m[i] == 0 or m[j] == 0:
+                        continue
+                    # m + e_i - e_j
+                    plus = list(m)
+                    plus[i] += 1
+                    plus[j] -= 1
+                    plus_t = tuple(plus)
+                    # m - e_i + e_j
+                    minus = list(m)
+                    minus[i] -= 1
+                    minus[j] += 1
+                    minus_t = tuple(minus)
+
+                    if plus_t not in self.support or minus_t not in self.support:
+                        continue
+
+                    lhs = self.poly[plus_t] * self.poly[minus_t]
+                    rhs = self.poly[m] ** 2
+
+                    if abs(rhs) > 1e-15:
+                        ratio = lhs / rhs
+                        optimal_K = max(optimal_K, ratio)
+                        if ratio > K + 1e-12:
+                            tight_cases.append({
+                                'm': m, 'i': i, 'j': j,
+                                'ratio': ratio
+                            })
+
+        return (optimal_K <= K + 1e-12, optimal_K, tight_cases)
 
 
-def uniform_matroid_poly(n: int, d: int, 
-                          weights: Optional[Dict[Tuple[int,...], Fraction]] = None) -> CoeffMap:
-    """Construct weighted uniform matroid basis-generating polynomial."""
-    poly: CoeffMap = {}
-    for subset in itertools.combinations(range(n), d):
-        exp = tuple(1 if i in subset else 0 for i in range(n))
-        w = weights.get(subset, Fraction(1)) if weights else Fraction(1)
-        poly[exp] = w
-    return poly
+# ─── Utility Functions ────────────────────────────────────────────────────
 
+def basis_vectors(n: int, d: int) -> List[Exponent]:
+    """Generate all d-element subset indicator vectors in {0,1}^n."""
+    vecs = []
+    for S in combinations(range(n), d):
+        v = [0] * n
+        for i in S:
+            v[i] = 1
+        vecs.append(tuple(v))
+    return vecs
+
+def weighted_uniform_poly(n: int, d: int, weights: List[float]) -> Polynomial:
+    """Create weighted uniform matroid polynomial with given weights."""
+    bases = basis_vectors(n, d)
+    return {bases[i]: weights[i] for i in range(min(len(bases), len(weights)))
+            if abs(weights[i]) > 1e-15}
+
+
+# ─── Example Usage ────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Valuated Exchange Algorithm Demonstration")
-    print("=" * 50)
-    
-    # Example: U(2,4) with random weights
-    n, d = 4, 2
-    weights = {
-        (0, 1): Fraction(3), (0, 2): Fraction(2), (0, 3): Fraction(5),
-        (1, 2): Fraction(7), (1, 3): Fraction(4), (2, 3): Fraction(1)
-    }
-    
-    poly = uniform_matroid_poly(n, d, weights)
-    checker = ValuatedExchangeChecker(poly, n)
-    
-    print(f"\nPolynomial: U({d},{n}) with weights")
-    for exp, c in sorted(poly.items()):
-        print(f"  coeff{exp} = {c}")
-    
-    K_min = checker.minimal_K()
-    print(f"\nMinimal exchange constant K = {K_min} = {float(K_min):.4f}")
-    
-    ok, _ = checker.check_exchange(K_min)
-    print(f"ValuatedExchange(p, {K_min}): {ok}")
-    
-    # Exchange configurations
-    configs = checker.exchange_configurations()
-    print(f"\nTotal exchange configurations: {len(configs)}")
-    
-    # Derivative transport analysis
-    analysis = derivative_transport_analysis(poly, n)
-    print(f"\nDerivative transport analysis:")
-    for d_info in analysis['derivatives']:
-        print(f"  ∂/∂x{d_info['variable']}: K = {d_info['K_derivative']}, "
-              f"ratio = {d_info['ratio']:.4f}, "
-              f"preserves K=1: {d_info['preserves_K1']}")
-    
-    # Slice log-concavity
-    print(f"\nSlice log-concavity along (0,1)-ray:")
-    lc_results = checker.check_slice_logconcavity(0, 1)
-    for r in lc_results:
-        print(f"  exp={r['exponent']}: {r['coeff']}² = {r['lhs']} "
-              f"{'≤' if r['logconcave'] else '>'} "
-              f"{r['coeff_down']}·{r['coeff_up']} = {r['rhs']}")
+    import random
+    random.seed(42)
+
+    print("Algorithm 1: ValuatedExchangeChecker")
+    print("-" * 50)
+    # U(2,3) with equal weights
+    p = weighted_uniform_poly(3, 2, [1.0, 1.0, 1.0])
+    checker = ValuatedExchangeChecker(p)
+    holds, opt_K, violations = checker.check(1.0)
+    print(f"U(2,3) equal weights: holds={holds}, optimal K={opt_K:.4f}")
+
+    # U(2,3) with unequal weights
+    p2 = weighted_uniform_poly(3, 2, [1.0, 2.0, 3.0])
+    checker2 = ValuatedExchangeChecker(p2)
+    holds2, opt_K2, _ = checker2.check(1.0)
+    print(f"U(2,3) weights [1,2,3]: holds={holds2}, optimal K={opt_K2:.4f}")
+
+    print("\nAlgorithm 2: DerivativeTransportAnalyzer")
+    print("-" * 50)
+    analyzer = DerivativeTransportAnalyzer(p2)
+    results = analyzer.analyze_transport()
+    for var, info in results.items():
+        print(f"∂_{var}: optimal K = {info['optimal_K']:.4f}, K=1 holds: {info['holds_K1']}")
+
+    print("\nAlgorithm 3: LogConcavityVerifier")
+    print("-" * 50)
+    # Need a polynomial with richer support for meaningful log-concavity
+    p3 = weighted_uniform_poly(4, 2, [1.0, 2.0, 1.5, 0.8, 1.2, 1.0])
+    verifier = LogConcavityVerifier(p3)
+    holds3, opt_K3, tight = verifier.check_slice_logconcavity(1.0)
+    print(f"U(2,4) reversed log-concavity: holds={holds3}, optimal K={opt_K3:.4f}")
+    if tight:
+        print(f"  Tight cases: {len(tight)}")
+        for tc in tight[:3]:
+            print(f"    m={tc['m']}, i={tc['i']}, j={tc['j']}, ratio={tc['ratio']:.4f}")
