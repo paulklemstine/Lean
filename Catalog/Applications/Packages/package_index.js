@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Information Theory",
     "date": "2026-05-29T03:38:33Z",
     "exp_id": "8c1a4c4e",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5472424489795918,
+    "quality": "partial",
     "pkg_num": 286
   },
   {
@@ -8303,8 +8303,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-29T03:38:33Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5472424489795918,
+      "quality": "partial"
     }
   ],
   "edges": [
