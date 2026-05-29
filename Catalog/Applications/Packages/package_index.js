@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Combinatorial Optimization",
     "date": "2026-05-29T08:42:39Z",
     "exp_id": "c4f35c03",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7126957433962264,
+    "quality": "substantial",
     "pkg_num": 306
   },
   {
@@ -8883,8 +8883,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-29T08:42:39Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7126957433962264,
+      "quality": "substantial"
     }
   ],
   "edges": [
