@@ -1,100 +1,89 @@
-# When Cycles Collide: How Overlapping Loops Unlock Hidden Structure in Networks
+# When Circles Collide: How Overlapping Cycles Reveal Hidden Structure in Networks
 
-## The Puzzle of Tangled Circuits
+## The Particle Problem
 
-Imagine you are an engineer designing a power grid. You have mapped every wire, every substation, every closed loop where electricity can circulate. Some loops are completely independent — a failure in one has no effect on another. But other loops share wires, and when something goes wrong in a shared section, the failure cascades through every loop that touches it.
+Imagine you are a physicist studying a gas of particles in a box. Each particle bounces around independently, and you can describe the whole system by describing each particle separately. Life is simple—because the particles don't interact.
 
-Now here is the question that has quietly obsessed a small group of mathematicians: *Can you predict the behavior of the entire system just by looking at which loops share wires?*
+Now turn on the forces between them. Suddenly, particles that are close enough begin to push and pull each other. The system can no longer be understood one particle at a time. Instead, you need to identify which clusters of particles are interacting and analyze each cluster as a unit. Particles in different clusters—too far apart to influence each other—can still be treated independently. The hard physics happens inside each cluster.
 
-The answer, it turns out, is surprisingly close to "yes." And the mathematics behind it connects power grids to error-correcting codes, internet routing, molecular biology, and a strange branch of algebra where the usual rules of addition are replaced by something called the "tropical" semiring.
+This is exactly the situation that arises in a seemingly unrelated corner of mathematics—the study of cycles in networks. And a new set of results shows that the same decomposition principle, the same clustering of interactions, governs the algebraic structure of network cycles in a surprisingly precise way.
 
-## A World Where Maximum Replaces Addition
+## Cycles in Networks
 
-To understand the breakthrough, we need a quick detour into one of the most counterintuitive branches of modern mathematics: tropical algebra.
+A network—what mathematicians call a graph—is a collection of nodes connected by links. Think of cities connected by roads, neurons connected by synapses, or computers connected by cables. One of the most fundamental features of any network is its cycles: closed loops where you can start at one node, follow links through other nodes, and return to where you began without retracing your steps.
 
-In ordinary arithmetic, 2 + 3 = 5 and 2 × 3 = 6. In tropical arithmetic, the "addition" operation is replaced by taking the maximum: 2 ⊕ 3 = max(2, 3) = 3. And "multiplication" becomes ordinary addition: 2 ⊗ 3 = 2 + 3 = 5. This may sound like a mathematical parlor trick, but tropical mathematics has turned out to be a profound tool for optimization, combinatorics, and algebraic geometry.
+Cycles are everywhere. In an electrical circuit, current flows in loops. In a social network, cycles represent closed chains of acquaintance. In a transportation system, cycles are circular routes. Understanding the cycle structure of a network is one of the oldest problems in mathematics, going back to Euler's famous analysis of the bridges of Königsberg in 1736.
 
-When you study a network — say, a graph with vertices and edges — you can build a matrix called the Laplacian that encodes the network's structure. The "tropical kernel" of this Laplacian is the set of all assignments of values to the vertices that are balanced at every internal vertex, in a tropical sense. Think of it as the set of all equilibrium configurations of the network under tropical rules.
+Every cycle has a *support*—the set of nodes it passes through. A triangle in a social network has a support of three people. A hexagonal ring in a chemical molecule has a support of six atoms. The support is the cycle's footprint on the network.
 
-Just as in ordinary linear algebra, where you want to find a basis — a minimal set of vectors from which you can build everything else — in tropical algebra you want to find a minimal generating family for the kernel. The question is: *How unique is this family?*
+When a network has multiple independent cycles, their supports tell you where each cycle "lives." And here is where things get interesting: sometimes those supports overlap.
 
-## The Easy Case: Independent Loops
+## The Disjoint World
 
-About five years ago, researchers established a clean answer in the simplest case. If the loops (cycles) in your network have completely separate wires — no two cycles share any vertex — then the minimal generating family is essentially unique. "Essentially" here means unique up to tropical projective equivalence: you can relabel the generators and shift each one by a constant, but that is all. The structure is rigid.
+Until recently, the best-understood case was the one where cycle supports don't overlap at all—where each cycle occupies its own private territory in the network.
 
-This is analogous to a classical result in linear algebra: a basis for a vector space is unique up to invertible linear transformation. The tropical version is more surprising because tropical algebra lacks many tools that make classical proofs work — there are no negatives, no subtraction, no notion of "solving equations" in the usual sense.
+In this disjoint regime, there is a beautiful uniqueness theorem. To state it, we need a concept from *tropical mathematics*—a variant of ordinary algebra where addition is replaced by taking minimums and multiplication is replaced by ordinary addition. (Yes, mathematicians really do this, and it turns out to be enormously useful in optimization, computational biology, and algebraic geometry.)
 
-But here is the catch: the disjoint-support case is the *non-interacting* regime. It is the easy case. Real networks have overlapping cycles. The wires in a power grid do not politely avoid each other; they criss-cross and share infrastructure constantly. What happens then?
+The tropical kernel of a network is a mathematical object that encodes all the cycle information at once. When cycle supports are disjoint, the theorem says that the "generators" of this tropical kernel—the building blocks from which all cycle information can be reconstructed—are essentially unique. There's only one way to decompose the cycle structure into independent pieces, up to trivial relabeling and shifting.
 
-## The Overlap Map
+This is elegant, but limited. In most real networks, cycles share nodes. The cycles in a road network share intersections. The loops in a protein's backbone share amino acids. What happens when supports collide?
 
-The new work introduces a remarkably simple construction: the **support interaction graph**.
+## The Overlap Graph
 
-Take all the cycle supports in your network — the sets of vertices that each cycle passes through. Now build a new graph: one vertex for each cycle support, and draw an edge between two supports whenever they share at least one vertex. This is the overlap graph. Its connected components are called **overlap classes**.
+The new theory begins with a deceptively simple idea: build a graph of the overlaps.
 
-The definition is elementary, but its consequences are deep. Here is the main discovery:
+Given a family of cycle supports, create a new network—the *overlap graph*—whose nodes are the supports themselves and whose links connect any two supports that share at least one element. Two cycles that pass through a common node are linked; two cycles with no nodes in common are not.
 
-> **The number of overlap classes is an invariant of tropical projective equivalence.**
+The connected components of this overlap graph are called *overlap classes*. Supports in the same class are connected by chains of shared elements. Supports in different classes have no shared elements whatsoever—not directly, and not through any chain of intermediaries.
 
-In plain language: no matter how you choose your minimal generating family, no matter how you relabel or shift the generators, the overlap class structure remains the same. The overlap classes are not an artifact of any particular choice — they are intrinsic to the network.
+This simple construction turns out to be exactly the right decomposition.
 
-## Why This Matters
+## The Factorization Theorem
 
-This result elevates the overlap class count from a combinatorial curiosity to a genuine algebraic invariant. To understand why this is significant, consider what it means for applications.
+The central mathematical result is the *overlap class factorization theorem*: supports from different overlap classes have completely disjoint unions. Not just pairwise disjoint supports, but disjoint *unions of supports within each class*. If you take all the nodes belonging to cycles in one overlap class and all the nodes belonging to cycles in another, those two sets of nodes have no overlap at all.
 
-**Network reliability.** In telecommunications or power engineering, overlap classes correspond to independent failure sectors. If two redundant loops belong to different overlap classes, a failure in one cannot propagate to the other through shared infrastructure. The theorem guarantees that this decomposition into sectors is intrinsic — it does not depend on how you model the redundancy.
+This means the network's cycle structure decomposes into independent sectors—one for each overlap class. Just as non-interacting particles in a gas can be analyzed separately, cycles in different overlap classes can be studied independently. The hard, entangled mathematics happens only within each class.
 
-**Error-correcting codes.** In coding theory, the supports of minimum-weight codewords play a role analogous to cycle supports. The overlap structure of these supports determines how errors interact. The new result suggests that overlap classes could provide a new classification tool for codes, complementing traditional invariants like the weight enumerator.
+The proof uses induction on the chain of overlaps. If two supports are not connected by any chain of shared elements, then there is no path of pairwise intersections linking them. This means their intersection must be empty. Extending this from individual supports to their unions requires careful tracking of the transitive closure of the overlap relation—the mathematical machinery that turns a local property (pairwise overlap) into a global one (class membership).
 
-**Chip-firing and sandpile models.** In the theory of chip-firing on graphs — a model used in statistical physics and theoretical computer science — the Laplacian kernel determines the group of recurrent configurations. The overlap structure of cycle supports controls how different "modes" of the sandpile interact.
+## Tropical Projective Equivalence and Invariance
 
-## The Proof Idea
+The second major result connects this decomposition to the algebraic structure of tropical kernels.
 
-The proof of the main theorem rests on a subtle interplay between two ideas.
+Two families of cycle generators are considered "tropically projectively equivalent" if one can be obtained from the other by permuting the generators and shifting each by a constant. This is the natural notion of sameness for tropical objects—just as two bases of a vector space are related by a change-of-basis matrix, two tropical generating families are related by permutation and shift.
 
-First, there is the concept of **variation support**: instead of looking at where a function is nonzero (which changes when you add a constant), you look at where it differs from its value at a chosen basepoint. This turns out to be exactly the right support notion — it does not change when you add a constant to the function, which is precisely the "scaling" operation in tropical projective equivalence.
+The theorem shows that tropical projective equivalence *preserves the overlap class structure*. If you replace one generating family by an equivalent one, the overlap pattern among the corresponding variation supports remains the same. Overlap classes are not just a combinatorial curiosity—they are an invariant of the algebraic structure.
 
-Second, there is the observation that a tropical projective equivalence comes with a permutation of the generators. The key lemma shows that this permutation preserves the overlap relation on variation supports: if two generators' variation supports overlap before the equivalence, then their images' variation supports overlap after. Since the permutation is a bijection, it maps the entire overlap graph — edges and all — to itself. Connected components (overlap classes) are therefore preserved.
+More precisely, the theory introduces the *variation support*: instead of asking where a function is nonzero, you ask where it differs from its value at a chosen basepoint. This variation support is immune to constant shifts—the tropical analogue of scalar multiplication—making it the correct notion for studying tropical equivalence. And the theorem proves that tropical projective equivalence maps overlap classes to overlap classes, preserving the entire decomposition.
 
-The argument extends further. Not just the number of classes, but the full **overlap degree** (number of overlapping pairs), the **overlap complexity** (total intersection size), and even the **overlap signature** (the sorted list of intersection sizes) are all tropical projective invariants. This is a complete package of invariants, from coarse to fine, all flowing from the same fundamental lemma.
+## From Disjoint to Overlapping: A Unified Framework
 
-## A Hierarchy of Invariants
+Perhaps the most satisfying aspect of the new theory is that it subsumes the old one. When all cycle supports are pairwise disjoint, the overlap degree—the number of overlapping pairs—is zero. Each support is its own overlap class. The factorization theorem reduces to the trivial observation that disjoint supports have disjoint unions. And the old uniqueness theorem falls out as a special case.
 
-The new theory establishes a hierarchy of overlap invariants, each capturing more detail:
+But the new framework goes further. It introduces the *overlap degree* as a complexity measure: zero in the classical case, positive in the interacting case. It defines the *overlap signature*—the sorted list of intersection sizes—as a finer invariant that captures not just whether supports overlap but how much they overlap. And it connects the overlap equivalence relation to graph reachability, showing that being in the same overlap class is the same as being connected in the overlap graph.
 
-1. **Overlap class count** — the coarsest invariant, counting interaction sectors.
-2. **Overlap degree** — how many pairs of supports interact.
-3. **Overlap complexity** — the total amount of overlap.
-4. **Overlap signature** — the distribution of overlap sizes.
+## Connections Across Mathematics
 
-All four are tropical projective invariants. Moving down the list gives finer discrimination: two families with the same class count might differ in degree, or in complexity, or in signature. For graph classification and code analysis, this hierarchy provides a new toolkit.
+The overlap class framework connects to surprising corners of mathematics.
 
-## The Inclusion-Exclusion Connection
+In *matroid theory*, the cycle supports of a graph are the circuits of its graphic matroid. The overlap classes are the connected components of the circuit intersection graph. The factorization theorem becomes a statement about matroid structure: circuits in different components of the circuit intersection graph involve completely different ground set elements.
 
-One of the subsidiary results provides a beautiful connection to classical combinatorics. The **inclusion-exclusion deficit** — the difference between the sum of individual support sizes and the size of their union — is bounded above by the overlap complexity. This is the quantitative version of the intuition that "more overlap means more double-counting."
+In *coding theory*, codewords have supports (positions where they are nonzero), and the overlap structure of minimum-weight codeword supports controls the interaction pattern of error correction. Overlap classes identify independent error-correction sectors—a potential tool for designing codes with predictable structure.
 
-Combined with the TPE invariance, this gives a chain of inequalities that constrains how the algebraic structure (tropical generators) relates to the combinatorial structure (support overlaps). It is the kind of result that feels obvious in retrospect but requires careful proof to nail down.
+In *network science*, the overlap graph is a second-order network—a network of relationships between network features. The factorization theorem says that the algebra of network cycles respects this second-order structure. Independent interaction sectors in the overlap graph correspond to algebraically independent sectors of the cycle space.
 
-## The Disjoint Case as a Special Case
+## What Comes Next
 
-An important sanity check: when the overlap degree is zero — meaning all supports are pairwise disjoint — the new theory recovers the classical uniqueness theorem exactly. The overlap class count equals the number of generators, each generator is its own class, and the tropical projective equivalence class is unique.
+The theory opens several doors. The most tantalizing question is whether the overlap class count exactly determines the number of tropical projective equivalence classes—whether knowing the overlap pattern is sufficient to reconstruct the full algebraic structure. Computational evidence on small graphs supports this conjecture, but a proof or counterexample remains open.
 
-This is not just a reassurance. It shows that the new framework genuinely extends the old one rather than replacing it with something incompatible. The disjoint case sits at one extreme of a spectrum; the fully overlapping case sits at the other; and the theory covers everything in between.
+Another direction is to strengthen the overlap graph to a *support nerve* or hypergraph, capturing higher-order interactions among three or more supports simultaneously. The current pairwise overlap graph is a coarse shadow of this richer structure, and the finer invariant may be needed to fully control the tropical algebra.
 
-## Looking Ahead
-
-The overlap class framework opens several doors.
-
-The most immediate question is whether the overlap class count gives an *exact* count of tropical projective equivalence classes, or merely a lower bound. Computational experiments on small graphs — testing every connected graph on up to six vertices — show perfect agreement, suggesting the stronger equality might hold. Proving (or disproving) this is the next frontier.
-
-Beyond graphs, the theory should generalize to matroids. Cycle supports are circuit supports in the graphic matroid, and everything in the framework — overlap, connectivity, classes — makes sense for arbitrary matroids. A matroid-level overlap rigidity theorem would apply to any structure with a notion of circuits, from linear codes to oriented matroids to hyperplane arrangements.
-
-And at the deepest level, there is a tantalizing connection to topology. The support interaction graph is a one-dimensional shadow of a higher-dimensional structure called the **support nerve** — a simplicial complex that encodes not just pairwise overlaps but triple, quadruple, and higher-order interactions. If overlap classes are the right invariant for pairwise interactions, the nerve might be the right invariant for the full story. Exploring this connection would bring tropical algebra into contact with algebraic topology, potentially opening an entirely new chapter.
+Perhaps most ambitiously, the framework suggests a bridge to *tropical Hodge theory*—the study of cohomological structures on tropical varieties. If tropical kernel generators decompose according to overlap classes, this decomposition might lift to a decomposition of tropical cohomology groups, connecting combinatorial graph theory to deep algebraic geometry.
 
 ## The Bigger Picture
 
-What makes this work exciting is not just the theorems but the conceptual shift. In the classical world, a basis for a vector space is essentially unique — that's the fundamental theorem of linear algebra. In the tropical world, uniqueness is more subtle, and for a long time it was only understood in the simplest case. The overlap class theory shows that the right way to think about tropical uniqueness is not in terms of individual generators but in terms of their interaction structure. The generators may not be individually unique, but their pattern of interactions is.
+Mathematics often progresses by finding the right level of abstraction—the right way to group things that should be grouped together and separate things that should be kept apart. The overlap class theory does exactly this for cycle supports in networks.
 
-This is a familiar theme in modern science: in physics, you cannot always identify individual particles, but you can identify their interaction patterns. In biology, you cannot always identify individual genes responsible for a trait, but you can identify their regulatory networks. In mathematics, you cannot always single out a canonical basis, but you can single out the canonical overlap structure.
+The key insight is that overlap is contagious. If cycle A shares a node with cycle B, and cycle B shares a node with cycle C, then A and C are part of the same interaction sector—even if A and C share no nodes themselves. This transitive structure, captured by the connected components of the overlap graph, is the natural boundary between independence and entanglement.
 
-The overlap classes are the right unit of analysis. They are the natural sectors in which tropical algebra organizes itself — not the individual generators, but the communities they form. And like any good mathematical abstraction, once you see them, you wonder how anyone ever thought about the subject without them.
+Just as physicists discovered that the behavior of interacting particles is governed by their interaction clusters, mathematicians have now shown that the algebra of network cycles is governed by their overlap classes. The non-interacting case was understood first, as it always is. But the real world is full of interactions—and the new theory provides the tools to handle them.
