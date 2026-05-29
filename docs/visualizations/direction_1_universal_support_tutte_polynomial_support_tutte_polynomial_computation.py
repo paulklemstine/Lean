@@ -1,203 +1,136 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for the Universal Support-Tutte Polynomial
+algorithms.py — Core algorithms for support-Tutte polynomial computation.
 
-Implements the core algorithms from the research paper:
-1. Recursive computation of the support-Tutte polynomial
-2. M-convexity verification
-3. Support deletion and contraction
-4. Order-independence testing
-
-Time complexity: O(2^n * n) where n = |S|, matching the classical
-Tutte polynomial computation complexity.
+Implements the recursive deletion-contraction algorithm with memoization,
+M-convexity verification, and activity counting.
 """
 
-from typing import FrozenSet, Tuple, Dict, List, Optional, Set
+from typing import Set, Tuple, Dict, List, Optional, FrozenSet
+from itertools import combinations, permutations
 from collections import defaultdict
-import itertools
 
-Element = Tuple[int, ...]
-Support = FrozenSet[Element]
-Polynomial = Dict[int, int]  # degree -> coefficient
+ExponentVector = Tuple[int, ...]
+Poly = Dict[int, int]
 
 
-class SupportTutteComputer:
+# ============================================================
+# Polynomial arithmetic
+# ============================================================
+
+def poly_zero() -> Poly:
+    """The zero polynomial."""
+    return {}
+
+def poly_one() -> Poly:
+    """The constant polynomial 1."""
+    return {0: 1}
+
+def poly_var() -> Poly:
+    """The variable X."""
+    return {1: 1}
+
+def poly_add(p: Poly, q: Poly) -> Poly:
+    """Add two polynomials."""
+    result = dict(p)
+    for deg, coeff in q.items():
+        result[deg] = result.get(deg, 0) + coeff
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_mul(p: Poly, q: Poly) -> Poly:
+    """Multiply two polynomials."""
+    result: Poly = {}
+    for d1, c1 in p.items():
+        for d2, c2 in q.items():
+            d = d1 + d2
+            result[d] = result.get(d, 0) + c1 * c2
+    return {k: v for k, v in result.items() if v != 0}
+
+def poly_eval(p: Poly, x: int) -> int:
+    """Evaluate polynomial at integer x."""
+    return sum(c * x**d for d, c in p.items())
+
+def poly_str(p: Poly) -> str:
+    """Pretty-print a polynomial."""
+    if not p:
+        return "0"
+    terms = []
+    for d in sorted(p.keys(), reverse=True):
+        c = p[d]
+        if d == 0:
+            terms.append(str(c))
+        elif d == 1:
+            terms.append(f"{c}*X" if abs(c) != 1 else ("X" if c > 0 else "-X"))
+        else:
+            terms.append(f"{c}*X^{d}" if abs(c) != 1 else (f"X^{d}" if c > 0 else f"-X^{d}"))
+    return " + ".join(terms).replace("+ -", "- ")
+
+
+# ============================================================
+# Support operations
+# ============================================================
+
+def support_delete(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Delete coordinate i: retain elements with v[i] = 0."""
+    return {v for v in S if v[i] == 0}
+
+def support_contract(S: Set[ExponentVector], i: int) -> Set[ExponentVector]:
+    """Tutte-style contraction at coordinate i: retain elements with
+    v[i] > 0, subtract 1 from coordinate i."""
+    result = set()
+    for v in S:
+        if v[i] > 0:
+            w = list(v)
+            w[i] -= 1
+            result.add(tuple(w))
+    return result
+
+def is_loop(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is a loop (all elements positive)."""
+    return len(S) > 0 and all(v[i] > 0 for v in S)
+
+def is_ordinary(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is ordinary (both zero and positive values exist)."""
+    has_zero = any(v[i] == 0 for v in S)
+    has_pos = any(v[i] > 0 for v in S)
+    return has_zero and has_pos
+
+def is_trivial_coord(S: Set[ExponentVector], i: int) -> bool:
+    """Check if coordinate i is trivial (all elements zero)."""
+    return all(v[i] == 0 for v in S)
+
+
+# ============================================================
+# M-convexity verification
+# ============================================================
+
+def check_mconvexity(S: Set[ExponentVector]) -> bool:
+    """Verify the symmetric exchange property (M-convexity).
+    
+    For every x, y in S and coordinate a with x[a] > y[a],
+    there exists b with y[b] > x[b] such that both
+    x - e_a + e_b and y + e_a - e_b are in S.
+    
+    Time complexity: O(|S|^2 * n^2) where n is the dimension.
     """
-    Computes the universal support-Tutte polynomial for M-convex supports.
+    if len(S) <= 1:
+        return True
     
-    The support-Tutte polynomial T(S) ∈ ℕ[X] is the unique polynomial-valued
-    deletion–contraction invariant satisfying:
-      T(∅) = 1
-      T({0}) = 1  
-      T(S) = T(del S i) + T(con S i)  for ordinary coordinates i
-      T(S) = X * T(con S i)            for loop coordinates i
-    
-    Example usage:
-        >>> computer = SupportTutteComputer(n_coords=2)
-        >>> S = frozenset({(0, 0), (1, 0), (0, 1)})
-        >>> T = computer.compute(S)
-        >>> print(computer.poly_str(T))
-        'X + 2'
-    """
-    
-    def __init__(self, n_coords: int):
-        """
-        Initialize with the number of coordinates.
-        
-        Args:
-            n_coords: Dimension of the ambient space ℕ^n
-        """
-        self.n_coords = n_coords
-        self._memo: Dict[Support, Polynomial] = {}
-        self._call_count = 0
-    
-    def compute(self, S: Support) -> Polynomial:
-        """
-        Compute T(S) using memoized recursion.
-        
-        Args:
-            S: A finite support set (frozenset of tuples)
-            
-        Returns:
-            The support-Tutte polynomial as {degree: coefficient}
-            
-        Time complexity: O(2^|S| * |S| * n_coords)
-        Space complexity: O(2^|S|) for memoization
-        """
-        self._call_count += 1
-        
-        if S in self._memo:
-            return self._memo[S]
-        
-        result = self._compute_impl(S)
-        self._memo[S] = result
-        return result
-    
-    def _compute_impl(self, S: Support) -> Polynomial:
-        """Core recursive computation."""
-        # Base cases
-        if len(S) == 0:
-            return {0: 1}
-        
-        zero = tuple(0 for _ in range(self.n_coords))
-        if S == frozenset({zero}):
-            return {0: 1}
-        
-        # Find ordinary coordinate (prefer lower index for determinism)
-        for i in range(self.n_coords):
-            if self._is_ordinary(S, i):
-                d = self.compute(self._delete(S, i))
-                c = self.compute(self._contract(S, i))
-                return self._poly_add(d, c)
-        
-        # Find loop coordinate
-        for i in range(self.n_coords):
-            if self._is_loop(S, i):
-                c = self.compute(self._contract(S, i))
-                return self._poly_mul_x(c)
-        
-        # Unreachable for valid supports
-        return {0: 1}
-    
-    def _delete(self, S: Support, i: int) -> Support:
-        """Support deletion: retain elements with m[i] = 0."""
-        return frozenset(m for m in S if m[i] == 0)
-    
-    def _contract(self, S: Support, i: int) -> Support:
-        """Tutte contraction: retain m[i] > 0, subtract e_i."""
-        result = set()
-        for m in S:
-            if m[i] > 0:
-                new = list(m)
-                new[i] -= 1
-                result.add(tuple(new))
-        return frozenset(result)
-    
-    def _is_loop(self, S: Support, i: int) -> bool:
-        """Check if coordinate i is a loop."""
-        return len(S) > 0 and all(m[i] > 0 for m in S)
-    
-    def _is_ordinary(self, S: Support, i: int) -> bool:
-        """Check if coordinate i is ordinary."""
-        has_zero = any(m[i] == 0 for m in S)
-        has_pos = any(m[i] > 0 for m in S)
-        return has_zero and has_pos
-    
-    @staticmethod
-    def _poly_add(p: Polynomial, q: Polynomial) -> Polynomial:
-        """Add two polynomials."""
-        result = dict(p)
-        for k, v in q.items():
-            result[k] = result.get(k, 0) + v
-        return {k: v for k, v in result.items() if v != 0}
-    
-    @staticmethod
-    def _poly_mul_x(p: Polynomial) -> Polynomial:
-        """Multiply polynomial by X."""
-        return {k + 1: v for k, v in p.items()}
-    
-    @staticmethod
-    def poly_eval(p: Polynomial, x: int) -> int:
-        """Evaluate polynomial at integer x."""
-        return sum(coeff * x**deg for deg, coeff in p.items())
-    
-    @staticmethod
-    def poly_str(p: Polynomial) -> str:
-        """Pretty-print polynomial."""
-        if not p:
-            return "0"
-        terms = []
-        for deg in sorted(p.keys(), reverse=True):
-            coeff = p[deg]
-            if coeff == 0:
-                continue
-            if deg == 0:
-                terms.append(str(coeff))
-            elif deg == 1:
-                terms.append(f"{coeff}X" if coeff != 1 else "X")
-            else:
-                terms.append(f"{coeff}X^{deg}" if coeff != 1 else f"X^{deg}")
-        return " + ".join(terms) if terms else "0"
-    
-    def get_stats(self) -> Dict:
-        """Return computation statistics."""
-        return {
-            "call_count": self._call_count,
-            "memo_size": len(self._memo),
-        }
-
-
-def check_m_convexity(S: Support, n_coords: int) -> bool:
-    """
-    Verify the symmetric exchange property (M-convexity) for a support set.
-    
-    The exchange property states: for all x, y in S and all coordinates a
-    with x(a) > y(a), there exists a coordinate b with y(b) > x(b) such
-    that x - e_a + e_b ∈ S and y + e_a - e_b ∈ S.
-    
-    Args:
-        S: Support set to check
-        n_coords: Number of coordinates
-        
-    Returns:
-        True if S satisfies the exchange property
-        
-    Time complexity: O(|S|^2 * n_coords^2)
-    """
+    n = len(next(iter(S)))
     for x in S:
         for y in S:
-            for a in range(n_coords):
+            for a in range(n):
                 if x[a] > y[a]:
                     found = False
-                    for b in range(n_coords):
+                    for b in range(n):
                         if y[b] > x[b]:
-                            new_x = list(x)
-                            new_x[a] -= 1
-                            new_x[b] += 1
-                            new_y = list(y)
-                            new_y[a] += 1
-                            new_y[b] -= 1
-                            if tuple(new_x) in S and tuple(new_y) in S:
+                            x_new = list(x)
+                            x_new[a] -= 1
+                            x_new[b] += 1
+                            y_new = list(y)
+                            y_new[a] += 1
+                            y_new[b] -= 1
+                            if tuple(x_new) in S and tuple(y_new) in S:
                                 found = True
                                 break
                     if not found:
@@ -205,105 +138,187 @@ def check_m_convexity(S: Support, n_coords: int) -> bool:
     return True
 
 
-def test_order_independence(S: Support, n_coords: int) -> Tuple[bool, List[Polynomial]]:
-    """
-    Test whether the support-Tutte polynomial is independent of
-    the coordinate ordering used in the recursion.
+# ============================================================
+# Support-Tutte polynomial computation
+# ============================================================
+
+class SupportTutteComputer:
+    """Memoized computation of the support-Tutte polynomial.
     
-    Args:
-        S: Support set
-        n_coords: Number of coordinates
+    Algorithm:
+        Recursive deletion-contraction with memoization.
+        At each step, choose the first ordinary or loop coordinate.
+    
+    Correctness:
+        Formally verified in Lean 4 (see SupportTutteUniversality.lean).
+        The universality theorem proves this recursion produces the
+        unique invariant satisfying the deletion-contraction rules.
+    
+    Complexity:
+        Time: O(2^k) where k = number of ordinary coordinates
+        Space: O(2^k) for memoization table
+    """
+    
+    def __init__(self):
+        self.memo: Dict[FrozenSet[ExponentVector], Poly] = {}
+        self.call_count = 0
+    
+    def compute(self, S: Set[ExponentVector]) -> Poly:
+        """Compute T(S) with memoization."""
+        self.call_count += 1
+        key = frozenset(S)
         
-    Returns:
-        (all_agree, list_of_polynomials_for_each_ordering)
+        if key in self.memo:
+            return self.memo[key]
+        
+        result = self._compute_impl(S)
+        self.memo[key] = result
+        return result
+    
+    def _compute_impl(self, S: Set[ExponentVector]) -> Poly:
+        if not S:
+            return poly_one()
+        
+        n = len(next(iter(S)))
+        zero = tuple([0] * n)
+        if S == {zero}:
+            return poly_one()
+        
+        # Try ordinary coordinates first
+        for i in range(n):
+            if is_ordinary(S, i):
+                d = support_delete(S, i)
+                c = support_contract(S, i)
+                return poly_add(self.compute(d), self.compute(c))
+        
+        # Then loop coordinates
+        for i in range(n):
+            if is_loop(S, i):
+                c = support_contract(S, i)
+                return poly_mul(poly_var(), self.compute(c))
+        
+        return poly_one()
+    
+    def activity_data(self, S: Set[ExponentVector]) -> Dict[str, int]:
+        """Count loops, ordinary, and trivial coordinates."""
+        if not S:
+            return {"loops": 0, "ordinary": 0, "trivial": 0}
+        
+        n = len(next(iter(S)))
+        loops = sum(1 for i in range(n) if is_loop(S, i))
+        ordinary = sum(1 for i in range(n) if is_ordinary(S, i))
+        trivial = sum(1 for i in range(n) if is_trivial_coord(S, i))
+        return {"loops": loops, "ordinary": ordinary, "trivial": trivial}
+
+
+def compute_support_tutte(S: Set[ExponentVector]) -> Poly:
+    """Convenience function to compute T(S)."""
+    computer = SupportTutteComputer()
+    return computer.compute(S)
+
+
+# ============================================================
+# Order-independence verification
+# ============================================================
+
+def verify_order_independence(S: Set[ExponentVector],
+                              verbose: bool = False) -> bool:
+    """Verify that the support-Tutte polynomial is independent of
+    the coordinate processing order.
+    
+    Tests all n! permutations of coordinates.
     """
+    if not S:
+        return True
+    
+    n = len(next(iter(S)))
+    results = set()
+    
+    for perm in permutations(range(n)):
+        memo: Dict[FrozenSet, Poly] = {}
+        T = _compute_with_order(S, list(perm), memo)
+        results.add(frozenset(T.items()))
+        if verbose:
+            print(f"  Order {list(perm)}: {poly_str(T)}")
+    
+    return len(results) == 1
+
+
+def _compute_with_order(S: Set[ExponentVector],
+                         order: List[int],
+                         memo: Dict) -> Poly:
+    """Compute T(S) with a specified coordinate processing order."""
+    key = frozenset(S)
+    if key in memo:
+        return memo[key]
+    
+    if not S:
+        return poly_one()
+    
+    n = len(next(iter(S)))
+    zero = tuple([0] * n)
+    if S == {zero}:
+        return poly_one()
+    
+    for i in order:
+        if is_ordinary(S, i):
+            d = support_delete(S, i)
+            c = support_contract(S, i)
+            new_order = [j for j in order if j != i]
+            result = poly_add(
+                _compute_with_order(d, new_order, memo),
+                _compute_with_order(c, new_order, memo)
+            )
+            memo[key] = result
+            return result
+    
+    for i in order:
+        if is_loop(S, i):
+            c = support_contract(S, i)
+            new_order = [j for j in order if j != i]
+            result = poly_mul(poly_var(), _compute_with_order(c, new_order, memo))
+            memo[key] = result
+            return result
+    
+    return poly_one()
+
+
+# ============================================================
+# Enumeration tools
+# ============================================================
+
+def simplex_support(n: int, d: int) -> Set[ExponentVector]:
+    """Generate all vectors in N^n summing to d."""
+    if n == 1:
+        return {(d,)}
+    result = set()
+    for k in range(d + 1):
+        for rest in simplex_support(n - 1, d - k):
+            result.add((k,) + rest)
+    return result
+
+def enumerate_mconvex_subsets(S: Set[ExponentVector],
+                               min_size: int = 2) -> List[Set[ExponentVector]]:
+    """Find all M-convex subsets of S with at least min_size elements."""
     results = []
-    
-    for perm in itertools.permutations(range(n_coords)):
-        order = list(perm)
-        computer = SupportTutteComputer(n_coords)
-        # Override the coordinate search order
-        T = _compute_with_order(S, n_coords, order)
-        results.append(T)
-    
-    all_agree = all(r == results[0] for r in results)
-    return all_agree, results
+    for r in range(min_size, len(S) + 1):
+        for subset in combinations(S, r):
+            sub = set(subset)
+            if check_mconvexity(sub):
+                results.append(sub)
+    return results
 
-
-def _compute_with_order(S: Support, n: int, order: List[int],
-                        memo: Optional[Dict] = None) -> Polynomial:
-    """Compute T(S) using a specified coordinate order."""
-    if memo is None:
-        memo = {}
-    
-    if S in memo:
-        return memo[S]
-    
-    if len(S) == 0:
-        return {0: 1}
-    
-    zero = tuple(0 for _ in range(n))
-    if S == frozenset({zero}):
-        return {0: 1}
-    
-    for i in order:
-        has_zero = any(m[i] == 0 for m in S)
-        has_pos = any(m[i] > 0 for m in S)
-        if has_zero and has_pos:
-            d = _compute_with_order(
-                frozenset(m for m in S if m[i] == 0), n, order, memo)
-            contracted = set()
-            for m in S:
-                if m[i] > 0:
-                    new = list(m)
-                    new[i] -= 1
-                    contracted.add(tuple(new))
-            c = _compute_with_order(frozenset(contracted), n, order, memo)
-            result = SupportTutteComputer._poly_add(d, c)
-            memo[S] = result
-            return result
-    
-    for i in order:
-        if all(m[i] > 0 for m in S):
-            contracted = set()
-            for m in S:
-                new = list(m)
-                new[i] -= 1
-                contracted.add(tuple(new))
-            c = _compute_with_order(frozenset(contracted), n, order, memo)
-            result = SupportTutteComputer._poly_mul_x(c)
-            memo[S] = result
-            return result
-    
-    return {0: 1}
-
-
-# ============== EXAMPLE USAGE ==============
 
 if __name__ == "__main__":
-    print("Support-Tutte Polynomial Algorithm Demo")
-    print("=" * 50)
+    # Quick self-test
+    print("Self-test of algorithms.py")
     
-    # Example 1: Basic computation
-    computer = SupportTutteComputer(n_coords=3)
-    S = frozenset({(0, 0, 1), (0, 1, 0), (1, 0, 0)})
+    S = simplex_support(3, 2)
+    computer = SupportTutteComputer()
     T = computer.compute(S)
-    print(f"\nU_{{1,3}} indicators: T = {computer.poly_str(T)}")
-    print(f"  T(1) = {computer.poly_eval(T, 1)} (should be {len(S)})")
-    print(f"  M-convex: {check_m_convexity(S, 3)}")
+    print(f"Simplex(3,2): T = {poly_str(T)}, T(1) = {poly_eval(T, 1)}, |S| = {len(S)}")
+    assert poly_eval(T, 1) == len(S), "Cardinality check failed!"
     
-    # Example 2: Non-binary support
-    computer2 = SupportTutteComputer(n_coords=2)
-    S2 = frozenset({(0, 0), (2, 0), (0, 2)})
-    T2 = computer2.compute(S2)
-    print(f"\nNon-binary {{(0,0), (2,0), (0,2)}}: T = {computer2.poly_str(T2)}")
-    print(f"  T(1) = {computer2.poly_eval(T2, 1)} (should be {len(S2)})")
-    print(f"  M-convex: {check_m_convexity(S2, 2)}")
+    assert verify_order_independence(S), "Order independence failed!"
     
-    # Example 3: Order independence
-    S3 = frozenset({(0, 0, 1), (0, 1, 0), (1, 0, 0)})
-    agree, polys = test_order_independence(S3, 3)
-    print(f"\nOrder independence for U_{{1,3}}: {'✓ PASSED' if agree else '✗ FAILED'}")
-    
-    stats = computer.get_stats()
-    print(f"\nComputation stats: {stats}")
+    print("All self-tests passed!")

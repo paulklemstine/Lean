@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Mathematical Physics / Topological Data Analysis / Quantum Field Theory",
     "date": "2026-05-29T07:29:46Z",
     "exp_id": "5a48098c",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.622958,
+    "quality": "partial",
     "pkg_num": 305
   },
   {
@@ -8854,8 +8854,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T07:29:46Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.622958,
+      "quality": "partial"
     }
   ],
   "edges": [
