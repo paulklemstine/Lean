@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra / Group Theory",
     "date": "2026-05-29T19:32:56Z",
     "exp_id": "ca95a7aa",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6747930072239421,
+    "quality": "partial",
     "pkg_num": 341
   },
   {
@@ -9898,8 +9898,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-29T19:32:56Z",
       "hue": 292,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6747930072239421,
+      "quality": "partial"
     }
   ],
   "edges": [
