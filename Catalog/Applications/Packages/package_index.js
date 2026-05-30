@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Computational Complexity / Tropical Algebra",
     "date": "2026-05-30T00:44:32Z",
     "exp_id": "8298bfc3",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.722653076923077,
+    "quality": "substantial",
     "pkg_num": 367
   },
   {
@@ -10652,8 +10652,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-05-30T00:44:32Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.722653076923077,
+      "quality": "substantial"
     }
   ],
   "edges": [
