@@ -1,238 +1,217 @@
 """
-Stereographic Sheaf Theory: Algorithms
-=======================================
-Core algorithms for computing with stereographic sheaves,
-Čech cohomology, and gluing data.
+Algorithms for Stereographic Sheaf Cohomology
+
+Implements the key algorithms from the research paper:
+1. Stereographic projection and its inverse
+2. Spectral decomposition under involutions
+3. Čech cohomology computation for two-chart covers
+4. Mayer-Vietoris exactness verification
 """
+from typing import Callable, Tuple, List
 import numpy as np
-from typing import Callable, Tuple, List, Optional
-
-
-class StereoGluingDatum:
-    """A gluing datum for a stereographic sheaf.
-
-    The transition function phi: G -> G is an involutive group homomorphism.
-    For our computational purposes, G is a finite-dimensional real vector space.
-
-    Attributes:
-        transition: A linear map R^n -> R^n that is an involution (phi^2 = id).
-        dim: Dimension of the section space.
-
-    Time complexity: O(n^2) for applying transition (matrix multiplication).
-    Space complexity: O(n^2) for storing the transition matrix.
-    """
-
-    def __init__(self, transition_matrix: np.ndarray):
-        """Initialize with a transition matrix.
-
-        Args:
-            transition_matrix: An n×n matrix A such that A^2 = I.
-
-        Raises:
-            ValueError: If the matrix is not involutive.
-        """
-        n = transition_matrix.shape[0]
-        self.matrix = transition_matrix
-        self.dim = n
-        # Verify involutive property
-        A2 = transition_matrix @ transition_matrix
-        if not np.allclose(A2, np.eye(n), atol=1e-10):
-            raise ValueError("Transition matrix must be involutive (A^2 = I)")
-
-    def apply(self, v: np.ndarray) -> np.ndarray:
-        """Apply the transition map to a vector. O(n^2)."""
-        return self.matrix @ v
-
-    @staticmethod
-    def trivial(n: int) -> 'StereoGluingDatum':
-        """The trivial gluing datum: phi = id. O(n^2)."""
-        return StereoGluingDatum(np.eye(n))
-
-    @staticmethod
-    def negation(n: int) -> 'StereoGluingDatum':
-        """The negation gluing datum: phi = -id. O(n^2)."""
-        return StereoGluingDatum(-np.eye(n))
-
-    @staticmethod
-    def reflection(n: int, axis: int) -> 'StereoGluingDatum':
-        """Reflection in one axis: phi(x)_i = -x_i if i == axis, x_i otherwise. O(n^2)."""
-        A = np.eye(n)
-        A[axis, axis] = -1
-        return StereoGluingDatum(A)
-
-
-def cech_differential(datum: StereoGluingDatum, a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """Compute the Čech differential d(a, b) = phi(a) - b.
-
-    Args:
-        datum: The gluing datum with transition phi.
-        a: Section over U_N (north chart).
-        b: Section over U_S (south chart).
-
-    Returns:
-        The Čech differential phi(a) - b.
-
-    Time complexity: O(n^2) for the matrix multiplication.
-    """
-    return datum.apply(a) - b
-
-
-def compute_H0(datum: StereoGluingDatum) -> Tuple[np.ndarray, int]:
-    """Compute H^0 = ker(phi - I) = eigenspace of phi for eigenvalue 1.
-
-    Returns:
-        basis: Matrix whose columns form a basis for H^0.
-        rank: Dimension of H^0.
-
-    Time complexity: O(n^3) for eigenvalue decomposition.
-    Space complexity: O(n^2).
-    """
-    # H^0 = {g : phi(g) = g} = ker(phi - I)
-    A_minus_I = datum.matrix - np.eye(datum.dim)
-    # Find null space via SVD
-    U, S, Vt = np.linalg.svd(A_minus_I)
-    null_mask = S < 1e-10
-    # Also include dimensions beyond S (if matrix is not square or rank-deficient)
-    null_space = Vt[len(S) - np.sum(~null_mask):].T
-    if null_mask.any():
-        extra = Vt[null_mask].T
-        if null_space.size == 0:
-            null_space = extra
-        else:
-            null_space = np.hstack([null_space, extra]) if extra.size > 0 else null_space
-
-    # More robust: use eigendecomposition
-    eigenvalues, eigenvectors = np.linalg.eig(datum.matrix)
-    h0_indices = np.where(np.abs(eigenvalues - 1) < 1e-10)[0]
-    basis = eigenvectors[:, h0_indices].real
-    rank = len(h0_indices)
-
-    return basis, rank
-
-
-def compute_H0_antisym(datum: StereoGluingDatum) -> Tuple[np.ndarray, int]:
-    """Compute the -1 eigenspace = {g : phi(g) = -g} = ker(phi + I).
-
-    Returns:
-        basis: Matrix whose columns form a basis for the -1 eigenspace.
-        rank: Dimension of the -1 eigenspace.
-
-    Time complexity: O(n^3) for eigenvalue decomposition.
-    """
-    eigenvalues, eigenvectors = np.linalg.eig(datum.matrix)
-    h1_indices = np.where(np.abs(eigenvalues + 1) < 1e-10)[0]
-    basis = eigenvectors[:, h1_indices].real
-    rank = len(h1_indices)
-    return basis, rank
-
-
-def spectral_decomposition(datum: StereoGluingDatum, g: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """Decompose g into symmetric + antisymmetric parts under the involution.
-
-    Given phi involutive, write g = s + a where phi(s) = s and phi(a) = -a.
-    s = (g + phi(g))/2, a = (g - phi(g))/2.
-
-    Args:
-        datum: Gluing datum with involutive transition.
-        g: Vector to decompose.
-
-    Returns:
-        (s, a): Symmetric and antisymmetric components.
-
-    Time complexity: O(n^2).
-    """
-    phi_g = datum.apply(g)
-    s = (g + phi_g) / 2
-    a = (g - phi_g) / 2
-    return s, a
-
-
-def euler_characteristic(datum: StereoGluingDatum) -> int:
-    """Compute the Euler characteristic chi = dim(H^0) - dim(H^0_anti).
-
-    For a two-chart cover with involutive transition,
-    chi = dim(+1 eigenspace) - dim(-1 eigenspace).
-
-    Returns:
-        The Euler characteristic (integer).
-
-    Time complexity: O(n^3).
-    """
-    _, rank_plus = compute_H0(datum)
-    _, rank_minus = compute_H0_antisym(datum)
-    return rank_plus - rank_minus
 
 
 def stereo_proj(t: float) -> Tuple[float, float]:
-    """Stereographic projection R -> S^1.
+    """
+    Stereographic projection from R to S^1.
 
-    Args:
-        t: Real parameter.
+    Maps t ∈ R to (2t/(1+t²), (1-t²)/(1+t²)) on the unit circle.
+    Complexity: O(1) time, O(1) space.
 
-    Returns:
-        (x, y) on the unit circle.
-
-    Time complexity: O(1).
+    >>> stereo_proj(0)
+    (0.0, 1.0)
+    >>> stereo_proj(1)
+    (1.0, 0.0)
     """
     d = 1 + t**2
     return (2*t/d, (1-t**2)/d)
 
 
-def stereo_conformal_factor(t: float) -> float:
-    """Conformal factor of stereographic projection: 2/(1+t^2).
+def stereo_inv(x: float, y: float) -> float:
+    """
+    Inverse stereographic projection from S^1 to R.
 
-    Time complexity: O(1).
+    Maps (x, y) on S^1 (with y ≠ -1) to t = x/(1+y).
+    Complexity: O(1).
+
+    >>> stereo_inv(0, 1)
+    0.0
+    >>> abs(stereo_inv(1, 0) - 1.0) < 1e-12
+    True
+    """
+    assert abs(y + 1) > 1e-15, "Point (x, -1) is the north pole (not in chart)"
+    return x / (1 + y)
+
+
+def conformal_factor(t: float) -> float:
+    """
+    Conformal factor λ(t) = 2/(1+t²) of stereographic projection.
+
+    This measures how much the projection distorts infinitesimal lengths.
+    Always in (0, 2], maximum at t=0.
+    Complexity: O(1).
     """
     return 2.0 / (1 + t**2)
 
 
-def zmod_negation_fixed_points(p: int) -> List[int]:
-    """Find elements x in Z/pZ such that -x = x (mod p).
+def spectral_decompose(phi: Callable[[float], float], g: float) -> Tuple[float, float]:
+    """
+    Spectral decomposition of g under involution phi.
+
+    Decomposes g = s + a where:
+    - s = (g + phi(g))/2 is the symmetric part (phi(s) = s)
+    - a = (g - phi(g))/2 is the antisymmetric part (phi(a) = -a)
+
+    Requires: phi is an involution (phi(phi(x)) = x for all x).
+    Complexity: O(T_phi) where T_phi is cost of evaluating phi.
 
     Args:
-        p: The modulus.
+        phi: Involution function R -> R
+        g: Element to decompose
 
     Returns:
-        List of fixed points.
+        (symmetric_part, antisymmetric_part)
 
-    Time complexity: O(p).
+    >>> spectral_decompose(lambda x: -x, 5.0)
+    (0.0, 5.0)
+    >>> spectral_decompose(lambda x: x, 5.0)
+    (5.0, 0.0)
     """
-    return [x for x in range(p) if (2 * x) % p == 0]
+    phi_g = phi(g)
+    return ((g + phi_g) / 2, (g - phi_g) / 2)
 
 
+def tate_norm(phi: Callable[[float], float], g: float) -> float:
+    """
+    Tate cohomology norm map N(g) = g + phi(g).
+
+    This is the norm map in group cohomology of Z/2Z.
+    Image always lies in the +1 eigenspace of phi.
+    Complexity: O(T_phi).
+    """
+    return g + phi(g)
+
+
+def difference_map(phi: Callable[[float], float], g: float) -> float:
+    """
+    Difference map D(g) = g - phi(g).
+
+    Image always lies in the -1 eigenspace of phi.
+    Satisfies N(D(g)) = 0 and D(N(g)) = 0 (Mayer-Vietoris exactness).
+    Complexity: O(T_phi).
+    """
+    return g - phi(g)
+
+
+def cech_differential(phi: Callable, a: float, b: float) -> float:
+    """
+    Čech differential δ(a, b) = phi(a) - b.
+
+    For a two-chart cover with transition phi:
+    - δ = 0 iff (a, b) represents a global section
+    - H^1 = coker(δ)
+    Complexity: O(T_phi).
+    """
+    return phi(a) - b
+
+
+def compute_h0_zmod(n: int, phi: Callable[[int], int]) -> List[int]:
+    """
+    Compute H^0 (fixed points of phi) in Z/nZ.
+
+    Args:
+        n: Modulus
+        phi: Involution on Z/nZ (function int -> int, values mod n)
+
+    Returns:
+        List of fixed points
+
+    Complexity: O(n) time, O(k) space where k = |H^0|.
+
+    >>> compute_h0_zmod(5, lambda x: (-x) % 5)
+    [0]
+    >>> compute_h0_zmod(6, lambda x: (-x) % 6)
+    [0, 3]
+    """
+    return [x for x in range(n) if phi(x) % n == x]
+
+
+def verify_mayer_vietoris(phi: Callable, values: List[float], tol: float = 1e-12) -> bool:
+    """
+    Verify Mayer-Vietoris exactness N∘D = D∘N = 0.
+
+    Tests the fundamental exact sequence property on a list of values.
+    Complexity: O(k * T_phi) where k = len(values).
+
+    Args:
+        phi: Involution
+        values: Test values
+        tol: Numerical tolerance
+
+    Returns:
+        True if exactness holds for all test values
+    """
+    for g in values:
+        # Test N(D(g)) = 0
+        Dg = difference_map(phi, g)
+        NDg = tate_norm(phi, Dg)
+        if abs(NDg) > tol:
+            return False
+        # Test D(N(g)) = 0
+        Ng = tate_norm(phi, g)
+        DNg = difference_map(phi, Ng)
+        if abs(DNg) > tol:
+            return False
+    return True
+
+
+def exactness_witness(phi: Callable, g: float) -> float:
+    """
+    Given g with N(g) = 0, find h such that g = h - phi(h).
+
+    Uses the explicit witness h = g/2 from the Mayer-Vietoris theorem.
+    Complexity: O(1).
+
+    Precondition: tate_norm(phi, g) ≈ 0.
+    """
+    return g / 2
+
+
+def iterated_tate_norm(phi: Callable, g: float, n: int) -> float:
+    """
+    Compute N^n(g) = N(N(...N(g)...)) with n applications.
+
+    Complexity: O(n * T_phi).
+    """
+    result = g
+    for _ in range(n):
+        result = tate_norm(phi, result)
+    return result
+
+
+# ============================================================
 # Example usage
+# ============================================================
 if __name__ == "__main__":
-    print("=== Stereographic Sheaf Algorithms ===\n")
+    # Negation involution
+    neg = lambda x: -x
 
-    # 1. Trivial gluing in R^3
-    D = StereoGluingDatum.trivial(3)
-    basis, rank = compute_H0(D)
-    print(f"Trivial gluing in R^3: H^0 rank = {rank} (should be 3)")
+    print("H^0(Z/7Z, negation):", compute_h0_zmod(7, lambda x: (-x) % 7))
+    print("H^0(Z/6Z, negation):", compute_h0_zmod(6, lambda x: (-x) % 6))
 
-    # 2. Negation gluing in R^3
-    D = StereoGluingDatum.negation(3)
-    basis, rank = compute_H0(D)
-    print(f"Negation gluing in R^3: H^0 rank = {rank} (should be 0)")
+    print("\nMayer-Vietoris exactness (negation):",
+          verify_mayer_vietoris(neg, [1.0, -3.5, 7.2, 0.0, 100.0]))
 
-    # 3. Reflection gluing in R^3
-    D = StereoGluingDatum.reflection(3, 0)
-    basis_p, rank_p = compute_H0(D)
-    basis_m, rank_m = compute_H0_antisym(D)
-    print(f"Reflection(axis=0) in R^3: H^0 rank = {rank_p}, H^0_anti rank = {rank_m}")
-    print(f"  Euler char = {rank_p} - {rank_m} = {euler_characteristic(D)}")
+    print("\nSpectral decomposition of g=5 under negation:",
+          spectral_decompose(neg, 5.0))
 
-    # 4. Spectral decomposition
-    g = np.array([1.0, 2.0, 3.0])
-    s, a = spectral_decomposition(D, g)
-    print(f"\nSpectral decomposition of {g}:")
-    print(f"  Symmetric part:     {s}")
-    print(f"  Antisymmetric part: {a}")
-    print(f"  Sum:                {s + a}")
-    print(f"  phi(s) = s: {np.allclose(D.apply(s), s)}")
-    print(f"  phi(a) = -a: {np.allclose(D.apply(a), -a)}")
+    print("\nIterated Tate norms (negation, g=42):")
+    for k in range(5):
+        print(f"  N^{k+1}(42) = {iterated_tate_norm(neg, 42, k+1)}")
 
-    # 5. ZMod conjecture
-    print(f"\nZMod negation fixed points:")
-    for p in [2, 3, 5, 7, 11, 13, 17, 19]:
-        fps = zmod_negation_fixed_points(p)
-        print(f"  Z/{p}Z: {fps} {'(conjecture fails)' if len(fps) > 1 else ''}")
+    # Verify stereographic projection
+    print("\nStereographic projection roundtrip:")
+    for t in [0, 1, -1, 0.5, 3.14]:
+        x, y = stereo_proj(t)
+        t_back = stereo_inv(x, y)
+        print(f"  t={t:6.2f} -> ({x:.4f}, {y:.4f}) -> {t_back:.4f} {'✓' if abs(t-t_back) < 1e-10 else '✗'}")
