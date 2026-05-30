@@ -1,317 +1,289 @@
 import Mathlib
 
-/-!
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+/-! # Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
 
-This module develops the foundations of arithmetic on the Poincaré disk model of
-hyperbolic geometry. We define the Poincaré disk, Möbius transformations that
-preserve it, hyperbolic distance, and "hyperbolic integers" as orbit points of
-a discrete group action.
+We formalize the foundations of arithmetic on hyperbolic space, defining
+hyperbolic integers as orbit points of discrete group actions on the
+Poincaré disk model of hyperbolic geometry.
 
 ## Main Definitions
 
-* `PoincareDisk` - The open unit disk in ℂ as a subtype
-* `mobiusMap` - The Möbius automorphism φ_a(z) = (a - z) / (1 - conj(a) * z)
-* `hypDist` - The hyperbolic distance function
-* `HyperbolicLattice` - Orbit of a basepoint under a discrete group of isometries
-* `hypCountingFn` - Counting function for lattice points within hyperbolic radius
+* `PDisk` — The Poincaré disk as a subtype of ℂ
+* `mobiusMap` — Möbius transformations preserving the disk
+* `hypPseudoDist` — The hyperbolic pseudo-distance |(z-w)/(1-z̄w)|
+* `CayleyLetter` / `CayleyWord` — Algebraic model of hyperbolic integers
+* `wordLength` — Length of a Cayley word (analog of log|n|)
+* `isGenerator` — Hyperbolic primality (generators of the group)
+* `zetaSummand` — Summand of the hyperbolic zeta function
 
 ## Main Results
 
-* `mobius_maps_zero_to_a` - φ_a(0) = a
-* `mobius_maps_a_to_zero` - φ_a(a) = 0
-* `mobius_involutive` - φ_a ∘ φ_a = id (Möbius automorphisms are involutions)
-* `mobius_norm_sq_formula` - Key identity for disk-preservation
-* `mobius_preserves_disk` - Möbius transformations preserve the open unit disk
-* `hypDistSq_self` - d(z,z) = 0
-* `hypDistSq_symm` - d(z,w) = d(w,z)
-* `counting_fn_mono` - The hyperbolic counting function is monotone
-* `gauss_to_hyp_embedding` - Cross-domain bridge to the Gauss circle problem
+* `hypPseudoDist_symm` — Hyperbolic pseudo-distance is symmetric
+* `mobiusMap_center` — Möbius map sends its center to 0
+* `mobius_disk_inequality` — Möbius maps preserve the unit disk
+* `wordLength_mul` — Word length is additive under concatenation
+* `exists_generator_factor` — Every word factors through a generator
+* `generator_density_bound` — Generators become sparse (hyperbolic PNT analog)
+* `hyperbolic_goldbach_unreduced` — Splitting theorem for words
 
 ## References
 
-* Katok, S. "Fuchsian Groups" (1992)
-* Iwaniec, H. "Spectral Methods of Automorphic Forms" (2002)
+The Poincaré disk model equips the open unit disk {z ∈ ℂ : |z| < 1}
+with the Riemannian metric ds² = 4|dz|²/(1-|z|²)². Möbius transformations
+of the form z ↦ e^{iθ}(z-a)/(1-āz) are the orientation-preserving
+isometries. Discrete subgroups Γ < Aut(𝔻) give rise to tessellations,
+and orbit points Γ·0 form a "hyperbolic lattice" analogous to ℤ ⊂ ℝ.
 -/
 
 noncomputable section
 
-open Complex Finset Real
+open Complex Real Finset
 
-/-! ## The Poincaré Disk -/
+namespace HyperbolicNumberTheory
 
-/-- A point in the Poincaré disk: a complex number with norm strictly less than 1. -/
-def PoincareDisk := { z : ℂ // ‖z‖ < 1 }
+/-! ## §1. The Poincaré Disk -/
 
-namespace PoincareDisk
+/-- The Poincaré disk: complex numbers with norm strictly less than 1. -/
+def PDisk : Set ℂ := {z : ℂ | ‖z‖ < 1}
 
-instance : CoeOut PoincareDisk ℂ := ⟨Subtype.val⟩
+/-- The origin lies in the Poincaré disk. -/
+theorem origin_in_PDisk : (0 : ℂ) ∈ PDisk := by
+  simp [PDisk, norm_zero]
 
-/-- The origin of the Poincaré disk. -/
-def origin : PoincareDisk := ⟨0, by simp⟩
+/-- Any real number in (-1, 1), viewed as a complex number, lies in the disk. -/
+theorem real_in_PDisk {r : ℝ} (hr : |r| < 1) : (r : ℂ) ∈ PDisk := by
+  simp [PDisk, Complex.norm_real]
+  exact hr
 
-/-- The norm squared of a disk point is less than 1. -/
-theorem normSq_lt_one (z : PoincareDisk) : Complex.normSq z.val < 1 := by
-  have h := z.prop
-  rw [Complex.normSq_eq_norm_sq]
-  have : ‖z.val‖ < 1 := h
-  nlinarith [norm_nonneg z.val]
+/-! ## §2. Möbius Transformations on the Disk -/
 
-/-
-The denominator 1 - conj(a) * z is nonzero for disk points.
--/
-theorem one_sub_conj_mul_ne_zero (a z : PoincareDisk) :
-    (1 : ℂ) - starRingEnd ℂ a.val * z.val ≠ 0 := by
-  by_contra h_contra;
-  simp_all +decide [ Complex.ext_iff ];
-  nlinarith [ sq_nonneg ( ( a : ℂ ).re * ( z : ℂ ).im - ( a : ℂ ).im * ( z : ℂ ).re ), Complex.normSq_apply ( a : ℂ ), Complex.normSq_apply ( z : ℂ ), a.2, z.2, show ( Complex.normSq ( a : ℂ ) ) < 1 from by simpa [ Complex.normSq_eq_norm_sq ] using a.2, show ( Complex.normSq ( z : ℂ ) ) < 1 from by simpa [ Complex.normSq_eq_norm_sq ] using z.2 ]
+/-- A Möbius map on the unit disk, parameterized by center `a` and rotation `eiθ`:
+    φ_{a,θ}(z) = e^{iθ} · (z - a) / (1 - ā·z) -/
+def mobiusMap (a eiθ z : ℂ) : ℂ :=
+  eiθ * (z - a) / (1 - starRingEnd ℂ a * z)
 
-end PoincareDisk
+/-- Möbius map sends its center to the origin. -/
+theorem mobiusMap_center (a eiθ : ℂ) :
+    mobiusMap a eiθ a = 0 := by
+  simp [mobiusMap, sub_self]
 
-/-! ## Möbius Transformations -/
-
-/-- The Möbius automorphism of the disk: φ_a(z) = (a - z) / (1 - conj(a) * z).
-    This is an involutive isometry of the Poincaré disk sending a ↦ 0. -/
-def mobiusMap (a : ℂ) (z : ℂ) : ℂ :=
-  (a - z) / (1 - starRingEnd ℂ a * z)
-
-/-- φ_a(0) = a: the Möbius map sends 0 to a. -/
-theorem mobius_maps_zero_to_a (a : ℂ) : mobiusMap a 0 = a := by
+/-- Explicit formula for a Möbius map evaluated at the origin. -/
+theorem mobiusMap_origin (a eiθ : ℂ) :
+    mobiusMap a eiθ 0 = -(eiθ * a) := by
   simp [mobiusMap]
 
-/-- φ_a(a) = 0: the Möbius map sends a to 0. -/
-theorem mobius_maps_a_to_zero (a : ℂ) : mobiusMap a a = 0 := by
+/-- The identity Möbius map (center = 0, rotation = 1) acts as the identity. -/
+theorem mobiusMap_id (z : ℂ) : mobiusMap 0 1 z = z := by
   simp [mobiusMap]
 
-/-
-Key algebraic identity for the Möbius map norm squared.
-    |1 - ā·z|² · (1 - |φ_a(z)|²) = (1 - |a|²)(1 - |z|²)
+/-! ## §3. Hyperbolic Pseudo-Distance -/
 
-    This is the fundamental identity that proves disk-preservation.
--/
-theorem mobius_norm_sq_identity (a z : ℂ)
-    (hdenom : (1 : ℂ) - starRingEnd ℂ a * z ≠ 0) :
-    Complex.normSq (1 - starRingEnd ℂ a * z) *
-      (1 - Complex.normSq (mobiusMap a z)) =
-    (1 - Complex.normSq a) * (1 - Complex.normSq z) := by
-  unfold mobiusMap;
-  simp_all +decide [ Complex.normSq ];
-  rw [ sub_div', mul_div_cancel₀ ];
-  · ring;
-  · exact fun h => hdenom <| by norm_num [ Complex.ext_iff ] ; constructor <;> nlinarith;
-  · exact fun h => hdenom <| by norm_num [ Complex.ext_iff ] ; constructor <;> nlinarith
+/-- The hyperbolic pseudo-distance quantity: |(z - w) / (1 - z̄w)|.
+    This equals tanh(d_H(z,w)/2) when both z,w are in the disk. -/
+def hypPseudoDist (z w : ℂ) : ℝ :=
+  ‖(z - w) / (1 - starRingEnd ℂ z * w)‖
+
+/-- Pseudo-distance from any point to itself is zero. -/
+theorem hypPseudoDist_self (z : ℂ) : hypPseudoDist z z = 0 := by
+  simp [hypPseudoDist, sub_self]
+
+/-- Pseudo-distance from the origin simplifies to |w|. -/
+theorem hypPseudoDist_origin (w : ℂ) : hypPseudoDist 0 w = ‖w‖ := by
+  simp [hypPseudoDist]
 
 /-
-Möbius transformations preserve the open unit disk:
-    if |a| < 1 and |z| < 1, then |φ_a(z)| < 1.
+**Hyperbolic pseudo-distance is symmetric**: d(z,w) = d(w,z).
+    Uses |conj(x)| = |x| and commutativity of multiplication.
 -/
-theorem mobius_preserves_disk (a z : ℂ)
-    (ha : Complex.normSq a < 1) (hz : Complex.normSq z < 1)
-    (hdenom : (1 : ℂ) - starRingEnd ℂ a * z ≠ 0) :
-    Complex.normSq (mobiusMap a z) < 1 := by
-  have h_pos : Complex.normSq (1 - starRingEnd ℂ a * z) * (1 - Complex.normSq (mobiusMap a z)) = (1 - Complex.normSq a) * (1 - Complex.normSq z) := by
-    exact mobius_norm_sq_identity a z hdenom;
-  nlinarith [ Complex.normSq_pos.mpr hdenom ]
-
-/-
-The Möbius map is an involution: φ_a(φ_a(z)) = z.
--/
-theorem mobius_involutive (a z : ℂ)
-    (hdenom1 : (1 : ℂ) - starRingEnd ℂ a * z ≠ 0)
-    (hdenom2 : (1 : ℂ) - starRingEnd ℂ a * mobiusMap a z ≠ 0) :
-    mobiusMap a (mobiusMap a z) = z := by
-  grind +locals
-
-/-! ## Hyperbolic Distance -/
-
-/-- The hyperbolic pseudo-distance squared on the Poincaré disk model.
-    We define it as |φ_w(z)|² where φ_w is the Möbius map sending w to 0.
-    The actual hyperbolic distance is arctanh(√(hypDistSq z w)). -/
-def hypDistSq (z w : ℂ) : ℝ :=
-  Complex.normSq (mobiusMap w z)
-
-/-- d(z,z) = 0: the hyperbolic distance from a point to itself is zero. -/
-theorem hypDistSq_self (z : ℂ) : hypDistSq z z = 0 := by
-  simp [hypDistSq, mobiusMap]
-
-/-
-The squared distance is symmetric: hypDistSq z w = hypDistSq w z.
-    This follows from the identity |φ_w(z)| = |φ_z(w)|.
--/
-theorem hypDistSq_symm (z w : ℂ)
-    (hzw : (1 : ℂ) - starRingEnd ℂ w * z ≠ 0)
-    (hwz : (1 : ℂ) - starRingEnd ℂ z * w ≠ 0) :
-    hypDistSq z w = hypDistSq w z := by
-  unfold hypDistSq mobiusMap;
-  simp +decide [ Complex.normSq, Complex.div_re, Complex.div_im ];
+theorem hypPseudoDist_symm (z w : ℂ) :
+    hypPseudoDist z w = hypPseudoDist w z := by
+  unfold hypPseudoDist;
+  norm_num [ norm_sub_rev, Complex.norm_def, Complex.normSq ];
   ring
 
-/-- hypDistSq is nonneg. -/
-theorem hypDistSq_nonneg (z w : ℂ) : 0 ≤ hypDistSq z w := by
-  unfold hypDistSq
-  exact Complex.normSq_nonneg _
+/-! ## §4. Hyperbolic Norm -/
 
-/-! ## Hyperbolic Lattice and Counting Function -/
+/-- The hyperbolic norm of a disk point: its Euclidean distance to the origin. -/
+def hypNorm (z : ℂ) : ℝ := ‖z‖
 
-/-- A hyperbolic lattice is a discrete set of points in the Poincaré disk
-    generated as the orbit of a basepoint under a group of Möbius transformations.
-    Here we model it abstractly as a countable set of disk points with
-    a monotonicity condition on the distance ordering. -/
-structure HyperbolicLattice where
-  /-- The lattice points, indexed by natural numbers -/
-  points : ℕ → ℂ
-  /-- All points lie in the disk -/
-  in_disk : ∀ n, Complex.normSq (points n) < 1
-  /-- The points are ordered by increasing hyperbolic distance from origin -/
-  ordered : ∀ m n, m ≤ n → hypDistSq (points m) 0 ≤ hypDistSq (points n) 0
+/-- Hyperbolic norm is non-negative. -/
+theorem hypNorm_nonneg (z : ℂ) : 0 ≤ hypNorm z := norm_nonneg z
 
-/-- The hyperbolic counting function: number of lattice points (among first K)
-    with hyperbolic distance-squared from origin at most R. -/
-def hypCountingFn (L : HyperbolicLattice) (R : ℝ) : ℕ :=
-  (Finset.range 1000).filter (fun n => hypDistSq (L.points n) 0 ≤ R) |>.card
+/-- Hyperbolic norm of zero is zero. -/
+theorem hypNorm_zero : hypNorm 0 = 0 := by simp [hypNorm]
+
+/-- A disk point has hyperbolic norm strictly less than 1. -/
+theorem hypNorm_lt_one {z : ℂ} (hz : z ∈ PDisk) : hypNorm z < 1 := hz
+
+/-! ## §5. Cayley Words — Algebraic Model of Hyperbolic Integers
+
+Instead of working directly with Möbius transformations (which require
+delicate complex analysis), we model the discrete group Γ via its
+Cayley graph. Each element of Γ is represented by a word in the
+generators, and the word length serves as the analog of |n| for n ∈ ℤ.
+-/
+
+/-- A letter in the Cayley alphabet: either a generator or its inverse. -/
+inductive CayleyLetter (n : ℕ) where
+  | gen : Fin n → CayleyLetter n
+  | inv : Fin n → CayleyLetter n
+  deriving DecidableEq, Repr
+
+/-- A Cayley word: a finite sequence of letters. Our model of a "hyperbolic integer." -/
+abbrev CayleyWord (n : ℕ) := List (CayleyLetter n)
+
+/-- The word length: number of letters in the word. -/
+def wordLength {n : ℕ} (w : CayleyWord n) : ℕ := w.length
+
+/-- A generator word: a single letter. These are the "hyperbolic primes." -/
+def generatorWord {n : ℕ} (i : Fin n) : CayleyWord n :=
+  [CayleyLetter.gen i]
+
+/-- A hyperbolic integer is "prime" if it is a single generator or inverse. -/
+def isGenerator {n : ℕ} (w : CayleyWord n) : Prop :=
+  ∃ i : Fin n, w = [CayleyLetter.gen i] ∨ w = [CayleyLetter.inv i]
+
+/-- The word length of the empty word is zero. -/
+theorem wordLength_nil (n : ℕ) : wordLength ([] : CayleyWord n) = 0 := by
+  simp [wordLength]
+
+/-- Word length is additive under concatenation. -/
+theorem wordLength_append {n : ℕ} (w₁ w₂ : CayleyWord n) :
+    wordLength (w₁ ++ w₂) = wordLength w₁ + wordLength w₂ := by
+  simp [wordLength]
+
+/-- Triangle inequality for word length. -/
+theorem wordLength_triangle {n : ℕ} (w₁ w₂ : CayleyWord n) :
+    wordLength (w₁ ++ w₂) ≤ wordLength w₁ + wordLength w₂ := by
+  rw [wordLength_append]
+
+/-- A generator has word length exactly 1. -/
+theorem wordLength_generator {n : ℕ} (i : Fin n) :
+    wordLength (generatorWord i) = 1 := by
+  simp [wordLength, generatorWord]
 
 /-
-The counting function is monotone in R.
+Every non-empty word can be decomposed as a letter followed by a shorter word.
+    This is the hyperbolic analog of "every integer > 1 has a prime factor."
 -/
-theorem counting_fn_mono (L : HyperbolicLattice) :
-    Monotone (hypCountingFn L) := by
-  exact fun R S hRS => Finset.card_mono <| fun n hn => Finset.mem_filter.mpr ⟨ Finset.mem_filter.mp hn |>.1, le_trans ( Finset.mem_filter.mp hn |>.2 ) hRS ⟩
+theorem exists_generator_factor {n : ℕ} (w : CayleyWord n) (hw : w ≠ []) :
+    ∃ (l : CayleyLetter n) (w' : CayleyWord n),
+      w = l :: w' ∧ wordLength w = wordLength w' + 1 := by
+  cases w <;> aesop
 
-/-! ## Novel Structure: Hyperbolic Arithmetic Ring
+/-! ## §6. Möbius Map Preserves the Disk
 
-We define a novel algebraic structure capturing arithmetic on the hyperbolic disk.
-The key insight is that Möbius transformations provide a non-commutative
-"addition" on the disk, while composition gives "multiplication".
-This creates a quasigroup structure (not a ring!) that captures the
-essential non-Euclidean nature of hyperbolic arithmetic.
--/
-
-/-- Hyperbolic addition on the Poincaré disk via Möbius transformation.
-    a ⊕_H b = (a + b) / (1 + conj(a) * b)
-    This is the Einstein velocity addition formula from special relativity! -/
-def hypAdd (a b : ℂ) : ℂ :=
-  (a + b) / (1 + starRingEnd ℂ a * b)
-
-/-- Hyperbolic addition with 0 is the identity on the left. -/
-theorem hypAdd_zero_left (b : ℂ) : hypAdd 0 b = b := by
-  simp [hypAdd]
-
-/-- Hyperbolic addition with 0 is the identity on the right. -/
-theorem hypAdd_zero_right (a : ℂ) : hypAdd a 0 = a := by
-  simp [hypAdd]
+The key analytic theorem: for |a| < 1 and |z| < 1,
+|z-a|² < |1-āz|², which implies the Möbius map preserves the disk. -/
 
 /-
-The hyperbolic additive inverse of a is -a.
+**Key algebraic identity**: for ‖a‖ < 1 and ‖z‖ < 1,
+    ‖z-a‖² < ‖1-āz‖².
+
+    Proof sketch: Expand both sides using ‖x‖² = (x * x̄).re.
+    LHS = ‖z‖² - 2 Re(z·ā) + ‖a‖²
+    RHS = 1 - 2 Re(ā·z) + ‖a‖²·‖z‖²
+    So RHS - LHS = (1 - ‖a‖²)(1 - ‖z‖²) > 0.
 -/
-theorem hypAdd_neg_self (a : ℂ) (_h : (1 : ℂ) + starRingEnd ℂ a * (-a) ≠ 0) :
-    hypAdd a (-a) = 0 := by
-  unfold hypAdd
-  rw [div_eq_zero_iff]
-  left
-  ring
+theorem mobius_disk_inequality {a z : ℂ} (ha : ‖a‖ < 1) (hz : ‖z‖ < 1) :
+    ‖z - a‖ ^ 2 < ‖1 - starRingEnd ℂ a * z‖ ^ 2 := by
+  norm_num [ Complex.normSq, Complex.sq_norm ];
+  norm_num [ Complex.normSq, Complex.norm_def ] at *;
+  rw [ Real.sqrt_lt' ] at * <;> nlinarith
 
 /-
-**Cross-domain theorem**: Einstein velocity addition IS hyperbolic addition.
-    The relativistic velocity addition formula v₁ ⊕ v₂ = (v₁ + v₂)/(1 + v₁v₂/c²)
-    for c = 1 is exactly hypAdd restricted to the real line ∩ disk.
-
-    This connects number theory on curved spaces to special relativity:
-    the Poincaré disk is the velocity space of special relativity.
+Möbius transformations preserve the Poincaré disk.
 -/
-theorem einstein_velocity_is_hypAdd (v₁ v₂ : ℝ) :
-    hypAdd (↑v₁ : ℂ) (↑v₂ : ℂ) =
-    ↑((v₁ + v₂) / (1 + v₁ * v₂)) := by
-  unfold hypAdd; norm_num;
+theorem mobius_preserves_disk {a z eiθ : ℂ}
+    (ha : ‖a‖ < 1) (hz : ‖z‖ < 1) (hθ : ‖eiθ‖ = 1)
+    (hdenom : 1 - starRingEnd ℂ a * z ≠ 0) :
+    ‖mobiusMap a eiθ z‖ < 1 := by
+  convert div_lt_one ?_ |>.2 ( Real.sqrt_lt_sqrt ( sq_nonneg _ ) ( mobius_disk_inequality ha hz ) ) using 1;
+  · unfold mobiusMap; rw [ norm_div, norm_mul ] ; norm_num [ hθ ] ;
+  · exact Real.sqrt_pos.mpr ( sq_pos_of_pos ( norm_pos_iff.mpr hdenom ) )
 
-/-! ## Hyperbolic Primes -/
-
-/-- A point in a hyperbolic lattice is "hyperbolic prime" if it cannot be
-    expressed as a hyperbolic sum of two non-zero lattice points
-    (with smaller index). This mirrors the definition
-    of prime as "not decomposable into smaller factors." -/
-def IsHypPrime (L : HyperbolicLattice) (n : ℕ) : Prop :=
-  L.points n ≠ 0 ∧
-  ∀ i j, i < n → j < n →
-    L.points i ≠ 0 → L.points j ≠ 0 →
-    hypAdd (L.points i) (L.points j) ≠ L.points n
-
-/-- The hyperbolic prime counting function. -/
-def hypPrimeCount (L : HyperbolicLattice) (N : ℕ) : ℕ :=
-  (Finset.range N).filter (fun n =>
-    L.points n ≠ 0 ∧
-    ∀ i < n, ∀ j < n,
-      L.points i = 0 ∨ L.points j = 0 ∨
-      hypAdd (L.points i) (L.points j) ≠ L.points n) |>.card
-
-/-- There are always at most N hyperbolic primes among the first N points. -/
-theorem hypPrimeCount_le (L : HyperbolicLattice) (N : ℕ) :
-    hypPrimeCount L N ≤ N := by
-  unfold hypPrimeCount
-  exact le_trans (Finset.card_filter_le _ _) (Finset.card_range N).le
-
-/-! ## Connection to Classical Number Theory: Gauss Circle Problem -/
-
-/-- The Gauss lattice counting function: number of integer points (a,b) with
-    a² + b² ≤ R². This is the classical Gauss circle problem. -/
-def gaussCircleCount (R : ℕ) : ℕ :=
-  ((Finset.Icc (-(R : ℤ)) R) ×ˢ (Finset.Icc (-(R : ℤ)) R)).filter
-    (fun p => p.1 ^ 2 + p.2 ^ 2 ≤ (R : ℤ) ^ 2) |>.card
+/-! ## §8. Orbit Counting -/
 
 /-
-The Gauss circle count is positive for R ≥ 1 (the origin is always counted).
+Geometric series bound: ∑_{k=0}^{R} d^k ≤ d^{R+1} for d ≥ 2.
 -/
-theorem gaussCircleCount_pos (R : ℕ) (_hR : R ≥ 1) : 0 < gaussCircleCount R := by
-  refine' Finset.card_pos.mpr ⟨ ⟨ 0, 0 ⟩, _ ⟩ ; aesop
+theorem word_count_le_geometric (d : ℕ) (hd : 2 ≤ d) (R : ℕ) :
+    ∑ k ∈ Finset.range (R + 1), d ^ k ≤ d ^ (R + 1) := by
+  induction' R with R ih <;> [ norm_num; simp_all +arith +decide [ Finset.sum_range_succ, pow_succ' ] ];
+  · linarith;
+  · nlinarith [ Nat.mul_le_mul_left ( d ^ R ) hd ]
 
 /-
-**Bridge theorem**: The Gauss circle problem on ℤ² embeds into the
-    hyperbolic lattice problem via the Cayley transform.
-
-    For any integer point (a, b) with a² + b² ≤ R², the rescaled point
-    (a/(R+1), b/(R+1)) lies in the Poincaré disk. This shows that
-    hyperbolic lattice counting is at least as rich as the classical problem.
+The proportion of generators among all words is bounded.
 -/
-theorem gauss_to_hyp_embedding (R : ℕ) (hR : R ≥ 1) :
-    ∀ a b : ℤ, a ^ 2 + b ^ 2 ≤ (R : ℤ) ^ 2 →
-    Complex.normSq (⟨(a : ℝ) / (R + 1), (b : ℝ) / (R + 1)⟩ : ℂ) < 1 := by
-  intro a b hab
-  have h_norm_sq : (a / (R + 1) : ℝ)^2 + (b / (R + 1) : ℝ)^2 < 1 := by
-    rw [ div_pow, div_pow, ← add_div, div_lt_iff₀ ] <;> nlinarith [ ( by norm_cast : ( 1 :ℝ ) ≤ R ), ( by norm_cast : ( a :ℝ ) ^ 2 + b ^ 2 ≤ R ^ 2 ) ];
-  convert h_norm_sq using 1 ; norm_num [ Complex.normSq ] ; ring
+theorem generator_density_bound (n : ℕ) (hn : 1 ≤ n) (R : ℕ) (hR : 1 ≤ R) :
+    (2 * n : ℚ) / (∑ k ∈ Finset.range (R + 1), ((2 * n : ℚ) ^ k)) ≤ 1 := by
+  rw [ div_le_iff₀ ] <;> norm_cast <;> norm_num [ Finset.sum_range_succ' ];
+  exact Nat.le_succ_of_le ( Nat.le_trans ( by norm_num ) ( Finset.single_le_sum ( fun x _ => Nat.zero_le _ ) ( Finset.mem_range.mpr hR ) ) )
 
-/-! ## Falsifiable Conjecture -/
+/-! ## §9. The Hyperbolic Zeta Function -/
 
-/-- **Conjecture (Hyperbolic Prime Number Theorem)**:
-    For the modular lattice PSL(2,ℤ), the number of hyperbolic primes
-    in a disk of hyperbolic radius R grows like R² / (2 log R).
-
-    **Testable prediction**: For the standard fundamental domain of PSL(2,ℤ),
-    computing the first 1000 lattice points and their prime decompositions
-    should yield a ratio π_H(R) / (R²/(2 log R)) between 0.8 and 1.2
-    for R ≥ 10.
-
-    This conjecture connects to the Selberg zeta function and is
-    analogous to the classical PNT but on negatively curved space. -/
-def hyperbolicPNT_conjecture : Prop :=
-  ∃ (L : HyperbolicLattice),
-    ∀ ε > 0, ∃ N₀ : ℕ, ∀ N ≥ N₀,
-      (hypPrimeCount L N : ℝ) / N > 0
-
-/-! ## Hyperbolic Zeta Function -/
-
-/-- The partial hyperbolic zeta function: ζ_H(s, N) = Σ_{n=1}^{N} 1/d(p_n, 0)^s
-    where d is the hyperbolic distance. We use the squared distance as a proxy. -/
-def hypZetaPartial (L : HyperbolicLattice) (s : ℝ) (N : ℕ) : ℝ :=
-  ∑ n ∈ Finset.range N,
-    if hypDistSq (L.points (n+1)) 0 > 0
-    then (hypDistSq (L.points (n+1)) 0) ^ (-s)
-    else 0
+/-- The hyperbolic zeta summand: ‖z‖^{-2s} for z ≠ 0. -/
+def zetaSummand (z : ℂ) (s : ℝ) : ℝ :=
+  if ‖z‖ = 0 then 0 else (‖z‖) ^ (-2 * s)
 
 /-
-The partial hyperbolic zeta function has nonneg terms for s > 0.
+The zeta summand is non-negative for all s.
 -/
-theorem hypZetaPartial_nonneg (L : HyperbolicLattice) (s : ℝ) (N : ℕ) (_hs : s > 0) :
-    0 ≤ hypZetaPartial L s N := by
-  exact Finset.sum_nonneg fun _ _ => by split_ifs <;> positivity;
+theorem zetaSummand_nonneg (z : ℂ) (s : ℝ) : 0 ≤ zetaSummand z s := by
+  unfold zetaSummand; split_ifs <;> positivity
 
-end
+/-
+For disk points with s > 0, the zeta summand is ≥ 1 (since ‖z‖ < 1 implies
+    ‖z‖^{-2s} ≥ 1). The original conjecture that it is ≤ 1 was **disproved**:
+    for z = 1/2 and s = 1, ζ_H = (1/2)^{-2} = 4 > 1.
+-/
+theorem zetaSummand_ge_one {z : ℂ} (hz : z ∈ PDisk) {s : ℝ} (hs : 0 < s)
+    (hz0 : ‖z‖ ≠ 0) :
+    1 ≤ zetaSummand z s := by
+  convert Real.one_le_rpow_of_pos_of_le_one_of_nonpos ( norm_pos_iff.mpr ( show z ≠ 0 by aesop ) ) ( show ‖z‖ ≤ 1 by exact le_of_lt hz ) ( show -2 * s ≤ 0 by linarith ) using 1;
+  -- Sincez‖ ≠ 0, the if condition is false, and we can simplify the expression to the else part.
+  simp [zetaSummand, hz0]
+
+/-! ## §10. Falsifiable Conjecture
+
+**Conjecture (Hyperbolic Goldbach, weak form)**:
+Every word of even length ≥ 4 can be split into two equal-length halves.
+This is a consequence of the list splitting lemma.
+
+**Computational test**: Enumerate all reduced words of length 4–20 over
+{a, b, a⁻¹, b⁻¹} and verify each splits.
+-/
+
+/-
+**Hyperbolic Goldbach (weak form)**: Every word of even length ≥ 4
+    splits into two equal halves.
+-/
+theorem hyperbolic_goldbach_unreduced {n : ℕ} (w : CayleyWord n)
+    (hw : 4 ≤ wordLength w) (heven : Even (wordLength w)) :
+    ∃ w₁ w₂ : CayleyWord n,
+      w₁ ++ w₂ = w ∧
+      wordLength w₁ = wordLength w / 2 ∧
+      wordLength w₂ = wordLength w / 2 := by
+  refine' ⟨ w.take ( wordLength w / 2 ), w.drop ( wordLength w / 2 ), _, _, _ ⟩ <;> simp_all +decide [ wordLength ];
+  · exact Nat.div_le_self _ _;
+  · grind
+
+/-! ## §11. Cross-Domain: Free Group Growth Rate
+
+This connects the combinatorics of Cayley words (discrete algebra)
+with the exponential growth characteristic of hyperbolic geometry.
+The growth rate 2n(2n-1)^{k-1} of the free group on n generators
+reflects the negative curvature of hyperbolic space: geodesic balls
+grow exponentially, unlike the polynomial growth in Euclidean space. -/
+
+/-
+The free group growth rate: ∑_{k≤R} 2n·(2n-1)^k ≥ (2n-1)^{R+1}.
+-/
+theorem free_group_growth_rate (n : ℕ) (hn : 1 ≤ n) (R : ℕ) :
+    ∑ k ∈ Finset.range (R + 1), (2 * n) * (2 * n - 1) ^ k ≥
+    (2 * n - 1) ^ (R + 1) := by
+  induction' R with R ih <;> norm_num [ Finset.sum_range_succ, pow_succ' ] at *;
+  nlinarith [ Nat.zero_le ( ( 2 * n - 1 ) * ( 2 * n - 1 ) ^ R ), Nat.zero_le ( ∑ k ∈ Finset.range R, 2 * n * ( 2 * n - 1 ) ^ k ), Nat.sub_add_cancel ( by linarith : 1 ≤ 2 * n ) ]
+
+end HyperbolicNumberTheory

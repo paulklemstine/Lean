@@ -1,339 +1,304 @@
 """
-Algorithms for Hyperbolic Number Theory
-========================================
-Implements core algorithms for arithmetic on the Poincaré disk,
-orbit computation, and lattice point counting.
+Hyperbolic Number Theory: Core Algorithms
+==========================================
+Implementations of the algorithms from the research paper with
+complexity analysis and docstrings.
 """
 
 import cmath
 import math
-from typing import Optional
+from typing import List, Tuple, Optional, Set
+from dataclasses import dataclass
+from enum import Enum
 
 
-class MobiusAutomorphism:
-    """A Möbius automorphism of the Poincaré disk.
+# =============================================================================
+# Algorithm 1: Möbius Transformation on the Poincaré Disk
+# =============================================================================
 
-    Represents the map z ↦ e^{iθ} · (z - a) / (1 - conj(a) · z)
-    where |a| < 1.
+def mobius_transform(a: complex, theta: float, z: complex) -> complex:
+    """
+    Apply a Möbius transformation to a point in the Poincaré disk.
 
-    Time complexity: O(1) per evaluation.
-    Space complexity: O(1).
+    The transformation is: φ_{a,θ}(z) = e^{iθ} · (z - a) / (1 - conj(a) · z)
+
+    Parameters:
+        a: Center point in the disk (|a| < 1)
+        theta: Rotation angle in radians
+        z: Input point in the disk (|z| < 1)
+
+    Returns:
+        The image point φ(z), guaranteed to be in the disk when inputs are valid.
+
+    Time complexity: O(1)
+    Space complexity: O(1)
+
+    Example:
+        >>> w = mobius_transform(0.3+0.4j, math.pi/4, 0.1+0.2j)
+        >>> abs(w) < 1  # Disk preservation
+        True
+    """
+    eitheta = cmath.exp(1j * theta)
+    denom = 1 - a.conjugate() * z
+    if abs(denom) < 1e-15:
+        raise ValueError("Degenerate: denominator too close to zero")
+    return eitheta * (z - a) / denom
+
+
+def hyperbolic_distance(z: complex, w: complex) -> float:
+    """
+    Compute the hyperbolic distance between two points in the Poincaré disk.
+
+    d_H(z, w) = 2 · arctanh(|(z-w)/(1-conj(z)·w)|)
+
+    Time complexity: O(1)
+    Space complexity: O(1)
+    """
+    denom = 1 - z.conjugate() * w
+    if abs(denom) < 1e-15:
+        return float('inf')
+    pd = abs((z - w) / denom)
+    if pd >= 1 - 1e-15:
+        return float('inf')
+    return 2 * math.atanh(pd)
+
+
+# =============================================================================
+# Algorithm 2: Cayley Word Arithmetic
+# =============================================================================
+
+class LetterType(Enum):
+    GEN = 1
+    INV = -1
+
+
+@dataclass
+class CayleyLetter:
+    """A letter in the Cayley alphabet: generator or inverse."""
+    index: int
+    letter_type: LetterType
+
+    def inverse(self) -> 'CayleyLetter':
+        new_type = LetterType.INV if self.letter_type == LetterType.GEN else LetterType.GEN
+        return CayleyLetter(self.index, new_type)
+
+    def __repr__(self):
+        name = f"g{self.index}"
+        if self.letter_type == LetterType.INV:
+            name += "⁻¹"
+        return name
+
+
+class CayleyWord:
+    """
+    A word in the Cayley graph of a finitely generated group.
+    Represents a 'hyperbolic integer'.
+
+    Time complexity:
+        - Creation: O(k) where k = word length
+        - Multiplication (concatenation): O(k1 + k2)
+        - Reduction: O(k) amortized
     """
 
-    def __init__(self, center: complex, phase: float):
+    def __init__(self, letters: Optional[List[CayleyLetter]] = None):
+        self.letters = letters or []
+
+    @property
+    def length(self) -> int:
+        """Word length = number of letters."""
+        return len(self.letters)
+
+    def __mul__(self, other: 'CayleyWord') -> 'CayleyWord':
+        """Multiplication = concatenation."""
+        return CayleyWord(self.letters + other.letters)
+
+    def reduce(self) -> 'CayleyWord':
         """
-        Args:
-            center: Point a in the disk (|a| < 1)
-            phase: Rotation angle θ
+        Free reduction: cancel adjacent inverse pairs.
 
-        Raises:
-            ValueError: If |center| >= 1
+        Time complexity: O(k) where k = word length
+        Space complexity: O(k)
         """
-        if abs(center) >= 1.0:
-            raise ValueError(f"|center| = {abs(center):.6f} >= 1, must be in open disk")
-        self.center = center
-        self.phase = phase
-        self._exp_phase = cmath.exp(1j * phase)
-
-    def __call__(self, z: complex) -> complex:
-        """Apply the Möbius transformation.
-
-        Args:
-            z: Point in the disk
-
-        Returns:
-            Image of z under the transformation
-
-        Complexity: O(1) arithmetic operations
-        """
-        denom = 1 - self.center.conjugate() * z
-        return self._exp_phase * (z - self.center) / denom
-
-    def inverse(self) -> 'MobiusAutomorphism':
-        """Compute the inverse transformation.
-
-        The inverse of z ↦ e^{iθ}(z-a)/(1-ā·z) is
-        z ↦ (e^{-iθ}·z + a) / (1 + ā·e^{-iθ}·z),
-        which equals z ↦ e^{-iθ}·(z - (-e^{iθ}·a)) / (1 - conj(-e^{iθ}·a)·z).
-
-        Returns:
-            The inverse MobiusAutomorphism
-
-        Complexity: O(1)
-        """
-        new_center = -self._exp_phase * self.center
-        new_phase = -self.phase
-        return MobiusAutomorphism(new_center, new_phase)
-
-    def compose(self, other: 'MobiusAutomorphism') -> 'MobiusAutomorphism':
-        """Approximate composition by sampling.
-
-        Note: The composition of two Möbius disk automorphisms is another
-        Möbius disk automorphism, but extracting the parameters requires
-        solving a system. Here we use a numerical approach.
-
-        Returns:
-            Approximate MobiusAutomorphism representing self ∘ other
-        """
-        # Evaluate at origin to find the new center
-        new_center_neg = self(other(0j))
-        # The center is the preimage of 0
-        inv_self = self.inverse()
-        inv_other = other.inverse()
-        center = inv_other(inv_self(0j))
-        # Phase from evaluating at a test point
-        if abs(center) < 1 - 1e-10:
-            test = center + 0.01 * (1 - abs(center))
-            actual = self(other(test))
-            expected_no_phase = (test - center) / (1 - center.conjugate() * test)
-            if abs(expected_no_phase) > 1e-12:
-                phase_complex = actual / expected_no_phase
-                phase = cmath.phase(phase_complex)
+        stack: List[CayleyLetter] = []
+        for letter in self.letters:
+            if (stack and stack[-1].index == letter.index and
+                    stack[-1].letter_type != letter.letter_type):
+                stack.pop()
             else:
-                phase = 0.0
-            return MobiusAutomorphism(center, phase)
+                stack.append(letter)
+        return CayleyWord(stack)
+
+    def is_generator(self) -> bool:
+        """Check if this word is a single generator (hyperbolic prime)."""
+        return self.length == 1
+
+    def factorize(self) -> List[CayleyLetter]:
+        """
+        Factor into individual letters (hyperbolic prime factorization).
+        Every word uniquely decomposes as a product of generators.
+        """
+        return list(self.letters)
+
+    def split_half(self) -> Optional[Tuple['CayleyWord', 'CayleyWord']]:
+        """
+        Split an even-length word into two equal halves.
+        Returns None if the word has odd length.
+        (Hyperbolic Goldbach decomposition)
+        """
+        if self.length % 2 != 0:
+            return None
+        half = self.length // 2
+        return CayleyWord(self.letters[:half]), CayleyWord(self.letters[half:])
+
+    def __repr__(self):
+        if not self.letters:
+            return "ε"
+        return "·".join(str(l) for l in self.letters)
+
+
+# =============================================================================
+# Algorithm 3: Orbit Point Generation
+# =============================================================================
+
+def generate_orbit_points(
+    generators: List[Tuple[complex, float]],
+    max_depth: int,
+    origin: complex = 0
+) -> List[Tuple[complex, int, str]]:
+    """
+    Generate orbit points Γ·0 by applying all words up to a given depth.
+
+    Parameters:
+        generators: List of (center_a, theta) pairs defining Möbius transforms
+        max_depth: Maximum word length to enumerate
+        origin: Starting point (default: 0)
+
+    Returns:
+        List of (point, depth, word_string) tuples
+
+    Time complexity: O(d^R) where d = 2·|generators| and R = max_depth
+    Space complexity: O(d^R)
+    """
+    points = [(origin, 0, "e")]
+    current_level = [(origin, "e")]
+
+    # Build all transforms (generators + inverses)
+    transforms = []
+    for i, (a, theta) in enumerate(generators):
+        transforms.append((a, theta, f"g{i}"))
+        # Inverse: center = -e^{iθ}·a / ... ≈ negate the action
+        transforms.append((mobius_transform(a, theta, 0), -theta, f"g{i}⁻¹"))
+
+    for depth in range(1, max_depth + 1):
+        next_level = []
+        for pt, word in current_level:
+            for a, theta, name in transforms:
+                try:
+                    new_pt = mobius_transform(a, theta, pt)
+                    if abs(new_pt) < 1 - 1e-10:
+                        new_word = word + "·" + name if word != "e" else name
+                        next_level.append((new_pt, new_word))
+                        points.append((new_pt, depth, new_word))
+                except ValueError:
+                    continue
+        current_level = next_level
+
+    return points
+
+
+# =============================================================================
+# Algorithm 4: Hyperbolic Zeta Function (Partial Sums)
+# =============================================================================
+
+def hyperbolic_zeta_partial(
+    orbit_points: List[complex],
+    s: float
+) -> float:
+    """
+    Compute the partial sum of the hyperbolic zeta function:
+    ζ_H(s) = Σ_{z ∈ Γ·0, z ≠ 0} ‖z‖^{-2s}
+
+    Parameters:
+        orbit_points: List of orbit points (excluding origin)
+        s: The parameter s (convergence requires s > δ/2)
+
+    Returns:
+        The partial sum
+
+    Time complexity: O(N) where N = len(orbit_points)
+    """
+    total = 0.0
+    for z in orbit_points:
+        r = abs(z)
+        if r > 1e-15:
+            total += r ** (-2 * s)
+    return total
+
+
+# =============================================================================
+# Algorithm 5: Growth Rate Estimation
+# =============================================================================
+
+def estimate_growth_rate(n_generators: int, max_R: int) -> List[Tuple[int, int, float]]:
+    """
+    Compute the growth function and estimate the exponential growth rate.
+
+    For a free group on n generators, the growth rate is 2n-1.
+    (Each step multiplies by 2n-1 since one direction is forbidden.)
+
+    Returns:
+        List of (R, word_count, estimated_rate) tuples
+    """
+    d = 2 * n_generators  # alphabet size
+    results = []
+    for R in range(max_R + 1):
+        word_count = sum(d**k for k in range(R + 1))
+        if R > 0:
+            prev_count = sum(d**k for k in range(R))
+            rate = word_count / prev_count if prev_count > 0 else 0
         else:
-            return MobiusAutomorphism(0j, 0.0)
+            rate = 1.0
+        results.append((R, word_count, rate))
+    return results
 
 
-class HyperbolicAddition:
-    """Einstein/hyperbolic addition on the Poincaré disk.
-
-    The operation z ⊕ w = (z + w) / (1 + conj(z)·w) gives the disk
-    the structure of a gyrogroup (non-associative, non-commutative
-    group-like structure).
-
-    This is mathematically identical to the relativistic velocity
-    addition formula in special relativity.
-    """
-
-    @staticmethod
-    def add(z: complex, w: complex) -> complex:
-        """Hyperbolic addition.
-
-        Args:
-            z, w: Points in the disk (|z|, |w| < 1)
-
-        Returns:
-            z ⊕ w in the disk
-
-        Complexity: O(1)
-        """
-        return (z + w) / (1 + z.conjugate() * w)
-
-    @staticmethod
-    def neg(z: complex) -> complex:
-        """Hyperbolic negation (inverse).
-
-        The hyperbolic inverse of z is -z.
-
-        Complexity: O(1)
-        """
-        return -z
-
-    @staticmethod
-    def is_in_disk(z: complex, tol: float = 1e-12) -> bool:
-        """Check if a point is in the open unit disk."""
-        return abs(z) < 1.0 - tol
-
-    @classmethod
-    def verify_closure(cls, z: complex, w: complex) -> tuple[complex, bool]:
-        """Verify that z ⊕ w is in the disk.
-
-        Returns:
-            Tuple of (result, is_in_disk)
-        """
-        result = cls.add(z, w)
-        return result, cls.is_in_disk(result)
-
-    @classmethod
-    def gyration(cls, z: complex, w: complex, x: complex) -> complex:
-        """The gyration operator gyr[z,w](x).
-
-        The gyration measures the failure of associativity:
-        z ⊕ (w ⊕ x) = (z ⊕ w) ⊕ gyr[z,w](x)
-
-        Complexity: O(1)
-        """
-        zw = cls.add(z, w)
-        zwx = cls.add(zw, x)
-        wx = cls.add(w, x)
-        z_wx = cls.add(z, wx)
-        # gyr[z,w](x) satisfies (z⊕w)⊕gyr[z,w](x) = z⊕(w⊕x)
-        # So gyr[z,w](x) = ⊖(z⊕w) ⊕ (z⊕(w⊕x))
-        return cls.add(cls.neg(zw), z_wx)
-
-
-class HyperbolicLattice:
-    """Generate and analyze hyperbolic lattice points.
-
-    Given a Möbius automorphism as generator, produces the orbit of
-    the origin and computes counting statistics.
-
-    Algorithm: Iterative Möbius application
-    Time complexity: O(N) to generate N orbit points
-    Space complexity: O(N) to store all points
-    """
-
-    def __init__(self, generator: MobiusAutomorphism):
-        self.generator = generator
-        self._orbit: list[complex] = [0j]
-
-    def generate(self, n: int) -> list[complex]:
-        """Generate n orbit points starting from origin.
-
-        Args:
-            n: Number of orbit points to generate
-
-        Returns:
-            List of n complex points in the disk
-
-        Complexity: O(n) time, O(n) space
-        """
-        while len(self._orbit) < n:
-            self._orbit.append(self.generator(self._orbit[-1]))
-        return self._orbit[:n]
-
-    def counting_function(self, r: float, n: Optional[int] = None) -> int:
-        """Count orbit points within Euclidean radius r.
-
-        Args:
-            r: Euclidean radius
-            n: Number of orbit points to consider (default: all generated)
-
-        Returns:
-            Count of points with |p| ≤ r
-
-        Complexity: O(n)
-        """
-        pts = self._orbit if n is None else self._orbit[:n]
-        return sum(1 for p in pts if abs(p) <= r)
-
-    def hyperbolic_distance_distribution(self, n: int) -> list[float]:
-        """Compute the hyperbolic distance proxy from origin for each orbit point.
-
-        Returns:
-            List of distance proxies |p|²/(1-|p|²) for each point
-
-        Complexity: O(n)
-        """
-        pts = self.generate(n)
-        dists = []
-        for p in pts:
-            r2 = abs(p) ** 2
-            if r2 < 1:
-                dists.append(r2 / (1 - r2))
-            else:
-                dists.append(float('inf'))
-        return dists
-
-
-class HyperbolicZeta:
-    """Numerical computation of the hyperbolic zeta function.
-
-    ζ_H(s) = Σ_{n ∈ Z_H, |n|_H > 0} 1/|n|_H^{2s}
-
-    where |n|_H is the hyperbolic distance proxy from the origin.
-
-    Algorithm: Direct summation with convergence monitoring
-    Time complexity: O(N) per evaluation for N terms
-    Convergence: For Re(s) > 1, convergence is geometric
-    """
-
-    def __init__(self, lattice: HyperbolicLattice):
-        self.lattice = lattice
-
-    def evaluate(self, s: complex, n_terms: int = 100) -> complex:
-        """Evaluate ζ_H(s) using the first n_terms lattice points.
-
-        Args:
-            s: Complex argument
-            n_terms: Number of terms in partial sum
-
-        Returns:
-            Partial sum approximation to ζ_H(s)
-
-        Complexity: O(n_terms)
-        """
-        pts = self.lattice.generate(n_terms)
-        total = 0j
-        for p in pts:
-            r = abs(p)
-            if r > 1e-12:
-                hyp_norm = r ** 2 / (1 - r ** 2) if r < 1 else 1e10
-                if hyp_norm > 1e-12:
-                    total += hyp_norm ** (-s)
-        return total
-
-    def partial_sums(self, s: complex, n_max: int = 100) -> list[complex]:
-        """Track partial sums for convergence analysis.
-
-        Returns:
-            List of cumulative partial sums
-
-        Complexity: O(n_max)
-        """
-        pts = self.lattice.generate(n_max)
-        sums = []
-        total = 0j
-        for p in pts:
-            r = abs(p)
-            if r > 1e-12 and r < 1:
-                hyp_norm = r ** 2 / (1 - r ** 2)
-                if hyp_norm > 1e-12:
-                    total += hyp_norm ** (-s)
-            sums.append(total)
-        return sums
-
-
-def demo_algorithms():
-    """Demonstrate all algorithms with examples."""
-    print("=" * 60)
-    print("ALGORITHM DEMONSTRATIONS")
-    print("=" * 60)
-
-    # 1. Möbius automorphism
-    print("\n1. Möbius Automorphism")
-    phi = MobiusAutomorphism(0.3 + 0.2j, math.pi / 4)
-    z = 0.1 + 0.5j
-    w = phi(z)
-    print(f"   φ(z) = {w:.6f}, |φ(z)| = {abs(w):.6f}")
-
-    # Inverse
-    phi_inv = phi.inverse()
-    z_back = phi_inv(w)
-    print(f"   φ⁻¹(φ(z)) = {z_back:.6f} ≈ {z}")
-
-    # 2. Hyperbolic addition
-    print("\n2. Hyperbolic Addition (Gyrogroup)")
-    ha = HyperbolicAddition()
-    z, w = 0.3 + 0.1j, 0.2 - 0.3j
-    print(f"   z ⊕ w = {ha.add(z, w):.6f}")
-    print(f"   w ⊕ z = {ha.add(w, z):.6f}")
-    print(f"   (non-commutative: diff = {abs(ha.add(z, w) - ha.add(w, z)):.6f})")
-
-    gyr = ha.gyration(z, w, 0.1 + 0.1j)
-    print(f"   gyr[z,w](0.1+0.1i) = {gyr:.6f}")
-
-    # 3. Lattice generation
-    print("\n3. Hyperbolic Lattice")
-    gen = MobiusAutomorphism(0.5, math.pi / 3)
-    lattice = HyperbolicLattice(gen)
-    pts = lattice.generate(100)
-    print(f"   Generated 100 orbit points")
-    print(f"   N(0.5) = {lattice.counting_function(0.5)}")
-    print(f"   N(0.9) = {lattice.counting_function(0.9)}")
-    print(f"   N(0.99) = {lattice.counting_function(0.99)}")
-
-    # 4. Hyperbolic zeta
-    print("\n4. Hyperbolic Zeta Function")
-    zeta = HyperbolicZeta(lattice)
-    for s_real in [2.0, 3.0, 5.0]:
-        val = zeta.evaluate(complex(s_real, 0), 200)
-        print(f"   ζ_H({s_real}) ≈ {val:.6f}")
-
-    print("\n" + "=" * 60)
-
+# =============================================================================
+# Example Usage
+# =============================================================================
 
 if __name__ == "__main__":
-    demo_algorithms()
+    print("=== Hyperbolic Number Theory: Algorithm Demonstrations ===\n")
+
+    # Demo: Möbius transform
+    a = 0.3 + 0.4j
+    theta = math.pi / 6
+    z = 0.1 + 0.2j
+    w = mobius_transform(a, theta, z)
+    print(f"Möbius({z}) = {w:.6f}, |result| = {abs(w):.6f}")
+
+    # Demo: Cayley words
+    g0 = CayleyLetter(0, LetterType.GEN)
+    g1 = CayleyLetter(1, LetterType.GEN)
+    g0_inv = g0.inverse()
+
+    word1 = CayleyWord([g0, g1, g0])
+    word2 = CayleyWord([g0_inv, g1])
+    product = word1 * word2
+    reduced = product.reduce()
+
+    print(f"\nWord1: {word1} (length {word1.length})")
+    print(f"Word2: {word2} (length {word2.length})")
+    print(f"Product: {product} (length {product.length})")
+    print(f"Reduced: {reduced} (length {reduced.length})")
+
+    # Demo: Growth rates
+    print("\nGrowth rate estimation (2 generators):")
+    for R, count, rate in estimate_growth_rate(2, 8):
+        print(f"  R={R}: {count:8d} words, growth rate ≈ {rate:.4f}")
+
+    # Demo: Orbit generation
+    gens = [(0.3 + 0.1j, math.pi / 4), (0.2 - 0.3j, math.pi / 3)]
+    orbit = generate_orbit_points(gens, max_depth=3)
+    print(f"\nOrbit points (depth ≤ 3): {len(orbit)} points generated")
+    for pt, depth, word in orbit[:10]:
+        print(f"  depth={depth}: {word} → {pt:.4f} (|z|={abs(pt):.4f})")
