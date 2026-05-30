@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Tropical Geometry",
     "date": "2026-05-30T17:49:34Z",
     "exp_id": "c46f992b",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.73343,
+    "quality": "substantial",
     "pkg_num": 428
   },
   {
@@ -12421,8 +12421,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-30T17:49:34Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.73343,
+      "quality": "substantial"
     }
   ],
   "edges": [
