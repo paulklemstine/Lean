@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Matroid Theory / Probability",
     "date": "2026-05-30T03:41:22Z",
     "exp_id": "5718240a",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.687075,
+    "quality": "partial",
     "pkg_num": 377
   },
   {
@@ -10942,8 +10942,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-30T03:41:22Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.687075,
+      "quality": "partial"
     }
   ],
   "edges": [

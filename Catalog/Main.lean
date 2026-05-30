@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2093 of the highest-quality
+A curated collection of 2094 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2093
+Total files: 2094
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -541,6 +541,7 @@ import FINAL.Bridges.MarginCosheaf
 import FINAL.Bridges.MaslovDequantizationRobustness
 import FINAL.Bridges.MatrixGroupGrowth
 import FINAL.Bridges.MatroidCertificatePhaseTransition
+import FINAL.Bridges.MatroidHodgeDPP
 import FINAL.Bridges.MatroidQuantumCertificates
 import FINAL.Bridges.MetrizedJacobian
 import FINAL.Bridges.MinEntropy
