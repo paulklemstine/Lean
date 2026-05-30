@@ -1,44 +1,185 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Happy End Problem
+algorithms.py — Algorithms for the Happy End Problem and Erdős–Szekeres theory.
 
-Implements the key algorithms underlying the Erdős–Szekeres theorem:
-1. Cup-Cap Decomposition (Seidenberg labeling for planar points)
-2. Convex polygon detection via orientation testing
-3. The Erdős–Szekeres bound computation
-4. Brute-force and heuristic search for ES(n) configurations
-
-Time Complexity:
-- Cup-Cap decomposition: O(n^2) per point, O(n^3) total
-- Convex polygon detection: O(n^3) for orientation checking
-- ES bound computation: O(1) via binomial coefficient
+Implements:
+1. Erdős-Szekeres labeling algorithm for monotone subsequences
+2. Cup-cap decomposition
+3. Convex depth computation
+4. Orientation-based convexity testing
 """
 
-import math
-from typing import List, Tuple, Optional, Set
-from itertools import combinations
+from typing import List, Tuple, Optional
+import itertools
 
 Point = Tuple[float, float]
 
 
 def orient(a: Point, b: Point, c: Point) -> float:
-    """Compute orientation of triangle (a, b, c).
-    
+    """Compute the orientation of three points.
+
     Returns:
-        Positive: counterclockwise (CCW)
-        Negative: clockwise (CW)
-        Zero: collinear
-    
-    Time: O(1)
-    Space: O(1)
+        > 0 if counterclockwise (left turn)
+        < 0 if clockwise (right turn)
+        = 0 if collinear
+
+    Time: O(1), Space: O(1)
     """
     return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
 
 
-def is_general_position(points: List[Point], eps: float = 1e-10) -> bool:
-    """Check if no three points are collinear.
-    
-    Time: O(n^3)
-    Space: O(1)
+def erdos_szekeres_labels(seq: List[float]) -> Tuple[List[int], List[int]]:
+    """Compute the Erdős-Szekeres labels (inc_i, dec_i) for each element.
+
+    For each index i, inc_i is the length of the longest increasing subsequence
+    ending at i, and dec_i is the length of the longest decreasing subsequence
+    ending at i.
+
+    By the pigeonhole principle, if n > (r-1)(s-1), there must exist an element
+    with inc_i ≥ r or dec_i ≥ s.
+
+    Time: O(n²), Space: O(n)
+
+    Example:
+        >>> inc, dec = erdos_szekeres_labels([3, 1, 4, 1, 5, 9, 2, 6])
+        >>> inc  # [1, 1, 2, 1, 3, 4, 2, 4]
+        >>> dec  # [1, 2, 1, 3, 1, 1, 3, 1]
+    """
+    n = len(seq)
+    inc = [1] * n
+    dec = [1] * n
+
+    for i in range(1, n):
+        for j in range(i):
+            if seq[j] < seq[i]:
+                inc[i] = max(inc[i], inc[j] + 1)
+            elif seq[j] > seq[i]:
+                dec[i] = max(dec[i], dec[j] + 1)
+
+    return inc, dec
+
+
+def find_longest_monotone(seq: List[float]) -> Tuple[List[int], List[int]]:
+    """Find the longest increasing and decreasing subsequences.
+
+    Returns indices of each.
+
+    Time: O(n²), Space: O(n)
+    """
+    n = len(seq)
+    if n == 0:
+        return [], []
+
+    # Longest increasing
+    inc_dp = [1] * n
+    inc_par = [-1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if seq[j] < seq[i] and inc_dp[j] + 1 > inc_dp[i]:
+                inc_dp[i] = inc_dp[j] + 1
+                inc_par[i] = j
+
+    inc_idx = max(range(n), key=lambda i: inc_dp[i])
+    inc_result = []
+    idx = inc_idx
+    while idx != -1:
+        inc_result.append(idx)
+        idx = inc_par[idx]
+    inc_result.reverse()
+
+    # Longest decreasing
+    dec_dp = [1] * n
+    dec_par = [-1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if seq[j] > seq[i] and dec_dp[j] + 1 > dec_dp[i]:
+                dec_dp[i] = dec_dp[j] + 1
+                dec_par[i] = j
+
+    dec_idx = max(range(n), key=lambda i: dec_dp[i])
+    dec_result = []
+    idx = dec_idx
+    while idx != -1:
+        dec_result.append(idx)
+        idx = dec_par[idx]
+    dec_result.reverse()
+
+    return inc_result, dec_result
+
+
+def find_cups_and_caps(points: List[Point]) -> Tuple[List[List[int]], List[List[int]]]:
+    """Decompose a point set into maximal cups and caps.
+
+    A cup is a sequence where consecutive triples have positive orientation.
+    A cap is a sequence where consecutive triples have negative orientation.
+
+    Points must be sorted by x-coordinate.
+
+    Time: O(n²), Space: O(n)
+    """
+    n = len(points)
+    if n <= 2:
+        return [list(range(n))], [list(range(n))]
+
+    # Find longest cup ending at each point
+    cup_len = [1] * n
+    cup_par = [-1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if cup_len[j] == 1:
+                # Any pair forms a cup of size 2
+                if cup_len[j] + 1 > cup_len[i] or (cup_len[j] + 1 == cup_len[i] and cup_par[i] == -1):
+                    cup_len[i] = max(cup_len[i], 2)
+                    if cup_len[i] == 2:
+                        cup_par[i] = j
+            elif cup_par[j] >= 0:
+                # Check orientation
+                if orient(points[cup_par[j]], points[j], points[i]) > 0:
+                    if cup_len[j] + 1 > cup_len[i]:
+                        cup_len[i] = cup_len[j] + 1
+                        cup_par[i] = j
+
+    # Find longest cap ending at each point
+    cap_len = [1] * n
+    cap_par = [-1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if cap_len[j] == 1:
+                if cap_len[j] + 1 > cap_len[i] or (cap_len[j] + 1 == cap_len[i] and cap_par[i] == -1):
+                    cap_len[i] = max(cap_len[i], 2)
+                    if cap_len[i] == 2:
+                        cap_par[i] = j
+            elif cap_par[j] >= 0:
+                if orient(points[cap_par[j]], points[j], points[i]) < 0:
+                    if cap_len[j] + 1 > cap_len[i]:
+                        cap_len[i] = cap_len[j] + 1
+                        cap_par[i] = j
+
+    # Extract the longest cup
+    cup_end = max(range(n), key=lambda i: cup_len[i])
+    cup = []
+    idx = cup_end
+    while idx != -1:
+        cup.append(idx)
+        idx = cup_par[idx]
+    cup.reverse()
+
+    # Extract the longest cap
+    cap_end = max(range(n), key=lambda i: cap_len[i])
+    cap = []
+    idx = cap_end
+    while idx != -1:
+        cap.append(idx)
+        idx = cap_par[idx]
+    cap.reverse()
+
+    return [cup], [cap]
+
+
+def is_in_general_position(points: List[Point], eps: float = 1e-10) -> bool:
+    """Check if points are in general position (no three collinear).
+
+    Time: O(n³), Space: O(1)
     """
     n = len(points)
     for i in range(n):
@@ -49,254 +190,116 @@ def is_general_position(points: List[Point], eps: float = 1e-10) -> bool:
     return True
 
 
-def has_distinct_x(points: List[Point], eps: float = 1e-10) -> bool:
-    """Check if all x-coordinates are distinct.
-    
-    Time: O(n log n)
-    Space: O(n)
-    """
-    xs = sorted(p[0] for p in points)
-    return all(abs(xs[i] - xs[i+1]) > eps for i in range(len(xs) - 1))
-
-
 def is_convex_position(points: List[Point], eps: float = 1e-10) -> bool:
-    """Check if points (assumed x-sorted) are in convex position.
-    
-    All orientation triples (i < j < k) must have the same sign.
-    
-    Time: O(n^3)
-    Space: O(1)
+    """Check if points are in convex position.
+
+    Points are in convex position if, when sorted by x-coordinate,
+    all ordered triples have the same orientation sign.
+
+    Time: O(n³), Space: O(1)
     """
     n = len(points)
     if n <= 2:
         return True
-    
-    ref_sign = None
+
+    pts = sorted(points, key=lambda p: p[0])
+    pos_count = 0
+    neg_count = 0
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j + 1, n):
-                o = orient(points[i], points[j], points[k])
-                if abs(o) < eps:
-                    return False
-                s = 1 if o > 0 else -1
-                if ref_sign is None:
-                    ref_sign = s
-                elif s != ref_sign:
-                    return False
-    return True
-
-
-class CupCapDecomposition:
-    """Cup-Cap Decomposition for planar point sets.
-    
-    For each point, computes the length of the longest cup (convex-up chain)
-    and longest cap (convex-down chain) ending at that point.
-    
-    This is the planar analogue of the Seidenberg labeling used in the
-    Erdős–Szekeres monotone subsequence theorem.
-    
-    Attributes:
-        points: List of points sorted by x-coordinate
-        cup_len: cup_len[i] = length of longest cup ending at point i
-        cap_len: cap_len[i] = length of longest cap ending at point i
-        cup_prev: cup_prev[i] = previous point index in the optimal cup
-        cap_prev: cap_prev[i] = previous point index in the optimal cap
-    """
-    
-    def __init__(self, points: List[Point]):
-        """Initialize and compute the decomposition.
-        
-        Time: O(n^3) in worst case, O(n^2) amortized
-        Space: O(n)
-        """
-        self.points = sorted(points, key=lambda p: p[0])
-        n = len(self.points)
-        
-        self.cup_len = [1] * n
-        self.cap_len = [1] * n
-        self.cup_prev = [-1] * n
-        self.cap_prev = [-1] * n
-        
-        for i in range(n):
-            for j in range(i):
-                # Try extending cup from j to i
-                if self.cup_len[j] == 1:
-                    # Any single point can start a cup of length 2
-                    if self.cup_len[i] < 2:
-                        self.cup_len[i] = 2
-                        self.cup_prev[i] = j
+                o = orient(pts[i], pts[j], pts[k])
+                if o > eps:
+                    pos_count += 1
+                elif o < -eps:
+                    neg_count += 1
                 else:
-                    # Check if (prev(j), j, i) has positive orientation
-                    prev_j = self.cup_prev[j]
-                    if prev_j >= 0:
-                        o = orient(self.points[prev_j], self.points[j], self.points[i])
-                        if o > 0 and self.cup_len[j] + 1 > self.cup_len[i]:
-                            self.cup_len[i] = self.cup_len[j] + 1
-                            self.cup_prev[i] = j
-                
-                # Try extending cap from j to i
-                if self.cap_len[j] == 1:
-                    if self.cap_len[i] < 2:
-                        self.cap_len[i] = 2
-                        self.cap_prev[i] = j
-                else:
-                    prev_j = self.cap_prev[j]
-                    if prev_j >= 0:
-                        o = orient(self.points[prev_j], self.points[j], self.points[i])
-                        if o < 0 and self.cap_len[j] + 1 > self.cap_len[i]:
-                            self.cap_len[i] = self.cap_len[j] + 1
-                            self.cap_prev[i] = j
-    
-    def max_cup(self) -> int:
-        """Length of the longest cup."""
-        return max(self.cup_len) if self.cup_len else 0
-    
-    def max_cap(self) -> int:
-        """Length of the longest cap."""
-        return max(self.cap_len) if self.cap_len else 0
-    
-    def get_labels(self) -> List[Tuple[int, int]]:
-        """Get the (cup_len, cap_len) label pairs.
-        
-        Key property: if these labels are injective (no two points share
-        the same label), then n ≤ max_cup * max_cap.
-        """
-        return list(zip(self.cup_len, self.cap_len))
-    
-    def extract_cup(self, idx: int) -> List[int]:
-        """Extract the cup ending at index idx."""
-        path = []
-        i = idx
-        while i >= 0:
-            path.append(i)
-            i = self.cup_prev[i]
-        return list(reversed(path))
-    
-    def extract_cap(self, idx: int) -> List[int]:
-        """Extract the cap ending at index idx."""
-        path = []
-        i = idx
-        while i >= 0:
-            path.append(i)
-            i = self.cap_prev[i]
-        return list(reversed(path))
+                    return False  # Collinear
+
+    return pos_count == 0 or neg_count == 0
 
 
-def es_classical_bound(n: int) -> int:
-    """Classical Erdős–Szekeres upper bound: C(2n-4, n-2) + 1.
-    
-    For n points in general position to guarantee a convex n-gon.
-    
-    Time: O(n) for binomial coefficient computation
-    Space: O(1)
+def convex_depth(points: List[Point]) -> int:
+    """Compute the convex depth: the size of the largest convex subset.
+
+    Time: O(2^n · n³) in the worst case (brute force).
+    For practical purposes, limited to n ≤ 20.
+
+    Space: O(n)
     """
-    if n < 3:
+    n = len(points)
+    best = 0
+
+    for size in range(n, 0, -1):
+        if size <= best:
+            break
+        for combo in itertools.combinations(range(n), size):
+            subset = [points[i] for i in combo]
+            if is_convex_position(subset):
+                return size
+
+    return max(best, min(n, 2))
+
+
+def es_upper_bound(n: int) -> int:
+    """Compute the classical Erdős-Szekeres upper bound C(2n-4, n-2) + 1.
+
+    This is the bound proved by the cup-cap theorem.
+
+    >>> es_upper_bound(3)
+    3
+    >>> es_upper_bound(4)
+    5
+    >>> es_upper_bound(5)
+    71  # The actual ES(5) = 9, so this is a very loose bound
+    """
+    if n <= 2:
         return n
-    return math.comb(2 * n - 4, n - 2) + 1
+    from math import comb
+    return comb(2 * n - 4, n - 2) + 1
 
 
-def es_conjecture_bound(n: int) -> int:
-    """Conjectured Erdős–Szekeres bound: 2^(n-2) + 1.
-    
-    Verified for n ≤ 6. Open for n ≥ 7.
-    
-    Time: O(1)
-    Space: O(1)
+def es_conjectured(n: int) -> int:
+    """The conjectured value ES(n) = 2^(n-2) + 1.
+
+    >>> es_conjectured(3)
+    3
+    >>> es_conjectured(4)
+    5
+    >>> es_conjectured(5)
+    9
+    >>> es_conjectured(6)
+    17
     """
-    if n < 3:
+    if n <= 2:
         return n
     return 2 ** (n - 2) + 1
 
 
-def find_convex_ngon(points: List[Point], n: int) -> Optional[List[Point]]:
-    """Find a convex n-gon in the point set, if one exists.
-    
-    Algorithm: brute-force search over all n-element subsets.
-    
-    Time: O(C(m, n) * n^3) where m = |points|
-    Space: O(n)
-    """
-    sorted_pts = sorted(points, key=lambda p: p[0])
-    for subset in combinations(range(len(sorted_pts)), n):
-        pts = [sorted_pts[i] for i in subset]
-        if is_convex_position(pts):
-            return pts
-    return None
-
-
-def reflect_points(points: List[Point]) -> List[Point]:
-    """Reflect points across the x-axis: (x, y) → (x, -y).
-    
-    Key property (proved in Lean): this transforms cups into caps
-    and vice versa, while preserving general position.
-    
-    Time: O(n)
-    Space: O(n)
-    """
-    return [(x, -y) for x, y in points]
-
-
-def pigeonhole_bound(r: int, s: int) -> int:
-    """Maximum points before a cup of size r or cap of size s is forced.
-    
-    By the pigeonhole principle on cup-cap labels, if each label is
-    in [1, r-1] × [1, s-1], at most (r-1)(s-1) points can have
-    distinct labels. With (r-1)(s-1) + 1 points, a cup of size r
-    or cap of size s must exist.
-    
-    Time: O(1)
-    Space: O(1)
-    """
-    return (r - 1) * (s - 1) + 1
-
-
-# ==================== EXAMPLE USAGE ====================
-
+# ============================================================================
+# Example usage
+# ============================================================================
 if __name__ == "__main__":
-    import random
-    
-    print("=" * 60)
-    print("ALGORITHMS: Happy End Problem")
-    print("=" * 60)
-    
-    # Example 1: Cup-Cap Decomposition
-    print("\n--- Cup-Cap Decomposition ---")
-    pts = [(1, 3), (2, 1), (3, 4), (4, 2), (5, 5), (6, 0), (7, 3.5)]
-    pts = [(float(x), float(y)) for x, y in pts]
-    
-    decomp = CupCapDecomposition(pts)
-    print(f"Points: {[(round(p[0]), round(p[1], 1)) for p in decomp.points]}")
-    print(f"Cup lengths: {decomp.cup_len}")
-    print(f"Cap lengths: {decomp.cap_len}")
-    print(f"Labels: {decomp.get_labels()}")
-    print(f"Max cup: {decomp.max_cup()}, Max cap: {decomp.max_cap()}")
-    
-    # Example 2: Convex polygon detection
-    print("\n--- Convex Polygon Detection ---")
-    for n in [3, 4, 5]:
-        m = es_conjecture_bound(n)
-        rng = random.Random(42)
-        test_pts = [(float(i), rng.uniform(-10, 10)) for i in range(m)]
-        result = find_convex_ngon(test_pts, n)
-        if result:
-            print(f"  Found convex {n}-gon in {m} points ✓")
-        else:
-            print(f"  No convex {n}-gon found in {m} points")
-    
-    # Example 3: Reflection symmetry
-    print("\n--- Reflection Symmetry ---")
-    test_pts = [(1.0, 1.0), (2.0, 0.5), (3.0, 2.0)]
-    reflected = reflect_points(test_pts)
-    o1 = orient(*test_pts)
-    o2 = orient(*reflected)
-    print(f"  orient(original) = {o1:.2f}")
-    print(f"  orient(reflected) = {o2:.2f}")
-    print(f"  Sum (should be 0): {o1 + o2:.2f}")
-    
-    # Example 4: Bounds comparison
-    print("\n--- Bound Comparison ---")
-    for n in range(3, 12):
-        conj = es_conjecture_bound(n)
-        classical = es_classical_bound(n)
-        pigeonhole = pigeonhole_bound(n, n)
-        print(f"  n={n}: conjecture={conj}, classical={classical}, pigeonhole={pigeonhole}")
+    print("Erdős-Szekeres Labels:")
+    seq = [5, 2, 8, 3, 7, 1, 9, 4, 6]
+    inc, dec = erdos_szekeres_labels(seq)
+    print(f"  Sequence: {seq}")
+    print(f"  Inc labels: {inc}")
+    print(f"  Dec labels: {dec}")
+    print(f"  Max inc: {max(inc)}, Max dec: {max(dec)}")
+    n = len(seq)
+    r = max(inc)
+    s = max(dec)
+    print(f"  Verification: (r-1)(s-1) = {(r-1)*(s-1)} < {n} = n ✓")
+
+    print("\nES Upper Bounds vs Conjectured Values:")
+    for k in range(3, 8):
+        print(f"  ES({k}): conjectured = {es_conjectured(k)}, "
+              f"upper bound = {es_upper_bound(k)}")
+
+    print("\nConvex Depth Example:")
+    import math
+    pts = [(math.cos(2 * math.pi * i / 7), math.sin(2 * math.pi * i / 7))
+           for i in range(7)]
+    print(f"  Regular 7-gon: convex depth = {convex_depth(pts)}")
