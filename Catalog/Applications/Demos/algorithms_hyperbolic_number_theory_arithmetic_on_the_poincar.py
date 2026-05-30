@@ -1,258 +1,322 @@
 """
-Algorithms for Hyperbolic Number Theory
-========================================
-
-Implements core algorithms for computing with hyperbolic integers,
-Möbius transformations, and lattice point counting on the Poincaré disk.
-
-All algorithms are self-contained with type hints and docstrings.
+Hyperbolic Number Theory: Core Algorithms
+==========================================
+Implements the mathematical machinery for hyperbolic arithmetic
+on the Poincaré disk, including SL₂(ℝ) group operations,
+orbit generation, and counting functions.
 """
 
 import math
-from typing import List, Tuple, Optional
+from typing import Tuple, List, Dict, Optional, Set
 
+# ============================================================
+# Algorithm 1: SL₂(ℝ) Arithmetic
+# ============================================================
 
-def normSq(z: complex) -> float:
-    """Compute |z|² = re(z)² + im(z)²
-    
-    Time: O(1), Space: O(1)
+class SL2RMatrix:
     """
-    return z.real**2 + z.imag**2
-
-
-def mobius_transform(a: complex, z: complex) -> complex:
-    """Compute the Möbius automorphism T_a(z) = (z - a)/(1 - conj(a)*z)
+    Element of SL₂(ℝ): 2×2 real matrix with determinant 1.
     
-    Maps the unit disk to itself when |a| < 1 and |z| < 1.
-    
-    Args:
-        a: Center point with |a| < 1
-        z: Input point with |z| < 1
-    
-    Returns:
-        T_a(z) in the unit disk
-    
-    Time: O(1), Space: O(1)
+    Supports multiplication, inversion, power, and trace computation.
+    Time complexity: O(1) for all operations except power (O(n)).
+    Space complexity: O(1).
     """
-    return (z - a) / (1 - a.conjugate() * z)
+    
+    __slots__ = ('a', 'b', 'c', 'd')
+    
+    def __init__(self, a: float, b: float, c: float, d: float):
+        self.a, self.b, self.c, self.d = a, b, c, d
+    
+    @property
+    def det(self) -> float:
+        """Determinant. Should always be ≈ 1."""
+        return self.a * self.d - self.b * self.c
+    
+    @property
+    def trace(self) -> float:
+        """Trace: classifies as elliptic (|tr|<2), parabolic (|tr|=2), hyperbolic (|tr|>2)."""
+        return self.a + self.d
+    
+    @property
+    def discriminant(self) -> float:
+        """tr² - 4: positive for hyperbolic, zero for parabolic, negative for elliptic."""
+        return self.trace ** 2 - 4
+    
+    def classify(self) -> str:
+        """Classify the transformation type."""
+        d = self.discriminant
+        if abs(d) < 1e-10:
+            return "parabolic"
+        return "hyperbolic" if d > 0 else "elliptic"
+    
+    def __matmul__(self, other: 'SL2RMatrix') -> 'SL2RMatrix':
+        """Matrix multiplication. O(1)."""
+        return SL2RMatrix(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d
+        )
+    
+    def inv(self) -> 'SL2RMatrix':
+        """Matrix inverse: [[d,-b],[-c,a]] for det=1. O(1)."""
+        return SL2RMatrix(self.d, -self.b, -self.c, self.a)
+    
+    def power(self, n: int) -> 'SL2RMatrix':
+        """
+        Matrix power by repeated squaring. O(log n).
+        
+        Uses the identity g^(m+n) = g^m · g^n proved in Lean.
+        """
+        if n == 0:
+            return SL2RMatrix(1, 0, 0, 1)
+        if n < 0:
+            return self.inv().power(-n)
+        if n == 1:
+            return SL2RMatrix(self.a, self.b, self.c, self.d)
+        if n % 2 == 0:
+            half = self.power(n // 2)
+            return half @ half
+        else:
+            return self @ self.power(n - 1)
+    
+    def key(self, precision: int = 8) -> Tuple[float, ...]:
+        """Hashable key for deduplication."""
+        return (round(self.a, precision), round(self.b, precision),
+                round(self.c, precision), round(self.d, precision))
+    
+    def __repr__(self):
+        return f"[[{self.a:.4f}, {self.b:.4f}], [{self.c:.4f}, {self.d:.4f}]]"
 
 
-def mobius_involution(a: complex, z: complex) -> complex:
-    """Compute the involutory Möbius automorphism φ_a(z) = (a - z)/(1 - conj(a)*z)
-    
-    Satisfies φ_a(φ_a(z)) = z (self-inverse).
-    
-    Time: O(1), Space: O(1)
+# ============================================================
+# Algorithm 2: Trace Chebyshev Recurrence
+# ============================================================
+
+def trace_sequence(g: SL2RMatrix, n_terms: int) -> List[float]:
     """
-    return (a - z) / (1 - a.conjugate() * z)
-
-
-def cayley_transform(z: complex) -> complex:
-    """Cayley transform: maps upper half-plane to Poincaré disk.
-    C(z) = (z - i)/(z + i)
+    Compute trace sequence tr(g^k) for k = 0, 1, ..., n_terms-1
+    using the Chebyshev recurrence: tr(g^{k+2}) = tr(g)·tr(g^{k+1}) - tr(g^k).
     
-    Time: O(1), Space: O(1)
+    This is proved in Lean as `hypsl2_trace_sq` (base case)
+    and conjectured as `sl2r_trace_recurrence` (general).
+    
+    Time: O(n_terms)
+    Space: O(n_terms) for output, O(1) working space
     """
-    return (z - 1j) / (z + 1j)
-
-
-def inverse_cayley(w: complex) -> complex:
-    """Inverse Cayley transform: maps Poincaré disk to upper half-plane.
-    C⁻¹(w) = i(1 + w)/(1 - w)
+    if n_terms <= 0:
+        return []
     
-    Time: O(1), Space: O(1)
+    t = g.trace
+    traces = [2.0]  # tr(g^0) = tr(I) = 2
+    
+    if n_terms >= 2:
+        traces.append(t)  # tr(g^1) = tr(g)
+    
+    for k in range(2, n_terms):
+        # Chebyshev recurrence: T_{k} = t · T_{k-1} - T_{k-2}
+        next_trace = t * traces[-1] - traces[-2]
+        traces.append(next_trace)
+    
+    return traces
+
+
+# ============================================================
+# Algorithm 3: PSL(2,ℤ) Orbit Generation
+# ============================================================
+
+def generate_psl2z_orbit(max_depth: int = 6) -> Dict[Tuple, SL2RMatrix]:
     """
-    return 1j * (1 + w) / (1 - w)
-
-
-def pseudo_hyp_dist(z: complex, w: complex) -> float:
-    """Compute the pseudo-hyperbolic distance between z and w.
-    ρ(z,w) = |z - w| / |1 - conj(w)·z|
+    Generate orbit of the identity under PSL(2,ℤ) = ⟨S, T⟩ where
+    S = [[0,-1],[1,0]] and T = [[1,1],[0,1]].
     
-    Takes values in [0, 1) for points in the open unit disk.
+    Uses BFS to enumerate all words of length ≤ max_depth.
     
-    Time: O(1), Space: O(1)
+    Time: O(3^max_depth) worst case
+    Space: O(|orbit|)
+    
+    Returns: dict mapping matrix keys to SL2RMatrix objects
     """
-    num = abs(z - w)
-    den = abs(1 - w.conjugate() * z)
-    if den == 0:
-        return float('inf')
-    return num / den
-
-
-def hyperbolic_distance(z: complex, w: complex) -> float:
-    """Compute the hyperbolic distance in the Poincaré disk model.
-    d(z,w) = 2 · arctanh(ρ(z,w))
+    S = SL2RMatrix(0, -1, 1, 0)
+    T = SL2RMatrix(1, 1, 0, 1)
+    generators = [S, T, T.inv()]
     
-    where ρ is the pseudo-hyperbolic distance.
+    orbit: Dict[Tuple, SL2RMatrix] = {}
+    identity = SL2RMatrix(1, 0, 0, 1)
+    orbit[identity.key()] = identity
     
-    Time: O(1), Space: O(1)
-    """
-    rho = pseudo_hyp_dist(z, w)
-    if rho >= 1:
-        return float('inf')
-    return 2 * math.atanh(rho)
-
-
-def generate_psl2z_orbit(max_depth: int = 5) -> List[complex]:
-    """Generate orbit points of i under PSL(2,Z) on the Poincaré disk.
+    frontier = [identity]
     
-    Uses the Cayley transform to map the PSL(2,Z) orbit of i in the
-    upper half-plane to the disk model. Generates points by applying
-    the generators S: z → -1/z and T: z → z+1 of PSL(2,Z).
-    
-    Args:
-        max_depth: Maximum word length in generators
-    
-    Returns:
-        List of complex numbers in the Poincaré disk
-    
-    Time: O(2^max_depth), Space: O(2^max_depth)
-    """
-    visited = set()
-    orbit = []
-    
-    def add_point(z_uhp: complex):
-        """Add a UHP point to the orbit via Cayley transform"""
-        if z_uhp.imag <= 0:
-            return
-        w = cayley_transform(z_uhp)
-        # Round for deduplication
-        key = (round(w.real, 10), round(w.imag, 10))
-        if key not in visited:
-            visited.add(key)
-            orbit.append(w)
-    
-    # BFS over words in the generators
-    current = {1j}  # Start with i
-    add_point(1j)
-    
-    for _ in range(max_depth):
-        next_level = set()
-        for z in current:
-            # Apply generator S: z → -1/z
-            if abs(z) > 1e-15:
-                s_z = -1.0 / z
-                if s_z.imag > 1e-10:
-                    add_point(s_z)
-                    next_level.add(s_z)
-            # Apply generator T: z → z + 1
-            t_z = z + 1
-            if t_z.imag > 1e-10:
-                add_point(t_z)
-                next_level.add(t_z)
-            # Apply T⁻¹: z → z - 1
-            ti_z = z - 1
-            if ti_z.imag > 1e-10:
-                add_point(ti_z)
-                next_level.add(ti_z)
-        current = next_level
+    for depth in range(max_depth):
+        next_frontier = []
+        for g in frontier:
+            for gen in generators:
+                h = g @ gen
+                k = h.key()
+                if k not in orbit:
+                    orbit[k] = h
+                    next_frontier.append(h)
+        frontier = next_frontier
     
     return orbit
 
 
-def count_lattice_points_in_ball(
-    points: List[complex], center: complex, radius: float
-) -> int:
-    """Count lattice points within a hyperbolic ball.
-    
-    Args:
-        points: List of lattice points in the disk
-        center: Center of the hyperbolic ball
-        radius: Hyperbolic radius
-    
-    Returns:
-        Number of points within hyperbolic distance `radius` of `center`
-    
-    Time: O(n) where n = len(points), Space: O(1)
+# ============================================================
+# Algorithm 4: Upper Half-Plane to Disk Mapping
+# ============================================================
+
+def mobius_action_on_i(g: SL2RMatrix) -> Tuple[float, float]:
     """
-    count = 0
-    for p in points:
-        if hyperbolic_distance(center, p) <= radius:
-            count += 1
-    return count
-
-
-def verify_key_identity(a: complex, z: complex) -> Tuple[float, float, float]:
-    """Verify the Möbius key identity for given inputs.
+    Compute g(i) where g acts on the upper half-plane.
+    g(z) = (az + b)/(cz + d), evaluated at z = i.
     
-    Returns (LHS, RHS, error) where:
-    LHS = |1 - conj(a)·z|² - |z - a|²
-    RHS = (1 - |a|²)(1 - |z|²)
-    
-    Time: O(1), Space: O(1)
+    Returns (Re(g(i)), Im(g(i))).
     """
-    lhs = normSq(1 - a.conjugate() * z) - normSq(z - a)
-    rhs = (1 - normSq(a)) * (1 - normSq(z))
-    return lhs, rhs, abs(lhs - rhs)
+    # g(i) = (ai + b)/(ci + d) = (b + ai)(d - ci) / (c² + d²)
+    denom = g.c**2 + g.d**2
+    if denom < 1e-15:
+        return (float('inf'), float('inf'))
+    re = (g.a * g.c + g.b * g.d) / denom
+    im = (g.a * g.d - g.b * g.c) / denom  # = 1/denom since det=1
+    return (re, im)
 
 
-def find_hyperbolic_primes(
-    orbit: List[complex], num_primes: int = 10
-) -> List[complex]:
-    """Find hyperbolic primes: the orbit points closest to the origin.
-    
-    These are the irreducible elements of the hyperbolic lattice,
-    analogous to prime numbers in ℤ.
-    
-    Args:
-        orbit: List of orbit points in the disk
-        num_primes: Number of primes to return
-    
-    Returns:
-        List of the closest non-origin orbit points
-    
-    Time: O(n log n), Space: O(n)
+def cayley_transform(z_re: float, z_im: float) -> Tuple[float, float]:
     """
-    # Filter out the origin and sort by normSq
-    nonzero = [(normSq(p), p) for p in orbit if abs(p) > 1e-12]
-    nonzero.sort()
-    return [p for _, p in nonzero[:num_primes]]
-
-
-def hyperbolic_lattice_growth_test(max_R: float = 10.0, steps: int = 20) -> List[Tuple[float, int]]:
-    """Test the hyperbolic prime counting conjecture.
+    Cayley transform: maps upper half-plane to Poincaré disk.
+    w = (z - i)/(z + i)
     
-    Computes N(R) = #{lattice points with normSq ≤ 1 - 1/R²}
-    and checks whether N(R) ∝ R² as predicted.
-    
-    Returns:
-        List of (R, count) pairs
-    
-    Time: O(steps × n), Space: O(n)
+    Returns (Re(w), Im(w)).
     """
-    orbit = generate_psl2z_orbit(max_depth=8)
-    results = []
-    
-    for i in range(1, steps + 1):
-        R = 1.0 + (max_R - 1.0) * i / steps
-        threshold = 1 - 1 / R**2
-        count = sum(1 for p in orbit if normSq(p) <= threshold)
-        results.append((R, count))
-    
-    return results
+    num_re = z_re
+    num_im = z_im - 1
+    den_re = z_re
+    den_im = z_im + 1
+    den_sq = den_re**2 + den_im**2
+    if den_sq < 1e-15:
+        return (0.0, 0.0)
+    w_re = (num_re * den_re + num_im * den_im) / den_sq
+    w_im = (num_im * den_re - num_re * den_im) / den_sq
+    return (w_re, w_im)
 
 
-# Example usage
+def orbit_to_disk_points(orbit: Dict[Tuple, SL2RMatrix]) -> List[Tuple[float, float, float]]:
+    """
+    Map orbit matrices to points in the Poincaré disk.
+    
+    Returns list of (x, y, |z|²) tuples.
+    """
+    points = []
+    for g in orbit.values():
+        z_re, z_im = mobius_action_on_i(g)
+        if z_im <= 0 or z_re == float('inf'):
+            continue
+        w_re, w_im = cayley_transform(z_re, z_im)
+        r_sq = w_re**2 + w_im**2
+        if r_sq < 1 - 1e-10:
+            points.append((w_re, w_im, r_sq))
+    return points
+
+
+# ============================================================
+# Algorithm 5: Hyperbolic Counting Function
+# ============================================================
+
+def count_in_radius(points: List[Tuple[float, float, float]], r: float) -> int:
+    """
+    Count points with |z|² ≤ r².
+    
+    Proved monotone in Lean: countInRadius_mono.
+    Time: O(|points|)
+    """
+    r_sq = r ** 2
+    return sum(1 for _, _, rsq in points if rsq <= r_sq)
+
+
+# ============================================================
+# Algorithm 6: Euler Totient and Farey Count
+# ============================================================
+
+def euler_totient(n: int) -> int:
+    """
+    Euler's totient function φ(n).
+    
+    Properties proved in Lean:
+    - totient_prime_eq: φ(p) = p-1 for prime p
+    - totient_mul_coprime: φ(mn) = φ(m)φ(n) for gcd(m,n)=1
+    
+    Time: O(√n)
+    """
+    if n <= 1:
+        return n
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
+
+
+def totient_sum(n: int) -> int:
+    """
+    Cumulative sum Σ_{k=1}^n φ(k).
+    
+    Proved in Lean: totientSumH_ge shows this ≥ n.
+    This equals |F_n| - 1 where F_n is the Farey sequence of order n.
+    
+    Time: O(n√n)
+    """
+    return sum(euler_totient(k) for k in range(1, n + 1))
+
+
+# ============================================================
+# Algorithm 7: Hyperbolic Distance
+# ============================================================
+
+def poincare_distance(p: Tuple[float, float], q: Tuple[float, float]) -> float:
+    """
+    Hyperbolic distance in the Poincaré disk model.
+    d(p,q) = 2·arctanh(|p-q| / √((1-|p|²)(1-|q|²) + |p-q|²))
+    
+    We use the log form proved in Lean:
+    d(p,q) = log(1 + 2|p-q|²/((1-|p|²)(1-|q|²)))
+    
+    Properties proved:
+    - hypDist_nonneg: d(p,q) ≥ 0
+    - hypDist_self: d(p,p) = 0
+    - mhypDist_comm: d(p,q) = d(q,p)
+    - mhypDist_pos_of_ne: p ≠ q → d(p,q) > 0
+    
+    Time: O(1)
+    """
+    dx = p[0] - q[0]
+    dy = p[1] - q[1]
+    delta_sq = dx**2 + dy**2
+    p_sq = p[0]**2 + p[1]**2
+    q_sq = q[0]**2 + q[1]**2
+    denom = (1 - p_sq) * (1 - q_sq)
+    if denom <= 0:
+        return float('inf')
+    return math.log(1 + 2 * delta_sq / denom)
+
+
 if __name__ == "__main__":
-    print("Generating PSL(2,Z) orbit on the Poincaré disk...")
-    orbit = generate_psl2z_orbit(max_depth=6)
-    print(f"Generated {len(orbit)} orbit points")
+    # Quick self-test
+    g = SL2RMatrix(2, 1, 1, 1)
+    traces = trace_sequence(g, 10)
+    print("Trace sequence:", [f"{t:.0f}" for t in traces])
     
-    print("\nFirst 5 hyperbolic primes (closest to origin):")
-    primes = find_hyperbolic_primes(orbit, 5)
-    for i, p in enumerate(primes):
-        print(f"  p_{i+1} = {p:.6f}, |p|² = {normSq(p):.6f}")
+    orbit = generate_psl2z_orbit(5)
+    print(f"Orbit size at depth 5: {len(orbit)}")
     
-    print("\nKey identity verification:")
-    for a, z in [(0.3+0.4j, 0.1+0.2j), (0.7+0.1j, -0.5+0.3j)]:
-        lhs, rhs, err = verify_key_identity(a, z)
-        print(f"  a={a}, z={z}: error = {err:.2e}")
+    pts = orbit_to_disk_points(orbit)
+    print(f"Disk points: {len(pts)}")
     
-    print("\nLattice point growth test (Hyperbolic PNT conjecture):")
-    growth = hyperbolic_lattice_growth_test(max_R=8.0, steps=8)
-    print(f"  {'R':>6} | {'N(R)':>6} | {'N(R)/R²':>8}")
-    print(f"  {'---':>6} | {'---':>6} | {'---':>8}")
-    for R, count in growth:
-        ratio = count / R**2 if R > 0 else 0
-        print(f"  {R:6.2f} | {count:6d} | {ratio:8.4f}")
+    print(f"φ(12) = {euler_totient(12)}")
+    print(f"Σφ(k) for k=1..10 = {totient_sum(10)}")
