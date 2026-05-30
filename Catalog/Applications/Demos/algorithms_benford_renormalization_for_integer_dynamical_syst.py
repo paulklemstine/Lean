@@ -1,401 +1,377 @@
+#!/usr/bin/env python3
 """
-Benford Renormalization: Core Algorithms
+Benford Renormalization — Core Algorithms
 
-Implements the computational pipeline for analyzing Benford behavior
-of integer dynamical systems. Provides certified leading-digit extraction,
-empirical frequency computation, and spectral obstruction detection.
+Implements the computational machinery for Benford analysis of integer
+dynamical systems, including:
 
-All algorithms are mathematically connected to the formally verified
-definitions in the Lean development.
+1. Leading digit extraction (arbitrary base)
+2. Empirical Benford frequency computation
+3. Digit discrepancy measurement
+4. Rational eigen-obstruction detection (spectral analysis)
+5. Cocycle drift/oscillation decomposition
+6. Universality conjecture testing framework
+
+All algorithms include complexity analysis and type hints.
 """
 
 import math
-from typing import Callable, Dict, List, Tuple, Optional
-from collections import Counter
+from typing import Callable, Optional
+from dataclasses import dataclass
 
 
-def leading_digit_base(b: int, n: int) -> int:
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 1: Leading Digit Extraction
+# Time: O(log_b(n)), Space: O(1)
+# ═══════════════════════════════════════════════════════════════════
+
+def leading_digit(n: int, base: int = 10) -> int:
     """
-    Extract the leading (most significant) digit of n in base b.
-
-    Matches the formal definition `BenfordRenormalization.leadingDigitBase`.
-    For b >= 2 and n >= 1, returns a value in {1, ..., b-1}.
-
-    Parameters
-    ----------
-    b : int
-        The base (must be >= 2).
-    n : int
-        The number (must be >= 1 for meaningful output).
-
-    Returns
-    -------
-    int
-        The leading digit.
-
-    Examples
-    --------
-    >>> leading_digit_base(10, 314)
+    Extract the leading (most significant) digit of n in the given base.
+    
+    Algorithm: Repeatedly divide by base until n < base.
+    Complexity: O(log_b(n)) time, O(1) space.
+    
+    >>> leading_digit(314, 10)
     3
-    >>> leading_digit_base(10, 1000)
-    1
-    >>> leading_digit_base(2, 7)
+    >>> leading_digit(255, 16)
+    15
+    >>> leading_digit(1024, 2)
     1
     """
-    if b <= 1:
+    if base <= 1 or n <= 0:
         return n
-    while n >= b:
-        n = n // b
+    while n >= base:
+        n //= base
     return n
 
 
-def benford_theoretical(b: int, d: int) -> float:
-    """
-    The Benford-law predicted frequency for digit d in base b.
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 2: Benford Frequency Analysis
+# Time: O(N * log_b(max(u))), Space: O(b)
+# ═══════════════════════════════════════════════════════════════════
 
-    Returns log_b(1 + 1/d) = log(1 + 1/d) / log(b).
+@dataclass
+class BenfordAnalysis:
+    """Results of Benford frequency analysis."""
+    base: int
+    empirical: dict[int, float]       # digit -> observed frequency
+    theoretical: dict[int, float]     # digit -> Benford prediction
+    discrepancy: float                # max |empirical - theoretical|
+    chi_squared: float                # chi-squared statistic
+    sample_size: int
 
-    Matches the formal definition `BenfordRenormalization.benfordTheoretical`.
-
-    Parameters
-    ----------
-    b : int
-        The base (>= 2).
-    d : int
-        The digit (1 <= d < b).
-
-    Returns
-    -------
-    float
-        The predicted frequency.
-    """
-    return math.log(1 + 1 / d) / math.log(b)
-
-
-def benford_freq_up_to(b: int, d: int, sequence: List[int], N: int) -> float:
-    """
-    Empirical leading-digit frequency for digit d over the first N terms.
-
-    Matches the formal definition `BenfordRenormalization.benfordFreqUpTo`.
-
-    Parameters
-    ----------
-    b : int
-        The base.
-    d : int
-        The target digit.
-    sequence : list of int
-        The sequence values.
-    N : int
-        Number of terms to consider.
-
-    Returns
-    -------
-    float
-        The fraction of terms with leading digit d.
-    """
-    if N == 0:
+def benford_theoretical(base: int, digit: int) -> float:
+    """Benford-predicted frequency for digit d in given base: log_b(1+1/d)."""
+    if digit <= 0:
         return 0.0
-    count = sum(1 for k in range(min(N, len(sequence)))
-                if leading_digit_base(b, sequence[k]) == d)
-    return count / N
+    return math.log(1 + 1/digit) / math.log(base)
 
-
-def frac_log_base(b: int, x: float) -> float:
+def analyze_benford(sequence: list[int], base: int = 10) -> BenfordAnalysis:
     """
-    Fractional part of log_b(x).
-
-    Matches the formal definition `BenfordRenormalization.fracLogBase`.
-
-    Parameters
-    ----------
-    b : int
-        The base.
-    x : float
-        A positive real number.
-
-    Returns
-    -------
-    float
-        The fractional part of log_b(x), in [0, 1).
-    """
-    if x <= 0:
-        return 0.0
-    val = math.log(x) / math.log(b)
-    return val - math.floor(val)
-
-
-def generate_orbit(T: Callable[[int], int], seed: int, steps: int) -> List[int]:
-    """
-    Generate an orbit of the map T starting from seed.
-
-    Parameters
-    ----------
-    T : callable
-        The dynamical map.
-    seed : int
-        The initial value.
-    steps : int
-        Number of iterations.
-
-    Returns
-    -------
-    list of int
-        The orbit [seed, T(seed), T(T(seed)), ...].
-    """
-    orbit = [seed]
-    x = seed
-    for _ in range(steps):
-        x = T(x)
-        if x <= 0:
-            break
-        orbit.append(x)
-    return orbit
-
-
-def digit_frequency_profile(sequence: List[int], base: int = 10) -> Dict[int, float]:
-    """
-    Compute empirical leading-digit frequencies for all digits.
-
-    Parameters
-    ----------
-    sequence : list of int
-        The sequence of positive integers.
-    base : int
-        The base for digit extraction.
-
-    Returns
-    -------
-    dict
-        Maps digit d to its empirical frequency.
+    Perform complete Benford analysis on a sequence.
+    
+    Algorithm:
+    1. Extract leading digits for all elements
+    2. Compute empirical frequencies
+    3. Compare with theoretical Benford distribution
+    4. Compute discrepancy and chi-squared statistics
+    
+    Complexity: O(N * log_b(max(u))) time, O(b) space.
+    
+    >>> result = analyze_benford([2**k for k in range(1, 1001)])
+    >>> result.discrepancy < 0.01
+    True
     """
     N = len(sequence)
     if N == 0:
-        return {}
-    counts = Counter(leading_digit_base(base, n) for n in sequence if n >= 1)
-    return {d: counts.get(d, 0) / N for d in range(1, base)}
+        return BenfordAnalysis(base, {}, {}, 0.0, 0.0, 0)
+    
+    # Count leading digits
+    counts: dict[int, int] = {d: 0 for d in range(1, base)}
+    for x in sequence:
+        if x >= 1:
+            d = leading_digit(x, base)
+            if 1 <= d < base:
+                counts[d] += 1
+    
+    # Compute frequencies
+    empirical = {d: counts[d] / N for d in range(1, base)}
+    theoretical = {d: benford_theoretical(base, d) for d in range(1, base)}
+    
+    # Discrepancy (sup norm)
+    discrepancy = max(abs(empirical[d] - theoretical[d]) for d in range(1, base))
+    
+    # Chi-squared statistic
+    chi_sq = sum(
+        (empirical[d] - theoretical[d])**2 / theoretical[d]
+        for d in range(1, base)
+    ) * N
+    
+    return BenfordAnalysis(base, empirical, theoretical, discrepancy, chi_sq, N)
 
 
-def benford_discrepancy(sequence: List[int], base: int = 10) -> float:
-    """
-    Compute the total discrepancy from Benford's law.
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 3: Rational Eigen-Obstruction Detection
+# Time: O(N * Q), Space: O(N)
+# where Q = max_q parameter
+# ═══════════════════════════════════════════════════════════════════
 
-    Returns the sum of |empirical(d) - theoretical(d)| over all digits.
+@dataclass
+class ObstructionResult:
+    """Results of rational eigen-obstruction detection."""
+    has_obstruction: bool
+    obstruction_order: int          # q value, or 0 if none found
+    max_residual: float             # maximum deviation from integrality
+    spectral_data: list[float]      # residuals for diagnostic
 
-    Parameters
-    ----------
-    sequence : list of int
-        The sequence.
-    base : int
-        The base.
-
-    Returns
-    -------
-    float
-        Total absolute discrepancy.
-    """
-    profile = digit_frequency_profile(sequence, base)
-    return sum(abs(profile.get(d, 0) - benford_theoretical(base, d))
-               for d in range(1, base))
-
-
-def fourier_mode_estimate(sequence: List[int], m: int, base: int = 10) -> complex:
-    """
-    Estimate the m-th Fourier mode of the fractional log sequence.
-
-    Computes (1/N) * sum_{k=0}^{N-1} exp(2πi·m·frac(log_b(u_k))).
-    For equidistributed sequences, this should converge to 0 for m ≠ 0.
-    Non-zero modes indicate spectral obstruction.
-
-    Parameters
-    ----------
-    sequence : list of int
-        The sequence.
-    m : int
-        The Fourier mode index (nonzero for obstruction detection).
-    base : int
-        The base.
-
-    Returns
-    -------
-    complex
-        The estimated Fourier coefficient.
-    """
-    N = len(sequence)
-    if N == 0:
-        return 0j
-    total = sum(
-        complex(math.cos(2 * math.pi * m * frac_log_base(base, x)),
-                math.sin(2 * math.pi * m * frac_log_base(base, x)))
-        for x in sequence if x >= 1
-    )
-    return total / N
-
-
-def detect_rational_obstruction(
-    sequence: List[int],
+def detect_obstruction(
+    sequence: list[int],
     base: int = 10,
-    max_q: int = 20,
-    threshold: float = 0.1
-) -> Optional[Tuple[int, float]]:
+    max_q: int = 50,
+    tolerance: float = 1e-8,
+    tail_fraction: float = 0.5
+) -> ObstructionResult:
     """
-    Detect rational eigen-obstruction in the logarithmic cocycle.
-
-    Checks whether q * log_b(u_k) is approximately integer for some
-    small q, by examining the q-th Fourier mode.
-
-    Parameters
-    ----------
-    sequence : list of int
-        The sequence.
-    base : int
-        The base.
-    max_q : int
-        Maximum q to check.
-    threshold : float
-        Fourier magnitude threshold for detection.
-
-    Returns
-    -------
-    tuple or None
-        (q, magnitude) if obstruction detected, None otherwise.
+    Detect rational eigen-obstructions in a sequence.
+    
+    A sequence has a rational eigen-obstruction of order q if
+    q * log_b(u(k)) is approximately integral for all large k.
+    
+    Algorithm:
+    1. Take the tail of the sequence (discard transients)
+    2. For each candidate q from 1 to max_q:
+       a. Compute q * log_b(u(k)) for each element
+       b. Measure distance to nearest integer
+       c. If all residuals < tolerance, report obstruction
+    
+    Complexity: O(N * max_q) time, O(N) space.
+    
+    >>> detect_obstruction([10**k for k in range(100)]).has_obstruction
+    True
+    >>> detect_obstruction([2**k for k in range(1000)]).has_obstruction
+    False
     """
+    if not sequence:
+        return ObstructionResult(False, 0, float('inf'), [])
+    
+    # Take tail to avoid transients
+    start = max(1, int(len(sequence) * (1 - tail_fraction)))
+    tail = [x for x in sequence[start:] if x > 0]
+    
+    if not tail:
+        return ObstructionResult(False, 0, float('inf'), [])
+    
+    log_b = math.log(base)
+    
     for q in range(1, max_q + 1):
-        mode = fourier_mode_estimate(sequence, q, base)
-        mag = abs(mode)
-        if mag > 1 - threshold:
-            return (q, mag)
-    return None
+        residuals = []
+        for x in tail:
+            val = q * math.log(x) / log_b
+            residual = abs(val - round(val))
+            residuals.append(residual)
+        
+        max_res = max(residuals)
+        if max_res < tolerance:
+            return ObstructionResult(True, q, max_res, residuals)
+    
+    # Compute spectral data for the last q tested
+    final_residuals = []
+    for x in tail:
+        val = math.log(x) / log_b
+        final_residuals.append(val - math.floor(val))
+    
+    return ObstructionResult(False, 0, max(final_residuals) if final_residuals else 0, final_residuals)
 
 
-def benford_orbit_report(
-    T: Callable[[int], int],
-    seeds: List[int],
-    steps: int,
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 4: Cocycle Decomposition
+# Time: O(N), Space: O(N)
+# ═══════════════════════════════════════════════════════════════════
+
+@dataclass
+class CocycleDecomposition:
+    """Decomposition of the logarithmic cocycle into drift + oscillation."""
+    drift_rates: list[float]       # Average log growth per step
+    oscillations: list[float]      # Fractional parts (determine digits)
+    mean_drift: float              # Lyapunov exponent estimate
+    oscillation_variance: float    # Measure of equidistribution
+
+def decompose_cocycle(
+    sequence: list[int],
     base: int = 10
-) -> Dict:
+) -> CocycleDecomposition:
     """
-    Comprehensive Benford analysis report for orbits of a dynamical map.
-
-    Generates empirical leading-digit frequencies, discrepancy from Benford,
-    low Fourier modes, and obstruction flags for each seed.
-
-    Parameters
-    ----------
-    T : callable
-        The dynamical map.
-    seeds : list of int
-        Starting values.
-    steps : int
-        Number of iterations per seed.
-    base : int
-        The base for digit extraction.
-
-    Returns
-    -------
-    dict
-        Report with keys:
-        - 'seeds': list of seed reports
-        - 'aggregate_discrepancy': average discrepancy across seeds
-        - 'benford_predicted': theoretical frequencies
+    Decompose the logarithmic cocycle of a sequence.
+    
+    For each k, compute:
+    - drift_rate(k) = log_b(u(k)) / k  (average growth)
+    - oscillation(k) = fract(log_b(u(k)))  (digit-determining part)
+    
+    The oscillation component is what determines Benford statistics.
+    If oscillations are equidistributed mod 1, the sequence is Benford.
+    
+    Complexity: O(N) time, O(N) space.
     """
-    reports = []
+    log_b = math.log(base)
+    drifts = []
+    oscillations = []
+    
+    for k, x in enumerate(sequence):
+        if x <= 0:
+            continue
+        log_val = math.log(x) / log_b
+        drift = log_val / (k + 1)
+        osc = log_val - math.floor(log_val)
+        drifts.append(drift)
+        oscillations.append(osc)
+    
+    mean_drift = sum(drifts) / len(drifts) if drifts else 0
+    
+    # Variance of oscillation measures departure from equidistribution
+    # For uniform [0,1], variance = 1/12 ≈ 0.0833
+    if oscillations:
+        mean_osc = sum(oscillations) / len(oscillations)
+        osc_var = sum((x - mean_osc)**2 for x in oscillations) / len(oscillations)
+    else:
+        osc_var = 0
+    
+    return CocycleDecomposition(drifts, oscillations, mean_drift, osc_var)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 5: Universality Conjecture Tester
+# Time: O(S * K * log_b(max orbit)), Space: O(K)
+# where S = number of seeds, K = orbit length
+# ═══════════════════════════════════════════════════════════════════
+
+@dataclass
+class UniversalityTestResult:
+    """Results of testing the Benford universality conjecture."""
+    map_name: str
+    base: int
+    num_seeds_tested: int
+    num_benford: int                # Seeds with Benford orbits
+    num_obstructed: int             # Seeds with rational obstruction
+    num_concordant: int             # Seeds matching conjecture prediction
+    concordance_rate: float         # Fraction matching prediction
+    counterexamples: list[int]      # Seeds violating conjecture (if any)
+
+def test_universality_conjecture(
+    T: Callable[[int], int],
+    map_name: str,
+    seeds: list[int],
+    orbit_length: int = 5000,
+    base: int = 10,
+    benford_threshold: float = 0.03,
+    obstruction_max_q: int = 30
+) -> UniversalityTestResult:
+    """
+    Test the Benford universality conjecture for a given dynamical map.
+    
+    The conjecture predicts: orbit is Benford ⟺ no rational eigen-obstruction.
+    
+    Algorithm:
+    1. For each seed n:
+       a. Generate orbit T^k(n) for k = 0, ..., orbit_length
+       b. Analyze Benford conformity (digit discrepancy)
+       c. Detect rational eigen-obstructions
+       d. Check if Benford ⟺ ¬obstruction
+    2. Report concordance rate
+    
+    Complexity: O(S * K * log_b(max orbit)) time, O(K) space per seed.
+    """
+    num_benford = 0
+    num_obstructed = 0
+    num_concordant = 0
+    counterexamples = []
+    
     for seed in seeds:
-        orbit = generate_orbit(T, seed, steps)
-        profile = digit_frequency_profile(orbit, base)
-        disc = benford_discrepancy(orbit, base)
-
-        # Low Fourier modes
-        fourier_modes = {}
-        for m in range(1, 6):
-            mode = fourier_mode_estimate(orbit, m, base)
-            fourier_modes[m] = {'real': mode.real, 'imag': mode.imag,
-                               'magnitude': abs(mode)}
-
-        # Obstruction detection
-        obstruction = detect_rational_obstruction(orbit, base)
-
-        reports.append({
-            'seed': seed,
-            'orbit_length': len(orbit),
-            'digit_frequencies': profile,
-            'discrepancy': disc,
-            'fourier_modes': fourier_modes,
-            'obstruction': obstruction,
-        })
-
-    predicted = {d: benford_theoretical(base, d) for d in range(1, base)}
-    avg_disc = sum(r['discrepancy'] for r in reports) / len(reports) if reports else 0
-
-    return {
-        'seeds': reports,
-        'aggregate_discrepancy': avg_disc,
-        'benford_predicted': predicted,
-    }
-
-
-# --- Map Families ---
-
-def multiplication_map(r: int) -> Callable[[int], int]:
-    """Pure multiplication map T(n) = r·n."""
-    return lambda n: r * n
+        # Generate orbit
+        orbit = [seed]
+        n = seed
+        for _ in range(orbit_length):
+            try:
+                n = T(n)
+                if n <= 0:
+                    break
+                orbit.append(n)
+            except (OverflowError, ValueError):
+                break
+        
+        # Analyze
+        analysis = analyze_benford(orbit, base)
+        is_benford = analysis.discrepancy < benford_threshold
+        
+        obs = detect_obstruction(orbit, base, obstruction_max_q)
+        has_obs = obs.has_obstruction
+        
+        if is_benford:
+            num_benford += 1
+        if has_obs:
+            num_obstructed += 1
+        
+        # Check conjecture: Benford ⟺ ¬obstruction
+        if is_benford == (not has_obs):
+            num_concordant += 1
+        else:
+            counterexamples.append(seed)
+    
+    concordance = num_concordant / len(seeds) if seeds else 0
+    
+    return UniversalityTestResult(
+        map_name, base, len(seeds), num_benford, num_obstructed,
+        num_concordant, concordance, counterexamples
+    )
 
 
-def affine_map(a: int, c: int) -> Callable[[int], int]:
-    """Affine map T(n) = a·n + c."""
-    return lambda n: a * n + c
+# ═══════════════════════════════════════════════════════════════════
+# Standard Dynamical Maps
+# ═══════════════════════════════════════════════════════════════════
 
+def collatz(n: int) -> int:
+    """The 3n+1 (Collatz) map."""
+    if n <= 1:
+        return 4  # Avoid trivial fixed point
+    return n // 2 if n % 2 == 0 else 3 * n + 1
 
-def collatz_map(n: int) -> int:
-    """Collatz-type map: 3n+1 if odd, n/2 if even."""
-    if n % 2 == 0:
-        return n // 2
-    return 3 * n + 1
+def doubling_map(n: int) -> int:
+    """The doubling map n -> 2n."""
+    return 2 * n
 
+def squaring_map(n: int) -> int:
+    """The squaring map n -> n^2 (restricted to avoid overflow)."""
+    return min(n * n, 10**15)
 
-def reverse_and_add(n: int) -> int:
-    """Reverse-and-add map."""
-    s = str(n)
-    return n + int(s[::-1])
-
-
-def polynomial_perturbed_map(r: int, c: int) -> Callable[[int], int]:
-    """Polynomially perturbed multiplicative map T(n) = r·n + c."""
-    return lambda n: r * n + c
+def affine_map(a: int, b: int) -> Callable[[int], int]:
+    """The affine map n -> a*n + b."""
+    return lambda n: a * n + b
 
 
 if __name__ == "__main__":
-    # Quick test
-    print("=== Benford Renormalization: Algorithm Tests ===\n")
-
-    # Test 1: Powers of 2 (should be Benford in base 10)
-    powers_of_2 = [2**k for k in range(1, 1001)]
-    profile = digit_frequency_profile(powers_of_2, 10)
-    disc = benford_discrepancy(powers_of_2, 10)
-    print("Powers of 2 (first 1000):")
-    for d in range(1, 10):
-        pred = benford_theoretical(10, d)
-        print(f"  Digit {d}: empirical={profile.get(d, 0):.4f}, "
-              f"predicted={pred:.4f}")
-    print(f"  Discrepancy: {disc:.6f}\n")
-
-    # Test 2: Powers of 10 (NOT Benford — rational obstruction)
-    powers_of_10 = [10**k for k in range(1, 101)]
-    profile = digit_frequency_profile(powers_of_10, 10)
-    disc = benford_discrepancy(powers_of_10, 10)
-    obs = detect_rational_obstruction(powers_of_10, 10)
-    print("Powers of 10 (first 100):")
-    print(f"  Digit 1 frequency: {profile.get(1, 0):.4f}")
-    print(f"  Discrepancy: {disc:.6f}")
-    print(f"  Obstruction detected: {obs}\n")
-
-    # Test 3: Multiplication orbit (×3 from seed 1)
-    orbit_3x = generate_orbit(multiplication_map(3), 1, 500)
-    profile = digit_frequency_profile(orbit_3x, 10)
-    disc = benford_discrepancy(orbit_3x, 10)
-    print("Orbit of T(n) = 3n, seed=1, 500 steps:")
-    for d in range(1, 10):
-        pred = benford_theoretical(10, d)
-        print(f"  Digit {d}: empirical={profile.get(d, 0):.4f}, "
-              f"predicted={pred:.4f}")
-    print(f"  Discrepancy: {disc:.6f}")
+    # Quick demo
+    print("Testing 2^k sequence (should be Benford):")
+    seq = [2**k for k in range(1, 1001)]
+    result = analyze_benford(seq)
+    print(f"  Discrepancy: {result.discrepancy:.4f}")
+    print(f"  Chi-squared: {result.chi_squared:.2f}")
+    
+    obs = detect_obstruction(seq)
+    print(f"  Obstruction: {obs.has_obstruction}")
+    
+    print("\nTesting 10^k sequence (should NOT be Benford):")
+    seq10 = [10**k for k in range(1, 101)]
+    result10 = analyze_benford(seq10)
+    print(f"  Discrepancy: {result10.discrepancy:.4f}")
+    
+    obs10 = detect_obstruction(seq10)
+    print(f"  Obstruction: {obs10.has_obstruction} (q={obs10.obstruction_order})")
+    
+    print("\nCollatz universality test (seeds 2-50):")
+    test = test_universality_conjecture(
+        collatz, "Collatz 3n+1",
+        list(range(2, 51)),
+        orbit_length=2000
+    )
+    print(f"  Concordance: {test.concordance_rate:.2%}")
+    print(f"  Counterexamples: {test.counterexamples}")

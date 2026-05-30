@@ -1,800 +1,573 @@
 #!/usr/bin/env python3
 """
-Benford Renormalization: Applications
+Benford Renormalization — Real-World Applications
 
-Demonstrates real-world and mathematical applications of the
-Benford renormalization theory for integer dynamical systems.
-
-Applications include:
-1. Fraud detection via Benford compliance testing
-2. Pseudorandomness testing for arithmetic recurrences
-3. Dynamical system classification by spectral type
+Shows how the Benford universality theory applies to:
+1. Financial fraud detection
+2. Scientific data integrity checking
+3. Random number generator quality assessment
+4. Electoral data validation
 """
 
 import math
 from collections import Counter
-from typing import List, Dict, Callable, Tuple
 
-
-# ═══════════════════════════════════════════════════════════════════
-# Core functions (self-contained)
-# ═══════════════════════════════════════════════════════════════════
 
 def leading_digit(n: int, base: int = 10) -> int:
-    if n <= 0 or base <= 1:
+    """Extract leading digit."""
+    if base <= 1 or n <= 0:
         return 0
     while n >= base:
         n //= base
     return n
 
 
-def benford_predicted(d: int, base: int = 10) -> float:
-    return math.log(1 + 1 / d) / math.log(base)
+def benford_theoretical(base: int, digit: int) -> float:
+    """Benford prediction for digit d in base b."""
+    return math.log(1 + 1/digit) / math.log(base)
 
 
-def frac_log(x: float, base: int = 10) -> float:
-    if x <= 0:
-        return 0.0
-    v = math.log(x) / math.log(base)
-    return v - math.floor(v)
-
-
-def digit_frequencies(data: List[int], base: int = 10) -> Dict[int, float]:
-    N = sum(1 for x in data if x >= 1)
+def benford_score(data: list[int], base: int = 10) -> dict:
+    """
+    Compute a Benford conformity score for a dataset.
+    Returns a dict with per-digit analysis and overall score.
+    """
+    if not data:
+        return {"score": 0, "details": {}}
+    
+    positive_data = [x for x in data if x > 0]
+    N = len(positive_data)
     if N == 0:
-        return {}
-    counts = Counter(leading_digit(x, base) for x in data if x >= 1)
-    return {d: counts.get(d, 0) / N for d in range(1, base)}
-
-
-def chi_squared_benford(data: List[int], base: int = 10) -> float:
-    """Chi-squared test statistic against Benford's law."""
-    N = sum(1 for x in data if x >= 1)
-    if N == 0:
-        return 0.0
-    freqs = digit_frequencies(data, base)
-    chi2 = 0.0
+        return {"score": 0, "details": {}}
+    
+    counts = Counter(leading_digit(x, base) for x in positive_data)
+    
+    details = {}
+    total_deviation = 0
     for d in range(1, base):
-        observed = freqs.get(d, 0) * N
-        expected = benford_predicted(d, base) * N
-        if expected > 0:
-            chi2 += (observed - expected) ** 2 / expected
-    return chi2
-
-
-def fourier_obstruction_score(data: List[int], base: int = 10,
-                               max_m: int = 10) -> float:
-    """
-    Spectral obstruction score: maximum Fourier magnitude over modes 1..max_m.
-    Values close to 1 indicate strong rational resonance (obstruction).
-    Values close to 0 indicate spectral flatness (no obstruction).
-    """
-    N = len(data)
-    if N == 0:
-        return 0.0
-    max_mag = 0.0
-    for m in range(1, max_m + 1):
-        total = sum(
-            complex(math.cos(2 * math.pi * m * frac_log(x, base)),
-                    math.sin(2 * math.pi * m * frac_log(x, base)))
-            for x in data if x >= 1
-        )
-        mag = abs(total / N)
-        max_mag = max(max_mag, mag)
-    return max_mag
+        observed = counts.get(d, 0) / N
+        expected = benford_theoretical(base, d)
+        deviation = abs(observed - expected)
+        total_deviation += deviation
+        details[d] = {
+            "observed": observed,
+            "expected": expected,
+            "deviation": deviation,
+            "z_score": (observed - expected) / math.sqrt(expected * (1 - expected) / N) if N > 0 else 0
+        }
+    
+    # Score: 1.0 = perfect Benford, 0.0 = maximum deviation
+    max_possible_deviation = 2.0  # theoretical max for sum of absolute deviations
+    score = max(0, 1 - total_deviation / max_possible_deviation * (base - 1))
+    
+    return {"score": score, "details": details, "sample_size": N}
 
 
 # ═══════════════════════════════════════════════════════════════════
 # Application 1: Financial Fraud Detection
 # ═══════════════════════════════════════════════════════════════════
 
-def fraud_detection_demo():
+def detect_financial_anomalies():
     """
-    Demonstrate Benford-based fraud detection.
-
-    Natural financial data tends to follow Benford's law. Fabricated data
-    often deviates because humans tend to choose digits uniformly.
-    The spectral obstruction framework provides a deeper diagnostic:
-    not just "does it match Benford?" but "what kind of structure
-    causes the deviation?"
+    Demonstrate Benford-based anomaly detection on financial data.
+    
+    Key insight from the universality theory: financial data follows Benford's
+    law because economic growth processes are multiplicative dynamical systems
+    with irrational expansion rates. When data is fabricated, the fabricator
+    typically uses a different (often uniform) digit distribution.
     """
     print("=" * 60)
-    print("Application 1: Financial Fraud Detection")
+    print("APPLICATION: Financial Fraud Detection")
     print("=" * 60)
-
-    # Simulate "natural" financial data (geometric growth with noise)
+    
+    # Simulate "real" financial data: multiplicative random walk
     import random
     random.seed(42)
-    natural_data = []
-    for _ in range(1000):
-        # Multiplicative random walk (log-normal-ish)
-        val = int(math.exp(random.gauss(5, 2)))
-        if val > 0:
-            natural_data.append(val)
-
-    # Simulate "fabricated" data (uniform digits)
-    fabricated_data = [random.randint(100, 999) for _ in range(1000)]
-
-    # Simulate "obstructed" data (powers of 10 with small perturbations)
-    obstructed_data = [10**k + random.randint(0, 5) for k in range(1, 100)
-                       for _ in range(10)]
-
-    for name, data in [("Natural (log-normal)", natural_data),
-                       ("Fabricated (uniform)", fabricated_data),
-                       ("Obstructed (near-powers-of-10)", obstructed_data)]:
-        freqs = digit_frequencies(data)
-        chi2 = chi_squared_benford(data)
-        obstruction = fourier_obstruction_score(data)
-
-        print(f"\n  {name} (n={len(data)}):")
-        print(f"    Chi² vs Benford: {chi2:.2f}")
-        print(f"    Spectral obstruction score: {obstruction:.4f}")
-        print(f"    Verdict: ", end="")
-        if chi2 < 15 and obstruction < 0.3:
-            print("✓ Benford-compliant (likely natural)")
-        elif obstruction > 0.7:
-            print("⚠ Strong spectral obstruction (structured deviation)")
-        else:
-            print("⚠ Non-Benford (possible fabrication)")
-
-        print(f"    Digit frequencies: ", end="")
-        for d in range(1, 10):
-            print(f"{d}:{freqs.get(d,0):.3f}", end=" ")
-        print()
+    
+    real_data = []
+    value = 1000
+    for _ in range(10000):
+        value *= (1 + random.gauss(0.001, 0.02))
+        real_data.append(int(abs(value)))
+    
+    real_score = benford_score(real_data)
+    print(f"\nReal financial data (multiplicative process):")
+    print(f"  Benford score: {real_score['score']:.4f}")
+    print(f"  Sample size: {real_score['sample_size']}")
+    
+    # Simulate "fake" financial data: uniformly distributed
+    fake_data = [random.randint(100, 999) for _ in range(10000)]
+    fake_score = benford_score(fake_data)
+    print(f"\nFabricated data (uniform distribution):")
+    print(f"  Benford score: {fake_score['score']:.4f}")
+    print(f"  Sample size: {fake_score['sample_size']}")
+    
+    # Show per-digit comparison
+    print(f"\n{'Digit':<8}{'Benford':<10}{'Real':<10}{'Fake':<10}")
+    print("-" * 38)
+    for d in range(1, 10):
+        print(f"  {d:<6}{benford_theoretical(10, d):<10.4f}"
+              f"{real_score['details'][d]['observed']:<10.4f}"
+              f"{fake_score['details'][d]['observed']:<10.4f}")
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Application 2: Pseudorandomness Testing
+# Application 2: RNG Quality Assessment
 # ═══════════════════════════════════════════════════════════════════
 
-def pseudorandomness_demo():
+def assess_rng_quality():
     """
-    Test pseudorandomness of arithmetic recurrences via Benford compliance.
-
-    The insight: a recurrence that produces Benford-distributed leading
-    digits has an equidistributed logarithmic cocycle, which is a
-    necessary condition for high-quality pseudorandomness. Rational
-    obstructions reveal hidden periodic structure.
+    Use Benford analysis to assess random number generator quality.
+    
+    The universality theory predicts: sequences from multiplicative maps
+    with irrational expansion should be Benford. Poor RNGs that fail this
+    test have detectable spectral obstructions.
     """
     print("\n" + "=" * 60)
-    print("Application 2: Pseudorandomness Testing")
+    print("APPLICATION: RNG Quality Assessment")
     print("=" * 60)
-
-    recurrences = {
-        "Linear: x_{n+1} = 3x_n (mod large prime)": (
-            lambda x: (3 * x) % 1000003, 7, 5000
-        ),
-        "Fibonacci-like: x_{n+1} = x_n + x_{n-1}": (
-            None, None, None  # special handling
-        ),
-        "Powers of 2: x_n = 2^n": (
-            lambda x: 2 * x, 1, 2000
-        ),
-        "Exponential: x_n = 3^n": (
-            lambda x: 3 * x, 1, 1000
-        ),
-    }
-
-    for name, params in recurrences.items():
-        print(f"\n  {name}:")
-
-        if "Fibonacci" in name:
-            # Generate Fibonacci sequence
-            seq = [1, 1]
-            for _ in range(2000):
-                seq.append(seq[-1] + seq[-2])
-            data = seq[10:]  # skip initial transient
-        else:
-            T, seed, steps = params
-            data = [seed]
-            x = seed
-            for _ in range(steps):
-                x = T(x)
-                if x <= 0:
-                    break
-                data.append(x)
-
-        freqs = digit_frequencies(data)
-        chi2 = chi_squared_benford(data)
-        obstruction = fourier_obstruction_score(data)
-
-        print(f"    Chi² vs Benford: {chi2:.2f}")
-        print(f"    Spectral obstruction: {obstruction:.4f}")
-
-        if obstruction < 0.2:
-            print(f"    → Cocycle is spectrally flat: good pseudorandomness indicator")
-        elif obstruction > 0.7:
-            print(f"    → Strong rational resonance: reveals periodic structure")
-        else:
-            print(f"    → Moderate spectral structure: intermediate quality")
+    
+    def lcg(seed: int, a: int, c: int, m: int, n: int) -> list[int]:
+        """Linear congruential generator."""
+        values = []
+        x = seed
+        for _ in range(n):
+            x = (a * x + c) % m
+            if x > 0:
+                values.append(x)
+        return values
+    
+    # Good LCG (large modulus, well-chosen constants)
+    good_lcg = lcg(1, 1103515245, 12345, 2**31 - 1, 10000)
+    good_score = benford_score(good_lcg)
+    
+    # Bad LCG (small modulus, poor constants) 
+    bad_lcg = lcg(1, 5, 3, 256, 10000)
+    bad_score = benford_score(bad_lcg)
+    
+    # Powers of 2 (irrational log_10 → Benford)
+    pow2 = [2**k for k in range(1, 10001)]
+    pow2_score = benford_score(pow2)
+    
+    print(f"\nGood LCG (m=2^31-1): Benford score = {good_score['score']:.4f}")
+    print(f"Bad LCG (m=256):     Benford score = {bad_score['score']:.4f}")
+    print(f"Powers of 2:         Benford score = {pow2_score['score']:.4f}")
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Application 3: Dynamical System Classification
+# Application 3: Electoral Data Validation
 # ═══════════════════════════════════════════════════════════════════
 
-def classification_demo():
+def validate_electoral_data():
     """
-    Classify dynamical systems by their Benford spectral type.
-
-    The renormalization framework provides a new invariant for integer
-    dynamical systems: the spectral type of the logarithmic cocycle.
-    Systems are classified as:
-    - Type I (Benford): equidistributed cocycle, no obstruction
-    - Type R (Rational): rational resonance, periodic digit structure
-    - Type M (Mixed): partial obstruction, complex digit statistics
+    Demonstrate Benford analysis for electoral data validation.
+    
+    Vote counts from genuine elections typically follow Benford's law
+    when aggregated from many precincts of varying sizes (a multiplicative
+    process). Manipulated results may deviate.
     """
     print("\n" + "=" * 60)
-    print("Application 3: Dynamical System Classification")
+    print("APPLICATION: Electoral Data Validation")
     print("=" * 60)
-
-    systems: List[Tuple[str, List[int]]] = []
-
-    # Type I: Irrational rotation (powers of 2)
-    systems.append(("Powers of 2 (irrational log₁₀)", [2**k for k in range(1, 2001)]))
-
-    # Type I: Powers of 3
-    systems.append(("Powers of 3 (irrational log₁₀)", [3**k for k in range(1, 1001)]))
-
-    # Type R: Powers of 10
-    systems.append(("Powers of 10 (rational log₁₀)", [10**k for k in range(1, 201)]))
-
-    # Type R: Powers of 100
-    systems.append(("Powers of 100 (rational log₁₀)", [100**k for k in range(1, 101)]))
-
-    # Type I: Factorials
-    factorials = [1]
-    for k in range(1, 501):
-        factorials.append(factorials[-1] * k)
-    systems.append(("Factorials n!", factorials[1:]))
-
-    # Mixed: Collatz orbits
-    x = 27
-    collatz_orbit = [x]
+    
+    import random
+    random.seed(123)
+    
+    # Simulate genuine election data: precinct sizes follow log-normal
+    genuine_votes = []
     for _ in range(5000):
-        x = x // 2 if x % 2 == 0 else 3 * x + 1
-        collatz_orbit.append(x)
-    systems.append(("Collatz orbit (seed=27)", collatz_orbit))
+        precinct_size = int(math.exp(random.gauss(6, 1.5)))
+        vote_share = random.betavariate(2, 3)
+        votes = max(1, int(precinct_size * vote_share))
+        genuine_votes.append(votes)
+    
+    genuine_score = benford_score(genuine_votes)
+    
+    # Simulate manipulated data: round numbers, suspicious patterns
+    manipulated_votes = []
+    for _ in range(5000):
+        base_votes = random.choice([100, 200, 300, 500, 1000]) 
+        noise = random.randint(-20, 20)
+        manipulated_votes.append(max(1, base_votes + noise))
+    
+    manipulated_score = benford_score(manipulated_votes)
+    
+    print(f"\nGenuine election data:     Benford score = {genuine_score['score']:.4f}")
+    print(f"Manipulated election data: Benford score = {manipulated_score['score']:.4f}")
+    
+    print(f"\nInterpretation:")
+    print(f"  Score > 0.95: Consistent with genuine process")
+    print(f"  Score < 0.80: Warrants further investigation")
 
-    print(f"\n  {'System':<40} {'χ²':<10} {'Obstruction':<14} {'Type'}")
-    print(f"  {'-'*80}")
-
-    for name, data in systems:
-        chi2 = chi_squared_benford(data)
-        obstruction = fourier_obstruction_score(data)
-
-        if obstruction > 0.7:
-            stype = "Type R (Rational)"
-        elif chi2 < 20 and obstruction < 0.3:
-            stype = "Type I (Benford)"
-        else:
-            stype = "Type M (Mixed)"
-
-        print(f"  {name:<40} {chi2:<10.2f} {obstruction:<14.4f} {stype}")
-
-
-# ═══════════════════════════════════════════════════════════════════
-# Main
-# ═══════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   BENFORD RENORMALIZATION: Applications Showcase            ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-
-    fraud_detection_demo()
-    pseudorandomness_demo()
-    classification_demo()
-
-    print("\n" + "=" * 60)
-    print("  All applications demonstrated successfully.")
-    print("=" * 60)
+    detect_financial_anomalies()
+    assess_rng_quality()
+    validate_electoral_data()
 
 
 #!/usr/bin/env python3
 """
-Benford Renormalization: Interactive Demo
+Benford Renormalization for Integer Dynamical Systems — Demo
 
-Demonstrates the theory of Benford renormalization for integer dynamical
-systems. Users can explore how different map families produce or fail to
-produce Benford-distributed leading digits, and inspect the spectral
-obstruction diagnostics.
-
-Usage:
-    python demo.py
-
-The demo presents a menu of map families and analysis options.
+Demonstrates the core theorems and concepts:
+1. Leading digit extraction and Benford frequency computation
+2. Theoretical Benford frequencies (telescoping sum = 1)
+3. Rational eigen-obstruction detection
+4. Digit discrepancy measurement
+5. 3n+1 orbit Benford analysis
 """
 
 import math
 from collections import Counter
-from typing import Callable, Dict, List, Optional, Tuple
-
-
-# ═══════════════════════════════════════════════════════════════════
-# Core algorithms (self-contained for demo purposes)
-# ═══════════════════════════════════════════════════════════════════
 
 def leading_digit_base(b: int, n: int) -> int:
-    """Extract leading digit of n in base b."""
-    if b <= 1 or n <= 0:
-        return 0
+    """Extract the leading (most significant) digit of n in base b."""
+    if b <= 1 or n == 0:
+        return n
     while n >= b:
         n //= b
     return n
 
+def benford_freq_up_to(b: int, d: int, sequence: list[int]) -> float:
+    """Empirical frequency of leading digit d in base b for a sequence."""
+    N = len(sequence)
+    if N == 0:
+        return 0.0
+    count = sum(1 for x in sequence if leading_digit_base(b, x) == d)
+    return count / N
 
 def benford_theoretical(b: int, d: int) -> float:
-    """Benford-predicted frequency for digit d in base b."""
-    return math.log(1 + 1 / d) / math.log(b)
+    """Benford's law predicted frequency for digit d in base b: log_b(1 + 1/d)."""
+    return math.log(1 + 1/d) / math.log(b)
 
-
-def frac_log_base(b: int, x: float) -> float:
-    """Fractional part of log_b(x)."""
-    if x <= 0:
-        return 0.0
-    v = math.log(x) / math.log(b)
-    return v - math.floor(v)
-
-
-def digit_frequency_profile(seq: List[int], base: int = 10) -> Dict[int, float]:
-    """Compute empirical leading-digit frequencies."""
-    N = len(seq)
-    if N == 0:
-        return {}
-    counts = Counter(leading_digit_base(base, n) for n in seq if n >= 1)
-    return {d: counts.get(d, 0) / N for d in range(1, base)}
-
-
-def benford_discrepancy(seq: List[int], base: int = 10) -> float:
-    """Total absolute discrepancy from Benford's law."""
-    profile = digit_frequency_profile(seq, base)
-    return sum(abs(profile.get(d, 0) - benford_theoretical(base, d))
-               for d in range(1, base))
-
-
-def fourier_mode_estimate(seq: List[int], m: int, base: int = 10) -> complex:
-    """Estimate m-th Fourier mode of frac(log_b(u_k))."""
-    N = len(seq)
-    if N == 0:
-        return 0j
-    total = sum(
-        complex(math.cos(2 * math.pi * m * frac_log_base(base, x)),
-                math.sin(2 * math.pi * m * frac_log_base(base, x)))
-        for x in seq if x >= 1
+def digit_discrepancy(b: int, sequence: list[int]) -> float:
+    """Maximum deviation from Benford prediction across all valid digits."""
+    return max(
+        abs(benford_freq_up_to(b, d, sequence) - benford_theoretical(b, d))
+        for d in range(1, b)
     )
-    return total / N
 
-
-def detect_rational_obstruction(seq: List[int], base: int = 10,
-                                 max_q: int = 20,
-                                 threshold: float = 0.1) -> Optional[Tuple[int, float]]:
-    """Detect rational eigen-obstruction via Fourier modes."""
-    for q in range(1, max_q + 1):
-        mode = fourier_mode_estimate(seq, q, base)
-        mag = abs(mode)
-        if mag > 1 - threshold:
-            return (q, mag)
-    return None
-
-
-def generate_orbit(T: Callable[[int], int], seed: int, steps: int) -> List[int]:
-    """Generate orbit of T starting from seed."""
-    orbit = [seed]
-    x = seed
+def collatz_orbit(n: int, steps: int) -> list[int]:
+    """Generate the 3n+1 (Collatz) orbit of n for given number of steps."""
+    orbit = [n]
     for _ in range(steps):
-        x = T(x)
-        if x <= 0:
-            break
-        orbit.append(x)
+        if n == 1:
+            n = 4  # Continue cycling to avoid degenerate behavior
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+        orbit.append(n)
     return orbit
 
+def geometric_orbit(a: int, r: int, steps: int) -> list[int]:
+    """Generate geometric sequence a * r^k for k = 0, ..., steps."""
+    return [a * r**k for k in range(steps + 1)]
 
-# ═══════════════════════════════════════════════════════════════════
-# Map families
-# ═══════════════════════════════════════════════════════════════════
-
-MAP_FAMILIES = {
-    '1': ('Multiplication: T(n) = r·n', 'mult'),
-    '2': ('Affine: T(n) = a·n + c', 'affine'),
-    '3': ('Power of base: T(n) = b^n (obstruction example)', 'powbase'),
-    '4': ('Collatz-type: 3n+1 / n÷2', 'collatz'),
-    '5': ('Reverse-and-add', 'revaddd'),
-    '6': ('Polynomial perturbation: T(n) = r·n + c', 'polpert'),
-}
-
-
-def run_analysis(name: str, orbit: List[int], base: int = 10):
-    """Run full Benford analysis on an orbit and display results."""
-    print(f"\n{'=' * 60}")
-    print(f"  {name}")
-    print(f"{'=' * 60}")
-    print(f"  Orbit length: {len(orbit)}")
-    if len(orbit) > 0:
-        print(f"  First 5 values: {orbit[:5]}")
-        print(f"  Last 5 values: {orbit[-5:]}")
-
-    print(f"\n  {'Digit':<8} {'Empirical':<12} {'Benford':<12} {'Diff':<12}")
-    print(f"  {'-'*44}")
-
-    profile = digit_frequency_profile(orbit, base)
-    for d in range(1, base):
-        emp = profile.get(d, 0)
-        pred = benford_theoretical(base, d)
-        diff = emp - pred
-        bar = '█' * int(abs(diff) * 200)
-        print(f"  {d:<8} {emp:<12.4f} {pred:<12.4f} {diff:+.4f}  {bar}")
-
-    disc = benford_discrepancy(orbit, base)
-    print(f"\n  Total discrepancy: {disc:.6f}")
-
-    # Fourier mode analysis
-    print(f"\n  Fourier mode analysis (spectral obstruction detection):")
-    print(f"  {'Mode m':<10} {'|c_m|':<12} {'Status':<20}")
-    print(f"  {'-'*42}")
-    for m in range(1, 6):
-        mode = fourier_mode_estimate(orbit, m, base)
-        mag = abs(mode)
-        status = "⚠ OBSTRUCTION" if mag > 0.5 else "✓ decaying"
-        print(f"  {m:<10} {mag:<12.6f} {status}")
-
-    obs = detect_rational_obstruction(orbit, base)
-    if obs:
-        print(f"\n  ⚠ RATIONAL OBSTRUCTION DETECTED: q={obs[0]}, magnitude={obs[1]:.4f}")
-        print(f"    The sequence has a rational resonance at frequency q={obs[0]}.")
-        print(f"    This blocks Benford universality (Theorem 2 in the formal development).")
-    else:
-        print(f"\n  ✓ No rational obstruction detected.")
-        print(f"    The logarithmic cocycle appears spectrally flat.")
-
-    # Fractional log histogram
-    print(f"\n  Fractional log histogram (10 bins in [0, 1)):")
-    frac_logs = [frac_log_base(base, x) for x in orbit if x >= 1]
-    bins = [0] * 10
-    for fl in frac_logs:
-        idx = min(int(fl * 10), 9)
-        bins[idx] += 1
-    total = len(frac_logs)
-    for i in range(10):
-        freq = bins[i] / total if total > 0 else 0
-        bar = '▓' * int(freq * 50)
-        print(f"  [{i/10:.1f}, {(i+1)/10:.1f})  {freq:.3f}  {bar}")
+def has_rational_eigen_obstruction(b: int, sequence: list[int], max_q: int = 20) -> tuple[bool, int]:
+    """
+    Check if the sequence has a rational eigen-obstruction in base b.
+    Returns (True, q) if q * log_b(u(k)) is approximately integral for large k.
+    """
+    if len(sequence) < 10:
+        return False, 0
+    
+    tail = sequence[len(sequence)//2:]  # Check only the tail
+    for q in range(1, max_q + 1):
+        residuals = []
+        for x in tail:
+            if x <= 0:
+                continue
+            val = q * math.log(x) / math.log(b)
+            residual = abs(val - round(val))
+            residuals.append(residual)
+        if residuals and max(residuals) < 1e-10:
+            return True, q
+    return False, 0
 
 
-def main():
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║      BENFORD RENORMALIZATION: Interactive Demo              ║")
-    print("║                                                            ║")
-    print("║  Exploring digit-law universality in arithmetic dynamics   ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+def demo_frequency_partition():
+    """Demo Theorem 1: Frequency partition of unity."""
+    print("=" * 60)
+    print("THEOREM 1: Frequency Partition of Unity")
+    print("For any positive sequence, digit frequencies sum to 1.")
+    print("=" * 60)
+    
+    b = 10
+    sequence = [2**k for k in range(1, 1001)]
+    
+    total = sum(benford_freq_up_to(b, d, sequence) for d in range(1, b))
+    print(f"\nBase {b}, sequence: 2^1, 2^2, ..., 2^1000")
+    print(f"Sum of frequencies for digits 1-9: {total:.10f}")
+    print(f"Expected: 1.0")
+    print(f"Match: {abs(total - 1.0) < 1e-10}")
+    
+    print("\nIndividual digit frequencies:")
+    for d in range(1, b):
+        freq = benford_freq_up_to(b, d, sequence)
+        theory = benford_theoretical(b, d)
+        print(f"  Digit {d}: freq={freq:.4f}, Benford={theory:.4f}, diff={abs(freq-theory):.4f}")
 
-    while True:
-        print("\n── Choose a map family ──────────────────────────────────────")
-        for key, (desc, _) in MAP_FAMILIES.items():
-            print(f"  [{key}] {desc}")
-        print(f"  [q] Quit")
 
-        choice = input("\nYour choice: ").strip()
-        if choice.lower() == 'q':
-            print("\nGoodbye!")
-            break
+def demo_theoretical_sum():
+    """Demo Theorem 2: Benford theoretical frequencies sum to 1."""
+    print("\n" + "=" * 60)
+    print("THEOREM 2: Benford Theoretical Sum = 1")
+    print("The predicted frequencies telescope: sum log_b(1+1/d) = 1.")
+    print("=" * 60)
+    
+    for b in [2, 5, 10, 16, 100]:
+        total = sum(benford_theoretical(b, d) for d in range(1, b))
+        # Show telescoping
+        terms = [math.log(d+1)/math.log(b) - math.log(d)/math.log(b) for d in range(1, b)]
+        print(f"\nBase {b}: sum = {total:.15f}")
+        print(f"  Telescoping: log_b({b}) - log_b(1) = {math.log(b)/math.log(b):.15f} - 0 = 1")
 
-        if choice not in MAP_FAMILIES:
-            print("Invalid choice. Try again.")
-            continue
 
-        _, family = MAP_FAMILIES[choice]
-        base = 10
+def demo_obstruction_power():
+    """Demo Theorem 3: Obstruction transfers under powering."""
+    print("\n" + "=" * 60)
+    print("THEOREM 3: Obstruction Transfer Under Powering")
+    print("If u has an obstruction, u^m also has one.")
+    print("=" * 60)
+    
+    b = 10
+    # u(k) = 10^k has a rational eigen-obstruction (q=1: log_10(10^k) = k is integral)
+    sequence = [10**k for k in range(1, 20)]
+    has_obs, q = has_rational_eigen_obstruction(b, sequence)
+    print(f"\nSequence u(k) = 10^k: obstruction={has_obs}, q={q}")
+    
+    for m in [2, 3, 5]:
+        powered = [x**m for x in sequence]
+        has_obs_m, q_m = has_rational_eigen_obstruction(b, powered)
+        print(f"Sequence u(k)^{m} = 10^({m}k): obstruction={has_obs_m}, q={q_m}")
 
-        try:
-            base_input = input("Base (default 10): ").strip()
-            if base_input:
-                base = int(base_input)
-                if base < 2:
-                    base = 10
-        except ValueError:
-            base = 10
 
-        if family == 'mult':
-            try:
-                r = int(input("Multiplier r (e.g. 3): ").strip() or "3")
-                seed = int(input("Seed (e.g. 1): ").strip() or "1")
-                steps = int(input("Steps (e.g. 1000): ").strip() or "1000")
-            except ValueError:
-                r, seed, steps = 3, 1, 1000
+def demo_collatz_benford():
+    """Demo: 3n+1 orbit Benford analysis."""
+    print("\n" + "=" * 60)
+    print("BENFORD ANALYSIS: 3n+1 (Collatz) Orbits")
+    print("Testing the universality conjecture prediction.")
+    print("=" * 60)
+    
+    b = 10
+    seeds = [7, 27, 97, 871, 6171, 77031]
+    
+    for seed in seeds:
+        orbit = collatz_orbit(seed, 10000)
+        positive_orbit = [x for x in orbit if x >= 1]
+        
+        disc = digit_discrepancy(b, positive_orbit)
+        has_obs, q = has_rational_eigen_obstruction(b, positive_orbit)
+        
+        print(f"\nSeed {seed}: orbit length={len(positive_orbit)}")
+        print(f"  Digit discrepancy: {disc:.4f}")
+        print(f"  Has obstruction: {has_obs}")
+        print(f"  Benford-compatible: {'YES' if disc < 0.05 else 'NO'}")
+        
+        # Show digit frequencies
+        freqs = {d: benford_freq_up_to(b, d, positive_orbit) for d in range(1, b)}
+        benford = {d: benford_theoretical(b, d) for d in range(1, b)}
+        print(f"  Digit frequencies vs Benford:")
+        for d in range(1, b):
+            print(f"    {d}: {freqs[d]:.4f} vs {benford[d]:.4f}")
 
-            orbit = generate_orbit(lambda n: r * n, seed, steps)
-            run_analysis(f"Multiplication map T(n) = {r}·n, seed={seed}", orbit, base)
 
-            # Check if log_b(r) is rational
-            log_r = math.log(r) / math.log(base)
-            # Test rationality heuristically
-            is_likely_rational = False
-            for q in range(1, 50):
-                if abs(q * log_r - round(q * log_r)) < 1e-10:
-                    is_likely_rational = True
-                    print(f"\n  Note: log_{base}({r}) ≈ {round(q*log_r)}/{q} "
-                          f"(rational => obstruction expected)")
-                    break
-            if not is_likely_rational:
-                print(f"\n  Note: log_{base}({r}) ≈ {log_r:.6f} "
-                      f"(likely irrational => Benford expected)")
-
-        elif family == 'affine':
-            try:
-                a = int(input("Slope a (e.g. 3): ").strip() or "3")
-                c = int(input("Intercept c (e.g. 1): ").strip() or "1")
-                seed = int(input("Seed (e.g. 1): ").strip() or "1")
-                steps = int(input("Steps (e.g. 1000): ").strip() or "1000")
-            except ValueError:
-                a, c, seed, steps = 3, 1, 1, 1000
-
-            orbit = generate_orbit(lambda n: a * n + c, seed, steps)
-            run_analysis(f"Affine map T(n) = {a}·n + {c}, seed={seed}", orbit, base)
-
-        elif family == 'powbase':
-            try:
-                steps = int(input("Number of powers (e.g. 100): ").strip() or "100")
-            except ValueError:
-                steps = 100
-
-            orbit = [base ** k for k in range(1, steps + 1)]
-            run_analysis(f"Powers of {base}: {base}^1, {base}^2, ..., {base}^{steps}",
-                        orbit, base)
-            print(f"\n  This demonstrates Theorem 1: powers of the base have")
-            print(f"  leading digit 1 always, creating a maximal obstruction.")
-
-        elif family == 'collatz':
-            try:
-                seed = int(input("Seed (e.g. 27): ").strip() or "27")
-                steps = int(input("Steps (e.g. 5000): ").strip() or "5000")
-            except ValueError:
-                seed, steps = 27, 5000
-
-            def collatz(n):
-                return n // 2 if n % 2 == 0 else 3 * n + 1
-
-            orbit = generate_orbit(collatz, seed, steps)
-            run_analysis(f"Collatz map, seed={seed}", orbit, base)
-
-        elif family == 'revaddd':
-            try:
-                seed = int(input("Seed (e.g. 196): ").strip() or "196")
-                steps = int(input("Steps (e.g. 500): ").strip() or "500")
-            except ValueError:
-                seed, steps = 196, 500
-
-            def rev_add(n):
-                return n + int(str(n)[::-1])
-
-            orbit = generate_orbit(rev_add, seed, steps)
-            run_analysis(f"Reverse-and-add, seed={seed}", orbit, base)
-
-        elif family == 'polpert':
-            try:
-                r = int(input("Multiplier r (e.g. 3): ").strip() or "3")
-                c = int(input("Perturbation c (e.g. 7): ").strip() or "7")
-                seed = int(input("Seed (e.g. 1): ").strip() or "1")
-                steps = int(input("Steps (e.g. 1000): ").strip() or "1000")
-            except ValueError:
-                r, c, seed, steps = 3, 7, 1, 1000
-
-            orbit = generate_orbit(lambda n: r * n + c, seed, steps)
-            run_analysis(f"Perturbed map T(n) = {r}·n + {c}, seed={seed}", orbit, base)
-
-            print(f"\n  This demonstrates Theorem 5 (stability): the perturbation")
-            print(f"  +{c} is asymptotically negligible compared to ×{r} growth.")
-
-        print("\n" + "─" * 60)
+def demo_geometric_benford():
+    """Demo: Geometric sequences and Benford behavior."""
+    print("\n" + "=" * 60)
+    print("GEOMETRIC SEQUENCES AND BENFORD'S LAW")
+    print("2^k is Benford (log_10(2) irrational), 10^k is not.")
+    print("=" * 60)
+    
+    b = 10
+    
+    # 2^k should be Benford (log_10(2) is irrational)
+    seq_2 = geometric_orbit(1, 2, 5000)
+    disc_2 = digit_discrepancy(b, seq_2)
+    obs_2, q_2 = has_rational_eigen_obstruction(b, seq_2)
+    print(f"\n2^k: discrepancy={disc_2:.4f}, obstruction={obs_2}")
+    
+    # 10^k should NOT be Benford (log_10(10) = 1 is rational)
+    seq_10 = geometric_orbit(1, 10, 100)
+    disc_10 = digit_discrepancy(b, seq_10)
+    obs_10, q_10 = has_rational_eigen_obstruction(b, seq_10)
+    print(f"10^k: discrepancy={disc_10:.4f}, obstruction={obs_10} (q={q_10})")
+    
+    # 3^k should be Benford (log_10(3) is irrational)
+    seq_3 = geometric_orbit(1, 3, 5000)
+    disc_3 = digit_discrepancy(b, seq_3)
+    obs_3, q_3 = has_rational_eigen_obstruction(b, seq_3)
+    print(f"3^k: discrepancy={disc_3:.4f}, obstruction={obs_3}")
 
 
 if __name__ == "__main__":
-    main()
+    demo_frequency_partition()
+    demo_theoretical_sum()
+    demo_obstruction_power()
+    demo_collatz_benford()
+    demo_geometric_benford()
 
 
+#!/usr/bin/env python3
 """
-Visualization: Benford Digit Frequency Comparison
+Visualization 1: Benford Frequency Convergence
 
-Compares empirical leading-digit frequencies of several integer sequences
-against the Benford prediction log_10(1 + 1/d). Demonstrates the dichotomy:
-sequences with irrational logarithmic growth follow Benford's law,
-while those with rational structure (powers of the base) deviate maximally.
+Shows how empirical leading-digit frequencies converge to Benford's law
+predictions as the orbit length increases, for different dynamical maps.
+Illustrates the frequency partition of unity theorem and the telescoping
+sum of theoretical frequencies.
 """
 
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from collections import Counter
 
 
 def leading_digit(n, base=10):
-    if n <= 0 or base <= 1:
+    if base <= 1 or n <= 0:
         return 0
     while n >= base:
         n //= base
     return n
 
 
-def digit_freqs(data, base=10):
-    N = sum(1 for x in data if x >= 1)
-    if N == 0:
-        return {d: 0 for d in range(1, base)}
-    counts = Counter(leading_digit(x, base) for x in data if x >= 1)
-    return {d: counts.get(d, 0) / N for d in range(1, base)}
+def benford_theoretical(base, digit):
+    return math.log(1 + 1/digit) / math.log(base)
+
+
+def compute_freq_evolution(sequence, base=10, checkpoints=None):
+    """Compute empirical frequencies at various sequence lengths."""
+    if checkpoints is None:
+        checkpoints = [10, 50, 100, 500, 1000, 2000, 5000]
+    
+    results = {}
+    for cp in checkpoints:
+        if cp > len(sequence):
+            break
+        subseq = sequence[:cp]
+        freqs = {}
+        for d in range(1, base):
+            count = sum(1 for x in subseq if leading_digit(x, base) == d)
+            freqs[d] = count / cp
+        results[cp] = freqs
+    return results
 
 
 # Generate sequences
-powers_of_2 = [2**k for k in range(1, 2001)]
-powers_of_3 = [3**k for k in range(1, 1001)]
-powers_of_10 = [10**k for k in range(1, 201)]
+base = 10
+N = 5000
 
-# Fibonacci
-fib = [1, 1]
-for _ in range(2000):
-    fib.append(fib[-1] + fib[-2])
-fibonacci = fib[2:]
+# 2^k sequence (Benford, irrational log_10(2))
+seq_2k = [2**k for k in range(1, N + 1)]
 
-# Factorials
-facts = [1]
-for k in range(1, 501):
-    facts.append(facts[-1] * k)
-factorials = facts[1:]
+# 3^k sequence (Benford, irrational log_10(3))
+seq_3k = [3**k for k in range(1, N + 1)]
 
-sequences = {
-    'Powers of 2': powers_of_2,
-    'Powers of 3': powers_of_3,
-    'Fibonacci': fibonacci,
-    'Factorials': factorials,
-    'Powers of 10\n(obstructed)': powers_of_10,
-}
+# 10^k sequence (NOT Benford, rational obstruction)
+seq_10k = [10**k for k in range(1, N + 1)]
 
-digits = list(range(1, 10))
-benford = [math.log10(1 + 1/d) for d in digits]
+checkpoints = [10, 25, 50, 100, 200, 500, 1000, 2000, 5000]
 
-fig, axes = plt.subplots(2, 3, figsize=(14, 9))
-axes = axes.flatten()
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Plot Benford prediction
-ax = axes[0]
-ax.bar(digits, benford, color='#2c3e50', alpha=0.9, edgecolor='white')
-ax.set_title("Benford's Law\n(Predicted)", fontsize=11, fontweight='bold')
+# --- Panel 1: 2^k convergence ---
+ax = axes[0, 0]
+evo = compute_freq_evolution(seq_2k, base, checkpoints)
+for d in range(1, base):
+    y_vals = [evo[cp][d] for cp in checkpoints if cp in evo]
+    x_vals = [cp for cp in checkpoints if cp in evo]
+    ax.plot(x_vals, y_vals, 'o-', markersize=4, label=f'd={d}', alpha=0.8)
+    ax.axhline(y=benford_theoretical(base, d), color='gray', alpha=0.3, linestyle='--')
+
+ax.set_xlabel('Orbit Length N')
+ax.set_ylabel('Frequency')
+ax.set_title('$2^k$: Convergence to Benford (irrational $\\log_{10} 2$)')
+ax.set_xscale('log')
+ax.legend(ncol=3, fontsize=7)
+ax.grid(True, alpha=0.3)
+
+# --- Panel 2: 10^k non-convergence ---
+ax = axes[0, 1]
+evo10 = compute_freq_evolution(seq_10k, base, checkpoints)
+for d in range(1, base):
+    y_vals = [evo10[cp][d] for cp in checkpoints if cp in evo10]
+    x_vals = [cp for cp in checkpoints if cp in evo10]
+    ax.plot(x_vals, y_vals, 'o-', markersize=4, label=f'd={d}', alpha=0.8)
+    ax.axhline(y=benford_theoretical(base, d), color='gray', alpha=0.3, linestyle='--')
+
+ax.set_xlabel('Orbit Length N')
+ax.set_ylabel('Frequency')
+ax.set_title('$10^k$: Rational Obstruction (digit always 1)')
+ax.set_xscale('log')
+ax.legend(ncol=3, fontsize=7)
+ax.grid(True, alpha=0.3)
+
+# --- Panel 3: Theoretical vs Empirical (bar chart, 2^k) ---
+ax = axes[1, 0]
+digits = list(range(1, base))
+empirical = [evo[5000][d] for d in digits]
+theoretical = [benford_theoretical(base, d) for d in digits]
+
+x = np.arange(len(digits))
+width = 0.35
+bars1 = ax.bar(x - width/2, empirical, width, label='Empirical ($2^k$, N=5000)', color='steelblue')
+bars2 = ax.bar(x + width/2, theoretical, width, label='Benford Prediction', color='coral')
 ax.set_xlabel('Leading Digit')
 ax.set_ylabel('Frequency')
-ax.set_ylim(0, 0.35)
-ax.set_xticks(digits)
+ax.set_title('Frequency Partition of Unity: Empirical vs Theory')
+ax.set_xticks(x)
+ax.set_xticklabels(digits)
+ax.legend()
+ax.grid(True, alpha=0.3, axis='y')
 
-# Plot each sequence
-colors = ['#27ae60', '#2980b9', '#8e44ad', '#e67e22', '#c0392b']
-for i, (name, seq) in enumerate(sequences.items()):
-    ax = axes[i + 1]
-    freqs = digit_freqs(seq)
-    emp = [freqs.get(d, 0) for d in digits]
+# Annotate sum = 1
+ax.text(0.95, 0.95, f'∑ empirical = {sum(empirical):.4f}\n∑ theory = {sum(theoretical):.4f}',
+        transform=ax.transAxes, ha='right', va='top', fontsize=9,
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
-    x = np.array(digits)
-    width = 0.35
-    ax.bar(x - width/2, emp, width, label='Empirical',
-           color=colors[i], alpha=0.8, edgecolor='white')
-    ax.bar(x + width/2, benford, width, label='Benford',
-           color='#95a5a6', alpha=0.6, edgecolor='white')
-    ax.set_title(name, fontsize=11, fontweight='bold')
-    ax.set_xlabel('Leading Digit')
-    ax.set_ylim(0, max(max(emp), 0.35) * 1.1)
-    ax.set_xticks(digits)
-    if i == 0:
-        ax.legend(fontsize=8)
+# --- Panel 4: Telescoping sum visualization ---
+ax = axes[1, 1]
+cumulative = [0]
+for d in range(1, base):
+    cumulative.append(cumulative[-1] + benford_theoretical(base, d))
 
-fig.suptitle('Benford Renormalization: Digit Frequency Dichotomy',
-             fontsize=14, fontweight='bold', y=0.98)
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('viz_digit_frequencies.png', dpi=150, bbox_inches='tight')
-print("Saved viz_digit_frequencies.png")
+for d in range(1, base):
+    ax.barh(0, benford_theoretical(base, d), left=cumulative[d-1], 
+            height=0.5, label=f'd={d}', alpha=0.8)
+
+# Show telescoping structure
+y_tel = -0.8
+for d in range(1, base + 1):
+    log_val = math.log(d) / math.log(base)
+    ax.plot(log_val, y_tel, 'k^', markersize=8)
+    ax.annotate(f'$\\log_{{10}}({d})$', (log_val, y_tel - 0.15), 
+                ha='center', fontsize=7, rotation=45)
+
+ax.set_xlim(-0.05, 1.05)
+ax.set_ylim(-1.5, 1)
+ax.set_xlabel('Cumulative Frequency')
+ax.set_title('Telescoping: $\\sum \\log_b(1+1/d) = 1$')
+ax.legend(ncol=3, fontsize=7, loc='upper left')
+ax.axvline(x=1.0, color='red', linestyle='--', alpha=0.5, label='Sum = 1')
+ax.set_yticks([])
+ax.grid(True, alpha=0.3, axis='x')
+
+plt.suptitle('Benford Renormalization: Frequency Analysis', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_benford_frequencies.png', dpi=150, bbox_inches='tight')
+print("Saved viz_benford_frequencies.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization: Fourier Spectral Obstruction Analysis
+Visualization 2: Cocycle Dynamics and Spectral Obstruction
 
-Plots the magnitude of Fourier modes |c_m| = |N^{-1} Σ exp(2πi·m·frac(log_b(u_k)))|
-for several sequences. Benford sequences have decaying Fourier modes
-(spectral flatness), while obstructed sequences show persistent peaks
-(rational resonance).
-
-This visualization makes the spectral obstruction theory concrete:
-the dichotomy between Benford and non-Benford behavior is visible
-as the presence or absence of spectral peaks.
-"""
-
-import math
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def frac_log(x, base=10):
-    if x <= 0:
-        return 0.0
-    v = math.log(x) / math.log(base)
-    return v - math.floor(v)
-
-
-def fourier_magnitudes(data, base=10, max_m=30):
-    """Compute |c_m| for m = 1, ..., max_m."""
-    N = len(data)
-    if N == 0:
-        return []
-    mags = []
-    for m in range(1, max_m + 1):
-        total = sum(
-            complex(math.cos(2 * math.pi * m * frac_log(x, base)),
-                    math.sin(2 * math.pi * m * frac_log(x, base)))
-            for x in data if x >= 1
-        )
-        mags.append(abs(total / N))
-    return mags
-
-
-# Generate sequences
-pow2 = [2**k for k in range(1, 2001)]
-pow3 = [3**k for k in range(1, 1001)]
-pow10 = [10**k for k in range(1, 201)]
-pow100 = [100**k for k in range(1, 101)]
-
-fib = [1, 1]
-for _ in range(2000):
-    fib.append(fib[-1] + fib[-2])
-fibonacci = fib[10:]
-
-# 3^k * 2^k = 6^k (rational in base 10? No, log10(6) is irrational)
-pow6 = [6**k for k in range(1, 501)]
-
-max_m = 25
-datasets = [
-    ('Powers of 2 (Benford)', pow2, '#27ae60'),
-    ('Powers of 3 (Benford)', pow3, '#2980b9'),
-    ('Fibonacci (Benford)', fibonacci[:1000], '#8e44ad'),
-    ('Powers of 6 (Benford)', pow6, '#e67e22'),
-    ('Powers of 10 (Obstructed)', pow10, '#c0392b'),
-    ('Powers of 100 (Obstructed)', pow100, '#e74c3c'),
-]
-
-fig, axes = plt.subplots(2, 3, figsize=(15, 9))
-axes_flat = axes.flatten()
-
-for idx, (title, data, color) in enumerate(datasets):
-    ax = axes_flat[idx]
-    mags = fourier_magnitudes(data, 10, max_m)
-    modes = list(range(1, max_m + 1))
-
-    ax.bar(modes, mags, color=color, alpha=0.8, edgecolor='white', linewidth=0.5)
-    ax.axhline(y=0.1, color='gray', linewidth=1, linestyle='--', alpha=0.5)
-    ax.set_title(title, fontsize=10, fontweight='bold')
-    ax.set_xlabel('Fourier mode m')
-    ax.set_ylabel('|cₘ|')
-    ax.set_ylim(0, 1.05)
-
-    # Highlight obstruction threshold
-    max_mag = max(mags) if mags else 0
-    if max_mag > 0.5:
-        ax.text(max_m * 0.6, 0.9, '⚠ OBSTRUCTION',
-                fontsize=9, color='red', fontweight='bold',
-                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-    else:
-        ax.text(max_m * 0.6, 0.9, '✓ Flat spectrum',
-                fontsize=9, color='green', fontweight='bold',
-                bbox=dict(boxstyle='round', facecolor='honeydew', alpha=0.8))
-
-fig.suptitle('Fourier Spectral Analysis: Detecting Rational Obstruction',
-             fontsize=14, fontweight='bold', y=0.98)
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('viz_fourier_spectrum.png', dpi=150, bbox_inches='tight')
-print("Saved viz_fourier_spectrum.png")
-
-
-"""
-Visualization: Fractional Logarithm Cocycle
-
-Plots the fractional parts frac(log_10(u_k)) for several sequences,
-revealing the equidistribution (or lack thereof) that controls Benford
-behavior. For irrational rotations, the points fill [0,1) uniformly.
-For rational obstructions, they cluster on a finite set.
+Shows the fractional logarithm (oscillation component) of different orbits:
+- Equidistributed cocycle (Benford) vs. concentrated cocycle (non-Benford)
+- Spectral gap visualization showing the obstruction criterion
+- Drift rate convergence
 """
 
 import math
@@ -802,85 +575,367 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def frac_log(x, base=10):
-    if x <= 0:
+def fractional_log(n, base=10):
+    """Fractional part of log_base(n)."""
+    if n <= 0:
         return 0.0
-    v = math.log(x) / math.log(base)
-    return v - math.floor(v)
+    val = math.log(n) / math.log(base)
+    return val - math.floor(val)
 
 
-# Generate sequences
-N = 500
+def collatz_orbit(n, steps):
+    """Generate Collatz orbit."""
+    orbit = [n]
+    for _ in range(steps):
+        if n <= 1:
+            n = 4
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        orbit.append(n)
+    return orbit
 
-# Powers of 2: frac(k * log10(2)) — irrational rotation
-pow2_frac = [frac_log(2**k) for k in range(1, N+1)]
 
-# Powers of 3: frac(k * log10(3)) — irrational rotation
-pow3_frac = [frac_log(3**k) for k in range(1, N+1)]
+N = 3000
 
-# Powers of 10: frac(k * log10(10)) = frac(k) = 0 — rational obstruction
-pow10_frac = [frac_log(10**k) for k in range(1, N+1)]
+# Generate different orbit types
+seq_2k = [2**k for k in range(1, N + 1)]
+seq_10k = [10**k for k in range(1, N + 1)]
+seq_3k = [3**k for k in range(1, N + 1)]
+collatz_7 = collatz_orbit(7, N)
 
-# Fibonacci: frac(log10(F_k)) ≈ frac(k*log10(φ) + const) — irrational
-fib = [1, 1]
-for _ in range(N + 10):
-    fib.append(fib[-1] + fib[-2])
-fib_frac = [frac_log(fib[k]) for k in range(10, N+10)]
+fig, axes = plt.subplots(2, 3, figsize=(16, 10))
 
-# 3n+1 orbit from seed 7
-x = 7
-collatz_orbit = [x]
-for _ in range(N):
-    x = x // 2 if x % 2 == 0 else 3 * x + 1
-    collatz_orbit.append(x)
-collatz_frac = [frac_log(v) for v in collatz_orbit if v > 0]
+# --- Row 1: Oscillation (fractional log) trajectories ---
 
-fig, axes = plt.subplots(2, 3, figsize=(15, 9))
+# 2^k: irrational rotation by log_10(2)
+ax = axes[0, 0]
+osc = [fractional_log(x) for x in seq_2k[:500]]
+ax.scatter(range(len(osc)), osc, s=1, alpha=0.5, c='steelblue')
+ax.set_xlabel('Step k')
+ax.set_ylabel('fract(log₁₀(2ᵏ))')
+ax.set_title('$2^k$: Irrational Rotation\n(equidistributed → Benford)')
+ax.set_ylim(0, 1)
+ax.grid(True, alpha=0.3)
 
-datasets = [
-    ('Powers of 2: frac(k·log₁₀(2))', pow2_frac, '#27ae60'),
-    ('Powers of 3: frac(k·log₁₀(3))', pow3_frac, '#2980b9'),
-    ('Powers of 10 (OBSTRUCTED)', pow10_frac, '#c0392b'),
-    ('Fibonacci: frac(log₁₀(Fₖ))', fib_frac, '#8e44ad'),
-    ('Collatz orbit (seed=7)', collatz_frac[:N], '#e67e22'),
-]
+# 10^k: trivial rotation (always 0)
+ax = axes[0, 1]
+osc_10 = [fractional_log(x) for x in seq_10k[:500]]
+ax.scatter(range(len(osc_10)), osc_10, s=3, alpha=0.7, c='red')
+ax.set_xlabel('Step k')
+ax.set_ylabel('fract(log₁₀(10ᵏ))')
+ax.set_title('$10^k$: Rational Obstruction\n(concentrated at 0 → NOT Benford)')
+ax.set_ylim(-0.1, 1.1)
+ax.grid(True, alpha=0.3)
 
-for idx, (title, data, color) in enumerate(datasets):
-    row, col = divmod(idx, 3)
-    ax = axes[row][col]
+# Collatz: chaotic but equidistributed
+ax = axes[0, 2]
+osc_c = [fractional_log(x) for x in collatz_7[:500] if x > 0]
+ax.scatter(range(len(osc_c)), osc_c, s=1, alpha=0.5, c='green')
+ax.set_xlabel('Step k')
+ax.set_ylabel('fract(log₁₀(T^k(7)))')
+ax.set_title('Collatz(7): Chaotic Cocycle\n(equidistributed → Benford)')
+ax.set_ylim(0, 1)
+ax.grid(True, alpha=0.3)
 
-    # Scatter plot of fractional parts
-    ax.scatter(range(len(data)), data, s=1.5, c=color, alpha=0.6)
-    ax.set_title(title, fontsize=10, fontweight='bold')
-    ax.set_xlabel('Index k')
-    ax.set_ylabel('frac(log₁₀(uₖ))')
-    ax.set_ylim(-0.05, 1.05)
-    ax.axhline(y=0, color='gray', linewidth=0.5, linestyle='--')
-    ax.axhline(y=1, color='gray', linewidth=0.5, linestyle='--')
+# --- Row 2: Histograms of oscillation + spectral analysis ---
 
-    # Add Benford digit boundaries
-    for d in range(1, 10):
-        boundary = math.log10(d)
-        if 0 < boundary < 1:
-            ax.axhline(y=boundary, color='lightgray', linewidth=0.3)
-
-# Last panel: histogram comparison
-ax = axes[1][2]
-bins = np.linspace(0, 1, 51)
-ax.hist(pow2_frac, bins=bins, alpha=0.6, density=True,
-        label='2ᵏ', color='#27ae60')
-ax.hist(pow10_frac, bins=bins, alpha=0.8, density=True,
-        label='10ᵏ', color='#c0392b')
-ax.axhline(y=1.0, color='black', linewidth=1.5, linestyle='--',
-           label='Uniform')
-ax.set_title('Histogram: Equidistributed vs Obstructed', fontsize=10,
-             fontweight='bold')
-ax.set_xlabel('frac(log₁₀(uₖ))')
+# 2^k histogram
+ax = axes[1, 0]
+osc_full = [fractional_log(x) for x in seq_2k]
+ax.hist(osc_full, bins=50, density=True, alpha=0.7, color='steelblue', edgecolor='navy')
+ax.axhline(y=1.0, color='red', linestyle='--', alpha=0.7, label='Uniform density')
+ax.set_xlabel('fract(log₁₀(n))')
 ax.set_ylabel('Density')
-ax.legend(fontsize=8)
+ax.set_title('Distribution of Oscillation ($2^k$)')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-fig.suptitle('The Logarithmic Cocycle: Equidistribution vs Rational Obstruction',
-             fontsize=13, fontweight='bold', y=0.98)
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('viz_fractional_log.png', dpi=150, bbox_inches='tight')
-print("Saved viz_fractional_log.png")
+# 10^k histogram
+ax = axes[1, 1]
+osc_10_full = [fractional_log(x) for x in seq_10k]
+ax.hist(osc_10_full, bins=50, density=True, alpha=0.7, color='red', edgecolor='darkred')
+ax.set_xlabel('fract(log₁₀(n))')
+ax.set_ylabel('Density')
+ax.set_title('Distribution of Oscillation ($10^k$)\nDirac mass at 0')
+ax.grid(True, alpha=0.3)
+
+# Spectral analysis: for each q, compute max residual of q*log_b(u(k)) from integers
+ax = axes[1, 2]
+max_q = 30
+
+for name, seq, color in [('$2^k$', seq_2k[:1000], 'steelblue'), 
+                           ('$3^k$', seq_3k[:1000], 'green'),
+                           ('$10^k$', seq_10k[:100], 'red')]:
+    residuals = []
+    for q in range(1, max_q + 1):
+        max_res = 0
+        for x in seq[-min(200, len(seq)):]:
+            if x > 0:
+                val = q * math.log(x) / math.log(10)
+                res = abs(val - round(val))
+                max_res = max(max_res, res)
+        residuals.append(max_res)
+    ax.plot(range(1, max_q + 1), residuals, 'o-', markersize=3, label=name, color=color, alpha=0.8)
+
+ax.axhline(y=0, color='black', linestyle='-', alpha=0.3)
+ax.axhline(y=0.01, color='gray', linestyle=':', alpha=0.5, label='Detection threshold')
+ax.set_xlabel('Candidate obstruction order q')
+ax.set_ylabel('Max residual (distance to ℤ)')
+ax.set_title('Spectral Obstruction Detection\n(low residual = obstruction)')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+ax.set_yscale('log')
+ax.set_ylim(1e-16, 1)
+
+plt.suptitle('Cocycle Dynamics and Spectral Obstructions', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_cocycle_dynamics.png', dpi=150, bbox_inches='tight')
+print("Saved viz_cocycle_dynamics.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization 3: Universality Conjecture Testing
+
+Tests the Benford universality conjecture across multiple dynamical map
+families: for each map and seed, checks whether Benford ⟺ ¬obstruction.
+Visualizes concordance rates and counterexample analysis.
+"""
+
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def leading_digit(n, base=10):
+    if base <= 1 or n <= 0:
+        return 0
+    while n >= base:
+        n //= base
+    return n
+
+
+def benford_theoretical(base, digit):
+    return math.log(1 + 1/digit) / math.log(base)
+
+
+def digit_discrepancy(sequence, base=10):
+    N = len(sequence)
+    if N == 0:
+        return 1.0
+    return max(
+        abs(sum(1 for x in sequence if leading_digit(x, base) == d) / N 
+            - benford_theoretical(base, d))
+        for d in range(1, base)
+    )
+
+
+def detect_obstruction_simple(sequence, base=10, max_q=20):
+    tail = sequence[len(sequence)//2:]
+    tail = [x for x in tail if x > 0]
+    if len(tail) < 5:
+        return False, 0
+    log_b = math.log(base)
+    for q in range(1, max_q + 1):
+        max_res = 0
+        for x in tail:
+            val = q * math.log(x) / log_b
+            max_res = max(max_res, abs(val - round(val)))
+            if max_res > 1e-6:
+                break
+        if max_res < 1e-6:
+            return True, q
+    return False, 0
+
+
+def generate_orbit(T, seed, steps):
+    orbit = [seed]
+    n = seed
+    for _ in range(steps):
+        try:
+            n = T(n)
+            if n <= 0 or n > 10**18:
+                break
+            orbit.append(n)
+        except (OverflowError, ValueError, ZeroDivisionError):
+            break
+    return orbit
+
+
+# Define dynamical maps
+def collatz(n):
+    if n <= 1: return 4
+    return n // 2 if n % 2 == 0 else 3 * n + 1
+
+def doubling(n): return 2 * n
+def tripling(n): return 3 * n
+def times10(n): return 10 * n
+def times6(n): return 6 * n
+def affine_3_1(n): return 3 * n + 1
+def affine_5_7(n): return 5 * n + 7
+
+maps = {
+    'Collatz 3n+1': collatz,
+    'Doubling 2n': doubling,
+    'Tripling 3n': tripling,
+    '×10': times10,
+    '×6': times6,
+    '3n+1 (affine)': affine_3_1,
+    '5n+7': affine_5_7,
+}
+
+# Test parameters
+seeds = list(range(2, 52))
+orbit_len = 3000
+base = 10
+threshold = 0.04
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+
+# --- Panel 1: Concordance rates across maps ---
+ax = axes[0, 0]
+map_names = []
+concordance_rates = []
+benford_rates = []
+obstruction_rates = []
+
+for name, T in maps.items():
+    concordant = 0
+    benford_count = 0
+    obs_count = 0
+    
+    for seed in seeds:
+        orbit = generate_orbit(T, seed, orbit_len)
+        disc = digit_discrepancy(orbit, base)
+        is_benford = disc < threshold
+        has_obs, _ = detect_obstruction_simple(orbit, base)
+        
+        if is_benford:
+            benford_count += 1
+        if has_obs:
+            obs_count += 1
+        if is_benford == (not has_obs):
+            concordant += 1
+    
+    map_names.append(name)
+    concordance_rates.append(concordant / len(seeds))
+    benford_rates.append(benford_count / len(seeds))
+    obstruction_rates.append(obs_count / len(seeds))
+
+y_pos = np.arange(len(map_names))
+bars = ax.barh(y_pos, concordance_rates, color='steelblue', alpha=0.8, edgecolor='navy')
+
+for i, (rate, bar) in enumerate(zip(concordance_rates, bars)):
+    ax.text(rate + 0.01, i, f'{rate:.0%}', va='center', fontsize=9)
+
+ax.set_yticks(y_pos)
+ax.set_yticklabels(map_names)
+ax.set_xlabel('Concordance Rate')
+ax.set_title('Universality Conjecture: Concordance\n(Benford ⟺ ¬Obstruction)')
+ax.set_xlim(0, 1.15)
+ax.axvline(x=1.0, color='green', linestyle='--', alpha=0.3)
+ax.grid(True, alpha=0.3, axis='x')
+
+# --- Panel 2: Discrepancy vs orbit length for different maps ---
+ax = axes[0, 1]
+checkpoints = [50, 100, 200, 500, 1000, 2000, 3000]
+
+for name, T, color in [('2n', doubling, 'steelblue'), 
+                         ('3n', tripling, 'green'),
+                         ('10n', times10, 'red'),
+                         ('Collatz', collatz, 'orange')]:
+    orbit = generate_orbit(T, 7, max(checkpoints))
+    discs = []
+    for cp in checkpoints:
+        if cp <= len(orbit):
+            discs.append(digit_discrepancy(orbit[:cp], base))
+        else:
+            discs.append(None)
+    
+    valid = [(cp, d) for cp, d in zip(checkpoints, discs) if d is not None]
+    if valid:
+        ax.plot([v[0] for v in valid], [v[1] for v in valid], 
+                'o-', label=name, color=color, markersize=4)
+
+ax.axhline(y=threshold, color='gray', linestyle=':', alpha=0.5, label='Threshold')
+ax.set_xlabel('Orbit Length')
+ax.set_ylabel('Digit Discrepancy')
+ax.set_title('Discrepancy Convergence\n(→0 for Benford sequences)')
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# --- Panel 3: Benford vs Obstruction classification ---
+ax = axes[1, 0]
+
+# Classify all (map, seed) pairs
+benford_no_obs = 0
+benford_obs = 0
+not_benford_no_obs = 0
+not_benford_obs = 0
+
+for name, T in maps.items():
+    for seed in seeds:
+        orbit = generate_orbit(T, seed, orbit_len)
+        disc = digit_discrepancy(orbit, base)
+        is_benford = disc < threshold
+        has_obs, _ = detect_obstruction_simple(orbit, base)
+        
+        if is_benford and not has_obs:
+            benford_no_obs += 1
+        elif is_benford and has_obs:
+            benford_obs += 1
+        elif not is_benford and not has_obs:
+            not_benford_no_obs += 1
+        else:
+            not_benford_obs += 1
+
+categories = ['Benford ∧ ¬Obs\n(Predicted ✓)', 'Benford ∧ Obs\n(Counterex.)', 
+              '¬Benford ∧ ¬Obs\n(Counterex.)', '¬Benford ∧ Obs\n(Predicted ✓)']
+counts = [benford_no_obs, benford_obs, not_benford_no_obs, not_benford_obs]
+colors_cat = ['#2ecc71', '#e74c3c', '#e74c3c', '#2ecc71']
+
+bars = ax.bar(range(4), counts, color=colors_cat, alpha=0.8, edgecolor='black')
+ax.set_xticks(range(4))
+ax.set_xticklabels(categories, fontsize=8)
+ax.set_ylabel('Count')
+ax.set_title('Classification Matrix\n(Green = agrees with conjecture)')
+for i, (count, bar) in enumerate(zip(counts, bars)):
+    ax.text(i, count + 1, str(count), ha='center', fontweight='bold')
+ax.grid(True, alpha=0.3, axis='y')
+
+# --- Panel 4: Collatz orbit digit frequency heatmap ---
+ax = axes[1, 1]
+
+n_seeds_heat = 20
+heat_seeds = list(range(2, 2 + n_seeds_heat))
+freq_matrix = np.zeros((n_seeds_heat, 9))
+
+for i, seed in enumerate(heat_seeds):
+    orbit = generate_orbit(collatz, seed, 5000)
+    for d in range(1, 10):
+        freq = sum(1 for x in orbit if leading_digit(x) == d) / len(orbit)
+        freq_matrix[i, d - 1] = freq
+
+benford_freqs = [benford_theoretical(10, d) for d in range(1, 10)]
+
+im = ax.imshow(freq_matrix, aspect='auto', cmap='YlOrRd', 
+               vmin=0, vmax=0.35)
+ax.set_xticks(range(9))
+ax.set_xticklabels(range(1, 10))
+ax.set_xlabel('Leading Digit')
+ax.set_ylabel('Seed')
+ax.set_yticks(range(n_seeds_heat))
+ax.set_yticklabels(heat_seeds)
+ax.set_title('Collatz Orbits: Digit Frequency Heatmap')
+plt.colorbar(im, ax=ax, label='Frequency')
+
+# Overlay Benford predictions
+for d_idx, bf in enumerate(benford_freqs):
+    ax.axvline(x=d_idx, color='white', alpha=0.1, linewidth=0.5)
+
+plt.suptitle('Benford Universality Conjecture: Computational Evidence', 
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_universality_test.png', dpi=150, bbox_inches='tight')
+print("Saved viz_universality_test.png")
