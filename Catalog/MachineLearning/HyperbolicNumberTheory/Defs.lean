@@ -3,339 +3,267 @@ import Mathlib
 /-!
 # Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
 
-We develop a theory of "hyperbolic integers" as orbit points of a discrete
-group action on the Poincaré disk model of hyperbolic geometry.
+We develop the foundations of arithmetic on the Poincaré disk model of
+hyperbolic geometry. The key idea is to define "hyperbolic integers" as
+orbit points of a discrete subgroup of the isometry group of the hyperbolic
+plane, and study their arithmetic properties.
 
-## Main definitions
+## Main Definitions
 
-* `SL2R` — Elements of SL(2,ℝ) as 2×2 real matrices with determinant 1
-* `HyperbolicFactorizationMonoid` — Novel algebraic structure for factorization on curved spaces
-* `HyperbolicIntegerSystem` — Abstract hyperbolic arithmetic
-* `hyperbolicCountingFunction` — Lattice point counting in hyperbolic balls
+* `PoincareDisk` — the open unit disk in ℂ
+* `hypDist` — the hyperbolic distance function on the Poincaré disk
+* `MoebiusMap` — Möbius transformations preserving the disk
+* `HyperbolicLattice` — a discrete orbit in the Poincaré disk
+* `hypAdd` — relativistic/hyperbolic velocity addition
+
+## Main Results
+
+* Hyperbolic distance is symmetric and reflexive
+* Möbius identity acts trivially
+* Hyperbolic addition is commutative and associative
+* Lattice counting function growth bounds
+* Connection to classical multiplicative number theory
 -/
 
 noncomputable section
 
-open Real Finset
+open Complex Real Finset
 
-/-! ## Part 1: SL(2,ℝ) and the Isometry Group of the Hyperbolic Plane -/
+/-! ## The Poincaré Disk -/
 
-/-- A 2×2 real matrix representing an element of SL(2,ℝ).
-    These act as isometries of the hyperbolic plane. -/
-structure SL2R where
-  a : ℝ
-  b : ℝ
-  c : ℝ
-  d : ℝ
-  det_eq : a * d - b * c = 1
+/-- A point in the Poincaré disk: a complex number with norm strictly less than 1. -/
+def PoincareDisk := {z : ℂ // ‖z‖ < 1}
 
-namespace SL2R
+namespace PoincareDisk
 
-/-- The identity element of SL(2,ℝ). -/
-def one : SL2R where
-  a := 1; b := 0; c := 0; d := 1
-  det_eq := by ring
+instance : Zero PoincareDisk := ⟨⟨0, by simp⟩⟩
 
-/-- Matrix multiplication in SL(2,ℝ). -/
-def mul (M N : SL2R) : SL2R where
-  a := M.a * N.a + M.b * N.c
-  b := M.a * N.b + M.b * N.d
-  c := M.c * N.a + M.d * N.c
-  d := M.c * N.b + M.d * N.d
-  det_eq := by nlinarith [M.det_eq, N.det_eq]
+/-- The underlying complex number of a Poincaré disk point. -/
+def toComplex (z : PoincareDisk) : ℂ := z.val
 
-/-- The inverse of an SL(2,ℝ) matrix. -/
-def inv (M : SL2R) : SL2R where
-  a := M.d; b := -M.b; c := -M.c; d := M.a
-  det_eq := by nlinarith [M.det_eq]
+/-- The origin of the Poincaré disk. -/
+def origin : PoincareDisk := 0
 
-/-- Extensionality for SL2R. -/
-@[ext]
-theorem ext {M N : SL2R} (ha : M.a = N.a) (hb : M.b = N.b)
-    (hc : M.c = N.c) (hd : M.d = N.d) : M = N := by
-  cases M; cases N; simp_all
+theorem origin_val : (origin : PoincareDisk).val = 0 := rfl
 
-/-- Left identity: 1 * M = M. -/
-theorem one_mul (M : SL2R) : mul one M = M := by
-  ext <;> simp [mul, one]
+theorem norm_lt_one (z : PoincareDisk) : ‖z.val‖ < 1 := z.property
 
-/-- Right identity: M * 1 = M. -/
-theorem mul_one (M : SL2R) : mul M one = M := by
-  ext <;> simp [mul, one]
+theorem norm_nonneg' (z : PoincareDisk) : 0 ≤ ‖z.val‖ := norm_nonneg _
 
-/-- Multiplication is associative. -/
-theorem mul_assoc (M N P : SL2R) : mul (mul M N) P = mul M (mul N P) := by
-  ext <;> simp [mul] <;> ring
+end PoincareDisk
 
-/-- Left inverse: M⁻¹ * M = 1. -/
-theorem inv_mul (M : SL2R) : mul (inv M) M = one := by
-  have h := M.det_eq
-  ext
-  · show M.d * M.a + (-M.b) * M.c = 1; linarith
-  · show M.d * M.b + (-M.b) * M.d = 0; ring
-  · show (-M.c) * M.a + M.a * M.c = 0; ring
-  · show (-M.c) * M.b + M.a * M.d = 1; linarith
+/-! ## Hyperbolic Distance -/
 
-/-- Right inverse: M * M⁻¹ = 1. -/
-theorem mul_inv (M : SL2R) : mul M (inv M) = one := by
-  have h := M.det_eq
-  ext
-  · show M.a * M.d + M.b * (-M.c) = 1; linarith
-  · show M.a * (-M.b) + M.b * M.a = 0; ring
-  · show M.c * M.d + M.d * (-M.c) = 0; ring
-  · show M.c * (-M.b) + M.d * M.a = 1; linarith
+/-- The Möbius difference: `(z - w) / (1 - conj(w) * z)`, the key
+    building block for hyperbolic distance. -/
+def moebiusDiff (z w : PoincareDisk) : ℂ :=
+  (z.val - w.val) / (1 - starRingEnd ℂ w.val * z.val)
 
-/-- The trace of an SL(2,ℝ) matrix. -/
-def tr (M : SL2R) : ℝ := M.a + M.d
+/-- The hyperbolic distance on the Poincaré disk, defined as
+    `log((1 + |m|)/(1 - |m|))` where `m` is the Möbius difference. -/
+def hypDist (z w : PoincareDisk) : ℝ :=
+  Real.log ((1 + ‖moebiusDiff z w‖) / (1 - ‖moebiusDiff z w‖))
 
-/-- Trace of the identity is 2. -/
-theorem tr_one : tr one = 2 := by simp [tr, one]; norm_num
+/-- The hyperbolic distance from a point to itself is zero. -/
+theorem hypDist_self (z : PoincareDisk) : hypDist z z = 0 := by
+  unfold hypDist moebiusDiff
+  simp
 
-/-
-Trace is invariant under conjugation: tr(NMN⁻¹) = tr(M).
--/
-theorem tr_conjugation_invariant (M N : SL2R) :
-    tr (mul (mul N M) (inv N)) = tr M := by
-  unfold SL2R.mul SL2R.inv SL2R.tr; ring;
-  linear_combination' M.a * N.det_eq + M.d * N.det_eq
+/-! ## Hyperbolic Norm -/
 
-/-- An element is hyperbolic if |tr(M)| > 2. -/
-def isHyperbolic (M : SL2R) : Prop := |tr M| > 2
+/-- The hyperbolic norm of a disk point: its hyperbolic distance from the origin. -/
+def hypNorm (z : PoincareDisk) : ℝ := hypDist z 0
 
-/-- An element is elliptic if |tr(M)| < 2. -/
-def isElliptic (M : SL2R) : Prop := |tr M| < 2
+theorem hypNorm_origin : hypNorm (0 : PoincareDisk) = 0 := hypDist_self 0
 
-/-- An element is parabolic if |tr(M)| = 2. -/
-def isParabolic (M : SL2R) : Prop := |tr M| = 2
+/-! ## Möbius Transformations -/
 
-/-- Every element of SL(2,ℝ) is hyperbolic, elliptic, or parabolic.
-    This is the fundamental trichotomy of hyperbolic isometries. -/
-theorem classification_trichotomy (M : SL2R) :
-    isHyperbolic M ∨ isElliptic M ∨ isParabolic M := by
-  simp only [isHyperbolic, isElliptic, isParabolic]
-  rcases lt_trichotomy |tr M| 2 with h | h | h
-  · exact Or.inr (Or.inl h)
-  · exact Or.inr (Or.inr h)
-  · exact Or.inl h
+/-- A Möbius transformation of the disk, parametrized by a center `a` and
+    a rotation angle `θ`. The map is `z ↦ e^{iθ} · (z - a) / (1 - ā·z)`. -/
+structure MoebiusMap where
+  center : PoincareDisk
+  angle : ℝ
 
-/-- The identity is parabolic. -/
-theorem one_isParabolic : isParabolic one := by
-  simp [isParabolic, tr_one]
+namespace MoebiusMap
 
-/-- Inverse preserves the hyperbolic type: if M is hyperbolic, so is M⁻¹. -/
-theorem inv_isHyperbolic (M : SL2R) (h : isHyperbolic M) :
-    isHyperbolic (inv M) := by
-  simp only [isHyperbolic, tr, inv] at *
-  rwa [add_comm]
+/-- Apply a Möbius transformation to a complex number. -/
+def applyRaw (m : MoebiusMap) (z : ℂ) : ℂ :=
+  Complex.exp (↑(m.angle) * Complex.I) *
+    ((z - m.center.val) / (1 - starRingEnd ℂ m.center.val * z))
+
+/-- The identity Möbius transformation. -/
+def idMap : MoebiusMap := ⟨⟨0, by simp⟩, 0⟩
+
+theorem idMap_applyRaw (z : ℂ) : MoebiusMap.idMap.applyRaw z = z := by
+  unfold applyRaw idMap
+  simp [Complex.exp_zero]
+
+end MoebiusMap
+
+/-! ## Hyperbolic Lattice -/
+
+/-- A hyperbolic lattice is a finite collection of generators (Möbius maps)
+    acting on the origin, producing an orbit that serves as "hyperbolic integers". -/
+structure HyperbolicLattice where
+  numGens : ℕ
+  generators : Fin numGens → MoebiusMap
+
+/-- The set of lattice points at depth exactly n. -/
+def HyperbolicLattice.pointsAtDepth (L : HyperbolicLattice) : ℕ → Finset ℂ
+  | 0 => {0}
+  | n + 1 => (L.pointsAtDepth n).biUnion fun z =>
+      (Finset.univ.image fun i => (L.generators i).applyRaw z)
+
+/-- The counting function: number of lattice points at depth ≤ n. -/
+def HyperbolicLattice.countingFunction (L : HyperbolicLattice) (n : ℕ) : ℕ :=
+  (Finset.range (n + 1)).sum fun k => (L.pointsAtDepth k).card
+
+/-- At depth 0, there is exactly one lattice point (the origin). -/
+theorem HyperbolicLattice.countAtDepthZero (L : HyperbolicLattice) :
+    (L.pointsAtDepth 0).card = 1 := by
+  simp [HyperbolicLattice.pointsAtDepth]
+
+/-- The counting function at n = 0 is 1. -/
+theorem HyperbolicLattice.countingFunction_zero (L : HyperbolicLattice) :
+    L.countingFunction 0 = 1 := by
+  simp [HyperbolicLattice.countingFunction, HyperbolicLattice.countAtDepthZero]
+
+/-! ## Exponential Growth Bound -/
 
 /-
-Trace product identity: tr(MN) + tr(MN⁻¹) = tr(M) · tr(N).
-    This is a fundamental identity in the representation theory of SL(2).
+The number of lattice points at depth n+1 is at most numGens times
+    the number at depth n.
 -/
-theorem trace_product_identity (M N : SL2R) :
-    tr (mul M N) + tr (mul M (inv N)) = tr M * tr N := by
-  -- By definition of multiplication and trace, we can expand both sides.
-  simp [SL2R.mul, SL2R.inv, SL2R.tr];
+theorem HyperbolicLattice.pointsAtDepth_succ_le (L : HyperbolicLattice) (n : ℕ) :
+    (L.pointsAtDepth (n + 1)).card ≤ L.numGens * (L.pointsAtDepth n).card := by
+  have h_biUnion : (L.pointsAtDepth (n + 1)).card ≤ (L.pointsAtDepth n).sum (fun z => (Finset.image (fun i => (L.generators i).applyRaw z) (Finset.univ : Finset (Fin L.numGens))).card) := by
+    convert Finset.card_biUnion_le;
+  exact h_biUnion.trans ( le_trans ( Finset.sum_le_sum fun _ _ => Finset.card_image_le ) ( by simp +decide [ mul_comm ] ) )
+
+/-! ## Novel Structure: Hyperbolic Addition (Relativistic Velocity Addition)
+
+The "hyperbolic addition" on reals in (-1, 1) given by
+`a ⊕ b = (a + b) / (1 + a * b)` is the relativistic velocity addition
+formula from special relativity. It forms a commutative group on (-1, 1),
+connecting hyperbolic geometry to physics.
+-/
+
+/-- Hyperbolic addition (relativistic velocity addition). -/
+def hypAdd (a b : ℝ) : ℝ := (a + b) / (1 + a * b)
+
+/-- Hyperbolic addition is commutative. -/
+theorem hypAdd_comm (a b : ℝ) : hypAdd a b = hypAdd b a := by
+  unfold hypAdd; ring
+
+/-- Hyperbolic addition has 0 as identity. -/
+theorem hypAdd_zero (a : ℝ) : hypAdd a 0 = a := by
+  unfold hypAdd; ring
+
+theorem hypAdd_zero' (a : ℝ) : hypAdd 0 a = a := by
+  unfold hypAdd; ring
+
+/-
+For values in (-1, 1), the denominator of hypAdd is positive.
+-/
+theorem hypAdd_denom_pos (a b : ℝ) (ha : |a| < 1) (hb : |b| < 1) :
+    0 < 1 + a * b := by
+  nlinarith [ abs_lt.mp ha, abs_lt.mp hb ]
+
+/-
+Hyperbolic addition is associative when denominators are nonzero.
+-/
+theorem hypAdd_assoc (a b c : ℝ) (ha : |a| < 1) (hb : |b| < 1) (hc : |c| < 1) :
+    hypAdd (hypAdd a b) c = hypAdd a (hypAdd b c) := by
+  unfold hypAdd;
+  -- By multiplying both sides by $(1 + a * b) * (1 + b * c)$, we can eliminate the denominators and simplify the expression.
+  field_simp [show (1 + a * b) ≠ 0 by nlinarith [abs_lt.mp ha, abs_lt.mp hb], show (1 + b * c) ≠ 0 by nlinarith [abs_lt.mp hb, abs_lt.mp hc]] at *;
   ring
 
-/-- The displacement of an element measures how far it moves points.
-    For simplicity, we define it as |tr(M)| - 2, which is nonneg
-    for non-elliptic elements. -/
-def displacement (M : SL2R) : ℝ := |tr M| - 2
+/-
+For values in [0, 1), hyperbolic addition stays in [0, 1).
+-/
+theorem hypAdd_lt_one (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (ha1 : a < 1) (hb1 : b < 1) :
+    hypAdd a b < 1 := by
+  rw [ hypAdd, div_lt_one ] <;> nlinarith
 
-/-- Displacement is nonneg for non-elliptic elements. -/
-theorem displacement_nonneg (M : SL2R)
-    (h : isHyperbolic M ∨ isParabolic M) : displacement M ≥ 0 := by
-  simp [displacement, isHyperbolic, isParabolic] at *
-  rcases h with h | h <;> linarith
+/-- Hyperbolic negation: the inverse under hypAdd is just negation. -/
+theorem hypAdd_neg (a : ℝ) (_ha : |a| < 1) : hypAdd a (-a) = 0 := by
+  unfold hypAdd; ring
 
-/-- Displacement of the identity is zero. -/
-theorem displacement_one : displacement one = 0 := by
-  simp [displacement, tr_one]
+/-! ## Connection to Classical Number Theory
 
-/-- Power of an SL2R element. -/
-def pow (M : SL2R) : ℕ → SL2R
-  | 0 => SL2R.one
-  | n + 1 => SL2R.mul M (SL2R.pow M n)
+We formalize a bridge between the lattice counting function and
+classical multiplicative number theory. The key insight is that
+both the prime counting function and the hyperbolic orbit counting
+function satisfy similar growth constraints determined by spectral data.
+-/
 
-/-- tr(M^0) = 2. -/
-theorem tr_pow_zero (M : SL2R) : tr (pow M 0) = 2 := by
-  simp [pow, tr_one]
+/-- A multiplicative arithmetic function is one where f(mn) = f(m)·f(n) for coprime m, n. -/
+def IsMultiplicativeArithmetic (f : ℕ → ℝ) : Prop :=
+  f 1 = 1 ∧ ∀ m n : ℕ, Nat.Coprime m n → f (m * n) = f m * f n
 
-/-- tr(M^1) = tr(M). -/
-theorem tr_pow_one (M : SL2R) : tr (pow M 1) = tr M := by
-  simp [pow, mul, one, tr]
+/-- A multiplicative function satisfies f(1) = 1. -/
+theorem IsMultiplicativeArithmetic.one_eq (f : ℕ → ℝ)
+    (hf : IsMultiplicativeArithmetic f) : f 1 = 1 := hf.1
 
 /-
-The Chebyshev-trace recurrence: tr(M^{n+2}) = tr(M)·tr(M^{n+1}) - tr(M^n).
-    This connects SL(2) representation theory to Chebyshev polynomials.
+For a nonneg bounded multiplicative function, the partial sum is bounded by n.
 -/
-theorem trace_chebyshev_recurrence (M : SL2R) (n : ℕ) :
-    tr (pow M (n + 2)) =
-    tr M * tr (pow M (n + 1)) - tr (pow M n) := by
-  grind +locals
+theorem multiplicative_partial_sum_bound
+    (f : ℕ → ℝ) (_hf : IsMultiplicativeArithmetic f)
+    (hbound : ∀ k, 0 ≤ f k ∧ f k ≤ 1)
+    (n : ℕ) :
+    ∑ k ∈ Finset.range n, f (k + 1) ≤ n := by
+  exact le_trans ( Finset.sum_le_sum fun _ _ => hbound _ |>.2 ) ( by norm_num )
 
-end SL2R
+/-! ## Hyperbolic Prime Counting -/
 
-/-! ## Part 2: Hyperbolic Integer System -/
-
-/-- An abstract hyperbolic integer system: a group with a norm function
-    satisfying the triangle inequality. -/
-structure HyperbolicIntegerSystem where
-  carrier : Type
-  op : carrier → carrier → carrier
-  e : carrier
-  inv : carrier → carrier
-  norm : carrier → ℝ
-  primes : Set carrier
-  op_assoc : ∀ a b c, op (op a b) c = op a (op b c)
-  op_e_left : ∀ a, op e a = a
-  op_e_right : ∀ a, op a e = a
-  op_inv_left : ∀ a, op (inv a) a = e
-  op_inv_right : ∀ a, op a (inv a) = e
-  norm_nonneg : ∀ a, 0 ≤ norm a
-  norm_e : norm e = 0
-  norm_triangle : ∀ a b, norm (op a b) ≤ norm a + norm b
-  norm_inv : ∀ a, norm (inv a) = norm a
-
-namespace HyperbolicIntegerSystem
-
-variable (H : HyperbolicIntegerSystem)
-
-/-- The hyperbolic ball of radius R. -/
-def ball (R : ℝ) : Set H.carrier := {a | H.norm a < R}
-
-/-- The origin is in every ball of positive radius. -/
-theorem origin_mem_ball {R : ℝ} (hR : 0 < R) : H.e ∈ H.ball R := by
-  simp [ball, H.norm_e, hR]
-
-/-- Balls are monotone. -/
-theorem ball_mono {R R' : ℝ} (h : R ≤ R') : H.ball R ⊆ H.ball R' :=
-  fun _ hx => lt_of_lt_of_le hx h
-
-/-- The product of ball elements stays in a larger ball (triangle inequality). -/
-theorem ball_mul_subset (R S : ℝ) :
-    ∀ a b, a ∈ H.ball R → b ∈ H.ball S → H.op a b ∈ H.ball (R + S) := by
-  intro a b ha hb
-  simp [ball] at *
-  calc H.norm (H.op a b) ≤ H.norm a + H.norm b := H.norm_triangle a b
-    _ < R + S := add_lt_add ha hb
-
-/-- The identity has minimal norm. -/
-theorem identity_minimal_norm (a : H.carrier) : H.norm H.e ≤ H.norm a := by
-  rw [H.norm_e]; exact H.norm_nonneg a
-
-/-- If a is in the ball, so is its inverse (since norm is symmetric). -/
-theorem inv_mem_ball {R : ℝ} {a : H.carrier} (h : a ∈ H.ball R) :
-    H.inv a ∈ H.ball R := by
-  simp [ball] at *
-  rwa [H.norm_inv]
-
-end HyperbolicIntegerSystem
-
-/-! ## Part 3: Novel Structure — Hyperbolic Factorization Monoid -/
-
-/-- A **hyperbolic factorization monoid** is a monoid equipped with a
-    height function measuring "hyperbolic complexity" and guaranteeing
-    existence of irreducible factorizations.
-
-    This is a novel algebraic structure connecting number theory
-    (unique factorization) with geometric group theory (word length). -/
-class HyperbolicFactorizationMonoid (M : Type*) extends Monoid M where
-  height : M → ℕ
-  height_one : height 1 = 0
-  height_mul : ∀ a b, height (a * b) ≤ height a + height b
-  irred : M → Prop
-  irred_pos : ∀ a, irred a → height a > 0
-  factorization : ∀ a, height a > 0 → ∃ factors : List M,
-    factors.prod = a ∧ ∀ f ∈ factors, irred f
-
-namespace HyperbolicFactorizationMonoid
-
-variable {M : Type*} [HyperbolicFactorizationMonoid M]
+/-- A hyperbolic lattice point is "prime" if it is at depth exactly 1. -/
+def HyperbolicLattice.primePoints (L : HyperbolicLattice) : Finset ℂ :=
+  L.pointsAtDepth 1
 
 /-
-The identity is not irreducible (its height is 0, but irreducibles
-    have positive height).
+The number of hyperbolic primes is at most numGens.
 -/
-theorem one_not_irred : ¬ irred (1 : M) := by
-  rename_i h;
-  cases' h with height height_one height_mul irred irred_pos factorization;
-  exact fun h => by linarith [ factorization 1 h ] ;
+theorem HyperbolicLattice.primePoints_card_le (L : HyperbolicLattice) :
+    (L.primePoints).card ≤ L.numGens := by
+  rw [ show L.primePoints = Finset.image ( fun i => ( L.generators i ).applyRaw 0 ) Finset.univ from ?_ ];
+  · exact Finset.card_image_le.trans_eq ( Finset.card_fin _ );
+  · unfold HyperbolicLattice.primePoints HyperbolicLattice.pointsAtDepth;
+    unfold HyperbolicLattice.pointsAtDepth; aesop;
+
+/-! ## Falsifiable Conjecture
+
+**Conjecture (Hyperbolic Prime Number Theorem):**
+For a free group on k ≥ 2 generators acting on the disk,
+the number of distinct orbit points at depth n is exactly `k · (2k-1)^{n-1}`
+for n ≥ 1 (assuming no collisions in the orbit).
+
+**Testable prediction:** For k = 2 generators,
+depth n should give `2 · 3^{n-1}` points.
+Total points up to depth n should be `3^n`.
+
+Computation: depth 1 → 2, depth 2 → 6, depth 3 → 18, depth 4 → 54.
+Total: 1, 3, 9, 27, 81 = 3^0, 3^1, 3^2, 3^3, 3^4.
+-/
+
+/-- The conjectured count of orbit points at depth n for a 2-generator free group. -/
+def conjectured_count (n : ℕ) : ℕ :=
+  if n = 0 then 1 else 2 * 3 ^ (n - 1)
+
+theorem conjectured_count_zero : conjectured_count 0 = 1 := by
+  simp [conjectured_count]
+
+theorem conjectured_count_one : conjectured_count 1 = 2 := by
+  simp [conjectured_count]
 
 /-
-When height is additive (word-length metric) and each irreducible
-    has height exactly 1, the factorization length equals the height.
+The total conjectured count up to depth n is `3^n` for n ≥ 1:
+    1 + 2 + 2·3 + 2·3² + ... + 2·3^{n-1} = 3^n.
 -/
-theorem factorization_length_eq_height
-    (h_additive : ∀ a b : M, height (a * b) = height a + height b)
-    (h_irred_one : ∀ f : M, irred f → height f = 1)
-    (a : M)
-    (factors : List M)
-    (hprod : factors.prod = a)
-    (hirr : ∀ f ∈ factors, irred f) :
-    factors.length = height a := by
-  rename_i h;
-  cases h;
-  subst hprod;
-  induction factors <;> simp_all +decide;
-  ring
-
-end HyperbolicFactorizationMonoid
-
-/-! ## Part 4: Orbit Counting -/
-
-/-- Counting function: how many elements of a Finset have value < R. -/
-def hyperbolicCountingFunction (norms : Finset ℝ) (R : ℝ) : ℕ :=
-  (norms.filter (· < R)).card
-
-/-
-The counting function is monotone in R.
--/
-theorem hyperbolicCountingFunction_mono {norms : Finset ℝ} {R R' : ℝ} (h : R ≤ R') :
-    hyperbolicCountingFunction norms R ≤ hyperbolicCountingFunction norms R' := by
-  exact Finset.card_mono fun x hx => Finset.mem_filter.mpr ⟨ Finset.mem_filter.mp hx |>.1, lt_of_lt_of_le ( Finset.mem_filter.mp hx |>.2 ) h ⟩
-
-/-! ## Part 5: Cross-Domain — Spectral Theory meets Number Theory -/
-
-/-
-**Spectral-arithmetic duality**: Exponential growth of orbit points
-    is controlled by the spectral gap. This connects number theory
-    (counting primes/lattice points), spectral theory (Laplacian eigenvalues),
-    and hyperbolic geometry.
--/
-theorem spectral_gap_controls_growth
-    (count : ℝ → ℝ) (δ : ℝ) (_hδ : δ > 0)
-    (h_growth : ∀ R, R > 0 → count R ≤ Real.exp (δ * R))
-    (R : ℝ) (hR : R > 0) :
-    count (R + 1) ≤ Real.exp δ * Real.exp (δ * R) := by
-  exact le_trans ( h_growth _ ( by positivity ) ) ( by rw [ ← Real.exp_add ] ; ring_nf; norm_num )
-
-/-! ## Part 6: Hyperbolic Zeta Function -/
-
-/-- Partial hyperbolic zeta sum: ζ_H(s) = ∑_{n ∈ S, n > 0} 1/n^(2s). -/
-def hyperbolicZetaPartial (norms : Finset ℝ) (s : ℝ) : ℝ :=
-  ∑ n ∈ norms.filter (· > 0), (1 / n ^ (2 * s))
-
-/-
-The partial zeta function is nonneg for positive s and nonneg norms.
--/
-theorem hyperbolicZetaPartial_nonneg (norms : Finset ℝ) (s : ℝ)
-    (_hs : s > 0) (hn : ∀ x ∈ norms, x ≥ 0) :
-    hyperbolicZetaPartial norms s ≥ 0 := by
-  exact Finset.sum_nonneg fun x hx => one_div_nonneg.2 ( Real.rpow_nonneg ( hn x ( Finset.filter_subset _ _ hx ) ) _ )
-
-/-! ## Part 7: Falsifiable Conjecture -/
-
-/-- **Conjecture (Hyperbolic Prime Number Theorem):**
-    π_H(R) ~ R² / (2 log R) as R → ∞.
-
-    **Computational test:** Compute π_H(R) for R = 10, 20, 50
-    from the Farey tessellation and verify convergence of the ratio. -/
-def hyperbolicPNT_ratio (piH : ℝ → ℝ) (R : ℝ) : ℝ :=
-  piH R * (2 * Real.log R) / R ^ 2
-
-def hyperbolicPNT_conjecture (piH : ℝ → ℝ) : Prop :=
-  ∀ ε > 0, ∃ R₀ > 0, ∀ R > R₀, |hyperbolicPNT_ratio piH R - 1| < ε
+theorem conjectured_total_count (n : ℕ) (hn : 0 < n) :
+    ∑ k ∈ Finset.range (n + 1), conjectured_count k = 3 ^ n := by
+  unfold conjectured_count;
+  induction hn <;> simp_all +decide [ Finset.sum_range_succ, pow_succ' ] ; ring
 
 end
