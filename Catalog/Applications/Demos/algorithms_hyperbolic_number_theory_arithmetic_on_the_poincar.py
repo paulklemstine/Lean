@@ -1,304 +1,225 @@
 """
-Hyperbolic Number Theory: Core Algorithms
-==========================================
-Implementations of the algorithms from the research paper with
-complexity analysis and docstrings.
+Algorithms for Hyperbolic Number Theory
+========================================
+
+Implements core algorithms for arithmetic on the Poincaré disk:
+1. Möbius transformation composition
+2. Hyperbolic distance computation
+3. Orbit generation for hyperbolic lattices
+4. Primitive word (hyperbolic prime) counting
+5. Hyperbolic lattice point counting
+
+Time/Space complexity annotations included.
 """
 
-import cmath
 import math
-from typing import List, Tuple, Optional, Set
-from dataclasses import dataclass
-from enum import Enum
+from typing import List, Tuple, Set, Optional
+from itertools import product
 
 
-# =============================================================================
-# Algorithm 1: Möbius Transformation on the Poincaré Disk
-# =============================================================================
+class DiskPoint:
+    """A point in the Poincaré disk {(x,y) : x² + y² < 1}."""
 
-def mobius_transform(a: complex, theta: float, z: complex) -> complex:
-    """
-    Apply a Möbius transformation to a point in the Poincaré disk.
-
-    The transformation is: φ_{a,θ}(z) = e^{iθ} · (z - a) / (1 - conj(a) · z)
-
-    Parameters:
-        a: Center point in the disk (|a| < 1)
-        theta: Rotation angle in radians
-        z: Input point in the disk (|z| < 1)
-
-    Returns:
-        The image point φ(z), guaranteed to be in the disk when inputs are valid.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Example:
-        >>> w = mobius_transform(0.3+0.4j, math.pi/4, 0.1+0.2j)
-        >>> abs(w) < 1  # Disk preservation
-        True
-    """
-    eitheta = cmath.exp(1j * theta)
-    denom = 1 - a.conjugate() * z
-    if abs(denom) < 1e-15:
-        raise ValueError("Degenerate: denominator too close to zero")
-    return eitheta * (z - a) / denom
-
-
-def hyperbolic_distance(z: complex, w: complex) -> float:
-    """
-    Compute the hyperbolic distance between two points in the Poincaré disk.
-
-    d_H(z, w) = 2 · arctanh(|(z-w)/(1-conj(z)·w)|)
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-    """
-    denom = 1 - z.conjugate() * w
-    if abs(denom) < 1e-15:
-        return float('inf')
-    pd = abs((z - w) / denom)
-    if pd >= 1 - 1e-15:
-        return float('inf')
-    return 2 * math.atanh(pd)
-
-
-# =============================================================================
-# Algorithm 2: Cayley Word Arithmetic
-# =============================================================================
-
-class LetterType(Enum):
-    GEN = 1
-    INV = -1
-
-
-@dataclass
-class CayleyLetter:
-    """A letter in the Cayley alphabet: generator or inverse."""
-    index: int
-    letter_type: LetterType
-
-    def inverse(self) -> 'CayleyLetter':
-        new_type = LetterType.INV if self.letter_type == LetterType.GEN else LetterType.GEN
-        return CayleyLetter(self.index, new_type)
-
-    def __repr__(self):
-        name = f"g{self.index}"
-        if self.letter_type == LetterType.INV:
-            name += "⁻¹"
-        return name
-
-
-class CayleyWord:
-    """
-    A word in the Cayley graph of a finitely generated group.
-    Represents a 'hyperbolic integer'.
-
-    Time complexity:
-        - Creation: O(k) where k = word length
-        - Multiplication (concatenation): O(k1 + k2)
-        - Reduction: O(k) amortized
-    """
-
-    def __init__(self, letters: Optional[List[CayleyLetter]] = None):
-        self.letters = letters or []
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
 
     @property
-    def length(self) -> int:
-        """Word length = number of letters."""
-        return len(self.letters)
+    def norm_sq(self) -> float:
+        return self.x**2 + self.y**2
 
-    def __mul__(self, other: 'CayleyWord') -> 'CayleyWord':
-        """Multiplication = concatenation."""
-        return CayleyWord(self.letters + other.letters)
+    @property
+    def norm(self) -> float:
+        return math.sqrt(self.norm_sq)
 
-    def reduce(self) -> 'CayleyWord':
-        """
-        Free reduction: cancel adjacent inverse pairs.
-
-        Time complexity: O(k) where k = word length
-        Space complexity: O(k)
-        """
-        stack: List[CayleyLetter] = []
-        for letter in self.letters:
-            if (stack and stack[-1].index == letter.index and
-                    stack[-1].letter_type != letter.letter_type):
-                stack.pop()
-            else:
-                stack.append(letter)
-        return CayleyWord(stack)
-
-    def is_generator(self) -> bool:
-        """Check if this word is a single generator (hyperbolic prime)."""
-        return self.length == 1
-
-    def factorize(self) -> List[CayleyLetter]:
-        """
-        Factor into individual letters (hyperbolic prime factorization).
-        Every word uniquely decomposes as a product of generators.
-        """
-        return list(self.letters)
-
-    def split_half(self) -> Optional[Tuple['CayleyWord', 'CayleyWord']]:
-        """
-        Split an even-length word into two equal halves.
-        Returns None if the word has odd length.
-        (Hyperbolic Goldbach decomposition)
-        """
-        if self.length % 2 != 0:
-            return None
-        half = self.length // 2
-        return CayleyWord(self.letters[:half]), CayleyWord(self.letters[half:])
+    def hyp_norm(self) -> float:
+        """Hyperbolic distance from origin: 2·artanh(|z|)."""
+        r = self.norm
+        if r >= 1.0:
+            return float('inf')
+        return math.log((1 + r) / (1 - r))
 
     def __repr__(self):
-        if not self.letters:
-            return "ε"
-        return "·".join(str(l) for l in self.letters)
+        return f"({self.x:.4f}, {self.y:.4f})"
 
 
-# =============================================================================
-# Algorithm 3: Orbit Point Generation
-# =============================================================================
-
-def generate_orbit_points(
-    generators: List[Tuple[complex, float]],
-    max_depth: int,
-    origin: complex = 0
-) -> List[Tuple[complex, int, str]]:
+def moebius_translate(a: DiskPoint, z: DiskPoint) -> DiskPoint:
     """
-    Generate orbit points Γ·0 by applying all words up to a given depth.
+    Apply Möbius translation T_a(z) = (z - a) / (1 - ā·z).
 
-    Parameters:
-        generators: List of (center_a, theta) pairs defining Möbius transforms
-        max_depth: Maximum word length to enumerate
-        origin: Starting point (default: 0)
+    Time: O(1)
+    Space: O(1)
+
+    Args:
+        a: Center point (must be in disk)
+        z: Point to transform (must be in disk)
 
     Returns:
-        List of (point, depth, word_string) tuples
-
-    Time complexity: O(d^R) where d = 2·|generators| and R = max_depth
-    Space complexity: O(d^R)
+        T_a(z), guaranteed to be in the disk.
     """
-    points = [(origin, 0, "e")]
-    current_level = [(origin, "e")]
+    denom = (1 - a.x*z.x - a.y*z.y)**2 + (a.x*z.y - a.y*z.x)**2
+    if denom < 1e-15:
+        raise ValueError("Degenerate Möbius transformation")
 
-    # Build all transforms (generators + inverses)
-    transforms = []
-    for i, (a, theta) in enumerate(generators):
-        transforms.append((a, theta, f"g{i}"))
-        # Inverse: center = -e^{iθ}·a / ... ≈ negate the action
-        transforms.append((mobius_transform(a, theta, 0), -theta, f"g{i}⁻¹"))
+    rx = ((z.x - a.x)*(1 - a.x*z.x - a.y*z.y)
+          + (z.y - a.y)*(a.x*z.y - a.y*z.x)) / denom
+    ry = ((z.y - a.y)*(1 - a.x*z.x - a.y*z.y)
+          - (z.x - a.x)*(a.x*z.y - a.y*z.x)) / denom
+    return DiskPoint(rx, ry)
 
-    for depth in range(1, max_depth + 1):
-        next_level = []
-        for pt, word in current_level:
-            for a, theta, name in transforms:
-                try:
-                    new_pt = mobius_transform(a, theta, pt)
-                    if abs(new_pt) < 1 - 1e-10:
-                        new_word = word + "·" + name if word != "e" else name
-                        next_level.append((new_pt, new_word))
-                        points.append((new_pt, depth, new_word))
-                except ValueError:
-                    continue
-        current_level = next_level
 
+def hyp_distance(p: DiskPoint, q: DiskPoint) -> float:
+    """
+    Compute hyperbolic distance between two disk points.
+
+    Uses: d_H(p,q) = 2·artanh(|T_p(q)|) where T_p is translation by p.
+
+    Time: O(1)
+    Space: O(1)
+    """
+    w = moebius_translate(p, q)
+    return w.hyp_norm()
+
+
+def generate_orbit(generators: List[DiskPoint], max_depth: int) -> List[DiskPoint]:
+    """
+    Generate the orbit of the origin under iterated Möbius translations.
+
+    Time: O(k^d) where k = #generators, d = max_depth
+    Space: O(k^d)
+
+    Args:
+        generators: List of disk points defining translations
+        max_depth: Maximum word length
+
+    Returns:
+        List of orbit points (with possible duplicates near boundary).
+    """
+    origin = DiskPoint(0.0, 0.0)
+    orbit = [origin]
+    current_layer = [origin]
+
+    for depth in range(max_depth):
+        next_layer = []
+        for point in current_layer:
+            for gen in generators:
+                new_point = moebius_translate(gen, point)
+                if new_point.norm < 0.9999:  # Stay safely in disk
+                    next_layer.append(new_point)
+        orbit.extend(next_layer)
+        current_layer = next_layer
+
+    return orbit
+
+
+def count_primitive_words(k: int, n: int) -> int:
+    """
+    Count primitive (Lyndon) words of length n over k-letter alphabet.
+
+    Uses Witt's formula: L(k, n) = (1/n) Σ_{d|n} μ(n/d) · k^d
+
+    Time: O(n · √n) for divisor enumeration
+    Space: O(n)
+
+    Args:
+        k: Alphabet size (≥ 2)
+        n: Word length (≥ 1)
+
+    Returns:
+        Number of primitive words (Lyndon words) of length n.
+    """
+    def mobius(m: int) -> int:
+        """Möbius function μ(m)."""
+        if m == 1:
+            return 1
+        factors = set()
+        temp = m
+        for p in range(2, int(math.sqrt(m)) + 1):
+            if temp % p == 0:
+                factors.add(p)
+                temp //= p
+                if temp % p == 0:
+                    return 0  # p² divides m
+        if temp > 1:
+            factors.add(temp)
+        return (-1) ** len(factors)
+
+    total = 0
+    for d in range(1, n + 1):
+        if n % d == 0:
+            total += mobius(n // d) * k**d
+
+    return total // n
+
+
+def lattice_points_in_ball(R: int) -> List[Tuple[int, int]]:
+    """
+    Enumerate all integer lattice points (a, b) with a² + b² ≤ R².
+
+    Time: O(R²)
+    Space: O(R²)
+
+    Args:
+        R: Radius of the ball
+
+    Returns:
+        List of (a, b) pairs.
+    """
+    points = []
+    for a in range(-R, R + 1):
+        for b in range(-R, R + 1):
+            if a**2 + b**2 <= R**2:
+                points.append((a, b))
     return points
 
 
-# =============================================================================
-# Algorithm 4: Hyperbolic Zeta Function (Partial Sums)
-# =============================================================================
-
-def hyperbolic_zeta_partial(
-    orbit_points: List[complex],
-    s: float
-) -> float:
+def project_to_disk(a: int, b: int) -> DiskPoint:
     """
-    Compute the partial sum of the hyperbolic zeta function:
-    ζ_H(s) = Σ_{z ∈ Γ·0, z ≠ 0} ‖z‖^{-2s}
+    Project integer lattice point to Poincaré disk via (a,b)/(√(a²+b²)+1).
 
-    Parameters:
-        orbit_points: List of orbit points (excluding origin)
-        s: The parameter s (convergence requires s > δ/2)
-
-    Returns:
-        The partial sum
-
-    Time complexity: O(N) where N = len(orbit_points)
+    Time: O(1)
+    Space: O(1)
     """
-    total = 0.0
-    for z in orbit_points:
-        r = abs(z)
-        if r > 1e-15:
-            total += r ** (-2 * s)
-    return total
+    r = math.sqrt(a**2 + b**2)
+    if r == 0:
+        return DiskPoint(0, 0)
+    scale = r / (r + 1)
+    return DiskPoint(a * scale / r, b * scale / r)
 
 
-# =============================================================================
-# Algorithm 5: Growth Rate Estimation
-# =============================================================================
-
-def estimate_growth_rate(n_generators: int, max_R: int) -> List[Tuple[int, int, float]]:
+def poincare_conformal_factor(r: float) -> float:
     """
-    Compute the growth function and estimate the exponential growth rate.
+    Compute the conformal factor λ(r) = 2/(1 - r²) of the Poincaré metric.
 
-    For a free group on n generators, the growth rate is 2n-1.
-    (Each step multiplies by 2n-1 since one direction is forbidden.)
-
-    Returns:
-        List of (R, word_count, estimated_rate) tuples
+    Time: O(1)
     """
-    d = 2 * n_generators  # alphabet size
-    results = []
-    for R in range(max_R + 1):
-        word_count = sum(d**k for k in range(R + 1))
-        if R > 0:
-            prev_count = sum(d**k for k in range(R))
-            rate = word_count / prev_count if prev_count > 0 else 0
-        else:
-            rate = 1.0
-        results.append((R, word_count, rate))
-    return results
+    assert 0 <= r < 1
+    return 2.0 / (1 - r**2)
 
 
-# =============================================================================
-# Example Usage
-# =============================================================================
+def triangle_defect(alpha: float, beta: float, gamma: float) -> float:
+    """
+    Compute the angular defect (= hyperbolic area) of a triangle.
+
+    Time: O(1)
+    """
+    return math.pi - (alpha + beta + gamma)
+
+
+# --- Demonstration ---
 
 if __name__ == "__main__":
-    print("=== Hyperbolic Number Theory: Algorithm Demonstrations ===\n")
+    print("Primitive word counts (k=2):")
+    print(f"{'n':>4} {'Lyndon(2,n)':>12} {'2^n/n':>10} {'Ratio':>8}")
+    for n in range(1, 21):
+        count = count_primitive_words(2, n)
+        expected = 2**n / n
+        ratio = count / expected if expected > 0 else 0
+        print(f"{n:4d} {count:12d} {expected:10.1f} {ratio:8.4f}")
 
-    # Demo: Möbius transform
-    a = 0.3 + 0.4j
-    theta = math.pi / 6
-    z = 0.1 + 0.2j
-    w = mobius_transform(a, theta, z)
-    print(f"Möbius({z}) = {w:.6f}, |result| = {abs(w):.6f}")
-
-    # Demo: Cayley words
-    g0 = CayleyLetter(0, LetterType.GEN)
-    g1 = CayleyLetter(1, LetterType.GEN)
-    g0_inv = g0.inverse()
-
-    word1 = CayleyWord([g0, g1, g0])
-    word2 = CayleyWord([g0_inv, g1])
-    product = word1 * word2
-    reduced = product.reduce()
-
-    print(f"\nWord1: {word1} (length {word1.length})")
-    print(f"Word2: {word2} (length {word2.length})")
-    print(f"Product: {product} (length {product.length})")
-    print(f"Reduced: {reduced} (length {reduced.length})")
-
-    # Demo: Growth rates
-    print("\nGrowth rate estimation (2 generators):")
-    for R, count, rate in estimate_growth_rate(2, 8):
-        print(f"  R={R}: {count:8d} words, growth rate ≈ {rate:.4f}")
-
-    # Demo: Orbit generation
-    gens = [(0.3 + 0.1j, math.pi / 4), (0.2 - 0.3j, math.pi / 3)]
-    orbit = generate_orbit_points(gens, max_depth=3)
-    print(f"\nOrbit points (depth ≤ 3): {len(orbit)} points generated")
-    for pt, depth, word in orbit[:10]:
-        print(f"  depth={depth}: {word} → {pt:.4f} (|z|={abs(pt):.4f})")
+    print("\nLattice point counts vs π·R²:")
+    for R in [5, 10, 20, 50, 100]:
+        points = lattice_points_in_ball(R)
+        density = len(points) / R**2
+        print(f"  R={R:3d}: {len(points):6d} points, "
+              f"count/R² = {density:.6f} (π ≈ {math.pi:.6f})")
