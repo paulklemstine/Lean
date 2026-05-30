@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Mathematical Physics / Numerical Analysis",
     "date": "2026-05-30T10:36:11Z",
     "exp_id": "bc40ba98",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7612210294117647,
+    "quality": "substantial",
     "pkg_num": 396
   },
   {
@@ -11493,8 +11493,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-05-30T10:36:11Z",
       "hue": 112,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7612210294117647,
+      "quality": "substantial"
     }
   ],
   "edges": [
