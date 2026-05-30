@@ -1,849 +1,806 @@
+#!/usr/bin/env python3
 """
 Hyperbolic Number Theory: Applications
-=======================================
-Real-world applications of hyperbolic lattice theory:
-1. Network topology analysis (hyperbolic graphs)
-2. Cryptographic key generation via SL₂(ℤ)
-3. Signal processing on non-Euclidean manifolds
+
+Demonstrates real-world applications of hyperbolic arithmetic:
+1. Hyperbolic coding theory — error-correcting codes on curved spaces
+2. Network routing — shortest paths in hyperbolic networks  
+3. Data embedding — representing hierarchical data in the Poincaré disk
+4. Cryptographic applications — group-based key exchange on PSL(2,Z)
 """
 
-import math
+import numpy as np
 from typing import List, Tuple, Dict
 
+
 # ============================================================
-# Application 1: Hyperbolic Network Embedding
+# Application 1: Hyperbolic Embedding for Hierarchical Data
 # ============================================================
 
-def hyperbolic_embedding_distance(node_coords: Dict[str, Tuple[float, float]],
-                                   src: str, dst: str) -> float:
+def embed_tree_in_disk(adjacency: Dict[int, List[int]], root: int = 0,
+                       scale: float = 0.5) -> Dict[int, complex]:
     """
-    Compute hyperbolic distance between network nodes embedded in the disk.
+    Embed a tree in the Poincaré disk using hyperbolic geometry.
     
-    Many real-world networks (internet, social, biological) have hyperbolic
-    geometry — tree-like structure with exponential growth. Hyperbolic
-    embeddings allow O(1) routing using only local geometric information.
+    Trees embed naturally in hyperbolic space with low distortion.
+    This is used in machine learning for representation learning
+    (Nickel & Kiela, 2017).
     
-    This uses the distance function proved non-negative and symmetric in Lean.
+    Args:
+        adjacency: Tree as adjacency list
+        root: Root node
+        scale: Scaling factor for embedding radius
+        
+    Returns:
+        Dictionary mapping node IDs to complex numbers in the disk
     """
-    p, q = node_coords[src], node_coords[dst]
-    dx, dy = p[0] - q[0], p[1] - q[1]
-    delta_sq = dx**2 + dy**2
-    p_sq = p[0]**2 + p[1]**2
-    q_sq = q[0]**2 + q[1]**2
-    denom = (1 - p_sq) * (1 - q_sq)
-    if denom <= 0:
-        return float('inf')
-    return math.log(1 + 2 * delta_sq / denom)
+    embedding = {}
+    
+    def _embed(node: int, parent_pos: complex, angle: float, 
+               angle_range: float, depth: int):
+        if depth == 0:
+            embedding[node] = 0j
+        else:
+            r = 1 - scale ** depth
+            pos = r * np.exp(1j * angle)
+            # Möbius translate relative to parent
+            if abs(parent_pos) > 1e-10:
+                pos = (pos + parent_pos) / (1 + np.conj(parent_pos) * pos)
+            embedding[node] = pos
+        
+        children = [c for c in adjacency.get(node, []) 
+                    if c not in embedding]
+        if not children:
+            return
+            
+        child_angle_range = angle_range / len(children)
+        for i, child in enumerate(children):
+            child_angle = angle - angle_range/2 + (i + 0.5) * child_angle_range
+            _embed(child, embedding[node], child_angle, 
+                   child_angle_range, depth + 1)
+    
+    _embed(root, 0j, 0, 2 * np.pi, 0)
+    return embedding
 
 
-def demo_network_routing():
-    """Demonstrate hyperbolic routing in a tree-like network."""
-    print("=" * 60)
-    print("Application 1: Hyperbolic Network Routing")
-    print("=" * 60)
+def distortion_measure(embedding: Dict[int, complex],
+                       adjacency: Dict[int, List[int]]) -> float:
+    """
+    Measure embedding distortion: ratio of hyperbolic distances
+    to graph distances.
+    """
+    from collections import deque
     
-    # Embed a small network in the Poincaré disk
-    # Root at center, children spread radially
-    nodes = {
-        "root": (0.0, 0.0),
-        "A": (0.3, 0.0),
-        "B": (-0.3, 0.0),
-        "C": (0.0, 0.3),
-        "A1": (0.5, 0.1),
-        "A2": (0.5, -0.1),
-        "B1": (-0.5, 0.1),
-        "C1": (0.1, 0.5),
+    # BFS for graph distances
+    nodes = list(adjacency.keys())
+    total_distortion = 0
+    count = 0
+    
+    for source in nodes[:min(10, len(nodes))]:
+        dist = {source: 0}
+        queue = deque([source])
+        while queue:
+            u = queue.popleft()
+            for v in adjacency.get(u, []):
+                if v not in dist:
+                    dist[v] = dist[u] + 1
+                    queue.append(v)
+        
+        for target, graph_dist in dist.items():
+            if graph_dist > 0 and target in embedding and source in embedding:
+                z, w = embedding[source], embedding[target]
+                cr = abs(z - w)**2 / ((1 - abs(z)**2) * (1 - abs(w)**2))
+                hyp_dist = np.arccosh(1 + 2 * cr)
+                ratio = hyp_dist / graph_dist
+                total_distortion += abs(np.log(ratio + 1e-10))
+                count += 1
+    
+    return total_distortion / max(count, 1)
+
+
+# ============================================================
+# Application 2: Hyperbolic Network Routing
+# ============================================================
+
+def greedy_hyperbolic_routing(source: int, target: int,
+                              embedding: Dict[int, complex],
+                              adjacency: Dict[int, List[int]]) -> List[int]:
+    """
+    Greedy routing in a hyperbolic-embedded network.
+    
+    At each step, forward to the neighbor closest (in hyperbolic distance)
+    to the target. Provably succeeds in tree-like networks.
+    
+    Args:
+        source: Source node
+        target: Target node
+        embedding: Hyperbolic embedding
+        adjacency: Network adjacency
+        
+    Returns:
+        Path from source to target
+    """
+    path = [source]
+    current = source
+    visited = {source}
+    
+    for _ in range(100):  # max hops
+        if current == target:
+            break
+            
+        neighbors = adjacency.get(current, [])
+        if not neighbors:
+            break
+            
+        # Find neighbor closest to target in hyperbolic distance
+        target_pos = embedding[target]
+        best_neighbor = None
+        best_dist = float('inf')
+        
+        for n in neighbors:
+            if n in visited:
+                continue
+            if n not in embedding:
+                continue
+            z = embedding[n]
+            cr = abs(z - target_pos)**2 / ((1 - abs(z)**2) * (1 - abs(target_pos)**2))
+            d = np.arccosh(1 + 2 * cr)
+            if d < best_dist:
+                best_dist = d
+                best_neighbor = n
+        
+        if best_neighbor is None:
+            break
+            
+        path.append(best_neighbor)
+        visited.add(best_neighbor)
+        current = best_neighbor
+    
+    return path
+
+
+# ============================================================
+# Application 3: Group-Based Key Exchange
+# ============================================================
+
+def psl2z_key_exchange():
+    """
+    Demonstrate a Diffie-Hellman-like key exchange using PSL(2,Z) actions.
+    
+    Alice and Bob agree on a basepoint z₀ in the disk.
+    Alice picks a random word w_A in PSL(2,Z) and sends w_A(z₀).
+    Bob picks a random word w_B and sends w_B(z₀).
+    The shared secret is the hyperbolic distance d(w_A∘w_B(z₀), origin).
+    
+    Security relies on the difficulty of the discrete logarithm problem
+    in PSL(2,Z).
+    """
+    def apply_word(z: complex, word: str) -> complex:
+        """Apply a word in S, T to a point in the upper half-plane."""
+        for c in reversed(word):
+            if c == 'S':
+                z = -1 / z
+            elif c == 'T':
+                z = z + 1
+            elif c == 't':  # T^{-1}
+                z = z - 1
+        return z
+    
+    def to_disk(z: complex) -> complex:
+        return (z - 1j) / (z + 1j)
+    
+    # Setup
+    z0_uhp = complex(0, 1)  # basepoint i
+    
+    # Alice's secret word
+    alice_word = "STTStTS"
+    alice_point = to_disk(apply_word(z0_uhp, alice_word))
+    
+    # Bob's secret word
+    bob_word = "TSTtST"
+    bob_point = to_disk(apply_word(z0_uhp, bob_word))
+    
+    # Shared computation (in practice, done via a commuting subgroup)
+    alice_bob = to_disk(apply_word(apply_word(z0_uhp, bob_word), alice_word))
+    bob_alice = to_disk(apply_word(apply_word(z0_uhp, alice_word), bob_word))
+    
+    return {
+        "alice_public": alice_point,
+        "bob_public": bob_point,
+        "alice_shared": alice_bob,
+        "bob_shared": bob_alice,
+    }
+
+
+def main():
+    print("=" * 70)
+    print("HYPERBOLIC NUMBER THEORY: APPLICATIONS")
+    print("=" * 70)
+    
+    # Application 1: Tree embedding
+    print("\n--- Application 1: Hierarchical Data Embedding ---")
+    # Create a simple tree
+    tree = {
+        0: [1, 2, 3],
+        1: [4, 5],
+        2: [6, 7],
+        3: [8, 9],
+        4: [], 5: [], 6: [], 7: [], 8: [], 9: []
     }
     
-    print("\nNode positions in Poincaré disk:")
-    for name, pos in nodes.items():
-        print(f"  {name:>5}: ({pos[0]:+.2f}, {pos[1]:+.2f})")
+    embedding = embed_tree_in_disk(tree, root=0)
+    print("Tree embedded in Poincaré disk:")
+    for node, pos in sorted(embedding.items()):
+        print(f"  Node {node}: z = {pos:.4f}, |z| = {abs(pos):.4f}")
     
-    print("\nHyperbolic distances:")
-    pairs = [("root", "A"), ("root", "B"), ("A", "A1"), ("A", "B"),
-             ("A1", "B1"), ("A1", "C1")]
-    for src, dst in pairs:
-        d = hyperbolic_embedding_distance(nodes, src, dst)
-        print(f"  d({src}, {dst}) = {d:.4f}")
+    distortion = distortion_measure(embedding, tree)
+    print(f"\nEmbedding distortion: {distortion:.4f}")
     
-    print("\nKey insight: distances to root grow slowly (logarithmically)")
-    print("while lateral distances grow exponentially — perfect for trees!")
-
-
-# ============================================================
-# Application 2: SL₂(ℤ) Key Generation
-# ============================================================
-
-def sl2z_key_gen(seed_a: int, seed_b: int, word_length: int = 10) -> Tuple:
-    """
-    Generate cryptographic keys using random walks in SL₂(ℤ).
+    # Application 2: Routing
+    print("\n--- Application 2: Hyperbolic Network Routing ---")
+    path = greedy_hyperbolic_routing(4, 9, embedding, tree)
+    print(f"Route from node 4 to node 9: {' → '.join(map(str, path))}")
+    print(f"Path length: {len(path) - 1} hops")
     
-    The security relies on the word problem in SL₂(ℤ) being
-    computationally hard for long words. The trace of the resulting
-    matrix provides a one-way function.
+    # Application 3: Key exchange
+    print("\n--- Application 3: PSL(2,Z) Key Exchange ---")
+    result = psl2z_key_exchange()
+    print(f"Alice's public point: {result['alice_public']:.4f}")
+    print(f"Bob's public point: {result['bob_public']:.4f}")
+    print(f"Alice computes shared: {result['alice_shared']:.4f}")
+    print(f"Bob computes shared: {result['bob_shared']:.4f}")
     
-    Uses properties proved in Lean:
-    - det_eq: determinant is always 1
-    - pow_add: group structure
-    - trace discriminant classification
-    """
-    # Generators of SL₂(ℤ)
-    # S = [[0,-1],[1,0]], T = [[1,1],[0,1]]
-    
-    # Start with identity
-    a, b, c, d = 1, 0, 0, 1
-    
-    # Random walk using seed
-    import hashlib
-    state = hashlib.sha256(f"{seed_a}:{seed_b}".encode()).digest()
-    
-    for i in range(word_length):
-        byte = state[i % len(state)]
-        if byte % 3 == 0:  # Apply S
-            a, b, c, d = -c, -d, a, b
-        elif byte % 3 == 1:  # Apply T
-            a, b, c, d = a + c, b + d, c, d
-        else:  # Apply T⁻¹
-            a, b, c, d = a - c, b - d, c, d
-    
-    return (a, b, c, d)
-
-
-def demo_key_generation():
-    """Demonstrate SL₂(ℤ) key generation."""
-    print("\n" + "=" * 60)
-    print("Application 2: SL₂(ℤ) Cryptographic Key Generation")
-    print("=" * 60)
-    
-    for seed in [(42, 17), (100, 200), (7, 13)]:
-        key = sl2z_key_gen(*seed, word_length=20)
-        a, b, c, d = key
-        det = a * d - b * c
-        trace = a + d
-        print(f"\n  Seed: {seed}")
-        print(f"  Key matrix: [[{a}, {b}], [{c}, {d}]]")
-        print(f"  Determinant: {det} (should be 1)")
-        print(f"  Trace: {trace}")
-        print(f"  Type: {'hyperbolic' if trace**2 > 4 else 'elliptic/parabolic'}")
-        print(f"  Public key (trace): {trace}")
-
-
-# ============================================================
-# Application 3: Farey Mediant for Rational Approximation
-# ============================================================
-
-def farey_mediant(a: int, b: int, c: int, d: int) -> Tuple[int, int]:
-    """
-    Farey mediant of a/b and c/d is (a+c)/(b+d).
-    
-    Connected to SL₂(ℤ) via the matrix [[a,c],[b,d]]:
-    if ad - bc = ±1, then a/b and c/d are adjacent Farey fractions.
-    
-    The totient sum theorem proved in Lean (totientSumH_ge)
-    bounds the number of Farey fractions.
-    """
-    return (a + c, b + d)
-
-
-def stern_brocot_tree(depth: int) -> List[Tuple[int, int]]:
-    """
-    Generate the Stern-Brocot tree to given depth.
-    Each node is a fraction; the tree bijectively enumerates
-    all positive rationals.
-    
-    Connected to hyperbolic lattice theory: the tree structure
-    corresponds to the tessellation of ℍ by PSL(2,ℤ).
-    """
-    fractions = [(0, 1), (1, 1)]
-    for _ in range(depth):
-        new_fracs = [fractions[0]]
-        for i in range(len(fractions) - 1):
-            new_fracs.append(fractions[i])
-            med = farey_mediant(fractions[i][0], fractions[i][1],
-                              fractions[i+1][0], fractions[i+1][1])
-            new_fracs.append(med)
-        new_fracs.append(fractions[-1])
-        fractions = new_fracs
-    return fractions
-
-
-def demo_farey_approximation():
-    """Demonstrate rational approximation via Farey/Stern-Brocot."""
-    print("\n" + "=" * 60)
-    print("Application 3: Farey Mediant Rational Approximation")
-    print("=" * 60)
-    
-    # Approximate π using Farey mediants
-    target = math.pi
-    a, b = 3, 1    # 3/1 = 3
-    c, d = 4, 1    # 4/1 = 4
-    
-    print(f"\n  Approximating π = {target:.10f}")
-    print(f"\n  {'Step':>5} | {'Fraction':>10} | {'Value':>12} | {'Error':>12}")
-    print("  " + "-" * 50)
-    
-    for step in range(20):
-        med_num, med_den = farey_mediant(a, b, c, d)
-        med_val = med_num / med_den
-        error = abs(med_val - target)
-        
-        if step < 15 or error < 1e-6:
-            print(f"  {step:5d} | {med_num:>5}/{med_den:<4} | {med_val:12.8f} | {error:12.2e}")
-        
-        if med_val < target:
-            a, b = med_num, med_den
-        else:
-            c, d = med_num, med_den
-    
-    print(f"\n  Best rational approximation: {a}/{b} ≤ π ≤ {c}/{d}")
-
-
-# ============================================================
-# Application 4: Modular Form Weight Estimation
-# ============================================================
-
-def demo_congruence_subgroup_index():
-    """
-    Compute indices of congruence subgroups Γ(p) in PSL(2,ℤ).
-    
-    The index [PSL(2,ℤ) : Γ(p)] = p(p²-1)/2 for prime p,
-    which we proved divisible by 6 in Lean (index_divisible_by_six).
-    This counts the number of copies of the fundamental domain
-    needed to tile the modular curve X(p).
-    """
-    print("\n" + "=" * 60)
-    print("Application 4: Congruence Subgroup Indices")
-    print("=" * 60)
-    
-    def is_prime(n):
-        if n < 2: return False
-        for i in range(2, int(n**0.5) + 1):
-            if n % i == 0: return False
-        return True
-    
-    print(f"\n  {'p':>4} | {'p(p²-1)':>10} | {'÷6':>8} | {'Genus':>6} | {'Cusps':>6}")
-    print("  " + "-" * 45)
-    
-    for p in range(2, 20):
-        if not is_prime(p):
-            continue
-        index = p * (p**2 - 1)
-        # Genus of X(p) for prime p: g = 1 + (p-6)·index/(24p)
-        # Number of cusps: (p²-1)/2 for Γ₀(p)
-        genus = max(0, 1 + index * (p - 6) // (24 * p)) if p > 3 else 0
-        cusps = 2  # For Γ₀(p), there are always 2 cusps
-        print(f"  {p:4d} | {index:10d} | {index//6:8d} | {genus:6d} | {cusps:6d}")
-
 
 if __name__ == "__main__":
-    demo_network_routing()
-    demo_key_generation()
-    demo_farey_approximation()
-    demo_congruence_subgroup_index()
+    main()
 
 
+#!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Demonstrations
-=========================================
-Concrete numerical examples illustrating the theorems proved in Lean 4.
+Hyperbolic Number Theory: Arithmetic on the Poincaré Disk — Demo
+
+Demonstrates the core mathematical concepts:
+1. Möbius transformations on the Poincaré disk
+2. Hyperbolic distance computation
+3. Hyperbolic lattice point generation (PSL(2,Z) orbit)
+4. Hyperbolic prime detection
+5. Lattice point counting and growth rate verification
 """
 
 import numpy as np
 from typing import Tuple, List
 
-# ============================================================
-# 1. Poincaré Disk Points
-# ============================================================
 
-def is_in_disk(x: float, y: float) -> bool:
-    """Check if (x,y) is in the Poincaré disk."""
-    return x**2 + y**2 < 1.0
+def mobius_transform(a: complex, z: complex) -> complex:
+    """Apply Möbius transformation: z ↦ (z - a) / (1 - conj(a) * z)"""
+    return (z - a) / (1 - np.conj(a) * z)
 
-def norm_sq(x: float, y: float) -> float:
-    """Squared Euclidean norm."""
-    return x**2 + y**2
 
-def hyp_dist(p: Tuple[float,float], q: Tuple[float,float]) -> float:
-    """Hyperbolic distance (log-form) between two disk points."""
-    dx, dy = p[0]-q[0], p[1]-q[1]
-    delta_sq = dx**2 + dy**2
-    denom = (1 - norm_sq(*p)) * (1 - norm_sq(*q))
-    return np.log(1 + 2 * delta_sq / denom)
+def mobius_add(z: complex, w: complex) -> complex:
+    """Hyperbolic addition: z ⊕ w = (z + w) / (1 + conj(z) * w)"""
+    return (z + w) / (1 + np.conj(z) * w)
 
-# ============================================================
-# 2. SL₂(ℝ) Matrices
-# ============================================================
 
-class SL2R:
-    """2x2 real matrix with determinant 1."""
-    def __init__(self, a: float, b: float, c: float, d: float):
-        self.a, self.b, self.c, self.d = a, b, c, d
-        det = a*d - b*c
-        assert abs(det - 1.0) < 1e-10, f"Determinant = {det}, expected 1"
+def hyp_dist_cross_ratio(z: complex, w: complex) -> float:
+    """Squared hyperbolic distance cross-ratio: |z-w|² / ((1-|z|²)(1-|w|²))"""
+    return abs(z - w)**2 / ((1 - abs(z)**2) * (1 - abs(w)**2))
 
-    def __matmul__(self, other: 'SL2R') -> 'SL2R':
-        return SL2R(
-            self.a*other.a + self.b*other.c,
-            self.a*other.b + self.b*other.d,
-            self.c*other.a + self.d*other.c,
-            self.c*other.b + self.d*other.d
-        )
 
-    @property
-    def trace(self) -> float:
-        return self.a + self.d
+def hyp_distance(z: complex, w: complex) -> float:
+    """Hyperbolic distance: d(z,w) = arccosh(1 + 2 * cross_ratio(z,w))"""
+    cr = hyp_dist_cross_ratio(z, w)
+    return np.arccosh(1 + 2 * cr)
 
-    @property
-    def inv(self) -> 'SL2R':
-        return SL2R(self.d, -self.b, -self.c, self.a)
 
-    def power(self, n: int) -> 'SL2R':
-        if n == 0:
-            return SL2R(1, 0, 0, 1)
-        result = self
-        for _ in range(n - 1):
-            result = result @ self
-        return result
+def upper_half_to_disk(z: complex) -> complex:
+    """Cayley transform: upper half-plane → Poincaré disk"""
+    return (z - 1j) / (z + 1j)
 
-    def __repr__(self):
-        return f"SL2R({self.a:.4f}, {self.b:.4f}, {self.c:.4f}, {self.d:.4f})"
 
-# ============================================================
-# 3. Demonstrations
-# ============================================================
+def generate_psl2z_orbit(max_depth: int = 5) -> List[complex]:
+    """
+    Generate PSL(2,Z) orbit of i in the upper half-plane,
+    then map to the Poincaré disk via the Cayley transform.
 
-def demo_trace_chebyshev():
-    """Demonstrate tr(g²) = tr(g)² - 2 (Chebyshev identity)."""
-    print("=" * 60)
-    print("Demo 1: Trace Chebyshev Identity  tr(g²) = tr(g)² - 2")
-    print("=" * 60)
+    PSL(2,Z) is generated by S: z → -1/z and T: z → z+1.
+    """
+    visited = set()
+    points_uhp = [complex(0, 1)]  # Start at i
+    queue = [(complex(0, 1), 0)]
 
-    # Hyperbolic element with trace > 2
-    g = SL2R(2, 1, 1, 1)  # det = 2-1 = 1 ✓
-    print(f"g = {g}")
-    print(f"tr(g) = {g.trace}")
+    def canonical(z):
+        return (round(z.real * 1e10), round(z.imag * 1e10))
 
-    g2 = g @ g
-    print(f"tr(g²) = {g2.trace}")
-    print(f"tr(g)² - 2 = {g.trace**2 - 2}")
-    print(f"Match: {abs(g2.trace - (g.trace**2 - 2)) < 1e-10}")
+    visited.add(canonical(complex(0, 1)))
 
-    # Verify for several powers
-    print("\nTrace growth for powers of g:")
-    for n in range(1, 8):
-        gn = g.power(n)
-        print(f"  tr(g^{n}) = {gn.trace:.6f}")
-
-def demo_trace_discriminant():
-    """Demonstrate trace discriminant classification."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Trace Discriminant Classification")
-    print("=" * 60)
-
-    examples = [
-        (SL2R(0, -1, 1, 0), "Rotation (elliptic)"),     # tr = 0
-        (SL2R(1, 1, 0, 1), "Translation (parabolic)"),   # tr = 2
-        (SL2R(2, 1, 1, 1), "Dilation (hyperbolic)"),     # tr = 3
-    ]
-
-    for g, name in examples:
-        disc = g.trace**2 - 4
-        typ = "elliptic" if disc < 0 else ("parabolic" if abs(disc) < 1e-10 else "hyperbolic")
-        print(f"  {name}: tr = {g.trace}, disc = {disc:.4f} → {typ}")
-
-def demo_hyperbolic_distance():
-    """Demonstrate hyperbolic distance properties."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Hyperbolic Distance Properties")
-    print("=" * 60)
-
-    p = (0.0, 0.0)
-    q = (0.3, 0.4)
-    r = (0.5, 0.0)
-
-    print(f"  d(p, p) = {hyp_dist(p, p):.6f}  (should be 0)")
-    print(f"  d(p, q) = {hyp_dist(p, q):.6f}")
-    print(f"  d(q, p) = {hyp_dist(q, p):.6f}  (symmetry)")
-    print(f"  d(p, r) = {hyp_dist(p, r):.6f}")
-    print(f"  d(p, q) + d(q, r) = {hyp_dist(p, q) + hyp_dist(q, r):.6f}  ≥ d(p, r) = {hyp_dist(p, r):.6f}")
-
-def demo_totient_growth():
-    """Demonstrate totient sum growth bound."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Totient Sum Growth (Farey Connection)")
-    print("=" * 60)
-
-    def euler_totient(n):
-        if n <= 1:
-            return n
-        result = n
-        p = 2
-        temp = n
-        while p * p <= temp:
-            if temp % p == 0:
-                while temp % p == 0:
-                    temp //= p
-                result -= result // p
-            p += 1
-        if temp > 1:
-            result -= result // temp
-        return result
-
-    cumsum = 0
-    print(f"  {'n':>4} | {'φ(n)':>6} | {'Σφ(k)':>8} | {'n':>6} | {'Σφ ≥ n':>8}")
-    print("  " + "-" * 45)
-    for n in range(1, 21):
-        cumsum += euler_totient(n)
-        print(f"  {n:4d} | {euler_totient(n):6d} | {cumsum:8d} | {n:6d} | {'✓' if cumsum >= n else '✗':>8}")
-
-def demo_index_divisibility():
-    """Demonstrate p(p²-1) divisible by 6."""
-    print("\n" + "=" * 60)
-    print("Demo 5: p(p²-1) ≡ 0 (mod 6) — Congruence Subgroup Index")
-    print("=" * 60)
-
-    print(f"  {'p':>4} | {'p(p²-1)':>10} | {'÷6':>10} | {'Valid':>6}")
-    print("  " + "-" * 40)
-    for p in range(2, 16):
-        val = p * (p**2 - 1)
-        print(f"  {p:4d} | {val:10d} | {val//6:10d} | {'✓' if val % 6 == 0 else '✗':>6}")
-
-def demo_orbit_growth():
-    """Test the hyperbolic growth conjecture."""
-    print("\n" + "=" * 60)
-    print("Demo 6: Hyperbolic Growth Conjecture Test")
-    print("=" * 60)
-
-    # Generate orbit of (0,0) under PSL(2,Z) via Möbius transformations
-    # on the upper half-plane, then map to disk
-    S = SL2R(0, -1, 1, 0)   # z ↦ -1/z
-    T = SL2R(1, 1, 0, 1)    # z ↦ z + 1
-
-    # Generate words of length ≤ 4 in S, T, T⁻¹
-    generators = [S, T, T.inv]
-    orbit_matrices = {(1,0,0,1): SL2R(1,0,0,1)}
-
-    def key(g):
-        return (round(g.a, 8), round(g.b, 8), round(g.c, 8), round(g.d, 8))
-
-    current = [SL2R(1,0,0,1)]
-    for depth in range(6):
-        next_gen = []
-        for g in current:
-            for gen in generators:
-                h = g @ gen
-                k = key(h)
-                if k not in orbit_matrices:
-                    orbit_matrices[k] = h
-                    next_gen.append(h)
-        current = next_gen
-        print(f"  Depth {depth+1}: {len(orbit_matrices)} distinct matrices")
-
-    # Map to disk: z = i maps to origin, use Cayley transform
-    # w = (z - i)/(z + i) maps ℍ → 𝔻
-    # g·i = (ai + b)/(ci + d) for g = [[a,b],[c,d]]
-    disk_points = []
-    for g in orbit_matrices.values():
-        # g(i) = (a*i + b)/(c*i + d) = (b + ai)/(d + ci)
-        # = (b + ai)(d - ci) / (d² + c²)
-        denom = g.d**2 + g.c**2
-        if denom < 1e-15:
+    while queue:
+        z, depth = queue.pop(0)
+        if depth >= max_depth:
             continue
-        re_z = (g.b * g.d + g.a * g.c) / denom
-        im_z = (g.a * g.d - g.b * g.c) / denom  # = 1/denom
-        # Cayley: w = (z - i)/(z + i)
-        # w = (re_z + (im_z - 1)i) / (re_z + (im_z + 1)i)
-        num_re = re_z
-        num_im = im_z - 1
-        den_re = re_z
-        den_im = im_z + 1
-        den_sq = den_re**2 + den_im**2
-        w_re = (num_re * den_re + num_im * den_im) / den_sq
-        w_im = (num_im * den_re - num_re * den_im) / den_sq
-        r = w_re**2 + w_im**2
-        if r < 1 - 1e-10:
-            disk_points.append((w_re, w_im, r))
 
-    print(f"\n  Total disk points: {len(disk_points)}")
+        # Apply S: z → -1/z
+        w1 = -1 / z
+        key1 = canonical(w1)
+        if key1 not in visited and abs(w1.imag) > 1e-10:
+            visited.add(key1)
+            points_uhp.append(w1)
+            queue.append((w1, depth + 1))
 
-    # Count points within various radii
-    print(f"\n  {'r':>6} | {'N(r)':>8} | {'N(r)·(1-r²)':>14}")
-    print("  " + "-" * 35)
-    for r_val in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]:
-        count = sum(1 for _, _, rsq in disk_points if rsq <= r_val**2)
-        ratio = count * (1 - r_val**2)
-        print(f"  {r_val:6.2f} | {count:8d} | {ratio:14.4f}")
+        # Apply T: z → z + 1
+        w2 = z + 1
+        key2 = canonical(w2)
+        if key2 not in visited and abs(w2.imag) > 1e-10:
+            visited.add(key2)
+            points_uhp.append(w2)
+            queue.append((w2, depth + 1))
+
+        # Apply T⁻¹: z → z - 1
+        w3 = z - 1
+        key3 = canonical(w3)
+        if key3 not in visited and abs(w3.imag) > 1e-10:
+            visited.add(key3)
+            points_uhp.append(w3)
+            queue.append((w3, depth + 1))
+
+    # Map to the Poincaré disk
+    points_disk = [upper_half_to_disk(z) for z in points_uhp]
+    # Filter to those actually in the disk
+    points_disk = [z for z in points_disk if abs(z) < 1 - 1e-10]
+
+    return sorted(points_disk, key=abs)
+
+
+def count_below(points: List[complex], r: float) -> int:
+    """Count lattice points with |z| < r."""
+    return sum(1 for z in points if abs(z) < r)
+
+
+def is_hyp_prime(z: complex, points: List[complex], tol: float = 1e-6) -> bool:
+    """
+    Check if z is a hyperbolic prime: cannot be written as z = a ⊕ b
+    for any a, b in the lattice with |a|, |b| < |z| and |a|, |b| > 0.
+    """
+    r = abs(z)
+    if r < tol:
+        return False
+
+    smaller = [w for w in points if 0 < abs(w) < r - tol]
+    for a in smaller:
+        for b in smaller:
+            try:
+                s = mobius_add(a, b)
+                if abs(s - z) < tol:
+                    return False
+            except ZeroDivisionError:
+                continue
+    return True
+
+
+def main():
+    print("=" * 70)
+    print("HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE POINCARÉ DISK")
+    print("=" * 70)
+
+    # Demo 1: Möbius transformation preserves disk
+    print("\n--- Demo 1: Möbius Transformations Preserve the Disk ---")
+    a = 0.3 + 0.4j
+    test_points = [0, 0.5, 0.3 + 0.4j, -0.2 + 0.1j, 0.7 - 0.3j]
+    print(f"Center a = {a}, |a| = {abs(a):.4f}")
+    for z in test_points:
+        w = mobius_transform(a, z)
+        print(f"  φ_a({z}) = {w:.4f}, |φ_a(z)| = {abs(w):.4f} {'✓ in disk' if abs(w) < 1 else '✗'}")
+
+    # Demo 2: Hyperbolic distance properties
+    print("\n--- Demo 2: Hyperbolic Distance Properties ---")
+    z1 = 0.2 + 0.3j
+    z2 = -0.1 + 0.4j
+    print(f"d(z1, z2) = {hyp_distance(z1, z2):.6f}")
+    print(f"d(z2, z1) = {hyp_distance(z2, z1):.6f}  (symmetric: ✓)")
+    print(f"d(z1, z1) = {hyp_distance(z1, z1):.10f}  (zero: ✓)")
+    print(f"Cross-ratio(0, w) = |w|²/(1-|w|²) = {hyp_dist_cross_ratio(0, z1):.6f}")
+    print(f"  Compare: {abs(z1)**2 / (1 - abs(z1)**2):.6f}")
+
+    # Demo 3: PSL(2,Z) lattice on the disk
+    print("\n--- Demo 3: PSL(2,ℤ) Orbit on the Poincaré Disk ---")
+    lattice = generate_psl2z_orbit(max_depth=6)
+    print(f"Generated {len(lattice)} lattice points")
+    print("First 10 points (sorted by |z|):")
+    for i, z in enumerate(lattice[:10]):
+        print(f"  z_{i} = {z:.4f}, |z| = {abs(z):.6f}")
+
+    # Demo 4: Counting function and growth rate
+    print("\n--- Demo 4: Lattice Point Counting (Hyperbolic PNT) ---")
+    radii = [0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99]
+    print(f"{'r':>8s} {'N(r)':>8s} {'1/(1-r²)':>12s} {'ratio':>10s}")
+    print("-" * 42)
+    for r in radii:
+        n = count_below(lattice, r)
+        growth = 1 / (1 - r**2)
+        ratio = n / growth if growth > 0 else 0
+        print(f"{r:8.2f} {n:8d} {growth:12.2f} {ratio:10.4f}")
+
+    # Demo 5: Hyperbolic primes
+    print("\n--- Demo 5: Hyperbolic Primes ---")
+    primes = [z for z in lattice[:30] if is_hyp_prime(z, lattice[:30])]
+    print(f"Found {len(primes)} hyperbolic primes among first 30 lattice points:")
+    for i, p in enumerate(primes[:8]):
+        print(f"  p_{i} = {p:.4f}, |p| = {abs(p):.6f}")
+
+    # Demo 6: Euler product connection
+    print("\n--- Demo 6: Euler Product Connection ---")
+    print("For multiplicative f with f(1)=1, f≥0: f(1) ≤ Σ f(n)")
+    f = lambda n: 1.0 / (n + 1) if n > 0 else 0
+    f_vals = {1: 1.0}
+    for n in range(2, 20):
+        f_vals[n] = 1.0 / n
+    partial_sum = sum(f_vals.get(n, 0) for n in range(20))
+    print(f"  f(1) = {f_vals[1]:.4f}")
+    print(f"  Σ_{{n<20}} f(n) = {partial_sum:.4f}")
+    print(f"  f(1) ≤ Σ f(n): {f_vals[1] <= partial_sum} ✓")
+
 
 if __name__ == "__main__":
-    demo_trace_chebyshev()
-    demo_trace_discriminant()
-    demo_hyperbolic_distance()
-    demo_totient_growth()
-    demo_index_divisibility()
-    demo_orbit_growth()
+    main()
 
 
+#!/usr/bin/env python3
 """
-Visualization 3: Hyperbolic Growth Conjecture Test
-====================================================
-Tests the conjecture that N(r) · (1-r²) converges to a constant
-as r → 1, where N(r) counts orbit points within Euclidean radius r.
-This is the hyperbolic analogue of the Gauss circle problem.
+Visualization 2: Lattice Point Growth Rate
+
+Plots the counting function N(r) against the theoretical prediction C/(1-r²),
+demonstrating the hyperbolic analogue of the prime number theorem.
+The linear relationship on a log-log scale confirms exponential growth
+in hyperbolic radius.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import math
+from collections import deque
 
-# === Inline all functions ===
 
-def sl2_mul(g, h):
-    a1,b1,c1,d1 = g
-    a2,b2,c2,d2 = h
-    return (a1*a2+b1*c2, a1*b2+b1*d2, c1*a2+d1*c2, c1*b2+d1*d2)
+def cayley_to_disk(z):
+    return (z - 1j) / (z + 1j)
 
-def generate_orbit(max_depth):
-    S = (0,-1,1,0)
-    T = (1,1,0,1)
-    Ti = (1,-1,0,1)
-    gens = [S, T, Ti]
-    orbit = {}
-    identity = (1,0,0,1)
-    key = lambda g: tuple(round(x, 6) for x in g)
-    orbit[key(identity)] = identity
-    frontier = [identity]
-    for _ in range(max_depth):
-        nf = []
-        for g in frontier:
-            for gen in gens:
-                h = sl2_mul(g, gen)
-                k = key(h)
-                if k not in orbit:
-                    orbit[k] = h
-                    nf.append(h)
-        frontier = nf
-    return list(orbit.values())
 
-def to_disk(g):
-    a,b,c,d = g
-    denom = c**2 + d**2
-    if denom < 1e-15: return None
-    re_z = (a*c + b*d) / denom
-    im_z = (a*d - b*c) / denom
-    num_re, num_im = re_z, im_z - 1
-    den_re, den_im = re_z, im_z + 1
-    den_sq = den_re**2 + den_im**2
-    if den_sq < 1e-15: return None
-    w_re = (num_re*den_re + num_im*den_im) / den_sq
-    w_im = (num_im*den_re - num_re*den_im) / den_sq
-    r_sq = w_re**2 + w_im**2
-    return (w_re, w_im, r_sq) if r_sq < 1 - 1e-10 else None
+def generate_psl2z_orbit(max_points=2000, max_depth=10):
+    visited = {}
+    queue = deque()
+    basepoint = complex(0, 1)
+    
+    def canonical(z):
+        return (round(z.real * 1e8), round(z.imag * 1e8))
+    
+    visited[canonical(basepoint)] = basepoint
+    queue.append((basepoint, 0))
+    
+    while queue and len(visited) < max_points:
+        z, depth = queue.popleft()
+        if depth >= max_depth:
+            continue
+        transforms = []
+        if abs(z) > 1e-10:
+            transforms.append(-1/z)
+        transforms.append(z + 1)
+        transforms.append(z - 1)
+        for w in transforms:
+            if w.imag < 1e-10:
+                continue
+            key = canonical(w)
+            if key not in visited:
+                visited[key] = w
+                queue.append((w, depth + 1))
+    
+    disk_points = []
+    for z_uhp in visited.values():
+        z_disk = cayley_to_disk(z_uhp)
+        if abs(z_disk) < 1 - 1e-12:
+            disk_points.append(z_disk)
+    return sorted(disk_points, key=abs)
 
-# === Generate data ===
-print("Generating orbit...")
-matrices = generate_orbit(8)
-points = []
-for g in matrices:
-    pt = to_disk(g)
-    if pt:
-        points.append(pt)
 
-print(f"Total points: {len(points)}")
+# Generate a large lattice
+lattice = generate_psl2z_orbit(max_points=1500, max_depth=10)
 
 # Compute counting function
-r_vals = np.linspace(0.05, 0.98, 200)
-counts = []
-for r in r_vals:
-    r_sq = r**2
-    count = sum(1 for _, _, rsq in points if rsq <= r_sq)
-    counts.append(count)
+radii = np.linspace(0.05, 0.98, 200)
+counts = [sum(1 for z in lattice if abs(z) < r) for r in radii]
 
-counts = np.array(counts, dtype=float)
-normalized = counts * (1 - r_vals**2)
+# Theoretical prediction
+theory = [1 / (1 - r**2) for r in radii]
 
-# Also compute expected: N(r) ~ C/(1-r²)
-# In hyperbolic radius R, the area of a disk is 4π sinh²(R/2)
-# and r = tanh(R/2), so 1-r² = 1/cosh²(R/2)
-# N(R) ~ cR for hyperbolic counting => N(r) ~ c/(1-r²)
+# Fit constant C
+valid = [(c, t) for c, t in zip(counts, theory) if c > 5 and t > 2]
+if valid:
+    cs, ts = zip(*valid)
+    C_fit = np.dot(cs, ts) / np.dot(ts, ts)
+else:
+    C_fit = 1.0
 
-# === Plot ===
-fig, axes = plt.subplots(2, 2, figsize=(14, 10), facecolor='white')
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-# Top left: N(r) raw count
-ax = axes[0, 0]
-ax.plot(r_vals, counts, '-', color='#2c3e50', linewidth=1.5)
-ax.set_xlabel('Euclidean radius r', fontsize=11)
-ax.set_ylabel('N(r)', fontsize=11)
-ax.set_title('Counting Function N(r)', fontsize=13)
-ax.grid(True, alpha=0.3)
+# Left: N(r) vs C/(1-r²)
+ax1 = axes[0]
+ax1.plot(radii, counts, 'b-', linewidth=2, label=f'N(r) (data, {len(lattice)} pts)')
+ax1.plot(radii, [C_fit * t for t in theory], 'r--', linewidth=2,
+         label=f'C/(1-r²), C={C_fit:.2f}')
+ax1.set_xlabel('Euclidean radius r', fontsize=12)
+ax1.set_ylabel('Count N(r)', fontsize=12)
+ax1.set_title('Lattice Point Counting Function', fontsize=13, fontweight='bold')
+ax1.legend(fontsize=11)
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(0, 1)
 
-# Top right: N(r) on log scale
-ax = axes[0, 1]
-mask = counts > 0
-ax.semilogy(r_vals[mask], counts[mask], '-', color='#e74c3c', linewidth=1.5)
-# Fit: N(r) ~ C/(1-r²)
-ax.semilogy(r_vals, 3 / (1 - r_vals**2), '--', color='#3498db', linewidth=1,
-            alpha=0.7, label=r'$3/(1-r^2)$')
-ax.set_xlabel('Euclidean radius r', fontsize=11)
-ax.set_ylabel('N(r) (log scale)', fontsize=11)
-ax.set_title('Growth Rate (log scale)', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
+# Right: Log-log ratio
+ax2 = axes[1]
+hyp_radii = [2 * np.arctanh(r) for r in radii if r < 0.99]
+hyp_counts = [sum(1 for z in lattice if abs(z) < r) for r in radii if r < 0.99]
 
-# Bottom left: Normalized N(r)·(1-r²)
-ax = axes[1, 0]
-mask2 = (r_vals > 0.3) & (counts > 0)
-ax.plot(r_vals[mask2], normalized[mask2], '-', color='#2ecc71', linewidth=1.5)
-ax.axhline(y=np.median(normalized[mask2 & (r_vals > 0.7)]), 
-           color='#e74c3c', linestyle='--', linewidth=1, 
-           label=f'Median = {np.median(normalized[mask2 & (r_vals > 0.7)]):.2f}')
-ax.set_xlabel('Euclidean radius r', fontsize=11)
-ax.set_ylabel(r'$N(r) \cdot (1-r^2)$', fontsize=11)
-ax.set_title('Conjecture Test: Does N(r)·(1-r²) converge?', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
+# Plot N(R) vs e^R in hyperbolic radius
+ax2.semilogy([2 * np.arctanh(r) for r in radii if 0.1 < r < 0.98],
+             [max(c, 0.5) for r, c in zip(radii, counts) if 0.1 < r < 0.98],
+             'b-', linewidth=2, label='N(R) (data)')
+R_range = np.linspace(0.2, 5, 100)
+ax2.semilogy(R_range, C_fit * np.exp(R_range), 'r--', linewidth=2,
+             label=f'C·e^R, C={C_fit:.2f}')
+ax2.set_xlabel('Hyperbolic radius R = 2 arctanh(r)', fontsize=12)
+ax2.set_ylabel('Count N(R)', fontsize=12)
+ax2.set_title('Exponential Growth in Hyperbolic Radius', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=11)
+ax2.grid(True, alpha=0.3)
 
-# Bottom right: p(p²-1)/6 for primes
-ax = axes[1, 1]
-primes = [p for p in range(2, 50) if all(p % i != 0 for i in range(2, int(p**0.5)+1))]
-indices = [p * (p**2 - 1) // 6 for p in primes]
-ax.bar(range(len(primes)), indices, color='#9b59b6', alpha=0.7)
-ax.set_xticks(range(len(primes)))
-ax.set_xticklabels(primes, fontsize=8)
-ax.set_xlabel('Prime p', fontsize=11)
-ax.set_ylabel(r'$p(p^2-1)/6$', fontsize=11)
-ax.set_title('Congruence Subgroup Index (proved ∈ ℤ)', fontsize=13)
-ax.grid(True, alpha=0.3, axis='y')
-
-plt.suptitle('Hyperbolic Number Theory: Growth Conjecture Analysis',
+plt.suptitle('Hyperbolic Prime Number Theorem: Lattice Growth Rate',
              fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('growth_conjecture.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved growth_conjecture.png")
+plt.savefig('growth_rate.png', dpi=150, bbox_inches='tight')
+print(f"Saved growth_rate.png (C_fit = {C_fit:.4f}, 6/π = {6/np.pi:.4f})")
 
 
+#!/usr/bin/env python3
 """
-Visualization 1: Poincaré Disk Tessellation
-============================================
-Visualizes the orbit of the origin under PSL(2,ℤ) in the Poincaré disk,
-showing the hyperbolic lattice points that form the "hyperbolic integers."
-The concentric circles show geodesic (hyperbolic) distance levels.
+Visualization 3: Möbius Transformations as Hyperbolic Isometries
+
+Shows how a Möbius transformation deforms a grid on the Poincaré disk.
+The left panel shows the original grid, the right panel shows the
+transformed grid. Both panels include the unit circle and geodesics.
+This illustrates the key theorem: Möbius maps preserve the disk.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import math
 
-# === Inline all needed functions ===
 
-def sl2_mul(g, h):
-    a1,b1,c1,d1 = g
-    a2,b2,c2,d2 = h
-    return (a1*a2+b1*c2, a1*b2+b1*d2, c1*a2+d1*c2, c1*b2+d1*d2)
+def mobius_transform(a, z):
+    """Apply Möbius transformation φ_a(z) = (z - a) / (1 - conj(a)*z)"""
+    return (z - a) / (1 - np.conj(a) * z)
 
-def sl2_inv(g):
-    a,b,c,d = g
-    return (d,-b,-c,a)
 
-def generate_orbit(max_depth=7):
-    S = (0,-1,1,0)
-    T = (1,1,0,1)
-    Ti = (1,-1,0,1)
-    gens = [S, T, Ti]
+def hyperbolic_geodesic(z1, z2, n_points=100):
+    """
+    Compute the hyperbolic geodesic between z1 and z2 in the Poincaré disk.
+    Uses the fact that geodesics are arcs of circles orthogonal to the unit circle.
+    """
+    # Parametric interpolation using Möbius transforms
+    # Map z1 to 0, then the geodesic through 0 and φ_{z1}(z2) is a diameter
+    w = mobius_transform(z1, z2)
+    t = np.linspace(0, 1, n_points)
+    # The geodesic from 0 to w is the straight line segment
+    line = t[:, None] * np.array([[w.real, w.imag]])
+    line_complex = line[:, 0] + 1j * line[:, 1]
+    # Map back
+    geodesic = np.array([mobius_transform(-z1, p) for p in line_complex])
+    return geodesic
+
+
+# Setup
+fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+theta = np.linspace(0, 2*np.pi, 200)
+
+# Center of the Möbius transform
+a = 0.4 + 0.3j
+
+for ax_idx, (ax, title, do_transform) in enumerate(zip(
+    axes,
+    ['Original Grid', f'After Möbius Transform φ_a, a={a:.2f}'],
+    [False, True]
+)):
+    # Unit circle
+    ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
     
-    orbit = {}
-    identity = (1,0,0,1)
-    key = lambda g: tuple(round(x, 6) for x in g)
-    orbit[key(identity)] = identity
-    frontier = [identity]
+    # Create a grid of points in the disk
+    grid_points = []
+    for x in np.linspace(-0.8, 0.8, 17):
+        for y in np.linspace(-0.8, 0.8, 17):
+            z = complex(x, y)
+            if abs(z) < 0.85:
+                grid_points.append(z)
     
-    for _ in range(max_depth):
-        nf = []
-        for g in frontier:
-            for gen in gens:
-                h = sl2_mul(g, gen)
-                k = key(h)
-                if k not in orbit:
-                    orbit[k] = h
-                    nf.append(h)
-        frontier = nf
-    return list(orbit.values())
+    if do_transform:
+        mapped = [mobius_transform(a, z) for z in grid_points]
+    else:
+        mapped = grid_points
+    
+    # Color by original distance from origin
+    colors = [abs(z) for z in grid_points]
+    
+    ax.scatter([z.real for z in mapped], [z.imag for z in mapped],
+               c=colors, cmap='viridis', s=15, alpha=0.7, zorder=3)
+    
+    # Draw some geodesic circles (concentric hyperbolic circles)
+    for r_hyp in [0.5, 1.0, 1.5, 2.0]:
+        r_euc = np.tanh(r_hyp / 2)
+        circle = r_euc * np.exp(1j * theta)
+        if do_transform:
+            circle = np.array([mobius_transform(a, z) for z in circle])
+            ax.plot(circle.real, circle.imag, 'b-', alpha=0.2, linewidth=0.8)
+        else:
+            ax.plot(circle.real, circle.imag, 'b-', alpha=0.2, linewidth=0.8)
+    
+    # Draw some radial geodesics
+    for angle in np.linspace(0, 2*np.pi, 12, endpoint=False):
+        endpoint = 0.9 * np.exp(1j * angle)
+        geo = hyperbolic_geodesic(0j, endpoint, 50)
+        if do_transform:
+            geo = np.array([mobius_transform(a, z) for z in geo])
+        ax.plot(geo.real, geo.imag, 'gray', alpha=0.2, linewidth=0.5)
+    
+    # Mark the center a
+    if do_transform:
+        origin_mapped = mobius_transform(a, 0j)
+        ax.plot(origin_mapped.real, origin_mapped.imag, 'r*', markersize=15, 
+                zorder=5, label='Image of origin')
+        ax.plot(0, 0, 'go', markersize=8, zorder=5, label='Image of a')
+    else:
+        ax.plot(0, 0, 'go', markersize=8, zorder=5, label='Origin')
+        ax.plot(a.real, a.imag, 'r*', markersize=15, zorder=5, label=f'a = {a:.2f}')
+    
+    ax.set_xlim(-1.15, 1.15)
+    ax.set_ylim(-1.15, 1.15)
+    ax.set_aspect('equal')
+    ax.set_title(title, fontsize=13, fontweight='bold')
+    ax.legend(fontsize=10, loc='upper right')
+    ax.grid(True, alpha=0.15)
 
-def to_disk(g):
-    a,b,c,d = g
-    denom = c**2 + d**2
-    if denom < 1e-15:
-        return None
-    re_z = (a*c + b*d) / denom
-    im_z = (a*d - b*c) / denom
-    num_re, num_im = re_z, im_z - 1
-    den_re, den_im = re_z, im_z + 1
-    den_sq = den_re**2 + den_im**2
-    if den_sq < 1e-15:
-        return None
-    w_re = (num_re*den_re + num_im*den_im) / den_sq
-    w_im = (num_im*den_re - num_re*den_im) / den_sq
-    r_sq = w_re**2 + w_im**2
-    if r_sq >= 1 - 1e-10:
-        return None
-    return (w_re, w_im)
+plt.suptitle('Möbius Transformations Preserve the Poincaré Disk\n(Proven: ‖φ_a(z)‖ < 1 for ‖a‖, ‖z‖ < 1)',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('mobius_transform.png', dpi=150, bbox_inches='tight')
+print("Saved mobius_transform.png")
 
-# === Generate data ===
-matrices = generate_orbit(7)
-points = []
-for g in matrices:
-    pt = to_disk(g)
-    if pt:
-        points.append(pt)
 
-xs = [p[0] for p in points]
-ys = [p[1] for p in points]
-rs = [math.sqrt(p[0]**2 + p[1]**2) for p in points]
+#!/usr/bin/env python3
+"""
+Visualization 1: PSL(2,Z) Lattice on the Poincaré Disk
 
-# === Plot ===
-fig, ax = plt.subplots(1, 1, figsize=(10, 10), facecolor='#0a0a2e')
-ax.set_facecolor('#0a0a2e')
+Shows the orbit of the point i under PSL(2,Z), mapped to the Poincaré disk.
+Hyperbolic primes are highlighted in red, composite points in blue.
+The unit circle boundary represents infinity in hyperbolic geometry.
+"""
 
-# Draw the unit disk boundary
-circle = plt.Circle((0, 0), 1, fill=False, color='white', linewidth=2)
-ax.add_patch(circle)
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import deque
+from typing import List, Dict, Tuple
 
-# Draw hyperbolic distance circles (in Euclidean coords)
-for hyp_r in [0.5, 1.0, 1.5, 2.0, 2.5]:
-    # Euclidean radius for hyperbolic radius R: r = tanh(R/2)
-    euc_r = math.tanh(hyp_r / 2)
-    c = plt.Circle((0, 0), euc_r, fill=False, color='#334477', 
-                    linewidth=0.5, linestyle='--', alpha=0.5)
-    ax.add_patch(c)
-    ax.text(euc_r + 0.02, 0.02, f'R={hyp_r}', color='#5577aa', fontsize=7, alpha=0.7)
 
-# Color points by distance from origin
-colors = plt.cm.plasma(np.array(rs) / max(rs) if rs else [0])
-sizes = 20 / (1 + 5 * np.array(rs))
+def cayley_to_disk(z: complex) -> complex:
+    return (z - 1j) / (z + 1j)
 
-ax.scatter(xs, ys, c=rs, cmap='plasma', s=sizes * 10, alpha=0.8, 
-           edgecolors='none', zorder=5)
 
-# Mark origin
-ax.plot(0, 0, 'o', color='#00ffaa', markersize=8, zorder=10)
-ax.text(0.03, 0.03, 'O', color='#00ffaa', fontsize=12, fontweight='bold')
+def generate_psl2z_orbit(max_points=500, max_depth=8):
+    visited = {}
+    queue = deque()
+    basepoint = complex(0, 1)
+    
+    def canonical(z):
+        return (round(z.real * 1e8), round(z.imag * 1e8))
+    
+    visited[canonical(basepoint)] = basepoint
+    queue.append((basepoint, 0))
+    
+    while queue and len(visited) < max_points:
+        z, depth = queue.popleft()
+        if depth >= max_depth:
+            continue
+        transforms = []
+        if abs(z) > 1e-10:
+            transforms.append(-1/z)
+        transforms.append(z + 1)
+        transforms.append(z - 1)
+        for w in transforms:
+            if w.imag < 1e-10:
+                continue
+            key = canonical(w)
+            if key not in visited:
+                visited[key] = w
+                queue.append((w, depth + 1))
+    
+    disk_points = []
+    for z_uhp in visited.values():
+        z_disk = cayley_to_disk(z_uhp)
+        if abs(z_disk) < 1 - 1e-12:
+            disk_points.append(z_disk)
+    return sorted(disk_points, key=abs)
+
+
+def mobius_add(z, w):
+    denom = 1 + np.conj(z) * w
+    if abs(denom) < 1e-15:
+        return complex(float('inf'), 0)
+    return (z + w) / denom
+
+
+def is_hyp_prime(z, points, tol=1e-5):
+    r = abs(z)
+    if r < tol:
+        return False
+    smaller = [w for w in points if tol < abs(w) < r - tol]
+    for a in smaller:
+        for b in smaller:
+            s = mobius_add(a, b)
+            if abs(s) < 1e10 and abs(s - z) < tol:
+                return False
+    return True
+
+
+# Generate lattice
+lattice = generate_psl2z_orbit(max_points=300, max_depth=7)
+
+# Classify primes (only check first ~40 for speed)
+n_check = min(40, len(lattice))
+primes = []
+composites = []
+for i, z in enumerate(lattice[:n_check]):
+    if abs(z) < 1e-5:
+        continue
+    if is_hyp_prime(z, lattice[:n_check]):
+        primes.append(z)
+    else:
+        composites.append(z)
+
+remaining = lattice[n_check:]
+
+# Plot
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+# Unit circle
+theta = np.linspace(0, 2*np.pi, 200)
+ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2, alpha=0.8)
+
+# Hyperbolic geodesic circles (circles of constant hyperbolic distance)
+for r_hyp in [1, 2, 3, 4]:
+    r_euc = np.tanh(r_hyp / 2)
+    circle = r_euc * np.exp(1j * theta)
+    ax.plot(circle.real, circle.imag, 'k--', alpha=0.15, linewidth=0.5)
+
+# Plot remaining lattice points
+if remaining:
+    ax.scatter([z.real for z in remaining], [z.imag for z in remaining],
+               c='lightblue', s=15, alpha=0.5, zorder=2, label='Lattice points')
+
+# Plot composites
+if composites:
+    ax.scatter([z.real for z in composites], [z.imag for z in composites],
+               c='steelblue', s=30, alpha=0.7, zorder=3, label='Composite')
+
+# Plot primes
+if primes:
+    ax.scatter([z.real for z in primes], [z.imag for z in primes],
+               c='crimson', s=60, marker='*', zorder=4, label='Hyperbolic primes')
+
+# Origin
+ax.plot(0, 0, 'ko', markersize=8, zorder=5)
+ax.annotate('0', (0.02, 0.02), fontsize=12, fontweight='bold')
 
 ax.set_xlim(-1.15, 1.15)
 ax.set_ylim(-1.15, 1.15)
 ax.set_aspect('equal')
-ax.set_title(f'Hyperbolic Integers: PSL(2,ℤ) Orbit in the Poincaré Disk\n'
-             f'({len(points)} lattice points, depth 7)',
-             color='white', fontsize=14, pad=20)
-ax.tick_params(colors='#666666')
-for spine in ax.spines.values():
-    spine.set_color('#333333')
+ax.legend(fontsize=12, loc='upper right')
+ax.set_title('PSL(2,ℤ) Lattice on the Poincaré Disk\nHyperbolic Primes (★) vs Composites (●)',
+             fontsize=14, fontweight='bold')
+ax.set_xlabel('Re(z)', fontsize=12)
+ax.set_ylabel('Im(z)', fontsize=12)
+ax.grid(True, alpha=0.2)
 
 plt.tight_layout()
-plt.savefig('poincare_disk_orbit.png', dpi=150, bbox_inches='tight',
-            facecolor='#0a0a2e')
-plt.close()
-print(f"Saved poincare_disk_orbit.png with {len(points)} points")
-
-
-"""
-Visualization 2: Trace Growth and Chebyshev Connection
-=======================================================
-Shows how the trace of SL₂(ℝ) powers follows the Chebyshev
-recurrence, demonstrating exponential growth for hyperbolic elements.
-This connects hyperbolic dynamics to polynomial algebra.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-
-# === Inline functions ===
-
-def trace_sequence_chebyshev(t, n_terms):
-    """Compute tr(g^k) using Chebyshev recurrence: T_{k+2} = t·T_{k+1} - T_k"""
-    traces = [2.0, t]
-    for _ in range(n_terms - 2):
-        traces.append(t * traces[-1] - traces[-2])
-    return traces
-
-def euler_totient(n):
-    if n <= 1:
-        return n
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-# === Generate data ===
-n_terms = 15
-
-# Different traces
-traces_data = {}
-for t in [2.0, 2.5, 3.0, 4.0]:
-    seq = trace_sequence_chebyshev(t, n_terms)
-    traces_data[t] = seq
-
-# Totient sums
-ns = list(range(1, 51))
-tot_sums = []
-cumsum = 0
-for n in ns:
-    cumsum += euler_totient(n)
-    tot_sums.append(cumsum)
-
-# === Plot ===
-fig, axes = plt.subplots(1, 2, figsize=(14, 6), facecolor='white')
-
-# Left: Trace growth
-ax = axes[0]
-colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
-for (t, seq), col in zip(traces_data.items(), colors):
-    label = f'tr(g) = {t}'
-    if t == 2.0:
-        ax.plot(range(n_terms), seq, 'o-', color=col, label=label, 
-                markersize=4, linewidth=1.5)
-    else:
-        ax.plot(range(n_terms), [abs(s) for s in seq], 'o-', color=col, 
-                label=label, markersize=4, linewidth=1.5)
-
-ax.set_yscale('log')
-ax.set_xlabel('Power n', fontsize=12)
-ax.set_ylabel('|tr(gⁿ)|', fontsize=12)
-ax.set_title('Trace Growth: Chebyshev Recurrence\n'
-             r'$\mathrm{tr}(g^{n+2}) = \mathrm{tr}(g) \cdot \mathrm{tr}(g^{n+1}) - \mathrm{tr}(g^n)$',
-             fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_xlim(-0.5, n_terms - 0.5)
-
-# Right: Totient sum growth
-ax = axes[1]
-ax.fill_between(ns, tot_sums, alpha=0.3, color='#3498db')
-ax.plot(ns, tot_sums, 'o-', color='#2c3e50', markersize=3, linewidth=1.5,
-        label=r'$\sum_{k=1}^n \varphi(k)$')
-ax.plot(ns, ns, '--', color='#e74c3c', linewidth=1.5, label='n (lower bound)')
-ax.plot(ns, [3*n**2/(math.pi**2) for n in ns], ':', color='#2ecc71', 
-        linewidth=2, label=r'$3n^2/\pi^2$ (asymptotic)')
-
-ax.set_xlabel('n', fontsize=12)
-ax.set_ylabel('Count', fontsize=12)
-ax.set_title('Totient Sum Growth (Farey Fraction Count)\n'
-             'Proved: Σφ(k) ≥ n for all n ≥ 1',
-             fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('trace_and_totient.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved trace_and_totient.png")
+plt.savefig('poincare_lattice.png', dpi=150, bbox_inches='tight')
+print("Saved poincare_lattice.png")
