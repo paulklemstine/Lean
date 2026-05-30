@@ -1,355 +1,362 @@
 """
-Algorithms for Primewise Persistent Homology
+Algorithms for Primewise Persistence Homology
 
-This module implements the core algorithms for computing persistence barcodes
-from Frobenius orbit data, testing local-global principles, and evaluating
-the separation conjecture.
-
-Algorithms:
-1. Frobenius orbit computation for conics mod p
+Implements the core algorithms from the research paper:
+1. Frobenius orbit signature computation
 2. Persistence barcode construction from orbit data
-3. Pell separation test across prime ranges
-4. Mod-9 obstruction classifier
-5. Barcode distance computation (bottleneck distance)
+3. Signature comparison and classification
+4. Euler characteristic computation for chain complexes
+
+All algorithms include complexity analysis in docstrings.
 """
 
-from typing import List, Tuple, Dict, Set, Optional
-import math
-from collections import Counter
+from typing import Optional
+import numpy as np
+from dataclasses import dataclass, field
 
 
-# ── Algorithm 1: Frobenius Orbit Computation ──────────────────────────
-
-def compute_frobenius_orbits(
-    curve_points: List[Tuple[int, ...]],
-    frobenius_map: callable,
-    p: int
-) -> List[int]:
+@dataclass
+class FrobeniusAction:
     """
-    Compute orbit sizes of a Frobenius-like map on a set of points.
+    A Frobenius action on a finite set, represented as a permutation.
 
-    Args:
-        curve_points: List of points (as tuples) on the curve mod p
-        frobenius_map: Function (point, p) -> point representing Frobenius
-        p: The prime
-
-    Returns:
-        List of orbit sizes (each positive)
-
-    Time complexity: O(N * max_orbit_size) where N = len(curve_points)
-    Space complexity: O(N)
+    Attributes:
+        perm: permutation as a list where perm[i] = σ(i)
     """
-    visited = set()
-    orbit_sizes = []
+    perm: list[int]
 
-    for pt in curve_points:
-        if pt in visited:
-            continue
+    @property
+    def card(self) -> int:
+        return len(self.perm)
 
-        # Trace the orbit
-        orbit = []
-        current = pt
-        while current not in visited:
-            visited.add(current)
-            orbit.append(current)
-            current = frobenius_map(current, p)
+    def apply(self, x: int) -> int:
+        """Apply σ to x. O(1)."""
+        return self.perm[x]
 
-        if orbit:
-            orbit_sizes.append(len(orbit))
+    def apply_power(self, x: int, k: int) -> int:
+        """Apply σ^k to x. O(k)."""
+        result = x
+        for _ in range(k):
+            result = self.perm[result]
+        return result
 
-    return orbit_sizes
+    def fixed_point_count(self) -> int:
+        """
+        Count fixed points of σ.
+        Time: O(n), Space: O(1)
+        """
+        return sum(1 for i in range(self.card) if self.perm[i] == i)
 
+    def iter_fixed_count(self, k: int) -> int:
+        """
+        Count fixed points of σ^k.
+        Time: O(n*k), Space: O(1)
+        """
+        return sum(1 for i in range(self.card) if self.apply_power(i, k) == i)
 
-def pell_conic_points(d: int, p: int) -> List[Tuple[int, int]]:
-    """
-    Compute points on the Pell conic x² - dy² = 1 over F_p.
+    def orbit_decomposition(self) -> list[list[int]]:
+        """
+        Decompose into orbits of the cyclic group ⟨σ⟩.
+        Time: O(n), Space: O(n)
 
-    Time complexity: O(p²)
-    Space complexity: O(p)
-    """
-    points = []
-    for x in range(p):
-        for y in range(p):
-            if (x * x - d * y * y - 1) % p == 0:
-                points.append((x, y))
-    return points
-
-
-def elliptic_curve_points(a: int, b: int, p: int) -> List[Tuple[int, int]]:
-    """
-    Compute affine points on y² = x³ + ax + b over F_p.
-
-    Time complexity: O(p²)
-    Space complexity: O(p)
-    """
-    points = []
-    for x in range(p):
-        rhs = (x * x * x + a * x + b) % p
-        for y in range(p):
-            if (y * y) % p == rhs:
-                points.append((x, y))
-    return points
-
-
-# ── Algorithm 2: Persistence Barcode Construction ─────────────────────
-
-def orbits_to_barcode(orbit_sizes: List[int]) -> List[Tuple[int, int]]:
-    """
-    Convert orbit sizes to persistence barcode intervals.
-
-    Each orbit of size k produces interval [0, k).
-
-    Args:
-        orbit_sizes: List of positive integers (orbit sizes)
-
-    Returns:
-        List of (birth, death) pairs
-
-    Time complexity: O(n) where n = len(orbit_sizes)
-    Space complexity: O(n)
-
-    Invariant (proved in Lean):
-        sum of lifetimes = sum of orbit_sizes = total_points
-    """
-    return [(0, k) for k in orbit_sizes]
-
-
-def barcode_total_persistence(barcode: List[Tuple[int, int]]) -> int:
-    """Compute total persistence of a barcode."""
-    return sum(d - b for b, d in barcode if d > 0)
-
-
-def barcode_euler_characteristic(barcode: List[Tuple[int, int]]) -> int:
-    """
-    Compute the Euler characteristic of a barcode.
-    Each interval with even birth contributes +1, odd birth contributes -1.
-    """
-    return sum(1 if b % 2 == 0 else -1 for b, _ in barcode)
-
-
-def barcode_rank_function(barcode: List[Tuple[int, int]], t: int) -> int:
-    """Count intervals alive at filtration level t."""
-    return sum(1 for b, d in barcode if b <= t and (d == 0 or t < d))
-
-
-# ── Algorithm 3: Pell Separation Test ─────────────────────────────────
-
-def is_prime(n: int) -> bool:
-    """Primality test. O(√n) time."""
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
-    return True
-
-
-def primes_up_to(n: int) -> List[int]:
-    """Sieve of Eratosthenes. O(n log log n) time."""
-    if n < 2: return []
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, n + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, n + 1) if sieve[i]]
-
-
-def quadratic_residue_signature(d: int, prime_bound: int) -> Dict[int, int]:
-    """
-    Compute the quadratic residue signature of d:
-    for each prime p ≤ prime_bound, count #{x ∈ F_p : x² ≡ d (mod p)}.
-
-    Args:
-        d: The integer to analyze
-        prime_bound: Upper bound for primes
-
-    Returns:
-        Dict mapping prime -> count of square roots of d mod p
-
-    Time complexity: O(π(B) * B) where B = prime_bound
-    """
-    primes = primes_up_to(prime_bound)
-    return {p: sum(1 for x in range(p) if (x*x) % p == d % p) for p in primes}
-
-
-def test_pell_separation(
-    d_values: List[int],
-    prime_bound: int
-) -> Tuple[int, int, List[Tuple[int, int]]]:
-    """
-    Test the Pell separation conjecture: for distinct squarefree d₁ ≠ d₂,
-    does there exist a prime p where the quadratic residue counts differ?
-
-    Returns:
-        (separated_count, total_pairs, unseparated_pairs)
-
-    Time complexity: O(|D|² * π(B) * B) where D = d_values, B = prime_bound
-    """
-    signatures = {d: quadratic_residue_signature(d, prime_bound) for d in d_values}
-
-    separated = 0
-    total = 0
-    unseparated = []
-
-    for i, d1 in enumerate(d_values):
-        for d2 in d_values[i+1:]:
-            total += 1
-            sig1 = signatures[d1]
-            sig2 = signatures[d2]
-
-            if any(sig1[p] != sig2[p] for p in sig1):
-                separated += 1
-            else:
-                unseparated.append((d1, d2))
-
-    return separated, total, unseparated
-
-
-# ── Algorithm 4: Mod-9 Obstruction Classifier ─────────────────────────
-
-def mod9_persistence(n: int) -> int:
-    """
-    Compute the mod-9 persistence indicator.
-    Returns 0 if n ≡ 4 or 5 (mod 9), else 1.
-
-    This implements the formal definition from the Lean proof:
-    integers with vanishing persistence cannot be sums of three cubes.
-    """
-    return 0 if n % 9 in (4, 5) else 1
-
-
-def classify_sum_three_cubes(n_max: int) -> Dict[str, List[int]]:
-    """
-    Classify integers up to n_max by their sum-of-three-cubes status.
-
-    Returns dict with keys:
-        'obstructed': n ≡ 4, 5 (mod 9), provably not representable
-        'candidate': all other residues, potentially representable
-    """
-    result = {'obstructed': [], 'candidate': []}
-    for n in range(1, n_max + 1):
-        if mod9_persistence(n) == 0:
-            result['obstructed'].append(n)
-        else:
-            result['candidate'].append(n)
-    return result
-
-
-# ── Algorithm 5: Bottleneck Distance ──────────────────────────────────
-
-def bottleneck_distance(
-    barcode1: List[Tuple[int, int]],
-    barcode2: List[Tuple[int, int]]
-) -> float:
-    """
-    Compute an approximation of the bottleneck distance between two barcodes.
-
-    Uses a greedy matching approach (not optimal, but fast).
-
-    Time complexity: O(n * m) where n, m are barcode sizes
-    Space complexity: O(n + m)
-    """
-    # Augment with diagonal projections
-    def diagonal_cost(interval):
-        b, d = interval
-        return (d - b) / 2.0
-
-    intervals1 = list(barcode1)
-    intervals2 = list(barcode2)
-
-    # Greedy matching
-    used2 = set()
-    max_cost = 0.0
-
-    for i, (b1, d1) in enumerate(intervals1):
-        best_cost = diagonal_cost((b1, d1))  # cost of matching to diagonal
-        best_j = -1
-
-        for j, (b2, d2) in enumerate(intervals2):
-            if j in used2:
+        Returns list of orbits, each orbit is a list of elements.
+        """
+        visited = set()
+        orbits = []
+        for i in range(self.card):
+            if i in visited:
                 continue
-            cost = max(abs(b1 - b2), abs(d1 - d2))
-            if cost < best_cost:
-                best_cost = cost
-                best_j = j
+            orbit = []
+            x = i
+            while x not in visited:
+                visited.add(x)
+                orbit.append(x)
+                x = self.perm[x]
+            orbits.append(orbit)
+        return orbits
 
-        if best_j >= 0:
-            used2.add(best_j)
-        max_cost = max(max_cost, best_cost)
+    def orbit_sizes(self) -> list[int]:
+        """Return sorted list of orbit sizes. O(n)."""
+        return sorted(len(o) for o in self.orbit_decomposition())
 
-    # Unmatched intervals in barcode2
-    for j, (b2, d2) in enumerate(intervals2):
-        if j not in used2:
-            max_cost = max(max_cost, diagonal_cost((b2, d2)))
+    def num_orbits(self) -> int:
+        """
+        Count orbits via Burnside's lemma: |orbits| = (1/|G|) * Σ |Fix(g)|.
+        For cyclic group of order n, this is efficient.
+        Time: O(n), Space: O(n)
+        """
+        return len(self.orbit_decomposition())
 
-    return max_cost
 
-
-# ── Algorithm 6: Prime Signature Family ───────────────────────────────
-
-def compute_signature_family(
-    d: int,
-    prime_bound: int
-) -> Dict[int, List[Tuple[int, int]]]:
+@dataclass
+class PrimeSignature:
     """
-    Compute the primewise persistence signature family for a Pell conic.
+    The persistence-relevant data at a prime p.
 
-    For each good prime p, compute the Frobenius orbit barcode of x²-dy²=1.
-
-    Returns: Dict mapping prime -> barcode (list of intervals)
+    Attributes:
+        prime: the prime p
+        counts: list of fixed point counts [|Fix(σ)|, |Fix(σ²)|, ..., |Fix(σ^d)|]
     """
-    primes = [p for p in primes_up_to(prime_bound) if p != 2 and d % p != 0]
-    family = {}
+    prime: int
+    counts: list[int]
 
-    for p in primes:
-        points = pell_conic_points(d, p)
-        orbit_sizes = [1] * len(points)  # Frobenius is identity over F_p
-        family[p] = orbits_to_barcode(orbit_sizes)
+    @property
+    def depth(self) -> int:
+        return len(self.counts)
 
-    return family
+    def agrees_with(self, other: 'PrimeSignature') -> bool:
+        """Check if two signatures have the same counts. O(depth)."""
+        return self.counts == other.counts
+
+    def discrepancy(self, other: 'PrimeSignature') -> int:
+        """Maximum absolute difference in counts. O(depth)."""
+        return max(abs(a - b) for a, b in zip(self.counts, other.counts))
 
 
-# ── Example Usage ─────────────────────────────────────────────────────
+@dataclass
+class ArithmeticObject:
+    """
+    An arithmetic object (e.g., curve) characterized by its prime signatures.
+
+    Attributes:
+        name: descriptive name
+        signatures: dict mapping prime p to PrimeSignature
+    """
+    name: str
+    signatures: dict[int, PrimeSignature] = field(default_factory=dict)
+
+    def add_signature(self, sig: PrimeSignature) -> None:
+        self.signatures[sig.prime] = sig
+
+    def is_separated_from(self, other: 'ArithmeticObject') -> Optional[int]:
+        """
+        Find a prime at which signatures disagree.
+        Returns the prime, or None if all agree.
+        Time: O(sum of depths at shared primes)
+        """
+        for p in self.signatures:
+            if p in other.signatures:
+                if not self.signatures[p].agrees_with(other.signatures[p]):
+                    return p
+        return None
+
+
+def compute_frobenius_signature(
+    point_counter: callable,
+    p: int,
+    depth: int = 2
+) -> PrimeSignature:
+    """
+    Compute the prime signature from a point-counting function.
+
+    Args:
+        point_counter: function(p, k) -> number of F_{p^k}-rational points
+        p: the prime
+        depth: number of Frobenius iterates to compute
+
+    Returns:
+        PrimeSignature with the computed counts
+
+    Time: O(depth * T(point_counter))
+    Space: O(depth)
+    """
+    counts = [point_counter(p, k) for k in range(1, depth + 1)]
+    return PrimeSignature(prime=p, counts=counts)
+
+
+def alternating_sum(values: list[int]) -> int:
+    """
+    Compute the alternating sum Σ (-1)^i * v_i.
+
+    This is the Euler characteristic of the associated chain complex.
+    Time: O(n), Space: O(1)
+    """
+    return sum((-1)**i * v for i, v in enumerate(values))
+
+
+@dataclass
+class FiniteChainComplex:
+    """
+    A finite chain complex with integer ranks at each degree.
+
+    Attributes:
+        ranks: list of ranks [r_0, r_1, ..., r_{n-1}]
+        boundary_ranks: list of boundary map ranks
+    """
+    ranks: list[int]
+    boundary_ranks: list[int]
+
+    def euler_characteristic(self) -> int:
+        """
+        Compute χ = Σ (-1)^i * rank_i.
+        Time: O(n), Space: O(1)
+        """
+        return alternating_sum(self.ranks)
+
+    @staticmethod
+    def direct_sum(c1: 'FiniteChainComplex', c2: 'FiniteChainComplex') -> 'FiniteChainComplex':
+        """
+        Direct sum of two chain complexes.
+        χ(C1 ⊕ C2) = χ(C1) + χ(C2)
+        Time: O(n), Space: O(n)
+        """
+        n = max(len(c1.ranks), len(c2.ranks))
+        r1 = c1.ranks + [0] * (n - len(c1.ranks))
+        r2 = c2.ranks + [0] * (n - len(c2.ranks))
+        b1 = c1.boundary_ranks + [0] * (n - len(c1.boundary_ranks))
+        b2 = c2.boundary_ranks + [0] * (n - len(c2.boundary_ranks))
+        return FiniteChainComplex(
+            ranks=[a + b for a, b in zip(r1, r2)],
+            boundary_ranks=[a + b for a, b in zip(b1, b2)]
+        )
+
+
+def frobenius_chain_complex(action: FrobeniusAction, depth: int) -> FiniteChainComplex:
+    """
+    Build a chain complex from Frobenius fixed point counts.
+
+    The rank at degree i is |Fix(σ^{i+1})|.
+    This bridges number theory (Frobenius) with topology (chain complexes).
+
+    Time: O(depth * n * depth), Space: O(depth)
+    """
+    ranks = [action.iter_fixed_count(k + 1) for k in range(depth)]
+    return FiniteChainComplex(ranks=ranks, boundary_ranks=[0] * depth)
+
+
+@dataclass
+class PersistenceBarcode:
+    """
+    A persistence barcode: a multiset of intervals [birth, death).
+
+    Each interval represents a topological feature that appears at
+    filtration level 'birth' and disappears at 'death'.
+    """
+    intervals: list[tuple[int, int]]  # (birth, death) pairs
+
+    @property
+    def num_features(self) -> int:
+        return len(self.intervals)
+
+    def total_persistence(self) -> int:
+        """Sum of lifetimes. O(n)."""
+        return sum(d - b for b, d in self.intervals)
+
+    def betti_at(self, level: int) -> int:
+        """Number of features alive at given level. O(n)."""
+        return sum(1 for b, d in self.intervals if b <= level < d)
+
+    def bottleneck_distance(self, other: 'PersistenceBarcode') -> float:
+        """
+        Approximate bottleneck distance between two barcodes.
+        Uses greedy matching. O(n*m) where n,m are barcode sizes.
+        """
+        if not self.intervals or not other.intervals:
+            max_pers = 0
+            for b, d in self.intervals + other.intervals:
+                max_pers = max(max_pers, (d - b) / 2)
+            return max_pers
+
+        used = set()
+        max_cost = 0
+        for b1, d1 in self.intervals:
+            best_cost = (d1 - b1) / 2  # cost of matching to diagonal
+            best_j = -1
+            for j, (b2, d2) in enumerate(other.intervals):
+                if j in used:
+                    continue
+                cost = max(abs(b1 - b2), abs(d1 - d2))
+                if cost < best_cost:
+                    best_cost = cost
+                    best_j = j
+            if best_j >= 0:
+                used.add(best_j)
+            max_cost = max(max_cost, best_cost)
+
+        # Check unmatched intervals in other
+        for j, (b2, d2) in enumerate(other.intervals):
+            if j not in used:
+                max_cost = max(max_cost, (d2 - b2) / 2)
+
+        return max_cost
+
+
+def signature_classifier(
+    signatures: dict[int, PrimeSignature],
+    reference_signatures: dict[str, dict[int, PrimeSignature]]
+) -> str:
+    """
+    Classify an arithmetic object by comparing its signatures to references.
+
+    Uses majority voting across all shared primes.
+
+    Args:
+        signatures: the object's prime signatures
+        reference_signatures: dict mapping class name to reference signatures
+
+    Returns:
+        The class name with the best match
+
+    Time: O(|primes| * |classes| * depth)
+    """
+    scores = {name: 0 for name in reference_signatures}
+
+    for p, sig in signatures.items():
+        for name, ref_sigs in reference_signatures.items():
+            if p in ref_sigs:
+                if sig.agrees_with(ref_sigs[p]):
+                    scores[name] += 1
+
+    return max(scores, key=scores.get)
+
+
+# ---- Example usage ----
 
 if __name__ == "__main__":
-    # Example 1: Orbit computation
-    print("Algorithm 1: Frobenius orbits for x² - 2y² = 1 mod 7")
-    points = pell_conic_points(2, 7)
-    print(f"  Points: {points}")
-    print(f"  Orbit sizes: {[1] * len(points)}")
+    print("=== Algorithm Demonstrations ===\n")
 
-    # Example 2: Barcode construction
-    print("\nAlgorithm 2: Barcode from orbits [1, 2, 3, 1, 5]")
-    barcode = orbits_to_barcode([1, 2, 3, 1, 5])
-    print(f"  Barcode: {barcode}")
-    print(f"  Total persistence: {barcode_total_persistence(barcode)}")
-    print(f"  Euler characteristic: {barcode_euler_characteristic(barcode)}")
+    # Example 1: Frobenius action
+    print("1. Frobenius Action (cyclic permutation on 7 elements)")
+    perm = [1, 2, 3, 4, 5, 6, 0]  # 7-cycle
+    action = FrobeniusAction(perm=perm)
+    print(f"   Card: {action.card}")
+    print(f"   Fixed points of σ: {action.fixed_point_count()}")
+    print(f"   Fixed points of σ²: {action.iter_fixed_count(2)}")
+    print(f"   Fixed points of σ⁷: {action.iter_fixed_count(7)}")
+    print(f"   Orbits: {action.orbit_decomposition()}")
+    print(f"   Orbit sizes: {action.orbit_sizes()}")
 
-    # Example 3: Pell separation
-    print("\nAlgorithm 3: Pell separation test")
-    sep, total, unsep = test_pell_separation([2, 3, 5, 6, 7, 10], 50)
-    print(f"  {sep}/{total} pairs separated")
-    if unsep:
-        print(f"  Unseparated: {unsep}")
+    # Example 2: Chain complex
+    print("\n2. Chain Complex from Frobenius")
+    cc = frobenius_chain_complex(action, depth=4)
+    print(f"   Ranks: {cc.ranks}")
+    print(f"   Euler characteristic: {cc.euler_characteristic()}")
 
-    # Example 4: Mod-9 classification
-    print("\nAlgorithm 4: Mod-9 classification up to 30")
-    classes = classify_sum_three_cubes(30)
-    print(f"  Obstructed: {classes['obstructed']}")
+    # Example 3: Identity action
+    print("\n3. Identity Action (n=5)")
+    id_action = FrobeniusAction(perm=list(range(5)))
+    print(f"   Fixed points of σ^k for k=1..4: "
+          f"{[id_action.iter_fixed_count(k) for k in range(1, 5)]}")
+    id_cc = frobenius_chain_complex(id_action, depth=4)
+    print(f"   Euler char: {id_cc.euler_characteristic()}")
+    print(f"   Expected: 5 * (1-1+1-1) = 0: {5 * alternating_sum([1,1,1,1])}")
 
-    # Example 5: Bottleneck distance
-    print("\nAlgorithm 5: Bottleneck distance")
-    b1 = [(0, 3), (0, 1), (0, 5)]
-    b2 = [(0, 2), (0, 1), (0, 4)]
-    print(f"  d_B({b1}, {b2}) = {bottleneck_distance(b1, b2)}")
+    # Example 4: Persistence barcode
+    print("\n4. Persistence Barcode")
+    barcode1 = PersistenceBarcode(intervals=[(0, 3), (1, 4), (2, 5)])
+    barcode2 = PersistenceBarcode(intervals=[(0, 2), (1, 5), (3, 6)])
+    print(f"   Barcode 1: {barcode1.intervals}, persistence={barcode1.total_persistence()}")
+    print(f"   Barcode 2: {barcode2.intervals}, persistence={barcode2.total_persistence()}")
+    print(f"   Bottleneck distance: {barcode1.bottleneck_distance(barcode2):.2f}")
 
-    # Example 6: Signature family
-    print("\nAlgorithm 6: Signature family for d=2, primes ≤ 20")
-    family = compute_signature_family(2, 20)
-    for p, bc in sorted(family.items()):
-        print(f"  p={p}: {len(bc)} intervals, "
-              f"total_pers={barcode_total_persistence(bc)}")
+    # Example 5: Euler characteristic additivity
+    print("\n5. Euler Characteristic Additivity")
+    c1 = FiniteChainComplex(ranks=[3, 2, 1], boundary_ranks=[0, 0, 0])
+    c2 = FiniteChainComplex(ranks=[1, 3, 2], boundary_ranks=[0, 0, 0])
+    c_sum = FiniteChainComplex.direct_sum(c1, c2)
+    print(f"   χ(C1) = {c1.euler_characteristic()}")
+    print(f"   χ(C2) = {c2.euler_characteristic()}")
+    print(f"   χ(C1⊕C2) = {c_sum.euler_characteristic()}")
+    print(f"   χ(C1) + χ(C2) = {c1.euler_characteristic() + c2.euler_characteristic()}")
+    assert c_sum.euler_characteristic() == c1.euler_characteristic() + c2.euler_characteristic()
+    print("   ✓ Additivity verified!")
