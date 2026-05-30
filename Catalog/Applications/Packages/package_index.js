@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Machine Learning \u00d7 Algebra \u00d7 Tropical Geometry",
     "date": "2026-05-30T14:53:20Z",
     "exp_id": "3ff76eec",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7187382352941176,
+    "quality": "substantial",
     "pkg_num": 411
   },
   {
@@ -11928,8 +11928,8 @@ window.PACKAGE_GRAPH = {
       "shape": "sphere_rings",
       "date": "2026-05-30T14:53:20Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7187382352941176,
+      "quality": "substantial"
     }
   ],
   "edges": [
