@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Hyperbolic Geometry / Number Theory",
     "date": "2026-05-30T09:24:53Z",
     "exp_id": "be364682",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5757892344497607,
+    "quality": "partial",
     "pkg_num": 393
   },
   {
@@ -11406,8 +11406,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-30T09:24:53Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5757892344497607,
+      "quality": "partial"
     }
   ],
   "edges": [

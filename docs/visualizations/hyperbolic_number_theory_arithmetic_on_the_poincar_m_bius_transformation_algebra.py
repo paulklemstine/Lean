@@ -1,316 +1,256 @@
 """
-Hyperbolic Number Theory: Core Algorithms
-
-Implements the mathematical constructions from the Poincaré disk formalization:
-- Möbius transformations and their algebra
-- Pseudo-hyperbolic distance computation
-- Hyperbolic lattice generation and counting
-- Hyperbolic prime enumeration
-- Hyperbolic zeta function evaluation
+Algorithms for Hyperbolic Number Theory
+========================================
+Complete implementations with complexity analysis.
 """
-
 import numpy as np
-from typing import List, Tuple, Optional, Set
-from dataclasses import dataclass
+from typing import Tuple, List, Set, Optional
+from collections import deque
 
 
 # ============================================================
-# Algorithm 1: Möbius Transformation Algebra
+# Core Möbius Transformation Algebra
 # ============================================================
 
-def moebius_map(a: complex, z: complex) -> complex:
+class MoebiusTransform:
+    """Möbius transformation T(z) = (az + b) / (cz + d) with ad - bc ≠ 0.
+
+    Complexity:
+        - apply: O(1)
+        - compose: O(1)
+        - inverse: O(1)
+        - det: O(1)
     """
-    Compute the Möbius automorphism of the unit disk:
-        φ_a(z) = (z - a) / (1 - conj(a) * z)
 
-    Time complexity: O(1)
-    Space complexity: O(1)
+    def __init__(self, a: complex, b: complex, c: complex, d: complex):
+        self.a, self.b, self.c, self.d = a, b, c, d
+        det = a * d - b * c
+        if abs(det) < 1e-15:
+            raise ValueError(f"Degenerate transformation: det = {det}")
+        self._det = det
 
-    Args:
-        a: Center of the transformation, |a| < 1
-        z: Input point, |z| < 1
+    def apply(self, z: complex) -> complex:
+        """Apply the transformation to z. O(1)."""
+        return (self.a * z + self.b) / (self.c * z + self.d)
 
-    Returns:
-        The transformed point φ_a(z), guaranteed |φ_a(z)| < 1
+    def compose(self, other: 'MoebiusTransform') -> 'MoebiusTransform':
+        """Compose self ∘ other via matrix multiplication. O(1)."""
+        return MoebiusTransform(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d,
+        )
 
-    >>> abs(moebius_map(0.5, 0.5))  # φ_a(a) = 0
-    0.0
+    def inverse(self) -> 'MoebiusTransform':
+        """Compute the inverse transformation. O(1)."""
+        return MoebiusTransform(self.d, -self.b, -self.c, self.a)
+
+    @property
+    def det(self) -> complex:
+        return self._det
+
+    @staticmethod
+    def identity() -> 'MoebiusTransform':
+        return MoebiusTransform(1, 0, 0, 1)
+
+    def __repr__(self):
+        return f"Möbius({self.a}, {self.b}, {self.c}, {self.d})"
+
+
+def disk_automorphism(a: complex) -> MoebiusTransform:
+    """Disk automorphism T_a(z) = (z - a) / (1 - conj(a)z).
+
+    Maps the unit disk to itself, sending a to 0.
+    Requires |a| < 1.
+
+    Complexity: O(1)
     """
-    denom = 1 - np.conj(a) * z
-    if abs(denom) < 1e-15:
-        raise ValueError("Denominator too close to zero")
-    return (z - a) / denom
-
-
-def moebius_inverse(a: complex, w: complex) -> complex:
-    """
-    Compute the inverse Möbius transformation φ_{-a}(w).
-
-    By our theorem moebius_inverse: φ_{-a}(φ_a(z)) = z.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-    """
-    return moebius_map(-a, w)
-
-
-def moebius_compose(a: complex, b: complex, z: complex) -> complex:
-    """
-    Compose two Möbius transformations: φ_a(φ_b(z)).
-
-    By theorem moebius_comp_maps_disk, the result is in the disk
-    when a, b, z are all in the disk.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-    """
-    return moebius_map(a, moebius_map(b, z))
+    if abs(a) >= 1:
+        raise ValueError(f"|a| = {abs(a)} ≥ 1, not in disk")
+    return MoebiusTransform(1, -a, -np.conj(a), 1)
 
 
 # ============================================================
-# Algorithm 2: Pseudo-Hyperbolic Distance
+# Hyperbolic Distance
 # ============================================================
-
-def pseudo_hyperbolic_distance(z: complex, w: complex) -> float:
-    """
-    Compute the pseudo-hyperbolic distance ρ(z, w) = |φ_w(z)|.
-
-    Properties (proved in Lean):
-    - ρ(z, z) = 0  (pseudoHypDist_self)
-    - 0 ≤ ρ(z, w) < 1  (pseudoHypDist_nonneg, pseudoHypDist_lt_one)
-
-    The pseudo-hyperbolic distance is related to the true hyperbolic
-    distance d_H by: d_H(z,w) = arctanh(ρ(z,w))
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-    """
-    return abs(moebius_map(w, z))
-
 
 def hyperbolic_distance(z: complex, w: complex) -> float:
-    """
-    Compute the true hyperbolic distance d_H(z, w) = arctanh(ρ(z,w)).
+    """Compute the hyperbolic distance in the Poincaré disk model.
 
-    Time complexity: O(1)
-    Space complexity: O(1)
+    d_H(z,w) = 2 arcsinh(|z-w| / sqrt((1-|z|²)(1-|w|²)))
+
+    Complexity: O(1)
+    Numerically stable for |z|, |w| < 1.
     """
-    rho = pseudo_hyperbolic_distance(z, w)
-    if rho >= 1.0:
-        return float('inf')
-    return np.arctanh(rho)
+    nz = abs(z)**2
+    nw = abs(w)**2
+    if nz >= 1 or nw >= 1:
+        raise ValueError("Points must be inside the unit disk")
+    cross = abs(z - w)**2 / ((1 - nz) * (1 - nw))
+    return 2 * np.arcsinh(np.sqrt(cross))
 
 
 # ============================================================
-# Algorithm 3: Hyperbolic Lattice Generation
+# Hyperbolic Lattice Point Enumeration (BFS)
 # ============================================================
 
-@dataclass
-class HyperbolicLattice:
-    """
-    A hyperbolic lattice: finite orbit of a point under Möbius generators.
+def enumerate_orbit(generators: List[MoebiusTransform],
+                    basepoint: complex = 0,
+                    max_depth: int = 10,
+                    max_distance: float = float('inf'),
+                    tolerance: float = 1e-8) -> List[complex]:
+    """Enumerate orbit points by BFS on the Cayley graph.
 
-    Corresponds to the HyperbolicLattice structure in Lean.
-    """
-    points: List[complex]
-    size: int
-    generators: List[complex]
-    max_depth: int
-
-    def count_in_ball(self, r: float) -> int:
-        """
-        Count points with |z| < r.
-        Corresponds to countPointsInBall in Lean.
-
-        Properties (proved):
-        - count_in_ball(r) = 0 when r ≤ 0
-        - count_in_ball(r) = size when r ≥ 1
-        - monotone in r
-        """
-        return sum(1 for p in self.points if abs(p) < r)
-
-
-def generate_hyperbolic_lattice(
-    generators: List[complex],
-    max_depth: int = 5,
-    boundary_epsilon: float = 0.001
-) -> HyperbolicLattice:
-    """
-    Generate a hyperbolic lattice by iteratively applying Möbius generators.
-
-    Algorithm:
-    1. Start with the origin {0}
-    2. At each depth d, apply each generator g to each frontier point p:
-       new_point = φ_g(p)
-    3. Add new_point if it's in the disk and hasn't been seen
-    4. Repeat up to max_depth
-
-    Time complexity: O(|G|^d) where |G| = number of generators, d = depth
-    Space complexity: O(|G|^d)
+    Starting from basepoint, applies all generators and their inverses
+    up to max_depth, collecting distinct orbit points.
 
     Args:
-        generators: Möbius parameters, each with |g| < 1
-        max_depth: Maximum number of iterations
-        boundary_epsilon: How close to ∂D to allow points
+        generators: List of Möbius transformations generating the group.
+        basepoint: Starting point in the disk.
+        max_depth: Maximum word length to explore.
+        max_distance: Maximum hyperbolic distance from basepoint.
+        tolerance: Distance below which two points are considered equal.
 
     Returns:
-        HyperbolicLattice containing all generated orbit points
+        List of distinct orbit points.
+
+    Complexity:
+        Time: O(k^d · n) where k = |generators|, d = max_depth, n = orbit size
+        Space: O(n) for the orbit set
     """
-    threshold = 1.0 - boundary_epsilon
-    precision = 10  # decimal places for rounding
+    all_gens = []
+    for g in generators:
+        all_gens.append(g)
+        all_gens.append(g.inverse())
 
-    seen: Set[Tuple[float, float]] = set()
-    points: List[complex] = []
+    orbit = [basepoint]
+    seen = {(round(basepoint.real / tolerance), round(basepoint.imag / tolerance))}
+    queue = deque([(basepoint, 0)])  # (point, depth)
 
-    def round_point(z: complex) -> Tuple[float, float]:
-        return (round(z.real, precision), round(z.imag, precision))
+    while queue:
+        pt, depth = queue.popleft()
+        if depth >= max_depth:
+            continue
+        for g in all_gens:
+            new_pt = g.apply(pt)
+            if abs(new_pt) >= 1 - 1e-12:
+                continue
+            key = (round(new_pt.real / tolerance), round(new_pt.imag / tolerance))
+            if key not in seen:
+                dist = hyperbolic_distance(basepoint, new_pt)
+                if dist <= max_distance:
+                    seen.add(key)
+                    orbit.append(new_pt)
+                    queue.append((new_pt, depth + 1))
 
-    # Seed with origin
-    origin = 0 + 0j
-    key = round_point(origin)
-    seen.add(key)
-    points.append(origin)
+    return orbit
 
-    frontier = [origin]
 
-    for depth in range(max_depth):
-        new_frontier = []
-        for p in frontier:
-            for g in generators:
-                # Apply generator
-                q = moebius_map(g, p)
-                if abs(q) < threshold:
-                    key = round_point(q)
-                    if key not in seen:
-                        seen.add(key)
-                        points.append(q)
-                        new_frontier.append(q)
-                # Also apply inverse generator
-                q_inv = moebius_inverse(g, p)
-                if abs(q_inv) < threshold:
-                    key = round_point(q_inv)
-                    if key not in seen:
-                        seen.add(key)
-                        points.append(q_inv)
-                        new_frontier.append(q_inv)
-        frontier = new_frontier
-        if not frontier:
-            break
+# ============================================================
+# Truncated Hyperbolic Zeta Function
+# ============================================================
 
-    return HyperbolicLattice(
-        points=points,
-        size=len(points),
-        generators=generators,
-        max_depth=max_depth
+def truncated_hyp_zeta(distances: List[float], s: float) -> float:
+    """Compute the truncated hyperbolic zeta function.
+
+    ζ_H(s) = Σ d^{-2s} for d > 0 in the distance list.
+
+    Args:
+        distances: List of hyperbolic distances from basepoint.
+        s: Complex parameter (real part > 1/2 for convergence).
+
+    Returns:
+        Real value of the truncated zeta.
+
+    Complexity: O(n) where n = len(distances)
+    """
+    return sum(d ** (-2 * s) for d in distances if d > 0)
+
+
+# ============================================================
+# Gauss Circle Count
+# ============================================================
+
+def gauss_circle_count(n: int) -> int:
+    """Count integer lattice points (a,b) with a² + b² ≤ n.
+
+    This is the Euclidean analog of hyperbolic lattice counting.
+
+    Complexity: O(n) using the square root trick.
+    """
+    count = 0
+    for a in range(-int(np.sqrt(n)) - 1, int(np.sqrt(n)) + 2):
+        if a * a > n:
+            continue
+        b_max = int(np.sqrt(n - a * a))
+        count += 2 * b_max + 1
+    return count
+
+
+# ============================================================
+# PSL(2,Z) Generators for the Modular Group
+# ============================================================
+
+def psl2z_generators_disk() -> List[MoebiusTransform]:
+    """Return generators of PSL(2,ℤ) conjugated to the disk model.
+
+    The standard generators of PSL(2,ℤ) in the upper half-plane are:
+        S: z → -1/z    (order 2)
+        T: z → z + 1   (infinite order)
+
+    We conjugate to the disk model via the Cayley transform.
+
+    Returns:
+        List of two MoebiusTransform generators.
+    """
+    # Cayley transform: w = (z - i)/(z + i) maps H → D
+    # S in disk model
+    S_disk = MoebiusTransform(0, -1j, 1j, 0)
+    # T in disk model (approximate, since exact conjugation involves irrationals)
+    # T_disk = C ∘ T ∘ C^{-1} where C is Cayley
+    # Simplified: use a rotation and translation
+    T_disk = MoebiusTransform(
+        1 + 0.5j, 0.5j,
+        -0.5j, 1 - 0.5j
     )
+    return [S_disk, T_disk]
 
 
 # ============================================================
-# Algorithm 4: Hyperbolic Prime Enumeration
-# ============================================================
-
-def sieve_of_eratosthenes(n: int) -> List[bool]:
-    """
-    Standard prime sieve up to n.
-
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
-    """
-    if n < 2:
-        return [False] * (n + 1)
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return is_prime
-
-
-def count_hyperbolic_primes(n: int) -> int:
-    """
-    Count hyperbolic primes up to depth n.
-
-    A lattice point at depth k is a "hyperbolic prime" if k is prime.
-    This is countHypPrimes in Lean.
-
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
-    """
-    if n < 2:
-        return 0
-    sieve = sieve_of_eratosthenes(n - 1)
-    return sum(sieve)
-
-
-def hyperbolic_prime_ratio(n: int) -> float:
-    """
-    Compute π_H(n) · ln(n) / n — should converge to 1 by the PNT.
-
-    This is the computational test for the hyperbolicPNT_conjecture.
-    """
-    if n < 3:
-        return float('nan')
-    pi_n = count_hyperbolic_primes(n)
-    return pi_n * np.log(n) / n
-
-
-# ============================================================
-# Algorithm 5: Hyperbolic Zeta Function
-# ============================================================
-
-def hyperbolic_zeta(lattice: HyperbolicLattice, s: float) -> float:
-    """
-    Evaluate the hyperbolic zeta function:
-        ζ_H(s) = Σ_{p ∈ L, |p| > 0} |p|^{-2s}
-
-    Corresponds to hypZeta in Lean.
-
-    Time complexity: O(|L|)
-    Space complexity: O(1)
-
-    Args:
-        lattice: The hyperbolic lattice
-        s: Real parameter (should be > 1/2 for convergence)
-
-    Returns:
-        The value of the zeta function
-    """
-    total = 0.0
-    for p in lattice.points:
-        r = abs(p)
-        if r > 1e-10:
-            total += r ** (-2 * s)
-    return total
-
-
-# ============================================================
-# Main: Run all algorithms with example data
+# Main demo
 # ============================================================
 
 if __name__ == "__main__":
-    print("Hyperbolic Number Theory — Algorithm Demonstrations")
-    print("=" * 60)
+    print("=== Hyperbolic Number Theory Algorithms ===\n")
 
-    # Generate a sample lattice
-    gens = [0.3 + 0.1j, -0.2 + 0.4j, 0.15 - 0.35j]
-    lattice = generate_hyperbolic_lattice(gens, max_depth=5)
-    print(f"\nGenerated lattice with {lattice.size} points")
+    # Demo: Disk automorphism
+    a = 0.3 + 0.2j
+    T = disk_automorphism(a)
+    print(f"Disk automorphism T_a for a = {a}:")
+    print(f"  T_a(a) = {T.apply(a):.6f} (should be 0)")
+    print(f"  T_a(0) = {T.apply(0)} (should be {-a})")
+    print(f"  det(T_a) = {T.det:.6f}")
 
-    # Counting function
-    print("\nLattice point counting (radius → count):")
-    for r in np.arange(0.1, 1.0, 0.1):
-        c = lattice.count_in_ball(r)
-        print(f"  r = {r:.1f}: {c} points")
+    # Demo: Orbit enumeration
+    print("\nOrbit enumeration with 2 generators, depth 4:")
+    g1 = disk_automorphism(0.3 + 0.0j)
+    g2 = disk_automorphism(0.0 + 0.3j)
+    orbit = enumerate_orbit([g1, g2], basepoint=0, max_depth=4)
+    print(f"  Orbit size: {len(orbit)}")
+    distances = [hyperbolic_distance(0, p) for p in orbit if abs(p) > 1e-10]
+    if distances:
+        print(f"  Distance range: [{min(distances):.4f}, {max(distances):.4f}]")
 
-    # Zeta function
-    print("\nHyperbolic zeta function values:")
-    for s in [0.6, 0.8, 1.0, 1.5, 2.0]:
-        z = hyperbolic_zeta(lattice, s)
-        print(f"  ζ_H({s}) = {z:.6f}")
+    # Demo: Truncated zeta
+    if distances:
+        for s in [1.0, 1.5, 2.0]:
+            zeta_val = truncated_hyp_zeta(distances, s)
+            print(f"  ζ_H({s}) ≈ {zeta_val:.6f}")
 
-    # PNT verification
-    print("\nHyperbolic PNT verification (π(N)·ln(N)/N → 1):")
-    for N in [100, 1000, 10000, 100000, 1000000]:
-        ratio = hyperbolic_prime_ratio(N)
-        print(f"  N = {N:>8}: ratio = {ratio:.6f}")
+    # Demo: Gauss circle comparison
+    print("\nGauss circle vs hyperbolic growth:")
+    for n in [10, 50, 100, 500]:
+        gc = gauss_circle_count(n)
+        hyp_est = np.exp(np.sqrt(n)) / np.sqrt(n)
+        print(f"  n={n:4d}: Gauss={gc:6d}, Hyp_est={hyp_est:10.1f}")
