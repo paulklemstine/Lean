@@ -1,318 +1,312 @@
-#!/usr/bin/env python3
 """
-EML Kolmogorov-Arnold Representation: Algorithms
+EML-Kolmogorov-Arnold Representation: Algorithms
 
-Implements constructive algorithms for EML superposition decomposition,
-including exact monomial/polynomial decomposition and approximate
-template fitting for general functions on positive domains.
+This module implements the core algorithms for constructing and evaluating
+EML-KA (Kolmogorov-Arnold) decompositions of multivariate functions.
+
+The key insight: many fundamental operations (multiplication, powers,
+geometric means, division) can be decomposed into sums of univariate
+EML-composed functions, achieving the Kolmogorov-Arnold representation
+with far fewer terms than the general theorem requires.
 """
 
 import numpy as np
-from typing import List, Tuple, Callable, Optional
+from typing import List, Callable, Tuple, Optional
+from dataclasses import dataclass
 
 
-# ============================================================================
-# Core Data Structures
-# ============================================================================
+@dataclass
+class KADecomp2:
+    """A Kolmogorov-Arnold decomposition for a bivariate function.
 
-class EMLSuperposition:
+    Represents f(x,y) = Σ_q w_q * Φ_q(φ1_q(x) + φ2_q(y))
+
+    Attributes:
+        Q: Number of terms in the decomposition
+        phi1: List of Q inner functions for the first variable
+        phi2: List of Q inner functions for the second variable
+        Phi: List of Q outer functions
+        weights: List of Q scalar weights (default: all 1.0)
     """
-    An EML superposition model for bivariate functions.
+    Q: int
+    phi1: List[Callable[[float], float]]
+    phi2: List[Callable[[float], float]]
+    Phi: List[Callable[[float], float]]
+    weights: Optional[List[float]] = None
 
-    Represents f(x,y) = sum_i outer_i(inner1_i(x) + inner2_i(y))
+    def __post_init__(self):
+        if self.weights is None:
+            self.weights = [1.0] * self.Q
 
-    Each term has:
-      - outer: R -> R  (outer univariate function)
-      - inner1: R -> R  (first inner function, applied to x)
-      - inner2: R -> R  (second inner function, applied to y)
-    """
+    def eval(self, x: float, y: float) -> float:
+        """Evaluate the KA decomposition at (x, y).
 
-    def __init__(self):
-        self.terms: List[Tuple[Callable, Callable, Callable]] = []
-
-    def add_term(self, outer: Callable, inner1: Callable, inner2: Callable):
-        """Add a superposition term."""
-        self.terms.append((outer, inner1, inner2))
-
-    def eval(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
-        """Evaluate the superposition at points (x, y)."""
-        result = np.zeros_like(x, dtype=float)
-        for outer, inner1, inner2 in self.terms:
-            result += outer(inner1(x) + inner2(y))
+        Time complexity: O(Q * T) where T is the cost of evaluating each component.
+        Space complexity: O(1) additional space.
+        """
+        result = 0.0
+        for q in range(self.Q):
+            inner = self.phi1[q](x) + self.phi2[q](y)
+            result += self.weights[q] * self.Phi[q](inner)
         return result
 
-    def __repr__(self) -> str:
-        return f"EMLSuperposition(terms={len(self.terms)})"
+    def eval_vectorized(self, xs: np.ndarray, ys: np.ndarray) -> np.ndarray:
+        """Evaluate the KA decomposition on arrays of inputs.
+
+        Args:
+            xs: Array of x values, shape (N,)
+            ys: Array of y values, shape (N,)
+
+        Returns:
+            Array of f(x,y) values, shape (N,)
+
+        Time complexity: O(Q * N)
+        Space complexity: O(N)
+        """
+        result = np.zeros_like(xs)
+        for q in range(self.Q):
+            inner = np.vectorize(self.phi1[q])(xs) + np.vectorize(self.phi2[q])(ys)
+            result += self.weights[q] * np.vectorize(self.Phi[q])(inner)
+        return result
 
 
-# ============================================================================
-# Algorithm 1: Monomial EML Decomposition
-# ============================================================================
+def mul_ka_decomp() -> KADecomp2:
+    """Construct the EML-KA decomposition for multiplication.
 
-def monomial_witness(a: float, b: float, coeff: float = 1.0) -> EMLSuperposition:
-    """
-    Construct an EML superposition witness for c * x^a * y^b.
-
-    Uses the identity: c * x^a * y^b = c * exp(a*log(x) + b*log(y))
-
-    Args:
-        a: Exponent for x
-        b: Exponent for y
-        coeff: Coefficient (default 1.0)
+    x * y = exp(log(x) + log(y)) for x, y > 0.
 
     Returns:
-        EMLSuperposition with 1 term
-
-    Complexity: O(1) construction, O(1) evaluation per point
+        A 1-term KA decomposition with inner=log, outer=exp.
 
     Example:
-        >>> S = monomial_witness(2.0, 3.0, coeff=5.0)
-        >>> S.eval(np.array([2.0]), np.array([3.0]))  # 5 * 4 * 27 = 540
-        array([540.])
+        >>> d = mul_ka_decomp()
+        >>> d.eval(3.0, 4.0)  # Should be 12.0
+        12.000000000000002
     """
-    S = EMLSuperposition()
-    S.add_term(
-        outer=lambda t, c=coeff: c * np.exp(t),
-        inner1=lambda x, a=a: a * np.log(x),
-        inner2=lambda y, b=b: b * np.log(y)
+    return KADecomp2(
+        Q=1,
+        phi1=[np.log],
+        phi2=[np.log],
+        Phi=[np.exp],
     )
-    return S
 
 
-# ============================================================================
-# Algorithm 2: Polynomial EML Decomposition
-# ============================================================================
+def pow_ka_decomp(n: int) -> KADecomp2:
+    """Construct the EML-KA decomposition for x^n.
 
-def polynomial_witness(
-    terms: List[Tuple[float, float, float]]
-) -> EMLSuperposition:
-    """
-    Construct an EML superposition for a positive-coefficient polynomial.
-
-    Decomposes p(x,y) = sum_k c_k * x^{a_k} * y^{b_k} into
-    sum_k c_k * exp(a_k * log(x) + b_k * log(y))
+    x^n = exp(n * log(x)) for x > 0.
 
     Args:
-        terms: List of (coefficient, x_exponent, y_exponent) tuples.
-               Coefficients must be positive.
+        n: The exponent (non-negative integer).
 
     Returns:
-        EMLSuperposition with len(terms) terms
-
-    Complexity: O(K) construction, O(K) evaluation per point
+        A 1-term KA decomposition.
 
     Example:
-        >>> # p(x,y) = x^2 + 3xy + 2y^2
-        >>> S = polynomial_witness([(1, 2, 0), (3, 1, 1), (2, 0, 2)])
-        >>> x, y = np.array([2.0]), np.array([3.0])
-        >>> S.eval(x, y)  # 4 + 18 + 18 = 40
-        array([40.])
+        >>> d = pow_ka_decomp(3)
+        >>> d.eval(2.0, 1.0)  # Should be 8.0
+        8.000000000000002
     """
-    S = EMLSuperposition()
-    for c, a, b in terms:
-        if c <= 0:
-            raise ValueError(f"Coefficient {c} must be positive")
-        S.add_term(
-            outer=lambda t, c=c: c * np.exp(t),
-            inner1=lambda x, a=a: a * np.log(x),
-            inner2=lambda y, b=b: b * np.log(y)
-        )
-    return S
+    return KADecomp2(
+        Q=1,
+        phi1=[lambda x, n=n: n * np.log(x)],
+        phi2=[lambda y: 0.0],
+        Phi=[np.exp],
+    )
 
 
-# ============================================================================
-# Algorithm 3: Approximate EML Template Fitting
-# ============================================================================
+def geom_mean_ka_decomp() -> KADecomp2:
+    """Construct the EML-KA decomposition for the geometric mean.
 
-def fit_eml_template(
-    f: Callable[[np.ndarray, np.ndarray], np.ndarray],
+    sqrt(x*y) = exp(0.5*log(x) + 0.5*log(y)) for x, y > 0.
+
+    Returns:
+        A 1-term KA decomposition.
+
+    Example:
+        >>> d = geom_mean_ka_decomp()
+        >>> d.eval(4.0, 9.0)  # Should be 6.0
+        6.000000000000001
+    """
+    return KADecomp2(
+        Q=1,
+        phi1=[lambda x: 0.5 * np.log(x)],
+        phi2=[lambda y: 0.5 * np.log(y)],
+        Phi=[np.exp],
+    )
+
+
+def div_ka_decomp() -> KADecomp2:
+    """Construct the EML-KA decomposition for division.
+
+    x/y = exp(log(x) - log(y)) for x, y > 0.
+
+    Returns:
+        A 1-term KA decomposition.
+
+    Example:
+        >>> d = div_ka_decomp()
+        >>> d.eval(6.0, 3.0)  # Should be 2.0
+        2.0000000000000004
+    """
+    return KADecomp2(
+        Q=1,
+        phi1=[np.log],
+        phi2=[lambda y: -np.log(y)],
+        Phi=[np.exp],
+    )
+
+
+def ka_decomp_add(d1: KADecomp2, d2: KADecomp2) -> KADecomp2:
+    """Add two KA decompositions: (d1 + d2)(x,y) = d1(x,y) + d2(x,y).
+
+    The result has Q1 + Q2 terms.
+
+    Time complexity: O(1) for construction, O(Q1+Q2) for evaluation.
+
+    Args:
+        d1: First KA decomposition with Q1 terms.
+        d2: Second KA decomposition with Q2 terms.
+
+    Returns:
+        Combined KA decomposition with Q1+Q2 terms.
+    """
+    return KADecomp2(
+        Q=d1.Q + d2.Q,
+        phi1=d1.phi1 + d2.phi1,
+        phi2=d1.phi2 + d2.phi2,
+        Phi=d1.Phi + d2.Phi,
+        weights=d1.weights + d2.weights,
+    )
+
+
+def eml(x: float, y: float) -> float:
+    """The EML operation: eml(x, y) = exp(x) - log(y).
+
+    This is the fundamental building block. Key special cases:
+    - eml(x, 1) = exp(x)        (recovers exponential)
+    - eml(0, y) = 1 - log(y)    (recovers logarithm)
+    - eml(log(a), exp(b)) = a - b for a > 0  (recovers subtraction)
+
+    Args:
+        x: First argument (any real number).
+        y: Second argument (must be positive for log to be defined).
+
+    Returns:
+        exp(x) - log(y)
+    """
+    return np.exp(x) - np.log(y)
+
+
+def kl_divergence_integrand(p: float, q: float) -> float:
+    """KL divergence integrand: p * log(p/q).
+
+    Decomposition via EML:
+        p * log(p/q) = p * log(p) - p * (1 - eml(0, q))
+
+    Args:
+        p: First probability (positive).
+        q: Second probability (positive).
+
+    Returns:
+        p * log(p/q)
+    """
+    return p * np.log(p) - p * (1 - eml(0, q))
+
+
+def fenchel_young_gap(x: float, s: float) -> float:
+    """Compute the Fenchel-Young gap: exp(x) + s*log(s) - s - x*s.
+
+    This is always >= 0, with equality at x = log(s).
+    The gap measures how far (x, s) is from the optimal dual pair.
+
+    Args:
+        x: Primal variable.
+        s: Dual variable (positive).
+
+    Returns:
+        The non-negative duality gap.
+    """
+    return np.exp(x) + s * np.log(s) - s - x * s
+
+
+def ka_approximation_error(
+    decomp: KADecomp2,
+    target: Callable[[float, float], float],
     x_range: Tuple[float, float],
     y_range: Tuple[float, float],
-    m: int = 5,
-    grid_size: int = 50,
-    max_iter: int = 2000,
-    lr: float = 0.01,
-    seed: int = 42
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray, float]:
-    """
-    Fit an m-term EML template to a target function via gradient descent.
-
-    Finds parameters (alpha, beta, gamma) minimizing:
-      sum_{grid} |f(x,y) - sum_i exp(alpha_i*log(x) + beta_i*log(y) + gamma_i)|^2
+    n_samples: int = 100
+) -> dict:
+    """Compute approximation error statistics for a KA decomposition.
 
     Args:
-        f: Target function f(x, y) -> z
-        x_range: (x_min, x_max) with x_min > 0
-        y_range: (y_min, y_max) with y_min > 0
-        m: Number of EML terms
-        grid_size: Points per axis
-        max_iter: Maximum gradient descent iterations
-        lr: Learning rate
-        seed: Random seed
+        decomp: The KA decomposition to evaluate.
+        target: The target function f(x,y).
+        x_range: (x_min, x_max) range for x.
+        y_range: (y_min, y_max) range for y.
+        n_samples: Number of sample points per dimension.
 
     Returns:
-        (alpha, beta, gamma, final_residual)
+        Dictionary with max_error, mean_error, rmse statistics.
 
-    Example:
-        >>> alpha, beta, gamma, res = fit_eml_template(
-        ...     lambda x, y: x * y, (0.5, 2.0), (0.5, 2.0), m=1)
-        >>> print(f"Residual: {res:.2e}")  # Should be ~0
+    Time complexity: O(n_samples^2 * Q)
+    Space complexity: O(n_samples^2)
     """
-    rng = np.random.RandomState(seed)
+    xs = np.linspace(x_range[0], x_range[1], n_samples)
+    ys = np.linspace(y_range[0], y_range[1], n_samples)
+    XX, YY = np.meshgrid(xs, ys)
 
-    x_grid = np.linspace(x_range[0], x_range[1], grid_size)
-    y_grid = np.linspace(y_range[0], y_range[1], grid_size)
-    X, Y = np.meshgrid(x_grid, y_grid)
-    log_X = np.log(X)
-    log_Y = np.log(Y)
-    target = f(X, Y)
+    errors = []
+    for i in range(n_samples):
+        for j in range(n_samples):
+            ka_val = decomp.eval(XX[i, j], YY[i, j])
+            target_val = target(XX[i, j], YY[i, j])
+            errors.append(abs(ka_val - target_val))
 
-    # Initialize parameters
-    alpha = rng.randn(m) * 0.5 + 1.0
-    beta = rng.randn(m) * 0.5 + 1.0
-    gamma = rng.randn(m) * 0.5
-
-    best_residual = float('inf')
-    best_params = (alpha.copy(), beta.copy(), gamma.copy())
-
-    for iteration in range(max_iter):
-        # Forward pass
-        predicted = np.zeros_like(X)
-        exp_terms = []
-        for i in range(m):
-            arg = alpha[i] * log_X + beta[i] * log_Y + gamma[i]
-            exp_term = np.exp(np.clip(arg, -50, 50))
-            exp_terms.append(exp_term)
-            predicted += exp_term
-
-        residual_matrix = predicted - target
-        residual = np.sum(residual_matrix ** 2)
-
-        if residual < best_residual:
-            best_residual = residual
-            best_params = (alpha.copy(), beta.copy(), gamma.copy())
-
-        # Gradient descent
-        for i in range(m):
-            grad_common = 2 * residual_matrix * exp_terms[i]
-            alpha[i] -= lr * np.sum(grad_common * log_X) / X.size
-            beta[i] -= lr * np.sum(grad_common * log_Y) / X.size
-            gamma[i] -= lr * np.sum(grad_common) / X.size
-
-        # Reduce learning rate
-        if iteration > 0 and iteration % 500 == 0:
-            lr *= 0.5
-
-    alpha, beta, gamma = best_params
-    # Compute final residual as max absolute error
-    predicted = np.zeros_like(X)
-    for i in range(m):
-        predicted += np.exp(np.clip(alpha[i]*log_X + beta[i]*log_Y + gamma[i], -50, 50))
-    max_error = np.max(np.abs(predicted - target))
-
-    return alpha, beta, gamma, max_error
-
-
-# ============================================================================
-# Algorithm 4: Separability Test
-# ============================================================================
-
-def test_additive_separability(
-    f: Callable[[np.ndarray, np.ndarray], np.ndarray],
-    x_range: Tuple[float, float],
-    y_range: Tuple[float, float],
-    grid_size: int = 50
-) -> Tuple[float, float]:
-    """
-    Test whether a function is additively separable: f(x,y) ≈ u(x) + v(y).
-
-    Uses SVD of the function's evaluation matrix. If f is additively separable,
-    the matrix has rank 1 (up to a constant). The ratio of the second to first
-    singular value measures non-separability.
-
-    Args:
-        f: Target function
-        x_range, y_range: Domain bounds (positive)
-        grid_size: Grid resolution
-
-    Returns:
-        (relative_error, singular_value_ratio)
-
-    Example:
-        >>> err, ratio = test_additive_separability(
-        ...     lambda x, y: x * y, (1, 3), (1, 3))
-        >>> print(f"Error: {err:.4f}, ratio: {ratio:.4f}")
-    """
-    x_grid = np.linspace(x_range[0], x_range[1], grid_size)
-    y_grid = np.linspace(y_range[0], y_range[1], grid_size)
-    X, Y = np.meshgrid(x_grid, y_grid)
-    Z = f(X, Y)
-
-    # Remove mean to get the interactive part
-    row_means = Z.mean(axis=1, keepdims=True)
-    col_means = Z.mean(axis=0, keepdims=True)
-    grand_mean = Z.mean()
-    additive_approx = row_means + col_means - grand_mean
-
-    residual = Z - additive_approx
-    rel_error = np.linalg.norm(residual) / np.linalg.norm(Z)
-
-    U, S, Vt = np.linalg.svd(Z - grand_mean)
-    sv_ratio = S[1] / S[0] if S[0] > 0 else 0.0
-
-    return rel_error, sv_ratio
-
-
-# ============================================================================
-# Main: Run examples
-# ============================================================================
-
-def main():
-    print("EML Kolmogorov-Arnold: Algorithm Examples")
-    print("=" * 60)
-
-    # Example 1: Monomial decomposition
-    print("\n1. Monomial witness for 5*x^2*y^3:")
-    S = monomial_witness(2.0, 3.0, coeff=5.0)
-    x = np.array([2.0, 3.0, 1.5])
-    y = np.array([3.0, 2.0, 4.0])
-    print(f"   Direct:  {5 * x**2 * y**3}")
-    print(f"   EML:     {S.eval(x, y)}")
-    print(f"   Error:   {np.max(np.abs(5*x**2*y**3 - S.eval(x, y))):.2e}")
-
-    # Example 2: Polynomial decomposition
-    print("\n2. Polynomial witness for x^2 + 3xy + 2y^2:")
-    S = polynomial_witness([(1, 2, 0), (3, 1, 1), (2, 0, 2)])
-    direct = x**2 + 3*x*y + 2*y**2
-    print(f"   Direct:  {direct}")
-    print(f"   EML:     {S.eval(x, y)}")
-    print(f"   Error:   {np.max(np.abs(direct - S.eval(x, y))):.2e}")
-
-    # Example 3: Approximate fitting
-    print("\n3. Approximate EML fitting for sqrt(x^2 + y^2):")
-    alpha, beta, gamma, res = fit_eml_template(
-        lambda x, y: np.sqrt(x**2 + y**2),
-        (0.5, 2.0), (0.5, 2.0), m=5, max_iter=3000
-    )
-    print(f"   Max error with 5 terms: {res:.6f}")
-    print(f"   Parameters:")
-    for i in range(len(alpha)):
-        print(f"     Term {i+1}: exp({alpha[i]:.4f}*log(x) + {beta[i]:.4f}*log(y) + {gamma[i]:.4f})")
-
-    # Example 4: Separability test
-    print("\n4. Additive separability tests:")
-    functions = {
-        "x*y (non-separable)": lambda x, y: x * y,
-        "x + y (separable)": lambda x, y: x + y,
-        "x^2*y^2 (non-separable)": lambda x, y: x**2 * y**2,
-        "sin(x) + cos(y) (separable)": lambda x, y: np.sin(x) + np.cos(y),
+    errors = np.array(errors)
+    return {
+        "max_error": float(np.max(errors)),
+        "mean_error": float(np.mean(errors)),
+        "rmse": float(np.sqrt(np.mean(errors**2))),
+        "n_samples": n_samples**2,
     }
-    for name, f in functions.items():
-        err, ratio = test_additive_separability(f, (1, 3), (1, 3))
-        print(f"   {name:35s} rel_error={err:.6f}  sv_ratio={ratio:.6f}")
-
-    print("\nDone.")
 
 
 if __name__ == "__main__":
-    main()
+    # Test all decompositions
+    print("Testing EML-KA decompositions...")
+
+    d_mul = mul_ka_decomp()
+    assert abs(d_mul.eval(3.0, 4.0) - 12.0) < 1e-10
+    print(f"  mul(3,4) = {d_mul.eval(3.0, 4.0):.10f} (expected 12)")
+
+    d_pow = pow_ka_decomp(3)
+    assert abs(d_pow.eval(2.0, 1.0) - 8.0) < 1e-10
+    print(f"  pow(2,3) = {d_pow.eval(2.0, 1.0):.10f} (expected 8)")
+
+    d_geom = geom_mean_ka_decomp()
+    assert abs(d_geom.eval(4.0, 9.0) - 6.0) < 1e-10
+    print(f"  geom(4,9) = {d_geom.eval(4.0, 9.0):.10f} (expected 6)")
+
+    d_div = div_ka_decomp()
+    assert abs(d_div.eval(6.0, 3.0) - 2.0) < 1e-10
+    print(f"  div(6,3) = {d_div.eval(6.0, 3.0):.10f} (expected 2)")
+
+    # Test composition
+    d_sum = ka_decomp_add(d_mul, d_mul)
+    assert abs(d_sum.eval(3.0, 4.0) - 24.0) < 1e-10
+    print(f"  2*mul(3,4) = {d_sum.eval(3.0, 4.0):.10f} (expected 24)")
+
+    # Test error analysis
+    stats = ka_approximation_error(
+        d_mul,
+        lambda x, y: x * y,
+        (0.1, 10.0), (0.1, 10.0),
+        n_samples=50
+    )
+    print(f"\n  Multiplication error stats:")
+    print(f"    Max error:  {stats['max_error']:.2e}")
+    print(f"    Mean error: {stats['mean_error']:.2e}")
+    print(f"    RMSE:       {stats['rmse']:.2e}")
+
+    print("\nAll tests passed!")

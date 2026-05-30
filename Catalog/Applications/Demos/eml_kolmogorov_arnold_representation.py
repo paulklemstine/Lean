@@ -1,682 +1,566 @@
-#!/usr/bin/env python3
 """
-EML Kolmogorov-Arnold Representation: Applications
-
-Demonstrates real-world applications of EML superposition theory:
-1. Log-linear models in machine learning
-2. Energy decomposition in statistical mechanics
-3. Symbolic regression via EML templates
-4. Positive-domain neural network design
-"""
-
-import numpy as np
-from typing import List, Tuple
-
-
-# ============================================================================
-# Application 1: Log-Linear Models
-# ============================================================================
-
-def app_log_linear_model():
-    """
-    Show how EML superposition underlies log-linear models.
-
-    In a log-linear model: P(x,y) = exp(w1*f1(x) + w2*f2(y) + b) / Z
-    This is exactly an EML superposition with inner functions f1, f2
-    and outer function exp.
-    """
-    print("=" * 60)
-    print("Application 1: Log-Linear Models via EML")
-    print("=" * 60)
-    print()
-
-    # Feature functions
-    def f1(x):
-        return np.log(x + 1)  # log-frequency feature
-
-    def f2(y):
-        return y ** 0.5  # sqrt feature
-
-    # Weights
-    w1, w2, b = 2.0, -0.5, 1.0
-
-    # EML superposition: unnormalized score
-    def eml_score(x, y):
-        return np.exp(w1 * f1(x) + w2 * f2(y) + b)
-
-    # Evaluate on grid
-    x_vals = np.array([0.5, 1.0, 2.0, 5.0, 10.0])
-    y_vals = np.array([1.0, 2.0, 4.0, 8.0])
-
-    print("Unnormalized EML scores exp(w1*f1(x) + w2*f2(y) + b):")
-    print(f"w1={w1}, w2={w2}, b={b}")
-    print(f"f1(x) = log(x+1), f2(y) = sqrt(y)")
-    print()
-    print(f"{'x\\y':>6s}", end="")
-    for y in y_vals:
-        print(f"  y={y:<5.1f}", end="")
-    print()
-    for x in x_vals:
-        print(f"x={x:<4.1f}", end="")
-        for y in y_vals:
-            print(f"  {eml_score(x, y):8.3f}", end="")
-        print()
-
-    # Key insight: multiplicative interactions via additive log-space
-    print()
-    print("Key insight: The product structure P(x,y) = A(x) * B(y) * C")
-    print("emerges from additivity in log-space:")
-    print("  log P = w1*f1(x) + w2*f2(y) + b")
-    print("This is exactly EML superposition at work.")
-    print()
-
-
-# ============================================================================
-# Application 2: Statistical Mechanics Energy Decomposition
-# ============================================================================
-
-def app_statistical_mechanics():
-    """
-    Show how the Boltzmann distribution uses EML structure.
-
-    Z = sum_i exp(-E_i / kT) where E_i decomposes additively
-    but the probabilities interact multiplicatively.
-    """
-    print("=" * 60)
-    print("Application 2: Statistical Mechanics via EML")
-    print("=" * 60)
-    print()
-
-    # Two-particle system: E(x,y) = E1(x) + E2(y) + interaction(x,y)
-    # Without interaction: P(x,y) = P1(x) * P2(y) (multiplicatively separable)
-    # With interaction: need EML superposition
-
-    kT = 1.0  # thermal energy
-
-    def E1(x):
-        return 0.5 * x**2  # harmonic potential
-
-    def E2(y):
-        return 0.5 * y**2
-
-    def E_interaction(x, y):
-        return 0.1 * x * y  # coupling
-
-    # Without interaction: separable
-    x_grid = np.linspace(-3, 3, 50)
-    y_grid = np.linspace(-3, 3, 50)
-    X, Y = np.meshgrid(x_grid, y_grid)
-
-    # Separable Boltzmann weights
-    W_sep = np.exp(-E1(X)/kT) * np.exp(-E2(Y)/kT)
-    # = exp(-(E1(x) + E2(y))/kT)  -- additive in log-space
-
-    # Coupled Boltzmann weights (with interaction)
-    W_coupled = np.exp(-(E1(X) + E2(Y) + E_interaction(X, Y))/kT)
-
-    # The interaction term x*y in the exponent uses EML:
-    # exp(-0.1*x*y/kT) = exp(log-domain coupling)
-
-    print("Two-particle system: E(x,y) = 0.5*x^2 + 0.5*y^2 + 0.1*x*y")
-    print()
-    print("Separable part:    exp(-E1(x)/kT) * exp(-E2(y)/kT)")
-    print("  -> multiplicative separation = additive in log-space")
-    print()
-    print("Interaction part:  exp(-0.1*x*y/kT)")
-    print("  -> requires EML superposition: exp(inner1(x) + inner2(y))")
-    print("  -> On positive domain: inner1(x) = -0.1*log(x)/kT,")
-    print("     inner2(y) = log(y), but this only works for the")
-    print("     multiplicative part x*y = exp(log x + log y)")
-    print()
-
-    # Compute partition functions
-    Z_sep = np.sum(W_sep) * (x_grid[1]-x_grid[0]) * (y_grid[1]-y_grid[0])
-    Z_coupled = np.sum(W_coupled) * (x_grid[1]-x_grid[0]) * (y_grid[1]-y_grid[0])
-    print(f"Partition function (separable):  Z = {Z_sep:.4f}")
-    print(f"Partition function (coupled):    Z = {Z_coupled:.4f}")
-    print(f"Free energy shift:  ΔF = -kT*ln(Z_c/Z_s) = {-kT*np.log(Z_coupled/Z_sep):.4f}")
-    print()
-    print("The EML framework makes this coupling structure explicit:")
-    print("every multiplicative interaction in probability space")
-    print("corresponds to an additive term in the energy (log) space.")
-    print()
-
-
-# ============================================================================
-# Application 3: Symbolic Regression via EML Templates
-# ============================================================================
-
-def app_symbolic_regression():
-    """
-    Use EML templates for symbolic regression of positive-domain data.
-    """
-    print("=" * 60)
-    print("Application 3: Symbolic Regression via EML Templates")
-    print("=" * 60)
-    print()
-
-    # Generate synthetic data from a known function
-    np.random.seed(42)
-    n_data = 200
-    x_data = np.random.uniform(0.5, 3.0, n_data)
-    y_data = np.random.uniform(0.5, 3.0, n_data)
-
-    # True function: f(x,y) = 2*x^1.5 * y^0.7
-    true_func = lambda x, y: 2 * x**1.5 * y**0.7
-    z_data = true_func(x_data, y_data) + np.random.randn(n_data) * 0.01
-
-    print(f"Data: {n_data} points from f(x,y) = 2*x^1.5*y^0.7 + noise")
-    print()
-
-    # EML regression: fit z = exp(gamma + alpha*log(x) + beta*log(y))
-    # In log-space: log(z) = gamma + alpha*log(x) + beta*log(y)
-    # This is linear regression in (log x, log y, 1)!
-
-    log_x = np.log(x_data)
-    log_y = np.log(y_data)
-    log_z = np.log(z_data)
-
-    # Design matrix
-    A = np.column_stack([np.ones(n_data), log_x, log_y])
-    params, residuals, _, _ = np.linalg.lstsq(A, log_z, rcond=None)
-
-    gamma, alpha, beta = params
-    coeff = np.exp(gamma)
-
-    print("EML regression (linear in log-coordinates):")
-    print(f"  log(z) = {gamma:.4f} + {alpha:.4f}*log(x) + {beta:.4f}*log(y)")
-    print(f"  z = {coeff:.4f} * x^{alpha:.4f} * y^{beta:.4f}")
-    print()
-    print(f"  True: z = 2.0000 * x^1.5000 * y^0.7000")
-    print(f"  Recovered coefficients: c={coeff:.4f}, a={alpha:.4f}, b={beta:.4f}")
-    print()
-
-    # Prediction quality
-    z_pred = coeff * x_data**alpha * y_data**beta
-    rmse = np.sqrt(np.mean((z_data - z_pred)**2))
-    r2 = 1 - np.sum((z_data - z_pred)**2) / np.sum((z_data - z_data.mean())**2)
-    print(f"  RMSE: {rmse:.6f}")
-    print(f"  R^2:  {r2:.6f}")
-    print()
-    print("Key insight: EML structure turns nonlinear symbolic regression")
-    print("into ordinary linear regression via the log coordinate change.")
-    print()
-
-
-# ============================================================================
-# Application 4: Positive-Domain Neural Architecture
-# ============================================================================
-
-def app_neural_architecture():
-    """
-    Design and evaluate a positive-domain EML neural network.
-    """
-    print("=" * 60)
-    print("Application 4: EML Neural Network Architecture")
-    print("=" * 60)
-    print()
-
-    # Architecture: Log-Linear-Exp network
-    # Input: (x, y) with x, y > 0
-    # Layer 1: log-transform -> (log x, log y)
-    # Layer 2: linear combination -> sum_i (w1_i * log x + w2_i * log y + b_i)
-    # Layer 3: exp-transform and sum -> sum_i exp(hidden_i)
-
-    class EMLNetwork:
-        """A simple EML neural network with log input and exp output."""
-
-        def __init__(self, hidden_units: int, seed: int = 42):
-            rng = np.random.RandomState(seed)
-            self.w1 = rng.randn(hidden_units) * 0.5
-            self.w2 = rng.randn(hidden_units) * 0.5
-            self.bias = rng.randn(hidden_units) * 0.5
-            self.hidden_units = hidden_units
-
-        def forward(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
-            """Forward pass: sum_i exp(w1_i*log(x) + w2_i*log(y) + b_i)"""
-            log_x = np.log(x)
-            log_y = np.log(y)
-            result = np.zeros_like(x, dtype=float)
-            for i in range(self.hidden_units):
-                hidden = self.w1[i] * log_x + self.w2[i] * log_y + self.bias[i]
-                result += np.exp(hidden)
-            return result
-
-        def train(self, x, y, target, lr=0.01, epochs=1000):
-            """Simple gradient descent training."""
-            for epoch in range(epochs):
-                pred = self.forward(x, y)
-                error = pred - target
-                loss = np.mean(error**2)
-
-                log_x = np.log(x)
-                log_y = np.log(y)
-                for i in range(self.hidden_units):
-                    hidden = self.w1[i]*log_x + self.w2[i]*log_y + self.bias[i]
-                    exp_h = np.exp(np.clip(hidden, -50, 50))
-                    grad = 2 * error * exp_h / len(x)
-                    self.w1[i] -= lr * np.sum(grad * log_x)
-                    self.w2[i] -= lr * np.sum(grad * log_y)
-                    self.bias[i] -= lr * np.sum(grad)
-
-                if epoch % 200 == 0:
-                    current_lr = lr * (0.95 ** (epoch // 200))
-                    lr = current_lr
-
-            return loss
-
-    # Train to learn multiplication
-    print("Training EML network to learn multiplication (1 hidden unit):")
-    net = EMLNetwork(hidden_units=1, seed=42)
-
-    np.random.seed(42)
-    x_train = np.random.uniform(0.5, 3.0, 500)
-    y_train = np.random.uniform(0.5, 3.0, 500)
-    z_train = x_train * y_train
-
-    loss = net.train(x_train, y_train, z_train, lr=0.001, epochs=2000)
-
-    x_test = np.array([1.0, 2.0, 3.0, 0.5, 1.5])
-    y_test = np.array([2.0, 3.0, 1.0, 4.0, 2.5])
-    z_true = x_test * y_test
-    z_pred = net.forward(x_test, y_test)
-
-    print(f"  Final loss: {loss:.6f}")
-    print(f"  Learned parameters: w1={net.w1[0]:.4f}, w2={net.w2[0]:.4f}, "
-          f"bias={net.bias[0]:.4f}")
-    print(f"  Expected: w1=1.0, w2=1.0, bias=0.0")
-    print()
-    print(f"  {'x':>6s} {'y':>6s} {'x*y':>8s} {'pred':>8s} {'error':>10s}")
-    for x, y, zt, zp in zip(x_test, y_test, z_true, z_pred):
-        print(f"  {x:6.2f} {y:6.2f} {zt:8.4f} {zp:8.4f} {abs(zt-zp):10.6f}")
-
-    print()
-    print("The EML architecture naturally learns the exp-log decomposition")
-    print("of multiplication with a single hidden unit.")
-    print()
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-def main():
-    print()
-    print("╔════════════════════════════════════════════════════════════╗")
-    print("║  EML Kolmogorov-Arnold: Real-World Applications          ║")
-    print("╚════════════════════════════════════════════════════════════╝")
-    print()
-
-    app_log_linear_model()
-    app_statistical_mechanics()
-    app_symbolic_regression()
-    app_neural_architecture()
-
-    print("=" * 60)
-    print("ALL APPLICATIONS COMPLETE")
-    print("=" * 60)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-EML Kolmogorov-Arnold Representation: Interactive Demonstrations
-
-Demonstrates the exact exp-log decomposition of multiplication and other
-functions, verifies non-separability, and searches approximate decompositions
-for polynomials.
+EML-Kolmogorov-Arnold Representation: Applications
+
+Demonstrates real-world applications of EML-KA decompositions:
+1. Financial option pricing (Black-Scholes components)
+2. Signal processing (log-spectral analysis)
+3. Machine learning (softmax decomposition)
+4. Information theory (KL divergence computation)
 """
 
 import numpy as np
-import sys
+from typing import Tuple
 
-# ============================================================================
-# Demo 1: Exact EML Decomposition of Multiplication
-# ============================================================================
 
-def demo_exact_multiplication():
+# =====================================================================
+# Application 1: Financial Option Pricing
+# =====================================================================
+
+def black_scholes_d1(S: float, K: float, T: float,
+                     r: float, sigma: float) -> float:
+    """Compute d1 in Black-Scholes using EML-KA decomposition.
+
+    d1 = [log(S/K) + (r + σ²/2)T] / (σ√T)
+
+    The log(S/K) = log(S) - log(K) term is a KA decomposition
+    of the ratio S/K using inner functions φ₁ = log, φ₂ = -log.
+
+    Args:
+        S: Current stock price
+        K: Strike price
+        T: Time to expiration (years)
+        r: Risk-free rate
+        sigma: Volatility
+
+    Returns:
+        The d1 parameter
     """
-    Verify x*y = exp(log(x) + log(y)) on a grid of positive values.
-    """
-    print("=" * 70)
-    print("DEMO 1: Exact EML Decomposition of Multiplication")
-    print("=" * 70)
-    print()
-    print("Identity: x * y = exp(log(x) + log(y))  for x, y > 0")
-    print()
-
-    # Create a grid of positive values
-    x_vals = np.linspace(0.1, 10.0, 100)
-    y_vals = np.linspace(0.1, 10.0, 100)
-    X, Y = np.meshgrid(x_vals, y_vals)
-
-    # Direct multiplication
-    direct = X * Y
-
-    # EML superposition: exp(log(x) + log(y))
-    eml_result = np.exp(np.log(X) + np.log(Y))
-
-    # Compute errors
-    abs_error = np.abs(direct - eml_result)
-    rel_error = abs_error / np.abs(direct)
-
-    print(f"Grid size: {X.shape[0]} x {X.shape[1]} = {X.size} points")
-    print(f"Domain: [{x_vals[0]:.1f}, {x_vals[-1]:.1f}] x [{y_vals[0]:.1f}, {y_vals[-1]:.1f}]")
-    print(f"Max absolute error: {abs_error.max():.2e}")
-    print(f"Max relative error: {rel_error.max():.2e}")
-    print(f"Mean absolute error: {abs_error.mean():.2e}")
-    print()
-
-    # Spot checks
-    print("Spot checks:")
-    test_points = [(2.0, 3.0), (0.5, 4.0), (7.0, 7.0), (0.1, 10.0)]
-    for x, y in test_points:
-        direct_val = x * y
-        eml_val = np.exp(np.log(x) + np.log(y))
-        print(f"  x={x:.1f}, y={y:.1f}: "
-              f"x*y = {direct_val:.6f}, "
-              f"exp(log(x)+log(y)) = {eml_val:.6f}, "
-              f"error = {abs(direct_val - eml_val):.2e}")
-
-    print()
-    print("RESULT: The decomposition is exact to machine precision.")
-    print()
+    # EML-KA decomposition of the ratio
+    log_ratio = np.log(S) + (-np.log(K))  # φ₁(S) + φ₂(K)
+    d1 = (log_ratio + (r + sigma**2 / 2) * T) / (sigma * np.sqrt(T))
+    return d1
 
 
-# ============================================================================
-# Demo 2: Non-Separability of Multiplication
-# ============================================================================
+def demonstrate_option_pricing():
+    """Show how EML-KA decomposes option pricing computations."""
+    print("=" * 60)
+    print("Application 1: Black-Scholes via EML-KA")
+    print("=" * 60)
 
-def demo_non_separability():
-    """
-    Demonstrate that x*y cannot be written as u(x) + v(y).
-    Uses the four-point algebraic proof and numerical fitting.
-    """
-    print("=" * 70)
-    print("DEMO 2: Multiplication is NOT Additively Separable")
-    print("=" * 70)
-    print()
+    scenarios = [
+        (100, 100, 1.0, 0.05, 0.2, "At-the-money"),
+        (100, 110, 0.5, 0.05, 0.3, "Out-of-money"),
+        (100, 90, 0.25, 0.02, 0.15, "In-the-money"),
+    ]
 
-    # Algebraic proof demonstration
-    a, b = 2.0, 5.0
-    print(f"Algebraic proof with a={a}, b={b}:")
-    print(f"  If x*y = u(x) + v(y) for x,y in {{a,b}}, then:")
-    print(f"  (1) a*a = u(a) + v(a)  =>  {a*a:.0f} = u(a) + v(a)")
-    print(f"  (2) a*b = u(a) + v(b)  =>  {a*b:.0f} = u(a) + v(b)")
-    print(f"  (3) b*a = u(b) + v(a)  =>  {b*a:.0f} = u(b) + v(a)")
-    print(f"  (4) b*b = u(b) + v(b)  =>  {b*b:.0f} = u(b) + v(b)")
-    print()
-    lhs = a*a - a*b - b*a + b*b
-    print(f"  (1) - (2) - (3) + (4) = {lhs:.0f}")
-    print(f"  But (a-b)^2 = {(a-b)**2:.0f} != 0")
-    print(f"  Contradiction! No such u, v exist.")
-    print()
-
-    # Numerical fitting attempt
-    print("Numerical verification: best L2 fit of u(x) + v(y) to x*y")
-    x_grid = np.linspace(1.0, 3.0, 50)
-    y_grid = np.linspace(1.0, 3.0, 50)
-    X, Y = np.meshgrid(x_grid, y_grid)
-    target = X * Y
-
-    # Best additive approximation: u(x) + v(y)
-    # Optimal u(x) = x * mean(y), v(y) = y * mean(x) - mean(x)*mean(y)
-    x_mean = x_grid.mean()
-    y_mean = y_grid.mean()
-    best_additive = np.outer(y_mean * np.ones_like(x_grid), np.ones_like(y_grid)) * X.T
-    # Actually solve by least squares
-    # u(x_i) + v(y_j) = x_i * y_j
-    # This is a rank-1 matrix approximation problem
-    U, S, Vt = np.linalg.svd(target)
-    rank1_approx = S[0] * np.outer(U[:, 0], Vt[0, :])
-    residual = target - rank1_approx
-    rel_error = np.linalg.norm(residual) / np.linalg.norm(target)
-
-    print(f"  Best rank-1 (additive) approximation relative L2 error: {rel_error:.4f}")
-    print(f"  = {rel_error*100:.2f}% error")
-    print(f"  This error is irreducible - no u(x)+v(y) can do better.")
-    print()
-
-
-# ============================================================================
-# Demo 3: Power Products and Geometric Mean
-# ============================================================================
-
-def demo_power_products():
-    """
-    Show EML decomposition for power products and geometric mean.
-    """
-    print("=" * 70)
-    print("DEMO 3: Power Products and Geometric Mean via EML")
-    print("=" * 70)
-    print()
-
-    x_vals = np.array([1.5, 2.0, 3.0, 5.0, 0.5])
-    y_vals = np.array([2.0, 3.0, 4.0, 0.7, 8.0])
-
-    # Power product x^alpha * y^alpha
-    for alpha in [0.5, 2.0, -1.0, 3.14159]:
-        print(f"  alpha = {alpha:.5f}:")
-        for x, y in zip(x_vals[:3], y_vals[:3]):
-            direct = (x ** alpha) * (y ** alpha)
-            eml = np.exp(alpha * (np.log(x) + np.log(y)))
-            print(f"    x={x}, y={y}: x^a*y^a = {direct:.6f}, "
-                  f"exp(a*(log x + log y)) = {eml:.6f}, "
-                  f"err = {abs(direct-eml):.2e}")
+    for S, K, T, r, sigma, name in scenarios:
+        d1 = black_scholes_d1(S, K, T, r, sigma)
+        print(f"  {name}: S={S}, K={K}, T={T:.2f}")
+        print(f"    log(S/K) = log({S}) + (-log({K})) = {np.log(S):.4f} + {-np.log(K):.4f}")
+        print(f"    d1 = {d1:.6f}")
         print()
 
-    # Geometric mean
-    print("  Geometric mean sqrt(x*y) = exp((log x + log y) / 2):")
-    for x, y in zip(x_vals, y_vals):
-        direct = np.sqrt(x * y)
-        eml = np.exp((np.log(x) + np.log(y)) / 2)
-        print(f"    x={x}, y={y}: sqrt(xy) = {direct:.6f}, "
-              f"exp((log x + log y)/2) = {eml:.6f}, "
-              f"err = {abs(direct-eml):.2e}")
-    print()
 
+# =====================================================================
+# Application 2: Log-Spectral Signal Processing
+# =====================================================================
 
-# ============================================================================
-# Demo 4: Polynomial EML Decomposition
-# ============================================================================
+def log_spectral_distance(spectrum1: np.ndarray, spectrum2: np.ndarray) -> float:
+    """Compute log-spectral distance using EML-KA structure.
 
-def demo_polynomial_decomposition():
+    LSD = sqrt(mean((10*log10(S1/S2))^2))
+        = sqrt(mean((10*(log10(S1) - log10(S2)))^2))
+
+    The inner log10 functions are EML primitives, and the ratio
+    S1/S2 decomposes as exp(log(S1) - log(S2)).
+
+    Args:
+        spectrum1: Power spectrum of signal 1 (positive values)
+        spectrum2: Power spectrum of signal 2 (positive values)
+
+    Returns:
+        Log-spectral distance in dB
     """
-    Decompose p(x,y) = x^2 + 3xy + 2y^2 into EML superposition terms.
+    # EML-KA: log-ratio decomposition
+    log_diff = 10 * (np.log10(spectrum1) - np.log10(spectrum2))
+    return float(np.sqrt(np.mean(log_diff**2)))
+
+
+def demonstrate_signal_processing():
+    """Show EML-KA in spectral analysis."""
+    print("=" * 60)
+    print("Application 2: Log-Spectral Distance via EML-KA")
+    print("=" * 60)
+
+    np.random.seed(42)
+    freqs = np.linspace(100, 8000, 256)
+
+    # Generate synthetic power spectra
+    spectrum_clean = np.exp(-((freqs - 1000) / 500)**2) + 0.1
+    spectrum_noisy = spectrum_clean * np.exp(0.1 * np.random.randn(256))
+    spectrum_shifted = np.exp(-((freqs - 1500) / 500)**2) + 0.1
+
+    lsd_noise = log_spectral_distance(spectrum_clean, spectrum_noisy)
+    lsd_shift = log_spectral_distance(spectrum_clean, spectrum_shifted)
+
+    print(f"  Clean vs. Noisy:   LSD = {lsd_noise:.2f} dB")
+    print(f"  Clean vs. Shifted: LSD = {lsd_shift:.2f} dB")
+    print(f"  (Higher LSD = more different spectra)")
+    print()
+
+
+# =====================================================================
+# Application 3: Softmax via EML-KA
+# =====================================================================
+
+def softmax_ratio_eml(z_i: float, z_j: float) -> float:
+    """Compute softmax ratio using EML-KA decomposition.
+
+    softmax(z_i) / softmax(z_j) = exp(z_i - z_j)
+
+    This is a 1-term KA decomposition with:
+      φ₁(z_i) = z_i, φ₂(z_j) = -z_j, Φ = exp
+
+    Args:
+        z_i: Logit i
+        z_j: Logit j
+
+    Returns:
+        exp(z_i - z_j) = softmax(z_i) / softmax(z_j)
     """
-    print("=" * 70)
-    print("DEMO 4: Polynomial EML Decomposition")
-    print("=" * 70)
-    print()
-    print("Target: p(x,y) = x^2 + 3xy + 2y^2")
-    print()
-    print("EML decomposition (3 terms):")
-    print("  Term 1: exp(2*log(x) + 0*log(y))        = x^2")
-    print("  Term 2: 3*exp(1*log(x) + 1*log(y))      = 3xy")
-    print("  Term 3: 2*exp(0*log(x) + 2*log(y))      = 2y^2")
-    print()
+    return np.exp(z_i + (-z_j))
 
-    # Coefficients and exponents
-    terms = [(1.0, 2.0, 0.0),   # x^2
-             (3.0, 1.0, 1.0),   # 3xy
-             (2.0, 0.0, 2.0)]   # 2y^2
 
-    x_grid = np.linspace(0.5, 2.0, 50)
-    y_grid = np.linspace(0.5, 2.0, 50)
-    X, Y = np.meshgrid(x_grid, y_grid)
+def demonstrate_softmax():
+    """Show EML-KA structure in softmax computation."""
+    print("=" * 60)
+    print("Application 3: Softmax Ratios via EML-KA")
+    print("=" * 60)
 
-    # Direct evaluation
-    direct = X**2 + 3*X*Y + 2*Y**2
+    logits = np.array([2.0, 1.0, 0.5, -1.0])
+    softmax_vals = np.exp(logits) / np.sum(np.exp(logits))
 
-    # EML evaluation
-    eml_result = np.zeros_like(X)
-    for c, a, b in terms:
-        eml_result += c * np.exp(a * np.log(X) + b * np.log(Y))
-
-    abs_error = np.abs(direct - eml_result)
-    print(f"Grid: [{x_grid[0]:.1f}, {x_grid[-1]:.1f}]^2, "
-          f"{x_grid.size}x{y_grid.size} = {X.size} points")
-    print(f"Max absolute error: {abs_error.max():.2e}")
-    print(f"Mean absolute error: {abs_error.mean():.2e}")
-    print()
-
-    # Spot checks
-    print("Spot checks:")
-    for x, y in [(1.0, 1.0), (1.5, 0.5), (2.0, 2.0)]:
-        d = x**2 + 3*x*y + 2*y**2
-        e = sum(c * np.exp(a * np.log(x) + b * np.log(y)) for c, a, b in terms)
-        print(f"  x={x}, y={y}: p(x,y) = {d:.4f}, EML = {e:.4f}, err = {abs(d-e):.2e}")
-    print()
-    print("RESULT: Exact decomposition to machine precision.")
+    print("  Logits:", logits)
+    print("  Softmax:", np.round(softmax_vals, 6))
+    print("\n  Pairwise ratios via EML-KA:")
+    for i in range(len(logits)):
+        for j in range(i+1, len(logits)):
+            ratio_ka = softmax_ratio_eml(logits[i], logits[j])
+            ratio_direct = softmax_vals[i] / softmax_vals[j]
+            print(f"    s[{i}]/s[{j}] = exp({logits[i]:.1f} - {logits[j]:.1f}) "
+                  f"= {ratio_ka:.6f} (direct: {ratio_direct:.6f})")
     print()
 
 
-# ============================================================================
-# Demo 5: EML Superposition Closure Under Multiplication
-# ============================================================================
+# =====================================================================
+# Application 4: KL Divergence via EML
+# =====================================================================
 
-def demo_closure():
+def kl_divergence_eml(p: np.ndarray, q: np.ndarray) -> float:
+    """Compute KL divergence using EML decomposition.
+
+    KL(p||q) = Σ p_i * log(p_i/q_i)
+             = Σ [p_i * log(p_i) - p_i * log(q_i)]
+             = Σ [p_i * log(p_i) - p_i * (1 - eml(0, q_i))]
+
+    where eml(0, q_i) = exp(0) - log(q_i) = 1 - log(q_i).
+
+    Args:
+        p: First probability distribution (sums to 1)
+        q: Second probability distribution (sums to 1)
+
+    Returns:
+        KL(p||q) >= 0, with equality iff p == q
     """
-    Demonstrate that exp(u(x)) * exp(v(x)) = exp(u(x) + v(x)).
-    """
-    print("=" * 70)
-    print("DEMO 5: Closure Under Multiplication")
-    print("=" * 70)
+    eml_terms = 1.0 - np.log(q)  # = eml(0, q_i) for each i
+    kl = np.sum(p * np.log(p) - p * (1.0 - eml_terms))
+    return float(kl)
+
+
+def demonstrate_kl_divergence():
+    """Show EML structure in KL divergence."""
+    print("=" * 60)
+    print("Application 4: KL Divergence via EML")
+    print("=" * 60)
+
+    distributions = [
+        (np.array([0.5, 0.5]), np.array([0.5, 0.5]), "Equal"),
+        (np.array([0.7, 0.3]), np.array([0.5, 0.5]), "Skewed vs uniform"),
+        (np.array([0.9, 0.1]), np.array([0.5, 0.5]), "Very skewed vs uniform"),
+        (np.array([0.25, 0.25, 0.25, 0.25]),
+         np.array([0.1, 0.2, 0.3, 0.4]), "Uniform vs gradient"),
+    ]
+
+    for p, q, name in distributions:
+        kl_eml = kl_divergence_eml(p, q)
+        kl_direct = float(np.sum(p * np.log(p / q)))
+        print(f"  {name:30s}: KL = {kl_eml:.6f} (direct: {kl_direct:.6f})")
+
     print()
-    print("If f(x) = exp(u(x)) and g(x) = exp(v(x)), then")
-    print("f(x)*g(x) = exp(u(x) + v(x))")
-    print()
-
-    x_vals = np.linspace(0.1, 3.0, 8)
-
-    # Example: u(x) = sin(x), v(x) = x^2
-    u = lambda x: np.sin(x)
-    v = lambda x: x**2
-
-    print("Example: u(x) = sin(x), v(x) = x^2")
-    print(f"{'x':>6s} {'exp(u)*exp(v)':>16s} {'exp(u+v)':>16s} {'error':>12s}")
-    for x in x_vals:
-        product = np.exp(u(x)) * np.exp(v(x))
-        composed = np.exp(u(x) + v(x))
-        print(f"{x:6.2f} {product:16.8f} {composed:16.8f} {abs(product-composed):12.2e}")
-    print()
-    print("RESULT: Exact equality (exp addition law).")
-    print()
-
-
-# ============================================================================
-# Demo 6: Depth-2 EML Network Interpretation
-# ============================================================================
-
-def demo_network():
-    """
-    Show multiplication as a depth-2 neural network in log-coordinates.
-    """
-    print("=" * 70)
-    print("DEMO 6: Depth-2 EML Network for Multiplication")
-    print("=" * 70)
-    print()
-    print("Architecture:")
-    print("  Input layer:  x, y  (positive reals)")
-    print("  Hidden layer: h = 1*log(x) + 1*log(y)  (one hidden unit)")
-    print("  Output layer: out = exp(h)")
-    print()
-    print("This is a single-hidden-unit network with log input activation")
-    print("and exp output activation.")
-    print()
-
-    test_cases = [(2, 3), (5, 7), (0.1, 100), (1.414, 1.414), (10, 0.1)]
-    print(f"{'x':>8s} {'y':>8s} {'x*y':>12s} {'network':>12s} {'error':>10s}")
-    for x, y in test_cases:
-        h = 1 * np.log(x) + 1 * np.log(y)
-        out = np.exp(h)
-        print(f"{x:8.3f} {y:8.3f} {x*y:12.6f} {out:12.6f} {abs(x*y - out):10.2e}")
-    print()
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-def main():
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  EML Kolmogorov-Arnold Representation: Interactive Demonstrations   ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_exact_multiplication()
-    demo_non_separability()
-    demo_power_products()
-    demo_polynomial_decomposition()
-    demo_closure()
-    demo_network()
-
-    print("=" * 70)
-    print("ALL DEMOS COMPLETE")
-    print("=" * 70)
 
 
 if __name__ == "__main__":
-    main()
+    demonstrate_option_pricing()
+    demonstrate_signal_processing()
+    demonstrate_softmax()
+    demonstrate_kl_divergence()
+    print("All applications demonstrated successfully.")
 
 
-#!/usr/bin/env python3
-"""Generate PACKAGE.json from all deliverable files."""
-import json
+"""
+EML-Kolmogorov-Arnold Representation: Demonstrations
 
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
+This script demonstrates the core mathematical results connecting
+EML (exp-log) functions to Kolmogorov-Arnold decompositions.
+"""
 
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-lean_code = read_file('EML/KolmogorovArnold.lean')
+import numpy as np
 
-package = {
-    "title": "EML Kolmogorov-Arnold Representation via Explicit Exp-Log Superposition",
-    "domain": "EML / Constructive Representation Theory",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "EML Kolmogorov-Arnold Demonstrations",
-            "code": demo_code
-        },
-        {
-            "name": "EML Real-World Applications",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Monomial EML Decomposition",
-            "pseudocode": "Input: exponents (a, b), coefficient c\nOutput: EML superposition with 1 term\n\nouter(t) = c * exp(t)\ninner1(x) = a * log(x)\ninner2(y) = b * log(y)\n\nCorrectness: c * exp(a*log(x) + b*log(y)) = c * x^a * y^b\nComplexity: O(1)",
-            "code": algorithms_code
-        },
-        {
-            "name": "Polynomial EML Decomposition",
-            "pseudocode": "Input: terms [(c_k, a_k, b_k)] with c_k > 0\nOutput: EML superposition with K terms\n\nfor k = 1 to K:\n  outer_k(t) = c_k * exp(t)\n  inner1_k(x) = a_k * log(x)\n  inner2_k(y) = b_k * log(y)\n\nCorrectness: sum_k c_k * exp(a_k*log(x) + b_k*log(y)) = sum_k c_k * x^{a_k} * y^{b_k}\nComplexity: O(K)",
-            "code": "# See algorithms.py for full implementation"
-        },
-        {
-            "name": "Approximate EML Template Fitting",
-            "pseudocode": "Input: target f, domain grid G, template size m\nOutput: parameters (alpha, beta, gamma) minimizing residual\n\nInitialize alpha, beta, gamma randomly\nfor iter = 1 to max_iter:\n  predicted = sum_i exp(alpha_i*log(x) + beta_i*log(y) + gamma_i)\n  residual = sum |f(x,y) - predicted|^2\n  Update parameters by gradient descent\nReturn best parameters",
-            "code": "# See algorithms.py for full implementation"
-        }
-    ],
-    "lean_proofs": lean_code
-}
+def eml(x: float, y: float) -> float:
+    """The EML operation: eml(x, y) = exp(x) - log(y)."""
+    return np.exp(x) - np.log(y)
 
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
+# =============================================================
+# Demo 1: Multiplication via EML-KA Decomposition
+# x * y = exp(log(x) + log(y)) for x, y > 0
+# =============================================================
+print("=" * 60)
+print("Demo 1: Multiplication via EML-KA Decomposition")
+print("  x * y = exp(log(x) + log(y))")
+print("=" * 60)
 
-print("PACKAGE.json generated successfully")
+test_pairs = [(2.0, 3.0), (0.5, 4.0), (np.pi, np.e), (100.0, 0.01)]
+for x, y in test_pairs:
+    ka_result = np.exp(np.log(x) + np.log(y))
+    direct = x * y
+    error = abs(ka_result - direct)
+    print(f"  x={x:.4f}, y={y:.4f}: KA={ka_result:.10f}, "
+          f"direct={direct:.10f}, error={error:.2e}")
+
+# =============================================================
+# Demo 2: Power Functions via EML-KA
+# x^n = exp(n * log(x)) for x > 0
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 2: Power Functions via EML-KA")
+print("  x^n = exp(n * log(x))")
+print("=" * 60)
+
+for x in [2.0, 3.0, 0.5]:
+    for n in [2, 3, 5, 10]:
+        ka_result = np.exp(n * np.log(x))
+        direct = x ** n
+        error = abs(ka_result - direct) / max(abs(direct), 1e-15)
+        print(f"  x={x:.2f}, n={n}: KA={ka_result:.10f}, "
+              f"direct={direct:.10f}, rel_error={error:.2e}")
+
+# =============================================================
+# Demo 3: Geometric Mean via EML-KA
+# sqrt(x*y) = exp(0.5 * log(x) + 0.5 * log(y))
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 3: Geometric Mean via EML-KA")
+print("  sqrt(x*y) = exp(0.5*log(x) + 0.5*log(y))")
+print("=" * 60)
+
+for x, y in [(4.0, 9.0), (2.0, 8.0), (1.0, 100.0)]:
+    ka_result = np.exp(0.5 * np.log(x) + 0.5 * np.log(y))
+    direct = np.sqrt(x * y)
+    error = abs(ka_result - direct)
+    print(f"  x={x:.1f}, y={y:.1f}: KA={ka_result:.10f}, "
+          f"direct={direct:.10f}, error={error:.2e}")
+
+# =============================================================
+# Demo 4: Division via EML-KA
+# x/y = exp(log(x) - log(y))
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 4: Division via EML-KA")
+print("  x/y = exp(log(x) - log(y))")
+print("=" * 60)
+
+for x, y in [(6.0, 3.0), (1.0, 7.0), (np.pi, 2.0)]:
+    ka_result = np.exp(np.log(x) - np.log(y))
+    direct = x / y
+    error = abs(ka_result - direct)
+    print(f"  x={x:.4f}, y={y:.4f}: KA={ka_result:.10f}, "
+          f"direct={direct:.10f}, error={error:.2e}")
+
+# =============================================================
+# Demo 5: KL Divergence Integrand via EML
+# p*log(p/q) = p*log(p) - p*(1 - eml(0, q))
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 5: KL Divergence Integrand via EML")
+print("  p*log(p/q) = p*log(p) - p*(1 - eml(0, q))")
+print("=" * 60)
+
+for p, q in [(0.3, 0.7), (0.5, 0.5), (0.8, 0.2)]:
+    kl_direct = p * np.log(p / q)
+    kl_eml = p * np.log(p) - p * (1 - eml(0, q))
+    error = abs(kl_direct - kl_eml)
+    print(f"  p={p:.1f}, q={q:.1f}: direct={kl_direct:.10f}, "
+          f"EML={kl_eml:.10f}, error={error:.2e}")
+
+# =============================================================
+# Demo 6: Fenchel-Young Inequality Verification
+# x*s <= exp(x) + s*log(s) - s for s > 0
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 6: Fenchel-Young Inequality")
+print("  x*s <= exp(x) + s*log(s) - s")
+print("=" * 60)
+
+for x in [-2.0, 0.0, 1.0, 3.0]:
+    for s in [0.1, 1.0, 2.0, 5.0]:
+        lhs = x * s
+        rhs = np.exp(x) + s * np.log(s) - s
+        gap = rhs - lhs
+        tight_x = np.log(s)
+        print(f"  x={x:5.1f}, s={s:4.1f}: LHS={lhs:8.4f}, "
+              f"RHS={rhs:8.4f}, gap={gap:.4f} (tight at x=log(s)={tight_x:.4f})")
+
+# =============================================================
+# Demo 7: Harmonic Mean via EML Components
+# =============================================================
+print("\n" + "=" * 60)
+print("Demo 7: Harmonic Mean")
+print("  H(x,y) = 2/(1/x + 1/y) = 2xy/(x+y)")
+print("=" * 60)
+
+for x, y in [(2.0, 8.0), (3.0, 6.0), (1.0, 1.0)]:
+    h1 = 2 * x * y / (x + y)
+    h2 = 2 / (1/x + 1/y)
+    print(f"  x={x:.1f}, y={y:.1f}: H={h1:.10f}, "
+          f"via inverses={h2:.10f}, match={abs(h1-h2) < 1e-12}")
+
+print("\n" + "=" * 60)
+print("All demonstrations completed successfully.")
+print("=" * 60)
+
+
+"""
+Visualization: Fenchel-Young Inequality and EML Duality
+
+Illustrates the Fenchel-Young inequality x·s ≤ exp(x) + s·log(s) - s
+which provides a variational characterization of the EML operation.
+The gap is zero exactly when x = log(s), connecting exp and log dually.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# --- Panel 1: Fenchel-Young for different values of s ---
+x = np.linspace(-3, 4, 200)
+s_values = [0.5, 1.0, 2.0, 5.0]
+colors = ['#2196F3', '#4CAF50', '#FF9800', '#F44336']
+
+for s, color in zip(s_values, colors):
+    lhs = x * s
+    rhs = np.exp(x) + s * np.log(s) - s
+    axes[0].plot(x, rhs - lhs, color=color, linewidth=2, label=f's = {s}')
+    axes[0].axvline(np.log(s), color=color, linestyle='--', alpha=0.5)
+
+axes[0].axhline(0, color='black', linewidth=0.5)
+axes[0].set_xlabel('x', fontsize=12)
+axes[0].set_ylabel('Gap = RHS − LHS', fontsize=12)
+axes[0].set_title('Fenchel-Young Gap\n(minimum at x = log s)', fontsize=12)
+axes[0].legend(fontsize=10)
+axes[0].set_ylim(-0.5, 10)
+axes[0].grid(True, alpha=0.3)
+
+# --- Panel 2: exp(x) and its conjugate ---
+x = np.linspace(-2, 3, 200)
+axes[1].plot(x, np.exp(x), 'b-', linewidth=2.5, label='exp(x)')
+
+# Tangent lines showing duality
+for s, color in zip([0.5, 1.0, 2.0], ['#4CAF50', '#FF9800', '#F44336']):
+    x0 = np.log(s)
+    tangent = s * (x - x0) + s
+    axes[1].plot(x, tangent, color=color, linewidth=1.5, linestyle='--',
+                 alpha=0.7, label=f'Tangent at x=log({s})')
+    axes[1].plot(x0, s, 'o', color=color, markersize=8)
+
+axes[1].set_xlabel('x', fontsize=12)
+axes[1].set_ylabel('y', fontsize=12)
+axes[1].set_title('exp(x) and Supporting Hyperplanes\n(Convex Conjugate Structure)', fontsize=12)
+axes[1].legend(fontsize=9)
+axes[1].set_ylim(-1, 12)
+axes[1].grid(True, alpha=0.3)
+
+# --- Panel 3: The EML surface eml(x,y) = exp(x) - log(y) ---
+y_pos = np.linspace(0.1, 5.0, 100)
+x_vals = [-1.0, 0.0, 1.0, 2.0]
+for xv, color in zip(x_vals, colors):
+    eml_vals = np.exp(xv) - np.log(y_pos)
+    axes[2].plot(y_pos, eml_vals, color=color, linewidth=2,
+                 label=f'eml({xv}, y)')
+
+axes[2].axhline(0, color='black', linewidth=0.5)
+axes[2].set_xlabel('y', fontsize=12)
+axes[2].set_ylabel('eml(x, y)', fontsize=12)
+axes[2].set_title('EML Slices: eml(x, y) = exp(x) − log(y)\n(exp dominates for large x)', fontsize=12)
+axes[2].legend(fontsize=10)
+axes[2].grid(True, alpha=0.3)
+
+plt.suptitle('EML Duality: Fenchel-Young Inequality and Convex Conjugates',
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_fenchel_young.png', dpi=150, bbox_inches='tight')
+print("Saved viz_fenchel_young.png")
+
+
+"""
+Visualization: Inner Functions of EML-KA Decompositions
+
+Shows the role of inner functions (log, scaled log, identity) in
+separating variables for Kolmogorov-Arnold representations.
+Demonstrates how different inner functions φ(x) map the positive
+real line into ℝ, enabling the outer function exp to reconstruct
+the target.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+x = np.linspace(0.01, 5.0, 300)
+
+# --- Panel 1: Inner functions ---
+ax = axes[0, 0]
+ax.plot(x, np.log(x), 'b-', linewidth=2.5, label='φ(x) = log(x) [multiplication]')
+ax.plot(x, 0.5 * np.log(x), 'r-', linewidth=2.5, label='φ(x) = ½log(x) [geom. mean]')
+ax.plot(x, 2 * np.log(x), 'g-', linewidth=2.5, label='φ(x) = 2·log(x) [x² power]')
+ax.plot(x, -np.log(x), 'm--', linewidth=2.5, label='φ(x) = −log(x) [division]')
+ax.axhline(0, color='black', linewidth=0.5)
+ax.set_xlabel('x', fontsize=12)
+ax.set_ylabel('φ(x)', fontsize=12)
+ax.set_title('EML Inner Functions', fontsize=13, fontweight='bold')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
+
+# --- Panel 2: Outer function (exp) ---
+ax = axes[0, 1]
+t = np.linspace(-3, 4, 300)
+ax.plot(t, np.exp(t), 'b-', linewidth=2.5, label='Φ(t) = exp(t)')
+ax.fill_between(t, 0, np.exp(t), alpha=0.1, color='blue')
+ax.set_xlabel('t = φ₁(x) + φ₂(y)', fontsize=12)
+ax.set_ylabel('Φ(t)', fontsize=12)
+ax.set_title('Universal Outer Function: exp', fontsize=13, fontweight='bold')
+ax.legend(fontsize=11)
+ax.set_ylim(0, 20)
+ax.grid(True, alpha=0.3)
+
+# --- Panel 3: KA term count comparison ---
+ax = axes[1, 0]
+dims = np.arange(1, 11)
+ka_general = 2 * dims + 1
+ka_eml_mul = np.ones_like(dims)
+ka_eml_pow = np.ones_like(dims)
+
+ax.bar(dims - 0.2, ka_general, 0.4, label='General KA (2n+1)',
+       color='#FF6B6B', alpha=0.8)
+ax.bar(dims + 0.2, ka_eml_mul, 0.4, label='EML-KA (multiplication)',
+       color='#4ECDC4', alpha=0.8)
+ax.set_xlabel('Dimension n', fontsize=12)
+ax.set_ylabel('Number of terms Q', fontsize=12)
+ax.set_title('KA Term Efficiency:\nGeneral vs. EML-KA', fontsize=13, fontweight='bold')
+ax.legend(fontsize=10)
+ax.set_xticks(dims)
+ax.grid(True, alpha=0.3, axis='y')
+
+# --- Panel 4: Point separation by log ---
+ax = axes[1, 1]
+points = [0.5, 1.0, 2.0, 3.0, 5.0]
+log_points = [np.log(p) for p in points]
+
+ax.scatter(points, [0]*len(points), s=100, c='blue', zorder=5,
+           label='Original points')
+ax.scatter(log_points, [1]*len(log_points), s=100, c='red', zorder=5,
+           label='After log (separated)')
+
+for p, lp in zip(points, log_points):
+    ax.annotate('', xy=(lp, 0.95), xytext=(p, 0.05),
+                arrowprops=dict(arrowstyle='->', color='gray', alpha=0.5))
+    ax.text(p, -0.15, f'{p}', ha='center', fontsize=10, color='blue')
+    ax.text(lp, 1.15, f'{lp:.2f}', ha='center', fontsize=10, color='red')
+
+ax.set_xlabel('Value', fontsize=12)
+ax.set_yticks([0, 1])
+ax.set_yticklabels(['Input space', 'Log-transformed'])
+ax.set_title('Log Separates Points\n(Injective on (0,∞))', fontsize=13, fontweight='bold')
+ax.legend(fontsize=10, loc='upper left')
+ax.grid(True, alpha=0.3, axis='x')
+
+plt.suptitle('Anatomy of EML-Kolmogorov-Arnold Decompositions',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_ka_inner_functions.png', dpi=150, bbox_inches='tight')
+print("Saved viz_ka_inner_functions.png")
+
+
+"""
+Visualization: EML-KA Decomposition Surfaces
+
+Shows how multiplication, geometric mean, and division are decomposed
+via exp-log (EML) inner functions in Kolmogorov-Arnold form.
+Each surface plot shows the target function and its EML-KA reconstruction.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+fig, axes = plt.subplots(2, 3, figsize=(16, 10),
+                         subplot_kw={'projection': '3d'})
+
+x = np.linspace(0.1, 5.0, 50)
+y = np.linspace(0.1, 5.0, 50)
+X, Y = np.meshgrid(x, y)
+
+# --- Row 1: Target functions ---
+# Multiplication
+Z_mul = X * Y
+axes[0, 0].plot_surface(X, Y, Z_mul, cmap='viridis', alpha=0.8)
+axes[0, 0].set_title('Target: x · y', fontsize=12)
+axes[0, 0].set_xlabel('x'); axes[0, 0].set_ylabel('y')
+
+# Geometric mean
+Z_geom = np.sqrt(X * Y)
+axes[0, 1].plot_surface(X, Y, Z_geom, cmap='plasma', alpha=0.8)
+axes[0, 1].set_title('Target: √(xy)', fontsize=12)
+axes[0, 1].set_xlabel('x'); axes[0, 1].set_ylabel('y')
+
+# Division
+Z_div = X / Y
+axes[0, 2].plot_surface(X, Y, Z_div, cmap='coolwarm', alpha=0.8)
+axes[0, 2].set_title('Target: x / y', fontsize=12)
+axes[0, 2].set_xlabel('x'); axes[0, 2].set_ylabel('y')
+
+# --- Row 2: EML-KA reconstructions ---
+# Multiplication via exp(log x + log y)
+Z_mul_ka = np.exp(np.log(X) + np.log(Y))
+axes[1, 0].plot_surface(X, Y, Z_mul_ka, cmap='viridis', alpha=0.8)
+axes[1, 0].set_title('EML-KA: exp(log x + log y)', fontsize=12)
+axes[1, 0].set_xlabel('x'); axes[1, 0].set_ylabel('y')
+
+# Geometric mean via exp(½ log x + ½ log y)
+Z_geom_ka = np.exp(0.5 * np.log(X) + 0.5 * np.log(Y))
+axes[1, 1].plot_surface(X, Y, Z_geom_ka, cmap='plasma', alpha=0.8)
+axes[1, 1].set_title('EML-KA: exp(½log x + ½log y)', fontsize=12)
+axes[1, 1].set_xlabel('x'); axes[1, 1].set_ylabel('y')
+
+# Division via exp(log x - log y)
+Z_div_ka = np.exp(np.log(X) - np.log(Y))
+axes[1, 2].plot_surface(X, Y, Z_div_ka, cmap='coolwarm', alpha=0.8)
+axes[1, 2].set_title('EML-KA: exp(log x − log y)', fontsize=12)
+axes[1, 2].set_xlabel('x'); axes[1, 2].set_ylabel('y')
+
+plt.suptitle('EML-Kolmogorov-Arnold Decompositions:\nTarget Functions vs. EML-KA Reconstructions',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_ka_surfaces.png', dpi=150, bbox_inches='tight')
+print("Saved viz_ka_surfaces.png")

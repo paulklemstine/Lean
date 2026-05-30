@@ -1,132 +1,97 @@
-# The Hidden Addition Inside Every Multiplication
+# The Hidden Architecture of Arithmetic
 
-## How a centuries-old logarithm trick is becoming the blueprint for a new kind of mathematics — and possibly a new kind of artificial intelligence
-
----
-
-By the time you finish reading this sentence, your brain will have performed thousands of multiplications. Every time you catch a ball, judge the speed of an oncoming car, or estimate how much to tip at a restaurant, neurons deep in your cortex are multiplying numbers together. And yet, for all its ubiquity, multiplication harbors a secret that mathematicians have known for four hundred years but are only now learning to exploit fully: **every multiplication is really an addition in disguise.**
-
-This is not a metaphor. It is a precise mathematical fact with consequences that are rippling outward into artificial intelligence, computer architecture, and our understanding of how complex systems encode information.
+## How Two Simple Functions Explain Why Multiplication Works
 
 ---
 
-## The Oldest Trick in Mathematics
+There is a mystery at the heart of multiplication that most of us learned to take for granted in third grade. When you multiply 3 by 4 to get 12, you are performing an operation that seems irreducibly two-dimensional: it takes *two* numbers as input and produces *one* as output. No matter how you slice it, multiplication appears to require knowing both factors simultaneously.
 
-In 1614, the Scottish mathematician John Napier published a book that would change the world. His invention — logarithms — gave astronomers, navigators, and engineers a seemingly magical power: the ability to turn multiplication into addition. If you wanted to multiply two large numbers, you could look up their logarithms in a table, add those logarithms together, and then look up the result in a reverse table to get your answer.
+But what if that isn't true?
 
-The principle is simple. For any two positive numbers *x* and *y*:
+In the late 1950s, Soviet mathematician Andrey Kolmogorov made a discovery so surprising that it briefly turned the mathematics of his era on its head. He proved that *every* continuous function of multiple variables—no matter how complicated—can be broken down into simple one-variable functions, stitched together with nothing more exotic than addition. A surface in three-dimensional space, a weather prediction depending on temperature and humidity and wind speed, the gravitational force between two masses—all of them, Kolmogorov showed, are secretly built from one-dimensional building blocks.
 
-> log(*x* × *y*) = log(*x*) + log(*y*)
+The theorem was beautiful but maddening. Kolmogorov proved these one-dimensional building blocks *existed*, but he couldn't tell you what they looked like. For decades, mathematicians knew the decomposition was possible in principle but had no practical way to construct it. The building blocks were exotic, highly irregular functions—mathematical objects you could prove existed but never write down.
 
-Multiplication becomes addition. And if you want to go back, the exponential function reverses the process:
+Now, new research reveals that for a surprising number of important functions, the building blocks aren't exotic at all. They are two of the most familiar functions in all of mathematics: the exponential and the logarithm.
 
-> *x* × *y* = exp(log *x* + log *y*)
+## The Exp-Log Universe
 
-For four centuries, this was regarded as a computational convenience — a clever shortcut for engineers with slide rules. But a new line of mathematical research is revealing that this identity is far more than a trick. It is the simplest example of a profound structural phenomenon: **nonlinear interactions between variables can be decomposed into compositions of simple one-variable functions.**
+The exponential function—the one that turns addition into multiplication—and the logarithm—its mirror image, which turns multiplication into addition—are arguably the two most important functions in science. They describe radioactive decay, compound interest, the decibel scale, earthquake magnitudes, and the way our ears perceive sound. Together, they form what researchers call the EML (exponential-minus-logarithm) function class.
 
-And that insight is reshaping how we think about everything from neural networks to the fundamental architecture of computation.
+The new result is startlingly simple. Take multiplication: *x* × *y*. For any two positive numbers, this equals:
 
----
+> exp(log *x* + log *y*)
 
-## The Superposition Problem
+Read that carefully. The logarithm converts each number into a single-variable function. Addition combines them. The exponential converts back. Three steps, each involving only one variable at a time (except the addition, which is trivially simple). Kolmogorov's decomposition, for multiplication, uses nothing more than `log` as the inner function and `exp` as the outer function.
 
-In 1957, the Soviet mathematician Andrey Kolmogorov stunned the mathematical world by proving something that seemed almost impossible. He showed that *any* continuous function of multiple variables — no matter how complicated — can be written as a combination of functions of just one variable.
+This isn't just a curiosity. It means multiplication—the operation that builds areas from lengths, combines probabilities, scales physical forces—has a one-term Kolmogorov-Arnold decomposition. Kolmogorov's general theorem says you might need as many as five terms (2*n* + 1 for dimension *n* = 2). Multiplication needs just one. The exponential-logarithm pair is spectacularly efficient.
 
-Think about what this means. A function of two variables, like *f*(*x*, *y*), seems to require genuine two-dimensional information. The value at a point depends on both coordinates simultaneously. Kolmogorov proved that this appearance is misleading: you can always decompose such a function into a sum of terms, each of which is built from one-variable functions composed together.
+## The Power of One
 
-The catch? Kolmogorov's proof was *existential*. He proved such decompositions exist, but the one-variable functions in his construction were bizarre, fractal-like objects that no one could write down explicitly. For decades, mathematicians treated the Kolmogorov superposition theorem as a beautiful curiosity — true but useless.
+The surprise deepens when you realize how far the exp-log decomposition reaches. Powers? *x*^*n* = exp(*n* · log *x*). Geometric means? √(*xy*) = exp(½ log *x* + ½ log *y*). Division? *x*/*y* = exp(log *x* − log *y*).
 
-Until now.
+Each of these is a one-term decomposition. Each uses only the logarithm to "read" the input variables and the exponential to "write" the output. The coefficient in front of the logarithm—whether it's 1, *n*, ½, or −1—determines which operation you get. It's as if the logarithm is a universal language for expressing numerical relationships, and the exponential is the universal decoder.
 
----
+This is remarkable for several reasons. First, it means these fundamental operations are *maximally simple* in the Kolmogorov-Arnold sense. You cannot decompose a bivariate function into fewer than one term. Multiplication, powers, means, and division all achieve this theoretical minimum.
 
-## Breaking the Barrier with Exp and Log
+Second, it reveals a hidden unity. These operations look very different when you learn them in school. Multiplication is repeated addition. Powers are repeated multiplication. Division is the inverse of multiplication. Square roots require a whole new concept. But viewed through the Kolmogorov-Arnold lens, they are all the same thing: exp composed with a linear combination of logs. The *only* difference between multiplication and taking a square root is the coefficient ½ versus 1 in front of the logarithm.
 
-The new research takes a radically different approach. Instead of trying to prove that *all* functions can be decomposed (and struggling with the pathological inner functions that Kolmogorov's proof requires), it asks a more targeted question: **which important functions can be decomposed using *nice* building blocks?**
+## Crossing Into Information Theory
 
-The building blocks in question are the exponential function and the logarithm — the oldest tools of mathematical analysis. And the first breakthrough target is the most fundamental nonlinear interaction in all of mathematics: multiplication itself.
+Perhaps the most surprising consequence appears when you cross into a completely different domain: information theory.
 
-Here is the key result, stated with crystalline precision:
+The Kullback-Leibler divergence—a fundamental measure of how different two probability distributions are—has an integrand of the form *p* · log(*p*/*q*). This is exactly the kind of expression that decomposes via the exp-log framework. Specifically:
 
-> For any positive real numbers *x* and *y*, the product *x* × *y* equals exp(log *x* + log *y*).
+> *p* · log(*p*/*q*) = *p* · log *p* − *p* · (1 − eml(0, *q*))
 
-Read that carefully. The right-hand side has a beautiful structure: take each input through a one-variable function (the logarithm), *add* the results, then pass through another one-variable function (the exponential). This is exactly the form that Kolmogorov's theorem promises — but here, every function involved is smooth, explicit, and computable.
+where eml(0, *q*) = exp(0) − log(*q*) = 1 − log *q* is the EML operation applied with a zero first argument.
 
-This matters because multiplication is the canonical example of what mathematicians call a *non-separable* function. You cannot write *x* × *y* as *u*(*x*) + *v*(*y*) for any choice of one-variable functions *u* and *v*. The proof is elegant: if such a decomposition existed, you could plug in four pairs of values and derive a contradiction through simple algebra. Multiplication genuinely requires the two variables to *interact*.
+This means the KL divergence—the workhorse of machine learning, the foundation of variational inference, the information-theoretic measure at the heart of modern AI—is built from the same exp-log primitives as multiplication. The bridge between arithmetic and information theory runs through the EML function class.
 
-But exp-log superposition cracks it open. The logarithm absorbs each variable separately, addition combines them in the simplest possible way, and the exponential reconstructs the nonlinear interaction. Multiplication is literally addition, performed in the right coordinate system.
+## A Duality from Convex Analysis
 
----
+There is an even deeper structural reason why exp and log play this privileged role. The Fenchel-Young inequality states that for any *x* and any positive *s*:
 
-## Why Coordinate Systems Are Everything
+> *x* · *s* ≤ exp(*x*) + *s* · log(*s*) − *s*
 
-To appreciate the depth of this result, consider an analogy. Imagine you are trying to describe the motion of planets. In Cartesian coordinates — the *x*, *y*, *z* grid we learn in school — planetary orbits are described by complicated equations coupling all three coordinates. But switch to polar coordinates, and the motion separates beautifully: the radial distance oscillates independently from the angular position.
+This inequality is tight—it becomes an equality—when *x* = log *s*. In the language of convex analysis, exp and the entropy function *s* · log *s* − *s* are *convex conjugates*: each is the "shadow" of the other, connected by the Legendre transform.
 
-The exp-log decomposition of multiplication is the same kind of insight, but more radical. It says that there is a coordinate system (logarithmic coordinates) in which the most fundamental nonlinear operation in mathematics becomes *linear*. And the coordinate change itself is performed by a single, universal, one-variable function.
+This duality explains *why* exp and log are the natural building blocks. They are not arbitrary choices but are linked by the deepest structure in optimization theory. The Fenchel-Young inequality is the mathematical law that guarantees the efficiency of the EML decomposition.
 
-This is not just a mathematical curiosity. It has immediate implications for how we design computing systems.
+## The Separation Property
 
----
+For a Kolmogorov-Arnold decomposition to work, the inner functions must *separate points*: if two inputs are different, the inner function must map them to different values. Otherwise, the outer function cannot distinguish them, and the decomposition fails.
 
-## The Neural Network Connection
+The logarithm separates all positive real numbers—it is injective on (0, ∞). This is a basic property, but it is also essential. Without injectivity, you cannot reconstruct the original function from its one-dimensional projections. The fact that log is injective, continuous, and unbounded on (0, ∞) makes it the ideal inner function for the EML-KA framework.
 
-In 2024, a paper on Kolmogorov-Arnold Networks (KANs) sent shockwaves through the machine learning community. The idea was to replace the fixed activation functions in standard neural networks with learnable one-variable functions, inspired by Kolmogorov's theorem. The results were promising, but a fundamental question remained: *what* one-variable functions should these networks learn?
+Exponential, meanwhile, is also injective—on all of ℝ. Together, they form a pair of bijections that "rotate" the positive reals into all of ℝ and back, preserving all the information needed for the Kolmogorov-Arnold reconstruction.
 
-The exp-log decomposition suggests a startling answer: for a vast class of important computations, the network only needs exponentials and logarithms. A two-layer network with log-activations in the first layer and an exp-activation in the second layer can exactly compute multiplication — the operation that standard neural networks struggle to learn and require many neurons to approximate.
+## The Conjecture
 
-The researchers proved this is not just an isolated trick. The class of functions representable through exp-log superpositions is *closed under multiplication*: if you have two functions that are each expressible as exponentials of simpler functions, their product is automatically expressible in the same form. This means the framework scales. You can build up complex nonlinear interactions step by step, always staying within the same representational family.
+The proven results cover a wide swath of elementary operations. But what about more complex functions? Can *every* continuous function on the positive reals be decomposed using only exp and log as the inner functions?
 
-Moreover, power functions of any real exponent — *x*^α × *y*^α for any α — are also exactly representable. The geometric mean, the harmonic mean, any homogeneous monomial: all of them fall within this framework. The positive orthant (the region where all variables are positive) becomes a playground where exp-log primitives provide exact, explicit decompositions.
+The researchers formulate a precise conjecture: for every polynomial *p*(*x*, *y*) that is positive on (0, ∞)², the function log(*p*(*x*, *y*)) should have a finite EML-KA decomposition. As a specific test case: can log(*x*² + *y*²) be decomposed into three terms using exp-log inner and outer functions?
 
----
+This is a question that can be tested computationally. If the conjecture is true, it would mean the exp-log pair is not just convenient but *universal* for a broad class of multivariate functions—far beyond the operations we learn in school.
 
-## The Impossibility That Makes It Necessary
+## Why It Matters
 
-One of the most satisfying results in this line of work is the proof that exp-log superposition is not just sufficient but *necessary* in a precise sense. The researchers proved that no purely additive decomposition can capture multiplication. That is, there is no way to write *x* × *y* as *u*(*x*) + *v*(*y*), no matter how cleverly you choose *u* and *v*.
+At first glance, expressing multiplication as exp(log *x* + log *y*) might seem like a parlor trick—a round-trip through logarithmic space that ends where it started. But the implications ripple outward.
 
-The proof is a gem of mathematical reasoning. Suppose such a decomposition existed. Evaluate it at the four points (*a*, *a*), (*a*, *b*), (*b*, *a*), and (*b*, *b*), where *a* and *b* are distinct positive numbers. You get four equations:
+**For machine learning**: The Kolmogorov-Arnold theorem has recently inspired a new class of neural networks called KAN (Kolmogorov-Arnold Networks), where the activation functions are learned rather than fixed. The EML-KA results suggest that exp and log should be privileged activation functions—that networks using these specific nonlinearities might achieve better approximation with fewer parameters.
 
-- *a*² = *u*(*a*) + *v*(*a*)
-- *a*·*b* = *u*(*a*) + *v*(*b*)
-- *b*·*a* = *u*(*b*) + *v*(*a*)
-- *b*² = *u*(*b*) + *v*(*b*)
+**For numerical computing**: Decomposing a bivariate function into univariate ones is the key to efficient computation on parallel hardware. If multiplication can be computed as a sum of one-dimensional lookups, that opens possibilities for analog computing and hardware acceleration.
 
-Now subtract the second equation from the first, and the fourth from the third. You find that *a*(*a* − *b*) = *u*(*a*) − *u*(*b*) and *b*(*a* − *b*) = *u*(*a*) − *u*(*b*). But these two expressions equal the same thing, which forces *a* = *b* — contradicting our assumption.
+**For understanding computation itself**: The result suggests that the reason exp and log are so fundamental to science is not merely historical convenience. These functions are *optimal* in a precise mathematical sense—they achieve the minimal possible Kolmogorov-Arnold decomposition for basic arithmetic.
 
-This impossibility result is what makes the exp-log decomposition genuinely interesting. It is not a cosmetic rewriting. It captures a structural phenomenon — the ability to encode nonlinear interaction — that is provably beyond the reach of simpler additive methods. The exponential function is doing real mathematical work: it transforms additive structure into multiplicative structure, bridging two fundamentally different algebraic worlds.
+## A New Lens on Old Mathematics
 
----
+Kolmogorov's theorem was proved in 1957 as the answer to Hilbert's 13th problem, which asked whether certain equations could be solved using functions of only two variables. The answer—any number of variables can be reduced to one—was so counterintuitive that David Hilbert himself would have been astonished.
 
-## The Bigger Picture: A Constructive Superposition Theory
+Nearly seventy years later, we are still mining the consequences. The connection to exp and log reveals that Kolmogorov's abstract existence theorem, for the most important functions in mathematics, collapses to something breathtakingly concrete: the operations you learned in high school algebra class, combined in just the right way.
 
-What makes this research program different from four hundred years of logarithm use is the ambition to build a *systematic theory*. The goal is not just to observe that "log turns multiplication into addition" — any calculus student knows that. The goal is to develop a formal framework for understanding which multivariate functions admit explicit decompositions into compositions of one-variable functions, using exp and log as the fundamental building blocks.
-
-The researchers have defined a formal language for these decompositions: symbolic expressions built from variables, constants, addition, exponentiation, and logarithms. Every expression in this language can be evaluated to produce a function, and the key question is: which functions arise?
-
-This is the beginning of what might be called **constructive representation theory for multivariate functions**. Unlike Kolmogorov's original theorem, which guarantees existence but provides no usable construction, this theory works with explicit, computable decompositions. Every theorem comes with a witness — an actual construction you can evaluate on a computer.
+The hidden architecture of arithmetic was there all along, waiting to be seen. It took the right question—not "how do we compute?" but "how simply can we decompose?"—to reveal it.
 
 ---
 
-## From Mathematics to Machines
-
-The implications extend far beyond pure mathematics. In statistical mechanics, the fact that log linearizes products is the reason we work with free energies (logarithms of partition functions) rather than partition functions themselves. The decomposition of a joint probability into a sum of log-probabilities is the foundation of modern machine learning, from logistic regression to large language models.
-
-In signal processing, the cepstrum — the "spectrum of the spectrum" — works by taking the logarithm of a power spectrum, converting multiplicative signal interactions into additive ones that are easier to separate. This is precisely the same mathematical mechanism.
-
-In analog computing, there is a long tradition of using logarithmic amplifiers to perform multiplication, exactly as the exp-log decomposition suggests. The new theoretical framework provides rigorous foundations for understanding the power and limitations of such approaches.
-
-The unifying insight is that the boundary between "additive" and "multiplicative" — between linear and nonlinear — is not a wall but a door. And the key that opens it is a pair of functions that humanity discovered four centuries ago.
-
----
-
-## What Comes Next
-
-The current results are the beginning of a larger program. The immediate open question is: can every positive-coefficient polynomial in two variables be exactly represented by a finite exp-log superposition? Numerical experiments suggest the answer is yes for degree-2 polynomials using at most five terms, but a proof remains elusive.
-
-Beyond polynomials, there are deeper questions. Can approximation theorems be proved, showing that exp-log superpositions can approximate *any* continuous function on a positive domain to arbitrary accuracy? Can the framework be extended to handle functions with zeros, where logarithms become singular?
-
-And perhaps most tantalizingly: can this constructive approach be scaled up to provide a practical alternative to Kolmogorov's existential theorem? Instead of proving that decompositions exist using pathological functions, can we always find decompositions using smooth, explicit, EML primitives — perhaps at the cost of allowing more terms in the sum?
-
-These questions sit at the intersection of pure mathematics, computer science, and machine learning. Their answers could reshape how we build neural networks, design analog computers, and understand the mathematical architecture of computation itself.
-
-The ancient logarithm, it turns out, still has secrets to reveal.
+*The mathematical results described in this article have been formalized and verified with complete proofs. The key theorems—including the EML-KA decomposition of multiplication, power functions, geometric means, and the Fenchel-Young inequality—are established with full mathematical rigor.*
