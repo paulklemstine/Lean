@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2140 of the highest-quality
+A curated collection of 2144 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2140
+Total files: 2144
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -494,6 +494,7 @@ import FINAL.Bridges.IdempotentNoether
 import FINAL.Bridges.IdempotentRenormalizationDuality
 import FINAL.Bridges.IdempotentThermodynamicRealization
 import FINAL.Bridges.IncrementalDAG
+import FINAL.Bridges.InfoGeometry
 import FINAL.Bridges.Instances
 import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
@@ -590,6 +591,7 @@ import FINAL.Bridges.Pareto
 import FINAL.Bridges.PartitionMatroidStability
 import FINAL.Bridges.PeriodicOrbitVarieties
 import FINAL.Bridges.PersistentProofHomology
+import FINAL.Bridges.PhaseStructure
 import FINAL.Bridges.PhaseTransition
 import FINAL.Bridges.PluckerFourPoint
 import FINAL.Bridges.PolynomialInterpolationEquiv
@@ -691,6 +693,7 @@ import FINAL.Bridges.SupportCertificateCompression
 import FINAL.Bridges.SupportCompression
 import FINAL.Bridges.SupportCompressionPoly
 import FINAL.Bridges.SupportTutteUniversality
+import FINAL.Bridges.SurrealArithmetic
 import FINAL.Bridges.SymmetricGroup
 import FINAL.Bridges.SymplecticCertificateAlgebra
 import FINAL.Bridges.SymplecticCryptography
@@ -1770,6 +1773,7 @@ import FINAL.Pythagorean.QuantumChannelMixing
 import FINAL.Pythagorean.QuantumCircuitRewriting
 import FINAL.Pythagorean.QuantumCircuitSynthesis
 import FINAL.Pythagorean.QuantumRungeLenz
+import FINAL.Pythagorean.QuantumTensorConfluence
 import FINAL.Pythagorean.QuantumTensorRewriting
 import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.QuotientSections
