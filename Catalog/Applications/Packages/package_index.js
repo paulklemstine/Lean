@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Speculative Mathematics / Hyperbolic Geometry / Number Theory",
     "date": "2026-05-30T08:19:53Z",
     "exp_id": "e355aaa7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5606909090909091,
+    "quality": "partial",
     "pkg_num": 392
   },
   {
@@ -11377,8 +11377,8 @@ window.PACKAGE_GRAPH = {
       "shape": "pentagonal_prism",
       "date": "2026-05-30T08:19:53Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5606909090909091,
+      "quality": "partial"
     }
   ],
   "edges": [

@@ -1,161 +1,189 @@
 """
-Visualization: Hyperbolic Tessellation and Lattice Points
+Visualization: Hyperbolic Tessellation and Prime Classification
+================================================================
 
-Shows the tessellation of the Poincaré disk by the modular group,
-illustrating how "hyperbolic integers" tile the hyperbolic plane.
-The exponential growth of tiles near the boundary reflects the
-proven theorem hypGrowth(n) = 3^n.
+Shows the fundamental domain tessellation of the modular group PSL(2,Z)
+and classifies group elements into hyperbolic "primes" (generators) and
+"composites" (products of generators).
 """
 
-import numpy as np
+import math
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+import numpy as np
 
 
-def moebius_map(a, z):
-    """Möbius automorphism."""
-    denom = 1 - np.conj(a) * z
-    mask = np.abs(denom) > 1e-12
-    result = np.where(mask, (z - a) / np.where(mask, denom, 1), 0)
-    return result
+def mobius_uhp(a, b, c, d, z_re, z_im):
+    """Apply Möbius transform (az+b)/(cz+d) in upper half-plane."""
+    denom_re = c * z_re + d
+    denom_im = c * z_im
+    denom_sq = denom_re**2 + denom_im**2
+    if denom_sq < 1e-15:
+        return None, None
+    num_re = a * z_re + b
+    num_im = a * z_im
+    w_re = (num_re * denom_re + num_im * denom_im) / denom_sq
+    w_im = (num_im * denom_re - num_re * denom_im) / denom_sq
+    return w_re, w_im
 
 
-def hyperbolic_distance_from_origin(z):
-    """Hyperbolic distance from the origin."""
-    r = np.abs(z)
-    r = np.clip(r, 0, 0.9999)
-    return 2 * np.arctanh(r)
+def cayley_to_disk(z_re, z_im):
+    """Cayley transform: upper half-plane to disk."""
+    plus_re, plus_im = z_re, z_im + 1
+    minus_re, minus_im = z_re, z_im - 1
+    d_sq = plus_re**2 + plus_im**2
+    if d_sq < 1e-15:
+        return None, None
+    return ((minus_re*plus_re + minus_im*plus_im) / d_sq,
+            (minus_im*plus_re - minus_re*plus_im) / d_sq)
 
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6.5))
+def draw_geodesic_arc(ax, z1_re, z1_im, z2_re, z2_im, color='gray', alpha=0.3, lw=0.5):
+    """Draw a hyperbolic geodesic between two points in the disk."""
+    # Simple: just draw a straight line (approximation for nearby points)
+    ax.plot([z1_re, z2_re], [z1_im, z2_im], color=color, alpha=alpha, linewidth=lw)
 
-# Left panel: Lattice points colored by distance
-ax = axes[0]
 
-# Draw disk boundary
-circle = patches.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-ax.add_patch(circle)
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-# Generate lattice points by applying transformations
-# Use simple representation: rotations and translations in disk model
-lattice_points = [0 + 0j]
-generators_a = [
-    0.3 + 0.0j,
-    -0.3 + 0.0j,
-    0.0 + 0.3j,
-    0.0 - 0.3j,
-    0.15 + 0.26j,
-    -0.15 + 0.26j,
-    0.15 - 0.26j,
-    -0.15 - 0.26j,
-]
+    # ──────────────────────────────────────────
+    # Panel 1: Fundamental domain in upper half-plane
+    # ──────────────────────────────────────────
+    ax = axes[0]
 
-# Generate orbit by repeatedly applying Möbius maps
-seen = set()
-seen.add((0, 0))
-current_gen = [0 + 0j]
+    # Draw fundamental domain of PSL(2,Z)
+    # Boundaries: Re(z) = -1/2, Re(z) = 1/2, |z| = 1
+    theta = np.linspace(np.pi/3, 2*np.pi/3, 100)
+    arc_x = np.cos(theta)
+    arc_y = np.sin(theta)
+    ax.plot(arc_x, arc_y, 'k-', linewidth=2)
+    ax.plot([-0.5, -0.5], [np.sin(np.pi/3), 3], 'k-', linewidth=2)
+    ax.plot([0.5, 0.5], [np.sin(np.pi/3), 3], 'k-', linewidth=2)
 
-for depth in range(4):
-    next_gen = []
-    for z in current_gen:
-        for a in generators_a:
-            w = moebius_map(a, z)
-            if abs(w) < 0.98:
-                key = (round(w.real, 4), round(w.imag, 4))
-                if key not in seen:
-                    seen.add(key)
-                    lattice_points.append(w)
-                    next_gen.append(w)
-    current_gen = next_gen
+    # Fill fundamental domain
+    fill_x = list(arc_x) + [0.5, 0.5, -0.5, -0.5] + [arc_x[0]]
+    fill_y = list(arc_y) + [arc_y[-1], 3, 3, arc_y[0]] + [arc_y[0]]
+    ax.fill(fill_x, fill_y, alpha=0.15, color='gold')
 
-# Plot lattice points colored by distance from origin
-points = np.array(lattice_points)
-distances = np.array([hyperbolic_distance_from_origin(z) for z in lattice_points])
+    # Draw translated copies
+    for n in range(-3, 4):
+        if n == 0:
+            continue
+        theta_t = np.linspace(0, np.pi, 100)
+        cx = np.cos(theta_t) + n
+        cy = np.sin(theta_t)
+        ax.plot(cx, cy, 'gray', linewidth=0.5, alpha=0.5)
+        ax.plot([n - 0.5, n - 0.5], [0, 3], 'gray', linewidth=0.3, alpha=0.3)
+        ax.plot([n + 0.5, n + 0.5], [0, 3], 'gray', linewidth=0.3, alpha=0.3)
 
-scatter = ax.scatter(points.real, points.imag, c=distances, cmap='viridis',
-                     s=15, alpha=0.8, edgecolors='none', zorder=3)
-plt.colorbar(scatter, ax=ax, label='Hyperbolic distance from origin', shrink=0.8)
+    # Mark special points
+    ax.plot(0, 1, 'r*', markersize=15, zorder=10, label='i (origin)')
+    ax.plot(-0.5, math.sqrt(3)/2, 'bs', markersize=8, zorder=10, label='ρ = e^{2πi/3}')
+    ax.plot(0.5, math.sqrt(3)/2, 'bs', markersize=8, zorder=10)
 
-# Mark origin
-ax.plot(0, 0, 'r*', markersize=12, zorder=5)
+    # Draw some images under S and T
+    special_pts = [(0, 1)]  # Start at i
+    # T(i) = i+1
+    special_pts.append((1, 1))
+    # S(i) = -1/i = i (fixed!)
+    # T^{-1}(i) = i-1
+    special_pts.append((-1, 1))
+    # ST(i) = S(i+1) = -1/(i+1) = (-1+i)/2... compute properly
+    z_re, z_im = 1, 1  # i+1
+    w_re, w_im = mobius_uhp(0, -1, 1, 0, z_re, z_im)
+    if w_re is not None:
+        special_pts.append((w_re, w_im))
 
-ax.set_xlim(-1.1, 1.1)
-ax.set_ylim(-1.1, 1.1)
-ax.set_aspect('equal')
-ax.set_title(f'Hyperbolic Lattice Points ({len(lattice_points)} points)\n'
-             'Color = hyperbolic distance from origin', fontsize=11)
-ax.grid(True, alpha=0.15)
+    for x, y in special_pts[1:]:
+        ax.plot(x, y, 'go', markersize=6, zorder=8)
 
-# Right panel: Hyperbolic geodesic fan showing tiling
-ax = axes[1]
+    ax.set_xlim(-3.5, 3.5)
+    ax.set_ylim(0, 3.5)
+    ax.set_aspect('equal')
+    ax.set_title('Upper Half-Plane: Fundamental Domain of PSL(2,ℤ)', fontsize=12)
+    ax.set_xlabel('Re(z)')
+    ax.set_ylabel('Im(z)')
+    ax.legend(loc='upper right', fontsize=9)
 
-# Draw disk boundary
-circle = patches.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-ax.add_patch(circle)
+    # ──────────────────────────────────────────
+    # Panel 2: Orbit in Poincaré disk with word length coloring
+    # ──────────────────────────────────────────
+    ax = axes[1]
 
-# Draw a {7,3} tiling approximation
-# Regular heptagonal tiling: 7-gons meeting 3 at each vertex
-n_sides = 7
-n_levels = 4
+    # Draw disk boundary
+    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax.add_patch(circle)
 
-# Generate vertices of central polygon
-r_central = 0.4
-angles_central = np.linspace(0, 2 * np.pi, n_sides, endpoint=False)
-central_vertices = r_central * np.exp(1j * angles_central)
+    # Generate orbit with word length tracking
+    class M:
+        def __init__(self, a, b, c, d, wl=0):
+            self.a, self.b, self.c, self.d = a, b, c, d
+            self.wl = wl
+        def mul(self, other):
+            return M(self.a*other.a+self.b*other.c, self.a*other.b+self.b*other.d,
+                     self.c*other.a+self.d*other.c, self.c*other.b+self.d*other.d,
+                     self.wl + 1)
+        def key(self):
+            return (round(self.a,3), round(self.b,3), round(self.c,3), round(self.d,3))
 
-# Draw central polygon
-for i in range(n_sides):
-    z1 = central_vertices[i]
-    z2 = central_vertices[(i + 1) % n_sides]
-    # Draw geodesic (approximated as line for now, since these are close to origin)
-    t = np.linspace(0, 1, 50)
-    # Hyperbolic geodesic: use Möbius-mapped straight lines
-    line = z1 + t[:, np.newaxis] * (z2 - z1)
-    line = line.flatten()
-    ax.plot(line.real, line.imag, 'b-', linewidth=1.5, alpha=0.7)
+    S_g = M(0, -1, 1, 0, 0)
+    T_g = M(1, 1, 0, 1, 0)
+    Ti_g = M(1, -1, 0, 1, 0)
 
-# Add reflected polygons
-for i in range(n_sides):
-    center = central_vertices[i]
-    # Reflect central polygon through each edge
-    for j in range(n_sides):
-        v = central_vertices[j]
-        w = moebius_map(-center * 0.8, v)
-        if abs(w) < 0.98:
-            ax.plot(w.real, w.imag, 'g.', markersize=3, alpha=0.5)
+    orbit = {}
+    queue = [M(1, 0, 0, 1, 0)]
+    orbit[queue[0].key()] = 0
 
-# Draw radial geodesics from origin to boundary
-n_geodesics = 14
-for angle in np.linspace(0, 2 * np.pi, n_geodesics, endpoint=False):
-    r = np.linspace(0, 0.99, 200)
-    z = r * np.exp(1j * angle)
-    ax.plot(z.real, z.imag, 'gray', linewidth=0.5, alpha=0.3)
+    for _ in range(6):
+        next_q = []
+        for m in queue:
+            for g in [S_g, T_g, Ti_g]:
+                n = m.mul(g)
+                k = n.key()
+                if k not in orbit:
+                    orbit[k] = n.wl
+                    next_q.append(n)
+        queue = next_q
 
-# Draw horocycles (circles tangent to boundary)
-for r_center in [0.3, 0.5, 0.7, 0.85, 0.93]:
-    theta = np.linspace(0, 2 * np.pi, 200)
-    z = r_center * np.exp(1j * theta)
-    ax.plot(z.real, z.imag, 'r-', linewidth=0.5, alpha=0.3)
+    # Convert to disk coordinates
+    pts_by_wl = {}
+    for (a, b, c, d), wl in orbit.items():
+        w_re, w_im = mobius_uhp(a, b, c, d, 0, 1)
+        if w_re is None:
+            continue
+        dx, dy = cayley_to_disk(w_re, w_im)
+        if dx is None:
+            continue
+        r = math.sqrt(dx**2 + dy**2)
+        if r >= 0.99:
+            continue
+        if wl not in pts_by_wl:
+            pts_by_wl[wl] = ([], [])
+        pts_by_wl[wl][0].append(dx)
+        pts_by_wl[wl][1].append(dy)
 
-# Mark "hyperbolic primes" (generators)
-prime_angles = np.linspace(0, 2 * np.pi, 6, endpoint=False)
-for angle in prime_angles:
-    z = 0.35 * np.exp(1j * angle)
-    ax.plot(z.real, z.imag, 'r^', markersize=8, zorder=5)
+    colors = ['gold', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c']
+    for wl in sorted(pts_by_wl.keys()):
+        xs, ys = pts_by_wl[wl]
+        c = colors[min(wl, len(colors)-1)]
+        s = max(5, 30 - 4 * wl)
+        label = f'Word length {wl}' if wl <= 5 else None
+        ax.scatter(xs, ys, c=c, s=s, alpha=0.8, label=label, zorder=5+wl)
 
-ax.plot(0, 0, 'k*', markersize=12, zorder=5, label='Origin (identity)')
-ax.plot([], [], 'r^', markersize=8, label='Hyperbolic primes')
-ax.legend(loc='upper right', fontsize=9)
+    ax.set_xlim(-1.15, 1.15)
+    ax.set_ylim(-1.15, 1.15)
+    ax.set_aspect('equal')
+    ax.set_title('Poincaré Disk: Hyperbolic Integers by Word Length', fontsize=12)
+    ax.set_xlabel('Re(z)')
+    ax.set_ylabel('Im(z)')
+    ax.legend(loc='upper right', fontsize=8)
 
-ax.set_xlim(-1.1, 1.1)
-ax.set_ylim(-1.1, 1.1)
-ax.set_aspect('equal')
-ax.set_title('Hyperbolic Tessellation & Primes\n'
-             'Red triangles = generators (primes)', fontsize=11)
-ax.grid(True, alpha=0.15)
+    fig.suptitle('Hyperbolic Number Theory: The Modular Tessellation',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('tessellation.png', dpi=150, bbox_inches='tight')
+    print("Saved tessellation.png")
 
-plt.suptitle('Hyperbolic Integers: Lattice Points on the Poincaré Disk',
-             fontsize=13, fontweight='bold', y=1.01)
-plt.tight_layout()
-plt.savefig("viz_tessellation.png", dpi=150, bbox_inches='tight')
-plt.close()
+
+if __name__ == "__main__":
+    main()

@@ -1683,10 +1683,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cea7988d",
     "timestamp": "2026-05-25T22:59:06.937020+00:00"
   },
   {
@@ -2982,10 +2982,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "78306251",
-    "consumed_by_exp_id": "5a22e7bf",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
   },
   {
@@ -4865,10 +4865,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "ece3d9d6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
@@ -7001,10 +7001,10 @@ window.FUTURE_DIRECTIONS = [
       "Topological Data Analysis"
     ],
     "priority_score": 0.9,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "d5a0fe5d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:49.105761+00:00"
   },
   {
@@ -7323,7 +7323,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "34620614",
+    "consumed_by_exp_id": "be364682",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
@@ -7543,10 +7543,10 @@ window.FUTURE_DIRECTIONS = [
       "Spectral Graph Theory"
     ],
     "priority_score": 0.8,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "6600e6df",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:32.898444+00:00"
   },
   {
@@ -7834,6 +7834,55 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_2196",
+    "title": "This research cycle established the foundational machinery for hyperbolic arithm",
+    "description": "# Future Directions: Hyperbolic Number Theory\n\n## Synthesis\n\nThis research cycle established the foundational machinery for hyperbolic arithmetic: a machine-verified SL(2,\u211d) group structure, the Chebyshev-trace recurrence connecting representation theory to approximation theory, and a novel hyperbolic factorization monoid capturing unique factorization on curved spaces. The most significant discovery was the spectral-arithmetic duality theorem, which provides a rigorous bridge between orbit counting (number theory), Laplacian eigenvalues (spectral theory), and exponential growth (hyperbolic geometry).\n\nThe most promising cross-domain connection is between the Chebyshev-trace recurrence and classical approximation theory. The fact that SL(2) traces satisfy the same recurrence as Chebyshev polynomials suggests that techniques from numerical analysis could yield new results in number theory, and vice versa. This is a concrete, testable bridge that could be developed immediately. A second major opportunity is connecting the hyperbolic factorization monoid to the existing Catalog's algebraic machinery \u2014 specifically the Berggren tree structure in `Algebra/Berggren.lean` and the Lorentz form in `Cryptography/BerggrenDiophantineLattice.lean`, both of which concern matrix groups acting on lattice points.\n\nThe highest breakthrough potential lies in formalizing the Selberg trace formula, which would connect the entire spectral theory of hyperbolic surfaces to the Catalog's existing work on modular forms (`EML/ModularForms.lean`) and create a verified path toward the prime geodesic theorem.\n\n---\n\n### Direction 1: The Selberg Trace Formula in Lean 4\n\n**Conjecture**: The Selberg trace formula for PSL(2,\u2124)\\\u210d can be formalized in Lean 4 using the existing Mathlib theory of integration, spectral theory, and automorphic forms: for any smooth test function h with suitable decay,\n\u2211_n h(r_n) = (Area/4\u03c0) \u222b h(r) r tanh(\u03c0r) dr + \u2211_{\u03b3} (\u2113(\u03b3\u2080))/(2sinh(\u2113(\u03b3)/2)) \u0125(\u2113(\u03b3)) + ...\nwhere {r_n} are the spectral parameters and {\u03b3} are primitive conjugacy classes.\n\n**Test**: Formalize the geometric side (sum over conjugacy classes) using the SL2R infrastructure from this cycle. Verify that the contribution of a single hyperbolic conjugacy class with trace t matches the formula \u2113\u2080/(2sinh(\u2113/2)) where \u2113 = 2\u00b7arccosh(|t|/2).\n\n**Impact**: A verified Selberg trace formula would be a landmark result in formalized mathematics, connecting spectral theory, number theory, and geometry in a single machine-checked identity. It would open the door to verified proofs of the prime geodesic theorem and Weyl's law.\n\n**Catalog References**: `EML/ModularForms.lean` (modular forms machinery), `Catalog/Algebra/Foundations.lean` (critical_line_implies_unit_disk \u2014 spectral/zeta connection), `Speculative/HyperbolicNumberTheory/Defs.lean` (SL2R infrastructure)\n\n**Proof Strategy**: (1) Define the spectral decomposition of L\u00b2(PSL(2,\u2124)\\\u210d) using Mathlib's spectral theory. (2) Formalize the heat kernel on the hyperbolic plane using the explicit formula involving Bessel functions. (3) Use the trace of the heat kernel to derive the trace formula via Poisson summation. Key lemmas needed: the Plancherel theorem for SL(2,\u211d), the Abel transform, and summation of orbital integrals.\n\n**Domain Bridges**: Number Theory <-> Spectral Theory, Algebra <-> Physics (quantum mechanics on hyperbolic surfaces)\n\n**Lineage**: Builds directly on SL2R.trace_chebyshev_recurrence and SL2R.tr_conjugation_invariant from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Chebyshev Polynomials as SL(2) Trace Polynomials\n\n**Conjecture**: The Chebyshev-trace recurrence from this cycle can be extended to a complete isomorphism between the ring of trace polynomials of SL(2,\u211d) and the ring of Chebyshev polynomials. Specifically, if T_n denotes the n-th Chebyshev polynomial of the first kind, then tr(M^n) = 2\u00b7T_n(tr(M)/2) for all M \u2208 SL(2,\u211d) and n \u2208 \u2115.\n\n**Test**: Prove the identity tr(M^n) = 2\u00b7T_n(tr(M)/2) by induction using the Chebyshev-trace recurrence and the defining recurrence of Chebyshev polynomials. Verify computationally for n \u2264 20 and random matrices.\n\n**Impact**: Establishes a formal bridge between hyperbolic geometry and approximation theory. Would enable transfer of Chebyshev polynomial bounds (best approximation, minimax, etc.) to trace problems in geometric group theory.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Defs.lean` (Chebyshev-trace recurrence), Mathlib's `Polynomial.Chebyshev` module\n\n**Proof Strategy**: (1) Define Chebyshev polynomials using the standard recurrence T_{n+2}(x) = 2x\u00b7T_{n+1}(x) \u2212 T_n(x). (2) Define trace polynomials P_n(t) = tr(M^n) as functions of t = tr(M). (3) Prove P_n(t) = 2\u00b7T_n(t/2) by induction, using the matching base cases (P_0 = 2 = 2\u00b7T_0, P_1 = t = 2\u00b7T_1(t/2)) and the matching recurrence (both satisfy f_{n+2} = t\u00b7f_{n+1} \u2212 f_n after rescaling).\n\n**Domain Bridges**: Algebra <-> Computation (approximation theory), Number Theory <-> Analysis\n\n**Lineage**: Extends SL2R.trace_chebyshev_recurrence and SL2R.tr_pow_zero/tr_pow_one.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Hyperbolic Factorization in the Berggren Tree\n\n**Conjecture**: The Berggren tree of primitive Pythagorean triples \u2014 already formalized in the Catalog \u2014 is isomorphic to a subtree of the Cayley graph of a hyperbolic integer system. Specifically, the three Berggren matrices (which generate all primitive Pythagorean triples from (3,4,5)) are irreducible elements of a hyperbolic factorization monoid, and every primitive triple corresponds to a unique word in these generators.\n\n**Test**: (1) Verify that the Berggren matrices have determinant \u00b11 (or after suitable normalization, fit into SL(2,\u211d)). (2) Define a height function on the Berggren tree (depth in the tree) and verify it is additive. (3) Apply the factorization_length_eq_height theorem to conclude that factorization length equals tree depth.\n\n**Impact**: Creates a concrete bridge between Pythagorean number theory (well-developed in the Catalog) and hyperbolic geometry. Would provide a geometric interpretation of the Berggren tree as a tessellation of a portion of hyperbolic space.\n\n**Catalog References**: `Algebra/Berggren.lean` (Berggren tree definitions), `Cryptography/BerggrenDiophantineLattice.lean` (lorentzForm, Pythagorean vectors), `Bridges/AlgebraPythagoreanCryptography/BerggrenLatticeReductionDuality.lean` (PrimTriple)\n\n**Proof Strategy**: (1) Show the three Berggren matrices generate a free monoid (no relations). (2) Define height = word length. (3) Verify additivity. (4) Apply HyperbolicFactorizationMonoid.factorization_length_eq_height. The key subtlety is that Berggren matrices preserve a Lorentz form (indefinite quadratic form), connecting to the Lorentz group SO(2,1) \u2245 PSL(2,\u211d).\n\n**Domain Bridges**: Algebra <-> Cryptography, Pythagorean <-> Geometry\n\n**Lineage**: Builds on HyperbolicFactorizationMonoid and connects to existing Berggren infrastructure.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Spectral Gap and Expander Graphs from PSL(2,\u2124)\n\n**Conjecture**: The Cayley graph of PSL(2,\u2124/p\u2124) with generators S and T is a family of expander graphs, with spectral gap bounded below by a constant independent of p. This is a theorem of Selberg (for the infinite analog) and Lubotzky-Phillips-Sarnak (for the finite quotients). The spectral gap should be expressible in terms of the Selberg eigenvalue conjecture: \u03bb\u2081 \u2265 1/4 implies spectral gap \u2265 3/16 for the finite quotients.\n\n**Test**: Compute the adjacency matrices of PSL(2,\u2124/p\u2124) for p = 3, 5, 7, 11, 13 and verify that the second-largest eigenvalue satisfies |\u03bb\u2082| \u2264 2\u221a2 (the Ramanujan bound).\n\n**Impact**: Would connect the Catalog's hyperbolic number theory to the Catalog's computation and machine learning domains (expander graphs are fundamental in derandomization, error-correcting codes, and deep learning theory). Creates a bridge Algebra <-> MachineLearning.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Defs.lean` (SL2R, spectral_gap_controls_growth), `Computation/InfoEfficientAlgorithms.lean` (information-theoretic bounds)\n\n**Proof Strategy**: (1) Formalize PSL(2,\u2124/p\u2124) as a finite group. (2) Construct the Cayley graph. (3) Bound the spectral gap using the Selberg 3/16 theorem (or prove the full Selberg eigenvalue conjecture \u03bb\u2081 \u2265 1/4 for the specific case of \u0393(p)). (4) Use spectral_gap_controls_growth to derive expansion bounds.\n\n**Domain Bridges**: Algebra <-> MachineLearning, Number Theory <-> Computation\n\n**Lineage**: Extends spectral_gap_controls_growth and SL2R classification.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Hyperbolic Zeta Function Analytic Continuation\n\n**Conjecture**: The partial hyperbolic zeta function defined in this cycle, \u03b6_H(s) = \u03a3 1/n^{2s}, extends to a meromorphic function on \u2102 with a functional equation relating \u03b6_H(s) and \u03b6_H(1\u2212s), analogous to the Riemann zeta function.\n\n**Test**: (1) Compute \u03b6_H(s) for s near 0 and near 1 and check whether the values exhibit the expected symmetry. (2) Verify that the residue at s = 1/2 (if a pole exists) equals the volume of the fundamental domain divided by 4\u03c0.\n\n**Impact**: If true, this would be a significant new zeta function with geometric origins, potentially amenable to a proof of its own Riemann Hypothesis via the Selberg trace formula. The spectral interpretation (zeros = eigenvalues of Laplacian) would make the RH a consequence of self-adjointness.\n\n**Catalog References**: `Catalog/Algebra/Foundations.lean` (critical_line_implies_unit_disk), `Speculative/HyperbolicNumberTheory/Defs.lean` (hyperbolicZetaPartial), `Speculative/IdempotentCollapse/TheoreticalExtensions.lean` (RH_via_fixed_points)\n\n**Proof Strategy**: (1) Establish absolute convergence for Re(s) > 1/2 using Margulis's lattice point counting. (2) Use the Selberg trace formula to derive a functional equation. (3) Relate zeros to eigenvalues of the Laplacian. Key prerequisite: formalize Margulis's theorem that the lattice point count N(R) ~ C\u00b7e^R/R as R \u2192 \u221e.\n\n**Domain Bridges**: Number Theory <-> Analysis, Algebra <-> Speculative (RH connections)\n\n**Lineage**: Extends hyperbolicZetaPartial_nonneg and connects to existing RH infrastructure.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "315192c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T08:19:36.139537+00:00"
+  },
+  {
+    "id": "fd_2197",
+    "title": "This research cycle established the algebraic foundations of arithmetic on the P",
+    "description": "# Future Directions: Hyperbolic Number Theory\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of arithmetic on the Poincar\u00e9 disk, proving 30+ theorems connecting SL\u2082(\u2124) trace arithmetic to Chebyshev polynomials, Markov number theory, and tropical geometry. The most promising cross-domain connection is the **Gromov product \u2194 tropical semiring bridge** (Theorem `gromov_product_ultrametric`), which suggests that the spectral theory of hyperbolic lattices can be \"tropicalized\" \u2014 replacing analytic objects with combinatorial ones while preserving essential structure.\n\nThe cycle's results fall into three interconnected layers: (1) the group-theoretic layer (`MobiusMap` structure with full group axioms), (2) the geometric layer (`DiskPoint` with pseudo-hyperbolic distance properties), and (3) the number-theoretic layer (trace sequences, Markov divisibility, primitive trace density). These layers connect to existing Catalog infrastructure: the Markov theory extends `Catalog/Algebra/Berggren.lean` (Pythagorean triples share the same tree structure), the tropical bridge extends `Catalog/Tropical/Hyperbolicity.lean`, and the trace arithmetic connects to `Catalog/MachineLearning/HyperbolicNumberTheory/PoincareDisk.lean`.\n\nThe highest breakthrough potential lies in **Direction 1** (Tropical Selberg Zeta), because it could provide a combinatorial proof of spectral gap results that currently require heavy analytic machinery. The formal verification of the Gromov ultrametric inequality provides the first rigorously verified step toward this goal.\n\n---\n\n### Direction 1: Tropical Selberg Zeta Function\n\n**Conjecture**: The Selberg zeta function Z(s) = \u220f_p \u220f_{k\u22650} (1 \u2212 N(p)^{\u2212(s+k)}) for PSL\u2082(\u2124), when \"tropicalized\" by replacing multiplication with min and addition with ordinary addition, yields a tropical polynomial whose roots correspond to the eigenvalues of the hyperbolic Laplacian on the modular surface.\n\n**Test**: Compute the first 10 primitive hyperbolic conjugacy classes of PSL\u2082(\u2124) (classified by trace t \u2265 3), compute the tropical Selberg zeta for s \u2208 [0, 5], and compare the tropical roots to the known spectrum {1/4 + r_n\u00b2 : r_n are the Maa\u00df form eigenvalues}. If the tropical roots approximate the spectral values to within 10%, the conjecture is supported.\n\n**Impact**: If true, this would provide a combinatorial framework for spectral geometry, potentially simplifying proofs of spectral gap theorems. If false, the failure mode reveals which aspects of the Selberg theory are inherently analytic and cannot be tropicalized.\n\n**Catalog References**: `Catalog/Tropical/Hyperbolicity.lean`, `Catalog/MachineLearning/HyperbolicNumberTheory/PoincareDisk.lean`, `Speculative/HyperbolicNumberTheory/Foundations.lean` (theorem `gromov_product_ultrametric`)\n\n**Proof Strategy**: (1) Formalize primitive hyperbolic conjugacy classes using the trace classification. (2) Define the tropical Selberg product as a min-plus convolution. (3) Prove that the tropical Euler product converges. (4) Compare roots numerically. Key lemmas needed: classification of primitive elements by trace, norm computation N(p) = ((t + \u221a(t\u00b2\u22124))/2)\u00b2.\n\n**Domain Bridges**: NumberTheory <-> Tropical, Geometry <-> Spectral\n\n**Lineage**: Builds on `traceSeq_mod`, `fundamentalDisc_pos`, and the tropical algebra theorems from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Markov Uniqueness via Trace Rigidity\n\n**Conjecture**: The Markov uniqueness conjecture \u2014 that the largest element of a Markov triple uniquely determines the triple \u2014 can be proved by showing that the SL\u2082(\u2124) conjugacy class associated to a Markov number z is determined by the geodesic length log((z + \u221a(z\u00b2\u22124))/2), using trace rigidity (Theorem `trace_conjugate`).\n\n**Test**: Verify computationally for all Markov numbers z \u2264 10\u2076 that no two distinct Markov triples share the same maximum element. Then attempt to formalize the uniqueness for z \u2264 100 using the Vieta tree structure.\n\n**Impact**: The Markov uniqueness conjecture has been open for over 100 years. Even a partial formal result (e.g., uniqueness for z \u2264 1000) would be significant. If the trace rigidity approach fails, it would constrain which algebraic methods can work.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Foundations.lean` (theorems `vieta_preserves_markov`, `markov_divisibility`, `markov_vieta_partner_pos`), `Catalog/Algebra/Berggren.lean`\n\n**Proof Strategy**: (1) Formalize the Markov tree as a binary tree with Vieta involutions. (2) Prove that distinct branches produce distinct maximum elements, by induction on tree depth. (3) Use `markov_vieta_bound` to control growth. (4) Apply `markov_divisibility` to eliminate collisions. Key difficulty: showing the Vieta involution is injective on the relevant domain.\n\n**Domain Bridges**: Algebra <-> Geometry, NumberTheory <-> Combinatorics\n\n**Lineage**: Builds on the Markov triple theorems from this cycle and the Berggren tree structure in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Chebyshev-Fibonacci Bridge via Trace Sequences\n\n**Conjecture**: The trace sequence traceSeq(3, n) = {2, 3, 7, 18, 47, 123, ...} satisfies gcd(traceSeq(3, m), traceSeq(3, n)) = traceSeq(3, gcd(m, n)), analogous to the classical identity gcd(F_m, F_n) = F_{gcd(m,n)} for Fibonacci numbers.\n\n**Test**: Verify computationally for all m, n \u2264 100. Then prove the identity by formalizing the divisibility property traceSeq(t, m) | traceSeq(t, mn) \u2212 2 and adapting the Fibonacci GCD proof.\n\n**Impact**: This would establish a complete analogy between Fibonacci numbers and trace sequences, opening the door to \"hyperbolic Fibonacci\" identities. The result would also give new divisibility tests for Markov-related sequences.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Foundations.lean` (theorems `traceSeq_mod`, `traceSeq_even_of_even`, `trace_pow_recurrence`)\n\n**Proof Strategy**: (1) Prove traceSeq(t, m) | traceSeq(t, km) for all k, by induction using `traceSeq_mod`. (2) Prove the GCD identity by strong induction on max(m,n), reducing via the Euclidean algorithm. (3) Handle the base case using `traceSeq_mod`. Key lemma: \"if (t\u22122) | (traceSeq(t,n) \u2212 2), then traceSeq(s, 1) | traceSeq(s, n)\" where s = traceSeq(t, m).\n\n**Domain Bridges**: NumberTheory <-> Algebra, Combinatorics <-> Geometry\n\n**Lineage**: Directly extends `traceSeq_mod` and `traceSeq_even_of_even`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Hyperbolic Lattice Counting via Euler Totients\n\n**Conjecture**: The number of SL\u2082(\u2124) elements with |trace| \u2264 T and coprime entries (a, c) is asymptotic to (3/\u03c0\u00b2) \u00b7 T\u00b3, with the leading constant 3/\u03c0\u00b2 = 3\u00b7(1 \u2212 1/4)(1 \u2212 1/9)(1 \u2212 1/25)\u00b7\u00b7\u00b7 arising from the Euler product for 1/\u03b6(2).\n\n**Test**: Count elements by brute force for T \u2264 50 and compare to the asymptotic formula. Verify that the ratio converges to 3/\u03c0\u00b2 \u2248 0.3040.\n\n**Impact**: This would establish the hyperbolic analog of the Gauss circle problem, connecting lattice point counting to the Riemann zeta function. The Euler totient sum theorem (`eulerTotientSum_ge`) provides the formal lower bound needed as a first step.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Foundations.lean` (theorems `eulerTotientSum_ge`, `trace_realized`, `congruence_subgroup_index_div6`)\n\n**Proof Strategy**: (1) Formalize the count of SL\u2082(\u2124) elements with trace t as a sum of Euler totients. (2) Use the Euler totient sum asymptotic (Mertens' theorem) to derive the T\u00b3 growth. (3) Identify the leading constant via the Euler product. Key prerequisite: formalizing \u2211_{n\u2264N} \u03c6(n) ~ 3N\u00b2/\u03c0\u00b2.\n\n**Domain Bridges**: NumberTheory <-> Geometry, Algebra <-> Analysis\n\n**Lineage**: Builds on `eulerTotientSum_ge` and `congruence_subgroup_index_div6`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Machine Learning on Hyperbolic Integers\n\n**Conjecture**: A neural network operating in hyperbolic space (using the pseudo-hyperbolic distance `pseudoHypDistSq` as its metric) can learn the Markov tree structure more efficiently than a Euclidean network, requiring O(log N) parameters to represent N Markov triples versus O(N) for flat embeddings.\n\n**Test**: Implement a hyperbolic graph neural network using the formally verified distance function, embed the first 1000 Markov triples, and measure distortion (the ratio of embedding distance to true graph distance). Compare to a Euclidean embedding with the same number of parameters.\n\n**Impact**: This would demonstrate a practical application of hyperbolic number theory to machine learning, and provide a formally verified distance metric for hyperbolic neural networks. The `pseudoHypDistSq_lt_one` and `pseudoHypDistSq_symm` theorems guarantee the metric properties needed for optimization convergence.\n\n**Catalog References**: `Speculative/HyperbolicNumberTheory/Foundations.lean` (theorems `pseudoHypDistSq_symm`, `pseudoHypDistSq_lt_one`, `pseudoHypDistSq_nonneg`), `Catalog/MachineLearning/HyperbolicNumberTheory/PoincareDisk.lean`\n\n**Proof Strategy**: (1) Prove that the pseudo-hyperbolic distance satisfies the triangle inequality (requires arctanh monotonicity). (2) Formalize the hyperbolic embedding of trees. (3) Bound the distortion using Gromov hyperbolicity. Key gap: the triangle inequality for the full hyperbolic distance requires analytic tools (arctanh) not yet formalized in this framework.\n\n**Domain Bridges**: MachineLearning <-> Geometry, Algebra <-> MachineLearning\n\n**Lineage**: Bridges between `MachineLearning` and `Geometry` Catalog domains.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e355aaa7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T08:19:57.103206+00:00"
   },
   {
     "id": "seed_007",
