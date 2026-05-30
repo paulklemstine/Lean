@@ -1,138 +1,124 @@
-#!/usr/bin/env python3
 """
-Visualization 2: Cayley Transform — Bridge Between Disk and Half-Plane
-
-Shows how the Cayley transform C(z) = i(1+z)/(1-z) maps the Poincaré disk
-to the upper half-plane. This is the geometric bridge between hyperbolic
-geometry (where our integers live) and the domain of modular forms
-and L-functions (where the Riemann hypothesis lives).
+Visualization 3: The Cayley Transform Bridge
+==============================================
+Visualizes the cross-domain bridge between the Riemann zeta function's
+critical line (Re(s) = 1/2) and the Poincaré disk via the Cayley transform.
+Also shows the Hilbert-tropical connection.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
 
 
-def cayley_transform(z):
-    if abs(1 - z) < 1e-15:
-        return complex(0, 1e6)
-    return 1j * (1 + z) / (1 - z)
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
+# Panel 1: Cayley transform mapping
+ax = axes[0]
+ax.set_title("Cayley Transform\n$w = (s-1)/(s+1)$", fontsize=13)
 
-def cayley_inverse(w):
-    return (w - 1j) / (w + 1j)
+# Draw unit circle (target)
+theta = np.linspace(0, 2 * np.pi, 200)
+ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2, alpha=0.3)
+ax.fill(np.cos(theta), np.sin(theta), alpha=0.05, color='blue')
 
+# Map critical line Re(s) = 1/2
+y_vals = np.linspace(-10, 10, 500)
+for sigma, color, label in [(0.5, '#E91E63', 'Re(s)=1/2 (critical)'),
+                             (1.0, '#4CAF50', 'Re(s)=1'),
+                             (0.0, '#2196F3', 'Re(s)=0')]:
+    ws = [(complex(sigma, y) - 1) / (complex(sigma, y) + 1) for y in y_vals]
+    ax.plot([w.real for w in ws], [w.imag for w in ws],
+            '-', color=color, linewidth=2, label=label, alpha=0.8)
 
-def mobius_map(a, z):
-    return (z - a) / (1 - np.conj(a) * z)
+# Mark specific points
+for y in [-2, -1, 0, 1, 2]:
+    s = complex(0.5, y)
+    w = (s - 1) / (s + 1)
+    ax.plot(w.real, w.imag, 'ro', markersize=6)
+    if abs(y) <= 2:
+        ax.annotate(f'y={y}', (w.real, w.imag), textcoords="offset points",
+                    xytext=(10, 5), fontsize=8)
 
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_aspect('equal')
+ax.legend(fontsize=9, loc='lower left')
+ax.grid(True, alpha=0.2)
+ax.set_xlabel('Re(w)')
+ax.set_ylabel('Im(w)')
 
-def hyp_norm(z):
-    r = abs(z)
-    if r >= 1:
-        return float('inf')
-    if r < 1e-15:
-        return 0.0
-    return np.log((1 + r) / (1 - r)) / 2
+# Panel 2: Critical line image in disk
+ax = axes[1]
+ax.set_title("Critical Line Image\nin the Poincaré Disk", fontsize=13)
 
+# Unit circle
+ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+ax.fill(np.cos(theta), np.sin(theta), alpha=0.05, color='blue')
 
-fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+# Map many points on the critical line
+y_dense = np.linspace(-20, 20, 2000)
+ws = [(complex(0.5, y) - 1) / (complex(0.5, y) + 1) for y in y_dense]
+norms = [abs(w) for w in ws]
 
-# ─── Left: Poincaré Disk ───────────────────────────────────────────
+ax.plot([w.real for w in ws], [w.imag for w in ws],
+        '-', color='#E91E63', linewidth=2, label='Critical line image')
 
-ax1 = axes[0]
-circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-ax1.add_patch(circle)
+# Show that all points have |w| ≤ 1
+ax.text(0.3, -0.8, f"max |w| = {max(norms):.6f}",
+        fontsize=11, color='#E91E63', fontweight='bold',
+        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#E91E63'))
 
-# Draw geodesics (circles orthogonal to boundary)
-# A geodesic through 0 is a diameter
-for angle in np.linspace(0, np.pi, 6, endpoint=False):
-    t = np.linspace(-0.95, 0.95, 100)
-    x = t * np.cos(angle)
-    y = t * np.sin(angle)
-    ax1.plot(x, y, 'gray', alpha=0.3, linewidth=0.8)
+# The image is a circle centered at (-1/3, 0) with radius 2/3
+circle_center = -1/3
+circle_radius = 2/3
+circle_theta = np.linspace(0, 2 * np.pi, 200)
+ax.plot(circle_center + circle_radius * np.cos(circle_theta),
+        circle_radius * np.sin(circle_theta),
+        '--', color='orange', linewidth=1.5, alpha=0.7, label='Containing circle')
 
-# Draw concentric hyperbolic circles (constant hyperbolic distance from origin)
-for R in [0.5, 1.0, 1.5, 2.0]:
-    r_euclid = np.tanh(R)
-    circ = plt.Circle((0, 0), r_euclid, fill=False, color='steelblue',
-                       linewidth=0.8, linestyle='--', alpha=0.5)
-    ax1.add_patch(circ)
-    ax1.text(r_euclid + 0.02, 0.02, f'R={R}', fontsize=7, color='steelblue')
+ax.set_xlim(-1.3, 1.3)
+ax.set_ylim(-1.3, 1.3)
+ax.set_aspect('equal')
+ax.legend(fontsize=10)
 
-# Sample points with colors
-np.random.seed(42)
-disk_points = []
-colors = []
-for i in range(50):
-    r = np.random.random() * 0.9
-    theta = np.random.random() * 2 * np.pi
-    z = r * np.exp(1j * theta)
-    disk_points.append(z)
-    colors.append(hyp_norm(z))
+# Panel 3: Hilbert-Tropical bridge
+ax = axes[2]
+ax.set_title("Hilbert ↔ Tropical Bridge\nLog coordinates linearize hyperbolic metric", fontsize=13)
 
-scatter1 = ax1.scatter([z.real for z in disk_points],
-                        [z.imag for z in disk_points],
-                        c=colors, cmap='plasma', s=30, zorder=3,
-                        edgecolors='black', linewidth=0.5)
-ax1.scatter(0, 0, c='red', s=80, zorder=5, marker='*')
+# Plot the Hilbert metric on (0, ∞) vs tropical distance
+x_vals = np.linspace(0.1, 5, 200)
+ref = 1.0
 
-ax1.set_xlim(-1.3, 1.3)
-ax1.set_ylim(-1.3, 1.3)
-ax1.set_aspect('equal')
-ax1.set_title('Poincaré Disk Model', fontsize=14, fontweight='bold')
-ax1.set_xlabel('Re(z)')
-ax1.set_ylabel('Im(z)')
-plt.colorbar(scatter1, ax=ax1, label='Hyperbolic norm', shrink=0.7)
+# Hilbert metric in log coords = |log(x) - log(ref)| = |log(x)|
+hilbert_dists = np.abs(np.log(x_vals) - np.log(ref))
+# Tropical distance in log coords
+log_x = np.log(x_vals)
+log_ref = np.log(ref)
+tropical_dists = np.abs(log_x - log_ref)
 
-# ─── Right: Upper Half-Plane ───────────────────────────────────────
+ax.plot(x_vals, hilbert_dists, '-', color='#2196F3', linewidth=3,
+        label='Hilbert metric: |log(x/y)|')
+ax.plot(x_vals, tropical_dists, '--', color='#E91E63', linewidth=2,
+        label='Tropical distance: |log x − log y|')
 
-ax2 = axes[1]
+# They're identical!
+ax.fill_between(x_vals, hilbert_dists, tropical_dists, alpha=0.1, color='green')
 
-# Transform points
-uhp_points = [cayley_transform(z) for z in disk_points]
+ax.axvline(x=1, color='gray', linestyle=':', alpha=0.5, label='Reference point y=1')
+ax.set_xlabel('x')
+ax.set_ylabel('Distance from y=1')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(0, 4)
 
-# Filter out extreme points for display
-uhp_filtered = [(w, c) for w, c in zip(uhp_points, colors)
-                if abs(w.real) < 15 and 0 < w.imag < 15]
+# Annotation
+ax.annotate("Hilbert = Tropical\nin log coordinates!",
+            xy=(3, 1.1), fontsize=12, color='#4CAF50',
+            fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
+                      edgecolor='#4CAF50', alpha=0.9))
 
-if uhp_filtered:
-    ws, cs = zip(*uhp_filtered)
-    scatter2 = ax2.scatter([w.real for w in ws], [w.imag for w in ws],
-                            c=cs, cmap='plasma', s=30, zorder=3,
-                            edgecolors='black', linewidth=0.5)
-
-# Mark C(0) = i
-ax2.scatter(0, 1, c='red', s=80, zorder=5, marker='*')
-ax2.annotate('C(0) = i', (0, 1), (0.5, 1.5), fontsize=10, color='red',
-             arrowprops=dict(arrowstyle='->', color='red'))
-
-# Draw the real axis (boundary of UHP)
-ax2.axhline(y=0, color='black', linewidth=2)
-
-# Draw some horizontal horocycles
-for y in [0.5, 1, 2, 4]:
-    ax2.axhline(y=y, color='steelblue', linewidth=0.5, linestyle='--', alpha=0.4)
-
-ax2.set_xlim(-8, 8)
-ax2.set_ylim(-0.5, 10)
-ax2.set_title('Upper Half-Plane (via Cayley Transform)', fontsize=14, fontweight='bold')
-ax2.set_xlabel('Re(w)')
-ax2.set_ylabel('Im(w)')
-ax2.text(3, 9, 'C(z) = i(1+z)/(1−z)', fontsize=11, style='italic',
-         bbox=dict(boxstyle='round', facecolor='lightyellow'))
-
-# Draw arrow between panels
-fig.patches.append(FancyArrowPatch(
-    (0.48, 0.5), (0.52, 0.5),
-    transform=fig.transFigure,
-    arrowstyle='->', mutation_scale=30,
-    color='darkgreen', linewidth=3
-))
-fig.text(0.5, 0.54, 'Cayley\nTransform', ha='center', va='bottom',
-         fontsize=11, color='darkgreen', fontweight='bold',
-         transform=fig.transFigure)
-
-plt.tight_layout(w_pad=3)
+plt.tight_layout()
 plt.savefig('viz_cayley_bridge.png', dpi=150, bbox_inches='tight')
-print("Saved Cayley bridge visualization")
+plt.close()
+print("Saved viz_cayley_bridge.png")
