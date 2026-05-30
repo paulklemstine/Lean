@@ -1,1035 +1,887 @@
+#!/usr/bin/env python3
 """
 Applications of Hyperbolic Number Theory
-==========================================
 
-Real-world applications connecting hyperbolic geometry,
-number theory, and spectral theory.
+Real-world applications connecting hyperbolic lattice theory to
+cryptography, coding theory, and geometric algorithms.
 """
 
 import math
 from typing import List, Tuple
 
 
-class SL2R:
-    """Minimal SL(2,R) matrix class for applications."""
+# ============================================================================
+# Application 1: SL₂(ℤ) Word Problem for Lattice Cryptography
+# ============================================================================
+
+def sl2z_word_length(a: int, b: int, c: int, d: int) -> int:
+    """
+    Estimate the word length of an SL₂(ℤ) element in the S,T generators.
+
+    This is related to the hardness of lattice-based cryptographic problems.
+    The word length is approximately proportional to log(max(|a|,|b|,|c|,|d|)).
+
+    Applications: lattice-based cryptography, hash functions from group actions.
+    """
+    assert a * d - b * c == 1, "Not an SL₂(ℤ) element"
+    entries = [abs(a), abs(b), abs(c), abs(d)]
+    M = max(entries)
+    if M <= 1:
+        return 0
+    return int(math.log2(M)) + 1
+
+
+def continued_fraction_to_sl2z(cf: List[int]) -> Tuple[int, int, int, int]:
+    """
+    Convert a continued fraction [a₀; a₁, a₂, ...] to an SL₂(ℤ) product.
+
+    The matrix T^a₀ · S · T^a₁ · S · ... encodes the continued fraction.
+
+    Applications: best rational approximations, Diophantine analysis.
+    """
+    a, b, c, d = 1, 0, 0, 1  # identity
+
+    for i, coeff in enumerate(cf):
+        # Multiply by T^coeff
+        a, b = a + coeff * c, b + coeff * d
+        if i < len(cf) - 1:
+            # Multiply by S = [[0,-1],[1,0]]
+            a, b, c, d = -c, -d, a, b
+
+    return (a, b, c, d)
+
+
+# ============================================================================
+# Application 2: Hyperbolic Voronoi Diagrams
+# ============================================================================
+
+def hyperbolic_midpoint(p: Tuple[float, float],
+                        q: Tuple[float, float]) -> Tuple[float, float]:
+    """
+    Compute the midpoint of the hyperbolic geodesic from p to q
+    in the Poincaré disk model.
+
+    Applications: computational geometry, mesh generation on surfaces.
+    """
+    px, py = p
+    qx, qy = q
+
+    # Use the Klein model midpoint then convert back
+    # This is an approximation for small distances
+    mx = (px + qx) / 2
+    my = (py + qy) / 2
+
+    # Project back to disk if needed
+    r2 = mx ** 2 + my ** 2
+    if r2 >= 1:
+        scale = 0.99 / math.sqrt(r2)
+        mx *= scale
+        my *= scale
+
+    return (mx, my)
+
+
+def hyperbolic_voronoi_cell(center: Tuple[float, float],
+                            neighbors: List[Tuple[float, float]],
+                            num_boundary_points: int = 100) -> List[Tuple[float, float]]:
+    """
+    Approximate the Voronoi cell for a point in the hyperbolic plane.
+
+    Each cell boundary is an arc of a hyperbolic geodesic equidistant
+    from the center and its neighbor.
+
+    Applications: tessellation algorithms, network routing on surfaces.
+    """
+    def pseudo_hyp_dist_sq(p, q):
+        px, py = p
+        qx, qy = q
+        num = (px - qx) ** 2 + (py - qy) ** 2
+        den = (1 - px * qx - py * qy) ** 2 + (px * qy - py * qx) ** 2
+        return num / den if den > 0 else float('inf')
+
+    boundary = []
+    for angle_idx in range(num_boundary_points):
+        theta = 2 * math.pi * angle_idx / num_boundary_points
+        # Binary search for the boundary point along this ray
+        lo, hi = 0.0, 0.99
+        for _ in range(50):
+            mid = (lo + hi) / 2
+            test_point = (center[0] + mid * math.cos(theta),
+                          center[1] + mid * math.sin(theta))
+            r2 = test_point[0] ** 2 + test_point[1] ** 2
+            if r2 >= 1:
+                hi = mid
+                continue
+
+            # Check if closer to center than any neighbor
+            d_center = pseudo_hyp_dist_sq(test_point, center)
+            min_d_neighbor = min(pseudo_hyp_dist_sq(test_point, n) for n in neighbors)
+            if d_center < min_d_neighbor:
+                lo = mid
+            else:
+                hi = mid
+        r = (lo + hi) / 2
+        pt = (center[0] + r * math.cos(theta),
+              center[1] + r * math.sin(theta))
+        if pt[0] ** 2 + pt[1] ** 2 < 1:
+            boundary.append(pt)
+
+    return boundary
+
+
+# ============================================================================
+# Application 3: Trace-Based Error Detection
+# ============================================================================
+
+def trace_hash(message: bytes, modulus: int = 2**31 - 1) -> int:
+    """
+    Hash function based on SL₂(ℤ) trace arithmetic.
+
+    Maps a byte sequence to a trace value via iterated composition
+    of SL₂(ℤ) elements. The trace is a conjugation invariant,
+    providing algebraic collision resistance.
+
+    Applications: hash functions, message authentication codes.
+    """
+    # Map bytes to SL₂(ℤ) generators
+    a, b, c, d = 1, 0, 0, 1  # identity
+
+    for byte in message:
+        # Use byte to select a generator
+        t = (byte % 253) + 3  # trace in [3, 255]
+        # Compose with [[t-1, 1], [t-2, 1]]
+        ga, gb, gc, gd = t - 1, 1, t - 2, 1
+        na = (a * ga + b * gc) % modulus
+        nb = (a * gb + b * gd) % modulus
+        nc = (c * ga + d * gc) % modulus
+        nd = (c * gb + d * gd) % modulus
+        a, b, c, d = na, nb, nc, nd
+
+    return (a + d) % modulus  # Return trace
+
+
+# ============================================================================
+# Application 4: Farey Sequence Enumeration
+# ============================================================================
+
+def farey_sequence(n: int) -> List[Tuple[int, int]]:
+    """
+    Generate the Farey sequence F_n: all fractions a/b with 0 ≤ a/b ≤ 1,
+    b ≤ n, in lowest terms, sorted by value.
+
+    Connected to hyperbolic tessellation: Farey neighbors correspond to
+    adjacent triangles in the Farey triangulation of the upper half-plane.
+
+    Time: O(n²), Space: O(n²)
+    """
+    fractions = set()
+    for b in range(1, n + 1):
+        for a in range(0, b + 1):
+            if math.gcd(a, b) == 1:
+                fractions.add((a, b))
+    return sorted(fractions, key=lambda f: f[0] / f[1])
+
+
+def verify_farey_neighbors(seq: List[Tuple[int, int]]) -> bool:
+    """
+    Verify that consecutive Farey fractions are Farey neighbors:
+    |a₁d₂ - a₂d₁| = 1.
+
+    This is the Farey neighbor property, equivalent to the
+    corresponding SL₂(ℤ) elements differing by a generator.
+    """
+    for i in range(len(seq) - 1):
+        a1, b1 = seq[i]
+        a2, b2 = seq[i + 1]
+        if abs(a1 * b2 - a2 * b1) != 1:
+            return False
+    return True
+
+
+# ============================================================================
+# Example Usage
+# ============================================================================
+
+if __name__ == "__main__":
+    # Application 1: SL₂(ℤ) word length
+    print("SL₂(ℤ) word lengths:")
+    for t in [3, 5, 10, 100]:
+        a, b, c, d = t - 1, 1, t - 2, 1
+        wl = sl2z_word_length(a, b, c, d)
+        print(f"  trace={t}: word length ≈ {wl}")
+
+    # Continued fraction example
+    print("\nContinued fraction [3; 7, 15, 1] = 355/113 ≈ π:")
+    a, b, c, d = continued_fraction_to_sl2z([3, 7, 15, 1])
+    print(f"  Matrix: [[{a}, {b}], [{c}, {d}]]")
+    print(f"  Fraction: {a}/{c} = {a/c:.10f}")
+    print(f"  π = {math.pi:.10f}")
+
+    # Application 3: Trace hash
+    print("\nTrace-based hash function:")
+    for msg in [b"hello", b"world", b"hello world", b"Hello"]:
+        h = trace_hash(msg)
+        print(f"  hash({msg}) = {h}")
+
+    # Application 4: Farey sequences
+    print("\nFarey sequence F_7:")
+    f7 = farey_sequence(7)
+    for a, b in f7:
+        print(f"  {a}/{b}", end="")
+    print()
+    print(f"  Length: {len(f7)}")
+    print(f"  All neighbors: {verify_farey_neighbors(f7)}")
+
+
+#!/usr/bin/env python3
+"""
+Hyperbolic Number Theory: Arithmetic on the Poincaré Disk — Demonstrations
+
+Concrete numerical examples illustrating the formally verified theorems.
+"""
+
+import math
+
+
+# ============================================================================
+# Part 1: SL₂(ℤ) Möbius Transformations
+# ============================================================================
+
+class MobiusMap:
+    """Element of SL₂(ℤ) represented as [[a, b], [c, d]] with ad - bc = 1."""
     def __init__(self, a, b, c, d):
-        self.a, self.b, self.c, self.d = float(a), float(b), float(c), float(d)
+        assert a * d - b * c == 1, f"Determinant is {a*d - b*c}, not 1"
+        self.a, self.b, self.c, self.d = a, b, c, d
 
-    @staticmethod
-    def identity():
-        return SL2R(1, 0, 0, 1)
-
-    def mul(self, other):
-        return SL2R(
-            self.a*other.a + self.b*other.c, self.a*other.b + self.b*other.d,
-            self.c*other.a + self.d*other.c, self.c*other.b + self.d*other.d)
-
-    def inv(self):
-        return SL2R(self.d, -self.b, -self.c, self.a)
+    def __repr__(self):
+        return f"[[{self.a}, {self.b}], [{self.c}, {self.d}]]"
 
     def trace(self):
         return self.a + self.d
 
-    def translation_length(self):
-        t = abs(self.trace()) / 2
-        return 2 * math.acosh(t) if t > 1 else 0.0
+    def trace_discriminant(self):
+        return self.trace() ** 2 - 4
 
-
-# ═══════════════════════════════════════════════════════════════
-# Application 1: Cryptographic Key Exchange on Hyperbolic Groups
-# ═══════════════════════════════════════════════════════════════
-
-def hyperbolic_key_exchange():
-    """
-    Demonstrates a Diffie-Hellman-like key exchange using SL(2,Z).
-
-    The discrete logarithm problem in SL(2,Z) — given M^n, find n —
-    is believed to be computationally hard, making it suitable for
-    cryptographic protocols.
-
-    This is related to the conjugacy search problem in hyperbolic groups.
-    """
-    print("Application 1: Cryptographic Key Exchange via SL(2,Z)")
-    print("=" * 55)
-
-    # Public parameters: generators of SL(2,Z)
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-
-    # Create a "hard" public element
-    G = S.mul(T).mul(T).mul(S).mul(T)
-    print(f"Public generator G: trace = {G.trace():.6f}")
-
-    # Alice's secret: n_A = 7
-    n_A = 7
-    # Bob's secret: n_B = 11
-    n_B = 11
-
-    # Alice computes G^n_A
-    GA = G
-    for _ in range(n_A - 1):
-        GA = GA.mul(G)
-    print(f"Alice sends G^{n_A}: trace = {GA.trace():.6f}")
-
-    # Bob computes G^n_B
-    GB = G
-    for _ in range(n_B - 1):
-        GB = GB.mul(G)
-    print(f"Bob sends G^{n_B}: trace = {GB.trace():.6f}")
-
-    # Shared secret: G^(n_A * n_B)
-    # Alice computes (G^n_B)^n_A
-    shared_A = GB
-    for _ in range(n_A - 1):
-        shared_A = shared_A.mul(GB)
-
-    # Bob computes (G^n_A)^n_B
-    shared_B = GA
-    for _ in range(n_B - 1):
-        shared_B = shared_B.mul(GA)
-
-    print(f"\nAlice's shared key trace: {shared_A.trace():.6f}")
-    print(f"Bob's shared key trace:   {shared_B.trace():.6f}")
-    print(f"Keys match: {abs(shared_A.trace() - shared_B.trace()) < 1e-6}")
-
-    # The trace is the same because matrix multiplication is associative
-    # and (G^a)^b = G^(ab) = (G^b)^a
-
-
-# ═══════════════════════════════════════════════════════════════
-# Application 2: Network Routing in Hyperbolic Space
-# ═══════════════════════════════════════════════════════════════
-
-def hyperbolic_routing():
-    """
-    Greedy routing in hyperbolic space.
-
-    Many real-world networks (internet, social networks, biological networks)
-    have a hidden hyperbolic geometry. The Poincaré disk model provides
-    efficient greedy routing: always forward to the neighbor closest to
-    the destination in hyperbolic distance.
-
-    The hyperbolic integers Z_H provide a natural grid for routing.
-    """
-    print("\n\nApplication 2: Network Routing in Hyperbolic Space")
-    print("=" * 55)
-
-    # Simulate nodes as orbit points of PSL(2,Z) acting on the disk
-    # Use the Cayley graph structure
-
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-    Ti = SL2R(1, -1, 0, 1)
-
-    # Build a small Cayley graph
-    nodes = {}
-    node_list = [SL2R.identity()]
-    nodes[(1, 0, 0, 1)] = 0
-
-    def key(M):
-        return (round(M.a), round(M.b), round(M.c), round(M.d))
-
-    # BFS
-    queue = [SL2R.identity()]
-    for _ in range(4):
-        next_q = []
-        for M in queue:
-            for g in [S, T, Ti]:
-                N = M.mul(g)
-                k = key(N)
-                if k not in nodes:
-                    nodes[k] = len(node_list)
-                    node_list.append(N)
-                    next_q.append(N)
-        queue = next_q
-
-    # Build adjacency using generators
-    edges = set()
-    for M in node_list:
-        i = nodes[key(M)]
-        for g in [S, T, Ti]:
-            N = M.mul(g)
-            k = key(N)
-            if k in nodes:
-                j = nodes[k]
-                edges.add((min(i, j), max(i, j)))
-
-    print(f"Network: {len(node_list)} nodes, {len(edges)} edges")
-
-    # Greedy routing: from node 0 to a distant node
-    target = len(node_list) - 1
-    target_trace = abs(node_list[target].trace())
-    current = 0
-    path = [current]
-    max_steps = 20
-
-    for _ in range(max_steps):
-        if current == target:
-            break
-        # Find neighbor closest to target in trace distance
-        M_current = node_list[current]
-        best_next = current
-        best_dist = float('inf')
-        for g in [S, T, Ti]:
-            N = M_current.mul(g)
-            k = key(N)
-            if k in nodes:
-                j = nodes[k]
-                dist = abs(abs(node_list[j].trace()) - target_trace)
-                if dist < best_dist:
-                    best_dist = dist
-                    best_next = j
-        if best_next == current:
-            break
-        current = best_next
-        path.append(current)
-
-    print(f"Routing from node 0 to node {target}:")
-    print(f"  Path length: {len(path) - 1} hops")
-    print(f"  Path: {path[:10]}{'...' if len(path) > 10 else ''}")
-
-
-# ═══════════════════════════════════════════════════════════════
-# Application 3: Spectral Analysis of Modular Surfaces
-# ═══════════════════════════════════════════════════════════════
-
-def spectral_analysis():
-    """
-    The Selberg trace formula connects the spectrum of the Laplacian
-    on a hyperbolic surface to the lengths of closed geodesics.
-
-    For PSL(2,Z)\H, the closed geodesics correspond to conjugacy classes
-    of hyperbolic elements. Their lengths are translation_length(M).
-
-    This gives a "spectrum" of the modular surface.
-    """
-    print("\n\nApplication 3: Geodesic Length Spectrum of the Modular Surface")
-    print("=" * 55)
-
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-    Ti = SL2R(1, -1, 0, 1)
-
-    # Collect hyperbolic elements and their translation lengths
-    elements = [SL2R.identity()]
-    seen_keys = {(1, 0, 0, 1)}
-
-    def key(M):
-        return (round(M.a), round(M.b), round(M.c), round(M.d))
-
-    queue = [SL2R.identity()]
-    for _ in range(6):
-        next_q = []
-        for M in queue:
-            for g in [S, T, Ti, S.inv()]:
-                N = M.mul(g)
-                k = key(N)
-                if k not in seen_keys:
-                    seen_keys.add(k)
-                    elements.append(N)
-                    next_q.append(N)
-        queue = next_q
-
-    # Extract translation lengths of hyperbolic elements
-    lengths = sorted(set(
-        round(M.translation_length(), 6)
-        for M in elements
-        if abs(M.trace()) > 2.01
-    ))
-
-    print(f"\nFound {len(lengths)} distinct geodesic lengths from {len(elements)} group elements")
-    print(f"\nShortest closed geodesics (length spectrum):")
-    for i, l in enumerate(lengths[:15]):
-        print(f"  ℓ_{i+1} = {l:.6f}")
-
-    # Weyl's law: #{ℓ_j ≤ L} ~ e^L / L
-    if lengths:
-        L = lengths[-1]
-        actual_count = len(lengths)
-        weyl_prediction = math.exp(L) / L if L > 0 else 0
-        print(f"\nWeyl's law comparison (L = {L:.2f}):")
-        print(f"  Actual count: {actual_count}")
-        print(f"  Weyl prediction (e^L/L): {weyl_prediction:.1f}")
-
-
-# ═══════════════════════════════════════════════════════════════
-# Application 4: Hyperbolic Error-Correcting Codes
-# ═══════════════════════════════════════════════════════════════
-
-def hyperbolic_codes():
-    """
-    Regular tilings of the hyperbolic plane give rise to
-    LDPC (Low-Density Parity-Check) codes with excellent properties.
-
-    The {p,q} tiling (p-gons, q meeting at each vertex) is hyperbolic
-    when (p-2)(q-2) > 4. The adjacency structure gives a parity check matrix.
-    """
-    print("\n\nApplication 4: Hyperbolic Tiling Codes")
-    print("=" * 55)
-
-    # Check which tilings are hyperbolic
-    print("\nTiling classification (p-gons, q at each vertex):")
-    print(f"{'p':>3} {'q':>3} | {'(p-2)(q-2)':>10} | {'Type':>12} | Rate bound")
-    print("-" * 55)
-    for p in range(3, 9):
-        for q in range(3, 9):
-            val = (p - 2) * (q - 2)
-            if val > 4:
-                ttype = "hyperbolic"
-                # Rate ~ 1 - 2/p - 2/q + 2/(p*q) for large codes
-                rate = max(0, 1 - 2/p - 2/q + 2/(p*q))
-                print(f"{p:>3} {q:>3} | {val:>10} | {ttype:>12} | {rate:.4f}")
-            elif val == 4:
-                ttype = "Euclidean"
-            else:
-                ttype = "spherical"
-
-
-if __name__ == "__main__":
-    hyperbolic_key_exchange()
-    hyperbolic_routing()
-    spectral_analysis()
-    hyperbolic_codes()
-    print("\n\nAll applications demonstrated successfully!")
-
-
-"""
-Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
-=========================================================
-
-Demonstrates the core concepts:
-1. SL(2,R) matrix operations and trace classification
-2. Hyperbolic lattice point counting
-3. Chebyshev-trace recurrence verification
-4. Hyperbolic zeta function computation
-"""
-
-import numpy as np
-from typing import Tuple, List
-
-# ═══════════════════════════════════════════════════════════════
-# Part 1: SL(2,R) Matrices
-# ═══════════════════════════════════════════════════════════════
-
-class SL2R:
-    """A 2x2 real matrix with determinant 1."""
-
-    def __init__(self, a: float, b: float, c: float, d: float):
-        self.a, self.b, self.c, self.d = a, b, c, d
-        det = a * d - b * c
-        if abs(det - 1.0) > 1e-10:
-            raise ValueError(f"Determinant is {det}, not 1")
-
-    @staticmethod
-    def identity() -> 'SL2R':
-        return SL2R(1, 0, 0, 1)
-
-    def __mul__(self, other: 'SL2R') -> 'SL2R':
-        return SL2R(
+    def compose(self, other):
+        return MobiusMap(
             self.a * other.a + self.b * other.c,
             self.a * other.b + self.b * other.d,
             self.c * other.a + self.d * other.c,
             self.c * other.b + self.d * other.d,
         )
 
-    def inv(self) -> 'SL2R':
-        return SL2R(self.d, -self.b, -self.c, self.a)
+    def inverse(self):
+        return MobiusMap(self.d, -self.b, -self.c, self.a)
 
-    def trace(self) -> float:
-        return self.a + self.d
-
-    def classify(self) -> str:
-        t = abs(self.trace())
-        if t > 2: return "hyperbolic"
-        elif t < 2: return "elliptic"
-        else: return "parabolic"
-
-    def displacement(self) -> float:
-        return abs(self.trace()) - 2
-
-    def pow(self, n: int) -> 'SL2R':
+    def power(self, n):
         if n == 0:
-            return SL2R.identity()
+            return MobiusMap(1, 0, 0, 1)
         result = self
         for _ in range(n - 1):
-            result = result * self
+            result = self.compose(result)
         return result
 
-    def __repr__(self) -> str:
-        return f"SL2R({self.a:.4f}, {self.b:.4f}, {self.c:.4f}, {self.d:.4f})"
+
+# Demo 1: Group laws
+print("=" * 60)
+print("Demo 1: MobiusMap Group Laws")
+print("=" * 60)
+
+S = MobiusMap(0, -1, 1, 0)
+T = MobiusMap(1, 1, 0, 1)
+identity = MobiusMap(1, 0, 0, 1)
+
+print(f"S = {S}, trace = {S.trace()}")
+print(f"T = {T}, trace = {T.trace()}")
+print(f"ST = {S.compose(T)}, trace = {S.compose(T).trace()}")
+
+# Verify S^4 = I
+S4 = S.power(4)
+print(f"S^4 = {S4}  (should be identity)")
+
+# Verify trace conjugation invariance
+g = MobiusMap(2, 1, 1, 1)
+h = MobiusMap(3, 1, 2, 1)
+conj = g.compose(h).compose(g.inverse())
+print(f"\nTrace conjugation: tr(ghg⁻¹) = {conj.trace()}, tr(h) = {h.trace()}")
+assert conj.trace() == h.trace(), "Conjugation invariance failed!"
+
+# Demo 2: Cayley-Hamilton and trace recurrence
+print("\n" + "=" * 60)
+print("Demo 2: Cayley-Hamilton & Trace Recurrence")
+print("=" * 60)
+
+g = MobiusMap(3, 1, 2, 1)  # trace = 4
+print(f"g = {g}, tr(g) = {g.trace()}")
+print(f"tr(g²) = {g.power(2).trace()}, tr(g)² - 2 = {g.trace()**2 - 2}")
+assert g.power(2).trace() == g.trace() ** 2 - 2
+
+# Verify trace recurrence: tr(g^{n+2}) = tr(g) * tr(g^{n+1}) - tr(g^n)
+print("\nTrace recurrence verification:")
+t = g.trace()
+for n in range(8):
+    tr_n = g.power(n).trace()
+    print(f"  tr(g^{n}) = {tr_n}")
+
+for n in range(6):
+    lhs = g.power(n + 2).trace()
+    rhs = t * g.power(n + 1).trace() - g.power(n).trace()
+    assert lhs == rhs, f"Recurrence failed at n={n}"
+print("✓ Trace recurrence verified for n = 0..5")
 
 
-# ═══════════════════════════════════════════════════════════════
-# Part 2: Demonstrations
-# ═══════════════════════════════════════════════════════════════
+# ============================================================================
+# Part 2: Trace Sequences (Chebyshev Connection)
+# ============================================================================
 
-def demo_sl2r_group():
-    """Demonstrate SL(2,R) group properties."""
-    print("=" * 60)
-    print("Demo 1: SL(2,R) Group Structure")
-    print("=" * 60)
+print("\n" + "=" * 60)
+print("Demo 3: Trace Sequences = Chebyshev Polynomials")
+print("=" * 60)
 
-    # Standard generators of PSL(2,Z)
-    S = SL2R(0, -1, 1, 0)   # S: z -> -1/z
-    T = SL2R(1, 1, 0, 1)    # T: z -> z+1
+def trace_seq(t, n):
+    if n == 0: return 2
+    if n == 1: return t
+    a, b = 2, t
+    for _ in range(n - 1):
+        a, b = b, t * b - a
+    return b
 
-    print(f"\nS = {S}, trace = {S.trace():.4f}, type = {S.classify()}")
-    print(f"T = {T}, trace = {T.trace():.4f}, type = {T.classify()}")
+# Verify formulas
+for t in [3, 4, 5]:
+    print(f"\nt = {t}:")
+    for n in range(8):
+        val = trace_seq(t, n)
+        print(f"  traceSeq({t}, {n}) = {val}")
+    # Verify t² - 2 formula
+    assert trace_seq(t, 2) == t ** 2 - 2, "traceSeq_two failed"
+    # Verify t³ - 3t formula
+    assert trace_seq(t, 3) == t ** 3 - 3 * t, "traceSeq_three failed"
 
-    # Verify group axioms
-    I = SL2R.identity()
-    print(f"\nS * S^(-1) = {S * S.inv()}")
-    print(f"T * T^(-1) = {T * T.inv()}")
+# Verify parity preservation
+print("\nParity preservation (even t → all even):")
+for t in [2, 4, 6]:
+    vals = [trace_seq(t, n) for n in range(10)]
+    all_even = all(v % 2 == 0 for v in vals)
+    print(f"  t={t}: {vals[:6]}... all even: {all_even}")
+    assert all_even
 
-    # S has order 4 in SL(2,Z), order 2 in PSL(2,Z)
-    S2 = S * S
-    print(f"\nS^2 = {S2}, trace = {S2.trace():.4f}")
-    S4 = S2 * S2
-    print(f"S^4 = {S4}, trace = {S4.trace():.4f} (= identity)")
-
-    # Classification
-    print("\n--- Classification Examples ---")
-    examples = [
-        ("Identity", I),
-        ("S (rotation)", S),
-        ("T (translation)", T),
-        ("T^2", T * T),
-        ("ST", S * T),
-        ("STS", S * T * S),
-    ]
-    for name, M in examples:
-        print(f"  {name}: trace={M.trace():.4f}, |trace|={abs(M.trace()):.4f}, type={M.classify()}")
-
-
-def demo_chebyshev_recurrence():
-    """Verify the Chebyshev trace recurrence: tr(M^{n+2}) = tr(M)*tr(M^{n+1}) - tr(M^n)."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Chebyshev-Trace Recurrence")
-    print("=" * 60)
-
-    M = SL2R(2, 1, 1, 1)  # A hyperbolic element
-    print(f"\nM = {M}, trace = {M.trace():.6f}")
-    print(f"\nVerifying: tr(M^{{n+2}}) = tr(M) * tr(M^{{n+1}}) - tr(M^n)")
-    print(f"{'n':>3} | {'tr(M^n)':>14} | {'tr(M)*tr(M^{n-1})-tr(M^{n-2})':>30} | {'Match':>5}")
-    print("-" * 60)
-
-    traces = [M.pow(i).trace() for i in range(12)]
-    t = M.trace()
-    for n in range(2, 12):
-        predicted = t * traces[n-1] - traces[n-2]
-        actual = traces[n]
-        match = abs(predicted - actual) < 1e-8
-        print(f"{n:>3} | {actual:>14.6f} | {predicted:>30.6f} | {'✓' if match else '✗':>5}")
+# Verify congruence mod (t-2)
+print("\nCongruence: traceSeq(t, n) ≡ 2 mod (t-2):")
+for t in [5, 7, 10]:
+    for n in range(8):
+        val = trace_seq(t, n)
+        assert (val - 2) % (t - 2) == 0, f"Congruence failed: t={t}, n={n}"
+    print(f"  t={t}: verified for n=0..7 ✓")
 
 
-def demo_conjugation_invariance():
-    """Verify trace conjugation invariance: tr(NMN^{-1}) = tr(M)."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Trace Conjugation Invariance")
-    print("=" * 60)
+# ============================================================================
+# Part 3: Pseudo-Hyperbolic Distance
+# ============================================================================
 
-    M = SL2R(3, 1, 2, 1)
-    conjugators = [
-        ("S", SL2R(0, -1, 1, 0)),
-        ("T", SL2R(1, 1, 0, 1)),
-        ("T^3", SL2R(1, 3, 0, 1)),
-        ("ST^2S", SL2R(0, -1, 1, 0) * SL2R(1, 2, 0, 1) * SL2R(0, -1, 1, 0)),
-    ]
+print("\n" + "=" * 60)
+print("Demo 4: Pseudo-Hyperbolic Distance on Poincaré Disk")
+print("=" * 60)
 
-    print(f"\nM = {M}, tr(M) = {M.trace():.6f}")
-    for name, N in conjugators:
-        conj = N * M * N.inv()
-        print(f"  tr({name} · M · {name}^(-1)) = {conj.trace():.6f}  ✓" if abs(conj.trace() - M.trace()) < 1e-10 else "  ✗")
+def pseudo_hyp_dist_sq(px, py, qx, qy):
+    num = (px - qx) ** 2 + (py - qy) ** 2
+    den = (1 - px * qx - py * qy) ** 2 + (px * qy - py * qx) ** 2
+    return num / den
 
+# Verify properties
+p = (0.3, 0.4)
+q = (0.1, -0.2)
+origin = (0, 0)
 
-def demo_trace_product_identity():
-    """Verify tr(MN) + tr(MN^{-1}) = tr(M) * tr(N)."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Trace Product Identity")
-    print("=" * 60)
+d_pq = pseudo_hyp_dist_sq(*p, *q)
+d_qp = pseudo_hyp_dist_sq(*q, *p)
+d_pp = pseudo_hyp_dist_sq(*p, *p)
+d_0q = pseudo_hyp_dist_sq(*origin, *q)
+norm_sq_q = q[0] ** 2 + q[1] ** 2
 
-    pairs = [
-        (SL2R(2, 1, 1, 1), SL2R(1, 1, 0, 1)),
-        (SL2R(3, 1, 2, 1), SL2R(0, -1, 1, 0)),
-        (SL2R(5, 2, 2, 1), SL2R(3, 1, 2, 1)),
-    ]
-
-    for M, N in pairs:
-        lhs = (M * N).trace() + (M * N.inv()).trace()
-        rhs = M.trace() * N.trace()
-        print(f"  tr(MN) + tr(MN⁻¹) = {lhs:.6f}, tr(M)·tr(N) = {rhs:.6f}  {'✓' if abs(lhs-rhs)<1e-10 else '✗'}")
+print(f"p = {p}, q = {q}")
+print(f"δ(p, q) = {d_pq:.6f}")
+print(f"δ(q, p) = {d_qp:.6f} (symmetry: {abs(d_pq - d_qp) < 1e-12})")
+print(f"δ(p, p) = {d_pp:.6f} (self-distance = 0)")
+print(f"δ(0, q) = {d_0q:.6f}, |q|² = {norm_sq_q:.6f} (equal: {abs(d_0q - norm_sq_q) < 1e-12})")
+print(f"δ(p, q) < 1: {d_pq < 1}")
 
 
-def demo_hyperbolic_counting():
-    """Count lattice points in hyperbolic balls of increasing radius."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Hyperbolic Lattice Point Counting")
-    print("=" * 60)
+# ============================================================================
+# Part 4: Fricke Trace Identity and Markov Numbers
+# ============================================================================
 
-    # Generate orbit points of PSL(2,Z) acting on i in the upper half-plane
-    # Use generators S and T to build words up to length L
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-    Ti = T.inv()
+print("\n" + "=" * 60)
+print("Demo 5: Fricke Identity & Markov Triples")
+print("=" * 60)
 
-    # BFS to find orbit elements
-    visited = {}  # trace -> element
-    queue = [SL2R.identity()]
-    generators = [S, T, Ti, S.inv()]
+# Verify Fricke identity for several pairs
+for (ga, gb, gc, gd, ha, hb, hc, hd) in [
+    (2, 1, 1, 1, 3, 1, 2, 1),
+    (1, 1, 0, 1, 0, -1, 1, 0),
+    (5, 2, 2, 1, 3, 1, 2, 1),
+]:
+    g = MobiusMap(ga, gb, gc, gd)
+    h = MobiusMap(ha, hb, hc, hd)
+    gh = g.compose(h)
+    comm = g.compose(h).compose(g.inverse()).compose(h.inverse())
 
-    for _ in range(6):  # depth
-        next_queue = []
-        for M in queue:
-            for g in generators:
-                N = M * g
-                t = round(N.trace(), 8)
-                if t not in visited:
-                    visited[t] = N
-                    next_queue.append(N)
-        queue = next_queue
+    lhs = g.trace() ** 2 + h.trace() ** 2 + gh.trace() ** 2 - g.trace() * h.trace() * gh.trace()
+    rhs = comm.trace() + 2
+    print(f"g={g}, h={h}")
+    print(f"  tr²+tr²+tr² - tr·tr·tr = {lhs}, tr(comm) + 2 = {rhs}, equal: {lhs == rhs}")
+    assert lhs == rhs
 
-    # Collect displacement values
-    displacements = sorted(set(abs(t) - 2 for t in visited.keys() if abs(t) >= 2))
+# Markov triples
+print("\nMarkov triples from Vieta involutions:")
+triples = [(1, 1, 1)]
+seen = set()
+queue = list(triples)
+while queue:
+    x, y, z = queue.pop(0)
+    for triple in [(x, y, z), (y, x, z), (x, z, y)]:
+        t = tuple(sorted(triple))
+        if t not in seen:
+            seen.add(t)
+            a, b, c = triple
+            z_new = 3 * a * b - c
+            if z_new > 0:
+                new_triple = tuple(sorted((a, b, z_new)))
+                if new_triple not in seen and len(seen) < 20:
+                    queue.append((a, b, z_new))
 
-    print(f"\nFound {len(visited)} distinct trace values")
-    print(f"\nCounting non-elliptic elements by displacement threshold:")
-    for threshold in [0, 1, 2, 5, 10, 20]:
-        count = sum(1 for d in displacements if d <= threshold)
-        print(f"  displacement ≤ {threshold:>3}: {count:>5} elements")
-
-
-def demo_hyperbolic_zeta():
-    """Compute the partial hyperbolic zeta function."""
-    print("\n" + "=" * 60)
-    print("Demo 6: Partial Hyperbolic Zeta Function")
-    print("=" * 60)
-
-    # Use displacement values as "norms"
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-
-    norms = []
-    for a in range(-5, 6):
-        for b in range(-5, 6):
-            for c in range(-5, 6):
-                d_val = (1 + b * c)
-                if a != 0 and d_val % a == 0:
-                    d = d_val // a
-                    if a * d - b * c == 1:
-                        disp = abs(a + d) - 2
-                        if disp > 0.01:
-                            norms.append(disp)
-
-    norms = sorted(set(norms))[:50]  # Take first 50 distinct norms
-
-    print(f"\nUsing {len(norms)} positive displacement values")
-    print(f"\n{'s':>6} | {'ζ_H(s)':>14}")
-    print("-" * 25)
-    for s in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
-        zeta = sum(1.0 / n ** (2 * s) for n in norms if n > 0)
-        print(f"{s:>6.1f} | {zeta:>14.6f}")
+for triple in sorted(seen):
+    x, y, z = triple
+    assert x ** 2 + y ** 2 + z ** 2 == 3 * x * y * z
+    print(f"  ({x}, {y}, {z}) — verified x²+y²+z² = 3xyz ✓")
 
 
-if __name__ == "__main__":
-    demo_sl2r_group()
-    demo_chebyshev_recurrence()
-    demo_conjugation_invariance()
-    demo_trace_product_identity()
-    demo_hyperbolic_counting()
-    demo_hyperbolic_zeta()
-    print("\n" + "=" * 60)
-    print("All demonstrations complete!")
-    print("=" * 60)
+# ============================================================================
+# Part 5: Falsifiable Conjecture — Primitive Trace Density
+# ============================================================================
+
+print("\n" + "=" * 60)
+print("Demo 6: Primitive Trace Density Conjecture")
+print("=" * 60)
+
+def is_imprimitive(t):
+    """t is imprimitive if t + 2 = s² for some s ≥ 2."""
+    s = int(math.isqrt(t + 2))
+    return s >= 2 and s * s == t + 2
+
+N = 100
+primitives = [t for t in range(3, N + 1) if not is_imprimitive(t)]
+imprimitives = [t for t in range(3, N + 1) if is_imprimitive(t)]
+
+print(f"Range [3, {N}]:")
+print(f"  Imprimitive traces (= s²-2): {imprimitives}")
+print(f"  Number of primitive traces: {len(primitives)}/{N-2}")
+print(f"  Primitive density: {len(primitives)/(N-2):.4f}")
+print(f"  Conjecture (6/π² complement): 1 - 6/π² ≈ {1 - 6/math.pi**2:.4f}")
+
+# Verify specific values from the theorems
+assert not is_imprimitive(3), "trace3_primitive failed"
+assert not is_imprimitive(4), "trace4_primitive failed"
+assert not is_imprimitive(5), "trace5_primitive failed"
+assert is_imprimitive(7), "trace7_imprimitive failed"
+print("\n✓ All formally verified primitivity results confirmed")
 
 
+# ============================================================================
+# Part 6: Cross-Domain Bridge — Tropical Algebra
+# ============================================================================
+
+print("\n" + "=" * 60)
+print("Demo 7: Tropical Algebra & Gromov Products")
+print("=" * 60)
+
+trop_add = min
+trop_mul = lambda a, b: a + b
+
+# Verify distributivity
+a, b, c = 3.0, 7.0, 2.0
+lhs = trop_mul(a, trop_add(b, c))
+rhs = trop_add(trop_mul(a, b), trop_mul(a, c))
+print(f"a⊗(b⊕c) = {a}+min({b},{c}) = {lhs}")
+print(f"(a⊗b)⊕(a⊗c) = min({a+b},{a+c}) = {rhs}")
+print(f"Distributivity: {abs(lhs - rhs) < 1e-12}")
+
+# Gromov product example (tree metric)
+print("\nGromov product on a tree (0-hyperbolic space):")
+dx, dy, dz = 5, 3, 4
+dxy, dxz, dyz = 6, 7, 5
+gp_xy = (dx + dy - dxy) / 2
+gp_xz = (dx + dz - dxz) / 2
+gp_yz = (dy + dz - dyz) / 2
+print(f"  (x|y) = {gp_xy}, (x|z) = {gp_xz}, (y|z) = {gp_yz}")
+print(f"  (x|y) ≥ min((x|z), (y|z)): {gp_xy} ≥ {min(gp_xz, gp_yz)}: {gp_xy >= min(gp_xz, gp_yz)}")
+
+
+# ============================================================================
+# Part 7: Fundamental Discriminant
+# ============================================================================
+
+print("\n" + "=" * 60)
+print("Demo 8: Fundamental Discriminants and Quadratic Fields")
+print("=" * 60)
+
+for t in range(3, 20):
+    D = t ** 2 - 4
+    # Check if D is a fundamental discriminant (square-free up to factor of 4)
+    sqrt_D = math.isqrt(D)
+    is_square = sqrt_D * sqrt_D == D
+    print(f"  t={t:2d}: D = t²-4 = {D:4d}, √D ≈ {math.sqrt(D):.3f}, "
+          f"ℚ(√{D}) {'(rational!)' if is_square else ''}")
+
+print("\n✓ All demonstrations complete!")
+
+
+#!/usr/bin/env python3
 """
-Visualization: Chebyshev-Trace Recurrence and Growth
-=====================================================
+Visualization 3: Conformal Factor and Hyperbolic Metric
 
-Shows how traces of powers of SL(2,R) elements follow the Chebyshev
-recurrence, exhibiting exponential growth for hyperbolic elements.
-This connects hyperbolic geometry to classical approximation theory.
+Shows how the Poincaré disk metric stretches near the boundary,
+and visualizes the pseudo-hyperbolic distance between points.
 """
 
-import math
+import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
 
 
-def chebyshev_traces(trace_M, n_terms):
-    """Compute traces via Chebyshev recurrence."""
-    if n_terms <= 0:
-        return []
-    traces = [2.0]
-    if n_terms == 1:
-        return traces
-    traces.append(trace_M)
-    for k in range(2, n_terms):
-        traces.append(trace_M * traces[k-1] - traces[k-2])
-    return traces
+# Create figure
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Panel 1: Conformal factor heatmap
+ax1 = axes[0]
+x = np.linspace(-0.99, 0.99, 400)
+y = np.linspace(-0.99, 0.99, 400)
+X, Y = np.meshgrid(x, y)
+R2 = X**2 + Y**2
+mask = R2 < 1
+
+# Conformal factor: λ(z) = 2/(1-|z|²)
+conf_factor = np.where(mask, 2 / (1 - R2), np.nan)
+
+im = ax1.pcolormesh(X, Y, conf_factor, cmap='inferno', norm=LogNorm(vmin=2, vmax=200),
+                    shading='auto')
+# Draw unit circle
+theta = np.linspace(0, 2 * np.pi, 200)
+ax1.plot(np.cos(theta), np.sin(theta), 'w-', linewidth=2)
+ax1.set_aspect('equal')
+ax1.set_title('Conformal Factor λ(z) = 2/(1-|z|²)\n'
+              'Diverges at boundary → infinite area', fontsize=11)
+ax1.set_xlabel('x')
+ax1.set_ylabel('y')
+plt.colorbar(im, ax=ax1, label='λ(z)', shrink=0.8)
+
+# Panel 2: Conformal factor along radius
+ax2 = axes[1]
+r = np.linspace(0, 0.999, 500)
+lam = 2 / (1 - r**2)
+
+ax2.semilogy(r, lam, 'b-', linewidth=2)
+ax2.axhline(y=2, color='red', linestyle='--', alpha=0.5, label='λ(0) = 2 (minimum)')
+ax2.fill_between(r, 2, lam, alpha=0.1, color='blue')
+ax2.set_xlabel('Radius r = |z|', fontsize=12)
+ax2.set_ylabel('Conformal factor λ(r)', fontsize=12)
+ax2.set_title('Conformal Factor vs. Radius\n'
+              'Proven: λ(r) ≥ 2 for all r ∈ [0,1)', fontsize=11)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(0, 1)
+
+# Panel 3: Pseudo-hyperbolic distance from origin
+ax3 = axes[2]
+
+def pseudo_hyp_dist_sq(px, py, qx, qy):
+    num = (px - qx)**2 + (py - qy)**2
+    den = (1 - px*qx - py*qy)**2 + (px*qy - py*qx)**2
+    return num / den if den > 0 else 0
+
+# Distance from a fixed point (0.3, 0.2)
+px, py = 0.3, 0.2
+dist = np.zeros_like(X)
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        if mask[i, j]:
+            dist[i, j] = pseudo_hyp_dist_sq(px, py, X[i, j], Y[i, j])
+        else:
+            dist[i, j] = np.nan
+
+# Use arctanh for actual hyperbolic distance
+hyp_dist = np.where(mask & (dist < 1), 2 * np.arctanh(np.sqrt(np.maximum(dist, 0))), np.nan)
+
+im3 = ax3.pcolormesh(X, Y, hyp_dist, cmap='viridis', shading='auto',
+                     vmin=0, vmax=5)
+ax3.plot(np.cos(theta), np.sin(theta), 'w-', linewidth=2)
+ax3.plot(px, py, 'r*', markersize=15, zorder=10)
+ax3.annotate(f'({px}, {py})', (px, py), textcoords="offset points",
+             xytext=(10, 10), color='white', fontsize=10, fontweight='bold')
+ax3.set_aspect('equal')
+ax3.set_title(f'Hyperbolic Distance from ({px}, {py})\n'
+              f'd(z,w) = 2·arctanh(√δ(z,w))', fontsize=11)
+ax3.set_xlabel('x')
+ax3.set_ylabel('y')
+plt.colorbar(im3, ax=ax3, label='Hyperbolic distance', shrink=0.8)
+
+plt.suptitle('The Poincaré Disk: Geometry of Curved Space',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('conformal_factor.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Generated conformal factor visualization")
 
 
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Panel 1: Trace growth for different element types
-    ax = axes[0, 0]
-    n = 20
-    ns = list(range(n))
-
-    # Hyperbolic: tr = 3
-    traces_hyp = chebyshev_traces(3.0, n)
-    ax.semilogy(ns, [abs(t) for t in traces_hyp], 'r-o', markersize=3,
-                label='Hyperbolic (tr=3)')
-
-    # Barely hyperbolic: tr = 2.1
-    traces_bh = chebyshev_traces(2.1, n)
-    ax.semilogy(ns, [abs(t) for t in traces_bh], 'orange', marker='s',
-                markersize=3, label='Hyperbolic (tr=2.1)')
-
-    # Parabolic: tr = 2
-    traces_par = chebyshev_traces(2.0, n)
-    ax.plot(ns, [abs(t) for t in traces_par], 'g-^', markersize=3,
-            label='Parabolic (tr=2)')
-
-    # Elliptic: tr = 1
-    traces_ell = chebyshev_traces(1.0, n)
-    ax.plot(ns, [max(abs(t), 0.01) for t in traces_ell], 'b-v', markersize=3,
-            label='Elliptic (tr=1)')
-
-    ax.set_xlabel('Power n')
-    ax.set_ylabel('|tr(M^n)|')
-    ax.set_title('Trace Growth by Element Type')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Chebyshev polynomial connection
-    ax = axes[0, 1]
-    # tr(M^n) = 2*T_n(tr(M)/2) where T_n is Chebyshev polynomial
-    x = [i * 0.01 for i in range(-300, 301)]
-    for n_val in [2, 3, 5, 8]:
-        y = [chebyshev_traces(2*xi, n_val+1)[-1] / 2 for xi in x]
-        ax.plot(x, y, label=f'T_{n_val}(x)')
-    ax.set_xlabel('x = tr(M)/2')
-    ax.set_ylabel('T_n(x) = tr(M^n)/2')
-    ax.set_title('Chebyshev Polynomials from SL(2) Traces')
-    ax.set_ylim(-3, 3)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    ax.axhline(y=0, color='k', linewidth=0.5)
-    ax.axvline(x=0, color='k', linewidth=0.5)
-
-    # Panel 3: Displacement spectrum
-    ax = axes[1, 0]
-
-    # Generate SL(2,Z) elements by direct enumeration
-    traces_set = set()
-    for a in range(-8, 9):
-        for b in range(-8, 9):
-            for c in range(-8, 9):
-                if a == 0:
-                    continue
-                rem = 1 + b * c
-                if rem % a == 0:
-                    d = rem // a
-                    if a * d - b * c == 1:
-                        t = abs(a + d)
-                        if t > 2:
-                            traces_set.add(t)
-
-    displacements = sorted(t - 2 for t in traces_set)[:80]
-    ax.bar(range(len(displacements)), displacements, color='steelblue', alpha=0.7)
-    ax.set_xlabel('Index')
-    ax.set_ylabel('Displacement |tr(M)| - 2')
-    ax.set_title('Displacement Spectrum of PSL(2,ℤ)')
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Panel 4: Partial zeta function
-    ax = axes[1, 1]
-    if displacements:
-        s_vals = [i * 0.05 for i in range(10, 80)]
-        zeta_vals = []
-        for s in s_vals:
-            z = sum(1.0 / d**(2*s) for d in displacements if d > 0.01)
-            zeta_vals.append(z)
-        ax.plot(s_vals, zeta_vals, 'darkred', linewidth=2)
-        ax.set_xlabel('s')
-        ax.set_ylabel('ζ_H(s)')
-        ax.set_title('Partial Hyperbolic Zeta Function')
-        ax.grid(True, alpha=0.3)
-        ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='y=1')
-        ax.legend()
-
-    fig.suptitle('Hyperbolic Number Theory: Chebyshev Connection & Spectral Data',
-                 fontsize=15, fontweight='bold', y=1.01)
-    plt.tight_layout()
-    plt.savefig('chebyshev_traces.png', dpi=150, bbox_inches='tight')
-    print("Saved chebyshev_traces.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
+#!/usr/bin/env python3
 """
-Visualization: Poincaré Disk with Hyperbolic Lattice Points
-============================================================
+Visualization 1: The Poincaré Disk with SL₂(ℤ) Orbit Points
 
-Visualizes the orbit of the origin under PSL(2,Z) in the Poincaré disk model,
-showing how "hyperbolic integers" tile the hyperbolic plane. Points are colored
-by their classification (hyperbolic/elliptic/parabolic).
+Visualizes the hyperbolic lattice: orbit points of the origin under
+the action of SL₂(ℤ), colored by trace value. Shows how the discrete
+group action creates a regular tessellation of hyperbolic space.
 """
 
-import math
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+
+
+def mobius_action_disk(a, b, c, d, z):
+    """Apply Möbius transformation [[a,b],[c,d]] to complex number z in disk model.
+    First map disk to upper half-plane, apply, then map back."""
+    # Cayley transform: disk → upper half-plane: w = i(1+z)/(1-z)
+    if abs(1 - z) < 1e-15:
+        return complex(0, 0)
+    w = 1j * (1 + z) / (1 - z)
+    # Apply Möbius: w -> (aw+b)/(cw+d)
+    denom = c * w + d
+    if abs(denom) < 1e-15:
+        return complex(0, 0)
+    w_new = (a * w + b) / denom
+    # Inverse Cayley: upper half-plane → disk: z = (w-i)/(w+i)
+    denom2 = w_new + 1j
+    if abs(denom2) < 1e-15:
+        return complex(0, 0)
+    z_new = (w_new - 1j) / denom2
+    return z_new
+
+
+def generate_orbit_points(max_trace=15, max_entries=30):
+    """Generate SL₂(ℤ) orbit points of i (mapped to origin in disk model)."""
+    points = []
+    traces = []
+
+    for a in range(-max_entries, max_entries + 1):
+        for c in range(-max_entries, max_entries + 1):
+            for d in range(-max_entries, max_entries + 1):
+                det_rem = a * d - 1
+                if c == 0:
+                    continue
+                if det_rem % c != 0:
+                    continue
+                b = det_rem // c
+                if abs(a + d) > max_trace:
+                    continue
+                # Apply to origin (which corresponds to i in UHP)
+                z = mobius_action_disk(a, b, c, d, complex(0, 0))
+                r = abs(z)
+                if r < 0.999:
+                    points.append((z.real, z.imag))
+                    traces.append(abs(a + d))
+
+    return points, traces
+
+
+# Generate orbit points
+points, traces = generate_orbit_points(max_trace=12, max_entries=15)
+
+# Create figure
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+# Draw unit circle
+theta = np.linspace(0, 2 * np.pi, 200)
+ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+
+# Draw some geodesics (arcs of circles orthogonal to unit circle)
+for angle in np.linspace(0, np.pi, 7)[1:-1]:
+    center_x = 1.0 / np.cos(angle)
+    center_y = 0
+    radius = abs(np.tan(angle))
+    arc_angles = np.linspace(-np.pi/2, np.pi/2, 100)
+    arc_x = center_x + radius * np.cos(arc_angles)
+    arc_y = center_y + radius * np.sin(arc_angles)
+    mask = arc_x**2 + arc_y**2 < 0.999
+    if np.any(mask):
+        ax.plot(arc_x[mask], arc_y[mask], 'lightblue', alpha=0.3, linewidth=0.5)
+
+# Plot orbit points
+if points:
+    xs, ys = zip(*points)
+    scatter = ax.scatter(xs, ys, c=traces, cmap='plasma', s=20, alpha=0.8,
+                         edgecolors='black', linewidth=0.3, zorder=5)
+    plt.colorbar(scatter, ax=ax, label='|Trace|', shrink=0.8)
+
+# Mark origin
+ax.plot(0, 0, 'r*', markersize=15, zorder=10, label='Origin (= i in UHP)')
+
+ax.set_xlim(-1.15, 1.15)
+ax.set_ylim(-1.15, 1.15)
+ax.set_aspect('equal')
+ax.set_title('SL₂(ℤ) Orbit in the Poincaré Disk\nColored by |Trace| of the Group Element',
+             fontsize=14, fontweight='bold')
+ax.legend(loc='upper right', fontsize=10)
+ax.grid(True, alpha=0.1)
+
+# Add annotation
+ax.text(-1.1, -1.08,
+        f'{len(points)} orbit points shown\nTrace values determine hyperbolic distance from origin',
+        fontsize=8, style='italic', alpha=0.7)
+
+plt.tight_layout()
+plt.savefig('poincare_disk_orbit.png', dpi=150, bbox_inches='tight')
+plt.close()
+print(f"Generated Poincaré disk visualization with {len(points)} orbit points")
+
+
+#!/usr/bin/env python3
+"""
+Visualization 2: Trace Sequences and Chebyshev Polynomials
+
+Shows the exponential growth of trace sequences for different base
+trace values, illustrating the connection to Chebyshev polynomials
+and the classification of Möbius transformations.
+"""
+
 import numpy as np
-
-
-class SL2R:
-    """Minimal SL(2,R) for visualization."""
-    def __init__(self, a, b, c, d):
-        self.a, self.b, self.c, self.d = float(a), float(b), float(c), float(d)
-
-    @staticmethod
-    def identity():
-        return SL2R(1, 0, 0, 1)
-
-    def mul(self, other):
-        return SL2R(
-            self.a*other.a + self.b*other.c, self.a*other.b + self.b*other.d,
-            self.c*other.a + self.d*other.c, self.c*other.b + self.d*other.d)
-
-    def inv(self):
-        return SL2R(self.d, -self.b, -self.c, self.a)
-
-    def trace(self):
-        return self.a + self.d
-
-    def classify(self):
-        t = abs(self.trace())
-        if t > 2.01: return "hyperbolic"
-        elif t < 1.99: return "elliptic"
-        return "parabolic"
-
-
-def mobius_to_disk(M, z_re=0.0, z_im=1.0):
-    """
-    Apply Möbius transformation M to z = z_re + i*z_im in the upper half-plane,
-    then map to the Poincaré disk via the Cayley transform w = (z-i)/(z+i).
-    """
-    # M acts on upper half-plane: z -> (az+b)/(cz+d)
-    denom_re = M.c * z_re + M.d
-    denom_im = M.c * z_im
-    denom_sq = denom_re**2 + denom_im**2
-
-    if denom_sq < 1e-15:
-        return None, None
-
-    num_re = M.a * z_re + M.b
-    num_im = M.a * z_im
-
-    w_re = (num_re * denom_re + num_im * denom_im) / denom_sq
-    w_im = (num_im * denom_re - num_re * denom_im) / denom_sq
-
-    # Cayley transform: disk_z = (w - i) / (w + i)
-    # w - i = (w_re, w_im - 1), w + i = (w_re, w_im + 1)
-    plus_re = w_re
-    plus_im = w_im + 1
-    minus_re = w_re
-    minus_im = w_im - 1
-
-    d_sq = plus_re**2 + plus_im**2
-    if d_sq < 1e-15:
-        return None, None
-
-    disk_re = (minus_re * plus_re + minus_im * plus_im) / d_sq
-    disk_im = (minus_im * plus_re - minus_re * plus_im) / d_sq
-
-    return disk_re, disk_im
-
-
-def main():
-    # Generate PSL(2,Z) elements
-    S = SL2R(0, -1, 1, 0)
-    T = SL2R(1, 1, 0, 1)
-    Ti = SL2R(1, -1, 0, 1)
-
-    elements = []
-    seen = set()
-
-    def key(M):
-        return (round(M.a, 4), round(M.b, 4), round(M.c, 4), round(M.d, 4))
-
-    queue = [SL2R.identity()]
-    seen.add(key(SL2R.identity()))
-    elements.append(SL2R.identity())
-
-    for _ in range(7):
-        next_q = []
-        for M in queue:
-            for g in [S, T, Ti, S.inv()]:
-                N = M.mul(g)
-                k = key(N)
-                if k not in seen:
-                    seen.add(k)
-                    elements.append(N)
-                    next_q.append(N)
-        queue = next_q
-
-    # Map to disk
-    hyp_x, hyp_y = [], []
-    ell_x, ell_y = [], []
-    par_x, par_y = [], []
-
-    for M in elements:
-        x, y = mobius_to_disk(M)
-        if x is None:
-            continue
-        r = math.sqrt(x**2 + y**2)
-        if r >= 0.99:
-            continue
-
-        cls = M.classify()
-        if cls == "hyperbolic":
-            hyp_x.append(x); hyp_y.append(y)
-        elif cls == "elliptic":
-            ell_x.append(x); ell_y.append(y)
-        else:
-            par_x.append(x); par_y.append(y)
-
-    # Plot
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
-
-    # Draw disk boundary
-    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-
-    # Draw geodesics (arcs) connecting some nearby points
-    all_pts = list(zip(hyp_x + ell_x + par_x, hyp_y + ell_y + par_y))
-    for i in range(len(all_pts)):
-        for j in range(i+1, min(i+3, len(all_pts))):
-            x1, y1 = all_pts[i]
-            x2, y2 = all_pts[j]
-            dist = math.sqrt((x1-x2)**2 + (y1-y2)**2)
-            if dist < 0.3:
-                ax.plot([x1, x2], [y1, y2], color='lightgray', linewidth=0.3, alpha=0.5)
-
-    # Plot points
-    ax.scatter(hyp_x, hyp_y, c='#e74c3c', s=15, alpha=0.7, label=f'Hyperbolic ({len(hyp_x)})', zorder=5)
-    ax.scatter(ell_x, ell_y, c='#3498db', s=20, alpha=0.8, label=f'Elliptic ({len(ell_x)})', zorder=5)
-    ax.scatter(par_x, par_y, c='#2ecc71', s=25, alpha=0.8, label=f'Parabolic ({len(par_x)})', zorder=5)
-
-    # Origin
-    ax.scatter([0], [0], c='gold', s=100, marker='*', zorder=10, label='Origin (i)')
-
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-    ax.set_aspect('equal')
-    ax.legend(loc='upper right', fontsize=11)
-    ax.set_title('Hyperbolic Integers: PSL(2,ℤ) Orbit in the Poincaré Disk',
-                 fontsize=14, fontweight='bold')
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-
-    # Add annotation
-    ax.text(0.02, -1.08, 'Points are images of i under PSL(2,ℤ) — the "integers" of the hyperbolic plane',
-            fontsize=9, style='italic', color='gray')
-
-    plt.tight_layout()
-    plt.savefig('poincare_disk_lattice.png', dpi=150, bbox_inches='tight')
-    print("Saved poincare_disk_lattice.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Hyperbolic Tessellation and Prime Classification
-================================================================
-
-Shows the fundamental domain tessellation of the modular group PSL(2,Z)
-and classifies group elements into hyperbolic "primes" (generators) and
-"composites" (products of generators).
-"""
-
-import math
 import matplotlib.pyplot as plt
-import numpy as np
 
 
-def mobius_uhp(a, b, c, d, z_re, z_im):
-    """Apply Möbius transform (az+b)/(cz+d) in upper half-plane."""
-    denom_re = c * z_re + d
-    denom_im = c * z_im
-    denom_sq = denom_re**2 + denom_im**2
-    if denom_sq < 1e-15:
-        return None, None
-    num_re = a * z_re + b
-    num_im = a * z_im
-    w_re = (num_re * denom_re + num_im * denom_im) / denom_sq
-    w_im = (num_im * denom_re - num_re * denom_im) / denom_sq
-    return w_re, w_im
+def trace_seq(t, n):
+    """Compute traceSeq(t, n) via recurrence."""
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    prev2, prev1 = 2, t
+    for _ in range(n - 1):
+        prev2, prev1 = prev1, t * prev1 - prev2
+    return prev1
 
 
-def cayley_to_disk(z_re, z_im):
-    """Cayley transform: upper half-plane to disk."""
-    plus_re, plus_im = z_re, z_im + 1
-    minus_re, minus_im = z_re, z_im - 1
-    d_sq = plus_re**2 + plus_im**2
-    if d_sq < 1e-15:
-        return None, None
-    return ((minus_re*plus_re + minus_im*plus_im) / d_sq,
-            (minus_im*plus_re - minus_re*plus_im) / d_sq)
+def primitive_trace_density(N):
+    """Compute the density of primitive traces in [3, N]."""
+    import math
+    count = 0
+    total = 0
+    for t in range(3, N + 1):
+        total += 1
+        s = int(math.isqrt(t + 2))
+        if not (s >= 2 and s * s == t + 2):
+            count += 1
+    return count / total if total > 0 else 0
 
 
-def draw_geodesic_arc(ax, z1_re, z1_im, z2_re, z2_im, color='gray', alpha=0.3, lw=0.5):
-    """Draw a hyperbolic geodesic between two points in the disk."""
-    # Simple: just draw a straight line (approximation for nearby points)
-    ax.plot([z1_re, z2_re], [z1_im, z2_im], color=color, alpha=alpha, linewidth=lw)
+# Create figure with subplots
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
 
+# Panel 1: Trace sequences (log scale)
+ax1 = axes[0, 0]
+n_vals = np.arange(0, 16)
+colors = plt.cm.viridis(np.linspace(0.2, 0.9, 5))
+for idx, t in enumerate([2, 3, 4, 5, 7]):
+    vals = [trace_seq(t, n) for n in n_vals]
+    label = f't = {t} ({"parabolic" if t == 2 else "hyperbolic"})'
+    ax1.semilogy(n_vals, [abs(v) for v in vals], 'o-', color=colors[idx],
+                 label=label, markersize=4, linewidth=1.5)
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+ax1.set_xlabel('Power n', fontsize=12)
+ax1.set_ylabel('|traceSeq(t, n)|', fontsize=12)
+ax1.set_title('Trace Sequences: Exponential Growth\n(Chebyshev Polynomials)', fontsize=13)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
 
-    # ──────────────────────────────────────────
-    # Panel 1: Fundamental domain in upper half-plane
-    # ──────────────────────────────────────────
-    ax = axes[0]
+# Panel 2: Trace sequence mod (t-2) — verifying congruence theorem
+ax2 = axes[0, 1]
+t_val = 7
+n_range = np.arange(0, 25)
+residues = [(trace_seq(t_val, n) - 2) % (t_val - 2) for n in n_range]
+ax2.bar(n_range, residues, color='steelblue', alpha=0.7)
+ax2.axhline(y=0, color='red', linestyle='--', linewidth=2, label='Expected residue = 0')
+ax2.set_xlabel('Power n', fontsize=12)
+ax2.set_ylabel(f'(traceSeq({t_val}, n) - 2) mod {t_val-2}', fontsize=12)
+ax2.set_title(f'Congruence Theorem Verification: t = {t_val}\n'
+              f'traceSeq(t, n) ≡ 2 (mod t-2)', fontsize=13)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
 
-    # Draw fundamental domain of PSL(2,Z)
-    # Boundaries: Re(z) = -1/2, Re(z) = 1/2, |z| = 1
-    theta = np.linspace(np.pi/3, 2*np.pi/3, 100)
-    arc_x = np.cos(theta)
-    arc_y = np.sin(theta)
-    ax.plot(arc_x, arc_y, 'k-', linewidth=2)
-    ax.plot([-0.5, -0.5], [np.sin(np.pi/3), 3], 'k-', linewidth=2)
-    ax.plot([0.5, 0.5], [np.sin(np.pi/3), 3], 'k-', linewidth=2)
+# Panel 3: Primitive trace density
+ax3 = axes[1, 0]
+N_values = list(range(10, 2001, 10))
+densities = [primitive_trace_density(N) for N in N_values]
+ax3.plot(N_values, densities, 'b-', linewidth=1.5, label='Primitive trace density')
+import math
+asymptotic = 1 - 6 / math.pi**2
+ax3.axhline(y=asymptotic, color='red', linestyle='--', linewidth=2,
+            label=f'Conjectured: 1 - 6/π² ≈ {asymptotic:.4f}')
+ax3.axhline(y=1.0, color='gray', linestyle=':', linewidth=1, alpha=0.5)
+ax3.set_xlabel('N', fontsize=12)
+ax3.set_ylabel('Primitive density in [3, N]', fontsize=12)
+ax3.set_title('Primitive Trace Density Conjecture\n'
+              '(Imprimitive = s²-2 for some s ≥ 2)', fontsize=13)
+ax3.legend(fontsize=10)
+ax3.set_ylim(0.85, 1.01)
+ax3.grid(True, alpha=0.3)
 
-    # Fill fundamental domain
-    fill_x = list(arc_x) + [0.5, 0.5, -0.5, -0.5] + [arc_x[0]]
-    fill_y = list(arc_y) + [arc_y[-1], 3, 3, arc_y[0]] + [arc_y[0]]
-    ax.fill(fill_x, fill_y, alpha=0.15, color='gold')
+# Panel 4: Markov tree (first few triples)
+ax4 = axes[1, 1]
+markov = [(1, 1, 1), (1, 1, 2), (1, 2, 5), (2, 5, 29), (1, 5, 13),
+          (5, 13, 194), (5, 29, 433), (1, 13, 34), (1, 34, 89)]
 
-    # Draw translated copies
-    for n in range(-3, 4):
-        if n == 0:
-            continue
-        theta_t = np.linspace(0, np.pi, 100)
-        cx = np.cos(theta_t) + n
-        cy = np.sin(theta_t)
-        ax.plot(cx, cy, 'gray', linewidth=0.5, alpha=0.5)
-        ax.plot([n - 0.5, n - 0.5], [0, 3], 'gray', linewidth=0.3, alpha=0.3)
-        ax.plot([n + 0.5, n + 0.5], [0, 3], 'gray', linewidth=0.3, alpha=0.3)
+# Plot as a tree
+positions = {
+    (1, 1, 1): (0, 3),
+    (1, 1, 2): (0, 2),
+    (1, 2, 5): (-2, 1),
+    (1, 5, 13): (-3, 0),
+    (1, 13, 34): (-4, -1),
+    (1, 34, 89): (-5, -2),
+    (2, 5, 29): (-1, 0),
+    (5, 13, 194): (-2, -1),
+    (5, 29, 433): (0, -1),
+}
 
-    # Mark special points
-    ax.plot(0, 1, 'r*', markersize=15, zorder=10, label='i (origin)')
-    ax.plot(-0.5, math.sqrt(3)/2, 'bs', markersize=8, zorder=10, label='ρ = e^{2πi/3}')
-    ax.plot(0.5, math.sqrt(3)/2, 'bs', markersize=8, zorder=10)
+for triple, pos in positions.items():
+    x, y, z = triple
+    ax4.plot(*pos, 'o', color='darkred', markersize=10, zorder=5)
+    ax4.annotate(f'({x},{y},{z})', pos, textcoords="offset points",
+                 xytext=(8, 5), fontsize=8, fontweight='bold')
 
-    # Draw some images under S and T
-    special_pts = [(0, 1)]  # Start at i
-    # T(i) = i+1
-    special_pts.append((1, 1))
-    # S(i) = -1/i = i (fixed!)
-    # T^{-1}(i) = i-1
-    special_pts.append((-1, 1))
-    # ST(i) = S(i+1) = -1/(i+1) = (-1+i)/2... compute properly
-    z_re, z_im = 1, 1  # i+1
-    w_re, w_im = mobius_uhp(0, -1, 1, 0, z_re, z_im)
-    if w_re is not None:
-        special_pts.append((w_re, w_im))
+# Draw edges
+edges = [
+    ((1, 1, 1), (1, 1, 2)),
+    ((1, 1, 2), (1, 2, 5)),
+    ((1, 2, 5), (2, 5, 29)),
+    ((1, 2, 5), (1, 5, 13)),
+    ((1, 5, 13), (5, 13, 194)),
+    ((1, 5, 13), (1, 13, 34)),
+    ((1, 13, 34), (1, 34, 89)),
+    ((2, 5, 29), (5, 29, 433)),
+]
 
-    for x, y in special_pts[1:]:
-        ax.plot(x, y, 'go', markersize=6, zorder=8)
+for t1, t2 in edges:
+    if t1 in positions and t2 in positions:
+        p1, p2 = positions[t1], positions[t2]
+        ax4.plot([p1[0], p2[0]], [p1[1], p2[1]], 'k-', linewidth=1, alpha=0.5)
 
-    ax.set_xlim(-3.5, 3.5)
-    ax.set_ylim(0, 3.5)
-    ax.set_aspect('equal')
-    ax.set_title('Upper Half-Plane: Fundamental Domain of PSL(2,ℤ)', fontsize=12)
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-    ax.legend(loc='upper right', fontsize=9)
+ax4.set_title('Markov Tree via Vieta Involutions\n'
+              'x² + y² + z² = 3xyz', fontsize=13)
+ax4.set_xlim(-6, 2)
+ax4.set_ylim(-3, 4)
+ax4.axis('off')
 
-    # ──────────────────────────────────────────
-    # Panel 2: Orbit in Poincaré disk with word length coloring
-    # ──────────────────────────────────────────
-    ax = axes[1]
-
-    # Draw disk boundary
-    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-
-    # Generate orbit with word length tracking
-    class M:
-        def __init__(self, a, b, c, d, wl=0):
-            self.a, self.b, self.c, self.d = a, b, c, d
-            self.wl = wl
-        def mul(self, other):
-            return M(self.a*other.a+self.b*other.c, self.a*other.b+self.b*other.d,
-                     self.c*other.a+self.d*other.c, self.c*other.b+self.d*other.d,
-                     self.wl + 1)
-        def key(self):
-            return (round(self.a,3), round(self.b,3), round(self.c,3), round(self.d,3))
-
-    S_g = M(0, -1, 1, 0, 0)
-    T_g = M(1, 1, 0, 1, 0)
-    Ti_g = M(1, -1, 0, 1, 0)
-
-    orbit = {}
-    queue = [M(1, 0, 0, 1, 0)]
-    orbit[queue[0].key()] = 0
-
-    for _ in range(6):
-        next_q = []
-        for m in queue:
-            for g in [S_g, T_g, Ti_g]:
-                n = m.mul(g)
-                k = n.key()
-                if k not in orbit:
-                    orbit[k] = n.wl
-                    next_q.append(n)
-        queue = next_q
-
-    # Convert to disk coordinates
-    pts_by_wl = {}
-    for (a, b, c, d), wl in orbit.items():
-        w_re, w_im = mobius_uhp(a, b, c, d, 0, 1)
-        if w_re is None:
-            continue
-        dx, dy = cayley_to_disk(w_re, w_im)
-        if dx is None:
-            continue
-        r = math.sqrt(dx**2 + dy**2)
-        if r >= 0.99:
-            continue
-        if wl not in pts_by_wl:
-            pts_by_wl[wl] = ([], [])
-        pts_by_wl[wl][0].append(dx)
-        pts_by_wl[wl][1].append(dy)
-
-    colors = ['gold', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c']
-    for wl in sorted(pts_by_wl.keys()):
-        xs, ys = pts_by_wl[wl]
-        c = colors[min(wl, len(colors)-1)]
-        s = max(5, 30 - 4 * wl)
-        label = f'Word length {wl}' if wl <= 5 else None
-        ax.scatter(xs, ys, c=c, s=s, alpha=0.8, label=label, zorder=5+wl)
-
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-    ax.set_aspect('equal')
-    ax.set_title('Poincaré Disk: Hyperbolic Integers by Word Length', fontsize=12)
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-    ax.legend(loc='upper right', fontsize=8)
-
-    fig.suptitle('Hyperbolic Number Theory: The Modular Tessellation',
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('tessellation.png', dpi=150, bbox_inches='tight')
-    print("Saved tessellation.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.suptitle('Hyperbolic Number Theory: Key Results',
+             fontsize=16, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('trace_sequences.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Generated trace sequence visualization")

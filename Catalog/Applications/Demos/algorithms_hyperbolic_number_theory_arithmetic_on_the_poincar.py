@@ -1,270 +1,311 @@
+#!/usr/bin/env python3
 """
 Algorithms for Hyperbolic Number Theory
-========================================
 
-Core algorithms for computing with SL(2,R) matrices,
-hyperbolic lattice points, and the hyperbolic zeta function.
+Implements key algorithms from the research paper with full documentation,
+type hints, and complexity analysis.
 """
 
+from typing import List, Tuple, Optional, Set
 import math
-from typing import List, Tuple, Dict, Optional, Set
 
 
-class SL2RMatrix:
+# ============================================================================
+# Algorithm 1: Trace Sequence Computation (Chebyshev Recurrence)
+# ============================================================================
+
+def trace_seq(t: int, n: int) -> int:
     """
-    A 2x2 real matrix with determinant 1.
+    Compute the trace sequence traceSeq(t, n) via the Chebyshev recurrence.
 
-    Represents an element of SL(2,R), the isometry group of the
-    hyperbolic plane.
+    This gives tr(g^n) where g ∈ SL₂(ℤ) has trace t.
+    Satisfies: traceSeq(t, 0) = 2, traceSeq(t, 1) = t,
+               traceSeq(t, n+2) = t * traceSeq(t, n+1) - traceSeq(t, n)
 
-    Time complexity: O(1) for all basic operations.
-    Space complexity: O(1).
+    Time: O(n), Space: O(1)
+
+    Args:
+        t: The base trace value (integer ≥ 2 for hyperbolic elements)
+        n: The power index (non-negative integer)
+
+    Returns:
+        The n-th term of the trace sequence with base t.
+
+    Examples:
+        >>> trace_seq(3, 0)
+        2
+        >>> trace_seq(3, 3)
+        18
     """
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    prev2, prev1 = 2, t
+    for _ in range(n - 1):
+        prev2, prev1 = prev1, t * prev1 - prev2
+    return prev1
 
-    __slots__ = ('a', 'b', 'c', 'd')
 
-    def __init__(self, a: float, b: float, c: float, d: float):
-        self.a, self.b, self.c, self.d = float(a), float(b), float(c), float(d)
+def trace_seq_matrix(t: int, n: int) -> int:
+    """
+    Compute traceSeq(t, n) via matrix exponentiation.
 
-    @staticmethod
-    def identity() -> 'SL2RMatrix':
-        return SL2RMatrix(1, 0, 0, 1)
+    Uses the recurrence matrix [[t, -1], [1, 0]] raised to power n.
 
-    def det(self) -> float:
-        return self.a * self.d - self.b * self.c
+    Time: O(log n), Space: O(1)
 
-    def mul(self, other: 'SL2RMatrix') -> 'SL2RMatrix':
-        """Matrix multiplication. O(1)."""
-        return SL2RMatrix(
-            self.a * other.a + self.b * other.c,
-            self.a * other.b + self.b * other.d,
-            self.c * other.a + self.d * other.c,
-            self.c * other.b + self.d * other.d,
+    Args:
+        t: The base trace value
+        n: The power index
+
+    Returns:
+        The n-th term of the trace sequence.
+    """
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+
+    def mat_mul(A: Tuple, B: Tuple) -> Tuple:
+        return (
+            A[0] * B[0] + A[1] * B[2],
+            A[0] * B[1] + A[1] * B[3],
+            A[2] * B[0] + A[3] * B[2],
+            A[2] * B[1] + A[3] * B[3],
         )
 
-    def inv(self) -> 'SL2RMatrix':
-        """Matrix inverse (for det=1 matrices). O(1)."""
-        return SL2RMatrix(self.d, -self.b, -self.c, self.a)
+    # Matrix [[t, -1], [1, 0]]
+    base = (t, -1, 1, 0)
+    result = (1, 0, 0, 1)  # Identity
 
-    def trace(self) -> float:
-        """Trace a + d. O(1)."""
-        return self.a + self.d
+    power = n - 1
+    while power > 0:
+        if power & 1:
+            result = mat_mul(result, base)
+        base = mat_mul(base, base)
+        power >>= 1
 
-    def classify(self) -> str:
-        """Classify as hyperbolic/elliptic/parabolic. O(1)."""
-        t = abs(self.trace())
-        if t > 2 + 1e-12:
-            return "hyperbolic"
-        elif t < 2 - 1e-12:
-            return "elliptic"
-        return "parabolic"
-
-    def power(self, n: int) -> 'SL2RMatrix':
-        """
-        Compute M^n using binary exponentiation.
-
-        Time complexity: O(log n).
-        """
-        if n == 0:
-            return SL2RMatrix.identity()
-        if n < 0:
-            return self.inv().power(-n)
-        result = SL2RMatrix.identity()
-        base = self
-        while n > 0:
-            if n % 2 == 1:
-                result = result.mul(base)
-            base = base.mul(base)
-            n //= 2
-        return result
-
-    def displacement(self) -> float:
-        """
-        Displacement: |tr(M)| - 2.
-        Nonneg for hyperbolic/parabolic elements.
-        """
-        return abs(self.trace()) - 2
-
-    def translation_length(self) -> float:
-        """
-        Hyperbolic translation length for hyperbolic elements.
-        ℓ(M) = 2 * arccosh(|tr(M)|/2)
-        """
-        t = abs(self.trace()) / 2
-        if t <= 1:
-            return 0.0
-        return 2 * math.acosh(t)
-
-    def __repr__(self) -> str:
-        return f"SL2R[{self.a:.3f} {self.b:.3f}; {self.c:.3f} {self.d:.3f}]"
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, SL2RMatrix):
-            return False
-        return (abs(self.a - other.a) < 1e-10 and abs(self.b - other.b) < 1e-10 and
-                abs(self.c - other.c) < 1e-10 and abs(self.d - other.d) < 1e-10)
-
-    def __hash__(self) -> int:
-        return hash((round(self.a, 8), round(self.b, 8),
-                      round(self.c, 8), round(self.d, 8)))
+    # result * [t, 2]^T gives [traceSeq(t, n), traceSeq(t, n-1)]
+    return result[0] * t + result[1] * 2
 
 
-def chebyshev_trace_sequence(M: SL2RMatrix, n_terms: int) -> List[float]:
+# ============================================================================
+# Algorithm 2: Markov Tree Generation via Vieta Involutions
+# ============================================================================
+
+def generate_markov_triples(max_value: int = 1000) -> List[Tuple[int, int, int]]:
     """
-    Compute traces tr(M^0), tr(M^1), ..., tr(M^{n-1}) using the
-    Chebyshev recurrence: tr(M^{k+2}) = tr(M) * tr(M^{k+1}) - tr(M^k).
+    Generate all Markov triples (x, y, z) with max(x,y,z) ≤ max_value.
 
-    This is O(n) time and O(n) space, much faster than computing M^k
-    directly which would be O(n log n) with binary exponentiation.
+    Uses BFS on the Markov tree, applying Vieta involutions:
+    (x, y, z) → (x, y, 3xy - z) and permutations.
+
+    The Markov equation is x² + y² + z² = 3xyz.
+
+    Time: O(N log N) where N is the number of triples found
+    Space: O(N)
 
     Args:
-        M: An SL(2,R) matrix.
-        n_terms: Number of terms to compute.
+        max_value: Upper bound on the largest element.
 
     Returns:
-        List of traces [tr(M^0), tr(M^1), ..., tr(M^{n-1})].
+        Sorted list of Markov triples.
     """
-    if n_terms <= 0:
-        return []
-    traces = [2.0]  # tr(M^0) = tr(I) = 2
-    if n_terms == 1:
-        return traces
-    traces.append(M.trace())  # tr(M^1) = tr(M)
-    t = M.trace()
-    for k in range(2, n_terms):
-        traces.append(t * traces[k - 1] - traces[k - 2])
-    return traces
+    seen: Set[Tuple[int, int, int]] = set()
+    queue = [(1, 1, 1)]
+    seen.add((1, 1, 1))
+
+    while queue:
+        x, y, z = queue.pop(0)
+        # Apply Vieta involution to each coordinate
+        for a, b, c in [(x, y, z), (x, z, y), (y, z, x)]:
+            new_c = 3 * a * b - c
+            if new_c > 0:
+                triple = tuple(sorted((a, b, new_c)))
+                if triple not in seen and max(triple) <= max_value:
+                    seen.add(triple)
+                    queue.append(triple)
+
+    return sorted(seen)
 
 
-def enumerate_psl2z_elements(max_depth: int) -> List[SL2RMatrix]:
+# ============================================================================
+# Algorithm 3: Primitive Trace Classification
+# ============================================================================
+
+def classify_traces(N: int) -> Tuple[List[int], List[int]]:
     """
-    Enumerate elements of PSL(2,Z) by word length in generators S, T.
+    Classify traces in [3, N] as primitive or imprimitive.
 
-    Uses BFS from the identity using the standard generators:
-      S = [[0, -1], [1, 0]]  (z -> -1/z)
-      T = [[1, 1], [0, 1]]   (z -> z+1)
+    A trace t is imprimitive if t + 2 = s² for some integer s ≥ 2
+    (equivalently, t is the trace of a square of some element).
 
-    Time complexity: O(3^d) where d = max_depth.
-    Space complexity: O(3^d).
+    Time: O(N), Space: O(N)
 
     Args:
-        max_depth: Maximum word length.
+        N: Upper bound for trace values.
 
     Returns:
-        List of distinct SL(2,Z) elements.
+        (primitives, imprimitives): Lists of primitive and imprimitive traces.
     """
-    S = SL2RMatrix(0, -1, 1, 0)
-    T = SL2RMatrix(1, 1, 0, 1)
-    Ti = SL2RMatrix(1, -1, 0, 1)
+    primitives = []
+    imprimitives = []
 
-    elements: Dict[Tuple[int, ...], SL2RMatrix] = {}
-    queue = [(SL2RMatrix.identity(), ())]
+    for t in range(3, N + 1):
+        s = int(math.isqrt(t + 2))
+        if s >= 2 and s * s == t + 2:
+            imprimitives.append(t)
+        else:
+            primitives.append(t)
 
-    def matrix_key(M: SL2RMatrix) -> Tuple[int, ...]:
-        return (round(M.a), round(M.b), round(M.c), round(M.d))
-
-    elements[matrix_key(SL2RMatrix.identity())] = SL2RMatrix.identity()
-
-    for depth in range(max_depth):
-        next_queue = []
-        for M, word in queue:
-            for g, name in [(S, 'S'), (T, 'T'), (Ti, 'Ti')]:
-                N = M.mul(g)
-                key = matrix_key(N)
-                if key not in elements:
-                    elements[key] = N
-                    next_queue.append((N, word + (name,)))
-        queue = next_queue
-
-    return list(elements.values())
+    return primitives, imprimitives
 
 
-def hyperbolic_lattice_count(elements: List[SL2RMatrix], R: float) -> int:
+# ============================================================================
+# Algorithm 4: Pseudo-Hyperbolic Distance
+# ============================================================================
+
+def pseudo_hyp_dist(p: Tuple[float, float], q: Tuple[float, float]) -> float:
     """
-    Count lattice points with translation length ≤ R.
+    Compute the pseudo-hyperbolic distance between two points in the Poincaré disk.
 
-    Time complexity: O(n) where n = len(elements).
+    δ(z,w) = |z-w| / |1-z̄w|
+
+    The actual hyperbolic distance is d = 2·arctanh(δ).
+
+    Time: O(1), Space: O(1)
 
     Args:
-        elements: List of SL(2,R) elements.
-        R: Radius threshold.
+        p: Point (x₁, y₁) with x₁²+y₁² < 1
+        q: Point (x₂, y₂) with x₂²+y₂² < 1
 
     Returns:
-        Number of elements with translation_length ≤ R.
+        The pseudo-hyperbolic distance δ(p, q) ∈ [0, 1).
     """
-    return sum(1 for M in elements if M.translation_length() <= R)
+    px, py = p
+    qx, qy = q
+
+    num_sq = (px - qx) ** 2 + (py - qy) ** 2
+    den_sq = (1 - px * qx - py * qy) ** 2 + (px * qy - py * qx) ** 2
+
+    return math.sqrt(num_sq / den_sq)
 
 
-def partial_hyperbolic_zeta(norms: List[float], s: float) -> float:
+def hyperbolic_distance(p: Tuple[float, float], q: Tuple[float, float]) -> float:
     """
-    Compute the partial hyperbolic zeta function:
-      ζ_H(s) = ∑_{n > 0} 1/n^{2s}
+    Compute the actual hyperbolic distance in the Poincaré disk model.
 
-    Time complexity: O(|norms|).
+    d(z,w) = 2·arctanh(δ(z,w))
+
+    Time: O(1), Space: O(1)
+    """
+    delta = pseudo_hyp_dist(p, q)
+    if delta >= 1:
+        return float('inf')
+    return 2 * math.atanh(delta)
+
+
+# ============================================================================
+# Algorithm 5: SL₂(ℤ) Element from Trace (Constructive Witness)
+# ============================================================================
+
+def sl2z_from_trace(n: int) -> Tuple[int, int, int, int]:
+    """
+    Construct an explicit SL₂(ℤ) element with given trace n (for n ≥ 2).
+
+    Returns [[n-1, 1], [n-2, 1]] which has determinant 1 and trace n.
+
+    Time: O(1), Space: O(1)
 
     Args:
-        norms: List of positive real norms.
-        s: Complex frequency parameter.
+        n: Desired trace value (integer ≥ 2)
 
     Returns:
-        Value of the partial zeta sum.
+        (a, b, c, d) with ad - bc = 1 and a + d = n
     """
-    return sum(1.0 / (n ** (2 * s)) for n in norms if n > 0)
+    assert n >= 2, f"Trace must be ≥ 2, got {n}"
+    a, b, c, d = n - 1, 1, n - 2, 1
+    assert a * d - b * c == 1
+    assert a + d == n
+    return (a, b, c, d)
 
 
-def verify_trace_product_identity(M: SL2RMatrix, N: SL2RMatrix,
-                                   tol: float = 1e-10) -> bool:
+# ============================================================================
+# Algorithm 6: Fundamental Discriminant Computation
+# ============================================================================
+
+def fundamental_disc(t: int) -> int:
     """
-    Verify tr(MN) + tr(MN^{-1}) = tr(M) * tr(N).
+    Compute the fundamental discriminant D = t² - 4 associated to trace t.
 
-    Returns True if the identity holds within tolerance.
+    This determines the quadratic field ℚ(√D) associated to a hyperbolic
+    element with trace t.
+
+    Time: O(1), Space: O(1)
     """
-    lhs = M.mul(N).trace() + M.mul(N.inv()).trace()
-    rhs = M.trace() * N.trace()
-    return abs(lhs - rhs) < tol
+    return t * t - 4
 
 
-def verify_conjugation_invariance(M: SL2RMatrix, N: SL2RMatrix,
-                                   tol: float = 1e-10) -> bool:
+def discriminant_class_table(max_t: int) -> dict:
     """
-    Verify tr(NMN^{-1}) = tr(M).
+    Build a table mapping discriminants to trace values.
 
-    Returns True if the identity holds within tolerance.
+    Time: O(max_t), Space: O(max_t)
+
+    Returns:
+        Dict mapping D → list of trace values t with t² - 4 ≡ D (mod squares)
     """
-    conj_trace = N.mul(M).mul(N.inv()).trace()
-    return abs(conj_trace - M.trace()) < tol
+    table = {}
+    for t in range(3, max_t + 1):
+        D = fundamental_disc(t)
+        # Find the square-free part
+        d = D
+        for p in range(2, int(math.isqrt(D)) + 1):
+            while d % (p * p) == 0:
+                d //= (p * p)
+        if d not in table:
+            table[d] = []
+        table[d].append(t)
+    return table
 
 
-# ═══════════════════════════════════════════════════════════════
-# Example usage
-# ═══════════════════════════════════════════════════════════════
+# ============================================================================
+# Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
-    print("Hyperbolic Number Theory — Algorithm Examples")
-    print("=" * 50)
+    # Trace sequence
+    print("Trace sequence for t=3:")
+    for n in range(10):
+        v1 = trace_seq(3, n)
+        v2 = trace_seq_matrix(3, n)
+        assert v1 == v2, f"Mismatch at n={n}"
+        print(f"  traceSeq(3, {n}) = {v1}")
 
-    # Chebyshev sequence
-    M = SL2RMatrix(2, 1, 1, 1)
-    traces = chebyshev_trace_sequence(M, 10)
-    print(f"\nChebyshev trace sequence for M with tr(M)={M.trace()}:")
-    for i, t in enumerate(traces):
-        print(f"  tr(M^{i}) = {t:.0f}")
+    # Markov triples
+    print("\nMarkov triples with max ≤ 100:")
+    triples = generate_markov_triples(100)
+    for t in triples:
+        print(f"  {t}")
 
-    # Enumerate PSL(2,Z)
-    elements = enumerate_psl2z_elements(5)
-    print(f"\nPSL(2,Z) elements up to word length 5: {len(elements)}")
+    # Primitive trace density
+    print("\nPrimitive trace density for N=1000:")
+    prims, imprims = classify_traces(1000)
+    print(f"  Primitives: {len(prims)}, Imprimitives: {len(imprims)}")
+    print(f"  Density: {len(prims)/998:.4f}")
 
-    # Count by type
-    types = {"hyperbolic": 0, "elliptic": 0, "parabolic": 0}
-    for e in elements:
-        types[e.classify()] += 1
-    print(f"  Hyperbolic: {types['hyperbolic']}")
-    print(f"  Elliptic: {types['elliptic']}")
-    print(f"  Parabolic: {types['parabolic']}")
+    # Hyperbolic distance
+    print("\nHyperbolic distances:")
+    points = [(0, 0), (0.5, 0), (0.3, 0.4), (-0.2, 0.1)]
+    for i, p in enumerate(points):
+        for j, q in enumerate(points):
+            if i < j:
+                d = hyperbolic_distance(p, q)
+                print(f"  d({p}, {q}) = {d:.4f}")
 
-    # Zeta function
-    norms = sorted(set(e.translation_length() for e in elements if e.translation_length() > 0.01))
-    print(f"\nPartial hyperbolic zeta function ({len(norms)} terms):")
-    for s in [1.0, 1.5, 2.0, 3.0]:
-        z = partial_hyperbolic_zeta(norms, s)
-        print(f"  ζ_H({s}) = {z:.6f}")
+    # Discriminant table
+    print("\nDiscriminant class table (square-free parts):")
+    table = discriminant_class_table(20)
+    for d in sorted(table.keys()):
+        print(f"  D_sf={d}: traces {table[d]}")
