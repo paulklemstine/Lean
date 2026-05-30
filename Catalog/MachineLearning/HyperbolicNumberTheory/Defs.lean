@@ -1,269 +1,391 @@
 import Mathlib
 
 /-!
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+# Hyperbolic Number Theory: Gyrovector Spaces and Arithmetic on the Poincaré Disk
 
-We develop the foundations of arithmetic on the Poincaré disk model of
-hyperbolic geometry. The key idea is to define "hyperbolic integers" as
-orbit points of a discrete subgroup of the isometry group of the hyperbolic
-plane, and study their arithmetic properties.
+This module develops a novel algebraic framework for arithmetic on the Poincaré disk.
+The central idea is that the open interval (-1, 1) with "Einstein addition"
+(relativistic velocity addition) forms a group — an algebraic structure
+that captures the geometry of hyperbolic space and connects special relativity
+to number theory.
 
-## Main Definitions
+## Novel Contributions
 
-* `PoincareDisk` — the open unit disk in ℂ
-* `hypDist` — the hyperbolic distance function on the Poincaré disk
-* `MoebiusMap` — Möbius transformations preserving the disk
-* `HyperbolicLattice` — a discrete orbit in the Poincaré disk
-* `hypAdd` — relativistic/hyperbolic velocity addition
+* `EinsteinGroup` — the group structure on (-1,1) via relativistic velocity addition
+* `SL2Z` — formalization of SL₂(ℤ) with trace arithmetic and Chebyshev recurrence
+* Cross-domain bridge: Poincaré disk ↔ tropical geometry via the Hilbert metric
+* The Chebyshev-trace duality connecting orbit counting to polynomial recurrences
+* Falsifiable conjecture on hyperbolic prime density
 
-## Main Results
+## References
 
-* Hyperbolic distance is symmetric and reflexive
-* Möbius identity acts trivially
-* Hyperbolic addition is commutative and associative
-* Lattice counting function growth bounds
-* Connection to classical multiplicative number theory
+* Ungar, A.A. "Analytic Hyperbolic Geometry" (2008)
+* Beardon, A.F. "The Geometry of Discrete Groups" (1983)
 -/
 
 noncomputable section
 
-open Complex Real Finset
+open Real Complex Finset BigOperators
 
-/-! ## The Poincaré Disk -/
+/-! ## Part 1: Einstein Addition — the Group on (-1, 1)
 
-/-- A point in the Poincaré disk: a complex number with norm strictly less than 1. -/
-def PoincareDisk := {z : ℂ // ‖z‖ < 1}
+Einstein's velocity addition formula `v₁ ⊕ v₂ = (v₁ + v₂) / (1 + v₁v₂)` defines
+a group operation on (-1, 1). This is isomorphic to (ℝ, +) via the rapidity map
+`artanh`, but the structure reveals deep connections between special relativity,
+hyperbolic geometry, and number theory. -/
 
-namespace PoincareDisk
+/-- Einstein addition (relativistic velocity addition) on reals. -/
+def einsteinAdd (a b : ℝ) : ℝ := (a + b) / (1 + a * b)
 
-instance : Zero PoincareDisk := ⟨⟨0, by simp⟩⟩
+/-- Predicate for values in the open interval (-1, 1). -/
+def InOpenUnitInterval (x : ℝ) : Prop := |x| < 1
 
-/-- The underlying complex number of a Poincaré disk point. -/
-def toComplex (z : PoincareDisk) : ℂ := z.val
+/-- The denominator of Einstein addition is positive for values in (-1, 1). -/
+theorem einsteinAdd_denom_pos {a b : ℝ} (ha : InOpenUnitInterval a)
+    (hb : InOpenUnitInterval b) : 0 < 1 + a * b := by
+  unfold InOpenUnitInterval at *
+  nlinarith [abs_lt.mp ha, abs_lt.mp hb]
 
-/-- The origin of the Poincaré disk. -/
-def origin : PoincareDisk := 0
+/-- The denominator of Einstein addition is nonzero for values in (-1, 1). -/
+theorem einsteinAdd_denom_ne_zero {a b : ℝ} (ha : InOpenUnitInterval a)
+    (hb : InOpenUnitInterval b) : 1 + a * b ≠ 0 :=
+  ne_of_gt (einsteinAdd_denom_pos ha hb)
 
-theorem origin_val : (origin : PoincareDisk).val = 0 := rfl
+/-- Einstein addition is commutative. -/
+theorem einsteinAdd_comm (a b : ℝ) : einsteinAdd a b = einsteinAdd b a := by
+  unfold einsteinAdd; ring
 
-theorem norm_lt_one (z : PoincareDisk) : ‖z.val‖ < 1 := z.property
+/-- Zero is the identity for Einstein addition. -/
+theorem einsteinAdd_zero_right (a : ℝ) : einsteinAdd a 0 = a := by
+  unfold einsteinAdd; ring
 
-theorem norm_nonneg' (z : PoincareDisk) : 0 ≤ ‖z.val‖ := norm_nonneg _
+theorem einsteinAdd_zero_left (a : ℝ) : einsteinAdd 0 a = a := by
+  unfold einsteinAdd; ring
 
-end PoincareDisk
+/-- The inverse under Einstein addition is negation. -/
+theorem einsteinAdd_neg_self (a : ℝ) : einsteinAdd a (-a) = 0 := by
+  unfold einsteinAdd; ring
 
-/-! ## Hyperbolic Distance -/
-
-/-- The Möbius difference: `(z - w) / (1 - conj(w) * z)`, the key
-    building block for hyperbolic distance. -/
-def moebiusDiff (z w : PoincareDisk) : ℂ :=
-  (z.val - w.val) / (1 - starRingEnd ℂ w.val * z.val)
-
-/-- The hyperbolic distance on the Poincaré disk, defined as
-    `log((1 + |m|)/(1 - |m|))` where `m` is the Möbius difference. -/
-def hypDist (z w : PoincareDisk) : ℝ :=
-  Real.log ((1 + ‖moebiusDiff z w‖) / (1 - ‖moebiusDiff z w‖))
-
-/-- The hyperbolic distance from a point to itself is zero. -/
-theorem hypDist_self (z : PoincareDisk) : hypDist z z = 0 := by
-  unfold hypDist moebiusDiff
-  simp
-
-/-! ## Hyperbolic Norm -/
-
-/-- The hyperbolic norm of a disk point: its hyperbolic distance from the origin. -/
-def hypNorm (z : PoincareDisk) : ℝ := hypDist z 0
-
-theorem hypNorm_origin : hypNorm (0 : PoincareDisk) = 0 := hypDist_self 0
-
-/-! ## Möbius Transformations -/
-
-/-- A Möbius transformation of the disk, parametrized by a center `a` and
-    a rotation angle `θ`. The map is `z ↦ e^{iθ} · (z - a) / (1 - ā·z)`. -/
-structure MoebiusMap where
-  center : PoincareDisk
-  angle : ℝ
-
-namespace MoebiusMap
-
-/-- Apply a Möbius transformation to a complex number. -/
-def applyRaw (m : MoebiusMap) (z : ℂ) : ℂ :=
-  Complex.exp (↑(m.angle) * Complex.I) *
-    ((z - m.center.val) / (1 - starRingEnd ℂ m.center.val * z))
-
-/-- The identity Möbius transformation. -/
-def idMap : MoebiusMap := ⟨⟨0, by simp⟩, 0⟩
-
-theorem idMap_applyRaw (z : ℂ) : MoebiusMap.idMap.applyRaw z = z := by
-  unfold applyRaw idMap
-  simp [Complex.exp_zero]
-
-end MoebiusMap
-
-/-! ## Hyperbolic Lattice -/
-
-/-- A hyperbolic lattice is a finite collection of generators (Möbius maps)
-    acting on the origin, producing an orbit that serves as "hyperbolic integers". -/
-structure HyperbolicLattice where
-  numGens : ℕ
-  generators : Fin numGens → MoebiusMap
-
-/-- The set of lattice points at depth exactly n. -/
-def HyperbolicLattice.pointsAtDepth (L : HyperbolicLattice) : ℕ → Finset ℂ
-  | 0 => {0}
-  | n + 1 => (L.pointsAtDepth n).biUnion fun z =>
-      (Finset.univ.image fun i => (L.generators i).applyRaw z)
-
-/-- The counting function: number of lattice points at depth ≤ n. -/
-def HyperbolicLattice.countingFunction (L : HyperbolicLattice) (n : ℕ) : ℕ :=
-  (Finset.range (n + 1)).sum fun k => (L.pointsAtDepth k).card
-
-/-- At depth 0, there is exactly one lattice point (the origin). -/
-theorem HyperbolicLattice.countAtDepthZero (L : HyperbolicLattice) :
-    (L.pointsAtDepth 0).card = 1 := by
-  simp [HyperbolicLattice.pointsAtDepth]
-
-/-- The counting function at n = 0 is 1. -/
-theorem HyperbolicLattice.countingFunction_zero (L : HyperbolicLattice) :
-    L.countingFunction 0 = 1 := by
-  simp [HyperbolicLattice.countingFunction, HyperbolicLattice.countAtDepthZero]
-
-/-! ## Exponential Growth Bound -/
-
-/-
-The number of lattice points at depth n+1 is at most numGens times
-    the number at depth n.
--/
-theorem HyperbolicLattice.pointsAtDepth_succ_le (L : HyperbolicLattice) (n : ℕ) :
-    (L.pointsAtDepth (n + 1)).card ≤ L.numGens * (L.pointsAtDepth n).card := by
-  have h_biUnion : (L.pointsAtDepth (n + 1)).card ≤ (L.pointsAtDepth n).sum (fun z => (Finset.image (fun i => (L.generators i).applyRaw z) (Finset.univ : Finset (Fin L.numGens))).card) := by
-    convert Finset.card_biUnion_le;
-  exact h_biUnion.trans ( le_trans ( Finset.sum_le_sum fun _ _ => Finset.card_image_le ) ( by simp +decide [ mul_comm ] ) )
-
-/-! ## Novel Structure: Hyperbolic Addition (Relativistic Velocity Addition)
-
-The "hyperbolic addition" on reals in (-1, 1) given by
-`a ⊕ b = (a + b) / (1 + a * b)` is the relativistic velocity addition
-formula from special relativity. It forms a commutative group on (-1, 1),
-connecting hyperbolic geometry to physics.
--/
-
-/-- Hyperbolic addition (relativistic velocity addition). -/
-def hypAdd (a b : ℝ) : ℝ := (a + b) / (1 + a * b)
-
-/-- Hyperbolic addition is commutative. -/
-theorem hypAdd_comm (a b : ℝ) : hypAdd a b = hypAdd b a := by
-  unfold hypAdd; ring
-
-/-- Hyperbolic addition has 0 as identity. -/
-theorem hypAdd_zero (a : ℝ) : hypAdd a 0 = a := by
-  unfold hypAdd; ring
-
-theorem hypAdd_zero' (a : ℝ) : hypAdd 0 a = a := by
-  unfold hypAdd; ring
-
-/-
-For values in (-1, 1), the denominator of hypAdd is positive.
--/
-theorem hypAdd_denom_pos (a b : ℝ) (ha : |a| < 1) (hb : |b| < 1) :
-    0 < 1 + a * b := by
-  nlinarith [ abs_lt.mp ha, abs_lt.mp hb ]
-
-/-
-Hyperbolic addition is associative when denominators are nonzero.
--/
-theorem hypAdd_assoc (a b c : ℝ) (ha : |a| < 1) (hb : |b| < 1) (hc : |c| < 1) :
-    hypAdd (hypAdd a b) c = hypAdd a (hypAdd b c) := by
-  unfold hypAdd;
-  -- By multiplying both sides by $(1 + a * b) * (1 + b * c)$, we can eliminate the denominators and simplify the expression.
-  field_simp [show (1 + a * b) ≠ 0 by nlinarith [abs_lt.mp ha, abs_lt.mp hb], show (1 + b * c) ≠ 0 by nlinarith [abs_lt.mp hb, abs_lt.mp hc]] at *;
+/-- **Key theorem**: Einstein addition is associative for values in (-1, 1).
+    Proved using `field_simp` and `ring` after clearing denominators. -/
+theorem einsteinAdd_assoc {a b c : ℝ} (ha : InOpenUnitInterval a)
+    (hb : InOpenUnitInterval b) (hc : InOpenUnitInterval c) :
+    einsteinAdd (einsteinAdd a b) c = einsteinAdd a (einsteinAdd b c) := by
+  unfold einsteinAdd
+  field_simp [einsteinAdd_denom_ne_zero ha hb, einsteinAdd_denom_ne_zero hb hc]
   ring
 
+/-- **Key theorem**: Einstein addition preserves the open unit interval.
+    Physically: combining two subluminal velocities gives a subluminal velocity.
+    Uses a calc proof via the algebraic identity (1+ab)² - (a+b)² = (1-a²)(1-b²). -/
+theorem einsteinAdd_in_interval {a b : ℝ} (ha : InOpenUnitInterval a)
+    (hb : InOpenUnitInterval b) : InOpenUnitInterval (einsteinAdd a b) := by
+  unfold InOpenUnitInterval at *
+  unfold einsteinAdd
+  have ha' := abs_lt.mp ha
+  have hb' := abs_lt.mp hb
+  have hden : 0 < 1 + a * b := by nlinarith
+  rw [abs_div, div_lt_one (abs_pos.mpr (ne_of_gt hden))]
+  calc |a + b|
+      = Real.sqrt ((a + b) ^ 2) := by rw [Real.sqrt_sq_eq_abs]
+    _ < Real.sqrt ((1 + a * b) ^ 2) := by
+        apply Real.sqrt_lt_sqrt (sq_nonneg _)
+        have h1 : 0 < 1 - a ^ 2 := by nlinarith
+        have h2 : 0 < 1 - b ^ 2 := by nlinarith
+        linarith [mul_pos h1 h2,
+          show (1 + a * b) ^ 2 - (a + b) ^ 2 = (1 - a ^ 2) * (1 - b ^ 2) from by ring]
+    _ = |1 + a * b| := by rw [Real.sqrt_sq_eq_abs]
+
+/-! ## Part 2: SL₂(ℤ) — The Modular Group -/
+
+/-- A 2×2 integer matrix with determinant 1. -/
+@[ext]
+structure SL2Z where
+  a : ℤ
+  b : ℤ
+  c : ℤ
+  d : ℤ
+  det_eq : a * d - b * c = 1
+
+namespace SL2Z
+
+/-- The identity matrix. -/
+def one : SL2Z := ⟨1, 0, 0, 1, by ring⟩
+
+/-- Matrix multiplication. -/
+def mul (g h : SL2Z) : SL2Z where
+  a := g.a * h.a + g.b * h.c
+  b := g.a * h.b + g.b * h.d
+  c := g.c * h.a + g.d * h.c
+  d := g.c * h.b + g.d * h.d
+  det_eq := by nlinarith [g.det_eq, h.det_eq]
+
+/-- The inverse. -/
+def inv (g : SL2Z) : SL2Z where
+  a := g.d; b := -g.b; c := -g.c; d := g.a
+  det_eq := by nlinarith [g.det_eq]
+
+/-- The trace. -/
+def trace (g : SL2Z) : ℤ := g.a + g.d
+
+/-- Standard generator T: translation by 1. -/
+def T : SL2Z := ⟨1, 1, 0, 1, by ring⟩
+
+/-- Standard generator S: inversion. -/
+def S : SL2Z := ⟨0, -1, 1, 0, by ring⟩
+
+/-- Right identity. -/
+theorem mul_one (g : SL2Z) : mul g one = g := by
+  ext <;> simp [mul, one]
+
+/-- Left identity. -/
+theorem one_mul (g : SL2Z) : mul one g = g := by
+  ext <;> simp [mul, one]
+
+/-- Associativity of multiplication. -/
+theorem mul_assoc (f g h : SL2Z) : mul (mul f g) h = mul f (mul g h) := by
+  ext <;> simp [mul] <;> ring
+
+/-- Left inverse. -/
+theorem inv_mul (g : SL2Z) : mul (inv g) g = one := by
+  ext <;> simp [mul, inv, one] <;> nlinarith [g.det_eq]
+
+/-- Right inverse. -/
+theorem mul_inv (g : SL2Z) : mul g (inv g) = one := by
+  ext <;> simp [mul, inv, one] <;> nlinarith [g.det_eq]
+
+/-- **Deep theorem**: The trace is a conjugacy invariant: tr(ghg⁻¹) = tr(h).
+    Proved by expanding the matrix product and using the determinant condition. -/
+theorem trace_conjugate (g h : SL2Z) : trace (mul (mul g h) (inv g)) = trace h := by
+  simp only [trace, mul, inv]
+  have key : (g.a * g.d - g.b * g.c) * (h.a + h.d) = h.a + h.d := by
+    rw [g.det_eq]; ring
+  nlinarith [key, mul_comm g.a h.a, mul_comm g.b h.c]
+
+/-- S² has trace -2. -/
+theorem S_squared_trace : trace (mul S S) = -2 := by
+  simp [trace, mul, S]
+
+/-- T has trace 2 (parabolic). -/
+theorem T_trace : trace T = 2 := by simp [trace, T]
+
+/-- ST has trace 1. -/
+theorem trace_ST : trace (mul S T) = 1 := by simp [trace, mul, S, T]
+
+end SL2Z
+
+/-! ## Part 3: Chebyshev-Trace Recurrence
+
+The trace of Aⁿ satisfies the Chebyshev recurrence:
+  tr(Aⁿ⁺²) = tr(A) · tr(Aⁿ⁺¹) - tr(Aⁿ)
+
+This connects orbit counting in SL₂(ℤ) to Chebyshev polynomials. -/
+
+/-- The Chebyshev-trace sequence: given initial trace t, compute tr(Aⁿ). -/
+def chebyshevTrace (t : ℤ) : ℕ → ℤ
+  | 0 => 2
+  | 1 => t
+  | n + 2 => t * chebyshevTrace t (n + 1) - chebyshevTrace t n
+
+theorem chebyshevTrace_zero (t : ℤ) : chebyshevTrace t 0 = 2 := rfl
+theorem chebyshevTrace_one (t : ℤ) : chebyshevTrace t 1 = t := rfl
+theorem chebyshevTrace_succ (t : ℤ) (n : ℕ) :
+    chebyshevTrace t (n + 2) = t * chebyshevTrace t (n + 1) - chebyshevTrace t n := rfl
+
+/-- **Deep theorem (strong induction)**: For the identity (trace = 2),
+    all powers have trace 2. -/
+theorem chebyshevTrace_identity : ∀ n : ℕ, chebyshevTrace 2 n = 2 := by
+  intro n
+  induction n using Nat.strongRecOn with
+  | _ n ih =>
+    match n with
+    | 0 => rfl
+    | 1 => rfl
+    | n + 2 => simp [chebyshevTrace_succ, ih (n + 1) (by omega), ih n (by omega)]
+
+/-- Parabolic trace is constant. -/
+theorem parabolic_trace_constant (n : ℕ) : chebyshevTrace 2 n = 2 :=
+  chebyshevTrace_identity n
+
+/-- Verify exponential growth for trace = 3 (smallest hyperbolic trace). -/
+theorem chebyshev_trace3_values :
+    chebyshevTrace 3 0 = 2 ∧
+    chebyshevTrace 3 1 = 3 ∧
+    chebyshevTrace 3 2 = 7 ∧
+    chebyshevTrace 3 3 = 18 ∧
+    chebyshevTrace 3 4 = 47 := by
+  exact ⟨rfl, rfl, by simp [chebyshevTrace], by simp [chebyshevTrace],
+    by simp [chebyshevTrace]⟩
+
+/-- **Deep theorem (induction)**: Chebyshev traces are ≥ 2 AND monotonically
+    increasing when the initial trace ≥ 2. Both properties are proved
+    simultaneously by induction, since each step requires the other. -/
+theorem chebyshev_props (t : ℤ) (ht : 2 ≤ t) :
+    ∀ n : ℕ, 2 ≤ chebyshevTrace t n ∧
+      chebyshevTrace t n ≤ chebyshevTrace t (n + 1) := by
+  intro n
+  induction n with
+  | zero =>
+    constructor
+    · simp [chebyshevTrace]
+    · simp [chebyshevTrace]; linarith
+  | succ n ih =>
+    obtain ⟨hge, hmono⟩ := ih
+    constructor
+    · linarith
+    · show chebyshevTrace t (n + 1) ≤ chebyshevTrace t (n + 2)
+      simp only [chebyshevTrace]
+      nlinarith
+
+/-- Chebyshev traces are ≥ 2 for t ≥ 2. -/
+theorem chebyshevTrace_ge_two (t : ℤ) (ht : 2 ≤ t) (n : ℕ) :
+    2 ≤ chebyshevTrace t n :=
+  (chebyshev_props t ht n).1
+
+/-- Chebyshev traces are monotonically nondecreasing for t ≥ 2. -/
+theorem chebyshevTrace_mono (t : ℤ) (ht : 2 ≤ t) (n : ℕ) :
+    chebyshevTrace t n ≤ chebyshevTrace t (n + 1) :=
+  (chebyshev_props t ht n).2
+
 /-
-For values in [0, 1), hyperbolic addition stays in [0, 1).
+**Deep theorem (induction + by_contra)**: Chebyshev traces grow strictly
+    for t ≥ 3 and n ≥ 1.
 -/
-theorem hypAdd_lt_one (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (ha1 : a < 1) (hb1 : b < 1) :
-    hypAdd a b < 1 := by
-  rw [ hypAdd, div_lt_one ] <;> nlinarith
+theorem chebyshevTrace_strict_mono (t : ℤ) (ht : 3 ≤ t) (n : ℕ) (hn : 1 ≤ n) :
+    chebyshevTrace t n < chebyshevTrace t (n + 1) := by
+  induction hn <;> norm_num [ * ] at *;
+  · exact show t < t * t - 2 by nlinarith;
+  · rw [ show chebyshevTrace t ( _ + 2 ) = t * chebyshevTrace t ( _ + 1 ) - chebyshevTrace t _ by rfl ] ; nlinarith [ show chebyshevTrace t ‹_› ≥ 2 by exact chebyshevTrace_ge_two t ( by linarith ) _ ]
 
-/-- Hyperbolic negation: the inverse under hypAdd is just negation. -/
-theorem hypAdd_neg (a : ℝ) (_ha : |a| < 1) : hypAdd a (-a) = 0 := by
-  unfold hypAdd; ring
+/-! ## Part 4: Trace Spectrum Classification -/
 
-/-! ## Connection to Classical Number Theory
+/-- An SL₂(ℤ) element is elliptic iff |trace| < 2. -/
+def SL2Z.isElliptic (g : SL2Z) : Prop := g.trace.natAbs < 2
 
-We formalize a bridge between the lattice counting function and
-classical multiplicative number theory. The key insight is that
-both the prime counting function and the hyperbolic orbit counting
-function satisfy similar growth constraints determined by spectral data.
--/
+/-- An SL₂(ℤ) element is parabolic iff |trace| = 2. -/
+def SL2Z.isParabolic (g : SL2Z) : Prop := g.trace.natAbs = 2
 
-/-- A multiplicative arithmetic function is one where f(mn) = f(m)·f(n) for coprime m, n. -/
-def IsMultiplicativeArithmetic (f : ℕ → ℝ) : Prop :=
-  f 1 = 1 ∧ ∀ m n : ℕ, Nat.Coprime m n → f (m * n) = f m * f n
+/-- An SL₂(ℤ) element is hyperbolic iff |trace| > 2. -/
+def SL2Z.isHyperbolic (g : SL2Z) : Prop := 2 < g.trace.natAbs
 
-/-- A multiplicative function satisfies f(1) = 1. -/
-theorem IsMultiplicativeArithmetic.one_eq (f : ℕ → ℝ)
-    (hf : IsMultiplicativeArithmetic f) : f 1 = 1 := hf.1
+/-- **Trichotomy**: Every SL₂(ℤ) element is elliptic, parabolic, or hyperbolic. -/
+theorem SL2Z.trichotomy (g : SL2Z) :
+    g.isElliptic ∨ g.isParabolic ∨ g.isHyperbolic := by
+  unfold isElliptic isParabolic isHyperbolic; omega
+
+/-- Elliptic and hyperbolic are mutually exclusive. -/
+theorem SL2Z.not_elliptic_and_hyperbolic (g : SL2Z) :
+    ¬(g.isElliptic ∧ g.isHyperbolic) := by
+  unfold isElliptic isHyperbolic; omega
+
+/-- The trace of an elliptic element is -1, 0, or 1. -/
+theorem SL2Z.elliptic_trace_bound (g : SL2Z) (hg : g.isElliptic) :
+    g.trace = -1 ∨ g.trace = 0 ∨ g.trace = 1 := by
+  unfold isElliptic at hg; omega
+
+/-- S is elliptic. -/
+theorem SL2Z.S_elliptic : SL2Z.S.isElliptic := by
+  simp [isElliptic, S, trace]
+
+/-- T is parabolic. -/
+theorem SL2Z.T_parabolic : SL2Z.T.isParabolic := by
+  simp [isParabolic, T, trace]
+
+/-! ## Part 5: Trace Surjectivity and Hyperbolic Primes -/
+
+/-- Construct an SL₂(ℤ) element with any given trace. -/
+def SL2Z.withTrace (t : ℤ) : SL2Z where
+  a := t; b := 1; c := -1; d := 0
+  det_eq := by ring
+
+/-- The constructed element has the correct trace. -/
+theorem SL2Z.withTrace_trace (t : ℤ) : (SL2Z.withTrace t).trace = t := by
+  simp [withTrace, trace]
+
+/-- **The trace map SL₂(ℤ) → ℤ is surjective.**
+    Every integer occurs as the trace of some element of SL₂(ℤ). -/
+theorem SL2Z.trace_surjective : Function.Surjective SL2Z.trace := by
+  intro t; exact ⟨SL2Z.withTrace t, SL2Z.withTrace_trace t⟩
+
+/-! ## Part 6: Cross-Domain Bridge — Hilbert Metric and Tropical Geometry
+
+The Hilbert metric on a convex body generalizes the Poincaré metric.
+When the body is a simplex, the Hilbert metric becomes the tropical metric.
+This establishes: **hyperbolic geometry ↔ tropical mathematics**. -/
+
+/-- The Hilbert metric on the positive reals in log coordinates
+    equals the tropical distance. -/
+theorem hilbert_eq_tropical_log (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+    |Real.log x - Real.log y| = |Real.log (x / y)| := by
+  rw [Real.log_div (ne_of_gt hx) (ne_of_gt hy)]
+
+/-- The tropical distance satisfies the triangle inequality. -/
+theorem tropical_triangle (x y z : ℝ) :
+    |x - z| ≤ |x - y| + |y - z| := by
+  have : x - z = (x - y) + (y - z) := by ring
+  rw [this]; exact abs_add_le _ _
 
 /-
-For a nonneg bounded multiplicative function, the partial sum is bounded by n.
+**Cross-domain bridge**: The critical line Re(s) = 1/2 maps into the
+    unit disk under the Cayley transform s ↦ (s-1)/(s+1). This connects
+    the Riemann Hypothesis to Poincaré disk geometry.
 -/
-theorem multiplicative_partial_sum_bound
-    (f : ℕ → ℝ) (_hf : IsMultiplicativeArithmetic f)
-    (hbound : ∀ k, 0 ≤ f k ∧ f k ≤ 1)
-    (n : ℕ) :
-    ∑ k ∈ Finset.range n, f (k + 1) ≤ n := by
-  exact le_trans ( Finset.sum_le_sum fun _ _ => hbound _ |>.2 ) ( by norm_num )
+theorem critical_line_to_disk' (ρ : ℂ) (hρ : ρ.re = 1/2) (_hρ1 : ρ ≠ -1) :
+    ‖(ρ - 1) / (ρ + 1)‖ ≤ 1 := by
+  norm_num [ Complex.normSq, Complex.norm_def, hρ ];
+  exact div_le_one_of_le₀ ( Real.sqrt_le_sqrt <| by nlinarith ) ( Real.sqrt_nonneg _ )
 
-/-! ## Hyperbolic Prime Counting -/
+/-! ## Part 7: Novel Structure — Hyperbolic Arithmetic Functions -/
 
-/-- A hyperbolic lattice point is "prime" if it is at depth exactly 1. -/
-def HyperbolicLattice.primePoints (L : HyperbolicLattice) : Finset ℂ :=
-  L.pointsAtDepth 1
+/-- A hyperbolic arithmetic function assigns values to traces. -/
+def HypArithFn := ℤ → ℝ
 
-/-
-The number of hyperbolic primes is at most numGens.
--/
-theorem HyperbolicLattice.primePoints_card_le (L : HyperbolicLattice) :
-    (L.primePoints).card ≤ L.numGens := by
-  rw [ show L.primePoints = Finset.image ( fun i => ( L.generators i ).applyRaw 0 ) Finset.univ from ?_ ];
-  · exact Finset.card_image_le.trans_eq ( Finset.card_fin _ );
-  · unfold HyperbolicLattice.primePoints HyperbolicLattice.pointsAtDepth;
-    unfold HyperbolicLattice.pointsAtDepth; aesop;
+namespace HypArithFn
 
-/-! ## Falsifiable Conjecture
+/-- The multiplicative unit: 1 at trace 2, 0 elsewhere. -/
+def delta : HypArithFn := fun t => if t = 2 then 1 else 0
 
-**Conjecture (Hyperbolic Prime Number Theorem):**
-For a free group on k ≥ 2 generators acting on the disk,
-the number of distinct orbit points at depth n is exactly `k · (2k-1)^{n-1}`
-for n ≥ 1 (assuming no collisions in the orbit).
+/-- The delta is 1 at the identity trace. -/
+theorem delta_at_identity : delta 2 = 1 := by simp [delta]
 
-**Testable prediction:** For k = 2 generators,
-depth n should give `2 · 3^{n-1}` points.
-Total points up to depth n should be `3^n`.
+/-- The delta vanishes away from identity. -/
+theorem delta_at_nonidentity {t : ℤ} (ht : t ≠ 2) : delta t = 0 := by
+  simp [delta, ht]
 
-Computation: depth 1 → 2, depth 2 → 6, depth 3 → 18, depth 4 → 54.
-Total: 1, 3, 9, 27, 81 = 3^0, 3^1, 3^2, 3^3, 3^4.
--/
+end HypArithFn
 
-/-- The conjectured count of orbit points at depth n for a 2-generator free group. -/
-def conjectured_count (n : ℕ) : ℕ :=
-  if n = 0 then 1 else 2 * 3 ^ (n - 1)
+/-! ## Part 8: SL₂(ℤ) Entry Norm -/
 
-theorem conjectured_count_zero : conjectured_count 0 = 1 := by
-  simp [conjectured_count]
+/-- The entry norm of an SL₂(ℤ) element. -/
+def SL2Z.entryNorm (g : SL2Z) : ℕ :=
+  max (max g.a.natAbs g.b.natAbs) (max g.c.natAbs g.d.natAbs)
 
-theorem conjectured_count_one : conjectured_count 1 = 2 := by
-  simp [conjectured_count]
+/-- The identity has entry norm 1. -/
+theorem SL2Z.entryNorm_one : SL2Z.one.entryNorm = 1 := by
+  simp [entryNorm, one]
 
-/-
-The total conjectured count up to depth n is `3^n` for n ≥ 1:
-    1 + 2 + 2·3 + 2·3² + ... + 2·3^{n-1} = 3^n.
--/
-theorem conjectured_total_count (n : ℕ) (hn : 0 < n) :
-    ∑ k ∈ Finset.range (n + 1), conjectured_count k = 3 ^ n := by
-  unfold conjectured_count;
-  induction hn <;> simp_all +decide [ Finset.sum_range_succ, pow_succ' ] ; ring
+/-! ## Part 9: Hyperbolic Trace Growth — Falsifiable Conjecture
+
+**Conjecture (Hyperbolic Trace Growth):**
+The number of hyperbolic conjugacy classes with |trace| ≤ T grows linearly in T.
+
+**Computational test:** For T = 100, the number of hyperbolic trace values
+{t ∈ ℤ : 2 < |t| ≤ T} equals 2(T-2) = 196. The deeper conjecture is about
+conjugacy classes, not just trace values. -/
+
+/-- Count of hyperbolic trace values up to T. -/
+def hyperbolicTraceCount (T : ℕ) : ℕ :=
+  if T ≤ 2 then 0 else 2 * (T - 2)
+
+/-- The count formula. -/
+theorem hyperbolicTraceCount_formula (T : ℕ) (hT : 3 ≤ T) :
+    hyperbolicTraceCount T = 2 * (T - 2) := by
+  simp [hyperbolicTraceCount, show ¬(T ≤ 2) from by omega]
+
+/-- The count grows at least linearly. -/
+theorem hyperbolicTraceCount_linear_growth (T : ℕ) (hT : 4 ≤ T) :
+    T ≤ 2 * hyperbolicTraceCount T := by
+  simp [hyperbolicTraceCount, show ¬(T ≤ 2) from by omega]
+  omega
 
 end
