@@ -1,327 +1,339 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Certified algorithms for Lorentzian-to-coefficient bridge.
+Algorithms for Lorentzian-to-Coefficient Bridge
 
-Implements:
-  1. Bivariate specialization coefficient extraction
-  2. Log-concavity certification (with violation witnesses)
-  3. k-fold log-concavity depth computation
-  4. Ratio transform iteration
-  5. Newton inequality profiling
+Implements the core algorithms for:
+1. Computing bivariate specialization coefficients
+2. Testing k-fold log-concavity
+3. Computing the Lorentzian depth of coefficient sequences
+4. Polynomial multiplication (convolution) for products of linear forms
 """
-
-from fractions import Fraction
-from typing import List, Optional, Tuple, Union
 import math
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
 
 
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 1: Bivariate Specialization Extraction
-# ────────────────────────────────────────────────────────────────────
+@dataclass
+class LogConcavityReport:
+    """Report from k-fold log-concavity analysis."""
+    depth: int
+    is_valid: bool
+    level_ratios: List[List[float]]
+    messages: List[str]
 
-def extract_bivariate_coefficients(
-    polynomial_coeffs: dict,  # {(e1,...,en): coeff}
-    u: list,  # direction vector 1
-    v: list,  # direction vector 2
-    degree: int
-) -> List[float]:
+
+def bivariate_specialization(degree: int, alpha: float, beta: float) -> List[float]:
     """
-    Extract bivariate specialization coefficients from a multivariate
-    homogeneous polynomial P by substituting x_i = u_i * s + v_i * t.
-
-    Returns [a_0, a_1, ..., a_d] where P(u*s + v*t) = sum a_m s^m t^{d-m}.
-
-    Time complexity: O(|supp(P)| * d)
-    Space complexity: O(d)
+    Compute the bivariate specialization coefficient sequence.
+    
+    For (alpha*x + beta*y)^d, returns [a(0), a(1), ..., a(d)] where
+    a(m) = C(d, m) * alpha^m * beta^(d-m).
+    
+    Args:
+        degree: Degree d of the polynomial
+        alpha: Coefficient of x
+        beta: Coefficient of y
+    
+    Returns:
+        List of d+1 coefficients
+    
+    Time: O(d)
+    Space: O(d)
     """
-    n = len(u)
-    coeffs = [0.0] * (degree + 1)
-
-    for exponent, c in polynomial_coeffs.items():
-        if len(exponent) != n:
-            continue
-        # For monomial x^alpha, substituting x_i = u_i*s + v_i*t:
-        # Π_i (u_i*s + v_i*t)^{alpha_i} = Σ_m (Π_i C(alpha_i, k_i) u_i^k_i v_i^{alpha_i-k_i}) s^m t^{d-m}
-        # where m = Σ k_i
-        # Use dynamic programming over variables
-        current = {0: 1.0}  # {power_of_s: coefficient}
-        for i, ai in enumerate(exponent):
-            new_current = {}
-            for existing_power, existing_coeff in current.items():
-                for ki in range(ai + 1):
-                    power_s = existing_power + ki
-                    binom = math.comb(ai, ki)
-                    contribution = existing_coeff * binom * (u[i] ** ki) * (v[i] ** (ai - ki))
-                    new_current[power_s] = new_current.get(power_s, 0.0) + contribution
-            current = new_current
-
-        for power_s, contribution in current.items():
-            if 0 <= power_s <= degree:
-                coeffs[power_s] += c * contribution
-
-    return coeffs
+    if degree < 0:
+        return []
+    return [
+        math.comb(degree, m) * alpha**m * beta**(degree - m)
+        for m in range(degree + 1)
+    ]
 
 
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 2: Log-Concavity Certification
-# ────────────────────────────────────────────────────────────────────
-
-class NewtonViolation:
-    """Witness of a Newton inequality violation at index m."""
-    def __init__(self, index: int, lhs: float, rhs: float):
-        self.index = index
-        self.lhs = lhs  # a_m^2
-        self.rhs = rhs  # a_{m-1} * a_{m+1}
-
-    def __repr__(self):
-        return f"NewtonViolation(m={self.index}, a_m²={self.lhs:.6e}, a_{{m-1}}·a_{{m+1}}={self.rhs:.6e})"
-
-
-def certify_log_concavity(
-    seq: List[float],
-    tolerance: float = 1e-12
-) -> Tuple[bool, Optional[NewtonViolation]]:
+def polynomial_product(polys: List[List[float]]) -> List[float]:
     """
-    Certify whether a sequence is log-concave.
-
-    Returns (True, None) if log-concave, or (False, violation) with a
-    concrete violating index.
-
-    Time complexity: O(n)
-    Space complexity: O(1)
+    Compute the product of multiple univariate polynomials.
+    
+    Each polynomial is represented as a list of coefficients [a0, a1, ...].
+    
+    Args:
+        polys: List of polynomials to multiply
+    
+    Returns:
+        Product polynomial coefficients
+    
+    Time: O(d1 * d2 * ... * dk) where di is the degree of polynomial i
+    Space: O(sum of degrees)
     """
-    for m in range(1, len(seq) - 1):
-        lhs = seq[m] ** 2
-        rhs = seq[m - 1] * seq[m + 1]
-        if lhs < rhs - tolerance:
-            return False, NewtonViolation(m, lhs, rhs)
-    return True, None
-
-
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 3: k-Fold Log-Concavity Depth Computation
-# ────────────────────────────────────────────────────────────────────
-
-def compute_kfold_depth(
-    seq: List[float],
-    max_depth: int = 50,
-    tolerance: float = 1e-12
-) -> int:
-    """
-    Compute the maximum k such that seq is k-fold log-concave.
-
-    Algorithm:
-      1. Check positivity (k=0)
-      2. Check log-concavity and compute ratio transform
-      3. Recurse on ratio transform
-      4. Stop when log-concavity fails or sequence too short
-
-    Time complexity: O(n * min(k, n))
-    Space complexity: O(n)
-
-    Returns the maximum depth k >= 0.
-    """
-    if any(x <= tolerance for x in seq):
-        return -1  # not positive
-
-    current = list(seq)
-    for k in range(max_depth):
-        if len(current) < 3:
-            return k  # trivially log-concave (length < 3)
-
-        is_lc, violation = certify_log_concavity(current, tolerance)
-        if not is_lc:
-            return k  # fails log-concavity at this level
-
-        # Compute ratio transform
-        ratio = [current[m + 1] / current[m] for m in range(len(current) - 1)]
-        if any(r <= tolerance for r in ratio):
-            return k + 1  # log-concave but ratio not positive
-
-        current = ratio
-
-    return max_depth
-
-
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 4: Ratio Transform Iteration
-# ────────────────────────────────────────────────────────────────────
-
-def iterate_ratio_transforms(
-    seq: List[float],
-    levels: int
-) -> List[List[float]]:
-    """
-    Compute iterated ratio transforms up to the given number of levels.
-
-    Returns a list [seq, ratio_1, ratio_2, ..., ratio_levels].
-
-    Time complexity: O(n * levels)
-    Space complexity: O(n * levels)
-    """
-    result = [list(seq)]
-    current = list(seq)
-    for _ in range(levels):
-        if len(current) < 2:
-            break
-        if any(x == 0 for x in current):
-            break
-        ratio = [current[m + 1] / current[m] for m in range(len(current) - 1)]
-        result.append(ratio)
-        current = ratio
+    if not polys:
+        return [1.0]
+    
+    result = polys[0][:]
+    for poly in polys[1:]:
+        new_result = [0.0] * (len(result) + len(poly) - 1)
+        for i, a in enumerate(result):
+            for j, b in enumerate(poly):
+                new_result[i + j] += a * b
+        result = new_result
+    
     return result
 
 
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 5: Newton Inequality Profile
-# ────────────────────────────────────────────────────────────────────
-
-def newton_profile(seq: List[float]) -> List[float]:
+def linear_form_product_coefficients(
+    forms: List[Tuple[float, float]]
+) -> List[float]:
     """
-    Compute the Newton inequality ratio a_m² / (a_{m-1} * a_{m+1})
-    for each interior index m.
-
-    For a log-concave sequence, all ratios are >= 1.
-    For a Lorentzian specialization, the ratios satisfy additional
-    structural constraints.
-
-    Time complexity: O(n)
-    Space complexity: O(n)
+    Compute coefficients of a product of linear forms in two variables.
+    
+    Given forms [(α₁, β₁), ..., (αₙ, βₙ)], computes the coefficient sequence
+    of ∏ᵢ (αᵢx + βᵢy) = Σₘ aₘ x^m y^(d-m).
+    
+    Args:
+        forms: List of (alpha, beta) pairs for each linear form
+    
+    Returns:
+        Coefficient sequence [a(0), a(1), ..., a(d)]
+    
+    Time: O(d²) where d = len(forms)
+    Space: O(d)
     """
+    polys = [[alpha, beta] for alpha, beta in forms]
+    return polynomial_product(polys)
+
+
+def compute_ratio_sequence(seq: List[float]) -> List[float]:
+    """
+    Compute the ratio sequence r(m) = a(m+1)/a(m).
+    
+    Args:
+        seq: Input sequence (must be positive)
+    
+    Returns:
+        Ratio sequence of length len(seq)-1
+    
+    Time: O(n)
+    Space: O(n)
+    """
+    return [seq[m + 1] / seq[m] for m in range(len(seq) - 1)]
+
+
+def compute_lc_ratios(seq: List[float]) -> List[float]:
+    """
+    Compute log-concavity ratios: a(m)² / (a(m-1) · a(m+1)) for m in [1, d-1].
+    
+    Values ≥ 1 indicate log-concavity at that position.
+    
+    Args:
+        seq: Input sequence of length d+1
+    
+    Returns:
+        List of d-1 ratios
+    
+    Time: O(d)
+    Space: O(d)
+    """
+    d = len(seq) - 1
     ratios = []
-    for m in range(1, len(seq) - 1):
-        denom = seq[m - 1] * seq[m + 1]
-        if denom > 0:
-            ratios.append(seq[m] ** 2 / denom)
+    for m in range(1, d):
+        if seq[m - 1] > 0 and seq[m + 1] > 0:
+            ratios.append(seq[m]**2 / (seq[m - 1] * seq[m + 1]))
         else:
             ratios.append(float('inf'))
     return ratios
 
 
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 6: Certified k-Fold Log-Concavity
-# ────────────────────────────────────────────────────────────────────
-
-def certify_kfold_log_concavity(
+def test_k_fold_log_concavity(
     seq: List[float],
-    target_depth: int,
-    tolerance: float = 1e-12
-) -> Union[bool, Tuple[int, NewtonViolation]]:
+    max_depth: int = 10
+) -> LogConcavityReport:
     """
-    Certify that a sequence is k-fold log-concave at the target depth.
-
-    Returns True if certified, or (level, violation) if a violation is found.
-
-    This is the computational counterpart of the formal theorem
-    `recursiveHessianLorentzian_implies_kFoldLogConcave`.
-
-    Time complexity: O(n * k)
-    Space complexity: O(n)
+    Determine the k-fold log-concavity depth of a positive sequence.
+    
+    Iteratively computes ratio sequences and checks log-concavity at each level.
+    Returns the maximum depth k such that the sequence is k-fold log-concave.
+    
+    Algorithm:
+    1. Check if sequence is positive → depth ≥ 0
+    2. Check log-concavity → depth ≥ 1
+    3. Compute ratio sequence, check its log-concavity → depth ≥ 2
+    4. Repeat until failure or max_depth
+    
+    Args:
+        seq: Input sequence (must be positive)
+        max_depth: Maximum depth to test
+    
+    Returns:
+        LogConcavityReport with the determined depth
+    
+    Time: O(d · k) where d = len(seq), k = returned depth
+    Space: O(d)
     """
-    if any(x <= tolerance for x in seq):
-        return (0, NewtonViolation(0, 0, 0))
-
-    current = list(seq)
-    for level in range(target_depth):
+    messages = []
+    level_ratios = []
+    current = seq[:]
+    depth = 0
+    
+    # Check positivity (depth 0)
+    if not all(x > 0 for x in current):
+        messages.append("Sequence is not positive.")
+        return LogConcavityReport(0, False, [], messages)
+    
+    messages.append("Depth 0: positive ✓")
+    
+    for level in range(max_depth):
         if len(current) < 3:
-            return True  # trivially true
+            messages.append(f"Depth {level + 1}: sequence too short, vacuously true ✓")
+            depth = level + 1
+            break
+        
+        ratios = compute_lc_ratios(current)
+        level_ratios.append(ratios)
+        
+        if min(ratios) < 1.0 - 1e-10:
+            messages.append(
+                f"Depth {level + 1}: NOT log-concave (min ratio = {min(ratios):.8f})"
+            )
+            break
+        
+        depth = level + 1
+        messages.append(
+            f"Depth {depth}: log-concave ✓ (min ratio = {min(ratios):.8f})"
+        )
+        
+        # Compute ratio sequence for next level
+        current = compute_ratio_sequence(current)
+        if not all(x > 0 for x in current):
+            messages.append(f"  Ratio sequence has non-positive terms, stopping.")
+            break
+    
+    return LogConcavityReport(depth, True, level_ratios, messages)
 
-        is_lc, violation = certify_log_concavity(current, tolerance)
-        if not is_lc:
-            return (level, violation)
 
-        ratio = [current[m + 1] / current[m] for m in range(len(current) - 1)]
-        if any(r <= tolerance for r in ratio):
-            return True if level + 1 >= target_depth else (level + 1, NewtonViolation(0, 0, 0))
-
-        current = ratio
-
-    return True
-
-
-# ────────────────────────────────────────────────────────────────────
-# Algorithm 7: Product of Linear Forms Generator
-# ────────────────────────────────────────────────────────────────────
-
-def product_of_linear_forms(degree: int, weights: Optional[List[float]] = None) -> List[float]:
+def reversed_cauchy_schwarz_ratio(d: int, m: int) -> float:
     """
-    Generate coefficients of a product of positive linear forms.
-
-    P(x,y) = Π_{i=1}^d (w_i * x + (1-w_i) * y)
-
-    This polynomial is Lorentzian (as a limit of products of linear forms
-    with positive coefficients), and its bivariate coefficients inherit
-    all the log-concavity properties guaranteed by the bridge theorem.
-
-    Time complexity: O(d²)
-    Space complexity: O(d)
+    Compute the reversed Cauchy-Schwarz ratio for binomial coefficients:
+    C(d,m)² / (C(d,m-1) · C(d,m+1)) = (d-m+1)(m+1) / (m(d-m))
+    
+    This ratio is always ≥ 1, with surplus exactly (d+1)/(m(d-m)).
+    
+    Args:
+        d: Degree
+        m: Index (1 ≤ m ≤ d-1)
+    
+    Returns:
+        The ratio, which measures how much the sequence exceeds log-concavity
     """
-    if weights is None:
-        weights = [(i + 1) / (degree + 1) for i in range(degree)]
-
-    coeffs = [1.0]
-    for w in weights:
-        new_coeffs = [0.0] * (len(coeffs) + 1)
-        for i, c in enumerate(coeffs):
-            new_coeffs[i] += c * (1 - w)
-            new_coeffs[i + 1] += c * w
-        coeffs = new_coeffs
-    return coeffs
+    if m < 1 or m >= d:
+        return float('inf')
+    return (d - m + 1) * (m + 1) / (m * (d - m))
 
 
-# ────────────────────────────────────────────────────────────────────
-# Example Usage
-# ────────────────────────────────────────────────────────────────────
+def geometric_perturbation(seq: List[float], r: float) -> List[float]:
+    """
+    Apply geometric perturbation: a(m) → a(m) · r^m.
+    
+    This preserves log-concavity (proved in the Lean formalization).
+    
+    Args:
+        seq: Input sequence
+        r: Perturbation parameter (must be > 0)
+    
+    Returns:
+        Perturbed sequence
+    
+    Time: O(d)
+    Space: O(d)
+    """
+    return [seq[m] * r**m for m in range(len(seq))]
 
+
+def hadamard_product(a: List[float], b: List[float]) -> List[float]:
+    """
+    Compute the Hadamard (pointwise) product of two sequences.
+    
+    If both inputs are log-concave and positive, the output is also
+    log-concave (proved in the Lean formalization).
+    
+    Args:
+        a, b: Input sequences (same length)
+    
+    Returns:
+        Pointwise product sequence
+    
+    Time: O(d)
+    Space: O(d)
+    """
+    assert len(a) == len(b), "Sequences must have the same length"
+    return [a[m] * b[m] for m in range(len(a))]
+
+
+def conjecture_test(
+    d: int,
+    forms: List[Tuple[float, float]],
+    expected_depth: Optional[int] = None
+) -> dict:
+    """
+    Test the Lorentzian Bivariate Specialization Conjecture.
+    
+    For a product of linear forms ∏(αᵢx + βᵢy), the conjecture predicts that
+    the coefficient sequence is min(k, d-2)-fold log-concave, where k is the
+    Lorentzian depth of the polynomial.
+    
+    Products of d linear forms with positive coefficients are Lorentzian of
+    depth d-2, so the prediction is (d-2)-fold log-concavity.
+    
+    Args:
+        d: Expected degree
+        forms: List of (alpha, beta) pairs
+        expected_depth: Expected k-fold depth (default: len(forms) - 2)
+    
+    Returns:
+        Dictionary with test results
+    """
+    if expected_depth is None:
+        expected_depth = len(forms) - 2
+    
+    coeffs = linear_form_product_coefficients(forms)
+    assert len(coeffs) == d + 1, f"Expected degree {d}, got {len(coeffs) - 1}"
+    
+    report = test_k_fold_log_concavity(coeffs, max_depth=expected_depth + 2)
+    
+    return {
+        "degree": d,
+        "num_forms": len(forms),
+        "coefficients": coeffs,
+        "expected_depth": expected_depth,
+        "actual_depth": report.depth,
+        "conjecture_holds": report.depth >= expected_depth,
+        "messages": report.messages,
+        "level_ratios": report.level_ratios,
+    }
+
+
+# Example usage
 if __name__ == "__main__":
-    print("=" * 60)
-    print("  Algorithm Demonstrations")
-    print("=" * 60)
-    print()
-
-    # Demo: Product of linear forms
-    d = 6
-    coeffs = product_of_linear_forms(d)
-    print(f"Product of {d} linear forms:")
-    print(f"  Coefficients: {[round(c, 6) for c in coeffs]}")
-
-    # Certify log-concavity
-    is_lc, violation = certify_log_concavity(coeffs)
-    print(f"  Log-concave: {is_lc}")
-
-    # Compute k-fold depth
-    depth = compute_kfold_depth(coeffs)
-    print(f"  k-fold depth: {depth}")
-
-    # Newton profile
-    profile = newton_profile(coeffs)
-    print(f"  Newton ratios: {[round(r, 4) for r in profile]}")
-
-    # Iterated transforms
-    transforms = iterate_ratio_transforms(coeffs, 4)
-    for i, t in enumerate(transforms):
-        print(f"  Level {i}: {[round(x, 4) for x in t]}")
-
-    # Certification
-    result = certify_kfold_log_concavity(coeffs, 3)
-    print(f"  3-fold certified: {result}")
-    print()
-
-    # Demo: Binomial coefficients
-    d = 10
-    coeffs = [float(math.comb(d, m)) for m in range(d + 1)]
-    depth = compute_kfold_depth(coeffs)
-    print(f"Binomial C({d}, m):")
-    print(f"  Coefficients: {[int(c) for c in coeffs]}")
-    print(f"  k-fold depth: {depth}")
-    print()
-
-    # Demo: Bivariate specialization extraction
-    # (x1 + x2)^2 = x1^2 + 2x1x2 + x2^2
-    poly = {(2, 0): 1.0, (1, 1): 2.0, (0, 2): 1.0}
-    u = [1.0, 0.0]
-    v = [0.0, 1.0]
-    coeffs = extract_bivariate_coefficients(poly, u, v, 2)
-    print(f"Bivariate extraction of (x1+x2)^2 along standard axes:")
-    print(f"  Coefficients: {coeffs}")
-    print()
+    print("=== Algorithm Demonstrations ===\n")
+    
+    # Test 1: Bivariate specialization
+    print("1. Bivariate specialization of (2x + 3y)^5:")
+    seq = bivariate_specialization(5, 2.0, 3.0)
+    print(f"   Coefficients: {[f'{c:.0f}' for c in seq]}")
+    report = test_k_fold_log_concavity(seq)
+    for msg in report.messages:
+        print(f"   {msg}")
+    
+    # Test 2: Product of distinct linear forms
+    print("\n2. Product of linear forms (x+y)(2x+y)(x+3y)(3x+2y):")
+    forms = [(1, 1), (2, 1), (1, 3), (3, 2)]
+    coeffs = linear_form_product_coefficients(forms)
+    print(f"   Coefficients: {[f'{c:.0f}' for c in coeffs]}")
+    report = test_k_fold_log_concavity(coeffs)
+    for msg in report.messages:
+        print(f"   {msg}")
+    
+    # Test 3: Conjecture test
+    print("\n3. Conjecture test (7 linear forms):")
+    forms7 = [(1, 1), (2, 1), (1, 2), (3, 1), (1, 3), (2, 3), (3, 2)]
+    result = conjecture_test(7, forms7)
+    print(f"   Expected depth: {result['expected_depth']}")
+    print(f"   Actual depth: {result['actual_depth']}")
+    print(f"   Conjecture holds: {result['conjecture_holds']}")
+    for msg in result['messages']:
+        print(f"   {msg}")
