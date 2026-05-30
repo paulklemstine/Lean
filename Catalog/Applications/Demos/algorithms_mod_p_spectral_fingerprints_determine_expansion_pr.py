@@ -1,339 +1,327 @@
-#!/usr/bin/env python3
 """
-Algorithms for Computing Mod-p Spectral Fingerprints
+Algorithms for Mod-p Spectral Fingerprints
 
-This module implements the core algorithms for the arithmetic spectral
-fingerprint framework:
-
-1. ModPFingerprint: efficient mod-p trace computation
-2. PrimeFingerprintComputer: full fingerprint computation pipeline
-3. SpectralGapEstimator: spectral gap estimation from fingerprint data
-4. FingerprintComparator: pseudometric on fingerprints
-
-Complexity:
-- mod_p_trace_pow: O(n^3 log k) for n×n matrix, k-th power
-- compute_fingerprint: O(π(P) * m * n^3 log m) where P = prime bound, m = degree bound
-- fingerprint_distance: O(|fingerprint|) = O(π(P) * m)
+Implements the core algorithms from the research paper:
+1. Mod-p Gaussian elimination (O(n^3) per prime)
+2. Spectral fingerprint computation
+3. Determinant recovery from fingerprint
+4. Edge boundary computation for expansion analysis
 """
 
-import numpy as np
-from typing import Dict, List, Tuple, Optional, NamedTuple
-from dataclasses import dataclass, field
+from typing import List, Dict, Tuple, Optional
 import math
 
 
-def sieve_primes(bound: int) -> List[int]:
-    """Sieve of Eratosthenes.
-    
-    Args:
-        bound: Upper bound for primes.
-    
-    Returns:
-        List of all primes up to bound.
-    
-    Complexity: O(n log log n) time, O(n) space.
-    
-    Example:
-        >>> sieve_primes(20)
-        [2, 3, 5, 7, 11, 13, 17, 19]
+def sieve_primes(N: int) -> List[int]:
     """
-    if bound < 2:
+    Sieve of Eratosthenes.
+
+    Time: O(N log log N)
+    Space: O(N)
+
+    Args:
+        N: Upper bound for prime search
+
+    Returns:
+        List of all primes up to N
+
+    >>> sieve_primes(20)
+    [2, 3, 5, 7, 11, 13, 17, 19]
+    """
+    if N < 2:
         return []
-    is_prime = [True] * (bound + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(bound**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, bound + 1, i):
-                is_prime[j] = False
-    return [i for i in range(bound + 1) if is_prime[i]]
+    sieve = [True] * (N + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if sieve[i]:
+            for j in range(i * i, N + 1, i):
+                sieve[j] = False
+    return [i for i in range(2, N + 1) if sieve[i]]
 
 
-def mod_p_matrix_pow(A: np.ndarray, k: int, p: int) -> np.ndarray:
-    """Compute A^k mod p using repeated squaring.
-    
+def mod_p_gaussian_elimination(M: List[List[int]], p: int) -> int:
+    """
+    Gaussian elimination over F_p to compute rank.
+
+    Time: O(n^2 * min(n, m))
+    Space: O(n * m)
+
     Args:
-        A: Square integer matrix.
-        k: Non-negative exponent.
-        p: Prime modulus.
-    
+        M: Integer matrix as list of lists
+        p: Prime modulus
+
     Returns:
-        A^k mod p as integer matrix.
-    
-    Complexity: O(n^3 log k) where n = matrix dimension.
-    
-    Example:
-        >>> A = np.array([[1, 1], [0, 1]])
-        >>> mod_p_matrix_pow(A, 3, 5)
-        array([[1, 3],
-               [0, 1]])
+        Rank of M mod p
+
+    >>> mod_p_gaussian_elimination([[1, 2], [3, 4]], 5)
+    2
+    >>> mod_p_gaussian_elimination([[2, 4], [1, 2]], 3)
+    1
     """
-    n = A.shape[0]
-    result = np.eye(n, dtype=int)
-    base = A.copy() % p
-    exp = k
-    while exp > 0:
-        if exp & 1:
-            result = result @ base % p
-        base = base @ base % p
-        exp >>= 1
-    return result % p
+    n = len(M)
+    if n == 0:
+        return 0
+    m = len(M[0])
+
+    # Copy and reduce mod p
+    A = [[M[i][j] % p for j in range(m)] for i in range(n)]
+
+    rank = 0
+    for col in range(m):
+        # Find pivot in current column
+        pivot_row = None
+        for row in range(rank, n):
+            if A[row][col] % p != 0:
+                pivot_row = row
+                break
+
+        if pivot_row is None:
+            continue
+
+        # Swap pivot row to current rank position
+        A[rank], A[pivot_row] = A[pivot_row], A[rank]
+
+        # Compute modular inverse of pivot using Fermat's little theorem
+        inv = pow(A[rank][col], p - 2, p)
+
+        # Eliminate all other rows
+        for row in range(n):
+            if row != rank and A[row][col] % p != 0:
+                factor = (A[row][col] * inv) % p
+                for c in range(m):
+                    A[row][c] = (A[row][c] - factor * A[rank][c]) % p
+
+        rank += 1
+
+    return rank
 
 
-def mod_p_trace_pow(A: np.ndarray, p: int, k: int) -> int:
-    """Compute tr(A^k) mod p.
-    
+def spectral_fingerprint(M: List[List[int]], primes: List[int]) -> Dict[int, int]:
+    """
+    Compute the spectral fingerprint of an integer matrix.
+
+    The spectral fingerprint maps each prime p to rank(M mod p).
+
+    Time: O(|primes| * n^3)
+    Space: O(n^2)
+
     Args:
-        A: Square integer matrix.
-        p: Prime modulus.
-        k: Non-negative exponent.
-    
+        M: Square integer matrix
+        primes: List of primes to evaluate
+
     Returns:
-        Integer in [0, p) equal to tr(A^k) mod p.
-    
-    Complexity: O(n^3 log k).
+        Dictionary mapping p -> rank(M mod p)
+
+    >>> M = [[6, 2], [4, 10]]
+    >>> fp = spectral_fingerprint(M, [2, 3, 5, 7, 13, 26])
+    >>> fp[2]  # det = 52 = 4 * 13, so rank drops at p=2 and p=13
+    1
     """
-    return int(np.trace(mod_p_matrix_pow(A, k, p))) % p
+    return {p: mod_p_gaussian_elimination(M, p) for p in primes}
 
 
-def exact_trace_pow(A: np.ndarray, k: int) -> int:
-    """Compute tr(A^k) exactly using Python arbitrary-precision integers.
-    
+def detect_bad_primes(M: List[List[int]], prime_bound: int) -> List[int]:
+    """
+    Detect all primes up to prime_bound where the rank drops.
+
+    By the rank stability theorem, these are exactly the primes
+    dividing det(M) (when det(M) != 0).
+
+    Time: O(prime_bound * n^3 / log(prime_bound))
+    Space: O(n^2 + prime_bound)
+
     Args:
-        A: Square integer matrix.
-        k: Non-negative exponent.
-    
+        M: Square integer matrix with nonzero determinant
+        prime_bound: Search for bad primes up to this bound
+
     Returns:
-        Exact integer value of tr(A^k).
-    
-    Complexity: O(n^3 log k) with big integer arithmetic.
+        List of bad primes (primes where rank drops below n)
+
+    >>> detect_bad_primes([[6, 1], [0, 10]], 50)
+    [2, 3, 5]
     """
-    n = A.shape[0]
-    M = np.eye(n, dtype=object)
-    base = A.astype(object)
-    exp = k
-    while exp > 0:
-        if exp & 1:
-            M = M @ base
-        base = base @ base
-        exp >>= 1
-    return int(np.trace(M))
-
-
-@dataclass
-class PrimeFingerprint:
-    """A prime spectral fingerprint of an integer matrix.
-    
-    Stores the mod-p traces tr(A^k) mod p for all primes p ≤ prime_bound
-    and all 1 ≤ k ≤ degree_bound.
-    
-    Attributes:
-        matrix_size: Dimension of the matrix.
-        prime_bound: Upper bound on primes used.
-        degree_bound: Maximum power computed.
-        data: Dict mapping (prime, power) to trace residue.
-        primes: List of primes used.
-    """
-    matrix_size: int
-    prime_bound: int
-    degree_bound: int
-    data: Dict[Tuple[int, int], int] = field(default_factory=dict)
-    primes: List[int] = field(default_factory=list)
-    
-    @classmethod
-    def compute(cls, A: np.ndarray, prime_bound: int, degree_bound: int) -> 'PrimeFingerprint':
-        """Compute the prime fingerprint of matrix A.
-        
-        Args:
-            A: Square integer matrix.
-            prime_bound: Compute for all primes p ≤ prime_bound.
-            degree_bound: Compute traces of A^1, ..., A^degree_bound.
-        
-        Returns:
-            PrimeFingerprint instance.
-        
-        Complexity: O(π(prime_bound) * degree_bound * n^3 * log(degree_bound))
-        """
-        n = A.shape[0]
-        primes = sieve_primes(prime_bound)
-        data = {}
-        for p in primes:
-            for k in range(1, degree_bound + 1):
-                data[(p, k)] = mod_p_trace_pow(A, p, k)
-        return cls(
-            matrix_size=n,
-            prime_bound=prime_bound,
-            degree_bound=degree_bound,
-            data=data,
-            primes=primes,
-        )
-    
-    def vector(self) -> np.ndarray:
-        """Return fingerprint as a flat vector for ML/comparison."""
-        keys = sorted(self.data.keys())
-        return np.array([self.data[k] for k in keys])
-    
-    def summary(self) -> str:
-        """Human-readable summary."""
-        lines = [f"PrimeFingerprint(n={self.matrix_size}, P≤{self.prime_bound}, deg≤{self.degree_bound})"]
-        for p in self.primes[:5]:
-            traces = [str(self.data.get((p, k), '?')) for k in range(1, min(6, self.degree_bound + 1))]
-            lines.append(f"  mod {p}: [{', '.join(traces)}]")
-        if len(self.primes) > 5:
-            lines.append(f"  ... ({len(self.primes)} primes total)")
-        return '\n'.join(lines)
-
-
-def fingerprint_hamming_distance(fp1: PrimeFingerprint, fp2: PrimeFingerprint) -> float:
-    """Normalized Hamming distance between two fingerprints.
-    
-    Args:
-        fp1, fp2: PrimeFingerprints to compare.
-    
-    Returns:
-        Float in [0, 1]: fraction of (p, k) pairs where traces differ.
-    
-    Complexity: O(|fingerprint|).
-    """
-    keys = set(fp1.data.keys()) & set(fp2.data.keys())
-    if not keys:
-        return 1.0
-    mismatches = sum(1 for k in keys if fp1.data[k] != fp2.data[k])
-    return mismatches / len(keys)
-
-
-def fingerprint_l2_distance(fp1: PrimeFingerprint, fp2: PrimeFingerprint) -> float:
-    """L2 distance between fingerprint vectors.
-    
-    For same-size fingerprints, compute the Euclidean distance
-    between their vectorized forms (normalized by dimension).
-    
-    Complexity: O(|fingerprint|).
-    """
-    keys = sorted(set(fp1.data.keys()) & set(fp2.data.keys()))
-    if not keys:
-        return float('inf')
-    diffs = [(fp1.data[k] - fp2.data[k]) for k in keys]
-    return math.sqrt(sum(d * d for d in diffs) / len(keys))
-
-
-def spectral_gap_from_eigenvalues(eigenvalues: np.ndarray, tol: float = 1e-10) -> float:
-    """Extract spectral gap (smallest positive eigenvalue) from eigenvalue array.
-    
-    Args:
-        eigenvalues: Array of real eigenvalues.
-        tol: Threshold for considering an eigenvalue as zero.
-    
-    Returns:
-        Smallest eigenvalue exceeding tol, or 0 if none exists.
-    """
-    positive = sorted(ev for ev in eigenvalues if ev > tol)
-    return positive[0] if positive else 0.0
-
-
-def verify_trace_transfer_theorem(A: np.ndarray, B: np.ndarray,
-                                   prime_bound: int, degree_bound: int) -> Dict:
-    """Verify the trace transfer theorem computationally.
-    
-    For each power k, checks whether mod-p agreement (for primes exceeding
-    |tr(A^k) - tr(B^k)|) correctly implies integer trace equality.
-    
-    Returns:
-        Dict with verification results per power.
-    """
+    n = len(M)
     primes = sieve_primes(prime_bound)
-    results = {}
-    
-    for k in range(1, degree_bound + 1):
-        tr_A = exact_trace_pow(A, k)
-        tr_B = exact_trace_pow(B, k)
-        diff = abs(tr_A - tr_B)
-        
-        # For each prime p, check mod-p agreement
-        mod_agree = {}
-        for p in primes:
-            mod_agree[p] = (mod_p_trace_pow(A, p, k) == mod_p_trace_pow(B, p, k))
-        
-        # Confirming primes: those where mod-p agrees AND p > |diff|
-        confirming = [p for p in primes if mod_agree[p] and p > diff]
-        
-        results[k] = {
-            'tr_A': tr_A,
-            'tr_B': tr_B,
-            'equal': tr_A == tr_B,
-            'diff': diff,
-            'mod_agree': mod_agree,
-            'confirming_primes': confirming,
-            'theorem_applies': len(confirming) > 0 or diff == 0,
-        }
-    
-    return results
+    return [p for p in primes if mod_p_gaussian_elimination(M, p) < n]
 
 
-def estimate_spectral_gap_from_fingerprint(fp: PrimeFingerprint, n: int) -> float:
-    """Heuristic spectral gap estimate from fingerprint data.
-    
-    Uses the trace ratio tr(A^2)/tr(A) as a crude spectral moment estimator.
-    For a Laplacian with eigenvalues λ_0 ≤ λ_1 ≤ ... ≤ λ_{n-1}:
-      tr(L) = Σ λ_i
-      tr(L^2) = Σ λ_i^2
-    
-    The spectral gap λ_1 can be bounded below using moment inequalities.
-    
-    This is a heuristic; the formal theorems give rigorous bounds under
-    explicit hypotheses.
+def determinant_mod_p(M: List[List[int]], p: int) -> int:
     """
-    # Get traces for the largest prime (most informative)
-    if not fp.primes:
-        return 0.0
-    p = max(fp.primes)
-    
-    tr1 = fp.data.get((p, 1), 0)
-    tr2 = fp.data.get((p, 2), 0)
-    
-    if tr1 == 0:
-        return 0.0
-    
-    # Rough heuristic: spectral gap ~ tr1/n - sqrt(tr2/n - (tr1/n)^2)
-    avg = tr1 / n
-    variance = max(0, tr2 / n - avg * avg)
-    return max(0, avg - math.sqrt(variance))
+    Compute det(M) mod p via Gaussian elimination.
+
+    Time: O(n^3)
+    Space: O(n^2)
+
+    Args:
+        M: Square integer matrix
+        p: Prime modulus
+
+    Returns:
+        det(M) mod p
+    """
+    n = len(M)
+    A = [[M[i][j] % p for j in range(n)] for i in range(n)]
+    det = 1
+    sign = 1
+
+    for col in range(n):
+        pivot_row = None
+        for row in range(col, n):
+            if A[row][col] % p != 0:
+                pivot_row = row
+                break
+        if pivot_row is None:
+            return 0
+
+        if pivot_row != col:
+            A[col], A[pivot_row] = A[pivot_row], A[col]
+            sign *= -1
+
+        det = (det * A[col][col]) % p
+        inv = pow(A[col][col], p - 2, p)
+
+        for row in range(col + 1, n):
+            if A[row][col] % p != 0:
+                factor = (A[row][col] * inv) % p
+                for c in range(n):
+                    A[row][c] = (A[row][c] - factor * A[col][c]) % p
+
+    return (sign * det) % p
 
 
-# Example usage
-if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
-    
-    # 1. Compute fingerprint of a cycle graph
-    n = 8
-    L = np.zeros((n, n), dtype=int)
+def complete_graph_laplacian(n: int) -> List[List[int]]:
+    """
+    Construct the Laplacian of the complete graph K_n.
+
+    L = nI - J where J is the all-ones matrix.
+
+    Time: O(n^2)
+    Space: O(n^2)
+
+    >>> complete_graph_laplacian(3)
+    [[3, -1, -1], [-1, 3, -1], [-1, -1, 3]]
+    """
+    return [[(n if i == j else 0) - 1 for j in range(n)] for i in range(n)]
+
+
+def path_graph_laplacian(n: int) -> List[List[int]]:
+    """
+    Construct the Laplacian of the path graph P_n.
+
+    Time: O(n^2)
+    Space: O(n^2)
+
+    >>> path_graph_laplacian(4)
+    [[1, -1, 0, 0], [-1, 2, -1, 0], [0, -1, 2, -1], [0, 0, -1, 1]]
+    """
+    L = [[0] * n for _ in range(n)]
     for i in range(n):
-        L[i, i] = 2
-        L[i, (i + 1) % n] = -1
-        L[(i + 1) % n, i] = -1
-    
-    fp = PrimeFingerprint.compute(L, prime_bound=13, degree_bound=6)
-    print("Cycle C_8 Laplacian fingerprint:")
-    print(fp.summary())
-    
-    # 2. Compare with complete graph
-    K = n * np.eye(n, dtype=int) - np.ones((n, n), dtype=int)
-    fp_K = PrimeFingerprint.compute(K, prime_bound=13, degree_bound=6)
-    print(f"\nComplete K_8 Laplacian fingerprint:")
-    print(fp_K.summary())
-    
-    dist = fingerprint_hamming_distance(fp, fp_K)
-    print(f"\nHamming distance: {dist:.4f}")
-    
-    # 3. Verify trace transfer
-    print("\nTrace Transfer Verification (C_8 vs K_8):")
-    results = verify_trace_transfer_theorem(L, K, prime_bound=50, degree_bound=4)
-    for k, r in results.items():
-        print(f"  k={k}: tr(A^k)={r['tr_A']}, tr(B^k)={r['tr_B']}, "
-              f"equal={r['equal']}, confirming_primes={r['confirming_primes'][:3]}")
-    
-    # 4. Spectral gap comparison
-    eigs = np.linalg.eigvalsh(L.astype(float))
-    gap = spectral_gap_from_eigenvalues(eigs)
-    est = estimate_spectral_gap_from_fingerprint(fp, n)
-    print(f"\nTrue spectral gap: {gap:.6f}")
-    print(f"Fingerprint estimate: {est:.6f}")
+        if i == 0 or i == n - 1:
+            L[i][i] = 1
+        else:
+            L[i][i] = 2
+        if i > 0:
+            L[i][i-1] = -1
+        if i < n - 1:
+            L[i][i+1] = -1
+    return L
+
+
+def cycle_graph_laplacian(n: int) -> List[List[int]]:
+    """
+    Construct the Laplacian of the cycle graph C_n.
+
+    Time: O(n^2)
+    Space: O(n^2)
+
+    >>> cycle_graph_laplacian(4)
+    [[2, -1, 0, -1], [-1, 2, -1, 0], [0, -1, 2, -1], [-1, 0, -1, 2]]
+    """
+    L = [[0] * n for _ in range(n)]
+    for i in range(n):
+        L[i][i] = 2
+        L[i][(i+1) % n] = -1
+        L[(i+1) % n][i] = -1
+    return L
+
+
+def edge_boundary(L: List[List[int]], S: List[int]) -> int:
+    """
+    Compute the edge boundary of subset S in graph with Laplacian L.
+
+    The edge boundary is ∑_{i∈S, j∈Sᶜ} (-L_{ij}).
+
+    Time: O(|S| * n)
+    Space: O(n)
+
+    Args:
+        L: Laplacian matrix (symmetric, zero row sums, nonpos off-diagonal)
+        S: Subset of vertices
+
+    Returns:
+        Total weight of edges crossing from S to its complement (always >= 0)
+
+    >>> L = path_graph_laplacian(5)
+    >>> edge_boundary(L, [0, 1])
+    1
+    """
+    n = len(L)
+    S_set = set(S)
+    Sc = [j for j in range(n) if j not in S_set]
+    return sum(-L[i][j] for i in S for j in Sc)
+
+
+def expansion_ratio(L: List[List[int]], S: List[int]) -> float:
+    """
+    Compute the edge expansion ratio h(S) = |∂S| / |S|.
+
+    Args:
+        L: Laplacian matrix
+        S: Nonempty subset of vertices with |S| <= n/2
+
+    Returns:
+        Expansion ratio
+
+    >>> L = complete_graph_laplacian(4)
+    >>> expansion_ratio(L, [0])
+    3.0
+    """
+    if not S:
+        return 0.0
+    return edge_boundary(L, S) / len(S)
+
+
+def recover_det_magnitude_from_fingerprint(
+    fp: Dict[int, int], n: int, prime_bound: int
+) -> Tuple[List[int], int]:
+    """
+    Recover information about |det(M)| from the spectral fingerprint.
+
+    The bad primes (where rank drops) are exactly the prime divisors of det(M).
+    This gives partial information about the determinant.
+
+    Args:
+        fp: Spectral fingerprint (p -> rank)
+        n: Matrix dimension
+        prime_bound: Maximum prime checked
+
+    Returns:
+        Tuple of (bad_primes, lower_bound_on_det) where lower_bound is
+        the product of all detected bad primes
+
+    >>> M = [[6, 1], [0, 10]]  # det = 60 = 2^2 * 3 * 5
+    >>> fp = spectral_fingerprint(M, sieve_primes(20))
+    >>> bad, lb = recover_det_magnitude_from_fingerprint(fp, 2, 20)
+    >>> sorted(bad)
+    [2, 3, 5]
+    """
+    bad_primes = [p for p, r in fp.items() if r < n]
+    lower_bound = 1
+    for p in bad_primes:
+        lower_bound *= p
+    return bad_primes, lower_bound
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(verbose=True)
