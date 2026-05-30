@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Spectral Graph Theory / Information Theory / Tropical Geometry",
     "date": "2026-05-30T06:32:27Z",
     "exp_id": "435c4cf7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7448370923273853,
+    "quality": "substantial",
     "pkg_num": 387
   },
   {
@@ -11232,8 +11232,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-30T06:32:27Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7448370923273853,
+      "quality": "substantial"
     }
   ],
   "edges": [
