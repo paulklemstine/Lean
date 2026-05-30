@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Quantum Computing / Matroid Theory",
     "date": "2026-05-30T07:09:17Z",
     "exp_id": "f248b9c5",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7273735294117647,
+    "quality": "substantial",
     "pkg_num": 388
   },
   {
@@ -11261,8 +11261,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-30T07:09:17Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7273735294117647,
+      "quality": "substantial"
     }
   ],
   "edges": [

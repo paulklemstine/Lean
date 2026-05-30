@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2101 of the highest-quality
+A curated collection of 2103 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2101
+Total files: 2103
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1723,6 +1723,7 @@ import FINAL.Pythagorean.PartitionShadow
 import FINAL.Pythagorean.PersistenceZetaMultiplicativity
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
 import FINAL.Pythagorean.PolynomialWidth
+import FINAL.Pythagorean.PrimeBarcodeTheorems
 import FINAL.Pythagorean.PrimePowerHecke
 import FINAL.Pythagorean.PrimewiseBirthSpectra
 import FINAL.Pythagorean.PrimewiseBirthSpectraDistinguish
@@ -1734,6 +1735,7 @@ import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
 import FINAL.Pythagorean.QuantumChannelMixing
 import FINAL.Pythagorean.QuantumCircuitRewriting
+import FINAL.Pythagorean.QuantumCircuitSynthesis
 import FINAL.Pythagorean.QuantumRungeLenz
 import FINAL.Pythagorean.QuantumTensorRewriting
 import FINAL.Pythagorean.QuotientClosure
