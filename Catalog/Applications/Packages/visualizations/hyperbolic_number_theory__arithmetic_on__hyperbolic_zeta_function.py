@@ -1,119 +1,95 @@
 """
-Visualization 2: Hyperbolic Zeta Function and Euclidean Comparison
-===================================================================
-Plots the truncated hyperbolic zeta function ζ_H(s) = Σ d^{-2s}
-alongside the classical Riemann zeta for comparison, illustrating
-how curved-space number theory modifies the analytic structure.
+Visualization: Hyperbolic Zeta Function Behavior
+==================================================
+Plots the hyperbolic zeta summand ‖z‖^{-2s} as a function of s
+for various disk points, illustrating the divergence structure
+and the connection to the classical Riemann zeta function.
 """
+
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import deque
 
 
-def moebius_apply(a, b, c, d, z):
-    return (a * z + b) / (c * z + d)
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
+# Plot 1: Zeta summand for various ‖z‖
+ax = axes[0]
+s_vals = np.linspace(0.01, 3, 200)
+norms = [0.2, 0.4, 0.6, 0.8, 0.95]
+colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(norms)))
 
-def enumerate_orbit_distances(generators, basepoint=0, max_depth=6, tol=1e-6):
-    """Enumerate orbit and return hyperbolic distances."""
-    all_gens = []
-    for g in generators:
-        all_gens.append(g)
-        all_gens.append((g[3], -g[1], -g[2], g[0]))
+for r, c in zip(norms, colors):
+    zeta_vals = r ** (-2 * s_vals)
+    ax.plot(s_vals, zeta_vals, color=c, linewidth=2, label=f'‖z‖={r}')
 
-    distances = []
-    seen = {(round(basepoint.real/tol), round(basepoint.imag/tol))}
-    queue = deque([(basepoint, 0)])
-
-    while queue:
-        pt, depth = queue.popleft()
-        if depth >= max_depth:
-            continue
-        for g in all_gens:
-            new_pt = moebius_apply(*g, pt)
-            if abs(new_pt) >= 1 - 1e-10:
-                continue
-            key = (round(new_pt.real/tol), round(new_pt.imag/tol))
-            if key not in seen:
-                seen.add(key)
-                d = abs(new_pt - basepoint)**2 / ((1-abs(new_pt)**2)*(1-abs(basepoint)**2))
-                dist = 2 * np.arcsinh(np.sqrt(max(d, 0)))
-                if dist > 0.01:
-                    distances.append(dist)
-                queue.append((new_pt, depth + 1))
-    return sorted(distances)
-
-
-def trunc_hyp_zeta(distances, s):
-    return sum(d**(-2*s) for d in distances if d > 0)
-
-
-def gauss_circle_count(n):
-    count = 0
-    for a in range(-int(np.sqrt(n))-1, int(np.sqrt(n))+2):
-        if a*a > n:
-            continue
-        b_max = int(np.sqrt(n - a*a))
-        count += 2*b_max + 1
-    return count
-
-
-# Generate data
-g1 = (1, -0.3, -0.3, 1)
-g2 = (1, -0.3j, 0.3j, 1)
-distances = enumerate_orbit_distances([g1, g2], max_depth=7)
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Top-left: ζ_H(s) vs s
-ax = axes[0, 0]
-s_vals = np.linspace(0.6, 4.0, 100)
-zeta_vals = [trunc_hyp_zeta(distances, s) for s in s_vals]
-ax.plot(s_vals, zeta_vals, 'b-', linewidth=2, label='$\\zeta_H(s)$ (hyperbolic)')
-
-# Classical Riemann zeta (truncated)
-riemann_vals = [sum(n**(-2*s) for n in range(1, 200)) for s in s_vals]
-ax.plot(s_vals, riemann_vals, 'r--', linewidth=2, label='$\\zeta(2s)$ (Riemann, truncated)')
-
+ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='ζ = 1 (proved: ≥ 1)')
 ax.set_xlabel('s', fontsize=12)
-ax.set_ylabel('$\\zeta(s)$', fontsize=12)
-ax.set_title('Hyperbolic vs Classical Zeta Function', fontsize=13)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(0, max(max(zeta_vals), max(riemann_vals)) * 1.1)
-
-# Top-right: Distance distribution
-ax = axes[0, 1]
-ax.hist(distances, bins=30, color='steelblue', edgecolor='white', alpha=0.8)
-ax.set_xlabel('Hyperbolic distance', fontsize=12)
-ax.set_ylabel('Count', fontsize=12)
-ax.set_title(f'Distribution of {len(distances)} Orbit Distances', fontsize=13)
+ax.set_ylabel('‖z‖^{-2s}', fontsize=12)
+ax.set_title('Hyperbolic Zeta Summand\n(Proved: always ≥ 1 for disk points)', fontsize=11)
+ax.legend(fontsize=8, loc='upper left')
+ax.set_ylim(0, 30)
 ax.grid(True, alpha=0.3)
 
-# Bottom-left: Gauss circle count vs πn
-ax = axes[1, 0]
-ns = np.arange(1, 101)
-gc = [gauss_circle_count(int(n)) for n in ns]
-theory = [np.pi * n for n in ns]
-ax.plot(ns, gc, 'b-', linewidth=2, label='$G(n)$ (actual count)')
-ax.plot(ns, theory, 'r--', linewidth=2, label='$\\pi n$ (asymptotic)')
-ax.set_xlabel('n', fontsize=12)
-ax.set_ylabel('Count', fontsize=12)
-ax.set_title('Gauss Circle Problem: $G(n) \\sim \\pi n$', fontsize=13)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
+# Plot 2: Partial zeta sums (mock orbit)
+ax2 = axes[1]
+np.random.seed(42)
+# Generate mock orbit points with exponentially distributed norms
+n_points_list = [10, 50, 200, 1000]
+s_range = np.linspace(0.1, 4, 100)
 
-# Bottom-right: Error term in Gauss circle problem
-ax = axes[1, 1]
-errors = [(gc[i] - np.pi * (i+1)) / np.sqrt(i+1) for i in range(len(gc))]
-ax.plot(ns, errors, 'g-', linewidth=1.5, alpha=0.8)
-ax.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
-ax.set_xlabel('n', fontsize=12)
-ax.set_ylabel('$(G(n) - \\pi n) / \\sqrt{n}$', fontsize=12)
-ax.set_title('Gauss Circle Error (normalized)', fontsize=13)
-ax.grid(True, alpha=0.3)
+for n_pts in n_points_list:
+    # Orbit points: norms distributed like r ~ 1 - exp(-k) for the k-th point
+    orbit_norms = [1 - np.exp(-0.5 * k) for k in range(1, n_pts + 1)]
+    orbit_norms = [r for r in orbit_norms if 0 < r < 1]
+
+    zeta_partial = []
+    for s in s_range:
+        total = sum(r ** (-2 * s) for r in orbit_norms)
+        zeta_partial.append(total)
+
+    ax2.plot(s_range, zeta_partial, linewidth=1.5, label=f'N={n_pts}')
+
+ax2.set_xlabel('s', fontsize=12)
+ax2.set_ylabel('ζ_H(s) partial sum', fontsize=12)
+ax2.set_title('Hyperbolic Zeta Function\n(Partial Sums)', fontsize=11)
+ax2.set_yscale('log')
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
+
+# Plot 3: Generator density (PNT analog)
+ax3 = axes[2]
+n_gen = 2
+d = 2 * n_gen
+R_vals = np.arange(1, 15)
+
+# Generator density
+densities = []
+for R in R_vals:
+    total = sum(d**k for k in range(R + 1))
+    density = d / total  # generators / total words
+    densities.append(density)
+
+# Classical PNT analog: 1/R (like 1/log(N))
+pnt_analog = 1.0 / R_vals
+
+ax3.semilogy(R_vals, densities, 'bo-', linewidth=2, markersize=6,
+             label='Generator density (hyperbolic)')
+ax3.semilogy(R_vals, pnt_analog, 'r--', linewidth=2,
+             label='1/R (classical PNT analog)')
+
+ax3.set_xlabel('Radius R (word length)', fontsize=12)
+ax3.set_ylabel('Density of generators', fontsize=12)
+ax3.set_title('Hyperbolic Prime Number Theorem\n(Generator Sparsity)', fontsize=11)
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+
+# Add annotation
+ax3.annotate('Generators become\nexponentially rare',
+             xy=(8, densities[7]), xytext=(10, 0.01),
+             arrowprops=dict(arrowstyle='->', color='blue'),
+             fontsize=9, color='blue')
 
 plt.tight_layout()
-plt.savefig('zeta_function_comparison.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Saved: zeta_function_comparison.png")
+plt.savefig('hyperbolic_zeta_function.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: hyperbolic_zeta_function.png")
