@@ -1,356 +1,245 @@
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+# Hyperbolic Number Theory: Trace Arithmetic and Markov Geometry on the Poincaré Disk
 
 ## Abstract
 
-We develop a rigorous foundation for number theory on the hyperbolic plane, formalized in the Poincaré disk model. We define *hyperbolic integers* as orbit points of a discrete group (corresponding to vertices of a hyperbolic tessellation), *hyperbolic primes* as lattice points that are irreducible under Möbius composition, and establish fundamental properties of the resulting arithmetic. Our main results include: (1) a proof that Möbius automorphisms preserve the open unit disk, with an explicit algebraic identity relating |φ_a(z)|² to the "defect" (1-|a|²)(1-|z|²); (2) the involution property ψ_a(ψ_a(z)) = z for the standard Möbius involution; (3) non-negativity and symmetry of hyperbolic distance; (4) the Schläfli hyperbolicity criterion (p-2)(q-2) > 4 ↔ 1/p + 1/q < 1/2; (5) a finite analog of the Selberg trace formula connecting spectral and geometric data; (6) the Gauss-Bonnet area formula for hyperbolic polygons; and (7) divergence of the Poincaré conformal factor near the boundary. We conjecture a Hyperbolic Prime Number Theorem and propose computational tests. All theorems are formally verified in Lean 4 with Mathlib, using no axioms beyond the standard foundation.
-
-**Keywords**: Poincaré disk, hyperbolic geometry, Möbius transformations, hyperbolic lattice, number theory, Selberg trace formula, tessellations, formal verification
-
----
+We develop a formally verified theory of arithmetic on the Poincaré disk, connecting SL₂(ℤ) trace identities to Markov number theory and tropical geometry. Our main contributions are: (1) a machine-verified proof of the Fricke trace identity relating matrix traces to the Markov equation; (2) formal verification of the Vieta involution's preservation of the Markov equation and its involutive property; (3) a proof that traces of SL₂(ℤ) powers satisfy Chebyshev polynomial recurrences, establishing the trace-Chebyshev correspondence; (4) a cross-domain bridge connecting hyperbolic Gromov products to tropical ultrametric inequalities; and (5) explicit constructions showing every integer ≥ 2 arises as an SL₂(ℤ) trace. All results are fully verified with no remaining unproved statements, using only standard foundational axioms.
 
 ## 1. Introduction
 
-Number theory has traditionally studied the integers ℤ as a subset of the real line ℝ — a flat, one-dimensional space with Euclidean metric. The distribution of primes, unique factorization, and the Riemann zeta function are all deeply tied to this linear structure.
+### 1.1 Motivation
 
-This paper asks: what happens to arithmetic on a curved space?
+The integers ℤ, equipped with addition and multiplication, form the most fundamental algebraic structure in mathematics. Their arithmetic properties — primality, divisibility, distribution of primes — have driven number theory for millennia. But the integers live on a line, and this linearity constrains the structural possibilities.
 
-The Poincaré disk model of hyperbolic geometry provides a natural setting. The open unit disk 𝔻 = {z ∈ ℂ : |z| < 1}, equipped with the metric ds² = (2/(1-|z|²))²(dx² + dy²), has constant negative curvature -1. Its isometry group consists of Möbius transformations, which serve as the "translations" of hyperbolic space.
+Hyperbolic geometry offers a radically different setting. The Poincaré disk model D = {z ∈ ℂ : |z| < 1} carries a Riemannian metric ds² = (2/(1-|z|²))² |dz|² of constant negative curvature -1. The group of orientation-preserving isometries is PSL(2,ℝ), and its arithmetic subgroup PSL(2,ℤ) — the modular group — generates a tessellation of D into ideal triangles. The orbit of any point under this group forms a discrete set of "hyperbolic integers."
 
-A discrete subgroup Γ of the isometry group generates a tessellation of the disk. The orbit Γ·0 of the origin under Γ gives a discrete set of points — our *hyperbolic integers* ℤ_H. The arithmetic operations (addition, multiplication) are defined via the group action, and *hyperbolic primes* are generators that cannot be decomposed.
+### 1.2 Prior Work
 
-### 1.1 Relationship to Prior Work
+The connection between SL₂(ℤ) traces and Markov numbers was established by Fricke (1897) and substantially developed by Markov (1880), Frobenius (1913), and Cassels (1957). The Chebyshev polynomial connection to matrix traces is classical (see Katok [1992]). The Gromov product and δ-hyperbolicity were introduced by Gromov (1987). The tropical connection to boundaries of hyperbolic spaces was developed by Papadopoulos and others.
 
-The study of lattice points in hyperbolic space has a rich history:
-- **Huber (1959)**: Established the asymptotic counting formula N(R) ~ C·e^R/R for lattice points in a ball of radius R, the hyperbolic analog of the Gauss circle problem.
-- **Selberg (1956)**: The trace formula relating eigenvalues of the Laplacian to closed geodesic lengths.
-- **Patterson (1976)**: Spectral theory of Fuchsian groups and the critical exponent.
-- **Iwaniec (2002)**: Spectral methods in number theory, connecting automorphic forms to prime distribution.
+### 1.3 Contributions
 
-Our contribution is to formalize these connections in a proof-verified framework and to define hyperbolic primes as a new mathematical concept amenable to computational study.
+Our work provides the first formally verified treatment of these classical connections, organized in a modular framework. Specifically:
 
-### 1.2 Contributions
+1. **SL₂(ℤ) group theory**: Full verification of the group axioms (associativity, identity, inverse), generator properties (S⁴ = I), and trace identities.
 
-1. **Formal definitions** of PoincaréDisk, moebiusMap, hypDist, HyperbolicLattice, IsHyperbolicPrime, hypArea, and poincareConformalFactor in Lean 4.
-2. **15 formally verified theorems** with zero `sorry` statements.
-3. **Novel concept**: Hyperbolic primes defined via irreducibility under Möbius composition.
-4. **Cross-domain theorem**: Finite Selberg trace formula connecting spectral and geometric data.
-5. **Falsifiable conjecture**: Hyperbolic Prime Number Theorem with computational test.
-6. **Algorithms**: BFS-based lattice generation, O(N³) prime identification, counting functions.
+2. **Fricke-Markov identity**: Machine-verified proof that tr(g)² + tr(h)² + tr(gh)² − tr(g)·tr(h)·tr(gh) = tr(ghg⁻¹h⁻¹) + 2 for all g, h ∈ SL₂(ℤ).
 
----
+3. **Markov arithmetic**: Vieta involution preservation, Vieta bound z ≤ 3xy, and divisibility property x | (y² + z²).
+
+4. **Trace dynamics**: Power addition law, Chebyshev recurrence, and trace classification.
+
+5. **Cross-domain bridges**: Tropical distributivity, Gromov product inequality, and conformal factor monotonicity.
 
 ## 2. Definitions and Notation
 
-### 2.1 The Poincaré Disk
+### 2.1 SL₂(ℤ)
 
-**Definition 2.1** (PoincaréDisk). The Poincaré disk is the subtype
-```
-PoincareDisk := { z : ℂ // ‖z‖ < 1 }
-```
+An element g ∈ SL₂(ℤ) is a matrix g = [[a,b],[c,d]] with a,b,c,d ∈ ℤ and ad − bc = 1. The trace is tr(g) = a + d. The generators are:
 
-**Definition 2.2** (Möbius Map). For a ∈ 𝔻, the Möbius automorphism is
-```
-φ_a(z) = (z - a) / (1 - ā·z)
-```
+- S = [[0,-1],[1,0]] (trace 0, elliptic of order 4)
+- T = [[1,1],[0,1]] (trace 2, parabolic)
 
-**Definition 2.3** (Möbius Involution). The standard involution form is
-```
-ψ_a(z) = (a - z) / (1 - ā·z)
-```
+### 2.2 Markov Triples
 
-**Definition 2.4** (Hyperbolic Distance).
-```
-d_H(z, w) = log((1 + t)/(1 - t)),  where t = |z - w|/|1 - w̄·z|
-```
+A Markov triple (x, y, z) ∈ ℕ³ satisfies x² + y² + z² = 3xyz with x, y, z > 0.
 
-**Definition 2.5** (Conformal Factor).
-```
-λ(z) = 2/(1 - |z|²)
-```
+### 2.3 Chebyshev Polynomials (Trace Version)
 
-### 2.2 Hyperbolic Lattice
+The trace Chebyshev polynomial is defined by:
+- T₀(t) = 2
+- T₁(t) = t  
+- T_{n+2}(t) = t · T_{n+1}(t) − T_n(t)
 
-**Definition 2.6** (HyperbolicLattice). A structure consisting of:
-- `points : ℕ → ℂ` — lattice points indexed by natural numbers
-- `in_disk : ∀ n, ‖points n‖ < 1` — all points in the open disk
-- `monotone_dist : ∀ m n, m ≤ n → ‖points m‖ ≤ ‖points n‖` — ordered by distance
-- `origin_first : points 0 = 0` — origin is the first point
+Note this differs from the standard Chebyshev polynomial by a factor: our T_n(t) = 2·T_n^{std}(t/2).
 
-### 2.3 Hyperbolic Primes
+### 2.4 Conformal Factor
 
-**Definition 2.7** (IsHyperbolicPrime). A lattice index n is a *hyperbolic prime* if n > 0 and there do not exist indices 0 < i, j < n such that φ_{points(i)}(points(j)) = points(n).
-
-### 2.4 Hyperbolic Area
-
-**Definition 2.8** (hypArea). The hyperbolic area of a disk of radius R:
-```
-A(R) = 4π sinh²(R/2)
-```
-
----
+The conformal factor of the Poincaré metric at Euclidean distance r from the center is λ(r) = 2/(1 − r²), positive and monotonically increasing on [0, 1).
 
 ## 3. Main Results
 
-### 3.1 Möbius Disk Preservation
+### 3.1 The Fricke Trace Identity (Theorem 1)
 
-**Theorem 3.1** (moebius_disk_aut_preserves_disk). *If |a| < 1 and |z| < 1, then |φ_a(z)| < 1.*
+**Theorem** (fricke_trace_identity). *For all g, h ∈ SL₂(ℤ):*
+$$\text{tr}(g)^2 + \text{tr}(h)^2 + \text{tr}(gh)^2 - \text{tr}(g)\text{tr}(h)\text{tr}(gh) = \text{tr}(ghg^{-1}h^{-1}) + 2$$
 
-*Proof sketch.* The key algebraic identity is:
-```
-|1 - ā·z|² - |z - a|² = (1 - |a|²)(1 - |z|²)
-```
-Since both factors on the right are positive when |a|, |z| < 1, we get |z - a|² < |1 - ā·z|², hence |φ_a(z)| = |z-a|/|1-āz| < 1. The formal proof uses `norm_div`, `div_lt_one`, and `nlinarith` on the expanded normSq expressions. □
+**Proof sketch.** Direct algebraic computation using the determinant constraint ad − bc = 1 for both g and h. The proof expands all traces in terms of matrix entries and applies `nlinarith` with the determinant equations as auxiliary hypotheses.
 
-### 3.2 The Involution Property
+**Significance.** When the commutator [g,h] has trace -2 (i.e., is a parabolic element), setting x = tr(g)/3, y = tr(h)/3, z = tr(gh)/3 yields the Markov equation x² + y² + z² = 3xyz after rescaling. This is the bridge from hyperbolic geometry to Diophantine equations.
 
-**Theorem 3.2** (moebius_involution). *If |a|² ≠ 1 and the denominators are nonzero, then ψ_a(ψ_a(z)) = z.*
+### 3.2 Vieta Involution (Theorems 2-4)
 
-*Proof sketch.* Direct computation:
-- Numerator of ψ_a(ψ_a(z)): a - (a-z)/(1-āz) = z(1 - |a|²)/(1 - āz)
-- Denominator: 1 - ā·(a-z)/(1-āz) = (1 - |a|²)/(1 - āz)
-- Ratio: z(1-|a|²)/(1-|a|²) = z
+**Theorem** (vieta_preserves_markov_eq). *If x² + y² + z² = 3xyz over ℤ, then x² + y² + (3xy − z)² = 3xy(3xy − z).*
 
-The factor (1 - |a|²) cancels because |a|² ≠ 1. The Lean proof uses `grind` after unfolding. □
+**Theorem** (vieta_involution). *3xy − (3xy − z) = z.*
 
-### 3.3 Hyperbolic Distance Properties
+**Theorem** (markov_vieta_bound). *If x² + y² + z² = 3xyz with x, y, z > 0, then z ≤ 3xy.*
 
-**Theorem 3.3** (hypDist_self). *d_H(z, z) = 0 for all z.*
+**Proof sketch.** The preservation follows from expanding (3xy − z)² and using the original equation. The involutive property is immediate. The bound follows from nlinarith with the auxiliary fact (z − 3xy)² ≥ 0.
 
-**Theorem 3.4** (hypDist_nonneg). *d_H(z, w) ≥ 0 for z, w ∈ 𝔻.*
+**Significance.** The Vieta involution generates the Markov tree: starting from (1,1,1), repeated application produces all Markov triples. This gives an efficient algorithm for enumerating Markov numbers.
 
-*Proof sketch.* The parameter t = |z-w|/|1-w̄z| satisfies 0 ≤ t < 1 (by the same algebraic identity used in Theorem 3.1). Hence (1+t)/(1-t) ≥ 1, and log is non-negative on [1, ∞). □
+### 3.3 Markov Divisibility (Theorem 5)
 
-**Theorem 3.5** (hypDist_comm). *d_H(z, w) = d_H(w, z).*
+**Theorem** (markov_divisibility). *In any Markov triple, x | (y² + z²).*
 
-**Theorem 3.6** (hypDist_origin). *d_H(0, z) = log((1+|z|)/(1-|z|)).*
+**Proof.** From x² + y² + z² = 3xyz, we get y² + z² = x(3yz − x), so x divides y² + z².
 
-### 3.4 Counting Function Properties
+### 3.4 Trace Power Recurrence (Theorem 6)
 
-**Theorem 3.7** (normCountingFn_mono). *N(L, N, r₁) ≤ N(L, N, r₂) for r₁ ≤ r₂.*
+**Theorem** (trace_power_recurrence). *For all g ∈ SL₂(ℤ) and n ∈ ℕ:*
+$$\text{tr}(g^{n+2}) = \text{tr}(g) \cdot \text{tr}(g^{n+1}) - \text{tr}(g^n)$$
 
-**Theorem 3.8** (normCountingFn_mono_N). *N(L, N₁, r) ≤ N(L, N₂, r) for N₁ ≤ N₂.*
+**Proof sketch.** The proof uses the Cayley-Hamilton theorem for SL₂: g² − tr(g)·g + I = 0 (where I is the identity). Multiplying by g^n and taking traces yields the recurrence.
 
-**Theorem 3.9** (normCountingFn_zero_radius). *N(L, N, 0) ≥ 1 for N > 0* (the origin is always counted).
+### 3.5 Trace-Chebyshev Correspondence (Theorem 7)
 
-### 3.5 Hyperbolic Primes
+**Theorem** (trace_eq_chebyshev). *For all g ∈ SL₂(ℤ) and n ∈ ℕ: tr(g^n) = T_n(tr(g)).*
 
-**Theorem 3.10** (first_point_is_hyp_prime). *The first non-origin lattice point (index 1) is always a hyperbolic prime.*
+**Proof.** By strong induction on n. The base cases n = 0, 1 are immediate from the definitions. The inductive step uses the trace recurrence (Theorem 6) and the Chebyshev recurrence.
 
-*Proof.* Vacuously true: there are no valid decomposition indices i, j with 0 < i, j < 1. □
+**Significance.** This identifies the traces of matrix powers with Chebyshev polynomials, connecting hyperbolic dynamics to classical approximation theory. For hyperbolic elements (|tr(g)| > 2), this implies exponential growth of traces: tr(g^n) ~ λ^n where λ = (tr(g) + √(tr(g)² − 4))/2.
 
-### 3.6 Cross-Domain: Spectral-Geometric Duality
+### 3.6 Gromov Product and Tropical Geometry (Theorem 8)
 
-**Theorem 3.11** (spectral_geometric_duality). *For any n×n matrix M with trace equal to Σᵢ λᵢ, we have Σᵢ Mᵢᵢ = Σᵢ λᵢ.*
+**Theorem** (gromov_product_tree_ineq). *In a 0-hyperbolic space satisfying the four-point condition d(x,y) + d(o,z) ≤ max(d(x,z) + d(o,y), d(y,z) + d(o,x)):*
+$$(x|y)_o \geq \min\{(x|z)_o, (y|z)_o\}$$
+*where (x|y)_o = (d(o,x) + d(o,y) − d(x,y))/2 is the Gromov product.*
 
-This is the finite analog of the Selberg trace formula. In the continuous case, the left side corresponds to the "geometric side" (sums over conjugacy classes / closed geodesics) and the right side to the "spectral side" (sums over eigenvalues / Laplacian spectrum).
+**Significance.** The Gromov product inequality is the ultrametric inequality, which is the defining axiom of tropical geometry. This establishes that the boundary at infinity of hyperbolic space carries a natural tropical structure.
 
-**Theorem 3.12** (weyl_law_finite_analog). *The average diagonal entry equals the average eigenvalue.*
+### 3.7 Trace Surjectivity (Theorem 9)
 
-### 3.7 Hyperbolic Area
+**Theorem** (every_large_int_is_trace). *For every n ∈ ℤ with n ≥ 2, there exists g ∈ SL₂(ℤ) with tr(g) = n.*
 
-**Theorem 3.13** (hypArea_nonneg). *A(R) ≥ 0 for all R.*
+**Proof.** The matrix [[n−1, 1], [n−2, 1]] has determinant (n−1)·1 − 1·(n−2) = 1 and trace (n−1) + 1 = n.
 
-**Theorem 3.14** (hypArea_zero). *A(0) = 0.*
+### 3.8 Additional Results
 
-### 3.8 Conformal Factor
-
-**Theorem 3.15** (poincareConformalFactor_pos). *λ(z) > 0 for |z| < 1.*
-
-**Theorem 3.16** (poincareConformalFactor_origin). *λ(0) = 2.*
-
-**Theorem 3.17** (poincareConformalFactor_large). *λ(z) ≥ 1/ε when |z| ≥ 1 - ε.*
-
-### 3.9 Gauss-Bonnet
-
-**Theorem 3.18** (gauss_bonnet_polygon). *For a hyperbolic n-gon with angles αᵢ satisfying Σαᵢ < (n-2)π, the area (n-2)π - Σαᵢ is positive.*
-
-### 3.10 Schläfli Condition
-
-**Theorem 3.19** (schlafli_hyperbolic_condition). *For p, q ≥ 3:*
-```
-(p-2)(q-2) > 4 ↔ 1/p + 1/q < 1/2
-```
-
-*Proof sketch.* Both sides reduce to pq > 2p + 2q via algebraic manipulation. The forward direction: (p-2)(q-2) = pq - 2p - 2q + 4 > 4 ⟹ pq > 2p + 2q ⟹ 1 > 2/q + 2/p ⟹ 1/p + 1/q < 1/2. The Lean proof uses `rcases` on p, q to handle the natural number subtraction, then `nlinarith`. □
-
-### 3.11 Euler Product Bound
-
-**Theorem 3.20** (finite_euler_product_bound). *For a non-negative function f with f(1) = 1 and any finite set P: f(1) ≤ Πₚ∈P (1 + f(p)).*
-
-*Proof.* Each factor 1 + f(p) ≥ 1 since f ≥ 0. The product of values ≥ 1 is ≥ 1 = f(1). □
-
----
+- **S⁴ = I** (S_order_four): The generator S has order 4 in SL₂(ℤ).
+- **tr(T^n) = 2** (tr_T_pow): The parabolic generator T has constant trace under powers.
+- **Farey count** (farey_count_ge): The Farey sequence F_n has at least n+1 terms.
+- **Conformal monotonicity** (conformalFactor_mono): λ(r₁) ≤ λ(r₂) for r₁ ≤ r₂.
+- **Congruence subgroup index** (congruence_subgroup_index_div6): 6 | p(p²−1) for p ≥ 2.
 
 ## 4. Algorithms
 
-### 4.1 Lattice Generation (BFS)
+### 4.1 Markov Tree Generation
+
+**Input:** Maximum value M  
+**Output:** All Markov triples (x,y,z) with max(x,y,z) ≤ M
 
 ```
-Algorithm: HyperbolicLatticeGenerate(p, q, depth)
-Input: Schläfli symbol {p,q}, BFS depth
-Output: List of lattice points in 𝔻
-
-1. Compute edge length d = arccosh(cos(π/q)/sin(π/p))
-2. r ← tanh(d/2)    // Euclidean radius
-3. generators ← {r·exp(2πik/p) : k = 0,...,p-1}
-4. points ← {0}
-5. queue ← {0}
-6. for gen = 1 to depth:
-7.   new_queue ← ∅
-8.   for center in queue:
-9.     for g in generators:
-10.      w ← φ_{-center}(g)
-11.      if w ∉ points and |w| < 1-ε:
-12.        points ← points ∪ {w}
-13.        new_queue ← new_queue ∪ {w}
-14.  queue ← new_queue
-15. return sort(points, key=|·|)
+Queue ← {(1,1,1)}
+Visited ← ∅
+while Queue ≠ ∅:
+    (x,y,z) ← dequeue
+    triple ← sort(x,y,z)
+    if triple ∈ Visited or max(triple) > M: continue
+    add triple to Visited
+    for (a,b,c) in cyclic_perms(x,y,z):
+        if 3ab − c > 0: enqueue (a, b, 3ab − c)
+return Visited
 ```
 
-**Complexity**: Time O(p^depth · N) for deduplication, Space O(p^depth). The exponential growth is inherent to hyperbolic geometry.
+**Complexity:** O(N log N) where N = |{Markov triples with max ≤ M}|. Since N = O(log² M), this is extremely efficient.
 
-### 4.2 Prime Identification
+### 4.2 SL₂(ℤ) Orbit Computation
 
-```
-Algorithm: IdentifyPrimes(points)
-Input: Sorted list of lattice points
-Output: Subset marked as hyperbolic primes
+**Input:** Base point z₀ ∈ ℍ, maximum word length L  
+**Output:** Orbit points in the Poincaré disk
 
-1. for each point n > 0:
-2.   prime[n] ← true
-3.   for i = 1 to n-1:
-4.     for j = 1 to n-1:
-5.       if |φ_{points[i]}(points[j]) - points[n]| < ε:
-6.         prime[n] ← false; break
-7. return {n : prime[n] = true}
-```
+Uses BFS over words in generators S, T, T⁻¹ with deduplication via rounding. Cayley transform maps upper half-plane to disk.
 
-**Complexity**: O(N³) where N = number of points.
+**Complexity:** O(3^L) time and space.
 
-### 4.3 Counting Function
+### 4.3 Chebyshev Trace Evaluation
 
-```
-Algorithm: Count(L, R)
-Input: Lattice L, radius R
-Output: |{n : d_H(0, points[n]) ≤ R}|
+**Input:** n ∈ ℕ, t ∈ ℤ  
+**Output:** T_n(t) = tr(g^n) where tr(g) = t
 
-1. return |{n ∈ L : |points[n]| ≤ tanh(R/2)}|
-```
+Uses the recurrence T₀ = 2, T₁ = t, T_{k+2} = t·T_{k+1} − T_k.
 
-**Complexity**: O(N) per query, O(1) with binary search on sorted points.
-
----
+**Complexity:** O(n) time, O(1) space.
 
 ## 5. Computational Experiments
 
-### 5.1 {7,3} Tessellation
+### 5.1 Markov Numbers
 
-We generated the lattice for the {7,3} tessellation (the dual of the {3,7} triangulation, one of the simplest hyperbolic tessellations) to depth 5:
+We enumerate all Markov triples with max ≤ 1000, finding 13 triples. The first 10 are:
 
-| Depth | Points | Primes | Prime ratio |
-|-------|--------|--------|-------------|
-| 1     | 8      | 7      | 0.875       |
-| 2     | 50     | 7      | 0.140       |
-| 3     | 295    | 7      | 0.024       |
-| 4     | 1,750  | ~14    | ~0.008      |
-| 5     | 10,000+| ~28    | ~0.003      |
+| # | Triple | Max |
+|---|--------|-----|
+| 1 | (1, 1, 1) | 1 |
+| 2 | (1, 1, 2) | 2 |
+| 3 | (1, 2, 5) | 5 |
+| 4 | (1, 5, 13) | 13 |
+| 5 | (2, 5, 29) | 29 |
+| 6 | (1, 13, 34) | 34 |
+| 7 | (1, 34, 89) | 89 |
+| 8 | (2, 29, 169) | 169 |
+| 9 | (5, 29, 433) | 433 |
+| 10 | (1, 89, 233) | 233 |
 
-The prime ratio decreases rapidly, consistent with the conjecture that primes thin out at rate e^R/R.
+### 5.2 Trace Growth
 
-### 5.2 Schläfli Classification
+For hyperbolic elements, trace growth is exponential:
 
-| {p,q} | (p-2)(q-2) | 1/p + 1/q | Type |
-|-------|-----------|-----------|------|
-| {3,3} | 1 | 0.667 | Spherical (tetrahedron) |
-| {4,3} | 2 | 0.583 | Spherical (cube) |
-| {3,6} | 4 | 0.833 | Euclidean (triangular) |
-| {4,4} | 4 | 0.500 | Euclidean (square) |
-| {6,3} | 4 | 0.500 | Euclidean (honeycomb) |
-| {7,3} | 5 | 0.476 | **Hyperbolic** |
-| {5,4} | 6 | 0.450 | **Hyperbolic** |
-| {4,5} | 6 | 0.450 | **Hyperbolic** |
+| n | tr=3 | tr=4 | tr=5 |
+|---|------|------|------|
+| 0 | 2 | 2 | 2 |
+| 1 | 3 | 4 | 5 |
+| 2 | 7 | 14 | 23 |
+| 3 | 18 | 52 | 110 |
+| 4 | 47 | 194 | 527 |
+| 5 | 123 | 724 | 2525 |
 
-### 5.3 Conformal Factor Divergence
+Growth rates: λ₃ ≈ 2.618, λ₄ ≈ 3.732, λ₅ ≈ 4.791.
 
-| |z| | 1 - |z| (= ε) | λ(z) = 2/(1-|z|²) | 1/ε | Ratio λ·ε |
-|-----|--------|-----------|-----|---------|
-| 0.0 | 1.0 | 2.0 | 1.0 | 2.0 |
-| 0.5 | 0.5 | 2.67 | 2.0 | 1.33 |
-| 0.9 | 0.1 | 10.53 | 10.0 | 1.05 |
-| 0.99 | 0.01 | 100.5 | 100.0 | 1.005 |
-| 0.999 | 0.001 | 1000.5 | 1000.0 | 1.0005 |
+### 5.3 Lagrange Spectrum
 
-The ratio λ·ε → 1, confirming that λ(z) ~ 1/ε near the boundary.
+The Markov spectrum (√(9 − 4/m²) for Markov numbers m) gives the Lagrange constants for Diophantine approximation:
 
----
+| Markov m | √(9−4/m²) | Approximation quality |
+|----------|-----------|----------------------|
+| 1 | √5 ≈ 2.236 | Golden ratio (worst) |
+| 2 | √8 ≈ 2.828 | √2 |
+| 5 | ≈ 2.973 | (1+√5)/4 |
+| 13 | ≈ 2.996 | Converging to 3 |
 
 ## 6. Discussion
 
-### 6.1 Uniqueness of Factorization
+### 6.1 Implications
 
-Classical integers enjoy unique factorization. Whether hyperbolic integers share this property depends on the choice of group Γ. For the modular group PSL(2,ℤ), the free product structure ℤ/2 * ℤ/3 suggests that unique factorization holds with respect to generators, but the precise relationship between the algebraic free product structure and the geometric notion of "hyperbolic prime" requires further investigation.
+The formal verification of the Fricke-Markov connection establishes a rigorous bridge between:
+- **Hyperbolic geometry**: isometries of the Poincaré disk
+- **Algebra**: matrix group SL₂(ℤ) and its representation theory
+- **Number theory**: Markov numbers and Diophantine approximation
+- **Tropical geometry**: ultrametric structure on the ideal boundary
+- **Physics**: Einstein velocity addition as Möbius addition
 
-### 6.2 The Selberg Connection
+### 6.2 Limitations
 
-Our finite trace formula (Theorem 3.11) is a shadow of the deep Selberg trace formula. The full Selberg formula reads:
-```
-Σ_n h(r_n) = (Area/4π) ∫ h(r) r·tanh(πr) dr + Σ_{γ} (ℓ(γ₀)/2sinh(ℓ(γ)/2)) ĥ(ℓ(γ))
-```
-where the left side sums over eigenvalues and the right side involves an integral over the spectrum plus a sum over closed geodesics. Building a formal bridge from our finite analog to the full formula is a major open problem.
+Our formalization works with concrete matrix entries rather than abstract group theory. The Markov uniqueness conjecture remains unproved. The asymptotic lattice point counting (Huber's theorem) is stated as a conjecture rather than proved, as it requires analytic methods beyond current Mathlib coverage.
 
-### 6.3 Limitations
+### 6.3 Open Questions
 
-1. **Decidability**: IsHyperbolicPrime is not decidable in general (it quantifies over all pairs i, j < n). Our computational algorithm uses a tolerance threshold.
-2. **Counting function**: Our normCountingFn uses a finite truncation, not the full lattice.
-3. **Asymptotic analysis**: We do not formally prove asymptotic statements; the hyperbolic PNT is stated as a conjecture.
-
----
+1. Can the Markov uniqueness conjecture be resolved using the hyperbolic geometric interpretation?
+2. What is the precise density of primitive traces in the trace spectrum of SL₂(ℤ)?
+3. Does the hyperbolic zeta function ζ_H(s) have a functional equation?
 
 ## 7. Future Work
 
-1. **Hyperbolic Selberg Zeta Function**: Define ζ_H(s) = Σ_{γ} (1 - e^{-sℓ(γ)})⁻¹ and prove its meromorphic continuation.
-2. **Unique Factorization**: Prove or disprove that hyperbolic integers in PSL(2,ℤ) orbits have unique factorization.
-3. **Hyperbolic PNT**: Establish the asymptotic N_prime(R) ~ Ce^R/R using spectral methods.
-4. **Cross-domain bridges**: Connect to tropical geometry (the "boundary at infinity" of the hyperbolic plane has tropical structure) and to quantum chaos (spectral statistics of hyperbolic Laplacians).
+- Extend to SL₂ over other rings (p-adic integers, function fields)
+- Formalize the Selberg trace formula connecting geometry to spectral theory
+- Develop hyperbolic lattice point counting with error terms
+- Connect to modular forms and automorphic representations
 
----
+## References
 
-## 8. References
-
-- Beardon, A. F. (1983). *The Geometry of Discrete Groups*. Springer.
-- Huber, H. (1959). Zur analytischen Theorie hyperbolischer Raumformen und Bewegungsgruppen. *Math. Ann.*, 138, 1-26.
-- Iwaniec, H. (2002). *Spectral Methods of Automorphic Forms*. AMS.
-- Patterson, S. J. (1976). The limit set of a Fuchsian group. *Acta Math.*, 136, 241-273.
-- Selberg, A. (1956). Harmonic analysis and discontinuous groups. *J. Indian Math. Soc.*, 20, 47-87.
-- Boguñá, M., Papadopoulos, F., & Krioukov, D. (2010). Sustaining the Internet with hyperbolic mapping. *Nature Communications*, 1, 62.
-
----
-
-## Appendix: Complete Theorem List
-
-All theorems formally verified in Lean 4 with Mathlib v4.28.0:
-
-| # | Name | Statement |
-|---|------|-----------|
-| 1 | moebius_disk_aut_preserves_disk | |a|,|z| < 1 ⟹ |φ_a(z)| < 1 |
-| 2 | moebius_at_origin | φ_a(0) = -a |
-| 3 | moebius_at_center | φ_a(a) = 0 |
-| 4 | moebius_involution | ψ_a(ψ_a(z)) = z |
-| 5 | hypDist_self | d(z,z) = 0 |
-| 6 | hypDist_nonneg | d(z,w) ≥ 0 |
-| 7 | hypDist_comm | d(z,w) = d(w,z) |
-| 8 | hypDist_origin | d(0,z) = log((1+|z|)/(1-|z|)) |
-| 9 | normCountingFn_mono | Counting is monotone in radius |
-| 10 | normCountingFn_mono_N | Counting is monotone in N |
-| 11 | normCountingFn_zero_radius | Origin always counted |
-| 12 | first_point_is_hyp_prime | Index 1 is always prime |
-| 13 | spectral_geometric_duality | Σ Mᵢᵢ = Σ λᵢ |
-| 14 | weyl_law_finite_analog | Average degree = average eigenvalue |
-| 15 | hypArea_nonneg | A(R) ≥ 0 |
-| 16 | hypArea_zero | A(0) = 0 |
-| 17 | poincareConformalFactor_pos | λ(z) > 0 for |z| < 1 |
-| 18 | poincareConformalFactor_origin | λ(0) = 2 |
-| 19 | poincareConformalFactor_large | λ(z) ≥ 1/ε near boundary |
-| 20 | gauss_bonnet_polygon | Hyperbolic polygon area > 0 |
-| 21 | schlafli_hyperbolic_condition | (p-2)(q-2) > 4 ↔ 1/p+1/q < 1/2 |
-| 22 | finite_euler_product_bound | f(1) ≤ Π(1+f(p)) |
+1. Aigner, M. "Markov's Theorem and 100 Years of the Uniqueness Conjecture." Springer, 2013.
+2. Cassels, J.W.S. "An Introduction to Diophantine Approximation." Cambridge, 1957.
+3. Gromov, M. "Hyperbolic Groups." Essays in Group Theory, MSRI Publications 8, 1987.
+4. Katok, S. "Fuchsian Groups." University of Chicago Press, 1992.
+5. Iwaniec, H. "Spectral Methods of Automorphic Forms." AMS, 2002.
+6. Markov, A.A. "Sur les formes quadratiques binaires indéfinies." Math. Ann. 15, 1880.
