@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Algebraic Number Theory",
     "date": "2026-05-30T03:09:54Z",
     "exp_id": "620e5ace",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7181579726027398,
+    "quality": "substantial",
     "pkg_num": 375
   },
   {
@@ -10884,8 +10884,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-30T03:09:54Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7181579726027398,
+      "quality": "substantial"
     }
   ],
   "edges": [
