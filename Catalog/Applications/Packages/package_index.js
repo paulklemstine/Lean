@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Topology / Number Theory",
     "date": "2026-05-30T05:25:35Z",
     "exp_id": "6c0996af",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7081033898305085,
+    "quality": "substantial",
     "pkg_num": 384
   },
   {
@@ -11145,8 +11145,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-30T05:25:35Z",
       "hue": 292,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7081033898305085,
+      "quality": "substantial"
     }
   ],
   "edges": [

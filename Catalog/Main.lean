@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2097 of the highest-quality
+A curated collection of 2099 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2097
+Total files: 2099
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -597,6 +597,7 @@ import FINAL.Bridges.PrimeSpectralRateDistortion
 import FINAL.Bridges.PrimeSpectralSchrodingerBridge
 import FINAL.Bridges.PrimeSpectrum
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
+import FINAL.Bridges.PrimewisePersistentHomology
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
 import FINAL.Bridges.ProofCongruenceAutomata
@@ -803,6 +804,7 @@ import FINAL.Bridges.TropicalSeparationClassifier
 import FINAL.Bridges.TropicalShadowEntropy
 import FINAL.Bridges.TropicalShannonCode
 import FINAL.Bridges.TropicalSpectralCertificates
+import FINAL.Bridges.TropicalSpectralConcentration
 import FINAL.Bridges.TropicalSpectralDuality
 import FINAL.Bridges.TropicalSpectralHardness
 import FINAL.Bridges.TropicalSpectrumDuality
