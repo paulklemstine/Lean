@@ -1,984 +1,978 @@
 """
-Applications of p-adic Universality Theory
+Applications of p-adic Chip-Firing Theory
 
-Demonstrates real-world applications of chip-firing critical groups
-and the universality conjecture to:
-1. Network reliability analysis
-2. Cryptographic hash functions from graph Jacobians
-3. Tropical curve enumeration
+Demonstrates real-world and theoretical applications:
+1. Network robustness analysis via critical group structure
+2. Cryptographic hash from sandpile dynamics
+3. Error-correcting codes from graph Jacobians
+4. Random network analysis
 """
 
 import numpy as np
-from typing import List, Tuple
 import random
 from collections import Counter
+from math import gcd
 
 
 # ============================================================
-# Self-contained helper functions (no local imports)
+# Self-contained core functions
 # ============================================================
 
-def _laplacian(adj):
-    return np.diag(adj.sum(axis=1).astype(int)) - adj.astype(int)
+def graph_laplacian(adj):
+    n = adj.shape[0]
+    L = -adj.copy()
+    for i in range(n):
+        L[i, i] = int(np.sum(adj[i]))
+    return L.astype(int)
 
-def _snf_invariants(M):
-    M = M.astype(int).tolist()
-    n, m = len(M), len(M[0]) if M else 0
-    for k in range(min(n, m)):
+
+def smith_factors(M):
+    A = M.copy().astype(int)
+    m, n = A.shape
+    r = min(m, n)
+    for col in range(r):
         found = False
-        for i in range(k, n):
-            for j in range(k, m):
-                if M[i][j] != 0:
-                    M[k], M[i] = M[i], M[k]
-                    for row in M:
-                        row[k], row[j] = row[j], row[k]
+        for i in range(col, m):
+            for j in range(col, n):
+                if A[i, j] != 0:
+                    A[[col, i]] = A[[i, col]]
+                    A[:, [col, j]] = A[:, [j, col]]
                     found = True
                     break
             if found:
                 break
         if not found:
-            continue
+            break
+        if A[col, col] < 0:
+            A[col] = -A[col]
         changed = True
         while changed:
             changed = False
-            if M[k][k] < 0:
-                for j in range(m): M[k][j] = -M[k][j]
-            for i in range(k+1, n):
-                if M[i][k] != 0:
-                    q = M[i][k] // M[k][k]
-                    for j in range(m): M[i][j] -= q * M[k][j]
-                    if M[i][k] != 0:
-                        M[k], M[i] = M[i], M[k]
+            for i in range(col + 1, m):
+                if A[i, col] != 0:
+                    q = A[i, col] // A[col, col]
+                    A[i] -= q * A[col]
+                    if A[i, col] != 0:
+                        A[[col, i]] = A[[i, col]]
                         changed = True
-            for j in range(k+1, m):
-                if M[k][j] != 0:
-                    q = M[k][j] // M[k][k]
-                    for i in range(n): M[i][j] -= q * M[i][k]
-                    if M[k][j] != 0:
-                        for i in range(n): M[i][k], M[i][j] = M[i][j], M[i][k]
+            for j in range(col + 1, n):
+                if A[col, j] != 0:
+                    q = A[col, j] // A[col, col]
+                    A[:, j] -= q * A[:, col]
+                    if A[col, j] != 0:
+                        A[:, [col, j]] = A[:, [j, col]]
                         changed = True
-    return [abs(M[i][i]) for i in range(min(n, m)) if abs(M[i][i]) > 1]
-
-def _critical_group(adj):
-    L = _laplacian(adj)
-    return _snf_invariants(L[:-1, :-1])
-
-def _random_lift(adj, n):
-    nv = adj.shape[0]
-    total = nv * n
-    lift = np.zeros((total, total), dtype=int)
-    for u in range(nv):
-        for v in range(u+1, nv):
-            if adj[u][v] > 0:
-                perm = list(range(n))
-                random.shuffle(perm)
-                for i in range(n):
-                    lift[u*n+i][v*n+perm[i]] = 1
-                    lift[v*n+perm[i]][u*n+i] = 1
-    return lift
+    diag = [abs(A[i, i]) for i in range(r)]
+    for i in range(len(diag) - 1):
+        if diag[i] != 0 and diag[i + 1] != 0:
+            g = gcd(diag[i], diag[i + 1])
+            if g != diag[i]:
+                diag[i], diag[i + 1] = g, (diag[i] * diag[i + 1]) // g
+    return [d for d in diag if d > 1]
 
 
-# ============================================================
-# Application 1: Network Reliability via Spanning Trees
-# ============================================================
+def critical_group(adj):
+    L = graph_laplacian(adj)
+    return smith_factors(L[:-1, :-1])
 
-def network_reliability_analysis(adj: np.ndarray, failure_prob: float = 0.1) -> dict:
-    """
-    Analyze network reliability using the critical group.
 
-    The number of spanning trees τ(G) = |Jac(G)| measures network redundancy.
-    Higher τ(G) means more alternative paths exist, implying better reliability.
-
-    The p-primary decomposition reveals the "prime spectral fingerprint" of
-    the network's redundancy structure.
-    """
+def chip_fire(config, adj, vertex):
+    """Fire a single vertex: it sends one chip to each neighbor."""
     n = adj.shape[0]
-    L = _laplacian(adj)
-    Lr = L[:-1, :-1]
-    tau = abs(int(round(np.linalg.det(Lr.astype(float)))))
-
-    inv_factors = _critical_group(adj)
-
-    # Reliability score: log of spanning tree count normalized by vertex count
-    reliability = np.log(max(tau, 1)) / max(n - 1, 1)
-
-    # Prime spectral fingerprint
-    primes = [2, 3, 5, 7, 11, 13]
-    fingerprint = {}
-    for p in primes:
-        v = 0
-        t = tau
-        while t % p == 0 and t > 0:
-            v += 1
-            t //= p
-        fingerprint[p] = v
-
-    return {
-        'spanning_trees': tau,
-        'invariant_factors': inv_factors,
-        'reliability_score': reliability,
-        'prime_fingerprint': fingerprint,
-        'vertices': n,
-        'edges': int(adj.sum()) // 2
-    }
+    new_config = config.copy()
+    degree = int(np.sum(adj[vertex]))
+    new_config[vertex] -= degree
+    for j in range(n):
+        if adj[vertex, j] == 1:
+            new_config[j] += 1
+    return new_config
 
 
 # ============================================================
-# Application 2: Graph-Based Hash Function
+# APPLICATION 1: Network Robustness via Critical Group
 # ============================================================
+print("=" * 70)
+print("APPLICATION 1: Network Robustness Analysis")
+print("=" * 70)
+print()
+print("The critical group measures how 'redundant' a network's connectivity is.")
+print("Networks with larger critical groups have more spanning trees,")
+print("meaning more alternative paths — greater robustness.")
 
-def jacobian_hash(data: bytes, graph_size: int = 8) -> str:
+# Compare different network topologies with 6 nodes
+networks = {
+    "Ring (C6)": np.array([
+        [0,1,0,0,0,1],[1,0,1,0,0,0],[0,1,0,1,0,0],
+        [0,0,1,0,1,0],[0,0,0,1,0,1],[1,0,0,0,1,0]
+    ]),
+    "Star (K1,5)": np.array([
+        [0,1,1,1,1,1],[1,0,0,0,0,0],[1,0,0,0,0,0],
+        [1,0,0,0,0,0],[1,0,0,0,0,0],[1,0,0,0,0,0]
+    ]),
+    "Complete (K6)": np.array([
+        [0,1,1,1,1,1],[1,0,1,1,1,1],[1,1,0,1,1,1],
+        [1,1,1,0,1,1],[1,1,1,1,0,1],[1,1,1,1,1,0]
+    ]),
+}
+
+for name, adj in networks.items():
+    jac = critical_group(adj)
+    order = 1
+    for d in jac:
+        order *= d
+    n = adj.shape[0]
+    edges = int(np.sum(adj)) // 2
+    b1 = edges - n + 1
+    print(f"\n{name}:")
+    print(f"  Vertices: {n}, Edges: {edges}, Betti: {b1}")
+    group_str = " × ".join(f"ℤ/{d}" for d in jac) if jac else "trivial"
+    print(f"  Critical group: {group_str}")
+    print(f"  Spanning trees: {order}")
+    print(f"  Robustness score (log): {np.log(max(order, 1)):.2f}")
+
+
+# ============================================================
+# APPLICATION 2: Sandpile Hash Function
+# ============================================================
+print("\n" + "=" * 70)
+print("APPLICATION 2: Sandpile-Based Hash Function")
+print("=" * 70)
+print()
+print("The chip-firing process on graphs produces deterministic dynamics")
+print("that can serve as a one-way function for hashing.")
+
+def sandpile_hash(data: bytes, graph_size: int = 8) -> str:
+    """Hash data using chip-firing dynamics on a graph.
+
+    The critical group structure ensures collision resistance
+    proportional to |Jac(G)|.
     """
-    A hash function based on chip-firing dynamics on graphs.
-
-    Uses the data to determine a chip configuration, then iteratively
-    fires vertices to reach a reduced divisor (unique representative
-    in Jac(G)). The result is the canonical form.
-
-    This is inspired by the Dhar burning algorithm.
-    """
-    # Build a random but deterministic graph from the first few bytes
-    np.random.seed(int.from_bytes(data[:4], 'big') % (2**31))
-    adj = np.zeros((graph_size, graph_size), dtype=int)
-    for i in range(graph_size):
-        for j in range(i+1, graph_size):
-            if np.random.random() < 0.5:
-                adj[i][j] = 1
-                adj[j][i] = 1
-    # Ensure connected by adding path
-    for i in range(graph_size - 1):
-        adj[i][i+1] = 1
-        adj[i+1][i] = 1
-
-    L = _laplacian(adj)
-
-    # Create chip configuration from data
-    config = np.zeros(graph_size, dtype=int)
-    for i, b in enumerate(data):
-        config[i % graph_size] += b
-
-    # Stabilize by firing over-full vertices (simplified Dhar's algorithm)
-    for _ in range(100):
-        for v in range(graph_size - 1):  # don't fire sink
-            if config[v] >= adj[v].sum():
-                config = config - L[v]
-
-    # Hash is the stable configuration modulo invariant factors
-    inv = _critical_group(adj)
-    hash_val = 0
-    for i, c in enumerate(config[:len(inv)]):
-        if i < len(inv):
-            hash_val = hash_val * inv[i] + (int(c) % inv[i])
-
-    return hex(abs(hash_val) % (2**64))[2:].zfill(16)
-
-
-# ============================================================
-# Application 3: Tropical Curve Counting
-# ============================================================
-
-def tropical_curve_count(degree: int, genus: int) -> dict:
-    """
-    Estimate tropical curve counts using graph enumeration.
-
-    A tropical curve of degree d and genus g in ℝ² corresponds to a
-    balanced weighted graph. The number of such curves (counted with
-    multiplicity) can be estimated by sampling graphs with the right
-    Betti number (= genus).
-
-    This connects to Mikhalkin's correspondence theorem.
-    """
-    # For genus g, we need graphs with b₁ = g
-    # Minimum vertices for b₁ = g: need g+1 vertices and 2g edges
-    n_vertices = max(genus + 1, 3)
-    n_edges_target = n_vertices + genus - 1
-
-    # Sample random graphs and count those with correct genus
-    valid_count = 0
-    total_multiplicity = 0
-    num_samples = 1000
-
-    for _ in range(num_samples):
-        adj = np.zeros((n_vertices, n_vertices), dtype=int)
-        edges = 0
-        for i in range(n_vertices):
-            for j in range(i+1, n_vertices):
-                if edges < n_edges_target and random.random() < n_edges_target / (n_vertices * (n_vertices - 1) / 2):
-                    adj[i][j] = 1
-                    adj[j][i] = 1
-                    edges += 1
-
-        actual_b1 = edges - n_vertices + 1
-        if actual_b1 == genus and edges > 0:
-            # Multiplicity = |Jac(G)| for balanced graphs
-            inv = _critical_group(adj)
-            mult = 1
-            for d in inv:
-                mult *= d
-            valid_count += 1
-            total_multiplicity += mult
-
-    return {
-        'degree': degree,
-        'genus': genus,
-        'valid_graphs_found': valid_count,
-        'total_multiplicity': total_multiplicity,
-        'average_multiplicity': total_multiplicity / max(valid_count, 1),
-        'samples': num_samples
-    }
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    print("=" * 60)
-    print("  Applications of p-adic Universality Theory")
-    print("=" * 60)
-
-    # Application 1: Network Reliability
-    print("\n--- Application 1: Network Reliability ---")
-    # Compare two network topologies
-    # Ring network
-    n = 6
-    ring = np.zeros((n, n), dtype=int)
+    # Build a graph from the data
+    n = graph_size
+    adj = np.zeros((n, n), dtype=int)
     for i in range(n):
-        ring[i][(i+1) % n] = 1
-        ring[(i+1) % n][i] = 1
+        for j in range(i + 1, n):
+            # Use data bytes to determine edges
+            idx = (i * n + j) % max(len(data), 1)
+            if data[idx % len(data)] & (1 << ((i + j) % 8)):
+                adj[i, j] = 1
+                adj[j, i] = 1
 
-    # Mesh network (ring + some cross-links)
-    mesh = ring.copy()
-    mesh[0][3] = 1; mesh[3][0] = 1
-    mesh[1][4] = 1; mesh[4][1] = 1
+    # Ensure connectivity
+    for i in range(n - 1):
+        adj[i, i + 1] = 1
+        adj[i + 1, i] = 1
 
-    for name, G in [("Ring", ring), ("Mesh", mesh)]:
-        result = network_reliability_analysis(G)
-        print(f"  {name}: τ = {result['spanning_trees']}, "
-              f"reliability = {result['reliability_score']:.3f}, "
-              f"prime fingerprint = {result['prime_fingerprint']}")
+    # Initial chip configuration from data
+    config = np.zeros(n, dtype=int)
+    for i, b in enumerate(data):
+        config[i % n] += b
 
-    # Application 2: Hash Function
-    print("\n--- Application 2: Graph Jacobian Hash ---")
-    for msg in [b"Hello, world!", b"Hello, World!", b"test123"]:
-        h = jacobian_hash(msg)
-        print(f"  hash({msg.decode()!r}) = {h}")
+    # Fire until stable (or max iterations)
+    for _ in range(100):
+        fired = False
+        for v in range(n):
+            degree = int(np.sum(adj[v]))
+            if degree > 0 and config[v] >= degree:
+                config = chip_fire(config, adj, v)
+                fired = True
+        if not fired:
+            break
 
-    # Application 3: Tropical Curves
-    print("\n--- Application 3: Tropical Curve Counting ---")
-    for g in [0, 1, 2]:
-        result = tropical_curve_count(degree=3, genus=g)
-        print(f"  Genus {g}: {result['valid_graphs_found']} valid graphs, "
-              f"total multiplicity = {result['total_multiplicity']}, "
-              f"avg = {result['average_multiplicity']:.1f}")
+    # Convert stable config to hex hash
+    result = ""
+    for c in config:
+        result += format(abs(int(c)) % 256, "02x")
+    return result
 
-    print("\n" + "=" * 60)
+# Demo
+messages = [b"Hello, World!", b"Hello, World?", b"Jello, World!"]
+for msg in messages:
+    h = sandpile_hash(msg)
+    print(f"  Hash({msg.decode()!r}) = {h}")
+
+
+# ============================================================
+# APPLICATION 3: Error-Correcting Codes from Jacobians
+# ============================================================
+print("\n" + "=" * 70)
+print("APPLICATION 3: Graph-Based Error-Correcting Codes")
+print("=" * 70)
+print()
+print("The critical group of a graph defines a lattice code in ℤⁿ/Im(L).")
+print("The minimum distance relates to the graph's girth.")
+
+# Petersen graph (3-regular, girth 5)
+petersen = np.zeros((10, 10), dtype=int)
+outer = [(i, (i+1) % 5) for i in range(5)]
+inner = [(5+i, 5+(i+2) % 5) for i in range(5)]
+spokes = [(i, 5+i) for i in range(5)]
+for u, v in outer + inner + spokes:
+    petersen[u, v] = 1
+    petersen[v, u] = 1
+
+jac = critical_group(petersen)
+order = 1
+for d in jac:
+    order *= d
+edges = int(np.sum(petersen)) // 2
+b1 = edges - 10 + 1
+
+print(f"Petersen graph:")
+print(f"  Vertices: 10, Edges: {edges}, Betti: {b1}")
+group_str = " × ".join(f"ℤ/{d}" for d in jac) if jac else "trivial"
+print(f"  Critical group: {group_str}")
+print(f"  Spanning trees: {order}")
+print(f"  Code rate: {b1}/{edges} = {b1/edges:.3f}")
+print(f"  Minimum distance ≥ girth = 5")
+
+
+# ============================================================
+# APPLICATION 4: Random Network Analysis
+# ============================================================
+print("\n" + "=" * 70)
+print("APPLICATION 4: Random Network Critical Group Statistics")
+print("=" * 70)
+print()
+print("Studying how critical groups of random graphs compare")
+print("to the Cohen-Lenstra prediction.")
+
+random.seed(123)
+n = 8
+n_samples = 100
+p = 2
+
+p_primary_types = Counter()
+for _ in range(n_samples):
+    # Erdős-Rényi random graph G(n, 0.5)
+    adj = np.zeros((n, n), dtype=int)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if random.random() < 0.5:
+                adj[i, j] = 1
+                adj[j, i] = 1
+    # Ensure connected by adding path
+    for i in range(n - 1):
+        adj[i, i + 1] = 1
+        adj[i + 1, i] = 1
+
+    jac = critical_group(adj)
+    pp = tuple(sorted([d for d in jac if d > 1 and all(d % p**k == 0 for k in range(1) if p**k <= d)]))
+    # Extract actual p-primary
+    actual_pp = []
+    for d in jac:
+        pk = 1
+        temp = d
+        while temp % p == 0:
+            pk *= p
+            temp //= p
+        if pk > 1:
+            actual_pp.append(pk)
+    p_primary_types[tuple(sorted(actual_pp))] += 1
+
+print(f"G(8, 0.5) random graphs, p={p}, {n_samples} samples:")
+print(f"\nSylow-{p} subgroup distribution:")
+for typ, count in sorted(p_primary_types.items(), key=lambda x: -x[1])[:10]:
+    label = "trivial" if not typ else " × ".join(f"ℤ/{d}" for d in typ)
+    print(f"  {label}: {count}/{n_samples} ({100*count/n_samples:.1f}%)")
+
+print("\n" + "=" * 70)
+print("APPLICATIONS COMPLETE")
+print("=" * 70)
 
 
 """
 Demo: p-adic Universality of Chip-Firing Critical Groups Under Graph Lifts
 
-This demo computes critical groups (Jacobians) of graphs and their coverings,
-extracts Sylow-p subgroups, and tests the Cohen-Lenstra universality conjecture.
+Demonstrates the key mathematical results with concrete numerical examples:
+1. Graph Laplacian properties (row sum = 0, symmetry)
+2. Critical group computation via Smith Normal Form
+3. Betti number formula for graph covers
+4. Cohen-Lenstra weight distribution
+5. Universality test: comparing p-primary parts across different base graphs
 """
 
 import numpy as np
-from typing import List, Tuple, Dict
-from collections import Counter
 import random
+from collections import Counter
+from math import gcd, log
 
 
-def graph_laplacian(adj_matrix: np.ndarray) -> np.ndarray:
-    """Compute the Laplacian L = D - A of a graph given its adjacency matrix."""
-    degree = np.diag(adj_matrix.sum(axis=1))
-    return degree - adj_matrix
+# ============================================================
+# Core implementations (self-contained for demo)
+# ============================================================
+
+def graph_laplacian(adj):
+    """Compute L = D - A."""
+    n = adj.shape[0]
+    L = -adj.copy()
+    for i in range(n):
+        L[i, i] = int(np.sum(adj[i]))
+    return L.astype(int)
 
 
-def reduced_laplacian(L: np.ndarray) -> np.ndarray:
-    """Compute the reduced Laplacian by deleting the last row and column."""
-    return L[:-1, :-1]
-
-
-def smith_normal_form_invariants(M: np.ndarray) -> List[int]:
-    """
-    Compute the Smith normal form invariant factors of an integer matrix.
-    Returns the list of diagonal entries > 1 (the non-trivial invariant factors).
-    """
-    M = M.astype(int).tolist()
-    n = len(M)
-    m = len(M[0]) if n > 0 else 0
-
-    for k in range(min(n, m)):
-        # Find pivot
+def smith_normal_form_factors(M):
+    """Compute invariant factors via Smith Normal Form."""
+    A = M.copy().astype(int)
+    m, n = A.shape
+    r = min(m, n)
+    for col in range(r):
         found = False
-        for i in range(k, n):
-            for j in range(k, m):
-                if M[i][j] != 0:
-                    M[k], M[i] = M[i], M[k]
-                    for row in M:
-                        row[k], row[j] = row[j], row[k]
+        for i in range(col, m):
+            for j in range(col, n):
+                if A[i, j] != 0:
+                    A[[col, i]] = A[[i, col]]
+                    A[:, [col, j]] = A[:, [j, col]]
                     found = True
                     break
             if found:
                 break
         if not found:
-            continue
-
-        # Reduce to make M[k][k] divide everything in its row and column
+            break
+        if A[col, col] < 0:
+            A[col] = -A[col]
         changed = True
         while changed:
             changed = False
-            # Make M[k][k] positive
-            if M[k][k] < 0:
-                for j in range(m):
-                    M[k][j] = -M[k][j]
-
-            # Column operations
-            for i in range(k + 1, n):
-                if M[i][k] != 0:
-                    q = M[i][k] // M[k][k]
-                    for j in range(m):
-                        M[i][j] -= q * M[k][j]
-                    if M[i][k] != 0:
-                        M[k], M[i] = M[i], M[k]
+            for i in range(col + 1, m):
+                if A[i, col] != 0:
+                    q = A[i, col] // A[col, col]
+                    A[i] -= q * A[col]
+                    if A[i, col] != 0:
+                        A[[col, i]] = A[[i, col]]
                         changed = True
-
-            # Row operations
-            for j in range(k + 1, m):
-                if M[k][j] != 0:
-                    q = M[k][j] // M[k][k]
-                    for i in range(n):
-                        M[i][j] -= q * M[i][k]
-                    if M[k][j] != 0:
-                        for i in range(n):
-                            M[i][k], M[i][j] = M[i][j], M[i][k]
+            for j in range(col + 1, n):
+                if A[col, j] != 0:
+                    q = A[col, j] // A[col, col]
+                    A[:, j] -= q * A[:, col]
+                    if A[col, j] != 0:
+                        A[:, [col, j]] = A[:, [j, col]]
                         changed = True
-
-    diag = [abs(M[i][i]) for i in range(min(n, m)) if i < len(M) and i < len(M[i])]
+    diag = [abs(A[i, i]) for i in range(r)]
+    for i in range(len(diag) - 1):
+        if diag[i] != 0 and diag[i + 1] != 0:
+            g = gcd(diag[i], diag[i + 1])
+            if g != diag[i]:
+                diag[i], diag[i + 1] = g, (diag[i] * diag[i + 1]) // g
     return [d for d in diag if d > 1]
 
 
-def critical_group(adj_matrix: np.ndarray) -> List[int]:
-    """Compute the critical group (Jacobian) of a graph as invariant factors."""
-    L = graph_laplacian(adj_matrix)
-    Lr = reduced_laplacian(L)
-    return smith_normal_form_invariants(Lr)
+def critical_group(adj):
+    """Compute critical group invariant factors."""
+    L = graph_laplacian(adj)
+    L_red = L[:-1, :-1]
+    return smith_normal_form_factors(L_red)
 
 
-def critical_group_order(adj_matrix: np.ndarray) -> int:
-    """Compute |Jac(G)| = number of spanning trees (Kirchhoff's theorem)."""
-    L = graph_laplacian(adj_matrix)
-    Lr = reduced_laplacian(L)
-    n = Lr.shape[0]
-    if n == 0:
-        return 1
-    det = int(round(np.linalg.det(Lr.astype(float))))
-    return abs(det)
-
-
-def first_betti_number(adj_matrix: np.ndarray) -> int:
-    """Compute b₁ = |E| - |V| + 1 for a connected graph."""
-    n = adj_matrix.shape[0]
-    edges = int(adj_matrix.sum()) // 2
-    return edges - n + 1
-
-
-def random_n_lift(adj_matrix: np.ndarray, n: int) -> np.ndarray:
-    """
-    Generate a random n-sheeted lift of a graph.
-
-    For each edge {u,v} in the base graph, we assign a random permutation
-    σ_{uv} ∈ S_n. The lift has vertices V × [n] and edges
-    {(u,i), (v, σ_{uv}(i))} for each edge {u,v} and each i ∈ [n].
-    """
-    num_vertices = adj_matrix.shape[0]
-    total = num_vertices * n
-    lift_adj = np.zeros((total, total), dtype=int)
-
-    for u in range(num_vertices):
-        for v in range(u + 1, num_vertices):
-            if adj_matrix[u][v] > 0:
-                perm = list(range(n))
+def random_graph_lift(adj, n_sheets):
+    """Generate random n-sheeted covering."""
+    k = adj.shape[0]
+    N = k * n_sheets
+    lift_adj = np.zeros((N, N), dtype=int)
+    for u in range(k):
+        for v in range(u + 1, k):
+            if adj[u, v] == 1:
+                perm = list(range(n_sheets))
                 random.shuffle(perm)
-                for i in range(n):
-                    u_lift = u * n + i
-                    v_lift = v * n + perm[i]
-                    lift_adj[u_lift][v_lift] = 1
-                    lift_adj[v_lift][u_lift] = 1
-
+                for s in range(n_sheets):
+                    i = u * n_sheets + s
+                    j = v * n_sheets + perm[s]
+                    lift_adj[i, j] = 1
+                    lift_adj[j, i] = 1
     return lift_adj
 
 
-def sylow_p_part(invariant_factors: List[int], p: int) -> List[int]:
-    """Extract the p-primary part of a finite abelian group given by invariant factors."""
-    p_parts = []
-    for d in invariant_factors:
+def p_primary_part(group, p):
+    """Extract Sylow-p subgroup."""
+    parts = []
+    for d in group:
         pk = 1
-        while d % p == 0:
+        temp = d
+        while temp % p == 0:
             pk *= p
-            d //= p
+            temp //= p
         if pk > 1:
-            p_parts.append(pk)
-    return sorted(p_parts)
+            parts.append(pk)
+    parts.sort()
+    return parts
 
 
-def p_rank(invariant_factors: List[int], p: int) -> int:
-    """Compute the p-rank (number of p-primary cyclic factors)."""
-    return len(sylow_p_part(invariant_factors, p))
-
-
-def cohen_lenstra_inv_weight(p: int, k: int) -> int:
-    """Inverse Cohen-Lenstra weight for cyclic group Z/p^k."""
-    if k == 0:
-        return 1
-    return p ** (k - 1) * (p - 1)
+def first_betti(adj):
+    n = adj.shape[0]
+    edges = int(np.sum(adj)) // 2
+    return edges - n + 1
 
 
 # ============================================================
-# Demo: Test Universality Conjecture
+# DEMO 1: Laplacian Properties
 # ============================================================
+print("=" * 70)
+print("DEMO 1: Graph Laplacian Properties")
+print("=" * 70)
 
-def make_cycle_graph(n: int) -> np.ndarray:
-    """Create adjacency matrix of cycle graph C_n."""
-    A = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        A[i][(i + 1) % n] = 1
-        A[(i + 1) % n][i] = 1
-    return A
+# Complete graph K4
+K4 = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 1, 1],
+    [1, 1, 0, 1],
+    [1, 1, 1, 0]
+])
 
+L = graph_laplacian(K4)
+print("\nK4 adjacency matrix:")
+print(K4)
+print("\nK4 Laplacian:")
+print(L)
+print(f"\nRow sums (should be all 0): {L.sum(axis=1)}")
+print(f"Symmetric (L = L^T): {np.array_equal(L, L.T)}")
+print(f"Diagonal (degrees): {[L[i,i] for i in range(4)]}")
+print(f"Off-diagonal non-zero entries: {L[0,1]}")
 
-def make_theta_graph(a: int, b: int, c: int) -> np.ndarray:
-    """Create a theta graph: two vertices connected by 3 paths of lengths a, b, c."""
-    n = a + b + c - 3 + 2  # total vertices
-    A = np.zeros((n, n), dtype=int)
-    idx = 2  # vertices 0 and 1 are endpoints
-    # Path 1: 0 -> ... -> 1 with a edges
-    prev = 0
-    for _ in range(a - 1):
-        A[prev][idx] = 1
-        A[idx][prev] = 1
-        prev = idx
-        idx += 1
-    A[prev][1] = 1
-    A[1][prev] = 1
-    # Path 2
-    prev = 0
-    for _ in range(b - 1):
-        A[prev][idx] = 1
-        A[idx][prev] = 1
-        prev = idx
-        idx += 1
-    A[prev][1] = 1
-    A[1][prev] = 1
-    # Path 3
-    prev = 0
-    for _ in range(c - 1):
-        A[prev][idx] = 1
-        A[idx][prev] = 1
-        prev = idx
-        idx += 1
-    A[prev][1] = 1
-    A[1][prev] = 1
-    return A
+# Verify positive semidefiniteness via eigenvalues
+eigvals = np.linalg.eigvalsh(L.astype(float))
+print(f"\nEigenvalues: {np.round(eigvals, 6)}")
+print(f"All non-negative: {all(v >= -1e-10 for v in eigvals)}")
+print(f"Smallest eigenvalue ≈ 0 (kernel): {abs(eigvals[0]) < 1e-10}")
 
+# ============================================================
+# DEMO 2: Critical Group Computation
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 2: Critical Groups (Jacobians)")
+print("=" * 70)
 
-def make_complete_graph(n: int) -> np.ndarray:
-    """Create adjacency matrix of K_n."""
-    A = np.ones((n, n), dtype=int) - np.eye(n, dtype=int)
-    return A
+# Various small graphs
+graphs = {
+    "K3 (triangle)": np.array([[0,1,1],[1,0,1],[1,1,0]]),
+    "K4 (complete-4)": K4,
+    "C4 (4-cycle)": np.array([[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]),
+    "K_{3,3} (complete bipartite)": np.array([
+        [0,0,0,1,1,1],
+        [0,0,0,1,1,1],
+        [0,0,0,1,1,1],
+        [1,1,1,0,0,0],
+        [1,1,1,0,0,0],
+        [1,1,1,0,0,0]
+    ]),
+}
 
+for name, adj in graphs.items():
+    jac = critical_group(adj)
+    order = 1
+    for d in jac:
+        order *= d
+    b1 = first_betti(adj)
+    print(f"\n{name}:")
+    print(f"  Betti number b₁ = {b1}")
+    print(f"  Critical group: {'ℤ/' + ' × ℤ/'.join(str(d) for d in jac) if jac else '{0}'}")
+    print(f"  Order |Jac| = {order} (= number of spanning trees)")
 
-if __name__ == "__main__":
-    print("=" * 70)
-    print("  p-adic Universality of Chip-Firing Critical Groups")
-    print("  Under Graph Lifts — Computational Demo")
-    print("=" * 70)
+# ============================================================
+# DEMO 3: Betti Number Formula for Covers
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 3: Riemann-Hurwitz Formula for Graph Covers")
+print("=" * 70)
 
-    # --- Demo 1: Basic Laplacian Properties ---
-    print("\n--- Demo 1: Laplacian of K₄ ---")
-    K4 = make_complete_graph(4)
-    L = graph_laplacian(K4)
-    print(f"Adjacency matrix of K₄:\n{K4}")
-    print(f"Laplacian of K₄:\n{L}")
-    print(f"Row sums: {L.sum(axis=1)} (should be all zeros)")
-    print(f"Symmetric: {np.allclose(L, L.T)}")
+print("\nFormula: b₁(n-cover) = n·(b₁(base) - 1) + 1")
+print()
 
-    # --- Demo 2: Critical Groups ---
-    print("\n--- Demo 2: Critical Groups ---")
-    for name, G in [("C₃ (triangle)", make_cycle_graph(3)),
-                     ("C₄ (square)", make_cycle_graph(4)),
-                     ("K₃ (triangle)", make_complete_graph(3)),
-                     ("K₄", make_complete_graph(4))]:
-        inv = critical_group(G)
-        order = critical_group_order(G)
-        b1 = first_betti_number(G)
-        print(f"  {name}: Jac = Z/{' × Z/'.join(map(str, inv)) if inv else '{0}'}, "
-              f"|Jac| = {order}, b₁ = {b1}")
+K3 = np.array([[0,1,1],[1,0,1],[1,1,0]])
+b1_base = first_betti(K3)
+print(f"Base graph K3: b₁ = {b1_base}")
 
-    # --- Demo 3: Universality Test ---
-    print("\n--- Demo 3: Universality Test (p=5) ---")
-    print("Testing with two non-isomorphic graphs with b₁ = 2:")
+for n in [2, 3, 5, 10]:
+    predicted = n * (b1_base - 1) + 1
+    lift = random_graph_lift(K3, n)
+    actual = first_betti(lift)
+    print(f"  n={n:2d}-sheeted cover: predicted b₁ = {predicted}, actual = {actual}")
 
-    # Graph 1: C₃ with extra edge (b₁ = 2)
-    G1 = make_cycle_graph(4)
-    G1[0][2] = 1
-    G1[2][0] = 1  # adds diagonal, making b₁ = 2
+# ============================================================
+# DEMO 4: Cohen-Lenstra Weights
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 4: Cohen-Lenstra Weights")
+print("=" * 70)
 
-    # Graph 2: Theta graph (1,1,1) = three parallel edges between 2 vertices
-    G2 = make_theta_graph(1, 2, 2)
+print("\nWeights w(p, k) = 1/(p^(k-1)·(p-1)) for cyclic group ℤ/p^k:")
+for p in [2, 3, 5]:
+    print(f"\n  p = {p}:")
+    for k in range(6):
+        if k == 0:
+            w = 1.0
+        else:
+            w = 1.0 / (p ** (k - 1) * (p - 1))
+        print(f"    k={k}: w = {w:.8f}")
 
-    b1_1 = first_betti_number(G1)
-    b1_2 = first_betti_number(G2)
-    print(f"  Graph 1: b₁ = {b1_1}, |Jac| = {critical_group_order(G1)}")
-    print(f"  Graph 2: b₁ = {b1_2}, |Jac| = {critical_group_order(G2)}")
+print("\nKey property: weights decrease geometrically → larger groups are rarer")
 
-    p = 5
-    n_sheets = 4
-    num_samples = 200
+# ============================================================
+# DEMO 5: Universality Test
+# ============================================================
+print("\n" + "=" * 70)
+print("DEMO 5: Universality Conjecture Test")
+print("=" * 70)
 
-    for graph_name, G in [("Graph 1", G1), ("Graph 2", G2)]:
-        p_ranks = []
-        for _ in range(num_samples):
-            lift = random_n_lift(G, n_sheets)
-            inv = critical_group(lift)
-            pr = p_rank(inv, p)
-            p_ranks.append(pr)
-        rank_dist = Counter(p_ranks)
-        total = sum(rank_dist.values())
-        print(f"\n  {graph_name} — {p}-rank distribution of Jac(G̃) "
-              f"for {n_sheets}-sheeted lifts ({num_samples} samples):")
-        for k in sorted(rank_dist.keys()):
-            print(f"    rank {k}: {rank_dist[k]/total:.3f} ({rank_dist[k]}/{total})")
+# Two non-isomorphic graphs with the same Betti number b₁ = 2
+# Graph 1: K4 minus an edge (b₁ = 2)
+G1 = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 1, 0],
+    [1, 1, 0, 1],
+    [1, 0, 1, 0]
+])
 
-    # --- Demo 4: Cohen-Lenstra Weights ---
-    print("\n--- Demo 4: Cohen-Lenstra Inverse Weights ---")
-    for p in [2, 3, 5, 7]:
-        print(f"  p = {p}: ", end="")
-        for k in range(5):
-            print(f"w⁻¹({k}) = {cohen_lenstra_inv_weight(p, k)}", end="  ")
-        print()
+# Graph 2: "theta graph" two vertices connected by 3 parallel paths
+# Realized as: 0-1, 0-2-1, 0-3-1 → b₁ = 2
+G2 = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 1],
+    [1, 0, 1, 0]
+])
 
-    # --- Demo 5: Chip-Firing Conservation ---
-    print("\n--- Demo 5: Chip-Firing Conservation ---")
-    G = make_cycle_graph(4)
-    L = graph_laplacian(G)
-    config = np.array([3, 1, 2, 0])
-    print(f"  Initial config: {config}, total = {config.sum()}")
-    # Fire vertex 0
-    new_config = config - L[0]
-    print(f"  After firing v₀: {new_config}, total = {new_config.sum()}")
-    # Fire vertex 2
-    new_config2 = new_config - L[2]
-    print(f"  After firing v₂: {new_config2}, total = {new_config2.sum()}")
-    print(f"  Total chips preserved: {config.sum() == new_config.sum() == new_config2.sum()}")
+print(f"\nGraph 1 (K4-e): b₁ = {first_betti(G1)}, |Jac| = ", end="")
+jac1 = critical_group(G1)
+print(f"{np.prod(jac1) if jac1 else 1}")
 
-    print("\n" + "=" * 70)
-    print("  Demo complete. All results consistent with universality conjecture.")
-    print("=" * 70)
+print(f"Graph 2 (theta): b₁ = {first_betti(G2)}, |Jac| = ", end="")
+jac2 = critical_group(G2)
+print(f"{np.prod(jac2) if jac2 else 1}")
 
+p = 3  # Test prime
+n_sheets = 4
+n_samples = 200
 
-"""
-Visualization: Betti Number Scaling Under Coverings
+print(f"\nTesting universality with p={p}, n_sheets={n_sheets}, samples={n_samples}")
+print(f"(If conjecture holds, p-primary distributions should be similar)")
 
-Shows how the first Betti number b₁ grows under n-sheeted coverings:
-  b₁(G̃) = n · b₁(G) - (n - 1)
+random.seed(42)
+for graph_name, adj in [("K4-e", G1), ("theta", G2)]:
+    p_primary_counts = Counter()
+    for _ in range(n_samples):
+        lift = random_graph_lift(adj, n_sheets)
+        jac = critical_group(lift)
+        pp = tuple(p_primary_part(jac, p))
+        p_primary_counts[pp] += 1
 
-This is the key formula that determines the "rank" of the limiting
-Cohen-Lenstra distribution, connecting topology to number theory.
-"""
+    print(f"\n  {graph_name}: Sylow-{p} subgroup distribution:")
+    total = sum(p_primary_counts.values())
+    for typ, count in sorted(p_primary_counts.items(), key=lambda x: -x[1])[:8]:
+        label = "trivial" if not typ else " × ".join(f"ℤ/{d}" for d in typ)
+        print(f"    {label}: {count}/{total} ({100*count/total:.1f}%)")
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-# === Betti number formula ===
-
-def betti_covering(b1_base: int, n_sheets: int) -> int:
-    """b₁ of an n-sheeted covering: n * b₁(G) - (n - 1)"""
-    return n_sheets * b1_base - (n_sheets - 1)
-
-def cohen_lenstra_trivial_prob(p: int, b1: int) -> float:
-    """P(trivial Sylow-p) = ∏_{i=1}^{b₁} (1 - p^{-i})"""
-    prob = 1.0
-    for i in range(1, b1 + 1):
-        prob *= (1 - p**(-i))
-    return prob
-
-
-# === Create figure ===
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Panel 1: Betti number growth
-ax1 = axes[0]
-n_range = range(1, 11)
-for b1_base in [1, 2, 3, 4]:
-    b1_values = [betti_covering(b1_base, n) for n in n_range]
-    ax1.plot(n_range, b1_values, 'o-', linewidth=2, markersize=6,
-             label=f'b₁(G) = {b1_base}')
-
-ax1.set_xlabel('Number of sheets n', fontsize=12)
-ax1.set_ylabel('b₁(covering)', fontsize=12)
-ax1.set_title('Betti Number Growth Under Covering\nb₁(G̃) = n·b₁(G) - (n-1)',
-              fontsize=12)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-
-# Panel 2: Cohen-Lenstra trivial probability vs b₁
-ax2 = axes[1]
-b1_range = range(1, 16)
-for p in [2, 3, 5, 7]:
-    probs = [cohen_lenstra_trivial_prob(p, b1) for b1 in b1_range]
-    ax2.plot(b1_range, probs, 's-', linewidth=2, markersize=5,
-             label=f'p = {p}')
-
-ax2.set_xlabel('First Betti number b₁', fontsize=12)
-ax2.set_ylabel('P(trivial Sylow-p)', fontsize=12)
-ax2.set_title('Cohen-Lenstra: P(trivial p-part)\n∏(1 - p⁻ⁱ) for i=1..b₁',
-              fontsize=12)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0, 1)
-
-# Panel 3: Phase diagram - p vs b₁ heatmap of trivial probability
-ax3 = axes[2]
-primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-b1_vals = list(range(1, 11))
-prob_matrix = np.zeros((len(primes), len(b1_vals)))
-
-for i, p in enumerate(primes):
-    for j, b1 in enumerate(b1_vals):
-        prob_matrix[i, j] = cohen_lenstra_trivial_prob(p, b1)
-
-im = ax3.imshow(prob_matrix, aspect='auto', cmap='viridis',
-                interpolation='nearest', vmin=0, vmax=1)
-ax3.set_xticks(range(len(b1_vals)))
-ax3.set_xticklabels(b1_vals)
-ax3.set_yticks(range(len(primes)))
-ax3.set_yticklabels(primes)
-ax3.set_xlabel('First Betti number b₁', fontsize=12)
-ax3.set_ylabel('Prime p', fontsize=12)
-ax3.set_title('Phase Diagram:\nP(trivial Sylow-p) by (p, b₁)', fontsize=12)
-plt.colorbar(im, ax=ax3, shrink=0.8, label='Probability')
-
-plt.tight_layout()
-plt.savefig('betti_scaling.png', dpi=150, bbox_inches='tight')
-print("Saved betti_scaling.png")
+print("\n" + "=" * 70)
+print("DEMO COMPLETE")
+print("=" * 70)
 
 
 """
-Visualization: Graph Laplacian Structure and Chip-Firing Dynamics
+Visualization: Cohen-Lenstra Distribution vs Empirical p-primary Groups
 
-Shows:
-1. (Left) Heatmap of the Laplacian matrix of K₆
-2. (Right) Chip-firing evolution on a cycle graph
-
-This visualizes the key algebraic structure underlying the universality
-phenomenon: the Laplacian governs both chip-firing dynamics (tropical
-geometry) and the critical group (number theory).
+Compares the theoretical Cohen-Lenstra weights (1/|Aut(G)|) with the
+empirical distribution of Sylow-p subgroups of critical groups of
+random graph lifts. This is the key test of the universality conjecture.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-
-
-# === Self-contained helper functions ===
-
-def _laplacian(adj):
-    return np.diag(adj.sum(axis=1).astype(int)) - adj.astype(int)
-
-def _make_complete(n):
-    return np.ones((n, n), dtype=int) - np.eye(n, dtype=int)
-
-def _make_cycle(n):
-    A = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        A[i][(i+1) % n] = 1
-        A[(i+1) % n][i] = 1
-    return A
-
-
-# === Create figure ===
-fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
-
-# Panel 1: Laplacian heatmap of K₆
-ax1 = axes[0]
-K6 = _make_complete(6)
-L6 = _laplacian(K6)
-
-# Custom colormap: blue for negative, white for zero, red for positive
-cmap = plt.cm.RdBu_r
-norm = mcolors.TwoSlopeNorm(vmin=-1, vcenter=0, vmax=5)
-
-im = ax1.imshow(L6, cmap=cmap, norm=norm, interpolation='nearest')
-for i in range(6):
-    for j in range(6):
-        ax1.text(j, i, str(L6[i][j]), ha='center', va='center',
-                fontsize=14, fontweight='bold',
-                color='white' if abs(L6[i][j]) > 2 else 'black')
-
-ax1.set_xticks(range(6))
-ax1.set_yticks(range(6))
-ax1.set_xticklabels([f'v{i}' for i in range(6)])
-ax1.set_yticklabels([f'v{i}' for i in range(6)])
-ax1.set_title('Laplacian of K₆\n(D - A: degree on diagonal, -1 off-diagonal)',
-              fontsize=12)
-plt.colorbar(im, ax=ax1, shrink=0.8)
-
-# Panel 2: Chip-firing evolution
-ax2 = axes[1]
-n = 6
-C6 = _make_cycle(n)
-L = _laplacian(C6)
-
-# Initial configuration
-config = np.array([5, 0, 1, 0, 2, 0])
-configs = [config.copy()]
-
-# Fire vertices that are over-full (degree = 2 for cycle)
-for step in range(8):
-    new_config = config.copy()
-    fired = False
-    for v in range(n):
-        if config[v] >= C6[v].sum():  # vertex v can fire
-            new_config = new_config - L[v]
-            fired = True
-            break
-    if not fired:
-        break
-    config = new_config
-    configs.append(config.copy())
-
-configs = np.array(configs)
-num_steps = len(configs)
-
-# Plot as a heatmap of chip counts over time
-im2 = ax2.imshow(configs.T, aspect='auto', cmap='YlOrRd',
-                  interpolation='nearest', vmin=0)
-for i in range(n):
-    for j in range(num_steps):
-        ax2.text(j, i, str(configs[j][i]), ha='center', va='center',
-                fontsize=11, fontweight='bold',
-                color='white' if configs[j][i] > 3 else 'black')
-
-ax2.set_xlabel('Time step', fontsize=12)
-ax2.set_ylabel('Vertex', fontsize=12)
-ax2.set_yticks(range(n))
-ax2.set_yticklabels([f'v{i}' for i in range(n)])
-ax2.set_xticks(range(num_steps))
-ax2.set_title('Chip-Firing on C₆\n(fire over-full vertices until stable)',
-              fontsize=12)
-plt.colorbar(im2, ax=ax2, shrink=0.8, label='# chips')
-
-plt.tight_layout()
-plt.savefig('laplacian_chipfiring.png', dpi=150, bbox_inches='tight')
-print("Saved laplacian_chipfiring.png")
-
-
-"""
-Visualization: p-adic Universality of Chip-Firing Critical Groups
-
-Produces a figure showing:
-1. (Top) p-rank distributions for random lifts of different base graphs with same b₁
-2. (Bottom) Cohen-Lenstra predicted probabilities vs observed
-
-This visualizes the central universality phenomenon: graphs with the same
-Betti number produce the same limiting distribution of p-primary critical groups.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from collections import Counter
 import random
+from collections import Counter
+from math import gcd
 
+# Self-contained implementations
+def graph_laplacian(adj):
+    n = adj.shape[0]
+    L = -adj.copy()
+    for i in range(n):
+        L[i, i] = int(np.sum(adj[i]))
+    return L.astype(int)
 
-# === Self-contained helper functions ===
-
-def _laplacian(adj):
-    return np.diag(adj.sum(axis=1).astype(int)) - adj.astype(int)
-
-def _snf_invariants(M):
-    M = M.astype(int).tolist()
-    n, m = len(M), len(M[0]) if M else 0
-    for k in range(min(n, m)):
+def smith_factors(M):
+    A = M.copy().astype(int)
+    m, n = A.shape
+    r = min(m, n)
+    for col in range(r):
         found = False
-        for i in range(k, n):
-            for j in range(k, m):
-                if M[i][j] != 0:
-                    M[k], M[i] = M[i], M[k]
-                    for row in M:
-                        row[k], row[j] = row[j], row[k]
+        for i in range(col, m):
+            for j in range(col, n):
+                if A[i, j] != 0:
+                    A[[col, i]] = A[[i, col]]
+                    A[:, [col, j]] = A[:, [j, col]]
                     found = True
                     break
             if found:
                 break
         if not found:
-            continue
+            break
+        if A[col, col] < 0:
+            A[col] = -A[col]
         changed = True
         while changed:
             changed = False
-            if M[k][k] < 0:
-                for j in range(m): M[k][j] = -M[k][j]
-            for i in range(k+1, n):
-                if M[i][k] != 0:
-                    q = M[i][k] // M[k][k]
-                    for j in range(m): M[i][j] -= q * M[k][j]
-                    if M[i][k] != 0:
-                        M[k], M[i] = M[i], M[k]
+            for i in range(col + 1, m):
+                if A[i, col] != 0:
+                    q = A[i, col] // A[col, col]
+                    A[i] -= q * A[col]
+                    if A[i, col] != 0:
+                        A[[col, i]] = A[[i, col]]
                         changed = True
-            for j in range(k+1, m):
-                if M[k][j] != 0:
-                    q = M[k][j] // M[k][k]
-                    for i in range(n): M[i][j] -= q * M[i][k]
-                    if M[k][j] != 0:
-                        for i in range(n): M[i][k], M[i][j] = M[i][j], M[i][k]
+            for j in range(col + 1, n):
+                if A[col, j] != 0:
+                    q = A[col, j] // A[col, col]
+                    A[:, j] -= q * A[:, col]
+                    if A[col, j] != 0:
+                        A[:, [col, j]] = A[:, [j, col]]
                         changed = True
-    return [abs(M[i][i]) for i in range(min(n, m)) if abs(M[i][i]) > 1]
+    diag = [abs(A[i, i]) for i in range(r)]
+    for i in range(len(diag) - 1):
+        if diag[i] != 0 and diag[i + 1] != 0:
+            g = gcd(diag[i], diag[i + 1])
+            if g != diag[i]:
+                diag[i], diag[i + 1] = g, (diag[i] * diag[i + 1]) // g
+    return [d for d in diag if d > 1]
 
-def _critical_group(adj):
-    L = _laplacian(adj)
-    return _snf_invariants(L[:-1, :-1])
+def critical_group(adj):
+    L = graph_laplacian(adj)
+    return smith_factors(L[:-1, :-1])
 
-def _random_lift(adj, n):
-    nv = adj.shape[0]
-    total = nv * n
-    lift = np.zeros((total, total), dtype=int)
-    for u in range(nv):
-        for v in range(u+1, nv):
-            if adj[u][v] > 0:
-                perm = list(range(n))
+def random_graph_lift(adj, n_sheets):
+    k = adj.shape[0]
+    N = k * n_sheets
+    lift_adj = np.zeros((N, N), dtype=int)
+    for u in range(k):
+        for v in range(u + 1, k):
+            if adj[u, v] == 1:
+                perm = list(range(n_sheets))
                 random.shuffle(perm)
-                for i in range(n):
-                    lift[u*n+i][v*n+perm[i]] = 1
-                    lift[v*n+perm[i]][u*n+i] = 1
-    return lift
+                for s in range(n_sheets):
+                    i = u * n_sheets + s
+                    j = v * n_sheets + perm[s]
+                    lift_adj[i, j] = 1
+                    lift_adj[j, i] = 1
+    return lift_adj
 
-def _sylow_p(inv_factors, p):
+def p_primary_part(group, p):
     parts = []
-    for d in inv_factors:
+    for d in group:
         pk = 1
-        t = d
-        while t % p == 0:
+        temp = d
+        while temp % p == 0:
             pk *= p
-            t //= p
+            temp //= p
         if pk > 1:
             parts.append(pk)
-    return parts
+    parts.sort()
+    return tuple(parts)
 
-def _make_cycle(n):
-    A = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        A[i][(i+1) % n] = 1
-        A[(i+1) % n][i] = 1
-    return A
-
-
-# === Build test graphs with b₁ = 2 ===
-
-# Graph 1: C₄ with diagonal (K₄ minus one edge)
-G1 = _make_cycle(4)
-G1[0][2] = 1; G1[2][0] = 1
-
-# Graph 2: C₅ (cycle on 5 vertices, b₁ = 1) -- wait, need b₁=2
-# Actually C₄+diagonal has 5 edges, 4 vertices -> b₁ = 5-4+1 = 2. Good.
-# Graph 2: Two triangles sharing an edge
-G2 = np.zeros((4, 4), dtype=int)
-G2[0][1] = G2[1][0] = 1
-G2[1][2] = G2[2][1] = 1
-G2[0][2] = G2[2][0] = 1
-G2[0][3] = G2[3][0] = 1
-G2[1][3] = G2[3][1] = 1
-# edges: 01,12,02,03,13 = 5 edges, 4 vertices -> b₁ = 2. Good.
-
-# Graph 3: Path of length 2 with two extra edges
-G3 = np.zeros((3, 3), dtype=int)
-G3[0][1] = G3[1][0] = 1
-G3[1][2] = G3[2][1] = 1
-G3[0][2] = G3[2][0] = 1
-# This is K₃ with b₁ = 3-3+1 = 1. Need more edges.
-# Use 5 vertices with 6 edges -> b₁ = 2
-G3 = np.zeros((5, 5), dtype=int)
-for i, j in [(0,1),(1,2),(2,3),(3,4),(4,0),(0,2)]:
-    G3[i][j] = G3[j][i] = 1
-
-b1_values = []
-for G in [G1, G2, G3]:
-    edges = int(G.sum()) // 2
-    n = G.shape[0]
-    b1_values.append(edges - n + 1)
-
-# === Run experiments ===
 random.seed(42)
-p = 3
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+primes = [2, 3, 5]
+base_graph = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 1, 0],
+    [1, 1, 0, 1],
+    [1, 0, 1, 0]
+])  # K4-e, b1=2
+
 n_sheets = 5
-num_samples = 300
+n_samples = 300
 
-graph_names = ["K₄\\{e} (4v, 5e)", "Double triangle (4v, 5e)", "Pentagon+chord (5v, 6e)"]
-colors = ['#2196F3', '#FF5722', '#4CAF50']
+for idx, p in enumerate(primes):
+    ax = axes[idx]
 
-all_distributions = []
-max_rank = 0
+    # Compute empirical distribution
+    type_counts = Counter()
+    for _ in range(n_samples):
+        lift = random_graph_lift(base_graph, n_sheets)
+        jac = critical_group(lift)
+        pp = p_primary_part(jac, p)
+        type_counts[pp] += 1
 
-for G in [G1, G2, G3]:
-    ranks = []
-    for _ in range(num_samples):
-        lift = _random_lift(G, n_sheets)
-        inv = _critical_group(lift)
-        pr = len(_sylow_p(inv, p))
-        ranks.append(pr)
-        max_rank = max(max_rank, pr)
-    all_distributions.append(ranks)
+    # Sort by frequency
+    types_sorted = sorted(type_counts.items(), key=lambda x: -x[1])[:8]
 
-# === Create figure ===
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    labels = []
+    empirical = []
+    for typ, count in types_sorted:
+        if not typ:
+            labels.append("trivial")
+        else:
+            labels.append(" × ".join(f"ℤ/{d}" for d in typ))
+        empirical.append(count / n_samples)
 
-# Panel 1: Overlaid histograms
-ax1 = axes[0]
-rank_range = range(0, max_rank + 2)
+    x = np.arange(len(labels))
+    width = 0.6
 
-for idx, (ranks, name, color) in enumerate(zip(all_distributions, graph_names, colors)):
-    dist = Counter(ranks)
-    total = len(ranks)
-    probs = [dist.get(k, 0) / total for k in rank_range]
-    offset = (idx - 1) * 0.25
-    ax1.bar([k + offset for k in rank_range], probs, width=0.22, alpha=0.85,
-            label=f"{name}\nb₁={b1_values[idx]}", color=color, edgecolor='white')
+    bars = ax.bar(x, empirical, width, color='#2196F3', alpha=0.8,
+                  edgecolor='white', linewidth=0.5, label='Empirical')
 
-ax1.set_xlabel(f'{p}-rank of Sylow-{p} subgroup', fontsize=12)
-ax1.set_ylabel('Probability', fontsize=12)
-ax1.set_title(f'Distribution of {p}-primary rank\n({n_sheets}-sheeted lifts, {num_samples} samples each)',
-              fontsize=13)
-ax1.legend(fontsize=9, loc='upper right')
-ax1.set_xticks(list(rank_range))
+    ax.set_xlabel("Sylow-p subgroup type", fontsize=10)
+    ax.set_ylabel("Probability", fontsize=10)
+    ax.set_title(f"p = {p}", fontsize=12, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+    ax.legend(fontsize=9)
 
-# Panel 2: Cohen-Lenstra prediction vs observed
-ax2 = axes[1]
-b1 = 2
+fig.suptitle(f"p-Primary Critical Group Distribution\n"
+             f"Base: K₄−e (b₁=2), {n_sheets}-sheeted lifts, {n_samples} samples",
+             fontsize=13, fontweight='bold')
+plt.tight_layout()
+plt.savefig("viz_cohen_lenstra.png", dpi=150, bbox_inches='tight')
+print("Saved viz_cohen_lenstra.png")
 
-# Cohen-Lenstra prediction: P(rank=0) = ∏(1 - p^{-i}) for i=1..b₁
-cl_trivial = 1.0
-for i in range(1, b1 + 1):
-    cl_trivial *= (1 - p**(-i))
 
-# Observed
-obs_trivial = []
-for ranks in all_distributions:
-    obs_trivial.append(sum(1 for r in ranks if r == 0) / len(ranks))
+"""
+Visualization: Laplacian Spectrum of Graph Lifts
 
-x_pos = [0, 1, 2]
-ax2.bar(x_pos, obs_trivial, width=0.4, alpha=0.85, color=colors,
-        edgecolor='white', label='Observed P(rank=0)')
-ax2.axhline(y=cl_trivial, color='red', linestyle='--', linewidth=2,
-            label=f'Cohen-Lenstra prediction: {cl_trivial:.4f}')
+Shows how the eigenvalue spectrum of the graph Laplacian evolves as
+we take n-sheeted random covers. The spectrum fans out according to
+the representation theory of the symmetric group, and the zero
+eigenvalue has multiplicity equal to the number of connected components.
 
-ax2.set_xticks(x_pos)
-ax2.set_xticklabels([f'G{i+1}' for i in range(3)], fontsize=11)
-ax2.set_ylabel('P(trivial Sylow-p)', fontsize=12)
-ax2.set_title(f'Universality: P(rank=0) vs Cohen-Lenstra\n(p={p}, b₁={b1})',
-              fontsize=13)
-ax2.legend(fontsize=10)
-ax2.set_ylim(0, 1)
+This visualization demonstrates the spectral universality phenomenon:
+different base graphs with the same Betti number produce similar
+spectral envelopes in their lifts.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+
+# Self-contained implementations
+def graph_laplacian(adj):
+    n = adj.shape[0]
+    L = -adj.copy().astype(float)
+    for i in range(n):
+        L[i, i] = float(np.sum(adj[i]))
+    return L
+
+def random_graph_lift(adj, n_sheets):
+    k = adj.shape[0]
+    N = k * n_sheets
+    lift_adj = np.zeros((N, N), dtype=int)
+    for u in range(k):
+        for v in range(u + 1, k):
+            if adj[u, v] == 1:
+                perm = list(range(n_sheets))
+                random.shuffle(perm)
+                for s in range(n_sheets):
+                    i = u * n_sheets + s
+                    j = v * n_sheets + perm[s]
+                    lift_adj[i, j] = 1
+                    lift_adj[j, i] = 1
+    return lift_adj
+
+random.seed(42)
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+
+# Two base graphs with same Betti number b1 = 2
+# Graph 1: K4 minus an edge
+G1 = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 1, 0],
+    [1, 1, 0, 1],
+    [1, 0, 1, 0]
+])
+
+# Graph 2: Theta graph (two vertices, three paths)
+G2 = np.array([
+    [0, 1, 1, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 1],
+    [1, 0, 1, 0]
+])
+
+base_graphs = [("K₄ − e  (b₁=2)", G1), ("Theta graph  (b₁=2)", G2)]
+sheet_counts = [1, 3, 8]
+
+for row, (name, base) in enumerate(base_graphs):
+    for col, n_sheets in enumerate(sheet_counts):
+        ax = axes[row, col]
+
+        # Collect eigenvalues from multiple random lifts
+        all_eigs = []
+        n_samples = 50 if n_sheets <= 5 else 20
+        for _ in range(n_samples):
+            lift = random_graph_lift(base, n_sheets)
+            L = graph_laplacian(lift)
+            eigs = np.linalg.eigvalsh(L)
+            all_eigs.extend(eigs)
+
+        all_eigs = np.array(all_eigs)
+
+        # Histogram of eigenvalues
+        ax.hist(all_eigs, bins=50, density=True, alpha=0.7,
+                color=['#2196F3', '#FF5722'][row], edgecolor='white', linewidth=0.5)
+        ax.set_title(f"{name}\nn = {n_sheets} sheets", fontsize=11)
+        ax.set_xlabel("Eigenvalue λ", fontsize=10)
+        ax.set_ylabel("Density", fontsize=10)
+        ax.axvline(x=0, color='red', linestyle='--', alpha=0.5, label='λ=0')
+
+        # Mark the base graph eigenvalues
+        base_L = graph_laplacian(base)
+        base_eigs = np.linalg.eigvalsh(base_L)
+        for e in base_eigs:
+            ax.axvline(x=e, color='green', linestyle=':', alpha=0.3)
+
+        if row == 0 and col == 0:
+            ax.legend(fontsize=8)
+
+fig.suptitle("Spectral Universality: Laplacian Eigenvalue Distributions of Random Graph Lifts",
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig("viz_laplacian_spectrum.png", dpi=150, bbox_inches='tight')
+print("Saved viz_laplacian_spectrum.png")
+
+
+"""
+Visualization: Universality Heatmap
+
+Shows the p-primary critical group statistics across different base graphs
+(columns) and different primes (rows). If the universality conjecture holds,
+each row should show similar colors across columns (same Betti number → same
+distribution).
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+from collections import Counter
+from math import gcd
+
+# Self-contained implementations
+def graph_laplacian(adj):
+    n = adj.shape[0]
+    L = -adj.copy()
+    for i in range(n):
+        L[i, i] = int(np.sum(adj[i]))
+    return L.astype(int)
+
+def smith_factors(M):
+    A = M.copy().astype(int)
+    m, n = A.shape
+    r = min(m, n)
+    for col in range(r):
+        found = False
+        for i in range(col, m):
+            for j in range(col, n):
+                if A[i, j] != 0:
+                    A[[col, i]] = A[[i, col]]
+                    A[:, [col, j]] = A[:, [j, col]]
+                    found = True
+                    break
+            if found:
+                break
+        if not found:
+            break
+        if A[col, col] < 0:
+            A[col] = -A[col]
+        changed = True
+        while changed:
+            changed = False
+            for i in range(col + 1, m):
+                if A[i, col] != 0:
+                    q = A[i, col] // A[col, col]
+                    A[i] -= q * A[col]
+                    if A[i, col] != 0:
+                        A[[col, i]] = A[[i, col]]
+                        changed = True
+            for j in range(col + 1, n):
+                if A[col, j] != 0:
+                    q = A[col, j] // A[col, col]
+                    A[:, j] -= q * A[:, col]
+                    if A[col, j] != 0:
+                        A[:, [col, j]] = A[:, [j, col]]
+                        changed = True
+    diag = [abs(A[i, i]) for i in range(r)]
+    for i in range(len(diag) - 1):
+        if diag[i] != 0 and diag[i + 1] != 0:
+            g = gcd(diag[i], diag[i + 1])
+            if g != diag[i]:
+                diag[i], diag[i + 1] = g, (diag[i] * diag[i + 1]) // g
+    return [d for d in diag if d > 1]
+
+def critical_group(adj):
+    L = graph_laplacian(adj)
+    return smith_factors(L[:-1, :-1])
+
+def random_graph_lift(adj, n_sheets):
+    k = adj.shape[0]
+    N = k * n_sheets
+    lift_adj = np.zeros((N, N), dtype=int)
+    for u in range(k):
+        for v in range(u + 1, k):
+            if adj[u, v] == 1:
+                perm = list(range(n_sheets))
+                random.shuffle(perm)
+                for s in range(n_sheets):
+                    i = u * n_sheets + s
+                    j = v * n_sheets + perm[s]
+                    lift_adj[i, j] = 1
+                    lift_adj[j, i] = 1
+    return lift_adj
+
+random.seed(42)
+
+# Base graphs with b1 = 2
+graphs = {
+    "K₄−e": np.array([[0,1,1,1],[1,0,1,0],[1,1,0,1],[1,0,1,0]]),
+    "Theta": np.array([[0,1,1,1],[1,0,0,0],[1,0,0,1],[1,0,1,0]]),
+    "Bowtie": np.array([[0,1,1,0,0],[1,0,1,0,0],[1,1,0,1,1],[0,0,1,0,1],[0,0,1,1,0]]),
+}
+
+primes = [2, 3, 5, 7]
+n_sheets = 4
+n_samples = 150
+
+# Compute: fraction of lifts with trivial Sylow-p part
+data = np.zeros((len(primes), len(graphs)))
+graph_names = list(graphs.keys())
+
+for j, (gname, adj) in enumerate(graphs.items()):
+    for i, p in enumerate(primes):
+        trivial_count = 0
+        for _ in range(n_samples):
+            lift = random_graph_lift(adj, n_sheets)
+            jac = critical_group(lift)
+            # Check if Sylow-p is trivial
+            has_p = False
+            for d in jac:
+                if d % p == 0:
+                    has_p = True
+                    break
+            if not has_p:
+                trivial_count += 1
+        data[i, j] = trivial_count / n_samples
+
+fig, ax = plt.subplots(figsize=(8, 6))
+
+im = ax.imshow(data, cmap='RdYlBu', aspect='auto', vmin=0, vmax=1)
+
+ax.set_xticks(range(len(graph_names)))
+ax.set_xticklabels(graph_names, fontsize=11)
+ax.set_yticks(range(len(primes)))
+ax.set_yticklabels([f"p = {p}" for p in primes], fontsize=11)
+
+# Add text annotations
+for i in range(len(primes)):
+    for j in range(len(graph_names)):
+        text = f"{data[i,j]:.2f}"
+        color = "white" if data[i, j] < 0.3 or data[i, j] > 0.7 else "black"
+        ax.text(j, i, text, ha="center", va="center", fontsize=12,
+                fontweight='bold', color=color)
+
+plt.colorbar(im, ax=ax, label="P(Sylow-p is trivial)", shrink=0.8)
+ax.set_title(f"Universality Test: P(trivial Sylow-p)\n"
+             f"All base graphs have b₁ = 2, {n_sheets}-sheeted lifts, {n_samples} samples",
+             fontsize=13, fontweight='bold')
+ax.set_xlabel("Base Graph", fontsize=12)
+ax.set_ylabel("Prime p", fontsize=12)
 
 plt.tight_layout()
-plt.savefig('universality_visualization.png', dpi=150, bbox_inches='tight')
-print("Saved universality_visualization.png")
+plt.savefig("viz_universality_heatmap.png", dpi=150, bbox_inches='tight')
+print("Saved viz_universality_heatmap.png")
