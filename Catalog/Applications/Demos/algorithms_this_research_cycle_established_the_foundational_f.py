@@ -1,283 +1,310 @@
 #!/usr/bin/env python3
 """
-Algorithms for Prime Persistent Homology
+Algorithms for Hyperbolic Number Theory
 
-Implements the key algorithms from the research:
-1. Rips filtration on the prime point cloud
-2. H₀ barcode computation via union-find
-3. Persistence entropy computation
-4. Filtration parameter optimization
-5. Gap-death bijection construction
+Implements the core mathematical algorithms from the research paper:
+1. Möbius gyrogroup arithmetic
+2. Hyperbolic zeta function computation
+3. Regular tree enumeration
+4. Pythagorean-to-disk embedding
 
-Time complexity: O(π(N) log π(N)) for barcode computation
-Space complexity: O(π(N))
+All algorithms include complexity analysis and type hints.
 """
 
-from typing import List, Tuple, Dict, Optional
-from math import log, log2
-from collections import defaultdict
+from fractions import Fraction
+from typing import List, Tuple, Optional, Iterator
+import math
 
 
-class UnionFind:
-    """Union-Find with path compression and union by rank.
+# ============================================================
+# Algorithm 1: Möbius Gyrogroup Arithmetic
+# ============================================================
+
+class MoebiusGyrogroup:
+    """
+    Implements the Möbius gyrogroup on the open interval (-1, 1).
     
-    Time complexity: O(α(n)) amortized per operation,
-    where α is the inverse Ackermann function.
+    The operation a ⊕ b = (a + b) / (1 + ab) forms a gyrogroup:
+    - Commutative: a ⊕ b = b ⊕ a
+    - Has identity: a ⊕ 0 = a
+    - Has inverses: a ⊕ (-a) = 0
+    - NOT associative (gyroassociative instead)
+    
+    Time complexity: O(1) per operation (using exact rational arithmetic)
+    Space complexity: O(1) per element
     """
-
-    def __init__(self, elements: List[int]):
-        self.parent: Dict[int, int] = {x: x for x in elements}
-        self.rank: Dict[int, int] = {x: 0 for x in elements}
-        self.size: Dict[int, int] = {x: 1 for x in elements}
-        self.num_components: int = len(elements)
-
-    def find(self, x: int) -> int:
-        """Find with path compression."""
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
-
-    def union(self, x: int, y: int) -> bool:
-        """Union by rank. Returns True if a merge occurred."""
-        px, py = self.find(x), self.find(y)
-        if px == py:
-            return False
-        if self.rank[px] < self.rank[py]:
-            px, py = py, px
-        self.parent[py] = px
-        self.size[px] += self.size[py]
-        if self.rank[px] == self.rank[py]:
-            self.rank[px] += 1
-        self.num_components -= 1
-        return True
-
-    def component_sizes(self) -> List[int]:
-        """Return sizes of all components."""
-        comps: Dict[int, int] = defaultdict(int)
-        for x in self.parent:
-            comps[self.find(x)] += 1
-        return sorted(comps.values(), reverse=True)
-
-
-class PersistenceBar:
-    """A bar in the H₀ persistence barcode."""
-
-    def __init__(self, birth: int, death: int, label: Optional[str] = None):
-        self.birth = birth
-        self.death = death
-        self.persistence = death - birth
-        self.label = label or f"[{birth}, {death})"
-
+    
+    def __init__(self, val: Fraction):
+        """Initialize with a rational number in (-1, 1)."""
+        if abs(val) >= 1:
+            raise ValueError(f"Value {val} not in open unit interval (-1, 1)")
+        self.val = val
+    
+    def __add__(self, other: 'MoebiusGyrogroup') -> 'MoebiusGyrogroup':
+        """Möbius addition: (a + b) / (1 + ab)"""
+        num = self.val + other.val
+        den = 1 + self.val * other.val
+        return MoebiusGyrogroup(num / den)
+    
+    def __neg__(self) -> 'MoebiusGyrogroup':
+        """Möbius inverse: -a"""
+        return MoebiusGyrogroup(-self.val)
+    
     def __repr__(self) -> str:
-        return f"Bar({self.birth}→{self.death}, pers={self.persistence})"
+        return f"M({self.val})"
+    
+    def __eq__(self, other: 'MoebiusGyrogroup') -> bool:
+        return self.val == other.val
+    
+    @staticmethod
+    def zero() -> 'MoebiusGyrogroup':
+        """The identity element."""
+        return MoebiusGyrogroup(Fraction(0))
+    
+    @staticmethod
+    def gyration(a: 'MoebiusGyrogroup', b: 'MoebiusGyrogroup', 
+                 x: 'MoebiusGyrogroup') -> 'MoebiusGyrogroup':
+        """
+        Gyration operator gyr[a,b](x).
+        In the 1D case, gyr[a,b] = id, so the gyrogroup is actually
+        a commutative group (gyrocommutative gyrogroup with trivial gyration).
+        """
+        return x  # Trivial in 1D
+    
+    def iterate(self, n: int) -> 'MoebiusGyrogroup':
+        """
+        Compute the n-fold Möbius sum: a ⊕ a ⊕ ... ⊕ a (n times).
+        Uses the iterative formula x_{k+1} = a ⊕ x_k.
+        
+        Time: O(n) arithmetic operations
+        Space: O(1)
+        """
+        result = self
+        current = self
+        for _ in range(n - 1):
+            current = self + current
+        return current
 
 
-def sieve_primes(N: int) -> List[int]:
-    """Sieve of Eratosthenes. O(N log log N) time, O(N) space."""
-    if N < 2:
-        return []
-    is_prime = [True] * (N + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(N**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, N + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, N + 1) if is_prime[i]]
+# ============================================================
+# Algorithm 2: Hyperbolic Zeta Function
+# ============================================================
 
-
-def compute_h0_barcode(N: int) -> Tuple[List[PersistenceBar], List[Tuple[int, int, int]]]:
-    """Compute the H₀ persistence barcode of the Rips filtration on primes ≤ N.
-
-    Algorithm:
-    1. Generate primes ≤ N via sieve
-    2. Compute all prime gaps (these are the filtration values)
-    3. Process gaps in increasing order (Kruskal-like)
-    4. Each merge event creates a bar death
-
-    Returns:
-        bars: List of PersistenceBar objects
-        events: List of (epsilon, p, q) merge events
-
-    Time: O(N log log N) for sieve + O(π(N) log π(N)) for sort + merges
-    Space: O(N) for sieve + O(π(N)) for union-find
+def hyperbolic_zeta_summand(r: float, s: int) -> float:
     """
-    primes = sieve_primes(N)
-    if len(primes) <= 1:
-        return [], []
-
-    # Compute edges: each consecutive pair with their gap
-    edges: List[Tuple[int, int, int]] = []
-    for i in range(len(primes) - 1):
-        gap = primes[i + 1] - primes[i]
-        edges.append((gap, primes[i], primes[i + 1]))
-
-    # Sort by gap (filtration value)
-    edges.sort()
-
-    # Process merges
-    uf = UnionFind(primes)
-    bars: List[PersistenceBar] = []
-    events: List[Tuple[int, int, int]] = []
-
-    for gap, p, q in edges:
-        if uf.union(p, q):
-            # A component merged — the younger component's bar dies
-            death_time = gap
-            # Birth time = the later prime (it was born as its own component)
-            birth = max(p, q)
-            bars.append(PersistenceBar(birth=0, death=death_time,
-                                       label=f"merge({p},{q})"))
-            events.append((gap, p, q))
-
-    return bars, events
-
-
-def gap_death_bijection(N: int) -> Dict[int, List[Tuple[int, int]]]:
-    """Construct the gap-death bijection explicitly.
-
-    Maps each prime gap value to the list of prime pairs with that gap.
-    This demonstrates our formalized gap_death_connection theorem.
-
-    Returns: {gap_value: [(p, q), ...]}
+    Compute the hyperbolic zeta summand r^{-2s}.
+    
+    For 0 < r < 1 (a disk point), this gives values ≥ 1,
+    reversing the classical bound.
+    
+    Time: O(log s) via fast exponentiation
+    Space: O(1)
     """
-    primes = sieve_primes(N)
-    bijection: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
-    for i in range(len(primes) - 1):
-        gap = primes[i + 1] - primes[i]
-        bijection[gap].append((primes[i], primes[i + 1]))
-    return dict(sorted(bijection.items()))
+    return (1.0 / r) ** (2 * s)
 
 
-def persistence_entropy(N: int) -> float:
-    """Compute the persistence entropy of the prime barcode.
-
-    H = -Σ (l_i / L) * log₂(l_i / L)
-
-    where l_i is the persistence of bar i and L = Σ l_i.
-
-    This is a topological summary statistic that measures the
-    "complexity" of the prime distribution at scale N.
-
-    Time: O(N log log N) for primes + O(π(N)) for entropy
+def hyperbolic_zeta_partial(r: float, s: float, N: int) -> float:
     """
-    primes = sieve_primes(N)
-    if len(primes) <= 1:
-        return 0.0
-
-    gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
-    total = sum(gaps)
-    if total == 0:
-        return 0.0
-
-    entropy = 0.0
-    for g in gaps:
-        if g > 0:
-            p = g / total
-            entropy -= p * log2(p)
-    return entropy
-
-
-def optimal_filtration_scale(N: int) -> int:
-    """Find the filtration scale that maximizes the number of deaths.
-
-    This is the "most interesting" scale in the barcode, where the
-    most topological changes occur.
-
-    Time: O(N log log N + π(N))
+    Compute partial sum of hyperbolic zeta function:
+    Z_hyp(r, s) = sum_{n=1}^{N} r^{-2ns}
+    
+    WARNING: This diverges for 0 < r < 1, s > 0 (the reversal!).
+    
+    Time: O(N)
+    Space: O(1)
     """
-    primes = sieve_primes(N)
-    gap_counts: Dict[int, int] = defaultdict(int)
-    for i in range(len(primes) - 1):
-        gap = primes[i + 1] - primes[i]
-        gap_counts[gap] += 1
-
-    if not gap_counts:
-        return 0
-    return max(gap_counts, key=gap_counts.get)
+    return sum((1.0 / r) ** (2 * n * s) for n in range(1, N + 1))
 
 
-def component_count_function(N: int) -> List[Tuple[int, int]]:
-    """Compute β₀(ε) = number of connected components at scale ε.
-
-    This is the Betti number function for H₀.
-    At ε=0, β₀ = π(N) (each prime is its own component).
-    As ε increases, components merge.
-    At ε=N, β₀ = 1 (all primes connected).
-
-    Returns: [(epsilon, component_count), ...]
+def classical_zeta_partial(s: float, N: int) -> float:
     """
-    primes = sieve_primes(N)
-    if not primes:
-        return [(0, 0)]
-
-    # Collect all distinct gaps
-    gaps = sorted(set(primes[i + 1] - primes[i] for i in range(len(primes) - 1)))
-
-    result = [(0, len(primes))]
-    uf = UnionFind(primes)
-
-    # Process in order of gap size
-    edges_by_gap: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
-    for i in range(len(primes) - 1):
-        g = primes[i + 1] - primes[i]
-        edges_by_gap[g].append((primes[i], primes[i + 1]))
-
-    for gap in gaps:
-        for p, q in edges_by_gap[gap]:
-            uf.union(p, q)
-        result.append((gap, uf.num_components))
-
-    return result
-
-
-def bertrand_ratio_sequence(N: int) -> List[float]:
-    """Compute the ratio gap/birth for each bar, verifying Bertrand bound.
-
-    Our theorem proves gap < birth for all primes, so all ratios < 1.
-    The maximum ratio approaches 1 for large primes (Cramér's conjecture
-    suggests max ratio ~ (log p)² / p → 0).
-
-    Returns: list of gap/birth ratios
+    Classical Riemann zeta partial sum for comparison:
+    zeta(s) ≈ sum_{n=1}^{N} 1/n^s
+    
+    Time: O(N)
+    Space: O(1)
     """
-    primes = sieve_primes(N)
-    ratios = []
-    for i in range(len(primes) - 1):
-        gap = primes[i + 1] - primes[i]
-        ratios.append(gap / primes[i])
-    return ratios
+    return sum(1.0 / n**s for n in range(1, N + 1))
 
 
-# Example usage
+# ============================================================
+# Algorithm 3: Regular Tree Enumeration
+# ============================================================
+
+def tree_sphere_size(q: int, k: int) -> int:
+    """
+    Number of vertices at distance exactly k from root
+    in a (q+1)-regular tree.
+    
+    Formula: S(0) = 1, S(k) = (q+1) * q^{k-1} for k ≥ 1
+    
+    Time: O(log k) via fast exponentiation
+    Space: O(1)
+    """
+    if k == 0:
+        return 1
+    return (q + 1) * q ** (k - 1)
+
+
+def tree_ball_size(q: int, n: int) -> int:
+    """
+    Number of vertices within distance n of root
+    in a (q+1)-regular tree.
+    
+    Formula: B(n) = 1 + (q+1) * (q^n - 1) / (q - 1) for q ≥ 2
+    
+    Time: O(n) or O(log n) with closed form
+    Space: O(1)
+    """
+    return sum(tree_sphere_size(q, k) for k in range(n + 1))
+
+
+def verify_exponential_growth(q: int, max_n: int = 20) -> List[Tuple[int, int, int, bool]]:
+    """
+    Verify the exponential growth theorem: q^n ≤ treeBall(q, n).
+    
+    Returns list of (n, q^n, ball_size, growth_holds).
+    
+    Time: O(max_n * n) total
+    Space: O(max_n) for results
+    """
+    results = []
+    for n in range(max_n + 1):
+        qn = q ** n
+        ball = tree_ball_size(q, n)
+        results.append((n, qn, ball, ball >= qn))
+    return results
+
+
+# ============================================================
+# Algorithm 4: Pythagorean-to-Disk Embedding
+# ============================================================
+
+def generate_pythagorean_triples(max_c: int) -> Iterator[Tuple[int, int, int]]:
+    """
+    Generate primitive Pythagorean triples (a, b, c) with c ≤ max_c.
+    Uses the parametrization a = m²-n², b = 2mn, c = m²+n² 
+    for m > n > 0, gcd(m,n) = 1, m-n odd.
+    
+    Time: O(max_c) triples generated
+    Space: O(1) per triple (generator)
+    """
+    for m in range(2, int(max_c**0.5) + 1):
+        for n in range(1, m):
+            if (m - n) % 2 == 0:
+                continue
+            if math.gcd(m, n) != 1:
+                continue
+            a = m*m - n*n
+            b = 2*m*n
+            c = m*m + n*n
+            if c > max_c:
+                break
+            yield (min(a, b), max(a, b), c)
+
+
+def embed_in_disk(triple: Tuple[int, int, int]) -> Tuple[float, float]:
+    """
+    Embed a Pythagorean triple (a, b, c) into the Poincaré disk
+    as the point (a/c, b/c).
+    
+    Time: O(1)
+    Space: O(1)
+    """
+    a, b, c = triple
+    return (a / c, b / c)
+
+
+def moebius_sum_of_embeddings(t1: Tuple[int, int, int], 
+                               t2: Tuple[int, int, int]) -> float:
+    """
+    Compute the Möbius sum of the a/c embeddings of two Pythagorean triples.
+    
+    Time: O(1)
+    Space: O(1)
+    """
+    r1 = t1[0] / t1[2]
+    r2 = t2[0] / t2[2]
+    return (r1 + r2) / (1 + r1 * r2)
+
+
+# ============================================================
+# Algorithm 5: Möbius Iteration Analysis
+# ============================================================
+
+def moebius_iterate_sequence(a: Fraction, n: int) -> List[Fraction]:
+    """
+    Compute the Möbius iteration sequence x_0 = a, x_{k+1} = a ⊕ x_k.
+    
+    Time: O(n) Möbius additions
+    Space: O(n) for the full sequence
+    """
+    seq = [a]
+    x = a
+    for _ in range(n):
+        x = (a + x) / (1 + a * x)
+        seq.append(x)
+    return seq
+
+
+def check_monotonicity(seq: List[Fraction]) -> bool:
+    """Check if a sequence is strictly increasing."""
+    return all(seq[i] < seq[i+1] for i in range(len(seq) - 1))
+
+
+def estimate_limit(seq: List[Fraction], tail: int = 5) -> float:
+    """
+    Estimate the limit of the sequence using Richardson extrapolation.
+    
+    Time: O(tail)
+    Space: O(1)
+    """
+    # Use ratio of consecutive differences
+    vals = [float(x) for x in seq[-tail:]]
+    if len(vals) < 3:
+        return vals[-1]
+    
+    diffs = [vals[i+1] - vals[i] for i in range(len(vals)-1)]
+    if abs(diffs[-1]) < 1e-15:
+        return vals[-1]
+    
+    ratios = [diffs[i+1] / diffs[i] for i in range(len(diffs)-1) if abs(diffs[i]) > 1e-15]
+    if ratios:
+        avg_ratio = sum(ratios) / len(ratios)
+        if abs(avg_ratio) < 1:
+            return vals[-1] + diffs[-1] / (1 - avg_ratio)
+    
+    return vals[-1]
+
+
+# ============================================================
+# Example Usage
+# ============================================================
+
 if __name__ == "__main__":
-    N = 10000
-    print(f"=== Prime Persistent Homology Algorithms (N={N}) ===\n")
-
-    # H₀ barcode
-    bars, events = compute_h0_barcode(N)
-    print(f"H₀ barcode: {len(bars)} bars")
-    print(f"First 5 merge events: {events[:5]}")
-
-    # Gap-death bijection
-    bij = gap_death_bijection(N)
-    print(f"\nGap-death bijection: {len(bij)} distinct gap values")
-    for gap, pairs in list(bij.items())[:5]:
-        print(f"  gap={gap}: {len(pairs)} occurrences")
-
-    # Persistence entropy
-    H = persistence_entropy(N)
-    print(f"\nPersistence entropy H = {H:.4f} bits")
-
-    # Optimal scale
-    opt = optimal_filtration_scale(N)
-    print(f"Most common gap (optimal filtration): ε = {opt}")
-
-    # Component count
-    betti = component_count_function(N)
-    print(f"\nBetti number β₀ at selected scales:")
-    for eps, count in betti[:10]:
-        print(f"  ε={eps}: β₀ = {count}")
-
-    # Bertrand ratios
-    ratios = bertrand_ratio_sequence(N)
-    print(f"\nBertrand ratio max = {max(ratios):.4f} < 1 ✓")
-    print(f"Bertrand ratio mean = {sum(ratios)/len(ratios):.6f}")
+    print("Hyperbolic Number Theory — Algorithm Demonstrations")
+    print("=" * 55)
+    
+    # Gyrogroup
+    a = MoebiusGyrogroup(Fraction(1, 3))
+    b = MoebiusGyrogroup(Fraction(1, 4))
+    print(f"\nGyrogroup: {a} + {b} = {a + b}")
+    print(f"Identity: {a} + 0 = {a + MoebiusGyrogroup.zero()}")
+    print(f"Inverse: {a} + (-{a}) = {a + (-a)}")
+    
+    # Zeta reversal
+    print(f"\nZeta reversal (r=0.5):")
+    for s in range(1, 6):
+        print(f"  Hyperbolic summand (s={s}): {hyperbolic_zeta_summand(0.5, s):.1f}")
+    
+    # Tree growth
+    print(f"\nTree growth verification (q=3):")
+    for n, qn, ball, ok in verify_exponential_growth(3, 10):
+        print(f"  n={n}: 3^n={qn:>8}, ball={ball:>8}, growth: {ok}")
+    
+    # Iteration
+    print(f"\nMöbius iteration (a=1/2):")
+    seq = moebius_iterate_sequence(Fraction(1, 2), 15)
+    print(f"  Monotone: {check_monotonicity(seq)}")
+    print(f"  Estimated limit: {estimate_limit(seq):.10f}")
+    print(f"  tanh(artanh(0.5) * inf) → 1.0 (boundary)")
