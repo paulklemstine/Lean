@@ -1,337 +1,310 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Core Algorithms
+Hyperbolic Number Theory — Core Algorithms
 
-Implements the algorithms described in the research paper for:
-- Möbius addition and gyration on the Poincaré disk
-- SL(2,R) group operations
-- Hyperbolic lattice generation via PSL(2,Z)
-- Hyperbolic prime detection
-- Hyperbolic counting function
-- Critical line to disk mapping
+Implements the key algorithms for computing with hyperbolic integers,
+Möbius transformations, and the hyperbolic zeta function.
 """
 
 import numpy as np
 from typing import List, Tuple, Set, Optional
-from dataclasses import dataclass
 
 
-# ============================================================
-# Poincaré Disk Arithmetic
-# ============================================================
-
-def moebius_add(z: complex, w: complex) -> complex:
+class MobiusTransform:
+    """A Möbius transformation φ_a(z) = (z - a) / (1 - conj(a) * z).
+    
+    Represents an isometry of the Poincaré disk model of the hyperbolic plane.
+    
+    Time complexity: O(1) for evaluation
+    Space complexity: O(1)
     """
-    Möbius addition on the Poincaré disk.
     
-    z ⊕ w = (z + w) / (1 + conj(z) * w)
+    def __init__(self, a: complex):
+        """Initialize with center point a (must have |a| < 1)."""
+        if abs(a) >= 1:
+            raise ValueError(f"|a| = {abs(a)} >= 1, not in disk")
+        self.a = a
     
-    This is the Einstein velocity addition formula and forms a
-    gyrogroup (non-commutative group with gyration automorphisms).
-    
-    Args:
-        z: First operand (complex, |z| < 1)
-        w: Second operand (complex, |w| < 1)
-    
-    Returns:
-        Möbius sum z ⊕ w
-    """
-    denom = 1 + z.conjugate() * w
-    if abs(denom) < 1e-15:
-        return complex(0, 0)
-    return (z + w) / denom
-
-
-def gyration_factor(z: complex, w: complex) -> complex:
-    """
-    Gyration factor gyr(z, w) = (1 + conj(z)*w) / (1 + z*conj(w)).
-    
-    This is always a unit complex number (|gyr| = 1) when the
-    denominator is nonzero, meaning gyration is a pure rotation.
-    
-    The gyration accounts for the non-commutativity of Möbius addition:
-    z ⊕ w = gyr(z, w) * (w ⊕ z)
-    
-    Args:
-        z, w: Complex numbers
-    
-    Returns:
-        Gyration factor (unit complex number)
-    """
-    denom = 1 + z * w.conjugate()
-    if abs(denom) < 1e-15:
-        return complex(1, 0)
-    return (1 + z.conjugate() * w) / denom
-
-
-def poincare_conformal(z: complex) -> float:
-    """
-    Poincaré conformal factor λ(z) = 2/(1 - |z|²).
-    
-    This factor converts between Euclidean and hyperbolic infinitesimal
-    distances: ds_hyp = λ(z) * ds_euc.
-    
-    Properties (proved in Lean):
-    - λ(z) > 0 for all z in D
-    - λ(0) = 2
-    - λ(z) ≥ 2 for all z in D
-    
-    Args:
-        z: Point in Poincaré disk (|z| < 1)
-    
-    Returns:
-        Conformal factor λ(z)
-    """
-    norm_sq = abs(z) ** 2
-    return 2.0 / (1.0 - norm_sq)
-
-
-def hyp_distance(z: complex, w: complex) -> float:
-    """
-    Hyperbolic distance between two points in the Poincaré disk.
-    
-    d(z, w) = 2 * arctanh(|z ⊖ w|) where z ⊖ w = (-z) ⊕ w.
-    
-    Equivalently: d(z, w) = 2 * arctanh(|z - w| / |1 - conj(w)*z|)
-    
-    Args:
-        z, w: Points in the Poincaré disk
-    
-    Returns:
-        Hyperbolic distance d(z, w)
-    """
-    diff = moebius_add(-z, w)
-    r = min(abs(diff), 1 - 1e-15)  # clamp for numerical stability
-    return 2.0 * np.arctanh(r)
-
-
-# ============================================================
-# SL(2,R) Operations
-# ============================================================
-
-@dataclass
-class SL2RElement:
-    """Element of SL(2,R): 2x2 real matrix with determinant 1."""
-    a: float
-    b: float
-    c: float
-    d: float
-    
-    def det(self) -> float:
-        return self.a * self.d - self.b * self.c
-    
-    def __post_init__(self):
-        assert abs(self.det() - 1.0) < 1e-8, f"det = {self.det()} ≠ 1"
-    
-    def __mul__(self, other: 'SL2RElement') -> 'SL2RElement':
-        """Group multiplication (matrix product)."""
-        return SL2RElement(
-            self.a * other.a + self.b * other.c,
-            self.a * other.b + self.b * other.d,
-            self.c * other.a + self.d * other.c,
-            self.c * other.b + self.d * other.d
-        )
-    
-    def inv(self) -> 'SL2RElement':
-        """Group inverse: [[d, -b], [-c, a]]."""
-        return SL2RElement(self.d, -self.b, -self.c, self.a)
-    
-    def act_upper_half(self, z: complex) -> Optional[complex]:
-        """Möbius action on upper half-plane: (az+b)/(cz+d)."""
-        denom = self.c * z + self.d
+    def __call__(self, z: complex) -> complex:
+        """Apply the Möbius transformation to z."""
+        denom = 1 - np.conj(self.a) * z
         if abs(denom) < 1e-15:
-            return None
-        return (self.a * z + self.b) / denom
+            raise ValueError("Denominator too close to zero")
+        return (z - self.a) / denom
+    
+    def inverse(self) -> 'MobiusTransform':
+        """The inverse transformation (which is itself: φ_a is an involution)."""
+        return MobiusTransform(self.a)
+    
+    def compose(self, other: 'MobiusTransform') -> complex:
+        """Return the image of the composition φ_self ∘ φ_other at origin."""
+        return self(other(0j))
 
 
-# ============================================================
-# Hyperbolic Lattice Generation
-# ============================================================
-
-def cayley_transform(z: complex) -> complex:
-    """Map upper half-plane to Poincaré disk: w = (z - i)/(z + i)."""
-    return (z - 1j) / (z + 1j)
-
-
-def inv_cayley_transform(w: complex) -> complex:
-    """Map Poincaré disk to upper half-plane: z = i(1 + w)/(1 - w)."""
-    return 1j * (1 + w) / (1 - w)
-
-
-def generate_psl2z_orbit(max_depth: int = 5) -> List[complex]:
+class HyperbolicMetric:
+    """Computes distances in the Poincaré disk model.
+    
+    The hyperbolic distance between z and w is:
+    d(z, w) = artanh(|φ_w(z)|) = (1/2) * log((1 + |φ_w(z)|) / (1 - |φ_w(z)|))
+    
+    where φ_w is the Möbius automorphism sending w to the origin.
     """
-    Generate orbit of i under PSL(2,Z) in the Poincaré disk.
     
-    Uses BFS over words in the generators S and T of PSL(2,Z):
-    - S: z ↦ -1/z (corresponding to [[0,-1],[1,0]])
-    - T: z ↦ z+1 (corresponding to [[1,1],[0,1]])
+    @staticmethod
+    def norm(z: complex) -> float:
+        """Hyperbolic distance from origin to z.
+        
+        Time: O(1), Space: O(1)
+        """
+        r = abs(z)
+        if r >= 1:
+            return float('inf')
+        if r < 1e-15:
+            return 0.0
+        return np.log((1 + r) / (1 - r)) / 2
     
-    Args:
-        max_depth: Maximum word length in generators
+    @staticmethod
+    def distance(z: complex, w: complex) -> float:
+        """Hyperbolic distance between z and w.
+        
+        Time: O(1), Space: O(1)
+        """
+        phi_w = MobiusTransform(w)
+        return HyperbolicMetric.norm(phi_w(z))
     
-    Returns:
-        Sorted list of orbit points in the Poincaré disk
+    @staticmethod
+    def ball_euclidean_radius(R: float) -> float:
+        """Euclidean radius of a hyperbolic ball of hyperbolic radius R.
+        
+        If d_H(0, z) = R, then |z| = tanh(R).
+        """
+        return np.tanh(R)
+
+
+class CayleyBridge:
+    """Cayley transform bridging the disk and upper half-plane models.
     
-    Complexity: O(4^depth) orbit points, O(4^depth) time
+    C(z) = i(1+z)/(1-z): disk → upper half-plane
+    C⁻¹(w) = (w-i)/(w+i): upper half-plane → disk
+    
+    This is the geometric bridge between hyperbolic geometry (disk model)
+    and classical analytic number theory (half-plane model where modular
+    forms and the Selberg zeta function naturally live).
     """
-    S = SL2RElement(0, -1, 1, 0)
-    T = SL2RElement(1, 1, 0, 1)
-    generators = [S, T, S.inv(), T.inv()]
     
-    base_point = 1j  # i in upper half-plane
+    @staticmethod
+    def to_uhp(z: complex) -> complex:
+        """Map disk point to upper half-plane."""
+        if abs(1 - z) < 1e-15:
+            return complex(0, float('inf'))
+        return 1j * (1 + z) / (1 - z)
     
-    orbit_disk: Set[Tuple[float, float]] = set()
-    visited: Set[Tuple[float, float, float, float]] = set()
-    
-    def matrix_key(M: SL2RElement) -> Tuple:
-        return (round(M.a, 8), round(M.b, 8), round(M.c, 8), round(M.d, 8))
-    
-    identity = SL2RElement(1, 0, 0, 1)
-    current_level = [identity]
-    visited.add(matrix_key(identity))
-    
-    # Add base point
-    w0 = cayley_transform(base_point)
-    orbit_disk.add((round(w0.real, 10), round(w0.imag, 10)))
-    
-    for depth in range(max_depth):
-        next_level = []
-        for M in current_level:
-            for g in generators:
-                M2 = M * g
-                key = matrix_key(M2)
-                neg_key = matrix_key(SL2RElement(-M2.a, -M2.b, -M2.c, -M2.d)
-                                     if abs(M2.det() - 1) < 0.01 else M2)
-                if key not in visited and neg_key not in visited:
-                    visited.add(key)
-                    z = M2.act_upper_half(base_point)
-                    if z is not None and z.imag > 1e-10:
-                        w = cayley_transform(z)
-                        if abs(w) < 1 - 1e-10:
-                            orbit_disk.add((round(w.real, 10), round(w.imag, 10)))
-                    next_level.append(M2)
-        current_level = next_level
-    
-    points = [complex(re, im) for re, im in orbit_disk]
-    return sorted(points, key=abs)
+    @staticmethod
+    def to_disk(w: complex) -> complex:
+        """Map upper half-plane point to disk."""
+        if abs(w + 1j) < 1e-15:
+            return complex(float('inf'), 0)
+        return (w - 1j) / (w + 1j)
 
 
-# ============================================================
-# Hyperbolic Prime Detection
-# ============================================================
-
-def is_hyperbolic_prime(orbit: List[complex], n: int, tol: float = 1e-6) -> bool:
+class HyperbolicLattice:
+    """A discrete lattice in the Poincaré disk generated by Möbius maps.
+    
+    This is the hyperbolic analog of the integer lattice ℤ ⊂ ℝ.
+    Points are generated by iteratively applying Möbius transformations
+    starting from the origin.
+    
+    Time complexity: O(|generators|^depth) for generation
+    Space complexity: O(N) where N is the number of distinct points
     """
-    Test if orbit[n] is a hyperbolic prime.
     
-    A lattice point is hyperbolic prime if it cannot be expressed as
-    orbit[i] ⊕ orbit[j] for any 0 < i, j < n.
+    def __init__(self, generators: List[complex]):
+        """Initialize with generator points (all must have |g| < 1)."""
+        for g in generators:
+            if abs(g) >= 1:
+                raise ValueError(f"Generator {g} has |g| = {abs(g)} >= 1")
+        self.generators = generators
+        self.transforms = [MobiusTransform(g) for g in generators]
+        self._points: Optional[List[complex]] = None
+        self._depth: int = 0
     
-    Args:
-        orbit: List of orbit points sorted by norm
-        n: Index to test
-        tol: Tolerance for equality check
+    def generate(self, depth: int = 6) -> List[complex]:
+        """Generate lattice points up to given composition depth.
+        
+        Algorithm:
+        1. Start with S₀ = {0}
+        2. For each depth d, compute S_{d+1} = S_d ∪ {φ_g(z) : g ∈ gens, z ∈ frontier}
+        3. Deduplicate using spatial hashing
+        
+        Time: O(|G|^d) worst case, typically much less due to collisions
+        Space: O(N) where N = |S_depth|
+        """
+        points: Set[complex] = {0j}
+        frontier: Set[complex] = {0j}
+        
+        for d in range(depth):
+            new_frontier: Set[complex] = set()
+            for z in frontier:
+                for phi in self.transforms:
+                    try:
+                        w = phi(z)
+                    except ValueError:
+                        continue
+                    if abs(w) < 0.99999:
+                        # Spatial dedup with rounding
+                        w_key = round(w.real, 9) + 1j * round(w.imag, 9)
+                        if w_key not in points:
+                            points.add(w_key)
+                            new_frontier.add(w_key)
+            frontier = new_frontier
+            if not frontier:
+                break
+        
+        self._points = sorted(points, key=abs)
+        self._depth = depth
+        return self._points
     
-    Returns:
-        True if orbit[n] is hyperbolic prime
+    def count_in_ball(self, R: float) -> int:
+        """Count lattice points with hyperbolic norm ≤ R."""
+        if self._points is None:
+            self.generate()
+        metric = HyperbolicMetric()
+        return sum(1 for z in self._points if metric.norm(z) <= R)
     
-    Complexity: O(n²)
+    def identify_primes(self) -> List[complex]:
+        """Identify hyperbolic primes: points not decomposable via generators.
+        
+        A point z is prime if z ≠ 0 and z ≠ φ_g₁(g₂) for any generators g₁, g₂.
+        """
+        if self._points is None:
+            self.generate()
+        
+        # Compute all single compositions
+        composites = set()
+        for g1 in self.generators:
+            for g2 in self.generators:
+                phi = MobiusTransform(g1)
+                try:
+                    w = phi(g2)
+                    composites.add(round(w.real, 9) + 1j * round(w.imag, 9))
+                except ValueError:
+                    pass
+        
+        primes = []
+        for z in self._points:
+            if abs(z) < 1e-10:
+                continue
+            z_key = round(z.real, 9) + 1j * round(z.imag, 9)
+            if z_key not in composites:
+                primes.append(z)
+        
+        return primes
+    
+    def count_primes_in_ball(self, R: float) -> int:
+        """Count hyperbolic primes with norm ≤ R."""
+        primes = self.identify_primes()
+        metric = HyperbolicMetric()
+        return sum(1 for z in primes if metric.norm(z) <= R)
+
+
+class HyperbolicZeta:
+    """The partial hyperbolic zeta function.
+    
+    ζ_H(s) = Σ_{z ∈ Λ, z ≠ 0} 1 / hypNorm(z)^(2s)
+    
+    Convergence: For a lattice with N(R) ~ C·R² points up to radius R,
+    the series converges for Re(s) > 1 (analogous to the Riemann zeta function).
     """
-    if n <= 0 or n >= len(orbit):
-        return False
     
-    target = orbit[n]
-    for i in range(1, n):
-        for j in range(1, n):
-            w = moebius_add(orbit[i], orbit[j])
-            if abs(w - target) < tol:
-                return False
-    return True
+    def __init__(self, lattice: HyperbolicLattice):
+        self.lattice = lattice
+        if lattice._points is None:
+            lattice.generate()
+    
+    def evaluate(self, s: float) -> float:
+        """Evaluate ζ_H(s) = Σ hypNorm(z)^(-2s) for real s.
+        
+        Time: O(N) where N is the number of lattice points
+        """
+        metric = HyperbolicMetric()
+        total = 0.0
+        for z in self.lattice._points:
+            hn = metric.norm(z)
+            if hn > 1e-10:
+                total += hn ** (-2 * s)
+        return total
+    
+    def evaluate_complex(self, s: complex) -> complex:
+        """Evaluate ζ_H(s) for complex s."""
+        metric = HyperbolicMetric()
+        total = 0j
+        for z in self.lattice._points:
+            hn = metric.norm(z)
+            if hn > 1e-10:
+                total += hn ** (-2 * s)
+        return total
 
 
-def hyperbolic_prime_count(orbit: List[complex], N: int) -> int:
+def sl2_det(M: np.ndarray) -> float:
+    """Compute the 'modular determinant' ad - bc for a 2x2 matrix.
+    
+    Corresponds to the Lean definition modularDet.
     """
-    Count hyperbolic primes among the first N orbit points.
+    return M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0]
+
+
+def is_sl2(M: np.ndarray, tol: float = 1e-10) -> bool:
+    """Check if a 2x2 matrix is in SL(2, ℝ)."""
+    return abs(sl2_det(M) - 1) < tol
+
+
+def verify_sl2_closure(A: np.ndarray, B: np.ndarray) -> dict:
+    """Verify that the product of two SL(2) matrices is SL(2).
     
-    Args:
-        orbit: List of orbit points
-        N: Upper bound on index
-    
-    Returns:
-        Number of hyperbolic primes with index < N
-    
-    Complexity: O(N³)
+    This corresponds to the theorem mul_isSL2.
     """
-    return sum(1 for n in range(1, min(N, len(orbit)))
-               if is_hyperbolic_prime(orbit, n))
+    det_A = sl2_det(A)
+    det_B = sl2_det(B)
+    det_AB = sl2_det(A @ B)
+    return {
+        "det_A": det_A,
+        "det_B": det_B,
+        "det_AB": det_AB,
+        "A_is_SL2": abs(det_A - 1) < 1e-10,
+        "B_is_SL2": abs(det_B - 1) < 1e-10,
+        "AB_is_SL2": abs(det_AB - 1) < 1e-10,
+    }
 
-
-# ============================================================
-# Counting Function
-# ============================================================
-
-def hyp_counting(orbit: List[complex], R: float, N: int) -> int:
-    """
-    Count orbit points among the first N with Euclidean norm ≤ R.
-    
-    Properties (proved in Lean):
-    - Monotone in R: R ≤ S ⟹ count(R) ≤ count(S)
-    - Monotone in N: M ≤ N ⟹ count(M) ≤ count(N)
-    - Lower bound: count ≥ 1 when R ≥ 0, N > 0
-    - Upper bound: count ≤ N
-    
-    Args:
-        orbit: List of orbit points
-        R: Radius threshold
-        N: Number of points to consider
-    
-    Returns:
-        Count of points with |orbit[n]| ≤ R for n < N
-    """
-    return sum(1 for n in range(min(N, len(orbit))) if abs(orbit[n]) <= R)
-
-
-# ============================================================
-# Critical Line Mapping
-# ============================================================
-
-def critical_line_to_disk(t: float) -> complex:
-    """
-    Map a point on the critical line Re(s) = 1/2 to the Poincaré disk.
-    
-    The Cayley-type transform s ↦ (s-1)/(s+1) maps the critical line
-    into the closed unit disk (proved in Lean as critical_line_to_disk).
-    
-    Args:
-        t: Imaginary part (ρ = 1/2 + it)
-    
-    Returns:
-        Transformed point in the Poincaré disk
-    """
-    rho = complex(0.5, t)
-    return (rho - 1) / (rho + 1)
-
-
-# ============================================================
-# Example Usage
-# ============================================================
 
 if __name__ == "__main__":
-    print("Generating PSL(2,Z) orbit...")
-    orbit = generate_psl2z_orbit(4)
-    print(f"  {len(orbit)} orbit points generated")
+    # Quick self-test
+    print("Running algorithm self-tests...")
     
-    print("\nCounting function values:")
-    for R in [0.3, 0.5, 0.7, 0.9]:
-        count = hyp_counting(orbit, R, len(orbit))
-        print(f"  N({R}) = {count}")
+    # Test Möbius
+    phi = MobiusTransform(0.3 + 0.4j)
+    assert abs(phi(phi.a)) < 1e-10, "φ_a(a) should be 0"
     
-    print("\nHyperbolic primes (first 20 points):")
-    for n in range(1, min(21, len(orbit))):
-        if is_hyperbolic_prime(orbit, n):
-            print(f"  Λ({n}) = {orbit[n]:.6f}, |Λ({n})| = {abs(orbit[n]):.6f}")
+    # Test metric
+    m = HyperbolicMetric()
+    assert m.norm(0) == 0, "norm(0) should be 0"
+    assert m.norm(0.5) > 0, "norm should be positive"
     
-    print("\nCritical line mapping:")
-    for t in [14.13, 21.02, 25.01]:
-        w = critical_line_to_disk(t)
-        print(f"  ρ = 1/2 + {t}i → |w| = {abs(w):.8f}")
+    # Test Cayley
+    cb = CayleyBridge()
+    assert abs(cb.to_uhp(0) - 1j) < 1e-10, "C(0) should be i"
+    assert abs(cb.to_disk(1j)) < 1e-10, "C⁻¹(i) should be 0"
+    
+    # Test lattice
+    lat = HyperbolicLattice([0.5, 0.3j, -0.4+0.2j])
+    pts = lat.generate(depth=4)
+    print(f"  Generated {len(pts)} lattice points")
+    primes = lat.identify_primes()
+    print(f"  Found {len(primes)} hyperbolic primes")
+    
+    # Test SL2
+    A = np.array([[2, 1], [1, 1]], dtype=float)
+    B = np.array([[1, 1], [0, 1]], dtype=float)
+    result = verify_sl2_closure(A, B)
+    assert result["AB_is_SL2"], "Product of SL2 matrices should be SL2"
+    
+    print("All self-tests passed!")
