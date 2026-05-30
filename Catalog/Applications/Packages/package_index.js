@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Arithmetic Dynamics",
     "date": "2026-05-30T07:43:02Z",
     "exp_id": "0c6a1353",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7271528169014083,
+    "quality": "substantial",
     "pkg_num": 392
   },
   {
@@ -11377,8 +11377,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-30T07:43:02Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7271528169014083,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2103 of the highest-quality
+A curated collection of 2107 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2103
+Total files: 2107
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -460,6 +460,7 @@ import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GaussianFreeField
 import FINAL.Bridges.GibbsPosterior
+import FINAL.Bridges.GraphCutHolography
 import FINAL.Bridges.GuardedFixedPointIndex
 import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
@@ -1509,6 +1510,7 @@ import FINAL.Physics.WeightEnumerator
 import FINAL.Physics.YangMillsMassGap
 import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdaptiveOverlapRounding
+import FINAL.Pythagorean.AdelicCollisionDynamics
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.AlgorithmicLatticeDiophantine
@@ -1669,6 +1671,7 @@ import FINAL.Pythagorean.IntegerTrichotomy
 import FINAL.Pythagorean.IntrinsicBetaEta
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.IteratedShadowGeometry
+import FINAL.Pythagorean.KTupleMoebiusInversion
 import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.KruskalKatonaMI
@@ -1828,6 +1831,7 @@ import FINAL.Pythagorean.UniformMatroidStabilityRadius
 import FINAL.Pythagorean.UniformitySharpness
 import FINAL.Pythagorean.UniversalCertifiedAlgebraicComputation
 import FINAL.Pythagorean.UniversalParent
+import FINAL.Pythagorean.UniversalSpectralLaw
 import FINAL.Pythagorean.UniversalSupportTutte
 import FINAL.Pythagorean.ValuatedMConvexExchange
 import FINAL.Pythagorean.ValuatedMatroidExchange
