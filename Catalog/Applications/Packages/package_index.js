@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Spectral Theory / Constraint Satisfaction / Markov Chains",
     "date": "2026-05-30T20:41:31Z",
     "exp_id": "83688c4d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6820803846153847,
+    "quality": "partial",
     "pkg_num": 440
   },
   {
@@ -12769,8 +12769,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-30T20:41:31Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6820803846153847,
+      "quality": "partial"
     }
   ],
   "edges": [
