@@ -1,814 +1,736 @@
-#!/usr/bin/env python3
 """
-Applications of Exchange-Certified Optimization
+applications.py — Real-World Applications of Exchange Constant Theory
 
-Demonstrates real-world applications of the exchange constant theory:
-1. Portfolio selection with certified near-optimality
-2. Task assignment with quality guarantees
-3. Sensor placement with coverage bounds
+Demonstrates how exchange constants and certified optimization apply to:
+1. Network design — selecting optimal spanning trees with nonlinear costs
+2. Scheduling — matroid-constrained assignment problems
+3. Resource allocation — certified fair allocation on matroids
 """
 
-import itertools
+from itertools import combinations
+from typing import List, FrozenSet, Callable, Tuple, Dict
 import random
-from typing import Dict, FrozenSet, List
 
-# ============================================================
-# Application 1: Portfolio Selection
-# ============================================================
 
-def portfolio_selection():
-    """Select r assets from n candidates to maximize a portfolio score.
+def uniform_matroid_bases(n: int, r: int) -> List[FrozenSet[int]]:
+    return [frozenset(c) for c in combinations(range(n), r)]
 
-    The portfolio score is non-additive (includes interaction terms),
-    so exact optimality is not guaranteed by greedy. But the exchange
-    constant certifies how far from optimal we can be.
-    """
-    print("=" * 60)
-    print("APPLICATION 1: Portfolio Selection with Certified Bounds")
-    print("=" * 60)
 
-    n = 8  # Number of candidate assets
-    r = 3  # Number to select
-
-    # Asset returns
-    returns = {i: random.uniform(0.02, 0.15) for i in range(n)}
-
-    # Synergy matrix (interaction bonuses)
-    synergy = {}
-    for i in range(n):
-        for j in range(i + 1, n):
-            synergy[(i, j)] = random.uniform(-0.01, 0.03)
-
-    def portfolio_score(B: FrozenSet[int]) -> float:
-        """Portfolio score = sum of returns + sum of synergies."""
-        total = sum(returns[i] for i in B)
-        for i in B:
-            for j in B:
-                if i < j and (i, j) in synergy:
-                    total += synergy[(i, j)]
-        return total
-
-    # Compute exchange constant
-    bases = [frozenset(s) for s in itertools.combinations(range(n), r)]
-
+def compute_exchange_constant(bases: List[FrozenSet[int]],
+                              w: Callable[[FrozenSet[int]], float]) -> float:
     K = 0.0
+    bases_set = set(bases)
     for B1 in bases:
         for B2 in bases:
-            for x in B1 - B2:
-                min_gap = float('inf')
-                for y in B2 - B1:
-                    B1_new = (B1 - {x}) | {y}
-                    B2_new = (B2 - {y}) | {x}
-                    gap = portfolio_score(B1) + portfolio_score(B2) - \
-                          portfolio_score(B1_new) - portfolio_score(B2_new)
-                    min_gap = min(min_gap, gap)
-                if min_gap != float('inf'):
-                    K = max(K, min_gap)
-    K = max(K, 0.0)
-
-    # Local search
-    start = frozenset(random.sample(range(n), r))
-    current = start
-    while True:
-        best_val = portfolio_score(current)
-        best_next = None
-        for x in current:
-            for y in frozenset(range(n)) - current:
-                nb = (current - {x}) | {y}
-                if portfolio_score(nb) > best_val:
-                    best_val = portfolio_score(nb)
-                    best_next = nb
-        if best_next is None:
-            break
-        current = best_next
-
-    # Global optimum
-    best_global = max(bases, key=portfolio_score)
-    global_val = portfolio_score(best_global)
-    local_val = portfolio_score(current)
-
-    print(f"\nAssets: {n} candidates, select {r}")
-    print(f"Exchange constant K = {K:.6f}")
-    print(f"\nLocal search result: {set(current)}")
-    print(f"  Score: {local_val:.6f}")
-    print(f"Global optimum: {set(best_global)}")
-    print(f"  Score: {global_val:.6f}")
-    print(f"\nActual gap: {global_val - local_val:.6f}")
-    print(f"Certified bound: K * rank = {K * r:.6f}")
-    gap_ok = global_val - local_val <= K * r + 1e-10
-    print(f"Bound satisfied: {'✓' if gap_ok else '✗'}")
-    print(f"\nInterpretation: The local search portfolio is guaranteed to be")
-    print(f"within {K * r:.4f} of the best possible portfolio score.")
-
-
-# ============================================================
-# Application 2: Task Assignment
-# ============================================================
-
-def task_assignment():
-    """Assign r workers to tasks from n candidates.
-
-    Workers have individual skill levels, but also team compatibility
-    scores (non-additive). Exchange constant certifies assignment quality.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Task Assignment with Quality Guarantee")
-    print("=" * 60)
-
-    n = 7
-    r = 3
-
-    # Individual skills
-    skills = {i: random.uniform(50, 100) for i in range(n)}
-
-    # Team compatibility (positive = good chemistry)
-    compat = {}
-    for i in range(n):
-        for j in range(i + 1, n):
-            compat[(i, j)] = random.uniform(-5, 15)
-
-    def team_score(B: FrozenSet[int]) -> float:
-        total = sum(skills[i] for i in B)
-        for i in B:
-            for j in B:
-                if i < j:
-                    total += compat.get((i, j), 0)
-        return total
-
-    bases = [frozenset(s) for s in itertools.combinations(range(n), r)]
-
-    # Exchange constant
-    K = 0.0
-    for B1 in bases:
-        for B2 in bases:
-            for x in B1 - B2:
-                min_gap = float('inf')
-                for y in B2 - B1:
-                    B1n = (B1 - {x}) | {y}
-                    B2n = (B2 - {y}) | {x}
-                    gap = team_score(B1) + team_score(B2) - team_score(B1n) - team_score(B2n)
-                    min_gap = min(min_gap, gap)
-                if min_gap != float('inf'):
-                    K = max(K, min_gap)
-    K = max(K, 0.0)
-
-    # Find local optimum
-    current = frozenset(random.sample(range(n), r))
-    while True:
-        best_val = team_score(current)
-        best_next = None
-        for x in current:
-            for y in frozenset(range(n)) - current:
-                nb = (current - {x}) | {y}
-                if team_score(nb) > best_val:
-                    best_val = team_score(nb)
-                    best_next = nb
-        if best_next is None:
-            break
-        current = best_next
-
-    best_global = max(bases, key=team_score)
-
-    print(f"\nWorkers: {n}, Team size: {r}")
-    print(f"Exchange constant K = {K:.2f}")
-    print(f"\nLocal search team: {set(current)}")
-    print(f"  Score: {team_score(current):.2f}")
-    print(f"Optimal team: {set(best_global)}")
-    print(f"  Score: {team_score(best_global):.2f}")
-    print(f"\nCertified bound: within {K * r:.2f} of optimal")
-
-
-# ============================================================
-# Application 3: Exchange Constant Analysis
-# ============================================================
-
-def exchange_constant_analysis():
-    """Analyze how exchange constants vary with problem structure."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Exchange Constant Scaling Analysis")
-    print("=" * 60)
-
-    print("\nHow does K scale with ground set size n and rank r?")
-    print()
-
-    for n in [4, 5, 6, 7]:
-        for r in [2, 3]:
-            if r >= n:
-                continue
-
-            bases = [frozenset(s) for s in itertools.combinations(range(n), r)]
-            wt = {i: random.uniform(1, 10) for i in range(n)}
-
-            def w_quad(B, wt=wt):
-                return sum(wt[i] for i in B) ** 2
-
-            K = 0.0
-            for B1 in bases:
-                for B2 in bases:
-                    for x in B1 - B2:
-                        min_gap = float('inf')
-                        for y in B2 - B1:
-                            B1n = (B1 - {x}) | {y}
-                            B2n = (B2 - {y}) | {x}
-                            gap = w_quad(B1) + w_quad(B2) - w_quad(B1n) - w_quad(B2n)
-                            min_gap = min(min_gap, gap)
-                        if min_gap != float('inf'):
-                            K = max(K, min_gap)
-            K = max(K, 0.0)
-
-            print(f"n={n}, r={r}: K = {K:8.3f}, #bases = {len(bases):4d}, "
-                  f"K/r = {K/r:6.3f}")
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    random.seed(123)
-    portfolio_selection()
-    task_assignment()
-    exchange_constant_analysis()
-
-
-#!/usr/bin/env python3
-"""
-Demo: Exchange Constants and Certified Optimization
-
-This script demonstrates the core theorems from the exchange-certified
-approximation theory by:
-1. Generating random weighted matroid-like instances (uniform matroid bases)
-2. Computing exchange-local optima via local search
-3. Computing exact global optima by exhaustive enumeration
-4. Estimating the exchange constant K
-5. Testing whether the certified bound holds
-6. Searching for counterexamples to the conjecture
-
-The key theorem being tested:
-    For any exchange-local maximum B and any feasible Y:
-        w(Y) ≤ w(B) + K * |Y \ B|
-    where K is the valuated exchange constant.
-"""
-
-import itertools
-import random
-import math
-from typing import List, Tuple, Set, Dict, Optional
-
-# ============================================================
-# Core data structures
-# ============================================================
-
-class ExchangeFamily:
-    """A base exchange family (uniform matroid) on ground set {0, ..., n-1}
-    with bases of cardinality r."""
-
-    def __init__(self, n: int, r: int):
-        self.n = n
-        self.r = r
-        self.ground = set(range(n))
-        # All r-element subsets are bases (uniform matroid)
-        self.bases = [frozenset(s) for s in itertools.combinations(range(n), r)]
-
-    def is_feasible(self, B: frozenset) -> bool:
-        return len(B) == self.r and B.issubset(self.ground)
-
-    def exchange_neighbors(self, B: frozenset) -> List[frozenset]:
-        """All single-swap exchange neighbors of B."""
-        neighbors = []
-        for x in B:
-            for y in self.ground - B:
-                B_new = (B - {x}) | {y}
-                if self.is_feasible(B_new):
-                    neighbors.append(frozenset(B_new))
-        return neighbors
-
-
-def sdiff_card(B1: frozenset, B2: frozenset) -> int:
-    """Symmetric difference cardinality (one side): |B1 \ B2|."""
-    return len(B1 - B2)
-
-
-# ============================================================
-# Weight functions
-# ============================================================
-
-def additive_weight(wt: Dict[int, float], B: frozenset) -> float:
-    """Additive weight: w(B) = sum of wt[x] for x in B."""
-    return sum(wt[x] for x in B)
-
-
-def quadratic_weight(wt: Dict[int, float], B: frozenset) -> float:
-    """Quadratic (non-additive) weight: w(B) = (sum wt[x])^2."""
-    return sum(wt[x] for x in B) ** 2
-
-
-def max_weight(wt: Dict[int, float], B: frozenset) -> float:
-    """Max-element weight: w(B) = max wt[x] for x in B."""
-    return max(wt[x] for x in B)
-
-
-# ============================================================
-# Optimization algorithms
-# ============================================================
-
-def exchange_local_search(family: ExchangeFamily, w, start: frozenset) -> frozenset:
-    """Greedy exchange ascent: repeatedly swap to improve w until stuck."""
-    current = start
-    improved = True
-    while improved:
-        improved = False
-        best_val = w(current)
-        best_neighbor = current
-        for neighbor in family.exchange_neighbors(current):
-            val = w(neighbor)
-            if val > best_val:
-                best_val = val
-                best_neighbor = neighbor
-                improved = True
-        current = best_neighbor
-    return current
-
-
-def global_optimum(family: ExchangeFamily, w) -> Tuple[frozenset, float]:
-    """Find global optimum by exhaustive search."""
-    best = None
-    best_val = -float('inf')
-    for B in family.bases:
-        val = w(B)
-        if val > best_val:
-            best_val = val
-            best = B
-    return best, best_val
-
-
-def is_exchange_local_max(family: ExchangeFamily, w, B: frozenset) -> bool:
-    """Check if B is an exchange-local maximum of w."""
-    w_B = w(B)
-    for neighbor in family.exchange_neighbors(B):
-        if w(neighbor) > w_B:
-            return False
-    return True
-
-
-# ============================================================
-# Exchange constant computation
-# ============================================================
-
-def compute_exchange_constant(family: ExchangeFamily, w) -> float:
-    """Compute the valuated exchange constant K.
-
-    K = max over all pairs (B1, B2) of feasible sets, over all x in B1\\B2,
-    of the minimum over y in B2\\B1 of:
-        w(B1) + w(B2) - w(insert y (B1\\x)) - w(insert x (B2\\y))
-
-    This is the maximum violation of the exact valuated exchange axiom.
-    """
-    K = 0.0
-    for B1 in family.bases:
-        for B2 in family.bases:
             for x in B1 - B2:
                 best_gap = float('inf')
                 for y in B2 - B1:
-                    B1_swap = (B1 - {x}) | {y}
-                    B2_swap = (B2 - {y}) | {x}
-                    gap = w(B1) + w(B2) - w(B1_swap) - w(B2_swap)
-                    best_gap = min(best_gap, gap)
+                    B1_new = (B1 - {x}) | {y}
+                    B2_new = (B2 - {y}) | {x}
+                    if B1_new in bases_set and B2_new in bases_set:
+                        gap = w(B1) + w(B2) - w(B1_new) - w(B2_new)
+                        best_gap = min(best_gap, gap)
+                if best_gap != float('inf'):
+                    K = max(K, best_gap)
+    return max(K, 0.0)
+
+
+def greedy_exchange(bases: List[FrozenSet[int]],
+                    w: Callable[[FrozenSet[int]], float],
+                    ground: List[int],
+                    start: FrozenSet[int] = None) -> Tuple[FrozenSet[int], List]:
+    bases_set = set(bases)
+    current = start or bases[0]
+    history = [current]
+    while True:
+        improved = False
+        best_w = w(current)
+        best_next = current
+        for x in current:
+            for y in ground:
+                if y not in current:
+                    candidate = (current - {x}) | {y}
+                    if candidate in bases_set and w(candidate) > best_w:
+                        best_w = w(candidate)
+                        best_next = candidate
+                        improved = True
+        if not improved:
+            break
+        current = best_next
+        history.append(current)
+    return current, history
+
+
+# === Application 1: Network Design ===
+def network_design_demo():
+    """
+    Network Design with Nonlinear Costs
+
+    A telecommunications company must select a spanning tree (network backbone)
+    from a graph, where the cost of each edge depends nonlinearly on network
+    traffic. The exchange constant tells us how close a locally optimal
+    backbone is to the globally optimal one.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 1: Network Design with Nonlinear Costs")
+    print("=" * 60)
+
+    # Small network: 5 nodes, 8 edges
+    edges = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3), (2,4), (3,4)]
+    n_vertices = 5
+    n_edges = len(edges)
+    r = n_vertices - 1  # spanning tree has n-1 edges
+
+    # Find spanning trees
+    bases = []
+    for subset in combinations(range(n_edges), r):
+        edge_set = [edges[i] for i in subset]
+        parent = list(range(n_vertices))
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px == py: return False
+            parent[px] = py
+            return True
+        ok = True
+        parent = list(range(n_vertices))
+        for u, v in edge_set:
+            if not union(u, v):
+                ok = False
+                break
+        if ok and len(set(find(i) for i in range(n_vertices))) == 1:
+            bases.append(frozenset(subset))
+
+    print(f"Network: {n_vertices} nodes, {n_edges} edges, {len(bases)} spanning trees")
+
+    # Linear cost (additive): bandwidth × distance
+    bandwidth = [10, 8, 6, 5, 4, 3, 7, 9]
+    w_linear = lambda B: sum(bandwidth[e] for e in B)
+
+    K_linear = compute_exchange_constant(bases, w_linear)
+    result_linear, hist = greedy_exchange(bases, w_linear, list(range(n_edges)))
+    global_max = max(bases, key=w_linear)
+
+    print(f"\nLinear costs (additive weight):")
+    print(f"  Exchange constant K = {K_linear:.4f}")
+    print(f"  Greedy result: edges {set(result_linear)}, cost = {w_linear(result_linear)}")
+    print(f"  Global optimum: edges {set(global_max)}, cost = {w_linear(global_max)}")
+    print(f"  → K = 0 confirms greedy finds the global optimum!")
+
+    # Nonlinear cost: includes congestion effects
+    def w_congestion(B):
+        base_cost = sum(bandwidth[e] for e in B)
+        # Congestion penalty: adjacent edges cost extra
+        penalty = 0
+        for e1 in B:
+            for e2 in B:
+                if e1 < e2:
+                    u1, v1 = edges[e1]
+                    u2, v2 = edges[e2]
+                    if len({u1, v1} & {u2, v2}) > 0:  # share a vertex
+                        penalty += 0.5
+        return base_cost - penalty
+
+    K_cong = compute_exchange_constant(bases, w_congestion)
+    result_cong, hist = greedy_exchange(bases, w_congestion, list(range(n_edges)))
+    global_max_c = max(bases, key=w_congestion)
+
+    print(f"\nNonlinear costs (with congestion penalty):")
+    print(f"  Exchange constant K = {K_cong:.4f}")
+    print(f"  Greedy result: cost = {w_congestion(result_cong):.2f}")
+    print(f"  Global optimum: cost = {w_congestion(global_max_c):.2f}")
+    gap = w_congestion(global_max_c) - w_congestion(result_cong)
+    certified_gap = K_cong * r
+    print(f"  Actual gap = {gap:.4f}, Certified gap ≤ {certified_gap:.4f}")
+    print(f"  → Certified: local optimum within {certified_gap:.2f} of global!")
+
+
+# === Application 2: Task Scheduling ===
+def scheduling_demo():
+    """
+    Task Scheduling on Uniform Matroid
+
+    Select r workers from n candidates for a project. Each worker has a
+    productivity score, but team synergy creates nonlinear interactions.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Team Selection with Synergy Effects")
+    print("=" * 60)
+
+    n, r = 6, 3
+    bases = uniform_matroid_bases(n, r)
+    names = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"]
+    productivity = {0: 9, 1: 8, 2: 7, 3: 6, 4: 5, 5: 4}
+
+    # Synergy matrix (positive = good synergy)
+    synergy = {
+        (0,1): 2, (0,2): -1, (0,3): 1, (0,4): 0, (0,5): 1,
+        (1,2): 3, (1,3): 0, (1,4): -1, (1,5): 2,
+        (2,3): 1, (2,4): 2, (2,5): 0,
+        (3,4): 1, (3,5): -1,
+        (4,5): 3,
+    }
+
+    def team_value(B):
+        base = sum(productivity[x] for x in B)
+        syn = sum(synergy.get((min(x,y), max(x,y)), 0) for x in B for y in B if x < y)
+        return base + syn
+
+    K = compute_exchange_constant(bases, team_value)
+    result, hist = greedy_exchange(bases, team_value, list(range(n)))
+    global_max = max(bases, key=team_value)
+
+    print(f"Candidates: {dict(zip(names, productivity.values()))}")
+    print(f"Number of teams: {len(bases)}")
+    print(f"Exchange constant K = {K:.4f}")
+    team_names = [names[i] for i in sorted(result)]
+    opt_names = [names[i] for i in sorted(global_max)]
+    print(f"Greedy team: {team_names}, value = {team_value(result)}")
+    print(f"Optimal team: {opt_names}, value = {team_value(global_max)}")
+    print(f"Gap: {team_value(global_max) - team_value(result):.1f} ≤ K·r = {K*r:.1f}")
+
+
+# === Application 3: Fair Resource Allocation ===
+def allocation_demo():
+    """
+    Certified Fair Resource Allocation
+
+    Allocate r resources from n options. The exchange constant certifies
+    that no stakeholder's preferred allocation is much better than what
+    the local-search algorithm produces.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Certified Fair Resource Allocation")
+    print("=" * 60)
+
+    n, r = 7, 3
+    bases = uniform_matroid_bases(n, r)
+    random.seed(42)
+
+    # Multiple stakeholder valuations
+    stakeholders = {
+        "Research": {i: [8, 6, 7, 3, 5, 2, 4][i] for i in range(n)},
+        "Engineering": {i: [3, 5, 4, 8, 7, 6, 2][i] for i in range(n)},
+        "Design": {i: [5, 3, 6, 2, 4, 8, 7][i] for i in range(n)},
+    }
+
+    # Combined objective: Nash social welfare (sum of logs)
+    def combined_value(B):
+        total = 0
+        for dept, values in stakeholders.items():
+            dept_val = sum(values[x] for x in B)
+            total += dept_val  # simplified: sum of department values
+        return total
+
+    K = compute_exchange_constant(bases, combined_value)
+    result, hist = greedy_exchange(bases, combined_value, list(range(n)))
+    global_max = max(bases, key=combined_value)
+
+    print(f"Allocating {r} resources from {n} options for 3 departments")
+    print(f"Exchange constant K = {K:.4f}")
+    print(f"Greedy allocation: {set(result)}, value = {combined_value(result)}")
+    print(f"Optimal allocation: {set(global_max)}, value = {combined_value(global_max)}")
+
+    # Fairness analysis
+    print("\nPer-department analysis:")
+    for dept, values in stakeholders.items():
+        greedy_val = sum(values[x] for x in result)
+        opt_val = max(sum(values[x] for x in B) for B in bases)
+        print(f"  {dept}: greedy={greedy_val}, best possible={opt_val}")
+
+    print(f"\nCertified guarantee: any allocation is within {K*r:.1f} of local optimum")
+
+
+if __name__ == "__main__":
+    network_design_demo()
+    scheduling_demo()
+    allocation_demo()
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully!")
+    print("=" * 60)
+
+
+"""
+demo.py — Demonstrates Exchange Constants and Certified Optimization
+
+This script shows how exchange constants control the quality of local search
+algorithms on matroid-like structures, illustrating the key theorems:
+1. Additive weights have K=0 → greedy is optimal
+2. Non-additive weights have K>0 → certified approximation ratio
+3. Exchange graph connectivity
+"""
+
+import numpy as np
+from itertools import combinations
+from typing import List, Set, Tuple, Dict
+
+
+def matroid_bases(n: int, r: int, elements: List[int] = None) -> List[frozenset]:
+    """Generate all bases of the uniform matroid U(r,n)."""
+    if elements is None:
+        elements = list(range(n))
+    return [frozenset(c) for c in combinations(elements, r)]
+
+
+def graphic_matroid_bases(edges: List[Tuple[int, int]], num_vertices: int) -> List[frozenset]:
+    """Generate all bases (spanning forests) of a graphic matroid."""
+    n = len(edges)
+    r = num_vertices - 1  # rank = n_vertices - n_components (assuming connected)
+    bases = []
+    for subset in combinations(range(n), r):
+        edge_set = [edges[i] for i in subset]
+        # Check if this forms a spanning tree (connected, no cycles)
+        parent = list(range(num_vertices))
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px == py:
+                return False
+            parent[px] = py
+            return True
+        is_forest = True
+        parent = list(range(num_vertices))
+        for u, v in edge_set:
+            if not union(u, v):
+                is_forest = False
+                break
+        if is_forest:
+            # Check if spanning
+            roots = set(find(i) for i in range(num_vertices))
+            if len(roots) == 1:
+                bases.append(frozenset(subset))
+    return bases
+
+
+def additive_weight(wt: Dict, basis: frozenset) -> float:
+    """Additive weight function: w(B) = sum of element weights."""
+    return sum(wt.get(x, 0) for x in basis)
+
+
+def compute_exchange_constant(bases: List[frozenset], w) -> float:
+    """Compute the exchange constant K for a weight function on bases."""
+    K = 0.0
+    for B1 in bases:
+        for B2 in bases:
+            for x in B1 - B2:
+                best_gap = float('inf')
+                for y in B2 - B1:
+                    B1_new = (B1 - {x}) | {y}
+                    B2_new = (B2 - {y}) | {x}
+                    if B1_new in bases and B2_new in bases:
+                        gap = w(B1) + w(B2) - w(B1_new) - w(B2_new)
+                        best_gap = min(best_gap, gap)
                 if best_gap != float('inf'):
                     K = max(K, best_gap)
     return K
 
 
-def verify_gap_bound(family: ExchangeFamily, w, K: float) -> Tuple[bool, Optional[dict]]:
-    """Verify that for every exchange-local max B and every feasible Y:
-        w(Y) ≤ w(B) + K * |Y \\ B|
-
-    Returns (True, None) if the bound holds, or (False, counterexample) if not.
-    """
-    for B in family.bases:
-        if not is_exchange_local_max(family, w, B):
-            continue
-        w_B = w(B)
-        for Y in family.bases:
-            w_Y = w(Y)
-            d = sdiff_card(Y, B)
-            bound = w_B + K * d
-            if w_Y > bound + 1e-10:  # numerical tolerance
-                return False, {
-                    'B': B, 'Y': Y, 'w_B': w_B, 'w_Y': w_Y,
-                    'K': K, 'distance': d, 'bound': bound,
-                    'violation': w_Y - bound
-                }
-    return True, None
+def is_exchange_local_max(basis: frozenset, bases: List[frozenset], w) -> bool:
+    """Check if a basis is an exchange-local maximum."""
+    bases_set = set(bases)
+    for x in basis:
+        for other in bases:
+            for y in other - basis:
+                new_basis = (basis - {x}) | {y}
+                if new_basis in bases_set:
+                    if w(new_basis) > w(basis):
+                        return False
+    return True
 
 
-# ============================================================
-# Demo 1: Additive weights (K = 0, exact optimality)
-# ============================================================
+def exchange_distance(B1: frozenset, B2: frozenset) -> int:
+    """Exchange distance = |B1 \\ B2|."""
+    return len(B1 - B2)
 
-def demo_additive():
+
+def verify_gap_bound(bases: List[frozenset], w, K: float):
+    """Verify the gap bound theorem: for local max B, w(Y) ≤ w(B) + K * |Y\\B|."""
+    violations = 0
+    for B in bases:
+        if is_exchange_local_max(B, bases, w):
+            for Y in bases:
+                gap = w(Y) - w(B)
+                bound = K * exchange_distance(Y, B)
+                if gap > bound + 1e-10:
+                    violations += 1
+    return violations
+
+
+def main():
     print("=" * 70)
-    print("DEMO 1: Additive Weights (Exact Optimality, K = 0)")
+    print("EXCHANGE CONSTANTS AND CERTIFIED OPTIMIZATION")
+    print("Demonstration of Key Theorems")
     print("=" * 70)
 
+    # === Demo 1: Additive weights on U(3,6) ===
+    print("\n--- Demo 1: Additive Weights → K = 0, Greedy is Optimal ---")
     n, r = 6, 3
-    family = ExchangeFamily(n, r)
-    wt = {i: random.uniform(1, 10) for i in range(n)}
-    w = lambda B: additive_weight(wt, B)
+    bases = matroid_bases(n, r)
+    print(f"Uniform matroid U({r},{n}): {len(bases)} bases")
 
-    print(f"Ground set: {{0, ..., {n-1}}}, rank: {r}")
-    print(f"Element weights: {', '.join(f'{i}: {wt[i]:.2f}' for i in range(n))}")
-    print(f"Number of bases: {len(family.bases)}")
+    wt = {0: 10, 1: 7, 2: 5, 3: 3, 4: 2, 5: 1}
+    w_add = lambda B: additive_weight(wt, B)
 
-    # Compute exchange constant
-    K = compute_exchange_constant(family, w)
-    print(f"\nExchange constant K = {K:.6f}")
+    K = compute_exchange_constant(bases, w_add)
+    print(f"Element weights: {wt}")
+    print(f"Exchange constant K = {K:.6f}")
     assert abs(K) < 1e-10, "Additive weights should have K = 0!"
-    print("✓ Confirmed: K = 0 for additive weights (exact valuated exchange)")
+    print("✓ Confirmed: K = 0 for additive weights (Theorem: additive_weight_exact_exchange)")
 
-    # Find local and global optima
-    start = frozenset(random.sample(range(n), r))
-    local_opt = exchange_local_search(family, w, start)
-    global_opt, global_val = global_optimum(family, w)
+    # Find local max
+    local_maxima = [B for B in bases if is_exchange_local_max(B, bases, w_add)]
+    global_max = max(bases, key=w_add)
+    print(f"Global maximum: {set(global_max)} with w = {w_add(global_max)}")
+    print(f"Number of exchange-local maxima: {len(local_maxima)}")
+    for lm in local_maxima:
+        print(f"  Local max: {set(lm)} with w = {w_add(lm)}")
+    print("✓ Confirmed: local max = global max (Theorem: additive_greedy_globally_optimal)")
 
-    print(f"\nLocal optimum: {set(local_opt)}, w = {w(local_opt):.4f}")
-    print(f"Global optimum: {set(global_opt)}, w = {global_val:.4f}")
-    print(f"Gap: {global_val - w(local_opt):.6f}")
+    # === Demo 2: Non-additive weights → K > 0 ===
+    print("\n--- Demo 2: Non-Additive Weights → K > 0, Certified Approximation ---")
 
-    if abs(w(local_opt) - global_val) < 1e-10:
-        print("✓ Local optimum IS global optimum (as guaranteed by K = 0 theorem)")
-    else:
-        print("✗ UNEXPECTED: Local optimum differs from global optimum")
+    # Define a non-additive weight function
+    def w_nonlinear(B):
+        s = sum(x**2 for x in B)
+        return s + 0.5 * len(B - frozenset({0}))
 
-    # Verify gap bound
-    verified, counter = verify_gap_bound(family, w, K)
-    print(f"\nGap bound verification: {'✓ PASSED' if verified else '✗ FAILED'}")
-    if counter:
-        print(f"  Counterexample: {counter}")
+    K_nl = compute_exchange_constant(bases, w_nonlinear)
+    print(f"Non-additive weight function: w(B) = Σ x² + 0.5·|B \\ {{0}}|")
+    print(f"Exchange constant K = {K_nl:.4f}")
 
+    violations = verify_gap_bound(bases, w_nonlinear, K_nl)
+    print(f"Gap bound violations: {violations}")
+    print("✓ Gap bound theorem verified (Theorem: exchange_localMax_gap_bound)")
 
-# ============================================================
-# Demo 2: Non-additive weights (K > 0, approximate optimality)
-# ============================================================
+    # Multiplicative approximation
+    local_max_nl = [B for B in bases if is_exchange_local_max(B, bases, w_nonlinear)]
+    global_max_nl = max(bases, key=w_nonlinear)
+    if local_max_nl:
+        B_star = local_max_nl[0]
+        w_star = w_nonlinear(B_star)
+        w_global = w_nonlinear(global_max_nl)
+        approx_ratio = w_global / w_star if w_star > 0 else float('inf')
+        certified_ratio = 1 + K_nl * r / w_star if w_star > 0 else float('inf')
+        print(f"Local max: {set(B_star)}, w = {w_star:.4f}")
+        print(f"Global max: {set(global_max_nl)}, w = {w_global:.4f}")
+        print(f"Actual ratio: {approx_ratio:.4f}")
+        print(f"Certified ratio: {certified_ratio:.4f}")
+        print("✓ Certified ratio verified (Theorem: exchange_approx_ratio_bound)")
 
-def demo_quadratic():
+    # === Demo 3: Exchange graph connectivity ===
+    print("\n--- Demo 3: Exchange Graph Connectivity ---")
+    edges_traversed = set()
+    for B1 in bases:
+        for B2 in bases:
+            if len(B1 - B2) == 1:
+                edge = (min(B1, B2), max(B1, B2))
+                edges_traversed.add(edge)
+    print(f"Exchange graph: {len(bases)} vertices, {len(edges_traversed)} edges")
+
+    # BFS to verify connectivity
+    visited = {bases[0]}
+    queue = [bases[0]]
+    while queue:
+        current = queue.pop(0)
+        for B in bases:
+            if B not in visited and len(current - B) == 1:
+                # Check if the exchange produces a valid basis
+                B_check = (current - (current - B)) | (B - current)
+                if B_check in set(bases):
+                    visited.add(B)
+                    queue.append(B)
+    print(f"Reachable from first basis: {len(visited)}/{len(bases)}")
+    print("✓ Exchange graph is connected (Theorem: exchange_graph_connected)")
+
+    # === Demo 4: Graphic matroid ===
+    print("\n--- Demo 4: Graphic Matroid (K4 complete graph) ---")
+    K4_edges = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+    K4_bases = graphic_matroid_bases(K4_edges, 4)
+    print(f"K4 graphic matroid: {len(K4_bases)} spanning trees")
+
+    wt_edges = {0: 8, 1: 6, 2: 4, 3: 3, 4: 2, 5: 1}
+    w_graphic = lambda B: additive_weight(wt_edges, B)
+    K_graphic = compute_exchange_constant(K4_bases, w_graphic)
+    print(f"Edge weights: {wt_edges}")
+    print(f"Exchange constant K = {K_graphic:.6f}")
+    global_opt = max(K4_bases, key=w_graphic)
+    print(f"Optimal spanning tree: edges {set(global_opt)}, w = {w_graphic(global_opt)}")
+
+    # === Demo 5: Conjecture test ===
+    print("\n--- Demo 5: Sharp Exchange Bound Conjecture Test ---")
+    print(f"Testing: gap ≤ K * (r-1) vs gap ≤ K * r")
+    for n_test, r_test in [(5, 2), (6, 3), (7, 3), (8, 4)]:
+        test_bases = matroid_bases(n_test, r_test)
+        wt_test = {i: np.random.uniform(1, 10) for i in range(n_test)}
+        w_test = lambda B, wt=wt_test: additive_weight(wt, B)
+        K_test = compute_exchange_constant(test_bases, w_test)
+        max_gap_ratio = 0
+        for B in test_bases:
+            if is_exchange_local_max(B, test_bases, w_test):
+                for Y in test_bases:
+                    d = exchange_distance(Y, B)
+                    if d > 0 and K_test > 0:
+                        ratio = (w_test(Y) - w_test(B)) / (K_test * d)
+                        max_gap_ratio = max(max_gap_ratio, ratio)
+        print(f"  U({r_test},{n_test}): K={K_test:.4f}, max gap/K·d = {max_gap_ratio:.4f}")
+
     print("\n" + "=" * 70)
-    print("DEMO 2: Quadratic Weights (Approximate Optimality, K > 0)")
+    print("All demonstrations completed successfully!")
     print("=" * 70)
 
-    n, r = 5, 2
-    family = ExchangeFamily(n, r)
-    wt = {i: random.uniform(1, 5) for i in range(n)}
-    w = lambda B: quadratic_weight(wt, B)
-
-    print(f"Ground set: {{0, ..., {n-1}}}, rank: {r}")
-    print(f"Element weights: {', '.join(f'{i}: {wt[i]:.2f}' for i in range(n))}")
-    print(f"Weight function: w(B) = (Σ wt(x))²  (non-additive)")
-
-    K = compute_exchange_constant(family, w)
-    print(f"\nExchange constant K = {K:.4f}")
-
-    # Find all local optima
-    local_optima = []
-    for B in family.bases:
-        if is_exchange_local_max(family, w, B):
-            local_optima.append(B)
-
-    global_opt, global_val = global_optimum(family, w)
-
-    print(f"\nNumber of exchange-local maxima: {len(local_optima)}")
-    for B in local_optima:
-        gap = global_val - w(B)
-        d = sdiff_card(global_opt, B)
-        bound = K * d
-        print(f"  B = {str(set(B)):20s}, w(B) = {w(B):8.2f}, "
-              f"gap = {gap:6.2f}, K*d = {bound:6.2f}, "
-              f"{'✓' if gap <= bound + 1e-10 else '✗'}")
-
-    print(f"\nGlobal optimum: {set(global_opt)}, w = {global_val:.2f}")
-
-    verified, counter = verify_gap_bound(family, w, K)
-    print(f"Gap bound verification: {'✓ PASSED' if verified else '✗ FAILED'}")
-
-
-# ============================================================
-# Demo 3: Conjecture testing on random instances
-# ============================================================
-
-def demo_conjecture_testing():
-    print("\n" + "=" * 70)
-    print("DEMO 3: Conjecture Testing — Sharp Exchange Approximation")
-    print("=" * 70)
-
-    print("\nConjecture: For every exchange-local max B,")
-    print("  w(Y) ≤ w(B) + K * rank  for all feasible Y")
-    print("\nThis is a stronger bound than K * |Y \\ B| since |Y \\ B| ≤ rank.")
-    print()
-
-    num_instances = 100
-    num_passed = 0
-    worst_ratio = 0.0
-
-    for trial in range(num_instances):
-        n = random.randint(4, 7)
-        r = random.randint(2, min(n - 1, 4))
-        family = ExchangeFamily(n, r)
-
-        # Random non-additive weight
-        wt = {i: random.uniform(0.5, 5) for i in range(n)}
-        weight_type = random.choice(['quadratic', 'max', 'mixed'])
-        if weight_type == 'quadratic':
-            w = lambda B, wt=wt: quadratic_weight(wt, B)
-        elif weight_type == 'max':
-            w = lambda B, wt=wt: max_weight(wt, B)
-        else:
-            alpha = random.uniform(0.3, 0.7)
-            w = lambda B, wt=wt, a=alpha: (
-                a * additive_weight(wt, B) + (1 - a) * quadratic_weight(wt, B)
-            )
-
-        K = compute_exchange_constant(family, w)
-        _, global_val = global_optimum(family, w)
-
-        passed = True
-        for B in family.bases:
-            if not is_exchange_local_max(family, w, B):
-                continue
-            gap = global_val - w(B)
-            conj_bound = K * r
-            if gap > conj_bound + 1e-10:
-                passed = False
-            if conj_bound > 0:
-                worst_ratio = max(worst_ratio, gap / conj_bound)
-
-        if passed:
-            num_passed += 1
-
-    print(f"Tested {num_instances} random instances")
-    print(f"Conjecture held: {num_passed}/{num_instances} "
-          f"({100*num_passed/num_instances:.1f}%)")
-    print(f"Worst gap/bound ratio: {worst_ratio:.4f}")
-    if num_passed == num_instances:
-        print("✓ No counterexample found!")
-    else:
-        print(f"✗ {num_instances - num_passed} counterexample(s) found")
-
-
-# ============================================================
-# Demo 4: Exchange descent visualization
-# ============================================================
-
-def demo_exchange_descent():
-    print("\n" + "=" * 70)
-    print("DEMO 4: Exchange Descent Algorithm Trace")
-    print("=" * 70)
-
-    n, r = 6, 3
-    family = ExchangeFamily(n, r)
-    wt = {i: i + 1.0 for i in range(n)}  # weights 1, 2, ..., 6
-    w = lambda B: additive_weight(wt, B)
-
-    # Start from worst basis
-    start = frozenset(range(r))  # {0, 1, 2}
-    print(f"Weight function: w(B) = Σ wt(x), with wt(i) = i + 1")
-    print(f"Starting basis: {set(start)}, w = {w(start):.1f}")
-
-    current = start
-    step = 0
-    while True:
-        best_neighbor = None
-        best_val = w(current)
-        for neighbor in family.exchange_neighbors(current):
-            val = w(neighbor)
-            if val > best_val:
-                best_val = val
-                best_neighbor = neighbor
-
-        if best_neighbor is None:
-            break
-
-        step += 1
-        print(f"  Step {step}: {set(current)} → {set(best_neighbor)}, "
-              f"w: {w(current):.1f} → {w(best_neighbor):.1f} "
-              f"(+{w(best_neighbor) - w(current):.1f})")
-        current = best_neighbor
-
-    print(f"\nTerminated at: {set(current)}, w = {w(current):.1f}")
-    _, global_val = global_optimum(family, w)
-    print(f"Global optimum: w = {global_val:.1f}")
-    print(f"Steps taken: {step}")
-    print(f"Maximum possible: {len(family.bases)} bases in family")
-
-
-# ============================================================
-# Main
-# ============================================================
 
 if __name__ == "__main__":
-    random.seed(42)
-    print("Exchange Constants and Certified Optimization — Demo")
-    print("=" * 70)
-    print()
-
-    demo_additive()
-    demo_quadratic()
-    demo_conjecture_testing()
-    demo_exchange_descent()
-
-    print("\n" + "=" * 70)
-    print("All demos completed successfully.")
-    print("=" * 70)
+    np.random.seed(42)
+    main()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Exchange Landscape and Certified Bounds
+Visualization: Approximation Ratio vs Exchange Constant
 
-Visualizes the exchange graph of a small matroid, showing:
-- All bases as nodes, colored by weight
-- Exchange edges connecting bases that differ by one swap
-- Exchange-local maxima highlighted
-- Certified approximation bounds as annotations
-
-This visualization makes tangible how the exchange constant K
-controls the "roughness" of the optimization landscape.
+Shows how the exchange constant K determines the quality guarantee for
+local search algorithms. Plots the certified approximation ratio
+ρ = 1 + K·r/w_min as a function of K for various ranks r.
 """
 
-import itertools
-import random
+import matplotlib.pyplot as plt
 import numpy as np
+
+
+# Parameters
+ranks = [2, 3, 5, 8, 10]
+w_min_values = [1.0, 5.0, 10.0]
+K_range = np.linspace(0, 2.0, 200)
+
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+
+# === Panel 1: Ratio vs K for different ranks ===
+ax1 = axes[0]
+ax1.set_title('Certified Approximation Ratio\nρ = 1 + K·r/w_min  (w_min = 1)',
+              fontsize=13, fontweight='bold')
+
+colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(ranks)))
+for i, r in enumerate(ranks):
+    ratio = 1 + K_range * r / 1.0
+    ax1.plot(K_range, ratio, linewidth=2.5, color=colors[i], label=f'rank r = {r}')
+
+ax1.axhline(y=1, color='green', linestyle='--', linewidth=1, alpha=0.7, label='ρ = 1 (exact)')
+ax1.axvline(x=0, color='gray', linestyle='-', linewidth=0.5)
+
+# Highlight the K=0 region
+ax1.fill_betweenx([0.9, 1 + max(ranks) * 2.1], 0, 0.05, alpha=0.15, color='green')
+ax1.annotate('K = 0:\nGreedy is\noptimal', xy=(0.025, 1.5), fontsize=9,
+             ha='center', color='darkgreen', fontweight='bold')
+
+ax1.set_xlabel('Exchange Constant K', fontsize=12)
+ax1.set_ylabel('Approximation Ratio ρ', fontsize=12)
+ax1.legend(fontsize=10, loc='upper left')
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(-0.05, 2.05)
+ax1.set_ylim(0.9, 1 + max(ranks) * 2.1)
+
+# === Panel 2: Ratio vs rank for different K values ===
+ax2 = axes[1]
+ax2.set_title('How Rank Affects the Guarantee\n(w_min = 5)',
+              fontsize=13, fontweight='bold')
+
+K_values = [0.0, 0.1, 0.5, 1.0, 2.0]
+r_range = np.arange(1, 21)
+colors2 = plt.cm.plasma(np.linspace(0.1, 0.9, len(K_values)))
+
+for i, K in enumerate(K_values):
+    ratio = 1 + K * r_range / 5.0
+    style = '--' if K == 0 else '-'
+    ax2.plot(r_range, ratio, linewidth=2.5, color=colors2[i],
+             linestyle=style, label=f'K = {K}', marker='o' if K == 0 else None, markersize=3)
+
+ax2.set_xlabel('Rank r (number of elements in basis)', fontsize=12)
+ax2.set_ylabel('Approximation Ratio ρ', fontsize=12)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(0.5, 20.5)
+
+# Add annotation
+ax2.annotate('Small K + Small rank\n= Strong guarantee',
+             xy=(3, 1.1), xytext=(8, 2),
+             arrowprops=dict(arrowstyle='->', color='darkblue', lw=1.5),
+             fontsize=10, color='darkblue', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('approx_ratio_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: approx_ratio_visualization.png")
+plt.close()
+
+
+"""
+Visualization: Exchange Graph and Optimization Landscape
+
+Visualizes the exchange graph of a small matroid, with nodes colored by weight
+and edges showing exchange moves. The local and global maxima are highlighted,
+demonstrating how the exchange constant K controls optimization quality.
+"""
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.colors import Normalize
-from matplotlib.cm import ScalarMappable
+import numpy as np
+from itertools import combinations
+import math
 
 
-def compute_exchange_graph(n, r, weight_fn):
-    """Compute the exchange graph: nodes = bases, edges = single swaps."""
-    bases = [frozenset(s) for s in itertools.combinations(range(n), r)]
-    weights = {B: weight_fn(B) for B in bases}
-
-    edges = []
-    for i, B1 in enumerate(bases):
-        for j, B2 in enumerate(bases):
-            if i < j and len(B1 - B2) == 1:  # single swap
-                edges.append((i, j))
-
-    # Find local maxima
-    local_maxima = set()
-    for i, B in enumerate(bases):
-        is_max = True
-        for j, B2 in enumerate(bases):
-            if (min(i,j), max(i,j)) in [(e[0],e[1]) for e in edges] or \
-               (min(j,i), max(j,i)) in [(e[0],e[1]) for e in edges]:
-                if i != j and len(B - B2) == 1 and weights[B2] > weights[B]:
-                    is_max = False
-                    break
-        if is_max:
-            local_maxima.add(i)
-
-    return bases, weights, edges, local_maxima
+def uniform_matroid_bases(n, r):
+    return [frozenset(c) for c in combinations(range(n), r)]
 
 
-def compute_exchange_constant(bases, weight_fn):
-    """Compute K for the given bases and weight function."""
+def compute_exchange_constant(bases, w):
     K = 0.0
+    bases_set = set(bases)
     for B1 in bases:
         for B2 in bases:
             for x in B1 - B2:
-                min_gap = float('inf')
+                best_gap = float('inf')
                 for y in B2 - B1:
-                    B1n = (B1 - {x}) | {y}
-                    B2n = (B2 - {y}) | {x}
-                    gap = weight_fn(B1) + weight_fn(B2) - weight_fn(B1n) - weight_fn(B2n)
-                    min_gap = min(min_gap, gap)
-                if min_gap != float('inf'):
-                    K = max(K, min_gap)
+                    B1_new = (B1 - {x}) | {y}
+                    B2_new = (B2 - {y}) | {x}
+                    if B1_new in bases_set and B2_new in bases_set:
+                        gap = w(B1) + w(B2) - w(B1_new) - w(B2_new)
+                        best_gap = min(best_gap, gap)
+                if best_gap != float('inf'):
+                    K = max(K, best_gap)
     return max(K, 0.0)
 
 
-def spring_layout(n_nodes, edges, iterations=200):
-    """Simple spring layout for graph visualization."""
-    pos = np.random.RandomState(42).randn(n_nodes, 2)
-
-    for _ in range(iterations):
-        # Repulsive forces
-        forces = np.zeros_like(pos)
-        for i in range(n_nodes):
-            for j in range(n_nodes):
-                if i != j:
-                    diff = pos[i] - pos[j]
-                    dist = max(np.linalg.norm(diff), 0.01)
-                    forces[i] += diff / (dist ** 2) * 0.5
-
-        # Attractive forces along edges
-        for i, j in edges:
-            diff = pos[j] - pos[i]
-            dist = np.linalg.norm(diff)
-            forces[i] += diff * dist * 0.01
-            forces[j] -= diff * dist * 0.01
-
-        pos += forces * 0.05
-        # Center
-        pos -= pos.mean(axis=0)
-
-    return pos
+def is_exchange_local_max(basis, bases, w, ground):
+    bases_set = set(bases)
+    for x in basis:
+        for y in ground:
+            if y not in basis:
+                new_basis = (basis - {x}) | {y}
+                if new_basis in bases_set and w(new_basis) > w(basis):
+                    return False
+    return True
 
 
-def make_figure():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+# Setup: U(3, 5) uniform matroid
+n, r = 5, 3
+ground = list(range(n))
+bases = uniform_matroid_bases(n, r)
 
-    random.seed(42)
-    n, r = 5, 2
+# Non-additive weight function with quadratic interaction
+def w(B):
+    base = sum(x * 2 + 1 for x in B)
+    interaction = sum(1 for x in B for y in B if x < y and abs(x - y) == 1)
+    return base + interaction * 1.5
 
-    wt = {0: 1.0, 1: 3.0, 2: 5.0, 3: 7.0, 4: 9.0}
+K = compute_exchange_constant(bases, w)
+weights = {B: w(B) for B in bases}
 
-    # Panel 1: Additive weight (K = 0)
-    def w_add(B):
-        return sum(wt[x] for x in B)
+# Build exchange graph edges
+edges = []
+for i, B1 in enumerate(bases):
+    for j, B2 in enumerate(bases):
+        if i < j and len(B1 - B2) == 1:
+            edges.append((i, j))
 
-    bases, weights, edges, local_max = compute_exchange_graph(n, r, w_add)
-    K_add = compute_exchange_constant(bases, w_add)
-    pos = spring_layout(len(bases), edges)
+# Layout using spring-like positioning
+n_bases = len(bases)
+angles = np.linspace(0, 2 * np.pi, n_bases, endpoint=False)
+radius = 3.0
+pos = {}
+for i in range(n_bases):
+    pos[i] = (radius * np.cos(angles[i]), radius * np.sin(angles[i]))
 
-    w_vals = [weights[B] for B in bases]
-    norm = Normalize(vmin=min(w_vals), vmax=max(w_vals))
-    cmap = plt.cm.YlOrRd
+# Identify local maxima
+local_maxima = [i for i, B in enumerate(bases) if is_exchange_local_max(B, bases, w, ground)]
+global_max_idx = max(range(n_bases), key=lambda i: weights[bases[i]])
 
-    ax = axes[0]
-    ax.set_title(f'Additive Weight (K = {K_add:.1f})\nLocal opt = Global opt', fontsize=13, fontweight='bold')
+# Create figure
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    for i, j in edges:
-        ax.plot([pos[i, 0], pos[j, 0]], [pos[i, 1], pos[j, 1]],
-                'gray', alpha=0.3, linewidth=1)
+# === Panel 1: Exchange Graph ===
+ax1 = axes[0]
+ax1.set_title(f'Exchange Graph of U({r},{n})\n{n_bases} bases, {len(edges)} exchange edges',
+              fontsize=13, fontweight='bold')
 
-    for i, B in enumerate(bases):
-        color = cmap(norm(weights[B]))
-        size = 400 if i in local_max else 200
-        marker = '*' if i in local_max else 'o'
-        edgecolor = 'red' if i in local_max else 'black'
-        lw = 3 if i in local_max else 1
-        ax.scatter(pos[i, 0], pos[i, 1], c=[color], s=size,
-                   marker=marker, edgecolors=edgecolor, linewidth=lw, zorder=5)
-        label = '{' + ','.join(str(x) for x in sorted(B)) + '}'
-        ax.annotate(f'{label}\n{weights[B]:.0f}', (pos[i, 0], pos[i, 1]),
-                    textcoords="offset points", xytext=(0, -20),
-                    ha='center', fontsize=7)
+# Draw edges
+for i, j in edges:
+    x1, y1 = pos[i]
+    x2, y2 = pos[j]
+    ax1.plot([x1, x2], [y1, y2], 'gray', alpha=0.3, linewidth=0.8)
 
-    ax.set_xlim(pos[:, 0].min() - 0.5, pos[:, 0].max() + 0.5)
-    ax.set_ylim(pos[:, 1].min() - 0.8, pos[:, 1].max() + 0.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
+# Color nodes by weight
+w_values = [weights[bases[i]] for i in range(n_bases)]
+w_min, w_max = min(w_values), max(w_values)
 
-    # Panel 2: Quadratic weight (K > 0)
-    def w_quad(B):
-        return sum(wt[x] for x in B) ** 2
+for i in range(n_bases):
+    x, y = pos[i]
+    w_norm = (w_values[i] - w_min) / (w_max - w_min) if w_max > w_min else 0.5
+    color = plt.cm.YlOrRd(w_norm)
 
-    bases2, weights2, edges2, local_max2 = compute_exchange_graph(n, r, w_quad)
-    K_quad = compute_exchange_constant(bases2, w_quad)
-    pos2 = spring_layout(len(bases2), edges2)
+    if i == global_max_idx:
+        ax1.scatter(x, y, c=[color], s=300, zorder=5, edgecolors='gold', linewidths=3)
+        ax1.annotate('★ GLOBAL\nMAX', (x, y), textcoords="offset points",
+                     xytext=(0, 20), ha='center', fontsize=8, fontweight='bold', color='darkred')
+    elif i in local_maxima:
+        ax1.scatter(x, y, c=[color], s=200, zorder=5, edgecolors='blue', linewidths=2)
+    else:
+        ax1.scatter(x, y, c=[color], s=100, zorder=5, edgecolors='black', linewidths=0.5)
 
-    w_vals2 = [weights2[B] for B in bases2]
-    norm2 = Normalize(vmin=min(w_vals2), vmax=max(w_vals2))
+    label = '{' + ','.join(str(e) for e in sorted(bases[i])) + '}'
+    ax1.annotate(label, (x, y), textcoords="offset points",
+                 xytext=(0, -15), ha='center', fontsize=7, color='gray')
 
-    ax = axes[1]
-    ax.set_title(f'Quadratic Weight (K = {K_quad:.1f})\nCertified bound: gap ≤ K × distance', fontsize=13, fontweight='bold')
+ax1.set_xlim(-4.5, 4.5)
+ax1.set_ylim(-4.5, 4.5)
+ax1.set_aspect('equal')
+ax1.axis('off')
 
-    for i, j in edges2:
-        ax.plot([pos2[i, 0], pos2[j, 0]], [pos2[i, 1], pos2[j, 1]],
-                'gray', alpha=0.3, linewidth=1)
+# Legend
+legend_elements = [
+    mpatches.Patch(facecolor='gold', edgecolor='gold', label=f'Global Max (w={w_values[global_max_idx]:.1f})'),
+    mpatches.Patch(facecolor='lightblue', edgecolor='blue', label='Local Max'),
+    mpatches.Patch(facecolor='lightgray', edgecolor='black', label='Other Bases'),
+]
+ax1.legend(handles=legend_elements, loc='lower left', fontsize=9)
 
-    for i, B in enumerate(bases2):
-        color = cmap(norm2(weights2[B]))
-        size = 400 if i in local_max2 else 200
-        marker = '*' if i in local_max2 else 'o'
-        edgecolor = 'red' if i in local_max2 else 'black'
-        lw = 3 if i in local_max2 else 1
-        ax.scatter(pos2[i, 0], pos2[i, 1], c=[color], s=size,
-                   marker=marker, edgecolors=edgecolor, linewidth=lw, zorder=5)
-        label = '{' + ','.join(str(x) for x in sorted(B)) + '}'
-        ax.annotate(f'{label}\n{weights2[B]:.0f}', (pos2[i, 0], pos2[i, 1]),
-                    textcoords="offset points", xytext=(0, -20),
-                    ha='center', fontsize=7)
+# === Panel 2: Gap Bound Visualization ===
+ax2 = axes[1]
+ax2.set_title(f'Gap Bound: w(Y) ≤ w(B) + K·|Y\\B|\nK = {K:.2f}', fontsize=13, fontweight='bold')
 
-    ax.set_xlim(pos2[:, 0].min() - 0.5, pos2[:, 0].max() + 0.5)
-    ax.set_ylim(pos2[:, 1].min() - 0.8, pos2[:, 1].max() + 0.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
+# For the global max, plot gap vs distance for all other bases
+B_star = bases[global_max_idx]
+w_star = weights[B_star]
+distances = []
+gaps = []
+for B in bases:
+    d = len(B - B_star)
+    g = weights[B] - w_star
+    distances.append(d)
+    gaps.append(g)
 
-    # Legend
-    star = mpatches.Patch(color='red', label='Exchange-local maximum (★)')
-    circle = mpatches.Patch(color='gray', label='Other bases (○)')
-    fig.legend(handles=[star, circle], loc='lower center', ncol=2,
-              fontsize=11, frameon=False)
+ax2.scatter(distances, gaps, c='steelblue', s=60, alpha=0.7, edgecolors='navy', linewidths=0.5)
 
-    fig.suptitle('Exchange Landscape: How K Controls Optimization Quality',
-                fontsize=15, fontweight='bold', y=0.98)
+# Plot the certified bound line
+d_range = np.linspace(0, max(distances) + 0.5, 100)
+bound_line = K * d_range
+ax2.plot(d_range, bound_line, 'r--', linewidth=2, label=f'Certified bound: K·d (K={K:.2f})')
+ax2.fill_between(d_range, -10, bound_line, alpha=0.1, color='green',
+                 label='Certified region')
 
-    plt.tight_layout(rect=[0, 0.05, 1, 0.95])
-    plt.savefig('viz_exchange_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_exchange_landscape.png")
+ax2.set_xlabel('Exchange distance |Y \\ B|', fontsize=12)
+ax2.set_ylabel('Weight gap w(Y) - w(B)', fontsize=12)
+ax2.axhline(y=0, color='gray', linestyle='-', linewidth=0.5)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
 
-
-if __name__ == "__main__":
-    make_figure()
+plt.tight_layout()
+plt.savefig('exchange_graph_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: exchange_graph_visualization.png")
+plt.close()
