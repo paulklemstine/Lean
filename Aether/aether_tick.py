@@ -343,6 +343,8 @@ def main():
                 asyncio.run(tick(extractor, args.max_inflight, args.novelty_slots))
             except Exception as e:
                 print(f"[Tick] Tick error: {e}")
+                import traceback
+                traceback.print_exc()
             rebuild_commit_push()
             print(f"[Tick] Sleeping {args.interval}s until next tick...")
             time.sleep(args.interval)
