@@ -37,7 +37,7 @@ class CatalogFileSummary:
 # Domain directories in the Catalog
 DOMAIN_DIRS = [
     "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
-    "EML", "Geometry", "Logic", "MachineLearning", "Physics",
+    "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
     "Pythagorean", "Shared", "Speculative", "Tropical",
 ]
 

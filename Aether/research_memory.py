@@ -557,7 +557,10 @@ class FutureDirectionsManager:
                 )
                 # Cap auto-generated priority to computed quality score
                 quality = self._compute_quality_score(fd)
-                fd.priority_score = min(fd.priority_score, max(0.70, quality))
+                fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                # Auto-titled "Direction N:" directions get an even stricter cap
+                if fd.title.startswith("Direction "):
+                    fd.priority_score = min(fd.priority_score, 0.60)
                 self.add_direction(fd)
                 added += 1
 
@@ -586,7 +589,9 @@ class FutureDirectionsManager:
                         priority_score=0.75,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    if fd.title.startswith("Direction "):
+                        fd.priority_score = min(fd.priority_score, 0.60)
                     self.add_direction(fd)
                     added += 1
 
@@ -614,7 +619,9 @@ class FutureDirectionsManager:
                         priority_score=0.7,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    if fd.title.startswith("Direction "):
+                        fd.priority_score = min(fd.priority_score, 0.60)
                     self.add_direction(fd)
                     added += 1
 
@@ -637,7 +644,9 @@ class FutureDirectionsManager:
                         priority_score=0.65,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    if fd.title.startswith("Direction "):
+                        fd.priority_score = min(fd.priority_score, 0.60)
                     self.add_direction(fd)
                     added += 1
 
@@ -745,7 +754,8 @@ class FutureDirectionsManager:
 
         Domains with recent high-quality results get boosted via outcome_bonus.
         Domains with recent low-quality results get penalized.
-        No forced breadth — quality signal guides selection.
+        Overrepresented domains get inverse-frequency penalty to prevent
+        Pythagorean/Algebra from dominating dispatch.
 
         domain_filter: only select directions containing this domain
         exclude_domains: exclude directions containing any of these domains
@@ -759,6 +769,24 @@ class FutureDirectionsManager:
             return None
         import random
         scores = [self._compute_quality_score(d, recent_domain_quality, catalog_analyzer) for d in available]
+
+        # Inverse-frequency domain balancing: penalize overrepresented domains
+        domain_counts = {}
+        for d in available:
+            for dom in d.domains:
+                domain_counts[dom] = domain_counts.get(dom, 0) + 1
+        n_available = len(available)
+
+        for i, d in enumerate(available):
+            for dom in d.domains:
+                frac = domain_counts.get(dom, 1) / n_available
+                if frac > 0.30:  # Domain occupies >30% of available pool
+                    # Scale down: e.g. Pythagorean at 56% → weight *= (1 - 0.56) = 0.44
+                    scores[i] *= (1.0 - frac)
+                elif frac < 0.10:  # Underrepresented domain
+                    # Boost: e.g. Cryptography at 1% → weight *= (1 + 0.10) = 1.10
+                    scores[i] *= (1.0 + frac)
+
         total = sum(scores)
         if total == 0:
             return random.choice(available)

@@ -187,7 +187,7 @@ _CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
     in a mathematical catalog. The catalog has these domains:
 
     Algebra, Bridges, Computation, Cryptography, EML, Geometry, Logic,
-    MachineLearning, Physics, Pythagorean, Shared, Speculative, Tropical
+    MachineLearning, Novelty, Physics, Pythagorean, Shared, Tropical
 
     Based on the mathematical content of the file, choose the most appropriate
     domain and subdirectory. Consider the main definitions, theorem statements,
@@ -1593,8 +1593,8 @@ class PiAgentClient:
                     f"one clever intermediate result.\n"
                     f"3. If the direct approach fails, try the contrapositive, a constructive "
                     f"witness, or a structural induction.\n"
-                    f"4. Connect to at least one other domain (tropical, algebraic, computational, "
-                    f"physical) for cross-domain impact.\n\n"
+                    f"4. If the direct approach fails, try the contrapositive, a constructive "
+                    f"witness, or structural induction.\n\n"
                     f"**FAILURE MODE**: If you cannot prove the full statement, prove the strongest "
                     f"special case or lemma. State the remaining conjecture precisely."
                 )
@@ -1605,7 +1605,7 @@ class PiAgentClient:
                     f"**PRECISE ASSIGNMENT**: Formalize and prove the most important theorem "
                     f"you can in this direction. Start from the catalog references below.\n\n"
                     f"**PROOF STRATEGY**: Build on existing results. Every theorem should "
-                    f"connect to at least one other domain for cross-domain impact.\n\n"
+                    f"advance mathematical understanding.\n\n"
                     f"**FAILURE MODE**: Prove the strongest lemma you can. Never fall back "
                     f"to trivial tautologies."
                 )
@@ -1620,11 +1620,7 @@ class PiAgentClient:
             assignment += f"\n**KEY REFERENCES**: {key_refs}"
 
         # Add file richness mandate for Aristotle's output
-        assignment += "\n\n**FILE RICHNESS MANDATE**: Produce substantial, rich files (not stubs)."\
-            "\n- Target 500+ lines with 20+ theorems and 10+ definitions per file."\
-            "\n- Historical Masters in the catalog average 2000+ lines, 180+ theorems, 70+ definitions."\
-            "\n- Each file should be a complete mathematical narrative with definitions, lemmas, and main theorems all connected."\
-            "\n- When producing catalog-wide output: create files across MULTIPLE domains (Bridges, Algebra, Cryptography, Tropical, EML, Physics), not just one domain."
+        assignment += "\n\n**DEPTH OVER BREADTH**: Each file should be a complete mathematical narrative — definitions, lemmas, and theorems all connected. Quality of insight matters more than quantity of theorems."
 
         return assignment
 
@@ -1730,11 +1726,7 @@ class PiAgentClient:
                that does not already exist in the Catalog. Check the catalog references to
                confirm novelty.
 
-            4. **Cross-domain connections**: Include at least one theorem that connects your
-               domain to a different mathematical domain (e.g., number theory + tropical
-               geometry, algebra + physics).
-
-            5. **Conjecture with testable prediction**: State at least one falsifiable
+            4. **Conjecture with testable prediction**: State at least one falsifiable
                conjecture with a clear computational test that could disprove it.
         """)
 
@@ -1759,8 +1751,6 @@ class PiAgentClient:
             catalog_section = "\nNo specific files referenced. Use Mathlib and general knowledge.\n"
 
         direct_prompt = textwrap.dedent(f"""\
-            Soli Deo Gloria
-
             ## Assignment: {concept.title}
 
             {mode_line}
@@ -1786,7 +1776,7 @@ class PiAgentClient:
 
             Use concrete types (Nat, Real, Finset, Matrix). Avoid trivial tautologies.
             If a direct proof fails, try the contrapositive, a constructive witness,
-            or structural induction. Connect to at least one other domain for impact.
+            or structural induction.
 
             ### Anti-Triviality Rules
             Do NOT produce any of the following:
@@ -1795,8 +1785,6 @@ class PiAgentClient:
             - Wrapper theorems that just unwrap a definition without mathematical insight
             - Proofs that are just `by simp` or `by trivial` with no depth
             - Definitions followed by trivial properties that don't advance understanding
-            - "Bridge" theorems that merely transfer a property between domains without
-              adding new content (e.g., "semiring X is also a Y" without a new theorem)
             If a result seems obvious, prove something STRONGER — the stronger theorem
             is often easier to prove and more interesting.
 
@@ -1815,14 +1803,10 @@ class PiAgentClient:
             demo or verification report.
 
             ## Catalog Context for Future Directions
-            Below is information about the current state of the Catalog. Reference
-            specific theorems by their Catalog file paths when writing FUTURE_DIRECTIONS.md.
+            Below are key theorems from the Catalog for lineage references.
             Use the **Catalog References** field to cite the exact file paths.
 
-            ### Catalog Breakthrough Analysis
-            {fd_breakthrough if fd_breakthrough else "Breakthrough analysis not available."}
-
-            ### Key Theorems Available (for lineage references)
+            ### Key Theorems Available
             {fd_theorem_listing if fd_theorem_listing else "Theorem listing not available."}
 
             FUTURE_DIRECTIONS.md MUST be a standalone research roadmap. It will be

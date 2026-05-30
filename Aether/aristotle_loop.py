@@ -20,8 +20,8 @@ from typing import Dict, List, Optional, Tuple, Any
 # Domain indices for synergy matrix
 DOMAINS = [
     "Algebra", "Bridges", "Computation", "Cryptography", "EML",
-    "Geometry", "Logic", "MachineLearning", "Physics", "Pythagorean",
-    "Shared", "Speculative", "Tropical",
+    "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
+    "Pythagorean", "Shared", "Speculative", "Tropical",
 ]
 DOMAIN_INDEX = {d: i for i, d in enumerate(DOMAINS)}
 N_DOMAINS = len(DOMAINS)

@@ -312,15 +312,19 @@ class KnowledgeExtractor:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)
             source_exp_ids = fd_manager.get_source_exp_ids_for(job_id)
             print(f"[Discover] Using future direction: {best_dir.title} (source={best_dir.source_exp_id})")
+            # Use the Aristotle loop's domain, not the direction's domains[0].
+            # The direction provides the concept idea; the loop provides the domain target.
+            # This prevents Pythagorean (56% of directions' domains[0]) from dominating dispatch.
+            loop_domain = loop_result['domain']
             concept = ResearchConcept(
                 title=best_dir.title,
-                domain=normalize_domain(best_dir.domains[0]) if best_dir.domains else loop_result['domain'],
+                domain=normalize_domain(loop_domain),
                 concept_description=best_dir.description,
                 mathematical_framing=best_dir.description,
                 lean_guess="",
                 catalog_references=best_dir.catalog_references or [],
                 research_mode=best_dir.research_mode or "prove",
-                novelty_estimate=0.85,
+                novelty_estimate=min(1.0, best_dir.priority_score),
                 breakthrough_potential=best_dir.priority_score,
                 key_references=[],
             )
@@ -489,142 +493,35 @@ class KnowledgeExtractor:
         """
         deliverables_section = f"""
 
-### WHAT WE NEED FROM YOU
+### Deliverables
 
 You are a world-class mathematician, software engineer, and science writer.
-Use your judgment on the best way to organize and present your work.
-We need ALL of the following deliverables:
+We need ALL of the following:
 
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 1 — Formally verified mathematics (Lean 4)
-────────────────────────────────────────────────────────────────────────────
-- Prove non-trivial theorems with complete proofs (no `sorry` in the final result)
-- Organize the code however makes sense — one file or several,
-  whatever serves the mathematics best
-- Use doc comments to explain the significance of key results
+1. **Lean 4 proofs** — Non-trivial theorems with complete proofs (no `sorry`).
+   Organize as makes sense. Use doc comments for key results.
 
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 2 — Standalone Popular-Science ARTICLE  →  ARTICLE.md
-────────────────────────────────────────────────────────────────────────────
-Write a **superb, standalone magazine-quality article** about this research.
+2. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
+   Write about IDEAS, not formal verification. No mentions of Lean or proof assistants.
+   Vivid prose, narrative arc, real-world connections. Must make sense standalone.
 
-CRITICAL RULES FOR THE ARTICLE:
-• Do NOT mention "Scientific American", "Sci Am", or "Lean" anywhere.
-• Do NOT mention "Lean", "Lean 4", "formal verification", or "proof assistant".
-• This is a POPULAR SCIENCE article for a curious, intelligent audience.
-  Write it as if it will be published in a premier science magazine.
-• The reader should come away saying "Wow, I had no idea math could do THAT."
+3. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
+   Abstract, definitions, main results with proof sketches, algorithms, applications,
+   discussion, future work, references.
 
-ARTICLE QUALITY STANDARDS:
-• **Superb writing**: Vivid, engaging prose. Strong opening hook. Narrative arc.
-  Use concrete analogies and metaphors that make abstract ideas tangible.
-• **Depth without jargon**: Explain the IDEAS, not the formalism.
-  A reader with a college education should understand and enjoy every paragraph.
-• **Story structure**: Open with a provocative question or surprising fact.
-  Build tension. Reveal the breakthrough. Show why it matters.
-• **Real-world connections**: Connect to technology, nature, everyday life.
-  Why should a non-mathematician care about this?
-• **Historical context**: Place the discovery in the sweep of intellectual history.
-  Who tried this before? What barriers stood in the way?
-• **Length**: 1500–3000 words. Substantial but not padded.
-• **Standalone**: The article must make complete sense on its own.
-  No references to "the proof above" or "our formal verification."
+4. **Python code** — demo.py (numerical examples), algorithms.py (type-hinted implementations),
+   and up to 3 self-contained visualization scripts (matplotlib/plotly, each a single file
+   with all functions inlined — no local imports).
 
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 3 — Comprehensive RESEARCH PAPER  →  RESEARCH_PAPER.md
-────────────────────────────────────────────────────────────────────────────
-Write a **thorough, in-depth research paper** that a mathematician or
-graduate student would find valuable. This is NOT a summary — it is a
-complete, publishable-quality paper.
+5. **FUTURE_DIRECTIONS.md** (MOST IMPORTANT — drives next cycle).
+   Begin with ## Synthesis tying all directions together. Then 3-5 directions using:
+   **Conjecture**, **Test**, **Impact**, **Catalog References**, **Proof Strategy**,
+   **Domain Bridges**, **Lineage**, **Ambition** (grand_challenge or extension).
+   Each direction must be self-contained and specific enough to fail.
 
-RESEARCH PAPER REQUIREMENTS:
-• **Abstract**: Concise summary of contributions and significance.
-• **Introduction**: Motivation, context, relationship to prior work.
-• **Definitions & Notation**: Precise mathematical setup.
-• **Main Results**: Full theorem statements with detailed proof sketches.
-  Include the key ideas, not just "by induction."
-• **Algorithms**: If the work produces algorithms, include complete
-  pseudocode with complexity analysis (time, space, convergence).
-• **Applications**: Concrete applications with worked examples.
-  Show HOW to use the results in practice.
-• **Computational Experiments**: Reference the Python demos.
-  Include tables, charts, or numerical results.
-• **Discussion**: Implications, limitations, open questions.
-• **Future Work**: Specific, actionable next steps.
-• **References**: Cite relevant prior work properly.
-• **Length**: 3000–8000 words. Comprehensive and substantive.
-
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 4 — Python Code: Demos, Algorithms
-────────────────────────────────────────────────────────────────────────────
-- **demo.py** — Working Python code demonstrating the theorems with
-  concrete numerical examples. Make the math tangible.
-- **algorithms.py** — Implement any algorithms from the research paper.
-  Include docstrings, type hints, and example usage.
-- **applications.py** — Code showing real-world applications of the results.
-  Show the math working.
-- **Visualization scripts** — Produce up to 3 self-contained Python scripts
-  that visually illustrate the core mathematical concepts discovered. Use
-  matplotlib for static plots (heatmaps, curves, surfaces) or plotly for
-  interactive charts. Available libraries: numpy, matplotlib, plotly.
-  If using matplotlib, the script must call plt.savefig() — the system
-  captures the output as a PNG. If using plotly, assign the figure to a
-  variable named `fig` — the system captures fig.to_html(). Each script
-  must include a comment header explaining what it visualizes and why.
-  **CRITICAL: Each visualization script MUST be a single, fully self-contained
-  file. Do NOT import from any local modules (algorithms.py, demo.py, etc.).
-  Instead, inline all needed functions and classes directly in the script.
-  The browser runtime (Pyodide) has no access to local .py files.**
-- **Interactive HTML demos** — Produce up to 3 self-contained HTML snippets
-  (with inline CSS/JS, no external dependencies) that demonstrate the
-  mathematical concepts interactively — sliders, animations, dynamic SVG,
-  or canvas drawing. Each demo must be a complete <div> fragment that
-  works when inserted into a page. No <html>, <head>, or <body> tags —
-  just the content div with its inline styles and scripts.
-
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
-────────────────────────────────────────────────────────────────────────────
-The MOST IMPORTANT deliverable. Every research cycle MUST produce a
-FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
-hypotheses, including 1-2 grand_challenge paradigm-shifting conjectures
-and 2-3 solid extensions building directly on Catalog theorems.
-MUST begin with a ## Synthesis section tying all directions together.
-Each direction must use the structured format with explicit fields:
-**Conjecture**, **Test**, **Impact**, **Catalog References**,
-**Proof Strategy**, **Domain Bridges**, **Lineage**, **Ambition**.
-Reference specific Catalog theorems by file path. Every hypothesis
-must be daring enough to matter and specific enough to fail.
-
-
-────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
-────────────────────────────────────────────────────────────────────────────
-Create a **single JSON file** that bundles ALL artifacts for the web templating system.
-Requirements:
-
-• **Structure**: Output a strictly valid JSON object matching this schema:
-  {{
-    "title": "Title of the Research",
-    "domain": "Mathematical Domain",
-    "article": "Markdown content...",
-    "research_paper": "Markdown content...",
-    "future_directions": "Markdown content...",
-    "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
-    "algorithms": [ {{ "name": "...", "pseudocode": "...", "code": "executable Python implementation" }} ],
-    "visualizations": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files. Inline all needed functions directly.", "description": "What this visualizes" }} ],
-    "interactive_demos": [ {{ "name": "...", "html": "<div>...</div>", "description": "What this demonstrates" }} ],
-    "lean_proofs": "Raw lean code..."
-  }}
-• **String Encoding**: Ensure all Markdown and code is properly JSON-escaped (e.g. `\n` for newlines).
-• **Complete**: Include ALL content from the article, research paper, and code. This JSON file
-  is the sole data source for the frontend web application.
-
-────────────────────────────────────────────────────────────────────────────
-
-The mathematics comes FIRST. Excellent proofs trump everything else.
-But great work deserves great presentation — make it real, useful, and
-beautiful. Every deliverable should be something you'd be proud to show.
+6. **PACKAGE.json** — Single JSON bundling all artifacts:
+   title, domain, article, research_paper, future_directions, demos, algorithms,
+   visualizations, interactive_demos, lean_proofs. JSON-escape all content.
 
 Research domain: {concept.domain}
 Research mode: {concept.research_mode}

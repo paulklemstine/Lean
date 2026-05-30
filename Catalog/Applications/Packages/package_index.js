@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Harmonic Analysis / Dynamical Systems",
     "date": "2026-05-30T18:56:14Z",
     "exp_id": "18650b90",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.707632,
+    "quality": "substantial",
     "pkg_num": 434
   },
   {
@@ -12595,8 +12595,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-30T18:56:14Z",
       "hue": 280,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.707632,
+      "quality": "substantial"
     }
   ],
   "edges": [
