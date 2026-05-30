@@ -1,374 +1,258 @@
-#!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Core Algorithms
+Algorithms for Hyperbolic Number Theory
+========================================
 
-Implements the mathematical algorithms for arithmetic on the Poincaré disk:
-1. Möbius transformation and its inverse
-2. Hyperbolic addition (Einstein velocity addition)
-3. Hyperbolic lattice generation
-4. Hyperbolic prime sieve
-5. Hyperbolic zeta function computation
-6. Gauss circle embedding
+Implements core algorithms for computing with hyperbolic integers,
+Möbius transformations, and lattice point counting on the Poincaré disk.
 
-All functions include type hints, docstrings, and complexity analysis.
+All algorithms are self-contained with type hints and docstrings.
 """
 
-import numpy as np
-from typing import List, Tuple, Optional, Set
-from collections import defaultdict
+import math
+from typing import List, Tuple, Optional
 
 
-# ─── Core Poincaré Disk Operations ───────────────────────────────────────
-
-class PoincareDisk:
-    """Represents arithmetic on the Poincaré disk model of hyperbolic geometry.
-
-    The Poincaré disk D = {z ∈ ℂ : |z| < 1} with hyperbolic metric
-    ds² = 4|dz|²/(1-|z|²)² models the hyperbolic plane H².
-
-    Time complexity for basic operations: O(1)
-    Space complexity: O(1)
+def normSq(z: complex) -> float:
+    """Compute |z|² = re(z)² + im(z)²
+    
+    Time: O(1), Space: O(1)
     """
-
-    @staticmethod
-    def is_in_disk(z: complex, tol: float = 1e-10) -> bool:
-        """Check if z is in the open unit disk."""
-        return abs(z) < 1 - tol
-
-    @staticmethod
-    def mobius_map(a: complex, z: complex) -> complex:
-        """Möbius automorphism φ_a(z) = (a - z) / (1 - conj(a) * z).
-
-        Properties (proved in Lean):
-        - φ_a(0) = a
-        - φ_a(a) = 0
-        - φ_a(φ_a(z)) = z (involution)
-        - |z| < 1, |a| < 1 ⟹ |φ_a(z)| < 1 (disk preservation)
-
-        Time: O(1), Space: O(1)
-        """
-        denom = 1 - a.conjugate() * z
-        if abs(denom) < 1e-15:
-            raise ValueError(f"Degenerate: 1 - conj(a)*z = 0 for a={a}, z={z}")
-        return (a - z) / denom
-
-    @staticmethod
-    def hyp_add(a: complex, b: complex) -> complex:
-        """Hyperbolic addition: a ⊕ b = (a + b) / (1 + conj(a) * b).
-
-        This is equivalent to the Einstein velocity addition formula
-        from special relativity (proved in Lean: einstein_velocity_is_hypAdd).
-
-        Properties (proved in Lean):
-        - 0 ⊕ b = b (left identity)
-        - a ⊕ 0 = a (right identity)
-        - a ⊕ (-a) = 0 (inverse)
-        - NOT commutative for complex arguments (gyrogroup structure)
-
-        Time: O(1), Space: O(1)
-        """
-        denom = 1 + a.conjugate() * b
-        if abs(denom) < 1e-15:
-            raise ValueError(f"Degenerate denominator for a={a}, b={b}")
-        return (a + b) / denom
-
-    @staticmethod
-    def hyp_dist(z: complex, w: complex) -> float:
-        """Hyperbolic distance d(z, w) = arctanh(|φ_w(z)|).
-
-        Properties (proved in Lean):
-        - d(z,z) = 0
-        - d(z,w) = d(w,z) (symmetry)
-        - d(z,w) ≥ 0
-
-        Time: O(1), Space: O(1)
-        """
-        m = PoincareDisk.mobius_map(w, z)
-        r = abs(m)
-        if r >= 1:
-            return float('inf')
-        return np.arctanh(r)
-
-    @staticmethod
-    def hyp_dist_sq(z: complex, w: complex) -> float:
-        """Squared Möbius pseudo-distance |φ_w(z)|².
-
-        Time: O(1), Space: O(1)
-        """
-        m = PoincareDisk.mobius_map(w, z)
-        return abs(m) ** 2
+    return z.real**2 + z.imag**2
 
 
-# ─── Hyperbolic Lattice Generation ───────────────────────────────────────
-
-class HyperbolicLattice:
-    """Generates and manages a hyperbolic lattice as the orbit of a basepoint
-    under a discrete group of isometries.
-
-    Algorithm: Breadth-first orbit generation
-    Time: O(N * D) where N = number of generators, D = depth
-    Space: O(|orbit|)
+def mobius_transform(a: complex, z: complex) -> complex:
+    """Compute the Möbius automorphism T_a(z) = (z - a)/(1 - conj(a)*z)
+    
+    Maps the unit disk to itself when |a| < 1 and |z| < 1.
+    
+    Args:
+        a: Center point with |a| < 1
+        z: Input point with |z| < 1
+    
+    Returns:
+        T_a(z) in the unit disk
+    
+    Time: O(1), Space: O(1)
     """
-
-    def __init__(self, generators: List[complex], basepoint: complex = 0.0,
-                 min_separation: float = 0.01):
-        """Initialize with a set of Möbius translation vectors.
-
-        Args:
-            generators: List of disk points defining Möbius translations
-            basepoint: Starting point for orbit generation
-            min_separation: Minimum distance between distinct lattice points
-        """
-        self.generators = generators
-        self.basepoint = basepoint
-        self.min_separation = min_separation
-        self.points: List[complex] = []
-        self.disk = PoincareDisk()
-
-    def generate(self, depth: int = 6) -> List[complex]:
-        """Generate lattice points via breadth-first orbit expansion.
-
-        Algorithm:
-        1. Start with {basepoint}
-        2. For each frontier point, apply all generators via hyperbolic addition
-        3. Add new points that are sufficiently separated from existing ones
-        4. Repeat for `depth` iterations
-
-        Time: O(|G|^depth) worst case, typically much less due to deduplication
-        Space: O(|orbit|)
-        """
-        orbit_set: Set[int] = set()  # Hash-based dedup
-        orbit: List[complex] = [self.basepoint]
-        frontier: List[complex] = [self.basepoint]
-
-        def _hash(z: complex) -> int:
-            return hash((round(z.real, 4), round(z.imag, 4)))
-
-        orbit_set.add(_hash(self.basepoint))
-
-        for _ in range(depth):
-            new_frontier: List[complex] = []
-            for z in frontier:
-                for g in self.generators:
-                    for sign in [1, -1]:
-                        try:
-                            w = self.disk.hyp_add(complex(sign) * g, z)
-                            if abs(w) < 0.999:
-                                h = _hash(w)
-                                if h not in orbit_set:
-                                    orbit_set.add(h)
-                                    orbit.append(w)
-                                    new_frontier.append(w)
-                        except ValueError:
-                            pass
-            frontier = new_frontier
-
-        # Sort by hyperbolic distance from origin
-        orbit.sort(key=lambda z: abs(z))
-        self.points = orbit
-        return orbit
-
-    def counting_function(self, R: float) -> int:
-        """Count lattice points within hyperbolic radius R from origin.
-
-        Time: O(|orbit|), Space: O(1)
-        """
-        return sum(1 for p in self.points
-                   if self.disk.hyp_dist(p, 0) <= R)
+    return (z - a) / (1 - a.conjugate() * z)
 
 
-# ─── Hyperbolic Prime Sieve ─────────────────────────────────────────────
-
-class HyperbolicPrimeSieve:
-    """Identifies hyperbolic primes in a lattice.
-
-    A lattice point p is hyperbolic prime if it cannot be written as
-    p = a ⊕ b for any two non-zero lattice points a, b with smaller
-    hyperbolic distance from the origin.
-
-    Algorithm: Exhaustive sieve (analogous to trial division)
-    Time: O(N³) where N = number of lattice points
-    Space: O(N)
+def mobius_involution(a: complex, z: complex) -> complex:
+    """Compute the involutory Möbius automorphism φ_a(z) = (a - z)/(1 - conj(a)*z)
+    
+    Satisfies φ_a(φ_a(z)) = z (self-inverse).
+    
+    Time: O(1), Space: O(1)
     """
-
-    def __init__(self, lattice: HyperbolicLattice):
-        self.lattice = lattice
-        self.disk = PoincareDisk()
-
-    def sieve(self, max_points: int = 50) -> Tuple[List[int], List[int]]:
-        """Run the hyperbolic prime sieve.
-
-        Returns: (prime_indices, composite_indices)
-        Time: O(N³), Space: O(N)
-        """
-        points = self.lattice.points[:max_points]
-        primes = []
-        composites = []
-
-        for n in range(len(points)):
-            if abs(points[n]) < 1e-10:
-                continue  # skip zero
-
-            is_prime = True
-            for i in range(n):
-                if abs(points[i]) < 1e-10:
-                    continue
-                for j in range(n):
-                    if abs(points[j]) < 1e-10:
-                        continue
-                    try:
-                        s = self.disk.hyp_add(points[i], points[j])
-                        if abs(s - points[n]) < 0.005:
-                            is_prime = False
-                            break
-                    except ValueError:
-                        pass
-                if not is_prime:
-                    break
-
-            if is_prime:
-                primes.append(n)
-            else:
-                composites.append(n)
-
-        return primes, composites
-
-    def prime_counting_function(self, R_values: List[float]) -> List[Tuple[float, int]]:
-        """Compute π_H(R) for a list of radii.
-
-        Time: O(len(R_values) * N³), Space: O(N)
-        """
-        primes, _ = self.sieve(len(self.lattice.points))
-        prime_set = set(primes)
-        result = []
-        for R in R_values:
-            count = 0
-            for i in prime_set:
-                if i < len(self.lattice.points):
-                    d = self.disk.hyp_dist(self.lattice.points[i], 0)
-                    if d <= R:
-                        count += 1
-            result.append((R, count))
-        return result
+    return (a - z) / (1 - a.conjugate() * z)
 
 
-# ─── Hyperbolic Zeta Function ────────────────────────────────────────────
-
-class HyperbolicZeta:
-    """Computes the partial hyperbolic zeta function.
-
-    ζ_H(s, N) = Σ_{n=1}^{N} 1/d(p_n, 0)^{2s}
-
-    where d is the hyperbolic distance.
-
-    Time: O(N) per evaluation
-    Space: O(1)
+def cayley_transform(z: complex) -> complex:
+    """Cayley transform: maps upper half-plane to Poincaré disk.
+    C(z) = (z - i)/(z + i)
+    
+    Time: O(1), Space: O(1)
     """
-
-    def __init__(self, lattice: HyperbolicLattice):
-        self.lattice = lattice
-        self.disk = PoincareDisk()
-        # Precompute distances
-        self.distances = []
-        for p in lattice.points:
-            d = self.disk.hyp_dist(p, 0)
-            if d > 1e-10:
-                self.distances.append(d)
-
-    def evaluate(self, s: float, N: Optional[int] = None) -> float:
-        """Evaluate ζ_H(s, N).
-
-        Args:
-            s: Complex exponent (real part)
-            N: Number of terms (default: all)
-
-        Time: O(N), Space: O(1)
-        """
-        if N is None:
-            N = len(self.distances)
-        total = 0.0
-        for d in self.distances[:N]:
-            total += d ** (-2 * s)
-        return total
-
-    def partial_sums(self, s: float, steps: int = 20) -> List[Tuple[int, float]]:
-        """Compute partial sums for convergence analysis.
-
-        Time: O(N), Space: O(steps)
-        """
-        result = []
-        N_max = len(self.distances)
-        for k in range(1, steps + 1):
-            n = min(k * N_max // steps, N_max)
-            if n > 0:
-                result.append((n, self.evaluate(s, n)))
-        return result
+    return (z - 1j) / (z + 1j)
 
 
-# ─── Gauss Circle Embedding ─────────────────────────────────────────────
+def inverse_cayley(w: complex) -> complex:
+    """Inverse Cayley transform: maps Poincaré disk to upper half-plane.
+    C⁻¹(w) = i(1 + w)/(1 - w)
+    
+    Time: O(1), Space: O(1)
+    """
+    return 1j * (1 + w) / (1 - w)
 
-def gauss_circle_count(R: int) -> int:
-    """Count integer points (a,b) with a² + b² ≤ R².
 
-    This is the classical Gauss circle problem.
-    The answer is approximately πR².
+def pseudo_hyp_dist(z: complex, w: complex) -> float:
+    """Compute the pseudo-hyperbolic distance between z and w.
+    ρ(z,w) = |z - w| / |1 - conj(w)·z|
+    
+    Takes values in [0, 1) for points in the open unit disk.
+    
+    Time: O(1), Space: O(1)
+    """
+    num = abs(z - w)
+    den = abs(1 - w.conjugate() * z)
+    if den == 0:
+        return float('inf')
+    return num / den
 
-    Time: O(R²), Space: O(1)
+
+def hyperbolic_distance(z: complex, w: complex) -> float:
+    """Compute the hyperbolic distance in the Poincaré disk model.
+    d(z,w) = 2 · arctanh(ρ(z,w))
+    
+    where ρ is the pseudo-hyperbolic distance.
+    
+    Time: O(1), Space: O(1)
+    """
+    rho = pseudo_hyp_dist(z, w)
+    if rho >= 1:
+        return float('inf')
+    return 2 * math.atanh(rho)
+
+
+def generate_psl2z_orbit(max_depth: int = 5) -> List[complex]:
+    """Generate orbit points of i under PSL(2,Z) on the Poincaré disk.
+    
+    Uses the Cayley transform to map the PSL(2,Z) orbit of i in the
+    upper half-plane to the disk model. Generates points by applying
+    the generators S: z → -1/z and T: z → z+1 of PSL(2,Z).
+    
+    Args:
+        max_depth: Maximum word length in generators
+    
+    Returns:
+        List of complex numbers in the Poincaré disk
+    
+    Time: O(2^max_depth), Space: O(2^max_depth)
+    """
+    visited = set()
+    orbit = []
+    
+    def add_point(z_uhp: complex):
+        """Add a UHP point to the orbit via Cayley transform"""
+        if z_uhp.imag <= 0:
+            return
+        w = cayley_transform(z_uhp)
+        # Round for deduplication
+        key = (round(w.real, 10), round(w.imag, 10))
+        if key not in visited:
+            visited.add(key)
+            orbit.append(w)
+    
+    # BFS over words in the generators
+    current = {1j}  # Start with i
+    add_point(1j)
+    
+    for _ in range(max_depth):
+        next_level = set()
+        for z in current:
+            # Apply generator S: z → -1/z
+            if abs(z) > 1e-15:
+                s_z = -1.0 / z
+                if s_z.imag > 1e-10:
+                    add_point(s_z)
+                    next_level.add(s_z)
+            # Apply generator T: z → z + 1
+            t_z = z + 1
+            if t_z.imag > 1e-10:
+                add_point(t_z)
+                next_level.add(t_z)
+            # Apply T⁻¹: z → z - 1
+            ti_z = z - 1
+            if ti_z.imag > 1e-10:
+                add_point(ti_z)
+                next_level.add(ti_z)
+        current = next_level
+    
+    return orbit
+
+
+def count_lattice_points_in_ball(
+    points: List[complex], center: complex, radius: float
+) -> int:
+    """Count lattice points within a hyperbolic ball.
+    
+    Args:
+        points: List of lattice points in the disk
+        center: Center of the hyperbolic ball
+        radius: Hyperbolic radius
+    
+    Returns:
+        Number of points within hyperbolic distance `radius` of `center`
+    
+    Time: O(n) where n = len(points), Space: O(1)
     """
     count = 0
-    for a in range(-R, R + 1):
-        for b in range(-R, R + 1):
-            if a**2 + b**2 <= R**2:
-                count += 1
+    for p in points:
+        if hyperbolic_distance(center, p) <= radius:
+            count += 1
     return count
 
 
-def gauss_to_disk_embedding(R: int) -> List[complex]:
-    """Embed Gauss circle lattice points into the Poincaré disk.
-
-    Maps (a, b) ↦ (a + bi)/(R+1), which sends Z² ∩ B(0,R) into D.
-
-    Proved in Lean: gauss_to_hyp_embedding shows |z|² < 1 for all embedded points.
-
-    Time: O(R²), Space: O(R²)
+def verify_key_identity(a: complex, z: complex) -> Tuple[float, float, float]:
+    """Verify the Möbius key identity for given inputs.
+    
+    Returns (LHS, RHS, error) where:
+    LHS = |1 - conj(a)·z|² - |z - a|²
+    RHS = (1 - |a|²)(1 - |z|²)
+    
+    Time: O(1), Space: O(1)
     """
-    points = []
-    for a in range(-R, R + 1):
-        for b in range(-R, R + 1):
-            if a**2 + b**2 <= R**2:
-                z = complex(a / (R + 1), b / (R + 1))
-                points.append(z)
-    return points
+    lhs = normSq(1 - a.conjugate() * z) - normSq(z - a)
+    rhs = (1 - normSq(a)) * (1 - normSq(z))
+    return lhs, rhs, abs(lhs - rhs)
 
 
-# ─── Example Usage ──────────────────────────────────────────────────────
+def find_hyperbolic_primes(
+    orbit: List[complex], num_primes: int = 10
+) -> List[complex]:
+    """Find hyperbolic primes: the orbit points closest to the origin.
+    
+    These are the irreducible elements of the hyperbolic lattice,
+    analogous to prime numbers in ℤ.
+    
+    Args:
+        orbit: List of orbit points in the disk
+        num_primes: Number of primes to return
+    
+    Returns:
+        List of the closest non-origin orbit points
+    
+    Time: O(n log n), Space: O(n)
+    """
+    # Filter out the origin and sort by normSq
+    nonzero = [(normSq(p), p) for p in orbit if abs(p) > 1e-12]
+    nonzero.sort()
+    return [p for _, p in nonzero[:num_primes]]
 
+
+def hyperbolic_lattice_growth_test(max_R: float = 10.0, steps: int = 20) -> List[Tuple[float, int]]:
+    """Test the hyperbolic prime counting conjecture.
+    
+    Computes N(R) = #{lattice points with normSq ≤ 1 - 1/R²}
+    and checks whether N(R) ∝ R² as predicted.
+    
+    Returns:
+        List of (R, count) pairs
+    
+    Time: O(steps × n), Space: O(n)
+    """
+    orbit = generate_psl2z_orbit(max_depth=8)
+    results = []
+    
+    for i in range(1, steps + 1):
+        R = 1.0 + (max_R - 1.0) * i / steps
+        threshold = 1 - 1 / R**2
+        count = sum(1 for p in orbit if normSq(p) <= threshold)
+        results.append((R, count))
+    
+    return results
+
+
+# Example usage
 if __name__ == "__main__":
-    # Create a hyperbolic lattice
-    generators = [
-        0.1 + 0.0j,
-        0.0 + 0.1j,
-        0.15 * np.exp(1j * np.pi / 3),
-        0.15 * np.exp(1j * 2 * np.pi / 3),
-    ]
-    lattice = HyperbolicLattice(generators)
-    points = lattice.generate(depth=5)
-    print(f"Generated {len(points)} lattice points")
-
-    # Run prime sieve
-    sieve = HyperbolicPrimeSieve(lattice)
-    primes, composites = sieve.sieve(min(40, len(points)))
-    print(f"Found {len(primes)} primes and {len(composites)} composites")
-
-    # Compute zeta function
-    zeta = HyperbolicZeta(lattice)
-    for s in [1.0, 1.5, 2.0, 3.0]:
-        val = zeta.evaluate(s, min(50, len(zeta.distances)))
-        print(f"ζ_H({s}) ≈ {val:.6f}")
-
-    # Gauss circle embedding
-    for R in [5, 10, 20]:
-        gc = gauss_circle_count(R)
-        embedded = gauss_to_disk_embedding(R)
-        max_norm = max(abs(z) for z in embedded)
-        print(f"R={R}: {gc} points, max |z| in disk = {max_norm:.4f} < 1")
+    print("Generating PSL(2,Z) orbit on the Poincaré disk...")
+    orbit = generate_psl2z_orbit(max_depth=6)
+    print(f"Generated {len(orbit)} orbit points")
+    
+    print("\nFirst 5 hyperbolic primes (closest to origin):")
+    primes = find_hyperbolic_primes(orbit, 5)
+    for i, p in enumerate(primes):
+        print(f"  p_{i+1} = {p:.6f}, |p|² = {normSq(p):.6f}")
+    
+    print("\nKey identity verification:")
+    for a, z in [(0.3+0.4j, 0.1+0.2j), (0.7+0.1j, -0.5+0.3j)]:
+        lhs, rhs, err = verify_key_identity(a, z)
+        print(f"  a={a}, z={z}: error = {err:.2e}")
+    
+    print("\nLattice point growth test (Hyperbolic PNT conjecture):")
+    growth = hyperbolic_lattice_growth_test(max_R=8.0, steps=8)
+    print(f"  {'R':>6} | {'N(R)':>6} | {'N(R)/R²':>8}")
+    print(f"  {'---':>6} | {'---':>6} | {'---':>8}")
+    for R, count in growth:
+        ratio = count / R**2 if R > 0 else 0
+        print(f"  {R:6.2f} | {count:6d} | {ratio:8.4f}")
