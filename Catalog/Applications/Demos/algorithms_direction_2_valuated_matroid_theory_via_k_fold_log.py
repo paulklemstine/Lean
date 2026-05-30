@@ -1,372 +1,333 @@
 """
-algorithms.py — Core algorithms for computing directional depth of multivariate functions.
+Algorithms for K-Fold Directional Log-Concavity Depth
 
-This module implements the mathematical theory of iterated directional log-concavity
-for functions on multi-indices f : (α → ℕ) → ℝ≥0.
-
-Key algorithms:
-1. check_directional_log_concave — verify the mixed log-concavity condition
-2. ratio_transform — compute the directional ratio transform Rᵢf
-3. compute_depth — compute the directional depth of a function on a finite domain
-4. check_supermodular — verify supermodularity of -log f
-5. check_exchange_closed — verify exchange-closure of support
+Implements:
+1. LorentzianDepthComputer - Compute k-fold DLC depth of a valuated matroid
+2. RatioTransformChain - Iteratively apply ratio transforms
+3. TropicalBridge - Convert log-concavity to tropical convexity
+4. MConvexVerifier - Verify M-convex exchange property
 
 Complexity:
-- check_directional_log_concave: O(|α|² · |domain|) per function evaluation
-- compute_depth up to level k: O(|α|^k · |domain| · |α|²) total
+- Depth computation: O(k * n * |S|) where |S| is support size
+- Ratio transform: O(|S|) per application
+- M-convex verification: O(|S|^2 * n^2)
 """
 
 import numpy as np
-from typing import Dict, Tuple, List, Optional, Callable
-from itertools import product as iter_product
-import math
+from math import factorial, log
+from itertools import combinations, product as cartesian_product
+from typing import Callable, List, Tuple, Optional, Set, Dict
 
 
-# Type alias: multi-index is a tuple of nonneg ints
-MultiIndex = Tuple[int, ...]
-
-
-def basis_vector(n: int, i: int) -> Tuple[int, ...]:
-    """Unit basis vector eᵢ in ℤⁿ."""
-    v = [0] * n
-    v[i] = 1
-    return tuple(v)
-
-
-def add_mi(a: MultiIndex, b: MultiIndex) -> MultiIndex:
-    """Add two multi-indices componentwise."""
-    return tuple(x + y for x, y in zip(a, b))
-
-
-def degree(m: MultiIndex) -> int:
-    """Total degree of a multi-index."""
-    return sum(m)
-
-
-def degree_slice(n: int, d: int) -> List[MultiIndex]:
+class RatioTransform:
     """
-    Generate all multi-indices in ℕⁿ of total degree d.
+    The discrete ratio transform R_i f(m) = f(m + e_i) / f(m).
     
-    Uses stars-and-bars enumeration.
+    This is the discrete analog of the logarithmic derivative.
+    Applying it k times extracts k-th order curvature information.
     
-    Args:
-        n: number of variables
-        d: total degree
-    
-    Returns:
-        List of all multi-indices (tuples) summing to d.
-    
-    Complexity: O(C(n+d-1, d)) — the number of such multi-indices.
+    Time: O(1) per evaluation (delegates to f)
+    Space: O(1) additional
     """
-    if n == 0:
-        return [()] if d == 0 else []
-    if n == 1:
-        return [(d,)]
-    result = []
-    for k in range(d + 1):
-        for rest in degree_slice(n - 1, d - k):
-            result.append((k,) + rest)
-    return result
+    
+    def __init__(self, f: Callable, direction: int, dim: int):
+        """
+        Args:
+            f: base function Z^n -> R
+            direction: coordinate index i
+            dim: dimension n
+        """
+        self.f = f
+        self.direction = direction
+        self.dim = dim
+    
+    def __call__(self, m: tuple) -> float:
+        """Evaluate R_i f at point m."""
+        shifted = list(m)
+        shifted[self.direction] += 1
+        denom = self.f(tuple(m))
+        if abs(denom) < 1e-15:
+            return 0.0
+        return self.f(tuple(shifted)) / denom
+    
+    @staticmethod
+    def chain(f: Callable, directions: List[int], dim: int) -> Callable:
+        """
+        Apply ratio transforms in sequence: R_{i_k} ... R_{i_1} f.
+        
+        Time: O(k) per evaluation
+        """
+        result = f
+        for d in directions:
+            result = RatioTransform(result, d, dim)
+        return result
 
 
-def check_directional_log_concave(
-    f: Dict[MultiIndex, float],
-    n: int,
-    domain: Optional[List[MultiIndex]] = None,
-    tol: float = -1e-12
-) -> Tuple[bool, Optional[Tuple[int, int, MultiIndex]]]:
+class LorentzianDepthComputer:
     """
-    Check directional log-concavity of f on a given domain.
-    
-    The condition: for all i, j ∈ {0,...,n-1} and all m in domain,
-        f(m + eᵢ) · f(m + eⱼ) ≥ f(m) · f(m + eᵢ + eⱼ)
-    
-    Args:
-        f: function values as dict from multi-index to ℝ
-        n: dimension (number of indices)
-        domain: list of multi-indices to check (default: all keys of f)
-        tol: tolerance for inequality (negative = strict)
-    
-    Returns:
-        (True, None) if log-concave, or (False, (i, j, m)) witnessing failure.
-    
-    Complexity: O(n² · |domain|)
-    """
-    if domain is None:
-        domain = list(f.keys())
-    
-    for m in domain:
-        for i in range(n):
-            ei = basis_vector(n, i)
-            mi = add_mi(m, ei)
-            for j in range(i, n):
-                ej = basis_vector(n, j)
-                mj = add_mi(m, ej)
-                mij = add_mi(mi, ej)
-                
-                fm = f.get(m, 0.0)
-                fmi = f.get(mi, 0.0)
-                fmj = f.get(mj, 0.0)
-                fmij = f.get(mij, 0.0)
-                
-                # Check: fmi * fmj >= fm * fmij
-                lhs = fmi * fmj
-                rhs = fm * fmij
-                if lhs - rhs < tol:
-                    return False, (i, j, m)
-    
-    return True, None
-
-
-def ratio_transform(
-    f: Dict[MultiIndex, float],
-    i: int,
-    n: int
-) -> Dict[MultiIndex, float]:
-    """
-    Compute the ratio transform Rᵢf(m) = f(m + eᵢ) / f(m).
-    
-    Uses the convention that division by zero yields 0.
-    
-    Args:
-        f: function values
-        i: direction index
-        n: dimension
-    
-    Returns:
-        Dict mapping m to Rᵢf(m) for all m where f(m) ≠ 0.
-    
-    Complexity: O(|domain|)
-    """
-    ei = basis_vector(n, i)
-    result = {}
-    for m, fm in f.items():
-        if abs(fm) > 1e-15:
-            mi = add_mi(m, ei)
-            fmi = f.get(mi, 0.0)
-            result[m] = fmi / fm
-        else:
-            result[m] = 0.0
-    return result
-
-
-def compute_depth(
-    f: Dict[MultiIndex, float],
-    n: int,
-    max_depth: int = 10,
-    domain: Optional[List[MultiIndex]] = None,
-    tol: float = -1e-10
-) -> int:
-    """
-    Compute the directional depth of f by iterating ratio transforms.
+    Compute the Lorentzian depth (k-fold DLC depth) of a function.
     
     Algorithm:
-    1. Check directional log-concavity of f.
-    2. If it passes, compute all n ratio transforms.
-    3. Recursively check depth of each ratio transform.
-    4. The depth is 1 + min(depth of Rᵢf for all i).
+    1. Start with depth k = 0 (check positivity)
+    2. For each k, check all-direction log-concavity
+    3. Apply ratio transform and recurse
+    4. Stop when log-concavity fails
     
-    Args:
-        f: function values
-        n: dimension
-        max_depth: maximum depth to check (prevents infinite recursion)
-        domain: domain to check on
-        tol: tolerance for inequality checks
-    
-    Returns:
-        The computed depth (capped at max_depth).
-    
-    Complexity: O(n^k · |domain| · n²) where k is the computed depth.
+    Time: O(k_max * n * |points|) where n = dimension
+    Space: O(|points|) for caching
     """
-    if max_depth == 0:
-        return 0
     
-    is_lc, failure = check_directional_log_concave(f, n, domain, tol)
-    if not is_lc:
-        return 0
+    def __init__(self, f: Callable, dim: int, 
+                 points: Optional[List[tuple]] = None,
+                 max_depth: int = 10,
+                 tol: float = 1e-10):
+        """
+        Args:
+            f: function Z^n -> R (the valuation)
+            dim: dimension n
+            points: test points (auto-generated if None)
+            max_depth: maximum depth to check
+            tol: numerical tolerance
+        """
+        self.f = f
+        self.dim = dim
+        self.max_depth = max_depth
+        self.tol = tol
+        
+        if points is None:
+            self.points = list(cartesian_product(range(6), repeat=dim))
+        else:
+            self.points = points
     
-    min_sub_depth = max_depth - 1
-    for i in range(n):
-        ri_f = ratio_transform(f, i, n)
-        # Filter out near-zero entries for cleaner recursion
-        ri_f_clean = {m: v for m, v in ri_f.items() if abs(v) > 1e-15}
-        if len(ri_f_clean) == 0:
-            min_sub_depth = 0
-            break
-        sub_depth = compute_depth(ri_f_clean, n, max_depth - 1, None, tol)
-        min_sub_depth = min(min_sub_depth, sub_depth)
-        if min_sub_depth == 0:
-            break
+    def _check_positive(self, f: Callable) -> bool:
+        """Check if f is positive on all test points."""
+        for m in self.points:
+            if f(m) <= self.tol:
+                return False
+        return True
     
-    return 1 + min_sub_depth
+    def _check_dir_log_concave(self, f: Callable, direction: int) -> Tuple[bool, float]:
+        """
+        Check directional log-concavity in direction i.
+        
+        Returns:
+            (is_lc, min_ratio): whether LC holds and the minimum f(m+e)^2/(f(m)*f(m+2e))
+        """
+        min_ratio = float('inf')
+        is_lc = True
+        
+        for m in self.points:
+            e = [0] * self.dim
+            e[direction] = 1
+            m1 = tuple(m[j] + e[j] for j in range(self.dim))
+            m2 = tuple(m[j] + 2*e[j] for j in range(self.dim))
+            
+            fm = f(m)
+            fm1 = f(m1)
+            fm2 = f(m2)
+            
+            if fm > self.tol and fm2 > self.tol:
+                ratio = fm1**2 / (fm * fm2)
+                min_ratio = min(min_ratio, ratio)
+                if ratio < 1.0 - self.tol:
+                    is_lc = False
+        
+        return is_lc, min_ratio
+    
+    def compute_depth(self) -> Tuple[int, Dict]:
+        """
+        Compute the k-fold DLC depth.
+        
+        Returns:
+            (depth, info): depth value and diagnostic info
+        
+        Time: O(max_depth * dim * |points|)
+        """
+        info = {
+            'positivity_checks': [],
+            'lc_checks': [],
+            'min_ratios': []
+        }
+        
+        current_f = self.f
+        
+        for k in range(self.max_depth):
+            # Check positivity
+            is_pos = self._check_positive(current_f)
+            info['positivity_checks'].append(is_pos)
+            if not is_pos:
+                return k, info
+            
+            # Check all-direction log-concavity
+            all_lc = True
+            min_ratio_k = float('inf')
+            for i in range(self.dim):
+                is_lc, min_r = self._check_dir_log_concave(current_f, i)
+                min_ratio_k = min(min_ratio_k, min_r)
+                if not is_lc:
+                    all_lc = False
+                    break
+            
+            info['lc_checks'].append(all_lc)
+            info['min_ratios'].append(min_ratio_k)
+            
+            if not all_lc:
+                return k, info
+            
+            # Apply ratio transform in direction 0
+            current_f = RatioTransform(current_f, 0, self.dim)
+        
+        return self.max_depth, info
 
 
-def check_supermodular(
-    g: Dict[MultiIndex, float],
-    n: int,
-    domain: Optional[List[MultiIndex]] = None,
-    tol: float = -1e-12
-) -> Tuple[bool, Optional[Tuple[int, int, MultiIndex]]]:
+class TropicalBridge:
     """
-    Check supermodularity of g on multi-indices.
+    Convert between log-concavity and tropical convexity.
     
-    Condition: for i ≠ j, g(m + eᵢ + eⱼ) + g(m) ≥ g(m + eᵢ) + g(m + eⱼ).
+    The tropicalization map: f -> -log(f) converts:
+    - Multiplicative structure → Additive structure
+    - Log-concavity → Tropical convexity (discrete convexity in min-plus)
+    - Products → Sums (in tropical semiring)
     
-    Args:
-        g: function values
-        n: dimension
-        domain: domain to check
-        tol: tolerance
-    
-    Returns:
-        (True, None) if supermodular, or (False, (i, j, m)) witnessing failure.
+    Time: O(1) per point evaluation
     """
-    if domain is None:
-        domain = list(g.keys())
     
-    for m in domain:
-        for i in range(n):
-            ei = basis_vector(n, i)
-            for j in range(i + 1, n):
-                ej = basis_vector(n, j)
-                gm = g.get(m, 0.0)
-                gmi = g.get(add_mi(m, ei), 0.0)
-                gmj = g.get(add_mi(m, ej), 0.0)
-                gmij = g.get(add_mi(m, add_mi(ei, ej)), 0.0)
+    @staticmethod
+    def tropicalize(f: Callable, m: tuple) -> float:
+        """Compute -log(f(m))."""
+        val = f(m)
+        if val <= 0:
+            return float('inf')
+        return -log(val)
+    
+    @staticmethod
+    def check_tropical_convexity(f: Callable, direction: int, 
+                                  point: tuple, dim: int) -> Tuple[float, float, bool]:
+        """
+        Check: 2 * trop(f(m+e)) <= trop(f(m)) + trop(f(m+2e))
+        
+        Returns:
+            (lhs, rhs, satisfied)
+        """
+        e = [0] * dim
+        e[direction] = 1
+        m1 = tuple(point[j] + e[j] for j in range(dim))
+        m2 = tuple(point[j] + 2*e[j] for j in range(dim))
+        
+        t0 = TropicalBridge.tropicalize(f, point)
+        t1 = TropicalBridge.tropicalize(f, m1)
+        t2 = TropicalBridge.tropicalize(f, m2)
+        
+        lhs = 2 * t1
+        rhs = t0 + t2
+        
+        return lhs, rhs, lhs <= rhs + 1e-10
+    
+    @staticmethod
+    def tropical_hessian(f: Callable, point: tuple, dim: int) -> np.ndarray:
+        """
+        Compute the tropical Hessian matrix H_{ij} at a point.
+        
+        H_{ij} = trop(f(m+e_i+e_j)) + trop(f(m)) - trop(f(m+e_i)) - trop(f(m+e_j))
+        
+        Negative semidefiniteness corresponds to tropical supermodularity.
+        
+        Time: O(n^2)
+        """
+        H = np.zeros((dim, dim))
+        t0 = TropicalBridge.tropicalize(f, point)
+        
+        for i in range(dim):
+            ei = [0] * dim
+            ei[i] = 1
+            mi = tuple(point[j] + ei[j] for j in range(dim))
+            ti = TropicalBridge.tropicalize(f, mi)
+            
+            for j in range(dim):
+                ej = [0] * dim
+                ej[j] = 1
+                mj = tuple(point[k] + ej[k] for k in range(dim))
+                mij = tuple(point[k] + ei[k] + ej[k] for k in range(dim))
                 
-                if (gmij + gm) - (gmi + gmj) < tol:
-                    return False, (i, j, m)
+                tj = TropicalBridge.tropicalize(f, mj)
+                tij = TropicalBridge.tropicalize(f, mij)
+                
+                H[i, j] = tij + t0 - ti - tj
+        
+        return H
+
+
+class MConvexVerifier:
+    """
+    Verify the M-convex exchange property for a support set.
     
-    return True, None
-
-
-def neg_log_function(
-    f: Dict[MultiIndex, float]
-) -> Dict[MultiIndex, float]:
-    """Compute -log(f) pointwise, skipping non-positive values."""
-    return {m: -math.log(v) for m, v in f.items() if v > 0}
-
-
-def check_exchange_closed(
-    f: Dict[MultiIndex, float],
-    n: int,
-    d: int,
-    tol: float = 1e-15
-) -> Tuple[bool, Optional[Tuple[MultiIndex, MultiIndex, int]]]:
-    """
-    Check exchange-closure of the support of f on degree slice d.
+    M-convexity: for any m, m' in S with m_i > m'_i,
+    there exists j with m_j < m'_j such that m - e_i + e_j ∈ S.
     
-    For all m, n with degree d and f(m) > 0, f(n) > 0:
-    if m_i < n_i, then ∃ j with n_j < m_j and f(exchange(m, i, j)) > 0.
+    Time: O(|S|^2 * n^2) for full verification
+    """
     
-    Returns:
-        (True, None) if exchange-closed, or (False, (m, n, i)) as witness.
-    """
-    points = [m for m in degree_slice(n, d) if f.get(m, 0.0) > tol]
-    
-    for m in points:
-        for nn in points:
-            for i in range(n):
-                if m[i] < nn[i]:
-                    found = False
-                    for j in range(n):
-                        if nn[j] < m[j]:
-                            # exchange move: increment i, decrement j
-                            moved = list(m)
-                            moved[i] += 1
-                            moved[j] -= 1
-                            if moved[j] >= 0 and f.get(tuple(moved), 0.0) > tol:
-                                found = True
-                                break
-                    if not found:
-                        return False, (m, nn, i)
-    
-    return True, None
+    @staticmethod
+    def verify(support: List[tuple], dim: int) -> Tuple[bool, Optional[Tuple]]:
+        """
+        Verify M-convex exchange property.
+        
+        Returns:
+            (is_mconvex, counterexample): True if M-convex, or a counterexample pair
+        """
+        support_set = set(support)
+        
+        for m in support:
+            for mp in support:
+                for i in range(dim):
+                    if m[i] > mp[i]:
+                        # Need to find j with m[j] < mp[j] and m - e_i + e_j in S
+                        found = False
+                        for j in range(dim):
+                            if m[j] < mp[j]:
+                                exchanged = list(m)
+                                exchanged[i] -= 1
+                                exchanged[j] += 1
+                                if tuple(exchanged) in support_set:
+                                    found = True
+                                    break
+                        
+                        if not found:
+                            return False, (m, mp, i)
+        
+        return True, None
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Model families for testing
-# ──────────────────────────────────────────────────────────────────────
-
-def uniform_matroid_valuation(n: int, r: int, max_degree: int = None) -> Dict[MultiIndex, float]:
-    """
-    Construct the indicator function of the uniform matroid U(r, n).
-    f(m) = 1 if |m| = r and all m_i ∈ {0, 1}, else 0.
-    (Bases of the uniform matroid on n elements of rank r.)
-    """
-    if max_degree is None:
-        max_degree = r
-    result = {}
-    for m in degree_slice(n, r):
-        if all(mi <= 1 for mi in m):
-            result[m] = 1.0
-    return result
-
-
-def weighted_product_valuation(weights: List[float], d: int) -> Dict[MultiIndex, float]:
-    """
-    Product valuation: f(m) = ∏ wᵢ^{mᵢ} on degree slice d.
-    This is always infinitely log-concave (like geometric sequences).
-    """
-    n = len(weights)
-    result = {}
-    for m in degree_slice(n, d):
-        val = 1.0
-        for i in range(n):
-            val *= weights[i] ** m[i]
-        result[m] = val
-    return result
-
-
-def multinomial_valuation(n: int, d: int) -> Dict[MultiIndex, float]:
-    """
-    Multinomial coefficients: f(m) = d! / (m₁! · m₂! · ... · mₙ!).
-    These arise from (x₁ + ... + xₙ)^d and should have high depth.
-    """
-    result = {}
-    for m in degree_slice(n, d):
-        val = math.factorial(d)
-        for mi in m:
-            val /= math.factorial(mi)
-        result[m] = float(val)
-    return result
-
-
-def perturbed_multinomial(n: int, d: int, epsilon: float = 0.1) -> Dict[MultiIndex, float]:
-    """
-    Multinomial coefficients with asymmetric perturbation.
-    f(m) = multinomial(m) * (1 + ε * m₁) to break symmetry.
-    """
-    base = multinomial_valuation(n, d)
-    result = {}
-    for m, v in base.items():
-        result[m] = v * (1.0 + epsilon * m[0])
-    return result
-
+# ============================================================
+# Example Usage
+# ============================================================
 
 if __name__ == "__main__":
-    print("=== Directional Depth Algorithm Demo ===\n")
+    # Example: multinomial coefficient function
+    def multinomial(m, degree=4):
+        if any(x < 0 for x in m) or sum(m) != degree:
+            return 0.0
+        return factorial(degree) / np.prod([factorial(int(x)) for x in m])
     
-    # Test 1: Multinomial coefficients (should have high depth)
-    n, d = 3, 4
-    f = multinomial_valuation(n, d)
-    depth = compute_depth(f, n, max_depth=6)
-    print(f"Multinomial(n={n}, d={d}): depth = {depth}")
+    n = 3
+    f = lambda m: multinomial(m, degree=4)
     
-    # Test 2: Uniform matroid
-    f = uniform_matroid_valuation(4, 2)
-    depth = compute_depth(f, 4, max_depth=6)
-    print(f"Uniform matroid U(2,4): depth = {depth}")
+    # Compute depth
+    points = [m for m in cartesian_product(range(5), repeat=n) if sum(m) == 4]
+    computer = LorentzianDepthComputer(f, n, points=points, max_depth=8)
+    depth, info = computer.compute_depth()
+    print(f"Multinomial (n=3, d=4) depth: >= {depth}")
+    print(f"Min ratios per level: {info['min_ratios'][:depth]}")
     
-    # Test 3: Product valuation (should be infinite depth)
-    f = weighted_product_valuation([1.0, 2.0, 3.0], 5)
-    depth = compute_depth(f, 3, max_depth=8)
-    print(f"Product valuation [1,2,3], d=5: depth ≥ {depth}")
+    # Tropical Hessian
+    H = TropicalBridge.tropical_hessian(f, (2, 1, 1), n)
+    print(f"\nTropical Hessian at (2,1,1):")
+    print(H)
+    eigenvalues = np.linalg.eigvalsh(H)
+    print(f"Eigenvalues: {eigenvalues}")
+    print(f"Negative semidefinite: {all(e <= 1e-10 for e in eigenvalues)}")
     
-    # Test 4: Supermodularity of -log f
-    f = multinomial_valuation(3, 3)
-    g = neg_log_function(f)
-    is_sm, _ = check_supermodular(g, 3)
-    print(f"\n-log(multinomial) supermodular: {is_sm}")
-    
-    print("\nDone.")
+    # M-convex verification
+    support = [m for m in points if f(m) > 0]
+    is_mc, cx = MConvexVerifier.verify(support, n)
+    print(f"\nM-convex support: {is_mc}")
