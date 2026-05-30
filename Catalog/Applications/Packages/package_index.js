@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Mathematical Music Theory / Crystallography / Information Theory",
     "date": "2026-05-30T18:25:17Z",
     "exp_id": "2e7961c7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7252166223404255,
+    "quality": "substantial",
     "pkg_num": 431
   },
   {
@@ -12508,8 +12508,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-30T18:25:17Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7252166223404255,
+      "quality": "substantial"
     }
   ],
   "edges": [
