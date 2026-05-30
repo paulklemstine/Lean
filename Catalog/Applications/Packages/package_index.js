@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Algebraic Combinatorics / Parameterized Complexity",
     "date": "2026-05-30T04:14:35Z",
     "exp_id": "8f6e3dce",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7660296460176992,
+    "quality": "substantial",
     "pkg_num": 380
   },
   {
@@ -11029,8 +11029,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-30T04:14:35Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7660296460176992,
+      "quality": "substantial"
     }
   ],
   "edges": [
