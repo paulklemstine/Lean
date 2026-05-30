@@ -1,798 +1,617 @@
 """
 Certified Fermion Sampling — Applications
-============================================
 
-Real-world applications of certified fermion sampling theory:
-1. Quantum chemistry: Certifying molecular orbital correlations
-2. Quantum advantage benchmarking: Noise tolerance thresholds
-3. DPP sampling quality: Machine learning kernel certification
+Real-world applications of the certified noise bounds:
+1. Quantum chemistry: electron correlation certification
+2. Materials science: band structure noise tolerance
+3. Quantum advantage verification: when can we trust noisy hardware?
 """
 
 import numpy as np
-from typing import Dict, List, Tuple
+from typing import List, Dict
+
+
+def depolarizing_channel(K: np.ndarray, eps: float) -> np.ndarray:
+    n = K.shape[0]
+    return (1 - eps) * K + (eps / 2) * np.eye(n)
+
+
+def iterated_depolarizing(K: np.ndarray, eps: float, d: int) -> np.ndarray:
+    contraction = (1 - eps) ** d
+    shift = (1 - contraction) / 2
+    return contraction * K + shift * np.eye(n)
+
+
+def certified_neg_dep_bound(d: int, eps: float) -> float:
+    eta = 3 * d * eps / 2
+    return 2 * (2 * eta + eta ** 2)
 
 
 # ============================================================
-# Application 1: Quantum Chemistry — Molecular Orbital Certification
+# Application 1: Quantum Chemistry — Electron Correlation
 # ============================================================
 
-def molecular_orbital_kernel(n_orbitals: int, n_electrons: int,
-                             hopping_strength: float = 1.0,
-                             seed: int = 42) -> np.ndarray:
-    """Create a correlation matrix modeling a molecular system.
-
-    Simulates a tight-binding Hamiltonian H = -t Σ c†_i c_{i+1} + h.c.
-    The ground state correlation matrix is K_ij = <c†_i c_j>.
-
-    Args:
-        n_orbitals: Number of molecular orbitals
-        n_electrons: Number of electrons
-        hopping_strength: Nearest-neighbor hopping amplitude
-
-    Returns:
-        Correlation matrix of the ground state
+def hydrogen_chain_correlation(n_sites: int, bond_length: float = 1.4) -> np.ndarray:
     """
-    # Build tight-binding Hamiltonian
-    H = np.zeros((n_orbitals, n_orbitals))
-    for i in range(n_orbitals - 1):
-        H[i, i + 1] = -hopping_strength
-        H[i + 1, i] = -hopping_strength
+    Simplified correlation matrix for a hydrogen chain at half-filling.
+    Models the tight-binding Hamiltonian with nearest-neighbor hopping.
 
-    # Diagonalize and fill lowest n_electrons orbitals
-    eigvals, eigvecs = np.linalg.eigh(H)
-    occupied = eigvecs[:, :n_electrons]
-    K = occupied @ occupied.T
+    K_ij ∝ sin(π|i-j|/(n+1)) / |i-j| for the ground state.
+    """
+    K = np.zeros((n_sites, n_sites))
+    for i in range(n_sites):
+        for j in range(n_sites):
+            if i == j:
+                K[i, j] = 0.5  # Half-filling
+            else:
+                dist = abs(i - j)
+                K[i, j] = (-1)**(dist + 1) * np.sin(np.pi * 0.5) / (np.pi * dist)
+    # Ensure symmetry and eigenvalues in [0, 1]
+    K = (K + K.T) / 2
+    eigenvalues = np.linalg.eigvalsh(K)
+    if np.min(eigenvalues) < 0 or np.max(eigenvalues) > 1:
+        K = K - np.min(eigenvalues) * np.eye(n_sites)
+        K = K / np.max(np.linalg.eigvalsh(K))
+        K = K * 0.95 + 0.025 * np.eye(n_sites)
     return K
 
 
-def certify_molecular_simulation(n_orbitals: int, n_electrons: int,
-                                  circuit_depth: int, gate_noise: float) -> Dict:
-    """Certify a quantum simulation of a molecular system.
-
-    Returns certification results for a noisy quantum simulation
-    of a simple molecular Hamiltonian.
-
-    Args:
-        n_orbitals: Number of orbitals
-        n_electrons: Number of electrons
-        circuit_depth: Depth of the preparation circuit
-        gate_noise: Depolarizing noise rate per gate
-
-    Returns:
-        Dictionary with certification results
+def certify_electron_correlations(n_sites: int, eps: float, d: int) -> Dict:
     """
-    K = molecular_orbital_kernel(n_orbitals, n_electrons)
+    Certify that noisy quantum hardware produces reliable electron correlations.
 
-    # Compute negative dependence margin
-    margin = float('inf')
-    for i in range(n_orbitals):
-        for j in range(i + 1, n_orbitals):
-            defect = -K[i, j] ** 2  # Symmetric kernel
-            margin = min(margin, -defect)
+    This is the key application: given a quantum circuit that prepares a
+    molecular ground state, determine whether the noise level allows
+    certified correlation estimates.
+    """
+    K = hydrogen_chain_correlation(n_sites)
+    K_noisy = iterated_depolarizing(K, eps, d)
+    bound = certified_neg_dep_bound(d, eps)
 
-    # Certified bound (symmetric case)
-    certified_bound = 2 * circuit_depth * gate_noise
-
-    # Simulate noisy circuit
-    n = n_orbitals
-    K_noisy = K.copy()
-    for _ in range(circuit_depth):
-        K_noisy = (1 - gate_noise) * K_noisy + gate_noise * np.eye(n) / 2
-
-    actual_max_diff = np.abs(K - K_noisy).max()
+    # Check pair correlations
+    n_certified = 0
+    n_total = 0
+    results = []
+    for i in range(n_sites):
+        for j in range(i + 1, n_sites):
+            P_ideal = K[i, i] * K[j, j] - K[i, j] ** 2
+            P_noisy = K_noisy[i, i] * K_noisy[j, j] - K_noisy[i, j] ** 2
+            certified = P_ideal - bound > 0
+            n_total += 1
+            if certified:
+                n_certified += 1
+            results.append({
+                'sites': (i, j),
+                'P_ideal': P_ideal,
+                'P_noisy': P_noisy,
+                'certified': certified
+            })
 
     return {
-        'n_orbitals': n_orbitals,
-        'n_electrons': n_electrons,
-        'neg_dep_margin': margin,
-        'certified_bound': certified_bound,
-        'is_certified': certified_bound < margin,
-        'actual_max_diff': actual_max_diff,
-        'max_certified_depth': margin / (2 * gate_noise) if gate_noise > 0 else float('inf'),
+        'n_sites': n_sites,
+        'eps': eps,
+        'd': d,
+        'bound': bound,
+        'n_certified': n_certified,
+        'n_total': n_total,
+        'fraction_certified': n_certified / n_total if n_total > 0 else 0,
+        'details': results
     }
 
 
 # ============================================================
-# Application 2: Quantum Advantage Benchmarking
+# Application 2: Quantum Advantage Verification
 # ============================================================
 
-def quantum_advantage_threshold(n_modes: int, filling: float = 0.5,
-                                 target_depth: int = 100) -> float:
-    """Compute the maximum noise rate for certified quantum advantage.
-
-    For a fermion sampling experiment with given parameters, determines
-    the noise threshold below which correlations remain certified.
-
-    Args:
-        n_modes: Number of fermionic modes
-        filling: Fraction of modes occupied
-        target_depth: Target circuit depth
-
-    Returns:
-        Maximum tolerable noise rate per gate
+def quantum_advantage_threshold(n: int, target_fidelity: float = 0.99) -> Dict:
     """
-    k = int(n_modes * filling)
-    K = molecular_orbital_kernel(n_modes, k)
+    Determine the noise threshold below which noisy fermion sampling
+    maintains quantum advantage.
 
-    margin = float('inf')
-    for i in range(n_modes):
-        for j in range(i + 1, n_modes):
-            margin = min(margin, K[i, j] ** 2)
-
-    # eps_max = margin / (2 * d)
-    eps_max = margin / (2 * target_depth)
-    return eps_max
-
-
-# ============================================================
-# Application 3: DPP Kernel Quality for Machine Learning
-# ============================================================
-
-def dpp_kernel_certification(K: np.ndarray, perturbation: np.ndarray) -> Dict:
-    """Certify the quality of a perturbed DPP kernel.
-
-    Given an ideal DPP kernel K and a perturbation matrix E = K' - K,
-    computes certified bounds on how the perturbation affects
-    sampling quality.
-
-    Args:
-        K: Ideal DPP kernel (symmetric PSD, eigenvalues in [0,1])
-        perturbation: Perturbation matrix E
-
-    Returns:
-        Dictionary with certification metrics
+    For quantum advantage, we need the output distribution to be
+    within total variation distance δ of the ideal distribution.
+    Our certified bounds translate this to noise requirements.
     """
-    n = K.shape[0]
-    K_perturbed = K + perturbation
+    K = hydrogen_chain_correlation(n)
 
-    eta = np.abs(perturbation).max()
-
-    # Check if perturbed kernel still satisfies neg dep
-    all_neg_dep = True
-    max_defect = -float('inf')
+    # Find minimum negative dependence gap
+    min_P = float('inf')
     for i in range(n):
         for j in range(i + 1, n):
-            defect = (K_perturbed[i, i] * K_perturbed[j, j] -
-                      K_perturbed[i, j] * K_perturbed[j, i]) - \
-                     K_perturbed[i, i] * K_perturbed[j, j]
-            max_defect = max(max_defect, defect)
-            if defect > 0:
-                all_neg_dep = False
+            P = K[i, i] * K[j, j] - K[i, j] ** 2
+            if P < min_P:
+                min_P = P
+
+    # For certified positive neg dep, need 2(2η + η²) < min_P
+    # where η = 3dε/2
+    # Solving: η < -1 + sqrt(1 + min_P/2)
+    max_eta = -1 + np.sqrt(1 + min_P / 2)
+
+    results = {}
+    for d in [10, 50, 100, 200, 500]:
+        max_eps = 2 * max_eta / (3 * d)
+        results[d] = {
+            'max_eps': max_eps,
+            'gate_fidelity': 1 - max_eps,
+            'total_noise': d * max_eps
+        }
 
     return {
-        'perturbation_norm': eta,
-        'certified_defect_bound': 4 * eta,  # General bound
-        'symmetric_defect_bound': 2 * eta,  # If both symmetric
-        'actual_max_defect': max_defect,
-        'neg_dep_preserved': all_neg_dep,
+        'n': n,
+        'min_neg_dep_gap': min_P,
+        'max_eta': max_eta,
+        'depth_thresholds': results
     }
+
+
+# ============================================================
+# Application 3: Materials Science — Band Structure
+# ============================================================
+
+def band_structure_correlation(n_k_points: int) -> np.ndarray:
+    """
+    Correlation matrix from a simple 1D band structure.
+    Models a metal at half-filling with n_k_points in the Brillouin zone.
+    """
+    K = np.zeros((n_k_points, n_k_points))
+    for i in range(n_k_points):
+        for j in range(n_k_points):
+            k_i = 2 * np.pi * i / n_k_points
+            k_j = 2 * np.pi * j / n_k_points
+            # Fourier transform of Fermi function at half-filling
+            if i == j:
+                K[i, j] = 0.5
+            else:
+                K[i, j] = 0.3 * np.sin(k_i - k_j) / (n_k_points * np.sin(np.pi * (i - j) / n_k_points))
+    K = (K + K.T) / 2
+    # Normalize eigenvalues to [0, 1]
+    eigs = np.linalg.eigvalsh(K)
+    if np.min(eigs) < 0:
+        K = K - (np.min(eigs) - 0.01) * np.eye(n_k_points)
+    eigs = np.linalg.eigvalsh(K)
+    if np.max(eigs) > 1:
+        K = K / (np.max(eigs) + 0.01)
+    return K
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("APPLICATION 1: Molecular Orbital Certification")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 1: Quantum Chemistry — Electron Correlation Certification")
+    print("=" * 70)
 
     for n in [4, 8, 16]:
-        result = certify_molecular_simulation(n, n // 2,
-                                               circuit_depth=20,
-                                               gate_noise=0.01)
-        print(f"\n{n}-orbital molecule ({n//2} electrons):")
-        print(f"  Neg dep margin: {result['neg_dep_margin']:.6f}")
-        print(f"  Certified bound: {result['certified_bound']:.6f}")
-        print(f"  Certified: {result['is_certified']}")
-        print(f"  Max certified depth: {result['max_certified_depth']:.1f}")
+        for eps in [0.001, 0.01]:
+            result = certify_electron_correlations(n, eps, d=50)
+            print(f"  n={n:>2}, ε={eps:.3f}, d=50: "
+                  f"{result['n_certified']}/{result['n_total']} pairs certified "
+                  f"({result['fraction_certified']:.1%}), "
+                  f"bound={result['bound']:.6f}")
 
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Quantum Advantage Thresholds")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("APPLICATION 2: Quantum Advantage Threshold")
+    print("=" * 70)
 
-    for n in [4, 8, 16, 32]:
-        for d in [10, 50, 100]:
-            eps_max = quantum_advantage_threshold(n, filling=0.5, target_depth=d)
-            print(f"  n={n:>3}, depth={d:>3}: max noise = {eps_max:.6f}")
+    for n in [4, 8, 16]:
+        result = quantum_advantage_threshold(n)
+        print(f"\n  n={n}: min neg dep gap = {result['min_neg_dep_gap']:.6f}")
+        for d, info in result['depth_thresholds'].items():
+            print(f"    d={d:>4}: max ε = {info['max_eps']:.6f}, "
+                  f"gate fidelity ≥ {info['gate_fidelity']:.6f}")
 
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: DPP Kernel Certification")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("APPLICATION 3: Materials Science — Band Structure Noise Tolerance")
+    print("=" * 70)
 
-    n = 8
-    K = molecular_orbital_kernel(n, n // 2)
-    rng = np.random.default_rng(42)
-    E = rng.standard_normal((n, n)) * 0.01
-    E = (E + E.T) / 2  # Symmetrize
+    for n in [4, 8]:
+        K_band = band_structure_correlation(n)
+        K_noisy = iterated_depolarizing(K_band, 0.01, 100)
+        max_pert = np.max(np.abs(K_band - K_noisy))
+        bound = 3 * 100 * 0.01 / 2
+        print(f"  n={n}: actual perturbation = {max_pert:.6f}, "
+              f"certified bound = {bound:.6f}")
 
-    result = dpp_kernel_certification(K, E)
-    print(f"\nKernel size: {n}x{n}")
-    print(f"  Perturbation norm: {result['perturbation_norm']:.6f}")
-    print(f"  Certified defect bound: {result['certified_defect_bound']:.6f}")
-    print(f"  Symmetric defect bound: {result['symmetric_defect_bound']:.6f}")
-    print(f"  Actual max defect: {result['actual_max_defect']:.6f}")
-    print(f"  Neg dep preserved: {result['neg_dep_preserved']}")
-
-
-"""Build PACKAGE.json from all deliverables."""
-
-import json
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-package = {
-    "title": "Certified Fermion Sampling in Noisy Quantum Circuits",
-    "domain": "Quantum Information / Probability Theory / Pythagorean",
-    "article": read_file("ARTICLE.md"),
-    "research_paper": read_file("RESEARCH_PAPER.md"),
-    "future_directions": read_file("FUTURE_DIRECTIONS.md"),
-    "demos": [
-        {
-            "name": "Certified Fermion Sampling Demo",
-            "code": read_file("demo.py")
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Certified Fermion Sampling Algorithms",
-            "pseudocode": """Algorithm: CertifyFermionSampling(K, d, eps)
-Input: Ideal kernel K, depth d, noise rate eps
-Output: Certified quality bound
-
-1. Compute delta = min_{i<j} K_ij^2          // O(n^2)
-2. Compute bound = 2 * d * eps                // O(1)
-3. If bound < delta: return CERTIFIED
-   Else: return NOT_CERTIFIED
-
-Time: O(n^2), Space: O(n^2)""",
-            "code": read_file("algorithms.py")
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Noise Threshold Phase Diagram",
-            "code": read_file("viz_noise_threshold.py"),
-            "description": "Phase diagram showing certified vs uncertified regions in the (depth, noise) parameter space for fermion sampling."
-        },
-        {
-            "name": "Defect Perturbation Bounds",
-            "code": read_file("viz_defect_perturbation.py"),
-            "description": "Comparison of actual defect perturbation with certified 2η and 4η bounds, demonstrating bound tightness."
-        },
-        {
-            "name": "Kernel Evolution Under Noise",
-            "code": read_file("viz_kernel_evolution.py"),
-            "description": "Heatmap evolution of the fermion correlation matrix under depolarizing noise, showing contraction toward maximally mixed state."
-        }
-    ],
-    "interactive_demos": [
-        {
-            "name": "Noise Threshold Explorer",
-            "html": read_file("interactive_noise_slider.html"),
-            "description": "Interactive explorer for the noise threshold theorem. Adjust noise rate, circuit depth, and margin to see whether fermion sampling is certified."
-        },
-        {
-            "name": "Correlation Matrix Under Noise",
-            "html": read_file("interactive_kernel_viz.html"),
-            "description": "Watch the fermion correlation matrix evolve under depolarizing noise with adjustable parameters."
-        }
-    ],
-    "lean_proofs": read_file("Pythagorean/CertifiedFermionSampling.lean")
-}
-
-with open("PACKAGE.json", "w") as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print("PACKAGE.json created successfully")
-print(f"  Size: {len(json.dumps(package))} bytes")
+    print("\nAll applications completed successfully!")
 
 
 """
 Certified Fermion Sampling in Noisy Quantum Circuits — Demo
-============================================================
 
-Demonstrates the core theorems with concrete numerical examples:
+Demonstrates the key theorems with concrete numerical examples:
 1. Depolarizing channel contraction
-2. Noise accumulation bound
-3. Pairwise negative dependence defect perturbation
-4. Noise threshold computation
-5. Symmetric vs general kernel advantage
+2. Error accumulation over circuit depth
+3. Certified negative dependence defect bounds
+4. Noise threshold for certified sampling
 """
 
 import numpy as np
 from typing import Tuple
 
-
 def depolarizing_channel(K: np.ndarray, eps: float) -> np.ndarray:
-    """Apply depolarizing channel: K -> (1-eps)*K + eps*(I/2)."""
+    """Apply depolarizing channel: Φ_ε(K) = (1-ε)K + (ε/2)I"""
     n = K.shape[0]
-    return (1 - eps) * K + eps * np.eye(n) / 2
+    return (1 - eps) * K + (eps / 2) * np.eye(n)
+
+def iterated_depolarizing(K: np.ndarray, eps: float, d: int) -> np.ndarray:
+    """Apply depolarizing channel d times."""
+    result = K.copy()
+    for _ in range(d):
+        result = depolarizing_channel(result, eps)
+    return result
+
+def pairwise_neg_dep_value(K: np.ndarray, i: int, j: int) -> float:
+    """Compute P_K(i,j) = K_ii * K_jj - K_ij * K_ji."""
+    return K[i, i] * K[j, j] - K[i, j] * K[j, i]
+
+def max_entry_perturbation(K: np.ndarray, K_prime: np.ndarray) -> float:
+    """Compute max |K_ij - K'_ij|."""
+    return np.max(np.abs(K - K_prime))
+
+def certified_bound(d: int, eps: float) -> float:
+    """Certified neg dep defect bound: 2*(2*(3dε/2) + (3dε/2)²)"""
+    eta = 3 * d * eps / 2
+    return 2 * (2 * eta + eta**2)
+
+def bernoulli_bound(d: int, eps: float) -> float:
+    """Bernoulli bound: (1-(1-ε)^d)/2 ≤ dε/2"""
+    return d * eps / 2
+
+def actual_perturbation(d: int, eps: float) -> float:
+    """Actual perturbation for identity: (1-(1-ε)^d)/2"""
+    return (1 - (1 - eps)**d) / 2
 
 
-def pairwise_neg_dep_defect(K: np.ndarray, i: int, j: int) -> float:
-    """Compute pairwise negative dependence defect = K_ii*K_jj - K_ij*K_ji - K_ii*K_jj."""
-    return (K[i, i] * K[j, j] - K[i, j] * K[j, i]) - K[i, i] * K[j, j]
+print("=" * 70)
+print("CERTIFIED FERMION SAMPLING IN NOISY QUANTUM CIRCUITS")
+print("=" * 70)
 
-
-def max_certified_depth(eps: float, tau: float, symmetric: bool = False) -> float:
-    """Maximum circuit depth maintaining certified negative dependence."""
-    if symmetric:
-        return tau / (2 * eps)
-    else:
-        return tau / (4 * eps)
-
-
-def make_fermion_kernel(n: int, filling: float = 0.5) -> np.ndarray:
-    """Create a valid fermion correlation matrix (random Slater determinant).
-
-    K = U @ diag(occupations) @ U^T where U is a random orthogonal matrix
-    and occupations are eigenvalues in [0, 1].
-    """
-    rng = np.random.default_rng(42)
-    U, _ = np.linalg.qr(rng.standard_normal((n, n)))
-    k = int(n * filling)
-    eigenvalues = np.zeros(n)
-    eigenvalues[:k] = 1.0  # Exact Slater determinant
-    K = U @ np.diag(eigenvalues) @ U.T
-    return K
-
-
-def verify_fermion_properties(K: np.ndarray) -> dict:
-    """Verify that K is a valid fermion correlation matrix."""
-    n = K.shape[0]
-    eigvals_K = np.linalg.eigvalsh(K)
-    eigvals_ImK = np.linalg.eigvalsh(np.eye(n) - K)
-    return {
-        "symmetric": np.allclose(K, K.T),
-        "psd": np.all(eigvals_K >= -1e-10),
-        "I_minus_K_psd": np.all(eigvals_ImK >= -1e-10),
-        "eigenvalues_in_01": np.all(eigvals_K >= -1e-10) and np.all(eigvals_K <= 1 + 1e-10),
-        "min_eigenvalue": float(eigvals_K.min()),
-        "max_eigenvalue": float(eigvals_K.max()),
-    }
-
-
-# ============================================================
-# DEMO 1: Depolarizing Channel Contraction
-# ============================================================
-print("=" * 60)
-print("DEMO 1: Depolarizing Channel Contraction")
-print("=" * 60)
-
+# Demo 1: Depolarizing channel contraction
+print("\n--- Demo 1: Depolarizing Channel Contraction ---")
 n = 4
-K = make_fermion_kernel(n)
+K = np.array([[0.8, 0.3, -0.1, 0.2],
+              [0.3, 0.6,  0.2, -0.1],
+              [-0.1, 0.2, 0.7, 0.1],
+              [0.2, -0.1, 0.1, 0.5]])
+L = np.array([[0.7, 0.2, 0.0, 0.1],
+              [0.2, 0.5, 0.1, 0.0],
+              [0.0, 0.1, 0.6, 0.2],
+              [0.1, 0.0, 0.2, 0.4]])
+
 eps = 0.1
+PhiK = depolarizing_channel(K, eps)
+PhiL = depolarizing_channel(L, eps)
 
-print(f"\nIdeal kernel K ({n}x{n}):")
-print(np.round(K, 4))
-print(f"\nFermion properties: {verify_fermion_properties(K)}")
+diff_before = max_entry_perturbation(K, L)
+diff_after = max_entry_perturbation(PhiK, PhiL)
+contraction_ratio = diff_after / diff_before if diff_before > 0 else 0
 
-K_noisy = depolarizing_channel(K, eps)
-print(f"\nNoisy kernel K' = (1-{eps})*K + {eps}*I/2:")
-print(np.round(K_noisy, 4))
-print(f"\nNoisy fermion properties: {verify_fermion_properties(K_noisy)}")
+print(f"  n = {n}, ε = {eps}")
+print(f"  ‖K - L‖_max = {diff_before:.6f}")
+print(f"  ‖Φ(K) - Φ(L)‖_max = {diff_after:.6f}")
+print(f"  Contraction ratio = {contraction_ratio:.6f}")
+print(f"  Theoretical bound (1-ε) = {1-eps:.6f}")
+print(f"  ✓ Contraction verified: {diff_after <= (1-eps) * diff_before + 1e-15}")
 
-# Verify contraction
-diff = np.abs(K - K_noisy).max()
-print(f"\n‖K - K'‖_max = {diff:.6f}")
-print(f"(1-eps) * max|K_ij - I/2_ij| = {(1-eps) * np.abs(K - np.eye(n)/2).max():.6f}")
-print(f"eps * max|K_ij - I/2_ij| = {eps * np.abs(K - np.eye(n)/2).max():.6f}")
+# Demo 2: Error accumulation
+print("\n--- Demo 2: Error Accumulation Over Circuit Depth ---")
+eps_values = [0.001, 0.01, 0.05, 0.1]
+depths = [1, 5, 10, 20, 50, 100]
+K_test = np.array([[1, 0, 0, 0],
+                    [0, 0.8, 0.3, 0],
+                    [0, 0.3, 0.6, 0.1],
+                    [0, 0, 0.1, 0.4]])
 
-# ============================================================
-# DEMO 2: Noise Accumulation
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 2: Noise Accumulation Over Circuit Depth")
-print("=" * 60)
+print(f"  {'ε':>8} {'d':>5} {'actual':>12} {'bound 3dε/2':>12} {'Bernoulli':>12} {'verified':>10}")
+print(f"  {'-'*8} {'-'*5} {'-'*12} {'-'*12} {'-'*12} {'-'*10}")
+for eps in [0.01, 0.05, 0.1]:
+    for d in [5, 10, 20, 50]:
+        K_noisy = iterated_depolarizing(K_test, eps, d)
+        actual = max_entry_perturbation(K_test, K_noisy)
+        bound = 3 * d * eps / 2
+        bern = actual_perturbation(d, eps)
+        ok = actual <= bound + 1e-12
+        print(f"  {eps:>8.3f} {d:>5} {actual:>12.6f} {bound:>12.6f} {bern:>12.6f} {'✓' if ok else '✗':>10}")
 
-depths = [1, 5, 10, 20, 50]
-eps = 0.01
-K0 = make_fermion_kernel(n)
+# Demo 3: Certified negative dependence defect
+print("\n--- Demo 3: Certified Negative Dependence Defect ---")
+K_ideal = np.array([[0.7, 0.2, -0.1, 0.05],
+                     [0.2, 0.6,  0.1, -0.05],
+                     [-0.1, 0.1, 0.5, 0.08],
+                     [0.05, -0.05, 0.08, 0.4]])
 
-print(f"\nNoise rate per gate: eps = {eps}")
-print(f"{'Depth':>6} | {'‖K-K_d‖_max':>12} | {'d*eps bound':>12} | {'Ratio':>8}")
-print("-" * 50)
+print(f"  {'ε':>8} {'d':>5} {'actual defect':>15} {'certified bound':>16} {'verified':>10}")
+print(f"  {'-'*8} {'-'*5} {'-'*15} {'-'*16} {'-'*10}")
 
-for d in depths:
-    K_d = K0.copy()
-    for _ in range(d):
-        K_d = depolarizing_channel(K_d, eps)
-    actual_err = np.abs(K0 - K_d).max()
-    bound = d * eps
-    print(f"{d:>6} | {actual_err:>12.6f} | {bound:>12.6f} | {actual_err/bound:>8.4f}")
+for eps in [0.01, 0.05, 0.1]:
+    for d in [5, 10, 20]:
+        K_noisy = iterated_depolarizing(K_ideal, eps, d)
+        # Compute actual max neg dep defect
+        max_defect = 0.0
+        for i in range(n):
+            for j in range(n):
+                defect = abs(pairwise_neg_dep_value(K_ideal, i, j) -
+                            pairwise_neg_dep_value(K_noisy, i, j))
+                max_defect = max(max_defect, defect)
+        bound = certified_bound(d, eps)
+        ok = max_defect <= bound + 1e-12
+        print(f"  {eps:>8.3f} {d:>5} {max_defect:>15.8f} {bound:>16.8f} {'✓' if ok else '✗':>10}")
 
-# ============================================================
-# DEMO 3: Pairwise Negative Dependence Defect
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 3: Negative Dependence Defect Perturbation")
-print("=" * 60)
+# Demo 4: Noise threshold
+print("\n--- Demo 4: Noise Threshold for Certified Sampling ---")
+print("  For pair (0,1) of K_ideal:")
+P_ideal = pairwise_neg_dep_value(K_ideal, 0, 1)
+print(f"  P_K(0,1) = K_00*K_11 - K_01*K_10 = {P_ideal:.6f}")
 
-K = make_fermion_kernel(n)
-print(f"\nIdeal kernel defects (should all be ≤ 0):")
-for i in range(n):
-    for j in range(i + 1, n):
-        d_val = pairwise_neg_dep_defect(K, i, j)
-        print(f"  defect({i},{j}) = {d_val:.6f}")
+for eps in [0.001, 0.005, 0.01, 0.05]:
+    for d in [10, 50, 100]:
+        K_noisy = iterated_depolarizing(K_ideal, eps, d)
+        P_noisy = pairwise_neg_dep_value(K_noisy, 0, 1)
+        bound = certified_bound(d, eps)
+        certified_positive = P_ideal - bound > 0
+        actually_positive = P_noisy > 0
+        print(f"  ε={eps:.3f}, d={d:>3}: P_noisy={P_noisy:.6f}, "
+              f"bound={bound:.6f}, certified_pos={certified_positive}, "
+              f"actual_pos={actually_positive}")
 
-# Apply noise
-eta_values = [0.001, 0.01, 0.05, 0.1]
-print(f"\nDefect perturbation bounds:")
-print(f"{'eta':>8} | {'Max |Δdefect|':>14} | {'4η bound':>10} | {'2η bound':>10} | {'Actual/2η':>10}")
-print("-" * 65)
+# Demo 5: Bernoulli's inequality verification
+print("\n--- Demo 5: Bernoulli's Inequality Verification ---")
+print(f"  {'ε':>8} {'d':>5} {'(1-ε)^d':>12} {'1-dε':>12} {'gap':>12}")
+print(f"  {'-'*8} {'-'*5} {'-'*12} {'-'*12} {'-'*12}")
+for eps in [0.01, 0.05, 0.1]:
+    for d in [5, 10, 20, 50]:
+        actual = (1 - eps)**d
+        linear = 1 - d * eps
+        gap = actual - linear
+        print(f"  {eps:>8.3f} {d:>5} {actual:>12.8f} {linear:>12.8f} {gap:>12.8f}")
 
-for eta in eta_values:
-    K_perturbed = depolarizing_channel(K, eta)
-    max_delta = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            d_ideal = pairwise_neg_dep_defect(K, i, j)
-            d_noisy = pairwise_neg_dep_defect(K_perturbed, i, j)
-            max_delta = max(max_delta, abs(d_ideal - d_noisy))
-    print(f"{eta:>8.4f} | {max_delta:>14.8f} | {4*eta:>10.6f} | {2*eta:>10.6f} | {max_delta/(2*eta):>10.6f}")
+# Demo 6: Tightness conjecture test
+print("\n--- Demo 6: Tightness Conjecture Test ---")
+print("  Testing: dε/4 ≤ (1-(1-ε)^d)/2 ≤ dε/2 for dε ≤ 1/2")
+print(f"  {'ε':>8} {'d':>5} {'dε':>8} {'lower':>12} {'actual':>12} {'upper':>12} {'ok':>5}")
+print(f"  {'-'*8} {'-'*5} {'-'*8} {'-'*12} {'-'*12} {'-'*12} {'-'*5}")
+for eps in [0.001, 0.005, 0.01, 0.05]:
+    for d in [10, 20, 50, 100]:
+        if d * eps <= 0.5:
+            actual = (1 - (1 - eps)**d) / 2
+            lower = d * eps / 4
+            upper = d * eps / 2
+            ok = lower <= actual + 1e-15 and actual <= upper + 1e-15
+            print(f"  {eps:>8.4f} {d:>5} {d*eps:>8.4f} {lower:>12.8f} {actual:>12.8f} {upper:>12.8f} {'✓' if ok else '✗':>5}")
 
-# ============================================================
-# DEMO 4: Noise Threshold
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 4: Noise Threshold Computation")
-print("=" * 60)
-
-K = make_fermion_kernel(n)
-
-# Compute the negative dependence margin
-margin = float('inf')
-for i in range(n):
-    for j in range(i + 1, n):
-        d_val = pairwise_neg_dep_defect(K, i, j)
-        margin = min(margin, -d_val)
-
-print(f"\nNegative dependence margin δ = {margin:.6f}")
-
-eps_values = [0.001, 0.005, 0.01, 0.05]
-print(f"\nMaximum certified depth for each noise rate:")
-print(f"{'eps':>8} | {'General d_max':>14} | {'Symmetric d_max':>16} | {'Advantage':>10}")
-print("-" * 60)
-
-for eps in eps_values:
-    d_gen = max_certified_depth(eps, margin, symmetric=False)
-    d_sym = max_certified_depth(eps, margin, symmetric=True)
-    print(f"{eps:>8.4f} | {d_gen:>14.1f} | {d_sym:>16.1f} | {d_sym/d_gen:>10.1f}x")
-
-# ============================================================
-# DEMO 5: Conjecture Test — Tightness of Constant 2
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 5: Conjecture Test — Tightness of Constant 2")
-print("=" * 60)
-
-# For symmetric K, defect = -(K_ij)^2
-# |defect_K - defect_K'| = |K_ij^2 - K'_ij^2| = |K_ij + K'_ij| * |K_ij - K'_ij|
-# As K_ij -> 1 and eta -> 0, ratio -> 2
-
-print("\nTesting tightness: ratio = max|Δdefect| / eta as eta → 0")
-print("(Conjecture: this ratio approaches 2 for symmetric kernels)")
-
-# Use a kernel with K_ij close to 1
-U = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
-K_tight = np.ones((2, 2)) * 0.5  # Rank-1 projector divided by 2
-
-# Actually use a kernel with off-diagonal close to 1
-# K = [[a, c], [c, a]] with a, c chosen so eigenvalues in [0,1]
-# eigenvalues = a+c and a-c, both in [0,1]
-# To maximize c: set a+c=1, a-c=0, so a=c=0.5
-# K_ij = 0.5, so |K_ij| = 0.5
-
-# To get K_ij = 0.99: eigenvalues 1.99 and 0.01 — but 1.99 > 1!
-# So max |K_ij| = 0.5 for a 2x2 kernel. Use larger n.
-
-# For 4x4, use rank-2 projector
-n_test = 4
-rng = np.random.default_rng(123)
-v1 = rng.standard_normal(n_test)
-v1 /= np.linalg.norm(v1)
-v2 = rng.standard_normal(n_test)
-v2 -= v2 @ v1 * v1
-v2 /= np.linalg.norm(v2)
-K_proj = np.outer(v1, v1) + np.outer(v2, v2)  # Rank-2 projector, eigenvalues 0 or 1
-
-# Find the pair with largest |K_ij|
-best_i, best_j = 0, 1
-for i in range(n_test):
-    for j in range(i+1, n_test):
-        if abs(K_proj[i, j]) > abs(K_proj[best_i, best_j]):
-            best_i, best_j = i, j
-
-K_ij_val = abs(K_proj[best_i, best_j])
-print(f"\nUsing {n_test}x{n_test} rank-2 projector, best |K_ij| = {K_ij_val:.6f}")
-
-eta_tests = [0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
-print(f"{'eta':>10} | {'Max |Δdefect|':>14} | {'2η':>10} | {'Ratio':>8}")
-print("-" * 50)
-
-for eta in eta_tests:
-    # Perturb entry-by-entry
-    K_pert = K_proj.copy()
-    K_pert[best_i, best_j] -= eta
-    K_pert[best_j, best_i] -= eta  # Keep symmetric
-
-    d_orig = pairwise_neg_dep_defect(K_proj, best_i, best_j)
-    d_pert = pairwise_neg_dep_defect(K_pert, best_i, best_j)
-    delta = abs(d_orig - d_pert)
-    ratio = delta / (2 * eta) if eta > 0 else 0
-    print(f"{eta:>10.5f} | {delta:>14.10f} | {2*eta:>10.6f} | {ratio:>8.6f}")
-
-print(f"\nExpected limit: 2*|K_ij| = {2*K_ij_val:.6f}")
-print("The ratio converges to 2*|K_ij| < 2, confirming the bound is tight")
-print("only when |K_ij| = 1 (achievable for larger matrices).")
-
-
-if __name__ == "__main__":
-    print("\n\nAll demos completed successfully!")
+print("\n" + "=" * 70)
+print("All demos completed successfully!")
+print("=" * 70)
 
 
 """
-Visualization 2: Defect Perturbation Bounds
-=============================================
-Shows how the pairwise negative dependence defect changes under
-perturbation, comparing the actual change with the certified 2η
-and 4η bounds. Demonstrates the tightness of the symmetric bound.
+Visualization: Negative Dependence Defect Heatmap
+
+Shows the pairwise negative dependence values for ideal and noisy
+fermionic states as heatmaps, along with the certified defect bound.
+Illustrates how noise degrades the DPP quality certificate.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
+def iterated_depolarizing(K, eps, d):
+    n = K.shape[0]
+    c = (1 - eps) ** d
+    return c * K + (1 - c) / 2 * np.eye(n)
 
-def molecular_orbital_kernel(n_orbitals, n_electrons, hopping_strength=1.0):
-    H = np.zeros((n_orbitals, n_orbitals))
-    for i in range(n_orbitals - 1):
-        H[i, i + 1] = -hopping_strength
-        H[i + 1, i] = -hopping_strength
-    eigvals, eigvecs = np.linalg.eigh(H)
-    occupied = eigvecs[:, :n_electrons]
-    return occupied @ occupied.T
-
-
-def pairwise_neg_dep_defect(K, i, j):
-    return (K[i, i] * K[j, j] - K[i, j] * K[j, i]) - K[i, i] * K[j, j]
-
-
-# Setup
-n = 8
-k = 4
-K = molecular_orbital_kernel(n, k)
-
-eta_values = np.logspace(-4, -0.5, 50)
-
-# Track max defect perturbation for each eta
-max_defect_changes = []
-for eta in eta_values:
-    K_noisy = (1 - eta) * K + eta * np.eye(n) / 2
-    max_change = 0
+def neg_dep_matrix(K):
+    n = K.shape[0]
+    P = np.zeros((n, n))
     for i in range(n):
-        for j in range(i + 1, n):
-            d_ideal = pairwise_neg_dep_defect(K, i, j)
-            d_noisy = pairwise_neg_dep_defect(K_noisy, i, j)
-            max_change = max(max_change, abs(d_ideal - d_noisy))
-    max_defect_changes.append(max_change)
+        for j in range(n):
+            P[i, j] = K[i, i] * K[j, j] - K[i, j] * K[j, i]
+    return P
 
-max_defect_changes = np.array(max_defect_changes)
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# Plot 1: Absolute bounds
-ax1.loglog(eta_values, max_defect_changes, 'ko-', markersize=3,
-           label='Actual max |Δdefect|', linewidth=2)
-ax1.loglog(eta_values, 2 * eta_values, 'b--', linewidth=2,
-           label='Symmetric bound (2η)')
-ax1.loglog(eta_values, 4 * eta_values, 'r--', linewidth=2,
-           label='General bound (4η)')
-ax1.set_xlabel('Perturbation η', fontsize=12)
-ax1.set_ylabel('Max |Δdefect|', fontsize=12)
-ax1.set_title('Defect Perturbation: Actual vs Certified Bounds', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Ratios
-ratio_2eta = max_defect_changes / (2 * eta_values)
-ratio_4eta = max_defect_changes / (4 * eta_values)
-
-ax2.semilogx(eta_values, ratio_2eta, 'b-o', markersize=3, linewidth=2,
-             label='Actual / (2η)')
-ax2.semilogx(eta_values, ratio_4eta, 'r-o', markersize=3, linewidth=2,
-             label='Actual / (4η)')
-ax2.axhline(y=1.0, color='gray', linestyle=':', linewidth=1.5, label='Bound = 1')
-ax2.set_xlabel('Perturbation η', fontsize=12)
-ax2.set_ylabel('Ratio (actual / bound)', fontsize=12)
-ax2.set_title('Bound Tightness Analysis', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0, 1.2)
-
-plt.suptitle(f'Certified Fermion Sampling Quality (n={n})',
-             fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig("defect_perturbation_bounds.png", dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved defect_perturbation_bounds.png")
-
-
-"""
-Visualization 3: Correlation Matrix Evolution Under Noise
-==========================================================
-Heatmap visualization showing how the fermion correlation matrix
-evolves as depolarizing noise is applied over multiple circuit layers.
-Demonstrates the contraction toward the maximally mixed state.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def molecular_orbital_kernel(n_orbitals, n_electrons, hopping_strength=1.0):
-    H = np.zeros((n_orbitals, n_orbitals))
-    for i in range(n_orbitals - 1):
-        H[i, i + 1] = -hopping_strength
-        H[i + 1, i] = -hopping_strength
-    eigvals, eigvecs = np.linalg.eigh(H)
-    occupied = eigvecs[:, :n_electrons]
-    return occupied @ occupied.T
-
-
-# Setup
+# Correlation matrix (8x8 for better visualization)
 n = 8
-k = 4
-K = molecular_orbital_kernel(n, k)
+np.random.seed(42)
+# Create a valid correlation matrix
+A = np.random.randn(n, n) * 0.3
+K = A @ A.T / n
+K = K / (np.max(np.linalg.eigvalsh(K)) + 0.1)
+K = (K + K.T) / 2
 
-depths = [0, 5, 20, 100]
-eps = 0.05
+fig, axes = plt.subplots(2, 3, figsize=(16, 10))
 
-fig, axes = plt.subplots(2, 4, figsize=(20, 9))
+configs = [
+    (0.0, 0, 'Ideal (no noise)'),
+    (0.01, 20, 'ε=0.01, d=20'),
+    (0.01, 100, 'ε=0.01, d=100'),
+    (0.05, 10, 'ε=0.05, d=10'),
+    (0.05, 50, 'ε=0.05, d=50'),
+    (0.1, 20, 'ε=0.1, d=20'),
+]
 
-for idx, d in enumerate(depths):
-    K_d = K.copy()
-    for _ in range(d):
-        K_d = (1 - eps) * K_d + eps * np.eye(n) / 2
+vmin = -0.05
+vmax = 0.3
 
-    # Top row: correlation matrix heatmap
-    ax = axes[0, idx]
-    im = ax.imshow(K_d, cmap='RdBu_r', vmin=-0.5, vmax=1.0, aspect='equal')
-    ax.set_title(f'd = {d}', fontsize=14, fontweight='bold')
-    if idx == 0:
-        ax.set_ylabel('Mode i', fontsize=12)
-    ax.set_xlabel('Mode j', fontsize=12)
-    plt.colorbar(im, ax=ax, fraction=0.046)
+for idx, (eps, d, title) in enumerate(configs):
+    ax = axes[idx // 3, idx % 3]
+    K_noisy = iterated_depolarizing(K, eps, d) if d > 0 else K
+    P = neg_dep_matrix(K_noisy)
 
-    # Bottom row: eigenvalue spectrum
-    ax2 = axes[1, idx]
-    eigvals = np.linalg.eigvalsh(K_d)
-    colors = ['#2196F3' if v > 0.01 else '#9E9E9E' for v in eigvals]
-    ax2.bar(range(n), eigvals, color=colors, edgecolor='black', linewidth=0.5)
-    ax2.axhline(y=0.5, color='red', linestyle='--', alpha=0.5, label='Mixed state')
-    ax2.set_ylim(-0.05, 1.05)
-    ax2.set_xlabel('Eigenvalue index', fontsize=12)
-    if idx == 0:
-        ax2.set_ylabel('Eigenvalue', fontsize=12)
-    ax2.set_title(f'Spectrum (d={d})', fontsize=12)
-    if idx == 0:
-        ax2.legend(fontsize=10)
+    im = ax.imshow(P, cmap='RdYlGn', vmin=vmin, vmax=vmax,
+                    interpolation='nearest')
+    ax.set_title(title, fontsize=11, fontweight='bold')
 
-    # Annotate with max entry diff
+    # Add text annotations
+    for i in range(n):
+        for j in range(n):
+            color = 'white' if abs(P[i, j]) > 0.15 else 'black'
+            ax.text(j, i, f'{P[i,j]:.2f}', ha='center', va='center',
+                   fontsize=6, color=color)
+
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xlabel('Mode j', fontsize=9)
+    ax.set_ylabel('Mode i', fontsize=9)
+
+    # Show certified bound
     if d > 0:
-        diff = np.abs(K - K_d).max()
-        ax.text(0.02, 0.02, f'‖K-K\'‖_max={diff:.3f}',
-                transform=ax.transAxes, fontsize=9, color='white',
-                bbox=dict(boxstyle='round', facecolor='black', alpha=0.7),
-                verticalalignment='bottom')
+        eta = 3 * d * eps / 2
+        bound = 2 * (2 * eta + eta**2)
+        ax.text(0.02, 0.98, f'Cert. bound: {bound:.4f}',
+               transform=ax.transAxes, fontsize=8,
+               verticalalignment='top',
+               bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
-plt.suptitle(f'Fermion Correlation Matrix Under Depolarizing Noise\n'
-             f'(n={n} modes, {k} electrons, ε={eps} per gate)',
-             fontsize=16, fontweight='bold', y=1.0)
-plt.tight_layout()
-plt.savefig("kernel_evolution.png", dpi=150, bbox_inches='tight')
+fig.colorbar(im, ax=axes, shrink=0.8, label='Pair Inclusion P(i,j)')
+plt.suptitle('Pairwise Negative Dependence Values\n'
+             'P(i,j) = K_ii·K_jj - K_ij·K_ji under Depolarizing Noise',
+             fontsize=14, fontweight='bold')
+plt.tight_layout(rect=[0, 0, 0.92, 0.93])
+plt.savefig('viz_neg_dep_heatmap.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved kernel_evolution.png")
+print("Saved viz_neg_dep_heatmap.png")
 
 
 """
-Visualization 1: Noise Threshold Phase Diagram
-================================================
-Visualizes the certified noise threshold as a function of circuit depth
-and noise rate. Shows the boundary between certified and uncertified
-regions in the (depth, noise) parameter space.
+Visualization: Noise Accumulation in Fermionic Quantum Circuits
+
+Shows how the correlation matrix perturbation grows with circuit depth,
+comparing the actual perturbation with the certified bound (3dε/2)
+and the Bernoulli approximation (dε/2). Demonstrates that our
+certified bound correctly envelopes all empirical observations.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-def molecular_orbital_kernel(n_orbitals, n_electrons, hopping_strength=1.0):
-    H = np.zeros((n_orbitals, n_orbitals))
-    for i in range(n_orbitals - 1):
-        H[i, i + 1] = -hopping_strength
-        H[i + 1, i] = -hopping_strength
-    eigvals, eigvecs = np.linalg.eigh(H)
-    occupied = eigvecs[:, :n_electrons]
-    return occupied @ occupied.T
-
-
-def pairwise_neg_dep_defect(K, i, j):
-    return (K[i, i] * K[j, j] - K[i, j] * K[j, i]) - K[i, i] * K[j, j]
-
-
-def compute_neg_dep_margin(K):
-    n = K.shape[0]
-    margin = float('inf')
-    for i in range(n):
-        for j in range(i + 1, n):
-            margin = min(margin, -pairwise_neg_dep_defect(K, i, j))
-    return margin
-
-
-def simulate_noisy_circuit(K, depth, eps):
-    n = K.shape[0]
-    K_noisy = K.copy()
-    for _ in range(depth):
-        K_noisy = (1 - eps) * K_noisy + eps * np.eye(n) / 2
-    return K_noisy
-
 
 # Parameters
-n = 8
-k = 4
-K = molecular_orbital_kernel(n, k)
-margin = compute_neg_dep_margin(K)
+n = 4
+eps_values = [0.01, 0.05, 0.1]
+depths = np.arange(0, 101)
 
-eps_range = np.linspace(0.001, 0.1, 80)
-depth_range = np.arange(1, 101)
+# Test correlation matrices
+K_identity = np.eye(n)
+K_mixed = np.array([[0.7, 0.2, -0.1, 0.05],
+                     [0.2, 0.6,  0.1, -0.05],
+                     [-0.1, 0.1, 0.5, 0.08],
+                     [0.05, -0.05, 0.08, 0.4]])
+K_extreme = np.array([[ 1.0,  0.5, -0.3,  0.2],
+                       [ 0.5,  0.8,  0.4, -0.1],
+                       [-0.3,  0.4,  0.6,  0.3],
+                       [ 0.2, -0.1,  0.3, -0.5]])
 
-# Compute phase diagrams
-certified_sym = np.zeros((len(eps_range), len(depth_range)))
-certified_gen = np.zeros((len(eps_range), len(depth_range)))
-actual = np.zeros((len(eps_range), len(depth_range)))
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-for ie, eps in enumerate(eps_range):
-    for id_, d in enumerate(depth_range):
-        certified_sym[ie, id_] = 1.0 if 2 * d * eps < margin else 0.0
-        certified_gen[ie, id_] = 1.0 if 4 * d * eps < margin else 0.0
+for ax, eps in zip(axes, eps_values):
+    for K, label, color in [(K_identity, 'K = I', '#2196F3'),
+                             (K_mixed, 'K mixed', '#4CAF50'),
+                             (K_extreme, 'K extreme', '#FF5722')]:
+        perturbations = []
+        for d in depths:
+            contraction = (1 - eps) ** d
+            shift = (1 - contraction) / 2
+            K_noisy = contraction * K + shift * np.eye(n)
+            pert = np.max(np.abs(K - K_noisy))
+            perturbations.append(pert)
+        ax.plot(depths, perturbations, color=color, label=f'Actual ({label})',
+                linewidth=1.5, alpha=0.8)
 
-        K_noisy = simulate_noisy_circuit(K, d, eps)
-        all_neg = all(
-            pairwise_neg_dep_defect(K_noisy, i, j) < 0
-            for i in range(n) for j in range(i + 1, n)
-        )
-        actual[ie, id_] = 1.0 if all_neg else 0.0
+    # Certified bound
+    ax.plot(depths, 3 * depths * eps / 2, 'k--', linewidth=2, label='Bound: 3dε/2',
+            alpha=0.9)
+    # Bernoulli approximation
+    ax.plot(depths, depths * eps / 2, 'k:', linewidth=1.5, label='Approx: dε/2',
+            alpha=0.7)
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    ax.set_xlabel('Circuit Depth d', fontsize=12)
+    ax.set_ylabel('‖K - K\'‖_max', fontsize=12)
+    ax.set_title(f'ε = {eps}', fontsize=14)
+    ax.legend(fontsize=8, loc='upper left')
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 100)
 
-for ax, data, title, cmap in [
-    (axes[0], actual, "Actual Neg. Dep. Preserved", "Greens"),
-    (axes[1], certified_gen, "Certified (General: 4dε < δ)", "Blues"),
-    (axes[2], certified_sym, "Certified (Symmetric: 2dε < δ)", "Oranges"),
-]:
-    im = ax.imshow(data, aspect='auto', origin='lower',
-                   extent=[depth_range[0], depth_range[-1],
-                           eps_range[0], eps_range[-1]],
-                   cmap=cmap, alpha=0.8)
-    ax.set_xlabel("Circuit Depth d", fontsize=12)
-    ax.set_ylabel("Noise Rate ε", fontsize=12)
-    ax.set_title(title, fontsize=13, fontweight='bold')
-    plt.colorbar(im, ax=ax, label="Preserved / Certified")
+plt.suptitle('Noise Accumulation in Fermionic Quantum Circuits\n'
+             'Certified Bound vs. Actual Perturbation',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_noise_accumulation.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_noise_accumulation.png")
 
-    # Add threshold curve
-    if "Symmetric" in title:
-        threshold_depths = margin / (2 * eps_range)
-    elif "General" in title:
-        threshold_depths = margin / (4 * eps_range)
-    else:
-        threshold_depths = None
 
-    if threshold_depths is not None:
-        ax.plot(threshold_depths, eps_range, 'r-', linewidth=2, label='Threshold')
-        ax.legend(fontsize=10)
+"""
+Visualization: Noise Threshold Surface
 
-plt.suptitle(f"Noise Threshold Phase Diagram (n={n}, δ={margin:.4f})",
+Shows the noise threshold as a function of circuit depth and noise rate,
+color-coded by whether the certified negative dependence is maintained.
+This is the key practical output: the "safe operating region" for
+noisy quantum fermion samplers.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
+def certified_neg_dep_bound(d, eps):
+    eta = 3 * d * eps / 2
+    return 2 * (2 * eta + eta**2)
+
+# Create figure with two panels
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+# Panel 1: Phase diagram (d vs ε) for different δ values
+eps_range = np.linspace(0.001, 0.1, 200)
+d_range = np.arange(1, 201)
+
+# For a given δ, the threshold is: 2(2η + η²) = δ where η = 3dε/2
+# η = -1 + sqrt(1 + δ/2)
+delta_values = [0.05, 0.1, 0.2, 0.3, 0.5]
+colors = ['#E91E63', '#FF5722', '#FF9800', '#4CAF50', '#2196F3']
+
+for delta, color in zip(delta_values, colors):
+    max_eta = -1 + np.sqrt(1 + delta / 2)
+    # η = 3dε/2, so d = 2η/(3ε)
+    d_threshold = 2 * max_eta / (3 * eps_range)
+    ax1.plot(eps_range * 100, d_threshold, color=color, linewidth=2,
+             label=f'δ = {delta}')
+    ax1.fill_between(eps_range * 100, 0, d_threshold, color=color, alpha=0.05)
+
+ax1.set_xlabel('Noise Rate ε (%)', fontsize=12)
+ax1.set_ylabel('Maximum Circuit Depth d', fontsize=12)
+ax1.set_title('Safe Operating Region\nfor Certified Fermion Sampling', fontsize=13)
+ax1.legend(title='Neg. dep. gap δ', fontsize=9)
+ax1.set_xlim(0, 10)
+ax1.set_ylim(0, 200)
+ax1.grid(True, alpha=0.3)
+ax1.text(0.95, 0.95, 'CERTIFIED\nSAFE',
+         transform=ax1.transAxes, fontsize=14, color='green',
+         ha='right', va='top', alpha=0.5, fontweight='bold')
+ax1.text(0.95, 0.05, 'UNCERTIFIED',
+         transform=ax1.transAxes, fontsize=14, color='red',
+         ha='right', va='bottom', alpha=0.5, fontweight='bold')
+
+# Panel 2: Certified bound as heatmap
+D, E = np.meshgrid(d_range, eps_range)
+Bound = certified_neg_dep_bound(D, E)
+
+# Use log scale for better visualization
+log_bound = np.log10(Bound + 1e-10)
+
+im = ax2.pcolormesh(E * 100, D, log_bound, cmap='hot_r', shading='auto')
+cb = fig.colorbar(im, ax=ax2, label='log₁₀(Certified Bound)')
+
+# Add contour lines
+contour_levels = [0.01, 0.05, 0.1, 0.2, 0.5, 1.0]
+CS = ax2.contour(E * 100, D, Bound, levels=contour_levels,
+                  colors='white', linewidths=1)
+ax2.clabel(CS, inline=True, fontsize=8, fmt='%.2f')
+
+ax2.set_xlabel('Noise Rate ε (%)', fontsize=12)
+ax2.set_ylabel('Circuit Depth d', fontsize=12)
+ax2.set_title('Certified Negative Dependence\nDefect Bound', fontsize=13)
+
+plt.suptitle('Noise Threshold for Certified Fermion Sampling',
              fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig("noise_threshold_phase_diagram.png", dpi=150, bbox_inches='tight')
+plt.savefig('viz_threshold_surface.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved noise_threshold_phase_diagram.png")
+print("Saved viz_threshold_surface.png")

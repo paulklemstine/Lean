@@ -11,7 +11,7 @@ and convex position in the plane. Key results include:
 -/
 import Mathlib
 import Geometry.ErdosSzekeres.Defs
-import Geometry.Orient
+import Geometry.ErdosSzekeres.Orient
 
 namespace ErdosSzekeres
 

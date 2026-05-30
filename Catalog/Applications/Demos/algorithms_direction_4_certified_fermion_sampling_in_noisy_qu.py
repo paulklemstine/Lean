@@ -1,279 +1,281 @@
 """
 Certified Fermion Sampling — Algorithms
-=========================================
 
-Core algorithms for certified fermion sampling under noise.
-Implements the mathematical framework proven in Lean 4.
-
-Time complexity:  O(n²) per noise application, O(n²d) total
-Space complexity: O(n²) for the correlation matrix
+Implements the core algorithms from the research:
+1. Depolarizing channel simulation
+2. Certified noise bound computation
+3. Noise threshold determination
+4. DPP pair inclusion certification
 """
 
 import numpy as np
-from typing import Tuple, Optional, Dict, List
-from dataclasses import dataclass
-
-
-@dataclass
-class FermionCorrelationCertificate:
-    """Certificate for fermion sampling quality.
-
-    Attributes:
-        ideal_kernel: The ideal (noiseless) correlation matrix K
-        noisy_kernel: The noisy correlation matrix K'
-        depth: Circuit depth d
-        noise_rate: Noise rate per gate ε
-        entry_bound: Maximum entry magnitude M
-        is_symmetric: Whether both kernels are symmetric
-        max_entry_diff: Actual ‖K - K'‖_max
-        certified_defect_bound: Certified bound on defect perturbation
-        neg_dep_margin: Negative dependence margin of ideal kernel
-        max_certified_depth: Maximum depth preserving negative dependence
-    """
-    ideal_kernel: np.ndarray
-    noisy_kernel: np.ndarray
-    depth: int
-    noise_rate: float
-    entry_bound: float
-    is_symmetric: bool
-    max_entry_diff: float
-    certified_defect_bound: float
-    neg_dep_margin: float
-    max_certified_depth: float
+from typing import Tuple, List, Optional
 
 
 def depolarizing_channel(K: np.ndarray, eps: float) -> np.ndarray:
-    """Apply depolarizing channel to correlation matrix.
+    """
+    Apply the depolarizing channel to a correlation matrix.
 
-    Maps K → (1-ε)K + ε(I/2), contracting eigenvalues toward 1/2.
+    Φ_ε(K) = (1 - ε) · K + (ε/2) · I
 
-    Args:
-        K: n×n correlation matrix
-        eps: Noise rate in [0, 1]
+    This models the effect of depolarizing noise on a fermionic Gaussian
+    state's correlation matrix. With probability 1-ε the state passes
+    through; with probability ε it is replaced by the maximally mixed state.
+
+    Parameters:
+        K: n×n symmetric correlation matrix
+        eps: noise rate ε ∈ [0, 1]
 
     Returns:
-        Noisy correlation matrix K'
+        The noisy correlation matrix Φ_ε(K)
 
-    Time: O(n²)
-    Space: O(n²)
+    Complexity: O(n²)
     """
     n = K.shape[0]
-    return (1 - eps) * K + eps * np.eye(n) / 2
+    assert 0 <= eps <= 1, f"Noise rate must be in [0,1], got {eps}"
+    assert K.shape == (n, n), f"Matrix must be square, got {K.shape}"
+    return (1 - eps) * K + (eps / 2) * np.eye(n)
 
 
-def simulate_noisy_circuit(K: np.ndarray, depth: int, eps: float) -> np.ndarray:
-    """Simulate a noisy quantum circuit by applying d layers of depolarizing noise.
-
-    Args:
-        K: Initial correlation matrix
-        depth: Number of gate layers
-        eps: Noise rate per layer
-
-    Returns:
-        Final noisy correlation matrix
-
-    Time: O(n²·d)
-    Space: O(n²)
+def iterated_depolarizing(K: np.ndarray, eps: float, d: int) -> np.ndarray:
     """
-    K_noisy = K.copy()
-    for _ in range(depth):
-        K_noisy = depolarizing_channel(K_noisy, eps)
-    return K_noisy
+    Apply the depolarizing channel d times: Φ_ε^d(K).
 
+    Uses the explicit formula when possible:
+        Φ_ε^d(K)_ij = (1-ε)^d · K_ij + (1-(1-ε)^d)/2 · δ_ij
 
-def pairwise_neg_dep_defect(K: np.ndarray, i: int, j: int) -> float:
-    """Compute pairwise negative dependence defect.
-
-    defect(K, i, j) = (K_ii·K_jj - K_ij·K_ji) - K_ii·K_jj = -K_ij·K_ji
-
-    For symmetric K: defect = -(K_ij)²
-
-    Args:
-        K: Correlation matrix
-        i, j: Index pair
+    Parameters:
+        K: n×n symmetric correlation matrix
+        eps: noise rate ε ∈ [0, 1]
+        d: circuit depth (number of iterations)
 
     Returns:
-        Defect value (≤ 0 for valid DPP kernels)
-    """
-    return (K[i, i] * K[j, j] - K[i, j] * K[j, i]) - K[i, i] * K[j, j]
+        The d-times noisy correlation matrix
 
-
-def compute_neg_dep_margin(K: np.ndarray) -> float:
-    """Compute the negative dependence margin of a correlation matrix.
-
-    margin = min_{i<j} (-defect(K, i, j)) = min_{i<j} K_ij · K_ji
-
-    Args:
-        K: Correlation matrix
-
-    Returns:
-        Negative dependence margin δ > 0 iff K satisfies neg dep
+    Complexity: O(n²) using explicit formula
     """
     n = K.shape[0]
-    margin = float('inf')
+    contraction = (1 - eps) ** d
+    shift = (1 - contraction) / 2
+    return contraction * K + shift * np.eye(n)
+
+
+def max_entry_perturbation(K: np.ndarray, K_prime: np.ndarray) -> float:
+    """
+    Compute the entrywise max norm of the difference: ‖K - K'‖_max.
+
+    Parameters:
+        K, K_prime: n×n matrices
+
+    Returns:
+        max_{i,j} |K_ij - K'_ij|
+
+    Complexity: O(n²)
+    """
+    return float(np.max(np.abs(K - K_prime)))
+
+
+def certified_entry_bound(d: int, eps: float) -> float:
+    """
+    Compute the certified entrywise perturbation bound: 3dε/2.
+
+    This is the proven upper bound on ‖K - Φ_ε^d(K)‖_max for any
+    fermionic correlation matrix K with |K_ij| ≤ 1.
+
+    Parameters:
+        d: circuit depth
+        eps: noise rate
+
+    Returns:
+        The certified bound 3dε/2
+
+    Theorem: circuit_noise_accumulation_entry
+    """
+    return 3 * d * eps / 2
+
+
+def certified_neg_dep_bound(d: int, eps: float) -> float:
+    """
+    Compute the certified negative dependence defect bound.
+
+    Bound: 2 · (2η + η²) where η = 3dε/2
+
+    This bounds |P_K(i,j) - P_{K'}(i,j)| for all pairs (i,j),
+    where P_K(i,j) = K_ii·K_jj - K_ij·K_ji.
+
+    Parameters:
+        d: circuit depth
+        eps: noise rate
+
+    Returns:
+        The certified bound
+
+    Theorem: certified_neg_dep_quality
+    """
+    eta = certified_entry_bound(d, eps)
+    return 2 * (2 * eta + eta ** 2)
+
+
+def noise_threshold(delta: float) -> Tuple[float, float]:
+    """
+    Compute the maximum noise budget (d·ε product) that preserves
+    positive pair inclusion probability.
+
+    Given that P_K(i,j) ≥ δ > 0, we need:
+        2·(2·(3dε/2) + (3dε/2)²) < δ
+
+    Let η = 3dε/2. We need 2(2η + η²) < δ, i.e., η² + 2η - δ/2 < 0.
+    Solving: η < -1 + √(1 + δ/2)
+
+    Parameters:
+        delta: the ideal negative dependence gap
+
+    Returns:
+        (max_eta, max_d_eps): maximum η and corresponding d·ε
+    """
+    max_eta = -1 + np.sqrt(1 + delta / 2)
+    max_d_eps = 2 * max_eta / 3  # since η = 3dε/2
+    return float(max_eta), float(max_d_eps)
+
+
+def certify_dpp_quality(
+    K_ideal: np.ndarray,
+    eps: float,
+    d: int
+) -> dict:
+    """
+    Full certification pipeline for noisy fermion sampling.
+
+    Given an ideal correlation matrix K, noise rate ε, and circuit depth d,
+    computes:
+    1. The noisy correlation matrix K'
+    2. Entry perturbation bound
+    3. Negative dependence defect bound
+    4. Which pairs maintain certified positive inclusion probability
+
+    Parameters:
+        K_ideal: n×n ideal correlation matrix
+        eps: per-gate noise rate
+        d: circuit depth
+
+    Returns:
+        Dictionary with certification results
+
+    Complexity: O(n²) for the channel, O(n²) for certification
+    """
+    n = K_ideal.shape[0]
+    K_noisy = iterated_depolarizing(K_ideal, eps, d)
+
+    entry_bound = certified_entry_bound(d, eps)
+    neg_dep_bound = certified_neg_dep_bound(d, eps)
+    actual_max_perturbation = max_entry_perturbation(K_ideal, K_noisy)
+
+    # Check each pair
+    certified_pairs = []
     for i in range(n):
         for j in range(i + 1, n):
-            defect = pairwise_neg_dep_defect(K, i, j)
-            margin = min(margin, -defect)
-    return margin
-
-
-def certify_fermion_sampling(
-    K: np.ndarray,
-    depth: int,
-    eps: float,
-    symmetric: bool = True
-) -> FermionCorrelationCertificate:
-    """Certify the quality of noisy fermion sampling.
-
-    Given an ideal kernel K and noise parameters, computes the noisy
-    kernel and provides certified quality bounds.
-
-    Algorithm:
-        1. Simulate noisy circuit: K' = D_eps^d(K)
-        2. Compute ‖K - K'‖_max
-        3. Compute certified defect bound (4·d·eps or 2·d·eps)
-        4. Compute negative dependence margin
-        5. Compute maximum certified depth
-
-    Args:
-        K: Ideal correlation matrix (n×n, PSD, eigenvalues in [0,1])
-        depth: Circuit depth
-        eps: Noise rate per gate
-        symmetric: Whether to use the tighter symmetric bound
-
-    Returns:
-        FermionCorrelationCertificate with all quality metrics
-
-    Time: O(n²·d)
-    Space: O(n²)
-    """
-    # Step 1: Simulate noisy circuit
-    K_noisy = simulate_noisy_circuit(K, depth, eps)
-
-    # Step 2: Compute actual entry difference
-    max_diff = np.abs(K - K_noisy).max()
-
-    # Step 3: Certified defect bound
-    constant = 2.0 if symmetric else 4.0
-    certified_bound = constant * depth * eps
-
-    # Step 4: Negative dependence margin
-    margin = compute_neg_dep_margin(K)
-
-    # Step 5: Maximum certified depth
-    if eps > 0 and margin > 0:
-        max_depth = margin / (constant * eps)
-    else:
-        max_depth = float('inf')
-
-    entry_bound = max(np.abs(K).max(), np.abs(K_noisy).max())
-
-    return FermionCorrelationCertificate(
-        ideal_kernel=K,
-        noisy_kernel=K_noisy,
-        depth=depth,
-        noise_rate=eps,
-        entry_bound=entry_bound,
-        is_symmetric=symmetric,
-        max_entry_diff=max_diff,
-        certified_defect_bound=certified_bound,
-        neg_dep_margin=margin,
-        max_certified_depth=max_depth,
-    )
-
-
-def make_slater_determinant(n: int, k: int, seed: int = 42) -> np.ndarray:
-    """Create a rank-k Slater determinant correlation matrix.
-
-    K = U_k @ U_k^T where U_k is the first k columns of a random
-    orthogonal matrix. Eigenvalues are k ones and n-k zeros.
-
-    Args:
-        n: Matrix dimension
-        k: Number of occupied modes (filling)
-        seed: Random seed
-
-    Returns:
-        n×n correlation matrix with rank k
-
-    Time: O(n²·k)
-    Space: O(n²)
-    """
-    rng = np.random.default_rng(seed)
-    Q, _ = np.linalg.qr(rng.standard_normal((n, n)))
-    U_k = Q[:, :k]
-    return U_k @ U_k.T
-
-
-def noise_threshold_analysis(
-    K: np.ndarray,
-    eps_range: np.ndarray,
-    depth_range: np.ndarray
-) -> Dict[str, np.ndarray]:
-    """Analyze noise thresholds across parameter space.
-
-    For each (eps, depth) pair, determines whether negative dependence
-    is certified to be preserved.
-
-    Args:
-        K: Ideal correlation matrix
-        eps_range: Array of noise rates to test
-        depth_range: Array of depths to test
-
-    Returns:
-        Dictionary with 'certified' (boolean grid), 'actual_preserved'
-        (boolean grid), and 'margin' (float)
-    """
-    margin = compute_neg_dep_margin(K)
-    n_eps = len(eps_range)
-    n_depth = len(depth_range)
-
-    certified = np.zeros((n_eps, n_depth), dtype=bool)
-    actual_preserved = np.zeros((n_eps, n_depth), dtype=bool)
-
-    for ie, eps in enumerate(eps_range):
-        for id_, d in enumerate(depth_range):
-            # Certified check: 2*d*eps < margin (symmetric case)
-            certified[ie, id_] = 2 * d * eps < margin
-
-            # Actual check via simulation
-            K_noisy = simulate_noisy_circuit(K, int(d), eps)
-            all_neg = True
-            for i in range(K.shape[0]):
-                for j in range(i + 1, K.shape[0]):
-                    if pairwise_neg_dep_defect(K_noisy, i, j) >= 0:
-                        all_neg = False
-                        break
-                if not all_neg:
-                    break
-            actual_preserved[ie, id_] = all_neg
+            P_ideal = K_ideal[i, i] * K_ideal[j, j] - K_ideal[i, j] * K_ideal[j, i]
+            P_noisy = K_noisy[i, i] * K_noisy[j, j] - K_noisy[i, j] * K_noisy[j, i]
+            certified_positive = P_ideal - neg_dep_bound > 0
+            certified_pairs.append({
+                'i': i, 'j': j,
+                'P_ideal': float(P_ideal),
+                'P_noisy': float(P_noisy),
+                'certified_positive': certified_positive,
+                'actually_positive': float(P_noisy) > 0
+            })
 
     return {
-        'certified': certified,
-        'actual_preserved': actual_preserved,
-        'margin': margin,
-        'eps_range': eps_range,
-        'depth_range': depth_range,
+        'n': n,
+        'eps': eps,
+        'd': d,
+        'entry_bound': entry_bound,
+        'actual_perturbation': actual_max_perturbation,
+        'neg_dep_bound': neg_dep_bound,
+        'pairs': certified_pairs,
+        'K_noisy': K_noisy,
+        'all_certified': all(p['certified_positive'] for p in certified_pairs),
+        'all_positive': all(p['actually_positive'] for p in certified_pairs)
     }
 
 
+def find_noise_budget(
+    K_ideal: np.ndarray,
+    target_confidence: float = 0.99
+) -> dict:
+    """
+    Find the maximum noise budget (d·ε product) that allows certified
+    sampling with all pairs having positive inclusion probability.
+
+    Parameters:
+        K_ideal: ideal correlation matrix
+        target_confidence: fraction of pairs that must be certified
+
+    Returns:
+        Maximum d·ε product and details
+    """
+    n = K_ideal.shape[0]
+
+    # Find minimum ideal neg dep value
+    min_P = float('inf')
+    min_pair = (0, 0)
+    for i in range(n):
+        for j in range(i + 1, n):
+            P = K_ideal[i, i] * K_ideal[j, j] - K_ideal[i, j] * K_ideal[j, i]
+            if P < min_P:
+                min_P = P
+                min_pair = (i, j)
+
+    if min_P <= 0:
+        return {
+            'feasible': False,
+            'reason': 'Ideal kernel does not satisfy negative dependence',
+            'min_P': min_P,
+            'min_pair': min_pair
+        }
+
+    max_eta, max_d_eps = noise_threshold(min_P)
+
+    return {
+        'feasible': True,
+        'min_P': min_P,
+        'min_pair': min_pair,
+        'max_eta': max_eta,
+        'max_d_eps': max_d_eps,
+        'example_configs': [
+            {'d': d, 'max_eps': max_d_eps / d if d > 0 else float('inf')}
+            for d in [10, 50, 100, 500]
+        ]
+    }
+
+
+# Example usage
 if __name__ == "__main__":
-    # Example usage
-    n = 8
-    k = 4  # Half-filling
-    K = make_slater_determinant(n, k)
+    print("=== Certified DPP Quality Pipeline ===\n")
 
-    print("Fermion Correlation Matrix Properties:")
-    eigvals = np.linalg.eigvalsh(K)
-    print(f"  Eigenvalues: {np.round(eigvals, 4)}")
-    print(f"  Rank: {np.linalg.matrix_rank(K)}")
-    print(f"  Symmetric: {np.allclose(K, K.T)}")
+    K = np.array([[0.7, 0.2, -0.1, 0.05],
+                   [0.2, 0.6,  0.1, -0.05],
+                   [-0.1, 0.1, 0.5, 0.08],
+                   [0.05, -0.05, 0.08, 0.4]])
 
-    cert = certify_fermion_sampling(K, depth=10, eps=0.01)
-    print(f"\nCertification Results:")
-    print(f"  Max entry difference: {cert.max_entry_diff:.6f}")
-    print(f"  Certified defect bound: {cert.certified_defect_bound:.6f}")
-    print(f"  Neg dep margin: {cert.neg_dep_margin:.6f}")
-    print(f"  Max certified depth: {cert.max_certified_depth:.1f}")
-    print(f"  Is certified: {cert.certified_defect_bound < cert.neg_dep_margin}")
+    result = certify_dpp_quality(K, eps=0.01, d=20)
+    print(f"n={result['n']}, ε={result['eps']}, d={result['d']}")
+    print(f"Entry perturbation: actual={result['actual_perturbation']:.6f}, "
+          f"bound={result['entry_bound']:.6f}")
+    print(f"Neg dep bound: {result['neg_dep_bound']:.6f}")
+    print(f"All pairs certified positive: {result['all_certified']}")
+    print(f"All pairs actually positive: {result['all_positive']}")
+
+    print("\n--- Pair details ---")
+    for p in result['pairs']:
+        print(f"  ({p['i']},{p['j']}): P_ideal={p['P_ideal']:.6f}, "
+              f"P_noisy={p['P_noisy']:.6f}, "
+              f"cert={p['certified_positive']}, "
+              f"actual={p['actually_positive']}")
+
+    print("\n--- Noise budget ---")
+    budget = find_noise_budget(K)
+    print(f"Min ideal P: {budget['min_P']:.6f} at pair {budget['min_pair']}")
+    print(f"Max d·ε product: {budget['max_d_eps']:.6f}")
+    for cfg in budget['example_configs']:
+        print(f"  d={cfg['d']:>4}: max ε = {cfg['max_eps']:.6f}")
