@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Network Algorithms",
     "date": "2026-05-30T09:59:25Z",
     "exp_id": "05377738",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7391721945137157,
+    "quality": "substantial",
     "pkg_num": 394
   },
   {
@@ -11435,8 +11435,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-30T09:59:25Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7391721945137157,
+      "quality": "substantial"
     }
   ],
   "edges": [
