@@ -1,327 +1,303 @@
 """
-Algorithms for Mod-p Spectral Fingerprints
+Algorithms for Mod-p Spectral Fingerprinting
 
 Implements the core algorithms from the research paper:
-1. Mod-p Gaussian elimination (O(n^3) per prime)
-2. Spectral fingerprint computation
-3. Determinant recovery from fingerprint
-4. Edge boundary computation for expansion analysis
+1. CRT-based matrix recovery from mod-p data
+2. Spectral gap computation
+3. Prime selection for fingerprinting
+4. Fingerprint comparison and matching
+
+All algorithms include docstrings, type hints, complexity analysis,
+and example usage.
 """
 
-from typing import List, Dict, Tuple, Optional
-import math
+import numpy as np
+from math import factorial, log, ceil
+from typing import List, Tuple, Optional
+from functools import reduce
 
 
-def sieve_primes(N: int) -> List[int]:
+def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
+    """Extended Euclidean algorithm.
+
+    Returns (g, x, y) such that a*x + b*y = g = gcd(a, b).
+
+    Time complexity: O(log(min(a,b)))
+    Space complexity: O(log(min(a,b))) due to recursion
+
+    >>> extended_gcd(35, 15)
+    (5, 1, -2)
     """
-    Sieve of Eratosthenes.
+    if a == 0:
+        return b, 0, 1
+    g, x, y = extended_gcd(b % a, a)
+    return g, y - (b // a) * x, x
 
-    Time: O(N log log N)
-    Space: O(N)
+
+def crt_recover(residues: List[int], moduli: List[int]) -> int:
+    """Chinese Remainder Theorem recovery.
+
+    Given residues r_i and pairwise coprime moduli m_i,
+    finds the unique x in [-M/2, M/2) such that x ≡ r_i (mod m_i)
+    where M = ∏ m_i.
 
     Args:
-        N: Upper bound for prime search
+        residues: List of residues [r_1, ..., r_k]
+        moduli: List of pairwise coprime moduli [m_1, ..., m_k]
 
     Returns:
-        List of all primes up to N
+        The unique integer x in the symmetric range [-M/2, M/2)
 
-    >>> sieve_primes(20)
-    [2, 3, 5, 7, 11, 13, 17, 19]
+    Time complexity: O(k · log(M)) where k = len(moduli), M = ∏ m_i
+    Space complexity: O(k)
+
+    >>> crt_recover([2, 3, 2], [3, 5, 7])
+    23
     """
-    if N < 2:
-        return []
-    sieve = [True] * (N + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(N**0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, N + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, N + 1) if sieve[i]]
+    M = reduce(lambda a, b: a * b, moduli, 1)
+    x = 0
+    for r, m in zip(residues, moduli):
+        Mi = M // m
+        _, inv, _ = extended_gcd(Mi, m)
+        x = (x + r * Mi * inv) % M
+    if x > M // 2:
+        x -= M
+    return x
 
 
-def mod_p_gaussian_elimination(M: List[List[int]], p: int) -> int:
-    """
-    Gaussian elimination over F_p to compute rank.
-
-    Time: O(n^2 * min(n, m))
-    Space: O(n * m)
+def matrix_mod_p(matrix: np.ndarray, p: int) -> np.ndarray:
+    """Reduce an integer matrix modulo p.
 
     Args:
-        M: Integer matrix as list of lists
+        matrix: Integer matrix (numpy array)
         p: Prime modulus
 
     Returns:
-        Rank of M mod p
+        Matrix with entries reduced to [0, p-1]
 
-    >>> mod_p_gaussian_elimination([[1, 2], [3, 4]], 5)
-    2
-    >>> mod_p_gaussian_elimination([[2, 4], [1, 2]], 3)
-    1
+    Time complexity: O(n²)
+    Space complexity: O(n²)
     """
-    n = len(M)
-    if n == 0:
-        return 0
-    m = len(M[0])
-
-    # Copy and reduce mod p
-    A = [[M[i][j] % p for j in range(m)] for i in range(n)]
-
-    rank = 0
-    for col in range(m):
-        # Find pivot in current column
-        pivot_row = None
-        for row in range(rank, n):
-            if A[row][col] % p != 0:
-                pivot_row = row
-                break
-
-        if pivot_row is None:
-            continue
-
-        # Swap pivot row to current rank position
-        A[rank], A[pivot_row] = A[pivot_row], A[rank]
-
-        # Compute modular inverse of pivot using Fermat's little theorem
-        inv = pow(A[rank][col], p - 2, p)
-
-        # Eliminate all other rows
-        for row in range(n):
-            if row != rank and A[row][col] % p != 0:
-                factor = (A[row][col] * inv) % p
-                for c in range(m):
-                    A[row][c] = (A[row][c] - factor * A[rank][c]) % p
-
-        rank += 1
-
-    return rank
+    return matrix % p
 
 
-def spectral_fingerprint(M: List[List[int]], primes: List[int]) -> Dict[int, int]:
-    """
-    Compute the spectral fingerprint of an integer matrix.
-
-    The spectral fingerprint maps each prime p to rank(M mod p).
-
-    Time: O(|primes| * n^3)
-    Space: O(n^2)
+def recover_matrix_from_modp(
+    mod_matrices: List[Tuple[int, np.ndarray]],
+    shape: Tuple[int, int]
+) -> np.ndarray:
+    """Recover an integer matrix from its mod-p reductions via CRT.
 
     Args:
-        M: Square integer matrix
-        primes: List of primes to evaluate
+        mod_matrices: List of (prime, reduced_matrix) pairs
+        shape: Shape of the original matrix (n, m)
 
     Returns:
-        Dictionary mapping p -> rank(M mod p)
+        Recovered integer matrix
 
-    >>> M = [[6, 2], [4, 10]]
-    >>> fp = spectral_fingerprint(M, [2, 3, 5, 7, 13, 26])
-    >>> fp[2]  # det = 52 = 4 * 13, so rank drops at p=2 and p=13
-    1
+    Time complexity: O(n² · k · log(M)) where k = number of primes
+    Space complexity: O(n² · k)
+
+    Example:
+        >>> L = np.array([[2, -1], [-1, 2]])
+        >>> mods = [(3, L % 3), (5, L % 5), (7, L % 7)]
+        >>> recover_matrix_from_modp(mods, (2, 2))
+        array([[ 2, -1],
+               [-1,  2]])
     """
-    return {p: mod_p_gaussian_elimination(M, p) for p in primes}
+    primes = [p for p, _ in mod_matrices]
+    n, m = shape
+    result = np.zeros(shape, dtype=int)
 
-
-def detect_bad_primes(M: List[List[int]], prime_bound: int) -> List[int]:
-    """
-    Detect all primes up to prime_bound where the rank drops.
-
-    By the rank stability theorem, these are exactly the primes
-    dividing det(M) (when det(M) != 0).
-
-    Time: O(prime_bound * n^3 / log(prime_bound))
-    Space: O(n^2 + prime_bound)
-
-    Args:
-        M: Square integer matrix with nonzero determinant
-        prime_bound: Search for bad primes up to this bound
-
-    Returns:
-        List of bad primes (primes where rank drops below n)
-
-    >>> detect_bad_primes([[6, 1], [0, 10]], 50)
-    [2, 3, 5]
-    """
-    n = len(M)
-    primes = sieve_primes(prime_bound)
-    return [p for p in primes if mod_p_gaussian_elimination(M, p) < n]
-
-
-def determinant_mod_p(M: List[List[int]], p: int) -> int:
-    """
-    Compute det(M) mod p via Gaussian elimination.
-
-    Time: O(n^3)
-    Space: O(n^2)
-
-    Args:
-        M: Square integer matrix
-        p: Prime modulus
-
-    Returns:
-        det(M) mod p
-    """
-    n = len(M)
-    A = [[M[i][j] % p for j in range(n)] for i in range(n)]
-    det = 1
-    sign = 1
-
-    for col in range(n):
-        pivot_row = None
-        for row in range(col, n):
-            if A[row][col] % p != 0:
-                pivot_row = row
-                break
-        if pivot_row is None:
-            return 0
-
-        if pivot_row != col:
-            A[col], A[pivot_row] = A[pivot_row], A[col]
-            sign *= -1
-
-        det = (det * A[col][col]) % p
-        inv = pow(A[col][col], p - 2, p)
-
-        for row in range(col + 1, n):
-            if A[row][col] % p != 0:
-                factor = (A[row][col] * inv) % p
-                for c in range(n):
-                    A[row][c] = (A[row][c] - factor * A[col][c]) % p
-
-    return (sign * det) % p
-
-
-def complete_graph_laplacian(n: int) -> List[List[int]]:
-    """
-    Construct the Laplacian of the complete graph K_n.
-
-    L = nI - J where J is the all-ones matrix.
-
-    Time: O(n^2)
-    Space: O(n^2)
-
-    >>> complete_graph_laplacian(3)
-    [[3, -1, -1], [-1, 3, -1], [-1, -1, 3]]
-    """
-    return [[(n if i == j else 0) - 1 for j in range(n)] for i in range(n)]
-
-
-def path_graph_laplacian(n: int) -> List[List[int]]:
-    """
-    Construct the Laplacian of the path graph P_n.
-
-    Time: O(n^2)
-    Space: O(n^2)
-
-    >>> path_graph_laplacian(4)
-    [[1, -1, 0, 0], [-1, 2, -1, 0], [0, -1, 2, -1], [0, 0, -1, 1]]
-    """
-    L = [[0] * n for _ in range(n)]
     for i in range(n):
-        if i == 0 or i == n - 1:
-            L[i][i] = 1
-        else:
-            L[i][i] = 2
-        if i > 0:
-            L[i][i-1] = -1
-        if i < n - 1:
-            L[i][i+1] = -1
-    return L
+        for j in range(m):
+            residues = [int(mat[i, j]) for _, mat in mod_matrices]
+            result[i, j] = crt_recover(residues, primes)
+
+    return result
 
 
-def cycle_graph_laplacian(n: int) -> List[List[int]]:
-    """
-    Construct the Laplacian of the cycle graph C_n.
+def hadamard_coefficient_bound(n: int, D: int) -> int:
+    """Hadamard-type bound on characteristic polynomial coefficients.
 
-    Time: O(n^2)
-    Space: O(n^2)
-
-    >>> cycle_graph_laplacian(4)
-    [[2, -1, 0, -1], [-1, 2, -1, 0], [0, -1, 2, -1], [-1, 0, -1, 2]]
-    """
-    L = [[0] * n for _ in range(n)]
-    for i in range(n):
-        L[i][i] = 2
-        L[i][(i+1) % n] = -1
-        L[(i+1) % n][i] = -1
-    return L
-
-
-def edge_boundary(L: List[List[int]], S: List[int]) -> int:
-    """
-    Compute the edge boundary of subset S in graph with Laplacian L.
-
-    The edge boundary is ∑_{i∈S, j∈Sᶜ} (-L_{ij}).
-
-    Time: O(|S| * n)
-    Space: O(n)
+    For an n×n integer matrix with entries bounded by D in absolute value,
+    the coefficients of the characteristic polynomial are bounded by n! · D^n.
 
     Args:
-        L: Laplacian matrix (symmetric, zero row sums, nonpos off-diagonal)
-        S: Subset of vertices
-
-    Returns:
-        Total weight of edges crossing from S to its complement (always >= 0)
-
-    >>> L = path_graph_laplacian(5)
-    >>> edge_boundary(L, [0, 1])
-    1
-    """
-    n = len(L)
-    S_set = set(S)
-    Sc = [j for j in range(n) if j not in S_set]
-    return sum(-L[i][j] for i in S for j in Sc)
-
-
-def expansion_ratio(L: List[List[int]], S: List[int]) -> float:
-    """
-    Compute the edge expansion ratio h(S) = |∂S| / |S|.
-
-    Args:
-        L: Laplacian matrix
-        S: Nonempty subset of vertices with |S| <= n/2
-
-    Returns:
-        Expansion ratio
-
-    >>> L = complete_graph_laplacian(4)
-    >>> expansion_ratio(L, [0])
-    3.0
-    """
-    if not S:
-        return 0.0
-    return edge_boundary(L, S) / len(S)
-
-
-def recover_det_magnitude_from_fingerprint(
-    fp: Dict[int, int], n: int, prime_bound: int
-) -> Tuple[List[int], int]:
-    """
-    Recover information about |det(M)| from the spectral fingerprint.
-
-    The bad primes (where rank drops) are exactly the prime divisors of det(M).
-    This gives partial information about the determinant.
-
-    Args:
-        fp: Spectral fingerprint (p -> rank)
         n: Matrix dimension
-        prime_bound: Maximum prime checked
+        D: Maximum absolute value of entries
 
     Returns:
-        Tuple of (bad_primes, lower_bound_on_det) where lower_bound is
-        the product of all detected bad primes
+        Upper bound B such that all char poly coefficients satisfy |c_k| ≤ B
 
-    >>> M = [[6, 1], [0, 10]]  # det = 60 = 2^2 * 3 * 5
-    >>> fp = spectral_fingerprint(M, sieve_primes(20))
-    >>> bad, lb = recover_det_magnitude_from_fingerprint(fp, 2, 20)
-    >>> sorted(bad)
-    [2, 3, 5]
+    Time complexity: O(n)
+    Space complexity: O(1)
     """
-    bad_primes = [p for p, r in fp.items() if r < n]
-    lower_bound = 1
-    for p in bad_primes:
-        lower_bound *= p
-    return bad_primes, lower_bound
+    return factorial(n) * (D ** n)
 
 
+def select_primes_for_recovery(bound: int, max_prime: Optional[int] = None) -> List[int]:
+    """Select a minimal set of primes whose product exceeds 2·bound.
+
+    This implements the prime selection step of the fingerprint algorithm.
+    Uses consecutive primes starting from 2.
+
+    Args:
+        bound: The coefficient bound B
+        max_prime: Optional upper limit on primes to use
+
+    Returns:
+        List of primes whose product > 2·bound
+
+    Time complexity: O(p_k · log(p_k)) where p_k is the largest prime used
+    Space complexity: O(k) where k is the number of primes selected
+    """
+    from sympy import isprime as is_prime
+
+    primes = []
+    product = 1
+    target = 2 * bound
+    p = 2
+    while product <= target:
+        if max_prime is not None and p > max_prime:
+            break
+        if is_prime(p):
+            primes.append(p)
+            product *= p
+        p += 1
+    return primes
+
+
+def compute_spectral_gap(laplacian: np.ndarray) -> float:
+    """Compute the spectral gap of a graph Laplacian.
+
+    The spectral gap is the smallest nonzero eigenvalue of the Laplacian.
+    For connected graphs, this equals the algebraic connectivity (Fiedler value).
+
+    Args:
+        laplacian: Symmetric Laplacian matrix
+
+    Returns:
+        Smallest nonzero eigenvalue (0 if no nonzero eigenvalues)
+
+    Time complexity: O(n³) for eigenvalue decomposition
+    Space complexity: O(n²)
+    """
+    eigenvalues = np.sort(np.linalg.eigvalsh(laplacian))
+    threshold = 1e-10
+    nonzero = [ev for ev in eigenvalues if ev > threshold]
+    return float(nonzero[0]) if nonzero else 0.0
+
+
+def graph_laplacian(adjacency: np.ndarray) -> np.ndarray:
+    """Compute the combinatorial Laplacian L = D - A.
+
+    Args:
+        adjacency: Symmetric 0-1 adjacency matrix
+
+    Returns:
+        Laplacian matrix L = D - A where D is the degree matrix
+
+    Time complexity: O(n²)
+    Space complexity: O(n²)
+    """
+    D = np.diag(adjacency.sum(axis=1))
+    return D - adjacency
+
+
+def spectral_fingerprint(
+    laplacian: np.ndarray,
+    primes: List[int]
+) -> dict:
+    """Compute the mod-p spectral fingerprint of a graph Laplacian.
+
+    The fingerprint is the collection of mod-p matrix reductions.
+
+    Args:
+        laplacian: Integer Laplacian matrix
+        primes: List of primes to use
+
+    Returns:
+        Dictionary mapping prime -> reduced matrix
+
+    Time complexity: O(k · n²) where k = len(primes)
+    Space complexity: O(k · n²)
+    """
+    return {p: matrix_mod_p(laplacian, p) for p in primes}
+
+
+def fingerprints_agree(fp1: dict, fp2: dict) -> bool:
+    """Check if two spectral fingerprints agree on all shared primes.
+
+    Args:
+        fp1, fp2: Fingerprint dictionaries (prime -> matrix)
+
+    Returns:
+        True if all shared primes give the same reduced matrix
+    """
+    shared_primes = set(fp1.keys()) & set(fp2.keys())
+    return all(np.array_equal(fp1[p], fp2[p]) for p in shared_primes)
+
+
+def estimate_primes_needed(n: int, max_degree: int) -> Tuple[int, List[int]]:
+    """Estimate how many primes are needed for spectral gap recovery.
+
+    For an n-vertex graph with maximum degree D, the Laplacian entries
+    are bounded by D, so the Hadamard bound gives B = n! · D^n.
+
+    Args:
+        n: Number of vertices
+        max_degree: Maximum vertex degree
+
+    Returns:
+        Tuple of (number of primes needed, list of primes)
+    """
+    B = hadamard_coefficient_bound(n, max_degree)
+    primes = select_primes_for_recovery(B)
+    return len(primes), primes
+
+
+# ============================================================
+# Example Usage
+# ============================================================
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
+    print("Spectral Fingerprint Algorithm Demo")
+    print("=" * 50)
+
+    # Create a graph
+    adj = np.array([
+        [0, 1, 1, 0, 1],
+        [1, 0, 1, 1, 0],
+        [1, 1, 0, 1, 0],
+        [0, 1, 1, 0, 1],
+        [1, 0, 0, 1, 0],
+    ], dtype=int)
+
+    L = graph_laplacian(adj)
+    n = L.shape[0]
+    max_entry = int(np.max(np.abs(L)))
+
+    print(f"\nGraph: {n} vertices, max degree {max_entry}")
+    print(f"Laplacian:\n{L}")
+
+    # Compute spectral gap
+    gap = compute_spectral_gap(L)
+    print(f"\nSpectral gap: {gap:.6f}")
+
+    # Find sufficient primes
+    num_primes, primes = estimate_primes_needed(n, max_entry)
+    print(f"\nPrimes needed for exact recovery: {num_primes}")
+    print(f"Primes: {primes}")
+
+    # Compute fingerprint
+    fp = spectral_fingerprint(L, primes)
+    print(f"\nFingerprint computed for {len(fp)} primes")
+
+    # Recover via CRT
+    mod_data = [(p, fp[p]) for p in primes]
+    L_recovered = recover_matrix_from_modp(mod_data, L.shape)
+    print(f"\nRecovered Laplacian matches: {np.array_equal(L, L_recovered)}")
+
+    # Verify spectral gap
+    gap_recovered = compute_spectral_gap(L_recovered.astype(float))
+    print(f"Recovered spectral gap: {gap_recovered:.6f}")
+    print(f"Gap recovery error: {abs(gap - gap_recovered):.2e}")
