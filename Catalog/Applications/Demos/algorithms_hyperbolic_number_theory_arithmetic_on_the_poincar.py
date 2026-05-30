@@ -1,249 +1,256 @@
-#!/usr/bin/env python3
 """
 Algorithms for Hyperbolic Number Theory
 ========================================
-
-Implements core algorithms for arithmetic on the Poincaré disk:
-1. Möbius transformation algebra
-2. Hyperbolic lattice generation
-3. Hyperbolic distance computation
-4. Lattice point counting
-5. Hyperbolic zeta function partial sums
+Complete implementations with complexity analysis.
 """
-
 import numpy as np
-from typing import List, Tuple, Set, Optional
+from typing import Tuple, List, Set, Optional
+from collections import deque
 
 
-class MoebiusMat:
-    """A Möbius transformation z ↦ (az+b)/(cz+d) with ad-bc ≠ 0.
-    
-    Complexity: O(1) for apply, compose, inverse.
+# ============================================================
+# Core Möbius Transformation Algebra
+# ============================================================
+
+class MoebiusTransform:
+    """Möbius transformation T(z) = (az + b) / (cz + d) with ad - bc ≠ 0.
+
+    Complexity:
+        - apply: O(1)
+        - compose: O(1)
+        - inverse: O(1)
+        - det: O(1)
     """
-    
+
     def __init__(self, a: complex, b: complex, c: complex, d: complex):
+        self.a, self.b, self.c, self.d = a, b, c, d
         det = a * d - b * c
         if abs(det) < 1e-15:
-            raise ValueError(f"Degenerate Möbius transformation: det = {det}")
-        self.a, self.b, self.c, self.d = a, b, c, d
+            raise ValueError(f"Degenerate transformation: det = {det}")
         self._det = det
-    
+
     def apply(self, z: complex) -> complex:
-        """Apply transformation: (az+b)/(cz+d). O(1)."""
-        denom = self.c * z + self.d
-        if abs(denom) < 1e-15:
-            return complex('inf')
-        return (self.a * z + self.b) / denom
-    
-    def compose(self, other: 'MoebiusMat') -> 'MoebiusMat':
+        """Apply the transformation to z. O(1)."""
+        return (self.a * z + self.b) / (self.c * z + self.d)
+
+    def compose(self, other: 'MoebiusTransform') -> 'MoebiusTransform':
         """Compose self ∘ other via matrix multiplication. O(1)."""
-        return MoebiusMat(
+        return MoebiusTransform(
             self.a * other.a + self.b * other.c,
             self.a * other.b + self.b * other.d,
             self.c * other.a + self.d * other.c,
-            self.c * other.b + self.d * other.d
+            self.c * other.b + self.d * other.d,
         )
-    
-    def inverse(self) -> 'MoebiusMat':
-        """Compute inverse transformation. O(1)."""
-        return MoebiusMat(self.d, -self.b, -self.c, self.a)
-    
+
+    def inverse(self) -> 'MoebiusTransform':
+        """Compute the inverse transformation. O(1)."""
+        return MoebiusTransform(self.d, -self.b, -self.c, self.a)
+
     @property
     def det(self) -> complex:
         return self._det
-    
+
     @staticmethod
-    def identity() -> 'MoebiusMat':
-        return MoebiusMat(1, 0, 0, 1)
-    
+    def identity() -> 'MoebiusTransform':
+        return MoebiusTransform(1, 0, 0, 1)
+
     def __repr__(self):
-        return f"MoebiusMat({self.a}, {self.b}, {self.c}, {self.d})"
+        return f"Möbius({self.a}, {self.b}, {self.c}, {self.d})"
 
 
-def moebius_add(z: complex, w: complex) -> complex:
-    """Möbius addition (Einstein velocity addition).
-    
-    (z + w) / (1 + conj(w) * z)
-    
-    Properties (verified formally):
-    - Identity: 0 ⊕ z = z ⊕ 0 = z
-    - Commutative for real inputs
-    - Non-commutative in general (Thomas precession)
-    
-    Complexity: O(1).
+def disk_automorphism(a: complex) -> MoebiusTransform:
+    """Disk automorphism T_a(z) = (z - a) / (1 - conj(a)z).
+
+    Maps the unit disk to itself, sending a to 0.
+    Requires |a| < 1.
+
+    Complexity: O(1)
     """
-    denom = 1 + np.conj(w) * z
-    if abs(denom) < 1e-15:
-        return complex('inf')
-    return (z + w) / denom
+    if abs(a) >= 1:
+        raise ValueError(f"|a| = {abs(a)} ≥ 1, not in disk")
+    return MoebiusTransform(1, -a, -np.conj(a), 1)
 
 
-def pseudo_hyp_dist(z: complex, w: complex) -> float:
-    """Pseudo-hyperbolic distance ρ(z,w) = |z-w| / |1 - w̄z|.
-    
-    Properties (verified formally):
-    - ρ(z,z) = 0
-    - ρ(z,w) = ρ(w,z) (symmetry)
-    - ρ(z,w) ≥ 0
-    - ρ(z,w) < 1 when z,w in unit disk
-    
-    Complexity: O(1).
+# ============================================================
+# Hyperbolic Distance
+# ============================================================
+
+def hyperbolic_distance(z: complex, w: complex) -> float:
+    """Compute the hyperbolic distance in the Poincaré disk model.
+
+    d_H(z,w) = 2 arcsinh(|z-w| / sqrt((1-|z|²)(1-|w|²)))
+
+    Complexity: O(1)
+    Numerically stable for |z|, |w| < 1.
     """
-    denom = abs(1 - np.conj(w) * z)
-    if denom < 1e-15:
-        return float('inf')
-    return abs(z - w) / denom
+    nz = abs(z)**2
+    nw = abs(w)**2
+    if nz >= 1 or nw >= 1:
+        raise ValueError("Points must be inside the unit disk")
+    cross = abs(z - w)**2 / ((1 - nz) * (1 - nw))
+    return 2 * np.arcsinh(np.sqrt(cross))
 
 
-def hyp_dist(z: complex, w: complex) -> float:
-    """Hyperbolic distance d(z,w) = log((1+ρ)/(1-ρ)) = 2·artanh(ρ).
-    
-    Complexity: O(1).
-    """
-    rho = pseudo_hyp_dist(z, w)
-    if rho >= 1.0:
-        return float('inf')
-    return np.log((1 + rho) / (1 - rho))
+# ============================================================
+# Hyperbolic Lattice Point Enumeration (BFS)
+# ============================================================
 
+def enumerate_orbit(generators: List[MoebiusTransform],
+                    basepoint: complex = 0,
+                    max_depth: int = 10,
+                    max_distance: float = float('inf'),
+                    tolerance: float = 1e-8) -> List[complex]:
+    """Enumerate orbit points by BFS on the Cayley graph.
 
-def hyp_area(R: float) -> float:
-    """Area of hyperbolic disk of radius R.
-    
-    A(R) = 2π(cosh(R) - 1) = 4π sinh²(R/2)
-    
-    Properties (verified formally):
-    - A(0) = 0
-    - A(R) ≥ 0 for R ≥ 0
-    - Strictly monotone on [0,∞)
-    - A(R) ≥ π(eᴿ - 2)  (exponential growth)
-    
-    Complexity: O(1).
-    """
-    return 2 * np.pi * (np.cosh(R) - 1)
+    Starting from basepoint, applies all generators and their inverses
+    up to max_depth, collecting distinct orbit points.
 
-
-def generate_lattice(generators: List[complex], depth: int = 5,
-                     max_points: int = 10000) -> List[complex]:
-    """Generate hyperbolic lattice points by iterating Möbius additions.
-    
-    Starting from the origin, repeatedly applies Möbius addition with
-    each generator to create an orbit.
-    
     Args:
-        generators: List of generating points in the unit disk
-        depth: Number of iteration rounds
-        max_points: Maximum number of points to generate
-    
+        generators: List of Möbius transformations generating the group.
+        basepoint: Starting point in the disk.
+        max_depth: Maximum word length to explore.
+        max_distance: Maximum hyperbolic distance from basepoint.
+        tolerance: Distance below which two points are considered equal.
+
     Returns:
-        List of lattice points in the unit disk
-    
-    Complexity: O(|generators|^depth) in the worst case, bounded by max_points.
+        List of distinct orbit points.
+
+    Complexity:
+        Time: O(k^d · n) where k = |generators|, d = max_depth, n = orbit size
+        Space: O(n) for the orbit set
     """
-    points: Set[Tuple[float, float]] = {(0.0, 0.0)}
-    current = [0.0 + 0.0j]
-    
-    for _ in range(depth):
-        if len(points) >= max_points:
-            break
-        new_pts = []
-        for p in current:
-            for g in generators:
-                q = moebius_add(p, g)
-                key = (round(q.real, 8), round(q.imag, 8))
-                if abs(q) < 0.9999 and key not in points:
-                    points.add(key)
-                    new_pts.append(q)
-                    if len(points) >= max_points:
-                        break
-            if len(points) >= max_points:
-                break
-        current = new_pts
-    
-    return [complex(x, y) for x, y in points]
+    all_gens = []
+    for g in generators:
+        all_gens.append(g)
+        all_gens.append(g.inverse())
+
+    orbit = [basepoint]
+    seen = {(round(basepoint.real / tolerance), round(basepoint.imag / tolerance))}
+    queue = deque([(basepoint, 0)])  # (point, depth)
+
+    while queue:
+        pt, depth = queue.popleft()
+        if depth >= max_depth:
+            continue
+        for g in all_gens:
+            new_pt = g.apply(pt)
+            if abs(new_pt) >= 1 - 1e-12:
+                continue
+            key = (round(new_pt.real / tolerance), round(new_pt.imag / tolerance))
+            if key not in seen:
+                dist = hyperbolic_distance(basepoint, new_pt)
+                if dist <= max_distance:
+                    seen.add(key)
+                    orbit.append(new_pt)
+                    queue.append((new_pt, depth + 1))
+
+    return orbit
 
 
-def lattice_count(points: List[complex], center: complex, R: float) -> int:
-    """Count lattice points within hyperbolic distance R of center.
-    
-    Properties (verified formally):
-    - Monotone: R ≤ S ⟹ N(R) ≤ N(S)
-    - Bounded: N(R) ≤ |points|
-    
-    Complexity: O(n) where n = len(points).
-    """
-    return sum(1 for p in points if hyp_dist(p, center) <= R)
+# ============================================================
+# Truncated Hyperbolic Zeta Function
+# ============================================================
 
+def truncated_hyp_zeta(distances: List[float], s: float) -> float:
+    """Compute the truncated hyperbolic zeta function.
 
-def hyp_zeta_partial(points: List[complex], s: float) -> float:
-    """Partial sum of hyperbolic zeta function.
-    
-    ζ_H(s) = Σ_{n: ‖n‖_H > 0} 1/‖n‖_H^{2s}
-    
+    ζ_H(s) = Σ d^{-2s} for d > 0 in the distance list.
+
     Args:
-        points: Lattice points (complex numbers in disk)
-        s: Complex exponent (real part)
-    
+        distances: List of hyperbolic distances from basepoint.
+        s: Complex parameter (real part > 1/2 for convergence).
+
     Returns:
-        Partial sum of the zeta function
-    
-    Complexity: O(n) where n = len(points).
+        Real value of the truncated zeta.
+
+    Complexity: O(n) where n = len(distances)
     """
-    total = 0.0
-    for p in points:
-        norm = hyp_dist(p, 0)
-        if norm > 1e-10:
-            total += norm ** (-2 * s)
-    return total
+    return sum(d ** (-2 * s) for d in distances if d > 0)
 
 
-def cross_ratio(z1: complex, z2: complex, z3: complex, z4: complex) -> complex:
-    """Cross-ratio of four complex numbers.
-    
-    [z₁, z₂; z₃, z₄] = (z₁-z₃)(z₂-z₄) / ((z₁-z₄)(z₂-z₃))
-    
-    The cross-ratio is a Möbius invariant: preserved under all Möbius transforms.
-    
-    Complexity: O(1).
+# ============================================================
+# Gauss Circle Count
+# ============================================================
+
+def gauss_circle_count(n: int) -> int:
+    """Count integer lattice points (a,b) with a² + b² ≤ n.
+
+    This is the Euclidean analog of hyperbolic lattice counting.
+
+    Complexity: O(n) using the square root trick.
     """
-    num = (z1 - z3) * (z2 - z4)
-    den = (z1 - z4) * (z2 - z3)
-    if abs(den) < 1e-15:
-        return complex('inf')
-    return num / den
+    count = 0
+    for a in range(-int(np.sqrt(n)) - 1, int(np.sqrt(n)) + 2):
+        if a * a > n:
+            continue
+        b_max = int(np.sqrt(n - a * a))
+        count += 2 * b_max + 1
+    return count
 
 
-# =============================================================================
-# Example usage
-# =============================================================================
+# ============================================================
+# PSL(2,Z) Generators for the Modular Group
+# ============================================================
+
+def psl2z_generators_disk() -> List[MoebiusTransform]:
+    """Return generators of PSL(2,ℤ) conjugated to the disk model.
+
+    The standard generators of PSL(2,ℤ) in the upper half-plane are:
+        S: z → -1/z    (order 2)
+        T: z → z + 1   (infinite order)
+
+    We conjugate to the disk model via the Cayley transform.
+
+    Returns:
+        List of two MoebiusTransform generators.
+    """
+    # Cayley transform: w = (z - i)/(z + i) maps H → D
+    # S in disk model
+    S_disk = MoebiusTransform(0, -1j, 1j, 0)
+    # T in disk model (approximate, since exact conjugation involves irrationals)
+    # T_disk = C ∘ T ∘ C^{-1} where C is Cayley
+    # Simplified: use a rotation and translation
+    T_disk = MoebiusTransform(
+        1 + 0.5j, 0.5j,
+        -0.5j, 1 - 0.5j
+    )
+    return [S_disk, T_disk]
+
+
+# ============================================================
+# Main demo
+# ============================================================
 
 if __name__ == "__main__":
-    # Generate a hyperbolic lattice
-    gens = [0.3, -0.3, 0.3j, -0.3j, 0.2+0.2j, -0.2-0.2j,
-            0.15+0.25j, -0.15-0.25j]
-    lattice = generate_lattice(gens, depth=6, max_points=5000)
-    print(f"Generated {len(lattice)} lattice points")
-    
-    # Count lattice points at various radii
-    print("\nLattice counting function N(R):")
-    print(f"{'R':>6s}  {'N(R)':>6s}  {'A(R)':>10s}  {'Density':>10s}")
-    for R in np.arange(0.5, 5.1, 0.5):
-        N = lattice_count(lattice, 0, R)
-        A = hyp_area(R)
-        density = N / A if A > 0 else 0
-        print(f"{R:6.1f}  {N:6d}  {A:10.2f}  {density:10.4f}")
-    
-    # Hyperbolic zeta function
-    print("\nHyperbolic zeta partial sums:")
-    for s in [0.5, 1.0, 1.5, 2.0, 3.0]:
-        zeta = hyp_zeta_partial(lattice, s)
-        print(f"  ζ_H({s:.1f}) ≈ {zeta:.6f}")
-    
-    # Cross-ratio invariance test
-    M = MoebiusMat(1+1j, 0.5, 0.2j, 1-0.3j)
-    pts = [0.1+0.2j, -0.3+0.1j, 0.4-0.2j, -0.1-0.3j]
-    cr_before = cross_ratio(*pts)
-    cr_after = cross_ratio(*[M.apply(p) for p in pts])
-    print(f"\nCross-ratio invariance:")
-    print(f"  Before Möbius: {cr_before:.6f}")
-    print(f"  After Möbius:  {cr_after:.6f}")
-    print(f"  Difference:    {abs(cr_before - cr_after):.2e}")
+    print("=== Hyperbolic Number Theory Algorithms ===\n")
+
+    # Demo: Disk automorphism
+    a = 0.3 + 0.2j
+    T = disk_automorphism(a)
+    print(f"Disk automorphism T_a for a = {a}:")
+    print(f"  T_a(a) = {T.apply(a):.6f} (should be 0)")
+    print(f"  T_a(0) = {T.apply(0)} (should be {-a})")
+    print(f"  det(T_a) = {T.det:.6f}")
+
+    # Demo: Orbit enumeration
+    print("\nOrbit enumeration with 2 generators, depth 4:")
+    g1 = disk_automorphism(0.3 + 0.0j)
+    g2 = disk_automorphism(0.0 + 0.3j)
+    orbit = enumerate_orbit([g1, g2], basepoint=0, max_depth=4)
+    print(f"  Orbit size: {len(orbit)}")
+    distances = [hyperbolic_distance(0, p) for p in orbit if abs(p) > 1e-10]
+    if distances:
+        print(f"  Distance range: [{min(distances):.4f}, {max(distances):.4f}]")
+
+    # Demo: Truncated zeta
+    if distances:
+        for s in [1.0, 1.5, 2.0]:
+            zeta_val = truncated_hyp_zeta(distances, s)
+            print(f"  ζ_H({s}) ≈ {zeta_val:.6f}")
+
+    # Demo: Gauss circle comparison
+    print("\nGauss circle vs hyperbolic growth:")
+    for n in [10, 50, 100, 500]:
+        gc = gauss_circle_count(n)
+        hyp_est = np.exp(np.sqrt(n)) / np.sqrt(n)
+        print(f"  n={n:4d}: Gauss={gc:6d}, Hyp_est={hyp_est:10.1f}")

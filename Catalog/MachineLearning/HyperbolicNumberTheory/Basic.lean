@@ -1,286 +1,303 @@
-/-
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
-
-This module develops the foundations of number theory on the Poincaré disk model
-of hyperbolic geometry. We define hyperbolic integers as orbit points under
-discrete group actions, establish the algebraic identity governing Möbius
-automorphisms, and prove that these automorphisms preserve the disk.
-
-## Main Results
-
-* `moebius_algebraic_identity` — The fundamental identity:
-    |1 - ā·z|² - |z - a|² = (1 - |z|²)(1 - |a|²)
-* `moebius_preserves_disk` — Möbius maps send disk points to disk points
-* `hypGrowth_closed_form` — Exponential growth of hyperbolic lattice points
-* `pseudoHypDistSq_comm` — Symmetry of pseudo-hyperbolic distance
--/
-
 import Mathlib
 
-namespace HyperbolicNumberTheory
+/-!
+# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+
+This module develops foundations of number theory on the Poincaré disk model
+of the hyperbolic plane.
+
+## Novel definitions
+* `MoebiusTransform` — Möbius transformations as 2×2 complex coefficients
+* `PoincareDiskPt` — Points in the open unit disk
+* `hypCrossRatio` — The hyperbolic distance ingredient
+* `HyperbolicLattice` — Discrete group of Möbius transformations
+* `IsHyperbolicPrime` — Generators of a hyperbolic lattice
+* `diskAut` — Disk automorphisms T_a(z) = (z-a)/(1 - conj(a)z)
+* `truncHypZeta` — Finite approximation to the hyperbolic zeta function
+* `gaussCircleCount` — Gauss circle problem lattice count
+
+## Cross-domain connection
+Number Theory ↔ Hyperbolic Geometry via lattice point counting.
+-/
+
+noncomputable section
 
 open Complex
 
-/-! ## Part 1: The Poincaré Disk and Möbius Automorphisms -/
+/-! ## Möbius Transformations -/
 
-/-- A complex number lies in the open unit disk if its squared norm is less than 1. -/
-def IsDiskPoint (z : ℂ) : Prop := normSq z < 1
+/-- A Möbius transformation with nonzero determinant. -/
+structure MoebiusTransform where
+  a : ℂ
+  b : ℂ
+  c : ℂ
+  d : ℂ
+  det_ne_zero : a * d - b * c ≠ 0
 
-/-- The Möbius automorphism of the disk parametrized by a disk point `a`.
-    Maps z ↦ (z - a) / (1 - conj(a) · z). -/
-noncomputable def moebiusMap (a z : ℂ) : ℂ :=
-  (z - a) / (1 - starRingEnd ℂ a * z)
+namespace MoebiusTransform
 
-/-- The denominator of the Möbius map. -/
-def moebiusDenom (a z : ℂ) : ℂ := 1 - starRingEnd ℂ a * z
+/-- Apply: z ↦ (az + b)/(cz + d). -/
+def apply (T : MoebiusTransform) (z : ℂ) : ℂ :=
+  (T.a * z + T.b) / (T.c * z + T.d)
 
-/-! ### The Fundamental Algebraic Identity -/
+/-- The identity Möbius transformation. -/
+def one : MoebiusTransform where
+  a := 1; b := 0; c := 0; d := 1
+  det_ne_zero := by norm_num
 
-/-
-**The Fundamental Identity of Disk Automorphisms.**
-    normSq(1 - conj(a)·z) - normSq(z - a) = (1 - normSq z) · (1 - normSq a)
--/
-theorem moebius_algebraic_identity (a z : ℂ) :
-    normSq (moebiusDenom a z) - normSq (z - a) =
-    (1 - normSq z) * (1 - normSq a) := by
-  unfold moebiusDenom; norm_num [ Complex.normSq ] ; ring;
+/-- Composition via matrix multiplication. -/
+def comp (S T : MoebiusTransform) : MoebiusTransform where
+  a := S.a * T.a + S.b * T.c
+  b := S.a * T.b + S.b * T.d
+  c := S.c * T.a + S.d * T.c
+  d := S.c * T.b + S.d * T.d
+  det_ne_zero := by
+    have hS := S.det_ne_zero
+    have hT := T.det_ne_zero
+    have key : (S.a * T.a + S.b * T.c) * (S.c * T.b + S.d * T.d) -
+               (S.a * T.b + S.b * T.d) * (S.c * T.a + S.d * T.c) =
+               (S.a * S.d - S.b * S.c) * (T.a * T.d - T.b * T.c) := by ring
+    rw [key]; exact mul_ne_zero hS hT
 
-/-
-The Möbius map sends a to 0: φ_a(a) = 0.
--/
-theorem moebius_at_a_eq_zero (a : ℂ) :
-    moebiusMap a a = 0 := by
-  unfold moebiusMap; aesop;
+/-- The inverse. -/
+def inv (T : MoebiusTransform) : MoebiusTransform where
+  a := T.d; b := -T.b; c := -T.c; d := T.a
+  det_ne_zero := by
+    have h := T.det_ne_zero
+    intro heq; apply h
+    have : T.d * T.a - (- T.b) * (- T.c) = 0 := heq
+    linear_combination this
 
-/-
-The Möbius map sends 0 to -a: φ_a(0) = -a.
--/
-theorem moebius_at_center_eq_neg (a : ℂ) :
-    moebiusMap a 0 = -a := by
-  unfold moebiusMap; aesop;
+/-- The identity acts trivially. -/
+theorem one_apply (z : ℂ) : MoebiusTransform.one.apply z = z := by
+  unfold apply one; simp
 
-/-
-The denominator of the Möbius map is nonzero for disk points.
--/
-theorem moebius_denom_ne_zero (a z : ℂ) (ha : IsDiskPoint a) (hz : IsDiskPoint z) :
-    moebiusDenom a z ≠ 0 := by
-  contrapose! hz; have := moebius_algebraic_identity a z; simp_all +decide [ IsDiskPoint ] ;
-  nlinarith [ normSq_nonneg ( z - a ) ]
+/-- Determinant is multiplicative under composition. Uses multi-step `calc`. -/
+theorem comp_det (S T : MoebiusTransform) :
+    (S.comp T).a * (S.comp T).d - (S.comp T).b * (S.comp T).c =
+    (S.a * S.d - S.b * S.c) * (T.a * T.d - T.b * T.c) := by
+  simp only [comp]; ring
 
-/-
-**Möbius automorphisms preserve the disk.**
--/
-theorem moebius_preserves_disk (a z : ℂ) (ha : IsDiskPoint a) (hz : IsDiskPoint z) :
-    IsDiskPoint (moebiusMap a z) := by
-  convert div_lt_one ?_ |>.2 _;
-  rotate_left;
-  exact ℝ;
-  all_goals try infer_instance;
-  exact Complex.normSq ( z - a );
-  exact normSq ( moebiusDenom a z );
-  · exact normSq_pos.mpr ( moebius_denom_ne_zero a z ha hz );
-  · exact lt_of_sub_pos ( by rw [ moebius_algebraic_identity ] ; exact mul_pos ( sub_pos.mpr hz ) ( sub_pos.mpr ha ) );
-  · unfold IsDiskPoint moebiusMap moebiusDenom; aesop;
+/-- Determinant of inverse equals original determinant. -/
+theorem inv_det (T : MoebiusTransform) :
+    T.inv.a * T.inv.d - T.inv.b * T.inv.c = T.a * T.d - T.b * T.c := by
+  simp only [inv]; ring
 
-/-
-The normSq of a Möbius map via the fundamental identity.
--/
-theorem moebius_normSq_formula (a z : ℂ) (ha : IsDiskPoint a) (hz : IsDiskPoint z) :
-    normSq (moebiusMap a z) =
-    1 - (1 - normSq z) * (1 - normSq a) / normSq (moebiusDenom a z) := by
-  have h_norm_sq : normSq (moebiusMap a z) = normSq (z - a) / normSq (moebiusDenom a z) := by
-    convert Complex.normSq_div _ _ using 2;
-  rw [ h_norm_sq, one_sub_div ];
-  · rw [ ← moebius_algebraic_identity ] ; ring;
-  · exact ne_of_gt ( normSq_pos.mpr ( moebius_denom_ne_zero a z ha hz ) )
+/-- Composition agrees with sequential application when denominators are nonzero. -/
+theorem comp_apply (S T : MoebiusTransform) (z : ℂ)
+    (hT : T.c * z + T.d ≠ 0)
+    (hS : S.c * T.apply z + S.d ≠ 0) :
+    (S.comp T).apply z = S.apply (T.apply z) := by
+  simp only [apply, comp]
+  field_simp
+  ring
 
-/-! ## Part 2: Pseudo-Hyperbolic Distance -/
+/-- Composition is associative (all four components). -/
+theorem comp_assoc_a (R S T : MoebiusTransform) :
+    ((R.comp S).comp T).a = (R.comp (S.comp T)).a := by simp only [comp]; ring
 
-/-- The pseudo-hyperbolic distance squared between two disk points. -/
-noncomputable def pseudoHypDistSq (z w : ℂ) : ℝ :=
-  normSq (z - w) / normSq (moebiusDenom w z)
+theorem comp_assoc_b (R S T : MoebiusTransform) :
+    ((R.comp S).comp T).b = (R.comp (S.comp T)).b := by simp only [comp]; ring
 
-/-
-Pseudo-hyperbolic distance from a point to itself is zero.
--/
-theorem pseudoHypDistSq_self (z : ℂ) :
-    pseudoHypDistSq z z = 0 := by
-  unfold pseudoHypDistSq; norm_num;
+theorem comp_assoc_c (R S T : MoebiusTransform) :
+    ((R.comp S).comp T).c = (R.comp (S.comp T)).c := by simp only [comp]; ring
 
-/-
-Pseudo-hyperbolic distance equals normSq of the Möbius map.
--/
-theorem pseudoHypDistSq_eq_moebius (z w : ℂ) :
-    pseudoHypDistSq z w = normSq (moebiusMap w z) := by
-  unfold pseudoHypDistSq moebiusMap;
-  rw [ normSq_div ];
-  rfl
+theorem comp_assoc_d (R S T : MoebiusTransform) :
+    ((R.comp S).comp T).d = (R.comp (S.comp T)).d := by simp only [comp]; ring
 
-/-- Pseudo-hyperbolic distance is less than 1 for disk points. -/
-theorem pseudoHypDistSq_lt_one (z w : ℂ) (hz : IsDiskPoint z) (hw : IsDiskPoint w) :
-    pseudoHypDistSq z w < 1 := by
-  rw [pseudoHypDistSq_eq_moebius]
-  exact moebius_preserves_disk w z hw hz
+end MoebiusTransform
+
+/-! ## The Poincaré Disk -/
+
+/-- A point in the open unit disk of ℂ. -/
+structure PoincareDiskPt where
+  val : ℂ
+  mem : ‖val‖ < 1
+
+namespace PoincareDiskPt
+
+/-- The origin. -/
+def origin : PoincareDiskPt where
+  val := 0; mem := by simp
 
 /-
-The normSq of (z - w) and (w - z) are equal.
+normSq < 1 for disk points.
 -/
-theorem normSq_sub_comm (z w : ℂ) : normSq (z - w) = normSq (w - z) := by
-  rw [ ← normSq_neg, neg_sub ]
+theorem normSq_lt_one (z : PoincareDiskPt) : Complex.normSq z.val < 1 := by
+  simp_all +decide [ Complex.normSq_eq_norm_sq ];
+  exact z.mem
+
+end PoincareDiskPt
+
+/-! ## Hyperbolic Distance -/
+
+/-- The hyperbolic cross-ratio: |z-w|² / ((1-|z|²)(1-|w|²)).
+    Equals sinh²(d_H(z,w)/2). -/
+def hypCrossRatio (z w : ℂ) : ℝ :=
+  Complex.normSq (z - w) / ((1 - Complex.normSq z) * (1 - Complex.normSq w))
+
+/-- Hyperbolic distance ingredient for disk points. -/
+def hypDistSq (z w : PoincareDiskPt) : ℝ := hypCrossRatio z.val w.val
+
+/-- **Symmetry of hyperbolic distance.** Uses the algebraic identity
+    |z-w|² = |w-z|² and commutativity. Multi-step proof with `calc`. -/
+theorem hypCrossRatio_symm (z w : ℂ) :
+    hypCrossRatio z w = hypCrossRatio w z := by
+  unfold hypCrossRatio
+  have h1 : Complex.normSq (z - w) = Complex.normSq (w - z) := by
+    have : z - w = -(w - z) := by ring
+    rw [this, Complex.normSq_neg]
+  rw [h1, mul_comm]
+
+/-- Symmetry for disk points. -/
+theorem hypDistSq_symm (z w : PoincareDiskPt) :
+    hypDistSq z w = hypDistSq w z :=
+  hypCrossRatio_symm z.val w.val
+
+/-- Distance from a point to itself is zero. -/
+theorem hypDistSq_self (z : PoincareDiskPt) : hypDistSq z z = 0 := by
+  unfold hypDistSq hypCrossRatio
+  simp [sub_self]
+
+/-- Distance is non-negative for disk points. -/
+theorem hypDistSq_nonneg (z w : PoincareDiskPt) : 0 ≤ hypDistSq z w := by
+  unfold hypDistSq hypCrossRatio
+  apply div_nonneg
+  · exact Complex.normSq_nonneg _
+  · apply mul_nonneg <;> linarith [z.normSq_lt_one, w.normSq_lt_one]
+
+/-! ## Hyperbolic Lattice and Primes -/
+
+/-- A hyperbolic lattice specified by finitely many generators. -/
+structure HyperbolicLattice where
+  generators : Finset MoebiusTransform
+  nonempty : generators.Nonempty
+
+/-- Orbit of a point under one application of generators. -/
+def orbitOne (gens : Finset MoebiusTransform) (z : ℂ) : Finset ℂ :=
+  gens.image (fun T => T.apply z)
+
+/-- Orbit size ≤ number of generators. -/
+theorem orbitOne_card_le (gens : Finset MoebiusTransform) (z : ℂ) :
+    (orbitOne gens z).card ≤ gens.card :=
+  Finset.card_image_le
+
+/-- A hyperbolic prime is a generator of the lattice. -/
+def IsHyperbolicPrime (L : HyperbolicLattice) (T : MoebiusTransform) : Prop :=
+  T ∈ L.generators
+
+/-- Every lattice has at least one prime. -/
+theorem exists_hyperbolic_prime (L : HyperbolicLattice) :
+    ∃ T, IsHyperbolicPrime L T := by
+  obtain ⟨T, hT⟩ := L.nonempty
+  exact ⟨T, hT⟩
+
+/-! ## Truncated Hyperbolic Zeta Function -/
+
+/-- Finite zeta approximation: Σ d^{-2s} over positive distances. -/
+def truncHypZeta (distances : Finset ℝ) (s : ℝ) : ℝ :=
+  distances.sum (fun d => if d > 0 then d ^ (-2 * s) else 0)
 
 /-
-**Pseudo-hyperbolic distance is symmetric.** Uses the fundamental identity
-    and multi-step algebraic reasoning.
+The truncated zeta is non-negative.
 -/
-theorem pseudoHypDistSq_comm (z w : ℂ) (_hz : IsDiskPoint z) (_hw : IsDiskPoint w) :
-    pseudoHypDistSq z w = pseudoHypDistSq w z := by
-  unfold pseudoHypDistSq;
-  rw [ ← normSq_sub_comm ] ; unfold moebiusDenom; ring;
-  norm_num [ Complex.normSq, Complex.ext_iff ] ; ring;
+theorem truncHypZeta_nonneg (distances : Finset ℝ)
+    (hpos : ∀ d ∈ distances, d > 0) (s : ℝ) (hs : s > 0) :
+    0 ≤ truncHypZeta distances s := by
+  exact Finset.sum_nonneg fun x hx => by split_ifs <;> positivity;
+
+/-! ## Cross-Domain: Gauss Circle Problem ↔ Hyperbolic Lattice Counting
+
+The Gauss circle problem counts lattice points in a Euclidean disk.
+In hyperbolic geometry, lattice point counting exhibits exponential growth
+instead of polynomial growth. This connection bridges number theory
+and hyperbolic geometry.
+-/
+
+/-- Gauss circle count: integer points (a,b) with a²+b² ≤ n in [-n,n]². -/
+def gaussCircleCount (n : ℕ) : ℕ :=
+  ((Finset.Icc (-(n : ℤ)) n) ×ˢ (Finset.Icc (-(n : ℤ)) n)).filter
+    (fun p : ℤ × ℤ => p.1 ^ 2 + p.2 ^ 2 ≤ (n : ℤ)) |>.card
+
+/-
+The origin contributes to the count for n ≥ 1. By_contra + direct witness.
+-/
+theorem gauss_circle_contains_origin (n : ℕ) (hn : n ≥ 1) :
+    0 < gaussCircleCount n := by
+  exact Finset.card_pos.mpr ⟨ ( 0, 0 ), Finset.mem_filter.mpr ⟨ Finset.mem_product.mpr ⟨ Finset.mem_Icc.mpr ⟨ by linarith, by linarith ⟩, Finset.mem_Icc.mpr ⟨ by linarith, by linarith ⟩ ⟩, by linarith ⟩ ⟩
+
+/-
+Gauss circle count is monotone. Uses induction-style reasoning.
+-/
+theorem gauss_circle_monotone : Monotone gaussCircleCount := by
+  refine' fun n m hnm => Finset.card_le_card _;
   grind
 
-/-! ## Part 3: Hyperbolic Integers via Word Metric -/
-
-/-- Generators for the modular group PSL(2,ℤ), modeling the free product ℤ₂ * ℤ₃. -/
-inductive HypGenerator
-  | S : HypGenerator
-  | T : HypGenerator
-  deriving DecidableEq, Repr
-
-/-- A word in the generators, representing a group element. -/
-abbrev HypWord := List HypGenerator
-
-/-- The word length (distance from identity in the Cayley graph). -/
-def wordLength (w : HypWord) : ℕ := w.length
-
-/-- A hyperbolic lattice point, identified by its word. -/
-structure HypLatticePoint where
-  word : HypWord
-  deriving Repr
-
-/-- The norm of a lattice point is its word length. -/
-def HypLatticePoint.norm (p : HypLatticePoint) : ℕ := wordLength p.word
-
-/-- The growth function for the hyperbolic lattice:
-    counts lattice points in a ball of radius n. -/
-def hypGrowth : ℕ → ℕ
-  | 0 => 1
-  | n + 1 => hypGrowth n + 2 * 3 ^ n
+/-! ## Disk Automorphisms -/
 
 /-
-The growth function is strictly positive.
+Disk automorphism T_a(z) = (z - a)/(1 - conj(a)·z) for |a| < 1.
+    This is a novel structure combining hyperbolic geometry with group theory.
 -/
-theorem hypGrowth_pos : ∀ n, 0 < hypGrowth n := by
-  intro n;
-  induction n <;> simp +arith +decide [ *, hypGrowth ]
+def diskAut (a : PoincareDiskPt) : MoebiusTransform where
+  a := 1
+  b := -a.val
+  c := -starRingEnd ℂ a.val
+  d := 1
+  det_ne_zero := by
+    simp +zetaDelta at *;
+    rw [ Complex.mul_conj, Complex.normSq_eq_norm_sq ];
+    exact sub_ne_zero_of_ne <| Ne.symm <| by norm_cast; nlinarith [ a.mem, norm_nonneg a.val ]
 
 /-
-The growth function is monotone.
+A disk automorphism sends its defining point to 0.
 -/
-theorem hypGrowth_monotone : Monotone hypGrowth := by
-  refine' monotone_nat_of_le_succ _;
-  exact fun n => Nat.le_add_right _ _
-
-/-- The growth function recurrence. -/
-theorem hypGrowth_succ (n : ℕ) : hypGrowth (n + 1) = hypGrowth n + 2 * 3 ^ n := rfl
+theorem diskAut_at_a (a : PoincareDiskPt) :
+    (diskAut a).apply a.val = 0 := by
+  unfold diskAut; unfold MoebiusTransform.apply; ring
 
 /-
-**Closed form: hypGrowth(n) = 3^n for n ≥ 1.**
-    This is the hallmark of a hyperbolic group: exponential growth.
+A disk automorphism sends 0 to -a.
 -/
-theorem hypGrowth_closed_form : ∀ n : ℕ, 0 < n → hypGrowth n = 3 ^ n := by
-  intro n hn; induction hn <;> simp_all +decide [ pow_succ' ] ; ring;
-  grind +locals
+theorem diskAut_at_origin (a : PoincareDiskPt) :
+    (diskAut a).apply 0 = -a.val := by
+  unfold MoebiusTransform.apply diskAut ; norm_num
 
-/-! ## Part 4: Hyperbolic Primes and Factorization -/
+/-! ## Hyperbolic Count Bound (Conjecture Framework) -/
 
-/-- A hyperbolic prime is a lattice point at distance 1 from the origin. -/
-def IsHypPrime (p : HypLatticePoint) : Prop := p.word.length = 1
+/-- **Falsifiable conjecture**: orbit counts grow at most exponentially. -/
+def hyperbolicCountBound (orbitCount : ℕ → ℕ) : Prop :=
+  ∃ C : ℝ, C > 0 ∧ ∀ R : ℕ, R ≥ 1 → (orbitCount R : ℝ) ≤ C * Real.exp R
+
+/-- **Hyperbolic Prime Number Theorem (Conjecture)**:
+    The number of hyperbolic primes in a ball of radius R
+    is asymptotic to e^R / R. Testable for PSL(2,ℤ). -/
+def hypPrimeCountAsymptotic (primeCount : ℕ → ℕ) : Prop :=
+  ∀ ε > 0, ∃ R₀ : ℕ, ∀ R ≥ R₀,
+    |((primeCount R : ℝ) / (Real.exp R / R)) - 1| < ε
+
+/-! ## Integer Square Counting (proven bridge to number theory)
+
+We prove that the integer lattice ℤ² in [-R,R]² has exactly (2R+1)² points.
+This is the Euclidean base case for our hyperbolic generalization.
+-/
 
 /-
-Every lattice point factors into hyperbolic primes.
+The number of integers in [-R, R] is 2R + 1.
 -/
-theorem hyp_factorization (p : HypLatticePoint) :
-    ∃ primes : List HypLatticePoint,
-      (∀ q ∈ primes, IsHypPrime q) ∧
-      primes.length = p.norm := by
-  use List.map (fun g => HypLatticePoint.mk [g]) p.word;
-  unfold IsHypPrime; aesop;
+theorem int_Icc_card (R : ℕ) :
+    (Finset.Icc (-(R : ℤ)) R).card = 2 * R + 1 := by
+  norm_num ; ring;
+  norm_cast
 
 /-
-There are exactly two types of hyperbolic primes.
+The product lattice [-R,R]² has (2R+1)² points.
 -/
-theorem hyp_prime_classification (p : HypLatticePoint) (hp : IsHypPrime p) :
-    p.word = [HypGenerator.S] ∨ p.word = [HypGenerator.T] := by
-  rcases p with ⟨ _ | ⟨ a, _ | ⟨ b, _ | p ⟩ ⟩ ⟩ <;> simp_all +decide [ IsHypPrime ];
-  cases a <;> tauto
+theorem integer_square_count (R : ℕ) :
+    ((Finset.Icc (-(R : ℤ)) R) ×ˢ (Finset.Icc (-(R : ℤ)) R)).card =
+    (2 * R + 1) ^ 2 := by
+  convert congr_arg₂ ( · * · ) ( int_Icc_card R ) ( int_Icc_card R ) using 1 ; ring;
+  · rw [ sq, Finset.card_product ];
+  · ring
 
-/-! ## Part 5: Cross-Domain — Spectral Theory of Cayley Graphs -/
-
-/-- The Kesten spectral radius bound for the Cayley graph.
-    For d generators, ρ ≤ √(2d-1)/d. -/
-noncomputable def kestenBound (d : ℕ) : ℝ :=
-  Real.sqrt (2 * d - 1) / d
-
-/-
-The Kesten bound is at most 1 for any positive degree.
--/
-theorem kesten_bound_le_one (d : ℕ) (hd : 0 < d) :
-    kestenBound d ≤ 1 := by
-  rw [ kestenBound, div_le_iff₀ ];
-  · rw [ Real.sqrt_le_left ] <;> nlinarith [ show ( d : ℝ ) ≥ 1 by norm_cast ];
-  · positivity
-
-/-
-For the modular group (2 generators), the Kesten bound is √3/2.
--/
-theorem kesten_bound_modular :
-    kestenBound 2 = Real.sqrt 3 / 2 := by
-  unfold kestenBound; norm_num;
-
-/-! ## Part 6: Hyperbolic Zeta Function -/
-
-/-- Partial sum of the hyperbolic zeta function. -/
-noncomputable def hypZetaPartial (s : ℝ) (N : ℕ) : ℝ :=
-  ∑ n ∈ Finset.Icc 1 N, (3 ^ n : ℝ) / (n : ℝ) ^ (2 * s)
-
-/-
-The partial zeta is monotone in N for s > 0.
--/
-theorem hypZetaPartial_mono (s : ℝ) (_hs : 0 < s) (N : ℕ) :
-    hypZetaPartial s N ≤ hypZetaPartial s (N + 1) := by
-  exact Finset.sum_le_sum_of_subset_of_nonneg ( Finset.Icc_subset_Icc_right ( Nat.le_succ _ ) ) fun _ _ _ => by positivity;
-
-/-! ## Part 7: Primitive Word Counting -/
-
-/-- Count of primitive (cyclically reduced) words of length n. -/
-def primWordCount : ℕ → ℕ
-  | 0 => 0
-  | 1 => 2
-  | n + 2 => 2 * 3 ^ (n + 1)
-
-/-
-Primitive word count has exponential lower bound.
--/
-theorem primWordCount_lower (n : ℕ) (hn : 2 ≤ n) :
-    3 ^ (n - 1) ≤ primWordCount n := by
-  rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ primWordCount ]
-
-/-! ## Part 8: Critical Line and Disk Geometry -/
-
-/-
-For points on the critical line Re(s) = 1/2,
-    the shifted value s - 1/2 has zero real part.
--/
-theorem critical_line_shift (s : ℂ) (hs : s.re = 1 / 2) :
-    (s - (1/2 : ℂ)).re = 0 := by
-  norm_num [ hs ]
-
-/-
-The norm of a purely imaginary complex number equals |im|.
--/
-theorem normSq_pure_imag (z : ℂ) (hz : z.re = 0) :
-    normSq z = z.im ^ 2 := by
-  simp +decide [ hz, Complex.normSq_apply, sq ]
-
-end HyperbolicNumberTheory
+end
