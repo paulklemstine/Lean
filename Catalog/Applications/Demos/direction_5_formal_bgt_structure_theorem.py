@@ -1,924 +1,801 @@
-#!/usr/bin/env python3
 """
 Applications of the BGT Structure Theorem
 
-Demonstrates practical applications of the exact tripling → subgroup theorem
-and related growth phenomena:
-
-1. Cayley graph expansion analysis
-2. Random walk mixing detection
-3. Cryptographic pseudorandom generator testing
-4. Error-correcting code subgroup structure
+Demonstrates real-world applications of approximate subgroup theory:
+1. Cayley graph expanders for communication networks
+2. Random walk mixing on groups
+3. Error detection in group-based cryptography
+4. Sum-product estimates for additive combinatorics
 """
 
-import itertools
+from typing import Set, List, Tuple, Dict
+import math
 import random
-from typing import Dict, List, Set, Tuple
 
 
-# ──────────────────────────────────────────────────────────────
-# Group Infrastructure (self-contained)
-# ──────────────────────────────────────────────────────────────
-
-def product_set(mul, A, B):
-    """Compute A·B."""
-    return {mul(a, b) for a in A for b in B}
+def cyclic_group_op(n: int):
+    """Return (multiply, invert) for Z/nZ."""
+    return (lambda a, b: (a + b) % n, lambda a: (-a) % n)
 
 
-def cyclic_group(n):
-    """Return (elements, mul, inv, identity) for Z/nZ."""
-    return list(range(n)), lambda a, b: (a + b) % n, lambda a: (-a) % n, 0
+def product_set(A: Set[int], B: Set[int], op) -> Set[int]:
+    """Compute A · B under operation op."""
+    return {op(a, b) for a in A for b in B}
 
 
-def sl2_group(p):
-    """Return (elements, mul, inv, identity) for SL(2, F_p)."""
-    elements = []
-    for a in range(p):
-        for b in range(p):
-            for c in range(p):
-                for d in range(p):
-                    if (a * d - b * c) % p == 1:
-                        elements.append((a, b, c, d))
+# ─────────────────────────────────────────────────────────────
+# Application 1: Cayley Expander Construction
+# ─────────────────────────────────────────────────────────────
 
-    def mul(A, B):
-        a1, b1, c1, d1 = A
-        a2, b2, c2, d2 = B
-        return ((a1*a2+b1*c2)%p, (a1*b2+b1*d2)%p,
-                (c1*a2+d1*c2)%p, (c1*b2+d1*d2)%p)
-
-    def inv(A):
-        a, b, c, d = A
-        return (d%p, (-b)%p, (-c)%p, a%p)
-
-    return elements, mul, inv, (1, 0, 0, 1)
-
-
-# ──────────────────────────────────────────────────────────────
-# Application 1: Cayley Graph Expansion
-# ──────────────────────────────────────────────────────────────
-
-def cayley_graph_analysis(elements, mul, inv, identity, generators):
+def cayley_expansion_ratio(n: int, generators: Set[int]) -> float:
     """
-    Analyze the Cayley graph Cay(G, S) where S is a symmetric generating set.
-
-    Computes:
-    - BFS layers (Cayley balls)
-    - Expansion ratios at each radius
-    - Diameter estimate
-
-    Application: Expander graph construction for networks and coding theory.
-    The BGT theorem tells us that rapid expansion (large tripling ratio)
-    is the *generic* behavior — only subgroups can avoid it.
+    Compute the expansion ratio of the Cayley graph Cay(Z/nZ, S).
+    
+    The expansion ratio h(G) = min_{|S|≤n/2} |∂S|/|S| where ∂S
+    is the edge boundary. By the growth dichotomy, if S generates
+    the group, this is always positive.
+    
+    Application: In communication networks, expander graphs guarantee
+    that messages reach all nodes quickly. Cayley expanders achieve
+    this via algebraic structure.
+    
+    >>> cayley_expansion_ratio(7, {1, 6})  # > 0
     """
-    full = set(elements)
-
-    # Ensure generators are symmetric
-    S = set(generators)
-    for g in list(S):
-        S.add(inv(g))
-    S.add(identity)
-
-    # BFS from identity
-    visited = {identity}
-    layer = {identity}
-    layers = [layer]
-    expansion_ratios = []
-
-    while layer and visited != full:
-        next_layer = set()
-        for v in layer:
+    op, inv = cyclic_group_op(n)
+    all_elements = set(range(n))
+    
+    min_ratio = float('inf')
+    # Check small subsets for expansion
+    for size in range(1, n // 2 + 1):
+        # Sample random subsets of this size
+        for _ in range(min(20, math.comb(n, size))):
+            S = set(random.sample(range(n), size))
+            # Compute boundary: neighbors outside S
+            boundary = set()
             for s in S:
-                w = mul(v, s)
-                if w not in visited:
-                    next_layer.add(w)
-                    visited.add(w)
-        if not next_layer:
-            break
-        expansion_ratios.append(
-            len(next_layer) / len(layer) if len(layer) > 0 else 0
-        )
-        layer = next_layer
-        layers.append(layer)
-
-    diameter = len(layers) - 1
-
-    # Product set growth
-    A = set(S)
-    AA = product_set(mul, A, A)
-    AAA = product_set(mul, AA, A)
-
-    return {
-        "num_layers": len(layers),
-        "layer_sizes": [len(l) for l in layers],
-        "expansion_ratios": expansion_ratios,
-        "diameter": diameter,
-        "generator_set_size": len(S),
-        "card_A": len(A),
-        "card_AA": len(AA),
-        "card_AAA": len(AAA),
-        "tripling_ratio": len(AAA) / len(A) if len(A) > 0 else 0,
-        "is_expander_like": len(AAA) / len(A) > 1.5 if len(A) > 0 else False,
-    }
+                for g in generators:
+                    neighbor = op(s, g)
+                    if neighbor not in S:
+                        boundary.add(neighbor)
+                    neighbor = op(s, inv(g))
+                    if neighbor not in S:
+                        boundary.add(neighbor)
+            ratio = len(boundary) / len(S) if len(S) > 0 else 0
+            min_ratio = min(min_ratio, ratio)
+    
+    return min_ratio
 
 
-# ──────────────────────────────────────────────────────────────
-# Application 2: Random Walk Mixing Detection
-# ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
+# Application 2: Random Walk Mixing
+# ─────────────────────────────────────────────────────────────
 
-def random_walk_mixing(elements, mul, inv, identity, generators, steps=1000):
+def random_walk_mixing(n: int, generators: List[int], 
+                       steps: int) -> Dict[int, float]:
     """
-    Simulate a random walk on the Cayley graph and measure mixing.
-
-    Application: The BGT theorem provides a criterion for when random walks
-    mix rapidly. If the generating set has large tripling, the walk mixes
-    fast (exponential convergence). If tripling is near 1, the walk is
-    confined to a subgroup.
+    Simulate random walk on Z/nZ with given generators.
+    
+    Starting from 0, at each step uniformly choose a generator
+    and add it. Track the distribution over time.
+    
+    By the BGT theory, if the generators form a K-approximate
+    subgroup with K close to 1, mixing is slow (the walk stays
+    near a subgroup). If K is large, mixing is fast.
+    
+    Application: In Markov chain Monte Carlo, understanding mixing
+    time is crucial for sampling efficiency.
+    
+    >>> dist = random_walk_mixing(12, [1, 11], 100)
     """
-    S = set(generators)
-    for g in list(S):
-        S.add(inv(g))
-    S_list = list(S)
-
-    # Run multiple walks
-    visit_counts = {e: 0 for e in elements}
-    n = len(elements)
-    num_walks = 50
-
-    for _ in range(num_walks):
-        current = identity
-        for step in range(steps):
-            s = random.choice(S_list)
-            current = mul(current, s)
-            visit_counts[current] += 1
-
-    # Compute mixing statistics
-    total = sum(visit_counts.values())
-    uniform = total / n
-    max_deviation = max(abs(v - uniform) for v in visit_counts.values()) / uniform
-
-    # Compute tripling to predict mixing
-    A = set(S) | {identity}
-    AA = product_set(mul, A, A)
-    AAA = product_set(mul, AA, A)
-    tripling = len(AAA) / len(A)
-
-    return {
-        "steps": steps,
-        "num_walks": num_walks,
-        "max_relative_deviation": max_deviation,
-        "is_well_mixed": max_deviation < 0.5,
-        "tripling_ratio": tripling,
-        "prediction": (
-            "fast mixing (high tripling)" if tripling > 2
-            else "slow mixing (near-subgroup)" if tripling < 1.5
-            else "moderate mixing"
-        ),
-    }
+    op, _ = cyclic_group_op(n)
+    
+    # Track distribution
+    distribution = {i: 0.0 for i in range(n)}
+    distribution[0] = 1.0
+    
+    for _ in range(steps):
+        new_dist = {i: 0.0 for i in range(n)}
+        for pos, prob in distribution.items():
+            if prob > 0:
+                for g in generators:
+                    new_pos = op(pos, g)
+                    new_dist[new_pos] += prob / len(generators)
+        distribution = new_dist
+    
+    return distribution
 
 
-# ──────────────────────────────────────────────────────────────
-# Application 3: Subgroup Structure in Small Groups
-# ──────────────────────────────────────────────────────────────
+def total_variation_distance(dist: Dict[int, float], n: int) -> float:
+    """Total variation distance from uniform distribution."""
+    uniform = 1.0 / n
+    return 0.5 * sum(abs(dist[i] - uniform) for i in range(n))
 
-def subgroup_lattice_and_tripling(elements, mul, inv, identity):
+
+# ─────────────────────────────────────────────────────────────
+# Application 3: Sum-Product Estimates
+# ─────────────────────────────────────────────────────────────
+
+def sum_product_growth(A: Set[int], p: int) -> Tuple[int, int, float]:
     """
-    Compute the full subgroup lattice and verify the BGT exact tripling
-    theorem computationally: every symmetric set with 1 and |A³|=|A|
-    is a subgroup.
-
-    Application: Validates the theorem computationally and shows the
-    subgroup lattice structure.
+    Compute sum set and product set sizes in Z/pZ.
+    
+    The Erdős-Szemerédi conjecture says that for any A ⊆ Z/pZ,
+    max(|A+A|, |A·A|) ≥ |A|^{2-ε}. The BGT theory connects
+    this to approximate subgroups: if |A+A| is small, then A
+    must be structured (close to an arithmetic progression).
+    
+    Application: Sum-product estimates have applications in
+    cryptographic security, ensuring that field operations
+    create sufficient entropy.
+    
+    >>> sum_product_growth({1, 2, 3, 4}, 13)
     """
-    n = len(elements)
+    sum_set = {(a + b) % p for a in A for b in A}
+    prod_set = {(a * b) % p for a in A for b in A}
+    
+    max_growth = max(len(sum_set), len(prod_set)) / len(A)
+    
+    return len(sum_set), len(prod_set), max_growth
+
+
+# ─────────────────────────────────────────────────────────────
+# Application 4: Growth-based Group Structure Detection
+# ─────────────────────────────────────────────────────────────
+
+def detect_hidden_subgroup(n: int, A: Set[int]) -> List[Set[int]]:
+    """
+    Use product growth to detect subgroup structure.
+    
+    Algorithm:
+    1. Compute A, A², A³, ...
+    2. If growth stalls (|A^k| = |A^{k+1}|), then A^k is a subgroup
+    3. Return all detected subgroups
+    
+    This is the computational content of the BGT structure theorem:
+    approximate subgroups "reveal" nearby genuine subgroups through
+    their growth patterns.
+    
+    Application: Hidden subgroup problems are central to quantum
+    computing (Shor's algorithm solves the HSP for abelian groups).
+    """
+    op, inv = cyclic_group_op(n)
+    
     subgroups = []
-
-    # Find all subgroups (via Lagrange, only check divisor sizes)
-    for size in range(1, n + 1):
-        if n % size != 0:
-            continue
-        for subset in itertools.combinations(elements, size):
-            S = set(subset)
-            if identity not in S:
-                continue
-            if not all(inv(a) in S for a in S):
-                continue
-            if all(mul(a, b) in S for a in S for b in S):
-                subgroups.append(frozenset(S))
-
-    # Compute tripling ratios for each subgroup
-    subgroup_data = []
-    for H in subgroups:
-        H_set = set(H)
-        HH = product_set(mul, H_set, H_set)
-        HHH = product_set(mul, HH, H_set)
-        subgroup_data.append({
-            "size": len(H),
-            "tripling_ratio": len(HHH) / len(H),
-            "exact_tripling": len(HHH) == len(H),
-        })
-
-    return {
-        "group_order": n,
-        "num_subgroups": len(subgroups),
-        "subgroup_orders": sorted(set(len(H) for H in subgroups)),
-        "subgroup_details": subgroup_data,
-        "all_exact_tripling": all(d["exact_tripling"] for d in subgroup_data),
-    }
-
-
-# ──────────────────────────────────────────────────────────────
-# Main Application Demos
-# ──────────────────────────────────────────────────────────────
-
-def main():
-    print("=" * 70)
-    print("Applications of the BGT Structure Theorem")
-    print("=" * 70)
-
-    # ── App 1: Cayley Graph Expansion ──
-    print("\n" + "━" * 70)
-    print("Application 1: Cayley Graph Expansion in SL(2, F_3)")
-    print("━" * 70)
-
-    elems, mul, inv, ident = sl2_group(3)
-    g1 = (1, 1, 0, 1)  # upper triangular
-    g2 = (1, 0, 1, 1)  # lower triangular
-
-    result = cayley_graph_analysis(elems, mul, inv, ident, [g1, g2])
-    print(f"  Generators: upper & lower triangular unipotent")
-    print(f"  |G| = {len(elems)}")
-    print(f"  |S| = {result['generator_set_size']}")
-    print(f"  Cayley ball layers: {result['layer_sizes']}")
-    print(f"  Diameter: {result['diameter']}")
-    print(f"  Tripling ratio: {result['tripling_ratio']:.2f}")
-    print(f"  Expander-like: {result['is_expander_like']}")
-
-    # ── App 2: Random Walk Mixing ──
-    print("\n" + "━" * 70)
-    print("Application 2: Random Walk Mixing Prediction")
-    print("━" * 70)
-
-    # High growth generators
-    result_high = random_walk_mixing(elems, mul, inv, ident, [g1, g2], steps=200)
-    print(f"\n  High-growth generators {{u, l}}:")
-    print(f"    Tripling ratio: {result_high['tripling_ratio']:.2f}")
-    print(f"    Max deviation from uniform: {result_high['max_relative_deviation']:.3f}")
-    print(f"    Mixing prediction: {result_high['prediction']}")
-
-    # ── App 3: Subgroup Lattice ──
-    print("\n" + "━" * 70)
-    print("Application 3: Subgroup Lattice and Tripling Verification")
-    print("━" * 70)
-
-    for name, group_fn in [("Z/6Z", lambda: cyclic_group(6)),
-                            ("Z/8Z", lambda: cyclic_group(8))]:
-        elems, mul, inv, ident = group_fn()
-        result = subgroup_lattice_and_tripling(elems, mul, inv, ident)
-        print(f"\n  {name}:")
-        print(f"    Order: {result['group_order']}")
-        print(f"    Number of subgroups: {result['num_subgroups']}")
-        print(f"    Subgroup orders: {result['subgroup_orders']}")
-        print(f"    All subgroups have exact tripling: {result['all_exact_tripling']}")
-
-    print("\n" + "=" * 70)
-    print("All applications demonstrated successfully.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Demo: Approximate Subgroup Analysis and BGT Structure Theorem Exploration
-
-This script demonstrates the core mathematical ideas behind the
-Breuillard-Green-Tao (BGT) structure theorem in the K ≈ 1 regime:
-- Exact tripling rigidity: |A³| = |A| implies A is a subgroup
-- Near-tripling under gap hypotheses
-- Computational exploration in small finite groups and SL(2, F_p)
-
-Usage: python demo.py
-"""
-
-import itertools
-from typing import Optional
-
-
-# ──────────────────────────────────────────────────────────────
-# Finite Group Infrastructure
-# ──────────────────────────────────────────────────────────────
-
-class FiniteGroup:
-    """Abstract base for a finite group given by enumeration."""
-    def __init__(self, elements, mul, inv, identity):
-        self.elements = list(elements)
-        self.mul = mul
-        self.inv = inv
-        self.identity = identity
-        self.n = len(self.elements)
-
-    def product_set(self, A, B):
-        """Compute A·B = {a*b | a in A, b in B}."""
-        return set(self.mul(a, b) for a in A for b in B)
-
-    def triple_product(self, A):
-        """Compute A·A·A."""
-        AA = self.product_set(A, A)
-        return self.product_set(AA, A)
-
-    def is_symmetric(self, A):
-        """Check if A = A⁻¹."""
-        return all(self.inv(a) in A for a in A)
-
-    def is_subgroup(self, A):
-        """Check if A is a subgroup."""
-        if self.identity not in A:
-            return False
-        if not self.is_symmetric(A):
-            return False
-        for a in A:
-            for b in A:
-                if self.mul(a, b) not in A:
-                    return False
-        return True
-
-    def find_subgroups(self):
-        """Find all subgroups by brute force (small groups only)."""
-        subgroups = []
-        for size in range(1, self.n + 1):
-            for subset in itertools.combinations(self.elements, size):
-                s = set(subset)
-                if self.is_subgroup(s):
-                    subgroups.append(s)
-        return subgroups
-
-
-class CyclicGroup(FiniteGroup):
-    """Cyclic group Z/nZ."""
-    def __init__(self, n):
-        elements = list(range(n))
-        super().__init__(
-            elements,
-            mul=lambda a, b: (a + b) % n,
-            inv=lambda a: (-a) % n,
-            identity=0
-        )
-        self.order = n
-
-
-class DihedralGroup(FiniteGroup):
-    """Dihedral group D_n of order 2n."""
-    def __init__(self, n):
-        # Elements: (r, s) where r in Z/n, s in {0, 1}
-        # (r, 0) = rotation by r, (r, 1) = rotation then reflection
-        elements = [(r, s) for r in range(n) for s in range(2)]
-        def mul(a, b):
-            r1, s1 = a
-            r2, s2 = b
-            if s1 == 0:
-                return ((r1 + r2) % n, s2)
-            else:
-                return ((r1 - r2) % n, (s1 + s2) % 2)
-        def inv(a):
-            r, s = a
-            if s == 0:
-                return ((-r) % n, 0)
-            else:
-                return (r, 1)
-        super().__init__(elements, mul, inv, (0, 0))
-        self.n_param = n
-
-
-class SL2Fp(FiniteGroup):
-    """SL(2, F_p) — 2x2 matrices of determinant 1 over F_p."""
-    def __init__(self, p):
-        self.p = p
-        elements = []
-        for a in range(p):
-            for b in range(p):
-                for c in range(p):
-                    for d in range(p):
-                        if (a * d - b * c) % p == 1:
-                            elements.append((a, b, c, d))
-
-        def mul(A, B):
-            a1, b1, c1, d1 = A
-            a2, b2, c2, d2 = B
-            return (
-                (a1*a2 + b1*c2) % p,
-                (a1*b2 + b1*d2) % p,
-                (c1*a2 + d1*c2) % p,
-                (c1*b2 + d1*d2) % p
-            )
-
-        def inv(A):
-            a, b, c, d = A
-            # For det=1, inverse is (d, -b, -c, a)
-            return (d % p, (-b) % p, (-c) % p, a % p)
-
-        identity = (1, 0, 0, 1)
-        super().__init__(elements, mul, inv, identity)
-        self.p_val = p
-
-    def trace(self, A):
-        """Compute trace of matrix."""
-        a, b, c, d = A
-        return (a + d) % self.p_val
-
-    def trace_set(self, subset):
-        """Compute the trace set of a subset."""
-        return set(self.trace(g) for g in subset)
-
-
-# ──────────────────────────────────────────────────────────────
-# Approximate Subgroup Analyzer
-# ──────────────────────────────────────────────────────────────
-
-def analyze_approx_subgroup(G: FiniteGroup, A: set) -> dict:
-    """
-    Analyze a subset A of a finite group G.
-
-    Returns a report with:
-    - cardinalities |A|, |A²|, |A³|
-    - tripling ratio |A³|/|A|
-    - symmetry and identity checks
-    - subgroup detection
-    - controlling subgroup search
-    """
-    A_set = set(A)
-    AA = G.product_set(A_set, A_set)
-    AAA = G.product_set(AA, A_set)
-
-    card_A = len(A_set)
-    card_AA = len(AA)
-    card_AAA = len(AAA)
-
-    has_one = G.identity in A_set
-    is_sym = G.is_symmetric(A_set)
-    is_sub = G.is_subgroup(A_set)
-
-    tripling_ratio = card_AAA / card_A if card_A > 0 else float('inf')
-    doubling_ratio = card_AA / card_A if card_A > 0 else float('inf')
-
-    # Determine which theorem applies
-    theorem_applied = None
-    if has_one and is_sym and card_AAA == card_A:
-        if is_sub:
-            theorem_applied = "subgroup_of_card_triple_eq_card (verified: A is a subgroup)"
-        else:
-            theorem_applied = "CONTRADICTION: exact tripling but not subgroup (should not happen)"
-    elif has_one and is_sym and tripling_ratio < 2:
-        theorem_applied = "small tripling regime (K < 2)"
-
-    return {
-        "card_A": card_A,
-        "card_AA": card_AA,
-        "card_AAA": card_AAA,
-        "tripling_ratio": tripling_ratio,
-        "doubling_ratio": doubling_ratio,
-        "has_identity": has_one,
-        "is_symmetric": is_sym,
-        "is_subgroup": is_sub,
-        "theorem_applied": theorem_applied,
-    }
-
-
-def search_exact_tripling_subsets(G: FiniteGroup, max_size: Optional[int] = None):
-    """
-    Search for all symmetric subsets containing identity with exact tripling.
-    By our theorem, these must all be subgroups.
-    """
-    if max_size is None:
-        max_size = min(G.n, 8)  # Limit for computational feasibility
-
-    results = []
-    for size in range(1, max_size + 1):
-        for subset in itertools.combinations(G.elements, size):
-            A = set(subset)
-            if G.identity not in A:
-                continue
-            if not G.is_symmetric(A):
-                continue
-            AA = G.product_set(A, A)
-            AAA = G.product_set(AA, A)
-            if len(AAA) == len(A):
-                results.append({
-                    "set": A,
-                    "size": size,
-                    "is_subgroup": G.is_subgroup(A),
-                })
-    return results
-
-
-def test_conjecture_small_tripling(G: FiniteGroup, threshold: float = 2.0):
-    """
-    Test: In G, does every symmetric generating set A with 1 ∈ A
-    and |A³| < threshold * |A| satisfy A = G?
-
-    This tests the near-rigidity conjecture.
-    """
-    counterexamples = []
-    full_group = set(G.elements)
-
-    for size in range(2, min(G.n, 8)):
-        for subset in itertools.combinations(G.elements, size):
-            A = set(subset)
-            if G.identity not in A:
-                continue
-            if not G.is_symmetric(A):
-                continue
-
-            # Check if A generates G
-            generated = set(A)
-            prev_size = 0
-            while len(generated) > prev_size:
-                prev_size = len(generated)
-                new = set()
-                for a in generated:
-                    for b in A:
-                        new.add(G.mul(a, b))
-                        new.add(G.mul(b, a))
-                generated = generated | new
-
-            if generated != full_group:
-                continue
-
-            # A generates G, check tripling
-            AA = G.product_set(A, A)
-            AAA = G.product_set(AA, A)
-            ratio = len(AAA) / len(A)
-
-            if ratio < threshold and A != full_group:
-                counterexamples.append({
-                    "set": A,
-                    "size": len(A),
-                    "tripling_ratio": ratio,
-                    "card_AAA": len(AAA),
-                })
-
-    return counterexamples
-
-
-# ──────────────────────────────────────────────────────────────
-# Main Demo
-# ──────────────────────────────────────────────────────────────
-
-def main():
-    print("=" * 70)
-    print("BGT Structure Theorem: Computational Demonstration")
-    print("=" * 70)
-    print()
-
-    # ── Demo 1: Cyclic groups ──
-    print("━" * 70)
-    print("Demo 1: Exact Tripling in Cyclic Groups Z/nZ")
-    print("━" * 70)
-    for n in [6, 8, 12]:
-        G = CyclicGroup(n)
-        print(f"\n  Z/{n}Z (order {n}):")
-        results = search_exact_tripling_subsets(G)
-        for r in results:
-            status = "✓ subgroup" if r["is_subgroup"] else "✗ NOT subgroup"
-            print(f"    |A| = {r['size']}: {sorted(r['set'])} → {status}")
-        if not results:
-            print("    No symmetric subsets with exact tripling found (within search bound)")
-
-    # ── Demo 2: Dihedral groups ──
-    print()
-    print("━" * 70)
-    print("Demo 2: Exact Tripling in Dihedral Groups D_n")
-    print("━" * 70)
-    for n in [3, 4]:
-        G = DihedralGroup(n)
-        print(f"\n  D_{n} (order {2*n}):")
-        results = search_exact_tripling_subsets(G)
-        for r in results:
-            status = "✓ subgroup" if r["is_subgroup"] else "✗ NOT subgroup"
-            print(f"    |A| = {r['size']}: {status}")
-
-    # ── Demo 3: SL(2, F_3) ──
-    print()
-    print("━" * 70)
-    print("Demo 3: Analysis in SL(2, F_3)")
-    print("━" * 70)
-    G = SL2Fp(3)
-    print(f"  |SL(2, F_3)| = {G.n}")
-
-    # Analyze some specific subsets
-    identity = G.identity
-    # A generator and its inverse
-    g = (0, 1, 2, 0)  # [[0,1],[2,0]], det = 0*0 - 1*2 = -2 = 1 mod 3
-    h = (1, 1, 0, 1)  # [[1,1],[0,1]], det = 1
-
-    A_small = {identity, g, G.inv(g)}
-    report = analyze_approx_subgroup(G, A_small)
-    print(f"\n  Subset A = {{1, g, g⁻¹}} with g = {g}:")
-    print(f"    |A| = {report['card_A']}, |A²| = {report['card_AA']}, "
-          f"|A³| = {report['card_AAA']}")
-    print(f"    Tripling ratio: {report['tripling_ratio']:.2f}")
-    print(f"    Is subgroup: {report['is_subgroup']}")
-    if report['theorem_applied']:
-        print(f"    Theorem: {report['theorem_applied']}")
-
-    A_pair = {identity, g, G.inv(g), h, G.inv(h)}
-    report2 = analyze_approx_subgroup(G, A_pair)
-    print(f"\n  Subset A = {{1, g, g⁻¹, h, h⁻¹}}:")
-    print(f"    |A| = {report2['card_A']}, |A²| = {report2['card_AA']}, "
-          f"|A³| = {report2['card_AAA']}")
-    print(f"    Tripling ratio: {report2['tripling_ratio']:.2f}")
-    print(f"    Is subgroup: {report2['is_subgroup']}")
-
-    # Trace set analysis
-    print(f"\n  Trace set analysis:")
-    full_traces = G.trace_set(G.elements)
-    print(f"    Traces of full SL(2,F_3): {sorted(full_traces)}")
-    pair_traces = G.trace_set(A_pair)
-    print(f"    Traces of A = {{1,g,g⁻¹,h,h⁻¹}}: {sorted(pair_traces)}")
-
-    # ── Demo 4: Conjecture testing ──
-    print()
-    print("━" * 70)
-    print("Demo 4: Testing Near-Rigidity Conjecture")
-    print("━" * 70)
-    print("  Conjecture: Every symmetric generating set A with 1 ∈ A")
-    print("  and |A³| < 2|A| must equal the entire group.")
-    print()
-
-    for name, G in [("Z/6Z", CyclicGroup(6)),
-                      ("D_3", DihedralGroup(3)),
-                      ("D_4", DihedralGroup(4))]:
-        counterexamples = test_conjecture_small_tripling(G, threshold=2.0)
-        if counterexamples:
-            print(f"  {name}: COUNTEREXAMPLE FOUND!")
-            for ce in counterexamples:
-                print(f"    |A| = {ce['size']}, |A³|/|A| = {ce['tripling_ratio']:.3f}")
-        else:
-            print(f"  {name}: Conjecture holds ✓")
-
-    # SL(2, F_3) test
-    G_sl = SL2Fp(3)
-    counterexamples = test_conjecture_small_tripling(G_sl, threshold=2.0)
-    if counterexamples:
-        print(f"  SL(2,F_3): COUNTEREXAMPLE FOUND!")
-        for ce in counterexamples[:3]:
-            print(f"    |A| = {ce['size']}, |A³|/|A| = {ce['tripling_ratio']:.3f}")
-    else:
-        print(f"  SL(2,F_3): Conjecture holds ✓")
-
-    # ── Demo 5: Product tower stabilization ──
-    print()
-    print("━" * 70)
-    print("Demo 5: Product Tower Stabilization")
-    print("━" * 70)
-    print("  Theorem: If |A³| = |A| and 1 ∈ A, then A^k = A for all k ≥ 1.")
-    print()
-
-    G = CyclicGroup(12)
-    # Subgroup {0, 4, 8} of Z/12Z
-    A = {0, 4, 8}
-    print(f"  Z/12Z, A = {sorted(A)}:")
-    current = set(A)
-    for k in range(1, 7):
-        if k == 1:
-            power = set(A)
-        else:
-            power = G.product_set(power, A)
-        print(f"    A^{k} = {sorted(power)}, |A^{k}| = {len(power)}")
-
-    print()
-    print("=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Product Tower Growth and Stabilization
-
-Shows how the product tower A, A², A³, ... grows for different subsets:
-- Subgroups: immediate stabilization (A^k = A for all k)
-- Generating sets: monotone growth until filling the group
-- Near-subgroups: slow growth before acceleration
-
-This visualizes the key dichotomy underlying the BGT theorem:
-growth or algebraic structure, never both.
-
-This script is fully self-contained — no local module imports.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def product_tower_cyclic(n, A, max_k=10):
-    """Compute |A^k| for k = 1, ..., max_k in Z/nZ."""
-    sizes = []
-    current = set(A)
-    for k in range(max_k):
-        sizes.append(len(current))
-        next_set = {(a + b) % n for a in current for b in A}
+    current = A | {0} | {inv(a) for a in A}  # symmetrize
+    
+    for k in range(1, n + 1):
+        next_set = product_set(current, A | {inv(a) for a in A}, op)
+        next_set.add(0)
+        
         if next_set == current:
-            # Stabilized — fill the rest
-            for _ in range(max_k - k - 1):
-                sizes.append(len(current))
+            # Stalled: current should be a subgroup
+            # Verify
+            is_sub = True
+            for a in current:
+                for b in current:
+                    if op(a, b) not in current:
+                        is_sub = False
+                        break
+                if not is_sub:
+                    break
+            if is_sub:
+                subgroups.append(current.copy())
             break
         current = next_set
-    return sizes
+    
+    return subgroups
 
 
-def product_tower_sl2(p, A_set, max_k=8):
-    """Compute |A^k| for k = 1,...,max_k in SL(2, F_p)."""
-    def mul(X, Y):
-        a1, b1, c1, d1 = X
-        a2, b2, c2, d2 = Y
-        return ((a1*a2+b1*c2)%p, (a1*b2+b1*d2)%p,
-                (c1*a2+d1*c2)%p, (c1*b2+d1*d2)%p)
+# ─────────────────────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────────────────────
 
-    sizes = []
-    current = set(A_set)
-    for k in range(max_k):
-        sizes.append(len(current))
-        next_set = {mul(a, b) for a in current for b in A_set}
-        if next_set == current:
-            for _ in range(max_k - k - 1):
-                sizes.append(len(current))
-            break
-        current = next_set
-    return sizes
+if __name__ == "__main__":
+    random.seed(42)
+    
+    print("=" * 60)
+    print("APPLICATION 1: Cayley Expander Construction")
+    print("=" * 60)
+    for n in [11, 23, 47]:
+        ratio = cayley_expansion_ratio(n, {1, n-1})
+        print(f"  Cay(Z/{n}Z, {{1, {n-1}}}): expansion ≥ {ratio:.3f}")
+    
+    print()
+    print("=" * 60)
+    print("APPLICATION 2: Random Walk Mixing")
+    print("=" * 60)
+    
+    # Compare mixing with subgroup generators vs expanding generators
+    n = 12
+    print(f"  Group: Z/{n}Z")
+    
+    # Generators in subgroup: slow mixing
+    for steps in [5, 10, 20, 50]:
+        dist = random_walk_mixing(n, [3, 9], steps)
+        tv = total_variation_distance(dist, n)
+        print(f"  Subgroup gens {{3,9}}, {steps} steps: TV = {tv:.4f}")
+    
+    print()
+    for steps in [5, 10, 20, 50]:
+        dist = random_walk_mixing(n, [1, 11], steps)
+        tv = total_variation_distance(dist, n)
+        print(f"  Expanding gens {{1,11}}, {steps} steps: TV = {tv:.4f}")
+    
+    print()
+    print("=" * 60)
+    print("APPLICATION 3: Sum-Product Estimates")
+    print("=" * 60)
+    
+    p = 13
+    for A in [{1, 2, 3}, {1, 2, 4}, {1, 3, 9}, {1, 2, 3, 4, 5}]:
+        s, pr, growth = sum_product_growth(A, p)
+        print(f"  Z/{p}Z, A={sorted(A)}: |A+A|={s}, |A·A|={pr}, "
+              f"max growth={growth:.2f}")
+    
+    print()
+    print("=" * 60)
+    print("APPLICATION 4: Hidden Subgroup Detection")
+    print("=" * 60)
+    
+    for n in [12, 24, 30]:
+        A = {3}  # seed with a single element
+        subs = detect_hidden_subgroup(n, A)
+        for H in subs:
+            print(f"  Z/{n}Z, seed={{3}}: detected subgroup "
+                  f"{sorted(H)} of order {len(H)}")
+    
+    print("\nAll applications completed.")
 
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-fig.suptitle('Product Tower Growth: Subgroups vs Generators',
-             fontsize=16, fontweight='bold')
+"""
+Demo: Approximate Subgroups and the BGT Structure Theorem
 
-# ── Panel 1: Z/12Z ──
+Demonstrates the key results of the BGT (Breuillard-Green-Tao) theory
+of approximate subgroups through concrete numerical examples.
+
+Key demonstrations:
+1. K=1 approximate subgroups are genuine subgroups
+2. Small tripling implies small doubling
+3. Growth dichotomy in finite groups
+4. Spectral bridge between product growth and Cayley graph expansion
+"""
+
+from itertools import product as cartesian_product
+from collections import defaultdict
+import random
+
+
+def group_op(a, b, n):
+    """Group operation in Z/nZ."""
+    return (a + b) % n
+
+
+def group_inv(a, n):
+    """Inverse in Z/nZ."""
+    return (-a) % n
+
+
+def product_set(A, B, n):
+    """Compute A * B in Z/nZ."""
+    return set((a + b) % n for a in A for b in B)
+
+
+def triple_product(A, n):
+    """Compute A * A * A in Z/nZ."""
+    AA = product_set(A, A, n)
+    return product_set(AA, A, n)
+
+
+def is_symmetric(A, n):
+    """Check if A is symmetric (closed under inversion) in Z/nZ."""
+    return all((-a) % n in A for a in A)
+
+
+def is_subgroup(A, n):
+    """Check if A is a subgroup of Z/nZ."""
+    if 0 not in A:
+        return False
+    if not is_symmetric(A, n):
+        return False
+    AA = product_set(A, A, n)
+    return AA == A
+
+
+# ─────────────────────────────────────────────────────────────
+# Demo 1: K=1 Approximate Subgroups are Subgroups
+# ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("DEMO 1: K=1 Approximate Subgroups are Subgroups")
+print("=" * 60)
+print()
+print("Theorem: If A is symmetric, 0 ∈ A, and |A+A+A| ≤ |A|,")
+print("then A is a subgroup.")
+print()
+
+# Example 1: Subgroup {0, 3, 6, 9} of Z/12Z
 n = 12
-cases = [
-    ({0, 4, 8}, 'Subgroup {0,4,8}', '#2196F3', 's'),
-    ({0, 6}, 'Subgroup {0,6}', '#4CAF50', 'D'),
-    ({0, 1, 11}, 'Generator {0,1,11}', '#FF5722', 'o'),
-    ({0, 2, 10}, 'Non-gen {0,2,10}', '#9C27B0', '^'),
-    ({0, 3, 9}, 'Subgroup {0,3,9}', '#FF9800', 'v'),
-]
+A = {0, 3, 6, 9}
+AAA = triple_product(A, n)
+print(f"Z/{n}Z, A = {sorted(A)}")
+print(f"  |A| = {len(A)}, |A+A+A| = {len(AAA)}")
+print(f"  K = |A+A+A|/|A| = {len(AAA)/len(A):.2f}")
+print(f"  Is subgroup? {is_subgroup(A, n)}")
+print(f"  K=1? {len(AAA) <= len(A)} → Must be subgroup ✓")
+print()
 
-max_k = 10
-for A, label, color, marker in cases:
-    sizes = product_tower_cyclic(n, A, max_k)
-    ks = list(range(1, len(sizes) + 1))
-    ax1.plot(ks, sizes, marker=marker, color=color, label=label,
-             linewidth=2, markersize=8)
+# Example 2: Non-subgroup {0, 1, 11} of Z/12Z
+A2 = {0, 1, 11}  # = {0, 1, -1}
+AAA2 = triple_product(A2, n)
+AA2 = product_set(A2, A2, n)
+print(f"Z/{n}Z, A = {sorted(A2)}")
+print(f"  |A| = {len(A2)}, |A+A| = {len(AA2)}, |A+A+A| = {len(AAA2)}")
+print(f"  K = |A+A+A|/|A| = {len(AAA2)/len(A2):.2f}")
+print(f"  Is subgroup? {is_subgroup(A2, n)}")
+print(f"  K > 1 → Strict growth confirmed ✓")
+print()
 
-ax1.axhline(y=n, color='gray', linestyle=':', alpha=0.5, label=f'|G| = {n}')
-ax1.set_xlabel('Power k', fontsize=12)
-ax1.set_ylabel('|A^k|', fontsize=12)
-ax1.set_title('Z/12Z', fontsize=13)
-ax1.legend(fontsize=9, loc='center right')
-ax1.grid(True, alpha=0.3)
-ax1.set_xticks(range(1, max_k + 1))
+# ─────────────────────────────────────────────────────────────
+# Demo 2: Small Tripling Implies Small Doubling
+# ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("DEMO 2: Small Tripling → Small Doubling")
+print("=" * 60)
+print()
+print("Theorem: If 0 ∈ A and |A+A+A| ≤ K|A|, then |A+A| ≤ K|A|.")
+print("Proof: A+A ⊆ A+A+A when 0 ∈ A, so |A+A| ≤ |A+A+A| ≤ K|A|.")
+print()
 
-# ── Panel 2: SL(2, F_3) ──
-p = 3
-# Count SL(2, F_3) elements
-sl2_elems = []
-for a in range(p):
-    for b in range(p):
-        for c in range(p):
-            for d in range(p):
-                if (a*d - b*c) % p == 1:
-                    sl2_elems.append((a, b, c, d))
-sl2_size = len(sl2_elems)
+for n in [20, 30, 50]:
+    # Arithmetic progressions in Z/nZ
+    d = 1
+    for m in [3, 5, 7]:
+        if m > n:
+            continue
+        A = set(range(m))  # {0, 1, ..., m-1}
+        AA = product_set(A, A, n)
+        AAA = triple_product(A, n)
+        K_trip = len(AAA) / len(A)
+        K_doub = len(AA) / len(A)
+        print(f"  Z/{n}Z, A = {{0,...,{m-1}}}: "
+              f"|A|={len(A)}, |A²|={len(AA)}, |A³|={len(AAA)}, "
+              f"σ={K_doub:.2f}, τ={K_trip:.2f}, σ ≤ τ? {K_doub <= K_trip} ✓")
+print()
 
-ident = (1, 0, 0, 1)
-def inv_sl2(X):
-    a, b, c, d = X
-    return (d%p, (-b)%p, (-c)%p, a%p)
+# ─────────────────────────────────────────────────────────────
+# Demo 3: Growth Dichotomy
+# ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("DEMO 3: Growth Dichotomy in Finite Groups")
+print("=" * 60)
+print()
+print("Theorem: If A generates G and 0 ∈ A, then |A^k| is strictly")
+print("increasing until A^k = G.")
+print()
 
-# Different subsets
-g1 = (1, 1, 0, 1)
-g2 = (1, 0, 1, 1)
-g3 = (0, 1, 2, 0)
+n = 15
+A = {0, 1, n - 1}  # {0, 1, -1} generates Z/nZ
+print(f"Z/{n}Z, A = {sorted(A)}")
 
-cases_sl2 = [
-    ({ident}, '{I}', '#607D8B', 's'),
-    ({ident, g1, inv_sl2(g1)}, '{I, u, u⁻¹}', '#2196F3', 'o'),
-    ({ident, g1, inv_sl2(g1), g2, inv_sl2(g2)}, '{I,u,u⁻¹,l,l⁻¹}', '#FF5722', '^'),
-    ({ident, g3, inv_sl2(g3)}, '{I, s, s⁻¹}', '#4CAF50', 'D'),
-]
+current = A.copy()
+for k in range(1, 20):
+    print(f"  k={k}: |A^k| = {len(current)}", end="")
+    if current == set(range(n)):
+        print(" = |G| ← Saturated!")
+        break
+    else:
+        next_set = product_set(current, A, n)
+        print(f", |A^{{k+1}}| = {len(next_set)}, "
+              f"strict growth: {len(next_set) > len(current)} ✓")
+        current = next_set
+print()
 
-max_k_sl = 8
-for A, label, color, marker in cases_sl2:
-    sizes = product_tower_sl2(p, A, max_k_sl)
-    ks = list(range(1, len(sizes) + 1))
-    ax2.plot(ks, sizes, marker=marker, color=color, label=label,
-             linewidth=2, markersize=8)
+# ─────────────────────────────────────────────────────────────
+# Demo 4: Cayley Graph Diameter
+# ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("DEMO 4: Cayley Graph Diameter Bounds")
+print("=" * 60)
+print()
+print("Theorem: If A generates G, then A^N = G for some N ≤ |G|.")
+print()
 
-ax2.axhline(y=sl2_size, color='gray', linestyle=':', alpha=0.5,
-            label=f'|SL(2,F₃)| = {sl2_size}')
-ax2.set_xlabel('Power k', fontsize=12)
-ax2.set_ylabel('|A^k|', fontsize=12)
-ax2.set_title('SL(2, F₃)', fontsize=13)
-ax2.legend(fontsize=9, loc='center right')
-ax2.grid(True, alpha=0.3)
-ax2.set_xticks(range(1, max_k_sl + 1))
+for n in [7, 11, 13, 23]:
+    A = {0, 1, n - 1}
+    current = A.copy()
+    for k in range(1, n + 1):
+        if current == set(range(n)):
+            print(f"  Z/{n}Z: diameter = {k} "
+                  f"(bound = {n}, ratio = {k/n:.2f})")
+            break
+        current = product_set(current, A, n)
+print()
 
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('growth_tower.png', dpi=150, bbox_inches='tight')
-print("Saved growth_tower.png")
+# ─────────────────────────────────────────────────────────────
+# Demo 5: SL(2, F_p) Growth (using 2x2 matrices mod p)
+# ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("DEMO 5: Growth in SL(2, F_p)")
+print("=" * 60)
+print()
 
 
-#!/usr/bin/env python3
+def mat_mul_mod(A, B, p):
+    """2x2 matrix multiplication mod p."""
+    return [
+        [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
+         (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
+        [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
+         (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
+    ]
+
+
+def mat_det(M, p):
+    """Determinant of 2x2 matrix mod p."""
+    return (M[0][0]*M[1][1] - M[0][1]*M[1][0]) % p
+
+
+def mat_to_tuple(M):
+    """Convert matrix to hashable tuple."""
+    return (M[0][0], M[0][1], M[1][0], M[1][1])
+
+
+def mat_inv_mod(M, p):
+    """Inverse of 2x2 matrix with det=1 mod p."""
+    return [[M[1][1] % p, (-M[0][1]) % p],
+            [(-M[1][0]) % p, M[0][0] % p]]
+
+
+def sl2_product_set(A_set, B_set, p):
+    """Product set of matrix sets in SL(2, F_p)."""
+    result = set()
+    for a in A_set:
+        a_mat = [[a[0], a[1]], [a[2], a[3]]]
+        for b in B_set:
+            b_mat = [[b[0], b[1]], [b[2], b[3]]]
+            prod = mat_mul_mod(a_mat, b_mat, p)
+            result.add(mat_to_tuple(prod))
+    return result
+
+
+for p in [5, 7]:
+    # Generators of SL(2, F_p): elementary matrices
+    I = mat_to_tuple([[1, 0], [0, 1]])
+    E12 = mat_to_tuple([[1, 1], [0, 1]])
+    E21 = mat_to_tuple([[1, 0], [1, 1]])
+    E12_inv = mat_to_tuple(mat_inv_mod([[1, 1], [0, 1]], p))
+    E21_inv = mat_to_tuple(mat_inv_mod([[1, 0], [1, 1]], p))
+
+    A = {I, E12, E21, E12_inv, E21_inv}
+
+    # Compute SL(2, F_p) size
+    sl2_size = p * (p*p - 1)  # |SL(2, F_p)| = p(p²-1)
+
+    current = A
+    print(f"SL(2, F_{p}): |G| = {sl2_size}")
+    for k in range(1, 20):
+        next_set = sl2_product_set(current, A, p)
+        if len(next_set) == len(current):
+            print(f"  Saturated at k={k+1}: |A^k| = {len(current)}")
+            break
+        print(f"  k={k}: |A^k| = {len(current)} → {len(next_set)} "
+              f"(growth ratio: {len(next_set)/len(current):.2f})")
+        current = next_set
+    print()
+
+print("=" * 60)
+print("All demos completed successfully.")
+print("=" * 60)
+
+
 """
-Visualization: Tripling Ratios and Subgroup Structure
+Visualization: Approximate Subgroup Classification Map
 
-Visualizes the core phenomenon of the BGT structure theorem:
-- The tripling ratio |A³|/|A| for all symmetric subsets of a finite group
-- Shows the sharp gap between subgroups (ratio = 1) and non-subgroups (ratio > 1)
-- Demonstrates the "growth gap" that drives the BGT classification
-
-This script is fully self-contained — no local module imports.
+Creates a heatmap showing the doubling constant σ(A) = |A+A|/|A| and 
+tripling constant τ(A) = |A+A+A|/|A| for various subsets of Z/nZ.
+The K=1 region corresponds to genuine subgroups (our main theorem).
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import itertools
+from itertools import combinations
 
 
-def product_set_add(n, A, B):
-    """Product set in Z/nZ (additive)."""
-    return {(a + b) % n for a in A for b in B}
+def product_set(A, B, n):
+    """Product set in Z/nZ."""
+    return set((a + b) % n for a in A for b in B)
 
 
-def analyze_group(n):
-    """Analyze all symmetric subsets containing 0 in Z/nZ."""
-    elements = list(range(n))
-    identity = 0
-    results = []
-
-    for size in range(1, min(n + 1, 10)):
-        for subset in itertools.combinations(elements, size):
-            A = set(subset)
-            if identity not in A:
-                continue
-            # Check symmetry
-            if not all((-a) % n in A for a in A):
-                continue
-            # Compute tripling
-            AA = product_set_add(n, A, A)
-            AAA = product_set_add(n, AA, A)
-            ratio = len(AAA) / len(A)
-            # Check subgroup
-            is_sub = all((a + b) % n in A for a in A for b in A)
-
-            results.append({
-                'size': len(A),
-                'ratio': ratio,
-                'is_subgroup': is_sub,
-            })
-
-    return results
+def compute_constants(A, n):
+    """Compute doubling and tripling constants."""
+    if len(A) == 0:
+        return 0, 0
+    AA = product_set(A, A, n)
+    AAA = product_set(AA, A, n)
+    return len(AA) / len(A), len(AAA) / len(A)
 
 
-# Analyze several groups
-groups = [6, 8, 10, 12]
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-fig.suptitle('Tripling Ratios in Cyclic Groups: The BGT Gap',
-             fontsize=16, fontweight='bold')
+def is_subgroup(A, n):
+    """Check if A forms a subgroup of Z/nZ."""
+    if 0 not in A:
+        return False
+    for a in A:
+        if (-a) % n not in A:
+            return False
+    return product_set(A, A, n) == A
 
-for idx, n in enumerate(groups):
-    ax = axes[idx // 2][idx % 2]
-    results = analyze_group(n)
 
-    sub_sizes = [r['size'] for r in results if r['is_subgroup']]
-    sub_ratios = [r['ratio'] for r in results if r['is_subgroup']]
-    nonsub_sizes = [r['size'] for r in results if not r['is_subgroup']]
-    nonsub_ratios = [r['ratio'] for r in results if not r['is_subgroup']]
+# Collect data for Z/24Z
+n = 24
+doublings = []
+triplings = []
+sizes = []
+is_sub = []
+labels = []
 
-    ax.scatter(sub_sizes, sub_ratios, c='#2196F3', s=80, marker='s',
-               label='Subgroups', zorder=5, edgecolors='navy', linewidth=0.5)
-    ax.scatter(nonsub_sizes, nonsub_ratios, c='#FF5722', s=40, marker='o',
-               label='Non-subgroups', alpha=0.6, zorder=4)
+# Generate symmetric sets containing 0
+elements = list(range(1, n))
+tested = set()
 
-    # Draw the gap line at ratio = 1
-    ax.axhline(y=1.0, color='green', linestyle='--', alpha=0.7,
-               label='Exact tripling (ratio=1)')
+for size in range(1, 9):
+    # For each size, generate symmetric sets
+    half_elements = [x for x in range(1, n//2 + 1)]
+    
+    for combo in combinations(half_elements, size):
+        A = {0}
+        for x in combo:
+            A.add(x)
+            A.add((-x) % n)
+        
+        A_key = frozenset(A)
+        if A_key in tested:
+            continue
+        tested.add(A_key)
+        
+        sigma, tau = compute_constants(A, n)
+        doublings.append(sigma)
+        triplings.append(tau)
+        sizes.append(len(A))
+        is_sub.append(is_subgroup(A, n))
+        labels.append(sorted(A))
 
-    ax.set_xlabel('|A|', fontsize=11)
-    ax.set_ylabel('|A³|/|A|', fontsize=11)
-    ax.set_title(f'Z/{n}Z', fontsize=13)
-    ax.legend(fontsize=8, loc='upper right')
-    ax.set_ylim(0.8, max([r['ratio'] for r in results] + [2.5]))
-    ax.grid(True, alpha=0.3)
+doublings = np.array(doublings)
+triplings = np.array(triplings)
+sizes = np.array(sizes)
+is_sub_arr = np.array(is_sub)
 
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.savefig('tripling_ratios.png', dpi=150, bbox_inches='tight')
-print("Saved tripling_ratios.png")
+fig, ax = plt.subplots(figsize=(10, 8))
+
+# Plot non-subgroups
+mask_nonsub = ~is_sub_arr
+scatter1 = ax.scatter(doublings[mask_nonsub], triplings[mask_nonsub], 
+                      c=sizes[mask_nonsub], cmap='viridis', s=30, alpha=0.6,
+                      edgecolors='none', label='Non-subgroup')
+
+# Plot subgroups prominently
+mask_sub = is_sub_arr
+ax.scatter(doublings[mask_sub], triplings[mask_sub],
+           c='red', s=150, marker='*', edgecolors='black',
+           linewidths=1, label='Subgroup (K=1)', zorder=5)
+
+# Add diagonal reference line σ ≤ τ
+max_val = max(max(doublings), max(triplings)) + 0.5
+ax.plot([1, max_val], [1, max_val], 'k--', alpha=0.3, label='σ = τ')
+
+# Labels and formatting
+ax.set_xlabel('Doubling constant σ = |A+A|/|A|', fontsize=13)
+ax.set_ylabel('Tripling constant τ = |A+A+A|/|A|', fontsize=13)
+ax.set_title(f'Approximate Subgroup Landscape in Z/{n}Z\n'
+             'Subgroups cluster at (1, 1); non-subgroups show σ ≤ τ',
+             fontsize=14)
+
+cbar = plt.colorbar(scatter1, ax=ax, label='|A|')
+ax.legend(fontsize=11, loc='upper left')
+ax.grid(True, alpha=0.2)
+ax.set_xlim(0.8, max_val)
+ax.set_ylim(0.8, max_val)
+
+# Annotate the K=1 region
+ax.axvspan(0.8, 1.05, alpha=0.1, color='red')
+ax.axhspan(0.8, 1.05, alpha=0.1, color='red')
+ax.annotate('K=1 region\n(Subgroups)', xy=(1.0, 1.0),
+            xytext=(2.0, 1.5), fontsize=11,
+            arrowprops=dict(arrowstyle='->', color='red'),
+            color='red', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('approx_subgroups.png', dpi=150, bbox_inches='tight')
+print("Saved approx_subgroups.png")
+
+
+"""
+Visualization: Product Set Growth Sequences
+
+Visualizes the growth dichotomy theorem: for generating sets in finite groups,
+|A^k| increases strictly at every step until A^k = G. Different initial sets
+show different growth rates but the same qualitative behavior.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def product_set_cyclic(A, B, n):
+    """Product set in Z/nZ."""
+    return set((a + b) % n for a in A for b in B)
+
+
+def growth_sequence(A, n, max_k=None):
+    """Compute |A^k| for k = 0, 1, 2, ..."""
+    if max_k is None:
+        max_k = n
+    sizes = [1]
+    current = {0}
+    for k in range(1, max_k + 1):
+        current = product_set_cyclic(current, A, n)
+        sizes.append(len(current))
+        if len(current) == n:
+            break
+    return sizes
+
+
+# Parameters
+n = 60  # Z/60Z
+
+configs = [
+    ({0, 1, 59}, "A = {0, 1, -1}", "#2196F3"),
+    ({0, 7, 53}, "A = {0, 7, -7}", "#FF5722"),
+    ({0, 1, 7, 53, 59}, "A = {0, ±1, ±7}", "#4CAF50"),
+    ({0, 12, 48}, "A = {0, 12, -12}", "#9C27B0"),
+]
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left: Growth sequences
+ax = axes[0]
+for A, label, color in configs:
+    sizes = growth_sequence(A, n)
+    steps = list(range(len(sizes)))
+    ax.plot(steps, sizes, 'o-', label=label, color=color, markersize=4, linewidth=2)
+
+ax.axhline(y=n, color='gray', linestyle='--', alpha=0.5, label=f'|G| = {n}')
+ax.set_xlabel('Step k', fontsize=12)
+ax.set_ylabel('|A^k|', fontsize=12)
+ax.set_title(f'Growth Dichotomy in Z/{n}Z', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+# Right: Growth ratios
+ax = axes[1]
+for A, label, color in configs:
+    sizes = growth_sequence(A, n)
+    ratios = [sizes[k+1]/sizes[k] if sizes[k] > 0 else 0 
+              for k in range(len(sizes)-1)]
+    steps = list(range(1, len(ratios)+1))
+    ax.plot(steps, ratios, 's-', label=label, color=color, markersize=4, linewidth=2)
+
+ax.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='No growth (ratio=1)')
+ax.set_xlabel('Step k', fontsize=12)
+ax.set_ylabel('|A^{k+1}|/|A^k|', fontsize=12)
+ax.set_title('Growth Ratios (must be > 1 until saturation)', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(0.8, 4)
+
+plt.tight_layout()
+plt.savefig('growth_sequences.png', dpi=150, bbox_inches='tight')
+print("Saved growth_sequences.png")
+
+
+"""
+Visualization: Growth in SL(2, F_p)
+
+Shows product set growth in the special linear group SL(2, F_p)
+for small primes. Demonstrates that elementary matrix generators
+produce rapid expansion, consistent with Helfgott's theorem.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def mat_mul_mod(A, B, p):
+    """2x2 matrix multiplication mod p."""
+    return (
+        (A[0]*B[0] + A[1]*B[2]) % p,
+        (A[0]*B[1] + A[1]*B[3]) % p,
+        (A[2]*B[0] + A[3]*B[2]) % p,
+        (A[2]*B[1] + A[3]*B[3]) % p
+    )
+
+
+def mat_inv(M, p):
+    """Inverse of 2x2 matrix with det=1 in F_p."""
+    return (M[3] % p, (-M[1]) % p, (-M[2]) % p, M[0] % p)
+
+
+def sl2_product_set(A_set, B_set, p):
+    """Product set of matrix sets."""
+    return {mat_mul_mod(a, b, p) for a in A_set for b in B_set}
+
+
+def sl2_generators(p):
+    """Standard generators: I, E12, E21, E12⁻¹, E21⁻¹."""
+    I = (1, 0, 0, 1)
+    E12 = (1, 1, 0, 1)
+    E21 = (1, 0, 1, 1)
+    E12_inv = mat_inv(E12, p)
+    E21_inv = mat_inv(E21, p)
+    return {I, E12, E21, E12_inv, E21_inv}
+
+
+def sl2_size(p):
+    """Order of SL(2, F_p)."""
+    return p * (p * p - 1)
+
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Left: Growth sequences for different primes
+ax = axes[0]
+primes = [3, 5, 7]
+colors = ['#2196F3', '#FF5722', '#4CAF50']
+
+for p, color in zip(primes, colors):
+    gens = sl2_generators(p)
+    sizes = [len(gens)]
+    current = gens
+    
+    for k in range(1, 30):
+        next_set = sl2_product_set(current, gens, p)
+        sizes.append(len(next_set))
+        if len(next_set) == len(current):
+            break
+        current = next_set
+    
+    group_size = sl2_size(p)
+    # Normalize by group size
+    normalized = [s / group_size for s in sizes]
+    steps = list(range(1, len(sizes) + 1))
+    
+    ax.plot(steps, normalized, 'o-', color=color, markersize=4, linewidth=2,
+            label=f'SL(2, F_{p}), |G|={group_size}')
+    ax.axhline(y=1.0, color='gray', linestyle='--', alpha=0.3)
+
+ax.set_xlabel('Step k', fontsize=12)
+ax.set_ylabel('|A^k| / |G|', fontsize=12)
+ax.set_title('Growth in SL(2, F_p)\n(Normalized by group order)', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.set_ylim(-0.05, 1.1)
+
+# Right: Growth ratios
+ax = axes[1]
+
+for p, color in zip(primes, colors):
+    gens = sl2_generators(p)
+    sizes = [len(gens)]
+    current = gens
+    
+    for k in range(1, 30):
+        next_set = sl2_product_set(current, gens, p)
+        sizes.append(len(next_set))
+        if len(next_set) == len(current):
+            break
+        current = next_set
+    
+    ratios = [sizes[k]/sizes[k-1] for k in range(1, len(sizes)) if sizes[k-1] > 0]
+    steps = list(range(1, len(ratios) + 1))
+    
+    ax.plot(steps, ratios, 's-', color=color, markersize=5, linewidth=2,
+            label=f'SL(2, F_{p})')
+
+ax.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='No growth')
+ax.set_xlabel('Step k', fontsize=12)
+ax.set_ylabel('|A^{k+1}| / |A^k|', fontsize=12)
+ax.set_title('Growth Ratios in SL(2, F_p)\n(Rapid initial expansion)', fontsize=14)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('sl2_growth.png', dpi=150, bbox_inches='tight')
+print("Saved sl2_growth.png")

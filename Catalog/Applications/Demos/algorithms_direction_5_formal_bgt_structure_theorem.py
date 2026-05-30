@@ -1,397 +1,401 @@
-#!/usr/bin/env python3
 """
 Algorithms for Approximate Subgroup Analysis
 
-Implements the computational methods underlying the BGT structure theorem
-in the K ≈ 1 regime. These algorithms detect subgroup structure from
-product-set growth data.
+Implements the core algorithms from the BGT (Breuillard-Green-Tao)
+structure theorem and related product growth machinery.
 
-Core algorithms:
-1. Product tower computation (A, A², A³, ..., Aᵏ)
-2. Subgroup detection from exact tripling
-3. Growth gap estimation
-4. Trace set analysis for SL(2, F_p)
+Algorithms:
+1. ApproximateSubgroupClassifier - Classify K-approximate subgroups
+2. ProductGrowthAnalyzer - Analyze product set growth sequences
+3. CayleyDiameterComputer - Compute Cayley graph diameters
+4. RuzsaCoveringFinder - Find Ruzsa coverings (greedy algorithm)
 """
 
-from typing import Callable, Dict, List, Optional, Set, Tuple
-import itertools
+from typing import Set, Dict, List, Tuple, Optional, Callable
+from dataclasses import dataclass
+from collections import defaultdict
+import math
 
 
-# ──────────────────────────────────────────────────────────────
-# Core Data Structures
-# ──────────────────────────────────────────────────────────────
+@dataclass
+class GroupElement:
+    """Abstract group element with operation defined by a table."""
+    value: int
+    
+    def __hash__(self):
+        return hash(self.value)
+    
+    def __eq__(self, other):
+        return self.value == other.value
 
-class GroupOps:
+
+class FiniteGroup:
     """
-    Encapsulates group operations for a finite group.
-
-    Attributes:
-        elements: list of group elements
-        mul: binary operation (a, b) -> a*b
-        inv: unary inverse a -> a^{-1}
-        identity: the identity element
+    A finite group defined by its multiplication table.
+    
+    Supports Z/nZ and direct products thereof.
+    
+    Args:
+        n: Order of the group (for Z/nZ)
+        op: Binary operation (a, b) -> c
+        inv: Inversion function a -> a^{-1}
+        identity: Identity element
+    
+    Time complexity: O(1) per operation
+    Space complexity: O(n) for the group
     """
-    def __init__(self, elements: list, mul: Callable, inv: Callable, identity):
-        self.elements = elements
-        self.mul = mul
-        self.inv = inv
+    
+    def __init__(self, n: int, 
+                 op: Callable[[int, int], int] = None,
+                 inv: Callable[[int], int] = None,
+                 identity: int = 0):
+        self.n = n
+        self.op = op or (lambda a, b: (a + b) % n)
+        self.inv = inv or (lambda a: (-a) % n)
         self.identity = identity
-        self.size = len(elements)
+        self.elements = set(range(n))
+    
+    def multiply(self, a: int, b: int) -> int:
+        return self.op(a, b)
+    
+    def invert(self, a: int) -> int:
+        return self.inv(a)
+    
+    def product_set(self, A: Set[int], B: Set[int]) -> Set[int]:
+        """Compute A · B = {a*b : a ∈ A, b ∈ B}."""
+        return {self.multiply(a, b) for a in A for b in B}
+    
+    def triple_product(self, A: Set[int]) -> Set[int]:
+        """Compute A · A · A."""
+        return self.product_set(self.product_set(A, A), A)
+    
+    def power_set(self, A: Set[int], k: int) -> Set[int]:
+        """Compute A^k (k-fold product)."""
+        if k == 0:
+            return {self.identity}
+        result = A.copy()
+        for _ in range(k - 1):
+            result = self.product_set(result, A)
+        return result
+    
+    def is_symmetric(self, A: Set[int]) -> bool:
+        """Check if A is closed under inversion."""
+        return all(self.invert(a) in A for a in A)
+    
+    def symmetric_closure(self, A: Set[int]) -> Set[int]:
+        """Compute {1} ∪ A ∪ A⁻¹."""
+        return {self.identity} | A | {self.invert(a) for a in A}
+    
+    def is_subgroup(self, A: Set[int]) -> bool:
+        """Check if A is a subgroup."""
+        if self.identity not in A:
+            return False
+        if not self.is_symmetric(A):
+            return False
+        return self.product_set(A, A) == A
 
 
-class ApproxSubgroupReport:
+@dataclass
+class ApproxSubgroupCertificate:
     """
-    Report from analyzing a subset of a finite group.
-
-    Mirrors the Lean `ApproxSubgroupReport` structure.
+    Certificate that a set is a K-approximate subgroup.
+    
+    Fields:
+        carrier: The set A
+        K: The approximation constant
+        is_symmetric: Whether A = A⁻¹
+        is_subgroup: Whether A is a genuine subgroup
+        doubling_const: |A²|/|A|
+        tripling_const: |A³|/|A|
+        classification: 'subgroup', 'near-subgroup', or 'expanding'
     """
-    def __init__(self, carrier: set, G: GroupOps):
-        self.carrier = carrier
-        self.G = G
-        self.card_A = len(carrier)
+    carrier: Set[int]
+    K: float
+    is_symmetric: bool
+    is_subgroup: bool
+    doubling_const: float
+    tripling_const: float
+    classification: str
 
+
+class ApproximateSubgroupClassifier:
+    """
+    Classify K-approximate subgroups using the BGT structure theorem.
+    
+    Algorithm:
+    1. Compute A², A³, check symmetry
+    2. Compute K = |A³|/|A| (tripling constant)
+    3. If K = 1: A is a subgroup (BGT base case)
+    4. If K < 2: A is "near" a subgroup (small growth regime)
+    5. If K ≥ 2: A exhibits genuine expansion
+    
+    Time complexity: O(|A|³) for tripling computation
+    Space complexity: O(|A|³) for storing triple product
+    
+    >>> G = FiniteGroup(12)
+    >>> clf = ApproximateSubgroupClassifier(G)
+    >>> cert = clf.classify({0, 3, 6, 9})
+    >>> cert.classification
+    'subgroup'
+    """
+    
+    def __init__(self, group: FiniteGroup):
+        self.group = group
+    
+    def classify(self, A: Set[int]) -> ApproxSubgroupCertificate:
+        """Classify a set as an approximate subgroup."""
+        G = self.group
+        
+        # Ensure identity is present
+        if G.identity not in A:
+            A = A | {G.identity}
+        
         # Compute product sets
-        self.AA = product_set(G, carrier, carrier)
-        self.AAA = product_set(G, self.AA, carrier)
-
-        self.card_AA = len(self.AA)
-        self.card_AAA = len(self.AAA)
-
-        # Ratios
-        self.doubling_ratio = self.card_AA / self.card_A if self.card_A > 0 else float('inf')
-        self.tripling_ratio = self.card_AAA / self.card_A if self.card_A > 0 else float('inf')
-
-        # Structural properties
-        self.has_one = G.identity in carrier
-        self.is_symmetric = all(G.inv(a) in carrier for a in carrier)
-        self.is_mul_closed = all(
-            G.mul(a, b) in carrier for a in carrier for b in carrier
+        AA = G.product_set(A, A)
+        AAA = G.product_set(AA, A)
+        
+        # Compute constants
+        card_A = len(A)
+        doubling = len(AA) / card_A if card_A > 0 else 0
+        tripling = len(AAA) / card_A if card_A > 0 else 0
+        K = math.ceil(tripling)
+        
+        symmetric = G.is_symmetric(A)
+        subgroup = G.is_subgroup(A)
+        
+        # Classification based on tripling constant
+        if tripling <= 1.0 + 1e-10:
+            classification = 'subgroup'
+        elif tripling < 2.0:
+            classification = 'near-subgroup'
+        else:
+            classification = 'expanding'
+        
+        return ApproxSubgroupCertificate(
+            carrier=A,
+            K=K,
+            is_symmetric=symmetric,
+            is_subgroup=subgroup,
+            doubling_const=doubling,
+            tripling_const=tripling,
+            classification=classification
         )
-        self.is_subgroup = self.has_one and self.is_symmetric and self.is_mul_closed
-
-        # Exact tripling check
-        self.has_exact_tripling = (self.card_AAA == self.card_A)
-
-        # Classify
-        self.classification = self._classify()
-
-    def _classify(self) -> str:
-        """Classify the subset according to BGT structure theory."""
-        if not self.has_one:
-            return "NOT_APPROX_SUBGROUP (missing identity)"
-        if not self.is_symmetric:
-            return "NOT_APPROX_SUBGROUP (not symmetric)"
-        if self.has_exact_tripling:
-            if self.is_subgroup:
-                return "EXACT_SUBGROUP (|A³|=|A|, confirmed subgroup by Theorem 2)"
-            else:
-                return "ERROR (|A³|=|A| but not subgroup — contradicts theorem)"
-        if self.tripling_ratio < 2:
-            return f"NEAR_SUBGROUP (|A³|/|A| = {self.tripling_ratio:.3f} < 2)"
-        return f"GROWING (|A³|/|A| = {self.tripling_ratio:.3f})"
-
-    def __repr__(self) -> str:
-        return (f"ApproxSubgroupReport(|A|={self.card_A}, |A²|={self.card_AA}, "
-                f"|A³|={self.card_AAA}, ratio={self.tripling_ratio:.3f}, "
-                f"class={self.classification})")
 
 
-# ──────────────────────────────────────────────────────────────
-# Algorithm 1: Product Set Computation
-# ──────────────────────────────────────────────────────────────
-
-def product_set(G: GroupOps, A: set, B: set) -> set:
+@dataclass
+class GrowthSequence:
     """
-    Compute the product set A·B = {a*b : a ∈ A, b ∈ B}.
-
-    Time complexity: O(|A| · |B|)
-    Space complexity: O(|A·B|)
-
-    Args:
-        G: group operations
-        A: first subset
-        B: second subset
-
-    Returns:
-        The product set A·B
+    Growth sequence data for iterated product sets.
+    
+    Fields:
+        sizes: List of |A^k| for k = 0, 1, ..., N
+        ratios: List of |A^{k+1}|/|A^k| growth ratios
+        saturation_step: Step at which A^k = G (or None)
+        is_monotone: Whether the sequence is strictly increasing
     """
-    return {G.mul(a, b) for a in A for b in B}
+    sizes: List[int]
+    ratios: List[float]
+    saturation_step: Optional[int]
+    is_monotone: bool
 
 
-def product_tower(G: GroupOps, A: set, k: int) -> List[set]:
+class ProductGrowthAnalyzer:
     """
-    Compute the product tower [A, A², A³, ..., Aᵏ].
-
-    Time complexity: O(k · |G|²) worst case
-    Space complexity: O(k · |G|)
-
-    Args:
-        G: group operations
-        A: the base set
-        k: maximum power
-
-    Returns:
-        List of sets [A¹, A², ..., Aᵏ]
+    Analyze the growth sequence |A|, |A²|, |A³|, ...
+    
+    Algorithm:
+    1. Iteratively compute A^k for k = 1, 2, ...
+    2. Track cardinalities and growth ratios
+    3. Detect saturation (A^k = A^{k+1})
+    4. Verify growth dichotomy
+    
+    Time complexity: O(N · |G|²) where N is saturation step
+    Space complexity: O(|G|) per step
+    
+    >>> G = FiniteGroup(15)
+    >>> analyzer = ProductGrowthAnalyzer(G)
+    >>> seq = analyzer.analyze({0, 1, 14})
+    >>> seq.is_monotone
+    True
     """
-    tower = [set(A)]
-    current = set(A)
-    for i in range(1, k):
-        current = product_set(G, current, A)
-        tower.append(current)
-    return tower
+    
+    def __init__(self, group: FiniteGroup):
+        self.group = group
+    
+    def analyze(self, A: Set[int], max_steps: int = None) -> GrowthSequence:
+        """Analyze the growth sequence of A."""
+        G = self.group
+        if max_steps is None:
+            max_steps = G.n + 1
+        
+        sizes = [1]  # |A^0| = |{1}| = 1
+        current = {G.identity}
+        ratios = []
+        saturation = None
+        is_mono = True
+        
+        for k in range(1, max_steps + 1):
+            current = G.product_set(current, A)
+            sizes.append(len(current))
+            
+            if len(sizes) >= 2:
+                ratio = sizes[-1] / sizes[-2] if sizes[-2] > 0 else float('inf')
+                ratios.append(ratio)
+                if sizes[-1] <= sizes[-2]:
+                    is_mono = False
+            
+            if current == G.elements:
+                saturation = k
+                break
+        
+        return GrowthSequence(
+            sizes=sizes,
+            ratios=ratios,
+            saturation_step=saturation,
+            is_monotone=is_mono
+        )
 
 
-# ──────────────────────────────────────────────────────────────
-# Algorithm 2: Subgroup Detection from Exact Tripling
-# ──────────────────────────────────────────────────────────────
-
-def detect_subgroup_from_tripling(G: GroupOps, A: set) -> Optional[set]:
+class CayleyDiameterComputer:
     """
-    Given a symmetric set A with 1 ∈ A, check if |A³| = |A|.
-    If so, return A (which must be a subgroup by Theorem 2).
-
-    This implements the cardinal rigidity detection:
-    1. Compute A² and A³
-    2. Check |A³| = |A|
-    3. If yes, verify subgroup axioms (should always pass)
-
-    Time complexity: O(|A|³) for product computation
-    Space complexity: O(|A|²)
-
-    Args:
-        G: group operations
-        A: candidate set
-
-    Returns:
-        A if it's a subgroup (exact tripling), None otherwise
-    """
-    if G.identity not in A:
-        return None
-    if not all(G.inv(a) in A for a in A):
-        return None
-
-    AA = product_set(G, A, A)
-    AAA = product_set(G, AA, A)
-
-    if len(AAA) == len(A):
-        # By Theorem 2 (subgroup_of_card_triple_eq_card), A is a subgroup
-        return A
-    return None
-
-
-# ──────────────────────────────────────────────────────────────
-# Algorithm 3: Growth Gap Estimation
-# ──────────────────────────────────────────────────────────────
-
-def estimate_growth_gap(G: GroupOps, sample_size: int = 100) -> float:
-    """
-    Estimate the growth gap δ for a finite group G.
-
-    The growth gap is:
-      δ = min { |A³|/|A| - 1 : A symmetric, 1 ∈ A, A generates G, A ≠ G }
-
-    We sample random symmetric generating sets and compute the minimum
-    tripling growth ratio minus 1.
-
-    Time complexity: O(sample_size · |G|³)
-
-    Args:
-        G: group operations
-        sample_size: number of random sets to test
-
-    Returns:
-        Estimated growth gap δ
-    """
-    import random
-    full = set(G.elements)
-    min_gap = float('inf')
-
-    for _ in range(sample_size):
-        # Generate a random symmetric set containing identity
-        size = random.randint(2, G.size - 1)
-        subset = random.sample(G.elements, min(size, G.size))
-        A = {G.identity}
-        for g in subset:
-            A.add(g)
-            A.add(G.inv(g))
-
-        if A == full:
-            continue
-
-        # Check if A generates G
-        generated = set(A)
-        prev = 0
-        while len(generated) > prev:
-            prev = len(generated)
-            new = set()
-            for a in generated:
-                for b in A:
-                    new.add(G.mul(a, b))
-            generated |= new
-
-        if generated != full:
-            continue
-
-        # Compute tripling ratio
-        AA = product_set(G, A, A)
-        AAA = product_set(G, AA, A)
-        ratio = len(AAA) / len(A)
-        gap = ratio - 1
-
-        if gap > 0:
-            min_gap = min(min_gap, gap)
-
-    return min_gap if min_gap < float('inf') else 0.0
-
-
-# ──────────────────────────────────────────────────────────────
-# Algorithm 4: Trace Set Analysis for SL(2, F_p)
-# ──────────────────────────────────────────────────────────────
-
-def sl2_trace_analysis(p: int, A: set) -> Dict:
-    """
-    Analyze the trace set of a subset A ⊆ SL(2, F_p).
-
-    For each matrix (a,b,c,d), trace = a + d mod p.
-    The trace set captures arithmetic structure from multiplicative data.
-
-    Args:
-        p: prime
-        A: subset of SL(2, F_p) as set of (a,b,c,d) tuples
-
-    Returns:
-        Dict with trace statistics
-    """
-    traces = {(a + d) % p for (a, b, c, d) in A}
-    return {
-        "trace_set": traces,
-        "trace_count": len(traces),
-        "field_size": p,
-        "trace_density": len(traces) / p,
-        "missing_traces": set(range(p)) - traces,
-    }
-
-
-# ──────────────────────────────────────────────────────────────
-# Algorithm 5: Exhaustive Subgroup Finder
-# ──────────────────────────────────────────────────────────────
-
-def find_all_subgroups(G: GroupOps) -> List[set]:
-    """
-    Find all subgroups of G by checking all subsets.
-    Only feasible for |G| ≤ 20 or so.
-
-    Uses the optimization: only check subsets whose size divides |G|
-    (by Lagrange's theorem).
-
-    Time complexity: O(2^|G| · |G|²) worst case, pruned by Lagrange
+    Compute the diameter of the Cayley graph Cay(G, A).
+    
+    The diameter is the smallest N such that A^N = G.
+    By the growth dichotomy theorem, this is at most |G|.
+    
+    Algorithm:
+    1. Start with S = A
+    2. Iteratively compute S = S · A
+    3. When S = G, return the step count
+    
+    Time complexity: O(diam · |G|²)
     Space complexity: O(|G|)
-
-    Args:
-        G: group operations
-
-    Returns:
-        List of all subgroups (as sets)
+    
+    >>> G = FiniteGroup(7)
+    >>> computer = CayleyDiameterComputer(G)
+    >>> computer.compute({0, 1, 6})
+    3
     """
-    subgroups = []
-    n = G.size
-
-    for size in range(1, n + 1):
-        if n % size != 0:  # Lagrange's theorem
-            continue
-        for subset in itertools.combinations(G.elements, size):
-            S = set(subset)
-            if G.identity not in S:
-                continue
-            if not all(G.inv(a) in S for a in S):
-                continue
-            if all(G.mul(a, b) in S for a in S for b in S):
-                subgroups.append(S)
-
-    return subgroups
-
-
-# ──────────────────────────────────────────────────────────────
-# Convenience: Group Constructors
-# ──────────────────────────────────────────────────────────────
-
-def cyclic_group(n: int) -> GroupOps:
-    """Construct Z/nZ."""
-    return GroupOps(
-        list(range(n)),
-        lambda a, b: (a + b) % n,
-        lambda a: (-a) % n,
-        0
-    )
+    
+    def __init__(self, group: FiniteGroup):
+        self.group = group
+    
+    def compute(self, A: Set[int]) -> int:
+        """Compute the Cayley diameter for generating set A."""
+        G = self.group
+        current = A.copy()
+        
+        for k in range(1, G.n + 1):
+            if current == G.elements:
+                return k
+            current = G.product_set(current, A)
+        
+        return -1  # A doesn't generate G
 
 
-def sl2_group(p: int) -> GroupOps:
-    """Construct SL(2, F_p)."""
-    elements = []
-    for a in range(p):
-        for b in range(p):
-            for c in range(p):
-                for d in range(p):
-                    if (a * d - b * c) % p == 1:
-                        elements.append((a, b, c, d))
+class RuzsaCoveringFinder:
+    """
+    Find a Ruzsa covering: T ⊆ B with B ⊆ T · (A⁻¹ · A).
+    
+    Uses the greedy algorithm:
+    1. Pick any uncovered b ∈ B
+    2. Add b to T
+    3. Mark all elements in {b} · (A⁻¹ · A) as covered
+    4. Repeat until B is fully covered
+    
+    Time complexity: O(|T| · |A|²)
+    Space complexity: O(|A|² + |B|)
+    
+    Guaranteed: |T| ≤ |A·B|/|A| when the sets are chosen
+    to maximize disjointness of translates.
+    """
+    
+    def __init__(self, group: FiniteGroup):
+        self.group = group
+    
+    def find_covering(self, A: Set[int], B: Set[int]) -> Tuple[Set[int], int]:
+        """
+        Find a covering of B by translates of A⁻¹·A.
+        
+        Returns:
+            (T, cover_size) where T is the set of translators
+            and cover_size = |T · (A⁻¹·A)|
+        """
+        G = self.group
+        
+        # Compute A⁻¹ · A
+        A_inv = {G.invert(a) for a in A}
+        AinvA = G.product_set(A_inv, A)
+        
+        T = set()
+        covered = set()
+        uncovered = B.copy()
+        
+        while uncovered:
+            # Pick any uncovered element
+            b = min(uncovered)  # deterministic choice
+            T.add(b)
+            
+            # Mark everything in {b} · (A⁻¹ · A) as covered
+            translate = {G.multiply(b, x) for x in AinvA}
+            covered |= translate
+            uncovered -= translate
+        
+        return T, len(G.product_set(T, AinvA))
 
-    def mul(A, B):
-        a1, b1, c1, d1 = A
-        a2, b2, c2, d2 = B
-        return (
-            (a1*a2 + b1*c2) % p, (a1*b2 + b1*d2) % p,
-            (c1*a2 + d1*c2) % p, (c1*b2 + d1*d2) % p
-        )
 
-    def inv(A):
-        a, b, c, d = A
-        return (d % p, (-b) % p, (-c) % p, a % p)
-
-    return GroupOps(elements, mul, inv, (1, 0, 0, 1))
-
-
-# ──────────────────────────────────────────────────────────────
-# Example Usage
-# ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
+# Example usage
+# ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print("Algorithm Demonstrations")
     print("=" * 50)
-
-    # Product tower in Z/12Z
-    G = cyclic_group(12)
-    A = {0, 3, 6, 9}  # Subgroup of order 4
-    tower = product_tower(G, A, 5)
-    print(f"\nProduct tower of {{0,3,6,9}} in Z/12Z:")
-    for i, s in enumerate(tower):
-        print(f"  A^{i+1} = {sorted(s)}, |A^{i+1}| = {len(s)}")
-
-    # Growth gap estimation
-    print(f"\nGrowth gap estimation for Z/6Z:")
-    G6 = cyclic_group(6)
-    gap = estimate_growth_gap(G6, sample_size=200)
-    print(f"  Estimated δ = {gap:.4f}")
-
-    # SL(2, F_3) trace analysis
-    print(f"\nSL(2, F_3) trace analysis:")
-    G_sl = sl2_group(3)
-    print(f"  |SL(2, F_3)| = {G_sl.size}")
-    full_trace = sl2_trace_analysis(3, set(G_sl.elements))
-    print(f"  Full trace set: {sorted(full_trace['trace_set'])}")
-    print(f"  Trace density: {full_trace['trace_density']:.2f}")
-
-    # Subgroup detection
-    print(f"\nSubgroup detection via exact tripling:")
-    for A_test in [{0, 2, 4}, {0, 3, 6, 9}, {0, 1, 2}]:
-        G12 = cyclic_group(12)
-        result = detect_subgroup_from_tripling(G12, A_test)
-        print(f"  A = {sorted(A_test)}: {'subgroup ✓' if result else 'not exact tripling'}")
-
-    # Full analysis
-    print(f"\nFull approximate subgroup reports:")
-    G_sl = sl2_group(3)
-    id_elem = G_sl.identity
-    g = (0, 1, 2, 0)
-    A_test = {id_elem, g, G_sl.inv(g)}
-    report = ApproxSubgroupReport(A_test, G_sl)
-    print(f"  {report}")
+    
+    # 1. Classify approximate subgroups
+    G = FiniteGroup(24)
+    clf = ApproximateSubgroupClassifier(G)
+    
+    test_sets = [
+        {0, 4, 8, 12, 16, 20},    # Subgroup 6Z/24Z
+        {0, 1, 23},                # Small generating set
+        {0, 2, 4, 6, 8, 10},      # Near-subgroup
+        {0, 1, 2, 3, 22, 23},     # Interval with inv
+    ]
+    
+    print("\n1. Approximate Subgroup Classification (Z/24Z)")
+    for A in test_sets:
+        cert = clf.classify(A)
+        print(f"   A={sorted(cert.carrier)[:6]}{'...' if len(cert.carrier)>6 else ''}: "
+              f"K={cert.K}, σ={cert.doubling_const:.2f}, "
+              f"τ={cert.tripling_const:.2f}, "
+              f"class={cert.classification}")
+    
+    # 2. Growth analysis
+    G = FiniteGroup(30)
+    analyzer = ProductGrowthAnalyzer(G)
+    
+    print("\n2. Growth Sequence Analysis (Z/30Z)")
+    for A in [{0, 1, 29}, {0, 7, 23}]:
+        seq = analyzer.analyze(A)
+        print(f"   A={sorted(A)}: sat={seq.saturation_step}, "
+              f"mono={seq.is_monotone}, "
+              f"sizes={seq.sizes[:6]}...")
+    
+    # 3. Cayley diameter
+    print("\n3. Cayley Graph Diameters")
+    comp = CayleyDiameterComputer(FiniteGroup(30))
+    for A in [{0, 1, 29}, {0, 7, 23}, {0, 1, 7, 23, 29}]:
+        d = comp.compute(A)
+        print(f"   A={sorted(A)}: diameter={d}")
+    
+    # 4. Ruzsa covering
+    G = FiniteGroup(20)
+    rcf = RuzsaCoveringFinder(G)
+    A = {0, 1, 2, 3, 4}
+    B = set(range(20))
+    T, cover = rcf.find_covering(A, B)
+    print(f"\n4. Ruzsa Covering (Z/20Z)")
+    print(f"   A={sorted(A)}, B=Z/20Z")
+    print(f"   T={sorted(T)}, |T|={len(T)}")
+    print(f"   |A⁻¹·A| = {len(G.product_set({G.invert(a) for a in A}, A))}")
