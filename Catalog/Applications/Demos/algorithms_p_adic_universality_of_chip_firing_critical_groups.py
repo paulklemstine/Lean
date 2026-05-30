@@ -1,220 +1,217 @@
-#!/usr/bin/env python3
 """
 Algorithms for p-adic Universality of Chip-Firing Critical Groups
 
-Implements the core algorithms for computing critical groups, generating
-graph lifts, and testing the universality conjecture.
-
-Time complexity analysis included for each algorithm.
+Implements:
+1. Graph Laplacian computation
+2. Smith Normal Form for integer matrices
+3. Critical group (Jacobian) computation via SNF
+4. Random graph lift generation
+5. Sylow-p extraction
+6. Cohen-Lenstra probability computation
 """
 
 import numpy as np
 from typing import List, Tuple, Optional
-from math import gcd
+from collections import Counter
 import random
+import math
+
 
 # ============================================================
-# Algorithm 1: Smith Normal Form
+# Algorithm 1: Smith Normal Form (SNF)
 # ============================================================
 
 def smith_normal_form(M: np.ndarray) -> Tuple[np.ndarray, List[int]]:
     """
-    Compute the Smith Normal Form of an integer matrix.
-    
-    Given an m×n integer matrix M, compute diagonal matrix D such that
-    D = U·M·V where U, V are unimodular (det = ±1).
-    
+    Compute the Smith Normal Form of an integer matrix M.
+
+    The SNF is a diagonal matrix D = U M V where U, V are unimodular,
+    and the diagonal entries d_1 | d_2 | ... | d_r are the invariant factors.
+
+    Time complexity: O(n^3 · log(max|M_ij|)) in practice
+    Space complexity: O(n^2)
+
+    Args:
+        M: Integer matrix (n × m)
+
     Returns:
-        (D, invariant_factors): The SNF diagonal matrix and the list of
-        nontrivial invariant factors (> 1).
-    
-    Time complexity: O(n³ · log(max_entry)) amortized
-    Space complexity: O(n²)
-    
-    Algorithm:
-        For each diagonal position i:
-        1. Find smallest nonzero entry in submatrix M[i:, i:]
-        2. Move it to position (i,i) via row/column swaps
-        3. Use it to eliminate all entries in row i and column i
-           via integer row/column operations
-        4. If any entry in the submatrix is not divisible by M[i,i],
-           use it to reduce M[i,i] (ensures divisibility chain)
-        5. Repeat until stable
+        (D, invariant_factors): Diagonal matrix and list of non-unit invariant factors
     """
-    M = M.copy().astype(int)
-    rows, cols = M.shape
-    n = min(rows, cols)
-    
-    for i in range(n):
-        # Phase 1: Find and place pivot
+    M = M.astype(int).tolist()
+    n = len(M)
+    m = len(M[0]) if n > 0 else 0
+
+    for k in range(min(n, m)):
+        # Find a nonzero pivot in the submatrix M[k:, k:]
         found = False
-        for r in range(i, rows):
-            for c in range(i, cols):
-                if M[r, c] != 0:
-                    M[[i, r]] = M[[r, i]]
-                    M[:, [i, c]] = M[:, [c, i]]
+        for i in range(k, n):
+            for j in range(k, m):
+                if M[i][j] != 0:
+                    # Swap rows k and i
+                    M[k], M[i] = M[i], M[k]
+                    # Swap columns k and j
+                    for row in M:
+                        row[k], row[j] = row[j], row[k]
                     found = True
                     break
             if found:
                 break
         if not found:
-            break
-        
-        # Phase 2: Eliminate using GCD operations
-        max_iters = 1000
-        for _ in range(max_iters):
+            continue
+
+        # Iterate until M[k][k] divides all entries in row k and column k
+        changed = True
+        while changed:
             changed = False
-            
-            # Eliminate column below pivot
-            for r in range(i + 1, rows):
-                if M[r, i] != 0:
-                    q = M[r, i] // M[i, i]
-                    M[r] -= q * M[i]
-                    if M[r, i] != 0:
-                        if abs(M[r, i]) < abs(M[i, i]):
-                            M[[i, r]] = M[[r, i]]
-                            changed = True
-            
-            # Eliminate row to right of pivot
-            for c in range(i + 1, cols):
-                if M[i, c] != 0:
-                    q = M[i, c] // M[i, i]
-                    M[:, c] -= q * M[:, i]
-                    if M[i, c] != 0:
-                        if abs(M[i, c]) < abs(M[i, i]):
-                            M[:, [i, c]] = M[:, [c, i]]
-                            changed = True
-            
-            if not changed:
-                break
-    
-    diag = [abs(M[i, i]) for i in range(n)]
+            if M[k][k] < 0:
+                for j in range(m):
+                    M[k][j] = -M[k][j]
+
+            # Eliminate column entries below pivot
+            for i in range(k + 1, n):
+                if M[i][k] != 0:
+                    q = M[i][k] // M[k][k]
+                    for j in range(m):
+                        M[i][j] -= q * M[k][j]
+                    if M[i][k] != 0:
+                        M[k], M[i] = M[i], M[k]
+                        changed = True
+
+            # Eliminate row entries to the right of pivot
+            for j in range(k + 1, m):
+                if M[k][j] != 0:
+                    q = M[k][j] // M[k][k]
+                    for i in range(n):
+                        M[i][j] -= q * M[i][k]
+                    if M[k][j] != 0:
+                        for i in range(n):
+                            M[i][k], M[i][j] = M[i][j], M[i][k]
+                        changed = True
+
+    D = np.array(M)
+    diag = [abs(M[i][i]) for i in range(min(n, m))]
     invariant_factors = [d for d in diag if d > 1]
-    return M, invariant_factors
+    return D, invariant_factors
 
 
 # ============================================================
-# Algorithm 2: Graph Laplacian Construction
+# Algorithm 2: Graph Laplacian and Critical Group
 # ============================================================
 
-def graph_laplacian(adj: np.ndarray) -> np.ndarray:
+def compute_laplacian(adj: np.ndarray) -> np.ndarray:
     """
-    Construct the graph Laplacian matrix L = D - A.
-    
-    Properties (proven in Lean):
-    - L is symmetric: L[v,w] = L[w,v]
-    - Row sums are zero: ∑_w L[v,w] = 0
-    - L is positive semidefinite: x^T L x ≥ 0
-    
-    Time complexity: O(n²)
-    Space complexity: O(n²)
+    Compute the graph Laplacian L = D - A.
+
+    L is positive semidefinite with kernel spanned by the all-ones vector
+    for connected graphs.
+
+    Time: O(n²), Space: O(n²)
     """
-    D = np.diag(adj.sum(axis=1).astype(int))
-    return D - adj
+    deg = np.diag(adj.sum(axis=1).astype(int))
+    return deg - adj.astype(int)
 
 
-def reduced_laplacian(L: np.ndarray, sink: int = 0) -> np.ndarray:
+def compute_critical_group(adj: np.ndarray) -> Tuple[List[int], int]:
     """
-    Compute the reduced Laplacian by deleting the sink row and column.
-    
-    By Kirchhoff's Matrix-Tree Theorem:
-        det(L̃) = number of spanning trees = |Jac(G)|
-    
-    Time complexity: O(n²)
-    Space complexity: O(n²)
-    """
-    return np.delete(np.delete(L, sink, axis=0), sink, axis=1)
+    Compute the critical group Jac(G) of a graph.
 
+    The critical group is isomorphic to ℤ^(n-1) / Im(L̃)
+    where L̃ is the reduced Laplacian.
 
-# ============================================================
-# Algorithm 3: Critical Group Computation
-# ============================================================
+    By Kirchhoff's matrix tree theorem, |Jac(G)| = number of spanning trees.
 
-def critical_group(adj: np.ndarray, sink: int = 0) -> List[int]:
-    """
-    Compute the critical group (Jacobian/sandpile group) of a graph.
-    
-    The critical group Jac(G) ≅ ℤ^{n-1} / Im(L̃) where L̃ is the
-    reduced Laplacian. Its structure as a finite abelian group is
-    determined by the Smith Normal Form of L̃.
-    
+    Time: O(n³ · log(max entry))
+    Space: O(n²)
+
     Returns:
-        List of cyclic factors [d₁, d₂, ...] where Jac(G) ≅ ⊕ ℤ/dᵢℤ
-        and d₁ | d₂ | ... (divisibility chain).
-    
-    Time complexity: O(n³ · log(max_degree))
-    Space complexity: O(n²)
+        (invariant_factors, order): Group structure and order
     """
-    L = graph_laplacian(adj)
-    Lr = reduced_laplacian(L, sink)
-    _, factors = smith_normal_form(Lr)
-    return factors
+    L = compute_laplacian(adj)
+    Lr = L[:-1, :-1]  # Reduced Laplacian
+    _, inv_factors = smith_normal_form(Lr)
+    order = 1
+    for d in inv_factors:
+        order *= d
+    return inv_factors, order
 
 
 # ============================================================
-# Algorithm 4: Random Voltage Lift
+# Algorithm 3: Random Graph Lift
 # ============================================================
 
-def random_voltage_lift(adj: np.ndarray, n_sheets: int) -> np.ndarray:
+def generate_random_lift(adj: np.ndarray, n_sheets: int,
+                         seed: Optional[int] = None) -> np.ndarray:
     """
-    Generate a random n-sheeted lift of a graph via voltage assignments.
-    
-    Construction (Gross-Tucker theory):
-    1. Orient each edge arbitrarily (v→w for v < w)
-    2. Assign a random permutation σ_{vw} ∈ S_n to each oriented edge
-    3. The reverse edge gets σ_{wv} = σ_{vw}^{-1}
-    4. Vertex (v, i) in the lift connects to (w, σ_{vw}(i))
-    
-    Time complexity: O(n_sheets · |E| + n_verts² · n_sheets²)
-    Space complexity: O((n_verts · n_sheets)²)
+    Generate a random n-sheeted covering (lift) of a graph.
+
+    For each edge {u,v}, assign a uniformly random permutation σ_{uv} ∈ S_n.
+    The lift graph has:
+    - Vertices: V × {0, ..., n-1}
+    - Edges: {(u,i), (v, σ_{uv}(i))} for each base edge {u,v} and i ∈ [n]
+
+    This is the standard model for random graph covers (Friedman, 2003).
+
+    Time: O(|E| · n)
+    Space: O(n² · |V|²)
+
+    Args:
+        adj: Adjacency matrix of base graph
+        n_sheets: Number of sheets
+        seed: Random seed for reproducibility
+
+    Returns:
+        Adjacency matrix of the lift
     """
-    num_verts = adj.shape[0]
-    N = num_verts * n_sheets
-    lift_adj = np.zeros((N, N), dtype=int)
-    
-    for v in range(num_verts):
-        for w in range(v + 1, num_verts):
-            if adj[v, w]:
+    if seed is not None:
+        random.seed(seed)
+
+    num_v = adj.shape[0]
+    total = num_v * n_sheets
+    lift = np.zeros((total, total), dtype=int)
+
+    for u in range(num_v):
+        for v in range(u + 1, num_v):
+            if adj[u][v] > 0:
                 perm = list(range(n_sheets))
                 random.shuffle(perm)
-                
                 for i in range(n_sheets):
-                    vi = v * n_sheets + i
-                    wj = w * n_sheets + perm[i]
-                    lift_adj[vi, wj] = 1
-                    lift_adj[wj, vi] = 1
-    
-    return lift_adj
+                    u_lift = u * n_sheets + i
+                    v_lift = v * n_sheets + perm[i]
+                    lift[u_lift][v_lift] = 1
+                    lift[v_lift][u_lift] = 1
+
+    return lift
 
 
 # ============================================================
-# Algorithm 5: p-Primary Decomposition
+# Algorithm 4: Sylow-p Subgroup Extraction
 # ============================================================
 
-def p_primary_part(factors: List[int], p: int) -> List[int]:
+def extract_sylow_p(invariant_factors: List[int], p: int) -> List[int]:
     """
-    Extract the p-primary (Sylow-p) part of a finite abelian group.
-    
-    Given the cyclic decomposition [d₁, ..., dₖ], return [p^{v_p(d₁)}, ...].
-    
-    Time complexity: O(k · log(max_factor) / log(p))
+    Extract the Sylow-p subgroup from invariant factors.
+
+    For each invariant factor d, compute v_p(d) = max k such that p^k | d.
+    The p-primary part is ⊕ ℤ/p^{v_p(d_i)}.
+
+    Time: O(r · log(max d_i) / log p) where r = number of factors
     """
-    result = []
-    for f in factors:
+    p_parts = []
+    for d in invariant_factors:
         pk = 1
-        temp = f
+        temp = d
         while temp % p == 0:
             pk *= p
             temp //= p
         if pk > 1:
-            result.append(pk)
-    return sorted(result)
+            p_parts.append(pk)
+    return sorted(p_parts)
 
 
-def padic_valuation(n: int, p: int) -> int:
-    """Compute v_p(n), the p-adic valuation of n."""
+def p_adic_valuation(n: int, p: int) -> int:
+    """Compute v_p(n) = max k such that p^k divides n."""
     if n == 0:
-        return -1  # Convention: v_p(0) is undefined
+        return float('inf')
     v = 0
     while n % p == 0:
         v += 1
@@ -223,137 +220,118 @@ def padic_valuation(n: int, p: int) -> int:
 
 
 # ============================================================
-# Algorithm 6: Cohen-Lenstra Weight
+# Algorithm 5: Cohen-Lenstra Distribution
 # ============================================================
 
-def cohen_lenstra_weight(p: int, k: int) -> float:
+def cohen_lenstra_probability(p: int, b1: int, group_type: Tuple[int, ...],
+                               max_terms: int = 20) -> float:
     """
-    Compute the Cohen-Lenstra weight for a p-group with k cyclic factors.
-    
-    W(p, k) = ∏_{i=1}^{k} (1 - p^{-i})
-    
-    This weight appears in the conjectured distribution of:
-    - Ideal class groups of quadratic number fields (Cohen-Lenstra, 1984)
-    - Sandpile groups of random graphs (Wood, 2017)
-    - Critical groups of random graph lifts (this work)
-    
-    Properties (proven in Lean):
-    - W(p, 0) = 1 (empty product)
-    - W(p, k) > 0 for all p ≥ 2, k ≥ 0
-    - W(p, k₁) ≥ W(p, k₂) for k₁ ≤ k₂ (monotone decreasing)
-    
-    Time complexity: O(k)
+    Compute the Cohen-Lenstra probability for a given p-group type.
+
+    For the conjectured universal distribution with Betti number b1,
+    the probability of a p-group of type λ = (λ_1, ..., λ_r) is:
+
+    P(λ) ∝ 1 / |Aut(G_λ)| · (size correction)
+
+    For the simplest case (trivial group, rank 0):
+    P(trivial) = ∏_{i=1}^{b1} (1 - p^{-i})
+
+    This is the probability that a random b1×b1 matrix over Z_p is invertible.
+
+    Time: O(max_terms)
+
+    Args:
+        p: Prime
+        b1: First Betti number of base graph
+        group_type: Tuple of p-powers giving the p-group type
+        max_terms: Number of terms in infinite product approximation
+
+    Returns:
+        Approximate probability
     """
-    w = 1.0
-    for i in range(1, k + 1):
-        w *= (1 - (1.0 / p) ** i)
-    return w
+    if len(group_type) == 0:
+        # Probability of trivial Sylow-p: random matrix invertibility over Z_p
+        prob = 1.0
+        for i in range(1, b1 + 1):
+            prob *= (1 - p ** (-i))
+        return prob
+    else:
+        # For non-trivial types, use the general Cohen-Lenstra weight
+        # This is an approximation based on the heuristic
+        r = len(group_type)
+        if r > b1:
+            return 0.0  # rank cannot exceed b1
+
+        # Weight = 1/|Aut(G_λ)| · correction
+        total_size = 1
+        for pk in group_type:
+            total_size *= pk
+
+        # Automorphism group order approximation for cyclic p-groups
+        aut_order = 1
+        for pk in group_type:
+            k = int(round(math.log(pk) / math.log(p)))
+            aut_order *= pk - pk // p  # Euler's phi
+
+        inv_aut = 1.0 / aut_order
+        # Normalization: multiply by matrix count factor
+        factor = p ** (-(sum(int(round(math.log(pk)/math.log(p))) for pk in group_type)))
+
+        return inv_aut * factor
 
 
-# ============================================================
-# Algorithm 7: Betti Number
-# ============================================================
-
-def betti_number(adj: np.ndarray) -> int:
+def universality_test(graphs: List[np.ndarray], p: int, n_sheets: int,
+                      num_samples: int = 500) -> dict:
     """
-    First Betti number b₁ = |E| - |V| + 1.
-    
-    For a connected graph, this equals:
-    - The number of independent cycles
-    - The rank of H₁(G, ℤ)
-    - The genus in tropical geometry
-    
-    Proven in Lean: b₁(lift) = n·(b₁(base) - 1) + 1 for n-sheeted covers.
-    
-    Time complexity: O(n²)
-    """
-    n = adj.shape[0]
-    edges = int(adj.sum()) // 2
-    return edges - n + 1
+    Test the universality conjecture by comparing p-rank distributions
+    across graphs with the same Betti number.
 
-
-# ============================================================
-# Algorithm 8: Universality Test Suite
-# ============================================================
-
-def universality_test(
-    graphs: List[Tuple[str, np.ndarray]],
-    p: int,
-    n_sheets: int,
-    n_trials: int = 100,
-    seed: int = 42
-) -> dict:
+    Returns a dictionary mapping graph index to p-rank distribution.
     """
-    Run the universality test: compare p-primary distributions across
-    graphs with the same Betti number.
-    
-    For each graph:
-    1. Generate n_trials random n-sheeted lifts
-    2. Compute the critical group of each lift
-    3. Extract the p-primary part
-    4. Build a histogram of p-adic valuations
-    
-    Returns a dict mapping graph names to valuation histograms.
-    
-    The universality conjecture predicts that all histograms should
-    converge to the same distribution for graphs with the same b₁.
-    
-    Time complexity: O(n_trials · (n_verts · n_sheets)³)
-    """
-    random.seed(seed)
     results = {}
-    
-    for name, adj in graphs:
-        b1 = betti_number(adj)
-        valuations = []
-        
-        for _ in range(n_trials):
-            lift = random_voltage_lift(adj, n_sheets)
-            cg = critical_group(lift)
-            pp = p_primary_part(cg, p)
-            total_val = sum(padic_valuation(f, p) for f in pp)
-            valuations.append(total_val)
-        
-        hist = {}
-        for v in valuations:
-            hist[v] = hist.get(v, 0) + 1
-        
-        results[name] = {
+    for idx, G in enumerate(graphs):
+        b1 = int(G.sum()) // 2 - G.shape[0] + 1
+        p_ranks = []
+        for _ in range(num_samples):
+            lift = generate_random_lift(G, n_sheets)
+            inv, _ = compute_critical_group(lift)
+            pr = len(extract_sylow_p(inv, p))
+            p_ranks.append(pr)
+
+        dist = Counter(p_ranks)
+        total = sum(dist.values())
+        norm_dist = {k: v / total for k, v in sorted(dist.items())}
+        results[idx] = {
             'betti': b1,
-            'histogram': dict(sorted(hist.items())),
-            'mean_valuation': np.mean(valuations),
-            'std_valuation': np.std(valuations)
+            'distribution': norm_dist,
+            'mean_rank': sum(p_ranks) / len(p_ranks),
+            'samples': num_samples
         }
-    
+
     return results
 
 
+# ============================================================
+# Example Usage
+# ============================================================
+
 if __name__ == "__main__":
-    # Quick test
-    print("Testing algorithms...")
-    
-    # Cycle graph C4
-    C4 = np.array([
-        [0, 1, 0, 1],
-        [1, 0, 1, 0],
-        [0, 1, 0, 1],
-        [1, 0, 1, 0]
-    ])
-    
-    L = graph_laplacian(C4)
-    print(f"Laplacian of C4:\n{L}")
-    print(f"Row sums: {L.sum(axis=1)}")
-    print(f"Symmetric: {np.array_equal(L, L.T)}")
-    
-    cg = critical_group(C4)
-    print(f"Critical group of C4: {cg}")
-    print(f"|Jac(C4)| = {np.prod(cg) if cg else 1}")
-    
-    print(f"Betti number of C4: {betti_number(C4)}")
-    
-    # Cohen-Lenstra weights
-    for k in range(5):
-        w = cohen_lenstra_weight(5, k)
-        print(f"CL_weight(5, {k}) = {w:.6f}")
-    
-    print("\nAll algorithms tested successfully.")
+    # Example: Triangle (K_3)
+    K3 = np.array([[0, 1, 1],
+                    [1, 0, 1],
+                    [1, 1, 0]])
+
+    print("K₃ Laplacian:")
+    print(compute_laplacian(K3))
+
+    inv, order = compute_critical_group(K3)
+    print(f"Jac(K₃) = Z/{' × Z/'.join(map(str, inv))}, order = {order}")
+    print(f"(Kirchhoff: K₃ has {order} spanning trees)")
+
+    # Random 3-sheeted lift
+    lift = generate_random_lift(K3, 3, seed=42)
+    inv_lift, order_lift = compute_critical_group(lift)
+    print(f"\nRandom 3-sheeted lift of K₃:")
+    print(f"Jac = Z/{' × Z/'.join(map(str, inv_lift))}, order = {order_lift}")
+    print(f"Sylow-2: {extract_sylow_p(inv_lift, 2)}")
+    print(f"Sylow-3: {extract_sylow_p(inv_lift, 3)}")
