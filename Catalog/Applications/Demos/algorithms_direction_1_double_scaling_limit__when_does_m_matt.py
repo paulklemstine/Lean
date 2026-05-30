@@ -1,249 +1,287 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for computing wreath-product subgroup pressure
-and double-scaling observables.
+Algorithms for Double Scaling Limit Analysis
 
-Implements:
-1. Polynomial defect envelope computation
-2. Critical exponent estimation via bisection
-3. Regime classification
-4. Crossover profile estimation
+Implements the core algorithms for computing and analyzing wreath product
+subgroup pressure, critical scaling exponents, and phase classification.
 """
-
 import numpy as np
-from typing import Callable, Tuple, List, Optional
+from typing import Tuple, List, Optional
 
 
-def polynomial_defect_bound(
-    k: int, m: int, C: float, a: int, b: int
-) -> float:
-    """Compute the polynomial defect upper bound C · m^a / k^b.
-
-    This is the envelope from the subcritical irrelevance theorem:
-    if |Δ(k,m)| ≤ C · m^a / k^b, then the critical exponent is α_c = b/a.
-
-    Args:
-        k: Group rank parameter (≥ 1)
-        m: Multiplicity parameter (≥ 0)
-        C: Envelope constant (≥ 0)
-        a: Exponent on m
-        b: Exponent on k
-
-    Returns:
-        The bound value C * m^a / k^b
-
-    Example:
-        >>> polynomial_defect_bound(10, 5, 1.0, 1, 1)
-        0.5
-    """
-    if k == 0:
-        return float('inf')
-    return C * (m ** a) / (k ** b)
-
-
-def critical_exponent(a: int, b: int) -> float:
-    """Compute the critical exponent α_c = b/a.
-
-    This is the threshold scaling: sequences m(k) = o(k^(b/a)) see
-    vanishing wreath defect, while m(k) ≈ k^(b/a) may not.
-
-    Args:
-        a: Exponent on m in defect bound
-        b: Exponent on k in defect bound
-
-    Returns:
-        The critical exponent b/a
-
-    Example:
-        >>> critical_exponent(2, 3)
-        1.5
-    """
-    if a == 0:
-        return float('inf')
-    return b / a
-
-
-def subcritical_ratio(
-    mf: Callable[[int], int], k: int, a: int, b: int
-) -> float:
-    """Compute the subcritical ratio m(k)^a / k^b.
-
-    When this ratio → 0 as k → ∞, the sequence m(k) is subcritical.
-
-    Args:
-        mf: Multiplicity function k → m(k)
-        k: Current value of group rank
-        a: Exponent on m
-        b: Exponent on k
-
-    Returns:
-        The ratio mf(k)^a / k^b
-    """
-    if k == 0:
-        return float('inf')
-    return (mf(k) ** a) / (k ** b)
-
-
-def estimate_defect_exponents(
-    defect_data: List[Tuple[int, int, float]],
-    k_min: int = 3
-) -> Tuple[float, float, float]:
-    """Estimate (C, a, b) from empirical defect data using least squares.
-
-    Given data points (k, m, |Δ(k,m)|), fits the model
-    |Δ(k,m)| ≈ C · m^a / k^b in log space.
-
-    Args:
-        defect_data: List of (k, m, |defect|) triples
-        k_min: Minimum k to include in fit
-
-    Returns:
-        (C, a, b) estimated parameters
-
-    Complexity: O(n) where n = len(defect_data)
-    """
-    filtered = [(k, m, d) for k, m, d in defect_data
-                if k >= k_min and m > 0 and d > 0]
-    if len(filtered) < 3:
-        return (1.0, 1.0, 1.0)
-
-    # log|Δ| = log C + a·log m - b·log k
-    A = np.array([[1, np.log(m), -np.log(k)]
-                   for k, m, d in filtered])
-    y = np.array([np.log(d) for _, _, d in filtered])
-
-    # Least squares: min ||Ax - y||^2
-    result = np.linalg.lstsq(A, y, rcond=None)
-    x = result[0]
-    C_est = np.exp(x[0])
-    a_est = x[1]
-    b_est = x[2]
-
-    return (C_est, a_est, b_est)
-
-
-def classify_regime_quantitative(
-    mf_k: int, k: int, a: int, b: int,
-    threshold_low: float = 0.01,
-    threshold_high: float = 100.0
-) -> str:
-    """Classify the perturbation regime based on scaling ratio.
-
-    Args:
-        mf_k: Value of m(k) at current k
-        k: Current group rank
-        a: Exponent on m
-        b: Exponent on k
-        threshold_low: Below this ratio → irrelevant
-        threshold_high: Above this ratio → relevant
-
-    Returns:
-        One of "IRRELEVANT", "MARGINAL", "RELEVANT"
-    """
-    if k == 0:
-        return "RELEVANT"
-    ratio = (mf_k ** a) / (k ** b)
-    if ratio < threshold_low:
-        return "IRRELEVANT"
-    elif ratio > threshold_high:
-        return "RELEVANT"
-    else:
-        return "MARGINAL"
-
-
-def compute_crossover_profile(
-    beta_symm: Callable[[int], float],
-    beta_wreath: Callable[[int, int], float],
+def compute_wreath_defect(
+    beta_symm: callable,
+    beta_wreath: callable,
     k: int,
-    lambda_values: np.ndarray,
-    alpha: float
-) -> np.ndarray:
-    """Compute the crossover profile F(λ) at fixed k.
-
-    For each λ, sets m = round(λ · k^α) and computes
-    F ≈ k^α · Δ(k,m) / m.
-
-    Args:
-        beta_symm: β(S_k) function
-        beta_wreath: β_W(k,m) function
-        k: Fixed group rank
-        lambda_values: Array of λ values to evaluate
-        alpha: Scaling exponent
-
-    Returns:
-        Array of F(λ) estimates
-    """
-    F_values = np.zeros_like(lambda_values)
-    for i, lam in enumerate(lambda_values):
-        m = max(1, round(lam * k ** alpha))
-        defect = beta_wreath(k, m) - m * beta_symm(k)
-        F_values[i] = (k ** alpha) * defect / m
-    return F_values
-
-
-def bisect_critical_exponent(
-    defect_func: Callable[[int, int], float],
-    k_values: List[int],
-    alpha_low: float = 0.0,
-    alpha_high: float = 5.0,
-    tol: float = 0.01,
-    max_iter: int = 50
+    m: int
 ) -> float:
-    """Bisection to find the critical exponent.
-
-    Finds α such that m(k) = k^α gives a marginal defect rate.
-    Tests whether Δ(k, floor(k^α)) / k^α → 0 or diverges.
-
-    Args:
-        defect_func: (k, m) → |Δ(k,m)|
-        k_values: List of k values to test (large k preferred)
-        alpha_low: Lower bound on α search
-        alpha_high: Upper bound on α search
-        tol: Convergence tolerance
-        max_iter: Maximum iterations
-
-    Returns:
-        Estimated critical exponent
-
-    Complexity: O(max_iter · len(k_values))
     """
-    def test_alpha(alpha: float) -> float:
-        """Returns average normalized defect at this exponent."""
-        total = 0.0
-        count = 0
-        for k in k_values:
-            m = max(1, int(k ** alpha))
-            d = abs(defect_func(k, m))
-            total += d / max(1, m)
-            count += 1
-        return total / max(1, count)
-
-    for _ in range(max_iter):
-        if alpha_high - alpha_low < tol:
-            break
-        alpha_mid = (alpha_low + alpha_high) / 2
-        val = test_alpha(alpha_mid)
-        if val < 1e-6:
-            alpha_low = alpha_mid
-        else:
-            alpha_high = alpha_mid
-
-    return (alpha_low + alpha_high) / 2
+    Compute the wreath defect Δ(k,m) = β_W(k,m) - m·β(S_k).
+    
+    Args:
+        beta_symm: Function k -> β(S_k) (symmetric group critical exponent)
+        beta_wreath: Function (k,m) -> β_W(k,m) (wreath product critical exponent)
+        k: Base group parameter
+        m: Number of copies
+    
+    Returns:
+        The wreath defect Δ(k,m)
+    
+    Example:
+        >>> compute_wreath_defect(lambda k: k*0.5, lambda k,m: m*k*0.5 + 0.1, 5, 3)
+        0.1
+    """
+    return beta_wreath(k, m) - m * beta_symm(k)
 
 
+def classify_scaling(
+    mf: callable,
+    alpha: float,
+    k_values: List[int],
+    threshold: float = 0.1
+) -> str:
+    """
+    Classify a scaling sequence m(k) relative to k^α.
+    
+    Args:
+        mf: Function k -> m(k) (the scaling sequence)
+        alpha: Critical exponent to test against
+        k_values: List of k values to evaluate
+        threshold: Threshold for classifying (default 0.1)
+    
+    Returns:
+        One of 'subcritical', 'critical', 'supercritical'
+    
+    Example:
+        >>> classify_scaling(lambda k: int(k**0.5), 1.0, list(range(10, 100)))
+        'subcritical'
+    """
+    ratios = []
+    for k in k_values:
+        m = mf(k)
+        if k > 0:
+            ratio = m / k**alpha
+            ratios.append(ratio)
+    
+    if not ratios:
+        return 'subcritical'
+    
+    # Check if ratios tend to 0, a constant, or infinity
+    late_ratios = ratios[len(ratios)//2:]  # second half
+    mean_late = np.mean(late_ratios)
+    
+    if mean_late < threshold:
+        return 'subcritical'
+    elif mean_late > 1.0 / threshold:
+        return 'supercritical'
+    else:
+        return 'critical'
+
+
+def find_critical_exponent(
+    beta_symm: callable,
+    beta_wreath: callable,
+    k_range: Tuple[int, int] = (5, 50),
+    m_range: Tuple[int, int] = (1, 200),
+    alpha_range: Tuple[float, float] = (0.1, 3.0),
+    n_alpha: int = 50
+) -> Tuple[float, float]:
+    """
+    Estimate the critical exponent α by data collapse.
+    
+    For each candidate α, compute the rescaled defect
+    |Δ(k,m)| · k^α / m and measure how well it collapses
+    across different (k,m) values.
+    
+    Args:
+        beta_symm: Function k -> β(S_k)
+        beta_wreath: Function (k,m) -> β_W(k,m)
+        k_range: Range of k values to test
+        m_range: Range of m values
+        alpha_range: Range of α to scan
+        n_alpha: Number of α values to test
+    
+    Returns:
+        (best_alpha, min_cv): Best critical exponent and its coefficient of variation
+    
+    Example:
+        >>> bs = lambda k: k * 0.5
+        >>> bw = lambda k, m: m * k * 0.5 + 0.3 * m / k
+        >>> alpha, cv = find_critical_exponent(bs, bw)
+    """
+    alphas = np.linspace(alpha_range[0], alpha_range[1], n_alpha)
+    best_alpha = alphas[0]
+    min_cv = float('inf')
+    
+    for alpha in alphas:
+        rescaled_values = []
+        for k in range(k_range[0], k_range[1]):
+            for m in range(max(1, m_range[0]), min(m_range[1], k*k)):
+                delta = compute_wreath_defect(beta_symm, beta_wreath, k, m)
+                if m > 0:
+                    rescaled = abs(delta) * k**alpha / m
+                    rescaled_values.append(rescaled)
+        
+        if len(rescaled_values) > 2:
+            mean = np.mean(rescaled_values)
+            std = np.std(rescaled_values)
+            cv = std / mean if mean > 0 else float('inf')
+            
+            if cv < min_cv:
+                min_cv = cv
+                best_alpha = alpha
+    
+    return best_alpha, min_cv
+
+
+def polynomial_defect_envelope(
+    C0: float,
+    gamma: float,
+    k: int,
+    m: int
+) -> float:
+    """
+    Compute the polynomial defect envelope C₀ · m^γ / k.
+    
+    Args:
+        C0: Base constant
+        gamma: Growth exponent
+        k: Base group parameter
+        m: Number of copies
+    
+    Returns:
+        Upper bound on |Δ(k,m)|
+    
+    Example:
+        >>> polynomial_defect_envelope(0.5, 1.0, 10, 5)
+        0.25
+    """
+    if k <= 0:
+        return float('inf')
+    return C0 * m**gamma / k
+
+
+def critical_scaling_function(alpha: float, k: int) -> int:
+    """
+    Compute m*(k) = ⌊k^α⌋.
+    
+    Args:
+        alpha: Critical exponent
+        k: Base group parameter
+    
+    Returns:
+        Critical scaling threshold m*(k)
+    
+    Example:
+        >>> critical_scaling_function(1.0, 10)
+        10
+        >>> critical_scaling_function(0.5, 100)
+        10
+    """
+    return int(np.floor(k**alpha))
+
+
+def verify_trichotomy(
+    beta_symm: callable,
+    beta_wreath: callable,
+    alpha: float,
+    k_values: List[int]
+) -> dict:
+    """
+    Verify the sharp trichotomy theorem numerically.
+    
+    Tests three sequences:
+    - Subcritical: m(k) = ⌊k^(α/2)⌋ 
+    - Critical: m(k) = ⌊k^α⌋
+    - Supercritical: m(k) = ⌊k^(2α)⌋
+    
+    Args:
+        beta_symm: Function k -> β(S_k)
+        beta_wreath: Function (k,m) -> β_W(k,m)
+        alpha: Critical exponent
+        k_values: k values to test
+    
+    Returns:
+        Dictionary with defect sequences for each regime
+    """
+    results = {
+        'subcritical': [],
+        'critical': [],
+        'supercritical': []
+    }
+    
+    for k in k_values:
+        # Subcritical
+        m_sub = max(1, int(k**(alpha/2)))
+        delta_sub = compute_wreath_defect(beta_symm, beta_wreath, k, m_sub)
+        results['subcritical'].append(abs(delta_sub))
+        
+        # Critical
+        m_crit = max(1, int(k**alpha))
+        delta_crit = compute_wreath_defect(beta_symm, beta_wreath, k, m_crit)
+        results['critical'].append(abs(delta_crit))
+        
+        # Supercritical
+        m_super = max(1, int(k**(2*alpha)))
+        delta_super = compute_wreath_defect(beta_symm, beta_wreath, k, m_super)
+        results['supercritical'].append(abs(delta_super))
+    
+    return results
+
+
+def defect_accumulation_bound(
+    delta_per_copy: float,
+    m: int
+) -> float:
+    """
+    Compute the inductive defect accumulation bound: m · δ.
+    
+    By Theorem 6, if each copy adds at most δ to the defect,
+    then after m copies the total defect is at most m · δ.
+    
+    Args:
+        delta_per_copy: Maximum defect per additional copy
+        m: Number of copies
+    
+    Returns:
+        Upper bound on total defect
+    """
+    return m * delta_per_copy
+
+
+# ============================================================
+# Example usage
+# ============================================================
 if __name__ == "__main__":
-    # Example usage
-    print("Polynomial defect bounds:")
-    for k in [5, 10, 50, 100]:
-        for m in [1, k, k**2]:
-            bound = polynomial_defect_bound(k, m, C=1.0, a=1, b=1)
-            print(f"  k={k:4d}, m={m:6d}: bound = {bound:.6f}")
-
-    print(f"\nCritical exponent for (a=1, b=1): {critical_exponent(1, 1)}")
-    print(f"Critical exponent for (a=2, b=3): {critical_exponent(2, 3)}")
-
-    print("\nRegime classification:")
-    for k in [10, 100]:
-        for m in [1, k, k**2]:
-            reg = classify_regime_quantitative(m, k, a=1, b=1)
-            print(f"  k={k}, m={m}: {reg}")
+    # Define model functions
+    def bs(k):
+        return k * np.log(max(k, 2)) / 2
+    
+    def bw(k, m):
+        gamma = 1.0
+        C0 = 0.5
+        defect = C0 * m**gamma / max(k, 1) * (0.5 + 0.3 * np.sin(k + m))
+        return m * bs(k) + defect
+    
+    # Find critical exponent
+    print("Finding critical exponent by data collapse...")
+    alpha_est, cv = find_critical_exponent(bs, bw, k_range=(5, 30))
+    print(f"  Best α = {alpha_est:.3f} (CV = {cv:.4f})")
+    print()
+    
+    # Verify trichotomy
+    print("Verifying trichotomy at α = 1.0...")
+    k_vals = list(range(5, 51))
+    tri = verify_trichotomy(bs, bw, 1.0, k_vals)
+    
+    for regime in ['subcritical', 'critical', 'supercritical']:
+        vals = tri[regime]
+        trend = "→ 0" if vals[-1] < vals[0] * 0.5 else "→ ∞" if vals[-1] > vals[0] * 2 else "~ const"
+        print(f"  {regime:>15}: final |Δ| = {vals[-1]:.4f}, trend: {trend}")
+    
+    print()
+    print("Classification examples:")
+    for mf_desc, mf in [("m=√k", lambda k: int(k**0.5)),
+                         ("m=k", lambda k: k),
+                         ("m=k²", lambda k: k*k)]:
+        phase = classify_scaling(mf, 1.0, list(range(10, 100)))
+        print(f"  {mf_desc:>8} → {phase}")
