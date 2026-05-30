@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Topology / Number Theory",
     "date": "2026-05-30T04:50:33Z",
     "exp_id": "840c8512",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7183628780487805,
+    "quality": "substantial",
     "pkg_num": 382
   },
   {
@@ -11087,8 +11087,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-30T04:50:33Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7183628780487805,
+      "quality": "substantial"
     }
   ],
   "edges": [
