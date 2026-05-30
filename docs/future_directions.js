@@ -265,6 +265,22 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.756189+00:00"
   },
   {
+    "id": "seed_075",
+    "title": "Stereographic Neural Attention: Attention via Riemann Sphere",
+    "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
+    "domains": [
+      "Geometry",
+      "MachineLearning",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.870982+00:00"
+  },
+  {
     "id": "seed_079",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
@@ -297,6 +313,70 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.996007+00:00"
   },
   {
+    "id": "seed_090",
+    "title": "Inverse Stereographic Neural Field Theory",
+    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
+    "domains": [
+      "Geometry",
+      "MachineLearning",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.006665+00:00"
+  },
+  {
+    "id": "seed_091",
+    "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves",
+    "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
+    "domains": [
+      "Geometry",
+      "Analysis",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.015985+00:00"
+  },
+  {
+    "id": "seed_095",
+    "title": "Topological Quantum Error Correction from Homological Persistence",
+    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "domains": [
+      "Physics",
+      "Topology",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.057726+00:00"
+  },
+  {
+    "id": "seed_096",
+    "title": "Neural Network Training as Renormalization Group Flow",
+    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
+    "domains": [
+      "MachineLearning",
+      "Physics",
+      "Analysis"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.066174+00:00"
+  },
+  {
     "id": "seed_098",
     "title": "Consciousness Complexity: Integrated Information as a Topological Invariant",
     "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
@@ -327,6 +407,70 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:55.097627+00:00"
+  },
+  {
+    "id": "seed_100",
+    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge",
+    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
+    "domains": [
+      "Physics",
+      "Topology",
+      "Analysis"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.107798+00:00"
+  },
+  {
+    "id": "seed_101",
+    "title": "AdS/CFT for Proof Theory: Holographic Verification",
+    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
+    "domains": [
+      "Logic",
+      "Computation",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.118574+00:00"
+  },
+  {
+    "id": "seed_102",
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
+    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
+    "domains": [
+      "Physics",
+      "Topology",
+      "MachineLearning"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.127465+00:00"
+  },
+  {
+    "id": "seed_103",
+    "title": "Gravity as Quantum Error Correction: Spacetime from Codes",
+    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
+    "domains": [
+      "Physics",
+      "Computation",
+      "Cryptography"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:55.135909+00:00"
   },
   {
     "id": "seed_104",
@@ -1038,10 +1182,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical Geometry"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba452feb",
     "timestamp": "2026-05-25T18:03:02.506322+00:00"
   },
   {
@@ -2009,10 +2153,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c89156c3",
-    "consumed_by_exp_id": "5718240a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T17:48:46.696888+00:00"
   },
   {
@@ -3344,10 +3488,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f6e3dce",
     "timestamp": "2026-05-28T15:57:05.219278+00:00"
   },
   {
@@ -3703,30 +3847,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8c1a4c4e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T03:38:36.715380+00:00"
-  },
-  {
-    "id": "fd_2044",
-    "title": "The M-convexity inheritance theorem reveals that second-derivative aggregation p",
-    "description": "# Future Directions: M-Convexity Inheritance and Hessian Shadows\n\n## Synthesis\n\nThe M-convexity inheritance theorem reveals that second-derivative aggregation preserves the exact combinatorial exchange geometry of discrete optimization domains. This creates a new functorial pathway from Lorentzian positivity (algebraic geometry) through M-convex exchange systems (discrete optimization) to polynomial-time algorithms. The five directions below extend this bridge in complementary ways: deeper into algebraic structure (Direction 1), broader across optimization theory (Direction 2), into the physics of negative dependence (Direction 3), toward tropical geometry (Direction 4), and into algorithmic game theory (Direction 5).\n\n---\n\n## Direction 1: Higher-Order Shadow Cascades and M-Convex Towers\n\n**Conjecture:** For any M-convex set S with constant degree d \u2265 k, the k-step shadow \u2202\u1d4fS = \u2202(\u2202(...\u2202(S)...)) is M-convex.\n\n**Test:** Verify computationally for U(r,n) with n \u2264 10 and k up to d. Check whether the exchange graph diameter changes predictably with k.\n\n**Impact:** Would establish an infinite tower of M-convex sets descending from any starting set, creating a \"discrete derivative calculus\" with guaranteed algorithmic tractability at every level. This would mean every Lorentzian polynomial generates a polynomial-length cascade of efficiently optimizable combinatorial state spaces.\n\n**The key insight is** that the compositional structure of our proof (two-step = one-step twice) immediately generalizes, but the base case needs re-verification at each step because the exchange witnesses change.\n\n**Why now?** The formalization infrastructure (definitions, helper lemmas, commutation identities) is now in place, making inductive generalization feasible.\n\n**Catalog References:** `Catalog/Pythagorean/HessianShadowMConvex.lean` (Theorems 1-3)\n\n**Proof Strategy:** Induction on k, using the one-step inheritance as the inductive step. The key lemma (exchange commutation through shadows) is already proved.\n\n**Domain Bridges:** Tropical geometry (erosion of Newton polytopes), algebraic K-theory (filtrations of exchange systems)\n\n**Lineage:** Direct extension of Theorems 1-2 in the current work.\n\n**Ambition:** solid_extension\n\n---\n\n## Direction 2: Valuated M-Convexity and Weighted Shadow Morphisms\n\n**Conjecture:** For a valuated matroid (M, \u03c9) with M-convex support and valuation \u03c9 satisfying a convexity condition, the weighted Hessian shadow AgSh(S, A) inherits valuated M-convexity when A is compatible with \u03c9.\n\n**Test:** Compute valuated exchange graphs for graphic matroids with random valuations under positive weight matrices. Check whether the \"discrete concavity\" of the valuation is preserved through the shadow.\n\n**Impact:** Would extend the inheritance theorem from set-level M-convexity to function-level M\u266e-convexity, connecting to the full power of Murota's discrete convex duality. This would enable Fenchel-type duality for Hessian-derived optimization problems.\n\n**The key insight is** that the shadow operation on supports is the combinatorial projection of a differentiation operator on valuated functions, and M\u266e-convexity is preserved under projections in Murota's framework.\n\n**Why now?** Valuated matroid theory has matured significantly with recent work by Baker-Bowler, and the categorical framework for morphisms between valuated matroids is now available.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` (anti-cancellation), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`\n\n**Proof Strategy:** Extend the support-level shadow to include coefficient tracking. Use anti-cancellation to ensure support exactness, then verify the valuated exchange axiom using the convexity of \u03c9.\n\n**Domain Bridges:** Tropical geometry (tropicalization of Hessians), algebraic geometry (Newton-Okounkov bodies)\n\n**Lineage:** Builds on anti-cancellation results and the set-level inheritance theorem.\n\n**Ambition:** grand_challenge\n\n---\n\n## Direction 3: Negative Dependence and Hessian Markov Chains\n\n**Conjecture:** If \u03bc is a strongly log-concave distribution (equivalently, its generating polynomial is Lorentzian), then the \"Hessian response distribution\" defined by the aggregate Hessian has M-convex support, enabling polynomial-time mixing of local Markov chains on the Hessian state space.\n\n**Test:** Simulate Glauber dynamics on the support of AgHess(p, I) for determinantal point process generating polynomials. Measure mixing times and compare with the theoretical O(n log n) bound guaranteed by M-convexity.\n\n**Impact:** Would provide a new class of efficiently sampleable distributions derived from strongly log-concave measures, with applications to experimental design, diversity sampling, and Monte Carlo methods in machine learning.\n\n**The key insight is** that M-convexity of the support is precisely the condition needed for the \"down-up walk\" and similar local Markov chains to mix in polynomial time, by the framework of Anari-Liu-Oveis Gharan-Vinzant.\n\n**Why now?** The connection between Lorentzian polynomials and rapid mixing was established in 2021-2023, but the role of Hessian shadows as derived sampling domains has not been explored.\n\n**Catalog References:** `Catalog/Pythagorean/HessianShadowMConvex.lean` (Theorem 5, matroid application)\n\n**Proof Strategy:** Use the inheritance theorem to establish M-convexity of the Hessian support, then invoke known mixing time bounds for exchange walks on M-convex sets.\n\n**Domain Bridges:** Statistical physics (partition functions), machine learning (determinantal sampling), probability (negative association)\n\n**Lineage:** Combines the inheritance theorem with Anari et al.'s mixing time results.\n\n**Ambition:** grand_challenge\n\n---\n\n## Direction 4: Tropical Hessians and Newton Polytope Erosion\n\n**Conjecture:** The two-step shadow of an M-convex set S equals the integer points of the Minkowski difference Newton(S) \u2296 \u0394\u2082, where \u0394\u2082 is the second dilate of the standard simplex, intersected with the hyperplane of degree d-2.\n\n**Test:** Compute Newton polytopes and Minkowski differences for matroid basis polytopes. Verify that the integer points of the eroded polytope match the two-step shadow exactly.\n\n**Impact:** Would provide a polyhedral-geometric characterization of the shadow operation, connecting M-convexity inheritance to the tropical geometry of Newton subdivisions and enabling the use of polyhedral computation tools.\n\n**The key insight is** that the shadow operation \u03b1 \u21a6 \u03b1 - e\u1d62 - e\u2c7c is a Minkowski subtraction at the tropical level, and the M-convexity of integer points in generalized polymatroids is preserved under such operations.\n\n**Why now?** Tropical Hodge theory has recently been developed by Adiprasito-Huh-Katz, providing the geometric framework to interpret derivative shadows as erosion operations on Newton polytopes.\n\n**Catalog References:** `Catalog/Pythagorean/HessianShadowMConvex.lean` (shadow definitions)\n\n**Proof Strategy:** Show that the shadow equals the lattice points of a generalized polymatroid, then use Murota's characterization of M-convex sets as lattice points of base polyhedra.\n\n**Domain Bridges:** Tropical geometry, polyhedral combinatorics, algebraic geometry\n\n**Lineage:** Geometric reinterpretation of the combinatorial shadow theorem.\n\n**Ambition:** solid_extension\n\n---\n\n## Direction 5: Hessian Shadows in Algorithmic Game Theory\n\n**Conjecture:** In a combinatorial auction with matroid-based valuations, the set of Hessian-perturbed allocations (under second-order price sensitivity) forms an M-convex set, enabling polynomial-time computation of approximate Walrasian equilibria in the perturbed market.\n\n**Test:** Implement a Hessian-perturbed auction clearing algorithm for graphic matroid valuations. Compare convergence rate with unperturbed clearing and verify that the exchange property enables greedy equilibrium finding.\n\n**Impact:** Would establish that second-order sensitivity analysis in combinatorial markets preserves the tractability of equilibrium computation \u2014 a key requirement for robust mechanism design under perturbation.\n\n**The key insight is** that Walrasian equilibrium computation reduces to optimization over M-convex sets (Murota-Shioura), and the inheritance theorem guarantees that Hessian perturbation doesn't destroy this structure.\n\n**Why now?** The connection between M-convexity and market equilibria was formalized by Murota-Shioura in 2014, but robustness under analytic perturbation has not been studied.\n\n**Catalog References:** `Catalog/Pythagorean/HessianShadowMConvex.lean` (Theorems 3, 5)\n\n**Proof Strategy:** Model the perturbed market as AgHess applied to the matroid valuation polynomial, then apply the inheritance theorem and Murota-Shioura's equilibrium existence result.\n\n**Domain Bridges:** Algorithmic game theory, mechanism design, mathematical economics\n\n**Lineage:** Application of the morphism property (Theorem 3) to economic settings.\n\n**Ambition:** solid_extension\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "93b2b0c7",
-    "consumed_by_exp_id": "89a99f0f",
-    "timestamp": "2026-05-29T04:14:57.399442+00:00"
   },
   {
     "id": "fd_2056",
@@ -4313,28 +4433,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "f9084be0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T12:11:18.911364+00:00"
-  },
-  {
-    "id": "fd_2088",
-    "title": "The directional depth filtration established in this work creates a new invarian",
-    "description": "# Future Directions: Directional Depth Theory for Valuated Matroids\n\n## Synthesis\n\nThe directional depth filtration established in this work creates a new invariant for functions on integer lattice points that simultaneously captures iterated log-concavity, tropical convexity persistence, and proto-Lorentzian structure. The five directions below form a coherent program: Direction 1 (Lorentzian connection) provides the algebraic foundation, Direction 2 (support-aware depth) extends applicability to combinatorial objects with zeros, Direction 3 (algorithmic applications) delivers computational impact, Direction 4 (phase transitions) bridges to statistical physics, and Direction 5 (categorical structure) provides the abstract framework unifying them all. Together, they constitute a research program to develop **higher discrete curvature theory** as a new subfield spanning combinatorics, tropical geometry, and mathematical physics.\n\n---\n\n## Direction 1: Infinite Depth Characterization via Lorentzian Polynomials\n\n**Conjecture**: Every function arising as the coefficient function of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh) has infinite directional depth. Conversely, infinite depth on a degree slice with exchange-closed support characterizes Lorentzian-origin valuations among all valuated matroids.\n\n**The key insight is** that the Hessian contraction property of Lorentzian polynomials \u2014 the defining recursive condition that all directional derivatives preserve the Lorentzian sign pattern \u2014 is structurally parallel to our depth recursion, where ratio transforms (discrete logarithmic derivatives) preserve log-concavity. Establishing this equivalence would show that depth = \u221e is precisely the discrete shadow of the Lorentzian condition.\n\n**Why now?** The recent proof by Br\u00e4nd\u00e9n\u2013Huh that Lorentzian polynomials are closed under a wide class of linear operators provides exactly the tool needed to show that ratio transforms (which are multiplicative analogs of differentiation) preserve the Lorentzian condition. The theory of completely log-concave polynomials by Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant gives complementary techniques for the converse direction.\n\n**Test**: Implement the Lorentzian polynomial checker for small (n \u2264 5, d \u2264 6) examples and verify that every Lorentzian coefficient function has depth exceeding any tested bound. Construct a non-Lorentzian function of infinite depth (if one exists) to disprove the converse, or prove the converse for n = 2.\n\n**Impact**: This would establish depth as the correct discrete analog of Lorentzian polynomial theory, creating a bridge between Hodge theory and tropical convexity.\n\n**Catalog References**: `Pythagorean/ValuatedMatroidDepth/Theorems.lean` \u2014 `directionalDepthAtLeast_mul`, `negLog_supermodular_of_depth_one`; `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave.mul`, `geometric_kFoldLogConcave`.\n\n**Proof Strategy**: For the forward direction, use induction on depth. At each level, the Hessian contraction gives a Lorentzian polynomial whose coefficients are the ratio-transformed values. For the converse, show that infinite depth + exchange-closure implies the tropical Pl\u00fccker relations, which characterize Lorentzian polynomials by the Dress\u2013Wenzel theorem.\n\n**Domain Bridges**: Algebraic geometry (Hodge\u2013Riemann relations), matroid theory (Chow ring positivity).\n\n**Lineage**: Extends Br\u00e4nd\u00e9n\u2013Huh 2020, Adiprasito\u2013Huh\u2013Katz 2018.\n\n**Ambition**: grand_challenge \u2014 would unify two major threads in modern combinatorics.\n\n---\n\n## Direction 2: Support-Aware Depth for Functions with Zeros\n\n**Conjecture**: There exists a well-defined notion of \"support-aware directional depth\" for functions f : (\u03b1 \u2192 \u2115) \u2192 \u211d\u22650 that may have zeros, such that: (a) it agrees with ordinary depth on globally positive functions, (b) it is \u2265 1 for all M-convex functions, and (c) it is multiplicative.\n\n**The key insight is** that the current theory requires positivity to define ratio transforms (avoiding 0/0). By restricting the log-concavity condition to the \"tropical support\" \u2014 the set of multi-indices where f is positive \u2014 and defining the ratio transform only on the interior of this support, one can extend depth to functions with zeros. The exchange-closed support condition (already formalized) provides the correct notion of \"well-behaved boundary.\"\n\n**Why now?** The weak exchange theorem proved in our formalization already connects exchange-closed support to the depth machinery. The missing piece is a careful treatment of boundary effects in the ratio transform, which requires techniques from tropical convexity theory (specifically, the theory of tropical linear spaces as developed by Speyer and Sturmfels).\n\n**Test**: Implement support-aware depth for uniform matroid indicators U(r, n) and verify that the depth is consistently 1 (matching the dichotomy conjecture). Check that the multiplicativity theorem extends to the support-aware setting for products of matroid indicators.\n\n**Impact**: Would make the depth invariant applicable to all valuated matroids, not just positive-valued ones.\n\n**Catalog References**: `Pythagorean/ValuatedMatroidDepth/Defs.lean` \u2014 `ExchangeClosedSupport`, `ExchangeMove`; `Pythagorean/ValuatedMatroidDepth/Theorems.lean` \u2014 `weak_exchange_of_depth_one`, `exchangeMove_degree`.\n\n**Proof Strategy**: Define SupportAwareDepth by replacing the universal quantifiers in DirectionalLogConcave with quantifiers restricted to the tropical support. Prove multiplicativity by showing that the support of a product is the intersection of supports, and that exchange-closure is preserved under intersection.\n\n**Domain Bridges**: Tropical geometry (tropical linear spaces), discrete convex analysis (M-convex functions).\n\n**Lineage**: Extends Murota 2003, Dress\u2013Wenzel 1992.\n\n**Ambition**: solid_extension \u2014 necessary infrastructure for applying the theory to real matroid problems.\n\n---\n\n## Direction 3: Depth as a Convexity Certificate in Discrete Optimization\n\n**Conjecture**: For discrete optimization problems on M-convex domains, the directional depth of the objective function provides a quantitative convergence guarantee: depth-k functions admit optimization algorithms with convergence rate O(n^k / \u03b5) on domains of dimension n.\n\n**The key insight is** that depth measures the \"smoothness\" of the discrete energy landscape. In continuous optimization, higher regularity (Lipschitz gradient, Lipschitz Hessian, etc.) gives faster convergence. The depth filtration is the discrete analog: depth 1 gives convexity (gradient descent works), depth 2 gives convex Hessian (Newton's method works), and higher depth should give even faster methods.\n\n**Why now?** Recent work on discrete convex optimization (Murota's algorithm for M-convex minimization, and the AHK framework for matroid intersection) provides the algorithmic foundation. The depth theory provides the missing \"regularity certificate\" that these algorithms implicitly assume but do not measure.\n\n**Test**: Implement a depth-aware steepest descent algorithm for M-convex minimization. Compare convergence on depth-1 vs. depth-\u221e functions on degree slices of dimension n \u2208 {5, ..., 15}. Verify that higher depth correlates with faster convergence.\n\n**Impact**: Would give the first quantitative connection between the algebraic structure of a valuated matroid and the computational complexity of optimization over it.\n\n**Catalog References**: `Pythagorean/ValuatedMatroidDepth/Theorems.lean` \u2014 `negLog_supermodular_of_depth_one`, `ratio_energy_supermodular`.\n\n**Proof Strategy**: For depth 1, use the supermodularity of \u2212log f to show that steepest descent converges in O(n/\u03b5) steps (analogous to gradient descent for convex functions). For depth 2, use the supermodularity of the ratio transform to show that a Newton-like method converges in O(log(n/\u03b5)) steps.\n\n**Domain Bridges**: Combinatorial optimization (matroid intersection), algorithmic game theory (gross substitutes).\n\n**Lineage**: Extends Murota 2003, Anari et al. 2021.\n\n**Ambition**: solid_extension \u2014 directly actionable with existing algorithmic tools.\n\n---\n\n## Direction 4: Depth and Phase Transitions in Statistical Mechanics\n\n**Conjecture**: For the Ising model partition function on a graph G at inverse temperature \u03b2, the directional depth is infinite for \u03b2 < \u03b2_c (high-temperature phase) and drops to 1 at \u03b2 = \u03b2_c (the critical point). The depth transition precisely detects the phase transition.\n\n**The key insight is** that the partition function Z(m) = \u03a3 exp(\u2212\u03b2H(\u03c3)) viewed as a function of external field parameters m is deeply log-concave in the high-temperature phase (where the system is essentially a product measure) and loses higher-order log-concavity at the phase transition (where long-range correlations destroy the factorization structure that powers the multiplicativity theorem).\n\n**Why now?** The recent proof of the Lee\u2013Yang theorem for the Ising model (Bencs, Buys, Peters 2024) and the connection between log-concavity and strong spatial mixing (Anari et al. 2021) provide the technical tools to relate depth to correlation decay. Our multiplicativity theorem gives the key structural input: product measures (independent systems) have infinite depth, so the question reduces to understanding how interactions degrade depth.\n\n**Test**: Compute the directional depth of the Ising partition function on the 4 \u00d7 4 grid at temperatures \u03b2 \u2208 {0.1, 0.2, ..., 2.0}. Plot depth vs. \u03b2 and compare the depth transition with the known critical temperature. Repeat for the triangular and hexagonal lattices.\n\n**Impact**: Would establish depth as a statistical-mechanical order parameter, providing a new lens for understanding phase transitions that is complementary to correlation length, susceptibility, and free energy analysis.\n\n**Catalog References**: `Pythagorean/ValuatedMatroidDepth/Theorems.lean` \u2014 `ratio_energy_supermodular`, `directionalDepthAtLeast_mul`.\n\n**Proof Strategy**: In the high-temperature phase (\u03b2 small), use cluster expansion to approximate Z as a product of local partition functions, each with infinite depth (by the multiplicativity theorem). Show that the cluster expansion preserves depth to all orders. At \u03b2_c, construct an explicit ratio transform that violates log-concavity using the divergent susceptibility.\n\n**Domain Bridges**: Statistical mechanics (phase transitions, Lee\u2013Yang theory), information geometry (Fisher information).\n\n**Lineage**: Extends Lee\u2013Yang 1952, Anari et al. 2021.\n\n**Ambition**: grand_challenge \u2014 would connect combinatorial curvature to physics in a novel way.\n\n---\n\n## Direction 5: Categorical Depth and Functoriality\n\n**Conjecture**: The depth filtration is functorial with respect to the category of valuated matroids and their morphisms (weak maps, strong maps, and tropical linear maps). Specifically, depth is non-increasing under weak maps and non-decreasing under strong maps.\n\n**The key insight is** that the ratio transform commutes with pullback along matroid morphisms (at least the \"product-preserving\" ones), so the depth filtration should be compatible with the categorical structure of matroids. This would make depth a true invariant of the matroid, not just of a particular representation.\n\n**Why now?** The recent development of tropical scheme theory (Giansiracusa\u2013Giansiracusa, Lorscheid) and the functorial perspective on matroids (Baker\u2013Bowler theory of matroids over hyperfields) provides the categorical framework needed to state and prove functoriality. Our multiplicativity theorem already proves one case: the product construction is a special case of a strong map, and depth is preserved.\n\n**Test**: Verify functoriality for the deletion/contraction operations on small valuated matroids (n \u2264 6). Check whether depth is preserved, decreased, or increased under deletion and contraction.\n\n**Impact**: Would embed the depth filtration into the modern categorical framework for matroid theory, opening connections to K-theory and motivic invariants of matroids.\n\n**Catalog References**: `Pythagorean/ValuatedMatroidDepth/Defs.lean` \u2014 all definitions; `Pythagorean/ValuatedMatroidDepth/Theorems.lean` \u2014 `directionalDepthAtLeast_mul`.\n\n**Proof Strategy**: Define the relevant matroid morphism categories. For weak maps, show that the pullback of a log-concave function is log-concave (this is a known result in discrete convexity). For strong maps, show that the pushforward preserves the ratio transform structure.\n\n**Domain Bridges**: Category theory (functorial invariants), algebraic K-theory (matroid K-theory), algebraic geometry (tropical schemes).\n\n**Lineage**: Extends Baker\u2013Bowler 2019, Dress\u2013Wenzel 1992.\n\n**Ambition**: solid_extension \u2014 provides conceptual clarity and connects to active research programs.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a941f362",
-    "consumed_by_exp_id": "d7c92ab8",
-    "timestamp": "2026-05-29T12:12:22.365445+00:00"
   },
   {
     "id": "fd_2090",
@@ -5602,10 +5700,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5111cc57",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6333883c",
     "timestamp": "2026-05-29T21:15:28.302167+00:00"
   },
   {
@@ -5691,10 +5789,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "927a59ea",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "76c13972",
     "timestamp": "2026-05-29T21:51:35.633092+00:00"
   },
   {
@@ -6148,22 +6246,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.961577+00:00"
   },
   {
-    "id": "seed_091",
-    "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves",
-    "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
-    "domains": [
-      "Geometry",
-      "Analysis",
-      "Physics"
-    ],
-    "priority_score": 0.97,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.015985+00:00"
-  },
-  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -6209,38 +6291,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.978415+00:00"
-  },
-  {
-    "id": "seed_090",
-    "title": "Inverse Stereographic Neural Field Theory",
-    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "priority_score": 0.96,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.006665+00:00"
-  },
-  {
-    "id": "seed_103",
-    "title": "Gravity as Quantum Error Correction: Spacetime from Codes",
-    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Cryptography"
-    ],
-    "priority_score": 0.96,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.135909+00:00"
   },
   {
     "id": "seed_002",
@@ -6305,22 +6355,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.634081+00:00"
   },
   {
-    "id": "seed_075",
-    "title": "Stereographic Neural Attention: Attention via Riemann Sphere",
-    "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "priority_score": 0.95,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.870982+00:00"
-  },
-  {
     "id": "seed_092",
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres",
     "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
@@ -6337,20 +6371,75 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:55.026751+00:00"
   },
   {
-    "id": "seed_095",
-    "title": "Topological Quantum Error Correction from Homological Persistence",
-    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "id": "fd_2162",
+    "title": "This research cycle established directional depth as a viable mathematical invar",
+    "description": "# Future Directions: Directional Depth Theory\n\n## Synthesis\n\nThis research cycle established directional depth as a viable mathematical invariant, proving its core structural properties (antitone filtration, product preservation, tropical bridge, exchange property) and demonstrating its connections to matroid theory and tropical geometry. The most significant finding was the **refutation of the phase transition conjecture**: random perturbations of geometric sequences break log-concavity almost surely, revealing that log-concavity is algebraically fragile in a way that constrains the theory's direct applicability to noisy data.\n\nThe strongest cross-domain connection is between depth theory and matroid exchange properties (Theorem `logConcave_exchange` in `Pythagorean/DirectionalDepthTheory.lean`). The exchange inequality `a(i)\u00b7a(j+1) \u2264 a(i+1)\u00b7a(j)` is the foundational axiom for greedy optimality in combinatorial optimization. Our result provides a clean certification path: verify log-concavity (O(n) time), conclude exchange, conclude greedy optimality. This connects discrete curvature (depth theory) to algorithm design (matroid optimization) through a precisely verified bridge.\n\nThe highest breakthrough potential lies in **Direction 1** (higher-dimensional depth), which would connect to the full Lorentzian polynomial framework of Br\u00e4nd\u00e9n-Huh and unlock applications to multivariate combinatorial objects (matroid basis counting, Hodge theory, chromatic polynomials). The tropical bridge theorem (`logConcave_tropical_bridge`) provides the necessary algebraic foundation for this extension.\n\n---\n\n### Direction 1: Higher-Dimensional Depth for Lattice Functions\n\n**Conjecture**: For a function `f : \u2124\u207f \u2192 \u211d\u208a`, define the **directional ratio transform** in direction `e_i` as `R_i(f)(x) = f(x + e_i) / f(x)`. Then `f` has *multivariate depth \u2265 k* if it is log-concave in every direction and all directional ratio transforms have depth \u2265 k-1. Conjecture: the coefficient function of a Lorentzian polynomial of degree d has multivariate depth \u2265 d.\n\n**Test**: Compute the multivariate depth of the coefficient function of `(x\u2081 + x\u2082 + x\u2083)^n` for n = 3, 4, 5. These are multinomial coefficients, known to be Lorentzian. Verify whether depth equals n.\n\n**Impact**: If true, this establishes depth as the discrete shadow of the Lorentzian condition, providing a computable invariant for detecting Lorentzian-origin valuations among all valuated matroids. If false, the failure mode reveals which directional interactions break the filtration.\n\n**Catalog References**: `Pythagorean/DirectionalDepthTheory.lean` (ratio transform definition, product theorem), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange property, ultra-log-concavity)\n\n**Proof Strategy**: Define `MultivariateDepth` as an inductive predicate on `(Fin n \u2192 \u2124) \u2192 \u211d`. Prove that Lorentzian polynomials satisfy the base case using the Hessian contraction property. The key lemma is that directional ratio transforms of Lorentzian polynomials correspond to directional derivatives, which preserve the Lorentzian condition by Br\u00e4nd\u00e9n-Huh.\n\n**Domain Bridges**: Algebra <-> Tropical, Pythagorean <-> Algebra\n\n**Lineage**: Builds on `geometric_infinite_depth`, `logConcave_tropical_bridge`, and `ratioTr_antitone` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Approximate Depth and Robust Log-Concavity\n\n**Conjecture**: Define *\u03b5-log-concavity* as `a(n+1)\u00b2 \u2265 (1-\u03b5) \u00b7 a(n) \u00b7 a(n+2)`. Then for any \u03b5 > 0, the \u03b5-depth (iterated \u03b5-log-concavity under ratio transform) of a perturbed geometric sequence `r\u207f(1+\u03b4_n)` with `|\u03b4_n| < \u03b4` satisfies \u03b5-depth \u2265 c \u00b7 log(1/\u03b4) for `\u03b5 \u2265 C\u00b7\u03b4` and universal constants c, C.\n\n**Test**: Compute \u03b5-depth for \u03b4 = 0.01 and \u03b5 = 0.1 on 200 random samples of length 20. Verify whether \u03b5-depth \u2265 2 holds with probability > 0.8.\n\n**Impact**: Resolves the fragility problem exposed by the refutation of the phase transition conjecture. A robust version of depth would make the theory applicable to statistical and signal processing contexts where exact algebraic conditions are never satisfied.\n\n**Catalog References**: `Pythagorean/DirectionalDepthTheory.lean` (phase transition conjecture refutation), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange certificates)\n\n**Proof Strategy**: Define `HasApproxDepth \u03b5 a k` with weakened inequality. Prove approximate versions of the product theorem and tropical bridge. The key new ingredient is an error propagation lemma: how does the \u03b5 parameter grow under ratio transforms?\n\n**Domain Bridges**: Pythagorean <-> MachineLearning (robust curvature for ML applications)\n\n**Lineage**: Directly extends the refuted `depthPhaseTransitionConjecture`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Depth of Matroid Basis Counting Sequences\n\n**Conjecture**: For the uniform matroid U(r, n), the basis counting sequence `b(k) = C(n, r)` restricted to the `k`-th weight class has depth \u2265 1. More broadly, for any matroid M, the independent set counting sequence `f_M(k) = |{I \u2208 I(M) : |I| = k}|` has depth \u2265 0 (log-concavity, following Mason's conjecture proved by Adiprasito-Huh-Katz) and conjecturally depth \u2265 1.\n\n**Test**: Compute the depth of `f_M(k)` for all matroids on \u2264 8 elements (using the matroid database). Check whether depth \u2265 1 holds universally.\n\n**Impact**: If true, this gives a structural explanation for why matroid sequences are \"more than log-concave\" \u2014 they have robust curvature at the ratio level. This would connect to the Hodge-Riemann relations in matroid theory.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (basis exchange from log-concavity), `Pythagorean/DirectionalDepthTheory.lean` (depth definition, product theorem)\n\n**Proof Strategy**: Use the ultra-log-concavity of matroid basis counting sequences (proved by Br\u00e4nd\u00e9n-Huh) to show that `C(n,k)/C(d,k)` is log-concave, which implies the ratio transform is also log-concave. Formalize in Lean using the `UltraLogConcave` predicate from `LorentzianExchangeCertificates.lean`.\n\n**Domain Bridges**: Pythagorean <-> Algebra (matroid intersection theory)\n\n**Lineage**: Builds on `logConcave_exchange`, `depth_product_min`, and `product_logConcave`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Categorical Depth Theory\n\n**Conjecture**: The collection of positive sequences with depth \u2265 k, together with \"depth-preserving maps\" (monotone transformations that don't decrease depth), forms a category `Depth_k`. The inclusions `Depth_{k+1} \u2192 Depth_k` are functorial, and the inverse limit `Depth_\u221e` is equivalent to the category of P\u00f3lya frequency sequences.\n\n**Test**: Verify the categorical axioms (identity, composition) for depth-preserving maps in Lean. Check whether the product map `(a, b) \u21a6 a\u00b7b` is a monoidal structure on `Depth_k`.\n\n**Impact**: A categorical formulation would provide the abstract framework for extending depth theory to new mathematical domains (sheaves, categories of representations) and connect to the categorical structures in the Catalog's `EML` and `Algebra` sections.\n\n**Catalog References**: `Pythagorean/DirectionalDepthTheory.lean` (DepthFiltration structure), `Catalog/EML/CategoryTheorems.lean`, `Catalog/Bridges/TannakaClosureReconstruction.lean`\n\n**Proof Strategy**: Define a `Category` instance on `DepthFiltration k` with morphisms as order-preserving maps that commute with the ratio transform. Prove the monoidal structure using `depth_product_min`. The key challenge is defining the correct morphism condition.\n\n**Domain Bridges**: Pythagorean <-> EML (categorical structures), Pythagorean <-> Algebra (algebraic categories)\n\n**Lineage**: Builds on `DepthFiltration`, `DepthFiltration.restrict`, `depth_product_min`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Tropical Depth and Valuated Matroid Classification\n\n**Conjecture**: Through the tropical bridge (`logConcave_tropical_bridge`), the depth filtration on sequences induces a filtration on tropical Laurent series. A valuated matroid whose valuation function has tropical depth \u2265 k has at most `O(n^{d-k})` extreme rays in its associated tropical linear space, where d is the rank.\n\n**Test**: Compute the tropical depth and extreme ray count for the Fano matroid, the Petersen matroid, and all uniform matroids U(r, n) with n \u2264 8. Check the predicted bound.\n\n**Impact**: This would connect depth theory to the combinatorial geometry of tropical linear spaces, providing a new tool for classifying valuated matroids. The bound on extreme rays would have implications for tropical optimization and phylogenetic tree estimation.\n\n**Catalog References**: `Pythagorean/DirectionalDepthTheory.lean` (tropical bridge), `Catalog/Tropical/` (tropical semiring structures)\n\n**Proof Strategy**: Use the tropical bridge to translate depth conditions to concavity conditions on the valuation function. Apply tropical Hodge theory to bound the dimension of the tropical linear space. Formalize the connection between concavity of valuations and face counts of tropical polytopes.\n\n**Domain Bridges**: Pythagorean <-> Tropical (tropical linear spaces), Algebra <-> Tropical (valuated matroids)\n\n**Lineage**: Builds on `logConcave_tropical_bridge`, `depth_tropical`.\n\n**Ambition**: extension\n",
     "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
       "Physics",
-      "Topology",
-      "Computation"
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
     ],
     "priority_score": 0.95,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "seed",
+    "source_exp_id": "d7c92ab8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.057726+00:00"
+    "timestamp": "2026-05-30T02:31:40.645488+00:00"
+  },
+  {
+    "id": "fd_2163",
+    "title": "This research cycle established the foundational gauge-code correspondence \u2014 a f",
+    "description": "# Future Directions: Topological Quantum Error Correction from Gauge Theory\n\n## Synthesis\n\nThis research cycle established the foundational gauge-code correspondence \u2014 a formal mathematical dictionary translating between lattice gauge theory spectral gaps and quantum error correction code distances. The key discovery is that the GaugeCodeCorrespondence structure, which packages a spectral gap function, a code distance function, linear growth bounds, and uniform gap bounds into a single mathematical object, provides a powerful framework for reasoning about families of topological quantum codes. We proved that any such correspondence with positive linear growth constant yields divergent code distance (Theorem 4.1), uniformly growing protection (Theorem 4.2), and the existence of a threshold system size for any desired protection level (Theorem 5.1).\n\nThe most promising cross-domain connection from this cycle is the **group classification \u2192 code classification** bridge. Since finite groups are completely classified, and our gauge-code correspondence transports along group isomorphisms (preserving all quantitative bounds), the classification of topological quantum codes reduces to a classification problem in group theory. This connects abstract algebra, physics, and quantum information in a deeply structured way. The Catalog contains substantial infrastructure in both `Catalog/Physics/YangMillsMassGap.lean` (gauge theory foundations) and `Catalog/Physics/ToricCode.lean` (toric code chain complex), and the `Bridges/` directory offers templates for formalizing cross-domain connections.\n\nThe highest breakthrough potential lies in Direction 1 (non-abelian quantum doubles), because non-abelian groups like S\u2083 could yield codes with qualitatively richer error-correction properties \u2014 potentially breaking the d = L barrier for abelian codes. This would require formalizing group representations and conjugacy class counting, connecting to Catalog infrastructure in `Catalog/Algebra/`.\n\n---\n\n### Direction 1: Non-Abelian Quantum Doubles and the S\u2083 Code Distance\n\n**Conjecture**: The quantum double of the symmetric group S\u2083 on an L\u00d7L torus has code distance d = L, matching the abelian case, despite having a richer ground state degeneracy (|Conj(S\u2083)| = 3 conjugacy classes vs. |\u2124\u2082| = 2 for abelian codes).\n\n**Test**: Formalize S\u2083 as a Lean type with Group and Fintype instances. Construct the quantum double model for S\u2083 and verify d \u2265 L for L = 4, 8, 16 by computing minimum-weight homologically non-trivial cycles in the quantum double chain complex over the group algebra \u2102[S\u2083].\n\n**Impact**: If true, this confirms that the gauge-code correspondence d = \u0394\u00b7L is universal across all finite groups. If false, it reveals that non-abelian structure can modify the code distance, potentially opening a new design space for quantum codes with d > L or d < L depending on group structure.\n\n**Catalog References**: \n- `Catalog/Physics/YangMillsMassGap.lean`: `plaquette_gauge_covariance`, `class_fn_gauge_invariant`\n- `Catalog/Physics/ToricCode.lean`: `boundary_sq_zero`, `horizontal_cycle_weight`\n- `Catalog/Algebra/Basic.lean` and related files for group infrastructure\n\n**Proof Strategy**: (A) Define S\u2083 as Equiv.Perm (Fin 3) with its standard Group instance. (B) Construct the non-abelian boundary maps \u2202\u2081, \u2202\u2082 using the group algebra \u2102[S\u2083]. (C) Use `class_fn_gauge_invariant` to show that the code distance computation is gauge-invariant. (D) Bound the minimum weight of non-trivial cycles using representation-theoretic arguments (the code distance equals the minimum dimension of a non-trivial irrep times L).\n\n**Domain Bridges**: Algebra (group theory) <-> Physics (gauge theory) <-> Computation (code parameters)\n\n**Lineage**: Direct extension of the GaugeCodeCorrespondence structure and the \u2124\u2082/\u2124\u2083 verification from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 2: Spectral Gap Continuity and the Lattice-to-Continuum Limit\n\n**Conjecture**: For the lattice gauge theory with gauge group \u2124_p (p prime) on an L\u00d7L torus, the spectral gap \u0394(L, p) satisfies \u0394(L, p) \u2192 \u0394_\u221e(p) > 0 as L \u2192 \u221e, where \u0394_\u221e(p) depends only on p and equals the mass gap of the continuum theory.\n\n**Test**: For p = 2, 3, 5, 7, compute the spectral gap of the transfer matrix on L \u00d7 L lattices for L = 4, 8, 16, 32 and verify convergence. The convergence rate should be exponential: |\u0394(L,p) - \u0394_\u221e(p)| \u2264 C\u00b7exp(-L/\u03be) where \u03be = 1/\u0394_\u221e(p).\n\n**Impact**: This would establish the lattice-to-continuum limit for the spectral gap, connecting the discrete (computable) lattice theory to the continuum (physical) theory. It would also provide a rigorous foundation for the claim that lattice gauge theory simulations faithfully represent continuum physics.\n\n**Catalog References**:\n- `Catalog/Physics/YangMillsMassGap.lean`: `gap_cauchy_limit_positive`, `uniform_gap_infimum_positive`\n- `Catalog/Physics/SpectralGap.lean` (if exists)\n- `Catalog/Pythagorean/SL2Spectral.lean` or `FINAL/Pythagorean/SL2Spectral.lean`: `l2_iterate_decay_of_spectral_gap`\n\n**Proof Strategy**: (A) Use `gap_cauchy_limit_positive` to establish that a convergent sequence of positive gaps has a positive limit. (B) Show the sequence \u0394(L, p) is monotone decreasing (larger systems have weaker gaps) using `spectral_gap_perturbation_stability`. (C) Use `uniform_gap_infimum_positive` to establish the limit is positive.\n\n**Domain Bridges**: Physics (gauge theory) <-> Analysis (convergence theory)\n\n**Lineage**: Builds on `gap_cauchy_limit_positive` and `uniform_gap_infimum_positive` from `Catalog/Physics/YangMillsMassGap.lean`, and extends the GaugeCodeCorrespondence framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: E\u2088 Quantum Double and Exceptional Code Parameters\n\n**Conjecture**: The quantum double of a finite group whose representation theory mirrors E\u2088 structure (e.g., the binary icosahedral group 2I of order 120, which has the same McKay graph as E\u2088) produces a topological code with code distance d \u2265 L and ground state degeneracy equal to the number of conjugacy classes (9 for 2I).\n\n**Test**: (A) Formalize the binary icosahedral group 2I \u2245 SL(2, F\u2085) in Lean as a subgroup of Equiv.Perm (Fin 120). (B) Compute the number of conjugacy classes (should be 9). (C) Verify d \u2265 L for L = 4, 8 by direct cycle-weight computation. (D) Check whether the ground state degeneracy matches |Conj(2I)| = 9.\n\n**Impact**: The E\u2088 connection is one of the most tantalizing in mathematical physics. If the binary icosahedral quantum double has exceptional code properties (e.g., unusually large correction capacity relative to qubit count), it would suggest that the exceptional structures in the classification of simple Lie algebras have direct implications for quantum error correction \u2014 a new bridge between pure mathematics and quantum technology.\n\n**Catalog References**:\n- `Catalog/Physics/QuantumE8ModularForms.lean`\n- `Catalog/Algebra/` (group infrastructure)\n- `Catalog/Physics/YangMillsMassGap.lean`: `plaquette_transport`\n\n**Proof Strategy**: (A) Define 2I as the preimage of the icosahedral group A\u2085 under the covering SU(2) \u2192 SO(3). (B) Use `plaquette_transport` to relate the E\u2088 quantum double to other quantum doubles. (C) Compute code parameters using representation theory. The code distance should equal the minimum weight of a non-trivial element in H\u2081(T\u00b2; \u2102[2I]).\n\n**Domain Bridges**: Algebra (exceptional groups) <-> Physics (topological codes) <-> Number Theory (modular forms via E\u2088 root lattice)\n\n**Lineage**: Builds on `plaquette_transport` and the GaugeCodeCorrespondence transport theorem.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Geometry of Code Distance Optimization\n\n**Conjecture**: The optimal code distance for a quantum double code on a genus-g surface can be computed as a tropical shortest path in a weighted graph derived from the surface triangulation, where edge weights are determined by the spectral gap of the local gauge theory.\n\n**Test**: For the torus (g = 1) with \u2124\u2082 gauge group, verify that the tropical shortest path equals L (the known toric code distance). For g = 2, compute the tropical shortest path and compare with the known code distance bound d \u2264 O(\u221a(n/g)).\n\n**Impact**: This would provide an efficient algorithm (O(n log n) via Dijkstra) for computing or bounding code distances, which is typically NP-hard for general stabilizer codes. The tropical approach would also connect topological codes to the rich mathematical theory of tropical geometry.\n\n**Catalog References**:\n- `Catalog/Tropical/` (tropical geometry infrastructure)\n- `Catalog/Physics/ToricCode.lean`: `horizontal_cycle_weight`, `vertical_cycle_weight`\n- `Catalog/Physics/TropicalBarrier.lean`, `Catalog/Physics/TropicalQuantum/`\n\n**Proof Strategy**: (A) Define the tropical graph associated to the surface triangulation. (B) Show that the code distance equals the tropical shortest cycle. (C) Use tropical Hodge theory to relate the tropical distance to the spectral gap. The key lemma: the minimum-weight cycle in the tropical graph equals min over all non-trivial homology classes of the tropical norm.\n\n**Domain Bridges**: Tropical Geometry <-> Physics (topological codes) <-> Computation (shortest path algorithms)\n\n**Lineage**: Connects the Catalog's existing tropical infrastructure (`Catalog/Tropical/`) with the physics infrastructure (`Catalog/Physics/ToricCode.lean`). Novel bridge between tropical geometry and quantum error correction.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Machine Learning Code Design via Gauge-Code Correspondence\n\n**Conjecture**: A neural network trained on the gauge-code correspondence can predict optimal code parameters (n, k, d) for a given gauge group G without explicitly computing the quantum double construction, achieving prediction accuracy > 99% for groups of order \u2264 100.\n\n**Test**: (A) Generate training data: for all finite groups G with |G| \u2264 30, compute quantum double parameters on L \u00d7 L tori for L = 4, 8, 16. (B) Train a graph neural network on the Cayley graph of G to predict (k, d/L). (C) Test on held-out groups of order 31-100.\n\n**Impact**: If successful, this would provide an efficient surrogate for the expensive quantum double construction, enabling rapid exploration of the \"periodic table of quantum codes.\" It would also demonstrate that the gauge-code correspondence has enough structure to be learnable.\n\n**Catalog References**:\n- `Catalog/MachineLearning/` (ML infrastructure)\n- `Catalog/Algebra/` (group infrastructure for computing Cayley graphs)\n- `Catalog/Bridges/AlgebraEMLClosureComputation.lean` (algebra-ML bridge template)\n\n**Proof Strategy**: No formal proof \u2014 this is a computational experiment. The key mathematical foundation is the GaugeCodeCorrespondence transport theorem, which ensures that isomorphic groups have identical code parameters, providing a natural invariance for the neural network to exploit.\n\n**Domain Bridges**: MachineLearning <-> Physics (quantum codes) <-> Algebra (group theory)\n\n**Lineage**: Builds on the Catalog's existing algebra-ML structural bridge (`Catalog/Bridges/AlgebraEMLClosureComputation.lean`) and the GaugeCodeCorrespondence from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d922bc32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T02:32:12.221655+00:00"
+  },
+  {
+    "id": "fd_2164",
+    "title": "This research cycle established the foundational theory of mod-p spectral finger",
+    "description": "# Future Directions: Mod-p Spectral Fingerprints and Arithmetic Expansion\n\n## Synthesis\n\nThis research cycle established the foundational theory of mod-p spectral fingerprints for arithmetic Laplacians, proving that the rank function $p \\mapsto \\text{rank}(L \\bmod p)$ captures the prime factorization of the determinant and is stable for all but finitely many primes. The key bridge theorem \u2014 that the fingerprint detects exactly the prime divisors of the determinant \u2014 connects number-theoretic data (prime factorization) to linear-algebraic invariants (rank, nullity), which in turn control graph-theoretic properties (expansion, connectivity) via the Cheeger inequality.\n\nThe most promising cross-domain connection discovered is between **modular arithmetic** and **graph expansion**. The edge boundary nonnegativity theorem and the boundary symmetry theorem provide the first steps toward a purely arithmetic route to certifying expansion. The existing Catalog results on spectral gaps (`spectral_gap_from_poincare`, `spectral_gap_from_l2_decay`, `spectral_gap_log_concave_lower_bound`) all work in the real-analytic setting; our work opens the door to finite-field analogs.\n\nThe highest breakthrough potential lies in Direction 1 (Quantitative Fingerprint\u2013Gap Bridge), because a quantitative relationship between the fingerprint and the spectral gap would replace expensive eigenvalue computation with cheap modular arithmetic. The existing tropical persistence machinery (`exists_unique_barcode_from_rank_data`) suggests that rank-based invariants suffice for reconstruction in the tropical world; proving the analogous statement in the spectral world would be transformative.\n\n---\n\n### Direction 1: Quantitative Spectral Gap Lower Bounds from Fingerprint Data\n\n**Conjecture**: For an $n \\times n$ arithmetic Laplacian $L$ with maximum degree $d_{\\max}$, if the reduced Laplacian $\\hat{L}$ (obtained by deleting one row and column) satisfies $\\text{rank}(\\hat{L} \\bmod p) = n - 1$ for all primes $p \\leq B$, then the spectral gap $\\lambda_1(L) \\geq c / B$ for a universal constant $c > 0$.\n\n**Test**: Construct arithmetic Laplacians with known spectral gaps (e.g., complete graphs, Cayley graphs of $\\text{SL}_2(\\mathbb{F}_q)$). Compute the fingerprint for primes up to $B$ and check whether $B \\cdot \\lambda_1$ is bounded below by a universal constant. The conjecture is falsified if graphs with identical fingerprints up to $B$ have spectral gaps differing by more than $O(1/B)$.\n\n**Impact**: Would establish a polynomial-time arithmetic algorithm for certifying expansion, replacing eigenvalue computation. Would make expansion certification accessible in finite-field arithmetic, enabling formal verification of expander properties in proof assistants.\n\n**Catalog References**: `Speculative/AutoResearch/LorentzianGlauberMixing.lean` (spectral_gap_from_poincare), `Speculative/AutoResearch/BourgainGamburd/Machine.lean` (spectral_gap_from_l2_decay), `FINAL/Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound)\n\n**Proof Strategy**: First establish the relationship between the Smith Normal Form diagonal entries and the eigenvalues of the Laplacian. The key step is bounding the smallest nonzero eigenvalue in terms of the smallest nonzero SNF entry. Use the fact that if all SNF entries are coprime to all primes $\\leq B$, then they are all $> B$, which constrains the product of eigenvalues and hence the smallest one.\n\n**Domain Bridges**: NumberTheory <-> SpectralGraphTheory, Algebra <-> Computation\n\n**Lineage**: Builds on `fingerprint_detects_prime_divisors`, `bad_primes_finite`, and `cheeger_discrete_bound` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Mod-p Persistent Homology of Arithmetic Complexes\n\n**Conjecture**: For a family of $d$-dimensional arithmetic simplicial complexes $X_N$ constructed from $\\text{SL}_d(\\mathbb{Z}/N\\mathbb{Z})$, the mod-p persistent Betti numbers $\\beta_k(X_N; \\mathbb{F}_p)$ for all primes $p \\leq C \\log N$ determine the rational Betti numbers $\\beta_k(X_N; \\mathbb{Q})$ for all $0 \\leq k \\leq d$.\n\n**Test**: For $d = 2$, construct the quotient of the Bruhat-Tits tree for $\\text{SL}_2(\\mathbb{Z}/N\\mathbb{Z})$ for $N = 6, 10, 15, 30$. Compute mod-p Betti numbers for $p \\leq 5 \\log N$ and compare with rational Betti numbers. The conjecture fails if rational Betti numbers cannot be recovered from the mod-p data.\n\n**Impact**: Would extend the tropical persistence realization duality to the arithmetic setting, creating a computational bridge between finite-field homology and rational homology of arithmetic groups. Would connect the Catalog's tropical barcode machinery to number-theoretic objects.\n\n**Catalog References**: `FINAL/Bridges/TropicalPersistenceRealizationDuality.lean` (exists_unique_barcode_from_rank_data), `Speculative/AutoResearch/ResidualFiniteness.lean` (finite_test_suite_exists)\n\n**Proof Strategy**: Use the universal coefficient theorem to relate $H_k(X; \\mathbb{F}_p)$ to $H_k(X; \\mathbb{Z})$. The key insight is that torsion in $H_k(X; \\mathbb{Z})$ is detected by rank drops in the mod-p homology. Bound the torsion primes using the determinant of the boundary matrices (which grow polynomially in $N$ for arithmetic groups), so $O(\\log N)$ primes suffice to see past all torsion.\n\n**Domain Bridges**: NumberTheory <-> AlgebraicTopology, Algebra <-> Tropical\n\n**Lineage**: Builds on `finite_prime_divisors` and `bad_primes_finite` from this cycle, and extends `exists_unique_barcode_from_rank_data` to the arithmetic setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Fingerprint-Based Graph Isomorphism Invariants\n\n**Conjecture**: The spectral fingerprint $\\mathcal{F}_L = \\{p \\mapsto \\text{rank}(L \\bmod p)\\}$ of the Laplacian $L$, together with the mod-p fingerprint of $L^2$, distinguishes all pairs of non-isomorphic strongly regular graphs on $\\leq 40$ vertices.\n\n**Test**: Compute $(\\mathcal{F}_L, \\mathcal{F}_{L^2})$ for all known strongly regular graphs on 25, 26, 28, 29, 36, and 40 vertices. Check whether any non-isomorphic pair shares the same pair of fingerprints. The conjecture is falsified by an explicit pair with identical fingerprints.\n\n**Impact**: Would provide a practical, $O(n^3)$-per-prime graph invariant computable in finite-field arithmetic. Could improve the state of the art for practical graph isomorphism testing for structured graphs.\n\n**Catalog References**: `Speculative/AutoResearch/CarmichaelComposite.lean` (algebraic structure detection), `Speculative/AutoResearch/PrimeCongruenceProofSemiring.lean` (exists_prime_theory_avoiding)\n\n**Proof Strategy**: Use the fact that $\\text{rank}(L \\bmod p)$ and $\\text{rank}(L^2 \\bmod p)$ together determine the mod-p spectrum (i.e., the multiset of eigenvalues in $\\overline{\\mathbb{F}_p}$). For strongly regular graphs, the spectrum has three distinct eigenvalues, and the mod-p reduction distinguishes them unless $p$ divides certain algebraic discriminants.\n\n**Domain Bridges**: Algebra <-> Computation, NumberTheory <-> GraphTheory\n\n**Lineage**: Extends `fingerprint_detects_prime_divisors` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Arithmetic Edge Expansion and Kirchhoff's Theorem\n\n**Conjecture**: For any connected arithmetic Laplacian $L$ on $n$ vertices with maximum degree $d_{\\max}$, the minimum edge expansion ratio $h(G) = \\min_{|S| \\leq n/2} |\\partial S| / |S|$ satisfies\n$$h(G) \\geq \\frac{\\tau(G)^{1/n}}{d_{\\max}}$$\nwhere $\\tau(G)$ is the number of spanning trees (equal to $\\det(\\hat{L})/n$ by Kirchhoff's theorem).\n\n**Test**: Compute $h(G)$, $\\tau(G)$, and $d_{\\max}$ for Cayley graphs of small groups (cyclic, dihedral, symmetric groups on $\\leq 8$ elements) with standard generating sets. The conjecture is falsified if any graph violates the inequality.\n\n**Impact**: Would provide a new lower bound for expansion in terms of spanning tree counts \u2014 a combinatorial quantity that the spectral fingerprint can estimate. Would connect Kirchhoff's classical theorem to modern expansion theory.\n\n**Catalog References**: `Speculative/AutoResearch/CycleEigenvalue.lean` (exists_bounded_cycle_mean_le), `Speculative/AutoResearch/LorentzianGlauberMixing.lean` (spectral_gap_from_poincare)\n\n**Proof Strategy**: Relate $\\tau(G) = \\det(\\hat{L})$ to the product of nonzero eigenvalues $\\lambda_1 \\cdots \\lambda_{n-1}$. By AM-GM, $\\lambda_1 \\geq (\\prod \\lambda_i)^{1/(n-1)} = \\tau(G)^{1/(n-1)}$. Apply the Cheeger inequality $h(G) \\geq \\lambda_1 / (2 d_{\\max})$.\n\n**Domain Bridges**: NumberTheory <-> GraphTheory, Algebra <-> Combinatorics\n\n**Lineage**: Builds on `cheeger_discrete_bound`, `edgeBoundary_compl`, `ArithLaplacian.degree_eq_neg_offdiag_sum` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Machine Learning on Spectral Fingerprints\n\n**Conjecture**: A simple regression model (linear or shallow neural network) trained on the spectral fingerprints $\\{\\mathcal{F}_{L}(p) : p \\leq C \\log n\\}$ of random $d$-regular graphs on $n$ vertices can predict the spectral gap $\\lambda_1$ with mean absolute error $O(1/\\sqrt{n})$.\n\n**Test**: Generate 10,000 random 3-regular graphs on $n = 50, 100, 200, 500$ vertices. Compute spectral fingerprints for primes $\\leq 5 \\log n$. Train a linear regression model to predict $\\lambda_1$ from the fingerprint vector. The conjecture is supported if prediction error decreases as $O(1/\\sqrt{n})$ and refuted if error plateaus.\n\n**Impact**: Would demonstrate practical utility of the fingerprint for spectral estimation in machine learning applications. Would bridge the gap between the theoretical guarantees (finiteness of bad primes) and practical prediction accuracy. Could lead to efficient graph property prediction algorithms for large-scale networks.\n\n**Catalog References**: `Speculative/AutoResearch/LorentzianInfoTheory.lean` (mutualInfo_bounded_by_gap), `FINAL/Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound)\n\n**Proof Strategy**: Establish concentration inequalities for the spectral fingerprint of random regular graphs (extending results of Friedman on random regular graph spectra). Show that the fingerprint feature vector has sufficient information content (measured by mutual information) to predict $\\lambda_1$ with the stated accuracy.\n\n**Domain Bridges**: MachineLearning <-> NumberTheory, Computation <-> SpectralGraphTheory\n\n**Lineage**: Extends `bad_primes_finite` and `fingerprint_detects_prime_divisors` from this cycle, connects to `mutualInfo_bounded_by_gap` from the Catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b7199b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T02:32:45.732878+00:00"
   },
   {
     "id": "seed_035",
@@ -6366,38 +6455,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.553079+00:00"
-  },
-  {
-    "id": "seed_096",
-    "title": "Neural Network Training as Renormalization Group Flow",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domains": [
-      "MachineLearning",
-      "Physics",
-      "Analysis"
-    ],
-    "priority_score": 0.94,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.066174+00:00"
-  },
-  {
-    "id": "seed_101",
-    "title": "AdS/CFT for Proof Theory: Holographic Verification",
-    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Physics"
-    ],
-    "priority_score": 0.94,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.118574+00:00"
   },
   {
     "id": "seed_004",
@@ -6428,22 +6485,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:55.074843+00:00"
-  },
-  {
-    "id": "seed_100",
-    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge",
-    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "Analysis"
-    ],
-    "priority_score": 0.93,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.107798+00:00"
   },
   {
     "id": "seed_053",
@@ -6506,22 +6547,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.953715+00:00"
-  },
-  {
-    "id": "seed_102",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "MachineLearning"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.127465+00:00"
   },
   {
     "id": "fd_0818",
@@ -6854,7 +6879,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "82a44112",
+    "consumed_by_exp_id": "22af3b54",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
@@ -6916,6 +6941,28 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
+  },
+  {
+    "id": "fd_2165",
+    "title": "This research cycle established the mathematical foundations connecting persiste",
+    "description": "# Future Directions: Persistent Homological Quantum Error Correction\n\n## Synthesis\n\nThis research cycle established the mathematical foundations connecting persistent homology to quantum error correction, producing formally verified theorems in Lean 4. The central discovery is that chain morphism functoriality \u2014 the algebraic property that maps between chain complexes preserve kernel elements \u2014 provides the mechanism by which persistent topological features correspond to robust quantum information.\n\nThree key cross-domain connections emerged: (1) the chain complex condition \u2202\u00b2=0 simultaneously governs both topological persistence and CSS code orthogonality, (2) tropical geometry provides a natural optimization framework for code selection from barcodes, and (3) the quantum Singleton bound constrains the rate-distance tradeoff in a way that directly reflects the barcode structure. The most promising direction for breakthrough is the Barcode Distance Conjecture (Direction 1), which would transform persistent homology from a descriptive tool into a constructive one for quantum code design.\n\nThe cycle's results build on and extend the existing Catalog infrastructure: the chain complex formalism in `Catalog/Physics/CechStabilizerCode.lean`, the toric code parameters in `Catalog/Physics/ToricCode.lean`, and the stabilizer bounds in `Catalog/Physics/StabilizerBounds.lean`. The new file `Physics/PersistentHomologicalQEC.lean` adds the persistence layer that connects these existing results.\n\n---\n\n### Direction 1: Proof of the Barcode Distance Conjecture\n\n**Conjecture**: For any simplicial complex K embedded in \u211d\u1d48 with a persistence bar [\u03b5, \u03b4) in H\u2081(K; GF(2)), the CSS code derived from the Vietoris-Rips filtration at scale \u03b4 has X-distance at least \u2308\u03b4/\u03b5\u2309.\n\n**Test**: Implement a computational pipeline: (a) sample N points from a known surface (torus, genus-2 surface, Klein bottle), (b) compute the Vietoris-Rips persistent H\u2081 barcode using Ripser, (c) construct the CSS code at each death scale, (d) compute the X-distance by GF(2) Gaussian elimination. Compare predicted distance \u2308\u03b4/\u03b5\u2309 to actual distance for each bar. Run for N \u2208 {20, 50, 100, 200} on at least 5 different surfaces.\n\n**Impact**: If true, this would provide the first systematic method for constructing quantum codes from arbitrary point cloud data. Every dataset with persistent H\u2081 features becomes a quantum code, with the barcode serving as the code specification. If false, the failure cases would reveal which geometric properties of the embedding (beyond persistence) control code distance, opening a refined conjecture.\n\n**Catalog References**: `Physics/PersistentHomologicalQEC.lean` (barcodeDistConj_ge_two, toric_distance_from_barcode), `Catalog/Physics/ToricCode.lean` (encoding_rate_bound), `Catalog/Physics/CechStabilizerCode.lean` (stabilizer_commutation_from_boundary_sq)\n\n**Proof Strategy**: The key step is relating the minimum weight of a nontrivial homology representative to the persistence ratio. For a bar [\u03b5, \u03b4), any cycle representing the persistent class must use edges of length \u2265 \u03b5, and the class persists until scale \u03b4, meaning the shortest representative at scale \u03b4 has geometric length \u2265 \u03b4. Since each edge has length \u2264 \u03b5, the minimum number of edges (= Hamming weight) is \u2265 \u2308\u03b4/\u03b5\u2309. The formal proof would need: (1) a formalization of Vietoris-Rips filtrations in Lean, (2) the connection between geometric length and Hamming weight, (3) the persistence module structure theorem.\n\n**Domain Bridges**: Topological Data Analysis \u2194 Quantum Error Correction \u2194 Computational Geometry\n\n**Lineage**: Extends the barcode distance verification in `Physics/PersistentHomologicalQEC.lean` from the toric code to general complexes. Builds on the chain complex \u2192 CSS code construction in `Catalog/Physics/CechStabilizerCode.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Quantum LDPC Codes\n\n**Conjecture**: For a family of expander graphs with vertex set V and edge set E, the tropical persistence landscape of the flag complex on the graph has O(|V|) bars of persistence \u03a9(log |V|), yielding quantum LDPC codes with constant rate k/n = \u0398(1) and distance d = \u03a9(log n).\n\n**Test**: Construct Ramanujan graph families (e.g., LPS graphs) for sizes n \u2208 {100, 500, 1000, 5000}. Compute the H\u2081 persistence barcode of the flag complex. Measure: (a) number of bars with persistence > C\u00b7log(n) for various constants C, (b) GF(2) rank of the resulting check matrices, (c) lower bound on code distance from the barcode. Plot k/n and d/log(n) as functions of n.\n\n**Impact**: This would connect the barcode framework to the breakthrough quantum LDPC codes (Panteleev-Kalachev, Leverrier-Z\u00e9mor). If the expander spectral gap controls the persistence landscape, it would provide a new route to constructing good quantum LDPC codes from spectral graph theory.\n\n**Catalog References**: `Physics/PersistentHomologicalQEC.lean` (tropical_persistence_additive, maslov_tropical_persistence_bound), `Catalog/Physics/StabilizerBounds.lean` (binary_quantum_hamming_bound), `Catalog/Physics/CharacterExpansionMassGap.lean` (mass_gap_lower_bound_from_character_suppression)\n\n**Proof Strategy**: (1) Prove that expander mixing implies long persistence bars in the flag complex. (2) Use the tropical additivity theorem to show that independent bars contribute independent logical qubits. (3) Apply the distance transfer theorem to show that the expander spectral gap provides a distance lower bound. Key lemmas needed: mixing lemma for flag complex homology, tropical independence from spectral gap.\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Tropical Geometry \u2194 Quantum Error Correction\n\n**Lineage**: Combines the tropical persistence framework from this cycle with the spectral gap analysis in `Catalog/Physics/CharacterExpansionMassGap.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Persistence Stability for Code Distance\n\n**Conjecture**: If two filtered simplicial complexes K and K' have bottleneck distance at most \u03b4 between their H\u2081 persistence diagrams, then the corresponding CSS code distances satisfy |d(K) - d(K')| \u2264 2\u2308\u03b4/\u03b5_min\u2309, where \u03b5_min is the minimum birth time.\n\n**Test**: Generate pairs of point clouds by perturbing a base cloud by varying amounts. Compute persistence diagrams, bottleneck distances, and code distances for each pair. Verify the bound empirically for 100 random pairs per perturbation level.\n\n**Impact**: Would establish that nearby point clouds produce quantum codes with similar error-correcting properties. This is essential for practical applications: if code distance is not stable under small perturbations, the framework would be sensitive to measurement noise.\n\n**Catalog References**: `Physics/PersistentHomologicalQEC.lean` (persistence_nesting, morphism_distance_transfer), `Catalog/Physics/CechStabilizerCode.lean` (cohomological_distance_cert)\n\n**Proof Strategy**: Use the algebraic stability theorem for persistence modules to relate the bottleneck distance to changes in the persistence diagram. Then apply the barcode distance conjecture to convert diagram changes to code distance changes. Key step: formalize the bottleneck stability theorem (Cohen-Steiner, Edelsbrunner, Harer 2007) in Lean.\n\n**Domain Bridges**: Topological Data Analysis \u2194 Metric Geometry \u2194 Quantum Error Correction\n\n**Lineage**: Extends the persistence nesting theorem in `Physics/PersistentHomologicalQEC.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Higher-Dimensional Persistence Codes\n\n**Conjecture**: For a 3-manifold M with H\u2082(M; GF(2)) \u2260 0, the CSS code from the 3-dimensional chain complex encodes logical qubits in 2-dimensional homology, with distance determined by the minimum area (number of 2-simplices) of a nontrivial 2-cycle.\n\n**Test**: Construct triangulations of S\u00b9 \u00d7 S\u00b2, RP\u00b3, and the 3-torus T\u00b3. Build the corresponding chain complexes over GF(2). Compute H\u2082 and the minimum weight of nontrivial 2-cycles. Verify the predicted code parameters.\n\n**Impact**: Extends the framework from surface codes (H\u2081) to 3D topological codes. The 3-torus T\u00b3 would give a [[L\u00b3, 3, L]] code family, improving on the quadratic overhead of surface codes. Higher-dimensional persistence barcodes would provide even richer code families.\n\n**Catalog References**: `Physics/PersistentHomologicalQEC.lean` (eulerCharPH, genus_euler_char), `Catalog/Physics/CechStabilizerCode.lean` (F2ChainComplex)\n\n**Proof Strategy**: Generalize the chain complex formalism to arbitrary dimensions. The key challenge is constructing explicit triangulations and boundary maps for 3-manifolds. Start with product manifolds (S\u00b9 \u00d7 \u03a3_g) where the chain complex decomposes as a tensor product.\n\n**Domain Bridges**: Algebraic Topology \u2194 Quantum Error Correction \u2194 Computational Topology\n\n**Lineage**: Natural generalization of the 2D results in this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Machine Learning on Barcode Codes\n\n**Conjecture**: A neural network trained on persistence barcodes can predict quantum code distance with > 90% accuracy (within \u00b11) for complexes up to 1000 simplices, outperforming the naive \u2308\u03b4/\u03b5\u2309 predictor.\n\n**Test**: Generate a dataset of 10,000 random simplicial complexes (Erd\u0151s-R\u00e9nyi flag complexes, Vietoris-Rips complexes on random point clouds, cubical complexes). For each, compute: (a) the H\u2081 persistence barcode, (b) the actual CSS code distance. Train a graph neural network on the barcode features to predict distance. Compare to the barcode distance conjecture prediction.\n\n**Impact**: If the neural network outperforms the conjecture, the failure modes would reveal which barcode features (beyond persistence ratio) contribute to code distance. This could lead to a refined conjecture. If the conjecture is tight, the ML model would validate it computationally across a large sample.\n\n**Catalog References**: `Physics/PersistentHomologicalQEC.lean` (barcodeDistConj, f2Wt, CSSCodePH.xDistanceLowerBound), `Catalog/MachineLearning/` (ML infrastructure), `Catalog/Bridges/` (cross-domain connections)\n\n**Proof Strategy**: Not a formal proof direction, but a computational validation. The ML model would serve as a fast proxy for the expensive exact distance computation, enabling exploration of the code landscape at scale.\n\n**Domain Bridges**: Machine Learning \u2194 Topological Data Analysis \u2194 Quantum Error Correction\n\n**Lineage**: Bridges the ML infrastructure in the Catalog with the quantum coding framework from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "529ce23c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T02:33:26.388788+00:00"
   },
   {
     "id": "seed_037",
@@ -7336,6 +7383,27 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "295a0450",
     "timestamp": "2026-05-29T16:51:49.141155+00:00"
+  },
+  {
+    "id": "fd_2166",
+    "title": "This research cycle established the **Exchange Cascade Theorem**: weighted diffe",
+    "description": "# Future Directions: M-Convexity Inheritance and Exchange Cascade Theory\n\n## Synthesis\n\nThis research cycle established the **Exchange Cascade Theorem**: weighted differentiation preserves the exchange property of positive sequences, yielding infinite towers of algorithmically tractable optimization structures. The key bridge connects three domains \u2014 discrete optimization (exchange property), tropical geometry (Newton polygon concavity), and polynomial algebra (generating-function derivatives) \u2014 through a single, elementary inequality. The most promising cross-domain connection from this cycle is the **tropical exchange slack framework**, which translates combinatorial exchange properties into geometric concavity conditions and vice versa. This framework opens direct paths to higher-dimensional M-convex theory and connections to statistical mechanics.\n\nThe cycle's results extend the Catalog's existing Lorentzian exchange certificates (`Catalog/Pythagorean/LorentzianExchangeCertificates.lean`) and tropical Lorentzian shadows (`Catalog/Pythagorean/TropicalLorentzianShadows.lean`) by providing the first proof that the exchange property \u2014 not just log-concavity \u2014 cascades through differentiation. Direction 1 below has the highest breakthrough potential because proving the full higher-dimensional M-convex inheritance would connect to the Br\u00e4nd\u00e9n\u2013Huh program and resolve a key open question in discrete convex analysis.\n\n---\n\n### Direction 1: Higher-Dimensional M-Convex Shadow Inheritance\n\n**Conjecture**: For any M-convex set S \u2286 \u2115\u207f with constant degree d \u2265 1, the shadow \u2202\u1d62S = {v - e\u1d62 : v \u2208 S, v\u1d62 > 0} is M-convex.\n\n**Test**: Implement M-convex set construction for graphic matroids of small graphs (K\u2084, K\u2085, Petersen graph). Verify the symmetric exchange property for \u2202\u1d62S computationally. If any exchange witness fails, the conjecture is false. Test for all coordinate directions i and all pairs of elements in the shadow.\n\n**Impact**: If true, this would provide a purely combinatorial proof of the Br\u00e4nd\u00e9n\u2013Huh theorem that derivatives of Lorentzian polynomials are Lorentzian. It would also yield an algorithmic \"shadow calculus\" where polynomial-time optimization propagates through an entire tower of projections \u2014 opening new algorithmic approaches for integer programming relaxations.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange property pipeline), `Catalog/Pythagorean/TropicalLorentzianShadows.lean` (tropical exchange slack framework)\n\n**Proof Strategy**: \n1. Define M-convex sets on `Fin n \u2192 \u2115` with the symmetric exchange property (done in this cycle).\n2. Define the shadow operation \u2202\u1d62 and prove it preserves constant-sum (the degree decreases by 1).\n3. For the exchange property: given x, y \u2208 \u2202\u1d62S with x\u2096 > y\u2096, lift to pre-images x\u0303, \u1ef9 \u2208 S. Apply exchange on S to find a swap witness in S, then project back to \u2202\u1d62S.\n4. The key technical challenge is proving the projected witness lands in \u2202\u1d62S (not just in S minus e\u1d62).\n\n**Domain Bridges**: Discrete Optimization <-> Algebraic Geometry, Matroid Theory <-> Polynomial Algebra\n\n**Lineage**: Builds on `MConvexShadowCascade.lean` (MConvexSet definition, exchange cascade theorem)\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Exchange Cascade for Matrix-Valued Sequences\n\n**Conjecture**: If A(k) is a sequence of n\u00d7n positive definite matrices satisfying a matrix exchange property (A(i) \u2297 A(j+1) \u227c A(i+1) \u2297 A(j) in the L\u00f6wner order for i \u2264 j), then the weighted derivative B(k) = (k+1)\u00b7A(k+1) also satisfies the matrix exchange property.\n\n**Test**: Construct concrete 2\u00d72 positive definite matrix sequences from random Wishart samples, verify the matrix exchange property, compute weighted derivatives, and test whether the derivative satisfies exchange. Use eigenvalue computations to check the L\u00f6wner ordering.\n\n**Impact**: Would extend the scalar cascade to matrix-valued settings, connecting to free probability, random matrix theory, and the theory of operator-valued Lorentzian polynomials. Applications to quantum information (quantum channel capacity cascades) and multivariate statistics.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalLorentzianShadows.lean` (TropicalQuadraticWeight, HasAtMostOnePositiveEigenvalue)\n\n**Proof Strategy**: \n1. Define matrix exchange using the L\u00f6wner order (A \u227c B iff B - A is PSD).\n2. The scalar proof uses the inequality (i+1)(j+2) \u2264 (i+2)(j+1). For matrices, need to verify that scalar multiplication by these coefficients preserves the L\u00f6wner ordering.\n3. Key lemma: if 0 \u227c A \u227c B and 0 \u2264 c \u2264 d, then cA \u227c dB. This is straightforward.\n4. The multiplication step (combining coefficient and matrix exchange) requires care with non-commutativity.\n\n**Domain Bridges**: Linear Algebra <-> Quantum Information, Matrix Analysis <-> Discrete Optimization\n\n**Lineage**: Extends the scalar cascade theorem from this cycle\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Exchange Property and Negative Dependence in Probability\n\n**Conjecture**: If \u03bc is a strongly Rayleigh measure on 2^{[n]} (equivalently, its generating polynomial is Lorentzian), then for any k, the k-th sectional generating polynomial (obtained by summing over k-element subsets) has coefficients that form an exchange sequence under any linear ordering of the index set.\n\n**Test**: Construct strongly Rayleigh measures from determinantal point processes (DPPs) with small kernel matrices (n \u2264 8). Compute sectional generating polynomials. Verify exchange property on their coefficient sequences. A violation would disprove the conjecture.\n\n**Impact**: Would provide a direct combinatorial link between negative dependence (a probabilistic concept) and exchange optimization (an algorithmic concept). This bridge would yield new polynomial-time sampling algorithms for negatively dependent distributions, extending the Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant program.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange property, basis exchange from log-concavity)\n\n**Proof Strategy**: \n1. Use the characterization of strongly Rayleigh measures via Lorentzian generating polynomials.\n2. Show that sectional polynomials are obtained by repeated application of the \"evaluation at 1\" operation, which is a specialization of the derivative.\n3. Apply the cascade theorem to conclude that the resulting coefficient sequences inherit exchange.\n4. The main difficulty is relating the multivariate Lorentzian property to the univariate exchange property under specialization.\n\n**Domain Bridges**: Probability <-> Discrete Optimization, Statistical Physics <-> Matroid Theory\n\n**Lineage**: Extends the cascade theorem and tropical bridge from this cycle\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Exchange Slack as a Complexity Measure\n\n**Conjecture**: The minimum exchange slack min_{i<j} \u03c3_a(i,j) of a positive exchange sequence a is non-decreasing through the cascade: min-slack(D^{k+1}a) \u2265 min-slack(D^k a) for all k.\n\n**Test**: Compute minimum exchange slacks for binomial sequences C(n,k) and their cascades up to depth 10 and n \u2264 20. Also test for Catalan numbers, Fibonacci-weighted sequences, and random log-concave sequences. Any counterexample disproves the conjecture.\n\n**Impact**: If true, this would show that the exchange property is not merely preserved but *amplified* by the cascade \u2014 each derivative is \"more exchange\" than the last. This would quantify the stability of the Lorentzian property and connect to the tropical spectral gap theory in `TropicalLorentzianShadows.lean`.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalLorentzianShadows.lean` (tropicalSpectralGap, exchange_slack_lipschitz), `Pythagorean/MConvexShadowCascade.lean` (seqExchangeSlack)\n\n**Proof Strategy**: \n1. Express the exchange slack of the derivative in terms of the original slack plus a correction term.\n2. The correction term involves log((i+2)(j+1)) - log((i+1)(j+2)) = log(1 + (j-i)/((i+1)(j+2))), which is always \u2265 0 for i \u2264 j.\n3. The main difficulty is that the derivative's slack at indices (i,j) involves the original's slack at shifted indices (i+1, j+1), not at (i,j) \u2014 so the minimum may not align.\n4. Need to show that the shift and the positive correction together guarantee non-decrease.\n\n**Domain Bridges**: Tropical Geometry <-> Complexity Theory, Combinatorics <-> Information Theory\n\n**Lineage**: Directly extends `seqExchangeSlack` and the slack framework from this cycle\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Exchange Cascades in Game Theory \u2014 Mechanism Design\n\n**Conjecture**: If a set of allocation profiles forms an M-convex set (as in the assignment game), then the VCG payment function inherits the exchange structure: the \"derivative\" of the social welfare function (which determines payments) satisfies exchange, guaranteeing that the VCG mechanism can be implemented greedily.\n\n**Test**: Construct assignment games with 4-6 agents and items. Compute the social welfare polynomial, its weighted derivative, and verify the exchange property on both. Test whether greedy VCG payment computation matches exact computation.\n\n**Impact**: Would provide a structural explanation for why certain auction mechanisms are computationally tractable while others are NP-hard. The cascade theorem would predict which mechanism design problems admit polynomial-time implementation.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange_greedy_optimality, CertifiedOptimum)\n\n**Proof Strategy**: \n1. Model the assignment game as an M-convex optimization problem.\n2. Show that VCG payments correspond to a derivative operation on the welfare polynomial.\n3. Apply the cascade theorem to conclude that payments can be computed greedily.\n4. Key technical issue: VCG payments involve differences (marginal contributions), which relate to but do not exactly coincide with weighted derivatives.\n\n**Domain Bridges**: Discrete Optimization <-> Game Theory, Matroid Theory <-> Mechanism Design\n\n**Lineage**: Applies the cascade greedy optimality theorem from this cycle to economic settings\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "89a99f0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T02:33:59.000452+00:00"
   },
   {
     "id": "seed_007",

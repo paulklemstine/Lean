@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Discrete Optimization / Tropical Geometry / Matroid Theory",
     "date": "2026-05-30T02:33:53Z",
     "exp_id": "89a99f0f",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6986567567567568,
+    "quality": "partial",
     "pkg_num": 374
   },
   {
@@ -10855,8 +10855,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-30T02:33:53Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6986567567567568,
+      "quality": "partial"
     }
   ],
   "edges": [

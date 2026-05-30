@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2087 of the highest-quality
+A curated collection of 2092 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2087
+Total files: 2092
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1343,6 +1343,7 @@ import FINAL.MachineLearning.MaxPlusRepresenter
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinCutPrinciple
 import FINAL.MachineLearning.MinMax
+import FINAL.MachineLearning.ModPSpectralFingerprint
 import FINAL.MachineLearning.ModelShrinkage
 import FINAL.MachineLearning.MotivicPersistence
 import FINAL.MachineLearning.MultiHead
@@ -1469,6 +1470,7 @@ import FINAL.Physics.DiscreteNoetherShadow
 import FINAL.Physics.EigenvalueRepulsion_2
 import FINAL.Physics.Entanglement
 import FINAL.Physics.Foundations
+import FINAL.Physics.GaugeCodeDistance
 import FINAL.Physics.HolevoCapacity
 import FINAL.Physics.IdempotentQuantum
 import FINAL.Physics.Krawtchouk
@@ -1478,6 +1480,7 @@ import FINAL.Physics.LorentzBerggrenThermodynamic
 import FINAL.Physics.MoonshotQuantum
 import FINAL.Physics.OrbitalGoalDynamics
 import FINAL.Physics.PauliClosureFoundations
+import FINAL.Physics.PersistentHomologicalQEC
 import FINAL.Physics.PlanckSpacetime
 import FINAL.Physics.QuantumE8ModularForms
 import FINAL.Physics.SelectionRules
@@ -1602,6 +1605,7 @@ import FINAL.Pythagorean.DiagonalObstruction
 import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.DiophantineCertifiedOptimization
 import FINAL.Pythagorean.DirectedCyclePressure
+import FINAL.Pythagorean.DirectionalDepthTheory
 import FINAL.Pythagorean.DirectionalLogConcavity
 import FINAL.Pythagorean.DoubleScalingLimit
 import FINAL.Pythagorean.Duality
@@ -1675,6 +1679,7 @@ import FINAL.Pythagorean.LorentzianSharpStability
 import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge
 import FINAL.Pythagorean.MConvexOptimization
+import FINAL.Pythagorean.MConvexShadowCascade
 import FINAL.Pythagorean.MConvexShadowCompression
 import FINAL.Pythagorean.ManySortedConvergentRewriteOptimizer
 import FINAL.Pythagorean.MatroidBasisLeafCompression
