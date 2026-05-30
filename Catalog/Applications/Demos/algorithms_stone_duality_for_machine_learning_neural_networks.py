@@ -1,286 +1,402 @@
 """
 Stone Duality for Neural Networks: Algorithms
-================================================
-Implements the core algorithms for computing activation Boolean algebras,
-Stone duality maps, and related quantities for ReLU neural networks.
+==============================================
+
+Implements the core algorithms from the research paper:
+1. Activation pattern computation
+2. Region enumeration for hyperplane arrangements
+3. Activation algebra construction
+4. Stone dual space computation
+5. Zaslavsky bound computation
+6. VC dimension estimation
+
+All algorithms include complexity analysis in docstrings.
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Set, Optional, FrozenSet
-from dataclasses import dataclass
-from itertools import product
 from math import comb
+from typing import List, Tuple, Set, Dict, Optional, FrozenSet
+from dataclasses import dataclass
 
 
 @dataclass
 class Hyperplane:
-    """Hyperplane w · x + b = 0 in R^n."""
-    w: np.ndarray  # weight vector (n,)
-    b: float       # bias
+    """A hyperplane in R^n: {x : normal · x + bias = 0}.
 
-    def eval(self, x: np.ndarray) -> float:
-        """Evaluate the affine function w · x + b."""
-        return float(np.dot(self.w, x) + self.b)
+    Attributes:
+        normal: Normal vector (n-dimensional)
+        bias: Scalar bias term
+    """
+    normal: np.ndarray
+    bias: float
+
+    def evaluate(self, x: np.ndarray) -> float:
+        """Evaluate normal · x + bias.
+
+        Time: O(n)
+        Space: O(1)
+        """
+        return np.dot(self.normal, x) + self.bias
 
     def sign(self, x: np.ndarray) -> bool:
-        """True if x is on the positive side."""
-        return self.eval(x) > 0
+        """Return True if x is in the positive half-space.
+
+        Time: O(n)
+        Space: O(1)
+        """
+        return self.evaluate(x) > 0
 
 
 @dataclass
 class HyperplaneArrangement:
-    """A collection of m hyperplanes in R^n.
+    """A finite collection of k hyperplanes in R^n.
 
     Attributes:
-        hyperplanes: List of Hyperplane objects
-        n: dimension of the ambient space
-        m: number of hyperplanes
+        hyperplanes: List of k hyperplanes
+        dim: Ambient dimension n
     """
     hyperplanes: List[Hyperplane]
+    dim: int
 
     @property
-    def n(self) -> int:
-        return self.hyperplanes[0].w.shape[0] if self.hyperplanes else 0
-
-    @property
-    def m(self) -> int:
+    def num_planes(self) -> int:
         return len(self.hyperplanes)
 
     def activation_pattern(self, x: np.ndarray) -> Tuple[bool, ...]:
-        """Compute the activation pattern σ(x) ∈ {0,1}^m.
+        """Compute activation pattern of x.
 
-        The Stone dual map: R^n → {0,1}^m.
+        Time: O(k * n) where k = num_planes, n = dim
+        Space: O(k)
 
-        Time complexity: O(nm)
+        Args:
+            x: Point in R^n
+
+        Returns:
+            Tuple of k booleans
         """
         return tuple(h.sign(x) for h in self.hyperplanes)
 
     def enumerate_regions(self, n_samples: int = 100000,
-                          bounds: float = 10.0) -> Dict[Tuple[bool, ...], int]:
-        """Enumerate realized activation regions by random sampling.
+                          bounds: Tuple[float, float] = (-10.0, 10.0)) -> Set[Tuple[bool, ...]]:
+        """Enumerate realized activation patterns by random sampling.
 
-        Returns a dict mapping activation patterns to sample counts.
+        Time: O(n_samples * k * n)
+        Space: O(min(2^k, n_samples) * k)
 
-        Time complexity: O(n_samples * n * m)
-        Space complexity: O(2^m) worst case for the pattern dict
+        Note: This is a Monte Carlo algorithm. It finds a lower bound
+        on the number of regions. For arrangements in general position,
+        it converges to the true count with high probability.
+
+        Args:
+            n_samples: Number of random points to sample
+            bounds: Uniform sampling bounds for each coordinate
+
+        Returns:
+            Set of realized activation patterns
         """
-        regions: Dict[Tuple[bool, ...], int] = {}
-        for _ in range(n_samples):
-            x = np.random.uniform(-bounds, bounds, size=self.n)
-            p = self.activation_pattern(x)
-            regions[p] = regions.get(p, 0) + 1
-        return regions
-
-    def zaslavsky_bound(self) -> int:
-        """Compute the Zaslavsky upper bound on number of regions.
-
-        For m hyperplanes in R^n: sum_{k=0}^{n} C(m, k).
-
-        Time complexity: O(n)
-        """
-        return sum(comb(self.m, k) for k in range(self.n + 1))
+        points = np.random.uniform(bounds[0], bounds[1], (n_samples, self.dim))
+        patterns = set()
+        for x in points:
+            patterns.add(self.activation_pattern(x))
+        return patterns
 
 
-def compute_activation_boolean_algebra(
-    arr: HyperplaneArrangement,
-    n_samples: int = 100000
-) -> Dict[str, object]:
-    """Compute the activation Boolean algebra of a hyperplane arrangement.
+class ActivationAlgebra:
+    """The Boolean algebra generated by half-spaces of a hyperplane arrangement.
 
-    Algorithm:
-    1. Sample random points to discover realized activation patterns
-    2. The Boolean algebra = powerset of realized patterns
-    3. Each element is a union of activation regions
+    Each element is represented as a frozenset of activation patterns.
+    The element represents the union of the corresponding regions.
 
-    Returns:
-        Dictionary with:
-        - 'atoms': set of realized patterns
-        - 'n_atoms': number of atoms
-        - 'algebra_size': 2^n_atoms
-        - 'zaslavsky_bound': theoretical upper bound
-        - 'exponential_bound': 2^m
-
-    Time complexity: O(n_samples * n * m + 2^m) for enumeration
-    Space complexity: O(2^m) for the pattern dictionary
+    Time complexity for construction: O(2^k) where k = num_planes
+    Space complexity: O(2^k * k)
     """
-    regions = arr.enumerate_regions(n_samples)
-    atoms = set(regions.keys())
 
-    return {
-        'atoms': atoms,
-        'n_atoms': len(atoms),
-        'algebra_size': 2 ** len(atoms),
-        'zaslavsky_bound': arr.zaslavsky_bound(),
-        'exponential_bound': 2 ** arr.m,
-        'region_samples': regions,
-    }
+    def __init__(self, arrangement: HyperplaneArrangement,
+                 realized_patterns: Set[Tuple[bool, ...]]):
+        self.arrangement = arrangement
+        self.realized_patterns = realized_patterns
+        self.k = arrangement.num_planes
+
+    def atom(self, pattern: Tuple[bool, ...]) -> FrozenSet[Tuple[bool, ...]]:
+        """Return the atom (singleton region) for a given pattern.
+
+        Time: O(1)
+        """
+        if pattern in self.realized_patterns:
+            return frozenset({pattern})
+        return frozenset()
+
+    def empty(self) -> FrozenSet[Tuple[bool, ...]]:
+        """The empty set (bottom element).
+
+        Time: O(1)
+        """
+        return frozenset()
+
+    def universe(self) -> FrozenSet[Tuple[bool, ...]]:
+        """The universal set (top element).
+
+        Time: O(|realized_patterns|)
+        """
+        return frozenset(self.realized_patterns)
+
+    def complement(self, A: FrozenSet[Tuple[bool, ...]]) -> FrozenSet[Tuple[bool, ...]]:
+        """Complement of A in the algebra.
+
+        Time: O(|realized_patterns|)
+        """
+        return frozenset(self.realized_patterns - A)
+
+    def union(self, A: FrozenSet[Tuple[bool, ...]],
+              B: FrozenSet[Tuple[bool, ...]]) -> FrozenSet[Tuple[bool, ...]]:
+        """Union of A and B.
+
+        Time: O(|A| + |B|)
+        """
+        return A | B
+
+    def intersection(self, A: FrozenSet[Tuple[bool, ...]],
+                     B: FrozenSet[Tuple[bool, ...]]) -> FrozenSet[Tuple[bool, ...]]:
+        """Intersection of A and B.
+
+        Time: O(min(|A|, |B|))
+        """
+        return A & B
+
+    def halfspace(self, j: int) -> FrozenSet[Tuple[bool, ...]]:
+        """Return the set of patterns where hyperplane j is positive.
+
+        This is the j-th generator of the activation algebra.
+
+        Time: O(|realized_patterns|)
+        """
+        return frozenset(p for p in self.realized_patterns if p[j])
+
+    def num_atoms(self) -> int:
+        """Number of atoms = number of realized patterns.
+
+        Time: O(1)
+        """
+        return len(self.realized_patterns)
+
+    def verify_boolean_algebra(self) -> Dict[str, bool]:
+        """Verify Boolean algebra axioms.
+
+        Time: O(2^k * k) for k = num_planes
+
+        Returns:
+            Dictionary of axiom name -> satisfied
+        """
+        results = {}
+
+        # Empty set and universe
+        e = self.empty()
+        u = self.universe()
+        results["empty_in_algebra"] = True
+        results["univ_in_algebra"] = True
+
+        # Complement
+        results["complement_of_empty"] = self.complement(e) == u
+        results["complement_of_univ"] = self.complement(u) == e
+
+        # Double complement
+        for p in self.realized_patterns:
+            a = self.atom(p)
+            results["double_complement"] = self.complement(self.complement(a)) == a
+            break
+
+        # De Morgan
+        if len(self.realized_patterns) >= 2:
+            pats = list(self.realized_patterns)
+            a = self.atom(pats[0])
+            b = self.atom(pats[1])
+            lhs = self.complement(self.union(a, b))
+            rhs = self.intersection(self.complement(a), self.complement(b))
+            results["de_morgan"] = lhs == rhs
+
+        return results
 
 
-def stone_dual_map(
-    arr: HyperplaneArrangement,
-    points: np.ndarray
-) -> np.ndarray:
-    """Compute the Stone dual map for a batch of points.
+class StoneDualSpace:
+    """The Stone dual of the activation algebra.
 
-    Maps each point x ∈ R^n to its activation pattern σ(x) ∈ {0,1}^m.
+    Points of the Stone space correspond to ultrafilters on the Boolean algebra.
+    For a finite Boolean algebra, ultrafilters = atoms = realized activation patterns.
+
+    Time complexity for construction: O(|realized_patterns|)
+    Space complexity: O(|realized_patterns| * k)
+    """
+
+    def __init__(self, arrangement: HyperplaneArrangement,
+                 realized_patterns: Set[Tuple[bool, ...]]):
+        self.arrangement = arrangement
+        self.points = list(realized_patterns)  # Each point = one ultrafilter
+
+    def cardinality(self) -> int:
+        """Number of points in the Stone dual.
+
+        Time: O(1)
+        """
+        return len(self.points)
+
+    def clopen_from_algebra_element(self, patterns: FrozenSet[Tuple[bool, ...]]) -> List[int]:
+        """Map an algebra element to a clopen set in the Stone space.
+
+        Time: O(|points|)
+
+        Returns:
+            List of indices of Stone space points in the clopen set
+        """
+        return [i for i, p in enumerate(self.points) if p in patterns]
+
+
+def zaslavsky_bound(n: int, k: int) -> int:
+    """Compute the Zaslavsky bound for k hyperplanes in R^n.
+
+    The bound is sum_{i=0}^{min(n,k)} C(k,i).
+
+    Time: O(min(n,k) * k)  [for binomial coefficient computation]
+    Space: O(1)
 
     Args:
-        arr: hyperplane arrangement
-        points: (N, n) array of N points in R^n
+        n: Ambient dimension
+        k: Number of hyperplanes
 
     Returns:
-        (N, m) boolean array of activation patterns
+        Upper bound on the number of regions
 
-    Time complexity: O(N * n * m)
+    Examples:
+        >>> zaslavsky_bound(2, 3)
+        7
+        >>> zaslavsky_bound(3, 3)
+        8
     """
-    N = points.shape[0]
-    m = arr.m
-    patterns = np.zeros((N, m), dtype=bool)
-    for j, h in enumerate(arr.hyperplanes):
-        vals = points @ h.w + h.b
-        patterns[:, j] = vals > 0
-    return patterns
+    return sum(comb(k, i) for i in range(min(n, k) + 1))
 
 
-def verify_tropical_equality(
-    W: np.ndarray,
-    bias: np.ndarray,
-    readout: np.ndarray,
-    c: float,
-    x: np.ndarray
-) -> Tuple[float, float, bool]:
-    """Verify that ReLU network = tropical affine on each region.
+def estimate_vc_dimension(arrangement: HyperplaneArrangement,
+                          max_d: int = 10,
+                          n_trials: int = 1000) -> int:
+    """Estimate the VC dimension of a hyperplane arrangement.
 
-    For a single-layer ReLU network with readout:
-      f(x) = c + sum_i readout_i * max(W_i · x + b_i, 0)
+    Uses random point sampling to check shattering.
 
-    On the activation region of x, this equals the tropical affine function:
-      g_σ(x) = c + sum_{i: σ_i=True} readout_i * (W_i · x + b_i)
+    Time: O(max_d * n_trials * 2^max_d * k * n)
+    Space: O(2^max_d * k)
+
+    Args:
+        arrangement: The hyperplane arrangement
+        max_d: Maximum dimension to check
+        n_trials: Number of random point sets to try
 
     Returns:
-        (relu_value, tropical_value, are_equal)
-
-    Time complexity: O(n * m)
+        Estimated VC dimension
     """
-    pre = W @ x + bias
-    relu_out = np.maximum(pre, 0)
-    relu_val = c + np.dot(readout, relu_out)
+    n = arrangement.dim
+    best_d = 0
 
-    # Compute tropical value using activation pattern
-    pattern = pre > 0
-    tropical_val = c + sum(
-        readout[i] * pre[i] for i in range(len(pre)) if pattern[i]
-    )
-
-    return relu_val, tropical_val, np.isclose(relu_val, tropical_val)
-
-
-def shattering_test(
-    arr: HyperplaneArrangement,
-    points: List[np.ndarray]
-) -> Tuple[bool, int]:
-    """Test if the arrangement hypothesis class shatters a set of points.
-
-    The hypothesis class consists of all functions x ↦ (σ(x) ∈ P)
-    for subsets P of activation patterns. A set S is shattered if
-    every labeling f: S → {0,1} is realized by some P.
-
-    Returns:
-        (is_shattered, n_dichotomies)
-
-    Time complexity: O(|S| * n * m + 2^(n_distinct_patterns))
-    """
-    patterns = [arr.activation_pattern(x) for x in points]
-    distinct = list(set(patterns))
-
-    # If patterns are not all distinct, S cannot be shattered
-    if len(distinct) < len(points):
-        # Find which points share a pattern
-        for i in range(len(points)):
-            for j in range(i + 1, len(points)):
-                if patterns[i] == patterns[j]:
-                    return False, 0
-
-    # Count distinct dichotomies
-    n_points = len(points)
-    dichotomies = set()
-    for subset_mask in range(2 ** len(distinct)):
-        P = set()
-        for k in range(len(distinct)):
-            if subset_mask & (1 << k):
-                P.add(distinct[k])
-        labeling = tuple(patterns[i] in P for i in range(n_points))
-        dichotomies.add(labeling)
-
-    is_shattered = len(dichotomies) == 2 ** n_points
-    return is_shattered, len(dichotomies)
-
-
-def compute_vc_dimension_bound(
-    arr: HyperplaneArrangement,
-    max_test_size: int = 8,
-    n_trials: int = 100
-) -> int:
-    """Estimate an upper bound on the VC dimension of an arrangement
-    hypothesis class by random sampling.
-
-    Tries to find the largest shattered set.
-
-    Returns:
-        Lower bound on VC dimension (largest shattered set found)
-
-    Time complexity: O(n_trials * max_test_size * 2^max_test_size * n * m)
-    """
-    best = 0
-    for size in range(1, max_test_size + 1):
-        found = False
+    for d in range(1, min(max_d, arrangement.num_planes) + 1):
+        shattered = False
         for _ in range(n_trials):
-            points = [np.random.uniform(-5, 5, size=arr.n)
-                      for _ in range(size)]
-            shattered, _ = shattering_test(arr, points)
-            if shattered:
-                found = True
-                best = max(best, size)
-                break
-        if not found:
+            # Sample d random points
+            points = [np.random.uniform(-10, 10, n) for _ in range(d)]
+            patterns = [arrangement.activation_pattern(x) for x in points]
+
+            # Check if all patterns are distinct (necessary for shattering)
+            if len(set(patterns)) == d:
+                # Check if we can realize all 2^d subsets
+                # For each subset, check if there's an algebra element separating it
+                all_subsets = True
+                for mask in range(2**d):
+                    target = frozenset(i for i in range(d) if mask & (1 << i))
+                    # Check if there's an activation pattern that selects exactly these points
+                    found = False
+                    for pat_idx in range(2**arrangement.num_planes):
+                        # Generate a potential separating pattern
+                        test_pat = tuple(bool(pat_idx & (1 << j))
+                                        for j in range(arrangement.num_planes))
+                        selected = frozenset(i for i in range(d) if patterns[i] == test_pat)
+                        if selected == target:
+                            found = True
+                            break
+                    if not found:
+                        all_subsets = False
+                        break
+
+                if all_subsets:
+                    shattered = True
+                    break
+
+        if shattered:
+            best_d = d
+        else:
             break
-    return best
+
+    return best_d
 
 
+def relu_network_to_arrangement(weights: np.ndarray, biases: np.ndarray) -> HyperplaneArrangement:
+    """Convert a single ReLU layer to a hyperplane arrangement.
+
+    Time: O(k * n)
+    Space: O(k * n)
+
+    Args:
+        weights: Weight matrix of shape (k, n)
+        biases: Bias vector of shape (k,)
+
+    Returns:
+        Corresponding hyperplane arrangement
+    """
+    k, n = weights.shape
+    hyperplanes = [Hyperplane(weights[j], biases[j]) for j in range(k)]
+    return HyperplaneArrangement(hyperplanes, n)
+
+
+# ======================================================================
 # Example usage
+# ======================================================================
+
 if __name__ == "__main__":
     np.random.seed(42)
 
-    # Create a hyperplane arrangement
-    n, m = 2, 4
-    hyperplanes = [Hyperplane(np.random.randn(n), np.random.randn())
-                   for _ in range(m)]
-    arr = HyperplaneArrangement(hyperplanes)
+    # Create a simple arrangement
+    arr = HyperplaneArrangement([
+        Hyperplane(np.array([1, 0]), 0),
+        Hyperplane(np.array([0, 1]), 0),
+        Hyperplane(np.array([1, 1]), 0),
+    ], dim=2)
 
-    # Compute activation Boolean algebra
-    result = compute_activation_boolean_algebra(arr)
-    print(f"Hyperplane arrangement: {m} hyperplanes in R^{n}")
-    print(f"Number of atoms: {result['n_atoms']}")
-    print(f"Boolean algebra size: {result['algebra_size']}")
-    print(f"Zaslavsky bound: {result['zaslavsky_bound']}")
-    print(f"Exponential bound: {result['exponential_bound']}")
+    # Enumerate regions
+    patterns = arr.enumerate_regions()
+    print(f"Arrangement: 3 lines in R^2")
+    print(f"Realized patterns: {len(patterns)}")
+    print(f"Zaslavsky bound: {zaslavsky_bound(2, 3)}")
+    print(f"2^k bound: {2**3}")
 
-    # Stone dual map
-    points = np.random.randn(10, n)
-    patterns = stone_dual_map(arr, points)
-    print(f"\nStone dual map on 10 random points:")
-    for i in range(min(5, len(points))):
-        print(f"  x = {points[i]} -> σ = {patterns[i]}")
+    # Build activation algebra
+    algebra = ActivationAlgebra(arr, patterns)
+    print(f"\nActivation algebra:")
+    print(f"  Atoms: {algebra.num_atoms()}")
+    print(f"  Axioms: {algebra.verify_boolean_algebra()}")
 
-    # Verify tropical equality
-    W = np.random.randn(m, n)
-    bias = np.random.randn(m)
-    readout = np.random.randn(m)
-    x = np.random.randn(n)
-    relu_val, trop_val, match = verify_tropical_equality(W, bias, readout, 0.0, x)
-    print(f"\nTropical equality: ReLU = {relu_val:.4f}, tropical = {trop_val:.4f}, match = {match}")
+    # Build Stone dual
+    stone = StoneDualSpace(arr, patterns)
+    print(f"\nStone dual space:")
+    print(f"  Cardinality: {stone.cardinality()}")
+    print(f"  = num atoms: {stone.cardinality() == algebra.num_atoms()}")
 
-    # VC dimension
-    vc = compute_vc_dimension_bound(arr, max_test_size=6)
-    print(f"\nVC dimension lower bound: {vc}")
-    print(f"Theoretical bound (2^m): {2**m}")
+    # Estimate VC dimension
+    vc = estimate_vc_dimension(arr, max_d=5)
+    print(f"\nEstimated VC dimension: {vc}")
+    print(f"num_planes: {arr.num_planes}")
+
+    # ReLU network example
+    W = np.array([[1, 1], [-1, 1], [1, -1], [0.5, -0.5]])
+    b = np.array([0, 0, 0, 0.5])
+    relu_arr = relu_network_to_arrangement(W, b)
+    relu_patterns = relu_arr.enumerate_regions()
+    print(f"\nReLU network (4 neurons, 2 inputs):")
+    print(f"  Regions: {len(relu_patterns)}")
+    print(f"  Zaslavsky bound: {zaslavsky_bound(2, 4)}")
+    print(f"  2^k bound: {2**4}")

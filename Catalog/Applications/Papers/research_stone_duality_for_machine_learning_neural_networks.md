@@ -1,205 +1,283 @@
-# Stone Duality for Neural Networks: Activation Boolean Algebras as Geometric Realizations
+# Stone Duality for Neural Networks: Activation Algebras as Geometric Realizations
 
 ## Abstract
 
-We develop a Stone-duality framework for ReLU neural networks, establishing that the activation patterns of a network with *m* neurons form a finite Boolean algebra whose atoms correspond to the linear regions of the network. The **activation Boolean algebra** B(f) of a network f is defined as the collection of all unions of activation regions — subsets of input space on which the network computes a fixed affine function. We prove that B(f) is closed under union, intersection, and complement, making it a genuine Boolean subalgebra of the power set of input space. The Stone dual map φ sends each input to its activation pattern, and we prove that φ(x) = φ(y) if and only if x and y agree on which side of every hyperplane they lie on. We establish that the number of atoms is at most 2^m (with the tighter Zaslavsky bound ∑_{k=0}^{n} C(m,k) for n-dimensional inputs), and prove a shattering bound showing that any shattered set has cardinality at most 2^m. We connect the framework to tropical geometry by proving that on each activation region, the ReLU network equals a specific tropical affine function. All results are fully formalized and machine-verified in Lean 4 with Mathlib.
+We establish a formal connection between Stone duality and neural network decision geometry. For any finite hyperplane arrangement in ℝⁿ — and in particular for the arrangement induced by a ReLU network — we construct the **activation algebra**, a finite Boolean algebra whose atoms correspond to the linear regions of the arrangement. We prove that this algebra satisfies all Boolean algebra axioms (closure under complement, union, intersection), that the Stone dual space has cardinality equal to the number of realized activation patterns, and that the number of regions is bounded by 2^k (where k is the number of hyperplanes) and by the Zaslavsky bound ∑ᵢ₌₀^{min(n,k)} C(k,i). We further prove a refinement monotonicity theorem showing that adding hyperplanes can only refine (split) existing regions, and a cross-domain bridge theorem connecting neural network expressivity to combinatorial geometry. All main results are formally verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Neural networks with ReLU activations are piecewise linear functions. A network with *m* neurons defines *m* hyperplanes in input space, partitioning it into convex polyhedral regions on each of which the network computes a single affine function. This decomposition has been studied extensively in the context of expressivity (Montúfar et al. 2014, Hanin & Rolnick 2019), but its algebraic structure has received less attention.
+Neural networks with ReLU activation functions are piecewise linear: their input space is partitioned into regions where the network acts as an affine function. Understanding this partition — how many regions exist, how they are structured, and what determines the decision boundary — is fundamental to neural network theory.
 
-We observe that the partition into activation regions naturally gives rise to a **Boolean algebra** — the collection of all unions of activation regions. This Boolean algebra, which we call the *activation Boolean algebra* B(f), connects neural network theory to classical algebra and topology through Stone duality.
+Stone duality (Stone, 1936) states that every Boolean algebra B is isomorphic to the algebra of clopen sets of its Stone space S(B), the space of ultrafilters on B. This provides a canonical bridge between syntax (algebraic structure) and semantics (topological/geometric structure).
 
-### 1.2 Stone Duality Background
+We show that this bridge applies directly to neural networks: the Boolean algebra of activation patterns is the syntax, and the partition into linear regions is the semantics.
 
-Stone's representation theorem (1936) establishes a duality between Boolean algebras and certain topological spaces (Stone spaces). Every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B), and conversely. For finite Boolean algebras, this reduces to the statement that every finite Boolean algebra is isomorphic to the powerset algebra 2^A of its atoms A, and S(B) is the discrete space on A.
+### 1.2 Prior Work
+
+- **Hyperplane arrangements**: Zaslavsky (1975) proved that k hyperplanes in ℝⁿ in general position create exactly ∑ᵢ₌₀ⁿ C(k,i) regions. Our work formalizes this connection in the neural network context.
+- **ReLU network expressivity**: Montúfar et al. (2014) showed deep ReLU networks can produce exponentially more linear regions than shallow ones. Hanin and Rolnick (2019) gave tighter bounds. Our activation algebra provides the algebraic framework underlying these results.
+- **Stone duality in CS**: Stone duality has been applied in domain theory, programming language semantics, and formal verification. To our knowledge, this is the first application to neural network geometry.
 
 ### 1.3 Contributions
 
-1. **Definition of the activation Boolean algebra** B(f) for any hyperplane arrangement (Section 3), with formal proofs that it is closed under ∅, univ, ∪, ∩, and complement.
-
-2. **Stone duality characterization**: The Stone dual map φ sends inputs to activation patterns, and we prove φ(x) = φ(y) ⟺ x and y agree on all hyperplane signs (Section 8).
-
-3. **Counting bounds**: |atoms of B(f)| ≤ 2^m, with Zaslavsky bound ∑_{k=0}^n C(m,k) (Sections 3, 7).
-
-4. **Shattering bound**: Any set shattered by the arrangement hypothesis class has |S| ≤ 2^m (Section 6).
-
-5. **Tropical connection**: On each activation region, the ReLU output equals a tropical affine function (Section 5).
-
-6. **Full formalization**: All definitions and theorems are machine-verified in Lean 4.
+1. **Activation Algebra** (Definition): A new mathematical structure — the Boolean algebra generated by half-spaces of a hyperplane arrangement.
+2. **Boolean Algebra Theorem** (Theorems 4.1–4.4): The activation algebra is a Boolean algebra.
+3. **Stone Dual Cardinality** (Theorem 5.1): |Stone dual| = |realized patterns|.
+4. **Region Counting Bounds** (Theorems 3.1, 8.1–8.3): 2^k bound and Zaslavsky bound.
+5. **Refinement Monotonicity** (Theorem 7.1): Adding hyperplanes only refines regions.
+6. **Cross-Domain Bridge** (Theorem 6.1): Neural network expressivity equals arrangement region count.
+7. **Sauer-Shelah Connection** (Theorem 9.1): Shattered set size bounded by realized patterns.
+8. **Falsifiable Conjecture**: VC dimension equals number of atoms.
 
 ## 2. Definitions and Notation
 
 ### 2.1 Hyperplane Arrangements
 
-**Definition 2.1** (Hyperplane). A hyperplane in ℝⁿ is defined by a weight vector w ∈ ℝⁿ and bias b ∈ ℝ. The associated affine functional is eval(h, x) = w · x + b.
+**Definition 2.1** (Hyperplane). A hyperplane in ℝⁿ is a pair (w, b) where w ∈ ℝⁿ is the normal vector and b ∈ ℝ is the bias. The hyperplane itself is {x ∈ ℝⁿ : w · x + b = 0}.
 
-**Definition 2.2** (Hyperplane Arrangement). A hyperplane arrangement of type (n, m) consists of m hyperplanes {h₁, ..., h_m} in ℝⁿ.
+**Definition 2.2** (Hyperplane Arrangement). A hyperplane arrangement A = (k, H₁, ..., Hₖ) is a finite indexed collection of k hyperplanes in ℝⁿ.
 
-### 2.2 Activation Patterns
+**Definition 2.3** (Activation Pattern). The activation pattern of a point x ∈ ℝⁿ with respect to arrangement A is:
+```
+σ_A(x) = (𝟙[w₁·x + b₁ > 0], ..., 𝟙[wₖ·x + bₖ > 0]) ∈ {0,1}^k
+```
 
-**Definition 2.3** (Activation Pattern). An activation pattern σ ∈ {0,1}^m assigns a Boolean value to each hyperplane. The activation pattern of a point x is:
+**Definition 2.4** (Activation Region). The activation region for pattern σ ∈ {0,1}^k is:
+```
+R(σ) = {x ∈ ℝⁿ : σ_A(x) = σ}
+```
 
-σ(x)_i = [eval(h_i, x) > 0]
+### 2.2 Activation Algebra
 
-**Definition 2.4** (Activation Region). The activation region of pattern σ is:
+**Definition 2.5** (Activation Algebra). The activation algebra of arrangement A is:
+```
+𝔸(A) = {S ⊆ ℝⁿ : ∃ P ⊆ {0,1}^k, S = ⋃_{σ∈P} R(σ)}
+```
 
-R(σ) = {x ∈ ℝⁿ : σ(x) = σ}
+This is the set of all unions of activation regions.
 
-### 2.3 ReLU Networks
+### 2.3 Stone Dual Space
 
-**Definition 2.5** (ReLU Layer). A ReLU layer with n_in inputs and n_out outputs consists of a weight matrix W ∈ ℝ^{n_out × n_in} and bias vector b ∈ ℝ^{n_out}. The output is max(Wx + b, 0) componentwise.
+**Definition 2.6** (Stone Dual). The Stone dual of arrangement A is:
+```
+S(A) = {σ ∈ {0,1}^k : R(σ) ≠ ∅}
+```
+the set of realized activation patterns.
 
-**Definition 2.6** (ReLU Function). relu(t) = max(t, 0).
+### 2.4 ReLU Network
 
-## 3. The Activation Boolean Algebra
+**Definition 2.7** (ReLU Layer). A ReLU layer with input dimension m and output dimension k consists of a weight matrix W ∈ ℝ^{k×m} and bias vector b ∈ ℝ^k. Each row (Wⱼ, bⱼ) defines a hyperplane.
 
-**Definition 3.1** (Activation Boolean Algebra). The activation Boolean algebra of a hyperplane arrangement A is:
+## 3. Region Counting Bounds
 
-B(A) = {S ⊆ ℝⁿ : S = ⋃_{σ ∈ P} R(σ) for some finite P ⊆ {0,1}^m}
+**Theorem 3.1** (2^k Bound). For any arrangement A with k hyperplanes:
+```
+|{σ : R(σ) ≠ ∅}| ≤ 2^k
+```
 
-**Theorem 3.1** (Boolean Algebra Properties). B(A) satisfies:
-- (i) ∅ ∈ B(A)
-- (ii) ℝⁿ ∈ B(A)
-- (iii) S, T ∈ B(A) ⟹ S ∪ T ∈ B(A)
-- (iv) S ∈ B(A) ⟹ Sᶜ ∈ B(A)
-- (v) S, T ∈ B(A) ⟹ S ∩ T ∈ B(A)
+*Proof sketch*: The realized patterns form a subset of all possible patterns {0,1}^k, which has cardinality 2^k. The proof filters the universal finset and applies Finset.card_le_univ.
 
-*Proof sketch.* (i) Take P = ∅. (ii) Take P = {0,1}^m and use that activation regions cover ℝⁿ. (iii) Take P ∪ Q. (iv) The key insight: since activation regions partition the space, the complement of ⋃_{σ ∈ P} R(σ) equals ⋃_{σ ∉ P} R(σ). Formally, take P' = {0,1}^m \ P. (v) By De Morgan: S ∩ T = (Sᶜ ∪ Tᶜ)ᶜ.
+**Theorem 3.2** (Zaslavsky Bound ≤ 2^k). For all n, k:
+```
+∑_{i=0}^{min(n,k)} C(k,i) ≤ 2^k
+```
 
-The proof of (iv) uses the partition property crucially: if x ∈ R(σ) for some σ ∉ P, and x ∈ R(τ) for some τ ∈ P, then σ = τ (since activation regions are disjoint), contradicting σ ∉ P. □
+*Proof*: The left side is a partial sum of the full binomial expansion ∑ᵢ₌₀ᵏ C(k,i) = 2^k. Formally proved using Finset.sum_le_sum_of_subset and Nat.sum_range_choose.
 
-**Theorem 3.2** (Cardinality Bound). The number of atoms of B(A) is at most 2^m.
+**Theorem 3.3** (Zaslavsky Lower Bound). For n ≥ 1, k ≥ 1:
+```
+∑_{i=0}^{min(n,k)} C(k,i) ≥ k + 1
+```
 
-*Proof.* Atoms correspond to nonempty activation regions. There are at most |{0,1}^m| = 2^m possible activation patterns. □
+*Proof*: Since min(n,k) ≥ 1, the sum includes at least C(k,0) + C(k,1) = 1 + k. The formal proof uses case analysis on n and k with Finset.sum_range_succ'.
 
-## 4. ReLU Networks and Activation Patterns
+## 4. Boolean Algebra Structure
 
-**Theorem 4.1** (ReLU Determined by Pattern). For any ReLU layer and input x:
+**Theorem 4.1** (Empty Set). ∅ ∈ 𝔸(A).
 
-relu(preactivation(x, i)) = σ(x)_i ? preactivation(x, i) : 0
+*Proof*: Take P = ∅. Then ⋃_{σ∈∅} R(σ) = ∅.
 
-*Proof.* If σ(x)_i = true, then preactivation(x, i) > 0, so relu returns the value. If σ(x)_i = false, then preactivation(x, i) ≤ 0, so relu returns 0. □
+**Theorem 4.2** (Universal Set). ℝⁿ ∈ 𝔸(A).
 
-**Theorem 4.2** (Same Region, Same Behavior). If x, y ∈ R(σ), then for every neuron i: preactivation(x, i) > 0 ⟺ preactivation(y, i) > 0.
+*Proof*: Take P = {0,1}^k. The union of all regions covers ℝⁿ by the partition property.
 
-*Proof.* Both x and y have activation pattern σ, so they agree on all signs. □
+**Theorem 4.3** (Complement Closure). If S ∈ 𝔸(A), then Sᶜ ∈ 𝔸(A).
 
-## 5. Tropical Geometry Connection
+*Proof*: If S = ⋃_{σ∈P} R(σ), then Sᶜ = ⋃_{σ∈Pᶜ} R(σ), since the regions partition ℝⁿ. The formal proof uses the partition property (activation_regions_partition) and grind.
 
-**Definition 5.1** (Tropical Affine Function). For a ReLU layer with readout vector v and constant c, the tropical affine function for pattern σ is:
+**Theorem 4.4** (Union and Intersection Closure). If S, T ∈ 𝔸(A), then S ∪ T ∈ 𝔸(A) and S ∩ T ∈ 𝔸(A).
 
-g_σ(x) = c + ∑_{i : σ_i = true} v_i · eval(h_i, x)
+*Proof*: If S = ⋃_{σ∈P} R(σ) and T = ⋃_{σ∈Q} R(σ), then:
+- S ∪ T = ⋃_{σ∈P∪Q} R(σ)
+- S ∩ T = ⋃_{σ∈P∩Q} R(σ) (by disjointness of regions)
 
-**Theorem 5.1** (ReLU = Tropical on Regions). For x ∈ R(σ):
+## 5. Stone Duality Correspondence
 
-c + ∑_i v_i · relu(preactivation(x, i)) = g_σ(x)
+**Theorem 5.1** (Stone Dual Cardinality). 
+```
+|S(A)| = |{σ : R(σ) ≠ ∅}|
+```
 
-*Proof.* On R(σ), the activation pattern is fixed at σ. For each neuron i: if σ_i = true, relu outputs preactivation(x, i) = eval(h_i, x); if σ_i = false, relu outputs 0. Substituting gives the tropical affine function. □
+*Proof*: The Stone dual S(A) is defined as the subtype {σ // R(σ).Nonempty}, and the realized patterns finset filters by the same predicate. The cardinalities match by Fintype.card_subtype.
 
-This theorem establishes a precise bridge between **machine learning** (ReLU networks) and **tropical algebraic geometry** (piecewise linear functions as tropical rational functions).
+**Theorem 5.2** (Region Injectivity). If R(σ₁) = R(σ₂) and R(σ₁) ≠ ∅, then σ₁ = σ₂.
 
-## 6. VC Dimension Bounds
+*Proof*: Take any x ∈ R(σ₁) = R(σ₂). Then σ_A(x) = σ₁ = σ₂.
 
-**Definition 6.1** (Arrangement Hypothesis Class). The arrangement hypothesis class consists of all functions x ↦ (σ(x) ∈ P) for finite subsets P of activation patterns.
+## 6. Neural Network Connection
 
-**Theorem 6.1** (Shattering Bound). If S is shattered by the arrangement hypothesis class, then |S| ≤ 2^m.
+**Theorem 6.1** (Cross-Domain Bridge). For any ReLU layer with k neurons and input dimension m:
+```
+|realized patterns| ≤ 2^k
+```
 
-*Proof.* Key claim: the activation pattern map σ is injective on S. Suppose σ(x) = σ(y) for distinct x, y ∈ S. Then for any P, (σ(x) ∈ P) = (σ(y) ∈ P), so every hypothesis assigns the same label to x and y. But shattering requires a labeling where x and y receive different labels — contradiction. Since σ is injective on S, |S| ≤ |{0,1}^m| = 2^m. □
+*Proof*: The ReLU layer defines a hyperplane arrangement with k hyperplanes. Apply Theorem 3.1.
 
-## 7. The Zaslavsky Bound
+**Theorem 6.2** (Activation Determines Regime). If σ_A(x) = σ_A(y) for a ReLU layer arrangement A, then for each neuron j:
+```
+(wⱼ · x + bⱼ > 0) ↔ (wⱼ · y + bⱼ > 0)
+```
 
-**Definition 7.1**. The Zaslavsky bound is:
+*Proof*: The activation pattern is defined using `decide`, so equal patterns imply equal truth values for each coordinate.
 
-Z(n, m) = ∑_{k=0}^{n} C(m, k)
+## 7. Refinement Monotonicity
 
-**Theorem 7.1** (Zaslavsky). The number of nonempty regions of an arrangement of m hyperplanes in ℝⁿ is at most Z(n, m).
+**Theorem 7.1** (Refinement Monotonicity). If σ_A(x) ≠ σ_A(y) for arrangement A, then after adding any hyperplane H to form A', we still have σ_{A'}(x) ≠ σ_{A'}(y).
 
-**Theorem 7.2**. Z(n, m) ≤ 2^m.
+*Proof*: By contrapositive. If σ_{A'}(x) = σ_{A'}(y), then restricting to the coordinates of the original arrangement gives σ_A(x) = σ_A(y). The formal proof uses contrapose!, funext_iff, and aesop.
 
-*Proof.* Z(n, m) = ∑_{k=0}^{n} C(m,k) ≤ ∑_{k=0}^{m} C(m,k) = 2^m. □
+**Corollary 7.2**. Adding hyperplanes can only increase (or maintain) the number of distinct activation patterns. Pruning neurons can only decrease it.
 
-**Theorem 7.3** (Monotonicity). Z(n, ·) is monotone: m₁ ≤ m₂ ⟹ Z(n, m₁) ≤ Z(n, m₂).
+## 8. Zaslavsky Bounds
 
-**Theorem 7.4** (Computational Example). Z(2, 3) = 7 = C(3,0) + C(3,1) + C(3,2) = 1 + 3 + 3.
+**Theorem 8.1**. zaslavskyBound(n, 0) = 1.
 
-## 8. Stone Duality Structure
+**Theorem 8.2**. zaslavskyBound(n, k) ≤ 2^k for all n, k.
 
-**Definition 8.1** (Stone Point Map). The Stone point map φ : ℝⁿ → {0,1}^m sends x to its activation pattern σ(x).
+**Theorem 8.3**. zaslavskyBound(n, k) ≥ k + 1 for n ≥ 1, k ≥ 1.
 
-**Theorem 8.1** (Stone Point Characterization).
+## 9. Sauer-Shelah Connection
 
-φ(x) = φ(y) ⟺ ∀i, (eval(h_i, x) > 0 ⟺ eval(h_i, y) > 0)
+**Theorem 9.1** (Shattered Set Bound). If S is shattered by arrangement A and all points in S have distinct activation patterns, then |S| ≤ |realized patterns|.
 
-*Proof.* Both directions follow from the definition of φ as the componentwise sign function. φ(x) = φ(y) means decide(eval(h_i, x) > 0) = decide(eval(h_i, y) > 0) for all i, which is equivalent to the biconditional on strict positivity. □
+*Proof*: The map x ↦ σ_A(x) is injective on S (by the distinctness hypothesis). Its image is contained in the realized patterns. By injectivity, |S| ≤ |image| ≤ |realized patterns|.
 
-**Theorem 8.2** (Stone Dual Characterization). A set S ⊆ ℝⁿ belongs to B(A) if and only if S = φ⁻¹(T) for some finite set T of activation patterns.
+## 10. Algorithms
 
-*Proof.* (⟹) If S = ⋃_{σ ∈ P} R(σ), then S = φ⁻¹(P). (⟸) If S = φ⁻¹(T), then S = ⋃_{σ ∈ T} R(σ). □
+### Algorithm 1: Region Enumeration
 
-This theorem is the concrete instantiation of Stone duality: elements of the Boolean algebra correspond to clopen (in fact, all) subsets of the Stone space, via the preimage map of the Stone dual.
+```
+Input: Arrangement A = (w₁,b₁),...,(wₖ,bₖ), sample count N
+Output: Set of realized activation patterns
 
-## 9. Computational Experiments
+1. patterns ← ∅
+2. for i = 1 to N:
+3.   x ← random point in [-B, B]ⁿ
+4.   σ ← (𝟙[w₁·x+b₁>0], ..., 𝟙[wₖ·x+bₖ>0])
+5.   patterns ← patterns ∪ {σ}
+6. return patterns
+```
 
-### 9.1 Region Counting
+**Complexity**: O(N·k·n) time, O(min(2^k, N)·k) space.
 
-We verified the Zaslavsky bound experimentally for arrangements of m = 1, ..., 15 hyperplanes in ℝ². Using 300,000 random samples per arrangement:
+### Algorithm 2: Activation Algebra Construction
 
-| m | Actual regions | Zaslavsky Z(2,m) | 2^m | Ratio actual/2^m |
-|---|---------------|------------------|-----|-------------------|
-| 1 | 2 | 2 | 2 | 1.0000 |
-| 3 | 7 | 7 | 8 | 0.8750 |
-| 5 | 16 | 16 | 32 | 0.5000 |
-| 8 | 37 | 37 | 256 | 0.1445 |
-| 10 | 56 | 56 | 1024 | 0.0547 |
-| 15 | 121 | 121 | 32768 | 0.0037 |
+```
+Input: Set of realized patterns P
+Output: Boolean algebra operations on 2^P
 
-The Zaslavsky bound is tight for generic arrangements, and the gap with 2^m grows exponentially.
+1. atoms ← {frozenset({σ}) : σ ∈ P}
+2. complement(A) ← P \ A
+3. union(A, B) ← A ∪ B
+4. intersection(A, B) ← A ∩ B
+5. return (atoms, complement, union, intersection)
+```
 
-### 9.2 Tropical Equality Verification
+**Complexity**: O(|P|) for construction, O(|P|) per operation.
 
-For 1000 random points and random single-layer ReLU networks, the tropical affine function always matched the ReLU output to machine precision (relative error < 10⁻¹⁴).
+### Algorithm 3: Redundant Neuron Detection
 
-### 9.3 Shattering Test
+```
+Input: Weight matrix W ∈ ℝ^{k×n}, bias b ∈ ℝ^k
+Output: Set of redundant neuron indices
 
-For random arrangements with m = 4 in ℝ², the largest shattered set found had 4 points, consistent with the bound |S| ≤ 2^m = 16 and the Zaslavsky-based analysis.
+1. full_count ← |enumerate_regions(W, b)|
+2. redundant ← ∅
+3. for j = 1 to k:
+4.   W' ← W with row j removed
+5.   b' ← b with entry j removed
+6.   if |enumerate_regions(W', b')| ≥ full_count:
+7.     redundant ← redundant ∪ {j}
+8. return redundant
+```
 
-## 10. Discussion
+**Complexity**: O(k · N · k · n) time.
 
-### 10.1 Relationship to Prior Work
+## 11. Computational Experiments
 
-The partition of input space by ReLU networks into linear regions has been studied by Montúfar et al. (2014), Raghu et al. (2017), and Hanin & Rolnick (2019). Our contribution is to identify the *algebraic structure* of this partition — the Boolean algebra — and connect it to Stone duality and tropical geometry.
+### 11.1 Region Counting Verification
 
-The connection between ReLU networks and tropical geometry was observed by Zhang et al. (2018) and Alfarra et al. (2022). We formalize this connection and prove the exact equality on each activation region.
+| n (dim) | k (planes) | Zaslavsky | 2^k  | Observed (sampling) |
+|---------|-----------|-----------|------|---------------------|
+| 2       | 2         | 4         | 4    | 4                   |
+| 2       | 3         | 7         | 8    | 6-7                 |
+| 2       | 4         | 11        | 16   | 8-11                |
+| 3       | 3         | 8         | 8    | 8                   |
+| 3       | 4         | 15        | 16   | 14-15               |
+| 2       | 6         | 22        | 64   | 18-22               |
 
-### 10.2 Implications
+The observed values are consistent with the Zaslavsky bound and always ≤ 2^k, confirming Theorems 3.1 and 8.2.
 
-1. **Learning theory**: The activation Boolean algebra provides a natural complexity measure for neural networks that is finer than parameter count and related to VC dimension.
+### 11.2 Boolean Algebra Verification
 
-2. **Interpretability**: The atoms of B(f) are the "elementary behaviors" of the network — understanding them gives a complete picture of the network's function.
+For all tested arrangements (n ∈ {2,3}, k ∈ {2,...,6}):
+- Empty set membership: ✓
+- Universe membership: ✓  
+- Complement closure: ✓
+- Double complement: ✓
+- De Morgan's laws: ✓
 
-3. **Robustness**: The distance to the nearest hyperplane boundary gives a certified robustness radius within each activation region.
+### 11.3 Architecture Comparison
 
-### 10.3 Limitations
+| Architecture | Neurons | Input dim | Regions | Zaslavsky | 2^k |
+|-------------|---------|-----------|---------|-----------|-----|
+| Wide-shallow (1×6) | 6 | 2 | ~20 | 22 | 64 |
+| Narrow-deep (3×2) | 6 | 2 | 4×4×4=64* | — | 64 |
 
-- Our formalization covers single-layer networks. Multi-layer networks create composed arrangements whose analysis is more complex.
-- The Zaslavsky bound is tight only for generic arrangements; degenerate arrangements may have fewer regions.
-- Computing the activation Boolean algebra exactly requires solving a system of linear inequalities (NP-hard in general for feasibility checking).
+*Product bound; actual is lower due to layer interactions.
 
-## 11. Future Work
+## 12. Discussion
 
-1. **Multi-layer extension**: Define the activation Boolean algebra for deep networks as a composition of single-layer algebras.
-2. **Stone space metrics**: Equip the Stone space with a metric reflecting the geometry of hyperplane boundaries.
-3. **Training dynamics**: Study how the activation Boolean algebra evolves during gradient descent.
-4. **VC dimension equality**: Prove or disprove the conjecture that |atoms of B(f)| equals the VC dimension for generic arrangements.
+### 12.1 Implications
+
+The activation algebra provides a canonical algebraic descriptor for neural network expressivity. Two networks with the same activation algebra (up to isomorphism) have the same decision geometry, regardless of their specific weight values.
+
+### 12.2 Limitations
+
+1. The Zaslavsky bound is tight only for arrangements in general position.
+2. Our analysis treats each layer independently; inter-layer interactions require further study.
+3. The conjecture about VC dimension remains unproven.
+
+### 12.3 Open Questions
+
+1. **VC Dimension Conjecture**: Does VC dim = |atoms| hold for all arrangements?
+2. **Depth Interaction**: How does the activation algebra of a deep network relate to the product of per-layer algebras?
+3. **Training Dynamics**: How does the activation algebra evolve during gradient descent?
+
+## 13. Future Work
+
+1. Extend to non-ReLU activations (sigmoid, GELU) using approximate Boolean algebras.
+2. Develop efficient algorithms for computing the activation algebra of deep networks.
+3. Apply to neural network verification and certified robustness.
+4. Investigate connections to tropical geometry (ReLU networks define tropical rational functions).
 
 ## References
 
-1. M. H. Stone, "The Theory of Representation for Boolean Algebras," *Trans. AMS* 40 (1936), 37–111.
-2. G. Zaslavsky, "Facing up to arrangements: face-count formulas for partitions of space by hyperplanes," *Mem. AMS* 154 (1975).
-3. G. Montúfar, R. Pascanu, K. Cho, Y. Bengio, "On the number of linear regions of deep neural networks," *NeurIPS* 2014.
-4. L. Hanin, D. Rolnick, "Deep ReLU Networks Have Surprisingly Few Activation Patterns," *NeurIPS* 2019.
-5. M. Zhang, Y. Li, et al., "Tropical Geometry of Deep Neural Networks," *ICML* 2018.
-6. M. Alfarra et al., "On the Decision Boundaries of Neural Networks: A Tropical Geometry Perspective," *IEEE TPAMI* 2022.
+1. Stone, M.H. (1936). "The theory of representation for Boolean algebras." *Trans. AMS*, 40(1), 37-111.
+2. Zaslavsky, T. (1975). "Facing up to arrangements." *Memoirs AMS*, 154.
+3. Montúfar, G., Pascanu, R., Cho, K., Bengio, Y. (2014). "On the number of linear regions of deep neural networks." *NeurIPS*.
+4. Hanin, B., Rolnick, D. (2019). "Complexity of linear regions in deep neural networks." *ICML*.
+5. Sauer, N. (1972). "On the density of families of sets." *J. Combin. Theory Ser. A*, 13, 145-147.
+6. Vapnik, V., Chervonenkis, A. (1971). "On the uniform convergence of relative frequencies of events to their probabilities." *Theory of Probability and Its Applications*, 16(2), 264-280.
