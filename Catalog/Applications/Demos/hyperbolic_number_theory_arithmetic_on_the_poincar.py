@@ -1,860 +1,698 @@
+#!/usr/bin/env python3
 """
 Hyperbolic Number Theory: Applications
 
-Real-world applications of hyperbolic lattice arithmetic, including:
-1. Cryptographic key generation via trace sequences
-2. Hyperbolic navigation / GPS error modeling
-3. Network topology via Gromov hyperbolicity
+Demonstrates real-world applications of hyperbolic arithmetic:
+1. Non-commutative key exchange (Diffie-Hellman analog)
+2. Hyperbolic random number generation
+3. Signal processing on the Poincaré disk
+4. Network geometry: embedding trees in hyperbolic space
 """
 
-import math
-from typing import List, Tuple
+import numpy as np
+from typing import Optional
 
 
-def trace_seq(t: int, n: int) -> int:
-    """Trace sequence: tr(γⁿ) where tr(γ) = t."""
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    a, b = 2, t
-    for _ in range(n - 1):
-        a, b = b, t * b - a
-    return b
+# ============================================================
+# Core Möbius arithmetic (self-contained)
+# ============================================================
+
+def moebius_map(a: complex, z: complex) -> complex:
+    """Möbius disk automorphism: φ_a(z) = (z - a) / (1 - conj(a) * z)"""
+    return (z - a) / (1 - np.conj(a) * z)
 
 
-# ============================================================================
-# Application 1: Pseudorandom Number Generation via Trace Sequences
-# ============================================================================
+def compute_orbit(a: complex, N: int, start: complex = 0.0) -> list[complex]:
+    """Compute Möbius orbit of length N from start."""
+    orbit = [start]
+    for _ in range(N):
+        orbit.append(moebius_map(a, orbit[-1]))
+    return orbit
 
-def trace_prng(seed_trace: int, seed_power: int, modulus: int, count: int) -> List[int]:
-    """Generate pseudorandom numbers using trace sequences.
-    
-    The trace sequence traceSeq(t, n) mod m produces pseudorandom values
-    because the Cassini identity traceSeq(t,n+2)*traceSeq(t,n) - traceSeq(t,n+1)² = t²-4
-    introduces non-trivial correlations that are difficult to predict without
-    knowing t.
-    
-    This exploits the connection between SL₂(ℤ) and the modular group:
-    the trace sequence mod p has period dividing p²-1 (for prime p),
-    which connects to the congruence subgroup index theorem.
-    
-    Args:
-        seed_trace: The trace parameter t (should be ≥ 3 for hyperbolicity).
-        seed_power: Starting power n₀.
-        modulus: Output modulus m.
-        count: Number of values to generate.
-        
-    Returns:
-        List of pseudorandom integers in [0, modulus).
+
+def hyp_distance(z: complex, w: complex) -> float:
+    """Hyperbolic distance in the Poincaré disk."""
+    r = abs(z - w) / abs(1 - np.conj(z) * w)
+    return np.arctanh(min(r, 1 - 1e-15))
+
+
+# ============================================================
+# Application 1: Non-Commutative Key Exchange
+# ============================================================
+
+def hyp_key_exchange_demo():
     """
-    result = []
-    n = seed_power
-    for _ in range(count):
-        val = trace_seq(seed_trace, n) % modulus
-        result.append(val)
-        n += 1
-    return result
-
-
-# ============================================================================
-# Application 2: Hyperbolic Distance Estimation
-# ============================================================================
-
-def estimate_curvature_from_triangles(
-    triangles: List[Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]]
-) -> float:
-    """Estimate the curvature of a space from triangle measurements.
+    Hyperbolic Diffie-Hellman: Key exchange using Möbius composition.
     
-    In a space of constant curvature K:
-    - K > 0: angle excess = K * area (spherical)
-    - K = 0: angle sum = π (Euclidean)
-    - K < 0: angle defect = |K| * area (hyperbolic)
-    
-    The Poincaré disk has K = -1. This function estimates K from
-    Euclidean triangle measurements, using the conformal factor
-    λ(z) = 2/(1-|z|²) to convert.
-    
-    Returns:
-        Estimated Gaussian curvature K.
+    Alice and Bob agree on a public generator a.
+    Alice picks secret m, computes z_m = orbit(a, 0, m).
+    Bob picks secret n, computes z_n = orbit(a, 0, n).
+    They exchange z_m and z_n publicly.
+    Alice computes orbit(a, z_n, m) = z_{m+n}.
+    Bob computes orbit(a, z_m, n) = z_{n+m}.
+    Both arrive at the same shared secret z_{m+n} = z_{n+m}.
     """
-    defects = []
-    for p1, p2, p3 in triangles:
-        # Compute Euclidean side lengths
-        def dist(a, b):
-            return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
-        
-        a = dist(p2, p3)
-        b = dist(p1, p3)
-        c = dist(p1, p2)
-        
-        if a * b * c == 0:
-            continue
-        
-        # Euclidean angles
-        cos_A = (b**2 + c**2 - a**2) / (2*b*c)
-        cos_B = (a**2 + c**2 - b**2) / (2*a*c)
-        cos_C = (a**2 + b**2 - c**2) / (2*a*b)
-        
-        cos_A = max(-1, min(1, cos_A))
-        cos_B = max(-1, min(1, cos_B))
-        cos_C = max(-1, min(1, cos_C))
-        
-        angle_sum = math.acos(cos_A) + math.acos(cos_B) + math.acos(cos_C)
-        defect = math.pi - angle_sum
-        
-        # Approximate area using conformal factor at centroid
-        cx = (p1[0] + p2[0] + p3[0]) / 3
-        cy = (p1[1] + p2[1] + p3[1]) / 3
-        norm_sq = cx**2 + cy**2
-        if norm_sq >= 1:
-            continue
-        
-        # Euclidean area
-        euc_area = 0.5 * abs((p2[0]-p1[0])*(p3[1]-p1[1]) - (p3[0]-p1[0])*(p2[1]-p1[1]))
-        if euc_area < 1e-12:
-            continue
-            
-        # Hyperbolic area ≈ λ² · Euclidean area
-        lam = 2.0 / (1.0 - norm_sq)
-        hyp_area = lam**2 * euc_area
-        
-        if hyp_area > 0:
-            K_est = -defect / hyp_area
-            defects.append(K_est)
+    print("=" * 50)
+    print("APPLICATION 1: Hyperbolic Key Exchange")
+    print("=" * 50)
     
-    if not defects:
-        return 0.0
-    return sum(defects) / len(defects)
+    # Public parameter
+    a = 0.3 + 0.2j
+    print(f"Public generator: a = {a}")
+    
+    # Alice's secret
+    m = 17
+    orbit_alice = compute_orbit(a, m)
+    z_m = orbit_alice[m]
+    print(f"\nAlice's secret index: m = {m}")
+    print(f"Alice sends: z_m = {z_m:.6f}")
+    
+    # Bob's secret
+    n = 23
+    orbit_bob = compute_orbit(a, n)
+    z_n = orbit_bob[n]
+    print(f"Bob's secret index: n = {n}")
+    print(f"Bob sends: z_n = {z_n:.6f}")
+    
+    # Shared secret computation
+    alice_shared = compute_orbit(a, m, start=z_n)[-1]
+    bob_shared = compute_orbit(a, n, start=z_m)[-1]
+    
+    # Direct computation for verification
+    direct = compute_orbit(a, m + n)[-1]
+    
+    print(f"\nAlice computes orbit(a, z_n, m) = {alice_shared:.10f}")
+    print(f"Bob computes orbit(a, z_m, n)   = {bob_shared:.10f}")
+    print(f"Direct z_{{m+n}}                 = {direct:.10f}")
+    print(f"Agreement: {np.isclose(alice_shared, bob_shared)} ✓")
+    print(f"Correctness: {np.isclose(alice_shared, direct)} ✓")
 
 
-# ============================================================================  
-# Application 3: Network Hyperbolicity Testing
-# ============================================================================
+# ============================================================
+# Application 2: Hyperbolic Random Number Generator
+# ============================================================
 
-def four_point_hyperbolicity(
-    dist_matrix: List[List[float]]
-) -> float:
-    """Compute the Gromov 4-point hyperbolicity δ of a metric space.
-    
-    For points x, y, z, w, the 4-point condition states:
-        d(x,y) + d(z,w) ≤ max(d(x,z)+d(y,w), d(x,w)+d(y,z)) + 2δ
-    
-    δ = 0 means the space is a tree (0-hyperbolic).
-    Small δ means the space is "tree-like" and suitable for
-    hyperbolic embedding (connecting to our tropical bridge theorem).
-    
-    Time complexity: O(n⁴) where n = number of points.
-    
-    Args:
-        dist_matrix: n×n distance matrix.
-        
-    Returns:
-        The hyperbolicity constant δ.
+def hyp_rng_demo():
     """
-    n = len(dist_matrix)
-    max_delta = 0.0
+    Random number generation using Möbius orbits.
     
-    for x in range(n):
-        for y in range(x + 1, n):
-            for z in range(y + 1, n):
-                for w in range(z + 1, n):
-                    s1 = dist_matrix[x][y] + dist_matrix[z][w]
-                    s2 = dist_matrix[x][z] + dist_matrix[y][w]
-                    s3 = dist_matrix[x][w] + dist_matrix[y][z]
-                    
-                    sums = sorted([s1, s2, s3])
-                    delta = (sums[2] - sums[1]) / 2
-                    max_delta = max(max_delta, delta)
+    The orbit of a complex generator produces pseudo-random
+    points in the disk. The angular component, when the generator
+    has irrational argument, yields quasi-random sequences on [0, 2π).
+    """
+    print("\n" + "=" * 50)
+    print("APPLICATION 2: Hyperbolic Random Number Generator")
+    print("=" * 50)
     
-    return max_delta
+    # Generator with irrational angle
+    a = 0.4 * np.exp(1j * np.sqrt(2))
+    N = 1000
+    orbit = compute_orbit(a, N)
+    
+    # Extract angles
+    angles = [np.angle(z) % (2 * np.pi) for z in orbit[1:]]
+    
+    # Test uniformity: divide [0, 2π) into bins
+    n_bins = 10
+    counts = np.histogram(angles, bins=n_bins, range=(0, 2*np.pi))[0]
+    expected = N / n_bins
+    chi2 = sum((c - expected)**2 / expected for c in counts)
+    
+    print(f"Generator: a = {a:.4f} (|a| = {abs(a):.4f})")
+    print(f"Generated {N} orbit points")
+    print(f"\nAngular distribution (10 bins of [0, 2π)):")
+    for i, c in enumerate(counts):
+        bar = "█" * (c // 5)
+        print(f"  [{i*36:3d}°, {(i+1)*36:3d}°): {c:4d} {bar}")
+    print(f"\nExpected per bin: {expected:.0f}")
+    print(f"Chi-squared statistic: {chi2:.2f}")
+    print(f"Uniformity: {'Good' if chi2 < 20 else 'Poor'}")
 
 
-# ============================================================================
-# Main: Demonstrate applications
-# ============================================================================
+# ============================================================
+# Application 3: Tree Embedding in Hyperbolic Space
+# ============================================================
 
-if __name__ == "__main__":
-    print("=" * 60)
-    print("  Hyperbolic Number Theory: Applications")
-    print("=" * 60)
+def hyp_tree_embedding_demo():
+    """
+    Embed a binary tree in the Poincaré disk using Möbius maps.
     
-    # Application 1: PRNG
-    print("\n--- Application 1: Trace-Based Pseudorandom Generation ---")
-    values = trace_prng(seed_trace=7, seed_power=1, modulus=100, count=20)
-    print(f"  PRNG(t=7, m=100): {values}")
+    Each edge of the tree corresponds to applying a Möbius map.
+    Left children use generator a_L, right children use a_R.
+    The hyperbolic metric naturally accommodates exponential growth
+    of the tree (the disk has exponentially growing area).
+    """
+    print("\n" + "=" * 50)
+    print("APPLICATION 3: Tree Embedding in Hyperbolic Space")
+    print("=" * 50)
     
-    # Check period for trace mod prime
-    p = 31
-    print(f"\n  Period of traceSeq(3, n) mod {p}:")
-    vals = [trace_seq(3, n) % p for n in range(p*p)]
-    # Find period
-    for period in range(1, len(vals)):
-        if all(vals[i] == vals[i + period] for i in range(min(period, len(vals) - period))):
-            print(f"    Period = {period}")
-            print(f"    p²-1 = {p**2-1}")
-            print(f"    Period divides p²-1: {(p**2-1) % period == 0}")
+    a_left = 0.4 * np.exp(1j * 2.5)
+    a_right = 0.4 * np.exp(1j * 0.8)
+    
+    # BFS to embed a binary tree of depth 4
+    depth = 4
+    nodes = [(0, complex(0))]  # (depth, position)
+    all_nodes = [complex(0)]
+    
+    for d in range(depth):
+        new_nodes = []
+        for _, pos in nodes:
+            left = moebius_map(a_left, pos)
+            right = moebius_map(a_right, pos)
+            new_nodes.append((d + 1, left))
+            new_nodes.append((d + 1, right))
+            all_nodes.extend([left, right])
+        nodes = new_nodes
+    
+    print(f"Binary tree of depth {depth}")
+    print(f"Total nodes: {len(all_nodes)}")
+    print(f"All in disk: {all(abs(z)**2 < 1 for z in all_nodes)} ✓")
+    
+    # Compute pairwise distances
+    leaves = [pos for d, pos in nodes]
+    n_leaves = len(leaves)
+    distances = np.zeros((n_leaves, n_leaves))
+    for i in range(n_leaves):
+        for j in range(n_leaves):
+            distances[i][j] = hyp_distance(leaves[i], leaves[j])
+    
+    print(f"\nLeaf nodes: {n_leaves}")
+    print(f"Mean pairwise distance: {np.mean(distances[np.triu_indices(n_leaves, 1)]):.4f}")
+    print(f"Min nonzero distance: {np.min(distances[distances > 0]):.4f}")
+    print(f"Max distance: {np.max(distances):.4f}")
+    
+    # Show that sibling leaves are closer than cousins
+    sibling_dists = []
+    cousin_dists = []
+    for i in range(0, n_leaves, 2):
+        sibling_dists.append(distances[i][i+1])
+    for i in range(0, n_leaves, 4):
+        for j in range(i+2, min(i+4, n_leaves)):
+            cousin_dists.append(distances[i][j])
+    
+    print(f"\nMean sibling distance: {np.mean(sibling_dists):.4f}")
+    print(f"Mean cousin distance: {np.mean(cousin_dists):.4f}")
+    print(f"Siblings closer than cousins: {np.mean(sibling_dists) < np.mean(cousin_dists)} ✓")
+
+
+# ============================================================
+# Application 4: Hyperbolic Signal Averaging
+# ============================================================
+
+def hyp_signal_averaging_demo():
+    """
+    Signal processing: computing means on the Poincaré disk.
+    
+    In applications like brain-computer interfaces and radar,
+    data naturally lives on the Poincaré disk (covariance matrices
+    mapped to the Siegel upper half-space). The Möbius map provides
+    a natural "centering" operation for computing means.
+    """
+    print("\n" + "=" * 50)
+    print("APPLICATION 4: Hyperbolic Signal Averaging")
+    print("=" * 50)
+    
+    # Generate "signals" as points in the disk
+    rng = np.random.RandomState(42)
+    n_signals = 20
+    signals = []
+    center = 0.3 + 0.2j  # true center
+    for _ in range(n_signals):
+        noise = 0.1 * (rng.randn() + 1j * rng.randn())
+        s = moebius_map(-noise, center)  # perturb center
+        if abs(s) < 0.99:  # ensure in disk
+            signals.append(s)
+    
+    print(f"True center: {center}")
+    print(f"Number of signals: {len(signals)}")
+    
+    # Euclidean mean (naive)
+    eucl_mean = np.mean(signals)
+    
+    # Hyperbolic mean via iterative centering
+    # Use Karcher mean: iteratively apply φ to center at mean
+    hyp_mean = eucl_mean  # initial guess
+    for iteration in range(50):
+        # Map all points to frame centered at current mean
+        centered = [moebius_map(hyp_mean, s) for s in signals]
+        # Euclidean mean in centered frame
+        delta = np.mean(centered)
+        if abs(delta) < 1e-10:
             break
+        # Move mean by delta
+        hyp_mean = moebius_map(-delta, hyp_mean)
+        if abs(hyp_mean) >= 1:
+            hyp_mean *= 0.99 / abs(hyp_mean)
     
-    # Application 2: Curvature estimation
-    print("\n--- Application 2: Curvature Estimation ---")
-    import random
-    random.seed(42)
+    eucl_error = abs(eucl_mean - center)
+    hyp_error = abs(hyp_mean - center)
     
-    triangles = []
-    for _ in range(100):
-        pts = []
-        for _ in range(3):
-            r = random.uniform(0, 0.5)
-            theta = random.uniform(0, 2*math.pi)
-            pts.append((r*math.cos(theta), r*math.sin(theta)))
-        triangles.append(tuple(pts))
-    
-    K = estimate_curvature_from_triangles(triangles)
-    print(f"  Estimated curvature K ≈ {K:.4f}")
-    print(f"  Expected for Poincaré disk: K = -1")
-    print(f"  (Note: estimation is approximate due to Euclidean triangle measurement)")
-    
-    # Application 3: Network hyperbolicity
-    print("\n--- Application 3: Network Hyperbolicity ---")
-    
-    # Tree (should be 0-hyperbolic)
-    tree_dist = [
-        [0, 1, 2, 3],
-        [1, 0, 3, 4],
-        [2, 3, 0, 1],
-        [3, 4, 1, 0],
-    ]
-    delta_tree = four_point_hyperbolicity(tree_dist)
-    print(f"  Tree metric: δ = {delta_tree:.2f} (expected: 0)")
-    
-    # Grid (should have positive δ)
-    grid_dist = [
-        [0, 1, 1, 2],
-        [1, 0, 2, 1],
-        [1, 2, 0, 1],
-        [2, 1, 1, 0],
-    ]
-    delta_grid = four_point_hyperbolicity(grid_dist)
-    print(f"  Grid metric: δ = {delta_grid:.2f} (expected: > 0)")
-    
-    print("\nAll applications demonstrated successfully!")
-
-
-"""
-Hyperbolic Number Theory: Demonstrations
-
-Concrete numerical examples illustrating the theorems proved in our
-Lean 4 formalization of arithmetic on the Poincaré disk.
-"""
-import math
-from typing import List, Tuple
-
-
-def trace_seq(t: int, n: int) -> int:
-    """Compute the trace sequence: tr(γⁿ) where tr(γ) = t.
-    
-    Satisfies the Chebyshev-like recurrence:
-        x_{n+2} = t * x_{n+1} - x_n
-    with x_0 = 2, x_1 = t.
-    
-    >>> trace_seq(3, 0)
-    2
-    >>> trace_seq(3, 4)
-    47
-    """
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    a, b = 2, t
-    for _ in range(n - 1):
-        a, b = b, t * b - a
-    return b
-
-
-def verify_cassini_identity(t: int, max_n: int = 20) -> None:
-    """Verify the Cassini identity: traceSeq(t,n+2)*traceSeq(t,n) - traceSeq(t,n+1)² = t²-4.
-    
-    This is our main theorem, proved by induction in Lean 4.
-    """
-    disc = t * t - 4
-    print(f"=== Cassini Identity for t = {t} (discriminant Δ = {disc}) ===")
-    for n in range(max_n):
-        lhs = trace_seq(t, n + 2) * trace_seq(t, n) - trace_seq(t, n + 1) ** 2
-        assert lhs == disc, f"Failed at n={n}: {lhs} ≠ {disc}"
-        print(f"  n={n:2d}: traceSeq({t},{n+2})·traceSeq({t},{n}) - traceSeq({t},{n+1})² = {lhs} ✓")
-    print()
-
-
-def verify_periodicity() -> None:
-    """Verify trace sequence periodicity for elliptic cases."""
-    print("=== Periodicity of Elliptic Trace Sequences ===")
-    
-    # t = 0: period 4
-    print("t = 0 (period 4):")
-    vals_0 = [trace_seq(0, n) for n in range(16)]
-    print(f"  Values: {vals_0}")
-    for n in range(12):
-        assert trace_seq(0, n + 4) == trace_seq(0, n)
-    print("  Verified: traceSeq(0, n+4) = traceSeq(0, n) for n=0..11 ✓")
-    
-    # t = 1: period 6
-    print("t = 1 (period 6):")
-    vals_1 = [trace_seq(1, n) for n in range(18)]
-    print(f"  Values: {vals_1}")
-    for n in range(12):
-        assert trace_seq(1, n + 6) == trace_seq(1, n)
-    print("  Verified: traceSeq(1, n+6) = traceSeq(1, n) for n=0..11 ✓")
-    
-    # t = -1: period 6
-    print("t = -1 (period 6):")
-    vals_m1 = [trace_seq(-1, n) for n in range(18)]
-    print(f"  Values: {vals_m1}")
-    for n in range(12):
-        assert trace_seq(-1, n + 6) == trace_seq(-1, n)
-    print("  Verified: traceSeq(-1, n+6) = traceSeq(-1, n) for n=0..11 ✓")
-    print()
-
-
-def verify_strict_monotonicity(t: int = 3, max_n: int = 15) -> None:
-    """Verify strict monotonicity for t ≥ 3."""
-    print(f"=== Strict Monotonicity for t = {t} ===")
-    vals = [trace_seq(t, n) for n in range(max_n)]
-    for i in range(len(vals) - 1):
-        assert vals[i] < vals[i + 1], f"Not strictly increasing at n={i}"
-    print(f"  Values: {vals}")
-    print(f"  All strictly increasing ✓")
-    
-    # Growth rate
-    print("  Growth rates traceSeq(t,n+1)/traceSeq(t,n):")
-    eigenvalue = (t + math.sqrt(t * t - 4)) / 2
-    for n in range(1, max_n - 1):
-        ratio = vals[n + 1] / vals[n]
-        print(f"    n={n}: ratio = {ratio:.6f} (λ₊ = {eigenvalue:.6f})")
-    print()
-
-
-def companion_matrix_demo(t: int = 3) -> None:
-    """Demonstrate the companion matrix bridge."""
-    print(f"=== Companion Matrix for t = {t} ===")
-    
-    # M = [[t, -1], [1, 0]]
-    M = [[t, -1], [1, 0]]
-    print(f"  M = {M}")
-    print(f"  det(M) = {M[0][0]*M[1][1] - M[0][1]*M[1][0]} (should be 1)")
-    print(f"  tr(M) = {M[0][0] + M[1][1]} (should be {t})")
-    
-    # Compute powers
-    def mat_mul(A, B):
-        return [
-            [A[0][0]*B[0][0] + A[0][1]*B[1][0], A[0][0]*B[0][1] + A[0][1]*B[1][1]],
-            [A[1][0]*B[0][0] + A[1][1]*B[1][0], A[1][0]*B[0][1] + A[1][1]*B[1][1]]
-        ]
-    
-    def mat_trace(A):
-        return A[0][0] + A[1][1]
-    
-    Mn = [[1, 0], [0, 1]]  # Identity
-    print("\n  Powers of M:")
-    for n in range(10):
-        tr = mat_trace(Mn)
-        expected = trace_seq(t, n)
-        status = "✓" if tr == expected else "✗"
-        print(f"    tr(M^{n}) = {tr} = traceSeq({t},{n}) = {expected} {status}")
-        Mn = mat_mul(M, Mn)
-    
-    # Cayley-Hamilton: M² = t·M - I
-    M2 = mat_mul(M, M)
-    tM_minus_I = [[t*M[0][0] - 1, t*M[0][1]], [t*M[1][0], t*M[1][1] - 1]]
-    print(f"\n  Cayley-Hamilton: M² = t·M - I")
-    print(f"    M² = {M2}")
-    print(f"    t·M - I = {tM_minus_I}")
-    print(f"    Equal: {M2 == tM_minus_I} ✓")
-    print()
-
-
-def markov_triple_demo() -> None:
-    """Demonstrate Markov triples and the Vieta involution."""
-    print("=== Markov Triples and Vieta Involutions ===")
-    
-    def check_markov(x, y, z):
-        return x**2 + y**2 + z**2 == 3*x*y*z
-    
-    def vieta(x, y, z):
-        return (x, y, 3*x*y - z)
-    
-    # Start from (1, 1, 1)
-    triple = (1, 1, 1)
-    print(f"  Initial triple: {triple}")
-    print(f"    Check: {triple[0]}² + {triple[1]}² + {triple[2]}² = {sum(t**2 for t in triple)}")
-    print(f"           3·{triple[0]}·{triple[1]}·{triple[2]} = {3*triple[0]*triple[1]*triple[2]}")
-    print(f"           Markov: {check_markov(*triple)} ✓")
-    
-    # Generate the Markov tree
-    triples = [triple]
-    seen = {triple}
-    for _ in range(5):
-        new_triples = []
-        for t in triples:
-            for perm in [(t[0],t[1],t[2]), (t[1],t[2],t[0]), (t[2],t[0],t[1])]:
-                v = vieta(*perm)
-                v_sorted = tuple(sorted(v))
-                if v_sorted not in seen and all(x > 0 for x in v):
-                    seen.add(v_sorted)
-                    new_triples.append(v_sorted)
-                    assert check_markov(*v_sorted), f"Vieta failed for {v_sorted}"
-                    print(f"  New triple: {v_sorted} (Vieta from {perm}) ✓")
-        triples = new_triples
-    print()
-
-
-def pseudo_hyperbolic_distance_demo() -> None:
-    """Demonstrate the pseudo-hyperbolic distance on the Poincaré disk."""
-    print("=== Pseudo-Hyperbolic Distance in the Poincaré Disk ===")
-    
-    def pseudo_hyp_dist_sq(p, q):
-        """ρ(p,q)² = |p-q|² / |1 - p̄·q|²"""
-        num = (p[0]-q[0])**2 + (p[1]-q[1])**2
-        den = (1-p[0]*q[0]-p[1]*q[1])**2 + (p[0]*q[1]-p[1]*q[0])**2
-        return num / den
-    
-    points = [
-        (0.0, 0.0),
-        (0.5, 0.0),
-        (0.0, 0.5),
-        (0.3, 0.4),
-        (-0.6, 0.2),
-    ]
-    
-    print("  Distance matrix (ρ²):")
-    for i, p in enumerate(points):
-        row = []
-        for j, q in enumerate(points):
-            d = pseudo_hyp_dist_sq(p, q)
-            row.append(f"{d:.4f}")
-        print(f"    {points[i]}: {' '.join(row)}")
-    
-    # Verify < 1
-    print("\n  Verifying ρ² < 1:")
-    for i, p in enumerate(points):
-        for j, q in enumerate(points):
-            d = pseudo_hyp_dist_sq(p, q)
-            assert d < 1.0 + 1e-10, f"ρ² ≥ 1 at ({p}, {q})"
-    print("    All ρ² < 1 ✓")
-    
-    # Symmetry
-    print("\n  Verifying symmetry ρ(p,q) = ρ(q,p):")
-    for i, p in enumerate(points):
-        for j, q in enumerate(points):
-            assert abs(pseudo_hyp_dist_sq(p, q) - pseudo_hyp_dist_sq(q, p)) < 1e-12
-    print("    All symmetric ✓")
-    print()
+    print(f"\nEuclidean mean: {eucl_mean:.6f}")
+    print(f"Hyperbolic mean: {hyp_mean:.6f}")
+    print(f"Euclidean error: {eucl_error:.6f}")
+    print(f"Hyperbolic error: {hyp_error:.6f}")
+    print(f"Hyperbolic mean is {'better' if hyp_error < eucl_error else 'worse'}")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Hyperbolic Number Theory: Arithmetic on the Poincaré   ║")
-    print("║  Disk — Demonstrations                                  ║")
-    print("╚══════════════════════════════════════════════════════════╝\n")
+    hyp_key_exchange_demo()
+    hyp_rng_demo()
+    hyp_tree_embedding_demo()
+    hyp_signal_averaging_demo()
     
-    verify_cassini_identity(3)
-    verify_cassini_identity(5)
-    verify_periodicity()
-    verify_strict_monotonicity(3)
-    companion_matrix_demo(3)
-    markov_triple_demo()
-    pseudo_hyperbolic_distance_demo()
-    
-    print("All demonstrations completed successfully!")
+    print("\n" + "=" * 50)
+    print("All applications demonstrated successfully.")
+    print("=" * 50)
 
 
+#!/usr/bin/env python3
 """
-Visualization 3: Markov Triples and the Vieta Involution Tree
+Hyperbolic Number Theory: Arithmetic on the Poincaré Disk — Demo
 
-Illustrates:
-1. The Markov tree generated by the Vieta involution z → 3xy - z
-2. Growth of Markov numbers (connecting to trace sequences)
-3. The spectral data: discriminant vs trace for SL₂(ℤ) elements
-4. Trace sequence mod p periodicity (connecting to congruence subgroups)
+Demonstrates the core mathematical constructions:
+1. Möbius map and disk preservation
+2. Hyperbolic integer orbit computation
+3. Hyperbolic cross-ratio symmetry
+4. Trace-lattice duality
+5. Hyperbolic zeta function
+6. Orbit composition property
+"""
+
+import numpy as np
+
+
+def moebius_map(a: complex, z: complex) -> complex:
+    """Möbius disk automorphism: φ_a(z) = (z - a) / (1 - conj(a) * z)"""
+    return (z - a) / (1 - np.conj(a) * z)
+
+
+def hyp_cross_ratio_sq(z: complex, w: complex) -> float:
+    """Squared hyperbolic cross-ratio: |z-w|² / |1 - conj(z)*w|²"""
+    return abs(z - w)**2 / abs(1 - np.conj(z) * w)**2
+
+
+def compute_orbit(a: complex, n: int) -> list[complex]:
+    """Compute the first n+1 hyperbolic integers (orbit of origin under φ_a)."""
+    orbit = [complex(0, 0)]
+    for _ in range(n):
+        orbit.append(moebius_map(a, orbit[-1]))
+    return orbit
+
+
+def hyp_zeta_partial(a: complex, s: float, N: int) -> float:
+    """Partial hyperbolic zeta sum: ζ_H(s, N) = Σ 1/|z_n|^{2s}"""
+    orbit = compute_orbit(a, N)
+    total = 0.0
+    for i in range(1, N + 1):
+        nsq = abs(orbit[i])**2
+        if nsq > 0:
+            total += nsq**(-s)
+    return total
+
+
+def main():
+    # Golden generator: a = (3 - sqrt(5)) / 2 ≈ 0.382
+    golden = (3 - np.sqrt(5)) / 2
+
+    print("=" * 60)
+    print("HYPERBOLIC NUMBER THEORY: DEMO")
+    print("=" * 60)
+
+    # Demo 1: Disk Preservation
+    print("\n--- Demo 1: Disk Preservation ---")
+    print(f"Golden generator a = {golden:.6f}")
+    print(f"|a|² = {abs(golden)**2:.6f} < 1 ✓")
+    orbit = compute_orbit(golden, 10)
+    print(f"\nFirst 11 orbit points (hyperbolic integers):")
+    print(f"{'n':>3} {'Re(z_n)':>12} {'|z_n|²':>12} {'In disk?':>10}")
+    for i, z in enumerate(orbit):
+        nsq = abs(z)**2
+        print(f"{i:3d} {z.real:12.6f} {nsq:12.6f} {'✓' if nsq < 1 else '✗':>10}")
+
+    # Demo 2: Cross-Ratio Symmetry
+    print("\n--- Demo 2: Cross-Ratio Symmetry ---")
+    z1, z2 = 0.3 + 0.2j, -0.1 + 0.4j
+    rho_zw = hyp_cross_ratio_sq(z1, z2)
+    rho_wz = hyp_cross_ratio_sq(z2, z1)
+    print(f"z = {z1}, w = {z2}")
+    print(f"ρ(z, w) = {rho_zw:.10f}")
+    print(f"ρ(w, z) = {rho_wz:.10f}")
+    print(f"Difference: {abs(rho_zw - rho_wz):.2e} (should be ~0)")
+
+    # Demo 3: Trace-Lattice Duality
+    print("\n--- Demo 3: Trace-Lattice Duality ---")
+    pts = [0.3 + 0.2j, -0.1 + 0.4j, 0.5 - 0.3j, -0.2 - 0.1j]
+    sum_normsq = sum(abs(z)**2 for z in pts)
+    sum_zzbar = sum((z * np.conj(z)).real for z in pts)
+    print(f"Points: {pts}")
+    print(f"Σ|z_i|² = {sum_normsq:.10f}")
+    print(f"Σ Re(z_i · conj(z_i)) = {sum_zzbar:.10f}")
+    print(f"Equal: {np.isclose(sum_normsq, sum_zzbar)} ✓")
+
+    # Demo 4: Hyperbolic Zeta Function
+    print("\n--- Demo 4: Hyperbolic Zeta Function ---")
+    print(f"ζ_H(s=1, N) for golden generator:")
+    print(f"{'N':>5} {'ζ_H(1,N)':>12} {'ln(N)':>10} {'≥ ln(N)?':>10}")
+    for N in [2, 5, 10, 20, 50, 100]:
+        zeta_val = hyp_zeta_partial(golden, 1.0, N)
+        ln_N = np.log(N)
+        print(f"{N:5d} {zeta_val:12.4f} {ln_N:10.4f} {'✓' if zeta_val >= ln_N else '✗':>10}")
+
+    # Demo 5: Orbit Composition
+    print("\n--- Demo 5: Orbit Composition ---")
+    m, n = 3, 4
+    orbit_long = compute_orbit(golden, m + n)
+    z_m = orbit_long[m]
+    # Compute orbit(a, z_m, n)
+    z_composed = z_m
+    for _ in range(n):
+        z_composed = moebius_map(golden, z_composed)
+    z_direct = orbit_long[n + m]
+    print(f"m={m}, n={n}")
+    print(f"orbit(a, z_{m}, {n}) = {z_composed:.10f}")
+    print(f"z_{n+m} = {z_direct:.10f}")
+    print(f"Equal: {np.isclose(z_composed, z_direct)} ✓")
+
+    # Demo 6: Non-Commutativity of Hyperbolic Addition
+    print("\n--- Demo 6: Non-Commutativity ---")
+    z, w = 0.3 + 0.1j, 0.2 - 0.3j
+    z_plus_w = moebius_map(w, z)  # z ⊕ w
+    w_plus_z = moebius_map(z, w)  # w ⊕ z
+    print(f"z = {z}, w = {w}")
+    print(f"z ⊕ w = {z_plus_w:.6f}")
+    print(f"w ⊕ z = {w_plus_z:.6f}")
+    print(f"z ⊕ w ≠ w ⊕ z: {not np.isclose(z_plus_w, w_plus_z)} (non-commutative!)")
+
+    # Demo 7: Complex Generator (2D orbit)
+    print("\n--- Demo 7: Complex Generator Orbit ---")
+    a_complex = 0.3 + 0.2j
+    orbit_c = compute_orbit(a_complex, 20)
+    print(f"Generator a = {a_complex}")
+    print(f"{'n':>3} {'Re(z_n)':>10} {'Im(z_n)':>10} {'|z_n|²':>10}")
+    for i in range(0, 21, 2):
+        z = orbit_c[i]
+        print(f"{i:3d} {z.real:10.6f} {z.imag:10.6f} {abs(z)**2:10.6f}")
+
+    print("\n" + "=" * 60)
+    print("All demos completed successfully.")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization 3: NormSq Identity and Disk Preservation
+
+Illustrates the key algebraic identity that makes everything work:
+1 - |φ_a(z)|² = (1-|a|²)(1-|z|²) / |1-āz|²
+
+Shows how the "remaining room" in the disk after applying a Möbius map
+factors into contributions from the generator and the input point.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import math
 
-def trace_seq(t, n):
-    if n == 0: return 2
-    if n == 1: return t
-    a, b = 2, t
-    for _ in range(n - 1):
-        a, b = b, t * b - a
-    return b
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+def moebius_map(a, z):
+    return (z - a) / (1 - np.conj(a) * z)
 
-# Panel 1: Markov tree
-ax = axes[0, 0]
 
-def markov_tree(max_depth=6):
-    result = []
-    seen = set()
-    queue = [(1, 1, 1, 0)]
-    while queue:
-        x, y, z, d = queue.pop(0)
-        key = tuple(sorted((x, y, z)))
-        if key in seen: continue
-        seen.add(key)
-        result.append((key, d))
-        if d < max_depth:
-            for a, b, c in [(x,y,z), (y,z,x), (z,x,y)]:
-                new_c = 3*a*b - c
-                if new_c > 0:
-                    queue.append((a, b, new_c, d+1))
-    return result
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
-triples = markov_tree(5)
-markov_numbers = sorted(set(v for t, _ in triples for v in t))
+# Panel 1: |φ_a(z)|² as a function of |z| for different |a|
+ax1 = axes[0, 0]
+zs = np.linspace(0, 0.99, 200)
+for a_val, color in [(0.1, '#4CAF50'), (0.3, '#2196F3'), (0.5, '#FF9800'),
+                      (0.7, '#E91E63'), (0.9, '#9C27B0')]:
+    phi_normsq = [abs(moebius_map(a_val, z))**2 for z in zs]
+    ax1.plot(zs, phi_normsq, color=color, linewidth=2, label=f'|a| = {a_val}')
 
-ax.barh(range(len(markov_numbers[:20])), markov_numbers[:20], color='steelblue')
-ax.set_yticks(range(len(markov_numbers[:20])))
-ax.set_yticklabels([str(m) for m in markov_numbers[:20]], fontsize=8)
-ax.set_xlabel('Value', fontsize=12)
-ax.set_title(f'First {min(20, len(markov_numbers))} Markov Numbers', fontsize=13)
-ax.grid(True, alpha=0.3, axis='x')
+ax1.plot(zs, zs**2, '--', color='gray', alpha=0.5, label='|z|² (identity)')
+ax1.set_xlabel('|z|', fontsize=11)
+ax1.set_ylabel('|φ_a(z)|²', fontsize=11)
+ax1.set_title('Image NormSq vs Input (real axis)', fontsize=12, fontweight='bold')
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
 
-# Panel 2: Discriminant spectrum
-ax = axes[0, 1]
-traces = range(3, 30)
-discriminants = [(t, t**2 - 4) for t in traces]
-colors_list = ['green' if (t**2 - 4) % 4 in [0, 1] else 'red' for t, _ in discriminants]
-
-ax.bar([t for t, _ in discriminants], [d for _, d in discriminants],
-       color=colors_list, alpha=0.7, edgecolor='black', linewidth=0.5)
-ax.set_xlabel('Trace t', fontsize=12)
-ax.set_ylabel('Discriminant Δ = t² − 4', fontsize=12)
-ax.set_title('Discriminant Spectrum of Hyperbolic Elements', fontsize=13)
-ax.grid(True, alpha=0.3)
-
-# Add classification
-for t, d in discriminants[:10]:
-    sqrt_d = math.isqrt(d)
-    is_square = sqrt_d * sqrt_d == d
-    if is_square:
-        ax.annotate('□', (t, d), ha='center', va='bottom', fontsize=8, color='purple')
-
-# Panel 3: Trace sequence mod p
-ax = axes[1, 0]
-p = 7
-t_vals = [3, 4, 5]
-colors_ts = ['navy', 'crimson', 'forestgreen']
-
-for t, color in zip(t_vals, colors_ts):
-    n_range = range(60)
-    vals_mod = [trace_seq(t, n) % p for n in n_range]
-    ax.plot(list(n_range), vals_mod, '.', color=color, markersize=4,
-            label=f't={t}, mod {p}')
+# Panel 2: Complement identity verification
+ax2 = axes[0, 1]
+for a_val, color in [(0.2, '#4CAF50'), (0.5, '#2196F3'), (0.8, '#E91E63')]:
+    complement_lhs = [1 - abs(moebius_map(a_val, z))**2 for z in zs]
+    factor1 = 1 - a_val**2
+    complement_rhs = [factor1 * (1 - z**2) / abs(1 - a_val * z)**2 for z in zs]
     
-    # Find period
-    for period in range(1, len(vals_mod)):
-        if period >= 3 and all(vals_mod[i] == vals_mod[i+period] 
-                                for i in range(min(period, len(vals_mod)-period))):
-            ax.axvline(x=period, color=color, linestyle='--', alpha=0.4)
-            break
+    ax2.plot(zs, complement_lhs, color=color, linewidth=2,
+             label=f'1−|φ(z)|² (|a|={a_val})')
+    ax2.plot(zs, complement_rhs, ':', color=color, linewidth=3, alpha=0.5)
 
-ax.set_xlabel('Power n', fontsize=12)
-ax.set_ylabel(f'traceSeq(t, n) mod {p}', fontsize=12)
-ax.set_title(f'Trace Sequences mod {p} (Periodic!)', fontsize=13)
-ax.legend()
-ax.grid(True, alpha=0.3)
+ax2.set_xlabel('|z|', fontsize=11)
+ax2.set_ylabel('1 − |φ_a(z)|²', fontsize=11)
+ax2.set_title('NormSq Complement Identity Verification', fontsize=12, fontweight='bold')
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
+ax2.text(0.5, 0.5, 'Solid = LHS\nDotted = RHS\n(identical!)',
+         transform=ax2.transAxes, fontsize=10, ha='center',
+         style='italic', alpha=0.7)
 
-# Panel 4: Primitive vs imprimitive traces
-ax = axes[1, 1]
+# Panel 3: Orbit |z_n|² convergence to 1
+ax3 = axes[1, 0]
+golden = (3 - np.sqrt(5)) / 2
 N = 50
-primitive = []
-imprimitive = []
-for t in range(3, N + 1):
-    is_imp = any(s * s == t + 2 for s in range(2, t + 1))
-    if is_imp:
-        imprimitive.append(t)
-    else:
-        primitive.append(t)
+orbit = [0.0 + 0j]
+for _ in range(N):
+    orbit.append(moebius_map(golden, orbit[-1]))
+normsqs = [abs(z)**2 for z in orbit]
 
-ax.bar(primitive, [1]*len(primitive), color='steelblue', label='Primitive', alpha=0.8)
-ax.bar(imprimitive, [1]*len(imprimitive), color='coral', label='Imprimitive (t+2 = s²)', alpha=0.8)
-ax.set_xlabel('Trace value t', fontsize=12)
-ax.set_ylabel('Classification', fontsize=12)
-ax.set_title(f'Primitive vs Imprimitive Traces (3 ≤ t ≤ {N})', fontsize=13)
-ax.legend()
+ax3.plot(range(N+1), normsqs, 'o-', color='#2196F3', markersize=4, linewidth=1)
+ax3.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Boundary (|z|² = 1)')
+ax3.fill_between(range(N+1), normsqs, 1, alpha=0.1, color='blue')
 
-# Compute density
-prim_count = len(primitive)
-total = len(primitive) + len(imprimitive)
-density = prim_count / total
-ax.text(0.95, 0.85, f'Primitive density: {density:.3f}\n({prim_count}/{total})',
-        transform=ax.transAxes, ha='right', va='top',
-        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8),
-        fontsize=10)
+# Mark primes
+primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+for p in primes:
+    if p <= N:
+        ax3.scatter(p, normsqs[p], c='red', s=40, zorder=5, marker='*')
 
-plt.suptitle('Algebraic Structure of Hyperbolic Lattice Arithmetic',
-             fontsize=15, fontweight='bold')
+ax3.set_xlabel('Orbit index n', fontsize=11)
+ax3.set_ylabel('|z_n|²', fontsize=11)
+ax3.set_title('Orbit NormSq (Golden Generator)', fontsize=12, fontweight='bold')
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+
+# Panel 4: Cross-ratio symmetry heatmap
+ax4 = axes[1, 1]
+n_pts = 15
+pts = [0.7 * np.exp(2j * np.pi * k / n_pts) * (0.3 + 0.4 * k / n_pts)
+       for k in range(n_pts)]
+
+asymmetry = np.zeros((n_pts, n_pts))
+for i in range(n_pts):
+    for j in range(n_pts):
+        rho_ij = abs(pts[i] - pts[j])**2 / max(abs(1 - np.conj(pts[i]) * pts[j])**2, 1e-30)
+        rho_ji = abs(pts[j] - pts[i])**2 / max(abs(1 - np.conj(pts[j]) * pts[i])**2, 1e-30)
+        asymmetry[i, j] = abs(rho_ij - rho_ji)
+
+im = ax4.imshow(asymmetry, cmap='RdBu_r', vmin=-1e-15, vmax=1e-15)
+ax4.set_xlabel('Point index j', fontsize=11)
+ax4.set_ylabel('Point index i', fontsize=11)
+ax4.set_title('Cross-Ratio Asymmetry |ρ(i,j)−ρ(j,i)|', fontsize=12, fontweight='bold')
+plt.colorbar(im, ax=ax4, label='Asymmetry (≈ 0)')
+
+fig.suptitle('The NormSq Identity: Foundation of Disk Preservation',
+             fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('viz_markov_tree.png', dpi=150, bbox_inches='tight')
+plt.savefig('viz_normsq.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_markov_tree.png")
+print("Saved viz_normsq.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 2: The Poincaré Disk and Hyperbolic Distance
+Visualization 1: Hyperbolic Integer Orbits on the Poincaré Disk
 
-Illustrates:
-1. The Poincaré disk with hyperbolic geodesics
-2. The conformal factor λ(z) = 2/(1-|z|²) as a heatmap
-3. Pseudo-hyperbolic distance contours
-4. Möbius orbits showing how the group action generates lattice points
+Shows the orbit of the origin under iterated Möbius maps for different
+generators, illustrating how hyperbolic integers are distributed in the disk.
+The unit circle boundary represents "infinity" in hyperbolic geometry.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 14))
 
-# Panel 1: Poincaré disk with geodesics
-ax = axes[0, 0]
-theta = np.linspace(0, 2*np.pi, 200)
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-ax.set_xlim(-1.15, 1.15)
-ax.set_ylim(-1.15, 1.15)
-ax.set_aspect('equal')
+def moebius_map(a, z):
+    return (z - a) / (1 - np.conj(a) * z)
 
-# Draw some hyperbolic geodesics (circular arcs perpendicular to boundary)
-for a in np.linspace(-0.8, 0.8, 9):
-    # Vertical geodesic through (a, 0): this is a circular arc
-    if abs(a) < 0.01:
-        ax.plot([0, 0], [-1, 1], 'b-', alpha=0.3, linewidth=0.8)
-    else:
-        # Center of the geodesic circle: (1/a, 0), radius sqrt(1/a²-1)
-        R = np.sqrt(1/a**2 - 1) if abs(a) < 1 else 1
-        cx = 1/a
-        t = np.linspace(-np.pi, np.pi, 500)
-        gx = cx + R * np.cos(t)
-        gy = R * np.sin(t)
-        mask = gx**2 + gy**2 < 1
-        gx_masked = np.where(mask, gx, np.nan)
-        gy_masked = np.where(mask, gy, np.nan)
-        ax.plot(gx_masked, gy_masked, 'b-', alpha=0.3, linewidth=0.8)
 
-# Horizontal geodesics
-for b in np.linspace(-0.8, 0.8, 9):
-    if abs(b) < 0.01:
-        ax.plot([-1, 1], [0, 0], 'r-', alpha=0.3, linewidth=0.8)
-    else:
-        R = np.sqrt(1/b**2 - 1) if abs(b) < 1 else 1
-        cy = 1/b
-        t = np.linspace(-np.pi, np.pi, 500)
-        gx = R * np.cos(t)
-        gy = cy + R * np.sin(t)
-        mask = gx**2 + gy**2 < 1
-        gx_masked = np.where(mask, gx, np.nan)
-        gy_masked = np.where(mask, gy, np.nan)
-        ax.plot(gx_masked, gy_masked, 'r-', alpha=0.3, linewidth=0.8)
+def compute_orbit(a, N, start=0.0):
+    orbit = [complex(start)]
+    for _ in range(N):
+        orbit.append(moebius_map(a, orbit[-1]))
+    return np.array(orbit)
 
-ax.set_title('Poincaré Disk with Geodesic Grid', fontsize=13)
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('y', fontsize=12)
 
-# Panel 2: Conformal factor heatmap
-ax = axes[0, 1]
-x = np.linspace(-0.99, 0.99, 400)
-y = np.linspace(-0.99, 0.99, 400)
-X, Y = np.meshgrid(x, y)
-R2 = X**2 + Y**2
-mask = R2 < 1
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-# λ(z) = 2/(1-|z|²)
-Lambda = np.where(mask, 2.0 / (1.0 - R2), np.nan)
+generators = [
+    ((3 - np.sqrt(5)) / 2, "Golden Generator\na = (3−√5)/2 ≈ 0.382"),
+    (0.3 + 0.2j, "Complex Generator\na = 0.3 + 0.2i"),
+    (0.5 * np.exp(1j * np.pi / 5), "Spiral Generator\na = 0.5·e^{iπ/5}"),
+]
 
-im = ax.imshow(Lambda, extent=[-1, 1, -1, 1], origin='lower',
-               cmap='hot', vmin=2, vmax=20, aspect='equal')
-ax.plot(np.cos(theta), np.sin(theta), 'w-', linewidth=2)
-plt.colorbar(im, ax=ax, label='λ(z) = 2/(1-|z|²)')
-ax.set_title('Conformal Factor (proved λ ≥ 2)', fontsize=13)
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('y', fontsize=12)
+for ax, (a, title) in zip(axes, generators):
+    N = 100
+    orbit = compute_orbit(a, N)
+    
+    # Draw unit circle
+    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax.add_patch(circle)
+    
+    # Draw orbit path
+    ax.plot(orbit.real, orbit.imag, '-', color='#2196F3', alpha=0.3, linewidth=0.5)
+    
+    # Color by index
+    colors = plt.cm.viridis(np.linspace(0, 1, N + 1))
+    
+    # Mark points
+    for i, z in enumerate(orbit):
+        is_prime = i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+                         53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+        size = 30 if is_prime else 8
+        marker = '*' if is_prime else 'o'
+        ax.scatter(z.real, z.imag, c=[colors[i]], s=size, marker=marker,
+                   edgecolors='none', zorder=3)
+    
+    # Mark origin
+    ax.scatter(0, 0, c='red', s=50, marker='o', zorder=5, edgecolors='black')
+    
+    # Mark generator
+    ax.scatter((-a).real, (-a).imag, c='green', s=80, marker='D', zorder=5,
+               edgecolors='black', label='z₁ = −a')
+    
+    ax.set_xlim(-1.15, 1.15)
+    ax.set_ylim(-1.15, 1.15)
+    ax.set_aspect('equal')
+    ax.set_title(title, fontsize=11)
+    ax.grid(True, alpha=0.2)
 
-# Panel 3: Pseudo-hyperbolic distance contours from origin
-ax = axes[1, 0]
-# ρ(0, z) = |z|, so the contours are just circles
-rho_vals = np.where(mask, np.sqrt(R2), np.nan)
-contour = ax.contourf(X, Y, rho_vals, levels=np.linspace(0, 0.99, 20),
-                        cmap='viridis', extend='max')
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-plt.colorbar(contour, ax=ax, label='ρ(0, z)')
-ax.set_aspect('equal')
-ax.set_title('Pseudo-Hyperbolic Distance from Origin', fontsize=13)
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('y', fontsize=12)
-ax.plot(0, 0, 'w*', markersize=15, markeredgecolor='k')
+# Legend
+axes[0].scatter([], [], c='red', s=50, marker='o', label='Origin (z₀)')
+axes[0].scatter([], [], c='green', s=80, marker='D', label='z₁ = −a')
+axes[0].scatter([], [], c='gold', s=30, marker='*', label='Prime index')
+axes[0].scatter([], [], c='gray', s=8, marker='o', label='Composite index')
+axes[0].legend(loc='lower left', fontsize=8)
 
-# Panel 4: Möbius orbits
-ax = axes[1, 1]
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-ax.set_xlim(-1.15, 1.15)
-ax.set_ylim(-1.15, 1.15)
-ax.set_aspect('equal')
-
-def mobius_map(a_re, a_im, z_re, z_im):
-    """φ_a(z) = (a + z) / (1 + conj(a)*z)"""
-    # numerator = a + z
-    num_re = a_re + z_re
-    num_im = a_im + z_im
-    # conj(a)*z = (a_re - i*a_im)*(z_re + i*z_im)
-    conj_a_z_re = a_re * z_re + a_im * z_im
-    conj_a_z_im = a_re * z_im - a_im * z_re
-    # denominator = 1 + conj(a)*z
-    den_re = 1 + conj_a_z_re
-    den_im = conj_a_z_im
-    # division
-    den_sq = den_re**2 + den_im**2
-    if den_sq < 1e-12:
-        return z_re, z_im
-    result_re = (num_re * den_re + num_im * den_im) / den_sq
-    result_im = (num_im * den_re - num_re * den_im) / den_sq
-    return result_re, result_im
-
-# Generate orbit of 0 under two generators
-generators = [(0.5, 0.0), (0.0, 0.5), (-0.3, 0.4), (0.4, -0.3)]
-colors = ['red', 'blue', 'green', 'orange']
-
-orbit_points = [(0.0, 0.0)]
-for gen_idx, (ga, gb) in enumerate(generators):
-    # Apply generator and its inverse repeatedly
-    current = [(0.0, 0.0)]
-    for depth in range(6):
-        new_points = []
-        for z_re, z_im in current:
-            w_re, w_im = mobius_map(ga, gb, z_re, z_im)
-            if w_re**2 + w_im**2 < 0.999:
-                new_points.append((w_re, w_im))
-                orbit_points.append((w_re, w_im))
-            # Also inverse
-            w_re2, w_im2 = mobius_map(-ga, -gb, z_re, z_im)
-            if w_re2**2 + w_im2**2 < 0.999:
-                new_points.append((w_re2, w_im2))
-                orbit_points.append((w_re2, w_im2))
-        current = new_points
-
-# Plot orbit points
-xs = [p[0] for p in orbit_points]
-ys = [p[1] for p in orbit_points]
-ax.scatter(xs, ys, c='navy', s=8, alpha=0.6, zorder=5)
-ax.plot(0, 0, 'r*', markersize=15, markeredgecolor='k', zorder=10)
-
-# Mark generators
-for (ga, gb), c in zip(generators, colors):
-    ax.plot(ga, gb, 'o', color=c, markersize=10, markeredgecolor='k',
-            zorder=10, label=f'gen ({ga},{gb})')
-
-ax.set_title(f'Möbius Orbits ({len(orbit_points)} lattice points)', fontsize=13)
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('y', fontsize=12)
-ax.legend(fontsize=8, loc='lower right')
-
-plt.suptitle('Poincaré Disk: Geometry of Hyperbolic Number Theory',
-             fontsize=15, fontweight='bold')
+fig.suptitle('Hyperbolic Integers on the Poincaré Disk', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('viz_poincare_disk.png', dpi=150, bbox_inches='tight')
+plt.savefig('viz_orbit.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_poincare_disk.png")
+print("Saved viz_orbit.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 1: Trace Sequences and the Cassini Identity
+Visualization 2: Hyperbolic Zeta Function and Prime Counting
 
-Shows how trace sequences traceSeq(t, n) behave for different trace values t:
-- Elliptic (|t| < 2): periodic oscillation
-- Parabolic (|t| = 2): linear growth
-- Hyperbolic (|t| > 2): exponential growth
-
-The Cassini identity traceSeq(t,n+2)·traceSeq(t,n) - traceSeq(t,n+1)² = t²-4
-is verified visually: the Cassini difference is constant for each t.
+Shows the growth of the hyperbolic zeta sum ζ_H(s, N) for different values
+of s, compared to classical growth rates. Also shows the hyperbolic prime
+counting function compared to N/ln(N).
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-def trace_seq(t, n):
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    a, b = 2, t
-    for _ in range(n - 1):
-        a, b = b, t * b - a
-    return b
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+def moebius_map(a, z):
+    return (z - a) / (1 - np.conj(a) * z)
 
-# Panel 1: Elliptic trace sequences (periodic)
-ax = axes[0, 0]
-n_vals = np.arange(0, 25)
-for t in [-1, 0, 1]:
-    vals = [trace_seq(t, n) for n in n_vals]
-    ax.plot(n_vals, vals, 'o-', label=f't = {t}', markersize=4)
-ax.set_xlabel('Power n', fontsize=12)
-ax.set_ylabel('traceSeq(t, n)', fontsize=12)
-ax.set_title('Elliptic Regime (|t| < 2): Periodic', fontsize=13)
-ax.legend()
-ax.grid(True, alpha=0.3)
-ax.axhline(y=0, color='k', linewidth=0.5)
 
-# Panel 2: Hyperbolic trace sequences (exponential growth)
-ax = axes[0, 1]
-n_vals = np.arange(0, 12)
-for t in [3, 4, 5]:
-    vals = [trace_seq(t, n) for n in n_vals]
-    ax.semilogy(n_vals, vals, 's-', label=f't = {t}', markersize=5)
-ax.set_xlabel('Power n', fontsize=12)
-ax.set_ylabel('traceSeq(t, n)  [log scale]', fontsize=12)
-ax.set_title('Hyperbolic Regime (|t| > 2): Exponential Growth', fontsize=13)
-ax.legend()
-ax.grid(True, alpha=0.3)
+def compute_orbit(a, N):
+    orbit = [0.0 + 0j]
+    for _ in range(N):
+        orbit.append(moebius_map(a, orbit[-1]))
+    return orbit
 
-# Panel 3: Cassini identity verification
-ax = axes[1, 0]
-n_vals = np.arange(0, 15)
-for t in [0, 1, 3, 5, 7]:
-    cassini_vals = [
-        trace_seq(t, n+2) * trace_seq(t, n) - trace_seq(t, n+1)**2
-        for n in n_vals
-    ]
-    disc = t**2 - 4
-    ax.plot(n_vals, cassini_vals, 'o', label=f't={t}, Δ={disc}', markersize=6)
-    ax.axhline(y=disc, linestyle='--', alpha=0.5)
-ax.set_xlabel('n', fontsize=12)
-ax.set_ylabel('traceSeq(t,n+2)·traceSeq(t,n) − traceSeq(t,n+1)²', fontsize=11)
-ax.set_title('Cassini Identity: Constant = Δ = t² − 4', fontsize=13)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
 
-# Panel 4: Growth rate convergence to eigenvalue
-ax = axes[1, 1]
-n_vals = np.arange(1, 20)
-for t in [3, 4, 5, 7]:
-    import math
-    eigenvalue = (t + math.sqrt(t**2 - 4)) / 2
-    ratios = [trace_seq(t, n+1) / trace_seq(t, n) for n in n_vals]
-    ax.plot(n_vals, ratios, 'D-', label=f't={t}, λ₊={eigenvalue:.3f}', markersize=4)
-    ax.axhline(y=eigenvalue, linestyle=':', alpha=0.4)
-ax.set_xlabel('n', fontsize=12)
-ax.set_ylabel('traceSeq(t, n+1) / traceSeq(t, n)', fontsize=11)
-ax.set_title('Growth Rate → Dominant Eigenvalue λ₊', fontsize=13)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
+def hyp_zeta_partial(a, s, N):
+    orbit = compute_orbit(a, N)
+    total = 0.0
+    for i in range(1, N + 1):
+        nsq = abs(orbit[i])**2
+        if nsq > 1e-30:
+            total += nsq**(-s)
+    return total
 
-plt.suptitle('Trace Sequences in Hyperbolic Number Theory', fontsize=15, fontweight='bold')
+
+def sieve_primes(N):
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(N + 1) if is_prime[i]]
+
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+
+golden = (3 - np.sqrt(5)) / 2
+
+# Panel 1: Zeta function growth
+ax1 = axes[0]
+Ns = list(range(2, 201))
+for s, color, label in [(0.5, '#E91E63', 's = 0.5'),
+                          (1.0, '#2196F3', 's = 1.0'),
+                          (2.0, '#4CAF50', 's = 2.0')]:
+    zetas = [hyp_zeta_partial(golden, s, N) for N in Ns]
+    ax1.plot(Ns, zetas, color=color, linewidth=2, label=label)
+
+# Reference lines
+ax1.plot(Ns, [np.log(N) for N in Ns], '--', color='gray', alpha=0.5, label='ln(N)')
+ax1.plot(Ns, Ns, ':', color='gray', alpha=0.3, label='N')
+
+ax1.set_xlabel('N (number of terms)', fontsize=12)
+ax1.set_ylabel('ζ_H(s, N)', fontsize=12)
+ax1.set_title('Hyperbolic Zeta Sum Growth', fontsize=13, fontweight='bold')
+ax1.legend(fontsize=10)
+ax1.set_yscale('log')
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: Prime counting
+ax2 = axes[1]
+N_max = 500
+primes = sieve_primes(N_max)
+
+Ns_prime = list(range(2, N_max + 1))
+pi_vals = []
+count = 0
+prime_idx = 0
+for N in Ns_prime:
+    while prime_idx < len(primes) and primes[prime_idx] <= N:
+        count += 1
+        prime_idx += 1
+    pi_vals.append(count)
+
+ax2.plot(Ns_prime, pi_vals, color='#2196F3', linewidth=2, label='π_H(N)')
+ax2.plot(Ns_prime, [N / np.log(N) for N in Ns_prime], '--',
+         color='#E91E63', linewidth=2, label='N / ln(N)')
+ax2.plot(Ns_prime, [N / (np.log(N) - 1) for N in Ns_prime], ':',
+         color='#4CAF50', linewidth=1.5, label='N / (ln(N) − 1)')
+
+ax2.set_xlabel('N', fontsize=12)
+ax2.set_ylabel('Count', fontsize=12)
+ax2.set_title('Hyperbolic Prime Counting Function', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+
+fig.suptitle('Hyperbolic Number Theory: Zeta Function & Primes',
+             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('viz_trace_sequences.png', dpi=150, bbox_inches='tight')
+plt.savefig('viz_zeta.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_trace_sequences.png")
+print("Saved viz_zeta.png")
