@@ -3701,10 +3701,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.97,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "887daa06",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
@@ -3974,21 +3974,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-30T14:52:43.093607+00:00"
   },
   {
-    "id": "fd_2241",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "4875df65",
-    "timestamp": "2026-05-30T13:51:56.564412+00:00"
-  },
-  {
     "id": "seed_037",
     "title": "Cram\u00e9r's Conjecture on Prime Gaps",
     "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
@@ -4167,81 +4152,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:12:30.270617+00:00"
   },
   {
-    "id": "fd_0901",
-    "title": "Algorithmic Independence of Primewise Persistence Profiles",
-    "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(N) over Z, computable from N in polynomial time, such that for infinitely many cutoffs N the collection of primewise barcode summary vectors B_p(C(N)) (for p <= polylog N) is pairwise algorithmically independent in the following testable sense: no predictor running in time poly(log N) and given {B_q(C(N)) : q != p, q <= polylog N} can recover B_p(C(N)) with advantage exceeding o(1) over the empirical base rate. Test: instantiate a canonical family C(N) (e.g. from arithmetic lattices, modular-symbol complexes, or filtered congruence complexes), compute B_p across many primes, and evaluate whether cross-prime prediction accuracy provably/empirically stays at chance while within-prime structure remains highly nontrivial. Refutation occurs if a uniform low-complexity predictor consistently reconstructs one prime's persistence from the others. Impact: This would reveal a new form of arithmetic pseudorandomness visible only through topological summaries, suggesting persistence as a probe of hidden independence phenomena across primes and enabling topology-based randomness tests for arithmetic objects.",
-    "domains": [
-      "Arithmetic Topology",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:15:46.019869+00:00"
-  },
-  {
-    "id": "fd_0920",
-    "title": "Prime-Sensitive Torsion Echoes in Random Flag Complexes",
-    "description": "Conjecture: In the Linial\u2013Meshulam random flag complex process X(n,p), there exists a dimension k >= 1 and a nontrivial interval of densities p = p(n) near the k-th homological phase transition such that the p-primary torsion profile of H_k(X; Z) is asymptotically non-universal across primes: specifically, after normalizing by the expected Betti-scale size, the distribution of v_ell(|Tor H_k(X; Z)|) depends on the prime ell and does not collapse to a single prime-independent law. Test: Sample random flag complexes in the critical window, compute integer homology, and compare the empirical laws of v_ell(|Tor H_k|) for several primes ell; the conjecture is refuted if these laws converge to the same universal distribution after normalization, and supported if statistically stable prime-dependent distributions persist with n. Impact: This would reveal a new arithmetic layer in random topology, showing that homological phase transitions carry genuine prime-specific structure rather than only field-coefficient universality, opening a bridge between probabilistic topology, torsion asymptotics, and arithmetic statistics.",
-    "domains": [
-      "Random Topology",
-      "Arithmetic Topology"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:39:42.310379+00:00"
-  },
-  {
-    "id": "fd_1131",
-    "title": "Persistent Homology as a Detector of Hidden Automaticity in Integer Sequences",
-    "description": "Conjecture: There exists a computable functor from an integer sequence a(n) with finite-valued local rule description to a family of filtered simplicial complexes K_N(a) such that a(n) is p-automatic for some prime p if and only if, for all sufficiently large N, the primewise persistent homology profiles of K_N(a) over F_p are eventually generated by a finite-state transducer and exhibit ultimately periodic barcode statistics, while for every non-p-automatic sequence in the same rule class this periodicity fails on a density-1 set of scales. Test: Construct K_N(a) for benchmark families (Thue-Morse, Rudin-Shapiro, sum-of-digits, paperfolding, polynomial phase sequences, multiplicative sequences) and algorithmically check whether barcode summary statistics over F_p become eventually automaton-recognizable/periodic exactly in the automatic cases; a single nonautomatic sequence with stable periodic profiles, or an automatic sequence lacking them, refutes the conjecture. Impact: This would create a topological criterion for automaticity, linking finite automata, arithmetic dynamics, and persistent homology, and could open a new route to classifying low-complexity arithmetic structure through geometric invariants rather than symbolic methods.",
-    "domains": [
-      "Topological Data Analysis",
-      "Automata Theory"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:06:00.281798+00:00"
-  },
-  {
-    "id": "fd_1318",
-    "title": "Mod-p Spectral Fingerprints Determine Expansion Profile of Arithmetic Simplicial",
-    "description": "Conjecture: There exists a family of bounded-degree arithmetic simplicial complexes X_N (for example Ramanujan-type quotients of Bruhat\u2013Tits buildings) such that the multiset of persistent homology barcodes of the mod-p Laplacian filtrations, taken over all primes p up to C log N, determines the real Laplacian spectral gap up to o(1) error as N -> infinity. Test: Construct explicit X_N, compute barcode statistics from mod-p combinatorial Laplacians for growing N and primes p <= C log N, and regress/predict the real spectral gap; the conjecture is supported if prediction error vanishes asymptotically and refuted if asymptotically different spectral gaps produce indistinguishable prime barcode data. Impact: This would create a new arithmetic-topological route to estimating expansion and mixing in high-dimensional complexes using only finite-field computations, linking expander theory, arithmetic geometry, and persistent homology.",
-    "domains": [
-      "Arithmetic Topology",
-      "Spectral Graph Theory"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T05:59:32.898444+00:00"
-  },
-  {
-    "id": "fd_1337",
-    "title": "Torsion Resonance Law for Modular Form Congruence Graphs",
-    "description": "Conjecture: For each normalized cuspidal Hecke eigenform f of fixed weight and level, there is a functorial construction of a finite filtered chain complex C_p(f) over Z from the mod-p Hecke orbit graph of f such that the birth scale distribution of p-torsion in H_*(C_p(f)) undergoes a sharp change exactly at primes p where f is congruent mod p to a distinct eigenform. Test: Compute C_p(f) for databases of modular forms and compare torsion barcode statistics against independently known congruence primes; confirmation is a statistically significant predictive correspondence, while systematic absence of correlation refutes the conjecture. Impact: This would create a topological detector for hidden congruences in automorphic forms, linking arithmetic deformation theory, Hecke algebras, and persistent topology in a new computational framework.",
-    "domains": [
-      "Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:51:52.030067+00:00"
-  },
-  {
     "id": "fd_1441",
     "title": "Arithmetic Monodromy from Persistent Homology of p-adic Newton Iteration Graphs",
     "description": "Conjecture: Let f(x) \u2208 Z[x] be a squarefree polynomial of degree d \u2265 3 with Galois group G over Q. For each good prime p, build the directed functional graph \u0393_p(f) on F_p by x \u21a6 x - f(x)/f'(x) whenever f'(x) \u2260 0, with singular points treated as isolated/marked vertices, and form a filtration by in-degree or preimage-depth. Then there exists a functorially defined persistence statistic S_p(f) such that the limiting distribution of S_p(f) over primes p determines the cycle type distribution of Frobenius in G; in particular, non-isomorphic transitive Galois groups of the same degree yield different limiting persistence laws for a density-1 set of squarefree polynomials. Test: Compute S_p(f) for large prime samples across families with known Galois groups (e.g. S_d, A_d, D_n, cyclic, solvable examples) and check whether empirical persistence distributions separate the groups with statistically significant accuracy; refute by exhibiting two such families with indistinguishable limiting laws despite distinct Frobenius cycle statistics. Impact: This would create a new topological probe of arithmetic monodromy, linking dynamical systems over finite fields, persistent homology, and inverse Galois heuristics, and could yield data-driven invariants for detecting hidden Galois structure from modular dynamics.",
@@ -4255,171 +4165,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T14:12:05.827873+00:00"
-  },
-  {
-    "id": "fd_1509",
-    "title": "Arithmetic Universality Class for Primewise Persistent Homology of Rational Dyna",
-    "description": "Conjecture: Let f,g \\in \\mathbb{Q}(x) be rational maps of degree at least 2 that are not conjugate over \\overline{\\mathbb{Q}} and whose postcritical dynamics are not both Latt\\u00e8s. For each good prime p, form the directed graph of the map on \\mathbb{P}^1(\\mathbb{F}_p), build a canonical filtered flag complex from orbit-preimage structure, and record the primewise persistence profile \\Pi_f(p). Then there exists a finite set of persistence statistics S(f) extracted from \\{\\Pi_f(p)\\}_p such that S(f)=S(g) for a density-1 set of primes p if and only if f and g are conjugate over \\overline{\\mathbb{Q}}. Test: Compute these persistence profiles for large families of quadratic and cubic rational maps over many good primes; confirmation is separation of non-conjugate maps with only finitely many exceptional primes, while repeated density-1 collisions between genuinely non-conjugate maps refute the conjecture. Impact: This would create a new topological invariant of arithmetic dynamics, turning mod-p orbit data into a practical and theoretically sharp classifier of algebraic dynamical systems, with possible applications to detecting hidden symmetries, exceptional maps, and dynamical moduli stratification.",
-    "domains": [
-      "Arithmetic Dynamics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T18:35:56.749847+00:00"
-  },
-  {
-    "id": "fd_1581",
-    "title": "Adelic Synchronization Threshold for Rational Dynamics",
-    "description": "Conjecture: There exists an explicit non-isotrivial family of rational maps f_t over Q of degree at least 2 and a finite combinatorial construction K_p(f_t) from the reduction of f_t modulo each good prime p such that the cross-prime mutual information of the resulting persistent homology barcodes undergoes a sharp phase transition exactly at the parameters t for which f_t acquires an exceptional algebraic relation among critical orbit portraits over Qbar. Test: Compute K_p(f_t) for many good primes p across parameter families, estimate barcode mutual-information matrices across primes, and check whether the emergence of a high-synchronization regime is equivalent to independently verified exceptional orbit relations; a single counterexample in either direction refutes the conjecture. Impact: This would create a new adelic order parameter for detecting hidden algebraic structure in arithmetic dynamical systems, potentially giving a topological probe of postcritical relations, rigidity loci, and moduli stratification.",
-    "domains": [
-      "Arithmetic Dynamics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:38:07.672322+00:00"
-  },
-  {
-    "id": "fd_1582",
-    "title": "Automatic Sequence Rigidity from Prime-Indexed Subword Zeta Functions",
-    "description": "Conjecture: Let a,b be infinite sequences over a finite alphabet generated by finite-state transducers (equivalently, automatic or morphic sequences of bounded description complexity). For each prime p, form the length-p subword frequency vector v_p(a) and v_p(b), and let Z_a(s)=\\sum_p p^{-s} H(v_p(a)) where H is Shannon entropy of the normalized subword frequency distribution. If H(v_p(a))=H(v_p(b)) for a set of primes of positive relative density and the corresponding rank profiles of the Hankel matrices of length-p factors also agree on that set, then a and b are shift-equivalent up to a coding. Test: Enumerate large libraries of automatic/morphic sequences, compute prime-indexed subword entropy and Hankel-rank signatures, and search for non-equivalent pairs with matching signatures on many primes; a single such pair refutes the conjecture, while exhaustive verification up to growing automaton size/prime cutoff provides evidence. Impact: This would create a new arithmetic-spectral invariant for symbolic dynamics, linking automata theory, combinatorics on words, and analytic/arithmetic statistics, and could yield algorithmic classification tools for low-complexity sequences.",
-    "domains": [
-      "Automata Theory",
-      "Combinatorics on Words"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:38:41.078890+00:00"
-  },
-  {
-    "id": "fd_1583",
-    "title": "Arithmetic Universality of Persistent Homology for Cellular Automata Trace Space",
-    "description": "Conjecture: There exists a one-dimensional nearest-neighbor cellular automaton A over a finite alphabet and a functorial construction sending each prime p to a filtered simplicial complex K_p(A,N) built from length-N spacetime trace statistics modulo p, such that the family of prime-indexed persistence diagrams undergoes a sharp phase transition in behavior if and only if A is computationally universal. Test: Compute K_p(A,N) for increasing N and many primes p for known universal and non-universal cellular automata; confirm the existence of a stable, quantitatively separable persistence-phase signature exactly for universal rules, and refute by finding a non-universal rule with the same asymptotic signature or a universal rule lacking it. Impact: This would create a topological/arithmetic order parameter for universality, linking computability, dynamics, and prime-sensitive topology, and could yield a new empirical route to classifying complex discrete systems.",
-    "domains": [
-      "Dynamical Systems",
-      "Computability Theory"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:39:08.569968+00:00"
-  },
-  {
-    "id": "fd_1782",
-    "title": "Prime-Interference Law for Torsion in Arithmetic Random Complexes",
-    "description": "Conjecture: There exists an explicit arithmetic random simplicial-complex model X(N, p) built from reductions modulo N of a fixed algebraic construction such that the p-primary and q-primary persistent torsion birth processes are asymptotically not independent for infinitely many distinct prime pairs (p,q), and their covariance is governed by a universal bilinear form coming from shared Frobenius eigenvalue statistics of the underlying arithmetic source. Test: Construct the model for growing N, compute primewise persistence barcodes simultaneously for many prime pairs, and measure whether the joint law of torsion births deviates from the product law in a stable, model-independent way; confirmation requires reproducible nonzero limiting cross-prime covariance matching the predicted Frobenius-based statistic, while refutation is asymptotic independence or absence of a universal covariance law. Impact: This would reveal a genuinely new cross-prime coupling principle in arithmetic topology, going beyond existing primewise theories, and could provide a new bridge between persistent homology, arithmetic statistics, and motivic-style correlations across primes.",
-    "domains": [
-      "Arithmetic Topology",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:03:44.396940+00:00"
-  },
-  {
-    "id": "fd_1783",
-    "title": "Persistent Homology Detects Zero-Density Exceptional Sets in Prime Number Races",
-    "description": "Conjecture: Let q >= 3 and let A,B be distinct reduced residue classes mod q with unequal Rubinstein-Sarnak bias. For each x, form the step function D_{A,B}(t)=pi(t;q,A)-pi(t;q,B) on t in [2,x], build its sublevel/superlevel persistence diagram after piecewise-linear interpolation and normalization by sqrt(t)/log t, and let M_x(A,B) be the signed barcode mass (total lifetime of positive bars minus negative bars). Then M_x(A,B) converges to a nonzero limit of the same sign as the logarithmic prime race bias, while for unbiased pairs it converges to 0. Test: compute M_x(A,B) for many q and residue pairs up to large x; confirmation is stable sign separation matching known Chebyshev biases and vanishing for unbiased races, while systematic mismatch or non-convergence refutes it. Impact: this would introduce a topological order parameter for subtle distributional asymmetries of primes, potentially giving a new quantitative probe of low-lying zero effects and a bridge between analytic number theory and topological signal analysis.",
-    "domains": [
-      "Analytic Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:04:17.028238+00:00"
-  },
-  {
-    "id": "fd_1805",
-    "title": "Profinite Reconstruction Threshold from Prime-by-Prime Finite Quotient Persisten",
-    "description": "Conjecture: There exists an explicit functorial construction sending every finitely generated residually finite group G to a family of finite filtered simplicial complexes K_p(G,N), indexed by primes p and quotient-depth parameter N, such that if two groups G and H satisfy barcode equality for all sufficiently large p and all N, then their profinite completions are isomorphic; moreover, there exists a finitely generated pair G,H with matching barcodes for every fixed finite set of primes but different profinite completions. Test: Implement K_p(G,N) from presentations via finite p-group and mixed finite quotient towers, compute persistent homology barcodes across p,N for known families with subtle finite-quotient behavior (e.g. arithmetic groups, 3-manifold groups, nilpotent and virtually free groups), and check whether barcode coincidence tracks profinite equivalence and whether finite-prime agreement can fail to determine it. A single counterexample to the reconstruction claim refutes the first part; a proof or exhaustive positive evidence on broad classes supports it. Impact: This would create a new topological-computational interface for profinite group theory, potentially giving computable invariants for distinguishing groups via their finite quotients and linking persistent homology with anabelian-style reconstruction phenomena.",
-    "domains": [
-      "Geometric Group Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:55:04.181043+00:00"
-  },
-  {
-    "id": "fd_2021",
-    "title": "Chromatic Persistence Rigidity for Arithmetic Matroids",
-    "description": "Conjecture: There exists an explicit functorial construction assigning to every representable arithmetic matroid M over Z and each prime p a finite filtered simplicial complex K_p(M) such that, for any two such matroids M and N of bounded rank, if the prime-indexed persistence diagrams of K_p(M) and K_p(N) agree for a set of primes of positive Dirichlet density, then M and N have the same arithmetic Tutte polynomial; moreover, there exist non-isomorphic underlying ordinary matroids with distinct arithmetic multiplicity data that are separated by this invariant. Test: Compute K_p(M) for explicit families coming from toric arrangements, integer vector configurations, and graph-incidence arithmetic matroids; verify whether persistence agreement across many primes correlates exactly with equality of arithmetic Tutte polynomials, and search for counterexamples with identical ordinary Tutte polynomial but different arithmetic data. Impact: This would create a new bridge between persistent homology, arithmetic matroid theory, and combinatorial invariants of toric arrangements, yielding a topological probe of arithmetic multiplicities invisible to classical matroid persistence constructions.",
-    "domains": [
-      "Arithmetic Matroids",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-29T01:49:05.211396+00:00"
-  },
-  {
-    "id": "fd_2029",
-    "title": "Persistence Detects Galois Groups of Number Fields via Prime Splitting Complexes",
-    "description": "Conjecture: There exists an explicit functorial construction sending a number field K/Q with discriminant D_K to a family of finite filtered simplicial complexes X_p(K), one for each unramified prime p, built only from the splitting type of p in K and low-complexity residue-degree/incidence data, such that for every fixed degree n there is a constant B(n) with the following property: if K and L are degree-n number fields and the primewise persistence profiles of X_p(K) and X_p(L) agree for all unramified p <= B(n)\u00b7(log |D_K D_L|)^2, then Gal(K^gal/Q) and Gal(L^gal/Q) are isomorphic as permutation groups on embeddings; moreover, there exist non-isomorphic degree-n fields whose ordinary splitting statistics agree up to this range but whose persistence profiles differ. Test: Implement X_p(K) from databases of number fields, compute persistence profiles across primes, and check whether these profiles cluster exactly by Galois group/permutation type and separate examples with matching coarse splitting statistics; refutation occurs if large families with distinct Galois groups remain persistence-indistinguishable or if the profiles never outperform classical splitting-count features. Impact: This would create a new topological invariant of arithmetic fields, turning prime splitting data into a computable geometric signature for inverse Galois classification and potentially revealing hidden structure beyond Chebotarev density summaries.",
-    "domains": [
-      "Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-29T01:49:32.800268+00:00"
-  },
-  {
-    "id": "fd_2037",
-    "title": "Persistent Homology Detects Secondary Terms in Chebotarev Prime Splitting",
-    "description": "Conjecture: There exists an explicit functorial construction assigning to each finite Galois extension K/Q with Galois group G and each conjugacy class union C subseteq G a filtered simplicial complex X_C(T) built from primes p <= T with Frobenius class in C, such that after centering by the main Chebotarev density term |C|/|G|, the stable barcode statistics of the family {X_C(T)}_T determine whether the associated Artin L-functions have a real exceptional zero or nontrivial low-lying zero bias. In particular, two pairs (K,C) and (K',C') with identical natural density |C|/|G| = |C'|/|G'| but different secondary Chebotarev error terms yield asymptotically different barcode summaries. Test: Compute the complexes for explicit number fields with matched splitting densities but provably different low-lying Artin zero behavior; confirm that barcode observables separate the families with statistical significance and fail to separate control pairs with matching secondary terms. Refutation occurs if no functorial prime-splitting complex yields asymptotically distinct persistence signatures beyond density. Impact: This would create a topological probe of fine analytic number theory, giving a new observable for Artin L-function phenomena and a bridge between persistence, prime distributions, and Galois representations.",
-    "domains": [
-      "Analytic Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-29T02:20:32.754351+00:00"
-  },
-  {
-    "id": "fd_2050",
-    "title": "Persistence Detects Natural Boundaries of Integer Generating Functions",
-    "description": "Conjecture: There exists an explicit functorial construction sending any integer sequence a(n) with rational ordinary generating function modulo every prime p to a family of filtered simplicial complexes K_p(N) built from length-N windows of the reduced sequence a(n) mod p, such that the following dichotomy holds. If the complex generating function A(z)=\\sum_{n\\ge0} a(n)z^n is D-finite and has no natural boundary, then for every fixed homological degree the barcode statistics of K_p(N), averaged over p<=P and normalized as N,P->infinity, stabilize to a finite-type limit determined by finitely many local recurrence parameters. If A(z) has a natural boundary on its circle of convergence, then there exists some homological degree and a diverging scale sequence N(P) for which the normalized barcode statistics fail to stabilize and instead exhibit unbounded prime-to-prime fluctuation. Test: Compute the construction for benchmark classes with known analytic behavior\u2014rational/algebraic/D-finite sequences versus lacunary, automatic-but-non-D-finite, and partition-like sequences with expected natural boundaries modulo primes\u2014and check whether stabilization versus persistent fluctuation cleanly separates the classes. A single counterexample in either direction refutes the conjecture. Impact: This would create a new topological diagnostic for analytic continuation phenomena of generating functions, linking arithmetic reductions, automata/recurrence structure, and complex-analytic singularity geometry through computable invariants.",
-    "domains": [
-      "Analytic Combinatorics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-29T04:53:05.338122+00:00"
   },
   {
     "id": "fd_2232",
@@ -4774,10 +4519,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.73,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19a9474f",
     "timestamp": "2026-05-30T13:51:57.326903+00:00"
   },
   {
@@ -4839,21 +4584,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:59.647743+00:00"
-  },
-  {
-    "id": "fd_2269",
-    "title": "Spectral Universality of Transformer Training Hessians",
-    "description": "Conjecture: For transformer language models above a critical width-depth scaling regime, the empirical spectral distribution of the Hessian of the training loss at late-stage SGD iterates converges, after normalization by parameter count and gradient noise scale, to a universal law determined only by architecture symmetry class and optimizer family, independent of dataset semantics and initialization distribution. Test: Train families of transformers varying width, depth, tokenizer, corpus domain, and initialization, then compute Hessian spectra at matched training phases; the conjecture is supported if normalized spectra collapse onto the same limiting distribution within each symmetry/optimizer class and refuted if persistent dataset-dependent or initialization-dependent spectral features remain in the large-model limit. Impact: Establishing such universality would create a quantitative statistical-mechanics theory of deep learning optimization, enabling principled scaling laws for trainability, sharper diagnostics for phase transitions in learning, and architecture-level design rules derived from spectral invariants rather than trial-and-error.",
-    "domains": [
-      "Mathematical Physics",
-      "Machine Learning Theory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-30T14:20:36.002236+00:00"
   },
   {
     "id": "fd_2238",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry \u00d7 Machine Learning",
     "date": "2026-05-30T16:00:40Z",
     "exp_id": "4875df65",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7339110169491525,
+    "quality": "substantial",
     "pkg_num": 415
   },
   {
@@ -12044,8 +12044,8 @@ window.PACKAGE_GRAPH = {
       "shape": "sphere_rings",
       "date": "2026-05-30T16:00:40Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7339110169491525,
+      "quality": "substantial"
     }
   ],
   "edges": [
