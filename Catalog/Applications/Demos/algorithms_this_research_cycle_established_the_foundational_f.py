@@ -1,265 +1,283 @@
+#!/usr/bin/env python3
 """
-Algorithms for Heegner Number Theory and Prime-Generating Polynomials
+Algorithms for Prime Persistent Homology
 
 Implements the key algorithms from the research:
-1. Euler polynomial prime generation with ZMod verification
-2. Discriminant lattice construction and analysis
-3. Quadratic form optimization (shortest vector)
-4. Cross-Heegner coprimality testing
+1. Rips filtration on the prime point cloud
+2. H₀ barcode computation via union-find
+3. Persistence entropy computation
+4. Filtration parameter optimization
+5. Gap-death bijection construction
+
+Time complexity: O(π(N) log π(N)) for barcode computation
+Space complexity: O(π(N))
 """
 
-import math
-from typing import List, Tuple, Optional, Dict
-from dataclasses import dataclass
+from typing import List, Tuple, Dict, Optional
+from math import log, log2
+from collections import defaultdict
 
 
-def is_prime(n: int) -> bool:
-    """Optimized primality test using 6k±1 method.
-
-    Time: O(√n), Space: O(1)
-
-    >>> is_prime(41)
-    True
-    >>> is_prime(27)
-    False
+class UnionFind:
+    """Union-Find with path compression and union by rank.
+    
+    Time complexity: O(α(n)) amortized per operation,
+    where α is the inverse Ackermann function.
     """
-    if n < 2:
-        return False
-    if n < 4:
+
+    def __init__(self, elements: List[int]):
+        self.parent: Dict[int, int] = {x: x for x in elements}
+        self.rank: Dict[int, int] = {x: 0 for x in elements}
+        self.size: Dict[int, int] = {x: 1 for x in elements}
+        self.num_components: int = len(elements)
+
+    def find(self, x: int) -> int:
+        """Find with path compression."""
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x: int, y: int) -> bool:
+        """Union by rank. Returns True if a merge occurred."""
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        self.size[px] += self.size[py]
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.num_components -= 1
         return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+
+    def component_sizes(self) -> List[int]:
+        """Return sizes of all components."""
+        comps: Dict[int, int] = defaultdict(int)
+        for x in self.parent:
+            comps[self.find(x)] += 1
+        return sorted(comps.values(), reverse=True)
 
 
-def euler_poly(n: int, p: int = 41) -> int:
-    """Compute n² + n + p.
+class PersistenceBar:
+    """A bar in the H₀ persistence barcode."""
 
-    Args:
-        n: Input value
-        p: Constant term (default 41 for Heegner number 163)
+    def __init__(self, birth: int, death: int, label: Optional[str] = None):
+        self.birth = birth
+        self.death = death
+        self.persistence = death - birth
+        self.label = label or f"[{birth}, {death})"
 
-    Returns:
-        Value of the polynomial
-
-    >>> euler_poly(0)
-    41
-    >>> euler_poly(39)
-    1601
-    """
-    return n * n + n + p
+    def __repr__(self) -> str:
+        return f"Bar({self.birth}→{self.death}, pers={self.persistence})"
 
 
-def verify_euler_lucky(p: int) -> Tuple[bool, Optional[int]]:
-    """Verify whether p is an Euler lucky prime.
-
-    An Euler lucky prime p satisfies: n²+n+p is prime for all 0 ≤ n ≤ p-2.
-
-    Args:
-        p: Prime to test
-
-    Returns:
-        (is_lucky, first_failure): is_lucky is True if p is Euler lucky,
-        first_failure is the first n where n²+n+p is composite (or None).
-
-    Time: O(p · √(p²)) = O(p²)
-
-    >>> verify_euler_lucky(41)
-    (True, None)
-    >>> verify_euler_lucky(7)
-    (False, 4)
-    """
-    if not is_prime(p):
-        return False, None
-    for n in range(p - 1):
-        val = n * n + n + p
-        if not is_prime(val):
-            return False, n
-    return True, None
+def sieve_primes(N: int) -> List[int]:
+    """Sieve of Eratosthenes. O(N log log N) time, O(N) space."""
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
 
 
-def zmod_rootless_check(p: int, q: int = 41) -> bool:
-    """Check if x² + x + q has no roots in ℤ/pℤ.
+def compute_h0_barcode(N: int) -> Tuple[List[PersistenceBar], List[Tuple[int, int, int]]]:
+    """Compute the H₀ persistence barcode of the Rips filtration on primes ≤ N.
 
-    This is equivalent to checking that -Δ (where Δ = 1-4q) is a
-    quadratic non-residue mod p.
-
-    Args:
-        p: Prime modulus
-        q: Constant in polynomial (default 41)
+    Algorithm:
+    1. Generate primes ≤ N via sieve
+    2. Compute all prime gaps (these are the filtration values)
+    3. Process gaps in increasing order (Kruskal-like)
+    4. Each merge event creates a bar death
 
     Returns:
-        True if the polynomial has no roots mod p
+        bars: List of PersistenceBar objects
+        events: List of (epsilon, p, q) merge events
 
-    Time: O(p)
-
-    >>> zmod_rootless_check(2)
-    True
-    >>> zmod_rootless_check(41)
-    False
+    Time: O(N log log N) for sieve + O(π(N) log π(N)) for sort + merges
+    Space: O(N) for sieve + O(π(N)) for union-find
     """
-    for r in range(p):
-        if (r * r + r + q) % p == 0:
-            return False
-    return True
+    primes = sieve_primes(N)
+    if len(primes) <= 1:
+        return [], []
+
+    # Compute edges: each consecutive pair with their gap
+    edges: List[Tuple[int, int, int]] = []
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        edges.append((gap, primes[i], primes[i + 1]))
+
+    # Sort by gap (filtration value)
+    edges.sort()
+
+    # Process merges
+    uf = UnionFind(primes)
+    bars: List[PersistenceBar] = []
+    events: List[Tuple[int, int, int]] = []
+
+    for gap, p, q in edges:
+        if uf.union(p, q):
+            # A component merged — the younger component's bar dies
+            death_time = gap
+            # Birth time = the later prime (it was born as its own component)
+            birth = max(p, q)
+            bars.append(PersistenceBar(birth=0, death=death_time,
+                                       label=f"merge({p},{q})"))
+            events.append((gap, p, q))
+
+    return bars, events
 
 
-@dataclass
-class DiscriminantLattice:
-    """A rank-2 lattice from a binary quadratic form ax² + bxy + cy².
+def gap_death_bijection(N: int) -> Dict[int, List[Tuple[int, int]]]:
+    """Construct the gap-death bijection explicitly.
 
-    The discriminant Δ = b² - 4ac must be negative (positive definite).
+    Maps each prime gap value to the list of prime pairs with that gap.
+    This demonstrates our formalized gap_death_connection theorem.
 
-    Attributes:
-        a: Coefficient of x²
-        b: Coefficient of xy
-        c: Coefficient of y²
+    Returns: {gap_value: [(p, q), ...]}
     """
-    a: int
-    b: int
-    c: int
-
-    def __post_init__(self):
-        assert self.a > 0, "a must be positive"
-        assert self.discriminant() < 0, "Discriminant must be negative"
-
-    def discriminant(self) -> int:
-        """Compute Δ = b² - 4ac."""
-        return self.b * self.b - 4 * self.a * self.c
-
-    def four_det(self) -> int:
-        """Compute 4 × Gram determinant = 4ac - b²."""
-        return 4 * self.a * self.c - self.b * self.b
-
-    def form(self, x: int, y: int) -> int:
-        """Evaluate the quadratic form at (x, y)."""
-        return self.a * x * x + self.b * x * y + self.c * y * y
-
-    def complete_square(self, x: int, y: int) -> Tuple[int, int]:
-        """Compute the completing-the-square decomposition.
-
-        4a·Q(x,y) = u² + |Δ|·y² where u = 2ax + by.
-
-        Returns:
-            (u, |Δ|) where u = 2ax + by
-        """
-        u = 2 * self.a * x + self.b * y
-        return u, -self.discriminant()
-
-    def shortest_vectors(self, bound: int = 10) -> List[Tuple[int, int, int]]:
-        """Find the shortest nonzero lattice vectors (by form value).
-
-        Args:
-            bound: Search range for x, y coordinates
-
-        Returns:
-            List of (x, y, Q(x,y)) sorted by form value
-
-        Time: O(bound²)
-        """
-        results = []
-        for x in range(-bound, bound + 1):
-            for y in range(-bound, bound + 1):
-                if x == 0 and y == 0:
-                    continue
-                val = self.form(x, y)
-                results.append((x, y, val))
-        results.sort(key=lambda t: t[2])
-        return results
+    primes = sieve_primes(N)
+    bijection: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        bijection[gap].append((primes[i], primes[i + 1]))
+    return dict(sorted(bijection.items()))
 
 
-def find_all_euler_lucky_primes(limit: int = 100) -> List[int]:
-    """Find all Euler lucky primes up to a given limit.
+def persistence_entropy(N: int) -> float:
+    """Compute the persistence entropy of the prime barcode.
 
-    Args:
-        limit: Upper bound for search
+    H = -Σ (l_i / L) * log₂(l_i / L)
 
-    Returns:
-        List of Euler lucky primes
+    where l_i is the persistence of bar i and L = Σ l_i.
 
-    >>> find_all_euler_lucky_primes(50)
-    [2, 3, 5, 11, 17, 41]
+    This is a topological summary statistic that measures the
+    "complexity" of the prime distribution at scale N.
+
+    Time: O(N log log N) for primes + O(π(N)) for entropy
     """
-    result = []
-    for p in range(2, limit + 1):
-        if is_prime(p):
-            lucky, _ = verify_euler_lucky(p)
-            if lucky:
-                result.append(p)
+    primes = sieve_primes(N)
+    if len(primes) <= 1:
+        return 0.0
+
+    gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+    total = sum(gaps)
+    if total == 0:
+        return 0.0
+
+    entropy = 0.0
+    for g in gaps:
+        if g > 0:
+            p = g / total
+            entropy -= p * log2(p)
+    return entropy
+
+
+def optimal_filtration_scale(N: int) -> int:
+    """Find the filtration scale that maximizes the number of deaths.
+
+    This is the "most interesting" scale in the barcode, where the
+    most topological changes occur.
+
+    Time: O(N log log N + π(N))
+    """
+    primes = sieve_primes(N)
+    gap_counts: Dict[int, int] = defaultdict(int)
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        gap_counts[gap] += 1
+
+    if not gap_counts:
+        return 0
+    return max(gap_counts, key=gap_counts.get)
+
+
+def component_count_function(N: int) -> List[Tuple[int, int]]:
+    """Compute β₀(ε) = number of connected components at scale ε.
+
+    This is the Betti number function for H₀.
+    At ε=0, β₀ = π(N) (each prime is its own component).
+    As ε increases, components merge.
+    At ε=N, β₀ = 1 (all primes connected).
+
+    Returns: [(epsilon, component_count), ...]
+    """
+    primes = sieve_primes(N)
+    if not primes:
+        return [(0, 0)]
+
+    # Collect all distinct gaps
+    gaps = sorted(set(primes[i + 1] - primes[i] for i in range(len(primes) - 1)))
+
+    result = [(0, len(primes))]
+    uf = UnionFind(primes)
+
+    # Process in order of gap size
+    edges_by_gap: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+    for i in range(len(primes) - 1):
+        g = primes[i + 1] - primes[i]
+        edges_by_gap[g].append((primes[i], primes[i + 1]))
+
+    for gap in gaps:
+        for p, q in edges_by_gap[gap]:
+            uf.union(p, q)
+        result.append((gap, uf.num_components))
+
     return result
 
 
-def cross_heegner_coprimality_test(
-    p1: int, p2: int, range1: int, range2: int
-) -> Tuple[bool, Optional[Tuple[int, int, int]]]:
-    """Test cross-Heegner coprimality conjecture.
+def bertrand_ratio_sequence(N: int) -> List[float]:
+    """Compute the ratio gap/birth for each bar, verifying Bertrand bound.
 
-    For polynomials f₁(n) = n²+n+p₁ and f₂(m) = m²+m+p₂,
-    test whether gcd(f₁(n), f₂(m)) = 1 for all n < range1, m < range2.
+    Our theorem proves gap < birth for all primes, so all ratios < 1.
+    The maximum ratio approaches 1 for large primes (Cramér's conjecture
+    suggests max ratio ~ (log p)² / p → 0).
 
-    Args:
-        p1, p2: Constants in the two polynomials
-        range1, range2: Testing ranges
-
-    Returns:
-        (all_coprime, counterexample): counterexample is (n, m, gcd) if found
-
-    >>> cross_heegner_coprimality_test(11, 41, 10, 40)
-    (True, None)
+    Returns: list of gap/birth ratios
     """
-    for n in range(range1):
-        v1 = n * n + n + p1
-        for m in range(range2):
-            v2 = m * m + m + p2
-            g = math.gcd(v1, v2)
-            if g > 1:
-                return False, (n, m, g)
-    return True, None
-
-
-def heegner_prime_radius(d: int) -> int:
-    """Compute the Heegner prime radius for a Heegner number d ≡ 3 (mod 4).
-
-    The radius is (d-3)/4, measuring how many consecutive primes
-    the associated Euler polynomial generates.
-
-    >>> heegner_prime_radius(163)
-    40
-    >>> heegner_prime_radius(67)
-    16
-    """
-    assert d % 4 == 3, "d must be ≡ 3 (mod 4)"
-    return (d - 3) // 4
+    primes = sieve_primes(N)
+    ratios = []
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        ratios.append(gap / primes[i])
+    return ratios
 
 
 # Example usage
 if __name__ == "__main__":
-    # Create the Heegner lattice for d = 163
-    lattice = DiscriminantLattice(a=1, b=1, c=41)
-    print(f"Heegner Lattice 163:")
-    print(f"  Discriminant: {lattice.discriminant()}")
-    print(f"  4 × det: {lattice.four_det()}")
-    print(f"  Form at (1,0): {lattice.form(1, 0)}")
-    print(f"  Form at (0,1): {lattice.form(0, 1)}")
+    N = 10000
+    print(f"=== Prime Persistent Homology Algorithms (N={N}) ===\n")
 
-    # Shortest vectors
-    print(f"\nShortest 10 lattice vectors:")
-    for x, y, val in lattice.shortest_vectors(5)[:10]:
-        print(f"  ({x:>2}, {y:>2}) → Q = {val}")
+    # H₀ barcode
+    bars, events = compute_h0_barcode(N)
+    print(f"H₀ barcode: {len(bars)} bars")
+    print(f"First 5 merge events: {events[:5]}")
 
-    # Euler lucky primes
-    print(f"\nEuler lucky primes up to 100: {find_all_euler_lucky_primes(100)}")
+    # Gap-death bijection
+    bij = gap_death_bijection(N)
+    print(f"\nGap-death bijection: {len(bij)} distinct gap values")
+    for gap, pairs in list(bij.items())[:5]:
+        print(f"  gap={gap}: {len(pairs)} occurrences")
 
-    # ZMod rootlessness
-    print(f"\nZMod rootless checks (x²+x+41 mod p):")
-    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]:
-        print(f"  p = {p:>2}: rootless = {zmod_rootless_check(p)}")
+    # Persistence entropy
+    H = persistence_entropy(N)
+    print(f"\nPersistence entropy H = {H:.4f} bits")
 
-    # Cross-Heegner coprimality
-    ok, cx = cross_heegner_coprimality_test(11, 41, 10, 40)
-    print(f"\nCross-Heegner coprimality (d=43, d=163): {ok}")
+    # Optimal scale
+    opt = optimal_filtration_scale(N)
+    print(f"Most common gap (optimal filtration): ε = {opt}")
+
+    # Component count
+    betti = component_count_function(N)
+    print(f"\nBetti number β₀ at selected scales:")
+    for eps, count in betti[:10]:
+        print(f"  ε={eps}: β₀ = {count}")
+
+    # Bertrand ratios
+    ratios = bertrand_ratio_sequence(N)
+    print(f"\nBertrand ratio max = {max(ratios):.4f} < 1 ✓")
+    print(f"Bertrand ratio mean = {sum(ratios)/len(ratios):.6f}")

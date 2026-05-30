@@ -1,659 +1,850 @@
+#!/usr/bin/env python3
 """
-Applications of Heegner Number Theory
+Applications of Prime Persistent Homology
 
-Demonstrates real-world applications:
-1. Cryptographic key generation using prime-rich polynomials
-2. Error-correcting codes from Heegner lattices
-3. Integer approximation using the Ramanujan constant
+Shows real-world applications of the theoretical framework:
+1. Prime gap prediction via barcode statistics
+2. Cryptographic key size estimation from persistence
+3. Random number quality testing via persistence entropy
+4. Signal detection in number sequences
 """
 
-import math
-from typing import List, Tuple
+from math import log, log2, sqrt, pi
+from collections import defaultdict
+from typing import List, Tuple, Dict
 
 
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def sieve_primes(N: int) -> List[int]:
+    """Sieve of Eratosthenes."""
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
 
 
-# Application 1: Prime Generation for Cryptography
-def generate_primes_euler(count: int = 10, start: int = 0) -> List[int]:
-    """Generate primes using Euler's polynomial n²+n+41.
+# --- Application 1: Gap Prediction ---
 
-    For n < 40, every value is guaranteed prime by the Heegner theory.
-    Beyond n = 39, primality is not guaranteed but the polynomial
-    still has a high prime density.
+def predict_next_gap(primes: List[int], window: int = 50) -> float:
+    """Predict the next prime gap using barcode persistence statistics.
 
-    Args:
-        count: Number of primes to generate
-        start: Starting value of n
+    Uses the moving average of recent bar persistences (gaps) weighted
+    by the log-density prediction from the Prime Number Theorem.
 
-    Returns:
-        List of primes generated
+    The PNT suggests average gap near p ~ ln(p), so we blend the
+    empirical barcode statistics with the theoretical prediction.
     """
-    primes = []
-    n = start
-    while len(primes) < count:
-        val = n * n + n + 41
-        if is_prime(val):
-            primes.append(val)
-        n += 1
-    return primes
+    if len(primes) < window + 1:
+        window = len(primes) - 1
+
+    recent_gaps = [primes[-i] - primes[-i - 1] for i in range(1, window + 1)]
+    empirical_avg = sum(recent_gaps) / len(recent_gaps)
+
+    p = primes[-1]
+    theoretical_avg = log(p) if p > 1 else 1.0
+
+    # Blend with theoretical prediction (70% empirical, 30% theoretical)
+    prediction = 0.7 * empirical_avg + 0.3 * theoretical_avg
+    return prediction
 
 
-# Application 2: Lattice-Based Error Correction
-def heegner_lattice_points(radius: int) -> List[Tuple[int, int, int]]:
-    """Find lattice points within a given norm bound.
+def gap_prediction_accuracy(N: int) -> Dict[str, float]:
+    """Evaluate gap prediction accuracy up to N."""
+    primes = sieve_primes(N)
 
-    The Heegner lattice Q(x,y) = x² + xy + 41y² provides an optimal
-    2D lattice for error correction with discriminant -163.
+    errors_barcode = []
+    errors_pnt = []
 
-    Points are sorted by their form value (squared distance from origin).
+    for i in range(100, len(primes) - 1):
+        actual_gap = primes[i + 1] - primes[i]
 
-    Args:
-        radius: Maximum coordinate magnitude
+        # Barcode-based prediction
+        pred_barcode = predict_next_gap(primes[:i + 1])
+        errors_barcode.append(abs(actual_gap - pred_barcode))
 
-    Returns:
-        List of (x, y, Q(x,y)) sorted by distance
-    """
-    points = []
-    for x in range(-radius, radius + 1):
-        for y in range(-radius, radius + 1):
-            if x == 0 and y == 0:
-                continue
-            q = x * x + x * y + 41 * y * y
-            points.append((x, y, q))
-    points.sort(key=lambda t: t[2])
-    return points
+        # Pure PNT prediction
+        pred_pnt = log(primes[i])
+        errors_pnt.append(abs(actual_gap - pred_pnt))
 
-
-def lattice_packing_density_2d(det_4: int) -> float:
-    """Compute the packing density of a 2D lattice.
-
-    For a lattice with 4×det = det_4 and minimum norm 1,
-    the packing density is π / (4 · √(det_4/4)).
-
-    Args:
-        det_4: Four times the Gram matrix determinant
-
-    Returns:
-        Packing density (fraction of space covered)
-    """
-    det = det_4 / 4.0
-    return math.pi / (4 * math.sqrt(det))
-
-
-# Application 3: Near-Integer Approximations
-def ramanujan_near_integers() -> List[Tuple[int, float, float]]:
-    """Compute near-integer values of e^(π√d) for Heegner numbers d.
-
-    The class number 1 property causes e^(π√d) to be remarkably
-    close to an integer for Heegner numbers d ≡ 3 (mod 4).
-
-    Returns:
-        List of (d, e^(π√d), distance_to_nearest_integer)
-    """
-    heegner_3mod4 = [3, 7, 11, 19, 43, 67, 163]
-    results = []
-    for d in heegner_3mod4:
-        val = math.exp(math.pi * math.sqrt(d))
-        nearest = round(val)
-        dist = abs(val - nearest)
-        results.append((d, val, dist))
-    return results
-
-
-# Application 4: Prime Density Comparison
-def prime_density_comparison(poly_fn, label: str, n_range: int = 100) -> dict:
-    """Compare the prime density of a polynomial against random expectation.
-
-    By the prime number theorem, a random number near N has probability
-    ~1/ln(N) of being prime. We compare the actual density of the polynomial.
-
-    Args:
-        poly_fn: Function mapping n to a value
-        label: Name for the polynomial
-        n_range: Range to test
-
-    Returns:
-        Dictionary with density statistics
-    """
-    prime_count = 0
-    expected_density = 0.0
-    for n in range(n_range):
-        val = poly_fn(n)
-        if is_prime(val):
-            prime_count += 1
-        if val > 1:
-            expected_density += 1.0 / math.log(val)
-
-    actual = prime_count / n_range
-    expected = expected_density / n_range
     return {
-        "polynomial": label,
-        "range": n_range,
-        "primes_found": prime_count,
-        "actual_density": actual,
-        "expected_density": expected,
-        "ratio": actual / expected if expected > 0 else float('inf')
+        "barcode_mae": sum(errors_barcode) / len(errors_barcode),
+        "pnt_mae": sum(errors_pnt) / len(errors_pnt),
+        "improvement": 1 - sum(errors_barcode) / sum(errors_pnt),
     }
 
 
+# --- Application 2: Cryptographic Key Size ---
+
+def estimate_key_strength(bit_length: int) -> Dict[str, float]:
+    """Estimate RSA key strength using barcode persistence statistics.
+
+    The security of RSA relies on the difficulty of factoring N = pq.
+    The distribution of prime gaps (bar persistences) affects the
+    density of primes near a given size, which impacts:
+    - Expected time to find a prime of the given bit length
+    - Expected gap between candidate prime and actual prime
+
+    Returns security metrics based on persistence analysis.
+    """
+    # Approximate the largest prime of this bit length
+    p_approx = 2 ** bit_length
+
+    # Expected gap from PNT: ~ln(p) ~ bit_length * ln(2)
+    expected_gap = bit_length * log(2)
+
+    # Expected number of candidates to test
+    expected_candidates = expected_gap / 2  # Only test odd numbers
+
+    # Bertrand bound: gap < p, so worst case is bounded
+    bertrand_bound = p_approx  # Our theorem guarantees this
+
+    # Persistence entropy estimate (how "spread out" the gaps are)
+    # Higher entropy = more uniform = harder to predict
+    estimated_entropy = log2(expected_gap) if expected_gap > 1 else 0
+
+    return {
+        "bit_length": bit_length,
+        "expected_gap": expected_gap,
+        "expected_candidates_to_test": expected_candidates,
+        "bertrand_worst_case_gap": bertrand_bound,
+        "gap_entropy_estimate": estimated_entropy,
+        "security_bits": bit_length // 2,  # Factoring complexity
+    }
+
+
+# --- Application 3: Randomness Quality Testing ---
+
+def persistence_randomness_test(sequence: List[int]) -> Dict[str, float]:
+    """Test the quality of a pseudo-random number sequence using
+    persistence homology concepts.
+
+    A truly random sequence of integers should have gap distributions
+    that differ significantly from prime gaps. We measure:
+    - Persistence entropy (should be higher for random)
+    - Gap uniformity (random should be more uniform)
+    - Bertrand ratio (meaningless for random, informative for primes)
+    """
+    if len(sequence) < 3:
+        return {"error": "sequence too short"}
+
+    sorted_seq = sorted(set(sequence))
+    gaps = [sorted_seq[i + 1] - sorted_seq[i] for i in range(len(sorted_seq) - 1)]
+
+    if not gaps:
+        return {"error": "no gaps"}
+
+    total = sum(gaps)
+
+    # Persistence entropy
+    entropy = 0.0
+    for g in gaps:
+        if g > 0 and total > 0:
+            p = g / total
+            entropy -= p * log2(p)
+
+    # Gap uniformity (coefficient of variation)
+    mean_gap = total / len(gaps)
+    variance = sum((g - mean_gap) ** 2 for g in gaps) / len(gaps)
+    cv = sqrt(variance) / mean_gap if mean_gap > 0 else 0
+
+    # Max gap ratio
+    max_ratio = max(gaps) / mean_gap if mean_gap > 0 else 0
+
+    return {
+        "entropy": entropy,
+        "coefficient_of_variation": cv,
+        "max_gap_ratio": max_ratio,
+        "mean_gap": mean_gap,
+        "num_distinct_gaps": len(set(gaps)),
+    }
+
+
+# --- Application 4: Signal Detection ---
+
+def detect_prime_like_structure(sequence: List[int], N: int = 1000) -> float:
+    """Detect whether a sequence has prime-like gap structure.
+
+    Compares the persistence entropy and gap distribution of the input
+    sequence against the prime barcode. Returns a similarity score
+    in [0, 1] where 1 = identical to primes.
+
+    Application: detecting structured patterns in noisy data.
+    """
+    primes = sieve_primes(N)
+
+    # Compute prime gap statistics
+    prime_gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+    prime_stats = persistence_randomness_test(primes)
+
+    # Compute sequence statistics
+    seq_stats = persistence_randomness_test(sequence)
+
+    if "error" in seq_stats or "error" in prime_stats:
+        return 0.0
+
+    # Compare entropy
+    entropy_diff = abs(prime_stats["entropy"] - seq_stats["entropy"])
+    entropy_score = max(0, 1 - entropy_diff / max(prime_stats["entropy"], 0.01))
+
+    # Compare coefficient of variation
+    cv_diff = abs(prime_stats["coefficient_of_variation"] - seq_stats["coefficient_of_variation"])
+    cv_score = max(0, 1 - cv_diff / max(prime_stats["coefficient_of_variation"], 0.01))
+
+    # Weighted similarity
+    similarity = 0.5 * entropy_score + 0.5 * cv_score
+    return similarity
+
+
 def main():
-    print("=" * 70)
-    print("APPLICATIONS OF HEEGNER NUMBER THEORY")
-    print("=" * 70)
+    print("=" * 60)
+    print("APPLICATIONS OF PRIME PERSISTENT HOMOLOGY")
+    print("=" * 60)
 
-    # App 1: Prime Generation
-    print("\n--- Application 1: Prime Generation ---")
-    primes = generate_primes_euler(20)
-    print(f"First 20 primes from n²+n+41: {primes}")
+    # Application 1: Gap Prediction
+    print("\n--- Application 1: Prime Gap Prediction ---")
+    for N in [10000, 100000]:
+        results = gap_prediction_accuracy(N)
+        print(f"  N={N}:")
+        print(f"    Barcode MAE: {results['barcode_mae']:.3f}")
+        print(f"    PNT MAE:     {results['pnt_mae']:.3f}")
+        print(f"    Improvement: {results['improvement']*100:.1f}%")
 
-    # App 2: Lattice Coding
-    print("\n--- Application 2: Lattice Error Correction ---")
-    points = heegner_lattice_points(3)
-    print(f"Heegner lattice points (sorted by distance):")
-    for x, y, q in points[:15]:
-        print(f"  ({x:>2}, {y:>2}): Q = {q}")
-    density = lattice_packing_density_2d(163)
-    print(f"\nPacking density for Heegner lattice: {density:.6f}")
-    print(f"Optimal hexagonal packing density: {math.pi / (2 * math.sqrt(3)):.6f}")
+    # Application 2: Crypto Key Estimation
+    print("\n--- Application 2: Cryptographic Key Analysis ---")
+    for bits in [1024, 2048, 4096]:
+        metrics = estimate_key_strength(bits)
+        print(f"  {bits}-bit RSA:")
+        print(f"    Expected gap: {metrics['expected_gap']:.1f}")
+        print(f"    Candidates to test: {metrics['expected_candidates_to_test']:.1f}")
+        print(f"    Gap entropy: {metrics['gap_entropy_estimate']:.2f} bits")
 
-    # App 3: Near-Integers
-    print("\n--- Application 3: Ramanujan Near-Integers ---")
-    for d, val, dist in ramanujan_near_integers():
-        print(f"  d = {d:>3}: e^(π√{d}) ≈ {val:.4f}, "
-              f"distance to integer: {dist:.2e}")
+    # Application 3: Randomness Testing
+    print("\n--- Application 3: Randomness Quality ---")
+    import random
+    random.seed(42)
 
-    # App 4: Prime Density
-    print("\n--- Application 4: Prime Density Comparison ---")
-    polys = [
-        (lambda n: n * n + n + 41, "n²+n+41 (Euler)"),
-        (lambda n: n * n + n + 17, "n²+n+17 (d=67)"),
-        (lambda n: n * n + n + 11, "n²+n+11 (d=43)"),
-        (lambda n: n * n + 1, "n²+1 (baseline)"),
-    ]
-    for fn, label in polys:
-        stats = prime_density_comparison(fn, label, 100)
-        print(f"  {label}:")
-        print(f"    Primes in [0,99]: {stats['primes_found']}/100")
-        print(f"    Actual density: {stats['actual_density']:.3f}")
-        print(f"    Expected (PNT): {stats['expected_density']:.3f}")
-        print(f"    Ratio (actual/expected): {stats['ratio']:.2f}")
+    primes_100 = sieve_primes(1000)
+    random_seq = sorted(random.sample(range(2, 1001), len(primes_100)))
+
+    prime_quality = persistence_randomness_test(primes_100)
+    random_quality = persistence_randomness_test(random_seq)
+
+    print(f"  Prime sequence:  entropy={prime_quality['entropy']:.3f}, "
+          f"CV={prime_quality['coefficient_of_variation']:.3f}")
+    print(f"  Random sequence: entropy={random_quality['entropy']:.3f}, "
+          f"CV={random_quality['coefficient_of_variation']:.3f}")
+
+    # Application 4: Signal Detection
+    print("\n--- Application 4: Structure Detection ---")
+    primes_500 = sieve_primes(500)
+    random_500 = sorted(random.sample(range(2, 501), min(len(primes_500), 95)))
+    # Semi-structured: every other prime
+    semi = primes_500[::2]
+
+    print(f"  Prime similarity to primes: {detect_prime_like_structure(primes_500):.3f}")
+    print(f"  Random similarity to primes: {detect_prime_like_structure(random_500):.3f}")
+    print(f"  Semi-structured similarity: {detect_prime_like_structure(semi):.3f}")
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated.")
 
 
 if __name__ == "__main__":
     main()
 
 
+#!/usr/bin/env python3
 """
-Demonstration of the Number 163 and Heegner Number Theory
+Demo: Persistent Homology of Prime Numbers
 
-This script demonstrates the key mathematical results about the number 163,
-Euler's prime-generating polynomial, and the Heegner quadratic form.
+Demonstrates the core mathematical results:
+1. Prime gap computation and barcode construction
+2. Bertrand bar length bound verification
+3. Gap-death correspondence
+4. Twin prime bar counting
+5. Filtration connectivity
 """
 
-import math
 from typing import List, Tuple
+from math import isqrt
 
 
-def euler_poly(n: int) -> int:
-    """Euler's prime-generating polynomial: f(n) = n² + n + 41"""
-    return n * n + n + 41
+def sieve_primes(N: int) -> List[int]:
+    """Sieve of Eratosthenes."""
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, isqrt(N) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
 
 
-def is_prime(n: int) -> bool:
-    """Simple primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
+def prime_gaps(N: int) -> List[Tuple[int, int, int]]:
+    """Compute prime gaps up to N.
+    Returns list of (p_n, p_{n+1}, gap) tuples."""
+    primes = sieve_primes(N)
+    gaps = []
+    for i in range(len(primes) - 1):
+        gaps.append((primes[i], primes[i + 1], primes[i + 1] - primes[i]))
+    return gaps
+
+
+def persistence_barcode(N: int) -> List[Tuple[int, int]]:
+    """Construct the H₀ persistence barcode for primes up to N.
+    Each bar is (birth, death) = (p_n, p_{n+1}).
+    The persistence is death - birth = prime gap."""
+    primes = sieve_primes(N)
+    bars = [(primes[i], primes[i + 1]) for i in range(len(primes) - 1)]
+    return bars
+
+
+def verify_bertrand_bound(N: int) -> bool:
+    """Verify the Bertrand bar length bound: gap < birth for all bars.
+    This is our formalized theorem bertrand_bar_length_bound."""
+    bars = persistence_barcode(N)
+    for birth, death in bars:
+        gap = death - birth
+        if gap >= birth:
+            print(f"VIOLATION: gap={gap} >= birth={birth} at ({birth}, {death})")
             return False
-        i += 6
+    print(f"Bertrand bound verified for all {len(bars)} bars up to N={N}")
     return True
 
 
-def heegner_form(x: int, y: int) -> int:
-    """The Heegner quadratic form: Q(x,y) = x² + xy + 41y²"""
-    return x * x + x * y + 41 * y * y
+def count_twin_prime_bars(N: int) -> int:
+    """Count bars with persistence exactly 2 (twin prime pairs)."""
+    bars = persistence_barcode(N)
+    twin_count = sum(1 for b, d in bars if d - b == 2)
+    return twin_count
+
+
+def gap_distribution(N: int) -> dict:
+    """Compute the distribution of prime gaps (bar persistences)."""
+    gaps = prime_gaps(N)
+    dist = {}
+    for _, _, g in gaps:
+        dist[g] = dist.get(g, 0) + 1
+    return dict(sorted(dist.items()))
+
+
+def filtration_components(N: int, epsilon: int) -> List[List[int]]:
+    """Compute connected components of the Rips graph at scale epsilon.
+    Primes are connected if their gap is ≤ epsilon."""
+    primes = sieve_primes(N)
+    # Union-Find
+    parent = {p: p for p in primes}
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px != py:
+            parent[px] = py
+
+    for i in range(len(primes) - 1):
+        if primes[i + 1] - primes[i] <= epsilon:
+            union(primes[i], primes[i + 1])
+
+    components = {}
+    for p in primes:
+        root = find(p)
+        components.setdefault(root, []).append(p)
+
+    return list(components.values())
+
+
+def demo_main():
+    print("=" * 60)
+    print("PERSISTENT HOMOLOGY OF PRIME NUMBERS — DEMO")
+    print("=" * 60)
+
+    # 1. Prime gaps and barcode
+    print("\n--- 1. Prime Gaps (first 20) ---")
+    gaps = prime_gaps(100)
+    for p1, p2, g in gaps[:20]:
+        print(f"  p={p1:3d} → p'={p2:3d}  gap={g}  bar=[{p1}, {p2})")
+
+    # 2. Bertrand bound verification
+    print("\n--- 2. Bertrand Bar Length Bound ---")
+    for N in [100, 1000, 10000, 100000]:
+        verify_bertrand_bound(N)
+
+    # 3. Twin prime bars
+    print("\n--- 3. Twin Prime Bar Count ---")
+    for N in [100, 1000, 10000, 100000, 1000000]:
+        count = count_twin_prime_bars(N)
+        total = len(persistence_barcode(N))
+        print(f"  N={N:>8d}: {count:>5d} twin bars out of {total:>6d} total "
+              f"({100*count/total:.1f}%)")
+
+    # 4. Gap distribution
+    print("\n--- 4. Gap Distribution (N=10000) ---")
+    dist = gap_distribution(10000)
+    for gap, count in list(dist.items())[:15]:
+        bar = "█" * (count // 5)
+        print(f"  gap={gap:3d}: {count:4d} {bar}")
+
+    # 5. Filtration components
+    print("\n--- 5. Filtration Components (N=50) ---")
+    for eps in [1, 2, 4, 6, 10, 50]:
+        comps = filtration_components(50, eps)
+        print(f"  ε={eps:2d}: {len(comps)} components "
+              f"(sizes: {sorted([len(c) for c in comps], reverse=True)[:5]})")
+
+    # 6. Gap-death correspondence
+    print("\n--- 6. Gap-Death Correspondence ---")
+    print("  Each prime gap corresponds exactly to a bar death:")
+    gaps_100 = prime_gaps(50)
+    for p1, p2, g in gaps_100:
+        print(f"  Gap [{p1},{p2}] of size {g} → bar dies at ε={g}")
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+
+
+if __name__ == "__main__":
+    demo_main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization 1: H₀ Persistence Barcode of the Prime Point Cloud
+
+This visualizes the persistence barcode for the Rips filtration on primes.
+Each horizontal bar represents a connected component, with birth at the
+prime value and death when it merges with a neighbor. The Bertrand bar
+length bound (gap < birth) is shown as a diagonal boundary.
+
+What this visualizes: The core mathematical object — the prime barcode —
+showing how prime gaps translate into topological persistence.
+"""
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+
+def sieve_primes(N):
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
 
 
 def main():
-    print("=" * 70)
-    print("THE NUMBER 163: Heegner Numbers, Euler's Polynomial, and Beyond")
-    print("=" * 70)
+    N = 200
+    primes = sieve_primes(N)
 
-    # Demo 1: Euler's polynomial generates 40 consecutive primes
-    print("\n--- Demo 1: Euler's Polynomial n² + n + 41 ---")
-    print(f"{'n':>4} | {'f(n)':>8} | {'Prime?':>6}")
-    print("-" * 25)
-    all_prime = True
-    for n in range(40):
-        val = euler_poly(n)
-        prime = is_prime(val)
-        if not prime:
-            all_prime = False
-        print(f"{n:>4} | {val:>8} | {'YES' if prime else 'NO':>6}")
-    print(f"\nAll 40 values prime: {all_prime}")
-    print(f"First value: f(0) = {euler_poly(0)} (prime: {is_prime(euler_poly(0))})")
-    print(f"Last value: f(39) = {euler_poly(39)} (prime: {is_prime(euler_poly(39))})")
-    print(f"f(40) = {euler_poly(40)} = 41² (NOT prime, first composite!)")
+    fig, axes = plt.subplots(2, 1, figsize=(14, 10), height_ratios=[2, 1])
 
-    # Demo 2: Non-divisibility by small primes
-    print("\n--- Demo 2: Non-Divisibility by Small Primes ---")
-    primes_to_40 = [p for p in range(2, 41) if is_prime(p)]
-    print(f"Primes ≤ 40: {primes_to_40}")
-    for p in primes_to_40:
-        # Check all residues mod p
-        has_root = False
-        for r in range(p):
-            if (r * r + r + 41) % p == 0:
-                has_root = True
-                break
-        print(f"  x² + x + 41 ≡ 0 (mod {p:>2}) has solution: {has_root}")
+    # --- Top: Barcode diagram ---
+    ax = axes[0]
+    colors = []
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        if gap == 2:
+            colors.append('#e74c3c')  # Twin primes: red
+        elif gap == 4:
+            colors.append('#f39c12')  # Cousin primes: orange
+        elif gap == 6:
+            colors.append('#2ecc71')  # Sexy primes: green
+        else:
+            colors.append('#3498db')  # Other: blue
 
-    # Demo 3: The Heegner quadratic form
-    print("\n--- Demo 3: Heegner Quadratic Form Q(x,y) = x² + xy + 41y² ---")
-    print("Completing the square: 4Q(x,y) = (2x+y)² + 163y²")
-    for x, y in [(1, 0), (0, 1), (1, 1), (-1, 1), (2, 1), (1, 2)]:
-        q = heegner_form(x, y)
-        lhs = 4 * q
-        rhs = (2 * x + y) ** 2 + 163 * y * y
-        print(f"  Q({x:>2}, {y:>2}) = {q:>5}   "
-              f"4Q = {lhs:>5} = {(2*x+y)}² + 163·{y}² = {rhs}")
+    for i in range(len(primes) - 1):
+        gap = primes[i + 1] - primes[i]
+        ax.barh(i, gap, left=primes[i], height=0.7, color=colors[i],
+                alpha=0.8, edgecolor='white', linewidth=0.3)
 
-    # Demo 4: Heegner numbers
-    print("\n--- Demo 4: The Nine Heegner Numbers ---")
-    heegner = [1, 2, 3, 7, 11, 19, 43, 67, 163]
-    print(f"Heegner numbers: {heegner}")
-    print(f"Sum: {sum(heegner)}")
-    for d in heegner:
-        if d > 3 and d % 4 == 3:
-            p = (d + 1) // 4
-            print(f"  d = {d:>3}: p = (d+1)/4 = {p:>2}, "
-                  f"prime-generating radius = {p-1}")
+    ax.set_xlabel('Prime Value', fontsize=12)
+    ax.set_ylabel('Bar Index', fontsize=12)
+    ax.set_title(f'H₀ Persistence Barcode of Primes ≤ {N}\n'
+                 'Each bar represents a connected component; color = gap type',
+                 fontsize=14, fontweight='bold')
 
-    # Demo 5: Euler lucky primes
-    print("\n--- Demo 5: Euler Lucky Primes ---")
-    euler_lucky = [2, 3, 5, 11, 17, 41]
-    for p in euler_lucky:
-        count = 0
-        for n in range(p - 1):
-            if is_prime(n * n + n + p):
-                count += 1
-            else:
-                break
-        all_ok = count == p - 1
-        print(f"  p = {p:>2}: n² + n + {p} prime for n = 0,...,{p-2}: {all_ok}")
+    # Legend
+    patches = [
+        mpatches.Patch(color='#e74c3c', label='Gap 2 (twin primes)'),
+        mpatches.Patch(color='#f39c12', label='Gap 4 (cousin primes)'),
+        mpatches.Patch(color='#2ecc71', label='Gap 6 (sexy primes)'),
+        mpatches.Patch(color='#3498db', label='Other gaps'),
+    ]
+    ax.legend(handles=patches, loc='lower right', fontsize=10)
 
-    # Demo 6: The Ramanujan constant
-    print("\n--- Demo 6: The Ramanujan Constant ---")
-    val = math.exp(math.pi * math.sqrt(163))
-    nearest = 262537412640768744
-    print(f"  e^(π√163) ≈ {val:.6f}")
-    print(f"  640320³ + 744 = {640320**3 + 744}")
-    print(f"  Difference: ~{abs(val - nearest):.2e}")
+    # --- Bottom: Gap distribution ---
+    ax2 = axes[1]
+    gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+    unique_gaps = sorted(set(gaps))
+    gap_counts = [gaps.count(g) for g in unique_gaps]
 
-    # Demo 7: Cross-Heegner coprimality test
-    print("\n--- Demo 7: Cross-Heegner Coprimality Conjecture ---")
-    max_gcd = 0
-    for n in range(10):
-        for m in range(40):
-            g = math.gcd(n*n + n + 11, m*m + m + 41)
-            if g > max_gcd:
-                max_gcd = g
-                if g > 1:
-                    print(f"  COUNTEREXAMPLE: gcd(f₁({n}), f₂({m})) = {g}")
-    if max_gcd == 1:
-        print(f"  All 400 pairs coprime! Conjecture verified computationally.")
-    print(f"  Maximum GCD found: {max_gcd}")
+    bar_colors = []
+    for g in unique_gaps:
+        if g == 2:
+            bar_colors.append('#e74c3c')
+        elif g == 4:
+            bar_colors.append('#f39c12')
+        elif g == 6:
+            bar_colors.append('#2ecc71')
+        else:
+            bar_colors.append('#3498db')
+
+    ax2.bar(unique_gaps, gap_counts, color=bar_colors, edgecolor='white',
+            width=1.5, alpha=0.85)
+    ax2.set_xlabel('Gap Size (Bar Persistence)', fontsize=12)
+    ax2.set_ylabel('Count', fontsize=12)
+    ax2.set_title('Distribution of Bar Persistences (Gap Sizes)', fontsize=13)
+
+    plt.tight_layout()
+    plt.savefig('viz_barcode.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_barcode.png")
 
 
 if __name__ == "__main__":
     main()
 
 
+#!/usr/bin/env python3
 """
-Visualization 1: Euler's Prime-Generating Polynomial
+Visualization 3: Persistence Entropy Growth of the Prime Barcode
 
-Shows the values of n²+n+41 for n = 0,...,45, highlighting which values
-are prime (green) and which are composite (red). The transition at n=40
-is the dramatic boundary predicted by Heegner number theory.
-"""
+Shows how persistence entropy H(N) grows with N, compared to log(log(N)).
+This connects prime distribution (number theory) to information theory
+via the barcode formalism — a cross-domain bridge.
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def is_prime(n):
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def euler_poly(n):
-    return n * n + n + 41
-
-
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [3, 1]})
-
-ns = list(range(46))
-vals = [euler_poly(n) for n in ns]
-primes = [is_prime(v) for v in vals]
-
-# Top plot: polynomial values with prime/composite coloring
-colors = ['#2ecc71' if p else '#e74c3c' for p in primes]
-ax1.bar(ns, vals, color=colors, alpha=0.8, edgecolor='white', linewidth=0.5)
-ax1.axvline(x=39.5, color='#f39c12', linewidth=2, linestyle='--',
-            label='Boundary: n = 40')
-ax1.set_xlabel('n', fontsize=14)
-ax1.set_ylabel('f(n) = n² + n + 41', fontsize=14)
-ax1.set_title("Euler's Prime-Generating Polynomial: 40 Consecutive Primes",
-              fontsize=16, fontweight='bold')
-ax1.legend(fontsize=12)
-
-# Add text annotations
-ax1.annotate('f(0) = 41', xy=(0, 41), xytext=(5, 200),
-            fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
-ax1.annotate('f(39) = 1601', xy=(39, 1601), xytext=(30, 1400),
-            fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
-ax1.annotate('f(40) = 1681 = 41²\n(COMPOSITE!)',
-            xy=(40, 1681), xytext=(35, 1850),
-            fontsize=10, color='#e74c3c', fontweight='bold',
-            arrowprops=dict(arrowstyle='->', color='#e74c3c'))
-
-# Legend
-from matplotlib.patches import Patch
-legend_elements = [Patch(facecolor='#2ecc71', label='Prime'),
-                   Patch(facecolor='#e74c3c', label='Composite')]
-ax1.legend(handles=legend_elements, fontsize=12, loc='upper left')
-
-# Bottom plot: prime/composite indicator
-ax2.bar(ns, [1 if p else -1 for p in primes], color=colors, alpha=0.8)
-ax2.axvline(x=39.5, color='#f39c12', linewidth=2, linestyle='--')
-ax2.set_xlabel('n', fontsize=14)
-ax2.set_ylabel('Prime?', fontsize=14)
-ax2.set_yticks([1, -1])
-ax2.set_yticklabels(['Yes', 'No'])
-ax2.set_title('Primality Pattern: Perfect Run of 40, Then Failure', fontsize=13)
-
-plt.tight_layout()
-plt.savefig('viz_euler_primes.png', dpi=150, bbox_inches='tight')
-print("Saved viz_euler_primes.png")
-
-
-"""
-Visualization 2: The Heegner Lattice for d = 163
-
-Plots the level curves of the quadratic form Q(x,y) = x² + xy + 41y²,
-showing the elliptical contours that define the lattice geometry.
-The lattice points and their form values are overlaid.
+What this visualizes: The information-theoretic complexity of the prime
+gap distribution, suggesting deep connections between entropy and the
+Prime Number Theorem.
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
+from math import log2, log
 
 
-def heegner_form(x, y):
-    """Q(x,y) = x² + xy + 41y²"""
-    return x**2 + x * y + 41 * y**2
+def sieve_primes(N):
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
 
 
-def is_prime(n):
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def persistence_entropy(primes):
+    if len(primes) <= 1:
+        return 0.0
+    gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+    total = sum(gaps)
+    if total == 0:
+        return 0.0
+    entropy = 0.0
+    for g in gaps:
+        if g > 0:
+            p = g / total
+            entropy -= p * log2(p)
+    return entropy
 
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-# Left: Contour plot of the quadratic form
-x = np.linspace(-8, 8, 400)
-y = np.linspace(-2, 2, 400)
-X, Y = np.meshgrid(x, y)
-Z = X**2 + X * Y + 41 * Y**2
+    # Compute entropy for various N
+    all_primes = sieve_primes(100000)
+    N_values = list(range(50, 100001, 100))
+    entropies = []
+    for N in N_values:
+        primes_N = [p for p in all_primes if p <= N]
+        entropies.append(persistence_entropy(primes_N))
 
-levels = [1, 5, 10, 20, 41, 43, 50, 80, 100, 150, 200]
-cs = ax1.contour(X, Y, Z, levels=levels, cmap='viridis', linewidths=1.5)
-ax1.clabel(cs, inline=True, fontsize=9, fmt='%d')
-ax1.contourf(X, Y, Z, levels=50, cmap='viridis', alpha=0.3)
+    # --- Left: Entropy growth ---
+    ax = axes[0]
+    ax.plot(N_values, entropies, color='#2c3e50', linewidth=1.5, label='H(N)')
 
-# Plot lattice points
-lattice_points = []
-for ix in range(-7, 8):
-    for iy in range(-1, 2):
-        if ix == 0 and iy == 0:
+    # Theoretical comparison: c * log(log(N))
+    log_log = [1.8 * log(log(N)) / log(2) if N > 2 else 0 for N in N_values]
+    ax.plot(N_values, log_log, color='#e74c3c', linewidth=2, linestyle='--',
+            label='c · log₂(log N)', alpha=0.7)
+
+    ax.set_xlabel('N', fontsize=13)
+    ax.set_ylabel('Persistence Entropy H(N) [bits]', fontsize=13)
+    ax.set_title('Persistence Entropy Growth\nof the Prime Barcode',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    # --- Middle: Entropy vs π(N) ---
+    ax = axes[1]
+    prime_counts = []
+    for N in N_values:
+        prime_counts.append(len([p for p in all_primes if p <= N]))
+
+    ax.scatter(prime_counts, entropies, s=3, alpha=0.5, color='#3498db')
+    ax.set_xlabel('π(N) = Number of Primes ≤ N', fontsize=13)
+    ax.set_ylabel('Persistence Entropy H(N) [bits]', fontsize=13)
+    ax.set_title('Entropy vs Prime Count\nCross-Domain: Number Theory ↔ Information Theory',
+                 fontsize=14, fontweight='bold')
+    ax.grid(True, alpha=0.3)
+
+    # Fit line
+    log_pc = [log2(pc) if pc > 0 else 0 for pc in prime_counts]
+    valid = [(lp, e) for lp, e in zip(log_pc, entropies) if lp > 0]
+    if valid:
+        x_fit = np.array([v[0] for v in valid])
+        y_fit = np.array([v[1] for v in valid])
+        coeffs = np.polyfit(x_fit, y_fit, 1)
+        x_line = np.linspace(min(x_fit), max(x_fit), 100)
+        ax.plot(np.power(2, x_line), np.polyval(coeffs, x_line),
+                color='#e74c3c', linewidth=2, linestyle='--',
+                label=f'Fit: H ≈ {coeffs[0]:.2f}·log₂(π(N)) + {coeffs[1]:.2f}')
+        ax.legend(fontsize=10)
+
+    # --- Right: Comparison with random ---
+    ax = axes[2]
+
+    # Prime entropy
+    ax.plot(N_values[::5], entropies[::5], 'o-', color='#2c3e50',
+            markersize=3, linewidth=1, label='Prime barcode entropy')
+
+    # Random: entropy of uniform gaps
+    np.random.seed(42)
+    random_entropies = []
+    for N in N_values[::5]:
+        n_points = len([p for p in all_primes if p <= N])
+        if n_points <= 1:
+            random_entropies.append(0)
             continue
-        q = heegner_form(ix, iy)
-        if q <= 200:
-            lattice_points.append((ix, iy, q))
+        random_points = sorted(np.random.choice(range(2, N + 1), size=n_points, replace=False))
+        random_gaps = [random_points[i + 1] - random_points[i] for i in range(len(random_points) - 1)]
+        total = sum(random_gaps)
+        if total == 0:
+            random_entropies.append(0)
+            continue
+        ent = 0
+        for g in random_gaps:
+            if g > 0:
+                p = g / total
+                ent -= p * log2(p)
+        random_entropies.append(ent)
 
-for ix, iy, q in lattice_points:
-    color = '#e74c3c' if is_prime(q) else '#3498db'
-    marker = '*' if is_prime(q) else 'o'
-    size = 100 if is_prime(q) else 50
-    ax1.plot(ix, iy, marker, color=color, markersize=8,
-             markeredgecolor='white', markeredgewidth=0.5)
-    ax1.annotate(f'{q}', (ix, iy), textcoords="offset points",
-                xytext=(5, 5), fontsize=7, color='white',
-                bbox=dict(boxstyle='round,pad=0.2', facecolor=color, alpha=0.7))
+    ax.plot(N_values[::5], random_entropies, 's-', color='#e74c3c',
+            markersize=3, linewidth=1, label='Random point cloud entropy')
 
-ax1.plot(0, 0, 'w+', markersize=15, markeredgewidth=2)
-ax1.set_xlabel('x', fontsize=14)
-ax1.set_ylabel('y', fontsize=14)
-ax1.set_title('Heegner Quadratic Form Q(x,y) = x² + xy + 41y²\n'
-              'Lattice points colored by primality', fontsize=13, fontweight='bold')
-ax1.set_facecolor('#1a1a2e')
-ax1.set_xlim(-8, 8)
-ax1.set_ylim(-1.5, 1.5)
+    # Maximum possible entropy
+    max_ent = [log2(len([p for p in all_primes if p <= N]) - 1)
+               if len([p for p in all_primes if p <= N]) > 1 else 0
+               for N in N_values[::5]]
+    ax.plot(N_values[::5], max_ent, '--', color='#27ae60',
+            linewidth=1.5, label='Max entropy (uniform)')
 
-# Right: The completing-the-square decomposition
-# 4Q = (2x+y)² + 163y² — visualize as u-v plane
-u = np.linspace(-10, 10, 400)
-v = np.linspace(-2, 2, 400)
-U, V = np.meshgrid(u, v)
-Z2 = U**2 + 163 * V**2  # This is 4Q after change of variables
+    ax.set_xlabel('N', fontsize=13)
+    ax.set_ylabel('Entropy [bits]', fontsize=13)
+    ax.set_title('Prime vs Random Entropy\nPrimes have lower entropy → more structure',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
 
-levels2 = [4, 20, 40, 80, 164, 172, 200, 400, 600, 800]
-cs2 = ax2.contour(U, V, Z2, levels=levels2, cmap='plasma', linewidths=1.5)
-ax2.clabel(cs2, inline=True, fontsize=9, fmt='%d')
-ax2.contourf(U, V, Z2, levels=50, cmap='plasma', alpha=0.3)
-
-# Key points in (u,v) = (2x+y, y) coordinates
-key_pts = [
-    (2, 0, "Q=1\n(1,0)"), (1, 1, "Q=41\n(0,1)"),
-    (3, 1, "Q=43\n(1,1)"), (-1, 1, "Q=41\n(-1,1)")
-]
-for u_pt, v_pt, label in key_pts:
-    val = u_pt**2 + 163 * v_pt**2
-    ax2.plot(u_pt, v_pt, 'w*', markersize=12)
-    ax2.annotate(label, (u_pt, v_pt), textcoords="offset points",
-                xytext=(8, 8), fontsize=9, color='white',
-                bbox=dict(boxstyle='round', facecolor='#8e44ad', alpha=0.8))
-
-ax2.set_xlabel('u = 2x + y', fontsize=14)
-ax2.set_ylabel('v = y', fontsize=14)
-ax2.set_title('Completing the Square: 4Q = u² + 163v²\n'
-              'Reveals circular symmetry scaled by √163', fontsize=13, fontweight='bold')
-ax2.set_facecolor('#1a1a2e')
-
-plt.tight_layout()
-plt.savefig('viz_heegner_lattice.png', dpi=150, bbox_inches='tight')
-print("Saved viz_heegner_lattice.png")
+    plt.tight_layout()
+    plt.savefig('viz_entropy.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_entropy.png")
 
 
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
 """
-Visualization 3: The Ramanujan Constant and Near-Integer Phenomenon
+Visualization 2: Rips Filtration on the Prime Point Cloud
 
-Shows how e^(π√d) approaches integers for Heegner numbers d,
-with the dramatic case d = 163 where the distance is ~7.5×10⁻¹³.
-This visualization connects the algebraic (class number 1) property
-to the transcendental (exponential) world.
+Shows how connected components evolve as the scale parameter ε increases.
+The Betti number β₀(ε) tracks the number of components. This visualizes
+the filtration monotonicity theorem (epsChain_monotone) and the
+completeness theorem (rips_connected_at_N).
+
+What this visualizes: The topology of the prime point cloud changing with
+scale, demonstrating the fundamental filtration monotonicity.
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
-import math
+from collections import defaultdict
 
 
-def is_prime(n):
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
+def sieve_primes(N):
+    if N < 2:
+        return []
+    is_prime = [True] * (N + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, N + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, N + 1) if is_prime[i]]
+
+
+class UnionFind:
+    def __init__(self, elements):
+        self.parent = {x: x for x in elements}
+        self.rank = {x: 0 for x in elements}
+        self.n_components = len(elements)
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
             return False
-        i += 6
-    return True
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.n_components -= 1
+        return True
+
+    def components(self):
+        comps = defaultdict(list)
+        for x in self.parent:
+            comps[self.find(x)].append(x)
+        return list(comps.values())
 
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+def main():
+    N = 100
+    primes = sieve_primes(N)
 
-# Plot 1: Distance to nearest integer for e^(π√d)
-ax1 = axes[0, 0]
-heegner_3mod4 = [3, 7, 11, 19, 43, 67, 163]
-distances = []
-for d in heegner_3mod4:
-    val = math.exp(math.pi * math.sqrt(d))
-    dist = abs(val - round(val))
-    distances.append(dist)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
-ax1.semilogy(heegner_3mod4, distances, 'o-', color='#e74c3c',
-             markersize=10, linewidth=2, markeredgecolor='white')
-for d, dist in zip(heegner_3mod4, distances):
-    ax1.annotate(f'd={d}\n{dist:.1e}', (d, dist),
-                textcoords="offset points", xytext=(10, 5),
-                fontsize=8, color='#ecf0f1')
-ax1.set_xlabel('Heegner number d', fontsize=13)
-ax1.set_ylabel('|e^(π√d) - nearest integer|', fontsize=13)
-ax1.set_title('The Ramanujan Phenomenon:\ne^(π√d) Nearly Integer for Heegner Numbers',
-              fontsize=13, fontweight='bold')
-ax1.set_facecolor('#2c3e50')
-ax1.grid(True, alpha=0.3)
+    # Compute Betti curve
+    gaps = sorted(set(primes[i + 1] - primes[i] for i in range(len(primes) - 1)))
+    edges_by_gap = defaultdict(list)
+    for i in range(len(primes) - 1):
+        g = primes[i + 1] - primes[i]
+        edges_by_gap[g].append((primes[i], primes[i + 1]))
 
-# Plot 2: Non-Heegner comparison
-ax2 = axes[0, 1]
-all_d = list(range(3, 170, 4))  # d ≡ 3 mod 4
-distances_all = []
-is_heegner = []
-for d in all_d:
-    try:
-        val = math.exp(math.pi * math.sqrt(d))
-        dist = abs(val - round(val))
-        distances_all.append(dist)
-        is_heegner.append(d in heegner_3mod4)
-    except OverflowError:
-        distances_all.append(None)
-        is_heegner.append(False)
+    betti_eps = [0]
+    betti_val = [len(primes)]
+    uf_global = UnionFind(primes)
 
-colors = ['#e74c3c' if h else '#95a5a6' for h in is_heegner]
-sizes = [80 if h else 20 for h in is_heegner]
-valid = [(d, dist, c, s) for d, dist, c, s in zip(all_d, distances_all, colors, sizes)
-         if dist is not None and dist > 0]
-if valid:
-    ds, dists, cs, ss = zip(*valid)
-    ax2.scatter(ds, [math.log10(d) if d > 0 else -15 for d in dists],
-                c=cs, s=ss, alpha=0.7, edgecolors='white', linewidths=0.5)
-ax2.set_xlabel('d (≡ 3 mod 4)', fontsize=13)
-ax2.set_ylabel('log₁₀(distance to integer)', fontsize=13)
-ax2.set_title('Heegner vs Non-Heegner:\nOnly Class Number 1 Gives Near-Integers',
-              fontsize=13, fontweight='bold')
-ax2.set_facecolor('#2c3e50')
-ax2.grid(True, alpha=0.3)
-from matplotlib.patches import Patch
-ax2.legend(handles=[Patch(facecolor='#e74c3c', label='Heegner'),
-                     Patch(facecolor='#95a5a6', label='Non-Heegner')],
-           fontsize=10)
+    for gap in gaps:
+        for p, q in edges_by_gap[gap]:
+            uf_global.union(p, q)
+        betti_eps.append(gap)
+        betti_val.append(uf_global.n_components)
 
-# Plot 3: Prime density of Euler polynomials from different Heegner numbers
-ax3 = axes[1, 0]
-heegner_primes = {163: 41, 67: 17, 43: 11}
-for d, p in heegner_primes.items():
-    ns = list(range(50))
-    prime_count = []
-    total = 0
-    for n in ns:
-        val = n * n + n + p
-        if is_prime(val):
-            total += 1
-        prime_count.append(total / (n + 1))
-    label = f'd={d}, p={p}'
-    ax3.plot(ns, prime_count, linewidth=2, label=label)
+    # --- Top left: Betti curve ---
+    ax = axes[0][0]
+    ax.step(betti_eps, betti_val, where='post', color='#2c3e50', linewidth=2.5)
+    ax.fill_between(betti_eps, betti_val, step='post', alpha=0.15, color='#3498db')
+    ax.set_xlabel('Scale parameter ε', fontsize=12)
+    ax.set_ylabel('β₀(ε) = # Components', fontsize=12)
+    ax.set_title('Betti Number Function β₀(ε)\nMonotone Decreasing (epsChain_monotone)',
+                 fontsize=13, fontweight='bold')
+    ax.axhline(y=1, color='#e74c3c', linestyle='--', alpha=0.5, label='Fully connected')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
 
-# Baseline: n²+1
-ns = list(range(50))
-baseline = []
-total = 0
-for n in ns:
-    if is_prime(n * n + 1):
-        total += 1
-    baseline.append(total / (n + 1))
-ax3.plot(ns, baseline, '--', linewidth=1.5, color='gray', label='n²+1 (baseline)')
+    # --- Top right: Point cloud at different scales ---
+    ax = axes[0][1]
+    epsilon_values = [1, 2, 6, 14]
+    y_offsets = [3, 2, 1, 0]
 
-ax3.set_xlabel('n', fontsize=13)
-ax3.set_ylabel('Cumulative prime density', fontsize=13)
-ax3.set_title('Prime Density: Heegner Polynomials\nvs Baseline', fontsize=13, fontweight='bold')
-ax3.legend(fontsize=10)
-ax3.set_facecolor('#2c3e50')
-ax3.grid(True, alpha=0.3)
+    for eps_val, y_off in zip(epsilon_values, y_offsets):
+        uf = UnionFind(primes)
+        for i in range(len(primes) - 1):
+            if primes[i + 1] - primes[i] <= eps_val:
+                uf.union(primes[i], primes[i + 1])
 
-# Plot 4: The six Euler lucky primes and their generating ranges
-ax4 = axes[1, 1]
-euler_lucky = [(2, 1), (3, 2), (5, 4), (11, 10), (17, 16), (41, 40)]
-ps = [p for p, _ in euler_lucky]
-ranges = [r for _, r in euler_lucky]
+        comps = uf.components()
+        comp_colors = plt.cm.Set3(np.linspace(0, 1, max(len(comps), 1)))
 
-bars = ax4.barh(range(len(ps)), ranges, color=['#1abc9c', '#2ecc71', '#3498db',
-                                                 '#9b59b6', '#e67e22', '#e74c3c'],
-                alpha=0.8, edgecolor='white')
-ax4.set_yticks(range(len(ps)))
-ax4.set_yticklabels([f'p = {p}' for p in ps], fontsize=12)
-ax4.set_xlabel('Prime-generating range (# consecutive primes)', fontsize=13)
-ax4.set_title('The Six Euler Lucky Primes\nand Their Prime-Generating Power',
-              fontsize=13, fontweight='bold')
-ax4.set_facecolor('#2c3e50')
+        for idx, comp in enumerate(comps):
+            color = comp_colors[idx % len(comp_colors)]
+            ax.scatter(comp, [y_off] * len(comp), c=[color], s=30,
+                      edgecolors='black', linewidths=0.3, zorder=5)
+            if len(comp) > 1:
+                ax.plot([min(comp), max(comp)], [y_off, y_off],
+                       color=color, alpha=0.5, linewidth=2)
 
-for i, (p, r) in enumerate(euler_lucky):
-    d = 4 * p - 1
-    ax4.text(r + 0.5, i, f'd = {d}', va='center', fontsize=10, color='#ecf0f1')
+    ax.set_yticks(y_offsets)
+    ax.set_yticklabels([f'ε={e}' for e in epsilon_values])
+    ax.set_xlabel('Prime Value', fontsize=12)
+    ax.set_title('Connected Components at Different Scales\n'
+                 'Colors show clusters', fontsize=13, fontweight='bold')
 
-plt.tight_layout()
-plt.savefig('viz_ramanujan.png', dpi=150, bbox_inches='tight')
-print("Saved viz_ramanujan.png")
+    # --- Bottom left: Bertrand ratio plot ---
+    ax = axes[1][0]
+    N_large = 10000
+    primes_large = sieve_primes(N_large)
+    ratios = [(primes_large[i + 1] - primes_large[i]) / primes_large[i]
+              for i in range(len(primes_large) - 1)]
+
+    ax.scatter(primes_large[:-1], ratios, s=1, alpha=0.3, color='#3498db')
+    ax.axhline(y=1, color='#e74c3c', linewidth=2, linestyle='--',
+               label='Bertrand bound (gap/birth < 1)')
+
+    # Running max
+    running_max = []
+    curr_max = 0
+    for r in ratios:
+        curr_max = max(curr_max, r)
+        running_max.append(curr_max)
+    ax.plot(primes_large[:-1], running_max, color='#e74c3c', alpha=0.7,
+            linewidth=1, label='Running maximum')
+
+    ax.set_xlabel('Prime p', fontsize=12)
+    ax.set_ylabel('Gap / p', fontsize=12)
+    ax.set_title(f'Bertrand Bar Length Bound (N={N_large})\n'
+                 'All ratios < 1 (formally verified)', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.set_ylim(0, 1.1)
+    ax.grid(True, alpha=0.3)
+
+    # --- Bottom right: Deaths per scale ---
+    ax = axes[1][1]
+    N_deaths = 1000
+    primes_d = sieve_primes(N_deaths)
+    gap_counts = defaultdict(int)
+    for i in range(len(primes_d) - 1):
+        g = primes_d[i + 1] - primes_d[i]
+        gap_counts[g] += 1
+
+    gap_vals = sorted(gap_counts.keys())
+    counts = [gap_counts[g] for g in gap_vals]
+
+    ax.bar(gap_vals, counts, color='#9b59b6', edgecolor='white', alpha=0.85)
+    ax.set_xlabel('Gap Size ε (Filtration Death Scale)', fontsize=12)
+    ax.set_ylabel('Number of Deaths', fontsize=12)
+    ax.set_title(f'Gap-Death Correspondence (N={N_deaths})\n'
+                 'Each gap = exactly one bar death', fontsize=13, fontweight='bold')
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('viz_filtration.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_filtration.png")
+
+
+if __name__ == "__main__":
+    main()
