@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Geometry / Topological Data Analysis",
     "date": "2026-05-30T08:52:11Z",
     "exp_id": "d5a0fe5d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7284849450549451,
+    "quality": "substantial",
     "pkg_num": 393
   },
   {
@@ -11406,8 +11406,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-30T08:52:11Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7284849450549451,
+      "quality": "substantial"
     }
   ],
   "edges": [
