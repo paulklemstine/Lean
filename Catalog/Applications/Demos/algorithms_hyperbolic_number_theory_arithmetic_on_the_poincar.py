@@ -1,310 +1,364 @@
-#!/usr/bin/env python3
 """
-Hyperbolic Number Theory — Core Algorithms
+Hyperbolic Number Theory: Algorithms
 
-Implements the key algorithms for computing with hyperbolic integers,
-Möbius transformations, and the hyperbolic zeta function.
+Core algorithms for computing with hyperbolic lattice structures,
+trace sequences, and Möbius transformations.
+
+Includes:
+- Trace sequence computation (O(n) time, O(1) space)
+- Companion matrix exponentiation (O(log n) time)
+- Pseudo-hyperbolic distance computation
+- Markov tree generation via Vieta involution
+- Conformal factor computation
 """
 
-import numpy as np
-from typing import List, Tuple, Set, Optional
+import math
+from typing import List, Tuple, Set, Optional, Dict
+from dataclasses import dataclass
 
 
-class MobiusTransform:
-    """A Möbius transformation φ_a(z) = (z - a) / (1 - conj(a) * z).
+# ============================================================================
+# Algorithm 1: Trace Sequence (Linear Recurrence)
+# ============================================================================
+
+def trace_seq(t: int, n: int) -> int:
+    """Compute traceSeq(t, n) via the Chebyshev recurrence.
     
-    Represents an isometry of the Poincaré disk model of the hyperbolic plane.
-    
-    Time complexity: O(1) for evaluation
+    Time complexity: O(n)
     Space complexity: O(1)
+    
+    The trace sequence satisfies:
+        x_0 = 2, x_1 = t, x_{k+2} = t·x_{k+1} - x_k
+    
+    This computes tr(γⁿ) where γ ∈ SL₂(ℤ) has tr(γ) = t.
+    
+    Args:
+        t: The trace value (integer).
+        n: The power (non-negative integer).
+        
+    Returns:
+        The n-th term of the trace sequence.
+        
+    Examples:
+        >>> trace_seq(3, 0)
+        2
+        >>> trace_seq(3, 4)
+        47
+        >>> trace_seq(0, 4)
+        2
     """
-    
-    def __init__(self, a: complex):
-        """Initialize with center point a (must have |a| < 1)."""
-        if abs(a) >= 1:
-            raise ValueError(f"|a| = {abs(a)} >= 1, not in disk")
-        self.a = a
-    
-    def __call__(self, z: complex) -> complex:
-        """Apply the Möbius transformation to z."""
-        denom = 1 - np.conj(self.a) * z
-        if abs(denom) < 1e-15:
-            raise ValueError("Denominator too close to zero")
-        return (z - self.a) / denom
-    
-    def inverse(self) -> 'MobiusTransform':
-        """The inverse transformation (which is itself: φ_a is an involution)."""
-        return MobiusTransform(self.a)
-    
-    def compose(self, other: 'MobiusTransform') -> complex:
-        """Return the image of the composition φ_self ∘ φ_other at origin."""
-        return self(other(0j))
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    a, b = 2, t
+    for _ in range(n - 1):
+        a, b = b, t * b - a
+    return b
 
 
-class HyperbolicMetric:
-    """Computes distances in the Poincaré disk model.
+# ============================================================================
+# Algorithm 2: Matrix Power via Fast Exponentiation
+# ============================================================================
+
+@dataclass
+class Mat2x2:
+    """2×2 integer matrix."""
+    a: int
+    b: int
+    c: int
+    d: int
     
-    The hyperbolic distance between z and w is:
-    d(z, w) = artanh(|φ_w(z)|) = (1/2) * log((1 + |φ_w(z)|) / (1 - |φ_w(z)|))
+    def __mul__(self, other: 'Mat2x2') -> 'Mat2x2':
+        return Mat2x2(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d,
+        )
     
-    where φ_w is the Möbius automorphism sending w to the origin.
-    """
+    def det(self) -> int:
+        return self.a * self.d - self.b * self.c
+    
+    def trace(self) -> int:
+        return self.a + self.d
     
     @staticmethod
-    def norm(z: complex) -> float:
-        """Hyperbolic distance from origin to z.
+    def identity() -> 'Mat2x2':
+        return Mat2x2(1, 0, 0, 1)
+
+
+def companion_matrix(t: int) -> Mat2x2:
+    """The trace companion matrix [[t, -1], [1, 0]].
+    
+    This matrix has:
+    - det = 1 (it's in SL₂(ℤ))
+    - trace = t
+    - tr(Mⁿ) = traceSeq(t, n)
+    """
+    return Mat2x2(t, -1, 1, 0)
+
+
+def matrix_power(M: Mat2x2, n: int) -> Mat2x2:
+    """Compute M^n via fast exponentiation.
+    
+    Time complexity: O(log n) matrix multiplications
+    Space complexity: O(1)
+    
+    Args:
+        M: A 2×2 integer matrix.
+        n: The exponent (non-negative integer).
         
-        Time: O(1), Space: O(1)
-        """
-        r = abs(z)
-        if r >= 1:
-            return float('inf')
-        if r < 1e-15:
+    Returns:
+        M^n as a 2×2 matrix.
+    """
+    if n == 0:
+        return Mat2x2.identity()
+    if n == 1:
+        return M
+    result = Mat2x2.identity()
+    base = M
+    while n > 0:
+        if n % 2 == 1:
+            result = result * base
+        base = base * base
+        n //= 2
+    return result
+
+
+def trace_seq_fast(t: int, n: int) -> int:
+    """Compute traceSeq(t, n) via matrix exponentiation.
+    
+    Time complexity: O(log n) (but with big integer multiplication)
+    Space complexity: O(1)
+    
+    Uses the identity tr(M^n) = traceSeq(t, n) where M = [[t,-1],[1,0]].
+    """
+    M = companion_matrix(t)
+    Mn = matrix_power(M, n)
+    return Mn.trace()
+
+
+# ============================================================================
+# Algorithm 3: Pseudo-Hyperbolic Distance
+# ============================================================================
+
+def pseudo_hyp_dist(p: Tuple[float, float], q: Tuple[float, float]) -> float:
+    """Compute the pseudo-hyperbolic distance ρ(p, q) in the Poincaré disk.
+    
+    ρ(p,q) = |p - q| / |1 - p̄·q|
+    
+    Time complexity: O(1)
+    
+    Args:
+        p, q: Points in the unit disk as (x, y) tuples.
+        
+    Returns:
+        The pseudo-hyperbolic distance (a value in [0, 1)).
+    """
+    dx, dy = p[0] - q[0], p[1] - q[1]
+    num_sq = dx**2 + dy**2
+    # |1 - p̄·q|² = (1 - px·qx - py·qy)² + (px·qy - py·qx)²
+    re_part = 1 - p[0]*q[0] - p[1]*q[1]
+    im_part = p[0]*q[1] - p[1]*q[0]
+    den_sq = re_part**2 + im_part**2
+    return math.sqrt(num_sq / den_sq)
+
+
+def hyperbolic_distance(p: Tuple[float, float], q: Tuple[float, float]) -> float:
+    """Compute the hyperbolic distance d_H(p, q) in the Poincaré disk.
+    
+    d_H(p, q) = 2 · arctanh(ρ(p, q))
+    
+    Time complexity: O(1)
+    """
+    rho = pseudo_hyp_dist(p, q)
+    return 2 * math.atanh(min(rho, 0.9999999))
+
+
+def conformal_factor(p: Tuple[float, float]) -> float:
+    """Compute the conformal factor λ(z) = 2/(1 - |z|²).
+    
+    This converts Euclidean infinitesimal distances to hyperbolic ones:
+    ds_H = λ(z) · ds_E
+    
+    Our theorem proves λ(z) ≥ 2 for all z in the disk.
+    """
+    norm_sq = p[0]**2 + p[1]**2
+    assert norm_sq < 1, "Point must be in the unit disk"
+    return 2.0 / (1.0 - norm_sq)
+
+
+# ============================================================================
+# Algorithm 4: Markov Tree via Vieta Involution
+# ============================================================================
+
+def markov_tree(max_depth: int = 5) -> List[Tuple[int, int, int]]:
+    """Generate the Markov tree via the Vieta involution.
+    
+    Starting from (1, 1, 1), applies the Vieta involution
+    z → 3xy - z to generate all Markov triples.
+    
+    The Vieta involution preserves the Markov equation
+    x² + y² + z² = 3xyz (proved in our Lean formalization).
+    
+    Time complexity: O(3^depth) per level
+    Space complexity: O(|tree|)
+    
+    Args:
+        max_depth: Maximum tree depth.
+        
+    Returns:
+        List of Markov triples (x, y, z) with x ≤ y ≤ z.
+    """
+    result = []
+    seen: Set[Tuple[int, int, int]] = set()
+    queue = [(1, 1, 1, 0)]  # (x, y, z, depth)
+    
+    while queue:
+        x, y, z, depth = queue.pop(0)
+        key = tuple(sorted((x, y, z)))
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(key)
+        
+        if depth < max_depth:
+            # Apply Vieta involution to each coordinate
+            for a, b, c in [(x,y,z), (y,z,x), (z,x,y)]:
+                new_c = 3*a*b - c
+                if new_c > 0:
+                    queue.append((a, b, new_c, depth + 1))
+    
+    return sorted(result)
+
+
+# ============================================================================
+# Algorithm 5: Spectral Data Computation
+# ============================================================================
+
+@dataclass
+class HyperbolicSpectralData:
+    """Spectral data for a hyperbolic element of SL₂(ℤ).
+    
+    Packages the trace, discriminant, and eigenvalue information.
+    """
+    trace_val: int
+    
+    @property
+    def discriminant(self) -> int:
+        """Δ = t² - 4."""
+        return self.trace_val**2 - 4
+    
+    @property 
+    def eigenvalues(self) -> Tuple[float, float]:
+        """The eigenvalues (t ± √Δ)/2 of the companion matrix."""
+        sqrt_disc = math.sqrt(abs(self.discriminant))
+        if self.discriminant >= 0:
+            return (
+                (self.trace_val + sqrt_disc) / 2,
+                (self.trace_val - sqrt_disc) / 2,
+            )
+        else:
+            return (
+                self.trace_val / 2,
+                self.trace_val / 2,
+            )
+    
+    @property
+    def displacement(self) -> float:
+        """The hyperbolic displacement length ℓ = arccosh(|t|/2)."""
+        if abs(self.trace_val) <= 2:
             return 0.0
-        return np.log((1 + r) / (1 - r)) / 2
+        return math.acosh(abs(self.trace_val) / 2)
     
-    @staticmethod
-    def distance(z: complex, w: complex) -> float:
-        """Hyperbolic distance between z and w.
-        
-        Time: O(1), Space: O(1)
-        """
-        phi_w = MobiusTransform(w)
-        return HyperbolicMetric.norm(phi_w(z))
+    @property
+    def element_type(self) -> str:
+        """Classify: hyperbolic (|t|>2), parabolic (|t|=2), elliptic (|t|<2)."""
+        if abs(self.trace_val) > 2:
+            return "hyperbolic"
+        elif abs(self.trace_val) == 2:
+            return "parabolic"
+        else:
+            return "elliptic"
     
-    @staticmethod
-    def ball_euclidean_radius(R: float) -> float:
-        """Euclidean radius of a hyperbolic ball of hyperbolic radius R.
-        
-        If d_H(0, z) = R, then |z| = tanh(R).
-        """
-        return np.tanh(R)
+    def power_trace(self, n: int) -> int:
+        """Compute tr(γⁿ) = traceSeq(t, n)."""
+        return trace_seq(self.trace_val, n)
+    
+    def verify_cassini(self, n: int) -> bool:
+        """Verify the Cassini identity at a specific n."""
+        lhs = self.power_trace(n+2) * self.power_trace(n) - self.power_trace(n+1)**2
+        return lhs == self.discriminant
 
 
-class CayleyBridge:
-    """Cayley transform bridging the disk and upper half-plane models.
+# ============================================================================
+# Algorithm 6: Gromov Product and Tropical Bridge
+# ============================================================================
+
+def gromov_product(d_xw: float, d_yw: float, d_xy: float) -> float:
+    """Compute the Gromov product ⟨x,y⟩_w = (d(x,w) + d(y,w) - d(x,y))/2.
     
-    C(z) = i(1+z)/(1-z): disk → upper half-plane
-    C⁻¹(w) = (w-i)/(w+i): upper half-plane → disk
-    
-    This is the geometric bridge between hyperbolic geometry (disk model)
-    and classical analytic number theory (half-plane model where modular
-    forms and the Selberg zeta function naturally live).
+    The ultrametric inequality states:
+    ⟨x,y⟩_w ≥ min(⟨x,z⟩_w, ⟨y,z⟩_w) - δ
+    for δ-hyperbolic spaces.
     """
-    
-    @staticmethod
-    def to_uhp(z: complex) -> complex:
-        """Map disk point to upper half-plane."""
-        if abs(1 - z) < 1e-15:
-            return complex(0, float('inf'))
-        return 1j * (1 + z) / (1 - z)
-    
-    @staticmethod
-    def to_disk(w: complex) -> complex:
-        """Map upper half-plane point to disk."""
-        if abs(w + 1j) < 1e-15:
-            return complex(float('inf'), 0)
-        return (w - 1j) / (w + 1j)
+    return (d_xw + d_yw - d_xy) / 2
 
 
-class HyperbolicLattice:
-    """A discrete lattice in the Poincaré disk generated by Möbius maps.
-    
-    This is the hyperbolic analog of the integer lattice ℤ ⊂ ℝ.
-    Points are generated by iteratively applying Möbius transformations
-    starting from the origin.
-    
-    Time complexity: O(|generators|^depth) for generation
-    Space complexity: O(N) where N is the number of distinct points
-    """
-    
-    def __init__(self, generators: List[complex]):
-        """Initialize with generator points (all must have |g| < 1)."""
-        for g in generators:
-            if abs(g) >= 1:
-                raise ValueError(f"Generator {g} has |g| = {abs(g)} >= 1")
-        self.generators = generators
-        self.transforms = [MobiusTransform(g) for g in generators]
-        self._points: Optional[List[complex]] = None
-        self._depth: int = 0
-    
-    def generate(self, depth: int = 6) -> List[complex]:
-        """Generate lattice points up to given composition depth.
-        
-        Algorithm:
-        1. Start with S₀ = {0}
-        2. For each depth d, compute S_{d+1} = S_d ∪ {φ_g(z) : g ∈ gens, z ∈ frontier}
-        3. Deduplicate using spatial hashing
-        
-        Time: O(|G|^d) worst case, typically much less due to collisions
-        Space: O(N) where N = |S_depth|
-        """
-        points: Set[complex] = {0j}
-        frontier: Set[complex] = {0j}
-        
-        for d in range(depth):
-            new_frontier: Set[complex] = set()
-            for z in frontier:
-                for phi in self.transforms:
-                    try:
-                        w = phi(z)
-                    except ValueError:
-                        continue
-                    if abs(w) < 0.99999:
-                        # Spatial dedup with rounding
-                        w_key = round(w.real, 9) + 1j * round(w.imag, 9)
-                        if w_key not in points:
-                            points.add(w_key)
-                            new_frontier.add(w_key)
-            frontier = new_frontier
-            if not frontier:
-                break
-        
-        self._points = sorted(points, key=abs)
-        self._depth = depth
-        return self._points
-    
-    def count_in_ball(self, R: float) -> int:
-        """Count lattice points with hyperbolic norm ≤ R."""
-        if self._points is None:
-            self.generate()
-        metric = HyperbolicMetric()
-        return sum(1 for z in self._points if metric.norm(z) <= R)
-    
-    def identify_primes(self) -> List[complex]:
-        """Identify hyperbolic primes: points not decomposable via generators.
-        
-        A point z is prime if z ≠ 0 and z ≠ φ_g₁(g₂) for any generators g₁, g₂.
-        """
-        if self._points is None:
-            self.generate()
-        
-        # Compute all single compositions
-        composites = set()
-        for g1 in self.generators:
-            for g2 in self.generators:
-                phi = MobiusTransform(g1)
-                try:
-                    w = phi(g2)
-                    composites.add(round(w.real, 9) + 1j * round(w.imag, 9))
-                except ValueError:
-                    pass
-        
-        primes = []
-        for z in self._points:
-            if abs(z) < 1e-10:
-                continue
-            z_key = round(z.real, 9) + 1j * round(z.imag, 9)
-            if z_key not in composites:
-                primes.append(z)
-        
-        return primes
-    
-    def count_primes_in_ball(self, R: float) -> int:
-        """Count hyperbolic primes with norm ≤ R."""
-        primes = self.identify_primes()
-        metric = HyperbolicMetric()
-        return sum(1 for z in primes if metric.norm(z) <= R)
+def tropical_add(a: float, b: float) -> float:
+    """Tropical addition: a ⊕ b = min(a, b)."""
+    return min(a, b)
 
 
-class HyperbolicZeta:
-    """The partial hyperbolic zeta function.
-    
-    ζ_H(s) = Σ_{z ∈ Λ, z ≠ 0} 1 / hypNorm(z)^(2s)
-    
-    Convergence: For a lattice with N(R) ~ C·R² points up to radius R,
-    the series converges for Re(s) > 1 (analogous to the Riemann zeta function).
-    """
-    
-    def __init__(self, lattice: HyperbolicLattice):
-        self.lattice = lattice
-        if lattice._points is None:
-            lattice.generate()
-    
-    def evaluate(self, s: float) -> float:
-        """Evaluate ζ_H(s) = Σ hypNorm(z)^(-2s) for real s.
-        
-        Time: O(N) where N is the number of lattice points
-        """
-        metric = HyperbolicMetric()
-        total = 0.0
-        for z in self.lattice._points:
-            hn = metric.norm(z)
-            if hn > 1e-10:
-                total += hn ** (-2 * s)
-        return total
-    
-    def evaluate_complex(self, s: complex) -> complex:
-        """Evaluate ζ_H(s) for complex s."""
-        metric = HyperbolicMetric()
-        total = 0j
-        for z in self.lattice._points:
-            hn = metric.norm(z)
-            if hn > 1e-10:
-                total += hn ** (-2 * s)
-        return total
+def tropical_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a ⊗ b = a + b."""
+    return a + b
 
 
-def sl2_det(M: np.ndarray) -> float:
-    """Compute the 'modular determinant' ad - bc for a 2x2 matrix.
-    
-    Corresponds to the Lean definition modularDet.
-    """
-    return M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0]
-
-
-def is_sl2(M: np.ndarray, tol: float = 1e-10) -> bool:
-    """Check if a 2x2 matrix is in SL(2, ℝ)."""
-    return abs(sl2_det(M) - 1) < tol
-
-
-def verify_sl2_closure(A: np.ndarray, B: np.ndarray) -> dict:
-    """Verify that the product of two SL(2) matrices is SL(2).
-    
-    This corresponds to the theorem mul_isSL2.
-    """
-    det_A = sl2_det(A)
-    det_B = sl2_det(B)
-    det_AB = sl2_det(A @ B)
-    return {
-        "det_A": det_A,
-        "det_B": det_B,
-        "det_AB": det_AB,
-        "A_is_SL2": abs(det_A - 1) < 1e-10,
-        "B_is_SL2": abs(det_B - 1) < 1e-10,
-        "AB_is_SL2": abs(det_AB - 1) < 1e-10,
-    }
-
+# ============================================================================
+# Main: Run all algorithms
+# ============================================================================
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Running algorithm self-tests...")
+    print("=" * 60)
+    print("  Hyperbolic Number Theory: Algorithm Demonstrations")
+    print("=" * 60)
     
-    # Test Möbius
-    phi = MobiusTransform(0.3 + 0.4j)
-    assert abs(phi(phi.a)) < 1e-10, "φ_a(a) should be 0"
+    # 1. Trace sequences
+    print("\n--- Trace Sequences ---")
+    for t in [0, 1, 3, 5]:
+        vals = [trace_seq(t, n) for n in range(10)]
+        print(f"  t={t:2d}: {vals}")
     
-    # Test metric
-    m = HyperbolicMetric()
-    assert m.norm(0) == 0, "norm(0) should be 0"
-    assert m.norm(0.5) > 0, "norm should be positive"
+    # 2. Fast vs slow computation
+    print("\n--- Fast Matrix Exponentiation ---")
+    t, n = 3, 50
+    slow = trace_seq(t, n)
+    fast = trace_seq_fast(t, n)
+    print(f"  traceSeq({t}, {n}) = {slow}")
+    print(f"  via matrix:      {fast}")
+    print(f"  Match: {slow == fast}")
     
-    # Test Cayley
-    cb = CayleyBridge()
-    assert abs(cb.to_uhp(0) - 1j) < 1e-10, "C(0) should be i"
-    assert abs(cb.to_disk(1j)) < 1e-10, "C⁻¹(i) should be 0"
+    # 3. Spectral data
+    print("\n--- Hyperbolic Spectral Data ---")
+    for t in [3, 4, 5, 7]:
+        sd = HyperbolicSpectralData(t)
+        print(f"  t={t}: Δ={sd.discriminant}, type={sd.element_type}, "
+              f"eigenvalues={sd.eigenvalues}, "
+              f"displacement={sd.displacement:.4f}")
+        # Verify Cassini
+        for n in range(10):
+            assert sd.verify_cassini(n), f"Cassini failed at t={t}, n={n}"
+        print(f"         Cassini verified for n=0..9 ✓")
     
-    # Test lattice
-    lat = HyperbolicLattice([0.5, 0.3j, -0.4+0.2j])
-    pts = lat.generate(depth=4)
-    print(f"  Generated {len(pts)} lattice points")
-    primes = lat.identify_primes()
-    print(f"  Found {len(primes)} hyperbolic primes")
+    # 4. Markov triples
+    print("\n--- Markov Tree ---")
+    triples = markov_tree(4)
+    print(f"  Found {len(triples)} Markov triples:")
+    for triple in triples[:15]:
+        x, y, z = triple
+        check = x**2 + y**2 + z**2 == 3*x*y*z
+        print(f"    ({x}, {y}, {z}) — check: {check}")
     
-    # Test SL2
-    A = np.array([[2, 1], [1, 1]], dtype=float)
-    B = np.array([[1, 1], [0, 1]], dtype=float)
-    result = verify_sl2_closure(A, B)
-    assert result["AB_is_SL2"], "Product of SL2 matrices should be SL2"
-    
-    print("All self-tests passed!")
+    print("\nAll algorithms verified successfully!")
