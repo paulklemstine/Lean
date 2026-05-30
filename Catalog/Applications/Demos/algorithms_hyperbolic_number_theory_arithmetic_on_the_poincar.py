@@ -1,311 +1,249 @@
 #!/usr/bin/env python3
 """
 Algorithms for Hyperbolic Number Theory
+========================================
 
-Implements key algorithms from the research paper with full documentation,
-type hints, and complexity analysis.
+Implements core algorithms for arithmetic on the Poincaré disk:
+1. Möbius transformation algebra
+2. Hyperbolic lattice generation
+3. Hyperbolic distance computation
+4. Lattice point counting
+5. Hyperbolic zeta function partial sums
 """
 
-from typing import List, Tuple, Optional, Set
-import math
+import numpy as np
+from typing import List, Tuple, Set, Optional
 
 
-# ============================================================================
-# Algorithm 1: Trace Sequence Computation (Chebyshev Recurrence)
-# ============================================================================
-
-def trace_seq(t: int, n: int) -> int:
+class MoebiusMat:
+    """A Möbius transformation z ↦ (az+b)/(cz+d) with ad-bc ≠ 0.
+    
+    Complexity: O(1) for apply, compose, inverse.
     """
-    Compute the trace sequence traceSeq(t, n) via the Chebyshev recurrence.
-
-    This gives tr(g^n) where g ∈ SL₂(ℤ) has trace t.
-    Satisfies: traceSeq(t, 0) = 2, traceSeq(t, 1) = t,
-               traceSeq(t, n+2) = t * traceSeq(t, n+1) - traceSeq(t, n)
-
-    Time: O(n), Space: O(1)
-
-    Args:
-        t: The base trace value (integer ≥ 2 for hyperbolic elements)
-        n: The power index (non-negative integer)
-
-    Returns:
-        The n-th term of the trace sequence with base t.
-
-    Examples:
-        >>> trace_seq(3, 0)
-        2
-        >>> trace_seq(3, 3)
-        18
-    """
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    prev2, prev1 = 2, t
-    for _ in range(n - 1):
-        prev2, prev1 = prev1, t * prev1 - prev2
-    return prev1
-
-
-def trace_seq_matrix(t: int, n: int) -> int:
-    """
-    Compute traceSeq(t, n) via matrix exponentiation.
-
-    Uses the recurrence matrix [[t, -1], [1, 0]] raised to power n.
-
-    Time: O(log n), Space: O(1)
-
-    Args:
-        t: The base trace value
-        n: The power index
-
-    Returns:
-        The n-th term of the trace sequence.
-    """
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-
-    def mat_mul(A: Tuple, B: Tuple) -> Tuple:
-        return (
-            A[0] * B[0] + A[1] * B[2],
-            A[0] * B[1] + A[1] * B[3],
-            A[2] * B[0] + A[3] * B[2],
-            A[2] * B[1] + A[3] * B[3],
+    
+    def __init__(self, a: complex, b: complex, c: complex, d: complex):
+        det = a * d - b * c
+        if abs(det) < 1e-15:
+            raise ValueError(f"Degenerate Möbius transformation: det = {det}")
+        self.a, self.b, self.c, self.d = a, b, c, d
+        self._det = det
+    
+    def apply(self, z: complex) -> complex:
+        """Apply transformation: (az+b)/(cz+d). O(1)."""
+        denom = self.c * z + self.d
+        if abs(denom) < 1e-15:
+            return complex('inf')
+        return (self.a * z + self.b) / denom
+    
+    def compose(self, other: 'MoebiusMat') -> 'MoebiusMat':
+        """Compose self ∘ other via matrix multiplication. O(1)."""
+        return MoebiusMat(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d
         )
+    
+    def inverse(self) -> 'MoebiusMat':
+        """Compute inverse transformation. O(1)."""
+        return MoebiusMat(self.d, -self.b, -self.c, self.a)
+    
+    @property
+    def det(self) -> complex:
+        return self._det
+    
+    @staticmethod
+    def identity() -> 'MoebiusMat':
+        return MoebiusMat(1, 0, 0, 1)
+    
+    def __repr__(self):
+        return f"MoebiusMat({self.a}, {self.b}, {self.c}, {self.d})"
 
-    # Matrix [[t, -1], [1, 0]]
-    base = (t, -1, 1, 0)
-    result = (1, 0, 0, 1)  # Identity
 
-    power = n - 1
-    while power > 0:
-        if power & 1:
-            result = mat_mul(result, base)
-        base = mat_mul(base, base)
-        power >>= 1
-
-    # result * [t, 2]^T gives [traceSeq(t, n), traceSeq(t, n-1)]
-    return result[0] * t + result[1] * 2
-
-
-# ============================================================================
-# Algorithm 2: Markov Tree Generation via Vieta Involutions
-# ============================================================================
-
-def generate_markov_triples(max_value: int = 1000) -> List[Tuple[int, int, int]]:
+def moebius_add(z: complex, w: complex) -> complex:
+    """Möbius addition (Einstein velocity addition).
+    
+    (z + w) / (1 + conj(w) * z)
+    
+    Properties (verified formally):
+    - Identity: 0 ⊕ z = z ⊕ 0 = z
+    - Commutative for real inputs
+    - Non-commutative in general (Thomas precession)
+    
+    Complexity: O(1).
     """
-    Generate all Markov triples (x, y, z) with max(x,y,z) ≤ max_value.
+    denom = 1 + np.conj(w) * z
+    if abs(denom) < 1e-15:
+        return complex('inf')
+    return (z + w) / denom
 
-    Uses BFS on the Markov tree, applying Vieta involutions:
-    (x, y, z) → (x, y, 3xy - z) and permutations.
 
-    The Markov equation is x² + y² + z² = 3xyz.
-
-    Time: O(N log N) where N is the number of triples found
-    Space: O(N)
-
-    Args:
-        max_value: Upper bound on the largest element.
-
-    Returns:
-        Sorted list of Markov triples.
+def pseudo_hyp_dist(z: complex, w: complex) -> float:
+    """Pseudo-hyperbolic distance ρ(z,w) = |z-w| / |1 - w̄z|.
+    
+    Properties (verified formally):
+    - ρ(z,z) = 0
+    - ρ(z,w) = ρ(w,z) (symmetry)
+    - ρ(z,w) ≥ 0
+    - ρ(z,w) < 1 when z,w in unit disk
+    
+    Complexity: O(1).
     """
-    seen: Set[Tuple[int, int, int]] = set()
-    queue = [(1, 1, 1)]
-    seen.add((1, 1, 1))
-
-    while queue:
-        x, y, z = queue.pop(0)
-        # Apply Vieta involution to each coordinate
-        for a, b, c in [(x, y, z), (x, z, y), (y, z, x)]:
-            new_c = 3 * a * b - c
-            if new_c > 0:
-                triple = tuple(sorted((a, b, new_c)))
-                if triple not in seen and max(triple) <= max_value:
-                    seen.add(triple)
-                    queue.append(triple)
-
-    return sorted(seen)
-
-
-# ============================================================================
-# Algorithm 3: Primitive Trace Classification
-# ============================================================================
-
-def classify_traces(N: int) -> Tuple[List[int], List[int]]:
-    """
-    Classify traces in [3, N] as primitive or imprimitive.
-
-    A trace t is imprimitive if t + 2 = s² for some integer s ≥ 2
-    (equivalently, t is the trace of a square of some element).
-
-    Time: O(N), Space: O(N)
-
-    Args:
-        N: Upper bound for trace values.
-
-    Returns:
-        (primitives, imprimitives): Lists of primitive and imprimitive traces.
-    """
-    primitives = []
-    imprimitives = []
-
-    for t in range(3, N + 1):
-        s = int(math.isqrt(t + 2))
-        if s >= 2 and s * s == t + 2:
-            imprimitives.append(t)
-        else:
-            primitives.append(t)
-
-    return primitives, imprimitives
-
-
-# ============================================================================
-# Algorithm 4: Pseudo-Hyperbolic Distance
-# ============================================================================
-
-def pseudo_hyp_dist(p: Tuple[float, float], q: Tuple[float, float]) -> float:
-    """
-    Compute the pseudo-hyperbolic distance between two points in the Poincaré disk.
-
-    δ(z,w) = |z-w| / |1-z̄w|
-
-    The actual hyperbolic distance is d = 2·arctanh(δ).
-
-    Time: O(1), Space: O(1)
-
-    Args:
-        p: Point (x₁, y₁) with x₁²+y₁² < 1
-        q: Point (x₂, y₂) with x₂²+y₂² < 1
-
-    Returns:
-        The pseudo-hyperbolic distance δ(p, q) ∈ [0, 1).
-    """
-    px, py = p
-    qx, qy = q
-
-    num_sq = (px - qx) ** 2 + (py - qy) ** 2
-    den_sq = (1 - px * qx - py * qy) ** 2 + (px * qy - py * qx) ** 2
-
-    return math.sqrt(num_sq / den_sq)
-
-
-def hyperbolic_distance(p: Tuple[float, float], q: Tuple[float, float]) -> float:
-    """
-    Compute the actual hyperbolic distance in the Poincaré disk model.
-
-    d(z,w) = 2·arctanh(δ(z,w))
-
-    Time: O(1), Space: O(1)
-    """
-    delta = pseudo_hyp_dist(p, q)
-    if delta >= 1:
+    denom = abs(1 - np.conj(w) * z)
+    if denom < 1e-15:
         return float('inf')
-    return 2 * math.atanh(delta)
+    return abs(z - w) / denom
 
 
-# ============================================================================
-# Algorithm 5: SL₂(ℤ) Element from Trace (Constructive Witness)
-# ============================================================================
-
-def sl2z_from_trace(n: int) -> Tuple[int, int, int, int]:
+def hyp_dist(z: complex, w: complex) -> float:
+    """Hyperbolic distance d(z,w) = log((1+ρ)/(1-ρ)) = 2·artanh(ρ).
+    
+    Complexity: O(1).
     """
-    Construct an explicit SL₂(ℤ) element with given trace n (for n ≥ 2).
+    rho = pseudo_hyp_dist(z, w)
+    if rho >= 1.0:
+        return float('inf')
+    return np.log((1 + rho) / (1 - rho))
 
-    Returns [[n-1, 1], [n-2, 1]] which has determinant 1 and trace n.
 
-    Time: O(1), Space: O(1)
+def hyp_area(R: float) -> float:
+    """Area of hyperbolic disk of radius R.
+    
+    A(R) = 2π(cosh(R) - 1) = 4π sinh²(R/2)
+    
+    Properties (verified formally):
+    - A(0) = 0
+    - A(R) ≥ 0 for R ≥ 0
+    - Strictly monotone on [0,∞)
+    - A(R) ≥ π(eᴿ - 2)  (exponential growth)
+    
+    Complexity: O(1).
+    """
+    return 2 * np.pi * (np.cosh(R) - 1)
 
+
+def generate_lattice(generators: List[complex], depth: int = 5,
+                     max_points: int = 10000) -> List[complex]:
+    """Generate hyperbolic lattice points by iterating Möbius additions.
+    
+    Starting from the origin, repeatedly applies Möbius addition with
+    each generator to create an orbit.
+    
     Args:
-        n: Desired trace value (integer ≥ 2)
-
+        generators: List of generating points in the unit disk
+        depth: Number of iteration rounds
+        max_points: Maximum number of points to generate
+    
     Returns:
-        (a, b, c, d) with ad - bc = 1 and a + d = n
+        List of lattice points in the unit disk
+    
+    Complexity: O(|generators|^depth) in the worst case, bounded by max_points.
     """
-    assert n >= 2, f"Trace must be ≥ 2, got {n}"
-    a, b, c, d = n - 1, 1, n - 2, 1
-    assert a * d - b * c == 1
-    assert a + d == n
-    return (a, b, c, d)
+    points: Set[Tuple[float, float]] = {(0.0, 0.0)}
+    current = [0.0 + 0.0j]
+    
+    for _ in range(depth):
+        if len(points) >= max_points:
+            break
+        new_pts = []
+        for p in current:
+            for g in generators:
+                q = moebius_add(p, g)
+                key = (round(q.real, 8), round(q.imag, 8))
+                if abs(q) < 0.9999 and key not in points:
+                    points.add(key)
+                    new_pts.append(q)
+                    if len(points) >= max_points:
+                        break
+            if len(points) >= max_points:
+                break
+        current = new_pts
+    
+    return [complex(x, y) for x, y in points]
 
 
-# ============================================================================
-# Algorithm 6: Fundamental Discriminant Computation
-# ============================================================================
-
-def fundamental_disc(t: int) -> int:
+def lattice_count(points: List[complex], center: complex, R: float) -> int:
+    """Count lattice points within hyperbolic distance R of center.
+    
+    Properties (verified formally):
+    - Monotone: R ≤ S ⟹ N(R) ≤ N(S)
+    - Bounded: N(R) ≤ |points|
+    
+    Complexity: O(n) where n = len(points).
     """
-    Compute the fundamental discriminant D = t² - 4 associated to trace t.
-
-    This determines the quadratic field ℚ(√D) associated to a hyperbolic
-    element with trace t.
-
-    Time: O(1), Space: O(1)
-    """
-    return t * t - 4
+    return sum(1 for p in points if hyp_dist(p, center) <= R)
 
 
-def discriminant_class_table(max_t: int) -> dict:
-    """
-    Build a table mapping discriminants to trace values.
-
-    Time: O(max_t), Space: O(max_t)
-
+def hyp_zeta_partial(points: List[complex], s: float) -> float:
+    """Partial sum of hyperbolic zeta function.
+    
+    ζ_H(s) = Σ_{n: ‖n‖_H > 0} 1/‖n‖_H^{2s}
+    
+    Args:
+        points: Lattice points (complex numbers in disk)
+        s: Complex exponent (real part)
+    
     Returns:
-        Dict mapping D → list of trace values t with t² - 4 ≡ D (mod squares)
+        Partial sum of the zeta function
+    
+    Complexity: O(n) where n = len(points).
     """
-    table = {}
-    for t in range(3, max_t + 1):
-        D = fundamental_disc(t)
-        # Find the square-free part
-        d = D
-        for p in range(2, int(math.isqrt(D)) + 1):
-            while d % (p * p) == 0:
-                d //= (p * p)
-        if d not in table:
-            table[d] = []
-        table[d].append(t)
-    return table
+    total = 0.0
+    for p in points:
+        norm = hyp_dist(p, 0)
+        if norm > 1e-10:
+            total += norm ** (-2 * s)
+    return total
 
 
-# ============================================================================
-# Example Usage
-# ============================================================================
+def cross_ratio(z1: complex, z2: complex, z3: complex, z4: complex) -> complex:
+    """Cross-ratio of four complex numbers.
+    
+    [z₁, z₂; z₃, z₄] = (z₁-z₃)(z₂-z₄) / ((z₁-z₄)(z₂-z₃))
+    
+    The cross-ratio is a Möbius invariant: preserved under all Möbius transforms.
+    
+    Complexity: O(1).
+    """
+    num = (z1 - z3) * (z2 - z4)
+    den = (z1 - z4) * (z2 - z3)
+    if abs(den) < 1e-15:
+        return complex('inf')
+    return num / den
+
+
+# =============================================================================
+# Example usage
+# =============================================================================
 
 if __name__ == "__main__":
-    # Trace sequence
-    print("Trace sequence for t=3:")
-    for n in range(10):
-        v1 = trace_seq(3, n)
-        v2 = trace_seq_matrix(3, n)
-        assert v1 == v2, f"Mismatch at n={n}"
-        print(f"  traceSeq(3, {n}) = {v1}")
-
-    # Markov triples
-    print("\nMarkov triples with max ≤ 100:")
-    triples = generate_markov_triples(100)
-    for t in triples:
-        print(f"  {t}")
-
-    # Primitive trace density
-    print("\nPrimitive trace density for N=1000:")
-    prims, imprims = classify_traces(1000)
-    print(f"  Primitives: {len(prims)}, Imprimitives: {len(imprims)}")
-    print(f"  Density: {len(prims)/998:.4f}")
-
-    # Hyperbolic distance
-    print("\nHyperbolic distances:")
-    points = [(0, 0), (0.5, 0), (0.3, 0.4), (-0.2, 0.1)]
-    for i, p in enumerate(points):
-        for j, q in enumerate(points):
-            if i < j:
-                d = hyperbolic_distance(p, q)
-                print(f"  d({p}, {q}) = {d:.4f}")
-
-    # Discriminant table
-    print("\nDiscriminant class table (square-free parts):")
-    table = discriminant_class_table(20)
-    for d in sorted(table.keys()):
-        print(f"  D_sf={d}: traces {table[d]}")
+    # Generate a hyperbolic lattice
+    gens = [0.3, -0.3, 0.3j, -0.3j, 0.2+0.2j, -0.2-0.2j,
+            0.15+0.25j, -0.15-0.25j]
+    lattice = generate_lattice(gens, depth=6, max_points=5000)
+    print(f"Generated {len(lattice)} lattice points")
+    
+    # Count lattice points at various radii
+    print("\nLattice counting function N(R):")
+    print(f"{'R':>6s}  {'N(R)':>6s}  {'A(R)':>10s}  {'Density':>10s}")
+    for R in np.arange(0.5, 5.1, 0.5):
+        N = lattice_count(lattice, 0, R)
+        A = hyp_area(R)
+        density = N / A if A > 0 else 0
+        print(f"{R:6.1f}  {N:6d}  {A:10.2f}  {density:10.4f}")
+    
+    # Hyperbolic zeta function
+    print("\nHyperbolic zeta partial sums:")
+    for s in [0.5, 1.0, 1.5, 2.0, 3.0]:
+        zeta = hyp_zeta_partial(lattice, s)
+        print(f"  ζ_H({s:.1f}) ≈ {zeta:.6f}")
+    
+    # Cross-ratio invariance test
+    M = MoebiusMat(1+1j, 0.5, 0.2j, 1-0.3j)
+    pts = [0.1+0.2j, -0.3+0.1j, 0.4-0.2j, -0.1-0.3j]
+    cr_before = cross_ratio(*pts)
+    cr_after = cross_ratio(*[M.apply(p) for p in pts])
+    print(f"\nCross-ratio invariance:")
+    print(f"  Before Möbius: {cr_before:.6f}")
+    print(f"  After Möbius:  {cr_after:.6f}")
+    print(f"  Difference:    {abs(cr_before - cr_after):.2e}")
