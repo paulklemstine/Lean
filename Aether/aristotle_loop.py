@@ -210,14 +210,8 @@ class UCBSelector:
     def get_domain_recommendations(self, limit: int = 5) -> List[Tuple[str, float]]:
         """Get recommended domains ranked by UCB score."""
         if self.total_selections == 0:
-            # Cold start priorities from the paper's analysis
-            return [
-                ("Pythagorean", 1.0),    # Carmichael theorem, Berggren factoring
-                ("Shared", 0.95),         # Fib_gcd_identity sorry
-                ("Tropical", 0.90),       # Hecke algebra, robustness
-                ("Cryptography", 0.85),   # Dilithium, SPB security
-                ("EML", 0.80),            # Universal approximation
-            ][:limit]
+            # Cold start: no domain preference — return all domains with equal score
+            return [(d, 1.0) for d in DOMAINS][:limit]
 
         scored = []
         for domain in DOMAINS:
@@ -263,41 +257,12 @@ class CrossDomainSynergyMatrix:
     The synergy matrix captures how valuable it is to research domain j
     given that domain i has already been explored.
 
-    Initially seeded with known connections from the paper's analysis.
+    Synergies are learned from observed cross-domain research value,
+    not seeded with hardcoded preferences.
     """
-
-    # Seed synergy matrix with known cross-domain connections
-    # Higher values = stronger synergy
-    KNOWN_SYNERGIES = {
-        # (domain_a, domain_b): synergy_score
-        ("Tropical", "MachineLearning"): 0.45,    # Tropical neural networks
-        ("Tropical", "Pythagorean"): 0.40,         # Tropical Berggren
-        ("Tropical", "Cryptography"): 0.35,        # Tropical trapdoor
-        ("Pythagorean", "Cryptography"): 0.45,     # Berggren factoring crypto
-        ("Pythagorean", "Physics"): 0.30,          # Lorentz connection
-        ("MachineLearning", "Physics"): 0.25,       # Quantum ML
-        ("EML", "MachineLearning"): 0.40,           # EML neural networks
-        ("EML", "Bridges"): 0.35,                   # SPB bridges
-        ("Cryptography", "Physics"): 0.30,          # Quantum crypto
-        ("Cryptography", "Computation"): 0.25,      # Complexity theory
-        ("Algebra", "Tropical"): 0.35,             # Tropical algebra
-        ("Algebra", "Geometry"): 0.30,              # Algebraic geometry
-        ("Logic", "Computation"): 0.40,             # Computability
-        ("Physics", "Geometry"): 0.35,              # Spacetime geometry
-        ("Bridges", "Tropical"): 0.30,              # Tropical bridges
-        ("Bridges", "Speculative"): 0.25,           # Speculative bridges
-    }
 
     def __init__(self):
         self.synergies: Dict[Tuple[str, str], float] = {}
-        self._seed_known_synergies()
-
-    def _seed_known_synergies(self) -> None:
-        """Initialize with known mathematical connections."""
-        for (a, b), score in self.KNOWN_SYNERGIES.items():
-            self.synergies[(a, b)] = score
-            self.synergies[(b, a)] = score  # Symmetric
-
         # Self-synergy = 1.0 (self-reinforcing)
         for d in DOMAINS:
             self.synergies[(d, d)] = 1.0

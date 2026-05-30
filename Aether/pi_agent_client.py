@@ -360,7 +360,7 @@ class PiAgentClient:
 
         # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
         # This is a last-resort safety net — upstream budgeting should keep prompts well under this
-        MAX_PROMPT_CHARS = 120000
+        MAX_PROMPT_CHARS = 200000
         if input_chars > MAX_PROMPT_CHARS:
             print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
             user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
@@ -1788,23 +1788,17 @@ class PiAgentClient:
             If a direct proof fails, try the contrapositive, a constructive witness,
             or structural induction. Connect to at least one other domain for impact.
 
-            ### Team Directive
-            You are not a lone researcher — you are LEADING a research science team.
-            Organize your team into roles:
-
-            1. **Hypothesis Team**: Brainstorm 3-5 bold, falsifiable hypotheses.
-               Each must be a precise conjecture that can be proved or disproved.
-            2. **Experiment Team**: Design and run Lean 4 experiments to test each
-               hypothesis. Prove theorems, find counterexamples, compute examples.
-            3. **Analysis Team**: Examine results. Which hypotheses survived? Which
-               failed? What does each failure teach? Update the knowledge base.
-            4. **Iteration Lead**: Based on analysis, propose the NEXT round of
-               hypotheses. Science is a loop: hypothesize → experiment → analyze →
-               repeat. Each cycle must advance the frontier.
-
-            The team operates as a self-improving science engine. Each round builds
-            on the last. Failed hypotheses are as valuable as successful ones — they
-            constrain the search space and reveal structure.
+            ### Anti-Triviality Rules
+            Do NOT produce any of the following:
+            - Commutativity/associativity proofs for standard algebraic structures
+              (e.g., `a + b = b + a` for semirings, `a * b * c = a * (b * c)`)
+            - Wrapper theorems that just unwrap a definition without mathematical insight
+            - Proofs that are just `by simp` or `by trivial` with no depth
+            - Definitions followed by trivial properties that don't advance understanding
+            - "Bridge" theorems that merely transfer a property between domains without
+              adding new content (e.g., "semiring X is also a Y" without a new theorem)
+            If a result seems obvious, prove something STRONGER — the stronger theorem
+            is often easier to prove and more interesting.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
                       ARTICLE.md (Scientific American style), algorithm, demo.py
@@ -1883,7 +1877,7 @@ class PiAgentClient:
         """)
 
         # Prompt size budget enforcement: cap at 30K chars
-        PROMPT_BUDGET = 100000
+        PROMPT_BUDGET = 200000
         if len(direct_prompt) > PROMPT_BUDGET:
             original_len = len(direct_prompt)
             # Progressively truncate lower-priority sections

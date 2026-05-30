@@ -470,6 +470,9 @@ class FutureDirectionsManager:
                     return
         if not direction.timestamp:
             direction.timestamp = datetime.now(timezone.utc).isoformat()
+        # Cap domains at 2 to prevent domain count inflation
+        if len(direction.domains) > 2:
+            direction.domains = direction.domains[:2]
         self._directions.append(direction)
         self._save()
 
@@ -546,12 +549,15 @@ class FutureDirectionsManager:
                     domains=self._infer_domains(title + " " + description),
                     proof_strategy=proof_strategy,
                     depth_estimate=3,
-                    priority_score=0.80,  # Higher default for structured format
+                    priority_score=0.80,  # Default; will be overridden by quality score
                     catalog_references=catalog_references,
                     ambition_level=ambition_level,
                     lineage_refs=lineage_refs,
                     domain_bridges=domain_bridges,
                 )
+                # Cap auto-generated priority to computed quality score
+                quality = self._compute_quality_score(fd)
+                fd.priority_score = min(fd.priority_score, max(0.70, quality))
                 self.add_direction(fd)
                 added += 1
 
@@ -579,6 +585,8 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.75,
                     )
+                    quality = self._compute_quality_score(fd)
+                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
                     self.add_direction(fd)
                     added += 1
 
@@ -605,6 +613,8 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.7,
                     )
+                    quality = self._compute_quality_score(fd)
+                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
                     self.add_direction(fd)
                     added += 1
 
@@ -626,6 +636,8 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.65,
                     )
+                    quality = self._compute_quality_score(fd)
+                    fd.priority_score = min(fd.priority_score, max(0.70, quality))
                     self.add_direction(fd)
                     added += 1
 
@@ -681,7 +693,8 @@ class FutureDirectionsManager:
                         "pde"],
             "Cryptography": ["crypto", "spb", "diffie-hellman", "discrete log",
                              "lattice", "dilithium", "encryption", "post-quantum",
-                             "zero-knowledge", "homomorphic"],
+                             "zero-knowledge", "homomorphic", "key exchange",
+                             "cipher", "authentication"],
             "EML": ["eml", "exponential-multiplicative", "exp-log", "closure operator"],
             "Bridges": ["bridge", "cross-domain", "unification", "functor",
                         "correspondence", "langlands", "category-theoretic"],
@@ -693,10 +706,14 @@ class FutureDirectionsManager:
             "Speculative": ["speculative", "science fiction", "consciousness",
                             "alien", "game of life"],
         }
-        domains = []
+        domain_scores = []
         for domain, keywords in domain_keywords.items():
-            if any(kw in text_lower for kw in keywords):
-                domains.append(domain)
+            score = sum(1 for kw in keywords if kw in text_lower)
+            if score > 0:
+                domain_scores.append((domain, score))
+        # Cap at 2 domains: keep the 2 most relevant by keyword match count
+        domain_scores.sort(key=lambda x: -x[1])
+        domains = [d for d, s in domain_scores[:2]]
         return domains or ["Bridges"]
 
     def get_available_directions(

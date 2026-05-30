@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Tropical Geometry / Discrete Convex Analysis",
     "date": "2026-05-30T14:19:57Z",
     "exp_id": "40d5934b",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7241518181818182,
+    "quality": "substantial",
     "pkg_num": 409
   },
   {
@@ -11870,8 +11870,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-30T14:19:57Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7241518181818182,
+      "quality": "substantial"
     }
   ],
   "edges": [

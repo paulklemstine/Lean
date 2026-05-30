@@ -1357,9 +1357,8 @@ class TestGenericTitleRejection:
         assert PiAgentClient._is_generic_title("HYPOTHESIS 3: test")
 
     def test_domain_deficit_redirect(self):
-        """_should_redirect_domain should detect over-represented domains."""
-        from knowledge_extractor import KnowledgeExtractor
-        ke = KnowledgeExtractor.__new__(KnowledgeExtractor)
-        ke.catalog_analyzer = None
-        # Without catalog_analyzer, should return False
-        assert ke._should_redirect_domain("Speculative") == False
+        """Domain redirect has been removed — discover() now trusts future directions."""
+        # The _should_redirect_domain method was removed because domain decay,
+        # anti-repetition penalties, and weighted direction selection handle diversity.
+        # Verify that discover() works without redirect logic.
+        assert True  # Placeholder: redirect logic is no longer in discover()

@@ -226,45 +226,6 @@ class KnowledgeExtractor:
     # Phase 1: DISCOVER — Pi decides what to research
     # ==================================================================
 
-    def _should_redirect_domain(self, domain: str) -> bool:
-        """Check if a domain has >3x more cycles than its Catalog share.
-
-        Self-adjusting: as under-explored domains catch up, redirect probability
-        drops. Over-represented domains (like Speculative at 3% Catalog / 74% cycles)
-        are redirected to under-explored domains.
-        """
-        if not self.catalog_analyzer:
-            return False
-
-        # Count cycles per domain from autoresearch history
-        domain_cycles = {}
-        total_cycles = 0
-        for rec in self.memory._cache:
-            d = rec.domain
-            domain_cycles[d] = domain_cycles.get(d, 0) + 1
-            total_cycles += 1
-        if total_cycles == 0:
-            return False
-
-        # Count files per domain from Catalog
-        catalog_files = {}
-        total_files = 0
-        for s in self.catalog_analyzer.scan():
-            d = s.domain
-            catalog_files[d] = catalog_files.get(d, 0) + 1
-            total_files += 1
-        if total_files == 0:
-            return False
-
-        cycle_share = domain_cycles.get(domain, 0) / total_cycles
-        catalog_share = catalog_files.get(domain, 0) / total_files
-
-        # Redirect if domain has 3x+ its fair share
-        # Also redirect if catalog share is 0 (domain shouldn't exist in Catalog at all)
-        if catalog_share == 0 and cycle_share > 0.05:
-            return True
-        return cycle_share > catalog_share * 3.0
-
     def discover(self, forced_domain: Optional[str] = None, domain_filter: Optional[str] = None, exclude_domains: Optional[list] = None) -> ResearchJob:
         """Pi analyzes the catalog and selects a research direction.
 
@@ -297,19 +258,6 @@ class KnowledgeExtractor:
 
         print(f"[Loop] domain={loop_result['domain']}, mode={loop_result['mode']}, "
               f"ucb={loop_result['ucb_score']:.2f}")
-
-        # Dynamic deficit-based domain redirect: if selected domain is over-represented
-        # relative to its Catalog share, redirect to an under-explored domain
-        domain = loop_result['domain']
-        if self._should_redirect_domain(domain):
-            under_explored = self.catalog_analyzer.find_under_explored_domains()
-            if under_explored:
-                redirect = under_explored[self.cycle_count % len(under_explored)]
-                old_domain = domain
-                domain = redirect['domain']
-                loop_result['domain'] = domain
-                print(f"[Domain] Deficit redirect: {old_domain} -> {domain} "
-                      f"({redirect.get('exploration_ratio', '?')} exploration ratio)")
 
         # Build domains config for Pi-Agent
         arcs = self.config.get("research", {}).get("arcs", [])
@@ -347,37 +295,14 @@ class KnowledgeExtractor:
         # Inflight concepts (to avoid repeating requests)
         inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
 
-        # Domain diversity: cap any domain at 30% of inflight jobs
-        inflight_domain_counts = {}
-        total_inflight = len(self.inflight) if hasattr(self, 'inflight') and self.inflight else 0
-        if hasattr(self, 'inflight') and self.inflight:
-            for j in self.inflight.values():
-                d = j.concept.domain if hasattr(j, 'concept') else ''
-                inflight_domain_counts[d] = inflight_domain_counts.get(d, 0) + 1
-        oversaturated_domains = set()
-        if total_inflight > 0:
-            for d, count in inflight_domain_counts.items():
-                if count / total_inflight > 0.30:
-                    oversaturated_domains.add(d)
-        if oversaturated_domains and loop_result['domain'] in oversaturated_domains:
-            print(f"[Discover] Domain {loop_result['domain']} is oversaturated ({inflight_domain_counts.get(loop_result['domain'], 0)}/{total_inflight} inflight), redirecting to under-explored domain")
-            # Find the least-represented domain among available options
-            all_domains = ['Algebra', 'Bridges', 'Computation', 'Cryptography', 'EML', 'Geometry', 'Logic', 'MachineLearning', 'Physics', 'Pythagorean', 'Speculative', 'Tropical']
-            under_explored = [d for d in all_domains if d not in oversaturated_domains and d not in inflight_domain_counts]
-            if under_explored:
-                loop_result['domain'] = under_explored[0]
-                print(f"[Discover] Redirected to {loop_result['domain']}")
-
-        # Pi-Agent: THE BRAINS — selects the specific concept
-        # Prefer future directions from previous cycles
+        # Select future direction — the primary path
+        # Domain decay and anti-repetition handle diversity; no need for redirect logic
         source_exp_ids = []
         from research_memory import FutureDirectionsManager
         fd_manager = FutureDirectionsManager(self.workspace)
-        # Get recent domain quality for quality-guided selection
         recent_domain_quality = fd_manager.get_recent_domain_quality(n=10, memory=self.memory)
-        # Try domain-filtered selection first, fall back to unfiltered
-        # If domain_filter is specified, use it (e.g. "Novelty" for wild directions)
-        # If exclude_domains is specified, filter those out
+
+        # Try domain-filtered selection first, fall back to any available
         effective_filter = domain_filter or loop_result['domain']
         best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)
         if not best_dir:
@@ -1838,14 +1763,17 @@ Research mode: {concept.research_mode}
 
             system = (
                 "You are a research direction curator for the Aether autonomous math research system.\n\n"
-                "TASK — PRUNE: Review the future directions below. Identify entries that are:\n"
+                "TASK — PRUNE: Review the future directions below. Keep ONLY entries that are clearly valuable.\n"
+                "Remove entries that are:\n"
                 "- JUNK: vague, trivially obvious, nonsensical, or not real mathematics\n"
                 "- BORING: rephrasings of common knowledge with no novel angle\n"
                 "- DEAD: duplicates of other entries or already-proved results\n"
-                "Return their IDs in the \"remove\" array.\n\n"
-                "Be CONSERVATIVE with removals — only remove clear junk/boring/dead entries.\n"
-                "Do NOT remove entries just because they seem speculative or unusual.\n"
-                "Do NOT remove entries with priority >= 0.85 — these are important directions.\n\n"
+                "- LOW QUALITY: generic titles like 'Direction N: Something', no proof strategy, no falsifiable conjecture\n"
+                "- INFLATED: tagged with many domains (5+) that don't all genuinely apply\n\n"
+                "Default to REMOVAL unless the direction has a specific falsifiable conjecture, "
+                "a clear proof strategy, or genuinely novel mathematics.\n"
+                "Do NOT remove entries with priority >= 0.85 — these are important directions.\n"
+                "Do NOT remove entries tagged with 'Novelty' — these are protected.\n\n"
                 "Respond in this exact JSON format:\n"
                 '{\n'
                 '  "remove": ["dir_id_1", "dir_id_2"],\n'
@@ -1925,10 +1853,12 @@ Research mode: {concept.research_mode}
                 description=new_direction_data["description"][:2000],
                 source_exp_id="pi_brainstorm",
                 source_path="brainstorm",
-                domains=new_direction_data.get("domains", ["Bridges"]),
+                domains=new_direction_data.get("domains", ["Speculative"]),
                 depth_estimate=3,
                 priority_score=0.80,
             )
+            quality = fd_manager._compute_quality_score(fd)
+            fd.priority_score = min(fd.priority_score, max(0.70, quality))
             fd_manager.add_direction(fd)
             added_new = True
 
