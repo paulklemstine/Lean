@@ -1,364 +1,325 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core algorithms for Overlap Class Theory
+Overlap Class Algorithms
+========================
+Implements the core algorithms from the overlap class theory.
+All algorithms are self-contained with docstrings and type hints.
 
-Implements the computational backbone of the overlap class framework:
-- Support overlap graph construction
-- Connected component (overlap class) enumeration
-- Overlap degree, complexity, and signature computation
-- TPE simulation and invariant verification
-- Graph cycle enumeration and support extraction
-
-Time complexity notes:
-- Overlap graph construction: O(n² · max|Fᵢ|) where n = family size
-- Connected components (union-find): O(n · α(n)) ≈ O(n)
-- Overlap degree: O(n²)
-- Overlap complexity: O(n² · max|Fᵢ|)
-- Cycle enumeration: exponential in general, O(E) for short cycles
+Key algorithms:
+1. Overlap graph construction  - O(n² · k) where k = max support size
+2. Overlap class computation   - O(n² · k) using BFS
+3. Overlap complexity          - O(n² · k)
+4. Peeling algorithm           - O(n² · k) per step
+5. Support interaction matrix  - O(n² · k)
+6. Overlap spectrum            - O(n² · k + n² log n²)
 """
 
-from collections import defaultdict
-from typing import FrozenSet, List, Set, Dict, Tuple, Optional
-import itertools
+from typing import List, Set, Dict, Tuple, Optional
+from itertools import combinations
+from collections import defaultdict, deque
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Type aliases
-# ─────────────────────────────────────────────────────────────────────
-Support = FrozenSet[int]
-SupportFamily = List[Support]
-Graph = Dict[int, Set[int]]  # adjacency list
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Union-Find data structure
-# ─────────────────────────────────────────────────────────────────────
-class UnionFind:
-    """Weighted union-find with path compression.
-
-    Time: O(α(n)) per operation (amortized).
-    Space: O(n).
+def build_overlap_graph(supports: List[Set[int]]) -> Dict[int, Set[int]]:
     """
-
-    def __init__(self, n: int):
-        self.parent = list(range(n))
-        self.rank = [0] * n
-        self.component_count = n
-
-    def find(self, x: int) -> int:
-        """Find root with path compression."""
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
-
-    def union(self, x: int, y: int) -> bool:
-        """Union by rank. Returns True if a merge occurred."""
-        px, py = self.find(x), self.find(y)
-        if px == py:
-            return False
-        if self.rank[px] < self.rank[py]:
-            px, py = py, px
-        self.parent[py] = px
-        if self.rank[px] == self.rank[py]:
-            self.rank[px] += 1
-        self.component_count -= 1
-        return True
-
-    def connected(self, x: int, y: int) -> bool:
-        return self.find(x) == self.find(y)
-
-    def components(self) -> List[List[int]]:
-        """Return all connected components."""
-        groups = defaultdict(list)
-        for i in range(len(self.parent)):
-            groups[self.find(i)].append(i)
-        return list(groups.values())
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Support Overlap Graph
-# ─────────────────────────────────────────────────────────────────────
-
-def build_overlap_graph(family: SupportFamily) -> Tuple[List[Tuple[int, int]], Graph]:
-    """Build the support interaction graph.
-
+    Build the overlap graph from a family of supports.
+    
+    The overlap graph has vertices = indices {0, ..., n-1} and
+    edges connecting pairs whose supports have nonempty intersection.
+    
+    Time complexity: O(n² · k) where k is the maximum support size.
+    Space complexity: O(n²) for the adjacency list.
+    
     Args:
-        family: List of supports (frozensets of elements).
-
+        supports: List of sets representing the support family.
+    
     Returns:
-        (edges, adjacency_dict) where edges is a list of (i,j) pairs
-        with i < j, and adjacency_dict maps each index to its neighbors.
-
-    Time: O(n² · max|Fᵢ|) where n = len(family).
+        Adjacency list representation of the overlap graph.
+    
+    Example:
+        >>> build_overlap_graph([{1,2}, {2,3}, {4,5}])
+        {0: {1}, 1: {0}, 2: set()}
     """
-    n = len(family)
-    edges = []
-    adj: Graph = defaultdict(set)
+    n = len(supports)
+    adj: Dict[int, Set[int]] = defaultdict(set)
     for i in range(n):
-        for j in range(i + 1, n):
-            if family[i] & family[j]:  # nonempty intersection
-                edges.append((i, j))
-                adj[i].add(j)
-                adj[j].add(i)
-    return edges, dict(adj)
-
-
-def overlap_classes(family: SupportFamily) -> List[List[int]]:
-    """Compute overlap classes (connected components of overlap graph).
-
-    Args:
-        family: List of supports.
-
-    Returns:
-        List of lists, each being the indices in one overlap class.
-
-    Time: O(n² · max|Fᵢ|).
-    """
-    n = len(family)
-    if n == 0:
-        return []
-    uf = UnionFind(n)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if family[i] & family[j]:
-                uf.union(i, j)
-    return uf.components()
-
-
-def overlap_class_count(family: SupportFamily) -> int:
-    """Number of overlap classes."""
-    return len(overlap_classes(family))
-
-
-def overlap_degree(family: SupportFamily) -> int:
-    """Number of overlapping pairs (edges in overlap graph).
-
-    Time: O(n²).
-    """
-    n = len(family)
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            if family[i] & family[j]:
-                count += 1
-    return count
-
-
-def overlap_complexity(family: SupportFamily) -> int:
-    """Sum of pairwise intersection cardinalities.
-
-    This is a finer measure than overlap_degree: it accounts for
-    how much each pair overlaps, not just whether they do.
-
-    Time: O(n² · max|Fᵢ|).
-    """
-    n = len(family)
-    total = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            total += len(family[i] & family[j])
-    return total
-
-
-def overlap_signature(family: SupportFamily) -> List[int]:
-    """Sorted list of intersection cardinalities for overlapping pairs.
-
-    Time: O(n² · max|Fᵢ| + k log k) where k = overlap_degree.
-    """
-    n = len(family)
-    sig = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            inter_size = len(family[i] & family[j])
-            if inter_size > 0:
-                sig.append(inter_size)
-    return sorted(sig)
-
-
-def cross_overlap_matrix(family: SupportFamily) -> List[List[int]]:
-    """Compute the full cross-overlap matrix.
-
-    M[i][j] = |Fᵢ ∩ Fⱼ| for all pairs.
-
-    Time: O(n² · max|Fᵢ|).
-    """
-    n = len(family)
-    M = [[0] * n for _ in range(n)]
-    for i in range(n):
-        M[i][i] = len(family[i])
-        for j in range(i + 1, n):
-            inter_size = len(family[i] & family[j])
-            M[i][j] = inter_size
-            M[j][i] = inter_size
-    return M
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Tropical Projective Equivalence
-# ─────────────────────────────────────────────────────────────────────
-
-def apply_tpe(
-    functions: List[Dict[int, int]],
-    sigma: List[int],
-    constants: List[int]
-) -> List[Dict[int, int]]:
-    """Apply TPE: F₂(σ(i), v) = F₁(i, v) + c(i).
-
-    Args:
-        functions: List of functions (dicts from vertex to value).
-        sigma: Permutation as a list.
-        constants: Additive constants.
-
-    Returns:
-        Transformed function family.
-    """
-    n = len(functions)
-    vertices = set()
-    for f in functions:
-        vertices |= set(f.keys())
-
-    result = [None] * n
-    for i in range(n):
-        new_f = {}
-        for v in vertices:
-            new_f[v] = functions[i].get(v, 0) + constants[i]
-        result[sigma[i]] = new_f
-    return result
-
-
-def variation_support(f: Dict[int, int], v0: int) -> FrozenSet[int]:
-    """VarSupport: {v | f(v) ≠ f(v₀)}.
-
-    This is the TPE-invariant support notion.
-    """
-    f_v0 = f.get(v0, 0)
-    return frozenset(v for v in f if f[v] != f_v0)
-
-
-def var_support_family(
-    functions: List[Dict[int, int]], v0: int
-) -> SupportFamily:
-    """Compute variation support family."""
-    return [variation_support(f, v0) for f in functions]
-
-
-def verify_tpe_invariance(
-    functions: List[Dict[int, int]],
-    sigma: List[int],
-    constants: List[int],
-    v0: int
-) -> Dict[str, bool]:
-    """Verify that TPE preserves all overlap invariants.
-
-    Returns dict mapping invariant name to whether it's preserved.
-    """
-    f2 = apply_tpe(functions, sigma, constants)
-    vsf1 = var_support_family(functions, v0)
-    vsf2 = var_support_family(f2, v0)
-
-    return {
-        "overlap_class_count": overlap_class_count(vsf1) == overlap_class_count(vsf2),
-        "overlap_degree": overlap_degree(vsf1) == overlap_degree(vsf2),
-        "overlap_complexity": overlap_complexity(vsf1) == overlap_complexity(vsf2),
-        "overlap_signature": overlap_signature(vsf1) == overlap_signature(vsf2),
-    }
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Graph Cycle Enumeration
-# ─────────────────────────────────────────────────────────────────────
-
-def find_cycles(adj: Graph, max_cycles: int = 50) -> List[Set[int]]:
-    """Find simple cycles using DFS.
-
-    Args:
-        adj: Adjacency list.
-        max_cycles: Maximum number of cycles to find.
-
-    Returns:
-        List of vertex sets, each being the support of a cycle.
-    """
-    vertices = sorted(adj.keys())
-    found = set()
-    result = []
-
-    def dfs(start, current, path, visited):
-        if len(result) >= max_cycles:
-            return
-        for nbr in sorted(adj.get(current, set())):
-            if nbr == start and len(path) >= 3:
-                cycle = frozenset(path)
-                if cycle not in found:
-                    found.add(cycle)
-                    result.append(set(path))
-            elif nbr not in visited and nbr > start:
-                visited.add(nbr)
-                path.append(nbr)
-                dfs(start, nbr, path, visited)
-                path.pop()
-                visited.discard(nbr)
-
-    for v in vertices:
-        dfs(v, v, [v], {v})
-        if len(result) >= max_cycles:
-            break
-
-    return result
-
-
-def graph_from_edges(edges: List[Tuple[int, int]]) -> Graph:
-    """Build adjacency list from edge list."""
-    adj: Graph = defaultdict(set)
-    for u, v in edges:
-        adj[u].add(v)
-        adj[v].add(u)
+        adj[i]  # ensure all vertices appear
+    for i, j in combinations(range(n), 2):
+        if supports[i] & supports[j]:
+            adj[i].add(j)
+            adj[j].add(i)
     return dict(adj)
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Inclusion-exclusion bounds
-# ─────────────────────────────────────────────────────────────────────
-
-def family_union_card(family: SupportFamily) -> int:
-    """Cardinality of the union of all supports."""
-    union = set()
-    for s in family:
-        union |= s
-    return len(union)
-
-
-def inclusion_exclusion_deficit(family: SupportFamily) -> int:
-    """Deficit: Σ|Fᵢ| - |⋃Fᵢ|.
-
-    By our theorem, this is bounded by overlap_complexity(family).
+def compute_overlap_classes(supports: List[Set[int]]) -> List[Set[int]]:
     """
-    return sum(len(s) for s in family) - family_union_card(family)
+    Compute the overlap equivalence classes via BFS on the overlap graph.
+    
+    Returns the connected components of the overlap graph, which are
+    the overlap classes (equivalence classes of the reflexive-transitive
+    closure of the overlap relation).
+    
+    Time complexity: O(n² · k) for graph construction + O(n) for BFS.
+    Space complexity: O(n²) for the graph + O(n) for BFS state.
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        List of sets, each set containing the indices in one overlap class.
+    
+    Example:
+        >>> compute_overlap_classes([{1,2}, {2,3}, {4,5}])
+        [{0, 1}, {2}]
+    """
+    n = len(supports)
+    if n == 0:
+        return []
+    
+    adj = build_overlap_graph(supports)
+    visited = set()
+    classes = []
+    
+    for start in range(n):
+        if start in visited:
+            continue
+        component: Set[int] = set()
+        queue = deque([start])
+        while queue:
+            node = queue.popleft()
+            if node in visited:
+                continue
+            visited.add(node)
+            component.add(node)
+            for neighbor in adj.get(node, set()):
+                if neighbor not in visited:
+                    queue.append(neighbor)
+        classes.append(component)
+    
+    return classes
 
 
-# ─────────────────────────────────────────────────────────────────────
+def overlap_class_count(supports: List[Set[int]]) -> int:
+    """
+    Count the number of overlap classes.
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        Number of overlap equivalence classes.
+    """
+    return len(compute_overlap_classes(supports))
+
+
+def compute_overlap_complexity(supports: List[Set[int]]) -> int:
+    """
+    Compute the overlap complexity: sum of |F(i) ∩ F(j)| over all i < j.
+    
+    This is a finer invariant than the overlap degree (which just counts
+    the number of overlapping pairs). Overlap complexity measures the
+    total intensity of overlap in the family.
+    
+    Time complexity: O(n² · k).
+    
+    Properties (proved in Lean):
+    - Complexity = 0 ⟺ pairwise disjoint
+    - Monotone under support inclusion
+    - Strictly decreases under peeling
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        Total pairwise intersection size.
+    """
+    total = 0
+    for i, j in combinations(range(len(supports)), 2):
+        total += len(supports[i] & supports[j])
+    return total
+
+
+def peel_element(supports: List[Set[int]], index: int, element: int) -> List[Set[int]]:
+    """
+    Remove an element from a specific support (peeling operation).
+    
+    The peeling lemma (proved in Lean) guarantees that if the element
+    is shared with another support, the overlap complexity strictly
+    decreases. This is the key inductive step for the overlap class
+    conjecture.
+    
+    Time complexity: O(k) for the set operation.
+    
+    Args:
+        supports: List of sets representing the support family.
+        index: Index of the support to modify.
+        element: Element to remove.
+    
+    Returns:
+        New support family with the element removed from the specified support.
+    """
+    result = [s.copy() for s in supports]
+    result[index].discard(element)
+    return result
+
+
+def iterative_peeling(supports: List[Set[int]]) -> Tuple[List[Set[int]], int]:
+    """
+    Iteratively peel shared elements until the family is pairwise disjoint.
+    
+    By the peeling lemma, each step strictly reduces overlap complexity,
+    so this terminates in at most O(overlap_complexity) steps. The result
+    is a pairwise disjoint family where each overlap class has been reduced
+    to a disjoint representative.
+    
+    Time complexity: O(C · n · k) where C is the initial overlap complexity.
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        Tuple of (peeled family, number of peeling steps).
+    """
+    current = [s.copy() for s in supports]
+    steps = 0
+    
+    while True:
+        # Find a shared element
+        found = False
+        for i, j in combinations(range(len(current)), 2):
+            shared = current[i] & current[j]
+            if shared:
+                element = min(shared)  # deterministic choice
+                current = peel_element(current, i, element)
+                steps += 1
+                found = True
+                break
+        if not found:
+            break
+    
+    return current, steps
+
+
+def compute_support_interaction_matrix(supports: List[Set[int]]) -> List[List[int]]:
+    """
+    Build the support interaction matrix.
+    
+    M[i][j] = |F(i) ∩ F(j)| for i ≠ j, and M[i][i] = |F(i)|.
+    
+    Properties (proved in Lean):
+    - Symmetric
+    - Diagonal for pairwise disjoint families
+    - Off-diagonal entries give cross-overlap counts
+    
+    Time complexity: O(n² · k).
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        n × n matrix as list of lists.
+    """
+    n = len(supports)
+    M = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                M[i][j] = len(supports[i])
+            else:
+                M[i][j] = len(supports[i] & supports[j])
+    return M
+
+
+def compute_overlap_spectrum(supports: List[Set[int]]) -> List[int]:
+    """
+    Compute the overlap spectrum: sorted list of pairwise intersection sizes.
+    
+    This is a finer invariant than overlap complexity (which is just the sum).
+    Two families can have the same complexity but different spectra.
+    
+    Time complexity: O(n² · k + n² log n²).
+    
+    Properties (proved in Lean):
+    - All entries are zero for pairwise disjoint families
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        Sorted list of intersection sizes for all pairs i < j.
+    """
+    spectrum = []
+    for i, j in combinations(range(len(supports)), 2):
+        spectrum.append(len(supports[i] & supports[j]))
+    return sorted(spectrum)
+
+
+def compute_support_distance(supports: List[Set[int]], i: int, j: int) -> int:
+    """
+    Compute the Hamming distance between two supports.
+    
+    The support distance is the size of the symmetric difference,
+    which equals the Hamming distance when supports are viewed as
+    characteristic vectors.
+    
+    Properties (proved in Lean):
+    - Symmetric
+    - Equals sum of sizes for disjoint supports
+    
+    Args:
+        supports: The support family.
+        i, j: Indices of the two supports.
+    
+    Returns:
+        |F(i) △ F(j)| = |F(i) \ F(j)| + |F(j) \ F(i)|
+    """
+    return len(supports[i] - supports[j]) + len(supports[j] - supports[i])
+
+
+def compute_overlap_rank(supports: List[Set[int]]) -> int:
+    """
+    Compute the overlap rank: n - (number of overlap classes).
+    
+    Analogous to the rank of a matroid. Measures the total interaction
+    intensity. Zero for pairwise disjoint families.
+    
+    Args:
+        supports: List of sets representing the support family.
+    
+    Returns:
+        Overlap rank.
+    """
+    return len(supports) - overlap_class_count(supports)
+
+
+# ============================================================
 # Example usage
-# ─────────────────────────────────────────────────────────────────────
-
+# ============================================================
 if __name__ == "__main__":
-    print("Overlap Class Theory — Algorithm Library")
+    print("Overlap Class Algorithms — Example Usage")
     print("=" * 50)
-
-    # Example family
-    family = [
-        frozenset({1, 2, 3}),
-        frozenset({3, 4, 5}),
-        frozenset({6, 7}),
-        frozenset({7, 8, 9}),
+    
+    # Example: cycle supports from K4
+    supports = [
+        {0, 1, 3},  # cycle 1-2-4 edges
+        {1, 2, 4},  # cycle 2-3-5 edges
+        {0, 2, 5},  # cycle 1-3-6 edges
     ]
-
-    print(f"\nFamily: {[set(s) for s in family]}")
-    print(f"Overlap classes: {overlap_classes(family)}")
-    print(f"Overlap class count: {overlap_class_count(family)}")
-    print(f"Overlap degree: {overlap_degree(family)}")
-    print(f"Overlap complexity: {overlap_complexity(family)}")
-    print(f"Overlap signature: {overlap_signature(family)}")
-    print(f"Cross-overlap matrix:")
-    for row in cross_overlap_matrix(family):
+    
+    print(f"\nSupports (K4 fundamental cycles): {supports}")
+    print(f"Overlap graph: {build_overlap_graph(supports)}")
+    print(f"Overlap classes: {compute_overlap_classes(supports)}")
+    print(f"Class count: {overlap_class_count(supports)}")
+    print(f"Overlap complexity: {compute_overlap_complexity(supports)}")
+    print(f"Overlap spectrum: {compute_overlap_spectrum(supports)}")
+    print(f"Overlap rank: {compute_overlap_rank(supports)}")
+    
+    print(f"\nInteraction matrix:")
+    M = compute_support_interaction_matrix(supports)
+    for row in M:
         print(f"  {row}")
-    print(f"Inclusion-exclusion deficit: {inclusion_exclusion_deficit(family)}")
-    print(f"  ≤ overlap complexity: {overlap_complexity(family)} ✓")
+    
+    print(f"\nPeeling to disjoint:")
+    peeled, steps = iterative_peeling(supports)
+    print(f"  Peeled family: {peeled}")
+    print(f"  Steps: {steps}")
+    print(f"  Final complexity: {compute_overlap_complexity(peeled)}")

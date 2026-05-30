@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2116 of the highest-quality
+A curated collection of 2118 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2116
+Total files: 2118
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1073,6 +1073,7 @@ import FINAL.EML.GaloisDuality
 import FINAL.EML.GaloisInsertionClosure
 import FINAL.EML.GraphNeuralNetworkTheory
 import FINAL.EML.InverseLimitApprox
+import FINAL.EML.KolmogorovArnoldEML
 import FINAL.EML.L2SheafRobustness
 import FINAL.EML.LatticeTreeCorrespondence
 import FINAL.EML.LogAffineNormal
@@ -1724,6 +1725,7 @@ import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
 import FINAL.Pythagorean.OrbitOrderDuality
+import FINAL.Pythagorean.OverlapClassConjecture
 import FINAL.Pythagorean.OverlapClassTheory
 import FINAL.Pythagorean.OverlapSupport
 import FINAL.Pythagorean.PF2Theorems
