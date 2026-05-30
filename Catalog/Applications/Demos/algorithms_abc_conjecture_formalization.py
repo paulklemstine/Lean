@@ -1,294 +1,254 @@
 #!/usr/bin/env python3
 """
-Algorithms for ABC Conjecture Computations
+algorithms.py — Core algorithms for ABC conjecture analysis
 
 Implements:
-  - Radical computation (squarefree kernel)
-  - Prime factorization
-  - ABC triple validation and quality measurement
-  - Discrete ABC inequality testing
-  - Quality distribution analysis
-
-All functions include docstrings, type hints, and example usage.
+1. Radical computation via trial division
+2. ABC triple finder with quality ranking
+3. Radical entropy and redundancy analysis
+4. Prime factorization utilities
+5. Fermat radical bound verification
 """
 
-from typing import Optional
-import math
+from math import gcd, log, factorial, prod, isqrt
+from typing import Dict, List, Optional, Set, Tuple
+from collections import defaultdict
 
 
-def prime_factorization(n: int) -> dict[int, int]:
+def factorize(n: int) -> Dict[int, int]:
     """
-    Compute the prime factorization of n.
+    Complete prime factorization of n.
 
-    Returns a dictionary mapping each prime factor to its exponent.
+    Returns dict {prime: exponent}.
+    Time complexity: O(sqrt(n))
+    Space complexity: O(log n) for the factor dict.
 
-    Time complexity: O(√n)
-    Space complexity: O(log n)
-
-    Examples:
-        >>> prime_factorization(12)
-        {2: 2, 3: 1}
-        >>> prime_factorization(1)
-        {}
-        >>> prime_factorization(100)
-        {2: 2, 5: 2}
+    >>> factorize(360)
+    {2: 3, 3: 2, 5: 1}
     """
     if n <= 1:
         return {}
-    factors: dict[int, int] = {}
+    factors: Dict[int, int] = {}
     d = 2
-    while d * d <= n:
-        while n % d == 0:
+    temp = abs(n)
+    while d * d <= temp:
+        while temp % d == 0:
             factors[d] = factors.get(d, 0) + 1
-            n //= d
+            temp //= d
         d += 1
-    if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+    if temp > 1:
+        factors[temp] = 1
     return factors
 
 
 def radical(n: int) -> int:
     """
-    Compute rad(n), the product of distinct prime divisors of n.
+    Compute rad(n) = product of distinct prime factors of n.
 
-    The radical is the squarefree kernel of n — the largest squarefree
-    divisor. It satisfies:
-      - rad(n) | n
-      - rad(n) is squarefree
-      - rad(n^k) = rad(n) for k ≥ 1
-      - rad(m·n) = rad(m)·rad(n) when gcd(m,n) = 1
+    Time complexity: O(sqrt(n))
 
-    Time complexity: O(√n)
-    Space complexity: O(log n)
-
-    Examples:
-        >>> radical(12)    # 12 = 2² × 3, rad = 2 × 3 = 6
-        6
-        >>> radical(100)   # 100 = 2² × 5², rad = 2 × 5 = 10
-        10
-        >>> radical(30)    # 30 = 2 × 3 × 5, rad = 30 (already squarefree)
-        30
+    >>> radical(360)
+    30
+    >>> radical(1)
+    1
     """
-    if n <= 0:
+    if n <= 1:
         return 1
-    result = 1
-    for p in prime_factorization(n):
-        result *= p
-    return result
+    return prod(factorize(n).keys())
 
 
 def prime_omega(n: int) -> int:
     """
-    Compute ω(n), the number of distinct prime factors of n.
+    Count distinct prime factors: ω(n).
 
-    This is the "prime support size" or "prime complexity" of n.
-
-    Examples:
-        >>> prime_omega(12)   # 2² × 3
-        2
-        >>> prime_omega(30)   # 2 × 3 × 5
-        3
-        >>> prime_omega(1)
-        0
+    >>> prime_omega(360)
+    3
     """
-    return len(prime_factorization(n))
+    return len(factorize(n))
 
 
-def gcd(a: int, b: int) -> int:
-    """Compute the greatest common divisor of a and b."""
-    while b:
-        a, b = b, a % b
-    return a
-
-
-def is_squarefree(n: int) -> bool:
+def big_omega(n: int) -> int:
     """
-    Check if n is squarefree (not divisible by any perfect square > 1).
+    Count prime factors with multiplicity: Ω(n).
 
-    Examples:
-        >>> is_squarefree(30)
-        True
-        >>> is_squarefree(12)   # divisible by 4
-        False
+    >>> big_omega(360)
+    6
     """
-    if n <= 0:
-        return False
-    for _, exp in prime_factorization(n).items():
-        if exp >= 2:
-            return False
-    return True
+    return sum(factorize(n).values())
 
 
-def is_primitive_abc_triple(a: int, b: int, c: int) -> bool:
+def redundancy(n: int) -> float:
     """
-    Check if (a, b, c) forms a primitive ABC triple.
+    Compute redundancy = n / rad(n).
+    Measures how much 'repeated' information the factorization carries.
+    A number is squarefree iff redundancy = 1.
 
-    A primitive ABC triple satisfies:
-      - a, b, c > 0
-      - a + b = c
-      - gcd(a, b) = 1
-
-    Examples:
-        >>> is_primitive_abc_triple(1, 8, 9)
-        True
-        >>> is_primitive_abc_triple(2, 4, 6)   # gcd(2,4) = 2
-        False
+    >>> redundancy(360)
+    12.0
+    >>> redundancy(30)
+    1.0
     """
-    return a > 0 and b > 0 and c > 0 and a + b == c and gcd(a, b) == 1
+    r = radical(n)
+    return n / r if r > 0 else float('inf')
 
 
 def abc_quality(a: int, b: int, c: int) -> float:
     """
-    Compute the ABC quality q(a,b,c) = log(c) / log(rad(abc)).
+    Compute the quality of an ABC triple: q(a,b,c) = log(c) / log(rad(abc)).
 
-    The ABC conjecture asserts that for any ε > 0, there are only finitely
-    many primitive triples with quality > 1 + ε.
+    The ABC conjecture states that for every ε > 0, there are only finitely
+    many triples with quality > 1 + ε.
 
-    Returns float('inf') if rad(abc) = 1.
-
-    Examples:
-        >>> round(abc_quality(1, 8, 9), 4)
-        1.2263
+    >>> abc_quality(1, 8, 9)  # rad(72) = 6, log(9)/log(6) ≈ 1.226
+    1.2264...
     """
     r = radical(a * b * c)
     if r <= 1:
         return float('inf')
-    return math.log(c) / math.log(r)
+    return log(c) / log(r)
 
 
-def exceeds_discrete_quality(m: int, a: int, b: int, c: int) -> bool:
+def is_abc_triple(a: int, b: int, c: int) -> bool:
+    """Check if (a, b, c) forms a valid ABC triple."""
+    return a >= 1 and b >= 1 and c >= 1 and a + b == c and gcd(a, b) == 1
+
+
+def find_high_quality_triples(
+    limit: int,
+    min_quality: float = 1.0
+) -> List[Tuple[int, int, int, float]]:
     """
-    Test the discrete ABC quality inequality: c^m > rad(abc)^(m+1).
+    Find all ABC triples (a, b, c) with c ≤ limit and quality > min_quality.
 
-    This is the computational counterpart of the formal theorem
-    `exceedsQuality_sound` in the Lean formalization.
+    Algorithm: Iterate over c from 3 to limit, then over a from 1 to c/2.
+    Time complexity: O(limit^2 * sqrt(limit)) in worst case.
 
-    Args:
-        m: The quality exponent (m ≥ 1 for meaningful tests)
-        a, b, c: Components of the ABC triple
-
-    Examples:
-        >>> exceeds_discrete_quality(1, 5, 27, 32)  # quality ≈ 1.43
-        True
-        >>> exceeds_discrete_quality(1, 1, 2, 3)     # quality ≈ 1.23
-        True
+    Returns list of (a, b, c, quality) sorted by decreasing quality.
     """
-    r = radical(a * b * c)
-    return c ** m > r ** (m + 1)
-
-
-def abc_quality_distribution(max_c: int, bins: int = 20) -> dict[str, object]:
-    """
-    Analyze the distribution of ABC quality values for all primitive
-    triples with c ≤ max_c.
-
-    Returns a dictionary with:
-      - 'total': total number of triples
-      - 'histogram': quality distribution histogram
-      - 'max_quality': highest observed quality
-      - 'above_one': count with quality > 1
-      - 'above_1_5': count with quality > 1.5
-
-    Time complexity: O(max_c² × √max_c) (naive enumeration)
-    """
-    qualities: list[float] = []
-
-    for c in range(3, max_c + 1):
-        for a in range(1, c):
+    results: List[Tuple[int, int, int, float]] = []
+    for c in range(3, limit + 1):
+        for a in range(1, (c + 1) // 2):
             b = c - a
-            if b > 0 and a <= b and gcd(a, b) == 1:
-                q = abc_quality(a, b, c)
-                if q < float('inf'):
-                    qualities.append(q)
+            if gcd(a, b) != 1:
+                continue
+            q = abc_quality(a, b, c)
+            if q > min_quality:
+                results.append((a, b, c, q))
+    return sorted(results, key=lambda x: -x[3])
 
-    if not qualities:
-        return {'total': 0, 'histogram': {}, 'max_quality': 0,
-                'above_one': 0, 'above_1_5': 0}
 
-    min_q = min(qualities)
-    max_q = max(qualities)
-    step = (max_q - min_q) / bins if max_q > min_q else 1
+def radical_entropy_profile(n: int) -> Dict[str, float]:
+    """
+    Compute the 'radical entropy profile' of n.
 
-    histogram: dict[float, int] = {}
-    for q in qualities:
-        bucket = round((q - min_q) / step) * step + min_q if step > 0 else min_q
-        bucket = round(bucket, 3)
-        histogram[bucket] = histogram.get(bucket, 0) + 1
+    This cross-domain concept connects number theory to information theory:
+    - diversity: number of distinct primes (ω(n))
+    - redundancy: n / rad(n)
+    - compression_ratio: log(rad(n)) / log(n)
+    - entropy: -Σ (e_i/Ω(n)) * log(e_i/Ω(n)) over prime factors
+
+    A squarefree number has maximal compression ratio (1.0) and
+    zero redundancy beyond 1.
+    """
+    factors = factorize(n)
+    if not factors:
+        return {"diversity": 0, "redundancy": 1.0,
+                "compression_ratio": 1.0, "entropy": 0.0}
+
+    rad_n = prod(factors.keys())
+    total_exp = sum(factors.values())
+
+    # Shannon entropy of exponent distribution
+    entropy = 0.0
+    for e in factors.values():
+        p = e / total_exp
+        if p > 0:
+            entropy -= p * log(p)
 
     return {
-        'total': len(qualities),
-        'histogram': dict(sorted(histogram.items())),
-        'max_quality': max_q,
-        'min_quality': min_q,
-        'mean_quality': sum(qualities) / len(qualities),
-        'above_one': sum(1 for q in qualities if q > 1),
-        'above_1_5': sum(1 for q in qualities if q > 1.5),
+        "diversity": len(factors),
+        "redundancy": n / rad_n,
+        "compression_ratio": log(rad_n) / log(n) if n > 1 else 1.0,
+        "entropy": entropy,
     }
 
 
-def fermat_quality_analysis(max_n: int = 20) -> list[dict[str, object]]:
+def verify_fermat_radical_bound(max_base: int = 20, max_exp: int = 6) -> bool:
     """
-    Analyze what ABC quality a hypothetical Fermat solution a^n + b^n = c^n
-    would require, and compare with observed quality bounds.
+    Verify that rad(x^n * y^n * z^n) ≤ xyz for small values.
 
-    The key insight: if a^n + b^n = c^n with coprime a,b, then
-    rad(abc) ≤ abc ≤ c^3, so quality ≥ n/3.
-
-    For large n, this exceeds all observed qualities, providing evidence
-    that the ABC conjecture implies asymptotic FLT.
+    This is our formally proved theorem: for coprime x, y and z = x + y
+    (or any z), the radical of the product of powers is bounded by the
+    product of bases.
     """
-    results = []
-    for n in range(3, max_n + 1):
-        min_quality = n / 3.0
-        results.append({
-            'n': n,
-            'min_quality': min_quality,
-            'description': f"FLT exponent n={n} requires quality ≥ {min_quality:.2f}"
-        })
-    return results
+    all_pass = True
+    for x in range(1, max_base + 1):
+        for y in range(1, max_base + 1):
+            for n in range(1, max_exp + 1):
+                z = x + y  # not a Fermat solution, but bound still holds
+                val = x**n * y**n * z**n
+                r = radical(val)
+                bound = x * y * z
+                if r > bound:
+                    print(f"FAIL: rad({x}^{n}*{y}^{n}*{z}^{n}) = {r} > {bound}")
+                    all_pass = False
+    return all_pass
 
 
-# Example usage and verification
+def verify_radical_factorial_bound(max_n: int = 100) -> bool:
+    """
+    Verify the conjecture rad(n!) ≥ n for n ≥ 2.
+
+    This is formally proved using Bertrand's postulate in our Lean code.
+    """
+    all_pass = True
+    for n in range(2, max_n + 1):
+        r = radical(factorial(n))
+        if r < n:
+            print(f"FAIL: rad({n}!) = {r} < {n}")
+            all_pass = False
+    return all_pass
+
+
+def primorial(n: int) -> int:
+    """Compute the primorial: product of all primes ≤ n."""
+    result = 1
+    for p in sieve_primes(n):
+        result *= p
+    return result
+
+
+def sieve_primes(n: int) -> List[int]:
+    """Sieve of Eratosthenes up to n."""
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, isqrt(n) + 1):
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, n + 1) if is_prime[i]]
+
+
 if __name__ == "__main__":
-    print("=== Algorithm Verification ===\n")
+    # Quick verification
+    print("Verifying Fermat radical bound (small values)...")
+    assert verify_fermat_radical_bound(10, 4), "Fermat radical bound FAILED"
+    print("✓ Passed\n")
 
-    # Verify radical properties
-    print("Radical properties:")
-    for n in [1, 6, 12, 30, 60, 100, 360]:
-        r = radical(n)
-        divides = n % r == 0
-        sf = is_squarefree(r)
-        print(f"  rad({n}) = {r}, divides {n}: {divides}, squarefree: {sf}")
+    print("Verifying radical factorial bound...")
+    assert verify_radical_factorial_bound(50), "Radical factorial bound FAILED"
+    print("✓ Passed\n")
 
-    print()
+    # Show some high-quality triples
+    print("High-quality ABC triples (c ≤ 10000):")
+    triples = find_high_quality_triples(10000, 1.2)
+    for a, b, c, q in triples[:10]:
+        print(f"  ({a}, {b}, {c}): quality = {q:.4f}, rad = {radical(a*b*c)}")
 
-    # Verify rad(n^k) = rad(n)
-    print("Radical of powers (rad(n^k) = rad(n)):")
-    for n in [6, 12, 30]:
-        for k in [1, 2, 3, 5]:
-            r1 = radical(n ** k)
-            r2 = radical(n)
-            print(f"  rad({n}^{k}) = {r1}, rad({n}) = {r2}, equal: {r1 == r2}")
-
-    print()
-
-    # Verify rad multiplicativity for coprimes
-    print("Radical multiplicativity (coprime case):")
-    for m, n in [(6, 35), (8, 9), (10, 21)]:
-        if gcd(m, n) == 1:
-            r_prod = radical(m * n)
-            r_m = radical(m)
-            r_n = radical(n)
-            print(f"  rad({m}×{n}) = {r_prod}, rad({m})×rad({n}) = {r_m * r_n}, "
-                  f"equal: {r_prod == r_m * r_n}")
-
-    print()
-
-    # Quality distribution
-    print("Quality distribution for c ≤ 500:")
-    dist = abc_quality_distribution(500)
-    print(f"  Total triples: {dist['total']}")
-    print(f"  Max quality: {dist['max_quality']:.4f}")
-    print(f"  Mean quality: {dist['mean_quality']:.4f}")
-    print(f"  Triples with quality > 1: {dist['above_one']}")
-    print(f"  Triples with quality > 1.5: {dist['above_1_5']}")
+    # Show entropy profiles
+    print("\nRadical entropy profiles:")
+    for n in [30, 360, 2310, 65536, 720720]:
+        profile = radical_entropy_profile(n)
+        print(f"  n={n}: {profile}")
