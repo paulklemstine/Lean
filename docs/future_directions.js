@@ -1487,10 +1487,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "40d5934b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
@@ -5540,10 +5540,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5800806f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9a49885",
     "timestamp": "2026-05-29T17:49:37.977486+00:00"
   },
   {
@@ -7703,6 +7703,69 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-30T12:55:41.955460+00:00"
   },
   {
+    "id": "fd_2225",
+    "title": "This research cycle established formal foundations for the Happy End Problem by ",
+    "description": "# Future Directions: Happy End Problem Research\n\n## Synthesis\n\nThis research cycle established formal foundations for the Happy End Problem by proving the cup all-triples theorem, cap all-triples theorem, cup-cap duality, and ES number monotonicity. The most significant cross-domain connection discovered is the formal bridge between geometric orientation (cups/caps) and order-theoretic structure (monotone subsequences/Dilworth's theorem). This bridge \u2014 formalized as the Dilworth-ES equivalence \u2014 suggests that techniques from partial order theory could be adapted to attack the geometric problem.\n\nThe introduction of *convex depth* as a quantitative measure opens a new dimension of analysis. Rather than asking the binary question \"does ES(n) equal some value?\", convex depth lets us track how geometric complexity accumulates as points are added. This connects to the broader Catalog themes in combinatorial optimization (see `Computation/InfoEfficientAlgorithms.lean`) and could benefit from the tropical geometry techniques in `Tropical/`.\n\nThe highest breakthrough potential lies in Direction 1 (the cup-cap inductive theorem), as it would immediately yield the classical ES upper bound and connect to the existing Erd\u0151s-Szekeres monotone subsequence formalization in `Geometry/MonotoneSubseq.lean`. Direction 3 (convex depth growth rates) is the most novel and could open entirely new research avenues.\n\n---\n\n### Direction 1: Full Cup-Cap Inductive Theorem\n\n**Conjecture**: For all j, k \u2265 2, any set of C(j+k\u22124, j\u22122) + 1 points in general position (with distinct x-coordinates) contains a j-cup or a k-cap.\n\n**Test**: Formalize the inductive proof: if the result holds for (j\u22121, k) and (j, k\u22121), then it holds for (j, k). The base cases j = 2 (any 2 points form a cup) and k = 2 (any 2 points form a cap) are trivial. Verify the binomial identity C(j+k\u22124, j\u22122) = C(j+k\u22125, j\u22123) + C(j+k\u22125, j\u22122).\n\n**Impact**: This would immediately give the classical ES upper bound ES(n) \u2264 C(2n\u22124, n\u22122) + 1, and combined with our cup/cap \u2192 convex position theorems, would give a complete formal proof that ES(n) is finite. This is a prerequisite for all further formalization work on the Happy End Problem.\n\n**Catalog References**: `Geometry/MonotoneSubseq.lean` (erdos_szekeres_monotone), `Geometry/CupsCaps.lean` (cup_all_triples_positive, cap_all_triples_negative), `Geometry/ErdosSzekeres/Defs.lean`\n\n**Proof Strategy**: The key challenge is managing the induction over the pair (j, k) simultaneously. Define a predicate CupCapThm(j, k, m) stating \"m points contain a j-cup or k-cap\". Prove by strong induction on j + k. The main lemma needed: given m + 1 points, if the last point extends neither any existing (j\u22121)-cup to a j-cup, then removing it and applying IH to (j, k\u22121) on the remaining m points yields the result.\n\n**Domain Bridges**: Geometry <-> Combinatorics\n\n**Lineage**: Builds on `cup_all_positive` and `cap_all_negative` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: ES(4) = 5 Complete Formalization\n\n**Conjecture**: GuaranteesConvexNGon 5 4, i.e., any 5 points in general position with distinct x-coordinates contain 4 in convex position.\n\n**Test**: Prove this by case analysis on the orientations of the 5 points sorted by x-coordinate. There are C(5,3) = 10 triples, each with two possible orientations (positive or negative, since we're in general position), but the geometric constraints drastically reduce the cases.\n\n**Impact**: Completes the formal verification of all known small cases (n = 3 was proved in the catalog, n = 4 is the next step). This is essential for validating the computational approach and building confidence in the formalization framework.\n\n**Catalog References**: `Geometry/CupsCaps.lean` (three_points_convex), `Geometry/ErdosSzekeres/Defs.lean` (GeneralPosition, InConvexPosition)\n\n**Proof Strategy**: Sort 5 points by x-coordinate as p\u2081, ..., p\u2085. Consider the orientation signs of consecutive triples (1,2,3), (2,3,4), (3,4,5). By pigeonhole, at least two of these three share a sign. If all three are positive: points form a 5-cup, extract any 4 for a convex quadrilateral. If two consecutive are positive and one negative (or vice versa): case analysis yields a 4-cup, 4-cap, or mixed configuration that still contains 4 convex points. Each case uses the orient transitivity theorems.\n\n**Domain Bridges**: Geometry <-> Logic (case analysis)\n\n**Lineage**: Builds on `cup_all_positive`, `cap_all_negative`, `uniform_positive_convex`, and `convex_ngon_contains_sub` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Convex Depth Growth Rate Conjecture\n\n**Conjecture**: For n points uniformly distributed in a convex region of the plane, the expected convex depth grows as \u0398(log n / log log n).\n\n**Test**: (1) Implement a Monte Carlo simulation generating random point sets of sizes n = 10, 50, 100, 500, 1000 and computing convex depth. (2) Fit the growth rate against log n, sqrt(n), and log n / log log n. (3) If the conjecture is correct, the fit to log n / log log n should have the smallest residual.\n\n**Impact**: If true, this would be the first quantitative result about the \"typical\" behavior of the Happy End Problem (as opposed to worst-case). It would connect to the probabilistic methods used in Suk's upper bound and potentially yield new proof techniques. If false, the actual growth rate would still be a significant finding.\n\n**Catalog References**: `Geometry/ErdosSzekeres/HappyEnd.lean` (ConvexDepth, convex_depth_le_card), `Computation/InfoEfficientAlgorithms.lean` (potential connections to information-theoretic bounds)\n\n**Proof Strategy**: For a formal lower bound, use the Erd\u0151s-Szekeres theorem to show ConvexDepth \u2265 \u2308log\u2082 n\u2309 + 2. For the upper bound, use probabilistic arguments: the probability that k random points are in convex position is approximately 2^(k\u22121)/k!, which becomes vanishingly small for k >> log n.\n\n**Domain Bridges**: Geometry <-> Probability, Geometry <-> Computation\n\n**Lineage**: Novel direction based on the ConvexDepth definition introduced in this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Geometry Bridge to ES Numbers\n\n**Conjecture**: The Erd\u0151s-Szekeres number ES(n) can be expressed as the tropical permanent of a specific n\u00d7n matrix derived from the orientation predicate.\n\n**Test**: Compute the tropical permanent for the orientation matrices at n = 3, 4, 5, 6 and check if they match the known ES values. The tropical permanent of a matrix A is max_\u03c3 \u03a3\u1d62 A(i,\u03c3(i)), where the max is over permutations.\n\n**Impact**: If true, this would be a revolutionary connection between combinatorial geometry and tropical algebraic geometry. It would suggest that the ES conjecture could be attacked using tropical techniques (Newton polytopes, tropical intersection theory). Even if false, the investigation would likely reveal structural properties of the orientation matrix.\n\n**Catalog References**: `Tropical/` (tropical algebra framework), `Geometry/TropicalTransversality.lean`, `Geometry/ErdosSzekeres/HappyEnd.lean` (ESNumber, orient)\n\n**Proof Strategy**: Define the orientation matrix O(i,j) = max over k of |orient(p\u1d62, p\u2c7c, p\u2096)| for a specific \"extremal\" point configuration. Compute its tropical permanent using the algorithms in the Tropical catalog. Compare with ES(n) for small n. If a pattern emerges, prove it for general n using the cup-cap theorem.\n\n**Domain Bridges**: Geometry <-> Tropical\n\n**Lineage**: Novel bridge exploiting the Tropical catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Algorithmic Convex Depth with Machine Learning\n\n**Conjecture**: A graph neural network (GNN) can predict the convex depth of a point configuration to within \u00b11 with > 90% accuracy on configurations of size \u2264 50, after training on configurations of size \u2264 30.\n\n**Test**: (1) Generate training data: 100,000 point configurations of sizes 5-30 with computed convex depths. (2) Train a GNN that takes the point configuration as input and predicts convex depth. (3) Evaluate on test configurations of sizes 31-50. (4) Report accuracy and analyze failure cases.\n\n**Impact**: If successful, this would demonstrate that geometric invariants like convex depth have learnable structure, bridging machine learning with combinatorial geometry. The failure cases could reveal structural properties that are hard for neural networks, suggesting new mathematical conjectures.\n\n**Catalog References**: `MachineLearning/` (ML framework), `Geometry/ErdosSzekeres/HappyEnd.lean` (ConvexDepth), `Bridges/` (cross-domain bridge framework)\n\n**Proof Strategy**: This is primarily an empirical direction. The formalized convex depth definition provides ground truth labels for training. The GNN architecture should use the Delaunay triangulation of the point set as the graph structure. After training, analyze the learned representations to extract geometric insights.\n\n**Domain Bridges**: Geometry <-> MachineLearning\n\n**Lineage**: Builds on ConvexDepth definition and the ML catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c3bbe9a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:31:06.105135+00:00"
+  },
+  {
+    "id": "fd_2226",
+    "title": "This cycle established the first certified quality bounds for noisy fermion samp",
+    "description": "# Future Directions: Certified Fermion Sampling\n\n## Synthesis\n\nThis cycle established the first certified quality bounds for noisy fermion sampling, bridging quantum information theory (depolarizing noise models) with probabilistic combinatorics (DPP negative dependence). The key insight is that the depolarizing channel's contraction property, combined with inductive error accumulation and product perturbation bounds, yields computable certificates for sampling quality.\n\nThe most promising cross-domain connection is the **fermion-DPP-Lorentzian triangle**: fermionic states (quantum physics) correspond to DPP kernels (probability), whose generating polynomials have Lorentzian structure (algebraic geometry). Our noise perturbation theory enters at the DPP kernel level; extending it to the Lorentzian polynomial level would connect quantum noise to log-concavity preservation\u2014a fundamentally new direction bridging physics and algebraic combinatorics. The catalog's `Speculative/AutoResearch/DPPLorentzian.lean` provides the Lorentzian side; our `Pythagorean/CertifiedFermionSampling.lean` provides the noise side; the bridge between them is the highest-potential breakthrough target.\n\nThe catalog's `Pythagorean/HigherOrderMinorPerturbation.lean` provides k\u00d7k minor perturbation bounds that our work uses at k=2. Extending to general k would yield certified k-wise negative dependence, relevant to k-DPP sampling algorithms used in machine learning subset selection. The `Pythagorean/RobustCertificateCompilation.lean` fidelity bounds offer a parallel pathway through quantum state fidelity rather than kernel perturbation.\n\n---\n\n### Direction 1: Lorentzian Polynomial Stability Under Quantum Noise\n\n**Conjecture**: If the homogeneous components Z_{K,d}(x) of a DPP partition function are Lorentzian polynomials (in the Br\u00e4nd\u00e9n-Huh sense), then the components Z_{K',d}(x) of the noisy kernel K' = \u03a6_\u03b5^d(K) remain (\u03b4, M)-approximately Lorentzian, where \u03b4 depends polynomially on the noise-depth product d\u03b5.\n\n**Test**: For n = 4, 6, 8 modes, compute the generating polynomial Z_K(x) = det(I + diag(x)\u00b7K) for exact and noisy kernels. Check whether the Hessian of log(Z_{K',d}) remains negative semidefinite (the Lorentzian condition) on the positive orthant. If it fails for small noise, the conjecture is false; if it holds up to a quantifiable threshold, the conjecture is confirmed.\n\n**Impact**: If true, this would show that quantum noise preserves the algebraic-geometric structure (Lorentzianity) that implies negative dependence, not just the pairwise version. This would be the first connection between quantum error theory and Hodge-theoretic combinatorics\u2014a genuinely new mathematical bridge.\n\n**Catalog References**: `Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel, dpp_uniformSpecialization), `Pythagorean/CertifiedFermionSampling.lean` (depolarizingChannel, certified_neg_dep_quality)\n\n**Proof Strategy**: Use the explicit formula \u03a6_\u03b5^d(K) = (1-\u03b5)^d K + ((1-(1-\u03b5)^d)/2)I to show that the noisy kernel is a convex combination of K and (1/2)I. Since both are PSD with eigenvalues in [0,1], and the Lorentzian cone is known to be stable under certain convex combinations, apply the Br\u00e4nd\u00e9n-Huh stability theorem for Lorentzian polynomials under positive operator perturbation.\n\n**Domain Bridges**: Quantum Information <-> Algebraic Geometry, Physics <-> Combinatorics\n\n**Lineage**: Extends `certified_neg_dep_quality` from pairwise to full Lorentzian structure. Builds on `dpp_uniformSpecialization` from the DPPLorentzian catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: k-Wise Negative Dependence Certification via Higher-Order Minor Perturbation\n\n**Conjecture**: For a noisy fermionic correlation matrix K' = \u03a6_\u03b5^d(K), the k-point inclusion probability satisfies:\n\n|det(K_S) - det(K'_S)| \u2264 k \u00b7 k! \u00b7 (3d\u03b5/2)^{k-1} \u00b7 (3d\u03b5/2)\n\nfor any k-element subset S, where the right side is the minor perturbation polynomial P(k, 1) \u00b7 (3d\u03b5/2) from `HigherOrderMinorPerturbation.lean`.\n\n**Test**: For n = 8, compute all k-element principal minors (k = 2, 3, 4) of K and K' for various noise levels. Verify the bound holds and measure the tightness ratio. If the bound fails for any parameter, the polynomial constant may need correction.\n\n**Impact**: k-wise negative dependence is required for k-DPP sampling algorithms used in machine learning (document summarization, recommendation systems). Certified k-wise bounds would provide the first provable quality guarantees for DPP-based ML pipelines running on noisy quantum hardware.\n\n**Catalog References**: `Pythagorean/HigherOrderMinorPerturbation.lean` (minorPerturbPoly, det_perturb_bound, k_point_correlation_stability), `Pythagorean/CertifiedFermionSampling.lean` (circuit_noise_accumulation_entry)\n\n**Proof Strategy**: Combine the entry-wise bound \u03b7 = 3d\u03b5/2 from `circuit_noise_accumulation_entry` with the k\u00d7k determinant perturbation bound from `det_perturb_bound`. The composition gives det(K_S) - det(K'_S) in terms of P(k, M) \u00b7 \u03b7 where M = 1 from the entry bound.\n\n**Domain Bridges**: Probability <-> Machine Learning, Quantum Information <-> Combinatorics\n\n**Lineage**: Directly combines `circuit_noise_accumulation_entry` with `det_perturb_bound` and `k_point_correlation_stability`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Correlated Noise Models and Spatial Decay\n\n**Conjecture**: For spatially correlated depolarizing noise with correlation length \u03be (where the noise on gates at distance > \u03be is independent), the error accumulation bound improves to:\n\n\u2016K - K'\u2016_max \u2264 C \u00b7 (d/\u03be) \u00b7 \u03b5 \u00b7 \u03be = C \u00b7 d \u00b7 \u03b5 (same order)\n\nbut the negative dependence perturbation improves to O(d\u03b5) instead of O(d\u00b2\u03b5\u00b2) for pairs (i,j) with |i-j| > \u03be, because distant pairs experience independent noise.\n\n**Test**: Implement a spatially correlated noise model where \u03a6_{\u03b5,\u03be}(K) applies correlated depolarizing noise with exponential spatial decay. Compare the pair inclusion perturbation |P_K(i,j) - P_{K'}(i,j)| for near pairs (|i-j| < \u03be) vs. far pairs (|i-j| > \u03be). The conjecture predicts far pairs have smaller defects.\n\n**Impact**: Real quantum hardware has spatially structured noise (nearby qubits have correlated errors). Spatial decay bounds would give much tighter certification for large systems, potentially extending certified fermion sampling from n \u2248 10 to n \u2248 100 modes.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (depolarizing_channel_contraction_entry, circuit_noise_accumulation_entry), `FINAL/Pythagorean/WreathPerturbation.lean` (entropy_correction_from_pressure_perturbation)\n\n**Proof Strategy**: Decompose the circuit into spatial blocks of size \u03be. Within each block, apply the existing contraction bounds. Between blocks, use independence to reduce the effective depth from d to d/\u03be for cross-block correlations. The product perturbation bound then gives improved constants for distant pairs.\n\n**Domain Bridges**: Quantum Information <-> Statistical Physics, Condensed Matter <-> Probability\n\n**Lineage**: Extends `circuit_noise_accumulation_entry` from site-independent to spatially correlated noise. The entropy perturbation from `WreathPerturbation.lean` provides a template for structured perturbation analysis.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Online Certification and Adaptive Circuits\n\n**Conjecture**: There exists a polynomial-time online algorithm that, given streaming measurement outcomes from a noisy fermion sampler, produces a running estimate of the negative dependence defect with certified confidence intervals, using O(n\u00b2) space and O(n\u00b2) time per sample.\n\n**Test**: Implement the online certifier and run it on simulated noisy fermion samples for n = 4, 8. Compare the running certified bound with the batch bound from `certified_neg_dep_quality`. The online bound should converge to a tighter estimate as more samples are collected.\n\n**Impact**: Online certification enables real-time quality monitoring during quantum computation. If the estimated noise exceeds the threshold, the algorithm can signal to adjust circuit parameters or increase error correction. This is the bridge from mathematical theory to practical quantum computing operations.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (noise_threshold_certified, certified_neg_dep_quality), `Pythagorean/RobustCertificateCompilation.lean` (fidelity_bound_from_perturbation)\n\n**Proof Strategy**: Estimate the noise rate \u03b5 from measurement statistics using the relation \u03a6_\u03b5^d(I)_{ii} = (1 + (1-\u03b5)^d)/2. Invert this to get \u03b5\u0302 = 1 - ((2K\u0302_{ii} - 1))^{1/d}. Then apply `certified_neg_dep_quality` with the estimated parameters. Concentration inequalities (Hoeffding) give confidence bounds on \u03b5\u0302.\n\n**Domain Bridges**: Quantum Information <-> Statistics, Computation <-> Physics\n\n**Lineage**: Builds on `noise_threshold_certified` and the `bernoulli_depolarizing` tightness analysis.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Fermion Sampling Complexity Under Certified Noise\n\n**Conjecture**: For any fermionic Gaussian state with correlation matrix K satisfying min_{i<j} P_K(i,j) \u2265 \u03b4, there exists a classical algorithm that, given oracle access to the noisy quantum sampler \u03a6_\u03b5^d(K), produces samples from a distribution within total variation distance O(n\u00b2 \u00b7 d\u03b5) of the ideal DPP, in time O(n\u00b3) per sample, provided d\u03b5 < \u03b4/(6n).\n\n**Test**: Implement the classical correction algorithm: (1) estimate K' from samples, (2) compute K\u0302 = (K' - (1-(1-\u03b5\u0302)^d)/2 \u00b7 I) / (1-\u03b5\u0302)^d to \"denoise\" the kernel, (3) sample from the DPP with kernel K\u0302. Compare output distribution with ideal DPP via total variation distance estimated from 10,000 samples.\n\n**Impact**: If true, this would show that noisy fermion sampling can be *classically corrected* below a noise threshold, weakening quantum advantage claims but strengthening the utility of near-term quantum devices. The certified noise bounds from our work provide the error bars needed for the correction step.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (all results), `FINAL/Pythagorean/MonotoneCircuitComplexity.lean` (circuit_depth_lb_of_formula_depth_lb), `Pythagorean/HigherOrderMinorPerturbation.lean` (det_perturb_bound)\n\n**Proof Strategy**: The denoising step inverts the depolarizing channel: K\u0302 = (K' - shift\u00b7I) / contraction. The perturbation |K\u0302 - K| = |K' - K|/contraction \u2264 (3d\u03b5/2)/(1-\u03b5)^d. For small d\u03b5, this is approximately (3d\u03b5/2)(1 + d\u03b5 + ...) \u2248 3d\u03b5/2. Feed this into the DPP sampling algorithm with kernel perturbation analysis from `det_perturb_bound` to get total variation bounds.\n\n**Domain Bridges**: Quantum Information <-> Computational Complexity, Physics <-> Algorithms\n\n**Lineage**: Combines `certified_neg_dep_quality` with circuit complexity lower bounds from `circuit_depth_lb_of_formula_depth_lb` to understand the computational landscape of noisy fermion sampling.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e3763bc3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:31:30.523866+00:00"
+  },
+  {
+    "id": "fd_2227",
+    "title": "This research cycle established that expansion certificates form a compositional",
+    "description": "# Future Directions: Expansion Certificate Algebra\n\n## Synthesis\n\nThis research cycle established that expansion certificates form a compositional algebraic framework, with three key discoveries: (1) certificates compose under tensor products with gap = min(\u03b5\u2081, \u03b5\u2082), providing a clean interface for product constructions; (2) the coding theory bridge \u2014 code distance from spectral gap \u2014 is sharp and directly applicable, with the \"expansion regime\" condition \u03b4 > 1 - \u03b5 determining feasibility; (3) the rank-field tradeoff q \u2265 2(n+1) \u27f9 gap \u2265 1/2 is tight and provides a concrete design rule for applications.\n\nThe most promising cross-domain connection is the **expansion \u2192 coding theory** bridge. The `code_distance_positive` theorem and `better_expansion_better_code` theorem from `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` provide a complete pipeline from representation-theoretic data (character ratios) to engineering specifications (code distance). This pipeline is currently formal but abstract \u2014 instantiating it with explicit codes built from actual symplectic Cayley graphs would yield the first provably good LDPC codes from group-theoretic certificates.\n\nThe second major opportunity is extending the certificate framework beyond symplectic groups. The `ExpansionCertificate` structure is group-agnostic \u2014 it depends only on numerical data, not on the specific group. Producing certificates for orthogonal or unitary groups would immediately leverage all the composition and application theorems already proved.\n\n---\n\n### Direction 1: Universal Character-Ratio Constants via Coxeter Torus Analysis\n\n**Conjecture**: For the Coxeter torus in Sp\u2082\u2099(\ud835\udd3d_q), there exists a universal constant C (independent of n) such that for all ranks n \u2265 1 and all nontrivial irreducible representations \u03c1: |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C/q.\n\n**Test**: Compute character ratios for Sp\u2086(\ud835\udd3d_q), Sp\u2088(\ud835\udd3d_q), Sp\u2081\u2080(\ud835\udd3d_q) at q = 7, 11, 13 using GAP or MAGMA. If the fitted constants C\u2083, C\u2084, C\u2085 stabilize (all \u2264 4), the conjecture is supported. If C_n grows linearly with n, it is falsified. Our computational demo (`demo.py`, Demo 5) shows the naive bound C_n = n+1 grows linearly, but the actual Coxeter torus character ratios may be much smaller.\n\n**Impact**: If true, the spectral gap becomes 1 - C/q uniformly across ALL ranks \u2014 making expansion essentially rank-free. The `rank_free_expansion_from_conjecture` theorem in `SymplecticCertificateAlgebra.lean` shows this implies 0 < 1 - C/q for any q > C. This would transform the entire pipeline: mixing times, code distances, and derandomization bounds would all become independent of the group rank.\n\n**Catalog References**: `Catalog/Pythagorean/Sp2nExpansion.lean` (uniform_torus_type_all_ranks), `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (UniversalCharRatioConjecture, rank_free_expansion_from_conjecture)\n\n**Proof Strategy**: \n1. Use the Deligne-Lusztig character formula for Coxeter torus elements to express |\u03c7_\u03c1(s)| in terms of root system data.\n2. Bound the resulting sum using Weil's estimates for character sums over finite fields.\n3. The key step is showing that the sum over positive roots contributing to the character ratio telescopes when s lies in the Coxeter torus, producing a bound independent of n.\n4. Formalize this as a `CoxeterTorusCharRatioBound` lemma.\n\n**Domain Bridges**: NumberTheory <-> CombinatoricsAlgebra, RepresentationTheory <-> CodingTheory\n\n**Lineage**: Builds on `uniform_torus_type_all_ranks` and `conjecture_from_framework` from `Sp2nExpansion.lean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Explicit Expander Codes from Symplectic Certificates\n\n**Conjecture**: For each n \u2265 2 and prime q \u2265 2(n+1), the Tanner code built on the Cayley graph of Sp\u2082\u2099(\ud835\udd3d_q) with a Reed-Solomon inner code of distance \u03b4 = 0.5 achieves:\n- Rate \u2265 0.25\n- Relative distance \u2265 (0.5 - (n+1)/q) > 0\n- Linear-time decoding (via the Sipser-Spielman flip algorithm)\n\n**Test**: Construct the bipartite Cayley graph for Sp\u2084(\ud835\udd3d\u2081\u2083) explicitly (|G| \u2248 4.4 \u00d7 10\u2075), apply a [13, 7, 5] RS inner code, and verify: (1) the code rate matches the theoretical prediction, (2) the minimum distance meets the bound from `code_distance_positive`, (3) the flip decoder converges within O(n) iterations.\n\n**Impact**: This would produce the first explicitly constructed, provably good, efficiently decodable codes from the certificate framework. Current expander codes use random or Ramanujan graphs \u2014 symplectic certificates offer a systematic, parametric alternative.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpanderCodeParams, code_distance_positive, better_expansion_better_code)\n\n**Proof Strategy**:\n1. Define the Tanner code formally as a Lean structure importing `ExpanderCodeParams`.\n2. Prove that the bipartite Cayley graph of Sp\u2082\u2099(\ud835\udd3d_q) with the natural symplectic pairing yields a biregular bipartite graph.\n3. Use the `code_distance_positive` theorem to get the distance bound.\n4. Implement the flip decoder and prove convergence using the expansion property (spectral gap > 0 \u27f9 unique syndrome decoding for small-weight errors).\n\n**Domain Bridges**: Algebra <-> CodingTheory, RepresentationTheory <-> InformationTheory\n\n**Lineage**: Builds on `code_distance_positive` and `better_expansion_better_code` from `SymplecticCertificateAlgebra.lean`\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Quantum Symplectic Expanders and Error Correction\n\n**Conjecture**: The symplectic structure of Sp\u2082\u2099(\ud835\udd3d_q) naturally yields quantum LDPC codes via the symplectic inner product on \ud835\udd3d_q^{2n}. Specifically, the CSS code defined by the left and right kernels of the Cayley graph adjacency matrix of Sp\u2082\u2099(\ud835\udd3d_q) has:\n- Dimension \u2265 q^{n\u00b2/2} (exponential in the rank)\n- Distance \u2265 \u03a9(q^{n/2}) (polynomial in the field size)\n- Local check weight O(1) (constant-degree expander)\n\n**Test**: For Sp\u2084(\ud835\udd3d\u2085), construct the CSS code explicitly and compute its parameters. Verify that the code corrects at least 2 errors on 125 qubits.\n\n**Impact**: Quantum LDPC codes with good parameters are a major open problem. The symplectic structure is natural for quantum error correction (stabilizer codes are inherently symplectic), and the expansion property guarantees the code has good distance. This would bridge the classical expansion certificate theory directly to quantum computing.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpansionCertificate), `Catalog/Pythagorean/Sp2nExpansion.lean` (DLRankCharacterBoundCertificate), `Catalog/Pythagorean/BerggrenQuantumBridge.lean`\n\n**Proof Strategy**:\n1. Define the symplectic inner product \u03c9(v, w) = v\u1d40 J w on \ud835\udd3d_q^{2n}.\n2. Show that the Cayley graph adjacency matrix of Sp\u2082\u2099(\ud835\udd3d_q) preserves this inner product.\n3. Construct the CSS code from the kernel structure.\n4. Use the spectral gap from the certificate to bound the code distance via the quantum Singleton bound analog.\n\n**Domain Bridges**: Algebra <-> Physics, ExpansionTheory <-> QuantumComputing\n\n**Lineage**: Builds on the symplectic structure in `Sp2nExpansion.lean` and the certificate framework in `SymplecticCertificateAlgebra.lean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Certificate Framework for Other Classical Groups\n\n**Conjecture**: The `ExpansionCertificate` framework extends to all classical groups: SO\u2082\u2099\u208a\u2081(\ud835\udd3d_q), SU_n(\ud835\udd3d_{q\u00b2}), and SO\u2082\u2099\u207a(\ud835\udd3d_q). For each family, there exist uniform torus types yielding character-ratio bounds of the form C_n/q, with C_n growing at most linearly in the rank.\n\n**Test**: \n1. Compute character ratios for SO\u2085(\ud835\udd3d\u2087) and SO\u2087(\ud835\udd3d\u2081\u2081) using GAP.\n2. Verify that the fitted constants are comparable to the symplectic case.\n3. Check that the `tensor` operation on certificates correctly predicts the gap of product groups SO \u00d7 Sp.\n\n**Impact**: Extending to all classical groups would provide a complete library of expansion certificates, enabling optimal group selection for each application. Different groups have different structural properties (e.g., orthogonal groups have better parity properties, unitary groups connect to Hermitian geometry).\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpansionCertificate.tensor), `Catalog/Pythagorean/GL2SpectralGap.lean`, `Catalog/Pythagorean/G2CharacterSheafCertificate.lean`\n\n**Proof Strategy**:\n1. Define `IsUniformTorusType` for each family (already done for type C_n in `Sp2nExpansion.lean`).\n2. Identify the Coxeter torus for each family and compute its character ratios.\n3. For type B_n (orthogonal): use the branching rule Sp\u2082\u2099 \u2192 SO\u2082\u2099\u208a\u2081 to transfer bounds.\n4. For type A_n (unitary): use Deligne-Lusztig induction from the maximal torus.\n5. Package results as `DLRankCharacterBoundCertificate` instances.\n\n**Domain Bridges**: Algebra <-> Algebra (cross-family), RepresentationTheory <-> CombinatoricsAlgebra\n\n**Lineage**: Extends the certificate framework from type C_n to types A_n, B_n, D_n\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Automorphic Forms and Certificate Depth\n\n**Conjecture**: The character-ratio bound C_n/q in the expansion certificate for Sp\u2082\u2099(\ud835\udd3d_q) is related to special values of automorphic L-functions. Specifically, for the Coxeter torus element s:\n\n|\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| = O(q^{-1} \u00b7 L(1, \u03c1, Ad))\n\nwhere L(s, \u03c1, Ad) is the adjoint L-function of the automorphic representation corresponding to \u03c1.\n\n**Test**: For Sp\u2084(\ud835\udd3d_p) with p = 5, 7, 11, 13, compute both the character ratio and the corresponding L-function value. Check if the ratio |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u00b7 q correlates with L(1, \u03c1, Ad).\n\n**Impact**: This would connect the certificate framework to the Langlands program \u2014 the deepest current program in number theory. If character-ratio bounds are controlled by L-function values, then progress on L-function bounds (Lindel\u00f6f hypothesis, subconvexity) would automatically improve expansion certificates. Conversely, computational expansion data would provide numerical evidence about L-function behavior.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (charRatioBound, gapFromRank), `Catalog/Pythagorean/ModularFormsAdvanced.lean`, `Catalog/Pythagorean/Sp2nExpansion.lean`\n\n**Proof Strategy**:\n1. Use the Satake isomorphism to relate representations of Sp\u2082\u2099(\ud835\udd3d_q) to automorphic representations.\n2. Express the character ratio in terms of the Satake parameters.\n3. Identify the Satake parameters with L-function data via the local Langlands correspondence.\n4. Bound the resulting L-function values using known subconvexity estimates.\n\n**Domain Bridges**: NumberTheory <-> RepresentationTheory, AutomorphicForms <-> ExpansionTheory\n\n**Lineage**: Connects the certificate framework to the Langlands program via Satake parameters\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b6e4edfb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:32:16.764201+00:00"
+  },
+  {
     "id": "seed_043",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
@@ -7777,10 +7840,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.97,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "40b01f55",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
@@ -7861,15 +7924,16 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.598768+00:00"
   },
   {
-    "id": "fd_2225",
-    "title": "This research cycle established formal foundations for the Happy End Problem by ",
-    "description": "# Future Directions: Happy End Problem Research\n\n## Synthesis\n\nThis research cycle established formal foundations for the Happy End Problem by proving the cup all-triples theorem, cap all-triples theorem, cup-cap duality, and ES number monotonicity. The most significant cross-domain connection discovered is the formal bridge between geometric orientation (cups/caps) and order-theoretic structure (monotone subsequences/Dilworth's theorem). This bridge \u2014 formalized as the Dilworth-ES equivalence \u2014 suggests that techniques from partial order theory could be adapted to attack the geometric problem.\n\nThe introduction of *convex depth* as a quantitative measure opens a new dimension of analysis. Rather than asking the binary question \"does ES(n) equal some value?\", convex depth lets us track how geometric complexity accumulates as points are added. This connects to the broader Catalog themes in combinatorial optimization (see `Computation/InfoEfficientAlgorithms.lean`) and could benefit from the tropical geometry techniques in `Tropical/`.\n\nThe highest breakthrough potential lies in Direction 1 (the cup-cap inductive theorem), as it would immediately yield the classical ES upper bound and connect to the existing Erd\u0151s-Szekeres monotone subsequence formalization in `Geometry/MonotoneSubseq.lean`. Direction 3 (convex depth growth rates) is the most novel and could open entirely new research avenues.\n\n---\n\n### Direction 1: Full Cup-Cap Inductive Theorem\n\n**Conjecture**: For all j, k \u2265 2, any set of C(j+k\u22124, j\u22122) + 1 points in general position (with distinct x-coordinates) contains a j-cup or a k-cap.\n\n**Test**: Formalize the inductive proof: if the result holds for (j\u22121, k) and (j, k\u22121), then it holds for (j, k). The base cases j = 2 (any 2 points form a cup) and k = 2 (any 2 points form a cap) are trivial. Verify the binomial identity C(j+k\u22124, j\u22122) = C(j+k\u22125, j\u22123) + C(j+k\u22125, j\u22122).\n\n**Impact**: This would immediately give the classical ES upper bound ES(n) \u2264 C(2n\u22124, n\u22122) + 1, and combined with our cup/cap \u2192 convex position theorems, would give a complete formal proof that ES(n) is finite. This is a prerequisite for all further formalization work on the Happy End Problem.\n\n**Catalog References**: `Geometry/MonotoneSubseq.lean` (erdos_szekeres_monotone), `Geometry/CupsCaps.lean` (cup_all_triples_positive, cap_all_triples_negative), `Geometry/ErdosSzekeres/Defs.lean`\n\n**Proof Strategy**: The key challenge is managing the induction over the pair (j, k) simultaneously. Define a predicate CupCapThm(j, k, m) stating \"m points contain a j-cup or k-cap\". Prove by strong induction on j + k. The main lemma needed: given m + 1 points, if the last point extends neither any existing (j\u22121)-cup to a j-cup, then removing it and applying IH to (j, k\u22121) on the remaining m points yields the result.\n\n**Domain Bridges**: Geometry <-> Combinatorics\n\n**Lineage**: Builds on `cup_all_positive` and `cap_all_negative` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: ES(4) = 5 Complete Formalization\n\n**Conjecture**: GuaranteesConvexNGon 5 4, i.e., any 5 points in general position with distinct x-coordinates contain 4 in convex position.\n\n**Test**: Prove this by case analysis on the orientations of the 5 points sorted by x-coordinate. There are C(5,3) = 10 triples, each with two possible orientations (positive or negative, since we're in general position), but the geometric constraints drastically reduce the cases.\n\n**Impact**: Completes the formal verification of all known small cases (n = 3 was proved in the catalog, n = 4 is the next step). This is essential for validating the computational approach and building confidence in the formalization framework.\n\n**Catalog References**: `Geometry/CupsCaps.lean` (three_points_convex), `Geometry/ErdosSzekeres/Defs.lean` (GeneralPosition, InConvexPosition)\n\n**Proof Strategy**: Sort 5 points by x-coordinate as p\u2081, ..., p\u2085. Consider the orientation signs of consecutive triples (1,2,3), (2,3,4), (3,4,5). By pigeonhole, at least two of these three share a sign. If all three are positive: points form a 5-cup, extract any 4 for a convex quadrilateral. If two consecutive are positive and one negative (or vice versa): case analysis yields a 4-cup, 4-cap, or mixed configuration that still contains 4 convex points. Each case uses the orient transitivity theorems.\n\n**Domain Bridges**: Geometry <-> Logic (case analysis)\n\n**Lineage**: Builds on `cup_all_positive`, `cap_all_negative`, `uniform_positive_convex`, and `convex_ngon_contains_sub` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Convex Depth Growth Rate Conjecture\n\n**Conjecture**: For n points uniformly distributed in a convex region of the plane, the expected convex depth grows as \u0398(log n / log log n).\n\n**Test**: (1) Implement a Monte Carlo simulation generating random point sets of sizes n = 10, 50, 100, 500, 1000 and computing convex depth. (2) Fit the growth rate against log n, sqrt(n), and log n / log log n. (3) If the conjecture is correct, the fit to log n / log log n should have the smallest residual.\n\n**Impact**: If true, this would be the first quantitative result about the \"typical\" behavior of the Happy End Problem (as opposed to worst-case). It would connect to the probabilistic methods used in Suk's upper bound and potentially yield new proof techniques. If false, the actual growth rate would still be a significant finding.\n\n**Catalog References**: `Geometry/ErdosSzekeres/HappyEnd.lean` (ConvexDepth, convex_depth_le_card), `Computation/InfoEfficientAlgorithms.lean` (potential connections to information-theoretic bounds)\n\n**Proof Strategy**: For a formal lower bound, use the Erd\u0151s-Szekeres theorem to show ConvexDepth \u2265 \u2308log\u2082 n\u2309 + 2. For the upper bound, use probabilistic arguments: the probability that k random points are in convex position is approximately 2^(k\u22121)/k!, which becomes vanishingly small for k >> log n.\n\n**Domain Bridges**: Geometry <-> Probability, Geometry <-> Computation\n\n**Lineage**: Novel direction based on the ConvexDepth definition introduced in this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Geometry Bridge to ES Numbers\n\n**Conjecture**: The Erd\u0151s-Szekeres number ES(n) can be expressed as the tropical permanent of a specific n\u00d7n matrix derived from the orientation predicate.\n\n**Test**: Compute the tropical permanent for the orientation matrices at n = 3, 4, 5, 6 and check if they match the known ES values. The tropical permanent of a matrix A is max_\u03c3 \u03a3\u1d62 A(i,\u03c3(i)), where the max is over permutations.\n\n**Impact**: If true, this would be a revolutionary connection between combinatorial geometry and tropical algebraic geometry. It would suggest that the ES conjecture could be attacked using tropical techniques (Newton polytopes, tropical intersection theory). Even if false, the investigation would likely reveal structural properties of the orientation matrix.\n\n**Catalog References**: `Tropical/` (tropical algebra framework), `Geometry/TropicalTransversality.lean`, `Geometry/ErdosSzekeres/HappyEnd.lean` (ESNumber, orient)\n\n**Proof Strategy**: Define the orientation matrix O(i,j) = max over k of |orient(p\u1d62, p\u2c7c, p\u2096)| for a specific \"extremal\" point configuration. Compute its tropical permanent using the algorithms in the Tropical catalog. Compare with ES(n) for small n. If a pattern emerges, prove it for general n using the cup-cap theorem.\n\n**Domain Bridges**: Geometry <-> Tropical\n\n**Lineage**: Novel bridge exploiting the Tropical catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Algorithmic Convex Depth with Machine Learning\n\n**Conjecture**: A graph neural network (GNN) can predict the convex depth of a point configuration to within \u00b11 with > 90% accuracy on configurations of size \u2264 50, after training on configurations of size \u2264 30.\n\n**Test**: (1) Generate training data: 100,000 point configurations of sizes 5-30 with computed convex depths. (2) Train a GNN that takes the point configuration as input and predicts convex depth. (3) Evaluate on test configurations of sizes 31-50. (4) Report accuracy and analyze failure cases.\n\n**Impact**: If successful, this would demonstrate that geometric invariants like convex depth have learnable structure, bridging machine learning with combinatorial geometry. The failure cases could reveal structural properties that are hard for neural networks, suggesting new mathematical conjectures.\n\n**Catalog References**: `MachineLearning/` (ML framework), `Geometry/ErdosSzekeres/HappyEnd.lean` (ConvexDepth), `Bridges/` (cross-domain bridge framework)\n\n**Proof Strategy**: This is primarily an empirical direction. The formalized convex depth definition provides ground truth labels for training. The GNN architecture should use the Delaunay triangulation of the point set as the graph structure. After training, analyze the learned representations to extract geometric insights.\n\n**Domain Bridges**: Geometry <-> MachineLearning\n\n**Lineage**: Builds on ConvexDepth definition and the ML catalog.\n\n**Ambition**: extension\n",
+    "id": "fd_2265",
+    "title": "This research cycle established a covering-theoretic framework for the Pl\u00fcnnecke",
+    "description": "# Future Directions: Non-Abelian Covering Calculus\n\n## Synthesis\n\nThis research cycle established a covering-theoretic framework for the Pl\u00fcnnecke-Ruzsa inequality, proving that K-approximate subgroups in commutative groups satisfy the sharp covering bound cov(H^n, H) \u2264 K^(n\u22121). The key breakthrough was identifying covering composition (`canCoverBy_compose`) as the fundamental algebraic operation that replaces cardinality arithmetic in the classical theory. The composition principle\u2014coverings multiply when composed\u2014is the covering analog of the Ruzsa sumset triangle inequality.\n\nThe most promising cross-domain connection is the **covering-entropy bridge**: log(cov(H^n, H)) behaves as an entropy functional that grows linearly in n. This mirrors the subadditivity of Shannon entropy and connects additive combinatorics to information theory in a precise, quantitative way. The covering perspective also connects naturally to coding theory (covering codes), network routing (permutation coverage), and cryptographic key management (seed efficiency).\n\nThe highest breakthrough potential lies in **resolving the non-abelian covering conjecture**: proving cov(H^n, H) \u2264 K^(n\u22121) for non-commutative groups. Computational evidence from S\u2083, S\u2084, and various matrix groups is strongly supportive. A proof would simultaneously strengthen the non-commutative Pl\u00fcnnecke-Ruzsa inequality (Tao 2010) and provide new tools for analyzing random walks on non-abelian groups. The Breuillard-Green-Tao classification of approximate subgroups may provide the structural machinery needed.\n\n---\n\n### Direction 1: Non-Abelian Covering Conjecture via Ruzsa Covering Lemma\n\n**Conjecture**: For any K-approximate subgroup H in a (possibly non-abelian) group G, cov(H^n, H) \u2264 K^(n\u22121) for all n \u2265 1.\n\n**Test**: Extend computational verification to GL(2, F_p) for p = 3, 5, 7 and to the Heisenberg group over F_p. Specifically, test subsets H generating proper subgroups vs. subsets generating the full group, for n up to 10.\n\n**Impact**: If true, this would be the first covering-theoretic Pl\u00fcnnecke-Ruzsa inequality for non-abelian groups. It would imply sharper bounds on Cayley graph diameters and random walk mixing times. If false, the counterexample would reveal precisely where non-commutativity creates covering obstacles, potentially leading to a classification of groups where the sharp bound holds.\n\n**Catalog References**: `Catalog/Pythagorean/BoundedPseudofiniteTransfer.lean` (cosetCover_compose, bounded_cover_implies_product_cover), `Catalog/Pythagorean/CoveringCalculus.lean` (canCoverBy_compose, setPow_cover_bound_comm).\n\n**Proof Strategy**: \n1. Use the Ruzsa covering lemma: if |A\u00b7B\u207b\u00b9| \u2264 K|A|, then B can be covered by K translates of A\u00b7A\u207b\u00b9. Adapt this from cardinality to covering.\n2. Establish a non-commutative covering Ruzsa triangle inequality: cov(A\u00b7C, B) \u2264 cov(A\u00b7B\u207b\u00b9, B) \u00b7 cov(B\u00b7C, B).\n3. Apply the triangle inequality inductively with A = H^n, B = H, C = H.\n4. Key lemma needed: cov(H^n \u00b7 H\u207b\u00b9, H) \u2264 K^n for symmetric H (where H\u207b\u00b9 = H).\n\n**Domain Bridges**: Algebra <-> Computation (Cayley graph algorithms)\n\n**Lineage**: Builds directly on `setPow_cover_bound_comm` and `canCoverBy_compose` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Covering Entropy and Information-Theoretic Sumset Inequalities\n\n**Conjecture**: For finite subsets A, B of an abelian group, the covering entropy h_cov(A) := log(cov(A, B)) satisfies a subadditivity inequality: h_cov(A + B) \u2264 h_cov(A) + h_cov(B) + O(1), where the O(1) term depends only on the doubling constant of B.\n\n**Test**: Compute h_cov for random subsets of Z/nZ for n = 100, 200, 500, varying |A| and |B|. Plot h_cov(A + B) vs h_cov(A) + h_cov(B) and fit the correction term.\n\n**Impact**: This would establish a formal bridge between additive combinatorics and information theory, connecting the Pl\u00fcnnecke-Ruzsa inequality to Shannon's entropy theory. It would provide a new proof technique: translate combinatorial covering problems into information-theoretic inequalities and apply the powerful machinery of entropy.\n\n**Catalog References**: `Catalog/Pythagorean/CoveringCalculus.lean` (covering_entropy_bound), `Catalog/EML/EMLv17Core.lean` (entropy-related definitions).\n\n**Proof Strategy**:\n1. Define covering entropy h_cov(A | B) = log(cov(A, B)).\n2. Prove subadditivity using the composition lemma: cov(A+B, C) \u2264 cov(A, C) \u00b7 cov(B+C, C).\n3. Show this is equivalent to h_cov(A+B | C) \u2264 h_cov(A | C) + h_cov(B+C | C).\n4. Connect to conditional entropy H(X|Y) via the probabilistic interpretation of covering.\n\n**Domain Bridges**: Algebra <-> EML (entropy methods), Algebra <-> MachineLearning (concentration inequalities)\n\n**Lineage**: Extends covering_entropy_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Covering Calculus for Locally Compact Groups\n\n**Conjecture**: For a compact symmetric neighborhood H of the identity in a locally compact group G with Haar measure \u03bc, the covering number N(H^n, H) (minimum number of translates of H covering H^n) satisfies N(H^n, H) \u2264 (\u03bc(H\u00b2)/\u03bc(H))^(n\u22121) for all n \u2265 1.\n\n**Test**: Verify for SO(3) with H = ball of radius \u03b5 around identity, for \u03b5 = 0.1, 0.3, 0.5, and n up to 10. Compare N(H^n, H) with the volume ratio (\u03bc(H^n)/\u03bc(H)).\n\n**Impact**: This would extend the discrete covering calculus to continuous groups, connecting to geometric measure theory and Riemannian geometry. It would provide new estimates for the growth of compact groups and could improve bounds on heat kernel estimates.\n\n**Catalog References**: `Catalog/Pythagorean/CoveringCalculus.lean` (discrete framework), `Catalog/Pythagorean/AdelicPersistentHomology.lean` (group-theoretic filtrations).\n\n**Proof Strategy**:\n1. Replace Finset cardinality with Haar measure throughout.\n2. Use the Vitali covering lemma as the continuous analog of the greedy covering algorithm.\n3. Prove a continuous covering composition principle: \u03bc-coverings compose multiplicatively.\n4. Establish the continuous inductive step using Fubini's theorem for the convolution H^n * H.\n\n**Domain Bridges**: Algebra <-> Geometry (Riemannian volume growth), Algebra <-> Physics (heat kernels)\n\n**Lineage**: Natural continuous extension of the discrete covering calculus framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Algorithmic Covering Number and Hardness\n\n**Conjecture**: Computing the exact covering number cov(A, H) in a finite group G is NP-hard (as a function of |G|), but admits a polynomial-time O(log |A|)-approximation via the greedy algorithm. Moreover, for K-approximate subgroups, the greedy algorithm achieves an O(log K)-approximation.\n\n**Test**: Implement and benchmark the greedy covering algorithm vs. exact (branch-and-bound) on S_n for n = 5, 6, 7. Measure the approximation ratio empirically.\n\n**Impact**: Understanding the computational complexity of covering numbers would have implications for algorithmic group theory, cryptanalysis, and network design. An improved approximation for approximate subgroups would give practical algorithms for group navigation.\n\n**Catalog References**: `Catalog/Computation/InfoEfficientAlgorithms.lean` (algorithmic frameworks), `Catalog/Pythagorean/CoveringCalculus.lean` (covering predicate).\n\n**Proof Strategy**:\n1. Reduce Set Cover to the covering number problem to prove NP-hardness.\n2. Analyze the greedy algorithm using the standard submodularity argument.\n3. For K-approximate subgroups, exploit the structure: the optimal covering has size at most K^(n\u22121), and each greedy step covers at least a 1/K fraction of the remaining uncovered elements.\n4. Formalize the approximation guarantee in Lean.\n\n**Domain Bridges**: Algebra <-> Computation (complexity theory), Computation <-> Cryptography (group-based cryptanalysis)\n\n**Lineage**: Builds on the greedy algorithm implemented in `algorithms.py` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Product-Free Sets and Covering Obstructions\n\n**Conjecture**: In a non-abelian group G, the maximum size of a product-free set (a set A with A \u00b7 A \u2229 A = \u2205) is related to the minimum covering constant: if |A| \u2265 |G|/K, then A cannot be K-approximate-subgroup-like, and specifically cov(A\u00b2, A) \u2265 K.\n\n**Test**: For G = S\u2085, enumerate maximal product-free sets and compute their covering constants. Check whether the covering constant is always at least |G|/|A|.\n\n**Impact**: Product-free sets are the \"opposite\" of approximate subgroups: they have maximal non-closure. Understanding their covering numbers would complete the picture of how covering behaves across the spectrum from perfectly closed (subgroups) to maximally non-closed (product-free) sets.\n\n**Catalog References**: `Catalog/Pythagorean/CoveringCalculus.lean` (covering framework), `Catalog/Algebra/ArithmeticDarkMatter.lean` (structural algebra).\n\n**Proof Strategy**:\n1. Show that if A is product-free, then A, A\u00b2, and A are disjoint, giving |A\u00b2| \u2265 |A| and cov(A\u00b2, A) \u2265 2.\n2. Strengthen using the symmetry condition: if A is also symmetric, A\u00b2 avoids A entirely, so every covering translate must \"reach\" into A\u00b2 from outside A.\n3. Use probabilistic arguments (random translates) to show cov(A\u00b2, A) \u2265 |A\u00b2|/|A|.\n4. Connect to Gowers' work on product-free sets in finite groups.\n\n**Domain Bridges**: Algebra <-> Logic (extremal combinatorics), Algebra <-> Computation (satisfiability)\n\n**Lineage**: Dual perspective to the approximate subgroup covering results.\n\n**Ambition**: extension\n",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Tropical",
+      "Cryptography",
+      "EML",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -7877,31 +7941,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7c3bbe9a",
+    "source_exp_id": "81c177e5",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-30T13:31:06.105135+00:00"
-  },
-  {
-    "id": "fd_2226",
-    "title": "This cycle established the first certified quality bounds for noisy fermion samp",
-    "description": "# Future Directions: Certified Fermion Sampling\n\n## Synthesis\n\nThis cycle established the first certified quality bounds for noisy fermion sampling, bridging quantum information theory (depolarizing noise models) with probabilistic combinatorics (DPP negative dependence). The key insight is that the depolarizing channel's contraction property, combined with inductive error accumulation and product perturbation bounds, yields computable certificates for sampling quality.\n\nThe most promising cross-domain connection is the **fermion-DPP-Lorentzian triangle**: fermionic states (quantum physics) correspond to DPP kernels (probability), whose generating polynomials have Lorentzian structure (algebraic geometry). Our noise perturbation theory enters at the DPP kernel level; extending it to the Lorentzian polynomial level would connect quantum noise to log-concavity preservation\u2014a fundamentally new direction bridging physics and algebraic combinatorics. The catalog's `Speculative/AutoResearch/DPPLorentzian.lean` provides the Lorentzian side; our `Pythagorean/CertifiedFermionSampling.lean` provides the noise side; the bridge between them is the highest-potential breakthrough target.\n\nThe catalog's `Pythagorean/HigherOrderMinorPerturbation.lean` provides k\u00d7k minor perturbation bounds that our work uses at k=2. Extending to general k would yield certified k-wise negative dependence, relevant to k-DPP sampling algorithms used in machine learning subset selection. The `Pythagorean/RobustCertificateCompilation.lean` fidelity bounds offer a parallel pathway through quantum state fidelity rather than kernel perturbation.\n\n---\n\n### Direction 1: Lorentzian Polynomial Stability Under Quantum Noise\n\n**Conjecture**: If the homogeneous components Z_{K,d}(x) of a DPP partition function are Lorentzian polynomials (in the Br\u00e4nd\u00e9n-Huh sense), then the components Z_{K',d}(x) of the noisy kernel K' = \u03a6_\u03b5^d(K) remain (\u03b4, M)-approximately Lorentzian, where \u03b4 depends polynomially on the noise-depth product d\u03b5.\n\n**Test**: For n = 4, 6, 8 modes, compute the generating polynomial Z_K(x) = det(I + diag(x)\u00b7K) for exact and noisy kernels. Check whether the Hessian of log(Z_{K',d}) remains negative semidefinite (the Lorentzian condition) on the positive orthant. If it fails for small noise, the conjecture is false; if it holds up to a quantifiable threshold, the conjecture is confirmed.\n\n**Impact**: If true, this would show that quantum noise preserves the algebraic-geometric structure (Lorentzianity) that implies negative dependence, not just the pairwise version. This would be the first connection between quantum error theory and Hodge-theoretic combinatorics\u2014a genuinely new mathematical bridge.\n\n**Catalog References**: `Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel, dpp_uniformSpecialization), `Pythagorean/CertifiedFermionSampling.lean` (depolarizingChannel, certified_neg_dep_quality)\n\n**Proof Strategy**: Use the explicit formula \u03a6_\u03b5^d(K) = (1-\u03b5)^d K + ((1-(1-\u03b5)^d)/2)I to show that the noisy kernel is a convex combination of K and (1/2)I. Since both are PSD with eigenvalues in [0,1], and the Lorentzian cone is known to be stable under certain convex combinations, apply the Br\u00e4nd\u00e9n-Huh stability theorem for Lorentzian polynomials under positive operator perturbation.\n\n**Domain Bridges**: Quantum Information <-> Algebraic Geometry, Physics <-> Combinatorics\n\n**Lineage**: Extends `certified_neg_dep_quality` from pairwise to full Lorentzian structure. Builds on `dpp_uniformSpecialization` from the DPPLorentzian catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: k-Wise Negative Dependence Certification via Higher-Order Minor Perturbation\n\n**Conjecture**: For a noisy fermionic correlation matrix K' = \u03a6_\u03b5^d(K), the k-point inclusion probability satisfies:\n\n|det(K_S) - det(K'_S)| \u2264 k \u00b7 k! \u00b7 (3d\u03b5/2)^{k-1} \u00b7 (3d\u03b5/2)\n\nfor any k-element subset S, where the right side is the minor perturbation polynomial P(k, 1) \u00b7 (3d\u03b5/2) from `HigherOrderMinorPerturbation.lean`.\n\n**Test**: For n = 8, compute all k-element principal minors (k = 2, 3, 4) of K and K' for various noise levels. Verify the bound holds and measure the tightness ratio. If the bound fails for any parameter, the polynomial constant may need correction.\n\n**Impact**: k-wise negative dependence is required for k-DPP sampling algorithms used in machine learning (document summarization, recommendation systems). Certified k-wise bounds would provide the first provable quality guarantees for DPP-based ML pipelines running on noisy quantum hardware.\n\n**Catalog References**: `Pythagorean/HigherOrderMinorPerturbation.lean` (minorPerturbPoly, det_perturb_bound, k_point_correlation_stability), `Pythagorean/CertifiedFermionSampling.lean` (circuit_noise_accumulation_entry)\n\n**Proof Strategy**: Combine the entry-wise bound \u03b7 = 3d\u03b5/2 from `circuit_noise_accumulation_entry` with the k\u00d7k determinant perturbation bound from `det_perturb_bound`. The composition gives det(K_S) - det(K'_S) in terms of P(k, M) \u00b7 \u03b7 where M = 1 from the entry bound.\n\n**Domain Bridges**: Probability <-> Machine Learning, Quantum Information <-> Combinatorics\n\n**Lineage**: Directly combines `circuit_noise_accumulation_entry` with `det_perturb_bound` and `k_point_correlation_stability`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Correlated Noise Models and Spatial Decay\n\n**Conjecture**: For spatially correlated depolarizing noise with correlation length \u03be (where the noise on gates at distance > \u03be is independent), the error accumulation bound improves to:\n\n\u2016K - K'\u2016_max \u2264 C \u00b7 (d/\u03be) \u00b7 \u03b5 \u00b7 \u03be = C \u00b7 d \u00b7 \u03b5 (same order)\n\nbut the negative dependence perturbation improves to O(d\u03b5) instead of O(d\u00b2\u03b5\u00b2) for pairs (i,j) with |i-j| > \u03be, because distant pairs experience independent noise.\n\n**Test**: Implement a spatially correlated noise model where \u03a6_{\u03b5,\u03be}(K) applies correlated depolarizing noise with exponential spatial decay. Compare the pair inclusion perturbation |P_K(i,j) - P_{K'}(i,j)| for near pairs (|i-j| < \u03be) vs. far pairs (|i-j| > \u03be). The conjecture predicts far pairs have smaller defects.\n\n**Impact**: Real quantum hardware has spatially structured noise (nearby qubits have correlated errors). Spatial decay bounds would give much tighter certification for large systems, potentially extending certified fermion sampling from n \u2248 10 to n \u2248 100 modes.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (depolarizing_channel_contraction_entry, circuit_noise_accumulation_entry), `FINAL/Pythagorean/WreathPerturbation.lean` (entropy_correction_from_pressure_perturbation)\n\n**Proof Strategy**: Decompose the circuit into spatial blocks of size \u03be. Within each block, apply the existing contraction bounds. Between blocks, use independence to reduce the effective depth from d to d/\u03be for cross-block correlations. The product perturbation bound then gives improved constants for distant pairs.\n\n**Domain Bridges**: Quantum Information <-> Statistical Physics, Condensed Matter <-> Probability\n\n**Lineage**: Extends `circuit_noise_accumulation_entry` from site-independent to spatially correlated noise. The entropy perturbation from `WreathPerturbation.lean` provides a template for structured perturbation analysis.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Online Certification and Adaptive Circuits\n\n**Conjecture**: There exists a polynomial-time online algorithm that, given streaming measurement outcomes from a noisy fermion sampler, produces a running estimate of the negative dependence defect with certified confidence intervals, using O(n\u00b2) space and O(n\u00b2) time per sample.\n\n**Test**: Implement the online certifier and run it on simulated noisy fermion samples for n = 4, 8. Compare the running certified bound with the batch bound from `certified_neg_dep_quality`. The online bound should converge to a tighter estimate as more samples are collected.\n\n**Impact**: Online certification enables real-time quality monitoring during quantum computation. If the estimated noise exceeds the threshold, the algorithm can signal to adjust circuit parameters or increase error correction. This is the bridge from mathematical theory to practical quantum computing operations.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (noise_threshold_certified, certified_neg_dep_quality), `Pythagorean/RobustCertificateCompilation.lean` (fidelity_bound_from_perturbation)\n\n**Proof Strategy**: Estimate the noise rate \u03b5 from measurement statistics using the relation \u03a6_\u03b5^d(I)_{ii} = (1 + (1-\u03b5)^d)/2. Invert this to get \u03b5\u0302 = 1 - ((2K\u0302_{ii} - 1))^{1/d}. Then apply `certified_neg_dep_quality` with the estimated parameters. Concentration inequalities (Hoeffding) give confidence bounds on \u03b5\u0302.\n\n**Domain Bridges**: Quantum Information <-> Statistics, Computation <-> Physics\n\n**Lineage**: Builds on `noise_threshold_certified` and the `bernoulli_depolarizing` tightness analysis.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Fermion Sampling Complexity Under Certified Noise\n\n**Conjecture**: For any fermionic Gaussian state with correlation matrix K satisfying min_{i<j} P_K(i,j) \u2265 \u03b4, there exists a classical algorithm that, given oracle access to the noisy quantum sampler \u03a6_\u03b5^d(K), produces samples from a distribution within total variation distance O(n\u00b2 \u00b7 d\u03b5) of the ideal DPP, in time O(n\u00b3) per sample, provided d\u03b5 < \u03b4/(6n).\n\n**Test**: Implement the classical correction algorithm: (1) estimate K' from samples, (2) compute K\u0302 = (K' - (1-(1-\u03b5\u0302)^d)/2 \u00b7 I) / (1-\u03b5\u0302)^d to \"denoise\" the kernel, (3) sample from the DPP with kernel K\u0302. Compare output distribution with ideal DPP via total variation distance estimated from 10,000 samples.\n\n**Impact**: If true, this would show that noisy fermion sampling can be *classically corrected* below a noise threshold, weakening quantum advantage claims but strengthening the utility of near-term quantum devices. The certified noise bounds from our work provide the error bars needed for the correction step.\n\n**Catalog References**: `Pythagorean/CertifiedFermionSampling.lean` (all results), `FINAL/Pythagorean/MonotoneCircuitComplexity.lean` (circuit_depth_lb_of_formula_depth_lb), `Pythagorean/HigherOrderMinorPerturbation.lean` (det_perturb_bound)\n\n**Proof Strategy**: The denoising step inverts the depolarizing channel: K\u0302 = (K' - shift\u00b7I) / contraction. The perturbation |K\u0302 - K| = |K' - K|/contraction \u2264 (3d\u03b5/2)/(1-\u03b5)^d. For small d\u03b5, this is approximately (3d\u03b5/2)(1 + d\u03b5 + ...) \u2248 3d\u03b5/2. Feed this into the DPP sampling algorithm with kernel perturbation analysis from `det_perturb_bound` to get total variation bounds.\n\n**Domain Bridges**: Quantum Information <-> Computational Complexity, Physics <-> Algorithms\n\n**Lineage**: Combines `certified_neg_dep_quality` with circuit complexity lower bounds from `circuit_depth_lb_of_formula_depth_lb` to understand the computational landscape of noisy fermion sampling.\n\n**Ambition**: grand_challenge\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.95,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e3763bc3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-30T13:31:30.523866+00:00"
+    "timestamp": "2026-05-30T13:53:10.613166+00:00"
   },
   {
     "id": "seed_004",
@@ -8007,6 +8049,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.477681+00:00"
   },
   {
+    "id": "fd_2254",
+    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean",
+    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Computation",
+      "NumberTheory"
+    ],
+    "priority_score": 0.86,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.542994+00:00"
+  },
+  {
     "id": "seed_006",
     "title": "Collatz Conjecture",
     "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
@@ -8037,14 +8096,31 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
   },
   {
-    "id": "fd_2227",
-    "title": "This research cycle established that expansion certificates form a compositional",
-    "description": "# Future Directions: Expansion Certificate Algebra\n\n## Synthesis\n\nThis research cycle established that expansion certificates form a compositional algebraic framework, with three key discoveries: (1) certificates compose under tensor products with gap = min(\u03b5\u2081, \u03b5\u2082), providing a clean interface for product constructions; (2) the coding theory bridge \u2014 code distance from spectral gap \u2014 is sharp and directly applicable, with the \"expansion regime\" condition \u03b4 > 1 - \u03b5 determining feasibility; (3) the rank-field tradeoff q \u2265 2(n+1) \u27f9 gap \u2265 1/2 is tight and provides a concrete design rule for applications.\n\nThe most promising cross-domain connection is the **expansion \u2192 coding theory** bridge. The `code_distance_positive` theorem and `better_expansion_better_code` theorem from `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` provide a complete pipeline from representation-theoretic data (character ratios) to engineering specifications (code distance). This pipeline is currently formal but abstract \u2014 instantiating it with explicit codes built from actual symplectic Cayley graphs would yield the first provably good LDPC codes from group-theoretic certificates.\n\nThe second major opportunity is extending the certificate framework beyond symplectic groups. The `ExpansionCertificate` structure is group-agnostic \u2014 it depends only on numerical data, not on the specific group. Producing certificates for orthogonal or unitary groups would immediately leverage all the composition and application theorems already proved.\n\n---\n\n### Direction 1: Universal Character-Ratio Constants via Coxeter Torus Analysis\n\n**Conjecture**: For the Coxeter torus in Sp\u2082\u2099(\ud835\udd3d_q), there exists a universal constant C (independent of n) such that for all ranks n \u2265 1 and all nontrivial irreducible representations \u03c1: |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C/q.\n\n**Test**: Compute character ratios for Sp\u2086(\ud835\udd3d_q), Sp\u2088(\ud835\udd3d_q), Sp\u2081\u2080(\ud835\udd3d_q) at q = 7, 11, 13 using GAP or MAGMA. If the fitted constants C\u2083, C\u2084, C\u2085 stabilize (all \u2264 4), the conjecture is supported. If C_n grows linearly with n, it is falsified. Our computational demo (`demo.py`, Demo 5) shows the naive bound C_n = n+1 grows linearly, but the actual Coxeter torus character ratios may be much smaller.\n\n**Impact**: If true, the spectral gap becomes 1 - C/q uniformly across ALL ranks \u2014 making expansion essentially rank-free. The `rank_free_expansion_from_conjecture` theorem in `SymplecticCertificateAlgebra.lean` shows this implies 0 < 1 - C/q for any q > C. This would transform the entire pipeline: mixing times, code distances, and derandomization bounds would all become independent of the group rank.\n\n**Catalog References**: `Catalog/Pythagorean/Sp2nExpansion.lean` (uniform_torus_type_all_ranks), `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (UniversalCharRatioConjecture, rank_free_expansion_from_conjecture)\n\n**Proof Strategy**: \n1. Use the Deligne-Lusztig character formula for Coxeter torus elements to express |\u03c7_\u03c1(s)| in terms of root system data.\n2. Bound the resulting sum using Weil's estimates for character sums over finite fields.\n3. The key step is showing that the sum over positive roots contributing to the character ratio telescopes when s lies in the Coxeter torus, producing a bound independent of n.\n4. Formalize this as a `CoxeterTorusCharRatioBound` lemma.\n\n**Domain Bridges**: NumberTheory <-> CombinatoricsAlgebra, RepresentationTheory <-> CodingTheory\n\n**Lineage**: Builds on `uniform_torus_type_all_ranks` and `conjecture_from_framework` from `Sp2nExpansion.lean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Explicit Expander Codes from Symplectic Certificates\n\n**Conjecture**: For each n \u2265 2 and prime q \u2265 2(n+1), the Tanner code built on the Cayley graph of Sp\u2082\u2099(\ud835\udd3d_q) with a Reed-Solomon inner code of distance \u03b4 = 0.5 achieves:\n- Rate \u2265 0.25\n- Relative distance \u2265 (0.5 - (n+1)/q) > 0\n- Linear-time decoding (via the Sipser-Spielman flip algorithm)\n\n**Test**: Construct the bipartite Cayley graph for Sp\u2084(\ud835\udd3d\u2081\u2083) explicitly (|G| \u2248 4.4 \u00d7 10\u2075), apply a [13, 7, 5] RS inner code, and verify: (1) the code rate matches the theoretical prediction, (2) the minimum distance meets the bound from `code_distance_positive`, (3) the flip decoder converges within O(n) iterations.\n\n**Impact**: This would produce the first explicitly constructed, provably good, efficiently decodable codes from the certificate framework. Current expander codes use random or Ramanujan graphs \u2014 symplectic certificates offer a systematic, parametric alternative.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpanderCodeParams, code_distance_positive, better_expansion_better_code)\n\n**Proof Strategy**:\n1. Define the Tanner code formally as a Lean structure importing `ExpanderCodeParams`.\n2. Prove that the bipartite Cayley graph of Sp\u2082\u2099(\ud835\udd3d_q) with the natural symplectic pairing yields a biregular bipartite graph.\n3. Use the `code_distance_positive` theorem to get the distance bound.\n4. Implement the flip decoder and prove convergence using the expansion property (spectral gap > 0 \u27f9 unique syndrome decoding for small-weight errors).\n\n**Domain Bridges**: Algebra <-> CodingTheory, RepresentationTheory <-> InformationTheory\n\n**Lineage**: Builds on `code_distance_positive` and `better_expansion_better_code` from `SymplecticCertificateAlgebra.lean`\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Quantum Symplectic Expanders and Error Correction\n\n**Conjecture**: The symplectic structure of Sp\u2082\u2099(\ud835\udd3d_q) naturally yields quantum LDPC codes via the symplectic inner product on \ud835\udd3d_q^{2n}. Specifically, the CSS code defined by the left and right kernels of the Cayley graph adjacency matrix of Sp\u2082\u2099(\ud835\udd3d_q) has:\n- Dimension \u2265 q^{n\u00b2/2} (exponential in the rank)\n- Distance \u2265 \u03a9(q^{n/2}) (polynomial in the field size)\n- Local check weight O(1) (constant-degree expander)\n\n**Test**: For Sp\u2084(\ud835\udd3d\u2085), construct the CSS code explicitly and compute its parameters. Verify that the code corrects at least 2 errors on 125 qubits.\n\n**Impact**: Quantum LDPC codes with good parameters are a major open problem. The symplectic structure is natural for quantum error correction (stabilizer codes are inherently symplectic), and the expansion property guarantees the code has good distance. This would bridge the classical expansion certificate theory directly to quantum computing.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpansionCertificate), `Catalog/Pythagorean/Sp2nExpansion.lean` (DLRankCharacterBoundCertificate), `Catalog/Pythagorean/BerggrenQuantumBridge.lean`\n\n**Proof Strategy**:\n1. Define the symplectic inner product \u03c9(v, w) = v\u1d40 J w on \ud835\udd3d_q^{2n}.\n2. Show that the Cayley graph adjacency matrix of Sp\u2082\u2099(\ud835\udd3d_q) preserves this inner product.\n3. Construct the CSS code from the kernel structure.\n4. Use the spectral gap from the certificate to bound the code distance via the quantum Singleton bound analog.\n\n**Domain Bridges**: Algebra <-> Physics, ExpansionTheory <-> QuantumComputing\n\n**Lineage**: Builds on the symplectic structure in `Sp2nExpansion.lean` and the certificate framework in `SymplecticCertificateAlgebra.lean`\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Certificate Framework for Other Classical Groups\n\n**Conjecture**: The `ExpansionCertificate` framework extends to all classical groups: SO\u2082\u2099\u208a\u2081(\ud835\udd3d_q), SU_n(\ud835\udd3d_{q\u00b2}), and SO\u2082\u2099\u207a(\ud835\udd3d_q). For each family, there exist uniform torus types yielding character-ratio bounds of the form C_n/q, with C_n growing at most linearly in the rank.\n\n**Test**: \n1. Compute character ratios for SO\u2085(\ud835\udd3d\u2087) and SO\u2087(\ud835\udd3d\u2081\u2081) using GAP.\n2. Verify that the fitted constants are comparable to the symplectic case.\n3. Check that the `tensor` operation on certificates correctly predicts the gap of product groups SO \u00d7 Sp.\n\n**Impact**: Extending to all classical groups would provide a complete library of expansion certificates, enabling optimal group selection for each application. Different groups have different structural properties (e.g., orthogonal groups have better parity properties, unitary groups connect to Hermitian geometry).\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (ExpansionCertificate.tensor), `Catalog/Pythagorean/GL2SpectralGap.lean`, `Catalog/Pythagorean/G2CharacterSheafCertificate.lean`\n\n**Proof Strategy**:\n1. Define `IsUniformTorusType` for each family (already done for type C_n in `Sp2nExpansion.lean`).\n2. Identify the Coxeter torus for each family and compute its character ratios.\n3. For type B_n (orthogonal): use the branching rule Sp\u2082\u2099 \u2192 SO\u2082\u2099\u208a\u2081 to transfer bounds.\n4. For type A_n (unitary): use Deligne-Lusztig induction from the maximal torus.\n5. Package results as `DLRankCharacterBoundCertificate` instances.\n\n**Domain Bridges**: Algebra <-> Algebra (cross-family), RepresentationTheory <-> CombinatoricsAlgebra\n\n**Lineage**: Extends the certificate framework from type C_n to types A_n, B_n, D_n\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Automorphic Forms and Certificate Depth\n\n**Conjecture**: The character-ratio bound C_n/q in the expansion certificate for Sp\u2082\u2099(\ud835\udd3d_q) is related to special values of automorphic L-functions. Specifically, for the Coxeter torus element s:\n\n|\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| = O(q^{-1} \u00b7 L(1, \u03c1, Ad))\n\nwhere L(s, \u03c1, Ad) is the adjoint L-function of the automorphic representation corresponding to \u03c1.\n\n**Test**: For Sp\u2084(\ud835\udd3d_p) with p = 5, 7, 11, 13, compute both the character ratio and the corresponding L-function value. Check if the ratio |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u00b7 q correlates with L(1, \u03c1, Ad).\n\n**Impact**: This would connect the certificate framework to the Langlands program \u2014 the deepest current program in number theory. If character-ratio bounds are controlled by L-function values, then progress on L-function bounds (Lindel\u00f6f hypothesis, subconvexity) would automatically improve expansion certificates. Conversely, computational expansion data would provide numerical evidence about L-function behavior.\n\n**Catalog References**: `Catalog/Pythagorean/SymplecticCertificateAlgebra.lean` (charRatioBound, gapFromRank), `Catalog/Pythagorean/ModularFormsAdvanced.lean`, `Catalog/Pythagorean/Sp2nExpansion.lean`\n\n**Proof Strategy**:\n1. Use the Satake isomorphism to relate representations of Sp\u2082\u2099(\ud835\udd3d_q) to automorphic representations.\n2. Express the character ratio in terms of the Satake parameters.\n3. Identify the Satake parameters with L-function data via the local Langlands correspondence.\n4. Bound the resulting L-function values using known subconvexity estimates.\n\n**Domain Bridges**: NumberTheory <-> RepresentationTheory, AutomorphicForms <-> ExpansionTheory\n\n**Lineage**: Connects the certificate framework to the Langlands program via Satake parameters\n\n**Ambition**: grand_challenge\n",
+    "id": "fd_2231",
+    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates",
+    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.040127+00:00"
+  },
+  {
+    "id": "fd_2266",
+    "title": "This research cycle established the first uniform spectral gap framework for gen",
+    "description": "# Future Directions: Higher-Rank Symplectic Expanders\n\n## Synthesis\n\nThis research cycle established the first uniform spectral gap framework for general symplectic groups Sp\u2082\u2099(\ud835\udd3d_q), parametrized by both rank n and field size q. The core innovation was the `SymplecticExpanderFamily` structure, which packages character ratio bounds, spectral gaps, and field-size thresholds into a single mathematical object that works across all ranks. The canonical family achieves gap \u2265 1/2 at threshold q\u2080 = 2(n+1), with the constant C_n = n+1 growing only linearly in rank.\n\nThe most promising cross-domain connection is the **polar code distance bridge** (`polar_code_expansion_bridge`), which translates spectral expansion of Cayley graphs into minimum distance bounds for error-correcting codes on the symplectic polar space W(2n-1, q). This is a concrete, quantitative bridge from abstract algebra to information theory, and extending it to other classical groups would yield a systematic code construction engine.\n\nThe highest breakthrough potential lies in **Direction 1** below: resolving the optimal character ratio constant conjecture. Our framework uses C_n = n+1, but the true optimal might be O(\u221an) or even O(1), which would dramatically improve all downstream bounds. This is also the direction most likely to connect to the Langlands program through the archimedean analog (Ramanujan bound for Siegel modular forms).\n\n---\n\n### Direction 1: Optimal Character Ratio Constants\n\n**Conjecture**: The optimal character ratio constant C_n^* (the smallest C such that max_\u03c1 |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C/q for some regular toral s) satisfies C_n^* = O(\u221an).\n\n**Test**: For n = 1, 2, 3, 4, 5, compute the exact character tables of Sp\u2082\u2099(\ud835\udd3d_q) for q = 3, 5, 7. Extract the optimal C_n^*(q) for each (n,q) pair. Plot C_n^*(q) vs n for fixed q and verify whether the growth is closer to \u221an or to n.\n\n**Impact**: If C_n^* = O(\u221an), the spectral gap at threshold improves from 1/2 to 1 - O(1/\u221an), giving nearly-perfect expansion for high-rank groups. This would make symplectic expanders competitive with Ramanujan graphs in the high-degree regime. If C_n^* = \u03a9(n), it would show our linear bound is essentially optimal.\n\n**Catalog References**: `Catalog/Pythagorean/Sp2nExpansion.lean` (DLRankCharacterBoundCertificate), `Pythagorean/Sp2nHigherRankExpanders.lean` (bound_constant_quadratic, characterRatio_decay).\n\n**Proof Strategy**: For each rank n, the character table of Sp\u2082\u2099(\ud835\udd3d_q) is determined by Deligne\u2013Lusztig theory. The key is to analyze the *Coxeter torus* (the most anisotropic torus) and show that DL characters attached to it have the smallest ratios. Use the Weyl character formula for type C\u2099 and estimate the resulting sums.\n\n**Domain Bridges**: Algebra <-> Number Theory (Langlands, Siegel modular forms), Algebra <-> Combinatorics (expander graphs).\n\n**Lineage**: Extends the character ratio framework from this cycle's `characterRatioBound` and `character_ratio_by_induction`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Orthogonal and Unitary Group Extensions\n\n**Conjecture**: The symplectic expander family framework extends to all classical groups over finite fields: SO\u2082\u2099\u208a\u2081(\ud835\udd3d_q), O\u2082\u2099\u207a(\ud835\udd3d_q), O\u2082\u2099\u207b(\ud835\udd3d_q), SU_n(\ud835\udd3d_{q\u00b2}), with analogous character ratio bounds C_n/q.\n\n**Test**: Formalize the `ClassicalGroupExpanderFamily` structure generalizing `SymplecticExpanderFamily`. Prove the Landazuri\u2013Seitz bound for each family and establish the threshold field sizes. Verify computationally for SO\u2085(\ud835\udd3d_q) and SU\u2083(\ud835\udd3d_{q\u00b2}) with q = 3, 5, 7.\n\n**Impact**: Would give a complete theory of classical-group expanders, covering all infinite families of finite simple groups of Lie type (except exceptional groups). This is a major step toward the classification of all algebraic expander constructions.\n\n**Catalog References**: `Catalog/Pythagorean/Sp2nExpansion.lean` (IsUniformTorusType, uniform_torus_type_propagates), `Catalog/Algebra/MatrixGroupGeneration.lean`.\n\n**Proof Strategy**: The Landazuri\u2013Seitz bounds for each family are:\n- SO\u2082\u2099\u208a\u2081: (q\u207f - 1)/(q - 1)\n- O\u2082\u2099\u207a: (q\u207f\u207b\u00b9 - 1)(q\u207f\u207b\u00b9 + q)/(q\u00b2 - 1)\n- SU_n: (q\u207f - (-1)\u207f)/(q + 1)\n\nFormalize each as a `LandazuriSeitzBound` variant and prove monotonicity. The character ratio analysis follows the same pattern: parabolic induction + Levi contribution.\n\n**Domain Bridges**: Algebra <-> Geometry (polar spaces of different types), Algebra <-> Coding Theory (different code families).\n\n**Lineage**: Direct extension of `SymplecticExpanderFamily` and `LandazuriSeitzBound`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Quantum Error Correction from Symplectic Expansion\n\n**Conjecture**: The spectral gap of the symplectic Cayley graph on Sp\u2082\u2099(\ud835\udd3d_q) yields quantum LDPC codes with parameters [[N, k, d]] where N = |W(2n-1,q)|, d \u2265 \u03b5N/2, and k = \u03a9(N^{1-\u03b4}) for any \u03b4 > 0.\n\n**Test**: Construct explicit quantum codes from the polar space W(3, q) (n=2) for q = 5, 7, 11. Compute the code parameters and verify the distance bound. Compare with known quantum LDPC constructions (e.g., Panteleev\u2013Kalachev).\n\n**Impact**: Would provide the first algebraic construction of asymptotically good quantum LDPC codes from classical groups. Current constructions use balanced products or fiber bundles; a direct group-theoretic approach would be conceptually simpler and potentially more efficient.\n\n**Catalog References**: `Pythagorean/Sp2nHigherRankExpanders.lean` (PolarCodeDistance, polar_code_expansion_bridge).\n\n**Proof Strategy**: Use the CSS construction: the classical polar code and its dual both inherit distance bounds from the spectral gap. The key challenge is showing that the dual code also has good distance, which requires analyzing the *complementary polar space*. The spectral gap controls both via the Cheeger inequality applied to the complementary graph.\n\n**Domain Bridges**: Algebra <-> Physics (quantum error correction), Algebra <-> Coding Theory (CSS codes).\n\n**Lineage**: Builds on the polar code distance bridge from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Mixing Time Sharpness\n\n**Conjecture**: The mixing time of the random walk on Sp\u2082\u2099(\ud835\udd3d_q) with the canonical generators exhibits a *cutoff phenomenon* at time \u03c4 = (n\u00b2/gap) \u00b7 log q, with a window of width O(n log q / gap).\n\n**Test**: For Sp\u2084(\ud835\udd3d_q) (n=2), compute the exact eigenvalues of the adjacency matrix of the Cayley graph for q = 3, 5, 7. Measure the mixing time numerically and compare with the predicted cutoff time. The conjecture is falsified if the mixing profile is smooth rather than exhibiting a sharp transition.\n\n**Impact**: Cutoff phenomena are among the most striking results in random walk theory (Diaconis). Establishing cutoff for Sp\u2082\u2099 would connect to the Aldous conjecture and the theory of random matrix eigenvalue spacing.\n\n**Catalog References**: `Catalog/Pythagorean/Sp2nExpansion.lean` (rank_certificate_implies_L2_mixing, L2_mixing_convergence).\n\n**Proof Strategy**: Prove upper and lower bounds on the mixing time that match up to the cutoff window. The upper bound follows from the spectral gap. The lower bound requires a *distinguishing statistic* \u2014 typically the trace function on Sp\u2082\u2099, which concentrates differently at short times.\n\n**Domain Bridges**: Algebra <-> Probability (random walks, cutoff), Algebra <-> Physics (random matrix theory).\n\n**Lineage**: Extends the mixing time analysis from this cycle's `mixing_time_pos` and the catalog's `multistep_L2_decay`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Symplectic Spectral Theory\n\n**Conjecture**: The tropical analog of the symplectic spectral gap \u2014 the min-plus eigenvalue gap of the tropical Cayley graph on the tropical symplectic group \u2014 has a uniform lower bound analogous to the classical case.\n\n**Test**: Define the tropical symplectic group Sp\u2082\u2099(\ud835\udd4b) as matrices preserving a tropical symplectic form. Compute the tropical eigenvalue gap for n = 1, 2 with small tropical \"field sizes.\" Verify whether the gap is bounded away from zero.\n\n**Impact**: Would establish the first connection between tropical geometry and spectral expansion, potentially yielding new constructions of metric expanders. The tropical framework also connects to optimization (min-plus algebra) and phylogenetics.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalSpectralMatroid.lean`, `Catalog/Tropical/`.\n\n**Proof Strategy**: Define tropical analogs of the key structures: tropical character ratios, tropical Cheeger constants. The main challenge is that tropical groups are not finite, so the spectral theory must be reformulated in terms of tropical convexity and min-plus linear algebra.\n\n**Domain Bridges**: Algebra <-> Tropical (tropical groups), Tropical <-> Combinatorics (matroids).\n\n**Lineage**: Novel cross-domain bridge, inspired by the catalog's tropical spectral matroid work.\n\n**Ambition**: extension\n",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Tropical",
       "Physics",
       "Bridges",
       "Logic"
@@ -8052,9 +8128,26 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b6e4edfb",
+    "source_exp_id": "489e786f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-30T13:32:16.764201+00:00"
+    "timestamp": "2026-05-30T13:53:41.406653+00:00"
+  },
+  {
+    "id": "fd_2241",
+    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries",
+    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Geometry",
+      "MachineLearning"
+    ],
+    "priority_score": 0.84,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.564412+00:00"
   },
   {
     "id": "seed_037",
@@ -8069,6 +8162,54 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.567677+00:00"
+  },
+  {
+    "id": "fd_2233",
+    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology",
+    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.343335+00:00"
+  },
+  {
+    "id": "fd_2244",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "NumberTheory"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.028231+00:00"
+  },
+  {
+    "id": "fd_2256",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.83,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.847785+00:00"
   },
   {
     "id": "seed_027",
@@ -8098,6 +8239,86 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.559748+00:00"
+  },
+  {
+    "id": "fd_2229",
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
+    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups \u2014 algebraic randomness is generic.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.82,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:54.712884+00:00"
+  },
+  {
+    "id": "fd_2243",
+    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count",
+    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.82,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.881282+00:00"
+  },
+  {
+    "id": "fd_2263",
+    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times",
+    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.82,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.951049+00:00"
+  },
+  {
+    "id": "fd_2235",
+    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids",
+    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.81,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.664683+00:00"
+  },
+  {
+    "id": "fd_2253",
+    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor",
+    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.81,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.390053+00:00"
   },
   {
     "id": "fd_0795",
@@ -8213,10 +8434,10 @@ window.FUTURE_DIRECTIONS = [
       "Topological Data Analysis"
     ],
     "priority_score": 0.8,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "ce1b3810",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T18:35:56.749847+00:00"
   },
   {
@@ -8447,6 +8668,135 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-29T15:17:44.967103+00:00"
   },
   {
+    "id": "fd_2232",
+    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields",
+    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.193414+00:00"
+  },
+  {
+    "id": "fd_2239",
+    "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?",
+    "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.257830+00:00"
+  },
+  {
+    "id": "fd_2250",
+    "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics",
+    "description": "The natural gradient algorithm updates parameters theta in the direction of steepest descent on the Fisher information manifold: theta_{t+1} = theta_t - eta * G^{-1}(theta_t) * gradient L(theta_t) where G is the Fisher information matrix. This is equivalent to following the geodesic on the statistical manifold (the Riemannian manifold with metric G). Conjecture: for any optimization problem with loss function L, the natural gradient descent converges to the minimum in O(1/t) iterations, regardless of the condition number of G. This is because the natural gradient follows the geodesic, which is the shortest path on the manifold, and the path length is O(1) (bounded by the diameter of the manifold). In contrast, standard gradient descent takes O(kappa) iterations where kappa is the condition number of G. Conjecture: natural gradient descent with step size eta = 1/t achieves L(theta_t) - L(theta*) = O(1/t) for convex losses, and L(theta_t) - L(theta*) = O(exp(-t/d)) for strongly convex losses, where d is the dimension. Test: compare natural gradient descent and standard gradient descent on logistic regression with varying condition numbers, verify the convergence rates. Impact: optimization is geometry. The natural gradient is the geodesic on the Fisher manifold, and geodesics are the shortest paths.",
+    "domains": [
+      "Novelty",
+      "MachineLearning",
+      "Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.937943+00:00"
+  },
+  {
+    "id": "fd_2236",
+    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map",
+    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Analysis"
+    ],
+    "priority_score": 0.79,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.816047+00:00"
+  },
+  {
+    "id": "fd_2248",
+    "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?",
+    "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.79,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.642453+00:00"
+  },
+  {
+    "id": "fd_2264",
+    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology",
+    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
+    "domains": [
+      "Novelty",
+      "Topology",
+      "Computation",
+      "MachineLearning"
+    ],
+    "priority_score": 0.79,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:52:00.100745+00:00"
+  },
+  {
+    "id": "fd_2230",
+    "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction",
+    "description": "Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / n^2, independent of the specific constraint structure. For standard 9x9 Sudoku (n=3): d_c = 8/9 \u2248 0.889. For 4x4 Sudoku (n=2): d_c = 3/4 = 0.75. For 16x16 (n=4): d_c = 15/16 \u2248 0.9375. The 'hardness' of random Sudoku peaks at the phase transition: instances with density near d_c take exponentially longer to solve than easy (low density) or trivial (high density) instances. Conjecture: the computational hardness of Sudoku at the phase transition is O(exp(n^2)) for backtracking algorithms, matching the theoretical prediction for CSPs at criticality. Test: generate random Sudoku instances at varying densities, measure solver time, and verify the phase transition at d_c. Impact: Sudoku hardness is not about 9x9 grids \u2014 it is about the phase transition structure of constraint satisfaction.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Logic"
+    ],
+    "priority_score": 0.78,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "768dfab3",
+    "timestamp": "2026-05-30T13:51:54.876996+00:00"
+  },
+  {
+    "id": "fd_2259",
+    "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?",
+    "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.78,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.298962+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -8461,6 +8811,202 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
   },
   {
+    "id": "fd_2237",
+    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory",
+    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Logic"
+    ],
+    "priority_score": 0.77,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.961834+00:00"
+  },
+  {
+    "id": "fd_2251",
+    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions",
+    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Analysis"
+    ],
+    "priority_score": 0.77,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.088592+00:00"
+  },
+  {
+    "id": "fd_2262",
+    "title": "Hypergraph Ramsey Theory: Beyond Graphs",
+    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Logic"
+    ],
+    "priority_score": 0.77,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.801550+00:00"
+  },
+  {
+    "id": "fd_2240",
+    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology",
+    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Algebra"
+    ],
+    "priority_score": 0.76,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.404598+00:00"
+  },
+  {
+    "id": "fd_2247",
+    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces",
+    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Geometry",
+      "MachineLearning"
+    ],
+    "priority_score": 0.76,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.480590+00:00"
+  },
+  {
+    "id": "fd_2242",
+    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?",
+    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "NumberTheory"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.722730+00:00"
+  },
+  {
+    "id": "fd_2257",
+    "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations",
+    "description": "Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algebra B(f) such that the clopen sets of S(B(f)) correspond to the decision regions of f. Specifically, for a binary classifier f: R^n -> {0, 1}, the decision regions {x : f(x) > 0} and {x : f(x) <= 0} are clopen sets in the Stone topology, and the Boolean algebra B(f) is generated by the hyperplanes that form the decision boundary. For a ReLU network with L layers: B(f) is generated by the w_1 + ... + w_L hyperplanes defined by each neuron. The Stone space S(B(f)) has 2^{w_1+...+w_L} points (one for each possible activation pattern), and the decision boundary of f is a subset of S(B(f)). Conjecture: the VC dimension of f equals the number of atoms in B(f), which equals the number of linear regions of f. Test: compute B(f) for small ReLU networks and verify the VC dimension equals the number of linear regions. Impact: neural networks have Stone duals. The Boolean algebra of activation patterns is the syntax, and the decision boundary is the semantics.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "c86362a6",
+    "timestamp": "2026-05-30T13:51:58.995302+00:00"
+  },
+  {
+    "id": "fd_2228",
+    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime",
+    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Analysis"
+    ],
+    "priority_score": 0.74,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:54.552789+00:00"
+  },
+  {
+    "id": "fd_2234",
+    "title": "The Thermodynamics of Sorting: Entropy and Computational Work",
+    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Physics"
+    ],
+    "priority_score": 0.74,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:55.509884+00:00"
+  },
+  {
+    "id": "fd_2252",
+    "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?",
+    "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
+    "domains": [
+      "Novelty",
+      "NumberTheory",
+      "Computation",
+      "MachineLearning"
+    ],
+    "priority_score": 0.74,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.239313+00:00"
+  },
+  {
+    "id": "fd_2246",
+    "title": "Categorification of Entropy: The Information Loss of Functors",
+    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.73,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.326903+00:00"
+  },
+  {
+    "id": "fd_2260",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation",
+      "MachineLearning"
+    ],
+    "priority_score": 0.73,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.478454+00:00"
+  },
+  {
     "id": "seed_007",
     "title": "196-Algorithm Non-Termination",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
@@ -8473,5 +9019,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
+  },
+  {
+    "id": "fd_2255",
+    "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring",
+    "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.72,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:58.696376+00:00"
+  },
+  {
+    "id": "fd_2245",
+    "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes",
+    "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
+    "domains": [
+      "Novelty",
+      "Computation",
+      "Combinatorics"
+    ],
+    "priority_score": 0.71,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.173471+00:00"
+  },
+  {
+    "id": "fd_2261",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Geometry",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.647743+00:00"
+  },
+  {
+    "id": "fd_2238",
+    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm",
+    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
+    "domains": [
+      "Novelty",
+      "Algebra",
+      "Computation",
+      "Speculative"
+    ],
+    "priority_score": 0.68,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:56.109230+00:00"
+  },
+  {
+    "id": "fd_2249",
+    "title": "The Topology of Argumentation: Why Debates Have Holes",
+    "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Computation",
+      "Speculative"
+    ],
+    "priority_score": 0.67,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:57.789071+00:00"
+  },
+  {
+    "id": "fd_2258",
+    "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right",
+    "description": "The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost rigorous' (a proof that is correct in spirit but has small gaps), then drops sharply (because mathematicians are suspicious of proofs that look correct but might have subtle errors), before recovering for fully rigorous proofs. The 'mathematical uncanny valley' function U(r) where r in [0,1] is the rigor level: U(0) = high (informal intuition is accepted), U(0.8) = low (almost rigorous but with gaps \u2014 very suspicious), U(1.0) = high (fully rigorous proof, formally verified). Conjecture: U(r) has a unique minimum at r = 1 - epsilon where epsilon is the 'gap size' that triggers the most suspicion. For Lean 4 proofs: U(1) = 1 (compiles), U(0.99) = 0.1 (almost compiles but has a 'sorry'), U(0.5) = 0.5 (sketch proof, accepted as intuition). Test: survey 100 mathematicians on their confidence in proofs at varying rigor levels and fit the uncanny valley curve. Impact: almost-right proofs are less trusted than informal intuitions. Formal verification escapes the uncanny valley.",
+    "domains": [
+      "Novelty",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.63,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-30T13:51:59.149777+00:00"
   }
 ];

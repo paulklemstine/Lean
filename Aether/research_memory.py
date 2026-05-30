@@ -297,6 +297,7 @@ class FutureDirectionsManager:
         self._pruned: List[FutureDirection] = []
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
         self._recent_domain_counts: Dict[str, int] = {}  # domain -> count in recent completions
+        self._recent_theme_keywords: Dict[str, int] = {}  # keyword -> count in recent completions
         self._load()
 
     def _next_id(self) -> str:
@@ -354,6 +355,7 @@ class FutureDirectionsManager:
                 self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
                 self._cycle_syntheses = data.get("cycle_syntheses", {})
                 self._recent_domain_counts = data.get("recent_domain_counts", {})
+                self._recent_theme_keywords = data.get("recent_theme_keywords", {})
         except Exception:
             self._directions = []
             self._pruned = []
@@ -408,6 +410,7 @@ class FutureDirectionsManager:
                 "pruned": [d.to_dict() for d in self._pruned],
                 "cycle_syntheses": self._cycle_syntheses,
                 "recent_domain_counts": self._recent_domain_counts,
+                "recent_theme_keywords": self._recent_theme_keywords,
             }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
@@ -773,6 +776,27 @@ class FutureDirectionsManager:
                 # Track domain in recent completions for soft decay
                 for domain in d.domains:
                     self._recent_domain_counts[domain] = self._recent_domain_counts.get(domain, 0) + 1
+                # Track theme keywords for anti-repetition penalty
+                title_words = set(w.lower().strip(".,;:!?()[]") for w in d.title.split()
+                                  if len(w) > 4 and w.lower() not in {
+                                      "which", "their", "other", "about", "would", "could",
+                                      "should", "these", "those", "being", "having", "where",
+                                      "there", "every", "between", "through", "during",
+                                  })
+                desc_words = set(w.lower().strip(".,;:!?()[]") for w in d.description.split()
+                                 if len(w) > 5 and w.lower() not in {
+                                     "which", "their", "other", "about", "would", "could",
+                                     "should", "these", "those", "being", "having", "where",
+                                     "there", "every", "between", "through", "during",
+                                 })
+                theme_keywords = title_words | desc_words
+                for kw in theme_keywords:
+                    self._recent_theme_keywords[kw] = self._recent_theme_keywords.get(kw, 0) + 1
+                # Cap theme keywords at 100 entries, removing least frequent
+                if len(self._recent_theme_keywords) > 100:
+                    sorted_kws = sorted(self._recent_theme_keywords.items(), key=lambda x: x[1])
+                    for kw, _ in sorted_kws[:len(sorted_kws) - 100]:
+                        del self._recent_theme_keywords[kw]
                 break
         self._save()
 
@@ -1110,28 +1134,41 @@ class FutureDirectionsManager:
                 break
 
         # soft domain decay: penalize directions whose domains are overrepresented
-        # in recent outputs. Each domain that appears in >3 recent completions
-        # gets a multiplicative penalty: 0.3^min(1, (count-3)/8)
-        # (stronger decay than before: 0.3 instead of 0.5, threshold lowered from 5 to 3)
+        # in recent outputs. Decay kicks in after just 1 completion: 0.25^min(1, (count-1)/6)
+        # This is aggressive: a domain with 7 completions gets ~0.25x, 13+ completions gets ~0.06x
         domain_decay = 1.0
         if self._recent_domain_counts:
             for d in direction.domains:
                 recent_count = self._recent_domain_counts.get(d, 0)
-                if recent_count > 3:
-                    decay = 0.3 ** min(1.0, (recent_count - 3) / 8.0)
+                if recent_count > 1:
+                    decay = 0.25 ** min(1.0, (recent_count - 1) / 6.0)
                     domain_decay = min(domain_decay, decay)
 
-        # first_time_domain_bonus: boost directions in domains with 0-1 completions
-        # (encourages exploration of new territory)
+        # first_time_domain_bonus: boost directions in domains with 0-2 completions
+        # (encourages exploration of underrepresented territory)
         first_time_bonus = 0.0
         if self._recent_domain_counts:
             for d in direction.domains:
-                if self._recent_domain_counts.get(d, 0) <= 1:
-                    first_time_bonus = 0.10
+                if self._recent_domain_counts.get(d, 0) <= 2:
+                    first_time_bonus = 0.15
                     break
 
         # novelty_bonus: wild/frontier directions tagged "Novelty" get a boost
         novelty_bonus = 0.10 if "Novelty" in direction.domains else 0.0
+
+        # anti-repetition penalty: directions that repeat recent theme keywords get penalized
+        # For each keyword in the direction that appears 3+ times in recent completions,
+        # apply a -0.03 penalty (capped at -0.15 total)
+        repetition_penalty = 0.0
+        if self._recent_theme_keywords:
+            title_words = set(w.lower().strip(".,;:!?()[]") for w in direction.title.split() if len(w) > 4)
+            desc_words = set(w.lower().strip(".,;:!?()[]") for w in direction.description.split() if len(w) > 5)
+            direction_keywords = title_words | desc_words
+            for kw in direction_keywords:
+                kw_count = self._recent_theme_keywords.get(kw, 0)
+                if kw_count >= 3:
+                    repetition_penalty -= 0.03
+            repetition_penalty = max(repetition_penalty, -0.15)
 
         # arxiv_boost: directions sourced from ArXiv mining get +0.15
         arxiv_boost = 0.15 if direction.source_exp_id and direction.source_exp_id.startswith("arxiv") else 0.0
@@ -1152,6 +1189,7 @@ class FutureDirectionsManager:
             + arxiv_boost
             + novelty_bonus
             + first_time_bonus
+            + repetition_penalty
         ) * domain_decay
 
     def prune_directions(

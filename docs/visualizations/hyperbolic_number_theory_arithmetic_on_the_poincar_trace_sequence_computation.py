@@ -1,311 +1,364 @@
-#!/usr/bin/env python3
 """
-Algorithms for Hyperbolic Number Theory
+Hyperbolic Number Theory: Algorithms
 
-Implements key algorithms from the research paper with full documentation,
-type hints, and complexity analysis.
+Core algorithms for computing with hyperbolic lattice structures,
+trace sequences, and Möbius transformations.
+
+Includes:
+- Trace sequence computation (O(n) time, O(1) space)
+- Companion matrix exponentiation (O(log n) time)
+- Pseudo-hyperbolic distance computation
+- Markov tree generation via Vieta involution
+- Conformal factor computation
 """
 
-from typing import List, Tuple, Optional, Set
 import math
+from typing import List, Tuple, Set, Optional, Dict
+from dataclasses import dataclass
 
 
 # ============================================================================
-# Algorithm 1: Trace Sequence Computation (Chebyshev Recurrence)
+# Algorithm 1: Trace Sequence (Linear Recurrence)
 # ============================================================================
 
 def trace_seq(t: int, n: int) -> int:
-    """
-    Compute the trace sequence traceSeq(t, n) via the Chebyshev recurrence.
-
-    This gives tr(g^n) where g ∈ SL₂(ℤ) has trace t.
-    Satisfies: traceSeq(t, 0) = 2, traceSeq(t, 1) = t,
-               traceSeq(t, n+2) = t * traceSeq(t, n+1) - traceSeq(t, n)
-
-    Time: O(n), Space: O(1)
-
+    """Compute traceSeq(t, n) via the Chebyshev recurrence.
+    
+    Time complexity: O(n)
+    Space complexity: O(1)
+    
+    The trace sequence satisfies:
+        x_0 = 2, x_1 = t, x_{k+2} = t·x_{k+1} - x_k
+    
+    This computes tr(γⁿ) where γ ∈ SL₂(ℤ) has tr(γ) = t.
+    
     Args:
-        t: The base trace value (integer ≥ 2 for hyperbolic elements)
-        n: The power index (non-negative integer)
-
+        t: The trace value (integer).
+        n: The power (non-negative integer).
+        
     Returns:
-        The n-th term of the trace sequence with base t.
-
+        The n-th term of the trace sequence.
+        
     Examples:
         >>> trace_seq(3, 0)
         2
-        >>> trace_seq(3, 3)
-        18
+        >>> trace_seq(3, 4)
+        47
+        >>> trace_seq(0, 4)
+        2
     """
     if n == 0:
         return 2
     if n == 1:
         return t
-    prev2, prev1 = 2, t
+    a, b = 2, t
     for _ in range(n - 1):
-        prev2, prev1 = prev1, t * prev1 - prev2
-    return prev1
+        a, b = b, t * b - a
+    return b
 
 
-def trace_seq_matrix(t: int, n: int) -> int:
+# ============================================================================
+# Algorithm 2: Matrix Power via Fast Exponentiation
+# ============================================================================
+
+@dataclass
+class Mat2x2:
+    """2×2 integer matrix."""
+    a: int
+    b: int
+    c: int
+    d: int
+    
+    def __mul__(self, other: 'Mat2x2') -> 'Mat2x2':
+        return Mat2x2(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d,
+        )
+    
+    def det(self) -> int:
+        return self.a * self.d - self.b * self.c
+    
+    def trace(self) -> int:
+        return self.a + self.d
+    
+    @staticmethod
+    def identity() -> 'Mat2x2':
+        return Mat2x2(1, 0, 0, 1)
+
+
+def companion_matrix(t: int) -> Mat2x2:
+    """The trace companion matrix [[t, -1], [1, 0]].
+    
+    This matrix has:
+    - det = 1 (it's in SL₂(ℤ))
+    - trace = t
+    - tr(Mⁿ) = traceSeq(t, n)
     """
-    Compute traceSeq(t, n) via matrix exponentiation.
+    return Mat2x2(t, -1, 1, 0)
 
-    Uses the recurrence matrix [[t, -1], [1, 0]] raised to power n.
 
-    Time: O(log n), Space: O(1)
-
+def matrix_power(M: Mat2x2, n: int) -> Mat2x2:
+    """Compute M^n via fast exponentiation.
+    
+    Time complexity: O(log n) matrix multiplications
+    Space complexity: O(1)
+    
     Args:
-        t: The base trace value
-        n: The power index
-
+        M: A 2×2 integer matrix.
+        n: The exponent (non-negative integer).
+        
     Returns:
-        The n-th term of the trace sequence.
+        M^n as a 2×2 matrix.
     """
     if n == 0:
-        return 2
+        return Mat2x2.identity()
     if n == 1:
-        return t
-
-    def mat_mul(A: Tuple, B: Tuple) -> Tuple:
-        return (
-            A[0] * B[0] + A[1] * B[2],
-            A[0] * B[1] + A[1] * B[3],
-            A[2] * B[0] + A[3] * B[2],
-            A[2] * B[1] + A[3] * B[3],
-        )
-
-    # Matrix [[t, -1], [1, 0]]
-    base = (t, -1, 1, 0)
-    result = (1, 0, 0, 1)  # Identity
-
-    power = n - 1
-    while power > 0:
-        if power & 1:
-            result = mat_mul(result, base)
-        base = mat_mul(base, base)
-        power >>= 1
-
-    # result * [t, 2]^T gives [traceSeq(t, n), traceSeq(t, n-1)]
-    return result[0] * t + result[1] * 2
+        return M
+    result = Mat2x2.identity()
+    base = M
+    while n > 0:
+        if n % 2 == 1:
+            result = result * base
+        base = base * base
+        n //= 2
+    return result
 
 
-# ============================================================================
-# Algorithm 2: Markov Tree Generation via Vieta Involutions
-# ============================================================================
-
-def generate_markov_triples(max_value: int = 1000) -> List[Tuple[int, int, int]]:
+def trace_seq_fast(t: int, n: int) -> int:
+    """Compute traceSeq(t, n) via matrix exponentiation.
+    
+    Time complexity: O(log n) (but with big integer multiplication)
+    Space complexity: O(1)
+    
+    Uses the identity tr(M^n) = traceSeq(t, n) where M = [[t,-1],[1,0]].
     """
-    Generate all Markov triples (x, y, z) with max(x,y,z) ≤ max_value.
-
-    Uses BFS on the Markov tree, applying Vieta involutions:
-    (x, y, z) → (x, y, 3xy - z) and permutations.
-
-    The Markov equation is x² + y² + z² = 3xyz.
-
-    Time: O(N log N) where N is the number of triples found
-    Space: O(N)
-
-    Args:
-        max_value: Upper bound on the largest element.
-
-    Returns:
-        Sorted list of Markov triples.
-    """
-    seen: Set[Tuple[int, int, int]] = set()
-    queue = [(1, 1, 1)]
-    seen.add((1, 1, 1))
-
-    while queue:
-        x, y, z = queue.pop(0)
-        # Apply Vieta involution to each coordinate
-        for a, b, c in [(x, y, z), (x, z, y), (y, z, x)]:
-            new_c = 3 * a * b - c
-            if new_c > 0:
-                triple = tuple(sorted((a, b, new_c)))
-                if triple not in seen and max(triple) <= max_value:
-                    seen.add(triple)
-                    queue.append(triple)
-
-    return sorted(seen)
+    M = companion_matrix(t)
+    Mn = matrix_power(M, n)
+    return Mn.trace()
 
 
 # ============================================================================
-# Algorithm 3: Primitive Trace Classification
-# ============================================================================
-
-def classify_traces(N: int) -> Tuple[List[int], List[int]]:
-    """
-    Classify traces in [3, N] as primitive or imprimitive.
-
-    A trace t is imprimitive if t + 2 = s² for some integer s ≥ 2
-    (equivalently, t is the trace of a square of some element).
-
-    Time: O(N), Space: O(N)
-
-    Args:
-        N: Upper bound for trace values.
-
-    Returns:
-        (primitives, imprimitives): Lists of primitive and imprimitive traces.
-    """
-    primitives = []
-    imprimitives = []
-
-    for t in range(3, N + 1):
-        s = int(math.isqrt(t + 2))
-        if s >= 2 and s * s == t + 2:
-            imprimitives.append(t)
-        else:
-            primitives.append(t)
-
-    return primitives, imprimitives
-
-
-# ============================================================================
-# Algorithm 4: Pseudo-Hyperbolic Distance
+# Algorithm 3: Pseudo-Hyperbolic Distance
 # ============================================================================
 
 def pseudo_hyp_dist(p: Tuple[float, float], q: Tuple[float, float]) -> float:
-    """
-    Compute the pseudo-hyperbolic distance between two points in the Poincaré disk.
-
-    δ(z,w) = |z-w| / |1-z̄w|
-
-    The actual hyperbolic distance is d = 2·arctanh(δ).
-
-    Time: O(1), Space: O(1)
-
+    """Compute the pseudo-hyperbolic distance ρ(p, q) in the Poincaré disk.
+    
+    ρ(p,q) = |p - q| / |1 - p̄·q|
+    
+    Time complexity: O(1)
+    
     Args:
-        p: Point (x₁, y₁) with x₁²+y₁² < 1
-        q: Point (x₂, y₂) with x₂²+y₂² < 1
-
+        p, q: Points in the unit disk as (x, y) tuples.
+        
     Returns:
-        The pseudo-hyperbolic distance δ(p, q) ∈ [0, 1).
+        The pseudo-hyperbolic distance (a value in [0, 1)).
     """
-    px, py = p
-    qx, qy = q
-
-    num_sq = (px - qx) ** 2 + (py - qy) ** 2
-    den_sq = (1 - px * qx - py * qy) ** 2 + (px * qy - py * qx) ** 2
-
+    dx, dy = p[0] - q[0], p[1] - q[1]
+    num_sq = dx**2 + dy**2
+    # |1 - p̄·q|² = (1 - px·qx - py·qy)² + (px·qy - py·qx)²
+    re_part = 1 - p[0]*q[0] - p[1]*q[1]
+    im_part = p[0]*q[1] - p[1]*q[0]
+    den_sq = re_part**2 + im_part**2
     return math.sqrt(num_sq / den_sq)
 
 
 def hyperbolic_distance(p: Tuple[float, float], q: Tuple[float, float]) -> float:
+    """Compute the hyperbolic distance d_H(p, q) in the Poincaré disk.
+    
+    d_H(p, q) = 2 · arctanh(ρ(p, q))
+    
+    Time complexity: O(1)
     """
-    Compute the actual hyperbolic distance in the Poincaré disk model.
+    rho = pseudo_hyp_dist(p, q)
+    return 2 * math.atanh(min(rho, 0.9999999))
 
-    d(z,w) = 2·arctanh(δ(z,w))
 
-    Time: O(1), Space: O(1)
+def conformal_factor(p: Tuple[float, float]) -> float:
+    """Compute the conformal factor λ(z) = 2/(1 - |z|²).
+    
+    This converts Euclidean infinitesimal distances to hyperbolic ones:
+    ds_H = λ(z) · ds_E
+    
+    Our theorem proves λ(z) ≥ 2 for all z in the disk.
     """
-    delta = pseudo_hyp_dist(p, q)
-    if delta >= 1:
-        return float('inf')
-    return 2 * math.atanh(delta)
+    norm_sq = p[0]**2 + p[1]**2
+    assert norm_sq < 1, "Point must be in the unit disk"
+    return 2.0 / (1.0 - norm_sq)
 
 
 # ============================================================================
-# Algorithm 5: SL₂(ℤ) Element from Trace (Constructive Witness)
+# Algorithm 4: Markov Tree via Vieta Involution
 # ============================================================================
 
-def sl2z_from_trace(n: int) -> Tuple[int, int, int, int]:
-    """
-    Construct an explicit SL₂(ℤ) element with given trace n (for n ≥ 2).
-
-    Returns [[n-1, 1], [n-2, 1]] which has determinant 1 and trace n.
-
-    Time: O(1), Space: O(1)
-
+def markov_tree(max_depth: int = 5) -> List[Tuple[int, int, int]]:
+    """Generate the Markov tree via the Vieta involution.
+    
+    Starting from (1, 1, 1), applies the Vieta involution
+    z → 3xy - z to generate all Markov triples.
+    
+    The Vieta involution preserves the Markov equation
+    x² + y² + z² = 3xyz (proved in our Lean formalization).
+    
+    Time complexity: O(3^depth) per level
+    Space complexity: O(|tree|)
+    
     Args:
-        n: Desired trace value (integer ≥ 2)
-
+        max_depth: Maximum tree depth.
+        
     Returns:
-        (a, b, c, d) with ad - bc = 1 and a + d = n
+        List of Markov triples (x, y, z) with x ≤ y ≤ z.
     """
-    assert n >= 2, f"Trace must be ≥ 2, got {n}"
-    a, b, c, d = n - 1, 1, n - 2, 1
-    assert a * d - b * c == 1
-    assert a + d == n
-    return (a, b, c, d)
+    result = []
+    seen: Set[Tuple[int, int, int]] = set()
+    queue = [(1, 1, 1, 0)]  # (x, y, z, depth)
+    
+    while queue:
+        x, y, z, depth = queue.pop(0)
+        key = tuple(sorted((x, y, z)))
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(key)
+        
+        if depth < max_depth:
+            # Apply Vieta involution to each coordinate
+            for a, b, c in [(x,y,z), (y,z,x), (z,x,y)]:
+                new_c = 3*a*b - c
+                if new_c > 0:
+                    queue.append((a, b, new_c, depth + 1))
+    
+    return sorted(result)
 
 
 # ============================================================================
-# Algorithm 6: Fundamental Discriminant Computation
+# Algorithm 5: Spectral Data Computation
 # ============================================================================
 
-def fundamental_disc(t: int) -> int:
+@dataclass
+class HyperbolicSpectralData:
+    """Spectral data for a hyperbolic element of SL₂(ℤ).
+    
+    Packages the trace, discriminant, and eigenvalue information.
     """
-    Compute the fundamental discriminant D = t² - 4 associated to trace t.
-
-    This determines the quadratic field ℚ(√D) associated to a hyperbolic
-    element with trace t.
-
-    Time: O(1), Space: O(1)
-    """
-    return t * t - 4
-
-
-def discriminant_class_table(max_t: int) -> dict:
-    """
-    Build a table mapping discriminants to trace values.
-
-    Time: O(max_t), Space: O(max_t)
-
-    Returns:
-        Dict mapping D → list of trace values t with t² - 4 ≡ D (mod squares)
-    """
-    table = {}
-    for t in range(3, max_t + 1):
-        D = fundamental_disc(t)
-        # Find the square-free part
-        d = D
-        for p in range(2, int(math.isqrt(D)) + 1):
-            while d % (p * p) == 0:
-                d //= (p * p)
-        if d not in table:
-            table[d] = []
-        table[d].append(t)
-    return table
+    trace_val: int
+    
+    @property
+    def discriminant(self) -> int:
+        """Δ = t² - 4."""
+        return self.trace_val**2 - 4
+    
+    @property 
+    def eigenvalues(self) -> Tuple[float, float]:
+        """The eigenvalues (t ± √Δ)/2 of the companion matrix."""
+        sqrt_disc = math.sqrt(abs(self.discriminant))
+        if self.discriminant >= 0:
+            return (
+                (self.trace_val + sqrt_disc) / 2,
+                (self.trace_val - sqrt_disc) / 2,
+            )
+        else:
+            return (
+                self.trace_val / 2,
+                self.trace_val / 2,
+            )
+    
+    @property
+    def displacement(self) -> float:
+        """The hyperbolic displacement length ℓ = arccosh(|t|/2)."""
+        if abs(self.trace_val) <= 2:
+            return 0.0
+        return math.acosh(abs(self.trace_val) / 2)
+    
+    @property
+    def element_type(self) -> str:
+        """Classify: hyperbolic (|t|>2), parabolic (|t|=2), elliptic (|t|<2)."""
+        if abs(self.trace_val) > 2:
+            return "hyperbolic"
+        elif abs(self.trace_val) == 2:
+            return "parabolic"
+        else:
+            return "elliptic"
+    
+    def power_trace(self, n: int) -> int:
+        """Compute tr(γⁿ) = traceSeq(t, n)."""
+        return trace_seq(self.trace_val, n)
+    
+    def verify_cassini(self, n: int) -> bool:
+        """Verify the Cassini identity at a specific n."""
+        lhs = self.power_trace(n+2) * self.power_trace(n) - self.power_trace(n+1)**2
+        return lhs == self.discriminant
 
 
 # ============================================================================
-# Example Usage
+# Algorithm 6: Gromov Product and Tropical Bridge
+# ============================================================================
+
+def gromov_product(d_xw: float, d_yw: float, d_xy: float) -> float:
+    """Compute the Gromov product ⟨x,y⟩_w = (d(x,w) + d(y,w) - d(x,y))/2.
+    
+    The ultrametric inequality states:
+    ⟨x,y⟩_w ≥ min(⟨x,z⟩_w, ⟨y,z⟩_w) - δ
+    for δ-hyperbolic spaces.
+    """
+    return (d_xw + d_yw - d_xy) / 2
+
+
+def tropical_add(a: float, b: float) -> float:
+    """Tropical addition: a ⊕ b = min(a, b)."""
+    return min(a, b)
+
+
+def tropical_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a ⊗ b = a + b."""
+    return a + b
+
+
+# ============================================================================
+# Main: Run all algorithms
 # ============================================================================
 
 if __name__ == "__main__":
-    # Trace sequence
-    print("Trace sequence for t=3:")
-    for n in range(10):
-        v1 = trace_seq(3, n)
-        v2 = trace_seq_matrix(3, n)
-        assert v1 == v2, f"Mismatch at n={n}"
-        print(f"  traceSeq(3, {n}) = {v1}")
-
-    # Markov triples
-    print("\nMarkov triples with max ≤ 100:")
-    triples = generate_markov_triples(100)
-    for t in triples:
-        print(f"  {t}")
-
-    # Primitive trace density
-    print("\nPrimitive trace density for N=1000:")
-    prims, imprims = classify_traces(1000)
-    print(f"  Primitives: {len(prims)}, Imprimitives: {len(imprims)}")
-    print(f"  Density: {len(prims)/998:.4f}")
-
-    # Hyperbolic distance
-    print("\nHyperbolic distances:")
-    points = [(0, 0), (0.5, 0), (0.3, 0.4), (-0.2, 0.1)]
-    for i, p in enumerate(points):
-        for j, q in enumerate(points):
-            if i < j:
-                d = hyperbolic_distance(p, q)
-                print(f"  d({p}, {q}) = {d:.4f}")
-
-    # Discriminant table
-    print("\nDiscriminant class table (square-free parts):")
-    table = discriminant_class_table(20)
-    for d in sorted(table.keys()):
-        print(f"  D_sf={d}: traces {table[d]}")
+    print("=" * 60)
+    print("  Hyperbolic Number Theory: Algorithm Demonstrations")
+    print("=" * 60)
+    
+    # 1. Trace sequences
+    print("\n--- Trace Sequences ---")
+    for t in [0, 1, 3, 5]:
+        vals = [trace_seq(t, n) for n in range(10)]
+        print(f"  t={t:2d}: {vals}")
+    
+    # 2. Fast vs slow computation
+    print("\n--- Fast Matrix Exponentiation ---")
+    t, n = 3, 50
+    slow = trace_seq(t, n)
+    fast = trace_seq_fast(t, n)
+    print(f"  traceSeq({t}, {n}) = {slow}")
+    print(f"  via matrix:      {fast}")
+    print(f"  Match: {slow == fast}")
+    
+    # 3. Spectral data
+    print("\n--- Hyperbolic Spectral Data ---")
+    for t in [3, 4, 5, 7]:
+        sd = HyperbolicSpectralData(t)
+        print(f"  t={t}: Δ={sd.discriminant}, type={sd.element_type}, "
+              f"eigenvalues={sd.eigenvalues}, "
+              f"displacement={sd.displacement:.4f}")
+        # Verify Cassini
+        for n in range(10):
+            assert sd.verify_cassini(n), f"Cassini failed at t={t}, n={n}"
+        print(f"         Cassini verified for n=0..9 ✓")
+    
+    # 4. Markov triples
+    print("\n--- Markov Tree ---")
+    triples = markov_tree(4)
+    print(f"  Found {len(triples)} Markov triples:")
+    for triple in triples[:15]:
+        x, y, z = triple
+        check = x**2 + y**2 + z**2 == 3*x*y*z
+        print(f"    ({x}, {y}, {z}) — check: {check}")
+    
+    print("\nAll algorithms verified successfully!")

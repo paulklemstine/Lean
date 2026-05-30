@@ -1909,6 +1909,10 @@ Research mode: {concept.research_mode}
                     if d.priority_score >= 0.85:
                         print(f"[Cleanup] Skipping removal of {d.id} (priority={d.priority_score:.2f}): {d.title[:50]}")
                         continue
+                    # Protect novelty directions from removal
+                    if "Novelty" in d.domains:
+                        print(f"[Cleanup] Skipping removal of {d.id} (Novelty-protected): {d.title[:50]}")
+                        continue
                     d.status = "pruned"
                     removed += 1
 

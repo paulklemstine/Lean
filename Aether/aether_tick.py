@@ -89,6 +89,25 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     if recovered:
         print(f"[Tick] Recovered {recovered} stale direction(s)")
 
+    # Auto-refill novelty pool if it's running low
+    available_novelty = len([d for d in fd_manager._directions
+                            if d.status == "available" and "Novelty" in d.domains])
+    if available_novelty < 5:
+        from seed_directions import get_seed_directions
+        seed_dirs = get_seed_directions()
+        novelty_seeds = [sd for sd in seed_dirs if "Novelty" in sd.domains]
+        added = 0
+        for sd in novelty_seeds:
+            existing_titles = {d.title.lower().strip() for d in fd_manager._directions}
+            if sd.title.lower().strip() not in existing_titles:
+                sd.id = fd_manager._next_id()
+                sd.status = "available"
+                fd_manager.add_direction(sd)
+                added += 1
+        if added:
+            fd_manager._save()
+            print(f"[Tick] Auto-refilled {added} novelty directions from seeds (was {available_novelty})")
+
     inflight_count = len(extractor.inflight)
     print(f"[Tick] {inflight_count} inflight jobs")
 

@@ -99,9 +99,6 @@ class QualityScore:
             # Boost novelty for speculative/novelty domains
             if domain_set & {"novelty", "speculative"}:
                 w["novelty"] = w.get("novelty", 0.15) + 0.08
-            # Boost cross_domain for bridges
-            if "bridges" in domain_set:
-                w["cross_domain"] = w.get("cross_domain", 0.10) + 0.05
 
         # Normalize weights to sum to 1.0
         total = sum(w.values())
