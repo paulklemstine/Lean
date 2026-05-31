@@ -26,10 +26,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40dc5ae8",
     "timestamp": "2026-05-24T22:37:54.322674+00:00"
   },
   {
@@ -551,10 +551,10 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33965a6b",
     "timestamp": "2026-05-24T22:37:54.969692+00:00"
   },
   {
@@ -3791,10 +3791,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f9649e2e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2eb21f61",
     "timestamp": "2026-05-30T20:06:13.665024+00:00"
   },
   {
@@ -4241,10 +4241,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b10855aa",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a664059",
     "timestamp": "2026-05-31T12:45:20.175798+00:00"
   },
   {
@@ -4376,10 +4376,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.97,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d433817c",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
@@ -4569,5 +4569,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e7f8157d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T15:45:03.346916+00:00"
+  },
+  {
+    "id": "fd_2376",
+    "title": "This research cycle established a rigorous mathematical framework connecting per",
+    "description": "# Future Directions: Protein Folding as Persistent Homology Optimization\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework connecting persistent homology to protein folding through the concept of **total persistence minimization**. The central insight\u2014that native protein folds minimize topological complexity\u2014was formalized as a variational principle on contact filtration barcodes. Six structural theorems were formally verified: additivity under domain decomposition, upper and lower size bounds, monotonicity under filtration refinement, triangle inequality for topological similarity, gradient dimension superlinearity (resolving Levinthal's paradox), and probability normalization of persistence weights.\n\nThe most promising cross-domain connection from this cycle is the bridge between **tropical geometry** and **protein topology**. The existing Catalog theorem `exists_unique_barcode_from_rank_data` (from `Bridges/AlgebraTropicalGeometry/TropicalPersistenceRealizationDuality.lean`) establishes that barcodes are uniquely determined by their tropical rank invariants. Combining this with our protein folding framework suggests that the protein folding optimization can be reformulated as a tropical polynomial optimization problem\u2014potentially yielding efficient algorithms via tropical convexity. This direction has the highest breakthrough potential because tropical optimization problems often admit polynomial-time solutions even when their classical counterparts are NP-hard.\n\nThe secondary connection is between **persistence entropy** (defined via normalized persistence weights, whose sum-to-one property we proved) and **information-theoretic folding bounds**. The Catalog's `free_energy_lower_bound` (from `Bridges/ArithmeticLearningTheory/Core.lean`) provides a template for deriving minimum-description-length bounds on folding free energy from topological invariants.\n\n---\n\n### Direction 1: Tropical Persistence Optimization for Protein Folding\n\n**Conjecture**: The total persistence minimization problem for protein contact filtrations can be reformulated as a tropical polynomial optimization problem over the tropical semiring (\u211d \u222a {\u221e}, min, +). Specifically, the total persistence functional TP(D) = \u03a3\u1d62 (d\u1d62 \u2212 b\u1d62), where {(b\u1d62, d\u1d62)} is the barcode of the distance matrix D, can be expressed as a tropical rational function of the entries of D. The minimum of this tropical function corresponds to the native protein fold.\n\n**Test**: For proteins of n \u2264 20 atoms, explicitly construct the tropical polynomial representation of TP as a function of the n(n\u22121)/2 pairwise distances. Verify that the tropical critical points (where the minimum is achieved on multiple tropical monomials simultaneously) correspond to distance matrices of compact protein-like configurations. Compare with direct optimization of TP via gradient descent.\n\n**Impact**: If true, protein structure prediction reduces to tropical optimization, which admits efficient algorithms (tropical Simplex, tropical interior point). This would provide a polynomial-time algorithm for approximate protein folding with provable optimality guarantees\u2014something no current method achieves.\n\n**Catalog References**: `Bridges/AlgebraTropicalGeometry/TropicalPersistenceRealizationDuality.lean` (theorem `exists_unique_barcode_from_rank_data`), `Bridges/Catalog/Pythagorean/TropicalPersistentHomology.lean`, `Tropical/` (tropical semiring definitions)\n\n**Proof Strategy**: (1) Express the birth/death times of H\u2080 features as min/max operations on distance matrix entries (these are tropically polynomial). (2) Show that the total sum of (death \u2212 birth) is a difference of two tropical polynomials (a tropical rational function). (3) Apply tropical duality to characterize the critical locus. (4) Prove that the tropical critical locus is nonempty and corresponds to compact configurations.\n\n**Domain Bridges**: AlgebraicGeometry \u2194 StructuralBiology, TropicalGeometry \u2194 Optimization\n\n**Lineage**: Builds on `exists_unique_barcode_from_rank_data` and the total persistence framework from this cycle's `ProteinFoldingPersistence.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Higher Persistent Homology and Secondary Structure Classification\n\n**Conjecture**: The H\u2081 (loop) persistence of a protein's Vietoris-Rips filtration classifies secondary structure elements: \u03b1-helices correspond to persistent 1-cycles with period ~5.4\u00c5 (the helix pitch), while \u03b2-sheets correspond to persistent 1-cycles with period ~7.0\u00c5 (the strand-to-strand distance). Formally: for a protein with k \u03b1-helices and m \u03b2-sheets, the H\u2081 barcode contains at least k intervals with death/birth ratio in [1.3, 1.6] and at least m intervals with death/birth ratio in [1.8, 2.2].\n\n**Test**: Compute H\u2081 persistence (using Ripser or similar) for 50 proteins with known secondary structure assignments (from DSSP). For each protein, count the number of H\u2081 intervals in the predicted ratio ranges and compare with the known helix/sheet counts. Success criterion: Pearson correlation > 0.7 between predicted and actual counts.\n\n**Impact**: If true, persistent homology provides a structure-free method for secondary structure assignment\u2014no coordinate fitting, template matching, or hydrogen bond analysis required. This would be the first purely topological method for secondary structure classification.\n\n**Catalog References**: `Bridges/PersistentProofHomology.lean` (barcode structures), `Bridges/ProteinFoldingPersistence.lean` (contact filtration framework)\n\n**Proof Strategy**: (1) Model an ideal \u03b1-helix as a discrete helix curve and compute its H\u2081 barcode analytically. (2) Model an ideal \u03b2-sheet as a pleated surface and compute its H\u2081 barcode. (3) Prove that the death/birth ratios are separated for helices vs sheets. (4) Use stability theorems to show that perturbations of ideal structures preserve the ratio separation.\n\n**Domain Bridges**: AlgebraicTopology \u2194 StructuralBiology, ComputationalGeometry \u2194 Bioinformatics\n\n**Lineage**: Extends the H\u2080 persistence framework from this cycle to H\u2081.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Information-Theoretic Folding Speed Limits\n\n**Conjecture**: The folding time of a protein (in units of the elementary folding step) is bounded below by the persistence entropy H(B) = \u2212\u03a3 p\u1d62 log p\u1d62, where p\u1d62 = pers(I\u1d62)/TP(B). Specifically, the number of folding steps T satisfies T \u2265 2^{H(B)}. This is a topological Landauer bound: erasing topological complexity requires at least H(B) bits of thermodynamic work.\n\n**Test**: For 30 proteins with known experimental folding rates (from the kinetics database), compute persistence entropy from their PDB structures. Plot log(folding rate) vs H(B). The conjecture predicts a negative correlation (higher entropy = slower folding) with slope \u2264 \u22121.\n\n**Impact**: If true, this establishes a fundamental connection between topology and kinetics: proteins with more complex persistence distributions fold slower. This would be the first rigorous lower bound on folding time derived from topology alone, analogous to Landauer's bound in thermodynamics.\n\n**Catalog References**: `Bridges/SpectralCrypto.lean` (theorem `landauer_energy_lower_bound`), `Bridges/ArithmeticLearningTheory/Core.lean` (theorem `free_energy_lower_bound`)\n\n**Proof Strategy**: (1) Prove that each folding step can change the barcode by at most one interval (monotonicity). (2) Model the folding trajectory as a sequence of barcode modifications. (3) Apply an information-theoretic argument: distinguishing the native barcode from a random barcode requires at least H(B) bits. (4) Each folding step provides at most 1 bit of information (binary decision: contact or not). (5) Therefore T \u2265 H(B), and by exponentiation T \u2265 2^{H(B)}.\n\n**Domain Bridges**: InformationTheory \u2194 StructuralBiology, Thermodynamics \u2194 Topology\n\n**Lineage**: Builds on `persistenceWeights_sum_one` from this cycle and `landauer_energy_lower_bound` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Topological Drug Target Identification\n\n**Conjecture**: Binding sites on protein surfaces correspond to local maxima of persistence density\u2014regions where the barcode has an unusually high concentration of short-lived topological features. Specifically, for a protein-ligand complex, the binding pocket can be identified as the spatial region where the local persistence density (total persistence of features born in a spatial neighborhood) exceeds the protein-wide mean by at least 2 standard deviations.\n\n**Test**: For 20 protein-ligand complexes from the PDBbind database, compute the spatially-resolved persistence density and identify the top-3 density peaks. Score by the fraction of complexes where at least one peak overlaps with the known binding site (within 5\u00c5). Success criterion: overlap fraction > 0.6.\n\n**Impact**: If true, this provides a geometry-free method for binding site prediction. Unlike current methods (fpocket, SiteMap) that rely on geometric cavity detection, this method uses topological signatures that are invariant under continuous deformations\u2014potentially capturing cryptic binding sites that are invisible to static geometry.\n\n**Catalog References**: `Bridges/ProteinFoldingPersistence.lean` (persistence at scale, multi-scale analysis)\n\n**Proof Strategy**: (1) Define local persistence density as a convolution of the barcode with a spatial kernel. (2) Prove that binding pockets\u2014concavities on the protein surface\u2014create local concentrations of short-lived H\u2080 and H\u2081 features. (3) Show that the density peaks are stable under small perturbations of the protein structure. (4) Validate computationally on the PDBbind benchmark.\n\n**Domain Bridges**: TopologicalDataAnalysis \u2194 DrugDesign, ComputationalGeometry \u2194 Pharmacology\n\n**Lineage**: Extends the multi-scale persistence analysis (`persistenceAtScale`) from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Persistence-Equivariant Neural Networks for Structure Prediction\n\n**Conjecture**: A neural network architecture that takes as input the persistence diagram (or equivalently, the tropical rank invariant) of partial distance information and predicts the full barcode of the native fold will achieve competitive accuracy with AlphaFold2 on CASP targets while being 10\u00d7 faster, because the topological representation is lower-dimensional than the full distance matrix.\n\n**Test**: Train a persistence-equivariant network on 10,000 proteins from the PDB (using distances from experimental structures as ground truth). Evaluate on CASP14/15 targets. Measure: (1) barcode prediction accuracy (bottleneck distance to true barcode), (2) structure prediction accuracy (GDT-TS), (3) inference time.\n\n**Impact**: If successful, this bridges the gap between the mathematical framework (topology-based) and practical structure prediction (learning-based). The key advantage over AlphaFold2 would be interpretability: each predicted barcode interval has a clear topological meaning (a specific loop closure, a specific hydrophobic contact cluster).\n\n**Catalog References**: `Bridges/HomologicalDeepLearning.lean` (theorem `depth_lower_bound_from_obstruction`), `Bridges/QuantumNeuralCapacity.lean`\n\n**Proof Strategy**: (1) Prove that the map from distance matrices to barcodes is Lipschitz (using stability theorems from persistent homology). (2) Show that Lipschitz maps can be approximated by neural networks of bounded depth and width (universal approximation). (3) Construct an architecture that respects the equivariance: permutation of atoms induces a well-defined action on the barcode. (4) Derive sample complexity bounds using the VC dimension of persistence-equivariant function classes.\n\n**Domain Bridges**: MachineLearning \u2194 StructuralBiology, AlgebraicTopology \u2194 DeepLearning\n\n**Lineage**: Builds on `depth_lower_bound_from_obstruction` from the Catalog and the stability results from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a2bfb31",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T15:45:22.104395+00:00"
   }
 ];

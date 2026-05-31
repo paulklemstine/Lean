@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "biological_topology_protein_folding_as_persistent_.json",
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
+    "domain": "Bridges",
+    "date": "2026-05-31T15:45:19Z",
+    "exp_id": "6a2bfb31",
+    "quality_score": 0.7471118604651162,
+    "quality": "substantial",
+    "pkg_num": 8
+  },
+  {
     "filename": "primes_of_the_form_n1.json",
     "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
     "domain": "Algebra",
@@ -108,6 +118,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "biological_topology_protein_folding_as_persistent_.json": {
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
+    "exp_id": "6a2bfb31",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Bridges"
+  },
   "this_research_cycle_established_a_formal_bridge_be.json": {
     "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
     "exp_id": "c3940ca2",
@@ -145,7 +163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -156,7 +174,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -167,7 +185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -178,7 +196,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -189,7 +207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:22Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.5537266666666667,
       "quality": "partial"
     },
@@ -200,7 +218,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -211,9 +229,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 359,
+      "hue": 90,
       "priority_score": 0.6293001538461539,
       "quality": "partial"
+    },
+    {
+      "id": "biological_topology_protein_folding_as_persistent_",
+      "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T15:45:19Z",
+      "hue": 272,
+      "priority_score": 0.7471118604651162,
+      "quality": "substantial"
     }
   ],
   "edges": [],
