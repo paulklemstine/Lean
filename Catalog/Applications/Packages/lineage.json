@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "random_matrices_edge_universality",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "isogeny_based_cryptography_csi_fish",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "resolution_of_singularities_in_positive_characteri",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "standard_conjectures_on_algebraic_cycles",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "entropy_power_inequality_sharp_version",
@@ -133,7 +133,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_as_foundations",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "neural_pde_universality_classes_via_renormalizatio",
@@ -151,7 +151,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 91
+      "hue": 270
+    },
+    {
+      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:56:19Z",
+      "hue": 280
     }
   ],
   "edges": [],
