@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "machine_learning_generalization_bounds.json",
+    "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
+    "domain": "MachineLearning",
+    "date": "2026-05-31T15:11:42Z",
+    "exp_id": "0c3e833a",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 4
+  },
+  {
     "filename": "the_theorems_established_in_this_work__identifying.json",
     "title": "Newton Persistence and Arithmetic Monodromy",
     "domain": "Algebra",
@@ -52,6 +62,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "machine_learning_generalization_bounds.json": {
+    "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
+    "exp_id": "0c3e833a",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "MachineLearning"
+  },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Trace Arithmetic: Number Theory on the Poincar\u00e9 Disk",
     "exp_id": "895b1d6e",
@@ -84,7 +102,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -95,9 +113,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
+    },
+    {
+      "id": "machine_learning_generalization_bounds",
+      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
+      "domain": "MachineLearning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-31T15:11:42Z",
+      "hue": 270,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],

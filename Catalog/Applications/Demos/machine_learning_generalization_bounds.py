@@ -1,654 +1,726 @@
 """
-Applications of Effective Complexity Theory to Real-World Deep Learning
+Demo: Spectral-Compression Complexity (SCC) for Deep Network Generalization
 
-Shows how the mathematical framework applies to practical scenarios:
-1. Analyzing GPT-scale language models
-2. Evaluating vision transformer architectures
-3. Guiding neural architecture search
-4. Understanding double descent phenomena
+This script demonstrates the key results of the SCC framework:
+1. Computes SCC for example networks
+2. Shows the double descent witness construction
+3. Visualizes how the SCC bound varies with sample size
+4. Compares spectral and compression-based bounds
 """
 
 import math
-from dataclasses import dataclass
-from typing import List, Tuple
-
-
-@dataclass
-class EffectiveComplexityProfile:
-    """Effective complexity profile for a deep learning architecture."""
-    param_dim: int
-    quotient_complexity: int
-    code_length: int
-    posterior_kl: float
-    sample_size: int
-
-    @property
-    def effective_rate(self) -> float:
-        return self.quotient_complexity + self.code_length + self.posterior_kl
-
-    def generalizes(self, epsilon: float) -> bool:
-        return self.effective_rate <= self.sample_size * epsilon ** 2
-
-
-# =============================================================================
-# Application 1: Large Language Model Analysis
-# =============================================================================
-
-def analyze_language_model():
-    """
-    Analyze why GPT-scale models generalize despite massive overparameterization.
-
-    Key insight: Weight sharing, attention patterns, and embedding structure
-    create enormous quotient collapse. A 175B parameter model may have an
-    effective complexity of only a few thousand.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Why Large Language Models Generalize")
-    print("=" * 70)
-
-    models = [
-        ("GPT-2 Small",   124_000_000, 500, 200, 100.0, 40_000_000_000),
-        ("GPT-2 Medium",  355_000_000, 600, 250, 120.0, 40_000_000_000),
-        ("GPT-2 Large",   774_000_000, 700, 280, 130.0, 40_000_000_000),
-        ("GPT-2 XL",     1_500_000_000, 800, 300, 140.0, 40_000_000_000),
-        ("GPT-3",       175_000_000_000, 1200, 400, 200.0, 300_000_000_000),
-    ]
-
-    epsilon = 0.01  # Target generalization accuracy
-
-    print(f"\n{'Model':<15} {'Params':>15} {'Eff Rate':>10} {'Gen?':>6} "
-          f"{'Compression':>12} {'p/n':>8}")
-    print("-" * 70)
-
-    for name, params, q, c, kl, n in models:
-        profile = EffectiveComplexityProfile(params, q, c, kl, n)
-        gen = profile.generalizes(epsilon)
-        compression = params / max(profile.effective_rate, 1)
-        pn_ratio = params / n
-
-        print(f"{name:<15} {params:>15,} {profile.effective_rate:>10.0f} "
-              f"{'✓' if gen else '✗':>6} {compression:>12,.0f}x {pn_ratio:>8.1f}")
-
-    print(f"\nKey finding: All models generalize at ε={epsilon} because their")
-    print(f"effective complexity (hundreds) << parameter count (billions).")
-    print(f"Quotient collapse from weight sharing and attention symmetry")
-    print(f"reduces the effective hypothesis space by factors of 10^5 to 10^8.")
-
-
-# =============================================================================
-# Application 2: Vision Transformer Architecture Comparison
-# =============================================================================
-
-def compare_vision_architectures():
-    """
-    Compare vision architectures using effective complexity analysis.
-
-    Shows how architectural choices (convolutions, attention, pooling)
-    affect the quotient complexity and hence generalization.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Vision Architecture Comparison")
-    print("=" * 70)
-
-    architectures = [
-        # (name, params, quotient_complexity, code_length, kl, dataset_size)
-        ("ResNet-50",      25_600_000, 150, 80, 50.0, 1_281_167),
-        ("ResNet-152",     60_200_000, 180, 90, 55.0, 1_281_167),
-        ("ViT-B/16",       86_000_000, 200, 100, 60.0, 1_281_167),
-        ("ViT-L/16",      304_000_000, 250, 120, 65.0, 1_281_167),
-        ("EfficientNet-B7", 66_000_000, 120, 60, 45.0, 1_281_167),
-        ("ConvNeXt-L",    198_000_000, 160, 85, 52.0, 1_281_167),
-    ]
-
-    epsilon = 0.05
-
-    print(f"\nTarget generalization: ε = {epsilon}")
-    print(f"Dataset: ImageNet (n ≈ 1.28M)\n")
-
-    print(f"{'Architecture':<18} {'Params':>12} {'Eff Rate':>10} {'Budget':>10} "
-          f"{'Gen?':>6} {'Margin':>10}")
-    print("-" * 70)
-
-    for name, params, q, c, kl, n in architectures:
-        profile = EffectiveComplexityProfile(params, q, c, kl, n)
-        budget = n * epsilon ** 2
-        gen = profile.generalizes(epsilon)
-        margin = budget - profile.effective_rate
-
-        print(f"{name:<18} {params:>12,} {profile.effective_rate:>10.0f} "
-              f"{budget:>10.0f} {'✓' if gen else '✗':>6} {margin:>10.0f}")
-
-    print(f"\nInsight: EfficientNet-B7 has the lowest effective rate despite")
-    print(f"66M parameters, because its compound scaling reduces quotient")
-    print(f"complexity more efficiently than brute-force scaling.")
-
-
-# =============================================================================
-# Application 3: Architecture Search via Quotient Collapse
-# =============================================================================
-
-def architecture_search_demo():
-    """
-    Demonstrate how effective complexity guides architecture search.
-
-    Instead of searching over raw architectures, we search over
-    effective complexity profiles and identify the Pareto frontier
-    of generalization vs. expressivity.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Architecture Search by Quotient Collapse")
-    print("=" * 70)
-
-    sample_size = 50000  # CIFAR-10 training set
-    epsilon = 0.05
-    budget = sample_size * epsilon ** 2
-
-    print(f"\n  Sample size: {sample_size:,}")
-    print(f"  Target accuracy: ε = {epsilon}")
-    print(f"  Sample budget (n·ε²): {budget:.0f}")
-
-    # Generate candidate architectures with varying quotient collapse
-    candidates = []
-    for width_mult in [1, 2, 4, 8, 16]:
-        for depth in [4, 8, 16, 32]:
-            params = width_mult * depth * 10000
-            # Quotient complexity grows sublinearly with params
-            q = int(math.sqrt(params / 100))
-            # Code length grows logarithmically
-            c = int(math.log2(params + 1))
-            # KL grows slowly
-            kl = math.log(params + 1) / 10
-
-            profile = EffectiveComplexityProfile(params, q, c, kl, sample_size)
-            candidates.append((width_mult, depth, profile))
-
-    # Find generalizing candidates
-    viable = [(w, d, p) for w, d, p in candidates if p.generalizes(epsilon)]
-    viable.sort(key=lambda x: x[2].param_dim)
-
-    print(f"\n  Candidates evaluated: {len(candidates)}")
-    print(f"  Viable (generalizing): {len(viable)}")
-
-    print(f"\n  Top 10 by compression ratio:")
-    print(f"  {'Width':>6} {'Depth':>6} {'Params':>12} {'Eff Rate':>10} "
-          f"{'Compression':>12}")
-    print("  " + "-" * 50)
-
-    viable.sort(key=lambda x: -x[2].param_dim / max(x[2].effective_rate, 1))
-    for w, d, p in viable[:10]:
-        compression = p.param_dim / max(p.effective_rate, 1)
-        print(f"  {w:>6} {d:>6} {p.param_dim:>12,} "
-              f"{p.effective_rate:>10.1f} {compression:>12,.0f}x")
-
-    print(f"\n  Strategy: Choose architectures with high compression ratio —")
-    print(f"  they have the most 'room' for overparameterization without")
-    print(f"  sacrificing generalization.")
-
-
-# =============================================================================
-# Application 4: Understanding Double Descent
-# =============================================================================
-
-def double_descent_analysis():
-    """
-    Analyze the double descent phenomenon through effective complexity.
-
-    Double descent occurs because:
-    1. In the underparameterized regime, effective rate ≈ param_dim
-    2. Near interpolation threshold, effective rate peaks
-    3. In overparameterized regime, quotient collapse reduces effective rate
-
-    This creates a non-monotone relationship between param_dim and
-    generalization error.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Double Descent Through Effective Complexity Lens")
-    print("=" * 70)
-
-    sample_size = 1000
-    epsilon = 0.1
-
-    print(f"\n  Sample size: {sample_size}, Target ε: {epsilon}")
-    print(f"\n  {'Params':>10} {'Eff Rate':>10} {'Budget':>10} {'Gen?':>6} {'Phase':>20}")
-    print("  " + "-" * 60)
-
-    for params in [10, 50, 100, 500, 800, 1000, 1200, 2000, 5000, 10000, 50000]:
-        # Model effective complexity behavior:
-        # - Underparameterized: effective ≈ params
-        # - Interpolation threshold: effective peaks
-        # - Overparameterized: effective drops due to quotient collapse
-        ratio = params / sample_size
-
-        if ratio < 0.8:
-            # Underparameterized: no compression
-            eff = params * 0.8
-            phase = "Underparameterized"
-        elif ratio < 1.5:
-            # Near interpolation: peak complexity
-            eff = params * 1.2
-            phase = "Interpolation peak"
-        else:
-            # Overparameterized: quotient collapse kicks in
-            # Effective rate grows as sqrt(params) due to symmetry
-            eff = math.sqrt(params) * 10
-            phase = "Overparameterized"
-
-        q = int(eff * 0.5)
-        c = int(eff * 0.3)
-        kl = eff * 0.2
-
-        profile = EffectiveComplexityProfile(params, q, c, kl, sample_size)
-        budget = sample_size * epsilon ** 2
-        gen = profile.effective_rate <= budget
-
-        print(f"  {params:>10,} {profile.effective_rate:>10.0f} "
-              f"{budget:>10.0f} {'✓' if gen else '✗':>6} {phase:>20}")
-
-    print(f"\n  The double descent curve is explained by the non-monotone")
-    print(f"  relationship between parameter count and effective complexity.")
-    print(f"  After the interpolation threshold, quotient collapse from")
-    print(f"  symmetry and redundancy reduces effective complexity faster")
-    print(f"  than parameter growth increases it.")
-
-
-# =============================================================================
-# Application 5: Sample Efficiency Predictions
-# =============================================================================
-
-def sample_efficiency_predictions():
-    """
-    Predict minimum sample sizes for different architectures and accuracy targets.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 5: Sample Efficiency Predictions")
-    print("=" * 70)
-
-    architectures = [
-        ("Simple MLP", 100, 50, 30, 10.0),
-        ("Deep CNN", 1000000, 200, 100, 50.0),
-        ("ResNet", 25000000, 150, 80, 40.0),
-        ("Transformer", 100000000, 300, 150, 70.0),
-        ("Compressed Transformer", 100000000, 50, 30, 20.0),
-    ]
-
-    epsilons = [0.01, 0.05, 0.1, 0.2]
-
-    print(f"\n  Minimum samples needed for generalization:\n")
-    header = f"  {'Architecture':<25}" + "".join(f"{'ε='+str(e):>12}" for e in epsilons)
-    print(header)
-    print("  " + "-" * (25 + 12 * len(epsilons)))
-
-    for name, params, q, c, kl in architectures:
-        eff = q + c + kl
-        row = f"  {name:<25}"
-        for eps in epsilons:
-            n_min = math.ceil(eff / eps ** 2)
-            row += f"{n_min:>12,}"
-        print(row)
-
-    print(f"\n  Note: The 'Compressed Transformer' has the same parameter count")
-    print(f"  as the regular Transformer but much lower effective complexity,")
-    print(f"  requiring 3-5x fewer samples for the same generalization guarantee.")
-
-
-if __name__ == "__main__":
-    analyze_language_model()
-    compare_vision_architectures()
-    architecture_search_demo()
-    double_descent_analysis()
-    sample_efficiency_predictions()
-
-    print("\n" + "=" * 70)
-    print("All applications completed successfully!")
-    print("=" * 70)
-
-
-"""
-Demo: Effective Complexity Profiles for Deep Learning Generalization
-
-Demonstrates the core mathematical results with concrete numerical examples,
-showing how overparameterized models can generalize when their effective
-complexity collapses through quotient compression and posterior concentration.
-"""
-
-import math
-from dataclasses import dataclass
-from typing import Optional
-
-
-@dataclass
-class EffectiveComplexityProfile:
-    """
-    Captures the key quantities governing generalization in overparameterized models.
-
-    Attributes:
-        param_dim: Raw parameter dimension (total number of weights)
-        quotient_complexity: Effective number of distinguishable behaviors
-        code_length: Minimum description length of the hypothesis
-        posterior_kl: KL divergence from prior to posterior
-        sample_size: Number of training samples
-    """
-    param_dim: int
-    quotient_complexity: int
-    code_length: int
-    posterior_kl: float
-    sample_size: int
-
-    @property
-    def effective_rate(self) -> float:
-        """The learning-relevant complexity measure (independent of param_dim)."""
-        return self.quotient_complexity + self.code_length + self.posterior_kl
-
-    def generalizes_at_scale(self, epsilon: float, delta: float) -> bool:
-        """Check if the profile satisfies the generalization condition."""
-        if epsilon <= 0 or delta <= 0:
-            return False
-        return self.effective_rate <= self.sample_size * epsilon ** 2
-
-    def overparameterized_by(self, k: int) -> 'EffectiveComplexityProfile':
-        """Inflate parameter dimension by k, keeping effective quantities fixed."""
-        return EffectiveComplexityProfile(
-            param_dim=self.param_dim + k,
-            quotient_complexity=self.quotient_complexity,
-            code_length=self.code_length,
-            posterior_kl=self.posterior_kl,
-            sample_size=self.sample_size,
-        )
-
-    def raw_dimension_bound(self, epsilon: float) -> float:
-        """The naive dimension-based sample complexity bound."""
-        return self.param_dim / epsilon ** 2
-
-    def effective_sample_complexity(self, epsilon: float) -> float:
-        """The effective-rate-based sample complexity bound."""
-        return self.effective_rate / epsilon ** 2
-
-
-def demo_theorem1_compression_pacbayes():
-    """
-    Theorem 1: Unified Compression-PAC-Bayes Generalization Principle
-
-    Shows that generalization is controlled by effective complexity,
-    not ambient parameter count.
-    """
-    print("=" * 70)
-    print("THEOREM 1: Compression-PAC-Bayes Generalization")
-    print("=" * 70)
-
-    epsilon = 0.1
+import numpy as np
+from algorithms import (
+    SpectralProfile,
+    compute_spectral_profile,
+    spectral_complexity,
+    total_effective_rank,
+    spectral_compression_complexity,
+    scc_generalization_bound,
+    compression_gap,
+    double_descent_witness,
+    effective_rank,
+)
+
+
+def demo_basic_profiles():
+    """Demonstrate basic spectral profile computations."""
+    print("=" * 60)
+    print("DEMO 1: Basic Spectral Profile Computations")
+    print("=" * 60)
+
+    # Example 1: Orthogonal network (spectral norms = 1)
+    ortho = SpectralProfile(
+        spectral_norms=[1.0, 1.0, 1.0],
+        frobenius_norms=[5.0, 5.0, 5.0],
+        margin=0.5
+    )
+    print(f"\nOrthogonal 3-layer network (σ=1, F=5, γ=0.5):")
+    print(f"  Spectral complexity: {spectral_complexity(ortho):.4f}")
+    print(f"  Total effective rank: {total_effective_rank(ortho):.1f}")
+    print(f"  SCC: {spectral_compression_complexity(ortho):.2f}")
+    print(f"  Gen bound (n=1000, δ=0.05): {scc_generalization_bound(ortho, 1000, 0.05):.4f}")
+
+    # Example 2: High-norm network
+    high_norm = SpectralProfile(
+        spectral_norms=[3.0, 3.0, 3.0],
+        frobenius_norms=[5.0, 5.0, 5.0],
+        margin=0.5
+    )
+    print(f"\nHigh-norm 3-layer network (σ=3, F=5, γ=0.5):")
+    print(f"  Spectral complexity: {spectral_complexity(high_norm):.4f}")
+    print(f"  Total effective rank: {total_effective_rank(high_norm):.1f}")
+    print(f"  SCC: {spectral_compression_complexity(high_norm):.2f}")
+    print(f"  Gen bound (n=1000, δ=0.05): {scc_generalization_bound(high_norm, 1000, 0.05):.4f}")
+
+    # Example 3: From random weight matrices
+    np.random.seed(42)
+    W1 = np.random.randn(100, 50) * 0.1
+    W2 = np.random.randn(50, 50) * 0.1
+    W3 = np.random.randn(50, 10) * 0.1
+    profile = compute_spectral_profile([W1, W2, W3], margin=0.3)
+    print(f"\nRandom 3-layer network (100→50→50→10, init scale 0.1):")
+    print(f"  Spectral norms: {[f'{s:.3f}' for s in profile.spectral_norms]}")
+    print(f"  Frobenius norms: {[f'{f:.3f}' for f in profile.frobenius_norms]}")
+    print(f"  Effective ranks: {[f'{effective_rank(profile, i):.1f}' for i in range(3)]}")
+    print(f"  Spectral complexity: {spectral_complexity(profile):.6f}")
+    print(f"  SCC: {spectral_compression_complexity(profile):.6f}")
+    print(f"  Gen bound (n=1000, δ=0.05): {scc_generalization_bound(profile, 1000, 0.05):.6f}")
+
+
+def demo_double_descent():
+    """Demonstrate the double descent witness construction."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Double Descent Witness")
+    print("=" * 60)
+
+    gamma = 1.0
+    p1, p2 = double_descent_witness(gamma)
+
+    print(f"\nProfile P1 (2-layer, rank-1 matrices):")
+    print(f"  Depth: {p1.depth}")
+    print(f"  Spectral norms: {p1.spectral_norms}")
+    print(f"  Frobenius norms: {p1.frobenius_norms}")
+    print(f"  Total effective rank: {total_effective_rank(p1):.0f}")
+    print(f"  Spectral complexity: {spectral_complexity(p1):.0f}")
+    print(f"  SCC: {spectral_compression_complexity(p1):.0f}")
+
+    print(f"\nProfile P2 (1-layer, high effective rank):")
+    print(f"  Depth: {p2.depth}")
+    print(f"  Spectral norms: {p2.spectral_norms}")
+    print(f"  Frobenius norms: {p2.frobenius_norms}")
+    print(f"  Total effective rank: {total_effective_rank(p2):.0f}")
+    print(f"  Spectral complexity: {spectral_complexity(p2):.0f}")
+    print(f"  SCC: {spectral_compression_complexity(p2):.0f}")
+
+    print(f"\n  P2 has {total_effective_rank(p2)/total_effective_rank(p1):.0f}× more effective parameters")
+    print(f"  But P2's SCC is {spectral_compression_complexity(p1)/spectral_compression_complexity(p2):.0f}× smaller!")
+
+    print(f"\n  Generalization bounds (n=1000, δ=0.05):")
+    n, delta = 1000, 0.05
+    b1 = scc_generalization_bound(p1, n, delta)
+    b2 = scc_generalization_bound(p2, n, delta)
+    print(f"    P1 (fewer params): {b1:.4f}")
+    print(f"    P2 (more params):  {b2:.4f}")
+    print(f"    P2 bound is {b1/b2:.1f}× tighter ✓")
+
+
+def demo_convergence():
+    """Show that the SCC bound converges to 0 as n → ∞."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: SCC Bound Convergence")
+    print("=" * 60)
+
+    profile = SpectralProfile(
+        spectral_norms=[2.0, 2.0],
+        frobenius_norms=[5.0, 5.0],
+        margin=0.5
+    )
+    scc = spectral_compression_complexity(profile)
+    print(f"\n2-layer network with SCC = {scc:.0f}")
+    print(f"\n{'n':>10} | {'Bound':>10} | {'Bound²×n':>10}")
+    print("-" * 36)
+    for n in [100, 500, 1000, 5000, 10000, 50000, 100000]:
+        b = scc_generalization_bound(profile, n, 0.05)
+        print(f"{n:>10} | {b:>10.6f} | {b**2 * n:>10.2f}")
+
+    print("\nNote: Bound → 0 as n → ∞ (consistency theorem)")
+    print("Note: Bound² × n → SCC × ln(2) ≈ {:.1f} (the asymptotic rate)".format(
+        scc * math.log(2)))
+
+
+def demo_compression_comparison():
+    """Compare spectral and compression bounds."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Spectral vs Compression Bounds")
+    print("=" * 60)
+
+    n = 1000
     delta = 0.05
-    log_inv_delta = math.log(1.0 / delta)
 
-    # A large neural network with massive parameter count but small effective complexity
-    profile = EffectiveComplexityProfile(
-        param_dim=10_000_000,  # 10 million parameters
-        quotient_complexity=50,  # Only 50 distinguishable behaviors
-        code_length=30,         # 30 bits to describe the hypothesis
-        posterior_kl=log_inv_delta,  # KL equals log(1/δ) (PAC-Bayes bound)
-        sample_size=5000,       # Only 5000 training samples
-    )
-
-    print(f"\nProfile:")
-    print(f"  Parameters:           {profile.param_dim:>12,}")
-    print(f"  Quotient complexity:  {profile.quotient_complexity:>12}")
-    print(f"  Code length:          {profile.code_length:>12}")
-    print(f"  Posterior KL:         {profile.posterior_kl:>12.4f}")
-    print(f"  Sample size:          {profile.sample_size:>12,}")
-    print(f"  Effective rate:       {profile.effective_rate:>12.4f}")
-    print(f"  n * ε²:               {profile.sample_size * epsilon**2:>12.4f}")
-    print(f"\n  Generalizes (ε={epsilon}, δ={delta})? "
-          f"{profile.generalizes_at_scale(epsilon, delta)}")
-
-    # Show the compression hypothesis
-    structural = profile.quotient_complexity + profile.code_length + log_inv_delta
-    budget = profile.sample_size * epsilon ** 2
-    print(f"\n  Structural complexity + log(1/δ) = {structural:.4f}")
-    print(f"  Sample budget (n * ε²)           = {budget:.4f}")
-    print(f"  Bound satisfied?                   {structural <= budget}")
-
-    # Contrast with naive dimension bound
-    naive_samples_needed = profile.param_dim / epsilon ** 2
-    effective_samples_needed = profile.effective_rate / epsilon ** 2
-    print(f"\n  Naive samples needed (d/ε²):       {naive_samples_needed:,.0f}")
-    print(f"  Effective samples needed:           {effective_samples_needed:,.1f}")
-    print(f"  Compression ratio:                  {naive_samples_needed / effective_samples_needed:,.0f}x")
-
-
-def demo_theorem2_overparameterization():
-    """
-    Theorem 2: Overparameterization Invariance
-
-    Shows that increasing parameter dimension does not hurt generalization
-    when effective complexity remains fixed.
-    """
-    print("\n" + "=" * 70)
-    print("THEOREM 2: Overparameterization Does Not Hurt")
-    print("=" * 70)
-
-    epsilon, delta = 0.1, 0.05
-    base = EffectiveComplexityProfile(
-        param_dim=100, quotient_complexity=10, code_length=5,
-        posterior_kl=2.0, sample_size=2000
-    )
-
-    print(f"\n{'Param Dim':>12} {'Eff Rate':>10} {'Generalizes?':>14} {'Ratio p/n':>10}")
+    print(f"\nSample size n = {n}, confidence δ = {delta}")
+    print(f"\n{'k (bits)':>10} | {'Compression gap':>15} | {'SCC bound (equiv)':>17}")
     print("-" * 50)
 
-    for k in [0, 100, 1000, 10000, 100000, 1000000]:
-        P = base.overparameterized_by(k)
-        gen = P.generalizes_at_scale(epsilon, delta)
-        ratio = P.param_dim / P.sample_size
-        print(f"{P.param_dim:>12,} {P.effective_rate:>10.1f} {str(gen):>14} {ratio:>10.1f}")
-
-    print(f"\nKey insight: effective rate = {base.effective_rate:.1f} "
-          f"is invariant under overparameterization!")
+    for k in [10, 50, 100, 500, 1000, 5000]:
+        c_gap = compression_gap(k, n, delta)
+        # Equivalent SCC that would give same bound
+        equiv_scc = (c_gap**2 * n - math.log(1/delta)) / math.log(2*n) if c_gap > 0 else 0
+        print(f"{k:>10} | {c_gap:>15.6f} | {max(0,equiv_scc):>17.2f}")
 
 
-def demo_theorem3_quotient_compression():
-    """
-    Theorem 3: Quotient Compression Improves Sample Complexity
+def demo_depth_tradeoff():
+    """Show the depth vs spectral norm tradeoff."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Depth vs Spectral Norm Tradeoff")
+    print("=" * 60)
 
-    Shows that quotient collapse yields strictly better bounds than
-    raw dimension counting.
-    """
-    print("\n" + "=" * 70)
-    print("THEOREM 3: Quotient Compression Beats Dimension")
-    print("=" * 70)
+    gamma = 1.0
+    n, delta = 5000, 0.05
 
-    raw_dim = 1000
-    epsilon = 0.1
-    n = 150000  # Sample size sufficient for raw dimension
+    print(f"\nFixed margin γ = {gamma}, n = {n}, δ = {delta}")
+    print(f"Frobenius norm = 10 for each layer")
+    print(f"\n{'Depth':>6} | {'σ_per_layer':>11} | {'C_spec':>10} | {'R_eff':>8} | {'SCC':>12} | {'Bound':>8}")
+    print("-" * 70)
 
-    print(f"\n  Raw dimension:   {raw_dim}")
-    print(f"  Sample budget:   n * ε² = {n * epsilon**2:.0f}")
-
-    print(f"\n{'(q, c)':>10} {'q + c':>8} {'2 * n * ε²':>12} {'Improvement':>12}")
-    print("-" * 45)
-
-    for q, c in [(1000, 1000), (500, 500), (100, 100), (10, 10), (1, 1)]:
-        if q <= raw_dim and c <= raw_dim:
-            bound = 2 * n * epsilon ** 2
-            improvement = raw_dim / (q + c) if q + c > 0 else float('inf')
-            print(f"({q:>4},{c:>4}) {q+c:>8} {bound:>12.0f} {improvement:>12.1f}x")
-
-
-def demo_theorem5_existence():
-    """
-    Theorem 5: Existence of Overparameterized Generalizing Profiles
-
-    Constructs explicit profiles where parameters > samples but generalization holds.
-    """
-    print("\n" + "=" * 70)
-    print("THEOREM 5: Overparameterized Yet Generalizing")
-    print("=" * 70)
-
-    epsilon, delta = 0.1, 0.05
-
-    print(f"\n{'Params':>12} {'Samples':>10} {'Eff Rate':>10} {'Gen?':>6} {'p/n Ratio':>10}")
-    print("-" * 52)
-
-    for param_dim, sample_size in [(100, 50), (1000, 100), (10000, 500),
-                                    (100000, 1000), (1000000, 5000)]:
-        P = EffectiveComplexityProfile(
-            param_dim=param_dim,
-            quotient_complexity=0,
-            code_length=0,
-            posterior_kl=0.0,
-            sample_size=sample_size
+    for L in [1, 2, 3, 5, 10, 20]:
+        # Spectral norm chosen so C_spec stays constant at 10
+        sigma = 10 ** (1/L)
+        F = 10.0
+        profile = SpectralProfile(
+            spectral_norms=[sigma] * L,
+            frobenius_norms=[F] * L,
+            margin=gamma
         )
-        gen = P.generalizes_at_scale(epsilon, delta)
-        ratio = param_dim / sample_size
-        print(f"{param_dim:>12,} {sample_size:>10,} {P.effective_rate:>10.1f} "
-              f"{str(gen):>6} {ratio:>10.0f}x")
-
-    print("\nAll profiles generalize despite massive overparameterization!")
-    print("This is because effective rate = 0 regardless of parameter count.")
-
-
-def demo_strict_separation():
-    """
-    Strict Separation: The regime where dimension-based bounds fail
-    but effective-complexity bounds succeed.
-    """
-    print("\n" + "=" * 70)
-    print("STRICT SEPARATION: Raw Dimension vs. Effective Complexity")
-    print("=" * 70)
-
-    epsilon = 0.5  # Need ε < 1 for separation
-    delta = 0.05
-
-    P = EffectiveComplexityProfile(
-        param_dim=2, quotient_complexity=0, code_length=0,
-        posterior_kl=0.0, sample_size=1
-    )
-
-    n_eps_sq = P.sample_size * epsilon ** 2
-    print(f"\n  Profile: paramDim={P.param_dim}, q={P.quotient_complexity}, "
-          f"c={P.code_length}, kl={P.posterior_kl}, n={P.sample_size}")
-    print(f"  ε = {epsilon}, ε² = {epsilon**2}")
-    print(f"  n * ε² = {n_eps_sq}")
-    print(f"  Effective rate = {P.effective_rate}")
-    print(f"  paramDim = {P.param_dim}")
-    print(f"\n  ✓ Effective rate ({P.effective_rate}) ≤ n*ε² ({n_eps_sq})  → GENERALIZES")
-    print(f"  ✗ paramDim ({P.param_dim}) > n*ε² ({n_eps_sq})  → RAW BOUND FAILS")
-    print(f"\n  This demonstrates strict separation between the two regimes!")
-
-
-def demo_compression_monotonicity():
-    """
-    Demonstrates that reducing any component of effective complexity
-    preserves or improves generalization.
-    """
-    print("\n" + "=" * 70)
-    print("MONOTONICITY: Compression Always Helps")
-    print("=" * 70)
-
-    epsilon, delta = 0.1, 0.05
-
-    base = EffectiveComplexityProfile(
-        param_dim=10000, quotient_complexity=20, code_length=15,
-        posterior_kl=10.0, sample_size=5000
-    )
-
-    print(f"\n  Base profile: eff_rate = {base.effective_rate:.1f}, "
-          f"generalizes = {base.generalizes_at_scale(epsilon, delta)}")
-
-    # Reduce code length
-    compressed = EffectiveComplexityProfile(
-        param_dim=base.param_dim,
-        quotient_complexity=base.quotient_complexity,
-        code_length=base.code_length - 10,
-        posterior_kl=base.posterior_kl,
-        sample_size=base.sample_size
-    )
-    print(f"  After compression (code_length -10): eff_rate = {compressed.effective_rate:.1f}, "
-          f"generalizes = {compressed.generalizes_at_scale(epsilon, delta)}")
-
-    # Reduce KL
-    concentrated = EffectiveComplexityProfile(
-        param_dim=base.param_dim,
-        quotient_complexity=base.quotient_complexity,
-        code_length=base.code_length,
-        posterior_kl=base.posterior_kl - 5.0,
-        sample_size=base.sample_size
-    )
-    print(f"  After KL reduction (kl -5.0):        eff_rate = {concentrated.effective_rate:.1f}, "
-          f"generalizes = {concentrated.generalizes_at_scale(epsilon, delta)}")
+        c = spectral_complexity(profile)
+        r = total_effective_rank(profile)
+        scc = spectral_compression_complexity(profile)
+        b = scc_generalization_bound(profile, n, delta)
+        print(f"{L:>6} | {sigma:>11.4f} | {c:>10.2f} | {r:>8.1f} | {scc:>12.1f} | {b:>8.4f}")
 
 
 if __name__ == "__main__":
-    demo_theorem1_compression_pacbayes()
-    demo_theorem2_overparameterization()
-    demo_theorem3_quotient_compression()
-    demo_theorem5_existence()
-    demo_strict_separation()
-    demo_compression_monotonicity()
-
-    print("\n" + "=" * 70)
+    demo_basic_profiles()
+    demo_double_descent()
+    demo_convergence()
+    demo_compression_comparison()
+    demo_depth_tradeoff()
+    print("\n" + "=" * 60)
     print("All demos completed successfully!")
-    print("=" * 70)
+    print("=" * 60)
 
 
-"""Generate PACKAGE.json from the project files."""
+"""Generate PACKAGE.json from component files."""
 import json
-import os
 
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
+# Read files
+with open("ARTICLE.md") as f:
+    article = f.read()
+with open("RESEARCH_PAPER.md") as f:
+    research_paper = f.read()
+with open("FUTURE_DIRECTIONS.md") as f:
+    future_directions = f.read()
+with open("demo.py") as f:
+    demo_code = f.read()
+with open("algorithms.py") as f:
+    algo_code = f.read()
+with open("viz_double_descent.py") as f:
+    viz1_code = f.read()
+with open("viz_convergence.py") as f:
+    viz2_code = f.read()
+with open("viz_spectral_landscape.py") as f:
+    viz3_code = f.read()
+with open("MachineLearning/Generalization/SpectralBounds.lean") as f:
+    lean_code = f.read()
 
-project_root = os.path.dirname(os.path.abspath(__file__))
+interactive_html = '''<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #f8f9fa; border-radius: 12px;">
+  <h2 style="color: #1a237e; margin-bottom: 5px;">Spectral-Compression Complexity Explorer</h2>
+  <p style="color: #666; font-size: 14px; margin-top: 0;">Explore how depth, spectral norms, and margin interact to determine generalization bounds</p>
 
-article = read_file(os.path.join(project_root, 'ARTICLE.md'))
-research_paper = read_file(os.path.join(project_root, 'RESEARCH_PAPER.md'))
-future_directions = read_file(os.path.join(project_root, 'FUTURE_DIRECTIONS.md'))
-demo_code = read_file(os.path.join(project_root, 'demo.py'))
-algorithms_code = read_file(os.path.join(project_root, 'algorithms.py'))
-applications_code = read_file(os.path.join(project_root, 'applications.py'))
-lean_code = read_file(os.path.join(project_root, 'MachineLearning', 'EffectiveComplexity.lean'))
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+    <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <label style="font-weight: 600; color: #333;">Depth (L): <span id="depthVal">3</span></label><br>
+      <input type="range" id="depth" min="1" max="20" value="3" style="width: 100%;" oninput="update()">
+
+      <label style="font-weight: 600; color: #333;">Spectral Norm (σ): <span id="sigmaVal">1.50</span></label><br>
+      <input type="range" id="sigma" min="50" max="500" value="150" style="width: 100%;" oninput="update()">
+
+      <label style="font-weight: 600; color: #333;">Frobenius Norm (F): <span id="frobVal">5.0</span></label><br>
+      <input type="range" id="frob" min="100" max="3000" value="500" style="width: 100%;" oninput="update()">
+
+      <label style="font-weight: 600; color: #333;">Margin (γ): <span id="marginVal">1.00</span></label><br>
+      <input type="range" id="margin" min="10" max="500" value="100" style="width: 100%;" oninput="update()">
+
+      <label style="font-weight: 600; color: #333;">Samples (n): <span id="nVal">1000</span></label><br>
+      <input type="range" id="nsamples" min="100" max="100000" value="1000" style="width: 100%;" oninput="update()">
+    </div>
+
+    <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <h3 style="margin-top: 0; color: #1a237e;">Network Profile</h3>
+      <div id="results" style="font-size: 14px; line-height: 2;"></div>
+    </div>
+  </div>
+
+  <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #1a237e;">Generalization Bound vs Sample Size</h3>
+    <canvas id="chart" width="850" height="300" style="width: 100%;"></canvas>
+  </div>
+
+  <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <h3 style="margin-top: 0; color: #1a237e;">Double Descent Comparison</h3>
+    <div id="dd_results" style="font-size: 14px;"></div>
+  </div>
+
+  <script>
+    function computeSCC(L, sigma, F, gamma) {
+      var R_eff = L * Math.pow(F / sigma, 2);
+      var C_spec = Math.pow(sigma, L) / gamma;
+      return L * L * R_eff * C_spec * C_spec;
+    }
+
+    function sccBound(scc, n, delta) {
+      var inner = scc * Math.log(2 * n) / n + Math.log(1 / delta) / n;
+      return Math.sqrt(Math.max(0, inner));
+    }
+
+    function update() {
+      var L = parseInt(document.getElementById('depth').value);
+      var sigma = parseInt(document.getElementById('sigma').value) / 100;
+      var F = parseInt(document.getElementById('frob').value) / 100;
+      var gamma = parseInt(document.getElementById('margin').value) / 100;
+      var n = parseInt(document.getElementById('nsamples').value);
+      var delta = 0.05;
+
+      if (F < sigma) { F = sigma + 0.01; document.getElementById('frob').value = Math.round(F * 100); }
+
+      document.getElementById('depthVal').textContent = L;
+      document.getElementById('sigmaVal').textContent = sigma.toFixed(2);
+      document.getElementById('frobVal').textContent = F.toFixed(1);
+      document.getElementById('marginVal').textContent = gamma.toFixed(2);
+      document.getElementById('nVal').textContent = n;
+
+      var R_eff = L * Math.pow(F / sigma, 2);
+      var C_spec = Math.pow(sigma, L) / gamma;
+      var scc = computeSCC(L, sigma, F, gamma);
+      var bound = sccBound(scc, n, delta);
+
+      var resultsHTML = '<div>';
+      resultsHTML += '<b>Spectral Complexity:</b> ' + C_spec.toFixed(2) + '<br>';
+      resultsHTML += '<b>Effective Rank/Layer:</b> ' + (Math.pow(F/sigma, 2)).toFixed(1) + '<br>';
+      resultsHTML += '<b>Total Effective Rank:</b> ' + R_eff.toFixed(1) + '<br>';
+      resultsHTML += '<b style="color: #e65100;">SCC:</b> ' + scc.toExponential(2) + '<br>';
+      resultsHTML += '<b style="color: #1b5e20;">Gen Bound:</b> ' + bound.toFixed(4) + '<br>';
+
+      var color = bound < 0.1 ? '#4CAF50' : bound < 1.0 ? '#FF9800' : '#F44336';
+      resultsHTML += '<div style="margin-top: 10px; padding: 8px; background: ' + color + '22; border-left: 4px solid ' + color + '; border-radius: 4px;">';
+      resultsHTML += bound < 0.1 ? '✅ Tight bound — network likely generalizes well' :
+                     bound < 1.0 ? '⚠️ Moderate bound — generalization possible but uncertain' :
+                     '❌ Loose bound — generalization not guaranteed by this measure';
+      resultsHTML += '</div></div>';
+      document.getElementById('results').innerHTML = resultsHTML;
+
+      // Draw chart
+      var canvas = document.getElementById('chart');
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      var nValues = [];
+      var bounds = [];
+      for (var i = 2; i <= 6; i += 0.02) {
+        var ni = Math.round(Math.pow(10, i));
+        nValues.push(ni);
+        bounds.push(sccBound(scc, ni, delta));
+      }
+
+      var maxB = Math.max(...bounds);
+      var minN = nValues[0], maxN = nValues[nValues.length - 1];
+      var pad = 50;
+      var w = canvas.width - 2 * pad, h = canvas.height - 2 * pad;
+
+      // Axes
+      ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, pad + h); ctx.lineTo(pad + w, pad + h); ctx.stroke();
+
+      // Labels
+      ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+      ctx.fillText('Sample size n (log scale)', pad + w/2 - 60, pad + h + 40);
+      ctx.save(); ctx.rotate(-Math.PI/2); ctx.fillText('Bound', -(pad + h/2 + 20), 15); ctx.restore();
+
+      // X-axis ticks
+      for (var exp = 2; exp <= 6; exp++) {
+        var x = pad + (exp - 2) / 4 * w;
+        ctx.fillText('10^' + exp, x - 10, pad + h + 20);
+        ctx.beginPath(); ctx.moveTo(x, pad + h); ctx.lineTo(x, pad + h + 5); ctx.stroke();
+      }
+
+      // Plot
+      ctx.strokeStyle = '#1a237e'; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (var i = 0; i < nValues.length; i++) {
+        var x = pad + (Math.log10(nValues[i]) - 2) / 4 * w;
+        var y = pad + h - (bounds[i] / maxB) * h;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Current n marker
+      if (n >= minN && n <= maxN) {
+        var cx = pad + (Math.log10(n) - 2) / 4 * w;
+        var cy = pad + h - (bound / maxB) * h;
+        ctx.fillStyle = '#F44336'; ctx.beginPath(); ctx.arc(cx, cy, 6, 0, 2*Math.PI); ctx.fill();
+        ctx.fillStyle = '#333'; ctx.fillText('n=' + n + ', bound=' + bound.toFixed(3), cx + 10, cy - 5);
+      }
+
+      // Double descent comparison
+      var scc1 = computeSCC(2, 10, 10, gamma);
+      var scc2 = computeSCC(1, 1, 10, gamma);
+      var b1 = sccBound(scc1, n, delta);
+      var b2 = sccBound(scc2, n, delta);
+      var ddHTML = '<table style="width: 100%; border-collapse: collapse;">';
+      ddHTML += '<tr style="background: #e3f2fd;"><th style="padding: 8px; text-align: left;">Profile</th><th>Depth</th><th>Eff. Rank</th><th>SCC</th><th>Bound</th></tr>';
+      ddHTML += '<tr><td style="padding: 8px;"><b>P₁</b> (deep, rank-1)</td><td style="text-align:center;">2</td><td style="text-align:center;">2</td><td style="text-align:center;">' + scc1.toFixed(0) + '</td><td style="text-align:center; color: #F44336;">' + b1.toFixed(4) + '</td></tr>';
+      ddHTML += '<tr style="background: #f1f8e9;"><td style="padding: 8px;"><b>P₂</b> (shallow, wide)</td><td style="text-align:center;">1</td><td style="text-align:center;">100</td><td style="text-align:center;">' + scc2.toFixed(0) + '</td><td style="text-align:center; color: #4CAF50;">' + b2.toFixed(4) + '</td></tr>';
+      ddHTML += '</table>';
+      ddHTML += '<p style="margin-top: 10px; color: #666;">P₂ has <b>50×</b> more effective parameters but <b>' + (scc1/scc2).toFixed(0) + '×</b> smaller SCC → tighter bound!</p>';
+      document.getElementById('dd_results').innerHTML = ddHTML;
+    }
+
+    update();
+  </script>
+</div>'''
 
 package = {
-    "title": "Effective Complexity Profiles: A Structure Theorem for Overparameterization and Generalization",
-    "domain": "Machine Learning Theory / Statistical Learning / Tropical Geometry",
+    "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
+    "domain": "MachineLearning",
     "article": article,
     "research_paper": research_paper,
     "future_directions": future_directions,
     "demos": [
         {
-            "name": "Effective Complexity Profile Demonstrations",
-            "code": demo_code
-        },
-        {
-            "name": "Real-World Applications of Effective Complexity Theory",
-            "code": applications_code
+            "name": "SCC Demo",
+            "code": demo_code,
+            "description": "Demonstrates SCC computation, double descent witness, convergence, and depth tradeoffs"
         }
     ],
     "algorithms": [
         {
-            "name": "Generalization Bound Computation",
-            "pseudocode": "function COMPUTE_GENERALIZATION_BOUND(P, ε, δ):\n    effective_rate ← q + c + κ\n    budget ← n · ε²\n    return effective_rate ≤ budget\n\nTime complexity: O(1)\nSpace complexity: O(1)",
-            "code": algorithms_code
-        },
-        {
-            "name": "Optimal Sample Size",
-            "pseudocode": "function OPTIMAL_SAMPLE_SIZE(q, c, κ, ε):\n    return ⌈(q + c + κ) / ε²⌉\n\nTime complexity: O(1)",
-            "code": "import math\n\ndef optimal_sample_size(q: int, c: int, kl: float, epsilon: float) -> int:\n    \"\"\"Compute minimum sample size for generalization at accuracy epsilon.\"\"\"\n    effective_rate = q + c + kl\n    return math.ceil(effective_rate / epsilon ** 2)\n\n# Example\nprint(f'Minimum samples for (q=10, c=5, kl=3.0, eps=0.1): {optimal_sample_size(10, 5, 3.0, 0.1)}')\nprint(f'Minimum samples for (q=10, c=5, kl=3.0, eps=0.05): {optimal_sample_size(10, 5, 3.0, 0.05)}')"
-        },
-        {
-            "name": "Separation Regime Detection",
-            "pseudocode": "function FIND_SEPARATION(d, q, c, κ, n):\n    eff ← q + c + κ\n    if eff ≥ d: return NONE\n    ε ← √((eff + d) / (2n))\n    // Verify: eff ≤ n·ε² < d\n    return ε\n\nTime complexity: O(1)",
-            "code": "import math\n\ndef find_separation(param_dim, q, c, kl, n):\n    \"\"\"Find epsilon demonstrating strict separation between\n    dimension-based and effective-complexity-based bounds.\"\"\"\n    eff = q + c + kl\n    if eff >= param_dim or n <= 0:\n        return None\n    eps_sq = (eff + param_dim) / (2.0 * n)\n    eps = math.sqrt(eps_sq)\n    n_eps_sq = n * eps_sq\n    print(f'epsilon = {eps:.4f}')\n    print(f'Effective rate ({eff:.1f}) <= n*eps^2 ({n_eps_sq:.1f}): {eff <= n_eps_sq}')\n    print(f'param_dim ({param_dim}) > n*eps^2 ({n_eps_sq:.1f}): {param_dim > n_eps_sq}')\n    return eps\n\n# Example: 1000 parameters, but only 9 effective complexity\nfind_separation(1000, 5, 3, 1.0, 100)"
-        },
-        {
-            "name": "Architecture Search by Quotient Collapse",
-            "pseudocode": "function ARCHITECTURE_SEARCH(n, ε, param_dims, max_q, max_c):\n    budget ← n · ε²\n    viable ← []\n    for d in param_dims:\n        for q in 0..min(max_q, d):\n            for c in 0..min(max_c, d):\n                κ ← log(1/δ)\n                if q + c + κ ≤ budget:\n                    viable.append((d, q, c, κ, d/(q+c+κ)))\n    return viable sorted by compression ratio\n\nTime complexity: O(|param_dims| · max_q · max_c)",
-            "code": "import math\n\ndef architecture_search(n, epsilon, param_dims, delta=0.05, max_q=20, max_c=10):\n    \"\"\"Search for architectures that generalize at target accuracy.\"\"\"\n    budget = n * epsilon ** 2\n    kl = math.log(1.0 / delta)\n    results = []\n    for d in param_dims:\n        for q in range(0, min(max_q + 1, d + 1)):\n            for c in range(0, min(max_c + 1, d + 1)):\n                eff = q + c + kl\n                if eff <= budget:\n                    results.append({'params': d, 'q': q, 'c': c,\n                                   'eff': eff, 'ratio': d / max(eff, 0.01)})\n    results.sort(key=lambda x: -x['ratio'])\n    for r in results[:5]:\n        print(f\"params={r['params']:>8}, q={r['q']}, c={r['c']}, \"\n              f\"eff={r['eff']:.1f}, compression={r['ratio']:.0f}x\")\n    return results[:5]\n\narchitecture_search(5000, 0.1, [100, 1000, 10000])"
+            "name": "SCC Computation",
+            "pseudocode": "For each layer: compute spectral norm (SVD), Frobenius norm. R_eff = sum((F_i/sigma_i)^2). C_spec = prod(sigma_i)/gamma. SCC = L^2 * R_eff * C_spec^2.",
+            "code": algo_code
         }
     ],
-    "lean_proofs": lean_code
+    "visualizations": [
+        {
+            "name": "Double Descent in SCC Bounds",
+            "code": viz1_code,
+            "description": "Shows how effective rank and spectral norms interact to create double descent"
+        },
+        {
+            "name": "SCC Bound Convergence",
+            "code": viz2_code,
+            "description": "Demonstrates that the SCC bound converges to zero as sample size increases"
+        },
+        {
+            "name": "Spectral Complexity Landscape",
+            "code": viz3_code,
+            "description": "Heatmap of SCC in depth-sigma space showing the spectral regularization sweet spot"
+        }
+    ],
+    "interactive_demos": [
+        {
+            "name": "SCC Explorer",
+            "html": interactive_html,
+            "description": "Interactive widget to explore how network depth, spectral norms, margin, and sample size affect the SCC generalization bound"
+        }
+    ],
+    "lean_proofs": [
+        {
+            "name": "Spectral Generalization Bounds",
+            "file": "MachineLearning/Generalization/SpectralBounds.lean",
+            "code": lean_code,
+            "description": "Fully verified Lean 4 proofs of spectral complexity bounds, effective rank properties, compression gap monotonicity, SCC convergence, and double descent algebraic theorem"
+        }
+    ]
 }
 
-with open(os.path.join(project_root, 'PACKAGE.json'), 'w') as f:
+with open("PACKAGE.json", "w") as f:
     json.dump(package, f, indent=2, ensure_ascii=False)
 
-print("PACKAGE.json generated successfully!")
+print("Generated PACKAGE.json")
+
+
+"""
+Visualization: SCC Bound Convergence
+
+Shows that the SCC generalization bound converges to zero as n → ∞,
+verifying the consistency theorem for different network configurations.
+"""
+
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def scc_bound(scc_val, n, delta):
+    """Compute sqrt(SCC * log(2n)/n + log(1/delta)/n)."""
+    inner = scc_val * math.log(2*n) / n + math.log(1/delta) / n
+    return math.sqrt(max(0, inner))
+
+
+def main():
+    delta = 0.05
+    n_values = np.logspace(1.5, 6, 300).astype(int)
+    n_values = sorted(set(n_values))
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Plot 1: Bound vs n for different SCC values
+    ax = axes[0]
+    scc_configs = [
+        (100, '#2196F3', 'SCC = 100 (shallow, wide)'),
+        (1000, '#FF9800', 'SCC = 1,000'),
+        (10000, '#FF5722', 'SCC = 10,000'),
+        (80000, '#9C27B0', 'SCC = 80,000 (deep, narrow)'),
+    ]
+
+    for scc_val, color, label in scc_configs:
+        bounds = [scc_bound(scc_val, n, delta) for n in n_values]
+        ax.plot(n_values, bounds, color=color, linewidth=2, label=label)
+
+    ax.set_xlabel('Sample Size n', fontsize=12)
+    ax.set_ylabel('Generalization Bound', fontsize=12)
+    ax.set_title('SCC Bound Convergence to Zero', fontsize=13)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    # Add O(1/sqrt(n)) reference line
+    ref_n = np.array(n_values)
+    ref = 50 / np.sqrt(ref_n)
+    ax.plot(ref_n, ref, 'k--', alpha=0.3, linewidth=1, label='O(1/√n)')
+    ax.legend(fontsize=9)
+
+    # Plot 2: Bound² × n (should converge to SCC × ln(2))
+    ax = axes[1]
+    for scc_val, color, label in scc_configs:
+        convergence = [scc_bound(scc_val, n, delta)**2 * n for n in n_values]
+        ax.plot(n_values, convergence, color=color, linewidth=2, label=label)
+        # Reference line
+        ax.axhline(y=scc_val * math.log(2), color=color, linestyle='--',
+                   alpha=0.4, linewidth=1)
+
+    ax.set_xlabel('Sample Size n', fontsize=12)
+    ax.set_ylabel('Bound² × n', fontsize=12)
+    ax.set_title('Asymptotic Rate (→ SCC × ln 2)', fontsize=13)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_convergence.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_convergence.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""
+Visualization: Double Descent in SCC Bounds
+
+Shows how the SCC generalization bound can be non-monotone in effective rank,
+demonstrating the algebraic core of the double descent phenomenon.
+"""
+
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def spectral_compression_complexity(depth, spectral_norms, frobenius_norms, margin):
+    """Compute SCC given layer-wise norms."""
+    L = depth
+    eff_ranks = [(f/s)**2 for s, f in zip(spectral_norms, frobenius_norms)]
+    R_eff = sum(eff_ranks)
+    C_spec = 1.0
+    for s in spectral_norms:
+        C_spec *= s
+    C_spec /= margin
+    return L**2 * R_eff * C_spec**2
+
+
+def scc_bound(scc_val, n, delta):
+    """Compute sqrt(SCC * log(2n)/n + log(1/delta)/n)."""
+    inner = scc_val * math.log(2*n) / n + math.log(1/delta) / n
+    return math.sqrt(max(0, inner))
+
+
+def main():
+    gamma = 1.0
+    n = 1000
+    delta = 0.05
+
+    # Vary the Frobenius norm (controls effective rank) for different depths
+    frob_values = np.linspace(1.01, 20, 200)
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Plot 1: SCC vs effective rank for different depths
+    ax = axes[0]
+    for L, color in [(1, '#2196F3'), (2, '#FF5722'), (3, '#4CAF50'), (5, '#9C27B0')]:
+        sigma = 1.0  # spectral norm = 1 (orthogonal)
+        sccs = []
+        eff_ranks = []
+        for F in frob_values:
+            eff_ranks.append(L * (F/sigma)**2)
+            scc_val = spectral_compression_complexity(
+                L, [sigma]*L, [F]*L, gamma)
+            sccs.append(scc_val)
+        ax.plot(eff_ranks, sccs, color=color, linewidth=2, label=f'L={L}')
+
+    ax.set_xlabel('Total Effective Rank', fontsize=12)
+    ax.set_ylabel('SCC', fontsize=12)
+    ax.set_title('SCC vs Effective Rank\n(σ=1 per layer)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
+
+    # Plot 2: Double descent witness - varying spectral norm with fixed rank
+    ax = axes[1]
+    sigma_values = np.linspace(0.5, 5, 200)
+    for L, color in [(1, '#2196F3'), (2, '#FF5722'), (3, '#4CAF50')]:
+        F = 10.0
+        bounds = []
+        for sigma in sigma_values:
+            scc_val = spectral_compression_complexity(
+                L, [sigma]*L, [F]*L, gamma)
+            bounds.append(scc_bound(scc_val, n, delta))
+        ax.plot(sigma_values, bounds, color=color, linewidth=2, label=f'L={L}')
+
+    ax.set_xlabel('Spectral Norm per Layer', fontsize=12)
+    ax.set_ylabel('Generalization Bound', fontsize=12)
+    ax.set_title(f'Bound vs Spectral Norm\n(F=10, n={n})', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Plot 3: The actual double descent shape
+    ax = axes[2]
+    # Simulate: as width increases, effective rank increases but spectral norm decreases
+    widths = np.logspace(0.5, 3, 200)
+    for L, color in [(2, '#FF5722'), (3, '#4CAF50')]:
+        bounds = []
+        eff_ranks_plot = []
+        for w in widths:
+            # Model: sigma ~ 1 + 1/sqrt(w), F ~ sqrt(w)
+            sigma = 1 + 1/math.sqrt(w)
+            F = math.sqrt(w)
+            if F < sigma:
+                F = sigma + 0.01
+            scc_val = spectral_compression_complexity(
+                L, [sigma]*L, [F]*L, gamma)
+            bounds.append(scc_bound(scc_val, n, delta))
+            eff_ranks_plot.append(L * (F/sigma)**2)
+        ax.plot(eff_ranks_plot, bounds, color=color, linewidth=2, label=f'L={L}')
+
+    ax.set_xlabel('Total Effective Rank', fontsize=12)
+    ax.set_ylabel('Generalization Bound', fontsize=12)
+    ax.set_title('Double Descent Shape\n(σ→1 as width→∞)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_double_descent.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_double_descent.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""
+Visualization: Spectral Complexity Landscape
+
+Shows how depth and spectral norm interact to determine the
+generalization bound, illustrating the depth-norm tradeoff.
+"""
+
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def scc_value(depth, sigma, frob, margin):
+    """Compute SCC for a homogeneous network."""
+    L = depth
+    R_eff = L * (frob / sigma) ** 2
+    C_spec = sigma ** L / margin
+    return L ** 2 * R_eff * C_spec ** 2
+
+
+def scc_bound(scc_val, n, delta):
+    inner = scc_val * math.log(2 * n) / n + math.log(1 / delta) / n
+    return math.sqrt(max(0, inner))
+
+
+def main():
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    n, delta, frob, gamma = 5000, 0.05, 10.0, 1.0
+
+    # Plot 1: Heatmap of SCC in (depth, sigma) space
+    ax = axes[0]
+    depths = np.arange(1, 21)
+    sigmas = np.linspace(0.5, 3.0, 100)
+    Z = np.zeros((len(sigmas), len(depths)))
+    for i, s in enumerate(sigmas):
+        for j, L in enumerate(depths):
+            Z[i, j] = math.log10(max(1e-10, scc_value(L, s, frob, gamma)))
+
+    im = ax.pcolormesh(depths, sigmas, Z, cmap='RdYlBu_r', shading='auto')
+    plt.colorbar(im, ax=ax, label='log₁₀(SCC)')
+    ax.set_xlabel('Depth L', fontsize=12)
+    ax.set_ylabel('Spectral Norm σ', fontsize=12)
+    ax.set_title('SCC Landscape\n(F=10, γ=1)', fontsize=13)
+
+    # Mark the σ=1 line (orthogonal)
+    ax.axhline(y=1.0, color='white', linestyle='--', linewidth=1.5, alpha=0.8)
+    ax.text(15, 1.05, 'σ=1 (orthogonal)', color='white', fontsize=9)
+
+    # Plot 2: Bound vs depth for different spectral norms
+    ax = axes[1]
+    depths_fine = np.arange(1, 31)
+    for sigma, color, ls in [(0.8, '#2196F3', '-'), (1.0, '#4CAF50', '-'),
+                               (1.2, '#FF9800', '-'), (1.5, '#FF5722', '-'),
+                               (2.0, '#9C27B0', '-')]:
+        bounds = []
+        for L in depths_fine:
+            scc = scc_value(L, sigma, frob, gamma)
+            bounds.append(scc_bound(scc, n, delta))
+        ax.plot(depths_fine, bounds, color=color, linewidth=2,
+                linestyle=ls, label=f'σ={sigma}')
+
+    ax.set_xlabel('Depth L', fontsize=12)
+    ax.set_ylabel('Generalization Bound', fontsize=12)
+    ax.set_title(f'Bound vs Depth\n(n={n}, δ={delta})', fontsize=13)
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    # Plot 3: Effective rank contribution
+    ax = axes[2]
+    frob_values = np.linspace(1.01, 30, 200)
+    for L, color in [(1, '#2196F3'), (2, '#FF5722'), (5, '#4CAF50'), (10, '#9C27B0')]:
+        sigma = 1.0
+        bounds = []
+        eff_ranks = []
+        for F in frob_values:
+            eff_ranks.append(L * (F/sigma)**2)
+            scc = scc_value(L, sigma, F, gamma)
+            bounds.append(scc_bound(scc, n, delta))
+        ax.plot(eff_ranks, bounds, color=color, linewidth=2, label=f'L={L}')
+
+    ax.set_xlabel('Total Effective Rank', fontsize=12)
+    ax.set_ylabel('Generalization Bound', fontsize=12)
+    ax.set_title('Bound vs Effective Rank\n(σ=1 per layer)', fontsize=13)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_spectral_landscape.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_spectral_landscape.png")
+
+
+if __name__ == "__main__":
+    main()
