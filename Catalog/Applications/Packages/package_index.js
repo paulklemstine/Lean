@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "date": "2026-05-31T14:58:00Z",
     "exp_id": "35ab8414",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7037042631578947,
+    "quality": "substantial",
     "pkg_num": 3
   },
   {
@@ -96,8 +96,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7037042631578947,
+      "quality": "substantial"
     }
   ],
   "edges": [],
