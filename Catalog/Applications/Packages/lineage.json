@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -34,7 +34,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:12:03Z",
-      "hue": 90
+      "hue": 270
+    },
+    {
+      "id": "this_research_cycle_established_a_formal_bridge_be",
+      "title": "The Lorentzian–Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:02Z",
+      "hue": 271
     }
   ],
   "edges": [],

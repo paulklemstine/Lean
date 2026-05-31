@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+    "domain": "Algebra",
+    "date": "2026-05-31T15:44:02Z",
+    "exp_id": "c3940ca2",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 5
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Algebra",
@@ -62,6 +72,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "this_research_cycle_established_a_formal_bridge_be.json": {
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+    "exp_id": "c3940ca2",
+    "source_exp_ids": [
+      "ece3d9d6"
+    ],
+    "domain": "Algebra"
+  },
   "machine_learning_generalization_bounds.json": {
     "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
     "exp_id": "0c3e833a",
@@ -102,7 +120,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -124,9 +142,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:12:03Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5234253846153847,
       "quality": "partial"
+    },
+    {
+      "id": "this_research_cycle_established_a_formal_bridge_be",
+      "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:02Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
