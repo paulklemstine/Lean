@@ -180,6 +180,20 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+.version-badge {
+    font-size: 0.55em;
+    font-weight: 500;
+    font-family: 'Fira Code', monospace;
+    background: rgba(136, 68, 255, 0.15);
+    color: var(--accent-color, #7c3aed);
+    -webkit-text-fill-color: var(--accent-color, #7c3aed);
+    padding: 2px 6px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 6px;
+    letter-spacing: 0.02em;
+}
+
 .header-controls {
     display: flex;
     align-items: center;
