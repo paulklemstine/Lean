@@ -143,13 +143,10 @@
                     <div class="tabs-container">
                         <button class="tab-btn active" data-tab="article">Article</button>
                         <button class="tab-btn" data-tab="paper">Research Paper</button>
+
                         <button class="tab-btn" data-tab="directions">Future Directions</button>
-                        <button class="tab-btn" data-tab="algorithms">Algorithms</button>
+                        <button class="tab-btn" data-tab="demos">Interactive</button>
                         <button class="tab-btn" data-tab="lean">Lean 4 Proofs</button>
-                        <button class="tab-btn" data-tab="visualizations">Visualizations</button>
-                        <button class="tab-btn" data-tab="interactive">Interactive</button>
-                        <button class="tab-btn" data-tab="python">Python</button>
-                        <button class="tab-btn" data-tab="download">Download Package</button>
                     </div>
                 </header>
 
@@ -164,6 +161,8 @@
                         <div class="markdown-body" id="content-paper"></div>
                     </div>
 
+
+
                     <!-- Future Directions Tab -->
                     <div class="tab-pane" id="tab-directions">
                         <div class="directions-lineage" id="content-lineage"></div>
@@ -173,46 +172,23 @@
                         <a href="#" class="view-all-directions-link" id="view-all-directions-link" style="display:none">View all research directions &rarr;</a>
                     </div>
 
-                    <!-- Algorithms Tab -->
-                    <div class="tab-pane" id="tab-algorithms">
+                    <!-- Demos Tab (algorithms pseudocode + interactive demos) -->
+                    <div class="tab-pane" id="tab-demos">
+                        <div id="content-interactive-demos"></div>
+                        <div id="content-visualizations"></div>
                         <div class="algorithms-list" id="content-algorithms"></div>
+                        <div class="demos-list" id="content-demos"></div>
                     </div>
 
                     <!-- Lean Proofs Tab -->
                     <div class="tab-pane" id="tab-lean">
-                        <div id="lean-files-container"></div>
-                    </div>
-
-                    <!-- Visualizations Tab -->
-                    <div class="tab-pane" id="tab-visualizations">
-                        <div id="content-visualizations"></div>
-                    </div>
-
-                    <!-- Interactive Tab -->
-                    <div class="tab-pane" id="tab-interactive">
-                        <div id="content-interactive"></div>
-                    </div>
-
-                    <!-- Python Tab -->
-                    <div class="tab-pane" id="tab-python">
-                        <div id="content-python"></div>
-                    </div>
-
-                    <!-- Download Package Tab -->
-                    <div class="tab-pane" id="tab-download">
-                        <div id="content-download">
-                            <div class="download-section">
-                                <h3 class="section-title" style="color: var(--accent-color, #7c3aed);">Download Research Package</h3>
-                                <p class="download-description" style="color: var(--text-muted); margin-bottom: 16px;">
-                                    Download all research artifacts as a single .zip file, including Lean 4 proofs, articles, papers, algorithms, demos, and visualizations.
-                                </p>
-                                <button id="download-zip-btn" class="download-zip-btn" style="background: var(--accent-color, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1em; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    Download .zip
-                                </button>
-                                <div id="download-contents" style="margin-top: 16px;"></div>
-                            </div>
+                        <div id="lean-header" style="display: none; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                            <span class="section-title" style="color: var(--accent-color, #7c3aed);">Lean 4 Proof Files</span>
+                            <button id="lean-download-zip" class="lean-download-btn" style="font-size: 0.85em; padding: 6px 14px;">
+                                Download Research Package .zip
+                            </button>
                         </div>
+                        <div id="lean-files-container"></div>
                     </div>
                 </div>
             </div>
