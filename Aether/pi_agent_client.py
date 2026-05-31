@@ -1637,7 +1637,7 @@ class PiAgentClient:
 
         Philosophy: Give Aristotle the direction and context, not a script.
         Let it decide what to prove, how deep to go, and what artifacts to produce.
-        All key deliverables are mandatory: Lean 4 proofs, FUTURE_DIRECTIONS.md (standalone research roadmap with 3-5 testable hypotheses, self-contained so future cycles can use it without this cycle's code), RESEARCH_PAPER.md (standalone scientific document — self-contained, readable without the Lean code), ARTICLE.md (Scientific American style), algorithm, and demo.py.
+        All key deliverables are mandatory: Lean 4 proofs, FUTURE_DIRECTIONS.md (standalone research roadmap with 3-5 testable hypotheses, self-contained so future cycles can use it without this cycle's code), RESEARCH_PAPER.md (standalone scientific document — self-contained, readable without the Lean code), ARTICLE.md (Scientific American style), algorithm, demo.py, and at least 1 interactive HTML demo in PACKAGE.json interactive_demos field.
         """
         refs = catalog_references or concept.catalog_references or []
 
@@ -1789,7 +1789,8 @@ class PiAgentClient:
             is often easier to prove and more interesting.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
-                      ARTICLE.md (Scientific American style), algorithm, demo.py
+                      ARTICLE.md (Scientific American style), algorithm, demo.py,
+                      at least 1 interactive HTML demo in PACKAGE.json
             Optional: (none — all key deliverables are mandatory)
 
             ## Taboo Topics for ARTICLE.md

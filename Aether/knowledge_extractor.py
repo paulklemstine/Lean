@@ -523,6 +523,19 @@ We need ALL of the following:
    title, domain, article, research_paper, future_directions, demos, algorithms,
    visualizations, interactive_demos, lean_proofs. JSON-escape all content.
 
+   **interactive_demos** (MANDATORY — include at least 1): Array of objects, each with:
+   - `name`: short title
+   - `html`: self-contained HTML+CSS+JS snippet (inline styles, no external JS files,
+     no local imports, CDN links OK for d3/plotly). Must render an interactive widget
+     (slider, button, animation, etc.) that demonstrates a key result visually.
+     Wrap in a `<div>` with inline styles. Use vanilla JS — no frameworks.
+   - `description`: one-sentence summary
+
+   **visualizations**: Array of objects with `name`, `code` (standalone Python script
+   using matplotlib or plotly, all functions inlined), `description`.
+
+   **algorithms**: Array of objects with `name`, `pseudocode` (brief), `code` (Python).
+
 Research domain: {concept.domain}
 Research mode: {concept.research_mode}
 """
