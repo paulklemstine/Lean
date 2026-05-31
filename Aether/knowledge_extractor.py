@@ -1687,7 +1687,6 @@ Research mode: {concept.research_mode}
             return
 
         # Only review the bottom 30% by quality — top directions are protected
-        from research_memory import _compute_quality_score
         scored = [(d, fd_manager._compute_quality_score(d)) for d in available]
         scored.sort(key=lambda x: x[1])  # ascending — worst first
         cutoff_idx = max(5, len(scored) // 3)  # review bottom third, at least 5
