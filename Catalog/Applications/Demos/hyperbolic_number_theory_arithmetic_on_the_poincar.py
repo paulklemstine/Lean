@@ -1,449 +1,508 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
-=========================================================
+Demo: Hyperbolic Number Theory — Arithmetic on the Poincaré Disk
 
 Demonstrates:
-1. Einstein addition on (-1,1) and its group properties
-2. Rapidity isomorphism: artanh converts ⊕ to +
-3. SL₂(ℤ) trace classification (elliptic/parabolic/hyperbolic)
-4. Hyperbolic prime counting and comparison with PNT
-5. Cross-ratio computation for Poincaré disk distance
+1. Einstein addition and its group structure
+2. Chebyshev trace sequences and exponential growth
+3. Tree Möbius inversion verification
+4. Hyperbolic lattice point generation
+5. Pseudo-hyperbolic distance computation
 """
 
 import math
+import cmath
 from typing import List, Tuple
 
 
 def einstein_add(a: float, b: float) -> float:
-    """Einstein addition (relativistic velocity addition)."""
+    """Einstein addition: (a + b) / (1 + ab)"""
     return (a + b) / (1 + a * b)
 
 
-def rapidity(x: float) -> float:
-    """Rapidity map: artanh(x) = log((1+x)/(1-x))/2."""
-    if abs(x) >= 1:
-        raise ValueError(f"|x| = {abs(x)} >= 1, not subluminal")
-    return math.log((1 + x) / (1 - x)) / 2
+def chebyshev_trace(t: int, n: int) -> int:
+    """Chebyshev trace: T(0)=2, T(1)=t, T(n+2)=t*T(n+1)-T(n)"""
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    prev, curr = 2, t
+    for _ in range(n - 1):
+        prev, curr = curr, t * curr - prev
+    return curr
 
 
-def classify_trace(t: int) -> str:
-    """Classify SL₂(ℤ) element by trace."""
-    if abs(t) < 2:
-        return "elliptic"
-    elif abs(t) == 2:
-        return "parabolic"
-    else:
-        return "hyperbolic"
+def tree_moebius(k: int, d: int) -> int:
+    if d == 0: return 1
+    if d == 1: return -k
+    return 0
 
 
-def hyp_prime_count(n: int) -> int:
-    """Count primes p with 2 < p <= n."""
-    count = 0
-    for k in range(3, n + 1):
-        if all(k % d != 0 for d in range(2, int(math.sqrt(k)) + 1)):
-            count += 1
-    return count
+def tree_convolve(k: int, n: int) -> int:
+    return sum(tree_moebius(k, i) * k**(n - i) for i in range(n + 1))
 
 
-def poincare_distance(z: complex, w: complex) -> float:
-    """Poincaré disk distance between z and w."""
-    num = abs(z - w)
-    den = abs(1 - w.conjugate() * z)
-    return math.atanh(num / den) * 2
+def pseudo_hyp_dist(z: complex, w: complex) -> float:
+    return abs(z - w) / abs(1 - w.conjugate() * z)
 
 
-# ============================================================
-# Demo 1: Einstein Addition Group Properties
-# ============================================================
-print("=" * 60)
-print("DEMO 1: Einstein Addition on (-1, 1)")
-print("=" * 60)
+def mobius_map(a: complex, z: complex) -> complex:
+    return (z - a) / (1 - a.conjugate() * z)
 
-test_pairs = [(0.3, 0.5), (0.8, 0.9), (-0.4, 0.7), (0.99, 0.99)]
 
-for a, b in test_pairs:
-    result = einstein_add(a, b)
-    print(f"  {a:6.2f} ⊕ {b:6.2f} = {result:8.5f}  (|result| < 1: {abs(result) < 1})")
+def main():
+    print("=" * 70)
+    print("  HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE POINCARÉ DISK")
+    print("=" * 70)
 
-# Verify associativity
-a, b, c = 0.3, 0.5, 0.7
-lhs = einstein_add(einstein_add(a, b), c)
-rhs = einstein_add(a, einstein_add(b, c))
-print(f"\n  Associativity: (a⊕b)⊕c = {lhs:.10f}")
-print(f"                 a⊕(b⊕c) = {rhs:.10f}")
-print(f"                 Diff = {abs(lhs - rhs):.2e}")
-
-# ============================================================
-# Demo 2: Rapidity Isomorphism
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 2: Rapidity Isomorphism (artanh converts ⊕ to +)")
-print("=" * 60)
-
-for a, b in [(0.3, 0.5), (0.7, 0.2), (-0.4, 0.6)]:
-    r_sum = rapidity(einstein_add(a, b))
-    r_a_plus_r_b = rapidity(a) + rapidity(b)
-    print(f"  rapidity({a} ⊕ {b}) = {r_sum:.8f}")
-    print(f"  rapidity({a}) + rapidity({b}) = {r_a_plus_r_b:.8f}")
-    print(f"  Diff = {abs(r_sum - r_a_plus_r_b):.2e}")
+    # ── Demo 1: Einstein Addition Group ──
+    print("\n━━━ Demo 1: Einstein Addition — The Velocity Group ━━━")
+    print("Einstein addition: a ⊕ b = (a + b) / (1 + ab)")
     print()
 
-# ============================================================
-# Demo 3: SL₂(ℤ) Trace Classification
-# ============================================================
-print("=" * 60)
-print("DEMO 3: SL₂(ℤ) Trace Classification")
-print("=" * 60)
+    vals = [0.1, 0.3, 0.5, 0.7, 0.9]
+    print("Closure (stays in (-1,1)):")
+    for a in vals:
+        for b in vals:
+            result = einstein_add(a, b)
+            print(f"  {a} ⊕ {b} = {result:.6f}  (< 1: {'✓' if abs(result) < 1 else '✗'})")
 
-for t in range(-5, 6):
-    cls = classify_trace(t)
-    print(f"  tr = {t:3d}  →  {cls}")
+    print("\nAssociativity: (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)")
+    a, b, c = 0.3, 0.5, 0.7
+    lhs = einstein_add(einstein_add(a, b), c)
+    rhs = einstein_add(a, einstein_add(b, c))
+    print(f"  ({a} ⊕ {b}) ⊕ {c} = {lhs:.10f}")
+    print(f"  {a} ⊕ ({b} ⊕ {c}) = {rhs:.10f}")
+    print(f"  Difference: {abs(lhs - rhs):.2e}")
 
-# ============================================================
-# Demo 4: Hyperbolic Prime Counting
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 4: Hyperbolic Prime Counting π_H(n)")
-print("=" * 60)
+    print("\nInverse property: a ⊕ (-a) = 0")
+    for a in vals:
+        print(f"  {a} ⊕ {-a} = {einstein_add(a, -a):.2e}")
 
-for n in [10, 25, 50, 100, 200, 500, 1000]:
-    count = hyp_prime_count(n)
-    ratio = count * math.log(n) / n if n > 1 else 0
-    print(f"  π_H({n:5d}) = {count:4d}   "
-          f"π_H(n)·ln(n)/n = {ratio:.4f}  (PNT predicts → 1)")
+    print("\nIterated addition (approaches 1 = speed of light):")
+    x = 0.5
+    curr = 0.0
+    for n in range(1, 16):
+        curr = einstein_add(curr, x)
+        tanh_val = math.tanh(n * math.atanh(x))
+        print(f"  {x} ⊕^{n:2d} = {curr:.10f}  "
+              f"(tanh({n}·artanh({x})) = {tanh_val:.10f}, "
+              f"diff = {abs(curr - tanh_val):.2e})")
 
-# ============================================================
-# Demo 5: Poincaré Disk Distance
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 5: Poincaré Disk Distance")
-print("=" * 60)
+    # ── Demo 2: Chebyshev Trace Sequences ──
+    print("\n━━━ Demo 2: Chebyshev Trace Sequences ━━━")
+    print("For SL₂(ℤ): Tr(g^n) satisfies T(n+2) = t·T(n+1) - T(n)")
+    print()
 
-test_points = [
-    (0.1 + 0.2j, 0.3 + 0.1j),
-    (0.5 + 0.3j, -0.2 + 0.4j),
-    (0.0 + 0.0j, 0.5 + 0.0j),
-    (0.9 + 0.0j, 0.95 + 0.0j),
-]
+    for t in [3, 4, 5, -3]:
+        print(f"Trace t = {t}:")
+        traces = [chebyshev_trace(t, n) for n in range(10)]
+        print(f"  T(0..9) = {traces}")
+        # Verify growth
+        abs_traces = [abs(x) for x in traces]
+        ratios = [abs_traces[i+1] / abs_traces[i] if abs_traces[i] > 0 else float('inf')
+                  for i in range(len(abs_traces) - 1)]
+        print(f"  |T(n+1)/T(n)| = {[f'{r:.3f}' for r in ratios]}")
+        print()
 
-for z, w in test_points:
-    d = poincare_distance(z, w)
-    cross_denom = abs(1 - w.conjugate() * z)
-    print(f"  d({z}, {w}) = {d:.4f}  "
-          f"|1 - w̄z| = {cross_denom:.4f}")
+    print("Verified: |T(n)| ≥ n+1 for |t| ≥ 3:")
+    t = 3
+    for n in range(15):
+        val = abs(chebyshev_trace(t, n))
+        bound = n + 1
+        print(f"  n={n:2d}: |T_{t}({n})| = {val:>10d} ≥ {bound:2d}  {'✓' if val >= bound else '✗'}")
 
-# ============================================================
-# Demo 6: Falsifiable Conjecture Test
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 6: Hyperbolic Prime Density Conjecture")
-print("=" * 60)
-print("  Conjecture: π_H(N)·log(N)/N² → 1/2 as N → ∞")
-print()
+    # ── Demo 3: Symmetry: T_{-t}(n) = (-1)^n T_t(n) ──
+    print("\n━━━ Demo 3: Chebyshev Sign Symmetry ━━━")
+    print("Theorem: T_{-t}(n) = (-1)^n · T_t(n)")
+    t = 5
+    for n in range(8):
+        lhs = chebyshev_trace(-t, n)
+        rhs = (-1)**n * chebyshev_trace(t, n)
+        print(f"  T_{-t}({n}) = {lhs:>8d},  (-1)^{n} · T_{t}({n}) = {rhs:>8d}  "
+              f"{'✓' if lhs == rhs else '✗'}")
 
-for N in [100, 500, 1000, 5000, 10000]:
-    count = hyp_prime_count(N)
-    ratio = count * math.log(N) / (N ** 2) if N > 1 else 0
-    print(f"  N = {N:6d}:  π_H(N) = {count:5d},  "
-          f"π_H(N)·ln(N)/N² = {ratio:.6f}")
+    # ── Demo 4: Tree Möbius Inversion ──
+    print("\n━━━ Demo 4: Tree Möbius Inversion ━━━")
+    print("On a k-ary tree: μ_T * ζ_T = δ")
+    print()
 
-print("\n  Note: The ratio does NOT converge to 1/2.")
-print("  This REFUTES the naive conjecture π_H(N) ~ N²/(2 log N).")
-print("  The correct asymptotic (prime number theorem) is π(N) ~ N/log(N),")
-print("  which gives π_H(N)·log(N)/N → 1, not π_H(N)·log(N)/N² → 1/2.")
-print("  The hyperbolic prime geodesic theorem has different asymptotics")
-print("  involving the length spectrum, not the trace norm directly.")
+    for k in [2, 3, 5, 10]:
+        print(f"k = {k} (k-ary tree):")
+        results = []
+        for n in range(8):
+            val = tree_convolve(k, n)
+            expected = 1 if n == 0 else 0
+            results.append(f"{val}")
+        print(f"  (μ * ζ)(0..7) = [{', '.join(results)}]")
+        all_correct = all(tree_convolve(k, n) == (1 if n == 0 else 0) for n in range(20))
+        print(f"  Verified for n = 0..19: {'✓' if all_correct else '✗'}")
+        print()
+
+    # ── Demo 5: Trace Surjectivity ──
+    print("\n━━━ Demo 5: Trace Surjectivity — Every Integer Is a Trace ━━━")
+    print("Witness: M = [[t, -1], [1, 0]] has det=1, trace=t")
+    for t in [-5, -1, 0, 1, 3, 7, 100]:
+        M = [[t, -1], [1, 0]]
+        det = M[0][0] * M[1][1] - M[0][1] * M[1][0]
+        tr = M[0][0] + M[1][1]
+        print(f"  t={t:>4d}: det = {det}, trace = {tr}  {'✓' if det == 1 and tr == t else '✗'}")
+
+    # ── Demo 6: Strictly Increasing |T(n)| ──
+    print("\n━━━ Demo 6: Strict Monotonicity of |T(n)| ━━━")
+    print("For |t| ≥ 3: |T(n)| < |T(n+1)| for all n ≥ 1")
+    for t in [3, -4, 7]:
+        print(f"\n  t = {t}:")
+        for n in range(1, 12):
+            curr = abs(chebyshev_trace(t, n))
+            next_val = abs(chebyshev_trace(t, n + 1))
+            print(f"    |T({n:2d})| = {curr:>12d} < |T({n+1:2d})| = {next_val:>12d}  "
+                  f"{'✓' if curr < next_val else '✗'}")
+
+    # ── Demo 7: Pseudo-Hyperbolic Distance ──
+    print("\n━━━ Demo 7: Pseudo-Hyperbolic Distance ━━━")
+    print("ρ(z,w) = |z-w|/|1-w̄z|, symmetric: ρ(z,w) = ρ(w,z)")
+    points = [0.3+0.2j, -0.1+0.4j, 0.5-0.3j, 0.1+0.1j]
+    for i, z in enumerate(points):
+        for j, w in enumerate(points):
+            if i < j:
+                d1 = pseudo_hyp_dist(z, w)
+                d2 = pseudo_hyp_dist(w, z)
+                print(f"  ρ({z}, {w}) = {d1:.8f}")
+                print(f"  ρ({w}, {z}) = {d2:.8f}")
+                print(f"  Symmetric: {'✓' if abs(d1 - d2) < 1e-14 else '✗'}")
+                print()
+
+    # ── Demo 8: Hyperbolic Lattice Points ──
+    print("\n━━━ Demo 8: Hyperbolic Lattice Points ━━━")
+    gen = 0.4 + 0.1j  # A generator in the disk
+    points = [0j]
+    seen = {0j}
+    frontier = [0j]
+
+    for depth in range(5):
+        new_frontier = []
+        for p in frontier:
+            for g in [gen, -gen]:
+                new_p = mobius_map(g, p)
+                if abs(new_p) < 0.999 and all(abs(new_p - s) > 1e-8 for s in seen):
+                    new_frontier.append(new_p)
+                    seen.add(new_p)
+                    points.append(new_p)
+        frontier = new_frontier
+        print(f"  Depth {depth+1}: {len(points)} total points, {len(frontier)} new")
+
+    # ── Demo 9: Conjectured Conjugacy Class Count ──
+    print("\n━━━ Demo 9: Conjugacy Class Conjecture ━━━")
+    print("Conjecture: #{hyperbolic conj classes with |tr| ≤ T} = 2T - 3 for T ≥ 2")
+    print()
+    print("For the modular group PSL(2,ℤ), hyperbolic conjugacy classes")
+    print("are parametrized by trace values |t| > 2. For each t ∈ {3,...,T},")
+    print("there is exactly one conjugacy class with trace t and one with -t.")
+    print("Plus the class with trace t for each t ∈ {3,...,T}.")
+    print()
+    for T in range(2, 15):
+        count = 2 * T - 3 if T >= 2 else 0
+        # Actual hyperbolic traces: |t| ≥ 3 and |t| ≤ T
+        traces = [t for t in range(-T, T+1) if abs(t) >= 3]
+        print(f"  T = {T:2d}: conjectured = {count:3d}, "
+              f"trace values with |t| ∈ [3,T] = {len(traces)}")
+
+    # ── Demo 10: Lattice Count Constant ──
+    print("\n━━━ Demo 10: Lattice Count Constant ━━━")
+    print(f"Conjectured: N(R) / e^R → C = 3/π ≈ {3/math.pi:.6f}")
+    print("(For the modular group PSL(2,ℤ) acting on the Poincaré disk)")
+
+    print("\n" + "=" * 70)
+    print("  All demonstrations completed successfully.")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization 1: Einstein Addition on the Poincaré Disk
-========================================================
+Visualization: Tree Möbius Inversion and Einstein Addition
 
-Shows how Einstein addition maps pairs of subluminal velocities
-to subluminal results, with the rapidity isomorphism overlay.
+Generates figures showing:
+1. The tree Möbius function values and convolution verification
+2. Einstein addition phase portrait on (-1,1)
+3. Iterated Einstein addition convergence
 """
 
+import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
 
-def einstein_add(a: float, b: float) -> float:
+def einstein_add(a, b):
     return (a + b) / (1 + a * b)
 
 
-def rapidity(x: float) -> float:
-    if abs(x) >= 1:
-        return float('inf') * np.sign(x)
-    return math.log((1 + x) / (1 - x)) / 2
+def tree_moebius(k, d):
+    if d == 0: return 1
+    if d == 1: return -k
+    return 0
 
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Plot 1: Einstein addition surface
-ax1 = axes[0]
-a_vals = np.linspace(-0.95, 0.95, 200)
-b_vals = np.linspace(-0.95, 0.95, 200)
-A, B = np.meshgrid(a_vals, b_vals)
-C = (A + B) / (1 + A * B)
-contour = ax1.contourf(A, B, C, levels=20, cmap='RdBu_r')
-plt.colorbar(contour, ax=ax1, label='a ⊕ b')
-ax1.set_xlabel('a')
-ax1.set_ylabel('b')
-ax1.set_title('Einstein Addition a ⊕ b')
-ax1.set_aspect('equal')
-
-# Plot 2: Rapidity isomorphism
-ax2 = axes[1]
-x = np.linspace(-0.99, 0.99, 500)
-r = [rapidity(xi) for xi in x]
-ax2.plot(x, r, 'b-', linewidth=2, label='rapidity(x)')
-ax2.plot(x, x, 'r--', alpha=0.5, label='y = x')
-ax2.axhline(y=0, color='gray', linewidth=0.5)
-ax2.axvline(x=0, color='gray', linewidth=0.5)
-ax2.set_xlabel('x ∈ (-1, 1)')
-ax2.set_ylabel('rapidity(x)')
-ax2.set_title('Rapidity Map: artanh')
-ax2.legend()
-ax2.set_xlim(-1, 1)
-ax2.set_ylim(-4, 4)
-
-# Plot 3: Closure demonstration
-ax3 = axes[2]
-np.random.seed(42)
-n_pairs = 500
-a_samples = np.random.uniform(-0.99, 0.99, n_pairs)
-b_samples = np.random.uniform(-0.99, 0.99, n_pairs)
-results = [(a + b) / (1 + a * b) for a, b in zip(a_samples, b_samples)]
-
-ax3.scatter(a_samples, b_samples, c=results, cmap='RdBu_r',
-            alpha=0.6, s=10, vmin=-1, vmax=1)
-ax3.set_xlabel('a')
-ax3.set_ylabel('b')
-ax3.set_title(f'Closure: all {n_pairs} results in (-1,1)')
-ax3.set_aspect('equal')
-ax3.set_xlim(-1, 1)
-ax3.set_ylim(-1, 1)
-
-# Annotate max |result|
-max_abs = max(abs(r) for r in results)
-ax3.text(0.02, 0.98, f'max |a⊕b| = {max_abs:.4f} < 1',
-         transform=ax3.transAxes, va='top', fontsize=9,
-         bbox=dict(boxstyle='round', facecolor='wheat'))
-
-plt.suptitle('Hyperbolic Arithmetic: Einstein Addition Group', fontsize=14, y=1.02)
-plt.tight_layout()
-plt.savefig('einstein_addition.png', dpi=150, bbox_inches='tight')
-print("Saved: einstein_addition.png")
+def tree_convolve(k, n):
+    return sum(tree_moebius(k, i) * k**(n - i) for i in range(n + 1))
 
 
-#!/usr/bin/env python3
-"""
-Visualization 2: Poincaré Disk with SL₂(ℤ) Orbit
-===================================================
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
 
-Visualizes the modular group tessellation on the Poincaré disk,
-with points colored by trace classification.
-"""
+    # ── Panel 1: Tree Möbius inversion verification ──
+    ax = axes[0, 0]
+    ks = [2, 3, 5, 7]
+    x_vals = list(range(10))
+    for k in ks:
+        vals = [tree_convolve(k, n) for n in x_vals]
+        ax.plot(x_vals, vals, 'o-', label=f'k={k}', markersize=8)
+    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xlabel('Depth n', fontsize=12)
+    ax.set_ylabel('(μ_T * ζ_T)(n)', fontsize=12)
+    ax.set_title('Tree Möbius Inversion: μ_T * ζ_T = δ', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.set_yticks([-1, 0, 1, 2])
+    ax.grid(True, alpha=0.3)
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
+    # ── Panel 2: Einstein addition phase portrait ──
+    ax = axes[0, 1]
+    a_vals = np.linspace(-0.95, 0.95, 200)
+    b_fixed = [0.1, 0.3, 0.5, 0.7, 0.9]
+
+    for b in b_fixed:
+        results = [einstein_add(a, b) for a in a_vals]
+        ax.plot(a_vals, results, label=f'a ⊕ {b}', linewidth=1.5)
+
+    ax.plot([-1, 1], [-1, 1], 'k--', alpha=0.3, label='identity')
+    ax.set_xlabel('a', fontsize=12)
+    ax.set_ylabel('a ⊕ b', fontsize=12)
+    ax.set_title('Einstein Addition Phase Portrait', fontsize=13)
+    ax.legend(fontsize=9)
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    ax.grid(True, alpha=0.3)
+    ax.set_aspect('equal')
+
+    # ── Panel 3: Iterated Einstein addition ──
+    ax = axes[1, 0]
+    base_vals = [0.1, 0.3, 0.5, 0.7, 0.9]
+    ns = list(range(1, 21))
+
+    for base in base_vals:
+        values = []
+        curr = 0.0
+        for n in ns:
+            curr = einstein_add(curr, base)
+            values.append(curr)
+        ax.plot(ns, values, 'o-', label=f'base = {base}', markersize=4)
+
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='light speed')
+    ax.set_xlabel('Iterations n', fontsize=12)
+    ax.set_ylabel('n-fold Einstein sum', fontsize=12)
+    ax.set_title('Iterated Einstein Addition\n(approaches speed of light)', fontsize=13)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    # ── Panel 4: Comparison with tanh(n·artanh(a)) ──
+    ax = axes[1, 1]
+    base = 0.5
+    ns = list(range(1, 16))
+    einstein_vals = []
+    tanh_vals = []
+    curr = 0.0
+    for n in ns:
+        curr = einstein_add(curr, base)
+        einstein_vals.append(curr)
+        tanh_vals.append(math.tanh(n * math.atanh(base)))
+
+    errors = [abs(e - t) for e, t in zip(einstein_vals, tanh_vals)]
+    ax.semilogy(ns, [max(e, 1e-20) for e in errors], 'ro-', markersize=6)
+    ax.set_xlabel('Iterations n', fontsize=12)
+    ax.set_ylabel('|Einstein - tanh(n·artanh(a))| ', fontsize=12)
+    ax.set_title(f'Numerical Agreement (base={base})\nEinstein sum = tanh ∘ (n × artanh)', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=1e-15, color='gray', linestyle=':', alpha=0.5, label='machine ε')
+    ax.legend()
+
+    plt.tight_layout()
+    plt.savefig('moebius_inversion_and_einstein.png', dpi=150, bbox_inches='tight')
+    print("Saved: moebius_inversion_and_einstein.png")
 
 
-def moebius_action(a: int, b: int, c: int, d: int, z: complex) -> complex:
-    return (a * z + b) / (c * z + d)
-
-
-def cayley_transform(z: complex) -> complex:
-    return (z - 1j) / (z + 1j)
-
-
-def classify_trace(t: int) -> str:
-    if abs(t) < 2:
-        return "elliptic"
-    elif abs(t) == 2:
-        return "parabolic"
-    else:
-        return "hyperbolic"
-
-
-# Generate SL₂(ℤ) orbit
-basepoint = 0.1 + 1.5j  # point in upper half-plane
-max_depth = 7
-
-orbit_points = []
-visited = set()
-queue = [(1, 0, 0, 1, 0)]  # (a, b, c, d, depth)
-
-# Generators: T, T⁻¹, S
-gens = [(1, 1, 0, 1), (1, -1, 0, 1), (0, -1, 1, 0)]
-
-while queue:
-    a, b, c, d, depth = queue.pop(0)
-    key = (a, b, c, d)
-    if key in visited or depth > max_depth:
-        continue
-    visited.add(key)
-
-    z = moebius_action(a, b, c, d, basepoint)
-    w = cayley_transform(z)
-    trace = a + d
-
-    if abs(w) < 0.999:
-        orbit_points.append((w.real, w.imag, trace, classify_trace(trace)))
-
-    if depth < max_depth:
-        for ga, gb, gc, gd in gens:
-            na = a * ga + b * gc
-            nb = a * gb + b * gd
-            nc = c * ga + d * gc
-            nd = c * gb + d * gd
-            queue.append((na, nb, nc, nd, depth + 1))
-
-fig, ax = plt.subplots(1, 1, figsize=(10, 10))
-
-# Draw unit circle
-theta = np.linspace(0, 2 * np.pi, 200)
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-
-# Color by classification
-colors = {'elliptic': '#e74c3c', 'parabolic': '#f39c12', 'hyperbolic': '#2ecc71'}
-labels_added = set()
-
-for x, y, trace, cls in orbit_points:
-    label = cls if cls not in labels_added else None
-    ax.scatter(x, y, c=colors[cls], s=15, alpha=0.7, label=label, zorder=3)
-    labels_added.add(cls)
-
-# Count by type
-type_counts = {}
-for _, _, _, cls in orbit_points:
-    type_counts[cls] = type_counts.get(cls, 0) + 1
-
-ax.set_xlim(-1.1, 1.1)
-ax.set_ylim(-1.1, 1.1)
-ax.set_aspect('equal')
-ax.legend(loc='upper right', fontsize=12)
-ax.set_title(f'SL₂(ℤ) Orbit on the Poincaré Disk\n'
-             f'({len(orbit_points)} points: '
-             f'{type_counts.get("elliptic", 0)} elliptic, '
-             f'{type_counts.get("parabolic", 0)} parabolic, '
-             f'{type_counts.get("hyperbolic", 0)} hyperbolic)',
-             fontsize=13)
-ax.set_xlabel('Re(z)')
-ax.set_ylabel('Im(z)')
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('poincare_orbit.png', dpi=150, bbox_inches='tight')
-print("Saved: poincare_orbit.png")
+if __name__ == '__main__':
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization 3: Hyperbolic Prime Counting
-============================================
+Visualization: Hyperbolic Lattice Points on the Poincaré Disk
 
-Compares the hyperbolic prime counting function π_H(n) with
-the prime number theorem prediction n/log(n).
+Generates a figure showing:
+1. The Poincaré disk boundary
+2. Lattice points generated by Möbius transformations
+3. Geodesic connections between nearby points
+4. Color-coded by generation depth
 """
 
+import math
+import cmath
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
-import math
 
 
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def mobius_map(a: complex, z: complex) -> complex:
+    """Möbius disk automorphism: z ↦ (z - a) / (1 - conj(a) z)"""
+    return (z - a) / (1 - a.conjugate() * z)
 
 
-def hyp_prime_count(n: int) -> int:
-    """Count primes p with 2 < p <= n."""
-    return sum(1 for k in range(3, n + 1) if is_prime(k))
+def generate_lattice(generators, max_depth=6):
+    """Generate lattice points on the Poincaré disk."""
+    points_by_depth = {0: [0j]}
+    all_points = {0j}
+    frontier = [0j]
+
+    for depth in range(1, max_depth + 1):
+        new_frontier = []
+        depth_points = []
+        for p in frontier:
+            for g in generators:
+                for new_p in [mobius_map(g, p), mobius_map(-g, p)]:
+                    if abs(new_p) < 0.999:
+                        is_new = all(abs(new_p - existing) > 1e-8
+                                     for existing in all_points)
+                        if is_new:
+                            new_frontier.append(new_p)
+                            all_points.add(new_p)
+                            depth_points.append(new_p)
+        points_by_depth[depth] = depth_points
+        frontier = new_frontier
+
+    return points_by_depth
 
 
-# Compute data
-ns = list(range(5, 2001))
-counts = [hyp_prime_count(n) for n in ns]
-pnt_approx = [n / math.log(n) for n in ns]
-li_approx = []
-for n in ns:
-    # li(n) approximation via numerical integration
-    val = sum(1.0 / math.log(max(k, 2)) for k in range(2, n + 1))
-    li_approx.append(val)
+def poincare_geodesic_arc(z1, z2, num_points=50):
+    """Compute the geodesic arc between z1 and z2 in the Poincaré disk."""
+    if abs(z1) < 1e-10 or abs(z2) < 1e-10 or abs(z1.imag * z2.real - z1.real * z2.imag) < 1e-10:
+        # Points are collinear with origin — geodesic is a straight line
+        ts = np.linspace(0, 1, num_points)
+        return [z1 + t * (z2 - z1) for t in ts]
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    # General case: geodesic is an arc of a circle orthogonal to the unit circle
+    x1, y1 = z1.real, z1.imag
+    x2, y2 = z2.real, z2.imag
 
-# Plot 1: π_H(n) vs n/log(n)
-ax1 = axes[0, 0]
-ax1.plot(ns, counts, 'b-', linewidth=1.5, label='π_H(n)')
-ax1.plot(ns, pnt_approx, 'r--', linewidth=1.5, label='n/ln(n)')
-ax1.plot(ns, li_approx, 'g-.', linewidth=1.5, label='li(n)')
-ax1.set_xlabel('n')
-ax1.set_ylabel('Count')
-ax1.set_title('Hyperbolic Prime Counting Function')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
+    # The geodesic circle passes through z1, z2 and is orthogonal to |z|=1
+    # Center of the geodesic circle: solve the orthogonality condition
+    # |center|^2 = 1 + R^2 and center equidistant from z1, z2
+    A = 2 * (x2 - x1)
+    B = 2 * (y2 - y1)
+    C = (x2**2 + y2**2) - (x1**2 + y1**2)
+    D = 2 * x1
+    E = 2 * y1
+    F = x1**2 + y1**2 - 1
 
-# Plot 2: Ratio π_H(n) / (n/log(n))
-ax2 = axes[0, 1]
-ratios = [c / (n / math.log(n)) for c, n in zip(counts, ns)]
-ax2.plot(ns, ratios, 'b-', linewidth=1)
-ax2.axhline(y=1, color='r', linestyle='--', alpha=0.7, label='PNT limit')
-ax2.set_xlabel('n')
-ax2.set_ylabel('π_H(n) / (n/ln n)')
-ax2.set_title('Convergence to PNT')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0.8, 1.5)
+    det = A * E - B * D
+    if abs(det) < 1e-12:
+        ts = np.linspace(0, 1, num_points)
+        return [z1 + t * (z2 - z1) for t in ts]
 
-# Plot 3: Density ratio π_H(n) · log(n) / n²  (testing the false conjecture)
-ax3 = axes[1, 0]
-density = [c * math.log(n) / (n ** 2) for c, n in zip(counts, ns)]
-ax3.plot(ns, density, 'purple', linewidth=1)
-ax3.set_xlabel('n')
-ax3.set_ylabel('π_H(n)·ln(n)/n²')
-ax3.set_title('False Conjecture Test: π_H(n)~n²/(2ln n)?')
-ax3.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='Predicted limit 1/2')
-ax3.legend()
-ax3.grid(True, alpha=0.3)
-ax3.annotate('Ratio → 0, not 1/2\n⟹ Conjecture REFUTED',
-             xy=(1000, density[995]), fontsize=10,
-             xytext=(1200, 0.3),
-             arrowprops=dict(arrowstyle='->', color='red'),
-             color='red', fontweight='bold')
+    cx = (C * E - B * F) / det
+    cy = (A * F - C * D) / det
+    center = complex(cx, cy)
+    R = abs(z1 - center)
 
-# Plot 4: Hyperbolic prime gaps
-ax4 = axes[1, 1]
-primes_h = [k for k in range(3, 501) if is_prime(k)]
-gaps = [primes_h[i + 1] - primes_h[i] for i in range(len(primes_h) - 1)]
-ax4.scatter(primes_h[:-1], gaps, s=5, alpha=0.6, c='teal')
-ax4.set_xlabel('Prime p')
-ax4.set_ylabel('Gap to next prime')
-ax4.set_title('Hyperbolic Prime Gaps (p > 2)')
-ax4.grid(True, alpha=0.3)
+    angle1 = cmath.phase(z1 - center)
+    angle2 = cmath.phase(z2 - center)
 
-plt.suptitle('Hyperbolic Number Theory: Prime Counting Analysis', fontsize=14, y=1.02)
-plt.tight_layout()
-plt.savefig('hyp_primes.png', dpi=150, bbox_inches='tight')
-print("Saved: hyp_primes.png")
+    if angle2 - angle1 > math.pi:
+        angle2 -= 2 * math.pi
+    elif angle1 - angle2 > math.pi:
+        angle1 -= 2 * math.pi
+
+    angles = np.linspace(angle1, angle2, num_points)
+    return [center + R * cmath.exp(1j * a) for a in angles]
+
+
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+
+    # ── Left panel: Lattice points on the Poincaré disk ──
+    ax = axes[0]
+    ax.set_aspect('equal')
+    ax.set_xlim(-1.15, 1.15)
+    ax.set_ylim(-1.15, 1.15)
+
+    # Draw unit circle
+    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax.add_patch(circle)
+
+    # Generate lattice
+    generators = [0.4 + 0.15j, 0.1 + 0.35j]
+    points_by_depth = generate_lattice(generators, max_depth=5)
+
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']
+
+    for depth, pts in sorted(points_by_depth.items()):
+        if not pts:
+            continue
+        xs = [p.real for p in pts]
+        ys = [p.imag for p in pts]
+        color = colors[depth % len(colors)]
+        size = max(5, 40 - 6 * depth)
+        ax.scatter(xs, ys, c=color, s=size, zorder=5,
+                  label=f'Depth {depth} ({len(pts)} pts)',
+                  edgecolors='black', linewidth=0.5, alpha=0.8)
+
+    ax.set_title('Hyperbolic Lattice Points\non the Poincaré Disk', fontsize=14)
+    ax.legend(loc='upper right', fontsize=8)
+    ax.set_xlabel('Re(z)')
+    ax.set_ylabel('Im(z)')
+
+    # ── Right panel: Chebyshev trace growth ──
+    ax = axes[1]
+
+    for t in [3, 4, 5]:
+        ns = list(range(12))
+        traces = [abs(chebyshev_trace_py(t, n)) for n in ns]
+        ax.semilogy(ns, traces, 'o-', label=f't = {t}', linewidth=2, markersize=6)
+
+    # Reference: exponential growth
+    ns = list(range(12))
+    for t in [3, 4, 5]:
+        growth_rate = (t + math.sqrt(t**2 - 4)) / 2
+        ref = [2 * growth_rate**n for n in ns]
+        ax.semilogy(ns, ref, '--', alpha=0.3, color='gray')
+
+    ax.set_xlabel('n (power)', fontsize=12)
+    ax.set_ylabel('|T_t(n)| (log scale)', fontsize=12)
+    ax.set_title('Chebyshev Trace Growth\n|T(n+2)| = |t·T(n+1) - T(n)|', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('hyperbolic_lattice_and_traces.png', dpi=150, bbox_inches='tight')
+    print("Saved: hyperbolic_lattice_and_traces.png")
+
+
+def chebyshev_trace_py(t, n):
+    if n == 0: return 2
+    if n == 1: return t
+    prev, curr = 2, t
+    for _ in range(n - 1):
+        prev, curr = curr, t * curr - prev
+    return curr
+
+
+if __name__ == '__main__':
+    main()
