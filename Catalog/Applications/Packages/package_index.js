@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "transfinite_game_theory_games_that_last_forever.json",
+    "title": "Transfinite Game Theory: Games That Last Forever",
+    "domain": "Computation",
+    "date": "2026-05-31T23:16:13Z",
+    "exp_id": "09ad0b7d",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 26
+  },
+  {
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation",
     "domain": "Computation",
@@ -360,6 +370,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "transfinite_game_theory_games_that_last_forever.json": {
+    "title": "Transfinite Game Theory: Games That Last Forever",
+    "exp_id": "09ad0b7d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Computation"
+  },
   "artins_conjecture_on_primitive_roots.json": {
     "title": "Artin's Conjecture on Primitive Roots",
     "exp_id": "c8935afa",
@@ -469,7 +487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -480,7 +498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -491,7 +509,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -502,7 +520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -513,7 +531,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 281,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -524,7 +542,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -535,7 +553,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -546,7 +564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -557,7 +575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -568,7 +586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -579,7 +597,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 271,
+      "hue": 101,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -590,7 +608,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 275,
+      "hue": 95,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -634,7 +652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -667,7 +685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -678,7 +696,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -689,7 +707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 271,
+      "hue": 280,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -700,7 +718,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -711,7 +729,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -722,7 +740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -733,9 +751,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
+    },
+    {
+      "id": "transfinite_game_theory_games_that_last_forever",
+      "title": "Transfinite Game Theory: Games That Last Forever",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T23:16:13Z",
+      "hue": 92,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
