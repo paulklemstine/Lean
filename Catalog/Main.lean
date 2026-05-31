@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2236 of the highest-quality
+A curated collection of 2240 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2236
+Total files: 2240
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -14,6 +14,7 @@ import FINAL.Algebra.Amplification
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
+import FINAL.Algebra.ArtinConjecture
 import FINAL.Algebra.ArtinPrimitiveRoot
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AverageCriterion
@@ -923,6 +924,7 @@ import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Catalog.BraidingUniversality
 import FINAL.Catalog.EntropyPowerInequality
 import FINAL.Catalog.NewtonHodge
+import FINAL.Catalog.SurrealTopologyExtended
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
 import FINAL.Computation.AlgorithmicCertificate
@@ -1005,6 +1007,7 @@ import FINAL.Computation.ThermodynamicSorting
 import FINAL.Computation.TimeSpaceTradeoff
 import FINAL.Computation.TracedCircuitSemantics
 import FINAL.Computation.TransfiniteCA
+import FINAL.Computation.TransfiniteGameTheory
 import FINAL.Computation.TropicalAmortized
 import FINAL.Computation.TropicalAmortizedExamples
 import FINAL.Computation.TropicalCompression
@@ -2043,6 +2046,7 @@ import FINAL.Tropical.FactorRank
 import FINAL.Tropical.FactorRankSeparation
 import FINAL.Tropical.Fano
 import FINAL.Tropical.FanoIncidence
+import FINAL.Tropical.FermatCurve
 import FINAL.Tropical.FermatHypersurface
 import FINAL.Tropical.FiberEntropy
 import FINAL.Tropical.FiniteTempTropical

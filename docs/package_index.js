@@ -4,6 +4,56 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "surreal_topology_open_sets_at_infinity.json",
+    "title": "Surreal Topology: Open Sets at Infinity",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:17:33Z",
+    "exp_id": "e7dbad62",
+    "quality_score": 0.6766884516129033,
+    "quality": "partial",
+    "pkg_num": 29
+  },
+  {
+    "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
+    "title": "The Unreasonable Effectiveness of Wrong Theories",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:17:11Z",
+    "exp_id": "10ec7af4",
+    "quality_score": 0.7302532967032966,
+    "quality": "substantial",
+    "pkg_num": 28
+  },
+  {
+    "filename": "artins_conjecture_on_primitive_roots.json",
+    "title": "Artin's Conjecture on Primitive Roots: Index Theory and Safe Prime Analysis",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:16:51Z",
+    "exp_id": "fde037db",
+    "quality_score": 0.676823846153846,
+    "quality": "partial",
+    "pkg_num": 27
+  },
+  {
+    "filename": "tropical_fermats_last_theorem.json",
+    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:16:32Z",
+    "exp_id": "c27d447a",
+    "quality_score": 0.6683460000000001,
+    "quality": "partial",
+    "pkg_num": 26
+  },
+  {
+    "filename": "transfinite_game_theory_games_that_last_forever.json",
+    "title": "Transfinite Game Theory: Games That Last Forever",
+    "domain": "Computation",
+    "date": "2026-05-31T23:16:13Z",
+    "exp_id": "09ad0b7d",
+    "quality_score": 0.7225286206896553,
+    "quality": "substantial",
+    "pkg_num": 25
+  },
+  {
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation",
     "domain": "Computation",
@@ -11,7 +61,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a82cace",
     "quality_score": 0.735339756097561,
     "quality": "substantial",
-    "pkg_num": 25
+    "pkg_num": 24
   },
   {
     "filename": "sierpiski_numbers_covering_systems.json",
@@ -21,7 +71,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7c29780f",
     "quality_score": 0.7134367272727273,
     "quality": "substantial",
-    "pkg_num": 24
+    "pkg_num": 23
   },
   {
     "filename": "p_adic_langlands_for_glq_p.json",
@@ -31,7 +81,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f95fe11c",
     "quality_score": 0.7597249152542372,
     "quality": "substantial",
-    "pkg_num": 23
+    "pkg_num": 22
   },
   {
     "filename": "langlands_for_gl_over_q.json",
@@ -41,7 +91,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ab6b7dec",
     "quality_score": 0.6995549999999999,
     "quality": "partial",
-    "pkg_num": 22
+    "pkg_num": 21
   },
   {
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
@@ -51,7 +101,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "94584937",
     "quality_score": 0.7406316585365854,
     "quality": "substantial",
-    "pkg_num": 21
+    "pkg_num": 20
   },
   {
     "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
@@ -61,7 +111,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e471f5e9",
     "quality_score": 0.7488625,
     "quality": "substantial",
-    "pkg_num": 20
+    "pkg_num": 19
   },
   {
     "filename": "topological_quantum_computing_braiding_universalit.json",
@@ -71,7 +121,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "831f1fd8",
     "quality_score": 0.7978566666666667,
     "quality": "substantial",
-    "pkg_num": 19
+    "pkg_num": 18
   },
   {
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
@@ -81,7 +131,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "58d4594d",
     "quality_score": 0.744326,
     "quality": "substantial",
-    "pkg_num": 18
+    "pkg_num": 17
   },
   {
     "filename": "neural_pde_universality_classes_via_renormalizatio.json",
@@ -91,7 +141,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "46942b74",
     "quality_score": 0.7212349056603773,
     "quality": "substantial",
-    "pkg_num": 17
+    "pkg_num": 16
   },
   {
     "filename": "homotopy_type_theory_as_foundations.json",
@@ -101,7 +151,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "b5aa996d",
     "quality_score": 0.7398349845201239,
     "quality": "substantial",
-    "pkg_num": 16
+    "pkg_num": 15
   },
   {
     "filename": "entropy_power_inequality_sharp_version.json",
@@ -111,7 +161,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "b3fdee2d",
     "quality_score": 0.7035288321167883,
     "quality": "substantial",
-    "pkg_num": 15
+    "pkg_num": 14
   },
   {
     "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
@@ -121,7 +171,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "6d12eefe",
     "quality_score": 0.7052853846153846,
     "quality": "substantial",
-    "pkg_num": 14
+    "pkg_num": 13
   },
   {
     "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
@@ -131,7 +181,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5d630953",
     "quality_score": 0.6860414464845499,
     "quality": "partial",
-    "pkg_num": 13
+    "pkg_num": 12
   },
   {
     "filename": "standard_conjectures_on_algebraic_cycles.json",
@@ -140,16 +190,6 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-31T20:24:43Z",
     "exp_id": "0554bed3",
     "quality_score": 0.7282123376623377,
-    "quality": "substantial",
-    "pkg_num": 12
-  },
-  {
-    "filename": "artins_conjecture_on_primitive_roots.json",
-    "title": "Artin's Conjecture on Primitive Roots",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:24:13Z",
-    "exp_id": "c8935afa",
-    "quality_score": 0.7068530588235296,
     "quality": "substantial",
     "pkg_num": 11
   },
@@ -320,6 +360,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "the_unreasonable_effectiveness_of_wrong_theories.json": {
+    "title": "The Unreasonable Effectiveness of Wrong Theories",
+    "exp_id": "10ec7af4",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "self_modifying_code_that_cannot_be_stopped.json": {
     "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
     "exp_id": "94584937",
@@ -360,9 +408,25 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "transfinite_game_theory_games_that_last_forever.json": {
+    "title": "Transfinite Game Theory: Games That Last Forever",
+    "exp_id": "09ad0b7d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Computation"
+  },
+  "tropical_fermats_last_theorem.json": {
+    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
+    "exp_id": "c27d447a",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "artins_conjecture_on_primitive_roots.json": {
-    "title": "Artin's Conjecture on Primitive Roots",
-    "exp_id": "c8935afa",
+    "title": "Artin's Conjecture on Primitive Roots: Index Theory and Safe Prime Analysis",
+    "exp_id": "fde037db",
     "source_exp_ids": [
       "seed"
     ],
@@ -375,6 +439,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Computation"
+  },
+  "surreal_topology_open_sets_at_infinity.json": {
+    "title": "Surreal Topology: Open Sets at Infinity",
+    "exp_id": "e7dbad62",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
   },
   "entropy_power_inequality_sharp_version.json": {
     "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
@@ -469,7 +541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -480,7 +552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91,
+      "hue": 292,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -491,7 +563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -502,7 +574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -513,7 +585,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 281,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -535,7 +607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -557,7 +629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 95,
+      "hue": 281,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -573,24 +645,13 @@ window.PACKAGE_GRAPH = {
       "quality": "substantial"
     },
     {
-      "id": "artins_conjecture_on_primitive_roots",
-      "title": "Artin's Conjecture on Primitive Roots",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:24:13Z",
-      "hue": 271,
-      "priority_score": 0.7068530588235296,
-      "quality": "substantial"
-    },
-    {
       "id": "standard_conjectures_on_algebraic_cycles",
       "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -601,7 +662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -612,7 +673,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -645,7 +706,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -656,7 +717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -678,7 +739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -689,7 +750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -700,7 +761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -733,9 +794,64 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
+    },
+    {
+      "id": "transfinite_game_theory_games_that_last_forever",
+      "title": "Transfinite Game Theory: Games That Last Forever",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T23:16:13Z",
+      "hue": 92,
+      "priority_score": 0.7225286206896553,
+      "quality": "substantial"
+    },
+    {
+      "id": "tropical_fermats_last_theorem",
+      "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:16:32Z",
+      "hue": 90,
+      "priority_score": 0.6683460000000001,
+      "quality": "partial"
+    },
+    {
+      "id": "artins_conjecture_on_primitive_roots",
+      "title": "Artin's Conjecture on Primitive Roots: Index Theory and Safe Prime Analysis",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:16:51Z",
+      "hue": 272,
+      "priority_score": 0.676823846153846,
+      "quality": "partial"
+    },
+    {
+      "id": "the_unreasonable_effectiveness_of_wrong_theories",
+      "title": "The Unreasonable Effectiveness of Wrong Theories",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:17:11Z",
+      "hue": 270,
+      "priority_score": 0.7302532967032966,
+      "quality": "substantial"
+    },
+    {
+      "id": "surreal_topology_open_sets_at_infinity",
+      "title": "Surreal Topology: Open Sets at Infinity",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:17:33Z",
+      "hue": 271,
+      "priority_score": 0.6766884516129033,
+      "quality": "partial"
     }
   ],
   "edges": [],

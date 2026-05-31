@@ -1249,5 +1249,10 @@
   "ab6b7dec": "langlands_for_gl_over_q.json",
   "f95fe11c": "p_adic_langlands_for_glq_p.json",
   "7c29780f": "sierpiski_numbers_covering_systems.json",
-  "5a82cace": "cellular_automata_at_the_ordinals_transfinite_comp.json"
+  "5a82cace": "cellular_automata_at_the_ordinals_transfinite_comp.json",
+  "09ad0b7d": "transfinite_game_theory_games_that_last_forever.json",
+  "c27d447a": "tropical_fermats_last_theorem.json",
+  "fde037db": "artins_conjecture_on_primitive_roots.json",
+  "10ec7af4": "the_unreasonable_effectiveness_of_wrong_theories.json",
+  "e7dbad62": "surreal_topology_open_sets_at_infinity.json"
 }
