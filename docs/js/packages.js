@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
+    // Listen for iframe resize messages from interactive HTML demos
+    window.addEventListener('message', (e) => {
+        if (e.data && e.data.type === 'iframe-resize' && e.data.id) {
+            const iframe = document.getElementById(e.data.id);
+            if (iframe) {
+                iframe.style.height = Math.max(e.data.height + 24, 200) + 'px';
+            }
+        }
+    });
+
     // Tab switching
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -313,45 +323,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const code = item.code || '';
             if (code.trim() && !isFilename(code)) return code;
 
-            // code is a filename or empty — try code_file fetch, then modules
+            // code is a filename or empty — resolve from package modules
             const pkg = window.Aether.currentPackage || {};
             const modules = pkg.modules || {};
 
-            // Try to find matching code in modules by function name in the filename
-            const stem = code.replace('.py', '').replace(/_/g, '');
+            // When code is a filename, the actual viz code is in the demo module.
+            // The LLM outputs filenames as placeholders; the real Python is in modules.
             for (const modName of ['demo', 'algorithms']) {
                 const modCode = modules[modName] || '';
-                if (!modCode) continue;
-
-                if (stem && stem.length > 2) {
-                    // Check if this function is defined in the module
-                    const funcDefRe = new RegExp(`def\\s+${stem}\\b`);
-                    if (funcDefRe.test(modCode)) {
-                        // Extract just this function
-                        const lines = modCode.split('\n');
-                        let start = -1, end = lines.length;
-                        for (let i = 0; i < lines.length; i++) {
-                            if (funcDefRe.test(lines[i]) && (i === 0 || !lines[i-1].startsWith(' ') && !lines[i-1].startsWith('\t') || lines[i-1].startsWith('@'))) {
-                                start = i;
-                                break;
-                            }
-                        }
-                        if (start >= 0) {
-                            const defIndent = lines[start].search(/\S/);
-                            for (let i = start + 1; i < lines.length; i++) {
-                                const lineIndent = lines[i].search(/\S/);
-                                if (lineIndent >= 0 && lineIndent <= defIndent && lines[i].trim()) {
-                                    end = i;
-                                    break;
-                                }
-                            }
-                            return lines.slice(start, end).join('\n');
-                        }
-                    }
-                }
-
-                // If no specific function match, use the whole module as fallback
-                if (!code.trim() || isFilename(code)) {
+                if (modCode && modCode.trim()) {
                     return modCode;
                 }
             }
@@ -539,24 +519,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Use iframe with srcdoc to isolate each demo's JS scope
+            const iframeId = 'demo-iframe-' + idx + '-' + Date.now();
             const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width: 100%; min-height: 300px; border: none; border-radius: 12px; background: white;';
-            iframe.sandbox = 'allow-scripts';
+            iframe.id = iframeId;
+            iframe.style.cssText = 'width: 100%; border: none; border-radius: 12px; background: white; overflow: hidden;';
+            iframe.sandbox = 'allow-scripts allow-same-origin';
+            iframe.scrolling = 'no';
             // Build a self-contained HTML doc for the iframe
             const htmlContent = item.html || '<p>No content</p>';
             const srcdoc = `<!DOCTYPE html>
 <html><head><style>
-  body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; }
+  html, body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; overflow: hidden; height: auto; }
   canvas { max-width: 100%; }
-</style></head><body>${htmlContent}</body></html>`;
+</style></head><body>${htmlContent}
+<script>
+  // Post resize message to parent so iframe can auto-size
+  function notifyHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iframe-resize', id: '${iframeId}', height: h }, '*');
+  }
+  window.addEventListener('load', () => { setTimeout(notifyHeight, 100); setTimeout(notifyHeight, 500); });
+  // Also notify after dynamic content changes
+  new MutationObserver(() => setTimeout(notifyHeight, 50)).observe(document.body, { childList: true, subtree: true });
+</script></body></html>`;
             iframe.srcdoc = srcdoc;
-            // Auto-resize iframe to content height
-            iframe.addEventListener('load', () => {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    iframe.style.height = Math.max(doc.body.scrollHeight + 24, 300) + 'px';
-                } catch {}
-            });
 
             card.appendChild(header);
             card.appendChild(iframe);
