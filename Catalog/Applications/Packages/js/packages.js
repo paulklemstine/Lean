@@ -179,18 +179,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const isFilename = (s) => typeof s === 'string' && s.length < 80 && (s.endsWith('.py') || s.startsWith('viz_') || s.startsWith('visualize_'));
 
+        // Resolve viz code from package modules when code field is a filename
+        const resolveVizCode = (item) => {
+            const code = item.code || '';
+            if (code.trim() && !isFilename(code)) return code;
+
+            // code is a filename or empty — try code_file fetch, then modules
+            const pkg = window.Aether.currentPackage || {};
+            const modules = pkg.modules || {};
+
+            // Try to find matching code in modules by function name in the filename
+            const stem = code.replace('.py', '').replace(/_/g, '');
+            for (const modName of ['demo', 'algorithms']) {
+                const modCode = modules[modName] || '';
+                if (!modCode) continue;
+
+                if (stem && stem.length > 2) {
+                    // Check if this function is defined in the module
+                    const funcDefRe = new RegExp(`def\\s+${stem}\\b`);
+                    if (funcDefRe.test(modCode)) {
+                        // Extract just this function
+                        const lines = modCode.split('\n');
+                        let start = -1, end = lines.length;
+                        for (let i = 0; i < lines.length; i++) {
+                            if (funcDefRe.test(lines[i]) && (i === 0 || !lines[i-1].startsWith(' ') && !lines[i-1].startsWith('\t') || lines[i-1].startsWith('@'))) {
+                                start = i;
+                                break;
+                            }
+                        }
+                        if (start >= 0) {
+                            const defIndent = lines[start].search(/\S/);
+                            for (let i = start + 1; i < lines.length; i++) {
+                                const lineIndent = lines[i].search(/\S/);
+                                if (lineIndent >= 0 && lineIndent <= defIndent && lines[i].trim()) {
+                                    end = i;
+                                    break;
+                                }
+                            }
+                            return lines.slice(start, end).join('\n');
+                        }
+                    }
+                }
+
+                // If no specific function match, use the whole module as fallback
+                if (!code.trim() || isFilename(code)) {
+                    return modCode;
+                }
+            }
+
+            // Last resort: try code_file
+            if (item.code_file) return null; // will be fetched async
+            return '';
+        };
+
         const validItems = items.filter(item => {
             if (typeof item === 'string') {
                 console.warn('Skipping string visualization entry:', item);
                 return false;
             }
-            // Accept if code is real content, or if code_file exists for fetching
-            const hasCode = item.code && item.code.trim() && !isFilename(item.code);
-            const hasCodeFile = item.code_file && item.code_file.trim();
-            if (!hasCode && !hasCodeFile) {
-                return false;
-            }
-            return true;
+            const resolved = resolveVizCode(item);
+            if (resolved === null) return true; // code_file fetch pending
+            return resolved && resolved.trim().length > 0;
         });
         if (validItems.length === 0) {
             container.style.display = 'none';
@@ -198,14 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         validItems.forEach((item, idx) => {
-            // Resolve code: if item.code is a filename placeholder, fetch from code_file
-            let resolvedCode = '';
-            if (item.code && item.code.trim() && !isFilename(item.code)) {
-                resolvedCode = item.code;
-            } else if (item.code_file) {
-                // Will be fetched asynchronously below
-                resolvedCode = '';
-            }
+            let resolvedCode = resolveVizCode(item);
+            if (resolvedCode === null) resolvedCode = ''; // will be filled by code_file fetch
             const card = document.createElement('div');
             card.className = 'viz-container';
 
@@ -266,15 +309,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(item.code_file)
                     .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
                     .then(code => {
+                        // If fetched code is just a filename (garbage), try modules instead
+                        if (isFilename(code)) {
+                            const modResolved = resolveVizCode({...item, code: ''});
+                            code = modResolved || '';
+                        }
                         editor.value = code;
                         resolvedCode = code;
-                        genBtn.disabled = false;
-                        genBtn.textContent = 'Generate';
+                        genBtn.disabled = !code || !code.trim();
+                        genBtn.textContent = code ? 'Generate' : 'Code Unavailable';
                     })
                     .catch(err => {
                         console.warn('Failed to fetch viz code:', item.code_file, err);
-                        genBtn.disabled = true;
-                        genBtn.textContent = 'Code Unavailable';
+                        // Try modules as fallback
+                        const modCode = resolveVizCode({...item, code: '', code_file: ''});
+                        if (modCode) {
+                            editor.value = modCode;
+                            resolvedCode = modCode;
+                            genBtn.disabled = false;
+                            genBtn.textContent = 'Generate';
+                        } else {
+                            genBtn.disabled = true;
+                            genBtn.textContent = 'Code Unavailable';
+                        }
                     });
             }
 
