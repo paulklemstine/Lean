@@ -11971,8 +11971,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 1.0,
-      "status": "in_progress",
-      "consumed_by_exp_id": "950e0bfb",
+      "status": "available",
+      "consumed_by_exp_id": "",
       "timestamp": "2026-05-27T16:40:30.181006+00:00",
       "catalog_references": [
         "Catalog/Pythagorean/SharpExponentLowerBounds.lean: decisionTree_leaves_le_pow_depth, layerProfile_decision_tree_depth_bound"
