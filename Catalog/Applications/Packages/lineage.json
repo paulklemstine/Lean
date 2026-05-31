@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "rotas_basis_conjecture",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "random_matrices_edge_universality",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "isogeny_based_cryptography_csi_fish",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "negative_dimensional_topology_what_lives_in_dimens",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "entropy_power_inequality_sharp_version",
@@ -133,7 +133,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 90
+      "hue": 271
+    },
+    {
+      "id": "homotopy_type_theory_as_foundations",
+      "title": "Homotopy Type Theory as Foundations: Bridges Between Univalent and Classical Mathematics",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:30:56Z",
+      "hue": 91
     }
   ],
   "edges": [],
