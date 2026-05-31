@@ -297,18 +297,22 @@ telemetry:
 arxiv:
   enabled: true
   queries:
-    Pythagorean: 'cat:math.NT AND all:"Pythagorean"'
-    Tropical: 'cat:math.CO OR all:"tropical semiring"'
-    Cryptography: 'cat:cs.CR AND all:"lattice"'
-    Algebra: 'cat:math.RA OR all:"semiring" OR all:"idempotent"'
-    EML: 'all:"exponential" AND all:"logarithmic" AND all:"activation"'
-    MachineLearning: 'cat:cs.LG AND all:"certified robustness"'
-    Physics: 'cat:math-ph OR all:"Hamiltonian"'
-    Logic: 'cat:cs.LO AND all:"formal verification"'
-    Computation: 'cat:cs.CC AND all:"complexity"'
-    Speculative: 'all:"speculative" OR all:"hypothetical"'
+    Pythagorean: 'cat:math.NT'
+    Tropical: 'cat:math.CO OR all:"tropical" OR all:"min-plus" OR all:"idempotent semiring"'
+    Cryptography: 'cat:cs.CR OR all:"post-quantum" OR all:"lattice-based"'
+    Algebra: 'cat:math.RA OR cat:math.AC OR all:"semiring" OR all:"group theory"'
+    EML: 'all:"exponential" AND all:"logarithmic" OR all:"softplus" OR all:"activation function"'
+    MachineLearning: 'cat:cs.LG OR all:"certified robustness" OR all:"neural network verification"'
+    Physics: 'cat:math-ph OR all:"Hamiltonian" OR all:"quantum field"'
+    Logic: 'cat:cs.LO OR all:"formal verification" OR all:"proof assistant" OR all:"dependent type"'
+    Computation: 'cat:cs.CC OR all:"computational complexity" OR all:"computability"'
+    Bridges: 'all:"interdisciplinary" OR all:"cross-domain" OR all:"bridge theorem" OR all:"connection between"'
+    Speculative: 'all:"speculative" OR all:"hypothetical" OR all:"conjecture" OR all:"open problem"'
+    Geometry: 'cat:math.AG OR cat:math.DG OR all:"manifold" OR all:"algebraic geometry" OR all:"topology"'
+    Novelty: 'all:"surprising" OR all:"unexpected" OR all:"counterexample" OR all:"paradox"'
+    NumberTheory: 'cat:math.NT OR all:"Diophantine" OR all:"arithmetic" OR all:"zeta function"'
   rate_limit_seconds: 3
-  max_paper_chars: 8000
+  max_paper_chars: 12000
 
 git:
   auto_push: true

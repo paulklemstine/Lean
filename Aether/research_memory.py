@@ -256,6 +256,8 @@ class FutureDirection:
     # --- Multi-cycle research arcs ---
     arc_id: str = ""                                              # groups related directions (e.g. "arc_001")
     arc_position: int = 0                                         # 1=foundation, 2=main theorem, 3=applications
+    # --- Quality feedback ---
+    outcome_quality: float = 0.0                                  # 0-1 score from cycle result (0=untested, 1=excellent)
 
     def to_dict(self) -> dict:
         return {
@@ -278,6 +280,7 @@ class FutureDirection:
             "domain_bridges": self.domain_bridges,
             "arc_id": self.arc_id,
             "arc_position": self.arc_position,
+            "outcome_quality": self.outcome_quality,
         }
 
     @classmethod
@@ -1229,8 +1232,14 @@ class FutureDirectionsManager:
                     repetition_penalty -= 0.03
             repetition_penalty = max(repetition_penalty, -0.15)
 
-        # arxiv_boost: directions sourced from ArXiv mining get +0.15
-        arxiv_boost = 0.15 if direction.source_exp_id and direction.source_exp_id.startswith("arxiv") else 0.0
+        # ArXiv directions earn their priority through quality scoring, not a flat boost.
+        # The quality score already accounts for source_bonus, novelty, description depth, etc.
+
+        # outcome_quality_feedback: if this direction already has a measured outcome,
+        # use it as a signal (directions that produced good results are worth more)
+        quality_feedback = 0.0
+        if direction.outcome_quality > 0:
+            quality_feedback = (direction.outcome_quality - 0.5) * 0.1  # small +/-0.05 nudge
 
         score = (
             0.18 * novelty
@@ -1245,10 +1254,10 @@ class FutureDirectionsManager:
             + fun_bonus
             + bridge_bonus
             + domain_diversity_penalty
-            + arxiv_boost
             + novelty_bonus
             + first_time_bonus
             + repetition_penalty
+            + quality_feedback
         ) * domain_decay
         # Cap at 0.85 so priorities spread across 0.4-0.85 instead of clustering at 1.0
         return min(0.85, score)

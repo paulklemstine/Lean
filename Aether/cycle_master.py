@@ -1232,13 +1232,23 @@ class CycleMaster:
             print(f"[Catalog] Scoring error (non-fatal): {e}")
 
         # Phase 10.7: ArXiv mining — inject fresh ideas from recent papers
+        # Rotate between domain-specific and cross-pollination queries
         if self.arxiv_miner and self.arxiv_miner.enabled:
             try:
-                use_domain_query = (self.state.cycle_count % 2 == 1)
-                direction = self.arxiv_miner.mine_future_direction(
-                    domain=domain["id"] if domain else "",
-                    use_domain_query=use_domain_query,
-                )
+                cycle = self.state.cycle_count
+                if cycle % 3 == 0:
+                    # Every 3rd cycle: use rotating general query for cross-pollination
+                    self.arxiv_miner.provider.set_general_query(cycle)
+                    direction = self.arxiv_miner.mine_future_direction(
+                        domain="",
+                        use_domain_query=False,
+                    )
+                else:
+                    # Domain-specific query aligned with current domain
+                    direction = self.arxiv_miner.mine_future_direction(
+                        domain=domain["id"] if domain else "",
+                        use_domain_query=True,
+                    )
                 if direction:
                     print(f"[ArXiv] Mined direction: {direction.title}")
                 else:

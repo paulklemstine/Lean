@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
-from arxiv_provider import ArxivTexProvider, ArxivPaper, DOMAIN_QUERIES, GENERAL_QUERY
+from arxiv_provider import ArxivTexProvider, ArxivPaper, DOMAIN_QUERIES, GENERAL_QUERIES, GENERAL_QUERY
 from research_memory import FutureDirection, FutureDirectionsManager
 
 # _infer_domains is a static method on FutureDirectionsManager
@@ -27,7 +27,11 @@ _MINING_SYSTEM_PROMPT = (
     "to identify novel research directions. Your goal is to find ideas from "
     "the paper that could be combined with existing formalized results to "
     "create genuinely new mathematics. Focus on cross-pollination: taking "
-    "techniques or results from one area and applying them to another. "
+    "techniques or results from one area and applying them to another.\n\n"
+    "CRITICAL: Your conjecture must be SPECIFIC and FALSIFIABLE. Vague directions "
+    "like 'Explore connections between X and Y' or 'Study the properties of X' "
+    "will be rejected. You must state a precise mathematical claim that can be "
+    "proved or disproved in Lean 4.\n\n"
     "Output ONLY valid JSON."
 )
 
@@ -52,19 +56,22 @@ Categories: {categories}
 Propose ONE research direction that:
 1. Takes a specific result or technique from the ArXiv paper
 2. Combines it with a specific theorem or structure from our Catalog
-3. States a precise, falsifiable conjecture that could be formalized in Lean 4
+3. States a PRECISE, FALSIFIABLE CONJECTURE — not a vague research topic.
+   BAD: "Explore connections between tropical geometry and number theory"
+   GOOD: "The tropicalization of the Pythagorean triple (a,b,c) satisfies
+         min(a^t, b^t) + min(c^t, (a+b)^t) = min(a^t + b^t, c^t) for all t ≥ 1"
 4. Identifies which Catalog theorems to build on (cite file paths)
 5. Names the domain bridges this creates (e.g., "Algebra <-> Tropical")
 
 Output JSON:
 {{
   "title": "Short descriptive title (not generic like 'Study of X')",
-  "description": "Conjecture: [precise statement]. Test: [how to verify]. Impact: [what this opens up].",
-  "domain": "One of: Pythagorean, Tropical, Cryptography, Algebra, EML, MachineLearning, Physics, Logic, Computation, Bridges, Speculative, Geometry",
+  "description": "Conjecture: [precise mathematical statement]. Test: [specific verification method, e.g. 'Prove by induction on n using Lemma 3.2']. Impact: [what this enables]",
+  "domain": "One of: Pythagorean, Tropical, Cryptography, Algebra, EML, MachineLearning, Physics, Logic, Computation, Bridges, Speculative, Geometry, Novelty",
   "catalog_references": ["Algebra/Berggren.lean", "Tropical/TropicalSemiring.lean"],
   "domain_bridges": ["Algebra <-> Tropical"],
   "ambition_level": "grand_challenge" or "extension",
-  "proof_strategy": "Brief proof approach: key lemmas needed, techniques to use.",
+  "proof_strategy": "Key lemma: [statement]. Approach: [technique]. Steps: 1) [first step] 2) [second step] ...",
   "arxiv_id": "{arxiv_id}"
 }}"""
 
@@ -86,7 +93,7 @@ class ArxivMiner:
         # Config
         self.enabled = self.config.get("enabled", True)
         self.rate_limit = self.config.get("rate_limit_seconds", 3)
-        self.max_paper_chars = self.config.get("max_paper_chars", 8000)
+        self.max_paper_chars = self.config.get("max_paper_chars", 12000)
         self.queries = self.config.get("queries", DOMAIN_QUERIES)
 
         # Provider instance (will be reconfigured per cycle)
@@ -127,8 +134,11 @@ class ArxivMiner:
             query = self.queries[domain]
             print(f"[ArXiv] Using domain query for {domain}: {query[:60]}...")
         else:
-            query = GENERAL_QUERY
-            print(f"[ArXiv] Using general cross-pollination query")
+            # Rotate through general queries for cross-pollination
+            query = GENERAL_QUERIES[self._cycle_count % len(GENERAL_QUERIES)]
+            print(f"[ArXiv] Using general cross-pollination query (cycle {self._cycle_count})")
+
+        self._cycle_count += 1
 
         self.provider.set_query(query)
 
@@ -219,6 +229,7 @@ class ArxivMiner:
             r"^Conjecture\s+\d+$",
             r"^(Study|Analysis|Investigation|Further|Extended)\s+(of|on|into)\s+",
             r"^(A|An|The)\s+(New|Novel|Further|Extended)\s+",
+            r"^(Explor|Exam|Invest|Survey)\w*\s+",
         ]
         for pat in generic_patterns:
             if re.match(pat, title, re.IGNORECASE):
@@ -228,6 +239,14 @@ class ArxivMiner:
         description = data.get("description", "").strip()
         if not description:
             description = f"Research direction inspired by ArXiv paper {paper.paper_id}"
+
+        # Check that the description contains a falsifiable conjecture
+        has_conjecture = any(kw in description.lower() for kw in
+            ["conjecture:", "theorem:", "prove", "disprove", "implies", "equals",
+             "iff", "holds if", "is equivalent to"])
+        if not has_conjecture:
+            print(f"[ArXiv] Direction lacks falsifiable conjecture, skipping: {title[:60]}")
+            return None
 
         domain = data.get("domain", "").strip()
         if not domain:
@@ -256,7 +275,23 @@ class ArxivMiner:
 
         proof_strategy = data.get("proof_strategy", "").strip()
 
-        return FutureDirection(
+        # Novelty check: compare against existing directions
+        existing_titles = [d.title.lower() for d in self.research_memory._directions
+                          if d.status in ("available", "in_progress")]
+        title_lower = title.lower()
+        for existing in existing_titles:
+            # Word overlap > 0.5 means it's too similar
+            existing_words = set(existing.split())
+            new_words = set(title_lower.split())
+            if len(existing_words) == 0:
+                continue
+            overlap = len(existing_words & new_words) / max(len(existing_words), len(new_words))
+            if overlap > 0.5:
+                print(f"[ArXiv] Direction too similar to existing '{existing[:60]}', skipping")
+                return None
+
+        # Let quality scoring determine priority — no flat boost
+        direction = FutureDirection(
             id=f"arxiv-{paper.paper_id}",
             title=title,
             description=description,
@@ -266,9 +301,16 @@ class ArxivMiner:
             proof_strategy=proof_strategy,
             research_mode="prove",
             depth_estimate=3,
-            priority_score=0.7,  # ArXiv-sourced directions start at high priority
+            priority_score=0.65,  # Modest starting priority — must earn higher via quality scoring
             status="available",
             catalog_references=catalog_refs,
             ambition_level=ambition,
             domain_bridges=domain_bridges,
         )
+
+        # Apply quality scoring so it competes fairly with other directions
+        quality = self.research_memory._compute_quality_score(direction)
+        direction.priority_score = min(direction.priority_score, max(0.40, quality))
+        print(f"[ArXiv] Direction quality={quality:.2f}, priority={direction.priority_score:.2f}")
+
+        return direction

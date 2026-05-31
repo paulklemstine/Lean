@@ -321,7 +321,7 @@ class KnowledgeExtractor:
                 domain=normalize_domain(loop_domain),
                 concept_description=best_dir.description,
                 mathematical_framing=best_dir.description,
-                lean_guess="",
+                lean_guess=best_dir.proof_strategy or "",
                 catalog_references=best_dir.catalog_references or [],
                 research_mode=best_dir.research_mode or "prove",
                 novelty_estimate=min(1.0, best_dir.priority_score),
@@ -1660,12 +1660,7 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: structural hole mining failed: {e}")
 
-        # 8. ArXiv fresh ideas pipeline — every 4 cycles
-        if self.arxiv_miner and self.cycle_count % 4 == 0:
-            try:
-                await asyncio.to_thread(self._mine_arxiv)
-            except Exception as e:
-                print(f"[Cleanup] Warning: ArXiv mining failed: {e}")
+        # 8. ArXiv mining is handled by cycle_master.py Phase 10.7
 
         return job
 
@@ -1928,35 +1923,7 @@ Research mode: {concept.research_mode}
         if added > 0:
             fd_manager._save()
 
-    def _mine_arxiv(self) -> None:
-        """Mine fresh research directions from recent ArXiv papers.
-
-        Runs every 4 cycles. Alternates between domain-specific and general
-        queries to balance relevance with cross-pollination.
-        """
-        if not self.arxiv_miner or not self.arxiv_miner.enabled:
-            return
-
-        # Determine domain from current inflight or cycle parity
-        domain = ""
-        if self.inflight:
-            domains = [j.concept.domain for j in self.inflight.values() if hasattr(j, 'concept') and j.concept]
-            if domains:
-                from collections import Counter
-                domain = Counter(domains).most_common(1)[0][0]
-
-        use_domain_query = (self.cycle_count % 2 == 1)
-        try:
-            direction = self.arxiv_miner.mine_future_direction(
-                domain=domain,
-                use_domain_query=use_domain_query,
-            )
-            if direction:
-                print(f"[ArXiv] Mined direction: {direction.title}")
-            else:
-                print(f"[ArXiv] No direction mined this cycle")
-        except Exception as e:
-            print(f"[ArXiv] Mining error (non-fatal): {e}")
+    # ArXiv mining is consolidated in cycle_master.py Phase 10.7
 
     def _generate_challenge_problem(self, job: ResearchJob) -> None:
         """After a successful cycle, auto-create a challenge problem — a hard
@@ -2827,6 +2794,10 @@ Research mode: {concept.research_mode}
             for d in fd_manager._directions:
                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
                     fd_manager.mark_direction_completed(d.id)
+                    # Quality feedback: record how well this direction performed
+                    if job.quality_score > 0:
+                        d.outcome_quality = job.quality_score
+                        print(f"[Cycle] Direction {d.id} outcome_quality={job.quality_score:.2f}")
                     print(f"[Cycle] Marked direction {d.id} as completed")
                     break
         except Exception as e:
@@ -3012,6 +2983,10 @@ Research mode: {concept.research_mode}
                             for d in fd_manager._directions:
                                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
                                     fd_manager.mark_direction_completed(d.id)
+                                    # Quality feedback: record how well this direction performed
+                                    if job.quality_score > 0:
+                                        d.outcome_quality = job.quality_score
+                                        print(f"[Continuous] Direction {d.id} outcome_quality={job.quality_score:.2f}")
                                     print(f"[Continuous] Marked direction {d.id} as completed")
                                     break
                         except Exception as e:

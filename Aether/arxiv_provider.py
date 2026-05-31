@@ -17,28 +17,44 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 
-# Domain-specific ArXiv queries mapped to Aether research domains
+# Domain-specific ArXiv queries mapped to Aether research domains.
+# Broader queries catch more relevant work — category-only queries are preferred
+# over narrow AND queries that miss related papers.
 DOMAIN_QUERIES = {
-    "Pythagorean": 'cat:math.NT AND all:"Pythagorean"',
-    "Tropical": 'cat:math.CO OR all:"tropical semiring" OR all:"min-plus"',
-    "Cryptography": 'cat:cs.CR AND all:"lattice" OR all:"post-quantum"',
-    "Algebra": 'cat:math.RA OR all:"semiring" OR all:"idempotent"',
-    "EML": 'all:"exponential" AND all:"logarithmic" AND all:"activation"',
-    "MachineLearning": 'cat:cs.LG AND all:"certified robustness" OR all:"neural network verification"',
-    "Physics": 'cat:math-ph OR all:"Hamiltonian" OR all:"Lagrangian"',
-    "Logic": 'cat:cs.LO AND all:"formal verification" OR all:"proof assistant"',
-    "Computation": 'cat:cs.CC AND all:"complexity" OR all:"computability"',
-    "Bridges": 'all:"interdisciplinary" OR all:"cross-domain"',
-    "Speculative": 'all:"speculative" OR all:"hypothetical"',
-    "Geometry": 'cat:math.AG OR all:"manifold" OR all:"algebraic geometry"',
+    "Pythagorean": 'cat:math.NT',
+    "Tropical": 'cat:math.CO OR all:"tropical" OR all:"min-plus" OR all:"idempotent semiring"',
+    "Cryptography": 'cat:cs.CR OR all:"post-quantum" OR all:"lattice-based"',
+    "Algebra": 'cat:math.RA OR cat:math.AC OR all:"semiring" OR all:"group theory"',
+    "EML": 'all:"exponential" AND all:"logarithmic" OR all:"softplus" OR all:"activation function"',
+    "MachineLearning": 'cat:cs.LG OR all:"certified robustness" OR all:"neural network verification"',
+    "Physics": 'cat:math-ph OR all:"Hamiltonian" OR all:"quantum field"',
+    "Logic": 'cat:cs.LO OR all:"formal verification" OR all:"proof assistant" OR all:"dependent type"',
+    "Computation": 'cat:cs.CC OR all:"computational complexity" OR all:"computability"',
+    "Bridges": 'all:"interdisciplinary" OR all:"cross-domain" OR all:"bridge theorem" OR all:"connection between"',
+    "Speculative": 'all:"speculative" OR all:"hypothetical" OR all:"conjecture" OR all:"open problem"',
+    "Geometry": 'cat:math.AG OR cat:math.DG OR all:"manifold" OR all:"algebraic geometry" OR all:"topology"',
+    "Novelty": 'all:"surprising" OR all:"unexpected" OR all:"counterexample" OR all:"paradox"',
+    "NumberTheory": 'cat:math.NT OR all:"Diophantine" OR all:"arithmetic" OR all:"zeta function"',
 }
 
-# General query for cross-pollination (used on even cycles)
-GENERAL_QUERY = 'cat:math.NT OR cat:math.CO OR cat:cs.CR OR cat:cs.LG OR cat:math.RA'
+# Rotating general queries for cross-pollination — one per cycle
+GENERAL_QUERIES = [
+    'cat:math.NT OR cat:math.CO',                                          # Number theory + combinatorics
+    'cat:cs.CR OR cat:cs.LG',                                               # Crypto + ML
+    'cat:math.RA OR cat:math.AC',                                           # Algebra + category theory
+    'cat:math-ph OR cat:math.DG',                                           # Math physics + diff geometry
+    'cat:cs.LO OR cat:cs.CC',                                               # Logic + complexity
+    'all:"formalization" OR all:"Lean" OR all:"proof assistant"',           # Formalization frontier
+    'all:"conjecture" OR all:"open problem"',                               # Open problems
+    'all:"tropical" OR all:"min-plus" OR all:"idempotent"',                # Tropical math
+]
+
+# Backward-compatible default general query
+GENERAL_QUERY = GENERAL_QUERIES[0]
 
 # Default config values
 DEFAULT_RATE_LIMIT = 3  # seconds between downloads
-DEFAULT_MAX_PAPER_CHARS = 8000  # truncate paper content for prompt budget
+DEFAULT_MAX_PAPER_CHARS = 12000  # increased for structural extraction
 DEFAULT_BATCH_SIZE = 5
 
 
@@ -154,15 +170,28 @@ class ArxivTexProvider:
             response = urllib.request.urlopen(req, timeout=60)
             data = response.read()
             tex_content = []
+            main_file = None  # Track the main .tex file
 
             # Attempt 1: Try reading as a tarball (standard for multi-file submissions)
             try:
                 with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as tar:
+                    tex_files = []
                     for member in tar.getmembers():
                         if member.name.endswith('.tex'):
                             f = tar.extractfile(member)
                             if f:
-                                tex_content.append(f.read().decode('utf-8', errors='ignore'))
+                                content = f.read().decode('utf-8', errors='ignore')
+                                # Identify main file by \documentclass
+                                if r'\documentclass' in content:
+                                    main_file = content
+                                else:
+                                    tex_files.append((member.name, content))
+                    # If we found a main file, put it first
+                    if main_file:
+                        tex_content = [main_file] + [c for _, c in tex_files]
+                    elif tex_files:
+                        # No \documentclass found, use all files in order
+                        tex_content = [c for _, c in tex_files]
             except tarfile.ReadError:
                 # Attempt 2: Single gzipped .tex file
                 try:
@@ -174,7 +203,8 @@ class ArxivTexProvider:
 
             if tex_content:
                 combined = "\n\n% --- NEXT TEX FILE ---\n\n".join(tex_content)
-                # Truncate for prompt budget
+                # Structural extraction: prioritize theorem/proof sections
+                combined = self._extract_theorem_rich_content(combined)
                 if len(combined) > self.max_paper_chars:
                     combined = combined[:self.max_paper_chars] + "\n\n[... truncated for prompt budget ...]"
                 return combined
@@ -185,6 +215,66 @@ class ArxivTexProvider:
         except Exception as e:
             print(f"[ArXiv] Error extracting {paper_id}: {e}")
             return None
+
+    @staticmethod
+    def _extract_theorem_rich_content(tex: str) -> str:
+        """Extract structurally important content from LaTeX source.
+
+        Prioritizes: abstract, theorems, lemmas, conjectures, proofs.
+        Removes: bibliographies, appendices, acknowledgments, figure environments.
+        Keeps: section headers and surrounding context.
+        """
+        import re
+
+        # Remove bibliography entirely
+        tex = re.sub(r'\\bibliography\{[^}]*\}', '', tex)
+        tex = re.sub(r'\\bibliographystyle\{[^}]*\}', '', tex)
+        tex = re.sub(r'\\begin\{thebibliography\}.*?\\end\{thebibliography\}', '', tex, flags=re.DOTALL)
+
+        # Remove appendices (usually surveys or supplementary material)
+        tex = re.sub(r'\\appendix.*?(?=\\section|\\subsection|\\end\{document\}|$)', '', tex, flags=re.DOTALL)
+
+        # Remove figure and table environments (visual content, not mathematical)
+        tex = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', '', tex, flags=re.DOTALL)
+        tex = re.sub(r'\\begin\{table\}.*?\\end\{table\}', '', tex, flags=re.DOTALL)
+        tex = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', '', tex, flags=re.DOTALL)
+
+        # Remove acknowledgment sections
+        tex = re.sub(r'\\section\*?\{Acknowledgment.*?\}(.*?)(?=\\section|$)', '', tex, flags=re.DOTALL | re.IGNORECASE)
+
+        # Extract the abstract explicitly (it's the most important summary)
+        abstract_match = re.search(r'\\begin\{abstract\}(.*?)\\end\{abstract\}', tex, re.DOTALL)
+        abstract_text = abstract_match.group(1).strip() if abstract_match else ""
+
+        # Find theorem-like environments: \begin{theorem}, \begin{lemma}, etc.
+        math_envs = r'(?:theorem|lemma|proposition|corollary|conjecture|definition|remark|claim)'
+        # Extract sections that contain theorem-like environments
+        sections = re.split(r'\\section\{', tex)
+        theorem_sections = []
+        for section in sections[1:]:  # Skip pre-section content
+            if re.search(r'\\begin\{' + math_envs + r'}', section, re.IGNORECASE):
+                theorem_sections.append('\\section{' + section)
+
+        # Also extract any standalone theorems not in a section
+        standalone_theorems = re.findall(
+            r'(\\begin\{' + math_envs + r'}.*?\\end\{' + math_envs + r'})',
+            tex, re.DOTALL | re.IGNORECASE
+        )
+
+        # Build result: abstract + theorem sections + standalone theorems
+        parts = []
+        if abstract_text:
+            parts.append(f"% === ABSTRACT ===\n{abstract_text}")
+        if theorem_sections:
+            parts.append("% === THEOREM-RICH SECTIONS ===\n" + "\n\n".join(theorem_sections))
+        if standalone_theorems and not theorem_sections:
+            parts.append("% === KEY THEOREMS ===\n" + "\n\n".join(standalone_theorems))
+
+        result = "\n\n".join(parts) if parts else tex
+
+        # Clean up excessive whitespace
+        result = re.sub(r'\n{3,}', '\n\n', result)
+        return result
 
     def get_next_paper(self) -> Optional[ArxivPaper]:
         """Return the next unseen paper with LaTeX content.
@@ -222,11 +312,12 @@ class ArxivTexProvider:
 
     def set_domain_query(self, domain: str) -> None:
         """Set query to the domain-specific ArXiv query, or general if unknown."""
-        self.set_query(DOMAIN_QUERIES.get(domain, GENERAL_QUERY))
+        self.set_query(DOMAIN_QUERIES.get(domain, GENERAL_QUERIES[0]))
 
-    def set_general_query(self) -> None:
-        """Set query to the general cross-pollination query."""
-        self.set_query(GENERAL_QUERY)
+    def set_general_query(self, cycle: int = 0) -> None:
+        """Set query to a rotating general cross-pollination query."""
+        query = GENERAL_QUERIES[cycle % len(GENERAL_QUERIES)]
+        self.set_query(query)
 
 
 if __name__ == "__main__":
