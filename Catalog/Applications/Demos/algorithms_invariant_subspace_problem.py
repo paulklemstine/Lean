@@ -1,323 +1,277 @@
-#!/usr/bin/env python3
 """
-Algorithms for Invariant Subspace Detection and Analysis
+Invariant Subspace Problem: Algorithms and Computational Tools
 
-Implements algorithms for finding invariant subspaces, testing the invariant
-subspace property, and analyzing operator structure.
+Type-hinted implementations for numerical exploration of invariant subspaces
+of bounded linear operators on Hilbert spaces (truncated to finite dimensions).
 """
 
+from typing import List, Tuple, Optional
 import numpy as np
-from numpy.linalg import eig, svd, norm, qr
-from typing import Optional, Tuple, List
+from numpy.typing import NDArray
 
 
-def find_invariant_subspaces(
-    T: np.ndarray,
-    tol: float = 1e-10
-) -> List[Tuple[complex, np.ndarray]]:
-    """
-    Find all eigenspace invariant subspaces of a matrix T.
-    
-    For each distinct eigenvalue μ, returns (μ, basis_of_E_μ).
-    These are guaranteed to be T-invariant subspaces.
-    
+def eigenspace_projection(
+    T: NDArray[np.complex128], mu: complex, tol: float = 1e-10
+) -> NDArray[np.complex128]:
+    """Compute the orthogonal projection onto the eigenspace of T for eigenvalue mu.
+
     Args:
-        T: Square complex matrix (n × n)
-        tol: Tolerance for eigenvalue clustering
-    
+        T: Square matrix (n x n) representing the operator.
+        mu: The eigenvalue.
+        tol: Tolerance for eigenvalue matching.
+
     Returns:
-        List of (eigenvalue, basis) pairs where basis is an orthonormal
-        matrix whose columns span the eigenspace.
-    
-    Complexity: O(n³) for eigendecomposition
+        Orthogonal projection matrix onto the mu-eigenspace.
     """
     n = T.shape[0]
-    eigenvalues, eigenvectors = eig(T)
-    
-    # Cluster eigenvalues
-    visited = [False] * n
-    subspaces = []
-    
-    for i in range(n):
-        if visited[i]:
+    eigenvalues, eigenvectors = np.linalg.eig(T)
+    # Select eigenvectors corresponding to mu
+    mask = np.abs(eigenvalues - mu) < tol
+    if not np.any(mask):
+        return np.zeros((n, n), dtype=complex)
+    V = eigenvectors[:, mask]
+    # Orthogonalize via QR
+    Q, _ = np.linalg.qr(V, mode='reduced')
+    return Q @ Q.conj().T
+
+
+def find_invariant_subspace(
+    T: NDArray[np.complex128],
+) -> Tuple[Optional[NDArray[np.complex128]], str]:
+    """Attempt to find a nontrivial closed invariant subspace for T.
+
+    Strategy: Try eigenspaces first, then kernel, then cyclic subspaces.
+
+    Args:
+        T: Square matrix (n x n).
+
+    Returns:
+        Tuple of (basis_matrix_or_None, method_description).
+    """
+    n = T.shape[0]
+    if n <= 1:
+        return None, "Space too small for nontrivial invariant subspace"
+
+    eigenvalues, eigenvectors = np.linalg.eig(T)
+
+    # Strategy 1: Eigenspace for each eigenvalue
+    for i, mu in enumerate(eigenvalues):
+        P = eigenspace_projection(T, mu)
+        rank = int(np.round(np.trace(P).real))
+        if 0 < rank < n:
+            return P, f"Eigenspace for mu={mu:.4f} (dim={rank})"
+
+    # Strategy 2: Kernel
+    _, s, _ = np.linalg.svd(T)
+    kernel_dim = np.sum(s < 1e-10)
+    if 0 < kernel_dim < n:
+        # Compute kernel basis
+        _, _, Vh = np.linalg.svd(T)
+        K = Vh[-int(kernel_dim):].conj().T
+        P = K @ K.conj().T
+        return P, f"Kernel (dim={int(kernel_dim)})"
+
+    # Strategy 3: Cyclic subspace from random vector
+    x = np.random.randn(n) + 1j * np.random.randn(n)
+    x = x / np.linalg.norm(x)
+    orbit = [x]
+    for k in range(1, n):
+        v = np.linalg.matrix_power(T, k) @ x
+        orbit.append(v)
+    V = np.column_stack(orbit)
+    Q, R = np.linalg.qr(V)
+    rank = np.sum(np.abs(np.diag(R)) > 1e-10)
+    if 0 < rank < n:
+        Q_trunc = Q[:, :rank]
+        P = Q_trunc @ Q_trunc.conj().T
+        return P, f"Cyclic subspace (dim={rank})"
+
+    return None, "No nontrivial invariant subspace found"
+
+
+def spectral_decomposition_depth(
+    T: NDArray[np.complex128], max_commutants: int = 100
+) -> int:
+    """Estimate the spectral decomposition depth of T.
+
+    Searches for compact (finite-rank) operators commuting with T that have
+    distinct nonzero eigenvalues.
+
+    Args:
+        T: Square matrix (n x n).
+        max_commutants: Number of random compact commutants to try.
+
+    Returns:
+        Lower bound on spectral decomposition depth.
+    """
+    n = T.shape[0]
+    best_depth = 0
+
+    for _ in range(max_commutants):
+        # Generate random low-rank matrix
+        rank = np.random.randint(1, max(2, n // 2))
+        A = np.random.randn(n, rank) + 1j * np.random.randn(n, rank)
+        B = np.random.randn(rank, n) + 1j * np.random.randn(rank, n)
+        K_init = A @ B
+
+        # Project onto commutant: solve TK = KT via Sylvester equation
+        # K_comm = solution to T @ K - K @ T = 0 closest to K_init
+        # Use iterative projection
+        K = K_init.copy()
+        for _ in range(50):
+            commutator = T @ K - K @ T
+            K = K - 0.1 * commutator
+
+        # Check commutation quality
+        comm_norm = np.linalg.norm(T @ K - K @ T) / max(np.linalg.norm(K), 1e-15)
+        if comm_norm > 1e-6:
             continue
-        mu = eigenvalues[i]
-        # Find all eigenvectors for this eigenvalue
-        cluster_indices = []
-        for j in range(i, n):
-            if not visited[j] and abs(eigenvalues[j] - mu) < tol:
-                cluster_indices.append(j)
-                visited[j] = True
-        
-        # Extract and orthogonalize basis
-        basis = eigenvectors[:, cluster_indices]
-        Q, _ = qr(basis, mode='reduced')
-        Q = Q[:, :len(cluster_indices)]
-        
-        subspaces.append((mu, Q))
-    
-    return subspaces
+
+        # Count distinct nonzero eigenvalues
+        eigs = np.linalg.eigvals(K)
+        nonzero_eigs = eigs[np.abs(eigs) > 1e-8]
+        if len(nonzero_eigs) == 0:
+            continue
+
+        # Cluster eigenvalues
+        clusters: List[complex] = []
+        for e in nonzero_eigs:
+            if all(abs(e - c) > 1e-6 for c in clusters):
+                clusters.append(e)
+
+        best_depth = max(best_depth, len(clusters))
+
+    return best_depth
 
 
-def test_invariance(
-    T: np.ndarray,
-    M_basis: np.ndarray,
-    tol: float = 1e-8
-) -> Tuple[bool, float]:
-    """
-    Test whether a subspace M (given by its orthonormal basis columns)
-    is invariant under T.
-    
-    M is T-invariant iff T(M) ⊆ M, equivalently, P_M⊥ T P_M = 0
-    where P_M is the orthogonal projection onto M.
-    
+def is_hyperinvariant(
+    T: NDArray[np.complex128],
+    P: NDArray[np.complex128],
+    num_tests: int = 100,
+    tol: float = 1e-8,
+) -> bool:
+    """Test whether a subspace (given by projection P) is hyperinvariant for T.
+
+    Checks that P S P = S P for random operators S commuting with T.
+
     Args:
-        T: Square matrix (n × n)
-        M_basis: Orthonormal basis columns for M (n × k)
-        tol: Tolerance for invariance check
-    
+        T: The operator matrix.
+        P: Orthogonal projection onto the candidate subspace.
+        num_tests: Number of random commutants to test.
+        tol: Tolerance for invariance check.
+
     Returns:
-        (is_invariant, leakage) where leakage measures ‖P_M⊥ T M‖
-    
-    Complexity: O(n²k) for projection and multiplication
+        True if the subspace appears hyperinvariant.
     """
     n = T.shape[0]
-    # Projection onto M
-    P_M = M_basis @ M_basis.conj().T
-    # Projection onto M⊥
-    P_perp = np.eye(n) - P_M
-    
-    # Leakage: how much T(M) leaks into M⊥
-    leakage = norm(P_perp @ T @ M_basis)
-    
-    return leakage < tol, leakage
+    for _ in range(num_tests):
+        # Generate random matrix and project to commutant
+        S = np.random.randn(n, n) + 1j * np.random.randn(n, n)
+        for _ in range(100):
+            comm = T @ S - S @ T
+            S = S - 0.1 * comm
+
+        if np.linalg.norm(T @ S - S @ T) / max(np.linalg.norm(S), 1e-15) > 1e-6:
+            continue
+
+        # Check invariance: P S (I - P) should be zero
+        residual = P @ S @ (np.eye(n) - P)
+        if np.linalg.norm(residual) > tol * np.linalg.norm(S):
+            return False
+
+    return True
 
 
-def test_reducing(
-    T: np.ndarray,
-    M_basis: np.ndarray,
-    tol: float = 1e-8
-) -> Tuple[bool, float, float]:
-    """
-    Test whether M is a reducing subspace for T.
-    M is reducing iff both M and M⊥ are T-invariant.
-    
+def weighted_shift_matrix(weights: List[complex], n: int) -> NDArray[np.complex128]:
+    """Construct a weighted shift operator truncated to n dimensions.
+
+    The weighted shift S_w maps e_k -> w_k * e_{k+1} for k < n-1.
+
     Args:
-        T: Square matrix (n × n)
-        M_basis: Orthonormal basis columns for M (n × k)
-        tol: Tolerance
-    
+        weights: Weight sequence (at least n-1 elements, or cycled).
+        n: Matrix dimension.
+
     Returns:
-        (is_reducing, M_leakage, M_perp_leakage)
-    
-    Complexity: O(n³) for complement computation
+        n x n matrix for the weighted shift.
     """
-    n = T.shape[0]
-    k = M_basis.shape[1]
-    
-    # Test M invariance
-    is_M_inv, M_leak = test_invariance(T, M_basis, tol)
-    
-    # Compute M⊥ basis
-    P_M = M_basis @ M_basis.conj().T
-    P_perp = np.eye(n) - P_M
-    # Get orthonormal basis for M⊥
-    U, S, _ = svd(P_perp)
-    M_perp_basis = U[:, :n - k]
-    
-    # Test M⊥ invariance
-    is_perp_inv, perp_leak = test_invariance(T, M_perp_basis, tol)
-    
-    return is_M_inv and is_perp_inv, M_leak, perp_leak
+    T = np.zeros((n, n), dtype=complex)
+    for k in range(n - 1):
+        w = weights[k % len(weights)]
+        T[k + 1, k] = w
+    return T
 
 
-def approximate_invariant_subspace_iteration(
-    T: np.ndarray,
-    dim: int,
-    max_iter: int = 1000,
-    tol: float = 1e-12
-) -> Tuple[np.ndarray, List[float]]:
-    """
-    Find an approximate invariant subspace of dimension `dim` using
-    subspace iteration (simultaneous power method).
-    
-    Algorithm:
-    1. Start with random subspace V₀ of dimension `dim`
-    2. Iterate: V_{k+1} = orth(T · V_k)
-    3. Converges to the dominant invariant subspace
-    
-    Args:
-        T: Square matrix (n × n)
-        dim: Desired subspace dimension
-        max_iter: Maximum iterations
-        tol: Convergence tolerance
-    
-    Returns:
-        (basis, convergence_history) where basis is orthonormal columns
-    
-    Complexity: O(n²·dim) per iteration, O(n²·dim·max_iter) total
-    """
-    n = T.shape[0]
-    # Random initial subspace
-    V = np.random.randn(n, dim) + 1j * np.random.randn(n, dim)
-    V, _ = qr(V, mode='reduced')
-    V = V[:, :dim]
-    
-    convergence = []
-    
-    for iteration in range(max_iter):
-        # Apply T
-        TV = T @ V
-        # Orthogonalize
-        V_new, _ = qr(TV, mode='reduced')
-        V_new = V_new[:, :dim]
-        
-        # Measure convergence: angle between subspaces
-        # sin(angle) = ‖P_new P_old⊥‖
-        P_old = V @ V.conj().T
-        P_new = V_new @ V_new.conj().T
-        angle = norm(P_new - P_old)
-        convergence.append(angle)
-        
-        V = V_new
-        
-        if angle < tol:
-            break
-    
-    return V, convergence
-
-
-def detect_nilpotency(
-    T: np.ndarray,
-    tol: float = 1e-8
+def test_cyclic_vector(
+    T: NDArray[np.complex128], x: NDArray[np.complex128], tol: float = 1e-8
 ) -> Tuple[bool, int]:
-    """
-    Detect if T is nilpotent and find its nilpotency index.
-    
-    T is nilpotent iff all eigenvalues are zero, equivalently T^n = 0
-    for some n ≤ dim. The nilpotency index is the smallest such n.
-    
+    """Test whether x is a cyclic vector for T.
+
+    Checks if span{x, Tx, T^2 x, ...} = entire space.
+
     Args:
-        T: Square matrix (n × n)
-        tol: Tolerance for zero check
-    
+        T: Square matrix.
+        x: Test vector.
+        tol: Tolerance for rank computation.
+
     Returns:
-        (is_nilpotent, index) where index is the nilpotency degree
-    
-    Complexity: O(n³) per power, O(n⁴) worst case
+        (is_cyclic, dimension_of_cyclic_subspace).
     """
     n = T.shape[0]
-    power = np.eye(n, dtype=complex)
-    
-    for k in range(1, n + 1):
-        power = power @ T
-        if norm(power) < tol:
-            return True, k
-    
-    return False, -1
+    vectors = [x]
+    for k in range(1, n):
+        vectors.append(np.linalg.matrix_power(T, k) @ x)
+    V = np.column_stack(vectors)
+    _, s, _ = np.linalg.svd(V)
+    rank = int(np.sum(s > tol))
+    return rank == n, rank
 
 
-def compact_operator_truncation(
-    kernel_func,
-    N: int,
-    interval: Tuple[float, float] = (0, 1)
-) -> np.ndarray:
-    """
-    Approximate a compact integral operator by a finite matrix.
-    
-    For K[f](x) = ∫ k(x,y) f(y) dy, the N×N truncation matrix
-    has entries K_{ij} = k(x_i, x_j) · Δx.
-    
+def compute_reducing_subspace(
+    T: NDArray[np.complex128], tol: float = 1e-8
+) -> Optional[NDArray[np.complex128]]:
+    """Find a reducing subspace for T (invariant for both T and T*).
+
+    For normal operators, every invariant subspace is reducing.
+
     Args:
-        kernel_func: Kernel function k(x, y)
-        N: Truncation size
-        interval: Integration interval [a, b]
-    
-    Returns:
-        N × N matrix approximating the operator
-    
-    Complexity: O(N²) for matrix construction
-    """
-    a, b = interval
-    x = np.linspace(a, b, N)
-    dx = (b - a) / N
-    
-    K = np.zeros((N, N))
-    for i in range(N):
-        for j in range(N):
-            K[i, j] = kernel_func(x[i], x[j]) * dx
-    
-    return K
+        T: Square matrix.
+        tol: Tolerance.
 
-
-def spectral_decomposition_analysis(T: np.ndarray) -> dict:
-    """
-    Full spectral analysis of an operator, identifying all invariant
-    subspace structure.
-    
     Returns:
-        Dictionary with eigenvalues, eigenspaces, nilpotent parts,
-        and reducing subspace information.
+        Projection onto reducing subspace, or None.
     """
     n = T.shape[0]
-    eigenvalues, eigenvectors = eig(T)
-    
-    # Check self-adjointness
-    is_sa = norm(T - T.conj().T) < 1e-8 * norm(T)
-    
-    # Find eigenspaces
-    subspaces = find_invariant_subspaces(T)
-    
-    # Check reducing for each eigenspace
-    reducing_info = []
-    for mu, basis in subspaces:
-        is_red, m_leak, p_leak = test_reducing(T, basis)
-        reducing_info.append({
-            'eigenvalue': mu,
-            'dimension': basis.shape[1],
-            'is_reducing': is_red,
-            'M_leakage': m_leak,
-            'M_perp_leakage': p_leak
-        })
-    
-    # Check nilpotency
-    is_nil, nil_idx = detect_nilpotency(T)
-    
-    return {
-        'dimension': n,
-        'is_self_adjoint': is_sa,
-        'is_nilpotent': is_nil,
-        'nilpotency_index': nil_idx,
-        'eigenspaces': reducing_info,
-        'has_ISP': n >= 2  # Always true for finite dim ≥ 2
-    }
+    T_adj = T.conj().T
 
+    # For normal operators, eigenspaces are reducing
+    eigenvalues, eigenvectors = np.linalg.eig(T)
 
-# Example usage
-if __name__ == "__main__":
-    print("Invariant Subspace Algorithms Demo")
-    print("=" * 50)
-    
-    # 1. Find invariant subspaces
-    T = np.diag([1, 1, 2, 3, 3, 3]) + 0j
-    subspaces = find_invariant_subspaces(T)
-    print(f"\nT = diag(1,1,2,3,3,3)")
-    for mu, basis in subspaces:
-        is_inv, leak = test_invariance(T, basis)
-        print(f"  E_{mu.real:.0f}: dim={basis.shape[1]}, invariant={is_inv}")
-    
-    # 2. Subspace iteration
-    n = 20
-    A = np.random.randn(n, n) + 1j * np.random.randn(n, n)
-    basis, conv = approximate_invariant_subspace_iteration(A, dim=3)
-    is_inv, leak = test_invariance(A, basis)
-    print(f"\nSubspace iteration on {n}×{n} random matrix:")
-    print(f"  Converged in {len(conv)} iterations")
-    print(f"  Approximate invariance leakage: {leak:.2e}")
-    
-    # 3. Spectral analysis
-    H = (A + A.conj().T) / 2
-    analysis = spectral_decomposition_analysis(H)
-    print(f"\nSpectral analysis of Hermitian matrix:")
-    print(f"  Self-adjoint: {analysis['is_self_adjoint']}")
-    print(f"  All eigenspaces reducing: {all(e['is_reducing'] for e in analysis['eigenspaces'])}")
+    # Group eigenvalues into clusters
+    clusters: List[List[int]] = []
+    assigned = set()
+    for i in range(n):
+        if i in assigned:
+            continue
+        cluster = [i]
+        assigned.add(i)
+        for j in range(i + 1, n):
+            if j not in assigned and abs(eigenvalues[i] - eigenvalues[j]) < tol:
+                cluster.append(j)
+                assigned.add(j)
+        clusters.append(cluster)
+
+    # Find a cluster that gives a proper subspace
+    for cluster in clusters:
+        if 0 < len(cluster) < n:
+            V = eigenvectors[:, cluster]
+            Q, _ = np.linalg.qr(V, mode='reduced')
+            P = Q @ Q.conj().T
+
+            # Verify reducing: check both T and T* invariance
+            res_T = np.linalg.norm(P @ T @ (np.eye(n) - P))
+            res_Tadj = np.linalg.norm(P @ T_adj @ (np.eye(n) - P))
+
+            if res_T < tol and res_Tadj < tol:
+                return P
+
+    return None

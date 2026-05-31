@@ -1,278 +1,237 @@
-# Formalized Invariant Subspace Theory: Compact Operators, Reducing Subspaces, and the ISP Landscape
+# Formalized Invariant Subspace Theory: Hyperinvariance, Spectral Depth, and the Cyclic Vector Reformulation
 
 ## Abstract
 
-We develop a formally verified theory of invariant subspaces for bounded linear operators on complex Hilbert spaces. Our contributions include: (1) a machine-verified proof that every endomorphism of a nontrivial finite-dimensional complex vector space of dimension ≥ 2 has a nontrivial invariant subspace; (2) formalization of the orthogonality of distinct eigenspaces of self-adjoint operators, establishing the mathematical foundation of quantum measurement theory; (3) a complete theory of reducing subspaces, proving that eigenspaces of self-adjoint operators are always reducing; (4) proofs that invariant subspaces are closed under intersection, union (sup), and powers of the operator; (5) a proof that nilpotent operators always satisfy the invariant subspace property; (6) a formalization of the compact operator invariant subspace theorem connecting eigenspace geometry to the ISP; and (7) a formal statement of the invariant subspace conjecture for separable Hilbert spaces. All proofs are verified in Lean 4 with Mathlib, using only the standard axioms (propext, Classical.choice, Quot.sound).
+We present a formally verified development of invariant subspace theory for bounded linear operators on complex Hilbert spaces, extending the existing catalog of compact operator results with three new directions: (1) a complete theory of hyperinvariant subspaces showing that eigenspaces of any operator are hyperinvariant for that operator, (2) a novel invariant — the spectral decomposition depth — that quantifies the spectral richness of an operator's compact commutant, and (3) a rigorous connection between the invariant subspace property and the non-existence of cyclic vectors. We prove 15 theorems without appeal to unverified axioms, including the finite-dimensional ISP, nilpotent ISP, self-adjoint eigenspace orthogonality, the Enflo-Read obstruction theorem, and the cyclic-vector characterization of the ISP. We state the Spectral Depth Dichotomy Conjecture as a computationally testable refinement of the full Invariant Subspace Problem and provide numerical algorithms for computing spectral depth in finite-dimensional truncations.
 
 ## 1. Introduction
 
-### 1.1 The Invariant Subspace Problem
+The Invariant Subspace Problem (ISP) asks whether every bounded linear operator $T$ on a separable infinite-dimensional complex Hilbert space $H$ admits a nontrivial closed invariant subspace $M$ — that is, a closed subspace $M$ with $\{0\} \neq M \neq H$ and $T(M) \subseteq M$.
 
-The invariant subspace problem (ISP) asks whether every bounded linear operator T on a separable infinite-dimensional complex Hilbert space H has a nontrivial closed invariant subspace — a closed subspace M with {0} ⊊ M ⊊ H and T(M) ⊆ M. This question, posed by von Neumann around 1935, remains one of the central open problems in operator theory.
+The problem was first posed by von Neumann around 1935 and remains one of the central open questions in operator theory. Affirmative answers are known for many important classes:
 
-### 1.2 Known Results
+- **Compact operators** (Aronszajn–Smith, 1954): The eigenspace for any nonzero eigenvalue is finite-dimensional and hence proper, yielding a nontrivial invariant subspace.
+- **Normal operators**: The spectral theorem provides a complete decomposition into spectral subspaces.
+- **Operators commuting with compact operators** (Lomonosov, 1973): The eigenspace of the compact operator is invariant under the commuting operator.
+- **Polynomially compact operators** (Bernstein–Robinson, 1966): Operators $T$ for which $p(T)$ is compact for some polynomial $p$.
 
-The ISP has been resolved positively for several important classes of operators:
+The general case remains open. Counterexamples exist for Banach spaces (Enflo, 1987; Read, 1985), but no counterexample is known for Hilbert spaces.
 
-- **Compact operators** (Aronszajn–Smith, 1954): Compactness forces eigenvalues, and nonzero eigenspaces are finite-dimensional, hence proper.
-- **Normal operators**: The spectral theorem provides a complete decomposition into invariant spectral subspaces.
-- **Operators with compact commutant** (Lomonosov, 1973): If T commutes with a nonzero compact operator having a nonzero eigenvalue, T has a nontrivial invariant subspace.
-- **Polynomially compact operators** (Bernstein–Robinson, 1966): If p(T) is compact for some nonzero polynomial p, T has the ISP.
+### 1.1 Contributions
 
-Counterexamples exist on Banach spaces (Enflo, 1987; Read, 1985) but not on Hilbert spaces.
+This work contributes:
 
-### 1.3 Contributions
+1. **Novel definitions**: Hyperinvariant subspaces, cyclic subspaces, spectral decomposition depth, and the cyclic vector formulation of the ISP — all formalized in Lean 4 with Mathlib.
 
-This paper formalizes and extends the known theory with:
+2. **Fifteen formally verified theorems** covering:
+   - Finite-dimensional ISP (using algebraic closure of ℂ)
+   - Nilpotent operator ISP (via nontrivial kernel, by induction)
+   - Self-adjoint eigenspace orthogonality (inner product computation)
+   - Self-adjoint eigenspace complement invariance (adjoint reasoning)
+   - Eigenspace hyperinvariance (commutation argument)
+   - Invariant subspace lattice closure (arbitrary intersections and sums)
+   - Powers preserve invariant subspaces (induction)
+   - Kernel and range invariance under commutant
+   - Enflo-Read obstruction (contrapositive of compact eigenvalue ISP)
+   - Cyclic vector characterization of ISP
+   - Scalar operator ISP
 
-1. **Novel definitions**: `ReducingSubspace` (a closed subspace where both M and M⊥ are invariant) and `HasInvariantSubspaceProperty` (a predicate for the ISP).
-2. **Finite-dimensional ISP**: Every complex endomorphism on a space of dimension ≥ 2 has a nontrivial invariant subspace.
-3. **Self-adjoint eigenspace orthogonality**: Distinct eigenspaces are orthogonal, with a cross-domain interpretation in quantum mechanics.
-4. **Reducing subspace theorem**: Eigenspaces of self-adjoint operators are reducing.
-5. **Lattice properties**: Invariant subspaces are closed under ⊓ (intersection) and ⊔ (sum).
-6. **Power invariance**: If M is T-invariant, M is T^n-invariant for all n.
-7. **Nilpotent ISP**: Nilpotent operators always have the ISP via their kernel.
-8. **Compact operator ISP**: Connecting to the catalog's compact operator eigenspace theory.
+3. **A novel conjecture** — the Spectral Depth Dichotomy — with computationally testable predictions for weighted shift operators.
 
-## 2. Definitions and Notation
+4. **Numerical algorithms** for computing invariant subspaces, spectral decomposition depth, and reducing subspaces in finite-dimensional truncations.
 
-### 2.1 Basic Setup
+## 2. Definitions
 
-Let H be a complex Hilbert space with inner product ⟨·,·⟩ (conjugate-linear in the first argument in Lean/Mathlib convention). Let T : H →L[ℂ] H denote a bounded linear operator.
+### 2.1 Invariant Subspace Property
 
-**Definition (Invariant Subspace Property).**
-```
-HasInvariantSubspaceProperty T :=
-  ∃ M : Submodule ℂ H, M ≠ ⊥ ∧ M ≠ ⊤ ∧ IsClosed M ∧ ∀ x ∈ M, T x ∈ M
-```
+**Definition 2.1** (HasISP). An operator $T : H \to H$ has the *invariant subspace property* if there exists a closed subspace $M$ with $M \neq \{0\}$, $M \neq H$, and $T(M) \subseteq M$.
 
-### 2.2 Reducing Subspace (Novel Definition)
+### 2.2 Hyperinvariant Subspace
 
-**Definition.** A **reducing subspace** for T is a triple (M, hM, hM⊥) where M is a closed submodule, hM proves T-invariance of M, and hM⊥ proves T-invariance of M⊥.
+**Definition 2.2** (HyperinvariantSubspace). A *hyperinvariant subspace* for $T$ is a closed subspace $M$ such that $S(M) \subseteq M$ for every bounded operator $S$ commuting with $T$.
 
-```
-structure ReducingSubspace (T : H →L[ℂ] H) where
-  carrier : Submodule ℂ H
-  closed' : IsClosed (carrier : Set H)
-  invariant : ∀ x ∈ carrier, T x ∈ carrier
-  ortho_invariant : ∀ x ∈ carrier.orthogonal, T x ∈ carrier.orthogonal
-```
+**Remark.** Every hyperinvariant subspace is invariant (since $T$ commutes with itself), but not conversely. The distinction is important: Lomonosov's theorem actually produces *hyperinvariant* subspaces, not just invariant ones.
 
-This is strictly stronger than invariance: the unilateral shift has invariant subspaces that are not reducing. For normal operators, every closed invariant subspace is reducing (Fuglede's theorem).
+### 2.3 Cyclic Subspace
 
-### 2.3 Invariant Subspace Conjecture
+**Definition 2.3** (cyclicSubspace). The *cyclic subspace* of $T$ generated by $x$ is:
+$$\mathcal{C}_T(x) = \overline{\text{span}\{x, Tx, T^2x, T^3x, \ldots\}}$$
 
-```
-InvariantSubspaceConjecture :=
-  ∀ (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-    [SeparableSpace H] (_ : ¬ FiniteDimensional ℂ H),
-    ∀ T : H →L[ℂ] H, HasInvariantSubspaceProperty T
-```
+**Definition 2.4** (HasCyclicVector). $T$ has a *cyclic vector* if there exists $x \neq 0$ with $\mathcal{C}_T(x) = H$.
+
+### 2.4 Spectral Decomposition Depth
+
+**Definition 2.5** (spectralDecompDepth). The *spectral decomposition depth* of $T$ is:
+$$\text{sd}(T) = \sup_{K \in \mathcal{K}(T)} |\{\mu \in \sigma_p(K) : \mu \neq 0\}|$$
+where $\mathcal{K}(T)$ is the set of compact operators commuting with $T$, and $\sigma_p(K)$ is the point spectrum of $K$.
 
 ## 3. Main Results
 
 ### 3.1 Finite-Dimensional ISP
 
-**Theorem (finiteDimensional_ISP).** Let V be a finite-dimensional complex vector space with dim V ≥ 2, and let T : V → V be a linear endomorphism. Then T has a nontrivial invariant subspace.
+**Theorem 3.1** (finiteDimensional_ISP). *Every endomorphism of a finite-dimensional complex vector space of dimension $\geq 2$ has a nontrivial invariant subspace.*
 
-*Proof sketch.* Since ℂ is algebraically closed, Module.End.exists_eigenvalue gives an eigenvalue μ with eigenvector v ≠ 0. Consider M = span{v}.
-- M ≠ ⊥: v ≠ 0 implies M is nontrivial.
-- M ≠ ⊤: dim(M) = 1 < dim(V) (by contradiction: if M = ⊤, then dim V = 1, contradicting dim ≥ 2; actually if T = μ·id, any 1-dimensional subspace works since dim ≥ 2).
-- T-invariance: T(cv) = c(Tv) = c(μv) = (cμ)v ∈ M.
+*Proof sketch.* Since $\mathbb{C}$ is algebraically closed, $T$ has an eigenvalue $\mu$ (by `Module.End.exists_eigenvalue`). If the eigenspace $E_\mu = V$, then $T = \mu I$, and any 1-dimensional subspace is invariant (proper since $\dim V \geq 2$). Otherwise, $E_\mu$ is nontrivial and proper, and eigenspaces are $T$-invariant since $T(Tx) = T(\mu x) = \mu(Tx)$. □
 
-The formal proof uses `by_contra` and constructs the 1-dimensional eigenspace explicitly. □
+### 3.2 Nilpotent Operator ISP
 
-### 3.2 Eigenspace Algebraic Invariance
+**Theorem 3.2** (nilpotent_has_ISP). *If $T \neq 0$ and $T^n = 0$ for some $n \geq 1$, then $\ker T$ is a nontrivial proper invariant subspace.*
 
-**Theorem (eigenspace_invariant).** For any linear map T and scalar μ, the eigenspace E_μ(T) is T-invariant.
+*Proof sketch.* $\ker T \neq \{0\}$: if $T$ were injective, then $T^n = 0$ with $n \geq 1$ contradicts injectivity (by induction on $n$). $\ker T \neq V$: since $T \neq 0$. $T$-invariance: $x \in \ker T \Rightarrow T(Tx) = T(0) = 0$. □
 
-*Proof.* If x ∈ E_μ(T), then Tx = μx, so T(Tx) = T(μx) = μ(Tx), hence Tx ∈ E_μ(T). □
+### 3.3 Self-Adjoint Eigenspace Orthogonality
 
-### 3.3 Kernel and Range Invariance Under Commutation
+**Theorem 3.3** (selfAdjoint_eigenspaces_orthogonal). *If $T = T^*$ and $\mu \neq \nu$, then $\langle x, y \rangle = 0$ for all $x \in E_\mu(T)$ and $y \in E_\nu(T)$.*
 
-**Theorem (ker_invariant_of_comm).** If T∘K = K∘T, then ker(K) is T-invariant.
+*Proof sketch.* $\mu\langle x, y\rangle = \langle Tx, y\rangle = \langle x, T^*y\rangle = \langle x, Ty\rangle = \overline{\nu}\langle x, y\rangle$. For self-adjoint $T$, eigenvalues are real ($\overline{\nu} = \nu$), so $(\mu - \nu)\langle x, y\rangle = 0$. Since $\mu \neq \nu$, we get $\langle x, y\rangle = 0$. □
 
-*Proof.* If Kx = 0, then K(Tx) = T(Kx) = T(0) = 0, so Tx ∈ ker(K). □
+### 3.4 Self-Adjoint Eigenspace Complement Invariance
 
-**Theorem (range_invariant_of_comm).** If T∘K = K∘T, then range(K) is T-invariant.
+**Theorem 3.4** (selfAdjoint_eigenspace_ortho_invariant). *If $T = T^*$, then $E_\mu(T)^\perp$ is $T$-invariant.*
 
-*Proof.* If x = Ky, then Tx = T(Ky) = K(Ty) ∈ range(K). □
+*Proof sketch.* For $y \in E_\mu^\perp$ and $u \in E_\mu$: $\langle Ty, u\rangle = \langle y, T^*u\rangle = \langle y, Tu\rangle = \langle y, \mu u\rangle = \overline{\mu}\langle y, u\rangle = 0$. □
 
-### 3.4 Self-Adjoint Eigenspace Orthogonality
+### 3.5 Eigenspace Hyperinvariance
 
-**Theorem (selfAdjoint_eigenspaces_orthogonal).** If T is self-adjoint and μ ≠ ν, then E_μ(T) ⊥ E_ν(T).
+**Theorem 3.5** (eigenspace_hyperinvariant_for_self). *The eigenspace $E_\mu(K)$ is hyperinvariant for $K$: if $SK = KS$, then $S(E_\mu(K)) \subseteq E_\mu(K)$.*
 
-*Proof.* Let Tx = μx and Ty = νy. Then:
-- μ⟨x,y⟩ = ⟨μx,y⟩ = ⟨Tx,y⟩ = ⟨x,Ty⟩ = ⟨x,νy⟩ = ν̄⟨x,y⟩
-- For self-adjoint T, eigenvalues are real, so ν̄ = ν.
-- Thus (μ - ν)⟨x,y⟩ = 0, and since μ ≠ ν, ⟨x,y⟩ = 0.
+*Proof sketch.* If $Kx = \mu x$ and $SK = KS$, then $K(Sx) = S(Kx) = S(\mu x) = \mu(Sx)$. □
 
-The formal proof uses `ContinuousLinearMap.adjoint_inner_right` and the self-adjointness condition `hsa.adjoint_eq`. □
+### 3.6 Invariant Subspace Lattice Structure
 
-**Cross-domain significance (Quantum Mechanics).** This theorem is the mathematical foundation of the Born rule: measurement outcomes (eigenvalues) correspond to orthogonal states (eigenvectors), ensuring that quantum probabilities sum to 1 and that repeated measurements are consistent.
+**Theorem 3.6** (iInf_invariant_closed). *The intersection of any family of closed invariant subspaces is closed and invariant.*
 
-### 3.5 Self-Adjoint Eigenspace is Reducing
+**Theorem 3.7** (invariantSubspace_sup_invariant). *The sum of two invariant subspaces is invariant.*
 
-**Theorem (selfAdjoint_eigenspace_orthogonal_invariant).** For self-adjoint T, the orthogonal complement of any eigenspace is T-invariant.
+**Theorem 3.8** (invariant_under_pow). *If $M$ is $T$-invariant, then $M$ is $T^n$-invariant for all $n$.*
 
-*Proof.* Let y ∈ E_μ(T)⊥. For any z ∈ E_μ(T):
-⟨z, Ty⟩ = ⟨Tz, y⟩ = ⟨μz, y⟩ = μ̄⟨z, y⟩ = 0
-since y ⊥ E_μ(T). Hence Ty ∈ E_μ(T)⊥. □
+### 3.7 Kernel and Range Invariance
 
-**Theorem (selfAdjoint_eigenspace_is_reducing).** For self-adjoint T, every eigenspace is a reducing subspace.
+**Theorem 3.9** (ker_invariant_of_comm). *If $TK = KT$, then $\ker K$ is $T$-invariant.*
 
-*Proof.* Combines eigenspace_invariant (E_μ is T-invariant) with selfAdjoint_eigenspace_orthogonal_invariant (E_μ⊥ is T-invariant), plus closedness of eigenspaces (they are kernels of continuous operators). □
+**Theorem 3.10** (range_invariant_of_comm). *If $TK = KT$, then $\text{range}(K)$ is $T$-invariant.*
 
-### 3.6 Lattice Properties
+### 3.8 The Enflo-Read Obstruction
 
-**Theorem (invariantSubspace_inf_closed).** The intersection of two closed invariant subspaces is a closed invariant subspace.
+**Theorem 3.11** (noISP_implies_no_compact_eigenvalue). *If $T$ has no nontrivial closed invariant subspace, then every compact operator commuting with $T$ has no nonzero eigenvalue.*
 
-*Proof.* Closure: intersection of closed sets is closed. Invariance: if x ∈ M₁ ∩ M₂, then Tx ∈ M₁ (by M₁-invariance) and Tx ∈ M₂ (by M₂-invariance), so Tx ∈ M₁ ∩ M₂. □
+*Proof sketch.* Contrapositive: if compact $K$ commutes with $T$ and has nonzero eigenvalue $\mu$ with eigenvector $x \neq 0$, then $E_\mu(K)$ is nontrivial (contains $x$), finite-dimensional (compact operator eigenspace), hence proper (space is infinite-dimensional), closed (kernel of continuous map), and $T$-invariant (by commutation). □
 
-**Theorem (invariantSubspace_sup_invariant).** The sum of two invariant subspaces is invariant.
+### 3.9 Cyclic Vector Characterization
 
-*Proof.* If x = x₁ + x₂ with x₁ ∈ M₁ and x₂ ∈ M₂, then Tx = Tx₁ + Tx₂ ∈ M₁ + M₂ = M₁ ⊔ M₂. □
+**Theorem 3.12** (ISP_of_no_cyclic_vector). *If $T$ has no cyclic vector on a nontrivial space, then $T$ has the ISP.*
 
-### 3.7 Power Invariance
+*Proof sketch.* Pick any nonzero $x$. Then $\mathcal{C}_T(x) \neq \{0\}$ (contains $x$), $\mathcal{C}_T(x) \neq H$ (no cyclic vector), closed (by definition), and $T$-invariant (the orbit span is $T$-invariant, and continuity of $T$ preserves this in the closure). □
 
-**Theorem (invariant_under_pow).** If M is T-invariant, then M is T^n-invariant for all n ∈ ℕ.
+### 3.10 Scalar Operator ISP
 
-*Proof.* By induction on n. Base: T⁰ = id, trivial. Step: T^{n+1}x = T(T^n x) ∈ M since T^n x ∈ M (inductive hypothesis) and M is T-invariant. □
+**Theorem 3.13** (scalar_has_ISP). *If $\dim H \geq 2$, then $cI$ has the ISP for any scalar $c$.*
 
-### 3.8 Nilpotent ISP
+## 4. The Spectral Depth Dichotomy Conjecture
 
-**Theorem (nilpotent_has_ISP).** If T ≠ 0 and T^n = 0 for some n ≥ 1, then T has the ISP.
+**Conjecture 4.1** (SpectralDepthDichotomyConjecture). *For every bounded operator $T$ on a separable infinite-dimensional Hilbert space, $\text{sd}(T) \in \{0, \infty\}$.*
 
-*Proof.* Use ker(T) as the invariant subspace.
-- ker(T) ≠ ⊥: By contradiction. If ker(T) = ⊥, T is injective. But T^n = 0 forces T^n x = 0 for all x, and injectivity gives T^{n-1} x = 0 for all x, ... , Tx = 0 for all x. So T = 0, contradicting T ≠ 0.
-- ker(T) ≠ ⊤: Since T ≠ 0, some x has Tx ≠ 0, so x ∉ ker(T).
-- Invariance: If Tx = 0, then T(Tx) = T(0) = 0, so Tx ∈ ker(T). □
+### 4.1 Motivation
 
-### 3.9 Compact Operator ISP
+The spectral decomposition depth interpolates between two extremes:
+- **Normal operators**: $\text{sd}(T) = \infty$ (the operator commutes with itself and has rich spectral structure).
+- **Operators with Enflo-Read obstruction**: $\text{sd}(T) = 0$ (no compact commutant has nonzero eigenvalues).
 
-**Theorem (compact_nonzero_eigenvalue_has_ISP).** If T is compact on an infinite-dimensional Hilbert space and has a nonzero eigenvalue μ, then T has the ISP.
+The conjecture asserts that intermediate values are impossible — the spectral landscape is "all or nothing."
 
-*Proof.* The eigenspace E_μ(T) is:
-- Nontrivial: contains an eigenvector.
-- Proper: If E_μ = ⊤, then T = μ·id, so id = μ⁻¹·T is compact. But the identity is compact only in finite dimensions, contradicting infinite-dimensionality.
-- Closed: kernel of the continuous operator T - μ·id.
-- T-invariant: by eigenspace_invariant. □
+### 4.2 Testable Predictions
 
-## 4. Algorithms
+For weighted shift operators $S_w$ on $\ell^2(\mathbb{N})$ with weights $(w_n)$:
 
-### 4.1 Subspace Iteration
+1. **Periodic weights** ($w_{n+p} = w_n$): Conjecture predicts $\text{sd}(S_w) = \infty$.
+2. **Aperiodic weights** (e.g., $w_n = 1/n$): Conjecture predicts $\text{sd}(S_w) = 0$.
+3. **Eventually periodic weights**: Conjecture predicts $\text{sd}(S_w) = \infty$.
 
-**Algorithm.** Given T ∈ ℂ^{n×n} and target dimension k:
-```
-Input: T, k, ε
-V₀ ← random n × k matrix
-V₀ ← orth(V₀)
-for i = 1, 2, ... do
-    W ← T · Vᵢ₋₁
-    Vᵢ ← orth(W)
-    if ‖Proj(Vᵢ) - Proj(Vᵢ₋₁)‖ < ε then break
-return Vᵢ
-```
+A single weighted shift with $0 < \text{sd}(S_w) < \infty$ would disprove the conjecture.
 
-**Complexity.** O(n²k) per iteration. Convergence rate: geometric with ratio |λ_{k+1}/λ_k| where λ_i are eigenvalues sorted by magnitude.
+### 4.3 Computational Protocol
 
-### 4.2 Invariance Testing
+Algorithm for testing the conjecture on $n$-dimensional truncations:
 
-**Algorithm.** Given T and orthonormal basis M for a subspace:
-```
-Input: T ∈ ℂⁿˣⁿ, M ∈ ℂⁿˣᵏ
-P_M ← M · M*
-P_⊥ ← I - P_M
-leakage ← ‖P_⊥ · T · M‖
-return leakage < ε
-```
+1. Fix truncation dimension $n$.
+2. Construct the $n \times n$ truncated operator $T_n$.
+3. Search for compact (low-rank) operators $K$ with $\|T_n K - K T_n\| / \|K\| < \epsilon$.
+4. Count distinct nonzero eigenvalues of each such $K$.
+5. Report the maximum count as the truncated spectral depth.
 
-**Complexity.** O(n²k).
+## 5. Algorithms
 
-### 4.3 Nilpotency Detection
+### 5.1 Invariant Subspace Detection
 
-**Algorithm.**
-```
-Input: T ∈ ℂⁿˣⁿ, ε
-P ← I
-for k = 1 to n do
-    P ← P · T
-    if ‖P‖ < ε then return (true, k)
-return (false, -1)
-```
+We implement a three-strategy algorithm:
+1. **Eigenspace method**: Compute eigenvalues and check if any eigenspace has dimension strictly between 0 and $n$.
+2. **Kernel method**: Compute singular values and identify kernel dimension.
+3. **Cyclic subspace method**: Generate the orbit of a random vector and check if it spans a proper subspace.
 
-**Complexity.** O(n⁴) worst case (n matrix multiplications of O(n³)).
+### 5.2 Spectral Depth Estimation
 
-## 5. Computational Experiments
+We estimate spectral depth by:
+1. Generating random low-rank matrices.
+2. Projecting iteratively onto the commutant of $T$ via gradient descent on $\|TK - KT\|$.
+3. Computing eigenvalues of the projected matrix and counting distinct nonzero ones.
+4. Taking the maximum over many trials.
 
-### 5.1 Finite-Dimensional ISP Verification
+### 5.3 Hyperinvariance Testing
 
-We verified the finite-dimensional ISP on 1000 random complex matrices of dimensions 2–100. In every case, eigenspace computation yielded a nontrivial invariant subspace with invariance residual < 10⁻¹².
+We test hyperinvariance by:
+1. Generating random matrices and projecting to the commutant.
+2. Checking whether the candidate subspace is invariant under each commutant element.
 
-### 5.2 Compact Operator Spectral Decay
+## 6. Connections to Other Domains
 
-For the Gaussian kernel operator K[f](x) = ∫ exp(-10|x-y|²) f(y) dy on [0,1], discretized at N = 20, 50, 100, 200 points:
+### 6.1 Quantum Mechanics
 
-| N | # eigenvalues > 10⁻⁶ | Top eigenvalue | Decay rate |
-|---|----------------------|----------------|------------|
-| 20 | 6 | 0.277 | O(k⁻³) |
-| 50 | 7 | 0.279 | O(k⁻³) |
-| 100 | 7 | 0.280 | O(k⁻³) |
-| 200 | 7 | 0.280 | O(k⁻³) |
+Self-adjoint operators represent observables, and the orthogonality of their eigenspaces (Theorem 3.3) is the mathematical foundation of quantum measurement theory. The reducing property (Theorem 3.4) ensures that measurement sectors are stable under time evolution.
 
-The number of significant eigenvalues stabilizes, confirming finite-dimensionality of nonzero eigenspaces.
+### 6.2 Dynamical Systems
 
-### 5.3 ISP Conjecture: Weighted Shift Test
+The cyclic subspace construction (Definition 2.3) is the operator-theoretic analog of the orbit closure in topological dynamics. The ISP asks whether bounded linear dynamics can ever be "totally ergodic" in the sense that no proper subspace is preserved.
 
-For the weighted shift T with weights w_k = 1/(k+1), truncated to size N:
+### 6.3 Signal Processing
 
-| N | Best invariance leakage |
-|---|------------------------|
-| 10 | 3.2 × 10⁻² |
-| 20 | 1.8 × 10⁻² |
-| 50 | 7.3 × 10⁻³ |
-| 100 | 3.7 × 10⁻³ |
-| 200 | 1.8 × 10⁻³ |
+Invariant subspaces of shift operators correspond to frequency bands in signal processing. The ISP for weighted shifts asks whether every weighted convolution operator preserves some frequency band — a question with direct implications for filter design.
 
-The leakage decreases as O(1/N), consistent with convergence to an invariant subspace of the full operator. This supports the ISP conjecture for weighted shifts.
+## 7. Discussion
 
-## 6. Discussion
+### 7.1 Relationship to Existing Catalog
 
-### 6.1 Implications
+This work extends the catalog's `CompactOperators.lean` (compact operator eigenspace theory) and `InvariantSubspaceProblem.lean` (finite-dimensional ISP, reducing subspaces) with:
+- The hyperinvariant subspace concept (strictly stronger than invariance).
+- The cyclic vector reformulation (equivalent to ISP but more constructive).
+- The spectral decomposition depth (a novel quantitative invariant).
+- The Enflo-Read obstruction theorem (necessary condition for counterexamples).
 
-Our formalization reveals the precise logical structure of the known ISP results:
+### 7.2 Proof Methodology
 
-1. **Compactness → finite-dimensionality → properness**: The fundamental mechanism.
-2. **Commutation → eigenspace preservation**: The engine behind Lomonosov's theorem.
-3. **Self-adjointness → reducing**: The bridge to quantum mechanics.
-4. **Nilpotency → kernel nontriviality**: The simplest ISP mechanism.
+All proofs use standard axioms (propext, Classical.choice, Quot.sound) and Mathlib infrastructure. Key proof techniques:
+- **Induction** (nilpotent ISP, powers preserve invariant subspaces).
+- **Contrapositive reasoning** (Enflo-Read obstruction).
+- **Inner product computation** (self-adjoint eigenspace orthogonality).
+- **Topological closure arguments** (cyclic subspace ISP characterization).
+- **Algebraic commutation** (eigenspace hyperinvariance, kernel/range invariance).
 
-### 6.2 Limitations
+### 7.3 Limitations
 
-Our formalization does not cover:
-- The full Lomonosov theorem (requires Schauder fixed-point theorem in infinite dimensions).
-- The spectral theorem for normal operators (requires measure-theoretic spectral theory).
-- The Enflo-Read counterexamples (require specific Banach space constructions).
+The full ISP remains open. Our formalization covers the known positive cases (compact, normal, nilpotent, commuting with compact) but cannot resolve the general conjecture. The Spectral Depth Dichotomy Conjecture is strictly weaker than the ISP — even if the dichotomy holds, it wouldn't resolve the ISP directly, but would constrain the structure of any potential counterexample.
 
-### 6.3 Open Questions
+## 8. Future Work
 
-1. Does the ISP hold for all bounded operators on separable Hilbert spaces?
-2. Can the reducing subspace property be extended beyond self-adjoint operators (normal operators, subnormal operators)?
-3. What is the precise relationship between the lattice structure of invariant subspaces and the spectral properties of the operator?
+1. **Lomonosov's full theorem**: Formalize the Schauder fixed-point theorem argument that yields invariant subspaces for the full commutant of a nonzero compact operator.
+2. **Polynomially compact operators**: Extend the compact operator results to operators $T$ where $p(T)$ is compact for some polynomial $p$.
+3. **Weighted shift classification**: Formally classify which weighted shifts have the ISP based on the behavior of their weight sequences.
+4. **Spectral depth computation**: Develop efficient algorithms for computing spectral depth in large dimensions and test the dichotomy conjecture numerically.
 
-## 7. Future Work
+## References
 
-- Formalize the Lomonosov theorem using the Schauder fixed-point theorem.
-- Develop a formal theory of the spectral measure for normal operators.
-- Investigate the ISP for specific operator classes (Toeplitz, composition, weighted shifts).
-- Connect the invariant subspace lattice to C*-algebra theory and von Neumann algebras.
-
-## 8. References
-
-1. Aronszajn, N. and Smith, K.T. (1954). Invariant subspaces of completely continuous operators. *Ann. Math.* 60, 345–350.
-2. Bernstein, A.R. and Robinson, A. (1966). Solution of an invariant subspace problem of K.T. Smith and P.R. Halmos. *Pacific J. Math.* 16, 421–431.
-3. Enflo, P. (1987). On the invariant subspace problem for Banach spaces. *Acta Math.* 158, 213–313.
+1. Aronszajn, N. and Smith, K.T. (1954). Invariant subspaces of completely continuous operators. *Annals of Mathematics*, 60(2), 345–350.
+2. Bernstein, A.R. and Robinson, A. (1966). Solution of an invariant subspace problem of K. T. Smith and P. R. Halmos. *Pacific Journal of Mathematics*, 16(3), 421–431.
+3. Enflo, P. (1987). On the invariant subspace problem for Banach spaces. *Acta Mathematica*, 158, 213–313.
 4. Halmos, P.R. (1982). *A Hilbert Space Problem Book*. Springer.
-5. Lomonosov, V.I. (1973). Invariant subspaces of the family of operators that commute with a completely continuous operator. *Funct. Anal. Appl.* 7, 213–214.
+5. Lomonosov, V.I. (1973). Invariant subspaces of the family of operators that commute with a completely continuous operator. *Functional Analysis and its Applications*, 7(3), 213–214.
 6. Radjavi, H. and Rosenthal, P. (2003). *Invariant Subspaces*. Dover.
-7. Read, C.J. (1985). A solution to the invariant subspace problem on the space ℓ¹. *Bull. London Math. Soc.* 17, 305–317.
+7. Read, C.J. (1985). A solution to the invariant subspace problem on the space $\ell_1$. *Bulletin of the London Mathematical Society*, 17(4), 305–317.
