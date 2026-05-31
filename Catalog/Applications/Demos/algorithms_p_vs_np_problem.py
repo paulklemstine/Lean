@@ -1,413 +1,385 @@
-#!/usr/bin/env python3
 """
-Algorithms: Entropy–Compression–Communication Complexity Barriers
+Circuit Complexity Algorithms
 
-Implements the core algorithms from the barrier framework:
-1. Bounded bitstring enumeration and counting
-2. Optimal encoding and incompressibility detection
-3. Karchmer–Wigderson witness enumeration
-4. KW complexity estimation
-5. Entropy computation and compression bounds
+Implementations of key algorithms from circuit complexity theory,
+including Shannon's counting argument, sensitivity computation,
+and barrier analysis.
 """
 
+from typing import Callable, List, Tuple, Dict, Set, Optional
 from itertools import product
-from math import log2, ceil, floor
-from typing import Callable, TypeVar, Optional
-from dataclasses import dataclass
+from math import log2, ceil, comb
+from functools import lru_cache
 
-T = TypeVar('T')
 
+# ============================================================
+# Boolean Function Representation
+# ============================================================
 
-# ─────────────────────────────────────────────────────────────
-# Algorithm 1: Bounded Bitstring Counting
-# ─────────────────────────────────────────────────────────────
+BoolFn = Callable[[Tuple[bool, ...]], bool]
 
-def count_bounded_bitstrings(k: int) -> int:
-    """
-    Count bitstrings of length ≤ k.
 
-    Uses the geometric series formula: Σ_{i=0}^{k} 2^i = 2^(k+1) - 1.
+def enumerate_inputs(n: int) -> List[Tuple[bool, ...]]:
+    """Enumerate all 2^n Boolean inputs of length n."""
+    return list(product([False, True], repeat=n))
 
-    Time complexity: O(1) (closed-form)
-    Space complexity: O(1)
 
-    Args:
-        k: Maximum bitstring length
+def truth_table(f: BoolFn, n: int) -> Tuple[bool, ...]:
+    """Compute the truth table of a Boolean function on n variables."""
+    return tuple(f(x) for x in enumerate_inputs(n))
 
-    Returns:
-        Number of distinct bitstrings of length 0, 1, ..., k
 
-    Examples:
-        >>> count_bounded_bitstrings(0)
-        1
-        >>> count_bounded_bitstrings(3)
-        15
-        >>> count_bounded_bitstrings(10)
-        2047
-    """
-    return (1 << (k + 1)) - 1
+def count_boolean_functions(n: int) -> int:
+    """Count the number of Boolean functions on n variables: 2^(2^n)."""
+    return 2 ** (2 ** n)
 
 
-def enumerate_bounded_bitstrings(k: int) -> list[tuple[int, ...]]:
-    """
-    Enumerate all bitstrings of length ≤ k.
+# ============================================================
+# Parity Function
+# ============================================================
 
-    Time complexity: O(2^(k+1))
-    Space complexity: O(2^(k+1))
-
-    Args:
-        k: Maximum bitstring length
-
-    Returns:
-        List of all bitstrings (as tuples of 0/1) of length ≤ k
-
-    Examples:
-        >>> enumerate_bounded_bitstrings(1)
-        [(), (0,), (1,)]
-        >>> len(enumerate_bounded_bitstrings(3))
-        15
-    """
-    result = []
-    for length in range(k + 1):
-        for bits in product([0, 1], repeat=length):
-            result.append(bits)
-    return result
-
-
-# ─────────────────────────────────────────────────────────────
-# Algorithm 2: Incompressibility Detection
-# ─────────────────────────────────────────────────────────────
-
-@dataclass
-class IncompressibilityResult:
-    """Result of an incompressibility analysis."""
-    set_size: int
-    max_short_codes: int
-    min_long_code_length: int
-    is_incompressible: bool
-    witness_element: Optional[int]  # Element needing a long code
-    encoding: Optional[dict]  # The actual encoding used
-
-
-def analyze_incompressibility(
-    elements: list,
-    max_code_length: int,
-    encoder: Optional[Callable] = None
-) -> IncompressibilityResult:
-    """
-    Analyze whether a set can be injectively encoded with short codes.
-
-    Implements the finite incompressibility theorem:
-    If |elements| > 2^(k+1) - 1, some element needs code length > k.
-
-    Time complexity: O(n log n) where n = |elements|
-    Space complexity: O(n)
-
-    Args:
-        elements: The set to encode
-        max_code_length: Maximum desired code length k
-        encoder: Optional custom encoder; default uses lexicographic
-
-    Returns:
-        IncompressibilityResult with analysis details
-
-    Examples:
-        >>> r = analyze_incompressibility(list(range(16)), 3)
-        >>> r.is_incompressible
-        True
-        >>> r.min_long_code_length
-        4
-    """
-    n = len(elements)
-    max_short = count_bounded_bitstrings(max_code_length)
-
-    if encoder is None:
-        # Default: assign codes in order, shortest first
-        codes = enumerate_bounded_bitstrings(max_code_length)
-        encoding = {}
-        witness = None
-
-        for i, elem in enumerate(elements):
-            if i < len(codes):
-                encoding[elem] = codes[i]
-            else:
-                if witness is None:
-                    witness = elem
-                # Need longer code
-                extra_bits = i - len(codes)
-                long_code = tuple(
-                    int(b) for b in format(extra_bits, f'0{max_code_length + 1}b')
-                )
-                encoding[elem] = (1,) + long_code  # Prefix with 1 to distinguish
-    else:
-        encoding = {elem: encoder(elem) for elem in elements}
-        witness = max(elements, key=lambda e: len(encoding[e]))
-
-    is_incompressible = n > max_short
-    min_long = ceil(log2(n)) if n > 1 else 0
-
-    return IncompressibilityResult(
-        set_size=n,
-        max_short_codes=max_short,
-        min_long_code_length=min_long,
-        is_incompressible=is_incompressible,
-        witness_element=witness,
-        encoding=encoding
-    )
-
-
-# ─────────────────────────────────────────────────────────────
-# Algorithm 3: KW Witness Enumeration
-# ─────────────────────────────────────────────────────────────
-
-@dataclass
-class KWWitness:
-    """A Karchmer–Wigderson witness: (x, y, i) where f(x)=T, f(y)=F, x[i]≠y[i]."""
-    x: tuple[int, ...]
-    y: tuple[int, ...]
-    index: int
-
-    def __repr__(self):
-        return f"KW(x={self.x}, y={self.y}, i={self.index})"
-
-
-def enumerate_kw_witnesses(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> list[KWWitness]:
-    """
-    Enumerate all KW witnesses for a Boolean function f on n variables.
-
-    A KW witness is a triple (x, y, i) where:
-    - f(x) = True (x is a "yes" instance)
-    - f(y) = False (y is a "no" instance)
-    - x[i] ≠ y[i] (coordinate i distinguishes x from y)
-
-    Time complexity: O(2^(2n) · n)
-    Space complexity: O(|witnesses|)
-
-    Args:
-        f: Boolean function on n-bit inputs
-        n: Number of input variables
-
-    Returns:
-        List of all KW witnesses
-
-    Examples:
-        >>> parity = lambda x: sum(x) % 2 == 1
-        >>> len(enumerate_kw_witnesses(parity, 2))
-        8
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-
-    witnesses = []
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    witnesses.append(KWWitness(x=x, y=y, index=i))
-
-    return witnesses
-
-
-def kw_witness_cardinality(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> int:
-    """
-    Compute |KWWitness(f)| for a Boolean function f on n variables.
-
-    Time complexity: O(2^(2n) · n)
-    Space complexity: O(1) (counting only)
-
-    Args:
-        f: Boolean function
-        n: Number of variables
-
-    Returns:
-        Cardinality of the KW witness space
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-
-    count = 0
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    count += 1
-    return count
-
-
-# ─────────────────────────────────────────────────────────────
-# Algorithm 4: KW Complexity Estimation
-# ─────────────────────────────────────────────────────────────
-
-@dataclass
-class KWComplexityBound:
-    """Bounds on KW complexity derived from witness counting."""
-    witness_count: int
-    log_lower_bound: float  # log₂(witness_count) is a lower bound
-    compression_bound: int  # Minimum code length forced
-    entropy_bound: float    # Shannon entropy of uniform distribution
-
-
-def estimate_kw_complexity(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> KWComplexityBound:
-    """
-    Estimate KW complexity bounds from the witness space.
-
-    The chain of implications:
-    |KWWitness(f)| ≥ 2^d  →  min code length ≥ d  →  entropy ≥ d
-
-    Time complexity: O(2^(2n) · n)
-    Space complexity: O(1)
-
-    Args:
-        f: Boolean function
-        n: Number of variables
-
-    Returns:
-        KWComplexityBound with derived bounds
-    """
-    count = kw_witness_cardinality(f, n)
-    log_bound = log2(count) if count > 0 else 0
-    compression = ceil(log_bound)
-    entropy = log_bound  # Uniform entropy = log₂(|support|)
-
-    return KWComplexityBound(
-        witness_count=count,
-        log_lower_bound=log_bound,
-        compression_bound=compression,
-        entropy_bound=entropy
-    )
-
-
-# ─────────────────────────────────────────────────────────────
-# Algorithm 5: Entropy and Information Bounds
-# ─────────────────────────────────────────────────────────────
-
-def shannon_entropy(distribution: dict[str, float]) -> float:
-    """
-    Compute Shannon entropy H(X) = -Σ p(x) log₂ p(x).
-
-    Time complexity: O(|support|)
-    Space complexity: O(1)
-
-    Args:
-        distribution: Mapping from outcomes to probabilities
-
-    Returns:
-        Shannon entropy in bits
-
-    Examples:
-        >>> shannon_entropy({"H": 0.5, "T": 0.5})
-        1.0
-        >>> round(shannon_entropy({"a": 0.25, "b": 0.25, "c": 0.25, "d": 0.25}), 2)
-        2.0
-    """
-    H = 0.0
-    for p in distribution.values():
-        if p > 0:
-            H -= p * log2(p)
-    return H
-
-
-def uniform_entropy(n: int) -> float:
-    """
-    Shannon entropy of uniform distribution on n elements = log₂(n).
-
-    Args:
-        n: Number of elements
-
-    Returns:
-        Entropy in bits
-    """
-    return log2(n) if n > 0 else 0.0
-
-
-def source_coding_bound(alphabet_size: int) -> float:
-    """
-    Source coding theorem: expected code length ≥ entropy.
-
-    For uniform distribution on alphabet_size elements,
-    expected code length ≥ log₂(alphabet_size).
-
-    Args:
-        alphabet_size: Number of distinct symbols
-
-    Returns:
-        Lower bound on expected code length (bits)
-    """
-    return uniform_entropy(alphabet_size)
-
-
-# ─────────────────────────────────────────────────────────────
-# Standard Boolean Functions
-# ─────────────────────────────────────────────────────────────
-
-def parity(x: tuple[int, ...]) -> bool:
-    """XOR/parity function."""
+def parity(x: Tuple[bool, ...]) -> bool:
+    """Compute the parity (XOR) of a Boolean input."""
     return sum(x) % 2 == 1
 
 
-def majority(x: tuple[int, ...]) -> bool:
-    """Majority function (strict majority of 1s)."""
-    return sum(x) > len(x) / 2
+def flip_bit(x: Tuple[bool, ...], i: int) -> Tuple[bool, ...]:
+    """Flip bit i in input x."""
+    lst = list(x)
+    lst[i] = not lst[i]
+    return tuple(lst)
 
 
-def threshold_k(k: int) -> Callable[[tuple[int, ...]], bool]:
-    """Threshold-k function: true iff at least k inputs are 1."""
-    return lambda x: sum(x) >= k
+# ============================================================
+# Sensitivity Computation
+# ============================================================
+
+def sensitivity_at(f: BoolFn, x: Tuple[bool, ...]) -> int:
+    """Compute the sensitivity of f at input x."""
+    n = len(x)
+    count = 0
+    for i in range(n):
+        x_flipped = flip_bit(x, i)
+        if f(x) != f(x_flipped):
+            count += 1
+    return count
 
 
-def or_fn(x: tuple[int, ...]) -> bool:
-    """OR function."""
-    return any(b == 1 for b in x)
+def max_sensitivity(f: BoolFn, n: int) -> int:
+    """Compute the maximum sensitivity of f over all inputs."""
+    return max(sensitivity_at(f, x) for x in enumerate_inputs(n))
 
 
-def and_fn(x: tuple[int, ...]) -> bool:
-    """AND function."""
-    return all(b == 1 for b in x)
+def avg_sensitivity(f: BoolFn, n: int) -> float:
+    """Compute the average sensitivity of f over all inputs."""
+    inputs = enumerate_inputs(n)
+    return sum(sensitivity_at(f, x) for x in inputs) / len(inputs)
 
 
-# ─────────────────────────────────────────────────────────────
-# Main: Run all algorithms with examples
-# ─────────────────────────────────────────────────────────────
+# ============================================================
+# Shannon's Counting Argument
+# ============================================================
+
+def circuit_count_upper_bound(n: int, s: int) -> int:
+    """
+    Upper bound on the number of Boolean circuits with n inputs and s gates.
+
+    Each gate has:
+    - 3 choices of gate type (AND, OR, NOT)
+    - For binary gates: (s + n + 2)^2 choices of inputs
+    - For NOT: (s + n + 2) choices of input
+
+    Rough upper bound: 3^s * (s + n + 2)^(2s)
+    """
+    base = s + n + 2
+    return (3 ** s) * (base ** (2 * s))
+
+
+def shannon_threshold(n: int) -> int:
+    """
+    Find the minimum circuit size s such that the number of circuits
+    of size ≤ s exceeds the number of Boolean functions on n variables.
+
+    Shannon's theorem says this threshold is approximately 2^n / (2n).
+    """
+    num_functions = count_boolean_functions(n)
+    s = 1
+    while circuit_count_upper_bound(n, s) < num_functions:
+        s += 1
+    return s
+
+
+def shannon_lower_bound(n: int) -> float:
+    """
+    Shannon's lower bound: most functions on n variables require
+    circuits of size at least 2^n / (2n).
+    """
+    return (2 ** n) / (2 * n)
+
+
+# ============================================================
+# Complexity Barrier Model
+# ============================================================
+
+class ComplexityBarrier:
+    """
+    A complexity barrier consists of:
+    - A ceiling: the maximum lower bound achievable by techniques in scope
+    - A set of technique strengths
+    """
+
+    def __init__(self, name: str, ceiling: int, technique_strengths: List[int]):
+        self.name = name
+        self.ceiling = ceiling
+        self.technique_strengths = technique_strengths
+        # Verify the barrier property
+        assert all(s <= ceiling for s in technique_strengths), \
+            f"Barrier {name}: some technique exceeds ceiling {ceiling}"
+
+    def blocks(self, target: int) -> bool:
+        """Check if this barrier blocks achieving the target."""
+        return self.ceiling < target
+
+    def is_tight(self) -> bool:
+        """Check if some technique achieves the ceiling."""
+        return self.ceiling in self.technique_strengths
+
+    def gap(self, target: int) -> int:
+        """Compute the gap between ceiling and target."""
+        return max(0, target - self.ceiling)
+
+    @staticmethod
+    def compose(b1: 'ComplexityBarrier', b2: 'ComplexityBarrier') -> 'ComplexityBarrier':
+        """Compose two barriers."""
+        ceiling = max(b1.ceiling, b2.ceiling)
+        strengths = [
+            max(s1, s2)
+            for s1 in b1.technique_strengths
+            for s2 in b2.technique_strengths
+        ]
+        return ComplexityBarrier(
+            f"{b1.name}+{b2.name}",
+            ceiling,
+            strengths
+        )
+
+
+def create_relativization_barrier() -> ComplexityBarrier:
+    """
+    Relativization barrier (Baker-Gill-Solovay, 1975).
+    Relativizing techniques can prove at most polynomial
+    relationships between complexity classes.
+    """
+    return ComplexityBarrier(
+        "Relativization",
+        ceiling=3,  # can prove polynomial relationships
+        technique_strengths=[1, 2, 3]  # diagonalization, simulation, padding
+    )
+
+
+def create_natural_proofs_barrier() -> ComplexityBarrier:
+    """
+    Natural proofs barrier (Razborov-Rudich, 1997).
+    Natural proof techniques can prove at most quasi-polynomial
+    circuit lower bounds (under OWF assumption).
+    """
+    return ComplexityBarrier(
+        "Natural Proofs",
+        ceiling=4,  # quasi-polynomial lower bounds
+        technique_strengths=[2, 3, 4]  # random restriction, approximation, sunflower
+    )
+
+
+def create_algebrization_barrier() -> ComplexityBarrier:
+    """
+    Algebrization barrier (Aaronson-Wigderson, 2009).
+    Algebrizing techniques extend relativization with algebraic structure.
+    """
+    return ComplexityBarrier(
+        "Algebrization",
+        ceiling=5,  # slightly beyond relativization
+        technique_strengths=[3, 4, 5]  # arithmetization, sumcheck, low-degree extension
+    )
+
+
+# ============================================================
+# Monotone Circuit Analysis
+# ============================================================
+
+class BoolCircuit:
+    """Simple Boolean circuit representation."""
+
+    def __init__(self, gate_type: str, inputs=None, children=None):
+        """
+        gate_type: 'INPUT', 'TRUE', 'FALSE', 'AND', 'OR', 'NOT'
+        inputs: for INPUT gates, the variable index
+        children: list of child circuits
+        """
+        self.gate_type = gate_type
+        self.input_idx = inputs
+        self.children = children or []
+
+    def eval(self, x: Tuple[bool, ...]) -> bool:
+        if self.gate_type == 'INPUT':
+            return x[self.input_idx]
+        elif self.gate_type == 'TRUE':
+            return True
+        elif self.gate_type == 'FALSE':
+            return False
+        elif self.gate_type == 'AND':
+            return self.children[0].eval(x) and self.children[1].eval(x)
+        elif self.gate_type == 'OR':
+            return self.children[0].eval(x) or self.children[1].eval(x)
+        elif self.gate_type == 'NOT':
+            return not self.children[0].eval(x)
+        else:
+            raise ValueError(f"Unknown gate type: {self.gate_type}")
+
+    @property
+    def size(self) -> int:
+        if self.gate_type in ('INPUT', 'TRUE', 'FALSE'):
+            return 0
+        elif self.gate_type == 'NOT':
+            return 1 + self.children[0].size
+        else:
+            return 1 + self.children[0].size + self.children[1].size
+
+    @property
+    def depth(self) -> int:
+        if self.gate_type in ('INPUT', 'TRUE', 'FALSE'):
+            return 0
+        elif self.gate_type == 'NOT':
+            return 1 + self.children[0].depth
+        else:
+            return 1 + max(self.children[0].depth, self.children[1].depth)
+
+    @property
+    def is_monotone(self) -> bool:
+        if self.gate_type == 'NOT':
+            return False
+        return all(c.is_monotone for c in self.children)
+
+    def restrict(self, var_idx: int, value: bool) -> 'BoolCircuit':
+        """Restrict variable var_idx to the given value."""
+        if self.gate_type == 'INPUT':
+            if self.input_idx == var_idx:
+                return BoolCircuit('TRUE' if value else 'FALSE')
+            return self
+        elif self.gate_type in ('TRUE', 'FALSE'):
+            return self
+        elif self.gate_type == 'NOT':
+            return BoolCircuit('NOT', children=[self.children[0].restrict(var_idx, value)])
+        else:
+            return BoolCircuit(
+                self.gate_type,
+                children=[c.restrict(var_idx, value) for c in self.children]
+            )
+
+
+# ============================================================
+# CNF and SAT
+# ============================================================
+
+Literal = Tuple[int, bool]  # (variable_index, is_positive)
+Clause = List[Literal]
+CNFFormula = List[Clause]
+
+
+def eval_literal(x: Tuple[bool, ...], lit: Literal) -> bool:
+    """Evaluate a literal."""
+    var, positive = lit
+    return x[var] if positive else not x[var]
+
+
+def eval_clause(x: Tuple[bool, ...], clause: Clause) -> bool:
+    """Evaluate a clause (disjunction)."""
+    return any(eval_literal(x, lit) for lit in clause)
+
+
+def eval_cnf(x: Tuple[bool, ...], formula: CNFFormula) -> bool:
+    """Evaluate a CNF formula (conjunction of clauses)."""
+    return all(eval_clause(x, clause) for clause in formula)
+
+
+def is_satisfiable(formula: CNFFormula, n: int) -> Optional[Tuple[bool, ...]]:
+    """Brute-force SAT solver. Returns a satisfying assignment or None."""
+    for x in enumerate_inputs(n):
+        if eval_cnf(x, formula):
+            return x
+    return None
+
+
+def pigeonhole_cnf(n: int) -> Tuple[CNFFormula, int]:
+    """
+    Generate PHP(n+1, n): pigeonhole principle for n+1 pigeons, n holes.
+    Returns (formula, num_variables).
+
+    Variables: x_{i,j} = pigeon i is in hole j
+    For i in {0,...,n}, j in {0,...,n-1}.
+    """
+    num_vars = (n + 1) * n
+
+    def var(pigeon: int, hole: int) -> int:
+        return pigeon * n + hole
+
+    clauses: CNFFormula = []
+
+    # Each pigeon must be in some hole
+    for i in range(n + 1):
+        clause = [(var(i, j), True) for j in range(n)]
+        clauses.append(clause)
+
+    # No two pigeons in the same hole
+    for j in range(n):
+        for i1 in range(n + 1):
+            for i2 in range(i1 + 1, n + 1):
+                clauses.append([(var(i1, j), False), (var(i2, j), False)])
+
+    return clauses, num_vars
+
 
 if __name__ == "__main__":
-    print("Bounded Bitstring Counting")
-    print("-" * 40)
-    for k in range(8):
-        print(f"  k={k}: |bs length ≤ {k}| = {count_bounded_bitstrings(k)}")
+    # Quick self-test
+    print("=== Algorithm Self-Tests ===")
 
-    print()
-    print("Incompressibility Analysis")
-    print("-" * 40)
-    for size in [8, 16, 32, 64]:
-        result = analyze_incompressibility(list(range(size)), 3)
-        print(f"  |α|={size}, k=3: incompressible={result.is_incompressible}, "
-              f"min code={result.min_long_code_length}")
+    # Test parity
+    assert parity((False,)) == False
+    assert parity((True,)) == True
+    assert parity((True, True)) == False
+    assert parity((True, False, True)) == False
+    print("✓ Parity function correct")
 
-    print()
-    print("KW Complexity Bounds")
-    print("-" * 40)
-    functions = [
-        ("Parity", parity),
-        ("Majority", majority),
-        ("OR", or_fn),
-        ("AND", and_fn),
-    ]
-    for n in range(2, 6):
-        print(f"  n={n}:")
-        for name, f in functions:
-            bounds = estimate_kw_complexity(f, n)
-            print(f"    {name:>10}: |KW|={bounds.witness_count:>6}, "
-                  f"log₂={bounds.log_lower_bound:>6.2f}, "
-                  f"entropy={bounds.entropy_bound:>6.2f}")
-        print()
+    # Test sensitivity
+    for n in range(1, 6):
+        s = max_sensitivity(parity, n)
+        assert s == n, f"Expected sensitivity {n}, got {s}"
+    print("✓ Parity has maximum sensitivity n")
+
+    # Test Shannon threshold
+    for n in range(2, 7):
+        lb = shannon_lower_bound(n)
+        print(f"  n={n}: Shannon lower bound = {lb:.1f}")
+    print("✓ Shannon lower bounds computed")
+
+    # Test barriers
+    b1 = create_relativization_barrier()
+    b2 = create_natural_proofs_barrier()
+    b3 = create_algebrization_barrier()
+    target = 10  # superpolynomial
+    assert b1.blocks(target)
+    assert b2.blocks(target)
+    assert b3.blocks(target)
+    composed = ComplexityBarrier.compose(
+        ComplexityBarrier.compose(b1, b2), b3
+    )
+    assert composed.blocks(target)
+    print("✓ All three barriers block superpolynomial target")
+
+    # Test PHP unsatisfiability
+    for n in range(2, 5):
+        php, num_vars = pigeonhole_cnf(n)
+        result = is_satisfiable(php, num_vars)
+        assert result is None, f"PHP({n+1},{n}) should be unsatisfiable"
+    print("✓ PHP unsatisfiability verified for small n")
+
+    print("\nAll self-tests passed!")

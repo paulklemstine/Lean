@@ -1,620 +1,234 @@
 #!/usr/bin/env python3
 """
-Applications: Entropy–Compression–Communication Complexity Barriers
+Circuit Complexity Barriers — Interactive Demonstration
 
-Real-world applications of the barrier framework theorems:
-1. Data compression limits for structured data
-2. Communication protocol design bounds
-3. Circuit design: formula depth estimation
-4. Cryptographic hardness indicators
-5. Error-correcting code design constraints
+This script demonstrates the key mathematical results formalized
+in our Lean 4 development:
+
+1. Shannon's counting argument for circuit lower bounds
+2. Parity function sensitivity analysis
+3. Complexity barrier composition
+4. Monotone circuit order preservation
+5. Pigeonhole principle CNF unsatisfiability
 """
 
-from itertools import product
-from math import log2, ceil, comb
-from typing import Callable
+from algorithms import (
+    parity, flip_bit, sensitivity_at, max_sensitivity, avg_sensitivity,
+    shannon_lower_bound, circuit_count_upper_bound, count_boolean_functions,
+    enumerate_inputs, truth_table,
+    ComplexityBarrier, create_relativization_barrier,
+    create_natural_proofs_barrier, create_algebrization_barrier,
+    BoolCircuit, pigeonhole_cnf, is_satisfiable
+)
 
 
-# ─────────────────────────────────────────────────────────────
-# Application 1: Data Compression Limits
-# ─────────────────────────────────────────────────────────────
-
-def compression_limit_analysis(data_alphabet_size: int, target_bits: int) -> dict:
-    """
-    Analyze whether a dataset can be compressed to a target bit-length.
-
-    Uses the finite incompressibility theorem: if |alphabet| > 2^(k+1) - 1,
-    at least one element needs more than k bits.
-
-    This has direct applications in:
-    - Database column encoding
-    - Network packet compression
-    - Image/video codec design
-
-    Args:
-        data_alphabet_size: Number of distinct data values
-        target_bits: Desired maximum code length
-
-    Returns:
-        Analysis dictionary with feasibility and bounds
-
-    Examples:
-        >>> r = compression_limit_analysis(256, 7)
-        >>> r['feasible']
-        False
-        >>> r = compression_limit_analysis(256, 8)
-        >>> r['feasible']
-        True
-    """
-    max_encodable = 2 ** (target_bits + 1) - 1
-    feasible = data_alphabet_size <= max_encodable
-    min_bits = ceil(log2(data_alphabet_size)) if data_alphabet_size > 1 else 0
-    wasted_capacity = max_encodable - data_alphabet_size if feasible else 0
-
-    return {
-        'alphabet_size': data_alphabet_size,
-        'target_bits': target_bits,
-        'max_encodable': max_encodable,
-        'feasible': feasible,
-        'min_bits_needed': min_bits,
-        'wasted_capacity': wasted_capacity if feasible else None,
-        'overflow_elements': max(0, data_alphabet_size - max_encodable),
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 2: Communication Protocol Bounds
-# ─────────────────────────────────────────────────────────────
-
-def protocol_lower_bound(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> dict:
-    """
-    Compute communication protocol lower bounds via KW witnesses.
-
-    In distributed computing, two parties (Alice and Bob) each hold
-    part of the input and must compute f(x,y). The KW game models
-    this: Alice holds x with f(x)=1, Bob holds y with f(y)=0,
-    and they must find a coordinate where x and y differ.
-
-    The number of rounds/bits they must exchange is lower-bounded
-    by the KW complexity, which we estimate from witness counting.
-
-    Applications:
-    - VLSI chip design (wire routing)
-    - Distributed database queries
-    - Network protocol optimization
-
-    Args:
-        f: Boolean function to compute
-        n: Number of input variables
-
-    Returns:
-        Dictionary with protocol bounds
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-
-    # Count KW witnesses
-    witness_count = 0
-    coords_used = set()
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    witness_count += 1
-                    coords_used.add(i)
-
-    log_bound = log2(witness_count) if witness_count > 0 else 0
-
-    return {
-        'function_inputs': 2**n,
-        'true_count': len(true_inputs),
-        'false_count': len(false_inputs),
-        'kw_witness_count': witness_count,
-        'communication_lower_bound': ceil(log_bound),
-        'entropy_bound': log_bound,
-        'coordinates_active': len(coords_used),
-        'all_coordinates_active': len(coords_used) == n,
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 3: Circuit Design — Formula Depth Estimation
-# ─────────────────────────────────────────────────────────────
-
-def formula_depth_bounds(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> dict:
-    """
-    Estimate formula depth bounds for a Boolean function.
-
-    The Karchmer–Wigderson theorem connects communication complexity
-    to monotone formula depth. Our compression bridge adds:
-
-    |KWWitness(f)| ≥ 2^d → formula depth ≥ d
-
-    Applications:
-    - FPGA synthesis planning
-    - Logic optimization
-    - Delay estimation in combinational circuits
-
-    Args:
-        f: Boolean function
-        n: Number of input variables
-
-    Returns:
-        Dictionary with depth bounds and design recommendations
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-
-    witness_count = 0
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    witness_count += 1
-
-    log_bound = log2(witness_count) if witness_count > 0 else 0
-    depth_lower = ceil(log_bound)
-
-    # Upper bound: trivial DNF/CNF has depth ≤ n + log₂(|true inputs|)
-    depth_upper = n  # Naive upper bound
-
-    return {
-        'n_variables': n,
-        'witness_count': witness_count,
-        'depth_lower_bound': depth_lower,
-        'depth_upper_bound': depth_upper,
-        'depth_gap': depth_upper - depth_lower,
-        'log_witness_count': log_bound,
-        'design_recommendation': (
-            f"Circuit needs at least {depth_lower} levels of gates. "
-            f"Trivial implementation uses {depth_upper}. "
-            f"Optimization potential: {depth_upper - depth_lower} levels."
-        ),
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 4: Cryptographic Hardness Indicators
-# ─────────────────────────────────────────────────────────────
-
-def crypto_hardness_analysis(
-    f: Callable[[tuple[int, ...]], bool],
-    n: int
-) -> dict:
-    """
-    Analyze cryptographic hardness indicators via compression barriers.
-
-    If a function family has high KW complexity, it resists compression,
-    which is related to pseudorandomness. Functions that can be efficiently
-    distinguished from random cannot be used as PRFs.
-
-    The barrier framework shows: if a proof method works against all
-    functions with a certain "largeness" property, it breaks PRFs.
-    This is the Natural Proofs barrier (Razborov–Rudich, 1997).
-
-    Applications:
-    - PRF candidate evaluation
-    - Hash function security analysis
-    - One-way function indicators
-
-    Args:
-        f: Boolean function (candidate hard function)
-        n: Number of input variables
-
-    Returns:
-        Dictionary with hardness indicators
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-
-    # Balance: how close to 50/50 is the function?
-    balance = len(true_inputs) / (2**n)
-
-    # KW witness complexity
-    witness_count = 0
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    witness_count += 1
-
-    max_possible_witnesses = len(true_inputs) * len(false_inputs) * n
-    witness_density = witness_count / max_possible_witnesses if max_possible_witnesses > 0 else 0
-
-    log_bound = log2(witness_count) if witness_count > 0 else 0
-
-    return {
-        'n_variables': n,
-        'balance': balance,
-        'is_balanced': abs(balance - 0.5) < 0.1,
-        'witness_count': witness_count,
-        'witness_density': witness_density,
-        'compression_resistance': log_bound,
-        'natural_proof_barrier': (
-            "This function's witness space is large enough that "
-            "any constructive property distinguishing it from random "
-            "would break pseudorandom functions (Natural Proofs barrier)."
-            if witness_density > 0.5 else
-            "This function has sparse KW witnesses, suggesting "
-            "structural regularity that might be exploitable."
-        ),
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 5: Error-Correcting Code Constraints
-# ─────────────────────────────────────────────────────────────
-
-def ecc_design_constraints(
-    codeword_length: int,
-    min_distance: int
-) -> dict:
-    """
-    Apply incompressibility bounds to error-correcting code design.
-
-    An (n, M, d) code has M codewords of length n with minimum distance d.
-    The Singleton bound says M ≤ 2^(n-d+1). Our framework gives a different
-    perspective: viewing codewords as encodings of M messages, the
-    incompressibility theorem constrains the code parameters.
-
-    Applications:
-    - QR code design
-    - Satellite communication
-    - Storage system reliability
-
-    Args:
-        codeword_length: Length n of each codeword
-        min_distance: Minimum Hamming distance d between codewords
-
-    Returns:
-        Dictionary with design constraints
-    """
-    # Singleton bound
-    singleton_bound = 2 ** (codeword_length - min_distance + 1)
-
-    # Hamming bound (sphere-packing)
-    volume = sum(comb(codeword_length, i) for i in range(min_distance // 2 + 1))
-    hamming_bound = 2 ** codeword_length // volume if volume > 0 else 0
-
-    # Plotkin bound (for d > n/2)
-    plotkin_bound = None
-    if min_distance > codeword_length / 2:
-        plotkin_bound = 2 * (min_distance // (2 * min_distance - codeword_length))
-
-    # Our compression perspective: M messages need codes of length ≥ log₂(M)
-    max_messages = min(singleton_bound, hamming_bound)
-    compression_bits = ceil(log2(max_messages)) if max_messages > 1 else 0
-
-    return {
-        'codeword_length': codeword_length,
-        'min_distance': min_distance,
-        'singleton_bound': singleton_bound,
-        'hamming_bound': hamming_bound,
-        'plotkin_bound': plotkin_bound,
-        'max_messages': max_messages,
-        'information_bits': compression_bits,
-        'redundancy': codeword_length - compression_bits,
-        'rate': compression_bits / codeword_length if codeword_length > 0 else 0,
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Main: Demonstrate all applications
-# ─────────────────────────────────────────────────────────────
-
-def parity(x):
-    return sum(x) % 2 == 1
-
-def majority(x):
-    return sum(x) > len(x) / 2
-
-def threshold_3(x):
-    return sum(x) >= 3
-
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Applications of the Barrier Framework                  ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+def demo_shannon_counting():
+    """Demonstrate Shannon's counting argument."""
+    print("=" * 70)
+    print("DEMO 1: Shannon's Counting Argument")
+    print("=" * 70)
     print()
-
-    # Application 1
-    print("APPLICATION 1: Data Compression Limits")
-    print("=" * 50)
-    for alphabet, bits in [(100, 6), (256, 7), (256, 8), (1000, 9), (1000, 10)]:
-        r = compression_limit_analysis(alphabet, bits)
-        status = "✓ Feasible" if r['feasible'] else "✗ Impossible"
-        print(f"  {alphabet} symbols → {bits} bits: {status}")
-        if not r['feasible']:
-            print(f"    Need at least {r['min_bits_needed']} bits")
+    print("Shannon (1949) showed that most Boolean functions require")
+    print("exponentially large circuits, by a counting argument.")
     print()
-
-    # Application 2
-    print("APPLICATION 2: Communication Protocol Bounds")
-    print("=" * 50)
-    for n in [3, 4, 5]:
-        for name, f in [("Parity", parity), ("Majority", majority)]:
-            r = protocol_lower_bound(f, n)
-            print(f"  {name}(n={n}): ≥ {r['communication_lower_bound']} bits "
-                  f"({r['kw_witness_count']} witnesses)")
+    print(f"{'n':>4} | {'# Functions':>15} | {'Shannon LB':>12} | {'Circuit UB (s=LB)':>18}")
+    print("-" * 60)
+    for n in range(2, 9):
+        num_fn = count_boolean_functions(n)
+        lb = shannon_lower_bound(n)
+        s = int(lb)
+        ub = circuit_count_upper_bound(n, s) if s < 50 else float('inf')
+        num_fn_str = f"{num_fn}" if num_fn < 10**15 else f"2^{2**n}"
+        ub_str = f"{ub}" if ub < 10**15 else ">10^15"
+        print(f"{n:>4} | {num_fn_str:>15} | {lb:>12.1f} | {ub_str:>18}")
     print()
-
-    # Application 3
-    print("APPLICATION 3: Circuit Design Bounds")
-    print("=" * 50)
-    for n in [3, 4, 5]:
-        r = formula_depth_bounds(parity, n)
-        print(f"  Parity(n={n}): depth ∈ [{r['depth_lower_bound']}, {r['depth_upper_bound']}]")
-    print()
-
-    # Application 4
-    print("APPLICATION 4: Cryptographic Hardness")
-    print("=" * 50)
-    for n in [3, 4, 5]:
-        r = crypto_hardness_analysis(parity, n)
-        print(f"  Parity(n={n}): balance={r['balance']:.2f}, "
-              f"witness density={r['witness_density']:.3f}")
-    print()
-
-    # Application 5
-    print("APPLICATION 5: Error-Correcting Code Constraints")
-    print("=" * 50)
-    for n, d in [(7, 3), (15, 5), (31, 7), (63, 11)]:
-        r = ecc_design_constraints(n, d)
-        print(f"  ({n},{d})-code: ≤{r['max_messages']} codewords, "
-              f"rate={r['rate']:.3f}, redundancy={r['redundancy']}")
+    print("The lower bound grows as 2^n/(2n), confirming that most functions")
+    print("require circuits of nearly maximum size.")
     print()
 
 
-#!/usr/bin/env python3
-"""
-Demo: Entropy–Compression–Communication Complexity Barriers
-
-This script demonstrates the core theorems from the formal barrier framework
-with concrete numerical examples, making the mathematics tangible.
-
-Key demonstrations:
-1. Counting bounded-length bitstrings (geometric series)
-2. Finite incompressibility: pigeonhole forces long codewords
-3. Karchmer–Wigderson witness spaces for Boolean functions
-4. Parity function: concrete compression lower bounds
-5. Bridge theorem: KW complexity → compression → entropy
-"""
-
-from itertools import product
-from math import log2, ceil, floor
-from collections import Counter
-
-
-# ─────────────────────────────────────────────────────────────
-# Demo 1: Counting Bounded-Length Bitstrings
-# ─────────────────────────────────────────────────────────────
-
-def count_bitstrings_exact(k: int) -> int:
-    """Number of bitstrings of exactly length k = 2^k."""
-    return 2 ** k
-
-
-def count_bitstrings_bounded(k: int) -> int:
-    """Number of bitstrings of length ≤ k = 2^(k+1) - 1 (geometric series)."""
-    return 2 ** (k + 1) - 1
-
-
-def enumerate_bitstrings_bounded(k: int) -> list[tuple[int, ...]]:
-    """Enumerate all bitstrings of length ≤ k."""
-    result = []
-    for length in range(k + 1):
-        for bits in product([0, 1], repeat=length):
-            result.append(bits)
-    return result
-
-
-def demo_counting():
-    """Demonstrate the geometric series identity for bitstring counting."""
-    print("=" * 60)
-    print("DEMO 1: Counting Bounded-Length Bitstrings")
-    print("=" * 60)
+def demo_parity_sensitivity():
+    """Demonstrate parity function sensitivity."""
+    print("=" * 70)
+    print("DEMO 2: Parity Function — Maximum Sensitivity")
+    print("=" * 70)
     print()
-    print("Theorem: |{bitstrings of length ≤ k}| = 2^(k+1) - 1")
+    print("The parity function has sensitivity exactly n at EVERY input.")
+    print("This is our theorem parity_sensitivity, proved by showing that")
+    print("flipping ANY bit changes the output (theorem parity_flip).")
     print()
-
-    for k in range(6):
-        actual = len(enumerate_bitstrings_bounded(k))
-        formula = count_bitstrings_bounded(k)
-        breakdown = " + ".join(f"2^{i}" for i in range(k + 1))
-        print(f"  k={k}: {breakdown} = {formula}  (enumerated: {actual})  ✓")
+    for n in range(1, 7):
+        ms = max_sensitivity(parity, n)
+        avgs = avg_sensitivity(parity, n)
+        print(f"n = {n}: max_sensitivity = {ms}, avg_sensitivity = {avgs:.2f}")
 
     print()
-    print("This is the geometric series: Σ_{i=0}^{k} 2^i = 2^(k+1) - 1")
+    print("Verification of parity_flip theorem:")
+    n = 4
+    x = (True, False, True, False)
+    print(f"  x = {x}, parity(x) = {parity(x)}")
+    for i in range(n):
+        x_flip = flip_bit(x, i)
+        print(f"  flip bit {i}: {x_flip}, parity = {parity(x_flip)} "
+              f"({'≠' if parity(x) != parity(x_flip) else '='} original)")
     print()
 
 
-# ─────────────────────────────────────────────────────────────
-# Demo 2: Finite Incompressibility (Pigeonhole)
-# ─────────────────────────────────────────────────────────────
-
-def demo_incompressibility():
-    """Demonstrate that large sets force long codewords."""
-    print("=" * 60)
-    print("DEMO 2: Finite Incompressibility")
-    print("=" * 60)
+def demo_barrier_composition():
+    """Demonstrate complexity barrier composition."""
+    print("=" * 70)
+    print("DEMO 3: Complexity Barrier Algebra")
+    print("=" * 70)
     print()
-    print("Theorem: If |α| ≥ 2^(k+1), any injective encoding")
-    print("         must give some element a codeword of length > k.")
+    print("Each barrier has a 'ceiling' — the maximum lower bound provable")
+    print("by techniques in its scope. Composition takes the max of ceilings.")
     print()
 
-    for k in range(1, 7):
-        max_short = count_bitstrings_bounded(k)
-        threshold = 2 ** (k + 1)
-        print(f"  k={k}: At most {max_short} elements can be encoded")
-        print(f"        with codes of length ≤ {k}.")
-        print(f"        So if |α| ≥ {threshold}, some code has length > {k}.")
-        print()
+    b_rel = create_relativization_barrier()
+    b_nat = create_natural_proofs_barrier()
+    b_alg = create_algebrization_barrier()
 
-    # Concrete example: try to encode 16 elements with codes of length ≤ 3
-    print("  Example: Encode {0,...,15} with binary codes of length ≤ 3")
-    print(f"    Available short codes: {count_bitstrings_bounded(3)} = 2^4 - 1 = 15")
-    print(f"    Elements to encode: 16")
-    print(f"    → At least one element needs a code of length ≥ 4  ✓")
+    barriers = [b_rel, b_nat, b_alg]
+    target = 10  # represents superpolynomial
+
+    for b in barriers:
+        status = "BLOCKS" if b.blocks(target) else "does not block"
+        tight = "tight" if b.is_tight() else "not tight"
+        print(f"  {b.name:20s}: ceiling = {b.ceiling}, {status} target {target}, {tight}")
+
+    print()
+
+    # Compose all three
+    composed_12 = ComplexityBarrier.compose(b_rel, b_nat)
+    composed_all = ComplexityBarrier.compose(composed_12, b_alg)
+
+    print(f"Composed barrier ceiling: {composed_all.ceiling}")
+    print(f"Composed barrier blocks target {target}: {composed_all.blocks(target)}")
+    print(f"Number of composed techniques: {len(composed_all.technique_strengths)}")
+
+    # Verify commutativity
+    composed_21 = ComplexityBarrier.compose(b_nat, b_rel)
+    print(f"\nCommutativity check:")
+    print(f"  ceiling(Rel + Nat) = {composed_12.ceiling}")
+    print(f"  ceiling(Nat + Rel) = {composed_21.ceiling}")
+    print(f"  Equal: {composed_12.ceiling == composed_21.ceiling} ✓")
     print()
 
 
-# ─────────────────────────────────────────────────────────────
-# Demo 3: Karchmer–Wigderson Witness Space
-# ─────────────────────────────────────────────────────────────
-
-def parity(x: tuple[int, ...]) -> bool:
-    """Parity function: XOR of all bits."""
-    return sum(x) % 2 == 1
-
-
-def majority(x: tuple[int, ...]) -> bool:
-    """Majority function: true iff > n/2 bits are 1."""
-    return sum(x) > len(x) / 2
-
-
-def compute_kw_witnesses(f, n: int) -> list[tuple[tuple, tuple, int]]:
-    """
-    Compute all KW witnesses (x, y, i) where:
-    - f(x) = True, f(y) = False
-    - x[i] ≠ y[i]
-    """
-    inputs = list(product([0, 1], repeat=n))
-    true_inputs = [x for x in inputs if f(x)]
-    false_inputs = [y for y in inputs if not f(y)]
-    witnesses = []
-    for x in true_inputs:
-        for y in false_inputs:
-            for i in range(n):
-                if x[i] != y[i]:
-                    witnesses.append((x, y, i))
-    return witnesses
-
-
-def demo_kw_witnesses():
-    """Demonstrate KW witness spaces for concrete functions."""
-    print("=" * 60)
-    print("DEMO 3: Karchmer–Wigderson Witness Spaces")
-    print("=" * 60)
+def demo_monotone_circuits():
+    """Demonstrate monotone circuit order preservation."""
+    print("=" * 70)
+    print("DEMO 4: Monotone Circuit Order Preservation")
+    print("=" * 70)
     print()
-    print("A KW witness (x, y, i) satisfies:")
-    print("  f(x) = True, f(y) = False, x[i] ≠ y[i]")
+    print("Theorem: If C is monotone and x ≤ y pointwise,")
+    print("then C(x) = True implies C(y) = True.")
+    print()
+
+    # Build a monotone circuit: (x₀ AND x₁) OR x₂
+    x0 = BoolCircuit('INPUT', inputs=0)
+    x1 = BoolCircuit('INPUT', inputs=1)
+    x2 = BoolCircuit('INPUT', inputs=2)
+    c_and = BoolCircuit('AND', children=[x0, x1])
+    c_or = BoolCircuit('OR', children=[c_and, x2])
+
+    print(f"Circuit: (x₀ AND x₁) OR x₂")
+    print(f"Size: {c_or.size}, Depth: {c_or.depth}, Monotone: {c_or.is_monotone}")
+    print()
+
+    # Test order preservation
+    print(f"{'x':>15} | {'C(x)':>5} | {'y ≥ x':>15} | {'C(y)':>5} | {'Preserved':>10}")
+    print("-" * 65)
+
+    inputs = enumerate_inputs(3)
+    violations = 0
+    for x in inputs:
+        if not c_or.eval(x):
+            continue
+        for y in inputs:
+            if all(x[i] <= y[i] for i in range(3)):
+                preserved = c_or.eval(y)
+                if not preserved:
+                    violations += 1
+                print(f"{str(x):>15} | {c_or.eval(x)!s:>5} | {str(y):>15} | "
+                      f"{c_or.eval(y)!s:>5} | {'✓' if preserved else '✗':>10}")
+
+    print(f"\nViolations: {violations} (expected: 0)")
+    print()
+
+
+def demo_php_unsat():
+    """Demonstrate pigeonhole principle unsatisfiability."""
+    print("=" * 70)
+    print("DEMO 5: Pigeonhole Principle CNF")
+    print("=" * 70)
+    print()
+    print("PHP(n+1, n): n+1 pigeons, n holes — always unsatisfiable.")
+    print("This connects to proof complexity: resolution proofs of PHP")
+    print("require exponential size (Haken, 1985).")
     print()
 
     for n in range(2, 6):
-        w_parity = compute_kw_witnesses(parity, n)
-        w_majority = compute_kw_witnesses(majority, n)
+        php, num_vars = pigeonhole_cnf(n)
+        result = is_satisfiable(php, num_vars)
+        num_clauses = len(php)
+        status = "UNSAT ✓" if result is None else f"SAT at {result}"
+        print(f"  PHP({n+1},{n}): {num_vars} vars, {num_clauses} clauses → {status}")
 
-        print(f"  n={n}:")
-        print(f"    Parity:   |KWWitness| = {len(w_parity):>6}  "
-              f"(≥ n={n}, log₂ = {log2(len(w_parity)):.2f})")
-        print(f"    Majority: |KWWitness| = {len(w_majority):>6}  "
-              f"(log₂ = {log2(len(w_majority)):.2f})")
-        print()
-
-    print("  Observation: Parity always has ≥ n witnesses (one per coordinate)")
-    print("  This is our theorem parity_kw_witness_card_ge.")
+    print()
+    print("The exponential resolution proof size aligns with our")
+    print("natural proofs barrier: efficiently checking unsatisfiability")
+    print("would violate cryptographic hardness assumptions.")
     print()
 
 
-# ─────────────────────────────────────────────────────────────
-# Demo 4: Bridge Theorem in Action
-# ─────────────────────────────────────────────────────────────
-
-def demo_bridge():
-    """Demonstrate the compression-KW bridge theorem."""
-    print("=" * 60)
-    print("DEMO 4: The Bridge Theorem")
-    print("=" * 60)
+def demo_depth_zero_classification():
+    """Demonstrate depth-0 circuit classification."""
+    print("=" * 70)
+    print("DEMO 6: Depth-0 Circuit Classification")
+    print("=" * 70)
     print()
-    print("Theorem: If |KWWitness(f)| ≥ 2^d, then any injective")
-    print("encoding of witnesses needs some code of length ≥ d.")
+    print("Theorem: Depth-0 circuits compute only constant functions")
+    print("or projections x_i. This is proved by case analysis.")
     print()
 
-    for n in range(2, 7):
-        witnesses = compute_kw_witnesses(parity, n)
-        card = len(witnesses)
-        d = floor(log2(card)) if card > 0 else 0
-        min_code = ceil(log2(card)) if card > 0 else 0
+    n = 3
+    # All depth-0 circuits on 3 variables
+    depth0_circuits = []
 
-        print(f"  Parity(n={n}):")
-        print(f"    |KWWitness| = {card}")
-        print(f"    ⌊log₂({card})⌋ = {d}")
-        print(f"    → Some code needs length ≥ {d}")
-        print(f"    → Formula depth ≥ {d} (via KW correspondence)")
-        print()
+    # Constants
+    depth0_circuits.append(("True", BoolCircuit('TRUE')))
+    depth0_circuits.append(("False", BoolCircuit('FALSE')))
 
-    print("  The chain: KW complexity → compression bound → entropy bound")
-    print("  Each link is formally verified!")
+    # Projections
+    for i in range(n):
+        depth0_circuits.append((f"x_{i}", BoolCircuit('INPUT', inputs=i)))
+
+    print(f"All depth-0 circuits on {n} variables:")
+    for name, c in depth0_circuits:
+        tt = tuple(c.eval(x) for x in enumerate_inputs(n))
+        print(f"  {name:>8}: truth table = {tt}, depth = {c.depth}")
+
+    print(f"\nTotal depth-0 functions: {len(depth0_circuits)} (= n + 2 = {n + 2})")
+    print(f"Total Boolean functions on {n} vars: {count_boolean_functions(n)}")
+    print(f"Fraction computable at depth 0: {len(depth0_circuits)}/{count_boolean_functions(n)}")
     print()
 
-
-# ─────────────────────────────────────────────────────────────
-# Demo 5: Entropy Perspective
-# ─────────────────────────────────────────────────────────────
-
-def shannon_entropy_uniform(n: int) -> float:
-    """Shannon entropy of uniform distribution on n elements."""
-    if n <= 0:
-        return 0.0
-    return log2(n)
-
-
-def demo_entropy():
-    """Demonstrate the entropy interpretation of KW lower bounds."""
-    print("=" * 60)
-    print("DEMO 5: Entropy Interpretation")
-    print("=" * 60)
-    print()
-    print("The uniform entropy of a finite set of size N is log₂(N).")
-    print("Our bridge: KW complexity d → |witnesses| ≥ 2^d → entropy ≥ d")
-    print()
-
-    print(f"  {'Function':<12} {'n':>3} {'|KW witnesses|':>15} {'Entropy (bits)':>15} {'Min code':>10}")
-    print(f"  {'-'*12} {'-'*3} {'-'*15} {'-'*15} {'-'*10}")
-
-    for n in range(2, 7):
-        for name, f in [("Parity", parity), ("Majority", majority)]:
-            witnesses = compute_kw_witnesses(f, n)
-            card = len(witnesses)
-            entropy = shannon_entropy_uniform(card)
-            min_code = ceil(entropy)
-            print(f"  {name:<12} {n:>3} {card:>15} {entropy:>15.2f} {min_code:>10}")
-        print()
-
-    print("  Key insight: entropy is a lower bound on expected code length.")
-    print("  Communication complexity → cardinality → entropy → code length.")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Entropy–Compression–Communication Barrier Framework    ║")
-    print("║  Demonstrating Formal Complexity Barriers               ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     CIRCUIT COMPLEXITY BARRIERS — DEMONSTRATION                     ║")
+    print("║     Formalized P vs NP Barrier Theory                               ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
     print()
 
-    demo_counting()
-    demo_incompressibility()
-    demo_kw_witnesses()
-    demo_bridge()
-    demo_entropy()
+    demo_shannon_counting()
+    demo_parity_sensitivity()
+    demo_barrier_composition()
+    demo_monotone_circuits()
+    demo_php_unsat()
+    demo_depth_zero_classification()
 
-    print("=" * 60)
+    print("=" * 70)
     print("All demonstrations complete.")
-    print("These examples illustrate theorems that are formally verified")
-    print("with machine-checked proofs — no errors possible.")
-    print("=" * 60)
+    print("=" * 70)
