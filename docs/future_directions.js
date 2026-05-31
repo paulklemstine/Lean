@@ -851,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.86,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "7c29780f",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
