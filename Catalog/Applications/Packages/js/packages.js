@@ -527,11 +527,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(content);
             container.appendChild(card);
         });
-
-            card.appendChild(header);
-            card.appendChild(iframe);
-            container.appendChild(card);
-        });
     }
 
     function renderCodeBlocks(containerId, items, codeField) {

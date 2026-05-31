@@ -386,11 +386,19 @@
         }
 
         // Override loadPackage to also hide directions view
-        const origLoadPackage = window.loadPackage;
-        window.loadPackage = function(filename) {
-            if (window.hideDirectionsView) window.hideDirectionsView();
-            origLoadPackage(filename);
-        };
+        // Wait until packages.js has defined window.loadPackage
+        function wrapLoadPackage() {
+            if (typeof window.loadPackage !== 'function') {
+                setTimeout(wrapLoadPackage, 50);
+                return;
+            }
+            const orig = window.loadPackage;
+            window.loadPackage = function(filename) {
+                if (window.hideDirectionsView) window.hideDirectionsView();
+                orig(filename);
+            };
+        }
+        wrapLoadPackage();
 
         // Override renderSidebar to also populate domain filter
         const origRenderSidebar = window.renderSidebar;

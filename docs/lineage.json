@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_theorems_established_in_this_work__identifying",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -28,13 +28,40 @@
       "hue": 270
     },
     {
+      "id": "this_research_cycle_established_a_formal_bridge_be",
+      "title": "The Lorentzian–Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:02Z",
+      "hue": 275
+    },
+    {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
-      "date": "2026-05-31T15:12:03Z",
-      "hue": 90
+      "date": "2026-05-31T15:44:22Z",
+      "hue": 95
+    },
+    {
+      "id": "this_research_cycle_established_the_mathematical_f",
+      "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:39Z",
+      "hue": 91
+    },
+    {
+      "id": "primes_of_the_form_n1",
+      "title": "Primes of the Form n² + 1: Quadratic Residue Constraints and Semi-prime Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:45:01Z",
+      "hue": 359
     }
   ],
   "edges": [],

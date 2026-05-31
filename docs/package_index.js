@@ -4,13 +4,43 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "primes_of_the_form_n1.json",
+    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+    "domain": "Algebra",
+    "date": "2026-05-31T15:45:01Z",
+    "exp_id": "e7f8157d",
+    "quality_score": 0.6293001538461539,
+    "quality": "partial",
+    "pkg_num": 7
+  },
+  {
+    "filename": "this_research_cycle_established_the_mathematical_f.json",
+    "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
+    "domain": "Algebra",
+    "date": "2026-05-31T15:44:39Z",
+    "exp_id": "866a2ce9",
+    "quality_score": 0.7711866265060241,
+    "quality": "substantial",
+    "pkg_num": 6
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Algebra",
-    "date": "2026-05-31T15:12:03Z",
-    "exp_id": "951b88f8",
-    "quality_score": 0.5234253846153847,
+    "date": "2026-05-31T15:44:22Z",
+    "exp_id": "4b21150a",
+    "quality_score": 0.5537266666666667,
     "quality": "partial",
+    "pkg_num": 5
+  },
+  {
+    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+    "domain": "Algebra",
+    "date": "2026-05-31T15:44:02Z",
+    "exp_id": "c3940ca2",
+    "quality_score": 0.722909152542373,
+    "quality": "substantial",
     "pkg_num": 4
   },
   {
@@ -62,6 +92,30 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "primes_of_the_form_n1.json": {
+    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+    "exp_id": "e7f8157d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
+  "this_research_cycle_established_the_mathematical_f.json": {
+    "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
+    "exp_id": "866a2ce9",
+    "source_exp_ids": [
+      "529ce23c"
+    ],
+    "domain": "Algebra"
+  },
+  "this_research_cycle_established_a_formal_bridge_be.json": {
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+    "exp_id": "c3940ca2",
+    "source_exp_ids": [
+      "ece3d9d6"
+    ],
+    "domain": "Algebra"
+  },
   "machine_learning_generalization_bounds.json": {
     "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
     "exp_id": "0c3e833a",
@@ -72,7 +126,7 @@ window.PACKAGE_DB_INDEX = {
   },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "exp_id": "951b88f8",
+    "exp_id": "4b21150a",
     "source_exp_ids": [
       "seed"
     ],
@@ -91,7 +145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -102,7 +156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271,
+      "hue": 275,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -118,14 +172,47 @@ window.PACKAGE_GRAPH = {
       "quality": "substantial"
     },
     {
+      "id": "this_research_cycle_established_a_formal_bridge_be",
+      "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:02Z",
+      "hue": 275,
+      "priority_score": 0.722909152542373,
+      "quality": "substantial"
+    },
+    {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
-      "date": "2026-05-31T15:12:03Z",
-      "hue": 90,
-      "priority_score": 0.5234253846153847,
+      "date": "2026-05-31T15:44:22Z",
+      "hue": 95,
+      "priority_score": 0.5537266666666667,
+      "quality": "partial"
+    },
+    {
+      "id": "this_research_cycle_established_the_mathematical_f",
+      "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:39Z",
+      "hue": 91,
+      "priority_score": 0.7711866265060241,
+      "quality": "substantial"
+    },
+    {
+      "id": "primes_of_the_form_n1",
+      "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:45:01Z",
+      "hue": 359,
+      "priority_score": 0.6293001538461539,
       "quality": "partial"
     }
   ],
