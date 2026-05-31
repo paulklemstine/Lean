@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:12Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "primewise_persistent_homology_detects_exceptional_",
@@ -16,7 +16,16 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "the_theorems_established_in_this_work__identifying",
+      "title": "Newton Persistence and Arithmetic Monodromy",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T14:58:00Z",
+      "hue": 91
     }
   ],
   "edges": [],
