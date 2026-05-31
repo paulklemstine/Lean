@@ -4,6 +4,36 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation",
+    "domain": "Computation",
+    "date": "2026-05-31T22:44:03Z",
+    "exp_id": "5a82cace",
+    "quality_score": 0.735339756097561,
+    "quality": "substantial",
+    "pkg_num": 25
+  },
+  {
+    "filename": "sierpiski_numbers_covering_systems.json",
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+    "domain": "Computation",
+    "date": "2026-05-31T22:43:44Z",
+    "exp_id": "7c29780f",
+    "quality_score": 0.7134367272727273,
+    "quality": "substantial",
+    "pkg_num": 24
+  },
+  {
+    "filename": "p_adic_langlands_for_glq_p.json",
+    "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
+    "domain": "Bridges",
+    "date": "2026-05-31T22:43:23Z",
+    "exp_id": "f95fe11c",
+    "quality_score": 0.7597249152542372,
+    "quality": "substantial",
+    "pkg_num": 23
+  },
+  {
     "filename": "langlands_for_gl_over_q.json",
     "title": "Langlands Correspondence for GL\u2082 over \u211a: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound",
     "domain": "Bridges",
@@ -274,6 +304,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "cellular_automata_at_the_ordinals_transfinite_comp.json": {
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation",
+    "exp_id": "5a82cace",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Computation"
+  },
   "the_topology_of_impossible_objects_escher_stairs_a.json": {
     "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
     "exp_id": "e471f5e9",
@@ -329,6 +367,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Algebra"
+  },
+  "sierpiski_numbers_covering_systems.json": {
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+    "exp_id": "7c29780f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Computation"
   },
   "entropy_power_inequality_sharp_version.json": {
     "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
@@ -401,6 +447,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Bridges"
+  },
+  "p_adic_langlands_for_glq_p.json": {
+    "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
+    "exp_id": "f95fe11c",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Bridges"
   }
 };
 
@@ -415,7 +469,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -426,7 +480,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -437,7 +491,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -448,7 +502,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -459,7 +513,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90,
+      "hue": 281,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -470,7 +524,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -481,7 +535,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -492,7 +546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -503,7 +557,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -514,7 +568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -525,7 +579,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 281,
+      "hue": 271,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -536,7 +590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -547,7 +601,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -558,7 +612,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -569,7 +623,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -580,7 +634,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -591,7 +645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -613,7 +667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -624,7 +678,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -635,7 +689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -646,9 +700,42 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 134,
+      "hue": 270,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
+    },
+    {
+      "id": "p_adic_langlands_for_glq_p",
+      "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T22:43:23Z",
+      "hue": 272,
+      "priority_score": 0.7597249152542372,
+      "quality": "substantial"
+    },
+    {
+      "id": "sierpiski_numbers_covering_systems",
+      "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T22:43:44Z",
+      "hue": 90,
+      "priority_score": 0.7134367272727273,
+      "quality": "substantial"
+    },
+    {
+      "id": "cellular_automata_at_the_ordinals_transfinite_comp",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T22:44:03Z",
+      "hue": 90,
+      "priority_score": 0.735339756097561,
+      "quality": "substantial"
     }
   ],
   "edges": [],
