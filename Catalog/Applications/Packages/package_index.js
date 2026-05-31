@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "artins_conjecture_on_primitive_roots.json",
+    "title": "Artin's Conjecture on Primitive Roots",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:24:13Z",
+    "exp_id": "c8935afa",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 11
+  },
+  {
     "filename": "resolution_of_singularities_in_positive_characteri.json",
     "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
     "domain": "Algebra",
     "date": "2026-05-31T20:23:45Z",
     "exp_id": "02d2fadb",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7457928571428571,
+    "quality": "substantial",
     "pkg_num": 10
   },
   {
@@ -154,6 +164,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "artins_conjecture_on_primitive_roots.json": {
+    "title": "Artin's Conjecture on Primitive Roots",
+    "exp_id": "c8935afa",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "biological_topology_protein_folding_as_persistent_.json": {
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
     "exp_id": "6a2bfb31",
@@ -199,7 +217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -210,7 +228,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -232,7 +250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 292,
+      "hue": 271,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -243,7 +261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 100,
+      "hue": 292,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -254,7 +272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -265,7 +283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -276,7 +294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 112,
+      "hue": 281,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -287,7 +305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -298,7 +316,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 92,
+      "hue": 90,
+      "priority_score": 0.7457928571428571,
+      "quality": "substantial"
+    },
+    {
+      "id": "artins_conjecture_on_primitive_roots",
+      "title": "Artin's Conjecture on Primitive Roots",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:13Z",
+      "hue": 90,
       "priority_score": null,
       "quality": "unrated"
     }
