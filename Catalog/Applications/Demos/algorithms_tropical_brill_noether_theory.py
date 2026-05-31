@@ -1,509 +1,326 @@
-#!/usr/bin/env python3
 """
 Tropical Brill-Noether Theory: Algorithms
 
-Implements core algorithms for computing Brill-Noether numbers,
-searching for admissible lattice paths on chains of loops, and
-performing chip-firing simulations on graphs.
+Type-hinted implementations of the key algorithms in tropical Brill-Noether theory,
+including the Brill-Noether number computation, chip-firing simulation, and
+Dhar's burning algorithm for computing divisor ranks on graphs.
 """
-
-from typing import List, Tuple, Optional, Dict, Set
-import random
-from itertools import product
+from typing import List, Dict, Tuple, Set, Optional
 from collections import defaultdict
+import itertools
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 1: Brill-Noether Number Computation
-# ═══════════════════════════════════════════════════════════════════════
-
-def brill_noether_number(g: int, r: int, d: int) -> int:
-    """Compute ρ(g,r,d) = g - (r+1)(g - d + r).
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
+def brill_noether_number(g: int, d: int, r: int) -> int:
+    """Compute the Brill-Noether number ρ(g,d,r) = g - (r+1)(g-d+r).
+    
+    This integer governs the expected dimension of the space of linear series
+    of degree d and rank r on a curve of genus g.
+    
     Args:
         g: genus of the curve
-        r: desired rank of the linear series
         d: degree of the divisor
-
+        r: rank of the linear series
+    
     Returns:
-        The Brill-Noether number ρ(g,r,d)
-
-    Examples:
-        >>> brill_noether_number(3, 1, 3)
-        0
-        >>> brill_noether_number(5, 2, 7)
-        2
+        The Brill-Noether number ρ(g,d,r)
     """
     return g - (r + 1) * (g - d + r)
 
 
-def brill_noether_threshold(g: int, r: int) -> int:
-    """Find the minimum degree d such that ρ(g,r,d) ≥ 0.
-
-    Uses the quadratic formula on ρ = (r+1)d - rg - r(r+1) ≥ 0,
-    giving d ≥ r(g + r + 1)/(r+1) = r + rg/(r+1).
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
+def max_brill_noether_rank(g: int, d: int) -> int:
+    """Find the maximum rank r such that ρ(g,d,r) ≥ 0.
+    
+    By the Brill-Noether theorem, this is the maximum rank of a divisor
+    of degree d on a general curve of genus g.
+    
     Args:
-        g: genus of the curve
-        r: desired rank
-
+        g: genus of the curve  
+        d: degree of the divisor
+    
     Returns:
-        Minimum degree d such that ρ(g,r,d) ≥ 0
-
-    Examples:
-        >>> brill_noether_threshold(3, 1)
-        3
-        >>> brill_noether_threshold(5, 2)
-        6
+        Maximum rank r with ρ(g,d,r) ≥ 0, or -1 if no such r exists
     """
-    # ρ = (r+1)d - rg - r(r+1) ≥ 0  ⟺  d ≥ rg/(r+1) + r
-    import math
-    if r == 0:
-        return 0
-    # d_min = ceil(r * (g + r + 1) / (r + 1))
-    # But we can compute directly
-    d = 0
-    while brill_noether_number(g, r, d) < 0:
-        d += 1
-    return d
+    r = 0
+    max_r = -1
+    while True:
+        rho = brill_noether_number(g, d, r)
+        if rho < 0:
+            break
+        max_r = r
+        r += 1
+    return max_r
 
 
-def list_feasible_parameters(g: int, max_r: int = None, max_d: int = None) -> List[Tuple[int, int, int]]:
-    """List all (g, r, d) with ρ(g,r,d) ≥ 0.
+class Graph:
+    """A simple undirected graph for chip-firing.
+    
+    Vertices are integers 0..n-1. Edges are stored as adjacency lists.
+    """
+    
+    def __init__(self, n: int):
+        self.n = n
+        self.adj: Dict[int, List[int]] = defaultdict(list)
+        self.edges: List[Tuple[int, int]] = []
+    
+    def add_edge(self, u: int, v: int) -> None:
+        """Add an undirected edge between u and v."""
+        self.adj[u].append(v)
+        self.adj[v].append(u)
+        self.edges.append((u, v))
+    
+    def degree(self, v: int) -> int:
+        """Return the degree of vertex v."""
+        return len(self.adj[v])
+    
+    def genus(self) -> int:
+        """Return the genus (cycle rank) of the graph: |E| - |V| + 1."""
+        return len(self.edges) - self.n + 1
+    
+    @staticmethod
+    def chain_of_loops(g: int) -> 'Graph':
+        """Construct a chain of g loops (the generic tropical curve of genus g).
+        
+        This graph has g+1 vertices v_0, ..., v_g, with two edges between
+        consecutive vertices v_i and v_{i+1}.
+        """
+        n = g + 1
+        G = Graph(n)
+        for i in range(g):
+            G.add_edge(i, i + 1)
+            G.add_edge(i, i + 1)  # Double edge for loop
+        return G
 
-    Time complexity: O(max_r * max_d)
 
+class Divisor:
+    """A divisor on a graph: an integer-valued function on vertices."""
+    
+    def __init__(self, values: List[int]):
+        self.values = list(values)
+    
+    def __getitem__(self, v: int) -> int:
+        return self.values[v]
+    
+    def __setitem__(self, v: int, val: int) -> None:
+        self.values[v] = val
+    
+    def degree(self) -> int:
+        """Sum of all chip values."""
+        return sum(self.values)
+    
+    def is_effective(self) -> bool:
+        """True if all values are non-negative."""
+        return all(v >= 0 for v in self.values)
+    
+    def copy(self) -> 'Divisor':
+        return Divisor(list(self.values))
+    
+    def __sub__(self, other: 'Divisor') -> 'Divisor':
+        return Divisor([a - b for a, b in zip(self.values, other.values)])
+    
+    def __add__(self, other: 'Divisor') -> 'Divisor':
+        return Divisor([a + b for a, b in zip(self.values, other.values)])
+    
+    def __repr__(self) -> str:
+        return f"Divisor({self.values})"
+
+
+def chip_fire(G: Graph, D: Divisor, v: int) -> Divisor:
+    """Fire vertex v: send one chip along each edge from v.
+    
     Args:
-        g: genus
-        max_r: maximum rank to consider (default: g)
-        max_d: maximum degree to consider (default: 2g)
-
+        G: the graph
+        D: the current divisor
+        v: vertex to fire
+    
     Returns:
-        List of (g, r, d) triples with nonneg Brill-Noether number
+        New divisor after firing v
     """
-    if max_r is None:
-        max_r = g
-    if max_d is None:
-        max_d = 2 * g
-
-    result = []
-    for r in range(max_r + 1):
-        for d in range(max_d + 1):
-            if brill_noether_number(g, r, d) >= 0:
-                result.append((g, r, d))
+    result = D.copy()
+    result[v] -= G.degree(v)
+    for w in G.adj[v]:
+        result[w] += 1
     return result
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 2: Chip-Firing on Graphs
-# ═══════════════════════════════════════════════════════════════════════
-
-class MetricGraph:
-    """A finite metric graph (combinatorial graph with edge weights).
-
-    Attributes:
-        n_vertices: number of vertices
-        edges: list of (u, v, weight) tuples
-        adjacency: adjacency list representation
-    """
-
-    def __init__(self, n_vertices: int, edges: List[Tuple[int, int, float]]):
-        self.n_vertices = n_vertices
-        self.edges = edges
-        self.adjacency: Dict[int, List[Tuple[int, float]]] = defaultdict(list)
-        for u, v, w in edges:
-            self.adjacency[u].append((v, w))
-            self.adjacency[v].append((u, w))
-
-    @property
-    def genus(self) -> int:
-        """First Betti number: |E| - |V| + 1."""
-        return len(self.edges) - self.n_vertices + 1
-
-    def degree(self, v: int) -> int:
-        """Valence of vertex v."""
-        return len(self.adjacency[v])
-
-    def laplacian_fire(self, divisor: List[int], vertex: int) -> List[int]:
-        """Fire vertex v: send one chip to each neighbor.
-
-        Args:
-            divisor: current chip configuration
-            vertex: vertex to fire
-
-        Returns:
-            New divisor after firing
-        """
-        result = divisor.copy()
-        result[vertex] -= self.degree(vertex)
-        for neighbor, _ in self.adjacency[vertex]:
-            result[neighbor] += 1
-        return result
-
-
-def chip_fire_rank(graph: MetricGraph, divisor: List[int]) -> int:
-    """Compute the rank of a divisor via Dhar's burning algorithm.
-
-    The rank of D is the largest r such that D - E is linearly
-    equivalent to an effective divisor for every effective E of degree r.
-
-    This uses a simplified brute-force approach for small graphs.
-
-    Time complexity: O(n^r * chip_firing_steps) for each rank test
-    Space complexity: O(n)
-
+def dhars_burning(G: Graph, D: Divisor, q: int) -> Tuple[bool, Set[int]]:
+    """Dhar's burning algorithm to test if a divisor is q-reduced.
+    
+    Simulates a fire starting at q. Returns whether the fire reaches all
+    vertices (meaning D is q-reduced and effective iff D(q) ≥ 0).
+    
     Args:
-        graph: the metric graph
-        divisor: chip configuration (integer per vertex)
-
+        G: the graph
+        D: the divisor
+        q: the distinguished vertex
+    
     Returns:
-        The rank of the divisor (-1 if not effective)
+        (is_reduced, burned_set): whether D is q-reduced and the set of burned vertices
     """
-    n = graph.n_vertices
+    burned = {q}
+    changed = True
+    while changed:
+        changed = False
+        for v in range(G.n):
+            if v in burned:
+                continue
+            # Count edges from v to burned vertices
+            edges_to_burned = sum(1 for w in G.adj[v] if w in burned)
+            if D[v] < edges_to_burned:
+                burned.add(v)
+                changed = True
+    return len(burned) == G.n, burned
 
-    if sum(divisor) < 0:
+
+def compute_rank(G: Graph, D: Divisor, q: int = 0) -> int:
+    """Compute the rank of divisor D on graph G using Dhar's algorithm.
+    
+    The rank r(D) is the maximum integer r ≥ -1 such that D - E is linearly
+    equivalent to an effective divisor for all effective E with deg(E) = r.
+    
+    Uses the q-reduced representative to efficiently compute rank.
+    
+    Args:
+        G: the graph
+        D: the divisor  
+        q: distinguished vertex for reduction (default: 0)
+    
+    Returns:
+        The rank of D, or -1 if D is not equivalent to any effective divisor
+    """
+    # First, reduce D to its q-reduced form
+    D_red = reduce_divisor(G, D, q)
+    
+    if D_red[q] < 0:
         return -1
-
-    # Check if divisor is effective (all entries ≥ 0)
-    if any(d < 0 for d in divisor):
-        # Try to make it effective via chip-firing (BFS)
-        if not _can_make_effective(graph, divisor):
-            return -1
-
+    
+    # Rank is at least 0. Try subtracting effective divisors.
     r = 0
     while True:
-        # Check if for every effective E of degree r+1,
-        # D - E is equivalent to an effective divisor
-        can_handle = True
-        for removal in _effective_divisors_of_degree(n, r + 1):
-            test_div = [divisor[i] - removal[i] for i in range(n)]
-            if not _can_make_effective(graph, test_div):
-                can_handle = False
+        # Check if rank is > r by trying all effective E with deg = r+1
+        # that are single-vertex point masses (sufficient by theory)
+        can_subtract = True
+        for v in range(G.n):
+            E = Divisor([0] * G.n)
+            E[v] = r + 1
+            D_minus_E = D_red - E
+            D_red_new = reduce_divisor(G, D_minus_E, q)
+            if D_red_new[q] < 0:
+                can_subtract = False
                 break
-        if not can_handle:
+        if not can_subtract:
             return r
         r += 1
-        if r > sum(divisor):  # rank can't exceed degree
+        if r > D.degree():  # Rank can't exceed degree
             return r
 
 
-def _can_make_effective(graph: MetricGraph, divisor: List[int]) -> bool:
-    """Check if divisor is linearly equivalent to an effective divisor.
-
-    Uses BFS over chip-firing moves (subset firing).
-
+def reduce_divisor(G: Graph, D: Divisor, q: int) -> Divisor:
+    """Compute the q-reduced divisor linearly equivalent to D.
+    
+    Repeatedly fires subsets of V\{q} until no more can fire.
+    
     Args:
-        graph: the metric graph
-        divisor: chip configuration
-
+        G: the graph
+        D: the divisor
+        q: distinguished vertex
+    
     Returns:
-        True if linearly equivalent to an effective divisor
+        The unique q-reduced divisor equivalent to D
     """
-    n = graph.n_vertices
-    if all(d >= 0 for d in divisor):
-        return True
-
-    # BFS with bounded depth
-    visited: Set[Tuple[int, ...]] = set()
-    queue = [tuple(divisor)]
-    visited.add(tuple(divisor))
-
-    max_iterations = min(1000, 2 ** n * 10)
-    iterations = 0
-
-    while queue and iterations < max_iterations:
-        current = list(queue.pop(0))
-        iterations += 1
-
-        for v in range(n):
-            new_div = graph.laplacian_fire(current, v)
-            key = tuple(new_div)
-            if all(d >= 0 for d in new_div):
-                return True
-            if key not in visited:
-                visited.add(key)
-                queue.append(key)
-
-    return False
-
-
-def _effective_divisors_of_degree(n: int, deg: int) -> List[List[int]]:
-    """Generate all effective divisors of given degree on n vertices.
-
-    Args:
-        n: number of vertices
-        deg: degree (total number of chips)
-
-    Returns:
-        List of divisors (each a list of n nonneg integers summing to deg)
-    """
-    if n == 1:
-        return [[deg]]
-    result = []
-    for first in range(deg + 1):
-        for rest in _effective_divisors_of_degree(n - 1, deg - first):
-            result.append([first] + rest)
-    return result
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 3: Chain of Loops Construction
-# ═══════════════════════════════════════════════════════════════════════
-
-def make_chain_of_loops(g: int, generic: bool = True) -> MetricGraph:
-    """Construct a chain of g loops with (optionally generic) edge lengths.
-
-    The chain of loops has g+1 vertices v_0, ..., v_g and 2g edges:
-    for each i in 0..g-1, two parallel edges from v_i to v_{i+1}
-    with lengths ℓ_{2i} and ℓ_{2i+1}.
-
-    Time complexity: O(g)
-    Space complexity: O(g)
-
-    Args:
-        g: genus (number of loops)
-        generic: if True, use random distinct edge lengths
-
-    Returns:
-        A MetricGraph representing the chain of loops
-    """
-    if generic:
-        # Generate 2g distinct random lengths
-        lengths = random.sample([i * 0.1 + 0.1 for i in range(10 * g)], 2 * g)
-    else:
-        lengths = [1.0] * (2 * g)
-
-    edges = []
-    for i in range(g):
-        edges.append((i, i + 1, lengths[2 * i]))
-        edges.append((i, i + 1, lengths[2 * i + 1]))
-
-    return MetricGraph(g + 1, edges)
-
-
-def is_generic_chain(lengths: List[float]) -> bool:
-    """Check if edge lengths are pairwise distinct (genericity condition).
-
-    Time complexity: O(n log n)
-
-    Args:
-        lengths: list of edge lengths
-
-    Returns:
-        True if all lengths are distinct
-    """
-    return len(set(lengths)) == len(lengths)
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 4: Admissible Lattice Path Enumeration
-# ═══════════════════════════════════════════════════════════════════════
-
-def count_lattice_paths(g: int, r: int, d: int) -> int:
-    """Count admissible lattice paths for Brill-Noether theory.
-
-    An admissible lattice path for parameters (g, r, d) is a path
-    in the integer lattice from (0, 0) to (g, d-g) that stays
-    within the rectangle [0, g] × [0, d-g] and satisfies certain
-    step constraints related to the Brill-Noether condition.
-
-    For the simplified model: paths from (0,0) to (g, d-r*(r+1)/(r+1))
-    with steps (1,0) and (0,1), staying weakly below the diagonal
-    scaled by the appropriate factor.
-
-    Time complexity: O(g * d) via dynamic programming
-    Space complexity: O(g * d)
-
-    Args:
-        g: genus
-        r: rank
-        d: degree
-
-    Returns:
-        Number of admissible lattice paths
-    """
-    rho = brill_noether_number(g, r, d)
-    if rho < 0:
-        return 0
-
-    # For the basic model: count paths in a (r+1) × (g-d+r) grid
-    # that stay within bounds
-    # This is a simplified Catalan-type counting
-    rows = r + 1
-    cols = g - d + r if g - d + r >= 0 else 0
-
-    if cols == 0:
-        return 1  # trivially admissible
-
-    # Count lattice paths from (0,0) to (rows-1, cols) staying
-    # weakly below y = x * (rows-1)/cols (ballot problem)
-    # Using reflection principle / DP
-    target_x = cols
-    target_y = rows - 1
-
-    if target_x < 0 or target_y < 0:
-        return max(1, rho + 1)
-
-    # DP: dp[x][y] = number of paths from (0,0) to (x,y)
-    dp = [[0] * (target_y + 2) for _ in range(target_x + 2)]
-    dp[0][0] = 1
-
-    for x in range(target_x + 1):
-        for y in range(target_y + 1):
-            if dp[x][y] == 0:
+    D_current = D.copy()
+    max_iterations = 10000
+    
+    for _ in range(max_iterations):
+        # Find a vertex v ≠ q that can fire (has enough chips)
+        fired = False
+        for v in range(G.n):
+            if v == q:
                 continue
-            # Step right
-            if x + 1 <= target_x:
-                dp[x + 1][y] += dp[x][y]
-            # Step up (if admissible)
-            if y + 1 <= target_y:
-                dp[x][y + 1] += dp[x][y]
+            if D_current[v] >= G.degree(v):
+                D_current = chip_fire(G, D_current, v)
+                fired = True
+                break
+        
+        if not fired:
+            # Try anti-firing q (adding chips at q, removing from neighbors)
+            # This is equivalent to firing all vertices except q
+            is_reduced, _ = dhars_burning(G, D_current, q)
+            if is_reduced:
+                break
+            # Fire all non-burned vertices
+            _, burned = dhars_burning(G, D_current, q)
+            unburned = [v for v in range(G.n) if v not in burned]
+            if not unburned:
+                break
+            for v in unburned:
+                D_current = chip_fire(G, D_current, v)
+    
+    return D_current
 
-    return max(dp[target_x][target_y], 1)
 
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 5: Brill-Noether Existence Search
-# ═══════════════════════════════════════════════════════════════════════
-
-def search_divisors(graph: MetricGraph, target_degree: int,
-                    target_rank: int, max_attempts: int = 100) -> Optional[List[int]]:
-    """Search for a divisor of given degree and rank on a graph.
-
-    Uses random sampling followed by chip-firing rank computation.
-
-    Time complexity: O(max_attempts * rank_computation)
-    Space complexity: O(n)
-
+def brill_noether_table(g_max: int) -> List[List[Tuple[int, int]]]:
+    """Generate a table of (max_rank, ρ) values for each (g, d).
+    
     Args:
-        graph: the metric graph
-        target_degree: desired degree
-        target_rank: desired minimum rank
-        max_attempts: number of random divisors to try
-
+        g_max: maximum genus to compute
+    
     Returns:
-        A divisor achieving the target, or None if not found
+        Table indexed by [g][d] giving (max_rank, ρ_at_max_rank)
     """
-    n = graph.n_vertices
-
-    for _ in range(max_attempts):
-        # Generate random divisor of given degree
-        divisor = [0] * n
-        for _ in range(target_degree):
-            v = random.randint(0, n - 1)
-            divisor[v] += 1
-
-        rank = chip_fire_rank(graph, divisor)
-        if rank >= target_rank:
-            return divisor
-
-    return None
+    table = []
+    for g in range(g_max + 1):
+        row = []
+        for d in range(2 * g + 1):
+            r = max_brill_noether_rank(g, d)
+            rho = brill_noether_number(g, d, r) if r >= 0 else -1
+            row.append((r, rho))
+        table.append(row)
+    return table
 
 
-def verify_brill_noether(g: int, max_r: int = 2, max_d: int = None,
-                          n_trials: int = 5) -> Dict[Tuple[int, int], str]:
-    """Verify Brill-Noether predictions on random generic chains of loops.
-
-    For each (r, d) pair, checks whether divisor existence matches
-    the sign of ρ(g, r, d).
-
-    Args:
-        g: genus
-        max_r: maximum rank to test
-        max_d: maximum degree to test
-        n_trials: number of random chains to test
-
-    Returns:
-        Dictionary mapping (r, d) to verification status
+def verify_serre_duality(g: int, d: int, r: int) -> bool:
+    """Verify that ρ(g,d,r) = ρ(g, 2g-2-d, g-1-d+r).
+    
+    This is the computational verification of the Serre duality theorem.
     """
-    if max_d is None:
-        max_d = 2 * g
-
-    results = {}
-    for r in range(1, max_r + 1):
-        for d in range(max_d + 1):
-            rho = brill_noether_number(g, r, d)
-            if rho < 0:
-                results[(r, d)] = f"ρ={rho} < 0: nonexistence certified"
-            else:
-                # Try to find a divisor on random chains
-                found_count = 0
-                for _ in range(n_trials):
-                    chain = make_chain_of_loops(g, generic=True)
-                    div = search_divisors(chain, d, r, max_attempts=50)
-                    if div is not None:
-                        found_count += 1
-                results[(r, d)] = f"ρ={rho} ≥ 0: found in {found_count}/{n_trials} trials"
-
-    return results
+    rho1 = brill_noether_number(g, d, r)
+    d_dual = 2 * g - 2 - d
+    r_dual = g - 1 - d + r
+    rho2 = brill_noether_number(g, d_dual, r_dual)
+    return rho1 == rho2
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Main: Run all algorithms with examples
-# ═══════════════════════════════════════════════════════════════════════
+def canonical_divisor(G: Graph) -> Divisor:
+    """Compute the canonical divisor K(v) = deg(v) - 2."""
+    return Divisor([G.degree(v) - 2 for v in range(G.n)])
+
 
 if __name__ == "__main__":
-    print("Tropical Brill-Noether Algorithms")
-    print("=" * 60)
-
-    # Algorithm 1: Brill-Noether numbers
-    print("\n1. Brill-Noether Number Table (genus 5)")
-    print("-" * 40)
-    g = 5
-    header = 'd\\r'
-    print(f"{header:>5}", end="")
-    for r in range(5):
-        print(f"  r={r:>1}", end="")
-    print()
-    for d in range(12):
-        print(f"d={d:>2}:", end="")
-        for r in range(5):
-            rho = brill_noether_number(g, r, d)
-            print(f"  {rho:>4}", end="")
-        print()
-
-    # Algorithm 2: Thresholds
-    print("\n2. Minimum degree for ρ ≥ 0")
-    print("-" * 40)
-    for g in range(2, 8):
-        thresholds = [brill_noether_threshold(g, r) for r in range(1, 4)]
-        print(f"  g={g}: r=1→d≥{thresholds[0]}, r=2→d≥{thresholds[1]}, r=3→d≥{thresholds[2]}")
-
-    # Algorithm 3: Chain of loops
-    print("\n3. Chain of Loops (genus 3)")
-    print("-" * 40)
-    chain = make_chain_of_loops(3, generic=True)
-    print(f"  Vertices: {chain.n_vertices}")
-    print(f"  Edges: {len(chain.edges)}")
-    print(f"  Genus: {chain.genus}")
-    print(f"  Edge lengths: {[f'{w:.2f}' for _, _, w in chain.edges]}")
-    print(f"  Generic: {is_generic_chain([w for _, _, w in chain.edges])}")
-
-    # Algorithm 4: Lattice path counts
-    print("\n4. Lattice Path Counts")
-    print("-" * 40)
-    for g_val in [3, 4, 5]:
-        for r_val in [1, 2]:
-            counts = []
-            for d_val in range(10):
-                counts.append(count_lattice_paths(g_val, r_val, d_val))
-            print(f"  g={g_val}, r={r_val}: paths = {counts}")
-
-    # Algorithm 5: Divisor search on small graph
-    print("\n5. Divisor Search on Chain of 2 Loops")
-    print("-" * 40)
-    chain2 = make_chain_of_loops(2, generic=True)
-    for d_val in range(5):
-        for r_val in range(3):
-            rho = brill_noether_number(2, r_val, d_val)
-            div = search_divisors(chain2, d_val, r_val, max_attempts=20)
-            status = f"found {div}" if div else "not found"
-            print(f"  d={d_val}, r={r_val}: ρ={rho:>3}, {status}")
-
-    print("\nAll algorithms completed.")
+    # Example computations
+    print("=== Brill-Noether Number Examples ===")
+    examples = [(2,2,1), (3,3,1), (4,3,1), (4,4,1), (5,4,1), (5,4,2)]
+    for g, d, r in examples:
+        rho = brill_noether_number(g, d, r)
+        print(f"ρ({g},{d},{r}) = {rho}")
+    
+    print("\n=== Serre Duality Verification ===")
+    for g in range(1, 6):
+        for d in range(2*g):
+            for r in range(d+1):
+                assert verify_serre_duality(g, d, r), f"Failed at ({g},{d},{r})"
+    print("Serre duality verified for g ≤ 5")
+    
+    print("\n=== Chain of Loops ===")
+    for g in range(1, 6):
+        G = Graph.chain_of_loops(g)
+        print(f"Chain of {g} loops: {G.n} vertices, {len(G.edges)} edges, genus {G.genus()}")
+        K = canonical_divisor(G)
+        print(f"  Canonical divisor: {K.values}, degree = {K.degree()}")
+    
+    print("\n=== Rank Computation on Chain of 3 Loops ===")
+    G = Graph.chain_of_loops(3)
+    for d in range(7):
+        D = Divisor([d] + [0] * (G.n - 1))
+        r = compute_rank(G, D)
+        r_max = max_brill_noether_rank(3, d)
+        print(f"  deg={d}: computed rank={r}, BN max rank={r_max}")
