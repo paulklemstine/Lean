@@ -1163,6 +1163,8 @@ class FutureDirectionsManager:
         if direction.timestamp:
             try:
                 added = datetime.fromisoformat(direction.timestamp)
+                if added.tzinfo is None:
+                    added = added.replace(tzinfo=timezone.utc)
                 days_old = (datetime.now(timezone.utc) - added).days
                 freshness = max(0.0, 1.0 - days_old / 90.0)
             except (ValueError, TypeError):

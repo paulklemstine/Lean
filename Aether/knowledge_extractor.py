@@ -2713,7 +2713,7 @@ Research mode: {concept.research_mode}
             concept_description=job.concept.concept_description,
             status=status,
             files_produced=job.theorem_count,
-            timestamp=datetime.datetime.now().isoformat(),
+            timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
             prompt_text=job.prompt,
             proof_quality=proof_quality,
             quality_score=job.quality_score,
