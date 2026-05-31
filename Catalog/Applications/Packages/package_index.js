@@ -4,14 +4,24 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
+    "title": "Hyperbolic Arithmetic on the Poincar\u00e9 Disk",
+    "domain": "Bridges",
+    "date": "2026-05-31T16:11:37Z",
+    "exp_id": "2474c876",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 9
+  },
+  {
     "filename": "this_cycle_established_the_foundational_infrastruc.json",
     "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
     "domain": "Bridges",
     "date": "2026-05-31T16:11:12Z",
     "exp_id": "efed225a",
-    "quality_score": null,
-    "quality": "unrated",
-    "pkg_num": 9
+    "quality_score": 0.7739868421052631,
+    "quality": "substantial",
+    "pkg_num": 8
   },
   {
     "filename": "biological_topology_protein_folding_as_persistent_.json",
@@ -21,7 +31,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "6a2bfb31",
     "quality_score": 0.7471118604651162,
     "quality": "substantial",
-    "pkg_num": 8
+    "pkg_num": 7
   },
   {
     "filename": "primes_of_the_form_n1.json",
@@ -31,7 +41,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e7f8157d",
     "quality_score": 0.6293001538461539,
     "quality": "partial",
-    "pkg_num": 7
+    "pkg_num": 6
   },
   {
     "filename": "this_research_cycle_established_the_mathematical_f.json",
@@ -41,16 +51,6 @@ window.PACKAGE_INDEX = [
     "exp_id": "866a2ce9",
     "quality_score": 0.7711866265060241,
     "quality": "substantial",
-    "pkg_num": 6
-  },
-  {
-    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "domain": "Algebra",
-    "date": "2026-05-31T15:44:22Z",
-    "exp_id": "4b21150a",
-    "quality_score": 0.5537266666666667,
-    "quality": "partial",
     "pkg_num": 5
   },
   {
@@ -153,12 +153,12 @@ window.PACKAGE_DB_INDEX = {
     "domain": "MachineLearning"
   },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "exp_id": "4b21150a",
+    "title": "Hyperbolic Arithmetic on the Poincar\u00e9 Disk",
+    "exp_id": "2474c876",
     "source_exp_ids": [
       "seed"
     ],
-    "domain": "Algebra"
+    "domain": "Bridges"
   },
   "this_cycle_established_the_foundational_infrastruc.json": {
     "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
@@ -181,7 +181,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -192,7 +192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -203,7 +203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 179,
+      "hue": 270,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -214,20 +214,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 314,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
-    },
-    {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:44:22Z",
-      "hue": 101,
-      "priority_score": 0.5537266666666667,
-      "quality": "partial"
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -236,7 +225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -247,7 +236,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6293001538461539,
       "quality": "partial"
     },
@@ -258,7 +247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -269,7 +258,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
-      "hue": 271,
+      "hue": 90,
+      "priority_score": 0.7739868421052631,
+      "quality": "substantial"
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Arithmetic on the Poincar\u00e9 Disk",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:37Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }

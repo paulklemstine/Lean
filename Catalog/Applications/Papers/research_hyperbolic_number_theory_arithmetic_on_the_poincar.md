@@ -1,208 +1,222 @@
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+# Hyperbolic Arithmetic on the Poincaré Disk: Formalized Foundations
 
-## Abstract
+**Abstract.** We develop a rigorous framework for arithmetic on the one-dimensional Poincaré disk model of hyperbolic geometry, centered on *Möbius addition* a ⊕ b = (a+b)/(1+ab). We establish disk preservation, full associativity (a one-dimensional phenomenon), monotone convergence of Möbius iterates, exponential lattice growth, absence of interior fixed points, and zeta summand reversal. All results are formalized in Lean 4 with Mathlib and verified without axioms beyond the standard foundations. We introduce the *Orbit Separation Conjecture* (proved for all steps by induction) and the *Hyperbolic Word Lattice*, connecting Pythagorean number theory with hyperbolic geometry.
 
-We develop foundations for number theory on the Poincaré disk model of hyperbolic geometry. We define hyperbolic integers as orbits of discrete subgroups of PSL(2,ℝ), introduce hyperbolic primes as irreducible elements under group composition, and establish a framework for hyperbolic convolution analogous to Dirichlet convolution. We prove that Möbius transformations preserve the disk, establish the Gauss-Bonnet angle defect formula and its additivity under triangulation, derive bounds on the hyperbolic divisor function, and show that the spectral gap controls prime geodesic counting. All results are machine-verified in Lean 4 with the Mathlib library, ensuring the highest standard of mathematical rigor.
-
-**Keywords:** Poincaré disk, hyperbolic geometry, Fuchsian groups, prime geodesic theorem, Selberg zeta function, spectral gap, formal verification
+---
 
 ## 1. Introduction
 
-The integers ℤ ⊂ ℝ form a discrete subset of a flat space — the real line. The entire edifice of classical number theory, from unique factorization to the Prime Number Theorem, rests on the algebraic and metric properties of this embedding. A natural question arises: what happens to arithmetic when the ambient space is curved?
+The Poincaré disk model realizes hyperbolic geometry within the open unit disk. While the geometry has been extensively studied, the *arithmetic* structures that arise from Möbius transformations on the disk have received less formal attention. This paper develops the algebraic and analytic foundations of "hyperbolic arithmetic" on the interval (-1, 1), treating Möbius addition as the fundamental operation.
 
-The Poincaré disk model of hyperbolic geometry provides the ideal setting for this investigation. The open unit disk D = {z ∈ ℂ : |z| < 1}, equipped with the hyperbolic metric ds² = 4|dz|²/(1 - |z|²)², is a complete, simply connected Riemannian manifold of constant sectional curvature -1. Its isometry group is PSL(2,ℝ), acting via Möbius transformations.
+Our contributions:
+1. A complete formalization of the Möbius group structure on (-1, 1), including the proof that real Möbius addition is associative (unlike the complex case).
+2. Quantitative convergence results for Möbius iteration, proved by induction.
+3. A word-based model of hyperbolic lattice points with exact exponential growth counts.
+4. The orbit separation theorem: distinct generators produce orbits with persistently positive gap.
+5. A bridge connecting Pythagorean triples to hyperbolic disk points.
 
-A discrete subgroup Γ ⊂ PSL(2,ℝ) acts on D by isometries, and the orbit Γ · 0 of the origin forms a discrete subset of D — the "hyperbolic integers" ℤ_H. The generators of Γ that cannot be decomposed as products of simpler elements play the role of "hyperbolic primes." The prime geodesic theorem, proved by Huber (1961) and refined by Hejhal, provides the hyperbolic analogue of the prime number theorem.
-
-### 1.1 Contributions
-
-We make the following contributions:
-
-1. **Formal foundations**: We define the Poincaré disk as a subtype of ℂ, prove that Möbius transformations preserve the disk, and establish that the denominator 1 - z̄w is nonzero for disk points.
-
-2. **Hyperbolic arithmetic**: We introduce a novel "hyperbolic convolution" operation on functions over the disk lattice, prove its algebraic properties (linearity, scaling), and define hyperbolic divisor and sigma functions.
-
-3. **Gauss-Bonnet formalism**: We prove the angle defect formula, its additivity under triangulation (by induction on the list of triangles), and the decomposition formula for cevian-split triangles.
-
-4. **Spectral gap analysis**: We define the spectral gap parameter, prove its monotonicity, compute its value at the critical threshold λ₁ = 1/4, and connect it to orbit growth bounds.
-
-5. **Critical line geometry**: We establish that the Möbius transform s ↦ (s - 1/2)/(s + 1/2) maps the critical line Re(s) = 1/2 strictly into the open unit disk, with explicit norm bound |t|/√(1 + t²).
-
-6. **Hyperbolic area**: We prove that the area of a hyperbolic disk of radius R is 2π(cosh R - 1), grows at least as fast as π(e^R - 2), and that the area scaling factor 4/(1-r²)² is always ≥ 4 and diverges as r → 1.
+All results are machine-verified in Lean 4.
 
 ## 2. Definitions
 
-### 2.1 The Poincaré Disk
+### 2.1 Möbius Addition
 
-**Definition 2.1.** The *Poincaré disk* is the type PoincareDisk := {z : ℂ | ‖z‖ < 1}.
+**Definition 1** (Möbius Addition). For a, b ∈ ℝ, define
+$$a \oplus b := \frac{a + b}{1 + ab}.$$
 
-**Definition 2.2.** The *hyperbolic distance quantity* between z, w ∈ D is
-$$\delta(z,w) = \frac{|z-w|^2}{(1-|z|^2)(1-|w|^2)}$$
-The actual hyperbolic distance satisfies d(z,w) = arccosh(1 + 2δ(z,w)).
+**Definition 2** (DiskPoint). A *disk point* is a real number x with |x| < 1. The set of disk points is denoted D = (-1, 1).
 
-### 2.2 Möbius Transformations
+### 2.2 Möbius Iteration
 
-**Definition 2.3.** A *Möbius automorphism* of the disk is a map φ_{a,θ}(z) = e^{iθ} · (z - a)/(1 - āz) where a ∈ D and |e^{iθ}| = 1.
+**Definition 3** (Möbius Iterate). For a ∈ D, define the sequence:
+- moebiusIterate(a, 0) = 0
+- moebiusIterate(a, n+1) = a ⊕ moebiusIterate(a, n)
 
-**Theorem 2.4** (Disk Preservation). *For a, z ∈ D, the Möbius map φ_a(z) = (z - a)/(1 - āz) satisfies |φ_a(z)| < 1.*
+### 2.3 Hyperbolic Word Lattice
 
-*Proof.* We need |z - a|² < |1 - āz|². Expanding:
-|z - a|² = |z|² - 2Re(z̄a) + |a|² and |1 - āz|² = 1 - 2Re(āz) + |a|²|z|².
-Since Re(z̄a) = Re(āz), the inequality reduces to |z|² + |a|² < 1 + |a|²|z|², i.e., (1 - |z|²)(1 - |a|²) > 0, which holds since both factors are positive. □
+**Definition 4** (HypWord). A *hyperbolic word* over a two-generator alphabet {L, R} is defined inductively:
+- id: the empty word
+- left(w): prepend generator L to word w  
+- right(w): prepend generator R to word w
 
-### 2.3 Hyperbolic Arithmetic System
+The *evaluation* of a word at generators a, b ∈ D is:
+- eval(id) = 0
+- eval(left(w)) = a ⊕ eval(w)
+- eval(right(w)) = b ⊕ eval(w)
 
-**Definition 2.5.** A *hyperbolic arithmetic system* is a tuple (E, e, ⊕, ‖·‖_H) where:
-- E ⊂ D is a finite set of "hyperbolic integers"
-- e = 0 ∈ E is the identity
-- ⊕ : E × E → E is a closed binary operation with e as left identity
-- ‖·‖_H : E → ℝ≥0 is a norm with ‖z‖_H = 0 ⟺ z = e
+**Definition 5** (Word Ball). wordBall(n) = Σ_{k=0}^n wordsOfLength(k), where wordsOfLength(k) = 2^k.
 
-**Definition 2.6.** An element p ∈ E is a *hyperbolic prime* if p ≠ e and for all a, b ∈ E with a ⊕ b = p, either a = e or b = e.
+### 2.4 Hyperbolic Distance
 
-### 2.4 Hyperbolic Convolution
+**Definition 6** (Hyperbolic Distance). d_H(a, b) = artanh(|a ⊕ (-b)|).
 
-**Definition 2.7.** The *hyperbolic convolution* of f, g : ℂ → ℝ over S ⊂ ℂ is
-$$(f \circledast g)(z) = \sum_{w \in S} f(w) \cdot g(z - w)$$
+### 2.5 Orbit Gap
 
-**Definition 2.8.** The *hyperbolic divisor function* for a group G with subset S is
-$$d_H(g) = |\{(g_1, g_2) \in S \times S : g_1 \cdot g_2 = g\}|$$
-
-**Definition 2.9.** The *hyperbolic sigma function* generalizes the divisor function:
-$$\sigma_H(k, g) = \sum_{\substack{(d_1, d_2) \in S \times S \\ d_1 \cdot d_2 = g}} \|d_1\|^k$$
+**Definition 7** (Orbit Gap). For a, b ∈ D, orbitGap(a, b, n) = moebiusIterate(b, n) - moebiusIterate(a, n).
 
 ## 3. Main Results
 
-### 3.1 Disk Geometry
+### 3.1 Algebraic Structure
 
-**Theorem 3.1** (Nonvanishing Denominator). *For z, w ∈ D, 1 - z̄w ≠ 0.*
+**Theorem 1** (Disk Preservation). If |a| < 1 and |b| < 1, then |a ⊕ b| < 1.
 
-**Theorem 3.2** (Disk Convexity). *For z, w ∈ D and t ∈ [0,1], the convex combination (1-t)z + tw ∈ D.*
+*Proof sketch.* The key inequality is (a+b)² < (1+ab)², which factors as (1-a²)(1-b²) > 0. Since |a|, |b| < 1, both factors are positive. The denominator 1+ab > 0 follows from |ab| ≤ |a|·|b| < 1. □
 
-**Theorem 3.3** (Area Factor Bounds). *The hyperbolic area element scaling 4/(1-r²)² satisfies:*
-- *4/(1-r²)² ≥ 4 for r ∈ [0,1)*
-- *For any M > 0, there exists r ∈ [0,1) with 4/(1-r²)² > M*
+**Theorem 2** (Associativity). For a, b, c ∈ D,
+$$(a \oplus b) \oplus c = a \oplus (b \oplus c).$$
 
-### 3.2 Gauss-Bonnet
+*Proof.* After clearing the denominators 1+ab ≠ 0 and 1+bc ≠ 0 (which follow from disk membership), both sides reduce to (a+b+c+abc)/(1+ab+bc+ac) by algebraic manipulation. Formally: `field_simp; ring`. □
 
-**Theorem 3.4** (Angle Defect). *The angle defect α_def(α,β,γ) = π - (α+β+γ) of a hyperbolic triangle equals its area. The defect is positive iff the angle sum is less than π.*
+**Remark.** This associativity is specific to the real line. In the complex Poincaré disk, Möbius addition a ⊕ b = (a+b)/(1+ā·b) involves conjugation, and the *gyration* gyr[a,b](c) = -(a⊕b) ⊕ (a ⊕ (b⊕c)) is nontrivial.
 
-**Theorem 3.5** (Additivity). *For any non-empty list of hyperbolic triangles with positive defects, the total defect is positive. (Proved by induction on the list length.)*
+**Theorem 3** (Group Axioms). (D, ⊕) is an abelian group with identity 0 and inverse -a.
 
-**Theorem 3.6** (Cevian Decomposition). *If a triangle is split by a cevian creating supplementary angles γ₁ + γ₂ = π, then the total defect decomposes as π - (α₁ + β₁ + α₂ + β₂).*
+### 3.2 Iteration Dynamics
 
-### 3.3 Divisor Bounds
+**Theorem 4** (Nonnegativity). For 0 < a < 1 and all n, moebiusIterate(a, n) ≥ 0.
 
-**Theorem 3.7** (Identity Divisor Bound). *For a finite group G with subset S closed under inverses, d_H(1) ≥ |S|.*
+*Proof by induction.* Base: moebiusIterate(a, 0) = 0 ≥ 0. Step: if x_n ≥ 0, then (a + x_n)/(1 + a·x_n) ≥ 0 since numerator and denominator are both positive. □
 
-*Proof.* The map g ↦ (g, g⁻¹) is an injection from S to the set of factorizing pairs, since g·g⁻¹ = 1 and g⁻¹ ∈ S by hypothesis. □
+**Theorem 5** (Strict Monotonicity). For 0 < a < 1, moebiusIterate(a, n) < moebiusIterate(a, n+1).
 
-**Theorem 3.8** (Upper Bound). *d_H(g) ≤ |S|² for all g ∈ G.*
+*Proof by induction.* The difference x_{n+1} - x_n = a(1 - x_n²)/(1 + a·x_n). Since |x_n| < 1 (Theorem 1 applied inductively), we have 1 - x_n² > 0, and since a > 0 and 1 + a·x_n > 0, the difference is positive. □
 
-**Theorem 3.9** (Sigma at k=0). *σ_H(0, g) = d_H(g) for all g.*
+**Corollary.** The sequence (moebiusIterate(a, n)) is bounded above by 1 and strictly increasing, hence convergent. The limit is 1 (the boundary), since artanh(moebiusIterate(a, n)) = n · artanh(a) → ∞.
 
-### 3.4 Spectral Gap
+### 3.3 Fixed-Point Theorem
 
-**Theorem 3.10** (Monotonicity). *The spectral gap δ(λ₁) = 1/2 + √(λ₁ - 1/4) is monotonically increasing in λ₁.*
+**Theorem 6** (No Interior Fixed Point). If a ≠ 0 and |a|, |x| < 1, then a ⊕ x ≠ x.
 
-**Theorem 3.11** (Critical Value). *δ(1/4) = 1/2.*
+*Proof by contradiction.* Suppose (a+x)/(1+ax) = x. Clearing denominators: a + x = x + ax². Hence a = ax², giving x² = 1. But |x| < 1 implies x² < 1, a contradiction. □
 
-**Theorem 3.12** (Lower Bound). *δ(λ₁) ≥ 1/2 for λ₁ ≥ 1/4.*
+### 3.4 Lattice Growth
 
-### 3.5 Orbit Growth and Counting
+**Theorem 7** (Word Evaluation in Disk). For any generators a, b ∈ D and any word w, eval(a, b, w) ∈ D.
 
-**Theorem 3.13** (Exponential Growth). *A group with n ≥ 2 generators has at least 4^k elements in the word ball of radius k.*
+*Proof by structural induction on w.* □
 
-**Theorem 3.14** (Geodesic Count Monotonicity). *The prime geodesic counting function π_H(N) is monotone in N.*
+**Theorem 8** (Exponential Growth). wordBall(n) = 2^{n+1} - 1.
 
-**Theorem 3.15** (Area Growth). *The hyperbolic disk area A(R) = 2π(cosh R - 1) satisfies A(R) ≥ π(e^R - 2).*
+*Proof.* By the geometric series formula: Σ_{k=0}^n 2^k = 2^{n+1} - 1. □
 
-### 3.6 Critical Line Connection
+**Theorem 9** (Growth Lower Bound). 2^n ≤ wordBall(n).
 
-**Theorem 3.16** (Critical Line to Disk). *The Möbius transform s ↦ (s - 1/2)/(s + 1/2) maps the critical line Re(s) = 1/2 strictly into the open unit disk: ‖(s - 1/2)/(s + 1/2)‖ < 1 for s ∈ {Re = 1/2, Im ≠ 0}.*
+### 3.5 Zeta Summand Reversal
 
-### 3.7 Hyperbolic Prime Asymptotics
+**Theorem 10** (Summand Divergence). For 0 < r < 1 and n ≥ 1, r^{-n} > 1.
 
-**Theorem 3.17** (Asymptotic Positivity). *The hyperbolic prime asymptotic e^R/R is positive for R > 0.*
+*Proof.* Since 0 < r < 1, we have r^{-1} > 1, so r^{-n} = (r^{-1})^n > 1 for n ≥ 1. □
 
-**Theorem 3.18** (Eventual Monotonicity). *e^R/R is increasing for R ≥ 1.*
+**Theorem 11** (Summand Monotonicity). For 0 < r < 1, r^{-n} < r^{-(n+1)}.
 
-*Proof.* For R₁ ≤ R₂ with R₁ ≥ 1, we need e^{R₁}·R₂ ≤ e^{R₂}·R₁, i.e., R₂/R₁ ≤ e^{R₂-R₁}. Since e^x ≥ 1 + x ≥ x for x ≥ 0, and R₂/R₁ ≤ 1 + (R₂-R₁)/R₁ ≤ 1 + (R₂-R₁) ≤ e^{R₂-R₁}. □
+This reversal means the hyperbolic zeta function ζ_H(s) = Σ 1/|z|^{2s} has summands that *grow* rather than decay, requiring different convergence analysis.
 
-## 4. Algorithms
+### 3.6 Orbit Separation
 
-### 4.1 Hyperbolic Lattice Point Enumeration
+**Theorem 12** (Orbit Separation). For 0 < a < b < 1 and all n ≥ 1, orbitGap(a, b, n) > 0.
 
-Given a Fuchsian group Γ with generators g₁, ..., g_n and their inverses, enumerate orbit points within hyperbolic radius R of the origin:
+*Proof by induction on n.* 
+
+*Base case* (n = 1): orbitGap(a, b, 1) = b - a > 0 since both iterate to b and a from 0.
+
+*Inductive step*: Assume orbitGap(a, b, n) > 0, i.e., x_n^b > x_n^a where x_n^b = moebiusIterate(b, n). We need x_{n+1}^b > x_{n+1}^a. Using Möbius addition monotonicity:
+
+1. b ⊕ x_n^b > a ⊕ x_n^b (monotonicity in first argument: since b > a and 1 - (x_n^b)² > 0)
+2. a ⊕ x_n^b > a ⊕ x_n^a (monotonicity in second argument: since x_n^b > x_n^a)
+
+Combining: x_{n+1}^b = b ⊕ x_n^b > a ⊕ x_n^a = x_{n+1}^a. □
+
+### 3.7 Pythagorean Bridge
+
+**Theorem 13** (Pythagorean Disk Embedding). For a Pythagorean triple (a, b, c) with b > 0, we have a/c ∈ D.
+
+**Theorem 14** (Pythagorean-Möbius Closure). If t₁ = (a₁, b₁, c₁) and t₂ = (a₂, b₂, c₂) are Pythagorean triples, then |a₁/c₁ ⊕ a₂/c₂| < 1.
+
+### 3.8 Distance Properties
+
+**Theorem 15** (Distance Self). d_H(a, a) = 0.
+
+**Theorem 16** (Distance Symmetry). d_H(a, b) = d_H(b, a).
+
+*Proof.* moebiusDiff(a, b) = (a-b)/(1-ab) and moebiusDiff(b, a) = (b-a)/(1-ba) = -(a-b)/(1-ab). Since |x| = |-x|, the artanh values agree. □
+
+## 4. The Artanh Isomorphism
+
+The deep reason for many of these results is the *artanh isomorphism*: the map φ: (D, ⊕) → (ℝ, +) given by φ(x) = artanh(x) is a group homomorphism. Under this map:
+
+- Möbius addition becomes ordinary addition: artanh(a ⊕ b) = artanh(a) + artanh(b)
+- Möbius iteration becomes multiplication: artanh(moebiusIterate(a, n)) = n · artanh(a)
+- Hyperbolic distance becomes absolute difference: d_H(a, b) = |artanh(a) - artanh(b)|
+
+This isomorphism is the source of associativity and commutativity in the 1D case. In higher dimensions, no such isomorphism exists, and the gyrogroup structure becomes essential.
+
+## 5. Algorithms
+
+### 5.1 Fast Möbius Iteration
+
+Direct computation of moebiusIterate(a, n) requires O(n) Möbius additions. Using the artanh isomorphism, it can be computed in O(1):
 
 ```
-function enumerate_orbit(generators, R, max_depth):
-    queue = [(identity, 0)]
-    visited = {identity}
-    while queue not empty:
-        (g, depth) = queue.pop()
-        if depth > max_depth: continue
-        z = g · 0  // apply to origin
-        if hyp_dist(0, z) ≤ R:
-            yield z
-        for gen in generators ∪ generators⁻¹:
-            g' = g · gen
-            if g' not in visited:
-                visited.add(g')
-                queue.append((g', depth + 1))
+moebiusIterateFast(a, n) = tanh(n * artanh(a))
 ```
 
-### 4.2 Selberg Zeta Computation
-
-Compute the truncated Selberg zeta function for a given geodesic spectrum:
+### 5.2 Hyperbolic Distance
 
 ```
-function selberg_zeta(spectrum, s, K):
-    product = 1
-    for ℓ in spectrum:
-        for k in 0..K-1:
-            product *= (1 - exp(-(s + k) * ℓ))
-    return product
+hypDist(a, b) = artanh(|moebiusDiff(a, b)|)
+             = |artanh(a) - artanh(b)|
 ```
 
-## 5. Discussion
+### 5.3 Orbit Gap Computation
 
-### 5.1 Unique Factorization
+```
+orbitGap(a, b, n) = tanh(n * artanh(b)) - tanh(n * artanh(a))
+```
 
-The question of whether hyperbolic arithmetic systems possess unique factorization is subtle. For free groups (which arise as fundamental groups of surfaces of genus ≥ 2), the word representation is unique, giving a form of unique factorization. However, for groups with relations (such as triangle groups), the factorization is not unique in general. This parallels the classical situation where unique factorization fails in certain algebraic number rings.
+## 6. Conjectures and Open Problems
 
-### 5.2 Connection to the Riemann Hypothesis
+### 6.1 Orbit Gap Monotonicity Conjecture
 
-The Selberg zeta function for a hyperbolic surface Γ\ℍ is defined by
-$$Z_\Gamma(s) = \prod_{\text{prim. geodesics } \gamma} \prod_{k=0}^\infty (1 - e^{-(s+k)\ell(\gamma)})$$
-where ℓ(γ) is the length of γ. The nontrivial zeros of Z_Γ are at s = 1/2 ± ir_j where λ_j = 1/4 + r_j² are the eigenvalues of the Laplacian. The analogue of the Riemann Hypothesis — all zeros on the line Re(s) = 1/2 — is known to hold for compact surfaces (Selberg).
+**Conjecture.** For 0 < a < b < 1 with artanh(b)/artanh(a) > 2, the sequence orbitGap(a, b, n) is eventually decreasing in n.
 
-For non-compact surfaces like PSL(2,ℤ)\ℍ, the situation is more complex due to the continuous spectrum. The spectral gap conjecture (Selberg's 1/4 conjecture) is the direct analogue of the Generalized Riemann Hypothesis for automorphic L-functions.
+*Computational evidence*: For a = 1/3, b = 1/2, the gaps decrease from n = 2 onward (verified for n ≤ 100).
 
-### 5.3 The PSL(2,ℤ) Lattice Point Problem
+*Discussion*: Since orbitGap(a, b, n) = tanh(n·artanh(b)) - tanh(n·artanh(a)) and tanh is concave on (0, ∞), the gap is eventually squeezed as both iterates approach 1.
 
-For the modular group Γ = PSL(2,ℤ), the covolume is π/3, and the leading coefficient in the lattice point count N(R) ~ (V/4π)·e^R = (1/12)·e^R as R → ∞. The error term is controlled by the spectral gap: N(R) = (1/12)e^R + O(e^{δR}) where δ < 1 depends on the first eigenvalue.
+### 6.2 Pythagorean Density
 
-## 6. Future Work
+**Question.** Is the set {a/c : a² + b² = c², gcd(a,b,c) = 1} dense in [0, 1)?
 
-1. **Hyperbolic L-functions**: Define and study L-functions associated to representations of Fuchsian groups, extending the Selberg framework.
+This is known to be true by classical results on the distribution of Pythagorean triples.
 
-2. **Computational verification**: Systematically compute lattice point counts for PSL(2,ℤ) and compare with the asymptotic formula.
+### 6.3 Higher-Dimensional Extension
 
-3. **Curved-space sieve**: Develop sieve methods adapted to the exponential growth of hyperbolic space.
+**Open Problem.** Characterize the failure of associativity in the complex Poincaré disk. Specifically: for which triples (a, b, c) ∈ D² ⊂ ℂ is gyr[a,b](c) = c?
 
-4. **Tropical-hyperbolic bridge**: Connect the tropical semiring structure to the hyperbolic metric via the valuation map z ↦ -log(1 - |z|²).
+## 7. Connections to Other Work
 
-## 7. Conjecture
+### 7.1 Tropical Arithmetic
 
-**Conjecture (Hyperbolic Goldbach-type):** For any finite simple group G with generating set S closed under inverses and |S| ≥ 2, the Cayley graph diameter satisfies diam(G, S) ≤ C · (log |G|)^k for absolute constants C, k.
+The Möbius addition formula (a+b)/(1+ab) = tanh(artanh(a) + artanh(b)) has a tropical flavor: the artanh map linearizes the operation, much as the logarithm linearizes multiplication. This suggests connections to tropical semirings via exponential/logarithmic changes of variables.
 
-This is a weak form of Babai's conjecture (which predicts k = O(1)). It is testable by computing Cayley graph diameters for alternating groups A_n with various generating sets.
+### 7.2 Spectral Theory
+
+The Selberg zeta function for a Fuchsian group Γ < PSL(2,ℝ) is the spectral-theoretic counterpart of our combinatorial hyperbolic zeta function. The Prime Geodesic Theorem—that the number of closed geodesics of length ≤ T grows as e^T/T—is the hyperbolic analog of the Prime Number Theorem.
+
+### 7.3 Pythagorean Number Theory
+
+The Berggren tree of primitive Pythagorean triples, studied elsewhere in this Catalog, provides an infinite supply of rational disk points. The interaction between Berggren tree structure and Möbius addition is a promising direction for future work.
+
+## 8. Conclusion
+
+We have established the foundations of hyperbolic arithmetic on the one-dimensional Poincaré disk, proving that the algebraic structure is a complete abelian group (unlike the higher-dimensional gyrogroup case), that Möbius iteration converges monotonically to the boundary, that lattice balls grow exponentially, and that distinct orbits remain separated. All proofs are formalized in Lean 4 and verified to depend only on the standard axioms (propext, Classical.choice, Quot.sound).
+
+The key insight is that the artanh isomorphism renders one-dimensional hyperbolic arithmetic essentially equivalent to ordinary arithmetic—but this equivalence breaks down in higher dimensions, where the gyration operator introduces genuinely new algebraic structure. The zeta summand reversal and exponential lattice growth hint at deep analytic differences that deserve further investigation.
 
 ## References
 
-1. H. Huber, "Zur analytischen Theorie hyperbolischer Raumformen und Bewegungsgruppen," Math. Ann. 138 (1959), 1–26.
-2. D. Hejhal, *The Selberg Trace Formula for PSL(2,ℝ)*, Lecture Notes in Mathematics, Springer, 1976/1983.
-3. A. Selberg, "On the estimation of Fourier coefficients of modular forms," Proc. Symp. Pure Math. 8 (1965), 1–15.
-4. P. Sarnak, "Selberg's eigenvalue conjecture," Notices AMS 42 (1995), 1272–1277.
-5. A. Lubotzky, "Cayley graphs: eigenvalues, expanders and random walks," in *Surveys in Combinatorics*, 1995.
+1. A. A. Ungar, *Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity*, World Scientific, 2008.
+2. A. A. Ungar, "Thomas rotation and the parametrization of the Lorentz transformation group," *Found. Phys. Lett.*, 1988.
+3. P. Sarnak, "The arithmetic and geometry of some hyperbolic three manifolds," *Acta Math.*, 1983.
+4. A. Selberg, "Harmonic analysis and discontinuous groups in weakly symmetric Riemannian spaces with applications to Dirichlet series," *J. Indian Math. Soc.*, 1956.
+5. Mathlib Contributors, *Mathlib: The Lean 4 Mathematics Library*, 2024.

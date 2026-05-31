@@ -1,326 +1,119 @@
 """
-Hyperbolic Number Theory: Algorithms for Arithmetic on the Poincaré Disk
+Hyperbolic Arithmetic Algorithms
+================================
 
-Type-hinted implementations of key algorithms for hyperbolic lattice enumeration,
-Möbius transformations, Selberg zeta computation, and spectral analysis.
+Type-hinted implementations of the core operations from
+Hyperbolic Number Theory on the Poincaré Disk.
 """
 
-import cmath
+from typing import List, Tuple
 import math
-from typing import List, Tuple, Set, Dict, Optional, Callable
 
 
-# ============================================================================
-# Core Poincaré Disk Operations
-# ============================================================================
-
-def mobius_transform(a: complex, z: complex) -> complex:
-    """Apply the Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)*z).
-
-    Args:
-        a: Center of the transformation, must satisfy |a| < 1.
-        z: Point to transform, must satisfy |z| < 1.
-
-    Returns:
-        The image φ_a(z) in the Poincaré disk.
+def moebius_add(a: float, b: float) -> float:
+    """Möbius addition on the Poincaré disk: (a+b)/(1+ab).
+    
+    For a, b in (-1, 1), the result is also in (-1, 1).
+    This is the fundamental arithmetic operation of hyperbolic geometry.
     """
-    return (z - a) / (1 - a.conjugate() * z)
+    return (a + b) / (1 + a * b)
 
 
-def hyperbolic_distance(z: complex, w: complex) -> float:
-    """Compute the hyperbolic distance d(z, w) in the Poincaré disk.
+def moebius_neg(a: float) -> float:
+    """Möbius negation: the inverse under Möbius addition."""
+    return -a
 
-    Uses the formula d(z,w) = 2 * artanh(|z-w| / |1 - conj(z)*w|).
 
-    Args:
-        z, w: Points in the open unit disk.
-
-    Returns:
-        The hyperbolic distance between z and w.
+def moebius_iterate(a: float, n: int) -> float:
+    """Compute the n-th Möbius iterate: a ⊕ a ⊕ ... ⊕ a (n times).
+    
+    Uses the artanh isomorphism: moebiusIterate(a, n) = tanh(n * artanh(a)).
     """
-    cross_ratio = abs(z - w) / abs(1 - z.conjugate() * w)
-    return 2 * math.atanh(min(cross_ratio, 0.9999999))  # clamp for numerical safety
-
-
-def hyperbolic_area(R: float) -> float:
-    """Compute the hyperbolic area of a disk of hyperbolic radius R.
-
-    A(R) = 2π(cosh(R) - 1) = 4π sinh²(R/2).
-    """
-    return 2 * math.pi * (math.cosh(R) - 1)
-
-
-def angle_defect(alpha: float, beta: float, gamma: float) -> float:
-    """Compute the angle defect (= hyperbolic area) of a triangle.
-
-    defect = π - (α + β + γ)
-    """
-    return math.pi - (alpha + beta + gamma)
-
-
-# ============================================================================
-# Hyperbolic Lattice Point Enumeration
-# ============================================================================
-
-def enumerate_orbit(
-    generators: List[Tuple[complex, complex]],
-    max_radius: float,
-    max_depth: int = 20
-) -> List[complex]:
-    """Enumerate orbit points of a Fuchsian group within hyperbolic radius R.
-
-    Each generator is a 2x2 matrix [[a,b],[c,d]] represented as (a,b,c,d).
-
-    Args:
-        generators: List of Möbius transformation parameters (a, rotation).
-        max_radius: Maximum hyperbolic distance from origin.
-        max_depth: Maximum word length to explore.
-
-    Returns:
-        List of orbit points within the given radius.
-    """
-    # Use BFS on the Cayley graph
-    orbit: List[complex] = [0j]
-    visited: Set[Tuple[float, float]] = {(0.0, 0.0)}
-
-    # For simple generators specified as disk centers
-    queue: List[Tuple[complex, int]] = [(0j, 0)]
-
-    for center, _ in generators:
-        z = center
-        key = (round(z.real, 10), round(z.imag, 10))
-        if key not in visited and abs(z) < 1:
-            d = hyperbolic_distance(0j, z)
-            if d <= max_radius:
-                orbit.append(z)
-                visited.add(key)
-
-    return orbit
-
-
-def psl2z_generators() -> List[Tuple[complex, complex]]:
-    """Return generators of PSL(2,Z) as Möbius transformations on the disk.
-
-    The standard generators are S: z -> -1/z and T: z -> z+1,
-    conjugated to the disk model via the Cayley transform.
-    """
-    # In the disk model, PSL(2,Z) generators become specific Möbius maps
-    # S corresponds to rotation by π, T corresponds to a parabolic element
-    return [(0.5 + 0j, 1 + 0j), (0.5j, 1 + 0j)]
-
-
-# ============================================================================
-# Selberg Zeta Function
-# ============================================================================
-
-def selberg_zeta_truncated(
-    spectrum: List[float],
-    s: complex,
-    K: int = 10
-) -> complex:
-    """Compute the truncated Selberg zeta function.
-
-    Z_K(s) = ∏_{ℓ ∈ spec} ∏_{k=0}^{K-1} (1 - e^{-(s+k)ℓ})
-
-    Args:
-        spectrum: List of primitive geodesic lengths.
-        s: Complex parameter.
-        K: Truncation level for the product.
-
-    Returns:
-        Value of the truncated Selberg zeta function.
-    """
-    result = 1 + 0j
-    for ell in spectrum:
-        for k in range(K):
-            result *= (1 - cmath.exp(-(s + k) * ell))
-    return result
-
-
-def modular_geodesic_lengths(max_trace: int = 50) -> List[float]:
-    """Compute primitive geodesic lengths for PSL(2,Z).
-
-    Primitive geodesics correspond to conjugacy classes of hyperbolic
-    elements. A matrix [[a,b],[c,d]] with a+d > 2 has geodesic length
-    ℓ = 2 * arccosh((a+d)/2).
-
-    For PSL(2,Z), hyperbolic elements have trace ≥ 3.
-    """
-    lengths: List[float] = []
-    seen_traces: Set[int] = set()
-
-    for trace in range(3, max_trace + 1):
-        # Check if this trace corresponds to a primitive element
-        # (not a power of a shorter element)
-        is_primitive = True
-        for k in range(2, int(math.log2(trace)) + 2):
-            # Chebyshev recurrence: tr(A^k) in terms of tr(A)
-            # For k=2: tr(A²) = tr(A)² - 2
-            if k == 2:
-                base_trace_sq = trace + 2
-                base_trace = int(round(math.sqrt(base_trace_sq)))
-                if base_trace * base_trace == base_trace_sq and base_trace >= 3:
-                    is_primitive = False
-                    break
-
-        if is_primitive:
-            ell = 2 * math.acosh(trace / 2)
-            lengths.append(ell)
-
-    return sorted(lengths)
-
-
-# ============================================================================
-# Spectral Gap Analysis
-# ============================================================================
-
-def spectral_gap(lambda1: float) -> float:
-    """Compute the spectral gap parameter.
-
-    δ = 1/2 + √(λ₁ - 1/4)
-
-    Args:
-        lambda1: First eigenvalue of the Laplacian (must be ≥ 1/4).
-
-    Returns:
-        The spectral gap parameter δ.
-    """
-    return 0.5 + math.sqrt(max(0, lambda1 - 0.25))
-
-
-def prime_geodesic_asymptotic(R: float) -> float:
-    """Compute the asymptotic prime geodesic count.
-
-    π_H(R) ~ e^R / R  (Prime Geodesic Theorem)
-    """
-    if R <= 0:
+    if n == 0:
         return 0.0
-    return math.exp(R) / R
+    return math.tanh(n * math.atanh(a))
 
 
-def lattice_point_leading_coeff(covolume: float) -> float:
-    """Compute the leading coefficient in the lattice point count.
-
-    N(R) ~ (V / 4π) · e^R
-
-    For PSL(2,Z), V = π/3, giving coefficient 1/12.
-    """
-    return covolume / (4 * math.pi)
-
-
-# ============================================================================
-# Hyperbolic Divisor Function
-# ============================================================================
-
-def hyperbolic_divisor_count(
-    elements: List[int],
-    group_op: Callable[[int, int], int],
-    target: int
-) -> int:
-    """Count the number of factorizations of target as g1 * g2.
-
-    Args:
-        elements: List of group elements (as integers).
-        group_op: The group operation.
-        target: The element to factor.
-
-    Returns:
-        Number of pairs (g1, g2) with g1 * g2 = target.
-    """
-    count = 0
-    for g1 in elements:
-        for g2 in elements:
-            if group_op(g1, g2) == target:
-                count += 1
-    return count
-
-
-def hyperbolic_sigma(
-    elements: List[int],
-    group_op: Callable[[int, int], int],
-    norm_fn: Callable[[int], float],
-    k: float,
-    target: int
-) -> float:
-    """Compute the hyperbolic sigma function σ_H(k, target).
-
-    σ_H(k, g) = Σ_{g1*g2=g} ‖g1‖^k
-    """
+def moebius_iterate_recursive(a: float, n: int) -> float:
+    """Recursive Möbius iteration (direct computation, O(n))."""
     result = 0.0
-    for g1 in elements:
-        for g2 in elements:
-            if group_op(g1, g2) == target:
-                result += norm_fn(g1) ** k
+    for _ in range(n):
+        result = moebius_add(a, result)
     return result
 
 
-# ============================================================================
-# Hyperbolic Convolution
-# ============================================================================
+def hyp_dist(a: float, b: float) -> float:
+    """Hyperbolic distance: d(a,b) = artanh(|a ⊕ (-b)|)."""
+    diff = moebius_add(a, -b)
+    return math.atanh(abs(diff))
 
-def hyperbolic_convolution(
-    S: List[complex],
-    f: Callable[[complex], float],
-    g: Callable[[complex], float],
-    z: complex
-) -> float:
-    """Compute the hyperbolic convolution (f ⊛ g)(z).
 
-    (f ⊛ g)(z) = Σ_{w ∈ S} f(w) · g(z - w)
+def orbit_gap(a: float, b: float, n: int) -> float:
+    """Gap between two Möbius orbits at step n."""
+    return moebius_iterate(b, n) - moebius_iterate(a, n)
+
+
+def word_ball_size(n: int) -> int:
+    """Exact number of words of length ≤ n in a 2-generator system.
+    
+    Returns 2^{n+1} - 1.
     """
-    return sum(f(w) * g(z - w) for w in S)
+    return 2 ** (n + 1) - 1
 
 
-# ============================================================================
-# Word Metric
-# ============================================================================
-
-def word_length(word: List[int]) -> int:
-    """Compute the word length of a group element."""
-    return len(word)
-
-
-def cayley_graph_diameter(
-    n: int,
-    generators: List[int],
-) -> int:
-    """Compute the Cayley graph diameter for Z/nZ with given generators.
-
-    Args:
-        n: Order of the cyclic group.
-        generators: List of generators (and their inverses should be included).
-
-    Returns:
-        The diameter of the Cayley graph.
+def hyp_zeta_summand(r: float, s: float) -> float:
+    """Hyperbolic zeta summand: r^{-2s}.
+    
+    For 0 < r < 1, this is > 1 when s > 0 (reversal of classical behavior).
     """
-    # BFS from 0
-    visited = {0}
-    frontier = {0}
-    depth = 0
-
-    while len(visited) < n:
-        next_frontier: Set[int] = set()
-        for x in frontier:
-            for g in generators:
-                y = (x + g) % n
-                if y not in visited:
-                    visited.add(y)
-                    next_frontier.add(y)
-        if not next_frontier:
-            break
-        frontier = next_frontier
-        depth += 1
-
-    return depth
+    return r ** (-2 * s)
 
 
-# ============================================================================
-# Area Factor Analysis
-# ============================================================================
-
-def hyp_area_factor(r: float) -> float:
-    """Compute the hyperbolic area scaling factor at Euclidean radius r.
-
-    factor = 4 / (1 - r²)²
+def gyration(a: float, b: float, c: float) -> float:
+    """The gyration operator gyr[a,b](c).
+    
+    On the real line, this is always c (associativity holds).
+    On the complex plane, it would be nontrivial.
     """
-    return 4 / (1 - r**2)**2
+    lhs = moebius_add(moebius_add(a, b), c)  # (a⊕b)⊕c
+    ab = moebius_add(a, b)
+    # gyr[a,b](c) = -(a⊕b) ⊕ (a ⊕ (b⊕c))
+    return moebius_add(-ab, moebius_add(a, moebius_add(b, c)))
+
+
+def pythagorean_disk_point(a: int, b: int, c: int) -> float:
+    """Map a Pythagorean triple (a, b, c) to a disk point a/c."""
+    assert a**2 + b**2 == c**2, f"Not a Pythagorean triple: {a}^2 + {b}^2 != {c}^2"
+    return a / c
+
+
+def find_pythagorean_triples(max_c: int) -> List[Tuple[int, int, int]]:
+    """Find all primitive Pythagorean triples with hypotenuse ≤ max_c."""
+    triples = []
+    for c in range(1, max_c + 1):
+        for a in range(1, c):
+            b_sq = c**2 - a**2
+            b = int(math.isqrt(b_sq))
+            if b > 0 and b * b == b_sq and a <= b:
+                if math.gcd(math.gcd(a, b), c) == 1:
+                    triples.append((a, b, c))
+    return triples
+
+
+def verify_orbit_separation(a: float, b: float, n_max: int) -> List[float]:
+    """Verify the orbit separation conjecture for given a, b up to n_max steps.
+    
+    Returns list of gaps. All should be positive if conjecture holds.
+    """
+    gaps = []
+    for n in range(1, n_max + 1):
+        gap = orbit_gap(a, b, n)
+        gaps.append(gap)
+    return gaps
+
+
+def verify_associativity(a: float, b: float, c: float) -> float:
+    """Check associativity: returns |(a⊕b)⊕c - a⊕(b⊕c)|."""
+    lhs = moebius_add(moebius_add(a, b), c)
+    rhs = moebius_add(a, moebius_add(b, c))
+    return abs(lhs - rhs)

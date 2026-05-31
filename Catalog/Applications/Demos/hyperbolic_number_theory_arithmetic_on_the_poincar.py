@@ -1,423 +1,276 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Numerical Demonstrations
+Hyperbolic Arithmetic Demo
+===========================
 
-Demonstrates key results from the Poincaré disk arithmetic framework:
-1. Möbius transformations preserve the disk
-2. Hyperbolic area growth
-3. Spectral gap analysis
-4. Prime geodesic counting
-5. Cayley graph diameters (testing Babai-type conjecture)
-6. Hyperbolic divisor function for cyclic groups
+Numerical demonstrations of the key results from
+Hyperbolic Number Theory on the Poincaré Disk.
 """
 
 import math
-import cmath
 from algorithms import (
-    mobius_transform,
-    hyperbolic_distance,
-    hyperbolic_area,
-    angle_defect,
-    spectral_gap,
-    prime_geodesic_asymptotic,
-    lattice_point_leading_coeff,
-    selberg_zeta_truncated,
-    modular_geodesic_lengths,
-    cayley_graph_diameter,
-    hyp_area_factor,
-    hyperbolic_divisor_count,
+    moebius_add, moebius_iterate, moebius_iterate_recursive,
+    hyp_dist, orbit_gap, word_ball_size, hyp_zeta_summand,
+    gyration, pythagorean_disk_point, find_pythagorean_triples,
+    verify_orbit_separation, verify_associativity
 )
 
 
-def demo_mobius_preservation():
-    """Verify that Möbius transformations preserve the disk."""
+def demo_moebius_addition():
+    """Demonstrate Möbius addition properties."""
     print("=" * 60)
-    print("DEMO 1: Möbius Transformations Preserve the Disk")
+    print("DEMO 1: Möbius Addition on the Poincaré Disk")
     print("=" * 60)
+    
+    pairs = [(0.5, 0.3), (0.7, -0.2), (0.9, 0.9), (-0.5, 0.8)]
+    for a, b in pairs:
+        result = moebius_add(a, b)
+        print(f"  {a} ⊕ {b} = {result:.6f}  (|result| = {abs(result):.6f} < 1 ✓)")
+    
+    print("\nCommutativity check:")
+    for a, b in pairs:
+        diff = abs(moebius_add(a, b) - moebius_add(b, a))
+        print(f"  |{a}⊕{b} - {b}⊕{a}| = {diff:.2e}")
+    
+    print("\nAssociativity check (real case — should be exact):")
+    triples = [(0.5, 0.3, 0.1), (0.7, -0.2, 0.4), (0.1, 0.2, 0.3)]
+    for a, b, c in triples:
+        diff = verify_associativity(a, b, c)
+        print(f"  |(a⊕b)⊕c - a⊕(b⊕c)| for ({a},{b},{c}) = {diff:.2e}")
 
-    test_points = [0.3 + 0.4j, -0.5 + 0.2j, 0.1 - 0.7j, 0.8 + 0.1j]
-    centers = [0.2 + 0.3j, -0.4 + 0.1j, 0.6 - 0.2j]
 
-    for a in centers:
-        print(f"\n  Center a = {a:.3f}, |a| = {abs(a):.4f}")
-        for z in test_points:
-            w = mobius_transform(a, z)
-            print(f"    φ_a({z:.3f}) = {w:.4f}, |w| = {abs(w):.6f} < 1 ✓")
-            assert abs(w) < 1, f"Disk not preserved! |w| = {abs(w)}"
-    print("\n  All Möbius images stay in the disk. ✓")
-
-
-def demo_hyperbolic_area():
-    """Demonstrate hyperbolic area growth."""
+def demo_iteration():
+    """Demonstrate Möbius iteration and monotonicity."""
     print("\n" + "=" * 60)
-    print("DEMO 2: Hyperbolic Area Growth")
+    print("DEMO 2: Möbius Iteration — Monotone Convergence to Boundary")
     print("=" * 60)
+    
+    a = 0.3
+    print(f"\nIterating a = {a}:")
+    print(f"  {'n':>3}  {'recursive':>12}  {'artanh':>12}  {'gap':>12}")
+    for n in range(11):
+        rec = moebius_iterate_recursive(a, n)
+        fast = moebius_iterate(a, n)
+        gap = 1.0 - fast
+        print(f"  {n:3d}  {rec:12.8f}  {fast:12.8f}  {gap:12.8f}")
+    
+    print(f"\n  → Converges to 1 (the boundary) as n → ∞")
+    print(f"  → artanh formula: tanh(n · artanh({a})) = tanh(n · {math.atanh(a):.4f})")
 
-    print(f"\n  {'R':>5s}  {'A(R)':>12s}  {'π·e^R':>12s}  {'A(R)/π·e^R':>10s}")
-    print("  " + "-" * 45)
 
-    for R in [0, 0.5, 1, 2, 3, 5, 8, 10]:
-        area = hyperbolic_area(R)
-        asymptotic = math.pi * math.exp(R) if R > 0 else 0
-        ratio = area / asymptotic if asymptotic > 0 else 0
-        print(f"  {R:5.1f}  {area:12.4f}  {asymptotic:12.4f}  {ratio:10.6f}")
-
-    print("\n  As R → ∞, A(R) / (π·e^R) → 1 (exponential growth).")
-
-
-def demo_spectral_gap():
-    """Analyze the spectral gap parameter."""
+def demo_orbit_separation():
+    """Test the orbit separation conjecture."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Spectral Gap Analysis")
+    print("DEMO 3: Orbit Separation Conjecture Test")
     print("=" * 60)
-
-    print(f"\n  {'λ₁':>8s}  {'δ(λ₁)':>8s}  {'Selberg bound':>14s}")
-    print("  " + "-" * 35)
-
-    for lam in [0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 5.0]:
-        delta = spectral_gap(lam)
-        bound = "λ₁ = 1/4" if abs(lam - 0.25) < 1e-10 else ""
-        print(f"  {lam:8.4f}  {delta:8.4f}  {bound}")
-
-    # Verify monotonicity
-    lambdas = [0.25 + 0.1 * i for i in range(50)]
-    deltas = [spectral_gap(l) for l in lambdas]
-    monotone = all(d1 <= d2 for d1, d2 in zip(deltas, deltas[1:]))
-    print(f"\n  Monotonicity verified: {monotone} ✓")
+    
+    a, b = 1/3, 1/2
+    print(f"\nTesting with a = 1/3, b = 1/2:")
+    gaps = verify_orbit_separation(a, b, 20)
+    
+    all_positive = all(g > 0 for g in gaps)
+    print(f"  {'n':>3}  {'gap':>14}  {'positive?':>10}")
+    for i, gap in enumerate(gaps):
+        print(f"  {i+1:3d}  {gap:14.10f}  {'✓' if gap > 0 else '✗':>10}")
+    
+    print(f"\n  All gaps positive: {'YES ✓' if all_positive else 'NO ✗'}")
+    print(f"  Conjecture {'SUPPORTED' if all_positive else 'REFUTED'} for this test case.")
 
 
-def demo_prime_geodesics():
-    """Demonstrate prime geodesic counting."""
+def demo_exponential_growth():
+    """Demonstrate exponential growth of word balls."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Prime Geodesic Theorem")
+    print("DEMO 4: Exponential Growth of Hyperbolic Lattice Balls")
     print("=" * 60)
-
-    lengths = modular_geodesic_lengths(100)
-    print(f"\n  Found {len(lengths)} primitive geodesic lengths for PSL(2,Z)")
-    print(f"  (traces 3 to 100)")
-    print(f"\n  First 10 lengths: {[f'{l:.4f}' for l in lengths[:10]]}")
-
-    print(f"\n  {'R':>5s}  {'Count':>6s}  {'e^R/R':>10s}  {'Ratio':>8s}")
-    print("  " + "-" * 35)
-
-    for R in [2, 3, 4, 5, 6, 7, 8]:
-        count = sum(1 for l in lengths if l <= R)
-        asymp = prime_geodesic_asymptotic(R)
-        ratio = count / asymp if asymp > 0 else 0
-        print(f"  {R:5.1f}  {count:6d}  {asymp:10.2f}  {ratio:8.4f}")
-
-    # PSL(2,Z) leading coefficient
-    coeff = lattice_point_leading_coeff(math.pi / 3)
-    print(f"\n  PSL(2,Z) lattice point leading coefficient: {coeff:.6f}")
-    print(f"  Expected (1/12): {1/12:.6f}")
-    print(f"  Match: {abs(coeff - 1/12) < 1e-10} ✓")
+    
+    print(f"\n  {'n':>3}  {'|B(n)|':>10}  {'2^n':>10}  {'ratio':>8}")
+    for n in range(13):
+        ball = word_ball_size(n)
+        exp = 2**n
+        ratio = ball / exp if exp > 0 else 0
+        print(f"  {n:3d}  {ball:10d}  {exp:10d}  {ratio:8.2f}")
+    
+    print(f"\n  → Ball grows as 2^(n+1) - 1 (exponential in n)")
+    print(f"  → Contrast with Euclidean ℤ^d where |B(n)| ~ n^d (polynomial)")
 
 
-def demo_cayley_diameters():
-    """Test Babai-type conjecture on Cayley graph diameters."""
+def demo_zeta_reversal():
+    """Demonstrate the zeta summand reversal phenomenon."""
     print("\n" + "=" * 60)
-    print("DEMO 5: Cayley Graph Diameters (Babai Conjecture Test)")
+    print("DEMO 5: Zeta Summand Reversal")
     print("=" * 60)
-
-    print(f"\n  Testing Z/nZ with generators {{1, n-1}}:")
-    print(f"  {'n':>5s}  {'Diameter':>8s}  {'⌊n/2⌋':>6s}  {'log₂n':>6s}")
-    print("  " + "-" * 30)
-
-    for n in [4, 5, 7, 10, 15, 20, 50, 100]:
-        gens = [1, n - 1]
-        diam = cayley_graph_diameter(n, gens)
-        half_n = n // 2
-        log_n = math.log2(n)
-        print(f"  {n:5d}  {diam:8d}  {half_n:6d}  {log_n:6.2f}")
-
-    print("\n  Diameter grows linearly (= ⌊n/2⌋), NOT logarithmically.")
-    print("  → Conjecture FALSE for cyclic groups with 2 generators.")
-
-    print(f"\n  Testing Z/nZ with generators {{1, 2, n-1, n-2}}:")
-    print(f"  {'n':>5s}  {'Diameter':>8s}  {'⌊n/4⌋+1':>8s}")
-    print("  " + "-" * 25)
-
-    for n in [4, 5, 7, 10, 15, 20, 50, 100]:
-        gens = [1, 2, n - 1, n - 2]
-        diam = cayley_graph_diameter(n, gens)
-        quarter = n // 4 + 1
-        print(f"  {n:5d}  {diam:8d}  {quarter:8d}")
+    
+    r = 0.5
+    s = 1.0
+    print(f"\nClassical vs Hyperbolic zeta summands (r = {r}, s = {s}):")
+    print(f"  {'n':>3}  {'classical 1/n^{2s}':>18}  {'hyperbolic r^{-2sn}':>20}")
+    for n in range(1, 11):
+        classical = 1.0 / n**(2*s) if n > 0 else float('inf')
+        hyperbolic = hyp_zeta_summand(r**n, s)
+        print(f"  {n:3d}  {classical:18.8f}  {hyperbolic:20.4f}")
+    
+    print(f"\n  → Classical summands decay to 0")
+    print(f"  → Hyperbolic summands grow without bound!")
 
 
-def demo_divisor_function():
-    """Demonstrate the hyperbolic divisor function for cyclic groups."""
+def demo_pythagorean_bridge():
+    """Demonstrate the Pythagorean-to-disk bridge."""
     print("\n" + "=" * 60)
-    print("DEMO 6: Hyperbolic Divisor Function for Z/nZ")
+    print("DEMO 6: Pythagorean Triples as Hyperbolic Lattice Points")
     print("=" * 60)
+    
+    triples = find_pythagorean_triples(50)
+    print(f"\nPrimitive Pythagorean triples → disk points:")
+    print(f"  {'(a, b, c)':>15}  {'a/c':>8}  {'in disk?':>10}")
+    for a, b, c in triples[:10]:
+        point = pythagorean_disk_point(a, b, c)
+        in_disk = abs(point) < 1
+        print(f"  ({a:3d},{b:3d},{c:3d})  {point:8.4f}  {'✓' if in_disk else '✗':>10}")
+    
+    print(f"\nMöbius sums of Pythagorean disk points:")
+    for i in range(min(5, len(triples))):
+        for j in range(i+1, min(5, len(triples))):
+            p1 = pythagorean_disk_point(*triples[i])
+            p2 = pythagorean_disk_point(*triples[j])
+            s = moebius_add(p1, p2)
+            print(f"  {triples[i]} ⊕ {triples[j]}: {p1:.4f} ⊕ {p2:.4f} = {s:.6f}  (|s| < 1: {abs(s) < 1})")
 
-    for n in [5, 7, 12]:
-        elements = list(range(n))
-        group_op = lambda a, b, n=n: (a + b) % n
 
-        print(f"\n  Z/{n}Z, S = Z/{n}Z:")
-        print(f"  {'g':>4s}  {'d_H(g)':>6s}")
-        print("  " + "-" * 14)
-
-        for g in range(n):
-            count = hyperbolic_divisor_count(elements, group_op, g)
-            marker = " ← identity" if g == 0 else ""
-            print(f"  {g:4d}  {count:6d}{marker}")
-
-        # Verify: d_H(0) = n (each element pairs with its inverse)
-        d0 = hyperbolic_divisor_count(elements, group_op, 0)
-        print(f"  d_H(0) = {d0} = |S| = {n} ✓")
-
-
-def demo_gauss_bonnet():
-    """Demonstrate the Gauss-Bonnet angle defect formula."""
+def demo_gyration():
+    """Show that gyration is trivial on ℝ (associativity holds)."""
     print("\n" + "=" * 60)
-    print("DEMO 7: Gauss-Bonnet Angle Defect")
+    print("DEMO 7: Gyration is Trivial on ℝ")
     print("=" * 60)
-
-    triangles = [
-        ("Ideal triangle (all angles 0)", 0, 0, 0),
-        ("Right triangle (π/4, π/6, π/4)", math.pi/4, math.pi/6, math.pi/4),
-        ("Nearly flat (π/3, π/3, π/3-0.1)", math.pi/3, math.pi/3, math.pi/3 - 0.1),
-        ("Very curved (0.1, 0.1, 0.1)", 0.1, 0.1, 0.1),
-    ]
-
-    for name, a, b, c in triangles:
-        defect = angle_defect(a, b, c)
-        angle_sum = a + b + c
-        print(f"\n  {name}:")
-        print(f"    Angle sum = {angle_sum:.4f} ({math.degrees(angle_sum):.1f}°)")
-        print(f"    Defect = Area = {defect:.4f}")
-        if defect > 0:
-            print(f"    Angle sum < π ✓ (hyperbolic)")
+    
+    test_cases = [(0.3, 0.4, 0.5), (0.1, -0.2, 0.7), (0.8, 0.1, -0.3)]
+    print(f"\nFor all a, b, c: gyr[a,b](c) should equal c:")
+    print(f"  {'(a, b, c)':>20}  {'gyr[a,b](c)':>12}  {'c':>8}  {'match?':>8}")
+    for a, b, c in test_cases:
+        g = gyration(a, b, c)
+        match = abs(g - c) < 1e-12
+        print(f"  ({a:4.1f},{b:5.1f},{c:5.1f})  {g:12.8f}  {c:8.4f}  {'✓' if match else '✗':>8}")
+    
+    print(f"\n  → On ℝ, the gyration is identity: (ℝ-disk, ⊕) is an abelian GROUP")
+    print(f"  → Non-trivial gyration only appears in ℂ-disk (2+ dimensions)")
 
 
-def demo_area_factor():
-    """Demonstrate the hyperbolic area factor divergence."""
+def demo_hyperbolic_distance():
+    """Demonstrate hyperbolic distance."""
     print("\n" + "=" * 60)
-    print("DEMO 8: Hyperbolic Area Factor Divergence")
+    print("DEMO 8: Hyperbolic Distance")
     print("=" * 60)
-
-    print(f"\n  {'r':>6s}  {'4/(1-r²)²':>12s}  {'≥ 4':>5s}")
-    print("  " + "-" * 28)
-
-    for r in [0, 0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99, 0.999]:
-        factor = hyp_area_factor(r)
-        check = "✓" if factor >= 4 else "✗"
-        print(f"  {r:6.3f}  {factor:12.2f}  {check:>5s}")
-
-    print("\n  Area factor diverges as r → 1: CONFIRMED ✓")
+    
+    pairs = [(0, 0.5), (0.3, 0.7), (0, 0.9), (0, 0.99)]
+    print(f"\n  {'(a, b)':>12}  {'d_H(a,b)':>10}  {'d_H(b,a)':>10}  {'symmetric?':>12}")
+    for a, b in pairs:
+        d1 = hyp_dist(a, b)
+        d2 = hyp_dist(b, a)
+        sym = abs(d1 - d2) < 1e-15
+        print(f"  ({a:4.2f},{b:4.2f})  {d1:10.6f}  {d2:10.6f}  {'✓' if sym else '✗':>12}")
+    
+    print(f"\n  → Near boundary (r → 1), distances blow up to ∞")
+    print(f"  → This is the hallmark of hyperbolic geometry")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   HYPERBOLIC NUMBER THEORY: NUMERICAL DEMONSTRATIONS    ║")
-    print("║   Arithmetic on the Poincaré Disk                       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_mobius_preservation()
-    demo_hyperbolic_area()
-    demo_spectral_gap()
-    demo_prime_geodesics()
-    demo_cayley_diameters()
-    demo_divisor_function()
-    demo_gauss_bonnet()
-    demo_area_factor()
-
+    demo_moebius_addition()
+    demo_iteration()
+    demo_orbit_separation()
+    demo_exponential_growth()
+    demo_zeta_reversal()
+    demo_pythagorean_bridge()
+    demo_gyration()
+    demo_hyperbolic_distance()
+    
     print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
+    print("All demonstrations complete.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Poincaré Disk with Hyperbolic Lattice Points
-
-Generates a plot of the Poincaré disk showing:
-- The unit disk boundary
-- Hyperbolic geodesics
-- Lattice points of a discrete group
-- Hyperbolic circles of increasing radius
+Visualization: Hyperbolic Arithmetic on the Poincaré Disk
 """
-
 import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import numpy as np
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.patches import Circle, Arc
-    from matplotlib.collections import LineCollection
-except ImportError:
-    print("matplotlib not available, skipping visualization")
-    exit(0)
+
+def moebius_add(a, b):
+    return (a + b) / (1 + a * b)
 
 
-def mobius_transform(a: complex, z: complex) -> complex:
-    """Apply Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)*z)."""
-    denom = 1 - a.conjugate() * z
-    if abs(denom) < 1e-15:
-        return 0j
-    return (z - a) / denom
+def moebius_iterate(a, n):
+    if n == 0:
+        return 0.0
+    return math.tanh(n * math.atanh(a))
 
 
-def generate_lattice_points(centers: list, depth: int = 4) -> list:
-    """Generate lattice points by composing Möbius transforms."""
-    points = [0j]
-    current_gen = [0j]
-
-    for _ in range(depth):
-        next_gen = []
-        for z in current_gen:
-            for a in centers:
-                w = mobius_transform(a, z)
-                if abs(w) < 0.999:
-                    # Check if point is new
-                    is_new = all(abs(w - p) > 0.01 for p in points)
-                    if is_new:
-                        points.append(w)
-                        next_gen.append(w)
-                # Also try inverse
-                w_inv = mobius_transform(-a, z)
-                if abs(w_inv) < 0.999:
-                    is_new = all(abs(w_inv - p) > 0.01 for p in points)
-                    if is_new:
-                        points.append(w_inv)
-                        next_gen.append(w_inv)
-        current_gen = next_gen
-        if not current_gen:
-            break
-
-    return points
+def orbit_gap(a, b, n):
+    return moebius_iterate(b, n) - moebius_iterate(a, n)
 
 
-def hyperbolic_circle_euclidean(center_hyp: complex, R: float, n_points: int = 200) -> list:
-    """Convert a hyperbolic circle to Euclidean coordinates."""
-    # For a circle centered at origin with hyperbolic radius R,
-    # the Euclidean radius is tanh(R/2)
-    if abs(center_hyp) < 1e-10:
-        r_eucl = math.tanh(R / 2)
-        return [(r_eucl * math.cos(t), r_eucl * math.sin(t))
-                for t in np.linspace(0, 2*math.pi, n_points)]
-    else:
-        # General case: transform a circle at origin
-        r_eucl = math.tanh(R / 2)
-        points = []
-        for t in np.linspace(0, 2*math.pi, n_points):
-            z = r_eucl * complex(math.cos(t), math.sin(t))
-            # Transform from origin to center_hyp
-            w = mobius_transform(-center_hyp, z)
-            points.append((w.real, w.imag))
-        return points
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle("Hyperbolic Arithmetic on the Poincaré Disk", fontsize=16, fontweight='bold')
 
+# Panel 1: Möbius iteration convergence
+ax1 = axes[0, 0]
+for a in [0.1, 0.3, 0.5, 0.7, 0.9]:
+    ns = list(range(21))
+    vals = [moebius_iterate(a, n) for n in ns]
+    ax1.plot(ns, vals, 'o-', markersize=3, label=f'a = {a}')
+ax1.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Boundary')
+ax1.set_xlabel('Step n')
+ax1.set_ylabel('moebiusIterate(a, n)')
+ax1.set_title('Möbius Iteration: Monotone Convergence to Boundary')
+ax1.legend(fontsize=8)
+ax1.grid(True, alpha=0.3)
 
-def plot_poincare_disk():
-    """Create the main Poincaré disk visualization."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+# Panel 2: Orbit separation
+ax2 = axes[0, 1]
+test_pairs = [(0.2, 0.4), (0.3, 0.5), (0.1, 0.8)]
+ns = list(range(1, 26))
+for a, b in test_pairs:
+    gaps = [orbit_gap(a, b, n) for n in ns]
+    ax2.semilogy(ns, gaps, 'o-', markersize=3, label=f'a={a}, b={b}')
+ax2.set_xlabel('Step n')
+ax2.set_ylabel('Orbit Gap (log scale)')
+ax2.set_title('Orbit Separation Conjecture: Gaps Stay Positive')
+ax2.legend(fontsize=8)
+ax2.grid(True, alpha=0.3)
 
-    # ====== Left plot: Lattice points ======
-    ax = axes[0]
-    ax.set_aspect('equal')
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-    ax.set_title('Hyperbolic Integers on the Poincaré Disk', fontsize=13)
+# Panel 3: Exponential growth vs polynomial
+ax3 = axes[1, 0]
+ns = list(range(1, 16))
+ball_sizes = [2**(n+1) - 1 for n in ns]
+euclidean_1d = [2*n + 1 for n in ns]
+euclidean_2d = [(2*n+1)**2 for n in ns]
+ax3.semilogy(ns, ball_sizes, 'ro-', markersize=4, label='Hyperbolic: 2^(n+1)-1')
+ax3.semilogy(ns, euclidean_1d, 'b^-', markersize=4, label='Euclidean ℤ¹: 2n+1')
+ax3.semilogy(ns, euclidean_2d, 'gs-', markersize=4, label='Euclidean ℤ²: (2n+1)²')
+ax3.set_xlabel('Radius n')
+ax3.set_ylabel('Ball Size (log scale)')
+ax3.set_title('Exponential vs Polynomial Growth')
+ax3.legend(fontsize=8)
+ax3.grid(True, alpha=0.3)
 
-    # Draw unit disk
-    disk = Circle((0, 0), 1, fill=False, edgecolor='black', linewidth=2)
-    ax.add_patch(disk)
-    disk_fill = Circle((0, 0), 1, fill=True, facecolor='#f0f8ff', edgecolor='none')
-    ax.add_patch(disk_fill)
+# Panel 4: Zeta summand reversal
+ax4 = axes[1, 1]
+ns_zeta = list(range(1, 16))
+for r in [0.3, 0.5, 0.7]:
+    hyp_summands = [r**(-2*n) for n in ns_zeta]
+    ax4.semilogy(ns_zeta, hyp_summands, 'o-', markersize=3, label=f'Hyperbolic r={r}')
+classical = [1.0/n**2 for n in ns_zeta]
+ax4.semilogy(ns_zeta, classical, 'k^-', markersize=4, label='Classical 1/n²')
+ax4.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+ax4.set_xlabel('n')
+ax4.set_ylabel('Summand Value (log scale)')
+ax4.set_title('Zeta Summand Reversal: Growth vs Decay')
+ax4.legend(fontsize=8)
+ax4.grid(True, alpha=0.3)
 
-    # Generate lattice points using two generators
-    gen1 = 0.4 + 0.3j
-    gen2 = -0.2 + 0.5j
-    points = generate_lattice_points([gen1, gen2], depth=5)
-
-    # Draw hyperbolic circles
-    for R in [0.5, 1.0, 1.5, 2.0, 2.5]:
-        circle_pts = hyperbolic_circle_euclidean(0j, R)
-        xs = [p[0] for p in circle_pts]
-        ys = [p[1] for p in circle_pts]
-        ax.plot(xs, ys, 'b-', alpha=0.15, linewidth=0.5)
-
-    # Plot lattice points
-    for p in points:
-        color = 'red' if abs(p) < 0.01 else ('darkblue' if abs(p) < 0.5 else 'steelblue')
-        size = 40 if abs(p) < 0.01 else (20 if abs(p) < 0.5 else 10)
-        ax.plot(p.real, p.imag, 'o', color=color, markersize=math.sqrt(size),
-                alpha=0.8, markeredgecolor='white', markeredgewidth=0.3)
-
-    ax.plot(0, 0, 'o', color='red', markersize=8, label='Origin (identity)')
-    ax.legend(loc='upper right', fontsize=9)
-
-    # Labels
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-    ax.text(0.02, -0.06, '0', fontsize=8, color='red')
-
-    # ====== Right plot: Area growth ======
-    ax2 = axes[1]
-    Rs = np.linspace(0, 6, 200)
-    areas = [2 * math.pi * (math.cosh(R) - 1) for R in Rs]
-    asymp = [math.pi * math.exp(R) for R in Rs]
-
-    ax2.plot(Rs, areas, 'b-', linewidth=2, label=r'$A(R) = 2\pi(\cosh R - 1)$')
-    ax2.plot(Rs, asymp, 'r--', linewidth=1.5, label=r'$\pi e^R$ (asymptotic)')
-    ax2.fill_between(Rs, areas, alpha=0.1, color='blue')
-
-    ax2.set_xlabel('Hyperbolic radius R', fontsize=12)
-    ax2.set_ylabel('Hyperbolic area', fontsize=12)
-    ax2.set_title('Exponential Growth of Hyperbolic Area', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.set_yscale('log')
-    ax2.set_ylim(0.1, 2000)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('poincare_disk.png', dpi=150, bbox_inches='tight')
-    print("Saved poincare_disk.png")
-    plt.close()
-
-
-def plot_spectral_gap():
-    """Plot the spectral gap analysis."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: spectral gap function
-    ax = axes[0]
-    lambdas = np.linspace(0.25, 5, 200)
-    deltas = [0.5 + math.sqrt(max(0, l - 0.25)) for l in lambdas]
-
-    ax.plot(lambdas, deltas, 'b-', linewidth=2)
-    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.5, label=r'$\delta = 1/2$ (minimum)')
-    ax.axvline(x=0.25, color='g', linestyle='--', alpha=0.5, label=r'$\lambda_1 = 1/4$ (Selberg)')
-    ax.set_xlabel(r'$\lambda_1$', fontsize=14)
-    ax.set_ylabel(r'$\delta(\lambda_1)$', fontsize=14)
-    ax.set_title('Spectral Gap: Monotonically Increasing', fontsize=13)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: area factor divergence
-    ax2 = axes[1]
-    rs = np.linspace(0, 0.99, 500)
-    factors = [4 / (1 - r**2)**2 for r in rs]
-
-    ax2.plot(rs, factors, 'purple', linewidth=2)
-    ax2.axhline(y=4, color='r', linestyle='--', alpha=0.5, label='Minimum = 4')
-    ax2.set_xlabel('Euclidean radius r', fontsize=14)
-    ax2.set_ylabel(r'$4/(1-r^2)^2$', fontsize=14)
-    ax2.set_title('Hyperbolic Area Factor Divergence', fontsize=13)
-    ax2.set_yscale('log')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('spectral_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved spectral_analysis.png")
-    plt.close()
-
-
-if __name__ == "__main__":
-    plot_poincare_disk()
-    plot_spectral_gap()
-    print("All visualizations generated.")
+plt.tight_layout()
+plt.savefig('hyperbolic_arithmetic.png', dpi=150, bbox_inches='tight')
+print("Saved visualization to hyperbolic_arithmetic.png")

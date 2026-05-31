@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "the_theorems_established_in_this_work__identifying",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -25,7 +25,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 179
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -34,16 +34,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271
-    },
-    {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:44:22Z",
-      "hue": 101
+      "hue": 314
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -52,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "primes_of_the_form_n1",
@@ -61,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -70,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "this_cycle_established_the_foundational_infrastruc",
@@ -79,7 +70,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
-      "hue": 271
+      "hue": 90
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Arithmetic on the Poincaré Disk",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:37Z",
+      "hue": 91
     }
   ],
   "edges": [],
