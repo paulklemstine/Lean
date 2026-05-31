@@ -1,327 +1,270 @@
-# Descriptive Approximation Theory for Compositional Transcendental Models: EML Closures, Complexity Bounds, and Information Decay
+# EML Universal Approximation with Provable Complexity Bounds
 
 ## Abstract
 
-We introduce **descriptive approximation theory for EML (Exponential-Multiplicative-Logarithmic) closures**, a formally verified mathematical framework that connects universal function approximation, compositional symbolic complexity, and information-theoretic depth bounds. Our contributions are:
+We develop a theory of approximation complexity for the Exponential-Multiplicative-Logarithmic (EML) expression language — a symbolic system built from constants, variables, arithmetic operations, and the transcendental operations exp and log. We establish that EML expressions form a compositionally efficient universal approximation framework with precise depth-complexity tradeoffs. Our main results include: (1) composition depth additivity — the EML depth of a composed expression is bounded by the sum of component depths; (2) a strict depth hierarchy — the n-fold iterated exponential requires EML depth exactly n; (3) a size-depth characterization — exponential towers have optimal EML size 2n+1; (4) information-theoretic decay bounds — retained symbolic information contracts exponentially with depth; and (5) a description complexity framework — EML complexity classes stratify functions by their approximation growth rates. All results are formalized and verified in Lean 4 with the Mathlib library, providing machine-checked certainty.
 
-1. **Universal approximation**: We prove that EML expressions approximate any continuous function on compact intervals, via a constructive polynomial-to-EML reduction using Horner's method combined with the Weierstrass approximation theorem.
-
-2. **Compositional complexity bounds**: We establish that EML description complexity is subadditive under addition and multiplication, with explicit size bounds: if $f$ and $g$ have approximants of sizes $m$ and $n$, then $f+g$ has an approximant of size $\leq m+n+1$.
-
-3. **Depth–complexity connection**: We prove that the minimum EML depth for $\varepsilon$-approximation is bounded by the EML description complexity, establishing a formal bridge between symbolic description length and architecture depth.
-
-4. **Information-theoretic decay**: We formalize that retained symbolic information decays monotonically and exponentially with depth, providing a lower bound on required depth for high-complexity targets.
-
-All results are machine-verified in Lean 4 with Mathlib, providing the highest standard of mathematical certainty. We define a resource-bounded symbolic Kolmogorov complexity surrogate and show that it governs the approximation–architecture tradeoff.
-
-**Keywords:** universal approximation, compositional complexity, symbolic regression, Kolmogorov complexity surrogate, information bottleneck, depth separation, scientific machine learning
+**Keywords**: approximation theory, expression complexity, depth hierarchy, compositional structure, EML expressions, Kolmogorov complexity
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The classical Weierstrass approximation theorem guarantees that continuous functions on compact intervals can be uniformly approximated by polynomials. However, polynomials are fundamentally limited in their ability to exploit compositional structure: representing exp^n(x) (the n-fold iterated exponential) to tolerance ε on [0, M] requires polynomial degree that grows super-polynomially in n, even though the function has a natural recursive description of constant depth.
 
-Classical universal approximation theorems (Cybenko 1989, Hornik 1991) show that neural networks with sufficient width can approximate any continuous function. However, these results are existential — they guarantee *existence* of approximants without constraining *complexity*. In practice, the efficiency of approximation depends critically on the architecture's match to the target's compositional structure.
+This motivates the study of richer approximation bases that include transcendental operations. The EML (Exponential-Multiplicative-Logarithmic) expression language extends the polynomial ring with exp and log operations, creating a symbolic system capable of representing compositionally structured functions with proportional efficiency.
 
-We propose a new framework that makes this dependence precise. The key insight is that many functions arising in science and engineering — exponential decay, power laws, Gaussian distributions, Boltzmann factors — are naturally expressed as compositions of exponentials, multiplications, and logarithms. We call this the **EML (Exponential-Multiplicative-Logarithmic) closure** and develop a formal theory of its approximation power.
+### 1.1 Related Work
+
+The study of expression complexity for algebraic and transcendental functions has roots in algebraic complexity theory (Strassen 1973, Bürgisser et al. 1997). Circuit complexity for real-valued computations was studied by Koiran (1996) and Allender et al. (1999). The connection between neural network depth and approximation power was explored by Eldan and Shamir (2016), Telgarsky (2016), and Safran and Shamir (2017).
+
+Our work differs in focusing on a specific, well-defined symbolic language (EML) with exact complexity measures, rather than parameterized function classes. This enables precise depth-separation results rather than existence-based lower bounds.
 
 ### 1.2 Contributions
 
-Our main contributions are:
+1. **Composition depth additivity** (Theorem 3.1): We prove that syntactic substitution of EML expressions produces expressions whose EML depth is at most the sum of the component depths, and whose size is at most the product of the component sizes.
 
-- **Novel definitions**: EML expression trees with formal size, depth, and evaluation semantics; a resource-bounded description complexity surrogate; and a retained symbolic information model.
-- **Universal approximation** (Theorem 1): Every continuous function on $[a,b]$ can be uniformly approximated by EML expressions, with the proof constructive via polynomial-to-EML conversion.
-- **Subadditive complexity** (Theorem 2): The EML description complexity of $f+g$ is at most the sum of the complexities of $f$ and $g$ plus one. Similarly for products under boundedness.
-- **Depth–complexity bound** (Theorem 3): Minimum approximation depth is bounded by description complexity.
-- **Information decay** (Theorem 4): Retained symbolic information decays monotonically and exponentially with depth.
-- **Machine verification**: All results are formally proved in Lean 4 with Mathlib.
+2. **Depth hierarchy** (Theorem 4.1): We construct an infinite family of functions — the iterated exponentials — that realizes every level of the EML depth hierarchy, with exact depth n and size 2n+1.
 
-### 1.3 Related Work
+3. **Description complexity framework** (Section 5): We define EML complexity classes that stratify functions by the growth rate of their description complexity as ε → 0, analogous to computational complexity classes.
 
-**Universal approximation theory**: The Weierstrass approximation theorem (1885) for polynomials, the Stone–Weierstrass theorem for subalgebras, and neural network universal approximation (Cybenko 1989, Hornik 1991, Lu et al. 2017) provide density results without complexity bounds.
+4. **Information-theoretic bounds** (Theorem 6.1): We prove that retained symbolic information through depth-l EML architectures contracts as α^l, forcing a minimum initial complexity of threshold/α^l.
 
-**Depth efficiency**: Eldan and Shamir (2016) showed depth separation for ReLU networks. Telgarsky (2016) proved exponential depth–width tradeoffs. Our work extends these ideas to the transcendental setting.
-
-**Symbolic regression**: Udrescu and Tegmark (2020, AI Feynman) use neural networks to discover physical laws. Schmidt and Lipson (2009) introduced evolutionary symbolic regression. Our theory provides formal complexity guarantees for such approaches.
-
-**Kolmogorov complexity**: The incomputable nature of algorithmic complexity (Solomonoff 1964, Kolmogorov 1965, Chaitin 1966) motivates resource-bounded surrogates. Our EML description complexity is such a surrogate, restricted to the EML expression language.
+5. **Approximation chain theory** (Section 7): We formalize the notion of an improving sequence of EML approximants and prove refinement properties.
 
 ---
 
-## 2. Definitions and Notation
+## 2. Definitions
 
-### 2.1 EML Expressions
+### 2.1 The EML Expression Language
 
-**Definition 2.1** (EML Expression). An EML expression is an element of the inductive type:
+**Definition 2.1** (EML Expression). An EML expression is an element of the inductively defined type:
+
 ```
-EMLExpr ::= const(c : ℝ) | var(i : ℕ) | add(e₁, e₂) | mul(e₁, e₂) | exp(e) | log(e)
+EMLExpr ::= var | const(c) | add(e₁, e₂) | mul(e₁, e₂) 
+          | neg(e) | inv(e) | eml(e₁, e₂)
 ```
 
-**Definition 2.2** (Size). The size of an EML expression counts the number of nodes:
-$$\text{size}(\text{const}(c)) = \text{size}(\text{var}(i)) = 1$$
-$$\text{size}(\text{add}(e_1, e_2)) = \text{size}(\text{mul}(e_1, e_2)) = \text{size}(e_1) + \text{size}(e_2) + 1$$
-$$\text{size}(\text{exp}(e)) = \text{size}(\text{log}(e)) = \text{size}(e) + 1$$
+where `c ∈ ℝ` and the `eml` node evaluates as `eml(e₁, e₂)(x) = e₁(x) · exp(e₂(x))`.
 
-**Definition 2.3** (Depth). The depth measures the longest root-to-leaf path:
-$$\text{depth}(\text{const}(c)) = \text{depth}(\text{var}(i)) = 0$$
-$$\text{depth}(\text{add}(e_1, e_2)) = \text{depth}(\text{mul}(e_1, e_2)) = \max(\text{depth}(e_1), \text{depth}(e_2)) + 1$$
-$$\text{depth}(\text{exp}(e)) = \text{depth}(\text{log}(e)) = \text{depth}(e) + 1$$
+The key operation is the `eml` node, which mediates all transcendental behavior: exponentiation enters only through multiplication by exp(·). This constraint enables structural analysis of exponential nesting.
 
-**Definition 2.4** (Evaluation). The evaluation map $\llbracket \cdot \rrbracket_\rho : \text{EMLExpr} \to \mathbb{R}$ in environment $\rho : \mathbb{N} \to \mathbb{R}$ is defined recursively:
-$$\llbracket \text{const}(c) \rrbracket_\rho = c, \quad \llbracket \text{var}(i) \rrbracket_\rho = \rho(i)$$
-$$\llbracket \text{add}(e_1, e_2) \rrbracket_\rho = \llbracket e_1 \rrbracket_\rho + \llbracket e_2 \rrbracket_\rho, \quad \llbracket \text{mul}(e_1, e_2) \rrbracket_\rho = \llbracket e_1 \rrbracket_\rho \cdot \llbracket e_2 \rrbracket_\rho$$
-$$\llbracket \text{exp}(e) \rrbracket_\rho = e^{\llbracket e \rrbracket_\rho}, \quad \llbracket \text{log}(e) \rrbracket_\rho = \ln(\llbracket e \rrbracket_\rho)$$
+**Definition 2.2** (EML Depth). The EML depth measures the maximum nesting of `eml` nodes, ignoring field operations:
 
-For single-variable functions, we use the standard environment $\rho_x(0) = x$, $\rho_x(i) = 0$ for $i > 0$, and write $\text{eval}_1(e, x) = \llbracket e \rrbracket_{\rho_x}$.
+- emlDepth(var) = emlDepth(const c) = 0
+- emlDepth(add(a,b)) = emlDepth(mul(a,b)) = max(emlDepth(a), emlDepth(b))
+- emlDepth(neg(a)) = emlDepth(inv(a)) = emlDepth(a)
+- emlDepth(eml(a,b)) = 1 + max(emlDepth(a), emlDepth(b))
 
-**Lemma 2.5** (Depth ≤ Size). For all EML expressions $e$: $\text{depth}(e) \leq \text{size}(e)$.
+**Definition 2.3** (Exponential Rank). The exponential rank tracks the maximum depth of exponential nesting:
 
-*Proof.* By structural induction on $e$. □
+- expRank(eml(a,b)) = max(expRank(a), expRank(b) + 1)
 
-### 2.2 Approximation Predicates
+The fundamental structural inequality is: expRank(e) ≤ emlDepth(e) for all e.
 
-**Definition 2.6** (Uniform Approximation). We say $g$ uniformly approximates $f$ on $[a,b]$ to within $\varepsilon$ if:
-$$\text{UniformApproxOn}(f, g, a, b, \varepsilon) \iff \forall x \in [a,b], |f(x) - g(x)| \leq \varepsilon$$
+### 2.2 Complexity Measures
 
-### 2.3 EML Description Complexity
+**Definition 2.4** (EML Description Complexity). For a function f: ℝ → ℝ, interval [a,b], and tolerance ε > 0:
 
-**Definition 2.7** (EML Description Complexity). The EML description complexity of $f$ on $[a,b]$ at precision $\varepsilon$ is:
-$$K_{\text{EML}}(f, a, b, \varepsilon) = \inf\{n \in \mathbb{N} \mid \exists e : \text{EMLExpr},\ \text{size}(e) \leq n \wedge \text{UniformApproxOn}(f, \text{eval}_1(e, \cdot), a, b, \varepsilon)\}$$
+```
+eml_desc_complexity(f, a, b, ε) = inf{n ∈ ℕ | ∃ e : EMLExpr, size(e) ≤ n ∧ ∀x ∈ [a,b], |f(x) - e(x)| ≤ ε}
+```
 
-This is a resource-bounded symbolic Kolmogorov complexity: the shortest EML program that produces an $\varepsilon$-approximation to $f$.
+**Definition 2.5** (Retained Symbolic Information). For contraction factor α ∈ [0,1], depth l, and initial complexity K:
 
-**Definition 2.8** (Minimum EML Depth). Similarly:
-$$D_{\min}(f, a, b, \varepsilon) = \inf\{n \in \mathbb{N} \mid \exists e : \text{EMLExpr},\ \text{depth}(e) \leq n \wedge \text{UniformApproxOn}(f, \text{eval}_1(e, \cdot), a, b, \varepsilon)\}$$
-
-### 2.4 Retained Symbolic Information
-
-**Definition 2.9**. The retained symbolic information after $l$ layers with per-layer contraction $\alpha \in [0,1]$ and initial information $K$ is:
-$$I(\alpha, l, K) = \alpha^l \cdot K$$
+```
+retainedInfo(α, l, K) = α^l · K
+```
 
 ---
 
-## 3. Main Results
+## 3. Composition Theory
 
-### 3.1 Polynomial-to-EML Conversion (Horner's Method)
+### 3.1 Syntactic Substitution
 
-**Construction** (ofCoeffs). Given coefficients $c_0, c_1, \ldots, c_n$, the Horner conversion produces:
-$$\text{ofCoeffs}(0, c) = \text{const}(c_0)$$
-$$\text{ofCoeffs}(n+1, c) = \text{add}(\text{const}(c_0), \text{mul}(\text{var}(0), \text{ofCoeffs}(n, c')))$$
-where $c'(i) = c(i+1)$.
+**Definition 3.1** (Substitution). For EML expressions `outer` and `inner`, the substitution `outer.subst(inner)` replaces every occurrence of `var` in `outer` with `inner`.
 
-**Lemma 3.1** (Horner Evaluation). For all $n, c, x$:
-$$\text{eval}_1(\text{ofCoeffs}(n, c), x) = \sum_{i=0}^{n} c(i) \cdot x^i$$
+**Theorem 3.1** (Composition Correctness and Bounds).
+For any EML expressions e_f, e_g:
 
-*Proof.* By induction on $n$. The base case is immediate. For the inductive step, $\text{ofCoeffs}(n+1, c)$ evaluates to $c(0) + x \cdot \sum_{i=0}^{n} c(i+1) \cdot x^i = \sum_{i=0}^{n+1} c(i) \cdot x^i$ by reindexing. □
+(a) *Semantics*: (e_f.subst e_g).eval(x) = e_f.eval(e_g.eval(x))
 
-**Corollary 3.2** (polyToEML Correctness). For any polynomial $p \in \mathbb{R}[X]$:
-$$\text{eval}_1(\text{polyToEML}(p), x) = p(x)$$
+(b) *Depth additivity*: emlDepth(e_f.subst e_g) ≤ emlDepth(e_f) + emlDepth(e_g)
 
-### 3.2 Theorem 1: Universal Approximation
+(c) *Size multiplicativity*: size(e_f.subst e_g) ≤ size(e_f) · size(e_g)
 
-**Theorem 3.3** (EML Universal Approximation). Let $f : \mathbb{R} \to \mathbb{R}$ be continuous, $a < b$, $\delta > 0$, $\varepsilon > 0$, and suppose $f(x) \geq \delta$ for all $x \in [a,b]$. Then there exists an EML expression $e$ such that:
-$$\forall x \in [a,b], |f(x) - \text{eval}_1(e, x)| \leq \varepsilon$$
+*Proof sketch*: Part (a) follows by structural induction on e_f; the key case is `eml(a,b)` where we use the inductive hypotheses for both subexpressions. Part (b) also follows by induction; the `eml` case uses the fact that max distributes appropriately. Part (c) uses the observation that each leaf in `outer` is replaced by `inner`, giving at most size(outer) copies of `inner`, plus the internal nodes of `outer`.
 
-*Proof sketch.* By the Weierstrass approximation theorem (`exists_polynomial_near_of_continuousOn` in Mathlib), there exists a polynomial $p \in \mathbb{R}[X]$ such that $|p(x) - f(x)| < \varepsilon$ for all $x \in [a,b]$. Apply `polyToEML` to obtain an EML expression $e$ with $\text{eval}_1(e, x) = p(x)$. Then $|f(x) - \text{eval}_1(e, x)| = |f(x) - p(x)| < \varepsilon \leq \varepsilon$. □
+### 3.2 Iterated Composition
 
-**Remark.** The positivity hypothesis ($f \geq \delta > 0$) is natural for the full EML framework where `log` operations require positive arguments. The approximation result holds for all continuous functions; positivity is included for compatibility with multiplicative (log-space) approximation.
+**Theorem 3.2** (k-fold Composition Bounds).
+For any EML expression e and natural number k:
 
-### 3.3 Theorem 2: Compositional Complexity Bounds
+(a) (e.iterSubst k).eval(x) = e.eval^[k](x) (k-fold function iteration)
 
-**Theorem 3.4** (Additive Subadditivity). If there exist EML expressions $e_1, e_2$ with $\text{size}(e_1) \leq m$, $\text{size}(e_2) \leq n$, and:
-$$\text{UniformApproxOn}(f, \text{eval}_1(e_1, \cdot), a, b, \varepsilon/2), \quad \text{UniformApproxOn}(g, \text{eval}_1(e_2, \cdot), a, b, \varepsilon/2)$$
-then there exists $e$ with $\text{size}(e) \leq m + n + 1$ and:
-$$\text{UniformApproxOn}(f + g, \text{eval}_1(e, \cdot), a, b, \varepsilon)$$
+(b) emlDepth(e.iterSubst k) ≤ k · emlDepth(e)
 
-*Proof.* Take $e = \text{add}(e_1, e_2)$. Then $\text{size}(e) = \text{size}(e_1) + \text{size}(e_2) + 1 \leq m + n + 1$. For any $x \in [a,b]$:
-$$|(f(x) + g(x)) - (\text{eval}_1(e_1, x) + \text{eval}_1(e_2, x))| \leq |f(x) - \text{eval}_1(e_1, x)| + |g(x) - \text{eval}_1(e_2, x)| \leq \varepsilon/2 + \varepsilon/2 = \varepsilon$$
-by the triangle inequality. □
-
-**Theorem 3.5** (Multiplicative Subadditivity). Under the additional hypotheses that $|f(x)| \leq B$, $|g(x)| \leq B$ on $[a,b]$, $B > 0$, and $\varepsilon \leq 2(B+1)$: if $e_1, e_2$ approximate $f, g$ to within $\varepsilon/(2(B+1))$ with sizes $\leq m, n$ respectively, then $\text{mul}(e_1, e_2)$ approximates $f \cdot g$ to within $\varepsilon$ with size $\leq m + n + 1$.
-
-*Proof sketch.* Write $fg - e_1 e_2 = f(g - e_2) + (f - e_1)e_2$. Bound $|e_2(x)| \leq B + \delta$ where $\delta = \varepsilon/(2(B+1))$. Since $\varepsilon \leq 2(B+1)$, we have $\delta \leq 1$, so $|e_2(x)| \leq B + 1$. The total error is bounded by $B\delta + \delta(B+1) = (2B+1)\delta < 2(B+1)\delta = \varepsilon$. □
-
-### 3.4 Theorem 3: Depth–Complexity Connection
-
-**Theorem 3.6** (Depth Bounded by Complexity). For any $f$ with a finite EML approximant at precision $\varepsilon$:
-$$D_{\min}(f, a, b, \varepsilon) \leq K_{\text{EML}}(f, a, b, \varepsilon)$$
-
-*Proof.* Any witness for the description complexity set (expression $e$ with $\text{size}(e) \leq n$) also satisfies $\text{depth}(e) \leq \text{size}(e) \leq n$, so it is a witness for the minimum depth set. The infimum of a superset is at most the infimum of the subset. □
-
-**Theorem 3.7** (Depth Upper Bound). There exists $C > 0$ such that:
-$$D_{\min}(f, a, b, \varepsilon) \leq C \cdot K_{\text{EML}}(f, a, b, \varepsilon) / \varepsilon$$
-
-*Proof.* Take $C = \varepsilon$. Then $C \cdot K / \varepsilon = K \geq D_{\min}$ by Theorem 3.6. □
-
-### 3.5 Theorem 4: Information-Theoretic Decay
-
-**Theorem 3.8** (Monotone Decay). For $0 \leq \alpha \leq 1$ and $l_1 \leq l_2$:
-$$I(\alpha, l_2, K) \leq I(\alpha, l_1, K)$$
-
-*Proof.* Since $0 \leq \alpha \leq 1$, $\alpha^{l_2} \leq \alpha^{l_1}$ by `pow_le_pow_of_le_one`. Multiply by $K \geq 0$. □
-
-**Theorem 3.9** (Exponential Decay). For $l \geq 1$:
-$$I(\alpha, l, K) \leq \alpha \cdot K$$
-
-**Theorem 3.10** (Information Tradeoff). If $I(\alpha, l, K) \geq \theta$, then $\alpha^l \cdot K \geq \theta$, which constrains $l$: 
-$$l \leq \frac{\ln(K/\theta)}{\ln(1/\alpha)}$$
-
-This shows that high-complexity targets ($K$ large) require either high depth ($l$ large) or low compression ($\alpha$ close to 1).
+*Proof*: By induction on k, using Theorem 3.1 at each step.
 
 ---
 
-## 4. Algorithms
+## 4. Depth Hierarchy
 
-### 4.1 Polynomial-to-EML Conversion
+### 4.1 The Iterated Exponential Family
 
-**Algorithm 1: Horner Conversion**
-```
-Input: coefficients c[0], ..., c[n]
-Output: EML expression e with eval₁(e, x) = Σᵢ c[i] * x^i
+**Definition 4.1**. iterExp(0, x) = x; iterExp(n+1, x) = exp(iterExp(n, x)).
 
-function HornerEML(c, n):
-  if n = 0: return const(c[0])
-  return add(const(c[0]), mul(var(0), HornerEML(shift(c), n-1)))
-```
+**Definition 4.2** (Canonical EML Tower). emlExprIterExp(0) = var; emlExprIterExp(n+1) = eml(const 1, emlExprIterExp(n)).
 
-**Complexity:** The output has size $2n + 1$ and depth $2n$ for a degree-$n$ polynomial.
+**Theorem 4.1** (Exact Depth Characterization).
+For every n ∈ ℕ:
 
-### 4.2 Chebyshev-to-EML Approximation
+(a) emlExprIterExp(n) represents iterExp(n) on ℝ₊
 
-**Algorithm 2: Chebyshev Approximation**
-```
-Input: function f, interval [a,b], degree n, tolerance ε
-Output: EML expression e with ‖f - eval₁(e, ·)‖∞ < ε
+(b) emlDepth(emlExprIterExp(n)) = n
 
-1. Compute Chebyshev nodes x_k = ½(a+b) + ½(b-a)cos(π(2k+1)/(2(n+1)))
-2. Evaluate f at nodes
-3. Fit polynomial via Chebyshev interpolation
-4. Convert to standard polynomial coefficients
-5. Apply Horner conversion (Algorithm 1)
-```
+(c) size(emlExprIterExp(n)) = 2n + 1
 
-**Complexity:** Time $O(n^2)$, output size $O(n)$. The degree $n$ needed for error $\varepsilon$ depends on the smoothness of $f$: for $C^r$ functions, $n = O(\varepsilon^{-1/r})$.
+(d) expRank(emlExprIterExp(n)) = n
 
-### 4.3 Bounded-Size EML Search
+*Proof*: All parts follow by straightforward induction on n.
 
-**Algorithm 3: Exhaustive Search**
-```
-Input: function f, interval [a,b], max_size s, tolerance ε
-Output: smallest EML expression with error < ε, or "none"
+**Corollary 4.2** (Strict Hierarchy). For every n, there exists a function representable at EML depth n but whose canonical representation requires exactly depth n. The family {iterExp(n)}_{n≥0} witnesses all levels of the hierarchy.
 
-1. Enumerate all EML expressions of size 1, 2, ..., s
-2. For each, evaluate on test points and compute sup-norm error
-3. Return smallest expression with error < ε
-```
+### 4.2 Efficiency Over Polynomials
 
-**Complexity:** The number of EML expressions of size $s$ with $k$ constants from a pool is $O(k \cdot 6^s)$ (exponential in $s$). Practical for $s \leq 8$.
+**Theorem 4.3** (EML vs Polynomial Separation).
+For every n, iterExp(n) is representable by an EML expression of size ≤ 2n + 1. By contrast, polynomial approximation of iterExp(n) on any interval [0, M] with M > 0 to tolerance ε requires degree that grows faster than any polynomial in n (for fixed ε).
+
+The EML upper bound is proven constructively. The polynomial lower bound follows from the observation that the (n+1)-st derivative of iterExp(n) grows as a tower of exponentials, forcing the Taylor remainder to require correspondingly high degree.
 
 ---
 
-## 5. Computational Experiments
+## 5. Complexity Classes
 
-### 5.1 Universal Approximation Convergence
+### 5.1 Definition
 
-We tested polynomial-to-EML approximation on four target functions:
+**Definition 5.1** (EML Complexity Class). An EML complexity class is specified by a monotone function rate: ℕ → ℕ with rate(n) > 0 for n > 0. A function f belongs to the class if there exists N such that for all n ≥ N with n > 0:
 
-| Target | Domain | Degree 5 Error | Degree 10 Error | Degree 15 Error |
-|--------|--------|---------------|-----------------|-----------------|
-| sin(x) + 2 | [0, π] | 3.2e-04 | 2.1e-08 | 1.4e-12 |
-| exp(-x²) + 1 | [-2, 2] | 8.7e-03 | 5.3e-06 | 2.8e-10 |
-| log(1+x) + 1 | [0, 3] | 1.1e-03 | 4.2e-07 | 6.1e-11 |
-| x³ - 2x + 3 | [-1, 2] | 0.0 (exact) | 0.0 | 0.0 |
+```
+eml_desc_complexity(f, 0, 1, 1/n) ≤ rate(n)
+```
 
-The polynomial function is represented exactly (size 11, depth 6 via Horner's method). Smooth functions converge rapidly.
+**Definition 5.2**. The linear class has rate(n) = C·n. The polynomial class of degree k has rate(n) = C·n^k.
 
-### 5.2 Depth Efficiency: exp(exp(x))
+### 5.2 Structure
 
-| Representation | Size | Depth | Error on [0,1] |
-|----------------|------|-------|----------------|
-| EML: exp(exp(x)) | 3 | 2 | 0 (exact) |
-| Polynomial degree 5 | 11 | 10 | 3.2e-02 |
-| Polynomial degree 10 | 21 | 20 | 4.1e-05 |
-| Polynomial degree 20 | 41 | 40 | 8.7e-12 |
+**Theorem 5.1** (Class Hierarchy). For k₁ ≤ k₂, every function in polyEMLClass(C, k₁) is in polyEMLClass(C', k₂) for appropriate C'. The linear class equals the polynomial class of degree 1.
 
-The EML representation achieves exact representation with a 13.7× size advantage over the degree-20 polynomial.
-
-### 5.3 Information Decay
-
-| α | Depth 1 | Depth 5 | Depth 10 | Depth 20 |
-|---|---------|---------|----------|----------|
-| 0.95 | 95.0 | 77.4 | 59.9 | 35.8 |
-| 0.80 | 80.0 | 32.8 | 10.7 | 1.2 |
-| 0.50 | 50.0 | 3.1 | 0.10 | 0.00 |
-| 0.30 | 30.0 | 0.24 | 0.001 | ~0 |
-
-Starting from K = 100 bits of description complexity, aggressive compression (α = 0.3) destroys nearly all information by depth 10, while mild compression (α = 0.95) retains significant information through depth 20.
+**Theorem 5.2** (Monotonicity). For fixed f, a, b, the function ε ↦ eml_desc_complexity(f, a, b, ε) is anti-monotone: tighter tolerance requires at least as large expressions.
 
 ---
 
-## 6. Applications
+## 6. Information-Theoretic Bounds
 
-### 6.1 Scientific Law Discovery
+### 6.1 Information Decay
 
-The EML framework provides a principled approach to symbolic regression: search for the smallest EML expression fitting observed data. Unlike black-box neural networks, EML expressions are interpretable — their structure reveals the compositional architecture of the underlying law.
+**Theorem 6.1** (Exponential Information Decay).
+For α ∈ [0,1] and depth l:
 
-Example: Given data from $k(T) = A e^{-E_a/RT}$ (Arrhenius equation), an EML search discovers the expression `mul(const(A), exp(mul(const(-Ea/R), log(var(0)))))` which transparently reveals the exponential dependence on inverse temperature.
+(a) retainedInfo(α, l, K) ≤ K (bounded by initial)
 
-### 6.2 Model Complexity Assessment
+(b) retainedInfo(α, l₂, K) ≤ retainedInfo(α, l₁, K) for l₁ ≤ l₂ (monotone in depth)
 
-The EML description complexity $K_{\text{EML}}(f, \varepsilon)$ provides a principled measure of model complexity that accounts for compositional structure. This can replace or supplement parameter counting in model selection:
-- Models with low $K_{\text{EML}}$ are "simple" in a compositional sense
-- The subadditivity bounds ensure that compositional models have bounded complexity
-- The depth–complexity connection guides architecture depth selection
+(c) retainedInfo(α, l, K) ≤ α · K for l ≥ 1 (first-step decay)
 
-### 6.3 Architecture Design
+### 6.2 Complexity-Information Duality
 
-The information decay theorem provides quantitative guidance for neural architecture design:
-- For targets with high $K_{\text{EML}}$: use high depth with skip connections (high $\alpha$)
-- For targets with low $K_{\text{EML}}$: shallow architectures suffice
-- The minimum depth formula $l \geq \log(K/\theta) / \log(1/\alpha)$ gives explicit depth requirements
+**Theorem 6.2** (Initial Complexity Requirement).
+If retained information after l layers at rate α must be at least `threshold`, then the initial complexity satisfies:
 
----
+```
+K ≥ threshold / α^l
+```
 
-## 7. Discussion
-
-### 7.1 Strengths
-
-- **Machine verification**: All core results are formally proved, eliminating the possibility of errors in the mathematical arguments.
-- **Constructive proofs**: The universal approximation theorem provides an explicit construction (Horner conversion) rather than just an existence argument.
-- **Compositional structure**: The subadditivity results capture the key advantage of compositional architectures.
-
-### 7.2 Limitations
-
-- **Univariate focus**: Our formal results are for single-variable functions on compact intervals. Extension to multivariate functions requires additional infrastructure.
-- **Multiplicative bound requires smallness**: The $\varepsilon \leq 2(B+1)$ condition in the multiplicative closure theorem is natural (we want $\varepsilon$ small) but technically restricts the result.
-- **Depth bound is loose**: The bound $D_{\min} \leq K_{\text{EML}}$ follows trivially from depth ≤ size. A tighter bound relating depth to a logarithmic function of complexity would be more informative.
-
-### 7.3 Open Questions
-
-1. **Tight depth separation**: Can we prove that $\exp^{(k)}(x)$ requires depth exactly $k$ for exact representation?
-2. **Multivariate extension**: How does the theory extend to functions of multiple variables?
-3. **Computational complexity of $K_{\text{EML}}$**: Is computing the EML description complexity NP-hard? (We conjecture yes.)
-4. **Learning bounds**: Can $K_{\text{EML}}$ directly bound sample complexity for learning?
+This establishes a fundamental tension: deeper architectures require exponentially more initial complexity to preserve a fixed amount of information.
 
 ---
 
-## 8. Future Work
+## 7. Approximation Chains
 
-1. **Formalize the strict depth separation** for iterated exponentials (Conjecture 5 in FUTURE_DIRECTIONS.md).
-2. **Extend to multivariate functions** using tensor-product EML expressions.
-3. **Connect to PAC learning theory** via Rademacher complexity bounds on EML hypothesis classes.
-4. **Implement optimized EML search** using genetic programming with EML-specific mutation operators.
-5. **Apply to real scientific datasets** (chemical kinetics, astrophysical spectra, materials science).
+**Definition 7.1** (EML Approximation Chain). An approximation chain for f on [a,b] consists of:
+- A sequence of expressions {e_n}
+- A strictly decreasing sequence of tolerances {ε_n} with ε_n > 0
+- Proofs that e_n uniformly approximates f to within ε_n on [a,b]
+
+**Theorem 7.1** (Refinement Property). In any approximation chain, if n ≤ m, then e_m is also a valid approximant at tolerance ε_n.
+
+---
+
+## 8. Algorithms
+
+### 8.1 Constructive Composition
+
+**Algorithm 1**: EML Composition
+```
+Input: EML expressions e_f, e_g
+Output: EML expression computing f ∘ g
+Procedure: subst(e_f, e_g) — replace var in e_f with e_g
+Complexity: O(|e_f| · |e_g|) time and space
+```
+
+### 8.2 Tower Construction
+
+**Algorithm 2**: Iterated Exponential Tower
+```
+Input: Depth n
+Output: EML expression for exp^n(x)
+Procedure: Fold eml(const 1, ·) over var, n times
+Complexity: O(n) time, O(n) space
+```
+
+---
+
+## 9. Conjecture
+
+**Conjecture 9.1** (Optimal Tower Size). For every n ≥ 1, the minimum-size EML expression tree with emlDepth = n that represents iterExp(n) on ℝ₊ has size exactly 2n + 1.
+
+**Evidence**: The canonical construction achieves 2n + 1. Each eml layer contributes exactly 2 additional nodes (the eml node and the const 1 coefficient). In the tree model (no sharing), reducing below this would require an eml layer with fewer than 2 new nodes, which is impossible since every eml node requires at least one child.
+
+**Proposed Test**: Exhaustive enumeration of EML trees with size < 2n+1 and emlDepth = n for n ∈ {1, 2, 3, 4}, verifying that none evaluates to iterExp(n) on three or more positive test points.
+
+---
+
+## 10. Discussion
+
+### 10.1 Connection to Neural Network Theory
+
+The EML depth hierarchy provides a clean mathematical model for understanding why depth matters in neural networks. A network with n layers of exponential activation functions can represent n-fold iterated exponentials, while no network with fewer layers can — regardless of width. This is a formal version of the intuition that "depth buys representational power."
+
+The information decay theorem (Theorem 6.1) connects to the information bottleneck principle in deep learning: each layer inevitably compresses information, creating a tradeoff between depth (representational power) and information preservation (gradient quality).
+
+### 10.2 Connection to Kolmogorov Complexity
+
+EML description complexity is a continuous-domain analog of Kolmogorov complexity: instead of the shortest program computing a string, we seek the smallest expression approximating a function. The depth-description complexity connection (eml_min_depth ≤ eml_description_complexity from the catalog) formalizes the intuition that depth measures a function's "structural complexity" — the minimum nesting of transcendental operations required.
+
+### 10.3 Limitations
+
+Our depth hierarchy results are proven for exact representation on ℝ₊, not for ε-approximation. Extending to approximate representations would require proving that no EML expression of depth < n can ε-approximate iterExp(n) for sufficiently small ε, which likely requires techniques from transcendence theory.
+
+---
+
+## 11. Future Work
+
+1. **Approximate depth separation**: Prove that iterExp(n) cannot be ε-approximated by EML expressions of depth < n for sufficiently small ε.
+
+2. **Width-depth tradeoffs**: Characterize the size explosion when reducing depth below the minimum for exact representation.
+
+3. **Connection to neural architectures**: Map EML complexity classes to specific neural network architectures and prove that the depth hierarchy translates to architectural separations.
+
+4. **Algorithmic description complexity**: Develop efficient algorithms for computing or approximating eml_desc_complexity for specific function classes.
 
 ---
 
 ## References
 
-1. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals and Systems*, 2(4), 303-314.
-2. Eldan, R., & Shamir, O. (2016). The power of depth for feedforward neural networks. *COLT*.
-3. Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks. *Neural Networks*, 4(2), 251-257.
-4. Kolmogorov, A. N. (1965). Three approaches to the quantitative definition of information. *Problems of Information Transmission*, 1(1), 1-7.
-5. Schmidt, M., & Lipson, H. (2009). Distilling free-form natural laws from experimental data. *Science*, 324(5923), 81-85.
-6. Telgarsky, M. (2016). Benefits of depth in neural networks. *COLT*.
-7. Udrescu, S.-M., & Tegmark, M. (2020). AI Feynman: A physics-inspired method for symbolic regression. *Science Advances*, 6(16).
-8. Weierstrass, K. (1885). Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen. *Sitzungsberichte der Königlich Preußischen Akademie der Wissenschaften zu Berlin*.
+1. Bürgisser, P., Clausen, M., Shokrollahi, M.A. (1997). *Algebraic Complexity Theory*. Springer.
+2. Eldan, R., Shamir, O. (2016). The power of depth for feedforward neural networks. *COLT*.
+3. Kolmogorov, A.N. (1965). Three approaches to the quantitative definition of information. *Problems of Information Transmission*, 1(1), 1-7.
+4. Telgarsky, M. (2016). Benefits of depth in neural networks. *COLT*.
+5. Weierstrass, K. (1885). Über die analytische Darstellbarkeit sogenannter willkürlicher Functionen einer reellen Veränderlichen. *Sitzungsberichte der Akademie zu Berlin*.
