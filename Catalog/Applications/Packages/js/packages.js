@@ -489,12 +489,28 @@ document.addEventListener('DOMContentLoaded', () => {
             content.style.cssText = 'padding: 16px; background: #fff; color: #222; border-radius: 0 0 12px 12px; overflow: visible;';
             content.innerHTML = item.html || '<p>No content</p>';
 
-            // Execute inline <script> tags (innerHTML doesn't run them)
-            // Wrap each in an IIFE so const/let declarations don't conflict across demos
+            // Execute inline <script> tags (innerHTML doesn't run them).
+            // Use a per-demo namespace so const/let declarations don't conflict,
+            // but expose handler functions referenced by inline oninput/onclick/etc.
+            // attributes so those attributes can find their functions.
+            const handlerFns = new Set();
+            content.querySelectorAll('[oninput],[onclick],[onchange],[onkeyup],[onkeydown]').forEach(el => {
+                for (const attr of ['oninput','onclick','onchange','onkeyup','onkeydown']) {
+                    const val = el.getAttribute(attr);
+                    if (val) {
+                        const m = val.match(/^([a-zA-Z_]\w*)\s*\(/);
+                        if (m) handlerFns.add(m[1]);
+                    }
+                }
+            });
+            const fnExposes = [...handlerFns].map(fn =>
+                `window.${fn} = window.${fn} || ${fn};`
+            ).join('\n');
+
             content.querySelectorAll('script').forEach(oldScript => {
                 if (oldScript.src) return;
                 const newScript = document.createElement('script');
-                newScript.textContent = `(function() { ${oldScript.textContent} })();`;
+                newScript.textContent = `(function() {\n${oldScript.textContent}\n${fnExposes}\n})();`;
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             });
 
