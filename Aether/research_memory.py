@@ -557,10 +557,13 @@ class FutureDirectionsManager:
                 )
                 # Cap auto-generated priority to computed quality score
                 quality = self._compute_quality_score(fd)
-                fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                fd.priority_score = min(fd.priority_score, max(0.40, quality))
                 # Auto-titled "Direction N:" directions get an even stricter cap
                 if fd.title.startswith("Direction "):
-                    fd.priority_score = min(fd.priority_score, 0.60)
+                    fd.priority_score = min(fd.priority_score, 0.50)
+                # Auto-generated "This research cycle..." titles get a strict cap
+                elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+                    fd.priority_score = min(fd.priority_score, 0.50)
                 self.add_direction(fd)
                 added += 1
 
@@ -589,9 +592,11 @@ class FutureDirectionsManager:
                         priority_score=0.75,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
                     if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.60)
+                        fd.priority_score = min(fd.priority_score, 0.50)
+                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+                        fd.priority_score = min(fd.priority_score, 0.50)
                     self.add_direction(fd)
                     added += 1
 
@@ -619,9 +624,11 @@ class FutureDirectionsManager:
                         priority_score=0.7,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
                     if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.60)
+                        fd.priority_score = min(fd.priority_score, 0.50)
+                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+                        fd.priority_score = min(fd.priority_score, 0.50)
                     self.add_direction(fd)
                     added += 1
 
@@ -644,9 +651,11 @@ class FutureDirectionsManager:
                         priority_score=0.65,
                     )
                     quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.60, quality))
+                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
                     if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.60)
+                        fd.priority_score = min(fd.priority_score, 0.50)
+                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+                        fd.priority_score = min(fd.priority_score, 0.50)
                     self.add_direction(fd)
                     added += 1
 
@@ -1218,7 +1227,7 @@ class FutureDirectionsManager:
         # arxiv_boost: directions sourced from ArXiv mining get +0.15
         arxiv_boost = 0.15 if direction.source_exp_id and direction.source_exp_id.startswith("arxiv") else 0.0
 
-        return (
+        score = (
             0.18 * novelty
             + 0.12 * outcome_bonus
             + 0.18 * source_bonus
@@ -1236,6 +1245,8 @@ class FutureDirectionsManager:
             + first_time_bonus
             + repetition_penalty
         ) * domain_decay
+        # Cap at 0.85 so priorities spread across 0.4-0.85 instead of clustering at 1.0
+        return min(0.85, score)
 
     def prune_directions(
         self,
