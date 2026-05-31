@@ -1,310 +1,349 @@
-#!/usr/bin/env python3
 """
-Algorithms for Hyperbolic Number Theory
+Algorithms for the Periodic Table of Finite Groups.
 
-Implements the core mathematical algorithms from the research paper:
-1. Möbius gyrogroup arithmetic
-2. Hyperbolic zeta function computation
-3. Regular tree enumeration
-4. Pythagorean-to-disk embedding
+This module implements the core algorithms for classifying finite groups
+by their derived series, computing solvability spectra, and evaluating
+the Euler-Group Bridge.
 
-All algorithms include complexity analysis and type hints.
+All groups are represented as multiplication tables (Cayley tables):
+a group of order n is given by an n×n matrix where entry (i,j) is the
+product of elements i and j.
 """
 
-from fractions import Fraction
-from typing import List, Tuple, Optional, Iterator
+from typing import List, Set, Tuple, Optional, Dict
+from enum import Enum
+from dataclasses import dataclass
 import math
+from functools import reduce
 
 
-# ============================================================
-# Algorithm 1: Möbius Gyrogroup Arithmetic
-# ============================================================
+class ChemicalSeries(Enum):
+    """Chemical series classification for finite groups."""
+    NOBLE_GAS = "Noble Gas"        # Cyclic groups
+    ALKALINE_EARTH = "Alkaline Earth"  # Abelian non-cyclic
+    COMPOUND = "Compound"          # Solvable non-abelian
+    RADIOACTIVE = "Radioactive"    # Non-solvable
 
-class MoebiusGyrogroup:
-    """
-    Implements the Möbius gyrogroup on the open interval (-1, 1).
-    
-    The operation a ⊕ b = (a + b) / (1 + ab) forms a gyrogroup:
-    - Commutative: a ⊕ b = b ⊕ a
-    - Has identity: a ⊕ 0 = a
-    - Has inverses: a ⊕ (-a) = 0
-    - NOT associative (gyroassociative instead)
-    
-    Time complexity: O(1) per operation (using exact rational arithmetic)
-    Space complexity: O(1) per element
-    """
-    
-    def __init__(self, val: Fraction):
-        """Initialize with a rational number in (-1, 1)."""
-        if abs(val) >= 1:
-            raise ValueError(f"Value {val} not in open unit interval (-1, 1)")
-        self.val = val
-    
-    def __add__(self, other: 'MoebiusGyrogroup') -> 'MoebiusGyrogroup':
-        """Möbius addition: (a + b) / (1 + ab)"""
-        num = self.val + other.val
-        den = 1 + self.val * other.val
-        return MoebiusGyrogroup(num / den)
-    
-    def __neg__(self) -> 'MoebiusGyrogroup':
-        """Möbius inverse: -a"""
-        return MoebiusGyrogroup(-self.val)
+
+@dataclass
+class SolvabilitySpectrum:
+    """The solvability spectrum of a finite group."""
+    derived_length: int          # -1 for non-solvable
+    is_nilpotent: bool
+    nilpotency_class: int        # 0 if not nilpotent
+    chemical_series: ChemicalSeries
+    order: int
     
     def __repr__(self) -> str:
-        return f"M({self.val})"
+        return (f"SolvabilitySpectrum(dL={self.derived_length}, "
+                f"nilp={self.is_nilpotent}, class={self.nilpotency_class}, "
+                f"series={self.chemical_series.value}, |G|={self.order})")
+
+
+class FiniteGroup:
+    """A finite group represented by its Cayley table."""
     
-    def __eq__(self, other: 'MoebiusGyrogroup') -> bool:
-        return self.val == other.val
-    
-    @staticmethod
-    def zero() -> 'MoebiusGyrogroup':
-        """The identity element."""
-        return MoebiusGyrogroup(Fraction(0))
-    
-    @staticmethod
-    def gyration(a: 'MoebiusGyrogroup', b: 'MoebiusGyrogroup', 
-                 x: 'MoebiusGyrogroup') -> 'MoebiusGyrogroup':
+    def __init__(self, table: List[List[int]], name: str = "G"):
         """
-        Gyration operator gyr[a,b](x).
-        In the 1D case, gyr[a,b] = id, so the gyrogroup is actually
-        a commutative group (gyrocommutative gyrogroup with trivial gyration).
-        """
-        return x  # Trivial in 1D
-    
-    def iterate(self, n: int) -> 'MoebiusGyrogroup':
-        """
-        Compute the n-fold Möbius sum: a ⊕ a ⊕ ... ⊕ a (n times).
-        Uses the iterative formula x_{k+1} = a ⊕ x_k.
+        Initialize a finite group from its Cayley table.
         
-        Time: O(n) arithmetic operations
-        Space: O(1)
+        Args:
+            table: n×n multiplication table where table[i][j] = i * j
+            name: human-readable name for the group
         """
-        result = self
-        current = self
-        for _ in range(n - 1):
-            current = self + current
-        return current
-
-
-# ============================================================
-# Algorithm 2: Hyperbolic Zeta Function
-# ============================================================
-
-def hyperbolic_zeta_summand(r: float, s: int) -> float:
-    """
-    Compute the hyperbolic zeta summand r^{-2s}.
+        self.table = table
+        self.order = len(table)
+        self.name = name
+        self._identity: Optional[int] = None
+        self._inverses: Optional[List[int]] = None
     
-    For 0 < r < 1 (a disk point), this gives values ≥ 1,
-    reversing the classical bound.
+    @property
+    def identity(self) -> int:
+        """Find the identity element."""
+        if self._identity is None:
+            for e in range(self.order):
+                if all(self.table[e][g] == g and self.table[g][e] == g
+                       for g in range(self.order)):
+                    self._identity = e
+                    break
+            if self._identity is None:
+                raise ValueError("No identity element found")
+        return self._identity
     
-    Time: O(log s) via fast exponentiation
-    Space: O(1)
-    """
-    return (1.0 / r) ** (2 * s)
-
-
-def hyperbolic_zeta_partial(r: float, s: float, N: int) -> float:
-    """
-    Compute partial sum of hyperbolic zeta function:
-    Z_hyp(r, s) = sum_{n=1}^{N} r^{-2ns}
+    @property
+    def inverses(self) -> List[int]:
+        """Compute inverse of each element."""
+        if self._inverses is None:
+            e = self.identity
+            self._inverses = [0] * self.order
+            for g in range(self.order):
+                for h in range(self.order):
+                    if self.table[g][h] == e:
+                        self._inverses[g] = h
+                        break
+        return self._inverses
     
-    WARNING: This diverges for 0 < r < 1, s > 0 (the reversal!).
+    def mul(self, a: int, b: int) -> int:
+        """Multiply two elements."""
+        return self.table[a][b]
     
-    Time: O(N)
-    Space: O(1)
-    """
-    return sum((1.0 / r) ** (2 * n * s) for n in range(1, N + 1))
-
-
-def classical_zeta_partial(s: float, N: int) -> float:
-    """
-    Classical Riemann zeta partial sum for comparison:
-    zeta(s) ≈ sum_{n=1}^{N} 1/n^s
+    def inv(self, a: int) -> int:
+        """Inverse of an element."""
+        return self.inverses[a]
     
-    Time: O(N)
-    Space: O(1)
-    """
-    return sum(1.0 / n**s for n in range(1, N + 1))
-
-
-# ============================================================
-# Algorithm 3: Regular Tree Enumeration
-# ============================================================
-
-def tree_sphere_size(q: int, k: int) -> int:
-    """
-    Number of vertices at distance exactly k from root
-    in a (q+1)-regular tree.
+    def commutator(self, a: int, b: int) -> int:
+        """Compute [a, b] = a * b * a^{-1} * b^{-1}."""
+        return self.mul(self.mul(self.mul(a, b), self.inv(a)), self.inv(b))
     
-    Formula: S(0) = 1, S(k) = (q+1) * q^{k-1} for k ≥ 1
+    def is_abelian(self) -> bool:
+        """Check if the group is abelian."""
+        return all(self.table[i][j] == self.table[j][i]
+                   for i in range(self.order)
+                   for j in range(self.order))
     
-    Time: O(log k) via fast exponentiation
-    Space: O(1)
-    """
-    if k == 0:
-        return 1
-    return (q + 1) * q ** (k - 1)
-
-
-def tree_ball_size(q: int, n: int) -> int:
-    """
-    Number of vertices within distance n of root
-    in a (q+1)-regular tree.
+    def is_cyclic(self) -> bool:
+        """Check if the group is cyclic."""
+        for g in range(self.order):
+            generated = set()
+            current = self.identity
+            for _ in range(self.order):
+                current = self.mul(current, g)
+                generated.add(current)
+            if len(generated) == self.order:
+                return True
+        return False
     
-    Formula: B(n) = 1 + (q+1) * (q^n - 1) / (q - 1) for q ≥ 2
+    def subgroup_generated_by(self, generators: Set[int]) -> Set[int]:
+        """Compute the subgroup generated by a set of elements."""
+        subgroup = {self.identity}
+        subgroup.update(generators)
+        changed = True
+        while changed:
+            changed = False
+            new_elements = set()
+            for a in subgroup:
+                for b in subgroup:
+                    prod = self.mul(a, b)
+                    if prod not in subgroup:
+                        new_elements.add(prod)
+                        changed = True
+                inv_a = self.inv(a)
+                if inv_a not in subgroup:
+                    new_elements.add(inv_a)
+                    changed = True
+            subgroup.update(new_elements)
+        return subgroup
     
-    Time: O(n) or O(log n) with closed form
-    Space: O(1)
-    """
-    return sum(tree_sphere_size(q, k) for k in range(n + 1))
-
-
-def verify_exponential_growth(q: int, max_n: int = 20) -> List[Tuple[int, int, int, bool]]:
-    """
-    Verify the exponential growth theorem: q^n ≤ treeBall(q, n).
+    def commutator_subgroup(self, subset: Set[int]) -> Set[int]:
+        """Compute the commutator subgroup [H, H] of a subset H."""
+        commutators = set()
+        for a in subset:
+            for b in subset:
+                commutators.add(self.commutator(a, b))
+        return self.subgroup_generated_by(commutators)
     
-    Returns list of (n, q^n, ball_size, growth_holds).
-    
-    Time: O(max_n * n) total
-    Space: O(max_n) for results
-    """
-    results = []
-    for n in range(max_n + 1):
-        qn = q ** n
-        ball = tree_ball_size(q, n)
-        results.append((n, qn, ball, ball >= qn))
-    return results
-
-
-# ============================================================
-# Algorithm 4: Pythagorean-to-Disk Embedding
-# ============================================================
-
-def generate_pythagorean_triples(max_c: int) -> Iterator[Tuple[int, int, int]]:
-    """
-    Generate primitive Pythagorean triples (a, b, c) with c ≤ max_c.
-    Uses the parametrization a = m²-n², b = 2mn, c = m²+n² 
-    for m > n > 0, gcd(m,n) = 1, m-n odd.
-    
-    Time: O(max_c) triples generated
-    Space: O(1) per triple (generator)
-    """
-    for m in range(2, int(max_c**0.5) + 1):
-        for n in range(1, m):
-            if (m - n) % 2 == 0:
-                continue
-            if math.gcd(m, n) != 1:
-                continue
-            a = m*m - n*n
-            b = 2*m*n
-            c = m*m + n*n
-            if c > max_c:
+    def derived_series(self, max_steps: int = 100) -> List[Set[int]]:
+        """
+        Compute the derived series G = G^(0) ⊇ G^(1) ⊇ G^(2) ⊇ ...
+        
+        Returns the list of subgroups in the derived series until it stabilizes
+        or reaches the trivial group.
+        """
+        current = set(range(self.order))
+        series = [current]
+        for _ in range(max_steps):
+            next_term = self.commutator_subgroup(current)
+            series.append(next_term)
+            if next_term == current or next_term == {self.identity}:
                 break
-            yield (min(a, b), max(a, b), c)
+            current = next_term
+        return series
+    
+    def derived_length(self) -> int:
+        """
+        Compute the derived length of the group.
+        
+        Returns -1 if the group is not solvable (derived series stabilizes
+        at a non-trivial subgroup).
+        """
+        series = self.derived_series()
+        if series[-1] == {self.identity}:
+            return len(series) - 1
+        return -1
+    
+    def is_solvable(self) -> bool:
+        """Check if the group is solvable."""
+        return self.derived_length() >= 0
+    
+    def center(self) -> Set[int]:
+        """Compute the center Z(G)."""
+        return {g for g in range(self.order)
+                if all(self.table[g][h] == self.table[h][g]
+                       for h in range(self.order))}
+    
+    def is_nilpotent(self, max_steps: int = 100) -> Tuple[bool, int]:
+        """
+        Check if the group is nilpotent and compute the nilpotency class.
+        
+        Uses the upper central series: Z_0 = {e}, Z_{i+1}/Z_i = Z(G/Z_i).
+        Returns (is_nilpotent, nilpotency_class).
+        """
+        # For simplicity, use the lower central series
+        # γ_1(G) = G, γ_{n+1}(G) = [G, γ_n(G)]
+        all_elements = set(range(self.order))
+        current = all_elements
+        nilp_class = 0
+        for _ in range(max_steps):
+            next_term = set()
+            for g in all_elements:
+                for h in current:
+                    next_term.add(self.commutator(g, h))
+            next_term = self.subgroup_generated_by(next_term)
+            nilp_class += 1
+            if next_term == {self.identity}:
+                return True, nilp_class
+            if next_term == current:
+                return False, 0
+            current = next_term
+        return False, 0
+    
+    def classify(self) -> SolvabilitySpectrum:
+        """Compute the full solvability spectrum."""
+        dl = self.derived_length()
+        nilp, nilp_class = self.is_nilpotent()
+        
+        if self.is_cyclic():
+            series = ChemicalSeries.NOBLE_GAS
+        elif self.is_abelian():
+            series = ChemicalSeries.ALKALINE_EARTH
+        elif dl >= 0:
+            series = ChemicalSeries.COMPOUND
+        else:
+            series = ChemicalSeries.RADIOACTIVE
+        
+        return SolvabilitySpectrum(
+            derived_length=dl,
+            is_nilpotent=nilp,
+            nilpotency_class=nilp_class,
+            chemical_series=series,
+            order=self.order
+        )
 
 
-def embed_in_disk(triple: Tuple[int, int, int]) -> Tuple[float, float]:
+def cyclic_group(n: int) -> FiniteGroup:
+    """Construct the cyclic group Z/nZ."""
+    table = [[(i + j) % n for j in range(n)] for i in range(n)]
+    return FiniteGroup(table, f"Z/{n}Z")
+
+
+def symmetric_group(n: int) -> FiniteGroup:
+    """Construct the symmetric group S_n."""
+    from itertools import permutations
+    
+    perms = list(permutations(range(n)))
+    perm_to_idx = {p: i for i, p in enumerate(perms)}
+    order = len(perms)
+    
+    def compose(p: Tuple[int, ...], q: Tuple[int, ...]) -> Tuple[int, ...]:
+        return tuple(p[q[i]] for i in range(n))
+    
+    table = [[perm_to_idx[compose(perms[i], perms[j])]
+              for j in range(order)] for i in range(order)]
+    return FiniteGroup(table, f"S_{n}")
+
+
+def dihedral_group(n: int) -> FiniteGroup:
+    """Construct the dihedral group D_n of order 2n."""
+    order = 2 * n
+    # Elements: rotations r^k (k=0..n-1) and reflections s*r^k (k=0..n-1)
+    # r^k is element k, s*r^k is element n+k
+    table = [[0] * order for _ in range(order)]
+    
+    for i in range(order):
+        for j in range(order):
+            if i < n and j < n:
+                # r^i * r^j = r^{(i+j) mod n}
+                table[i][j] = (i + j) % n
+            elif i < n and j >= n:
+                # r^i * s*r^j = s*r^{(j-i) mod n}
+                table[i][j] = n + (j - n - i) % n
+            elif i >= n and j < n:
+                # s*r^i * r^j = s*r^{(i+j) mod n}
+                table[i][j] = n + (i - n + j) % n
+            else:
+                # s*r^i * s*r^j = r^{(i-j) mod n}
+                table[i][j] = (i - n - (j - n)) % n
+    
+    return FiniteGroup(table, f"D_{n}")
+
+
+def euler_totient(n: int) -> int:
+    """Compute Euler's totient function φ(n)."""
+    if n <= 0:
+        return 0
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
+
+
+def euler_group_bridge(n: int) -> Tuple[int, int]:
     """
-    Embed a Pythagorean triple (a, b, c) into the Poincaré disk
-    as the point (a/c, b/c).
+    Compute both sides of the Euler-Group Bridge:
+    φ(n) and |(ℤ/nℤ)ˣ|
     
-    Time: O(1)
-    Space: O(1)
+    Returns (totient, unit_group_order). These should always be equal.
     """
-    a, b, c = triple
-    return (a / c, b / c)
+    totient = euler_totient(n)
+    # Unit group order = count of k in [1, n) with gcd(k, n) = 1
+    unit_count = sum(1 for k in range(1, n) if math.gcd(k, n) == 1)
+    return totient, unit_count
 
 
-def moebius_sum_of_embeddings(t1: Tuple[int, int, int], 
-                               t2: Tuple[int, int, int]) -> float:
-    """
-    Compute the Möbius sum of the a/c embeddings of two Pythagorean triples.
-    
-    Time: O(1)
-    Space: O(1)
-    """
-    r1 = t1[0] / t1[2]
-    r2 = t2[0] / t2[2]
-    return (r1 + r2) / (1 + r1 * r2)
+def prime_factorization(n: int) -> Dict[int, int]:
+    """Compute the prime factorization of n."""
+    factors: Dict[int, int] = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
 
 
-# ============================================================
-# Algorithm 5: Möbius Iteration Analysis
-# ============================================================
-
-def moebius_iterate_sequence(a: Fraction, n: int) -> List[Fraction]:
-    """
-    Compute the Möbius iteration sequence x_0 = a, x_{k+1} = a ⊕ x_k.
-    
-    Time: O(n) Möbius additions
-    Space: O(n) for the full sequence
-    """
-    seq = [a]
-    x = a
-    for _ in range(n):
-        x = (a + x) / (1 + a * x)
-        seq.append(x)
-    return seq
+def totient_from_factorization(n: int) -> int:
+    """Compute φ(n) using the prime factorization formula."""
+    factors = prime_factorization(n)
+    result = 1
+    for p, k in factors.items():
+        result *= (p ** (k - 1)) * (p - 1)
+    return result
 
 
-def check_monotonicity(seq: List[Fraction]) -> bool:
-    """Check if a sequence is strictly increasing."""
-    return all(seq[i] < seq[i+1] for i in range(len(seq) - 1))
-
-
-def estimate_limit(seq: List[Fraction], tail: int = 5) -> float:
-    """
-    Estimate the limit of the sequence using Richardson extrapolation.
-    
-    Time: O(tail)
-    Space: O(1)
-    """
-    # Use ratio of consecutive differences
-    vals = [float(x) for x in seq[-tail:]]
-    if len(vals) < 3:
-        return vals[-1]
-    
-    diffs = [vals[i+1] - vals[i] for i in range(len(vals)-1)]
-    if abs(diffs[-1]) < 1e-15:
-        return vals[-1]
-    
-    ratios = [diffs[i+1] / diffs[i] for i in range(len(diffs)-1) if abs(diffs[i]) > 1e-15]
-    if ratios:
-        avg_ratio = sum(ratios) / len(ratios)
-        if abs(avg_ratio) < 1:
-            return vals[-1] + diffs[-1] / (1 - avg_ratio)
-    
-    return vals[-1]
-
-
-# ============================================================
-# Example Usage
-# ============================================================
-
-if __name__ == "__main__":
-    print("Hyperbolic Number Theory — Algorithm Demonstrations")
-    print("=" * 55)
-    
-    # Gyrogroup
-    a = MoebiusGyrogroup(Fraction(1, 3))
-    b = MoebiusGyrogroup(Fraction(1, 4))
-    print(f"\nGyrogroup: {a} + {b} = {a + b}")
-    print(f"Identity: {a} + 0 = {a + MoebiusGyrogroup.zero()}")
-    print(f"Inverse: {a} + (-{a}) = {a + (-a)}")
-    
-    # Zeta reversal
-    print(f"\nZeta reversal (r=0.5):")
-    for s in range(1, 6):
-        print(f"  Hyperbolic summand (s={s}): {hyperbolic_zeta_summand(0.5, s):.1f}")
-    
-    # Tree growth
-    print(f"\nTree growth verification (q=3):")
-    for n, qn, ball, ok in verify_exponential_growth(3, 10):
-        print(f"  n={n}: 3^n={qn:>8}, ball={ball:>8}, growth: {ok}")
-    
-    # Iteration
-    print(f"\nMöbius iteration (a=1/2):")
-    seq = moebius_iterate_sequence(Fraction(1, 2), 15)
-    print(f"  Monotone: {check_monotonicity(seq)}")
-    print(f"  Estimated limit: {estimate_limit(seq):.10f}")
-    print(f"  tanh(artanh(0.5) * inf) → 1.0 (boundary)")
+def classify_by_order(n: int) -> str:
+    """Classify what chemical series groups of order n can belong to."""
+    factors = prime_factorization(n)
+    if len(factors) == 0:
+        return "Trivial"
+    if len(factors) == 1:
+        p, k = list(factors.items())[0]
+        if k == 1:
+            return "Noble Gas only (Z/pZ)"
+        else:
+            return "Noble Gas or Alkaline Earth (p-group, always nilpotent)"
+    if len(factors) == 2:
+        return "Noble Gas, Alkaline Earth, or Compound (≤2 prime factors, always solvable by Burnside)"
+    if n < 60:
+        return "Solvable (order < 60, smallest non-solvable has order 60)"
+    return "Any series possible"
