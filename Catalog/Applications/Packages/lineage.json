@@ -7,25 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91
-    },
-    {
-      "id": "the_theorems_established_in_this_work__identifying",
-      "title": "Newton Persistence and Arithmetic Monodromy",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T14:58:00Z",
-      "hue": 90
-    },
-    {
-      "id": "machine_learning_generalization_bounds",
-      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T15:11:42Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -34,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -43,16 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270
-    },
-    {
-      "id": "primes_of_the_form_n1",
-      "title": "Primes of the Form n² + 1: Quadratic Residue Constraints and Semi-prime Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:45:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -61,25 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92
-    },
-    {
-      "id": "this_cycle_established_the_foundational_infrastruc",
-      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:11:12Z",
-      "hue": 270
-    },
-    {
-      "id": "this_research_cycle_established_that_expansion_cer",
-      "title": "Expansion Certificate Lattice and Amplification Theory",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:12:01Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -91,13 +46,13 @@
       "hue": 90
     },
     {
-      "id": "p_vs_np_problem",
-      "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T16:24:16Z",
-      "hue": 91
+      "id": "rotas_basis_conjecture",
+      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:19:26Z",
+      "hue": 90
     }
   ],
   "edges": [],

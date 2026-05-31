@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "rotas_basis_conjecture.json",
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:19:26Z",
+    "exp_id": "edde521f",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 6
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Bridges",
@@ -95,6 +105,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Bridges"
+  },
+  "rotas_basis_conjecture.json": {
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+    "exp_id": "edde521f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
   }
 };
 
@@ -109,31 +127,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
-    },
-    {
-      "id": "the_theorems_established_in_this_work__identifying",
-      "title": "Newton Persistence and Arithmetic Monodromy",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T14:58:00Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "machine_learning_generalization_bounds",
-      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T15:11:42Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -142,7 +138,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -153,20 +149,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
-    },
-    {
-      "id": "primes_of_the_form_n1",
-      "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:45:01Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -175,31 +160,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
-    },
-    {
-      "id": "this_cycle_established_the_foundational_infrastruc",
-      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:11:12Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "this_research_cycle_established_that_expansion_cer",
-      "title": "Expansion Certificate Lattice and Amplification Theory",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:12:01Z",
-      "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -213,13 +176,13 @@ window.PACKAGE_GRAPH = {
       "quality": "partial"
     },
     {
-      "id": "p_vs_np_problem",
-      "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T16:24:16Z",
-      "hue": 91,
+      "id": "rotas_basis_conjecture",
+      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:19:26Z",
+      "hue": 90,
       "priority_score": null,
       "quality": "unrated"
     }
