@@ -1,706 +1,568 @@
 #!/usr/bin/env python3
 """
-EML Single Operator Universality — Applications
+EML Single-Operator Church-Turing Thesis: Demo
 
-Demonstrates real-world applications of the EML universality theory:
-1. Neural network activation functions via EML
-2. Thermodynamic partition functions
-3. Signal processing / log-domain computation
-4. Analog circuit design primitives
+Demonstrates:
+1. EML operator recovering exp and log
+2. Elementary functions as EML circuits
+3. Transcendental depth hierarchy
+4. Depth-width tradeoff investigation
+5. Growth rate analysis of iterated exponentials
 """
 
 import math
-from typing import List, Tuple, Dict
-import random
+from algorithms import (
+    EMLCircuit, Var, Const, Add, Mul, Neg, Inv, Exp, Log,
+    eml_op, recover_exp_via_eml, recover_log_via_eml,
+    iter_exp, iter_exp_circuit,
+    sinh_circuit, cosh_circuit, gaussian_circuit, sigmoid_circuit,
+    logistic_map_circuit, verify_depth_class, check_tradeoff
+)
 
 
-# ============================================================
-# Application 1: Neural Network Activation Functions via EML
-# ============================================================
-
-def eml(x: float, y: float) -> float:
-    """The EML operator: eml(x, y) = exp(x) - log(y)"""
-    log_y = math.log(y) if y > 0 else 0.0
-    return math.exp(x) - log_y
-
-
-def eml_exp(x: float) -> float:
-    """exp(x) via eml: eml(x, 1)"""
-    return eml(x, 1.0)
-
-
-def eml_log(y: float) -> float:
-    """log(y) via eml: 1 - eml(0, y)"""
-    return 1.0 - eml(0.0, y)
-
-
-def eml_sigmoid(x: float) -> float:
-    """Logistic sigmoid via EML: 1 / (1 + eml(-x, 1))
-    Since exp(-x) = eml(-x, 1), we get σ(x) = 1/(1 + exp(-x))"""
-    return 1.0 / (1.0 + eml(-x, 1.0))
-
-
-def eml_tanh(x: float) -> float:
-    """Hyperbolic tangent via EML:
-    tanh(x) = (exp(2x) - 1) / (exp(2x) + 1)
-            = (eml(2x, 1) - 1) / (eml(2x, 1) + 1)"""
-    e2x = eml(2*x, 1.0)
-    return (e2x - 1.0) / (e2x + 1.0)
-
-
-def eml_softplus(x: float) -> float:
-    """Softplus via EML: log(1 + exp(x))
-    = 1 - eml(0, 1 + eml(x, 1))"""
-    return 1.0 - eml(0.0, 1.0 + eml(x, 1.0))
-
-
-def eml_swish(x: float) -> float:
-    """Swish activation: x * sigmoid(x)"""
-    return x * eml_sigmoid(x)
-
-
-def demo_activations():
-    """Compare EML-based activations with standard implementations."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 1: Neural Network Activations via EML")
+def demo_eml_operator():
+    """Demonstrate the EML operator recovering exp and log."""
+    print("=" * 60)
+    print("§1. The EML Operator: eml(x, y) = exp(x) - log(y)")
     print("=" * 60)
 
-    test_points = [-3.0, -1.0, -0.5, 0.0, 0.5, 1.0, 3.0]
+    print("\n  Identity 1: eml(x, 1) = exp(x)")
+    for x in [-2.0, -1.0, 0.0, 1.0, 2.0]:
+        eml_val = recover_exp_via_eml(x)
+        exp_val = math.exp(x)
+        print(f"    x = {x:5.1f}: eml(x,1) = {eml_val:.10f}, exp(x) = {exp_val:.10f}, "
+              f"error = {abs(eml_val - exp_val):.2e}")
 
-    print("\n  Sigmoid: σ(x) = 1/(1 + exp(-x))")
-    print(f"  {'x':>6s}  {'standard':>12s}  {'EML':>12s}  {'error':>12s}")
-    for x in test_points:
-        std = 1.0 / (1.0 + math.exp(-x))
-        eml_val = eml_sigmoid(x)
-        print(f"  {x:6.1f}  {std:12.8f}  {eml_val:12.8f}  {abs(std-eml_val):12.2e}")
-
-    print("\n  Tanh: tanh(x)")
-    print(f"  {'x':>6s}  {'standard':>12s}  {'EML':>12s}  {'error':>12s}")
-    for x in test_points:
-        std = math.tanh(x)
-        eml_val = eml_tanh(x)
-        print(f"  {x:6.1f}  {std:12.8f}  {eml_val:12.8f}  {abs(std-eml_val):12.2e}")
-
-    print("\n  Softplus: log(1 + exp(x))")
-    print(f"  {'x':>6s}  {'standard':>12s}  {'EML':>12s}  {'error':>12s}")
-    for x in test_points:
-        std = math.log(1.0 + math.exp(x))
-        eml_val = eml_softplus(x)
-        print(f"  {x:6.1f}  {std:12.8f}  {eml_val:12.8f}  {abs(std-eml_val):12.2e}")
+    print("\n  Identity 2: 1 - eml(0, y) = log(y)")
+    for y in [0.5, 1.0, 2.0, math.e, 10.0]:
+        eml_val = recover_log_via_eml(y)
+        log_val = math.log(y)
+        print(f"    y = {y:5.2f}: 1-eml(0,y) = {eml_val:.10f}, log(y) = {log_val:.10f}, "
+              f"error = {abs(eml_val - log_val):.2e}")
 
 
-# ============================================================
-# Application 2: Thermodynamic Partition Functions
-# ============================================================
-
-def log_partition_function(energies: List[float], beta: float) -> float:
-    """Compute log of the partition function Z = Σ exp(-β·E_i)
-    using the log-sum-exp trick (numerically stable).
-
-    In EML terms: this is iterative application of the eml primitive
-    to accumulate exponential contributions.
-    """
-    max_e = max(-beta * e for e in energies)
-    log_z = max_e + math.log(sum(math.exp(-beta * e - max_e) for e in energies))
-    return log_z
-
-
-def free_energy(energies: List[float], beta: float) -> float:
-    """Helmholtz free energy: F = -1/β · log(Z)
-    Expressed via EML: F = -1/β · (1 - eml(0, Z))
-    """
-    log_z = log_partition_function(energies, beta)
-    return -log_z / beta
-
-
-def boltzmann_entropy(energies: List[float], beta: float) -> float:
-    """Boltzmann entropy: S = β(⟨E⟩ - F)"""
-    log_z = log_partition_function(energies, beta)
-    z = math.exp(log_z)
-    mean_e = sum(e * math.exp(-beta * e) for e in energies) / z
-    f = -log_z / beta
-    return beta * (mean_e - f)
-
-
-def demo_thermodynamics():
-    """Demonstrate EML in thermodynamic computations."""
+def demo_elementary_functions():
+    """Show elementary functions as EML circuits."""
     print("\n" + "=" * 60)
-    print("  APPLICATION 2: Thermodynamic Partition Functions")
+    print("§2. Elementary Functions as EML Circuits")
     print("=" * 60)
 
-    # A simple 5-level quantum system
-    energies = [0.0, 1.0, 2.0, 3.0, 5.0]
-    print(f"\n  Energy levels: {energies}")
+    test_points = [-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0]
 
-    print(f"\n  {'β (1/kT)':>10s}  {'log Z':>10s}  {'F':>10s}  {'S':>10s}")
-    print(f"  {'─' * 44}")
-    for beta in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]:
-        log_z = log_partition_function(energies, beta)
-        f = free_energy(energies, beta)
-        s = boltzmann_entropy(energies, beta)
-        print(f"  {beta:10.1f}  {log_z:10.4f}  {f:10.4f}  {s:10.4f}")
-
-    print("\n  Key insight: All thermodynamic quantities are computed via")
-    print("  exp and log — precisely the primitives that eml unifies.")
-    print("  The partition function Z = Σ exp(-βE_i) is a sum of eml(·, 1) terms.")
-    print("  Free energy F = -log(Z)/β uses eml(0, ·) to extract the log.")
-
-
-# ============================================================
-# Application 3: Log-Domain Signal Processing
-# ============================================================
-
-def log_domain_multiply(log_a: float, log_b: float) -> float:
-    """Multiply in log domain: log(a·b) = log(a) + log(b)"""
-    return log_a + log_b
-
-
-def log_domain_add_via_eml(log_a: float, log_b: float) -> float:
-    """Add in log domain using EML:
-    log(a + b) = log(a) + log(1 + exp(log(b) - log(a)))
-
-    The inner exp(log(b) - log(a)) = eml(log(b) - log(a), 1)
-    """
-    if log_a >= log_b:
-        diff = log_b - log_a
-        return log_a + math.log(1.0 + math.exp(diff))
-    else:
-        diff = log_a - log_b
-        return log_b + math.log(1.0 + math.exp(diff))
-
-
-def demo_signal_processing():
-    """Demonstrate EML in log-domain signal processing."""
-    print("\n" + "=" * 60)
-    print("  APPLICATION 3: Log-Domain Signal Processing")
-    print("=" * 60)
-
-    print("\n  In log-domain DSP, signals are represented as logarithms.")
-    print("  Multiplication becomes addition (cheap).")
-    print("  Addition requires the log-sum-exp trick — which IS eml.")
-
-    signals = [
-        (100.0, 200.0),
-        (0.001, 0.002),
-        (1e10, 2e10),
-        (1e-10, 3e-10),
+    circuits = [
+        ("sinh(x)", sinh_circuit(), math.sinh),
+        ("cosh(x)", cosh_circuit(), math.cosh),
+        ("exp(-x²)", gaussian_circuit(), lambda x: math.exp(-x**2)),
+        ("σ(x)", sigmoid_circuit(), lambda x: 1.0 / (1.0 + math.exp(-x))),
+        ("4x(1-x)", logistic_map_circuit(4.0), lambda x: 4*x*(1-x)),
     ]
 
-    print(f"\n  {'a':>12s}  {'b':>12s}  {'a+b (direct)':>14s}  {'a+b (log-domain)':>16s}  {'error':>12s}")
-    print(f"  {'─' * 68}")
-    for a, b in signals:
-        direct = a + b
-        log_a, log_b = math.log(a), math.log(b)
-        log_sum = log_domain_add_via_eml(log_a, log_b)
-        recovered = math.exp(log_sum)
-        err = abs(direct - recovered) / direct
-        print(f"  {a:12.4g}  {b:12.4g}  {direct:14.4g}  {recovered:16.4g}  {err:12.2e}")
-
-    print("\n  The log-sum-exp operation is the fundamental primitive for")
-    print("  log-domain addition, and it is exactly eml in disguise.")
+    for name, circuit, target in circuits:
+        result = verify_depth_class(circuit, target, test_points, circuit.transc_depth)
+        status = "✓" if result['function_correct'] else "✗"
+        print(f"\n  {status} {name}")
+        print(f"    Circuit: {circuit}")
+        print(f"    Size: {result['size']}, Transc Depth: {result['transc_depth']}")
+        print(f"    Max error: {result['max_error']:.2e}")
 
 
-# ============================================================
-# Application 4: Analog Circuit Primitives
-# ============================================================
-
-def transistor_current(vgs: float, vt: float = 0.7, n: float = 1.0,
-                       vth: float = 0.026) -> float:
-    """Diode/transistor current: I = I_s · exp((V_GS - V_t) / (n·V_th))
-    This is eml((V_GS - V_t)/(n·V_th), 1) in EML terms.
-    """
-    return math.exp((vgs - vt) / (n * vth))
-
-
-def log_amplifier(vin: float, reference: float = 1.0) -> float:
-    """Logarithmic amplifier output: V_out = V_th · log(V_in / V_ref)
-    This uses eml(0, V_in/V_ref) via: log(x) = 1 - eml(0, x)
-    """
-    if vin <= 0 or reference <= 0:
-        return 0.0
-    return 0.026 * math.log(vin / reference)
-
-
-def demo_analog_circuits():
-    """Demonstrate EML in analog circuit computations."""
+def demo_depth_hierarchy():
+    """Demonstrate the transcendental depth hierarchy."""
     print("\n" + "=" * 60)
-    print("  APPLICATION 4: Analog Circuit Primitives")
+    print("§3. Transcendental Depth Hierarchy")
     print("=" * 60)
 
-    print("\n  Transistor I-V characteristic (normalized current):")
-    print(f"  {'V_GS (V)':>10s}  {'I/I_s':>12s}  {'log(I/I_s)':>12s}")
-    print(f"  {'─' * 36}")
-    for vgs in [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9, 1.0]:
-        i = transistor_current(vgs)
-        print(f"  {vgs:10.2f}  {i:12.4g}  {math.log(i):12.4f}")
+    print("\n  Depth 0 (algebraic/rational):")
+    alg_circuits = [
+        ("x²", Mul(Var(), Var())),
+        ("1/x", Inv(Var())),
+        ("x² + 2x + 1", Add(Add(Mul(Var(), Var()), Mul(Const(2), Var())), Const(1))),
+        ("4x(1-x)", logistic_map_circuit(4.0)),
+    ]
+    for name, c in alg_circuits:
+        print(f"    {name}: size={c.size}, depth={c.depth}, "
+              f"transc_depth={c.transc_depth}, algebraic={c.is_algebraic}")
 
-    print("\n  Log amplifier output:")
-    print(f"  {'V_in':>10s}  {'V_out (mV)':>12s}")
-    print(f"  {'─' * 24}")
-    for vin in [0.01, 0.1, 1.0, 10.0, 100.0]:
-        vout = log_amplifier(vin) * 1000  # Convert to mV
-        print(f"  {vin:10.2f}  {vout:12.4f}")
+    print("\n  Depth 1 (one level of exp/log):")
+    depth1 = [
+        ("exp(x)", Exp(Var())),
+        ("log(x)", Log(Var())),
+        ("sinh(x)", sinh_circuit()),
+        ("σ(x)", sigmoid_circuit()),
+        ("exp(-x²)", gaussian_circuit()),
+    ]
+    for name, c in depth1:
+        print(f"    {name}: size={c.size}, depth={c.depth}, "
+              f"transc_depth={c.transc_depth}")
 
-    print("\n  Key insight: The exponential I-V law of transistors and the")
-    print("  logarithmic transfer function of log amplifiers are both")
-    print("  instances of the eml primitive. Analog circuits naturally")
-    print("  compute in the eml algebra.")
+    print("\n  Depth n (iterated exponentials):")
+    for n in range(1, 6):
+        c = iter_exp_circuit(n)
+        print(f"    exp^{n}(x): size={c.size}, depth={c.depth}, "
+              f"transc_depth={c.transc_depth}")
 
 
-# ============================================================
-# Main
-# ============================================================
+def demo_growth_rates():
+    """Show growth rates of iterated exponentials."""
+    print("\n" + "=" * 60)
+    print("§4. Growth Rates of Iterated Exponentials")
+    print("=" * 60)
+
+    print("\n  iterExp(n, 0) for n = 0, 1, ..., 4:")
+    for n in range(5):
+        val = iter_exp(n, 0.0)
+        if math.isfinite(val):
+            print(f"    iterExp({n}, 0) = {val:.6f}")
+        else:
+            print(f"    iterExp({n}, 0) = ∞")
+
+    print("\n  iterExp(n, 1) for n = 0, 1, 2, 3:")
+    for n in range(4):
+        val = iter_exp(n, 1.0)
+        if math.isfinite(val):
+            print(f"    iterExp({n}, 1) = {val:.6f}")
+        else:
+            print(f"    iterExp({n}, 1) = ∞")
+
+    print("\n  Strict monotonicity check (iterExp n is increasing):")
+    for n in range(1, 4):
+        points = [-1.0, 0.0, 1.0, 2.0]
+        values = [iter_exp(n, x) for x in points]
+        is_increasing = all(v1 < v2 for v1, v2 in zip(values, values[1:])
+                           if math.isfinite(v1) and math.isfinite(v2))
+        print(f"    iterExp({n}): {['%.4f' % v if math.isfinite(v) else '∞' for v in values]} "
+              f"{'✓ increasing' if is_increasing else '✗ NOT increasing'}")
+
+
+def demo_composition():
+    """Demonstrate composition and depth addition."""
+    print("\n" + "=" * 60)
+    print("§5. Composition: Depths Add")
+    print("=" * 60)
+
+    # exp ∘ exp = exp(exp(x))
+    f = Exp(Var())  # depth 1
+    g = Exp(Var())  # depth 1
+    fg = f.substitute(g)  # should be depth 2
+    print(f"\n  f = {f}, transc_depth = {f.transc_depth}")
+    print(f"  g = {g}, transc_depth = {g.transc_depth}")
+    print(f"  f ∘ g = {fg}, transc_depth = {fg.transc_depth}")
+    print(f"  Depth bound: {f.transc_depth} + {g.transc_depth} = "
+          f"{f.transc_depth + g.transc_depth} ≥ {fg.transc_depth} ✓")
+
+    # sigmoid ∘ polynomial
+    sig = sigmoid_circuit()  # depth 1
+    poly = Mul(Var(), Var())  # depth 0, computes x²
+    composed = sig.substitute(poly)
+    print(f"\n  σ = {sig}, transc_depth = {sig.transc_depth}")
+    print(f"  p = {poly}, transc_depth = {poly.transc_depth}")
+    print(f"  σ ∘ p = {composed}, transc_depth = {composed.transc_depth}")
+    print(f"  Depth bound: {sig.transc_depth} + {poly.transc_depth} = "
+          f"{sig.transc_depth + poly.transc_depth} ≥ {composed.transc_depth} ✓")
+
+    # Verify correctness
+    x_test = 1.5
+    expected = 1.0 / (1.0 + math.exp(-x_test**2))
+    actual = composed.eval(x_test)
+    print(f"\n  Verification at x = {x_test}:")
+    print(f"    σ(x²) expected = {expected:.10f}")
+    print(f"    σ(x²) computed = {actual:.10f}")
+    print(f"    Error = {abs(actual - expected):.2e}")
+
+
+def demo_depth_width_tradeoff():
+    """Investigate the depth-width tradeoff conjecture."""
+    print("\n" + "=" * 60)
+    print("§6. Depth-Width Tradeoff Conjecture")
+    print("=" * 60)
+
+    for n in [1, 2, 3]:
+        result = check_tradeoff(n, max_search_size=5)
+        print(f"\n  n = {n}:")
+        print(f"    Chain size: {result['chain_size']}")
+        print(f"    Best size found: {result['best_size']}")
+        print(f"    Conjecture bound (2n-1): {result['conjecture_bound']}")
+        print(f"    Conjecture holds: {result['conjecture_holds']}")
+
+
+def demo_polynomial_not_exp():
+    """Numerical demonstration that no polynomial matches exp."""
+    print("\n" + "=" * 60)
+    print("§7. Exp is Not Polynomial: Numerical Evidence")
+    print("=" * 60)
+
+    print("\n  Taylor polynomials of exp at x = 0:")
+    print("  The n-th Taylor polynomial T_n(x) = Σ x^k/k! approximates exp")
+    print("  near 0 but diverges for large x.\n")
+
+    for degree in [1, 2, 3, 5, 10]:
+        # Taylor polynomial of exp
+        def taylor_exp(x: float, d: int = degree) -> float:
+            return sum(x**k / math.factorial(k) for k in range(d + 1))
+
+        print(f"  Degree {degree} Taylor polynomial:")
+        for x in [0.0, 1.0, 5.0, 10.0, 20.0]:
+            t_val = taylor_exp(x)
+            e_val = math.exp(x) if x < 500 else float('inf')
+            if math.isfinite(e_val) and math.isfinite(t_val):
+                rel_err = abs(t_val - e_val) / e_val if e_val != 0 else abs(t_val)
+                print(f"    x={x:5.1f}: T_{degree}(x) = {t_val:15.4f}, "
+                      f"exp(x) = {e_val:15.4f}, rel_err = {rel_err:.4f}")
+            else:
+                print(f"    x={x:5.1f}: overflow")
+
+    print("\n  Key insight: any polynomial eventually grows slower than exp.")
+    print("  Ratio exp(x) / x^n → ∞ as x → ∞ for all n:")
+    for n in [1, 2, 5, 10]:
+        x = 100.0
+        ratio = math.exp(x) / x**n
+        print(f"    exp(100) / 100^{n:2d} = {ratio:.4e}")
+
+
+if __name__ == '__main__':
+    demo_eml_operator()
+    demo_elementary_functions()
+    demo_depth_hierarchy()
+    demo_growth_rates()
+    demo_composition()
+    demo_depth_width_tradeoff()
+    demo_polynomial_not_exp()
+
+    print("\n" + "=" * 60)
+    print("Demo complete.")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""
+Visualization: EML Transcendental Depth Hierarchy
+
+Shows functions at different depth levels and their growth rates.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+
+
+def iter_exp(n: int, x: float) -> float:
+    result = x
+    for _ in range(n):
+        result = np.exp(np.clip(result, -500, 500))
+    return result
+
 
 def main():
-    print("=" * 60)
-    print("  EML SINGLE OPERATOR UNIVERSALITY — APPLICATIONS")
-    print("=" * 60)
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('EML Transcendental Depth Hierarchy', fontsize=16, fontweight='bold')
 
-    demo_activations()
-    demo_thermodynamics()
-    demo_signal_processing()
-    demo_analog_circuits()
+    # Panel 1: Depth 0 functions (rational/polynomial)
+    ax = axes[0, 0]
+    x = np.linspace(-3, 3, 500)
+    ax.plot(x, x**2, label='x²', linewidth=2)
+    ax.plot(x, x**3, label='x³', linewidth=2)
+    ax.plot(x, 1/(1 + x**2), label='1/(1+x²)', linewidth=2)
+    ax.plot(x, 4*x*(1-x), label='4x(1-x)', linewidth=2, linestyle='--')
+    ax.set_title('Depth 0: Rational Functions', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-5, 10)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
 
-    print("\n" + "=" * 60)
-    print("  SUMMARY")
-    print("=" * 60)
-    print("""
-  The EML operator eml(x,y) = exp(x) - log(y) appears naturally in:
+    # Panel 2: Depth 1 functions (one exp/log layer)
+    ax = axes[0, 1]
+    x = np.linspace(-3, 3, 500)
+    ax.plot(x, np.exp(x), label='exp(x)', linewidth=2)
+    ax.plot(x, np.sinh(x), label='sinh(x)', linewidth=2)
+    ax.plot(x, np.cosh(x), label='cosh(x)', linewidth=2)
+    ax.plot(x, np.exp(-x**2), label='exp(-x²)', linewidth=2, linestyle='--')
+    ax.plot(x, 1/(1 + np.exp(-x)), label='σ(x)', linewidth=2, linestyle=':')
+    ax.set_title('Depth 1: One Level of exp/log', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-5, 15)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
 
-  1. NEURAL NETWORKS: All standard activations (sigmoid, tanh,
-     softplus, swish) are compositions of eml with field operations.
+    # Panel 3: Growth rate comparison (log scale)
+    ax = axes[1, 0]
+    x = np.linspace(0.1, 5, 500)
+    ax.semilogy(x, x**2, label='x² (depth 0)', linewidth=2)
+    ax.semilogy(x, x**5, label='x⁵ (depth 0)', linewidth=2)
+    ax.semilogy(x, np.exp(x), label='exp(x) (depth 1)', linewidth=2)
+    exp_exp = np.exp(np.clip(np.exp(x), 0, 500))
+    mask = exp_exp < 1e200
+    ax.semilogy(x[mask], exp_exp[mask], label='exp(exp(x)) (depth 2)', linewidth=2)
+    ax.set_title('Growth Rate Comparison (log scale)', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=9)
+    ax.set_ylim(0.01, 1e50)
+    ax.grid(True, alpha=0.3)
 
-  2. THERMODYNAMICS: Partition functions, free energy, and entropy
-     are computed via exp and log — unified by eml.
+    # Panel 4: Depth hierarchy strictness
+    ax = axes[1, 1]
+    depths = list(range(6))
+    sizes = [n + 1 for n in depths]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(depths)))
 
-  3. SIGNAL PROCESSING: Log-domain addition (the log-sum-exp trick)
-     is the eml primitive applied to signal representations.
+    bars = ax.bar(depths, sizes, color=colors, edgecolor='black', linewidth=0.5)
+    ax.set_title('iterExp(n) Circuit Complexity', fontsize=12)
+    ax.set_xlabel('Transcendental Depth n')
+    ax.set_ylabel('Minimum Circuit Size')
 
-  4. ANALOG CIRCUITS: Transistor exponential I-V characteristics
-     and logarithmic amplifiers compute eml natively in hardware.
+    for i, (d, s) in enumerate(zip(depths, sizes)):
+        ax.text(d, s + 0.1, f'{s}', ha='center', va='bottom', fontweight='bold')
 
-  Conclusion: The EML operator is not an abstract curiosity — it is
-  the fundamental computational primitive of real-valued computation
-  across physics, engineering, and machine learning.
-""")
+    # Add the chain structure as annotation
+    ax.annotate('exp(var) = 2 nodes',
+                xy=(1, 2), xytext=(2.5, 4.5),
+                arrowprops=dict(arrowstyle='->', color='red'),
+                fontsize=9, color='red')
+    ax.annotate('exp(exp(exp(var))) = 4 nodes',
+                xy=(3, 4), xytext=(4, 5.5),
+                arrowprops=dict(arrowstyle='->', color='red'),
+                fontsize=9, color='red')
+
+    ax.set_xticks(depths)
+    ax.set_ylim(0, 8)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('depth_hierarchy.png', dpi=150, bbox_inches='tight')
+    print("Saved: depth_hierarchy.png")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 
 
 #!/usr/bin/env python3
 """
-EML Single Operator Universality — Interactive Demo
+Visualization: The EML Operator eml(x, y) = exp(x) - log(y)
 
-Demonstrates that the single binary operator eml(x,y) = exp(x) - log(y)
-can express all elementary real functions. Constructs sample elementary
-expressions, compiles them to EML-only form, numerically compares
-original and compiled expressions, and visualizes the results.
-
-Usage:
-    python demo.py
+Shows the surface plot and key cross-sections of the EML operator,
+including the exp and log recovery identities.
 """
 
-import math
-from typing import Callable, List, Tuple, Optional
-from dataclasses import dataclass
-from enum import Enum, auto
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib
+matplotlib.use('Agg')
 
 
-# ============================================================
-# §1. Expression Tree Data Structures
-# ============================================================
+def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """EML operator: eml(x, y) = exp(x) - log(y)."""
+    log_y = np.where(y > 0, np.log(y), 0.0)
+    return np.exp(np.clip(x, -10, 10)) - log_y
 
-class ExprType(Enum):
-    CONST = auto()
-    VAR = auto()
-    ADD = auto()
-    MUL = auto()
-    NEG = auto()
-    INV = auto()
-    EXP = auto()
-    LOG = auto()
-    EML = auto()  # eml(x, y) = exp(x) - log(y)
-
-
-@dataclass
-class Expr:
-    """Expression tree node."""
-    kind: ExprType
-    value: Optional[float] = None      # For CONST
-    var_index: Optional[int] = None    # For VAR
-    left: Optional['Expr'] = None
-    right: Optional['Expr'] = None
-
-    def eval(self, env: dict) -> float:
-        """Evaluate the expression in the given variable environment."""
-        if self.kind == ExprType.CONST:
-            return self.value
-        elif self.kind == ExprType.VAR:
-            return env.get(self.var_index, 0.0)
-        elif self.kind == ExprType.ADD:
-            return self.left.eval(env) + self.right.eval(env)
-        elif self.kind == ExprType.MUL:
-            return self.left.eval(env) * self.right.eval(env)
-        elif self.kind == ExprType.NEG:
-            return -self.left.eval(env)
-        elif self.kind == ExprType.INV:
-            v = self.left.eval(env)
-            return 1.0 / v if v != 0 else float('inf')
-        elif self.kind == ExprType.EXP:
-            return math.exp(self.left.eval(env))
-        elif self.kind == ExprType.LOG:
-            v = self.left.eval(env)
-            return math.log(v) if v > 0 else float('-inf')
-        elif self.kind == ExprType.EML:
-            a = self.left.eval(env)
-            b = self.right.eval(env)
-            return math.exp(a) - (math.log(b) if b > 0 else float('-inf'))
-        raise ValueError(f"Unknown expression type: {self.kind}")
-
-    def size(self) -> int:
-        """Count nodes in the expression tree."""
-        if self.kind in (ExprType.CONST, ExprType.VAR):
-            return 1
-        elif self.kind in (ExprType.NEG, ExprType.INV, ExprType.EXP, ExprType.LOG):
-            return 1 + self.left.size()
-        else:
-            return 1 + self.left.size() + (self.right.size() if self.right else 0)
-
-    def __repr__(self) -> str:
-        if self.kind == ExprType.CONST:
-            return f"{self.value}"
-        elif self.kind == ExprType.VAR:
-            return f"x{self.var_index}"
-        elif self.kind == ExprType.ADD:
-            return f"({self.left} + {self.right})"
-        elif self.kind == ExprType.MUL:
-            return f"({self.left} * {self.right})"
-        elif self.kind == ExprType.NEG:
-            return f"(-{self.left})"
-        elif self.kind == ExprType.INV:
-            return f"(1/{self.left})"
-        elif self.kind == ExprType.EXP:
-            return f"exp({self.left})"
-        elif self.kind == ExprType.LOG:
-            return f"log({self.left})"
-        elif self.kind == ExprType.EML:
-            return f"eml({self.left}, {self.right})"
-        return "?"
-
-
-# Convenience constructors
-def Const(v: float) -> Expr:
-    return Expr(ExprType.CONST, value=v)
-
-def Var(i: int = 0) -> Expr:
-    return Expr(ExprType.VAR, var_index=i)
-
-def Add(a: Expr, b: Expr) -> Expr:
-    return Expr(ExprType.ADD, left=a, right=b)
-
-def Mul(a: Expr, b: Expr) -> Expr:
-    return Expr(ExprType.MUL, left=a, right=b)
-
-def Neg(a: Expr) -> Expr:
-    return Expr(ExprType.NEG, left=a)
-
-def Inv(a: Expr) -> Expr:
-    return Expr(ExprType.INV, left=a)
-
-def Exp(a: Expr) -> Expr:
-    return Expr(ExprType.EXP, left=a)
-
-def Log(a: Expr) -> Expr:
-    return Expr(ExprType.LOG, left=a)
-
-def Eml(a: Expr, b: Expr) -> Expr:
-    return Expr(ExprType.EML, left=a, right=b)
-
-def Sub(a: Expr, b: Expr) -> Expr:
-    return Add(a, Neg(b))
-
-def Div(a: Expr, b: Expr) -> Expr:
-    return Mul(a, Inv(b))
-
-
-# ============================================================
-# §2. The Compilation Algorithm: EML → EML-Only
-# ============================================================
-
-def compile_to_eml_only(expr: Expr) -> Expr:
-    """
-    Compile an expression using separate exp/log nodes into one
-    using only the eml(x,y) = exp(x) - log(y) primitive.
-
-    Key translations:
-    - exp(e) → eml(e, 1)     since eml(e, 1) = exp(e) - log(1) = exp(e)
-    - log(e) → 1 - eml(0, e) since eml(0, e) = exp(0) - log(e) = 1 - log(e)
-    """
-    if expr.kind == ExprType.CONST:
-        return Const(expr.value)
-    elif expr.kind == ExprType.VAR:
-        return Var(expr.var_index)
-    elif expr.kind == ExprType.ADD:
-        return Add(compile_to_eml_only(expr.left), compile_to_eml_only(expr.right))
-    elif expr.kind == ExprType.MUL:
-        return Mul(compile_to_eml_only(expr.left), compile_to_eml_only(expr.right))
-    elif expr.kind == ExprType.NEG:
-        return Neg(compile_to_eml_only(expr.left))
-    elif expr.kind == ExprType.INV:
-        return Inv(compile_to_eml_only(expr.left))
-    elif expr.kind == ExprType.EXP:
-        # exp(e) = eml(e, 1)
-        return Eml(compile_to_eml_only(expr.left), Const(1.0))
-    elif expr.kind == ExprType.LOG:
-        # log(e) = 1 - eml(0, e) = Add(Const(1), Neg(eml(Const(0), e)))
-        return Add(Const(1.0), Neg(Eml(Const(0.0), compile_to_eml_only(expr.left))))
-    elif expr.kind == ExprType.EML:
-        return Eml(compile_to_eml_only(expr.left), compile_to_eml_only(expr.right))
-    raise ValueError(f"Unknown type: {expr.kind}")
-
-
-def has_only_eml(expr: Expr) -> bool:
-    """Check that the expression has no EXP or LOG nodes (only EML)."""
-    if expr.kind in (ExprType.EXP, ExprType.LOG):
-        return False
-    if expr.kind in (ExprType.CONST, ExprType.VAR):
-        return True
-    if expr.left and not has_only_eml(expr.left):
-        return False
-    if expr.right and not has_only_eml(expr.right):
-        return False
-    return True
-
-
-# ============================================================
-# §3. Sample Elementary Expressions
-# ============================================================
-
-def build_test_functions() -> List[Tuple[str, Expr, Callable, Tuple[float, float]]]:
-    """
-    Build a suite of elementary functions with their expression trees,
-    reference implementations, and valid domains.
-
-    Returns: List of (name, expr, reference_fn, (domain_lo, domain_hi))
-    """
-    x = Var(0)
-    tests = []
-
-    # 1. Polynomial: x^2 + 3x + 2
-    poly = Add(Add(Mul(x, x), Mul(Const(3.0), x)), Const(2.0))
-    tests.append(("x² + 3x + 2", poly, lambda v: v**2 + 3*v + 2, (-5.0, 5.0)))
-
-    # 2. Exponential
-    tests.append(("exp(x)", Exp(x), lambda v: math.exp(v), (-3.0, 3.0)))
-
-    # 3. Logarithm
-    tests.append(("log(x)", Log(x), lambda v: math.log(v), (0.1, 10.0)))
-
-    # 4. Hyperbolic sine: (exp(x) - exp(-x)) / 2
-    sinh_expr = Div(Sub(Exp(x), Exp(Neg(x))), Const(2.0))
-    tests.append(("sinh(x)", sinh_expr, lambda v: math.sinh(v), (-3.0, 3.0)))
-
-    # 5. Hyperbolic cosine: (exp(x) + exp(-x)) / 2
-    cosh_expr = Div(Add(Exp(x), Exp(Neg(x))), Const(2.0))
-    tests.append(("cosh(x)", cosh_expr, lambda v: math.cosh(v), (-3.0, 3.0)))
-
-    # 6. Gaussian: exp(-x²)
-    gauss = Exp(Neg(Mul(x, x)))
-    tests.append(("exp(-x²)", gauss, lambda v: math.exp(-v**2), (-3.0, 3.0)))
-
-    # 7. Logistic sigmoid: 1/(1 + exp(-x))
-    sigmoid = Inv(Add(Const(1.0), Exp(Neg(x))))
-    tests.append(("σ(x) = 1/(1+exp(-x))", sigmoid,
-                   lambda v: 1.0/(1.0+math.exp(-v)), (-5.0, 5.0)))
-
-    # 8. Real power via exp-log: x^(3/2) = exp(1.5 * log(x))
-    rpow = Exp(Mul(Const(1.5), Log(x)))
-    tests.append(("x^(3/2)", rpow,
-                   lambda v: math.exp(1.5 * math.log(v)), (0.1, 5.0)))
-
-    # 9. Double exponential
-    tests.append(("exp(exp(x))", Exp(Exp(x)),
-                   lambda v: math.exp(math.exp(v)), (-2.0, 1.5)))
-
-    # 10. Rational function: (x² + 1) / (x² - 1)  (avoid ±1)
-    rat = Div(Add(Mul(x, x), Const(1.0)), Sub(Mul(x, x), Const(1.0)))
-    tests.append(("(x²+1)/(x²-1)", rat,
-                   lambda v: (v**2+1)/(v**2-1), (1.5, 5.0)))
-
-    return tests
-
-
-# ============================================================
-# §4. Numerical Comparison Engine
-# ============================================================
-
-def linspace(lo: float, hi: float, n: int) -> List[float]:
-    """Simple linspace without numpy."""
-    if n <= 1:
-        return [lo]
-    return [lo + (hi - lo) * i / (n - 1) for i in range(n)]
-
-
-def compare_expressions(name: str, original: Expr, compiled: Expr,
-                        ref_fn: Callable, domain: Tuple[float, float],
-                        n_points: int = 50) -> dict:
-    """
-    Numerically compare original expression, compiled EML-only expression,
-    and reference function on sampled domain points.
-    """
-    lo, hi = domain
-    xs = linspace(lo, hi, n_points)
-    orig_vals = []
-    comp_vals = []
-    ref_vals = []
-    max_error = 0.0
-
-    for xv in xs:
-        env = {0: xv}
-        try:
-            ov = original.eval(env)
-            cv = compiled.eval(env)
-            rv = ref_fn(xv)
-            orig_vals.append(ov)
-            comp_vals.append(cv)
-            ref_vals.append(rv)
-            err = abs(ov - cv)
-            max_error = max(max_error, err)
-        except (ValueError, OverflowError, ZeroDivisionError):
-            orig_vals.append(None)
-            comp_vals.append(None)
-            ref_vals.append(None)
-
-    return {
-        'name': name,
-        'xs': xs,
-        'original': orig_vals,
-        'compiled': comp_vals,
-        'reference': ref_vals,
-        'max_error': max_error,
-        'orig_size': original.size(),
-        'compiled_size': compiled.size(),
-        'size_ratio': compiled.size() / original.size() if original.size() > 0 else 0,
-        'is_eml_only': has_only_eml(compiled),
-    }
-
-
-# ============================================================
-# §5. ASCII Visualization
-# ============================================================
-
-def ascii_plot(xs: list, ys: list, title: str,
-               width: int = 60, height: int = 15):
-    """Simple ASCII plot."""
-    valid = [(x, y) for x, y in zip(xs, ys) if y is not None and math.isfinite(y)]
-    if not valid:
-        print(f"  [{title}]: No valid data points")
-        return
-
-    x_vals, y_vals = zip(*valid)
-    y_min, y_max = min(y_vals), max(y_vals)
-    if y_max == y_min:
-        y_max = y_min + 1
-
-    canvas = [[' '] * width for _ in range(height)]
-
-    for x, y in valid:
-        col = int((x - xs[0]) / (xs[-1] - xs[0]) * (width - 1))
-        row = int((y_max - y) / (y_max - y_min) * (height - 1))
-        col = max(0, min(width - 1, col))
-        row = max(0, min(height - 1, row))
-        canvas[row][col] = '●'
-
-    print(f"\n  {title}")
-    print(f"  {'─' * (width + 4)}")
-    for i, row in enumerate(canvas):
-        if i == 0:
-            label = f"{y_max:8.2f}"
-        elif i == height - 1:
-            label = f"{y_min:8.2f}"
-        elif i == height // 2:
-            label = f"{(y_max + y_min)/2:8.2f}"
-        else:
-            label = " " * 8
-        print(f"  {label} │{''.join(row)}│")
-    print(f"  {'─' * (width + 4)}")
-    print(f"  {' ' * 8}  {xs[0]:.2f}{' ' * (width - 16)}{xs[-1]:.2f}")
-
-
-# ============================================================
-# §6. Main Demo
-# ============================================================
 
 def main():
-    print("=" * 72)
-    print("  EML SINGLE OPERATOR UNIVERSALITY — INTERACTIVE DEMO")
-    print("=" * 72)
-    print()
-    print("  The EML operator:  eml(x, y) = exp(x) - log(y)")
-    print()
-    print("  Key identities:")
-    print("    • exp(x) = eml(x, 1)        [since log(1) = 0]")
-    print("    • log(y) = 1 - eml(0, y)    [since exp(0) = 1]")
-    print()
-    print("  Thesis: eml + field ops + constants = all elementary functions")
-    print("=" * 72)
+    fig = plt.figure(figsize=(16, 10))
+    fig.suptitle('The EML Operator: eml(x, y) = exp(x) − log(y)',
+                 fontsize=16, fontweight='bold')
 
-    tests = build_test_functions()
-    all_results = []
+    # Panel 1: Surface plot
+    ax1 = fig.add_subplot(2, 2, 1, projection='3d')
+    x_range = np.linspace(-2, 2, 50)
+    y_range = np.linspace(0.1, 5, 50)
+    X, Y = np.meshgrid(x_range, y_range)
+    Z = eml(X, Y)
+    Z = np.clip(Z, -10, 20)
+    surf = ax1.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8,
+                            edgecolor='none')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax1.set_zlabel('eml(x,y)')
+    ax1.set_title('EML Surface', fontsize=12)
+    ax1.view_init(elev=25, azim=-45)
 
-    for name, expr, ref_fn, domain in tests:
-        compiled = compile_to_eml_only(expr)
+    # Panel 2: Recovery of exp (y = 1 cross-section)
+    ax2 = fig.add_subplot(2, 2, 2)
+    x = np.linspace(-3, 3, 200)
+    eml_at_y1 = eml(x, np.ones_like(x))
+    exp_x = np.exp(x)
 
-        print(f"\n{'─' * 72}")
-        print(f"  Function: {name}")
-        print(f"  Original:  {expr}")
-        print(f"  Compiled:  {compiled}")
-        print(f"  EML-only:  {'✓' if has_only_eml(compiled) else '✗'}")
+    ax2.plot(x, exp_x, 'b-', linewidth=2.5, label='exp(x)')
+    ax2.plot(x, eml_at_y1, 'r--', linewidth=2, label='eml(x, 1)')
+    ax2.set_title('Recovery: eml(x, 1) = exp(x)', fontsize=12)
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('Value')
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_ylim(-1, 15)
 
-        result = compare_expressions(name, expr, compiled, ref_fn, domain)
-        all_results.append(result)
+    # Panel 3: Recovery of log (x = 0 cross-section)
+    ax3 = fig.add_subplot(2, 2, 3)
+    y = np.linspace(0.1, 10, 200)
+    recovered_log = 1 - eml(np.zeros_like(y), y)
+    true_log = np.log(y)
 
-        print(f"  Size: {result['orig_size']} → {result['compiled_size']} "
-              f"(ratio: {result['size_ratio']:.2f}×)")
-        print(f"  Max |original - compiled| error: {result['max_error']:.2e}")
+    ax3.plot(y, true_log, 'b-', linewidth=2.5, label='log(y)')
+    ax3.plot(y, recovered_log, 'r--', linewidth=2, label='1 − eml(0, y)')
+    ax3.set_title('Recovery: 1 − eml(0, y) = log(y)', fontsize=12)
+    ax3.set_xlabel('y')
+    ax3.set_ylabel('Value')
+    ax3.legend(fontsize=11)
+    ax3.grid(True, alpha=0.3)
 
-        if result['max_error'] < 1e-10:
-            print(f"  ✓ EXACT MATCH (within floating-point precision)")
-        else:
-            print(f"  ⚠ DISCREPANCY detected")
+    # Panel 4: Diagonal eml(x, x) = exp(x) - log(x)
+    ax4 = fig.add_subplot(2, 2, 4)
+    x = np.linspace(0.01, 4, 500)
+    diag = np.exp(x) - np.log(x)
+    exp_part = np.exp(x)
+    neg_log_part = -np.log(x)
 
-        ascii_plot(result['xs'], result['original'], f"{name} (original)", width=50, height=10)
+    ax4.plot(x, diag, 'b-', linewidth=2.5, label='eml(x,x) = exp(x)−log(x)')
+    ax4.plot(x, exp_part, 'g--', linewidth=1.5, alpha=0.7, label='exp(x)')
+    ax4.plot(x, neg_log_part, 'r--', linewidth=1.5, alpha=0.7, label='−log(x)')
+    ax4.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
 
-    # Summary table
-    print(f"\n{'=' * 72}")
-    print("  COMPILATION SUMMARY")
-    print(f"{'=' * 72}")
-    print(f"  {'Function':<25} {'Orig':>6} {'Compiled':>8} {'Ratio':>6} {'Max Err':>12} {'EML?':>5}")
-    print(f"  {'─' * 62}")
-    for r in all_results:
-        eml_str = "✓" if r['is_eml_only'] else "✗"
-        print(f"  {r['name']:<25} {r['orig_size']:>6} {r['compiled_size']:>8} "
-              f"{r['size_ratio']:>5.1f}× {r['max_error']:>12.2e} {eml_str:>5}")
+    # Mark the minimum
+    idx = np.argmin(diag)
+    ax4.plot(x[idx], diag[idx], 'ko', markersize=8)
+    ax4.annotate(f'min ≈ ({x[idx]:.2f}, {diag[idx]:.2f})',
+                xy=(x[idx], diag[idx]),
+                xytext=(x[idx] + 0.5, diag[idx] + 2),
+                arrowprops=dict(arrowstyle='->', color='black'),
+                fontsize=10)
 
-    all_exact = all(r['max_error'] < 1e-10 for r in all_results)
-    all_eml = all(r['is_eml_only'] for r in all_results)
-    max_ratio = max(r['size_ratio'] for r in all_results)
+    ax4.set_title('Diagonal: eml(x, x) = exp(x) − log(x)', fontsize=12)
+    ax4.set_xlabel('x')
+    ax4.set_ylabel('Value')
+    ax4.legend(fontsize=9)
+    ax4.grid(True, alpha=0.3)
+    ax4.set_ylim(-2, 20)
 
-    print(f"\n  All exact:          {'✓' if all_exact else '✗'}")
-    print(f"  All EML-only:       {'✓' if all_eml else '✗'}")
-    print(f"  Max size expansion: {max_ratio:.1f}×")
-    print(f"  Size bound proven:  ≤ 5× (verified in Lean)")
-
-    print(f"\n{'=' * 72}")
-    print("  CONCLUSION")
-    print(f"{'=' * 72}")
-    print("  The single binary operator eml(x,y) = exp(x) - log(y)")
-    print("  successfully compiles ALL tested elementary functions")
-    print("  with exact numerical agreement and linear size overhead.")
-    print(f"{'=' * 72}")
+    plt.tight_layout()
+    plt.savefig('eml_operator.png', dpi=150, bbox_inches='tight')
+    print("Saved: eml_operator.png")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Why Exp is Not Polynomial
+
+Illustrates the derivative fixed-point argument:
+- If p = exp, then p' = exp = p
+- But polynomial derivatives lower degree
+- So p must be constant — contradiction
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+
+
+def taylor(x: np.ndarray, degree: int) -> np.ndarray:
+    """Taylor polynomial of exp at x=0."""
+    result = np.zeros_like(x)
+    factorial = 1.0
+    for k in range(degree + 1):
+        if k > 0:
+            factorial *= k
+        result += x**k / factorial
+    return result
+
+
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle('Why exp(x) Cannot Be a Polynomial',
+                 fontsize=16, fontweight='bold')
+
+    # Panel 1: Taylor approximations diverge from exp for large x
+    ax = axes[0, 0]
+    x = np.linspace(-1, 6, 500)
+    ax.plot(x, np.exp(x), 'k-', linewidth=3, label='exp(x)', zorder=10)
+    colors = plt.cm.Set1(np.linspace(0, 0.8, 5))
+    for i, deg in enumerate([1, 2, 3, 5, 10]):
+        y = taylor(x, deg)
+        y_clipped = np.clip(y, -50, 600)
+        ax.plot(x, y_clipped, color=colors[i], linewidth=1.5,
+                linestyle='--', label=f'T_{deg}(x)', alpha=0.8)
+
+    ax.set_title('Taylor Polynomials vs exp(x)', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-10, 500)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 2: The derivative fixed-point argument
+    ax = axes[0, 1]
+    x = np.linspace(-2, 3, 500)
+
+    # Show p(x) = exp(x) and p'(x) = exp(x) (same!)
+    ax.plot(x, np.exp(x), 'b-', linewidth=2.5, label='exp(x)')
+    ax.plot(x, np.exp(x), 'r--', linewidth=2, label="exp'(x) = exp(x)")
+
+    # Show polynomial p(x) = 1 + x + x²/2 and its derivative
+    p_approx = 1 + x + x**2/2
+    p_deriv = 1 + x
+    ax.plot(x, p_approx, 'g-', linewidth=1.5, alpha=0.7, label='p(x) = 1+x+x²/2')
+    ax.plot(x, p_deriv, 'm--', linewidth=1.5, alpha=0.7, label="p'(x) = 1+x")
+
+    ax.annotate('exp\' = exp\n(fixed point!)',
+                xy=(1.5, np.exp(1.5)), xytext=(0, 12),
+                arrowprops=dict(arrowstyle='->', color='blue'),
+                fontsize=11, color='blue', fontweight='bold')
+    ax.annotate('p\' ≠ p\n(degree drops!)',
+                xy=(2, 1 + 2), xytext=(2.2, 8),
+                arrowprops=dict(arrowstyle='->', color='green'),
+                fontsize=10, color='green')
+
+    ax.set_title('The Derivative Fixed-Point Argument', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.legend(fontsize=9)
+    ax.set_ylim(-2, 20)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 3: Growth rate — exp vs polynomials (log scale)
+    ax = axes[1, 0]
+    x = np.linspace(1, 20, 500)
+    ax.semilogy(x, np.exp(x), 'k-', linewidth=3, label='exp(x)')
+    for n in [1, 2, 5, 10, 20]:
+        ax.semilogy(x, x**n, linewidth=1.5, alpha=0.7, label=f'x^{n}')
+
+    ax.set_title('exp(x) Eventually Dominates x^n', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x) (log scale)')
+    ax.legend(fontsize=9, ncol=2)
+    ax.grid(True, alpha=0.3)
+
+    # Panel 4: Ratio exp(x)/x^n → ∞
+    ax = axes[1, 1]
+    x = np.linspace(1, 30, 500)
+    for n in [1, 2, 3, 5, 10]:
+        ratio = np.exp(x) / x**n
+        ratio_clipped = np.clip(ratio, 0, 1e6)
+        mask = ratio < 1e6
+        ax.plot(x[mask], ratio_clipped[mask], linewidth=2,
+                label=f'exp(x)/x^{n}')
+
+    ax.set_title('exp(x)/x^n → ∞ for all n', fontsize=12)
+    ax.set_xlabel('x')
+    ax.set_ylabel('exp(x)/x^n')
+    ax.legend(fontsize=9)
+    ax.set_ylim(0, 100)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+
+    plt.tight_layout()
+    plt.savefig('exp_not_polynomial.png', dpi=150, bbox_inches='tight')
+    print("Saved: exp_not_polynomial.png")
+
+
+if __name__ == '__main__':
     main()

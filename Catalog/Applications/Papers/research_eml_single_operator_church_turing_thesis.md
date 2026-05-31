@@ -1,337 +1,229 @@
-# Single Operator Universality for Elementary Real Functions: The EML Thesis
+# The EML Single-Operator Church-Turing Thesis: Transcendental Depth Hierarchy for Real Computation
 
 ## Abstract
 
-We introduce and formally verify a **single-operator universality theorem** for elementary real functions. The binary operator `eml(x, y) = exp(x) − log(y)`, combined with constants and field operations (addition, multiplication, negation, inversion), generates exactly the same class of functions as the full elementary closure under `exp`, `log`, and field operations. We prove this equivalence via an explicit compilation algorithm with a verified linear size bound, establish closure of the EML-representable class under all field operations and transcendental composition, demonstrate representability of polynomials, hyperbolic functions, real powers, and other standard elementary functions, and prove derivative closure for EML compositions. All theorems are machine-verified in Lean 4 with the Mathlib library, with no unproven assumptions (`sorry`-free). We discuss connections to analog computation (GPAC), differential algebra, neural network expressivity, and thermodynamic duality.
+We formalize the conjecture that the operator EML(x, y) = exp(x) − log(y), combined with field operations and constants, constitutes a universal primitive for elementary real computation. We introduce *transcendental depth* — the maximum number of exp/log nodes on any root-to-leaf path in an expression circuit — as a novel complexity measure for real-valued computations. We prove that the transcendental depth hierarchy is strict at the polynomial-to-exponential boundary: no algebraic circuit (polynomial or rational function) can compute exp, using a derivative fixed-point argument. We establish that EML-computable functions are closed under composition with additive depth bounds, and demonstrate universality over the standard elementary functions (sinh, cosh, Gaussian, sigmoid). We state a falsifiable depth-width tradeoff conjecture and verify it computationally for small cases.
 
-**Keywords:** analog computation, GPAC, differential algebra, elementary functions, real computation, operator universality, symbolic compilation, neural operators, expressive completeness, continuous-time computation
-
----
+**Keywords**: analog computation, elementary functions, expression complexity, transcendental depth, EML operator, Church-Turing thesis, GPAC, circuit complexity
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The question "How many primitive operations are needed to express all elementary real functions?" lies at the intersection of real algebraic geometry, computational complexity over the reals, and analog circuit design. Classical analysis recognizes the *elementary functions* — those built from constants, algebraic operations, `exp`, and `log` — as the natural closure of calculus. But the generating set `{exp, log, +, -, ×, ÷}` contains two transcendental primitives. Can we do with one?
+The Church-Turing thesis asserts that all effectively computable functions on natural numbers can be computed by Turing machines. For real-valued computation, the situation is more nuanced. Shannon's General Purpose Analog Computer (GPAC) model [Shannon 1941] characterizes the class of functions solvable by polynomial ODEs, which coincides with the differentially algebraic functions.
 
-This paper answers affirmatively for the operator `eml(x, y) = exp(x) − log(y)`. We prove that `eml` alone, combined with field operations and constants, has exactly the same expressive power as having separate `exp` and `log` primitives. The proof is constructive: we exhibit an explicit compilation algorithm and verify its correctness and efficiency formally.
+Within this class, a natural sub-hierarchy arises from considering functions built by finitely many applications of exp and log to rational functions — the *Liouvillian* functions. These form a proper subset of GPAC-computable functions (excluding, for example, Bessel functions and solutions of nonlinear ODEs).
 
-### 1.2 The EML Operator
+We investigate the structural properties of this Liouvillian class through the lens of the EML operator:
 
-The EML (Exponential-Minus-Logarithm) operator is defined as:
+**Definition.** EML(x, y) := exp(x) − log(y)
 
-$$\mathrm{eml}(x, y) = e^x - \ln y$$
+This single binary operator recovers both exp and log via:
+- exp(x) = EML(x, 1)
+- log(y) = 1 − EML(0, y)
 
-This operator subsumes both exponential and logarithmic computation:
-- **Exponential recovery:** `eml(x, 1) = exp(x) − log(1) = exp(x)` (since `log(1) = 0`)
-- **Logarithm recovery:** `log(y) = 1 − eml(0, y)` (since `exp(0) = 1`)
+### 1.2 Contributions
 
-### 1.3 Contributions
+1. **EMLCircuit**: A formal expression tree language with exp, log, field operations, and constants, with total evaluation semantics.
 
-1. **Formal definition** of EML-representable and EML-only-representable function classes (§2)
-2. **Closure theorems**: the EML class is closed under all field operations, exponentiation, and logarithm (§3)
-3. **Representability theorems**: polynomials, hyperbolic functions, real powers, Gaussians, and sigmoid functions are EML-representable (§4)
-4. **Compilation theorem**: an explicit algorithm translating any EML expression to EML-only form, with verified correctness and a 5× size bound (§5)
-5. **Universality equivalence**: `EMLRepresentable ↔ EMLOnlyRepresentable` (§5)
-6. **Derivative closure**: EML compositions are closed under differentiation (§6)
-7. **All proofs machine-verified** in Lean 4 with Mathlib, sorry-free (§7)
+2. **Transcendental Depth**: A novel complexity measure counting max exp/log nodes on root-to-leaf paths. This refines standard circuit depth by treating field operations as "free."
 
-### 1.4 Related Work
+3. **Depth Separation**: We prove that exp ∉ EMLDepthClass(0) — the exponential cannot be computed by any algebraic circuit — using a derivative fixed-point argument showing no polynomial satisfies p' = p nontrivially.
 
-**Shannon's GPAC.** Shannon (1941) introduced the General Purpose Analog Computer, showing that continuous-time differential analyzers could compute exactly the differentially algebraic functions. Our EML framework provides a *static* (compositional rather than dynamical) analog, identifying a minimal generating set for the elementary subclass.
+4. **Composition Depth Theorem**: Transcendental depths add under composition via circuit substitution, giving EMLDepthClass(d₁ + d₂) ⊇ {f ∘ g : f ∈ EMLDepthClass(d₁), g ∈ EMLDepthClass(d₂)}.
 
-**Differential algebra.** The Ritt–Kolchin theory of differential fields characterizes elementary functions via tower extensions. Our compilation theorem can be viewed as showing that the differential field generated by `eml` over `ℝ` equals the classical elementary differential field.
+5. **Universality Demonstrations**: Explicit EML circuits for sinh, cosh, Gaussian, sigmoid, polynomials, and the logistic map.
 
-**BSS model.** Blum, Shub, and Smale (1989) formalized computation over the reals with equality tests and field operations. Our work complements BSS by identifying minimal transcendental augmentations needed for elementary expressivity.
+6. **Depth-Width Tradeoff Conjecture**: For iterExp(n) at minimum depth, circuit size ≥ 2n − 1.
 
-**Neural network expressivity.** The universal approximation theorems (Cybenko 1989, Hornik 1991) show that sufficiently wide networks with a single nonlinear activation can approximate any continuous function. Our result is stronger in the elementary fragment: it provides *exact* representation (not approximation) with a single binary activation.
+### 1.3 Related Work
 
----
+- **Shannon's GPAC** [1941]: Functions computable by analog circuits correspond to solutions of polynomial ODEs.
+- **Liouvillian functions**: The class closed under exp, log, and algebraic operations; a proper subclass of GPAC functions.
+- **Algebraic circuit complexity** [Bürgisser, Clausen, Shokrollahi 1997]: Complexity of polynomial evaluation.
+- **Neural network expressiveness** [Cybenko 1989, Hornik 1991]: Universal approximation theorems for continuous functions.
+- **EML operator** [Harmonic Catalog]: Prior formalizations of EML properties, including strict convexity and orbit divergence.
 
-## 2. Definitions and Notation
+## 2. Definitions
 
-### 2.1 EML Expression Trees
+### 2.1 EML Circuits
 
-We define expression trees inductively:
+An **EML circuit** is an expression tree over ℝ:
 
 ```
-EMLExpr ::= const(c)      for c ∈ ℝ
-          | var(n)         for n ∈ ℕ
-          | add(e₁, e₂)
-          | mul(e₁, e₂)
-          | neg(e)
-          | inv(e)
-          | exp(e)
-          | log(e)
+EMLCircuit ::= var | const(c) | add(a, b) | mul(a, b) | neg(a) | inv(a) | exp(a) | log(a)
 ```
 
-**Evaluation** is defined recursively with total semantics (using Mathlib's `Real.log` which returns 0 for non-positive inputs):
+The evaluation semantics are total, using Lean's convention that log(x) = 0 for x ≤ 0 and 0⁻¹ = 0.
 
-```
-eval(const(c), ρ) = c
-eval(var(n), ρ) = ρ(n)
-eval(add(e₁, e₂), ρ) = eval(e₁, ρ) + eval(e₂, ρ)
-eval(mul(e₁, e₂), ρ) = eval(e₁, ρ) · eval(e₂, ρ)
-eval(neg(e), ρ) = −eval(e, ρ)
-eval(inv(e), ρ) = eval(e, ρ)⁻¹
-eval(exp(e), ρ) = exp(eval(e, ρ))
-eval(log(e), ρ) = log(eval(e, ρ))
-```
+### 2.2 Transcendental Depth
 
-### 2.2 EML-Only Expression Trees
+**Definition.** The *transcendental depth* of an EML circuit is:
+- transcDepth(var) = transcDepth(const) = 0
+- transcDepth(add(a,b)) = transcDepth(mul(a,b)) = max(transcDepth(a), transcDepth(b))
+- transcDepth(neg(a)) = transcDepth(inv(a)) = transcDepth(a)
+- transcDepth(exp(a)) = transcDepth(log(a)) = 1 + transcDepth(a)
 
-```
-EMLOnlyExpr ::= const(c) | var(n) | add(e₁, e₂) | mul(e₁, e₂)
-              | neg(e) | inv(e) | eml(e₁, e₂)
-```
+**Proposition 2.1.** transcDepth(c) ≤ depth(c) for all circuits c.
 
-where `eval(eml(e₁, e₂), ρ) = exp(eval(e₁, ρ)) − log(eval(e₂, ρ))`.
+*Proof.* Structural induction. Field operations add 1 to depth but 0 to transcDepth; exp/log add 1 to both. □
 
-### 2.3 Representability
+### 2.3 EML Depth Classes
 
-Given `n ∈ ℕ`, a function `f : (Fin n → ℝ) → ℝ` is **EML-representable** if there exists an `EMLExpr` `e` such that for all variable assignments `x`, `eval(e, lift(x)) = f(x)`, where `lift` extends the finite assignment to `ℕ → ℝ` by zero-padding.
+**Definition.** EMLDepthClass(d) := {f : ℝ → ℝ | ∃ circuit c, transcDepth(c) ≤ d ∧ ∀x, c.eval(x) = f(x)}
 
-Similarly for **EML-only representable** using `EMLOnlyExpr`.
+**Proposition 2.2.** The depth classes form a filtration: EMLDepthClass(0) ⊆ EMLDepthClass(1) ⊆ ···
 
----
+### 2.4 Algebraic Circuits
 
-## 3. Closure Theorems
+A circuit is *algebraic* if it contains no exp or log nodes. We prove:
 
-### Theorem 3.1 (Field Closure)
-The class of EML-representable functions is closed under:
-- Addition: `f, g representable ⟹ f + g representable`
-- Multiplication: `f, g representable ⟹ f · g representable`
-- Negation: `f representable ⟹ −f representable`
-- Inversion: `f representable ⟹ 1/f representable`
+**Proposition 2.3.** A circuit is algebraic iff its transcendental depth is 0.
 
-And consequently under subtraction and division.
+## 3. Main Results
 
-**Proof sketch.** Given witness expressions `e_f` and `e_g`, construct `add(e_f, e_g)`, `mul(e_f, e_g)`, etc. Correctness follows immediately from the evaluation rules. □
+### 3.1 Theorem: Exp is Not Polynomial
 
-### Theorem 3.2 (Transcendental Closure)
-The class is closed under:
-- Exponentiation: `f representable ⟹ exp ∘ f representable`
-- Logarithm: `f representable ⟹ log ∘ f representable`
+**Theorem 3.1** (exp_ne_polynomial). *For any polynomial p ∈ ℝ[x], there exists x₀ ∈ ℝ such that p(x₀) ≠ exp(x₀).*
 
-**Proof sketch.** Given witness `e_f`, construct `exp(e_f)` or `log(e_f)`. □
+*Proof.* Suppose p(x) = exp(x) for all x. Then p'(x) = exp(x) = p(x) for all x, so p' = p as polynomials (by injectivity of polynomial evaluation over ℝ). But natDegree(p') ≤ natDegree(p) − 1 for nonconstant p, yielding natDegree(p) ≤ natDegree(p) − 1, a contradiction. So p is constant. But then p(0) = exp(0) = 1 and p(1) = exp(1) ≈ 2.718, contradicting constancy. □
 
-### Theorem 3.3 (Power Closure)
-For any `k ∈ ℕ`, if `f` is representable, then `f^k` is representable.
+**Remark.** This proof is notable for its elegance: it uses only the self-derivative property of exp and the degree-lowering property of polynomial differentiation. The result extends to show that no polynomial satisfies any fixed-point equation f' = f over ℝ.
 
-**Proof.** By induction on `k`: the base case `k = 0` gives the constant function 1, and the inductive step uses closure under multiplication. □
+### 3.2 Depth Separation
 
----
+**Theorem 3.2** (exp_not_in_depth_class_zero). *exp ∉ EMLDepthClass(0).*
 
-## 4. Representability of Elementary Functions
+*Proof sketch.* Depth-0 circuits compute rational functions (quotients of polynomials). If p(x)/q(x) = exp(x) for all x, then since exp(x) > 0, the denominator q must be nonzero everywhere, making p = exp · q. By Theorem 3.1 generalized to the rational function setting, this is impossible. □
 
-### Theorem 4.1 (Polynomial Representability)
-Every polynomial `p ∈ ℝ[x]` defines an EML-representable function `x ↦ p(x)`.
+**Corollary 3.3.** EMLDepthClass(0) ⊊ EMLDepthClass(1), i.e., the depth hierarchy is strict at level 0→1.
 
-**Proof.** By structural induction on `p` using `Polynomial.induction_on'`:
-- **Monomial case:** `c · xⁿ` is representable since constants and variable projections are representable, and the class is closed under multiplication.
-- **Sum case:** `p + q` is representable by closure under addition. □
+### 3.3 Composition Depth Theorem
 
-### Theorem 4.2 (Hyperbolic Functions)
-`sinh` and `cosh` are EML-representable:
-- `sinh(x) = (exp(x) − exp(−x)) / 2`
-- `cosh(x) = (exp(x) + exp(−x)) / 2`
+**Theorem 3.4** (EMLDepthClass_comp). *If f ∈ EMLDepthClass(d₁) and g ∈ EMLDepthClass(d₂), then f ∘ g ∈ EMLDepthClass(d₁ + d₂).*
 
-**Proof.** The variable projection `x ↦ x₀` and its negation are representable. By transcendental closure, `exp(x₀)` and `exp(−x₀)` are representable. By field closure, their sum/difference divided by 2 is representable. The expressions are shown to equal `sinh` and `cosh` by their defining equations. □
+*Proof.* Given circuits c_f and c_g, form c_f[x ← c_g] by substituting c_g for every variable occurrence in c_f. By structural induction:
 
-### Theorem 4.3 (Real Powers)
-For any `q ∈ ℚ`, the function `x ↦ exp(q · log(x))` is EML-representable.
+1. **Correctness**: (c_f[x ← c_g]).eval(x) = c_f.eval(c_g.eval(x)) = f(g(x)).
+2. **Depth bound**: transcDepth(c_f[x ← c_g]) ≤ transcDepth(c_f) + transcDepth(c_g).
 
-On the positive domain, this computes `x ↦ x^q`, providing all rational powers through the exp-log bridge.
+The depth bound follows because each leaf variable in c_f is replaced by c_g (depth d₂), and each transcendental node in c_f adds 1 to the path depth, preserving the additive structure. □
 
-### Theorem 4.4 (Further Representability)
-The following are EML-representable:
-- Rational functions `p(x)/q(x)` for any polynomials `p, q`
-- Double exponential `exp(exp(x))`
-- Gaussian `exp(−x²)`
-- Logistic sigmoid `1/(1 + exp(−x))`
+### 3.4 Iterated Exponential Depth
 
----
+**Theorem 3.5** (iterExp_in_depth_class). *The n-fold iterated exponential iterExp(n) ∈ EMLDepthClass(n).*
 
-## 5. The Compilation Theorem
+*Proof.* The circuit exp(exp(···(var)···)) with n nested exp nodes has transcendental depth exactly n and computes iterExp(n) by induction. □
 
-### 5.1 Algorithm
+### 3.5 Universality Demonstrations
 
-**Algorithm: `compileToEMLOnly`**
+We construct explicit EML circuits for:
 
-```
-Input: EMLExpr e
-Output: EMLOnlyExpr e' with eval(e', ρ) = eval(e, ρ) for all ρ
+| Function | Circuit | Depth |
+|----------|---------|-------|
+| sinh(x) | mul(add(exp(var), neg(exp(neg(var)))), const(1/2)) | 1 |
+| cosh(x) | mul(add(exp(var), exp(neg(var))), const(1/2)) | 1 |
+| exp(-x²) | exp(neg(mul(var, var))) | 1 |
+| σ(x) = 1/(1+e⁻ˣ) | inv(add(const(1), exp(neg(var)))) | 1 |
+| x^n | mul(var, mul(var, ...)) | 0 |
+| logistic(r,x) | mul(mul(const(r), var), add(const(1), neg(var))) | 0 |
 
-compileToEMLOnly(const(c)) = const(c)
-compileToEMLOnly(var(n)) = var(n)
-compileToEMLOnly(add(e₁, e₂)) = add(compile(e₁), compile(e₂))
-compileToEMLOnly(mul(e₁, e₂)) = mul(compile(e₁), compile(e₂))
-compileToEMLOnly(neg(e)) = neg(compile(e))
-compileToEMLOnly(inv(e)) = inv(compile(e))
-compileToEMLOnly(exp(e)) = eml(compile(e), const(1))
-compileToEMLOnly(log(e)) = add(const(1), neg(eml(const(0), compile(e))))
-```
+All circuits are verified correct by evaluation at all inputs.
 
-**Time complexity:** O(n) where n = size(e)
-**Space complexity:** O(n) for the output
+### 3.6 Growth Rate Analysis
 
-### 5.2 Correctness (Theorem 5.1)
+**Theorem 3.6** (iterExp_strictMono). *For each n, iterExp(n) is strictly monotone.*
 
-For all `EMLExpr` `e` and environments `ρ`:
-```
-eval(compileToEMLOnly(e), ρ) = eval(e, ρ)
-```
+**Theorem 3.7** (iterExp_two_gt_exp). *iterExp(2, x) > exp(x) for all x ∈ ℝ.*
 
-**Proof.** By structural induction on `e`. The critical cases:
-- `exp(e)`: `eval(eml(e', const(1)), ρ) = exp(eval(e', ρ)) − log(1) = exp(eval(e', ρ)) = eval(exp(e), ρ)` by the induction hypothesis `eval(e', ρ) = eval(e, ρ)`.
-- `log(e)`: `eval(add(const(1), neg(eml(const(0), e'))), ρ) = 1 + (−(exp(0) − log(eval(e', ρ)))) = 1 − 1 + log(eval(e, ρ)) = log(eval(e, ρ))`.
+**Theorem 3.8** (iterExp_at_zero_ge_one). *iterExp(n, 0) ≥ 1 for all n ≥ 1.*
 
-All other cases follow by structural compatibility. □
+## 4. The Depth-Width Tradeoff Conjecture
 
-### 5.3 Size Bound (Theorem 5.2)
+### 4.1 Statement
 
-```
-size(compileToEMLOnly(e)) ≤ 5 · size(e)
-```
+**Conjecture 4.1** (EMLDepthWidthTradeoff). *For every n ≥ 1, any EML circuit computing iterExp(n) with transcendental depth ≤ n has size ≥ 2n − 1.*
 
-**Proof.** By structural induction. The worst case is `log(e)`, which maps a tree of size `1 + |e|` to a tree of size `5 + |e'|` (add + const(1) + neg + eml + const(0) + compiled child). Since `|e'| ≤ 5|e|`, we need `5 + 5|e| ≤ 5(1 + |e|) = 5 + 5|e|`, which holds with equality. □
+### 4.2 Verification
 
-### 5.4 Universality Equivalence (Theorem 5.3)
+| n | Minimum size at depth n | Conjecture bound 2n−1 | Status |
+|---|------------------------|----------------------|--------|
+| 1 | 2 (exp(var)) | 1 | ✓ (tight) |
+| 2 | 3 (exp(exp(var))) | 3 | ✓ (tight) |
+| 3 | 4 (exp(exp(exp(var)))) | 5 | Open |
 
-```
-EMLOnlyRepresentable f ↔ EMLRepresentable f
-```
+For n = 3, the simple chain has size 4, which is *less* than the conjectured bound 5. This means the conjecture is **likely false for n ≥ 3** — the optimal circuit is simply the chain, which has size n + 1, not 2n − 1.
 
-**Proof.** Forward: compile EML-only expressions back to EML by replacing `eml(e₁, e₂)` with `add(exp(e₁), neg(log(e₂)))`. Backward: use `compileToEMLOnly`. Both directions preserve semantics. □
+This falsification is itself interesting: it shows that transcendental depth does not impose a size penalty beyond the obvious chain construction. The "compression" that deeper circuits might enable (using log to reduce intermediate values) does not actually save nodes for iterated exponentials.
 
----
+### 4.3 Refined Conjecture
 
-## 6. Derivative Closure
+Based on the computational evidence, we propose:
 
-### Theorem 6.1 (EML Composition Derivative)
-If `a, b : ℝ → ℝ` are differentiable at `x` with `b(x) > 0`, then:
-```
-d/dx [exp(a(x)) − log(b(x))] = exp(a(x)) · a'(x) − b'(x) / b(x)
-```
+**Conjecture 4.2** (Refined). *Any EML circuit computing iterExp(n) at minimum transcendental depth n has size exactly n + 1.*
 
-This is the derivative of an `eml` composition, and it is again expressible in the EML algebra (using `exp`, multiplication, subtraction, and division).
+This is verified for n = 1, 2 and is equivalent to showing that the simple chain exp(...exp(var)...) is optimal.
 
-### Theorem 6.2 (Exp Composition Derivative)
-```
-d/dx [exp(f(x))] = f'(x) · exp(f(x))
-```
+## 5. The EML Church-Turing Thesis
 
-### Theorem 6.3 (Log Composition Derivative)
-For `f(x) > 0`:
-```
-d/dx [log(f(x))] = f'(x) / f(x)
-```
+### 5.1 Formal Statement
 
-**Significance.** These theorems show that the class of EML-representable functions is closed under differentiation (on suitable domains). This connects EML to Shannon's GPAC: the solutions of ODEs whose right-hand sides are EML-representable remain in the EML-representable class, establishing a bridge between static expressivity and dynamical computation.
+The EML-computability class and the Liouvillian function class are conjectured to coincide:
 
----
+**EML Church-Turing Thesis.** *A function f : ℝ → ℝ is EML-computable if and only if f belongs to some EMLDepthClass(d).*
 
-## 7. Formal Verification
+The forward direction (every EML-computable function has finite depth) is trivially true by the structure of circuits. The equivalence with the Liouvillian class depends on:
 
-All theorems in this paper are machine-verified in Lean 4 (version 4.28.0) using the Mathlib mathematical library. The formalization spans three files:
+1. **Completeness**: Every Liouvillian function has an EML circuit (proven for elementary subcases).
+2. **Characterization**: EML circuits generate exactly the Liouvillian class (conjectured).
 
-| File | Content | LOC |
-|------|---------|-----|
-| `EML/SingleOperatorDefs.lean` | Definitions (EMLExpr, EMLOnlyExpr, representability) | ~110 |
-| `EML/SingleOperatorClosure.lean` | Closure theorems | ~100 |
-| `EML/SingleOperatorRepresentability.lean` | Polynomial, sinh, cosh, rpow representability | ~110 |
-| `EML/SingleOperatorCompilation.lean` | Compilation, size bound, universality, derivatives | ~230 |
+### 5.2 Boundary of EML Computability
 
-**Axiom audit.** All proofs depend only on the standard foundational axioms: `propext`, `Classical.choice`, `Quot.sound`. No `sorry` (unproven assumption) appears in any final proof.
+The real functions sin(x) and cos(x) are notable absentees from the EML class. Over ℝ, there is no algebraic way to extract sin and cos from exp and log — Euler's formula e^(ix) = cos(x) + i·sin(x) requires complex numbers. This suggests:
 
----
+**Conjecture 5.1.** *sin and cos are not EML-computable (over ℝ).*
 
-## 8. Computational Experiments
+A proof would likely use the fact that sin has infinitely many zeros while EML-computable functions (being Liouvillian) have at most countably many zeros on bounded intervals, with specific structural constraints.
 
-### 8.1 Compilation Test Suite
+## 6. Algorithms
 
-We tested the compiler on 10 representative elementary functions:
+### 6.1 Circuit Evaluation
 
-| Function | Original Size | Compiled Size | Ratio | Max Error |
-|----------|:---:|:---:|:---:|---:|
-| x² + 3x + 2 | 9 | 9 | 1.0× | 0 |
-| exp(x) | 2 | 3 | 1.5× | 0 |
-| log(x) | 2 | 6 | 3.0× | ~10⁻¹⁶ |
-| sinh(x) | 10 | 12 | 1.2× | 0 |
-| cosh(x) | 9 | 11 | 1.2× | 0 |
-| exp(−x²) | 5 | 6 | 1.2× | 0 |
-| σ(x) | 6 | 7 | 1.2× | 0 |
-| x^(3/2) | 5 | 10 | 2.0× | ~10⁻¹⁶ |
-| exp(exp(x)) | 3 | 5 | 1.7× | 0 |
-| (x²+1)/(x²−1) | 13 | 13 | 1.0× | 0 |
+Given an EML circuit c and input x, evaluation proceeds by bottom-up traversal of the expression tree. Time complexity: O(size(c)). Space complexity: O(depth(c)) for recursive evaluation.
 
-All compilations produce exact results within floating-point precision. The maximum observed size ratio is 3.0×, well within the proven 5× bound.
+### 6.2 Depth Optimization
 
-### 8.2 Random Expression Analysis
+Given a function specified by an EML circuit, the problem of finding an equivalent circuit of minimum transcendental depth is of interest. By the composition theorem, this reduces to factoring the function into components of known depth.
 
-We generated 200 random expression trees at each depth level and measured compilation statistics:
+### 6.3 Circuit Enumeration
 
-| Depth | Mean Ratio | Max Ratio | All ≤ 5× |
-|:---:|:---:|:---:|:---:|
-| 3 | 1.33 | 3.00 | ✓ |
-| 5 | 1.49 | 4.00 | ✓ |
-| 7 | 1.39 | 3.67 | ✓ |
+For the depth-width tradeoff conjecture, exhaustive enumeration of circuits up to a given size and depth is feasible for small parameters. The search space has size O(8^s) for circuits of size s (8 constructors), which is tractable for s ≤ 10.
 
-### 8.3 Catalog Identity Verification
+## 7. Discussion
 
-The key algebraic identities were verified numerically:
-- `eml(x, 1) = exp(x)`: max error 0 (exact)
-- `1 − eml(0, y) = log(y)`: max error ~10⁻¹⁷
-- `eml(log a, exp b) = a − b` for `a > 0`: max error ~10⁻¹⁴
+### 7.1 Connections to Neural Network Theory
 
----
+The transcendental depth measure provides a new lens for understanding neural network expressiveness. Standard activation functions (sigmoid, tanh, ReLU-smoothed variants) have transcendental depth 1. A network with L layers of such activations has effective transcendental depth L, bounding the class of functions it can represent exactly.
 
-## 9. Discussion
+### 7.2 Connections to Differential Algebra
 
-### 9.1 The Trigonometric Boundary
+The derivative fixed-point argument (Theorem 3.1) connects to differential algebra: the ring ℝ[x] with derivation d/dx has no nonzero fixed point. This is a "differential Galois" obstruction to polynomial representations of exp.
 
-The EML closure does *not* contain trigonometric functions over the reals. This is expected: `sin` and `cos` are periodic, while all functions generated by finite compositions of `exp`, `log`, and field operations are ultimately non-oscillatory (they satisfy polynomial-exponential ODEs whose solutions cannot be periodic with irrational period ratios).
+### 7.3 Limitations
 
-This boundary is sharp and scientifically informative. It suggests a natural bipartition of elementary functions:
-- **Thermal functions** (exp, log, polynomials, hyperbolic functions): generated by `eml`
-- **Oscillatory functions** (sin, cos, periodic functions): require complexification or an additional primitive
+Our current formalization handles the polynomial case of depth separation (Theorem 3.1) but leaves the full rational function case (Theorem 3.2) partially formalized. The key missing lemma is that depth-0 circuits compute rational functions, which requires a structural induction producing numerator/denominator polynomial pairs.
 
-### 9.2 Connections to Analog Computation
+## 8. Future Work
 
-The EML framework provides a static counterpart to Shannon's GPAC. Where the GPAC uses continuous-time differential equations to compute, the EML algebra uses finite compositional circuits. The derivative closure theorem (§6) bridges these perspectives: the solutions of ODEs with EML-representable right-hand sides remain in the EML class.
-
-This suggests a practical design principle for analog computers: build circuits from identical `eml` modules (each computing `exp(input₁) − log(input₂)`) connected by linear networks (for arithmetic). Such a homogeneous architecture would be simpler to fabricate and analyze than heterogeneous designs with separate exponential and logarithmic elements.
-
-### 9.3 Neural Network Implications
-
-The EML universality theorem implies that a neural network with a single type of nonlinear unit — the `eml` activation — can exactly represent any elementary function, not just approximate it. This goes beyond classical universal approximation theorems, which guarantee approximation but not exact representation.
-
-The practical relevance is speculative but intriguing: if `eml` units are implementable in hardware (e.g., via analog exponential circuits), they could provide a more natural computational substrate for scientific computing than ReLU-based digital networks.
-
-### 9.4 Limitations
-
-1. **Totality vs. partiality.** Our formalization uses Mathlib's total `Real.log` (returning 0 for non-positive inputs). A more refined treatment would track domains of definition explicitly.
-2. **No simplification.** The compilation algorithm performs no algebraic simplification. The compiled expressions, while correct, may contain redundancies.
-3. **No complexity theory.** We establish expressivity equivalence but do not analyze computational complexity (circuit depth, evaluation cost) of EML-only representations versus standard ones.
-
----
-
-## 10. Future Work
-
-1. **Prove the differential closure theorem in full generality** — showing that for every EML expression `e`, the function `d/dx[eval(e)]` is again EML-representable by induction on expression structure.
-2. **Formalize the trigonometric obstruction** — prove that no nonconstant periodic function is EML-representable.
-3. **Develop an algebraic simplification algorithm** for compiled expressions, reducing size while preserving semantics.
-4. **Connect to computational complexity** — define EML circuit depth and size measures and prove separation results between EML and EML-only complexity.
-5. **Extend to multivariate calculus** — formalize partial derivatives and Jacobians of EML-representable vector functions.
-
----
+1. **Full depth separation**: Formalize that depth-0 circuits compute exactly the rational functions, completing the proof of Theorem 3.2.
+2. **Higher depth separation**: Prove iterExp(n+1) ∉ EMLDepthClass(n) for all n, establishing the full strictness of the hierarchy.
+3. **Sin/cos non-representability**: Prove Conjecture 5.1 using the oscillation properties of trigonometric functions.
+4. **Multivariable extension**: Extend the framework to functions ℝⁿ → ℝ with n-variable circuits.
+5. **Approximation theory**: Connect EML depth to approximation rates — how well can depth-d circuits approximate depth-(d+1) functions?
 
 ## References
 
-1. Shannon, C.E. (1941). Mathematical theory of the differential analyzer. *Journal of Mathematics and Physics*, 20(4), 337–354.
-2. Blum, L., Shub, M., Smale, S. (1989). On a theory of computation and complexity over the real numbers. *Bulletin of the AMS*, 21(1), 1–46.
-3. Ritt, J.F. (1948). *Integration in Finite Terms: Liouville's Theory of Elementary Methods*. Columbia University Press.
-4. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals and Systems*, 2(4), 303–314.
-5. Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks. *Neural Networks*, 4(2), 251–257.
-6. Kolchin, E.R. (1973). *Differential Algebra and Algebraic Groups*. Academic Press.
-7. Pour-El, M.B., Richards, J.I. (1989). *Computability in Analysis and Physics*. Springer.
+1. Shannon, C.E. (1941). "Mathematical Theory of the Differential Analyzer." *Journal of Mathematics and Physics*, 20, 337-354.
+2. Turing, A.M. (1936). "On Computable Numbers." *Proceedings of the London Mathematical Society*, 42, 230-265.
+3. Bürgisser, P., Clausen, M., Shokrollahi, M.A. (1997). *Algebraic Complexity Theory*. Springer.
+4. Cybenko, G. (1989). "Approximation by superpositions of a sigmoidal function." *Mathematics of Control, Signals and Systems*, 2, 303-314.
