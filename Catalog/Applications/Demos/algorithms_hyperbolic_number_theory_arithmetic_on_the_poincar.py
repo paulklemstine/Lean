@@ -1,147 +1,223 @@
 """
-Hyperbolic Arithmetic Algorithms
+Hyperbolic Trace Arithmetic: Core Algorithms
 
-Type-hinted implementations of Möbius addition, hyperbolic distance,
-Möbius iteration, and hyperbolic prime detection on the Poincaré disk.
+Type-hinted implementations of the main algorithms from the
+hyperbolic trace arithmetic framework.
 """
 
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Set, Dict, Optional
 import math
 
 
-def moebius_add(a: float, b: float) -> float:
-    """Möbius addition on the real Poincaré disk (-1, 1).
+def sl2_mul(a: Tuple[int, int, int, int],
+            b: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
+    """Multiply two SL₂(ℤ) matrices represented as (a, b, c, d)."""
+    a1, b1, c1, d1 = a
+    a2, b2, c2, d2 = b
+    return (a1*a2 + b1*c2, a1*b2 + b1*d2,
+            c1*a2 + d1*c2, c1*b2 + d1*d2)
 
-    Computes a ⊕ b = (a + b) / (1 + a*b).
-    Both inputs should satisfy |a| < 1 and |b| < 1.
+
+def sl2_inv(m: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
+    """Compute the inverse of an SL₂(ℤ) matrix."""
+    a, b, c, d = m
+    return (d, -b, -c, a)
+
+
+def sl2_trace(m: Tuple[int, int, int, int]) -> int:
+    """Compute the trace of an SL₂(ℤ) matrix."""
+    return m[0] + m[3]
+
+
+def cheb_trace(t: int, n: int) -> int:
+    """Compute the n-th Chebyshev trace value for initial trace t.
+
+    Uses the recurrence:
+        chebTrace(t, 0) = 2
+        chebTrace(t, 1) = t
+        chebTrace(t, n+2) = t * chebTrace(t, n+1) - chebTrace(t, n)
     """
-    return (a + b) / (1 + a * b)
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    a, b = 2, t
+    for _ in range(2, n + 1):
+        a, b = b, t * b - a
+    return b
 
 
-def moebius_add_complex(z: complex, w: complex) -> complex:
-    """Möbius addition on the complex Poincaré disk.
+def cheb_trace_invariant(t: int, n: int) -> int:
+    """Verify the Chebyshev-Trace Invariant.
 
-    Computes z ⊕ w = (z + w) / (1 + conj(z)*w).
+    Returns chebTrace(n+1)² + chebTrace(n)² - t*chebTrace(n)*chebTrace(n+1),
+    which should always equal 4 - t².
     """
-    return (z + w) / (1 + z.conjugate() * w)
+    cn = cheb_trace(t, n)
+    cn1 = cheb_trace(t, n + 1)
+    return cn1**2 + cn**2 - t * cn * cn1
 
 
-def moebius_neg(a: float) -> float:
-    """Möbius negation (inverse under ⊕). Simply -a."""
-    return -a
+def trace_spectrum(k: int) -> Set[int]:
+    """Compute the set of distinct traces achievable by words
+    of length ≤ k in {S, T, S⁻¹, T⁻¹}.
 
+    Args:
+        k: Maximum word length
 
-def moebius_iter(g: float, n: int) -> float:
-    """Compute g^{⊕n} = g ⊕ g ⊕ ... ⊕ g (n times).
-
-    This is the hyperbolic analog of n*g in Euclidean arithmetic.
+    Returns:
+        Set of distinct trace values
     """
-    result = 0.0
-    for _ in range(n):
-        result = moebius_add(result, g)
-    return result
+    S = (0, -1, 1, 0)
+    T = (1, 1, 0, 1)
+    S_inv = sl2_inv(S)
+    T_inv = sl2_inv(T)
+    generators = [S, T, S_inv, T_inv]
+
+    identity = (1, 0, 0, 1)
+    current_level: Set[Tuple[int, int, int, int]] = {identity}
+    all_matrices: Set[Tuple[int, int, int, int]] = {identity}
+    traces: Set[int] = {sl2_trace(identity)}
+
+    for _ in range(k):
+        next_level: Set[Tuple[int, int, int, int]] = set()
+        for g in current_level:
+            for gen in generators:
+                h = sl2_mul(g, gen)
+                if h not in all_matrices:
+                    all_matrices.add(h)
+                    next_level.add(h)
+                    traces.add(sl2_trace(h))
+        current_level = next_level
+        if not current_level:
+            break
+
+    return traces
 
 
-def hyp_norm(x: float) -> float:
-    """Hyperbolic norm: |x| / (1 - |x|).
+def farey_neighbors(n: int) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+    """Generate Farey neighbor pairs in the Farey sequence F_n.
 
-    Maps the disk (-1,1) to [0, ∞), measuring hyperbolic distance from origin.
+    Args:
+        n: Order of the Farey sequence
+
+    Returns:
+        List of neighboring fraction pairs ((a,b), (c,d)) with ad-bc=1
     """
-    ax = abs(x)
-    if ax >= 1.0:
-        return float('inf')
-    return ax / (1 - ax)
+    # Build Farey sequence F_n
+    fractions: List[Tuple[int, int]] = [(0, 1), (1, 1)]
+    for _ in range(n - 1):
+        new_fracs: List[Tuple[int, int]] = [fractions[0]]
+        for i in range(len(fractions) - 1):
+            a, b = fractions[i]
+            c, d = fractions[i + 1]
+            if b + d <= n:
+                new_fracs.append((a + c, b + d))
+            new_fracs.append(fractions[i + 1])
+        fractions = new_fracs
+
+    # Extract neighbor pairs
+    neighbors: List[Tuple[Tuple[int, int], Tuple[int, int]]] = []
+    for i in range(len(fractions) - 1):
+        a, b = fractions[i]
+        c, d = fractions[i + 1]
+        if abs(a * d - b * c) == 1:
+            neighbors.append(((a, b), (c, d)))
+
+    return neighbors
 
 
-def hyp_distance(a: float, b: float) -> float:
-    """Hyperbolic distance between two points in (-1, 1).
+def fricke_vogt_check(A: Tuple[int, int, int, int],
+                       B: Tuple[int, int, int, int]) -> bool:
+    """Verify the Fricke-Vogt identity for matrices A, B.
 
-    d(a, b) = arctanh(|(-a) ⊕ b|) = 0.5 * ln((1+|m|)/(1-|m|))
-    where m = moebius_add(-a, b).
+    Checks: tr(A)² + tr(B)² + tr(AB)² = tr(A)·tr(B)·tr(AB) + tr([A,B]) + 2
     """
-    m = abs(moebius_add(-a, b))
-    if m >= 1.0:
-        return float('inf')
-    return 0.5 * math.log((1 + m) / (1 - m))
+    AB = sl2_mul(A, B)
+    ABA_inv = sl2_mul(AB, sl2_inv(A))
+    comm = sl2_mul(ABA_inv, sl2_inv(B))
+
+    tA = sl2_trace(A)
+    tB = sl2_trace(B)
+    tAB = sl2_trace(AB)
+    tComm = sl2_trace(comm)
+
+    lhs = tA**2 + tB**2 + tAB**2
+    rhs = tA * tB * tAB + tComm + 2
+
+    return lhs == rhs
 
 
-def generate_moebius_orbit(g: float, n: int) -> List[float]:
-    """Generate the first n Möbius iterates of g.
-
-    Returns [g^{⊕0}, g^{⊕1}, ..., g^{⊕(n-1)}].
-    """
-    orbit = [0.0]
-    for i in range(1, n):
-        orbit.append(moebius_add(orbit[-1], g))
-    return orbit
+def trace_product_check(A: Tuple[int, int, int, int],
+                         B: Tuple[int, int, int, int]) -> bool:
+    """Verify the trace product identity: tr(AB) + tr(AB⁻¹) = tr(A)·tr(B)."""
+    AB = sl2_mul(A, B)
+    AB_inv = sl2_mul(A, sl2_inv(B))
+    return sl2_trace(AB) + sl2_trace(AB_inv) == sl2_trace(A) * sl2_trace(B)
 
 
-def is_hyp_decomposable(p: float, lattice: List[float], tol: float = 1e-10) -> bool:
-    """Check if p can be written as a ⊕ b for nonzero a, b in lattice."""
-    for a in lattice:
-        if abs(a) < tol:
-            continue
-        for b in lattice:
-            if abs(b) < tol:
-                continue
-            if abs(moebius_add(a, b) - p) < tol:
-                return True
-    return False
+def trace_convolution(f: Dict[int, float], f_bound: int,
+                       g: Dict[int, float], g_bound: int,
+                       t: int) -> float:
+    """Compute the trace convolution (f ⊛ g)(t).
 
+    Args:
+        f: First function as dict {trace_value: function_value}
+        f_bound: Support bound for f
+        g: Second function as dict
+        g_bound: Support bound for g
+        t: Point at which to evaluate the convolution
 
-def find_hyp_primes(lattice: List[float], tol: float = 1e-10) -> List[float]:
-    """Find all hyperbolic primes in a lattice.
-
-    A hyperbolic prime is a nonzero element that cannot be decomposed
-    as a ⊕ b for nonzero a, b in the lattice.
-    """
-    primes = []
-    for p in lattice:
-        if abs(p) < tol:
-            continue
-        if not is_hyp_decomposable(p, lattice, tol):
-            primes.append(p)
-    return primes
-
-
-def hyp_zeta_partial(lattice: List[float], s: float, max_terms: int = 1000) -> float:
-    """Partial sum of the hyperbolic zeta function.
-
-    ζ_H(s) = Σ_{x ∈ lattice, x ≠ 0} 1/|x|_H^{2s}
+    Returns:
+        (f ⊛ g)(t) = Σᵢ f(i) · g(t - i)
     """
     total = 0.0
-    count = 0
-    for x in lattice:
-        if abs(x) < 1e-15:
-            continue
-        hn = hyp_norm(x)
-        if hn <= 0:
-            continue
-        total += hn ** (-2 * s)
-        count += 1
-        if count >= max_terms:
-            break
+    bound = f_bound + g_bound
+    for i in range(-bound, bound + 1):
+        fi = f.get(i, 0.0)
+        gti = g.get(t - i, 0.0)
+        total += fi * gti
     return total
 
 
-def verify_orbit_growth_conjecture(g: float, max_n: int = 100) -> Tuple[bool, List[Tuple[int, float, float]]]:
-    """Verify the hyperbolic orbit growth conjecture.
+def hyperbolic_lattice_count(points: List[complex], r: float) -> int:
+    """Count lattice points with |z| < r in the Poincaré disk.
 
-    Checks: moebiusIter(g, n) > 1 - 2/(n+1) for n = 1, ..., max_n.
-    Returns (all_pass, list of (n, actual, bound)).
+    Args:
+        points: List of complex numbers in the unit disk
+        r: Radius bound
+
+    Returns:
+        Number of points with |z| < r
     """
-    results = []
-    all_pass = True
-    for n in range(1, max_n + 1):
-        actual = moebius_iter(g, n)
-        bound = 1 - 2 / (n + 1)
-        passed = actual > bound
-        if not passed:
-            all_pass = False
-        results.append((n, actual, bound))
-    return all_pass, results
+    return sum(1 for z in points if abs(z) < r)
 
 
-def moebius_cayley_table(elements: List[float]) -> List[List[float]]:
-    """Compute the Cayley table for Möbius addition on a finite set."""
-    return [[moebius_add(a, b) for b in elements] for a in elements]
+def cayley_transform(s: complex) -> complex:
+    """Apply the Cayley transform s ↦ (s-1)/(s+1)."""
+    return (s - 1) / (s + 1)
+
+
+if __name__ == "__main__":
+    # Quick self-test
+    print("=== Chebyshev-Trace Invariant Test ===")
+    for t in [2, 3, 5, 10]:
+        for n in range(6):
+            inv_val = cheb_trace_invariant(t, n)
+            expected = 4 - t**2
+            assert inv_val == expected, f"Failed: t={t}, n={n}"
+            print(f"  t={t}, n={n}: invariant = {inv_val} = 4-{t}² ✓")
+
+    print("\n=== Trace Product Identity Test ===")
+    S = (0, -1, 1, 0)
+    T = (1, 1, 0, 1)
+    for A in [S, T, sl2_mul(S, T), sl2_mul(T, T)]:
+        for B in [S, T, sl2_mul(S, T)]:
+            assert trace_product_check(A, B), f"Failed for {A}, {B}"
+    print("  All checks passed ✓")
+
+    print("\n=== Fricke-Vogt Identity Test ===")
+    for A in [S, T, sl2_mul(S, T)]:
+        for B in [S, T, sl2_mul(T, S)]:
+            assert fricke_vogt_check(A, B), f"Failed for {A}, {B}"
+    print("  All checks passed ✓")
