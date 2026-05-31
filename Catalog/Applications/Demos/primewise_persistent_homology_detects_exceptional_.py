@@ -1,208 +1,303 @@
 #!/usr/bin/env python3
 """
-Applications of Volcano Depth Detection via Topological Invariants
+Demo: Primewise Persistent Homology Detects Isogeny Volcano Depth
 
-Demonstrates real-world applications:
-1. Cryptographic depth oracle simulation
-2. Volcano navigation (crater ascent)
-3. Depth verification without endomorphism ring computation
-4. Classification statistics across configurations
+This script demonstrates the main conjecture by:
+1. Building l-isogeny volcano graphs for various parameters
+2. Computing BFS neighborhood complexes and persistence barcodes
+3. Verifying that first cycle birth radius = volcano depth
+4. Generating summary statistics and visualizations
 """
 
-from __future__ import annotations
-import random
-from collections import deque
-from typing import Dict, List, Set, Tuple
+from algorithms import (
+    VolcanoGraph, NeighborhoodComplex, depth_prediction,
+    compute_accuracy, run_experiment, compute_persistence_barcode,
+    subtree_size
+)
+from typing import Dict, List
 
 
-# ─── Self-contained infrastructure ──────────────────────────────────────────
-
-class VolcanoGraph:
-    def __init__(self):
-        self.vertices: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
-        self.depth: Dict[int, int] = {}
-        self.crater: Set[int] = set()
-        self.max_depth: int = 0
-
-    def add_vertex(self, v, d):
-        self.vertices.add(v); self.adj.setdefault(v, set())
-        self.depth[v] = d
-        if d == 0: self.crater.add(v)
-        self.max_depth = max(self.max_depth, d)
-
-    def add_edge(self, u, v):
-        if u == v: return
-        self.adj.setdefault(u, set()).add(v)
-        self.adj.setdefault(v, set()).add(u)
-
-    def neighbors(self, v): return self.adj.get(v, set())
-
-
-def build_volcano(cs, br, md):
-    G = VolcanoGraph(); nid = 0
-    crater = []
-    for i in range(cs): G.add_vertex(nid, 0); crater.append(nid); nid += 1
-    for i in range(cs): G.add_edge(crater[i], crater[(i+1) % cs])
-    if md == 0: return G
-    d1 = []
-    for i in range(cs):
-        c1, c2 = crater[i], crater[(i+1) % cs]
-        for _ in range(br):
-            G.add_vertex(nid, 1); G.add_edge(c1, nid); G.add_edge(c2, nid)
-            d1.append(nid); nid += 1
-    level = d1
-    for d in range(2, md+1):
-        nl = []
-        for p in level:
-            for _ in range(br):
-                G.add_vertex(nid, d); G.add_edge(p, nid); nl.append(nid); nid += 1
-        level = nl
-    return G
-
-
-def bfs_ball(G, v, r):
-    vis = {v}; q = deque([(v, 0)])
-    while q:
-        u, d = q.popleft()
-        if d >= r: continue
-        for w in G.neighbors(u):
-            if w not in vis: vis.add(w); q.append((w, d+1))
-    return vis
-
-
-def cycle_rank_of(G, ball):
-    edges = [(u, w) for u in ball for w in G.neighbors(u) if w in ball and u < w]
-    parent = {v: v for v in ball}
-    def find(x):
-        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
-        return x
-    for u, v in edges:
-        ru, rv = find(u), find(v)
-        if ru != rv: parent[rv] = ru
-    c = len(set(find(v) for v in ball))
-    return max(0, len(edges) - len(ball) + c)
-
-
-def first_cycle_radius(G, v):
-    for r in range(G.max_depth + 2):
-        if cycle_rank_of(G, bfs_ball(G, v, r)) > 0: return r
-    return G.max_depth + 1
-
-
-# ─── Application 1: Cryptographic Depth Oracle ──────────────────────────────
-
-def app_crypto_oracle():
-    print("=" * 70)
-    print("APPLICATION 1: CRYPTOGRAPHIC DEPTH ORACLE")
-    print("=" * 70)
-    print("\nSimulating depth oracle for isogeny-based cryptography.\n")
-
-    for cs, br, md, label in [
-        (3, 2, 2, "Small (p~2^32)"),
-        (5, 2, 3, "Medium (p~2^64)"),
-        (8, 2, 4, "Large (p~2^128)"),
-    ]:
-        G = build_volcano(cs, br, md)
-        sample = random.sample(sorted(G.vertices), min(20, len(G.vertices)))
-        nc_ok = sum(1 for v in sample if G.depth[v] > 0 and first_cycle_radius(G, v) == G.depth[v])
-        nc_tot = sum(1 for v in sample if G.depth[v] > 0)
-        print(f"  {label}: {len(G.vertices)} vertices, "
-              f"non-crater accuracy = {nc_ok}/{nc_tot}")
-
-
-# ─── Application 2: Crater Ascent ───────────────────────────────────────────
-
-def app_crater_ascent():
+def print_header(title: str) -> None:
     print("\n" + "=" * 70)
-    print("APPLICATION 2: CRATER ASCENT VIA TOPOLOGICAL NAVIGATION")
+    print(f"  {title}")
     print("=" * 70)
 
-    G = build_volcano(5, 2, 4)
-    floor = [v for v in G.vertices if G.depth[v] == G.max_depth]
-    start = floor[0]
-    print(f"\nStarting from vertex {start} (depth {G.depth[start]})")
 
-    current = start; path = [current]; steps = 0
-    while G.depth[current] > 0 and steps < 20:
-        cur_fcr = first_cycle_radius(G, current)
-        best, best_fcr = None, cur_fcr
-        for u in G.neighbors(current):
-            u_fcr = first_cycle_radius(G, u)
-            if u_fcr < best_fcr: best_fcr = u_fcr; best = u
-        if best is None: break
-        print(f"  Step {steps}: v={current}, depth={G.depth[current]}, FCR={cur_fcr} → v={best}")
-        current = best; path.append(current); steps += 1
+def demo_basic_volcano() -> None:
+    """Demonstrate basic volcano construction and classification."""
+    print_header("Demo 1: Basic 2-Isogeny Volcano (depth 3, crater 3)")
 
-    print(f"  Step {steps}: v={current}, depth={G.depth[current]}, FCR={first_cycle_radius(G, current)}")
-    print(f"Reached crater: {'YES ✓' if G.depth[current] == 0 else 'NO ✗'}")
-    print(f"Steps: {steps} (optimal: {G.depth[start]})")
+    graph = VolcanoGraph(l=2, crater_size=3, max_depth=3)
+    print(f"Total vertices: {graph.total_vertices()}")
+    print(f"Vertices per depth:")
+    for d in range(4):
+        verts = graph.get_vertices_at_depth(d)
+        print(f"  Depth {d}: {len(verts)} vertices")
+
+    # Show detailed classification for one vertex at each depth
+    for d in range(4):
+        v = graph.get_vertices_at_depth(d)[0]
+        cx = NeighborhoodComplex(graph, v, max_radius=6)
+        print(f"\n  Vertex {v} (depth {d}):")
+        print(f"    Radius | Vertices | Edges | β₁")
+        print(f"    -------+---------+-------+----")
+        for r in range(min(6, len(cx.vertex_counts))):
+            print(f"    {r:6d} | {cx.vertex_counts[r]:7d} | {cx.edge_counts[r]:5d} | {cx.cycle_rank(r):3d}")
+        fcb = cx.first_cycle_birth()
+        pred = depth_prediction(graph, v, max_radius=6, crater_cycle_radius=1)
+        print(f"    First cycle birth radius: {fcb}")
+        print(f"    Predicted depth (fcb-1): {pred}")
+        print(f"    Actual depth: {d}")
+        print(f"    Prediction correct: {pred == d}")
 
 
-# ─── Application 3: Depth Verification ──────────────────────────────────────
+def demo_accuracy_sweep() -> None:
+    """Sweep over parameters and show accuracy."""
+    print_header("Demo 2: Accuracy Sweep")
 
-def app_depth_verify():
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: DEPTH VERIFICATION")
-    print("=" * 70)
+    configs = [
+        (2, 3, 2),
+        (2, 3, 3),
+        (2, 3, 4),
+        (2, 5, 3),
+        (3, 4, 2),
+        (3, 4, 3),
+        (5, 6, 2),
+    ]
 
-    G = build_volcano(6, 2, 3)
-    claims = []
-    for v in sorted(G.vertices)[:15]:
-        d = G.depth[v]
-        if d == 0: continue  # Skip crater for this demo
-        if random.random() < 0.7:
-            claims.append((v, d, True))
+    print(f"{'l':>3} {'crater':>7} {'depth':>6} {'vertices':>9} {'accuracy':>9}")
+    print("-" * 40)
+
+    for l, c, d in configs:
+        result = run_experiment(l=l, crater_size=c, max_depth=d, max_radius=d + c//2 + 1)
+        print(f"{l:3d} {c:7d} {d:6d} {result['total_vertices']:9d} {result['accuracy']:9.2%}")
+
+
+def demo_persistence_barcodes() -> None:
+    """Show persistence barcodes at different depths."""
+    print_header("Demo 3: Persistence Barcodes")
+
+    graph = VolcanoGraph(l=2, crater_size=4, max_depth=3)
+    max_r = 6
+
+    for d in range(4):
+        v = graph.get_vertices_at_depth(d)[0]
+        barcode = compute_persistence_barcode(graph, v, max_r)
+        print(f"\n  Depth {d}, vertex {v}:")
+        if barcode:
+            for birth, death in barcode:
+                bar = "█" * (death - birth + 1)
+                print(f"    [{birth}, {death}] {' ' * birth}{bar}")
         else:
-            fake = random.choice([x for x in range(1, G.max_depth+1) if x != d])
-            claims.append((v, fake, False))
-
-    print(f"\n{'Vertex':>8} {'Claimed':>8} {'True':>6} {'FCR':>6} {'Verdict':>8} {'Honest':>8}")
-    print("─" * 50)
-    ok = 0
-    for v, claimed, honest in claims:
-        fcr = first_cycle_radius(G, v)
-        verdict = "ACCEPT" if fcr == claimed else "REJECT"
-        correct = (honest and verdict == "ACCEPT") or (not honest and verdict == "REJECT")
-        if correct: ok += 1
-        print(f"{v:>8} {claimed:>8} {G.depth[v]:>6} {fcr:>6} {verdict:>8} "
-              f"{'✓' if honest else '✗':>8}")
-    print(f"\nVerification accuracy: {ok}/{len(claims)}")
+            print(f"    (no H₁ generators)")
 
 
-# ─── Application 4: Classification Stats ────────────────────────────────────
+def demo_subtree_growth() -> None:
+    """Verify subtree size formula."""
+    print_header("Demo 4: Subtree Growth Verification")
 
-def app_classification():
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: DEPTH CLASS DISTRIBUTION")
-    print("=" * 70)
+    print(f"{'l':>3} {'r':>3} {'subtreeSize':>12} {'formula':>12} {'match':>6}")
+    print("-" * 40)
 
-    for cs, br, md in [(4, 2, 2), (6, 2, 3), (5, 3, 2)]:
-        G = build_volcano(cs, br, md)
-        depth_dist = {}; fcr_dist = {}
-        for v in G.vertices:
-            d = G.depth[v]
-            depth_dist[d] = depth_dist.get(d, 0) + 1
-            f = first_cycle_radius(G, v)
-            fcr_dist[f] = fcr_dist.get(f, 0) + 1
+    for l in [2, 3, 5]:
+        for r in range(6):
+            st = subtree_size(l, r)
+            formula = sum(l**i for i in range(r + 1))
+            print(f"{l:3d} {r:3d} {st:12d} {formula:12d} {'✓' if st == formula else '✗':>6}")
 
-        print(f"\nVolcano(crater={cs}, branch={br}, depth={md}), {len(G.vertices)} vertices:")
-        print(f"  Depth dist: {dict(sorted(depth_dist.items()))}")
-        print(f"  FCR dist:   {dict(sorted(fcr_dist.items()))}")
-        # Non-crater match
-        nc_match = all(depth_dist.get(d, 0) == fcr_dist.get(d, 0) for d in range(1, md+1))
-        print(f"  Non-crater distributions match: {'✓' if nc_match else '✗'}")
+
+def demo_conjecture_test() -> None:
+    """Test the main conjecture across many configurations."""
+    print_header("Demo 5: Conjecture Verification")
+
+    total_tests = 0
+    total_correct = 0
+    failures: List[Dict] = []
+
+    import math
+    for l in [2, 3, 5]:
+        for crater_size in [3, 4, 5, 6]:
+            for max_depth in [1, 2, 3, 4]:
+                if l == 5 and max_depth > 2:
+                    continue  # Skip very large graphs
+
+                graph = VolcanoGraph(l, crater_size, max_depth)
+                ccr = crater_size // 2
+                max_radius = max_depth + ccr + 1
+                for v in graph.vertices:
+                    pred = depth_prediction(graph, v, max_radius, ccr)
+                    actual = graph.depth[v]
+                    total_tests += 1
+                    if pred == actual:
+                        total_correct += 1
+                    else:
+                        failures.append({
+                            "l": l, "crater": crater_size,
+                            "depth": max_depth, "vertex": v,
+                            "predicted": pred, "actual": actual
+                        })
+
+    print(f"Total tests: {total_tests}")
+    print(f"Correct: {total_correct}")
+    print(f"Accuracy: {total_correct/total_tests:.4%}")
+
+    if failures:
+        print(f"\nFailures ({len(failures)}):")
+        for f in failures[:10]:
+            print(f"  l={f['l']}, crater={f['crater']}, depth={f['depth']}, "
+                  f"v={f['vertex']}: predicted={f['predicted']}, actual={f['actual']}")
+    else:
+        print("\n✓ All tests passed — conjecture holds for all tested configurations!")
+
+
+def demo_euler_characteristic() -> None:
+    """Verify Euler characteristic properties."""
+    print_header("Demo 6: Euler Characteristic")
+
+    graph = VolcanoGraph(l=2, crater_size=3, max_depth=3)
+
+    print(f"{'Depth':>6} {'Radius':>7} {'V':>5} {'E':>5} {'χ':>5} {'β₁':>5} {'χ=1-β₁':>8}")
+    print("-" * 45)
+
+    for d in range(4):
+        v = graph.get_vertices_at_depth(d)[0]
+        cx = NeighborhoodComplex(graph, v, max_radius=5)
+        for r in range(min(5, len(cx.vertex_counts))):
+            nv = cx.vertex_counts[r]
+            ne = cx.edge_counts[r]
+            chi = nv - ne
+            beta = cx.cycle_rank(r)
+            check = "✓" if chi == 1 - beta else "✗"
+            print(f"{d:6d} {r:7d} {nv:5d} {ne:5d} {chi:5d} {beta:5d} {check:>8}")
+
+
+if __name__ == "__main__":
+    demo_basic_volcano()
+    demo_accuracy_sweep()
+    demo_persistence_barcodes()
+    demo_subtree_growth()
+    demo_conjecture_test()
+    demo_euler_characteristic()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Persistence Barcodes for Volcano Depth Detection.
+
+Creates a figure showing persistence barcodes (H₁) for vertices at each
+depth level, demonstrating the depth-separation property.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import deque
+
+
+def build_volcano(l, crater_size, max_depth):
+    adj = {}
+    depth_map = {}
+    vid = 0
+    crater = []
+    for i in range(crater_size):
+        adj[vid] = set()
+        depth_map[vid] = 0
+        crater.append(vid)
+        vid += 1
+    for i in range(crater_size):
+        u, v = crater[i], crater[(i + 1) % crater_size]
+        adj[u].add(v); adj[v].add(u)
+    current_layer = crater
+    for d in range(1, max_depth + 1):
+        next_layer = []
+        for parent in current_layer:
+            for _ in range(l):
+                child = vid; vid += 1
+                adj[child] = set(); depth_map[child] = d
+                adj[parent].add(child); adj[child].add(parent)
+                next_layer.append(child)
+        current_layer = next_layer
+    return adj, depth_map
+
+
+def compute_barcode(adj, vertex, max_radius):
+    visited = {vertex}
+    boundary = {vertex}
+    prev_rank = 0
+    barcode = []
+    for r in range(max_radius + 1):
+        edges = set()
+        for v in visited:
+            for u in adj[v]:
+                if u in visited:
+                    edges.add((min(u, v), max(u, v)))
+        beta1 = max(0, len(edges) - len(visited) + 1)
+        new_cycles = beta1 - prev_rank
+        for _ in range(new_cycles):
+            barcode.append((r, max_radius))
+        prev_rank = beta1
+        new_boundary = set()
+        for v in boundary:
+            for u in adj[v]:
+                if u not in visited:
+                    new_boundary.add(u); visited.add(u)
+        boundary = new_boundary
+    return barcode
 
 
 def main():
-    random.seed(42)
-    app_crypto_oracle()
-    app_crater_ascent()
-    app_depth_verify()
-    app_classification()
-    print("\n" + "=" * 70)
-    print("All applications demonstrated successfully.")
-    print("=" * 70)
+    configs = [
+        (2, 3, 4, "l=2, crater=3, depth=4"),
+        (3, 4, 3, "l=3, crater=4, depth=3"),
+    ]
+
+    fig, axes = plt.subplots(1, len(configs), figsize=(7 * len(configs), 6))
+    if len(configs) == 1:
+        axes = [axes]
+
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 6))
+
+    for ax, (l, c, max_d, title) in zip(axes, configs):
+        adj, depth_map = build_volcano(l, c, max_d)
+        max_r = max_d + c // 2 + 2
+
+        y_pos = 0
+        y_labels = []
+        y_ticks = []
+
+        for d in range(max_d + 1):
+            # Find a representative vertex at depth d
+            for v in adj:
+                if depth_map[v] == d:
+                    barcode = compute_barcode(adj, v, max_r)
+                    for birth, death in barcode:
+                        ax.barh(y_pos, death - birth, left=birth,
+                                height=0.6, color=colors[d], edgecolor='black',
+                                linewidth=0.5, alpha=0.8)
+                        y_pos -= 1
+                    if not barcode:
+                        y_pos -= 1
+                    y_labels.append(f"Depth {d}")
+                    y_ticks.append(y_pos + 0.5 * (1 if not barcode else len(barcode)))
+                    y_pos -= 0.5
+                    break
+
+        ax.set_xlabel('Filtration Radius', fontsize=11)
+        ax.set_title(f'H₁ Persistence Barcodes\n{title}', fontsize=12)
+        ax.set_yticks(y_ticks)
+        ax.set_yticklabels(y_labels, fontsize=9)
+        ax.grid(True, axis='x', alpha=0.3)
+        ax.axvline(x=0, color='gray', linewidth=0.5)
+
+        # Annotate first cycle birth
+        for d in range(max_d + 1):
+            fcb = d + c // 2
+            ax.axvline(x=fcb, color=colors[d], linewidth=1, linestyle='--', alpha=0.5)
+
+    plt.tight_layout()
+    plt.savefig('barcode_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved barcode_visualization.png")
 
 
 if __name__ == '__main__':
@@ -211,660 +306,154 @@ if __name__ == '__main__':
 
 #!/usr/bin/env python3
 """
-Interactive Demo: Volcano Depth Detection via Topological Invariants
+Visualization: Isogeny Volcano Structure and Depth Detection.
 
-Constructs sample volcano-like graphs, computes cycle-rank / first-cycle-radius
-statistics, predicts depths, and visualizes the results.
-
-Usage:
-    python demo.py [--crater_size N] [--branching B] [--max_depth D] [--sweep]
-
-Keywords: isogeny volcanoes, persistent homology, cycle rank, Euler characteristic,
-topological data analysis, arithmetic graphs, isogeny-based cryptography
+Creates a figure showing:
+1. The volcano graph colored by depth
+2. BFS neighborhood expansion from different depths
+3. Cycle rank (β₁) vs radius for each depth
 """
 
-from __future__ import annotations
-import argparse
-import random
-from collections import deque
-from typing import Dict, List, Optional, Set, Tuple
-
-
-# ─── Core Graph Infrastructure ───────────────────────────────────────────────
-
-class VolcanoGraph:
-    def __init__(self):
-        self.vertices: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
-        self.depth: Dict[int, int] = {}
-        self.crater: Set[int] = set()
-        self.max_depth: int = 0
-
-    def add_vertex(self, v: int, d: int):
-        self.vertices.add(v)
-        self.adj.setdefault(v, set())
-        self.depth[v] = d
-        if d == 0:
-            self.crater.add(v)
-        self.max_depth = max(self.max_depth, d)
-
-    def add_edge(self, u: int, v: int):
-        if u == v: return
-        self.adj.setdefault(u, set()).add(v)
-        self.adj.setdefault(v, set()).add(u)
-
-    def neighbors(self, v: int) -> Set[int]:
-        return self.adj.get(v, set())
-
-
-def build_volcano(crater_size: int, branching: int, max_depth: int) -> VolcanoGraph:
-    """Construct a volcano graph.
-
-    Depth-1 vertices connect to two adjacent crater vertices (forming triangles).
-    Deeper vertices have single parents. This ensures firstCycleRadius = depth
-    for all non-crater vertices.
-    """
-    G = VolcanoGraph()
-    nid = 0
-    crater = []
-    for i in range(crater_size):
-        G.add_vertex(nid, 0); crater.append(nid); nid += 1
-    for i in range(crater_size):
-        G.add_edge(crater[i], crater[(i + 1) % crater_size])
-
-    if max_depth == 0:
-        return G
-
-    # Depth 1: dual parent (triangle with crater edge)
-    depth1 = []
-    for i in range(crater_size):
-        c1, c2 = crater[i], crater[(i + 1) % crater_size]
-        for _ in range(branching):
-            G.add_vertex(nid, 1)
-            G.add_edge(c1, nid)
-            G.add_edge(c2, nid)
-            depth1.append(nid); nid += 1
-
-    # Deeper: single parent
-    level = depth1
-    for d in range(2, max_depth + 1):
-        nlevel = []
-        for p in level:
-            for _ in range(branching):
-                G.add_vertex(nid, d)
-                G.add_edge(p, nid)
-                nlevel.append(nid); nid += 1
-        level = nlevel
-    return G
-
-
-# ─── Topological Computations ────────────────────────────────────────────────
-
-def bfs_ball(G, v, r):
-    visited = {v}
-    queue = deque([(v, 0)])
-    while queue:
-        u, dist = queue.popleft()
-        if dist >= r: continue
-        for w in G.neighbors(u):
-            if w not in visited:
-                visited.add(w); queue.append((w, dist + 1))
-    return visited
-
-
-def induced_edges(G, vertices):
-    return [(u, w) for u in vertices for w in G.neighbors(u) if w in vertices and u < w]
-
-
-def connected_components(vertices, edges):
-    if not vertices: return 0
-    parent = {v: v for v in vertices}
-    def find(x):
-        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
-        return x
-    def union(x, y):
-        rx, ry = find(x), find(y)
-        if rx != ry: parent[ry] = rx
-    for u, v in edges: union(u, v)
-    return len(set(find(v) for v in vertices))
-
-
-def cycle_rank(vertices, edges):
-    return max(0, len(edges) - len(vertices) + connected_components(vertices, edges))
-
-
-def cycle_profile(G, v, r):
-    ball = bfs_ball(G, v, r)
-    return cycle_rank(ball, induced_edges(G, ball))
-
-
-def first_cycle_radius(G, v):
-    for r in range(G.max_depth + 2):
-        if cycle_profile(G, v, r) > 0: return r
-    return G.max_depth + 1
-
-
-def predict_depth(G, v):
-    return first_cycle_radius(G, v)
-
-
-def euler_characteristic(vertices, edges):
-    return len(vertices) - len(edges)
-
-
-# ─── Demo Functions ──────────────────────────────────────────────────────────
-
-def demo_basic(crater_size=5, branching=2, max_depth=3):
-    print("=" * 70)
-    print("VOLCANO DEPTH DETECTION VIA TOPOLOGICAL INVARIANTS")
-    print("=" * 70)
-
-    G = build_volcano(crater_size, branching, max_depth)
-    print(f"\nVolcano: crater={crater_size}, branching={branching}, max_depth={max_depth}")
-    print(f"Total vertices: {len(G.vertices)}, Crater: {sorted(G.crater)}")
-
-    print(f"\n{'Vertex':>8} {'Depth':>6} {'FCR':>6} {'Predicted':>10} {'Correct':>8}")
-    print("─" * 45)
-
-    correct_nc = 0
-    total_nc = 0
-    for v in sorted(G.vertices):
-        d = G.depth[v]
-        fcr = first_cycle_radius(G, v)
-        pred = predict_depth(G, v)
-        is_crater = d == 0
-        ok = pred == d
-        if not is_crater:
-            total_nc += 1
-            if ok: correct_nc += 1
-        marker = "crater" if is_crater else ("✓" if ok else "✗")
-        print(f"{v:>8} {d:>6} {fcr:>6} {pred:>10} {marker:>8}")
-
-    print("─" * 45)
-    if total_nc > 0:
-        print(f"Non-crater accuracy: {correct_nc}/{total_nc} = {correct_nc/total_nc:.1%}")
-    print(f"(Crater vertices handled by separate classification theorem)")
-
-
-def demo_cycle_profiles(crater_size=5, branching=2, max_depth=3):
-    print("\n" + "=" * 70)
-    print("CYCLE PROFILE ANALYSIS (one vertex per depth)")
-    print("=" * 70)
-
-    G = build_volcano(crater_size, branching, max_depth)
-    by_depth = {}
-    for v in sorted(G.vertices):
-        d = G.depth[v]
-        if d not in by_depth: by_depth[d] = v
-
-    for d in sorted(by_depth):
-        v = by_depth[d]
-        print(f"\nVertex {v} (depth {d}):")
-        print(f"  {'r':>4} {'β₁':>6} {'χ':>6} {'|V|':>6} {'|E|':>6}")
-        print(f"  {'─' * 30}")
-        for r in range(max_depth + 2):
-            ball = bfs_ball(G, v, r)
-            edges = induced_edges(G, ball)
-            beta = cycle_rank(ball, edges)
-            chi = euler_characteristic(ball, edges)
-            prev_beta = cycle_profile(G, v, r - 1) if r > 0 else 0
-            marker = " ← FIRST CYCLE" if beta > 0 and prev_beta == 0 else ""
-            print(f"  {r:>4} {beta:>6} {chi:>6} {len(ball):>6} {len(edges):>6}{marker}")
-        fcr = first_cycle_radius(G, v)
-        match = "✓" if fcr == d else f"(crater: FCR={fcr})"
-        print(f"  → firstCycleRadius = {fcr}, depth = {d} {match}")
-
-
-def demo_euler_bridge(crater_size=5, branching=2, max_depth=3):
-    print("\n" + "=" * 70)
-    print("EULER CHARACTERISTIC BRIDGE: χ = 1 - β₁")
-    print("=" * 70)
-
-    G = build_volcano(crater_size, branching, max_depth)
-    v = sorted(v for v in G.vertices if G.depth[v] == max_depth)[0]
-    print(f"\nFloor vertex {v} (depth {G.depth[v]}):")
-    print(f"Below crater: χ = 1 (tree). At crater: χ drops.\n")
-
-    for r in range(max_depth + 2):
-        ball = bfs_ball(G, v, r)
-        edges = induced_edges(G, ball)
-        beta = cycle_rank(ball, edges)
-        chi = euler_characteristic(ball, edges)
-        c = connected_components(ball, edges)
-        check = "✓ χ=1-β₁" if c == 1 and chi == 1 - beta else ""
-        tree = "TREE" if beta == 0 else "CYCLIC"
-        print(f"  r={r}: β₁={beta}, χ={chi}, |V|={len(ball)}, |E|={len(edges)} [{tree}] {check}")
-
-
-def demo_parameter_sweep():
-    print("\n" + "=" * 70)
-    print("PARAMETER SWEEP: NON-CRATER PREDICTION ACCURACY")
-    print("=" * 70)
-    print(f"\n{'Crater':>8} {'Branch':>8} {'Depth':>8} {'Vertices':>10} {'NonCrater':>10} {'Accuracy':>10}")
-    print("─" * 58)
-
-    for cs in [3, 5, 8, 12]:
-        for br in [1, 2, 3]:
-            for md in [1, 2, 3, 4]:
-                G = build_volcano(cs, br, md)
-                nc_correct = sum(1 for v in G.vertices
-                                 if G.depth[v] > 0 and predict_depth(G, v) == G.depth[v])
-                nc_total = sum(1 for v in G.vertices if G.depth[v] > 0)
-                acc = nc_correct / nc_total if nc_total > 0 else 1.0
-                print(f"{cs:>8} {br:>8} {md:>8} {len(G.vertices):>10} "
-                      f"{nc_total:>10} {acc:>10.1%}")
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Volcano Depth Detection Demo")
-    parser.add_argument('--crater_size', type=int, default=5)
-    parser.add_argument('--branching', type=int, default=2)
-    parser.add_argument('--max_depth', type=int, default=3)
-    parser.add_argument('--sweep', action='store_true')
-    args = parser.parse_args()
-
-    demo_basic(args.crater_size, args.branching, args.max_depth)
-    demo_cycle_profiles(args.crater_size, args.branching, args.max_depth)
-    demo_euler_bridge(args.crater_size, args.branching, args.max_depth)
-
-    if args.sweep:
-        demo_parameter_sweep()
-    else:
-        # Quick sweep by default
-        demo_parameter_sweep()
-
-
-if __name__ == '__main__':
-    main()
-
-
-"""
-Visualization: Cycle Profile Heatmap for Volcano Depth Detection
-
-Visualizes the cycle rank β₁(B_r(v)) as a function of vertex depth and
-ball radius, showing the sharp transition at the diagonal r = depth(v)
-that is the core mechanism of topological depth detection.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import numpy as np
-from collections import deque
-from typing import Dict, Set
-
-
-# ─── Self-contained volcano infrastructure ───────────────────────────────────
-
-class VG:
-    def __init__(self):
-        self.V: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
-        self.depth: Dict[int, int] = {}
-        self.max_depth = 0
-    def add_v(self, v, d):
-        self.V.add(v); self.adj.setdefault(v, set()); self.depth[v] = d
-        self.max_depth = max(self.max_depth, d)
-    def add_e(self, u, v):
-        if u == v: return
-        self.adj.setdefault(u, set()).add(v); self.adj.setdefault(v, set()).add(u)
-    def nbrs(self, v): return self.adj.get(v, set())
-
-
-def build(cs, br, md):
-    G = VG(); nid = 0
-    crater = []
-    for i in range(cs): G.add_v(nid, 0); crater.append(nid); nid += 1
-    for i in range(cs): G.add_e(crater[i], crater[(i+1)%cs])
-    if md == 0: return G
-    d1 = []
-    for i in range(cs):
-        c1, c2 = crater[i], crater[(i+1)%cs]
-        for _ in range(br):
-            G.add_v(nid, 1); G.add_e(c1, nid); G.add_e(c2, nid); d1.append(nid); nid += 1
-    lev = d1
-    for d in range(2, md+1):
-        nl = []
-        for p in lev:
-            for _ in range(br): G.add_v(nid, d); G.add_e(p, nid); nl.append(nid); nid += 1
-        lev = nl
-    return G
-
-
-def ball(G, v, r):
-    vis = {v}; q = deque([(v, 0)])
-    while q:
-        u, d = q.popleft()
-        if d >= r: continue
-        for w in G.nbrs(u):
-            if w not in vis: vis.add(w); q.append((w, d+1))
-    return vis
-
-
-def beta1(G, v, r):
-    b = ball(G, v, r)
-    edges = [(u, w) for u in b for w in G.nbrs(u) if w in b and u < w]
-    parent = {x: x for x in b}
-    def find(x):
-        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
-        return x
-    for u, w in edges:
-        ru, rw = find(u), find(w)
-        if ru != rw: parent[rw] = ru
-    c = len(set(find(x) for x in b))
-    return max(0, len(edges) - len(b) + c)
-
-
-# ─── Build data ──────────────────────────────────────────────────────────────
-
-cs, br, md = 6, 2, 4
-G = build(cs, br, md)
-
-depth_range = list(range(md + 1))
-radius_range = list(range(md + 2))
-
-data = np.zeros((len(depth_range), len(radius_range)))
-reps = {}
-for d in depth_range:
-    for v in sorted(G.V):
-        if G.depth[v] == d and d not in reps:
-            reps[d] = v
-    v = reps[d]
-    for ri, r in enumerate(radius_range):
-        data[d, ri] = beta1(G, v, r)
-
-# ─── Plot ────────────────────────────────────────────────────────────────────
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-ax = axes[0]
-cmap = mcolors.LinearSegmentedColormap.from_list('custom',
-    ['#f0f0f0', '#2196F3', '#1565C0', '#0D47A1', '#000051'])
-im = ax.imshow(data, cmap=cmap, aspect='auto', origin='lower',
-               extent=[-0.5, len(radius_range)-0.5, -0.5, len(depth_range)-0.5])
-ax.plot([-0.5, md+0.5], [-0.5, md+0.5], 'r--', linewidth=2,
-        label='r = depth (detection boundary)')
-ax.set_xlabel('Ball Radius r', fontsize=12)
-ax.set_ylabel('Vertex Depth d', fontsize=12)
-ax.set_title(f'Cycle Rank β₁(B_r(v)) by Depth and Radius\n'
-             f'(crater={cs}, branching={br}, max_depth={md})', fontsize=13)
-ax.set_xticks(range(len(radius_range))); ax.set_xticklabels(radius_range)
-ax.set_yticks(range(len(depth_range))); ax.set_yticklabels(depth_range)
-ax.legend(loc='upper left', fontsize=10)
-for i in range(len(depth_range)):
-    for j in range(len(radius_range)):
-        val = int(data[i, j])
-        color = 'white' if val > 0 else 'gray'
-        ax.text(j, i, str(val), ha='center', va='center', fontsize=10,
-                fontweight='bold' if val > 0 else 'normal', color=color)
-fig.colorbar(im, ax=ax, label='β₁', shrink=0.8)
-
-ax2 = axes[1]
-colors = plt.cm.viridis(np.linspace(0, 0.9, len(depth_range)))
-for d in depth_range:
-    profile = [data[d, r] for r in range(len(radius_range))]
-    ax2.plot(radius_range, profile, 'o-', color=colors[d], linewidth=2,
-             markersize=6, label=f'depth {d}')
-    for r in range(len(radius_range)):
-        if profile[r] > 0:
-            ax2.plot(radius_range[r], profile[r], 's', color=colors[d],
-                     markersize=12, markeredgecolor='red', markeredgewidth=2)
-            break
-ax2.set_xlabel('Ball Radius r', fontsize=12)
-ax2.set_ylabel('Cycle Rank β₁', fontsize=12)
-ax2.set_title('Cycle Profile by Vertex Depth\n(red squares = first cycle birth)', fontsize=13)
-ax2.legend(loc='upper left', fontsize=9)
-ax2.grid(True, alpha=0.3)
-ax2.set_xticks(radius_range)
-
-plt.tight_layout()
-plt.savefig('cycle_profiles_heatmap.png', dpi=150, bbox_inches='tight')
-print("Saved: cycle_profiles_heatmap.png")
-
-
-"""
-Visualization: Euler Characteristic Transition in Volcano Graphs
-
-Shows how χ(B_r(v)) transitions from χ ≈ 1 (tree-like, below crater) to χ < 1
-(cycle-detecting, at/above crater). Visualizes the cross-domain bridge.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-from collections import deque
-from typing import Dict, Set
-
-
-class VG:
-    def __init__(self):
-        self.V: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
-        self.depth: Dict[int, int] = {}
-        self.max_depth = 0
-    def add_v(self, v, d):
-        self.V.add(v); self.adj.setdefault(v, set()); self.depth[v] = d
-        self.max_depth = max(self.max_depth, d)
-    def add_e(self, u, v):
-        if u == v: return
-        self.adj.setdefault(u, set()).add(v); self.adj.setdefault(v, set()).add(u)
-    def nbrs(self, v): return self.adj.get(v, set())
-
-
-def build(cs, br, md):
-    G = VG(); nid = 0; crater = []
-    for i in range(cs): G.add_v(nid, 0); crater.append(nid); nid += 1
-    for i in range(cs): G.add_e(crater[i], crater[(i+1)%cs])
-    if md == 0: return G
-    d1 = []
-    for i in range(cs):
-        c1, c2 = crater[i], crater[(i+1)%cs]
-        for _ in range(br):
-            G.add_v(nid, 1); G.add_e(c1, nid); G.add_e(c2, nid); d1.append(nid); nid += 1
-    lev = d1
-    for d in range(2, md+1):
-        nl = []
-        for p in lev:
-            for _ in range(br): G.add_v(nid, d); G.add_e(p, nid); nl.append(nid); nid += 1
-        lev = nl
-    return G
-
-
-def ball_stats(G, v, r):
-    vis = {v}; q = deque([(v, 0)])
-    while q:
-        u, d = q.popleft()
-        if d >= r: continue
-        for w in G.nbrs(u):
-            if w not in vis: vis.add(w); q.append((w, d+1))
-    edges = [(u, w) for u in vis for w in G.nbrs(u) if w in vis and u < w]
-    parent = {x: x for x in vis}
-    def find(x):
-        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
-        return x
-    for u, w in edges:
-        ru, rw = find(u), find(w)
-        if ru != rw: parent[rw] = ru
-    c = len(set(find(x) for x in vis))
-    nV, nE = len(vis), len(edges)
-    return nV, nE, c, max(0, nE - nV + c), nV - nE
-
-
-configs = [
-    (5, 2, 4, "Volcano A: crater=5, branch=2, depth=4"),
-    (8, 2, 3, "Volcano B: crater=8, branch=2, depth=3"),
-    (4, 3, 3, "Volcano C: crater=4, branch=3, depth=3"),
-]
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-for idx, (cs, br, md, title) in enumerate(configs):
-    ax = axes[idx]
-    G = build(cs, br, md)
-    reps = {}
-    for v in sorted(G.V):
-        d = G.depth[v]
-        if d not in reps: reps[d] = v
-
-    colors = plt.cm.plasma(np.linspace(0.1, 0.9, md + 1))
-    rng = range(md + 2)
-
-    for d in range(md + 1):
-        v = reps[d]
-        chi_vals = []; beta_vals = []
-        for r in rng:
-            nV, nE, c, beta, chi = ball_stats(G, v, r)
-            chi_vals.append(chi); beta_vals.append(beta)
-        ax.plot(list(rng), chi_vals, 'o-', color=colors[d], linewidth=2, markersize=5, label=f'd={d}')
-        for r in rng:
-            if beta_vals[r] > 0:
-                ax.plot(r, chi_vals[r], 'v', color=colors[d], markersize=10,
-                        markeredgecolor='black', markeredgewidth=1.5)
-                break
-
-    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, linewidth=1.5, label='χ=1 (tree)')
-    ax.set_xlabel('Ball Radius r', fontsize=11)
-    ax.set_ylabel('Euler Characteristic χ', fontsize=11)
-    ax.set_title(title, fontsize=11)
-    ax.legend(fontsize=8, loc='lower left')
-    ax.grid(True, alpha=0.3)
-    ax.set_xticks(list(rng))
-
-fig.suptitle('Euler Characteristic Transition: χ = 1 − β₁\n'
-             '(▼ = first cycle detection, dashed = tree baseline)', fontsize=14, fontweight='bold')
-plt.tight_layout()
-plt.savefig('euler_char_transition.png', dpi=150, bbox_inches='tight')
-print("Saved: euler_char_transition.png")
-
-
-"""
-Visualization: Volcano Graph Structure and Depth Classification
-
-Shows the structure of a layered volcano graph with vertices colored by
-depth and annotated with their topologically-predicted depth.
-"""
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 from collections import deque
-from typing import Dict, Set
-import math
 
 
-class VG:
-    def __init__(self):
-        self.V: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
-        self.depth: Dict[int, int] = {}
-        self.max_depth = 0
-    def add_v(self, v, d):
-        self.V.add(v); self.adj.setdefault(v, set()); self.depth[v] = d
-        self.max_depth = max(self.max_depth, d)
-    def add_e(self, u, v):
-        if u == v: return
-        self.adj.setdefault(u, set()).add(v); self.adj.setdefault(v, set()).add(u)
-    def nbrs(self, v): return self.adj.get(v, set())
+def build_volcano(l, crater_size, max_depth):
+    """Build volcano graph, returns (adj, depth, positions)."""
+    adj = {}
+    depth_map = {}
+    positions = {}
+    vid = 0
+
+    # Crater as a regular polygon
+    crater = []
+    for i in range(crater_size):
+        adj[vid] = set()
+        depth_map[vid] = 0
+        angle = 2 * np.pi * i / crater_size - np.pi / 2
+        positions[vid] = (np.cos(angle) * 0.8, np.sin(angle) * 0.8 + max_depth)
+        crater.append(vid)
+        vid += 1
+
+    for i in range(crater_size):
+        u, v = crater[i], crater[(i + 1) % crater_size]
+        adj[u].add(v)
+        adj[v].add(u)
+
+    current_layer = crater
+    for d in range(1, max_depth + 1):
+        next_layer = []
+        spread = len(current_layer) * l
+        for idx, parent in enumerate(current_layer):
+            for j in range(l):
+                child = vid
+                vid += 1
+                adj[child] = set()
+                depth_map[child] = d
+                # Position: spread out below parent
+                child_idx = idx * l + j
+                x = (child_idx - spread / 2 + 0.5) * (3.0 / max(spread, 1))
+                y = max_depth - d
+                positions[child] = (x, y)
+                adj[parent].add(child)
+                adj[child].add(parent)
+                next_layer.append(child)
+        current_layer = next_layer
+
+    return adj, depth_map, positions
 
 
-def build(cs, br, md):
-    G = VG(); nid = 0; crater = []
-    for i in range(cs): G.add_v(nid, 0); crater.append(nid); nid += 1
-    for i in range(cs): G.add_e(crater[i], crater[(i+1)%cs])
-    if md == 0: return G
-    d1 = []
-    for i in range(cs):
-        c1, c2 = crater[i], crater[(i+1)%cs]
-        for _ in range(br):
-            G.add_v(nid, 1); G.add_e(c1, nid); G.add_e(c2, nid); d1.append(nid); nid += 1
-    lev = d1
-    for d in range(2, md+1):
-        nl = []
-        for p in lev:
-            for _ in range(br): G.add_v(nid, d); G.add_e(p, nid); nl.append(nid); nid += 1
-        lev = nl
-    return G
+def compute_cycle_rank_profile(adj, depth_map, vertex, max_radius):
+    """Compute β₁ at each radius from vertex."""
+    visited = {vertex}
+    boundary = {vertex}
+    profile = []
+
+    for r in range(max_radius + 1):
+        # Count edges within visited
+        edges = set()
+        for v in visited:
+            for u in adj[v]:
+                if u in visited:
+                    edges.add((min(u, v), max(u, v)))
+        beta1 = max(0, len(edges) - len(visited) + 1)
+        profile.append(beta1)
+
+        # Expand
+        new_boundary = set()
+        for v in boundary:
+            for u in adj[v]:
+                if u not in visited:
+                    new_boundary.add(u)
+                    visited.add(u)
+        boundary = new_boundary
+
+    return profile
 
 
-def fcr(G, vid):
-    for r in range(G.max_depth + 2):
-        vis = {vid}; q = deque([(vid, 0)])
-        while q:
-            u, d = q.popleft()
-            if d >= r: continue
-            for w in G.nbrs(u):
-                if w not in vis: vis.add(w); q.append((w, d+1))
-        edges = [(u, w) for u in vis for w in G.nbrs(u) if w in vis and u < w]
-        parent = {x: x for x in vis}
-        def find(x):
-            while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
-            return x
-        for a, b in edges:
-            ra, rb = find(a), find(b)
-            if ra != rb: parent[rb] = ra
-        c = len(set(find(x) for x in vis))
-        if max(0, len(edges) - len(vis) + c) > 0: return r
-    return G.max_depth + 1
+def main():
+    l, crater_size, max_depth = 2, 3, 3
+    max_radius = 6
+    adj, depth_map, positions = build_volcano(l, crater_size, max_depth)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Volcano graph colored by depth
+    ax1 = axes[0]
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, max_depth + 1))
+
+    # Draw edges
+    drawn = set()
+    for u in adj:
+        for v in adj[u]:
+            edge = (min(u, v), max(u, v))
+            if edge not in drawn:
+                drawn.add(edge)
+                x = [positions[u][0], positions[v][0]]
+                y = [positions[u][1], positions[v][1]]
+                ax1.plot(x, y, 'k-', alpha=0.3, linewidth=0.5)
+
+    # Draw vertices
+    for v in adj:
+        d = depth_map[v]
+        ax1.scatter(*positions[v], c=[colors[d]], s=30, zorder=5, edgecolors='black', linewidth=0.3)
+
+    # Legend
+    patches = [mpatches.Patch(color=colors[d], label=f'Depth {d}') for d in range(max_depth + 1)]
+    ax1.legend(handles=patches, loc='lower right', fontsize=8)
+    ax1.set_title(f'{l}-Isogeny Volcano (crater={crater_size}, depth={max_depth})', fontsize=12)
+    ax1.set_xlabel('Position')
+    ax1.set_ylabel('Layer (crater at top)')
+    ax1.set_aspect('equal')
+
+    # Right: Cycle rank profiles
+    ax2 = axes[1]
+    radii = list(range(max_radius + 1))
+
+    for d in range(max_depth + 1):
+        # Pick a representative vertex at this depth
+        for v in adj:
+            if depth_map[v] == d:
+                profile = compute_cycle_rank_profile(adj, depth_map, v, max_radius)
+                ax2.plot(radii, profile, 'o-', color=colors[d],
+                         label=f'Depth {d} (fcb={d+1})', markersize=4, linewidth=2)
+                break
+
+    ax2.set_xlabel('BFS Radius r', fontsize=11)
+    ax2.set_ylabel('Cycle Rank β₁(B_r(v))', fontsize=11)
+    ax2.set_title('Cycle Rank Profile by Depth', fontsize=12)
+    ax2.legend(fontsize=9)
+    ax2.set_xticks(radii)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('volcano_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved volcano_visualization.png")
 
 
-cs, br, md = 5, 2, 3
-G = build(cs, br, md)
-
-# Layout
-pos = {}
-crater_verts = sorted(v for v in G.V if G.depth[v] == 0)
-for i, v in enumerate(crater_verts):
-    angle = 2*math.pi*i/cs - math.pi/2
-    pos[v] = (2.0*math.cos(angle), -0.5*math.sin(angle))
-for d in range(1, md+1):
-    verts = sorted(v for v in G.V if G.depth[v] == d)
-    spread = 3.0 * (1.2**d)
-    for i, v in enumerate(verts):
-        pos[v] = (-spread/2 + spread*(i+0.5)/len(verts), -1.5*d)
-
-fcr_map = {v: fcr(G, v) for v in G.V}
-
-fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-cmap = plt.cm.RdYlBu_r
-dc = {d: cmap(d/max(md, 1)) for d in range(md+1)}
-
-# Left: True depth
-ax = axes[0]
-for v in G.V:
-    for u in G.nbrs(v):
-        if u > v:
-            ax.plot([pos[v][0], pos[u][0]], [pos[v][1], pos[u][1]], 'k-', alpha=0.3, lw=1)
-for v in sorted(G.V):
-    ax.scatter(*pos[v], c=[dc[G.depth[v]]], s=200, zorder=5, edgecolors='black', lw=1.5)
-    ax.annotate(str(v), pos[v], ha='center', va='center', fontsize=7, fontweight='bold', zorder=6)
-ax.legend(handles=[mpatches.Patch(color=dc[d], label=f'Depth {d}') for d in range(md+1)],
-          loc='lower right', fontsize=9)
-ax.set_title('True Depth', fontsize=14, fontweight='bold')
-ax.set_aspect('equal'); ax.axis('off')
-
-# Right: FCR prediction
-ax2 = axes[1]
-for v in G.V:
-    for u in G.nbrs(v):
-        if u > v:
-            ax2.plot([pos[v][0], pos[u][0]], [pos[v][1], pos[u][1]], 'k-', alpha=0.3, lw=1)
-for v in sorted(G.V):
-    f = fcr_map[v]; d = G.depth[v]
-    color = dc.get(f, 'gray')
-    correct = (f == d) if d > 0 else True  # crater handled separately
-    ax2.scatter(*pos[v], c=[color], s=200, zorder=5,
-                marker='o' if correct else 'X', edgecolors='black', lw=1.5)
-    ax2.annotate(f'FCR={f}', (pos[v][0], pos[v][1]-0.35), ha='center', va='top',
-                 fontsize=6, zorder=6, color='darkblue')
-ax2.legend(handles=[mpatches.Patch(color=dc[d], label=f'FCR={d}') for d in range(md+1)],
-           loc='lower right', fontsize=9)
-nc_correct = sum(1 for v in G.V if G.depth[v] > 0 and fcr_map[v] == G.depth[v])
-nc_total = sum(1 for v in G.V if G.depth[v] > 0)
-ax2.text(0.02, 0.02, f'Non-crater: {nc_correct}/{nc_total} ({100*nc_correct/nc_total:.0f}%)',
-         transform=ax2.transAxes, fontsize=12, fontweight='bold',
-         bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
-ax2.set_title('Topological Prediction (FCR)', fontsize=14, fontweight='bold')
-ax2.set_aspect('equal'); ax2.axis('off')
-
-fig.suptitle('Topological Depth Detection in Volcano Graphs', fontsize=15, fontweight='bold', y=0.98)
-plt.tight_layout()
-plt.savefig('volcano_structure.png', dpi=150, bbox_inches='tight')
-print("Saved: volcano_structure.png")
+if __name__ == '__main__':
+    main()

@@ -7,7 +7,16 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:12Z",
-      "hue": 271
+      "hue": 92
+    },
+    {
+      "id": "primewise_persistent_homology_detects_exceptional_",
+      "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
+      "domain": "MachineLearning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-31T14:57:35Z",
+      "hue": 270
     }
   ],
   "edges": [],

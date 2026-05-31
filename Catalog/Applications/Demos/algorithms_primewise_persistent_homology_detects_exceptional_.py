@@ -1,295 +1,284 @@
 """
-Algorithms for Volcano Depth Detection via Cycle-Rank Filtration
+Algorithms for Primewise Persistent Homology and Isogeny Volcano Depth Detection.
 
-Implements the topological depth-detection framework for layered volcano graphs:
-- Volcano graph construction with crater-triangle structure
-- BFS-based ball computation
-- Cycle rank (β₁) computation
-- First cycle radius detection
-- Depth prediction and classification
+This module implements the core algorithms for:
+1. Building l-isogeny volcano graphs
+2. Computing BFS neighborhood complexes
+3. Extracting persistence barcodes (H₁)
+4. Classifying volcano depth from topological invariants
 
-The key structural property: each depth-1 vertex is connected to two adjacent
-crater vertices, forming a triangle. Deeper vertices have single parents.
-This ensures β₁(B_d(v)) > 0 exactly when the ball reaches the crater triangle
-at distance d = depth(v).
-
-Keywords: isogeny volcanoes, persistent homology, cycle rank, Euler characteristic,
-topological data analysis, graph algorithms, isogeny-based cryptography
+Type-hinted throughout for clarity and integration.
 """
 
-from __future__ import annotations
-from collections import deque
-from typing import Dict, List, Optional, Set, Tuple
+from typing import List, Dict, Tuple, Set, Optional
+from collections import defaultdict, deque
+import math
 
+
+# ---------------------------------------------------------------------------
+# Data Structures
+# ---------------------------------------------------------------------------
 
 class VolcanoGraph:
-    """A layered volcano graph with crater cycle and descending trees.
+    """Represents an l-isogeny volcano graph."""
 
-    Attributes:
-        vertices: Set of vertex identifiers
-        adj: Adjacency list representation
-        depth: Mapping from vertex to depth (0 = crater)
-        crater: Set of crater vertices (depth 0)
-        max_depth: Maximum depth in the volcano
-    """
-
-    def __init__(self):
-        self.vertices: Set[int] = set()
-        self.adj: Dict[int, Set[int]] = {}
+    def __init__(self, l: int, crater_size: int, max_depth: int):
+        self.l = l
+        self.crater_size = crater_size
+        self.max_depth = max_depth
+        self.adj: Dict[int, Set[int]] = defaultdict(set)
         self.depth: Dict[int, int] = {}
-        self.crater: Set[int] = set()
-        self.max_depth: int = 0
+        self.vertices: Set[int] = set()
+        self._build()
 
-    def add_vertex(self, v: int, d: int) -> None:
-        self.vertices.add(v)
-        self.adj.setdefault(v, set())
-        self.depth[v] = d
-        if d == 0:
-            self.crater.add(v)
-        self.max_depth = max(self.max_depth, d)
+    def _build(self) -> None:
+        """Build the volcano graph layer by layer."""
+        vertex_id = 0
 
-    def add_edge(self, u: int, v: int) -> None:
-        if u == v:
-            return
-        self.adj.setdefault(u, set()).add(v)
-        self.adj.setdefault(v, set()).add(u)
+        # Crater: cycle of crater_size vertices
+        crater_vertices = []
+        for i in range(self.crater_size):
+            self.vertices.add(vertex_id)
+            self.depth[vertex_id] = 0
+            crater_vertices.append(vertex_id)
+            vertex_id += 1
 
-    def neighbors(self, v: int) -> Set[int]:
-        return self.adj.get(v, set())
+        # Connect crater as cycle
+        for i in range(self.crater_size):
+            u = crater_vertices[i]
+            v = crater_vertices[(i + 1) % self.crater_size]
+            self.adj[u].add(v)
+            self.adj[v].add(u)
+
+        # Build descending layers
+        current_layer = crater_vertices
+        for d in range(1, self.max_depth + 1):
+            next_layer = []
+            for parent in current_layer:
+                # Each parent has l children (descending edges)
+                for _ in range(self.l):
+                    child = vertex_id
+                    vertex_id += 1
+                    self.vertices.add(child)
+                    self.depth[child] = d
+                    self.adj[parent].add(child)
+                    self.adj[child].add(parent)
+                    next_layer.append(child)
+            current_layer = next_layer
+
+    def total_vertices(self) -> int:
+        return len(self.vertices)
+
+    def get_vertices_at_depth(self, d: int) -> List[int]:
+        return [v for v in self.vertices if self.depth[v] == d]
 
 
-def build_volcano(crater_size: int, branching: int, max_depth: int) -> VolcanoGraph:
-    """Construct a layered volcano graph with crater-triangle structure.
+class NeighborhoodComplex:
+    """BFS neighborhood complex with vertex/edge counts at each radius."""
 
-    Each depth-1 vertex connects to two adjacent crater vertices, forming a
-    triangle. This guarantees firstCycleRadius(v) = depth(v) for all vertices:
-    - Crater vertices (depth 0): the crater cycle is at radius 0 in the triangle
-      with their two children... actually, crater vertices see a cycle at r=1
-      because they're adjacent to other crater vertices AND depth-1 vertices
-      that form triangles. For depth 0 vertices we handle them by noting that
-      each crater vertex has a neighbor (depth-1 vertex) that creates a triangle
-      visible at radius 1. But depth=0, so we adjust: crater vertices are on
-      the cycle, so we define their firstCycleRadius as 0 if they participate
-      in a cycle at radius 0 — but B_0(v) = {v} has no cycle. So instead:
-      the formal theorem excludes crater vertices from the firstCycleRadius = 0
-      assertion and handles them separately.
+    def __init__(self, graph: VolcanoGraph, center: int, max_radius: int):
+        self.center = center
+        self.max_radius = max_radius
+        self.center_depth = graph.depth[center]
+        self.vertex_counts: List[int] = []
+        self.edge_counts: List[int] = []
+        self._compute(graph)
 
-    In practice, for this demo:
-    - Depth-1 vertices: triangle with crater at r=1 → FCR=1=depth ✓
-    - Depth-d vertices (d>1): single parent → cycle at r=d via triangle at crater → FCR=d=depth ✓
-    - Crater vertices: cycle visible at r=1 (triangle) → FCR=1≠0=depth — but we know
-      they're on the crater by the triangle structure, and the formal theorem's crater
-      classification uses the separate crater_iff_depth_zero axiom.
+    def _compute(self, graph: VolcanoGraph) -> None:
+        """BFS from center, recording vertex/edge counts at each radius."""
+        visited: Set[int] = {self.center}
+        current_boundary: Set[int] = {self.center}
+        all_edges: Set[Tuple[int, int]] = set()
 
-    Args:
-        crater_size: Number of vertices in the crater cycle (≥ 3)
-        branching: Children per crater edge at depth 1
-        max_depth: Depth of descent trees
+        for r in range(self.max_radius + 1):
+            # Count vertices
+            self.vertex_counts.append(len(visited))
 
-    Returns:
-        A VolcanoGraph with the specified structure
+            # Count edges within visited set
+            edges_in_ball = set()
+            for v in visited:
+                for u in graph.adj[v]:
+                    if u in visited:
+                        edge = (min(u, v), max(u, v))
+                        edges_in_ball.add(edge)
+            self.edge_counts.append(len(edges_in_ball))
+
+            # Expand BFS
+            next_boundary: Set[int] = set()
+            for v in current_boundary:
+                for u in graph.adj[v]:
+                    if u not in visited:
+                        next_boundary.add(u)
+                        visited.add(u)
+            current_boundary = next_boundary
+
+    def cycle_rank(self, r: int) -> int:
+        """First Betti number β₁ at radius r."""
+        if r >= len(self.vertex_counts):
+            r = len(self.vertex_counts) - 1
+        return max(0, self.edge_counts[r] - self.vertex_counts[r] + 1)
+
+    def first_cycle_birth(self) -> Optional[int]:
+        """First radius where β₁ > 0."""
+        for r in range(len(self.vertex_counts)):
+            if self.cycle_rank(r) > 0:
+                return r
+        return None
+
+    def persistence_bar_length(self) -> Optional[int]:
+        """Length of first persistence bar: max_radius - first_cycle_birth."""
+        fcb = self.first_cycle_birth()
+        if fcb is None:
+            return None
+        return self.max_radius - fcb
+
+
+# ---------------------------------------------------------------------------
+# Core Algorithms
+# ---------------------------------------------------------------------------
+
+def depth_prediction(graph: VolcanoGraph, vertex: int,
+                     max_radius: int = 10,
+                     crater_cycle_radius: int = 1) -> Optional[int]:
     """
-    G = VolcanoGraph()
-    next_id = 0
+    Predict volcano depth from BFS neighborhood topology.
 
-    # Create crater cycle
-    crater_vertices = []
-    for i in range(crater_size):
-        G.add_vertex(next_id, 0)
-        crater_vertices.append(next_id)
-        next_id += 1
+    Algorithm:
+    1. Build BFS neighborhood complex K(v) up to radius max_radius
+    2. Compute cycle rank β₁(B_r(v)) at each radius r
+    3. Return (first r where β₁ > 0) - crater_cycle_radius
 
-    for i in range(crater_size):
-        G.add_edge(crater_vertices[i], crater_vertices[(i + 1) % crater_size])
+    The crater_cycle_radius is ⌈crater_size/2⌉ for a crater that is
+    a cycle of crater_size vertices. For crater_size=3 (triangle),
+    this is 1. For crater_size=4, this is 2.
 
-    if max_depth == 0:
-        return G
-
-    # Depth 1: each child connects to two adjacent crater vertices
-    depth1_vertices = []
-    for i in range(crater_size):
-        c1 = crater_vertices[i]
-        c2 = crater_vertices[(i + 1) % crater_size]
-        for _ in range(branching):
-            child = next_id
-            G.add_vertex(child, 1)
-            G.add_edge(c1, child)
-            G.add_edge(c2, child)  # dual parent → triangle c1-c2-child
-            depth1_vertices.append(child)
-            next_id += 1
-
-    # Deeper levels: single parent (standard tree descent)
-    current_level = depth1_vertices
-    for d in range(2, max_depth + 1):
-        next_level = []
-        for parent in current_level:
-            for _ in range(branching):
-                child = next_id
-                G.add_vertex(child, d)
-                G.add_edge(parent, child)
-                next_level.append(child)
-                next_id += 1
-        current_level = next_level
-
-    return G
-
-
-def bfs_ball(G: VolcanoGraph, v: int, r: int) -> Set[int]:
-    """Compute the ball of radius r around v using BFS."""
-    visited = {v}
-    queue = deque([(v, 0)])
-    while queue:
-        u, dist = queue.popleft()
-        if dist >= r:
-            continue
-        for w in G.neighbors(u):
-            if w not in visited:
-                visited.add(w)
-                queue.append((w, dist + 1))
-    return visited
-
-
-def induced_edges(G: VolcanoGraph, vertices: Set[int]) -> List[Tuple[int, int]]:
-    """Compute edges of the induced subgraph on a vertex set."""
-    edges = []
-    for u in vertices:
-        for w in G.neighbors(u):
-            if w in vertices and u < w:
-                edges.append((u, w))
-    return edges
-
-
-def connected_components(vertices: Set[int], edges: List[Tuple[int, int]]) -> int:
-    """Count connected components using union-find."""
-    if not vertices:
-        return 0
-    parent = {v: v for v in vertices}
-    rank = {v: 0 for v in vertices}
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(x: int, y: int) -> None:
-        rx, ry = find(x), find(y)
-        if rx == ry:
-            return
-        if rank[rx] < rank[ry]:
-            rx, ry = ry, rx
-        parent[ry] = rx
-        if rank[rx] == rank[ry]:
-            rank[rx] += 1
-
-    for u, v in edges:
-        union(u, v)
-    return len(set(find(v) for v in vertices))
-
-
-def cycle_rank(vertices: Set[int], edges: List[Tuple[int, int]]) -> int:
-    """Compute the cycle rank (first Betti number) β₁ = |E| - |V| + c."""
-    nV = len(vertices)
-    nE = len(edges)
-    c = connected_components(vertices, edges)
-    return max(0, nE - nV + c)
-
-
-def cycle_profile(G: VolcanoGraph, v: int, r: int) -> int:
-    """Compute β₁(B_r(v)), the cycle rank of the ball of radius r around v."""
-    ball = bfs_ball(G, v, r)
-    edges = induced_edges(G, ball)
-    return cycle_rank(ball, edges)
-
-
-def first_cycle_radius(G: VolcanoGraph, v: int, max_r: Optional[int] = None) -> int:
-    """Compute the first cycle radius: smallest r with β₁(B_r(v)) > 0."""
-    if max_r is None:
-        max_r = G.max_depth + 1
-    for r in range(max_r + 1):
-        if cycle_profile(G, v, r) > 0:
-            return r
-    return max_r + 1
-
-
-def predict_depth(G: VolcanoGraph, v: int) -> int:
-    """Predict depth using first cycle radius.
-
-    For non-crater vertices in the dual-parent volcano construction,
-    predictDepth(v) = depth(v).
+    Returns: predicted depth, or None if no cycle found
     """
-    return first_cycle_radius(G, v)
+    cx = NeighborhoodComplex(graph, vertex, max_radius)
+    fcb = cx.first_cycle_birth()
+    if fcb is None:
+        return None
+    return max(0, fcb - crater_cycle_radius)
 
 
-def euler_characteristic(vertices: Set[int], edges: List[Tuple[int, int]]) -> int:
-    """Compute Euler characteristic χ = |V| - |E|."""
-    return len(vertices) - len(edges)
-
-
-def classify_vertex(G: VolcanoGraph, v: int) -> str:
-    """Classify a vertex as crater, floor, or intermediate."""
-    fcr = first_cycle_radius(G, v)
-    if fcr == 0:
-        return 'crater'
-    elif fcr == G.max_depth:
-        return 'floor'
-    else:
-        return f'depth_{fcr}'
-
-
-def is_exceptional(G: VolcanoGraph, v: int) -> bool:
-    """Check if a vertex is exceptional (neighbor depth diff ≥ 2)."""
-    dv = G.depth[v]
-    for u in G.neighbors(v):
-        if abs(G.depth[u] - dv) >= 2:
-            return True
-    return False
-
-
-def full_analysis(G: VolcanoGraph) -> Dict:
-    """Perform full topological analysis of a volcano graph."""
-    results = {}
-    for v in sorted(G.vertices):
-        d = G.depth[v]
-        fcr = first_cycle_radius(G, v)
-        pred = predict_depth(G, v)
-        exc = is_exceptional(G, v)
-        cls = classify_vertex(G, v)
-
-        profiles = {}
-        for r in range(G.max_depth + 2):
-            ball = bfs_ball(G, v, r)
-            edges = induced_edges(G, ball)
-            beta = cycle_rank(ball, edges)
-            chi = euler_characteristic(ball, edges)
-            profiles[r] = {'beta1': beta, 'euler_char': chi,
-                           'vertices': len(ball), 'edges': len(edges)}
-
-        results[v] = {
-            'depth': d,
-            'predicted_depth': pred,
-            'first_cycle_radius': fcr,
-            'classification': cls,
-            'is_exceptional': exc,
-            'correct': pred == d if not exc else None,
-            'profiles': profiles,
-        }
+def classify_all_vertices(graph: VolcanoGraph,
+                          max_radius: int = 10,
+                          crater_cycle_radius: int = 1) -> Dict[int, Optional[int]]:
+    """Classify all vertices by predicted depth."""
+    results: Dict[int, Optional[int]] = {}
+    for v in graph.vertices:
+        results[v] = depth_prediction(graph, v, max_radius, crater_cycle_radius)
     return results
 
 
-if __name__ == '__main__':
-    G = build_volcano(crater_size=5, branching=2, max_depth=3)
-    print(f"Volcano: {len(G.vertices)} vertices, max_depth={G.max_depth}")
-    print(f"Crater size: {len(G.crater)}")
+def compute_accuracy(graph: VolcanoGraph,
+                     max_radius: int = 10,
+                     crater_cycle_radius: int = 1) -> Tuple[float, int, int]:
+    """
+    Compute classification accuracy.
 
-    results = full_analysis(G)
-    # Count accuracy for non-crater vertices (depth > 0)
-    non_crater = {v: r for v, r in results.items() if r['depth'] > 0}
-    correct = sum(1 for r in non_crater.values() if r['correct'] is True)
-    total = len(non_crater)
-    print(f"\nDepth prediction accuracy (non-crater): {correct}/{total} = {correct/total:.1%}")
+    Returns: (accuracy, correct, total)
+    """
+    predictions = classify_all_vertices(graph, max_radius, crater_cycle_radius)
+    correct = 0
+    total = 0
+    for v, pred in predictions.items():
+        total += 1
+        if pred == graph.depth[v]:
+            correct += 1
+    accuracy = correct / total if total > 0 else 0.0
+    return accuracy, correct, total
 
-    for v in sorted(G.vertices)[:15]:
-        r = results[v]
-        print(f"  v={v}: depth={r['depth']}, fcr={r['first_cycle_radius']}, "
-              f"class={r['classification']}, correct={r['correct']}")
+
+def compute_persistence_barcode(graph: VolcanoGraph, vertex: int,
+                                max_radius: int = 10) -> List[Tuple[int, int]]:
+    """
+    Compute H₁ persistence barcode for the neighborhood filtration.
+
+    Returns list of (birth, death) pairs for H₁ generators.
+    """
+    complex = NeighborhoodComplex(graph, vertex, max_radius)
+    barcode: List[Tuple[int, int]] = []
+
+    prev_rank = 0
+    for r in range(max_radius + 1):
+        curr_rank = complex.cycle_rank(r)
+        # New cycles born at radius r
+        new_cycles = curr_rank - prev_rank
+        for _ in range(new_cycles):
+            barcode.append((r, max_radius))
+        prev_rank = curr_rank
+
+    return barcode
+
+
+def subtree_size(l: int, r: int) -> int:
+    """Geometric sum: 1 + l + l² + ... + l^r."""
+    if l == 1:
+        return r + 1
+    return (l ** (r + 1) - 1) // (l - 1)
+
+
+def volcano_total_vertices(l: int, crater_size: int, depth: int) -> int:
+    """Total number of vertices in the volcano."""
+    return crater_size * subtree_size(l, depth)
+
+
+def euler_characteristic(n_vertices: int, n_edges: int) -> int:
+    """Euler characteristic χ = V - E."""
+    return n_vertices - n_edges
+
+
+# ---------------------------------------------------------------------------
+# Experimental Verification
+# ---------------------------------------------------------------------------
+
+def run_experiment(l: int = 2, crater_size: int = 3,
+                   max_depth: int = 4, max_radius: int = 10) -> Dict:
+    """
+    Run a complete experiment verifying the depth detection conjecture.
+
+    Args:
+        l: branching factor (isogeny prime)
+        crater_size: number of crater vertices
+        max_depth: volcano depth
+        max_radius: BFS radius for classification
+
+    Returns: experiment results dictionary
+    """
+    graph = VolcanoGraph(l, crater_size, max_depth)
+    crater_cycle_radius = crater_size // 2
+    accuracy, correct, total = compute_accuracy(graph, max_radius, crater_cycle_radius)
+
+    # Per-depth accuracy
+    depth_results: Dict[int, Dict] = {}
+    for d in range(max_depth + 1):
+        vertices_at_d = graph.get_vertices_at_depth(d)
+        d_correct = sum(
+            1 for v in vertices_at_d
+            if depth_prediction(graph, v, max_radius, crater_cycle_radius) == d
+        )
+        depth_results[d] = {
+            "count": len(vertices_at_d),
+            "correct": d_correct,
+            "accuracy": d_correct / len(vertices_at_d) if vertices_at_d else 0.0
+        }
+
+    return {
+        "l": l,
+        "crater_size": crater_size,
+        "max_depth": max_depth,
+        "total_vertices": total,
+        "accuracy": accuracy,
+        "correct": correct,
+        "depth_results": depth_results
+    }
+
+
+if __name__ == "__main__":
+    # Quick test
+    result = run_experiment(l=2, crater_size=3, max_depth=3, max_radius=10)
+    print(f"Accuracy: {result['accuracy']:.2%}")
+    print(f"Correct: {result['correct']}/{result['total_vertices']}")
+    for d, dr in result["depth_results"].items():
+        print(f"  Depth {d}: {dr['correct']}/{dr['count']} ({dr['accuracy']:.2%})")
