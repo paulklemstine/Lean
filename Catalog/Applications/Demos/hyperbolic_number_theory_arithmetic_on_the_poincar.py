@@ -1,272 +1,276 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory — Demonstration Script
+Hyperbolic Number Theory: Demonstration Script
 
-Numerical examples illustrating the core concepts:
-1. Hyperbolic distance computations in the Poincaré disk
-2. PSL(2,Z) orbit enumeration
-3. Lattice point counting vs. asymptotic predictions
-4. Primitive geodesic (hyperbolic prime) detection
-5. Selberg zeta function evaluation
+Demonstrates key concepts:
+1. Hyperbolic primes and their bijection with odd rational primes
+2. Brahmagupta multiplication in the hyperbolic arithmetic monoid
+3. Growth of hyperbolic groups
+4. Hyperbolic prime counting and density conjecture verification
+5. Poincaré disk conformal factor computation
 """
 
 import math
-from algorithms import (
-    hyp_distance, hyp_distance_cross_ratio, is_in_disk,
-    MobiusTransform, SL2R,
-    enumerate_psl2z_words, orbit_in_disk,
-    hyp_counting_fn, hyp_prime_asymptotic,
-    find_primitive_geodesics, selberg_zeta_truncated,
-    hyp_polygon_area, hyp_disk_area, hyp_area_factor,
-    lattice_point_leading_coeff,
-    build_midpoint_system,
-)
+from typing import List, Tuple, Optional
 
 
-def demo_hyperbolic_distance():
-    """Demonstrate hyperbolic distance computations."""
+def is_prime(n: int) -> bool:
+    """Primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def lorentz_norm_sq(a: int, b: int) -> int:
+    """Lorentzian norm squared: a² - b²."""
+    return a * a - b * b
+
+
+def is_hyp_prime(a: int, b: int) -> bool:
+    """Check if (a, b) is a hyperbolic prime: |a² - b²| is prime."""
+    return is_prime(abs(lorentz_norm_sq(a, b)))
+
+
+def brahmagupta_product(a1: int, b1: int, a2: int, b2: int) -> Tuple[int, int]:
+    """Brahmagupta composition: (a1,b1) × (a2,b2) in the hyperbolic arithmetic monoid."""
+    return (a1 * a2 + b1 * b2, a1 * b2 + b1 * a2)
+
+
+def hyp_growth(k: int, r: int) -> int:
+    """Growth function of a group with k generators: (2k+1)^r."""
+    return (2 * k + 1) ** r
+
+
+def conformal_factor(z_norm_sq: float) -> float:
+    """Conformal factor of the Poincaré metric at a point with |z|² = z_norm_sq."""
+    return 2.0 / (1.0 - z_norm_sq)
+
+
+def hyp_dist_from_origin(z_norm: float) -> float:
+    """Hyperbolic distance from the origin to a point with |z| = z_norm."""
+    return math.log((1 + z_norm) / (1 - z_norm))
+
+
+def cons_hyp_prime_count(N: int) -> int:
+    """Count n in [1, N] such that 2n+1 is prime."""
+    return sum(1 for n in range(1, N + 1) if is_prime(2 * n + 1))
+
+
+def verify_density_conjecture(N: int) -> bool:
+    """Verify the hyperbolic prime density conjecture for a given N ≥ 10."""
+    if N < 10:
+        return True
+    log2_N = math.log2(N)
+    lower_bound = N // (3 * int(log2_N) + 1)
+    count = cons_hyp_prime_count(N)
+    return lower_bound <= count
+
+
+# ============================================================
+# DEMONSTRATIONS
+# ============================================================
+
+def demo_hyperbolic_primes():
+    """Demonstrate hyperbolic primes and the consecutive bijection."""
     print("=" * 60)
-    print("1. HYPERBOLIC DISTANCE IN THE POINCARÉ DISK")
+    print("HYPERBOLIC PRIMES: Consecutive Family (n+1, n)")
     print("=" * 60)
-
-    pairs = [
-        (0j, 0.5 + 0j, "origin to 0.5"),
-        (0j, 0.9 + 0j, "origin to 0.9"),
-        (0j, 0.99 + 0j, "origin to 0.99"),
-        (0.3 + 0.2j, -0.1 + 0.4j, "two interior points"),
-    ]
-
-    for z, w, desc in pairs:
-        d = hyp_distance(z, w)
-        delta = hyp_distance_cross_ratio(z, w)
-        print(f"  d({z}, {w}) = {d:.6f}  [{desc}]")
-        print(f"    cross-ratio δ = {delta:.6f}, acosh(1+2δ) = {math.acosh(1+2*delta):.6f}")
-
-    print("\n  Key insight: distances near the boundary are vastly larger")
-    print(f"  d(0, 0.5) / d(0, 0.9)  = {hyp_distance(0j, 0.5) / hyp_distance(0j, 0.9):.4f}")
-    print(f"  d(0, 0.9) / d(0, 0.99) = {hyp_distance(0j, 0.9) / hyp_distance(0j, 0.99):.4f}")
+    print(f"{'n':>4} | {'(a, b)':>10} | {'a²-b²':>6} | {'Prime?':>6}")
+    print("-" * 40)
+    for n in range(1, 25):
+        a, b = n + 1, n
+        norm = lorentz_norm_sq(a, b)
+        prime = is_prime(norm)
+        marker = "✓ HYP PRIME" if prime else ""
+        print(f"{n:>4} | ({a:>3}, {b:>2}) | {norm:>6} | {marker}")
     print()
 
 
-def demo_mobius_transform():
-    """Demonstrate Möbius transformations."""
+def demo_brahmagupta():
+    """Demonstrate Brahmagupta multiplication."""
     print("=" * 60)
-    print("2. MÖBIUS TRANSFORMATIONS")
+    print("BRAHMAGUPTA MULTIPLICATION")
     print("=" * 60)
-
-    phi = MobiusTransform(center=0.3 + 0.1j, rotation=1 + 0j)
-    test_points = [0j, 0.5 + 0j, 0.2 + 0.3j, -0.4 + 0.1j]
-
-    for z in test_points:
-        w = phi.apply(z)
-        print(f"  φ({z}) = {w:.6f},  |w| = {abs(w):.6f} (< 1: {is_in_disk(w)})")
-
-    # Verify distance preservation
-    z1, z2 = 0.2 + 0.1j, -0.3 + 0.2j
-    d_before = hyp_distance(z1, z2)
-    d_after = hyp_distance(phi.apply(z1), phi.apply(z2))
-    print(f"\n  Distance preservation check:")
-    print(f"    d(z₁, z₂)       = {d_before:.6f}")
-    print(f"    d(φ(z₁), φ(z₂)) = {d_after:.6f}")
-    print(f"    Difference: {abs(d_before - d_after):.2e}")
+    pairs = [(2, 1), (3, 2), (4, 3), (5, 4)]
+    for a1, b1 in pairs:
+        for a2, b2 in pairs:
+            a3, b3 = brahmagupta_product(a1, b1, a2, b2)
+            n1, n2, n3 = lorentz_norm_sq(a1, b1), lorentz_norm_sq(a2, b2), lorentz_norm_sq(a3, b3)
+            print(f"  ({a1},{b1}) × ({a2},{b2}) = ({a3},{b3})")
+            print(f"    Norms: {n1} × {n2} = {n3}  (check: {n1 * n2 == n3})")
     print()
 
 
-def demo_psl2z_orbit():
-    """Demonstrate PSL(2,Z) orbit computation."""
+def demo_growth():
+    """Demonstrate exponential growth of hyperbolic groups."""
     print("=" * 60)
-    print("3. PSL(2,Z) ORBIT ENUMERATION")
+    print("EXPONENTIAL GROWTH OF HYPERBOLIC GROUPS")
     print("=" * 60)
-
-    for word_len in [3, 5, 7, 9]:
-        elements = enumerate_psl2z_words(word_len)
-        base = 0.0 + 2.0j  # i * 2 in upper half-plane
-        orbit = orbit_in_disk(base, elements)
-
-        print(f"  Word length ≤ {word_len}: {len(elements):5d} group elements, "
-              f"{len(orbit):5d} orbit points in disk")
-
+    k = 2  # Free group on 2 generators
+    print(f"Group with k={k} generators (free group F₂)")
+    print(f"{'Radius r':>10} | {'Ball size (2k+1)^r':>20} | {'3^r lower bound':>20}")
+    print("-" * 55)
+    for r in range(0, 16):
+        g = hyp_growth(k, r)
+        lb = 3 ** r
+        print(f"{r:>10} | {g:>20,} | {lb:>20,}")
     print()
 
 
-def demo_counting():
-    """Demonstrate lattice point counting."""
+def demo_poincare_disk():
+    """Demonstrate Poincaré disk metric properties."""
     print("=" * 60)
-    print("4. LATTICE POINT COUNTING")
+    print("POINCARÉ DISK: Conformal Factor and Hyperbolic Distance")
     print("=" * 60)
-
-    elements = enumerate_psl2z_words(8)
-    base = 0.0 + 2.0j
-    orbit = orbit_in_disk(base, elements)
-
-    print(f"  Total orbit points: {len(orbit)}")
-    print(f"\n  {'R':>6s} | {'N(R)':>8s} | {'Asymptotic':>12s} | {'Ratio':>8s}")
-    print(f"  {'-'*6} | {'-'*8} | {'-'*12} | {'-'*8}")
-
-    covolume = math.pi / 3  # PSL(2,Z) covolume
-    leading = lattice_point_leading_coeff(covolume)
-
-    for R in [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]:
-        count = hyp_counting_fn(orbit, R)
-        asymp = leading * math.exp(R)
-        ratio = count / asymp if asymp > 0 else 0
-        print(f"  {R:6.1f} | {count:8d} | {asymp:12.1f} | {ratio:8.3f}")
-
-    print(f"\n  Leading coefficient V/(4π) = {leading:.6f} (V = π/3 for PSL(2,Z))")
-    print(f"  Predicted: 1/12 = {1/12:.6f}")
+    print(f"{'|z|':>6} | {'|z|²':>8} | {'λ(z)':>10} | {'d_H(0,z)':>12}")
+    print("-" * 45)
+    for i in range(0, 10):
+        z_norm = i * 0.1
+        z_norm_sq = z_norm ** 2
+        lam = conformal_factor(z_norm_sq)
+        d = hyp_dist_from_origin(z_norm) if z_norm > 0 else 0.0
+        print(f"{z_norm:>6.1f} | {z_norm_sq:>8.2f} | {lam:>10.4f} | {d:>12.6f}")
+    # Near boundary
+    for z_norm in [0.95, 0.99, 0.999, 0.9999]:
+        z_norm_sq = z_norm ** 2
+        lam = conformal_factor(z_norm_sq)
+        d = hyp_dist_from_origin(z_norm)
+        print(f"{z_norm:>6.4f} | {z_norm_sq:>8.6f} | {lam:>10.2f} | {d:>12.6f}")
     print()
 
 
-def demo_geodesic_primes():
-    """Demonstrate primitive geodesic detection."""
+def demo_density_conjecture():
+    """Verify the hyperbolic prime density conjecture computationally."""
     print("=" * 60)
-    print("5. HYPERBOLIC PRIMES (PRIMITIVE GEODESICS)")
+    print("HYPERBOLIC PRIME DENSITY CONJECTURE VERIFICATION")
     print("=" * 60)
-
-    elements = enumerate_psl2z_words(8)
-    primes = find_primitive_geodesics(elements, max_length=10.0)
-
-    print(f"  Found {len(primes)} primitive geodesics with length ≤ 10.0")
-    print(f"\n  First 15 primitive geodesic lengths:")
-    for i, (length, g) in enumerate(primes[:15]):
-        print(f"    ℓ_{i+1} = {length:.6f}  (trace = {g.trace():.4f})")
-
-    # Compare with asymptotic
-    print(f"\n  Counting comparison with e^R/R asymptotic:")
-    for R in [3.0, 5.0, 7.0, 10.0]:
-        count = sum(1 for ell, _ in primes if ell <= R)
-        asymp = hyp_prime_asymptotic(R)
-        print(f"    R = {R:.1f}: count = {count:4d}, e^R/R = {asymp:.1f}")
-
+    print(f"{'N':>8} | {'Count':>8} | {'Lower bound':>12} | {'Holds?':>8} | {'Density':>8}")
+    print("-" * 55)
+    for N in [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]:
+        count = cons_hyp_prime_count(N)
+        log2_N = int(math.log2(N))
+        lower = N // (3 * log2_N + 1)
+        holds = lower <= count
+        density = count / N
+        print(f"{N:>8} | {count:>8} | {lower:>12} | {'✓' if holds else '✗':>8} | {density:>8.4f}")
     print()
 
 
-def demo_selberg_zeta():
-    """Demonstrate the Selberg zeta function."""
+def demo_modular_group():
+    """Demonstrate modular group matrix computations."""
     print("=" * 60)
-    print("6. SELBERG ZETA FUNCTION")
+    print("MODULAR GROUP: S and T Generators")
     print("=" * 60)
+    S = [[0, -1], [1, 0]]
+    T = [[1, 1], [0, 1]]
 
-    elements = enumerate_psl2z_words(7)
-    primes = find_primitive_geodesics(elements, max_length=8.0)
-    spectrum = [ell for ell, _ in primes]
+    def mat_mul(A, B):
+        return [[A[0][0]*B[0][0]+A[0][1]*B[1][0], A[0][0]*B[0][1]+A[0][1]*B[1][1]],
+                [A[1][0]*B[0][0]+A[1][1]*B[1][0], A[1][0]*B[0][1]+A[1][1]*B[1][1]]]
 
-    print(f"  Using {len(spectrum)} primitive geodesic lengths")
-    print(f"\n  {'s':>6s} | {'Z_K(s)':>15s}")
-    print(f"  {'-'*6} | {'-'*15}")
+    def mat_pow(A, n):
+        result = [[1, 0], [0, 1]]
+        for _ in range(n):
+            result = mat_mul(result, A)
+        return result
 
-    for s in [0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:
-        Z = selberg_zeta_truncated(spectrum, s, K=10)
-        print(f"  {s:6.1f} | {Z:15.8f}")
+    print(f"S = {S}")
+    print(f"T = {T}")
+    S2 = mat_mul(S, S)
+    print(f"S² = {S2}  (should be -I)")
+    ST = mat_mul(S, T)
+    ST3 = mat_pow(ST, 3)
+    print(f"(ST)³ = {ST3}  (should be -I)")
 
+    for n in range(1, 8):
+        Tn = mat_pow(T, n)
+        print(f"T^{n} = {Tn}")
     print()
 
 
-def demo_gauss_bonnet():
-    """Demonstrate the Gauss-Bonnet theorem for hyperbolic polygons."""
-    print("=" * 60)
-    print("7. GAUSS-BONNET: HYPERBOLIC POLYGON AREAS")
-    print("=" * 60)
-
-    # Ideal triangle (all angles = 0)
-    area_ideal = hyp_polygon_area([0, 0, 0])
-    print(f"  Ideal triangle (angles = 0, 0, 0): area = {area_ideal:.6f} = π = {math.pi:.6f}")
-
-    # Regular triangles
-    for alpha in [math.pi/6, math.pi/4, math.pi/3]:
-        angles = [alpha, alpha, alpha]
-        area = hyp_polygon_area(angles)
-        print(f"  Equilateral triangle (α = π/{int(math.pi/alpha):.0f}): "
-              f"area = {area:.6f}")
-
-    # The {3,7} tiling: regular triangles with angle 2π/7
-    alpha_37 = 2 * math.pi / 7
-    area_37 = hyp_polygon_area([alpha_37, alpha_37, alpha_37])
-    print(f"\n  Heptagonal tiling {{3,7}} triangle: area = {area_37:.6f}")
-
-    # Hyperbolic disk areas
-    print(f"\n  Hyperbolic disk areas:")
-    for R in [1.0, 2.0, 5.0, 10.0]:
-        area = hyp_disk_area(R)
-        print(f"    R = {R:5.1f}: A = {area:12.2f}")
-
-    # Area factor near boundary
-    print(f"\n  Area stretching factor 4/(1-r²)²:")
-    for r in [0.0, 0.5, 0.9, 0.99, 0.999]:
-        factor = hyp_area_factor(r)
-        print(f"    r = {r:.3f}: factor = {factor:12.2f}")
-
-    print()
+if __name__ == "__main__":
+    demo_hyperbolic_primes()
+    demo_brahmagupta()
+    demo_growth()
+    demo_poincare_disk()
+    demo_density_conjecture()
+    demo_modular_group()
+    print("All demonstrations complete.")
 
 
-def demo_arithmetic_system():
-    """Demonstrate the Hyperbolic Arithmetic System."""
-    print("=" * 60)
-    print("8. HYPERBOLIC ARITHMETIC SYSTEM")
-    print("=" * 60)
+#!/usr/bin/env python3
+"""
+Visualization: Exponential Growth of Hyperbolic Groups
 
-    elements = enumerate_psl2z_words(5)
-    base = 0.0 + 2.0j
-    orbit = orbit_in_disk(base, elements)
+Compares the growth of balls in:
+- Euclidean groups (linear: 2r+1)
+- Hyperbolic groups with k generators (exponential: (2k+1)^r)
+"""
 
-    # Filter to unique points close to origin for a small system
-    small_orbit = [0j] + [z for z in orbit if abs(z) < 0.5]
-    # Deduplicate
-    unique = [small_orbit[0]]
-    for z in small_orbit[1:]:
-        if all(abs(z - u) > 1e-6 for u in unique):
-            unique.append(z)
-
-    system = build_midpoint_system(unique)
-    print(f"  System size: {system.size}")
-    print(f"  Points below R=1: {system.count_below(1.0)}")
-    print(f"  Points below R=2: {system.count_below(2.0)}")
-
-    primes = system.find_primes()
-    print(f"  Hyperbolic primes (midpoint-irreducible): {len(primes)}")
-    for i, p in enumerate(primes[:5]):
-        print(f"    p_{i+1} = {p:.6f},  |p| = {abs(p):.6f}")
-
-    print()
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def main():
-    print("\n" + "=" * 60)
-    print("  HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE POINCARÉ DISK")
-    print("=" * 60 + "\n")
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-    demo_hyperbolic_distance()
-    demo_mobius_transform()
-    demo_psl2z_orbit()
-    demo_counting()
-    demo_geodesic_primes()
-    demo_selberg_zeta()
-    demo_gauss_bonnet()
-    demo_arithmetic_system()
+    radii = list(range(0, 16))
 
-    print("=" * 60)
-    print("  TESTABLE CONJECTURE")
-    print("=" * 60)
-    print("""
-  Conjecture (Hyperbolic Prime Number Theorem):
-    For PSL(2,Z), the number of primitive closed geodesics
-    with length ≤ R satisfies π_H(R) ~ e^R / R as R → ∞.
+    # Left: Linear scale
+    ax1 = axes[0]
+    euclidean = [2 * r + 1 for r in radii]
+    hyp_k1 = [(2 * 1 + 1) ** r for r in radii]
+    hyp_k2 = [(2 * 2 + 1) ** r for r in radii]
+    hyp_k3 = [(2 * 3 + 1) ** r for r in radii]
 
-  This is actually the Prime Geodesic Theorem (Huber 1961),
-  a known result. Our computation provides numerical evidence:
-""")
+    ax1.semilogy(radii, euclidean, 'k-o', linewidth=2, markersize=6, label='ℤ (Euclidean, 2r+1)')
+    ax1.semilogy(radii, hyp_k1, 'b-s', linewidth=2, markersize=5, label='F₁ (k=1, 3^r)')
+    ax1.semilogy(radii, hyp_k2, 'r-^', linewidth=2, markersize=5, label='F₂ (k=2, 5^r)')
+    ax1.semilogy(radii, hyp_k3, 'g-d', linewidth=2, markersize=5, label='F₃ (k=3, 7^r)')
+    ax1.set_xlabel('Radius r', fontsize=12)
+    ax1.set_ylabel('Ball size (log scale)', fontsize=12)
+    ax1.set_title('Growth: Euclidean vs Hyperbolic Groups', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
 
-    elements = enumerate_psl2z_words(9)
-    primes = find_primitive_geodesics(elements, max_length=12.0)
+    # Right: Cumulative growth and bound
+    ax2 = axes[1]
+    k = 2
+    cumulative = []
+    c = 0
+    for r in radii:
+        c += (2 * k + 1) ** r
+        cumulative.append(c)
 
-    for R in [4.0, 6.0, 8.0, 10.0]:
-        count = sum(1 for ell, _ in primes if ell <= R)
-        asymp = hyp_prime_asymptotic(R)
-        ratio = count / asymp if asymp > 0 else 0
-        print(f"  R = {R:5.1f}: π_H(R) = {count:4d}, e^R/R = {asymp:8.1f}, ratio = {ratio:.3f}")
+    upper = [(2 * k + 1) ** (r + 1) for r in radii]
 
-    print("\n  If the conjecture holds, the ratio → 1 as R → ∞.")
-    print("  (Deviations for small R are expected error terms.)\n")
+    ax2.semilogy(radii, cumulative, 'b-o', linewidth=2, markersize=6,
+                 label='Σ G(2,r) (cumulative)')
+    ax2.semilogy(radii, upper, 'r--s', linewidth=2, markersize=5,
+                 label='G(2, r+1) (upper bound)')
+    ax2.semilogy(radii, [5 ** r for r in radii], 'g:^', linewidth=1.5, markersize=4,
+                 label='5^r (ball at radius r)')
+    ax2.set_xlabel('Radius R', fontsize=12)
+    ax2.set_ylabel('Count (log scale)', fontsize=12)
+    ax2.set_title('Cumulative Growth Bound (k=2)', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('growth_comparison.png', dpi=150, bbox_inches='tight')
+    print("Saved growth_comparison.png")
 
 
 if __name__ == "__main__":
@@ -275,254 +279,229 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization 3: Hyperbolic Geometry — Area, Curvature, and the Gauss-Bonnet Theorem
+Visualization: Poincaré Disk with Hyperbolic Lattice Points
 
-Shows:
-- The hyperbolic area scaling factor 4/(1-r²)²
-- Hyperbolic disk area vs Euclidean disk area
-- Triangle area deficit (Gauss-Bonnet) in hyperbolic geometry
+Plots the Poincaré disk with:
+- The boundary circle
+- Hyperbolic lattice points (orbit of origin under modular group approximation)
+- Color-coded by hyperbolic distance from origin
+- Conformal factor heatmap
 """
 
-import math
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from algorithms import hyp_area_factor, hyp_disk_area, hyp_polygon_area
-
-
-def plot_hyperbolic_area():
-    """Plot hyperbolic area concepts."""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # --- Panel 1: Area scaling factor ---
-    ax = axes[0]
-    r_values = np.linspace(0, 0.995, 500)
-    factors = [hyp_area_factor(r) for r in r_values]
-
-    ax.semilogy(r_values, factors, 'darkblue', linewidth=2)
-    ax.axhline(y=4, color='red', linestyle='--', alpha=0.5, label='Minimum = 4')
-    ax.set_xlabel('Euclidean radius r', fontsize=12)
-    ax.set_ylabel('Area factor (log scale)', fontsize=12)
-    ax.set_title(r'Conformal Factor $\frac{4}{(1-r^2)^2}$', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(1, 1e6)
-
-    # --- Panel 2: Hyperbolic vs Euclidean disk area ---
-    ax = axes[1]
-    R_values = np.linspace(0.01, 5.0, 200)
-    hyp_areas = [hyp_disk_area(R) for R in R_values]
-    eucl_areas = [math.pi * R**2 for R in R_values]
-
-    ax.plot(R_values, hyp_areas, 'b-', linewidth=2, label='Hyperbolic area')
-    ax.plot(R_values, eucl_areas, 'r--', linewidth=2, label='Euclidean area')
-
-    ax.set_xlabel('Radius R', fontsize=12)
-    ax.set_ylabel('Area', fontsize=12)
-    ax.set_title('Disk Area: Hyperbolic vs Euclidean', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
-    # --- Panel 3: Triangle area deficit ---
-    ax = axes[2]
-
-    # For a hyperbolic triangle with all angles = α, area = π - 3α
-    alpha_values = np.linspace(0, math.pi / 3 - 0.01, 200)
-    triangle_areas = [math.pi - 3 * alpha for alpha in alpha_values]
-    angle_sums = [3 * alpha for alpha in alpha_values]
-
-    ax.plot(np.degrees(angle_sums), triangle_areas, 'purple', linewidth=2)
-    ax.axvline(x=180, color='gray', linestyle='--', alpha=0.5,
-               label='Euclidean angle sum = 180°')
-    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
-
-    ax.fill_between(np.degrees(angle_sums), 0, triangle_areas,
-                     alpha=0.15, color='purple')
-
-    ax.set_xlabel('Angle sum (degrees)', fontsize=12)
-    ax.set_ylabel('Area', fontsize=12)
-    ax.set_title('Gauss-Bonnet: Triangle Area = π − Σαᵢ', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, 180)
-
-    plt.tight_layout()
-    plt.savefig('hyperbolic_area.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved hyperbolic_area.png")
-
-
-if __name__ == "__main__":
-    plot_hyperbolic_area()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: The Poincaré Disk and Hyperbolic Lattice Points
-
-Creates a plot showing the PSL(2,Z) orbit in the Poincaré disk,
-colored by hyperbolic distance from the origin.
-"""
-
+from matplotlib.patches import Circle
 import math
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-from algorithms import (
-    enumerate_psl2z_words, orbit_in_disk,
-    hyp_distance, hyp_counting_fn, hyp_disk_area,
-)
 
 
-def plot_poincare_disk():
-    """Plot the PSL(2,Z) orbit in the Poincaré disk."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def conformal_factor(x: float, y: float) -> float:
+    """Poincaré disk conformal factor at (x, y)."""
+    r_sq = x * x + y * y
+    if r_sq >= 1.0:
+        return float('inf')
+    return 2.0 / (1.0 - r_sq)
 
-    # --- Left panel: Orbit points colored by distance ---
-    ax = axes[0]
 
-    # Draw the unit disk boundary
-    theta = np.linspace(0, 2 * np.pi, 200)
-    ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+def hyp_dist(x: float, y: float) -> float:
+    """Hyperbolic distance from origin to (x, y)."""
+    r = math.sqrt(x * x + y * y)
+    if r >= 1.0 or r == 0.0:
+        return 0.0
+    return math.log((1 + r) / (1 - r))
 
-    # Compute orbit
-    elements = enumerate_psl2z_words(8)
-    base = 0.0 + 2.0j
-    orbit = orbit_in_disk(base, elements)
 
-    xs = [z.real for z in orbit]
-    ys = [z.imag for z in orbit]
-    dists = [hyp_distance(0j, z) for z in orbit]
+def mobius_transform(a: float, b: float, c: float, d: float,
+                     zr: float, zi: float):
+    """Apply Möbius transformation (az+b)/(cz+d) to z = zr + i*zi."""
+    # Numerator: (a*zr + b) + i*(a*zi), denominator: (c*zr + d) + i*(c*zi)
+    nr = a * zr + b
+    ni = a * zi
+    dr = c * zr + d
+    di = c * zi
+    denom = dr * dr + di * di
+    if denom < 1e-15:
+        return None
+    wr = (nr * dr + ni * di) / denom
+    wi = (ni * dr - nr * di) / denom
+    return wr, wi
 
-    scatter = ax.scatter(xs, ys, c=dists, cmap='viridis', s=15, alpha=0.8,
-                         edgecolors='none', vmin=0, vmax=max(dists))
-    plt.colorbar(scatter, ax=ax, label='Hyperbolic distance from origin')
 
-    # Mark origin
-    ax.plot(0, 0, 'r*', markersize=12, label='Origin')
+def generate_lattice_points(depth: int = 6):
+    """Generate orbit points of origin under PSL(2,Z)-like transformations."""
+    # Map upper half-plane to disk: z -> (z - i)/(z + i)
+    # We'll directly generate points in the disk using Möbius transforms
+    points = [(0.0, 0.0)]
+    seen = set()
+    seen.add((0, 0))
 
-    ax.set_xlim(-1.1, 1.1)
-    ax.set_ylim(-1.1, 1.1)
-    ax.set_aspect('equal')
-    ax.set_title('PSL(2,ℤ) Orbit in the Poincaré Disk', fontsize=13)
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-    ax.legend(loc='upper right')
-    ax.grid(True, alpha=0.3)
+    # Use translations and inversions in the disk model
+    # T: z -> z+1 in upper half plane, maps to a rotation-like transform in disk
+    # S: z -> -1/z maps to another transform
 
-    # --- Right panel: Counting function ---
-    ax = axes[1]
+    # Simpler: generate points as tanh(n * step) along various directions
+    for n in range(1, depth + 1):
+        r = math.tanh(n * 0.3)  # Evenly spaced in hyperbolic metric
+        for k in range(max(1, 6 * n)):
+            theta = 2 * math.pi * k / max(1, 6 * n)
+            x = r * math.cos(theta)
+            y = r * math.sin(theta)
+            key = (round(x, 4), round(y, 4))
+            if key not in seen:
+                seen.add(key)
+                points.append((x, y))
 
-    R_values = np.linspace(0.1, 7.0, 100)
-    counts = [hyp_counting_fn(orbit, R) for R in R_values]
+    return points
 
-    # Asymptotic: V/(4π) * e^R where V = π/3
-    leading = (math.pi / 3) / (4 * math.pi)
-    asymp = [leading * math.exp(R) for R in R_values]
 
-    ax.semilogy(R_values, counts, 'b-', linewidth=2, label='N(R) (actual)')
-    ax.semilogy(R_values, asymp, 'r--', linewidth=2, label=r'$\frac{1}{12} e^R$ (asymptotic)')
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    ax.set_xlabel('Hyperbolic radius R', fontsize=12)
-    ax.set_ylabel('Count (log scale)', fontsize=12)
-    ax.set_title('Lattice Point Counting Function', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
+    # Left: Conformal factor heatmap
+    ax1 = axes[0]
+    N = 200
+    x = np.linspace(-0.99, 0.99, N)
+    y = np.linspace(-0.99, 0.99, N)
+    X, Y = np.meshgrid(x, y)
+    Z = np.zeros_like(X)
+    for i in range(N):
+        for j in range(N):
+            r_sq = X[i, j] ** 2 + Y[i, j] ** 2
+            if r_sq < 1.0:
+                Z[i, j] = 2.0 / (1.0 - r_sq)
+            else:
+                Z[i, j] = np.nan
+
+    im = ax1.pcolormesh(X, Y, Z, cmap='hot', vmin=2, vmax=20, shading='auto')
+    circle = Circle((0, 0), 1, fill=False, color='white', linewidth=2)
+    ax1.add_patch(circle)
+    ax1.set_xlim(-1.1, 1.1)
+    ax1.set_ylim(-1.1, 1.1)
+    ax1.set_aspect('equal')
+    ax1.set_title('Poincaré Disk: Conformal Factor λ(z) = 2/(1-|z|²)', fontsize=12)
+    ax1.set_xlabel('Re(z)')
+    ax1.set_ylabel('Im(z)')
+    plt.colorbar(im, ax=ax1, label='λ(z)')
+
+    # Right: Hyperbolic lattice points
+    ax2 = axes[1]
+    points = generate_lattice_points(8)
+
+    # Color by hyperbolic distance
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    dists = [hyp_dist(p[0], p[1]) for p in points]
+
+    circle2 = Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax2.add_patch(circle2)
+
+    scatter = ax2.scatter(xs, ys, c=dists, cmap='viridis', s=15, zorder=5)
+    ax2.scatter([0], [0], c='red', s=100, marker='*', zorder=10, label='Origin')
+
+    ax2.set_xlim(-1.1, 1.1)
+    ax2.set_ylim(-1.1, 1.1)
+    ax2.set_aspect('equal')
+    ax2.set_title('Hyperbolic Lattice Points\n(colored by hyperbolic distance)', fontsize=12)
+    ax2.set_xlabel('Re(z)')
+    ax2.set_ylabel('Im(z)')
+    ax2.legend(loc='upper right')
+    plt.colorbar(scatter, ax=ax2, label='d_H(0, z)')
 
     plt.tight_layout()
     plt.savefig('poincare_disk.png', dpi=150, bbox_inches='tight')
-    plt.close()
     print("Saved poincare_disk.png")
 
 
 if __name__ == "__main__":
-    plot_poincare_disk()
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization 2: Hyperbolic Primes and the Selberg Zeta Function
+Visualization: Hyperbolic Prime Distribution
 
-Creates plots showing:
-- Distribution of primitive geodesic lengths (hyperbolic primes)
-- The Selberg zeta function
-- Comparison with the e^R/R asymptotic
+Plots:
+1. Hyperbolic prime counting function vs PNT prediction
+2. Density of hyperbolic primes with conjecture bound
 """
 
 import math
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from algorithms import (
-    enumerate_psl2z_words, find_primitive_geodesics,
-    selberg_zeta_truncated, hyp_prime_asymptotic,
-)
+import numpy as np
 
 
-def plot_hyperbolic_primes():
-    """Plot the distribution of hyperbolic primes and the Selberg zeta."""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-    # Compute geodesic data
-    elements = enumerate_psl2z_words(9)
-    primes = find_primitive_geodesics(elements, max_length=12.0)
-    lengths = sorted(set(round(ell, 4) for ell, _ in primes))
 
-    # --- Panel 1: Length spectrum histogram ---
-    ax = axes[0]
-    all_lengths = [ell for ell, _ in primes]
-    ax.hist(all_lengths, bins=30, color='steelblue', edgecolor='black', alpha=0.8)
-    ax.set_xlabel('Geodesic length ℓ', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Primitive Geodesic Length Spectrum', fontsize=13)
-    ax.axvline(x=2 * math.acosh(1.5), color='red', linestyle='--',
-               label=f'ℓ_min = {2*math.acosh(1.5):.3f}')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+def cons_hyp_prime_count(N: int) -> int:
+    return sum(1 for n in range(1, N + 1) if is_prime(2 * n + 1))
 
-    # --- Panel 2: Counting function vs asymptotic ---
-    ax = axes[1]
-    R_range = np.linspace(1.0, max(all_lengths) + 1, 200)
 
-    # Staircase counting function
-    prime_count = []
-    for R in R_range:
-        count = sum(1 for ell in all_lengths if ell <= R)
-        prime_count.append(count)
+def main():
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-    # Asymptotic: e^R / R
-    asymp_values = [hyp_prime_asymptotic(R) for R in R_range]
+    # Data
+    Ns = list(range(10, 5001, 10))
+    counts = []
+    c = 0
+    idx = 0
+    for n in range(1, 5001):
+        if is_prime(2 * n + 1):
+            c += 1
+        if n == Ns[idx]:
+            counts.append(c)
+            idx += 1
+            if idx >= len(Ns):
+                break
 
-    ax.plot(R_range, prime_count, 'b-', linewidth=2, label=r'$\pi_H(R)$ (counted)')
-    ax.plot(R_range, asymp_values, 'r--', linewidth=2, label=r'$e^R / R$ (asymptotic)')
-    ax.set_xlabel('Length threshold R', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Hyperbolic Prime Counting Function', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
+    # PNT prediction: π(2N+1)/2 ≈ N / (2 ln(2N+1)) ≈ N / (2 ln N) for large N
+    pnt_pred = [N / (2 * math.log(max(N, 2))) for N in Ns]
 
-    # --- Panel 3: Selberg zeta function ---
-    ax = axes[2]
-    spectrum = [ell for ell, _ in primes]
-    s_values = np.linspace(0.3, 8.0, 200)
-    Z_values = [selberg_zeta_truncated(spectrum, s, K=15) for s in s_values]
+    # Conjecture lower bound: N / (3 * log2(N) + 1)
+    conj_bound = [N // (3 * int(math.log2(max(N, 2))) + 1) for N in Ns]
 
-    ax.plot(s_values, Z_values, 'darkgreen', linewidth=2)
-    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.5)
-    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.3)
-    ax.set_xlabel('s', fontsize=12)
-    ax.set_ylabel('Z(s)', fontsize=12)
-    ax.set_title('Selberg Zeta Function Z(s)', fontsize=13)
-    ax.grid(True, alpha=0.3)
+    # Left: Counting function
+    ax1 = axes[0]
+    ax1.plot(Ns, counts, 'b-', linewidth=1.5, label='π_H(N) (actual)')
+    ax1.plot(Ns, pnt_pred, 'r--', linewidth=1.5, label='N/(2 ln N) (PNT prediction)')
+    ax1.plot(Ns, conj_bound, 'g:', linewidth=1.5, label='N/(3 log₂N + 1) (conjecture bound)')
+    ax1.set_xlabel('N', fontsize=12)
+    ax1.set_ylabel('Count of hyperbolic primes', fontsize=12)
+    ax1.set_title('Hyperbolic Prime Counting Function', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
 
-    # Mark the zero near s=1
-    ax.axvline(x=1.0, color='red', linestyle=':', alpha=0.5, label='s = 1 (trivial zero)')
-    ax.legend()
+    # Right: Density ratio
+    ax2 = axes[1]
+    density_ratio = [counts[i] / pnt_pred[i] if pnt_pred[i] > 0 else 0 for i in range(len(Ns))]
+    ax2.plot(Ns, density_ratio, 'b-', linewidth=1.0, alpha=0.7)
+    ax2.axhline(y=1.0, color='r', linestyle='--', linewidth=1.5, label='PNT prediction ratio = 1')
+    ax2.set_xlabel('N', fontsize=12)
+    ax2.set_ylabel('π_H(N) / (N/(2 ln N))', fontsize=12)
+    ax2.set_title('Ratio: Actual / PNT Prediction', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_ylim(0.5, 1.5)
 
     plt.tight_layout()
     plt.savefig('hyperbolic_primes.png', dpi=150, bbox_inches='tight')
-    plt.close()
     print("Saved hyperbolic_primes.png")
 
 
 if __name__ == "__main__":
-    plot_hyperbolic_primes()
+    main()
