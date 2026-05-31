@@ -1,56 +1,53 @@
 """
-Algorithms for Primewise Persistent Homology
+Primewise Persistent Homology: Core Algorithms
 
-Type-hinted implementations of the core algorithms for computing
+Type-hinted implementations of the key algorithms for computing
 primewise persistence barcodes and detecting separating primes.
 """
 
-from typing import List, Tuple, Dict, Set, Optional
+from typing import List, Tuple, Set, Dict, Optional
 from dataclasses import dataclass
 import math
 
 
-@dataclass
-class BarcodeInterval:
+@dataclass(frozen=True)
+class PersistenceInterval:
     """A persistence interval [birth, death)."""
     birth: int
     death: int
 
-    def __post_init__(self) -> None:
-        assert self.birth < self.death, f"birth={self.birth} must be < death={self.death}"
+    def __post_init__(self):
+        assert self.birth <= self.death, f"Invalid interval: birth={self.birth} > death={self.death}"
 
     @property
     def lifetime(self) -> int:
         return self.death - self.birth
 
+    def alive_at(self, t: int) -> bool:
+        return self.birth <= t < self.death
 
-@dataclass
-class PersistenceBarcode:
-    """A persistence barcode: a list of intervals."""
-    intervals: List[BarcodeInterval]
 
-    def total_persistence(self) -> int:
-        """Sum of all interval lifetimes."""
-        return sum(iv.lifetime for iv in self.intervals)
+Barcode = List[PersistenceInterval]
 
-    def size(self) -> int:
-        """Number of intervals."""
-        return len(self.intervals)
 
-    def betti_at(self, t: int) -> int:
-        """Betti number at filtration index t."""
-        return sum(1 for iv in self.intervals if iv.birth <= t < iv.death)
+def interval_match_cost(I: PersistenceInterval, J: PersistenceInterval) -> int:
+    """Bottleneck matching cost between two persistence intervals."""
+    return max(abs(I.birth - J.birth), abs(I.death - J.death))
 
-    def persistence_entropy(self) -> float:
-        """Shannon entropy of the persistence diagram."""
-        L = self.total_persistence()
-        if L == 0:
-            return 0.0
-        return -sum(
-            (iv.lifetime / L) * math.log(iv.lifetime / L)
-            for iv in self.intervals
-            if iv.lifetime > 0
-        )
+
+def betti_at(barcode: Barcode, t: int) -> int:
+    """Betti number at filtration parameter t."""
+    return sum(1 for I in barcode if I.alive_at(t))
+
+
+def rank_function(barcode: Barcode, s: int, t: int) -> int:
+    """Persistent rank function β(s, t)."""
+    return sum(1 for I in barcode if I.birth <= s and t < I.death)
+
+
+def total_persistence(barcode: Barcode) -> int:
+    """Total persistence (sum of lifetimes)."""
+    return sum(I.lifetime for I in barcode)
 
 
 def is_prime(n: int) -> bool:
@@ -70,55 +67,71 @@ def is_prime(n: int) -> bool:
 
 
 def primes_up_to(n: int) -> List[int]:
-    """Sieve of Eratosthenes up to n."""
+    """Sieve of Eratosthenes."""
     if n < 2:
         return []
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
     for i in range(2, int(n**0.5) + 1):
         if sieve[i]:
-            for j in range(i * i, n + 1, i):
+            for j in range(i*i, n + 1, i):
                 sieve[j] = False
     return [i for i in range(n + 1) if sieve[i]]
 
 
-def mod_p_vietoris_rips(
-    lengths: List[float], p: int, max_dim: int = 2
-) -> List[BarcodeInterval]:
+def mod_p_residues(lengths: List[int], p: int) -> List[int]:
+    """Compute sorted distinct residues of lengths mod p."""
+    return sorted(set(x % p for x in lengths))
+
+
+def mod_p_filtration_barcode(lengths: List[int], p: int) -> Barcode:
     """
-    Compute a persistence barcode from geodesic lengths mod p.
+    Construct a persistence barcode from mod-p filtration of length data.
 
-    Given a list of geodesic lengths, reduce them mod p to get
-    residue classes, then build a Vietoris-Rips-like filtration
-    based on pairwise residue distances.
-
-    Parameters:
-        lengths: List of geodesic lengths (as floats or ints)
-        p: Prime modulus
-        max_dim: Maximum homological dimension
-
-    Returns:
-        List of barcode intervals
+    For each distinct residue class r that appears in lengths mod p,
+    create a persistence interval [r, p).
     """
-    # Reduce lengths mod p
-    residues = [int(l) % p for l in lengths]
-    n = len(residues)
+    residues = mod_p_residues(lengths, p)
+    return [PersistenceInterval(birth=r, death=p) for r in residues]
 
+
+def vietoris_rips_edges(lengths: List[int], epsilon: int) -> List[Tuple[int, int]]:
+    """
+    Compute edges of the Vietoris-Rips complex at scale epsilon.
+
+    Two lengths are connected if their absolute difference <= epsilon.
+    """
+    edges = []
+    for i in range(len(lengths)):
+        for j in range(i + 1, len(lengths)):
+            if abs(lengths[i] - lengths[j]) <= epsilon:
+                edges.append((i, j))
+    return edges
+
+
+def vietoris_rips_barcode(lengths: List[int], max_epsilon: int) -> Barcode:
+    """
+    Compute the H0 persistence barcode of the Vietoris-Rips filtration.
+
+    Uses union-find to track connected components.
+    """
+    n = len(lengths)
     if n == 0:
         return []
 
-    # Pairwise distances in Z/pZ (minimum of d and p-d)
-    distances: List[Tuple[int, int, int]] = []
+    # Compute all pairwise distances and sort
+    dist_pairs: List[Tuple[int, int, int]] = []
     for i in range(n):
         for j in range(i + 1, n):
-            d = abs(residues[i] - residues[j])
-            d = min(d, p - d)
-            distances.append((d, i, j))
+            d = abs(lengths[i] - lengths[j])
+            if d <= max_epsilon:
+                dist_pairs.append((d, i, j))
+    dist_pairs.sort()
 
-    distances.sort()
-
-    # Simplified persistence: track connected components
+    # Union-Find
     parent = list(range(n))
+    rank_uf = [0] * n
+    birth = [0] * n  # all components born at 0
 
     def find(x: int) -> int:
         while parent[x] != x:
@@ -126,125 +139,111 @@ def mod_p_vietoris_rips(
             x = parent[x]
         return x
 
-    def union(x: int, y: int) -> bool:
+    def union(x: int, y: int, death_time: int) -> Optional[PersistenceInterval]:
         rx, ry = find(x), find(y)
         if rx == ry:
-            return False
-        parent[rx] = ry
-        return True
+            return None
+        # Younger component dies (higher birth time dies)
+        if rank_uf[rx] < rank_uf[ry]:
+            rx, ry = ry, rx
+        parent[ry] = rx
+        if rank_uf[rx] == rank_uf[ry]:
+            rank_uf[rx] += 1
+        return PersistenceInterval(birth=0, death=death_time)
 
-    # Birth times: all components born at 0
-    # Death times: when components merge
-    intervals: List[BarcodeInterval] = []
-    for d, i, j in distances:
-        if union(i, j):
-            if d > 0:
-                intervals.append(BarcodeInterval(birth=0, death=d))
+    barcode: Barcode = []
+    for d, i, j in dist_pairs:
+        result = union(i, j, d)
+        if result and result.lifetime > 0:
+            barcode.append(result)
 
-    return intervals
+    return barcode
 
 
-def compute_primewise_signature(
-    lengths: List[float], prime_bound: int
-) -> Dict[int, PersistenceBarcode]:
+def compute_primewise_barcodes(
+    lengths: List[int],
+    prime_bound: int
+) -> Dict[int, Barcode]:
+    """Compute mod-p barcodes for all primes up to prime_bound."""
+    return {
+        p: mod_p_filtration_barcode(lengths, p)
+        for p in primes_up_to(prime_bound)
+    }
+
+
+def find_separating_primes(
+    lengths1: List[int],
+    lengths2: List[int],
+    prime_bound: int
+) -> Tuple[Set[int], Set[int]]:
     """
-    Compute the primewise persistence signature.
+    Find primes that separate two length spectra.
 
-    For each prime p up to prime_bound, compute the mod-p
-    persistence barcode of the given length data.
-
-    Parameters:
-        lengths: Geodesic length data
-        prime_bound: Upper bound on primes to consider
-
-    Returns:
-        Dictionary mapping primes to persistence barcodes
+    Returns (separating_primes, agreeing_primes).
     """
-    signature: Dict[int, PersistenceBarcode] = {}
+    separating: Set[int] = set()
+    agreeing: Set[int] = set()
+
     for p in primes_up_to(prime_bound):
-        intervals = mod_p_vietoris_rips(lengths, p)
-        signature[p] = PersistenceBarcode(intervals)
-    return signature
+        b1 = mod_p_filtration_barcode(lengths1, p)
+        b2 = mod_p_filtration_barcode(lengths2, p)
+
+        if len(b1) != len(b2):
+            separating.add(p)
+        elif any(i1.birth != i2.birth or i1.death != i2.death
+                 for i1, i2 in zip(b1, b2)):
+            separating.add(p)
+        else:
+            agreeing.add(p)
+
+    return separating, agreeing
 
 
-def detect_separating_primes(
-    sig1: Dict[int, PersistenceBarcode],
-    sig2: Dict[int, PersistenceBarcode],
-) -> Tuple[List[int], float]:
-    """
-    Find primes where two signatures differ in total persistence.
-
-    Parameters:
-        sig1, sig2: Primewise persistence signatures
-
-    Returns:
-        (separating_primes, estimated_density)
-    """
-    common_primes = sorted(set(sig1.keys()) & set(sig2.keys()))
-    separating: List[int] = []
-
-    for p in common_primes:
-        if sig1[p].total_persistence() != sig2[p].total_persistence():
-            separating.append(p)
-
-    density = len(separating) / len(common_primes) if common_primes else 0.0
-    return separating, density
-
-
-def sunada_conjugacy_count(
-    group_elements: List[int],
-    subgroup: Set[int],
-    conjugate_fn,
-) -> Dict[int, int]:
-    """
-    Count elements in subgroup per conjugacy class.
-
-    Parameters:
-        group_elements: Elements of the group G
-        subgroup: Elements of a subgroup H
-        conjugate_fn: Function (g, x) -> x * g * x^{-1}
-
-    Returns:
-        Dictionary mapping representatives to counts
-    """
-    counts: Dict[int, int] = {}
-    for g in group_elements:
-        count = 0
-        for h in subgroup:
-            # Check if h is conjugate to g
-            for x in group_elements:
-                if conjugate_fn(h, x) == g:
-                    count += 1
-                    break
-        counts[g] = count
-    return counts
-
-
-def prime_count(n: int) -> int:
-    """π(n): number of primes up to n."""
-    return len(primes_up_to(n))
-
-
-def relative_prime_density(
-    separating: List[int], prime_bound: int
+def separation_density(
+    lengths1: List[int],
+    lengths2: List[int],
+    prime_bound: int
 ) -> float:
-    """
-    Compute the relative density of separating primes
-    among all primes up to prime_bound.
-    """
-    total = prime_count(prime_bound)
-    if total == 0:
-        return 0.0
-    sep_count = sum(1 for p in separating if p <= prime_bound)
-    return sep_count / total
+    """Compute the density of separating primes up to prime_bound."""
+    sep, agr = find_separating_primes(lengths1, lengths2, prime_bound)
+    total = len(sep) + len(agr)
+    return len(sep) / total if total > 0 else 0.0
 
 
-if __name__ == "__main__":
-    # Quick test
-    iv = BarcodeInterval(2, 5)
-    bc = PersistenceBarcode([iv])
-    print(f"Interval: [{iv.birth}, {iv.death}), lifetime={iv.lifetime}")
-    print(f"Total persistence: {bc.total_persistence()}")
-    print(f"Betti at 3: {bc.betti_at(3)}")
-    print(f"Betti at 5: {bc.betti_at(5)}")
-    print(f"Primes up to 50: {primes_up_to(50)}")
+def euler_characteristic(evens: Barcode, odds: Barcode, t: int) -> int:
+    """Euler characteristic at filtration parameter t."""
+    return betti_at(evens, t) - betti_at(odds, t)
+
+
+def barcode_bottleneck_distance(b1: Barcode, b2: Barcode) -> int:
+    """
+    Approximate bottleneck distance between two barcodes.
+
+    Uses a greedy matching heuristic (not optimal, but fast).
+    """
+    if not b1 and not b2:
+        return 0
+
+    # Include deletion costs
+    costs = []
+    used_j: Set[int] = set()
+
+    for i, I in enumerate(b1):
+        best_cost = I.lifetime  # deletion cost
+        best_j = -1
+        for j, J in enumerate(b2):
+            if j not in used_j:
+                c = interval_match_cost(I, J)
+                if c < best_cost:
+                    best_cost = c
+                    best_j = j
+        if best_j >= 0:
+            used_j.add(best_j)
+        costs.append(best_cost)
+
+    # Unmatched intervals in b2
+    for j, J in enumerate(b2):
+        if j not in used_j:
+            costs.append(J.lifetime)
+
+    return max(costs) if costs else 0

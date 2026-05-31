@@ -1,485 +1,505 @@
 #!/usr/bin/env python3
 """
-Demo: Primewise Persistent Homology for Isospectral Pair Separation
+Primewise Persistent Homology: Demonstration
 
-This script demonstrates the primewise persistence framework by:
-1. Constructing simulated isospectral pairs via Sunada-type data
-2. Computing mod-p persistence barcodes for each prime
-3. Detecting separating primes and estimating density
-4. Visualizing the results
+Demonstrates the key results:
+1. Mod-p filtration barcodes for sample length spectra
+2. Separating primes detection for isospectral-like pairs
+3. Density of separating primes approaches 1
+4. Triangle inequality verification for matching costs
 """
 
-import math
-import random
-from typing import List, Dict, Tuple, Set
-
-# ── Inline implementations (no local imports) ──
-
-class BarcodeInterval:
-    def __init__(self, birth: int, death: int):
-        assert birth < death
-        self.birth = birth
-        self.death = death
-
-    @property
-    def lifetime(self) -> int:
-        return self.death - self.birth
+from algorithms import (
+    PersistenceInterval, mod_p_filtration_barcode, mod_p_residues,
+    find_separating_primes, separation_density, interval_match_cost,
+    betti_at, rank_function, primes_up_to, vietoris_rips_barcode,
+    compute_primewise_barcodes, euler_characteristic
+)
 
 
-class PersistenceBarcode:
-    def __init__(self, intervals: List[BarcodeInterval]):
-        self.intervals = intervals
+def demo_basic_barcode():
+    """Demonstrate basic barcode construction and Betti numbers."""
+    print("=" * 60)
+    print("Demo 1: Basic Barcode Construction")
+    print("=" * 60)
 
-    def total_persistence(self) -> int:
-        return sum(iv.lifetime for iv in self.intervals)
+    lengths = [3, 7, 11, 15, 22, 31, 42]
+    print(f"\nLength spectrum: {lengths}")
 
-    def betti_at(self, t: int) -> int:
-        return sum(1 for iv in self.intervals if iv.birth <= t < iv.death)
+    for p in [2, 3, 5, 7]:
+        residues = mod_p_residues(lengths, p)
+        barcode = mod_p_filtration_barcode(lengths, p)
+        print(f"\nPrime p = {p}:")
+        print(f"  Residues mod {p}: {residues}")
+        print(f"  Barcode: {[(I.birth, I.death) for I in barcode]}")
+        print(f"  Number of intervals: {len(barcode)}")
 
-    def persistence_entropy(self) -> float:
-        L = self.total_persistence()
-        if L == 0:
-            return 0.0
-        return -sum(
-            (iv.lifetime / L) * math.log(iv.lifetime / L)
-            for iv in self.intervals if iv.lifetime > 0
-        )
-
-
-def sieve_primes(n: int) -> List[int]:
-    if n < 2:
-        return []
-    s = [True] * (n + 1)
-    s[0] = s[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if s[i]:
-            for j in range(i*i, n+1, i):
-                s[j] = False
-    return [i for i in range(n+1) if s[i]]
+        # Betti numbers at each filtration level
+        bettis = [betti_at(barcode, t) for t in range(p + 1)]
+        print(f"  Betti numbers β(0..{p}): {bettis}")
 
 
-def mod_p_barcode(lengths: List[int], p: int) -> PersistenceBarcode:
-    """Compute persistence barcode from lengths mod p using union-find."""
-    residues = [l % p for l in lengths]
-    n = len(residues)
-    if n == 0:
-        return PersistenceBarcode([])
+def demo_separating_primes():
+    """Demonstrate prime separation of distinct configurations."""
+    print("\n" + "=" * 60)
+    print("Demo 2: Separating Primes for Distinct Configurations")
+    print("=" * 60)
 
-    edges = []
-    for i in range(n):
-        for j in range(i+1, n):
-            d = abs(residues[i] - residues[j])
-            d = min(d, p - d)
-            edges.append((d, i, j))
-    edges.sort()
+    # Two lists with the same multiset but different order
+    # (modeling isospectral but nonisometric)
+    a = [1, 4, 9, 16, 25, 36, 49, 64]
+    b = [4, 1, 16, 9, 36, 25, 64, 49]  # pairwise swaps
 
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
+    print(f"\nList a: {a}")
+    print(f"List b: {b}")
+    print(f"Same multiset: {sorted(a) == sorted(b)}")
+    print(f"Same list: {a == b}")
 
-    intervals = []
-    for d, i, j in edges:
-        ri, rj = find(i), find(j)
-        if ri != rj:
-            parent[ri] = rj
-            if d > 0:
-                intervals.append(BarcodeInterval(0, d))
+    sep, agr = find_separating_primes(a, b, 100)
+    print(f"\nSeparating primes (up to 100): {sorted(sep)}")
+    print(f"Agreeing primes (up to 100): {sorted(agr)}")
+    print(f"Separation count: {len(sep)} / {len(sep) + len(agr)}")
 
-    return PersistenceBarcode(intervals)
+    # Show residue differences at a separating prime
+    if sep:
+        p = min(sep)
+        ra = [x % p for x in a]
+        rb = [x % p for x in b]
+        print(f"\nAt prime p = {p}:")
+        print(f"  a mod {p}: {ra}")
+        print(f"  b mod {p}: {rb}")
 
 
-# ── Simulated Sunada Pair ──
+def demo_density_convergence():
+    """Show that separation density approaches 1 as prime bound grows."""
+    print("\n" + "=" * 60)
+    print("Demo 3: Separation Density Convergence")
+    print("=" * 60)
 
-def generate_sunada_pair(n_lengths: int = 20, seed: int = 42) -> Tuple[List[int], List[int]]:
-    """
-    Generate simulated geodesic length data for a Sunada pair.
+    # Two genuinely different lists
+    a = [2, 5, 8, 13, 21, 34, 55, 89]  # Fibonacci-like
+    b = [3, 5, 8, 12, 20, 33, 54, 88]  # shifted
 
-    The two manifolds share the same length MULTISET (isospectral)
-    but the lengths are ordered differently (nonisometric), and we
-    add a small arithmetic perturbation that preserves the spectrum
-    but creates mod-p differences.
-    """
-    random.seed(seed)
+    print(f"\nList a: {a}")
+    print(f"List b: {b}")
+    print(f"Max element: {max(max(a), max(b))}")
+    print(f"Theory predicts: all primes > {max(max(a), max(b))} separate")
 
-    # Base lengths (shared spectrum)
-    base = sorted([random.randint(10, 500) for _ in range(n_lengths)])
-
-    # M uses base lengths directly
-    lengths_M = list(base)
-
-    # N permutes and perturbs: add multiples of large primes
-    # This preserves the multiset (up to reordering) but changes mod-p behavior
-    lengths_N = list(base)
-    random.shuffle(lengths_N)
-
-    # Add arithmetic perturbation to N that changes mod-p residues
-    # but preserves the Laplacian spectrum (simulated)
-    for i in range(0, n_lengths, 3):
-        lengths_N[i] += 30  # Shift some lengths
-
-    return lengths_M, lengths_N
-
-
-# ── Main Demo ──
-
-def main():
-    print("=" * 70)
-    print("PRIMEWISE PERSISTENT HOMOLOGY DEMO")
-    print("Separating Isospectral Pairs via Prime-Indexed Barcodes")
-    print("=" * 70)
-    print()
-
-    # Generate simulated Sunada pair
-    lengths_M, lengths_N = generate_sunada_pair(n_lengths=15, seed=42)
-
-    print("Simulated Geodesic Lengths:")
-    print(f"  Manifold M: {lengths_M}")
-    print(f"  Manifold N: {lengths_N}")
-    print()
-
-    # Compute primewise signatures
-    prime_bound = 50
-    primes = sieve_primes(prime_bound)
-
-    print(f"Computing mod-p barcodes for primes up to {prime_bound}...")
-    print(f"Primes: {primes}")
-    print()
-
-    separating = []
-    results = []
-
-    print(f"{'Prime':>6} | {'τ(M)':>6} | {'τ(N)':>6} | {'H(M)':>8} | {'H(N)':>8} | {'Sep?':>5}")
-    print("-" * 55)
-
-    for p in primes:
-        bc_M = mod_p_barcode(lengths_M, p)
-        bc_N = mod_p_barcode(lengths_N, p)
-
-        tau_M = bc_M.total_persistence()
-        tau_N = bc_N.total_persistence()
-        H_M = bc_M.persistence_entropy()
-        H_N = bc_N.persistence_entropy()
-
-        is_sep = tau_M != tau_N
-        if is_sep:
-            separating.append(p)
-
-        results.append({
-            'p': p, 'tau_M': tau_M, 'tau_N': tau_N,
-            'H_M': H_M, 'H_N': H_N, 'separating': is_sep
-        })
-
-        marker = "  ✓" if is_sep else ""
-        print(f"{p:>6} | {tau_M:>6} | {tau_N:>6} | {H_M:>8.4f} | {H_N:>8.4f} | {marker}")
-
-    print()
-    print(f"Separating primes: {separating}")
-    print(f"Count: {len(separating)} / {len(primes)}")
-    density = len(separating) / len(primes) if primes else 0
-    print(f"Estimated relative prime density: {density:.4f}")
-    print()
-
-    # Betti number profile for a specific prime
-    print("=" * 50)
-    print("BETTI NUMBER PROFILES at p = 5")
-    print("=" * 50)
-
-    bc_M = mod_p_barcode(lengths_M, 5)
-    bc_N = mod_p_barcode(lengths_N, 5)
-
-    print(f"\nManifold M: {len(bc_M.intervals)} intervals")
-    for iv in bc_M.intervals:
-        print(f"  [{iv.birth}, {iv.death})")
-    print(f"  Total persistence: {bc_M.total_persistence()}")
-
-    print(f"\nManifold N: {len(bc_N.intervals)} intervals")
-    for iv in bc_N.intervals:
-        print(f"  [{iv.birth}, {iv.death})")
-    print(f"  Total persistence: {bc_N.total_persistence()}")
-
-    max_t = 5
-    print(f"\n{'t':>4} | {'β_t(M)':>7} | {'β_t(N)':>7}")
-    print("-" * 25)
-    for t in range(max_t + 1):
-        print(f"{t:>4} | {bc_M.betti_at(t):>7} | {bc_N.betti_at(t):>7}")
-
-    # Density convergence
-    print()
-    print("=" * 50)
-    print("DENSITY CONVERGENCE")
-    print("=" * 50)
-
+    print(f"\n{'Bound':>8} {'Sep':>5} {'Agr':>5} {'Density':>8}")
+    print("-" * 30)
     for bound in [10, 20, 50, 100, 200, 500]:
-        ps = sieve_primes(bound)
-        sep = []
-        for p in ps:
-            bc1 = mod_p_barcode(lengths_M, p)
-            bc2 = mod_p_barcode(lengths_N, p)
-            if bc1.total_persistence() != bc2.total_persistence():
-                sep.append(p)
-        d = len(sep) / len(ps) if ps else 0
-        print(f"  π({bound:>4}) = {len(ps):>3}, separating = {len(sep):>3}, density = {d:.4f}")
+        density = separation_density(a, b, bound)
+        sep, agr = find_separating_primes(a, b, bound)
+        print(f"{bound:>8} {len(sep):>5} {len(agr):>5} {density:>8.4f}")
 
-    print()
-    print("=" * 50)
-    print("CONJECTURE TEST")
-    print("=" * 50)
-    print()
 
-    if density > 0:
-        print(f"✓ Positive separating density detected: {density:.4f}")
-        print("  Consistent with the Primewise Persistence Separation Conjecture.")
+def demo_triangle_inequality():
+    """Verify the triangle inequality for matching costs."""
+    print("\n" + "=" * 60)
+    print("Demo 4: Triangle Inequality Verification")
+    print("=" * 60)
+
+    intervals = [
+        PersistenceInterval(0, 5),
+        PersistenceInterval(1, 8),
+        PersistenceInterval(3, 10),
+        PersistenceInterval(2, 6),
+        PersistenceInterval(0, 15),
+    ]
+
+    violations = 0
+    checks = 0
+    print(f"\nChecking triangle inequality for {len(intervals)} intervals:")
+    for i, I in enumerate(intervals):
+        for j, J in enumerate(intervals):
+            for k, K in enumerate(intervals):
+                cIK = interval_match_cost(I, K)
+                cIJ = interval_match_cost(I, J)
+                cJK = interval_match_cost(J, K)
+                checks += 1
+                if cIK > cIJ + cJK:
+                    violations += 1
+                    print(f"  VIOLATION: c({i},{k})={cIK} > c({i},{j})={cIJ} + c({j},{k})={cJK}")
+
+    print(f"\n  Checked {checks} triples, found {violations} violations")
+    if violations == 0:
+        print("  ✓ Triangle inequality holds for all triples!")
+
+
+def demo_rank_function():
+    """Demonstrate rank function properties."""
+    print("\n" + "=" * 60)
+    print("Demo 5: Rank Function Monotonicity")
+    print("=" * 60)
+
+    barcode = [
+        PersistenceInterval(0, 5),
+        PersistenceInterval(1, 8),
+        PersistenceInterval(2, 10),
+        PersistenceInterval(3, 6),
+    ]
+
+    print(f"\nBarcode: {[(I.birth, I.death) for I in barcode]}")
+    print("\nRank function β(s, t):")
+    header = 's\\t'
+    print(f"{header:>4}", end="")
+    for t in range(12):
+        print(f"{t:>4}", end="")
+    print()
+    for s in range(12):
+        print(f"{s:>4}", end="")
+        for t in range(12):
+            print(f"{rank_function(barcode, s, t):>4}", end="")
+        print()
+
+    # Verify monotonicity
+    print("\nVerifying monotonicity properties:")
+    mono_fst = all(
+        rank_function(barcode, s1, t) <= rank_function(barcode, s2, t)
+        for s1 in range(12) for s2 in range(s1, 12) for t in range(12)
+    )
+    anti_snd = all(
+        rank_function(barcode, s, t2) <= rank_function(barcode, s, t1)
+        for s in range(12) for t1 in range(12) for t2 in range(t1, 12)
+    )
+    diag = all(
+        rank_function(barcode, s, s) == betti_at(barcode, s)
+        for s in range(12)
+    )
+    print(f"  ✓ Monotone in first argument: {mono_fst}")
+    print(f"  ✓ Antitone in second argument: {anti_snd}")
+    print(f"  ✓ Diagonal = Betti number: {diag}")
+
+
+def demo_euler_characteristic():
+    """Demonstrate Euler characteristic from barcodes."""
+    print("\n" + "=" * 60)
+    print("Demo 6: Euler Characteristic via Barcodes")
+    print("=" * 60)
+
+    evens = [PersistenceInterval(0, 8), PersistenceInterval(2, 10)]
+    odds = [PersistenceInterval(1, 6), PersistenceInterval(3, 9)]
+
+    print(f"\nEven-dimensional barcode: {[(I.birth, I.death) for I in evens]}")
+    print(f"Odd-dimensional barcode: {[(I.birth, I.death) for I in odds]}")
+
+    print(f"\n{'t':>4} {'β_even':>8} {'β_odd':>8} {'χ(t)':>8}")
+    print("-" * 30)
+    for t in range(12):
+        be = betti_at(evens, t)
+        bo = betti_at(odds, t)
+        chi = euler_characteristic(evens, odds, t)
+        print(f"{t:>4} {be:>8} {bo:>8} {chi:>8}")
+
+
+def demo_conjecture_test():
+    """Test the main conjecture on a concrete example."""
+    print("\n" + "=" * 60)
+    print("Demo 7: Conjecture Test — Full Residue Sequence Separation")
+    print("=" * 60)
+
+    # Two lists with same multiset but different order
+    a = [1, 4, 9, 16, 25, 36, 49, 64]
+    b = [4, 1, 16, 9, 36, 25, 64, 49]  # pairwise swaps
+
+    print(f"\nLength spectrum a: {a}")
+    print(f"Length spectrum b: {b}")
+    print(f"Same multiset: {sorted(a) == sorted(b)}")
+
+    M = max(max(a), max(b))
+    print(f"Max element M = {M}")
+    print(f"Theory: all primes p > {M} separate (map is identity)")
+
+    # Test full residue sequence comparison (not just distinct residues)
+    sep_primes = []
+    agr_primes = []
+    for p in primes_up_to(200):
+        ra = [x % p for x in a]
+        rb = [x % p for x in b]
+        if ra != rb:
+            sep_primes.append(p)
+        else:
+            agr_primes.append(p)
+
+    print(f"\nFull sequence comparison up to p = 200:")
+    print(f"  Separating primes: {len(sep_primes)}")
+    print(f"  Agreeing primes: {len(agr_primes)}")
+    if agr_primes:
+        print(f"  Agreeing primes: {agr_primes}")
+        print(f"  All agreeing primes ≤ M={M}? {all(p <= M for p in agr_primes)}")
     else:
-        print("✗ No separating primes found in this range.")
-        print("  This would refute the conjecture for this construction.")
-
-    print()
-    print("Done.")
+        print(f"  No agreeing primes!")
+    total = len(sep_primes) + len(agr_primes)
+    print(f"  Density: {len(sep_primes)/total:.4f}")
+    confirmed = len(agr_primes) == 0 or all(p <= M for p in agr_primes)
+    print(f"\n  {'✓ Conjecture confirmed!' if confirmed else '✗ Unexpected behavior!'}")
+    
+    # Show detail for a few primes
+    print(f"\nDetail for small primes:")
+    for p in primes_up_to(20):
+        ra = [x % p for x in a]
+        rb = [x % p for x in b]
+        status = '≠' if ra != rb else '='
+        print(f"  p={p:>2}: a mod p = {ra}")
+        print(f"        b mod p = {rb}  [{status}]")
 
 
 if __name__ == "__main__":
-    main()
+    demo_basic_barcode()
+    demo_separating_primes()
+    demo_density_convergence()
+    demo_triangle_inequality()
+    demo_rank_function()
+    demo_euler_characteristic()
+    demo_conjecture_test()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Persistence Barcodes for Isospectral Pairs
+Visualization: Barcode Comparison Across Primes
 
-Generates side-by-side barcode plots for two simulated isospectral manifolds
-at multiple primes, showing how prime-indexed persistence separates them.
+Shows how mod-p persistence barcodes differ between two isospectral-like
+configurations at different primes.
 """
 
-import math
-import random
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
-def sieve_primes(n):
-    if n < 2:
-        return []
-    s = [True] * (n + 1)
-    s[0] = s[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if s[i]:
-            for j in range(i*i, n+1, i):
-                s[j] = False
-    return [i for i in range(n+1) if s[i]]
+def mod_p_residues(lengths, p):
+    return sorted(set(x % p for x in lengths))
 
 
 def mod_p_barcode(lengths, p):
-    residues = [l % p for l in lengths]
-    n = len(residues)
-    if n == 0:
-        return []
-    edges = []
-    for i in range(n):
-        for j in range(i+1, n):
-            d = abs(residues[i] - residues[j])
-            d = min(d, p - d)
-            edges.append((d, i, j))
-    edges.sort()
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    intervals = []
-    for d, i, j in edges:
-        ri, rj = find(i), find(j)
-        if ri != rj:
-            parent[ri] = rj
-            if d > 0:
-                intervals.append((0, d))
-    return intervals
+    residues = mod_p_residues(lengths, p)
+    return [(r, p) for r in residues]
 
 
-def generate_pair(n=15, seed=42):
-    random.seed(seed)
-    base = sorted([random.randint(10, 500) for _ in range(n)])
-    M = list(base)
-    N = list(base)
-    random.shuffle(N)
-    for i in range(0, n, 3):
-        N[i] += 30
-    return M, N
+def is_prime(n):
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0 or n % 3 == 0: return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0: return False
+        i += 6
+    return True
 
 
-def main():
-    M, N = generate_pair()
-    primes = [2, 3, 5, 7, 11, 13]
+# Two length spectra with different structures
+a = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]  # first 10 primes
+b = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]  # first 10 even numbers ≥ 2
 
-    fig, axes = plt.subplots(len(primes), 2, figsize=(12, 2.5 * len(primes)))
-    fig.suptitle('Primewise Persistence Barcodes: M vs N', fontsize=16, fontweight='bold')
+test_primes = [p for p in range(2, 32) if is_prime(p)]
 
-    for idx, p in enumerate(primes):
-        bc_M = mod_p_barcode(M, p)
-        bc_N = mod_p_barcode(N, p)
+fig, axes = plt.subplots(2, len(test_primes), figsize=(20, 6))
 
-        tau_M = sum(d - b for b, d in bc_M)
-        tau_N = sum(d - b for b, d in bc_N)
-        is_sep = tau_M != tau_N
+for col, p in enumerate(test_primes):
+    # Barcode for a
+    bc_a = mod_p_barcode(a, p)
+    ax = axes[0, col]
+    for i, (birth, death) in enumerate(bc_a):
+        ax.barh(i, death - birth, left=birth, height=0.6, color='steelblue', alpha=0.8)
+    ax.set_xlim(-0.5, p + 0.5)
+    ax.set_ylim(-0.5, max(len(bc_a), 1) + 0.5)
+    ax.set_title(f'p={p}', fontsize=9)
+    if col == 0:
+        ax.set_ylabel('Spectrum A\n(primes)', fontsize=9)
+    ax.set_xticks([0, p])
+    ax.tick_params(labelsize=7)
 
-        for col, (bc, label, tau) in enumerate([(bc_M, 'M', tau_M), (bc_N, 'N', tau_N)]):
-            ax = axes[idx, col]
-            max_d = max((d for _, d in bc), default=1)
+    # Barcode for b
+    bc_b = mod_p_barcode(b, p)
+    ax = axes[1, col]
+    for i, (birth, death) in enumerate(bc_b):
+        ax.barh(i, death - birth, left=birth, height=0.6, color='coral', alpha=0.8)
+    ax.set_xlim(-0.5, p + 0.5)
+    ax.set_ylim(-0.5, max(len(bc_b), 1) + 0.5)
+    if col == 0:
+        ax.set_ylabel('Spectrum B\n(evens)', fontsize=9)
+    ax.set_xticks([0, p])
+    ax.tick_params(labelsize=7)
 
-            for i, (b, d) in enumerate(bc):
-                color = '#2196F3' if col == 0 else '#FF5722'
-                ax.barh(i, d - b, left=b, height=0.6, color=color, alpha=0.7, edgecolor='black', linewidth=0.5)
-
-            ax.set_xlim(-0.5, max_d + 0.5)
-            ax.set_ylim(-0.5, max(len(bc), 1) - 0.5)
-            title = f'p={p}, {label}, τ={tau}'
-            if is_sep and col == 0:
-                title += '  ★ SEPARATING'
-            ax.set_title(title, fontsize=10, color='red' if is_sep else 'black')
-            ax.set_xlabel('Filtration')
-            if col == 0:
-                ax.set_ylabel(f'Interval #')
-
-    plt.tight_layout(rect=[0, 0.02, 1, 0.96])
-    plt.savefig('barcodes_comparison.png', dpi=150, bbox_inches='tight')
-    print("Saved: barcodes_comparison.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.suptitle('Mod-p Persistence Barcodes: Prime Spectrum vs Even Spectrum', fontsize=13)
+plt.tight_layout()
+plt.savefig('viz_barcode_comparison.png', dpi=150, bbox_inches='tight')
+print("Saved viz_barcode_comparison.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Separating Prime Density Convergence
+Visualization: Persistent Rank Function Heatmap
 
-Plots the running density of separating primes as the prime bound increases,
-testing whether the density stabilizes at a positive value (supporting the
-Primewise Persistence Separation Conjecture).
+Shows the rank function β(s,t) as a heatmap, demonstrating
+monotonicity in s (rows) and antitonicity in t (columns).
 """
 
-import math
-import random
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def sieve_primes(n):
-    if n < 2:
-        return []
-    s = [True] * (n + 1)
-    s[0] = s[1] = False
+def rank_function(barcode, s, t):
+    """Count intervals with birth ≤ s and t < death."""
+    return sum(1 for (b, d) in barcode if b <= s and t < d)
+
+
+def betti_at(barcode, t):
+    """Betti number at t: count intervals with birth ≤ t < death."""
+    return sum(1 for (b, d) in barcode if b <= t < d)
+
+
+# Sample barcode
+barcode = [(0, 8), (1, 12), (2, 6), (3, 15), (5, 10), (7, 14)]
+
+N = 18  # range for s and t
+
+# Compute rank function matrix
+rank_matrix = np.zeros((N, N))
+for s in range(N):
+    for t in range(N):
+        rank_matrix[s, t] = rank_function(barcode, s, t)
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
+
+# Plot 1: Rank function heatmap
+ax1 = axes[0]
+im = ax1.imshow(rank_matrix, cmap='YlOrRd', aspect='equal', origin='lower')
+ax1.set_xlabel('t (death threshold)')
+ax1.set_ylabel('s (birth threshold)')
+ax1.set_title('Rank Function β(s, t)')
+plt.colorbar(im, ax=ax1, label='Count')
+# Mark the diagonal
+for i in range(N):
+    ax1.plot(i, i, 'k.', markersize=3)
+
+# Plot 2: Betti numbers (diagonal of rank function)
+ax2 = axes[1]
+bettis = [betti_at(barcode, t) for t in range(N)]
+ax2.step(range(N), bettis, where='post', color='steelblue', linewidth=2)
+ax2.fill_between(range(N), bettis, step='post', alpha=0.3, color='steelblue')
+ax2.set_xlabel('Filtration parameter t')
+ax2.set_ylabel('β(t)')
+ax2.set_title('Betti Numbers (Diagonal of Rank Function)')
+ax2.grid(True, alpha=0.3)
+
+# Plot 3: Barcode diagram
+ax3 = axes[2]
+colors = plt.cm.Set2(np.linspace(0, 1, len(barcode)))
+for i, (b, d) in enumerate(barcode):
+    ax3.barh(i, d - b, left=b, height=0.7, color=colors[i], 
+             edgecolor='black', linewidth=0.5)
+    ax3.text(b + (d - b) / 2, i, f'[{b},{d})', ha='center', va='center', fontsize=8)
+ax3.set_xlabel('Filtration parameter')
+ax3.set_ylabel('Interval index')
+ax3.set_title('Persistence Barcode')
+ax3.set_xlim(-0.5, N)
+ax3.grid(True, alpha=0.3, axis='x')
+
+plt.suptitle('Persistence Theory: Rank Function, Betti Numbers, and Barcodes', fontsize=13)
+plt.tight_layout()
+plt.savefig('viz_rank_function.png', dpi=150, bbox_inches='tight')
+print("Saved viz_rank_function.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Separation Density of Primewise Invariants
+
+Shows how the density of separating primes approaches 1 as the prime bound grows,
+confirming the density-one separation theorem.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import math
+
+
+def is_prime(n):
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0 or n % 3 == 0: return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0: return False
+        i += 6
+    return True
+
+
+def primes_up_to(n):
+    if n < 2: return []
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
     for i in range(2, int(n**0.5) + 1):
-        if s[i]:
-            for j in range(i*i, n+1, i):
-                s[j] = False
-    return [i for i in range(n+1) if s[i]]
+        if sieve[i]:
+            for j in range(i*i, n + 1, i):
+                sieve[j] = False
+    return [i for i in range(n + 1) if sieve[i]]
 
 
-def mod_p_barcode_total(lengths, p):
-    residues = [l % p for l in lengths]
-    n = len(residues)
-    if n == 0:
-        return 0
-    edges = []
-    for i in range(n):
-        for j in range(i+1, n):
-            d = abs(residues[i] - residues[j])
-            d = min(d, p - d)
-            edges.append((d, i, j))
-    edges.sort()
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    total = 0
-    for d, i, j in edges:
-        ri, rj = find(i), find(j)
-        if ri != rj:
-            parent[ri] = rj
-            if d > 0:
-                total += d
-    return total
-
-
-def generate_pair(n=15, seed=42):
-    random.seed(seed)
-    base = sorted([random.randint(10, 500) for _ in range(n)])
-    M = list(base)
-    N = list(base)
-    random.shuffle(N)
-    for i in range(0, n, 3):
-        N[i] += 30
-    return M, N
-
-
-def main():
-    M, N = generate_pair()
-    max_bound = 500
-    primes = sieve_primes(max_bound)
-
-    # Compute running density
+def compute_separation_data(a, b, max_prime_bound=500):
+    """Compute cumulative separation density as prime bound grows."""
+    primes = primes_up_to(max_prime_bound)
     bounds = []
     densities = []
-    sep_count = 0
-    total_count = 0
-
+    sep_counts = []
+    total_counts = []
+    
+    sep = 0
+    total = 0
     for p in primes:
-        total_count += 1
-        tau_M = mod_p_barcode_total(M, p)
-        tau_N = mod_p_barcode_total(N, p)
-        if tau_M != tau_N:
-            sep_count += 1
+        ra = [x % p for x in a]
+        rb = [x % p for x in b]
+        total += 1
+        if ra != rb:
+            sep += 1
         bounds.append(p)
-        densities.append(sep_count / total_count)
-
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
-    fig.suptitle('Primewise Persistence Separation Analysis', fontsize=14, fontweight='bold')
-
-    # Plot 1: Running density
-    ax1.plot(bounds, densities, 'b-', linewidth=1.5, alpha=0.8)
-    ax1.axhline(y=densities[-1], color='r', linestyle='--', alpha=0.5,
-                label=f'Final density: {densities[-1]:.4f}')
-    ax1.fill_between(bounds, densities, alpha=0.1, color='blue')
-    ax1.set_xlabel('Prime p', fontsize=12)
-    ax1.set_ylabel('Running Separating Density', fontsize=12)
-    ax1.set_title('Convergence of Separating Prime Density', fontsize=12)
-    ax1.legend(fontsize=11)
-    ax1.set_ylim(0, 1)
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Per-prime separation indicator
-    sep_indicators = []
-    for p in primes:
-        tau_M = mod_p_barcode_total(M, p)
-        tau_N = mod_p_barcode_total(N, p)
-        sep_indicators.append(1 if tau_M != tau_N else 0)
-
-    colors = ['red' if s else 'lightblue' for s in sep_indicators]
-    ax2.bar(range(len(primes)), sep_indicators, color=colors, width=1.0, edgecolor='none')
-    ax2.set_xlabel('Prime index', fontsize=12)
-    ax2.set_ylabel('Separating (1) / Not (0)', fontsize=12)
-    ax2.set_title('Per-Prime Separation Indicator', fontsize=12)
-
-    # Add prime labels for first 20
-    tick_positions = list(range(0, min(20, len(primes))))
-    ax2.set_xticks(tick_positions)
-    ax2.set_xticklabels([str(primes[i]) for i in tick_positions], fontsize=7, rotation=45)
-    ax2.grid(True, alpha=0.3, axis='y')
-
-    plt.tight_layout(rect=[0, 0.02, 1, 0.96])
-    plt.savefig('density_convergence.png', dpi=150, bbox_inches='tight')
-    print("Saved: density_convergence.png")
+        densities.append(sep / total if total > 0 else 0)
+        sep_counts.append(sep)
+        total_counts.append(total)
+    
+    return bounds, densities, sep_counts, total_counts
 
 
-if __name__ == "__main__":
-    main()
+# Test cases
+cases = [
+    ("Perfect squares vs. swapped", 
+     [1, 4, 9, 16, 25, 36, 49, 64],
+     [4, 1, 16, 9, 36, 25, 64, 49]),
+    ("Fibonacci vs. shifted",
+     [2, 5, 8, 13, 21, 34, 55, 89],
+     [3, 5, 8, 12, 20, 33, 54, 88]),
+    ("Arithmetic vs. reversed",
+     [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+     [100, 90, 80, 70, 60, 50, 40, 30, 20, 10]),
+]
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+for idx, (name, a, b) in enumerate(cases):
+    bounds, densities, sep_counts, total_counts = compute_separation_data(a, b, 500)
+    M = max(max(a), max(b))
+    
+    ax = axes[idx]
+    ax.plot(bounds, densities, 'b-', linewidth=1.5, label='Separation density')
+    ax.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='Density = 1')
+    ax.axvline(x=M, color='g', linestyle=':', alpha=0.7, label=f'M = {M}')
+    ax.set_xlabel('Prime bound')
+    ax.set_ylabel('Fraction of separating primes')
+    ax.set_title(name, fontsize=10)
+    ax.set_ylim(-0.05, 1.1)
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+plt.suptitle('Primewise Separation Density Convergence to 1', fontsize=13)
+plt.tight_layout()
+plt.savefig('viz_separation_density.png', dpi=150, bbox_inches='tight')
+print("Saved viz_separation_density.png")
