@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:25:11Z",
+    "exp_id": "5d630953",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 13
+  },
+  {
     "filename": "standard_conjectures_on_algebraic_cycles.json",
     "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
     "domain": "Algebra",
     "date": "2026-05-31T20:24:43Z",
     "exp_id": "0554bed3",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7282123376623377,
+    "quality": "substantial",
     "pkg_num": 12
   },
   {
@@ -198,6 +208,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "aboriginal_kinship_as_group_theory_dreamtime_algeb.json": {
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "exp_id": "5d630953",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "exp_id": "abcc87bf",
@@ -235,7 +253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -246,7 +264,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -257,7 +275,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -268,7 +286,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -279,7 +297,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -290,7 +308,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -312,7 +330,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -323,7 +341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -334,7 +352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -345,7 +363,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -356,7 +374,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270,
+      "hue": 91,
+      "priority_score": 0.7282123376623377,
+      "quality": "substantial"
+    },
+    {
+      "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:11Z",
+      "hue": 90,
       "priority_score": null,
       "quality": "unrated"
     }
