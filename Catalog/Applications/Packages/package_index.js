@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "surreal_topology_open_sets_at_infinity.json",
+    "title": "Surreal Topology: Open Sets at Infinity",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:17:33Z",
+    "exp_id": "e7dbad62",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 29
+  },
+  {
     "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
     "title": "The Unreasonable Effectiveness of Wrong Theories",
     "domain": "Algebra",
     "date": "2026-05-31T23:17:11Z",
     "exp_id": "10ec7af4",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7302532967032966,
+    "quality": "substantial",
     "pkg_num": 28
   },
   {
@@ -430,6 +440,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Computation"
   },
+  "surreal_topology_open_sets_at_infinity.json": {
+    "title": "Surreal Topology: Open Sets at Infinity",
+    "exp_id": "e7dbad62",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "entropy_power_inequality_sharp_version.json": {
     "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
     "exp_id": "b3fdee2d",
@@ -523,7 +541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -534,7 +552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 292,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -545,7 +563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -556,7 +574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -567,7 +585,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -578,7 +596,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -589,7 +607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -600,7 +618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -611,7 +629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 90,
+      "hue": 281,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -633,7 +651,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -644,7 +662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 112,
+      "hue": 92,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -655,7 +673,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -666,7 +684,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -677,7 +695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -688,7 +706,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -732,7 +750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -743,7 +761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -754,7 +772,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -765,7 +783,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -776,7 +794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -787,7 +805,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -798,7 +816,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -809,7 +827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -821,6 +839,17 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
       "hue": 270,
+      "priority_score": 0.7302532967032966,
+      "quality": "substantial"
+    },
+    {
+      "id": "surreal_topology_open_sets_at_infinity",
+      "title": "Surreal Topology: Open Sets at Infinity",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:17:33Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
