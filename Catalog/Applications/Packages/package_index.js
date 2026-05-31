@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "self_modifying_code_that_cannot_be_stopped.json",
+    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
+    "domain": "Bridges",
+    "date": "2026-05-31T21:57:44Z",
+    "exp_id": "94584937",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 21
+  },
+  {
     "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
     "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
     "domain": "Bridges",
     "date": "2026-05-31T21:57:15Z",
     "exp_id": "e471f5e9",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7488625,
+    "quality": "substantial",
     "pkg_num": 20
   },
   {
@@ -262,6 +272,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "self_modifying_code_that_cannot_be_stopped.json": {
+    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
+    "exp_id": "94584937",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Bridges"
+  },
   "catalans_conjecture_generalizations.json": {
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "exp_id": "b52cbca8",
@@ -379,7 +397,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270,
+      "hue": 280,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -390,7 +408,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -401,7 +419,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -412,7 +430,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -423,7 +441,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90,
+      "hue": 292,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -434,7 +452,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -445,7 +463,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -456,7 +474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -467,7 +485,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -478,7 +496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -489,7 +507,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -500,7 +518,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -511,7 +529,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -522,7 +540,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -533,7 +551,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -544,7 +562,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -555,7 +573,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 100,
+      "hue": 292,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -566,7 +584,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -577,7 +595,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -588,7 +606,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 271,
+      "hue": 275,
+      "priority_score": 0.7488625,
+      "quality": "substantial"
+    },
+    {
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:57:44Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
