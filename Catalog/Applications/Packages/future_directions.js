@@ -18,6 +18,36 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.294221+00:00"
   },
   {
+    "id": "seed_005",
+    "title": "P vs NP Problem",
+    "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.322674+00:00"
+  },
+  {
+    "id": "seed_006",
+    "title": "Collatz Conjecture",
+    "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.330478+00:00"
+  },
+  {
     "id": "seed_010",
     "title": "Happy End Problem",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
@@ -198,6 +228,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.591547+00:00"
   },
   {
+    "id": "seed_041",
+    "title": "Machine Learning Generalization Bounds",
+    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.598768+00:00"
+  },
+  {
     "id": "seed_043",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
@@ -303,6 +348,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.679862+00:00"
   },
   {
+    "id": "seed_053",
+    "title": "Certified Novelty Detection for Theorem Provers",
+    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.687353+00:00"
+  },
+  {
     "id": "seed_054",
     "title": "Proof Strategy Mining from Deep Mathematics",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
@@ -316,6 +376,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.694274+00:00"
+  },
+  {
+    "id": "seed_055",
+    "title": "Research Depth via Proof-Theoretic Ordinal Analysis",
+    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.701095+00:00"
   },
   {
     "id": "seed_056",
@@ -346,6 +421,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.756189+00:00"
+  },
+  {
+    "id": "seed_068",
+    "title": "EML Single Operator Church-Turing Thesis",
+    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.808552+00:00"
   },
   {
     "id": "seed_075",
@@ -3558,36 +3648,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-30T14:53:24.965426+00:00"
   },
   {
-    "id": "fd_2274",
-    "title": "This research cycle established the foundational theory of exchange family desce",
-    "description": "# Future Directions: Exchange Family Descent Complexity\n\n## Synthesis\n\nThis research cycle established the foundational theory of exchange family descent complexity through ten machine-verified theorems. The central discovery is the *exact additivity* of worst-case descent length under product tensorization (Theorem 1), which provides the engine for complexity amplification: combining independent optimization problems yields predictable, additive complexity growth. This result, combined with the entropy-complexity bridge (Theorem 5) connecting information theory to optimization, opens a rich landscape of cross-domain research.\n\nThe most promising cross-domain connection is the entropy bridge, which shows that the information content of an optimization landscape (measured by the number of distinguishable states) is fundamentally limited by the descent complexity. This creates a two-way pipeline: information-theoretic tools can bound optimization complexity, and optimization structure reveals information-theoretic constraints. The polynomial closure theorem (Theorem 10) further strengthens this by showing that well-behaved complexity classes are preserved under composition, echoing algebraic closure properties.\n\nLooking at the broader Catalog, the exchange family framework connects naturally to the tropical geometry and algebraic structures already present (see `Catalog/Pythagorean/TropicalMorse/` and `Catalog/Algebra/`). The measure function in exchange families can be interpreted as a tropical valuation, and the descent process corresponds to tropical gradient flow. This connection to tropical geometry has the highest breakthrough potential because it would connect the discrete optimization theory to the rich geometric machinery already formalized in the Catalog.\n\n---\n\n### Direction 1: Tropical Valuation Interpretation of Exchange Families\n\n**Conjecture**: Every exchange family measure function can be decomposed as a tropical polynomial evaluated on a tropical semiring, and the certificate depth equals the tropical degree of this polynomial.\n\n**Test**: For exchange families in dimensions 2\u20136, compute the tropical Newton polytope of the measure function (treating state coordinates as tropical variables). Check whether the tropical degree matches the certificate depth. A single mismatch disproves the conjecture.\n\n**Impact**: If true, this would embed the entire exchange family theory into tropical algebraic geometry, unlocking tools like tropical intersection theory for bounding descent complexity. If false, it would identify the precise obstruction to a tropical interpretation, revealing new invariants.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/Defs.lean`, `Catalog/Pythagorean/TropicalTensorDistributivity.lean`, `Pythagorean/ExchangeFamily.lean`\n\n**Proof Strategy**: Define a tropical polynomial ring on dim variables. Map each state to a tropical point. Show that the measure function equals the evaluation of a tropical polynomial at these points. Use tropical B\u00e9zout's theorem to bound the number of tropical roots, connecting to the entropy bridge.\n\n**Domain Bridges**: Pythagorean <-> Tropical, Algebra <-> Geometry\n\n**Lineage**: Builds on `product_worstCase_additive`, `entropy_lower_bound_descent`, and tropical structures in `Catalog/Pythagorean/TropicalMorse/`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Quantum Exchange Families and Superposition Descent\n\n**Conjecture**: A quantum exchange family (where states can be in superposition) achieves a quadratic speedup over classical descent: the quantum worst-case descent length is at most O(\u221a(WDL_classical)).\n\n**Test**: Define quantum exchange families formally as exchange families over complex Hilbert spaces with unitary descent operators. Implement Grover-like amplitude amplification adapted to the descent structure. Compute the quantum WDL for specific small families (dim \u2264 4) and compare to the classical WDL.\n\n**Impact**: If true, this would provide a new quantum speedup paradigm for combinatorial optimization, distinct from Grover search and quantum annealing. If false, it would establish a separation between descent complexity and query complexity, showing that optimization structure provides no quantum advantage.\n\n**Catalog References**: `Pythagorean/ExchangeFamily.lean`, `Pythagorean/ExchangeFamilyDescentComplexity.lean`\n\n**Proof Strategy**: Define a quantum oracle for the measure function. Apply quantum phase estimation to detect descent directions. Use the strict descent axiom to bound the number of oracle calls needed. Apply the polynomial method to prove the lower bound.\n\n**Domain Bridges**: Pythagorean <-> Physics, Computation <-> Algebra\n\n**Lineage**: Builds on `strict_descent_length_bound`, `depth_k_power_bound`, and quantum computing structures.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Average-Case Descent Complexity via Random Exchange Families\n\n**Conjecture**: For a random exchange family (measures drawn uniformly from {0, ..., M} for each of N states), the expected worst-case descent length is \u0398(M) and the expected certificate depth is \u0398(log M / log d).\n\n**Test**: Sample 10,000 random exchange families for each parameter setting (d \u2208 {2,3,4,5}, N \u2208 {10,20,50}, M \u2208 {10,50,100}). Compute WDL and certificate depth for each. Fit the scaling exponents and check against the conjectured \u0398(M) and \u0398(log M / log d).\n\n**Impact**: Establishes the average-case theory needed for practical applications. Most real optimization instances are \"random-like,\" so average-case bounds are more relevant than worst-case bounds for algorithm selection.\n\n**Catalog References**: `Pythagorean/ExchangeFamilyDescentComplexity.lean` (specifically `depth_k_power_bound`, `entropy_lower_bound_descent`)\n\n**Proof Strategy**: Use probabilistic method techniques. The expected maximum of N uniform {0,...,M} samples is M - M/(N+1), giving E[WDL] \u2248 M. For certificate depth, solve M\u00b7(N/(N+1)) \u2264 d^k for k. Use concentration inequalities (Chernoff/Hoeffding) to show the typical behavior matches the expectation.\n\n**Domain Bridges**: Pythagorean <-> MachineLearning, Computation <-> EML\n\n**Lineage**: Builds on `product_worstCase_additive` and `depth_k_power_bound`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Matroid Polytope Geometry and Descent Measure Optimization\n\n**Conjecture**: For matroid exchange families, the optimal descent measure (minimizing WDL subject to the exchange axiom) corresponds to the shortest vector in the matroid polytope lattice.\n\n**Test**: For uniform matroids U(r,n) with r \u2264 4 and n \u2264 8, enumerate all valid measures satisfying the exchange axiom. Compute the minimum WDL over all valid measures. Compare to the shortest lattice vector in the matroid polytope.\n\n**Impact**: Would connect exchange family theory to lattice-based optimization and the geometry of polyhedra. This would enable geometric algorithms (ellipsoid method, interior point) to compute optimal descent measures.\n\n**Catalog References**: `Pythagorean/ExchangeFamilyDescentComplexity.lean`, `Catalog/Geometry/` (if matroid polytope definitions exist), `Catalog/Algebra/Basic.lean`\n\n**Proof Strategy**: Formalize the matroid polytope as a Finset-valued polytope. Show that the exchange axiom corresponds to a set of linear inequalities on the measure vector. Apply LP duality to characterize the optimal measure. Relate the dual solution to lattice vectors.\n\n**Domain Bridges**: Pythagorean <-> Geometry, Algebra <-> Computation\n\n**Lineage**: Builds on `descentChain_length_bound` and matroid theory.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Certificate Amplification in Cryptographic Hash Functions\n\n**Conjecture**: Cryptographic hash functions (SHA-256, BLAKE3) can be modeled as exchange families where the certificate depth determines the hardness of preimage attacks. Specifically, a hash with k rounds has certificate depth k, and the preimage attack complexity is at least d^k where d is the state width.\n\n**Test**: Model the internal state of SHA-256 as an exchange family with 256 bits of state (d=256). Define the measure as the Hamming distance from the target hash. Check whether the round structure provides certificate depth proportional to the number of rounds (64 for SHA-256).\n\n**Impact**: Would provide a new framework for analyzing hash function security based on descent complexity rather than generic group-theoretic arguments. Could suggest new hash function designs optimized for certificate depth.\n\n**Catalog References**: `Pythagorean/ExchangeFamilyDescentComplexity.lean`, `Catalog/Cryptography/BerggrenDiophantineLattice.lean`\n\n**Proof Strategy**: Formalize the round function of SHA-256 as an exchange operation. Show that the measure (Hamming distance to target) satisfies strict descent within each round. Compute the certificate depth as a function of the number of rounds. Apply `depth_k_power_bound` to derive the lower bound.\n\n**Domain Bridges**: Pythagorean <-> Cryptography, Computation <-> Logic\n\n**Lineage**: Builds on `depth_k_power_bound`, `certificate_depth_product_bound`, and cryptographic structures in `Catalog/Cryptography/`.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f9a49885",
-    "consumed_by_exp_id": "8fb245ef",
-    "timestamp": "2026-05-30T15:26:04.675941+00:00"
-  },
-  {
-    "id": "fd_2275",
-    "title": "This research cycle established a formally verified mathematical framework for p",
-    "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\n## Synthesis\n\nThis research cycle established a formally verified mathematical framework for phase transitions in constraint satisfaction problems (CSPs), centered on Latin square completion as a canonical example. The key discovery is the structural identity n\u00b2(1 \u2212 d_c(n)) = 1: at the conjectured critical density d_c(n) = (n\u00b2 \u2212 1)/n\u00b2, exactly one degree of freedom remains per constraint group. This connects naturally to the existing Catalog's work on phase transitions (in `Bridges/PhaseTransition.lean`, `MachineLearning/ProofPhaseTransitions/`, and `Pythagorean/LorentzianComplexityTransition.lean`) and opens several high-potential research directions.\n\nThe most promising cross-domain connection from this cycle is the **CSP \u2194 Graph Coloring bridge** through the Rook's graph. This parallels the spectral certificate work in `Pythagorean/LorentzianComplexityTransition.lean` and could be extended to connect CSP phase transitions to algebraic graph theory, random matrix theory, and the existing tropical geometry framework in the Catalog. The constraint entropy formalism we introduced also opens a natural bridge to the information-theoretic framework in `MachineLearning/ProofPhaseTransitions/Defs.lean`, where the monotone provability system captures similar threshold phenomena.\n\nThe direction with highest breakthrough potential is Direction 1 (Sharp Threshold via Second Moment Method), because it would provide the first rigorous proof that the phase transition in Latin square completion is genuinely sharp \u2014 not just a smooth crossover. This would be a significant advance in combinatorics, connecting to the Friedgut-Bourgain sharp threshold theorem and potentially to the spectral methods in the Catalog's expander graph work (`Speculative/AutoResearch/GL2CertifiedExpanders.lean`).\n\n---\n\n### Direction 1: Sharp Threshold Theorem for Latin Square Phase Transition\n\n**Conjecture**: The phase transition in random Latin square completion is sharp: for any \u03b5 > 0, the probability of satisfiability transitions from > 1 \u2212 \u03b5 to < \u03b5 within a density window of width O(1/n\u00b2). More precisely, if P_n(d) denotes the satisfiability probability at density d for n\u00d7n Latin squares, then for fixed \u03b5 > 0, the width |d\u2081 \u2212 d\u2082| where P_n(d\u2081) = 1 \u2212 \u03b5 and P_n(d\u2082) = \u03b5 satisfies |d\u2081 \u2212 d\u2082| = O(1/n\u00b2).\n\n**Test**: Formalize the second moment method for the random variable X = number of valid completions. Compute E[X] and E[X\u00b2] as functions of density. If E[X\u00b2]/E[X]\u00b2 \u2192 1 as n \u2192 \u221e for d < d_c, the Paley-Zygmund inequality gives P(X > 0) \u2192 1, establishing the lower half of the sharp threshold.\n\n**Impact**: If true, this would be the first rigorous sharp threshold result for Latin square completion, connecting CSP theory to the Friedgut-Bourgain theory of sharp thresholds for monotone properties. It would also validate the 1/n\u00b2 window width observed computationally. If false, it would suggest that Latin square completion has a fundamentally different threshold structure from random k-SAT.\n\n**Catalog References**: `Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean` (criticalDensity_gap, satProbability_monotone), `Bridges/PhaseTransition.lean` (width-controlled policies), `MachineLearning/ProofPhaseTransitions/Defs.lean` (monotone provability systems)\n\n**Proof Strategy**: (1) Define X_k = number of Latin square completions given k random pre-filled cells. (2) Compute E[X_k] using inclusion-exclusion on the permanent of a 0-1 matrix. (3) Compute E[X_k\u00b2] via pairwise correlation of completions. (4) Apply second moment method: P(X_k > 0) \u2265 E[X_k]\u00b2/E[X_k\u00b2]. (5) Show this bound \u2192 1 when d < d_c \u2212 \u03b5 for any \u03b5 > 0. Key lemma: the permanent of the constraint matrix at density d has expected value ~ n^(n\u00b2(1\u2212d)) \u00b7 exp(\u2212\u0398(n\u00b2d)).\n\n**Domain Bridges**: Combinatorics <-> Probability, CSP <-> Graph Theory\n\n**Lineage**: Builds on criticalDensity_gap and satProbability_monotone from this cycle's `Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Gap of the Rook's Graph and Mixing Time Bounds\n\n**Conjecture**: The spectral gap of the Rook's graph K_n \u25a1 K_n governs the mixing time of Markov chain Monte Carlo (MCMC) samplers for Latin squares. Specifically, the Glauber dynamics on Latin square completions mixes in O(n\u00b2 log n) steps when density d < d_c \u2212 \u03b5, and exhibits torpid mixing (exponential time) when d > d_c.\n\n**Test**: Compute the eigenvalues of the adjacency matrix of K_n \u25a1 K_n for small n (n = 2, 3, 4, 5). The eigenvalues of the Cartesian product graph are \u03bb_i + \u03bc_j where \u03bb_i and \u03bc_j are eigenvalues of the factors. For K_n, the eigenvalues are n\u22121 (multiplicity 1) and \u22121 (multiplicity n\u22121). So the Rook's graph has eigenvalues ranging from 2(n\u22121) to \u22122, with spectral gap n.\n\n**Impact**: This would connect CSP phase transitions to spectral graph theory and MCMC sampling theory, providing algorithmic implications: fast sampling is possible below d_c, but not above. This bridges the gap between the combinatorial phase transition (satisfiability) and the computational phase transition (hardness).\n\n**Catalog References**: `Pythagorean/LorentzianComplexityTransition.lean` (spectral gap proxies, spectral certification), `Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean` (constraintDegree_eq_rook_graph), `Speculative/AutoResearch/GL2CertifiedExpanders.lean` (expander certification)\n\n**Proof Strategy**: (1) Formalize the Rook's graph as the Cartesian product K_n \u25a1 K_n. (2) Prove the eigenvalue formula using the tensor product decomposition of the adjacency matrix. (3) Establish the spectral gap = n for the Rook's graph. (4) Apply the canonical path method to bound the mixing time of Glauber dynamics below the critical density.\n\n**Domain Bridges**: Graph Theory <-> Probability, Algebra <-> Computation\n\n**Lineage**: Builds on constraintDegree_eq_rook_graph and the Rook's graph connection from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Geometry of the Constraint Polytope\n\n**Conjecture**: The constraint polytope of the Latin square completion problem has a tropical geometric structure: its tropicalization encodes the phase transition as a tropical variety. The critical density d_c corresponds to a breakpoint in the tropical Newton polygon of the permanent polynomial.\n\n**Test**: Compute the tropical permanent of a generic n\u00d7n matrix for n = 2, 3, 4. Verify that the tropical Newton polygon has a vertex at the point corresponding to density d_c. The tropical permanent is the minimum-weight perfect matching, computable in O(n\u00b3) by the Hungarian algorithm.\n\n**Impact**: If true, this would establish a new bridge between CSP theory and tropical geometry, connecting the phase transition to the Newton polytope of the permanent \u2014 one of the most studied objects in algebraic combinatorics. This would also connect to the existing tropical framework in the Catalog.\n\n**Catalog References**: `Tropical/PhaseIIFormal.lean`, `Tropical/DiffConstraints.lean`, `Pythagorean/TropicalPhaseTransition.lean`, `MachineLearning/TropicalGrokkingPhaseTransition.lean`\n\n**Proof Strategy**: (1) Define the permanent polynomial P(x) = \u03a3_\u03c3 \u03a0_i x_{i,\u03c3(i)}. (2) Tropicalize: replace + with min, \u00d7 with +. (3) Compute the tropical variety of P. (4) Show that the tropical variety has a combinatorial change at the weight corresponding to d_c. Key tool: the Kapranov theorem connecting tropical varieties to Newton polytopes.\n\n**Domain Bridges**: CSP <-> Tropical, Combinatorics <-> Algebra\n\n**Lineage**: Builds on the Rook's graph connection and extends to the tropical geometry framework in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Block Constraints and Sudoku-Specific Phase Transitions\n\n**Conjecture**: Adding block constraints (the \"box\" constraints in standard Sudoku) shifts the critical density from d_c = (n\u00b2 \u2212 1)/n\u00b2 to a lower value d_c^{Sudoku}(n) = d_c(n) \u2212 \u0398(1/n\u00b3). For n = 3, this predicts d_c^{Sudoku} \u2248 0.889 \u2212 0.037 \u2248 0.852.\n\n**Test**: Implement a Sudoku solver (with block constraints) and run the phase transition detection algorithm for n = 2 (4\u00d74 Sudoku) and n = 3 (9\u00d79 Sudoku). Compare the empirical d_c^{Sudoku} with the predicted value. The shift should be approximately 1/(n\u00b7n\u00b2) = 1/n\u00b3.\n\n**Impact**: This would extend the Latin square framework to full Sudoku, addressing the most practically relevant case. The predicted 1/n\u00b3 shift quantifies the additional constraining power of block constraints.\n\n**Catalog References**: `Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean` (criticalDensity, free_cells_at_critical), `Bridges/PhaseTransition.lean` (width-controlled policies)\n\n**Proof Strategy**: (1) Define Sudoku constraints as Latin square constraints + block constraints. (2) Count the additional constraints per cell: each cell has n\u22121 block neighbors beyond its row/column neighbors. (3) Compute the effective constraint degree: 3(n\u22121) instead of 2(n\u22121). (4) Derive the modified critical density by adjusting the constraint ratio.\n\n**Domain Bridges**: CSP <-> Combinatorics\n\n**Lineage**: Direct extension of criticalDensity and constraintDegree_eq_rook_graph from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Theoretic Lower Bounds via Constraint Entropy\n\n**Conjecture**: The constraint entropy H(n, k, c) satisfies a differential inequality: dH/dk \u2264 \u22121/n for Latin squares. This implies that the entropy reaches zero (the UNSAT threshold) at k \u2265 n \u00b7 H(n, 0, L_n), where L_n is the number of Latin squares of order n.\n\n**Test**: Compute H(n, k) numerically for n = 4, 5 by sampling random partial assignments at each density and counting completions. Verify that the rate of entropy decrease is approximately 1/n per filled cell. This is computationally feasible for n \u2264 5.\n\n**Impact**: If the differential inequality holds, it provides an information-theoretic proof of the phase transition: entropy must reach zero at a specific density, which would give an independent derivation of d_c. This connects CSP theory to Shannon theory and rate-distortion theory.\n\n**Catalog References**: `Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean` (constraintEntropy_le_one, constraintEntropy_nonneg, entropy_below_threshold_implies_unsat), `MachineLearning/ProofPhaseTransitions/Defs.lean` (monotone provability, proof partition function)\n\n**Proof Strategy**: (1) Formalize the entropy function H(n, k) as the log-ratio of actual to unconstrained completions. (2) Establish the monotone decrease of H via the monotone satisfiability system. (3) Prove the differential inequality using a counting argument: each new filled cell eliminates at least a 1/n fraction of completions because it excludes one value from its row and column. (4) Integrate to get the UNSAT threshold.\n\n**Domain Bridges**: CSP <-> Information Theory, Combinatorics <-> Physics\n\n**Lineage**: Builds on constraintEntropy_le_one, entropy_below_threshold_implies_unsat, and the MonotoneSatSystem framework from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "768dfab3",
-    "consumed_by_exp_id": "13446a17",
-    "timestamp": "2026-05-30T15:26:30.043465+00:00"
-  },
-  {
     "id": "fd_2276",
     "title": "This research cycle established a formal bridge between Stone duality and neural",
     "description": "# Future Directions: Stone Duality for Neural Networks\n\n## Synthesis\n\nThis research cycle established a formal bridge between Stone duality and neural network geometry, proving that the activation patterns of any hyperplane arrangement form a Boolean algebra (the activation algebra) whose Stone dual space has cardinality equal to the number of linear regions. The key insight is that the syntax-semantics duality of logic (Boolean algebra \u2194 Stone space) maps precisely onto the architecture-geometry duality of neural networks (activation patterns \u2194 decision regions).\n\nThe most promising cross-domain connection from this cycle is the **Algebra \u2194 MachineLearning bridge** through the activation algebra. This directly addresses the structural opportunity identified in the Catalog analysis, where both domains share structures (lattice, topology, order) but lacked a formal bridge. The activation algebra provides this bridge: it is simultaneously an algebraic object (Boolean algebra, lattice) and a geometric descriptor of neural network behavior.\n\nThe highest breakthrough potential lies in Direction 1 (Tropical-Stone Bridge), because tropical geometry already provides a complementary algebraic framework for ReLU networks (via the existing `relu_network_has_canonical_tropical_rational` theorems in the Catalog), and unifying tropical and Stone-algebraic perspectives could yield a complete algebraic theory of neural network expressivity.\n\n---\n\n### Direction 1: Tropical-Stone Bridge \u2014 Unifying Two Algebraic Views of ReLU Networks\n\n**Conjecture**: For any ReLU network f, the tropical rational function representation of f (from tropical geometry) and the activation algebra of f (from Stone duality) determine each other. Specifically, the Newton polytope of the tropical representation has one vertex per atom of the activation algebra, and the normal fan of the Newton polytope recovers the hyperplane arrangement.\n\n**Test**: For small ReLU networks (2-3 neurons, 2D input), compute both the tropical rational representation and the activation algebra. Verify that the number of vertices of the Newton polytope equals the number of atoms. Check that the normal fan directions match the weight vectors.\n\n**Impact**: If true, this unifies two independently developed algebraic theories of neural networks into a single framework. It would mean that tropical geometry and Stone duality are two facets of the same underlying structure \u2014 a \"Rosetta Stone\" for neural network algebra. If false, it identifies fundamental limitations of one or both frameworks.\n\n**Catalog References**: `Tropical/Canonical/Basic.lean` (relu_network_has_canonical_tropical_rational), `MachineLearning/StoneDualityNN.lean` (activation algebra construction)\n\n**Proof Strategy**: \n1. Formalize Newton polytopes of tropical rational functions in Lean.\n2. Show that the vertices of the Newton polytope correspond to the activation patterns where the maximum in the tropical expression is achieved.\n3. Use the fact that ReLU = max(x, 0) is a tropical polynomial to establish the correspondence.\n4. The key lemma would be: for each atom \u03c3 of the activation algebra, there exists a unique vertex v(\u03c3) of the Newton polytope such that f restricted to region R(\u03c3) is the affine function defined by v(\u03c3).\n\n**Domain Bridges**: Tropical <-> MachineLearning, Algebra <-> MachineLearning\n\n**Lineage**: Builds on `relu_network_has_canonical_tropical_rational` and the activation algebra from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: VC Dimension as Algebraic Invariant\n\n**Conjecture**: The VC dimension of a hyperplane arrangement A in \u211d\u207f equals the largest d such that there exist d hyperplanes in A whose normal vectors are linearly independent. Equivalently, VC(A) = rank(W) where W is the matrix of normal vectors.\n\n**Test**: Compute VC dimension and matrix rank for:\n- k parallel hyperplanes in \u211d\u207f (VC should be 1, rank is 1)\n- k hyperplanes in general position in \u211d\u207f (VC should be min(k,n), rank is min(k,n))\n- Random arrangements with known rank deficiency\n\n**Impact**: If true, this gives a purely linear-algebraic characterization of VC dimension, making it efficiently computable. This would connect statistical learning theory (VC dimension) to linear algebra (rank) through the activation algebra (Stone duality). If false, the failure mode reveals what additional geometric information beyond rank is needed.\n\n**Catalog References**: `MachineLearning/StoneDualityNN.lean` (vc_dim_le_num_planes, IsShattered', shattered_card_le_two_pow_regions)\n\n**Proof Strategy**:\n1. Prove the forward direction: if d vectors are linearly independent, construct d points that are shattered.\n2. For the reverse direction: if d+1 points are shattered, show this requires d+1 independent normal vectors.\n3. Key tool: the Radon partition theorem (any d+2 points in \u211d\u1d48 have a Radon partition).\n4. Helper lemma: LinearIndependent \u211d (fun i : S => normal i) \u2192 \u2203 points, IsShattered arr points \u2227 points.card = S.card.\n\n**Domain Bridges**: MachineLearning <-> Algebra (linear algebra), MachineLearning <-> Logic (VC theory)\n\n**Lineage**: Builds on shattered_card_le_two_pow_regions from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Activation Algebra Dynamics Under Training\n\n**Conjecture**: During gradient descent training of a ReLU network, the number of atoms in the activation algebra (= number of linear regions) follows a characteristic trajectory: initially increasing (exploration phase), then stabilizing or decreasing (compression phase). The transition point corresponds to the \"grokking\" phenomenon.\n\n**Test**: Train small ReLU networks on simple classification tasks (XOR, circles). At each training step, compute the activation algebra and count atoms. Plot atoms vs. training step. Check if the transition point correlates with the test accuracy jump associated with grokking.\n\n**Impact**: If true, this gives the first algebraic characterization of grokking \u2014 a much-debated phenomenon where networks suddenly generalize long after overfitting. The activation algebra would provide a measurable \"order parameter\" for the phase transition. If false, it constrains which aspects of network geometry are relevant to generalization.\n\n**Catalog References**: `MachineLearning/StoneDualityNN.lean` (HyperplaneArrangement.realizedPatterns, stone_dual_card_eq_realized_patterns), `MachineLearning/TropicalGrokkingPhaseTransition.lean`\n\n**Proof Strategy**:\n1. Formalize a discrete training step: weight update W \u2190 W - \u03b7\u2207L.\n2. Define the function t \u21a6 |atoms(A(W_t))| tracking region count over time.\n3. Show that small weight perturbations can only change the region count by \u00b11 (stability lemma).\n4. The key difficulty is connecting the algebraic (atom count) to the analytic (loss landscape).\n\n**Domain Bridges**: MachineLearning <-> Physics (phase transitions), Algebra <-> MachineLearning\n\n**Lineage**: Builds on activation algebra from this cycle, connects to existing TropicalGrokkingPhaseTransition work.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Efficient Activation Algebra Computation via Lattice Theory\n\n**Conjecture**: The activation algebra of an arrangement with k hyperplanes in \u211d\u207f can be computed in O(k^n) time (polynomial in k for fixed n), rather than the naive O(2^k) enumeration, by exploiting the lattice structure of the intersection poset.\n\n**Test**: Implement both the naive algorithm (enumerate all 2^k patterns) and the lattice-based algorithm (traverse the intersection poset). Compare running times for k = 10, 20, 50, 100 with n = 2, 3, 5. Verify they produce identical results.\n\n**Impact**: If true, this makes the activation algebra practically computable for real-world networks (which have thousands of neurons but often low effective dimension). This would enable the pruning and verification applications described in the research paper. If false, it establishes a computational complexity barrier for the framework.\n\n**Catalog References**: `MachineLearning/StoneDualityNN.lean` (HyperplaneArrangement.realizedPatterns), `Algebra/Advanced.lean` (lattice structures)\n\n**Proof Strategy**:\n1. Formalize the intersection poset L(A) of the arrangement.\n2. Show that |atoms| = |M\u00f6bius function value at bottom| using Zaslavsky's theorem.\n3. The M\u00f6bius function can be computed by traversing L(A), which has O(k^n) elements.\n4. Key lemma: the intersection poset has at most C(k, n) \u00b7 n! maximal chains.\n\n**Domain Bridges**: Computation <-> MachineLearning, Algebra <-> Computation\n\n**Lineage**: Builds on zaslavsky_le_two_pow and zaslavsky_lower_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Stone Duality for Attention Mechanisms\n\n**Conjecture**: The attention mechanism in Transformer networks has a natural Stone dual, where the Boolean algebra is generated not by half-spaces but by the \"attention regions\" \u2014 subsets of the key-query space where different attention heads dominate. The number of atoms in this algebra bounds the effective number of \"attention patterns\" the model can distinguish.\n\n**Test**: For a single-head attention layer with d_model = 4 and sequence length L = 8, enumerate the attention patterns (which key-query pairs have above-average attention weight). Count the realized patterns and compare to the theoretical bound.\n\n**Impact**: If true, this extends Stone duality beyond ReLU networks to the dominant architecture of modern AI. It would provide an algebraic theory of attention that could explain phenomena like attention head redundancy and the lottery ticket hypothesis for Transformers. If false, it reveals fundamental differences between the geometry of ReLU and softmax activations.\n\n**Catalog References**: `MachineLearning/StoneDualityNN.lean` (activation algebra framework), `MachineLearning/Attention.lean` (if exists)\n\n**Proof Strategy**:\n1. Define \"attention regions\" as the sets where argmax(softmax(QK^T/\u221ad)) is constant.\n2. These regions are defined by piecewise linear boundaries (differences of linear functions > 0).\n3. Show that attention regions form a hyperplane arrangement in the key-query product space.\n4. Apply the activation algebra framework to this arrangement.\n5. Key difficulty: softmax is smooth, not piecewise linear, so the regions are defined by strict inequalities and the boundaries have measure zero.\n\n**Domain Bridges**: MachineLearning <-> Algebra, MachineLearning <-> Logic\n\n**Lineage**: Builds on activation algebra framework from this cycle; extends to non-ReLU architectures.\n\n**Ambition**: extension\n",
@@ -3888,21 +3948,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-31T04:34:41.341971+00:00"
   },
   {
-    "id": "seed_068",
-    "title": "EML Single Operator Church-Turing Thesis",
-    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "priority_score": 0.98,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.808552+00:00"
-  },
-  {
     "id": "seed_070",
     "title": "EML Kolmogorov-Arnold Representation",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
@@ -3948,21 +3993,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
-    "id": "seed_005",
-    "title": "P vs NP Problem",
-    "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "priority_score": 0.96,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.322674+00:00"
-  },
-  {
     "id": "seed_069",
     "title": "EML Neural Network Expressiveness: Depth vs Width",
     "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) \u2014 matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
@@ -3993,19 +4023,19 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.302055+00:00"
   },
   {
-    "id": "seed_041",
-    "title": "Machine Learning Generalization Bounds",
-    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
+    "id": "fd_2234",
+    "title": "The Thermodynamics of Sorting: Entropy and Computational Work",
+    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
     "domains": [
-      "MachineLearning",
+      "Novelty",
       "Computation"
     ],
-    "priority_score": 0.95,
+    "priority_score": 0.94,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.598768+00:00"
+    "timestamp": "2026-05-30T13:51:55.509884+00:00"
   },
   {
     "id": "seed_004",
@@ -4037,21 +4067,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:55.074843+00:00"
   },
   {
-    "id": "seed_053",
-    "title": "Certified Novelty Detection for Theorem Provers",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.92,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.687353+00:00"
-  },
-  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -4064,21 +4079,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.378958+00:00"
-  },
-  {
-    "id": "seed_055",
-    "title": "Research Depth via Proof-Theoretic Ordinal Analysis",
-    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.701095+00:00"
   },
   {
     "id": "seed_024",
@@ -4109,21 +4109,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.477681+00:00"
   },
   {
-    "id": "seed_006",
-    "title": "Collatz Conjecture",
-    "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "priority_score": 0.85,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.330478+00:00"
-  },
-  {
     "id": "seed_033",
     "title": "Schanuel's Conjecture",
     "description": "Prove Schanuel's conjecture: if z\u2081,...,z\u2099 are Q-linearly independent complex numbers, then the transcendence degree of {z\u2081,...,z\u2099,e^z\u2081,...,e^z\u2099} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
@@ -4137,6 +4122,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
+  },
+  {
+    "id": "fd_2314",
+    "title": "This cycle established formal foundations for r-uniform hypergraph Ramsey theory",
+    "description": "# Future Directions: Hypergraph Ramsey Theory\n\n## Synthesis\n\nThis cycle established formal foundations for r-uniform hypergraph Ramsey theory, introducing the tower function as the growth-rate model and the Ramsey density spectrum as a novel diagnostic invariant. The key insight is that the hierarchy of Ramsey growth rates \u2014 exponential for graphs, double-exponential for 3-uniform, tower for general r-uniform \u2014 is not merely a sequence of upper bounds but reflects a fundamental structural phenomenon: each additional dimension of combinatorial interaction multiplies the complexity by an exponential factor.\n\nThe most promising cross-domain connection is between hypergraph Ramsey theory and computational complexity. The tower growth hierarchy directly connects to the non-elementary complexity of certain decision problems (e.g., satisfiability of first-order sentences over finite structures). The density spectrum concept bridges combinatorics and algorithmic game theory: a coloring with low Ramsey density represents an \"efficient\" strategy for avoiding monochromatic structure, which has applications in multi-party communication protocols and property testing. The connection to the Catalog's barrier framework (`Computation/BarrierFramework.lean`) is natural \u2014 Ramsey-type lower bounds serve as barriers for combinatorial algorithms.\n\nThe direction with highest breakthrough potential is Direction 1 (stepping-up formalization), because it would establish the first machine-verified proof of the tower growth phenomenon and could reveal new structural insights through the formalization process itself. Directions 2 and 3 bridge to existing Catalog infrastructure and offer concrete computational targets.\n\n---\n\n### Direction 1: Formalize the Stepping-Up Lemma\n\n**Conjecture**: The Erd\u0151s-Rado stepping-up lemma can be fully formalized as: given a 2-coloring of r-subsets of [n] with no monochromatic k-clique, one can construct a 2-coloring of (r+1)-subsets of [2^n + 1] with no monochromatic (k+1)-clique. Formally: `\u00acHypergraphRamseyProp n r k k \u2192 \u00acHypergraphRamseyProp (2^n + 1) (r+1) (k+1) (k+1)`.\n\n**Test**: Verify the construction for r=2, k=3, n=5 (since R\u2082(3,3)=6 > 5): the stepping-up should produce a valid 3-uniform coloring on 33 vertices with no monochromatic 4-clique. Check: R\u2083(4,4) = 13 < 33, so the construction should not yield a tight bound but should be valid.\n\n**Impact**: This would be the first machine-verified proof of the tower phenomenon in hypergraph Ramsey theory. The formalization would also serve as a template for other stepping-up constructions in additive combinatorics and Ramsey theory.\n\n**Catalog References**: `Computation/HypergraphRamsey.lean` (this cycle's formalization), `Computation/BarrierFramework.lean` (barrier lower bounds)\n\n**Proof Strategy**:\n1. Define the binary labeling construction: given vertices v\u2081 < v\u2082 < ... < v_{r+1} in [2^n], extract the \"critical bit\" where adjacent pairs diverge.\n2. Define the derived coloring: color the (r+1)-tuple by applying the original r-coloring to the r critical bits.\n3. Prove that a monochromatic (k+1)-clique in the derived coloring induces a monochromatic k-clique in the original.\n4. Key lemma: the critical bit function is injective on ordered tuples (requires careful bit-level reasoning).\n\n**Domain Bridges**: Computation <-> Combinatorics, Logic <-> Combinatorics\n\n**Lineage**: Builds on `HypergraphRamsey.SteppingUpWitness` and `HypergraphRamsey.TowerExp` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Probabilistic Method Lower Bounds in Lean\n\n**Conjecture**: The first moment method gives R_r(k,k) > n whenever C(n,k) \u00b7 2^{1-C(k,r)} < 1. This can be formalized as: if the expected number of monochromatic k-cliques in a uniformly random 2-coloring is less than 1, then there exists a coloring with no monochromatic k-clique, hence HypergraphRamseyProp n r k k is false.\n\n**Test**: For r=3, k=4: C(5,4) \u00b7 2^{1-C(4,3)} = 5 \u00b7 2^{-3} = 5/8 < 1, confirming R\u2083(4,4) > 5. For k=5: C(11,5) \u00b7 2^{1-C(5,3)} = 462 \u00b7 2^{-9} \u2248 0.90 < 1, confirming R\u2083(5,5) > 11. Verify these computations match the formal statement.\n\n**Impact**: Would establish the first formalized probabilistic method argument for Ramsey lower bounds, connecting to Mathlib's probability theory infrastructure.\n\n**Catalog References**: `Computation/HypergraphRamsey.lean` (definitions), `MachineLearning/ProbabilisticMethod/Advanced.lean` (existing probabilistic method formalization)\n\n**Proof Strategy**:\n1. Define the probability space of random 2-colorings (product measure on Bool^{C(n,r)}).\n2. Define the indicator random variable for each potential k-clique being monochromatic.\n3. Compute the expectation by linearity.\n4. Apply the first moment method: E[X] < 1 implies P[X = 0] > 0.\n5. Existential witness: there exists a coloring with no monochromatic k-clique.\n\n**Domain Bridges**: Computation <-> Probability, Combinatorics <-> MachineLearning\n\n**Lineage**: Extends `HypergraphRamsey.expectedMonoCliques` concept and `HypergraphRamsey.HypergraphRamseyProp`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Ramsey Density Spectrum Distribution\n\n**Conjecture**: For a uniformly random 2-coloring of edges of K_n (r=2), the expected Ramsey density satisfies E[\u03c1] = (2 + o(1)) log\u2082(n) / n. More precisely, the largest monochromatic clique in a random 2-coloring of K_n has size (2 + o(1)) log\u2082(n) with high probability.\n\n**Test**: For n=100, simulate 1000 random 2-colorings and compute the average largest monochromatic clique size. Expected: \u2248 2 log\u2082(100) \u2248 13.3 vertices. For n=1000, expected \u2248 2 log\u2082(1000) \u2248 19.9.\n\n**Impact**: Connecting the Ramsey density spectrum to random graph theory would establish the density spectrum as a bridge between worst-case (Ramsey) and average-case (random) combinatorics.\n\n**Catalog References**: `Computation/HypergraphRamsey.lean` (RamseyDensitySpectrum definition), `MachineLearning/RamseyDNA.lean` (Ramsey theory in biological contexts)\n\n**Proof Strategy**:\n1. Use the Lov\u00e1sz Local Lemma or second moment method to bound the clique number of the random graph G(n, 1/2).\n2. Connect to the Ramsey density: \u03c1 = \u03c9(G(n,1/2)) / n where \u03c9 is the clique number.\n3. Formalize the concentration inequality: P[|\u03c9 - 2log\u2082n| > \u03b5 log\u2082n] \u2192 0.\n\n**Domain Bridges**: Computation <-> Probability, Combinatorics <-> MachineLearning\n\n**Lineage**: Extends `RamseyDensitySpectrum` from this cycle, connects to `RamseyDNA` module.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tower-Type Lower Bounds via Diagonal Ramsey\n\n**Conjecture**: There exists a constant c > 0 such that R\u2083(k,k) \u2265 2^{ck\u00b2} for all k \u2265 3. This quadratic exponent is the state of the art from the probabilistic method, but the *exponential* lower bound 2^{k\u00b2} (vs. the upper bound 2^{2^k}) leaves a gap between single and double exponential.\n\n**Test**: Verify for k=3,4: 2^{c\u00b79} \u2264 4 gives c \u2264 0.222; 2^{c\u00b716} \u2264 13 gives c \u2264 0.231. A consistent c \u2248 0.22 works. For k=5: prediction R\u2083(5,5) \u2265 2^{0.22\u00b725} = 2^{5.5} \u2248 45. If R\u2083(5,5) < 45, the constant needs revision.\n\n**Impact**: Formalizing the exponential lower bound would be a significant achievement in formalized Ramsey theory, as it requires the probabilistic method and careful counting.\n\n**Catalog References**: `Computation/HypergraphRamsey.lean` (DoubleExpGrowthConjecture), `Computation/BarrierFramework.lean`\n\n**Proof Strategy**:\n1. Define the probability space of random 2-colorings of 3-subsets.\n2. For each k-subset, compute P[monochromatic] = 2^{1-C(k,3)}.\n3. Union bound: P[\u2203 mono k-clique] \u2264 C(n,k) \u00b7 2^{1-C(k,3)}.\n4. Show this is < 1 when n < 2^{ck\u00b2} for appropriate c.\n5. Careful Stirling approximation of C(n,k) and C(k,3).\n\n**Domain Bridges**: Computation <-> Combinatorics, Probability <-> NumberTheory\n\n**Lineage**: Builds on `DoubleExpGrowthConjecture` and stepping-up witness structure from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Connecting Hypergraph Ramsey to Circuit Complexity Barriers\n\n**Conjecture**: The tower function TowerExp(2, r) provides a natural barrier for circuit complexity lower bounds. Specifically, any proof that a Boolean function requires circuits of size > TowerExp(2, r) must use techniques that go beyond \"naturalization\" (in the Razborov-Rudich sense) at the r-th level.\n\n**Test**: Examine whether known circuit lower bounds (e.g., for PARITY, CLIQUE) have proof complexity that correlates with the tower function. For r=2 (graph Ramsey), the barrier is exponential \u2014 matching known limitations of natural proofs. For r=3, the barrier would be double-exponential \u2014 check if any known lower bound exceeds this.\n\n**Impact**: Would establish a formal connection between Ramsey-theoretic growth rates and circuit complexity barriers, potentially explaining *why* super-exponential circuit lower bounds are hard to prove.\n\n**Catalog References**: `Computation/BarrierFramework.lean` (barrier framework), `Computation/CircuitComplexity/` (circuit complexity infrastructure), `Computation/HypergraphRamsey.lean` (tower function)\n\n**Proof Strategy**:\n1. Formalize the notion of \"r-natural proof\" using r-uniform hypergraph properties.\n2. Show that the density requirement of natural proofs at level r is 1/TowerExp(2, r-2).\n3. Prove that an r-natural proof of a circuit lower bound > TowerExp(2, r) yields a contradiction with the stepping-up bound.\n\n**Domain Bridges**: Computation <-> Logic, Combinatorics <-> Cryptography\n\n**Lineage**: Bridges `HypergraphRamsey.TowerExp` to `Computation/BarrierFramework.lean` and `Computation/CircuitComplexity/`.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "27c28732",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T05:47:13.733936+00:00"
   },
   {
     "id": "seed_037",
@@ -4241,21 +4241,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
   },
   {
-    "id": "fd_2262",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "priority_score": 0.77,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "27c28732",
-    "timestamp": "2026-05-30T13:51:59.801550+00:00"
-  },
-  {
     "id": "fd_2240",
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology",
     "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
@@ -4284,21 +4269,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:56.722730+00:00"
-  },
-  {
-    "id": "fd_2234",
-    "title": "The Thermodynamics of Sorting: Entropy and Computational Work",
-    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "priority_score": 0.74,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-30T13:51:55.509884+00:00"
   },
   {
     "id": "fd_2258",
