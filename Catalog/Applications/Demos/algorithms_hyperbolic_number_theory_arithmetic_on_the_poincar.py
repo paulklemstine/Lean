@@ -1,153 +1,243 @@
 """
-Hyperbolic Number Theory: Algorithms for Arithmetic on the Poincaré Disk
+Hyperbolic Number Theory: Core Algorithms
+==========================================
 
-Core implementations of hyperbolic geometry, lattice counting,
-and the hyperbolic zeta function for PSL(2,Z).
+Implementation of Möbius transformations, pseudohyperbolic distance,
+hyperbolic lattice enumeration, and the hyperbolic zeta function
+on the Poincaré disk model.
+
+All functions are type-hinted and documented.
 """
 
-import math
 import cmath
-from typing import List, Tuple, Optional
-
-
-def poincare_cf(z: complex) -> float:
-    """Poincaré conformal factor λ(z) = 2 / (1 - |z|²)."""
-    r2 = abs(z) ** 2
-    if r2 >= 1.0:
-        return float('inf')
-    return 2.0 / (1.0 - r2)
+import math
+from typing import List, Tuple, Set, Optional
 
 
 def mobius_map(a: complex, z: complex) -> complex:
-    """Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)*z)."""
-    denom = 1.0 - a.conjugate() * z
-    if abs(denom) < 1e-15:
-        return complex(float('inf'), 0)
-    return (z - a) / denom
-
-
-def hyp_dist(z: complex, w: complex) -> float:
-    """Hyperbolic distance d_H(z, w) = 2 * artanh(|φ_w(z)|)."""
-    t = abs(mobius_map(w, z))
-    if t >= 1.0:
-        return float('inf')
-    return 2.0 * math.atanh(t)
-
-
-def hyp_area(R: float) -> float:
-    """Hyperbolic area of a disk of radius R: A(R) = 2π(cosh R - 1)."""
-    return 2.0 * math.pi * (math.cosh(R) - 1.0)
-
-
-def upper_half_to_disk(z: complex) -> complex:
-    """Map from upper half-plane to Poincaré disk: w = (z - i)/(z + i)."""
-    return (z - 1j) / (z + 1j)
-
-
-def disk_to_upper_half(w: complex) -> complex:
-    """Map from Poincaré disk to upper half-plane: z = i(1 + w)/(1 - w)."""
-    return 1j * (1.0 + w) / (1.0 - w)
-
-
-def hyp_dist_upper_half(z: complex, w: complex) -> float:
-    """Hyperbolic distance in the upper half-plane model.
-    d(z,w) = 2 * artanh(|z-w| / |z-conj(w)|).
+    """Apply the Möbius transformation φ_a(z) = (z - a) / (1 - conj(a)*z).
+    
+    This maps the unit disk to itself when |a| < 1 and |z| < 1.
+    It sends a ↦ 0 and is an isometry of the hyperbolic metric.
+    
+    Args:
+        a: Center point in the unit disk (|a| < 1)
+        z: Point to transform (|z| < 1)
+    
+    Returns:
+        The image φ_a(z) in the unit disk
     """
-    num = abs(z - w)
-    den = abs(z - w.conjugate())
-    if den < 1e-15:
-        return float('inf')
-    t = num / den
-    if t >= 1.0:
-        return float('inf')
-    return 2.0 * math.atanh(t)
+    return (z - a) / (1 - a.conjugate() * z)
 
 
-def enumerate_psl2z(R: float) -> List[Tuple[int, int, int, int]]:
-    """Enumerate elements [[a,b],[c,d]] of PSL(2,Z) with
-    hyperbolic distance from i to γ·i ≤ R in upper half-plane.
-
-    d_H(i, γ·i) = 2 * arccosh((a²+b²+c²+d²) / 2)
-    So we need a²+b²+c²+d² ≤ 2*cosh(R).
+def mobius_inverse(a: complex, w: complex) -> complex:
+    """Apply the inverse Möbius transformation φ_{-a}(w) = (w + a) / (1 + conj(a)*w).
+    
+    This is the functional inverse of mobius_map(a, ·).
+    
+    Args:
+        a: Original center point
+        w: Point to invert
+    
+    Returns:
+        The pre-image z such that φ_a(z) = w
     """
-    bound = 2.0 * math.cosh(R)
-    max_val = int(math.sqrt(bound)) + 1
-    results = []
-
-    for a in range(-max_val, max_val + 1):
-        for b in range(-max_val, max_val + 1):
-            for c in range(-max_val, max_val + 1):
-                for d in range(-max_val, max_val + 1):
-                    if a * d - b * c != 1:
-                        continue
-                    trace_sq = a * a + b * b + c * c + d * d
-                    if trace_sq <= bound:
-                        # PSL identification: (a,b,c,d) ~ (-a,-b,-c,-d)
-                        if a > 0 or (a == 0 and b > 0) or (a == 0 and b == 0 and c > 0) or \
-                           (a == 0 and b == 0 and c == 0 and d > 0):
-                            results.append((a, b, c, d))
-
-    return results
+    return (w + a) / (1 + a.conjugate() * w)
 
 
-def lattice_count_psl2z(R: float) -> int:
-    """Count PSL(2,Z) lattice points within hyperbolic radius R of i."""
-    return len(enumerate_psl2z(R))
-
-
-def hyp_zeta_partial(R_max: float, s: float, num_terms: int = 100) -> float:
-    """Compute partial sum of hyperbolic zeta function for PSL(2,Z):
-    ζ_H(s) = Σ 1/d_H(i, γ·i)^{2s}
-    summing over PSL(2,Z) elements with d_H(i, γ·i) ≤ R_max.
+def pseudo_hyp_dist(z: complex, w: complex) -> float:
+    """Compute the pseudohyperbolic distance ρ(z, w) = |φ_w(z)|.
+    
+    This is related to the hyperbolic distance by d_H(z,w) = 2·arctanh(ρ(z,w)).
+    
+    Args:
+        z, w: Points in the unit disk
+    
+    Returns:
+        The pseudohyperbolic distance in [0, 1)
     """
-    elements = enumerate_psl2z(R_max)
+    return abs(mobius_map(w, z))
+
+
+def hyperbolic_distance(z: complex, w: complex) -> float:
+    """Compute the hyperbolic distance d_H(z, w) = 2·arctanh(ρ(z, w)).
+    
+    Args:
+        z, w: Points in the unit disk
+    
+    Returns:
+        The hyperbolic distance (non-negative real)
+    """
+    rho = pseudo_hyp_dist(z, w)
+    return 2 * math.atanh(min(rho, 0.9999999))  # clamp for numerical stability
+
+
+def conformal_weight(z: complex) -> float:
+    """Compute the conformal weight 1/(1 - |z|²)² at point z.
+    
+    This appears in the hyperbolic area element dA_hyp = dA_eucl / (1 - |z|²)².
+    
+    Args:
+        z: Point in the unit disk
+    
+    Returns:
+        The conformal weight (≥ 1 inside the disk)
+    """
+    r2 = abs(z) ** 2
+    return 1.0 / (1.0 - r2) ** 2
+
+
+def generate_lattice_orbit(
+    generators: List[complex],
+    max_depth: int = 8,
+    max_points: int = 5000
+) -> Set[complex]:
+    """Generate the orbit of the origin under iterated Möbius maps.
+    
+    Starting from z = 0, we apply all generators and their inverses
+    repeatedly up to max_depth iterations, collecting all distinct points.
+    
+    Args:
+        generators: List of generator points in the unit disk
+        max_depth: Maximum iteration depth
+        max_points: Maximum number of points to generate
+    
+    Returns:
+        Set of orbit points (approximately, due to floating point)
+    """
+    # Use a grid-based deduplication
+    seen: Set[Tuple[int, int]] = set()
+    points: List[complex] = []
+    GRID = 1_000_000  # discretization for dedup
+    
+    def grid_key(z: complex) -> Tuple[int, int]:
+        return (round(z.real * GRID), round(z.imag * GRID))
+    
+    # Start with the origin
+    current_layer = [complex(0, 0)]
+    key = grid_key(complex(0, 0))
+    seen.add(key)
+    points.append(complex(0, 0))
+    
+    # All maps: generators and their inverses
+    all_maps = []
+    for g in generators:
+        all_maps.append(('fwd', g))
+        all_maps.append(('inv', g))
+    
+    for depth in range(max_depth):
+        next_layer = []
+        for z in current_layer:
+            for direction, g in all_maps:
+                if direction == 'fwd':
+                    w = mobius_map(g, z)
+                else:
+                    w = mobius_inverse(g, z)
+                
+                if abs(w) >= 0.99999:
+                    continue
+                
+                key = grid_key(w)
+                if key not in seen:
+                    seen.add(key)
+                    points.append(w)
+                    next_layer.append(w)
+                    
+                    if len(points) >= max_points:
+                        return set(points)
+        
+        current_layer = next_layer
+        if not current_layer:
+            break
+    
+    return set(points)
+
+
+def counting_function(points: List[complex], R: float) -> int:
+    """Count lattice points with |z| ≤ R.
+    
+    Args:
+        points: List of lattice points
+        R: Euclidean radius threshold
+    
+    Returns:
+        Number of points within radius R
+    """
+    return sum(1 for z in points if abs(z) <= R)
+
+
+def hyperbolic_zeta_partial(points: List[complex], s: float) -> float:
+    """Compute the partial hyperbolic zeta function.
+    
+    ζ_H(s) = Σ_{z ∈ points, z ≠ 0} 1/|z|^(2s)
+    
+    Args:
+        points: List of lattice points
+        s: Complex parameter (real part)
+    
+    Returns:
+        The partial zeta sum
+    """
     total = 0.0
-    for (a, b, c, d) in elements:
-        trace_sq = a * a + b * b + c * c + d * d
-        if trace_sq <= 2:
-            continue  # Skip identity
-        dist = 2.0 * math.acosh(trace_sq / 2.0)
-        if dist > 0:
-            total += dist ** (-2.0 * s)
+    for z in points:
+        r = abs(z)
+        if r > 1e-10:
+            total += r ** (-2 * s)
     return total
 
 
-def test_lattice_growth(R_values: List[float]) -> List[Tuple[float, int, float]]:
-    """Test the Selberg-Huber lattice growth conjecture for PSL(2,Z).
-
-    Predicts N(R) ~ e^R / (π/3) = 3e^R/π.
-    Returns (R, N(R), ratio = N(R)·(π/3)/e^R).
+def verify_mobius_identity(a: complex, z: complex) -> Tuple[float, float]:
+    """Verify the fundamental Möbius identity:
+    |1 - conj(a)*z|² - |z - a|² = (1 - |a|²)(1 - |z|²)
+    
+    Returns (LHS, RHS) which should be equal up to floating point.
     """
-    covolume = math.pi / 3.0
-    results = []
-    for R in R_values:
-        N = lattice_count_psl2z(R)
-        ratio = N * covolume / math.exp(R)
-        results.append((R, N, ratio))
-    return results
+    denom = 1 - a.conjugate() * z
+    lhs = abs(denom) ** 2 - abs(z - a) ** 2
+    rhs = (1 - abs(a) ** 2) * (1 - abs(z) ** 2)
+    return lhs, rhs
 
 
-def conformal_factor_along_radius(num_points: int = 100) -> List[Tuple[float, float]]:
-    """Compute conformal factor along the real axis [0, 0.99]."""
-    results = []
-    for i in range(num_points):
-        r = 0.99 * i / (num_points - 1)
-        cf = poincare_cf(complex(r, 0))
-        results.append((r, cf))
-    return results
-
-
-def hyp_area_vs_euclidean(R_values: List[float]) -> List[Tuple[float, float, float]]:
-    """Compare hyperbolic and Euclidean disk areas.
-    Returns (R, A_hyp(R), A_euc(R)) where A_euc uses the
-    Euclidean radius corresponding to hyperbolic radius R.
+def verify_mobius_inverse(a: complex, z: complex) -> float:
+    """Verify that φ_{-a}(φ_a(z)) = z.
+    
+    Returns |φ_{-a}(φ_a(z)) - z| which should be ~0.
     """
-    results = []
-    for R in R_values:
-        A_hyp = hyp_area(R)
-        # Euclidean radius of a hyperbolic disk of radius R centered at origin:
-        # r_euc = tanh(R/2)
-        r_euc = math.tanh(R / 2.0)
-        A_euc = math.pi * r_euc ** 2
-        results.append((R, A_hyp, A_euc))
-    return results
+    w = mobius_map(a, z)
+    z_recovered = mobius_map(-a, w)
+    return abs(z_recovered - z)
+
+
+def verify_conformal_transform(a: complex, z: complex) -> Tuple[float, float]:
+    """Verify the conformal factor transformation law:
+    1 - |φ_a(z)|² = (1 - |a|²)(1 - |z|²) / |1 - conj(a)*z|²
+    
+    Returns (LHS, RHS).
+    """
+    w = mobius_map(a, z)
+    denom = 1 - a.conjugate() * z
+    lhs = 1 - abs(w) ** 2
+    rhs = (1 - abs(a) ** 2) * (1 - abs(z) ** 2) / abs(denom) ** 2
+    return lhs, rhs
+
+
+if __name__ == "__main__":
+    # Quick verification
+    a = complex(0.3, 0.4)
+    z = complex(-0.2, 0.5)
+    
+    print("=== Möbius Identity Verification ===")
+    lhs, rhs = verify_mobius_identity(a, z)
+    print(f"  LHS = {lhs:.15f}")
+    print(f"  RHS = {rhs:.15f}")
+    print(f"  Diff = {abs(lhs - rhs):.2e}")
+    
+    print("\n=== Möbius Inverse Verification ===")
+    err = verify_mobius_inverse(a, z)
+    print(f"  |φ_{{-a}}(φ_a(z)) - z| = {err:.2e}")
+    
+    print("\n=== Conformal Transform Verification ===")
+    lhs, rhs = verify_conformal_transform(a, z)
+    print(f"  LHS = {lhs:.15f}")
+    print(f"  RHS = {rhs:.15f}")
+    print(f"  Diff = {abs(lhs - rhs):.2e}")
