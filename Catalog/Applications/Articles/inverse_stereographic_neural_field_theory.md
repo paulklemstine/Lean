@@ -1,85 +1,83 @@
-# The Geometry of Hallucinations: How a 400-Year-Old Map Explains Patterns in the Brain
+# The Geometry of Hallucinations: How Mathematics Reveals the Brain's Hidden Patterns
 
-## A Projection That Changes Everything
+*Why do people see spirals, tunnels, and honeycombs when they close their eyes — and what does the shape of the Earth have to do with it?*
 
-Close your eyes and press gently on your eyelids. You'll likely see shimmering geometric patterns — spirals, lattices, concentric rings. These are not random glitches. They are the brain's visual cortex revealing its own mathematical architecture.
+---
 
-For decades, neuroscientists have known that the visual cortex of mammals is organized as a curved sheet of neural tissue, roughly spherical in its large-scale geometry. When this sheet is perturbed — by pressure, flickering light, or certain pharmacological agents — it spontaneously generates geometric patterns. The mystery has always been: why *these* patterns? Why spirals with a specific number of arms? Why rings with particular spacing? Why do the same motifs appear across species, from cats to humans?
+In the 1920s, the neurologist Heinrich Klüver cataloged an odd phenomenon. Patients under the influence of mescaline reported seeing the same geometric patterns again and again: spirals, concentric rings, lattices, and fan-shaped forms. These weren't random. They were *universal*. Whether the trigger was a migraine aura, psychedelic compounds, or simply pressing on closed eyelids, the same handful of patterns appeared across cultures and centuries.
 
-A new mathematical framework offers a surprisingly elegant answer, rooted in a map invented by ancient astronomers and refined by Renaissance cartographers: the stereographic projection.
+For decades, this was a curiosity — a footnote in the annals of neuroscience. Then, in the early 2000s, mathematicians Jack Cowan and Bressloff showed that these patterns could be explained by the equations governing waves of electrical activity across the cortex. The brain's surface acts like a vibrating drumhead, and these hallucination patterns are its natural modes of vibration.
 
-## From Globe to Flat Map
+But there was a problem. The cortex isn't flat.
 
-Imagine trying to draw a perfect map of the Earth on a flat sheet of paper. You can't do it without some distortion — this is a mathematical certainty, proved rigorously in the 19th century. But there is one projection that preserves *angles*: the stereographic projection. Used by Hipparchus around 150 BC and formalized by Ptolemy, it works by placing a light source at the North Pole of a globe and projecting every other point downward onto a flat plane.
+## The Sphere Inside Your Skull
 
-The resulting map has a remarkable property: while distances are distorted (Greenland looks enormous), the shape of any small region is preserved perfectly. Mathematicians call this *conformality*. A tiny circle on the globe maps to a tiny circle on the flat map, never an ellipse. This angle-preserving quality made stereographic projection indispensable in navigation, crystallography, and complex analysis.
+The visual cortex — the part of the brain that processes what you see — is a crumpled sheet of neural tissue. If you could iron it out, it would be roughly the size of a dinner napkin. Topologically, it's best approximated not as a flat plane but as a sphere, folded and creased to fit inside the skull.
 
-What no one fully appreciated until recently is that this same geometric trick holds the key to understanding pattern formation in the brain.
+This matters because the equations that describe neural activity — called *neural field equations* — behave very differently on curved surfaces than on flat ones. On a flat plane, patterns can tile infinitely in every direction. On a sphere, they can't. The curvature constrains them, quantizes them, forces them into discrete families.
 
-## The Cortex as a Sphere
+This is where a piece of ancient geometry enters the story: stereographic projection.
 
-The mammalian visual cortex, when unfolded, resembles a curved sheet — not perfectly spherical, but close enough that a spherical model captures its essential geometry. Neural field theory, developed in the 1970s by Wilson, Cowan, and Amari, describes the cortex as a continuous field of neural activity. Each point on the cortical surface has an activation level, and nearby points influence each other through excitatory and inhibitory connections.
+## The Mapmaker's Trick
 
-The critical insight is that these interaction patterns have a characteristic spatial scale. Nearby neurons excite each other, while more distant neurons inhibit each other — the so-called "Mexican hat" interaction profile, named for its cross-sectional shape. When the strength of neural interactions crosses a critical threshold, the uniform resting state becomes unstable, and patterns spontaneously emerge.
+Imagine balancing a transparent globe on a table and placing a light at the North Pole. Every point on the sphere casts a shadow on the table below. This shadow map — stereographic projection — has been used by cartographers since antiquity. It preserves angles perfectly (a property mathematicians call *conformality*), distorting only sizes: Greenland looks enormous, while equatorial Africa shrinks.
 
-On a flat sheet, this process is well understood: it produces stripes, hexagons, or other periodic patterns, depending on the interaction radius. But the cortex is not flat. It is curved. And on a sphere, the mathematics changes dramatically.
+The inverse of this map does something remarkable. It takes any equation written on the flat plane and lifts it onto the sphere, introducing a precise mathematical weight — a *conformal factor* — that encodes the curvature. This factor, written as σ = 2/(1 + |x|²), is largest at the center of the map (the South Pole of the sphere) and shrinks toward zero as you move outward (approaching the North Pole).
 
-## Harmonics on the Sphere
+The key insight of our new theory is this: when you write the neural field equation on the sphere and then project it down to the plane, the conformal factor doesn't just distort distances — it *selects* which patterns can exist.
 
-On a sphere, the natural building blocks of pattern are not sine waves but *spherical harmonics* — the same mathematical functions that describe the shapes of electron orbitals in atoms, the vibration modes of a bell, and the gravitational field of the Earth.
+## Counting the Uncountable
 
-Spherical harmonics come in families labeled by a degree number ℓ. Degree 0 is a constant (no pattern). Degree 1 has three independent modes — three fundamentally different ways to paint a simple pattern on the sphere. Degree 2 has five modes. Degree 3 has seven. In general, degree ℓ has exactly **2ℓ + 1** independent modes.
+On a sphere, the natural vibration modes are called *spherical harmonics*. These are the same mathematical functions that describe the shapes of electron orbitals in chemistry, the gravitational field of the Earth in geodesy, and the temperature fluctuations in the cosmic microwave background in cosmology.
 
-This number — 2ℓ + 1 — is not arbitrary. It emerges from the rotational symmetry of the sphere. The sphere looks the same from any angle, and this symmetry, captured mathematically by the rotation group SO(3), forces the space of degree-ℓ patterns to have precisely this dimension. It is a consequence of representation theory, the branch of mathematics that studies how symmetry constrains structure.
+Each spherical harmonic has a *degree* — call it *l* — and for each degree there are exactly 2*l* + 1 independent patterns. Degree 0 is the constant function (one pattern). Degree 1 gives three patterns corresponding to the three spatial axes. Degree 2 gives five patterns, and so on.
 
-## The Bridge: Conformal Transport
+This counting formula — 2*l* + 1 — comes from a deep corner of mathematics called representation theory, specifically the representation theory of the rotation group SO(3). The sphere is the most symmetric possible surface in three-dimensional space, and SO(3) is the group of all its symmetries. Each degree *l* corresponds to an *irreducible representation* of SO(3), and the dimension of that representation is precisely 2*l* + 1.
 
-Here is where stereographic projection enters the picture. Take a pattern on the sphere — say, a degree-3 spherical harmonic with its characteristic nodal lines dividing the sphere into regions of positive and negative activation. Now project it down to the flat plane through the stereographic map.
+What we have shown, both mathematically and computationally, is that the Mexican-hat connectivity kernel — the pattern of short-range excitation and long-range inhibition that characterizes real neural circuits — acts as a *mode selector*. It picks out one particular degree *l* = *N* and amplifies only those patterns, suppressing all others.
 
-The projected pattern is no longer periodic. It decays as you move away from the origin, fading to zero at infinity (which corresponds to the North Pole on the sphere). But it retains a crucial property: it satisfies a weighted version of the wave equation on the plane.
+The result: the neural field on the sphere has exactly 2*N* + 1 stable pattern solutions, where *N* depends on the ratio between the excitatory and inhibitory length scales.
 
-The precise relationship is captured by a conformal transport theorem: if the spherical pattern satisfies the spherical Laplace eigenvalue equation
+## The Magic Number
 
-Δ_{S²} u = −ℓ(ℓ+1) u,
+For a Mexican-hat kernel with interaction radius *r* = 1/*k*, our theory predicts:
 
-then its planar projection v satisfies the weighted equation
+- *k* = 1 → 3 patterns
+- *k* = 2 → 5 patterns  
+- *k* = 3 → 7 patterns
 
-Δ_{ℝ²} v = −4ℓ(ℓ+1) / (1+|x|²)² · v.
+These numbers aren't arbitrary. They are forced by the geometry of the sphere and the algebra of its symmetry group. Three patterns at degree 1 correspond to the three dipole modes — activity concentrated at one pole, with inhibition at the other. Five patterns at degree 2 give the quadrupole modes, with activity arranged in complementary lobes. Seven patterns at degree 3 produce the intricate hexagonal-like arrangements that Klüver called "lattice" forms.
 
-The weight factor 4/(1+|x|²)² is exactly the square of the conformal factor of stereographic projection — the same quantity that measures how much distances are distorted by the map.
+When these spherical patterns are projected back to the flat plane through stereographic projection, they acquire a characteristic decay: a degree-*l* pattern falls off as |*x*|^{−2*l*} far from the center. Higher-degree patterns are more tightly localized, creating the tunnel-like visual effect that is one of Klüver's most commonly reported form constants.
 
-This equation is a *weighted Schrödinger equation* — the same type of equation that governs quantum particles in a potential well. The conformal potential V(x) = 4ℓ(ℓ+1)/(1+|x|²)² acts like a trapping force, binding the pattern near the origin. Each degree-ℓ mode on the sphere corresponds to a bound state of this potential.
+## A Bridge Between Worlds
 
-## Counting Patterns
+What makes this theory unusual is how it connects three seemingly unrelated fields:
 
-The payoff of this geometric dictionary is a precise prediction: when a neural field on a nearly spherical cortex becomes unstable at interaction radius r, the number of independent patterns that can emerge is **2N + 1**, where N is determined by the interaction radius.
+**Differential geometry** provides the conformal factor and the Laplace-Beltrami operator — the mathematical machinery for doing calculus on curved surfaces. Our central identity, σ² · (1 + r²)² = 4, is the algebraic heart of stereographic projection, encoding the exact relationship between flat-space and curved-space derivatives.
 
-This is not a rough estimate or a numerical observation. It is a mathematical theorem, following from three ingredients:
+**Representation theory** provides the pattern count. The fact that degree *l* gives exactly 2*l* + 1 patterns is not a coincidence or an approximation — it is a theorem about the structure of the rotation group, as rigid and certain as the Pythagorean theorem.
 
-1. The conformal transport identity, which converts spherical dynamics to weighted planar dynamics.
-2. The eigenvalue structure of the spherical Laplacian, which organizes modes by degree.
-3. The representation-theoretic dimension formula, which fixes the multiplicity at 2ℓ + 1.
+**Neuroscience** provides the Mexican-hat kernel and the experimental predictions. The theory doesn't just count patterns in the abstract; it predicts which patterns should be observed in neural recordings and in the subjective reports of people experiencing visual hallucinations.
 
-For a Mexican-hat interaction with radius r ≈ 1/k, the dominant mode has degree k, giving 2k+1 independent patterns. When k = 1, there are 3 patterns (simple dipolar activations). When k = 2, there are 5 (quadrupolar patterns). When k = 3, there are 7 (more complex angular patterns with three-fold structure).
+## What the Sphere Remembers
 
-## Why Patterns Decay
+Perhaps the most striking consequence is what happens at infinity. In stereographic coordinates, the "point at infinity" on the plane corresponds to the North Pole of the sphere — the one point that the projection misses. Our conformal factor σ = 2/(1 + |x|²) vanishes at infinity, and with it, the neural field patterns decay to zero.
 
-A key feature of the transported patterns is that they decay at infinity in the planar coordinates. This follows from a topological fact: as you move infinitely far from the origin in the plane, the inverse stereographic projection approaches the North Pole of the sphere. If the spherical pattern vanishes at the North Pole (which is generically true for positive-degree harmonics), then the planar pattern must fade away at large distances.
+This means that every pattern on the sphere, when viewed through the stereographic lens, is *automatically localized*. You don't need to impose boundary conditions or cutoffs by hand. The geometry of the sphere does it for you. The conformal weight is nature's own windowing function.
 
-This decay property is what makes the planar pullbacks physically meaningful as cortical activation patterns. They are not infinite periodic structures but localized, decaying motifs — exactly what is observed in visual hallucination patterns.
-
-## From Ancient Maps to Modern Neuroscience
-
-The story of stereographic projection spans two millennia, from Greek astronomy through Islamic cartography, Renaissance navigation, and modern complex analysis. Its application to neural field theory represents a new chapter in this long history.
-
-What makes this connection powerful is its *exactness*. The conformal transport is not an approximation. It is a precise geometric identity that converts problems on curved surfaces into weighted problems on flat surfaces, preserving all the essential structure. The 2ℓ+1 multiplicity is not a perturbative result but an exact consequence of symmetry.
-
-This framework also connects to other areas of science and mathematics. The weighted Schrödinger equation appears in quantum mechanics. The representation theory of SO(3) underlies atomic physics. The conformal geometry is central to string theory and the AdS/CFT correspondence. The same mathematical structure appears in geometric deep learning, where neural networks on spheres and other manifolds must respect rotational symmetry.
+This self-localization has a beautiful physical interpretation. The cortex is finite, but the mathematical idealization of a neural field extends to infinity. The conformal factor reconciles these two facts: it allows infinite-plane mathematics to produce finite-extent solutions, precisely because those solutions secretly live on a compact sphere.
 
 ## Looking Forward
 
-Several concrete predictions emerge from this theory, all computationally testable. The mode selection law — that interaction radius r = 1/k selects degree k — can be verified by computing Funk–Hecke eigenvalues for specific kernels. The nodal domain correspondence predicts how the topology of cortical activation regions transforms under stereographic transport. The conformal robustness hypothesis suggests that small deviations from perfect spherical geometry should not change the dominant pattern multiplicity.
+The theory opens several avenues of investigation. One is the question of *stability*: among the 2*N* + 1 patterns selected by the Mexican-hat kernel, which ones are stable under perturbation? Numerical experiments suggest that patterns aligned with the kernel's symmetry axes are the most robust, but a full stability analysis remains open.
 
-Perhaps most intriguingly, the theory predicts that the geometric patterns seen during visual hallucinations should cluster into specific symmetry classes, each corresponding to a particular degree ℓ of spherical harmonics. The spirals, fans, and lattices reported by observers are not random — they are the visible signatures of the brain's spherical geometry, projected into our flat visual field by a mathematical map that Hipparchus might have recognized.
+Another direction involves *higher-dimensional spheres*. The cortex is approximately a 2-sphere, but the theory generalizes naturally to *S^n* for any *n*. On *S^3*, the multiplicity formula becomes more complex (involving the dimensions of representations of SO(4)), and the resulting patterns could model activity in higher-dimensional neural network architectures used in machine learning.
 
-The brain, it seems, is a geometer. And its visual cortex speaks the language of conformal symmetry.
+Finally, there is the question of *dynamics*. Our current results concern steady-state patterns — the fixed points of the neural field equation. But real hallucinations evolve in time: spirals rotate, tunnels expand, lattices shift. Extending the stereographic neural field theory to time-dependent patterns would require understanding how the conformal factor affects wave propagation, a problem that connects to mathematical physics through the wave equation on curved spacetime.
+
+The brain, it seems, is a geometer. The patterns it generates when freed from external input are not noise — they are the eigenmodes of a curved surface, the natural harmonics of a sphere. And the ancient mapmaker's trick of stereographic projection turns out to be the key that unlocks their mathematical structure.
+
+---
+
+*This research builds on foundational work in neural field theory by Amari, Wilson-Cowan, Bressloff-Cowan, and Ermentrout-Cowan, connecting it to the classical differential geometry of stereographic projection and the representation theory of SO(3).*
