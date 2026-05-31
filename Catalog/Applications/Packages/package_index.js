@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "date": "2026-05-31T10:02:42Z",
     "exp_id": "285768df",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.657554181818182,
+    "quality": "partial",
     "pkg_num": 475
   },
   {
@@ -13784,8 +13784,8 @@ window.PACKAGE_GRAPH = {
       "shape": "dodecahedron",
       "date": "2026-05-31T10:02:42Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.657554181818182,
+      "quality": "partial"
     }
   ],
   "edges": [
