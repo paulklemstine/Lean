@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "rotas_basis_conjecture",
@@ -52,7 +52,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 90
+      "hue": 91
+    },
+    {
+      "id": "random_matrices_edge_universality",
+      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:14Z",
+      "hue": 91
     }
   ],
   "edges": [],

@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "random_matrices_edge_universality.json",
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:22:14Z",
+    "exp_id": "941734c2",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 7
+  },
+  {
     "filename": "rotas_basis_conjecture.json",
     "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
     "domain": "Algebra",
     "date": "2026-05-31T20:19:26Z",
     "exp_id": "edde521f",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7123901951219513,
+    "quality": "substantial",
     "pkg_num": 6
   },
   {
@@ -74,6 +84,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "random_matrices_edge_universality.json": {
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+    "exp_id": "941734c2",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "exp_id": "866a2ce9",
@@ -127,7 +145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 95,
+      "hue": 92,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -138,7 +156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -160,7 +178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -171,7 +189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -182,7 +200,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 90,
+      "hue": 91,
+      "priority_score": 0.7123901951219513,
+      "quality": "substantial"
+    },
+    {
+      "id": "random_matrices_edge_universality",
+      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:14Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
