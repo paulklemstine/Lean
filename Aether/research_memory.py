@@ -886,6 +886,9 @@ class FutureDirectionsManager:
             if d.status == "in_progress":
                 try:
                     ts = datetime.fromisoformat(d.timestamp)
+                    # Ensure offset-aware comparison
+                    if ts.tzinfo is None:
+                        ts = ts.replace(tzinfo=timezone.utc)
                     if ts < cutoff:
                         d.status = "available"
                         d.consumed_by_exp_id = ""
