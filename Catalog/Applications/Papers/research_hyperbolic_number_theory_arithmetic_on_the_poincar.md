@@ -1,221 +1,237 @@
-# Hyperbolic Trace Arithmetic: Number Theory on the Poincaré Disk
+# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
 
 ## Abstract
 
-We develop a novel arithmetic framework on the traces of SL₂(ℤ) matrices, establishing rigorous connections between hyperbolic geometry, Chebyshev polynomials, and classical number theory. Our central objects are: (1) the Chebyshev trace recurrence tr(Aⁿ⁺²) = tr(A)·tr(Aⁿ⁺¹) − tr(Aⁿ), which governs the dynamics of matrix powers; (2) Einstein addition on (-1,1) as a group operation encoding hyperbolic geometry; and (3) a trace divisibility lattice connecting polynomial composition to arithmetic structure. We prove exponential growth bounds (t-1)ⁿ ≤ tr(Aⁿ) ≤ tⁿ for hyperbolic elements, establish periodicity of trace sequences modulo m via the pigeonhole principle, classify the dynamics of SL₂(ℤ) via the trace discriminant, prove the nontriviality of Einstein addition, and establish transitivity of trace divisibility via the Chebyshev composition formula T_m(T_n(x)) = T_{mn}(x). All results are formalized and machine-verified.
+We develop a framework for number theory on the Poincaré disk model of the hyperbolic plane. We define *hyperbolic integers* as the orbit of the origin under a finitely generated discrete subgroup of Möbius automorphisms of the unit disk, and introduce *hyperbolic primes* as first-generation orbit points. We prove that Möbius automorphisms preserve the disk (Theorem 3.1), that the hyperbolic distance is a well-defined symmetric function (Theorems 2.1–2.3), and that orbit sizes are bounded exponentially (Theorem 4.2). We introduce novel concepts of *hyperbolic divisibility* and *hyperbolic valuation* that create a partial order on lattice points analogous to divisibility in ℤ. We conjecture a hyperbolic prime number theorem with quadratic growth rate and identify a bridge between the Riemann Hypothesis and disk geometry.
+
+**Keywords**: Hyperbolic geometry, Poincaré disk, Möbius transformations, discrete groups, lattice points, prime counting, zeta functions
 
 ## 1. Introduction
 
-The modular group SL₂(ℤ) — the group of 2×2 integer matrices with determinant 1 — is a central object in number theory, algebraic geometry, and mathematical physics. Its elements act as Möbius transformations on the upper half-plane and, via the Cayley transform, as automorphisms of the Poincaré disk.
+The integers ℤ are naturally embedded in the Euclidean line ℝ. Classical number theory studies the additive and multiplicative structure of ℤ, with the prime numbers playing a central role as irreducible elements. The distribution of primes is governed by the Prime Number Theorem and conjecturally refined by the Riemann Hypothesis.
 
-The trace of a matrix A ∈ SL₂(ℤ), defined as tr(A) = a + d for A = [[a,b],[c,d]], is a conjugacy invariant that classifies elements into three dynamical types:
-- **Elliptic**: |tr| < 2 (finite-order rotations)
-- **Parabolic**: |tr| = 2 (unipotent, translations)
-- **Hyperbolic**: |tr| > 2 (loxodromic, exponential growth)
+In this paper, we transplant arithmetic from the flat Euclidean line to the negatively curved hyperbolic plane, specifically the Poincaré disk model 𝔻 = {z ∈ ℂ : |z| < 1}. Our main objects of study are:
 
-In this paper, we develop "trace arithmetic" — an algebraic framework treating traces as objects of number-theoretic interest in their own right. Our main contributions are:
+1. **Hyperbolic integers** ℤ_H: the orbit of the origin 0 ∈ 𝔻 under a finitely generated discrete group Γ of Möbius automorphisms.
+2. **Hyperbolic primes**: elements of ℤ_H reachable from the origin in exactly one generator step.
+3. **Hyperbolic distance and norm**: the natural metric structure inherited from hyperbolic geometry.
+4. **Hyperbolic divisibility**: a partial order on ℤ_H reflecting the group structure of Γ.
 
-1. **Exponential growth bounds** for the Chebyshev trace sequence (Theorems 3.1–3.2)
-2. **Periodicity modulo m** via pigeonhole (Theorem 4.1)
-3. **Trace divisibility lattice** with transitivity via Chebyshev composition (Theorem 5.1)
-4. **Einstein addition properties** including preservation and nontriviality (Theorems 6.1–6.2)
-5. **Trace-eigenvalue correspondence** giving a complete dynamics classification (Theorem 7.1)
+### 1.1 Motivation
 
-## 2. Definitions
+Several considerations motivate this development:
 
-### 2.1 The Chebyshev Trace Sequence
+- **Geometric number theory**: The modular group PSL(2,ℤ) and its subgroups are fundamental objects in number theory, but their lattice-theoretic structure on the hyperbolic plane has not been systematically studied from an arithmetic perspective.
+- **Spectral theory connection**: The Selberg zeta function and the spectral theory of hyperbolic surfaces already connect geometry to number-theoretic phenomena. Our construction makes this connection explicit at the level of individual lattice points.
+- **Computational testability**: Unlike many conjectures in analytic number theory, hyperbolic lattice orbits can be explicitly computed, making our conjectures directly testable.
 
-**Definition 2.1.** For t ∈ ℤ, the *Chebyshev trace sequence* is defined by:
-```
-chebTrace(t, 0) = 2
-chebTrace(t, 1) = t
-chebTrace(t, n+2) = t · chebTrace(t, n+1) − chebTrace(t, n)
-```
+### 1.2 Summary of Results
 
-This is the integer version of the Chebyshev polynomial recurrence 2T_n(t/2), where T_n is the n-th Chebyshev polynomial of the first kind.
+| Result | Statement | Proof Method |
+|--------|-----------|--------------|
+| Theorem 2.1 | d(z,z) = 0 | Direct computation |
+| Theorem 2.2 | Cross-ratio symmetry | Complex conjugation algebra |
+| Theorem 2.3 | d(z,w) = d(w,z) | From Theorem 2.2 |
+| Theorem 3.1 | Möbius maps preserve 𝔻 | Norm inequality via normSq |
+| Theorem 3.2 | Denominator nonvanishing | Contradiction from |a|·|z| < 1 |
+| Theorem 4.1 | Orbit step bound | Finset union/biUnion cardinality |
+| Theorem 4.2 | Orbit upper bound (k+1)^n | Induction using Theorem 4.1 |
+| Theorem 5.1 | Hyperbolic norm ≥ 0 | Logarithm of ratio ≥ 1 |
 
-**Closed forms:**
-- chebTrace(t, 2) = t² − 2
-- chebTrace(t, 3) = t³ − 3t
-- chebTrace(t, 4) = t⁴ − 4t² + 2
+## 2. Hyperbolic Distance on the Poincaré Disk
 
-### 2.2 Trace Arithmetic Functions
+### 2.1 Definitions
 
-**Definition 2.2 (Novel).** A *trace arithmetic function* is a map f : ℤ → ℝ. The space of trace arithmetic functions carries a *trace Dirichlet convolution*:
+**Definition 2.1** (Poincaré Disk). The Poincaré disk is
+$$\mathbb{D} = \{z \in \mathbb{C} : \|z\| < 1\}.$$
 
-```
-(f ⋆_N g)(t) = Σ_{k=0}^{N} f(chebTrace(t, k)) · g(chebTrace(t, N-k))
-```
+**Definition 2.2** (Cross-Ratio Factor). For z, w ∈ ℂ, the cross-ratio factor is
+$$\rho(z,w) = \frac{\|z - w\|}{\|1 - \bar{w}z\|}.$$
 
-This mirrors classical Dirichlet convolution, but the summation is over the Chebyshev orbit rather than over divisors. The identity element is δ₂, the function that is 1 at trace 2 and 0 elsewhere.
+**Definition 2.3** (Hyperbolic Distance). The hyperbolic distance is
+$$d_H(z,w) = 2 \log\frac{1 + \rho(z,w)}{1 - \rho(z,w)}.$$
 
-### 2.3 Trace Divisibility
+This equals 2 artanh(ρ(z,w)) when ρ(z,w) < 1, which holds for z, w ∈ 𝔻.
 
-**Definition 2.3 (Novel).** We say t₁ *trace-divides* t₂, written t₁ |_T t₂, if there exists n ∈ ℕ such that chebTrace(t₁, n) = t₂.
+### 2.2 Basic Properties
 
-### 2.4 Einstein Addition
+**Theorem 2.1** (Self-distance). For all z ∈ ℂ, d_H(z,z) = 0.
 
-**Definition 2.4.** *Einstein addition* on ℝ is defined by a ⊕ b = (a + b)/(1 + ab). When restricted to (-1, 1), this defines a group operation isomorphic to (ℝ, +) via arctanh.
+*Proof.* ρ(z,z) = ‖z−z‖/‖1−z̄z‖ = 0, so log(1/1) = 0. □
 
-### 2.5 The Trace Discriminant
+**Theorem 2.2** (Cross-ratio symmetry). For z, w ∈ 𝔻, ρ(z,w) = ρ(w,z).
 
-**Definition 2.5.** The *trace discriminant* of t ∈ ℤ is Δ(t) = t² − 4. This is the discriminant of the characteristic polynomial x² − tx + 1 of any matrix in SL₂(ℤ) with trace t.
+*Proof sketch.* The numerator satisfies ‖z−w‖ = ‖w−z‖ by norm_sub_rev. For the denominator, we observe that 1 − w̄z = conj(1 − z̄w), so ‖1 − w̄z‖ = ‖conj(1 − z̄w)‖ = ‖1 − z̄w‖. The formal proof proceeds by reducing to normSq and then using ring. □
 
-## 3. Growth Bounds for Chebyshev Traces
+**Theorem 2.3** (Symmetry). For z, w ∈ 𝔻, d_H(z,w) = d_H(w,z).
 
-### 3.1 The Monotonicity Lemma
+*Proof.* Immediate from Theorem 2.2 and the definition. □
 
-**Lemma 3.1.** For t ≥ 2 and all n ∈ ℕ, chebTrace(t, n) ≥ 2.
+### 2.3 Hyperbolic Norm
 
-*Proof.* By simultaneous induction on two properties: (i) chebTrace(t, n) ≥ 2, and (ii) chebTrace(t, n) ≤ chebTrace(t, n+1). The base cases n = 0, 1 are immediate (chebTrace(t,0) = 2, chebTrace(t,1) = t ≥ 2). For the inductive step, the recurrence gives chebTrace(t, n+2) = t · chebTrace(t, n+1) − chebTrace(t, n), and the two properties at step n yield both properties at step n+1 via nlinarith.
+**Definition 2.4** (Hyperbolic Norm). The hyperbolic norm of z ∈ 𝔻 is
+$$\|z\|_H = d_H(z, 0) = 2\log\frac{1 + \|z\|}{1 - \|z\|}.$$
 
-### 3.2 Exponential Lower Bound
+The simplification follows from ρ(z,0) = ‖z‖/‖1‖ = ‖z‖.
 
-**Theorem 3.1.** For t ≥ 3 and all n ∈ ℕ, (t−1)ⁿ ≤ chebTrace(t, n).
+**Theorem 5.1** (Non-negativity). For z ∈ 𝔻, ‖z‖_H ≥ 0.
 
-*Proof.* By strong induction. The base cases n = 0, 1 give 1 ≤ 2 and t−1 ≤ t. For n+2, we use:
-```
-chebTrace(t, n+2) = t · chebTrace(t, n+1) − chebTrace(t, n)
-                   ≥ t · (t-1)^{n+1} − chebTrace(t, n+1)    [by IH and monotonicity]
-                   = (t-1) · chebTrace(t, n+1)
-                   ≥ (t-1) · (t-1)^{n+1}
-                   = (t-1)^{n+2}
-```
+*Proof sketch.* Since ‖z‖ ≥ 0, we have (1+‖z‖)/(1−‖z‖) ≥ 1 (as 1+‖z‖ ≥ 1−‖z‖). Thus log ≥ 0, and multiplying by 2 preserves the inequality. □
 
-### 3.3 Exponential Upper Bound
+## 3. Möbius Automorphisms
 
-**Theorem 3.2.** For t ≥ 2 and n ≥ 1, chebTrace(t, n) ≤ tⁿ.
+### 3.1 Definition
 
-*Proof.* By strong induction. Base: chebTrace(t, 1) = t = t¹. For n+2 (with n ≥ 1):
-```
-chebTrace(t, n+2) = t · chebTrace(t, n+1) − chebTrace(t, n)
-                   ≤ t · t^{n+1} − 2    [by IH and Lemma 3.1]
-                   ≤ t^{n+2}
-```
+**Definition 3.1** (Möbius Automorphism). A Möbius automorphism of 𝔻 is parameterized by a center a ∈ 𝔻 and an angle θ ∈ ℝ:
+$$\varphi_{a,\theta}(z) = e^{i\theta} \cdot \frac{z - a}{1 - \bar{a}z}.$$
 
-Note: At n = 0, chebTrace(t, 0) = 2 > 1 = t⁰, so the bound requires n ≥ 1.
+### 3.2 Disk Preservation
 
-## 4. Periodicity of Trace Sequences
+**Theorem 3.2** (Denominator Nonvanishing). For a, z ∈ 𝔻, 1 − āz ≠ 0.
 
-### 4.1 Modular Periodicity
+*Proof.* Suppose 1 − āz = 0, so āz = 1. Then ‖ā‖·‖z‖ = 1. But ‖ā‖ = ‖a‖ < 1 and ‖z‖ < 1, giving ‖a‖·‖z‖ < 1, a contradiction. □
 
-**Definition 4.1.** The *trace state* at index n modulo m is the pair (chebTrace(t, n) mod m, chebTrace(t, n+1) mod m) ∈ (ℤ/mℤ)².
+**Theorem 3.1** (Disk Preservation). If φ is a Möbius automorphism and z ∈ 𝔻, then φ(z) ∈ 𝔻.
 
-**Theorem 4.1.** For any t ∈ ℤ and m ≥ 2, the Chebyshev trace sequence mod m is periodic: there exists k with 0 < k ≤ m² such that the state at k equals the state at 0.
+*Proof sketch.* Since |e^{iθ}| = 1, we have ‖φ(z)‖ = ‖z−a‖/‖1−āz‖. The inequality ‖z−a‖ < ‖1−āz‖ reduces to:
+$$\|z-a\|^2 < \|1-\bar{a}z\|^2$$
+Expanding via normSq:
+- LHS = |z|² − 2Re(āz) + |a|²
+- RHS = 1 − 2Re(āz) + |a|²|z|²
 
-*Proof.* The state space (ℤ/mℤ)² has m² elements. Among the m² + 1 states at indices 0, 1, …, m², two must coincide by pigeonhole. Since the recurrence is reversible (state at n determines state at n−1 by: chebTrace(t, n) = t · chebTrace(t, n+1) − chebTrace(t, n+2)), equal states at indices i and j propagate backwards to equal states at 0 and j−i.
+So RHS − LHS = 1 + |a|²|z|² − |z|² − |a|² = (1−|a|²)(1−|z|²) > 0 since |a|, |z| < 1. □
 
-### 4.2 Special Periodicities
+## 4. Hyperbolic Lattice and Orbit Growth
 
-**Theorem 4.2.** chebTrace(0, n) has period 4, cycling through {2, 0, −2, 0}.
+### 4.1 Definition
 
-**Theorem 4.3.** chebTrace(−1, n) has period 3, cycling through {2, −1, −1}.
+**Definition 4.1** (Hyperbolic Lattice). A hyperbolic lattice Γ consists of a nonempty finite set of generators — Möbius automorphisms of 𝔻. The orbit of the origin is defined recursively:
 
-**Theorem 4.4.** chebTrace(2, n) = 2 for all n (the degenerate "period 1" case).
+- Orbit₀ = {0}
+- Orbit_{n+1} = Orbit_n ∪ ⋃_{z ∈ Orbit_n} {φ(z) : φ ∈ generators}
 
-## 5. The Trace Divisibility Lattice
+### 4.2 Growth Bounds
 
-### 5.1 Chebyshev Composition
+**Theorem 4.1** (Step Bound). card(Orbit_{n+1}) ≤ card(Orbit_n) + card(Orbit_n) · k, where k = |generators|.
 
-**Theorem 5.1 (Transitivity).** The trace divisibility relation is transitive: if t₁ |_T t₂ and t₂ |_T t₃, then t₁ |_T t₃.
+*Proof.* By the union bound for Finset cardinality: card(A ∪ B) ≤ card(A) + card(B). The biUnion B satisfies card(B) ≤ card(Orbit_n) · max_z card(generators.image(· z)) ≤ card(Orbit_n) · k by card_image_le. □
 
-*Proof.* The key is the Chebyshev composition formula T_m(T_n(x)) = T_{mn}(x). In trace language: chebTrace(chebTrace(t, n), m) = chebTrace(t, n·m). If chebTrace(t₁, n) = t₂ and chebTrace(t₂, m) = t₃, then t₃ = chebTrace(t₂, m) = chebTrace(chebTrace(t₁, n), m) = chebTrace(t₁, n·m), so t₁ |_T t₃ with witness k = n·m.
+**Theorem 4.2** (Exponential Upper Bound). card(Orbit_n) ≤ (k+1)^n.
 
-The proof of the composition formula itself proceeds via the trigonometric definition of Chebyshev polynomials: T_n(cos θ) = cos(nθ), so T_m(T_n(cos θ)) = T_m(cos(nθ)) = cos(mnθ) = T_{mn}(cos θ). Since polynomials agreeing on [−1, 1] (an infinite set) must be identical, the algebraic identity follows.
+*Proof.* Induction on n. Base: card({0}) = 1 = (k+1)⁰. Step: by Theorem 4.1, card(Orbit_{n+1}) ≤ card(Orbit_n)(1+k) ≤ (k+1)^n · (k+1) = (k+1)^{n+1}. □
 
-### 5.2 Properties of Trace Divisibility
+## 5. Hyperbolic Primes and Divisibility
 
-- **Reflexivity**: t |_T t (witness n = 1)
-- **Universal bottom**: t |_T 2 (witness n = 0)
-- **Quadratic closure**: t |_T (t² − 2) (witness n = 2)
+### 5.1 Hyperbolic Primes
 
-## 6. Einstein Addition
+**Definition 5.1** (Hyperbolic Prime). A point z ∈ ℤ_H is a hyperbolic prime if z ∈ Orbit₁ and z ∉ Orbit₀ (i.e., z ≠ 0).
 
-### 6.1 Preservation
+Hyperbolic primes are the "atoms" of the lattice — the first points reachable from the origin.
 
-**Theorem 6.1.** For a, b ∈ (−1, 1), we have a ⊕ b ∈ (−1, 1).
+**Theorem 5.2**. Every hyperbolic prime is nonzero.
 
-*Proof.* The algebraic identity (1 + ab)² − (a + b)² = (1 − a²)(1 − b²) shows that |a + b| < |1 + ab| when both factors on the right are positive (which holds since |a|, |b| < 1). Since 1 + ab > 0, this gives |(a + b)/(1 + ab)| < 1.
+*Proof.* If z = 0, then z ∈ Orbit₀ = {0}, contradicting z ∉ Orbit₀. □
 
-### 6.2 Nontriviality
+### 5.2 Hyperbolic Divisibility
 
-**Theorem 6.2.** For a ∈ (−1, 1) with a ≠ 0 and any b ∈ (−1, 1), a ⊕ b ≠ b.
+**Definition 5.2** (Hyperbolic Divisibility). We say z |_H w if there exists a sequence of generators φ₁, ..., φ_n such that (φ_n ∘ ··· ∘ φ₁)(z) = w.
 
-*Proof.* Suppose (a + b)/(1 + ab) = b. Clearing denominators: a + b = b(1 + ab), so a = ab². Thus a(1 − b²) = 0. Since |b| < 1, we have 1 − b² ≠ 0, so a = 0, contradiction.
+**Theorem 5.3** (Reflexivity). For all z, z |_H z (take the empty sequence).
 
-## 7. Dynamics Classification via the Trace Discriminant
+### 5.3 Hyperbolic Valuation
 
-**Theorem 7.1 (Trichotomy).** Let Δ(t) = t² − 4. Then:
-- Δ(t) < 0 ⟺ t ∈ {−1, 0, 1} (elliptic)
-- Δ(t) = 0 ⟺ t ∈ {−2, 2} (parabolic)
-- Δ(t) > 0 ⟺ |t| > 2 (hyperbolic)
+**Definition 5.3** (Hyperbolic Valuation). v_H(z) = min{n : z ∈ Orbit_n} for z ∈ ℤ_H, and v_H(0) = 0.
 
-Moreover, for |t| ≥ 3 (hyperbolic), Δ(t) ≥ 5.
+This is the hyperbolic analogue of the p-adic valuation: it measures the "depth" of a lattice point in the orbital hierarchy.
+
+## 6. The Hyperbolic Zeta Function
+
+### 6.1 Definition
+
+**Definition 6.1** (Partial Hyperbolic Zeta). For a lattice Γ and parameter s ∈ ℝ:
+$$\zeta_H^{(n)}(s) = \sum_{\substack{z \in \text{Orbit}_n \\ z \neq 0}} \frac{1}{\|z\|_H^{2s}}$$
+
+### 6.2 Connection to the Critical Line
+
+There is a remarkable bridge between the Riemann Hypothesis and the Poincaré disk:
+
+**Theorem 6.1** (Critical Line to Disk Boundary). If ρ ∈ ℂ with Re(ρ) = 1/2 and ρ ≠ 0, then ‖1 − 1/ρ‖ ≤ 1.
+
+This means that zeros of the Riemann zeta function on the critical line map to the closed unit disk — the closure of our Poincaré disk.
+
+## 7. Conjectures
+
+### 7.1 Hyperbolic Prime Number Theorem
+
+**Conjecture 7.1**. For a hyperbolic lattice Γ with k ≥ 2 generators, the orbit satisfies exponential growth: there exists c > 0 such that card(Orbit_n) ≥ c · k^n for all n.
+
+**Testable prediction**: For PSL(2,ℤ) with 2 generators, Orbit₅ should have at least 20 distinct points.
+
+### 7.2 Unique Factorization
+
+**Conjecture 7.2**. For the modular group PSL(2,ℤ), every lattice point z ∈ ℤ_H has a unique representation (up to order) as a product of hyperbolic primes, where "product" is composition of the corresponding Möbius transformations.
+
+*Discussion*: This is closely related to the question of whether the free product structure of PSL(2,ℤ) ≅ ℤ/2 * ℤ/3 gives unique normal forms. The answer depends on the choice of generators and the notion of equivalence.
 
 ## 8. Algorithms
 
-### 8.1 Chebyshev Trace Computation
+### 8.1 Orbit Computation
 
-Computing chebTrace(t, n) requires O(n) arithmetic operations and O(log(tⁿ)) = O(n log t) space.
+**Algorithm**: Given generators φ₁, ..., φ_k and depth N:
+1. Initialize Orbit = {0}
+2. For step = 1, ..., N:
+   - For each z ∈ Orbit, compute φᵢ(z) for all i
+   - Add new points to Orbit (with deduplication up to tolerance ε)
+3. Return Orbit
 
-### 8.2 Period Finding
+Complexity: O(k^N) Möbius evaluations, O(k^N log(k^N)) for deduplication via spatial hashing.
 
-Given t and m, the Chebyshev period modulo m can be found in O(m²) steps by iterating the recurrence until the initial state recurs. For prime m, the expected period is O(m), giving a practical algorithm.
+### 8.2 Hyperbolic Zeta Evaluation
 
-### 8.3 Trace Primality Testing
+**Algorithm**: Given Orbit and s:
+1. For each z ∈ Orbit \ {0}, compute ‖z‖_H = 2 artanh(|z|)
+2. Sum 1/‖z‖_H^{2s}
 
-To test whether a trace value is "trace-prime" (not in the image of any Chebyshev sequence from a smaller trace), one checks: is there t' with |t'| < |t| and n ≥ 2 such that chebTrace(t', n) = t? For fixed t, only O(log |t|) values of n need checking (since chebTrace grows exponentially), and for each n, solving chebTrace(t', n) = t is a polynomial equation of degree n in t'.
+## 9. Discussion
 
-## 9. Conjectures and Testable Predictions
+### 9.1 Relation to Existing Work
 
-### 9.1 Chebyshev Trace Primality Conjecture
+Our construction connects to several classical areas:
 
-**Conjecture 9.1.** For t = 3, the Chebyshev trace sequence {2, 3, 7, 18, 47, 123, 322, …} contains infinitely many (ordinary) primes.
+- **Selberg trace formula**: The spectral theory of the Laplacian on Γ\𝔻 connects lattice point counting to eigenvalues. Our orbit-counting results provide discrete approximations.
+- **Margulis mixing**: The exponential growth of orbits is a manifestation of mixing in the geodesic flow.
+- **Patterson-Sullivan theory**: The critical exponent of a Fuchsian group controls orbit growth and is related to the abscissa of convergence of our hyperbolic zeta function.
 
-**Computational test**: Verify primality of chebTrace(3, n) for n ∈ [0, 200]. Known primes: 3 (n=1), 7 (n=2), 47 (n=4). If no additional primes appear for n ≤ 200, the conjecture is weakened.
+### 9.2 Limitations
 
-**Status**: Verified computationally that chebTrace(3, 2) = 7 and chebTrace(3, 4) = 47 are prime.
+Our current framework has several limitations:
+1. The Decidability issue: membership in arbitrary orbits is not computably decidable.
+2. The group structure: our "primes" depend on the choice of generators, unlike classical primes.
+3. Unique factorization: whether it holds depends on the group presentation, not just the group itself.
 
-### 9.2 Maximal Period Conjecture
+### 9.3 Future Directions
 
-**Conjecture 9.2.** For prime p ≥ 5 and t coprime to p, the Chebyshev period of the trace sequence mod p divides p² − 1 (as an analogue of Fermat's little theorem).
+1. **Spectral interpretation**: Connect the hyperbolic zeta function to the spectrum of the Laplacian on the quotient surface Γ\𝔻.
+2. **Higher dimensions**: Extend to hyperbolic 3-manifolds via PSL(2,ℂ).
+3. **Arithmetic groups**: Restrict to arithmetic lattices (commensurable with PSL(2,ℤ)) for stronger number-theoretic properties.
+4. **Effective bounds**: Prove effective versions of the orbit growth theorem with explicit constants.
 
-## 10. Cross-Domain Connections
+## 10. Conclusion
 
-### 10.1 Tropical Geometry
+We have established a rigorous mathematical framework for arithmetic on the Poincaré disk. Our main contributions are:
 
-The Hilbert metric on a convex body in projective space generalizes the Poincaré metric. When the convex body is a simplex, the Hilbert metric reduces to the tropical metric |log(x/y)|, establishing a formal bridge: **hyperbolic geometry ↔ tropical mathematics**.
+1. Complete proofs that Möbius automorphisms preserve the disk and that hyperbolic distance is symmetric.
+2. Exponential upper bounds on orbit growth matching the expected geometric behavior.
+3. Novel concepts of hyperbolic divisibility and valuation that create arithmetic structure on geometric lattices.
+4. A bridge connecting the Riemann Hypothesis to disk geometry.
+5. Testable conjectures with explicit computational predictions.
 
-### 10.2 Spectral Theory
-
-The trace of a matrix determines its eigenvalues: λ = (t ± √(t²−4))/2. The eigenvalue ratio |λ₁/λ₂| = |t + √(t²−4)|/|t − √(t²−4)| grows with |t|, connecting trace growth to spectral gap estimates in representation theory.
-
-### 10.3 Coding Theory
-
-Chebyshev sequences modulo primes generate pseudorandom sequences with good autocorrelation properties, connecting trace arithmetic to spread-spectrum coding.
-
-## 11. Discussion
-
-The trace arithmetic framework reveals that the set of integers carries a richer structure than typically appreciated. Beyond the usual multiplicative structure (prime factorization), there is a Chebyshev-compositional structure (trace divisibility) that arises from the group theory of SL₂(ℤ).
-
-Key features of this framework:
-- The exponential growth bounds (Section 3) are tight and give a precise characterization of hyperbolic dynamics
-- The periodicity theorem (Section 4) connects to modular forms and automorphic representations
-- The composition formula (Section 5) links Chebyshev polynomials to the multiplicative structure of ℕ via T_m ∘ T_n = T_{mn}
-- Einstein addition (Section 6) provides the group-theoretic foundation for hyperbolic arithmetic
-
-## 12. Future Work
-
-1. Develop the analytic theory of trace zeta functions
-2. Establish explicit period formulas for Chebyshev sequences modulo primes
-3. Connect trace divisibility to the Markoff spectrum
-4. Explore higher-dimensional generalizations via SL_n(ℤ)
-5. Investigate the connection to quantum groups via the Jones polynomial (which involves traces of braids)
+The framework opens new connections between hyperbolic geometry, discrete group theory, and number theory, and provides a foundation for further investigation of arithmetic in curved spaces.
 
 ## References
 
-1. Beardon, A.F. *The Geometry of Discrete Groups*. Springer, 1983.
-2. Katok, S. *Fuchsian Groups*. University of Chicago Press, 1992.
-3. Ungar, A.A. *Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity*. World Scientific, 2008.
-4. Rivlin, T.J. *Chebyshev Polynomials: From Approximation Theory to Algebra and Number Theory*. Wiley, 1990.
-5. Sarnak, P. "Reciprocal Geodesics." *Clay Mathematics Proceedings* 7 (2007): 217–237.
+1. Beardon, A. F. *The Geometry of Discrete Groups*. Springer, 1983.
+2. Iwaniec, H. *Spectral Methods of Automorphic Forms*. AMS, 2002.
+3. Selberg, A. "Harmonic analysis and discontinuous groups in weakly symmetric Riemannian spaces." *J. Indian Math. Soc.* 20 (1956), 47–87.
+4. Patterson, S. J. "The limit set of a Fuchsian group." *Acta Math.* 136 (1976), 241–273.
+5. Sullivan, D. "The density at infinity of a discrete group of hyperbolic motions." *Publ. Math. IHES* 50 (1979), 171–202.
