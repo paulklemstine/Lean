@@ -130,7 +130,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // Lean
         const leanDiv = document.getElementById('content-lean');
         if (data.lean_proofs) {
-            leanDiv.textContent = data.lean_proofs;
+            // lean_proofs can be a string (full code) or an array of strings (filenames or code)
+            let leanText = '';
+            if (typeof data.lean_proofs === 'string') {
+                leanText = data.lean_proofs;
+            } else if (Array.isArray(data.lean_proofs)) {
+                // Filter out filename placeholders, keep actual code
+                const codeEntries = data.lean_proofs.filter(e => typeof e === 'string' && e.length > 50 && !e.endsWith('.lean'));
+                const filenameEntries = data.lean_proofs.filter(e => typeof e === 'string' && (e.endsWith('.lean') || e.length <= 50));
+                if (codeEntries.length > 0) {
+                    leanText = codeEntries.join('\n\n');
+                } else if (filenameEntries.length > 0) {
+                    leanDiv.textContent = '-- Lean proofs available at: ' + filenameEntries.join(', ');
+                    return;
+                }
+            }
+            if (leanText && leanText.length > 50) {
+                leanDiv.textContent = leanText;
+            } else {
+                leanDiv.textContent = '-- No Lean proofs provided.';
+            }
         } else {
             leanDiv.textContent = '-- No Lean proofs provided.';
         }
