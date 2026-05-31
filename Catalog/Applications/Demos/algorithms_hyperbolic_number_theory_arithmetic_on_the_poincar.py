@@ -1,166 +1,306 @@
+#!/usr/bin/env python3
 """
 Hyperbolic Number Theory: Core Algorithms
 ==========================================
 
-Type-hinted implementations of arithmetic on the Poincaré disk,
-lattice point counting for PSL(2,Z), and hyperbolic zeta function
-partial sums.
+Type-hinted implementations of the key algorithms from the formalization.
 """
 
-import cmath
 import math
-from typing import Tuple, List, Optional
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
+from enum import Enum
 
 
-# ─── Poincaré Disk Primitives ───────────────────────────────────────
+# ============================================================
+# Core Types
+# ============================================================
 
-def poincare_conformal_factor(z: complex) -> float:
-    """Conformal factor λ(z) = 2 / (1 - |z|²) for the Poincaré disk metric."""
-    nsq = abs(z) ** 2
-    if nsq >= 1.0:
-        raise ValueError(f"|z|² = {nsq:.6f} ≥ 1: point outside the disk")
-    return 2.0 / (1.0 - nsq)
-
-
-def mobius_add(z: complex, w: complex) -> complex:
-    """Möbius (Einstein) addition: z ⊕ w = (z + w) / (1 + conj(z)·w)."""
-    return (z + w) / (1.0 + z.conjugate() * w)
+class SL2Class(Enum):
+    ELLIPTIC = "elliptic"
+    PARABOLIC = "parabolic"
+    HYPERBOLIC = "hyperbolic"
 
 
-def mobius_aut(a: complex, z: complex) -> complex:
-    """Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)·z)."""
-    return (z - a) / (1.0 - a.conjugate() * z)
+@dataclass
+class SL2Z:
+    """2×2 integer matrix with determinant 1."""
+    a: int
+    b: int
+    c: int
+    d: int
+
+    def __post_init__(self) -> None:
+        det = self.a * self.d - self.b * self.c
+        if det != 1:
+            raise ValueError(f"Determinant is {det}, not 1")
+
+    @property
+    def trace(self) -> int:
+        return self.a + self.d
+
+    def classify(self) -> SL2Class:
+        t = abs(self.trace)
+        if t < 2:
+            return SL2Class.ELLIPTIC
+        elif t == 2:
+            return SL2Class.PARABOLIC
+        else:
+            return SL2Class.HYPERBOLIC
+
+    def __mul__(self, other: 'SL2Z') -> 'SL2Z':
+        return SL2Z(
+            a=self.a * other.a + self.b * other.c,
+            b=self.a * other.b + self.b * other.d,
+            c=self.c * other.a + self.d * other.c,
+            d=self.c * other.b + self.d * other.d,
+        )
+
+    def inv(self) -> 'SL2Z':
+        return SL2Z(a=self.d, b=-self.b, c=-self.c, d=self.a)
+
+    @staticmethod
+    def identity() -> 'SL2Z':
+        return SL2Z(1, 0, 0, 1)
+
+    @staticmethod
+    def T() -> 'SL2Z':
+        return SL2Z(1, 1, 0, 1)
+
+    @staticmethod
+    def S() -> 'SL2Z':
+        return SL2Z(0, -1, 1, 0)
 
 
-def gyration_factor(a: complex, b: complex) -> complex:
-    """Thomas gyration factor: (1 + conj(a)·b) / (1 + conj(b)·a)."""
-    num = 1.0 + a.conjugate() * b
-    den = 1.0 + b.conjugate() * a
-    if abs(den) < 1e-15:
-        raise ValueError("Gyration factor denominator is zero")
+@dataclass(frozen=True)
+class EinsteinVelocity:
+    """A subluminal velocity: a real number in (-1, 1)."""
+    value: float
+
+    def __post_init__(self) -> None:
+        if abs(self.value) >= 1.0:
+            raise ValueError(f"|value| = {abs(self.value)} >= 1, not subluminal")
+
+    def __add__(self, other: 'EinsteinVelocity') -> 'EinsteinVelocity':
+        result = (self.value + other.value) / (1 + self.value * other.value)
+        return EinsteinVelocity(result)
+
+    def __neg__(self) -> 'EinsteinVelocity':
+        return EinsteinVelocity(-self.value)
+
+    def rapidity(self) -> float:
+        return math.log((1 + self.value) / (1 - self.value)) / 2
+
+
+# ============================================================
+# Algorithm 1: Einstein Addition with Closure Verification
+# ============================================================
+
+def einstein_add(a: float, b: float) -> float:
+    """
+    Einstein addition (relativistic velocity addition).
+
+    For |a| < 1 and |b| < 1, returns (a+b)/(1+ab) ∈ (-1,1).
+
+    Proof of closure: (1+ab)² - (a+b)² = (1-a²)(1-b²) > 0
+    when |a| < 1 and |b| < 1.
+    """
+    return (a + b) / (1 + a * b)
+
+
+def einstein_add_chain(values: List[float]) -> float:
+    """
+    Left-fold Einstein addition over a list of subluminal velocities.
+    By associativity (proved in Lean), the fold direction doesn't matter.
+    """
+    result = 0.0
+    for v in values:
+        result = einstein_add(result, v)
+    return result
+
+
+# ============================================================
+# Algorithm 2: Rapidity Map (Group Isomorphism)
+# ============================================================
+
+def rapidity(x: float) -> float:
+    """
+    The rapidity map: artanh(x) = log((1+x)/(1-x))/2.
+
+    This is a group isomorphism from ((-1,1), ⊕) to (ℝ, +):
+        rapidity(a ⊕ b) = rapidity(a) + rapidity(b)
+
+    Proved formally in Lean as theorem rapidity_additive.
+    """
+    if abs(x) >= 1:
+        raise ValueError(f"|x| >= 1")
+    return math.log((1 + x) / (1 - x)) / 2
+
+
+def inverse_rapidity(r: float) -> float:
+    """Inverse rapidity: tanh(r) maps ℝ → (-1,1)."""
+    return math.tanh(r)
+
+
+# ============================================================
+# Algorithm 3: SL₂(ℤ) Trace Classification
+# ============================================================
+
+def classify_by_trace(t: int) -> SL2Class:
+    """
+    Classify an SL₂(ℤ) element by its trace.
+
+    - Elliptic: |tr| < 2 (finite order, rotation)
+    - Parabolic: |tr| = 2 (cusp, unipotent)
+    - Hyperbolic: |tr| > 2 (geodesic translation)
+
+    Proved in Lean:
+        elliptic_trace_bounded, parabolic_iff_trace_pm2, hyperbolic_iff_trace_large
+    """
+    if abs(t) < 2:
+        return SL2Class.ELLIPTIC
+    elif abs(t) == 2:
+        return SL2Class.PARABOLIC
+    else:
+        return SL2Class.HYPERBOLIC
+
+
+# ============================================================
+# Algorithm 4: Hyperbolic Prime Counting
+# ============================================================
+
+def is_prime(n: int) -> bool:
+    """Primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def hyp_prime_count(n: int) -> int:
+    """
+    Count 'hyperbolic primes' up to n: primes p with p > 2.
+
+    These correspond to potential traces of primitive hyperbolic
+    elements in SL₂(ℤ). Proved monotone and eventually positive in Lean.
+    """
+    return sum(1 for k in range(3, n + 1) if is_prime(k))
+
+
+def hyp_prime_density_ratio(n: int) -> float:
+    """
+    Compute π_H(n) · log(n) / n.
+
+    By the prime number theorem, this ratio → 1 as n → ∞.
+    """
+    if n <= 2:
+        return 0.0
+    return hyp_prime_count(n) * math.log(n) / n
+
+
+# ============================================================
+# Algorithm 5: Poincaré Disk Distance
+# ============================================================
+
+def poincare_distance(z: complex, w: complex) -> float:
+    """
+    Hyperbolic distance on the Poincaré disk.
+
+    d(z,w) = 2·artanh(|z-w| / |1 - w̄z|)
+
+    The denominator |1 - w̄z| > 0 is guaranteed when |z| < 1 and |w| < 1.
+    This was proved formally as cross_ratio_denom_pos in Lean.
+    """
+    num = abs(z - w)
+    den = abs(1 - w.conjugate() * z)
+    if den == 0:
+        raise ValueError("Points on the boundary")
+    return 2 * math.atanh(num / den)
+
+
+def cross_ratio_mod_sq(z: complex, w: complex) -> float:
+    """
+    Cross-ratio modulus squared: |z-w|² / |1 - w̄z|².
+
+    Used in the Poincaré metric formula.
+    """
+    num = abs(z - w) ** 2
+    den = abs(1 - w.conjugate() * z) ** 2
     return num / den
 
 
-def gyration(a: complex, b: complex, c: complex) -> complex:
-    """Thomas gyration: gyr[a,b](c) = factor · c."""
-    return gyration_factor(a, b) * c
+# ============================================================
+# Algorithm 6: SL₂(ℤ) Orbit Generation
+# ============================================================
 
-
-def hyp_dist(z: complex, w: complex) -> float:
-    """Hyperbolic distance d_H(z, w) = 2 · artanh(|φ_w(z)|)."""
-    t = abs(mobius_aut(w, z))
-    if t >= 1.0:
-        return float('inf')
-    return 2.0 * math.atanh(t)
-
-
-def hyp_area(R: float) -> float:
-    """Hyperbolic area of a disk of radius R: A(R) = 2π(cosh R - 1)."""
-    return 2.0 * math.pi * (math.cosh(R) - 1.0)
-
-
-# ─── SL(2,Z) Lattice Point Counting ────────────────────────────────
-
-def sl2z_matrices_up_to_trace(T: int) -> List[Tuple[int, int, int, int]]:
+def generate_sl2z_orbit(
+    basepoint: complex,
+    max_word_length: int = 6
+) -> List[Tuple[complex, SL2Z]]:
     """
-    Enumerate matrices [[a,b],[c,d]] ∈ SL(2,Z) with |trace| = |a+d| ≤ T.
-    Returns list of (a, b, c, d) with ad - bc = 1.
+    Generate orbit points of the modular group action on the upper half-plane,
+    then map to the Poincaré disk via the Cayley transform.
+
+    Uses generators T (translation) and S (inversion).
     """
-    results = []
-    for a in range(-T, T + 1):
-        for d in range(-T, T + 1):
-            if abs(a + d) > T:
-                continue
-            # ad - bc = 1, so bc = ad - 1
-            bc = a * d - 1
-            if bc == 0:
-                # b=0,c=0 impossible (det=0), or b=±1,c=∓1 etc
-                # bc=0 means ad=1
-                for b_val in [0]:
-                    for c_val in [0]:
-                        if a * d - b_val * c_val == 1:
-                            results.append((a, b_val, c_val, d))
-                # Also b or c could be 0
-                if a * d == 1:
-                    results.append((a, 0, 0, d))
-                continue
-            # Find all factor pairs of bc
-            for b in range(-abs(bc), abs(bc) + 1):
-                if b == 0:
-                    continue
-                if bc % b == 0:
-                    c = bc // b
-                    if a * d - b * c == 1:
-                        results.append((a, b, c, d))
-    # Deduplicate
-    return list(set(results))
+    T = SL2Z.T()
+    S = SL2Z.S()
 
+    def moebius_action(g: SL2Z, z: complex) -> complex:
+        return (g.a * z + g.b) / (g.c * z + g.d)
 
-def sl2z_hyp_dist_from_origin(a: int, b: int, c: int, d: int) -> float:
-    """
-    Hyperbolic distance from i to γ·i in the upper half-plane model,
-    where γ = [[a,b],[c,d]] ∈ SL(2,Z).
-    
-    Uses: cosh(d_H(i, γ·i)) = (a² + b² + c² + d²) / 2.
-    """
-    trace_sq = a**2 + b**2 + c**2 + d**2
-    cosh_d = trace_sq / 2.0
-    if cosh_d < 1.0:
-        cosh_d = 1.0  # numerical guard
-    return math.acosh(cosh_d)
+    def cayley_transform(z: complex) -> complex:
+        return (z - 1j) / (z + 1j)
 
+    orbit: List[Tuple[complex, SL2Z]] = []
+    visited: set = set()
+    queue = [(SL2Z.identity(), 0)]
+    generators = [T, T.inv(), S]
 
-def lattice_count_sl2z(R: float, max_trace: int = 100) -> int:
-    """
-    Count lattice points of PSL(2,Z) within hyperbolic distance R of i.
-    
-    Uses the trace bound: d_H(i, γ·i) ≤ R iff (a²+b²+c²+d²)/2 ≤ cosh(R).
-    """
-    cosh_R = math.cosh(R)
-    bound = int(math.ceil(2 * cosh_R))
-    count = 0
-    matrices = sl2z_matrices_up_to_trace(min(bound, max_trace))
-    for (a, b, c, d) in matrices:
-        dist = sl2z_hyp_dist_from_origin(a, b, c, d)
-        if dist <= R:
-            count += 1
-    return count
+    while queue:
+        g, depth = queue.pop(0)
+        key = (g.a, g.b, g.c, g.d)
+        if key in visited or depth > max_word_length:
+            continue
+        visited.add(key)
 
+        z = moebius_action(g, basepoint)
+        w = cayley_transform(z)
 
-# ─── Hyperbolic Zeta Function ──────────────────────────────────────
+        if abs(w) < 1:
+            orbit.append((w, g))
 
-def hyp_zeta_partial(
-    distances: List[float], s: float, cutoff: float = 0.01
-) -> float:
-    """
-    Partial sum of the hyperbolic zeta function:
-    ζ_H(s) = Σ d_n^{-2s} for d_n > cutoff.
-    """
-    total = 0.0
-    for d in distances:
-        if d > cutoff:
-            total += d ** (-2 * s)
-    return total
+        if depth < max_word_length:
+            for gen in generators:
+                queue.append((g * gen, depth + 1))
 
-
-# ─── Lattice Growth Ratio ──────────────────────────────────────────
-
-def lattice_growth_ratio(R: float, N: int, covolume: float) -> float:
-    """
-    Compute the Selberg-Huber ratio N(R) · V / e^R.
-    For PSL(2,Z), covolume V = π/3.
-    The conjecture predicts this → 1 as R → ∞.
-    """
-    return N * covolume / math.exp(R)
+    return orbit
 
 
 if __name__ == "__main__":
     # Quick self-test
-    print("=== Hyperbolic Number Theory: Algorithm Self-Test ===")
-    print(f"λ(0) = {poincare_conformal_factor(0):.4f} (expect 2.0)")
-    print(f"0 ⊕ z = z: {mobius_add(0, 0.5+0.3j):.6f} (expect 0.5+0.3j)")
-    print(f"d_H(0, 0) = {hyp_dist(0, 0):.6f} (expect 0.0)")
-    print(f"A(0) = {hyp_area(0):.6f} (expect 0.0)")
-    print(f"gyr[0,b](c) = c: {abs(gyration(0, 0.3j, 0.5+0.2j) - (0.5+0.2j)):.2e}")
-    print(f"|gyr factor|² = 1: {abs(gyration_factor(0.3, 0.4j))**2:.10f}")
-    print("All self-tests passed.")
+    v1 = EinsteinVelocity(0.5)
+    v2 = EinsteinVelocity(0.3)
+    v3 = v1 + v2
+    print(f"0.5 ⊕ 0.3 = {v3.value:.6f}")
+    print(f"rapidity(0.5 ⊕ 0.3) = {v3.rapidity():.6f}")
+    print(f"rapidity(0.5) + rapidity(0.3) = {v1.rapidity() + v2.rapidity():.6f}")
+
+    # SL₂(ℤ) examples
+    T = SL2Z.T()
+    S = SL2Z.S()
+    print(f"\nT = {T}, trace = {T.trace}, class = {T.classify().value}")
+    print(f"S = {S}, trace = {S.trace}, class = {S.classify().value}")
+    print(f"T·S = {T * S}, trace = {(T * S).trace}, class = {(T * S).classify().value}")
+
+    # Prime counting
+    for n in [100, 1000, 10000]:
+        print(f"π_H({n}) = {hyp_prime_count(n)}, density ratio = {hyp_prime_density_ratio(n):.4f}")

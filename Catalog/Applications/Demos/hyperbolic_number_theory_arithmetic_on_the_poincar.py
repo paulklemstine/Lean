@@ -1,493 +1,449 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory — Numerical Demonstrations
-=====================================================
+Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+=========================================================
 
-Demonstrates key results:
-1. Conformal factor divergence near the boundary
-2. Möbius addition vs Euclidean addition
-3. Thomas gyration (non-associativity measure)
-4. Lattice point counting for PSL(2,Z) and growth ratio
-5. Hyperbolic zeta partial sums
+Demonstrates:
+1. Einstein addition on (-1,1) and its group properties
+2. Rapidity isomorphism: artanh converts ⊕ to +
+3. SL₂(ℤ) trace classification (elliptic/parabolic/hyperbolic)
+4. Hyperbolic prime counting and comparison with PNT
+5. Cross-ratio computation for Poincaré disk distance
 """
 
 import math
-import cmath
-from algorithms import (
-    poincare_conformal_factor, mobius_add, hyp_dist,
-    hyp_area, gyration, gyration_factor,
-    sl2z_hyp_dist_from_origin, sl2z_matrices_up_to_trace,
-    lattice_growth_ratio
-)
+from typing import List, Tuple
 
 
-def demo_conformal_divergence():
-    """Show the conformal factor diverging as |z| → 1."""
-    print("\n" + "="*60)
-    print("DEMO 1: Conformal Factor Divergence")
-    print("="*60)
-    print(f"{'|z|':>10}  {'λ(z)':>12}  {'2/(1-|z|²)':>12}")
-    print("-" * 40)
-    for r in [0.0, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99, 0.999, 0.9999]:
-        z = complex(r, 0)
-        lam = poincare_conformal_factor(z)
-        print(f"{r:>10.4f}  {lam:>12.4f}  {2/(1-r**2):>12.4f}")
-    print("\nKey insight: λ(z) → ∞ as |z| → 1.")
-    print("This means hyperbolic space has infinite extent")
-    print("packed into the unit disk — a finite model of infinity.")
+def einstein_add(a: float, b: float) -> float:
+    """Einstein addition (relativistic velocity addition)."""
+    return (a + b) / (1 + a * b)
 
 
-def demo_mobius_addition():
-    """Compare Möbius and Euclidean addition."""
-    print("\n" + "="*60)
-    print("DEMO 2: Möbius Addition vs Euclidean Addition")
-    print("="*60)
-    pairs = [
-        (0.3+0j, 0.2+0j),
-        (0.5+0j, 0.3+0j),
-        (0.1+0.2j, 0.2+0.1j),
-        (0.4+0.3j, 0.2-0.1j),
-    ]
-    print(f"{'z':>15}  {'w':>15}  {'z+w (Euclid)':>15}  {'z⊕w (Möbius)':>15}")
-    print("-" * 65)
-    for z, w in pairs:
-        euc = z + w
-        mob = mobius_add(z, w)
-        print(f"{z!s:>15}  {w!s:>15}  {euc!s:>15}  {mob:.6f}")
-    print("\nMöbius addition 'compresses' results to stay inside the disk.")
-    print("This is exactly Einstein velocity addition in special relativity!")
+def rapidity(x: float) -> float:
+    """Rapidity map: artanh(x) = log((1+x)/(1-x))/2."""
+    if abs(x) >= 1:
+        raise ValueError(f"|x| = {abs(x)} >= 1, not subluminal")
+    return math.log((1 + x) / (1 - x)) / 2
 
 
-def demo_gyration():
-    """Show the Thomas gyration — non-associativity of Möbius addition."""
-    print("\n" + "="*60)
-    print("DEMO 3: Thomas Gyration (Non-Associativity)")
-    print("="*60)
-    a, b, c = 0.3+0.1j, 0.1+0.2j, 0.2-0.1j
-    
-    # Check |gyr[a,b](c)| = |c|
-    gc = gyration(a, b, c)
-    print(f"a = {a}, b = {b}, c = {c}")
-    print(f"gyr[a,b](c) = {gc:.6f}")
-    print(f"|c|       = {abs(c):.10f}")
-    print(f"|gyr(c)|  = {abs(gc):.10f}")
-    print(f"Preserved: {abs(abs(gc) - abs(c)) < 1e-12}")
-    
-    # Check gyr[0,b] = id
-    gc0 = gyration(0, b, c)
-    print(f"\ngyr[0,b](c) = {gc0:.6f} (should equal c = {c})")
-    print(f"Is identity: {abs(gc0 - c) < 1e-12}")
-    
-    # Show non-associativity
-    lhs = mobius_add(a, mobius_add(b, c))
-    rhs = mobius_add(mobius_add(a, b), c)
-    print(f"\na ⊕ (b ⊕ c) = {lhs:.6f}")
-    print(f"(a ⊕ b) ⊕ c = {rhs:.6f}")
-    print(f"Difference:    {abs(lhs - rhs):.2e}")
-    print("Möbius addition is NOT associative — this is the gyration effect.")
-    
-    # But with gyration correction:
-    rhs_corrected = mobius_add(mobius_add(a, b), gyration(a, b, c))
-    print(f"\n(a ⊕ b) ⊕ gyr[a,b](c) = {rhs_corrected:.6f}")
-    print(f"a ⊕ (b ⊕ c)           = {lhs:.6f}")
-    print(f"Match: {abs(lhs - rhs_corrected) < 1e-10}")
+def classify_trace(t: int) -> str:
+    """Classify SL₂(ℤ) element by trace."""
+    if abs(t) < 2:
+        return "elliptic"
+    elif abs(t) == 2:
+        return "parabolic"
+    else:
+        return "hyperbolic"
 
 
-def demo_lattice_counting():
-    """Count PSL(2,Z) lattice points and check growth ratio."""
-    print("\n" + "="*60)
-    print("DEMO 4: Lattice Point Counting for PSL(2,Z)")
-    print("="*60)
-    
-    covolume = math.pi / 3.0
-    print(f"Covolume V = π/3 ≈ {covolume:.6f}")
-    print(f"\n{'R':>6}  {'N(R)':>8}  {'e^R':>12}  {'A(R)':>12}  {'N·V/e^R':>10}")
-    print("-" * 55)
-    
-    for R in [1.0, 2.0, 3.0, 4.0, 5.0]:
-        cosh_R = math.cosh(R)
-        bound = int(math.ceil(math.sqrt(2 * cosh_R))) + 2
-        
-        count = 0
-        for a in range(-bound, bound+1):
-            for d in range(-bound, bound+1):
-                bc = a * d - 1
-                for b in range(-bound, bound+1):
-                    if b == 0:
-                        if bc == 0:
-                            c = 0
-                            if a * d - b * c == 1:
-                                dist = sl2z_hyp_dist_from_origin(a, b, c, d)
-                                if dist <= R:
-                                    count += 1
-                        continue
-                    if bc % b != 0:
-                        continue
-                    c = bc // b
-                    if abs(c) > bound:
-                        continue
-                    dist = sl2z_hyp_dist_from_origin(a, b, c, d)
-                    if dist <= R:
-                        count += 1
-        
-        eR = math.exp(R)
-        area = hyp_area(R)
-        ratio = lattice_growth_ratio(R, count, covolume)
-        print(f"{R:>6.1f}  {count:>8d}  {eR:>12.2f}  {area:>12.2f}  {ratio:>10.4f}")
-    
-    print("\nSelberg-Huber conjecture: N·V/e^R → 1 as R → ∞")
+def hyp_prime_count(n: int) -> int:
+    """Count primes p with 2 < p <= n."""
+    count = 0
+    for k in range(3, n + 1):
+        if all(k % d != 0 for d in range(2, int(math.sqrt(k)) + 1)):
+            count += 1
+    return count
 
 
-def demo_hyperbolic_zeta():
-    """Compute partial sums of the hyperbolic zeta function."""
-    print("\n" + "="*60)
-    print("DEMO 5: Hyperbolic Zeta Function Partial Sums")
-    print("="*60)
-    
-    # Generate some lattice distances
-    distances = []
-    bound = 5
-    for a in range(-bound, bound+1):
-        for d in range(-bound, bound+1):
-            bc = a * d - 1
-            for b in range(-bound, bound+1):
-                if b == 0:
-                    continue
-                if bc % b != 0:
-                    continue
-                c = bc // b
-                if abs(c) > bound:
-                    continue
-                dist = sl2z_hyp_dist_from_origin(a, b, c, d)
-                if dist > 0.01:
-                    distances.append(dist)
-    
-    distances = sorted(set([round(d, 8) for d in distances]))
-    print(f"Found {len(distances)} distinct non-zero distances")
-    
-    print(f"\n{'s':>6}  {'ζ_H(s, partial)':>18}")
-    print("-" * 30)
-    for s in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
-        zeta_val = sum(d ** (-2 * s) for d in distances if d > 0.01)
-        print(f"{s:>6.1f}  {zeta_val:>18.6f}")
+def poincare_distance(z: complex, w: complex) -> float:
+    """Poincaré disk distance between z and w."""
+    num = abs(z - w)
+    den = abs(1 - w.conjugate() * z)
+    return math.atanh(num / den) * 2
 
 
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   Hyperbolic Number Theory: Arithmetic on the          ║")
-    print("║   Poincaré Disk — Numerical Demonstrations             ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    
-    demo_conformal_divergence()
-    demo_mobius_addition()
-    demo_gyration()
-    demo_lattice_counting()
-    demo_hyperbolic_zeta()
-    
-    print("\n" + "="*60)
-    print("All demonstrations complete.")
-    print("="*60)
+# ============================================================
+# Demo 1: Einstein Addition Group Properties
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Einstein Addition on (-1, 1)")
+print("=" * 60)
+
+test_pairs = [(0.3, 0.5), (0.8, 0.9), (-0.4, 0.7), (0.99, 0.99)]
+
+for a, b in test_pairs:
+    result = einstein_add(a, b)
+    print(f"  {a:6.2f} ⊕ {b:6.2f} = {result:8.5f}  (|result| < 1: {abs(result) < 1})")
+
+# Verify associativity
+a, b, c = 0.3, 0.5, 0.7
+lhs = einstein_add(einstein_add(a, b), c)
+rhs = einstein_add(a, einstein_add(b, c))
+print(f"\n  Associativity: (a⊕b)⊕c = {lhs:.10f}")
+print(f"                 a⊕(b⊕c) = {rhs:.10f}")
+print(f"                 Diff = {abs(lhs - rhs):.2e}")
+
+# ============================================================
+# Demo 2: Rapidity Isomorphism
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Rapidity Isomorphism (artanh converts ⊕ to +)")
+print("=" * 60)
+
+for a, b in [(0.3, 0.5), (0.7, 0.2), (-0.4, 0.6)]:
+    r_sum = rapidity(einstein_add(a, b))
+    r_a_plus_r_b = rapidity(a) + rapidity(b)
+    print(f"  rapidity({a} ⊕ {b}) = {r_sum:.8f}")
+    print(f"  rapidity({a}) + rapidity({b}) = {r_a_plus_r_b:.8f}")
+    print(f"  Diff = {abs(r_sum - r_a_plus_r_b):.2e}")
+    print()
+
+# ============================================================
+# Demo 3: SL₂(ℤ) Trace Classification
+# ============================================================
+print("=" * 60)
+print("DEMO 3: SL₂(ℤ) Trace Classification")
+print("=" * 60)
+
+for t in range(-5, 6):
+    cls = classify_trace(t)
+    print(f"  tr = {t:3d}  →  {cls}")
+
+# ============================================================
+# Demo 4: Hyperbolic Prime Counting
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 4: Hyperbolic Prime Counting π_H(n)")
+print("=" * 60)
+
+for n in [10, 25, 50, 100, 200, 500, 1000]:
+    count = hyp_prime_count(n)
+    ratio = count * math.log(n) / n if n > 1 else 0
+    print(f"  π_H({n:5d}) = {count:4d}   "
+          f"π_H(n)·ln(n)/n = {ratio:.4f}  (PNT predicts → 1)")
+
+# ============================================================
+# Demo 5: Poincaré Disk Distance
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: Poincaré Disk Distance")
+print("=" * 60)
+
+test_points = [
+    (0.1 + 0.2j, 0.3 + 0.1j),
+    (0.5 + 0.3j, -0.2 + 0.4j),
+    (0.0 + 0.0j, 0.5 + 0.0j),
+    (0.9 + 0.0j, 0.95 + 0.0j),
+]
+
+for z, w in test_points:
+    d = poincare_distance(z, w)
+    cross_denom = abs(1 - w.conjugate() * z)
+    print(f"  d({z}, {w}) = {d:.4f}  "
+          f"|1 - w̄z| = {cross_denom:.4f}")
+
+# ============================================================
+# Demo 6: Falsifiable Conjecture Test
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 6: Hyperbolic Prime Density Conjecture")
+print("=" * 60)
+print("  Conjecture: π_H(N)·log(N)/N² → 1/2 as N → ∞")
+print()
+
+for N in [100, 500, 1000, 5000, 10000]:
+    count = hyp_prime_count(N)
+    ratio = count * math.log(N) / (N ** 2) if N > 1 else 0
+    print(f"  N = {N:6d}:  π_H(N) = {count:5d},  "
+          f"π_H(N)·ln(N)/N² = {ratio:.6f}")
+
+print("\n  Note: The ratio does NOT converge to 1/2.")
+print("  This REFUTES the naive conjecture π_H(N) ~ N²/(2 log N).")
+print("  The correct asymptotic (prime number theorem) is π(N) ~ N/log(N),")
+print("  which gives π_H(N)·log(N)/N → 1, not π_H(N)·log(N)/N² → 1/2.")
+print("  The hyperbolic prime geodesic theorem has different asymptotics")
+print("  involving the length spectrum, not the trace norm directly.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Conformal Factor Growth and Hyperbolic Area
-==========================================================
+Visualization 1: Einstein Addition on the Poincaré Disk
+========================================================
 
-Plots showing:
-1. Conformal factor as a function of |z|
-2. Hyperbolic area A(R) vs Euclidean area and exponential bound
-3. Lattice counting growth (if computable)
+Shows how Einstein addition maps pairs of subluminal velocities
+to subluminal results, with the rapidity isomorphism overlay.
 """
 
-import math
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
+import math
 
 
-def conformal_factor_vs_r():
-    """Plot λ(r) = 2/(1-r²) for r ∈ [0, 1)."""
-    r = np.linspace(0, 0.995, 500)
-    lam = 2.0 / (1.0 - r**2)
-    return r, lam
+def einstein_add(a: float, b: float) -> float:
+    return (a + b) / (1 + a * b)
 
 
-def hyperbolic_area(R: np.ndarray) -> np.ndarray:
-    """A(R) = 2π(cosh R - 1)."""
-    return 2.0 * np.pi * (np.cosh(R) - 1.0)
+def rapidity(x: float) -> float:
+    if abs(x) >= 1:
+        return float('inf') * np.sign(x)
+    return math.log((1 + x) / (1 - x)) / 2
 
 
-def euclidean_area(R: np.ndarray) -> np.ndarray:
-    """πR² for comparison."""
-    return np.pi * R**2
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
+# Plot 1: Einstein addition surface
+ax1 = axes[0]
+a_vals = np.linspace(-0.95, 0.95, 200)
+b_vals = np.linspace(-0.95, 0.95, 200)
+A, B = np.meshgrid(a_vals, b_vals)
+C = (A + B) / (1 + A * B)
+contour = ax1.contourf(A, B, C, levels=20, cmap='RdBu_r')
+plt.colorbar(contour, ax=ax1, label='a ⊕ b')
+ax1.set_xlabel('a')
+ax1.set_ylabel('b')
+ax1.set_title('Einstein Addition a ⊕ b')
+ax1.set_aspect('equal')
 
-def exp_bound(R: np.ndarray) -> np.ndarray:
-    """π·e^R upper bound."""
-    return np.pi * np.exp(R)
+# Plot 2: Rapidity isomorphism
+ax2 = axes[1]
+x = np.linspace(-0.99, 0.99, 500)
+r = [rapidity(xi) for xi in x]
+ax2.plot(x, r, 'b-', linewidth=2, label='rapidity(x)')
+ax2.plot(x, x, 'r--', alpha=0.5, label='y = x')
+ax2.axhline(y=0, color='gray', linewidth=0.5)
+ax2.axvline(x=0, color='gray', linewidth=0.5)
+ax2.set_xlabel('x ∈ (-1, 1)')
+ax2.set_ylabel('rapidity(x)')
+ax2.set_title('Rapidity Map: artanh')
+ax2.legend()
+ax2.set_xlim(-1, 1)
+ax2.set_ylim(-4, 4)
 
+# Plot 3: Closure demonstration
+ax3 = axes[2]
+np.random.seed(42)
+n_pairs = 500
+a_samples = np.random.uniform(-0.99, 0.99, n_pairs)
+b_samples = np.random.uniform(-0.99, 0.99, n_pairs)
+results = [(a + b) / (1 + a * b) for a, b in zip(a_samples, b_samples)]
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
-    
-    # ─── Panel 1: Conformal Factor ───
-    ax1 = axes[0]
-    r, lam = conformal_factor_vs_r()
-    ax1.semilogy(r, lam, 'b-', linewidth=2, label='λ(z) = 2/(1-|z|²)')
-    ax1.axhline(y=2, color='gray', linestyle='--', alpha=0.5, label='λ = 2 (minimum)')
-    ax1.set_xlabel('|z| (Euclidean distance from origin)', fontsize=12)
-    ax1.set_ylabel('Conformal factor λ(z)', fontsize=12)
-    ax1.set_title('Poincaré Disk:\nConformal Factor Divergence', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.set_xlim(0, 1)
-    ax1.set_ylim(1, 2000)
-    ax1.grid(True, alpha=0.3)
-    
-    # Annotate
-    ax1.annotate('λ ≥ 2 everywhere\n(Theorem: poincareCF_ge_two)',
-                 xy=(0.3, 2), xytext=(0.15, 10),
-                 arrowprops=dict(arrowstyle='->', color='red'),
-                 fontsize=9, color='red')
-    ax1.annotate('λ → ∞ at boundary\n(Theorem: poincareCF_diverges)',
-                 xy=(0.98, 500), xytext=(0.5, 800),
-                 arrowprops=dict(arrowstyle='->', color='darkred'),
-                 fontsize=9, color='darkred')
-    
-    # ─── Panel 2: Hyperbolic vs Euclidean Area ───
-    ax2 = axes[1]
-    R = np.linspace(0, 5, 300)
-    A_hyp = hyperbolic_area(R)
-    A_euc = euclidean_area(R)
-    A_exp = exp_bound(R)
-    
-    ax2.semilogy(R, A_hyp, 'b-', linewidth=2.5, label='A_H(R) = 2π(cosh R - 1)')
-    ax2.semilogy(R, A_euc, 'g--', linewidth=1.5, label='A_E(R) = πR² (Euclidean)')
-    ax2.semilogy(R, A_exp, 'r:', linewidth=1.5, label='π·e^R (upper bound)')
-    
-    ax2.set_xlabel('Radius R (hyperbolic)', fontsize=12)
-    ax2.set_ylabel('Area', fontsize=12)
-    ax2.set_title('Hyperbolic Area Growth\nvs Euclidean and Exponential', fontsize=13)
-    ax2.legend(fontsize=9, loc='upper left')
-    ax2.grid(True, alpha=0.3)
-    ax2.set_xlim(0, 5)
-    
-    ax2.annotate('Hyperbolic area grows\nexponentially, not quadratically!',
-                 xy=(3.5, hyperbolic_area(np.array([3.5]))[0]),
-                 xytext=(1.5, 100),
-                 arrowprops=dict(arrowstyle='->', color='blue'),
-                 fontsize=9, color='blue')
-    
-    # ─── Panel 3: Möbius Addition Comparison ───
-    ax3 = axes[2]
-    
-    # Show how Möbius addition compresses
-    r_vals = np.linspace(0, 0.9, 50)
-    euc_sum = []
-    mob_sum = []
-    for r in r_vals:
-        z = complex(r, 0)
-        w = complex(0.3, 0)
-        euc = abs(z + w)
-        mob = abs((z + w) / (1.0 + z.conjugate() * w))
-        euc_sum.append(euc)
-        mob_sum.append(mob)
-    
-    ax3.plot(r_vals, euc_sum, 'g-', linewidth=2, label='|z + 0.3| (Euclidean)')
-    ax3.plot(r_vals, mob_sum, 'b-', linewidth=2, label='|z ⊕ 0.3| (Möbius)')
-    ax3.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='|w| = 1 boundary')
-    
-    ax3.set_xlabel('|z| (along real axis)', fontsize=12)
-    ax3.set_ylabel('|z + w| or |z ⊕ w|', fontsize=12)
-    ax3.set_title('Möbius vs Euclidean Addition\n(w = 0.3, z real)', fontsize=13)
-    ax3.legend(fontsize=10)
-    ax3.grid(True, alpha=0.3)
-    ax3.set_xlim(0, 0.9)
-    ax3.set_ylim(0, 1.3)
-    
-    ax3.annotate('Möbius stays\ninside the disk!',
-                 xy=(0.7, mob_sum[35]), xytext=(0.4, 0.3),
-                 arrowprops=dict(arrowstyle='->', color='blue'),
-                 fontsize=10, color='blue')
-    
-    plt.tight_layout()
-    plt.savefig('conformal_growth_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: conformal_growth_visualization.png")
+ax3.scatter(a_samples, b_samples, c=results, cmap='RdBu_r',
+            alpha=0.6, s=10, vmin=-1, vmax=1)
+ax3.set_xlabel('a')
+ax3.set_ylabel('b')
+ax3.set_title(f'Closure: all {n_pairs} results in (-1,1)')
+ax3.set_aspect('equal')
+ax3.set_xlim(-1, 1)
+ax3.set_ylim(-1, 1)
 
+# Annotate max |result|
+max_abs = max(abs(r) for r in results)
+ax3.text(0.02, 0.98, f'max |a⊕b| = {max_abs:.4f} < 1',
+         transform=ax3.transAxes, va='top', fontsize=9,
+         bbox=dict(boxstyle='round', facecolor='wheat'))
 
-if __name__ == "__main__":
-    main()
+plt.suptitle('Hyperbolic Arithmetic: Einstein Addition Group', fontsize=14, y=1.02)
+plt.tight_layout()
+plt.savefig('einstein_addition.png', dpi=150, bbox_inches='tight')
+print("Saved: einstein_addition.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Poincaré Disk with Lattice Points and Conformal Factor
-=====================================================================
+Visualization 2: Poincaré Disk with SL₂(ℤ) Orbit
+===================================================
 
-Self-contained matplotlib visualization showing:
-1. Conformal factor heatmap on the Poincaré disk
-2. Lattice points of PSL(2,Z) (via Cayley transform from upper half-plane)
-3. Geodesics between lattice points
+Visualizes the modular group tessellation on the Poincaré disk,
+with points colored by trace classification.
 """
 
-import math
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+import numpy as np
+import math
+
+
+def moebius_action(a: int, b: int, c: int, d: int, z: complex) -> complex:
+    return (a * z + b) / (c * z + d)
 
 
 def cayley_transform(z: complex) -> complex:
-    """Map from upper half-plane to unit disk: w = (z - i)/(z + i)."""
     return (z - 1j) / (z + 1j)
 
 
-def conformal_factor(z: complex) -> float:
-    """λ(z) = 2/(1 - |z|²)."""
-    nsq = abs(z) ** 2
-    if nsq >= 1.0:
-        return float('nan')
-    return 2.0 / (1.0 - nsq)
+def classify_trace(t: int) -> str:
+    if abs(t) < 2:
+        return "elliptic"
+    elif abs(t) == 2:
+        return "parabolic"
+    else:
+        return "hyperbolic"
 
 
-def sl2z_orbit_points(max_entry: int = 6) -> list:
-    """Generate PSL(2,Z) orbit of i in the upper half-plane, mapped to disk."""
-    points = set()
-    for a in range(-max_entry, max_entry + 1):
-        for b in range(-max_entry, max_entry + 1):
-            for c in range(-max_entry, max_entry + 1):
-                d_vals = []
-                if c != 0:
-                    # ad - bc = 1 => d = (1 + bc) / a if a != 0
-                    if a != 0 and (1 + b * c) % a == 0:
-                        d_vals.append((1 + b * c) // a)
-                else:
-                    # c = 0, ad = 1
-                    if a == 1:
-                        d_vals.append(1)
-                    elif a == -1:
-                        d_vals.append(-1)
-                for d in d_vals:
-                    if a * d - b * c != 1:
-                        continue
-                    # γ·i = (ai + b)/(ci + d)
-                    num = complex(b, a)
-                    den = complex(d, c)
-                    if abs(den) < 1e-12:
-                        continue
-                    z = num / den
-                    if z.imag > 0.001:
-                        w = cayley_transform(z)
-                        if abs(w) < 0.999:
-                            points.add((round(w.real, 8), round(w.imag, 8)))
-    return [complex(x, y) for x, y in points]
+# Generate SL₂(ℤ) orbit
+basepoint = 0.1 + 1.5j  # point in upper half-plane
+max_depth = 7
+
+orbit_points = []
+visited = set()
+queue = [(1, 0, 0, 1, 0)]  # (a, b, c, d, depth)
+
+# Generators: T, T⁻¹, S
+gens = [(1, 1, 0, 1), (1, -1, 0, 1), (0, -1, 1, 0)]
+
+while queue:
+    a, b, c, d, depth = queue.pop(0)
+    key = (a, b, c, d)
+    if key in visited or depth > max_depth:
+        continue
+    visited.add(key)
+
+    z = moebius_action(a, b, c, d, basepoint)
+    w = cayley_transform(z)
+    trace = a + d
+
+    if abs(w) < 0.999:
+        orbit_points.append((w.real, w.imag, trace, classify_trace(trace)))
+
+    if depth < max_depth:
+        for ga, gb, gc, gd in gens:
+            na = a * ga + b * gc
+            nb = a * gb + b * gd
+            nc = c * ga + d * gc
+            nd = c * gb + d * gd
+            queue.append((na, nb, nc, nd, depth + 1))
+
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+# Draw unit circle
+theta = np.linspace(0, 2 * np.pi, 200)
+ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+
+# Color by classification
+colors = {'elliptic': '#e74c3c', 'parabolic': '#f39c12', 'hyperbolic': '#2ecc71'}
+labels_added = set()
+
+for x, y, trace, cls in orbit_points:
+    label = cls if cls not in labels_added else None
+    ax.scatter(x, y, c=colors[cls], s=15, alpha=0.7, label=label, zorder=3)
+    labels_added.add(cls)
+
+# Count by type
+type_counts = {}
+for _, _, _, cls in orbit_points:
+    type_counts[cls] = type_counts.get(cls, 0) + 1
+
+ax.set_xlim(-1.1, 1.1)
+ax.set_ylim(-1.1, 1.1)
+ax.set_aspect('equal')
+ax.legend(loc='upper right', fontsize=12)
+ax.set_title(f'SL₂(ℤ) Orbit on the Poincaré Disk\n'
+             f'({len(orbit_points)} points: '
+             f'{type_counts.get("elliptic", 0)} elliptic, '
+             f'{type_counts.get("parabolic", 0)} parabolic, '
+             f'{type_counts.get("hyperbolic", 0)} hyperbolic)',
+             fontsize=13)
+ax.set_xlabel('Re(z)')
+ax.set_ylabel('Im(z)')
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('poincare_orbit.png', dpi=150, bbox_inches='tight')
+print("Saved: poincare_orbit.png")
 
 
-def poincare_geodesic(z1: complex, z2: complex, n_pts: int = 100) -> list:
-    """Compute the geodesic between two points on the Poincaré disk."""
-    # Parametrize via Möbius: send z1 to origin, geodesic is a line
-    if abs(z1 - z2) < 1e-10:
-        return [z1]
-    
-    # φ_{z1}(z) sends z1 to 0
-    def mobius(z, a):
-        return (z - a) / (1.0 - a.conjugate() * z)
-    
-    def inv_mobius(w, a):
-        return (w + a) / (1.0 + a.conjugate() * w)
-    
-    w2 = mobius(z2, z1)
-    # Geodesic from 0 to w2 is a diameter
-    pts = []
-    for t in np.linspace(0, 1, n_pts):
-        w = t * w2
-        z = inv_mobius(w, z1)
-        pts.append(z)
-    return pts
+#!/usr/bin/env python3
+"""
+Visualization 3: Hyperbolic Prime Counting
+============================================
+
+Compares the hyperbolic prime counting function π_H(n) with
+the prime number theorem prediction n/log(n).
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import math
 
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7.5))
-    
-    # ─── Panel 1: Conformal factor heatmap ───
-    ax1 = axes[0]
-    N = 400
-    x = np.linspace(-1, 1, N)
-    y = np.linspace(-1, 1, N)
-    X, Y = np.meshgrid(x, y)
-    R = np.sqrt(X**2 + Y**2)
-    
-    CF = np.full_like(R, np.nan)
-    mask = R < 0.999
-    CF[mask] = 2.0 / (1.0 - R[mask]**2)
-    
-    im = ax1.pcolormesh(X, Y, CF, cmap='inferno',
-                         norm=mcolors.LogNorm(vmin=2, vmax=500),
-                         shading='auto')
-    
-    # Draw unit circle
-    theta = np.linspace(0, 2*np.pi, 200)
-    ax1.plot(np.cos(theta), np.sin(theta), 'w-', linewidth=2)
-    
-    # Add lattice points
-    pts = sl2z_orbit_points(5)
-    if pts:
-        px = [p.real for p in pts]
-        py = [p.imag for p in pts]
-        ax1.scatter(px, py, c='cyan', s=8, zorder=5, alpha=0.7)
-    
-    ax1.set_xlim(-1.1, 1.1)
-    ax1.set_ylim(-1.1, 1.1)
-    ax1.set_aspect('equal')
-    ax1.set_title('Poincaré Disk: Conformal Factor λ(z)\nwith PSL(2,ℤ) Lattice Points',
-                   fontsize=13)
-    ax1.set_xlabel('Re(z)')
-    ax1.set_ylabel('Im(z)')
-    plt.colorbar(im, ax=ax1, label='λ(z) = 2/(1-|z|²)', shrink=0.8)
-    
-    # ─── Panel 2: Lattice points with geodesics ───
-    ax2 = axes[1]
-    
-    # Draw disk boundary
-    ax2.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=1.5)
-    ax2.fill(np.cos(theta), np.sin(theta), color='#f0f0f0')
-    
-    # Draw lattice points
-    pts_sorted = sorted(pts, key=lambda p: abs(p))
-    if len(pts_sorted) > 100:
-        pts_sorted = pts_sorted[:100]
-    
-    # Draw some geodesics from origin
-    origin = complex(0, 0)
-    for i, p in enumerate(pts_sorted[:20]):
-        geo = poincare_geodesic(origin, p, 50)
-        gx = [g.real for g in geo]
-        gy = [g.imag for g in geo]
-        ax2.plot(gx, gy, '-', color='steelblue', alpha=0.3, linewidth=0.8)
-    
-    # Draw lattice points colored by distance from origin
-    dists = [abs(p) for p in pts_sorted]
-    sc = ax2.scatter([p.real for p in pts_sorted],
-                      [p.imag for p in pts_sorted],
-                      c=dists, cmap='viridis', s=15, zorder=5,
-                      edgecolors='k', linewidth=0.3)
-    ax2.scatter([0], [0], c='red', s=50, zorder=6, marker='*',
-                edgecolors='k', linewidth=0.5, label='Origin')
-    
-    ax2.set_xlim(-1.1, 1.1)
-    ax2.set_ylim(-1.1, 1.1)
-    ax2.set_aspect('equal')
-    ax2.set_title('Hyperbolic Integers ℤ_H\n(PSL(2,ℤ) orbit with geodesics)',
-                   fontsize=13)
-    ax2.set_xlabel('Re(z)')
-    ax2.set_ylabel('Im(z)')
-    ax2.legend(loc='lower right')
-    plt.colorbar(sc, ax=ax2, label='|z| (Euclidean)', shrink=0.8)
-    
-    plt.tight_layout()
-    plt.savefig('poincare_disk_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: poincare_disk_visualization.png")
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
 
-if __name__ == "__main__":
-    main()
+def hyp_prime_count(n: int) -> int:
+    """Count primes p with 2 < p <= n."""
+    return sum(1 for k in range(3, n + 1) if is_prime(k))
+
+
+# Compute data
+ns = list(range(5, 2001))
+counts = [hyp_prime_count(n) for n in ns]
+pnt_approx = [n / math.log(n) for n in ns]
+li_approx = []
+for n in ns:
+    # li(n) approximation via numerical integration
+    val = sum(1.0 / math.log(max(k, 2)) for k in range(2, n + 1))
+    li_approx.append(val)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Plot 1: π_H(n) vs n/log(n)
+ax1 = axes[0, 0]
+ax1.plot(ns, counts, 'b-', linewidth=1.5, label='π_H(n)')
+ax1.plot(ns, pnt_approx, 'r--', linewidth=1.5, label='n/ln(n)')
+ax1.plot(ns, li_approx, 'g-.', linewidth=1.5, label='li(n)')
+ax1.set_xlabel('n')
+ax1.set_ylabel('Count')
+ax1.set_title('Hyperbolic Prime Counting Function')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+# Plot 2: Ratio π_H(n) / (n/log(n))
+ax2 = axes[0, 1]
+ratios = [c / (n / math.log(n)) for c, n in zip(counts, ns)]
+ax2.plot(ns, ratios, 'b-', linewidth=1)
+ax2.axhline(y=1, color='r', linestyle='--', alpha=0.7, label='PNT limit')
+ax2.set_xlabel('n')
+ax2.set_ylabel('π_H(n) / (n/ln n)')
+ax2.set_title('Convergence to PNT')
+ax2.legend()
+ax2.grid(True, alpha=0.3)
+ax2.set_ylim(0.8, 1.5)
+
+# Plot 3: Density ratio π_H(n) · log(n) / n²  (testing the false conjecture)
+ax3 = axes[1, 0]
+density = [c * math.log(n) / (n ** 2) for c, n in zip(counts, ns)]
+ax3.plot(ns, density, 'purple', linewidth=1)
+ax3.set_xlabel('n')
+ax3.set_ylabel('π_H(n)·ln(n)/n²')
+ax3.set_title('False Conjecture Test: π_H(n)~n²/(2ln n)?')
+ax3.axhline(y=0.5, color='r', linestyle='--', alpha=0.7, label='Predicted limit 1/2')
+ax3.legend()
+ax3.grid(True, alpha=0.3)
+ax3.annotate('Ratio → 0, not 1/2\n⟹ Conjecture REFUTED',
+             xy=(1000, density[995]), fontsize=10,
+             xytext=(1200, 0.3),
+             arrowprops=dict(arrowstyle='->', color='red'),
+             color='red', fontweight='bold')
+
+# Plot 4: Hyperbolic prime gaps
+ax4 = axes[1, 1]
+primes_h = [k for k in range(3, 501) if is_prime(k)]
+gaps = [primes_h[i + 1] - primes_h[i] for i in range(len(primes_h) - 1)]
+ax4.scatter(primes_h[:-1], gaps, s=5, alpha=0.6, c='teal')
+ax4.set_xlabel('Prime p')
+ax4.set_ylabel('Gap to next prime')
+ax4.set_title('Hyperbolic Prime Gaps (p > 2)')
+ax4.grid(True, alpha=0.3)
+
+plt.suptitle('Hyperbolic Number Theory: Prime Counting Analysis', fontsize=14, y=1.02)
+plt.tight_layout()
+plt.savefig('hyp_primes.png', dpi=150, bbox_inches='tight')
+print("Saved: hyp_primes.png")
