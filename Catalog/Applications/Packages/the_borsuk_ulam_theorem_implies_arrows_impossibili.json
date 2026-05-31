@@ -27,15 +27,13 @@
   "visualizations": [
     {
       "name": "Preference Sphere and Condorcet Cycle",
-      "code": "visualize_preference_sphere.py",
-      "description": "Shows the 6 strict rankings of 3 alternatives arranged on the preference circle S^1, with antipodal pairs connected, alongside the Condorcet cycle as a tournament.",
-      "code_file": "visualizations/arrow_s_impossibility_theorem_as_topolog_preference_sphere_and_condorce.py"
+      "code": "",
+      "description": "Shows the 6 strict rankings of 3 alternatives arranged on the preference circle S^1, with antipodal pairs connected, alongside the Condorcet cycle as a tournament."
     },
     {
       "name": "Arrow's Impossibility Landscape",
-      "code": "visualize_arrow_landscape.py",
-      "description": "Venn diagram of Arrow's three axioms showing the impossible intersection, plus the decisive coalition hierarchy showing how Arrow's proof contracts coalitions to a dictator.",
-      "code_file": "visualizations/arrow_s_impossibility_theorem_as_topolog_arrow_s_impossibility_landscap.py"
+      "code": "",
+      "description": "Venn diagram of Arrow's three axioms showing the impossible intersection, plus the decisive coalition hierarchy showing how Arrow's proof contracts coalitions to a dictator."
     }
   ],
   "interactive_demos": [

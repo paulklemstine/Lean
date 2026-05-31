@@ -21,21 +21,18 @@
   "visualizations": [
     {
       "name": "Barrier Visualization",
-      "code": "visualize_barrier.py",
-      "description": "Plots barcode capacity vs Frobenius polynomial growth, multi-prime capacity, and birthday paradox collision probability.",
-      "code_file": "visualizations/arithmetic_universality_barrier_for_prim_barrier_visualization.py"
+      "code": "",
+      "description": "Plots barcode capacity vs Frobenius polynomial growth, multi-prime capacity, and birthday paradox collision probability."
     },
     {
       "name": "Hasse Bound Analysis",
-      "code": "visualize_hasse.py",
-      "description": "Shows Hasse trace count at each prime versus barcode capacity thresholds, and cumulative multi-prime analysis.",
-      "code_file": "visualizations/arithmetic_universality_barrier_for_prim_hasse_bound_analysis.py"
+      "code": "",
+      "description": "Shows Hasse trace count at each prime versus barcode capacity thresholds, and cumulative multi-prime analysis."
     },
     {
       "name": "Refinement Monotonicity",
-      "code": "visualize_refinement.py",
-      "description": "Heatmap of information content and capacity growth curves showing monotonicity of refinement.",
-      "code_file": "visualizations/arithmetic_universality_barrier_for_prim_refinement_monotonicity.py"
+      "code": "",
+      "description": "Heatmap of information content and capacity growth curves showing monotonicity of refinement."
     }
   ],
   "interactive_demos": [

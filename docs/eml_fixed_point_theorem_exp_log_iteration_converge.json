@@ -36,15 +36,13 @@
   "visualizations": [
     {
       "name": "Convergence Visualization",
-      "code": "visualize_convergence.py",
-      "description": "Four-panel figure: function plot with fixed point, cobweb diagram, geometric error decay, and parameter sweep.",
-      "code_file": "visualizations/eml_fixed_point_theorem__exp_log_iterati_convergence_visualization.py"
+      "code": "",
+      "description": "Four-panel figure: function plot with fixed point, cobweb diagram, geometric error decay, and parameter sweep."
     },
     {
       "name": "Bifurcation Diagram",
-      "code": "visualize_bifurcation.py",
-      "description": "Bifurcation diagram showing transition from contraction to non-contraction as parameter a increases.",
-      "code_file": "visualizations/eml_fixed_point_theorem__exp_log_iterati_bifurcation_diagram.py"
+      "code": "",
+      "description": "Bifurcation diagram showing transition from contraction to non-contraction as parameter a increases."
     }
   ],
   "interactive_demos": [

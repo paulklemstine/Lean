@@ -33,21 +33,18 @@
   "visualizations": [
     {
       "name": "Depth Hierarchy and Information Decay",
-      "code": "viz_depth_hierarchy.py",
-      "description": "Three-panel figure showing iterated exponentials at different depths, the linear size-depth relationship (2n+1), and exponential information decay through layers.",
-      "code_file": "visualizations/eml_universal_approximation_with_provabl_depth_hierarchy_and_informatio.py"
+      "code": "",
+      "description": "Three-panel figure showing iterated exponentials at different depths, the linear size-depth relationship (2n+1), and exponential information decay through layers."
     },
     {
       "name": "Composition Bounds",
-      "code": "viz_composition_bounds.py",
-      "description": "Two-panel figure showing depth additivity and size multiplicativity under EML expression composition.",
-      "code_file": "visualizations/eml_universal_approximation_with_provabl_composition_bounds.py"
+      "code": "",
+      "description": "Two-panel figure showing depth additivity and size multiplicativity under EML expression composition."
     },
     {
       "name": "Complexity Classes",
-      "code": "viz_complexity_classes.py",
-      "description": "Two-panel figure showing the EML complexity class hierarchy (linear, quadratic, cubic) and description complexity anti-monotonicity in epsilon.",
-      "code_file": "visualizations/eml_universal_approximation_with_provabl_complexity_classes.py"
+      "code": "",
+      "description": "Two-panel figure showing the EML complexity class hierarchy (linear, quadratic, cubic) and description complexity anti-monotonicity in epsilon."
     }
   ],
   "interactive_demos": [

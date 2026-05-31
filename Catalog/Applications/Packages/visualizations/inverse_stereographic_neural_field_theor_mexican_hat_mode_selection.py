@@ -1,1 +1,0 @@
-visualize_mexican_hat.py

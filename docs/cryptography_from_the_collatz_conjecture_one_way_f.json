@@ -34,15 +34,13 @@
   "visualizations": [
     {
       "name": "Security Gap Analysis",
-      "code": "viz_security_gap.py",
-      "description": "Four-panel visualization showing forward-inverse cost asymmetry, security gap growth, proved polynomial bounds, and preimage tree growth.",
-      "code_file": "visualizations/collatz_one_way_functions__cryptographic_security_gap_analysis.py"
+      "code": "",
+      "description": "Four-panel visualization showing forward-inverse cost asymmetry, security gap growth, proved polynomial bounds, and preimage tree growth."
     },
     {
       "name": "Trajectory Sensitivity",
-      "code": "viz_collatz_trajectories.py",
-      "description": "Four-panel visualization showing trajectory divergence, the famous n=27 trajectory, parity pseudo-randomness, and Hamming distance between nearby trajectories.",
-      "code_file": "visualizations/collatz_one_way_functions__cryptographic_trajectory_sensitivity.py"
+      "code": "",
+      "description": "Four-panel visualization showing trajectory divergence, the famous n=27 trajectory, parity pseudo-randomness, and Hamming distance between nearby trajectories."
     }
   ],
   "interactive_demos": [

@@ -21,21 +21,18 @@
   "visualizations": [
     {
       "name": "Sorting Entropy and Stirling Bounds",
-      "code": "visualize_entropy.py",
-      "description": "Plots log₂(n!) with Stirling lower/upper bounds and the approximation gap",
-      "code_file": "visualizations/the_thermodynamics_of_sorting__entropy___sorting_entropy_and_stirling_b.py"
+      "code": "",
+      "description": "Plots log₂(n!) with Stirling lower/upper bounds and the approximation gap"
     },
     {
       "name": "Thermodynamic Waste Comparison",
-      "code": "visualize_waste.py",
-      "description": "Compares comparison counts and waste percentages of bubble sort vs merge sort",
-      "code_file": "visualizations/the_thermodynamics_of_sorting__entropy___thermodynamic_waste_comparison.py"
+      "code": "",
+      "description": "Compares comparison counts and waste percentages of bubble sort vs merge sort"
     },
     {
       "name": "Decision Tree Entropy Reduction",
-      "code": "visualize_decision_tree.py",
-      "description": "Simulates entropy reduction during sorting and compares decision tree depth to entropy",
-      "code_file": "visualizations/the_thermodynamics_of_sorting__entropy___decision_tree_entropy_reductio.py"
+      "code": "",
+      "description": "Simulates entropy reduction during sorting and compares decision tree depth to entropy"
     }
   ],
   "interactive_demos": [

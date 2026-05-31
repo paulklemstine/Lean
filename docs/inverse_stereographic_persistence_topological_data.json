@@ -21,15 +21,13 @@
   "visualizations": [
     {
       "name": "Conformal Factor Analysis",
-      "code": "visualize_conformal.py",
-      "description": "Plots of the stereographic conformal factor, distance distortion, and interleaving bounds",
-      "code_file": "visualizations/stereographic_persistence__conformally_w_conformal_factor_analysis.py"
+      "code": "",
+      "description": "Plots of the stereographic conformal factor, distance distortion, and interleaving bounds"
     },
     {
       "name": "Persistence Diagram Comparison",
-      "code": "visualize_persistence.py",
-      "description": "Side-by-side persistence diagrams for geodesic, Euclidean, and weighted distances",
-      "code_file": "visualizations/stereographic_persistence__conformally_w_persistence_diagram_comparison.py"
+      "code": "",
+      "description": "Side-by-side persistence diagrams for geodesic, Euclidean, and weighted distances"
     }
   ],
   "interactive_demos": [

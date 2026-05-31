@@ -238,6 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!window.Aether.pyodideInstance) {
                 genBtn.disabled = true;
                 genBtn.textContent = 'Loading Engine...';
+            } else if (!resolvedCode && item.code_file) {
+                genBtn.disabled = true;
+                genBtn.textContent = 'Loading Code...';
             } else {
                 genBtn.textContent = 'Generate';
             }
@@ -262,8 +265,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!resolvedCode && item.code_file) {
                 fetch(item.code_file)
                     .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-                    .then(code => { editor.value = code; resolvedCode = code; })
-                    .catch(err => console.warn('Failed to fetch viz code:', item.code_file, err));
+                    .then(code => {
+                        editor.value = code;
+                        resolvedCode = code;
+                        genBtn.disabled = false;
+                        genBtn.textContent = 'Generate';
+                    })
+                    .catch(err => {
+                        console.warn('Failed to fetch viz code:', item.code_file, err);
+                        genBtn.disabled = true;
+                        genBtn.textContent = 'Code Unavailable';
+                    });
             }
 
             const outputContainer = document.createElement('div');
@@ -273,7 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             genBtn.addEventListener('click', () => {
                 if (window.runVisualization) {
-                    window.runVisualization(editor.value, outputContainer, genBtn);
+                    const codeToRun = editor.value;
+                    // Guard against filename-only code (not runnable Python)
+                    if (!codeToRun || !codeToRun.trim() || isFilename(codeToRun.trim())) {
+                        outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Source code not available for this visualization</div>';
+                        return;
+                    }
+                    window.runVisualization(codeToRun, outputContainer, genBtn);
                 }
             });
 

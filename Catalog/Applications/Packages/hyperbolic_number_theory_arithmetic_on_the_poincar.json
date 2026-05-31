@@ -33,15 +33,13 @@
   "visualizations": [
     {
       "name": "Poincaré Disk Lattice and Trace Growth",
-      "code": "viz_poincare_lattice.py",
-      "description": "Hyperbolic lattice points on the Poincaré disk colored by generation depth, alongside Chebyshev trace growth curves on a logarithmic scale.",
-      "code_file": "visualizations/hyperbolic_m_bius_inversion_and_trace_ar_poincar__disk_lattice_and_trac.py"
+      "code": "",
+      "description": "Hyperbolic lattice points on the Poincaré disk colored by generation depth, alongside Chebyshev trace growth curves on a logarithmic scale."
     },
     {
       "name": "Möbius Inversion and Einstein Addition",
-      "code": "viz_moebius_inversion.py",
-      "description": "Four-panel visualization: tree Möbius inversion verification, Einstein addition phase portrait, iterated addition convergence, and numerical agreement with tanh.",
-      "code_file": "visualizations/hyperbolic_m_bius_inversion_and_trace_ar_m_bius_inversion_and_einstein_.py"
+      "code": "",
+      "description": "Four-panel visualization: tree Möbius inversion verification, Einstein addition phase portrait, iterated addition convergence, and numerical agreement with tanh."
     }
   ],
   "interactive_demos": [

@@ -34,9 +34,8 @@
   "visualizations": [
     {
       "name": "Prime Gaps vs Cramér Bound",
-      "code": "visualize_prime_gaps.py",
-      "description": "Four-panel visualization: gaps vs (log p)² bound, normalized ratio, gap distribution, and hierarchy of bounds (Bertrand, BHP, Cramér).",
-      "code_file": "visualizations/cram_r_s_conjecture_on_prime_gaps__forma_prime_gaps_vs_cram_r_bound.py"
+      "code": "",
+      "description": "Four-panel visualization: gaps vs (log p)² bound, normalized ratio, gap distribution, and hierarchy of bounds (Bertrand, BHP, Cramér)."
     }
   ],
   "interactive_demos": [

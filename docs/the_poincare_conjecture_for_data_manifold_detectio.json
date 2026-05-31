@@ -27,21 +27,18 @@
   "visualizations": [
     {
       "name": "Poincaré Threshold Scaling Law",
-      "code": "viz_scaling.py",
-      "description": "Log-log plot of ε* vs n for S^1, S^2, S^3 with linear regression fits showing the -1/d scaling exponent.",
-      "code_file": "visualizations/the_poincar__conjecture_for_data__manifo_poincar__threshold_scaling_law.py"
+      "code": "",
+      "description": "Log-log plot of ε* vs n for S^1, S^2, S^3 with linear regression fits showing the -1/d scaling exponent."
     },
     {
       "name": "Vietoris-Rips Graph Evolution",
-      "code": "viz_vr_graph.py",
-      "description": "Four-panel visualization showing how the VR graph on S^1 evolves through the Poincaré threshold.",
-      "code_file": "visualizations/the_poincar__conjecture_for_data__manifo_vietoris_rips_graph_evolution.py"
+      "code": "",
+      "description": "Four-panel visualization showing how the VR graph on S^1 evolves through the Poincaré threshold."
     },
     {
       "name": "Dimension Detection",
-      "code": "viz_dimension_detection.py",
-      "description": "Three-panel plot showing dimension estimation from scaling exponents for S^1, S^2, S^3.",
-      "code_file": "visualizations/the_poincar__conjecture_for_data__manifo_dimension_detection.py"
+      "code": "",
+      "description": "Three-panel plot showing dimension estimation from scaling exponents for S^1, S^2, S^3."
     }
   ],
   "interactive_demos": [

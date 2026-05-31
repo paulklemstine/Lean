@@ -21,21 +21,18 @@
   "visualizations": [
     {
       "name": "Separation Density Convergence",
-      "code": "viz_separation_density.py",
-      "description": "Shows separation density approaching 1 as prime bound grows",
-      "code_file": "visualizations/primewise_persistent_homology_distinguis_separation_density_convergence.py"
+      "code": "",
+      "description": "Shows separation density approaching 1 as prime bound grows"
     },
     {
       "name": "Barcode Comparison Across Primes",
-      "code": "viz_barcode_comparison.py",
-      "description": "Compares mod-p persistence barcodes for two distinct spectra",
-      "code_file": "visualizations/primewise_persistent_homology_distinguis_barcode_comparison_across_prim.py"
+      "code": "",
+      "description": "Compares mod-p persistence barcodes for two distinct spectra"
     },
     {
       "name": "Rank Function Heatmap",
-      "code": "viz_rank_function.py",
-      "description": "Visualizes the persistent rank function, Betti numbers, and barcode",
-      "code_file": "visualizations/primewise_persistent_homology_distinguis_rank_function_heatmap.py"
+      "code": "",
+      "description": "Visualizes the persistent rank function, Betti numbers, and barcode"
     }
   ],
   "interactive_demos": [

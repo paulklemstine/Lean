@@ -1,1 +1,0 @@
-visualize_arrow_landscape.py

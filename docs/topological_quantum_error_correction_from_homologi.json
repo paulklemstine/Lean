@@ -22,15 +22,13 @@
   "visualizations": [
     {
       "name": "Barcode QEC Visualization",
-      "code": "visualize_barcode.py",
-      "description": "Four-panel figure showing persistence barcode, toric code distance vs L, rate-distance tradeoff, and stability envelope.",
-      "code_file": "visualizations/topological_quantum_error_correction_fro_barcode_qec_visualization.py"
+      "code": "",
+      "description": "Four-panel figure showing persistence barcode, toric code distance vs L, rate-distance tradeoff, and stability envelope."
     },
     {
       "name": "Singleton Bound Visualization",
-      "code": "visualize_singleton.py",
-      "description": "Feasible region kd ≤ n² for topological quantum codes and distance scaling with cell count.",
-      "code_file": "visualizations/topological_quantum_error_correction_fro_singleton_bound_visualization.py"
+      "code": "",
+      "description": "Feasible region kd ≤ n² for topological quantum codes and distance scaling with cell count."
     }
   ],
   "interactive_demos": [

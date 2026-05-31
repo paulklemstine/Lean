@@ -27,9 +27,8 @@
   "visualizations": [
     {
       "name": "Curvature Distribution and Polarization",
-      "code": "visualize_curvature.py",
-      "description": "Four-panel visualization showing curvature distribution, polarization-curvature correlation, curvature growth with dimension, and phase transition between consensus and polarization.",
-      "code_file": "visualizations/the_geometry_of_consensus__arrow_s_theor_curvature_distribution_and_pol.py"
+      "code": "",
+      "description": "Four-panel visualization showing curvature distribution, polarization-curvature correlation, curvature growth with dimension, and phase transition between consensus and polarization."
     }
   ],
   "interactive_demos": [

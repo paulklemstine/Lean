@@ -27,15 +27,13 @@
   "visualizations": [
     {
       "name": "Stereographic Projection and Eigenspaces",
-      "code": "visualize_stereo.py",
-      "description": "Four-panel figure: stereographic projection to S^1, conformal factor, eigenspace decomposition, and H^0 sizes for ZMod p",
-      "code_file": "visualizations/stereographic_sheaf_theory__gluing_data__stereographic_projection_and_e.py"
+      "code": "",
+      "description": "Four-panel figure: stereographic projection to S^1, conformal factor, eigenspace decomposition, and H^0 sizes for ZMod p"
     },
     {
       "name": "Čech Cohomology and Tate Complex",
-      "code": "visualize_cohomology.py",
-      "description": "Three-panel figure: Tate complex over Z, norm kernel vs difference image, and phase transition at p=2",
-      "code_file": "visualizations/stereographic_sheaf_theory__gluing_data___ech_cohomology_and_tate_compl.py"
+      "code": "",
+      "description": "Three-panel figure: Tate complex over Z, norm kernel vs difference image, and phase transition at p=2"
     }
   ],
   "interactive_demos": [

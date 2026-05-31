@@ -33,21 +33,18 @@
   "visualizations": [
     {
       "name": "EML Reduction Identities",
-      "code": "visualize_eml.py",
-      "description": "Plots showing multiplication, power, reciprocal, and square root computed via exp-log reductions.",
-      "code_file": "visualizations/eml_single_operator_church_turing_thesis_eml_reduction_identities.py"
+      "code": "",
+      "description": "Plots showing multiplication, power, reciprocal, and square root computed via exp-log reductions."
     },
     {
       "name": "EML Depth Hierarchy",
-      "code": "visualize_eml.py",
-      "description": "Visualization of functions at different EML depths (algebraic, single exp/log, double exp).",
-      "code_file": "visualizations/eml_single_operator_church_turing_thesis_eml_depth_hierarchy.py"
+      "code": "",
+      "description": "Visualization of functions at different EML depths (algebraic, single exp/log, double exp)."
     },
     {
       "name": "EML Approximation Quality",
-      "code": "visualize_eml.py",
-      "description": "Polynomial approximation of sin(x) and convergence rate as degree increases.",
-      "code_file": "visualizations/eml_single_operator_church_turing_thesis_eml_approximation_quality.py"
+      "code": "",
+      "description": "Polynomial approximation of sin(x) and convergence rate as degree increases."
     }
   ],
   "interactive_demos": [

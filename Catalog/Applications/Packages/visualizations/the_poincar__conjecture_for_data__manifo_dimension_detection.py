@@ -1,1 +1,0 @@
-viz_dimension_detection.py

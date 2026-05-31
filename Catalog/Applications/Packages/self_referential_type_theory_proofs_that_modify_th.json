@@ -33,9 +33,8 @@
   "visualizations": [
     {
       "name": "Consistency Tower and Level Stabilization",
-      "code": "visualize_tower.py",
-      "description": "Four-panel visualization showing the consistency tower, level stabilization traces, self-reference depth vs initial level, and the diagonal barrier matrix.",
-      "code_file": "visualizations/stratified_self_reference__type_theory_w_consistency_tower_and_level_st.py"
+      "code": "",
+      "description": "Four-panel visualization showing the consistency tower, level stabilization traces, self-reference depth vs initial level, and the diagonal barrier matrix."
     }
   ],
   "interactive_demos": [

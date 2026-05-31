@@ -27,9 +27,8 @@
   "visualizations": [
     {
       "name": "Matroid Minor Lattice and Forbidden Minor Paradigm",
-      "code": "visualize_matroid_lattice.py",
-      "description": "Visualizes the minor partial order for small matroids, highlighting GF(2)-representable matroids and the unique excluded minor U(2,4). Also shows the forbidden minor hierarchy across finite fields.",
-      "code_file": "visualizations/matroid_minors_and_the_robertson_seymour_matroid_minor_lattice_and_forb.py"
+      "code": "",
+      "description": "Visualizes the minor partial order for small matroids, highlighting GF(2)-representable matroids and the unique excluded minor U(2,4). Also shows the forbidden minor hierarchy across finite fields."
     }
   ],
   "interactive_demos": [

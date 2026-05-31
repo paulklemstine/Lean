@@ -39,15 +39,13 @@
   "visualizations": [
     {
       "name": "Persistent Robustness Filtration",
-      "code": "viz_persistent_robustness.py",
-      "description": "Shows how the persistent robust set shrinks as perturbation radius increases, with heatmap of score-gap and blue overlay for robust region.",
-      "code_file": "visualizations/certified_adversarial_robustness_via_she_persistent_robustness_filtrati.py"
+      "code": "",
+      "description": "Shows how the persistent robust set shrinks as perturbation radius increases, with heatmap of score-gap and blue overlay for robust region."
     },
     {
       "name": "Composition Robustness and Layer Depth",
-      "code": "viz_composition_robustness.py",
-      "description": "Three-panel figure showing certified radius vs depth, margin, and cover granularity.",
-      "code_file": "visualizations/certified_adversarial_robustness_via_she_composition_robustness_and_lay.py"
+      "code": "",
+      "description": "Three-panel figure showing certified radius vs depth, margin, and cover granularity."
     }
   ],
   "interactive_demos": [

@@ -33,21 +33,18 @@
   "visualizations": [
     {
       "name": "Verification-Search Gap",
-      "code": "visualize_search_gap.py",
-      "description": "Log-scale comparison of polynomial verification cost vs exponential search cost, showing the gap grows without bound.",
-      "code_file": "visualizations/information_theoretic_limits_of_proof_se_verification_search_gap.py"
+      "code": "",
+      "description": "Log-scale comparison of polynomial verification cost vs exponential search cost, showing the gap grows without bound."
     },
     {
       "name": "Proof Density Analysis",
-      "code": "visualize_proof_density.py",
-      "description": "Three-panel visualization of proof density decay, information content growth, and expected search cost for different proof count scenarios.",
-      "code_file": "visualizations/information_theoretic_limits_of_proof_se_proof_density_analysis.py"
+      "code": "",
+      "description": "Three-panel visualization of proof density decay, information content growth, and expected search cost for different proof count scenarios."
     },
     {
       "name": "Proof Length Conjecture",
-      "code": "visualize_proof_length.py",
-      "description": "Four-panel analysis testing the Theta(n log n) proof length growth conjecture with synthetic data and scaling analysis.",
-      "code_file": "visualizations/information_theoretic_limits_of_proof_se_proof_length_conjecture.py"
+      "code": "",
+      "description": "Four-panel analysis testing the Theta(n log n) proof length growth conjecture with synthetic data and scaling analysis."
     }
   ],
   "interactive_demos": [

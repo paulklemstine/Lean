@@ -27,21 +27,18 @@
   "visualizations": [
     {
       "name": "Consequence Narrowing Profile",
-      "code": "visualize_narrowing.py",
-      "description": "Shows how candidate sets shrink monotonically as consequences are verified, with comparison to the theoretical n/2^k bound.",
-      "code_file": "visualizations/retrocausal_proof_theory__proving_theore_consequence_narrowing_profile.py"
+      "code": "",
+      "description": "Shows how candidate sets shrink monotonically as consequences are verified, with comparison to the theoretical n/2^k bound."
     },
     {
       "name": "Compression Conjecture Testing",
-      "code": "visualize_compression.py",
-      "description": "Tests the retrocausal compression conjecture across parameter settings, showing distribution of survivor counts.",
-      "code_file": "visualizations/retrocausal_proof_theory__proving_theore_compression_conjecture_testing.py"
+      "code": "",
+      "description": "Tests the retrocausal compression conjecture across parameter settings, showing distribution of survivor counts."
     },
     {
       "name": "Idempotent Collapse Bridge",
-      "code": "visualize_idempotent.py",
-      "description": "Demonstrates the connection between consequence filtering and idempotent oracle dynamics.",
-      "code_file": "visualizations/retrocausal_proof_theory__proving_theore_idempotent_collapse_bridge.py"
+      "code": "",
+      "description": "Demonstrates the connection between consequence filtering and idempotent oracle dynamics."
     }
   ],
   "interactive_demos": [

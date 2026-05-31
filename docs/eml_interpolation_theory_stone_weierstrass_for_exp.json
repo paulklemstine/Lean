@@ -34,21 +34,18 @@
   "visualizations": [
     {
       "name": "EML Approximation Quality",
-      "code": "viz_eml_approx.py",
-      "description": "Shows EML networks of increasing width approximating various target functions (x², sin, sqrt, |x-0.5|), demonstrating Stone-Weierstrass density.",
-      "code_file": "visualizations/stone_weierstrass_for_exp_log__eml__netw_eml_approximation_quality.py"
+      "code": "",
+      "description": "Shows EML networks of increasing width approximating various target functions (x², sin, sqrt, |x-0.5|), demonstrating Stone-Weierstrass density."
     },
     {
       "name": "EML Separation Property",
-      "code": "viz_separation.py",
-      "description": "Visualizes the point separation property: log function, separation gap vs ratio, and EML layers with various parameters.",
-      "code_file": "visualizations/stone_weierstrass_for_exp_log__eml__netw_eml_separation_property.py"
+      "code": "",
+      "description": "Visualizes the point separation property: log function, separation gap vs ratio, and EML layers with various parameters."
     },
     {
       "name": "Depth-Width Tradeoff",
-      "code": "viz_depth_tradeoff.py",
-      "description": "Shows depth-1 vs depth-2 vs depth-3 growth rates, EML power function representation, and the tropical-EML bridge.",
-      "code_file": "visualizations/stone_weierstrass_for_exp_log__eml__netw_depth_width_tradeoff.py"
+      "code": "",
+      "description": "Shows depth-1 vs depth-2 vs depth-3 growth rates, EML power function representation, and the tropical-EML bridge."
     }
   ],
   "interactive_demos": [

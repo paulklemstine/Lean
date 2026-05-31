@@ -21,15 +21,13 @@
   "visualizations": [
     {
       "name": "Persistence Barcode Comparison",
-      "code": "visualize_persistence.py",
-      "description": "Compares H0 barcodes and total persistence between alpha helix and random coil configurations.",
-      "code_file": "visualizations/protein_folding_as_persistent_homology_o_persistence_barcode_comparison.py"
+      "code": "",
+      "description": "Compares H0 barcodes and total persistence between alpha helix and random coil configurations."
     },
     {
       "name": "Distance Matrix Stability",
-      "code": "visualize_stability.py",
-      "description": "Demonstrates Theorem G: distance matrix perturbation is bounded by 2x configuration distance.",
-      "code_file": "visualizations/protein_folding_as_persistent_homology_o_distance_matrix_stability.py"
+      "code": "",
+      "description": "Demonstrates Theorem G: distance matrix perturbation is bounded by 2x configuration distance."
     }
   ],
   "interactive_demos": [

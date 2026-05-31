@@ -21,21 +21,18 @@
   "visualizations": [
     {
       "name": "Suspicion Curves: Symmetric vs. Asymmetric",
-      "code": "viz_suspicion_curve.py",
-      "description": "Side-by-side comparison showing the symmetric kernel (valley at n/2) vs. asymmetric kernel (valley at 2n/3)",
-      "code_file": "visualizations/the_mathematical_uncanny_valley__asymmet_suspicion_curves__symmetric_vs.py"
+      "code": "",
+      "description": "Side-by-side comparison showing the symmetric kernel (valley at n/2) vs. asymmetric kernel (valley at 2n/3)"
     },
     {
       "name": "Trust Landscape Heatmap",
-      "code": "viz_trust_landscape.py",
-      "description": "2D heatmap of normalized trust T(k,n)/n^3 showing the uncanny valley as a diagonal band",
-      "code_file": "visualizations/the_mathematical_uncanny_valley__asymmet_trust_landscape_heatmap.py"
+      "code": "",
+      "description": "2D heatmap of normalized trust T(k,n)/n^3 showing the uncanny valley as a diagonal band"
     },
     {
       "name": "Valley Depth Growth",
-      "code": "viz_valley_depth.py",
-      "description": "Quadratic growth of valley depth and linear growth of the uncanny valley ratio",
-      "code_file": "visualizations/the_mathematical_uncanny_valley__asymmet_valley_depth_growth.py"
+      "code": "",
+      "description": "Quadratic growth of valley depth and linear growth of the uncanny valley ratio"
     }
   ],
   "interactive_demos": [

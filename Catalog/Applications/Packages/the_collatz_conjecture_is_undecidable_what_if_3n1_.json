@@ -33,15 +33,13 @@
   "visualizations": [
     {
       "name": "Collatz Orbit Analysis",
-      "code": "visualize_collatz.py",
-      "description": "Four-panel visualization: stopping time distribution, bit-length correlation, excursion histogram, and growth rate test for the Theta(log^2 N) conjecture.",
-      "code_file": "visualizations/collatz_undecidability__orbit_complexity_collatz_orbit_analysis.py"
+      "code": "",
+      "description": "Four-panel visualization: stopping time distribution, bit-length correlation, excursion histogram, and growth rate test for the Theta(log^2 N) conjecture."
     },
     {
       "name": "Tropical Valuation Walks",
-      "code": "visualize_tropical.py",
-      "description": "Four-panel visualization of Collatz orbits as tropical valuation walks, showing log-scale dynamics, step increments, drift rates, and slope distribution.",
-      "code_file": "visualizations/collatz_undecidability__orbit_complexity_tropical_valuation_walks.py"
+      "code": "",
+      "description": "Four-panel visualization of Collatz orbits as tropical valuation walks, showing log-scale dynamics, step increments, drift rates, and slope distribution."
     }
   ],
   "interactive_demos": [

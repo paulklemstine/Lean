@@ -33,21 +33,18 @@
   "visualizations": [
     {
       "name": "Geometric Convergence and Universality",
-      "code": "viz_convergence.py",
-      "description": "Four-panel visualization showing geometric convergence, log-scale distance decay, spectral gap landscape, and universality classes.",
-      "code_file": "visualizations/neural_network_training_as_renormalizati_geometric_convergence_and_univ.py"
+      "code": "",
+      "description": "Four-panel visualization showing geometric convergence, log-scale distance decay, spectral gap landscape, and universality classes."
     },
     {
       "name": "Beta Function and RG Phase Portrait",
-      "code": "viz_beta_function.py",
-      "description": "Beta function plots, RG flow phase portrait with arrows, and RG scaling relation verification.",
-      "code_file": "visualizations/neural_network_training_as_renormalizati_beta_function_and_rg_phase_por.py"
+      "code": "",
+      "description": "Beta function plots, RG flow phase portrait with arrows, and RG scaling relation verification."
     },
     {
       "name": "Critical Exponents and Stability Diagram",
-      "code": "viz_critical_exponents.py",
-      "description": "Critical exponent vs learning rate, Wilson-Fisher exponents, convergence rate comparison, and stability heatmap.",
-      "code_file": "visualizations/neural_network_training_as_renormalizati_critical_exponents_and_stabili.py"
+      "code": "",
+      "description": "Critical exponent vs learning rate, Wilson-Fisher exponents, convergence rate comparison, and stability heatmap."
     }
   ],
   "interactive_demos": [

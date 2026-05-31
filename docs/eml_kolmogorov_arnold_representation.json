@@ -33,15 +33,13 @@
   "visualizations": [
     {
       "name": "EML-KA Decomposition Results",
-      "code": "visualize_eml_ka.py",
-      "description": "Six-panel visualization showing multiplication/monomial decomposition errors, AM-GM and Fenchel-Young gap surfaces, depth independence comparison, and EML encoding geometry.",
-      "code_file": "visualizations/eml_chains_and_kolmogorov_arnold_decompo_eml_ka_decomposition_results.py"
+      "code": "",
+      "description": "Six-panel visualization showing multiplication/monomial decomposition errors, AM-GM and Fenchel-Young gap surfaces, depth independence comparison, and EML encoding geometry."
     },
     {
       "name": "EML Chain Depth Analysis",
-      "code": "visualize_chain_depth.py",
-      "description": "Four-panel visualization showing chain evaluation traces, power function depth independence, polynomial term decomposition, and sin(xy) universality test convergence.",
-      "code_file": "visualizations/eml_chains_and_kolmogorov_arnold_decompo_eml_chain_depth_analysis.py"
+      "code": "",
+      "description": "Four-panel visualization showing chain evaluation traces, power function depth independence, polynomial term decomposition, and sin(xy) universality test convergence."
     }
   ],
   "interactive_demos": [

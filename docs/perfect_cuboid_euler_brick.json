@@ -34,9 +34,8 @@
   "visualizations": [
     {
       "name": "Euler Brick Analysis",
-      "code": "visualize_euler_bricks.py",
-      "description": "Four-panel analysis: defect distribution, edge sum vs defect, parity structure, near-miss ranking.",
-      "code_file": "visualizations/perfect_cuboid__modular_constraints__nea_euler_brick_analysis.py"
+      "code": "",
+      "description": "Four-panel analysis: defect distribution, edge sum vs defect, parity structure, near-miss ranking."
     }
   ],
   "interactive_demos": [

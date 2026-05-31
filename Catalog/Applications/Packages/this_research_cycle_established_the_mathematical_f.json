@@ -27,9 +27,8 @@
   "visualizations": [
     {
       "name": "ASI Phase Transition Plot",
-      "code": "visualize_asi.py",
-      "description": "Bar chart of ASI values across parameters c, with postcritical parameters highlighted in red, showing the phase transition at c=0,-1,-2.",
-      "code_file": "visualizations/adelic_synchronization_for_arithmetic_dy_asi_phase_transition_plot.py"
+      "code": "",
+      "description": "Bar chart of ASI values across parameters c, with postcritical parameters highlighted in red, showing the phase transition at c=0,-1,-2."
     }
   ],
   "interactive_demos": [
