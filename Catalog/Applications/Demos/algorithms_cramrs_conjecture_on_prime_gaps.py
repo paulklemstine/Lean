@@ -1,59 +1,16 @@
 #!/usr/bin/env python3
 """
-Prime Gap Theory — Algorithms
+Algorithms for Prime Gap Analysis and Cramér's Conjecture
 
-Implementations of the core algorithms from the Certified Prime Gap Theory
-framework, with full docstrings, type hints, and complexity analysis.
+Type-hinted implementations of key algorithms formalized in the Lean proofs.
 """
 
 import math
-from typing import List, Tuple, Optional
-
-
-def sieve_of_eratosthenes(limit: int) -> List[int]:
-    """
-    Compute all primes up to `limit` using the Sieve of Eratosthenes.
-
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
-
-    Args:
-        limit: Upper bound for prime search.
-
-    Returns:
-        Sorted list of all primes p with 2 ≤ p ≤ limit.
-
-    Example:
-        >>> sieve_of_eratosthenes(30)
-        [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-    """
-    if limit < 2:
-        return []
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+from typing import List, Optional, Tuple
 
 
 def is_prime(n: int) -> bool:
-    """
-    Deterministic primality test using trial division.
-
-    Time complexity: O(√n)
-
-    Args:
-        n: Integer to test.
-
-    Returns:
-        True if n is prime.
-
-    Example:
-        >>> is_prime(1000000007)
-        True
-    """
+    """Primality test by trial division. O(√n) time."""
     if n < 2:
         return False
     if n < 4:
@@ -68,239 +25,174 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def next_prime_after(n: int) -> int:
+def next_prime(n: int) -> int:
     """
     Find the smallest prime strictly greater than n.
-
-    This implements the formal definition:
-        nextPrimeAfter(n) = min{p ∈ ℕ | Prime(p) ∧ p > n}
-
-    Time complexity: O(g_n · √n) where g_n is the gap size.
-    By Bertrand's postulate, g_n ≤ n, so worst case O(n^{3/2}).
-    Conjecturally (Cramér), g_n = O((log n)²), giving O((log n)² · √n).
-
-    Args:
-        n: Starting point (non-negative integer).
-
-    Returns:
-        The smallest prime p > n.
-
-    Example:
-        >>> next_prime_after(100)
-        101
-        >>> next_prime_after(113)
-        127
+    
+    Corresponds to the Lean definition `nextPrime`.
+    Guaranteed to terminate by Euclid's theorem (infinitely many primes).
+    By Bertrand's postulate, terminates within n steps for n ≥ 1.
     """
-    m = n + 1
-    while not is_prime(m):
-        m += 1
-    return m
+    candidate = n + 1
+    while not is_prime(candidate):
+        candidate += 1
+    return candidate
 
 
-def prime_gap_after(n: int) -> int:
+def prime_gap(n: int) -> int:
     """
-    Compute the prime gap after n: distance to the next prime.
-
-    Formally: primeGapAfter(n) = nextPrimeAfter(n) - n
-
-    Args:
-        n: Starting point.
-
-    Returns:
-        The gap nextPrimeAfter(n) - n, always positive.
-
-    Example:
-        >>> prime_gap_after(7)
-        4
-        >>> prime_gap_after(23)
-        6
+    Compute the prime gap at n: nextPrime(n) - n.
+    
+    Corresponds to the Lean definition `primeGap`.
     """
-    return next_prime_after(n) - n
+    return next_prime(n) - n
 
 
-def compute_prime_gaps(limit: int) -> List[Tuple[int, int, int]]:
+def sieve_primes(limit: int) -> List[int]:
+    """Sieve of Eratosthenes. Returns all primes up to limit."""
+    if limit < 2:
+        return []
+    sieve = bytearray(b'\x01') * (limit + 1)
+    sieve[0] = sieve[1] = 0
+    for i in range(2, int(math.isqrt(limit)) + 1):
+        if sieve[i]:
+            sieve[i*i::i] = bytearray(len(sieve[i*i::i]))
+    return [i for i in range(2, limit + 1) if sieve[i]]
+
+
+def cramer_density(n: int) -> float:
     """
-    Compute all consecutive prime gaps up to `limit`.
-
-    Returns:
-        List of (prime, next_prime, gap) tuples.
-
-    Example:
-        >>> compute_prime_gaps(20)
-        [(2, 3, 1), (3, 5, 2), (5, 7, 2), (7, 11, 4), (11, 13, 2), (13, 17, 4), (17, 19, 2)]
-    """
-    primes = sieve_of_eratosthenes(limit)
-    return [(primes[i], primes[i + 1], primes[i + 1] - primes[i])
-            for i in range(len(primes) - 1)]
-
-
-def cramer_weight(m: int) -> float:
-    """
-    The Cramér weight function.
-
-    Formally:
-        cramerWeight(m) = 1/log(m) if m ≥ 2, else 0
-
-    This is the probability assigned to m being "prime-like" in Cramér's
-    random model of the primes.
-
-    Args:
-        m: Integer.
-
-    Returns:
-        The Cramér weight at m.
-
-    Example:
-        >>> round(cramer_weight(100), 6)
-        0.217147
-    """
-    if m >= 2:
-        return 1.0 / math.log(m)
-    return 0.0
-
-
-def expected_prime_likes_in_interval(N: int, H: int) -> float:
-    """
-    Compute the expected number of model-primes in [N, N+H].
-
-    Formally:
-        E(N, H) = Σ_{m=N}^{N+H} cramerWeight(m)
-
-    Certified bounds (for N ≥ 3):
-        (H+1)/log(N+H) ≤ E(N,H) ≤ (H+1)/log(N)
-
-    Time complexity: O(H)
-
-    Args:
-        N: Start of interval.
-        H: Length parameter (interval is [N, N+H]).
-
-    Returns:
-        The sum of Cramér weights over the interval.
-
-    Example:
-        >>> round(expected_prime_likes_in_interval(1000, 100), 2)
-        14.62
-    """
-    return sum(cramer_weight(m) for m in range(N, N + H + 1))
-
-
-def normalized_gap(n: int) -> float:
-    """
-    The normalized prime gap observable: gap(n) / (log n)².
-
-    Cramér's conjecture is equivalent to this quantity being
-    eventually bounded.
-
-    Args:
-        n: Starting point (must be ≥ 2 for meaningful result).
-
-    Returns:
-        The normalized gap, or 0.0 if n < 2.
-
-    Example:
-        >>> round(normalized_gap(113), 4)  # gap to 127 is 14
-        0.6277
+    Cramér model density: probability 1/log(n) for n ≥ 2.
+    
+    Corresponds to `CramerRandomModel.density` in Lean.
     """
     if n < 2:
         return 0.0
-    gap = prime_gap_after(n)
-    log_n = math.log(n)
-    return gap / (log_n ** 2)
+    return 1.0 / math.log(n)
 
 
-def gap_from_interval_bound(n: int, F: callable) -> int:
+def cramer_bound(p: int) -> float:
     """
-    The transfer principle: given F(n) such that there is always a prime
-    in (n, n + F(n)], the prime gap after n is at most F(n).
-
-    This demonstrates the formal theorem:
-        (∀ n ≥ N₀, ∃ p prime, n < p ≤ n + F(n)) → primeGapAfter(n) ≤ F(n)
-
-    Args:
-        n: Starting point.
-        F: Bound function.
-
-    Returns:
-        F(n), the certified gap upper bound.
+    Cramér's conjectured upper bound on the prime gap at p: (log p)².
+    
+    For the strong form with C = 1.
     """
-    return F(n)
+    if p < 2:
+        return 0.0
+    return math.log(p) ** 2
 
 
-def dyadic_oscillation_analysis(limit: int) -> List[Tuple[int, int, float]]:
+def bertrand_bound(p: int) -> int:
     """
-    Compute raw and normalized gap oscillation on dyadic intervals [2^k, 2^{k+1}].
-
-    Returns:
-        List of (k, raw_oscillation, normalized_oscillation) tuples.
+    Bertrand's postulate bound: gap < p.
+    
+    Corresponds to `bertrand_prime_gap_lt` in Lean.
     """
-    primes = sieve_of_eratosthenes(limit)
-    results = []
-
-    k = 3
-    while 2**k <= limit:
-        lo, hi = 2**k, min(2**(k + 1), limit)
-        range_primes = [p for p in primes if lo <= p <= hi]
-        if len(range_primes) >= 2:
-            gaps = [range_primes[i + 1] - range_primes[i]
-                    for i in range(len(range_primes) - 1)]
-            raw_osc = max(gaps) - min(gaps)
-            log_lo = math.log(lo)
-            norm_gaps = [g / (log_lo ** 2) for g in gaps]
-            norm_osc = max(norm_gaps) - min(norm_gaps)
-            results.append((k, raw_osc, norm_osc))
-        k += 1
-
-    return results
+    return p
 
 
-def cramer_model_occupancy_estimate(N: int, A: float) -> Tuple[float, float, float]:
+def rsa_prime_search_bound(k: int) -> int:
     """
-    Estimate the probability that a Cramér-scale interval contains a model-prime.
-
-    For interval [N, N + ⌈A(log N)²⌉]:
-    - Compute the expectation S = E(N, H)
-    - Estimate P(at least one) ≥ 1 - exp(-S)
-
-    Args:
-        N: Start of interval.
-        A: Scaling constant.
-
-    Returns:
-        (H, S, lower_bound_probability) tuple.
-
-    Example:
-        >>> H, S, prob = cramer_model_occupancy_estimate(10000, 2.0)
-        >>> prob > 0.99
-        True
+    Under Cramér's conjecture, worst-case number of candidates to
+    test when searching for a k-bit prime: O(k²).
+    
+    Corresponds to `RSAPrimeSearchBound` in Lean.
     """
-    log_N = math.log(N)
-    H = math.ceil(A * log_N ** 2)
-    S = expected_prime_likes_in_interval(N, H)
-    prob_lower = 1.0 - math.exp(-S)
-    return H, S, prob_lower
+    return k * k
+
+
+def verify_cramer_up_to(bound: int) -> Tuple[bool, Optional[int]]:
+    """
+    Verify Cramér's conjecture (with C=1) for all primes p with 11 ≤ p ≤ bound.
+    
+    Returns (True, None) if conjecture holds, or (False, counterexample_prime).
+    Corresponds to `CramerTestable` in Lean.
+    """
+    primes = sieve_primes(bound + 1000)  # extra margin for next_prime
+    for i in range(len(primes) - 1):
+        p = primes[i]
+        if p < 11 or p > bound:
+            continue
+        gap = primes[i + 1] - p
+        if gap > math.log(p) ** 2:
+            return (False, p)
+    return (True, None)
+
+
+def factorial_gap_construction(k: int) -> Tuple[int, int, int]:
+    """
+    Construct k consecutive composite numbers using the factorial method.
+    
+    Returns (start, end, gap_length) where start = (k+1)! + 2 and
+    end = (k+1)! + (k+1) are all composite.
+    
+    Corresponds to the proof of `arbitrarily_large_prime_gaps` in Lean.
+    """
+    n = math.factorial(k + 1)
+    start = n + 2
+    end = n + k + 1
+    return (start, end, k)
+
+
+def log_sq_vs_linear(n: int) -> Tuple[float, float, float]:
+    """
+    Compare (log n)², n, and their ratio.
+    
+    Demonstrates `log_sq_lt_self`: (log n)² < n for n ≥ 1.
+    """
+    if n < 1:
+        return (0.0, 0.0, 0.0)
+    log_sq = math.log(n) ** 2
+    return (log_sq, float(n), log_sq / n)
+
+
+def gap_statistics(limit: int) -> dict:
+    """Compute comprehensive prime gap statistics up to `limit`."""
+    primes = sieve_primes(limit)
+    gaps = [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+    
+    if not gaps:
+        return {}
+    
+    max_gap = max(gaps)
+    max_gap_idx = gaps.index(max_gap)
+    mean_gap = sum(gaps) / len(gaps)
+    
+    # Cramér ratio: gap / (log p)²
+    cramer_ratios = []
+    for i, g in enumerate(gaps):
+        p = primes[i]
+        if p >= 11:
+            cramer_ratios.append(g / math.log(p) ** 2)
+    
+    return {
+        "num_primes": len(primes),
+        "num_gaps": len(gaps),
+        "max_gap": max_gap,
+        "max_gap_after_prime": primes[max_gap_idx],
+        "mean_gap": mean_gap,
+        "max_cramer_ratio": max(cramer_ratios) if cramer_ratios else 0,
+        "mean_cramer_ratio": sum(cramer_ratios) / len(cramer_ratios) if cramer_ratios else 0,
+        "cramer_violations": sum(1 for r in cramer_ratios if r > 1),
+    }
 
 
 if __name__ == "__main__":
-    print("=== Algorithm Examples ===\n")
-
-    # Next prime
-    for n in [100, 1000, 10000]:
-        p = next_prime_after(n)
-        print(f"nextPrimeAfter({n}) = {p}, gap = {p - n}")
-
-    print()
-
-    # Cramér expectations
-    for N in [100, 1000, 10000]:
-        for H in [10, 100]:
-            E = expected_prime_likes_in_interval(N, H)
-            print(f"E({N}, {H}) = {E:.4f}")
-
-    print()
-
-    # Occupancy estimates
-    for N in [1000, 10000, 100000]:
-        for A in [1.0, 2.0]:
-            H, S, prob = cramer_model_occupancy_estimate(N, A)
-            print(f"N={N}, A={A}: H={H}, S={S:.2f}, P(≥1) ≥ {prob:.6f}")
+    # Quick demo
+    print("Prime gaps for first 20 primes:")
+    primes = sieve_primes(80)
+    for i in range(min(19, len(primes) - 1)):
+        p = primes[i]
+        g = primes[i + 1] - p
+        cb = cramer_bound(p)
+        print(f"  p={p:>3}, gap={g}, Cramér bound={(cb):.2f}, "
+              f"ratio={g/cb:.3f}" if cb > 0 else f"  p={p:>3}, gap={g}")
+    
+    print(f"\nVerifying Cramér up to 100,000...")
+    ok, cex = verify_cramer_up_to(100_000)
+    print(f"  Result: {'HOLDS' if ok else f'FAILS at p={cex}'}")
+    
+    print(f"\nGap statistics up to 1,000,000:")
+    stats = gap_statistics(1_000_000)
+    for k, v in stats.items():
+        print(f"  {k}: {v}")

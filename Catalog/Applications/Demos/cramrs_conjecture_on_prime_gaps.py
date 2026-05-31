@@ -1,376 +1,9 @@
 #!/usr/bin/env python3
 """
-Prime Gap Theory — Applications
+Demo: Prime Gap Analysis and Cramér's Conjecture Verification
 
-Real-world applications of prime gap analysis, including:
-- Cryptographic prime generation timing estimates
-- Prime gap statistics for random number generation
-- Cramér model accuracy assessment
-- Spacing distribution analysis (Poisson vs Wigner-Dyson)
-"""
-
-import math
-import time
-from typing import List, Tuple, Dict
-from collections import Counter
-
-
-def sieve_of_eratosthenes(limit: int) -> List[int]:
-    """Return all primes up to limit."""
-    if limit < 2:
-        return []
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
-
-
-# =============================================================================
-# Application 1: Cryptographic Prime Search Estimates
-# =============================================================================
-
-def estimate_prime_search_time(bit_length: int) -> Dict[str, float]:
-    """
-    Estimate the expected number of candidates to test when generating
-    a random prime of given bit length.
-
-    By the Prime Number Theorem, the density of primes near n is 1/ln(n).
-    For a b-bit number, n ≈ 2^b, so ln(n) ≈ b·ln(2).
-
-    The Cramér model predicts that the maximum gap is about (b·ln 2)²,
-    so in the worst case you might need to test that many candidates.
-
-    Args:
-        bit_length: Desired bit length of the prime.
-
-    Returns:
-        Dictionary with estimates.
-    """
-    n = 2 ** bit_length
-    log_n = bit_length * math.log(2)
-
-    return {
-        "bit_length": bit_length,
-        "approximate_n": f"2^{bit_length}",
-        "expected_candidates_avg": log_n,
-        "cramer_worst_case": log_n ** 2,
-        "bertrand_worst_case": float(n),
-        "ratio_cramer_to_bertrand": (log_n ** 2) / n,
-    }
-
-
-# =============================================================================
-# Application 2: Model Accuracy Assessment
-# =============================================================================
-
-def assess_cramer_model_accuracy(limit: int) -> Dict[str, object]:
-    """
-    Compare Cramér model predictions to actual prime distribution.
-
-    For intervals of various lengths around sample points, compare:
-    - Actual number of primes
-    - Cramér model expected number
-
-    Args:
-        limit: Upper bound for analysis.
-
-    Returns:
-        Assessment results.
-    """
-    primes_set = set(sieve_of_eratosthenes(limit))
-    sample_points = [10**k for k in range(3, int(math.log10(limit)) + 1)]
-    results = []
-
-    for N in sample_points:
-        if N >= limit:
-            continue
-        for H in [100, 1000]:
-            if N + H > limit:
-                continue
-
-            # Actual count
-            actual = sum(1 for m in range(N, N + H + 1) if m in primes_set)
-
-            # Cramér expectation
-            expected = sum(1.0 / math.log(m) for m in range(max(2, N), N + H + 1))
-
-            # Certified bounds
-            log_N = math.log(N)
-            log_NH = math.log(N + H)
-            lower = (H + 1) / log_NH
-            upper = (H + 1) / log_N
-
-            results.append({
-                "N": N, "H": H,
-                "actual": actual,
-                "expected": round(expected, 2),
-                "lower_bound": round(lower, 2),
-                "upper_bound": round(upper, 2),
-                "relative_error": round(abs(actual - expected) / max(expected, 1), 4),
-            })
-
-    return {"comparisons": results}
-
-
-# =============================================================================
-# Application 3: Gap Distribution Analysis
-# =============================================================================
-
-def analyze_gap_distribution(limit: int) -> Dict[str, object]:
-    """
-    Analyze the distribution of prime gaps and compare to theoretical predictions.
-
-    Computes:
-    - Gap histogram
-    - Mean and variance
-    - Maximum gap and normalized maximum
-    - Comparison to Poisson spacing predictions
-
-    Args:
-        limit: Upper bound for prime search.
-
-    Returns:
-        Statistical analysis of gaps.
-    """
-    primes = sieve_of_eratosthenes(limit)
-    gaps = [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
-
-    # Basic statistics
-    mean_gap = sum(gaps) / len(gaps)
-    variance = sum((g - mean_gap) ** 2 for g in gaps) / len(gaps)
-    max_gap = max(gaps)
-    max_idx = gaps.index(max_gap)
-    max_prime = primes[max_idx]
-
-    # Normalized gaps
-    normalized = []
-    for i in range(len(gaps)):
-        p = primes[i]
-        if p >= 3:
-            log_p = math.log(p)
-            normalized.append(gaps[i] / (log_p ** 2))
-
-    max_normalized = max(normalized) if normalized else 0
-
-    # Gap histogram (even gaps dominate for p > 2)
-    gap_counts = Counter(gaps)
-    top_gaps = gap_counts.most_common(10)
-
-    # Poisson comparison: in a Poisson process with rate 1/log(n),
-    # gaps should be approximately exponentially distributed with
-    # mean log(n). Normalized gaps g/(log p)² should cluster near 0.
-    mean_normalized = sum(normalized) / len(normalized) if normalized else 0
-
-    return {
-        "num_primes": len(primes),
-        "num_gaps": len(gaps),
-        "mean_gap": round(mean_gap, 4),
-        "variance": round(variance, 4),
-        "max_gap": max_gap,
-        "max_gap_at_prime": max_prime,
-        "max_normalized_gap": round(max_normalized, 6),
-        "mean_normalized_gap": round(mean_normalized, 6),
-        "top_10_gap_frequencies": top_gaps,
-    }
-
-
-# =============================================================================
-# Application 4: Spacing Statistics (Poisson vs Wigner-Dyson)
-# =============================================================================
-
-def spacing_analysis(limit: int) -> Dict[str, object]:
-    """
-    Compute spacing statistics for prime gaps and compare to
-    Poisson and Wigner-Dyson predictions.
-
-    The Cramér model predicts Poisson (exponential) spacing.
-    Random matrix theory (GUE) predicts Wigner-Dyson spacing.
-
-    Args:
-        limit: Upper bound for analysis.
-
-    Returns:
-        Spacing statistics and comparison metrics.
-    """
-    primes = sieve_of_eratosthenes(limit)
-
-    # Compute normalized spacings: gap / mean_local_gap
-    # Use local windows for normalization
-    window = 100
-    spacings = []
-
-    for i in range(window, len(primes) - window - 1):
-        local_gaps = [primes[j + 1] - primes[j]
-                      for j in range(i - window, i + window)]
-        local_mean = sum(local_gaps) / len(local_gaps)
-        if local_mean > 0:
-            s = (primes[i + 1] - primes[i]) / local_mean
-            spacings.append(s)
-
-    if not spacings:
-        return {"error": "Not enough primes for analysis"}
-
-    # Empirical CDF
-    spacings.sort()
-    n = len(spacings)
-
-    # Kolmogorov-Smirnov statistics
-    # Poisson: P(s) = 1 - exp(-s)
-    # Wigner: P(s) = 1 - exp(-π s²/4)
-    ks_poisson = 0.0
-    ks_wigner = 0.0
-
-    for i, s in enumerate(spacings):
-        ecdf = (i + 1) / n
-        poisson_cdf = 1.0 - math.exp(-s)
-        wigner_cdf = 1.0 - math.exp(-math.pi * s * s / 4.0)
-        ks_poisson = max(ks_poisson, abs(ecdf - poisson_cdf))
-        ks_wigner = max(ks_wigner, abs(ecdf - wigner_cdf))
-
-    return {
-        "num_spacings": n,
-        "mean_spacing": round(sum(spacings) / n, 4),
-        "ks_poisson": round(ks_poisson, 6),
-        "ks_wigner": round(ks_wigner, 6),
-        "closer_to": "Poisson" if ks_poisson < ks_wigner else "Wigner-Dyson",
-        "poisson_better_by": round(ks_wigner - ks_poisson, 6),
-    }
-
-
-# =============================================================================
-# Application 5: Prime Generation Benchmark
-# =============================================================================
-
-def benchmark_prime_generation(bit_lengths: List[int],
-                               trials: int = 100) -> List[Dict]:
-    """
-    Benchmark how many candidates are tested to find primes of various sizes.
-
-    Args:
-        bit_lengths: List of desired bit lengths.
-        trials: Number of primes to generate per bit length.
-
-    Returns:
-        Benchmark results.
-    """
-    import random
-    results = []
-
-    for bits in bit_lengths:
-        lo = 2 ** (bits - 1)
-        hi = 2 ** bits - 1
-        candidates_tested = []
-
-        for _ in range(trials):
-            n = random.randint(lo, hi)
-            if n % 2 == 0:
-                n += 1
-            count = 0
-            m = n
-            while True:
-                count += 1
-                # Simple trial division for small sizes
-                if bits <= 20:
-                    is_p = True
-                    if m < 2:
-                        is_p = False
-                    elif m > 3:
-                        if m % 2 == 0 or m % 3 == 0:
-                            is_p = False
-                        else:
-                            j = 5
-                            while j * j <= m:
-                                if m % j == 0 or m % (j + 2) == 0:
-                                    is_p = False
-                                    break
-                                j += 6
-                    if is_p:
-                        break
-                else:
-                    # For larger sizes, just count expected candidates
-                    break
-                m += 2
-
-            candidates_tested.append(count)
-
-        avg = sum(candidates_tested) / len(candidates_tested)
-        theoretical = bits * math.log(2) / 2  # divide by 2 since we skip evens
-        results.append({
-            "bits": bits,
-            "avg_candidates": round(avg, 1),
-            "theoretical_expected": round(theoretical, 1),
-            "max_candidates": max(candidates_tested),
-            "cramer_predicted_max": round((bits * math.log(2)) ** 2 / 2, 1),
-        })
-
-    return results
-
-
-if __name__ == "__main__":
-    print("=" * 70)
-    print("  PRIME GAP THEORY — APPLICATIONS")
-    print("=" * 70)
-
-    # App 1: Cryptographic estimates
-    print("\n--- Application 1: Cryptographic Prime Search Estimates ---\n")
-    for bits in [256, 512, 1024, 2048, 4096]:
-        est = estimate_prime_search_time(bits)
-        print(f"  {bits}-bit prime:")
-        print(f"    Expected candidates (average): {est['expected_candidates_avg']:.1f}")
-        print(f"    Cramér worst case: {est['cramer_worst_case']:.0f}")
-        print(f"    Ratio Cramér/Bertrand: {est['ratio_cramer_to_bertrand']:.2e}")
-        print()
-
-    # App 2: Model accuracy
-    print("--- Application 2: Cramér Model Accuracy ---\n")
-    accuracy = assess_cramer_model_accuracy(1_000_000)
-    for r in accuracy["comparisons"]:
-        print(f"  N={r['N']}, H={r['H']}: actual={r['actual']}, "
-              f"expected={r['expected']}, error={r['relative_error']:.1%}")
-    print()
-
-    # App 3: Gap distribution
-    print("--- Application 3: Gap Distribution Analysis ---\n")
-    dist = analyze_gap_distribution(1_000_000)
-    print(f"  Primes: {dist['num_primes']:,}")
-    print(f"  Mean gap: {dist['mean_gap']}")
-    print(f"  Max gap: {dist['max_gap']} at prime {dist['max_gap_at_prime']}")
-    print(f"  Max normalized gap: {dist['max_normalized_gap']}")
-    print(f"  Mean normalized gap: {dist['mean_normalized_gap']}")
-    print(f"  Top gap frequencies: {dist['top_10_gap_frequencies'][:5]}")
-    print()
-
-    # App 4: Spacing analysis
-    print("--- Application 4: Spacing Statistics ---\n")
-    spacing = spacing_analysis(1_000_000)
-    print(f"  Spacings analyzed: {spacing['num_spacings']:,}")
-    print(f"  K-S statistic (Poisson): {spacing['ks_poisson']}")
-    print(f"  K-S statistic (Wigner-Dyson): {spacing['ks_wigner']}")
-    print(f"  Closer to: {spacing['closer_to']}")
-    print()
-
-    # App 5: Prime generation benchmark
-    print("--- Application 5: Prime Generation Benchmark ---\n")
-    bench = benchmark_prime_generation([8, 10, 12, 14, 16, 18, 20])
-    print(f"  {'Bits':>5s} | {'Avg':>6s} | {'Theory':>7s} | {'Max':>5s} | {'Cramér':>7s}")
-    print("  " + "-" * 45)
-    for r in bench:
-        print(f"  {r['bits']:>5d} | {r['avg_candidates']:>6.1f} | "
-              f"{r['theoretical_expected']:>7.1f} | {r['max_candidates']:>5d} | "
-              f"{r['cramer_predicted_max']:>7.1f}")
-
-    print("\nAll applications completed!")
-
-
-#!/usr/bin/env python3
-"""
-Prime Gap Theory — Demonstration
-
-Concrete numerical demonstrations of the theorems formalized in the
-Certified Prime Gap Theory framework.
+This script computes prime gaps for primes up to a given bound and checks
+whether Cramér's conjecture (gap ≤ (log p)²) holds for each prime.
 """
 
 import math
@@ -383,200 +16,244 @@ def sieve_of_eratosthenes(limit: int) -> List[int]:
         return []
     is_prime = [True] * (limit + 1)
     is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
+    for i in range(2, int(math.isqrt(limit)) + 1):
         if is_prime[i]:
             for j in range(i * i, limit + 1, i):
                 is_prime[j] = False
     return [i for i in range(2, limit + 1) if is_prime[i]]
 
 
-def next_prime_after(n: int) -> int:
-    """Find the smallest prime strictly greater than n."""
-    m = n + 1
-    while True:
-        if is_prime_trial(m):
-            return m
-        m += 1
-
-
-def is_prime_trial(n: int) -> bool:
-    """Trial division primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def prime_gap_after(n: int) -> int:
-    """The prime gap after n: distance to the next prime."""
-    return next_prime_after(n) - n
-
-
-def cramer_weight(m: int) -> float:
-    """Cramér weight: 1/log(m) for m >= 2, else 0."""
-    if m >= 2:
-        return 1.0 / math.log(m)
-    return 0.0
-
-
-def expected_prime_likes(N: int, H: int) -> float:
-    """Expected number of model-primes in [N, N+H]."""
-    return sum(cramer_weight(m) for m in range(N, N + H + 1))
-
-
-def demo_theorem_a():
-    """Theorem A: Existence of next prime after any n."""
-    print("=" * 60)
-    print("THEOREM A: Next prime exists after every natural number")
-    print("=" * 60)
-    test_values = [0, 1, 10, 100, 1000, 10000, 100000]
-    for n in test_values:
-        p = next_prime_after(n)
-        gap = p - n
-        print(f"  nextPrimeAfter({n:>6d}) = {p:>6d}  (gap = {gap})")
-    print()
-
-
-def demo_theorem_b():
-    """Theorem B: Prime gaps are always positive."""
-    print("=" * 60)
-    print("THEOREM B: Prime gap is always positive")
-    print("=" * 60)
-    for n in range(20):
-        gap = prime_gap_after(n)
-        assert gap > 0, f"Gap at {n} is {gap}, not positive!"
-    print("  Verified: primeGapAfter(n) > 0 for all n in [0, 19]")
-    print()
-
-
-def demo_theorem_c():
-    """Theorem C: Bertrand-based bound — gap ≤ n for n ≥ 1."""
-    print("=" * 60)
-    print("THEOREM C: primeGapAfter(n) ≤ n for n ≥ 1 (Bertrand)")
-    print("=" * 60)
-    violations = 0
-    for n in range(1, 100001):
-        gap = prime_gap_after(n)
-        if gap > n:
-            violations += 1
-            print(f"  VIOLATION at n={n}: gap={gap}")
-    print(f"  Tested n = 1 to 100000: {violations} violations")
-    # Show how loose the bound is
-    print("\n  How loose is Bertrand's bound?")
-    for n in [100, 1000, 10000, 100000]:
-        gap = prime_gap_after(n)
-        ratio = gap / n
-        print(f"    n={n:>6d}: gap={gap:>3d}, gap/n = {ratio:.6f}")
-    print()
-
-
-def demo_theorem_f():
-    """Theorem F: Cramér model expectation bounds."""
-    print("=" * 60)
-    print("THEOREM F: Cramér model expectation sandwich bounds")
-    print("=" * 60)
-    N = 10000
-    for H in [10, 50, 100, 500, 1000]:
-        E = expected_prime_likes(N, H)
-        upper = (H + 1) / math.log(N)
-        lower = (H + 1) / math.log(N + H)
-
-        # Count actual primes in [N, N+H]
-        actual = sum(1 for m in range(N, N + H + 1) if is_prime_trial(m))
-
-        print(f"  N={N}, H={H}:")
-        print(f"    Lower bound:  {lower:.4f}")
-        print(f"    Expectation:  {E:.4f}")
-        print(f"    Upper bound:  {upper:.4f}")
-        print(f"    Actual primes: {actual}")
-        assert lower <= E + 1e-10, "Lower bound violated!"
-        assert E <= upper + 1e-10, "Upper bound violated!"
-    print()
-
-
-def demo_cramer_conjecture():
-    """Demonstrate Cramér's conjecture numerically."""
-    print("=" * 60)
-    print("CRAMÉR'S CONJECTURE: Normalized gaps g(n)/(log n)²")
-    print("=" * 60)
-    primes = sieve_of_eratosthenes(10_000_000)
-    max_normalized = 0.0
-    max_gap = 0
-    max_gap_prime = 0
-
+def compute_prime_gaps(primes: List[int]) -> List[Tuple[int, int, float]]:
+    """Compute (prime, gap, (log p)²) for consecutive primes."""
+    results = []
     for i in range(len(primes) - 1):
         p = primes[i]
         gap = primes[i + 1] - p
-        if p >= 3:
-            log_p = math.log(p)
-            normalized = gap / (log_p ** 2)
-            if normalized > max_normalized:
-                max_normalized = normalized
-                max_gap = gap
-                max_gap_prime = p
+        log_sq = math.log(p) ** 2 if p >= 2 else 0
+        results.append((p, gap, log_sq))
+    return results
 
-    print(f"  Primes tested: up to {primes[-1]:,}")
-    print(f"  Largest normalized gap: {max_normalized:.6f}")
-    print(f"    at prime p = {max_gap_prime:,}, gap = {max_gap}")
-    print(f"    (log p)² = {math.log(max_gap_prime)**2:.2f}")
-    print()
 
-    # Show normalized gaps in dyadic ranges
-    print("  Dyadic range analysis:")
-    for k in range(10, 24):
-        lo, hi = 2**k, 2**(k + 1)
-        range_primes = [p for p in primes if lo <= p <= hi]
-        if len(range_primes) < 2:
+def verify_cramer_conjecture(limit: int = 1_000_000) -> None:
+    """Verify Cramér's conjecture for all primes up to `limit`."""
+    print(f"=== Cramér's Conjecture Verification up to {limit:,} ===\n")
+    
+    primes = sieve_of_eratosthenes(limit)
+    gaps = compute_prime_gaps(primes)
+    
+    max_gap = 0
+    max_gap_prime = 0
+    max_ratio = 0.0
+    max_ratio_prime = 0
+    violations = 0
+    
+    for p, gap, log_sq in gaps:
+        if p < 11:
             continue
-        gaps = [range_primes[i + 1] - range_primes[i]
-                for i in range(len(range_primes) - 1)]
-        max_g = max(gaps)
-        log_lo = math.log(lo)
-        normalized_max = max_g / (log_lo ** 2)
-        print(f"    [2^{k}, 2^{k+1}]: max gap = {max_g:>4d}, "
-              f"max g/(log n)² = {normalized_max:.4f}")
+        ratio = gap / log_sq if log_sq > 0 else 0
+        
+        if gap > max_gap:
+            max_gap = gap
+            max_gap_prime = p
+        
+        if ratio > max_ratio:
+            max_ratio = ratio
+            max_ratio_prime = p
+        
+        if gap > log_sq:
+            violations += 1
+    
+    total = sum(1 for p, _, _ in gaps if p >= 11)
+    print(f"Primes examined: {total:,}")
+    print(f"Largest gap: {max_gap} (after prime {max_gap_prime:,})")
+    print(f"  (log {max_gap_prime})² = {math.log(max_gap_prime)**2:.2f}")
+    print(f"Largest ratio gap/(log p)²: {max_ratio:.4f} (at prime {max_ratio_prime:,})")
+    print(f"Violations of gap ≤ (log p)²: {violations}")
+    print(f"Conjecture {'HOLDS' if violations == 0 else 'VIOLATED'} for all primes ≤ {limit:,}")
     print()
+    
+    # Show the 10 largest gaps
+    gaps_sorted = sorted(gaps, key=lambda x: x[1], reverse=True)
+    print("Top 10 largest prime gaps:")
+    print(f"{'Prime':>12} {'Gap':>6} {'(log p)²':>10} {'Ratio':>8}")
+    print("-" * 40)
+    for p, gap, log_sq in gaps_sorted[:10]:
+        ratio = gap / log_sq if log_sq > 0 else 0
+        print(f"{p:>12,} {gap:>6} {log_sq:>10.2f} {ratio:>8.4f}")
 
 
-def demo_transfer_principle():
-    """Demonstrate the transfer principle with different F(n)."""
-    print("=" * 60)
-    print("TRANSFER PRINCIPLE: gap ≤ F(n) from interval-prime theorems")
-    print("=" * 60)
-    test_n = [100, 1000, 10000, 100000, 1000000]
+def bertrand_bound_demo() -> None:
+    """Demonstrate the Bertrand gap bound: gap < p for all primes."""
+    print("\n=== Bertrand's Postulate: gap < p for all primes ===\n")
+    primes = sieve_of_eratosthenes(100_000)
+    gaps = compute_prime_gaps(primes)
+    
+    max_ratio = 0.0
+    for p, gap, _ in gaps:
+        if p >= 2:
+            ratio = gap / p
+            if ratio > max_ratio:
+                max_ratio = ratio
+                max_p = p
+                max_gap = gap
+    
+    print(f"Maximum gap/p ratio: {max_ratio:.6f} at p = {max_p} (gap = {max_gap})")
+    print(f"Bertrand guarantees this ratio < 1 (achieved: {max_ratio < 1})")
 
-    print(f"  {'n':>10s} | {'gap':>5s} | {'F=n':>10s} | "
-          f"{'F=n^0.525':>10s} | {'F=C(ln n)²':>10s}")
-    print("  " + "-" * 60)
 
-    for n in test_n:
-        gap = prime_gap_after(n)
-        bertrand = n
-        bhp = int(n ** 0.525) + 1
-        cramer = int(2 * math.log(n) ** 2) + 1
-        print(f"  {n:>10d} | {gap:>5d} | {bertrand:>10d} | "
-              f"{bhp:>10d} | {cramer:>10d}")
+def rsa_search_bound_demo() -> None:
+    """Demonstrate the RSA prime search bound under Cramér's conjecture."""
+    print("\n=== RSA Prime Search Bounds ===\n")
+    print(f"{'Bit length k':>14} {'2^k':>20} {'Cramér O(k²)':>14} {'Bertrand O(2^k)':>18}")
+    print("-" * 70)
+    for k in [128, 256, 512, 1024, 2048, 4096]:
+        cramer = k * k
+        import decimal
+        two_k = 2 ** k
+        print(f"{k:>14} {'2^'+str(k):>20} {cramer:>14,} {'2^'+str(k):>18}")
     print()
+    print("Under Cramér's conjecture, RSA prime search is O(k²) — polynomial in bit length.")
+    print("Without it, Bertrand only gives O(2^k) — exponential and useless in practice.")
+
+
+def gap_distribution_demo() -> None:
+    """Show the distribution of normalized prime gaps gap/(log p)."""
+    print("\n=== Distribution of Normalized Prime Gaps ===\n")
+    primes = sieve_of_eratosthenes(1_000_000)
+    gaps = compute_prime_gaps(primes)
+    
+    # Compute gap / log(p) for all primes ≥ 11
+    normalized = []
+    for p, gap, _ in gaps:
+        if p >= 11:
+            normalized.append(gap / math.log(p))
+    
+    # Histogram
+    bins = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 8, 10, float('inf')]
+    counts = [0] * (len(bins) - 1)
+    for x in normalized:
+        for i in range(len(bins) - 1):
+            if bins[i] <= x < bins[i + 1]:
+                counts[i] += 1
+                break
+    
+    total = len(normalized)
+    print(f"{'Range':>12} {'Count':>8} {'Fraction':>10}")
+    print("-" * 32)
+    for i in range(len(counts)):
+        lo = bins[i]
+        hi = bins[i + 1]
+        label = f"[{lo:.1f}, {hi:.1f})" if hi < float('inf') else f"[{lo:.1f}, ∞)"
+        print(f"{label:>12} {counts[i]:>8} {counts[i]/total:>10.4f}")
+    
+    mean = sum(normalized) / len(normalized)
+    print(f"\nMean normalized gap: {mean:.4f} (PNT predicts ≈ 1.0)")
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  CERTIFIED PRIME GAP THEORY — NUMERICAL DEMONSTRATIONS")
-    print("=" * 60 + "\n")
+    verify_cramer_conjecture(1_000_000)
+    bertrand_bound_demo()
+    rsa_search_bound_demo()
+    gap_distribution_demo()
 
-    demo_theorem_a()
-    demo_theorem_b()
-    demo_theorem_c()
-    demo_theorem_f()
-    demo_cramer_conjecture()
-    demo_transfer_principle()
 
-    print("All demonstrations completed successfully!")
+#!/usr/bin/env python3
+"""
+Visualization: Prime Gaps vs Cramér's Bound
+
+Generates a plot showing prime gaps overlaid with the (log p)² bound,
+demonstrating that all gaps fall below the conjectured ceiling.
+"""
+
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def sieve_of_eratosthenes(limit):
+    """Return all primes up to limit."""
+    if limit < 2:
+        return []
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(math.isqrt(limit)) + 1):
+        if is_prime[i]:
+            for j in range(i * i, limit + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, limit + 1) if is_prime[i]]
+
+
+def main():
+    limit = 1_000_000
+    primes = sieve_of_eratosthenes(limit)
+    
+    ps = []
+    gaps = []
+    cramer_bounds = []
+    
+    for i in range(len(primes) - 1):
+        p = primes[i]
+        if p >= 11:
+            g = primes[i + 1] - p
+            ps.append(p)
+            gaps.append(g)
+            cramer_bounds.append(math.log(p) ** 2)
+    
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle("Prime Gaps and Cramér's Conjecture", fontsize=16, fontweight='bold')
+    
+    # Plot 1: Gaps vs Cramér bound
+    ax1 = axes[0, 0]
+    ax1.scatter(ps, gaps, s=0.3, alpha=0.3, color='steelblue', label='Prime gaps')
+    ax1.plot(ps, cramer_bounds, color='red', linewidth=1.5, label='(log p)²')
+    ax1.set_xlabel('Prime p')
+    ax1.set_ylabel('Gap size')
+    ax1.set_title('Prime Gaps vs (log p)² Bound')
+    ax1.legend()
+    ax1.set_xlim(0, limit)
+    
+    # Plot 2: Ratio gap / (log p)²
+    ax2 = axes[0, 1]
+    ratios = [g / cb for g, cb in zip(gaps, cramer_bounds)]
+    ax2.scatter(ps, ratios, s=0.3, alpha=0.3, color='darkorange')
+    ax2.axhline(y=1.0, color='red', linestyle='--', linewidth=1.5, label='Cramér limit (ratio=1)')
+    ax2.set_xlabel('Prime p')
+    ax2.set_ylabel('gap / (log p)²')
+    ax2.set_title('Normalized Gap Ratio')
+    ax2.legend()
+    ax2.set_xlim(0, limit)
+    ax2.set_ylim(0, 1.2)
+    
+    # Plot 3: Histogram of gaps
+    ax3 = axes[1, 0]
+    ax3.hist(gaps, bins=range(0, max(gaps) + 2, 2), color='steelblue', 
+             edgecolor='white', alpha=0.8)
+    ax3.set_xlabel('Gap size')
+    ax3.set_ylabel('Frequency')
+    ax3.set_title('Distribution of Prime Gaps')
+    ax3.axvline(x=np.mean(gaps), color='red', linestyle='--', 
+                label=f'Mean = {np.mean(gaps):.1f}')
+    ax3.legend()
+    
+    # Plot 4: Log-log comparison of bounds
+    ax4 = axes[1, 1]
+    x = np.linspace(11, limit, 1000)
+    ax4.plot(x, np.log(x)**2, 'r-', linewidth=2, label='Cramér: (log p)²')
+    ax4.plot(x, x**0.525, 'g--', linewidth=2, label='BHP: p^{0.525}')
+    ax4.plot(x, x, 'b:', linewidth=2, label='Bertrand: p')
+    ax4.set_xlabel('Prime p')
+    ax4.set_ylabel('Gap bound')
+    ax4.set_title('Hierarchy of Gap Bounds')
+    ax4.set_yscale('log')
+    ax4.set_xscale('log')
+    ax4.legend()
+    
+    plt.tight_layout()
+    plt.savefig('prime_gaps_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved: prime_gaps_visualization.png")
+
+
+if __name__ == "__main__":
+    main()
