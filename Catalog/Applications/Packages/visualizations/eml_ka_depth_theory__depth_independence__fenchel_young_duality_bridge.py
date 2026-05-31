@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+x = np.linspace(-2, 3, 300)
+axes[0].plot(x, np.exp(x), 'b-', linewidth=2, label='exp(x)')
+xx = np.linspace(0.01, 8, 300)
+axes[0].plot(xx, xx*np.log(xx)-xx+1, 'r-', linewidth=2, label='x log(x)-x+1')
+axes[0].set_xlabel('x')
+axes[0].set_ylabel('f(x)')
+axes[0].set_title('Convex Conjugates')
+axes[0].legend()
+axes[0].set_ylim(-2, 15)
+axes[0].grid(True, alpha=0.3)
+
+p_vals = np.linspace(0.01, 5, 300)
+for q in [0.5, 1.0, 2.0, 3.0]:
+    kl = p_vals * np.log(p_vals / q) - (p_vals - q)
+    axes[1].plot(p_vals, kl, linewidth=2, label=f'q={q}')
+axes[1].axhline(y=0, color='k', linewidth=0.5)
+axes[1].set_xlabel('p')
+axes[1].set_ylabel('KL Bregman')
+axes[1].set_title('Gibbs Inequality: KL >= 0')
+axes[1].legend()
+axes[1].set_ylim(-0.5, 5)
+axes[1].grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('fenchel_young_bridge.png', dpi=150)
+plt.close()
+print('Saved: fenchel_young_bridge.png')
