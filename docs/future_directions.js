@@ -356,10 +356,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "fe57727b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.687353+00:00"
   },
   {
@@ -4361,10 +4361,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.97,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "126e8512",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
   },
   {
