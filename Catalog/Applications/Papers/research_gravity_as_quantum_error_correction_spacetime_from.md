@@ -1,319 +1,226 @@
-# Gravity as Quantum Error Correction: Formalizing the Holographic Code–Spacetime Correspondence
+# Gravity as Quantum Error Correction: A Formal Framework for Spacetime from Codes
 
 ## Abstract
 
-We establish a rigorous mathematical framework connecting quantum error-correcting codes to holographic gravity, formalizing the Almheiri-Dong-Harlow correspondence between the Ryu-Takayanagi formula and the quantum Singleton bound. We introduce the `HolographicCode` structure, a novel mathematical object that extends standard quantum error-correcting code parameters [[n, k, d]] with geometric data (area, Newton's constant) subject to the Ryu-Takayanagi relation. Within this framework, we prove the RT-Singleton correspondence, the complementary recovery theorem (a code-theoretic formulation of quantum no-cloning), erasure threshold bounds, and several entropy inequalities. We construct an infinite family of holographic codes (the HaPPY family) and prove by induction that the RT formula holds exactly at every level. We establish a cross-domain bridge to tropical geometry, showing that geodesic distances in the bulk correspond to shortest paths in the tropical semiring. All results are formalized in Lean 4 with no unproved assumptions.
+We develop a formal mathematical framework connecting quantum error-correcting codes to holographic gravity. We define quantum error-correcting codes (QEC codes) with the quantum Singleton bound as a structural constraint, formalize the Ryu-Takayanagi formula as a discrete geometric structure on boundary regions, and establish the precise mathematical bridge between code-theoretic parameters and holographic entropy. Our main results include: (1) the area-entropy duality theorem showing that for perfect codes, the code distance and logical dimension exactly determine the number of physical qubits via 2(d−1) + k = n; (2) a complete proof that strong subadditivity of entropy implies subadditivity for disjoint regions and non-negativity of mutual information; (3) the complementary recovery bound showing that large boundary regions necessarily exclude their complements from accessing bulk information; and (4) a structural theorem on tensor network decompositions (HaPPY codes) showing that the total logical dimension equals the number of tiles. All results are machine-verified in Lean 4 with the Mathlib library.
 
-**Keywords**: quantum error correction, holographic principle, AdS/CFT, Ryu-Takayanagi formula, Singleton bound, tropical geometry, formal verification
+**Keywords**: quantum error correction, holographic principle, AdS/CFT, Ryu-Takayanagi formula, Singleton bound, tensor networks, HaPPY code, entanglement entropy
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The holographic principle — the idea that the information content of a region of space is bounded by its boundary area rather than its volume — has become a cornerstone of modern theoretical physics. The AdS/CFT correspondence provides the most concrete realization: a (d+1)-dimensional gravitational theory in anti-de Sitter space is dual to a d-dimensional conformal field theory on the boundary.
 
-The holographic principle, exemplified by the AdS/CFT correspondence (Maldacena 1997), states that quantum gravity in (d+1)-dimensional anti-de Sitter space is dual to a conformal field theory on the d-dimensional boundary. A central result in holography is the Ryu-Takayanagi (RT) formula:
+A breakthrough insight of Almheiri, Dong, and Harlow (2015) and Pastawski, Yoshida, Harlow, and Preskill (2015) is that this holographic encoding has precisely the structure of a quantum error-correcting code. The boundary CFT encodes bulk information redundantly, just as a QEC code encodes logical qubits in physical qubits. The code distance — the minimum weight of a non-trivial logical operator — corresponds to the length of the shortest geodesic through the bulk.
 
-$$S(A) = \frac{\text{Area}(\gamma_A)}{4G_N}$$
+In this paper, we formalize this connection rigorously, establishing the mathematical equivalence between code-theoretic bounds and geometric entropy formulas. Our framework is built on four pillars:
 
-relating the entanglement entropy of a boundary region A to the area of the minimal surface γ_A homologous to A in the bulk.
+1. **QEC codes with the Singleton bound**: We define codes [[n, k, d]] with the quantum Singleton bound 2(d−1) ≤ n − k as a structural axiom.
+2. **The Ryu-Takayanagi formula**: We formalize RT as a structure associating boundary regions with minimal surface areas.
+3. **Strong subadditivity**: We prove key entropy inequalities from the SSA axiom.
+4. **Tensor network decomposition**: We formalize the HaPPY code as a tiling by [[5,1,3]] codes.
 
-Almheiri, Dong, and Harlow (2014) observed that this formula has a natural interpretation in quantum error correction: the boundary CFT encodes bulk quantum information as a quantum error-correcting code, and the RT formula is a consequence of the code's algebraic structure. Pastawski, Yoshida, Harlow, and Preskill (2015) made this concrete by constructing tensor network models (HaPPY codes) based on the five-qubit code.
+## 2. Definitions
 
-### 1.2 Contributions
+### 2.1 Quantum Error-Correcting Codes
 
-This paper formalizes these physical insights mathematically, proving:
+**Definition 2.1** (QECCode). A quantum error-correcting code is a tuple (n, k, d) of natural numbers satisfying:
+- k ≤ n (the number of logical qubits does not exceed physical qubits)
+- d > 0 (the code distance is positive)  
+- d ≤ n (the code distance does not exceed the number of physical qubits)
+- 2(d − 1) ≤ n − k (the quantum Singleton bound)
 
-1. **RT-Singleton Correspondence** (Theorem 2.1): The Ryu-Takayanagi formula is equivalent to the quantum Singleton bound applied to the holographic code.
+The quantum Singleton bound is the quantum analogue of the classical Singleton bound d ≤ n − k + 1. The factor of 2 arises from the no-cloning theorem: quantum error correction requires twice the redundancy of classical error correction.
 
-2. **Complementary Recovery** (Theorem 3.1): The no-cloning theorem for holographic codes — if a boundary region can reconstruct bulk information, its complement cannot.
+**Definition 2.2** (Redundancy). The redundancy of a code [[n, k, d]] is r = n − k.
 
-3. **HaPPY Code Properties** (Section 4): Complete verification that the [[5,1,3]] code is MDS, with entropy 4, erasure capacity 2, and sharp reconstruction threshold at size 3.
+**Definition 2.3** (Perfect Code). A code is perfect if it saturates the Singleton bound: 2(d − 1) = n − k.
 
-4. **Inductive Construction** (Section 7): A family of holographic codes at arbitrary depth, with RT holding exactly at every level by induction.
+**Definition 2.4** (Erasure Threshold). The erasure threshold is t = d − 1, the maximum number of qubits that can be erased while preserving the logical information.
 
-5. **Tropical-Geodesic Bridge** (Section 6): A cross-domain connection showing tropical semiring operations compute geodesic distances.
+### 2.2 The [[5,1,3]] Code
 
-6. **Concatenation Bounds** (Section 11): The Singleton bound is preserved under code concatenation.
+The [[5,1,3]] code is the smallest perfect quantum error-correcting code:
+- n = 5 physical qubits
+- k = 1 logical qubit  
+- d = 3 code distance
+- Redundancy: 4
+- Erasure threshold: 2
+- Singleton bound: 2(3−1) = 4 = 5−1 ✓ (saturated)
 
-### 1.3 Related Work
+### 2.3 Boundary Regions and the Ryu-Takayanagi Formula
 
-- **Almheiri-Dong-Harlow (2014)**: First proposal that holographic QEC explains the RT formula.
-- **Pastawski-Yoshida-Harlow-Preskill (2015)**: Construction of HaPPY codes as tensor network models.
-- **Harlow (2016)**: Review connecting bulk reconstruction to quantum error correction.
-- **Hayden-Nezami-Qi-Thomas-Walter-Yang (2016)**: Holographic duality from random tensor networks.
-- **Catalog StabilizerBounds.lean**: Existing formalization of quantum Singleton and Hamming bounds.
-- **Catalog CechStabilizerCode.lean**: Chain complex foundations for CSS codes.
+**Definition 2.5** (RTFormula). An RT formula for a system with n boundary sites consists of:
+- A function minimalArea mapping each nonempty boundary region to a natural number
+- The constraint that the full boundary has zero area
+- The constraint that the minimal area is bounded by the region size
 
-## 2. Definitions and Notation
+**Definition 2.6** (HolographicCode). A holographic code is a QEC code equipped with an RT formula such that the code distance equals the minimal area of some half-boundary region.
 
-### 2.1 Code Parameters
+### 2.4 Entropy Structures
 
-A quantum stabilizer code is described by parameters [[n, k, d]] where:
-- **n**: number of physical (boundary) qubits
-- **k**: number of logical (bulk) qubits  
-- **d**: code distance (minimum weight of undetectable error)
+**Definition 2.7** (MonotoneEntropy). A monotone entropy function on n parties is a function S from subsets of {1,...,n} to ℝ satisfying S(A) ≥ 0 for all A and S(∅) = 0.
 
-**Definition 2.1** (CodeParams). A structure `CodeParams` consists of natural numbers n, k, d.
+**Definition 2.8** (Strong Subadditivity). An entropy function S satisfies SSA if for all A, B: S(A ∪ B) + S(A ∩ B) ≤ S(A) + S(B).
 
-### 2.2 Holographic Code
+**Definition 2.9** (Holographic Entropy Vector). An entropy vector is holographic if it satisfies non-negativity, SSA, and the monogamy of mutual information (MMI): for disjoint A, B, C, S(A∪B) + S(A∪C) + S(B∪C) ≥ S(A) + S(B) + S(C) + S(A∪B∪C).
 
-**Definition 2.2** (HolographicCode). A holographic code consists of:
-- Code parameters (n, k, d)
-- Minimal surface area A (in Planck units)
-- Discretized Newton's constant 4G (positive natural number)
-- **Validity conditions**:
-  - k ≤ n (bulk fits in boundary)
-  - d > 0 (non-trivial distance)
-  - 2d + k ≤ n + 2 (quantum Singleton bound)
-  - A = 4G × (n - k) (Ryu-Takayanagi relation)
+### 2.5 Tensor Networks
 
-The entanglement entropy is S = n - k (the number of syndrome bits).
+**Definition 2.10** (TensorTile). A tensor tile consists of a QEC code, a number of bulk legs, and a number of boundary legs, with the constraint that the total number of legs equals the code size.
 
-### 2.3 Boundary Regions
+**Definition 2.11** (HaPPYCode). A HaPPY code consists of a collection of tensor tiles, all using the [[5,1,3]] code, with a specified boundary size equal to the sum of boundary legs.
 
-**Definition 2.3** (BoundaryRegion). A boundary region of a holographic code c is a pair (size, proof that size ≤ n). The complement has size n - size.
+### 2.6 Entanglement Wedges
 
-**Definition 2.4** (canCorrect). A boundary region A can correct erasures if n - |A| < d — the erasure set (complement of A) is smaller than the code distance.
+**Definition 2.12** (EntanglementWedge). An entanglement wedge assignment maps boundary regions to subsets of logical qubits, satisfying monotonicity (A ⊆ B ⟹ wedge(A) ⊆ wedge(B)), completeness (wedge(full) = all), and vacuity (wedge(∅) = ∅).
 
 ## 3. Main Results
 
-### 3.1 RT-Singleton Correspondence
+### 3.1 Area-Entropy Duality
 
-**Theorem 3.1** (rt_singleton_correspondence). For any holographic code c:
-$$S(c) \times 4G \leq \text{Area}(c)$$
+**Theorem 3.1** (Area-Entropy Duality). For a perfect code [[n, k, d]]:
+$$2(d - 1) + k = n$$
 
-*Proof sketch*: Direct from the RT relation A = 4G × (n-k) and S = n-k:
-$$S \times 4G = (n-k) \times 4G = 4G \times (n-k) = A$$
-The inequality holds with equality. □
+*Proof sketch*. By definition of perfectness, 2(d−1) = n − k. Adding k to both sides and using n − k + k = n (which follows from k ≤ n). □
 
-**Corollary** (singleton_from_rt). 2d ≤ (n-k) + 2.
+This is the discrete analogue of the Ryu-Takayanagi formula: the "area" 2(d−1) plus the "bulk entropy" k equals the "boundary entropy" n.
 
-*Proof*: From 2d + k ≤ n + 2 and k ≤ n, subtract k: 2d ≤ n - k + 2. □
+### 3.2 Subadditivity from Strong Subadditivity
 
-### 3.2 Complementary Recovery
+**Theorem 3.2** (Subadditivity from SSA). If S satisfies SSA, then for disjoint A, B:
+$$S(A \cup B) \leq S(A) + S(B)$$
 
-**Theorem 3.2** (complementary_recovery). For a holographic code with k ≥ 1, if a boundary region A can correct erasures, its complement cannot.
+*Proof sketch*. Specialize SSA to A, B: S(A∪B) + S(A∩B) ≤ S(A) + S(B). Since A∩B = ∅, S(A∩B) = S(∅) = 0. Therefore S(A∪B) ≤ S(A) + S(B). □
 
-*Proof sketch*: Suppose A corrects: n - |A| < d, so |A| ≥ n - d + 1. The complement has size n - |A|. For the complement to correct, we'd need |A| < d. By Singleton: 2d + k ≤ n + 2 with k ≥ 1 gives 2d ≤ n + 1. But |A| ≥ n - d + 1 and |A| < d would give n - d + 1 ≤ |A| < d, hence n < 2d - 1, contradicting 2d ≤ n + 1 when combined with |A| ≤ n. More precisely: from Singleton, n - d + 1 ≥ d + k - 1 ≥ d, so |A| ≥ d, contradicting |A| < d. □
+### 3.3 Non-negativity of Mutual Information
 
-This is the code-theoretic formulation of quantum no-cloning: you cannot clone bulk information by accessing both a region and its complement.
+**Theorem 3.3** (Mutual Information Non-negativity). If S satisfies SSA, then for disjoint A, B:
+$$I(A:B) = S(A) + S(B) - S(A \cup B) \geq 0$$
 
-### 3.3 Erasure Threshold
+*Proof*. Immediate from Theorem 3.2: S(A∪B) ≤ S(A) + S(B) implies S(A) + S(B) − S(A∪B) ≥ 0. □
 
-**Theorem 3.3** (erasure_threshold). If |A| + d > n, then A can correct.
+### 3.4 Complementary Recovery
 
-*Proof*: |A| + d > n implies n - |A| < d, which is the definition of correction. □
+**Theorem 3.4** (Complementary Recovery Bound). For a code [[n, k, d]], if a boundary region has A_size ≥ n − d + 1 sites, then the complement has fewer than d sites:
+$$n - A_{\text{size}} < d$$
 
-### 3.4 MDS Entropy Bound
+*Proof*. Direct arithmetic: A_size ≥ n − d + 1 implies n − A_size ≤ d − 1 < d. □
 
-**Theorem 3.4** (mds_entropy_bound). For an MDS code (2d + k = n + 2): S = 2(d-1).
+This is the code-theoretic expression of the no-cloning theorem in holographic gravity: if a boundary region is large enough to reconstruct a bulk operator, its complement is too small to do the same.
 
-*Proof*: S = n - k = n - (n + 2 - 2d) = 2d - 2 = 2(d-1). □
+### 3.5 HaPPY Code Structure
 
-### 3.5 Area-Distance Relation
+**Theorem 3.5** (HaPPY Logical Qubits). In a HaPPY code with T tiles, the total number of logical qubits is T.
 
-**Theorem 3.5** (mds_area_distance). For MDS codes: A = 4G × 2(d-1).
+*Proof*. Each tile uses the [[5,1,3]] code, which has k = 1. The sum ∑ᵢ kᵢ = ∑ᵢ 1 = T. □
 
-*Proof*: Combine the RT relation with the MDS entropy bound. □
+**Theorem 3.6** (HaPPY Total Legs). In a HaPPY code with T tiles, the total number of physical legs is 5T.
 
-## 4. The [[5,1,3]] HaPPY Code
+*Proof*. Each tile uses the [[5,1,3]] code, which has n = 5. The sum ∑ᵢ nᵢ = ∑ᵢ 5 = 5T. □
 
-The five-qubit code [[5,1,3]] is the smallest perfect quantum code. We verify:
+### 3.6 Erasure Threshold
 
-| Property | Value | Theorem |
-|----------|-------|---------|
-| MDS | 2×3 + 1 = 5 + 2 = 7 ✓ | `happy_pentagon_mds` |
-| Entropy | S = 5 - 1 = 4 | `happy_pentagon_entropy` |
-| Erasure capacity | d - 1 = 2 | `happy_pentagon_erasure` |
-| Singleton deficit | 0 (MDS) | `happy_pentagon_deficit` |
-| Reconstruction threshold | size ≥ 3 | `happy_pentagon_reconstruction` |
-| No small reconstruction | size ≤ 2 fails | `happy_pentagon_no_small` |
+**Theorem 3.7** (Erasure Threshold Bound). For any QEC code, the erasure threshold is at most half the redundancy:
+$$d - 1 \leq \lfloor(n - k)/2\rfloor$$
 
-## 5. Holographic Entropy Inequalities
+*Proof*. From the Singleton bound: 2(d−1) ≤ n − k. Dividing by 2: d − 1 ≤ ⌊(n−k)/2⌋. □
 
-We prove several entropy inequalities:
+### 3.7 Perfect Code Parameter Identity
 
-- **Area monotonicity** (Theorem 5.1): S ≤ A (entropy ≤ area)
-- **Distance-entropy duality** (Theorem 5.2): d ≤ S/2 + 1
-- **Information-geometry** (Theorem 5.3): 2d ≤ (n-k) + 2
-- **Holographic redundancy** (Theorem 5.4): For k ≥ 1, d ≥ 2: 2(d-1) ≤ n-k
-- **Bekenstein bound** (Theorem 5.5): k + 2d ≤ n + 2
+**Theorem 3.8** (Perfect Code Parameters). For a perfect code with k > 0:
+$$n = 2d - 2 + k$$
 
-## 6. Tropical Geodesic Distance (Cross-Domain Bridge)
+*Proof*. From 2(d−1) = n − k and d ≥ 1: n − k = 2d − 2, so n = 2d − 2 + k. □
 
-### 6.1 Tropical Semiring
+### 3.8 Singleton-Erasure Equivalence
 
-The tropical semiring (ℝ, ⊕, ⊗) with a ⊕ b = min(a,b) and a ⊗ b = a + b computes shortest paths. We prove:
+**Theorem 3.9** (Singleton ↔ Erasure). The quantum Singleton bound is equivalent to:
+$$2(d - 1) \leq n - k \iff 2d \leq n - k + 2$$
 
-- **Commutativity**: a ⊕ b = b ⊕ a (Theorem 6.1)
-- **Associativity**: (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c) (Theorem 6.2)
-- **Distributivity**: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c) (Theorem 6.3)
-- **Idempotency**: a ⊕ a = a (Theorem 6.4)
+*Proof*. Natural number arithmetic with d ≥ 1. □
 
-### 6.2 Geodesic Interpretation
+## 4. The Bridge: Singleton Bound ↔ Ryu-Takayanagi
 
-**Definition 6.1** (WeightedGraph). A weighted graph with non-negative edge weights and zero self-loops.
+The central insight connecting quantum error correction to holographic gravity can be summarized as follows:
 
-**Definition 6.2** (IsMetricGraph). A weighted graph satisfying the triangle inequality.
+| Code Theory | Holographic Gravity |
+|---|---|
+| Physical qubits n | Boundary sites |
+| Logical qubits k | Bulk degrees of freedom |
+| Code distance d | Minimal geodesic length |
+| Redundancy n − k | Area / 4G_N |
+| Singleton bound 2(d−1) ≤ n−k | RT formula Area ≥ 2(geodesic − 1) |
+| Erasure threshold d − 1 | Entanglement wedge radius |
+| Perfect code 2(d−1) = n−k | Saturation of RT bound |
+| No-cloning theorem | Complementary recovery |
 
-**Theorem 6.5** (tropical_path_bound). In a metric graph, the direct edge weight minimizes against any two-hop path:
-$$\min(w(i,k), w(i,j) + w(j,k)) = w(i,k)$$
+The area-entropy duality (Theorem 3.1) is the code-theoretic expression of the Ryu-Takayanagi formula. For a perfect code, the geometric area (= 2(d−1)) and the bulk entropy (= k) exactly account for all boundary degrees of freedom (= n).
 
-### 6.3 Connection to Holographic Codes
+## 5. Algorithms
 
-The code distance d corresponds to the tropical geodesic distance:
-- Boundary qubits are graph vertices
-- Edge weights encode entanglement structure  
-- Code distance = minimum tropical distance through bulk
+### 5.1 Greedy Entanglement Wedge Reconstruction
 
-## 7. Inductive Construction
+Given a boundary region A and a bulk graph:
+1. Initialize the reconstructed set R = ∅.
+2. For each bulk vertex v not in R: count the edges from v to A ∪ R (call this count_in) and the edges from v to the complement (call this count_out).
+3. If count_in > count_out, add v to R.
+4. Repeat until no more vertices can be added.
+5. Return R as the entanglement wedge of A.
 
-### 7.1 HaPPY Family
+This algorithm has complexity O(V · E) where V is the number of bulk vertices and E is the number of edges.
 
-We define the HaPPY code family at level L:
-- `happyCodeAt L` with n = 5(L+1), k = L+1, d = 3, A = 4(L+1)
+### 5.2 RT Minimal Surface Computation
 
-**Theorem 7.1** (happyCode_rt_exact). A(L) = S(L) at every level.
+For a discrete bulk graph, the minimal surface homologous to a boundary region A is a minimum cut in the graph:
+1. Add a source vertex connected to all boundary sites in A.
+2. Add a sink vertex connected to all boundary sites not in A.
+3. Compute the minimum cut between source and sink.
+4. The cut value is the discrete area (= code distance for the optimal cut).
 
-**Theorem 7.2** (happyCode_entropy_scaling). S(L₁) < S(L₂) for L₁ < L₂.
+This reduces to max-flow/min-cut, solvable in O(V³) by the push-relabel algorithm.
 
-### 7.2 Iterative Definition
+## 6. Conjecture: Holographic MMI Tightness
 
-We also define `iterateHolographicCode` recursively:
-```
-iterate(0) = [[5, 1, 3]]
-iterate(L+1) = [[iterate(L).n + 5, iterate(L).k + 1, 3]]
-```
+**Conjecture 6.1** (MMI Tightness). For n = 4 parties, every holographic entropy vector satisfies MMI, and there exist holographic states achieving exact MMI equality.
 
-**Theorem 7.3** (iterate_boundary). `iterate(L).n = 5(L+1)` (by induction).
+**Computational Test**: Enumerate all RT cuts for the [[5,1,3]] code with 4 boundary regions. Verify (1) all entropy vectors satisfy MMI, and (2) at least one achieves I₃ = 0 within tolerance 10⁻⁶.
 
-**Theorem 7.4** (iterate_entropy). `iterate(L).n - iterate(L).k = 4(L+1)` (by induction).
+This conjecture is falsifiable: if either condition fails for any partition of the 5 boundary sites into 4 groups, the conjecture is disproved.
 
-**Theorem 7.5** (iterate_depth_from_entropy). `(n-k)/4 = L+1`.
+## 7. Discussion
 
-### 7.3 Entropy Ratio
+### 7.1 Limitations
 
-**Theorem 7.6** (happy_entropy_ratio). 5 × S = 4 × n at all levels.
+Our framework works in the discrete setting with ℕ-valued parameters. The continuous limit — where the bulk geometry is a smooth Riemannian manifold and the boundary theory is a full QFT — requires additional machinery (functional analysis, measure theory) not developed here.
 
-This ratio of 4/5 is constant across the entire family, matching the prediction from the Bekenstein-Hawking area law: entropy is proportional to boundary area.
+The quantum Singleton bound is taken as an axiom of the code structure rather than derived from first principles. A complete treatment would derive it from the no-cloning theorem and the structure of quantum Hilbert spaces.
 
-## 8. Entanglement Wedge Reconstruction
+### 7.2 Comparison with Prior Work
 
-**Definition 8.1** (maxBulkReconstruction). Returns k if boundary region is large enough, 0 otherwise.
+The existing catalog theorem `quantum_code_distance_from_obstruction` (in `Bridges/HomologicalDeepLearning.lean`) establishes a connection between Ext-group obstruction dimensions and code distances. Our work complements this by providing the geometric side of the bridge: the code distance is not just an algebraic invariant but a geometric one (geodesic length in the bulk).
 
-**Theorem 8.1** (wedge_nesting). Larger boundary regions reconstruct at least as much bulk.
+The `boundary_determines_minimal_bulk` theorem (in `Bridges/UltrametricHolographicRenormalization.lean`) establishes that boundary data uniquely determines the minimal bulk reconstruction. Our entanglement wedge framework provides the code-theoretic mechanism: the boundary data determines the bulk via the code's error-correcting structure.
 
-*Proof*: Case analysis on whether each region exceeds the threshold. □
+### 7.3 Implications
 
-## 9. Concatenated Codes
+If the holographic principle is correctly modeled by quantum error correction, then:
 
-**Definition 9.1** (concatenateParams). Products: n₁n₂, k₁k₂, d₁d₂.
+1. **Spacetime is emergent**: The bulk geometry is not fundamental but arises from the code's encoding structure.
+2. **Gravity is entropic**: The gravitational force is a consequence of the code's error-correcting properties, mediated by the RT formula.
+3. **Black hole information is preserved**: The code's error-correcting capability ensures that information thrown into a black hole is preserved on the boundary, consistent with unitarity.
 
-**Theorem 9.1** (concat_singleton_product). If both codes satisfy Singleton, so does the concatenation.
+## 8. Future Work
 
-*Proof*: By nlinarith, using the multiplicative structure of the Singleton bound. □
-
-**Corollary**. [[5,1,3]] ⊗ [[5,1,3]] = [[25,1,9]], which satisfies Singleton.
-
-## 10. Algorithms
-
-### 10.1 Holographic Code Parameter Computation
-```
-Input: Code parameters (n, k, d), Newton's constant 4G
-Output: Entropy S, area A, Singleton deficit, erasure capacity
-
-1. S ← n - k
-2. A ← 4G × S
-3. deficit ← (n + 2) - (2d + k)
-4. capacity ← d - 1
-5. Return (S, A, deficit, capacity)
-```
-**Complexity**: O(1) time and space.
-
-### 10.2 Reconstruction Decision
-```
-Input: Code c, boundary region size s
-Output: Whether full reconstruction is possible
-
-1. If s + d > n: return True (full reconstruction)
-2. Else: return False
-```
-**Complexity**: O(1).
-
-### 10.3 Tropical Shortest Path
-```
-Input: Weighted graph G with n vertices
-Output: All-pairs shortest distances
-
-1. D ← G.weight (adjacency matrix)
-2. For k = 1 to n:
-3.   For i = 1 to n:
-4.     For j = 1 to n:
-5.       D[i][j] ← min(D[i][j], D[i][k] + D[k][j])
-6. Return D
-```
-**Complexity**: O(n³) time, O(n²) space.
-
-## 11. Computational Experiments
-
-### 11.1 Parameter Verification
-
-We verified the following code families computationally:
-
-| Code | n | k | d | Entropy | MDS? | Singleton ≤ |
-|------|---|---|---|---------|------|-------------|
-| [[5,1,3]] | 5 | 1 | 3 | 4 | Yes | 7 ≤ 7 |
-| [[7,1,3]] | 7 | 1 | 3 | 6 | No | 7 ≤ 9 |
-| [[9,1,3]] | 9 | 1 | 3 | 8 | No | 7 ≤ 11 |
-| [[25,1,9]] | 25 | 1 | 9 | 24 | No | 19 ≤ 27 |
-| HaPPY L=5 | 30 | 6 | 3 | 24 | No | 12 ≤ 32 |
-
-### 11.2 Entropy Ratio Verification
-
-For the HaPPY family at levels 0-20:
-- S/n = 4/5 = 0.8000 at every level (exact)
-- This confirms the theoretical prediction
-
-### 11.3 Tropical Distance Computation
-
-For a 5-vertex pentagon graph (modeling the [[5,1,3]] code bulk):
-- Minimum distance between opposite vertices = 2 (two hops)
-- Code distance d = 3 corresponds to 3 edge-disjoint paths
-- Triangle inequality verified for all triples
-
-## 12. Discussion
-
-### 12.1 Key Insights
-
-1. The RT formula and Singleton bound are the same inequality in different notation.
-2. Complementary recovery is no-cloning for spacetime.
-3. The entropy-to-boundary ratio 4/5 is a universal constant of the HaPPY construction.
-4. Tropical geometry provides the computational substrate for bulk geodesics.
-
-### 12.2 Limitations
-
-- Our model uses natural numbers, losing the continuous geometry of actual AdS space.
-- The RT formula is exact only for the specific HaPPY family; real holographic codes have subleading corrections.
-- The tropical geodesic connection is established at the algebraic level but not yet connected to continuous Riemannian geometry.
-
-### 12.3 Open Questions
-
-1. Can the RT formula with quantum corrections (Faulkner-Lewkowycz-Maldacena formula) be formalized as a refined Singleton bound?
-2. Is there a code-theoretic analog of the Penrose singularity theorem?
-3. Can de Sitter holography be modeled by a different class of error-correcting codes?
-
-## 13. Future Work
-
-- Extend to approximate quantum error correction (relevant for subleading corrections).
-- Formalize the connection between code concatenation and holographic renormalization.
-- Build explicit tensor network constructions in Lean 4.
-- Connect to the BPT (Bravyi-Poulin-Terhal) bound for topological codes.
+1. Extend the framework to approximate quantum error correction (AQEC), where the Singleton bound is replaced by approximate bounds.
+2. Formalize the connection between the holographic entropy cone and the quantum entropy cone for n ≥ 5 parties.
+3. Develop a theory of holographic codes on non-hyperbolic geometries (flat, de Sitter).
+4. Prove the RT formula directly from the code structure without assuming it as an axiom.
 
 ## References
 
-1. Almheiri, A., Dong, X., & Harlow, D. (2014). Bulk locality and quantum error correction in AdS/CFT. *JHEP*, 2015(4), 163.
-2. Bekenstein, J. D. (1973). Black holes and entropy. *Physical Review D*, 7(8), 2333.
-3. Harlow, D. (2016). The Ryu-Takayanagi formula from quantum error correction. *Communications in Mathematical Physics*, 354(3), 865-912.
-4. Hawking, S. W. (1975). Particle creation by black holes. *Communications in Mathematical Physics*, 43(3), 199-220.
-5. Maldacena, J. (1997). The large N limit of superconformal field theories and supergravity. *Advances in Theoretical and Mathematical Physics*, 2(4), 231-252.
-6. Pastawski, F., Yoshida, B., Harlow, D., & Preskill, J. (2015). Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence. *JHEP*, 2015(6), 149.
-7. Ryu, S., & Takayanagi, T. (2006). Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence. *Physical Review Letters*, 96(18), 181602.
+1. Almheiri, A., Dong, X., & Harlow, D. (2015). Bulk locality and quantum error correction in AdS/CFT. *JHEP*, 2015(4), 163.
+2. Pastawski, F., Yoshida, B., Harlow, D., & Preskill, J. (2015). Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence. *JHEP*, 2015(6), 149.
+3. Ryu, S., & Takayanagi, T. (2006). Holographic derivation of entanglement entropy from AdS/CFT. *Physical Review Letters*, 96(18), 181602.
+4. Maldacena, J. (1999). The large-N limit of superconformal field theories and supergravity. *International Journal of Theoretical Physics*, 38, 1113–1133.
+5. Hayden, P., Nezami, S., Qi, X.-L., Thomas, N., Walter, M., & Yang, Z. (2016). Holographic duality from random tensor networks. *JHEP*, 2016(11), 9.
+6. Bao, N., Nezami, S., Ooguri, H., Stoica, B., Sully, J., & Walter, M. (2015). The holographic entropy cone. *JHEP*, 2015(9), 130.
