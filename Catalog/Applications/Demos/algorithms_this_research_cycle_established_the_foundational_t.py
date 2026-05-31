@@ -1,400 +1,264 @@
 """
-Algorithms for Phantom Topology Theory
+Exchange Family Descent Complexity: Core Algorithms
 
-This module implements the core algorithms for computing phantom topological
-invariants on finite sets.
-
-Classes:
-    FiniteTopology: Represents a topology on a finite set.
-    PhantomSystem: A collection of observer topologies.
-    PhantomFiltration: Sequential observer addition framework.
-
-Algorithms:
-    - Consensus computation (intersection of open-set families)
-    - Phantom number computation (minimum decomposition)
-    - Phantom spectrum enumeration
-    - Phantom filtration with stabilization detection
-    - Phantom entropy computation
+Type-hinted implementations of the exchange family descent framework.
+Provides data structures for exchange families, descent chains, tropical
+valuations, and product tensorization.
 """
 
-from itertools import combinations, chain
-from typing import FrozenSet, Set, List, Optional, Tuple
-from functools import reduce
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Callable, Generic, TypeVar, Optional
+import math
+
+T = TypeVar('T')
+S = TypeVar('S')
 
 
-class FiniteTopology:
-    """
-    A topology on a finite set, represented as a collection of open sets.
+@dataclass
+class ExchangeFamily(Generic[T]):
+    """An exchange family: states with a measure and exchange relation.
 
-    The underlying set X is inferred from the maximal open set.
-    Open sets are stored as frozensets of frozensets for hashability.
+    The measure strictly decreases under exchanges, guaranteeing termination
+    of any descent process.
 
     Attributes:
-        X: The underlying set.
-        opens: The collection of open sets.
+        states: List of all states in the family.
+        measure: Maps each state to a non-negative integer measure.
+        can_exchange: Returns True if state x can exchange to state y.
     """
+    states: list[T]
+    measure: Callable[[T], int]
+    can_exchange: Callable[[T, T], bool]
 
-    def __init__(self, X: FrozenSet, opens: FrozenSet[FrozenSet]):
-        """
-        Initialize a topology.
-
-        Args:
-            X: The underlying set.
-            opens: Collection of open sets (must form a valid topology).
-        """
-        self.X = frozenset(X)
-        self.opens = frozenset(opens)
-
-    @classmethod
-    def discrete(cls, X) -> 'FiniteTopology':
-        """The discrete topology: every subset is open."""
-        X = frozenset(X)
-        all_subs = []
-        items = list(X)
-        for r in range(len(items) + 1):
-            for c in combinations(items, r):
-                all_subs.append(frozenset(c))
-        return cls(X, frozenset(all_subs))
-
-    @classmethod
-    def indiscrete(cls, X) -> 'FiniteTopology':
-        """The indiscrete topology: only ∅ and X are open."""
-        X = frozenset(X)
-        return cls(X, frozenset([frozenset(), X]))
-
-    def is_open(self, U: FrozenSet) -> bool:
-        """Check if a set is open in this topology."""
-        return frozenset(U) in self.opens
-
-    def __eq__(self, other):
-        return isinstance(other, FiniteTopology) and self.opens == other.opens
-
-    def __hash__(self):
-        return hash(self.opens)
-
-    def __le__(self, other):
-        """τ₁ ≤ τ₂ means τ₁ is finer (has more open sets)."""
-        return other.opens.issubset(self.opens)
-
-    def __repr__(self):
-        return f"Topology(|opens|={len(self.opens)})"
-
-    def is_hausdorff(self) -> bool:
-        """Check if the topology is T₂ (Hausdorff)."""
-        for x in self.X:
-            for y in self.X:
-                if x != y:
-                    # Find disjoint open sets separating x and y
-                    separated = False
-                    for U in self.opens:
-                        if x in U and y not in U:
-                            for V in self.opens:
-                                if y in V and x not in V:
-                                    if not (U & V):
-                                        separated = True
-                                        break
-                        if separated:
-                            break
-                    if not separated:
+    def validate(self) -> bool:
+        """Check that all exchanges strictly decrease the measure."""
+        for x in self.states:
+            for y in self.states:
+                if self.can_exchange(x, y):
+                    if self.measure(y) >= self.measure(x):
                         return False
         return True
 
+    def local_minima(self) -> list[T]:
+        """Find all local minima (states with no exchange successors)."""
+        return [x for x in self.states if not any(
+            self.can_exchange(x, y) for y in self.states
+        )]
 
-def consensus(*topologies: FiniteTopology) -> FiniteTopology:
+    def successors(self, x: T) -> list[T]:
+        """All states reachable from x by one exchange."""
+        return [y for y in self.states if self.can_exchange(x, y)]
+
+    def max_measure(self) -> int:
+        """Maximum measure across all states."""
+        return max(self.measure(x) for x in self.states)
+
+
+@dataclass
+class DescentChain(Generic[T]):
+    """A descent chain in an exchange family.
+
+    A sequence of states where each consecutive pair is related by exchange.
     """
-    Compute the consensus (supremum) of topologies.
+    family: ExchangeFamily[T]
+    chain: list[T]
 
-    The consensus topology has as open sets exactly those sets that
-    are open in ALL input topologies. This is the supremum in the
-    complete lattice of topologies.
-
-    Time complexity: O(k * |opens|) where k = number of topologies.
-
-    Args:
-        topologies: Variable number of FiniteTopology instances.
-
-    Returns:
-        The consensus topology.
-    """
-    if not topologies:
-        raise ValueError("Need at least one topology for consensus")
-
-    X = topologies[0].X
-    result_opens = set(topologies[0].opens)
-    for t in topologies[1:]:
-        result_opens &= set(t.opens)
-    return FiniteTopology(X, frozenset(result_opens))
-
-
-def all_topologies_on(X) -> List[FiniteTopology]:
-    """
-    Enumerate all topologies on a finite set X.
-
-    Uses brute-force enumeration of subsets of the power set,
-    checking the topology axioms for each.
-
-    Time complexity: O(2^(2^n)) where n = |X|.
-
-    Args:
-        X: The underlying set (iterable).
-
-    Returns:
-        List of all valid topologies on X.
-    """
-    X = frozenset(X)
-    items = list(X)
-    subsets = []
-    for r in range(len(items) + 1):
-        for c in combinations(items, r):
-            subsets.append(frozenset(c))
-
-    def is_valid_topology(opens_list):
-        opens_set = set(opens_list)
-        if frozenset() not in opens_set or X not in opens_set:
-            return False
-        for U in opens_list:
-            for V in opens_list:
-                if U & V not in opens_set:
-                    return False
-        for r in range(len(opens_list) + 1):
-            for combo in combinations(opens_list, r):
-                union = frozenset().union(*combo) if combo else frozenset()
-                if union not in opens_set:
-                    return False
+    def is_valid(self) -> bool:
+        """Verify this is a valid descent chain."""
+        for i in range(len(self.chain) - 1):
+            if not self.family.can_exchange(self.chain[i], self.chain[i + 1]):
+                return False
         return True
 
-    topologies = []
-    for r in range(len(subsets) + 1):
-        for combo in combinations(subsets, r):
-            opens = list(combo)
-            if is_valid_topology(opens):
-                topologies.append(FiniteTopology(X, frozenset(opens)))
-    return topologies
+    def length(self) -> int:
+        """Number of states in the chain."""
+        return len(self.chain)
+
+    def depth(self) -> int:
+        """Number of exchange steps (length - 1)."""
+        return max(0, len(self.chain) - 1)
+
+    def measures(self) -> list[int]:
+        """Sequence of measures along the chain."""
+        return [self.family.measure(x) for x in self.chain]
+
+    def is_maximal(self) -> bool:
+        """True if the chain cannot be extended."""
+        if not self.chain:
+            return True
+        last = self.chain[-1]
+        return not any(self.family.can_exchange(last, y)
+                       for y in self.family.states)
 
 
-def phantom_number(target: FiniteTopology, all_tops: List[FiniteTopology]) -> int:
+@dataclass
+class TropicalDescentValuation(Generic[T]):
+    """A tropical descent valuation assigns costs to exchanges.
+
+    Creates a dual view of descent: instead of counting steps (depth),
+    we measure total computational weight (cost).
     """
-    Compute the phantom number of a topology.
+    family: ExchangeFamily[T]
+    cost: Callable[[T, T], int]
 
-    The phantom number is the minimum k such that the target topology
-    can be expressed as the consensus of k topologies.
+    def chain_cost(self, chain: list[T]) -> int:
+        """Total cost along a descent chain."""
+        return sum(self.cost(chain[i], chain[i + 1])
+                   for i in range(len(chain) - 1))
 
-    Time complexity: O(sum_{k=0}^{N} C(N,k)) where N = number of topologies.
+    def min_cost_per_step(self) -> int:
+        """Minimum cost of any single exchange."""
+        costs = []
+        for x in self.family.states:
+            for y in self.family.states:
+                if self.family.can_exchange(x, y):
+                    costs.append(self.cost(x, y))
+        return min(costs) if costs else 0
 
-    Args:
-        target: The target topology.
-        all_tops: List of all available topologies.
+    def max_cost_per_step(self) -> int:
+        """Maximum cost of any single exchange."""
+        costs = []
+        for x in self.family.states:
+            for y in self.family.states:
+                if self.family.can_exchange(x, y):
+                    costs.append(self.cost(x, y))
+        return max(costs) if costs else 0
 
-    Returns:
-        The phantom number (0 if discrete, inf if not decomposable).
+
+def greedy_descent(family: ExchangeFamily[T], start: T) -> DescentChain[T]:
+    """Find a greedy descent chain starting from `start`.
+
+    At each step, choose the successor with the largest measure decrease.
+    Guaranteed to terminate by the exchange_decreasing property.
     """
-    discrete = FiniteTopology.discrete(target.X)
-    if target == discrete:
-        return 0
+    chain = [start]
+    current = start
+    while True:
+        succs = family.successors(current)
+        if not succs:
+            break
+        # Choose successor with smallest measure (greediest descent)
+        best = min(succs, key=family.measure)
+        chain.append(best)
+        current = best
+    return DescentChain(family, chain)
 
-    for k in range(1, len(all_tops) + 1):
-        for combo in combinations(all_tops, k):
-            if consensus(*combo) == target:
-                return k
-    return float('inf')
 
+def longest_descent(family: ExchangeFamily[T], start: T) -> DescentChain[T]:
+    """Find the longest descent chain from `start` (exhaustive search).
 
-class PhantomSystem:
+    Uses DFS to find the longest path in the exchange DAG.
+    Exponential in the worst case but guaranteed to find the optimum.
     """
-    A phantom system: a collection of observer topologies on the same set.
+    best_chain: list[T] = [start]
 
-    Attributes:
-        X: The underlying set.
-        observers: List of observer topologies.
+    def dfs(current: T, path: list[T]) -> None:
+        nonlocal best_chain
+        if len(path) > len(best_chain):
+            best_chain = list(path)
+        for y in family.successors(current):
+            path.append(y)
+            dfs(y, path)
+            path.pop()
+
+    dfs(start, [start])
+    return DescentChain(family, best_chain)
+
+
+def product_family(
+    e1: ExchangeFamily[T],
+    e2: ExchangeFamily[S]
+) -> ExchangeFamily[tuple[T, S]]:
+    """Construct the product of two exchange families.
+
+    The product measure is the sum. Exchanges happen in one component at a time.
     """
+    states = [(a, b) for a in e1.states for b in e2.states]
 
-    def __init__(self, X, observers: List[FiniteTopology]):
-        self.X = frozenset(X)
-        self.observers = observers
+    def measure(p: tuple[T, S]) -> int:
+        return e1.measure(p[0]) + e2.measure(p[1])
 
-    def consensus_topology(self) -> FiniteTopology:
-        """Compute the consensus of all observers."""
-        if not self.observers:
-            return FiniteTopology.discrete(self.X)
-        return consensus(*self.observers)
+    def can_exchange(p: tuple[T, S], q: tuple[T, S]) -> bool:
+        return ((e1.can_exchange(p[0], q[0]) and p[1] == q[1]) or
+                (p[0] == q[0] and e2.can_exchange(p[1], q[1])))
 
-    def spectrum(self) -> Set[FiniteTopology]:
-        """
-        Compute the phantom spectrum: all consensus topologies
-        achievable from subsets of observers.
-
-        Time complexity: O(2^k * k * |opens|) where k = number of observers.
-
-        Returns:
-            Set of all achievable consensus topologies.
-        """
-        spec = {FiniteTopology.discrete(self.X)}  # Empty subset
-        for r in range(1, len(self.observers) + 1):
-            for combo in combinations(self.observers, r):
-                spec.add(consensus(*combo))
-        return spec
-
-    def entropy(self) -> int:
-        """
-        Compute the phantom entropy: |spectrum| - 1.
-
-        This measures the diversity of observer viewpoints.
-        """
-        return len(self.spectrum()) - 1
-
-    def is_observer_independent(self, i: int, j: int) -> bool:
-        """
-        Check if observers i and j are independent
-        (neither's topology refines the other's).
-        """
-        ti = self.observers[i]
-        tj = self.observers[j]
-        return not (ti <= tj) and not (tj <= ti)
+    return ExchangeFamily(states, measure, can_exchange)
 
 
-class PhantomFiltration:
+def depth_cost_tradeoff(
+    valuation: TropicalDescentValuation[T],
+    chain: list[T]
+) -> dict[str, float]:
+    """Compute the depth-cost tradeoff for a given chain.
+
+    Returns bounds and ratios from the fundamental tradeoff theorem.
     """
-    A phantom filtration: sequential observer addition.
+    w = valuation.min_cost_per_step()
+    W = valuation.max_cost_per_step()
+    depth = max(0, len(chain) - 1)
+    total_cost = valuation.chain_cost(chain)
+    head_measure = valuation.family.measure(chain[0]) if chain else 0
 
-    At stage n, the consensus is computed from the first n observers.
-    The consensus sequence is monotone (non-decreasing in the ≤ ordering,
-    meaning it gets coarser as more observers are added).
+    return {
+        'depth': depth,
+        'total_cost': total_cost,
+        'min_cost_per_step': w,
+        'max_cost_per_step': W,
+        'lower_bound': w * depth,
+        'upper_bound': W * depth,
+        'measure_bound': head_measure,
+        'cost_per_depth': total_cost / depth if depth > 0 else 0,
+        'lower_satisfied': w * depth <= total_cost,
+        'upper_satisfied': total_cost <= W * depth,
+        'depth_satisfied': depth <= head_measure,
+    }
 
-    Attributes:
-        X: The underlying set.
-        observer_seq: Sequence of observer topologies.
+
+def compute_exchange_graph(family: ExchangeFamily[T]) -> dict[T, list[T]]:
+    """Build the exchange DAG as an adjacency list."""
+    return {x: family.successors(x) for x in family.states}
+
+
+def count_states_by_measure(family: ExchangeFamily[T]) -> dict[int, int]:
+    """Count states at each measure level."""
+    counts: dict[int, int] = {}
+    for x in family.states:
+        m = family.measure(x)
+        counts[m] = counts.get(m, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def verify_binary_conjecture(
+    family: ExchangeFamily[T]
+) -> dict[str, object]:
+    """Test the binary exchange depth bound conjecture.
+
+    Checks whether n+1 ≤ 2^(max_measure + 1) when every state has
+    at most 2 exchange predecessors.
     """
+    n_plus_1 = len(family.states)
+    max_m = family.max_measure()
 
-    def __init__(self, X, observer_seq: List[FiniteTopology]):
-        self.X = frozenset(X)
-        self.observer_seq = observer_seq
+    # Check binary in-degree
+    in_degrees: dict[T, int] = {x: 0 for x in family.states}
+    for x in family.states:
+        for y in family.states:
+            if family.can_exchange(x, y):
+                in_degrees[y] = in_degrees.get(y, 0) + 1
 
-    def consensus_at(self, n: int) -> FiniteTopology:
-        """
-        Compute the consensus at stage n (first n observers).
+    max_in_degree = max(in_degrees.values()) if in_degrees else 0
+    is_binary = max_in_degree <= 2
 
-        Args:
-            n: Stage number (0 = discrete, 1 = first observer, ...).
+    bound = 2 ** (max_m + 1)
+    conjecture_holds = n_plus_1 <= bound
 
-        Returns:
-            The consensus topology at stage n.
-        """
-        if n == 0:
-            return FiniteTopology.discrete(self.X)
-        return consensus(*self.observer_seq[:n])
-
-    def stages(self) -> List[Tuple[int, FiniteTopology]]:
-        """Compute all filtration stages."""
-        return [(n, self.consensus_at(n))
-                for n in range(len(self.observer_seq) + 1)]
-
-    def stabilization_stage(self) -> Optional[int]:
-        """
-        Find the stabilization stage, if any.
-
-        The filtration stabilizes at stage n if C(n+1) = C(n).
-        By the Stabilization Theorem, this means C(m) = C(n) for all m ≥ n.
-
-        Returns:
-            The stabilization stage, or None if not stabilized.
-        """
-        prev = self.consensus_at(0)
-        for n in range(1, len(self.observer_seq) + 1):
-            curr = self.consensus_at(n)
-            if curr == prev:
-                return n - 1
-            prev = curr
-        return None
-
-    def limit_consensus(self) -> FiniteTopology:
-        """
-        Compute the limit consensus (all observers).
-
-        By the Limit Characterization Theorem, this equals
-        the consensus at the stabilization stage (if it stabilizes).
-        """
-        if not self.observer_seq:
-            return FiniteTopology.discrete(self.X)
-        return consensus(*self.observer_seq)
-
-
-def verify_stabilization_theorem(filt: PhantomFiltration) -> bool:
-    """
-    Verify the Stabilization Theorem: if the filtration stabilizes
-    at stage n, then the limit equals C(n).
-
-    Args:
-        filt: A phantom filtration.
-
-    Returns:
-        True if the theorem holds (it always should).
-    """
-    stab = filt.stabilization_stage()
-    if stab is not None:
-        limit = filt.limit_consensus()
-        c_n = filt.consensus_at(stab)
-        return limit == c_n
-    return True  # No stabilization to check
-
-
-def verify_decomposition_formula(filt: PhantomFiltration) -> bool:
-    """
-    Verify the Consensus Decomposition Formula:
-    C(n+1) = C(n) ⊔ τ_n for all n.
-
-    In finite topologies, C(n) ⊔ τ_n is the intersection of
-    their open set collections (consensus = supremum = intersection).
-
-    Args:
-        filt: A phantom filtration.
-
-    Returns:
-        True if the formula holds for all stages (it always should).
-    """
-    for n in range(len(filt.observer_seq)):
-        c_n = filt.consensus_at(n)
-        c_n1 = filt.consensus_at(n + 1)
-        tau_n = filt.observer_seq[n]
-        # C(n) ⊔ τ_n = consensus of C(n) and τ_n
-        expected = consensus(c_n, tau_n)
-        if c_n1 != expected:
-            return False
-    return True
-
-
-if __name__ == "__main__":
-    # Example usage
-    X = {0, 1}
-
-    # Create some topologies
-    discrete = FiniteTopology.discrete(X)
-    indiscrete = FiniteTopology.indiscrete(X)
-    sierp0 = FiniteTopology(frozenset(X),
-        frozenset([frozenset(), frozenset({0}), frozenset(X)]))
-    sierp1 = FiniteTopology(frozenset(X),
-        frozenset([frozenset(), frozenset({1}), frozenset(X)]))
-
-    print("Topologies on {0, 1}:")
-    print(f"  Discrete: {discrete.opens}")
-    print(f"  Indiscrete: {indiscrete.opens}")
-    print(f"  Sierpinski-0: {sierp0.opens}")
-    print(f"  Sierpinski-1: {sierp1.opens}")
-
-    # Phantom system
-    system = PhantomSystem(X, [sierp0, sierp1])
-    print(f"\nConsensus: {system.consensus_topology().opens}")
-    print(f"Spectrum size: {len(system.spectrum())}")
-    print(f"Phantom entropy: {system.entropy()}")
-
-    # Filtration
-    filt = PhantomFiltration(X, [sierp0, sierp1])
-    print(f"\nFiltration stages:")
-    for stage, top in filt.stages():
-        print(f"  Stage {stage}: |opens| = {len(top.opens)}")
-
-    stab = filt.stabilization_stage()
-    print(f"Stabilization: stage {stab}")
-
-    # Verify theorems
-    print(f"\nStabilization theorem holds: {verify_stabilization_theorem(filt)}")
-    print(f"Decomposition formula holds: {verify_decomposition_formula(filt)}")
+    return {
+        'n_plus_1': n_plus_1,
+        'max_measure': max_m,
+        'bound': bound,
+        'is_binary': is_binary,
+        'conjecture_holds': conjecture_holds,
+        'max_in_degree': max_in_degree,
+        'log2_ratio': math.log2(n_plus_1) / (max_m + 1) if max_m >= 0 else None,
+    }
