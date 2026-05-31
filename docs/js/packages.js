@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const thmCount = (file.code.match(/\btheorem\b/g) || []).length;
                     const lemmaCount = (file.code.match(/\blemma\b/g) || []).length;
                     const sorryCount = (file.code.match(/\bsorry\b/g) || []).length;
-                    const lineCount = file.code.splitlines().length;
+                    const lineCount = file.code.split('\n').length;
                     let metaText = `${lineCount} lines`;
                     if (thmCount + lemmaCount > 0) metaText += ` · ${thmCount + lemmaCount} theorems`;
                     if (sorryCount > 0) metaText += ` · ${sorryCount} sorrys`;
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Use iframe with srcdoc to isolate each demo's JS scope
             const iframe = document.createElement('iframe');
             iframe.style.cssText = 'width: 100%; min-height: 300px; border: none; border-radius: 12px; background: white;';
-            iframe.sandbox = 'allow-scripts allow-same-origin';
+            iframe.sandbox = 'allow-scripts';
             // Build a self-contained HTML doc for the iframe
             const htmlContent = item.html || '<p>No content</p>';
             const srcdoc = `<!DOCTYPE html>
