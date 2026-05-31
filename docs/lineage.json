@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "the_theorems_established_in_this_work__identifying",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -25,7 +25,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -37,22 +37,13 @@
       "hue": 270
     },
     {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:44:22Z",
-      "hue": 271
-    },
-    {
       "id": "this_research_cycle_established_the_mathematical_f",
       "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "primes_of_the_form_n1",
@@ -71,6 +62,33 @@
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
       "hue": 272
+    },
+    {
+      "id": "this_cycle_established_the_foundational_infrastruc",
+      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:12Z",
+      "hue": 91
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Arithmetic on the Poincaré Disk",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:37Z",
+      "hue": 91
+    },
+    {
+      "id": "this_research_cycle_established_that_expansion_cer",
+      "title": "Expansion Certificate Lattice and Amplification Theory",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:12:01Z",
+      "hue": 271
     }
   ],
   "edges": [],

@@ -1,4 +1,4 @@
-def hyp_dist(z: complex, w: complex) -> float:
-    import math
-    t = abs((z - w) / (1.0 - w.conjugate() * z))
-    return 2.0 * math.atanh(min(t, 0.9999999))
+import math
+def hyp_dist(a: float, b: float) -> float:
+    diff = (a - b) / (1 - a * b)
+    return math.atanh(abs(diff))

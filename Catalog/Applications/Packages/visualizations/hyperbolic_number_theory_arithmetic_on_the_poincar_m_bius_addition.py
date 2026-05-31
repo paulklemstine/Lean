@@ -1,2 +1,2 @@
-def mobius_add(z: complex, w: complex) -> complex:
-    return (z + w) / (1.0 + z.conjugate() * w)
+def moebius_add(a: float, b: float) -> float:
+    return (a + b) / (1 + a * b)
