@@ -2296,7 +2296,8 @@ Research mode: {concept.research_mode}
         if hasattr(job, 'result_algorithms') and job.result_algorithms:
             modules["algorithms"] = job.result_algorithms
             # Also inject code into algorithms entries for backward compat
-            algorithms = pkg.get("algorithms", [])
+            # Filter out string entries — LLM sometimes returns algorithms as strings
+            algorithms = [a for a in pkg.get("algorithms", []) if isinstance(a, dict)]
             if algorithms:
                 try:
                     tree = ast.parse(job.result_algorithms)
@@ -2322,6 +2323,9 @@ Research mode: {concept.research_mode}
                             module_code_lines.append("\n".join(source_lines[start:end]))
                     module_preamble = "\n".join(module_code_lines) if module_code_lines else ""
                     for alg in algorithms:
+                        # LLM sometimes returns algorithms as strings instead of dicts
+                        if isinstance(alg, str):
+                            continue
                         if alg.get("code"):
                             continue
                         alg_name = alg.get("name", "").lower()
@@ -2338,6 +2342,8 @@ Research mode: {concept.research_mode}
                             alg["code"] = job.result_algorithms
                 except SyntaxError:
                     for alg in algorithms:
+                        if isinstance(alg, str):
+                            continue
                         if not alg.get("code"):
                             alg["code"] = job.result_algorithms
 
