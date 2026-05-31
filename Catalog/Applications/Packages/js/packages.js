@@ -127,31 +127,160 @@ document.addEventListener('DOMContentLoaded', () => {
         // Future Directions tab
         renderDirectionsTab(data);
 
-        // Lean
-        const leanDiv = document.getElementById('content-lean');
+        // Lean — parse into individual file cards
+        const leanContainer = document.getElementById('lean-files-container');
+        const leanHeader = document.getElementById('lean-header');
+        const leanZipBtn = document.getElementById('lean-download-zip');
+        leanContainer.innerHTML = '';
+        leanHeader.style.display = 'none';
+
+        // Parse lean_proofs into [{name, code}] regardless of format
+        const leanFiles = [];
         if (data.lean_proofs) {
-            // lean_proofs can be a string (full code) or an array of strings (filenames or code)
-            let leanText = '';
             if (typeof data.lean_proofs === 'string') {
-                leanText = data.lean_proofs;
+                const lp = data.lean_proofs;
+                if (lp.length > 50 && !lp.endsWith('.lean')) {
+                    // Split by file markers
+                    const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
+                    if (parts.length > 1) {
+                        for (let i = 1; i < parts.length; i += 2) {
+                            const name = parts[i].trim();
+                            const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
+                            if (code) leanFiles.push({ name, code });
+                        }
+                    } else {
+                        // Single file — derive name from package
+                        const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
+                        leanFiles.push({ name: slug + '.lean', code: lp });
+                    }
+                }
             } else if (Array.isArray(data.lean_proofs)) {
-                // Filter out filename placeholders, keep actual code
-                const codeEntries = data.lean_proofs.filter(e => typeof e === 'string' && e.length > 50 && !e.endsWith('.lean'));
-                const filenameEntries = data.lean_proofs.filter(e => typeof e === 'string' && (e.endsWith('.lean') || e.length <= 50));
-                if (codeEntries.length > 0) {
-                    leanText = codeEntries.join('\n\n');
-                } else if (filenameEntries.length > 0) {
-                    leanDiv.textContent = '-- Lean proofs available at: ' + filenameEntries.join(', ');
-                    return;
+                for (const entry of data.lean_proofs) {
+                    if (typeof entry === 'string') {
+                        if (entry.length > 50 && !entry.endsWith('.lean')) {
+                            const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
+                            leanFiles.push({ name: slug + '.lean', code: entry });
+                        }
+                        // Skip short filename placeholders
+                    } else if (typeof entry === 'object' && entry !== null) {
+                        // Dict with file, theorems, description, and possibly code
+                        const fname = entry.file || entry.name || 'Proof.lean';
+                        const basename = fname.split('/').pop();
+                        if (entry.code && entry.code.trim()) {
+                            leanFiles.push({ name: basename, code: entry.code });
+                        } else if (entry.content && entry.content.trim()) {
+                            leanFiles.push({ name: basename, code: entry.content });
+                        } else {
+                            // Try to load from Catalog
+                            leanFiles.push({
+                                name: basename,
+                                code: '',
+                                file_path: fname,
+                                theorems: entry.theorems || [],
+                                description: entry.description || ''
+                            });
+                        }
+                    }
                 }
             }
-            if (leanText && leanText.length > 50) {
-                leanDiv.textContent = leanText;
-            } else {
-                leanDiv.textContent = '-- No Lean proofs provided.';
-            }
+        }
+
+        if (leanFiles.length === 0) {
+            leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
         } else {
-            leanDiv.textContent = '-- No Lean proofs provided.';
+            leanHeader.style.display = 'flex';
+
+            // Async: load any .lean files that need fetching from Catalog
+            const fetchPromises = leanFiles
+                .filter(f => !f.code && f.file_path)
+                .map(f => {
+                    // Try multiple path prefixes
+                    const prefixes = ['', 'Catalog/', 'Catalog/Applications/'];
+                    return (async () => {
+                        for (const prefix of prefixes) {
+                            try {
+                                const resp = await fetch(prefix + f.file_path);
+                                if (resp.ok) {
+                                    f.code = await resp.text();
+                                    return;
+                                }
+                            } catch {}
+                        }
+                    })();
+                });
+            Promise.all(fetchPromises).then(() => renderLeanCards());
+
+            function renderLeanCards() {
+                leanContainer.innerHTML = '';
+                // Filter to files that have code
+                const filesWithCode = leanFiles.filter(f => f.code && f.code.trim());
+
+                if (filesWithCode.length === 0) {
+                    leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
+                    leanHeader.style.display = 'none';
+                    return;
+                }
+
+                filesWithCode.forEach((file, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'code-container';
+                    card.style.cssText = 'margin-bottom: 16px;';
+
+                    const header = document.createElement('div');
+                    header.className = 'code-header';
+                    header.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'code-title';
+                    nameSpan.textContent = file.name;
+
+                    const meta = document.createElement('span');
+                    meta.style.cssText = 'color: var(--text-muted); font-size: 0.85em;';
+                    const thmCount = (file.code.match(/\btheorem\b/g) || []).length;
+                    const lemmaCount = (file.code.match(/\blemma\b/g) || []).length;
+                    const sorryCount = (file.code.match(/\bsorry\b/g) || []).length;
+                    const lineCount = file.code.splitlines().length;
+                    let metaText = `${lineCount} lines`;
+                    if (thmCount + lemmaCount > 0) metaText += ` · ${thmCount + lemmaCount} theorems`;
+                    if (sorryCount > 0) metaText += ` · ${sorryCount} sorrys`;
+                    meta.textContent = metaText;
+
+                    header.appendChild(nameSpan);
+                    header.appendChild(meta);
+
+                    const pre = document.createElement('pre');
+                    const codeEl = document.createElement('code');
+                    codeEl.className = 'language-lean';
+                    codeEl.textContent = file.code;
+                    pre.appendChild(codeEl);
+
+                    card.appendChild(header);
+                    card.appendChild(pre);
+                    leanContainer.appendChild(card);
+                });
+
+                // Syntax highlight if Prism is available
+                if (window.Prism) {
+                    leanContainer.querySelectorAll('code.language-lean').forEach(el => Prism.highlightElement(el));
+                }
+
+                // Zip download
+                leanZipBtn.onclick = async () => {
+                    if (!window.JSZip) {
+                        console.warn('JSZip not loaded');
+                        return;
+                    }
+                    const zip = new JSZip();
+                    filesWithCode.forEach(f => zip.file(f.name, f.code));
+                    const blob = await zip.generateAsync({ type: 'blob' });
+                    const slug = (data.title || 'lean_proofs').replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 40);
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = slug + '.zip';
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                };
+            }
         }
 
         // Reset to first tab

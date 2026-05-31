@@ -24,6 +24,7 @@
 
     <!-- Pyodide for WASM Python Execution -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -181,9 +182,13 @@
 
                     <!-- Lean Proofs Tab -->
                     <div class="tab-pane" id="tab-lean">
-                        <div class="code-container">
-                            <pre><code class="language-lean" id="content-lean"></code></pre>
+                        <div id="lean-header" style="display: none; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                            <span class="section-title" style="color: var(--accent-color, #7c3aed);">Lean 4 Proof Files</span>
+                            <button id="lean-download-zip" class="run-btn" style="font-size: 0.85em; padding: 6px 14px;">
+                                Download .zip
+                            </button>
                         </div>
+                        <div id="lean-files-container"></div>
                     </div>
                 </div>
             </div>
