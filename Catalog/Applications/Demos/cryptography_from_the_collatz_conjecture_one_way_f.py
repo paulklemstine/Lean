@@ -1,409 +1,359 @@
 #!/usr/bin/env python3
 """
-Collatz One-Way Function: Demonstration Script
+Collatz One-Way Functions: Interactive Demo
 
-Demonstrates the key properties of the Collatz map as a cryptographic primitive:
-1. Forward computation efficiency
-2. Exponential preimage witnesses
-3. Image compression and collisions
-4. Hash distribution analysis
-5. Preimage density conjecture test
+Demonstrates the key concepts from the formalization:
+1. Forward computation vs. preimage search asymmetry
+2. Collatz hash construction and collision resistance
+3. Preimage tree growth
+4. Security gap analysis
 """
 
+import time
 from algorithms import (
-    collatz_step, collatz_iter, collatz_owf, collatz_trajectory,
-    collatz_hash, preimage_set, find_collisions, image_compression_ratio,
-    preimage_density, exponential_preimage_witness, preimage_tree_bfs,
-    security_gap_analysis, collision_resistant_hash_test
+    collatz_step, collatz_iter, collatz_trajectory,
+    collatz_preimage, collatz_preimage_tree,
+    CollatzHashConfig, forward_cost, inverse_cost,
+    security_gap, collatz_hash_fingerprint,
+    verify_preimage_growth_conjecture,
 )
 
 
-def demo_basic_collatz():
+def demo_collatz_basics():
     """Demonstrate basic Collatz map properties."""
     print("=" * 60)
-    print("DEMO 1: Basic Collatz Map")
+    print("DEMO 1: Basic Collatz Map Properties")
     print("=" * 60)
-
-    for n in [1, 2, 3, 5, 7, 12, 27]:
-        print(f"  T({n}) = {collatz_step(n)}")
-
-    print("\nTrajectories:")
-    for n in [7, 27, 97]:
-        traj = collatz_trajectory(20, n)
-        print(f"  {n} -> {' -> '.join(map(str, traj[:10]))} ...")
+    
+    # Show even/odd behavior
+    for n in [1, 2, 3, 4, 5, 6, 7, 8, 27, 100]:
+        step = collatz_step(n)
+        branch = "even→n/2" if n % 2 == 0 else "odd→3n+1"
+        print(f"  T({n:3d}) = {step:4d}  [{branch}]")
+    
     print()
+    
+    # Famous trajectory of 27
+    traj = collatz_trajectory(27, 111)
+    print(f"  Trajectory of 27 (length {len(traj)}):")
+    print(f"  First 20: {traj[:20]}")
+    print(f"  Max value: {max(traj)}")
+    print(f"  Reaches 1 at step: {traj.index(1) if 1 in traj else 'not found'}")
 
 
-def demo_exponential_witness():
-    """Demonstrate exponential preimage witnesses."""
+def demo_forward_inverse_asymmetry():
+    """Demonstrate the forward-inverse computational gap."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Forward-Inverse Computational Asymmetry")
     print("=" * 60)
-    print("DEMO 2: Exponential Preimage Witnesses")
+    
+    n = 12345
+    print(f"\n  Forward computation: T^k({n})")
+    for k in [10, 20, 50, 100]:
+        start = time.perf_counter()
+        result = collatz_iter(k, n)
+        elapsed = time.perf_counter() - start
+        print(f"    k={k:3d}: T^k({n}) = {result:10d}  ({elapsed*1e6:.1f} μs)")
+    
+    print(f"\n  Preimage tree search: T^{{-k}}(1)")
+    for k in range(1, 16):
+        start = time.perf_counter()
+        tree = collatz_preimage_tree(1, k)
+        elapsed = time.perf_counter() - start
+        size = len(tree[k])
+        print(f"    k={k:2d}: |T^{{-k}}(1)| = {size:6d}  ({elapsed*1e3:.2f} ms)")
+    
+    print(f"\n  Security gap (inverse/forward cost ratio):")
+    for k in [5, 10, 15, 20, 25, 30]:
+        gap = security_gap(k)
+        print(f"    k={k:2d}: gap = 2^k/k = {gap:,.1f}")
+
+
+def demo_preimage_structure():
+    """Demonstrate the branching structure of Collatz preimages."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Preimage Structure (Branching Factor)")
     print("=" * 60)
-    print("  T^a(2^a * v) = v for all a, v > 0\n")
+    
+    targets = [1, 2, 4, 8, 16, 32]
+    for m in targets:
+        pre = collatz_preimage(m)
+        print(f"  T^{{-1}}({m:3d}) = {sorted(pre)}  (|preimage| = {len(pre)})")
+    
+    print(f"\n  Preimage branching (how many values have 1 vs 2 preimages):")
+    one_pre = 0
+    two_pre = 0
+    for m in range(1, 1001):
+        size = len(collatz_preimage(m))
+        if size == 1:
+            one_pre += 1
+        elif size == 2:
+            two_pre += 1
+    print(f"    Out of m in [1,1000]: {one_pre} have 1 preimage, {two_pre} have 2 preimages")
+    print(f"    Fraction with 2 preimages: {two_pre/1000:.3f} (expected ≈ 1/6 = {1/6:.3f})")
 
-    v = 7
-    for a in range(1, 11):
-        witness = exponential_preimage_witness(a, v)
-        result = collatz_owf(a, witness)
-        print(f"  a={a:2d}: T^{a}({witness:>8d}) = {result}  ✓" if result == v
-              else f"  a={a:2d}: FAILED")
 
-    print(f"\n  Search space grows as 2^a:")
-    for a in [5, 10, 15, 20, 30]:
-        print(f"    a={a:2d}: search space ≥ 2^{a} = {2**a:,}")
-    print()
-
-
-def demo_image_compression():
-    """Demonstrate image compression under iteration."""
+def demo_hash_construction():
+    """Demonstrate the Collatz hash function."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Collatz Hash Function Construction")
     print("=" * 60)
-    print("DEMO 3: Image Compression Under Iteration")
+    
+    cfg = CollatzHashConfig(
+        depths=[10, 15, 20, 25],
+        seeds=[1, 3, 5, 7]
+    )
+    
+    print(f"\n  Hash config: {cfg.num_chains} chains")
+    print(f"  Depths: {cfg.depths}")
+    print(f"  Seeds:  {cfg.seeds}")
+    
+    print(f"\n  Hash values:")
+    for x in [42, 43, 44, 100, 1000, 9999]:
+        h = cfg.hash(x)
+        fp = collatz_hash_fingerprint(x)[:16]
+        print(f"    hash({x:5d}) = {h}  fingerprint={fp}...")
+    
+    print(f"\n  Collision search in [0, 10000):")
+    start = time.perf_counter()
+    collision = cfg.find_collision(range(10000))
+    elapsed = time.perf_counter() - start
+    if collision:
+        x, y = collision
+        print(f"    Found collision: hash({x}) = hash({y}) = {cfg.hash(x)}")
+    else:
+        print(f"    No collision found ({elapsed:.2f}s)")
+
+
+def demo_sensitivity():
+    """Demonstrate sensitivity to initial conditions."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Sensitivity to Initial Conditions")
     print("=" * 60)
-    print("  Ratio = |Image(T^a on {0..B-1})| / B\n")
+    
+    n1, n2 = 1000, 1001
+    depth = 30
+    t1 = collatz_trajectory(n1, depth)
+    t2 = collatz_trajectory(n2, depth)
+    
+    print(f"\n  Trajectories of {n1} vs {n1+1} (depth {depth}):")
+    print(f"  {'k':>4s}  {'T^k({})'.format(n1):>10s}  {'T^k({})'.format(n2):>10s}  {'match':>6s}")
+    for k in range(depth + 1):
+        match = "✓" if t1[k] == t2[k] else "✗"
+        print(f"  {k:4d}  {t1[k]:10d}  {t2[k]:10d}  {match:>6s}")
 
-    B = 1000
-    for a in [1, 2, 3, 5, 10, 20]:
-        ratio = image_compression_ratio(a, B)
-        print(f"  a={a:2d}: compression ratio = {ratio:.4f}  "
-              f"(|image| = {int(ratio * B)})")
-    print()
 
-
-def demo_collisions():
-    """Demonstrate collision finding."""
+def demo_conjecture_test():
+    """Test the preimage growth conjecture."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Preimage Growth Conjecture Test")
     print("=" * 60)
-    print("DEMO 4: Collision Detection")
-    print("=" * 60)
-
-    for a in [1, 2, 3, 5]:
-        B = 100
-        colls = find_collisions(a, B)
-        print(f"  a={a}, B={B}: {len(colls)} collision pairs")
-        if colls:
-            n1, n2 = colls[0]
-            print(f"    Example: T^{a}({n1}) = T^{a}({n2}) = {collatz_owf(a, n1)}")
-    print()
-
-
-def demo_security_gap():
-    """Demonstrate the security gap between forward and backward computation."""
-    print("=" * 60)
-    print("DEMO 5: Security Gap Analysis")
-    print("=" * 60)
-    print("  Forward cost vs backward search space\n")
-
-    results = security_gap_analysis(20, v=7)
-    print(f"  {'a':>3s}  {'Forward':>8s}  {'Search Space':>14s}  {'Ratio':>10s}")
-    print(f"  {'':->3s}  {'':->8s}  {'':->14s}  {'':->10s}")
-    for r in results:
-        a = r["iterations"]
-        fwd = r["forward_cost"]
-        ss = r["search_space_lower_bound"]
-        ratio = r["security_ratio"]
-        print(f"  {a:3d}  {fwd:8d}  {ss:14,d}  {ratio:10,d}")
-    print()
-
-
-def demo_hash_distribution():
-    """Demonstrate Collatz hash distribution."""
-    print("=" * 60)
-    print("DEMO 6: Collatz Hash Distribution")
-    print("=" * 60)
-
-    for a in [5, 10, 20]:
-        m = 64
-        B = 5000
-        stats = collision_resistant_hash_test(a, m, B)
-        print(f"\n  a={a}, m={m}, B={B}:")
-        print(f"    Buckets used: {stats['num_buckets_used']}/{stats['total_buckets']}")
-        print(f"    Avg/bucket:   {stats['avg_per_bucket']:.1f}")
-        print(f"    Min/Max:      {stats['min_per_bucket']}/{stats['max_per_bucket']}")
-        print(f"    Uniformity:   {stats['uniformity_ratio']:.4f}")
-    print()
-
-
-def demo_density_conjecture():
-    """Test the falsifiable conjecture on preimage density."""
-    print("=" * 60)
-    print("DEMO 7: Preimage Density Conjecture Test")
-    print("=" * 60)
-    print("  Conjecture: density → 1/m as a → ∞\n")
-
-    m = 100
-    v = 0
-    B = 5000
-    expected = 1.0 / m
-
-    print(f"  m={m}, v={v}, B={B}, expected density = {expected:.4f}\n")
-    print(f"  {'a':>4s}  {'Density':>10s}  {'Expected':>10s}  {'Deviation':>10s}")
-    print(f"  {'':->4s}  {'':->10s}  {'':->10s}  {'':->10s}")
-
-    for a in [1, 2, 5, 10, 20, 50, 100]:
-        d = preimage_density(a, m, v, B)
-        dev = abs(d - expected)
-        print(f"  {a:4d}  {d:10.6f}  {expected:10.6f}  {dev:10.6f}")
-    print()
-
-
-def demo_preimage_tree():
-    """Demonstrate the preimage tree structure."""
-    print("=" * 60)
-    print("DEMO 8: Preimage Tree Structure")
-    print("=" * 60)
-
-    target = 8
-    depth = 5
-    tree = preimage_tree_bfs(target, depth)
-
-    print(f"\n  Preimage tree for {target}, depth {depth}:")
-    for node, preimages in sorted(tree.items())[:20]:
-        print(f"    T⁻¹({node}) = {preimages}")
-
-    print(f"\n  Total nodes explored: {len(tree)}")
-    print()
+    
+    print(f"\n  Conjecture: |T^{{-k}}(1)| ≥ k for all k ≥ 10")
+    print(f"\n  {'k':>4s}  {'|T^{-k}(1)|':>12s}  {'k':>4s}  {'satisfies?':>10s}")
+    
+    results = verify_preimage_growth_conjecture(25)
+    for k in range(10, 26):
+        size = results[k]
+        satisfies = "✓" if size >= k else "✗ REFUTED"
+        print(f"  {k:4d}  {size:12d}  {k:4d}  {satisfies:>10s}")
 
 
 if __name__ == "__main__":
-    demo_basic_collatz()
-    demo_exponential_witness()
-    demo_image_compression()
-    demo_collisions()
-    demo_security_gap()
-    demo_hash_distribution()
-    demo_density_conjecture()
-    demo_preimage_tree()
-
-    print("=" * 60)
-    print("All demonstrations completed successfully!")
+    demo_collatz_basics()
+    demo_forward_inverse_asymmetry()
+    demo_preimage_structure()
+    demo_hash_construction()
+    demo_sensitivity()
+    demo_conjecture_test()
+    
+    print("\n" + "=" * 60)
+    print("All demos completed successfully.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Collatz Preimage Tree
+Visualization: Collatz Trajectory Sensitivity and Divergence
 
-Shows the tree structure of preimages under the Collatz map,
-demonstrating the exponential branching that makes inversion hard.
+Shows how nearby starting values produce wildly different trajectories,
+illustrating the "sensitivity to initial conditions" that makes the
+Collatz map useful as a cryptographic primitive.
 """
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from collections import deque
 
 
-def collatz_step(n: int) -> int:
+def collatz_step(n):
     if n <= 0:
         return 0
-    if n % 2 == 0:
-        return n // 2
-    else:
-        return 3 * n + 1
+    return n // 2 if n % 2 == 0 else 3 * n + 1
+
+def collatz_trajectory(n, k):
+    traj = [n]
+    current = n
+    for _ in range(k):
+        current = collatz_step(current)
+        traj.append(current)
+    return traj
 
 
-def get_preimages(v: int) -> list:
-    """Get all Collatz preimages of v."""
-    preimages = []
-    if v > 0:
-        preimages.append(2 * v)  # even preimage
-        if v >= 4 and v % 3 == 1:
-            candidate = (v - 1) // 3
-            if candidate % 2 == 1 and candidate > 0:
-                preimages.append(candidate)
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle("Collatz Trajectories: Sensitivity and Cryptographic Properties",
+             fontsize=15, fontweight='bold')
+
+# Plot 1: Nearby starting values diverge
+ax = axes[0, 0]
+depth = 60
+colors = plt.cm.viridis(np.linspace(0, 0.9, 5))
+for i, n in enumerate([100, 101, 102, 103, 104]):
+    traj = collatz_trajectory(n, depth)
+    ax.plot(traj, color=colors[i], alpha=0.8, linewidth=1.2, label=f'n={n}')
+ax.set_xlabel('Step')
+ax.set_ylabel('Value')
+ax.set_title('Nearby Inputs → Divergent Trajectories')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Plot 2: Famous trajectory of 27
+ax = axes[0, 1]
+traj_27 = collatz_trajectory(27, 111)
+ax.plot(traj_27, color='darkblue', linewidth=0.8)
+ax.set_xlabel('Step')
+ax.set_ylabel('Value')
+ax.set_title('Trajectory of n=27 (reaches 1 at step 111)')
+ax.grid(True, alpha=0.3)
+ax.axhline(y=1, color='red', linestyle='--', alpha=0.5)
+
+# Plot 3: Parity pattern (even/odd bit sequence)
+ax = axes[1, 0]
+n_vals = [27, 31, 255]
+for n in n_vals:
+    traj = collatz_trajectory(n, 50)
+    parities = [v % 2 for v in traj[:50]]
+    ax.plot(parities, 'o', markersize=2, label=f'n={n}')
+ax.set_xlabel('Step')
+ax.set_ylabel('Parity (0=even, 1=odd)')
+ax.set_title('Parity Sequences (Pseudo-Random Appearance)')
+ax.legend(fontsize=8)
+ax.set_yticks([0, 1])
+ax.grid(True, alpha=0.3)
+
+# Plot 4: Hamming distance between trajectories
+ax = axes[1, 1]
+depth = 40
+n_base = 1000
+diffs = []
+for delta in range(1, 51):
+    t1 = collatz_trajectory(n_base, depth)
+    t2 = collatz_trajectory(n_base + delta, depth)
+    matching = sum(1 for a, b in zip(t1, t2) if a == b)
+    diffs.append(matching)
+ax.bar(range(1, 51), diffs, color='steelblue', alpha=0.7)
+ax.set_xlabel('Input difference (Δ)')
+ax.set_ylabel(f'Matching steps (out of {depth+1})')
+ax.set_title(f'Trajectory Overlap: T^k({n_base}) vs T^k({n_base}+Δ)')
+ax.grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.savefig('viz_collatz_trajectories.png', dpi=150, bbox_inches='tight')
+print("Saved viz_collatz_trajectories.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Forward-Inverse Security Gap for Collatz One-Way Functions
+
+Shows the exponential gap between forward computation cost O(k) and
+inverse search cost O(2^k), demonstrating the one-way function property.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def collatz_step(n):
+    if n <= 0:
+        return 0
+    return n // 2 if n % 2 == 0 else 3 * n + 1
+
+def collatz_preimage(m):
+    if m <= 0:
+        return {0}
+    preimages = {2 * m}
+    if (m - 1) % 3 == 0:
+        candidate = (m - 1) // 3
+        if candidate > 0 and candidate % 2 == 1:
+            preimages.add(candidate)
     return preimages
 
-
-def build_preimage_tree(root: int, max_depth: int):
-    """Build preimage tree via BFS, returning (edges, positions)."""
-    positions = {root: (0, 0)}
-    edges = []
-    queue = deque([(root, 0)])
-    level_counts = {}
-
-    while queue:
-        node, depth = queue.popleft()
-        if depth >= max_depth:
-            continue
-
-        preimages = get_preimages(node)
-        if depth + 1 not in level_counts:
-            level_counts[depth + 1] = 0
-
-        for p in preimages:
-            if p not in positions:
-                y = -(depth + 1)
-                x = level_counts[depth + 1]
-                level_counts[depth + 1] += 1
-                positions[p] = (x, y)
-                edges.append((node, p))
-                queue.append((p, depth + 1))
-
-    return edges, positions
+def preimage_tree_size(m, depth):
+    current = {m}
+    for _ in range(depth):
+        next_level = set()
+        for val in current:
+            next_level |= collatz_preimage(val)
+        current = next_level
+    return len(current)
 
 
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-    fig.suptitle('Collatz Preimage Trees', fontsize=16, fontweight='bold')
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle("Collatz One-Way Functions: Security Analysis", fontsize=16, fontweight='bold')
 
-    # Tree 1: root = 8
-    ax1 = axes[0]
-    root1 = 8
-    edges1, pos1 = build_preimage_tree(root1, 6)
+# Plot 1: Forward vs Inverse Cost
+ax = axes[0, 0]
+k_vals = np.arange(1, 26)
+forward = k_vals
+inverse = 2.0 ** k_vals
+ax.semilogy(k_vals, forward, 'b-o', markersize=4, label='Forward cost = k')
+ax.semilogy(k_vals, inverse, 'r-s', markersize=4, label='Inverse cost = 2^k')
+ax.fill_between(k_vals, forward, inverse, alpha=0.2, color='red', label='Security gap')
+ax.set_xlabel('Iteration depth k')
+ax.set_ylabel('Computational cost')
+ax.set_title('Forward-Inverse Asymmetry')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    for parent, child in edges1:
-        px, py = pos1[parent]
-        cx, cy = pos1[child]
-        ax1.plot([px, cx], [py, cy], 'b-', alpha=0.4, linewidth=1)
+# Plot 2: Security Gap Ratio
+ax = axes[0, 1]
+gap = inverse / forward
+ax.semilogy(k_vals, gap, 'g-^', markersize=5, color='darkgreen')
+ax.set_xlabel('Iteration depth k')
+ax.set_ylabel('Gap ratio (2^k / k)')
+ax.set_title('Security Gap Growth')
+ax.grid(True, alpha=0.3)
+ax.axhline(y=1e6, color='red', linestyle='--', alpha=0.5, label='1M barrier')
+ax.legend()
 
-    for node, (x, y) in pos1.items():
-        color = 'red' if node == root1 else ('green' if node % 2 == 0 else 'orange')
-        ax1.scatter(x, y, c=color, s=80, zorder=5, edgecolors='black', linewidth=0.5)
-        ax1.annotate(str(node), (x, y), textcoords="offset points",
-                    xytext=(0, 8), ha='center', fontsize=7)
+# Plot 3: k^2 vs 2^k (proved theorem)
+ax = axes[1, 0]
+k2 = k_vals ** 2
+ax.semilogy(k_vals, k2, 'b-o', markersize=4, label='k²')
+ax.semilogy(k_vals, k_vals ** 2 + k_vals, 'm-d', markersize=4, label='k² + k')
+ax.semilogy(k_vals, inverse, 'r-s', markersize=4, label='2^k')
+ax.axvline(x=5, color='green', linestyle='--', alpha=0.7, label='k = 5 (proved threshold)')
+ax.set_xlabel('Iteration depth k')
+ax.set_ylabel('Value')
+ax.set_title('Proved: k² + k < 2^k for k ≥ 5')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    ax1.set_title(f'Preimage Tree: root = {root1}')
-    ax1.set_ylabel('Depth')
-    ax1.set_xlabel('Node index')
-    ax1.grid(True, alpha=0.2)
+# Plot 4: Preimage Tree Growth
+ax = axes[1, 1]
+depths = range(1, 21)
+tree_sizes = [preimage_tree_size(1, d) for d in depths]
+ax.plot(list(depths), tree_sizes, 'b-o', markersize=5, label='|T^{-k}(1)|')
+ax.plot(list(depths), [2**d for d in depths], 'r--', alpha=0.5, label='2^k upper bound')
+ax.plot(list(depths), list(depths), 'g--', alpha=0.5, label='k (conjecture lower bound)')
+ax.set_xlabel('Preimage depth k')
+ax.set_ylabel('Preimage tree size')
+ax.set_title('Preimage Tree Growth')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    # Tree 2: root = 16
-    ax2 = axes[1]
-    root2 = 16
-    edges2, pos2 = build_preimage_tree(root2, 6)
-
-    for parent, child in edges2:
-        px, py = pos2[parent]
-        cx, cy = pos2[child]
-        ax2.plot([px, cx], [py, cy], 'b-', alpha=0.4, linewidth=1)
-
-    for node, (x, y) in pos2.items():
-        color = 'red' if node == root2 else ('green' if node % 2 == 0 else 'orange')
-        ax2.scatter(x, y, c=color, s=80, zorder=5, edgecolors='black', linewidth=0.5)
-        ax2.annotate(str(node), (x, y), textcoords="offset points",
-                    xytext=(0, 8), ha='center', fontsize=7)
-
-    ax2.set_title(f'Preimage Tree: root = {root2}')
-    ax2.set_ylabel('Depth')
-    ax2.set_xlabel('Node index')
-    ax2.grid(True, alpha=0.2)
-
-    plt.tight_layout()
-    plt.savefig('preimage_tree.png', dpi=150, bbox_inches='tight')
-    print("Saved: preimage_tree.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Security Gap Between Forward and Backward Computation
-
-Shows the exponential divergence between forward cost (linear in a)
-and backward search space (exponential in a) for the Collatz OWF.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def collatz_step(n: int) -> int:
-    if n <= 0:
-        return 0
-    if n % 2 == 0:
-        return n // 2
-    else:
-        return 3 * n + 1
-
-
-def collatz_iter(a: int, n: int) -> int:
-    result = n
-    for _ in range(a):
-        result = collatz_step(result)
-    return result
-
-
-def image_compression_ratio(a: int, bound: int) -> float:
-    image = {collatz_iter(a, n) for n in range(bound)}
-    return len(image) / bound
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Collatz One-Way Function: Security Analysis', fontsize=16, fontweight='bold')
-
-    # Plot 1: Forward vs Backward cost (log scale)
-    ax1 = axes[0, 0]
-    a_vals = list(range(1, 31))
-    forward_costs = a_vals
-    backward_costs = [2**a for a in a_vals]
-    ax1.semilogy(a_vals, forward_costs, 'b-o', markersize=4, label='Forward cost (a)')
-    ax1.semilogy(a_vals, backward_costs, 'r-s', markersize=4, label='Search space (2^a)')
-    ax1.fill_between(a_vals, forward_costs, backward_costs, alpha=0.15, color='red')
-    ax1.set_xlabel('Iterations (a)')
-    ax1.set_ylabel('Cost')
-    ax1.set_title('Security Gap: Forward vs Backward')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Image compression ratio
-    ax2 = axes[0, 1]
-    B = 1000
-    a_range = list(range(1, 26))
-    ratios = [image_compression_ratio(a, B) for a in a_range]
-    ax2.plot(a_range, ratios, 'g-o', markersize=4)
-    ax2.axhline(y=0, color='k', linestyle='--', alpha=0.3)
-    ax2.set_xlabel('Iterations (a)')
-    ax2.set_ylabel('|Image| / B')
-    ax2.set_title(f'Image Compression (B={B})')
-    ax2.grid(True, alpha=0.3)
-
-    # Plot 3: Preimage tree branching
-    ax3 = axes[1, 0]
-    targets = [4, 8, 16, 32]
-    depths = list(range(1, 13))
-    for target in targets:
-        counts = []
-        for d in depths:
-            preimages = {n for n in range(target * 2**d + 100)
-                        if collatz_iter(d, n) == target}
-            counts.append(len(preimages))
-        ax3.semilogy(depths, counts, '-o', markersize=4, label=f'target={target}')
-    # Reference: 2^d growth
-    ref = [2**d for d in depths]
-    ax3.semilogy(depths, ref, 'k--', alpha=0.5, label='2^d reference')
-    ax3.set_xlabel('Depth (d)')
-    ax3.set_ylabel('Number of Preimages')
-    ax3.set_title('Preimage Tree Growth')
-    ax3.legend(fontsize=8)
-    ax3.grid(True, alpha=0.3)
-
-    # Plot 4: Hash distribution
-    ax4 = axes[1, 1]
-    m = 32
-    B = 3000
-    for a in [1, 5, 10, 20]:
-        hash_counts = [0] * m
-        for n in range(B):
-            h = collatz_iter(a, n) % m
-            hash_counts[h] += 1
-        ax4.bar(np.arange(m) + a * 0.15, hash_counts, width=0.15,
-                label=f'a={a}', alpha=0.7)
-    ax4.axhline(y=B/m, color='k', linestyle='--', alpha=0.5, label=f'B/m={B//m}')
-    ax4.set_xlabel('Hash bucket')
-    ax4.set_ylabel('Count')
-    ax4.set_title(f'Hash Distribution (m={m}, B={B})')
-    ax4.legend(fontsize=7)
-    ax4.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('security_gap_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: security_gap_analysis.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('viz_security_gap.png', dpi=150, bbox_inches='tight')
+print("Saved viz_security_gap.png")
