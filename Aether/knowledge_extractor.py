@@ -1405,6 +1405,8 @@ Research mode: {concept.research_mode}
         target_path = re.sub(r'/[0-9a-f]+_aristotle/', '/', target_path)
         # Fix compound domain paths like AlgebraEML/Cryptography/ -> Bridges/AlgebraEMLCryptography/
         target_path = self._resolve_compound_domain_path(target_path)
+        # Deduplicate repeated domain segments: Bridges/Bridges/ -> Bridges/
+        target_path = self._deduplicate_domain_segments(target_path)
         suffix = Path(target_path).suffix.lower()
 
         # Safety: reject obviously invalid paths
@@ -1474,11 +1476,39 @@ Research mode: {concept.research_mode}
         )
         for prefix in prefixes:
             if path.startswith(prefix):
-                return path[len(prefix):]
+                path = path[len(prefix):]
+                break
         # Strip Aristotle project directory prefixes like 47bf2ccd_aristotle/Bridges/...
         # These are artifacts of the extraction structure, not real Catalog paths
         path = re.sub(r'^[0-9a-f]+_aristotle/', '', path)
+        # Fix doubled paths like Bridges/Catalog/Bridges/X.lean -> Bridges/X.lean
+        # The LLM sometimes generates paths with interior "Catalog/" segments
+        while '/Catalog/' in path:
+            path = path.replace('/Catalog/', '/')
         return path
+
+    @staticmethod
+    def _deduplicate_domain_segments(path: str) -> str:
+        """Remove repeated domain-like segments from paths.
+
+        E.g. Bridges/Bridges/X.lean -> Bridges/X.lean
+        Handles cases where the LLM or path computation creates doubled segments.
+        """
+        parts = [p for p in path.replace("\\", "/").split("/") if p]
+        if len(parts) < 2:
+            return path
+        known_domains = {
+            "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
+            "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
+            "Pythagorean", "Shared", "Speculative", "Tropical",
+        }
+        deduped = [parts[0]]
+        for i in range(1, len(parts)):
+            # Skip a segment if it's the same domain as the previous segment
+            if parts[i] == deduped[-1] and parts[i] in known_domains:
+                continue
+            deduped.append(parts[i])
+        return "/".join(deduped)
 
     @staticmethod
     def _lean_contains_sorry(content: str) -> bool:

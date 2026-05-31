@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Visualizations (generated images from Python scripts)
         renderVisualizations('content-visualizations', data.visualizations);
 
-        // Algorithms: show pseudocode (brief description) when available, full code as fallback
+        // Algorithms: use 'code' field (some older packages have 'pseudocode' too)
         const algoField = data.algorithms && data.algorithms.some(a => a.pseudocode && a.pseudocode.trim())
             ? 'pseudocode' : 'code';
         renderCodeBlocks('content-algorithms', data.algorithms, algoField);
