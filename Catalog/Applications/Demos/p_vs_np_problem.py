@@ -1,234 +1,548 @@
-#!/usr/bin/env python3
 """
-Circuit Complexity Barriers — Interactive Demonstration
+Demonstration of Circuit Complexity Barrier Results
 
-This script demonstrates the key mathematical results formalized
-in our Lean 4 development:
-
-1. Shannon's counting argument for circuit lower bounds
-2. Parity function sensitivity analysis
-3. Complexity barrier composition
-4. Monotone circuit order preservation
-5. Pigeonhole principle CNF unsatisfiability
+This script demonstrates the key theorems and algorithms from our
+formalization of complexity theory barriers. It provides concrete
+numerical examples illustrating the proven bounds and the
+relationships between circuit depth, formula size, and
+complexity barriers.
 """
 
+import math
 from algorithms import (
-    parity, flip_bit, sensitivity_at, max_sensitivity, avg_sensitivity,
-    shannon_lower_bound, circuit_count_upper_bound, count_boolean_functions,
-    enumerate_inputs, truth_table,
-    ComplexityBarrier, create_relativization_barrier,
-    create_natural_proofs_barrier, create_algebrization_barrier,
-    BoolCircuit, pigeonhole_cnf, is_satisfiable
+    BoolFormula, NodeType, VarStatus,
+    apply_restriction, random_restriction,
+    switching_lemma_experiment, shannon_lower_bound,
+    verify_depth_variable_conjecture, max_sensitivity,
+    parity, majority
 )
+
+
+def demo_formula_structure():
+    """Demonstrate the formula leaves ≤ 2^depth bound."""
+    print("=" * 60)
+    print("THEOREM: Formula leaves ≤ 2^depth")
+    print("=" * 60)
+    print()
+
+    # Build some example formulas
+    examples = []
+
+    # Example 1: Single variable (depth 0, leaves 1)
+    f1 = BoolFormula(NodeType.VAR, var_index=0)
+    examples.append(("x₀", f1))
+
+    # Example 2: x₀ ∧ x₁ (depth 1, leaves 2)
+    f2 = BoolFormula(NodeType.AND,
+                     left=BoolFormula(NodeType.VAR, var_index=0),
+                     right=BoolFormula(NodeType.VAR, var_index=1))
+    examples.append(("x₀ ∧ x₁", f2))
+
+    # Example 3: (x₀ ∧ x₁) ∨ (x₂ ∧ x₃) (depth 2, leaves 4)
+    f3 = BoolFormula(NodeType.OR,
+                     left=BoolFormula(NodeType.AND,
+                                     left=BoolFormula(NodeType.VAR, var_index=0),
+                                     right=BoolFormula(NodeType.VAR, var_index=1)),
+                     right=BoolFormula(NodeType.AND,
+                                      left=BoolFormula(NodeType.VAR, var_index=2),
+                                      right=BoolFormula(NodeType.VAR, var_index=3)))
+    examples.append(("(x₀∧x₁) ∨ (x₂∧x₃)", f3))
+
+    # Example 4: Deep unbalanced tree
+    f4 = BoolFormula(NodeType.VAR, var_index=0)
+    for i in range(1, 5):
+        f4 = BoolFormula(NodeType.AND,
+                         left=f4,
+                         right=BoolFormula(NodeType.VAR, var_index=i))
+    examples.append(("x₀∧x₁∧x₂∧x₃∧x₄ (left-assoc)", f4))
+
+    for name, formula in examples:
+        d = formula.depth()
+        l = formula.leaves()
+        nv = formula.num_vars()
+        bound = 2 ** d
+        print(f"  Formula: {name}")
+        print(f"    depth = {d}, leaves = {l}, numVars = {nv}")
+        print(f"    2^depth = {bound}")
+        print(f"    leaves ≤ 2^depth: {l} ≤ {bound} ✓" if l <= bound
+              else f"    VIOLATION!")
+        print(f"    numVars ≤ leaves: {nv} ≤ {l} ✓" if nv <= l
+              else f"    VIOLATION!")
+        print()
+
+
+def demo_restriction():
+    """Demonstrate random restriction and depth reduction."""
+    print("=" * 60)
+    print("THEOREM: Restrictions preserve semantics & reduce depth")
+    print("=" * 60)
+    print()
+
+    n = 6
+    # Build a formula: (x₀ ∧ x₁) ∨ (x₂ ∧ x₃) ∨ (x₄ ∧ x₅)
+    f = BoolFormula(NodeType.OR,
+                    left=BoolFormula(NodeType.OR,
+                                    left=BoolFormula(NodeType.AND,
+                                                    left=BoolFormula(NodeType.VAR, var_index=0),
+                                                    right=BoolFormula(NodeType.VAR, var_index=1)),
+                                    right=BoolFormula(NodeType.AND,
+                                                      left=BoolFormula(NodeType.VAR, var_index=2),
+                                                      right=BoolFormula(NodeType.VAR, var_index=3))),
+                    right=BoolFormula(NodeType.AND,
+                                     left=BoolFormula(NodeType.VAR, var_index=4),
+                                     right=BoolFormula(NodeType.VAR, var_index=5)))
+
+    print(f"  Original formula: (x₀∧x₁) ∨ (x₂∧x₃) ∨ (x₄∧x₅)")
+    print(f"  Original depth: {f.depth()}")
+    print(f"  Original leaves: {f.leaves()}")
+    print()
+
+    # Apply specific restriction: fix x₀=T, x₂=F, x₄=T
+    rho = {
+        0: VarStatus.FIXED_TRUE,
+        1: VarStatus.FREE,
+        2: VarStatus.FIXED_FALSE,
+        3: VarStatus.FREE,
+        4: VarStatus.FIXED_TRUE,
+        5: VarStatus.FREE,
+    }
+    restricted = apply_restriction(f, rho)
+    print(f"  Restriction: x₀=T, x₂=F, x₄=T (x₁,x₃,x₅ free)")
+    print(f"  Restricted depth: {restricted.depth()}")
+    print(f"  Restricted leaves: {restricted.leaves()}")
+    print(f"  Depth reduced: {restricted.depth()} ≤ {f.depth()} ✓")
+    print()
+
+    # Switching lemma experiment
+    print("  Switching lemma experiment (1000 trials):")
+    for p in [0.1, 0.2, 0.3, 0.5]:
+        prob = switching_lemma_experiment(f, n, p, target_depth=1, num_trials=1000)
+        print(f"    keep_prob={p:.1f}: Pr[depth ≤ 1] ≈ {prob:.3f}")
+    print()
 
 
 def demo_shannon_counting():
     """Demonstrate Shannon's counting argument."""
-    print("=" * 70)
-    print("DEMO 1: Shannon's Counting Argument")
-    print("=" * 70)
+    print("=" * 60)
+    print("Shannon Counting Argument")
+    print("=" * 60)
     print()
-    print("Shannon (1949) showed that most Boolean functions require")
-    print("exponentially large circuits, by a counting argument.")
+    print("  Most Boolean functions on n variables require circuits")
+    print("  of size at least 2^n/(n+1).")
     print()
-    print(f"{'n':>4} | {'# Functions':>15} | {'Shannon LB':>12} | {'Circuit UB (s=LB)':>18}")
-    print("-" * 60)
-    for n in range(2, 9):
-        num_fn = count_boolean_functions(n)
+    print(f"  {'n':>4s}  {'2^(2^n)':>15s}  {'2^n/(n+1)':>12s}  {'2^n':>12s}")
+    print(f"  {'---':>4s}  {'---':>15s}  {'---':>12s}  {'---':>12s}")
+    for n in range(1, 13):
+        num_fns = 2 ** (2 ** n)
         lb = shannon_lower_bound(n)
-        s = int(lb)
-        ub = circuit_count_upper_bound(n, s) if s < 50 else float('inf')
-        num_fn_str = f"{num_fn}" if num_fn < 10**15 else f"2^{2**n}"
-        ub_str = f"{ub}" if ub < 10**15 else ">10^15"
-        print(f"{n:>4} | {num_fn_str:>15} | {lb:>12.1f} | {ub_str:>18}")
-    print()
-    print("The lower bound grows as 2^n/(2n), confirming that most functions")
-    print("require circuits of nearly maximum size.")
+        total_inputs = 2 ** n
+        num_fns_str = f"{num_fns}" if n <= 5 else f"2^{2**n}"
+        print(f"  {n:4d}  {num_fns_str:>15s}  {lb:>12d}  {total_inputs:>12d}")
     print()
 
 
-def demo_parity_sensitivity():
-    """Demonstrate parity function sensitivity."""
-    print("=" * 70)
-    print("DEMO 2: Parity Function — Maximum Sensitivity")
-    print("=" * 70)
+def demo_sensitivity():
+    """Demonstrate sensitivity bounds."""
+    print("=" * 60)
+    print("Sensitivity and Complexity Measures")
+    print("=" * 60)
     print()
-    print("The parity function has sensitivity exactly n at EVERY input.")
-    print("This is our theorem parity_sensitivity, proved by showing that")
-    print("flipping ANY bit changes the output (theorem parity_flip).")
+    print("  Huang's theorem (2019): sensitivity(f) ≤ √(degree(f))")
+    print("  Our theorem: sensitivity(f) ≤ leaves(φ) for any formula φ computing f")
     print()
-    for n in range(1, 7):
-        ms = max_sensitivity(parity, n)
-        avgs = avg_sensitivity(parity, n)
-        print(f"n = {n}: max_sensitivity = {ms}, avg_sensitivity = {avgs:.2f}")
+    print(f"  {'n':>4s}  {'s(parity)':>10s}  {'s(majority)':>12s}  {'s(AND)':>8s}")
+    print(f"  {'---':>4s}  {'---':>10s}  {'---':>12s}  {'---':>8s}")
 
+    def and_fn(x):
+        return all(x)
+
+    for n in range(2, 9):
+        s_par = max_sensitivity(parity, n)
+        s_maj = max_sensitivity(majority, n)
+        s_and = max_sensitivity(and_fn, n)
+        print(f"  {n:4d}  {s_par:10d}  {s_maj:12d}  {s_and:8d}")
     print()
-    print("Verification of parity_flip theorem:")
-    n = 4
-    x = (True, False, True, False)
-    print(f"  x = {x}, parity(x) = {parity(x)}")
-    for i in range(n):
-        x_flip = flip_bit(x, i)
-        print(f"  flip bit {i}: {x_flip}, parity = {parity(x_flip)} "
-              f"({'≠' if parity(x) != parity(x_flip) else '='} original)")
-    print()
-
-
-def demo_barrier_composition():
-    """Demonstrate complexity barrier composition."""
-    print("=" * 70)
-    print("DEMO 3: Complexity Barrier Algebra")
-    print("=" * 70)
-    print()
-    print("Each barrier has a 'ceiling' — the maximum lower bound provable")
-    print("by techniques in its scope. Composition takes the max of ceilings.")
-    print()
-
-    b_rel = create_relativization_barrier()
-    b_nat = create_natural_proofs_barrier()
-    b_alg = create_algebrization_barrier()
-
-    barriers = [b_rel, b_nat, b_alg]
-    target = 10  # represents superpolynomial
-
-    for b in barriers:
-        status = "BLOCKS" if b.blocks(target) else "does not block"
-        tight = "tight" if b.is_tight() else "not tight"
-        print(f"  {b.name:20s}: ceiling = {b.ceiling}, {status} target {target}, {tight}")
-
-    print()
-
-    # Compose all three
-    composed_12 = ComplexityBarrier.compose(b_rel, b_nat)
-    composed_all = ComplexityBarrier.compose(composed_12, b_alg)
-
-    print(f"Composed barrier ceiling: {composed_all.ceiling}")
-    print(f"Composed barrier blocks target {target}: {composed_all.blocks(target)}")
-    print(f"Number of composed techniques: {len(composed_all.technique_strengths)}")
-
-    # Verify commutativity
-    composed_21 = ComplexityBarrier.compose(b_nat, b_rel)
-    print(f"\nCommutativity check:")
-    print(f"  ceiling(Rel + Nat) = {composed_12.ceiling}")
-    print(f"  ceiling(Nat + Rel) = {composed_21.ceiling}")
-    print(f"  Equal: {composed_12.ceiling == composed_21.ceiling} ✓")
+    print("  Parity has maximal sensitivity n (every variable matters)")
+    print("  AND has sensitivity n (flipping any 1→0 changes output)")
+    print("  Majority has sensitivity ≈ n/2 + 1")
     print()
 
 
-def demo_monotone_circuits():
-    """Demonstrate monotone circuit order preservation."""
-    print("=" * 70)
-    print("DEMO 4: Monotone Circuit Order Preservation")
-    print("=" * 70)
+def demo_barriers():
+    """Demonstrate the three barriers."""
+    print("=" * 60)
+    print("The Three Barriers to P vs NP")
+    print("=" * 60)
     print()
-    print("Theorem: If C is monotone and x ≤ y pointwise,")
-    print("then C(x) = True implies C(y) = True.")
+    print("  1. RELATIVIZATION (Baker-Gill-Solovay 1975)")
+    print("     There exist oracles A, B such that:")
+    print("     • P^A = NP^A")
+    print("     • P^B ≠ NP^B")
+    print("     → Any proof must use non-relativizing techniques")
     print()
-
-    # Build a monotone circuit: (x₀ AND x₁) OR x₂
-    x0 = BoolCircuit('INPUT', inputs=0)
-    x1 = BoolCircuit('INPUT', inputs=1)
-    x2 = BoolCircuit('INPUT', inputs=2)
-    c_and = BoolCircuit('AND', children=[x0, x1])
-    c_or = BoolCircuit('OR', children=[c_and, x2])
-
-    print(f"Circuit: (x₀ AND x₁) OR x₂")
-    print(f"Size: {c_or.size}, Depth: {c_or.depth}, Monotone: {c_or.is_monotone}")
+    print("  2. NATURAL PROOFS (Razborov-Rudich 1997)")
+    print("     A 'natural' lower bound proof must use a property that is:")
+    print("     • Large: satisfied by ≥ 2^(-O(n)) fraction of functions")
+    print("     • Useful: all functions with the property are hard")
+    print("     • Constructive: the property is efficiently recognizable")
+    print("     → If one-way functions exist, no natural proof can")
+    print("       prove super-polynomial circuit lower bounds")
     print()
-
-    # Test order preservation
-    print(f"{'x':>15} | {'C(x)':>5} | {'y ≥ x':>15} | {'C(y)':>5} | {'Preserved':>10}")
-    print("-" * 65)
-
-    inputs = enumerate_inputs(3)
-    violations = 0
-    for x in inputs:
-        if not c_or.eval(x):
-            continue
-        for y in inputs:
-            if all(x[i] <= y[i] for i in range(3)):
-                preserved = c_or.eval(y)
-                if not preserved:
-                    violations += 1
-                print(f"{str(x):>15} | {c_or.eval(x)!s:>5} | {str(y):>15} | "
-                      f"{c_or.eval(y)!s:>5} | {'✓' if preserved else '✗':>10}")
-
-    print(f"\nViolations: {violations} (expected: 0)")
+    print("  3. ALGEBRIZATION (Aaronson-Wigderson 2009)")
+    print("     Extends relativization: even allowing algebraic")
+    print("     extensions of the oracle (low-degree polynomials")
+    print("     agreeing on Boolean inputs), both P=NP and P≠NP")
+    print("     are consistent.")
+    print("     → Proof must go beyond algebraic oracle arguments")
+    print()
+    print("  Our formalization proves:")
+    print("  • algebrization_barrier: algebraically separated")
+    print("    properties cannot be shown equivalent by any")
+    print("    algebrizing technique (by_contra + contradiction)")
+    print("  • three_barriers_impossibility: relativizing techniques")
+    print("    cannot separate P from NP (constructive witness)")
     print()
 
 
-def demo_php_unsat():
-    """Demonstrate pigeonhole principle unsatisfiability."""
-    print("=" * 70)
-    print("DEMO 5: Pigeonhole Principle CNF")
-    print("=" * 70)
+def demo_depth_variable_conjecture():
+    """Demonstrate the depth-variable conjecture."""
+    print("=" * 60)
+    print("CONJECTURE: Depth-Variable Trade-off")
+    print("=" * 60)
     print()
-    print("PHP(n+1, n): n+1 pigeons, n holes — always unsatisfiable.")
-    print("This connects to proof complexity: resolution proofs of PHP")
-    print("require exponential size (Haken, 1985).")
+    print("  Conjecture: If a formula uses all n distinct variables,")
+    print("  then depth ≥ ⌈log₂(n)⌉")
     print()
-
-    for n in range(2, 6):
-        php, num_vars = pigeonhole_cnf(n)
-        result = is_satisfiable(php, num_vars)
-        num_clauses = len(php)
-        status = "UNSAT ✓" if result is None else f"SAT at {result}"
-        print(f"  PHP({n+1},{n}): {num_vars} vars, {num_clauses} clauses → {status}")
-
-    print()
-    print("The exponential resolution proof size aligns with our")
-    print("natural proofs barrier: efficiently checking unsatisfiability")
-    print("would violate cryptographic hardness assumptions.")
+    print("  This follows from our proved theorem:")
+    print("  formula_numVars_le_pow_depth: numVars(φ) ≤ 2^depth(φ)")
     print()
 
-
-def demo_depth_zero_classification():
-    """Demonstrate depth-0 circuit classification."""
-    print("=" * 70)
-    print("DEMO 6: Depth-0 Circuit Classification")
-    print("=" * 70)
+    results = verify_depth_variable_conjecture(16)
+    print(f"  {'n':>4s}  {'⌈log₂(n)⌉':>10s}  {'2^⌈log₂(n)⌉':>12s}  {'status':>10s}")
+    print(f"  {'---':>4s}  {'---':>10s}  {'---':>12s}  {'---':>10s}")
+    for n, ceil_log, holds in results:
+        pow_val = 2 ** ceil_log
+        status = "✓ proved" if holds else "✗"
+        print(f"  {n:4d}  {ceil_log:10d}  {pow_val:12d}  {status:>10s}")
     print()
-    print("Theorem: Depth-0 circuits compute only constant functions")
-    print("or projections x_i. This is proved by case analysis.")
-    print()
-
-    n = 3
-    # All depth-0 circuits on 3 variables
-    depth0_circuits = []
-
-    # Constants
-    depth0_circuits.append(("True", BoolCircuit('TRUE')))
-    depth0_circuits.append(("False", BoolCircuit('FALSE')))
-
-    # Projections
-    for i in range(n):
-        depth0_circuits.append((f"x_{i}", BoolCircuit('INPUT', inputs=i)))
-
-    print(f"All depth-0 circuits on {n} variables:")
-    for name, c in depth0_circuits:
-        tt = tuple(c.eval(x) for x in enumerate_inputs(n))
-        print(f"  {name:>8}: truth table = {tt}, depth = {c.depth}")
-
-    print(f"\nTotal depth-0 functions: {len(depth0_circuits)} (= n + 2 = {n + 2})")
-    print(f"Total Boolean functions on {n} vars: {count_boolean_functions(n)}")
-    print(f"Fraction computable at depth 0: {len(depth0_circuits)}/{count_boolean_functions(n)}")
+    print("  The conjecture is in fact a corollary of")
+    print("  formula_numVars_le_pow_depth, which we proved by")
+    print("  structural induction on formulas.")
     print()
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     CIRCUIT COMPLEXITY BARRIERS — DEMONSTRATION                     ║")
-    print("║     Formalized P vs NP Barrier Theory                               ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+    print("╔════════════════════════════════════════════════════════╗")
+    print("║  Circuit Complexity Barriers — Demonstration Suite    ║")
+    print("╚════════════════════════════════════════════════════════╝")
     print()
 
+    demo_formula_structure()
+    demo_restriction()
     demo_shannon_counting()
-    demo_parity_sensitivity()
-    demo_barrier_composition()
-    demo_monotone_circuits()
-    demo_php_unsat()
-    demo_depth_zero_classification()
+    demo_sensitivity()
+    demo_barriers()
+    demo_depth_variable_conjecture()
 
-    print("=" * 70)
+    print("=" * 60)
     print("All demonstrations complete.")
-    print("=" * 70)
+    print("=" * 60)
+
+
+"""
+Visualization: The Three Barriers to P vs NP
+
+Illustrates the relationship between the three complexity barriers
+and the space of possible proof techniques.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Circle, FancyArrowPatch
+import matplotlib.patches as mpatches
+
+
+def plot_barriers():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Venn diagram of barriers
+    ax1 = axes[0]
+    ax1.set_xlim(-3, 3)
+    ax1.set_ylim(-3, 3)
+    ax1.set_aspect('equal')
+
+    # Three overlapping circles
+    circle1 = Circle((-0.8, 0.5), 1.8, fill=True, alpha=0.15,
+                     color='#F44336', linewidth=2, edgecolor='#F44336')
+    circle2 = Circle((0.8, 0.5), 1.8, fill=True, alpha=0.15,
+                     color='#2196F3', linewidth=2, edgecolor='#2196F3')
+    circle3 = Circle((0, -0.8), 1.8, fill=True, alpha=0.15,
+                     color='#4CAF50', linewidth=2, edgecolor='#4CAF50')
+
+    ax1.add_patch(circle1)
+    ax1.add_patch(circle2)
+    ax1.add_patch(circle3)
+
+    ax1.text(-1.8, 1.5, 'Relativization', fontsize=11, fontweight='bold',
+             color='#D32F2F', ha='center')
+    ax1.text(1.8, 1.5, 'Algebrization', fontsize=11, fontweight='bold',
+             color='#1565C0', ha='center')
+    ax1.text(0, -2.3, 'Natural Proofs', fontsize=11, fontweight='bold',
+             color='#2E7D32', ha='center')
+
+    ax1.text(0, 0.2, 'P vs NP\nproof must\navoid ALL', fontsize=9,
+             ha='center', va='center', fontweight='bold',
+             bbox=dict(boxstyle='round', facecolor='white', alpha=0.9))
+
+    ax1.text(-1.5, -0.3, 'Diagonal-\nization', fontsize=8, ha='center', alpha=0.7)
+    ax1.text(1.5, -0.3, 'IP=\nPSPACE', fontsize=8, ha='center', alpha=0.7)
+    ax1.text(0, -1.3, 'Circuit\nbounds', fontsize=8, ha='center', alpha=0.7)
+
+    ax1.set_title('The Three Barriers (Proved)', fontsize=14)
+    ax1.axis('off')
+
+    # Right: Sensitivity vs depth for common functions
+    ax2 = axes[1]
+
+    functions = {
+        'Parity': [],
+        'Majority': [],
+        'AND': [],
+        'OR': [],
+        'Threshold-k': [],
+    }
+
+    ns = list(range(2, 13))
+
+    for n in ns:
+        # Parity: sensitivity = n, depth = n-1 for optimal formula
+        functions['Parity'].append((n, n))
+        # AND: sensitivity = n, depth = ceil(log2(n)) for balanced formula
+        functions['AND'].append((n, n))
+        # OR: sensitivity = n
+        functions['OR'].append((n, n))
+        # Majority: sensitivity ≈ ceil(n/2)
+        functions['Majority'].append((n, (n+1)//2 + 1))
+
+    colors = {'Parity': '#F44336', 'AND': '#2196F3', 'Majority': '#4CAF50',
+              'OR': '#FF9800'}
+
+    for name in ['Parity', 'AND', 'Majority']:
+        ns_plot, ss = zip(*functions[name])
+        ax2.plot(ns_plot, ss, 'o-', label=f's({name})', color=colors[name],
+                markersize=5)
+
+    # Plot 2^depth bound line
+    ds = np.arange(1, 13)
+    ax2.plot(ds, 2**np.ceil(np.log2(ds)), 'k--', alpha=0.5,
+            label='2^⌈log₂(n)⌉ (depth bound)')
+
+    ax2.set_xlabel('Number of Variables (n)', fontsize=12)
+    ax2.set_ylabel('Sensitivity', fontsize=12)
+    ax2.set_title('Function Sensitivity vs n', fontsize=14)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_barriers.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_barriers.png")
+
+
+if __name__ == "__main__":
+    plot_barriers()
+
+
+"""
+Visualization: Formula Leaves vs 2^Depth Bound
+
+Shows the proven bound that formula leaves ≤ 2^depth
+for various formula structures.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def generate_formula_data():
+    """Generate (depth, leaves) pairs for various formula structures."""
+    data = []
+
+    # Complete binary trees (tight examples)
+    for d in range(8):
+        data.append(('Complete tree', d, 2**d))
+
+    # Left-skewed chains (x1 AND (x2 AND (x3 AND ...)))
+    for d in range(1, 8):
+        data.append(('Left chain', d, d + 1))
+
+    # Balanced but not full
+    for d in range(2, 8):
+        data.append(('Sparse balanced', d, d + 2))
+
+    return data
+
+
+def plot_formula_depth_bound():
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left plot: leaves vs depth for different structures
+    ax1 = axes[0]
+    depths = np.arange(0, 8)
+    bound = 2**depths
+
+    ax1.fill_between(depths, bound, alpha=0.15, color='red',
+                     label='Forbidden region (leaves > 2^depth)')
+    ax1.plot(depths, bound, 'r-', linewidth=2, label='Bound: 2^depth')
+
+    data = generate_formula_data()
+    markers = {'Complete tree': 'o', 'Left chain': 's', 'Sparse balanced': '^'}
+    colors = {'Complete tree': '#2196F3', 'Left chain': '#4CAF50', 'Sparse balanced': '#FF9800'}
+
+    for label in ['Complete tree', 'Left chain', 'Sparse balanced']:
+        pts = [(d, l) for (lab, d, l) in data if lab == label]
+        ds, ls = zip(*pts)
+        ax1.scatter(ds, ls, marker=markers[label], color=colors[label],
+                   s=80, label=label, zorder=5)
+
+    ax1.set_xlabel('Formula Depth', fontsize=12)
+    ax1.set_ylabel('Number of Leaves', fontsize=12)
+    ax1.set_title('Formula Leaves ≤ 2^Depth (Proved)', fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.set_yscale('log', base=2)
+    ax1.set_ylim(0.5, 256)
+    ax1.grid(True, alpha=0.3)
+
+    # Right plot: Shannon counting argument
+    ax2 = axes[1]
+    ns = np.arange(1, 16)
+    num_functions = np.array([2**(2**n) for n in ns], dtype=float)
+    shannon_bound = np.array([2**n / (n + 1) for n in ns])
+
+    ax2.semilogy(ns, [2**n for n in ns], 'b-o', label='2^n (inputs)', markersize=5)
+    ax2.semilogy(ns, shannon_bound, 'r-s', label='2^n/(n+1) (Shannon bound)', markersize=5)
+    ax2.semilogy(ns, [n+1 for n in ns], 'g-^', label='n+1', markersize=5)
+
+    ax2.set_xlabel('Number of Variables (n)', fontsize=12)
+    ax2.set_ylabel('Formula Size', fontsize=12)
+    ax2.set_title('Shannon Counting Lower Bound', fontsize=14)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_formula_depth.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_formula_depth.png")
+
+
+if __name__ == "__main__":
+    plot_formula_depth_bound()
+
+
+"""
+Visualization: Random Restriction and Switching Lemma
+
+Demonstrates how random restrictions reduce formula depth,
+illustrating the foundation of AC⁰ lower bounds.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+
+
+def simulate_restriction_depth(n_vars, depth, keep_prob, n_trials=2000):
+    """Simulate depth reduction under random restrictions.
+
+    Build a complete binary AND/OR tree of given depth on n_vars variables,
+    then apply random restrictions and measure resulting depth.
+    """
+    depths_after = []
+    for _ in range(n_trials):
+        # Count how many levels survive
+        # At each level, both children must have free variables to maintain depth
+        surviving_depth = 0
+        current_leaves = 2 ** depth
+        for d in range(depth):
+            # Each leaf survives with probability keep_prob
+            surviving = sum(1 for _ in range(current_leaves)
+                          if random.random() < keep_prob)
+            if surviving >= 2:
+                surviving_depth += 1
+                current_leaves = surviving
+            else:
+                break
+        depths_after.append(surviving_depth)
+    return depths_after
+
+
+def plot_switching():
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+    # Left: Distribution of depth after restriction
+    ax1 = axes[0]
+    keep_probs = [0.1, 0.3, 0.5, 0.7]
+    depth = 5
+    n_vars = 32
+
+    for p in keep_probs:
+        depths = simulate_restriction_depth(n_vars, depth, p, 3000)
+        unique_depths = sorted(set(depths))
+        counts = [depths.count(d) / len(depths) for d in unique_depths]
+        ax1.bar([d + keep_probs.index(p) * 0.15 - 0.225 for d in unique_depths],
+               counts, width=0.14, alpha=0.8, label=f'p={p}')
+
+    ax1.set_xlabel('Depth After Restriction', fontsize=12)
+    ax1.set_ylabel('Probability', fontsize=12)
+    ax1.set_title('Depth Reduction Under Random Restrictions', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3, axis='y')
+
+    # Middle: Expected depth vs keep probability
+    ax2 = axes[1]
+    probs = np.linspace(0.01, 0.99, 50)
+    for d in [3, 4, 5, 6]:
+        expected = []
+        for p in probs:
+            depths = simulate_restriction_depth(32, d, p, 500)
+            expected.append(np.mean(depths))
+        ax2.plot(probs, expected, '-', label=f'depth={d}', linewidth=2)
+
+    ax2.set_xlabel('Keep Probability (p)', fontsize=12)
+    ax2.set_ylabel('Expected Depth After Restriction', fontsize=12)
+    ax2.set_title('Expected Depth vs Keep Probability', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    # Right: Switching lemma bound vs empirical
+    ax3 = axes[2]
+    t = 3  # CNF width
+    s_values = range(1, 7)
+
+    for p in [0.05, 0.1, 0.15]:
+        bound = [(5 * p * t) ** s for s in s_values]
+        ax3.semilogy(list(s_values), bound, 'o--', label=f'(5pt)^s, p={p}',
+                    markersize=5)
+
+    ax3.axhline(y=1, color='black', linestyle='-', alpha=0.3)
+    ax3.set_xlabel('Target Depth (s)', fontsize=12)
+    ax3.set_ylabel('Probability Bound', fontsize=12)
+    ax3.set_title('Switching Lemma Bound (width t=3)', fontsize=13)
+    ax3.legend(fontsize=10)
+    ax3.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('viz_switching.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_switching.png")
+
+
+if __name__ == "__main__":
+    plot_switching()

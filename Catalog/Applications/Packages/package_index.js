@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "p_vs_np_problem.json",
+    "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
+    "domain": "Computation",
+    "date": "2026-05-31T16:24:16Z",
+    "exp_id": "40dc5ae8",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 11
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Bridges",
     "date": "2026-05-31T16:23:25Z",
     "exp_id": "abcc87bf",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5950639917089624,
+    "quality": "partial",
     "pkg_num": 10
   },
   {
@@ -154,6 +164,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "p_vs_np_problem.json": {
+    "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
+    "exp_id": "40dc5ae8",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Computation"
+  },
   "this_research_cycle_established_that_expansion_cer.json": {
     "title": "Expansion Certificate Lattice and Amplification Theory",
     "exp_id": "0881fd0d",
@@ -199,7 +217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -221,7 +239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -243,7 +261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -254,7 +272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.6293001538461539,
       "quality": "partial"
     },
@@ -265,7 +283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -276,7 +294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7739868421052631,
       "quality": "substantial"
     },
@@ -287,7 +305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:12:01Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.8144779422972237,
       "quality": "substantial"
     },
@@ -298,7 +316,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 271,
+      "hue": 90,
+      "priority_score": 0.5950639917089624,
+      "quality": "partial"
+    },
+    {
+      "id": "p_vs_np_problem",
+      "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T16:24:16Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
