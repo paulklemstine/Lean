@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2219 of the highest-quality
+A curated collection of 2226 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2219
+Total files: 2226
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -14,6 +14,7 @@ import FINAL.Algebra.Amplification
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
+import FINAL.Algebra.ArtinPrimitiveRoot
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AverageCriterion
 import FINAL.Algebra.Barrier
@@ -79,6 +80,7 @@ import FINAL.Algebra.Distance
 import FINAL.Algebra.DruzkowskiTheory
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
+import FINAL.Algebra.EdgeUniversality
 import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
 import FINAL.Algebra.EnergyLandscapeMetastability
@@ -165,6 +167,7 @@ import FINAL.Algebra.MonomialObstruction
 import FINAL.Algebra.MontgomeryPairCorrelation
 import FINAL.Algebra.MoonshotExplorations
 import FINAL.Algebra.MultiocularGodOracle
+import FINAL.Algebra.NegDimTopology
 import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewHypotheses
 import FINAL.Algebra.NewResults
@@ -196,6 +199,7 @@ import FINAL.Algebra.Periodic
 import FINAL.Algebra.PeriodicSums
 import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
+import FINAL.Algebra.PillaiDiophantine
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PolynomialTransforms
 import FINAL.Algebra.Positivity
@@ -229,10 +233,12 @@ import FINAL.Algebra.Recursion
 import FINAL.Algebra.Reduction
 import FINAL.Algebra.RegulatorPosDef
 import FINAL.Algebra.ResidueDescent
+import FINAL.Algebra.ResolutionSingularities
 import FINAL.Algebra.ReversibleComputing
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
 import FINAL.Algebra.RootBound
+import FINAL.Algebra.RotaBasisConjecture
 import FINAL.Algebra.RotaBaxter
 import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
@@ -1021,6 +1027,7 @@ import FINAL.Cryptography.BerggrenSpectralHash
 import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
+import FINAL.Cryptography.CSIFiSh
 import FINAL.Cryptography.CollatzOWF
 import FINAL.Cryptography.CollatzOneWay
 import FINAL.Cryptography.CommitmentProtocol

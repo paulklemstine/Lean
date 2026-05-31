@@ -10,24 +10,6 @@
       "hue": 91
     },
     {
-      "id": "the_theorems_established_in_this_work__identifying",
-      "title": "Newton Persistence and Arithmetic Monodromy",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T14:58:00Z",
-      "hue": 90
-    },
-    {
-      "id": "machine_learning_generalization_bounds",
-      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T15:11:42Z",
-      "hue": 90
-    },
-    {
       "id": "this_research_cycle_established_a_formal_bridge_be",
       "title": "The Lorentzian–Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
       "domain": "Algebra",
@@ -43,16 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270
-    },
-    {
-      "id": "primes_of_the_form_n1",
-      "title": "Primes of the Form n² + 1: Quadratic Residue Constraints and Semi-prime Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:45:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -61,25 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92
-    },
-    {
-      "id": "this_cycle_established_the_foundational_infrastruc",
-      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:11:12Z",
-      "hue": 270
-    },
-    {
-      "id": "this_research_cycle_established_that_expansion_cer",
-      "title": "Expansion Certificate Lattice and Amplification Theory",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:12:01Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -91,13 +46,85 @@
       "hue": 90
     },
     {
-      "id": "p_vs_np_problem",
-      "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T16:24:16Z",
+      "id": "rotas_basis_conjecture",
+      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:19:26Z",
+      "hue": 271
+    },
+    {
+      "id": "random_matrices_edge_universality",
+      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:14Z",
       "hue": 91
+    },
+    {
+      "id": "catalans_conjecture_generalizations",
+      "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:48Z",
+      "hue": 272
+    },
+    {
+      "id": "isogeny_based_cryptography_csi_fish",
+      "title": "Isogeny-Based Cryptography: CSI-FiSh — Formalized Class Group Actions",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:18Z",
+      "hue": 91
+    },
+    {
+      "id": "resolution_of_singularities_in_positive_characteri",
+      "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:45Z",
+      "hue": 271
+    },
+    {
+      "id": "artins_conjecture_on_primitive_roots",
+      "title": "Artin's Conjecture on Primitive Roots",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:13Z",
+      "hue": 270
+    },
+    {
+      "id": "standard_conjectures_on_algebraic_cycles",
+      "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:43Z",
+      "hue": 90
+    },
+    {
+      "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:11Z",
+      "hue": 270
+    },
+    {
+      "id": "negative_dimensional_topology_what_lives_in_dimens",
+      "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:40Z",
+      "hue": 272
     }
   ],
   "edges": [],

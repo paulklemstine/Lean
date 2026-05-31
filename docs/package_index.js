@@ -4,6 +4,96 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:25:40Z",
+    "exp_id": "6d12eefe",
+    "quality_score": 0.7052853846153846,
+    "quality": "substantial",
+    "pkg_num": 14
+  },
+  {
+    "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:25:11Z",
+    "exp_id": "5d630953",
+    "quality_score": 0.6860414464845499,
+    "quality": "partial",
+    "pkg_num": 13
+  },
+  {
+    "filename": "standard_conjectures_on_algebraic_cycles.json",
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:24:43Z",
+    "exp_id": "0554bed3",
+    "quality_score": 0.7282123376623377,
+    "quality": "substantial",
+    "pkg_num": 12
+  },
+  {
+    "filename": "artins_conjecture_on_primitive_roots.json",
+    "title": "Artin's Conjecture on Primitive Roots",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:24:13Z",
+    "exp_id": "c8935afa",
+    "quality_score": 0.7068530588235296,
+    "quality": "substantial",
+    "pkg_num": 11
+  },
+  {
+    "filename": "resolution_of_singularities_in_positive_characteri.json",
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:23:45Z",
+    "exp_id": "02d2fadb",
+    "quality_score": 0.7457928571428571,
+    "quality": "substantial",
+    "pkg_num": 10
+  },
+  {
+    "filename": "isogeny_based_cryptography_csi_fish.json",
+    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:23:18Z",
+    "exp_id": "3971a79e",
+    "quality_score": 0.735085669920142,
+    "quality": "substantial",
+    "pkg_num": 9
+  },
+  {
+    "filename": "catalans_conjecture_generalizations.json",
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:22:48Z",
+    "exp_id": "b52cbca8",
+    "quality_score": 0.6621330000000001,
+    "quality": "partial",
+    "pkg_num": 8
+  },
+  {
+    "filename": "random_matrices_edge_universality.json",
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:22:14Z",
+    "exp_id": "941734c2",
+    "quality_score": 0.7068734374999999,
+    "quality": "substantial",
+    "pkg_num": 7
+  },
+  {
+    "filename": "rotas_basis_conjecture.json",
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:19:26Z",
+    "exp_id": "edde521f",
+    "quality_score": 0.7123901951219513,
+    "quality": "substantial",
+    "pkg_num": 6
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Bridges",
@@ -56,6 +146,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "isogeny_based_cryptography_csi_fish.json": {
+    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+    "exp_id": "3971a79e",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "primewise_persistent_homology_detects_exceptional_.json": {
     "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
     "exp_id": "2b593e59",
@@ -64,11 +162,43 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "random_matrices_edge_universality.json": {
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+    "exp_id": "941734c2",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
+  "resolution_of_singularities_in_positive_characteri.json": {
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+    "exp_id": "02d2fadb",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
+  "catalans_conjecture_generalizations.json": {
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+    "exp_id": "b52cbca8",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "exp_id": "866a2ce9",
     "source_exp_ids": [
       "529ce23c"
+    ],
+    "domain": "Algebra"
+  },
+  "artins_conjecture_on_primitive_roots.json": {
+    "title": "Artin's Conjecture on Primitive Roots",
+    "exp_id": "c8935afa",
+    "source_exp_ids": [
+      "seed"
     ],
     "domain": "Algebra"
   },
@@ -88,6 +218,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "aboriginal_kinship_as_group_theory_dreamtime_algeb.json": {
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "exp_id": "5d630953",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "exp_id": "abcc87bf",
@@ -95,6 +233,30 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Bridges"
+  },
+  "rotas_basis_conjecture.json": {
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+    "exp_id": "edde521f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
+  "negative_dimensional_topology_what_lives_in_dimens.json": {
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+    "exp_id": "6d12eefe",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
+  "standard_conjectures_on_algebraic_cycles.json": {
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+    "exp_id": "0554bed3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
   }
 };
 
@@ -114,28 +276,6 @@ window.PACKAGE_GRAPH = {
       "quality": "substantial"
     },
     {
-      "id": "the_theorems_established_in_this_work__identifying",
-      "title": "Newton Persistence and Arithmetic Monodromy",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T14:58:00Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "machine_learning_generalization_bounds",
-      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T15:11:42Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
       "id": "this_research_cycle_established_a_formal_bridge_be",
       "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
       "domain": "Algebra",
@@ -153,20 +293,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
-    },
-    {
-      "id": "primes_of_the_form_n1",
-      "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:45:01Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -175,31 +304,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
-    },
-    {
-      "id": "this_cycle_established_the_foundational_infrastruc",
-      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:11:12Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "this_research_cycle_established_that_expansion_cer",
-      "title": "Expansion Certificate Lattice and Amplification Theory",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:12:01Z",
-      "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -213,15 +320,103 @@ window.PACKAGE_GRAPH = {
       "quality": "partial"
     },
     {
-      "id": "p_vs_np_problem",
-      "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T16:24:16Z",
+      "id": "rotas_basis_conjecture",
+      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:19:26Z",
+      "hue": 271,
+      "priority_score": 0.7123901951219513,
+      "quality": "substantial"
+    },
+    {
+      "id": "random_matrices_edge_universality",
+      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:14Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7068734374999999,
+      "quality": "substantial"
+    },
+    {
+      "id": "catalans_conjecture_generalizations",
+      "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:48Z",
+      "hue": 272,
+      "priority_score": 0.6621330000000001,
+      "quality": "partial"
+    },
+    {
+      "id": "isogeny_based_cryptography_csi_fish",
+      "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:18Z",
+      "hue": 91,
+      "priority_score": 0.735085669920142,
+      "quality": "substantial"
+    },
+    {
+      "id": "resolution_of_singularities_in_positive_characteri",
+      "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:45Z",
+      "hue": 271,
+      "priority_score": 0.7457928571428571,
+      "quality": "substantial"
+    },
+    {
+      "id": "artins_conjecture_on_primitive_roots",
+      "title": "Artin's Conjecture on Primitive Roots",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:13Z",
+      "hue": 270,
+      "priority_score": 0.7068530588235296,
+      "quality": "substantial"
+    },
+    {
+      "id": "standard_conjectures_on_algebraic_cycles",
+      "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:43Z",
+      "hue": 90,
+      "priority_score": 0.7282123376623377,
+      "quality": "substantial"
+    },
+    {
+      "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:11Z",
+      "hue": 270,
+      "priority_score": 0.6860414464845499,
+      "quality": "partial"
+    },
+    {
+      "id": "negative_dimensional_topology_what_lives_in_dimens",
+      "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:40Z",
+      "hue": 272,
+      "priority_score": 0.7052853846153846,
+      "quality": "substantial"
     }
   ],
   "edges": [],
