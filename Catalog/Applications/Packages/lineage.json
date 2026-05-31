@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "rotas_basis_conjecture",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "isogeny_based_cryptography_csi_fish",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "resolution_of_singularities_in_positive_characteri",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "artins_conjecture_on_primitive_roots",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 275
+      "hue": 281
     },
     {
       "id": "standard_conjectures_on_algebraic_cycles",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "negative_dimensional_topology_what_lives_in_dimens",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "neural_pde_universality_classes_via_renormalizatio",
@@ -151,7 +151,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "topological_quantum_computing_braiding_universalit",
@@ -169,7 +169,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "the_topology_of_impossible_objects_escher_stairs_a",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "self_modifying_code_that_cannot_be_stopped",
@@ -187,7 +187,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "langlands_for_gl_over_q",
+      "title": "Langlands Correspondence for GL₂ over ℚ: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T22:11:39Z",
+      "hue": 134
     }
   ],
   "edges": [],
