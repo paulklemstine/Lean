@@ -522,25 +522,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const iframeId = 'demo-iframe-' + idx + '-' + Date.now();
             const iframe = document.createElement('iframe');
             iframe.id = iframeId;
-            iframe.style.cssText = 'width: 100%; border: none; border-radius: 12px; background: white; overflow: hidden;';
+            iframe.style.cssText = 'width: 100%; min-height: 400px; height: 400px; border: none; border-radius: 12px; background: white;';
             iframe.sandbox = 'allow-scripts allow-same-origin';
-            iframe.scrolling = 'no';
             // Build a self-contained HTML doc for the iframe
             const htmlContent = item.html || '<p>No content</p>';
             const srcdoc = `<!DOCTYPE html>
 <html><head><style>
-  html, body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; overflow: hidden; height: auto; }
+  html, body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; height: fit-content; }
   canvas { max-width: 100%; }
 </style></head><body>${htmlContent}
 <script>
-  // Post resize message to parent so iframe can auto-size
   function notifyHeight() {
-    const h = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'iframe-resize', id: '${iframeId}', height: h }, '*');
+    const h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    window.parent.postMessage({ type: 'iframe-resize', id: '${iframeId}', height: h + 24 }, '*');
   }
-  window.addEventListener('load', () => { setTimeout(notifyHeight, 100); setTimeout(notifyHeight, 500); });
-  // Also notify after dynamic content changes
-  new MutationObserver(() => setTimeout(notifyHeight, 50)).observe(document.body, { childList: true, subtree: true });
+  window.addEventListener('load', () => { notifyHeight(); setTimeout(notifyHeight, 200); setTimeout(notifyHeight, 1000); });
+  new MutationObserver(() => setTimeout(notifyHeight, 50)).observe(document.body, { childList: true, subtree: true, attributes: true });
 </script></body></html>`;
             iframe.srcdoc = srcdoc;
 

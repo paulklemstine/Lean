@@ -959,6 +959,11 @@ body.light-theme .gallery-img-container {
     font-size: 0.95rem;
     line-height: 1.6;
     background-color: var(--bg-panel);
+    white-space: pre;
+}
+
+.code-card pre code {
+    white-space: pre;
 }
 
 /* Interactive Runner */

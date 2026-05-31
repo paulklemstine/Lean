@@ -399,9 +399,16 @@ def _viz_savefig(*args, **kwargs):
     pass
 plt.savefig = _viz_savefig
 
+# Override plt.close to be a no-op so figures survive for capture
+_orig_close = plt.close
+def _viz_close(*args, **kwargs):
+    pass
+plt.close = _viz_close
+
 ${processedCode}
 
 # Restore and capture via buffer
+plt.close = _orig_close
 plt.savefig = _orig_savefig
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
