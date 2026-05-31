@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -25,7 +25,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -34,7 +34,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "primes_of_the_form_n1",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "this_cycle_established_the_foundational_infrastruc",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -80,6 +80,15 @@
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:37Z",
       "hue": 91
+    },
+    {
+      "id": "this_research_cycle_established_that_expansion_cer",
+      "title": "Expansion Certificate Lattice and Amplification Theory",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:12:01Z",
+      "hue": 271
     }
   ],
   "edges": [],

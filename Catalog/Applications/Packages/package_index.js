@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "this_research_cycle_established_that_expansion_cer.json",
+    "title": "Expansion Certificate Lattice and Amplification Theory",
+    "domain": "Bridges",
+    "date": "2026-05-31T16:12:01Z",
+    "exp_id": "0881fd0d",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 10
+  },
+  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Bridges",
     "date": "2026-05-31T16:11:37Z",
     "exp_id": "2474c876",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6095277777777777,
+    "quality": "partial",
     "pkg_num": 9
   },
   {
@@ -144,6 +154,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "this_research_cycle_established_that_expansion_cer.json": {
+    "title": "Expansion Certificate Lattice and Amplification Theory",
+    "exp_id": "0881fd0d",
+    "source_exp_ids": [
+      "b6e4edfb"
+    ],
+    "domain": "Bridges"
+  },
   "machine_learning_generalization_bounds.json": {
     "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
     "exp_id": "0c3e833a",
@@ -192,7 +210,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271,
+      "hue": 89,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -203,7 +221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -214,7 +232,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 314,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -225,7 +243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -236,7 +254,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6293001538461539,
       "quality": "partial"
     },
@@ -247,7 +265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -258,7 +276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7739868421052631,
       "quality": "substantial"
     },
@@ -270,6 +288,17 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:37Z",
       "hue": 91,
+      "priority_score": 0.6095277777777777,
+      "quality": "partial"
+    },
+    {
+      "id": "this_research_cycle_established_that_expansion_cer",
+      "title": "Expansion Certificate Lattice and Amplification Theory",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:12:01Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
