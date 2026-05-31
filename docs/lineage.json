@@ -1,15 +1,6 @@
 {
   "nodes": [
     {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Trace Arithmetic: Number Theory on the Poincaré Disk",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T14:57:12Z",
-      "hue": 270
-    },
-    {
       "id": "primewise_persistent_homology_detects_exceptional_",
       "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
       "domain": "MachineLearning",
@@ -25,7 +16,25 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 91
+      "hue": 271
+    },
+    {
+      "id": "machine_learning_generalization_bounds",
+      "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
+      "domain": "MachineLearning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-31T15:11:42Z",
+      "hue": 270
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:12:03Z",
+      "hue": 90
     }
   ],
   "edges": [],

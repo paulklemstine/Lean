@@ -235,6 +235,26 @@ def update_index():
                         af.write(alg_code)
                     alg["code_file"] = f"visualizations/{alg_filename}"
 
+        # Embed actual Lean 4 code into lean_proofs entries that only have file paths
+        if data.get("lean_proofs"):
+            lp = data["lean_proofs"]
+            if isinstance(lp, list):
+                for entry in lp:
+                    if not isinstance(entry, dict):
+                        continue
+                    if entry.get("code"):
+                        continue
+                    fpath = entry.get("file", "") or entry.get("name", "")
+                    if not fpath or not fpath.endswith('.lean'):
+                        continue
+                    # Try to find the .lean file
+                    for prefix in [catalog_root, os.path.join(catalog_root, "Catalog"), os.path.join(catalog_root, "Catalog", "Applications")]:
+                        full_path = os.path.join(prefix, fpath)
+                        if os.path.isfile(full_path):
+                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                entry["code"] = lf.read()
+                            break
+
         # Rewrite the individual JSON file with extracted viz paths
         with open(f, 'w', encoding='utf-8') as out_f:
             json.dump(data, out_f, indent=2, ensure_ascii=False)
