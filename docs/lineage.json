@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "rotas_basis_conjecture",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "isogeny_based_cryptography_csi_fish",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "resolution_of_singularities_in_positive_characteri",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 280
+      "hue": 275
     },
     {
       "id": "standard_conjectures_on_algebraic_cycles",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "negative_dimensional_topology_what_lives_in_dimens",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "entropy_power_inequality_sharp_version",
@@ -133,7 +133,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_as_foundations",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "neural_pde_universality_classes_via_renormalizatio",
@@ -151,7 +151,43 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 91
+      "hue": 292
+    },
+    {
+      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:56:19Z",
+      "hue": 271
+    },
+    {
+      "id": "topological_quantum_computing_braiding_universalit",
+      "title": "Topological Quantum Computing: Braiding Universality",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:56:48Z",
+      "hue": 90
+    },
+    {
+      "id": "the_topology_of_impossible_objects_escher_stairs_a",
+      "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:57:15Z",
+      "hue": 275
+    },
+    {
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:57:44Z",
+      "hue": 270
     }
   ],
   "edges": [],
