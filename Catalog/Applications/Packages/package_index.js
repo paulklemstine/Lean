@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:25:40Z",
+    "exp_id": "6d12eefe",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 14
+  },
+  {
     "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
     "domain": "Algebra",
     "date": "2026-05-31T20:25:11Z",
     "exp_id": "5d630953",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6860414464845499,
+    "quality": "partial",
     "pkg_num": 13
   },
   {
@@ -232,6 +242,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "negative_dimensional_topology_what_lives_in_dimens.json": {
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+    "exp_id": "6d12eefe",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "standard_conjectures_on_algebraic_cycles.json": {
     "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
     "exp_id": "0554bed3",
@@ -275,7 +293,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -286,7 +304,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -297,7 +315,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -319,7 +337,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -330,7 +348,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 275,
+      "hue": 272,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -341,7 +359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -352,7 +370,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -363,7 +381,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -374,7 +392,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -385,7 +403,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 90,
+      "hue": 270,
+      "priority_score": 0.6860414464845499,
+      "quality": "partial"
+    },
+    {
+      "id": "negative_dimensional_topology_what_lives_in_dimens",
+      "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:25:40Z",
+      "hue": 272,
       "priority_score": null,
       "quality": "unrated"
     }
