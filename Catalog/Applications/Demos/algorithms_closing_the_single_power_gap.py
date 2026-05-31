@@ -1,398 +1,252 @@
-#!/usr/bin/env python3
 """
-Exchange Family Descent Complexity — Certified Algorithms
+Graded Descent Complexity: Certificate Depth as Complexity Exponent
 
-Implements the core algorithms from the research paper with complete
-docstrings, type hints, and example usage.
-
-Algorithms:
-1. Exact worst-case descent length via dynamic programming
-2. Descending path enumeration / counting
-3. Certificate amplification profile computation
-4. Product family constructor with superadditivity verification
-5. Adversarial family generator
+Type-hinted implementations of the core algorithms and data structures
+for computing certificate depth profiles, adversarial descent constructions,
+and the single-power gap ratio analysis.
 """
 
-from typing import Dict, List, Set, Tuple, Optional
-from collections import defaultdict
-import itertools
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Callable, Optional
 import math
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Core Types
-# ─────────────────────────────────────────────────────────────────────────────
+@dataclass
+class DescentSystem:
+    """A finite descent system with a measure function.
 
-State = int
-
-class ExchangeFamily:
+    The state space is implicitly {0, 1, ..., num_states-1}.
+    The measure function maps each state to a natural number.
+    The descent relation connects states with strictly decreasing measures.
     """
-    A finite exchange family with strict descent.
+    dim: int
+    num_states: int
+    measure: Callable[[int], int]
+    can_descend: Callable[[int, int], bool]
 
-    This is a finite state system where a step relation strictly decreases
-    a natural-number measure. Models descent dynamics in combinatorial
-    optimization, where each "exchange" improves the objective.
+    def worst_case(self) -> int:
+        """Maximum measure over all states."""
+        return max(self.measure(s) for s in range(self.num_states))
 
-    Attributes:
-        dim: Ambient dimension parameter
-        states: Set of state identifiers
-        measure: Mapping from states to natural numbers
-        adj: Adjacency list representation of the step relation
+    def longest_descent_chain(self) -> list[int]:
+        """Find the longest descent chain by greedy exploration."""
+        # Start from the state with maximum measure
+        start = max(range(self.num_states), key=self.measure)
+        chain = [start]
+        current = start
+        while True:
+            # Find the successor with smallest measure (greedy)
+            successors = [
+                t for t in range(self.num_states)
+                if self.can_descend(current, t)
+            ]
+            if not successors:
+                break
+            next_state = min(successors, key=self.measure)
+            chain.append(next_state)
+            current = next_state
+        return chain
+
+
+def adversarial_system(d: int) -> DescentSystem:
+    """Construct the adversarial descent system for dimension d.
+
+    State space: {0, 1, ..., d^d}
+    Measure: identity function
+    Descent: s -> t iff t + 1 = s
+    Achieves worst-case descent length exactly d^d.
     """
-
-    def __init__(self, dim: int, states: List[State],
-                 measure: Dict[State, int],
-                 edges: Set[Tuple[State, State]]):
-        self.dim = dim
-        self.states = sorted(states)
-        self.measure = measure
-        self.adj: Dict[State, List[State]] = defaultdict(list)
-        for (u, v) in edges:
-            assert measure[v] < measure[u], \
-                f"Strict descent violated: m({u})={measure[u]}, m({v})={measure[v]}"
-            self.adj[u].append(v)
-
-    @property
-    def num_states(self) -> int:
-        return len(self.states)
+    n = d ** d + 1
+    return DescentSystem(
+        dim=d,
+        num_states=n,
+        measure=lambda s: s,
+        can_descend=lambda s, t: t + 1 == s,
+    )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 1: Exact Worst-Case Descent Length (Dynamic Programming)
-# ─────────────────────────────────────────────────────────────────────────────
+def certificate_depth_profile(d: int, k: int) -> int:
+    """Compute T(d, k) = d^(d-k), the certificate depth profile.
 
-def compute_longest_chain(F: ExchangeFamily) -> int:
+    This is the theoretical upper bound on worst-case descent length
+    for a depth-k system in dimension d.
     """
-    Compute the exact longest descending chain in F via memoized DFS.
+    if k > d:
+        return 1  # Convention: d^0 = 1 when k > d
+    return d ** (d - k)
 
-    Time complexity:  O(|V| + |E|) where |E| = number of step edges
-    Space complexity: O(|V|) for memoization table
 
-    The algorithm processes states in order of increasing measure (topological
-    order guaranteed by strict descent), computing for each state the longest
-    chain starting from it.
+def depth_decrement(d: int, k: int, c: float = 1.0) -> float:
+    """Compute the depth-parameterized decrement δ(d, k) = c / d^(d-k).
 
-    Returns:
-        Length of the longest descending chain (number of steps)
-
-    Example:
-        >>> F = linear_chain(5)
-        >>> compute_longest_chain(F)
-        5
+    This is the minimum potential decrease per descent step at depth k.
     """
-    dp: Dict[State, int] = {}
-
-    def dfs(s: State) -> int:
-        if s in dp:
-            return dp[s]
-        dp[s] = 0
-        for t in F.adj[s]:
-            dp[s] = max(dp[s], 1 + dfs(t))
-        return dp[s]
-
-    return max(dfs(s) for s in F.states) if F.states else 0
+    if d == 0:
+        return float('inf')
+    return c / (d ** (d - k))
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 2: Descending Path Count (Partition Function)
-# ─────────────────────────────────────────────────────────────────────────────
-
-def count_descending_paths(F: ExchangeFamily, n: int) -> int:
-    """
-    Count the total number of descending paths of exactly n steps.
-
-    This is the combinatorial partition function: it counts all possible
-    n-step relaxation trajectories in the descent landscape.
-
-    Time complexity:  O(n · |V| · max_degree)
-    Space complexity: O(|V|)
-
-    In statistical mechanics terms:
-    - Each path is a zero-temperature relaxation trajectory
-    - The count is the partition function Z(n)
-    - log Z(n) is the descent entropy
+def graded_descent_bound(
+    d: int, k: int, c: float, C0: float, D: int
+) -> float:
+    """Compute the graded descent upper bound: C0 * D * d^(d-k) / c.
 
     Args:
-        F: Exchange family
-        n: Number of steps
+        d: dimension
+        k: certificate depth
+        c: decrement constant
+        C0: potential range constant
+        D: diameter bound
 
     Returns:
-        Total number of length-n descending paths across all starting states
-
-    Example:
-        >>> F = linear_chain(3)
-        >>> [count_descending_paths(F, k) for k in range(5)]
-        [4, 3, 2, 1, 0]
+        Upper bound on descent chain length.
     """
-    # current[s] = number of paths of current length ending at s
-    current = {s: 1 for s in F.states}  # length 0: one path per state
-
-    if n == 0:
-        return sum(current.values())
-
-    for step in range(n):
-        next_count: Dict[State, int] = defaultdict(int)
-        for s in F.states:
-            if current.get(s, 0) > 0:
-                for t in F.adj[s]:
-                    next_count[t] += current[s]
-        current = dict(next_count)
-
-    return sum(current.values())
+    if c <= 0 or d <= 0:
+        return float('inf')
+    return C0 * D * (d ** (d - k)) / c
 
 
-def descent_entropy(F: ExchangeFamily, n: int) -> float:
-    """
-    Compute the descent entropy H(n) = log(Z(n)) where Z(n) is the
-    number of length-n descending paths.
-
-    In statistical mechanics, this is the zero-temperature free energy.
-    In information theory, it measures the information content of the
-    descent process at horizon n.
-
-    Returns:
-        Natural logarithm of the path count (0 if count is 0)
-    """
-    count = count_descending_paths(F, n)
-    return math.log(count) if count > 0 else 0.0
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 3: Certificate Amplification Profile
-# ─────────────────────────────────────────────────────────────────────────────
-
-def amplification_profile(F: ExchangeFamily, k: int) -> int:
-    """
-    Compute the certificate amplification profile at depth k.
-
-    This is the max measure among states with measure ≤ dim^k.
-    When this equals the global worst-case measure, depth k "sees"
-    all the complexity. When it's strictly less, there is hidden
-    complexity beyond what depth-k certificates can capture.
-
-    Time complexity: O(|V|)
+def single_power_gap_ratio(
+    d: int, k: int, worst_case: int
+) -> dict[str, float]:
+    """Compute diagnostic ratios for the single-power gap conjecture.
 
     Args:
-        F: Exchange family
-        k: Depth parameter
+        d: dimension
+        k: certificate depth
+        worst_case: observed worst-case descent length
 
     Returns:
-        Max measure among states within the depth-k budget
+        Dictionary with:
+        - 'tight_ratio': worst_case / d^(d-k), should converge to c_k > 0 if tight
+        - 'slack_ratio': worst_case / d^(d-k-1), converges to 0 if tight, c_k if slack
+        - 'log_ratio': log(worst_case) / ((d-k) * log(d)), approaches 1 if tight
     """
-    threshold = F.dim ** k
-    eligible = [F.measure[s] for s in F.states if F.measure[s] <= threshold]
-    return max(eligible) if eligible else 0
+    profile = certificate_depth_profile(d, k)
+    slack_profile = certificate_depth_profile(d, k + 1) if k < d else 1
 
+    tight_ratio = worst_case / profile if profile > 0 else float('inf')
+    slack_ratio = worst_case / slack_profile if slack_profile > 0 else float('inf')
 
-def has_certificate_depth(F: ExchangeFamily, k: int) -> bool:
-    """Check if F has certificate depth ≤ k (all measures ≤ dim^k)."""
-    threshold = F.dim ** k
-    return all(F.measure[s] <= threshold for s in F.states)
+    if worst_case > 0 and d > 1 and d > k:
+        log_ratio = math.log(worst_case) / ((d - k) * math.log(d))
+    else:
+        log_ratio = float('nan')
 
-
-def detect_gap(F: ExchangeFamily, k: int) -> bool:
-    """
-    Detect whether the amplification profile at depth k is strictly
-    less than the worst-case descent length.
-
-    If True, certificate depth k does NOT capture all complexity —
-    there is hidden structure beyond depth k.
-    """
-    profile = amplification_profile(F, k)
-    worst = max(F.measure[s] for s in F.states)
-    return profile < worst
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 4: Product Family Construction
-# ─────────────────────────────────────────────────────────────────────────────
-
-def product_family(F: ExchangeFamily, G: ExchangeFamily) -> ExchangeFamily:
-    """
-    Construct the product of two exchange families.
-
-    States are pairs (s, t), measure is sum, and a step moves in
-    exactly one coordinate. This is the tensorization construction
-    that enables hardness amplification.
-
-    Key property (proved in Lean):
-        worst_descent(F × G) ≥ worst_descent(F) + worst_descent(G)
-
-    Time complexity:  O(|F.V| · |G.V| · (|F.E| + |G.E|))
-    Space complexity: O(|F.V|² · |G.V|² ) worst case
-
-    Args:
-        F, G: Exchange families to combine
-
-    Returns:
-        Product exchange family
-    """
-    # Encode pairs as integers for efficiency
-    n_g = len(G.states)
-    g_idx = {s: i for i, s in enumerate(G.states)}
-    f_idx = {s: i for i, s in enumerate(F.states)}
-
-    states = []
-    measure = {}
-    edges = set()
-
-    for sf in F.states:
-        for sg in G.states:
-            pair = f_idx[sf] * n_g + g_idx[sg]
-            states.append(pair)
-            measure[pair] = F.measure[sf] + G.measure[sg]
-
-    for sf in F.states:
-        for tf in F.adj[sf]:
-            for sg in G.states:
-                u = f_idx[sf] * n_g + g_idx[sg]
-                v = f_idx[tf] * n_g + g_idx[sg]
-                edges.add((u, v))
-
-    for sg in G.states:
-        for tg in G.adj[sg]:
-            for sf in F.states:
-                u = f_idx[sf] * n_g + g_idx[sg]
-                v = f_idx[sf] * n_g + g_idx[tg]
-                edges.add((u, v))
-
-    return ExchangeFamily(F.dim + G.dim, states, measure, edges)
-
-
-def verify_superadditivity(F: ExchangeFamily, G: ExchangeFamily) -> dict:
-    """
-    Verify the product superadditivity theorem computationally.
-
-    Returns a dict with:
-        - worst_F, worst_G: individual worst-case lengths
-        - worst_product: product worst-case length
-        - sum: worst_F + worst_G
-        - superadditive: whether the inequality holds
-    """
-    P = product_family(F, G)
-    wf = compute_longest_chain(F)
-    wg = compute_longest_chain(G)
-    wp = compute_longest_chain(P)
     return {
-        'worst_F': wf,
-        'worst_G': wg,
-        'worst_product': wp,
-        'sum': wf + wg,
-        'superadditive': wp >= wf + wg,
+        'tight_ratio': tight_ratio,
+        'slack_ratio': slack_ratio,
+        'log_ratio': log_ratio,
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 5: Adversarial Family Generator
-# ─────────────────────────────────────────────────────────────────────────────
+@dataclass
+class DepthHierarchy:
+    """Represents the complete depth hierarchy for a given dimension d."""
+    d: int
+    profiles: list[int] = field(default_factory=list)
 
-def linear_chain(d: int) -> ExchangeFamily:
-    """Linear chain: states 0..d, step i → i-1. Worst case = d."""
-    states = list(range(d + 1))
-    measure = {s: s for s in states}
-    edges = {(i, i - 1) for i in range(1, d + 1)}
-    return ExchangeFamily(d, states, measure, edges)
+    def compute(self) -> None:
+        """Compute T(d, k) for k = 0, 1, ..., d."""
+        self.profiles = [
+            certificate_depth_profile(self.d, k)
+            for k in range(self.d + 1)
+        ]
+
+    def ratios(self) -> list[float]:
+        """Compute consecutive profile ratios T(d,k)/T(d,k+1)."""
+        if not self.profiles:
+            self.compute()
+        return [
+            self.profiles[k] / self.profiles[k + 1]
+            for k in range(len(self.profiles) - 1)
+        ]
+
+    def is_strict(self) -> bool:
+        """Check that the hierarchy is strictly decreasing."""
+        if not self.profiles:
+            self.compute()
+        return all(
+            self.profiles[k] > self.profiles[k + 1]
+            for k in range(len(self.profiles) - 1)
+        ) if self.d >= 2 else True
 
 
-def full_descent_family(d: int, branching: int = 2) -> ExchangeFamily:
+@dataclass
+class ProductSystem:
+    """Product of two descent systems."""
+    D1: DescentSystem
+    D2: DescentSystem
+
+    def worst_case(self) -> int:
+        """Worst case of product = sum of worst cases."""
+        return self.D1.worst_case() + self.D2.worst_case()
+
+    def dim(self) -> int:
+        return self.D1.dim + self.D2.dim
+
+
+def iterated_product_worst_case(d: int, n: int) -> int:
+    """Worst case of n-fold product of adversarial system in dim d.
+
+    Returns n * d^d.
     """
-    Create a fully-connected descent family where each state at measure m
-    can step to any state at measure m-1, ..., m-branching.
+    return n * (d ** d)
 
-    This maximizes path count while keeping the step structure controlled.
+
+def entropy_bound(num_states: int) -> int:
+    """Information-theoretic lower bound on worst-case descent length.
+
+    If the measure is injective, then worst_case >= log2(num_states) - 1.
     """
-    n = d ** 2
-    states = list(range(n + 1))
-    measure = {s: s for s in states}
-    edges = set()
-    for s in states:
-        for delta in range(1, min(branching + 1, s + 1)):
-            edges.add((s, s - delta))
-    return ExchangeFamily(d, states, measure, edges)
+    if num_states <= 1:
+        return 0
+    return int(math.log2(num_states))
 
 
-def adversarial_at_depth(d: int, k: int) -> ExchangeFamily:
+def scan_conjecture(
+    k: int,
+    d_range: range,
+    system_constructor: Optional[Callable[[int], DescentSystem]] = None,
+) -> list[dict]:
+    """Scan the single-power gap conjecture for given k and d range.
+
+    For each d, constructs the adversarial system (or user-provided system),
+    computes worst-case, and returns the diagnostic ratios.
+
+    Args:
+        k: certificate depth
+        d_range: range of dimensions to scan
+        system_constructor: optional custom system builder
+
+    Returns:
+        List of {d, worst_case, tight_ratio, slack_ratio, log_ratio} dicts.
     """
-    Construct an adversarial exchange family targeting depth k.
+    results = []
+    for d in d_range:
+        if d < k + 1:
+            continue
+        if system_constructor:
+            sys = system_constructor(d)
+        else:
+            sys = adversarial_system(d)
+        wc = sys.worst_case()
+        ratios = single_power_gap_ratio(d, k, wc)
+        results.append({
+            'd': d,
+            'k': k,
+            'worst_case': wc,
+            **ratios,
+        })
+    return results
 
-    Strategy: create states with measures spanning [0, d^(d-k-1)] with
-    maximal branching at the transition boundary d^k, to stress-test
-    whether depth k truly captures the complexity.
+
+def depth_separation_factor(d: int, k1: int, k2: int) -> float:
+    """Compute the speedup factor from depth k1 to depth k2.
+
+    Returns d^(k2 - k1) when k1 < k2 <= d.
     """
-    if d <= k + 1:
-        return linear_chain(d)
-
-    max_m = min(d ** (d - k), d ** 4)  # Cap for tractability
-    states = list(range(max_m + 1))
-    measure = {s: s for s in states}
-
-    # Multi-branching step structure
-    edges = set()
-    for s in states:
-        for delta in range(1, min(d + 1, s + 1)):
-            edges.add((s, s - delta))
-
-    return ExchangeFamily(d, states, measure, edges)
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Algorithm 6: T(d,k) Estimator
-# ─────────────────────────────────────────────────────────────────────────────
-
-def estimate_T(d: int, k: int) -> Dict:
-    """
-    Estimate T(d,k) by constructing adversarial families and computing
-    their exact worst-case descent lengths.
-
-    Returns a dict with the estimated T value and diagnostic ratios.
-    """
-    F = adversarial_at_depth(d, k)
-    T = compute_longest_chain(F)
-
-    upper = d ** (d - k) if d > k else 1
-    lower = d ** max(0, d - k - 1) if d > k + 1 else 1
-
-    return {
-        'T': T,
-        'd': d,
-        'k': k,
-        'upper_bound': upper,
-        'lower_bound': lower,
-        'ratio_upper': T / upper if upper > 0 else float('inf'),
-        'ratio_lower': T / lower if lower > 0 else float('inf'),
-        'num_states': F.num_states,
-    }
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Example Usage
-# ─────────────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    print("Exchange Family Algorithms — Example Usage\n")
-
-    # Example 1: Linear chain
-    F = linear_chain(5)
-    print(f"Linear chain (d=5): longest chain = {compute_longest_chain(F)}")
-    print(f"  Path counts: {[count_descending_paths(F, n) for n in range(7)]}")
-    print(f"  Entropy: {[f'{descent_entropy(F, n):.3f}' for n in range(7)]}")
-
-    # Example 2: Product
-    G = linear_chain(3)
-    result = verify_superadditivity(F, G)
-    print(f"\nProduct F(5) × G(3): {result}")
-
-    # Example 3: Amplification profile
-    H = full_descent_family(4, branching=3)
-    print(f"\nFull descent family (d=4, branching=3):")
-    print(f"  Longest chain: {compute_longest_chain(H)}")
-    for k in range(5):
-        print(f"  Amplification profile k={k}: {amplification_profile(H, k)}, "
-              f"gap detected: {detect_gap(H, k)}")
-
-    # Example 4: T(d,k) estimation
-    print(f"\nT(d,k) estimates:")
-    for d in range(4, 9):
-        for k in [0, 1]:
-            est = estimate_T(d, k)
-            print(f"  T({d},{k}) ≈ {est['T']}, ratio_upper={est['ratio_upper']:.6f}")
+    if k1 >= k2 or k2 > d:
+        return 1.0
+    return float(d ** (k2 - k1))
