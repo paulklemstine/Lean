@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2206 of the highest-quality
+A curated collection of 2219 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2206
+Total files: 2219
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -297,7 +297,9 @@ import FINAL.Bridges.AlgorithmicSpectralCertification
 import FINAL.Bridges.AlgorithmicTropicalKernel
 import FINAL.Bridges.AlmostSimplePressure
 import FINAL.Bridges.AlternatingPermutationSecurity
+import FINAL.Bridges.AntiCancellationLorentzian
 import FINAL.Bridges.ArithmeticOperadicStability
+import FINAL.Bridges.ArithmeticPersistence
 import FINAL.Bridges.ArithmeticProfileAnalysis
 import FINAL.Bridges.ArithmeticStatistics
 import FINAL.Bridges.ArithmeticVCDimension
@@ -458,7 +460,10 @@ import FINAL.Bridges.FiniteSizeSusceptibility
 import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
+import FINAL.Bridges.ForcingPatterns
 import FINAL.Bridges.Foundations
+import FINAL.Bridges.FourierAnalysis
+import FINAL.Bridges.FourierZetaSpectrum
 import FINAL.Bridges.FreeProbabilityEdge
 import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
@@ -477,6 +482,7 @@ import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GaussianFreeField
 import FINAL.Bridges.GibbsPosterior
+import FINAL.Bridges.GodelCasino
 import FINAL.Bridges.GraphCutHolography
 import FINAL.Bridges.GraphRiemannRoch
 import FINAL.Bridges.GuardedFixedPointIndex
@@ -494,6 +500,7 @@ import FINAL.Bridges.HigherQuantumLDPC
 import FINAL.Bridges.HigherSimplicial
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence
+import FINAL.Bridges.HolographicCoding
 import FINAL.Bridges.HolographicProofRenormalization
 import FINAL.Bridges.HomologicalDeepLearning
 import FINAL.Bridges.HopfCausalCore
@@ -578,6 +585,7 @@ import FINAL.Bridges.MomentMethodAdvanced
 import FINAL.Bridges.MoonshineCodingTheory
 import FINAL.Bridges.MorseInequalities
 import FINAL.Bridges.MultiClassCertificationBridge
+import FINAL.Bridges.MultiModeLorentzianWitnesses
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralProofMining
@@ -625,6 +633,7 @@ import FINAL.Bridges.PrimeSpectralRateDistortion
 import FINAL.Bridges.PrimeSpectralSchrodingerBridge
 import FINAL.Bridges.PrimeSpectrum
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
+import FINAL.Bridges.PrimeTorsionEchoes
 import FINAL.Bridges.PrimewisePersistenceBarrier
 import FINAL.Bridges.PrimewisePersistentHomology
 import FINAL.Bridges.ProfileRecovery
@@ -647,6 +656,7 @@ import FINAL.Bridges.QuantumBerggrenWalks
 import FINAL.Bridges.QuantumClassicalBridge
 import FINAL.Bridges.QuantumDPPEntanglement
 import FINAL.Bridges.QuantumDagger
+import FINAL.Bridges.QuantumEntanglementLinkingNumber
 import FINAL.Bridges.QuantumGraphCodes
 import FINAL.Bridges.QuantumGroundStatePreparation
 import FINAL.Bridges.QuantumLorentzianBridge
@@ -719,6 +729,7 @@ import FINAL.Bridges.SupportCompression
 import FINAL.Bridges.SupportCompressionPoly
 import FINAL.Bridges.SupportTutteUniversality
 import FINAL.Bridges.SurrealArithmetic
+import FINAL.Bridges.SurrealTopology
 import FINAL.Bridges.SymmetricGroup
 import FINAL.Bridges.SymplecticCertificateAlgebra
 import FINAL.Bridges.SymplecticCryptography
@@ -890,6 +901,7 @@ import FINAL.Bridges.VoiceLeadingMonge
 import FINAL.Bridges.VoiceLeadingRateDistortion
 import FINAL.Bridges.VoiceLeadingSorted
 import FINAL.Bridges.VoiceLeadingTransport
+import FINAL.Bridges.VolcanoPersistence
 import FINAL.Bridges.WeightAlgebra
 import FINAL.Bridges.WeightedDescentLorentzian
 import FINAL.Bridges.WeightedTropicalHodge
@@ -908,6 +920,7 @@ import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.CSPPhaseTransition
+import FINAL.Computation.CircuitBarriers
 import FINAL.Computation.Circuits
 import FINAL.Computation.CliqueLowerBound
 import FINAL.Computation.ClosureCompressionOptimality
