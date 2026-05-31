@@ -667,18 +667,20 @@ body {
 .tabs-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 4px;
     border-bottom: 2px solid var(--bg-elevated);
     padding-bottom: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tab-btn {
     background: none;
     border: none;
-    padding: 12px 20px;
+    padding: 10px 14px;
     color: var(--text-muted);
     font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
     border-radius: 8px 8px 0 0;
@@ -686,6 +688,8 @@ body {
     position: relative;
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -1294,7 +1298,11 @@ body.light-theme .gallery-img-container {
 
     .tab-btn {
         padding: 8px 10px;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .tabs-container {
+        gap: 2px;
     }
 
     .welcome-content h1 {
@@ -1925,6 +1933,28 @@ body.light-theme .lean-download-btn {
     -webkit-text-fill-color: #fff;
 }
 
+body.light-theme .download-zip-btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+}
+body.light-theme .download-zip-btn:hover {
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+}
+
+body.light-theme .download-contents-list li {
+    color: #333;
+    border-bottom-color: #e5e7eb;
+}
+body.light-theme .download-contents-list li::before {
+    color: #7c3aed;
+}
+
+body.light-theme .python-output {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
 body.light-theme .welcome-desc a,
 body.light-theme .welcome-footer a {
     -webkit-text-fill-color: transparent;
@@ -2073,11 +2103,53 @@ body.light-theme #aether-toast .toast-body {
     padding: 0 1rem;
 }
 
-/* Algorithms merged into Demos tab — separator */
+/* Algorithms in its own tab */
 .tab-pane .algorithms-list {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
+}
+
+/* Download Package tab */
+.download-zip-btn {
+    transition: all 0.2s ease;
+    font-family: var(--font-sans);
+}
+.download-zip-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(136, 68, 255, 0.3);
+}
+.download-zip-btn:active {
+    transform: translateY(0);
+}
+.download-contents-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.download-contents-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color, #333);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-main);
+}
+.download-contents-list li::before {
+    content: '✓';
+    color: var(--accent-color, #7c3aed);
+    font-weight: bold;
+}
+
+/* Python tab */
+.python-output {
+    background: var(--bg-secondary, #1e1e2e);
+    border-radius: 0 0 8px 8px;
+    font-family: 'Fira Code', monospace;
+    white-space: pre-wrap;
+    padding: 8px;
+    min-height: 40px;
+    color: var(--text-main);
 }
 
 /* Lineage links in Future Directions tab */

@@ -110,29 +110,29 @@ document.addEventListener('DOMContentLoaded', () => {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
 
-        // Interactive HTML demos
-        renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
-
-        // Visualizations (generated images from Python scripts)
-        renderVisualizations('content-visualizations', data.visualizations);
-
         // Algorithms: use 'code' field (some older packages have 'pseudocode' too)
         const algoField = data.algorithms && data.algorithms.some(a => a.pseudocode && a.pseudocode.trim())
             ? 'pseudocode' : 'code';
         renderCodeBlocks('content-algorithms', data.algorithms, algoField);
-        if (window.renderInteractiveDemos) {
-            window.renderInteractiveDemos('content-demos', data.demos);
-        }
+
+        // Visualizations (generated images from Python scripts)
+        renderVisualizations('content-visualizations', data.visualizations);
+
+        // Interactive HTML demos
+        renderInteractiveHTMLDemos('content-interactive', data.interactive_demos);
+
+        // Python tab — runnable Python code
+        renderPythonTab('content-python', data);
+
+        // Download Package tab
+        renderDownloadTab(data);
 
         // Future Directions tab
         renderDirectionsTab(data);
 
         // Lean — parse into individual file cards
         const leanContainer = document.getElementById('lean-files-container');
-        const leanHeader = document.getElementById('lean-header');
-        const leanZipBtn = document.getElementById('lean-download-zip');
         leanContainer.innerHTML = '';
-        leanHeader.style.display = 'none';
 
         // Parse lean_proofs into [{name, code}] regardless of format
         const leanFiles = [];
@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (leanFiles.length === 0) {
             leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
         } else {
-            leanHeader.style.display = 'flex';
             renderLeanCards();
 
             function renderLeanCards() {
@@ -192,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (filesWithCode.length === 0) {
                     leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
-                    leanHeader.style.display = 'none';
                     return;
                 }
 
@@ -238,93 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.Prism) {
                     leanContainer.querySelectorAll('code.language-lean').forEach(el => Prism.highlightElement(el));
                 }
-
-                // Zip download — includes ALL research package artifacts
-                leanZipBtn.onclick = async () => {
-                    if (!window.JSZip) {
-                        console.warn('JSZip not loaded');
-                        return;
-                    }
-                    const zip = new JSZip();
-                    const slug = (data.title || 'research_package').replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 40);
-
-                    // Lean 4 proofs
-                    filesWithCode.forEach(f => zip.file(`lean/${f.name}`, f.code));
-
-                    // Article
-                    if (data.article && typeof data.article === 'string' && data.article.length > 50 && !data.article.endsWith('.md')) {
-                        zip.file('ARTICLE.md', data.article);
-                    }
-
-                    // Research paper
-                    if (data.research_paper && typeof data.research_paper === 'string' && data.research_paper.length > 50 && !data.research_paper.endsWith('.md')) {
-                        zip.file('RESEARCH_PAPER.md', data.research_paper);
-                    }
-
-                    // Future directions
-                    if (data.future_directions && typeof data.future_directions === 'string' && data.future_directions.length > 50 && !data.future_directions.endsWith('.md')) {
-                        zip.file('FUTURE_DIRECTIONS.md', data.future_directions);
-                    }
-
-                    // Algorithms
-                    if (Array.isArray(data.algorithms)) {
-                        data.algorithms.forEach((a, i) => {
-                            if (typeof a === 'object' && a.code && a.code.trim()) {
-                                const name = (a.name || `algorithm_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
-                                zip.file(`algorithms/${name}.py`, a.code);
-                            }
-                        });
-                    }
-
-                    // Demos
-                    if (Array.isArray(data.demos)) {
-                        data.demos.forEach((d, i) => {
-                            if (typeof d === 'object' && d.code && d.code.trim()) {
-                                const name = (d.name || `demo_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
-                                zip.file(`demos/${name}.py`, d.code);
-                            }
-                        });
-                    }
-
-                    // Interactive HTML demos
-                    if (Array.isArray(data.interactive_demos)) {
-                        data.interactive_demos.forEach((d, i) => {
-                            if (typeof d === 'object' && d.html && d.html.trim()) {
-                                const name = (d.name || `interactive_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
-                                zip.file(`interactive_demos/${name}.html`, d.html);
-                            }
-                        });
-                    }
-
-                    // Visualizations
-                    if (Array.isArray(data.visualizations)) {
-                        data.visualizations.forEach((v, i) => {
-                            if (typeof v === 'object') {
-                                const code = v.code || '';
-                                if (code.trim()) {
-                                    const name = (v.name || `visualization_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
-                                    zip.file(`visualizations/${name}.py`, code);
-                                }
-                            }
-                        });
-                    }
-
-                    // Modules (algorithms.py, demo.py)
-                    if (data.modules && typeof data.modules === 'object') {
-                        for (const [modName, modCode] of Object.entries(data.modules)) {
-                            if (typeof modCode === 'string' && modCode.trim()) {
-                                zip.file(`modules/${modName}.py`, modCode);
-                            }
-                        }
-                    }
-
-                    const blob = await zip.generateAsync({ type: 'blob' });
-                    const a = document.createElement('a');
-                    a.href = URL.createObjectURL(blob);
-                    a.download = slug + '.zip';
-                    a.click();
-                    URL.revokeObjectURL(a.href);
-                };
             }
         }
 
@@ -624,6 +535,353 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No data provided for this section.</p>';
         }
+    }
+
+    function renderPythonTab(containerId, data) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        // Collect all Python code entries from demos and algorithms
+        const pythonEntries = [];
+
+        if (Array.isArray(data.demos)) {
+            data.demos.forEach((d, i) => {
+                if (typeof d === 'object' && d.code && d.code.trim()) {
+                    pythonEntries.push({
+                        name: d.name || `Demo ${i + 1}`,
+                        code: d.code,
+                        description: d.description || ''
+                    });
+                }
+            });
+        }
+
+        if (Array.isArray(data.algorithms)) {
+            data.algorithms.forEach((a, i) => {
+                if (typeof a === 'object' && a.code && a.code.trim()) {
+                    // Avoid duplicates with demos
+                    const isDup = pythonEntries.some(e => e.code === a.code);
+                    if (!isDup) {
+                        pythonEntries.push({
+                            name: a.name || `Algorithm ${i + 1}`,
+                            code: a.code,
+                            description: a.description || ''
+                        });
+                    }
+                }
+            });
+        }
+
+        // Include module code
+        if (data.modules && typeof data.modules === 'object') {
+            for (const [modName, modCode] of Object.entries(data.modules)) {
+                if (typeof modCode === 'string' && modCode.trim()) {
+                    pythonEntries.push({
+                        name: modName,
+                        code: modCode,
+                        description: `Module: ${modName}`
+                    });
+                }
+            }
+        }
+
+        if (pythonEntries.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-muted)">No Python code available for this package.</p>';
+            return;
+        }
+
+        pythonEntries.forEach((entry, idx) => {
+            const card = document.createElement('div');
+            card.className = 'code-card';
+            card.style.cssText = 'margin-bottom: 16px;';
+
+            const header = document.createElement('div');
+            header.className = 'code-header';
+            header.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
+
+            const title = document.createElement('span');
+            title.className = 'code-title';
+            title.textContent = entry.name;
+
+            const btnGroup = document.createElement('div');
+            btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'source-toggle';
+            toggleBtn.textContent = 'Show Source';
+
+            const runBtn = document.createElement('button');
+            runBtn.className = 'run-btn';
+            if (!window.Aether.pyodideInstance) {
+                runBtn.disabled = true;
+                runBtn.textContent = 'Loading Engine...';
+            } else {
+                runBtn.textContent = '▶ Run';
+            }
+
+            btnGroup.appendChild(toggleBtn);
+            btnGroup.appendChild(runBtn);
+            header.appendChild(title);
+            header.appendChild(btnGroup);
+
+            if (entry.description) {
+                const desc = document.createElement('p');
+                desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 4px 0 8px;';
+                desc.textContent = entry.description;
+                header.appendChild(desc);
+            }
+
+            const editor = document.createElement('textarea');
+            editor.className = 'code-editor';
+            editor.spellcheck = false;
+            editor.value = entry.code;
+            editor.style.display = 'none';
+
+            const autoSizeEditor = () => {
+                editor.style.height = 'auto';
+                editor.style.height = Math.max(200, editor.scrollHeight) + 'px';
+            };
+
+            toggleBtn.addEventListener('click', () => {
+                if (editor.style.display === 'none') {
+                    editor.style.display = '';
+                    toggleBtn.textContent = 'Hide Source';
+                    autoSizeEditor();
+                } else {
+                    editor.style.display = 'none';
+                    toggleBtn.textContent = 'Show Source';
+                }
+            });
+
+            const outputContainer = document.createElement('div');
+            outputContainer.className = 'python-output';
+            outputContainer.style.cssText = 'min-height: 40px; padding: 8px; background: var(--bg-secondary, #1e1e2e); border-radius: 0 0 8px 8px; font-family: monospace; white-space: pre-wrap; display: none;';
+
+            runBtn.addEventListener('click', async () => {
+                if (!window.Aether.pyodideInstance) {
+                    outputContainer.style.display = 'block';
+                    outputContainer.textContent = 'Python engine not ready yet. Please wait...';
+                    return;
+                }
+                runBtn.disabled = true;
+                runBtn.textContent = 'Running...';
+                outputContainer.style.display = 'block';
+                outputContainer.textContent = '';
+
+                try {
+                    const pyodide = window.Aether.pyodideInstance;
+                    // Redirect stdout
+                    pyodide.runPython('import io, sys; sys.stdout = io.StringIO(); sys.stderr = io.StringIO()');
+                    const codeToRun = editor.value;
+                    const result = pyodide.runPython(codeToRun);
+                    const stdout = pyodide.runPython('sys.stdout.getvalue()');
+                    const stderr = pyodide.runPython('sys.stderr.getvalue()');
+                    // Reset stdout
+                    pyodide.runPython('sys.stdout = sys.__stdout__; sys.stderr = sys.__stderr__');
+
+                    let output = '';
+                    if (stdout) output += stdout;
+                    if (stderr) output += (output ? '\n' : '') + 'STDERR:\n' + stderr;
+                    if (result !== undefined && result !== null) output += (output ? '\n' : '') + String(result);
+                    outputContainer.textContent = output || '(no output)';
+                } catch (err) {
+                    outputContainer.textContent = 'Error: ' + (err.message || String(err));
+                } finally {
+                    runBtn.disabled = false;
+                    runBtn.textContent = '▶ Run';
+                }
+            });
+
+            card.appendChild(header);
+            card.appendChild(editor);
+            card.appendChild(outputContainer);
+            container.appendChild(card);
+        });
+    }
+
+    function renderDownloadTab(data) {
+        const container = document.getElementById('content-download');
+        if (!container) return;
+
+        const contentsDiv = document.getElementById('download-contents');
+        if (!contentsDiv) return;
+
+        // Build a summary of what's included
+        const items = [];
+
+        // Count lean proof files
+        const leanFiles = [];
+        if (data.lean_proofs) {
+            if (typeof data.lean_proofs === 'string') {
+                const lp = data.lean_proofs;
+                if (lp.length > 50 && !lp.endsWith('.lean')) {
+                    const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
+                    if (parts.length > 1) {
+                        for (let i = 1; i < parts.length; i += 2) {
+                            leanFiles.push(parts[i].trim());
+                        }
+                    } else {
+                        leanFiles.push('Proof.lean');
+                    }
+                }
+            } else if (Array.isArray(data.lean_proofs)) {
+                for (const entry of data.lean_proofs) {
+                    if (typeof entry === 'object' && entry !== null) {
+                        leanFiles.push((entry.file || entry.name || 'Proof.lean').split('/').pop());
+                    }
+                }
+            }
+        }
+        if (leanFiles.length > 0) items.push(`${leanFiles.length} Lean 4 proof file${leanFiles.length > 1 ? 's' : ''}`);
+
+        if (data.article) items.push('Article');
+        if (data.research_paper) items.push('Research Paper');
+        if (data.future_directions) items.push('Future Directions');
+        if (Array.isArray(data.algorithms) && data.algorithms.length > 0) items.push(`${data.algorithms.length} Algorithm${data.algorithms.length > 1 ? 's' : ''}`);
+        if (Array.isArray(data.demos) && data.demos.length > 0) items.push(`${data.demos.length} Demo${data.demos.length > 1 ? 's' : ''}`);
+        if (Array.isArray(data.interactive_demos) && data.interactive_demos.length > 0) items.push(`${data.interactive_demos.length} Interactive Demo${data.interactive_demos.length > 1 ? 's' : ''}`);
+        if (Array.isArray(data.visualizations) && data.visualizations.length > 0) items.push(`${data.visualizations.length} Visualization${data.visualizations.length > 1 ? 's' : ''}`);
+        if (data.modules && Object.keys(data.modules).length > 0) items.push(`${Object.keys(data.modules).length} Module${Object.keys(data.modules).length > 1 ? 's' : ''}`);
+
+        if (items.length > 0) {
+            const ul = document.createElement('ul');
+            ul.className = 'download-contents-list';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ul.appendChild(li);
+            });
+            contentsDiv.innerHTML = '';
+            contentsDiv.appendChild(ul);
+        } else {
+            contentsDiv.innerHTML = '<p style="color: var(--text-muted);">No artifacts available for download.</p>';
+        }
+
+        // Wire up the download button
+        const downloadBtn = document.getElementById('download-zip-btn');
+        if (!downloadBtn) return;
+
+        // Remove any existing listener by cloning
+        const newBtn = downloadBtn.cloneNode(true);
+        downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
+
+        newBtn.addEventListener('click', async () => {
+            if (!window.JSZip) {
+                console.warn('JSZip not loaded');
+                return;
+            }
+            const zip = new JSZip();
+            const slug = (data.title || 'research_package').replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 40);
+
+            // Lean 4 proofs
+            // Parse lean_proofs into individual file cards regardless of format
+            const leanFileData = [];
+            if (data.lean_proofs) {
+                if (typeof data.lean_proofs === 'string') {
+                    const lp = data.lean_proofs;
+                    if (lp.length > 50 && !lp.endsWith('.lean')) {
+                        const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
+                        if (parts.length > 1) {
+                            for (let i = 1; i < parts.length; i += 2) {
+                                const name = parts[i].trim();
+                                const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
+                                if (code) leanFileData.push({ name, code });
+                            }
+                        } else {
+                            const s = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
+                            leanFileData.push({ name: s + '.lean', code: lp });
+                        }
+                    }
+                } else if (Array.isArray(data.lean_proofs)) {
+                    for (const entry of data.lean_proofs) {
+                        if (typeof entry === 'object' && entry !== null) {
+                            const fname = entry.file || entry.name || 'Proof.lean';
+                            const basename = fname.split('/').pop();
+                            if (entry.code && entry.code.trim()) {
+                                leanFileData.push({ name: basename, code: entry.code });
+                            } else if (entry.content && entry.content.trim()) {
+                                leanFileData.push({ name: basename, code: entry.content });
+                            }
+                        }
+                    }
+                }
+            }
+            leanFileData.forEach(f => zip.file(`lean/${f.name}`, f.code));
+
+            // Article
+            if (data.article && typeof data.article === 'string' && data.article.length > 50 && !data.article.endsWith('.md')) {
+                zip.file('ARTICLE.md', data.article);
+            }
+
+            // Research paper
+            if (data.research_paper && typeof data.research_paper === 'string' && data.research_paper.length > 50 && !data.research_paper.endsWith('.md')) {
+                zip.file('RESEARCH_PAPER.md', data.research_paper);
+            }
+
+            // Future directions
+            if (data.future_directions && typeof data.future_directions === 'string' && data.future_directions.length > 50 && !data.future_directions.endsWith('.md')) {
+                zip.file('FUTURE_DIRECTIONS.md', data.future_directions);
+            }
+
+            // Algorithms
+            if (Array.isArray(data.algorithms)) {
+                data.algorithms.forEach((a, i) => {
+                    if (typeof a === 'object' && a.code && a.code.trim()) {
+                        const name = (a.name || `algorithm_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                        zip.file(`algorithms/${name}.py`, a.code);
+                    }
+                });
+            }
+
+            // Demos
+            if (Array.isArray(data.demos)) {
+                data.demos.forEach((d, i) => {
+                    if (typeof d === 'object' && d.code && d.code.trim()) {
+                        const name = (d.name || `demo_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                        zip.file(`demos/${name}.py`, d.code);
+                    }
+                });
+            }
+
+            // Interactive HTML demos
+            if (Array.isArray(data.interactive_demos)) {
+                data.interactive_demos.forEach((d, i) => {
+                    if (typeof d === 'object' && d.html && d.html.trim()) {
+                        const name = (d.name || `interactive_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                        zip.file(`interactive_demos/${name}.html`, d.html);
+                    }
+                });
+            }
+
+            // Visualizations
+            if (Array.isArray(data.visualizations)) {
+                data.visualizations.forEach((v, i) => {
+                    if (typeof v === 'object') {
+                        const code = v.code || '';
+                        if (code.trim()) {
+                            const name = (v.name || `visualization_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                            zip.file(`visualizations/${name}.py`, code);
+                        }
+                    }
+                });
+            }
+
+            // Modules
+            if (data.modules && typeof data.modules === 'object') {
+                for (const [modName, modCode] of Object.entries(data.modules)) {
+                    if (typeof modCode === 'string' && modCode.trim()) {
+                        zip.file(`modules/${modName}.py`, modCode);
+                    }
+                }
+            }
+
+            const blob = await zip.generateAsync({ type: 'blob' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = slug + '.zip';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
     }
 
     function renderLineageLinks(container, pkgData) {
