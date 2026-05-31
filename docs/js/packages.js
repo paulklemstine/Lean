@@ -171,14 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else if (entry.content && entry.content.trim()) {
                             leanFiles.push({ name: basename, code: entry.content });
                         } else {
-                            // Try to load from Catalog
-                            leanFiles.push({
-                                name: basename,
-                                code: '',
-                                file_path: fname,
-                                theorems: entry.theorems || [],
-                                description: entry.description || ''
-                            });
+                            // No code available — skip this file
+                            console.warn('Lean file has no embedded code:', fname);
                         }
                     }
                 }
@@ -189,26 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
         } else {
             leanHeader.style.display = 'flex';
-
-            // Async: load any .lean files that need fetching from Catalog
-            const fetchPromises = leanFiles
-                .filter(f => !f.code && f.file_path)
-                .map(f => {
-                    // Try multiple path prefixes
-                    const prefixes = ['', 'Catalog/', 'Catalog/Applications/'];
-                    return (async () => {
-                        for (const prefix of prefixes) {
-                            try {
-                                const resp = await fetch(prefix + f.file_path);
-                                if (resp.ok) {
-                                    f.code = await resp.text();
-                                    return;
-                                }
-                            } catch {}
-                        }
-                    })();
-                });
-            Promise.all(fetchPromises).then(() => renderLeanCards());
+            renderLeanCards();
 
             function renderLeanCards() {
                 leanContainer.innerHTML = '';
