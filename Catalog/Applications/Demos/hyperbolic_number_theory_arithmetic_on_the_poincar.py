@@ -1,973 +1,528 @@
+#!/usr/bin/env python3
 """
-Applications of Hyperbolic Number Theory
-==========================================
+Hyperbolic Number Theory — Demonstration Script
 
-Demonstrates real-world applications of the theory:
-1. Relativistic velocity composition in particle physics
-2. Hyperbolic embeddings for machine learning
-3. Error-correcting codes from SL₂(ℤ) orbits
-4. Signal processing via the Cayley transform
+Numerical examples illustrating the core concepts:
+1. Hyperbolic distance computations in the Poincaré disk
+2. PSL(2,Z) orbit enumeration
+3. Lattice point counting vs. asymptotic predictions
+4. Primitive geodesic (hyperbolic prime) detection
+5. Selberg zeta function evaluation
 """
 
 import math
-from typing import List, Tuple
+from algorithms import (
+    hyp_distance, hyp_distance_cross_ratio, is_in_disk,
+    MobiusTransform, SL2R,
+    enumerate_psl2z_words, orbit_in_disk,
+    hyp_counting_fn, hyp_prime_asymptotic,
+    find_primitive_geodesics, selberg_zeta_truncated,
+    hyp_polygon_area, hyp_disk_area, hyp_area_factor,
+    lattice_point_leading_coeff,
+    build_midpoint_system,
+)
 
 
-# ============================================================
-# Application 1: Relativistic Velocity Composition
-# ============================================================
-
-def relativistic_velocity_add(v1: float, v2: float, c: float = 1.0) -> float:
-    """
-    Add two velocities relativistically.
-
-    In special relativity, velocities don't add linearly.
-    Instead: v₁ ⊕ v₂ = (v₁ + v₂) / (1 + v₁v₂/c²)
-
-    This is exactly Einstein addition on the interval (-c, c).
-
-    Args:
-        v1, v2: Velocities (must satisfy |v| < c)
-        c: Speed of light (default: 1 in natural units)
-
-    Returns:
-        Combined velocity, always satisfying |result| < c
-    """
-    return (v1 + v2) / (1 + v1 * v2 / (c * c))
-
-
-def demo_relativistic():
-    """Demonstrate relativistic velocity addition."""
+def demo_hyperbolic_distance():
+    """Demonstrate hyperbolic distance computations."""
     print("=" * 60)
-    print("APPLICATION 1: Relativistic Velocity Composition")
+    print("1. HYPERBOLIC DISTANCE IN THE POINCARÉ DISK")
     print("=" * 60)
 
-    c = 299792458  # m/s
+    pairs = [
+        (0j, 0.5 + 0j, "origin to 0.5"),
+        (0j, 0.9 + 0j, "origin to 0.9"),
+        (0j, 0.99 + 0j, "origin to 0.99"),
+        (0.3 + 0.2j, -0.1 + 0.4j, "two interior points"),
+    ]
 
-    # Two rockets each at 0.9c
-    v1 = 0.9 * c
-    v2 = 0.9 * c
+    for z, w, desc in pairs:
+        d = hyp_distance(z, w)
+        delta = hyp_distance_cross_ratio(z, w)
+        print(f"  d({z}, {w}) = {d:.6f}  [{desc}]")
+        print(f"    cross-ratio δ = {delta:.6f}, acosh(1+2δ) = {math.acosh(1+2*delta):.6f}")
 
-    # Newtonian (wrong):
-    v_newton = v1 + v2
-    # Relativistic (correct):
-    v_einstein = relativistic_velocity_add(v1, v2, c)
-
-    print(f"\nTwo rockets each at 0.9c:")
-    print(f"  Newtonian prediction: {v_newton/c:.4f}c (WRONG - exceeds c!)")
-    print(f"  Relativistic (Einstein addition): {v_einstein/c:.6f}c (< 1c ✓)")
-
-    # Iterative composition
-    print("\nIterative composition of v = 0.5c:")
-    v = 0.5 * c
-    current = 0.0
-    for i in range(1, 11):
-        current = relativistic_velocity_add(current, v, c)
-        print(f"  After {i} additions: {current/c:.6f}c")
-    print("  → Approaches c but never reaches it!")
+    print("\n  Key insight: distances near the boundary are vastly larger")
+    print(f"  d(0, 0.5) / d(0, 0.9)  = {hyp_distance(0j, 0.5) / hyp_distance(0j, 0.9):.4f}")
+    print(f"  d(0, 0.9) / d(0, 0.99) = {hyp_distance(0j, 0.9) / hyp_distance(0j, 0.99):.4f}")
+    print()
 
 
-# ============================================================
-# Application 2: Hyperbolic Embeddings for ML
-# ============================================================
+def demo_mobius_transform():
+    """Demonstrate Möbius transformations."""
+    print("=" * 60)
+    print("2. MÖBIUS TRANSFORMATIONS")
+    print("=" * 60)
 
-def poincare_distance(x: complex, y: complex) -> float:
-    """
-    Compute the hyperbolic distance in the Poincaré disk model.
+    phi = MobiusTransform(center=0.3 + 0.1j, rotation=1 + 0j)
+    test_points = [0j, 0.5 + 0j, 0.2 + 0.3j, -0.4 + 0.1j]
 
-    d(x, y) = arccosh(1 + 2|x-y|²/((1-|x|²)(1-|y|²)))
+    for z in test_points:
+        w = phi.apply(z)
+        print(f"  φ({z}) = {w:.6f},  |w| = {abs(w):.6f} (< 1: {is_in_disk(w)})")
 
-    This is used in hyperbolic neural networks for embedding
-    hierarchical data (trees, taxonomies, knowledge graphs).
-    """
-    num = abs(x - y) ** 2
-    denom = (1 - abs(x) ** 2) * (1 - abs(y) ** 2)
-    if denom <= 0:
-        return float('inf')
-    return math.acosh(1 + 2 * num / denom)
+    # Verify distance preservation
+    z1, z2 = 0.2 + 0.1j, -0.3 + 0.2j
+    d_before = hyp_distance(z1, z2)
+    d_after = hyp_distance(phi.apply(z1), phi.apply(z2))
+    print(f"\n  Distance preservation check:")
+    print(f"    d(z₁, z₂)       = {d_before:.6f}")
+    print(f"    d(φ(z₁), φ(z₂)) = {d_after:.6f}")
+    print(f"    Difference: {abs(d_before - d_after):.2e}")
+    print()
 
 
-def demo_hyperbolic_embeddings():
-    """Demonstrate hyperbolic embeddings."""
+def demo_psl2z_orbit():
+    """Demonstrate PSL(2,Z) orbit computation."""
+    print("=" * 60)
+    print("3. PSL(2,Z) ORBIT ENUMERATION")
+    print("=" * 60)
+
+    for word_len in [3, 5, 7, 9]:
+        elements = enumerate_psl2z_words(word_len)
+        base = 0.0 + 2.0j  # i * 2 in upper half-plane
+        orbit = orbit_in_disk(base, elements)
+
+        print(f"  Word length ≤ {word_len}: {len(elements):5d} group elements, "
+              f"{len(orbit):5d} orbit points in disk")
+
+    print()
+
+
+def demo_counting():
+    """Demonstrate lattice point counting."""
+    print("=" * 60)
+    print("4. LATTICE POINT COUNTING")
+    print("=" * 60)
+
+    elements = enumerate_psl2z_words(8)
+    base = 0.0 + 2.0j
+    orbit = orbit_in_disk(base, elements)
+
+    print(f"  Total orbit points: {len(orbit)}")
+    print(f"\n  {'R':>6s} | {'N(R)':>8s} | {'Asymptotic':>12s} | {'Ratio':>8s}")
+    print(f"  {'-'*6} | {'-'*8} | {'-'*12} | {'-'*8}")
+
+    covolume = math.pi / 3  # PSL(2,Z) covolume
+    leading = lattice_point_leading_coeff(covolume)
+
+    for R in [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]:
+        count = hyp_counting_fn(orbit, R)
+        asymp = leading * math.exp(R)
+        ratio = count / asymp if asymp > 0 else 0
+        print(f"  {R:6.1f} | {count:8d} | {asymp:12.1f} | {ratio:8.3f}")
+
+    print(f"\n  Leading coefficient V/(4π) = {leading:.6f} (V = π/3 for PSL(2,Z))")
+    print(f"  Predicted: 1/12 = {1/12:.6f}")
+    print()
+
+
+def demo_geodesic_primes():
+    """Demonstrate primitive geodesic detection."""
+    print("=" * 60)
+    print("5. HYPERBOLIC PRIMES (PRIMITIVE GEODESICS)")
+    print("=" * 60)
+
+    elements = enumerate_psl2z_words(8)
+    primes = find_primitive_geodesics(elements, max_length=10.0)
+
+    print(f"  Found {len(primes)} primitive geodesics with length ≤ 10.0")
+    print(f"\n  First 15 primitive geodesic lengths:")
+    for i, (length, g) in enumerate(primes[:15]):
+        print(f"    ℓ_{i+1} = {length:.6f}  (trace = {g.trace():.4f})")
+
+    # Compare with asymptotic
+    print(f"\n  Counting comparison with e^R/R asymptotic:")
+    for R in [3.0, 5.0, 7.0, 10.0]:
+        count = sum(1 for ell, _ in primes if ell <= R)
+        asymp = hyp_prime_asymptotic(R)
+        print(f"    R = {R:.1f}: count = {count:4d}, e^R/R = {asymp:.1f}")
+
+    print()
+
+
+def demo_selberg_zeta():
+    """Demonstrate the Selberg zeta function."""
+    print("=" * 60)
+    print("6. SELBERG ZETA FUNCTION")
+    print("=" * 60)
+
+    elements = enumerate_psl2z_words(7)
+    primes = find_primitive_geodesics(elements, max_length=8.0)
+    spectrum = [ell for ell, _ in primes]
+
+    print(f"  Using {len(spectrum)} primitive geodesic lengths")
+    print(f"\n  {'s':>6s} | {'Z_K(s)':>15s}")
+    print(f"  {'-'*6} | {'-'*15}")
+
+    for s in [0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:
+        Z = selberg_zeta_truncated(spectrum, s, K=10)
+        print(f"  {s:6.1f} | {Z:15.8f}")
+
+    print()
+
+
+def demo_gauss_bonnet():
+    """Demonstrate the Gauss-Bonnet theorem for hyperbolic polygons."""
+    print("=" * 60)
+    print("7. GAUSS-BONNET: HYPERBOLIC POLYGON AREAS")
+    print("=" * 60)
+
+    # Ideal triangle (all angles = 0)
+    area_ideal = hyp_polygon_area([0, 0, 0])
+    print(f"  Ideal triangle (angles = 0, 0, 0): area = {area_ideal:.6f} = π = {math.pi:.6f}")
+
+    # Regular triangles
+    for alpha in [math.pi/6, math.pi/4, math.pi/3]:
+        angles = [alpha, alpha, alpha]
+        area = hyp_polygon_area(angles)
+        print(f"  Equilateral triangle (α = π/{int(math.pi/alpha):.0f}): "
+              f"area = {area:.6f}")
+
+    # The {3,7} tiling: regular triangles with angle 2π/7
+    alpha_37 = 2 * math.pi / 7
+    area_37 = hyp_polygon_area([alpha_37, alpha_37, alpha_37])
+    print(f"\n  Heptagonal tiling {{3,7}} triangle: area = {area_37:.6f}")
+
+    # Hyperbolic disk areas
+    print(f"\n  Hyperbolic disk areas:")
+    for R in [1.0, 2.0, 5.0, 10.0]:
+        area = hyp_disk_area(R)
+        print(f"    R = {R:5.1f}: A = {area:12.2f}")
+
+    # Area factor near boundary
+    print(f"\n  Area stretching factor 4/(1-r²)²:")
+    for r in [0.0, 0.5, 0.9, 0.99, 0.999]:
+        factor = hyp_area_factor(r)
+        print(f"    r = {r:.3f}: factor = {factor:12.2f}")
+
+    print()
+
+
+def demo_arithmetic_system():
+    """Demonstrate the Hyperbolic Arithmetic System."""
+    print("=" * 60)
+    print("8. HYPERBOLIC ARITHMETIC SYSTEM")
+    print("=" * 60)
+
+    elements = enumerate_psl2z_words(5)
+    base = 0.0 + 2.0j
+    orbit = orbit_in_disk(base, elements)
+
+    # Filter to unique points close to origin for a small system
+    small_orbit = [0j] + [z for z in orbit if abs(z) < 0.5]
+    # Deduplicate
+    unique = [small_orbit[0]]
+    for z in small_orbit[1:]:
+        if all(abs(z - u) > 1e-6 for u in unique):
+            unique.append(z)
+
+    system = build_midpoint_system(unique)
+    print(f"  System size: {system.size}")
+    print(f"  Points below R=1: {system.count_below(1.0)}")
+    print(f"  Points below R=2: {system.count_below(2.0)}")
+
+    primes = system.find_primes()
+    print(f"  Hyperbolic primes (midpoint-irreducible): {len(primes)}")
+    for i, p in enumerate(primes[:5]):
+        print(f"    p_{i+1} = {p:.6f},  |p| = {abs(p):.6f}")
+
+    print()
+
+
+def main():
     print("\n" + "=" * 60)
-    print("APPLICATION 2: Hyperbolic Embeddings for Machine Learning")
+    print("  HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE POINCARÉ DISK")
+    print("=" * 60 + "\n")
+
+    demo_hyperbolic_distance()
+    demo_mobius_transform()
+    demo_psl2z_orbit()
+    demo_counting()
+    demo_geodesic_primes()
+    demo_selberg_zeta()
+    demo_gauss_bonnet()
+    demo_arithmetic_system()
+
     print("=" * 60)
-
-    # Hierarchical data: root → children → grandchildren
-    # In hyperbolic space, trees embed with exponentially less distortion
-    root = complex(0, 0)
-    children = [complex(0.3, 0), complex(-0.3, 0), complex(0, 0.3)]
-    grandchildren = [complex(0.5, 0.2), complex(0.5, -0.2),
-                     complex(-0.5, 0.1), complex(-0.5, -0.1)]
-
-    print("\nTree embedding distances:")
-    print(f"  Root to origin: {poincare_distance(root, complex(0, 0)):.4f}")
-    for i, ch in enumerate(children):
-        d = poincare_distance(root, ch)
-        print(f"  Root to child {i}: {d:.4f}")
-
-    print("\n  Child-to-child distances:")
-    for i in range(len(children)):
-        for j in range(i + 1, len(children)):
-            d = poincare_distance(children[i], children[j])
-            print(f"    child {i} ↔ child {j}: {d:.4f}")
-
-    # Key insight: distances grow exponentially near boundary
-    print("\n  Exponential growth near boundary:")
-    for r in [0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99]:
-        p = complex(r, 0)
-        d = poincare_distance(root, p)
-        print(f"    |z| = {r:.2f}: distance from origin = {d:.4f}")
-
-
-# ============================================================
-# Application 3: The Cayley Transform in Signal Processing
-# ============================================================
-
-def cayley_transform(s: complex) -> complex:
-    """
-    Cayley transform: maps the right half-plane to the unit disk.
-    w = (s - 1) / (s + 1)
-
-    In signal processing, this maps continuous-time transfer functions
-    (Laplace domain, right half-plane = stable) to discrete-time
-    (z-domain, unit disk = stable), preserving stability.
-    """
-    return (s - 1) / (s + 1)
-
-
-def inverse_cayley(w: complex) -> complex:
-    """
-    Inverse Cayley transform: maps unit disk to right half-plane.
-    s = (1 + w) / (1 - w)
-    """
-    return (1 + w) / (1 - w)
-
-
-def demo_signal_processing():
-    """Demonstrate the Cayley transform in signal processing."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Cayley Transform in Signal Processing")
+    print("  TESTABLE CONJECTURE")
     print("=" * 60)
+    print("""
+  Conjecture (Hyperbolic Prime Number Theorem):
+    For PSL(2,Z), the number of primitive closed geodesics
+    with length ≤ R satisfies π_H(R) ~ e^R / R as R → ∞.
 
-    # Critical line Re(s) = 1/2 maps to disk
-    print("\nCritical line Re(s) = 1/2 → unit disk:")
-    for y in [-3, -2, -1, 0, 1, 2, 3]:
-        s = complex(0.5, y)
-        w = cayley_transform(s)
-        print(f"  s = 0.5 + {y}i → w = {w:.4f}, |w| = {abs(w):.6f}")
+  This is actually the Prime Geodesic Theorem (Huber 1961),
+  a known result. Our computation provides numerical evidence:
+""")
 
-    # Stability preservation
-    print("\nStability preservation (Re(s) > 0 → |w| < 1):")
-    for sigma in [0.1, 0.5, 1.0, 2.0, 5.0]:
-        for omega in [0, 1, 5]:
-            s = complex(sigma, omega)
-            w = cayley_transform(s)
-            stable_s = sigma > 0
-            stable_w = abs(w) < 1
-            print(f"  s = {sigma}+{omega}i: Re(s)>0={stable_s}, |w|<1={stable_w}")
+    elements = enumerate_psl2z_words(9)
+    primes = find_primitive_geodesics(elements, max_length=12.0)
 
+    for R in [4.0, 6.0, 8.0, 10.0]:
+        count = sum(1 for ell, _ in primes if ell <= R)
+        asymp = hyp_prime_asymptotic(R)
+        ratio = count / asymp if asymp > 0 else 0
+        print(f"  R = {R:5.1f}: π_H(R) = {count:4d}, e^R/R = {asymp:8.1f}, ratio = {ratio:.3f}")
 
-# ============================================================
-# Application 4: Trace-Based Error Detection
-# ============================================================
+    print("\n  If the conjecture holds, the ratio → 1 as R → ∞.")
+    print("  (Deviations for small R are expected error terms.)\n")
 
-def trace_checksum(data: List[int]) -> int:
-    """
-    Use the Chebyshev trace recurrence as an error-detecting code.
-
-    The trace of a product of SL₂(ℤ) elements encodes the data
-    in a way that detects single-bit errors.
-
-    Time: O(n), Space: O(1)
-    """
-    # Encode data as traces, compute product trace via Chebyshev
-    result = 2  # trace of identity
-    for d in data:
-        t = d + 3  # shift to ensure |trace| > 2 (hyperbolic)
-        # Compute trace of product via recurrence
-        result = t * result - 2  # simplified for demonstration
-    return result
-
-
-def demo_error_detection():
-    """Demonstrate trace-based error detection."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Trace-Based Error Detection")
-    print("=" * 60)
-
-    data = [1, 2, 3, 4, 5]
-    checksum = trace_checksum(data)
-    print(f"\nOriginal data: {data}")
-    print(f"Trace checksum: {checksum}")
-
-    # Flip one bit
-    for pos in range(len(data)):
-        corrupted = data.copy()
-        corrupted[pos] += 1
-        bad_checksum = trace_checksum(corrupted)
-        detected = bad_checksum != checksum
-        print(f"  Corrupted at position {pos}: {corrupted} → checksum = {bad_checksum}, detected: {detected}")
-
-
-# ============================================================
-# Main
-# ============================================================
 
 if __name__ == "__main__":
-    demo_relativistic()
-    demo_hyperbolic_embeddings()
-    demo_signal_processing()
-    demo_error_detection()
-    print("\n" + "=" * 60)
-    print("All applications demonstrated successfully!")
-    print("=" * 60)
+    main()
 
 
-"""Build PACKAGE.json from all artifacts."""
-import json
-import os
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Read all files
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-lean_code = read_file('Speculative/HyperbolicNumberTheory/Defs.lean')
-viz1 = read_file('viz_poincare_disk.py')
-viz2 = read_file('viz_trace_spectrum.py')
-viz3 = read_file('viz_cayley_bridge.py')
-interactive1 = read_file('interactive_einstein.html')
-interactive2 = read_file('interactive_chebyshev.html')
-
-package = {
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
-    "domain": "Number Theory / Hyperbolic Geometry / Mathematical Physics",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Hyperbolic Number Theory Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications Demo",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Einstein Addition Group",
-            "pseudocode": "EINSTEIN_ADD(a, b):\n  return (a + b) / (1 + a * b)\n\nITERATED_ADD(a, n):\n  phi = artanh(a)\n  return tanh(n * phi)",
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Poincaré Disk and Einstein Addition",
-            "code": viz1,
-            "description": "Three-panel visualization showing Einstein addition vectors, SL₂(ℤ) orbit points in the Poincaré disk, and Chebyshev trace growth curves."
-        },
-        {
-            "name": "Trace Spectrum and Hyperbolic Primes",
-            "code": viz2,
-            "description": "Four-panel visualization showing trace classification (elliptic/parabolic/hyperbolic), trace count growth, prime vs composite traces, and SL₂(ℤ) element distribution by trace."
-        },
-        {
-            "name": "Cayley Transform Bridge",
-            "code": viz3,
-            "description": "Three-panel visualization showing the Cayley transform mapping critical lines to the disk, the critical line image, and the Hilbert-tropical bridge."
-        }
-    ],
-    "interactive_demos": [
-        {
-            "name": "Einstein Velocity Addition",
-            "html": interactive1,
-            "description": "Interactive slider demonstrating how Einstein addition combines velocities subluminally, compared to Newtonian addition."
-        },
-        {
-            "name": "Chebyshev-Trace Recurrence",
-            "html": interactive2,
-            "description": "Interactive visualization of the Chebyshev-trace recurrence for different initial traces, showing elliptic/parabolic/hyperbolic behavior."
-        }
-    ],
-    "lean_proofs": lean_code
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print("PACKAGE.json created successfully!")
-print(f"Size: {os.path.getsize('PACKAGE.json')} bytes")
-
-
+#!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
-=========================================================
-Demonstration of key theorems and computations.
+Visualization 3: Hyperbolic Geometry — Area, Curvature, and the Gauss-Bonnet Theorem
 
-This script demonstrates:
-1. Einstein addition (relativistic velocity addition) as a group on (-1,1)
-2. The Chebyshev-trace recurrence for SL₂(ℤ) orbit counting
-3. The trace classification (elliptic/parabolic/hyperbolic)
-4. The Hilbert-tropical bridge
-5. Hyperbolic prime counting
+Shows:
+- The hyperbolic area scaling factor 4/(1-r²)²
+- Hyperbolic disk area vs Euclidean disk area
+- Triangle area deficit (Gauss-Bonnet) in hyperbolic geometry
 """
 
-import numpy as np
-from typing import List, Tuple
-
-
-# ============================================================
-# Part 1: Einstein Addition
-# ============================================================
-
-def einstein_add(a: float, b: float) -> float:
-    """Relativistic velocity addition: (a + b) / (1 + a*b)"""
-    return (a + b) / (1 + a * b)
-
-
-def demo_einstein_addition():
-    """Demonstrate the group properties of Einstein addition."""
-    print("=" * 60)
-    print("EINSTEIN ADDITION (Relativistic Velocity Addition)")
-    print("=" * 60)
-
-    # Identity
-    a = 0.6
-    print(f"\nIdentity: einstein_add({a}, 0) = {einstein_add(a, 0):.6f} (should be {a})")
-
-    # Commutativity
-    a, b = 0.3, 0.7
-    print(f"Commutativity: einstein_add({a}, {b}) = {einstein_add(a, b):.6f}")
-    print(f"               einstein_add({b}, {a}) = {einstein_add(b, a):.6f}")
-
-    # Associativity
-    a, b, c = 0.2, 0.5, 0.8
-    lhs = einstein_add(einstein_add(a, b), c)
-    rhs = einstein_add(a, einstein_add(b, c))
-    print(f"Associativity: (a ⊕ b) ⊕ c = {lhs:.10f}")
-    print(f"               a ⊕ (b ⊕ c) = {rhs:.10f}")
-    print(f"               Difference: {abs(lhs - rhs):.2e}")
-
-    # Inverse
-    a = 0.75
-    print(f"Inverse: einstein_add({a}, {-a}) = {einstein_add(a, -a):.10f} (should be 0)")
-
-    # Closure: subluminal velocities stay subluminal
-    print("\nClosure (subluminal stays subluminal):")
-    for a, b in [(0.9, 0.9), (0.99, 0.99), (0.999, 0.999)]:
-        result = einstein_add(a, b)
-        print(f"  {a} ⊕ {b} = {result:.10f} < 1 ✓")
-
-
-# ============================================================
-# Part 2: SL₂(ℤ) and Trace Arithmetic
-# ============================================================
-
-class SL2Z:
-    """An element of SL₂(ℤ): 2×2 integer matrix with determinant 1."""
-
-    def __init__(self, a: int, b: int, c: int, d: int):
-        assert a * d - b * c == 1, f"Determinant must be 1, got {a*d - b*c}"
-        self.a, self.b, self.c, self.d = a, b, c, d
-
-    def __repr__(self):
-        return f"SL2Z([{self.a}, {self.b}; {self.c}, {self.d}])"
-
-    @staticmethod
-    def identity():
-        return SL2Z(1, 0, 0, 1)
-
-    @staticmethod
-    def generator_S():
-        return SL2Z(0, -1, 1, 0)
-
-    @staticmethod
-    def generator_T():
-        return SL2Z(1, 1, 0, 1)
-
-    def mul(self, other: 'SL2Z') -> 'SL2Z':
-        return SL2Z(
-            self.a * other.a + self.b * other.c,
-            self.a * other.b + self.b * other.d,
-            self.c * other.a + self.d * other.c,
-            self.c * other.b + self.d * other.d
-        )
-
-    def inv(self) -> 'SL2Z':
-        return SL2Z(self.d, -self.b, -self.c, self.a)
-
-    def trace(self) -> int:
-        return self.a + self.d
-
-    def classify(self) -> str:
-        t = abs(self.trace())
-        if t < 2:
-            return "elliptic"
-        elif t == 2:
-            return "parabolic"
-        else:
-            return "hyperbolic"
-
-
-def demo_sl2z():
-    """Demonstrate SL₂(ℤ) trace arithmetic."""
-    print("\n" + "=" * 60)
-    print("SL₂(ℤ) TRACE ARITHMETIC")
-    print("=" * 60)
-
-    S = SL2Z.generator_S()
-    T = SL2Z.generator_T()
-    I = SL2Z.identity()
-
-    print(f"\nS = {S}, trace = {S.trace()}, type = {S.classify()}")
-    print(f"T = {T}, trace = {T.trace()}, type = {T.classify()}")
-    print(f"ST = {S.mul(T)}, trace = {S.mul(T).trace()}, type = {S.mul(T).classify()}")
-    print(f"S² = {S.mul(S)}, trace = {S.mul(S).trace()}, type = {S.mul(S).classify()}")
-
-    # Trace conjugation invariance
-    print("\nTrace conjugation invariance: tr(gAg⁻¹) = tr(A)")
-    g = SL2Z(2, 1, 1, 1)
-    A = SL2Z(3, 1, -1, 0)
-    conj = g.mul(A).mul(g.inv())
-    print(f"  g = {g}")
-    print(f"  A = {A}, tr(A) = {A.trace()}")
-    print(f"  gAg⁻¹ = {conj}, tr(gAg⁻¹) = {conj.trace()}")
-
-    # Trace surjectivity
-    print("\nTrace surjectivity: every integer is a trace of some SL₂(ℤ) element")
-    for t in range(-5, 6):
-        m = SL2Z(t, 1, -1, 0)
-        print(f"  trace = {t}: {m} (det = {m.a * m.d - m.b * m.c})")
-
-
-# ============================================================
-# Part 3: Chebyshev-Trace Recurrence
-# ============================================================
-
-def chebyshev_trace(t: int, n: int) -> int:
-    """Compute the n-th Chebyshev trace value: tr(Aⁿ) where tr(A) = t."""
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    prev, curr = 2, t
-    for _ in range(n - 1):
-        prev, curr = curr, t * curr - prev
-    return curr
-
-
-def demo_chebyshev():
-    """Demonstrate the Chebyshev-trace recurrence."""
-    print("\n" + "=" * 60)
-    print("CHEBYSHEV-TRACE RECURRENCE: tr(Aⁿ)")
-    print("=" * 60)
-
-    # Parabolic case: trace = 2
-    print("\nParabolic case (tr(A) = 2): tr(Aⁿ) = 2 for all n")
-    for n in range(8):
-        print(f"  tr(A^{n}) = {chebyshev_trace(2, n)}")
-
-    # Hyperbolic case: trace = 3 (exponential growth)
-    print("\nHyperbolic case (tr(A) = 3): exponential growth")
-    for n in range(8):
-        val = chebyshev_trace(3, n)
-        print(f"  tr(A^{n}) = {val}")
-
-    # Verify monotonicity for t ≥ 2
-    print("\nMonotonicity verification for t = 3:")
-    vals = [chebyshev_trace(3, n) for n in range(10)]
-    for i in range(len(vals) - 1):
-        print(f"  tr(A^{i}) = {vals[i]} ≤ tr(A^{i+1}) = {vals[i+1]} ✓")
-
-    # Strict monotonicity for t ≥ 3, n ≥ 1
-    print("\nStrict monotonicity for t ≥ 3, n ≥ 1:")
-    for t in [3, 4, 5]:
-        vals = [chebyshev_trace(t, n) for n in range(1, 6)]
-        strictly_increasing = all(vals[i] < vals[i+1] for i in range(len(vals)-1))
-        print(f"  t = {t}: {vals} — strictly increasing: {strictly_increasing}")
-
-
-# ============================================================
-# Part 4: Hyperbolic Prime Counting
-# ============================================================
-
-def demo_prime_counting():
-    """Demonstrate the hyperbolic trace growth conjecture."""
-    print("\n" + "=" * 60)
-    print("HYPERBOLIC TRACE GROWTH")
-    print("=" * 60)
-
-    print("\nHyperbolic trace values: |t| > 2 in [-T, T]")
-    for T in [3, 5, 10, 20, 50, 100]:
-        count = 2 * (T - 2) if T >= 3 else 0
-        print(f"  T = {T:3d}: count = {count:4d}, 2*(T-2) = {2*(T-2):4d}")
-
-    print("\nLinear growth verification: T ≤ 2 * count for T ≥ 4")
-    for T in range(4, 21):
-        count = 2 * (T - 2)
-        satisfied = T <= 2 * count
-        print(f"  T = {T:2d}: count = {count:2d}, 2*count = {2*count:2d} ≥ T = {T:2d}: {satisfied}")
-
-
-# ============================================================
-# Part 5: Cross-Domain Bridge
-# ============================================================
-
-def demo_cross_domain():
-    """Demonstrate the critical line to disk bridge."""
-    print("\n" + "=" * 60)
-    print("CROSS-DOMAIN BRIDGE: Critical Line → Poincaré Disk")
-    print("=" * 60)
-
-    print("\nCayley transform s ↦ (s-1)/(s+1) maps Re(s)=1/2 into unit disk:")
-    for y in np.linspace(-5, 5, 11):
-        s = complex(0.5, y)
-        w = (s - 1) / (s + 1)
-        print(f"  s = 0.5 + {y:5.1f}i → w = {w.real:+.4f} + {w.imag:+.4f}i, |w| = {abs(w):.6f} ≤ 1 ✓")
-
-
-# ============================================================
-# Main
-# ============================================================
-
-if __name__ == "__main__":
-    demo_einstein_addition()
-    demo_sl2z()
-    demo_chebyshev()
-    demo_prime_counting()
-    demo_cross_domain()
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully!")
-    print("=" * 60)
-
-
-"""
-Visualization 3: The Cayley Transform Bridge
-==============================================
-Visualizes the cross-domain bridge between the Riemann zeta function's
-critical line (Re(s) = 1/2) and the Poincaré disk via the Cayley transform.
-Also shows the Hilbert-tropical connection.
-"""
-
+import math
 import numpy as np
 import matplotlib.pyplot as plt
+from algorithms import hyp_area_factor, hyp_disk_area, hyp_polygon_area
 
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+def plot_hyperbolic_area():
+    """Plot hyperbolic area concepts."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-# Panel 1: Cayley transform mapping
-ax = axes[0]
-ax.set_title("Cayley Transform\n$w = (s-1)/(s+1)$", fontsize=13)
+    # --- Panel 1: Area scaling factor ---
+    ax = axes[0]
+    r_values = np.linspace(0, 0.995, 500)
+    factors = [hyp_area_factor(r) for r in r_values]
 
-# Draw unit circle (target)
-theta = np.linspace(0, 2 * np.pi, 200)
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2, alpha=0.3)
-ax.fill(np.cos(theta), np.sin(theta), alpha=0.05, color='blue')
+    ax.semilogy(r_values, factors, 'darkblue', linewidth=2)
+    ax.axhline(y=4, color='red', linestyle='--', alpha=0.5, label='Minimum = 4')
+    ax.set_xlabel('Euclidean radius r', fontsize=12)
+    ax.set_ylabel('Area factor (log scale)', fontsize=12)
+    ax.set_title(r'Conformal Factor $\frac{4}{(1-r^2)^2}$', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(1, 1e6)
 
-# Map critical line Re(s) = 1/2
-y_vals = np.linspace(-10, 10, 500)
-for sigma, color, label in [(0.5, '#E91E63', 'Re(s)=1/2 (critical)'),
-                             (1.0, '#4CAF50', 'Re(s)=1'),
-                             (0.0, '#2196F3', 'Re(s)=0')]:
-    ws = [(complex(sigma, y) - 1) / (complex(sigma, y) + 1) for y in y_vals]
-    ax.plot([w.real for w in ws], [w.imag for w in ws],
-            '-', color=color, linewidth=2, label=label, alpha=0.8)
+    # --- Panel 2: Hyperbolic vs Euclidean disk area ---
+    ax = axes[1]
+    R_values = np.linspace(0.01, 5.0, 200)
+    hyp_areas = [hyp_disk_area(R) for R in R_values]
+    eucl_areas = [math.pi * R**2 for R in R_values]
 
-# Mark specific points
-for y in [-2, -1, 0, 1, 2]:
-    s = complex(0.5, y)
-    w = (s - 1) / (s + 1)
-    ax.plot(w.real, w.imag, 'ro', markersize=6)
-    if abs(y) <= 2:
-        ax.annotate(f'y={y}', (w.real, w.imag), textcoords="offset points",
-                    xytext=(10, 5), fontsize=8)
+    ax.plot(R_values, hyp_areas, 'b-', linewidth=2, label='Hyperbolic area')
+    ax.plot(R_values, eucl_areas, 'r--', linewidth=2, label='Euclidean area')
 
-ax.set_xlim(-1.5, 1.5)
-ax.set_ylim(-1.5, 1.5)
-ax.set_aspect('equal')
-ax.legend(fontsize=9, loc='lower left')
-ax.grid(True, alpha=0.2)
-ax.set_xlabel('Re(w)')
-ax.set_ylabel('Im(w)')
+    ax.set_xlabel('Radius R', fontsize=12)
+    ax.set_ylabel('Area', fontsize=12)
+    ax.set_title('Disk Area: Hyperbolic vs Euclidean', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
 
-# Panel 2: Critical line image in disk
-ax = axes[1]
-ax.set_title("Critical Line Image\nin the Poincaré Disk", fontsize=13)
+    # --- Panel 3: Triangle area deficit ---
+    ax = axes[2]
 
-# Unit circle
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-ax.fill(np.cos(theta), np.sin(theta), alpha=0.05, color='blue')
+    # For a hyperbolic triangle with all angles = α, area = π - 3α
+    alpha_values = np.linspace(0, math.pi / 3 - 0.01, 200)
+    triangle_areas = [math.pi - 3 * alpha for alpha in alpha_values]
+    angle_sums = [3 * alpha for alpha in alpha_values]
 
-# Map many points on the critical line
-y_dense = np.linspace(-20, 20, 2000)
-ws = [(complex(0.5, y) - 1) / (complex(0.5, y) + 1) for y in y_dense]
-norms = [abs(w) for w in ws]
+    ax.plot(np.degrees(angle_sums), triangle_areas, 'purple', linewidth=2)
+    ax.axvline(x=180, color='gray', linestyle='--', alpha=0.5,
+               label='Euclidean angle sum = 180°')
+    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
 
-ax.plot([w.real for w in ws], [w.imag for w in ws],
-        '-', color='#E91E63', linewidth=2, label='Critical line image')
+    ax.fill_between(np.degrees(angle_sums), 0, triangle_areas,
+                     alpha=0.15, color='purple')
 
-# Show that all points have |w| ≤ 1
-ax.text(0.3, -0.8, f"max |w| = {max(norms):.6f}",
-        fontsize=11, color='#E91E63', fontweight='bold',
-        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#E91E63'))
+    ax.set_xlabel('Angle sum (degrees)', fontsize=12)
+    ax.set_ylabel('Area', fontsize=12)
+    ax.set_title('Gauss-Bonnet: Triangle Area = π − Σαᵢ', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 180)
 
-# The image is a circle centered at (-1/3, 0) with radius 2/3
-circle_center = -1/3
-circle_radius = 2/3
-circle_theta = np.linspace(0, 2 * np.pi, 200)
-ax.plot(circle_center + circle_radius * np.cos(circle_theta),
-        circle_radius * np.sin(circle_theta),
-        '--', color='orange', linewidth=1.5, alpha=0.7, label='Containing circle')
-
-ax.set_xlim(-1.3, 1.3)
-ax.set_ylim(-1.3, 1.3)
-ax.set_aspect('equal')
-ax.legend(fontsize=10)
-
-# Panel 3: Hilbert-Tropical bridge
-ax = axes[2]
-ax.set_title("Hilbert ↔ Tropical Bridge\nLog coordinates linearize hyperbolic metric", fontsize=13)
-
-# Plot the Hilbert metric on (0, ∞) vs tropical distance
-x_vals = np.linspace(0.1, 5, 200)
-ref = 1.0
-
-# Hilbert metric in log coords = |log(x) - log(ref)| = |log(x)|
-hilbert_dists = np.abs(np.log(x_vals) - np.log(ref))
-# Tropical distance in log coords
-log_x = np.log(x_vals)
-log_ref = np.log(ref)
-tropical_dists = np.abs(log_x - log_ref)
-
-ax.plot(x_vals, hilbert_dists, '-', color='#2196F3', linewidth=3,
-        label='Hilbert metric: |log(x/y)|')
-ax.plot(x_vals, tropical_dists, '--', color='#E91E63', linewidth=2,
-        label='Tropical distance: |log x − log y|')
-
-# They're identical!
-ax.fill_between(x_vals, hilbert_dists, tropical_dists, alpha=0.1, color='green')
-
-ax.axvline(x=1, color='gray', linestyle=':', alpha=0.5, label='Reference point y=1')
-ax.set_xlabel('x')
-ax.set_ylabel('Distance from y=1')
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(0, 4)
-
-# Annotation
-ax.annotate("Hilbert = Tropical\nin log coordinates!",
-            xy=(3, 1.1), fontsize=12, color='#4CAF50',
-            fontweight='bold', ha='center',
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
-                      edgecolor='#4CAF50', alpha=0.9))
-
-plt.tight_layout()
-plt.savefig('viz_cayley_bridge.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_cayley_bridge.png")
+    plt.tight_layout()
+    plt.savefig('hyperbolic_area.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved hyperbolic_area.png")
 
 
+if __name__ == "__main__":
+    plot_hyperbolic_area()
+
+
+#!/usr/bin/env python3
 """
-Visualization 1: The Poincaré Disk and Einstein Addition
-=========================================================
-Visualizes the Einstein velocity addition group on the Poincaré disk.
-Shows how vectors add hyperbolically (smaller than Euclidean addition)
-and how the disk boundary acts as a "speed of light" barrier.
+Visualization 1: The Poincaré Disk and Hyperbolic Lattice Points
+
+Creates a plot showing the PSL(2,Z) orbit in the Poincaré disk,
+colored by hyperbolic distance from the origin.
 """
 
+import math
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from algorithms import (
+    enumerate_psl2z_words, orbit_in_disk,
+    hyp_distance, hyp_counting_fn, hyp_disk_area,
+)
 
 
-def einstein_add_2d(z1, z2):
-    """Einstein (Möbius) addition in the Poincaré disk model.
-    z1, z2 are complex numbers with |z| < 1."""
-    num = z1 + z2
-    denom = 1 + np.conj(z1) * z2
-    return num / denom
+def plot_poincare_disk():
+    """Plot the PSL(2,Z) orbit in the Poincaré disk."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # --- Left panel: Orbit points colored by distance ---
+    ax = axes[0]
+
+    # Draw the unit disk boundary
+    theta = np.linspace(0, 2 * np.pi, 200)
+    ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+
+    # Compute orbit
+    elements = enumerate_psl2z_words(8)
+    base = 0.0 + 2.0j
+    orbit = orbit_in_disk(base, elements)
+
+    xs = [z.real for z in orbit]
+    ys = [z.imag for z in orbit]
+    dists = [hyp_distance(0j, z) for z in orbit]
+
+    scatter = ax.scatter(xs, ys, c=dists, cmap='viridis', s=15, alpha=0.8,
+                         edgecolors='none', vmin=0, vmax=max(dists))
+    plt.colorbar(scatter, ax=ax, label='Hyperbolic distance from origin')
+
+    # Mark origin
+    ax.plot(0, 0, 'r*', markersize=12, label='Origin')
+
+    ax.set_xlim(-1.1, 1.1)
+    ax.set_ylim(-1.1, 1.1)
+    ax.set_aspect('equal')
+    ax.set_title('PSL(2,ℤ) Orbit in the Poincaré Disk', fontsize=13)
+    ax.set_xlabel('Re(z)')
+    ax.set_ylabel('Im(z)')
+    ax.legend(loc='upper right')
+    ax.grid(True, alpha=0.3)
+
+    # --- Right panel: Counting function ---
+    ax = axes[1]
+
+    R_values = np.linspace(0.1, 7.0, 100)
+    counts = [hyp_counting_fn(orbit, R) for R in R_values]
+
+    # Asymptotic: V/(4π) * e^R where V = π/3
+    leading = (math.pi / 3) / (4 * math.pi)
+    asymp = [leading * math.exp(R) for R in R_values]
+
+    ax.semilogy(R_values, counts, 'b-', linewidth=2, label='N(R) (actual)')
+    ax.semilogy(R_values, asymp, 'r--', linewidth=2, label=r'$\frac{1}{12} e^R$ (asymptotic)')
+
+    ax.set_xlabel('Hyperbolic radius R', fontsize=12)
+    ax.set_ylabel('Count (log scale)', fontsize=12)
+    ax.set_title('Lattice Point Counting Function', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('poincare_disk.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved poincare_disk.png")
 
 
-def draw_hyperbolic_geodesic(ax, z1, z2, n_points=100, **kwargs):
-    """Draw a geodesic (circular arc) between two points in the Poincaré disk."""
-    t = np.linspace(0, 1, n_points)
-    # Parametrize the geodesic via Möbius interpolation
-    points = []
-    for ti in t:
-        # Linear interpolation in rapidity space (approximate)
-        z = z1 * (1 - ti) + z2 * ti
-        if abs(z) < 0.999:
-            points.append(z)
-    if points:
-        xs = [p.real for p in points]
-        ys = [p.imag for p in points]
-        ax.plot(xs, ys, **kwargs)
+if __name__ == "__main__":
+    plot_poincare_disk()
 
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-# Panel 1: Einstein addition vectors
-ax = axes[0]
-ax.set_title("Einstein Addition on (-1, 1)\n$a \\oplus b = (a+b)/(1+ab)$", fontsize=13)
-
-# Draw the interval
-ax.axhline(y=0, color='gray', linewidth=0.5)
-ax.axvline(x=-1, color='red', linewidth=2, linestyle='--', alpha=0.5, label='Speed of light')
-ax.axvline(x=1, color='red', linewidth=2, linestyle='--', alpha=0.5)
-
-# Plot Einstein additions
-pairs = [(0.3, 0.4), (0.5, 0.5), (0.7, 0.7), (0.9, 0.9)]
-colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
-
-for i, (a, b) in enumerate(pairs):
-    result = (a + b) / (1 + a * b)
-    naive = a + b
-    y_offset = (i + 1) * 0.15
-
-    ax.plot([0, a], [y_offset, y_offset], 'o-', color=colors[i], linewidth=2, markersize=6)
-    ax.plot([a, result], [y_offset, y_offset], 's-', color=colors[i], linewidth=2,
-            markersize=8, alpha=0.7, label=f'{a} ⊕ {b} = {result:.3f}')
-    if naive < 1.2:
-        ax.plot(naive, y_offset, 'x', color=colors[i], markersize=10, markeredgewidth=2)
-
-ax.set_xlim(-1.3, 1.3)
-ax.set_ylim(-0.1, 0.9)
-ax.legend(fontsize=9, loc='upper left')
-ax.set_xlabel('Velocity (units of c)')
-
-# Panel 2: Poincaré disk with orbit points
-ax = axes[1]
-ax.set_title("SL₂(ℤ) Orbit Points\nin the Poincaré Disk", fontsize=13)
-
-# Draw unit circle
-theta = np.linspace(0, 2 * np.pi, 200)
-ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
-ax.fill(np.cos(theta), np.sin(theta), alpha=0.05, color='blue')
-
-# Generate orbit points using Möbius transformations
-np.random.seed(42)
-points = [complex(0, 0)]  # Origin
-
-# Apply S and T generators iteratively
-def moebius_S(z):
-    """S generator: z → -1/z (with disk model adjustment)"""
-    if abs(z) < 0.001:
-        return complex(0.5, 0)
-    w = -1.0 / z if abs(z) > 0.01 else complex(0, 0)
-    return w / (1 + abs(w)) * 0.9  # project to disk
-
-def moebius_T(z, n=1):
-    """T generator: translation"""
-    shift = complex(0.3 * n, 0.1 * n)
-    return einstein_add_2d(z, shift * 0.3)
-
-# Build orbit
-orbit = set()
-orbit.add(complex(0, 0))
-generators = [complex(0.4, 0), complex(-0.4, 0), complex(0, 0.4), complex(0, -0.4),
-              complex(0.3, 0.3), complex(-0.3, 0.3)]
-
-current_layer = {complex(0, 0)}
-for depth in range(3):
-    next_layer = set()
-    for z in current_layer:
-        for g in generators:
-            w = einstein_add_2d(z, g)
-            if abs(w) < 0.98:
-                orbit.add(w)
-                next_layer.add(w)
-    current_layer = next_layer
-
-# Color by distance from origin
-for z in orbit:
-    r = abs(z)
-    color = plt.cm.viridis(r / 1.0)
-    size = 30 if r < 0.1 else 15
-    ax.plot(z.real, z.imag, 'o', color=color, markersize=size ** 0.5 + 2, alpha=0.8)
-
-ax.plot(0, 0, 'r*', markersize=15, zorder=5, label='Origin')
-ax.set_xlim(-1.2, 1.2)
-ax.set_ylim(-1.2, 1.2)
-ax.set_aspect('equal')
-ax.legend(fontsize=10)
-
-# Panel 3: Chebyshev trace growth
-ax = axes[2]
-ax.set_title("Chebyshev Trace Growth\n$\\mathrm{tr}(A^n)$ by initial trace", fontsize=13)
-
-def chebyshev_trace_seq(t, max_n):
-    result = [2, t]
-    for i in range(2, max_n + 1):
-        result.append(t * result[-1] - result[-2])
-    return result
-
-max_n = 8
-for t, color, label in [(2, '#2196F3', 't=2 (parabolic)'),
-                         (3, '#4CAF50', 't=3 (hyperbolic)'),
-                         (4, '#FF9800', 't=4'),
-                         (5, '#E91E63', 't=5')]:
-    seq = chebyshev_trace_seq(t, max_n)
-    ax.semilogy(range(max_n + 1), [max(1, abs(v)) for v in seq],
-                'o-', color=color, linewidth=2, markersize=6, label=label)
-
-ax.set_xlabel('Power n')
-ax.set_ylabel('|tr(Aⁿ)| (log scale)')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('viz_poincare_disk.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_poincare_disk.png")
-
-
+#!/usr/bin/env python3
 """
-Visualization 2: Trace Spectrum and Hyperbolic Primes
-======================================================
-Visualizes the classification of SL₂(ℤ) elements by trace,
-the growth of hyperbolic trace counts, and the identification
-of "prime" traces that correspond to primitive geodesics.
+Visualization 2: Hyperbolic Primes and the Selberg Zeta Function
+
+Creates plots showing:
+- Distribution of primitive geodesic lengths (hyperbolic primes)
+- The Selberg zeta function
+- Comparison with the e^R/R asymptotic
 """
 
+import math
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import defaultdict
+from algorithms import (
+    enumerate_psl2z_words, find_primitive_geodesics,
+    selberg_zeta_truncated, hyp_prime_asymptotic,
+)
 
 
-def chebyshev_trace(t, n):
-    """Compute tr(Aⁿ) where tr(A) = t."""
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    prev, curr = 2, t
-    for _ in range(n - 1):
-        prev, curr = curr, t * curr - prev
-    return curr
+def plot_hyperbolic_primes():
+    """Plot the distribution of hyperbolic primes and the Selberg zeta."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+    # Compute geodesic data
+    elements = enumerate_psl2z_words(9)
+    primes = find_primitive_geodesics(elements, max_length=12.0)
+    lengths = sorted(set(round(ell, 4) for ell, _ in primes))
+
+    # --- Panel 1: Length spectrum histogram ---
+    ax = axes[0]
+    all_lengths = [ell for ell, _ in primes]
+    ax.hist(all_lengths, bins=30, color='steelblue', edgecolor='black', alpha=0.8)
+    ax.set_xlabel('Geodesic length ℓ', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Primitive Geodesic Length Spectrum', fontsize=13)
+    ax.axvline(x=2 * math.acosh(1.5), color='red', linestyle='--',
+               label=f'ℓ_min = {2*math.acosh(1.5):.3f}')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    # --- Panel 2: Counting function vs asymptotic ---
+    ax = axes[1]
+    R_range = np.linspace(1.0, max(all_lengths) + 1, 200)
+
+    # Staircase counting function
+    prime_count = []
+    for R in R_range:
+        count = sum(1 for ell in all_lengths if ell <= R)
+        prime_count.append(count)
+
+    # Asymptotic: e^R / R
+    asymp_values = [hyp_prime_asymptotic(R) for R in R_range]
+
+    ax.plot(R_range, prime_count, 'b-', linewidth=2, label=r'$\pi_H(R)$ (counted)')
+    ax.plot(R_range, asymp_values, 'r--', linewidth=2, label=r'$e^R / R$ (asymptotic)')
+    ax.set_xlabel('Length threshold R', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Hyperbolic Prime Counting Function', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    # --- Panel 3: Selberg zeta function ---
+    ax = axes[2]
+    spectrum = [ell for ell, _ in primes]
+    s_values = np.linspace(0.3, 8.0, 200)
+    Z_values = [selberg_zeta_truncated(spectrum, s, K=15) for s in s_values]
+
+    ax.plot(s_values, Z_values, 'darkgreen', linewidth=2)
+    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.5)
+    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.3)
+    ax.set_xlabel('s', fontsize=12)
+    ax.set_ylabel('Z(s)', fontsize=12)
+    ax.set_title('Selberg Zeta Function Z(s)', fontsize=13)
+    ax.grid(True, alpha=0.3)
+
+    # Mark the zero near s=1
+    ax.axvline(x=1.0, color='red', linestyle=':', alpha=0.5, label='s = 1 (trivial zero)')
+    ax.legend()
+
+    plt.tight_layout()
+    plt.savefig('hyperbolic_primes.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved hyperbolic_primes.png")
 
 
-def is_prime_trace(t, max_power=15):
-    """Check if trace t is primitive (not a proper power)."""
-    if abs(t) <= 2:
-        return False
-    for t0 in range(-abs(t) + 1, abs(t)):
-        for n in range(2, max_power + 1):
-            if chebyshev_trace(t0, n) == t:
-                return False
-    return True
-
-
-def count_sl2z_by_norm(max_norm):
-    """Count SL₂(ℤ) elements by trace for entry norm ≤ max_norm."""
-    trace_counts = defaultdict(int)
-    for a in range(-max_norm, max_norm + 1):
-        for b in range(-max_norm, max_norm + 1):
-            for c in range(-max_norm, max_norm + 1):
-                for d in range(-max_norm, max_norm + 1):
-                    if a * d - b * c == 1:
-                        trace_counts[a + d] += 1
-    return dict(trace_counts)
-
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-
-# Panel 1: Trace classification
-ax = axes[0, 0]
-ax.set_title("Trace Classification of SL₂(ℤ)\n(Elliptic / Parabolic / Hyperbolic)", fontsize=12)
-
-traces = range(-10, 11)
-colors = []
-for t in traces:
-    if abs(t) < 2:
-        colors.append('#2196F3')  # Elliptic: blue
-    elif abs(t) == 2:
-        colors.append('#FF9800')  # Parabolic: orange
-    else:
-        colors.append('#E91E63')  # Hyperbolic: red
-
-ax.bar(traces, [1] * len(traces), color=colors, edgecolor='white', linewidth=0.5)
-ax.set_xlabel('Trace value t')
-ax.set_ylabel('')
-ax.set_yticks([])
-
-# Legend
-from matplotlib.patches import Patch
-legend_elements = [
-    Patch(facecolor='#2196F3', label='Elliptic (|t| < 2)'),
-    Patch(facecolor='#FF9800', label='Parabolic (|t| = 2)'),
-    Patch(facecolor='#E91E63', label='Hyperbolic (|t| > 2)')
-]
-ax.legend(handles=legend_elements, fontsize=10)
-
-# Panel 2: Hyperbolic trace count growth
-ax = axes[0, 1]
-ax.set_title("Hyperbolic Trace Count Growth\n# of hyperbolic traces with |t| ≤ T", fontsize=12)
-
-T_values = range(3, 51)
-counts = [2 * (T - 2) for T in T_values]
-ax.plot(T_values, counts, 'b-', linewidth=2, label='2(T−2)')
-ax.plot(T_values, list(T_values), 'r--', linewidth=1, label='T (linear reference)')
-ax.fill_between(T_values, counts, alpha=0.1, color='blue')
-ax.set_xlabel('Trace bound T')
-ax.set_ylabel('Count')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-# Panel 3: Prime traces
-ax = axes[1, 0]
-ax.set_title("Prime vs Composite Traces\n(Prime = primitive hyperbolic element)", fontsize=12)
-
-max_t = 30
-prime_traces = []
-composite_traces = []
-for t in range(3, max_t + 1):
-    if is_prime_trace(t):
-        prime_traces.append(t)
-    else:
-        composite_traces.append(t)
-
-ax.bar(prime_traces, [1] * len(prime_traces), color='#4CAF50', label=f'Prime ({len(prime_traces)})',
-       edgecolor='white')
-ax.bar(composite_traces, [1] * len(composite_traces), color='#9E9E9E',
-       label=f'Composite ({len(composite_traces)})', edgecolor='white')
-ax.set_xlabel('Trace value t')
-ax.set_ylabel('')
-ax.set_yticks([])
-ax.legend(fontsize=10)
-
-# Panel 4: SL₂(ℤ) trace distribution
-ax = axes[1, 1]
-ax.set_title("SL₂(ℤ) Element Count by Trace\n(entry norm ≤ 5)", fontsize=12)
-
-trace_dist = count_sl2z_by_norm(5)
-traces_sorted = sorted(trace_dist.keys())
-counts_sorted = [trace_dist[t] for t in traces_sorted]
-
-bar_colors = []
-for t in traces_sorted:
-    if abs(t) < 2:
-        bar_colors.append('#2196F3')
-    elif abs(t) == 2:
-        bar_colors.append('#FF9800')
-    else:
-        bar_colors.append('#E91E63')
-
-ax.bar(traces_sorted, counts_sorted, color=bar_colors, edgecolor='white', linewidth=0.5)
-ax.set_xlabel('Trace value t')
-ax.set_ylabel('Number of SL₂(ℤ) elements')
-ax.set_yscale('log')
-ax.grid(True, alpha=0.3, axis='y')
-
-plt.tight_layout()
-plt.savefig('viz_trace_spectrum.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_trace_spectrum.png")
+if __name__ == "__main__":
+    plot_hyperbolic_primes()
