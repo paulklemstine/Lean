@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "primes_of_the_form_n1.json",
+    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+    "domain": "Algebra",
+    "date": "2026-05-31T15:45:01Z",
+    "exp_id": "e7f8157d",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 7
+  },
+  {
     "filename": "this_research_cycle_established_the_mathematical_f.json",
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "domain": "Algebra",
     "date": "2026-05-31T15:44:39Z",
     "exp_id": "866a2ce9",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7711866265060241,
+    "quality": "substantial",
     "pkg_num": 6
   },
   {
@@ -82,6 +92,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
+  "primes_of_the_form_n1.json": {
+    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+    "exp_id": "e7f8157d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "exp_id": "866a2ce9",
@@ -127,7 +145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -138,7 +156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -149,7 +167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -160,7 +178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -171,7 +189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:22Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.5537266666666667,
       "quality": "partial"
     },
@@ -182,7 +200,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 272,
+      "hue": 91,
+      "priority_score": 0.7711866265060241,
+      "quality": "substantial"
+    },
+    {
+      "id": "primes_of_the_form_n1",
+      "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:45:01Z",
+      "hue": 359,
       "priority_score": null,
       "quality": "unrated"
     }

@@ -1,324 +1,278 @@
 #!/usr/bin/env python3
 """
-Algorithms for studying primes and semiprimes of the form n² + 1.
+algorithms.py — Core algorithms for studying primes of the form n² + 1.
 
-Implements:
-1. Efficient classification of n² + 1 values by prime factor count
-2. Euclid-style prime generation for primes ≡ 1 (mod 4)
-3. Root counting for X² + 1 over finite fields
-4. Semiprime sieve for n² + 1
+Type-hinted implementations of:
+1. Bateman-Horn constant computation
+2. n² + 1 prime counting
+3. Semi-prime detection and counting
+4. Mod-4 constraint verification
+5. Friedlander-Iwaniec set enumeration
 """
 
-import math
-from typing import List, Tuple, Dict, Set, Optional
+from math import log, sqrt, isqrt
+from typing import List, Tuple, Set, Dict, Optional
 
 
 def sieve_of_eratosthenes(limit: int) -> List[int]:
-    """
-    Generate all primes up to `limit` using the Sieve of Eratosthenes.
-
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
+    """Return all primes up to limit using the Sieve of Eratosthenes.
 
     Args:
-        limit: Upper bound for primes.
+        limit: Upper bound for prime search.
 
     Returns:
-        Sorted list of primes up to limit.
-
-    >>> sieve_of_eratosthenes(20)
-    [2, 3, 5, 7, 11, 13, 17, 19]
+        Sorted list of primes ≤ limit.
     """
     if limit < 2:
         return []
     is_prime = [True] * (limit + 1)
     is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
+    for i in range(2, isqrt(limit) + 1):
         if is_prime[i]:
             for j in range(i * i, limit + 1, i):
                 is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+    return [i for i, v in enumerate(is_prime) if v]
 
 
-def factorize(n: int, primes: Optional[List[int]] = None) -> List[int]:
-    """
-    Return the prime factorization of n as a sorted list with multiplicity.
+def is_prime(n: int) -> bool:
+    """Deterministic primality test for n.
 
-    If a precomputed prime list is provided, uses trial division with those primes.
-    Otherwise uses basic trial division.
-
-    Time complexity: O(√n) without precomputed primes, O(√n / log n) with.
+    Uses trial division up to √n. For large n, consider Miller-Rabin.
 
     Args:
-        n: Number to factorize (must be ≥ 1).
-        primes: Optional precomputed list of primes up to √n.
+        n: Non-negative integer to test.
 
     Returns:
-        Sorted list of prime factors with multiplicity.
-
-    >>> factorize(12)
-    [2, 2, 3]
-    >>> factorize(17)
-    [17]
+        True if n is prime.
     """
-    if n <= 1:
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def prime_factorization(n: int) -> List[int]:
+    """Return the prime factorization of n as a sorted list with multiplicity.
+
+    Args:
+        n: Positive integer ≥ 2.
+
+    Returns:
+        List of prime factors, e.g. [2, 2, 3] for n=12.
+    """
+    if n < 2:
         return []
-    factors = []
-    if primes:
-        for p in primes:
-            if p * p > n:
-                break
-            while n % p == 0:
-                factors.append(p)
-                n //= p
-    else:
-        d = 2
-        while d * d <= n:
-            while n % d == 0:
-                factors.append(d)
-                n //= d
-            d += 1
+    factors: List[int] = []
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors.append(d)
+            n //= d
+        d += 1
     if n > 1:
         factors.append(n)
     return factors
 
 
-def classify_sq_plus_one(limit: int) -> Dict[str, List[int]]:
-    """
-    Classify values of n² + 1 for n = 1, ..., limit by their prime structure.
-
-    Algorithm:
-        1. Precompute primes up to limit² + 1 using sieve.
-        2. For each n, compute n² + 1 and count prime factors.
-        3. Classify into primes, semiprimes, and higher.
-
-    Time complexity: O(limit² log log(limit²)) for sieve + O(limit · √(limit²)) for factoring.
-    Space complexity: O(limit²) for the sieve.
+def big_omega(n: int) -> int:
+    """Compute Ω(n), the number of prime factors of n with multiplicity.
 
     Args:
-        limit: Maximum value of n to test.
+        n: Positive integer ≥ 1.
 
     Returns:
-        Dictionary with keys 'primes', 'semiprimes', 'three_factors', etc.
-        Each maps to a list of n values producing that category.
-
-    >>> result = classify_sq_plus_one(10)
-    >>> 1 in result['primes']  # 1² + 1 = 2 is prime
-    True
-    >>> 3 in result['semiprimes']  # 3² + 1 = 10 = 2 × 5
-    True
+        Number of prime factors with multiplicity.
     """
-    # Precompute primes for faster factoring
-    max_val = limit * limit + 1
-    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)
+    return len(prime_factorization(n))
 
-    result: Dict[str, List[int]] = {
-        'primes': [],
-        'semiprimes': [],
-        'three_factors': [],
-        'four_plus_factors': []
-    }
 
-    for n in range(1, limit + 1):
+def is_semiprime(n: int) -> bool:
+    """Test whether n is a semi-prime (product of exactly two primes).
+
+    Args:
+        n: Positive integer.
+
+    Returns:
+        True if Ω(n) = 2.
+    """
+    return big_omega(n) == 2
+
+
+def is_almost_prime(k: int, n: int) -> bool:
+    """Test whether n is a P_k number (at most k prime factors with multiplicity).
+
+    Args:
+        k: Maximum number of prime factors allowed.
+        n: Positive integer > 1.
+
+    Returns:
+        True if n > 1 and Ω(n) ≤ k.
+    """
+    return n > 1 and big_omega(n) <= k
+
+
+def count_nsq_plus_one_primes(N: int) -> int:
+    """Count n in [0, N) such that n² + 1 is prime.
+
+    Args:
+        N: Upper bound (exclusive) for n.
+
+    Returns:
+        Number of n < N with n² + 1 prime.
+    """
+    count = 0
+    for n in range(N):
+        if is_prime(n * n + 1):
+            count += 1
+    return count
+
+
+def count_nsq_plus_one_semiprimes(N: int) -> int:
+    """Count n in [0, N) such that n² + 1 is a semi-prime.
+
+    Args:
+        N: Upper bound (exclusive) for n.
+
+    Returns:
+        Number of n < N with n² + 1 semi-prime.
+    """
+    count = 0
+    for n in range(N):
+        if is_semiprime(n * n + 1):
+            count += 1
+    return count
+
+
+def bateman_horn_constant(num_primes: int = 10000) -> float:
+    """Compute the Bateman-Horn/Hardy-Littlewood constant for n² + 1.
+
+    The constant is C = ∏_{p odd prime} (1 - χ₋₄(p)/(p-1))
+    where χ₋₄(p) = +1 if p ≡ 1 (mod 4), -1 if p ≡ 3 (mod 4).
+
+    Args:
+        num_primes: Number of odd primes to include in the product.
+
+    Returns:
+        Approximation of the constant C.
+    """
+    primes = sieve_of_eratosthenes(num_primes * 15)  # generous upper bound
+    C = 1.0
+    count = 0
+    for p in primes:
+        if p == 2:
+            continue
+        if p % 4 == 1:
+            C *= 1.0 - 1.0 / (p - 1)
+        else:  # p % 4 == 3
+            C *= 1.0 + 1.0 / (p - 1)
+        count += 1
+        if count >= num_primes:
+            break
+    return C
+
+
+def hardy_littlewood_prediction(N: int, C: Optional[float] = None) -> float:
+    """Predict π_{n²+1}(N) using the Hardy-Littlewood conjecture.
+
+    Prediction: π_{n²+1}(N) ~ C · N / ln(N)
+
+    Args:
+        N: Upper bound.
+        C: The Hardy-Littlewood constant. If None, computed automatically.
+
+    Returns:
+        Predicted count of primes of the form n² + 1 with n < N.
+    """
+    if N <= 2:
+        return 0.0
+    if C is None:
+        C = bateman_horn_constant()
+    return C * N / log(N)
+
+
+def verify_mod4_constraint(N: int) -> Tuple[Set[int], Set[int]]:
+    """Verify that all odd prime divisors of n² + 1 are ≡ 1 (mod 4).
+
+    Args:
+        N: Check for all n < N.
+
+    Returns:
+        Tuple of (primes_1mod4, primes_3mod4) that divide some n² + 1.
+        The second set should always be empty.
+    """
+    primes_1mod4: Set[int] = set()
+    primes_3mod4: Set[int] = set()
+
+    for n in range(N):
         val = n * n + 1
-        omega = len(factorize(val, small_primes))
+        for p in set(prime_factorization(val)):
+            if p == 2:
+                continue
+            if p % 4 == 1:
+                primes_1mod4.add(p)
+            else:
+                primes_3mod4.add(p)
 
-        if omega == 1:
-            result['primes'].append(n)
-        elif omega == 2:
-            result['semiprimes'].append(n)
-        elif omega == 3:
-            result['three_factors'].append(n)
-        else:
-            result['four_plus_factors'].append(n)
-
-    return result
+    return primes_1mod4, primes_3mod4
 
 
-def euclid_style_prime_generator(bound: int) -> List[Tuple[int, int, int]]:
-    """
-    Generate primes ≡ 1 (mod 4) dividing values of n² + 1 using the
-    Euclid-style construction from Theorem D.
-
-    Algorithm (pseudocode):
-        Input: bound B
-        1. Compute B!
-        2. Set M = (2 · B!)² + 1
-        3. Find all prime factors of M
-        4. Return those that are > B and ≡ 1 (mod 4)
-
-    Each returned prime q comes with a witness n = 2 · B! such that q | n² + 1.
+def enumerate_friedlander_iwaniec_primes(bound: int) -> List[Tuple[int, int, int]]:
+    """Find primes of the form a² + b⁴ up to bound.
 
     Args:
-        bound: The bound B. Returns primes > B.
+        bound: Upper limit for the prime value.
 
     Returns:
-        List of tuples (q, n, B) where q is prime, q > B, q ≡ 1 (mod 4),
-        and q | n² + 1.
-
-    >>> results = euclid_style_prime_generator(3)
-    >>> all(q > 3 and q % 4 == 1 for q, _, _ in results)
-    True
+        List of (prime, a, b) triples.
     """
-    factorial_B = math.factorial(bound)
-    n_witness = 2 * factorial_B
-    M = n_witness * n_witness + 1
-
-    factors = factorize(M)
-    primes = sorted(set(factors))
-
-    results = []
-    for q in primes:
-        if q > bound and q % 4 == 1:
-            results.append((q, n_witness, bound))
-
+    results: List[Tuple[int, int, int]] = []
+    b = 1
+    while b ** 4 < bound:
+        a = 0
+        while a * a + b ** 4 < bound:
+            val = a * a + b ** 4
+            if is_prime(val):
+                results.append((val, a, b))
+            a += 1
+        b += 1
+    results.sort()
     return results
 
 
-def root_count_x_sq_plus_one(p: int) -> Tuple[int, List[int]]:
-    """
-    Count roots of X² + 1 in ℤ/pℤ and return them.
-
-    This computes ω(p) = |{n ∈ ℤ/pℤ : n² + 1 ≡ 0 (mod p)}|,
-    which is the local density used in sieve theory.
-
-    Algorithm:
-        For each n ∈ {0, 1, ..., p-1}, check if (n² + 1) mod p = 0.
-
-    Time complexity: O(p)
-    Space complexity: O(p) for storing roots.
-
-    The expected pattern (provable from quadratic reciprocity):
-        ω(2) = 1
-        ω(p) = 2 if p ≡ 1 (mod 4)
-        ω(p) = 0 if p ≡ 3 (mod 4)
+def omega_distribution(N: int) -> Dict[int, int]:
+    """Compute the distribution of Ω(n² + 1) for n < N.
 
     Args:
-        p: A prime number.
+        N: Upper bound for n.
 
     Returns:
-        Tuple of (count, list_of_roots).
-
-    >>> root_count_x_sq_plus_one(5)
-    (2, [2, 3])
-    >>> root_count_x_sq_plus_one(7)
-    (0, [])
+        Dictionary mapping Ω values to their counts.
     """
-    roots = [n for n in range(p) if (n * n + 1) % p == 0]
-    return len(roots), roots
-
-
-def semiprime_sieve_sq_plus_one(limit: int) -> List[Tuple[int, int, List[int]]]:
-    """
-    Find all n ≤ limit where n² + 1 is prime or semiprime.
-
-    Returns each qualifying n along with n² + 1 and its factorization.
-
-    Algorithm:
-        1. Precompute small primes.
-        2. For each n, factorize n² + 1.
-        3. Keep those with Ω(n² + 1) ≤ 2.
-
-    Time complexity: O(limit · √(limit²)) = O(limit²)
-    Space complexity: O(√(limit²)) for prime table.
-
-    Args:
-        limit: Maximum n to check.
-
-    Returns:
-        List of (n, n²+1, factorization) triples where Ω(n²+1) ≤ 2.
-
-    >>> results = semiprime_sieve_sq_plus_one(5)
-    >>> (1, 2, [2]) in results  # 1² + 1 = 2 (prime)
-    True
-    """
-    max_val = limit * limit + 1
-    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)
-
-    results = []
-    for n in range(1, limit + 1):
+    dist: Dict[int, int] = {}
+    for n in range(N):
         val = n * n + 1
-        factors = factorize(val, small_primes)
-        if len(factors) <= 2:
-            results.append((n, val, factors))
-
-    return results
-
-
-def admissibility_check(f, var_count: int, test_primes: List[int]) -> Dict[int, Tuple[bool, Optional[Tuple]]]:
-    """
-    Check local admissibility of a polynomial function for given primes.
-
-    For each prime p, finds a witness (n₁, ..., nₖ) with p ∤ f(n₁, ..., nₖ),
-    or reports that p divides all values (which should never happen for
-    admissible polynomials).
-
-    Algorithm:
-        For each prime p, iterate over small input values until finding
-        one where f(...) is not divisible by p.
-
-    Args:
-        f: Function taking `var_count` natural number arguments.
-        var_count: Number of variables (1 or 2).
-        test_primes: List of primes to test.
-
-    Returns:
-        Dict mapping each prime to (is_admissible, witness_or_None).
-
-    >>> f = lambda n: n**2 + 1
-    >>> result = admissibility_check(f, 1, [2, 3, 5, 7])
-    >>> all(v[0] for v in result.values())
-    True
-    """
-    results = {}
-
-    for p in test_primes:
-        found = False
-        if var_count == 1:
-            for n in range(p):
-                if f(n) % p != 0:
-                    results[p] = (True, (n,))
-                    found = True
-                    break
-        elif var_count == 2:
-            for a in range(p):
-                for b in range(p):
-                    if f(a, b) % p != 0:
-                        results[p] = (True, (a, b))
-                        found = True
-                        break
-                if found:
-                    break
-
-        if not found:
-            results[p] = (False, None)
-
-    return results
+        omega = big_omega(val)
+        dist[omega] = dist.get(omega, 0) + 1
+    return dist
 
 
 if __name__ == "__main__":
-    print("=== Classification of n² + 1 for n ≤ 100 ===")
-    result = classify_sq_plus_one(100)
-    print(f"Primes (Ω=1): {len(result['primes'])} values")
-    print(f"  n = {result['primes'][:15]}...")
-    print(f"Semiprimes (Ω=2): {len(result['semiprimes'])} values")
-    print(f"Three factors (Ω=3): {len(result['three_factors'])} values")
-    print(f"Four+ factors (Ω≥4): {len(result['four_plus_factors'])} values")
-    print()
+    # Quick verification
+    C = bateman_horn_constant(10000)
+    print(f"Hardy-Littlewood constant: {C:.6f}")
 
-    print("=== Euclid-style prime generation ===")
-    for B in [3, 5, 7, 10]:
-        primes = euclid_style_prime_generator(B)
-        print(f"B = {B}: found primes {[q for q, _, _ in primes]}")
-    print()
+    N = 10000
+    actual = count_nsq_plus_one_primes(N)
+    predicted = hardy_littlewood_prediction(N, C)
+    print(f"Primes n²+1 for n < {N}: actual={actual}, predicted={predicted:.1f}")
 
-    print("=== Root counts of X² + 1 mod p ===")
-    for p in sieve_of_eratosthenes(30):
-        count, roots = root_count_x_sq_plus_one(p)
-        print(f"  p = {p:>3} (≡ {p%4} mod 4): {count} roots {roots}")
-    print()
-
-    print("=== Admissibility check ===")
-    primes_50 = sieve_of_eratosthenes(50)
-    print("n² + 1:", all(v[0] for v in admissibility_check(lambda n: n**2 + 1, 1, primes_50).values()))
-    print("a² + b⁴:", all(v[0] for v in admissibility_check(lambda a, b: a**2 + b**4, 2, primes_50).values()))
+    p1, p3 = verify_mod4_constraint(10000)
+    print(f"Mod-4 constraint: {len(p1)} primes ≡ 1, {len(p3)} primes ≡ 3 (should be 0)")
