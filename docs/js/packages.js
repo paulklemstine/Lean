@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Visualizations (generated images from Python scripts)
         renderVisualizations('content-visualizations', data.visualizations);
 
-        // Algorithms rendered above demos in the Interactive tab
-        renderCodeBlocks('content-algorithms', data.algorithms, 'code');
+        // Algorithms: show pseudocode (brief description) when available, full code as fallback
+        renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
         if (window.renderInteractiveDemos) {
             window.renderInteractiveDemos('content-demos', data.demos);
         }
@@ -168,17 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Filter out visualizations with empty or placeholder code
-        const renderableItems = validItems.filter(item => {
-            const code = item.code || '';
-            return code.trim().length > 20;
-        });
-        if (renderableItems.length === 0) {
-            container.style.display = 'none';
-            return;
-        }
-
-        renderableItems.forEach((item, idx) => {
+        validItems.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = 'viz-container';
 
