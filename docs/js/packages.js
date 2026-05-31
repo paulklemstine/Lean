@@ -414,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (editor.style.display === 'none') {
                     editor.style.display = '';
                     toggleBtn.textContent = 'Hide Source';
+                    autoSizeEditor();
                 } else {
                     editor.style.display = 'none';
                     toggleBtn.textContent = 'Show Source';
@@ -447,6 +448,11 @@ document.addEventListener('DOMContentLoaded', () => {
             editor.spellcheck = false;
             editor.value = resolvedCode;
             editor.style.display = 'none'; // Hidden by default
+            // Auto-size: set height to fit content when shown
+            const autoSizeEditor = () => {
+                editor.style.height = 'auto';
+                editor.style.height = Math.max(450, editor.scrollHeight) + 'px';
+            };
 
             // Fetch code from code_file if not resolved yet
             if (!resolvedCode && item.code_file) {
@@ -462,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         resolvedCode = code;
                         genBtn.disabled = !code || !code.trim();
                         genBtn.textContent = code ? 'Generate' : 'Code Unavailable';
+                        autoSizeEditor();
                     })
                     .catch(err => {
                         console.warn('Failed to fetch viz code:', item.code_file, err);
@@ -472,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             resolvedCode = modCode;
                             genBtn.disabled = false;
                             genBtn.textContent = 'Generate';
+                            autoSizeEditor();
                         } else {
                             genBtn.disabled = true;
                             genBtn.textContent = 'Code Unavailable';

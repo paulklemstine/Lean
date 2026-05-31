@@ -1022,7 +1022,8 @@ body.light-theme .gallery-img-container {
 
 .code-editor {
     width: 100%;
-    min-height: 200px;
+    min-height: 450px;
+    height: auto;
     padding: 20px 24px;
     background-color: var(--bg-panel);
     color: var(--text-main);
@@ -1033,6 +1034,7 @@ body.light-theme .gallery-img-container {
     resize: vertical;
     outline: none;
     border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
 .code-editor:focus {
