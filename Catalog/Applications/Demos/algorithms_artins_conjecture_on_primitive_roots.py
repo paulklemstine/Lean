@@ -1,45 +1,27 @@
 """
 Algorithms for Artin's Conjecture on Primitive Roots
 
-Type-hinted implementations of key algorithms for:
-1. Testing whether an integer is a primitive root mod p
-2. Computing primitive roots mod p
-3. Computing the Artin constant approximation
-4. Counting primes where a given integer is a primitive root
+Implementations of key algorithms for computing primitive roots,
+testing the Artin conjecture computationally, and estimating densities.
 """
 
 from typing import List, Tuple, Optional
-from math import gcd, isqrt, log
-from functools import reduce
+import math
 
 
 def is_prime(n: int) -> bool:
-    """Miller-Rabin primality test (deterministic for n < 3.3×10^24)."""
+    """Test primality using trial division."""
     if n < 2:
         return False
     if n < 4:
         return True
-    if n % 2 == 0:
+    if n % 2 == 0 or n % 3 == 0:
         return False
-    # Write n-1 as 2^r * d
-    r, d = 0, n - 1
-    while d % 2 == 0:
-        r += 1
-        d //= 2
-    # Test witnesses
-    witnesses = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
-    for a in witnesses:
-        if a >= n:
-            continue
-        x = pow(a, d, n)
-        if x == 1 or x == n - 1:
-            continue
-        for _ in range(r - 1):
-            x = pow(x, 2, n)
-            if x == n - 1:
-                break
-        else:
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
             return False
+        i += 6
     return True
 
 
@@ -61,17 +43,159 @@ def prime_factors(n: int) -> List[int]:
 def multiplicative_order(a: int, n: int) -> int:
     """Compute the multiplicative order of a modulo n.
 
-    Assumes gcd(a, n) = 1. Uses the factorization of φ(n) for efficiency.
+    Returns the smallest positive integer k such that a^k ≡ 1 (mod n).
+    Assumes gcd(a, n) = 1.
     """
-    if gcd(a, n) != 1:
+    if math.gcd(a, n) != 1:
         raise ValueError(f"gcd({a}, {n}) != 1")
-    # Compute Euler's totient
-    phi = euler_totient(n)
-    order = phi
-    for p in prime_factors(phi):
-        while order % p == 0 and pow(a, order // p, n) == 1:
-            order //= p
+    order = 1
+    current = a % n
+    while current != 1:
+        current = (current * a) % n
+        order += 1
     return order
+
+
+def is_primitive_root(a: int, p: int) -> bool:
+    """Test if a is a primitive root modulo prime p.
+
+    Uses the efficient test: a is a primitive root mod p iff
+    a^((p-1)/q) ≢ 1 (mod p) for every prime q dividing p-1.
+
+    Args:
+        a: Integer to test
+        p: Prime modulus
+
+    Returns:
+        True if a is a primitive root mod p
+    """
+    if not is_prime(p):
+        raise ValueError(f"{p} is not prime")
+    a_mod = a % p
+    if a_mod == 0:
+        return False
+
+    factors = prime_factors(p - 1)
+    for q in factors:
+        if pow(a_mod, (p - 1) // q, p) == 1:
+            return False
+    return True
+
+
+def is_perfect_square(n: int) -> bool:
+    """Test if integer n is a perfect square."""
+    if n < 0:
+        return False
+    s = int(math.isqrt(n))
+    return s * s == n
+
+
+def is_artin_candidate(a: int) -> bool:
+    """Test if integer a is an Artin candidate (not ±1, not a perfect square)."""
+    if a == 1 or a == -1:
+        return False
+    if a >= 0:
+        return not is_perfect_square(a)
+    return not is_perfect_square(-a)  # -n^2 is never a perfect square in Z
+
+
+def artin_set(a: int, bound: int) -> List[int]:
+    """Compute the Artin set A(a) = {p prime : a is a primitive root mod p} up to bound.
+
+    Args:
+        a: Integer base
+        bound: Upper bound for primes to check
+
+    Returns:
+        List of primes p ≤ bound for which a is a primitive root mod p
+    """
+    result = []
+    for p in range(2, bound + 1):
+        if is_prime(p) and p > abs(a):
+            if is_primitive_root(a, p):
+                result.append(p)
+    return result
+
+
+def artin_density(a: int, bound: int) -> float:
+    """Compute the density of primes p ≤ bound for which a is a primitive root.
+
+    Args:
+        a: Integer base
+        bound: Upper bound for primes
+
+    Returns:
+        Ratio |A(a) ∩ [2, bound]| / π(bound)
+    """
+    primes = [p for p in range(2, bound + 1) if is_prime(p)]
+    if not primes:
+        return 0.0
+    artin_primes = [p for p in primes if p > abs(a) and is_primitive_root(a, p)]
+    return len(artin_primes) / len(primes)
+
+
+def artin_constant_approx(num_primes: int = 100) -> float:
+    """Approximate the Artin constant C = ∏_q prime (1 - 1/(q(q-1))).
+
+    The Artin constant is approximately 0.3739558136...
+
+    Args:
+        num_primes: Number of primes to use in the product
+
+    Returns:
+        Approximation of the Artin constant
+    """
+    product = 1.0
+    count = 0
+    n = 2
+    while count < num_primes:
+        if is_prime(n):
+            product *= (1 - 1.0 / (n * (n - 1)))
+            count += 1
+        n += 1
+    return product
+
+
+def safe_primes(bound: int) -> List[Tuple[int, int]]:
+    """Find all safe primes p = 2q + 1 with p ≤ bound.
+
+    A safe prime is a prime p such that (p-1)/2 is also prime.
+
+    Args:
+        bound: Upper bound
+
+    Returns:
+        List of (p, q) pairs where p = 2q + 1, both p and q prime
+    """
+    result = []
+    for q in range(2, bound // 2 + 1):
+        if is_prime(q):
+            p = 2 * q + 1
+            if p <= bound and is_prime(p):
+                result.append((p, q))
+    return result
+
+
+def primitive_root_index(a: int, p: int) -> int:
+    """Compute the primitive root index of a modulo p.
+
+    The index is (p-1) / ord_p(a), measuring how far a is from
+    being a primitive root. Index 1 means a is a primitive root.
+
+    Args:
+        a: Integer (coprime to p)
+        p: Prime modulus
+
+    Returns:
+        The index (p-1) / multiplicative_order(a, p)
+    """
+    if not is_prime(p):
+        raise ValueError(f"{p} is not prime")
+    a_mod = a % p
+    if a_mod == 0:
+        raise ValueError(f"{a} ≡ 0 (mod {p})")
+    ord_a = multiplicative_order(a_mod, p)
+    return (p - 1) // ord_a
 
 
 def euler_totient(n: int) -> int:
@@ -90,110 +214,29 @@ def euler_totient(n: int) -> int:
     return result
 
 
-def is_primitive_root(a: int, p: int) -> bool:
-    """Test whether a is a primitive root modulo prime p.
+def count_primitive_roots(p: int) -> int:
+    """Count the number of primitive roots modulo prime p.
 
-    Uses the efficient criterion: a is a primitive root mod p iff
-    a^((p-1)/q) ≢ 1 (mod p) for every prime factor q of p-1.
+    By theory, this equals φ(p-1).
+
+    Args:
+        p: Prime
+
+    Returns:
+        Number of primitive roots mod p
     """
     if not is_prime(p):
         raise ValueError(f"{p} is not prime")
-    if p == 2:
-        return a % 2 == 1
-    a_mod = a % p
-    if a_mod == 0:
-        return False
-    for q in prime_factors(p - 1):
-        if pow(a_mod, (p - 1) // q, p) == 1:
-            return False
-    return True
+    return euler_totient(p - 1)
 
 
-def find_primitive_root(p: int) -> int:
-    """Find the smallest primitive root modulo prime p."""
-    if not is_prime(p):
-        raise ValueError(f"{p} is not prime")
-    if p == 2:
-        return 1
-    for g in range(2, p):
-        if is_primitive_root(g, p):
-            return g
-    return -1  # Should never reach here
+def primitive_root_density_ratio(p: int) -> float:
+    """Compute φ(p-1)/(p-1), the fraction of units that are primitive roots.
 
+    Args:
+        p: Prime ≥ 3
 
-def is_perfect_square(n: int) -> bool:
-    """Test whether an integer is a perfect square."""
-    if n < 0:
-        return False
-    s = isqrt(n)
-    return s * s == n
-
-
-def is_artin_candidate(a: int) -> bool:
-    """Test whether a is an Artin candidate (not ±1 and not a perfect square)."""
-    if a == 1 or a == -1:
-        return False
-    if a >= 0:
-        return not is_perfect_square(a)
-    return not is_perfect_square(-a)  # -k^2 is never a square for k>0 unless k=0
-
-
-def artin_primes(a: int, bound: int) -> List[int]:
-    """Find all primes p ≤ bound for which a is a primitive root mod p."""
-    result = []
-    for p in range(2, bound + 1):
-        if is_prime(p) and gcd(abs(a), p) == 1:
-            if is_primitive_root(a % p, p):
-                result.append(p)
-    return result
-
-
-def artin_constant_approx(num_primes: int = 1000) -> float:
-    """Approximate the Artin constant C = ∏_q (1 - 1/(q(q-1))) over primes q.
-
-    The Artin constant ≈ 0.3739558136...
+    Returns:
+        The density ratio
     """
-    product = 1.0
-    count = 0
-    n = 2
-    while count < num_primes:
-        if is_prime(n):
-            product *= (1.0 - 1.0 / (n * (n - 1)))
-            count += 1
-        n += 1
-    return product
-
-
-def artin_density(a: int, bound: int) -> Tuple[int, int, float]:
-    """Compute the density of primes where a is a primitive root.
-
-    Returns (count, total_primes, ratio) for primes up to bound.
-    """
-    primes = artin_primes(a, bound)
-    total = sum(1 for p in range(2, bound + 1) if is_prime(p))
-    count = len(primes)
-    ratio = count / total if total > 0 else 0.0
-    return count, total, ratio
-
-
-def safe_primes(bound: int) -> List[Tuple[int, int]]:
-    """Find safe primes p = 2q+1 where q is also prime, up to bound.
-
-    For safe primes, the primitive root test reduces to checking just
-    two conditions (Legendre symbol and one power test).
-    """
-    result = []
-    for q in range(2, bound):
-        if is_prime(q):
-            p = 2 * q + 1
-            if p <= bound and is_prime(p):
-                result.append((p, q))
-    return result
-
-
-if __name__ == "__main__":
-    # Quick self-test
-    print("Artin constant approximation:", artin_constant_approx(10000))
-    print("Primitive roots of 2 up to 100:", artin_primes(2, 100))
-    print("Safe primes up to 100:", safe_primes(100))
-    print("Density of 2 as primitive root up to 10000:", artin_density(2, 10000))
+    return euler_totient(p - 1) / (p - 1)
