@@ -247,13 +247,30 @@ def update_index():
                     fpath = entry.get("file", "") or entry.get("name", "")
                     if not fpath or not fpath.endswith('.lean'):
                         continue
-                    # Try to find the .lean file
-                    for prefix in [catalog_root, os.path.join(catalog_root, "Catalog"), os.path.join(catalog_root, "Catalog", "Applications")]:
-                        full_path = os.path.join(prefix, fpath)
-                        if os.path.isfile(full_path):
-                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
-                                entry["code"] = lf.read()
+                    # Try to find the .lean file with various path prefixes
+                    # fpath may be "Catalog/Algebra/Foo.lean" or "Algebra/Foo.lean"
+                    candidates = [fpath]
+                    if fpath.startswith("Catalog/"):
+                        candidates.append(fpath[len("Catalog/"):])
+                    # Also try finding by basename in all subdirectories
+                    basename = os.path.basename(fpath)
+                    for candidate in candidates:
+                        for prefix in [catalog_root, os.path.join(catalog_root, "Catalog"), os.path.join(catalog_root, "Catalog", "Applications")]:
+                            full_path = os.path.join(prefix, candidate)
+                            if os.path.isfile(full_path):
+                                with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                    entry["code"] = lf.read()
+                                break
+                        if entry.get("code"):
                             break
+                    # Fallback: search by basename
+                    if not entry.get("code"):
+                        for root, dirs, files in os.walk(catalog_root):
+                            if basename in files:
+                                full_path = os.path.join(root, basename)
+                                with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                    entry["code"] = lf.read()
+                                break
 
         # Rewrite the individual JSON file with extracted viz paths
         with open(f, 'w', encoding='utf-8') as out_f:
