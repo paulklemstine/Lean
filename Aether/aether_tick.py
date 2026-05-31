@@ -27,47 +27,8 @@ from knowledge_extractor import KnowledgeExtractor
 REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
-TICK_COUNTER_PATH = Path(__file__).parent / ".aether_workspace" / "tick_counter.json"
-MAX_TICKS_PER_HOUR = 6
 
 
-def check_tick_rate_limit() -> bool:
-    """Return True if we're within the 2-ticks-per-hour limit."""
-    now = datetime.now(timezone.utc)
-    one_hour_ago = now - timedelta(hours=1)
-
-    ticks = []
-    if TICK_COUNTER_PATH.exists():
-        try:
-            with open(TICK_COUNTER_PATH) as f:
-                data = json.load(f)
-                ticks = data.get("ticks", [])
-        except (json.JSONDecodeError, OSError):
-            ticks = []
-
-    # Prune entries older than 1 hour
-    recent = []
-    for t in ticks:
-        try:
-            ts = datetime.fromisoformat(t["timestamp"])
-            if ts > one_hour_ago:
-                recent.append(t)
-        except (KeyError, ValueError):
-            continue
-
-    if len(recent) >= MAX_TICKS_PER_HOUR:
-        print(f"[Tick] Rate limit: {len(recent)}/{MAX_TICKS_PER_HOUR} ticks in the last hour, skipping")
-        with open(TICK_COUNTER_PATH, "w") as f:
-            json.dump({"ticks": recent}, f)
-        return False
-
-    # Record this tick
-    recent.append({"timestamp": now.isoformat()})
-    TICK_COUNTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(TICK_COUNTER_PATH, "w") as f:
-        json.dump({"ticks": recent}, f)
-    print(f"[Tick] Tick count: {len(recent)}/{MAX_TICKS_PER_HOUR} in the last hour")
-    return True
 
 
 async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
@@ -75,10 +36,6 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
     """
-    # Rate limit: max 2 ticks per hour
-    if not check_tick_rate_limit():
-        return
-
     # 1. Poll inflight jobs
     extractor._load_inflight()
 
