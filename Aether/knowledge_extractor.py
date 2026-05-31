@@ -2374,7 +2374,8 @@ Research mode: {concept.research_mode}
                 pass
 
         # Write visualization scripts to visualizations/ dir
-        visualizations = pkg.get("visualizations", [])
+        # Filter out string entries — LLM sometimes returns visualizations as strings
+        visualizations = [v for v in pkg.get("visualizations", []) if isinstance(v, dict)]
         if visualizations:
             viz_dir = self.catalog_root / "Applications" / "Packages" / "visualizations"
             viz_dir.mkdir(parents=True, exist_ok=True)

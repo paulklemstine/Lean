@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2145 of the highest-quality
+A curated collection of 2151 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2145
+Total files: 2151
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -80,6 +80,7 @@ import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
+import FINAL.Algebra.EnergyLandscapeMetastability
 import FINAL.Algebra.Equivalences
 import FINAL.Algebra.EulerBricks
 import FINAL.Algebra.EvalKernel
@@ -147,6 +148,7 @@ import FINAL.Algebra.LocalEulerExt
 import FINAL.Algebra.LocalGlobal
 import FINAL.Algebra.LocalObstruction
 import FINAL.Algebra.Lorentz
+import FINAL.Algebra.Los
 import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
@@ -243,6 +245,7 @@ import FINAL.Algebra.SpectralTheory
 import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StereographicBridge
+import FINAL.Algebra.StochasticGalois
 import FINAL.Algebra.StrangeLight
 import FINAL.Algebra.StrangeLoops
 import FINAL.Algebra.StrictUpperTriangular
@@ -265,6 +268,7 @@ import FINAL.Algebra.TropicalBSDPrototype
 import FINAL.Algebra.TropicalBSDSpecialization
 import FINAL.Algebra.TropicalDragon
 import FINAL.Algebra.TropicalDragonDecomposition
+import FINAL.Algebra.TropicalRecipeComplexity
 import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors
 import FINAL.Algebra.TwoEyesNextSteps
 import FINAL.Algebra.UltrametricCondNeg
@@ -455,6 +459,7 @@ import FINAL.Bridges.GL3TopCycleRobustness
 import FINAL.Bridges.GL3TournamentRobustness
 import FINAL.Bridges.GL3TropicalSatakeCertification
 import FINAL.Bridges.GL3TropicalSatakeScoreStability
+import FINAL.Bridges.GaloisCellularAutomata
 import FINAL.Bridges.GaloisCohomologicalConsensus
 import FINAL.Bridges.GaloisDeepLearning
 import FINAL.Bridges.GaloisNeuralCorrespondence
@@ -637,6 +642,7 @@ import FINAL.Bridges.RandomTransversalThermodynamics
 import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RecursiveCriticalPairSaturation
+import FINAL.Bridges.RegisterAllocation
 import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.RepresentableDimension
 import FINAL.Bridges.Representation
