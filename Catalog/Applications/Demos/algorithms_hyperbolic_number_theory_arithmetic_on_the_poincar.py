@@ -1,119 +1,253 @@
 """
-Hyperbolic Arithmetic Algorithms
-================================
+Algorithms for Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
 
-Type-hinted implementations of the core operations from
-Hyperbolic Number Theory on the Poincaré Disk.
+Implements Möbius addition, orbit computation, hyperbolic convolution,
+and the associativity defect computation for both 1D real and 2D complex cases.
 """
 
-from typing import List, Tuple
+from typing import List, Callable, Tuple
 import math
 
 
 def moebius_add(a: float, b: float) -> float:
-    """Möbius addition on the Poincaré disk: (a+b)/(1+ab).
-    
-    For a, b in (-1, 1), the result is also in (-1, 1).
-    This is the fundamental arithmetic operation of hyperbolic geometry.
+    """
+    Möbius addition on (-1,1): a ⊕ b = (a + b) / (1 + a*b).
+
+    Parameters
+    ----------
+    a : float
+        First disk point, |a| < 1
+    b : float
+        Second disk point, |b| < 1
+
+    Returns
+    -------
+    float
+        Möbius sum a ⊕ b, guaranteed to satisfy |result| < 1
     """
     return (a + b) / (1 + a * b)
 
 
-def moebius_neg(a: float) -> float:
-    """Möbius negation: the inverse under Möbius addition."""
-    return -a
-
-
-def moebius_iterate(a: float, n: int) -> float:
-    """Compute the n-th Möbius iterate: a ⊕ a ⊕ ... ⊕ a (n times).
-    
-    Uses the artanh isomorphism: moebiusIterate(a, n) = tanh(n * artanh(a)).
+def moebius_add_complex(z: complex, w: complex) -> complex:
     """
-    if n == 0:
-        return 0.0
-    return math.tanh(n * math.atanh(a))
+    Möbius addition on the complex unit disk:
+    z ⊕ w = (z + w) / (1 + conj(z) * w).
+
+    Parameters
+    ----------
+    z : complex
+        First disk point, |z| < 1
+    w : complex
+        Second disk point, |w| < 1
+
+    Returns
+    -------
+    complex
+        Möbius sum z ⊕ w
+    """
+    return (z + w) / (1 + z.conjugate() * w)
 
 
-def moebius_iterate_recursive(a: float, n: int) -> float:
-    """Recursive Möbius iteration (direct computation, O(n))."""
-    result = 0.0
+def moebius_orbit(g: float, n: int) -> List[float]:
+    """
+    Compute the Möbius orbit of generator g up to step n.
+
+    The orbit is defined by O(0) = 0, O(k+1) = g ⊕ O(k).
+
+    Parameters
+    ----------
+    g : float
+        Generator, 0 < g < 1
+    n : int
+        Number of orbit steps
+
+    Returns
+    -------
+    List[float]
+        Array [O(0), O(1), ..., O(n)]
+    """
+    orbit: List[float] = [0.0]
     for _ in range(n):
-        result = moebius_add(a, result)
+        orbit.append(moebius_add(g, orbit[-1]))
+    return orbit
+
+
+def hyp_dist_proxy(a: float, b: float) -> float:
+    """
+    Hyperbolic distance proxy: |a ⊖ b| = |a ⊕ (-b)|.
+
+    Parameters
+    ----------
+    a : float
+        First disk point
+    b : float
+        Second disk point
+
+    Returns
+    -------
+    float
+        |a ⊖ b|, a monotone function of the true hyperbolic distance
+    """
+    return abs(moebius_add(a, -b))
+
+
+def hyp_convolution(f: List[float], g: List[float], n: int) -> float:
+    """
+    Compute (f ⋆ g)(n) = Σ_{k=0}^{n} f(k) * g(n-k).
+
+    Parameters
+    ----------
+    f : List[float]
+        First function values [f(0), f(1), ..., f(N)]
+    g : List[float]
+        Second function values [g(0), g(1), ..., g(N)]
+    n : int
+        Evaluation point
+
+    Returns
+    -------
+    float
+        Convolution value (f ⋆ g)(n)
+    """
+    result = 0.0
+    for k in range(min(n + 1, len(f))):
+        if n - k < len(g):
+            result += f[k] * g[n - k]
     return result
 
 
-def hyp_dist(a: float, b: float) -> float:
-    """Hyperbolic distance: d(a,b) = artanh(|a ⊕ (-b)|)."""
-    diff = moebius_add(a, -b)
-    return math.atanh(abs(diff))
-
-
-def orbit_gap(a: float, b: float, n: int) -> float:
-    """Gap between two Möbius orbits at step n."""
-    return moebius_iterate(b, n) - moebius_iterate(a, n)
-
-
-def word_ball_size(n: int) -> int:
-    """Exact number of words of length ≤ n in a 2-generator system.
-    
-    Returns 2^{n+1} - 1.
+def hyp_convolution_full(f: List[float], g: List[float]) -> List[float]:
     """
-    return 2 ** (n + 1) - 1
+    Compute the full convolution f ⋆ g up to index len(f)+len(g)-2.
 
+    Parameters
+    ----------
+    f : List[float]
+        First function values
+    g : List[float]
+        Second function values
 
-def hyp_zeta_summand(r: float, s: float) -> float:
-    """Hyperbolic zeta summand: r^{-2s}.
-    
-    For 0 < r < 1, this is > 1 when s > 0 (reversal of classical behavior).
+    Returns
+    -------
+    List[float]
+        Full convolution array
     """
-    return r ** (-2 * s)
+    n = len(f) + len(g) - 1
+    return [hyp_convolution(f, g, k) for k in range(n)]
 
 
-def gyration(a: float, b: float, c: float) -> float:
-    """The gyration operator gyr[a,b](c).
-    
-    On the real line, this is always c (associativity holds).
-    On the complex plane, it would be nontrivial.
+def associativity_defect_1d(a: float, b: float, c: float) -> float:
     """
-    lhs = moebius_add(moebius_add(a, b), c)  # (a⊕b)⊕c
-    ab = moebius_add(a, b)
-    # gyr[a,b](c) = -(a⊕b) ⊕ (a ⊕ (b⊕c))
-    return moebius_add(-ab, moebius_add(a, moebius_add(b, c)))
+    Compute the associativity defect δ(a,b,c) = |(a⊕b)⊕c - a⊕(b⊕c)| in 1D.
 
+    In the 1D real case, this should always be 0 (up to floating point).
 
-def pythagorean_disk_point(a: int, b: int, c: int) -> float:
-    """Map a Pythagorean triple (a, b, c) to a disk point a/c."""
-    assert a**2 + b**2 == c**2, f"Not a Pythagorean triple: {a}^2 + {b}^2 != {c}^2"
-    return a / c
+    Parameters
+    ----------
+    a, b, c : float
+        Disk points with |a|, |b|, |c| < 1
 
-
-def find_pythagorean_triples(max_c: int) -> List[Tuple[int, int, int]]:
-    """Find all primitive Pythagorean triples with hypotenuse ≤ max_c."""
-    triples = []
-    for c in range(1, max_c + 1):
-        for a in range(1, c):
-            b_sq = c**2 - a**2
-            b = int(math.isqrt(b_sq))
-            if b > 0 and b * b == b_sq and a <= b:
-                if math.gcd(math.gcd(a, b), c) == 1:
-                    triples.append((a, b, c))
-    return triples
-
-
-def verify_orbit_separation(a: float, b: float, n_max: int) -> List[float]:
-    """Verify the orbit separation conjecture for given a, b up to n_max steps.
-    
-    Returns list of gaps. All should be positive if conjecture holds.
+    Returns
+    -------
+    float
+        Associativity defect
     """
-    gaps = []
-    for n in range(1, n_max + 1):
-        gap = orbit_gap(a, b, n)
-        gaps.append(gap)
-    return gaps
-
-
-def verify_associativity(a: float, b: float, c: float) -> float:
-    """Check associativity: returns |(a⊕b)⊕c - a⊕(b⊕c)|."""
     lhs = moebius_add(moebius_add(a, b), c)
     rhs = moebius_add(a, moebius_add(b, c))
     return abs(lhs - rhs)
+
+
+def associativity_defect_2d(z1: complex, z2: complex, z3: complex) -> float:
+    """
+    Compute the associativity defect in 2D (complex disk).
+
+    This is generically nonzero due to the gyration operator.
+
+    Parameters
+    ----------
+    z1, z2, z3 : complex
+        Disk points with |z1|, |z2|, |z3| < 1
+
+    Returns
+    -------
+    float
+        Associativity defect |δ|
+    """
+    lhs = moebius_add_complex(moebius_add_complex(z1, z2), z3)
+    rhs = moebius_add_complex(z1, moebius_add_complex(z2, z3))
+    return abs(lhs - rhs)
+
+
+def gyration(a: complex, b: complex, c: complex) -> complex:
+    """
+    The gyration operator gyr[a,b](c) for the complex Möbius gyrogroup.
+
+    gyr[a,b](c) = ((1 + a*conj(b)) / (1 + conj(a)*b)) * c
+
+    Parameters
+    ----------
+    a, b : complex
+        Parameters of the gyration
+    c : complex
+        Point to be gyrated
+
+    Returns
+    -------
+    complex
+        gyr[a,b](c)
+    """
+    numerator = 1 + a * b.conjugate()
+    denominator = 1 + a.conjugate() * b
+    return (numerator / denominator) * c
+
+
+def pythagorean_disk_points(max_c: int) -> List[Tuple[int, int, int, float]]:
+    """
+    Generate Pythagorean triples (a, b, c) with c ≤ max_c and their disk points a/c.
+
+    Parameters
+    ----------
+    max_c : int
+        Maximum hypotenuse
+
+    Returns
+    -------
+    List[Tuple[int, int, int, float]]
+        List of (a, b, c, a/c) for each Pythagorean triple
+    """
+    results: List[Tuple[int, int, int, float]] = []
+    for c in range(1, max_c + 1):
+        for a in range(1, c):
+            b_sq = c * c - a * a
+            b = int(math.isqrt(b_sq))
+            if b > 0 and b * b == b_sq and a <= b:
+                results.append((a, b, c, a / c))
+    return results
+
+
+def hyperbolic_zeta_partial(g: float, s: float, n_terms: int) -> float:
+    """
+    Compute the partial sum of the hyperbolic zeta function:
+    ζ_H(s) ≈ Σ_{n=1}^{N} |O(g,n)|^{-2s}
+
+    Parameters
+    ----------
+    g : float
+        Generator, 0 < g < 1
+    s : float
+        Exponent (real part)
+    n_terms : int
+        Number of terms
+
+    Returns
+    -------
+    float
+        Partial sum of ζ_H(s)
+    """
+    orbit = moebius_orbit(g, n_terms)
+    total = 0.0
+    for i in range(1, len(orbit)):
+        norm = abs(orbit[i])
+        if norm > 0:
+            total += norm ** (-2 * s)
+    return total
