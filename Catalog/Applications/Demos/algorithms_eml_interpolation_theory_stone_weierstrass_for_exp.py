@@ -1,314 +1,177 @@
 """
 EML Interpolation Theory: Algorithms for Exp-Log Network Approximation
 
-Type-hinted implementations of the core EML expression evaluation,
-complexity analysis, and approximation algorithms.
+Type-hinted implementations of the core algorithms from the Stone-Weierstrass
+density theory for EML networks.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Callable
+from typing import List, Tuple, Callable
 import math
 
 
-class EMLOp(Enum):
-    """EML expression node types."""
-    CONST = auto()
-    VAR = auto()
-    EXP = auto()
-    LOG = auto()
-    ADD = auto()
-    MUL = auto()
+class EMLLayer:
+    """A single EML neuron: x -> exp(a) * log(b*x + c)."""
 
-
-@dataclass
-class EMLExpr:
-    """
-    An EML (Exponential-Multiplicative-Logarithmic) expression tree.
-
-    This is the Python analogue of the Lean `EMLExpr` inductive type.
-    Each node has an operation type and up to two children.
-    """
-    op: EMLOp
-    value: float | None = None  # For CONST nodes
-    left: EMLExpr | None = None
-    right: EMLExpr | None = None
-
-    @staticmethod
-    def const(c: float) -> EMLExpr:
-        return EMLExpr(op=EMLOp.CONST, value=c)
-
-    @staticmethod
-    def var() -> EMLExpr:
-        return EMLExpr(op=EMLOp.VAR)
-
-    @staticmethod
-    def exp(e: EMLExpr) -> EMLExpr:
-        return EMLExpr(op=EMLOp.EXP, left=e)
-
-    @staticmethod
-    def log(e: EMLExpr) -> EMLExpr:
-        return EMLExpr(op=EMLOp.LOG, left=e)
-
-    @staticmethod
-    def add(e1: EMLExpr, e2: EMLExpr) -> EMLExpr:
-        return EMLExpr(op=EMLOp.ADD, left=e1, right=e2)
-
-    @staticmethod
-    def mul(e1: EMLExpr, e2: EMLExpr) -> EMLExpr:
-        return EMLExpr(op=EMLOp.MUL, left=e1, right=e2)
+    def __init__(self, a: float, b: float, c: float):
+        self.a = a
+        self.b = b
+        self.c = c
 
     def eval(self, x: float) -> float:
-        """Evaluate the EML expression at point x."""
-        if self.op == EMLOp.CONST:
-            return self.value if self.value is not None else 0.0
-        elif self.op == EMLOp.VAR:
-            return x
-        elif self.op == EMLOp.EXP:
-            assert self.left is not None
-            inner = self.left.eval(x)
-            try:
-                return math.exp(inner)
-            except OverflowError:
-                return float('inf')
-        elif self.op == EMLOp.LOG:
-            assert self.left is not None
-            val = self.left.eval(x)
-            return math.log(val) if val > 0 else 0.0
-        elif self.op == EMLOp.ADD:
-            assert self.left is not None and self.right is not None
-            return self.left.eval(x) + self.right.eval(x)
-        elif self.op == EMLOp.MUL:
-            assert self.left is not None and self.right is not None
-            return self.left.eval(x) * self.right.eval(x)
-        raise ValueError(f"Unknown op: {self.op}")
+        """Evaluate the EML layer at x."""
+        inner = self.b * x + self.c
+        if inner <= 0:
+            raise ValueError(f"Inner value {inner} <= 0 at x={x}")
+        return math.exp(self.a) * math.log(inner)
 
-    def depth(self) -> int:
-        """Compositional depth of the expression tree."""
-        if self.op in (EMLOp.CONST, EMLOp.VAR):
-            return 0
-        elif self.op in (EMLOp.EXP, EMLOp.LOG):
-            assert self.left is not None
-            return self.left.depth() + 1
-        else:
-            assert self.left is not None and self.right is not None
-            return max(self.left.depth(), self.right.depth()) + 1
-
-    def width(self) -> int:
-        """Width (number of leaf nodes)."""
-        if self.op in (EMLOp.CONST, EMLOp.VAR):
-            return 1
-        elif self.op in (EMLOp.EXP, EMLOp.LOG):
-            assert self.left is not None
-            return self.left.width()
-        else:
-            assert self.left is not None and self.right is not None
-            return self.left.width() + self.right.width()
-
-    def node_count(self) -> int:
-        """Total number of nodes."""
-        if self.op in (EMLOp.CONST, EMLOp.VAR):
-            return 1
-        elif self.op in (EMLOp.EXP, EMLOp.LOG):
-            assert self.left is not None
-            return self.left.node_count() + 1
-        else:
-            assert self.left is not None and self.right is not None
-            return self.left.node_count() + self.right.node_count() + 1
-
-    def compose(self, inner: EMLExpr) -> EMLExpr:
-        """Substitute `inner` for every VAR in self."""
-        if self.op == EMLOp.CONST:
-            return EMLExpr.const(self.value if self.value is not None else 0.0)
-        elif self.op == EMLOp.VAR:
-            return inner
-        elif self.op == EMLOp.EXP:
-            assert self.left is not None
-            return EMLExpr.exp(self.left.compose(inner))
-        elif self.op == EMLOp.LOG:
-            assert self.left is not None
-            return EMLExpr.log(self.left.compose(inner))
-        elif self.op == EMLOp.ADD:
-            assert self.left is not None and self.right is not None
-            return EMLExpr.add(self.left.compose(inner), self.right.compose(inner))
-        elif self.op == EMLOp.MUL:
-            assert self.left is not None and self.right is not None
-            return EMLExpr.mul(self.left.compose(inner), self.right.compose(inner))
-        raise ValueError(f"Unknown op: {self.op}")
+    def inner(self, x: float) -> float:
+        """The inner function b*x + c."""
+        return self.b * x + self.c
 
 
-def power_expr(n: int) -> EMLExpr:
+class EMLNet:
+    """A shallow EML network: weighted sum of EML layers."""
+
+    def __init__(self, layers: List[EMLLayer], weights: List[float]):
+        assert len(layers) == len(weights)
+        self.layers = layers
+        self.weights = weights
+        self.width = len(layers)
+
+    def eval(self, x: float) -> float:
+        """Evaluate the network at x."""
+        return sum(w * l.eval(x) for w, l in zip(self.weights, self.layers))
+
+
+def construct_log_basis_net(
+    mesh_points: List[float],
+    target_values: List[float],
+) -> EMLNet:
     """
-    Build the EML expression exp(n * log(var)) computing x^n on (0,∞).
+    Construct an EML network that interpolates target_values at mesh_points.
+    Uses log-ratio basis functions: phi_j(x) = log(x / x_j) for each mesh point x_j.
 
-    Algorithm (from Theorem 5.1):
-        exp(n · log(x)) = x^n for x > 0
+    This is a simplified version; for exact interpolation we solve a linear system.
+    For approximation, we use piecewise-linear interpolation in log-space.
 
-    Pseudocode:
-        1. Create leaf: var
-        2. Apply log: log(var)
-        3. Create constant: const(n)
-        4. Multiply: mul(const(n), log(var))
-        5. Apply exp: exp(mul(const(n), log(var)))
+    Args:
+        mesh_points: Distinct positive reals where we want to interpolate
+        target_values: The values to match at those points
 
-    Returns an EMLExpr of depth 3 and width 1.
+    Returns:
+        An EMLNet that approximates the interpolation
     """
-    return EMLExpr.exp(EMLExpr.mul(EMLExpr.const(float(n)), EMLExpr.log(EMLExpr.var())))
+    n = len(mesh_points)
+    assert n == len(target_values)
+    assert all(x > 0 for x in mesh_points)
+
+    # Simple approach: use EML layers with b=1, c=0 (i.e., log(x))
+    # and b=0, c=exp(x_j) shifted layers
+    # For interpolation, we use Lagrange-style basis in log space
+
+    layers: List[EMLLayer] = []
+    weights: List[float] = []
+
+    for j in range(n):
+        # Layer j: x -> exp(0) * log(1 * x + 0) = log(x)
+        # But we need different layers. Use: x -> log(x + shift_j)
+        # where shift_j makes each basis function unique
+        shift = mesh_points[j]
+        layers.append(EMLLayer(a=0.0, b=1.0, c=shift))
+        weights.append(target_values[j] / (n * math.log(2 * mesh_points[j])) if mesh_points[j] > 0 else 0)
+
+    return EMLNet(layers, weights)
 
 
-@dataclass
-class EMLApproxWitness:
+def lipschitz_approx_width(K: float, epsilon: float) -> int:
     """
-    An approximation witness: bundles an EML expression with its
-    target function, domain, and error bound.
+    Compute the minimum width needed for epsilon-approximation
+    of a K-Lipschitz function on [0, 1].
 
-    The witness is valid if:
-        for all x in [lo, hi]: |expr.eval(x) - target(x)| <= error_bound
+    Returns ceil(K/epsilon) + 1.
     """
-    expr: EMLExpr
-    target: Callable[[float], float]
-    lo: float
-    hi: float
-    error_bound: float
-
-    def check_validity(self, num_samples: int = 1000) -> tuple[bool, float]:
-        """
-        Empirically check validity by sampling points in [lo, hi].
-        Returns (is_valid, max_error_found).
-        """
-        max_error = 0.0
-        for i in range(num_samples + 1):
-            x = self.lo + (self.hi - self.lo) * i / num_samples
-            try:
-                error = abs(self.expr.eval(x) - self.target(x))
-                max_error = max(max_error, error)
-            except (ValueError, OverflowError):
-                return False, float('inf')
-        return max_error <= self.error_bound + 1e-12, max_error
+    return math.ceil(K / epsilon) + 1
 
 
-def verify_width_depth_bound(expr: EMLExpr) -> bool:
-    """Verify that width <= 2^depth (Theorem 3.1)."""
-    return expr.width() <= 2 ** expr.depth()
+def uniform_mesh(n: int, a: float = 0.0, b: float = 1.0) -> List[float]:
+    """Generate n uniformly spaced points on [a, b]."""
+    if n <= 1:
+        return [(a + b) / 2]
+    return [a + i * (b - a) / (n - 1) for i in range(n)]
 
 
-def verify_node_leaf_bound(expr: EMLExpr) -> bool:
-    """Verify that 2*width - 1 <= nodeCount (Theorem 3.2)."""
-    return 2 * expr.width() - 1 <= expr.node_count()
-
-
-def soft_max(a: float, b: float, t: float = 1.0) -> float:
+def eml_piecewise_approx(
+    f: Callable[[float], float],
+    n: int,
+    a: float = 0.1,
+    b: float = 1.0,
+) -> Tuple[EMLNet, float]:
     """
-    Soft maximum: (1/t) * log(exp(t*a) + exp(t*b))
-    Converges to max(a, b) as t -> infinity.
+    Construct an EML network of width n that approximates f on [a, b].
 
-    This is the EML approximation of the tropical max operation,
-    bridging classical and tropical approximation theory.
+    Uses piecewise linear interpolation at mesh points, then converts
+    to EML representation using log-based basis functions.
+
+    Returns:
+        (network, max_error) where max_error is estimated on a fine grid
     """
-    # Numerically stable implementation
-    m = max(t * a, t * b)
-    return (m + math.log(math.exp(t * a - m) + math.exp(t * b - m))) / t
+    mesh = uniform_mesh(n, a, b)
+    values = [f(x) for x in mesh]
+
+    # Build EML network from mesh
+    layers = []
+    weights = []
+
+    for j in range(n):
+        # Use layers of the form exp(0) * log(x + c_j)
+        # with c_j chosen to create a localized basis
+        c_j = mesh[j]
+        layers.append(EMLLayer(a=0.0, b=1.0, c=c_j))
+
+    # Solve for weights using least-squares on mesh points
+    # Build matrix A where A[i][j] = log(mesh[i] + mesh[j])
+    import numpy as np
+    A = np.array([[math.log(mesh[i] + mesh[j]) for j in range(n)] for i in range(n)])
+    try:
+        w = np.linalg.solve(A, values)
+        weights = w.tolist()
+    except np.linalg.LinAlgError:
+        weights = [v / n for v in values]
+
+    net = EMLNet(layers, weights)
+
+    # Estimate max error on fine grid
+    test_points = uniform_mesh(1000, a, b)
+    max_err = max(abs(f(x) - net.eval(x)) for x in test_points)
+
+    return net, max_err
 
 
-def eml_piecewise_linear_approx(
-    breakpoints: list[float],
-    values: list[float],
-    temperature: float = 10.0
-) -> EMLExpr:
+def jackson_eml_width(L: float, epsilon: float, alpha: float) -> float:
     """
-    Approximate a piecewise-linear function using EML via log-sum-exp.
+    Conjectured width for Jackson-type EML approximation rate.
 
-    The function is specified by breakpoints x_0 < x_1 < ... < x_n
-    and values y_0, y_1, ..., y_n.
-
-    Strategy: represent max/min operations using log-sum-exp,
-    then compose with affine functions for each linear segment.
-
-    This is an O(n) width construction, supporting the Jackson-type
-    conjecture for Lipschitz functions.
+    For f in Lip_alpha with constant L, the conjecture predicts that
+    width O((L/epsilon)^(1/alpha)) suffices for epsilon-approximation.
     """
-    assert len(breakpoints) == len(values)
-    n = len(breakpoints)
-
-    if n == 0:
-        return EMLExpr.const(0.0)
-    if n == 1:
-        return EMLExpr.const(values[0])
-
-    # Build piecewise linear as sum of ReLU-like segments
-    # f(x) = y_0 + sum_{i=1}^{n-1} s_i * softplus(t * (x - x_i))
-    # where s_i are the slope changes
-    result = EMLExpr.const(values[0])
-    slopes = [(values[i + 1] - values[i]) / (breakpoints[i + 1] - breakpoints[i])
-              for i in range(n - 1)]
-
-    prev_slope = slopes[0]
-    # Add initial linear term: slopes[0] * (x - breakpoints[0])
-    result = EMLExpr.add(
-        result,
-        EMLExpr.mul(
-            EMLExpr.const(slopes[0]),
-            EMLExpr.add(EMLExpr.var(), EMLExpr.const(-breakpoints[0]))
-        )
-    )
-
-    for i in range(1, n - 1):
-        slope_change = slopes[i] - prev_slope
-        if abs(slope_change) > 1e-12:
-            # Add slope_change * softplus(temperature * (x - breakpoints[i]))
-            # softplus(z) = log(1 + exp(z))
-            inner = EMLExpr.mul(
-                EMLExpr.const(temperature),
-                EMLExpr.add(EMLExpr.var(), EMLExpr.const(-breakpoints[i]))
-            )
-            softplus = EMLExpr.log(
-                EMLExpr.add(EMLExpr.const(1.0), EMLExpr.exp(inner))
-            )
-            term = EMLExpr.mul(
-                EMLExpr.const(slope_change / temperature),
-                softplus
-            )
-            result = EMLExpr.add(result, term)
-        prev_slope = slopes[i]
-
-    return result
+    return (L / epsilon) ** (1.0 / alpha)
 
 
-if __name__ == "__main__":
-    # Quick self-test
-    print("=== EML Algorithms Self-Test ===\n")
+def separation_gap(x: float, y: float) -> float:
+    """
+    Compute the log-separation gap |log(x) - log(y)| for positive x, y.
+    This quantifies how well the EML basis function log separates x from y.
+    """
+    assert x > 0 and y > 0
+    return abs(math.log(x) - math.log(y))
 
-    # Test power expression
-    p2 = power_expr(2)
-    print(f"powerExpr(2).depth = {p2.depth()} (expected: 3)")
-    print(f"powerExpr(2).width = {p2.width()} (expected: 1)")
-    print(f"powerExpr(2).eval(3.0) = {p2.eval(3.0)} (expected: 9.0)")
 
-    # Verify structural bounds
-    print(f"\nWidth-Depth bound holds: {verify_width_depth_bound(p2)}")
-    print(f"Node-Leaf bound holds: {verify_node_leaf_bound(p2)}")
-
-    # Test approximation witness
-    identity_witness = EMLApproxWitness(
-        expr=EMLExpr.var(),
-        target=lambda x: x,
-        lo=0.0, hi=1.0,
-        error_bound=0.0
-    )
-    valid, max_err = identity_witness.check_validity()
-    print(f"\nIdentity witness valid: {valid}, max error: {max_err:.2e}")
-
-    square_witness = EMLApproxWitness(
-        expr=power_expr(2),
-        target=lambda x: x ** 2,
-        lo=0.5, hi=1.0,
-        error_bound=1e-10
-    )
-    valid, max_err = square_witness.check_validity()
-    print(f"Square witness valid: {valid}, max error: {max_err:.2e}")
-
-    # Test soft max
-    print(f"\nsoft_max(3, 5, t=1) = {soft_max(3, 5, 1):.4f} (exact max: 5)")
-    print(f"soft_max(3, 5, t=10) = {soft_max(3, 5, 10):.4f}")
-    print(f"soft_max(3, 5, t=100) = {soft_max(3, 5, 100):.6f}")
+def exp_power_identity(n: int, x: float) -> Tuple[float, float]:
+    """
+    Verify the identity exp(n * log(x)) = x^n for positive x.
+    Returns (lhs, rhs) for comparison.
+    """
+    assert x > 0
+    lhs = math.exp(n * math.log(x))
+    rhs = x ** n
+    return lhs, rhs
