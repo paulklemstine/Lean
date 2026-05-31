@@ -1,506 +1,319 @@
-#!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Demonstration Script
+Hyperbolic Number Theory: Arithmetic on the Poincaré Disk — Demo
 
-Demonstrates key concepts:
-1. Hyperbolic primes and their bijection with odd rational primes
-2. Brahmagupta multiplication in the hyperbolic arithmetic monoid
-3. Growth of hyperbolic groups
-4. Hyperbolic prime counting and density conjecture verification
-5. Poincaré disk conformal factor computation
+Demonstrates Möbius addition, hyperbolic distance, orbit generation,
+prime detection, and conjecture verification.
 """
 
-import math
-from typing import List, Tuple, Optional
-
-
-def is_prime(n: int) -> bool:
-    """Primality test."""
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-
-def lorentz_norm_sq(a: int, b: int) -> int:
-    """Lorentzian norm squared: a² - b²."""
-    return a * a - b * b
-
-
-def is_hyp_prime(a: int, b: int) -> bool:
-    """Check if (a, b) is a hyperbolic prime: |a² - b²| is prime."""
-    return is_prime(abs(lorentz_norm_sq(a, b)))
-
-
-def brahmagupta_product(a1: int, b1: int, a2: int, b2: int) -> Tuple[int, int]:
-    """Brahmagupta composition: (a1,b1) × (a2,b2) in the hyperbolic arithmetic monoid."""
-    return (a1 * a2 + b1 * b2, a1 * b2 + b1 * a2)
-
-
-def hyp_growth(k: int, r: int) -> int:
-    """Growth function of a group with k generators: (2k+1)^r."""
-    return (2 * k + 1) ** r
-
-
-def conformal_factor(z_norm_sq: float) -> float:
-    """Conformal factor of the Poincaré metric at a point with |z|² = z_norm_sq."""
-    return 2.0 / (1.0 - z_norm_sq)
-
-
-def hyp_dist_from_origin(z_norm: float) -> float:
-    """Hyperbolic distance from the origin to a point with |z| = z_norm."""
-    return math.log((1 + z_norm) / (1 - z_norm))
-
-
-def cons_hyp_prime_count(N: int) -> int:
-    """Count n in [1, N] such that 2n+1 is prime."""
-    return sum(1 for n in range(1, N + 1) if is_prime(2 * n + 1))
-
-
-def verify_density_conjecture(N: int) -> bool:
-    """Verify the hyperbolic prime density conjecture for a given N ≥ 10."""
-    if N < 10:
-        return True
-    log2_N = math.log2(N)
-    lower_bound = N // (3 * int(log2_N) + 1)
-    count = cons_hyp_prime_count(N)
-    return lower_bound <= count
-
-
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-def demo_hyperbolic_primes():
-    """Demonstrate hyperbolic primes and the consecutive bijection."""
-    print("=" * 60)
-    print("HYPERBOLIC PRIMES: Consecutive Family (n+1, n)")
-    print("=" * 60)
-    print(f"{'n':>4} | {'(a, b)':>10} | {'a²-b²':>6} | {'Prime?':>6}")
-    print("-" * 40)
-    for n in range(1, 25):
-        a, b = n + 1, n
-        norm = lorentz_norm_sq(a, b)
-        prime = is_prime(norm)
-        marker = "✓ HYP PRIME" if prime else ""
-        print(f"{n:>4} | ({a:>3}, {b:>2}) | {norm:>6} | {marker}")
-    print()
-
-
-def demo_brahmagupta():
-    """Demonstrate Brahmagupta multiplication."""
-    print("=" * 60)
-    print("BRAHMAGUPTA MULTIPLICATION")
-    print("=" * 60)
-    pairs = [(2, 1), (3, 2), (4, 3), (5, 4)]
-    for a1, b1 in pairs:
-        for a2, b2 in pairs:
-            a3, b3 = brahmagupta_product(a1, b1, a2, b2)
-            n1, n2, n3 = lorentz_norm_sq(a1, b1), lorentz_norm_sq(a2, b2), lorentz_norm_sq(a3, b3)
-            print(f"  ({a1},{b1}) × ({a2},{b2}) = ({a3},{b3})")
-            print(f"    Norms: {n1} × {n2} = {n3}  (check: {n1 * n2 == n3})")
-    print()
-
-
-def demo_growth():
-    """Demonstrate exponential growth of hyperbolic groups."""
-    print("=" * 60)
-    print("EXPONENTIAL GROWTH OF HYPERBOLIC GROUPS")
-    print("=" * 60)
-    k = 2  # Free group on 2 generators
-    print(f"Group with k={k} generators (free group F₂)")
-    print(f"{'Radius r':>10} | {'Ball size (2k+1)^r':>20} | {'3^r lower bound':>20}")
-    print("-" * 55)
-    for r in range(0, 16):
-        g = hyp_growth(k, r)
-        lb = 3 ** r
-        print(f"{r:>10} | {g:>20,} | {lb:>20,}")
-    print()
-
-
-def demo_poincare_disk():
-    """Demonstrate Poincaré disk metric properties."""
-    print("=" * 60)
-    print("POINCARÉ DISK: Conformal Factor and Hyperbolic Distance")
-    print("=" * 60)
-    print(f"{'|z|':>6} | {'|z|²':>8} | {'λ(z)':>10} | {'d_H(0,z)':>12}")
-    print("-" * 45)
-    for i in range(0, 10):
-        z_norm = i * 0.1
-        z_norm_sq = z_norm ** 2
-        lam = conformal_factor(z_norm_sq)
-        d = hyp_dist_from_origin(z_norm) if z_norm > 0 else 0.0
-        print(f"{z_norm:>6.1f} | {z_norm_sq:>8.2f} | {lam:>10.4f} | {d:>12.6f}")
-    # Near boundary
-    for z_norm in [0.95, 0.99, 0.999, 0.9999]:
-        z_norm_sq = z_norm ** 2
-        lam = conformal_factor(z_norm_sq)
-        d = hyp_dist_from_origin(z_norm)
-        print(f"{z_norm:>6.4f} | {z_norm_sq:>8.6f} | {lam:>10.2f} | {d:>12.6f}")
-    print()
-
-
-def demo_density_conjecture():
-    """Verify the hyperbolic prime density conjecture computationally."""
-    print("=" * 60)
-    print("HYPERBOLIC PRIME DENSITY CONJECTURE VERIFICATION")
-    print("=" * 60)
-    print(f"{'N':>8} | {'Count':>8} | {'Lower bound':>12} | {'Holds?':>8} | {'Density':>8}")
-    print("-" * 55)
-    for N in [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]:
-        count = cons_hyp_prime_count(N)
-        log2_N = int(math.log2(N))
-        lower = N // (3 * log2_N + 1)
-        holds = lower <= count
-        density = count / N
-        print(f"{N:>8} | {count:>8} | {lower:>12} | {'✓' if holds else '✗':>8} | {density:>8.4f}")
-    print()
-
-
-def demo_modular_group():
-    """Demonstrate modular group matrix computations."""
-    print("=" * 60)
-    print("MODULAR GROUP: S and T Generators")
-    print("=" * 60)
-    S = [[0, -1], [1, 0]]
-    T = [[1, 1], [0, 1]]
-
-    def mat_mul(A, B):
-        return [[A[0][0]*B[0][0]+A[0][1]*B[1][0], A[0][0]*B[0][1]+A[0][1]*B[1][1]],
-                [A[1][0]*B[0][0]+A[1][1]*B[1][0], A[1][0]*B[0][1]+A[1][1]*B[1][1]]]
-
-    def mat_pow(A, n):
-        result = [[1, 0], [0, 1]]
-        for _ in range(n):
-            result = mat_mul(result, A)
-        return result
-
-    print(f"S = {S}")
-    print(f"T = {T}")
-    S2 = mat_mul(S, S)
-    print(f"S² = {S2}  (should be -I)")
-    ST = mat_mul(S, T)
-    ST3 = mat_pow(ST, 3)
-    print(f"(ST)³ = {ST3}  (should be -I)")
-
-    for n in range(1, 8):
-        Tn = mat_pow(T, n)
-        print(f"T^{n} = {Tn}")
-    print()
-
-
-if __name__ == "__main__":
-    demo_hyperbolic_primes()
-    demo_brahmagupta()
-    demo_growth()
-    demo_poincare_disk()
-    demo_density_conjecture()
-    demo_modular_group()
-    print("All demonstrations complete.")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Exponential Growth of Hyperbolic Groups
-
-Compares the growth of balls in:
-- Euclidean groups (linear: 2r+1)
-- Hyperbolic groups with k generators (exponential: (2k+1)^r)
-"""
-
-import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+from algorithms import (
+    moebius_add, moebius_iter, hyp_norm, hyp_distance,
+    generate_moebius_orbit, find_hyp_primes, verify_orbit_growth_conjecture,
+    hyp_zeta_partial
+)
 
 
 def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+    print("=" * 70)
+    print("  HYPERBOLIC NUMBER THEORY: Arithmetic on the Poincaré Disk")
+    print("=" * 70)
 
-    radii = list(range(0, 16))
+    # --- 1. Möbius Addition ---
+    print("\n1. MÖBIUS ADDITION a ⊕ b = (a+b)/(1+ab)")
+    print("-" * 50)
+    pairs = [(0.3, 0.5), (0.5, 0.5), (-0.3, 0.3), (0.9, 0.9)]
+    for a, b in pairs:
+        result = moebius_add(a, b)
+        print(f"   {a:6.3f} ⊕ {b:6.3f} = {result:8.5f}  (|result| = {abs(result):.5f})")
 
-    # Left: Linear scale
-    ax1 = axes[0]
-    euclidean = [2 * r + 1 for r in radii]
-    hyp_k1 = [(2 * 1 + 1) ** r for r in radii]
-    hyp_k2 = [(2 * 2 + 1) ** r for r in radii]
-    hyp_k3 = [(2 * 3 + 1) ** r for r in radii]
+    # --- 2. Identity and Inverse ---
+    print("\n2. IDENTITY AND INVERSE")
+    print("-" * 50)
+    for a in [0.3, 0.7, -0.5]:
+        print(f"   0 ⊕ {a} = {moebius_add(0, a):.6f}")
+        print(f"   {a} ⊕ (-{a}) = {moebius_add(a, -a):.6f}")
 
-    ax1.semilogy(radii, euclidean, 'k-o', linewidth=2, markersize=6, label='ℤ (Euclidean, 2r+1)')
-    ax1.semilogy(radii, hyp_k1, 'b-s', linewidth=2, markersize=5, label='F₁ (k=1, 3^r)')
-    ax1.semilogy(radii, hyp_k2, 'r-^', linewidth=2, markersize=5, label='F₂ (k=2, 5^r)')
-    ax1.semilogy(radii, hyp_k3, 'g-d', linewidth=2, markersize=5, label='F₃ (k=3, 7^r)')
-    ax1.set_xlabel('Radius r', fontsize=12)
-    ax1.set_ylabel('Ball size (log scale)', fontsize=12)
-    ax1.set_title('Growth: Euclidean vs Hyperbolic Groups', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+    # --- 3. Möbius Iterates ---
+    print("\n3. MÖBIUS ITERATES g^{⊕n} (g = 0.5)")
+    print("-" * 50)
+    g = 0.5
+    orbit = generate_moebius_orbit(g, 15)
+    for i, x in enumerate(orbit):
+        hn = hyp_norm(x) if abs(x) > 1e-15 else 0.0
+        print(f"   g^{{⊕{i:2d}}} = {x:10.7f}   hypNorm = {hn:10.4f}")
 
-    # Right: Cumulative growth and bound
-    ax2 = axes[1]
-    k = 2
-    cumulative = []
-    c = 0
-    for r in radii:
-        c += (2 * k + 1) ** r
-        cumulative.append(c)
+    # --- 4. Hyperbolic Distance ---
+    print("\n4. HYPERBOLIC DISTANCE")
+    print("-" * 50)
+    pts = [(0.0, 0.5), (0.3, 0.7), (-0.2, 0.8)]
+    for a, b in pts:
+        d = hyp_distance(a, b)
+        print(f"   d({a:5.2f}, {b:5.2f}) = {d:.6f}")
+    # Symmetry check
+    d1 = hyp_distance(0.3, 0.7)
+    d2 = hyp_distance(0.7, 0.3)
+    print(f"\n   Symmetry check: d(0.3, 0.7) = {d1:.10f}")
+    print(f"                   d(0.7, 0.3) = {d2:.10f}")
+    print(f"                   Equal: {abs(d1 - d2) < 1e-14}")
 
-    upper = [(2 * k + 1) ** (r + 1) for r in radii]
+    # --- 5. Hyperbolic Primes ---
+    print("\n5. HYPERBOLIC PRIMES (lattice from g = 0.5, n = 20)")
+    print("-" * 50)
+    orbit_full = generate_moebius_orbit(0.5, 20)
+    # Include negatives
+    lattice = sorted(set(orbit_full + [-x for x in orbit_full]))
+    primes = find_hyp_primes(lattice)
+    print(f"   Lattice size: {len(lattice)}")
+    print(f"   Number of hyperbolic primes: {len(primes)}")
+    for p in sorted(primes, key=abs):
+        print(f"     prime: {p:10.7f}  hypNorm = {hyp_norm(p):.4f}")
 
-    ax2.semilogy(radii, cumulative, 'b-o', linewidth=2, markersize=6,
-                 label='Σ G(2,r) (cumulative)')
-    ax2.semilogy(radii, upper, 'r--s', linewidth=2, markersize=5,
-                 label='G(2, r+1) (upper bound)')
-    ax2.semilogy(radii, [5 ** r for r in radii], 'g:^', linewidth=1.5, markersize=4,
-                 label='5^r (ball at radius r)')
-    ax2.set_xlabel('Radius R', fontsize=12)
-    ax2.set_ylabel('Count (log scale)', fontsize=12)
-    ax2.set_title('Cumulative Growth Bound (k=2)', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
+    # --- 6. Orbit Growth Conjecture ---
+    print("\n6. ORBIT GROWTH CONJECTURE VERIFICATION")
+    print("   Conjecture: g^{⊕n} > 1 - 2/(n+1) for g = 0.5, n ≥ 1")
+    print("-" * 50)
+    passed, results = verify_orbit_growth_conjecture(0.5, 50)
+    print(f"   All 50 tests passed: {passed}")
+    print("\n   Sample values:")
+    for n, actual, bound in results[:10]:
+        margin = actual - bound
+        print(f"     n={n:3d}: g^{{⊕n}} = {actual:.8f} > {bound:.8f}  (margin: {margin:.6f})")
 
-    plt.tight_layout()
-    plt.savefig('growth_comparison.png', dpi=150, bbox_inches='tight')
-    print("Saved growth_comparison.png")
+    # --- 7. Hyperbolic Zeta Partial Sums ---
+    print("\n7. HYPERBOLIC ZETA FUNCTION (partial sums)")
+    print("-" * 50)
+    orbit_200 = generate_moebius_orbit(0.5, 200)
+    full_lattice = sorted(set(orbit_200 + [-x for x in orbit_200]))
+    for s in [1.0, 1.5, 2.0, 3.0]:
+        zval = hyp_zeta_partial(full_lattice, s)
+        print(f"   ζ_H({s:.1f}) ≈ {zval:.6f}  (over {len(full_lattice)} lattice points)")
+
+    # --- 8. Fundamental Identity Check ---
+    print("\n8. FUNDAMENTAL IDENTITY: (a+b)² - (1+ab)² = -((1-a²)(1-b²))")
+    print("-" * 50)
+    for a, b in [(0.3, 0.4), (0.7, 0.8), (-0.5, 0.9)]:
+        lhs = (a + b) ** 2 - (1 + a * b) ** 2
+        rhs = -((1 - a ** 2) * (1 - b ** 2))
+        print(f"   a={a:5.2f}, b={b:5.2f}: LHS={lhs:.10f}, RHS={rhs:.10f}, match={abs(lhs - rhs) < 1e-14}")
+
+    print("\n" + "=" * 70)
+    print("  DEMO COMPLETE")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
     main()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Poincaré Disk with Hyperbolic Lattice Points
+Visualization: Hyperbolic Tessellation and Lattice Points
 
-Plots the Poincaré disk with:
-- The boundary circle
-- Hyperbolic lattice points (orbit of origin under modular group approximation)
-- Color-coded by hyperbolic distance from origin
-- Conformal factor heatmap
+Shows the Poincaré disk with lattice points from Möbius iteration,
+colored by hyperbolic norm, with geodesic arcs.
 """
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-import math
+import matplotlib.patches as patches
+import numpy as np
 
 
-def conformal_factor(x: float, y: float) -> float:
-    """Poincaré disk conformal factor at (x, y)."""
-    r_sq = x * x + y * y
-    if r_sq >= 1.0:
+def moebius_add_complex(z: complex, w: complex) -> complex:
+    return (z + w) / (1 + z.conjugate() * w)
+
+
+def hyp_norm_complex(z: complex) -> float:
+    r = abs(z)
+    if r >= 1:
         return float('inf')
-    return 2.0 / (1.0 - r_sq)
+    return r / (1 - r)
 
 
-def hyp_dist(x: float, y: float) -> float:
-    """Hyperbolic distance from origin to (x, y)."""
-    r = math.sqrt(x * x + y * y)
-    if r >= 1.0 or r == 0.0:
-        return 0.0
-    return math.log((1 + r) / (1 - r))
+def generate_lattice_2d(generators: list, depth: int) -> list:
+    """Generate lattice points by applying generators repeatedly."""
+    points = {0 + 0j}
+    frontier = {0 + 0j}
 
+    for _ in range(depth):
+        new_frontier = set()
+        for p in frontier:
+            for g in generators:
+                new_p = moebius_add_complex(p, g)
+                if abs(new_p) < 0.999:
+                    # Discretize to avoid floating point duplicates
+                    key = round(new_p.real, 8) + round(new_p.imag, 8) * 1j
+                    if key not in points:
+                        points.add(key)
+                        new_frontier.add(key)
+                neg_g = -g
+                new_p2 = moebius_add_complex(p, neg_g)
+                if abs(new_p2) < 0.999:
+                    key2 = round(new_p2.real, 8) + round(new_p2.imag, 8) * 1j
+                    if key2 not in points:
+                        points.add(key2)
+                        new_frontier.add(key2)
+        frontier = new_frontier
+        if not frontier:
+            break
 
-def mobius_transform(a: float, b: float, c: float, d: float,
-                     zr: float, zi: float):
-    """Apply Möbius transformation (az+b)/(cz+d) to z = zr + i*zi."""
-    # Numerator: (a*zr + b) + i*(a*zi), denominator: (c*zr + d) + i*(c*zi)
-    nr = a * zr + b
-    ni = a * zi
-    dr = c * zr + d
-    di = c * zi
-    denom = dr * dr + di * di
-    if denom < 1e-15:
-        return None
-    wr = (nr * dr + ni * di) / denom
-    wi = (ni * dr - nr * di) / denom
-    return wr, wi
-
-
-def generate_lattice_points(depth: int = 6):
-    """Generate orbit points of origin under PSL(2,Z)-like transformations."""
-    # Map upper half-plane to disk: z -> (z - i)/(z + i)
-    # We'll directly generate points in the disk using Möbius transforms
-    points = [(0.0, 0.0)]
-    seen = set()
-    seen.add((0, 0))
-
-    # Use translations and inversions in the disk model
-    # T: z -> z+1 in upper half plane, maps to a rotation-like transform in disk
-    # S: z -> -1/z maps to another transform
-
-    # Simpler: generate points as tanh(n * step) along various directions
-    for n in range(1, depth + 1):
-        r = math.tanh(n * 0.3)  # Evenly spaced in hyperbolic metric
-        for k in range(max(1, 6 * n)):
-            theta = 2 * math.pi * k / max(1, 6 * n)
-            x = r * math.cos(theta)
-            y = r * math.sin(theta)
-            key = (round(x, 4), round(y, 4))
-            if key not in seen:
-                seen.add(key)
-                points.append((x, y))
-
-    return points
+    return list(points)
 
 
 def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
 
-    # Left: Conformal factor heatmap
-    ax1 = axes[0]
-    N = 200
-    x = np.linspace(-0.99, 0.99, N)
-    y = np.linspace(-0.99, 0.99, N)
-    X, Y = np.meshgrid(x, y)
-    Z = np.zeros_like(X)
-    for i in range(N):
-        for j in range(N):
-            r_sq = X[i, j] ** 2 + Y[i, j] ** 2
-            if r_sq < 1.0:
-                Z[i, j] = 2.0 / (1.0 - r_sq)
-            else:
-                Z[i, j] = np.nan
+    # --- Panel 1: Lattice from two generators ---
+    ax = axes[0]
+    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax.add_patch(circle)
 
-    im = ax1.pcolormesh(X, Y, Z, cmap='hot', vmin=2, vmax=20, shading='auto')
-    circle = Circle((0, 0), 1, fill=False, color='white', linewidth=2)
-    ax1.add_patch(circle)
-    ax1.set_xlim(-1.1, 1.1)
-    ax1.set_ylim(-1.1, 1.1)
-    ax1.set_aspect('equal')
-    ax1.set_title('Poincaré Disk: Conformal Factor λ(z) = 2/(1-|z|²)', fontsize=12)
-    ax1.set_xlabel('Re(z)')
-    ax1.set_ylabel('Im(z)')
-    plt.colorbar(im, ax=ax1, label='λ(z)')
+    g1 = 0.3 + 0.1j
+    g2 = 0.05 + 0.35j
+    lattice = generate_lattice_2d([g1, g2], depth=6)
 
-    # Right: Hyperbolic lattice points
-    ax2 = axes[1]
-    points = generate_lattice_points(8)
+    xs = [z.real for z in lattice]
+    ys = [z.imag for z in lattice]
+    norms = [hyp_norm_complex(z) for z in lattice]
+    max_norm = max(n for n in norms if n < float('inf')) if norms else 1
 
-    # Color by hyperbolic distance
-    xs = [p[0] for p in points]
-    ys = [p[1] for p in points]
-    dists = [hyp_dist(p[0], p[1]) for p in points]
+    scatter = ax.scatter(xs, ys, c=norms, cmap='plasma', s=15,
+                          vmin=0, vmax=min(max_norm, 50), edgecolors='none')
+    plt.colorbar(scatter, ax=ax, label='Hyperbolic Norm')
 
-    circle2 = Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax2.add_patch(circle2)
+    ax.set_xlim(-1.15, 1.15)
+    ax.set_ylim(-1.15, 1.15)
+    ax.set_aspect('equal')
+    ax.set_title(f'Hyperbolic Lattice ({len(lattice)} points)\n'
+                 f'Generators: {g1}, {g2}')
+    ax.grid(True, alpha=0.2)
 
-    scatter = ax2.scatter(xs, ys, c=dists, cmap='viridis', s=15, zorder=5)
-    ax2.scatter([0], [0], c='red', s=100, marker='*', zorder=10, label='Origin')
+    # --- Panel 2: Orbit density histogram ---
+    ax = axes[1]
+    radii = [abs(z) for z in lattice if abs(z) > 0.001]
+    hyp_dists = [0.5 * np.log((1 + r) / (1 - r)) for r in radii if r < 1]
 
-    ax2.set_xlim(-1.1, 1.1)
-    ax2.set_ylim(-1.1, 1.1)
-    ax2.set_aspect('equal')
-    ax2.set_title('Hyperbolic Lattice Points\n(colored by hyperbolic distance)', fontsize=12)
-    ax2.set_xlabel('Re(z)')
-    ax2.set_ylabel('Im(z)')
-    ax2.legend(loc='upper right')
-    plt.colorbar(scatter, ax=ax2, label='d_H(0, z)')
+    ax.hist(hyp_dists, bins=30, color='steelblue', edgecolor='white', alpha=0.8)
+    ax.set_xlabel('Hyperbolic Distance from Origin')
+    ax.set_ylabel('Number of Lattice Points')
+    ax.set_title('Distribution of Lattice Points\nby Hyperbolic Distance')
+    ax.grid(True, alpha=0.3)
+
+    # Overlay theoretical growth: area of hyperbolic disk ~ sinh²(R)
+    R_vals = np.linspace(0, max(hyp_dists) if hyp_dists else 5, 100)
+    # Area of hyperbolic disk of radius R is 4π sinh²(R/2)
+    # So point density should grow like sinh(R) (derivative of area)
+    if hyp_dists:
+        bin_width = (max(hyp_dists) - min(hyp_dists)) / 30
+        scale = len(hyp_dists) * bin_width / np.max(np.sinh(R_vals) + 0.01)
+        ax.plot(R_vals, scale * np.sinh(R_vals), 'r-', linewidth=2,
+                label='~sinh(R) growth')
+        ax.legend()
 
     plt.tight_layout()
-    plt.savefig('poincare_disk.png', dpi=150, bbox_inches='tight')
-    print("Saved poincare_disk.png")
+    plt.savefig('viz_hyperbolic_tessellation.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_hyperbolic_tessellation.png")
 
 
 if __name__ == "__main__":
     main()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Hyperbolic Prime Distribution
+Visualization: Möbius Orbits on the Poincaré Disk
 
-Plots:
-1. Hyperbolic prime counting function vs PNT prediction
-2. Density of hyperbolic primes with conjecture bound
+Shows how Möbius iteration maps points through the disk,
+with orbit trajectories and the approach to the boundary.
 """
-
-import math
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
 
 
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    if n < 4:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def moebius_add(a: float, b: float) -> float:
+    return (a + b) / (1 + a * b)
 
 
-def cons_hyp_prime_count(N: int) -> int:
-    return sum(1 for n in range(1, N + 1) if is_prime(2 * n + 1))
+def moebius_iter(g: float, n: int) -> float:
+    result = 0.0
+    for _ in range(n):
+        result = moebius_add(result, g)
+    return result
+
+
+def moebius_add_complex(z: complex, w: complex) -> complex:
+    return (z + w) / (1 + z.conjugate() * w)
+
+
+def generate_complex_orbit(g: complex, n: int) -> list:
+    orbit = [0 + 0j]
+    for _ in range(1, n):
+        orbit.append(moebius_add_complex(orbit[-1], g))
+    return orbit
 
 
 def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    # Data
-    Ns = list(range(10, 5001, 10))
-    counts = []
-    c = 0
-    idx = 0
-    for n in range(1, 5001):
-        if is_prime(2 * n + 1):
-            c += 1
-        if n == Ns[idx]:
-            counts.append(c)
-            idx += 1
-            if idx >= len(Ns):
-                break
+    # --- Panel 1: Real Möbius orbits ---
+    ax = axes[0]
+    generators = [0.2, 0.3, 0.5, 0.7, 0.9]
+    colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(generators)))
+    for g, c in zip(generators, colors):
+        ns = range(20)
+        vals = [moebius_iter(g, n) for n in ns]
+        ax.plot(ns, vals, 'o-', color=c, markersize=4, label=f'g={g}')
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Boundary')
+    ax.axhline(y=-1, color='red', linestyle='--', alpha=0.5)
+    ax.set_xlabel('Iteration n')
+    ax.set_ylabel('g^{⊕n}')
+    ax.set_title('Möbius Iterates Approach the Boundary')
+    ax.legend(fontsize=8)
+    ax.set_ylim(-0.1, 1.1)
+    ax.grid(True, alpha=0.3)
 
-    # PNT prediction: π(2N+1)/2 ≈ N / (2 ln(2N+1)) ≈ N / (2 ln N) for large N
-    pnt_pred = [N / (2 * math.log(max(N, 2))) for N in Ns]
+    # --- Panel 2: Complex orbits on disk ---
+    ax = axes[1]
+    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax.add_patch(circle)
 
-    # Conjecture lower bound: N / (3 * log2(N) + 1)
-    conj_bound = [N // (3 * int(math.log2(max(N, 2))) + 1) for N in Ns]
+    complex_gens = [0.3 + 0.2j, 0.1 + 0.4j, -0.2 + 0.3j, 0.4 - 0.1j]
+    colors2 = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
+    for g, c in zip(complex_gens, colors2):
+        orbit = generate_complex_orbit(g, 30)
+        xs = [z.real for z in orbit]
+        ys = [z.imag for z in orbit]
+        ax.plot(xs, ys, 'o-', color=c, markersize=3, alpha=0.7,
+                label=f'g={g.real:.1f}+{g.imag:.1f}i')
+        ax.plot(xs[0], ys[0], 's', color=c, markersize=8)
 
-    # Left: Counting function
-    ax1 = axes[0]
-    ax1.plot(Ns, counts, 'b-', linewidth=1.5, label='π_H(N) (actual)')
-    ax1.plot(Ns, pnt_pred, 'r--', linewidth=1.5, label='N/(2 ln N) (PNT prediction)')
-    ax1.plot(Ns, conj_bound, 'g:', linewidth=1.5, label='N/(3 log₂N + 1) (conjecture bound)')
-    ax1.set_xlabel('N', fontsize=12)
-    ax1.set_ylabel('Count of hyperbolic primes', fontsize=12)
-    ax1.set_title('Hyperbolic Prime Counting Function', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+    ax.set_xlim(-1.2, 1.2)
+    ax.set_ylim(-1.2, 1.2)
+    ax.set_aspect('equal')
+    ax.set_title('Complex Möbius Orbits in the Poincaré Disk')
+    ax.legend(fontsize=7, loc='lower left')
+    ax.grid(True, alpha=0.3)
 
-    # Right: Density ratio
-    ax2 = axes[1]
-    density_ratio = [counts[i] / pnt_pred[i] if pnt_pred[i] > 0 else 0 for i in range(len(Ns))]
-    ax2.plot(Ns, density_ratio, 'b-', linewidth=1.0, alpha=0.7)
-    ax2.axhline(y=1.0, color='r', linestyle='--', linewidth=1.5, label='PNT prediction ratio = 1')
-    ax2.set_xlabel('N', fontsize=12)
-    ax2.set_ylabel('π_H(N) / (N/(2 ln N))', fontsize=12)
-    ax2.set_title('Ratio: Actual / PNT Prediction', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0.5, 1.5)
+    # --- Panel 3: Growth rate comparison ---
+    ax = axes[2]
+    g = 0.5
+    ns = np.arange(1, 30)
+    iterates = [moebius_iter(g, int(n)) for n in ns]
+    bound = 1 - 2 / (ns + 1)
+    euclidean = np.minimum(ns * g, 0.999)
+
+    ax.plot(ns, iterates, 'bo-', markersize=4, label='Möbius g^{⊕n}')
+    ax.plot(ns, bound, 'r--', linewidth=2, label='Bound: 1 - 2/(n+1)')
+    ax.fill_between(ns, bound, iterates, alpha=0.2, color='green',
+                     label='Margin')
+    ax.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+    ax.set_xlabel('n')
+    ax.set_ylabel('Value')
+    ax.set_title('Orbit Growth Conjecture (g=0.5)')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('hyperbolic_primes.png', dpi=150, bbox_inches='tight')
-    print("Saved hyperbolic_primes.png")
+    plt.savefig('viz_moebius_orbits.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved viz_moebius_orbits.png")
 
 
 if __name__ == "__main__":
