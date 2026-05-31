@@ -4,7 +4,7 @@
 
 Aether is an autonomous mathematical research system that cycles through discovery, formalization, and knowledge accumulation. Each cycle:
 
-1. **Discover** — `knowledge_extractor.discover()` pops the highest-priority future direction, builds a `ResearchConcept`, and creates a `ResearchJob`
+1. **Discover** — `knowledge_extractor.discover()` pops a weighted-random future direction (with inverse-frequency domain balancing), builds a `ResearchConcept`, and creates a `ResearchJob`
 2. **Execute** — Aristotle (via `pi_agent_client`) receives the concept and produces Lean 4 proofs, articles, research papers, demos, and FUTURE_DIRECTIONS.md
 3. **Integrate** — `knowledge_extractor.run_single_cycle()` unpacks artifacts into the Catalog, extracts new future directions, and marks the consumed direction as completed
 4. **Repeat** — The next cycle picks up newly seeded directions
@@ -13,12 +13,15 @@ Aether is an autonomous mathematical research system that cycles through discove
 
 | File | Purpose |
 |------|---------|
-| `research_memory.py` | `FutureDirectionsManager` — tracks research directions (available/in_progress/completed/abandoned), dedup, persistence |
-| `seed_directions.py` | `get_seed_directions()` — 22 seed directions covering millennial problems, computation, AI/ML, tropical math, cryptography, and speculative topics |
+| `research_memory.py` | `FutureDirectionsManager` — tracks research directions (available/in_progress/completed/pruned), dedup, domain decay, anti-repetition, inverse-frequency balancing |
+| `seed_directions.py` | `get_seed_directions()` — 201 seed directions including 97 novelty-tagged directions |
 | `pi_agent_client.py` | `PiAgentClient.write_aristotle_prompt()` — builds the research prompt; `ResearchConcept` dataclass |
 | `knowledge_extractor.py` | `KnowledgeExtractor` — orchestrates the full cycle: discover → execute → integrate → update lineage |
 | `lineage_extractor.py` | Builds the knowledge graph (provenance edges only, no heuristic edges) |
 | `catalog_analyzer.py` | Analyzes existing Catalog theorems for context |
+| `output_organizer.py` | `normalize_domain()` — maps domain names to Catalog directories; `DOMAIN_DIRS` — valid domain list |
+| `aristotle_loop.py` | UCB-based domain selection, cross-domain synergy tracking, diminishing returns detection |
+| `aether_tick.py` | Main tick loop: poll → integrate → dispatch → rebuild website → commit → push |
 
 ## TDD Policy
 
@@ -34,6 +37,28 @@ Run the full test suite with:
 pytest tests/test_future_directions.py -v
 ```
 
+## Domain System
+
+### Valid Domains (DOMAIN_DIRS)
+
+`Algebra`, `Applications`, `Bridges`, `Computation`, `Cryptography`, `EML`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `Physics`, `Pythagorean`, `Shared`, `Tropical`
+
+Novelty is a first-class domain for wild/exploratory directions. Speculative is **not** a valid Catalog domain — sub-domains like TDA, Arithmetic Geometry, etc. map to real domains via `normalize_domain()`.
+
+### Domain Normalization
+
+`output_organizer.normalize_domain()` maps ~90 domain name variants (including sub-domains like "Arithmetic Geometry"→"Algebra", "TDA"→"Computation", "Novelty"→"Novelty") to the 14 valid Catalog directories. Any unrecognized domain falls through to "Speculative" as a last resort, but most known sub-domains are now mapped.
+
+### Domain Routing
+
+`discover()` uses the **Aristotle loop's domain selection** (UCB-based), not the future direction's `domains[0]`. The direction provides the concept idea; the loop provides the domain target. This prevents Pythagorean (56% of directions' `domains[0]`) from dominating dispatch.
+
+### Inverse-Frequency Domain Balancing
+
+`select_direction_weighted()` applies inverse-frequency weighting:
+- Domains occupying >30% of the available pool are penalized: `weight *= (1 - fraction)`
+- Domains occupying <10% get a boost: `weight *= (1 + fraction)`
+
 ## Future Directions System
 
 ### Data Model
@@ -41,25 +66,61 @@ pytest tests/test_future_directions.py -v
 Each `FutureDirection` has:
 - `id`, `title`, `description` — identity and content
 - `source_exp_id`, `source_path` — provenance (where it came from)
-- `domains` — tag list (auto-inferred from description if not set)
+- `domains` — tag list, **capped at 2** per direction (auto-inferred if not set)
 - `priority_score` — 0.0–1.0, higher = popped first
-- `status` — `available` | `in_progress` | `completed` | `abandoned`
+- `status` — `available` | `in_progress` | `completed` | `pruned`
 - `consumed_by_exp_id` — experiment that claimed this direction
 - `timestamp` — set automatically on add
+
+### Quality Scoring and Anti-Bias
+
+- **Domain decay**: `0.25^min(1, (count-1)/6)` for overrepresented domains
+- **First-time domain bonus**: +0.15 for domains with ≤2 completions
+- **Anti-repetition penalty**: -0.03 per keyword appearing 3+ times in recent completions (capped at -0.15)
+- **Auto-title cap**: Directions starting with "Direction N:" are capped at priority 0.60
+- **Quality cap on creation**: `priority_score = min(priority_score, max(0.60, quality_score))`
+- **Novelty protection**: Cleanup skips directions tagged with "Novelty"
+
+### Novelty Track
+
+- 2 dispatch slots reserved for Novelty-tagged directions by default (`--novelty-slots 2`)
+- Auto-refill from `seed_directions.py` when <5 Novelty directions are available
+- Novelty-tagged directions are protected from LLM cleanup pruning
 
 ### Lifecycle
 
 ```
 available → in_progress (mark_direction_consumed) → completed (mark_direction_completed)
-                                                         ↘ abandoned (mark_direction_abandoned)
+                                                         ↘ pruned (LLM cleanup or auto-prune)
 ```
 
 ### Reset/Reseed
 
 ```bash
-python research_memory.py reset    # Abandon in-progress, seed with 22 directions
+python research_memory.py reset    # Abandon in-progress, seed with directions
 python research_memory.py stats    # Show counts by status
 ```
+
+## Aristotle Prompt
+
+The research prompt is ~12K characters and contains:
+- **Depth Requirements**: No trivial proofs, at least 3 deep-proof theorems, novel definitions, falsifiable conjecture
+- **Anti-Triviality Rules**: Rejects commutativity proofs, wrapper theorems, simp-only proofs, definitions without insight
+- **Deliverables**: Lean 4 proofs, ARTICLE.md, RESEARCH_PAPER.md, Python code, FUTURE_DIRECTIONS.md, PACKAGE.json
+- **No cross-domain mandate**: Removed — the LLM naturally connects domains when relevant
+- **No Speculative in classification**: Classification uses 14 real domains including Novelty
+- **No FILE RICHNESS MANDATE**: Removed line-count incentives that caused bloat
+- **Novelty from direction metrics**: `novelty_estimate` comes from `priority_score`, not hardcoded 0.85
+
+### Removed Biases
+
+The following biases were removed:
+- Hardcoded cross-domain examples ("number theory + tropical geometry, algebra + physics") that steered every cycle toward tropical/physics
+- "Bridge" anti-triviality rule that penalized cross-domain theorems
+- Speculative as a Catalog domain (now maps to real domains via `normalize_domain()`)
+- FILE RICHNESS MANDATE that incentivized 500+ lines and 20+ theorems per file
+- Hardcoded `novelty_estimate=0.85` that told the LLM every direction was highly novel
+- Duplicate Depth Requirements and Anti-Triviality Rules (appeared twice in the prompt)
 
 ## Running the Research Loop
 
@@ -73,8 +134,19 @@ This runs continuously: each tick polls for completed jobs, integrates them, dis
 
 Other flags:
 - `--max-inflight N` — max concurrent Aristotle jobs (default 9)
+- `--novelty-slots N` — dispatch slots reserved for Novelty directions (default 3)
 - `--interval SECONDS` — sleep between ticks (default 21600 = 6h)
 - Single run (no loop): `python3 aether_tick.py --ollama-cloud`
+
+### Oracle Cloud Free Tier Deployment
+
+ARM Ampere A1 instance with 1 OCPU, 6 GB RAM, Ubuntu 22.04:
+1. Create VM on Oracle Cloud dashboard (Compute → Instances → Create Instance)
+2. SSH in, install Python/git/dependencies
+3. Clone repo, set up venv, install requirements
+4. Configure `.env` with API keys (ARISTOTLE_API_KEY, POLLINATIONS_API_KEY)
+5. Set up systemd service for continuous operation
+6. Transfer existing workspace data if migrating from local
 
 ### GitHub Pages
 
@@ -85,5 +157,7 @@ The website is served from the `docs/` directory on the `master` branch (branch-
 - Python 3.10+ with type hints
 - Dataclasses for structured data
 - JSON file persistence in `.aether_workspace/`
-- Domain inference uses keyword matching against a known domain list
+- Domain inference uses keyword matching against a known domain list, capped at 2 domains per direction
 - Dedup by title exact match OR description word overlap > 0.7
+- UCB bandit for domain selection in AristotleLoop (no hardcoded priorities)
+- Cross-domain synergy learned from data only (no hardcoded KNOWN_SYNERGIES)
