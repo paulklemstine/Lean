@@ -1496,10 +1496,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "038c9b3f",
-    "consumed_by_exp_id": "f9d127dc",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-29T10:33:26.756675+00:00"
   },
   {
