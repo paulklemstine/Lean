@@ -273,6 +273,81 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": ""
   },
   {
+    "id": "seed_248",
+    "title": "Arithmetic Mirror Symmetry for Calabi-Yau",
+    "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
+    "id": "seed_249",
+    "title": "Topological Quantum Computing: Braiding Universality",
+    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
+    "id": "seed_250",
+    "title": "Entropy Power Inequality: Sharp Version",
+    "description": "Prove the sharp entropy power inequality for all dimensions with equality conditions. Connect to the Brunn-Minkowski inequality and prove stability versions.",
+    "domains": [
+      "Bridges",
+      "Probability"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
+    "id": "seed_251",
+    "title": "Homotopy Type Theory as Foundations",
+    "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
+    "id": "seed_252",
+    "title": "p-adic Langlands for GL\u2082(Q_p)",
+    "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
+    "domains": [
+      "Bridges",
+      "NumberTheory"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
     "id": "19a55de9",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
     "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
@@ -286,6 +361,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed_wave7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:49.600779"
+  },
+  {
+    "id": "e019dde6",
+    "title": "Social Credit Scores as Topological Invariants",
+    "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
+    "domains": [
+      "Novelty",
+      "Bridges"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed_wave7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T11:52:50.273663"
   },
   {
     "id": "31104d3e",
@@ -483,21 +573,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": ""
   },
   {
-    "id": "seed_252",
-    "title": "p-adic Langlands for GL\u2082(Q_p)",
-    "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
-    "domains": [
-      "Bridges",
-      "NumberTheory"
-    ],
-    "priority_score": 0.93,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": ""
-  },
-  {
     "id": "seed_232",
     "title": "Unique Games Conjecture",
     "description": "Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
@@ -506,21 +581,6 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.92,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": ""
-  },
-  {
-    "id": "seed_248",
-    "title": "Arithmetic Mirror Symmetry for Calabi-Yau",
-    "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.91,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -594,21 +654,6 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic",
       "SetTheory"
-    ],
-    "priority_score": 0.89,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": ""
-  },
-  {
-    "id": "seed_249",
-    "title": "Topological Quantum Computing: Braiding Universality",
-    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
-    "domains": [
-      "Bridges",
-      "Physics"
     ],
     "priority_score": 0.89,
     "status": "available",
@@ -738,21 +783,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": ""
   },
   {
-    "id": "seed_251",
-    "title": "Homotopy Type Theory as Foundations",
-    "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.87,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": ""
-  },
-  {
     "id": "ff4b6b2b",
     "title": "Transfinite Game Theory: Games That Last Forever",
     "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
@@ -761,10 +791,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09ad0b7d",
     "timestamp": "2026-05-31T11:52:49.434394"
   },
   {
@@ -821,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c29780f",
     "timestamp": ""
   },
   {
@@ -1061,10 +1091,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a82cace",
     "timestamp": "2026-05-31T11:52:49.940082"
   },
   {
@@ -1169,36 +1199,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": ""
-  },
-  {
-    "id": "seed_250",
-    "title": "Entropy Power Inequality: Sharp Version",
-    "description": "Prove the sharp entropy power inequality for all dimensions with equality conditions. Connect to the Brunn-Minkowski inequality and prove stability versions.",
-    "domains": [
-      "Bridges",
-      "Probability"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": ""
-  },
-  {
-    "id": "e019dde6",
-    "title": "Social Credit Scores as Topological Invariants",
-    "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
-    "domains": [
-      "Novelty",
-      "Bridges"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-31T11:52:50.273663"
   },
   {
     "id": "2f5afdf2",
@@ -1468,18 +1468,48 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-31T11:52:52.676425"
   },
   {
-    "id": "fd_2383",
-    "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
-    "description": "Conjecture: For wide neural operators and deep residual networks trained by gradient flow on translation-invariant PDE solution families, the induced input-output map at large scales converges, after appropriate rescaling, to one of finitely many renormalization-group fixed-point universality classes determined only by the PDE's symmetry group, conservation laws, and differential order, not by architecture details or initialization distribution. Test: Train multiple distinct architectures (Fourier neural operators, CNN ResNets, transformers with local kernels) on parametrized solution ensembles from PDEs such as Burgers, Navier-Stokes, KdV, and nonlinear Schr\u00f6dinger equations; compute coarse-grained effective operators under spatial/temporal block rescaling and measure whether their spectra, critical exponents, and correlation kernels collapse to architecture-independent fixed-point families. Confirmation requires statistically robust collapse within each PDE class and separation between classes; refutation occurs if asymptotic scaling behavior remains architecture-specific or varies continuously rather than falling into discrete classes. Impact: This would create a predictive theory of when learned scientific models generalize by identifying universality laws for neural surrogates, linking machine learning, mathematical physics, and numerical analysis, and enabling principled architecture design from PDE symmetries rather than trial-and-error.",
+    "id": "fd_2391",
+    "title": "This research cycle established a rigorous formal framework for the entropy powe",
+    "description": "# Future Directions: Entropy Power Inequality Research Program\n\n## Synthesis\n\nThis research cycle established a rigorous formal framework for the entropy power inequality (EPI) and its connections to convex geometry, proving 15+ theorems without any sorry. The key breakthrough was the complete formalization of the maximum entropy theorem with sharp equality conditions: entropy equals log(n) if and only if the distribution is uniform. This required a careful treatment of Jensen's inequality for strictly convex functions, handling the equality case through the KL divergence framework.\n\nThe most promising cross-domain connection emerging from this work is the **EPI-BM bridge**: the entropy power inequality is the distributional analog of the Brunn-Minkowski inequality. Our volume entropy power construction makes this precise: for finite sets A with |A| = k in dimension d, the volume entropy power k^{2/d} satisfies the same superadditivity that the distributional entropy power exp(2H/d) does. This bridge connects information theory (Shannon entropy, channel capacity) with convex geometry (Minkowski sums, volumes) and probability (central limit theorem, Gaussian convergence).\n\nThe highest breakthrough potential lies in Direction 1 (Continuous EPI via Measure Theory), which would bring the full power of Mathlib's probability infrastructure to bear on information-theoretic inequalities. The R\u00e9nyi-Shannon ordering (H\u2082 \u2264 H\u2081) we proved for finite distributions generalizes to continuous distributions and has immediate applications in cryptography and quantum information. Direction 3 (Quantum EPI) connects to the rapidly growing field of quantum information theory and could yield formal proofs of results that are currently only known in the physics literature.\n\n---\n\n### Direction 1: Continuous Entropy Power Inequality via Measure Theory\n\n**Conjecture**: For absolutely continuous random variables X, Y on \u211d\u207f with finite differential entropy, the entropy power inequality N(X+Y) \u2265 N(X) + N(Y) holds, where N(X) = (1/(2\u03c0e)) \u00b7 exp(2h(X)/n) and h(X) = -\u222b f log f dx is the differential entropy. Furthermore, equality holds if and only if X and Y are Gaussian with proportional covariance matrices.\n\n**Test**: Formalize differential entropy using `MeasureTheory.Measure.absolutelyContinuous` and `MeasureTheory.Measure.rnDeriv` from Mathlib. Verify that for the Gaussian distribution with density f(x) = (2\u03c0\u03c3\u00b2)^{-1/2} exp(-x\u00b2/(2\u03c3\u00b2)), the differential entropy equals (1/2) log(2\u03c0e\u03c3\u00b2). Then prove the EPI for the special case where X and Y are both Gaussian.\n\n**Impact**: This would be the first fully formal proof of the continuous EPI. It would open the door to formalizing Fisher information, de Bruijn's identity, and the information-theoretic proof of the central limit theorem. These results are foundational for modern information theory, statistics, and machine learning.\n\n**Catalog References**: `Bridges/CategorifiedShannonTheory.lean` (gibbs_inequality, FinProbDist), `Bridges/EntropyPowerInequality.lean` (EPIFunctional, entropy_le_log_card)\n\n**Proof Strategy**: \n1. Define differential entropy using Mathlib's `MeasureTheory.integral` and `MeasureTheory.Measure.rnDeriv`.\n2. Define Fisher information I(X) = \u222b (f'/f)\u00b2 f dx.\n3. Prove de Bruijn's identity: dH(X + \u221at Z)/dt = (1/2)I(X + \u221at Z).\n4. Prove the Fisher information inequality: 1/I(X+Y) \u2265 1/I(X) + 1/I(Y).\n5. Derive the EPI from the Fisher information inequality using de Bruijn's identity.\n6. Characterize equality using the fact that Gaussians are the unique fixed points of the heat equation.\n\n**Domain Bridges**: InformationTheory <-> MeasureTheory, Probability <-> ConvexGeometry\n\n**Lineage**: Builds on entropy_le_log_card, entropy_eq_log_iff_uniform, EPIFunctional from this cycle. Extends the discrete maximum entropy theorem to the continuous setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Sharp Stability Constants for the Discrete EPI\n\n**Conjecture**: For a probability distribution p on Fin(n) with n \u2265 2, define the Gaussian proximity \u03b4(p) = log(n) - H(p) and the collision entropy gap \u0394(p) = H\u2081(p) - H\u2082(p). Then:\n  \u03b4(p) \u2264 (n-1)/n \u00b7 log(1 + (n-1)\u00b7exp(-2\u0394(p)))\n\nThis would give a sharp relationship between Gaussian proximity and the R\u00e9nyi entropy gap, with the bound being tight when p concentrates on two values.\n\n**Test**: Compute both sides for:\n- p = (1/2, 1/2, 0, ..., 0) on Fin(n): \u03b4 = log(n) - log(2), \u0394 = log(2) - log(1/2) = 0 (since H\u2081 = H\u2082 = log 2).\n- p = (1-\u03b5, \u03b5/(n-1), ..., \u03b5/(n-1)) for small \u03b5: both sides should be approximately log(n).\n- p = uniform: both sides should be 0.\nRun numerical experiments for n = 4, 8, 16, 32 with 10000 random distributions each.\n\n**Impact**: Sharp stability constants are the frontier of the EPI research. Current best bounds (Bobkov-Chistyakov 2015) give power-type stability but with non-optimal exponents. A sharp bound would resolve a conjecture of Ball-Barthe-Naor and have applications to channel coding (bounding capacity loss from non-Gaussian input distributions).\n\n**Catalog References**: `Bridges/EntropyPowerInequality.lean` (gaussian_proximity_nonneg, gaussian_proximity_zero_iff, renyi2_le_shannon), `Bridges/BerggrenEntropyExtractor.lean` (berggren_renyi2_entropy_lower_bound)\n\n**Proof Strategy**:\n1. Define the two-point distribution family p_t = (t, (1-t)/(n-1), ..., (1-t)/(n-1)) parameterized by t \u2208 [1/n, 1].\n2. Compute \u03b4(p_t) and \u0394(p_t) explicitly as functions of t.\n3. Show the conjectured bound is tight on this family.\n4. For general distributions, use Schur-convexity: the function (\u03b4, \u0394) \u2192 \u03b4 - bound(\u0394) is Schur-convex on the probability simplex.\n5. The maximum of a Schur-convex function on the simplex is attained at the boundary (two-point distributions).\n\n**Domain Bridges**: InformationTheory <-> Combinatorics, Optimization <-> Probability\n\n**Lineage**: Builds on gaussian_proximity_nonneg, gaussian_proximity_zero_iff, renyi2_le_shannon from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Quantum Entropy Power Inequality\n\n**Conjecture**: For quantum states \u03c1_A, \u03c1_B on n-mode bosonic systems with finite von Neumann entropy, the quantum entropy power inequality holds:\n  exp(2S(\u03c1_{A\u2295B})/n) \u2265 exp(2S(\u03c1_A)/n) + exp(2S(\u03c1_B)/n)\nwhere S is the von Neumann entropy and \u2295 denotes the beam-splitter operation. Equality holds iff both states are Gaussian (thermal) states with proportional covariance matrices.\n\n**Test**: Verify for thermal states with mean photon numbers n\u0304\u2081, n\u0304\u2082. The entropy of a thermal state is S = (n\u0304+1)log(n\u0304+1) - n\u0304 log n\u0304. Check that the entropy power (n\u0304 + 1/2) satisfies the EPI: (n\u0304\u2081 + n\u0304\u2082 + 1/2) \u2265 (n\u0304\u2081 + 1/2) + (n\u0304\u2082 + 1/2), which reduces to checking -1/2 \u2265 0, which is false \u2014 so the normalization needs to be adjusted. The correct quantum EPI uses exp(S/n) rather than exp(2S/n).\n\n**Impact**: The quantum EPI (K\u00f6nig-Smith 2014) is a fundamental inequality in quantum information theory with applications to bounding quantum channel capacities, proving security of quantum key distribution, and understanding quantum thermodynamics. A formal proof would be the first machine-verified result in quantum Shannon theory.\n\n**Catalog References**: `Bridges/EntropyPowerInequality.lean` (EPIFunctional, epi_am_gm_bound, epi_iterated_growth), `Bridges/EntanglementEntropy.lean` (entropy_ge_esymm_bound)\n\n**Proof Strategy**:\n1. Define von Neumann entropy S(\u03c1) = -Tr(\u03c1 log \u03c1) using Mathlib's Matrix types.\n2. Define quantum entropy power as exp(S(\u03c1)/n) for n-mode states.\n3. Define the beam-splitter operation as a unitary on H\u2297H.\n4. Prove the quantum EPI for Gaussian states (explicit computation).\n5. Use the quantum de Bruijn identity and quantum Fisher information to extend to general states.\n6. Characterize equality via the unique saturation by Gaussian states.\n\n**Domain Bridges**: InformationTheory <-> QuantumPhysics, ConvexGeometry <-> OperatorAlgebras\n\n**Lineage**: Builds on EPIFunctional, epi_am_gm_bound from this cycle. Extends entropy_ge_esymm_bound from EntanglementEntropy.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Additive Combinatorics via Entropy Methods\n\n**Conjecture**: For finite subsets A, B of an abelian group G with |A+B| \u2264 K\u00b7min(|A|, |B|), the Ruzsa covering lemma gives |A| \u2264 K\u00b2\u00b7|B| and |B| \u2264 K\u00b2\u00b7|A|. The entropic version states: for random variables X, Y uniform on A, B respectively, if H(X+Y) \u2264 H(X) + log K, then there exists a set S with |S| \u2264 K\u00b2 such that A \u2286 S + B - B.\n\n**Test**: For A = {0, 1, ..., n-1} and B = {0, 1, ..., m-1} in \u2124, we have |A+B| = n+m-1. If n = m, then K = (2n-1)/n < 2. The conjecture predicts |A| \u2264 4|B|, which holds since |A| = |B|. For A = {0, 1, ..., 9} and B = {0, 10, 20, ..., 90}, |A+B| = 100 while |A|\u00b7|B| = 100, giving K = 10. The covering number should be at most 100.\n\n**Impact**: Entropy methods in additive combinatorics (Tao, Ruzsa, Madiman) provide a powerful alternative to traditional combinatorial arguments. Formalizing this connection would bridge information theory and additive number theory, potentially leading to new proofs of Freiman's theorem and the Polynomial Freiman-Ruzsa conjecture (recently resolved by Gowers-Green-Manners-Tao).\n\n**Catalog References**: `Bridges/EntropyPowerInequality.lean` (entropy_le_log_card, entropy_uniform, shannonEntropy), `Bridges/ArithmeticStatistics.lean`\n\n**Proof Strategy**:\n1. Define sumset entropy: H(X+Y) for X, Y uniform on finite sets.\n2. Prove Ruzsa's triangle inequality: d(A,C) \u2264 d(A,B) + d(B,C) where d is the Ruzsa distance.\n3. Formalize the Pl\u00fcnnecke-Ruzsa inequality using the entropy method.\n4. Derive the covering lemma from the Pl\u00fcnnecke-Ruzsa inequality.\n5. Apply to prove Freiman's theorem for small doubling constants.\n\n**Domain Bridges**: InformationTheory <-> AdditiveCombinatorics, NumberTheory <-> Probability\n\n**Lineage**: Builds on entropy_uniform, entropy_le_log_card from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Entropic Central Limit Theorem with Rate\n\n**Conjecture**: For i.i.d. random variables X\u2081, X\u2082, ... with mean 0, variance 1, and finite fourth moment \u03bc\u2084, the relative entropy satisfies:\n  D(S_n || Z) \u2264 C \u00b7 (\u03bc\u2084 - 3)\u00b2 / n\nwhere S_n = (X\u2081 + ... + X_n)/\u221an and Z is standard Gaussian. The constant C is universal (does not depend on the distribution of X_i).\n\n**Test**: For X_i uniform on {-\u221a3, \u221a3} (mean 0, variance 3... actually need variance 1, so X_i uniform on {-1, 1}), \u03bc\u2084 = 1. The Gaussian has \u03bc\u2084 = 3. So (\u03bc\u2084 - 3)\u00b2 = 4. The bound predicts D(S_n || Z) \u2264 4C/n. Compute D(S_n || Z) numerically for n = 10, 100, 1000 and verify the 1/n rate.\n\n**Impact**: The entropic CLT with rate is one of the most refined versions of the central limit theorem. It implies Berry-Esseen bounds and local limit theorems. A formal proof would connect our EPI framework (which proves linear growth of entropy power) to quantitative Gaussian convergence, bridging information theory and probability theory at the deepest level.\n\n**Catalog References**: `Bridges/EntropyPowerInequality.lean` (epi_iterated_growth, EPIProfile, epi_from_concavity), `FINAL/Bridges/SpectralCrypto.lean` (entropy_positive_for_expansive)\n\n**Proof Strategy**:\n1. Formalize the relative entropy D(P || Q) = \u222b dP/dQ log(dP/dQ) dQ using Mathlib's measure theory.\n2. Prove monotonicity: D(S_{n+1} || Z) \u2264 D(S_n || Z) using the EPI (this is Artstein-Ball-Barthe-Naor 2004).\n3. Use our epi_iterated_growth theorem to bound the entropy deficit.\n4. Prove the rate bound using Taylor expansion of the entropy around the Gaussian.\n5. The key technical ingredient is the fourth-moment bound on Fisher information.\n\n**Domain Bridges**: InformationTheory <-> Probability, Analysis <-> Statistics\n\n**Lineage**: Builds on epi_iterated_growth, epi_from_concavity from this cycle. Extends the abstract EPIProfile to a concrete quantitative statement.\n\n**Ambition**: extension\n",
     "domains": [
-      "Mathematical Physics",
-      "Machine Learning Theory"
+      "Algebra",
+      "Pythagorean"
     ],
-    "priority_score": 0.7,
-    "status": "in_progress",
+    "priority_score": 0.75,
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "46942b74",
-    "timestamp": "2026-05-31T20:22:30.989918+00:00"
+    "source_exp_id": "b3fdee2d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T21:30:39.095810+00:00"
+  },
+  {
+    "id": "fd_2392",
+    "title": "This cycle established a formal bridge between Homotopy Type Theory (HoTT) and c",
+    "description": "# Future Directions: Homotopy Type Theory as Foundations\n\n## Synthesis\n\nThis cycle established a formal bridge between Homotopy Type Theory (HoTT) and classical mathematics within Lean 4, proving theorems about truncation levels, winding numbers (modeling \u03c0\u2081(S\u00b9) \u2245 \u2124), the fiber characterization of equivalences, and the Structure Identity Principle for finite algebraic structures. The most promising cross-domain connection emerged between **tropical univalence** (from the existing Catalog at `Bridges/TropicalUnivalence.lean`) and our finite univalence model: both instantiate the abstract univalence principle in concrete, decidable settings. The tropical version works with weighted matrices under permutation, while ours works with Fin-types under cardinality equality. This suggests a general pattern \u2014 a \"ladder of univalence\" from decidable finite cases through metric/tropical cases to the full topological axiom.\n\nThe highest breakthrough potential lies in **Direction 1** (Synthetic Homotopy via Cubical Models), which could yield the first purely formal computation of \u03c0\u2082(S\u00b2) within a Lean-compatible framework. The cycle's winding number machinery provides the template: the encode-decode method scaled from S\u00b9 to higher spheres. The fiber characterization (Direction 3) connects to machine learning applications through the `Bridges/HomologicalDeepLearning.lean` result on certified robustness from margin and Lipschitz bounds \u2014 the fiber structure of neural network predictions is precisely the geometric object that determines adversarial robustness.\n\nThe Structure Identity Principle (Direction 4) has the most immediate practical impact: it provides automatic transport of theorems across isomorphic structures, which would dramatically reduce proof engineering effort. Combined with the existing categorical bridges (`Bridges/CategoricalBridges.lean`), this could automate the \"bridge composition\" pattern that currently requires manual adjunction tracking.\n\n---\n\n### Direction 1: Synthetic Homotopy of S\u00b2 via the Hopf Fibration\n\n**Conjecture**: There exists a formal model of the Hopf fibration S\u00b9 \u2192 S\u00b3 \u2192 S\u00b2 within Lean 4's type theory (using an abstract higher inductive type encoding) such that the induced long exact sequence computes \u03c0\u2082(S\u00b2) \u2245 \u2124, with the winding number of S\u00b9-fibers providing the isomorphism.\n\n**Test**: Formalize the Hopf map as a function `hopf : Fin 4 \u2192 Fin 3 \u2192 Fin 2` on discretized spheres. Compute the fiber over each point of S\u00b2 (discretized) and verify each fiber is isomorphic to S\u00b9 (discretized). Then verify that the induced map on second homotopy groups matches the degree map.\n\nComputationally: for a triangulation of S\u00b2 with N faces, the Hopf fiber over each face should have winding number \u00b11. Test with N = 20 (icosahedron).\n\n**Impact**: This would be the first machine-verified computation of \u03c0\u2082(S\u00b2) via the Hopf fibration in a Lean-compatible setting. It would validate that the encode-decode method (proven for S\u00b9 in this cycle) scales to higher-dimensional topology. If the conjecture fails, it reveals limitations of discrete/simplicial models for capturing continuous homotopy invariants.\n\n**Catalog References**: `Bridges/HoTTFoundations.lean` (winding number, encode-decode), `Bridges/TropicalUnivalence.lean` (tropical isometry), `Bridges/CategoricalBridges.lean` (bridge hierarchy)\n\n**Proof Strategy**:\n1. Define a `HigherSphere` type for S\u207f as a quotient of Fin-indexed simplicial complexes.\n2. Construct the Hopf map as a specific simplicial map.\n3. Show fibers are equivalent to S\u00b9 using `finite_univalence_iff`.\n4. Apply the long exact sequence (formalized as a chain complex in Mathlib) to compute \u03c0\u2082.\n5. Use the winding number homomorphism from this cycle to identify the group.\n\nKey lemmas needed: `fiber_of_hopf_is_circle`, `long_exact_sequence_of_fibration`, `pi2_from_les`.\n\n**Domain Bridges**: Topology <-> Algebra, HoTT <-> Classical Algebraic Topology\n\n**Lineage**: Builds on this cycle's `FormalLoop.winding_surjective`, `FormalLoop.winding_concat`, and `finite_univalence_iff`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Constructive Galois Theory via Univalent Splitting Fields\n\n**Conjecture**: For any polynomial p \u2208 \u211a[x] of degree n with distinct roots, the Galois group Gal(p) can be computed constructively as a subgroup of S\u2099 using the univalent structure identity principle, and this computation agrees with the classical Galois group.\n\nFormally: define `constructiveGaloisGroup (p : Polynomial \u211a) : Subgroup (Equiv.Perm (Fin n))` using the FinGroupEquiv structure, and prove it equals the classical Galois group when the latter is defined.\n\n**Test**: Compute the constructive Galois group of x\u2074 - 2 (should be the dihedral group D\u2084 of order 8), x\u00b3 - 2 (should be S\u2083 of order 6), and x\u2075 - 1 (should be \u2124/4\u2124, the cyclic group of order 4). Verify these match known results.\n\n**Impact**: Constructive Galois theory would provide algorithms for computing Galois groups that are correct by construction. This bridges the gap between computational algebra (which computes Galois groups heuristically) and formal mathematics (which proves properties but doesn't compute). A failure would indicate that the univalent approach doesn't simplify the combinatorial complexity of Galois group computation.\n\n**Catalog References**: `Bridges/HoTTFoundations.lean` (FinGroupEquiv, fin_group_equiv_trans), `Algebra/Basic.lean`, `Bridges/CategoricalBridges.lean` (bridge_composition)\n\n**Proof Strategy**:\n1. Define splitting field as a quotient type using Mathlib's `Polynomial.SplittingField`.\n2. Define the Galois group as automorphisms of the splitting field fixing \u211a.\n3. Use `FinGroupEquiv` to identify this with a subgroup of S\u2099.\n4. Prove the SIP transfers group properties automatically.\n5. Compute explicit examples using `#eval` on the Fin-indexed representation.\n\nKey lemmas: `galois_group_is_fin_group_equiv`, `sip_transfers_subgroup`, `splitting_field_fin_equiv`.\n\n**Domain Bridges**: Algebra <-> Computation, NumberTheory <-> HoTT\n\n**Lineage**: Builds on this cycle's `FinGroupEquiv`, `fin_group_equiv_refl/symm/trans`, and the foundation comparison framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Fiber Geometry of Neural Network Decision Boundaries\n\n**Conjecture**: For a ReLU neural network f : \u211d\u207f \u2192 \u211d\u1d4f with L layers and width w, the fiber f\u207b\u00b9(y) over a generic output y is a piecewise-linear manifold of dimension n - k, and the number of connected components of this fiber is bounded above by O((2w)^L).\n\n**Test**: Train a 2-layer ReLU network on MNIST (n = 784, k = 10, w = 256). For 100 random test points, compute the local fiber dimension (should be 774 = 784 - 10) and count connected components of the decision region (should be \u2264 (512)\u00b2 = 262144). Verify these bounds hold empirically.\n\n**Impact**: This connects the fiber characterization of equivalences (proved in this cycle) to deep learning interpretability. The fiber structure determines when two inputs are \"equivalent\" from the network's perspective \u2014 this is precisely the geometric content of adversarial robustness. If the bound on connected components is tight, it explains why deeper networks generalize better (fewer, larger decision regions). If false, it reveals that ReLU geometry is more complex than the naive count suggests.\n\n**Catalog References**: `Bridges/HoTTFoundations.lean` (bijective_iff_unique_fibers), `Bridges/HomologicalDeepLearning.lean` (certified_robustness_from_margin_and_lipschitz)\n\n**Proof Strategy**:\n1. Formalize ReLU networks as piecewise-linear maps using Mathlib's `PiecewiseLinear` API.\n2. Show fibers of PL maps are PL manifolds (generalize `bijective_of_unique_fibers`).\n3. Bound connected components using the arrangement counting lemma.\n4. Connect to the Lipschitz margin bound from `HomologicalDeepLearning.lean`.\n\nKey lemmas: `relu_fiber_is_pl_manifold`, `pl_fiber_component_bound`, `component_bound_depth_dependence`.\n\n**Domain Bridges**: MachineLearning <-> Topology, HoTT <-> DeepLearning\n\n**Lineage**: Builds on this cycle's `bijective_iff_unique_fibers` and the existing `certified_robustness_from_margin_and_lipschitz`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Automated Transport via the Structure Identity Principle\n\n**Conjecture**: For any first-order algebraic theory T (groups, rings, modules, etc.) formalized in Lean 4, the Structure Identity Principle can be implemented as a tactic `transport` that automatically transfers theorems from one T-model to an isomorphic one, with proof terms of size O(n) where n is the theorem size (not exponential in the number of isomorphism applications).\n\n**Test**: Implement the `transport` tactic for groups. Test on three cases:\n1. Transfer the classification of groups of order 4 from (\u2124/4\u2124, +) to any cyclic group of order 4.\n2. Transfer Lagrange's theorem from one representation of S\u2083 to another.\n3. Transfer the Chinese Remainder Theorem between \u2124/6\u2124 and \u2124/2\u2124 \u00d7 \u2124/3\u2124.\n\nMeasure proof term size \u2014 it should grow linearly with the original theorem, not exponentially.\n\n**Impact**: This would be a major practical contribution to formal mathematics. Currently, transferring results between isomorphic structures requires tedious manual work. An automated, efficient `transport` tactic would save thousands of lines of proof across Mathlib. The linear proof-term size conjecture, if true, means the tactic is practical even for large theorems. If false, it identifies a fundamental computational barrier to automatic transport.\n\n**Catalog References**: `Bridges/HoTTFoundations.lean` (FinGroupEquiv, Structure Identity Principle), `Bridges/CategoricalBridges.lean` (bridge_composition, adjunction composition)\n\n**Proof Strategy**:\n1. Formalize first-order algebraic theories as `Structure` in Lean 4.\n2. Define \"displayed structures\" following Ahrens-Lumsdaine-Voevodsky.\n3. Prove the SIP for each theory by induction on the theory signature.\n4. Implement transport as a recursive tactic that follows the SIP proof.\n5. Prove the O(n) bound by analyzing the recursion depth.\n\nKey lemmas: `sip_for_groups`, `sip_for_rings`, `transport_term_size_linear`.\n\n**Domain Bridges**: Logic <-> Algebra, HoTT <-> Proof Engineering\n\n**Lineage**: Builds on this cycle's `fin_group_equiv_refl/symm/trans` and the univalence model framework.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Truncation Levels and Valuation-Theoretic Homotopy\n\n**Conjecture**: The truncation level hierarchy from HoTT has a natural tropical analogue: define the \"tropical truncation level\" of a valued field (K, v) as the smallest n such that the n-th iterated valuation group \u0393\u2099(K) is trivially ordered. Then for the p-adic numbers \u211a\u209a, the tropical truncation level is 1, and for the field of Hahn series over \u211a\u209a, it is 2.\n\n**Test**: Compute tropical truncation levels for:\n1. \u211a\u209a with the p-adic valuation (predict: level 1, since \u0393\u2081 = \u2124 is linearly ordered and \u0393\u2082 is trivial)\n2. \u211a\u209a((t)) with the t-adic + p-adic valuation (predict: level 2, since \u0393\u2081 = \u2124\u00b2, \u0393\u2082 = \u2124, \u0393\u2083 = 0)\n3. \u211d with the trivial valuation (predict: level 0, since \u0393\u2081 = 0)\n\n**Impact**: This bridges HoTT's truncation levels with non-Archimedean geometry and tropical mathematics. If the correspondence holds, it provides a new invariant for valued fields and explains why p-adic geometry is \"one level more complex\" than real geometry. The Hahn series prediction, if true, connects to the depth hierarchy in the Catalog's `Computation/PadicValuationDepth.lean`.\n\n**Catalog References**: `Bridges/HoTTFoundations.lean` (TruncationLevel, truncation_hierarchy_strict), `Bridges/TropicalUnivalence.lean` (tropical equivalence), `Computation/PadicValuationDepth.lean` (ValuationDepthMeasure)\n\n**Proof Strategy**:\n1. Define `tropicalTruncationLevel` for valued fields using iterated value groups.\n2. Compute it for \u211a\u209a using Mathlib's `Valued` typeclass.\n3. Compute it for Hahn series using `HahnSeries` from Mathlib.\n4. Prove the correspondence with HoTT truncation levels via a functor from valued fields to the truncation hierarchy.\n\nKey lemmas: `padic_tropical_trunc_eq_one`, `hahn_tropical_trunc_eq_two`, `tropical_trunc_functor`.\n\n**Domain Bridges**: NumberTheory <-> Tropical, HoTT <-> p-adic Geometry\n\n**Lineage**: Builds on this cycle's `TruncationLevel` and `conjectured_pi_n_trunc`, plus the Catalog's `ValuationDepthMeasure`.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b5aa996d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T21:30:58.327170+00:00"
+  },
+  {
+    "id": "fd_2393",
+    "title": "This cycle established the mathematical foundations for universality classes of ",
+    "description": "# Future Directions: Neural PDE Universality via Renormalization\n\n## Synthesis\n\nThis cycle established the mathematical foundations for universality classes of neural PDE operators through renormalization-group (RG) semigroup theory. The central result\u2014that contractive RG flows force architecture-independent convergence to unique fixed points\u2014connects machine learning, statistical physics, and functional analysis through a common algebraic framework. The formalization builds on the Catalog's `ClosureFlow` infrastructure from `RenormalizationUniversality.lean` (discrete RG on closure semirings), `HolographicProofRenormalization.lean` (fixed-point orbit bounds), and `ResidualRobustness.lean` (spectral gap analysis for residual networks).\n\nThe most promising cross-domain connection is between **conservation-law separation** and **tropical geometry**. Conservation laws in our framework are linear functionals preserved by the RG; in the tropical setting, these correspond to valuations preserved under tropical operations. The `TropicalEcosystemDynamics.lean` fixed-point invariant theorem suggests that tropical semiring methods could provide combinatorial certificates for universality class membership, bypassing the need for explicit distance computations. Meanwhile, the connection to `GaloisDeepLearning.lean` (depth from group order) suggests that the symmetry dimension in our PDE invariant could be computed via Galois-theoretic methods, tying universality to algebraic number theory.\n\nThe highest breakthrough potential lies in Direction 1 (Local Contractivity and Phase Transitions), because it addresses the main limitation of the current theory\u2014the assumption of global contractivity\u2014and connects to the physically important phenomenon of critical phenomena where universality classes undergo bifurcation.\n\n---\n\n### Direction 1: Local Contractivity, Basins of Attraction, and Phase Transitions\n\n**Conjecture**: For an RG semigroup that is contractive only in a neighborhood B(fp, r) of a fixed point fp, the basin of attraction\u2014the set of operators whose orbits eventually enter B(fp, r)\u2014is an open convex set, and its boundary is a codimension-1 separatrix where the linearized RG has a unit eigenvalue. At the separatrix, the universality class undergoes a bifurcation: a single class splits into two or more classes as a PDE parameter crosses a critical value.\n\n**Test**: Construct a 2D RG semigroup with a cubic nonlinearity: T(x,y) = (cx + \u03b1x\u00b3, cy + \u03b2y\u00b3) where c < 1 but \u03b1, \u03b2 > 0 create an expansive region far from the origin. Compute the basin of attraction numerically and verify that (1) it is bounded, (2) its boundary contains exactly the points where the Jacobian has eigenvalue 1, and (3) varying \u03b1 continuously through a critical value creates a pitchfork bifurcation of fixed points.\n\n**Impact**: If true, this provides a mathematical theory of when neural operator training \"fails\"\u2014when the learned operator escapes the basin of the intended universality class and converges to an unphysical fixed point. This would enable robust training guarantees based on initialization within provable basins.\n\n**Catalog References**: `Bridges/HolographicProofRenormalization.lean` (fixed-point orbit bounds), `Bridges/RenormalizationUniversality.lean` (ClosureFlow stabilization), `Bridges/ResidualRobustness.lean` (spectral gap analysis)\n\n**Proof Strategy**: (1) Define a Lyapunov function V(x) = dist(x, fp)\u00b2 and show that V decreases under T within B(fp, r). (2) Use the inverse function theorem to show that the basin boundary is a smooth manifold. (3) Apply center manifold theory to characterize the bifurcation at the separatrix. Key lemma: `basin_boundary_eigenvalue_one`: If x is on the basin boundary, then the spectral radius of DT(x) equals 1.\n\n**Domain Bridges**: Physics <-> MachineLearning, Bridges <-> Algebra\n\n**Lineage**: Extends the contractive RG theory from this cycle. Builds on `exists_fixed_point_on_orbit_with_bound` for finite convergence guarantees.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Certificates for Universality Class Membership\n\n**Conjecture**: For RG semigroups over the tropical semiring (\u211d \u222a {-\u221e}, max, +), universality class membership can be determined in polynomial time by computing a tropical polynomial certificate. Specifically, two operators x, y are in the same class if and only if they have the same tropical Newton polygon under the RG-induced tropical map.\n\n**Test**: Implement tropical RG iteration on piecewise-linear functions (tropical polynomials). For the tropical Burgers equation (known to have piecewise-linear solutions), compute the tropical Newton polygons of RG orbits from different initial conditions and verify that: (1) orbits within the same universality class produce identical Newton polygons after O(log n) steps, (2) orbits in different classes produce non-isomorphic polygons.\n\n**Impact**: This would provide a purely combinatorial classification of universality classes, avoiding the need for real-valued distance computations. It would also connect neural PDE universality to the rich theory of tropical algebraic geometry, potentially enabling certificates that can be verified by simple integer arithmetic.\n\n**Catalog References**: `Tropical/` (tropical semiring infrastructure), `Bridges/TropicalEcosystemDynamics.lean` (tropical fixed-point invariants), `Bridges/AlgebraTropicalGeometry/` (tropical geometric methods)\n\n**Proof Strategy**: (1) Define the tropicalization of an RG semigroup. (2) Show that tropical RG preserves the Newton polygon lattice. (3) Prove that the Newton polygon is a complete invariant for tropical universality classes. Key lemma: `tropical_rg_preserves_newton`: The Newton polygon of T(f) is contained in the Newton polygon of f.\n\n**Domain Bridges**: Tropical <-> Bridges, Algebra <-> Computation\n\n**Lineage**: Builds on `trop_pred_prey_fixed_point_invariant` and the tropical RG connection suggested by `AlgebraTropicalGeometry`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Conservation Law Discovery via Spectral Methods\n\n**Conjecture**: For a trained neural operator with unknown conservation laws, the number of independent conservation laws equals the number of eigenvalues of the linearized RG at the fixed point that are exactly 1 (marginal directions). These marginal eigenvalues correspond to directions in operator space along which the coarse-graining map acts as the identity, and the corresponding eigenvectors are the conservation law functionals.\n\n**Test**: (1) Train a Fourier Neural Operator on the KdV equation (known to have 3 independent conservation laws: mass, momentum, energy). (2) Compute the spectrum of the linearized RG at the converged fixed point. (3) Verify that exactly 3 eigenvalues are 1.0 (within numerical tolerance). (4) Check that the corresponding eigenvectors, when applied to the operator, recover the known conservation law functionals up to linear combination.\n\n**Impact**: This would provide an automatic method for discovering conservation laws from trained neural operators\u2014a significant capability for scientific discovery. When applied to unknown PDEs (discovered empirically from data), it could reveal hidden conservation laws.\n\n**Catalog References**: `Bridges/RenormalizationUniversality.lean` (ClosureFlow observable stabilization), `Bridges/AlgorithmicSpectralCertification.lean` (spectral methods)\n\n**Proof Strategy**: (1) Show that conservation laws \u03c6 satisfy DT(fp) \u00b7 \u2207\u03c6(fp) = \u2207\u03c6(fp), making \u2207\u03c6(fp) an eigenvector with eigenvalue 1. (2) Prove the converse: eigenvectors with eigenvalue 1 give conservation laws (requires local integrability). Key lemma: `marginal_eigenvalue_iff_conservation`: \u03bb = 1 iff the corresponding direction is a conservation law.\n\n**Domain Bridges**: MachineLearning <-> Physics, Computation <-> Bridges\n\n**Lineage**: Extends the conservation law separation theorem from this cycle. Builds on spectral analysis infrastructure.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Depth-Width Tradeoffs in Universality Convergence\n\n**Conjecture**: For a residual neural network of depth L and width W trained on a PDE with differential order p, the effective contraction rate of the induced RG semigroup satisfies c_eff = c\u2080^p \u00b7 (1 + O(1/W)) \u00b7 (1 - O(e^{-L/L\u2080})), where c\u2080 is the base contraction rate and L\u2080 is a characteristic depth scale determined by the PDE's spectral gap. In particular, width affects convergence multiplicatively while depth affects it exponentially.\n\n**Test**: Train ResNets of varying depth (L = 4, 8, 16, 32, 64) and width (W = 32, 64, 128, 256, 512) on the heat equation. For each (L, W) pair, estimate the RG contraction rate using the method from `algorithms.py`. Fit the formula c_eff(L, W) and verify that (1) the depth dependence is exponential, (2) the width dependence is algebraic (1/W correction), (3) the differential order exponent is correct.\n\n**Impact**: This would provide quantitative guidance for neural architecture design: given a target convergence rate, compute the minimum depth and width needed. It connects the abstract universality theory to concrete neural network hyperparameters.\n\n**Catalog References**: `Bridges/ResidualRobustness.lean` (residual robustness and spectral gaps), `Bridges/GaloisDeepLearning.lean` (depth from group order)\n\n**Proof Strategy**: (1) Model the residual network as a discretized dynamical system. (2) Show that each residual block contributes a multiplicative contraction factor. (3) Use `depth_from_group_order` to connect the characteristic depth L\u2080 to the symmetry group order. Key lemma: `resnet_contraction_depth_bound`: For depth L, the contraction rate satisfies c \u2264 c\u2080 \u00b7 e^{-L\u00b7\u0394} where \u0394 is the spectral gap.\n\n**Domain Bridges**: MachineLearning <-> Bridges, Physics <-> Algebra\n\n**Lineage**: Builds on `residual_robust_of_base_gap_and_skip_budget` and `depth_from_group_order`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Universality Classes for Stochastic PDEs\n\n**Conjecture**: For stochastic PDEs (SPDEs) driven by spatially correlated noise with correlation length \u03be, the universality class of the neural operator depends on the ratio \u03be/L where L is the system size. When \u03be/L \u2192 0 (uncorrelated noise), the universality class is identical to the deterministic PDE. When \u03be/L \u2192 \u221e (perfectly correlated noise), a new \"stochastic universality class\" emerges with a contraction rate c_stoch = c_det^{1/2}\u2014half the exponent of the deterministic case.\n\n**Test**: Train neural operators on the stochastic heat equation with varying noise correlation lengths. Compute the RG contraction rate as a function of \u03be/L. Verify the predicted crossover from c_det to c_det^{1/2} and identify the critical ratio (\u03be/L)* at which the transition occurs.\n\n**Impact**: Most real-world physical systems include stochastic forcing (turbulence, thermal fluctuations, measurement noise). Understanding how noise changes universality classes is essential for deploying neural PDE solvers in realistic settings.\n\n**Catalog References**: `Bridges/RenormalizationUniversality.lean` (universality class theory), `Physics/` (physical systems with noise)\n\n**Proof Strategy**: (1) Extend the RG semigroup to act on probability distributions over operators. (2) Show that the noise correlation length \u03be enters as a relevant parameter in the RG flow. (3) Compute the RG fixed point in the large-\u03be limit using a saddle-point approximation. Key lemma: `stochastic_rg_contraction`: The stochastic contraction rate satisfies c_stoch = c_det^{min(1, 2\u03be/L)}.\n\n**Domain Bridges**: Physics <-> MachineLearning, Bridges <-> Computation\n\n**Lineage**: Extends the deterministic universality theory from this cycle to stochastic settings.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "46942b74",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T21:31:17.068483+00:00"
   }
 ];
