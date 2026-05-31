@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "neural_pde_universality_classes_via_renormalizatio.json",
+    "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
+    "domain": "Bridges",
+    "date": "2026-05-31T21:31:14Z",
+    "exp_id": "46942b74",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 17
+  },
+  {
     "filename": "homotopy_type_theory_as_foundations.json",
     "title": "Homotopy Type Theory as Foundations: Bridges Between Univalent and Classical Mathematics",
     "domain": "Bridges",
     "date": "2026-05-31T21:30:56Z",
     "exp_id": "b5aa996d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7398349845201239,
+    "quality": "substantial",
     "pkg_num": 16
   },
   {
@@ -198,6 +208,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "neural_pde_universality_classes_via_renormalizatio.json": {
+    "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
+    "exp_id": "46942b74",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "domain": "Bridges"
+  },
   "catalans_conjecture_generalizations.json": {
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "exp_id": "b52cbca8",
@@ -307,7 +325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -318,7 +336,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -329,7 +347,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 90,
+      "hue": 101,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -340,7 +358,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -351,7 +369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -373,7 +391,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -384,7 +402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -395,7 +413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -406,7 +424,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -417,7 +435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 270,
+      "hue": 280,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -428,7 +446,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -450,7 +468,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270,
+      "hue": 112,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -461,7 +479,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -472,6 +490,17 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
+      "hue": 270,
+      "priority_score": 0.7398349845201239,
+      "quality": "substantial"
+    },
+    {
+      "id": "neural_pde_universality_classes_via_renormalizatio",
+      "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:31:14Z",
       "hue": 91,
       "priority_score": null,
       "quality": "unrated"
