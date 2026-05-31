@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             const fnExposes = [...handlerFns].map(fn =>
-                `window.${fn} = window.${fn} || ${fn};`
+                `window.${fn} = ${fn};`
             ).join('\n');
 
             content.querySelectorAll('script').forEach(oldScript => {
