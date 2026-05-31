@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:51:11Z",
+    "exp_id": "7ee1e9b0",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 32
+  },
+  {
     "filename": "this_research_cycle_established_a_rigorous_framewo.json",
     "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
     "domain": "Algebra",
     "date": "2026-05-31T23:50:52Z",
     "exp_id": "de323f00",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7352763636363637,
+    "quality": "substantial",
     "pkg_num": 31
   },
   {
@@ -364,6 +374,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "paradoxes_as_theorems_liar_berry_and_russell_made_.json": {
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
+    "exp_id": "7ee1e9b0",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "cellular_automata_at_the_ordinals_transfinite_comp.json": {
     "title": "Cellular Automata at the Ordinals: Transfinite Computation",
     "exp_id": "5a82cace",
@@ -588,7 +606,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -599,7 +617,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -610,7 +628,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -621,7 +639,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -654,7 +672,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -665,7 +683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 271,
+      "hue": 112,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -676,7 +694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -698,7 +716,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -720,7 +738,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -731,7 +749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -742,7 +760,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -753,7 +771,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -764,7 +782,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -775,7 +793,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 89,
+      "hue": 272,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -786,7 +804,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -797,7 +815,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -808,7 +826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -819,7 +837,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 90,
+      "hue": 314,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -830,7 +848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -841,7 +859,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -852,7 +870,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -863,7 +881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 292,
+      "hue": 270,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -874,7 +892,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -885,7 +903,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -896,7 +914,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -907,7 +925,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 90,
+      "hue": 270,
+      "priority_score": 0.7352763636363637,
+      "quality": "substantial"
+    },
+    {
+      "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:51:11Z",
+      "hue": 92,
       "priority_score": null,
       "quality": "unrated"
     }
