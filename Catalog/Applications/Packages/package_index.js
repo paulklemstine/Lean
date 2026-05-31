@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "this_research_cycle_established_a_rigorous_framewo.json",
+    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:50:52Z",
+    "exp_id": "de323f00",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 31
+  },
+  {
     "filename": "isomorphisms_of_meaning_when_structures_collide.json",
     "title": "Isomorphisms of Meaning: When Structures Collide",
     "domain": "Algebra",
     "date": "2026-05-31T23:50:29Z",
     "exp_id": "1debcf92",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7206367500000002,
+    "quality": "substantial",
     "pkg_num": 30
   },
   {
@@ -386,6 +396,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "this_research_cycle_established_a_rigorous_framewo.json": {
+    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
+    "exp_id": "de323f00",
+    "source_exp_ids": [
+      "5a82cace"
+    ],
+    "domain": "Algebra"
+  },
   "catalans_conjecture_generalizations.json": {
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "exp_id": "b52cbca8",
@@ -559,7 +577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -592,7 +610,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 275,
+      "hue": 272,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -603,7 +621,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -614,7 +632,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 292,
+      "hue": 270,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -625,7 +643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -658,7 +676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -669,7 +687,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 314,
+      "hue": 270,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -691,7 +709,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -724,7 +742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 112,
+      "hue": 91,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -735,7 +753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -746,7 +764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -757,7 +775,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 91,
+      "hue": 89,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -768,7 +786,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -779,7 +797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -790,7 +808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -812,7 +830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -834,7 +852,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 134,
+      "hue": 270,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -845,7 +863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 90,
+      "hue": 292,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -856,7 +874,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -867,7 +885,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -878,11 +896,30 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 100,
+      "hue": 272,
+      "priority_score": 0.7206367500000002,
+      "quality": "substantial"
+    },
+    {
+      "id": "this_research_cycle_established_a_rigorous_framewo",
+      "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:50:52Z",
+      "hue": 90,
       "priority_score": null,
       "quality": "unrated"
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "cellular_automata_at_the_ordinals_transfinite_comp",
+      "target": "this_research_cycle_established_a_rigorous_framewo",
+      "strength": 1.0,
+      "label": "Direction 1: Explicit Depth-2 Construction via XOR Oscillati",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": []
 };
