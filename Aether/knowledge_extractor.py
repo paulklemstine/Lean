@@ -2303,6 +2303,10 @@ Research mode: {concept.research_mode}
             rp = pkg.get("research_paper", "")
             if isinstance(rp, str) and (PLACEHOLDER_PATTERN.match(rp) or len(rp) < 30):
                 pkg["research_paper"] = job.result_research_paper
+        if hasattr(job, 'result_future_directions') and job.result_future_directions:
+            fd = pkg.get("future_directions", "")
+            if isinstance(fd, str) and (PLACEHOLDER_PATTERN.match(fd) or (isinstance(fd, str) and len(fd) < 50)):
+                pkg["future_directions"] = job.result_future_directions
         if hasattr(job, 'result_lean') and job.result_lean:
             lp = pkg.get("lean_proofs", "")
             if isinstance(lp, str) and PLACEHOLDER_PATTERN.match(lp):

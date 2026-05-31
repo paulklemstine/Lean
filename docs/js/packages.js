@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Visualizations (generated images from Python scripts)
         renderVisualizations('content-visualizations', data.visualizations);
 
-        // Algorithms (pseudocode) rendered above demos in the Interactive tab
-        renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
+        // Algorithms rendered above demos in the Interactive tab
+        renderCodeBlocks('content-algorithms', data.algorithms, 'code');
         if (window.renderInteractiveDemos) {
             window.renderInteractiveDemos('content-demos', data.demos);
         }
@@ -156,7 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
         container.appendChild(sectionTitle);
 
-        items.forEach((item, idx) => {
+        const validItems = items.filter(item => {
+            if (typeof item === 'string') {
+                console.warn('Skipping string visualization entry:', item);
+                return false;
+            }
+            return true;
+        });
+        if (validItems.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        validItems.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = 'viz-container';
 
@@ -244,7 +256,19 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
         container.appendChild(sectionTitle);
 
-        items.forEach((item, idx) => {
+        const validItems = items.filter(item => {
+            if (typeof item === 'string') {
+                console.warn('Skipping string interactive demo entry:', item);
+                return false;
+            }
+            return true;
+        });
+        if (validItems.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        validItems.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = 'code-card';
             card.style.cssText = 'margin-bottom: 12px;';
@@ -284,8 +308,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
 
-        if (items && items.length > 0) {
-            items.forEach(item => {
+        const validItems = (items || []).filter(item => {
+            if (typeof item === 'string') {
+                console.warn('Skipping string code entry:', item);
+                return false;
+            }
+            return true;
+        });
+        if (validItems.length > 0) {
+            validItems.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'code-card';
                 card.innerHTML = `
@@ -376,8 +407,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Narrative section: raw markdown from package's future_directions field
         const narrativeDiv = document.getElementById('content-directions-narrative');
-        if (pkgData.future_directions) {
-            narrativeDiv.innerHTML = marked.parse(pkgData.future_directions);
+        const fd = pkgData.future_directions;
+        if (fd && typeof fd === 'string' && fd.length > 50 && !fd.endsWith('.md')) {
+            narrativeDiv.innerHTML = marked.parse(fd);
         } else {
             narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
         }

@@ -187,10 +187,13 @@ def update_index():
 
         # Extract visualizations into real files, replace data with file paths
         if data.get("visualizations"):
+            # Convert string entries to dicts — LLM sometimes returns filenames instead of objects
+            data["visualizations"] = [
+                {"name": v.replace(".py", "").replace("_", " ").title(), "code": "", "description": ""}
+                if isinstance(v, str) else v
+                for v in data["visualizations"]
+            ]
             for i, viz in enumerate(data["visualizations"]):
-                # Skip string entries — LLM sometimes returns raw strings instead of dicts
-                if isinstance(viz, str):
-                    continue
                 # Handle inline image data (base64/SVG)
                 viz_data = viz.get("data", "")
                 if viz_data:
@@ -214,9 +217,13 @@ def update_index():
 
         # Also extract algorithms code into separate files if present
         if data.get("algorithms"):
+            # Convert string entries to dicts
+            data["algorithms"] = [
+                {"name": a.replace(".py", "").replace("_", " ").title(), "code": ""}
+                if isinstance(a, str) else a
+                for a in data["algorithms"]
+            ]
             for i, alg in enumerate(data["algorithms"]):
-                if isinstance(alg, str):
-                    continue
                 alg_code = alg.get("code", "")
                 if alg_code:
                     safe_name = sanitize_filename(alg.get("name", ""), 40) or f"algo_{i}"
