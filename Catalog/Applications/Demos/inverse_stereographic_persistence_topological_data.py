@@ -1,572 +1,446 @@
 """
-Applications of Stereographic Persistence Theory
+Stereographic Persistence Demo
 
-Real-world applications demonstrating the utility of exact metric transport
-for topological data analysis on spherical data.
-
-Applications:
-1. Astrophysical sky map analysis (CMB-like distributions)
-2. Directional statistics (wind/ocean current data)
-3. Molecular orientation analysis
+Demonstrates the key results:
+1. Conformal factor properties
+2. Weighted vs unweighted Čech filtration interleaving
+3. Persistence diagram comparison for spherical point clouds
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 from algorithms import (
+    stereo_conformal_factor,
+    stereo_weighted_dist,
     stereographic_project,
-    spherical_distance_matrix, weighted_distance_matrix,
-    euclidean_distance_matrix,
-    sample_spherical_cap, sample_sphere_uniform,
+    inverse_stereographic,
+    geodesic_dist,
+    compute_pairwise_distances,
+    vietoris_rips_persistence,
+    compare_persistence_diagrams,
+    stereo_persistence_interleaving_bound,
+    generate_spherical_points,
 )
 
 
-def astrophysical_anisotropy_detection():
-    """
-    Application 1: Detecting anisotropy in sky distributions.
+def demo_conformal_factor():
+    """Demonstrate properties of the stereographic conformal factor."""
+    print("=" * 60)
+    print("DEMO 1: Stereographic Conformal Factor Properties")
+    print("=" * 60)
 
-    Simulates isotropic vs anisotropic point distributions on S^2
-    (as a simplified model of CMB hotspot locations), and compares
-    the Rips complex structure under different metrics.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Astrophysical Anisotropy Detection")
-    print("=" * 70)
+    # Property 1: w(0) = 2
+    origin = np.zeros(3)
+    w0 = stereo_conformal_factor(origin)
+    print(f"\nw(0) = {w0:.6f} (should be 2.0)")
 
+    # Property 2: w(x) ≤ 2 for all x
+    print("\nConformal factor for random points (should all be ≤ 2):")
     np.random.seed(42)
-    N = 40
+    for _ in range(5):
+        x = np.random.randn(3)
+        w = stereo_conformal_factor(x)
+        print(f"  x = [{x[0]:.3f}, {x[1]:.3f}, {x[2]:.3f}], ||x|| = {np.linalg.norm(x):.3f}, w(x) = {w:.6f}")
 
-    # Isotropic distribution: uniform on S^2
-    iso_points = sample_sphere_uniform(N, n_dim=2, seed=42)
-    iso_points[iso_points[:, 2] > 0.95, 2] = 0.9
-    iso_points = iso_points / np.linalg.norm(iso_points, axis=1, keepdims=True)
+    # Property 3: Monotone decreasing in norm
+    print("\nMonotonicity (w decreases as ||x|| increases):")
+    norms = [0, 0.5, 1.0, 2.0, 5.0, 10.0]
+    for r in norms:
+        x = np.array([r, 0, 0])
+        w = stereo_conformal_factor(x)
+        print(f"  ||x|| = {r:5.1f}, w(x) = {w:.6f}")
 
-    # Anisotropic: clustered around two antipodal caps (dipole pattern)
-    aniso1 = sample_spherical_cap(N // 2, n_dim=2, angular_radius=0.6,
-                                  center=np.array([1, 0, 0.0]), seed=100)
-    aniso2 = sample_spherical_cap(N // 2, n_dim=2, angular_radius=0.6,
-                                  center=np.array([-1, 0, 0.0]), seed=200)
-    aniso_points = np.vstack([aniso1, aniso2])
-
-    for label, points in [("Isotropic", iso_points), ("Anisotropic (dipole)", aniso_points)]:
-        projected = stereographic_project(points)
-        n = len(points)
-
-        D_sph = spherical_distance_matrix(points)
-        D_wt = weighted_distance_matrix(projected)
-        D_euc = euclidean_distance_matrix(projected)
-
-        iu = np.triu_indices(n, k=1)
-        err_exact = np.max(np.abs(D_sph[iu] - D_wt[iu]))
-        err_naive = np.max(np.abs(D_sph[iu] - D_euc[iu]))
-
-        # Count edges at representative scale
-        eps = 0.5
-        e_sph = np.sum(D_sph[iu] <= eps)
-        e_wt = np.sum(D_wt[iu] <= eps)
-        e_euc = np.sum(D_euc[iu] <= eps)
-
-        print(f"\n  {label} (N={n}):")
-        print(f"    Exact transport error: {err_exact:.2e}")
-        print(f"    Naive Euclidean error: {err_naive:.4f}")
-        print(f"    Edges at ε=0.5: spherical={e_sph}, weighted={e_wt}, euclidean={e_euc}")
-
-    print("\n  Key insight: weighted stereographic matches spherical exactly,")
-    print("  while naive Euclidean systematically distorts the filtration.")
+    # Property 4: Lower bound for bounded clouds
+    R = 3.0
+    c_min = 2.0 / (1.0 + R**2)
+    print(f"\nFor R = {R}: c_min = 2/(1+R²) = {c_min:.6f}")
+    print(f"All points with ||x|| ≤ {R} have w(x) ≥ {c_min:.6f}")
 
 
-def directional_statistics_wind():
-    """
-    Application 2: Wind direction analysis.
-
-    Simulates directional data and demonstrates that weighted stereographic
-    persistence correctly captures circular structure.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Directional Statistics (Wind Directions)")
-    print("=" * 70)
+def demo_weighted_distance():
+    """Demonstrate weighted distance properties."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Weighted Distance Bounds")
+    print("=" * 60)
 
     np.random.seed(123)
-    N = 40
+    x = np.random.randn(3)
+    y = np.random.randn(3)
+    eucl_dist = np.linalg.norm(x - y)
+    w_dist = stereo_weighted_dist(x, y)
 
-    # Simulate wind directions: two clusters
-    theta = np.random.vonmises(mu=0, kappa=5, size=N // 2)
-    phi = np.random.vonmises(mu=np.pi / 4, kappa=10, size=N // 2)
-    theta2 = np.random.vonmises(mu=np.pi, kappa=5, size=N // 2)
-    phi2 = np.random.vonmises(mu=np.pi / 4, kappa=10, size=N // 2)
+    print(f"\nPoints: x = {x}, y = {y}")
+    print(f"Euclidean distance: {eucl_dist:.6f}")
+    print(f"Weighted distance:  {w_dist:.6f}")
+    print(f"Ratio w_dist/eucl:  {w_dist/eucl_dist:.6f}")
+    print(f"Upper bound (4x):   {4*eucl_dist:.6f}")
+    print(f"w_dist ≤ 4·eucl? {w_dist <= 4*eucl_dist}")
 
-    theta_all = np.concatenate([theta, theta2])
-    phi_all = np.concatenate([phi, phi2])
-
-    x = np.cos(phi_all) * np.cos(theta_all)
-    y = np.cos(phi_all) * np.sin(theta_all)
-    z = np.sin(phi_all)
-    points = np.column_stack([x, y, z])
-    points = points / np.linalg.norm(points, axis=1, keepdims=True)
-    points[points[:, 2] > 0.95, 2] = 0.9
-    points = points / np.linalg.norm(points, axis=1, keepdims=True)
-
-    projected = stereographic_project(points)
-
-    D_sph = spherical_distance_matrix(points)
-    D_wt = weighted_distance_matrix(projected)
-    D_euc = euclidean_distance_matrix(projected)
-
-    # Edge count comparison at multiple scales
-    scales = [0.3, 0.5, 0.8, 1.0]
-    iu = np.triu_indices(N, k=1)
-
-    print(f"\n  Wind direction data (N={N}):")
-    print(f"  {'Scale':<8} {'Sph edges':<12} {'Wt edges':<12} {'Euc edges':<12}")
-    for eps in scales:
-        e_s = np.sum(D_sph[iu] <= eps)
-        e_w = np.sum(D_wt[iu] <= eps)
-        e_e = np.sum(D_euc[iu] <= eps)
-        print(f"  {eps:<8.1f} {e_s:<12d} {e_w:<12d} {e_e:<12d}")
-
-    print("  Weighted matches spherical exactly at every scale.")
+    # Symmetry
+    w_dist_rev = stereo_weighted_dist(y, x)
+    print(f"\nSymmetry: d_w(x,y) = {w_dist:.10f}")
+    print(f"          d_w(y,x) = {w_dist_rev:.10f}")
+    print(f"          Equal? {abs(w_dist - w_dist_rev) < 1e-14}")
 
 
-def molecular_orientation_analysis():
-    """
-    Application 3: Molecular orientation analysis.
+def demo_persistence_comparison():
+    """Compare persistence diagrams for spherical point clouds."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Persistence Diagram Comparison")
+    print("=" * 60)
 
-    Demonstrates persistence on orientation data for distinguishing
-    conformational states.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Molecular Orientation Analysis")
-    print("=" * 70)
+    for N in [20, 50, 100]:
+        print(f"\n--- N = {N} points on S² ---")
 
-    np.random.seed(456)
-    N = 30
+        # Generate points on S²
+        sphere_pts = generate_spherical_points(N, dim=2, seed=42)
 
-    # Class A: near a great circle
-    t = np.linspace(0, 2 * np.pi, N)
-    noise = 0.1
-    points_A = np.column_stack([
-        np.cos(t) + noise * np.random.randn(N),
-        np.sin(t) + noise * np.random.randn(N),
-        noise * np.random.randn(N)
-    ])
-    points_A = points_A / np.linalg.norm(points_A, axis=1, keepdims=True)
+        # Project to R²
+        proj_pts = np.array([stereographic_project(p) for p in sphere_pts])
 
-    # Class B: two clusters
-    c1 = sample_spherical_cap(N // 2, n_dim=2, angular_radius=0.8,
-                              center=np.array([0, 0, -1.0]), seed=10)
-    center2 = np.array([0, 0.5, 0.5])
-    center2 = center2 / np.linalg.norm(center2)
-    c2 = sample_spherical_cap(N - N // 2, n_dim=2, angular_radius=0.8,
-                              center=center2, seed=20)
-    points_B = np.vstack([c1, c2])
+        # Filter out any points near the north pole (infinite projection)
+        valid = np.all(np.isfinite(proj_pts), axis=1)
+        sphere_pts = sphere_pts[valid]
+        proj_pts = proj_pts[valid]
+        N_valid = len(sphere_pts)
+        print(f"  Valid points: {N_valid}")
 
-    for label, points in [("Alpha-helix-like", points_A),
-                          ("Beta-sheet-like", points_B)]:
-        points[points[:, 2] > 0.95, 2] = 0.9
-        points = points / np.linalg.norm(points, axis=1, keepdims=True)
+        # Compute geodesic distance matrix
+        D_geo = compute_pairwise_distances(sphere_pts, metric='geodesic')
 
-        projected = stereographic_project(points)
-        D_sph = spherical_distance_matrix(points)
-        D_wt = weighted_distance_matrix(projected)
+        # Compute Euclidean distance matrix in R²
+        D_eucl = compute_pairwise_distances(proj_pts, metric='euclidean')
 
-        iu = np.triu_indices(len(points), k=1)
-        total_sph = np.sum(D_sph[iu])
-        total_wt = np.sum(D_wt[iu])
-        err = np.max(np.abs(D_sph[iu] - D_wt[iu]))
+        # Compute weighted distance matrix
+        weights = np.array([stereo_conformal_factor(p) for p in proj_pts])
+        D_weighted = np.zeros((N_valid, N_valid))
+        for i in range(N_valid):
+            for j in range(i + 1, N_valid):
+                d_w = weights[i] * weights[j] * np.linalg.norm(proj_pts[i] - proj_pts[j])
+                D_weighted[i, j] = d_w
+                D_weighted[j, i] = d_w
 
-        print(f"\n  {label} (N={len(points)}):")
-        print(f"    Total pairwise spherical distance: {total_sph:.2f}")
-        print(f"    Total pairwise weighted distance:  {total_wt:.2f}")
-        print(f"    Max pointwise error: {err:.2e}")
+        # Compute persistence for each
+        pers_geo = vietoris_rips_persistence(D_geo, max_epsilon=np.pi)
+        pers_eucl = vietoris_rips_persistence(D_eucl, max_epsilon=20.0)
+        pers_weighted = vietoris_rips_persistence(D_weighted, max_epsilon=20.0)
 
-    print("\n  Both conformational classes show exact agreement between")
-    print("  spherical and weighted stereographic metrics.")
+        # Compare
+        diff_geo_weighted, close_gw = compare_persistence_diagrams(
+            pers_geo, pers_weighted, threshold=0.5)
+        diff_eucl_weighted, close_ew = compare_persistence_diagrams(
+            pers_eucl, pers_weighted, threshold=0.5)
+
+        print(f"  |pers_geo - pers_weighted| = {diff_geo_weighted:.6f}")
+        print(f"  |pers_eucl - pers_weighted| = {diff_eucl_weighted:.6f}")
+
+        # Significant features
+        sig_geo = sum(1 for p in pers_geo if p.is_significant(0.1))
+        sig_weighted = sum(1 for p in pers_weighted if p.is_significant(0.1))
+        print(f"  Significant features (geo): {sig_geo}")
+        print(f"  Significant features (weighted): {sig_weighted}")
 
 
-if __name__ == '__main__':
-    print("Stereographic Persistence: Applications")
-    print("=" * 70)
+def demo_interleaving_bounds():
+    """Demonstrate the interleaving bounds."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Interleaving Bounds")
+    print("=" * 60)
 
-    astrophysical_anisotropy_detection()
-    directional_statistics_wind()
-    molecular_orientation_analysis()
+    for R in [1.0, 2.0, 5.0, 10.0]:
+        epsilon = 1.0
+        fwd, rev = stereo_persistence_interleaving_bound(R, epsilon)
+        ratio = rev / fwd
+        print(f"\n  R = {R:5.1f}: forward ε/c²_max = {fwd:.6f}, "
+              f"reverse ε/c²_min = {rev:.6f}, ratio = {ratio:.2f}")
 
-    print("\n" + "=" * 70)
-    print("All applications complete.")
+
+def demo_separation_bound():
+    """Test the conjecture on separation bounds."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Separation Bound Conjecture Test")
+    print("=" * 60)
+
+    for N in [50, 100, 200]:
+        sphere_pts = generate_spherical_points(N, dim=2, seed=42)
+        proj_pts = np.array([stereographic_project(p) for p in sphere_pts])
+        valid = np.all(np.isfinite(proj_pts), axis=1)
+        proj_pts = proj_pts[valid]
+        N_valid = len(proj_pts)
+
+        # Compute norms and minimum separation
+        norms = np.linalg.norm(proj_pts, axis=1)
+        R = np.max(norms)
+
+        min_sep = np.inf
+        min_weighted = np.inf
+        for i in range(N_valid):
+            for j in range(i + 1, N_valid):
+                d = np.linalg.norm(proj_pts[i] - proj_pts[j])
+                dw = stereo_weighted_dist(proj_pts[i], proj_pts[j])
+                if d < min_sep:
+                    min_sep = d
+                if dw < min_weighted:
+                    min_weighted = dw
+
+        c_min = 2.0 / (1.0 + R**2)
+        predicted_bound = min_sep * c_min**2
+
+        print(f"\n  N = {N}: R = {R:.4f}, δ = {min_sep:.6f}")
+        print(f"    c_min = {c_min:.6f}")
+        print(f"    Predicted bound: δ·c²_min = {predicted_bound:.8f}")
+        print(f"    Actual min d_w:            {min_weighted:.8f}")
+        print(f"    Conjecture holds? {min_weighted >= predicted_bound - 1e-12}")
+
+
+if __name__ == "__main__":
+    demo_conformal_factor()
+    demo_weighted_distance()
+    demo_persistence_comparison()
+    demo_interleaving_bounds()
+    demo_separation_bound()
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
 
 
 """
-Demo: Stereographic Persistence — Exact Metric Transport from S^n to R^n
+Visualization: Stereographic Conformal Factor and Weighted Distance
 
-This script demonstrates the main results of the stereographic persistence theory:
-
-1. The exact distance transport formula: d_st(x,y) = d_{S^n}(σ⁻¹(x), σ⁻¹(y))
-2. Čech filtration equivalence under stereographic projection
-3. Bi-Lipschitz bounds on bounded regions
-4. Comparison of exact vs naive Euclidean persistence
-5. Stress tests near the stereographic singularity
-6. Runtime scaling analysis
-
-Usage:
-    python demo.py
-
-All plots are saved to the current directory.
+Self-contained script generating plots of the conformal weight function
+and distance distortion under stereographic projection.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')  # Non-interactive backend
 import matplotlib.pyplot as plt
-from algorithms import (
-    stereographic_project, inverse_stereographic,
-    spherical_distance_matrix, weighted_distance_matrix,
-    euclidean_distance_matrix, weighted_stereographic_distance,
-    spherical_geodesic_distance, bi_lipschitz_constants,
-    sample_spherical_cap, sample_sphere_uniform,
-    persistence_comparison, rips_filtration_values
-)
-import time
+from matplotlib.gridspec import GridSpec
 
 
-def demo_exact_transport(N=50):
-    """
-    Demonstrate that the weighted stereographic distance exactly reproduces
-    spherical geodesic distance. This is the core theorem.
-    """
-    print("=" * 70)
-    print("DEMO 1: Exact Distance Transport Theorem")
-    print("=" * 70)
+def stereo_conformal_factor(x):
+    """w(x) = 2/(1 + ||x||²)"""
+    return 2.0 / (1.0 + np.sum(x**2, axis=-1))
 
-    for n_dim in [2, 3, 5]:
-        points = sample_spherical_cap(N, n_dim=n_dim, angular_radius=2.5, seed=42)
-        result = persistence_comparison(points)
 
-        print(f"\nS^{n_dim}, N={N} points:")
-        print(f"  Max |d_spherical - d_weighted|:  {result['max_error_exact_transport']:.2e}")
-        print(f"  Max |d_spherical - d_euclidean|: {result['max_error_naive_euclidean']:.4f}")
-        print(f"  Mean d_euclidean / d_spherical:  {result['mean_euclidean_to_spherical_ratio']:.4f}")
+def main():
+    fig = plt.figure(figsize=(14, 10))
+    gs = GridSpec(2, 2, figure=fig, hspace=0.35, wspace=0.3)
 
-    # Detailed plot for S^2
-    points = sample_spherical_cap(100, n_dim=2, angular_radius=2.5, seed=42)
-    result = persistence_comparison(points)
+    # Plot 1: Conformal factor as function of norm
+    ax1 = fig.add_subplot(gs[0, 0])
+    r = np.linspace(0, 5, 200)
+    w = 2.0 / (1.0 + r**2)
+    ax1.plot(r, w, 'b-', linewidth=2, label=r'$w(r) = \frac{2}{1+r^2}$')
+    ax1.axhline(y=2, color='r', linestyle='--', alpha=0.5, label='Upper bound (2)')
+    ax1.fill_between(r, 0, w, alpha=0.15, color='blue')
+    ax1.set_xlabel(r'$\|x\|$', fontsize=12)
+    ax1.set_ylabel(r'$w(x)$', fontsize=12)
+    ax1.set_title('Stereographic Conformal Factor', fontsize=13)
+    ax1.legend(fontsize=10)
+    ax1.set_ylim(0, 2.3)
+    ax1.grid(True, alpha=0.3)
 
+    # Plot 2: Conformal factor heatmap in 2D
+    ax2 = fig.add_subplot(gs[0, 1])
+    x_grid = np.linspace(-4, 4, 200)
+    y_grid = np.linspace(-4, 4, 200)
+    X, Y = np.meshgrid(x_grid, y_grid)
+    points = np.stack([X, Y], axis=-1)
+    W = stereo_conformal_factor(points)
+    im = ax2.pcolormesh(X, Y, W, shading='auto', cmap='viridis')
+    ax2.set_xlabel('x', fontsize=12)
+    ax2.set_ylabel('y', fontsize=12)
+    ax2.set_title('Conformal Weight on ℝ²', fontsize=13)
+    ax2.set_aspect('equal')
+    plt.colorbar(im, ax=ax2, label=r'$w(x)$')
+
+    # Plot 3: Distance distortion ratio
+    ax3 = fig.add_subplot(gs[1, 0])
+    np.random.seed(42)
+    n_pairs = 500
+    pts = np.random.randn(n_pairs * 2, 2) * 2
+    eucl_dists = []
+    weighted_dists = []
+    norms = []
+    for k in range(n_pairs):
+        x, y = pts[2*k], pts[2*k+1]
+        d_e = np.linalg.norm(x - y)
+        w_x = stereo_conformal_factor(x)
+        w_y = stereo_conformal_factor(y)
+        d_w = w_x * w_y * d_e
+        eucl_dists.append(d_e)
+        weighted_dists.append(d_w)
+        norms.append(max(np.linalg.norm(x), np.linalg.norm(y)))
+
+    eucl_dists = np.array(eucl_dists)
+    weighted_dists = np.array(weighted_dists)
+    norms = np.array(norms)
+
+    sc = ax3.scatter(eucl_dists, weighted_dists, c=norms, cmap='coolwarm',
+                     s=10, alpha=0.6)
+    ax3.plot([0, max(eucl_dists)], [0, 4*max(eucl_dists)], 'r--', alpha=0.3,
+             label=r'$4 \cdot d_E$ bound')
+    ax3.set_xlabel(r'Euclidean distance $d_E$', fontsize=12)
+    ax3.set_ylabel(r'Weighted distance $d_w$', fontsize=12)
+    ax3.set_title('Distance Distortion', fontsize=13)
+    ax3.legend(fontsize=10)
+    ax3.grid(True, alpha=0.3)
+    plt.colorbar(sc, ax=ax3, label=r'max $\|x\|$')
+
+    # Plot 4: Interleaving ratio vs R
+    ax4 = fig.add_subplot(gs[1, 1])
+    R_vals = np.linspace(0.1, 10, 200)
+    c_min = 2.0 / (1.0 + R_vals**2)
+    c_max = 2.0
+    ratio = (c_max / c_min)**2
+    ax4.semilogy(R_vals, ratio, 'b-', linewidth=2)
+    ax4.axhline(y=1, color='g', linestyle='--', alpha=0.5, label='Exact isometry')
+    ax4.set_xlabel(r'$R$ (norm bound)', fontsize=12)
+    ax4.set_ylabel('Interleaving ratio', fontsize=12)
+    ax4.set_title('Persistence Interleaving Quality', fontsize=13)
+    ax4.legend(fontsize=10)
+    ax4.grid(True, alpha=0.3)
+
+    plt.suptitle('Stereographic Persistence: Conformal Analysis',
+                 fontsize=15, fontweight='bold', y=0.98)
+    plt.savefig('stereo_persistence_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: stereo_persistence_analysis.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""
+Visualization: Persistence Diagram Comparison
+
+Self-contained script comparing persistence diagrams computed with
+geodesic, Euclidean, and conformally weighted distances.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def stereo_conformal_factor(x):
+    return 2.0 / (1.0 + np.sum(x**2, axis=-1))
+
+
+def stereographic_project(p):
+    n = len(p) - 1
+    denom = 1.0 - p[-1]
+    if abs(denom) < 1e-15:
+        return np.full(n, np.inf)
+    return p[:n] / denom
+
+
+def geodesic_dist(p, q):
+    dot = np.clip(np.dot(p, q), -1.0, 1.0)
+    return np.arccos(dot)
+
+
+def generate_spherical_points(n_points, dim=2, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+    points = np.random.randn(n_points, dim + 1)
+    norms = np.linalg.norm(points, axis=1, keepdims=True)
+    return points / norms
+
+
+def vietoris_rips_h0(dist_matrix):
+    n = len(dist_matrix)
+    parent = list(range(n))
+    pairs = []
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        rx, ry = find(x), find(y)
+        if rx == ry:
+            return False
+        parent[rx] = ry
+        return True
+
+    edges = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            edges.append((dist_matrix[i, j], i, j))
+    edges.sort()
+
+    for dist, i, j in edges:
+        if union(i, j):
+            pairs.append((0.0, dist / 2.0))
+
+    return pairs
+
+
+def main():
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    D_s = result['D_spherical']
-    D_w = result['D_weighted']
-    D_e = result['D_euclidean']
+    N = 60
+    sphere_pts = generate_spherical_points(N, dim=2, seed=42)
+    proj_pts = np.array([stereographic_project(p) for p in sphere_pts])
+    valid = np.all(np.isfinite(proj_pts), axis=1)
+    sphere_pts = sphere_pts[valid]
+    proj_pts = proj_pts[valid]
+    N_valid = len(sphere_pts)
 
-    # Extract upper triangle
-    idx = np.triu_indices(len(D_s), k=1)
-    ds = D_s[idx]
-    dw = D_w[idx]
-    de = D_e[idx]
+    # Geodesic distances
+    D_geo = np.zeros((N_valid, N_valid))
+    for i in range(N_valid):
+        for j in range(i+1, N_valid):
+            d = geodesic_dist(sphere_pts[i], sphere_pts[j])
+            D_geo[i, j] = d
+            D_geo[j, i] = d
 
-    axes[0].scatter(ds, dw, alpha=0.3, s=5, color='blue')
-    axes[0].plot([0, np.pi], [0, np.pi], 'r--', linewidth=2, label='y = x (exact)')
-    axes[0].set_xlabel('Spherical geodesic distance')
-    axes[0].set_ylabel('Weighted stereographic distance')
-    axes[0].set_title('Exact Transport (should be y=x)')
-    axes[0].legend()
+    # Euclidean distances
+    D_eucl = np.zeros((N_valid, N_valid))
+    for i in range(N_valid):
+        for j in range(i+1, N_valid):
+            d = np.linalg.norm(proj_pts[i] - proj_pts[j])
+            D_eucl[i, j] = d
+            D_eucl[j, i] = d
 
-    axes[1].scatter(ds, de, alpha=0.3, s=5, color='orange')
-    axes[1].plot([0, np.pi], [0, np.pi], 'r--', linewidth=2, label='y = x')
-    axes[1].set_xlabel('Spherical geodesic distance')
-    axes[1].set_ylabel('Naive Euclidean distance')
-    axes[1].set_title('Naive Euclidean (systematic distortion)')
-    axes[1].legend()
+    # Weighted distances
+    weights = np.array([stereo_conformal_factor(p) for p in proj_pts])
+    D_weighted = np.zeros((N_valid, N_valid))
+    for i in range(N_valid):
+        for j in range(i+1, N_valid):
+            d = weights[i] * weights[j] * np.linalg.norm(proj_pts[i] - proj_pts[j])
+            D_weighted[i, j] = d
+            D_weighted[j, i] = d
 
-    axes[2].hist(np.abs(ds - dw), bins=50, color='blue', alpha=0.7, label='|d_sph - d_wt|')
-    axes[2].hist(np.abs(ds - de), bins=50, color='orange', alpha=0.7, label='|d_sph - d_euc|')
-    axes[2].set_xlabel('Absolute error')
-    axes[2].set_ylabel('Count')
-    axes[2].set_title('Error Distribution')
-    axes[2].legend()
-    axes[2].set_yscale('log')
+    # Persistence diagrams
+    pairs_geo = vietoris_rips_h0(D_geo)
+    pairs_eucl = vietoris_rips_h0(D_eucl)
+    pairs_weighted = vietoris_rips_h0(D_weighted)
 
+    for ax, pairs, title, color in [
+        (axes[0], pairs_geo, 'Geodesic H₀', 'blue'),
+        (axes[1], pairs_eucl, 'Euclidean H₀', 'red'),
+        (axes[2], pairs_weighted, 'Weighted H₀', 'green')
+    ]:
+        births = [p[0] for p in pairs]
+        deaths = [p[1] for p in pairs]
+        max_val = max(deaths) if deaths else 1
+        ax.scatter(births, deaths, c=color, s=20, alpha=0.7)
+        ax.plot([0, max_val], [0, max_val], 'k--', alpha=0.3)
+        ax.set_xlabel('Birth', fontsize=11)
+        ax.set_ylabel('Death', fontsize=11)
+        ax.set_title(title, fontsize=13)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.3)
+
+    plt.suptitle(f'Persistence Diagrams (N={N_valid} points on S²)',
+                 fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('demo_exact_transport.png', dpi=150)
+    plt.savefig('persistence_comparison.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("\n  Plot saved: demo_exact_transport.png")
+    print("Saved: persistence_comparison.png")
 
 
-def demo_filtration_equivalence(N=30):
-    """
-    Demonstrate that the Rips filtration values are identical under
-    exact metric transport but differ under naive Euclidean distance.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 2: Filtration Equivalence")
-    print("=" * 70)
-
-    points = sample_spherical_cap(N, n_dim=2, angular_radius=2.0, seed=123)
-    projected = stereographic_project(points)
-
-    D_sph = spherical_distance_matrix(points)
-    D_wt = weighted_distance_matrix(projected)
-    D_euc = euclidean_distance_matrix(projected)
-
-    filt_sph = rips_filtration_values(D_sph)
-    filt_wt = rips_filtration_values(D_wt)
-    filt_euc = rips_filtration_values(D_euc)
-
-    print(f"\n  Number of filtration values (spherical): {len(filt_sph)}")
-    print(f"  Number of filtration values (weighted):  {len(filt_wt)}")
-    print(f"  Number of filtration values (Euclidean): {len(filt_euc)}")
-    print(f"  Max |filt_sph - filt_wt|: {np.max(np.abs(filt_sph - filt_wt)):.2e}")
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(range(len(filt_sph)), filt_sph, 'b-', label='Spherical geodesic', linewidth=2)
-    ax.plot(range(len(filt_wt)), filt_wt, 'g--', label='Weighted stereographic', linewidth=2)
-    ax.plot(range(len(filt_euc)), filt_euc, 'r:', label='Naive Euclidean', linewidth=2)
-    ax.set_xlabel('Edge index (sorted)')
-    ax.set_ylabel('Filtration value (distance)')
-    ax.set_title(f'Rips Filtration Values (N={N} points on S²)')
-    ax.legend()
-    plt.tight_layout()
-    plt.savefig('demo_filtration_equivalence.png', dpi=150)
-    plt.close()
-    print("  Plot saved: demo_filtration_equivalence.png")
-
-
-def demo_bilipschitz(N=100):
-    """
-    Demonstrate the bi-Lipschitz bounds on bounded regions.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 3: Bi-Lipschitz Bounds on Bounded Regions")
-    print("=" * 70)
-
-    Rs = [0.5, 1.0, 2.0, 5.0, 10.0]
-
-    fig, axes = plt.subplots(1, len(Rs), figsize=(5 * len(Rs), 5))
-
-    for idx, R in enumerate(Rs):
-        rho = 2 * np.arctan(R)  # angular radius of cap
-        points = sample_spherical_cap(N, n_dim=2, angular_radius=rho, seed=42)
-        projected = stereographic_project(points)
-
-        norms = np.linalg.norm(projected, axis=1)
-        actual_R = np.max(norms)
-
-        C1, C2 = bi_lipschitz_constants(actual_R)
-
-        D_wt = weighted_distance_matrix(projected)
-        D_euc = euclidean_distance_matrix(projected)
-
-        iu = np.triu_indices(N, k=1)
-        dw = D_wt[iu]
-        de = D_euc[iu]
-
-        ax = axes[idx]
-        ax.scatter(de, dw, alpha=0.3, s=5, color='blue')
-        t = np.linspace(0, np.max(de) * 1.1, 100)
-        ax.plot(t, C1 * t, 'g-', label=f'C₁={C1:.3f}', linewidth=2)
-        ax.plot(t, C2 * t, 'r-', label=f'C₂={C2:.3f}', linewidth=2)
-        ax.set_xlabel('Euclidean distance')
-        ax.set_ylabel('Weighted distance')
-        ax.set_title(f'R={R:.1f}, ρ={np.degrees(rho):.0f}°')
-        ax.legend(fontsize=8)
-
-        # Check bounds
-        violations_lower = np.sum(dw < C1 * de - 1e-10)
-        violations_upper = np.sum(dw > C2 * de + 1e-10)
-        print(f"  R={R:.1f}: C₁={C1:.4f}, C₂={C2:.4f}, "
-              f"lower violations={violations_lower}, upper violations={violations_upper}")
-
-    plt.tight_layout()
-    plt.savefig('demo_bilipschitz.png', dpi=150)
-    plt.close()
-    print("  Plot saved: demo_bilipschitz.png")
-
-
-def demo_north_pole_stress(N=30):
-    """
-    Stress test near the stereographic singularity (north pole).
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 4: North Pole Stress Test")
-    print("=" * 70)
-
-    # Base cloud on the southern hemisphere
-    base_points = sample_spherical_cap(N - 1, n_dim=2, angular_radius=1.0, seed=42)
-
-    angular_distances = [1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01]
-    max_proj_norms = []
-    condition_numbers = []
-    max_weighted_errors = []
-
-    for delta in angular_distances:
-        # Point near north pole at angular distance delta
-        near_pole = np.array([np.sin(delta), 0.0, np.cos(delta)])
-        points = np.vstack([base_points, near_pole.reshape(1, -1)])
-
-        projected = stereographic_project(points)
-        max_norm = np.max(np.linalg.norm(projected, axis=1))
-        max_proj_norms.append(max_norm)
-
-        D_sph = spherical_distance_matrix(points)
-        D_wt = weighted_distance_matrix(projected)
-        D_euc = euclidean_distance_matrix(projected)
-
-        max_err = np.max(np.abs(D_sph - D_wt))
-        max_weighted_errors.append(max_err)
-
-        # Condition number of distance matrix
-        eigenvalues = np.linalg.eigvalsh(D_wt)
-        nonzero_eig = eigenvalues[np.abs(eigenvalues) > 1e-12]
-        if len(nonzero_eig) > 0:
-            cond = np.max(np.abs(nonzero_eig)) / np.min(np.abs(nonzero_eig))
-        else:
-            cond = float('inf')
-        condition_numbers.append(cond)
-
-        print(f"  δ={delta:.3f}: max_proj_norm={max_norm:.1f}, "
-              f"cond={cond:.1f}, exact_error={max_err:.2e}")
-
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    axes[0].loglog(angular_distances, max_proj_norms, 'bo-', linewidth=2)
-    axes[0].set_xlabel('Angular distance from north pole')
-    axes[0].set_ylabel('Max projected norm')
-    axes[0].set_title('Projection Norm vs Distance from Pole')
-    axes[0].grid(True)
-
-    axes[1].loglog(angular_distances, condition_numbers, 'ro-', linewidth=2)
-    axes[1].set_xlabel('Angular distance from north pole')
-    axes[1].set_ylabel('Condition number')
-    axes[1].set_title('Distance Matrix Conditioning')
-    axes[1].grid(True)
-
-    axes[2].semilogy(angular_distances, max_weighted_errors, 'go-', linewidth=2)
-    axes[2].set_xlabel('Angular distance from north pole')
-    axes[2].set_ylabel('Max |d_spherical - d_weighted|')
-    axes[2].set_title('Exact Transport Numerical Error')
-    axes[2].grid(True)
-
-    plt.tight_layout()
-    plt.savefig('demo_north_pole_stress.png', dpi=150)
-    plt.close()
-    print("  Plot saved: demo_north_pole_stress.png")
-
-
-def demo_cap_approximation():
-    """
-    Demonstrate how Euclidean approximation improves on smaller caps.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 5: Cap Radius vs Euclidean Approximation Quality")
-    print("=" * 70)
-
-    N = 100
-    radii = np.linspace(0.1, 2.5, 15)
-    max_errors = []
-    mean_errors = []
-
-    for rho in radii:
-        points = sample_spherical_cap(N, n_dim=2, angular_radius=rho, seed=42)
-        projected = stereographic_project(points)
-
-        D_sph = spherical_distance_matrix(points)
-        D_euc = euclidean_distance_matrix(projected)
-
-        iu = np.triu_indices(N, k=1)
-        ds = D_sph[iu]
-        de = D_euc[iu]
-        mask = ds > 1e-10
-
-        if np.any(mask):
-            rel_errors = np.abs(ds[mask] - de[mask]) / ds[mask]
-            max_errors.append(np.max(rel_errors))
-            mean_errors.append(np.mean(rel_errors))
-        else:
-            max_errors.append(0)
-            mean_errors.append(0)
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(np.degrees(radii), max_errors, 'r-o', label='Max relative error', linewidth=2)
-    ax.plot(np.degrees(radii), mean_errors, 'b-s', label='Mean relative error', linewidth=2)
-    ax.set_xlabel('Cap angular radius (degrees)')
-    ax.set_ylabel('Relative error |d_sph - d_euc| / d_sph')
-    ax.set_title('Euclidean Approximation Quality vs Cap Size')
-    ax.legend()
-    ax.grid(True)
-    plt.tight_layout()
-    plt.savefig('demo_cap_approximation.png', dpi=150)
-    plt.close()
-    print("  Plot saved: demo_cap_approximation.png")
-
-
-def demo_scaling():
-    """
-    Runtime scaling analysis for the three distance computations.
-    """
-    print("\n" + "=" * 70)
-    print("DEMO 6: Runtime Scaling")
-    print("=" * 70)
-
-    sizes = [50, 100, 200]
-    times_sph = []
-    times_wt = []
-    times_euc = []
-
-    for N in sizes:
-        points = sample_sphere_uniform(N, n_dim=2, seed=42)
-        # Ensure no point is too close to north pole
-        points[points[:, -1] > 0.95, -1] = 0.9
-        points = points / np.linalg.norm(points, axis=1, keepdims=True)
-
-        projected = stereographic_project(points)
-
-        t0 = time.time()
-        for _ in range(3):
-            D_sph = spherical_distance_matrix(points)
-        t_sph = (time.time() - t0) / 3
-
-        t0 = time.time()
-        for _ in range(3):
-            D_wt = weighted_distance_matrix(projected)
-        t_wt = (time.time() - t0) / 3
-
-        t0 = time.time()
-        for _ in range(3):
-            D_euc = euclidean_distance_matrix(projected)
-        t_euc = (time.time() - t0) / 3
-
-        times_sph.append(t_sph)
-        times_wt.append(t_wt)
-        times_euc.append(t_euc)
-
-        print(f"  N={N}: spherical={t_sph:.4f}s, weighted={t_wt:.4f}s, euclidean={t_euc:.4f}s")
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(sizes, times_sph, 'b-o', label='Spherical geodesic', linewidth=2)
-    ax.plot(sizes, times_wt, 'g-s', label='Weighted stereographic', linewidth=2)
-    ax.plot(sizes, times_euc, 'r-^', label='Naive Euclidean', linewidth=2)
-    ax.set_xlabel('Number of points')
-    ax.set_ylabel('Time (seconds)')
-    ax.set_title('Distance Matrix Computation Time')
-    ax.legend()
-    ax.grid(True)
-    plt.tight_layout()
-    plt.savefig('demo_scaling.png', dpi=150)
-    plt.close()
-    print("  Plot saved: demo_scaling.png")
-
-
-if __name__ == '__main__':
-    print("Stereographic Persistence: Demonstrations")
-    print("=" * 70)
-    print()
-
-    demo_exact_transport(N=50)
-    demo_filtration_equivalence(N=30)
-    demo_bilipschitz(N=100)
-    demo_north_pole_stress(N=30)
-    demo_cap_approximation()
-    demo_scaling()
-
-    print("\n" + "=" * 70)
-    print("All demos complete. Plots saved to current directory.")
-    print("=" * 70)
+if __name__ == "__main__":
+    main()

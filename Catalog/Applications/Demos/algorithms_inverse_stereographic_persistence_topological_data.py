@@ -1,346 +1,303 @@
 """
-Algorithms for Stereographic Persistence: Exact metric transport from S^n to R^n.
+Stereographic Persistence: Algorithms for Topological Data Analysis on Spheres
 
-This module implements the core algorithms for computing persistence diagrams
-using the weighted stereographic distance, providing an exact bridge between
-intrinsic spherical topology and computable Euclidean filtrations.
-
-Key algorithms:
-1. Inverse stereographic projection and its inverse
-2. Weighted stereographic distance computation
-3. Spherical geodesic distance computation
-4. Vietoris-Rips filtration construction with custom metrics
-5. Bi-Lipschitz constant estimation on bounded regions
+Type-hinted implementations of the core algorithms for computing persistent
+homology on spheres via stereographic projection.
 """
 
 import numpy as np
-from typing import Tuple, List, Optional
-from itertools import combinations
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
 
 
-def stereographic_project(points_sphere: np.ndarray) -> np.ndarray:
-    """
-    Stereographic projection from S^n ⊂ R^{n+1} to R^n.
+@dataclass
+class PersistencePair:
+    """A birth-death pair in a persistence diagram."""
+    birth: float
+    death: float
+    dimension: int = 0
 
-    Projects from the north pole N = (0, ..., 0, 1).
-    Formula: σ(x₁,...,x_{n+1}) = (x₁,...,xₙ) / (1 - x_{n+1})
+    @property
+    def lifetime(self) -> float:
+        return self.death - self.birth
 
-    Args:
-        points_sphere: Array of shape (N, n+1) with points on S^n.
+    def is_significant(self, threshold: float) -> bool:
+        return self.lifetime >= threshold
 
-    Returns:
-        Array of shape (N, n) with projected points in R^n.
-
-    Complexity: O(N * n) time, O(N * n) space.
-
-    Example:
-        >>> south_pole = np.array([[0, 0, -1.0]])
-        >>> stereographic_project(south_pole)
-        array([[0., 0.]])
-    """
-    last_coord = points_sphere[:, -1:]
-    denom = 1.0 - last_coord
-    return points_sphere[:, :-1] / denom
+    def scale(self, c: float) -> 'PersistencePair':
+        return PersistencePair(c * self.birth, c * self.death, self.dimension)
 
 
-def inverse_stereographic(points_flat: np.ndarray) -> np.ndarray:
-    """
-    Inverse stereographic projection from R^n to S^n ⊂ R^{n+1}.
-
-    Maps from R^n to S^n \\ {N} using the standard formula:
-    σ⁻¹(y) = ((2y₁,...,2yₙ, ‖y‖²-1)) / (‖y‖²+1)
+def stereo_conformal_factor(x: np.ndarray) -> float:
+    """Compute the stereographic conformal factor w(x) = 2/(1 + ||x||²).
 
     Args:
-        points_flat: Array of shape (N, n) with points in R^n.
+        x: Point in R^n
 
     Returns:
-        Array of shape (N, n+1) with points on S^n.
-
-    Complexity: O(N * n) time, O(N * n+1) space.
-
-    Example:
-        >>> origin = np.array([[0.0, 0.0]])
-        >>> inverse_stereographic(origin)
-        array([[ 0.,  0., -1.]])
+        The conformal weight at x
     """
-    norms_sq = np.sum(points_flat ** 2, axis=1, keepdims=True)
-    denom = norms_sq + 1.0
-    first_n = 2.0 * points_flat / denom
-    last = (norms_sq - 1.0) / denom
-    return np.hstack([first_n, last])
+    return 2.0 / (1.0 + np.dot(x, x))
 
 
-def spherical_geodesic_distance(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Geodesic distance on S^n between two unit vectors.
-
-    d(p, q) = arccos(⟨p, q⟩), clamped for numerical stability.
+def stereo_weighted_dist(x: np.ndarray, y: np.ndarray) -> float:
+    """Compute the conformally weighted distance d_w(x,y) = w(x)·w(y)·||x-y||.
 
     Args:
-        p, q: Unit vectors in R^{n+1}.
+        x, y: Points in R^n
 
     Returns:
-        Geodesic distance in [0, π].
+        The conformally weighted Euclidean distance
+    """
+    wx = stereo_conformal_factor(x)
+    wy = stereo_conformal_factor(y)
+    return wx * wy * np.linalg.norm(x - y)
+
+
+def stereographic_project(p: np.ndarray) -> np.ndarray:
+    """Stereographic projection from S^n to R^n.
+
+    Projects from the north pole (0,...,0,1) to the equatorial plane.
+
+    Args:
+        p: Point on S^n (unit sphere in R^{n+1})
+
+    Returns:
+        Projected point in R^n
+    """
+    n = len(p) - 1
+    denom = 1.0 - p[-1]
+    if abs(denom) < 1e-15:
+        return np.full(n, np.inf)
+    return p[:n] / denom
+
+
+def inverse_stereographic(x: np.ndarray) -> np.ndarray:
+    """Inverse stereographic projection from R^n to S^n.
+
+    Args:
+        x: Point in R^n
+
+    Returns:
+        Point on S^n (unit sphere in R^{n+1})
+    """
+    norm_sq = np.dot(x, x)
+    denom = 1.0 + norm_sq
+    result = np.zeros(len(x) + 1)
+    result[:len(x)] = 2.0 * x / denom
+    result[-1] = (norm_sq - 1.0) / denom
+    return result
+
+
+def geodesic_dist(p: np.ndarray, q: np.ndarray) -> float:
+    """Compute geodesic distance between two points on S^n.
+
+    Args:
+        p, q: Points on S^n (unit sphere)
+
+    Returns:
+        Geodesic (great-circle) distance
     """
     dot = np.clip(np.dot(p, q), -1.0, 1.0)
     return np.arccos(dot)
 
 
-def spherical_distance_matrix(points_sphere: np.ndarray) -> np.ndarray:
-    """
-    Compute the full pairwise spherical geodesic distance matrix.
+def compute_pairwise_distances(
+    points: np.ndarray,
+    metric: str = 'euclidean',
+    weights: Optional[np.ndarray] = None
+) -> np.ndarray:
+    """Compute pairwise distance matrix.
 
     Args:
-        points_sphere: Array of shape (N, n+1) with unit vectors.
+        points: N x d array of points
+        metric: 'euclidean', 'geodesic', or 'weighted'
+        weights: Optional conformal weights for 'weighted' metric
 
     Returns:
-        Symmetric distance matrix of shape (N, N).
-
-    Complexity: O(N² * n) time, O(N²) space.
+        N x N distance matrix
     """
-    dots = np.clip(points_sphere @ points_sphere.T, -1.0, 1.0)
-    return np.arccos(dots)
+    n = len(points)
+    D = np.zeros((n, n))
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if metric == 'euclidean':
+                d = np.linalg.norm(points[i] - points[j])
+            elif metric == 'geodesic':
+                d = geodesic_dist(points[i], points[j])
+            elif metric == 'weighted':
+                if weights is None:
+                    weights = np.array([stereo_conformal_factor(p) for p in points])
+                d = weights[i] * weights[j] * np.linalg.norm(points[i] - points[j])
+            else:
+                raise ValueError(f"Unknown metric: {metric}")
+            D[i, j] = d
+            D[j, i] = d
+
+    return D
 
 
-def weighted_stereographic_distance(x: np.ndarray, y: np.ndarray) -> float:
-    """
-    Weighted stereographic distance d_st(x, y).
+def cech_filtration_value(
+    simplex: List[int],
+    dist_matrix: np.ndarray
+) -> float:
+    """Compute the filtration value (birth time) of a simplex in the Čech complex.
 
-    This is the transported spherical geodesic distance through stereographic
-    coordinates. By the exact distance transport theorem:
-
-    d_st(x, y) = arccos(1 - 2‖x-y‖² / ((1+‖x‖²)(1+‖y‖²)))
-
-    Note: This uses the standard stereographic convention. The Mathlib convention
-    with factor 2 gives: arccos(1 - 8‖w₁-w₂‖² / ((‖w₁‖²+4)(‖w₂‖²+4))).
+    The birth time is max(d(i,j)) / 2 over all pairs in the simplex.
 
     Args:
-        x, y: Points in R^n.
+        simplex: List of vertex indices
+        dist_matrix: Pairwise distance matrix
 
     Returns:
-        The weighted distance (= spherical geodesic distance of preimages).
+        Filtration value (half of maximum pairwise distance)
     """
-    diff_sq = np.sum((x - y) ** 2)
-    nx_sq = np.sum(x ** 2)
-    ny_sq = np.sum(y ** 2)
-    denom = (1.0 + nx_sq) * (1.0 + ny_sq)
-    inner_val = np.clip(1.0 - 2.0 * diff_sq / denom, -1.0, 1.0)
-    return np.arccos(inner_val)
+    max_dist = 0.0
+    for i in range(len(simplex)):
+        for j in range(i + 1, len(simplex)):
+            d = dist_matrix[simplex[i], simplex[j]]
+            if d > max_dist:
+                max_dist = d
+    return max_dist / 2.0
 
 
-def weighted_distance_matrix(points_flat: np.ndarray) -> np.ndarray:
-    """
-    Compute the full pairwise weighted stereographic distance matrix.
+def vietoris_rips_persistence(
+    dist_matrix: np.ndarray,
+    max_dim: int = 1,
+    max_epsilon: float = np.inf
+) -> List[PersistencePair]:
+    """Compute Vietoris-Rips persistence diagram (simplified version).
 
-    This computes d_st(x_i, x_j) for all pairs, which by the exact transport
-    theorem equals the spherical geodesic distance between the preimages.
+    Uses a greedy approach for edges to compute H_0 persistence
+    (connected components).
 
     Args:
-        points_flat: Array of shape (N, n) with points in R^n.
+        dist_matrix: N x N pairwise distance matrix
+        max_dim: Maximum homological dimension
+        max_epsilon: Maximum filtration parameter
 
     Returns:
-        Symmetric distance matrix of shape (N, N).
-
-    Complexity: O(N² * n) time, O(N²) space.
+        List of persistence pairs
     """
-    norms_sq = np.sum(points_flat ** 2, axis=1)
-    # Compute pairwise squared distances
-    diff = points_flat[:, np.newaxis, :] - points_flat[np.newaxis, :, :]
-    diff_sq = np.sum(diff ** 2, axis=-1)
-    # Compute denominators
-    denom = np.outer(1.0 + norms_sq, 1.0 + norms_sq)
-    inner_vals = np.clip(1.0 - 2.0 * diff_sq / denom, -1.0, 1.0)
-    return np.arccos(inner_vals)
+    n = len(dist_matrix)
+    pairs: List[PersistencePair] = []
+
+    # H_0: Connected components via minimum spanning tree
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x: int, y: int) -> bool:
+        rx, ry = find(x), find(y)
+        if rx == ry:
+            return False
+        parent[rx] = ry
+        return True
+
+    # Sort edges by distance
+    edges: List[Tuple[float, int, int]] = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if dist_matrix[i, j] <= max_epsilon:
+                edges.append((dist_matrix[i, j], i, j))
+    edges.sort()
+
+    # Process edges
+    components = n
+    for dist, i, j in edges:
+        if union(i, j):
+            pairs.append(PersistencePair(0.0, dist / 2.0, dimension=0))
+            components -= 1
+
+    # The last surviving component has infinite death
+    # (we represent as death = max_epsilon)
+    if components > 0:
+        pairs.append(PersistencePair(0.0, max_epsilon, dimension=0))
+
+    return pairs
 
 
-def euclidean_distance_matrix(points: np.ndarray) -> np.ndarray:
-    """Compute pairwise Euclidean distance matrix."""
-    diff = points[:, np.newaxis, :] - points[np.newaxis, :, :]
-    return np.sqrt(np.sum(diff ** 2, axis=-1))
-
-
-def rips_complex_faces(dist_matrix: np.ndarray, epsilon: float,
-                       max_dim: int = 2) -> List[Tuple[int, ...]]:
-    """
-    Compute faces of the Vietoris-Rips complex at scale epsilon.
-
-    A simplex {v₀, ..., v_k} is included if d(v_i, v_j) ≤ ε for all i, j.
+def compare_persistence_diagrams(
+    dgm1: List[PersistencePair],
+    dgm2: List[PersistencePair],
+    threshold: float = 0.01
+) -> Tuple[float, bool]:
+    """Compare two persistence diagrams using bottleneck-like distance.
 
     Args:
-        dist_matrix: Pairwise distance matrix.
-        epsilon: Scale parameter.
-        max_dim: Maximum simplex dimension to compute.
+        dgm1, dgm2: Persistence diagrams
+        threshold: Tolerance for equality
 
     Returns:
-        List of simplices as tuples of vertex indices.
-
-    Complexity: O(N^{max_dim+1}) time in the worst case.
+        (distance, is_close) tuple
     """
-    N = dist_matrix.shape[0]
-    faces = [(i,) for i in range(N)]  # 0-simplices (vertices)
+    # Sort by lifetime
+    s1 = sorted(dgm1, key=lambda p: -p.lifetime)
+    s2 = sorted(dgm2, key=lambda p: -p.lifetime)
 
-    for dim in range(1, max_dim + 1):
-        for simplex in combinations(range(N), dim + 1):
-            is_face = True
-            for i, j in combinations(simplex, 2):
-                if dist_matrix[i, j] > epsilon:
-                    is_face = False
-                    break
-            if is_face:
-                faces.append(simplex)
-    return faces
+    # Pad to same length
+    max_len = max(len(s1), len(s2))
+    while len(s1) < max_len:
+        s1.append(PersistencePair(0.0, 0.0))
+    while len(s2) < max_len:
+        s2.append(PersistencePair(0.0, 0.0))
+
+    # Compute max difference in lifetimes
+    max_diff = 0.0
+    for p1, p2 in zip(s1, s2):
+        diff = abs(p1.lifetime - p2.lifetime)
+        max_diff = max(max_diff, diff)
+
+    return max_diff, max_diff < threshold
 
 
-def rips_filtration_values(dist_matrix: np.ndarray) -> np.ndarray:
-    """
-    Compute the birth times for all edges in the Rips filtration.
+def stereo_persistence_interleaving_bound(
+    R: float,
+    epsilon: float
+) -> Tuple[float, float]:
+    """Compute the interleaving bounds for stereographic persistence.
 
-    The birth time of edge (i,j) is d(i,j). Higher simplices enter when
-    all their edges have appeared.
+    For points with norms bounded by R, the weighted and unweighted
+    Čech complexes are interleaved with parameters:
+    - Forward: ε/4 (universal bound from w ≤ 2)
+    - Reverse: ε/(2/(1+R²))² (depends on R)
 
     Args:
-        dist_matrix: Pairwise distance matrix.
+        R: Bound on point norms in R^n
+        epsilon: Filtration parameter
 
     Returns:
-        Sorted array of unique edge weights (filtration values).
+        (forward_param, reverse_param) bounds
     """
-    N = dist_matrix.shape[0]
-    edges = []
-    for i in range(N):
-        for j in range(i + 1, N):
-            edges.append(dist_matrix[i, j])
-    return np.sort(np.unique(edges))
+    c_max = 2.0
+    c_min = 2.0 / (1.0 + R**2)
+    forward = epsilon / c_max**2
+    reverse = epsilon / c_min**2
+    return forward, reverse
 
 
-def bi_lipschitz_constants(R: float) -> Tuple[float, float]:
-    """
-    Compute the bi-Lipschitz constants for the stereographic distance
-    on a bounded region {‖x‖ ≤ R}.
-
-    By the formal theorem: C₁ = 4/(R²+4) and C₂ = π/2.
-    (Using the standard stereographic convention.)
-
-    The formal theorem proves:
-    C₁ * ‖x-y‖ ≤ d_st(x,y) ≤ C₂ * ‖x-y‖
-
-    for all x, y with ‖x‖, ‖y‖ ≤ R.
-
-    Note: The Mathlib formalization uses the convention with factor 2 in
-    the forward map, giving constants 4/(R²+4) and π/2 for that convention.
+def generate_spherical_points(
+    n_points: int,
+    dim: int = 2,
+    seed: Optional[int] = None
+) -> np.ndarray:
+    """Generate random points uniformly on S^dim.
 
     Args:
-        R: Bound on norms of points in stereographic coordinates.
+        n_points: Number of points
+        dim: Dimension of sphere (S^dim lives in R^{dim+1})
+        seed: Random seed
 
     Returns:
-        Tuple (C₁, C₂) of bi-Lipschitz constants.
-
-    Example:
-        >>> bi_lipschitz_constants(1.0)
-        (0.8, 1.5707963267948966)
-    """
-    # For d_st(x,y) = arccos(1 - 2‖x-y‖²/((1+‖x‖²)(1+‖y‖²)))
-    # arccos(1-t) ~ √(2t) for small t, and ≤ π√(t/2) in general.
-    # t = 2‖x-y‖²/D where D = (1+‖x‖²)(1+‖y‖²) ∈ [1, (1+R²)²]
-    # Lower: d_st ≥ √(2t) ≥ √(4/(1+R²)²) * ‖x-y‖ = 2/(1+R²) * ‖x-y‖
-    # Upper: d_st ≤ π (bounded by π), and d_st → ‖x-y‖ ratio approaches
-    #   √(2/D_min) ≤ √2 for local behaviour
-    C1 = 2.0 / (1.0 + R ** 2)  # lower bound constant
-    C2 = np.pi / 2.0  # upper bound constant (from chord-arc inequality)
-    return C1, C2
-
-
-def sample_spherical_cap(n_points: int, n_dim: int = 2,
-                         angular_radius: float = np.pi / 3,
-                         center: Optional[np.ndarray] = None,
-                         seed: Optional[int] = None) -> np.ndarray:
-    """
-    Sample points uniformly from a spherical cap on S^n.
-
-    Args:
-        n_points: Number of points to sample.
-        n_dim: Dimension of the sphere (S^n_dim embedded in R^{n_dim+1}).
-        angular_radius: Angular radius of the cap in radians.
-        center: Center of the cap (unit vector). Defaults to south pole.
-        seed: Random seed for reproducibility.
-
-    Returns:
-        Array of shape (n_points, n_dim+1) with points on S^n.
+        N x (dim+1) array of points on S^dim
     """
     if seed is not None:
         np.random.seed(seed)
-
-    if center is None:
-        center = np.zeros(n_dim + 1)
-        center[-1] = -1.0  # south pole (away from north pole)
-
-    # Sample from cap by rejection sampling
-    points = []
-    while len(points) < n_points:
-        # Random direction on S^n
-        x = np.random.randn(n_dim + 1)
-        x /= np.linalg.norm(x)
-        # Check if within angular radius of center
-        if np.dot(x, center) >= np.cos(angular_radius):
-            points.append(x)
-
-    return np.array(points)
-
-
-def sample_sphere_uniform(n_points: int, n_dim: int = 2,
-                          seed: Optional[int] = None) -> np.ndarray:
-    """
-    Sample points uniformly on S^n.
-
-    Args:
-        n_points: Number of points.
-        n_dim: Sphere dimension.
-        seed: Random seed.
-
-    Returns:
-        Array of shape (n_points, n_dim+1).
-    """
-    if seed is not None:
-        np.random.seed(seed)
-    x = np.random.randn(n_points, n_dim + 1)
-    norms = np.linalg.norm(x, axis=1, keepdims=True)
-    return x / norms
-
-
-def persistence_comparison(points_sphere: np.ndarray) -> dict:
-    """
-    Compare three distance matrices for a point cloud on the sphere:
-    1. Intrinsic spherical geodesic distance
-    2. Weighted stereographic distance (exact transport)
-    3. Naive Euclidean distance on stereographic coordinates
-
-    By the exact transport theorem, (1) and (2) should be identical
-    (up to numerical tolerance). (3) will generally differ.
-
-    Args:
-        points_sphere: Array of shape (N, n+1) with points on S^n,
-                       not containing the north pole.
-
-    Returns:
-        Dictionary with distance matrices and comparison statistics.
-    """
-    points_flat = stereographic_project(points_sphere)
-
-    D_spherical = spherical_distance_matrix(points_sphere)
-    D_weighted = weighted_distance_matrix(points_flat)
-    D_euclidean = euclidean_distance_matrix(points_flat)
-
-    max_diff_exact = np.max(np.abs(D_spherical - D_weighted))
-    max_diff_naive = np.max(np.abs(D_spherical - D_euclidean))
-    mean_ratio = np.mean(D_euclidean[D_spherical > 1e-10] /
-                         D_spherical[D_spherical > 1e-10])
-
-    return {
-        'D_spherical': D_spherical,
-        'D_weighted': D_weighted,
-        'D_euclidean': D_euclidean,
-        'max_error_exact_transport': max_diff_exact,
-        'max_error_naive_euclidean': max_diff_naive,
-        'mean_euclidean_to_spherical_ratio': mean_ratio,
-        'points_sphere': points_sphere,
-        'points_flat': points_flat,
-    }
+    points = np.random.randn(n_points, dim + 1)
+    norms = np.linalg.norm(points, axis=1, keepdims=True)
+    return points / norms
