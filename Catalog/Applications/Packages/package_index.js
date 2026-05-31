@@ -4,16 +4,6 @@
 
 window.PACKAGE_INDEX = [
   {
-    "filename": "p_vs_np_problem.json",
-    "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-    "domain": "Computation",
-    "date": "2026-05-31T16:24:16Z",
-    "exp_id": "40dc5ae8",
-    "quality_score": 0.7246329358335261,
-    "quality": "substantial",
-    "pkg_num": 11
-  },
-  {
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Bridges",
@@ -21,27 +11,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "abcc87bf",
     "quality_score": 0.5950639917089624,
     "quality": "partial",
-    "pkg_num": 10
-  },
-  {
-    "filename": "this_research_cycle_established_that_expansion_cer.json",
-    "title": "Expansion Certificate Lattice and Amplification Theory",
-    "domain": "Bridges",
-    "date": "2026-05-31T16:12:01Z",
-    "exp_id": "0881fd0d",
-    "quality_score": 0.8144779422972237,
-    "quality": "substantial",
-    "pkg_num": 9
-  },
-  {
-    "filename": "this_cycle_established_the_foundational_infrastruc.json",
-    "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-    "domain": "Bridges",
-    "date": "2026-05-31T16:11:12Z",
-    "exp_id": "efed225a",
-    "quality_score": 0.7739868421052631,
-    "quality": "substantial",
-    "pkg_num": 8
+    "pkg_num": 5
   },
   {
     "filename": "biological_topology_protein_folding_as_persistent_.json",
@@ -51,17 +21,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "6a2bfb31",
     "quality_score": 0.7471118604651162,
     "quality": "substantial",
-    "pkg_num": 7
-  },
-  {
-    "filename": "primes_of_the_form_n1.json",
-    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
-    "domain": "Algebra",
-    "date": "2026-05-31T15:45:01Z",
-    "exp_id": "e7f8157d",
-    "quality_score": 0.6293001538461539,
-    "quality": "partial",
-    "pkg_num": 6
+    "pkg_num": 4
   },
   {
     "filename": "this_research_cycle_established_the_mathematical_f.json",
@@ -71,7 +31,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "866a2ce9",
     "quality_score": 0.7711866265060241,
     "quality": "substantial",
-    "pkg_num": 5
+    "pkg_num": 3
   },
   {
     "filename": "this_research_cycle_established_a_formal_bridge_be.json",
@@ -80,26 +40,6 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-31T15:44:02Z",
     "exp_id": "c3940ca2",
     "quality_score": 0.722909152542373,
-    "quality": "substantial",
-    "pkg_num": 4
-  },
-  {
-    "filename": "machine_learning_generalization_bounds.json",
-    "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-    "domain": "MachineLearning",
-    "date": "2026-05-31T15:11:42Z",
-    "exp_id": "0c3e833a",
-    "quality_score": 0.7320666666666666,
-    "quality": "substantial",
-    "pkg_num": 3
-  },
-  {
-    "filename": "the_theorems_established_in_this_work__identifying.json",
-    "title": "Newton Persistence and Arithmetic Monodromy",
-    "domain": "Algebra",
-    "date": "2026-05-31T14:58:00Z",
-    "exp_id": "35ab8414",
-    "quality_score": 0.7037042631578947,
     "quality": "substantial",
     "pkg_num": 2
   },
@@ -116,14 +56,6 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
-  "the_theorems_established_in_this_work__identifying.json": {
-    "title": "Newton Persistence and Arithmetic Monodromy",
-    "exp_id": "35ab8414",
-    "source_exp_ids": [
-      "0f96d042"
-    ],
-    "domain": "Algebra"
-  },
   "primewise_persistent_homology_detects_exceptional_.json": {
     "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
     "exp_id": "2b593e59",
@@ -131,14 +63,6 @@ window.PACKAGE_DB_INDEX = {
       "pi_brainstorm"
     ],
     "domain": "MachineLearning"
-  },
-  "primes_of_the_form_n1.json": {
-    "title": "Primes of the Form n\u00b2 + 1: Quadratic Residue Constraints and Semi-prime Theory",
-    "exp_id": "e7f8157d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
   },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
@@ -164,43 +88,11 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
-  "p_vs_np_problem.json": {
-    "title": "Circuit Complexity Barriers: Algebrization, Proof Systems, and Formula Structure",
-    "exp_id": "40dc5ae8",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Computation"
-  },
-  "this_research_cycle_established_that_expansion_cer.json": {
-    "title": "Expansion Certificate Lattice and Amplification Theory",
-    "exp_id": "0881fd0d",
-    "source_exp_ids": [
-      "b6e4edfb"
-    ],
-    "domain": "Bridges"
-  },
-  "machine_learning_generalization_bounds.json": {
-    "title": "Spectral-Compression Complexity: Unified Generalization Bounds for Deep Networks",
-    "exp_id": "0c3e833a",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "MachineLearning"
-  },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "exp_id": "abcc87bf",
     "source_exp_ids": [
       "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "this_cycle_established_the_foundational_infrastruc.json": {
-    "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
-    "exp_id": "efed225a",
-    "source_exp_ids": [
-      "8e75c5be"
     ],
     "domain": "Bridges"
   }
@@ -229,8 +121,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
       "hue": 90,
-      "priority_score": 0.7037042631578947,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -240,8 +132,8 @@ window.PACKAGE_GRAPH = {
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
       "hue": 90,
-      "priority_score": 0.7320666666666666,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -273,8 +165,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-31T15:45:01Z",
       "hue": 270,
-      "priority_score": 0.6293001538461539,
-      "quality": "partial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -295,8 +187,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-31T16:11:12Z",
       "hue": 270,
-      "priority_score": 0.7739868421052631,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "this_research_cycle_established_that_expansion_cer",
@@ -306,8 +198,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-31T16:12:01Z",
       "hue": 271,
-      "priority_score": 0.8144779422972237,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -328,8 +220,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-05-31T16:24:16Z",
       "hue": 91,
-      "priority_score": 0.7246329358335261,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
