@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2163 of the highest-quality
+A curated collection of 2167 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2163
+Total files: 2167
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -397,6 +397,7 @@ import FINAL.Bridges.ClosureVoronoiDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
 import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.CoeffExtraction
+import FINAL.Bridges.CollatzUndecidability
 import FINAL.Bridges.Completeness
 import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
@@ -471,6 +472,7 @@ import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GaussianFreeField
 import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.GraphCutHolography
+import FINAL.Bridges.GraphRiemannRoch
 import FINAL.Bridges.GuardedFixedPointIndex
 import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
@@ -619,6 +621,7 @@ import FINAL.Bridges.PrimewisePersistentHomology
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
 import FINAL.Bridges.ProofCongruenceAutomata
+import FINAL.Bridges.ProofSearchComplexity
 import FINAL.Bridges.ProofSemiringDiagonalization
 import FINAL.Bridges.ProofSemiringStone
 import FINAL.Bridges.ProofSemiringStoneDuality
@@ -902,6 +905,7 @@ import FINAL.Computation.Criticality
 import FINAL.Computation.Defs
 import FINAL.Computation.DivergenceTheory
 import FINAL.Computation.Diversity
+import FINAL.Computation.EMLChurchTuring
 import FINAL.Computation.Entropy
 import FINAL.Computation.EntropyBarrier
 import FINAL.Computation.EntropyBridge
