@@ -168,7 +168,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        validItems.forEach((item, idx) => {
+        // Filter out visualizations with empty or placeholder code
+        const renderableItems = validItems.filter(item => {
+            const code = item.code || '';
+            return code.trim().length > 20;
+        });
+        if (renderableItems.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        renderableItems.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = 'viz-container';
 
