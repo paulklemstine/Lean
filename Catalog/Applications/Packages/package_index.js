@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "this_cycle_established_the_foundational_infrastruc.json",
+    "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
+    "domain": "Bridges",
+    "date": "2026-05-31T16:11:12Z",
+    "exp_id": "efed225a",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 9
+  },
+  {
     "filename": "biological_topology_protein_folding_as_persistent_.json",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
     "domain": "Bridges",
@@ -149,6 +159,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Algebra"
+  },
+  "this_cycle_established_the_foundational_infrastruc.json": {
+    "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
+    "exp_id": "efed225a",
+    "source_exp_ids": [
+      "8e75c5be"
+    ],
+    "domain": "Bridges"
   }
 };
 
@@ -163,7 +181,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271,
+      "hue": 280,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -174,7 +192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7037042631578947,
       "quality": "substantial"
     },
@@ -185,7 +203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 91,
+      "hue": 179,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
     },
@@ -196,7 +214,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -207,7 +225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:22Z",
-      "hue": 271,
+      "hue": 101,
       "priority_score": 0.5537266666666667,
       "quality": "partial"
     },
@@ -240,9 +258,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
+    },
+    {
+      "id": "this_cycle_established_the_foundational_infrastruc",
+      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:12Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],

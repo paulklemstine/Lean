@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "the_theorems_established_in_this_work__identifying",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T14:58:00Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -25,7 +25,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -34,7 +34,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:22Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -70,7 +70,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 272
+      "hue": 92
+    },
+    {
+      "id": "this_cycle_established_the_foundational_infrastruc",
+      "title": "Dependent Ultraproducts: Construction and Transfer Theorems",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T16:11:12Z",
+      "hue": 271
     }
   ],
   "edges": [],
