@@ -1,0 +1,1 @@
+../../Computation/StereographicPersistence.lean
