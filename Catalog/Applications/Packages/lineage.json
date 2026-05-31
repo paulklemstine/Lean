@@ -25,16 +25,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 270
-    },
-    {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:12:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -43,7 +34,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271
+      "hue": 91
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:22Z",
+      "hue": 91
     }
   ],
   "edges": [],

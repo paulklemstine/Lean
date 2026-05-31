@@ -4,23 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
-    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
-    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
+    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "domain": "Algebra",
-    "date": "2026-05-31T15:44:02Z",
-    "exp_id": "c3940ca2",
+    "date": "2026-05-31T15:44:22Z",
+    "exp_id": "4b21150a",
     "quality_score": null,
     "quality": "unrated",
     "pkg_num": 5
   },
   {
-    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
+    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
     "domain": "Algebra",
-    "date": "2026-05-31T15:12:03Z",
-    "exp_id": "951b88f8",
-    "quality_score": 0.5234253846153847,
-    "quality": "partial",
+    "date": "2026-05-31T15:44:02Z",
+    "exp_id": "c3940ca2",
+    "quality_score": 0.722909152542373,
+    "quality": "substantial",
     "pkg_num": 4
   },
   {
@@ -90,7 +90,7 @@ window.PACKAGE_DB_INDEX = {
   },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "exp_id": "951b88f8",
+    "exp_id": "4b21150a",
     "source_exp_ids": [
       "seed"
     ],
@@ -131,20 +131,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T15:11:42Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7320666666666666,
       "quality": "substantial"
-    },
-    {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:12:03Z",
-      "hue": 270,
-      "priority_score": 0.5234253846153847,
-      "quality": "partial"
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -153,7 +142,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 271,
+      "hue": 91,
+      "priority_score": 0.722909152542373,
+      "quality": "substantial"
+    },
+    {
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T15:44:22Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }

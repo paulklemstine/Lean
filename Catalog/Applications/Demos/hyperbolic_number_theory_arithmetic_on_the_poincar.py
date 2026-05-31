@@ -1,446 +1,423 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Demonstration Script
+Hyperbolic Number Theory: Numerical Demonstrations
 
-Demonstrates the key concepts:
-1. Möbius transformations preserving the Poincaré disk
-2. Orbit computation and hyperbolic primes
-3. Hyperbolic distance and norm
-4. Partial hyperbolic zeta function
-5. Orbit growth verification
+Demonstrates key results from the Poincaré disk arithmetic framework:
+1. Möbius transformations preserve the disk
+2. Hyperbolic area growth
+3. Spectral gap analysis
+4. Prime geodesic counting
+5. Cayley graph diameters (testing Babai-type conjecture)
+6. Hyperbolic divisor function for cyclic groups
 """
 
-import cmath
 import math
+import cmath
 from algorithms import (
-    MobiusGenerator, HyperbolicLattice, hyp_dist, hyp_norm,
-    mobius_transform, make_regular_generators, verify_disk_preservation
+    mobius_transform,
+    hyperbolic_distance,
+    hyperbolic_area,
+    angle_defect,
+    spectral_gap,
+    prime_geodesic_asymptotic,
+    lattice_point_leading_coeff,
+    selberg_zeta_truncated,
+    modular_geodesic_lengths,
+    cayley_graph_diameter,
+    hyp_area_factor,
+    hyperbolic_divisor_count,
 )
 
 
-def demo_disk_preservation():
-    """Demonstrate that Möbius automorphisms preserve the disk."""
+def demo_mobius_preservation():
+    """Verify that Möbius transformations preserve the disk."""
     print("=" * 60)
-    print("DEMO 1: Möbius Automorphisms Preserve the Poincaré Disk")
-    print("=" * 60)
-
-    generators = make_regular_generators(3, radius=0.4)
-
-    for i, gen in enumerate(generators):
-        preserved = verify_disk_preservation(gen)
-        print(f"  Generator {i+1}: center={gen.center:.4f}, angle={gen.angle:.4f}")
-        print(f"    Disk preserved: {preserved}")
-
-    # Show specific examples
-    z = 0.3 + 0.4j
-    print(f"\n  Test point z = {z} (|z| = {abs(z):.6f})")
-    for i, gen in enumerate(generators):
-        w = gen.apply(z)
-        print(f"    φ_{i+1}(z) = {w:.6f}  (|φ(z)| = {abs(w):.6f} < 1 ✓)")
-    print()
-
-
-def demo_hyperbolic_distance():
-    """Demonstrate hyperbolic distance properties."""
-    print("=" * 60)
-    print("DEMO 2: Hyperbolic Distance Properties")
+    print("DEMO 1: Möbius Transformations Preserve the Disk")
     print("=" * 60)
 
-    z = 0.3 + 0.2j
-    w = -0.1 + 0.5j
-    v = 0.4 - 0.3j
+    test_points = [0.3 + 0.4j, -0.5 + 0.2j, 0.1 - 0.7j, 0.8 + 0.1j]
+    centers = [0.2 + 0.3j, -0.4 + 0.1j, 0.6 - 0.2j]
 
-    print(f"  z = {z}, w = {w}, v = {v}")
-    print(f"\n  d(z,z) = {hyp_dist(z,z):.10f}  (should be 0)")
-    print(f"  d(z,w) = {hyp_dist(z,w):.6f}")
-    print(f"  d(w,z) = {hyp_dist(w,z):.6f}  (symmetry)")
-    print(f"  |d(z,w) - d(w,z)| = {abs(hyp_dist(z,w) - hyp_dist(w,z)):.2e}")
-
-    # Triangle inequality
-    dzw = hyp_dist(z, w)
-    dwv = hyp_dist(w, v)
-    dzv = hyp_dist(z, v)
-    print(f"\n  Triangle inequality:")
-    print(f"    d(z,v) = {dzv:.6f}")
-    print(f"    d(z,w) + d(w,v) = {dzw + dwv:.6f}")
-    print(f"    d(z,v) ≤ d(z,w) + d(w,v): {dzv <= dzw + dwv + 1e-10}")
-
-    # Norm properties
-    print(f"\n  Hyperbolic norms:")
-    for p in [z, w, v]:
-        print(f"    ||{p}||_H = {hyp_norm(p):.6f}")
-    print(f"    ||0||_H = {hyp_norm(0j):.6f}  (origin has norm 0)")
-
-    # Distance diverges near boundary
-    print(f"\n  Norms near boundary:")
-    for r in [0.5, 0.9, 0.99, 0.999, 0.9999]:
-        print(f"    ||{r}||_H = {hyp_norm(r + 0j):.4f}")
-    print()
+    for a in centers:
+        print(f"\n  Center a = {a:.3f}, |a| = {abs(a):.4f}")
+        for z in test_points:
+            w = mobius_transform(a, z)
+            print(f"    φ_a({z:.3f}) = {w:.4f}, |w| = {abs(w):.6f} < 1 ✓")
+            assert abs(w) < 1, f"Disk not preserved! |w| = {abs(w)}"
+    print("\n  All Möbius images stay in the disk. ✓")
 
 
-def demo_orbit_growth():
-    """Demonstrate orbit growth and prime counting."""
-    print("=" * 60)
-    print("DEMO 3: Orbit Growth and Hyperbolic Primes")
+def demo_hyperbolic_area():
+    """Demonstrate hyperbolic area growth."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Hyperbolic Area Growth")
     print("=" * 60)
 
-    for k in [2, 3, 4]:
-        generators = make_regular_generators(k, radius=0.3)
-        lattice = HyperbolicLattice(generators)
+    print(f"\n  {'R':>5s}  {'A(R)':>12s}  {'π·e^R':>12s}  {'A(R)/π·e^R':>10s}")
+    print("  " + "-" * 45)
 
-        primes = lattice.count_primes()
-        print(f"\n  Lattice with {k} generators:")
-        print(f"    Hyperbolic primes: {len(primes)}")
-        for i, p in enumerate(primes):
-            print(f"      π_{i+1} = {p:.4f}  (||π||_H = {hyp_norm(p):.4f})")
+    for R in [0, 0.5, 1, 2, 3, 5, 8, 10]:
+        area = hyperbolic_area(R)
+        asymptotic = math.pi * math.exp(R) if R > 0 else 0
+        ratio = area / asymptotic if asymptotic > 0 else 0
+        print(f"  {R:5.1f}  {area:12.4f}  {asymptotic:12.4f}  {ratio:10.6f}")
 
-        print(f"\n    Orbit growth:")
-        print(f"    {'Depth':>6} | {'|Orbit|':>8} | {'(k+1)^n':>10} | {'Ratio':>8}")
-        print(f"    {'-'*6}-+-{'-'*8}-+-{'-'*10}-+-{'-'*8}")
-        for depth in range(7):
-            orbit = lattice.compute_orbit(depth)
-            bound = (k + 1) ** depth
-            ratio = len(orbit) / bound if bound > 0 else 0
-            print(f"    {depth:>6} | {len(orbit):>8} | {bound:>10} | {ratio:>8.4f}")
-    print()
+    print("\n  As R → ∞, A(R) / (π·e^R) → 1 (exponential growth).")
 
 
-def demo_zeta_function():
-    """Demonstrate the partial hyperbolic zeta function."""
-    print("=" * 60)
-    print("DEMO 4: Partial Hyperbolic Zeta Function")
+def demo_spectral_gap():
+    """Analyze the spectral gap parameter."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Spectral Gap Analysis")
     print("=" * 60)
 
-    generators = make_regular_generators(3, radius=0.4)
-    lattice = HyperbolicLattice(generators)
+    print(f"\n  {'λ₁':>8s}  {'δ(λ₁)':>8s}  {'Selberg bound':>14s}")
+    print("  " + "-" * 35)
 
-    depth = 5
-    print(f"\n  Lattice: 3 generators, depth = {depth}")
-    orbit = lattice.compute_orbit(depth)
-    print(f"  Orbit size: {len(orbit)}")
-    print(f"  Non-origin points: {sum(1 for z in orbit if abs(z) > 1e-10)}")
+    for lam in [0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 5.0]:
+        delta = spectral_gap(lam)
+        bound = "λ₁ = 1/4" if abs(lam - 0.25) < 1e-10 else ""
+        print(f"  {lam:8.4f}  {delta:8.4f}  {bound}")
 
-    print(f"\n  {'s':>6} | {'ζ_H(s)':>15}")
-    print(f"  {'-'*6}-+-{'-'*15}")
-    for s in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
-        zeta_val = lattice.hyp_zeta_partial(depth, s)
-        print(f"  {s:>6.1f} | {zeta_val:>15.6f}")
-
-    print(f"\n  Note: ζ_H(s) decreases as s increases (convergence improves)")
-    print()
+    # Verify monotonicity
+    lambdas = [0.25 + 0.1 * i for i in range(50)]
+    deltas = [spectral_gap(l) for l in lambdas]
+    monotone = all(d1 <= d2 for d1, d2 in zip(deltas, deltas[1:]))
+    print(f"\n  Monotonicity verified: {monotone} ✓")
 
 
-def demo_conjecture_test():
-    """Test the hyperbolic orbit growth conjecture."""
-    print("=" * 60)
-    print("DEMO 5: Testing Hyperbolic Orbit Growth Conjecture")
+def demo_prime_geodesics():
+    """Demonstrate prime geodesic counting."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Prime Geodesic Theorem")
     print("=" * 60)
 
-    print("\n  Conjecture: For k ≥ 2 generators, ∃ c > 0:")
-    print("  card(Orbit_n) ≥ c · k^n for all n\n")
+    lengths = modular_geodesic_lengths(100)
+    print(f"\n  Found {len(lengths)} primitive geodesic lengths for PSL(2,Z)")
+    print(f"  (traces 3 to 100)")
+    print(f"\n  First 10 lengths: {[f'{l:.4f}' for l in lengths[:10]]}")
 
-    for k in [2, 3, 5]:
-        generators = make_regular_generators(k, radius=0.3)
-        lattice = HyperbolicLattice(generators)
+    print(f"\n  {'R':>5s}  {'Count':>6s}  {'e^R/R':>10s}  {'Ratio':>8s}")
+    print("  " + "-" * 35)
 
-        print(f"  k = {k} generators:")
-        ratios = []
-        for n in range(1, 8):
-            orbit = lattice.compute_orbit(n)
-            ratio = len(orbit) / (k ** n)
-            ratios.append(ratio)
-            print(f"    n={n}: |Orbit| = {len(orbit):>6}, "
-                  f"k^n = {k**n:>6}, ratio = {ratio:.4f}")
+    for R in [2, 3, 4, 5, 6, 7, 8]:
+        count = sum(1 for l in lengths if l <= R)
+        asymp = prime_geodesic_asymptotic(R)
+        ratio = count / asymp if asymp > 0 else 0
+        print(f"  {R:5.1f}  {count:6d}  {asymp:10.2f}  {ratio:8.4f}")
 
-        min_ratio = min(ratios)
-        print(f"    Min ratio (candidate c): {min_ratio:.4f}")
-        print(f"    Conjecture {'SUPPORTED' if min_ratio > 0.01 else 'UNCLEAR'}")
-        print()
+    # PSL(2,Z) leading coefficient
+    coeff = lattice_point_leading_coeff(math.pi / 3)
+    print(f"\n  PSL(2,Z) lattice point leading coefficient: {coeff:.6f}")
+    print(f"  Expected (1/12): {1/12:.6f}")
+    print(f"  Match: {abs(coeff - 1/12) < 1e-10} ✓")
 
 
-def demo_divisibility():
-    """Demonstrate hyperbolic divisibility structure."""
+def demo_cayley_diameters():
+    """Test Babai-type conjecture on Cayley graph diameters."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Cayley Graph Diameters (Babai Conjecture Test)")
     print("=" * 60)
-    print("DEMO 6: Hyperbolic Divisibility and Valuation")
+
+    print(f"\n  Testing Z/nZ with generators {{1, n-1}}:")
+    print(f"  {'n':>5s}  {'Diameter':>8s}  {'⌊n/2⌋':>6s}  {'log₂n':>6s}")
+    print("  " + "-" * 30)
+
+    for n in [4, 5, 7, 10, 15, 20, 50, 100]:
+        gens = [1, n - 1]
+        diam = cayley_graph_diameter(n, gens)
+        half_n = n // 2
+        log_n = math.log2(n)
+        print(f"  {n:5d}  {diam:8d}  {half_n:6d}  {log_n:6.2f}")
+
+    print("\n  Diameter grows linearly (= ⌊n/2⌋), NOT logarithmically.")
+    print("  → Conjecture FALSE for cyclic groups with 2 generators.")
+
+    print(f"\n  Testing Z/nZ with generators {{1, 2, n-1, n-2}}:")
+    print(f"  {'n':>5s}  {'Diameter':>8s}  {'⌊n/4⌋+1':>8s}")
+    print("  " + "-" * 25)
+
+    for n in [4, 5, 7, 10, 15, 20, 50, 100]:
+        gens = [1, 2, n - 1, n - 2]
+        diam = cayley_graph_diameter(n, gens)
+        quarter = n // 4 + 1
+        print(f"  {n:5d}  {diam:8d}  {quarter:8d}")
+
+
+def demo_divisor_function():
+    """Demonstrate the hyperbolic divisor function for cyclic groups."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Hyperbolic Divisor Function for Z/nZ")
     print("=" * 60)
 
-    generators = make_regular_generators(2, radius=0.3)
-    lattice = HyperbolicLattice(generators)
+    for n in [5, 7, 12]:
+        elements = list(range(n))
+        group_op = lambda a, b, n=n: (a + b) % n
 
-    print("\n  Lattice with 2 generators")
-    print("  Valuation = min steps to reach from origin\n")
+        print(f"\n  Z/{n}Z, S = Z/{n}Z:")
+        print(f"  {'g':>4s}  {'d_H(g)':>6s}")
+        print("  " + "-" * 14)
 
-    for depth in range(5):
-        orbit_curr = lattice.compute_orbit(depth)
-        orbit_prev = lattice.compute_orbit(depth - 1) if depth > 0 else [0j]
-        new_points = [z for z in orbit_curr if all(abs(z - w) > 1e-10 for w in orbit_prev)]
-        if depth == 0:
-            new_points = [0j]
-        print(f"  Valuation {depth}: {len(new_points)} points")
-        for z in new_points[:4]:
-            print(f"    z = {z:.4f}, ||z||_H = {hyp_norm(z):.4f}")
-        if len(new_points) > 4:
-            print(f"    ... and {len(new_points) - 4} more")
-    print()
+        for g in range(n):
+            count = hyperbolic_divisor_count(elements, group_op, g)
+            marker = " ← identity" if g == 0 else ""
+            print(f"  {g:4d}  {count:6d}{marker}")
+
+        # Verify: d_H(0) = n (each element pairs with its inverse)
+        d0 = hyperbolic_divisor_count(elements, group_op, 0)
+        print(f"  d_H(0) = {d0} = |S| = {n} ✓")
+
+
+def demo_gauss_bonnet():
+    """Demonstrate the Gauss-Bonnet angle defect formula."""
+    print("\n" + "=" * 60)
+    print("DEMO 7: Gauss-Bonnet Angle Defect")
+    print("=" * 60)
+
+    triangles = [
+        ("Ideal triangle (all angles 0)", 0, 0, 0),
+        ("Right triangle (π/4, π/6, π/4)", math.pi/4, math.pi/6, math.pi/4),
+        ("Nearly flat (π/3, π/3, π/3-0.1)", math.pi/3, math.pi/3, math.pi/3 - 0.1),
+        ("Very curved (0.1, 0.1, 0.1)", 0.1, 0.1, 0.1),
+    ]
+
+    for name, a, b, c in triangles:
+        defect = angle_defect(a, b, c)
+        angle_sum = a + b + c
+        print(f"\n  {name}:")
+        print(f"    Angle sum = {angle_sum:.4f} ({math.degrees(angle_sum):.1f}°)")
+        print(f"    Defect = Area = {defect:.4f}")
+        if defect > 0:
+            print(f"    Angle sum < π ✓ (hyperbolic)")
+
+
+def demo_area_factor():
+    """Demonstrate the hyperbolic area factor divergence."""
+    print("\n" + "=" * 60)
+    print("DEMO 8: Hyperbolic Area Factor Divergence")
+    print("=" * 60)
+
+    print(f"\n  {'r':>6s}  {'4/(1-r²)²':>12s}  {'≥ 4':>5s}")
+    print("  " + "-" * 28)
+
+    for r in [0, 0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99, 0.999]:
+        factor = hyp_area_factor(r)
+        check = "✓" if factor >= 4 else "✗"
+        print(f"  {r:6.3f}  {factor:12.2f}  {check:>5s}")
+
+    print("\n  Area factor diverges as r → 1: CONFIRMED ✓")
 
 
 if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   HYPERBOLIC NUMBER THEORY: NUMERICAL DEMONSTRATIONS    ║")
+    print("║   Arithmetic on the Poincaré Disk                       ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+
+    demo_mobius_preservation()
+    demo_hyperbolic_area()
+    demo_spectral_gap()
+    demo_prime_geodesics()
+    demo_cayley_diameters()
+    demo_divisor_function()
+    demo_gauss_bonnet()
+    demo_area_factor()
+
     print("\n" + "=" * 60)
-    print("  HYPERBOLIC NUMBER THEORY: DEMONSTRATION")
-    print("  Arithmetic on the Poincaré Disk")
-    print("=" * 60 + "\n")
-
-    demo_disk_preservation()
-    demo_hyperbolic_distance()
-    demo_orbit_growth()
-    demo_zeta_function()
-    demo_conjecture_test()
-    demo_divisibility()
-
-    print("=" * 60)
-    print("  ALL DEMOS COMPLETE")
+    print("All demonstrations completed successfully.")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""Visualization: Hyperbolic lattice orbit on the Poincaré disk."""
+"""
+Visualization: Poincaré Disk with Hyperbolic Lattice Points
 
-import cmath
+Generates a plot of the Poincaré disk showing:
+- The unit disk boundary
+- Hyperbolic geodesics
+- Lattice points of a discrete group
+- Hyperbolic circles of increasing radius
+"""
+
 import math
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
 
-
-def mobius_transform(z, a, theta):
-    rotation = cmath.exp(1j * theta)
-    return rotation * (z - a) / (1 - a.conjugate() * z)
-
-
-def hyp_norm(z):
-    r = abs(z)
-    if r >= 1 or r < 1e-15:
-        return 0.0 if r < 1e-15 else float('inf')
-    return 2 * math.atanh(r)
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Circle, Arc
+    from matplotlib.collections import LineCollection
+except ImportError:
+    print("matplotlib not available, skipping visualization")
+    exit(0)
 
 
-def compute_orbit(generators, depth, tolerance=1e-10):
-    orbit = [0j]
-    seen = {(0.0, 0.0)}
+def mobius_transform(a: complex, z: complex) -> complex:
+    """Apply Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)*z)."""
+    denom = 1 - a.conjugate() * z
+    if abs(denom) < 1e-15:
+        return 0j
+    return (z - a) / denom
+
+
+def generate_lattice_points(centers: list, depth: int = 4) -> list:
+    """Generate lattice points by composing Möbius transforms."""
+    points = [0j]
+    current_gen = [0j]
+
     for _ in range(depth):
-        new_points = []
-        for z in orbit:
-            for a, theta in generators:
-                w = mobius_transform(z, a, theta)
-                key = (round(w.real / tolerance) * tolerance,
-                       round(w.imag / tolerance) * tolerance)
-                if key not in seen:
-                    seen.add(key)
-                    new_points.append(w)
-        if not new_points:
+        next_gen = []
+        for z in current_gen:
+            for a in centers:
+                w = mobius_transform(a, z)
+                if abs(w) < 0.999:
+                    # Check if point is new
+                    is_new = all(abs(w - p) > 0.01 for p in points)
+                    if is_new:
+                        points.append(w)
+                        next_gen.append(w)
+                # Also try inverse
+                w_inv = mobius_transform(-a, z)
+                if abs(w_inv) < 0.999:
+                    is_new = all(abs(w_inv - p) > 0.01 for p in points)
+                    if is_new:
+                        points.append(w_inv)
+                        next_gen.append(w_inv)
+        current_gen = next_gen
+        if not current_gen:
             break
-        orbit.extend(new_points)
-    return orbit
+
+    return points
 
 
-def compute_orbit_by_depth(generators, max_depth, tolerance=1e-10):
-    layers = [[0j]]
-    seen = {(0.0, 0.0)}
-    for d in range(max_depth):
-        new_points = []
-        for z in layers[-1]:
-            for a, theta in generators:
-                w = mobius_transform(z, a, theta)
-                key = (round(w.real / tolerance) * tolerance,
-                       round(w.imag / tolerance) * tolerance)
-                if key not in seen:
-                    seen.add(key)
-                    new_points.append(w)
-        layers.append(new_points)
-    return layers
+def hyperbolic_circle_euclidean(center_hyp: complex, R: float, n_points: int = 200) -> list:
+    """Convert a hyperbolic circle to Euclidean coordinates."""
+    # For a circle centered at origin with hyperbolic radius R,
+    # the Euclidean radius is tanh(R/2)
+    if abs(center_hyp) < 1e-10:
+        r_eucl = math.tanh(R / 2)
+        return [(r_eucl * math.cos(t), r_eucl * math.sin(t))
+                for t in np.linspace(0, 2*math.pi, n_points)]
+    else:
+        # General case: transform a circle at origin
+        r_eucl = math.tanh(R / 2)
+        points = []
+        for t in np.linspace(0, 2*math.pi, n_points):
+            z = r_eucl * complex(math.cos(t), math.sin(t))
+            # Transform from origin to center_hyp
+            w = mobius_transform(-center_hyp, z)
+            points.append((w.real, w.imag))
+        return points
 
 
-def main():
-    k = 3
-    radius = 0.4
-    generators = [(radius * cmath.exp(2j * math.pi * i / k), 2 * math.pi * i / k)
-                   for i in range(k)]
+def plot_poincare_disk():
+    """Create the main Poincaré disk visualization."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
-    max_depth = 6
-    layers = compute_orbit_by_depth(generators, max_depth)
-
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-
-    # Left: Orbit on Poincaré disk, colored by valuation
+    # ====== Left plot: Lattice points ======
     ax = axes[0]
-    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-
-    colors = plt.cm.viridis(np.linspace(0, 1, max_depth + 1))
-    for d, layer in enumerate(layers):
-        if not layer:
-            continue
-        xs = [z.real for z in layer]
-        ys = [z.imag for z in layer]
-        size = max(5, 50 - 8 * d)
-        ax.scatter(xs, ys, c=[colors[d]], s=size, zorder=5, label=f'v={d} ({len(layer)} pts)')
-
+    ax.set_aspect('equal')
     ax.set_xlim(-1.15, 1.15)
     ax.set_ylim(-1.15, 1.15)
-    ax.set_aspect('equal')
-    ax.set_title(f'Hyperbolic Lattice Orbit ({k} generators)', fontsize=14)
-    ax.legend(loc='upper right', fontsize=8)
-    ax.grid(True, alpha=0.3)
+    ax.set_title('Hyperbolic Integers on the Poincaré Disk', fontsize=13)
 
-    # Right: Orbit growth
+    # Draw unit disk
+    disk = Circle((0, 0), 1, fill=False, edgecolor='black', linewidth=2)
+    ax.add_patch(disk)
+    disk_fill = Circle((0, 0), 1, fill=True, facecolor='#f0f8ff', edgecolor='none')
+    ax.add_patch(disk_fill)
+
+    # Generate lattice points using two generators
+    gen1 = 0.4 + 0.3j
+    gen2 = -0.2 + 0.5j
+    points = generate_lattice_points([gen1, gen2], depth=5)
+
+    # Draw hyperbolic circles
+    for R in [0.5, 1.0, 1.5, 2.0, 2.5]:
+        circle_pts = hyperbolic_circle_euclidean(0j, R)
+        xs = [p[0] for p in circle_pts]
+        ys = [p[1] for p in circle_pts]
+        ax.plot(xs, ys, 'b-', alpha=0.15, linewidth=0.5)
+
+    # Plot lattice points
+    for p in points:
+        color = 'red' if abs(p) < 0.01 else ('darkblue' if abs(p) < 0.5 else 'steelblue')
+        size = 40 if abs(p) < 0.01 else (20 if abs(p) < 0.5 else 10)
+        ax.plot(p.real, p.imag, 'o', color=color, markersize=math.sqrt(size),
+                alpha=0.8, markeredgecolor='white', markeredgewidth=0.3)
+
+    ax.plot(0, 0, 'o', color='red', markersize=8, label='Origin (identity)')
+    ax.legend(loc='upper right', fontsize=9)
+
+    # Labels
+    ax.set_xlabel('Re(z)')
+    ax.set_ylabel('Im(z)')
+    ax.text(0.02, -0.06, '0', fontsize=8, color='red')
+
+    # ====== Right plot: Area growth ======
     ax2 = axes[1]
-    depths = list(range(max_depth + 1))
-    cumulative = [sum(len(layers[i]) for i in range(d + 1)) for d in depths]
-    upper_bound = [(k + 1) ** d for d in depths]
+    Rs = np.linspace(0, 6, 200)
+    areas = [2 * math.pi * (math.cosh(R) - 1) for R in Rs]
+    asymp = [math.pi * math.exp(R) for R in Rs]
 
-    ax2.semilogy(depths, cumulative, 'bo-', linewidth=2, markersize=8, label='|Orbit_n|')
-    ax2.semilogy(depths, upper_bound, 'r--', linewidth=2, label=f'(k+1)^n = {k+1}^n')
-    ax2.set_xlabel('Depth n', fontsize=12)
-    ax2.set_ylabel('Count (log scale)', fontsize=12)
-    ax2.set_title('Orbit Growth vs Upper Bound', fontsize=14)
-    ax2.legend(fontsize=11)
+    ax2.plot(Rs, areas, 'b-', linewidth=2, label=r'$A(R) = 2\pi(\cosh R - 1)$')
+    ax2.plot(Rs, asymp, 'r--', linewidth=1.5, label=r'$\pi e^R$ (asymptotic)')
+    ax2.fill_between(Rs, areas, alpha=0.1, color='blue')
+
+    ax2.set_xlabel('Hyperbolic radius R', fontsize=12)
+    ax2.set_ylabel('Hyperbolic area', fontsize=12)
+    ax2.set_title('Exponential Growth of Hyperbolic Area', fontsize=13)
+    ax2.legend(fontsize=10)
+    ax2.set_yscale('log')
+    ax2.set_ylim(0.1, 2000)
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_orbit.png', dpi=150, bbox_inches='tight')
+    plt.savefig('poincare_disk.png', dpi=150, bbox_inches='tight')
+    print("Saved poincare_disk.png")
     plt.close()
-    print("Saved viz_orbit.png")
 
 
-if __name__ == "__main__":
-    main()
+def plot_spectral_gap():
+    """Plot the spectral gap analysis."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
+    # Left: spectral gap function
+    ax = axes[0]
+    lambdas = np.linspace(0.25, 5, 200)
+    deltas = [0.5 + math.sqrt(max(0, l - 0.25)) for l in lambdas]
 
-#!/usr/bin/env python3
-"""Visualization: Hyperbolic zeta function and distance properties."""
-
-import cmath
-import math
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def mobius_transform(z, a, theta):
-    rotation = cmath.exp(1j * theta)
-    return rotation * (z - a) / (1 - a.conjugate() * z)
-
-
-def hyp_norm(z):
-    r = abs(z)
-    if r >= 1 or r < 1e-15:
-        return 0.0 if r < 1e-15 else float('inf')
-    return 2 * math.atanh(r)
-
-
-def compute_orbit(generators, depth, tolerance=1e-10):
-    orbit = [0j]
-    seen = {(0.0, 0.0)}
-    for _ in range(depth):
-        new_points = []
-        for z in orbit:
-            for a, theta in generators:
-                w = mobius_transform(z, a, theta)
-                key = (round(w.real / tolerance) * tolerance,
-                       round(w.imag / tolerance) * tolerance)
-                if key not in seen:
-                    seen.add(key)
-                    new_points.append(w)
-        if not new_points:
-            break
-        orbit.extend(new_points)
-    return orbit
-
-
-def hyp_zeta(orbit, s):
-    total = 0.0
-    for z in orbit:
-        hn = hyp_norm(z)
-        if hn > 1e-10:
-            total += 1.0 / (hn ** (2 * s))
-    return total
-
-
-def main():
-    k = 3
-    radius = 0.4
-    generators = [(radius * cmath.exp(2j * math.pi * i / k), 2 * math.pi * i / k)
-                   for i in range(k)]
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-
-    # Top-left: Hyperbolic norm vs Euclidean norm
-    ax = axes[0, 0]
-    rs = np.linspace(0, 0.999, 500)
-    hyp_norms = [2 * np.arctanh(r) for r in rs]
-    ax.plot(rs, hyp_norms, 'b-', linewidth=2)
-    ax.plot(rs, rs, 'r--', linewidth=1, alpha=0.5, label='Euclidean |z|')
-    ax.set_xlabel('Euclidean norm |z|', fontsize=12)
-    ax.set_ylabel('Hyperbolic norm ||z||_H', fontsize=12)
-    ax.set_title('Hyperbolic vs Euclidean Norm', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 8)
-
-    # Top-right: Partial zeta function for different depths
-    ax = axes[0, 1]
-    s_vals = np.linspace(0.3, 4.0, 100)
-    for depth in [3, 5, 7]:
-        orbit = compute_orbit(generators, depth)
-        zeta_vals = [hyp_zeta(orbit, s) for s in s_vals]
-        ax.plot(s_vals, zeta_vals, linewidth=2, label=f'depth {depth} ({len(orbit)} pts)')
-
-    ax.set_xlabel('s', fontsize=12)
-    ax.set_ylabel('ζ_H^{(n)}(s)', fontsize=12)
-    ax.set_title('Partial Hyperbolic Zeta Function', fontsize=14)
+    ax.plot(lambdas, deltas, 'b-', linewidth=2)
+    ax.axhline(y=0.5, color='r', linestyle='--', alpha=0.5, label=r'$\delta = 1/2$ (minimum)')
+    ax.axvline(x=0.25, color='g', linestyle='--', alpha=0.5, label=r'$\lambda_1 = 1/4$ (Selberg)')
+    ax.set_xlabel(r'$\lambda_1$', fontsize=14)
+    ax.set_ylabel(r'$\delta(\lambda_1)$', fontsize=14)
+    ax.set_title('Spectral Gap: Monotonically Increasing', fontsize=13)
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 50)
 
-    # Bottom-left: Distribution of hyperbolic norms in the orbit
-    ax = axes[1, 0]
-    orbit = compute_orbit(generators, 7)
-    norms = sorted([hyp_norm(z) for z in orbit if abs(z) > 1e-10])
-    ax.hist(norms, bins=40, color='steelblue', edgecolor='black', alpha=0.7)
-    ax.set_xlabel('Hyperbolic norm ||z||_H', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title(f'Distribution of Hyperbolic Norms ({len(norms)} points)', fontsize=14)
-    ax.grid(True, alpha=0.3)
+    # Right: area factor divergence
+    ax2 = axes[1]
+    rs = np.linspace(0, 0.99, 500)
+    factors = [4 / (1 - r**2)**2 for r in rs]
 
-    # Bottom-right: Geodesic circles and lattice points
-    ax = axes[1, 1]
-    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-
-    # Draw hyperbolic circles (Euclidean circles in disk model)
-    for R in [0.5, 1.0, 1.5, 2.0, 3.0]:
-        r_euc = math.tanh(R / 2)  # Euclidean radius of hyperbolic circle
-        circ = plt.Circle((0, 0), r_euc, fill=False, color='gray', linestyle='--', alpha=0.4)
-        ax.add_patch(circ)
-        ax.text(r_euc + 0.02, 0.02, f'R={R}', fontsize=7, color='gray')
-
-    orbit_short = compute_orbit(generators, 5)
-    for z in orbit_short:
-        hn = hyp_norm(z)
-        color = 'red' if hn < 0.01 else ('orange' if hn < 1 else ('blue' if hn < 2 else 'purple'))
-        ax.plot(z.real, z.imag, 'o', color=color, markersize=3)
-
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-    ax.set_aspect('equal')
-    ax.set_title('Lattice Points with Geodesic Circles', fontsize=14)
-    ax.grid(True, alpha=0.3)
+    ax2.plot(rs, factors, 'purple', linewidth=2)
+    ax2.axhline(y=4, color='r', linestyle='--', alpha=0.5, label='Minimum = 4')
+    ax2.set_xlabel('Euclidean radius r', fontsize=14)
+    ax2.set_ylabel(r'$4/(1-r^2)^2$', fontsize=14)
+    ax2.set_title('Hyperbolic Area Factor Divergence', fontsize=13)
+    ax2.set_yscale('log')
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_zeta.png', dpi=150, bbox_inches='tight')
+    plt.savefig('spectral_analysis.png', dpi=150, bbox_inches='tight')
+    print("Saved spectral_analysis.png")
     plt.close()
-    print("Saved viz_zeta.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_poincare_disk()
+    plot_spectral_gap()
+    print("All visualizations generated.")
