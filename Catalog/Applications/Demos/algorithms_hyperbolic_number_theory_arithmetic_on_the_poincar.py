@@ -1,223 +1,153 @@
 """
-Hyperbolic Trace Arithmetic: Core Algorithms
+Hyperbolic Number Theory: Algorithms for Arithmetic on the Poincaré Disk
 
-Type-hinted implementations of the main algorithms from the
-hyperbolic trace arithmetic framework.
+Core implementations of hyperbolic geometry, lattice counting,
+and the hyperbolic zeta function for PSL(2,Z).
 """
 
-from typing import List, Tuple, Set, Dict, Optional
 import math
+import cmath
+from typing import List, Tuple, Optional
 
 
-def sl2_mul(a: Tuple[int, int, int, int],
-            b: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
-    """Multiply two SL₂(ℤ) matrices represented as (a, b, c, d)."""
-    a1, b1, c1, d1 = a
-    a2, b2, c2, d2 = b
-    return (a1*a2 + b1*c2, a1*b2 + b1*d2,
-            c1*a2 + d1*c2, c1*b2 + d1*d2)
+def poincare_cf(z: complex) -> float:
+    """Poincaré conformal factor λ(z) = 2 / (1 - |z|²)."""
+    r2 = abs(z) ** 2
+    if r2 >= 1.0:
+        return float('inf')
+    return 2.0 / (1.0 - r2)
 
 
-def sl2_inv(m: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
-    """Compute the inverse of an SL₂(ℤ) matrix."""
-    a, b, c, d = m
-    return (d, -b, -c, a)
+def mobius_map(a: complex, z: complex) -> complex:
+    """Möbius automorphism φ_a(z) = (z - a) / (1 - conj(a)*z)."""
+    denom = 1.0 - a.conjugate() * z
+    if abs(denom) < 1e-15:
+        return complex(float('inf'), 0)
+    return (z - a) / denom
 
 
-def sl2_trace(m: Tuple[int, int, int, int]) -> int:
-    """Compute the trace of an SL₂(ℤ) matrix."""
-    return m[0] + m[3]
+def hyp_dist(z: complex, w: complex) -> float:
+    """Hyperbolic distance d_H(z, w) = 2 * artanh(|φ_w(z)|)."""
+    t = abs(mobius_map(w, z))
+    if t >= 1.0:
+        return float('inf')
+    return 2.0 * math.atanh(t)
 
 
-def cheb_trace(t: int, n: int) -> int:
-    """Compute the n-th Chebyshev trace value for initial trace t.
+def hyp_area(R: float) -> float:
+    """Hyperbolic area of a disk of radius R: A(R) = 2π(cosh R - 1)."""
+    return 2.0 * math.pi * (math.cosh(R) - 1.0)
 
-    Uses the recurrence:
-        chebTrace(t, 0) = 2
-        chebTrace(t, 1) = t
-        chebTrace(t, n+2) = t * chebTrace(t, n+1) - chebTrace(t, n)
+
+def upper_half_to_disk(z: complex) -> complex:
+    """Map from upper half-plane to Poincaré disk: w = (z - i)/(z + i)."""
+    return (z - 1j) / (z + 1j)
+
+
+def disk_to_upper_half(w: complex) -> complex:
+    """Map from Poincaré disk to upper half-plane: z = i(1 + w)/(1 - w)."""
+    return 1j * (1.0 + w) / (1.0 - w)
+
+
+def hyp_dist_upper_half(z: complex, w: complex) -> float:
+    """Hyperbolic distance in the upper half-plane model.
+    d(z,w) = 2 * artanh(|z-w| / |z-conj(w)|).
     """
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    a, b = 2, t
-    for _ in range(2, n + 1):
-        a, b = b, t * b - a
-    return b
+    num = abs(z - w)
+    den = abs(z - w.conjugate())
+    if den < 1e-15:
+        return float('inf')
+    t = num / den
+    if t >= 1.0:
+        return float('inf')
+    return 2.0 * math.atanh(t)
 
 
-def cheb_trace_invariant(t: int, n: int) -> int:
-    """Verify the Chebyshev-Trace Invariant.
+def enumerate_psl2z(R: float) -> List[Tuple[int, int, int, int]]:
+    """Enumerate elements [[a,b],[c,d]] of PSL(2,Z) with
+    hyperbolic distance from i to γ·i ≤ R in upper half-plane.
 
-    Returns chebTrace(n+1)² + chebTrace(n)² - t*chebTrace(n)*chebTrace(n+1),
-    which should always equal 4 - t².
+    d_H(i, γ·i) = 2 * arccosh((a²+b²+c²+d²) / 2)
+    So we need a²+b²+c²+d² ≤ 2*cosh(R).
     """
-    cn = cheb_trace(t, n)
-    cn1 = cheb_trace(t, n + 1)
-    return cn1**2 + cn**2 - t * cn * cn1
+    bound = 2.0 * math.cosh(R)
+    max_val = int(math.sqrt(bound)) + 1
+    results = []
+
+    for a in range(-max_val, max_val + 1):
+        for b in range(-max_val, max_val + 1):
+            for c in range(-max_val, max_val + 1):
+                for d in range(-max_val, max_val + 1):
+                    if a * d - b * c != 1:
+                        continue
+                    trace_sq = a * a + b * b + c * c + d * d
+                    if trace_sq <= bound:
+                        # PSL identification: (a,b,c,d) ~ (-a,-b,-c,-d)
+                        if a > 0 or (a == 0 and b > 0) or (a == 0 and b == 0 and c > 0) or \
+                           (a == 0 and b == 0 and c == 0 and d > 0):
+                            results.append((a, b, c, d))
+
+    return results
 
 
-def trace_spectrum(k: int) -> Set[int]:
-    """Compute the set of distinct traces achievable by words
-    of length ≤ k in {S, T, S⁻¹, T⁻¹}.
+def lattice_count_psl2z(R: float) -> int:
+    """Count PSL(2,Z) lattice points within hyperbolic radius R of i."""
+    return len(enumerate_psl2z(R))
 
-    Args:
-        k: Maximum word length
 
-    Returns:
-        Set of distinct trace values
+def hyp_zeta_partial(R_max: float, s: float, num_terms: int = 100) -> float:
+    """Compute partial sum of hyperbolic zeta function for PSL(2,Z):
+    ζ_H(s) = Σ 1/d_H(i, γ·i)^{2s}
+    summing over PSL(2,Z) elements with d_H(i, γ·i) ≤ R_max.
     """
-    S = (0, -1, 1, 0)
-    T = (1, 1, 0, 1)
-    S_inv = sl2_inv(S)
-    T_inv = sl2_inv(T)
-    generators = [S, T, S_inv, T_inv]
-
-    identity = (1, 0, 0, 1)
-    current_level: Set[Tuple[int, int, int, int]] = {identity}
-    all_matrices: Set[Tuple[int, int, int, int]] = {identity}
-    traces: Set[int] = {sl2_trace(identity)}
-
-    for _ in range(k):
-        next_level: Set[Tuple[int, int, int, int]] = set()
-        for g in current_level:
-            for gen in generators:
-                h = sl2_mul(g, gen)
-                if h not in all_matrices:
-                    all_matrices.add(h)
-                    next_level.add(h)
-                    traces.add(sl2_trace(h))
-        current_level = next_level
-        if not current_level:
-            break
-
-    return traces
-
-
-def farey_neighbors(n: int) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
-    """Generate Farey neighbor pairs in the Farey sequence F_n.
-
-    Args:
-        n: Order of the Farey sequence
-
-    Returns:
-        List of neighboring fraction pairs ((a,b), (c,d)) with ad-bc=1
-    """
-    # Build Farey sequence F_n
-    fractions: List[Tuple[int, int]] = [(0, 1), (1, 1)]
-    for _ in range(n - 1):
-        new_fracs: List[Tuple[int, int]] = [fractions[0]]
-        for i in range(len(fractions) - 1):
-            a, b = fractions[i]
-            c, d = fractions[i + 1]
-            if b + d <= n:
-                new_fracs.append((a + c, b + d))
-            new_fracs.append(fractions[i + 1])
-        fractions = new_fracs
-
-    # Extract neighbor pairs
-    neighbors: List[Tuple[Tuple[int, int], Tuple[int, int]]] = []
-    for i in range(len(fractions) - 1):
-        a, b = fractions[i]
-        c, d = fractions[i + 1]
-        if abs(a * d - b * c) == 1:
-            neighbors.append(((a, b), (c, d)))
-
-    return neighbors
-
-
-def fricke_vogt_check(A: Tuple[int, int, int, int],
-                       B: Tuple[int, int, int, int]) -> bool:
-    """Verify the Fricke-Vogt identity for matrices A, B.
-
-    Checks: tr(A)² + tr(B)² + tr(AB)² = tr(A)·tr(B)·tr(AB) + tr([A,B]) + 2
-    """
-    AB = sl2_mul(A, B)
-    ABA_inv = sl2_mul(AB, sl2_inv(A))
-    comm = sl2_mul(ABA_inv, sl2_inv(B))
-
-    tA = sl2_trace(A)
-    tB = sl2_trace(B)
-    tAB = sl2_trace(AB)
-    tComm = sl2_trace(comm)
-
-    lhs = tA**2 + tB**2 + tAB**2
-    rhs = tA * tB * tAB + tComm + 2
-
-    return lhs == rhs
-
-
-def trace_product_check(A: Tuple[int, int, int, int],
-                         B: Tuple[int, int, int, int]) -> bool:
-    """Verify the trace product identity: tr(AB) + tr(AB⁻¹) = tr(A)·tr(B)."""
-    AB = sl2_mul(A, B)
-    AB_inv = sl2_mul(A, sl2_inv(B))
-    return sl2_trace(AB) + sl2_trace(AB_inv) == sl2_trace(A) * sl2_trace(B)
-
-
-def trace_convolution(f: Dict[int, float], f_bound: int,
-                       g: Dict[int, float], g_bound: int,
-                       t: int) -> float:
-    """Compute the trace convolution (f ⊛ g)(t).
-
-    Args:
-        f: First function as dict {trace_value: function_value}
-        f_bound: Support bound for f
-        g: Second function as dict
-        g_bound: Support bound for g
-        t: Point at which to evaluate the convolution
-
-    Returns:
-        (f ⊛ g)(t) = Σᵢ f(i) · g(t - i)
-    """
+    elements = enumerate_psl2z(R_max)
     total = 0.0
-    bound = f_bound + g_bound
-    for i in range(-bound, bound + 1):
-        fi = f.get(i, 0.0)
-        gti = g.get(t - i, 0.0)
-        total += fi * gti
+    for (a, b, c, d) in elements:
+        trace_sq = a * a + b * b + c * c + d * d
+        if trace_sq <= 2:
+            continue  # Skip identity
+        dist = 2.0 * math.acosh(trace_sq / 2.0)
+        if dist > 0:
+            total += dist ** (-2.0 * s)
     return total
 
 
-def hyperbolic_lattice_count(points: List[complex], r: float) -> int:
-    """Count lattice points with |z| < r in the Poincaré disk.
+def test_lattice_growth(R_values: List[float]) -> List[Tuple[float, int, float]]:
+    """Test the Selberg-Huber lattice growth conjecture for PSL(2,Z).
 
-    Args:
-        points: List of complex numbers in the unit disk
-        r: Radius bound
-
-    Returns:
-        Number of points with |z| < r
+    Predicts N(R) ~ e^R / (π/3) = 3e^R/π.
+    Returns (R, N(R), ratio = N(R)·(π/3)/e^R).
     """
-    return sum(1 for z in points if abs(z) < r)
+    covolume = math.pi / 3.0
+    results = []
+    for R in R_values:
+        N = lattice_count_psl2z(R)
+        ratio = N * covolume / math.exp(R)
+        results.append((R, N, ratio))
+    return results
 
 
-def cayley_transform(s: complex) -> complex:
-    """Apply the Cayley transform s ↦ (s-1)/(s+1)."""
-    return (s - 1) / (s + 1)
+def conformal_factor_along_radius(num_points: int = 100) -> List[Tuple[float, float]]:
+    """Compute conformal factor along the real axis [0, 0.99]."""
+    results = []
+    for i in range(num_points):
+        r = 0.99 * i / (num_points - 1)
+        cf = poincare_cf(complex(r, 0))
+        results.append((r, cf))
+    return results
 
 
-if __name__ == "__main__":
-    # Quick self-test
-    print("=== Chebyshev-Trace Invariant Test ===")
-    for t in [2, 3, 5, 10]:
-        for n in range(6):
-            inv_val = cheb_trace_invariant(t, n)
-            expected = 4 - t**2
-            assert inv_val == expected, f"Failed: t={t}, n={n}"
-            print(f"  t={t}, n={n}: invariant = {inv_val} = 4-{t}² ✓")
-
-    print("\n=== Trace Product Identity Test ===")
-    S = (0, -1, 1, 0)
-    T = (1, 1, 0, 1)
-    for A in [S, T, sl2_mul(S, T), sl2_mul(T, T)]:
-        for B in [S, T, sl2_mul(S, T)]:
-            assert trace_product_check(A, B), f"Failed for {A}, {B}"
-    print("  All checks passed ✓")
-
-    print("\n=== Fricke-Vogt Identity Test ===")
-    for A in [S, T, sl2_mul(S, T)]:
-        for B in [S, T, sl2_mul(T, S)]:
-            assert fricke_vogt_check(A, B), f"Failed for {A}, {B}"
-    print("  All checks passed ✓")
+def hyp_area_vs_euclidean(R_values: List[float]) -> List[Tuple[float, float, float]]:
+    """Compare hyperbolic and Euclidean disk areas.
+    Returns (R, A_hyp(R), A_euc(R)) where A_euc uses the
+    Euclidean radius corresponding to hyperbolic radius R.
+    """
+    results = []
+    for R in R_values:
+        A_hyp = hyp_area(R)
+        # Euclidean radius of a hyperbolic disk of radius R centered at origin:
+        # r_euc = tanh(R/2)
+        r_euc = math.tanh(R / 2.0)
+        A_euc = math.pi * r_euc ** 2
+        results.append((R, A_hyp, A_euc))
+    return results

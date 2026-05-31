@@ -1,467 +1,313 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Trace Arithmetic — Demonstration Script
+Hyperbolic Number Theory: Demonstration Script
 
-Demonstrates the key results:
-1. Chebyshev-Trace Invariant
-2. Trace Product Identity
-3. Fricke-Vogt Identity
-4. Trace Spectrum Density
-5. Farey Neighbor Mediant
-6. Critical Line → Poincaré Disk
+Demonstrates key results from the formalization:
+1. Conformal factor properties
+2. Möbius transformations preserving the disk
+3. Lattice point counting for PSL(2,Z)
+4. Hyperbolic area growth
+5. Hyperbolic zeta function computation
 """
 
+import math
 from algorithms import (
-    sl2_mul, sl2_inv, sl2_trace, cheb_trace, cheb_trace_invariant,
-    trace_spectrum, fricke_vogt_check, trace_product_check,
-    farey_neighbors, cayley_transform
+    poincare_cf, mobius_map, hyp_dist, hyp_area,
+    lattice_count_psl2z, hyp_zeta_partial,
+    test_lattice_growth, conformal_factor_along_radius,
+    hyp_area_vs_euclidean, enumerate_psl2z
 )
-import math
 
 
-def demo_chebyshev_invariant():
-    """Demonstrate the Chebyshev-Trace Invariant: Q(n) = 4 - t² for all n."""
+def demo_conformal_factor():
+    """Demonstrate conformal factor properties."""
     print("=" * 60)
-    print("1. CHEBYSHEV-TRACE INVARIANT")
-    print("   Q(n) = cheb(n+1)² + cheb(n)² - t·cheb(n)·cheb(n+1)")
-    print("   should equal 4 - t² for all n")
+    print("1. POINCARÉ CONFORMAL FACTOR λ(z) = 2/(1-|z|²)")
     print("=" * 60)
 
-    for t in [2, 3, 5, 7]:
-        print(f"\n  t = {t}, expected invariant = {4 - t**2}")
-        for n in range(8):
-            cn = cheb_trace(t, n)
-            cn1 = cheb_trace(t, n + 1)
-            Q = cheb_trace_invariant(t, n)
-            print(f"    n={n}: cheb({n})={cn:>6}, cheb({n+1})={cn1:>6}, Q={Q:>6} {'✓' if Q == 4 - t**2 else '✗'}")
+    print("\nλ(0) = {:.4f}  (should be 2.0)".format(poincare_cf(0)))
+
+    print("\nMonotonicity along real axis:")
+    for r in [0.0, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99]:
+        z = complex(r, 0)
+        print(f"  |z| = {r:.2f}  →  λ(z) = {poincare_cf(z):.4f}")
+
+    print("\nDivergence at boundary: λ(z) → ∞ as |z| → 1")
+    for r in [0.999, 0.9999, 0.99999]:
+        z = complex(r, 0)
+        print(f"  |z| = {r}  →  λ(z) = {poincare_cf(z):.2f}")
 
 
-def demo_trace_product():
-    """Demonstrate the Trace Product Identity: tr(AB) + tr(AB⁻¹) = tr(A)·tr(B)."""
+def demo_mobius():
+    """Demonstrate Möbius transformations."""
     print("\n" + "=" * 60)
-    print("2. TRACE PRODUCT IDENTITY")
-    print("   tr(AB) + tr(AB⁻¹) = tr(A) · tr(B)")
+    print("2. MÖBIUS TRANSFORMATIONS φ_a(z) = (z-a)/(1-ā·z)")
     print("=" * 60)
 
-    S = (0, -1, 1, 0)
-    T = (1, 1, 0, 1)
-    ST = sl2_mul(S, T)
-    TT = sl2_mul(T, T)
-    names = {"S": S, "T": T, "ST": ST, "T²": TT}
+    a = complex(0.3, 0.4)
+    print(f"\na = {a},  |a| = {abs(a):.4f}")
+    print(f"φ_a(a) = {mobius_map(a, a):.6f}  (should be 0)")
+    print(f"φ_0(z) = z: φ_0(0.5+0.3i) = {mobius_map(0, 0.5+0.3j)}")
 
-    for nA, A in names.items():
-        for nB, B in names.items():
-            AB = sl2_mul(A, B)
-            AB_inv = sl2_mul(A, sl2_inv(B))
-            lhs = sl2_trace(AB) + sl2_trace(AB_inv)
-            rhs = sl2_trace(A) * sl2_trace(B)
-            ok = "✓" if lhs == rhs else "✗"
-            print(f"  {nA}·{nB}: tr(AB)={sl2_trace(AB):>3}, "
-                  f"tr(AB⁻¹)={sl2_trace(AB_inv):>3}, "
-                  f"sum={lhs:>3} = tr(A)·tr(B)={rhs:>3} {ok}")
+    print("\nDisk preservation: |z| < 1 → |φ_a(z)| < 1")
+    test_points = [0.1+0.2j, 0.5+0.3j, -0.4+0.6j, 0.8+0.1j]
+    for z in test_points:
+        w = mobius_map(a, z)
+        print(f"  z = {z}, |z| = {abs(z):.4f} → φ_a(z) = {w:.4f}, |φ_a(z)| = {abs(w):.4f}")
 
 
-def demo_fricke_vogt():
-    """Demonstrate the Fricke-Vogt Identity."""
+def demo_hyperbolic_distance():
+    """Demonstrate hyperbolic distance."""
     print("\n" + "=" * 60)
-    print("3. FRICKE-VOGT IDENTITY")
-    print("   tr(A)² + tr(B)² + tr(AB)² = tr(A)·tr(B)·tr(AB) + tr([A,B]) + 2")
+    print("3. HYPERBOLIC DISTANCE d_H(z,w) = 2·artanh(|φ_w(z)|)")
     print("=" * 60)
 
-    S = (0, -1, 1, 0)
-    T = (1, 1, 0, 1)
-    matrices = [
-        ("S", S), ("T", T), ("ST", sl2_mul(S, T)),
-        ("TS", sl2_mul(T, S)), ("T²", sl2_mul(T, T))
-    ]
+    print("\nd_H(z, z) = 0:")
+    z = complex(0.3, 0.4)
+    print(f"  d_H({z}, {z}) = {hyp_dist(z, z):.10f}")
 
-    for nA, A in matrices:
-        for nB, B in matrices:
-            AB = sl2_mul(A, B)
-            comm = sl2_mul(sl2_mul(AB, sl2_inv(A)), sl2_inv(B))
-            tA, tB, tAB, tC = sl2_trace(A), sl2_trace(B), sl2_trace(AB), sl2_trace(comm)
-            lhs = tA**2 + tB**2 + tAB**2
-            rhs = tA * tB * tAB + tC + 2
-            ok = "✓" if lhs == rhs else "✗"
-            print(f"  ({nA},{nB}): tr(A)={tA:>2}, tr(B)={tB:>2}, "
-                  f"tr(AB)={tAB:>3}, tr([A,B])={tC:>3}, "
-                  f"LHS={lhs:>4}=RHS={rhs:>4} {ok}")
+    print("\nDistance from origin: d_H(r, 0) = 2·artanh(r)")
+    for r in [0.1, 0.3, 0.5, 0.7, 0.9]:
+        d = hyp_dist(complex(r, 0), 0)
+        expected = 2 * math.atanh(r)
+        print(f"  r = {r:.1f}: d_H = {d:.6f}, 2·artanh(r) = {expected:.6f}")
 
 
-def demo_trace_spectrum():
-    """Demonstrate trace spectrum density for different word lengths."""
+def demo_lattice_counting():
+    """Demonstrate lattice point counting for PSL(2,Z)."""
     print("\n" + "=" * 60)
-    print("4. TRACE SPECTRUM DENSITY")
-    print("   Count of distinct traces for words of length ≤ k")
+    print("4. LATTICE COUNTING FOR PSL(2,ℤ)")
     print("=" * 60)
 
-    for k in range(1, 13):
-        traces = trace_spectrum(k)
-        min_t = min(traces)
-        max_t = max(traces)
-        print(f"  k={k:>2}: {len(traces):>4} distinct traces, "
-              f"range [{min_t:>4}, {max_t:>4}], "
-              f"|traces|/k² = {len(traces)/max(k*k, 1):.2f}")
+    print("\nN(R) = #{γ ∈ PSL(2,ℤ) : d_H(i, γ·i) ≤ R}")
+    print("\nSelberg-Huber prediction: N(R) ~ e^R / (π/3) = 3e^R/π")
+    print(f"\n{'R':>6} {'N(R)':>10} {'3eᴿ/π':>12} {'Ratio':>8}")
+    print("-" * 40)
+
+    for R in [1.0, 2.0, 3.0, 4.0, 5.0]:
+        N = lattice_count_psl2z(R)
+        predicted = 3.0 * math.exp(R) / math.pi
+        ratio = N / predicted if predicted > 0 else 0
+        print(f"{R:6.1f} {N:10d} {predicted:12.1f} {ratio:8.4f}")
 
 
-def demo_farey_mediant():
-    """Demonstrate the Farey Mediant Theorem."""
+def demo_hyperbolic_area():
+    """Demonstrate hyperbolic area growth."""
     print("\n" + "=" * 60)
-    print("5. FAREY MEDIANT THEOREM")
-    print("   Mediant (a+c, b+d) is a neighbor of both parents")
+    print("5. HYPERBOLIC AREA: A(R) = 2π(cosh R - 1)")
     print("=" * 60)
 
-    neighbors = farey_neighbors(8)
-    print(f"  Farey sequence F_8 has {len(neighbors)} neighbor pairs")
-    for (a, b), (c, d) in neighbors[:10]:
-        det = a * d - b * c
-        med = (a + c, b + d)
-        det_right = med[0] * d - med[1] * c
-        det_left = a * med[1] - b * med[0]
-        print(f"  ({a}/{b})-({c}/{d}): det={det:>2}, "
-              f"mediant=({med[0]}/{med[1]}), "
-              f"det_right={det_right:>2}, det_left={det_left:>2}")
+    print(f"\nA(0) = {hyp_area(0):.6f}  (should be 0)")
+
+    print(f"\n{'R':>6} {'A_hyp(R)':>12} {'π·eᴿ':>12} {'Ratio':>8}")
+    print("-" * 42)
+    for R in [0.5, 1.0, 2.0, 3.0, 5.0, 10.0]:
+        A = hyp_area(R)
+        bound = math.pi * math.exp(R)
+        ratio = A / bound
+        print(f"{R:6.1f} {A:12.2f} {bound:12.2f} {ratio:8.4f}")
+
+    print("\nNote: A(R)/πeᴿ → 1 as R → ∞ (exponential growth)")
 
 
-def demo_critical_line():
-    """Demonstrate the Critical Line → Poincaré Disk map."""
+def demo_zeta():
+    """Demonstrate hyperbolic zeta function."""
     print("\n" + "=" * 60)
-    print("6. CRITICAL LINE → POINCARÉ DISK")
-    print("   Cayley transform maps Re(s) = 1/2 into the closed disk")
+    print("6. HYPERBOLIC ZETA FUNCTION ζ_H(s)")
     print("=" * 60)
 
-    for y in [0, 1, 2, 5, 10, 14.134725, 21.022040, 25.010858, 50, 100]:
-        s = complex(0.5, y)
-        w = cayley_transform(s)
-        norm = abs(w)
-        print(f"  s = 1/2 + {y:>10.6f}i  →  w = {w.real:>8.5f} + {w.imag:>8.5f}i  "
-              f"|w| = {norm:.6f} {'≤ 1 ✓' if norm <= 1.0001 else '> 1 ✗'}")
-
-    print("\n  (Note: y ≈ 14.13, 21.02, 25.01 are the first three")
-    print("   imaginary parts of Riemann zeta zeros on the critical line)")
+    print("\nPartial sums for PSL(2,ℤ), R_max = 5.0:")
+    print(f"\n{'s':>6} {'ζ_H(s)':>12}")
+    print("-" * 20)
+    for s in [0.6, 0.8, 1.0, 1.5, 2.0, 3.0]:
+        zeta = hyp_zeta_partial(5.0, s)
+        print(f"{s:6.1f} {zeta:12.6f}")
 
 
-def demo_growth_comparison():
-    """Compare Chebyshev trace growth rates."""
+def demo_growth_conjecture():
+    """Test the lattice growth conjecture."""
     print("\n" + "=" * 60)
-    print("7. CHEBYSHEV TRACE GROWTH")
-    print("   cheb(t, n) grows exponentially for t ≥ 3")
+    print("7. TESTING LATTICE GROWTH CONJECTURE")
     print("=" * 60)
 
-    for t in [2, 3, 5, 10]:
-        print(f"\n  t = {t}:")
-        for n in range(10):
-            cn = cheb_trace(t, n)
-            ratio = cn / max(cheb_trace(t, max(n-1, 0)), 1)
-            print(f"    cheb({t}, {n}) = {cn:>12}  "
-                  f"ratio = {ratio:>8.3f}  "
-                  f"(golden ≈ {((t + math.sqrt(t**2 - 4))/2) if t > 2 else 'N/A'})")
+    print("\nConjecture: N(R) · (π/3) / e^R → 1 as R → ∞")
+    print(f"\n{'R':>6} {'N(R)':>10} {'N·V/eᴿ':>12}")
+    print("-" * 30)
+
+    results = test_lattice_growth([1.0, 2.0, 3.0, 4.0, 5.0])
+    for R, N, ratio in results:
+        print(f"{R:6.1f} {N:10d} {ratio:12.6f}")
+
+    print("\nThe ratio should approach 1 as R increases.")
+    print("(For small R, finite-size effects cause deviations.)")
 
 
 if __name__ == "__main__":
-    demo_chebyshev_invariant()
-    demo_trace_product()
-    demo_fricke_vogt()
-    demo_trace_spectrum()
-    demo_farey_mediant()
-    demo_critical_line()
-    demo_growth_comparison()
+    print("╔════════════════════════════════════════════════════════╗")
+    print("║  HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE DISK     ║")
+    print("╚════════════════════════════════════════════════════════╝")
+
+    demo_conformal_factor()
+    demo_mobius()
+    demo_hyperbolic_distance()
+    demo_lattice_counting()
+    demo_hyperbolic_area()
+    demo_zeta()
+    demo_growth_conjecture()
+
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Chebyshev-Trace Sequences and the Invariant
+Visualization: Poincaré Disk Tessellation and Lattice Points
 
-Produces plots showing:
-1. Growth of Chebyshev traces for different initial traces
-2. The conserved invariant Q(n) = 4 - t²
-3. Log-scale growth comparison
+Self-contained matplotlib visualization showing:
+1. The Poincaré disk with conformal factor heatmap
+2. PSL(2,Z) orbit points (hyperbolic integers)
+3. Conformal factor divergence at boundary
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
 import math
-
-
-def cheb_trace(t, n):
-    """Compute chebTrace(t, n)."""
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    a, b = 2, t
-    for _ in range(2, n + 1):
-        a, b = b, t * b - a
-    return b
-
-
-def cheb_trace_invariant(t, n):
-    """Compute the Chebyshev-Trace Invariant."""
-    cn = cheb_trace(t, n)
-    cn1 = cheb_trace(t, n + 1)
-    return cn1**2 + cn**2 - t * cn * cn1
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Chebyshev-Trace Sequences on SL₂(ℤ)',
-                 fontsize=16, fontweight='bold')
-
-    # Plot 1: Chebyshev traces for different t values
-    ax1 = axes[0, 0]
-    ns = list(range(12))
-    for t in [2, 3, 4, 5, 7]:
-        vals = [cheb_trace(t, n) for n in ns]
-        ax1.plot(ns, vals, 'o-', label=f't = {t}', linewidth=2, markersize=4)
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('chebTrace(t, n)', fontsize=12)
-    ax1.set_title('Chebyshev Trace Growth', fontsize=13)
-    ax1.legend()
-    ax1.set_yscale('log')
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: The invariant Q(n) = 4 - t²
-    ax2 = axes[0, 1]
-    for t in [2, 3, 5, 7, 10]:
-        invariants = [cheb_trace_invariant(t, n) for n in ns]
-        ax2.plot(ns, invariants, 's-', label=f't = {t} (Q = {4 - t**2})',
-                 linewidth=2, markersize=5)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Invariant Q(n)', fontsize=12)
-    ax2.set_title('Conserved Invariant: Q(n) = 4 - t²', fontsize=13)
-    ax2.legend(fontsize=9)
-    ax2.grid(True, alpha=0.3)
-    ax2.axhline(y=0, color='black', linestyle='--', alpha=0.5)
-
-    # Plot 3: Growth rate (ratio of successive terms)
-    ax3 = axes[1, 0]
-    ns_ratio = list(range(1, 15))
-    for t in [3, 4, 5, 7, 10]:
-        ratios = [cheb_trace(t, n) / max(cheb_trace(t, n - 1), 1)
-                  for n in ns_ratio]
-        eigenvalue = (t + math.sqrt(t**2 - 4)) / 2
-        ax3.plot(ns_ratio, ratios, 'o-', label=f't = {t} (λ = {eigenvalue:.2f})',
-                 linewidth=2, markersize=4)
-        ax3.axhline(y=eigenvalue, linestyle=':', alpha=0.4)
-    ax3.set_xlabel('n', fontsize=12)
-    ax3.set_ylabel('cheb(n+1) / cheb(n)', fontsize=12)
-    ax3.set_title('Growth Rate → Largest Eigenvalue', fontsize=13)
-    ax3.legend(fontsize=9)
-    ax3.grid(True, alpha=0.3)
-
-    # Plot 4: Trace sequence values mod small primes
-    ax4 = axes[1, 1]
-    ns_mod = list(range(30))
-    for p in [2, 3, 5, 7]:
-        vals = [cheb_trace(3, n) % p for n in ns_mod]
-        ax4.scatter(ns_mod, vals, label=f'mod {p}', s=20, alpha=0.7)
-    ax4.set_xlabel('n', fontsize=12)
-    ax4.set_ylabel('chebTrace(3, n) mod p', fontsize=12)
-    ax4.set_title('Periodicity of Traces mod p (t=3)', fontsize=13)
-    ax4.legend()
-    ax4.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('viz_chebyshev.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_chebyshev.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The Poincaré Disk, Farey Graph, and Critical Line
-
-Produces plots showing:
-1. The modular tessellation on the Poincaré disk
-2. The Farey graph structure
-3. The critical line mapping to the disk
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-import cmath
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 
-def sl2_mul(a, b):
-    a1, b1, c1, d1 = a
-    a2, b2, c2, d2 = b
-    return (a1*a2 + b1*c2, a1*b2 + b1*d2,
-            c1*a2 + d1*c2, c1*b2 + d1*d2)
+def poincare_cf(x, y):
+    """Conformal factor at point (x, y) in the disk."""
+    r2 = x**2 + y**2
+    if r2 >= 1.0:
+        return float('nan')
+    return 2.0 / (1.0 - r2)
 
 
-def sl2_inv(m):
-    a, b, c, d = m
-    return (d, -b, -c, a)
+def mobius_map(a, z):
+    """Möbius automorphism φ_a(z) = (z-a)/(1-conj(a)*z)."""
+    denom = 1.0 - a.conjugate() * z
+    if abs(denom) < 1e-15:
+        return complex(float('inf'))
+    return (z - a) / denom
 
 
-def sl2_trace(m):
-    return m[0] + m[3]
+def upper_half_to_disk(z):
+    """Map z from upper half-plane to Poincaré disk."""
+    return (z - 1j) / (z + 1j)
 
 
-def mobius_upper_to_disk(z):
-    """Map from upper half-plane to Poincaré disk: w = (z - i)/(z + i)."""
-    i = complex(0, 1)
-    return (z - i) / (z + i)
-
-
-def mobius_action(m, z):
-    """Apply SL₂ matrix to z in the upper half-plane."""
-    a, b, c, d = m
+def sl2z_action(a, b, c, d, z):
+    """Action of [[a,b],[c,d]] on z in upper half-plane."""
     denom = c * z + d
-    if abs(denom) < 1e-12:
-        return None
+    if abs(denom) < 1e-15:
+        return complex(float('inf'))
     return (a * z + b) / denom
 
 
-def cayley_transform(s):
-    return (s - 1) / (s + 1)
+def enumerate_sl2z_orbit(R_max, basepoint=1j):
+    """Enumerate PSL(2,Z) orbit of basepoint in disk coordinates."""
+    bound = 2.0 * math.cosh(R_max)
+    max_val = int(math.sqrt(bound)) + 1
+    points = []
+    dists = []
+
+    for a in range(-max_val, max_val + 1):
+        for b in range(-max_val, max_val + 1):
+            for c in range(-max_val, max_val + 1):
+                for d in range(-max_val, max_val + 1):
+                    if a * d - b * c != 1:
+                        continue
+                    trace_sq = a*a + b*b + c*c + d*d
+                    if trace_sq > bound:
+                        continue
+                    # Map basepoint
+                    w = sl2z_action(a, b, c, d, basepoint)
+                    if w.imag <= 0:
+                        continue
+                    # Convert to disk
+                    p = upper_half_to_disk(w)
+                    if abs(p) < 1.0:
+                        dist = 2.0 * math.acosh(max(1.0, trace_sq / 2.0))
+                        points.append(p)
+                        dists.append(dist)
+
+    return points, dists
 
 
 def main():
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    fig.suptitle('Hyperbolic Number Theory on the Poincaré Disk',
-                 fontsize=16, fontweight='bold')
 
-    # Plot 1: SL₂(ℤ) orbit of i on the Poincaré disk
+    # Panel 1: Conformal factor heatmap
     ax1 = axes[0]
-    theta = np.linspace(0, 2*np.pi, 200)
-    ax1.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+    N = 400
+    x = np.linspace(-1, 1, N)
+    y = np.linspace(-1, 1, N)
+    X, Y = np.meshgrid(x, y)
+    Z = np.full_like(X, np.nan)
 
-    S = (0, -1, 1, 0)
-    T = (1, 1, 0, 1)
-    T_inv = sl2_inv(T)
-    S_inv = sl2_inv(S)
-    gens = [S, T, S_inv, T_inv]
+    for i in range(N):
+        for j in range(N):
+            r2 = X[i, j]**2 + Y[i, j]**2
+            if r2 < 0.99:
+                Z[i, j] = np.log10(2.0 / (1.0 - r2))
 
-    # Generate orbit points
-    i = complex(0, 1)
-    current = {(1, 0, 0, 1)}
-    all_mats = set(current)
-    orbit_points = [mobius_upper_to_disk(i)]
-    traces = [2]
-
-    for depth in range(5):
-        next_level = set()
-        for g in current:
-            for gen in gens:
-                h = sl2_mul(g, gen)
-                if h not in all_mats:
-                    z = mobius_action(h, i)
-                    if z is not None and z.imag > 0.01:
-                        w = mobius_upper_to_disk(z)
-                        if abs(w) < 0.999:
-                            orbit_points.append(w)
-                            traces.append(sl2_trace(h))
-                            all_mats.add(h)
-                            next_level.add(h)
-        current = next_level
-
-    # Color by trace type
-    for w, t in zip(orbit_points, traces):
-        if abs(t) < 2:
-            color = 'red'  # elliptic
-        elif abs(t) == 2:
-            color = 'blue'  # parabolic
-        else:
-            color = 'green'  # hyperbolic
-        ax1.plot(w.real, w.imag, 'o', color=color, markersize=3, alpha=0.6)
-
-    ax1.set_xlim(-1.15, 1.15)
-    ax1.set_ylim(-1.15, 1.15)
+    im = ax1.pcolormesh(X, Y, Z, cmap='inferno', shading='auto')
+    circle = plt.Circle((0, 0), 1, fill=False, color='white', linewidth=2)
+    ax1.add_patch(circle)
+    ax1.set_xlim(-1.1, 1.1)
+    ax1.set_ylim(-1.1, 1.1)
     ax1.set_aspect('equal')
-    ax1.set_title(f'SL₂(ℤ) Orbit on Poincaré Disk\n({len(orbit_points)} points)', fontsize=12)
-    ax1.set_xlabel('Re(w)')
-    ax1.set_ylabel('Im(w)')
+    ax1.set_title('Conformal Factor log₁₀(λ)', fontsize=14)
+    ax1.set_xlabel('Re(z)')
+    ax1.set_ylabel('Im(z)')
+    plt.colorbar(im, ax=ax1, label='log₁₀(λ(z))')
 
-    # Legend
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='red',
-               markersize=6, label='Elliptic (|tr|<2)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='blue',
-               markersize=6, label='Parabolic (|tr|=2)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='green',
-               markersize=6, label='Hyperbolic (|tr|>2)')
-    ]
-    ax1.legend(handles=legend_elements, fontsize=8, loc='upper right')
-
-    # Plot 2: Farey graph (Stern-Brocot tree mediant structure)
+    # Panel 2: PSL(2,Z) lattice points on disk
     ax2 = axes[1]
+    circle2 = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
+    ax2.add_patch(circle2)
 
-    def stern_brocot(a, b, c, d, depth, segments):
-        if depth <= 0:
-            return
-        med_num = a + c
-        med_den = b + d
-        segments.append(((a/b, c/d), (a/b, med_num/med_den)))
-        segments.append(((c/d, a/b), (c/d, med_num/med_den)))
-        stern_brocot(a, b, med_num, med_den, depth - 1, segments)
-        stern_brocot(med_num, med_den, c, d, depth - 1, segments)
+    points, dists = enumerate_sl2z_orbit(5.0)
+    if points:
+        xs = [p.real for p in points]
+        ys = [p.imag for p in points]
+        cs = dists
+        sc = ax2.scatter(xs, ys, c=cs, cmap='viridis', s=15, alpha=0.8,
+                         edgecolors='none')
+        plt.colorbar(sc, ax=ax2, label='d_H(i, γ·i)')
 
-    # Draw the Farey graph as a tree
-    fractions = [(0, 1)]
-    queue = [(0, 1, 1, 1, 0)]
-    all_fracs = {(0, 1), (1, 1)}
+    # Mark origin (image of i)
+    bp = upper_half_to_disk(1j)
+    ax2.plot(bp.real, bp.imag, 'r*', markersize=15, label='basepoint (i)')
+    ax2.set_xlim(-1.1, 1.1)
+    ax2.set_ylim(-1.1, 1.1)
+    ax2.set_aspect('equal')
+    ax2.set_title('PSL(2,ℤ) Lattice Points', fontsize=14)
+    ax2.set_xlabel('Re(z)')
+    ax2.set_ylabel('Im(z)')
+    ax2.legend(loc='upper right', fontsize=10)
 
-    def farey_tree(a, b, c, d, depth):
-        if depth > 6:
-            return
-        med = (a + c, b + d)
-        if med not in all_fracs:
-            all_fracs.add(med)
-            ax2.plot([a/b, med[0]/med[1]], [1.0/b, 1.0/med[1]], 'b-',
-                     linewidth=0.5, alpha=0.5)
-            ax2.plot([c/d, med[0]/med[1]], [1.0/d, 1.0/med[1]], 'b-',
-                     linewidth=0.5, alpha=0.5)
-            ax2.plot(med[0]/med[1], 1.0/med[1], 'ro', markersize=2)
-            farey_tree(a, b, med[0], med[1], depth + 1)
-            farey_tree(med[0], med[1], c, d, depth + 1)
-
-    ax2.plot(0, 1, 'ko', markersize=5)
-    ax2.plot(1, 1, 'ko', markersize=5)
-    ax2.plot([0, 1], [1, 1], 'k-', linewidth=1)
-    farey_tree(0, 1, 1, 1, 0)
-
-    ax2.set_title('Farey Graph (Stern-Brocot Tree)', fontsize=12)
-    ax2.set_xlabel('p/q')
-    ax2.set_ylabel('1/q (height)')
-    ax2.set_xlim(-0.05, 1.05)
-
-    # Plot 3: Critical line mapped to disk
+    # Panel 3: Area growth comparison
     ax3 = axes[2]
-    ax3.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=2)
+    R_vals = np.linspace(0.01, 6, 100)
+    hyp_areas = [2 * math.pi * (math.cosh(R) - 1) for R in R_vals]
+    exp_bounds = [math.pi * math.exp(R) for R in R_vals]
+    euc_areas = [math.pi * math.tanh(R/2)**2 for R in R_vals]
 
-    ys = np.linspace(-50, 50, 500)
-    ws = [cayley_transform(complex(0.5, y)) for y in ys]
-    ax3.plot([w.real for w in ws], [w.imag for w in ws], 'b-',
-             linewidth=2, label='Critical line Re(s)=1/2')
-
-    # Mark first few zeta zeros
-    zeta_zeros = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062]
-    for y0 in zeta_zeros:
-        w = cayley_transform(complex(0.5, y0))
-        ax3.plot(w.real, w.imag, 'r*', markersize=8)
-        w_neg = cayley_transform(complex(0.5, -y0))
-        ax3.plot(w_neg.real, w_neg.imag, 'r*', markersize=8)
-
-    ax3.set_xlim(-1.15, 1.15)
-    ax3.set_ylim(-1.15, 1.15)
-    ax3.set_aspect('equal')
-    ax3.set_title('Critical Line → Poincaré Disk\n(★ = first 5 zeta zeros)', fontsize=12)
-    ax3.set_xlabel('Re(w)')
-    ax3.set_ylabel('Im(w)')
-    ax3.legend(fontsize=8)
+    ax3.semilogy(R_vals, hyp_areas, 'b-', linewidth=2, label='A_hyp(R) = 2π(cosh R - 1)')
+    ax3.semilogy(R_vals, exp_bounds, 'r--', linewidth=2, label='π·e^R (upper bound)')
+    ax3.semilogy(R_vals, euc_areas, 'g-.', linewidth=2, label='π·tanh²(R/2) (Euclidean)')
+    ax3.set_xlabel('Hyperbolic radius R', fontsize=12)
+    ax3.set_ylabel('Area', fontsize=12)
+    ax3.set_title('Hyperbolic vs Euclidean Area', fontsize=14)
+    ax3.legend(fontsize=10)
+    ax3.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_poincare.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_poincare.png")
+    plt.savefig('poincare_disk_visualization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: poincare_disk_visualization.png")
 
 
 if __name__ == "__main__":
