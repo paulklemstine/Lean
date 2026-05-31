@@ -117,7 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         renderVisualizations('content-visualizations', data.visualizations);
 
         // Algorithms: show pseudocode (brief description) when available, full code as fallback
-        renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
+        const algoField = data.algorithms && data.algorithms.some(a => a.pseudocode && a.pseudocode.trim())
+            ? 'pseudocode' : 'code';
+        renderCodeBlocks('content-algorithms', data.algorithms, algoField);
         if (window.renderInteractiveDemos) {
             window.renderInteractiveDemos('content-demos', data.demos);
         }
@@ -159,6 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const validItems = items.filter(item => {
             if (typeof item === 'string') {
                 console.warn('Skipping string visualization entry:', item);
+                return false;
+            }
+            // Skip entries with no runnable code (blank white image on Generate)
+            if (!item.code || !item.code.trim()) {
                 return false;
             }
             return true;
