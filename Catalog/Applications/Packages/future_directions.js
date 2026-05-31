@@ -3461,10 +3461,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5582f648",
     "timestamp": "2026-05-30T13:51:55.509884+00:00"
   },
   {
