@@ -999,6 +999,27 @@ body.light-theme .gallery-img-container {
     background-size: auto;
 }
 
+.lean-download-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: filter 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.lean-download-btn:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+}
+
 .code-editor {
     width: 100%;
     min-height: 200px;
@@ -1894,6 +1915,12 @@ body.light-theme .run-btn {
     -webkit-text-fill-color: #fff;
     animation: none;
     background-size: auto;
+}
+
+body.light-theme .lean-download-btn {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
 }
 
 body.light-theme .welcome-desc a,
