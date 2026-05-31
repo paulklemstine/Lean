@@ -239,16 +239,86 @@ document.addEventListener('DOMContentLoaded', () => {
                     leanContainer.querySelectorAll('code.language-lean').forEach(el => Prism.highlightElement(el));
                 }
 
-                // Zip download
+                // Zip download — includes ALL research package artifacts
                 leanZipBtn.onclick = async () => {
                     if (!window.JSZip) {
                         console.warn('JSZip not loaded');
                         return;
                     }
                     const zip = new JSZip();
-                    filesWithCode.forEach(f => zip.file(f.name, f.code));
+                    const slug = (data.title || 'research_package').replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 40);
+
+                    // Lean 4 proofs
+                    filesWithCode.forEach(f => zip.file(`lean/${f.name}`, f.code));
+
+                    // Article
+                    if (data.article && typeof data.article === 'string' && data.article.length > 50 && !data.article.endsWith('.md')) {
+                        zip.file('ARTICLE.md', data.article);
+                    }
+
+                    // Research paper
+                    if (data.research_paper && typeof data.research_paper === 'string' && data.research_paper.length > 50 && !data.research_paper.endsWith('.md')) {
+                        zip.file('RESEARCH_PAPER.md', data.research_paper);
+                    }
+
+                    // Future directions
+                    if (data.future_directions && typeof data.future_directions === 'string' && data.future_directions.length > 50 && !data.future_directions.endsWith('.md')) {
+                        zip.file('FUTURE_DIRECTIONS.md', data.future_directions);
+                    }
+
+                    // Algorithms
+                    if (Array.isArray(data.algorithms)) {
+                        data.algorithms.forEach((a, i) => {
+                            if (typeof a === 'object' && a.code && a.code.trim()) {
+                                const name = (a.name || `algorithm_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                                zip.file(`algorithms/${name}.py`, a.code);
+                            }
+                        });
+                    }
+
+                    // Demos
+                    if (Array.isArray(data.demos)) {
+                        data.demos.forEach((d, i) => {
+                            if (typeof d === 'object' && d.code && d.code.trim()) {
+                                const name = (d.name || `demo_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                                zip.file(`demos/${name}.py`, d.code);
+                            }
+                        });
+                    }
+
+                    // Interactive HTML demos
+                    if (Array.isArray(data.interactive_demos)) {
+                        data.interactive_demos.forEach((d, i) => {
+                            if (typeof d === 'object' && d.html && d.html.trim()) {
+                                const name = (d.name || `interactive_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                                zip.file(`interactive_demos/${name}.html`, d.html);
+                            }
+                        });
+                    }
+
+                    // Visualizations
+                    if (Array.isArray(data.visualizations)) {
+                        data.visualizations.forEach((v, i) => {
+                            if (typeof v === 'object') {
+                                const code = v.code || '';
+                                if (code.trim()) {
+                                    const name = (v.name || `visualization_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                                    zip.file(`visualizations/${name}.py`, code);
+                                }
+                            }
+                        });
+                    }
+
+                    // Modules (algorithms.py, demo.py)
+                    if (data.modules && typeof data.modules === 'object') {
+                        for (const [modName, modCode] of Object.entries(data.modules)) {
+                            if (typeof modCode === 'string' && modCode.trim()) {
+                                zip.file(`modules/${modName}.py`, modCode);
+                            }
+                        }
+                    }
+
                     const blob = await zip.generateAsync({ type: 'blob' });
-                    const slug = (data.title || 'lean_proofs').replace(/[^a-zA-Z0-9]+/g, '_').slice(0, 40);
                     const a = document.createElement('a');
                     a.href = URL.createObjectURL(blob);
                     a.download = slug + '.zip';
