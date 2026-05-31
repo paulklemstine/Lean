@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "langlands_for_gl_over_q.json",
+    "title": "Langlands Correspondence for GL\u2082 over \u211a: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound",
+    "domain": "Bridges",
+    "date": "2026-05-31T22:11:39Z",
+    "exp_id": "ab6b7dec",
+    "quality_score": 0.6995549999999999,
+    "quality": "partial",
+    "pkg_num": 22
+  },
+  {
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
     "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
     "domain": "Bridges",
@@ -288,6 +298,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "langlands_for_gl_over_q.json": {
+    "title": "Langlands Correspondence for GL\u2082 over \u211a: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound",
+    "exp_id": "ab6b7dec",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Bridges"
+  },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "exp_id": "866a2ce9",
@@ -397,7 +415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280,
+      "hue": 270,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -408,7 +426,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -441,7 +459,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 292,
+      "hue": 90,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -474,7 +492,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -485,7 +503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 275,
+      "hue": 92,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -496,7 +514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -507,7 +525,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 275,
+      "hue": 281,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -529,7 +547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -562,7 +580,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -573,7 +591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 292,
+      "hue": 90,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -584,7 +602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -595,7 +613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -606,7 +624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -617,9 +635,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
+    },
+    {
+      "id": "langlands_for_gl_over_q",
+      "title": "Langlands Correspondence for GL\u2082 over \u211a: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T22:11:39Z",
+      "hue": 134,
+      "priority_score": 0.6995549999999999,
+      "quality": "partial"
     }
   ],
   "edges": [],
