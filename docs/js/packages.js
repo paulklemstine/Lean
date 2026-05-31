@@ -7,16 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
-    // Listen for iframe resize messages from interactive HTML demos
-    window.addEventListener('message', (e) => {
-        if (e.data && e.data.type === 'iframe-resize' && e.data.id) {
-            const iframe = document.getElementById(e.data.id);
-            if (iframe) {
-                iframe.style.height = Math.max(e.data.height + 24, 200) + 'px';
-            }
-        }
-    });
-
     // Tab switching
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -518,28 +508,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.appendChild(desc);
             }
 
-            // Use iframe with srcdoc to isolate each demo's JS scope
-            const iframeId = 'demo-iframe-' + idx + '-' + Date.now();
-            const iframe = document.createElement('iframe');
-            iframe.id = iframeId;
-            iframe.style.cssText = 'width: 100%; min-height: 400px; height: 400px; border: none; border-radius: 12px; background: white;';
-            iframe.sandbox = 'allow-scripts allow-same-origin';
-            // Build a self-contained HTML doc for the iframe
-            const htmlContent = item.html || '<p>No content</p>';
-            const srcdoc = `<!DOCTYPE html>
-<html><head><style>
-  html, body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; height: fit-content; }
-  canvas { max-width: 100%; }
-</style></head><body>${htmlContent}
-<script>
-  function notifyHeight() {
-    const h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-    window.parent.postMessage({ type: 'iframe-resize', id: '${iframeId}', height: h + 24 }, '*');
-  }
-  window.addEventListener('load', () => { notifyHeight(); setTimeout(notifyHeight, 200); setTimeout(notifyHeight, 1000); });
-  new MutationObserver(() => setTimeout(notifyHeight, 50)).observe(document.body, { childList: true, subtree: true, attributes: true });
-</script></body></html>`;
-            iframe.srcdoc = srcdoc;
+            // Inline embed the HTML snippet inside a card wrapper
+            const content = document.createElement('div');
+            content.className = 'interactive-demo-content';
+            content.style.cssText = 'padding: 16px; background: #fff; color: #222; border-radius: 0 0 12px 12px; overflow: visible;';
+            content.innerHTML = item.html || '<p>No content</p>';
+
+            // Execute inline <script> tags (innerHTML doesn't run them)
+            // Wrap each in an IIFE so const/let declarations don't conflict across demos
+            content.querySelectorAll('script').forEach(oldScript => {
+                if (oldScript.src) return;
+                const newScript = document.createElement('script');
+                newScript.textContent = `(function() { ${oldScript.textContent} })();`;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+
+            card.appendChild(header);
+            card.appendChild(content);
+            container.appendChild(card);
+        });
 
             card.appendChild(header);
             card.appendChild(iframe);
