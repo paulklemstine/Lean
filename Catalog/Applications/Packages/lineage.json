@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "random_matrices_edge_universality",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -70,7 +70,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "isogeny_based_cryptography_csi_fish",
+      "title": "Isogeny-Based Cryptography: CSI-FiSh — Formalized Class Group Actions",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:18Z",
+      "hue": 91
     }
   ],
   "edges": [],

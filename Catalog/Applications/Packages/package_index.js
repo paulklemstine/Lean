@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "isogeny_based_cryptography_csi_fish.json",
+    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:23:18Z",
+    "exp_id": "3971a79e",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 9
+  },
+  {
     "filename": "catalans_conjecture_generalizations.json",
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "domain": "Algebra",
     "date": "2026-05-31T20:22:48Z",
     "exp_id": "b52cbca8",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6621330000000001,
+    "quality": "partial",
     "pkg_num": 8
   },
   {
@@ -86,6 +96,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "isogeny_based_cryptography_csi_fish.json": {
+    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+    "exp_id": "3971a79e",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "primewise_persistent_homology_detects_exceptional_.json": {
     "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
     "exp_id": "2b593e59",
@@ -174,7 +192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -185,7 +203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -196,7 +214,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -218,7 +236,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -229,7 +247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -240,7 +258,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
+      "hue": 90,
+      "priority_score": 0.6621330000000001,
+      "quality": "partial"
+    },
+    {
+      "id": "isogeny_based_cryptography_csi_fish",
+      "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:18Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
