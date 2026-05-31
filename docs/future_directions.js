@@ -56,10 +56,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45adcb5f",
     "timestamp": "2026-05-24T22:37:54.387127+00:00"
   },
   {
@@ -866,10 +866,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94340a0b",
     "timestamp": "2026-05-27T16:40:30.251712+00:00"
   },
   {
@@ -2051,10 +2051,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ca95a7aa",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b7f0056",
     "timestamp": "2026-05-29T19:32:59.696271+00:00"
   },
   {
@@ -2351,10 +2351,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8298bfc3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d207afb4",
     "timestamp": "2026-05-30T00:44:36.299804+00:00"
   },
   {
@@ -3221,10 +3221,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7c3bbe9a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1f0b467",
     "timestamp": "2026-05-30T13:31:06.105135+00:00"
   },
   {
@@ -3266,10 +3266,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2dabfd5a",
     "timestamp": "2026-05-30T13:51:54.712884+00:00"
   },
   {
@@ -4234,10 +4234,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.72,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "443c2655",
     "timestamp": "2026-05-30T13:51:58.696376+00:00"
   },
   {
@@ -4309,10 +4309,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e18f2436",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e75c5be",
     "timestamp": "2026-05-27T08:27:03.973772+00:00"
   },
   {
