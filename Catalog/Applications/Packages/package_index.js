@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "resolution_of_singularities_in_positive_characteri.json",
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:23:45Z",
+    "exp_id": "02d2fadb",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 10
+  },
+  {
     "filename": "isogeny_based_cryptography_csi_fish.json",
     "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Class Group Actions",
     "domain": "Algebra",
     "date": "2026-05-31T20:23:18Z",
     "exp_id": "3971a79e",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.735085669920142,
+    "quality": "substantial",
     "pkg_num": 9
   },
   {
@@ -120,6 +130,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "resolution_of_singularities_in_positive_characteri.json": {
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+    "exp_id": "02d2fadb",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "catalans_conjecture_generalizations.json": {
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "exp_id": "b52cbca8",
@@ -181,7 +199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -192,7 +210,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -203,7 +221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -214,7 +232,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 292,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -225,7 +243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -247,7 +265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -258,7 +276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 112,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -269,7 +287,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 91,
+      "hue": 90,
+      "priority_score": 0.735085669920142,
+      "quality": "substantial"
+    },
+    {
+      "id": "resolution_of_singularities_in_positive_characteri",
+      "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:23:45Z",
+      "hue": 92,
       "priority_score": null,
       "quality": "unrated"
     }
