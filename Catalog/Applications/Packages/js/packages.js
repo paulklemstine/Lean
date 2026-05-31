@@ -531,24 +531,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
             header.appendChild(title);
 
-            const content = document.createElement('div');
-            content.className = 'interactive-demo-inline';
-            content.style.cssText = 'width: 100%; border-radius: 12px;';
-            content.innerHTML = item.html || '<p>No content</p>';
+            if (item.description) {
+                const desc = document.createElement('p');
+                desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 4px 0 8px;';
+                desc.textContent = item.description;
+                header.appendChild(desc);
+            }
 
-            // innerHTML does not execute <script> tags — execute them via Blob URLs
-            content.querySelectorAll('script').forEach(oldScript => {
-                if (oldScript.src) return; // external scripts handled by browser
-                const blob = new Blob([oldScript.textContent], { type: 'application/javascript' });
-                const url = URL.createObjectURL(blob);
-                const newScript = document.createElement('script');
-                newScript.src = url;
-                newScript.onload = () => URL.revokeObjectURL(url);
-                oldScript.parentNode.replaceChild(newScript, oldScript);
+            // Use iframe with srcdoc to isolate each demo's JS scope
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = 'width: 100%; min-height: 300px; border: none; border-radius: 12px; background: white;';
+            iframe.sandbox = 'allow-scripts allow-same-origin';
+            // Build a self-contained HTML doc for the iframe
+            const htmlContent = item.html || '<p>No content</p>';
+            const srcdoc = `<!DOCTYPE html>
+<html><head><style>
+  body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; color: #222; background: #fff; }
+  canvas { max-width: 100%; }
+</style></head><body>${htmlContent}</body></html>`;
+            iframe.srcdoc = srcdoc;
+            // Auto-resize iframe to content height
+            iframe.addEventListener('load', () => {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframe.style.height = Math.max(doc.body.scrollHeight + 24, 300) + 'px';
+                } catch {}
             });
 
             card.appendChild(header);
-            card.appendChild(content);
+            card.appendChild(iframe);
             container.appendChild(card);
         });
     }
