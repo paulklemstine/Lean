@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "topological_quantum_computing_braiding_universalit.json",
+    "title": "Topological Quantum Computing: Braiding Universality",
+    "domain": "Bridges",
+    "date": "2026-05-31T21:56:48Z",
+    "exp_id": "831f1fd8",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 19
+  },
+  {
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
     "domain": "Bridges",
     "date": "2026-05-31T21:56:19Z",
     "exp_id": "58d4594d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.744326,
+    "quality": "substantial",
     "pkg_num": 18
   },
   {
@@ -329,6 +339,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Algebra"
+  },
+  "topological_quantum_computing_braiding_universalit.json": {
+    "title": "Topological Quantum Computing: Braiding Universality",
+    "exp_id": "831f1fd8",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Bridges"
   }
 };
 
@@ -343,7 +361,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 280,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -354,7 +372,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -365,7 +383,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 271,
+      "hue": 292,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -376,7 +394,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -398,7 +416,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271,
+      "hue": 292,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -409,7 +427,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -442,7 +460,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -453,7 +471,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -464,7 +482,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -486,7 +504,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -508,7 +526,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -519,7 +537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -530,7 +548,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 280,
+      "hue": 270,
+      "priority_score": 0.744326,
+      "quality": "substantial"
+    },
+    {
+      "id": "topological_quantum_computing_braiding_universalit",
+      "title": "Topological Quantum Computing: Braiding Universality",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:56:48Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
