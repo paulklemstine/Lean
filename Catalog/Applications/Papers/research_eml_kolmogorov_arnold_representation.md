@@ -1,310 +1,245 @@
-# EML-Kolmogorov-Arnold Representation Theory
+# EML Chains and Kolmogorov-Arnold Decomposition: Depth-Bounded Representations via Exponential-Logarithmic Primitives
 
 ## Abstract
 
-We establish a systematic connection between the EML (exp-log-minus) function class and Kolmogorov-Arnold representations. For a bivariate function f : ℝ² → ℝ, the Kolmogorov-Arnold theorem guarantees decompositions of the form f(x,y) = Σ_{q} Φ_q(φ_{1,q}(x) + φ_{2,q}(y)) with at most 2n+1 = 5 terms. We prove that multiplication, powers, geometric means, and division all admit 1-term decompositions where the inner functions are logarithms and the outer function is the exponential—both EML primitives. We establish the continuity of these decompositions, prove that EML primitives separate points on (0,∞), show that the decomposition algebra is closed under addition, and connect the framework to information theory via the KL divergence. We prove the Fenchel-Young inequality as the variational foundation underlying EML-KA efficiency. All results are formalized and machine-verified.
+We introduce **EML chains** — finite compositions of exponential, logarithmic, and affine operations — as a structured function class for Kolmogorov-Arnold (KA) decompositions. We prove that every monomial $x^a y^b$ ($a, b \in \mathbb{N}$) admits a 1-term EML-KA decomposition of depth exactly 3, independent of the monomial degree. This yields EML-KA decompositions for arbitrary polynomials with $M$ terms using exactly $M$ KA terms, each of bounded depth. We establish connections to convex duality via the Fenchel-Young inequality and to classical inequalities via the AM-GM theorem, both expressed naturally in the EML framework. All results are formalized and machine-verified in Lean 4 with Mathlib. We state a falsifiable universality conjecture: that EML-KA decompositions can approximate any continuous function on $(0,\infty)^2$ to arbitrary accuracy.
 
-**Keywords**: Kolmogorov-Arnold theorem, EML functions, exponential-logarithm decomposition, representation theory, information theory, convex duality
+**Keywords**: Kolmogorov-Arnold representation, EML functions, exponential-logarithmic chains, function decomposition, universal approximation
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Background
-
-The Kolmogorov-Arnold representation theorem (Kolmogorov 1957, Arnold 1957) states that every continuous function f : [0,1]^n → ℝ can be written as
+The Kolmogorov-Arnold representation theorem (Kolmogorov 1957, Arnold 1957) states that any continuous function $f : [0,1]^n \to \mathbb{R}$ can be written as
 
 $$f(x_1, \ldots, x_n) = \sum_{q=0}^{2n} \Phi_q\left(\sum_{p=1}^n \varphi_{q,p}(x_p)\right)$$
 
-where each φ_{q,p} : [0,1] → ℝ and Φ_q : ℝ → ℝ are continuous univariate functions. This result resolved Hilbert's 13th problem by showing that functions of arbitrarily many variables can be reduced to compositions of univariate functions and addition.
+where each $\varphi_{q,p}$ and $\Phi_q$ is a continuous univariate function. While existentially powerful, the theorem is non-constructive: it does not specify the nature of the inner functions $\varphi_{q,p}$.
 
-The theorem is existential—it guarantees the inner and outer functions exist but does not specify them constructively. The inner functions in the original proof are highly irregular (Hölder continuous but nowhere differentiable).
+Recent interest in Kolmogorov-Arnold Networks (KANs) for machine learning (Liu et al. 2024) has renewed attention to the question: what function classes suffice for the inner and outer functions? We propose that **EML chains** — compositions of $\exp$, $\log$, and affine maps — provide a natural, depth-bounded answer for a significant class of target functions.
 
-### 1.2 The EML Function Class
+### 1.1 The EML Operation
 
-The EML (exp-log-minus) operation is defined as:
+The EML (exponential-minus-logarithm) operation is defined as $\text{eml}(x, y) = e^x - \log y$. This operation naturally arises at the intersection of multiplicative and additive structures: $\exp$ converts addition to multiplication, while $\log$ converts multiplication to addition.
 
-$$\text{eml}(x, y) = e^x - \ln y$$
+### 1.2 Contributions
 
-This single binary operation subsumes both exp and log:
-- exp(x) = eml(x, 1), since log(1) = 0
-- log(y) = 1 - eml(0, y), since exp(0) = 1
+1. **EML Chain formalism** (§2): We define EML chains as lists of elementary operations and prove composition and depth-subadditivity theorems.
 
-Combined with field operations, eml generates the elementary real function class. The compilation theorem (established in prior work) shows that every expression built from exp, log, and field operations can be rewritten using eml as the sole transcendental primitive.
+2. **Monomial decomposition** (§3): We prove that every monomial $x^a y^b$ has a 1-term, depth-3 EML-KA decomposition, with the depth independent of $a$ and $b$.
 
-### 1.3 Our Contribution
+3. **Polynomial decomposition** (§4): We construct explicit $M$-term EML-KA decompositions for polynomials with $M$ monomials.
 
-We prove that for a significant class of multivariate functions—including all monomial, power, and mean functions—the Kolmogorov-Arnold inner and outer functions can be chosen from the EML function class. Specifically:
+4. **Variational connections** (§5): We prove the Fenchel-Young inequality and AM-GM in the EML framework, revealing the duality structure.
 
-1. **Multiplication** x·y = exp(log x + log y) gives a 1-term EML-KA decomposition (vs. the general bound of 5 terms).
-2. **Power functions** x^n = exp(n·log x) decompose with a single scaled-log inner function.
-3. **Geometric mean** √(xy) = exp(½ log x + ½ log y) uses half-scaled logs.
-4. **Division** x/y = exp(log x - log y) uses negated log.
-5. **KL divergence** p·log(p/q) decomposes via EML, bridging to information theory.
-6. **Fenchel-Young inequality** provides the variational foundation.
+5. **Universality conjecture** (§6): We state a falsifiable conjecture about EML-KA universality with a concrete computational test.
 
 ---
 
-## 2. Definitions and Notation
+## 2. EML Chains
 
-### 2.1 KA Decomposition Structure
+### 2.1 Definition
 
-**Definition 2.1** (KADecomp₂). A *Q-term Kolmogorov-Arnold decomposition* for a bivariate function consists of:
-- Inner functions φ₁_q, φ₂_q : ℝ → ℝ for q ∈ {0, ..., Q-1}
-- Outer functions Φ_q : ℝ → ℝ for q ∈ {0, ..., Q-1}
+An **EML chain operation** is one of:
+- $\text{exp}$: $x \mapsto e^x$
+- $\text{log}$: $x \mapsto \log x$  
+- $\text{affine}(a, b)$: $x \mapsto ax + b$
+
+An **EML chain** is a finite list $[op_1, op_2, \ldots, op_k]$ of such operations, evaluated as the composition $op_1 \circ op_2 \circ \cdots \circ op_k$.
+
+**Definition (Depth)**. The depth of an EML chain counts the number of non-affine operations (i.e., the number of $\exp$ and $\log$ operations).
+
+### 2.2 Composition Theorem
+
+**Theorem 2.1** (Chain Composition). *For EML chains $c_1$ and $c_2$ and any $x \in \mathbb{R}$:*
+$$\text{eval}(c_1 \mathbin{++} c_2, x) = \text{eval}(c_1, \text{eval}(c_2, x))$$
+
+*Proof.* By structural induction on $c_1$. The base case ($c_1 = []$) is immediate. For $c_1 = op :: \text{rest}$, we have $\text{eval}((op :: \text{rest}) \mathbin{++} c_2, x) = op(\text{eval}(\text{rest} \mathbin{++} c_2, x)) = op(\text{eval}(\text{rest}, \text{eval}(c_2, x))) = \text{eval}(op :: \text{rest}, \text{eval}(c_2, x))$ by the induction hypothesis. $\square$
+
+**Theorem 2.2** (Depth Subadditivity). *For EML chains $c_1$ and $c_2$:*
+$$\text{depth}(c_1 \mathbin{++} c_2) \leq \text{depth}(c_1) + \text{depth}(c_2)$$
+
+*Proof.* By induction on $c_1$ with case analysis on each operation type. $\square$
+
+### 2.3 Fundamental Identities
+
+- **Cancellation**: $\text{eval}([\exp, \log], x) = x$ for $x > 0$, and $\text{eval}([\log, \exp], x) = x$ for all $x$.
+- **Scaled log**: The chain $[\text{affine}(a, 0), \log]$ evaluates to $x \mapsto a \cdot \log x$ and has depth 1.
+
+---
+
+## 3. Monomial Decomposition
+
+### 3.1 EML-KA Decomposition Structure
+
+An **EML-KA decomposition** with $Q$ terms consists of:
+- Inner chains $\varphi_1^{(q)}, \varphi_2^{(q)}$ for the two variables
+- Outer chains $\Phi^{(q)}$
 
 The decomposition evaluates as:
+$$d(x, y) = \sum_{q=1}^Q \Phi^{(q)}\!\left(\varphi_1^{(q)}(x) + \varphi_2^{(q)}(y)\right)$$
 
-$$\text{eval}(x, y) = \sum_{q=0}^{Q-1} \Phi_q(\varphi_{1,q}(x) + \varphi_{2,q}(y))$$
+### 3.2 The Core Identity
 
-**Definition 2.2** (Represents). A decomposition d *represents* f on S ⊆ ℝ² if eval(x,y) = f(x,y) for all (x,y) ∈ S.
+**Theorem 3.1** (Monomial Identity). *For $x, y > 0$ and $a, b \in \mathbb{N}$:*
+$$\exp(a \cdot \log x + b \cdot \log y) = x^a \cdot y^b$$
 
-### 2.2 EML Primitives
+*Proof.* By the laws of exponents:
+$$\exp(a \log x + b \log y) = \exp(a \log x) \cdot \exp(b \log y) = (\exp(\log x))^a \cdot (\exp(\log y))^b = x^a \cdot y^b$$
+using $\exp(\log z) = z$ for $z > 0$ and $\exp(n \cdot t) = (\exp t)^n$. $\square$
 
-**Definition 2.3** (EMLPrimitive). An EML primitive is one of:
-- expFn: x ↦ exp(x)
-- logFn: x ↦ log(x)
-- affine(a,b): x ↦ a·x + b
+### 3.3 Depth-3 Decomposition
 
-An *EML-KA decomposition* is one where all inner and outer functions are EML primitives or compositions thereof.
+**Theorem 3.2** (Monomial Completeness). *Every monomial $x^a y^b$ admits a 1-term EML-KA decomposition with:*
+- *$\varphi_1 = [\text{affine}(a, 0), \log]$ (depth 1)*
+- *$\varphi_2 = [\text{affine}(b, 0), \log]$ (depth 1)*  
+- *$\Phi = [\exp]$ (depth 1)*
+- *Maximum depth = 3 (= 1 + 1 + 1)*
 
-### 2.3 Weighted KA Decomposition
+**Corollary 3.3** (Depth Independence). *The maximum depth of the monomial EML-KA decomposition is exactly 3, independent of the exponents $a$ and $b$.*
 
-**Definition 2.4** (WKADecomp₂). A *weighted Q-term KA decomposition* extends KADecomp₂ with scalar weights w_q ∈ ℝ:
-
-$$\text{eval}_w(x, y) = \sum_{q=0}^{Q-1} w_q \cdot \Phi_q(\varphi_{1,q}(x) + \varphi_{2,q}(y))$$
-
----
-
-## 3. Main Results
-
-### 3.1 Multiplication (Theorem: mul_ka_decomp_spec)
-
-**Theorem 3.1.** For all x, y > 0:
-
-$$\exp(\log x + \log y) = x \cdot y$$
-
-*Proof.* By the addition law for exp and the inverse property exp(log z) = z for z > 0:
-$$\exp(\log x + \log y) = \exp(\log x) \cdot \exp(\log y) = x \cdot y. \qquad \square$$
-
-**Corollary 3.2** (mul_ka_represents). The decomposition mulKADecomp with φ₁ = φ₂ = log, Φ = exp represents multiplication on (0,∞)².
-
-### 3.2 Power Functions (Theorem: exp_mul_log_eq_pow)
-
-**Theorem 3.3.** For all x > 0 and n ∈ ℕ:
-
-$$\exp(n \cdot \log x) = x^n$$
-
-*Proof.* By induction on n.
-- Base case (n = 0): exp(0 · log x) = exp(0) = 1 = x⁰.
-- Inductive step: exp((k+1) · log x) = exp(k · log x + log x) = exp(k · log x) · exp(log x) = x^k · x = x^{k+1}. □
-
-### 3.3 Geometric Mean (Theorem: exp_half_log_eq_sqrt_mul)
-
-**Theorem 3.4.** For all x, y > 0:
-
-$$\exp\left(\tfrac{1}{2}\log x + \tfrac{1}{2}\log y\right) = \sqrt{xy}$$
-
-*Proof.* We have ½ log x + ½ log y = ½(log x + log y) = ½ log(xy). Then exp(½ log(xy)) = (xy)^{1/2} = √(xy) by the definition of real powers. □
-
-### 3.4 Division (Theorem: div_ka_decomp_spec)
-
-**Theorem 3.5.** For all x, y > 0:
-
-$$\exp(\log x - \log y) = \frac{x}{y}$$
-
-*Proof.* exp(log x - log y) = exp(log x) / exp(log y) = x/y. □
-
-### 3.5 KA Closure Under Addition (Theorem: ka_add_eval)
-
-**Theorem 3.6.** If d₁ is a Q₁-term decomposition and d₂ is a Q₂-term decomposition, then their sum (concatenating all terms) is a (Q₁+Q₂)-term decomposition satisfying:
-
-$$(d_1 \oplus d_2)(x, y) = d_1(x, y) + d_2(x, y)$$
-
-*Proof.* The sum over Fin(Q₁ + Q₂) splits via Fin.sum_univ_add into the sum over the first Q₁ indices plus the sum over the last Q₂ indices. The dite conditions resolve correctly in each range. □
-
-### 3.6 Fenchel-Young Inequality (Theorem: fenchel_young_eml)
-
-**Theorem 3.7.** For all x ∈ ℝ and s > 0:
-
-$$x \cdot s \leq e^x + s \cdot \ln s - s$$
-
-*Proof.* From the fundamental inequality log(u) ≤ u - 1 for u > 0, applied to u = exp(x)/s, we get log(exp(x)/s) ≤ exp(x)/s - 1, i.e., x - log s ≤ exp(x)/s - 1. Multiplying by s > 0: s·x - s·log s ≤ exp(x) - s, giving x·s ≤ exp(x) + s·log s - s. □
-
-**Theorem 3.8** (fenchel_young_tight). Equality holds when x = log s:
-
-$$(\log s) \cdot s = e^{\log s} + s \cdot \ln s - s = s + s \ln s - s = s \ln s$$
+This is perhaps the most striking result: a monomial of arbitrarily high degree (e.g., $x^{1000} y^{2000}$) has the same decomposition depth as the simple product $xy$.
 
 ---
 
-## 4. Cross-Domain: Information Theory
+## 4. Polynomial Decomposition
 
-### 4.1 KL Divergence Decomposition (Theorem: kl_div_decomp)
+### 4.1 Term-by-Term Construction
 
-**Theorem 4.1.** For p, q > 0:
+**Theorem 4.1** (Polynomial Bound). *For any polynomial $p(x, y) = \sum_{i=1}^M c_i \cdot x^{a_i} y^{b_i}$ with $M$ monomials, there exists an EML-KA decomposition with $M$ terms such that for all $x, y > 0$:*
+$$d(x, y) = p(x, y)$$
 
-$$p \cdot \log\frac{p}{q} = p \cdot \log p - p \cdot \log q$$
+*Proof.* For the $i$-th term, use:
+- $\varphi_1^{(i)} = [\text{affine}(a_i, 0), \log]$
+- $\varphi_2^{(i)} = [\text{affine}(b_i, 0), \log]$
+- $\Phi^{(i)} = [\text{affine}(c_i, 0), \exp]$
 
-This decomposes the KL integrand into a sum of univariate terms: the self-information p·log p (a function of p alone) and the cross-term p·log q (bilinear in p and q).
+The $i$-th term evaluates to $c_i \cdot \exp(a_i \log x + b_i \log y) = c_i \cdot x^{a_i} y^{b_i}$ by the monomial identity. Summing over $i$ gives $p(x, y)$. $\square$
 
-### 4.2 EML Encoding (Theorem: kl_eml_connection)
+### 4.2 Comparison with Classical KA
 
-**Theorem 4.2.** The KL integrand can be expressed via the EML operation:
-
-$$p \cdot \log\frac{p}{q} = p \cdot \log p - p \cdot (1 - \text{eml}(0, q))$$
-
-where eml(0, q) = 1 - log q. This shows the KL divergence integrand is naturally within the EML computational framework.
-
----
-
-## 5. Continuity and Separation
-
-### 5.1 Continuity (Theorem: mul_ka_continuous_on)
-
-**Theorem 5.1.** The map (x, y) ↦ exp(log x + log y) is continuous on (0,∞)².
-
-*Proof.* Log is continuous on (0,∞), projection maps (x,y) ↦ x and (x,y) ↦ y are continuous, addition is continuous, and exp is continuous on ℝ. The composition of continuous maps is continuous. □
-
-### 5.2 Point Separation (Theorem: eml_ka_inner_separates)
-
-**Theorem 5.2.** For any x₁, x₂ ∈ (0,∞) with x₁ ≠ x₂, there exists an EML primitive φ such that φ(x₁) ≠ φ(x₂).
-
-*Proof.* Take φ = log. Since log is injective on (0,∞) (being strictly monotone), log(x₁) ≠ log(x₂). □
+| Property | Classical KA | EML-KA (monomials) | EML-KA (polynomials) |
+|----------|-------------|--------------------|--------------------|
+| Terms for $n = 2$ | 5 (fixed) | 1 per monomial | $M$ (# monomials) |
+| Inner function class | Arbitrary continuous | EML chains | EML chains |
+| Depth | Unbounded | 3 (fixed) | 3 (fixed) |
+| Domain | $[0,1]^n$ | $(0,\infty)^2$ | $(0,\infty)^2$ |
 
 ---
 
-## 6. Efficiency Analysis
+## 5. Variational Connections
 
-### 6.1 Term Count Comparison
+### 5.1 AM-GM via EML
 
-| Function | General KA bound | EML-KA terms | Savings |
-|----------|-----------------|-------------|---------|
-| x·y      | 5 (2·2+1)      | 1           | 80%     |
-| x^n      | 3 (2·1+1)      | 1           | 67%     |
-| √(xy)    | 5               | 1           | 80%     |
-| x/y      | 5               | 1           | 80%     |
-| f + g    | Q₁ + Q₂        | Q₁ + Q₂    | —       |
+**Theorem 5.1** (AM-GM in EML Form). *For $x, y > 0$:*
+$$\exp\!\left(\frac{\log x + \log y}{2}\right) \leq \frac{x + y}{2}$$
 
-### 6.2 EML Depth
+*Proof sketch.* The left side equals $\sqrt{xy}$ (the geometric mean). The inequality $\sqrt{xy} \leq (x+y)/2$ follows from $(\sqrt{x} - \sqrt{y})^2 \geq 0$. $\square$
 
-The *EML depth* of a decomposition counts the number of nested exp/log layers:
-- Multiplication: depth 2 (one log layer + one exp layer)
-- Powers: depth 2 (one scaled-log layer + one exp layer)
-- Division: depth 2 (one log/neg-log layer + one exp layer)
+This result shows that the EML encoding (log) followed by linear averaging followed by EML decoding (exp) always underestimates the true average. The "nonlinearity gap" is $\frac{x+y}{2} - \sqrt{xy} = \frac{(\sqrt{x} - \sqrt{y})^2}{2}$.
 
-All elementary operations achieve the minimum possible EML depth of 2.
+### 5.2 Fenchel-Young Inequality
 
----
+**Theorem 5.2** (Fenchel-Young). *For all $x \in \mathbb{R}$ and $s > 0$:*
+$$x \cdot s \leq e^x + s \log s - s$$
 
-## 7. Computational Experiments
+*Equality holds if and only if $x = \log s$.*
 
-### 7.1 Numerical Verification
+*Proof sketch.* Set $t = e^x / s > 0$. The inequality reduces to $t - \log t - 1 \geq 0$, which follows from $\log t \leq t - 1$ for $t > 0$. $\square$
 
-We verified all decompositions numerically in Python (see `demo.py`).
-
-| Test | x | y | KA result | Direct | Error |
-|------|---|---|-----------|--------|-------|
-| Multiplication | 3.0 | 4.0 | 12.0000000000 | 12.0 | 2.2e-15 |
-| Power (x³) | 2.0 | — | 8.0000000000 | 8.0 | 1.8e-15 |
-| Geom. mean | 4.0 | 9.0 | 6.0000000000 | 6.0 | 8.9e-16 |
-| Division | 6.0 | 3.0 | 2.0000000000 | 2.0 | 4.4e-16 |
-
-All decompositions achieve machine-precision accuracy (errors < 10⁻¹⁴).
-
-### 7.2 Fenchel-Young Gap
-
-The Fenchel-Young gap exp(x) + s·log(s) - s - x·s was verified to be non-negative for all tested (x, s) pairs, with the gap vanishing at x = log(s).
+This inequality reveals that $\exp$ and $s \mapsto s \log s - s$ are convex conjugates, providing the variational foundation for the EML framework.
 
 ---
 
-## 8. Algorithms
+## 6. Universality Conjecture
 
-### 8.1 KA Decomposition Construction
+**Conjecture 6.1** (EML-KA Universality). *For every continuous function $f : (0,\infty)^2 \to \mathbb{R}$, every compact $K \subset (0,\infty)^2$, and every $\varepsilon > 0$, there exists $Q \in \mathbb{N}$ and an EML-KA decomposition $d$ with $Q$ terms such that:*
+$$\sup_{(x,y) \in K} |d(x, y) - f(x, y)| < \varepsilon$$
 
-**Algorithm 1: Construct EML-KA Decomposition**
+**Testable Prediction**: For $f(x, y) = \sin(xy)$ and $K = [1, 2]^2$, a 10-term EML-KA decomposition should achieve $\varepsilon = 0.01$.
+
+**Evidence for the conjecture**:
+1. Polynomials on $(0,\infty)^2$ have exact EML-KA decompositions (Theorem 4.1).
+2. By the Stone-Weierstrass theorem, polynomials are dense in $C(K)$ for compact $K$.
+3. EML chains are continuous (proved), so EML-KA decompositions are continuous.
+
+**Potential obstacles**: The Stone-Weierstrass argument gives polynomial approximation, but the polynomial degree (and hence the number of EML-KA terms) grows with $1/\varepsilon$. A direct approximation using EML chain optimization might achieve better rates.
+
+---
+
+## 7. Algorithms
+
+### 7.1 EML-KA Evaluation Algorithm
 
 ```
-Input: Target operation type τ ∈ {mul, pow(n), geom_mean, div}
-Output: KADecomp₂ with Q = 1
+Input: EML-KA decomposition d with Q terms, point (x, y) ∈ (0,∞)²
+Output: d(x, y)
 
-function ConstructEMLKA(τ):
-    match τ:
-        case mul:
-            return KADecomp₂(φ₁ = log, φ₂ = log, Φ = exp)
-        case pow(n):
-            return KADecomp₂(φ₁ = n·log, φ₂ = 0, Φ = exp)
-        case geom_mean:
-            return KADecomp₂(φ₁ = ½·log, φ₂ = ½·log, Φ = exp)
-        case div:
-            return KADecomp₂(φ₁ = log, φ₂ = -log, Φ = exp)
+result ← 0
+for q = 1 to Q:
+    u ← evalChain(d.φ₁[q], x)
+    v ← evalChain(d.φ₂[q], y)
+    result ← result + evalChain(d.Φ[q], u + v)
+return result
 ```
 
-**Complexity**: O(1) construction, O(Q) evaluation per point.
-
-### 8.2 KA Decomposition Addition
-
-**Algorithm 2: Add KA Decompositions**
+### 7.2 EML-KA Fitting Algorithm
 
 ```
-Input: d₁ with Q₁ terms, d₂ with Q₂ terms
-Output: d with Q₁ + Q₂ terms
+Input: Target function f, domain K, tolerance ε, max terms Q_max
+Output: EML-KA decomposition approximating f on K
 
-function AddKA(d₁, d₂):
-    Q ← Q₁ + Q₂
-    for q = 0 to Q-1:
-        if q < Q₁:
-            (φ₁_q, φ₂_q, Φ_q) ← (d₁.φ₁_q, d₁.φ₂_q, d₁.Φ_q)
-        else:
-            (φ₁_q, φ₂_q, Φ_q) ← (d₂.φ₁_{q-Q₁}, d₂.φ₂_{q-Q₁}, d₂.Φ_{q-Q₁})
-    return KADecomp₂(Q, φ₁, φ₂, Φ)
+for Q = 1 to Q_max:
+    Initialize chain parameters randomly
+    Optimize: min_{params} sup_{(x,y) ∈ K} |d(x,y) - f(x,y)|
+    if achieved error < ε:
+        return d
+return best decomposition found
 ```
-
-**Complexity**: O(Q₁ + Q₂) construction, O(Q₁ + Q₂) evaluation.
 
 ---
 
-## 9. Discussion
+## 8. Discussion
 
-### 9.1 Why Exp and Log?
+### 8.1 Connections to Neural Network Architecture
 
-The privileged role of exp and log in EML-KA decompositions is not accidental. It arises from three structural properties:
+The EML-KA framework suggests a neural network architecture where:
+- Input layer: log-transform positive inputs
+- Hidden layers: affine transformations (standard linear layers)
+- Output layer: exp-transform to decode
 
-1. **Homomorphism**: log converts multiplication to addition, which is the combining operation in KA decompositions.
-2. **Injectivity**: log is injective on (0,∞), ensuring point separation.
-3. **Convex duality**: exp and the entropy function are Legendre conjugates, connected by the Fenchel-Young inequality.
+This "log-linear-exp" sandwich architecture naturally represents multiplicative relationships and has connections to attention mechanisms in transformers (where softmax = normalized exp).
 
-### 9.2 Limitations
+### 8.2 Computational Complexity
 
-The current results are restricted to functions expressible as products, quotients, and powers of the input variables. The conjecture that *all* continuous functions on (0,∞)² admit finite EML-KA decompositions remains open.
+The depth-3 bound for monomials implies that EML-KA evaluation can be parallelized to constant depth for any single monomial, with the total computation for an $M$-term polynomial requiring depth 3 with width $M$.
 
-The key obstruction is *sums of powers*: log(x² + y²) does not obviously factor through the addition structure of the KA decomposition. This is the simplest test case for the conjecture.
+### 8.3 Limitations
 
-### 9.3 Connection to KAN Networks
-
-The Kolmogorov-Arnold Network (KAN) architecture (Liu et al. 2024) learns both inner and outer functions. Our results suggest a prior: initializing inner functions as logarithms and outer functions as exponentials should be highly effective for learning multiplicative/power-law relationships, which are ubiquitous in physics and engineering.
+1. The current results require $x, y > 0$. Extending to $\mathbb{R}^2$ requires handling the singularity of $\log$ at 0.
+2. The polynomial decomposition requires $M$ terms for $M$ monomials, which may not be optimal.
+3. The universality conjecture remains unproven.
 
 ---
 
-## 10. Future Work
+## 9. Future Work
 
-1. **Conjecture verification**: Can log(x² + y²) be decomposed into a finite number of EML-KA terms? A computational search over 3-term decompositions with parameterized inner/outer functions would test this.
-
-2. **Approximation bounds**: For functions that do not have exact EML-KA decompositions, what is the best Q-term EML-KA approximation error as a function of Q?
-
-3. **Higher dimensions**: Extend the multiplication decomposition to n variables: x₁·x₂·...·xₙ = exp(Σ log xᵢ). This is a 1-term decomposition for any n, while the general KA bound is 2n+1.
-
-4. **Tropical limits**: As parameters approach infinity, do EML-KA decompositions converge to tropical (max-plus) decompositions?
+1. Prove or disprove the EML-KA universality conjecture.
+2. Establish optimal term bounds: can $M$-monomial polynomials be decomposed with fewer than $M$ terms?
+3. Extend to $n > 2$ variables and connect to the classical $2n+1$ bound.
+4. Investigate the relationship between EML chain depth and approximation rate.
+5. Build and train EML-KA neural networks on standard benchmarks.
 
 ---
 
 ## References
 
-1. Kolmogorov, A.N. (1957). On the representation of continuous functions of several variables by superposition of continuous functions of one variable and addition. *Doklady Akademii Nauk SSSR*, 114, 953–956.
+1. Kolmogorov, A. N. (1957). On the representation of continuous functions of several variables by superposition of continuous functions of one variable and addition. *Dokl. Akad. Nauk SSSR*, 114, 953-956.
 
-2. Arnold, V.I. (1957). On functions of three variables. *Doklady Akademii Nauk SSSR*, 114, 679–681.
+2. Arnold, V. I. (1957). On functions of three variables. *Dokl. Akad. Nauk SSSR*, 114, 679-681.
 
-3. Sprecher, D.A. (1965). On the structure of continuous functions of several variables. *Transactions of the AMS*, 115, 340–355.
+3. Liu, Z., Wang, Y., Vaidya, S., et al. (2024). KAN: Kolmogorov-Arnold Networks. *arXiv:2404.19756*.
 
-4. Liu, Z., et al. (2024). KAN: Kolmogorov-Arnold Networks. *arXiv:2404.19756*.
+4. Sprecher, D. A. (1965). On the structure of continuous functions of several variables. *Trans. Amer. Math. Soc.*, 115, 340-355.
 
-5. Braun, J., & Griebel, M. (2009). On a constructive proof of Kolmogorov's superposition theorem. *Constructive Approximation*, 30(3), 653–675.
+5. Braun, J., & Griebel, M. (2009). On a constructive proof of Kolmogorov's superposition theorem. *Constructive Approximation*, 30(3), 653-675.

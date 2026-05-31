@@ -1,312 +1,372 @@
 """
-EML-Kolmogorov-Arnold Representation: Algorithms
+EML-KA (Exponential-Logarithmic Kolmogorov-Arnold) Decomposition Algorithms
 
-This module implements the core algorithms for constructing and evaluating
-EML-KA (Kolmogorov-Arnold) decompositions of multivariate functions.
-
-The key insight: many fundamental operations (multiplication, powers,
-geometric means, division) can be decomposed into sums of univariate
-EML-composed functions, achieving the Kolmogorov-Arnold representation
-with far fewer terms than the general theorem requires.
+Type-hinted implementations of EML chain evaluation, KA decomposition,
+and fitting algorithms.
 """
 
-import numpy as np
-from typing import List, Callable, Tuple, Optional
+from typing import List, Tuple, Callable, Optional
 from dataclasses import dataclass
+from enum import Enum
+import math
+
+
+class OpType(Enum):
+    EXP = "exp"
+    LOG = "log"
+    AFFINE = "affine"
 
 
 @dataclass
-class KADecomp2:
-    """A Kolmogorov-Arnold decomposition for a bivariate function.
+class EMLChainOp:
+    """A single operation in an EML chain."""
+    op_type: OpType
+    a: float = 0.0  # affine coefficient
+    b: float = 0.0  # affine offset
 
-    Represents f(x,y) = Σ_q w_q * Φ_q(φ1_q(x) + φ2_q(y))
+    def eval(self, x: float) -> float:
+        if self.op_type == OpType.EXP:
+            return math.exp(min(x, 500))  # clamp to avoid overflow
+        elif self.op_type == OpType.LOG:
+            return math.log(max(x, 1e-300))
+        else:  # AFFINE
+            return self.a * x + self.b
 
-    Attributes:
-        Q: Number of terms in the decomposition
-        phi1: List of Q inner functions for the first variable
-        phi2: List of Q inner functions for the second variable
-        Phi: List of Q outer functions
-        weights: List of Q scalar weights (default: all 1.0)
-    """
-    Q: int
-    phi1: List[Callable[[float], float]]
-    phi2: List[Callable[[float], float]]
-    Phi: List[Callable[[float], float]]
-    weights: Optional[List[float]] = None
+    def __repr__(self) -> str:
+        if self.op_type == OpType.EXP:
+            return "exp"
+        elif self.op_type == OpType.LOG:
+            return "log"
+        else:
+            if self.b == 0:
+                return f"({self.a}·x)"
+            return f"({self.a}·x + {self.b})"
 
-    def __post_init__(self):
-        if self.weights is None:
-            self.weights = [1.0] * self.Q
+
+@dataclass
+class EMLChain:
+    """A finite composition of EML operations."""
+    ops: List[EMLChainOp]
+
+    def eval(self, x: float) -> float:
+        """Evaluate the chain at x. Operations are applied right-to-left."""
+        result = x
+        for op in reversed(self.ops):
+            result = op.eval(result)
+        return result
+
+    @property
+    def depth(self) -> int:
+        """Count non-affine operations."""
+        return sum(1 for op in self.ops if op.op_type != OpType.AFFINE)
+
+    def __repr__(self) -> str:
+        return " ∘ ".join(str(op) for op in self.ops)
+
+
+@dataclass
+class EMLKADecomp:
+    """EML Kolmogorov-Arnold decomposition with Q terms."""
+    phi1: List[EMLChain]  # inner chains for variable 1
+    phi2: List[EMLChain]  # inner chains for variable 2
+    Phi: List[EMLChain]   # outer chains
+
+    @property
+    def Q(self) -> int:
+        return len(self.phi1)
 
     def eval(self, x: float, y: float) -> float:
-        """Evaluate the KA decomposition at (x, y).
-
-        Time complexity: O(Q * T) where T is the cost of evaluating each component.
-        Space complexity: O(1) additional space.
-        """
+        """Evaluate the decomposition at (x, y)."""
         result = 0.0
         for q in range(self.Q):
-            inner = self.phi1[q](x) + self.phi2[q](y)
-            result += self.weights[q] * self.Phi[q](inner)
+            u = self.phi1[q].eval(x)
+            v = self.phi2[q].eval(y)
+            result += self.Phi[q].eval(u + v)
         return result
 
-    def eval_vectorized(self, xs: np.ndarray, ys: np.ndarray) -> np.ndarray:
-        """Evaluate the KA decomposition on arrays of inputs.
+    def max_depth(self) -> int:
+        """Maximum depth across all chains."""
+        return max(
+            self.phi1[q].depth + self.phi2[q].depth + self.Phi[q].depth
+            for q in range(self.Q)
+        )
 
-        Args:
-            xs: Array of x values, shape (N,)
-            ys: Array of y values, shape (N,)
-
-        Returns:
-            Array of f(x,y) values, shape (N,)
-
-        Time complexity: O(Q * N)
-        Space complexity: O(N)
-        """
-        result = np.zeros_like(xs)
-        for q in range(self.Q):
-            inner = np.vectorize(self.phi1[q])(xs) + np.vectorize(self.phi2[q])(ys)
-            result += self.weights[q] * np.vectorize(self.Phi[q])(inner)
-        return result
+    def represents(self, f: Callable[[float, float], float],
+                   points: List[Tuple[float, float]],
+                   tol: float = 1e-10) -> bool:
+        """Check if decomposition represents f at given points."""
+        return all(
+            abs(self.eval(x, y) - f(x, y)) < tol
+            for x, y in points
+        )
 
 
-def mul_ka_decomp() -> KADecomp2:
-    """Construct the EML-KA decomposition for multiplication.
+# ============================================================
+# Standard EML-KA Decompositions
+# ============================================================
 
+def scaled_log_chain(a: float) -> EMLChain:
+    """Chain for x ↦ a · log(x)."""
+    return EMLChain([
+        EMLChainOp(OpType.AFFINE, a, 0),
+        EMLChainOp(OpType.LOG),
+    ])
+
+
+def exp_chain() -> EMLChain:
+    """Chain for x ↦ exp(x)."""
+    return EMLChain([EMLChainOp(OpType.EXP)])
+
+
+def log_chain() -> EMLChain:
+    """Chain for x ↦ log(x)."""
+    return EMLChain([EMLChainOp(OpType.LOG)])
+
+
+def affine_chain(a: float, b: float) -> EMLChain:
+    """Chain for x ↦ a*x + b."""
+    return EMLChain([EMLChainOp(OpType.AFFINE, a, b)])
+
+
+def mul_emlka() -> EMLKADecomp:
+    """1-term EML-KA decomposition for multiplication.
     x * y = exp(log(x) + log(y)) for x, y > 0.
-
-    Returns:
-        A 1-term KA decomposition with inner=log, outer=exp.
-
-    Example:
-        >>> d = mul_ka_decomp()
-        >>> d.eval(3.0, 4.0)  # Should be 12.0
-        12.000000000000002
     """
-    return KADecomp2(
-        Q=1,
-        phi1=[np.log],
-        phi2=[np.log],
-        Phi=[np.exp],
+    return EMLKADecomp(
+        phi1=[log_chain()],
+        phi2=[log_chain()],
+        Phi=[exp_chain()],
     )
 
 
-def pow_ka_decomp(n: int) -> KADecomp2:
-    """Construct the EML-KA decomposition for x^n.
-
-    x^n = exp(n * log(x)) for x > 0.
-
-    Args:
-        n: The exponent (non-negative integer).
-
-    Returns:
-        A 1-term KA decomposition.
-
-    Example:
-        >>> d = pow_ka_decomp(3)
-        >>> d.eval(2.0, 1.0)  # Should be 8.0
-        8.000000000000002
+def div_emlka() -> EMLKADecomp:
+    """1-term EML-KA decomposition for division.
+    x / y = exp(log(x) + (-log(y))) for x, y > 0.
     """
-    return KADecomp2(
-        Q=1,
-        phi1=[lambda x, n=n: n * np.log(x)],
-        phi2=[lambda y: 0.0],
-        Phi=[np.exp],
+    return EMLKADecomp(
+        phi1=[log_chain()],
+        phi2=[EMLChain([
+            EMLChainOp(OpType.AFFINE, -1, 0),
+            EMLChainOp(OpType.LOG),
+        ])],
+        Phi=[exp_chain()],
     )
 
 
-def geom_mean_ka_decomp() -> KADecomp2:
-    """Construct the EML-KA decomposition for the geometric mean.
-
-    sqrt(x*y) = exp(0.5*log(x) + 0.5*log(y)) for x, y > 0.
-
-    Returns:
-        A 1-term KA decomposition.
-
-    Example:
-        >>> d = geom_mean_ka_decomp()
-        >>> d.eval(4.0, 9.0)  # Should be 6.0
-        6.000000000000001
+def monomial_emlka(a: int, b: int) -> EMLKADecomp:
+    """1-term EML-KA decomposition for x^a * y^b.
+    x^a * y^b = exp(a*log(x) + b*log(y)) for x, y > 0.
     """
-    return KADecomp2(
-        Q=1,
-        phi1=[lambda x: 0.5 * np.log(x)],
-        phi2=[lambda y: 0.5 * np.log(y)],
-        Phi=[np.exp],
+    return EMLKADecomp(
+        phi1=[scaled_log_chain(a)],
+        phi2=[scaled_log_chain(b)],
+        Phi=[exp_chain()],
     )
 
 
-def div_ka_decomp() -> KADecomp2:
-    """Construct the EML-KA decomposition for division.
-
-    x/y = exp(log(x) - log(y)) for x, y > 0.
-
-    Returns:
-        A 1-term KA decomposition.
-
-    Example:
-        >>> d = div_ka_decomp()
-        >>> d.eval(6.0, 3.0)  # Should be 2.0
-        2.0000000000000004
-    """
-    return KADecomp2(
-        Q=1,
-        phi1=[np.log],
-        phi2=[lambda y: -np.log(y)],
-        Phi=[np.exp],
-    )
-
-
-def ka_decomp_add(d1: KADecomp2, d2: KADecomp2) -> KADecomp2:
-    """Add two KA decompositions: (d1 + d2)(x,y) = d1(x,y) + d2(x,y).
-
-    The result has Q1 + Q2 terms.
-
-    Time complexity: O(1) for construction, O(Q1+Q2) for evaluation.
+def polynomial_emlka(
+    coeffs: List[float],
+    exps_a: List[int],
+    exps_b: List[int],
+) -> EMLKADecomp:
+    """M-term EML-KA decomposition for Σ c_i * x^a_i * y^b_i.
 
     Args:
-        d1: First KA decomposition with Q1 terms.
-        d2: Second KA decomposition with Q2 terms.
+        coeffs: coefficients c_i
+        exps_a: exponents a_i for x
+        exps_b: exponents b_i for y
 
     Returns:
-        Combined KA decomposition with Q1+Q2 terms.
+        EML-KA decomposition with len(coeffs) terms.
     """
-    return KADecomp2(
-        Q=d1.Q + d2.Q,
-        phi1=d1.phi1 + d2.phi1,
-        phi2=d1.phi2 + d2.phi2,
-        Phi=d1.Phi + d2.Phi,
-        weights=d1.weights + d2.weights,
-    )
+    M = len(coeffs)
+    assert len(exps_a) == M and len(exps_b) == M
+
+    phi1 = [scaled_log_chain(exps_a[i]) for i in range(M)]
+    phi2 = [scaled_log_chain(exps_b[i]) for i in range(M)]
+    Phi = [
+        EMLChain([
+            EMLChainOp(OpType.AFFINE, coeffs[i], 0),
+            EMLChainOp(OpType.EXP),
+        ])
+        for i in range(M)
+    ]
+    return EMLKADecomp(phi1=phi1, phi2=phi2, Phi=Phi)
 
 
-def eml(x: float, y: float) -> float:
-    """The EML operation: eml(x, y) = exp(x) - log(y).
+# ============================================================
+# Fitting Algorithm
+# ============================================================
 
-    This is the fundamental building block. Key special cases:
-    - eml(x, 1) = exp(x)        (recovers exponential)
-    - eml(0, y) = 1 - log(y)    (recovers logarithm)
-    - eml(log(a), exp(b)) = a - b for a > 0  (recovers subtraction)
-
-    Args:
-        x: First argument (any real number).
-        y: Second argument (must be positive for log to be defined).
-
-    Returns:
-        exp(x) - log(y)
-    """
-    return np.exp(x) - np.log(y)
-
-
-def kl_divergence_integrand(p: float, q: float) -> float:
-    """KL divergence integrand: p * log(p/q).
-
-    Decomposition via EML:
-        p * log(p/q) = p * log(p) - p * (1 - eml(0, q))
-
-    Args:
-        p: First probability (positive).
-        q: Second probability (positive).
-
-    Returns:
-        p * log(p/q)
-    """
-    return p * np.log(p) - p * (1 - eml(0, q))
-
-
-def fenchel_young_gap(x: float, s: float) -> float:
-    """Compute the Fenchel-Young gap: exp(x) + s*log(s) - s - x*s.
-
-    This is always >= 0, with equality at x = log(s).
-    The gap measures how far (x, s) is from the optimal dual pair.
-
-    Args:
-        x: Primal variable.
-        s: Dual variable (positive).
-
-    Returns:
-        The non-negative duality gap.
-    """
-    return np.exp(x) + s * np.log(s) - s - x * s
-
-
-def ka_approximation_error(
-    decomp: KADecomp2,
-    target: Callable[[float, float], float],
+def fit_emlka(
+    f: Callable[[float, float], float],
     x_range: Tuple[float, float],
     y_range: Tuple[float, float],
-    n_samples: int = 100
-) -> dict:
-    """Compute approximation error statistics for a KA decomposition.
+    Q: int = 5,
+    n_grid: int = 20,
+    n_iter: int = 1000,
+    lr: float = 0.01,
+) -> Tuple[EMLKADecomp, float]:
+    """Fit an EML-KA decomposition to a target function using gradient-free optimization.
+
+    Uses random search with local refinement.
 
     Args:
-        decomp: The KA decomposition to evaluate.
-        target: The target function f(x,y).
-        x_range: (x_min, x_max) range for x.
-        y_range: (y_min, y_max) range for y.
-        n_samples: Number of sample points per dimension.
+        f: Target function
+        x_range: (x_min, x_max) for the domain
+        y_range: (y_min, y_max) for the domain
+        Q: Number of KA terms
+        n_grid: Grid points per dimension for evaluation
+        n_iter: Number of optimization iterations
+        lr: Learning rate for local refinement
 
     Returns:
-        Dictionary with max_error, mean_error, rmse statistics.
-
-    Time complexity: O(n_samples^2 * Q)
-    Space complexity: O(n_samples^2)
+        (best_decomp, best_error): Best decomposition found and its max error.
     """
-    xs = np.linspace(x_range[0], x_range[1], n_samples)
-    ys = np.linspace(y_range[0], y_range[1], n_samples)
-    XX, YY = np.meshgrid(xs, ys)
+    import random
 
-    errors = []
-    for i in range(n_samples):
-        for j in range(n_samples):
-            ka_val = decomp.eval(XX[i, j], YY[i, j])
-            target_val = target(XX[i, j], YY[i, j])
-            errors.append(abs(ka_val - target_val))
+    # Create evaluation grid
+    xs = [x_range[0] + (x_range[1] - x_range[0]) * i / (n_grid - 1)
+          for i in range(n_grid)]
+    ys = [y_range[0] + (y_range[1] - y_range[0]) * i / (n_grid - 1)
+          for i in range(n_grid)]
+    targets = {(x, y): f(x, y) for x in xs for y in ys}
 
-    errors = np.array(errors)
-    return {
-        "max_error": float(np.max(errors)),
-        "mean_error": float(np.mean(errors)),
-        "rmse": float(np.sqrt(np.mean(errors**2))),
-        "n_samples": n_samples**2,
-    }
+    best_error = float('inf')
+    best_params: Optional[List[float]] = None
+
+    # Each term has: a1, b1 (affine for phi1), a2, b2 (affine for phi2),
+    #                a3, b3 (affine for Phi)
+    # phi_i = affine(a_i, b_i) ∘ log
+    # Phi = affine(a3, b3) ∘ exp
+    n_params = Q * 6
+
+    def params_to_decomp(params: List[float]) -> EMLKADecomp:
+        phi1, phi2, Phi_list = [], [], []
+        for q in range(Q):
+            base = q * 6
+            a1, b1 = params[base], params[base + 1]
+            a2, b2 = params[base + 2], params[base + 3]
+            a3, b3 = params[base + 4], params[base + 5]
+            phi1.append(EMLChain([
+                EMLChainOp(OpType.AFFINE, a1, b1),
+                EMLChainOp(OpType.LOG),
+            ]))
+            phi2.append(EMLChain([
+                EMLChainOp(OpType.AFFINE, a2, b2),
+                EMLChainOp(OpType.LOG),
+            ]))
+            Phi_list.append(EMLChain([
+                EMLChainOp(OpType.AFFINE, a3, b3),
+                EMLChainOp(OpType.EXP),
+            ]))
+        return EMLKADecomp(phi1=phi1, phi2=phi2, Phi=Phi_list)
+
+    def compute_error(params: List[float]) -> float:
+        try:
+            d = params_to_decomp(params)
+            return max(abs(d.eval(x, y) - t) for (x, y), t in targets.items())
+        except (OverflowError, ValueError):
+            return float('inf')
+
+    # Random search
+    for _ in range(n_iter):
+        params = [random.gauss(0, 1) for _ in range(n_params)]
+        error = compute_error(params)
+        if error < best_error:
+            best_error = error
+            best_params = params[:]
+
+    # Local refinement
+    if best_params is not None:
+        for _ in range(n_iter):
+            idx = random.randint(0, n_params - 1)
+            delta = random.gauss(0, lr)
+            best_params[idx] += delta
+            error = compute_error(best_params)
+            if error < best_error:
+                best_error = error
+            else:
+                best_params[idx] -= delta
+
+    if best_params is None:
+        raise ValueError("Optimization failed to find any valid decomposition")
+
+    return params_to_decomp(best_params), best_error
+
+
+# ============================================================
+# Verification Utilities
+# ============================================================
+
+def verify_monomial_decomp(a: int, b: int,
+                           test_points: Optional[List[Tuple[float, float]]] = None,
+                           ) -> Tuple[bool, float]:
+    """Verify the monomial EML-KA decomposition for x^a * y^b.
+
+    Returns (passed, max_error).
+    """
+    if test_points is None:
+        test_points = [
+            (0.5, 0.5), (1.0, 1.0), (1.5, 2.0), (0.1, 10.0),
+            (3.0, 0.3), (2.0, 2.0), (0.01, 100.0),
+        ]
+
+    d = monomial_emlka(a, b)
+    max_error = 0.0
+    for x, y in test_points:
+        expected = x**a * y**b
+        actual = d.eval(x, y)
+        error = abs(actual - expected) / max(abs(expected), 1e-15)
+        max_error = max(max_error, error)
+
+    return max_error < 1e-10, max_error
+
+
+def am_gm_check(x: float, y: float) -> Tuple[float, float, bool]:
+    """Check AM-GM: exp((log x + log y)/2) ≤ (x + y)/2.
+
+    Returns (geometric_mean, arithmetic_mean, inequality_holds).
+    """
+    assert x > 0 and y > 0
+    gm = math.exp((math.log(x) + math.log(y)) / 2)
+    am = (x + y) / 2
+    return gm, am, gm <= am + 1e-15
+
+
+def fenchel_young_check(x: float, s: float) -> Tuple[float, float, bool]:
+    """Check Fenchel-Young: x*s ≤ exp(x) + s*log(s) - s.
+
+    Returns (lhs, rhs, inequality_holds).
+    """
+    assert s > 0
+    lhs = x * s
+    rhs = math.exp(min(x, 500)) + s * math.log(s) - s
+    return lhs, rhs, lhs <= rhs + 1e-15
 
 
 if __name__ == "__main__":
-    # Test all decompositions
-    print("Testing EML-KA decompositions...")
+    print("=== EML-KA Algorithms Module ===")
+    print()
 
-    d_mul = mul_ka_decomp()
-    assert abs(d_mul.eval(3.0, 4.0) - 12.0) < 1e-10
-    print(f"  mul(3,4) = {d_mul.eval(3.0, 4.0):.10f} (expected 12)")
+    # Verify monomial decompositions
+    for a, b in [(1, 1), (2, 3), (5, 0), (0, 4), (10, 10)]:
+        passed, err = verify_monomial_decomp(a, b)
+        status = "✓" if passed else "✗"
+        print(f"  {status} x^{a} * y^{b}: max relative error = {err:.2e}")
 
-    d_pow = pow_ka_decomp(3)
-    assert abs(d_pow.eval(2.0, 1.0) - 8.0) < 1e-10
-    print(f"  pow(2,3) = {d_pow.eval(2.0, 1.0):.10f} (expected 8)")
+    print()
 
-    d_geom = geom_mean_ka_decomp()
-    assert abs(d_geom.eval(4.0, 9.0) - 6.0) < 1e-10
-    print(f"  geom(4,9) = {d_geom.eval(4.0, 9.0):.10f} (expected 6)")
+    # Check AM-GM
+    for x, y in [(1.0, 4.0), (2.0, 8.0), (0.01, 100.0)]:
+        gm, am, ok = am_gm_check(x, y)
+        status = "✓" if ok else "✗"
+        print(f"  {status} AM-GM({x}, {y}): GM={gm:.6f}, AM={am:.6f}")
 
-    d_div = div_ka_decomp()
-    assert abs(d_div.eval(6.0, 3.0) - 2.0) < 1e-10
-    print(f"  div(6,3) = {d_div.eval(6.0, 3.0):.10f} (expected 2)")
+    print()
 
-    # Test composition
-    d_sum = ka_decomp_add(d_mul, d_mul)
-    assert abs(d_sum.eval(3.0, 4.0) - 24.0) < 1e-10
-    print(f"  2*mul(3,4) = {d_sum.eval(3.0, 4.0):.10f} (expected 24)")
-
-    # Test error analysis
-    stats = ka_approximation_error(
-        d_mul,
-        lambda x, y: x * y,
-        (0.1, 10.0), (0.1, 10.0),
-        n_samples=50
-    )
-    print(f"\n  Multiplication error stats:")
-    print(f"    Max error:  {stats['max_error']:.2e}")
-    print(f"    Mean error: {stats['mean_error']:.2e}")
-    print(f"    RMSE:       {stats['rmse']:.2e}")
-
-    print("\nAll tests passed!")
+    # Check Fenchel-Young
+    for x, s in [(0.0, 1.0), (1.0, 1.0), (2.0, 0.5), (-1.0, 3.0)]:
+        lhs, rhs, ok = fenchel_young_check(x, s)
+        status = "✓" if ok else "✗"
+        print(f"  {status} FY(x={x}, s={s}): {lhs:.6f} ≤ {rhs:.6f}")
