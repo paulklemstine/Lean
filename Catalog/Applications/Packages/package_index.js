@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "entropy_power_inequality_sharp_version.json",
+    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
+    "domain": "Bridges",
+    "date": "2026-05-31T21:30:36Z",
+    "exp_id": "b3fdee2d",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 15
+  },
+  {
     "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
     "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
     "domain": "Algebra",
@@ -202,6 +212,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "entropy_power_inequality_sharp_version.json": {
+    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
+    "exp_id": "b3fdee2d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Bridges"
+  },
   "biological_topology_protein_folding_as_persistent_.json": {
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
     "exp_id": "6a2bfb31",
@@ -271,7 +289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -282,7 +300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -304,7 +322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -315,7 +333,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -337,7 +355,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -348,7 +366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -359,7 +377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -370,7 +388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -392,7 +410,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -403,7 +421,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -414,9 +432,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
+    },
+    {
+      "id": "entropy_power_inequality_sharp_version",
+      "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:30:36Z",
+      "hue": 90,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
