@@ -1,362 +1,282 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for computing with rational Hodge structures.
+Hodge Conjecture: Algebraic Algorithms
 
-Implements:
-1. Hodge class identification via complexification membership
-2. Algebraicity testing: checking if all Hodge classes are spanned by given generators
-3. Orthogonal decomposition computation for polarized structures
-4. Direct sum Hodge class computation
+Type-hinted implementations of the core algebraic operations underlying
+the Hodge conjecture formalization.
 """
 
-import numpy as np
-from typing import List, Tuple, Optional
+from __future__ import annotations
 from dataclasses import dataclass, field
+from typing import List, Tuple, Optional
+import numpy as np
 
 
 @dataclass
-class HodgeStructureWeightTwo:
+class RationalVector:
+    """A vector with rational coordinates, represented as float for computation."""
+    coords: np.ndarray
+
+    @staticmethod
+    def from_list(vals: List[float]) -> RationalVector:
+        return RationalVector(np.array(vals, dtype=float))
+
+    def __repr__(self) -> str:
+        return f"RationalVector({self.coords.tolist()})"
+
+
+@dataclass
+class BilinearForm:
+    """A symmetric bilinear form Q on ℚ^n, represented by a matrix."""
+    matrix: np.ndarray
+
+    def evaluate(self, v: np.ndarray, w: np.ndarray) -> float:
+        """Compute Q(v, w) = v^T M w."""
+        return float(v @ self.matrix @ w)
+
+    def is_symmetric(self) -> bool:
+        return np.allclose(self.matrix, self.matrix.T)
+
+    def is_nondegenerate(self) -> bool:
+        return abs(np.linalg.det(self.matrix)) > 1e-10
+
+    def signature(self) -> Tuple[int, int, int]:
+        """Return (pos, neg, zero) eigenvalue counts."""
+        eigenvalues = np.linalg.eigvalsh(self.matrix)
+        pos = int(np.sum(eigenvalues > 1e-10))
+        neg = int(np.sum(eigenvalues < -1e-10))
+        zero = len(eigenvalues) - pos - neg
+        return (pos, neg, zero)
+
+    def restrict_to_subspace(self, basis: np.ndarray) -> 'BilinearForm':
+        """Restrict Q to the subspace spanned by the rows of basis."""
+        restricted = basis @ self.matrix @ basis.T
+        return BilinearForm(restricted)
+
+
+@dataclass
+class WeightTwoHodgeStructure:
     """
-    A weight-2 rational Hodge structure on a finite-dimensional ℚ-vector space V.
+    A weight-2 rational Hodge structure on ℚ^n.
 
-    Attributes:
-        dim: dimension of V over ℚ
-        hodge_basis: basis vectors for the Hodge class subspace Hdg(V) ⊂ V
-        name: optional label for the structure
+    The H^{1,1} subspace is specified by a basis (rows of h11_basis)
+    in the complexification ℂ ⊗ ℚ^n ≅ ℂ^n.
 
-    The Hodge class subspace is represented concretely as span(hodge_basis) ⊂ ℚ^dim.
-    In the abstract mathematical setting, this is V ∩ H^{1,1} under the embedding
-    V → V_ℂ = ℂ ⊗_ℚ V.
+    A rational vector v is a Hodge class if 1⊗v ∈ H^{1,1}, which for
+    computation we check as: v (viewed in ℂ^n) lies in H^{1,1}.
     """
     dim: int
-    hodge_basis: List[np.ndarray]
-    name: str = ""
+    h11_basis: np.ndarray  # rows are basis vectors of H^{1,1} in ℂ^n
 
-    @property
+    def is_hodge_class(self, v: np.ndarray) -> bool:
+        """Check if a rational vector v is a Hodge class (1⊗v ∈ H^{1,1})."""
+        # Project v onto H^{1,1} and check if projection equals v
+        if self.h11_basis.shape[0] == 0:
+            return np.allclose(v, 0)
+        # Use least squares to check if v is in span of h11_basis rows
+        coeffs, residuals, _, _ = np.linalg.lstsq(self.h11_basis.T, v, rcond=None)
+        reconstruction = self.h11_basis.T @ coeffs
+        return np.allclose(reconstruction, v, atol=1e-10)
+
+    def hodge_classes_basis(self) -> np.ndarray:
+        """Compute a basis for the Hodge class subspace (rational vectors in H^{1,1})."""
+        # For real H^{1,1}, Hodge classes = H^{1,1} ∩ ℚ^n
+        # In our simplified model where H^{1,1} has a real basis, this is just
+        # the real part of H^{1,1}
+        if self.h11_basis.shape[0] == 0:
+            return np.zeros((0, self.dim))
+        # Extract real parts and find the rational span
+        real_basis = np.real(self.h11_basis)
+        # SVD to find rank
+        U, s, Vt = np.linalg.svd(real_basis, full_matrices=False)
+        rank = int(np.sum(s > 1e-10))
+        return Vt[:rank]
+
     def picard_rank(self) -> int:
-        """The Picard rank = dimension of the Hodge class space."""
-        if not self.hodge_basis:
-            return 0
-        return np.linalg.matrix_rank(np.column_stack(self.hodge_basis))
+        """Compute the Picard rank (dimension of Hodge class subspace)."""
+        basis = self.hodge_classes_basis()
+        return basis.shape[0]
 
-    def is_hodge_class(self, v: np.ndarray, tol: float = 1e-10) -> bool:
-        """Check whether v is a Hodge class (i.e., v ∈ Hdg(V))."""
-        if not self.hodge_basis:
-            return np.linalg.norm(v) < tol
-        A = np.column_stack(self.hodge_basis)
-        coeffs, _, _, _ = np.linalg.lstsq(A, v, rcond=None)
-        return np.linalg.norm(A @ coeffs - v) < tol
-
-    def hodge_coefficients(self, v: np.ndarray) -> Optional[np.ndarray]:
-        """
-        If v is a Hodge class, return its coordinates in the Hodge basis.
-        Returns None if v is not a Hodge class.
-        """
-        if not self.is_hodge_class(v):
-            return None
-        A = np.column_stack(self.hodge_basis)
-        coeffs, _, _, _ = np.linalg.lstsq(A, v, rcond=None)
-        return coeffs
+    def hodge_level(self) -> int:
+        """Compute the Hodge level: dim(V) - picard_rank."""
+        return self.dim - self.picard_rank()
 
 
 @dataclass
 class PolarizedHodgeStructure:
+    """A polarized weight-2 Hodge structure with bilinear form Q."""
+    hodge: WeightTwoHodgeStructure
+    Q: BilinearForm
+
+    def transcendental_lattice_basis(self) -> np.ndarray:
+        """Compute a basis for the transcendental lattice (Q-orthogonal to Hodge classes)."""
+        hc_basis = self.hodge.hodge_classes_basis()
+        if hc_basis.shape[0] == 0:
+            return np.eye(self.hodge.dim)
+        # T = {v : Q(v, h) = 0 for all h in HC}
+        # This means M @ v . h = 0 for all h in hc_basis
+        # Equivalently: (hc_basis @ M) @ v = 0
+        constraint = hc_basis @ self.Q.matrix
+        # Find null space
+        U, s, Vt = np.linalg.svd(constraint, full_matrices=True)
+        null_rank = self.hodge.dim - int(np.sum(s > 1e-10))
+        return Vt[-null_rank:] if null_rank > 0 else np.zeros((0, self.hodge.dim))
+
+    def hodge_index(self) -> Tuple[int, int]:
+        """Compute the signature of Q restricted to Hodge classes: (pos, neg)."""
+        hc_basis = self.hodge.hodge_classes_basis()
+        if hc_basis.shape[0] == 0:
+            return (0, 0)
+        Q_restricted = self.Q.restrict_to_subspace(hc_basis)
+        pos, neg, _ = Q_restricted.signature()
+        return (pos, neg)
+
+    def verify_hodge_index_theorem(self) -> bool:
+        """Verify the Hodge index theorem: Q restricted to HC has signature (1, ρ-1)."""
+        pos, neg = self.hodge_index()
+        rho = self.hodge.picard_rank()
+        if rho == 0:
+            return True  # vacuously true
+        return pos == 1 and neg == rho - 1
+
+
+def verify_transcendental_hodge_disjointness(phs: PolarizedHodgeStructure) -> bool:
+    """Verify that transcendental lattice ∩ Hodge classes = {0}."""
+    hc_basis = phs.hodge.hodge_classes_basis()
+    tl_basis = phs.transcendental_lattice_basis()
+    if hc_basis.shape[0] == 0 or tl_basis.shape[0] == 0:
+        return True
+    # Stack bases and check rank
+    combined = np.vstack([hc_basis, tl_basis])
+    rank = np.linalg.matrix_rank(combined, tol=1e-10)
+    # If rank equals sum of individual ranks, intersection is {0}
+    hc_rank = np.linalg.matrix_rank(hc_basis, tol=1e-10)
+    tl_rank = np.linalg.matrix_rank(tl_basis, tol=1e-10)
+    return rank == hc_rank + tl_rank
+
+
+def verify_hodge_conjecture_rank_one(
+    hs: WeightTwoHodgeStructure,
+    algebraic_generator: np.ndarray
+) -> bool:
     """
-    A polarized weight-2 rational Hodge structure.
-
-    Adds a nondegenerate symmetric bilinear form Q (the polarization)
-    to the Hodge structure data.
-
-    Attributes:
-        hodge: the underlying Hodge structure
-        Q: the polarization matrix (symmetric, nondegenerate)
+    Verify the Hodge conjecture for Picard rank 1:
+    if there's a nonzero algebraic class, all Hodge classes are its multiples.
     """
-    hodge: HodgeStructureWeightTwo
-    Q: np.ndarray
+    if hs.picard_rank() != 1:
+        return False
+    if not hs.is_hodge_class(algebraic_generator):
+        return False
+    if np.allclose(algebraic_generator, 0):
+        return False
+    # Check that every Hodge class is a multiple of the generator
+    hc_basis = hs.hodge_classes_basis()
+    for row in hc_basis:
+        # row should be proportional to algebraic_generator
+        if not np.allclose(algebraic_generator, 0):
+            ratios = row / algebraic_generator
+            nonzero = ~np.isclose(algebraic_generator, 0)
+            if nonzero.any():
+                ratio = ratios[nonzero][0]
+                if not np.allclose(row, ratio * algebraic_generator, atol=1e-10):
+                    return False
+    return True
 
-    def is_nondegenerate(self) -> bool:
-        """Check that Q is nondegenerate."""
-        return abs(np.linalg.det(self.Q)) > 1e-10
 
-    def is_symmetric(self) -> bool:
-        """Check that Q is symmetric."""
-        return np.allclose(self.Q, self.Q.T)
-
-
-# ============================================================
-# Algorithm 1: Algebraicity Test
-# ============================================================
-
-def test_algebraicity(
-    hs: HodgeStructureWeightTwo,
-    generators: List[np.ndarray],
-    tol: float = 1e-10
-) -> Tuple[bool, str]:
+@dataclass
+class K3LatticeData:
     """
-    Test whether a given set of generators spans all Hodge classes.
+    The cohomology lattice of a K3 surface.
 
-    This implements the algorithmic content of Theorem A (Lefschetz (1,1)-style):
-    given generators Z ⊂ Hdg(V), check whether span(Z) = Hdg(V).
-
-    Algorithm:
-        1. Verify all generators are Hodge classes.
-        2. Compute rank of generators.
-        3. Compare with Picard rank.
-
-    Returns:
-        (is_algebraic, explanation) where is_algebraic is True iff
-        span(generators) = Hdg(V).
-
-    Time complexity: O(n * k^2) where n = dim(V), k = number of generators.
-    Space complexity: O(n * k).
+    H^2(X, ℤ) ≅ U^3 ⊕ E_8(-1)^2 has rank 22, signature (3, 19).
+    The Picard lattice NS(X) ⊂ H^{1,1}(X) ∩ H^2(X, ℤ) has rank 1 ≤ ρ ≤ 20.
+    The transcendental lattice T(X) is the orthogonal complement of NS(X).
     """
-    # Step 1: Verify generators are Hodge classes
-    for i, g in enumerate(generators):
-        if not hs.is_hodge_class(g):
-            return False, f"Generator {i} is not a Hodge class"
+    picard_rank: int  # 1 ≤ ρ ≤ 20
 
-    # Step 2: Compute ranks
-    if not generators:
-        if hs.picard_rank == 0:
-            return True, "No Hodge classes and no generators: trivially algebraic"
-        return False, "Hodge classes exist but no generators provided"
+    def __post_init__(self) -> None:
+        assert 1 <= self.picard_rank <= 20, "K3 Picard rank must be in [1, 20]"
 
-    gen_rank = np.linalg.matrix_rank(np.column_stack(generators))
-    picard_rank = hs.picard_rank
+    @property
+    def transcendental_rank(self) -> int:
+        return 22 - self.picard_rank
 
-    # Step 3: Compare
-    if gen_rank == picard_rank:
-        return True, (f"Generators span all Hodge classes "
-                      f"(rank {gen_rank} = Picard rank {picard_rank})")
-    else:
-        return False, (f"Generators span a proper subspace "
-                       f"(rank {gen_rank} < Picard rank {picard_rank})")
+    @property
+    def intersection_form_signature(self) -> Tuple[int, int]:
+        """Signature of the intersection form on H^2."""
+        return (3, 19)
+
+    @property
+    def ns_signature(self) -> Tuple[int, int]:
+        """Signature of intersection form on NS(X): (1, ρ-1) by Hodge index theorem."""
+        return (1, self.picard_rank - 1)
+
+    @property
+    def transcendental_signature(self) -> Tuple[int, int]:
+        """Signature of intersection form on T(X): (2, 20-ρ)."""
+        return (2, 20 - self.picard_rank)
+
+    def hodge_conjecture_holds(self) -> bool:
+        """The Hodge conjecture holds for K3 surfaces (known theorem).
+        Every Hodge class on a K3 surface is algebraic.
+        This follows from the Lefschetz (1,1) theorem since all Hodge
+        classes on a K3 are of type (1,1)."""
+        return True
 
 
-# ============================================================
-# Algorithm 2: Orthogonal Decomposition
-# ============================================================
-
-def orthogonal_decomposition(
-    phs: PolarizedHodgeStructure
-) -> Tuple[np.ndarray, np.ndarray, bool]:
+@dataclass
+class AbelianVarietyData:
     """
-    Compute the algebraic-transcendental orthogonal decomposition.
+    Data for an abelian variety of dimension g.
 
-    Given a polarized Hodge structure (V, Q, Hdg), compute:
-    - Projection matrix P_alg onto the algebraic part Hdg(V)
-    - Projection matrix P_trans onto the transcendental part Hdg(V)^⊥
-
-    This implements Theorem C: V = Alg ⊕ Tr when Q|_Alg is nondegenerate.
-
-    Algorithm:
-        1. Compute the Gram matrix G = B^T Q B where B is the Hodge basis matrix.
-        2. If det(G) ≠ 0 (restriction is nondegenerate), compute the orthogonal
-           projection P_alg = B (G^{-1}) B^T Q.
-        3. P_trans = I - P_alg.
-
-    Returns:
-        (P_alg, P_trans, is_valid) where is_valid indicates whether the
-        decomposition exists (Q|_Alg is nondegenerate).
-
-    Time complexity: O(n^2 * k + k^3) where n = dim(V), k = Picard rank.
-    Space complexity: O(n^2).
+    H^{2p}(A, ℚ) has Hodge classes that are generated by divisor classes
+    for simple abelian varieties of prime dimension (Tankeev, Ribet).
     """
-    if not phs.hodge.hodge_basis:
-        # No algebraic part: everything is transcendental
-        n = phs.hodge.dim
-        return np.zeros((n, n)), np.eye(n), True
+    dimension: int  # g
 
-    B = np.column_stack(phs.hodge.hodge_basis)
-    Q = phs.Q
-    n = phs.hodge.dim
+    @property
+    def h2_rank(self) -> int:
+        """Rank of H^2(A, ℚ) = (2g choose 2)."""
+        return self.dimension * (2 * self.dimension - 1)
 
-    # Gram matrix of Q restricted to Alg
-    G = B.T @ Q @ B
-
-    if abs(np.linalg.det(G)) < 1e-10:
-        return np.zeros((n, n)), np.eye(n), False
-
-    # Orthogonal projection onto Alg (with respect to Q)
-    G_inv = np.linalg.inv(G)
-    P_alg = B @ G_inv @ B.T @ Q
-    P_trans = np.eye(n) - P_alg
-
-    return P_alg, P_trans, True
+    def hodge_conjecture_known(self, p: int) -> bool:
+        """Whether the Hodge conjecture is known for H^{2p}."""
+        if p == 1:
+            return True  # Lefschetz (1,1)
+        if p == self.dimension - 1:
+            return True  # Hard Lefschetz duality with p=1
+        # For simple abelian varieties of prime dimension
+        if self.dimension in [2, 3]:
+            return True  # Known for small dimensions
+        return False  # Unknown in general
 
 
-def decompose_vector(
-    phs: PolarizedHodgeStructure,
-    v: np.ndarray
-) -> Tuple[np.ndarray, np.ndarray, bool]:
+def construct_k3_hodge_structure(picard_rank: int) -> PolarizedHodgeStructure:
     """
-    Decompose v = v_alg + v_trans where v_alg ∈ Alg and v_trans ∈ Tr.
+    Construct a model polarized Hodge structure for a K3 surface
+    with given Picard rank.
 
-    Returns:
-        (v_alg, v_trans, is_valid).
+    The intersection form has signature (3, 19) on H^2 ≅ ℚ^22.
+    On the Picard lattice NS(X), it has signature (1, ρ-1).
     """
-    P_alg, P_trans, is_valid = orthogonal_decomposition(phs)
-    if not is_valid:
-        return np.zeros_like(v), v, False
-    return P_alg @ v, P_trans @ v, True
+    n = 22  # H^2 rank for K3
 
+    # Intersection form: diag(1, 1, 1, -1, ..., -1) with 3 positive, 19 negative
+    Q_matrix = np.diag([1.0] * 3 + [-1.0] * 19)
 
-# ============================================================
-# Algorithm 3: Direct Sum Hodge Structure
-# ============================================================
+    # H^{1,1} basis: e_1 (positive) + e_{4}, ..., e_{3+ρ-1} (negative)
+    # This gives Q|_NS signature (1, ρ-1), matching the Hodge index theorem
+    indices = [0] + list(range(3, 3 + picard_rank - 1))  # e_1 + negative directions
+    h11_basis = np.eye(n)[indices]
 
-def direct_sum_hodge(
-    hs1: HodgeStructureWeightTwo,
-    hs2: HodgeStructureWeightTwo
-) -> HodgeStructureWeightTwo:
-    """
-    Compute the direct sum Hodge structure on V₁ × V₂.
+    hs = WeightTwoHodgeStructure(dim=n, h11_basis=h11_basis)
+    Q = BilinearForm(Q_matrix)
+    return PolarizedHodgeStructure(hodge=hs, Q=Q)
 
-    This implements Theorem D: Hdg(V₁ × V₂) = Hdg(V₁) × Hdg(V₂).
-
-    The Hodge basis of the product is formed by embedding each factor's
-    Hodge basis into the product space.
-
-    Time complexity: O((n₁ + n₂) * (k₁ + k₂)).
-    Space complexity: O((n₁ + n₂) * (k₁ + k₂)).
-    """
-    n1, n2 = hs1.dim, hs2.dim
-    n = n1 + n2
-
-    hodge_basis = []
-
-    # Embed hs1 Hodge basis: (v, 0)
-    for v in hs1.hodge_basis:
-        embedded = np.zeros(n)
-        embedded[:n1] = v
-        hodge_basis.append(embedded)
-
-    # Embed hs2 Hodge basis: (0, w)
-    for w in hs2.hodge_basis:
-        embedded = np.zeros(n)
-        embedded[n1:] = w
-        hodge_basis.append(embedded)
-
-    return HodgeStructureWeightTwo(
-        dim=n,
-        hodge_basis=hodge_basis,
-        name=f"{hs1.name} × {hs2.name}" if hs1.name and hs2.name
-             else "Direct Sum"
-    )
-
-
-# ============================================================
-# Algorithm 4: Rank-Based Algebraicity Criterion
-# ============================================================
-
-def rank_algebraicity_criterion(
-    hs: HodgeStructureWeightTwo,
-    algebraic_classes: List[np.ndarray]
-) -> Tuple[bool, int, int, str]:
-    """
-    Apply the rank-based algebraicity criterion.
-
-    For Picard rank 1: any single nonzero algebraic class suffices.
-    For Picard rank 2: any two linearly independent algebraic classes suffice.
-    General: k linearly independent algebraic classes suffice for rank k.
-
-    Returns:
-        (all_algebraic, picard_rank, algebraic_rank, explanation).
-
-    Time complexity: O(n * k^2) where n = dim(V), k = max(|algebraic_classes|, Picard rank).
-    """
-    picard_rank = hs.picard_rank
-
-    # Filter to actual Hodge classes
-    valid = [c for c in algebraic_classes if hs.is_hodge_class(c)]
-
-    if not valid:
-        if picard_rank == 0:
-            return True, 0, 0, "Trivially algebraic: no Hodge classes exist"
-        return False, picard_rank, 0, "No valid algebraic classes provided"
-
-    alg_rank = np.linalg.matrix_rank(np.column_stack(valid))
-
-    if alg_rank >= picard_rank:
-        if picard_rank == 1:
-            explanation = (f"Rank-1 criterion satisfied: single algebraic class "
-                          f"generates all Hodge classes (Theorem B1)")
-        elif picard_rank == 2:
-            explanation = (f"Rank-2 criterion satisfied: two independent algebraic "
-                          f"classes generate all Hodge classes (Theorem B2)")
-        else:
-            explanation = (f"Full rank criterion satisfied: {alg_rank} independent "
-                          f"algebraic classes span Picard rank {picard_rank} space")
-        return True, picard_rank, alg_rank, explanation
-    else:
-        return False, picard_rank, alg_rank, (
-            f"Insufficient: {alg_rank} independent algebraic classes "
-            f"< Picard rank {picard_rank}")
-
-
-# ============================================================
-# Example usage
-# ============================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Algorithm Demonstrations")
-    print("=" * 60)
-
-    # Example 1: K3 surface model (Picard rank 1)
-    print("\n--- K3 Surface (Picard rank 1) ---")
-    k3 = HodgeStructureWeightTwo(
-        dim=22,
-        hodge_basis=[np.eye(22)[0]],  # Single generator: the polarization
-        name="K3"
-    )
-    polarization = np.eye(22)[0]
-    result = rank_algebraicity_criterion(k3, [polarization])
-    print(f"Picard rank: {result[1]}")
-    print(f"Algebraic rank: {result[2]}")
-    print(f"All algebraic: {result[0]}")
-    print(f"Explanation: {result[3]}")
-
-    # Example 2: Abelian surface (Picard rank 2)
-    print("\n--- Abelian Surface (Picard rank 2) ---")
-    ab = HodgeStructureWeightTwo(
-        dim=6,
-        hodge_basis=[np.array([1,0,0,0,0,0.]),
-                     np.array([0,1,0,0,0,0.])],
-        name="Abelian"
-    )
-    result = rank_algebraicity_criterion(
-        ab,
-        [np.array([1,0,0,0,0,0.]), np.array([0,1,0,0,0,0.])]
-    )
-    print(f"Picard rank: {result[1]}")
-    print(f"Algebraic rank: {result[2]}")
-    print(f"All algebraic: {result[0]}")
-    print(f"Explanation: {result[3]}")
-
-    # Example 3: Orthogonal decomposition
-    print("\n--- Orthogonal Decomposition ---")
-    Q = np.diag([1., 1., -1., -1.])
-    phs = PolarizedHodgeStructure(
-        hodge=HodgeStructureWeightTwo(
-            dim=4,
-            hodge_basis=[np.array([1,0,0,0.]), np.array([0,1,0,0.])],
-        ),
-        Q=Q
-    )
-    v = np.array([3., -2., 5., 7.])
-    v_alg, v_trans, valid = decompose_vector(phs, v)
-    print(f"v = {v}")
-    print(f"v_alg = {np.round(v_alg, 4)}")
-    print(f"v_trans = {np.round(v_trans, 4)}")
-    print(f"Q(v_alg, v_trans) = {np.round(v_alg @ Q @ v_trans, 10)}")
-
-    # Example 4: Direct sum
-    print("\n--- Direct Sum ---")
-    hs1 = HodgeStructureWeightTwo(dim=3, hodge_basis=[np.array([1,0,0.])], name="V")
-    hs2 = HodgeStructureWeightTwo(dim=2, hodge_basis=[np.array([1,0.])], name="W")
-    hs_sum = direct_sum_hodge(hs1, hs2)
-    print(f"{hs_sum.name}: dim = {hs_sum.dim}, Picard rank = {hs_sum.picard_rank}")
-    result = test_algebraicity(hs_sum, hs_sum.hodge_basis)
-    print(f"All Hodge classes algebraic: {result[0]}")
-    print(f"Explanation: {result[1]}")
+    # Quick test
+    phs = construct_k3_hodge_structure(2)
+    print(f"K3 with ρ=2: Picard rank = {phs.hodge.picard_rank()}")
+    print(f"  Hodge index: {phs.hodge_index()}")
+    print(f"  HIT verified: {phs.verify_hodge_index_theorem()}")
+    print(f"  T∩HC = {{0}}: {verify_transcendental_hodge_disjointness(phs)}")
