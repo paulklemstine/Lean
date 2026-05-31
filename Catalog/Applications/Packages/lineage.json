@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "this_research_cycle_established_the_mathematical_f",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "random_matrices_edge_universality",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "resolution_of_singularities_in_positive_characteri",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "artins_conjecture_on_primitive_roots",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "standard_conjectures_on_algebraic_cycles",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "entropy_power_inequality_sharp_version",
@@ -133,7 +133,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_as_foundations",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "neural_pde_universality_classes_via_renormalizatio",
@@ -151,7 +151,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "topological_quantum_computing_braiding_universalit",
@@ -170,6 +170,15 @@
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
       "hue": 270
+    },
+    {
+      "id": "the_topology_of_impossible_objects_escher_stairs_a",
+      "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:57:15Z",
+      "hue": 271
     }
   ],
   "edges": [],

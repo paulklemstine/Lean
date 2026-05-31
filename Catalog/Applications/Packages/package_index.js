@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
+    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
+    "domain": "Bridges",
+    "date": "2026-05-31T21:57:15Z",
+    "exp_id": "e471f5e9",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 20
+  },
+  {
     "filename": "topological_quantum_computing_braiding_universalit.json",
     "title": "Topological Quantum Computing: Braiding Universality",
     "domain": "Bridges",
     "date": "2026-05-31T21:56:48Z",
     "exp_id": "831f1fd8",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7978566666666667,
+    "quality": "substantial",
     "pkg_num": 19
   },
   {
@@ -244,6 +254,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "the_topology_of_impossible_objects_escher_stairs_a.json": {
+    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
+    "exp_id": "e471f5e9",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Bridges"
+  },
   "catalans_conjecture_generalizations.json": {
     "title": "Pillai's Conjecture and Exponential Diophantine Equations",
     "exp_id": "b52cbca8",
@@ -361,7 +379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -372,7 +390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -383,7 +401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 292,
+      "hue": 90,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -394,7 +412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -416,7 +434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 292,
+      "hue": 91,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -427,7 +445,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -449,7 +467,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -460,7 +478,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -471,7 +489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -482,7 +500,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -504,7 +522,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -515,7 +533,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -526,7 +544,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -537,7 +555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -548,7 +566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -560,6 +578,17 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
       "hue": 270,
+      "priority_score": 0.7978566666666667,
+      "quality": "substantial"
+    },
+    {
+      "id": "the_topology_of_impossible_objects_escher_stairs_a",
+      "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-31T21:57:15Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
