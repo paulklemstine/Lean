@@ -79,7 +79,9 @@ Each `FutureDirection` has:
 - **Anti-repetition penalty**: -0.03 per keyword appearing 3+ times in recent completions (capped at -0.15)
 - **Auto-title cap**: Directions starting with "Direction N:" are capped at priority 0.60
 - **Quality cap on creation**: `priority_score = min(priority_score, max(0.60, quality_score))`
-- **Novelty protection**: Cleanup skips directions tagged with "Novelty"
+- **Novelty protection**: Cleanup and auto-pruning skip directions tagged with "Novelty"
+- **Seed protection**: Auto-pruning never removes seed directions
+- **Conservative LLM pruning**: Reviews only bottom 30% by quality, requires justification for each removal, protects priority >= 0.80
 
 ### Novelty Track
 

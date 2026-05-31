@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set
 
 # Default maximum number of available non-seed directions to keep
-DEFAULT_DIRECTION_CAP = 300
+DEFAULT_DIRECTION_CAP = 2000  # Soft ceiling; quality decay handles the real pruning
 
 
 @dataclass
@@ -1280,16 +1280,20 @@ class FutureDirectionsManager:
                 else:
                     auto_available.append(d)
 
-        # Score and sort auto-parsed available directions
-        scored = [(d, self._compute_quality_score(d)) for d in auto_available]
+        # Determine which to keep and which to prune
+        # Novelty-tagged directions are always protected from auto-pruning
+        novelty_available = [d for d in auto_available if "Novelty" in d.domains]
+        non_novelty_available = [d for d in auto_available if "Novelty" not in d.domains]
+
+        # Score and sort non-novelty auto-parsed directions
+        scored = [(d, self._compute_quality_score(d)) for d in non_novelty_available]
         scored.sort(key=lambda x: x[1], reverse=True)
 
-        # Determine which to keep and which to prune
         if min_quality > 0:
             above_threshold = [(d, s) for d, s in scored if s >= min_quality]
             keep_count = min(cap, len(above_threshold))
         else:
-            keep_count = min(cap, len(auto_available))
+            keep_count = min(cap, len(non_novelty_available))
 
         to_keep = [d for d, s in scored[:keep_count]]
         to_prune = [d for d, s in scored[keep_count:]]
@@ -1298,6 +1302,9 @@ class FutureDirectionsManager:
         if min_quality > 0:
             to_prune = [d for d, s in scored if s < min_quality]
             to_keep = [d for d, s in scored if s >= min_quality][:cap]
+
+        # Novelty directions are always kept, never pruned by this method
+        to_keep.extend(novelty_available)
 
         quality_threshold = scored[keep_count][1] if keep_count < len(scored) else 0.0
 

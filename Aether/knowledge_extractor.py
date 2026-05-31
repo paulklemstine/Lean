@@ -1670,58 +1670,73 @@ Research mode: {concept.research_mode}
         return job
 
     def _cleanup_future_directions(self) -> None:
-        """Ask Pi-Agent to prune junk directions and brainstorm a novel new one.
+        """Thoughtfully prune low-quality directions and brainstorm a novel new one.
 
-        Reviews the future directions list in batches, removes dead/useless/boring entries,
-        and adds one fresh, interesting direction. Runs every ~10 cycles to save pollen.
+        Reviews directions in small batches, requiring justification for each removal.
+        Protects high-priority, Novelty-tagged, and seed directions.
+        Runs every ~20 cycles to avoid over-pruning.
         """
         from research_memory import FutureDirectionsManager, FutureDirection
         fd_manager = FutureDirectionsManager(self.workspace)
         available = [d for d in fd_manager._directions if d.status == "available"]
-        if len(available) < 3:
+        if len(available) < 5:
             return
 
-        # Only run every ~10 cycles to save pollen
-        if self.cycle_count % 10 != 0 and self.cycle_count > 0:
+        # Only run every ~20 cycles to avoid over-pruning
+        if self.cycle_count % 20 != 0 and self.cycle_count > 0:
             return
 
-        # Batch the review to avoid prompt truncation: review in chunks of 80 directions
-        BATCH_SIZE = 80
-        all_removed_ids = set()
+        # Only review the bottom 30% by quality — top directions are protected
+        from research_memory import _compute_quality_score
+        scored = [(d, fd_manager._compute_quality_score(d)) for d in available]
+        scored.sort(key=lambda x: x[1])  # ascending — worst first
+        cutoff_idx = max(5, len(scored) // 3)  # review bottom third, at least 5
+        candidates = scored[:cutoff_idx]
 
-        for batch_start in range(0, len(available), BATCH_SIZE):
-            batch = available[batch_start:batch_start + BATCH_SIZE]
+        if not candidates:
+            print("[Cleanup] No low-quality candidates to review.")
+            return
 
-            print(f"[Cleanup] Asking Pi-Agent to review batch {batch_start // BATCH_SIZE + 1}: {len(batch)} of {len(available)} directions...")
+        # Small batches of 15 for thoughtful review
+        BATCH_SIZE = 15
+        all_removed = []
+
+        for batch_start in range(0, len(candidates), BATCH_SIZE):
+            batch = candidates[batch_start:batch_start + BATCH_SIZE]
+
+            print(f"[Cleanup] Reviewing batch {batch_start // BATCH_SIZE + 1}: {len(batch)} low-quality directions...")
 
             # Build a compact listing
             dir_lines = []
-            for d in batch:
-                desc_preview = d.description[:150].replace("\n", " ").strip()
-                dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}) {d.title}: {desc_preview}")
+            for d, score in batch:
+                desc_preview = d.description[:120].replace("\n", " ").strip()
+                domains_str = ", ".join(d.domains[:3])
+                dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}, quality={score:.2f}, domains=[{domains_str}]) {d.title}: {desc_preview}")
             directions_text = "\n".join(dir_lines)
 
             system = (
                 "You are a research direction curator for the Aether autonomous math research system.\n\n"
-                "TASK — PRUNE: Review the future directions below. Keep ONLY entries that are clearly valuable.\n"
-                "Remove entries that are:\n"
-                "- JUNK: vague, trivially obvious, nonsensical, or not real mathematics\n"
-                "- BORING: rephrasings of common knowledge with no novel angle\n"
-                "- DEAD: duplicates of other entries or already-proved results\n"
-                "- LOW QUALITY: generic titles like 'Direction N: Something', no proof strategy, no falsifiable conjecture\n"
-                "- INFLATED: tagged with many domains (5+) that don't all genuinely apply\n\n"
-                "Default to REMOVAL unless the direction has a specific falsifiable conjecture, "
-                "a clear proof strategy, or genuinely novel mathematics.\n"
-                "Do NOT remove entries with priority >= 0.85 — these are important directions.\n"
-                "Do NOT remove entries tagged with 'Novelty' — these are protected.\n\n"
+                "TASK — REVIEW: Evaluate these low-quality future directions. Only remove entries that are "
+                "CLEARLY worthless. Default to KEEPING directions that have any mathematical substance.\n\n"
+                "REMOVE only entries that are:\n"
+                "- JUNK: genuinely nonsensical or not real mathematics\n"
+                "- EXACT DUPLICATES: same idea as another entry in this batch (keep the better one)\n"
+                "- EMPTY: no description or description is just the title repeated\n\n"
+                "KEEP entries that:\n"
+                "- Have any falsifiable conjecture, even an imprecise one\n"
+                "- Touch on genuinely novel ideas, even if speculative\n"
+                "- Represent an unsolved problem or open question\n"
+                "- Are tagged with Novelty domain\n\n"
+                "For each removal, provide a one-line reason. Be CONSERVATIVE — when in doubt, keep.\n\n"
                 "Respond in this exact JSON format:\n"
                 '{\n'
-                '  "remove": ["dir_id_1", "dir_id_2"],\n'
-                '  "notes": "brief summary of what was removed and why"\n'
+                '  "remove": [{"id": "dir_id", "reason": "one-line justification"}],\n'
+                '  "kept": ["dir_id_1", "dir_id_2"],\n'
+                '  "notes": "brief summary"\n'
                 '}'
             )
 
-            user = f"Here are {len(batch)} available future research directions (batch {batch_start // BATCH_SIZE + 1}):\n\n{directions_text}"
+            user = f"Here are {len(batch)} future research directions to evaluate (sorted by quality, worst first):\n\n{directions_text}"
 
             try:
                 raw = self.pi_agent._call_ollama(system, user, timeout=60)
@@ -1734,13 +1749,39 @@ Research mode: {concept.research_mode}
                 print(f"[Cleanup] Could not parse Pi-Agent cleanup response for batch")
                 continue
 
-            for dir_id in result.get("remove", []):
-                all_removed_ids.add(dir_id)
+            for item in result.get("remove", []):
+                if isinstance(item, dict):
+                    all_removed.append((item.get("id", ""), item.get("reason", "no reason")))
+                elif isinstance(item, str):
+                    all_removed.append((item, "no reason provided"))
 
-        # Only brainstorm a new direction once, after all batches are reviewed
-        # Build a compact listing of all available directions for brainstorming context
+        # Apply removals with protection guardrails
+        removed = 0
+        skipped = 0
+        for dir_id, reason in all_removed:
+            for d in fd_manager._directions:
+                if d.id == dir_id and d.status == "available":
+                    # Protection guardrails — never prune these
+                    if d.priority_score >= 0.80:
+                        print(f"[Cleanup] Protecting {d.id} (priority={d.priority_score:.2f}): {d.title[:50]}")
+                        skipped += 1
+                        continue
+                    if "Novelty" in d.domains:
+                        print(f"[Cleanup] Protecting {d.id} (Novelty): {d.title[:50]}")
+                        skipped += 1
+                        continue
+                    if d.source_path.startswith("seed:"):
+                        print(f"[Cleanup] Protecting {d.id} (seed): {d.title[:50]}")
+                        skipped += 1
+                        continue
+                    d.status = "pruned"
+                    d.prune_reason = f"llm_cleanup: {reason[:100]}"
+                    d.pruned_at = datetime.now(timezone.utc).isoformat()
+                    removed += 1
+
+        # Brainstorm a new direction
         existing_titles = [d.title for d in available]
-        existing_titles_preview = existing_titles[:30]  # Just send titles to avoid truncation
+        existing_titles_preview = existing_titles[:30]
 
         brainstorm_system = (
             "You are a research direction curator for the Aether autonomous math research system.\n\n"
@@ -1768,22 +1809,6 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Pi-Agent brainstorm call failed: {e}")
 
-        # Remove junk (prune ALL directions matching each ID, not just the first)
-        removed = 0
-        for dir_id in all_removed_ids:
-            for d in fd_manager._directions:
-                if d.id == dir_id and d.status == "available":
-                    # Protect high-priority directions from removal
-                    if d.priority_score >= 0.85:
-                        print(f"[Cleanup] Skipping removal of {d.id} (priority={d.priority_score:.2f}): {d.title[:50]}")
-                        continue
-                    # Protect novelty directions from removal
-                    if "Novelty" in d.domains:
-                        print(f"[Cleanup] Skipping removal of {d.id} (Novelty-protected): {d.title[:50]}")
-                        continue
-                    d.status = "pruned"
-                    removed += 1
-
         # Add brainstormed direction
         added_new = False
         if new_direction_data and new_direction_data.get("title") and new_direction_data.get("description"):
@@ -1793,7 +1818,7 @@ Research mode: {concept.research_mode}
                 description=new_direction_data["description"][:2000],
                 source_exp_id="pi_brainstorm",
                 source_path="brainstorm",
-                domains=new_direction_data.get("domains", ["Speculative"]),
+                domains=new_direction_data.get("domains", ["Novelty"]),
                 depth_estimate=3,
                 priority_score=0.80,
             )
@@ -1805,8 +1830,7 @@ Research mode: {concept.research_mode}
         if removed > 0 or added_new:
             fd_manager._save()
 
-        notes = result.get("notes", "")
-        print(f"[Cleanup] Directions cleanup: removed {removed}, brainstormed 1 new. {notes}")
+        print(f"[Cleanup] Directions cleanup: removed {removed}, protected {skipped}, brainstormed {1 if added_new else 0}. Total available: {len([d for d in fd_manager._directions if d.status == 'available'])}")
 
     def _mine_structural_holes(self) -> None:
         """Find domain pairs with no edges in the knowledge graph and generate bridge directions.
@@ -2360,6 +2384,41 @@ Research mode: {concept.research_mode}
                     job.result_lean if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
                     for e in lp
                 ]
+
+            # Also add all .lean files from result_lean that aren't already in lean_proofs.
+            # This ensures the website tab and zip download include every changed file.
+            if hasattr(job, 'result_lean') and job.result_lean:
+                existing_files = set()
+                lp_list = pkg.get("lean_proofs", [])
+                if isinstance(lp_list, list):
+                    for entry in lp_list:
+                        if isinstance(entry, dict):
+                            fname = entry.get("file", "") or entry.get("name", "")
+                            existing_files.add(fname.split("/")[-1])
+                # Parse -- NEW_FILE: markers from result_lean (skip DIFF entries —
+                # those are patches, not complete files)
+                _pattern = re.compile(r'^-- NEW_FILE:\s*(.+?)$', re.MULTILINE)
+                _splits = _pattern.split(job.result_lean)
+                # _splits: [preamble, filename1, code1, filename2, code2, ...]
+                _new_entries = []
+                for i in range(1, len(_splits), 2):
+                    fname = _splits[i].strip()
+                    code = _splits[i + 1].strip() if i + 1 < len(_splits) else ""
+                    basename = fname.split("/")[-1].replace(".lean", "")
+                    if basename not in existing_files and code:
+                        _new_entries.append({
+                            "file": fname,
+                            "name": fname,
+                            "code": code,
+                            "theorems": code.count("theorem ") + code.count("lemma "),
+                            "description": f"Lean 4 proof file from research cycle"
+                        })
+                        existing_files.add(basename)
+                if _new_entries:
+                    if isinstance(pkg.get("lean_proofs"), list):
+                        pkg["lean_proofs"].extend(_new_entries)
+                    elif not pkg.get("lean_proofs"):
+                        pkg["lean_proofs"] = _new_entries
         if hasattr(job, 'result_algorithms') and job.result_algorithms:
             # Replace string entries in algorithms list that look like filenames
             algs = pkg.get("algorithms", [])
