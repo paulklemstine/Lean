@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "sierpiski_numbers_covering_systems.json",
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+    "domain": "Computation",
+    "date": "2026-05-31T22:43:44Z",
+    "exp_id": "7c29780f",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 24
+  },
+  {
     "filename": "p_adic_langlands_for_glq_p.json",
     "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
     "domain": "Bridges",
     "date": "2026-05-31T22:43:23Z",
     "exp_id": "f95fe11c",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7597249152542372,
+    "quality": "substantial",
     "pkg_num": 23
   },
   {
@@ -340,6 +350,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "sierpiski_numbers_covering_systems.json": {
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+    "exp_id": "7c29780f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Computation"
+  },
   "entropy_power_inequality_sharp_version.json": {
     "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
     "exp_id": "b3fdee2d",
@@ -444,7 +462,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -455,7 +473,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 280,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -466,7 +484,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -477,7 +495,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -499,7 +517,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -510,7 +528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -521,7 +539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -532,7 +550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 112,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -543,7 +561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7068530588235296,
       "quality": "substantial"
     },
@@ -554,7 +572,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -565,7 +583,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -576,7 +594,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -587,7 +605,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -598,7 +616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -609,7 +627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -620,7 +638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -642,7 +660,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -653,7 +671,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -664,7 +682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 90,
+      "hue": 280,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -675,7 +693,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 90,
+      "hue": 91,
+      "priority_score": 0.7597249152542372,
+      "quality": "substantial"
+    },
+    {
+      "id": "sierpiski_numbers_covering_systems",
+      "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-31T22:43:44Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
