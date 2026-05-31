@@ -1,364 +1,343 @@
+#!/usr/bin/env python3
 """
-EML Single-Operator Church-Turing Thesis: Algorithms
+EML Church-Turing Thesis: Core Algorithms
 
-Type-hinted implementations of EML circuit evaluation, depth computation,
-and circuit enumeration for the depth-width tradeoff conjecture.
+Type-hinted implementations of EML expression evaluation, compilation,
+and approximation algorithms.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Callable, Optional
+from enum import Enum, auto
+from typing import Callable, Dict, List, Optional, Tuple
 import math
 
 
-# ============================================================================
-# §1. EML Circuit Data Structure
-# ============================================================================
+# ============================================================
+# EML Expression AST
+# ============================================================
 
-@dataclass(frozen=True)
-class EMLCircuit:
-    """An EML expression tree node."""
-    kind: str  # 'var', 'const', 'add', 'mul', 'neg', 'inv', 'exp', 'log'
-    value: Optional[float] = None  # For 'const' nodes
-    left: Optional['EMLCircuit'] = None
-    right: Optional['EMLCircuit'] = None
+class EMLNodeType(Enum):
+    VAR = auto()
+    CONST = auto()
+    ADD = auto()
+    MUL = auto()
+    SUB = auto()
+    DIV = auto()
+    EXP = auto()
+    LOG = auto()
 
-    def eval(self, x: float) -> float:
-        """Evaluate the circuit at input x."""
-        if self.kind == 'var':
-            return x
-        elif self.kind == 'const':
-            return self.value if self.value is not None else 0.0
-        elif self.kind == 'add':
-            return self.left.eval(x) + self.right.eval(x)
-        elif self.kind == 'mul':
-            return self.left.eval(x) * self.right.eval(x)
-        elif self.kind == 'neg':
-            return -self.left.eval(x)
-        elif self.kind == 'inv':
-            v = self.left.eval(x)
-            return 1.0 / v if v != 0 else 0.0
-        elif self.kind == 'exp':
-            v = self.left.eval(x)
-            try:
-                return math.exp(v)
-            except OverflowError:
-                return float('inf')
-        elif self.kind == 'log':
-            v = self.left.eval(x)
-            return math.log(v) if v > 0 else 0.0
+
+@dataclass
+class EMLExpr:
+    """An expression in the EML (Exp-Multiply-Log) language."""
+    node_type: EMLNodeType
+    value: Optional[float] = None      # For CONST
+    var_index: Optional[int] = None    # For VAR
+    left: Optional[EMLExpr] = None     # For binary ops
+    right: Optional[EMLExpr] = None    # For binary ops
+    child: Optional[EMLExpr] = None    # For unary ops (EXP, LOG)
+
+    @staticmethod
+    def var(i: int) -> EMLExpr:
+        return EMLExpr(EMLNodeType.VAR, var_index=i)
+
+    @staticmethod
+    def const(c: float) -> EMLExpr:
+        return EMLExpr(EMLNodeType.CONST, value=c)
+
+    @staticmethod
+    def add(a: EMLExpr, b: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.ADD, left=a, right=b)
+
+    @staticmethod
+    def mul(a: EMLExpr, b: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.MUL, left=a, right=b)
+
+    @staticmethod
+    def sub(a: EMLExpr, b: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.SUB, left=a, right=b)
+
+    @staticmethod
+    def div(a: EMLExpr, b: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.DIV, left=a, right=b)
+
+    @staticmethod
+    def exp(e: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.EXP, child=e)
+
+    @staticmethod
+    def log(e: EMLExpr) -> EMLExpr:
+        return EMLExpr(EMLNodeType.LOG, child=e)
+
+    def eval(self, sigma: Dict[int, float]) -> float:
+        """Evaluate the expression given variable assignment sigma."""
+        if self.node_type == EMLNodeType.VAR:
+            return sigma.get(self.var_index, 0.0)
+        elif self.node_type == EMLNodeType.CONST:
+            return self.value
+        elif self.node_type == EMLNodeType.ADD:
+            return self.left.eval(sigma) + self.right.eval(sigma)
+        elif self.node_type == EMLNodeType.MUL:
+            return self.left.eval(sigma) * self.right.eval(sigma)
+        elif self.node_type == EMLNodeType.SUB:
+            return self.left.eval(sigma) - self.right.eval(sigma)
+        elif self.node_type == EMLNodeType.DIV:
+            r = self.right.eval(sigma)
+            return self.left.eval(sigma) / r if r != 0 else float('inf')
+        elif self.node_type == EMLNodeType.EXP:
+            v = self.child.eval(sigma)
+            return math.exp(min(v, 700))  # Prevent overflow
+        elif self.node_type == EMLNodeType.LOG:
+            v = self.child.eval(sigma)
+            return math.log(v) if v > 0 else 0.0  # Lean convention: log(x) = 0 for x ≤ 0
         else:
-            raise ValueError(f"Unknown node kind: {self.kind}")
+            raise ValueError(f"Unknown node type: {self.node_type}")
+
+    @property
+    def depth(self) -> int:
+        """Transcendental nesting depth."""
+        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
+            return 0
+        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
+            return max(self.left.depth, self.right.depth)
+        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
+            return self.child.depth + 1
+        return 0
 
     @property
     def size(self) -> int:
         """Total number of nodes."""
-        if self.kind in ('var', 'const'):
+        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
             return 1
-        elif self.kind in ('neg', 'inv', 'exp', 'log'):
-            return 1 + self.left.size
-        else:
-            return 1 + self.left.size + self.right.size
+        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
+            return self.left.size + self.right.size + 1
+        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
+            return self.child.size + 1
+        return 1
 
     @property
-    def transc_depth(self) -> int:
-        """Transcendental depth: max exp/log nodes on root-to-leaf path."""
-        if self.kind in ('var', 'const'):
+    def transc_count(self) -> int:
+        """Number of exp/log nodes."""
+        if self.node_type in (EMLNodeType.VAR, EMLNodeType.CONST):
             return 0
-        elif self.kind in ('add', 'mul'):
-            return max(self.left.transc_depth, self.right.transc_depth)
-        elif self.kind in ('neg', 'inv'):
-            return self.left.transc_depth
-        elif self.kind in ('exp', 'log'):
-            return 1 + self.left.transc_depth
-        else:
-            return 0
+        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
+            return self.left.transc_count + self.right.transc_count
+        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
+            return self.child.transc_count + 1
+        return 0
 
-    @property
-    def depth(self) -> int:
-        """Standard depth (max root-to-leaf path)."""
-        if self.kind in ('var', 'const'):
-            return 0
-        elif self.kind in ('add', 'mul'):
-            return 1 + max(self.left.depth, self.right.depth)
-        elif self.kind in ('neg', 'inv', 'exp', 'log'):
-            return 1 + self.left.depth
-        else:
-            return 0
-
-    @property
-    def is_algebraic(self) -> bool:
-        """True if no exp/log nodes."""
-        if self.kind in ('var', 'const'):
-            return True
-        elif self.kind in ('add', 'mul'):
-            return self.left.is_algebraic and self.right.is_algebraic
-        elif self.kind in ('neg', 'inv'):
-            return self.left.is_algebraic
-        elif self.kind in ('exp', 'log'):
-            return False
-        return False
-
-    def substitute(self, replacement: 'EMLCircuit') -> 'EMLCircuit':
-        """Replace all 'var' leaves with the given circuit."""
-        if self.kind == 'var':
-            return replacement
-        elif self.kind == 'const':
+    def subst(self, i: int, e_prime: EMLExpr) -> EMLExpr:
+        """Substitute variable i with expression e_prime."""
+        if self.node_type == EMLNodeType.VAR:
+            return e_prime if self.var_index == i else self
+        elif self.node_type == EMLNodeType.CONST:
             return self
-        elif self.kind in ('neg', 'inv', 'exp', 'log'):
-            return EMLCircuit(self.kind, left=self.left.substitute(replacement))
-        elif self.kind in ('add', 'mul'):
-            return EMLCircuit(self.kind,
-                              left=self.left.substitute(replacement),
-                              right=self.right.substitute(replacement))
+        elif self.node_type in (EMLNodeType.ADD, EMLNodeType.MUL, EMLNodeType.SUB, EMLNodeType.DIV):
+            new_left = self.left.subst(i, e_prime)
+            new_right = self.right.subst(i, e_prime)
+            return EMLExpr(self.node_type, left=new_left, right=new_right)
+        elif self.node_type in (EMLNodeType.EXP, EMLNodeType.LOG):
+            new_child = self.child.subst(i, e_prime)
+            return EMLExpr(self.node_type, child=new_child)
         return self
 
-    def __str__(self) -> str:
-        if self.kind == 'var':
-            return 'x'
-        elif self.kind == 'const':
-            return str(self.value)
-        elif self.kind == 'add':
-            return f'({self.left} + {self.right})'
-        elif self.kind == 'mul':
-            return f'({self.left} * {self.right})'
-        elif self.kind == 'neg':
-            return f'(-{self.left})'
-        elif self.kind == 'inv':
-            return f'(1/{self.left})'
-        elif self.kind == 'exp':
-            return f'exp({self.left})'
-        elif self.kind == 'log':
-            return f'log({self.left})'
-        return '?'
+    def __repr__(self) -> str:
+        if self.node_type == EMLNodeType.VAR:
+            return f"x{self.var_index}"
+        elif self.node_type == EMLNodeType.CONST:
+            return f"{self.value}"
+        elif self.node_type == EMLNodeType.ADD:
+            return f"({self.left} + {self.right})"
+        elif self.node_type == EMLNodeType.MUL:
+            return f"({self.left} * {self.right})"
+        elif self.node_type == EMLNodeType.SUB:
+            return f"({self.left} - {self.right})"
+        elif self.node_type == EMLNodeType.DIV:
+            return f"({self.left} / {self.right})"
+        elif self.node_type == EMLNodeType.EXP:
+            return f"exp({self.child})"
+        elif self.node_type == EMLNodeType.LOG:
+            return f"log({self.child})"
+        return "?"
 
 
-# ============================================================================
-# §2. Constructor Helpers
-# ============================================================================
+# ============================================================
+# EML Compilation: Functions → EML Expressions
+# ============================================================
 
-def Var() -> EMLCircuit:
-    return EMLCircuit('var')
-
-def Const(c: float) -> EMLCircuit:
-    return EMLCircuit('const', value=c)
-
-def Add(a: EMLCircuit, b: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('add', left=a, right=b)
-
-def Mul(a: EMLCircuit, b: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('mul', left=a, right=b)
-
-def Neg(a: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('neg', left=a)
-
-def Inv(a: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('inv', left=a)
-
-def Exp(a: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('exp', left=a)
-
-def Log(a: EMLCircuit) -> EMLCircuit:
-    return EMLCircuit('log', left=a)
-
-
-# ============================================================================
-# §3. Standard Circuits
-# ============================================================================
-
-def iter_exp_circuit(n: int) -> EMLCircuit:
-    """Circuit for the n-fold iterated exponential."""
-    c = Var()
-    for _ in range(n):
-        c = Exp(c)
-    return c
-
-def sinh_circuit() -> EMLCircuit:
-    """Circuit for sinh(x) = (exp(x) - exp(-x)) / 2."""
-    return Mul(Add(Exp(Var()), Neg(Exp(Neg(Var())))), Const(0.5))
-
-def cosh_circuit() -> EMLCircuit:
-    """Circuit for cosh(x) = (exp(x) + exp(-x)) / 2."""
-    return Mul(Add(Exp(Var()), Exp(Neg(Var()))), Const(0.5))
-
-def gaussian_circuit() -> EMLCircuit:
-    """Circuit for exp(-x^2)."""
-    return Exp(Neg(Mul(Var(), Var())))
-
-def sigmoid_circuit() -> EMLCircuit:
-    """Circuit for 1 / (1 + exp(-x))."""
-    return Inv(Add(Const(1.0), Exp(Neg(Var()))))
-
-def logistic_map_circuit(r: float) -> EMLCircuit:
-    """Circuit for the logistic map r*x*(1-x)."""
-    return Mul(Mul(Const(r), Var()), Add(Const(1.0), Neg(Var())))
-
-
-# ============================================================================
-# §4. The EML Operator
-# ============================================================================
-
-def eml_op(x: float, y: float) -> float:
-    """The EML binary operator: eml(x, y) = exp(x) - log(y)."""
-    log_y = math.log(y) if y > 0 else 0.0
-    try:
-        return math.exp(x) - log_y
-    except OverflowError:
-        return float('inf')
-
-
-def recover_exp_via_eml(x: float) -> float:
-    """Recover exp(x) via eml(x, 1)."""
-    return eml_op(x, 1.0)
-
-
-def recover_log_via_eml(y: float) -> float:
-    """Recover log(y) via 1 - eml(0, y)."""
-    return 1.0 - eml_op(0.0, y)
-
-
-# ============================================================================
-# §5. Iterated Exponential
-# ============================================================================
-
-def iter_exp(n: int, x: float) -> float:
-    """Compute the n-fold iterated exponential."""
-    result = x
-    for _ in range(n):
-        try:
-            result = math.exp(result)
-        except OverflowError:
-            return float('inf')
+def compile_polynomial(coeffs: List[float]) -> EMLExpr:
+    """
+    Compile a polynomial p(x) = coeffs[0] + coeffs[1]*x + coeffs[2]*x² + ...
+    into an EML expression using Horner's method.
+    
+    Algorithm (Horner's method):
+        p(x) = c₀ + x(c₁ + x(c₂ + ... + x·cₙ))
+    
+    This produces an EML expression of depth 0 (purely algebraic) and
+    size O(n) where n is the degree.
+    """
+    if not coeffs:
+        return EMLExpr.const(0.0)
+    
+    x = EMLExpr.var(0)
+    # Horner's method: start from highest degree
+    result = EMLExpr.const(coeffs[-1])
+    for i in range(len(coeffs) - 2, -1, -1):
+        result = EMLExpr.add(EMLExpr.const(coeffs[i]), EMLExpr.mul(x, result))
+    
     return result
 
 
-# ============================================================================
-# §6. Circuit Enumeration (for Depth-Width Tradeoff)
-# ============================================================================
-
-def enumerate_circuits(max_size: int, max_depth: int,
-                       constants: list[float] = [0.0, 1.0, -1.0, 0.5, 2.0]
-                       ) -> list[EMLCircuit]:
+def compile_power(n: int) -> EMLExpr:
     """
-    Enumerate all EML circuits up to a given size and transcendental depth.
-
-    This is for testing the depth-width tradeoff conjecture.
+    Compile x^n via exp(n * log(x)).
+    Produces an EML expression of depth 2.
     """
-    circuits: list[EMLCircuit] = []
-
-    def _gen(remaining_size: int, remaining_td: int) -> list[EMLCircuit]:
-        if remaining_size <= 0:
-            return []
-        result = [Var()]
-        for c in constants:
-            result.append(Const(c))
-        if remaining_size >= 2:
-            for sub in _gen(remaining_size - 1, remaining_td):
-                result.append(Neg(sub))
-                result.append(Inv(sub))
-            if remaining_td >= 1:
-                for sub in _gen(remaining_size - 1, remaining_td - 1):
-                    result.append(Exp(sub))
-                    result.append(Log(sub))
-        if remaining_size >= 3:
-            for s1 in range(1, remaining_size - 1):
-                s2 = remaining_size - 1 - s1
-                left_circuits = _gen(s1, remaining_td)
-                right_circuits = _gen(s2, remaining_td)
-                for l in left_circuits:
-                    for r in right_circuits:
-                        result.append(Add(l, r))
-                        result.append(Mul(l, r))
-        return result
-
-    return _gen(max_size, max_depth)
+    x = EMLExpr.var(0)
+    return EMLExpr.exp(EMLExpr.mul(EMLExpr.const(float(n)), EMLExpr.log(x)))
 
 
-def check_tradeoff(n: int, test_points: list[float] = [-1.0, 0.0, 1.0, 2.0],
-                   max_search_size: int = 6, tol: float = 1e-10
-                   ) -> dict:
+def compile_product() -> EMLExpr:
     """
-    Check the depth-width tradeoff conjecture for iterExp(n).
-
-    Returns information about the smallest circuit found.
+    Compile x₀ * x₁ via exp(log(x₀) + log(x₁)).
+    Produces an EML expression of depth 2.
     """
-    target_values = [iter_exp(n, x) for x in test_points]
-    chain = iter_exp_circuit(n)
-    chain_size = chain.size
+    return EMLExpr.exp(EMLExpr.add(EMLExpr.log(EMLExpr.var(0)), EMLExpr.log(EMLExpr.var(1))))
 
-    print(f"\nChecking depth-width tradeoff for iterExp({n}):")
-    print(f"  Chain circuit size: {chain_size}")
-    print(f"  Chain transc depth: {chain.transc_depth}")
-    print(f"  Target values at test points: {target_values}")
 
-    best_size = chain_size
-    best_circuit = chain
+def compile_reciprocal() -> EMLExpr:
+    """
+    Compile 1/x₀ via exp(-log(x₀)).
+    Produces an EML expression of depth 2.
+    """
+    return EMLExpr.exp(EMLExpr.sub(EMLExpr.const(0.0), EMLExpr.log(EMLExpr.var(0))))
 
-    # Search for smaller circuits
-    for size in range(1, min(max_search_size, chain_size)):
-        circuits = enumerate_circuits(size, n)
-        for c in circuits:
-            if c.transc_depth > n:
-                continue
-            try:
-                values = [c.eval(x) for x in test_points]
-                if all(abs(v - t) < tol for v, t in zip(values, target_values)
-                       if math.isfinite(v) and math.isfinite(t)):
-                    if all(math.isfinite(v) for v in values):
-                        if c.size < best_size:
-                            best_size = c.size
-                            best_circuit = c
-                            print(f"  Found smaller circuit of size {c.size}: {c}")
-            except (OverflowError, ZeroDivisionError, ValueError):
-                continue
 
+def compile_sqrt() -> EMLExpr:
+    """
+    Compile √x₀ via exp(log(x₀) / 2).
+    Produces an EML expression of depth 2.
+    """
+    return EMLExpr.exp(EMLExpr.div(EMLExpr.log(EMLExpr.var(0)), EMLExpr.const(2.0)))
+
+
+# ============================================================
+# Function Approximation
+# ============================================================
+
+def chebyshev_nodes(n: int, a: float, b: float) -> List[float]:
+    """Compute n Chebyshev nodes on [a, b]."""
+    return [
+        (a + b) / 2 + (b - a) / 2 * math.cos((2*k + 1) * math.pi / (2*n))
+        for k in range(n)
+    ]
+
+
+def chebyshev_coefficients(f: Callable[[float], float], n: int, a: float, b: float) -> List[float]:
+    """
+    Compute polynomial coefficients for Chebyshev interpolation of f on [a, b].
+    Returns coefficients in monomial basis.
+    """
+    nodes = chebyshev_nodes(n, a, b)
+    values = [f(x) for x in nodes]
+    
+    # Convert to monomial coefficients via Newton's divided differences
+    # (simplified for small n)
+    coeffs = list(values)
+    for j in range(1, n):
+        for i in range(n - 1, j - 1, -1):
+            coeffs[i] = (coeffs[i] - coeffs[i-1]) / (nodes[i] - nodes[i-j])
+    
+    # Convert from Newton form to monomial form
+    mono = [0.0] * n
+    mono[0] = coeffs[0]
+    
+    # Build up: each step multiplies by (x - nodes[k])
+    running = [0.0] * n
+    running[0] = 1.0
+    
+    for k in range(1, n):
+        # Multiply running by (x - nodes[k-1])
+        new_running = [0.0] * n
+        for i in range(k, 0, -1):
+            new_running[i] = running[i-1]
+        for i in range(k + 1):
+            new_running[i] -= nodes[k-1] * running[i]
+        running = new_running
+        
+        for i in range(n):
+            mono[i] += coeffs[k] * running[i]
+    
+    return mono
+
+
+def approximate_function(f: Callable[[float], float], a: float, b: float, 
+                          degree: int) -> EMLExpr:
+    """
+    Approximate f on [a, b] by a polynomial EML expression of given degree.
+    
+    Algorithm:
+        1. Compute Chebyshev interpolation nodes.
+        2. Evaluate f at these nodes.
+        3. Compute polynomial coefficients.
+        4. Compile polynomial to EML expression via Horner's method.
+    
+    The result is an EML expression of depth 0 (purely algebraic)
+    with size O(degree).
+    """
+    coeffs = chebyshev_coefficients(f, degree, a, b)
+    return compile_polynomial(coeffs)
+
+
+# ============================================================
+# Complexity Analysis
+# ============================================================
+
+def analyze_expression(e: EMLExpr) -> Dict[str, int]:
+    """Compute complexity metrics for an EML expression."""
     return {
-        'n': n,
-        'chain_size': chain_size,
-        'best_size': best_size,
-        'best_circuit': str(best_circuit),
-        'conjecture_bound': 2 * n - 1,
-        'conjecture_holds': best_size >= 2 * n - 1
+        "size": e.size,
+        "depth": e.depth,
+        "transc_count": e.transc_count,
+        "depth_le_transc": int(e.depth <= e.transc_count),
+        "transc_le_size": int(e.transc_count <= e.size),
     }
 
 
-# ============================================================================
-# §7. Depth Class Verification
-# ============================================================================
-
-def verify_depth_class(circuit: EMLCircuit, target_fn: Callable[[float], float],
-                       test_points: list[float], expected_depth: int,
-                       tol: float = 1e-10) -> dict:
-    """Verify that a circuit computes the target function at the expected depth."""
-    errors = []
+if __name__ == "__main__":
+    # Demo: compile and evaluate
+    print("=== EML Expression Compilation ===\n")
+    
+    # Polynomial 3x² + 2x + 1
+    poly = compile_polynomial([1.0, 2.0, 3.0])
+    print(f"Polynomial 3x² + 2x + 1:")
+    print(f"  Expression: {poly}")
+    print(f"  Metrics: {analyze_expression(poly)}")
+    print(f"  eval(x=2): {poly.eval({0: 2.0})} (expected: {3*4 + 2*2 + 1})")
+    
+    # Power x^5
+    power = compile_power(5)
+    print(f"\nPower x⁵ (via exp-log):")
+    print(f"  Expression: {power}")
+    print(f"  Metrics: {analyze_expression(power)}")
+    print(f"  eval(x=3): {power.eval({0: 3.0})} (expected: {3**5})")
+    
+    # Product
+    prod = compile_product()
+    print(f"\nProduct x₀ × x₁ (via exp-log):")
+    print(f"  Expression: {prod}")
+    print(f"  Metrics: {analyze_expression(prod)}")
+    print(f"  eval(x₀=3, x₁=7): {prod.eval({0: 3.0, 1: 7.0})} (expected: 21)")
+    
+    # Approximate sin(x) on [-π, π]
+    print(f"\n=== Function Approximation ===\n")
+    sin_approx = approximate_function(math.sin, -math.pi, math.pi, 15)
+    print(f"sin(x) approximation (degree 15):")
+    print(f"  Metrics: {analyze_expression(sin_approx)}")
+    
+    test_points = [0.0, 0.5, 1.0, math.pi/2]
     for x in test_points:
-        try:
-            computed = circuit.eval(x)
-            expected = target_fn(x)
-            if math.isfinite(computed) and math.isfinite(expected):
-                errors.append(abs(computed - expected))
-            else:
-                errors.append(float('inf'))
-        except (OverflowError, ValueError):
-            errors.append(float('inf'))
-
-    max_error = max(errors) if errors else 0.0
-    return {
-        'circuit': str(circuit),
-        'size': circuit.size,
-        'transc_depth': circuit.transc_depth,
-        'expected_depth': expected_depth,
-        'depth_correct': circuit.transc_depth <= expected_depth,
-        'max_error': max_error,
-        'function_correct': max_error < tol,
-        'test_points': len(test_points)
-    }
-
-
-if __name__ == '__main__':
-    # Quick self-test
-    x = Var()
-    assert Exp(x).eval(0.0) == 1.0
-    assert abs(sinh_circuit().eval(1.0) - math.sinh(1.0)) < 1e-10
-    assert abs(cosh_circuit().eval(1.0) - math.cosh(1.0)) < 1e-10
-    print("All self-tests passed.")
+        approx_val = sin_approx.eval({0: x})
+        exact_val = math.sin(x)
+        print(f"  x={x:.4f}: approx={approx_val:.8f}, exact={exact_val:.8f}, error={abs(approx_val-exact_val):.2e}")

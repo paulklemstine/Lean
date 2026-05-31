@@ -1,103 +1,85 @@
-# The One Operator That Rules Them All
+# One Function to Rule Them All: How Exponents and Logarithms Could Be the Atoms of Computation
 
-## How a simple mathematical trick unifies the building blocks of computation
-
----
-
-In 1936, Alan Turing showed that a single, universal machine could simulate any computation. His insight — that complex computation reduces to simple, repeated operations — reshaped the twentieth century. Now, a new line of mathematical research asks whether a similar universality principle governs the continuous world of real-number computation. The answer, remarkably, seems to involve just two ancient mathematical friends: the exponential and the logarithm.
-
-## The Unreasonable Power of Exp and Log
-
-Every high school student learns about exponential growth and logarithms. What's less appreciated is how these two functions, combined with basic arithmetic (addition, multiplication, division), can build essentially *every* mathematical function that scientists and engineers use daily.
-
-Consider the hyperbolic sine function, sinh(x), beloved by physicists modeling hanging cables and special relativity. It looks exotic, but it decomposes neatly:
-
-> sinh(x) = (eˣ - e⁻ˣ) / 2
-
-That's just two exponentials, a subtraction, and a division. The hyperbolic cosine, cosh(x)? Same idea, with a plus sign. The Gaussian bell curve that underpins all of statistics?
-
-> exp(-x²) = e^(-x·x)
-
-One multiplication and one exponential. The logistic sigmoid — the activation function powering modern neural networks?
-
-> σ(x) = 1 / (1 + e⁻ˣ)
-
-Again: an exponential, an addition, and a reciprocal.
-
-This pattern runs deep. Real powers like x^(1/3) or x^π decompose through the "exp-log bridge": x^a = exp(a · log(x)). Every polynomial is built from addition and multiplication. Every rational function adds division. And then exp and log open the door to the entire edifice of transcendental mathematics.
-
-## A Single Binary Operator
-
-Here's where the story gets surprising. Mathematicians working on computational theory have discovered that a single binary operator — let's call it EML — can replace both exp and log:
-
-> EML(x, y) = eˣ - log(y)
-
-This looks almost too simple. But the magic lies in two identities:
-
-- **Recovering exp**: EML(x, 1) = eˣ - log(1) = eˣ - 0 = eˣ
-- **Recovering log**: 1 - EML(0, y) = 1 - (e⁰ - log(y)) = 1 - 1 + log(y) = log(y)
-
-So one operator, applied with the right constant arguments, recovers both transcendental primitives. Combined with basic arithmetic, EML generates the entire class of elementary real functions.
-
-This is analogous to the NAND gate in digital logic — a single gate from which all Boolean functions can be built. But EML operates in the continuous world of real numbers, making it a "universal primitive" for analog computation.
-
-## Measuring Transcendental Complexity
-
-The EML framework doesn't just tell us *which* functions are computable — it introduces a natural measure of *how transcendentally complex* a computation is.
-
-Imagine building a mathematical expression as a tree. At the leaves are variables and constants. Internal nodes are operations: addition, multiplication, exp, log. Now count the maximum number of exp and log nodes you encounter along any path from the root to a leaf. Call this the *transcendental depth*.
-
-This measure captures something fundamental: how many times you need to "cross the boundary" between the algebraic and transcendental worlds to compute a function. Addition and multiplication are algebraically "free." Each application of exp or log costs one unit of transcendental depth.
-
-Under this measure, a natural hierarchy emerges:
-
-- **Depth 0**: Rational functions (polynomials, their ratios). x², 1/x, (x³ + 1)/(x - 2). No transcendental operations needed.
-- **Depth 1**: Functions involving one level of exp or log. eˣ, log(x), sinh(x), the Gaussian, the sigmoid. All the workhorses of applied mathematics.
-- **Depth 2**: Functions involving nested transcendentals. exp(exp(x)), the iterated exponential. These arise in complexity theory and combinatorics.
-- **Depth n**: The n-fold iterated exponential exp(exp(...(x)...)). Each level of nesting requires one more unit of depth.
-
-## A Strict Hierarchy
-
-The hierarchy is not just a classification scheme — it's provably strict. The simplest version of this result is striking: **the exponential function cannot be computed by any algebraic formula**, no matter how clever.
-
-The proof uses a beautiful fixed-point argument from calculus. Suppose some polynomial p(x) equals eˣ for every x. Then taking derivatives: p'(x) = eˣ = p(x). So p equals its own derivative! But a polynomial's derivative has strictly lower degree — unless the polynomial is a constant. And a constant can't equal eˣ at both x = 0 (where eˣ = 1) and x = 1 (where eˣ ≈ 2.718). Contradiction.
-
-This clean argument — polynomial functions can't match exp because they'd need to be their own derivative — shows that transcendental depth 0 is strictly weaker than transcendental depth 1. The deeper levels of the hierarchy are separated by similar, increasingly intricate arguments.
-
-## Depth Adds Under Composition
-
-One of the elegant properties of transcendental depth is its behavior under function composition: **depths add**. If f has depth 3 and g has depth 2, then f ∘ g (f composed with g) has depth at most 5.
-
-This is proved by a circuit substitution argument. To compute f(g(x)), take the circuit for f and replace every occurrence of the variable with the circuit for g. Each transcendental node in f might now sit atop the transcendental nodes from g, stacking their depths additively.
-
-This subadditivity property has practical implications. It tells us that composing operations never produces transcendental depth "for free" — the complexity of a pipeline is bounded by the sum of its stages. In the language of neural networks, each "layer" can contribute at most a constant amount of transcendental depth.
-
-## The Church-Turing Connection
-
-The parallel to classical computability is deliberate. Turing's thesis states that all effectively computable functions can be computed by a Turing machine. The EML Church-Turing thesis proposes an analogous principle for continuous computation:
-
-> *Every Liouvillian function — one built from rational functions by finitely many adjunctions of exp and log — is computable by an EML circuit.*
-
-The forward direction is trivially true: any EML circuit, by definition, computes some function. The depth of the circuit tells us exactly which level of the Liouvillian hierarchy the function belongs to.
-
-The interesting question is what lies *outside* the EML universe. Trigonometric functions like sin(x) and cos(x) are notable absentees. Over the real numbers, there is no algebraic way to extract sin and cos from exp and log alone — you need the complex exponential e^(ix) = cos(x) + i·sin(x), which involves imaginary numbers. This suggests that the real EML universe is a proper subset of the full elementary function class, and the boundary is exactly where complex analysis becomes essential.
-
-## Implications for Neural Networks
-
-Modern neural networks are, at their core, compositions of simple functions. The most common activation functions — sigmoid, tanh, softplus — are all EML-computable, requiring transcendental depth exactly 1. The network's mathematical power comes from composing many such layers, linearly increasing the transcendental depth.
-
-The EML framework suggests a new way to measure neural network expressiveness: not by parameter count or layer count, but by the *transcendental depth* of the functions they can approximate. A network with k layers of sigmoid activations has effective transcendental depth k, which determines the class of functions it can represent exactly (not just approximate).
-
-This perspective connects deep learning theory to classical analysis in a precise, quantitative way. The "depth" in "deep learning" has a mathematical shadow in the transcendental depth hierarchy — and both measure, in different ways, the computational power that emerges from composition.
-
-## An Open Frontier
-
-The EML depth-width tradeoff conjecture poses a concrete challenge: computing the n-fold iterated exponential with optimal transcendental depth requires a circuit of size at least 2n - 1. For small cases, this is verifiable by exhaustive search. For large n, it remains open — and its resolution would reveal deep facts about the structure of transcendental computation.
-
-Mathematics has a long tradition of finding unity beneath apparent diversity. The EML operator — a single formula combining exp and log — is the latest entry in this tradition: a universal primitive that captures the full power of elementary real computation. Like Turing's universal machine, it shows that computational universality can emerge from stunning simplicity.
-
-The hierarchy it induces — measuring not just *what* can be computed, but *how transcendentally deep* the computation must go — opens a new dimension in understanding the complexity of continuous mathematics. In a world increasingly powered by continuous computation, from neural networks to analog signal processing, that understanding may prove as consequential as Turing's original insight.
+*A single mathematical operation — combining exponentials and logarithms — may be all you need to compute anything.*
 
 ---
 
-*The research described in this article was conducted using rigorous mathematical methods, with key results verified to the standard of formal mathematical proof.*
+## The Search for Simplicity
+
+Mathematics has always been a quest for economy. Euclid reduced geometry to five postulates. Newton captured the motion of planets in a handful of equations. The entire digital revolution rests on a single logical operation: the NAND gate, from which every computer circuit can be built. Now, a new line of research suggests that a similarly radical simplification may be possible for continuous mathematics — and the key is an operation so simple it might be taught in a high school algebra class.
+
+The operation is this: take the exponential of one number, and the logarithm of another. From just these two functions, together with basic arithmetic (addition, subtraction, multiplication, division), you can build every elementary function that scientists use — polynomials, roots, trigonometric functions, and more. This is the **EML conjecture**, named for the triad of Exp, Multiply, and Log that forms its foundation.
+
+If the conjecture is true, it would mean that a single type of computational "neuron" — one that knows how to exponentiate and take logarithms — is theoretically sufficient to approximate any continuous computation on real numbers.
+
+## The Exp-Log Magic Trick
+
+The core insight behind the EML conjecture is deceptively simple. Consider multiplication. You learned in school that multiplying two numbers is... multiplying two numbers. But there's another way. If you have two positive numbers *a* and *b*, you can compute their product as:
+
+> *a × b = exp(log(a) + log(b))*
+
+Take the logarithm of each number, add the results, and exponentiate. This is the principle behind the slide rule, one of the most important computational tools in history, used by engineers from the 17th century through the Apollo missions.
+
+But the trick goes much further. Powers? Easy:
+
+> *x^n = exp(n × log(x))*
+
+Square roots? Just a special case:
+
+> *√x = exp(log(x) / 2)*
+
+Division?
+
+> *a / b = exp(log(a) − log(b))*
+
+Every one of these operations — operations that seem fundamentally different — reduces to just two ingredients: `exp` and `log`, glued together with addition and subtraction.
+
+## Building the Tower
+
+Once you have polynomials (which are just sums of powers), you can invoke one of the most powerful results in mathematics: the **Weierstrass approximation theorem**, which says that any continuous function on a closed interval can be approximated as closely as you like by polynomials.
+
+This means that sine, cosine, the error function, Bessel functions — the entire menagerie of special functions that populate physics textbooks — can be approximated by polynomials. And polynomials, as we've seen, can be built from exp and log.
+
+But the EML framework goes further. Because exp and log are themselves in the toolkit, functions like *exp(exp(x))* or *log(log(x))* — iterated towers of transcendental operations — are also representable. This gives the EML class a richness that goes beyond what polynomials alone can do. It can capture functions with different growth rates, from the glacially slow logarithmic to the explosively fast doubly-exponential.
+
+## A Hierarchy of Complexity
+
+One of the most interesting discoveries in this research is that EML expressions have a natural measure of complexity: their **depth**. The depth counts how many layers of exp/log nesting an expression uses. A polynomial operating on positive reals has depth 2 (one log going in, one exp coming out). A doubly-exponential function like *exp(exp(x))* has depth 2. And this hierarchy is strict — there are functions at every depth level that cannot be computed at any lower depth.
+
+This is not unlike the circuit complexity classes that computer scientists study, where they measure how many layers of logical gates are needed to compute a Boolean function. The EML depth hierarchy is its continuous analogue, measuring the "transcendental complexity" of a real-valued computation.
+
+The depth also composes predictably: if you substitute one EML expression into another, the resulting depth is at most the sum of the two depths. This gives engineers a way to reason about the resource cost of building complicated functions from simple ones.
+
+## The Neural Network Connection
+
+Why does this matter beyond pure mathematics? The answer lies in the design of neural networks. Today's artificial neural networks are built from simple units that compute weighted sums followed by a nonlinear "activation function" — typically a sigmoid, ReLU, or similar function. The universal approximation theorems for neural networks show that these architectures can approximate any continuous function, but the choice of activation function is largely arbitrary.
+
+The EML conjecture suggests a more principled choice. An **EML neuron** would compute something like *exp(a) · log(b)* — a single unit that combines exponential amplification with logarithmic compression. If the conjecture is true, a network of such neurons would be computationally universal not because of some abstract existence theorem, but because of the *algebraic structure* of the exp and log functions.
+
+This has practical implications. Exponentials and logarithms have well-understood numerical properties. They map nicely to hardware (many processors have dedicated exp/log instructions). And the exp-log representation often reveals structure that is hidden in a polynomial or neural-network representation — for instance, multiplicative relationships become additive after taking logarithms, which is exactly the principle behind log-linear models in statistics.
+
+## What Could Go Wrong?
+
+The conjecture is not trivially true. There are genuine obstacles. The most serious is the **domain restriction**: the logarithm is only defined for positive numbers. This means that the raw EML reduction of multiplication, *a × b = exp(log(a) + log(b))*, only works when *a* and *b* are positive. Extending to negative numbers or zero requires additional tricks — essentially, tracking signs separately and using the absolute value.
+
+There are also questions about **computability** in the rigorous sense. The conjecture claims universality for "computable real functions," but the precise meaning of this depends on which model of real computation you adopt. In the Blum-Shub-Smale model, which allows exact real arithmetic, the conjecture is a statement about algebraic expressibility. In the computable analysis tradition, where everything is approximated to finite precision, the relevant question is whether EML compositions can achieve arbitrary approximation accuracy — which connects directly to the Weierstrass-type results.
+
+## The Diagonal Map: A Window into Dynamics
+
+An intriguing connection emerges when you apply both exp and log to the *same* variable. The **diagonal EML function** *d(x) = exp(x) − log(x)* has remarkable properties: it has no fixed points on the positive reals (it always exceeds *x*), and it is bounded below by 2 for all positive inputs. This means the diagonal map is a kind of "expanding" operation that pushes every positive number away from itself.
+
+This no-fixed-point property is not just a curiosity. It connects to dynamical systems theory and the study of iteration. If you repeatedly apply the diagonal map, you get a sequence that grows without bound — a fact that has implications for the convergence analysis of iterative algorithms built from EML primitives.
+
+## Looking Forward
+
+The EML conjecture sits at a crossroads of several mathematical traditions: analysis (approximation theory), algebra (closure properties of function classes), computability theory (what can be computed with finite resources), and machine learning (universal approximation). Its resolution — whether positive or negative — would illuminate the deep structure connecting these fields.
+
+If true, it would provide a canonical minimal basis for real-valued computation, analogous to how NAND gates provide a canonical basis for Boolean computation. If false, the *reason* for failure would itself be interesting — it would identify a fundamental limitation of the exp-log paradigm and point toward whatever additional primitives are needed.
+
+In the meantime, the partial results are already useful. The fact that all polynomials are EML-representable, that the depth hierarchy is strict, and that the class has clean closure properties — these are tools that can be applied today, whether or not the full universality conjecture is eventually settled.
+
+Mathematics, at its best, finds the hidden unity behind apparent diversity. The EML program asks: is there a single thread — the interplay of growth and compression, of exp and log — that runs through all of continuous computation? The answer, whatever it turns out to be, will tell us something deep about the fabric of mathematical reality.
+
+---
+
+*The research described here involves new mathematical results about the closure properties of exponential-logarithmic function classes and their relationship to computational universality.*
