@@ -1496,10 +1496,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "038c9b3f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9d127dc",
     "timestamp": "2026-05-29T10:33:26.756675+00:00"
   },
   {
@@ -3551,10 +3551,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.96,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "a4eead7c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:57.480590+00:00"
   },
   {
@@ -3980,10 +3980,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.8,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "e5ff52e8",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:56.257830+00:00"
   },
   {
@@ -4039,10 +4039,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.77,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "9dcd4b8d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:59.801550+00:00"
   },
   {
@@ -4069,10 +4069,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "72d2d425",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-30T13:51:56.722730+00:00"
   },
   {
