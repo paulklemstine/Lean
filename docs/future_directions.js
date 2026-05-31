@@ -266,10 +266,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "ab6b7dec",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -491,10 +491,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.93,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "f95fe11c",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -521,10 +521,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.91,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "58d4594d",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -611,10 +611,10 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "priority_score": 0.89,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "831f1fd8",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -746,10 +746,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.87,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "b5aa996d",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -1179,10 +1179,10 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "priority_score": 0.83,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "b3fdee2d",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
