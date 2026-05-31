@@ -177,13 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
         container.appendChild(sectionTitle);
 
+        const isFilename = (s) => typeof s === 'string' && s.length < 80 && (s.endsWith('.py') || s.startsWith('viz_') || s.startsWith('visualize_'));
+
         const validItems = items.filter(item => {
             if (typeof item === 'string') {
                 console.warn('Skipping string visualization entry:', item);
                 return false;
             }
-            // Skip entries with no runnable code (blank white image on Generate)
-            if (!item.code || !item.code.trim()) {
+            // Accept if code is real content, or if code_file exists for fetching
+            const hasCode = item.code && item.code.trim() && !isFilename(item.code);
+            const hasCodeFile = item.code_file && item.code_file.trim();
+            if (!hasCode && !hasCodeFile) {
                 return false;
             }
             return true;
@@ -194,6 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         validItems.forEach((item, idx) => {
+            // Resolve code: if item.code is a filename placeholder, fetch from code_file
+            let resolvedCode = '';
+            if (item.code && item.code.trim() && !isFilename(item.code)) {
+                resolvedCode = item.code;
+            } else if (item.code_file) {
+                // Will be fetched asynchronously below
+                resolvedCode = '';
+            }
             const card = document.createElement('div');
             card.className = 'viz-container';
 
@@ -243,8 +255,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const editor = document.createElement('textarea');
             editor.className = 'code-editor';
             editor.spellcheck = false;
-            editor.value = item.code || '';
+            editor.value = resolvedCode;
             editor.style.display = 'none'; // Hidden by default
+
+            // Fetch code from code_file if not resolved yet
+            if (!resolvedCode && item.code_file) {
+                fetch(item.code_file)
+                    .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+                    .then(code => { editor.value = code; resolvedCode = code; })
+                    .catch(err => console.warn('Failed to fetch viz code:', item.code_file, err));
+            }
 
             const outputContainer = document.createElement('div');
             outputContainer.className = 'gallery-img-container';

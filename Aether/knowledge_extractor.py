@@ -2357,6 +2357,42 @@ Research mode: {concept.research_mode}
                 for e in idemos
             ]
 
+        # Replace visualization code fields that are filename placeholders
+        # The LLM sometimes outputs "code": "visualize_barrier.py" instead of actual code
+        viz_code_source = ""
+        if hasattr(job, 'result_demo') and job.result_demo:
+            viz_code_source = job.result_demo
+        elif hasattr(job, 'result_algorithms') and job.result_algorithms:
+            viz_code_source = job.result_algorithms
+        if viz_code_source:
+            # Parse result_demo into a dict of filename→content
+            file_contents = {}
+            parts = re.split(r'-- (?:NEW_FILE|DIFF): (.+?)\n', viz_code_source)
+            for i in range(1, len(parts) - 1, 2):
+                fname = parts[i].strip()
+                content = parts[i + 1].strip() if i + 1 < len(parts) else ""
+                if content:
+                    file_contents[fname] = content
+                    file_contents[Path(fname).name] = content  # also key by basename
+
+            viz_list = pkg.get("visualizations", [])
+            for v in viz_list:
+                if isinstance(v, dict):
+                    code = v.get("code", "")
+                    if isinstance(code, str) and (PLACEHOLDER_PATTERN.match(code) or
+                        (len(code) < 80 and code.endswith('.py'))):
+                        # Try to find the matching file content
+                        matched = file_contents.get(code, "")
+                        if not matched:
+                            # Try partial match on basename
+                            stem = code.replace('.py', '').replace('_', '').lower()
+                            for fname, content in file_contents.items():
+                                if stem in fname.replace('_', '').replace('.py', '').lower():
+                                    matched = content
+                                    break
+                        if matched:
+                            v["code"] = matched
+
         # Build modules dict from all Python artifacts
         modules = {}
 

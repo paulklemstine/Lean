@@ -207,7 +207,9 @@ def update_index():
 
                 # Handle Python visualization scripts (code field)
                 viz_code = viz.get("code", "")
-                if viz_code and not viz.get("code_file"):
+                # Skip if code is just a filename placeholder (not actual Python)
+                is_filename = viz_code and len(viz_code) < 80 and (viz_code.endswith('.py') or viz_code.startswith('viz_') or viz_code.startswith('visualize_'))
+                if viz_code and not is_filename and not viz.get("code_file"):
                     safe_name = sanitize_filename(viz.get("name", ""), 30) or f"viz_{i}"
                     viz_filename = f"{pkg_slug}_{safe_name}.py"
                     viz_path = os.path.join(viz_dir, viz_filename)
