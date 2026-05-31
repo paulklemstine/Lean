@@ -1,254 +1,233 @@
-# Stereographic Sheaf Theory: Spectral Decomposition and Mayer-Vietoris Exactness for Two-Chart Covers
+# Stereographic Sheaf Theory: Gluing Data, Čech Cohomology, and Descent on Spheres
 
 ## Abstract
 
-We develop a formal theory of **stereographic sheaves** — sheaves on the sphere S^n whose gluing data is constrained by the involutive structure of the stereographic two-chart atlas. We define the category of stereographic sheaves via involutive gluing data, introduce **conformal weight data** as a novel extension capturing differential-form behavior, and prove the complete **Mayer-Vietoris exact sequence** for this setting. Our main results include: (1) a spectral decomposition theorem splitting sections into ±1 eigenspaces of the transition involution, (2) exactness of the Tate norm-difference sequence N∘D = D∘N = 0 with explicit witnesses, (3) computation of H⁰ and H¹ for specific gluing data over ℤ and ℝ, and (4) a cross-domain connection between Čech cohomology and ℤ/2ℤ group cohomology. All results are formalized and verified in the Lean 4 proof assistant with Mathlib.
-
-**Keywords**: Sheaf theory, stereographic projection, Čech cohomology, Mayer-Vietoris sequence, involutions, spectral decomposition, group cohomology, formal verification.
+We develop a formalized theory of **stereographic sheaves**—sheaves on the sphere S^n whose gluing data is constrained by the conformal structure of the stereographic two-chart atlas. We introduce the `SGDatum` structure (an involutive group endomorphism modeling the transition function) and the `StereoCechComplex` (the Čech cochain complex for the two-chart cover). Our main results include: (1) the Tate complex identity N∘D = D∘N = 0, establishing the complex property; (2) the eigenspace direct sum decomposition theorem with uniqueness, providing the spectral theory for ℤ/2ℤ actions; (3) exactness of the Tate sequence over ℝ, showing H¹ vanishes for ℝ-valued stereographic sheaves; (4) nontriviality of H¹ for ℤ-valued sheaves with negation gluing, witnessing H¹ ≅ ℤ/2ℤ; (5) the H⁰ rank formula for odd primes, showing negation has only trivial fixed points in ZMod p; and (6) a descent criterion characterizing when sheaf data on S^n descends to the quotient. All results are machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Sheaf theory provides a systematic framework for studying how local data glues to form global objects. The sphere S^n, equipped with its stereographic two-chart atlas {U_N, U_S}, offers an ideal testing ground: the atlas has just two charts, the transition function is a conformal involution, and the resulting Čech complex is finite-dimensional.
 
-The sphere S^n admits a canonical two-chart atlas via stereographic projection from the north and south poles. The charts U_N and U_S are each diffeomorphic to ℝ^n, and the transition map on the overlap U_N ∩ U_S ≅ ℝ^n \ {0} is the conformal inversion x ↦ x/|x|². In the one-dimensional case S¹, this simplifies to t ↦ 1/t.
+The key observation underlying this work is that the involutive nature of the stereographic transition map t ↦ 1/t (or more generally, x ↦ x/|x|² in higher dimensions) forces a spectral decomposition of the section spaces into ±1 eigenspaces. This decomposition:
 
-The key observation driving this work is that the stereographic transition is an **involution**: applying it twice returns to the identity. This involutive structure imposes strong constraints on the gluing data of any sheaf on the stereographic cover, leading to:
+1. Reduces Čech cohomology computations to eigenspace dimension counts
+2. Connects sheaf cohomology on S^n to group cohomology of ℤ/2ℤ
+3. Provides a computational shortcut: cohomology is determined by a single transition function
 
-1. A spectral decomposition of sections into ±1 eigenspaces
-2. Reduction of Čech cohomology to eigenspace dimensions
-3. A direct connection to ℤ/2ℤ group cohomology
+### 1.1 Related Work
 
-### 1.2 Related Work
+The connection between Čech cohomology and group cohomology for cyclic covers is classical (see Grothendieck's Tôhoku paper). Our contribution is the explicit formalization and the emphasis on the conformal constraint, which selects a geometrically natural subcategory of sheaves. The descent theory connects to the classical Galois descent framework.
 
-Sheaf cohomology on manifolds has been extensively studied since Leray's foundational work [Leray 1945] and Grothendieck's algebraic reformulation. The Mayer-Vietoris sequence for two-element covers is classical [Bott-Tu 1982]. The connection between Čech cohomology and group cohomology for Galois covers appears in [Serre 1956, Brown 1982]. Our contribution is the systematic exploitation of the involutive structure specific to stereographic covers, and the formalization of these results in a proof assistant.
+## 2. Definitions
 
-### 1.3 Contributions
+### 2.1 Stereographic Gluing Datum
 
-- **Definition** of `StereoGluing`, `ConformalWeightDatum`, and `StereoMorphism` as formal mathematical structures
-- **Spectral Decomposition Theorem** (Theorem 3.1): every element decomposes under an additive involution
-- **Mayer-Vietoris Exactness** (Theorem 4.1–4.3): N∘D = D∘N = 0 with constructive witnesses
-- **Cross-domain bridge**: identification of Čech H⁰ with ℤ/2ℤ group cohomology
-- **Iterated vanishing** (Theorem 5.1): N^k = 0 for the negation gluing on ℤ
-- **Complete formalization** in Lean 4 with Mathlib (495 lines, 0 sorry)
+**Definition 2.1** (SGDatum). A *stereographic gluing datum* on an abelian group G is a pair (φ, inv) where:
+- φ : G → G is a group homomorphism
+- inv : ∀ x, φ(φ(x)) = x (involutivity)
 
-## 2. Definitions and Notation
+The datum models the transition function of a sheaf on the two-chart atlas of S^n. The involutivity encodes the self-inverse nature of stereographic inversion.
 
-### 2.1 Stereographic Gluing Data
+**Key instances:**
+- *Trivial datum*: φ = id (constant sheaf)
+- *Negation datum*: φ = −id (orientation sheaf)
 
-**Definition 2.1** (StereoGluing). A *stereographic gluing datum* on an abelian group G is a pair (G, φ) where φ: G → G is an involutive group homomorphism. Formally:
+### 2.2 Eigenspaces
 
-```
-structure StereoGluing (G : Type*) [AddCommGroup G] where
-  transition : G →+ G
-  involutive : ∀ x, transition (transition x) = x
-```
+**Definition 2.2.** Given an SGDatum (φ, inv) on G:
+- The *fixed-point subgroup* (H⁰): {g ∈ G | φ(g) = g}
+- The *anti-fixed subgroup*: {g ∈ G | φ(g) = −g}
 
-**Definition 2.2** (Standard gluing data).
-- *Trivial gluing*: φ = id
-- *Negation gluing*: φ = -id
+Both are additive subgroups of G, closed under addition, negation, and containing zero.
 
-### 2.2 Čech Cohomology
+### 2.3 Čech Cochain Complex
 
-**Definition 2.3** (Čech H⁰). The zeroth Čech cohomology group is the fixed-point subgroup:
-$$H^0(D) = \{g \in G \mid \phi(g) = g\}$$
-
-**Definition 2.4** (Čech differential). The differential δ: G × G → G is:
-$$\delta(a, b) = \phi(a) - b$$
-
-**Definition 2.5** (Čech H¹). The first cohomology group is H¹ = G / im(δ).
-
-### 2.3 Conformal Weight Datum (Novel)
-
-**Definition 2.6** (ConformalWeightDatum). A *conformal weight datum* is a triple (φ, w, w²=1) where φ: ℝ → ℝ is an ℝ-linear involution and w ∈ {±1} is the conformal weight. The *weighted transition* is g ↦ w · φ(g).
-
-This models sheaves of differential k-forms on S^n, where:
-- w = +1 corresponds to scalar forms (0-forms, functions)
-- w = -1 corresponds to pseudoscalar forms (top forms, volume elements)
-
-**Theorem 2.7** (Weight Classification). If w² = 1, then w = 1 or w = -1.
-
-*Proof*: Factor w² - 1 = (w-1)(w+1) = 0 and apply zero-product property. □
-
-### 2.4 Morphisms and Category Structure
-
-**Definition 2.8** (StereoMorphism). A morphism f: (G, φ₁) → (H, φ₂) is a group homomorphism f: G → H such that f ∘ φ₁ = φ₂ ∘ f (equivariance).
-
-**Proposition 2.9**. Stereographic sheaves form a category with:
-- Identity: id morphism
-- Composition: (f ∘ g) is a morphism when f and g are
-- Associativity: (f ∘ g) ∘ h = f ∘ (g ∘ h)
-
-## 3. Spectral Decomposition
-
-### 3.1 Main Theorem
-
-**Theorem 3.1** (Spectral Decomposition). Let φ: ℝ → ℝ be an additive involution. For every g ∈ ℝ, there exist s, a ∈ ℝ such that:
-1. φ(s) = s (symmetric)
-2. φ(a) = -a (antisymmetric)
-3. g = s + a
-
-Moreover, the decomposition is given explicitly by:
-$$s = \frac{g + \phi(g)}{2}, \quad a = \frac{g - \phi(g)}{2}$$
-
-*Proof sketch*: The key technical step is showing that additive maps on ℝ commute with division by 2. Since φ(x/2) + φ(x/2) = φ(x) by additivity, we get φ(x/2) = φ(x)/2. Then:
-- φ(s) = φ((g + φg)/2) = (φg + φ²g)/2 = (φg + g)/2 = s ✓
-- φ(a) = φ((g - φg)/2) = (φg - φ²g)/2 = (φg - g)/2 = -a ✓ □
-
-**Theorem 3.2** (Orthogonality). If φ(x) = x and φ(x) = -x, then x = 0.
-
-*Proof*: From φ(x) = x and φ(x) = -x, we get x = -x, hence 2x = 0, so x = 0 (over ℝ). □
-
-### 3.2 Connection to Representation Theory
-
-The spectral decomposition is the ℤ/2ℤ analogue of the Fourier decomposition for cyclic groups. The ±1 eigenspaces correspond to the two irreducible representations of ℤ/2ℤ: the trivial representation (symmetric) and the sign representation (antisymmetric).
-
-## 4. Mayer-Vietoris Exactness
-
-### 4.1 The Norm-Difference Complex
-
-Define the **Tate norm** N: G → G by N(g) = g + φ(g) and the **difference map** D: G → G by D(g) = g - φ(g).
-
-**Theorem 4.1** (Complex Property). N ∘ D = 0 and D ∘ N = 0.
-
-*Proof*:
-- N(D(g)) = (g - φg) + φ(g - φg) = g - φg + φg - φ²g = g - g = 0
-- D(N(g)) = (g + φg) - φ(g + φg) = g + φg - φg - φ²g = g - g = 0 □
-
-**Theorem 4.2** (Exactness, Forward). If N(g) = 0, then g ∈ im(D).
-
-*Proof*: Take h = g/2. From N(g) = 0 we get φ(g) = -g. Using the halving lemma (φ(x/2) = φ(x)/2), we get φ(g/2) = -g/2, so D(h) = g/2 - φ(g/2) = g/2 + g/2 = g. □
-
-**Theorem 4.3** (Exactness, Backward). If D(g) = 0, then g = N(h)/2 for some h.
-
-*Proof*: Take h = g. From D(g) = 0 we get φ(g) = g, so N(g)/2 = (g + g)/2 = g. □
-
-### 4.2 Eigenspace Interpretation
-
-The Tate norm kills the -1 eigenspace and doubles the +1 eigenspace:
-- If φ(g) = -g, then N(g) = g + (-g) = 0
-- If φ(g) = g, then N(g) = g + g = 2g
-
-Dually, the difference map kills the +1 eigenspace and doubles the -1 eigenspace.
-
-## 5. Iterated Tate Norm
-
-**Theorem 5.1** (Iterated Vanishing). For the negation gluing on ℤ, N^k(g) = 0 for all k ≥ 1 and g ∈ ℤ.
-
-*Proof by induction*:
-- Base case (k=1): N(g) = g + (-g) = 0
-- Inductive step: N^{k+1}(g) = N(N^k(g)) = N(0) = 0 □
-
-**Theorem 5.2** (Iterated H⁰ Membership). For any gluing datum D, N^k(g) ∈ H⁰(D) for all k ≥ 1.
-
-*Proof by induction*: The Tate norm always maps to H⁰ (by Theorem 4.1 and the symmetric output property). □
-
-## 6. Computations
-
-### 6.1 H⁰ Computations
-
-| Group G | Gluing φ | H⁰(D) | Computation |
-|---------|---------|--------|-------------|
-| ℤ | id | ℤ | All elements fixed |
-| ℤ | -id | 0 | Only 0 satisfies -g = g |
-| ℝ | id | ℝ | All elements fixed |
-| ℝ | -id | 0 | Only 0 satisfies -g = g |
-| ℤ/3ℤ | -id | {0} | Verified by decide |
-| ℤ/5ℤ | -id | {0} | Verified by decide |
-| ℤ/7ℤ | -id | {0} | Verified by decide |
-| ℤ/6ℤ | -id | {0, 3} | -3 ≡ 3 (mod 6) |
-| ℤ/2ℤ | -id | ℤ/2ℤ | -x = x for all x |
-
-### 6.2 Eigenspace Partition Conjecture
-
-**Conjecture 6.1**: For ℤ/pℤ with p an odd prime and φ = negation, |Fix(φ)| = 1.
-
-**Status**: Verified for p = 3, 5, 7. The conjecture follows from the fact that 2x = 0 in ℤ/pℤ implies x = 0 when p is odd (since 2 is invertible mod p).
-
-**Falsification cases**: p = 2 (all elements fixed), n = 6 (element 3 is fixed).
-
-## 7. Algorithms
-
-### 7.1 Spectral Decomposition Algorithm
+**Definition 2.3** (StereoCechComplex). For a two-chart cover with gluing datum D, the Čech complex is:
 
 ```
-Input: Involution φ, element g
-Output: (symmetric part s, antisymmetric part a) with g = s + a
-
-1. Compute φ(g)
-2. s ← (g + φ(g)) / 2
-3. a ← (g - φ(g)) / 2
-4. Return (s, a)
-
-Complexity: O(T_φ) where T_φ is the cost of evaluating φ
+C⁰ = G × G  →δ  C¹ = G  →  0
 ```
 
-### 7.2 Mayer-Vietoris Witness Algorithm
+where δ(s₀, s₁) = φ(s₀) − s₁ is the Čech coboundary. The kernel of δ is the space of global sections (compatible pairs), and the cokernel is H¹.
+
+### 2.4 Norm and Difference Maps
+
+**Definition 2.4.** The Tate norm and difference maps are:
+- N : G → G, N(g) = g + φ(g) (norm map)
+- D : G → G, D(g) = g − φ(g) (difference map)
+
+### 2.5 Descent Datum
+
+**Definition 2.5** (DescentDatum). A *descent datum* consists of:
+- A gluing datum (φ) for the stereographic structure
+- An antipodal involution (τ)
+- Commutativity: φ ∘ τ = τ ∘ φ
+
+The descended sections are elements fixed by both φ and τ simultaneously.
+
+### 2.6 Eigenspace Projections (Novel)
+
+**Definition 2.6.** For a linear involution φ on ℝ:
+- π⁺(g) = (g + φ(g))/2 (projection to +1 eigenspace)
+- π⁻(g) = (g − φ(g))/2 (projection to −1 eigenspace)
+
+## 3. Main Results
+
+### 3.1 The Tate Complex Property
+
+**Theorem 3.1** (norm_diff_zero, diff_norm_zero). For any SGDatum D on G:
+```
+N ∘ D = 0    and    D ∘ N = 0
+```
+
+*Proof sketch.* For N∘D: N(D(g)) = D(g) + φ(D(g)) = (g − φg) + φ(g − φg) = (g − φg) + (φg − φ²g) = (g − φg) + (φg − g) = 0, using φ² = id. The argument for D∘N is symmetric. □
+
+This establishes that (G, N, D) forms a two-periodic complex, the simplest Tate complex for ℤ/2ℤ.
+
+### 3.2 Landing in Eigenspaces
+
+**Theorem 3.2** (normMap_mem_fixed, diffMap_mem_antiFixed). The norm map lands in the +1 eigenspace and the difference map lands in the −1 eigenspace:
+```
+φ(N(g)) = N(g)    and    φ(D(g)) = −D(g)
+```
+
+### 3.3 Eigenspace Direct Sum
+
+**Theorem 3.3** (eigenspace_direct_sum). For any linear involution φ on ℝ and any g ∈ ℝ:
+```
+g = π⁺(g) + π⁻(g)
+```
+where π⁺(g) = (g + φg)/2 and π⁻(g) = (g − φg)/2.
+
+**Theorem 3.4** (eigenspace_decomposition_unique). The decomposition is unique: if g = s + a with φ(s) = s and φ(a) = −a, then s = π⁺(g) and a = π⁻(g).
+
+*Proof.* From g = s + a and the eigenspace conditions, φ(g) = φ(s) + φ(a) = s − a. Then π⁺(g) = (g + φg)/2 = (s + a + s − a)/2 = s, and similarly π⁻(g) = a. □
+
+### 3.4 Exactness over ℝ
+
+**Theorem 3.5** (exactness_at_norm_real). For any SGDatum D on ℝ: if N(g) = 0, then there exists h such that D(h) = g.
+
+*Proof.* Take h = g/2. From N(g) = 0 we get φ(g) = −g. By additivity, φ(g/2) + φ(g/2) = φ(g) = −g, so φ(g/2) = −g/2. Then D(g/2) = g/2 − φ(g/2) = g/2 − (−g/2) = g. □
+
+**Corollary.** H¹ vanishes for ℝ-valued stereographic sheaves (with any gluing datum).
+
+### 3.5 H¹ Nontriviality for ℤ
+
+**Theorem 3.6** (cech_h1_negation_nontrivial). For ℤ with the negation datum:
+- N(1) = 0 (so 1 ∈ ker N)
+- There is no g ∈ ℤ with D(g) = 1 (since D(g) = 2g is always even)
+
+This computes H¹(ℤ/2ℤ, ℤ) ≅ ker(N)/im(D) = ℤ/2ℤ, the Tate cohomology of the cyclic group of order 2 acting on ℤ by negation.
+
+### 3.6 H⁰ for Finite Fields
+
+**Theorem 3.7** (h0_negation_zmod_odd). For p an odd prime:
+```
+∀ x : ZMod p, −x = x → x = 0
+```
+
+*Proof.* From −x = x we get 2x = 0 in ZMod p. Since p is an odd prime, gcd(2, p) = 1, so 2 is invertible in ZMod p. Therefore x = 0. □
+
+**Theorem 3.8** (computational verification). The conjecture holds for (ZMod 3)² and (ZMod 5)², and fails for (ZMod 2)² as expected.
+
+### 3.7 Descent Criterion
+
+**Theorem 3.9** (descent_fixed_point_characterization). An element g descends (i.e., g ∈ fixedPoints(φ) ∩ fixedPoints(τ)) if:
+1. τ(g) = g (antipodal-fixed), and
+2. φ(τ(g)) = g
+
+**Theorem 3.10** (composed_involution). For commuting involutions φ and τ: φ ∘ τ ∘ φ ∘ τ = id.
+
+### 3.8 Injectivity of Stereographic Projection
+
+**Theorem 3.11** (stereoS1_injective). The stereographic projection
+```
+stereoS1(t) = (2t/(1+t²), (1−t²)/(1+t²))
+```
+is injective as a map ℝ → ℝ².
+
+### 3.9 Functoriality
+
+**Theorem 3.12** (normMap_natural, fixedPoints_functorial). The norm map and the fixed-point functor are natural: they commute with morphisms of gluing data.
+
+### 3.10 Iterated Norm
+
+**Theorem 3.13** (iterNorm_mem_fixed). For any n ≥ 1, the n-fold iterated norm lands in the fixed-point subgroup. Proved by induction.
+
+**Theorem 3.14** (iterNorm_neg_zero_int). For the negation datum on ℤ, all iterated norms vanish. Proved by induction: base case N(g) = 0, step N(0) = 0.
+
+## 4. Algorithms
+
+### 4.1 Čech Cohomology via Transition Function
+
+**Input:** An involutive homomorphism φ : G → G
+**Output:** H⁰(G, φ) and a witness for H¹
 
 ```
-Input: Involution φ, element g with N(g) = 0
-Output: h such that g = D(h)
-
-1. h ← g / 2
-2. Return h
-
-Complexity: O(1) (given the precondition)
+Algorithm CechCohomology(φ, G):
+  H0 = {g ∈ G : φ(g) = g}              # Fixed points
+  kerN = {g ∈ G : g + φ(g) = 0}         # Kernel of norm
+  imD = {g − φ(g) : g ∈ G}              # Image of difference
+  H1 = kerN / imD                        # Quotient
+  return H0, H1
 ```
 
-### 7.3 H⁰ Computation for Finite Groups
+For finite groups, this is computable in O(|G|) time.
+
+### 4.2 Eigenspace Decomposition
+
+**Input:** A linear involution φ on a real vector space, an element g
+**Output:** The unique decomposition g = s + a with φ(s) = s, φ(a) = −a
 
 ```
-Input: Finite group G of order n, involution φ
-Output: H⁰(G, φ) = {g ∈ G : φ(g) = g}
-
-1. For each g ∈ G:
-2.   If φ(g) = g, add g to result
-3. Return result
-
-Complexity: O(n · T_φ)
+Algorithm EigenDecompose(φ, g):
+  s = (g + φ(g)) / 2    # Symmetric part
+  a = (g − φ(g)) / 2    # Antisymmetric part
+  return s, a
 ```
 
-## 8. Applications
+## 5. Applications
 
-### 8.1 Signal Processing on Spheres
+### 5.1 Topological Data Analysis
 
-Signals on the sphere (e.g., antenna radiation patterns, climate data) can be processed using two stereographic charts. The spectral decomposition separates the signal into even and odd harmonics with respect to the antipodal map, providing a natural basis for compression and filtering.
+The stereographic framework provides efficient cohomology computation for data lying on or near spheres. Given a point cloud approximately on S^n, project to two charts, compute the transition function, and extract H* from the Tate complex.
 
-### 8.2 Topological Data Analysis
+### 5.2 Differential Equations on Spheres
 
-The Čech cohomology framework detects topological features (holes, connected components) in data. The stereographic two-chart approach reduces the computation from exponential in the number of cover elements to constant (two charts), at the cost of requiring the data to live on a sphere.
+Conformal weight sheaves model differential forms of various degrees on the sphere. The even/odd weight grading corresponds to scalar vs. pseudoscalar forms, with the cohomology capturing global obstructions to solving PDEs.
 
-### 8.3 Molecular Symmetry
+### 5.3 Representation Theory
 
-The ℤ/2ℤ eigenspace decomposition classifies molecular configurations by their behavior under spatial inversion, distinguishing chiral from achiral structures.
+The framework provides a geometric incarnation of ℤ/2ℤ group cohomology, connecting the abstract algebraic theory to concrete geometric constructions on spheres.
 
-## 9. Discussion
+## 6. Falsifiable Conjecture
 
-### 9.1 Limitations
+**Conjecture** (Eigenspace Dimension Formula). For G = (ZMod p)^n with p an odd prime and φ = componentwise negation, |H⁰(G, φ)| = 1.
 
-- The framework is specific to two-chart covers and involutive transitions
-- Extension to higher-dimensional spheres S^n requires replacing ℝ with ℝ^n
-- The ℤ/2ℤ group cohomology connection assumes the deck group is cyclic of order 2
+**Test:** Verified computationally for (ZMod 3)², (ZMod 5)².
+**Disproof path:** Fails for p = 2, confirming the odd prime hypothesis is necessary.
+**Broader prediction:** H¹((ZMod p)^n, neg) ≅ (ZMod p)^n for odd p.
 
-### 9.2 Open Questions
+## 7. Discussion
 
-1. Can the conformal weight datum be extended to non-integer weights for fractional forms?
-2. Does the spectral decomposition extend to modules over rings with 2-torsion?
-3. Can the Mayer-Vietoris framework be automated for computational topology?
+The stereographic sheaf framework achieves a significant computational reduction: for sheaves compatible with the conformal structure, all cohomological invariants are determined by the single transition function φ. This contrasts with general sheaf cohomology, which requires working with arbitrary open covers.
 
-## 10. Formal Verification
+The key structural insight is that involutivity of the transition forces a spectral decomposition, which in turn makes the Tate complex exact (over ℝ) or computable (over ℤ and finite fields). The failure of exactness over ℤ—witnessed by the nontriviality of H¹—is precisely the topological content: it detects the mod-2 topology of the sphere.
 
-All theorems in this paper have been formalized in Lean 4 with Mathlib. The formalization comprises:
-- 495 lines of Lean code
-- 0 unproven statements (no `sorry`)
-- Novel structures: `StereoGluing`, `ConformalWeightDatum`, `StereoMorphism`
-- 30+ formally verified theorems
+## 8. Future Work
 
-The complete verified code is available in `Geometry/StereographicSheafAdvanced.lean`.
+1. **Higher-dimensional spheres**: Extend the eigenspace decomposition to vector-valued sections on S^n, where the transition involves the Jacobian of stereographic projection.
+
+2. **Conformal weight grading**: Develop the full graded theory where weight-k sections transform by (−1)^k under the transition, modeling k-forms on S^n.
+
+3. **Connection to K-theory**: Investigate whether the stereographic descent framework provides a computational approach to topological K-theory of spheres via the Atiyah-Hirzebruch spectral sequence.
+
+4. **Applications to machine learning**: Exploit the stereographic decomposition for efficient computation of topological features of data on spheres, relevant to spherical neural networks.
 
 ## References
 
-1. Bott, R. and Tu, L. W. (1982). *Differential Forms in Algebraic Topology*. Springer.
-2. Brown, K. S. (1982). *Cohomology of Groups*. Springer.
-3. Grothendieck, A. (1957). Sur quelques points d'algèbre homologique. *Tôhoku Math. J.* 9, 119–221.
-4. Leray, J. (1945). Sur la forme des espaces topologiques et sur les points fixes des représentations. *J. Math. Pures Appl.* 24, 95–167.
-5. Serre, J.-P. (1956). Géométrie algébrique et géométrie analytique. *Ann. Inst. Fourier* 6, 1–42.
+1. R. Bott and L. Tu, *Differential Forms in Algebraic Topology*, Springer GTM 82, 1982.
+2. R. Hartshorne, *Algebraic Geometry*, Springer GTM 52, 1977.
+3. J. Milnor, *Characteristic Classes*, Annals of Mathematics Studies 76, 1974.
+4. K. Brown, *Cohomology of Groups*, Springer GTM 87, 1982.
+5. A. Grothendieck, "Sur quelques points d'algèbre homologique," *Tôhoku Math. J.* 9 (1957), 119–221.
