@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "catalans_conjecture_generalizations.json",
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:22:48Z",
+    "exp_id": "b52cbca8",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 8
+  },
+  {
     "filename": "random_matrices_edge_universality.json",
     "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
     "domain": "Algebra",
     "date": "2026-05-31T20:22:14Z",
     "exp_id": "941734c2",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7068734374999999,
+    "quality": "substantial",
     "pkg_num": 7
   },
   {
@@ -92,6 +102,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "catalans_conjecture_generalizations.json": {
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+    "exp_id": "b52cbca8",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "this_research_cycle_established_the_mathematical_f.json": {
     "title": "Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds",
     "exp_id": "866a2ce9",
@@ -145,7 +163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -167,7 +185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -178,7 +196,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 100,
+      "hue": 91,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -189,7 +207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -200,7 +218,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -211,7 +229,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 91,
+      "hue": 90,
+      "priority_score": 0.7068734374999999,
+      "quality": "substantial"
+    },
+    {
+      "id": "catalans_conjecture_generalizations",
+      "title": "Pillai's Conjecture and Exponential Diophantine Equations",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:22:48Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
