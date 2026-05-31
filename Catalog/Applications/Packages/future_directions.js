@@ -438,6 +438,36 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.808552+00:00"
   },
   {
+    "id": "seed_069",
+    "title": "EML Neural Network Expressiveness: Depth vs Width",
+    "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) \u2014 matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.817888+00:00"
+  },
+  {
+    "id": "seed_070",
+    "title": "EML Kolmogorov-Arnold Representation",
+    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
+    "domains": [
+      "EML",
+      "Analysis"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.827715+00:00"
+  },
+  {
     "id": "seed_075",
     "title": "Stereographic Neural Attention: Attention via Riemann Sphere",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
@@ -513,6 +543,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.961577+00:00"
   },
   {
+    "id": "seed_086",
+    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks",
+    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
+    "domains": [
+      "EML",
+      "Analysis"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "50496045",
+    "timestamp": "2026-05-24T22:37:54.969692+00:00"
+  },
+  {
     "id": "seed_087",
     "title": "EML Information Geometry: Fisher Information of exp-log Models",
     "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
@@ -536,10 +581,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66b7904d",
     "timestamp": "2026-05-24T22:37:54.996007+00:00"
   },
   {
@@ -551,10 +596,10 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "20509038",
     "timestamp": "2026-05-24T22:37:55.006665+00:00"
   },
   {
@@ -1106,10 +1151,10 @@ window.FUTURE_DIRECTIONS = [
       "Arithmetic Topology"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "ebcc47b2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T05:35:00.011801+00:00"
   },
   {
@@ -3873,36 +3918,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-31T08:23:17.731368+00:00"
   },
   {
-    "id": "seed_070",
-    "title": "EML Kolmogorov-Arnold Representation",
-    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
-    "domains": [
-      "EML",
-      "Analysis"
-    ],
-    "priority_score": 0.97,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "6068e460",
-    "timestamp": "2026-05-24T22:37:54.827715+00:00"
-  },
-  {
-    "id": "seed_086",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domains": [
-      "EML",
-      "Analysis"
-    ],
-    "priority_score": 0.97,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.969692+00:00"
-  },
-  {
     "id": "seed_106",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
@@ -3914,23 +3929,8 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "1973203a",
+    "consumed_by_exp_id": "15f0d224",
     "timestamp": "2026-05-29T02:19:18.745187+00:00"
-  },
-  {
-    "id": "seed_069",
-    "title": "EML Neural Network Expressiveness: Depth vs Width",
-    "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) \u2014 matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
-    "domains": [
-      "EML",
-      "MachineLearning"
-    ],
-    "priority_score": 0.96,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.817888+00:00"
   },
   {
     "id": "seed_002",
@@ -4047,6 +4047,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
+  },
+  {
+    "id": "fd_2345",
+    "title": "This research cycle established the formal foundations of EML (Exponential-Multi",
+    "description": "# Future Directions: EML Interpolation Theory\n\n## Synthesis\n\nThis research cycle established the formal foundations of EML (Exponential-Multiplicative-Logarithmic) interpolation theory, proving that the algebra generated by exp, log, +, and \u00d7 satisfies the separation and constant-inclusion hypotheses of Stone-Weierstrass, and providing explicit structural complexity bounds (width \u2264 2^depth, nodeCount \u2265 2\u00b7width \u2212 1). The most striking result is the exact power representation theorem: exp(n \u00b7 log x) = x^n for x > 0, which shows that EML networks are *more* than universal approximators \u2014 they are exact representors for all monomial functions on the positive reals.\n\nThe most promising cross-domain connection emerging from this cycle is the bridge between **EML interpolation** and **tropical geometry**. The log-sum-exp identity max(a,b) \u2248 log(exp(a) + exp(b)) provides a natural deformation from tropical (max-plus) algebra to classical algebra, mediated by EML expressions. This connects the tropical Stone-Weierstrass theorem (already formalized in `Bridges/TropicalStoneWeierstrass.lean`) with our classical EML density results, suggesting a unified approximation framework that interpolates between tropical and classical regimes.\n\nThe Jackson-type rate conjecture has the highest breakthrough potential: if proved, it would provide the first quantitative universal approximation theorem for EML networks, transforming the existential guarantees of Stone-Weierstrass into constructive, rate-optimal bounds. The exact power representation (width 1 achieves zero error for x^n) suggests that EML networks may achieve significantly better rates than polynomials for functions with exp-log structure.\n\n---\n\n### Direction 1: Quantitative Jackson-Type Rates for EML Networks\n\n**Conjecture**: For any 1-Lipschitz function f : [0,1] \u2192 \u211d and any \u03b5 > 0, there exists an EML expression e of width at most \u23081/\u03b5\u2309 + 1 such that sup_{x \u2208 [0,1]} |e.eval(x) \u2212 f(x)| \u2264 \u03b5. More generally, for \u03b1-H\u00f6lder functions with constant C, the width bound should be O((C/\u03b5)^{1/\u03b1}).\n\n**Test**: (a) Construct explicit EML approximations for f(x) = |x \u2212 1/2| on [0,1] (a 1-Lipschitz function that is not smooth) and verify the width bound computationally. (b) For the Weierstrass function W_\u03b1(x) = \u03a3 a^n cos(b^n \u03c0 x) with 0 < \u03b1 < 1, compute the minimal EML width needed to achieve \u03b5-approximation and compare with the predicted rate.\n\n**Impact**: If true, this would be the first quantitative universal approximation theorem for a specific neural network architecture, going beyond the existential guarantees of Cybenko/Hornik. It would provide concrete network sizing guidance: given a target accuracy and a regularity assumption, the theorem would prescribe the minimum network width.\n\n**Catalog References**: `Bridges/TropicalStoneWeierstrass.lean` (tropical density), `Bridges/EMLInterpolation.lean` (EML separation and power representation)\n\n**Proof Strategy**: The key steps would be:\n1. Prove that EML expressions of width w can approximate any piecewise-linear function with w breakpoints (reduce to max/min representation via log-sum-exp).\n2. Use Jackson's theorem to relate the best piecewise-linear approximation rate to the H\u00f6lder exponent.\n3. Combine via the triangle inequality.\nThe main technical lemma needed is a quantitative version of the log-sum-exp approximation: |max(a,b) \u2212 log(exp(a) + exp(b))| \u2264 log(2), and the refinement that for t \u2192 \u221e, |max(a,b) \u2212 (1/t)\u00b7log(exp(ta) + exp(tb))| \u2192 0.\n\n**Domain Bridges**: Approximation Theory <-> Machine Learning, Analysis <-> Tropical Geometry\n\n**Lineage**: Builds on `eml_power_nat` (exact power representation), `width_le_two_pow_depth` (capacity bound), and `exp_lipschitz_on_Icc` (error propagation).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical-Classical EML Deformation Bridge\n\n**Conjecture**: The parametric family of EML operations F_t(a,b) = (1/t)\u00b7log(exp(ta) + exp(tb)) for t > 0 converges uniformly to max(a,b) as t \u2192 \u221e on compact sets, and the corresponding \"soft-tropical\" algebra generated by F_t satisfies Stone-Weierstrass hypotheses for all t > 0, providing a continuous deformation from classical to tropical approximation.\n\n**Test**: (a) Prove that for any compact K \u2282 \u211d\u00b2, sup_{(a,b)\u2208K} |F_t(a,b) \u2212 max(a,b)| \u2264 log(2)/t. (b) Verify that for t = 1, 10, 100, the soft-tropical algebra achieves the same asymptotic approximation rates as the tropical algebra, with explicit dependence on t in the error bounds.\n\n**Impact**: This would unify the tropical and classical Stone-Weierstrass theorems into a single parametric family, showing that universal approximation is stable under tropicalization. It would also provide a mathematical foundation for the \"temperature\" parameter in softmax and other neural network operations.\n\n**Catalog References**: `Bridges/TropicalStoneWeierstrass.lean` (tropical hypotheses), `Bridges/EMLInterpolation.lean` (EML algebra), `Bridges/LogSumExpVariational.lean` (log-sum-exp)\n\n**Proof Strategy**:\n1. Define the soft-tropical algebra A_t as the closure of EML under F_t and constant shifts.\n2. Prove that A_t separates points for all t > 0 (using strict monotonicity of F_t in each variable).\n3. Prove that A_t contains constants (take constant EML expressions).\n4. Apply Stone-Weierstrass to conclude density of A_t in C(K).\n5. Show that as t \u2192 \u221e, the elements of A_t converge to tropical (max-plus) expressions, recovering the tropical density theorem as a limit.\n\n**Domain Bridges**: Tropical Geometry <-> Classical Analysis, Statistical Mechanics <-> Machine Learning\n\n**Lineage**: Builds on `tropical_stone_weierstrass_eml_dense` (tropical density) and `eml_separates_points` (classical separation).\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Multivariate EML Expression Theory\n\n**Conjecture**: The multivariate EML algebra on \u211d^n (with n independent input variables) separates points of any compact K \u2282 \u211d^n, and the width bound for \u03b5-approximation of Lipschitz functions scales as O(\u03b5^{-n/\u03b1}) where \u03b1 is the H\u00f6lder exponent \u2014 matching the curse of dimensionality for polynomial approximation.\n\n**Test**: (a) Define multivariate EML expressions with n input variables. (b) Prove that for K = [0,1]^n, the projection functions x_i separate points. (c) For the function f(x\u2081,...,x_n) = x\u2081\u00b7x\u2082\u00b7...\u00b7x_n, construct an EML expression of depth O(log n) and width 1 computing it exactly (via exp(log(x\u2081) + ... + log(x_n))).\n\n**Impact**: Extending the univariate theory to multiple dimensions is essential for practical applications. If the curse of dimensionality is unavoidable for general Lipschitz functions but avoidable for functions with exp-log structure, this would explain why deep learning succeeds on structured high-dimensional problems.\n\n**Catalog References**: `Bridges/EMLInterpolation.lean` (univariate theory), `EML/EMLv17Core.lean` (bivariate eml function)\n\n**Proof Strategy**:\n1. Extend `EMLExpr` to include multiple variable indices: `var_i` for i = 1,...,n.\n2. Prove that the evaluation function is well-defined on \u211d^n.\n3. Prove separation: for x \u2260 y in \u211d^n, some coordinate differs, and `var_i` separates them.\n4. Prove width bounds by induction, adapting the univariate proofs.\n5. For the approximation rate, use the multivariate Jackson theorem as a baseline.\n\n**Domain Bridges**: Approximation Theory <-> High-Dimensional Geometry, Machine Learning <-> Algebraic Geometry\n\n**Lineage**: Direct extension of univariate `EMLExpr` theory from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: EML Depth Separation and Computational Complexity\n\n**Conjecture**: There exists a family of continuous functions {f_n}_{n\u22651} on [0,1] such that each f_n can be computed by an EML expression of depth O(n) and width O(1), but any EML expression of depth o(n) computing f_n requires width 2^\u03a9(n). Candidate: f_n(x) = exp(exp(...(exp(x))...)) with n nested exponentials.\n\n**Test**: (a) Verify that the n-fold iterated exponential has depth n and width 1 in EML. (b) Prove that any EML expression computing exp^(n)(x) with depth < n must have width \u2265 2 (or find a depth-reducing transformation). (c) Numerically compute the Lipschitz constants of exp^(n) on [0,1] to understand the complexity growth.\n\n**Impact**: This would be the first formal depth separation result for a specific neural network architecture, establishing that depth provides an exponential computational advantage over width in the EML setting. It would connect to circuit complexity lower bounds and the broader question of why deep networks outperform shallow ones.\n\n**Catalog References**: `Bridges/EMLInterpolation.lean` (width_le_two_pow_depth), `Computation/PadicValuationDepth.lean` (depth measures)\n\n**Proof Strategy**:\n1. Define iterated exponential: iterExp(0, x) = x, iterExp(n+1, x) = exp(iterExp(n, x)).\n2. Prove that iterExp(n) has the EML expression with depth n and width 1.\n3. For the lower bound, analyze the growth rate: exp^(n)(x) grows as a tower function, while EML expressions of bounded depth and polynomial width can only represent functions with bounded tower height.\n4. Use the composition theorem (compose_eval) to analyze depth reduction.\n\n**Domain Bridges**: Computational Complexity <-> Analysis, Circuit Complexity <-> Neural Networks\n\n**Lineage**: Builds on `width_le_two_pow_depth` and `compose_eval`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: EML Cryptographic One-Way Functions\n\n**Conjecture**: The composition exp \u2218 log \u2218 exp : (0,\u221e) \u2192 (0,\u221e) defines a trapdoor function family when parameterized by a secret shift: F_k(x) = exp(log(exp(x) + k)) for k \u2208 \u211d, k > 0. Specifically, computing k from (x, F_k(x)) requires solving a transcendental equation that has no closed-form inverse for generic k, while F_k is efficiently computable as an EML expression of depth 3.\n\n**Test**: (a) Verify that F_k has depth 3 and width 2 in EML. (b) Show that the inverse problem \u2014 given y = exp(log(exp(x) + k)), find k \u2014 reduces to k = exp(y) \u2212 exp(x), which is efficiently computable. This would *disprove* the one-way conjecture for this specific family. (c) Search for EML compositions of depth \u2265 5 where the inverse problem is computationally harder, potentially involving the Lambert W function or other non-elementary inverses.\n\n**Impact**: If an EML-based one-way function exists, it would connect approximation theory to cryptography in a novel way: the expressiveness of the EML algebra (which enables universal approximation) would simultaneously enable cryptographic hardness. The failure of simple constructions (depth 3) would guide the search toward more complex candidates.\n\n**Catalog References**: `Cryptography/BerggrenQuotient.lean` (cryptographic constructions), `Bridges/EMLInterpolation.lean` (EML composition), `Bridges/ContractionTropicalCryptoBridge.lean` (tropical crypto)\n\n**Proof Strategy**:\n1. Formalize F_k as an EML expression.\n2. Analyze the inverse problem: given y = F_k(x) and x, compute k.\n3. If the inverse is easy (as predicted for depth 3), increase depth and analyze again.\n4. Use the compose_eval theorem to verify that compositions preserve EML structure.\n5. Connect to existing tropical cryptographic constructions via the log-sum-exp bridge.\n\n**Domain Bridges**: Cryptography <-> Approximation Theory, Number Theory <-> Analysis\n\n**Lineage**: Builds on `compose_eval`, `exp_preserves_separation`, and tropical crypto from the Catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.85,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef1b4b71",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T10:34:27.642579+00:00"
   },
   {
     "id": "seed_037",
@@ -4329,5 +4344,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "285768df",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T10:02:46.484063+00:00"
+  },
+  {
+    "id": "fd_2346",
+    "title": "This research cycle established rigorous mathematical foundations for adelic syn",
+    "description": "# Future Directions: Adelic Synchronization for Arithmetic Dynamics\n\n## Synthesis\n\nThis research cycle established rigorous mathematical foundations for adelic synchronization analysis of finite dynamical systems. We formally verified five structural theorems: (1) iterate image antitone (the sequence of image sizes under iterates is nonincreasing), (2) image stabilization within card(\u03b1) steps, (3) periodic orbit packet divisibility (period-p points come in multiples of p), (4) the distinct cycle count bound k(k+1) \u2264 2n, and (5) the rho length bound (tail + cycle \u2264 n). These results underpin the novel Adelic Synchronization Index (ASI), which quantifies cross-prime correlation of orbit signatures for parameterized polynomial maps.\n\nThe most significant discovery is the computational evidence for a **synchronization phase transition**: postcritical parameters of the quadratic family f_c(x) = x\u00b2 + c exhibit ~2.5\u00d7 higher ASI than generic parameters when measured across the first 25 primes. This connects three domains: arithmetic dynamics (postcritical structure), information theory (mutual information across primes), and statistical physics (phase transitions). The proved theorems from this cycle\u2014especially iterate image stabilization and packet divisibility\u2014provide the combinatorial constraints that make the phase transition possible, since they limit the \"vocabulary\" of orbit signatures that can be correlated.\n\nThe direction with highest breakthrough potential is Direction 1 (Persistent Homology Enrichment), because the current ASI uses only cycle lengths\u2014a coarse invariant. Enriching it with the full topological structure of the functional graph (tree depths, branching patterns) could sharpen the phase transition signal dramatically, potentially making it detectable with fewer primes. Direction 3 (Moduli Space Geometry) offers the deepest theoretical payoff, connecting to the canonical height theory of arithmetic dynamics. Directions 2 and 4 provide concrete extensions building on the proved theorems.\n\n---\n\n### Direction 1: Persistent Homology Enrichment of Orbit Signatures\n\n**Conjecture**: For the quadratic family f_c(x) = x\u00b2 + c over \u2124/p\u2124, define the *topological orbit signature* as the persistent homology barcode of the Vietoris-Rips complex on the functional graph (where distance is shortest-path distance in the directed graph of f). The cross-prime mutual information of topological orbit signatures exhibits a phase transition that is strictly sharper than the ASI phase transition: specifically, the ratio of postcritical to generic mutual information exceeds 5\u00d7 (compared to the current ~2.5\u00d7) when using 25 primes.\n\n**Test**: Implement the topological orbit signature computation for primes up to 100 and parameters c \u2208 [-10, 10]. Compute pairwise L\u00b2 overlaps of barcode distributions (using bottleneck or Wasserstein distance) and compare the postcritical/generic ratio to the standard ASI ratio. If the ratio does not exceed 3\u00d7 with 25 primes, the conjecture fails.\n\n**Impact**: If true, this provides a strictly finer dynamical invariant that could serve as a practical \"algebraicity detector\" for polynomial maps, with applications to primality testing algorithms and cryptographic parameter selection. If false, it indicates that cycle lengths already capture the essential cross-prime correlation, and topological refinement is unnecessary.\n\n**Catalog References**: `Bridges/HolographicProofRenormalization.lean` (finite orbit theorem, strict descent), `EML/AdelicSynchronization.lean` (orbit signatures, ASI definition, packet divisibility)\n\n**Proof Strategy**: First, define the functional graph distance metric and prove it satisfies ultrametric properties (the functional graph is a union of trees hanging from cycles). Then prove that the persistent homology of the Vietoris-Rips complex detects both cycle lengths and tree depths, making it strictly finer than the cycle-length multiset. Use the packet divisibility theorem to constrain barcode multiplicities. Key lemmas needed: (1) the functional graph distance is an ultrametric, (2) the 0-th Betti number of the Rips complex at scale r counts connected components of the functional graph with edges \u2264 r, (3) cycle lengths and tree depths are both readable from the barcode.\n\n**Domain Bridges**: NumberTheory \u2194 Topology, Dynamics \u2194 Algebraic Geometry\n\n**Lineage**: Builds on `iterImageCard_antitone`, `periodic_packet_divisibility`, and `distinct_cycle_count_bound` from this cycle. Extends the orbit signature definition to include topological information.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Higher-Degree Polynomial Families and Multi-Critical Synchronization\n\n**Conjecture**: For the cubic family g_c(x) = x\u00b3 - cx over \u2124/p\u2124, the ASI exhibits *two* independent phase transitions, corresponding to the two critical points x = \u00b1\u221a(c/3). Parameters where both critical points are preperiodic have ASI at least 4\u00d7 the generic baseline; parameters where exactly one critical point is preperiodic have ASI between 2\u00d7 and 3\u00d7 the baseline.\n\n**Test**: Implement orbit signature computation for the cubic family. Compute ASI for c \u2208 [0, 50] over the first 20 odd primes. Classify parameters by the preperiodicity of each critical point and compare ASI distributions. The conjecture predicts a clear stratification: double-postcritical > single-postcritical > generic.\n\n**Impact**: Establishing multi-critical synchronization would show that the ASI framework generalizes beyond the quadratic family and that each critical point contributes independently to cross-prime correlation. This would connect to the theory of *critically marked polynomial maps* and the Thurston classification of postcritically finite polynomials.\n\n**Catalog References**: `EML/AdelicSynchronization.lean` (quadMap, orbit signatures, ASI), `Algebra/Advanced.lean` (iterate definitions)\n\n**Proof Strategy**: Generalize the quadMap definition to cubic maps. Prove that the iterate image antitone theorem and packet divisibility hold for any map on a finite type (they already do\u2014they're proved for arbitrary f : \u03b1 \u2192 \u03b1). Define separate preperiodicity predicates for each critical point. The key new lemma is that if *both* critical points are preperiodic, then the map has a globally finite postcritical set, which forces stronger algebraic constraints on cycle lengths. Use Galois theory of periodic points (cf. Vivaldi-Hatjispyros) to relate cycle lengths at different primes.\n\n**Domain Bridges**: Dynamics \u2194 Algebra, NumberTheory \u2194 Galois Theory\n\n**Lineage**: Direct extension of the quadratic ASI framework. Uses all five proved theorems.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: ASI as a Function on Moduli Space\n\n**Conjecture**: The ASI, viewed as a function on the parameter space of quadratic maps, is related to the canonical height function \u0125 of arithmetic dynamics. Specifically, for c \u2208 \u2124 with |c| \u2264 B, the ASI over primes up to B satisfies:\n\nASI(c, P_B) \u2248 C \u00b7 exp(-\u03b1 \u00b7 \u0125(c))\n\nfor constants C, \u03b1 > 0 depending on B. Here \u0125(c) = lim_{n\u2192\u221e} (1/2^n) log\u207a|f_c^n(0)| is the canonical height of the critical orbit.\n\n**Test**: Compute ASI and canonical height for c \u2208 [-100, 100] and B = 200. Fit the exponential model and compute R\u00b2. The conjecture predicts R\u00b2 > 0.8. If R\u00b2 < 0.5, the exponential relationship is not supported.\n\n**Impact**: This would establish a deep connection between the combinatorial ASI (defined via modular arithmetic) and the analytic canonical height (defined via archimedean dynamics). It would mean that cross-prime synchronization is *quantitatively* predicted by archimedean dynamics, providing a bridge between the p-adic and archimedean worlds in the sense of the product formula.\n\n**Catalog References**: `EML/AdelicSynchronization.lean` (ASI definition, iterate image stabilization), `Computation/PadicValuationDepth.lean` (valuation depth measures)\n\n**Proof Strategy**: First, establish that \u0125(c) = 0 if and only if c is critically preperiodic (this is a theorem of Call-Silverman). Then prove that ASI(c) > 0 for postcritical c (using the packet divisibility and the algebraic constraints on cycle lengths). For the quantitative relationship, use the equidistribution theorem for small points: parameters with small canonical height have cycle lengths that are constrained by Galois theory, and these constraints create cross-prime correlations. Key lemma: the Galois group of the n-th dynatomic polynomial of f_c acts transitively on roots if c is generic, but has a proper subgroup action if c is postcritical.\n\n**Domain Bridges**: Dynamics \u2194 AlgebraicGeometry, NumberTheory \u2194 Analysis\n\n**Lineage**: Extends ASI framework using tools from canonical height theory. Builds on critically_preperiodic_zero and critically_preperiodic_neg_one.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Stabilization Index Statistics and Random Mapping Theory\n\n**Conjecture**: For f_c : \u2124/p\u2124 \u2192 \u2124/p\u2124 with random c \u2208 \u2124/p\u2124, the stabilization index N_c (the smallest N with |Im(f_c^N)| = |Im(f_c^{N+1})|) satisfies:\n\nE[N_c] = \u221a(\u03c0p/2) \u00b7 (1 + o(1)) as p \u2192 \u221e\n\nThis matches the birthday paradox threshold for random mappings on p elements, confirming that the quadratic map behaves like a random mapping in this statistic.\n\n**Test**: For each prime p \u2208 {101, 503, 1009, 5003, 10007}, compute N_c for all c \u2208 \u2124/p\u2124 and compare the mean to \u221a(\u03c0p/2). The conjecture predicts the ratio E[N_c] / \u221a(\u03c0p/2) converges to 1.\n\n**Impact**: This would establish the quadratic map as a \"pseudorandom mapping\" in a precise dynamical sense, connecting to the Flajolet-Odlyzko theory of random mappings. It would also quantify the typical stabilization time, complementing our worst-case bound of N \u2264 p.\n\n**Catalog References**: `EML/AdelicSynchronization.lean` (exists_stabilization_index, iterImageCard_antitone)\n\n**Proof Strategy**: Use the Flajolet-Odlyzko analytic framework for random mappings, which gives the expected tree height as \u221a(\u03c0n/2). Show that the quadratic map modulo p satisfies the conditions for the random mapping heuristic (proved by Pollard and refined by Martins-Panario). The key technical step is showing that the iterates f^k(x) behave like independent uniform random variables for k up to \u221ap, which follows from Weil's bound on exponential sums.\n\n**Domain Bridges**: Dynamics \u2194 Probability, NumberTheory \u2194 Combinatorics\n\n**Lineage**: Direct extension of the stabilization analysis. Uses exists_stabilization_index and iterImageCard_antitone.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Entropy-Optimal Orbit Codes and Dynamical Compression\n\n**Conjecture**: Define the *orbit entropy* of f : \u03b1 \u2192 \u03b1 as H(f) = -\u03a3_k \u03bd(k) log \u03bd(k), where \u03bd(k) = |{x : minPeriod(f,x) = k}| / |\u03b1| is the normalized orbit count. For the quadratic family f_c over \u2124/p\u2124, the orbit entropy satisfies:\n\nH(f_{c,p}) \u2264 (1/2) log p + O(1)\n\nand this bound is tight for \u0398(p) values of c.\n\n**Test**: Compute H(f_{c,p}) for all c \u2208 \u2124/p\u2124 and p \u2208 {101, 503, 1009}. Verify that max_c H(f_{c,p}) / log(p) \u2192 1/2 as p grows. The conjecture predicts this ratio exceeds 0.4 for p > 100.\n\n**Impact**: This would establish a precise entropy ceiling for the orbit structure of quadratic maps, directly generalizing the coarse bound from our cycle count theorem. It connects to the theory of dynamical zeta functions and could yield new bounds on the distribution of cycle lengths.\n\n**Catalog References**: `EML/AdelicSynchronization.lean` (distinct_cycle_count_bound, cycleType_card_le, orbitSignature definition), `EML/EMLv17Advanced.lean` (eml_entropy_bound)\n\n**Proof Strategy**: The upper bound follows from the distinct cycle count bound: at most O(\u221ap) distinct cycle lengths, each contributing at most log(\u221ap) bits, gives H \u2264 O(\u221ap \u00b7 log(\u221ap) / p) which is actually o(1). For the tighter (1/2)log(p) bound, use the packet divisibility theorem: each cycle length k contributes k periodic points, so the entropy is maximized when there are O(\u221ap) cycle lengths of similar size. The lower bound requires constructing explicit c values with many distinct cycle lengths, using the theory of primitive roots.\n\n**Domain Bridges**: Dynamics \u2194 InformationTheory, NumberTheory \u2194 Combinatorics\n\n**Lineage**: Extends the distinct cycle count bound and orbit signature analysis. Builds on the entropy perspective from the original research framing.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "31ebac1c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T10:35:27.454575+00:00"
   }
 ];

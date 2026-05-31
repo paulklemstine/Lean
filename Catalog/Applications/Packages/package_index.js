@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "EML",
     "date": "2026-05-31T10:35:23Z",
     "exp_id": "31ebac1c",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7828438931297709,
+    "quality": "substantial",
     "pkg_num": 476
   },
   {
@@ -13813,8 +13813,8 @@ window.PACKAGE_GRAPH = {
       "shape": "octahedron",
       "date": "2026-05-31T10:35:23Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7828438931297709,
+      "quality": "substantial"
     }
   ],
   "edges": [

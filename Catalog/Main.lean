@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2175 of the highest-quality
+A curated collection of 2179 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2175
+Total files: 2179
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -431,6 +431,7 @@ import FINAL.Bridges.ECOCRobust
 import FINAL.Bridges.ECOCRobustSoft
 import FINAL.Bridges.EMLClosureCore
 import FINAL.Bridges.EMLDensityBridge
+import FINAL.Bridges.EMLInterpolation
 import FINAL.Bridges.EMLSpectralSemantics
 import FINAL.Bridges.EMLZetaSemantics
 import FINAL.Bridges.EntanglementEntropy
@@ -494,6 +495,7 @@ import FINAL.Bridges.HomologicalDeepLearning
 import FINAL.Bridges.HopfCausalCore
 import FINAL.Bridges.HopfCircuitRenormalization
 import FINAL.Bridges.HyperbolicNumberTheory
+import FINAL.Bridges.HyperbolicTraceArithmetic
 import FINAL.Bridges.HypothesisTopos
 import FINAL.Bridges.IRVStability
 import FINAL.Bridges.IdempotentBlackwellThermodynamicDuality
@@ -1061,6 +1063,7 @@ import FINAL.Cryptography.TropicalSmoothnessScore
 import FINAL.Cryptography.TropicalZKCommitments
 import FINAL.Cryptography.TropicalZeroKnowledge
 import FINAL.EML.ANRApproximation
+import FINAL.EML.AdelicSynchronization
 import FINAL.EML.AdvancedTheorems
 import FINAL.EML.AdvancedTheory
 import FINAL.EML.AdversarialRobustness
@@ -1110,6 +1113,7 @@ import FINAL.EML.FutureTheorems
 import FINAL.EML.GaloisDuality
 import FINAL.EML.GaloisInsertionClosure
 import FINAL.EML.GraphNeuralNetworkTheory
+import FINAL.EML.HyperbolicArithmetic
 import FINAL.EML.InverseLimitApprox
 import FINAL.EML.KolmogorovArnoldEML
 import FINAL.EML.L2SheafRobustness
