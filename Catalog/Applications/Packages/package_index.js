@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "isomorphisms_of_meaning_when_structures_collide.json",
+    "title": "Isomorphisms of Meaning: When Structures Collide",
+    "domain": "Algebra",
+    "date": "2026-05-31T23:50:29Z",
+    "exp_id": "1debcf92",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 30
+  },
+  {
     "filename": "surreal_topology_open_sets_at_infinity.json",
     "title": "Surreal Topology: Open Sets at Infinity",
     "domain": "Algebra",
@@ -496,6 +506,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "isomorphisms_of_meaning_when_structures_collide.json": {
+    "title": "Isomorphisms of Meaning: When Structures Collide",
+    "exp_id": "1debcf92",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Algebra"
+  },
   "negative_dimensional_topology_what_lives_in_dimens.json": {
     "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
     "exp_id": "6d12eefe",
@@ -541,7 +559,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -552,7 +570,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 292,
+      "hue": 271,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -563,7 +581,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -574,7 +592,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 91,
+      "hue": 275,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -585,7 +603,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -596,7 +614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271,
+      "hue": 292,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -607,7 +625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -618,7 +636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -629,7 +647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:18Z",
-      "hue": 281,
+      "hue": 271,
       "priority_score": 0.735085669920142,
       "quality": "substantial"
     },
@@ -651,7 +669,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 91,
+      "hue": 314,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -662,7 +680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -673,7 +691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -684,7 +702,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -706,7 +724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 91,
+      "hue": 112,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -717,7 +735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -728,7 +746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -761,7 +779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 92,
+      "hue": 275,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -772,7 +790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -805,7 +823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -816,7 +834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 90,
+      "hue": 134,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -827,7 +845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -838,7 +856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -849,9 +867,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
+    },
+    {
+      "id": "isomorphisms_of_meaning_when_structures_collide",
+      "title": "Isomorphisms of Meaning: When Structures Collide",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T23:50:29Z",
+      "hue": 100,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
