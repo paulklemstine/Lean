@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "standard_conjectures_on_algebraic_cycles.json",
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+    "domain": "Algebra",
+    "date": "2026-05-31T20:24:43Z",
+    "exp_id": "0554bed3",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 12
+  },
+  {
     "filename": "artins_conjecture_on_primitive_roots.json",
     "title": "Artin's Conjecture on Primitive Roots",
     "domain": "Algebra",
     "date": "2026-05-31T20:24:13Z",
     "exp_id": "c8935afa",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7068530588235296,
+    "quality": "substantial",
     "pkg_num": 11
   },
   {
@@ -203,6 +213,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Algebra"
+  },
+  "standard_conjectures_on_algebraic_cycles.json": {
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+    "exp_id": "0554bed3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
   }
 };
 
@@ -217,7 +235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -228,7 +246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -239,7 +257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:39Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7711866265060241,
       "quality": "substantial"
     },
@@ -250,7 +268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -261,7 +279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 292,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -272,7 +290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -294,7 +312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 281,
+      "hue": 90,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -316,7 +334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -328,6 +346,17 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:13Z",
       "hue": 90,
+      "priority_score": 0.7068530588235296,
+      "quality": "substantial"
+    },
+    {
+      "id": "standard_conjectures_on_algebraic_cycles",
+      "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-31T20:24:43Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
