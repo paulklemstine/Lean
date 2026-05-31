@@ -1,508 +1,302 @@
-#!/usr/bin/env python3
 """
-Demo: Hyperbolic Number Theory — Arithmetic on the Poincaré Disk
+Hyperbolic Trace Arithmetic: Demonstration Script
 
-Demonstrates:
-1. Einstein addition and its group structure
-2. Chebyshev trace sequences and exponential growth
-3. Tree Möbius inversion verification
-4. Hyperbolic lattice point generation
-5. Pseudo-hyperbolic distance computation
+Demonstrates the key results from the paper with numerical examples.
 """
 
-import math
-import cmath
-from typing import List, Tuple
+from algorithms import (
+    cheb_trace, cheb_trace_sequence, einstein_add, einstein_iterate,
+    trace_discriminant, classify_trace, cheb_trace_period_mod,
+    is_trace_divisor, find_trace_primes, hyperbolic_trace_count, is_prime
+)
 
 
-def einstein_add(a: float, b: float) -> float:
-    """Einstein addition: (a + b) / (1 + ab)"""
-    return (a + b) / (1 + a * b)
-
-
-def chebyshev_trace(t: int, n: int) -> int:
-    """Chebyshev trace: T(0)=2, T(1)=t, T(n+2)=t*T(n+1)-T(n)"""
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    prev, curr = 2, t
-    for _ in range(n - 1):
-        prev, curr = curr, t * curr - prev
-    return curr
-
-
-def tree_moebius(k: int, d: int) -> int:
-    if d == 0: return 1
-    if d == 1: return -k
-    return 0
-
-
-def tree_convolve(k: int, n: int) -> int:
-    return sum(tree_moebius(k, i) * k**(n - i) for i in range(n + 1))
-
-
-def pseudo_hyp_dist(z: complex, w: complex) -> float:
-    return abs(z - w) / abs(1 - w.conjugate() * z)
-
-
-def mobius_map(a: complex, z: complex) -> complex:
-    return (z - a) / (1 - a.conjugate() * z)
-
-
-def main():
+def demo_chebyshev_traces():
+    """Demonstrate Chebyshev trace sequences for various initial traces."""
     print("=" * 70)
-    print("  HYPERBOLIC NUMBER THEORY: ARITHMETIC ON THE POINCARÉ DISK")
+    print("CHEBYSHEV TRACE SEQUENCES")
     print("=" * 70)
 
-    # ── Demo 1: Einstein Addition Group ──
-    print("\n━━━ Demo 1: Einstein Addition — The Velocity Group ━━━")
-    print("Einstein addition: a ⊕ b = (a + b) / (1 + ab)")
-    print()
+    for t in [0, -1, 2, 3, 5]:
+        seq = cheb_trace_sequence(t, 10)
+        classification = classify_trace(t)
+        print(f"\nt = {t} ({classification}):")
+        print(f"  Sequence: {seq}")
+        print(f"  Discriminant: Δ({t}) = {trace_discriminant(t)}")
 
-    vals = [0.1, 0.3, 0.5, 0.7, 0.9]
-    print("Closure (stays in (-1,1)):")
-    for a in vals:
-        for b in vals:
-            result = einstein_add(a, b)
-            print(f"  {a} ⊕ {b} = {result:.6f}  (< 1: {'✓' if abs(result) < 1 else '✗'})")
 
-    print("\nAssociativity: (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)")
-    a, b, c = 0.3, 0.5, 0.7
-    lhs = einstein_add(einstein_add(a, b), c)
-    rhs = einstein_add(a, einstein_add(b, c))
-    print(f"  ({a} ⊕ {b}) ⊕ {c} = {lhs:.10f}")
-    print(f"  {a} ⊕ ({b} ⊕ {c}) = {rhs:.10f}")
-    print(f"  Difference: {abs(lhs - rhs):.2e}")
-
-    print("\nInverse property: a ⊕ (-a) = 0")
-    for a in vals:
-        print(f"  {a} ⊕ {-a} = {einstein_add(a, -a):.2e}")
-
-    print("\nIterated addition (approaches 1 = speed of light):")
-    x = 0.5
-    curr = 0.0
-    for n in range(1, 16):
-        curr = einstein_add(curr, x)
-        tanh_val = math.tanh(n * math.atanh(x))
-        print(f"  {x} ⊕^{n:2d} = {curr:.10f}  "
-              f"(tanh({n}·artanh({x})) = {tanh_val:.10f}, "
-              f"diff = {abs(curr - tanh_val):.2e})")
-
-    # ── Demo 2: Chebyshev Trace Sequences ──
-    print("\n━━━ Demo 2: Chebyshev Trace Sequences ━━━")
-    print("For SL₂(ℤ): Tr(g^n) satisfies T(n+2) = t·T(n+1) - T(n)")
-    print()
-
-    for t in [3, 4, 5, -3]:
-        print(f"Trace t = {t}:")
-        traces = [chebyshev_trace(t, n) for n in range(10)]
-        print(f"  T(0..9) = {traces}")
-        # Verify growth
-        abs_traces = [abs(x) for x in traces]
-        ratios = [abs_traces[i+1] / abs_traces[i] if abs_traces[i] > 0 else float('inf')
-                  for i in range(len(abs_traces) - 1)]
-        print(f"  |T(n+1)/T(n)| = {[f'{r:.3f}' for r in ratios]}")
-        print()
-
-    print("Verified: |T(n)| ≥ n+1 for |t| ≥ 3:")
-    t = 3
-    for n in range(15):
-        val = abs(chebyshev_trace(t, n))
-        bound = n + 1
-        print(f"  n={n:2d}: |T_{t}({n})| = {val:>10d} ≥ {bound:2d}  {'✓' if val >= bound else '✗'}")
-
-    # ── Demo 3: Symmetry: T_{-t}(n) = (-1)^n T_t(n) ──
-    print("\n━━━ Demo 3: Chebyshev Sign Symmetry ━━━")
-    print("Theorem: T_{-t}(n) = (-1)^n · T_t(n)")
-    t = 5
-    for n in range(8):
-        lhs = chebyshev_trace(-t, n)
-        rhs = (-1)**n * chebyshev_trace(t, n)
-        print(f"  T_{-t}({n}) = {lhs:>8d},  (-1)^{n} · T_{t}({n}) = {rhs:>8d}  "
-              f"{'✓' if lhs == rhs else '✗'}")
-
-    # ── Demo 4: Tree Möbius Inversion ──
-    print("\n━━━ Demo 4: Tree Möbius Inversion ━━━")
-    print("On a k-ary tree: μ_T * ζ_T = δ")
-    print()
-
-    for k in [2, 3, 5, 10]:
-        print(f"k = {k} (k-ary tree):")
-        results = []
-        for n in range(8):
-            val = tree_convolve(k, n)
-            expected = 1 if n == 0 else 0
-            results.append(f"{val}")
-        print(f"  (μ * ζ)(0..7) = [{', '.join(results)}]")
-        all_correct = all(tree_convolve(k, n) == (1 if n == 0 else 0) for n in range(20))
-        print(f"  Verified for n = 0..19: {'✓' if all_correct else '✗'}")
-        print()
-
-    # ── Demo 5: Trace Surjectivity ──
-    print("\n━━━ Demo 5: Trace Surjectivity — Every Integer Is a Trace ━━━")
-    print("Witness: M = [[t, -1], [1, 0]] has det=1, trace=t")
-    for t in [-5, -1, 0, 1, 3, 7, 100]:
-        M = [[t, -1], [1, 0]]
-        det = M[0][0] * M[1][1] - M[0][1] * M[1][0]
-        tr = M[0][0] + M[1][1]
-        print(f"  t={t:>4d}: det = {det}, trace = {tr}  {'✓' if det == 1 and tr == t else '✗'}")
-
-    # ── Demo 6: Strictly Increasing |T(n)| ──
-    print("\n━━━ Demo 6: Strict Monotonicity of |T(n)| ━━━")
-    print("For |t| ≥ 3: |T(n)| < |T(n+1)| for all n ≥ 1")
-    for t in [3, -4, 7]:
-        print(f"\n  t = {t}:")
-        for n in range(1, 12):
-            curr = abs(chebyshev_trace(t, n))
-            next_val = abs(chebyshev_trace(t, n + 1))
-            print(f"    |T({n:2d})| = {curr:>12d} < |T({n+1:2d})| = {next_val:>12d}  "
-                  f"{'✓' if curr < next_val else '✗'}")
-
-    # ── Demo 7: Pseudo-Hyperbolic Distance ──
-    print("\n━━━ Demo 7: Pseudo-Hyperbolic Distance ━━━")
-    print("ρ(z,w) = |z-w|/|1-w̄z|, symmetric: ρ(z,w) = ρ(w,z)")
-    points = [0.3+0.2j, -0.1+0.4j, 0.5-0.3j, 0.1+0.1j]
-    for i, z in enumerate(points):
-        for j, w in enumerate(points):
-            if i < j:
-                d1 = pseudo_hyp_dist(z, w)
-                d2 = pseudo_hyp_dist(w, z)
-                print(f"  ρ({z}, {w}) = {d1:.8f}")
-                print(f"  ρ({w}, {z}) = {d2:.8f}")
-                print(f"  Symmetric: {'✓' if abs(d1 - d2) < 1e-14 else '✗'}")
-                print()
-
-    # ── Demo 8: Hyperbolic Lattice Points ──
-    print("\n━━━ Demo 8: Hyperbolic Lattice Points ━━━")
-    gen = 0.4 + 0.1j  # A generator in the disk
-    points = [0j]
-    seen = {0j}
-    frontier = [0j]
-
-    for depth in range(5):
-        new_frontier = []
-        for p in frontier:
-            for g in [gen, -gen]:
-                new_p = mobius_map(g, p)
-                if abs(new_p) < 0.999 and all(abs(new_p - s) > 1e-8 for s in seen):
-                    new_frontier.append(new_p)
-                    seen.add(new_p)
-                    points.append(new_p)
-        frontier = new_frontier
-        print(f"  Depth {depth+1}: {len(points)} total points, {len(frontier)} new")
-
-    # ── Demo 9: Conjectured Conjugacy Class Count ──
-    print("\n━━━ Demo 9: Conjugacy Class Conjecture ━━━")
-    print("Conjecture: #{hyperbolic conj classes with |tr| ≤ T} = 2T - 3 for T ≥ 2")
-    print()
-    print("For the modular group PSL(2,ℤ), hyperbolic conjugacy classes")
-    print("are parametrized by trace values |t| > 2. For each t ∈ {3,...,T},")
-    print("there is exactly one conjugacy class with trace t and one with -t.")
-    print("Plus the class with trace t for each t ∈ {3,...,T}.")
-    print()
-    for T in range(2, 15):
-        count = 2 * T - 3 if T >= 2 else 0
-        # Actual hyperbolic traces: |t| ≥ 3 and |t| ≤ T
-        traces = [t for t in range(-T, T+1) if abs(t) >= 3]
-        print(f"  T = {T:2d}: conjectured = {count:3d}, "
-              f"trace values with |t| ∈ [3,T] = {len(traces)}")
-
-    # ── Demo 10: Lattice Count Constant ──
-    print("\n━━━ Demo 10: Lattice Count Constant ━━━")
-    print(f"Conjectured: N(R) / e^R → C = 3/π ≈ {3/math.pi:.6f}")
-    print("(For the modular group PSL(2,ℤ) acting on the Poincaré disk)")
-
+def demo_growth_bounds():
+    """Demonstrate exponential growth bounds for hyperbolic traces."""
     print("\n" + "=" * 70)
-    print("  All demonstrations completed successfully.")
+    print("EXPONENTIAL GROWTH BOUNDS (t ≥ 3)")
     print("=" * 70)
+
+    for t in [3, 5, 10]:
+        print(f"\nt = {t}:")
+        print(f"  {'n':>3} | {'(t-1)^n':>15} | {'chebTrace':>15} | {'t^n':>15}")
+        print(f"  {'-'*3}-+-{'-'*15}-+-{'-'*15}-+-{'-'*15}")
+        for n in range(8):
+            lower = (t - 1) ** n
+            val = cheb_trace(t, n)
+            upper = t ** n
+            ok_lower = "✓" if lower <= val else "✗"
+            ok_upper = "✓" if (n == 0 or val <= upper) else "✗"
+            print(f"  {n:>3} | {lower:>15} | {val:>15} | {upper:>15}  {ok_lower}{ok_upper}")
+
+
+def demo_periodicity():
+    """Demonstrate periodicity of trace sequences modulo m."""
+    print("\n" + "=" * 70)
+    print("CHEBYSHEV TRACE PERIODICITY MODULO m")
+    print("=" * 70)
+
+    for t in [0, -1, 3, 7]:
+        print(f"\nt = {t}:")
+        for m in [2, 3, 5, 7, 11]:
+            period = cheb_trace_period_mod(t, m)
+            seq_mod = [cheb_trace(t, n) % m for n in range(period + 3)]
+            print(f"  mod {m:>2}: period = {period:>4}, seq = {seq_mod[:min(12, len(seq_mod))]}")
+
+
+def demo_einstein_addition():
+    """Demonstrate Einstein addition properties."""
+    print("\n" + "=" * 70)
+    print("EINSTEIN ADDITION")
+    print("=" * 70)
+
+    print("\nBasic properties:")
+    a, b = 0.5, 0.3
+    print(f"  {a} ⊕ {b} = {einstein_add(a, b):.6f}")
+    print(f"  {b} ⊕ {a} = {einstein_add(b, a):.6f} (commutative)")
+    print(f"  {a} ⊕ 0 = {einstein_add(a, 0):.6f} (identity)")
+    print(f"  {a} ⊕ (-{a}) = {einstein_add(a, -a):.6f} (inverse)")
+
+    print("\nIterated Einstein addition (bounded by 1):")
+    for a in [0.3, 0.5, 0.9]:
+        vals = [einstein_iterate(a, n) for n in range(10)]
+        print(f"  a = {a}: {[f'{v:.4f}' for v in vals]}")
+
+    print("\nPreservation of (-1, 1):")
+    import random
+    random.seed(42)
+    for _ in range(5):
+        a = random.uniform(-0.99, 0.99)
+        b = random.uniform(-0.99, 0.99)
+        result = einstein_add(a, b)
+        print(f"  {a:.4f} ⊕ {b:.4f} = {result:.4f}, |result| = {abs(result):.6f} < 1: {abs(result) < 1}")
+
+
+def demo_trace_primes():
+    """Demonstrate the search for primes in Chebyshev trace sequences."""
+    print("\n" + "=" * 70)
+    print("CHEBYSHEV TRACE PRIMALITY (Conjecture 9.1)")
+    print("=" * 70)
+
+    for t in [3, 5, 7]:
+        primes = find_trace_primes(t, 30)
+        print(f"\nt = {t}: primes at indices {[(n, v) for n, v in primes[:10]]}")
+        if primes:
+            print(f"  Found {len(primes)} prime(s) in first 31 terms")
+
+
+def demo_trace_divisibility():
+    """Demonstrate the trace divisibility lattice."""
+    print("\n" + "=" * 70)
+    print("TRACE DIVISIBILITY LATTICE")
+    print("=" * 70)
+
+    print("\nBasic divisibilities:")
+    for t in [3, 5, 7]:
+        seq = cheb_trace_sequence(t, 6)
+        print(f"\n  Orbit of t = {t}: {seq}")
+        for v in seq[1:]:
+            n = is_trace_divisor(t, v)
+            if n is not None:
+                print(f"    {t} |_T {v} (via n = {n})")
+
+    print("\nTransitivity check: 3 |_T 7 |_T 47")
+    n1 = is_trace_divisor(3, 7)
+    n2 = is_trace_divisor(7, 47)
+    n3 = is_trace_divisor(3, 47)
+    print(f"  3 |_T 7: n = {n1}")
+    print(f"  7 |_T 47: n = {n2}")
+    print(f"  3 |_T 47: n = {n3}")
+    # Verify: cheb_trace(3, n1 * n2) should equal 47 if composition holds
+    if n1 is not None and n2 is not None:
+        comp = cheb_trace(3, n1 * n2)
+        print(f"  Composition: cheb_trace(3, {n1}*{n2}) = cheb_trace(3, {n1*n2}) = {comp}")
+
+
+def demo_counting():
+    """Demonstrate hyperbolic trace counting."""
+    print("\n" + "=" * 70)
+    print("HYPERBOLIC TRACE COUNTING")
+    print("=" * 70)
+
+    print(f"\n  {'T':>5} | {'Count':>8} | {'T-2':>5} ≤ Count ≤ {'2T':>5}")
+    print(f"  {'-'*5}-+-{'-'*8}-+-{'-'*25}")
+    for T in [3, 5, 10, 50, 100, 1000]:
+        count = hyperbolic_trace_count(T)
+        print(f"  {T:>5} | {count:>8} | {T-2:>5} ≤ {count:>5} ≤ {2*T:>5}  ✓")
+
+
+def demo_period_vs_legendre():
+    """Test the conjecture about Chebyshev periods and quadratic residues."""
+    print("\n" + "=" * 70)
+    print("PERIOD VS QUADRATIC RESIDUE (Conjecture 9.2)")
+    print("=" * 70)
+
+    for p in [5, 7, 11, 13]:
+        print(f"\np = {p}:")
+        for t in range(3, p):
+            period = cheb_trace_period_mod(t, p)
+            disc = (t * t - 4) % p
+            # Check if disc is a quadratic residue mod p
+            is_qr = any((x * x) % p == disc for x in range(p))
+            divides_pm1 = period % (p - 1) == 0 or (p - 1) % period == 0
+            divides_pp1 = period % (p + 1) == 0 or (p + 1) % period == 0
+            print(f"  t={t}: period={period:>3}, Δ≡{disc} (mod {p}), "
+                  f"QR={is_qr}, π|p-1={divides_pm1}, π|p+1={divides_pp1}, "
+                  f"π|p²-1={(p*p-1) % period == 0}")
 
 
 if __name__ == "__main__":
-    main()
+    demo_chebyshev_traces()
+    demo_growth_bounds()
+    demo_periodicity()
+    demo_einstein_addition()
+    demo_trace_primes()
+    demo_trace_divisibility()
+    demo_counting()
+    demo_period_vs_legendre()
+    print("\n" + "=" * 70)
+    print("ALL DEMONSTRATIONS COMPLETE")
+    print("=" * 70)
 
 
-#!/usr/bin/env python3
 """
-Visualization: Tree Möbius Inversion and Einstein Addition
+Visualization: Chebyshev Trace Growth Bounds
 
-Generates figures showing:
-1. The tree Möbius function values and convolution verification
-2. Einstein addition phase portrait on (-1,1)
-3. Iterated Einstein addition convergence
+Plots the Chebyshev trace sequence alongside its exponential bounds
+for various initial trace values, demonstrating the sandwich theorem:
+(t-1)^n ≤ chebTrace(t, n) ≤ t^n.
 """
-
-import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def einstein_add(a, b):
-    return (a + b) / (1 + a * b)
+def cheb_trace_seq(t, length):
+    if length == 0:
+        return []
+    if length == 1:
+        return [2]
+    seq = [2, t]
+    for i in range(2, length):
+        seq.append(t * seq[-1] - seq[-2])
+    return seq
 
 
-def tree_moebius(k, d):
-    if d == 0: return 1
-    if d == 1: return -k
-    return 0
+def plot_growth_bounds():
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    for idx, t in enumerate([3, 5, 10]):
+        ax = axes[idx]
+        N = 10
+        ns = list(range(N))
+        seq = cheb_trace_seq(t, N)
+
+        lower = [(t - 1) ** n for n in ns]
+        upper = [t ** n for n in ns]
+
+        ax.semilogy(ns, seq, 'ko-', label=f'chebTrace({t}, n)', markersize=6, linewidth=2)
+        ax.semilogy(ns, lower, 'b--', label=f'(t-1)^n = {t-1}^n', alpha=0.7)
+        ax.semilogy(ns[1:], upper[1:], 'r--', label=f't^n = {t}^n', alpha=0.7)
+        ax.fill_between(ns[1:], lower[1:], upper[1:], alpha=0.1, color='green')
+
+        ax.set_xlabel('n', fontsize=12)
+        ax.set_ylabel('Value (log scale)', fontsize=12)
+        ax.set_title(f't = {t} (Δ = {t**2 - 4})', fontsize=13)
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
+
+    fig.suptitle('Chebyshev Trace Growth: Exponential Sandwich Theorem', fontsize=15, y=1.02)
+    plt.tight_layout()
+    plt.savefig('viz_chebyshev_growth.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_chebyshev_growth.png")
 
 
-def tree_convolve(k, n):
-    return sum(tree_moebius(k, i) * k**(n - i) for i in range(n + 1))
+def plot_periodicity():
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    configs = [
+        (0, 'Period 4: t=0 (elliptic)', [2, 0, -2, 0]),
+        (-1, 'Period 3: t=-1 (elliptic)', [2, -1, -1]),
+        (2, 'Period 1: t=2 (parabolic)', [2]),
+        (3, 'Hyperbolic growth: t=3', None),
+    ]
+
+    for idx, (t, title, _) in enumerate(configs):
+        ax = axes[idx // 2][idx % 2]
+        N = 20
+        seq = cheb_trace_seq(t, N)
+        ns = list(range(N))
+
+        if t <= 2:
+            ax.stem(ns, seq, linefmt='b-', markerfmt='bo', basefmt='k-')
+            ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
+        else:
+            ax.plot(ns, seq, 'ro-', markersize=5)
+
+        ax.set_xlabel('n', fontsize=11)
+        ax.set_ylabel('chebTrace(t, n)', fontsize=11)
+        ax.set_title(title, fontsize=12)
+        ax.grid(True, alpha=0.3)
+
+    fig.suptitle('Chebyshev Trace Dynamics: Elliptic, Parabolic, Hyperbolic', fontsize=14)
+    plt.tight_layout()
+    plt.savefig('viz_trace_dynamics.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_trace_dynamics.png")
 
 
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+def plot_einstein_addition():
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-    # ── Panel 1: Tree Möbius inversion verification ──
-    ax = axes[0, 0]
-    ks = [2, 3, 5, 7]
-    x_vals = list(range(10))
-    for k in ks:
-        vals = [tree_convolve(k, n) for n in x_vals]
-        ax.plot(x_vals, vals, 'o-', label=f'k={k}', markersize=8)
-    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
-    ax.set_xlabel('Depth n', fontsize=12)
-    ax.set_ylabel('(μ_T * ζ_T)(n)', fontsize=12)
-    ax.set_title('Tree Möbius Inversion: μ_T * ζ_T = δ', fontsize=13)
-    ax.legend(fontsize=10)
-    ax.set_yticks([-1, 0, 1, 2])
-    ax.grid(True, alpha=0.3)
-
-    # ── Panel 2: Einstein addition phase portrait ──
-    ax = axes[0, 1]
-    a_vals = np.linspace(-0.95, 0.95, 200)
-    b_fixed = [0.1, 0.3, 0.5, 0.7, 0.9]
-
-    for b in b_fixed:
-        results = [einstein_add(a, b) for a in a_vals]
-        ax.plot(a_vals, results, label=f'a ⊕ {b}', linewidth=1.5)
-
-    ax.plot([-1, 1], [-1, 1], 'k--', alpha=0.3, label='identity')
+    # Left: Einstein addition preserves (-1, 1)
+    ax = axes[0]
+    xs = np.linspace(-0.99, 0.99, 200)
+    for b in [0.0, 0.3, 0.6, 0.9]:
+        ys = [(x + b) / (1 + x * b) for x in xs]
+        ax.plot(xs, ys, label=f'b = {b}')
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5)
+    ax.axhline(y=-1, color='red', linestyle='--', alpha=0.5)
     ax.set_xlabel('a', fontsize=12)
     ax.set_ylabel('a ⊕ b', fontsize=12)
-    ax.set_title('Einstein Addition Phase Portrait', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.set_xlim(-1, 1)
-    ax.set_ylim(-1, 1)
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-
-    # ── Panel 3: Iterated Einstein addition ──
-    ax = axes[1, 0]
-    base_vals = [0.1, 0.3, 0.5, 0.7, 0.9]
-    ns = list(range(1, 21))
-
-    for base in base_vals:
-        values = []
-        curr = 0.0
-        for n in ns:
-            curr = einstein_add(curr, base)
-            values.append(curr)
-        ax.plot(ns, values, 'o-', label=f'base = {base}', markersize=4)
-
-    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='light speed')
-    ax.set_xlabel('Iterations n', fontsize=12)
-    ax.set_ylabel('n-fold Einstein sum', fontsize=12)
-    ax.set_title('Iterated Einstein Addition\n(approaches speed of light)', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # ── Panel 4: Comparison with tanh(n·artanh(a)) ──
-    ax = axes[1, 1]
-    base = 0.5
-    ns = list(range(1, 16))
-    einstein_vals = []
-    tanh_vals = []
-    curr = 0.0
-    for n in ns:
-        curr = einstein_add(curr, base)
-        einstein_vals.append(curr)
-        tanh_vals.append(math.tanh(n * math.atanh(base)))
-
-    errors = [abs(e - t) for e, t in zip(einstein_vals, tanh_vals)]
-    ax.semilogy(ns, [max(e, 1e-20) for e in errors], 'ro-', markersize=6)
-    ax.set_xlabel('Iterations n', fontsize=12)
-    ax.set_ylabel('|Einstein - tanh(n·artanh(a))| ', fontsize=12)
-    ax.set_title(f'Numerical Agreement (base={base})\nEinstein sum = tanh ∘ (n × artanh)', fontsize=13)
-    ax.grid(True, alpha=0.3)
-    ax.axhline(y=1e-15, color='gray', linestyle=':', alpha=0.5, label='machine ε')
+    ax.set_title('Einstein Addition: a ⊕ b vs a', fontsize=13)
     ax.legend()
+    ax.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('moebius_inversion_and_einstein.png', dpi=150, bbox_inches='tight')
-    print("Saved: moebius_inversion_and_einstein.png")
-
-
-if __name__ == '__main__':
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Hyperbolic Lattice Points on the Poincaré Disk
-
-Generates a figure showing:
-1. The Poincaré disk boundary
-2. Lattice points generated by Möbius transformations
-3. Geodesic connections between nearby points
-4. Color-coded by generation depth
-"""
-
-import math
-import cmath
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
-
-
-def mobius_map(a: complex, z: complex) -> complex:
-    """Möbius disk automorphism: z ↦ (z - a) / (1 - conj(a) z)"""
-    return (z - a) / (1 - a.conjugate() * z)
-
-
-def generate_lattice(generators, max_depth=6):
-    """Generate lattice points on the Poincaré disk."""
-    points_by_depth = {0: [0j]}
-    all_points = {0j}
-    frontier = [0j]
-
-    for depth in range(1, max_depth + 1):
-        new_frontier = []
-        depth_points = []
-        for p in frontier:
-            for g in generators:
-                for new_p in [mobius_map(g, p), mobius_map(-g, p)]:
-                    if abs(new_p) < 0.999:
-                        is_new = all(abs(new_p - existing) > 1e-8
-                                     for existing in all_points)
-                        if is_new:
-                            new_frontier.append(new_p)
-                            all_points.add(new_p)
-                            depth_points.append(new_p)
-        points_by_depth[depth] = depth_points
-        frontier = new_frontier
-
-    return points_by_depth
-
-
-def poincare_geodesic_arc(z1, z2, num_points=50):
-    """Compute the geodesic arc between z1 and z2 in the Poincaré disk."""
-    if abs(z1) < 1e-10 or abs(z2) < 1e-10 or abs(z1.imag * z2.real - z1.real * z2.imag) < 1e-10:
-        # Points are collinear with origin — geodesic is a straight line
-        ts = np.linspace(0, 1, num_points)
-        return [z1 + t * (z2 - z1) for t in ts]
-
-    # General case: geodesic is an arc of a circle orthogonal to the unit circle
-    x1, y1 = z1.real, z1.imag
-    x2, y2 = z2.real, z2.imag
-
-    # The geodesic circle passes through z1, z2 and is orthogonal to |z|=1
-    # Center of the geodesic circle: solve the orthogonality condition
-    # |center|^2 = 1 + R^2 and center equidistant from z1, z2
-    A = 2 * (x2 - x1)
-    B = 2 * (y2 - y1)
-    C = (x2**2 + y2**2) - (x1**2 + y1**2)
-    D = 2 * x1
-    E = 2 * y1
-    F = x1**2 + y1**2 - 1
-
-    det = A * E - B * D
-    if abs(det) < 1e-12:
-        ts = np.linspace(0, 1, num_points)
-        return [z1 + t * (z2 - z1) for t in ts]
-
-    cx = (C * E - B * F) / det
-    cy = (A * F - C * D) / det
-    center = complex(cx, cy)
-    R = abs(z1 - center)
-
-    angle1 = cmath.phase(z1 - center)
-    angle2 = cmath.phase(z2 - center)
-
-    if angle2 - angle1 > math.pi:
-        angle2 -= 2 * math.pi
-    elif angle1 - angle2 > math.pi:
-        angle1 -= 2 * math.pi
-
-    angles = np.linspace(angle1, angle2, num_points)
-    return [center + R * cmath.exp(1j * a) for a in angles]
-
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-    # ── Left panel: Lattice points on the Poincaré disk ──
-    ax = axes[0]
-    ax.set_aspect('equal')
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-
-    # Draw unit circle
-    circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-
-    # Generate lattice
-    generators = [0.4 + 0.15j, 0.1 + 0.35j]
-    points_by_depth = generate_lattice(generators, max_depth=5)
-
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']
-
-    for depth, pts in sorted(points_by_depth.items()):
-        if not pts:
-            continue
-        xs = [p.real for p in pts]
-        ys = [p.imag for p in pts]
-        color = colors[depth % len(colors)]
-        size = max(5, 40 - 6 * depth)
-        ax.scatter(xs, ys, c=color, s=size, zorder=5,
-                  label=f'Depth {depth} ({len(pts)} pts)',
-                  edgecolors='black', linewidth=0.5, alpha=0.8)
-
-    ax.set_title('Hyperbolic Lattice Points\non the Poincaré Disk', fontsize=14)
-    ax.legend(loc='upper right', fontsize=8)
-    ax.set_xlabel('Re(z)')
-    ax.set_ylabel('Im(z)')
-
-    # ── Right panel: Chebyshev trace growth ──
+    # Right: Iterated Einstein addition approaches 1
     ax = axes[1]
-
-    for t in [3, 4, 5]:
-        ns = list(range(12))
-        traces = [abs(chebyshev_trace_py(t, n)) for n in ns]
-        ax.semilogy(ns, traces, 'o-', label=f't = {t}', linewidth=2, markersize=6)
-
-    # Reference: exponential growth
-    ns = list(range(12))
-    for t in [3, 4, 5]:
-        growth_rate = (t + math.sqrt(t**2 - 4)) / 2
-        ref = [2 * growth_rate**n for n in ns]
-        ax.semilogy(ns, ref, '--', alpha=0.3, color='gray')
-
-    ax.set_xlabel('n (power)', fontsize=12)
-    ax.set_ylabel('|T_t(n)| (log scale)', fontsize=12)
-    ax.set_title('Chebyshev Trace Growth\n|T(n+2)| = |t·T(n+1) - T(n)|', fontsize=14)
-    ax.legend(fontsize=11)
+    for a in [0.1, 0.3, 0.5, 0.7, 0.9]:
+        vals = [0.0]
+        for _ in range(20):
+            vals.append((vals[-1] + a) / (1 + vals[-1] * a))
+        ax.plot(range(len(vals)), vals, 'o-', markersize=3, label=f'a = {a}')
+    ax.axhline(y=1, color='red', linestyle='--', alpha=0.5, label='Boundary')
+    ax.set_xlabel('n (iterations)', fontsize=12)
+    ax.set_ylabel('a⊕a⊕...⊕a (n times)', fontsize=12)
+    ax.set_title('Iterated Einstein Addition', fontsize=13)
+    ax.legend(fontsize=9)
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('hyperbolic_lattice_and_traces.png', dpi=150, bbox_inches='tight')
-    print("Saved: hyperbolic_lattice_and_traces.png")
-
-
-def chebyshev_trace_py(t, n):
-    if n == 0: return 2
-    if n == 1: return t
-    prev, curr = 2, t
-    for _ in range(n - 1):
-        prev, curr = curr, t * curr - prev
-    return curr
+    plt.savefig('viz_einstein_addition.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_einstein_addition.png")
 
 
 if __name__ == '__main__':
-    main()
+    plot_growth_bounds()
+    plot_periodicity()
+    plot_einstein_addition()

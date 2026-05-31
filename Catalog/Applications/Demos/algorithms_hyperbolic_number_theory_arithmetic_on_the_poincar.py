@@ -1,50 +1,88 @@
 """
-Algorithms for Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+Hyperbolic Trace Arithmetic: Core Algorithms
 
-Type-hinted implementations of the core algorithms:
-1. Einstein addition on (-1,1)
-2. Chebyshev trace recurrence
-3. Tree Möbius inversion
-4. Hyperbolic lattice point counting
-5. Pseudo-hyperbolic distance computation
+Type-hinted implementations of the key algorithms from the paper:
+1. Chebyshev trace computation
+2. Einstein addition
+3. Trace periodicity detection
+4. Trace primality classification
 """
 
-from typing import List, Tuple, Callable, Optional
-import math
-import cmath
+from typing import List, Tuple, Optional
+from math import gcd, sqrt
+
+
+def cheb_trace(t: int, n: int) -> int:
+    """Compute the n-th Chebyshev trace value for initial trace t.
+
+    Satisfies: cheb_trace(t, 0) = 2, cheb_trace(t, 1) = t,
+    cheb_trace(t, n+2) = t * cheb_trace(t, n+1) - cheb_trace(t, n).
+
+    Args:
+        t: The initial trace parameter.
+        n: The power index (non-negative integer).
+
+    Returns:
+        The integer cheb_trace(t, n) = 2 * T_n(t/2) where T_n is the
+        n-th Chebyshev polynomial of the first kind.
+    """
+    if n == 0:
+        return 2
+    if n == 1:
+        return t
+    a, b = 2, t
+    for _ in range(n - 1):
+        a, b = b, t * b - a
+    return b
+
+
+def cheb_trace_sequence(t: int, length: int) -> List[int]:
+    """Compute the first `length` values of the Chebyshev trace sequence.
+
+    Args:
+        t: The initial trace parameter.
+        length: Number of values to compute.
+
+    Returns:
+        List [cheb_trace(t, 0), cheb_trace(t, 1), ..., cheb_trace(t, length-1)].
+    """
+    if length == 0:
+        return []
+    if length == 1:
+        return [2]
+    seq = [2, t]
+    for i in range(2, length):
+        seq.append(t * seq[-1] - seq[-2])
+    return seq
 
 
 def einstein_add(a: float, b: float) -> float:
-    """Einstein addition (relativistic velocity addition): (a + b) / (1 + ab).
+    """Einstein (relativistic) velocity addition: a ⊕ b = (a + b) / (1 + a*b).
 
-    This is the group operation on (-1, 1) that makes it isomorphic to (ℝ, +)
-    via the rapidity map artanh. It is associative, commutative, and has
-    -a as the inverse of a.
+    Preserves the interval (-1, 1) when both inputs are in (-1, 1).
 
     Args:
-        a: First velocity, must be in (-1, 1)
-        b: Second velocity, must be in (-1, 1)
+        a: First velocity (should be in (-1, 1) for geometric meaning).
+        b: Second velocity.
 
     Returns:
-        Einstein sum in (-1, 1)
+        The Einstein sum a ⊕ b.
+
+    Raises:
+        ZeroDivisionError: If 1 + a*b = 0.
     """
     return (a + b) / (1 + a * b)
 
 
-def einstein_neg(a: float) -> float:
-    """Einstein additive inverse: -a."""
-    return -a
-
-
-def einstein_add_iterated(a: float, n: int) -> float:
-    """Compute n-fold Einstein addition of a with itself.
+def einstein_iterate(a: float, n: int) -> float:
+    """Compute the n-fold Einstein addition of a with itself.
 
     Args:
-        a: Base value in (-1, 1)
-        n: Number of iterations (non-negative)
+        a: The base value in (-1, 1).
+        n: Number of self-additions (non-negative).
 
     Returns:
-        a ⊕ a ⊕ ... ⊕ a (n times), which equals tanh(n * artanh(a))
+        a ⊕ a ⊕ ... ⊕ a (n times), which equals tanh(n * arctanh(a)).
     """
     result = 0.0
     for _ in range(n):
@@ -52,192 +90,144 @@ def einstein_add_iterated(a: float, n: int) -> float:
     return result
 
 
-def chebyshev_trace(t: int, n: int) -> int:
-    """Compute the Chebyshev trace sequence: T(0) = 2, T(1) = t,
-    T(n+2) = t * T(n+1) - T(n).
+def trace_discriminant(t: int) -> int:
+    """Compute the trace discriminant Δ(t) = t² - 4.
 
-    This gives the trace of the n-th power of an SL₂(ℤ) matrix with trace t.
-    Connected to Chebyshev polynomials of the first kind via
-    T_n(t/2) = chebyshev_trace(t, n) / 2.
-
-    Args:
-        t: The trace of the base matrix
-        n: The power (non-negative)
-
-    Returns:
-        Trace of the n-th power
-    """
-    if n == 0:
-        return 2
-    if n == 1:
-        return t
-    prev, curr = 2, t
-    for _ in range(n - 1):
-        prev, curr = curr, t * curr - prev
-    return curr
-
-
-def tree_moebius(k: int, d: int) -> int:
-    """The Möbius function on a k-ary tree.
-
-    μ_T(0) = 1, μ_T(1) = -k, μ_T(d) = 0 for d ≥ 2.
-
-    This captures the inclusion-exclusion structure of the tree.
+    Classification:
+    - Δ < 0: elliptic (t ∈ {-1, 0, 1})
+    - Δ = 0: parabolic (t ∈ {-2, 2})
+    - Δ > 0: hyperbolic (|t| > 2)
 
     Args:
-        k: Branching factor of the tree
-        d: Depth difference
+        t: The trace value.
 
     Returns:
-        Value of the tree Möbius function
+        The discriminant t² - 4.
     """
-    if d == 0:
-        return 1
-    elif d == 1:
-        return -k
+    return t * t - 4
+
+
+def classify_trace(t: int) -> str:
+    """Classify an SL₂(ℤ) element by its trace.
+
+    Args:
+        t: The trace value.
+
+    Returns:
+        One of 'elliptic', 'parabolic', or 'hyperbolic'.
+    """
+    d = trace_discriminant(t)
+    if d < 0:
+        return 'elliptic'
+    elif d == 0:
+        return 'parabolic'
     else:
+        return 'hyperbolic'
+
+
+def cheb_trace_period_mod(t: int, m: int) -> int:
+    """Find the period of the Chebyshev trace sequence modulo m.
+
+    The sequence cheb_trace(t, n) mod m is periodic; this function
+    finds the minimal positive period.
+
+    Args:
+        t: The initial trace parameter.
+        m: The modulus (must be ≥ 2).
+
+    Returns:
+        The minimal period k > 0 such that the state (cheb_trace(t, k) mod m,
+        cheb_trace(t, k+1) mod m) equals the initial state (2 mod m, t mod m).
+    """
+    if m < 2:
+        raise ValueError("Modulus must be at least 2")
+
+    init_state = (2 % m, t % m)
+    a, b = init_state
+    for k in range(1, m * m + 1):
+        a, b = b, (t * b - a) % m
+        if (a, b) == init_state:
+            return k
+    return m * m  # Should not reach here by pigeonhole
+
+
+def is_trace_divisor(t1: int, t2: int, max_n: int = 1000) -> Optional[int]:
+    """Check if t1 trace-divides t2, i.e., if t2 = cheb_trace(t1, n) for some n.
+
+    Args:
+        t1: The potential trace divisor.
+        t2: The target trace value.
+        max_n: Maximum power to check.
+
+    Returns:
+        The smallest n such that cheb_trace(t1, n) = t2, or None if not found.
+    """
+    a, b = 2, t1
+    if a == t2:
         return 0
+    if b == t2:
+        return 1
+    for n in range(2, max_n + 1):
+        a, b = b, t1 * b - a
+        if b == t2:
+            return n
+        if abs(b) > abs(t2) and abs(t1) > 2:
+            return None  # Sequence grows past target
+    return None
 
 
-def tree_zeta(k: int, d: int) -> int:
-    """The tree zeta function: ζ_T(d) = k^d (descendants at depth d)."""
-    return k ** d
-
-
-def tree_convolve(f: Callable[[int], int], g: Callable[[int], int], n: int) -> int:
-    """Dirichlet-style convolution on depth-indexed functions.
-
-    (f * g)(n) = ∑_{i=0}^{n} f(i) * g(n - i)
-    """
-    return sum(f(i) * g(n - i) for i in range(n + 1))
-
-
-def verify_moebius_inversion(k: int, max_depth: int = 20) -> List[Tuple[int, int]]:
-    """Verify the tree Möbius inversion: μ_T * ζ_T = δ.
-
-    Returns list of (n, value) where value should be 1 if n=0, else 0.
-    """
-    results = []
-    for n in range(max_depth):
-        val = tree_convolve(lambda d: tree_moebius(k, d),
-                           lambda d: tree_zeta(k, d), n)
-        results.append((n, val))
-    return results
-
-
-def pseudo_hyperbolic_distance(z: complex, w: complex) -> float:
-    """Pseudo-hyperbolic distance in the Poincaré disk.
-
-    ρ(z, w) = |z - w| / |1 - conj(w) * z|
-
-    This is a metric on the open unit disk, related to the hyperbolic distance by
-    d_hyp(z, w) = 2 * artanh(ρ(z, w)).
+def is_prime(n: int) -> bool:
+    """Simple primality test.
 
     Args:
-        z: Point in the open unit disk
-        w: Point in the open unit disk
+        n: Integer to test.
 
     Returns:
-        Pseudo-hyperbolic distance
+        True if n is prime.
     """
-    return abs(z - w) / abs(1 - w.conjugate() * z)
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
 
-def mobius_map(a: complex, theta: float, z: complex) -> complex:
-    """Möbius disk automorphism: z ↦ e^{iθ} (z - a) / (1 - conj(a) z).
+def find_trace_primes(t: int, max_n: int = 100) -> List[Tuple[int, int]]:
+    """Find prime values in the Chebyshev trace sequence.
 
     Args:
-        a: Center of the Möbius map, |a| < 1
-        theta: Rotation angle
-        z: Input point
+        t: The initial trace parameter.
+        max_n: Maximum index to check.
 
     Returns:
-        Image under the Möbius map
+        List of (n, cheb_trace(t, n)) where cheb_trace(t, n) is prime.
     """
-    rotation = cmath.exp(1j * theta)
-    return rotation * (z - a) / (1 - a.conjugate() * z)
+    primes = []
+    seq = cheb_trace_sequence(t, max_n + 1)
+    for n, val in enumerate(seq):
+        if is_prime(abs(val)):
+            primes.append((n, val))
+    return primes
 
 
-def hyperbolic_lattice_points(generators: List[complex],
-                               max_depth: int = 5) -> List[complex]:
-    """Generate lattice points by applying Möbius generators iteratively.
+def hyperbolic_trace_count(T: int) -> int:
+    """Count hyperbolic trace values with |t| ≤ T.
 
-    Starting from the origin, apply each generator and its inverse up to
-    max_depth times to generate the orbit.
+    These are integers t with |t| > 2 and |t| ≤ T.
 
     Args:
-        generators: List of complex numbers in the open unit disk
-        max_depth: Maximum number of generator applications
+        T: The bound (non-negative integer).
 
     Returns:
-        List of lattice points (orbit of 0)
+        The count 2*(T-2) for T ≥ 3, else 0.
     """
-    points = {0j}
-    frontier = {0j}
-
-    for _ in range(max_depth):
-        new_frontier = set()
-        for p in frontier:
-            for g in generators:
-                # Apply g and g^{-1} as Möbius maps
-                new_p = mobius_map(g, 0, p)
-                inv_p = mobius_map(-g, 0, p)  # Inverse of Möbius map with center g
-                for q in [new_p, inv_p]:
-                    if abs(q) < 0.9999 and all(abs(q - existing) > 1e-10
-                                                for existing in points):
-                        new_frontier.add(q)
-                        points.add(q)
-        frontier = new_frontier
-
-    return sorted(list(points), key=abs)
-
-
-def trace_witness(t: int) -> Tuple[Tuple[int, int], Tuple[int, int]]:
-    """Construct an SL₂(ℤ) matrix with given trace.
-
-    Returns [[t, -1], [1, 0]] which has trace t and determinant 1.
-
-    Args:
-        t: Desired trace value
-
-    Returns:
-        2x2 matrix as nested tuples
-    """
-    return ((t, -1), (1, 0))
-
-
-def hyperbolic_conj_class_count(T: int) -> int:
-    """Conjectured count of hyperbolic conjugacy classes with |trace| ≤ T.
-
-    Conjecture: equals 2T - 3 for T ≥ 2.
-    """
-    if T <= 1:
+    if T <= 2:
         return 0
-    return 2 * T - 3
-
-
-def lattice_count_constant() -> float:
-    """The conjectured constant C = 3/π for modular group lattice counting.
-
-    N(R) / e^R → 3/π as R → ∞, where N(R) counts lattice points within
-    hyperbolic distance R of the origin.
-    """
-    return 3.0 / math.pi
-
-
-if __name__ == "__main__":
-    # Quick self-test
-    print("=== Einstein Addition ===")
-    print(f"0.5 ⊕ 0.3 = {einstein_add(0.5, 0.3):.6f}")
-    print(f"0.5 ⊕ (-0.5) = {einstein_add(0.5, -0.5):.6f}")
-
-    print("\n=== Chebyshev Trace ===")
-    for n in range(8):
-        print(f"T_3({n}) = {chebyshev_trace(3, n)}")
-
-    print("\n=== Möbius Inversion Verification (k=3) ===")
-    results = verify_moebius_inversion(3, 10)
-    for n, val in results:
-        expected = 1 if n == 0 else 0
-        status = "✓" if val == expected else "✗"
-        print(f"  n={n}: μ*ζ = {val} (expected {expected}) {status}")
+    return 2 * (T - 2)
