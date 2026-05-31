@@ -2290,6 +2290,56 @@ Research mode: {concept.research_mode}
             except (json.JSONDecodeError, ValueError):
                 return json_pkg_str
 
+        # Replace placeholder filenames with actual content from separate result files.
+        # The LLM sometimes outputs PACKAGE.json with fields like "article": "ARTICLE.md"
+        # instead of the actual content. If we have the real content from separate files,
+        # inject it here.
+        PLACEHOLDER_PATTERN = re.compile(r'^[A-Z_0-9]+\.(md|py|txt|json|lean)$', re.IGNORECASE)
+        if hasattr(job, 'result_article') and job.result_article:
+            article = pkg.get("article", "")
+            if isinstance(article, str) and (PLACEHOLDER_PATTERN.match(article) or len(article) < 30):
+                pkg["article"] = job.result_article
+        if hasattr(job, 'result_research_paper') and job.result_research_paper:
+            rp = pkg.get("research_paper", "")
+            if isinstance(rp, str) and (PLACEHOLDER_PATTERN.match(rp) or len(rp) < 30):
+                pkg["research_paper"] = job.result_research_paper
+        if hasattr(job, 'result_lean') and job.result_lean:
+            lp = pkg.get("lean_proofs", "")
+            if isinstance(lp, str) and PLACEHOLDER_PATTERN.match(lp):
+                pkg["lean_proofs"] = job.result_lean
+            elif isinstance(lp, list):
+                # Replace string entries that look like filenames
+                pkg["lean_proofs"] = [
+                    job.result_lean if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
+                    for e in lp
+                ]
+        if hasattr(job, 'result_algorithms') and job.result_algorithms:
+            # Replace string entries in algorithms list that look like filenames
+            algs = pkg.get("algorithms", [])
+            pkg["algorithms"] = [
+                {"name": e.replace(".py", "").replace("_", " ").title(),
+                 "code": job.result_algorithms}
+                if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
+                for e in algs
+            ]
+        if hasattr(job, 'result_demo') and job.result_demo:
+            # Replace string entries in demos list that look like filenames
+            demos = pkg.get("demos", [])
+            pkg["demos"] = [
+                {"name": e.replace(".py", "").replace("_", " ").title(),
+                 "code": job.result_demo}
+                if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
+                for e in demos
+            ]
+            # Also replace interactive_demos string entries
+            idemos = pkg.get("interactive_demos", [])
+            pkg["interactive_demos"] = [
+                {"name": e.replace(".py", "").replace("_", " ").title(),
+                 "code": job.result_demo}
+                if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
+                for e in idemos
+            ]
+
         # Build modules dict from all Python artifacts
         modules = {}
 
