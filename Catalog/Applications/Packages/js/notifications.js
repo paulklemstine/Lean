@@ -49,7 +49,7 @@ window.AetherNotifications = (() => {
         // Browser notification
         if ('Notification' in window && Notification.permission === 'granted') {
             try {
-                const n = new Notification(title, { body, icon: 'visualizations/favicon.svg', tag: 'aether-new-packages' });
+                const n = new Notification(title, { body, icon: 'favicon.svg', tag: 'aether-new-packages' });
                 n.onclick = () => { window.focus(); n.close(); };
             } catch (e) { console.warn('[Aether] Browser notification failed:', e); }
         } else {
