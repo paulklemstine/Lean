@@ -1,243 +1,241 @@
 """
-Hyperbolic Number Theory: Core Algorithms
-==========================================
+Hyperbolic Arithmetic: Core Algorithms
+======================================
 
-Implementation of Möbius transformations, pseudohyperbolic distance,
-hyperbolic lattice enumeration, and the hyperbolic zeta function
-on the Poincaré disk model.
-
-All functions are type-hinted and documented.
+Type-hinted implementations of the key algorithms from the hyperbolic number theory
+framework: SL₂(ℤ) arithmetic, Möbius transformations on the Poincaré disk,
+orbit enumeration, and trace spectrum computation.
 """
 
-import cmath
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Tuple, Set, Dict, Optional
 import math
-from typing import List, Tuple, Set, Optional
+import cmath
 
 
-def mobius_map(a: complex, z: complex) -> complex:
-    """Apply the Möbius transformation φ_a(z) = (z - a) / (1 - conj(a)*z).
-    
-    This maps the unit disk to itself when |a| < 1 and |z| < 1.
-    It sends a ↦ 0 and is an isometry of the hyperbolic metric.
-    
-    Args:
-        a: Center point in the unit disk (|a| < 1)
-        z: Point to transform (|z| < 1)
-    
-    Returns:
-        The image φ_a(z) in the unit disk
-    """
-    return (z - a) / (1 - a.conjugate() * z)
+@dataclass(frozen=True)
+class SL2Z:
+    """An element of SL₂(ℤ): a 2×2 integer matrix with determinant 1."""
+    a: int
+    b: int
+    c: int
+    d: int
+
+    def __post_init__(self) -> None:
+        assert self.a * self.d - self.b * self.c == 1, \
+            f"Determinant must be 1, got {self.a * self.d - self.b * self.c}"
+
+    @staticmethod
+    def identity() -> SL2Z:
+        return SL2Z(1, 0, 0, 1)
+
+    def mul(self, other: SL2Z) -> SL2Z:
+        return SL2Z(
+            self.a * other.a + self.b * other.c,
+            self.a * other.b + self.b * other.d,
+            self.c * other.a + self.d * other.c,
+            self.c * other.b + self.d * other.d,
+        )
+
+    def inv(self) -> SL2Z:
+        return SL2Z(self.d, -self.b, -self.c, self.a)
+
+    def trace(self) -> int:
+        return self.a + self.d
+
+    def is_hyperbolic(self) -> bool:
+        return abs(self.trace()) > 2
+
+    def is_parabolic(self) -> bool:
+        return abs(self.trace()) == 2
+
+    def is_elliptic(self) -> bool:
+        return abs(self.trace()) < 2
+
+    def mobius_act(self, z: complex) -> complex:
+        """Apply the Möbius transformation g·z = (az+b)/(cz+d)."""
+        num = self.a * z + self.b
+        den = self.c * z + self.d
+        if abs(den) < 1e-15:
+            return complex(float('inf'), 0)
+        return num / den
+
+    def pow(self, n: int) -> SL2Z:
+        """Compute g^n (n ≥ 0)."""
+        if n == 0:
+            return SL2Z.identity()
+        if n < 0:
+            return self.inv().pow(-n)
+        result = SL2Z.identity()
+        base = self
+        while n > 0:
+            if n % 2 == 1:
+                result = result.mul(base)
+            base = base.mul(base)
+            n //= 2
+        return result
+
+    def __repr__(self) -> str:
+        return f"SL2Z({self.a}, {self.b}, {self.c}, {self.d})"
 
 
-def mobius_inverse(a: complex, w: complex) -> complex:
-    """Apply the inverse Möbius transformation φ_{-a}(w) = (w + a) / (1 + conj(a)*w).
-    
-    This is the functional inverse of mobius_map(a, ·).
-    
-    Args:
-        a: Original center point
-        w: Point to invert
-    
-    Returns:
-        The pre-image z such that φ_a(z) = w
-    """
-    return (w + a) / (1 + a.conjugate() * w)
-
-
-def pseudo_hyp_dist(z: complex, w: complex) -> float:
-    """Compute the pseudohyperbolic distance ρ(z, w) = |φ_w(z)|.
-    
-    This is related to the hyperbolic distance by d_H(z,w) = 2·arctanh(ρ(z,w)).
-    
-    Args:
-        z, w: Points in the unit disk
-    
-    Returns:
-        The pseudohyperbolic distance in [0, 1)
-    """
-    return abs(mobius_map(w, z))
+# Standard generators
+S = SL2Z(0, -1, 1, 0)
+T = SL2Z(1, 1, 0, 1)
 
 
 def hyperbolic_distance(z: complex, w: complex) -> float:
-    """Compute the hyperbolic distance d_H(z, w) = 2·arctanh(ρ(z, w)).
+    """Compute the hyperbolic distance d(z,w) in the Poincaré disk model.
     
-    Args:
-        z, w: Points in the unit disk
-    
-    Returns:
-        The hyperbolic distance (non-negative real)
+    d(z,w) = 2·artanh(|z-w|/|1-z̄w|)
     """
-    rho = pseudo_hyp_dist(z, w)
-    return 2 * math.atanh(min(rho, 0.9999999))  # clamp for numerical stability
+    if abs(z) >= 1 or abs(w) >= 1:
+        return float('inf')
+    num = abs(z - w)
+    den = abs(1 - z.conjugate() * w)
+    if den < 1e-15:
+        return float('inf')
+    tau = num / den
+    if tau >= 1:
+        return float('inf')
+    return math.log((1 + tau) / (1 - tau))
 
 
-def conformal_weight(z: complex) -> float:
-    """Compute the conformal weight 1/(1 - |z|²)² at point z.
+def enumerate_orbit(generators: List[SL2Z], max_word_length: int) -> Dict[SL2Z, int]:
+    """BFS enumeration of group elements by word length.
     
-    This appears in the hyperbolic area element dA_hyp = dA_eucl / (1 - |z|²)².
-    
-    Args:
-        z: Point in the unit disk
-    
-    Returns:
-        The conformal weight (≥ 1 inside the disk)
+    Returns a dict mapping each element to its word length.
     """
-    r2 = abs(z) ** 2
-    return 1.0 / (1.0 - r2) ** 2
-
-
-def generate_lattice_orbit(
-    generators: List[complex],
-    max_depth: int = 8,
-    max_points: int = 5000
-) -> Set[complex]:
-    """Generate the orbit of the origin under iterated Möbius maps.
+    visited: Dict[SL2Z, int] = {SL2Z.identity(): 0}
+    frontier: Set[SL2Z] = {SL2Z.identity()}
     
-    Starting from z = 0, we apply all generators and their inverses
-    repeatedly up to max_depth iterations, collecting all distinct points.
+    all_gens = generators + [g.inv() for g in generators]
     
-    Args:
-        generators: List of generator points in the unit disk
-        max_depth: Maximum iteration depth
-        max_points: Maximum number of points to generate
-    
-    Returns:
-        Set of orbit points (approximately, due to floating point)
-    """
-    # Use a grid-based deduplication
-    seen: Set[Tuple[int, int]] = set()
-    points: List[complex] = []
-    GRID = 1_000_000  # discretization for dedup
-    
-    def grid_key(z: complex) -> Tuple[int, int]:
-        return (round(z.real * GRID), round(z.imag * GRID))
-    
-    # Start with the origin
-    current_layer = [complex(0, 0)]
-    key = grid_key(complex(0, 0))
-    seen.add(key)
-    points.append(complex(0, 0))
-    
-    # All maps: generators and their inverses
-    all_maps = []
-    for g in generators:
-        all_maps.append(('fwd', g))
-        all_maps.append(('inv', g))
-    
-    for depth in range(max_depth):
-        next_layer = []
-        for z in current_layer:
-            for direction, g in all_maps:
-                if direction == 'fwd':
-                    w = mobius_map(g, z)
-                else:
-                    w = mobius_inverse(g, z)
-                
-                if abs(w) >= 0.99999:
-                    continue
-                
-                key = grid_key(w)
-                if key not in seen:
-                    seen.add(key)
-                    points.append(w)
-                    next_layer.append(w)
-                    
-                    if len(points) >= max_points:
-                        return set(points)
-        
-        current_layer = next_layer
-        if not current_layer:
+    for length in range(1, max_word_length + 1):
+        new_frontier: Set[SL2Z] = set()
+        for g in frontier:
+            for gen in all_gens:
+                product = g.mul(gen)
+                if product not in visited:
+                    visited[product] = length
+                    new_frontier.add(product)
+        frontier = new_frontier
+        if not frontier:
             break
     
-    return set(points)
+    return visited
 
 
-def counting_function(points: List[complex], R: float) -> int:
-    """Count lattice points with |z| ≤ R.
-    
-    Args:
-        points: List of lattice points
-        R: Euclidean radius threshold
-    
-    Returns:
-        Number of points within radius R
+def counting_function(base_point: complex, orbit: Dict[SL2Z, int], R: float) -> int:
+    """Count orbit points within hyperbolic distance R of base_point."""
+    count = 0
+    for g in orbit:
+        gz = g.mobius_act(base_point)
+        if abs(gz) < 1:  # still in disk
+            d = hyperbolic_distance(base_point, gz)
+            if d <= R:
+                count += 1
+    return count
+
+
+def chebyshev_trace_sequence(g: SL2Z, n_terms: int) -> List[int]:
+    """Compute the trace sequence tr(g^0), tr(g^1), ..., tr(g^{n-1})
+    using the Chebyshev recurrence: tr(g^{n+2}) = tr(g)·tr(g^{n+1}) - tr(g^n).
     """
-    return sum(1 for z in points if abs(z) <= R)
+    if n_terms == 0:
+        return []
+    traces = [2]  # tr(g^0) = 2
+    if n_terms == 1:
+        return traces
+    traces.append(g.trace())  # tr(g^1) = tr(g)
+    t = g.trace()
+    for i in range(2, n_terms):
+        traces.append(t * traces[-1] - traces[-2])
+    return traces
 
 
-def hyperbolic_zeta_partial(points: List[complex], s: float) -> float:
-    """Compute the partial hyperbolic zeta function.
+def fricke_character(g: SL2Z, h: SL2Z) -> Tuple[int, int, int]:
+    """Compute the Fricke character (tr(g), tr(h), tr(gh))."""
+    return (g.trace(), h.trace(), g.mul(h).trace())
+
+
+def vieta_involution(x: int, y: int, z: int) -> Tuple[int, int, int]:
+    """Apply the Vieta involution on the Markov surface: (x,y,z) -> (x,y,xy-z)."""
+    return (x, y, x * y - z)
+
+
+def markov_tree(depth: int) -> List[Tuple[int, int, int]]:
+    """Generate the Markov tree from the root triple using Vieta involutions.
     
-    ζ_H(s) = Σ_{z ∈ points, z ≠ 0} 1/|z|^(2s)
-    
-    Args:
-        points: List of lattice points
-        s: Complex parameter (real part)
-    
-    Returns:
-        The partial zeta sum
+    The Markov equation here is x² + y² + z² - xyz = κ.
+    Starting from various roots, we apply all three Vieta involutions.
     """
-    total = 0.0
-    for z in points:
-        r = abs(z)
-        if r > 1e-10:
-            total += r ** (-2 * s)
-    return total
-
-
-def verify_mobius_identity(a: complex, z: complex) -> Tuple[float, float]:
-    """Verify the fundamental Möbius identity:
-    |1 - conj(a)*z|² - |z - a|² = (1 - |a|²)(1 - |z|²)
+    # Start from (1,1,2) which satisfies 1+1+4-2 = 4
+    # Actually for the standard Markov equation x²+y²+z² = 3xyz,
+    # (1,1,1) is the root with x²+y²+z²-3xyz = 0
+    # Our equation is x²+y²+z² - xyz = κ, different normalization
+    root = (3, 3, 3)  # 9+9+9-27 = 0, on standard Markov surface with κ=0
     
-    Returns (LHS, RHS) which should be equal up to floating point.
-    """
-    denom = 1 - a.conjugate() * z
-    lhs = abs(denom) ** 2 - abs(z - a) ** 2
-    rhs = (1 - abs(a) ** 2) * (1 - abs(z) ** 2)
-    return lhs, rhs
-
-
-def verify_mobius_inverse(a: complex, z: complex) -> float:
-    """Verify that φ_{-a}(φ_a(z)) = z.
+    triples: Set[Tuple[int, int, int]] = set()
+    queue = [root]
     
-    Returns |φ_{-a}(φ_a(z)) - z| which should be ~0.
-    """
-    w = mobius_map(a, z)
-    z_recovered = mobius_map(-a, w)
-    return abs(z_recovered - z)
-
-
-def verify_conformal_transform(a: complex, z: complex) -> Tuple[float, float]:
-    """Verify the conformal factor transformation law:
-    1 - |φ_a(z)|² = (1 - |a|²)(1 - |z|²) / |1 - conj(a)*z|²
+    for _ in range(depth):
+        new_queue = []
+        for (x, y, z) in queue:
+            # Three Vieta involutions
+            for triple in [
+                (x * y - z, x, y),
+                (x, x * z - y, z),
+                (x, y, y * z - x),
+            ]:
+                canonical = tuple(sorted(triple))
+                if canonical not in triples and all(t > 0 for t in canonical):
+                    triples.add(canonical)
+                    new_queue.append(triple)
+        queue = new_queue
     
-    Returns (LHS, RHS).
+    return sorted(triples)
+
+
+def upper_half_to_disk(z: complex) -> complex:
+    """Map from the upper half-plane to the Poincaré disk via the Cayley transform.
+    
+    w = (z - i) / (z + i)
     """
-    w = mobius_map(a, z)
-    denom = 1 - a.conjugate() * z
-    lhs = 1 - abs(w) ** 2
-    rhs = (1 - abs(a) ** 2) * (1 - abs(z) ** 2) / abs(denom) ** 2
-    return lhs, rhs
+    i = complex(0, 1)
+    return (z - i) / (z + i)
+
+
+def disk_to_upper_half(w: complex) -> complex:
+    """Map from the Poincaré disk to the upper half-plane (inverse Cayley).
+    
+    z = i(1 + w) / (1 - w)
+    """
+    i = complex(0, 1)
+    return i * (1 + w) / (1 - w)
 
 
 if __name__ == "__main__":
-    # Quick verification
-    a = complex(0.3, 0.4)
-    z = complex(-0.2, 0.5)
+    # Quick demo
+    print("=== SL₂(ℤ) Generators ===")
+    print(f"S = {S}, trace = {S.trace()}, {'elliptic' if S.is_elliptic() else 'other'}")
+    print(f"T = {T}, trace = {T.trace()}, {'parabolic' if T.is_parabolic() else 'other'}")
     
-    print("=== Möbius Identity Verification ===")
-    lhs, rhs = verify_mobius_identity(a, z)
-    print(f"  LHS = {lhs:.15f}")
-    print(f"  RHS = {rhs:.15f}")
-    print(f"  Diff = {abs(lhs - rhs):.2e}")
+    ST = S.mul(T)
+    print(f"ST = {ST}, trace = {ST.trace()}")
+    print(f"Fricke character of (S,T) = {fricke_character(S, T)}")
     
-    print("\n=== Möbius Inverse Verification ===")
-    err = verify_mobius_inverse(a, z)
-    print(f"  |φ_{{-a}}(φ_a(z)) - z| = {err:.2e}")
+    print("\n=== Chebyshev Trace Sequence for ST ===")
+    traces = chebyshev_trace_sequence(ST, 10)
+    print(f"tr((ST)^n) for n=0..9: {traces}")
     
-    print("\n=== Conformal Transform Verification ===")
-    lhs, rhs = verify_conformal_transform(a, z)
-    print(f"  LHS = {lhs:.15f}")
-    print(f"  RHS = {rhs:.15f}")
-    print(f"  Diff = {abs(lhs - rhs):.2e}")
+    print("\n=== Orbit Enumeration ===")
+    orbit = enumerate_orbit([S, T], max_word_length=4)
+    print(f"Elements with word length ≤ 4: {len(orbit)}")
+    
+    print("\n=== Counting Function ===")
+    for R in [1.0, 2.0, 3.0, 4.0, 5.0]:
+        N = counting_function(complex(0, 0), orbit, R)
+        ratio = N / math.exp(R) if R > 0 else 0
+        print(f"N({R:.1f}) = {N}, N(R)/e^R = {ratio:.4f}, target 3/π ≈ {3/math.pi:.4f}")

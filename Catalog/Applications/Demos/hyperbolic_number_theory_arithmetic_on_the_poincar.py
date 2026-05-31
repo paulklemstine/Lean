@@ -1,351 +1,340 @@
 #!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Demonstration
-========================================
+Hyperbolic Number Theory: Interactive Demo
+==========================================
 
-Numerical demonstrations of:
-1. Möbius transformations preserving the unit disk
-2. The fundamental norm-squared identity
-3. Hyperbolic lattice generation and counting
-4. The hyperbolic zeta function
-5. Conformal weight properties
+Demonstrates key results from the hyperbolic arithmetic framework:
+1. SL₂(ℤ) trace arithmetic and the Chebyshev recurrence
+2. The Fricke trace identity on concrete examples
+3. Orbit enumeration on the Poincaré disk
+4. The Vieta involution generating Markov-like triples
+5. Lattice point counting and the conjectured asymptotic
 """
 
-import math
-import cmath
 from algorithms import (
-    mobius_map, mobius_inverse, pseudo_hyp_dist, hyperbolic_distance,
-    conformal_weight, generate_lattice_orbit, counting_function,
-    hyperbolic_zeta_partial, verify_mobius_identity, verify_mobius_inverse,
-    verify_conformal_transform
+    SL2Z, S, T, hyperbolic_distance, enumerate_orbit,
+    counting_function, chebyshev_trace_sequence, fricke_character,
+    vieta_involution, upper_half_to_disk
 )
+import math
 
 
-def demo_mobius_disk_preservation():
-    """Demonstrate that Möbius maps preserve the unit disk."""
+def demo_trace_arithmetic():
+    """Demonstrate trace identities for SL₂(ℤ)."""
     print("=" * 60)
-    print("DEMO 1: Möbius Maps Preserve the Unit Disk")
+    print("DEMO 1: SL₂(ℤ) Trace Arithmetic")
     print("=" * 60)
     
-    test_points = [
-        (complex(0.3, 0.4), complex(0.1, 0.2)),
-        (complex(0.5, 0.5), complex(-0.3, 0.6)),
-        (complex(0.9, 0.0), complex(0.0, 0.9)),
-        (complex(0.1, -0.8), complex(0.7, 0.3)),
+    # Cayley-Hamilton: tr(g²) = tr(g)² - 2
+    g = S.mul(T).mul(T)  # g = ST²
+    g_sq = g.mul(g)
+    print(f"\ng = ST² = {g}")
+    print(f"tr(g) = {g.trace()}")
+    print(f"tr(g²) = {g_sq.trace()}")
+    print(f"tr(g)² - 2 = {g.trace()**2 - 2}")
+    print(f"Cayley-Hamilton verified: {g_sq.trace() == g.trace()**2 - 2}")
+    
+    # Chebyshev recurrence
+    print("\nChebyshev trace recurrence for g = ST²:")
+    traces = chebyshev_trace_sequence(g, 8)
+    print(f"  tr(g^n) for n=0..7: {traces}")
+    for n in range(len(traces) - 2):
+        lhs = traces[n + 2]
+        rhs = g.trace() * traces[n + 1] - traces[n]
+        print(f"  n={n}: tr(g^{n+2})={lhs}, tr(g)·tr(g^{n+1})-tr(g^{n})={rhs}, match={lhs==rhs}")
+
+
+def demo_fricke_identity():
+    """Demonstrate the Fricke trace identity."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: The Fricke Trace Identity")
+    print("=" * 60)
+    
+    test_pairs = [
+        (S, T, "S, T"),
+        (S.mul(T), T, "ST, T"),
+        (T.mul(T), S.mul(T), "T², ST"),
     ]
     
-    for a, z in test_points:
-        if abs(a) >= 1 or abs(z) >= 1:
-            continue
-        w = mobius_map(a, z)
-        print(f"  a = {a}, |a| = {abs(a):.4f}")
-        print(f"  z = {z}, |z| = {abs(z):.4f}")
-        print(f"  φ_a(z) = {w:.6f}, |φ_a(z)| = {abs(w):.6f} < 1 ✓")
-        print()
+    for g, h, name in test_pairs:
+        gh = g.mul(h)
+        comm = g.mul(h).mul(g.inv()).mul(h.inv())
+        
+        lhs = g.trace()**2 + h.trace()**2 + gh.trace()**2 - g.trace()*h.trace()*gh.trace()
+        rhs = comm.trace() + 2
+        
+        print(f"\n(g, h) = ({name}):")
+        print(f"  Fricke char = ({g.trace()}, {h.trace()}, {gh.trace()})")
+        print(f"  LHS = tr(g)²+tr(h)²+tr(gh)² - tr(g)tr(h)tr(gh) = {lhs}")
+        print(f"  RHS = tr([g,h]) + 2 = {comm.trace()} + 2 = {rhs}")
+        print(f"  Identity verified: {lhs == rhs}")
+        
+        # Check Markov surface: x²+y²+z² - xyz = κ where κ = tr([g,h]) + 2
+        kappa = comm.trace() + 2
+        x, y, z = g.trace(), h.trace(), gh.trace()
+        surface_val = x**2 + y**2 + z**2 - x*y*z
+        print(f"  Markov surface: {x}²+{y}²+{z}² - {x}·{y}·{z} = {surface_val} = κ={kappa}")
 
 
-def demo_fundamental_identity():
-    """Demonstrate the norm-squared identity."""
-    print("=" * 60)
-    print("DEMO 2: Fundamental Möbius Norm-Squared Identity")
-    print("  |1 - ā·z|² - |z - a|² = (1 - |a|²)(1 - |z|²)")
-    print("=" * 60)
-    
-    tests = [
-        (complex(0.3, 0.4), complex(0.1, 0.2)),
-        (complex(0.0, 0.5), complex(0.5, 0.0)),
-        (complex(0.8, 0.1), complex(-0.3, 0.7)),
-    ]
-    
-    for a, z in tests:
-        lhs, rhs = verify_mobius_identity(a, z)
-        print(f"  a={a}, z={z}: LHS={lhs:.10f}, RHS={rhs:.10f}, err={abs(lhs-rhs):.2e}")
-
-
-def demo_mobius_inverse():
-    """Demonstrate the inverse property φ_{-a} ∘ φ_a = id."""
+def demo_vieta():
+    """Demonstrate the Vieta involution on the Markov surface."""
     print("\n" + "=" * 60)
-    print("DEMO 3: Möbius Inverse: φ_{-a}(φ_a(z)) = z")
+    print("DEMO 3: Vieta Involution on the Markov Surface")
     print("=" * 60)
     
-    tests = [
-        (complex(0.3, 0.4), complex(0.1, 0.2)),
-        (complex(0.7, 0.0), complex(0.0, 0.5)),
-        (complex(0.1, 0.9), complex(-0.5, -0.3)),
-    ]
+    # Start from (1,1,1) on x²+y²+z²-xyz = 2
+    triple = (1, 1, 1)
+    kappa = sum(t**2 for t in triple) - triple[0]*triple[1]*triple[2]
+    print(f"\nRoot triple: {triple}, κ = {kappa}")
     
-    for a, z in tests:
-        if abs(a) >= 1 or abs(z) >= 1:
-            continue
-        err = verify_mobius_inverse(a, z)
-        print(f"  a={a}, z={z}: |φ_{{-a}}(φ_a(z)) - z| = {err:.2e} ✓")
+    # Apply Vieta involutions
+    print("\nVieta tree (first few levels):")
+    visited = {triple}
+    queue = [triple]
+    for level in range(5):
+        new_queue = []
+        for (x, y, z) in queue:
+            for new_triple in [
+                vieta_involution(x, y, z),
+                (y, z, y*z - x),
+                (x, z, x*z - y),
+            ]:
+                canonical = tuple(sorted(new_triple))
+                if canonical not in visited:
+                    # Verify surface equation
+                    a, b, c = new_triple
+                    val = a**2 + b**2 + c**2 - a*b*c
+                    visited.add(canonical)
+                    new_queue.append(new_triple)
+                    print(f"  Level {level+1}: {new_triple}, surface value = {val}, verified = {val == kappa}")
+        queue = new_queue
 
 
-def demo_lattice_generation():
-    """Generate and analyze a hyperbolic lattice."""
+def demo_orbit():
+    """Demonstrate orbit enumeration and counting."""
     print("\n" + "=" * 60)
-    print("DEMO 4: Hyperbolic Lattice Generation")
+    print("DEMO 4: Orbit Enumeration on the Poincaré Disk")
     print("=" * 60)
     
-    # Use two generators at specific positions
-    g1 = complex(0.5, 0.0)
-    g2 = complex(0.0, 0.5)
+    base_point = complex(0, 0)
     
-    print(f"  Generators: g₁ = {g1}, g₂ = {g2}")
-    print(f"  |g₁| = {abs(g1):.4f}, |g₂| = {abs(g2):.4f}")
+    print("\nEnumerating modular group orbit at origin...")
+    orbit = enumerate_orbit([S, T], max_word_length=6)
     
-    points = generate_lattice_orbit([g1, g2], max_depth=6, max_points=2000)
-    point_list = sorted(list(points), key=abs)
+    # Classify by word length
+    by_length = {}
+    for g, length in orbit.items():
+        by_length.setdefault(length, []).append(g)
     
-    print(f"  Generated {len(point_list)} lattice points")
-    print(f"\n  Counting function N(R):")
+    print(f"\n{'Word length':<15} {'Count':<10} {'Cumulative':<12} {'New traces'}")
+    print("-" * 60)
+    cumulative = 0
+    for length in sorted(by_length.keys()):
+        elements = by_length[length]
+        cumulative += len(elements)
+        traces = sorted(set(g.trace() for g in elements))[:5]
+        trace_str = str(traces) + ("..." if len(set(g.trace() for g in elements)) > 5 else "")
+        print(f"{length:<15} {len(elements):<10} {cumulative:<12} {trace_str}")
     
-    for R in [0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99]:
-        n = counting_function(point_list, R)
-        print(f"    N({R:.2f}) = {n}")
-    
-    print(f"\n  First 10 lattice points (by distance from origin):")
-    for i, z in enumerate(point_list[:10]):
-        print(f"    z_{i} = ({z.real:.6f}, {z.imag:.6f}), |z| = {abs(z):.6f}")
+    # Counting function
+    print(f"\n{'R':<8} {'N(R)':<10} {'e^R':<12} {'N(R)/e^R':<12} {'3/π ≈ 0.955'}")
+    print("-" * 55)
+    for R in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0]:
+        N = counting_function(base_point, orbit, R)
+        eR = math.exp(R)
+        ratio = N / eR if eR > 0 else 0
+        print(f"{R:<8.1f} {N:<10} {eR:<12.2f} {ratio:<12.4f} {'←' if abs(ratio - 3/math.pi) < 0.3 else ''}")
 
 
-def demo_hyperbolic_zeta():
-    """Compute the hyperbolic zeta function at various s values."""
+def demo_trace_spectrum():
+    """Demonstrate that every integer is a trace of some SL₂(ℤ) element."""
     print("\n" + "=" * 60)
-    print("DEMO 5: Hyperbolic Zeta Function")
+    print("DEMO 5: The Trace Spectrum of SL₂(ℤ)")
     print("=" * 60)
     
-    g1 = complex(0.5, 0.0)
-    g2 = complex(0.0, 0.5)
-    points = generate_lattice_orbit([g1, g2], max_depth=5, max_points=500)
-    point_list = list(points)
-    
-    print(f"  Using {len(point_list)} lattice points")
-    print(f"\n  ζ_H(s) = Σ 1/|z|^(2s):")
-    
-    for s in [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
-        val = hyperbolic_zeta_partial(point_list, s)
-        print(f"    ζ_H({s:.1f}) = {val:.6f}")
+    print("\nConstructing elements with prescribed traces:")
+    for t in range(-5, 11):
+        # The matrix [[t-1, t-2], [1, 1]] has det = (t-1) - (t-2) = 1, trace = t
+        g = SL2Z(t - 1, t - 2, 1, 1)
+        print(f"  trace {t:>3}: {g}, det = {g.a*g.d - g.b*g.c}, tr = {g.trace()}")
 
 
-def demo_conformal_weight():
-    """Demonstrate conformal weight properties."""
+def demo_counting_conjecture():
+    """Test the hyperbolic counting conjecture N(R)/e^R → 3/π."""
     print("\n" + "=" * 60)
-    print("DEMO 6: Conformal Weight Properties")
+    print("DEMO 6: Testing the Counting Conjecture")
     print("=" * 60)
     
-    print("  conformalWeight(z) = 1/(1 - |z|²)²")
-    print("  Property: conformalWeight(z) ≥ 1 for |z| < 1")
-    print("  Property: conformalWeight(0) = 1")
-    print()
+    target = 3 / math.pi
+    print(f"\nConjectured limit: 3/π ≈ {target:.6f}")
+    print("\nNote: The base point is the origin. For small R, finite-size effects")
+    print("dominate. The asymptotic should emerge for large R, but our enumeration")
+    print("is limited by word length.")
     
-    for r in [0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99]:
-        z = complex(r, 0)
-        w = conformal_weight(z)
-        print(f"    |z| = {r:.2f}: weight = {w:.4f} ≥ 1 ✓")
+    # Use larger word length for better statistics
+    orbit = enumerate_orbit([S, T], max_word_length=8)
+    base = complex(0, 0)
     
-    print("\n  Conformal transform verification:")
-    a = complex(0.3, 0.4)
-    z = complex(-0.2, 0.1)
-    lhs, rhs = verify_conformal_transform(a, z)
-    print(f"    a={a}, z={z}")
-    print(f"    1 - |φ_a(z)|² = {lhs:.10f}")
-    print(f"    (1-|a|²)(1-|z|²)/|1-ā·z|² = {rhs:.10f}")
-    print(f"    Error: {abs(lhs - rhs):.2e}")
-
-
-def demo_conjecture_test():
-    """Test the hyperbolic prime counting conjecture."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Conjecture Test — Lattice Growth")
-    print("=" * 60)
-    
-    g1 = complex(0.5, 0.0)
-    g2 = complex(0.0, 0.5)
-    
-    print(f"  Conjecture: N(R) grows as lattice points accumulate at boundary")
-    print(f"  Testing with generators at |g| = 0.5\n")
-    
-    for depth in [2, 4, 6, 8, 10]:
-        points = generate_lattice_orbit([g1, g2], max_depth=depth, max_points=10000)
-        point_list = list(points)
-        n90 = counting_function(point_list, 0.9)
-        n95 = counting_function(point_list, 0.95)
-        n99 = counting_function(point_list, 0.99)
-        print(f"    depth={depth:2d}: total={len(point_list):5d}, "
-              f"N(0.9)={n90:4d}, N(0.95)={n95:4d}, N(0.99)={n99:4d}")
+    print(f"\nTotal orbit elements enumerated: {len(orbit)}")
+    print(f"\n{'R':<8} {'N(R)':<10} {'N(R)/e^R':<12} {'Deviation from 3/π'}")
+    print("-" * 50)
+    for R in [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]:
+        N = counting_function(base, orbit, R)
+        eR = math.exp(R)
+        ratio = N / eR
+        dev = abs(ratio - target) / target * 100
+        print(f"{R:<8.1f} {N:<10} {ratio:<12.6f} {dev:.1f}%")
 
 
 if __name__ == "__main__":
-    demo_mobius_disk_preservation()
-    demo_fundamental_identity()
-    demo_mobius_inverse()
-    demo_lattice_generation()
-    demo_hyperbolic_zeta()
-    demo_conformal_weight()
-    demo_conjecture_test()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
+    demo_trace_arithmetic()
+    demo_fricke_identity()
+    demo_vieta()
+    demo_orbit()
+    demo_trace_spectrum()
+    demo_counting_conjecture()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Hyperbolic Lattice on the Poincaré Disk
-=======================================================
+Visualization: Poincaré Disk Orbit and Trace Spectrum
+=====================================================
 
-Generates a matplotlib figure showing:
-1. The Poincaré disk boundary
-2. Lattice points colored by generation depth
-3. Hyperbolic geodesics connecting nearest neighbors
+Standalone matplotlib visualization of the modular group orbit
+on the Poincaré disk, trace spectrum, and Chebyshev recurrence.
 """
 
 import math
-import cmath
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
+from dataclasses import dataclass
+from typing import Dict, List, Set, Tuple
 
 
-def mobius_map(a, z):
-    return (z - a) / (1 - a.conjugate() * z)
-
-def mobius_inverse(a, w):
-    return (w + a) / (1 + a.conjugate() * w)
-
-def generate_lattice_by_depth(generators, max_depth=7, max_points=3000):
-    """Generate lattice points labeled by depth."""
-    GRID = 1_000_000
-    def grid_key(z):
-        return (round(z.real * GRID), round(z.imag * GRID))
-    
-    seen = set()
-    depth_points = {0: [complex(0, 0)]}
-    key = grid_key(complex(0, 0))
-    seen.add(key)
-    
-    current = [complex(0, 0)]
-    total = 1
-    
-    all_maps = []
-    for g in generators:
-        all_maps.append(('fwd', g))
-        all_maps.append(('inv', g))
-    
-    for d in range(1, max_depth + 1):
-        next_layer = []
-        for z in current:
-            for direction, g in all_maps:
-                w = mobius_map(g, z) if direction == 'fwd' else mobius_inverse(g, z)
-                if abs(w) >= 0.999:
-                    continue
-                key = grid_key(w)
-                if key not in seen:
-                    seen.add(key)
-                    next_layer.append(w)
-                    total += 1
-                    if total >= max_points:
-                        depth_points[d] = next_layer
-                        return depth_points
-        depth_points[d] = next_layer
-        current = next_layer
-        if not current:
-            break
-    
-    return depth_points
+@dataclass(frozen=True)
+class SL2Z:
+    a: int; b: int; c: int; d: int
+    def mul(self, o: 'SL2Z') -> 'SL2Z':
+        return SL2Z(self.a*o.a+self.b*o.c, self.a*o.b+self.b*o.d,
+                     self.c*o.a+self.d*o.c, self.c*o.b+self.d*o.d)
+    def inv(self) -> 'SL2Z': return SL2Z(self.d, -self.b, -self.c, self.a)
+    def trace(self) -> int: return self.a + self.d
+    def mobius(self, z: complex) -> complex:
+        d = self.c*z + self.d
+        return (self.a*z + self.b) / d if abs(d) > 1e-15 else complex(1e10)
 
 
-def draw_geodesic_arc(ax, z1, z2, color='gray', alpha=0.15, lw=0.3):
-    """Draw a hyperbolic geodesic between z1 and z2 on the Poincaré disk."""
-    # Parametrize the geodesic via Möbius map
-    # Map z1 to origin, then the geodesic is a diameter through the image of z2
-    if abs(z1 - z2) < 1e-10:
-        return
-    
-    # Simple: just draw a straight line for nearby points
-    # (for a full implementation, compute the circular arc)
-    t = np.linspace(0, 1, 20)
-    # Use the Möbius midpoint formula for a smoother curve
-    points = []
-    for ti in t:
-        # Linear interpolation in disk model (not geodesic, but visually ok for nearby points)
-        zi = z1 * (1 - ti) + z2 * ti
-        if abs(zi) < 1:
-            points.append(zi)
-    
-    if len(points) > 1:
-        xs = [p.real for p in points]
-        ys = [p.imag for p in points]
-        ax.plot(xs, ys, color=color, alpha=alpha, linewidth=lw)
+S = SL2Z(0, -1, 1, 0)
+T = SL2Z(1, 1, 0, 1)
+
+
+def enumerate_orbit(gens: List[SL2Z], max_len: int) -> Dict[SL2Z, int]:
+    visited = {SL2Z(1,0,0,1): 0}
+    frontier = {SL2Z(1,0,0,1)}
+    all_g = gens + [g.inv() for g in gens]
+    for l in range(1, max_len + 1):
+        nf = set()
+        for g in frontier:
+            for gen in all_g:
+                p = g.mul(gen)
+                if p not in visited:
+                    visited[p] = l
+                    nf.add(p)
+        frontier = nf
+    return visited
+
+
+def hyp_dist(z: complex, w: complex) -> float:
+    num = abs(z - w)
+    den = abs(1 - z.conjugate() * w)
+    tau = num / den if den > 1e-15 else 1.0
+    return math.log((1 + min(tau, 0.9999)) / (1 - min(tau, 0.9999))) if tau < 1 else 30.0
 
 
 def main():
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-    
-    # ---- Left panel: Two-generator lattice ----
-    ax = axes[0]
-    g1 = complex(0.5, 0.0)
-    g2 = complex(0.0, 0.5)
-    
-    depth_points = generate_lattice_by_depth([g1, g2], max_depth=7, max_points=2000)
-    
-    # Draw disk boundary
+    fig, axes = plt.subplots(2, 2, figsize=(14, 14))
+
+    # 1. Poincaré disk orbit
+    ax1 = axes[0, 0]
+    orbit = enumerate_orbit([S, T], 7)
+    base = complex(0.1, 0.2)
+
+    xs, ys, colors = [], [], []
+    for g, wl in orbit.items():
+        gz = g.mobius(base)
+        if abs(gz) < 0.999:
+            xs.append(gz.real)
+            ys.append(gz.imag)
+            colors.append(wl)
+
     circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-    ax.add_patch(circle)
-    
-    # Color map for depths
-    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#a65628', '#f781bf', '#999999']
-    
-    all_pts = []
-    for d, pts in sorted(depth_points.items()):
-        if not pts:
-            continue
-        xs = [z.real for z in pts]
-        ys = [z.imag for z in pts]
-        c = colors[d % len(colors)]
-        size = max(2, 15 - 2 * d)
-        ax.scatter(xs, ys, c=c, s=size, zorder=5 + d, label=f'Depth {d}', alpha=0.8)
-        all_pts.extend(pts)
-    
-    ax.set_xlim(-1.15, 1.15)
-    ax.set_ylim(-1.15, 1.15)
-    ax.set_aspect('equal')
-    ax.set_title('Hyperbolic Lattice on the Poincaré Disk\n'
-                 f'Generators: ({g1.real}, {g1.imag}), ({g2.real}, {g2.imag})\n'
-                 f'{len(all_pts)} lattice points', fontsize=12)
-    ax.legend(loc='upper right', fontsize=8, markerscale=2)
-    ax.grid(True, alpha=0.2)
-    
-    # ---- Right panel: Counting function ----
-    ax2 = axes[1]
-    
-    radii = np.linspace(0, 0.99, 200)
-    counts = [sum(1 for z in all_pts if abs(z) <= r) for r in radii]
-    
-    ax2.plot(radii, counts, 'b-', linewidth=2, label='N(R) = # points with |z| ≤ R')
-    
-    # Theoretical comparison: exponential growth
-    # For a lattice in H², N(R_hyp) ~ e^{R_hyp}, but in Euclidean coords
-    # R_eucl ~ tanh(R_hyp/2), so R_hyp ~ 2·arctanh(R_eucl)
-    # Hence N ~ exp(2·arctanh(R)) ~ (1+R)/(1-R) for large R
-    theoretical = [max(1, 0.5 * (1 + r) / (1 - r + 0.01)) for r in radii]
-    ax2.plot(radii, theoretical, 'r--', linewidth=1.5, alpha=0.7,
-             label=r'$\sim \frac{1+R}{1-R}$ (theoretical growth)')
-    
-    ax2.set_xlabel('Euclidean radius R', fontsize=12)
-    ax2.set_ylabel('N(R)', fontsize=12)
-    ax2.set_title('Hyperbolic Lattice Counting Function', fontsize=12)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_yscale('log')
-    
+    ax1.add_patch(circle)
+    sc = ax1.scatter(xs, ys, c=colors, cmap='viridis', s=8, alpha=0.7)
+    ax1.set_xlim(-1.1, 1.1)
+    ax1.set_ylim(-1.1, 1.1)
+    ax1.set_aspect('equal')
+    ax1.set_title('PSL(2,ℤ) Orbit on the Poincaré Disk', fontsize=14)
+    ax1.set_xlabel('Re(z)')
+    ax1.set_ylabel('Im(z)')
+    plt.colorbar(sc, ax=ax1, label='Word length')
+
+    # 2. Trace distribution
+    ax2 = axes[0, 1]
+    traces = [g.trace() for g in orbit.keys()]
+    trace_range = range(min(traces), max(traces) + 1)
+    trace_counts = {t: traces.count(t) for t in trace_range}
+    ax2.bar(trace_counts.keys(), trace_counts.values(), color='steelblue', alpha=0.7)
+    ax2.set_title('Trace Distribution of Orbit Elements', fontsize=14)
+    ax2.set_xlabel('Trace value')
+    ax2.set_ylabel('Count')
+    ax2.axvline(x=2, color='red', linestyle='--', alpha=0.5, label='tr=2 (parabolic)')
+    ax2.axvline(x=-2, color='red', linestyle='--', alpha=0.5, label='tr=-2')
+    ax2.legend()
+
+    # 3. Chebyshev trace sequences
+    ax3 = axes[1, 0]
+    test_elements = [
+        (SL2Z(2, 1, 1, 1), "tr=3 (hyp)"),
+        (SL2Z(3, 2, 1, 1), "tr=4 (hyp)"),
+        (SL2Z(4, 3, 1, 1), "tr=5 (hyp)"),
+    ]
+    for g, label in test_elements:
+        tr_seq = [2, g.trace()]
+        t = g.trace()
+        for _ in range(8):
+            tr_seq.append(t * tr_seq[-1] - tr_seq[-2])
+        ax3.semilogy(range(len(tr_seq)), [abs(x) for x in tr_seq], 'o-', label=label, markersize=4)
+    ax3.set_title('Chebyshev Trace Growth (log scale)', fontsize=14)
+    ax3.set_xlabel('Power n')
+    ax3.set_ylabel('|tr(gⁿ)|')
+    ax3.legend()
+    ax3.grid(True, alpha=0.3)
+
+    # 4. Counting function
+    ax4 = axes[1, 1]
+    Rs = np.linspace(0.1, 8, 50)
+    Ns = []
+    for R in Rs:
+        count = sum(1 for g in orbit if abs(g.mobius(base)) < 0.999 and
+                    hyp_dist(base, g.mobius(base)) <= R)
+        Ns.append(count)
+
+    ax4.plot(Rs, Ns, 'b-', label='N(R)', linewidth=2)
+    ax4.plot(Rs, [3/math.pi * math.exp(R) for R in Rs], 'r--',
+             label=f'(3/π)·eᴿ ≈ {3/math.pi:.3f}·eᴿ', linewidth=1.5)
+    ax4.set_title('Lattice Point Counting N(R)', fontsize=14)
+    ax4.set_xlabel('Hyperbolic radius R')
+    ax4.set_ylabel('Count')
+    ax4.legend()
+    ax4.grid(True, alpha=0.3)
+    ax4.set_yscale('log')
+
     plt.tight_layout()
-    plt.savefig('poincare_lattice.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: poincare_lattice.png")
+    plt.savefig('poincare_orbit.png', dpi=150, bbox_inches='tight')
+    print("Saved poincare_orbit.png")
 
 
 if __name__ == "__main__":
