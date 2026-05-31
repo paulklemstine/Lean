@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2181 of the highest-quality
+A curated collection of 2185 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2181
+Total files: 2185
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1108,6 +1108,7 @@ import FINAL.EML.EMLv8Advanced
 import FINAL.EML.EMLv8Core
 import FINAL.EML.ExtendedTheory
 import FINAL.EML.FederatedLearningTheory
+import FINAL.EML.FixedPointConvergence
 import FINAL.EML.FreivaldsAmplification
 import FINAL.EML.FutureResearch
 import FINAL.EML.FutureTheorems
@@ -1117,6 +1118,7 @@ import FINAL.EML.GraphNeuralNetworkTheory
 import FINAL.EML.HyperbolicArithmetic
 import FINAL.EML.InverseLimitApprox
 import FINAL.EML.KolmogorovArnoldEML
+import FINAL.EML.KolmogorovArnoldEMLDeep
 import FINAL.EML.L2SheafRobustness
 import FINAL.EML.LatticeTreeCorrespondence
 import FINAL.EML.LogAffineNormal
@@ -1178,6 +1180,7 @@ import FINAL.Geometry.CupsCaps
 import FINAL.Geometry.DiscreteGaussBonnet
 import FINAL.Geometry.DiscreteMorseInequalities
 import FINAL.Geometry.Distortion
+import FINAL.Geometry.EMLStoneWeierstrass
 import FINAL.Geometry.Endomorphisms
 import FINAL.Geometry.EulerTopology
 import FINAL.Geometry.GapMatterResearch
@@ -1207,6 +1210,7 @@ import FINAL.Geometry.SplitGeometry
 import FINAL.Geometry.StereographicRG
 import FINAL.Geometry.StereographicSheaf
 import FINAL.Geometry.StereographicSheafAdvanced
+import FINAL.Geometry.StereographicSheafGluing
 import FINAL.Geometry.TensorHom
 import FINAL.Geometry.Theorems
 import FINAL.Geometry.TropicalTransversality

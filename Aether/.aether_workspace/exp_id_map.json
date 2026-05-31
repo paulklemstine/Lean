@@ -1194,5 +1194,9 @@
   "31ebac1c": "this_research_cycle_established_the_mathematical_f.json",
   "8429b13d": "eml_universal_approximation.json",
   "1973203a": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
-  "ebcc47b2": "primewise_persistent_homology_distinguishes_isospe.json"
+  "ebcc47b2": "primewise_persistent_homology_distinguishes_isospe.json",
+  "8fd02fe3": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
+  "6068e460": "eml_kolmogorov_arnold_representation.json",
+  "66b7904d": "stereographic_sheaf_theory_gluing_data_on_spheres.json",
+  "50496045": "eml_interpolation_theory_stone_weierstrass_for_exp.json"
 }
