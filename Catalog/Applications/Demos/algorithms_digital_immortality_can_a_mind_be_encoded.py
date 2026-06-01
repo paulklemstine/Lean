@@ -1,155 +1,215 @@
+#!/usr/bin/env python3
 """
-Algorithms for Digital Immortality: Information-Theoretic Bounds on Mind Encoding
-
-Type-hinted implementations of the key algorithms from the formalization.
+Algorithms for Information-Theoretic Analysis of Neural Connectomes.
+Type-hinted implementations of core computational methods.
 """
-
-from typing import List, Tuple, Set, Optional
 import math
+from typing import List, Tuple, Optional
+import itertools
 
 
-def connectome_space_size(n: int) -> int:
+def connectome_entropy(matrix: List[List[int]], k: int) -> float:
     """
-    Compute the number of distinct directed connectomes on n neurons.
-    Each ordered pair (i, j) of neurons can have or not have a synapse.
-    
-    Returns 2^(n^2).
-    """
-    return 2 ** (n * n)
+    Compute the Shannon entropy of a connectome weight matrix.
 
+    Args:
+        matrix: n×n matrix of synaptic weights (values in {0, ..., k-1})
+        k: number of weight levels
 
-def mind_encoding_bound(n: int) -> int:
+    Returns:
+        Shannon entropy in bits (upper bound on compression ratio)
     """
-    Minimum number of bits needed to encode all distinct connectomes on n neurons.
-    This is log2 of the connectome space size = n^2.
-    """
-    return n * n
-
-
-def bekenstein_capacity(radius: float, energy: float, 
-                         hbar: float = 1.0546e-34,
-                         c: float = 3e8,
-                         ln2: float = 0.6931) -> float:
-    """
-    Bekenstein bound: maximum information (in bits) storable in a sphere
-    of given radius and energy.
-    
-    S_max = 2 * pi * R * E / (hbar * c * ln2)
-    """
-    return 2 * math.pi * radius * energy / (hbar * c * ln2)
-
-
-def max_neurons_for_capacity(capacity_bits: float) -> int:
-    """
-    Given a storage capacity in bits, compute the maximum number of neurons
-    whose full connectome can be faithfully encoded.
-    
-    Since encoding requires n^2 bits, max neurons = floor(sqrt(capacity)).
-    """
-    return int(math.sqrt(capacity_bits))
-
-
-def compression_ratio(n: int, target_bits: int) -> float:
-    """
-    Compute the compression ratio: target_bits / mind_encoding_bound(n).
-    A ratio < 1 means lossy compression (some connectomes will be lost).
-    """
-    bound = mind_encoding_bound(n)
-    if bound == 0:
-        return float('inf')
-    return target_bits / bound
-
-
-def synapse_count(connectome: List[List[bool]]) -> int:
-    """
-    Count the number of synapses (True entries) in a connectome matrix.
-    """
-    return sum(1 for row in connectome for val in row if val)
-
-
-def simulation_fidelity(mapping: dict) -> int:
-    """
-    Compute simulation fidelity: the number of distinct output values.
-    This is |image(mapping)|.
-    """
-    return len(set(mapping.values()))
-
-
-def composition_fidelity(f: dict, g: dict) -> Tuple[int, int]:
-    """
-    Compute fidelity of f and g∘f, demonstrating the data processing inequality.
-    Returns (fidelity_f, fidelity_gf).
-    """
-    fid_f = len(set(f.values()))
-    gf = {k: g.get(v) for k, v in f.items() if v in g}
-    fid_gf = len(set(gf.values()))
-    return fid_f, fid_gf
-
-
-def incompressible_fraction(n: int, k: int) -> float:
-    """
-    Fraction of n-neuron connectomes that are k-incompressible
-    (require at least n^2 - k bits to describe).
-    
-    At most 2^(n^2 - k) - 1 programs of length < n^2 - k exist,
-    so at least 1 - 2^(-k) / (1 - 2^(-n^2)) fraction are incompressible.
-    
-    For large n, this approaches 1 - 2^(-k).
-    """
-    total = 2 ** (n * n)
-    short_programs = 2 ** (n * n - k) - 1
-    if total == 0:
+    n = len(matrix)
+    if n == 0 or k <= 0:
         return 0.0
-    return 1.0 - short_programs / total
+
+    # Count frequency of each weight value
+    freq: dict[int, int] = {}
+    total = n * n
+    for row in matrix:
+        for w in row:
+            freq[w] = freq.get(w, 0) + 1
+
+    # Compute entropy
+    entropy = 0.0
+    for count in freq.values():
+        if count > 0:
+            p = count / total
+            entropy -= p * math.log2(p)
+
+    return entropy * total  # Total bits, not per-symbol
 
 
-def neuron_scaling_cost(n: int) -> int:
+def neural_info_defect(n: int, k: int, k_prime: int) -> float:
     """
-    Additional bits needed when going from n to n+1 neurons.
-    This is 2n + 1 (the marginal cost of one extra neuron).
+    Compute the Neural Information Defect (NID).
+
+    NID(n, k, k') = n² · (log₂(k) - log₂(k'))
+
+    Args:
+        n: number of neurons
+        k: original weight precision
+        k_prime: target weight precision
+
+    Returns:
+        Number of bits irrecoverably lost
     """
-    return 2 * n + 1
+    if k <= 0 or k_prime <= 0:
+        raise ValueError("Weight levels must be positive")
+    return n * n * (math.log2(k) - math.log2(k_prime))
 
 
-def digital_immortality_gap(n: int, capacity_bits: int) -> int:
+def bekenstein_bound_bits(
+    radius_m: float,
+    mass_kg: float,
+    hbar: float = 1.054571817e-34,
+    c: float = 2.998e8,
+) -> float:
     """
-    The gap between required encoding bits and available capacity.
-    Positive means faithful encoding is impossible.
+    Compute the Bekenstein bound in bits.
+
+    B(R, M) = 2πRMc² / (ℏ ln 2)
+
+    Args:
+        radius_m: radius of the region in meters
+        mass_kg: mass in kilograms
+        hbar: reduced Planck constant (default: SI value)
+        c: speed of light (default: SI value)
+
+    Returns:
+        Maximum information in bits
     """
-    return mind_encoding_bound(n) - capacity_bits
+    energy = mass_kg * c ** 2
+    return 2 * math.pi * radius_m * energy / (hbar * math.log(2))
 
 
-# Human brain parameters
-HUMAN_NEURONS = 86_000_000_000  # ~86 billion neurons
-HUMAN_SYNAPSES = 150_000_000_000_000  # ~150 trillion synapses
-BRAIN_RADIUS = 0.075  # meters (7.5 cm radius)
-BRAIN_ENERGY = 20.0  # watts (average power consumption)
-BRAIN_REST_MASS_ENERGY = 1.4 * 9e16  # ~1.4 kg * c^2 in joules
+def min_description_length(n: int, k: int) -> float:
+    """
+    Minimum description length of a connectome in bits.
+
+    MDL(n, k) = n² · log₂(k)
+
+    Args:
+        n: number of neurons
+        k: number of weight levels
+
+    Returns:
+        Minimum bits required for lossless encoding
+    """
+    if k <= 0:
+        raise ValueError("Weight levels must be positive")
+    return n * n * math.log2(k)
+
+
+def compression_ratio_bound(n: int, k: int, compressed_bits: int) -> float:
+    """
+    Compute the fraction of connectomes that CAN be compressed
+    to at most `compressed_bits` bits.
+
+    By the pigeonhole principle, at most 2^compressed_bits
+    connectomes have descriptions of that length.
+
+    Args:
+        n: number of neurons
+        k: weight levels
+        compressed_bits: target description length
+
+    Returns:
+        Upper bound on fraction of compressible connectomes
+    """
+    total = k ** (n * n)
+    compressible = 2 ** compressed_bits
+    return min(1.0, compressible / total)
+
+
+def enumerate_connectomes(n: int, k: int) -> List[Tuple[Tuple[int, ...], ...]]:
+    """
+    Enumerate all connectomes for small n, k.
+
+    Args:
+        n: number of neurons (keep small!)
+        k: weight levels
+
+    Returns:
+        List of connectome matrices (as tuples of tuples)
+    """
+    if n * n > 16:
+        raise ValueError(f"Too many synapses ({n*n}) to enumerate")
+
+    weights = range(k)
+    all_entries = list(itertools.product(weights, repeat=n * n))
+    return [
+        tuple(entries[i * n : (i + 1) * n] for i in range(n))
+        for entries in all_entries
+    ]
+
+
+def coarse_grain(
+    matrix: List[List[int]], k: int, k_prime: int
+) -> List[List[int]]:
+    """
+    Apply uniform coarse-graining to a connectome matrix.
+
+    Maps weights from {0,...,k-1} to {0,...,k'-1} by
+    floor division: w ↦ w * k' // k.
+
+    Args:
+        matrix: n×n weight matrix
+        k: original precision
+        k_prime: target precision
+
+    Returns:
+        Coarse-grained weight matrix
+    """
+    return [[w * k_prime // k for w in row] for row in matrix]
+
+
+def upload_feasibility_analysis(
+    neurons: int,
+    weight_levels: int,
+    substrate_radius_m: float,
+    substrate_mass_kg: float,
+) -> dict:
+    """
+    Complete feasibility analysis for a mind upload specification.
+
+    Args:
+        neurons: number of neurons
+        weight_levels: synaptic weight precision
+        substrate_radius_m: radius of target substrate
+        substrate_mass_kg: mass of target substrate
+
+    Returns:
+        Dictionary with analysis results
+    """
+    info_req = min_description_length(neurons, weight_levels)
+    phys_cap = bekenstein_bound_bits(substrate_radius_m, substrate_mass_kg)
+    ratio = phys_cap / info_req if info_req > 0 else float("inf")
+
+    return {
+        "neurons": neurons,
+        "weight_levels": weight_levels,
+        "info_requirement_bits": info_req,
+        "bekenstein_capacity_bits": phys_cap,
+        "capacity_ratio": ratio,
+        "feasible": phys_cap >= info_req,
+        "nid_to_half_precision": neural_info_defect(
+            neurons, weight_levels, max(2, weight_levels // 2)
+        ),
+    }
 
 
 if __name__ == "__main__":
-    print("=== Digital Immortality: Key Computations ===\n")
-    
-    # Small examples
-    for n in [2, 3, 4, 5, 10]:
-        size = connectome_space_size(n)
-        bits = mind_encoding_bound(n)
-        print(f"n={n}: {size:,} connectomes, {bits} bits needed")
-    
-    print(f"\n=== Human Brain Scale ===")
-    n = HUMAN_NEURONS
-    bits = mind_encoding_bound(n)
-    print(f"Neurons: {n:,}")
-    print(f"Bits needed for full connectome: ~10^{math.log10(bits):.1f}")
-    print(f"  (= {n}^2 = {bits:.2e} bits)")
-    
-    # Bekenstein bound for the brain
-    bek = bekenstein_capacity(BRAIN_RADIUS, BRAIN_REST_MASS_ENERGY)
-    print(f"\nBekenstein capacity of brain: ~{bek:.2e} bits")
-    max_n = max_neurons_for_capacity(bek)
-    print(f"Max neurons for faithful connectome encoding: ~{max_n:.2e}")
-    
-    print(f"\n=== Scaling Law ===")
-    for n in range(1, 11):
-        cost = neuron_scaling_cost(n)
-        print(f"  n={n} → n={n+1}: +{cost} bits")
+    # Example: human brain upload feasibility
+    result = upload_feasibility_analysis(
+        neurons=86_000_000_000,
+        weight_levels=256,
+        substrate_radius_m=0.1,
+        substrate_mass_kg=1.4,
+    )
+    print("Upload Feasibility Analysis:")
+    for key, val in result.items():
+        if isinstance(val, float):
+            print(f"  {key}: {val:.4e}")
+        else:
+            print(f"  {key}: {val}")
