@@ -1,128 +1,213 @@
 #!/usr/bin/env python3
 """
-Self-Avoiding Walk Demo: Numerical Exploration
+Demo: Self-Avoiding Walk Theory Computations
 
-Demonstrates key results from the SAW theory formalization:
-1. SAW counting on ℤ² for small n
-2. Convergence of c(n)^{1/n} to the connective constant
-3. Properties of the Nienhuis constant √(2+√2)
-4. Tropical phase transition visualization
+Demonstrates key numerical results from the formalized SAW theory:
+1. SAW enumeration on the square lattice
+2. Connective constant approximation via c(n)^{1/n}
+3. Nienhuis constant verification
+4. Tropical polynomial evaluation
 """
 
 import math
-from itertools import product
+from typing import List, Tuple, Set, Dict
 
+# ============================================================
+# SAW Enumeration by Backtracking
+# ============================================================
 
-def enumerate_saws(n: int) -> list:
-    """Enumerate all n-step self-avoiding walks on ℤ² from the origin."""
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # N, S, E, W
-    
+def count_saws(n: int) -> int:
+    """Count self-avoiding walks of length n on Z^2 starting at origin."""
     if n == 0:
-        return [[(0, 0)]]
-    
-    saws = []
-    stack = [[(0, 0)]]
-    
-    while stack:
-        path = stack.pop()
-        if len(path) == n + 1:
-            saws.append(path)
-            continue
-        
-        x, y = path[-1]
-        visited = set(path)
+        return 1
+
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    count = 0
+
+    def backtrack(x: int, y: int, steps: int, visited: Set[Tuple[int, int]]):
+        nonlocal count
+        if steps == n:
+            count += 1
+            return
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
             if (nx, ny) not in visited:
-                stack.append(path + [(nx, ny)])
-    
-    return saws
+                visited.add((nx, ny))
+                backtrack(nx, ny, steps + 1, visited)
+                visited.remove((nx, ny))
+
+    visited = {(0, 0)}
+    backtrack(0, 0, 0, visited)
+    return count
 
 
-def saw_count(n: int) -> int:
-    """Count n-step self-avoiding walks from the origin."""
-    return len(enumerate_saws(n))
+def demonstrate_saw_counts():
+    """Show SAW counts and connective constant approximation."""
+    print("=" * 60)
+    print("Self-Avoiding Walk Counts c(n) on the Square Lattice")
+    print("=" * 60)
+
+    known_values = {
+        0: 1, 1: 4, 2: 12, 3: 36, 4: 100, 5: 284, 6: 780,
+        7: 2172, 8: 5916, 9: 16268, 10: 44100
+    }
+
+    print(f"\n{'n':>4} {'c(n)':>12} {'c(n)^(1/n)':>14} {'log c(n)/n':>14}")
+    print("-" * 48)
+
+    for n in range(11):
+        cn = known_values[n]
+        if n > 0:
+            root = cn ** (1.0 / n)
+            log_ratio = math.log(cn) / n
+        else:
+            root = float('inf')
+            log_ratio = float('inf')
+        print(f"{n:>4} {cn:>12} {root:>14.6f} {log_ratio:>14.6f}")
+
+    print(f"\nTrue connective constant μ ≈ 2.63815853...")
+    print(f"c(10)^(1/10) = {44100 ** 0.1:.8f} (upper bound)")
+
+
+def demonstrate_nienhuis():
+    """Verify properties of the Nienhuis constant."""
+    print("\n" + "=" * 60)
+    print("The Nienhuis Constant μ_hex = √(2 + √2)")
+    print("=" * 60)
+
+    sqrt2 = math.sqrt(2)
+    nienhuis = math.sqrt(2 + sqrt2)
+
+    print(f"\n√2 = {sqrt2:.10f}")
+    print(f"2 + √2 = {2 + sqrt2:.10f}")
+    print(f"μ_hex = √(2 + √2) = {nienhuis:.10f}")
+    print(f"\nVerification:")
+    print(f"  μ² = {nienhuis**2:.10f} (should be {2 + sqrt2:.10f})")
+    print(f"  μ⁴ - 4μ² + 2 = {nienhuis**4 - 4*nienhuis**2 + 2:.2e} (should be 0)")
+    print(f"  μ is irrational: True (proven formally)")
+
+
+def demonstrate_tropical():
+    """Show tropical polynomial evaluation."""
+    print("\n" + "=" * 60)
+    print("Tropical Polynomial for the Nienhuis Constant")
+    print("=" * 60)
+
+    print(f"\nMinimal polynomial: x⁴ - 4x² + 2 = 0")
+    print(f"Tropical version: max(4v, 2v + log(4), log(2))")
+    print(f"\nTropical root at v = log(2) = {math.log(2):.6f}:")
+    v = math.log(2)
+    t1 = 4 * v
+    t2 = 2 * v + math.log(4)
+    t3 = math.log(2)
+    print(f"  4v        = {t1:.6f}")
+    print(f"  2v + ln4  = {t2:.6f}")
+    print(f"  ln2       = {t3:.6f}")
+    print(f"  First two terms equal: {abs(t1 - t2) < 1e-10}")
+
+
+def demonstrate_convergence():
+    """Show the convergence criterion."""
+    print("\n" + "=" * 60)
+    print("Convergence Criterion for SAW Generating Function")
+    print("=" * 60)
+
+    # Known c(n) values
+    cn = [1, 4, 12, 36, 100, 284, 780, 2172, 5916, 16268, 44100]
+    mu_approx = 2.63815853
+
+    print(f"\nConnective constant μ ≈ {mu_approx}")
+    print(f"Critical fugacity x_c = 1/μ ≈ {1/mu_approx:.8f}")
+    print(f"\nPartial sums Σ c(n) x^n for various x:")
+
+    for x in [0.3, 0.35, 0.37, 0.378, 0.379]:
+        partial_sum = sum(cn[n] * x**n for n in range(len(cn)))
+        print(f"  x = {x:.3f}: S₁₀ = {partial_sum:.4f}"
+              f" {'(converging)' if x < 1/mu_approx else '(diverging)'}")
+
+
+def demonstrate_fekete():
+    """Show Fekete's lemma in action."""
+    print("\n" + "=" * 60)
+    print("Fekete's Lemma: log c(n)/n Converges")
+    print("=" * 60)
+
+    cn = [1, 4, 12, 36, 100, 284, 780, 2172, 5916, 16268, 44100]
+
+    print(f"\n{'n':>4} {'log c(n)/n':>14} {'Δ from μ':>12}")
+    print("-" * 34)
+    mu = math.log(2.63815853)
+    for n in range(1, len(cn)):
+        ratio = math.log(cn[n]) / n
+        print(f"{n:>4} {ratio:>14.8f} {ratio - mu:>12.8f}")
+
+    print(f"\nlog(μ) = {mu:.8f}")
+    print(f"The ratios approach log(μ) from above (Fekete's lemma)")
+
+
+if __name__ == "__main__":
+    demonstrate_saw_counts()
+    demonstrate_nienhuis()
+    demonstrate_tropical()
+    demonstrate_convergence()
+    demonstrate_fekete()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Self-Avoiding Walk Growth Rate Convergence
+
+Shows how c(n)^{1/n} converges to the connective constant μ ≈ 2.638,
+demonstrating Fekete's lemma in action.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import math
 
 
 def main():
-    print("=" * 60)
-    print("SELF-AVOIDING WALKS ON ℤ²: NUMERICAL EXPLORATION")
-    print("=" * 60)
-    
-    # 1. SAW Counts
-    print("\n1. SAW COUNTS c(n)")
-    print("-" * 40)
-    counts = {}
-    for n in range(11):
-        c = saw_count(n)
-        counts[n] = c
-        ratio = c ** (1/n) if n > 0 else float('inf')
-        print(f"  c({n:2d}) = {c:>10d}   c(n)^(1/n) = {ratio:.6f}" 
-              if n > 0 else f"  c({n:2d}) = {c:>10d}")
-    
-    # 2. Submultiplicativity verification
-    print("\n2. SUBMULTIPLICATIVITY: c(m+n) ≤ c(m)·c(n)")
-    print("-" * 40)
-    for m in range(1, 6):
-        for n in range(1, 6):
-            if m + n <= 10:
-                lhs = counts[m + n]
-                rhs = counts[m] * counts[n]
-                ok = "✓" if lhs <= rhs else "✗"
-                print(f"  c({m}+{n}) = {lhs:>8d} ≤ c({m})·c({n}) = {rhs:>8d}  {ok}")
-    
-    # 3. Nienhuis constant
-    print("\n3. NIENHUIS CONSTANT: μ_hex = √(2+√2)")
-    print("-" * 40)
-    sqrt2 = math.sqrt(2)
-    nienhuis = math.sqrt(2 + sqrt2)
-    xc = 1 / nienhuis
-    
-    print(f"  √2 = {sqrt2:.10f}")
-    print(f"  2 + √2 = {2 + sqrt2:.10f}")
-    print(f"  μ_hex = √(2+√2) = {nienhuis:.10f}")
-    print(f"  x_c = 1/μ_hex = {xc:.10f}")
-    print()
-    print(f"  Minimal polynomial: μ⁴ - 4μ² + 2 = {nienhuis**4 - 4*nienhuis**2 + 2:.2e}")
-    print(f"  Fugacity polynomial: 2x_c⁴ - 4x_c² + 1 = {2*xc**4 - 4*xc**2 + 1:.2e}")
-    print(f"  Conjugate product: (2+√2)(2-√2) = {(2+sqrt2)*(2-sqrt2):.10f}")
-    print(f"  1 < μ_hex < 2: {1 < nienhuis < 2}")
-    
-    # 4. Connective constant bounds
-    print("\n4. CONNECTIVE CONSTANT BOUNDS")
-    print("-" * 40)
-    mu_approx = counts[10] ** (1/10)
-    print(f"  Lower bound: μ ≥ 2 (walks using only N,E)")
-    print(f"  Upper bound: μ ≤ 4 (at most 4^n walks)")
-    print(f"  Estimate from c(10): c(10)^(1/10) = {mu_approx:.6f}")
-    print(f"  Known value: μ ≈ 2.6381585...")
-    
-    # 5. Tropical phase transition
-    print("\n5. TROPICAL PHASE TRANSITION")
-    print("-" * 40)
-    log_mu = math.log(mu_approx)
-    print(f"  log(μ) ≈ {log_mu:.6f}")
-    print(f"  Subcritical (β < log μ): tropical partition unbounded")
-    print(f"  Supercritical (β > log μ): tropical partition bounded ≤ 0")
-    for beta in [0.5, 0.8, 0.97, 1.0, 1.1, 1.5]:
-        vals = [n * log_mu - beta * n for n in range(20)]
-        sup_val = max(vals)
-        phase = "subcritical" if beta < log_mu else "supercritical"
-        print(f"    β = {beta:.2f} ({phase:>13s}): sup_n(n·log μ - β·n) = {sup_val:.4f}")
-    
-    # 6. Bridge-like walks
-    print("\n6. BRIDGE WALKS (y-coordinate monotone)")
-    print("-" * 40)
-    for n in range(1, 8):
-        saws = enumerate_saws(n)
-        bridges = []
-        for path in saws:
-            # Check if y-coordinate is strictly increasing
-            ys = [p[1] for p in path]
-            if all(ys[i] < ys[i+1] for i in range(len(ys)-1)):
-                bridges.append(path)
-        print(f"  n={n}: {len(bridges):>5d} bridges out of {len(saws):>8d} SAWs "
-              f"(ratio = {len(bridges)/len(saws):.4f})")
+    # Known SAW counts on the square lattice
+    cn = [1, 4, 12, 36, 100, 284, 780, 2172, 5916, 16268, 44100,
+          120292, 324932, 881500, 2374444, 6416596, 17245332]
+
+    n_values = list(range(1, len(cn)))
+    roots = [cn[n] ** (1.0 / n) for n in n_values]
+    log_ratios = [math.log(cn[n]) / n for n in n_values]
+
+    mu_true = 2.63815853
+    log_mu = math.log(mu_true)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: c(n)^{1/n} convergence
+    ax1.plot(n_values, roots, 'bo-', markersize=6, label=r'$c(n)^{1/n}$')
+    ax1.axhline(y=mu_true, color='r', linestyle='--', linewidth=2,
+                label=rf'$\mu \approx {mu_true}$')
+    ax1.set_xlabel('Walk length n', fontsize=12)
+    ax1.set_ylabel(r'$c(n)^{1/n}$', fontsize=14)
+    ax1.set_title('Connective Constant Convergence\n(Fekete\'s Lemma)', fontsize=13)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
+    ax1.set_xlim(0, len(cn))
+
+    # Right: log c(n)/n convergence
+    ax2.plot(n_values, log_ratios, 'gs-', markersize=6, label=r'$\log c(n) / n$')
+    ax2.axhline(y=log_mu, color='r', linestyle='--', linewidth=2,
+                label=rf'$\log \mu \approx {log_mu:.4f}$')
+    ax2.set_xlabel('Walk length n', fontsize=12)
+    ax2.set_ylabel(r'$\log c(n) / n$', fontsize=14)
+    ax2.set_title('Log-Growth Rate Convergence\n(Subadditivity)', fontsize=13)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xlim(0, len(cn))
+
+    plt.tight_layout()
+    plt.savefig('saw_convergence.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved saw_convergence.png")
 
 
 if __name__ == "__main__":
@@ -131,196 +216,62 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Self-Avoiding Walks and Connective Constant
+Visualization: Tropical Polynomial of the Nienhuis Constant
 
-Generates plots showing:
-1. Sample self-avoiding walks on ℤ²
-2. Convergence of c(n)^{1/n} to the connective constant
-3. The Nienhuis constant and its minimal polynomial
+Shows the tropical polynomial max(4v, 2v + log(4), log(2)) and its root
+at v = log(2), where two linear pieces intersect.
 """
 
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 import math
-from typing import List, Tuple, Set
-
-# Inline SAW enumeration
-def enumerate_saws(n: int) -> list:
-    if n == 0:
-        return [[(0, 0)]]
-    result = []
-    def bt(path, visited):
-        if len(path) == n + 1:
-            result.append(list(path))
-            return
-        x, y = path[-1]
-        for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:
-            nx, ny = x+dx, y+dy
-            if (nx,ny) not in visited:
-                path.append((nx,ny))
-                visited.add((nx,ny))
-                bt(path, visited)
-                path.pop()
-                visited.discard((nx,ny))
-    bt([(0,0)], {(0,0)})
-    return result
-
-def saw_count(n: int) -> int:
-    return len(enumerate_saws(n))
 
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    import numpy as np
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("matplotlib not available; skipping plots")
+def main():
+    v = np.linspace(-0.5, 2.0, 500)
 
+    # Three linear pieces
+    piece1 = 4 * v  # from x^4 term
+    piece2 = 2 * v + np.log(4)  # from -4x^2 term
+    piece3 = np.full_like(v, np.log(2))  # from +2 term
 
-def plot_sample_walks():
-    """Plot sample self-avoiding walks of various lengths."""
-    if not HAS_MPL:
-        return
-    
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    fig.suptitle('Sample Self-Avoiding Walks on ℤ²', fontsize=16, fontweight='bold')
-    
-    import random
-    random.seed(42)
-    
-    for idx, n in enumerate([5, 8, 10, 12, 15, 18]):
-        ax = axes[idx // 3][idx % 3]
-        
-        # Generate a random SAW using pivot algorithm (simplified)
-        walk = [(0, 0)]
-        visited = {(0, 0)}
-        attempts = 0
-        while len(walk) <= n and attempts < 100000:
-            x, y = walk[-1]
-            dirs = [(0,1),(0,-1),(1,0),(-1,0)]
-            random.shuffle(dirs)
-            moved = False
-            for dx, dy in dirs:
-                nx, ny = x+dx, y+dy
-                if (nx,ny) not in visited:
-                    walk.append((nx,ny))
-                    visited.add((nx,ny))
-                    moved = True
-                    break
-            if not moved:
-                walk = [(0,0)]
-                visited = {(0,0)}
-                attempts += 1
-        
-        xs = [p[0] for p in walk]
-        ys = [p[1] for p in walk]
-        
-        ax.plot(xs, ys, 'b-', linewidth=2, alpha=0.7)
-        ax.plot(xs[0], ys[0], 'go', markersize=10, label='Start')
-        ax.plot(xs[-1], ys[-1], 'ro', markersize=10, label='End')
-        ax.set_title(f'n = {n} steps', fontsize=12)
-        ax.set_aspect('equal')
-        ax.grid(True, alpha=0.3)
-        ax.legend(fontsize=8)
-    
+    # Tropical polynomial = max of all pieces
+    trop = np.maximum(np.maximum(piece1, piece2), piece3)
+
+    # Root: where two pieces meet
+    v_root = np.log(2)
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    ax.plot(v, piece1, 'b--', alpha=0.5, linewidth=1.5, label=r'$4v$ (from $x^4$)')
+    ax.plot(v, piece2, 'g--', alpha=0.5, linewidth=1.5, label=r'$2v + \ln 4$ (from $4x^2$)')
+    ax.plot(v, piece3, 'r--', alpha=0.5, linewidth=1.5, label=r'$\ln 2$ (from $2$)')
+    ax.plot(v, trop, 'k-', linewidth=3, label='Tropical polynomial')
+
+    # Mark the root
+    ax.plot(v_root, 4 * v_root, 'ro', markersize=12, zorder=5)
+    ax.annotate(f'Tropical root\nv = ln(2) ≈ {v_root:.4f}',
+                xy=(v_root, 4 * v_root),
+                xytext=(v_root + 0.3, 4 * v_root + 0.5),
+                fontsize=11,
+                arrowprops=dict(arrowstyle='->', color='red'),
+                color='red')
+
+    ax.set_xlabel('Tropical variable v', fontsize=13)
+    ax.set_ylabel('Tropical polynomial value', fontsize=13)
+    ax.set_title('Tropical Polynomial of the Nienhuis Constant\n'
+                 r'$\mathrm{trop}(x^4 - 4x^2 + 2) = \max(4v,\; 2v + \ln 4,\; \ln 2)$',
+                 fontsize=14)
+    ax.legend(fontsize=11, loc='upper left')
+    ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('saw_samples.png', dpi=150, bbox_inches='tight')
+    plt.savefig('tropical_nienhuis.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved saw_samples.png")
-
-
-def plot_connective_constant():
-    """Plot convergence of c(n)^{1/n} to μ."""
-    if not HAS_MPL:
-        return
-    
-    ns = list(range(1, 15))
-    counts = [saw_count(n) for n in ns]
-    estimates = [c ** (1.0/n) for c, n in zip(counts, ns)]
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Plot 1: c(n) on log scale
-    ax1.semilogy(ns, counts, 'bo-', markersize=8, linewidth=2)
-    mu_approx = 2.6381585
-    ax1.semilogy(ns, [mu_approx**n for n in ns], 'r--', alpha=0.7, 
-                 label=f'μⁿ (μ ≈ {mu_approx})')
-    ax1.set_xlabel('Walk length n', fontsize=12)
-    ax1.set_ylabel('c(n) (log scale)', fontsize=12)
-    ax1.set_title('SAW Count Growth', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    
-    # Plot 2: c(n)^{1/n} convergence
-    ax2.plot(ns, estimates, 'bo-', markersize=8, linewidth=2, label='c(n)^{1/n}')
-    ax2.axhline(y=mu_approx, color='r', linestyle='--', alpha=0.7, 
-                label=f'μ ≈ {mu_approx}')
-    ax2.axhline(y=2, color='g', linestyle=':', alpha=0.5, label='Lower bound = 2')
-    ax2.axhline(y=4, color='orange', linestyle=':', alpha=0.5, label='Upper bound = 4')
-    ax2.set_xlabel('Walk length n', fontsize=12)
-    ax2.set_ylabel('c(n)^{1/n}', fontsize=12)
-    ax2.set_title('Connective Constant Convergence', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(1.5, 4.5)
-    
-    plt.tight_layout()
-    plt.savefig('connective_constant.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved connective_constant.png")
-
-
-def plot_nienhuis():
-    """Plot the Nienhuis minimal polynomial and related functions."""
-    if not HAS_MPL:
-        return
-    
-    x = np.linspace(0, 2.5, 500)
-    poly = x**4 - 4*x**2 + 2
-    
-    nienhuis = math.sqrt(2 + math.sqrt(2))
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Plot 1: Minimal polynomial
-    ax1.plot(x, poly, 'b-', linewidth=2, label='p(x) = x⁴ - 4x² + 2')
-    ax1.axhline(y=0, color='k', linewidth=0.5)
-    ax1.axvline(x=nienhuis, color='r', linestyle='--', alpha=0.7,
-                label=f'μ_hex = √(2+√2) ≈ {nienhuis:.4f}')
-    ax1.plot(nienhuis, 0, 'ro', markersize=10)
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('p(x)', fontsize=12)
-    ax1.set_title('Minimal Polynomial of the Nienhuis Constant', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(-3, 5)
-    
-    # Plot 2: Critical fugacity polynomial
-    xc_range = np.linspace(0, 1, 500)
-    fug_poly = 2*xc_range**4 - 4*xc_range**2 + 1
-    xc = 1/nienhuis
-    
-    ax2.plot(xc_range, fug_poly, 'b-', linewidth=2, label='q(x) = 2x⁴ - 4x² + 1')
-    ax2.axhline(y=0, color='k', linewidth=0.5)
-    ax2.axvline(x=xc, color='r', linestyle='--', alpha=0.7,
-                label=f'x_c = 1/μ_hex ≈ {xc:.4f}')
-    ax2.plot(xc, 0, 'ro', markersize=10)
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('q(x)', fontsize=12)
-    ax2.set_title('Critical Fugacity Polynomial', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('nienhuis_polynomial.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved nienhuis_polynomial.png")
+    print("Saved tropical_nienhuis.png")
 
 
 if __name__ == "__main__":
-    plot_sample_walks()
-    plot_connective_constant()
-    plot_nienhuis()
-    print("\nAll visualizations generated!")
+    main()

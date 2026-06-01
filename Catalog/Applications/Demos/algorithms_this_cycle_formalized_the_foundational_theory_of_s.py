@@ -1,263 +1,244 @@
 #!/usr/bin/env python3
 """
-Algorithms for Self-Avoiding Walk Analysis
+Algorithms for Self-Avoiding Walk Theory
 
-Type-hinted implementations of key algorithms from the SAW theory:
-1. SAW enumeration via backtracking
-2. Connective constant estimation
-3. Bridge decomposition
-4. Tropical partition function computation
+Type-hinted implementations of key algorithms from the SAW theory formalization.
 """
 
-from typing import List, Tuple, Set, Optional, Dict
+from typing import List, Tuple, Set, Dict, Optional
 import math
 
 
-# Type aliases
-Point = Tuple[int, int]
-Walk = List[Point]
-Direction = Tuple[int, int]
-
-DIRECTIONS: List[Direction] = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
-
-def enumerate_saws_backtrack(n: int) -> List[Walk]:
+def count_saws_backtrack(n: int) -> int:
     """
-    Enumerate all n-step self-avoiding walks on ℤ² from origin.
-    
+    Count self-avoiding walks of length n on Z^2 starting at origin.
+
     Algorithm: Depth-first backtracking search.
-    Time complexity: O(μⁿ · n) where μ ≈ 2.638 is the connective constant.
-    Space complexity: O(n) for the stack (iterative DFS).
-    
-    Args:
-        n: Walk length (number of steps)
-    
-    Returns:
-        List of all self-avoiding walks of length n starting at (0,0)
-    """
-    if n == 0:
-        return [[(0, 0)]]
-    
-    result: List[Walk] = []
-    
-    def backtrack(path: Walk, visited: Set[Point]) -> None:
-        if len(path) == n + 1:
-            result.append(list(path))
-            return
-        x, y = path[-1]
-        for dx, dy in DIRECTIONS:
-            nx, ny = x + dx, y + dy
-            if (nx, ny) not in visited:
-                path.append((nx, ny))
-                visited.add((nx, ny))
-                backtrack(path, visited)
-                path.pop()
-                visited.discard((nx, ny))
-    
-    backtrack([(0, 0)], {(0, 0)})
-    return result
+    Complexity: O(3^n) time (each step has at most 3 choices, since we can't go back).
 
-
-def saw_count_fast(n: int) -> int:
-    """
-    Count n-step SAWs without storing them (memory-efficient).
-    
-    Uses the same backtracking algorithm but only increments a counter.
-    
     Args:
-        n: Walk length
-    
+        n: Walk length (non-negative integer).
+
     Returns:
-        Number of self-avoiding walks of length n
+        Number of self-avoiding walks of length n.
     """
     if n == 0:
         return 1
-    
-    count = 0
-    
-    def backtrack(x: int, y: int, steps: int, visited: Set[Point]) -> None:
+
+    directions: List[Tuple[int, int]] = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    count: int = 0
+
+    def backtrack(x: int, y: int, steps: int, visited: Set[Tuple[int, int]]) -> None:
         nonlocal count
         if steps == n:
             count += 1
             return
-        for dx, dy in DIRECTIONS:
+        for dx, dy in directions:
             nx, ny = x + dx, y + dy
             if (nx, ny) not in visited:
                 visited.add((nx, ny))
                 backtrack(nx, ny, steps + 1, visited)
-                visited.discard((nx, ny))
-    
-    backtrack(0, 0, 0, {(0, 0)})
+                visited.remove((nx, ny))
+
+    visited: Set[Tuple[int, int]] = {(0, 0)}
+    backtrack(0, 0, 0, visited)
     return count
 
 
-def connective_constant_estimate(max_n: int = 20) -> Tuple[float, List[float]]:
+def connective_constant_approx(saw_counts: List[int]) -> List[float]:
     """
-    Estimate the connective constant μ = lim c(n)^{1/n}.
-    
-    Computes c(n) for n = 1, ..., max_n and returns the sequence
-    of estimates c(n)^{1/n} along with the best estimate.
-    
+    Approximate the connective constant from SAW count data.
+
+    For a submultiplicative sequence c(n), the connective constant is
+    μ = lim c(n)^{1/n} = inf_{n≥1} c(n)^{1/n}.
+
     Args:
-        max_n: Maximum walk length to enumerate
-    
+        saw_counts: List of c(0), c(1), ..., c(N).
+
     Returns:
-        Tuple of (best estimate, list of c(n)^{1/n} values)
+        List of approximations c(n)^{1/n} for n = 1, ..., N.
     """
-    estimates: List[float] = []
-    for n in range(1, max_n + 1):
-        c = saw_count_fast(n)
-        est = c ** (1.0 / n)
-        estimates.append(est)
-    
-    return estimates[-1], estimates
+    approx: List[float] = []
+    for n in range(1, len(saw_counts)):
+        cn = saw_counts[n]
+        if cn > 0:
+            approx.append(cn ** (1.0 / n))
+        else:
+            approx.append(0.0)
+    return approx
 
 
-def nienhuis_properties() -> Dict[str, float]:
+def tropical_valuation(x: float) -> float:
     """
-    Compute and verify properties of the Nienhuis constant √(2+√2).
-    
-    Returns:
-        Dictionary of computed properties
-    """
-    sqrt2 = math.sqrt(2)
-    mu = math.sqrt(2 + sqrt2)
-    xc = 1.0 / mu
-    
-    return {
-        "sqrt_2": sqrt2,
-        "nienhuis": mu,
-        "nienhuis_sq": mu ** 2,
-        "two_plus_sqrt2": 2 + sqrt2,
-        "minimal_poly": mu**4 - 4*mu**2 + 2,  # Should be ~0
-        "critical_fugacity": xc,
-        "fugacity_poly": 2*xc**4 - 4*xc**2 + 1,  # Should be ~0
-        "conjugate_product": (2 + sqrt2) * (2 - sqrt2),  # Should be 2
-    }
+    Compute the tropical valuation of a positive real number.
 
+    val(x) = -log(x)
 
-def bridge_decomposition(walk: Walk) -> List[Walk]:
-    """
-    Decompose a self-avoiding walk into bridges.
-    
-    A bridge is a maximal segment where the y-coordinate at the endpoint
-    exceeds all intermediate y-coordinates, and the y-coordinate at the
-    start is below all intermediate y-coordinates.
-    
-    We use a simpler definition: split the walk at points where the
-    y-coordinate achieves a new maximum.
-    
+    This maps multiplication to addition: val(xy) = val(x) + val(y).
+
     Args:
-        walk: A self-avoiding walk (list of points)
-    
+        x: Positive real number.
+
     Returns:
-        List of bridge segments
+        Tropical valuation -log(x).
     """
-    if len(walk) <= 1:
-        return [walk]
-    
-    bridges: List[Walk] = []
-    current_bridge: Walk = [walk[0]]
-    max_y = walk[0][1]
-    
-    for i in range(1, len(walk)):
-        current_bridge.append(walk[i])
-        if walk[i][1] > max_y:
-            max_y = walk[i][1]
-            if i < len(walk) - 1:
-                # Check if this is a valid split point
-                bridges.append(current_bridge)
-                current_bridge = [walk[i]]
-    
-    if current_bridge:
-        bridges.append(current_bridge)
-    
-    return bridges
+    assert x > 0, "Tropical valuation requires positive input"
+    return -math.log(x)
 
 
-def tropical_partition_function(
-    log_mu: float, 
-    beta: float, 
-    max_n: int = 100
-) -> float:
+def tropical_polynomial_eval(coefficients: List[float], v: float) -> float:
     """
-    Compute the tropical partition function Z_trop(β) = sup_n (n·log(μ) - β·n).
-    
-    In the max-plus semiring:
-    - Subcritical (β < log μ): Z_trop = +∞ (unbounded)
-    - Supercritical (β > log μ): Z_trop = 0 (attained at n=0)
-    - Critical (β = log μ): Z_trop = 0 (all terms equal 0)
-    
+    Evaluate a tropical polynomial at v.
+
+    The tropical polynomial trop(Σ a_i x^i) is max_i(val(a_i) + i*v).
+
     Args:
-        log_mu: Natural log of the connective constant
-        beta: Inverse temperature parameter
-        max_n: Maximum n to check (approximation for infinite sup)
-    
+        coefficients: List of tropical valuations of coefficients [val(a_0), val(a_1), ...].
+        v: Point at which to evaluate.
+
     Returns:
-        Approximate value of Z_trop(β)
+        max_i(coefficients[i] + i * v).
     """
-    return max(n * log_mu - beta * n for n in range(max_n + 1))
+    return max(coefficients[i] + i * v for i in range(len(coefficients)))
 
 
-def subadditive_sequence_analysis(
-    a: List[float]
-) -> Dict[str, object]:
+def fekete_ratio_sequence(subadditive_seq: List[float]) -> List[float]:
     """
-    Analyze a sequence for subadditivity and compute Fekete ratio estimates.
-    
+    Compute the Fekete ratio a(n)/n for a subadditive sequence.
+
+    By Fekete's lemma, if a is subadditive, then a(n)/n → inf_{n≥1} a(n)/n.
+
     Args:
-        a: Sequence values a[0], a[1], ..., a[n]
-    
+        subadditive_seq: Values a(0), a(1), ..., a(N).
+
     Returns:
-        Dictionary with analysis results
+        List of ratios a(n)/n for n = 1, ..., N.
     """
-    n = len(a)
-    
-    # Check subadditivity
-    violations = []
+    ratios: List[float] = []
+    for n in range(1, len(subadditive_seq)):
+        ratios.append(subadditive_seq[n] / n)
+    return ratios
+
+
+def nienhuis_constant() -> float:
+    """
+    Compute the Nienhuis constant √(2 + √2).
+
+    This is the connective constant of the hexagonal lattice.
+    It satisfies x^4 - 4x^2 + 2 = 0.
+
+    Returns:
+        The Nienhuis constant ≈ 1.84776.
+    """
+    return math.sqrt(2 + math.sqrt(2))
+
+
+def verify_submultiplicativity(seq: List[int]) -> bool:
+    """
+    Verify that a sequence is submultiplicative: a(m+n) <= a(m)*a(n).
+
+    Args:
+        seq: Sequence values a(0), a(1), ..., a(N).
+
+    Returns:
+        True if submultiplicativity holds for all tested pairs.
+    """
+    n = len(seq)
     for m in range(n):
-        for k in range(n):
-            if m + k < n:
-                if a[m + k] > a[m] + a[k] + 1e-10:
-                    violations.append((m, k, a[m+k], a[m] + a[k]))
-    
-    # Compute ratios a(n)/n
-    ratios = [a[i] / i if i > 0 else float('inf') for i in range(n)]
-    
-    # Infimum of ratios
-    finite_ratios = [r for r in ratios[1:] if math.isfinite(r)]
-    inf_ratio = min(finite_ratios) if finite_ratios else float('inf')
-    
-    return {
-        "is_subadditive": len(violations) == 0,
-        "violations": violations[:5],  # First 5 violations
-        "ratios": ratios[1:],
-        "infimum": inf_ratio,
-    }
+        for k in range(n - m):
+            if seq[m + k] > seq[m] * seq[k]:
+                return False
+    return True
+
+
+def radius_of_convergence(saw_counts: List[int]) -> float:
+    """
+    Estimate the radius of convergence of Σ c(n) x^n.
+
+    R = 1/μ where μ = inf c(n)^{1/n}.
+
+    Args:
+        saw_counts: SAW counts c(0), ..., c(N).
+
+    Returns:
+        Estimated radius of convergence.
+    """
+    mu_approx = min(
+        saw_counts[n] ** (1.0 / n)
+        for n in range(1, len(saw_counts))
+        if saw_counts[n] > 0
+    )
+    return 1.0 / mu_approx
+
+
+def bridge_saw_count(n: int) -> int:
+    """
+    Count bridge SAWs of length n on Z^2 starting at origin.
+
+    A bridge SAW is one where the endpoint has strictly maximal
+    first coordinate among all visited points.
+
+    Args:
+        n: Walk length.
+
+    Returns:
+        Number of bridge SAWs of length n.
+    """
+    if n == 0:
+        return 0  # Bridge must have positive length
+
+    directions: List[Tuple[int, int]] = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    count: int = 0
+
+    def backtrack(x: int, y: int, steps: int,
+                  visited: Set[Tuple[int, int]], max_x: int) -> None:
+        nonlocal count
+        if steps == n:
+            if x > max_x - 1:  # endpoint has strictly max x
+                # Check: x must be strictly greater than all OTHER visited x
+                if all(x > vx for (vx, vy) in visited if (vx, vy) != (x, y)):
+                    count += 1
+            return
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if (nx, ny) not in visited:
+                visited.add((nx, ny))
+                backtrack(nx, ny, steps + 1, visited, max(max_x, nx))
+                visited.remove((nx, ny))
+
+    visited: Set[Tuple[int, int]] = {(0, 0)}
+    backtrack(0, 0, 0, visited, 0)
+    return count
 
 
 if __name__ == "__main__":
-    # Demo
-    print("SAW counts for n=0..12:")
-    for n in range(13):
-        c = saw_count_fast(n)
-        print(f"  c({n:2d}) = {c}")
-    
-    print("\nNienhuis constant properties:")
-    props = nienhuis_properties()
-    for key, val in props.items():
-        print(f"  {key}: {val:.12f}")
-    
-    print("\nConnective constant estimates:")
-    best, estimates = connective_constant_estimate(12)
-    for i, est in enumerate(estimates, 1):
-        print(f"  c({i:2d})^(1/{i:2d}) = {est:.6f}")
-    print(f"  Best estimate: μ ≈ {best:.6f}")
-    
-    print("\nSubadditivity of log(c(n)):")
-    counts = [saw_count_fast(n) for n in range(13)]
-    log_counts = [math.log(c) if c > 0 else 0 for c in counts]
-    analysis = subadditive_sequence_analysis(log_counts)
-    print(f"  Is subadditive: {analysis['is_subadditive']}")
-    print(f"  Infimum of log(c(n))/n: {analysis['infimum']:.6f}")
-    print(f"  exp(infimum) = {math.exp(analysis['infimum']):.6f}")
+    # Verify SAW counts
+    print("SAW counts c(n):")
+    for n in range(8):
+        c = count_saws_backtrack(n)
+        print(f"  c({n}) = {c}")
+
+    # Verify submultiplicativity
+    counts = [count_saws_backtrack(n) for n in range(8)]
+    print(f"\nSubmultiplicativity holds: {verify_submultiplicativity(counts)}")
+
+    # Connective constant approximation
+    approx = connective_constant_approx(counts)
+    print(f"\nConnective constant approximations c(n)^(1/n):")
+    for i, a in enumerate(approx):
+        print(f"  n={i+1}: {a:.6f}")
+
+    # Nienhuis constant
+    mu_hex = nienhuis_constant()
+    print(f"\nNienhuis constant: {mu_hex:.10f}")
+    print(f"Minimal poly check: {mu_hex**4 - 4*mu_hex**2 + 2:.2e}")
+
+    # Radius of convergence
+    R = radius_of_convergence(counts)
+    print(f"\nRadius of convergence ≈ {R:.6f}")
+
+    # Bridge counts
+    print(f"\nBridge SAW counts:")
+    for n in range(1, 7):
+        b = bridge_saw_count(n)
+        print(f"  b({n}) = {b}")

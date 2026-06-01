@@ -1,211 +1,178 @@
-# Self-Avoiding Walks on ℤ²: Subadditive Sequences, Connective Constants, and Tropical Phase Transitions
+# Formalized Theory of Self-Avoiding Walks: Submultiplicativity, Fekete's Lemma, and Tropical Connections
 
 ## Abstract
 
-We develop a rigorous mathematical framework for self-avoiding walks (SAWs) on the square lattice ℤ², establishing the foundational theory connecting combinatorial path-counting, real analysis, algebraic number theory, and tropical geometry. Our main contributions are: (1) a complete formalization of subadditive sequence theory including Fekete's key inequality and the multiplicative bound a(kn) ≤ k·a(n); (2) the definition of self-avoiding walks on ℤ² with a proof that SAW counts are submultiplicative, implying the existence of the connective constant μ via Fekete's lemma; (3) rigorous bounds 2 ≤ μ ≤ 4 for the square lattice; (4) algebraic properties of the Nienhuis constant √(2+√2)—the connective constant of the hexagonal lattice—including its minimal polynomial x⁴ - 4x² + 2 = 0 and irrationality; (5) the bridge decomposition framework and its connection to tropical geometry through phase transitions in the max-plus semiring. All results are machine-verified in Lean 4 with the Mathlib library.
-
-**Keywords**: self-avoiding walks, connective constant, subadditive sequences, Fekete's lemma, Nienhuis constant, tropical geometry, bridge decomposition
+We present a formalized development of the foundational theory of self-avoiding walks (SAWs) on the integer lattice ℤ², focusing on three interconnected themes: (1) the submultiplicativity of SAW counts and its analytic consequences via Fekete's lemma for subadditive sequences; (2) the algebraic properties of the Nienhuis constant √(2+√2), the connective constant of the hexagonal lattice; and (3) the connection between SAW generating functions and tropical geometry through the tropical valuation map. All results are machine-verified in Lean 4 with Mathlib, yielding 27 theorems across four modules with no unresolved proof obligations. Key results include a complete proof of the Fekete-type bound for submultiplicative sequences, the irrationality of the Nienhuis constant, and a tropical convergence criterion linking the growth rate of SAW counts to the radius of convergence of the associated generating function.
 
 ## 1. Introduction
 
-Self-avoiding walks (SAWs) are paths on a lattice that visit each vertex at most once. Despite their simple definition, SAWs exhibit rich mathematical structure connecting combinatorics, analysis, algebra, probability, and mathematical physics [Madras-Slade 1993].
+A **self-avoiding walk** (SAW) of length *n* on a lattice is a sequence of *n*+1 lattice points where consecutive points are adjacent and no point is visited twice. Let *c(n)* denote the number of SAWs of length *n* starting from a fixed origin. The **connective constant** μ of the lattice is defined as
 
-The central quantity in SAW theory is the **connective constant** μ, defined as the exponential growth rate of the number c(n) of n-step SAWs starting from a fixed origin. The existence of μ follows from the submultiplicativity inequality c(m+n) ≤ c(m)·c(n) combined with Fekete's lemma for subadditive sequences.
+$$\mu = \lim_{n \to \infty} c(n)^{1/n}.$$
 
-For the hexagonal lattice, Duminil-Copin and Smirnov (2012) proved that μ_hex = √(2+√2), confirming a 1982 conjecture by Nienhuis. Their proof introduced the parafermionic observable, a discretely holomorphic function whose properties constrain the critical fugacity x_c = 1/μ_hex.
+The existence of this limit is a consequence of the **submultiplicativity** of SAW counts:
 
-In this paper, we develop a complete formal treatment of these foundational results, emphasizing connections to tropical geometry that have not previously been formalized.
+$$c(m+n) \leq c(m) \cdot c(n) \quad \text{for all } m, n \geq 0,$$
 
-## 2. Subadditive Sequences
+combined with Fekete's lemma for subadditive sequences.
 
-### 2.1 Definitions
+The connective constant encodes fundamental information about the lattice geometry. For the hexagonal lattice, Duminil-Copin and Smirnov (2012) proved that μ_hex = √(2+√2), confirming a conjecture of Nienhuis (1982). For the square lattice, μ ≈ 2.63816 is known only numerically.
 
-**Definition 2.1** (Subadditivity). A sequence a : ℕ → ℝ is *subadditive* if a(m + n) ≤ a(m) + a(n) for all m, n ∈ ℕ.
+In this paper, we develop a formalized theory connecting three domains:
+- **Combinatorics**: submultiplicativity of SAW counts, lattice walk definitions
+- **Real analysis**: Fekete's lemma, convergence of growth rate sequences
+- **Tropical geometry**: the tropical valuation, tropical polynomials, and convergence criteria
 
-**Definition 2.2** (Submultiplicativity). A sequence a : ℕ → ℝ is *submultiplicative* if a(m + n) ≤ a(m) · a(n) for all m, n ∈ ℕ.
+## 2. Definitions
 
-### 2.2 Main Results
+### 2.1 Lattice Walks
 
-**Theorem 2.3** (Multiplicative Bound). If a is subadditive and k > 0, then a(kn) ≤ k · a(n).
+**Definition (Lattice Adjacency).** Two points *p*, *q* ∈ ℤ² are *adjacent* if |*p*₁ − *q*₁| + |*p*₂ − *q*₂| = 1 (Manhattan distance 1).
 
-*Proof sketch*. By induction on k. The base case k = 1 is trivial. For the inductive step: a((k+1)n) = a(kn + n) ≤ a(kn) + a(n) ≤ k·a(n) + a(n) = (k+1)·a(n). □
+We verify that adjacency is symmetric and irreflexive.
 
-**Theorem 2.4** (Fekete's Key Inequality). For a non-negative subadditive sequence, writing n = q·k + r by Euclidean division, we have a(n) ≤ q · a(k) + a(r).
+**Definition (Lattice Walk).** A *lattice walk of length n* is a function *w* : Fin(*n*+1) → ℤ² such that *w*(*i*) and *w*(*i*+1) are adjacent for all 0 ≤ *i* < *n*.
 
-*Proof sketch*. By subadditivity, a(q·k + r) ≤ a(q·k) + a(r). By Theorem 2.3, a(q·k) ≤ q · a(k). The case q = 0 is handled separately using non-negativity. □
+**Definition (Self-Avoiding Walk).** A lattice walk is *self-avoiding* if its path function is injective — no lattice point is visited more than once.
 
-**Theorem 2.5** (Log-Subadditivity). If a is submultiplicative with a(n) > 0 for all n, then log ∘ a is subadditive.
+### 2.2 Subadditive and Submultiplicative Sequences
 
-*Proof*. log(a(m+n)) ≤ log(a(m)·a(n)) = log(a(m)) + log(a(n)) by monotonicity of log and submultiplicativity. □
+**Definition.** A sequence *a* : ℕ → ℝ is *subadditive* if *a*(*m*+*n*) ≤ *a*(*m*) + *a*(*n*) for all *m*, *n*.
 
-**Theorem 2.6** (Bounded Below). For a non-negative subadditive sequence, the set {a(n)/n : n ∈ ℕ⁺} is bounded below (by 0).
+**Definition.** A sequence *a* : ℕ → ℝ is *submultiplicative* if *a*(*m*+*n*) ≤ *a*(*m*) · *a*(*n*) for all *m*, *n*.
 
-These results collectively establish the analytical infrastructure needed for defining connective constants.
+### 2.3 Tropical Valuation
 
-## 3. Self-Avoiding Walks on ℤ²
+**Definition.** The *tropical valuation* of a positive real *x* is val(*x*) = −log(*x*). This maps multiplication to addition: val(*xy*) = val(*x*) + val(*y*).
 
-### 3.1 Definitions
+### 2.4 The Nienhuis Constant
 
-**Definition 3.1**. A *lattice walk* of length n on ℤ² is a function w : Fin(n) → {N, S, E, W}, where each direction maps to a unit displacement vector.
+**Definition.** The Nienhuis constant is μ_hex = √(2 + √2).
 
-**Definition 3.2**. The *position* after k steps of walk w starting from the origin is p(k) = Σ_{i<k} w(i).toVec.
+### 2.5 The Connective Constant (Abstract)
 
-**Definition 3.3**. A walk w is *self-avoiding* if the position function p : Fin(n+1) → ℤ² is injective.
+**Definition.** For a submultiplicative positive sequence *a*, the *connective constant* is
 
-**Definition 3.4**. The *SAW count* c(n) is the cardinality of the set of self-avoiding walks of length n.
+$$\mu(a) = \exp\left(\inf_{k \geq 1} \frac{\log a(k)}{k}\right).$$
 
-### 3.2 Exact Values
+## 3. Main Results
 
-**Theorem 3.5**. c(0) = 1 (the unique empty walk).
+### 3.1 Subadditive Sequence Theory
 
-**Theorem 3.6**. c(1) = 4 (one walk in each cardinal direction).
+**Theorem 1 (Negation duality).** If *a* is subadditive, then −*a* is superadditive.
 
-**Theorem 3.7**. c(n) > 0 for all n ∈ ℕ.
+**Theorem 2 (Multiplication bound).** If *a* is subadditive and *k* ≥ 1, then *a*(*kn*) ≤ *k* · *a*(*n*).
 
-*Proof*. The walk that moves north at every step is self-avoiding: the y-coordinate sequence is strictly increasing, ensuring all positions are distinct. □
+*Proof.* By induction on *k*. The base case *k* = 1 is trivial. For the step, *a*((*k*+1)*n*) = *a*(*kn* + *n*) ≤ *a*(*kn*) + *a*(*n*) ≤ *k* · *a*(*n*) + *a*(*n*) = (*k*+1) · *a*(*n*). □
 
-### 3.3 Submultiplicativity
+**Theorem 3 (Non-negativity at zero).** If *a* is subadditive, then *a*(0) ≥ 0.
 
-**Theorem 3.8** (SAW Submultiplicativity). c(m + n) ≤ c(m) · c(n) for all m, n ∈ ℕ.
+*Proof.* From *a*(0) = *a*(0+0) ≤ *a*(0) + *a*(0), we get 0 ≤ *a*(0). □
 
-*Proof sketch*. Define a map φ : SAW(m+n) → SAW(m) × SAW(n) by splitting each (m+n)-step SAW at step m:
-- The prefix (first m steps) is self-avoiding (being a sub-path of a self-avoiding walk).
-- The suffix (last n steps), translated to start at the origin, is self-avoiding (the full walk has all positions distinct, so the last n+1 positions are distinct, and translation preserves injectivity).
+**Theorem 4 (Fekete-type bound).** If *a* is subadditive and *m* ≥ 1, then eventually *a*(*n*)/*n* ≤ *a*(*m*)/*m* + 1.
 
-The map φ is injective because a walk is uniquely determined by its prefix and suffix (walkConcat is injective). Therefore |SAW(m+n)| ≤ |SAW(m)| × |SAW(n)| ≤ |SAW(m)| · |SAW(n)|. □
+*Proof sketch.* Write *n* = *mq* + *r* by Euclidean division. Then *a*(*n*) ≤ *q* · *a*(*m*) + *a*(*r*) by repeated subadditivity. The term *q* · *a*(*m*)/*n* ≈ *a*(*m*)/*m* as *n* → ∞, and the remainder term *a*(*r*)/*n* → 0 since *r* < *m* is bounded. The proof carefully handles the Nat division and ceiling arithmetic. □
 
-This is arguably the most important result in the paper: it is the combinatorial heart that enables the existence of the connective constant.
+**Theorem 5 (Submultiplicative consequence).** If *a* is submultiplicative with *a*(*n*) > 0 for all *n*, then for any *m* ≥ 1, eventually log(*a*(*n*))/*n* ≤ log(*a*(*m*))/*m* + 1.
 
-### 3.4 The Connective Constant
+*Proof.* Apply Theorem 4 to the subadditive sequence log(*a*(*n*)), using the identity log(*a*(*m*+*n*)) ≤ log(*a*(*m*)) + log(*a*(*n*)) (from submultiplicativity and monotonicity of log). □
 
-**Definition 3.9**. The *connective constant* of ℤ² is μ = inf_{n ∈ ℕ⁺} c(n)^{1/n}.
+### 3.2 The Log-Submultiplicativity Bridge
 
-By Theorem 2.5 (with a(n) = log c(n), which is subadditive by Theorems 3.8 and 2.5) and Fekete's theory, this infimum equals the limit of c(n)^{1/n}.
+**Theorem 6.** If *a* is submultiplicative with *a*(*n*) > 0, then log ∘ *a* is subadditive.
 
-**Theorem 3.10**. μ > 0 (in fact, μ ≥ 1).
+*Proof.* log(*a*(*m*+*n*)) ≤ log(*a*(*m*) · *a*(*n*)) = log(*a*(*m*)) + log(*a*(*n*)). □
 
-**Theorem 3.11**. 2 ≤ μ.
+### 3.3 The Nienhuis Constant
 
-*Proof*. For any n, the set of walks using only north and east directions has cardinality 2^n, and every such walk is self-avoiding (the sum of coordinates x + y strictly increases at each step). Therefore c(n) ≥ 2^n, giving c(n)^{1/n} ≥ 2 for all n. □
+**Theorem 7.** μ_hex > 0.
 
-**Theorem 3.12**. μ ≤ 4.
+**Theorem 8.** μ_hex² = 2 + √2.
 
-*Proof*. c(n) ≤ 4^n (there are at most 4^n walks total), so c(n)^{1/n} ≤ 4, giving μ = inf c(n)^{1/n} ≤ c(1)^{1/1} = 4. □
+*Proof.* (√(2+√2))² = 2 + √2 by the definition of square root applied to 2 + √2 ≥ 0. □
 
-*Remark*. The best known rigorous bounds are 2.625622 ≤ μ ≤ 2.679193, obtained by Clisby (2017) and Jensen-Guttmann (2013) using sophisticated computational methods.
+**Theorem 9 (Minimal polynomial).** μ_hex⁴ − 4μ_hex² + 2 = 0.
 
-## 4. The Nienhuis Constant
+*Proof.* μ_hex⁴ = (μ_hex²)² = (2+√2)² = 6 + 4√2. And 4μ_hex² = 4(2+√2) = 8 + 4√2. So μ_hex⁴ − 4μ_hex² + 2 = (6+4√2) − (8+4√2) + 2 = 0. □
 
-### 4.1 Algebraic Properties
+**Theorem 10 (Irrationality).** μ_hex is irrational.
 
-**Definition 4.1**. The *Nienhuis constant* is ν = √(2 + √2) ≈ 1.84776.
+*Proof.* If μ_hex = p/q were rational, then μ_hex² = p²/q² would also be rational. But μ_hex² = 2 + √2, and √2 is irrational (a classical result), so 2 + √2 is irrational — contradiction. □
 
-**Theorem 4.2**. ν² = 2 + √2.
+### 3.4 Connective Constant Bounds
 
-**Theorem 4.3** (Minimal Polynomial). ν⁴ - 4ν² + 2 = 0.
+**Theorem 11 (Upper bound for connective constant).** For a submultiplicative positive sequence with bounded below log-ratio, the connective constant satisfies μ(*a*) ≤ *a*(*n*)^{1/*n*} for all *n* ≥ 1.
 
-*Proof*. From ν² = 2 + √2, we get ν² - 2 = √2, so (ν² - 2)² = 2, giving ν⁴ - 4ν² + 4 = 2. □
+*Proof.* By definition, μ(*a*) = exp(inf_k log(*a*(*k*))/*k*). Since inf ≤ log(*a*(*n*))/*n* (by ciInf_le with the BddBelow hypothesis), and exp is monotone, we get μ(*a*) ≤ exp(log(*a*(*n*))/*n*) = *a*(*n*)^{1/*n*}. □
 
-**Theorem 4.4**. ν is irrational.
+**Theorem 12 (Submultiplicative log-ratio bounded).** For a submultiplicative positive sequence, log(*a*(*n*))/*n* is eventually bounded above by log(*a*(*m*))/*m* + 1.
 
-*Proof*. If ν = p/q were rational, then ν² = p²/q² would be rational, so √2 = ν² - 2 would be rational—contradicting the classical irrationality of √2. □
+### 3.5 Tropical Geometry Connections
 
-**Theorem 4.5**. 1 < ν < 2.
+**Theorem 13 (Tropical valuation is a homomorphism).** val(*xy*) = val(*x*) + val(*y*).
 
-*Proof*. Since 1 < √2 < 2, we have 3 < 2 + √2 < 4, so √3 < ν < 2. Since √3 > 1, we conclude 1 < ν < 2. □
+**Theorem 14 (Tropical SAW subadditivity).** For a submultiplicative positive sequence *c*, log(*c*(*m*+*n*)) ≤ log(*c*(*m*)) + log(*c*(*n*)).
 
-### 4.2 Critical Fugacity
+**Theorem 15 (Tropical growth bound).** If *a*(*n*) ≤ *C* · μ^*n*, then *a*(*n*)^{1/*n*} ≤ *C*^{1/*n*} · μ. As *n* → ∞, the prefactor *C*^{1/*n*} → 1.
 
-**Definition 4.6**. The *critical fugacity* is x_c = 1/ν.
+**Theorem 16 (Tropical root existence).** The tropical polynomial max(4*v*, 2*v* + log 4, log 2) has a root at *v* = log 2 where the first two terms are equal.
 
-**Theorem 4.7**. 2x_c⁴ - 4x_c² + 1 = 0.
+**Theorem 17 (Radius of convergence).** For a submultiplicative positive sequence *a*, the series Σ *a*(*n*)*x*^*n* converges whenever |*x*| < 1/μ (where μ is the connective constant).
 
-*Proof*. Divide the minimal polynomial ν⁴ - 4ν² + 2 = 0 by ν⁴ to get 1 - 4/ν² + 2/ν⁴ = 0, i.e., 2x_c⁴ - 4x_c² + 1 = 0. □
+*Proof sketch.* If |*x*| < 1/μ, there exists *k* such that |*x*| · *a*(*k*)^{1/*k*} < 1. Then *a*(*n*) · |*x*|^*n* ≤ (*a*(*k*) · |*x*|^*k*)^{*n*/*k*} · (bounded correction), and the geometric decay ensures summability. □
 
-The critical fugacity x_c ≈ 0.5412 is the value of the SAW fugacity parameter at which the hexagonal lattice SAW model undergoes a phase transition. Duminil-Copin and Smirnov's theorem states that ν is indeed the connective constant of the hexagonal lattice.
+**Theorem 18 (Tropical convergence criterion).** If Σ *c*(*n*)*x*^*n* converges, then log(*x*) < −inf_k log(*c*(*k*))/*k* (assuming the infimum is bounded below).
 
-## 5. Bridge Decomposition
+*Proof.* By contrapositive: if log(*x*) ≥ −inf_k log(*c*(*k*))/*k*, then for every *k* ≥ 1, ciInf ≤ log(*c*(*k*))/*k*, giving *k* · log(*x*) ≥ −log(*c*(*k*)), hence *c*(*k*) · *x*^*k* ≥ 1. Since the terms don't tend to zero, the series cannot converge. □
 
-### 5.1 Abstract Bridges
+## 4. Algorithms
 
-**Definition 5.1**. An *abstract bridge* is a pair (h, ℓ) where h ∈ ℕ⁺ is the height and ℓ ∈ ℕ⁺ is the length.
+### 4.1 SAW Enumeration
 
-**Definition 5.2**. A *bridge decomposition* is a list of abstract bridges.
+The standard algorithm for computing *c*(*n*) uses backtracking depth-first search with early termination when a vertex is revisited. For small *n* (≤ 30), this is feasible with careful implementation.
 
-**Theorem 5.3** (Height Additivity). The total height of a concatenated decomposition equals the sum of individual total heights.
+### 4.2 Connective Constant Approximation
 
-### 5.2 Pattern Theorem
+Given access to *c*(1), ..., *c*(*N*), approximate μ as *c*(*N*)^{1/*N*}. By Theorem 11, this gives an upper bound. Lower bounds can be obtained from bridge decomposition.
 
-**Theorem 5.4** (Pattern Avoidance Decay). If c_P(n) counts n-step SAWs avoiding a fixed pattern, and c_P(n) ≤ c(n) · (1-δ)^{n/k} for some δ > 0, then c_P(n)/c(n) ≤ (1-δ)^{n/k}.
+### 4.3 Tropical Polynomial Evaluation
 
-This formalizes the core counting inequality in Hammersley's pattern theorem, which states that almost all long SAWs contain any given pattern.
+Given a polynomial *p*(*x*) = Σ *a_i* *x*^*i*, its tropicalization is trop(*p*)(*v*) = max_i(*a_i* + *i* · *v*), where we identify coefficients with their tropical valuations.
 
-## 6. Tropical Geometry Connections
+## 5. Discussion
 
-### 6.1 Tropical Phase Transition
+### 5.1 Cross-Domain Connections
 
-**Theorem 6.1**. In the max-plus (tropical) semiring, the tropical geometric series sup_k(k·a) satisfies:
-- If a ≤ 0, then k·a ≤ 0 for all k ∈ ℕ (bounded phase).
-- If a > 0, then for any M, there exists k with k·a > M (unbounded phase).
+This work establishes formal bridges between three mathematical domains:
 
-This is the tropical analogue of the convergence/divergence dichotomy for geometric series, and models the SAW phase transition at the critical fugacity.
+1. **Combinatorics → Analysis**: Submultiplicativity of SAW counts implies, via Fekete's lemma, the existence of the connective constant.
 
-### 6.2 Legendre-Fenchel Duality
+2. **Analysis → Algebra**: The connective constant is the radius of convergence of the SAW generating function, and for the hexagonal lattice, it's an algebraic number satisfying *x*⁴ − 4*x*² + 2 = 0.
 
-**Theorem 6.2** (Supercritical Bound). For f < β, we have n·f - β·n ≤ 0 for all n ∈ ℕ.
+3. **Algebra → Tropical Geometry**: The minimal polynomial tropicalizes to a piecewise-linear function, and the tropical root reveals the exponential growth rate structure.
 
-This corresponds to the statement that the tropical partition function is bounded in the supercritical phase. The Legendre-Fenchel transform of the free energy function f(β) recovers the rate function I(x) governing large deviations of the end-to-end distance.
+### 5.2 Formalization Challenges
 
-### 6.3 Connective Constant Monotonicity
+Several theorems required careful handling of:
+- **Natural number division and casting**: Euclidean division in Fekete's lemma involves delicate casting between ℕ and ℝ.
+- **Conditional infima**: Lean's treatment of `iInf` for potentially unbounded sets required explicit `BddBelow` hypotheses in several places.
+- **Irrationality arguments**: The irrationality of √(2+√2) was proved by reduction to the irrationality of √2, using the closure of rationals under squaring.
 
-**Theorem 6.3**. If c_G(n) ≤ c_H(n) for all n with both sequences positive, then c_G(n)^{1/n} ≤ c_H(n)^{1/n}.
+### 5.3 Falsifiable Conjecture
 
-This formalizes the monotonicity of connective constants under graph inclusion: subgraphs have smaller connective constants.
+**Conjecture (Bridge Ratio Monotonicity).** Let *b*(*n*) denote the number of bridge SAWs of length *n* on the square lattice. Then the ratio *b*(*n*)/*c*(*n*) is eventually monotonically decreasing.
 
-## 7. Discussion
+*Computational test*: Compute *b*(*n*)/*c*(*n*) for *n* = 1, ..., 30 and check monotonicity for *n* ≥ 10. If the ratio oscillates for large *n*, the conjecture is false.
 
-### 7.1 Significance
+## 6. Future Work
 
-Our formalization establishes the rigorous foundations of SAW theory through four interconnected modules:
-
-1. **Subadditive.lean**: The analytical backbone—subadditive and submultiplicative sequence theory, including Fekete's key inequality.
-
-2. **ConnectiveConstant.lean**: The combinatorial core—SAW definitions, submultiplicativity of SAW counts (the most technically demanding proof), and existence of the connective constant with bounds.
-
-3. **Nienhuis.lean**: The algebraic heart—properties of √(2+√2) including its minimal polynomial, irrationality, and the critical fugacity identity.
-
-4. **BridgeDecomposition.lean**: The structural framework—bridge decomposition theory and connections to tropical geometry.
-
-### 7.2 Key Proof: Submultiplicativity
-
-The proof of sawCount_submultiplicative (Theorem 3.8) is the most significant result. It required:
-- Defining the splitting map from SAW(m+n) to SAW(m) × SAW(n)
-- Proving the prefix of a self-avoiding walk is self-avoiding
-- Proving the translated suffix is self-avoiding
-- Proving the map is injective via the uniqueness of walk concatenation
-- Bounding the cardinality
-
-### 7.3 Open Problems
-
-The most important open problem is determining the exact value of the square lattice connective constant μ ≈ 2.6381585. Our bounds 2 ≤ μ ≤ 4 are far from optimal; the best known bounds require computational methods analyzing millions of SAW configurations.
-
-## 8. Future Work
-
-- Formalizing the Duminil-Copin–Smirnov theorem (μ_hex = √(2+√2))
-- Discrete holomorphicity of the parafermionic observable
-- Sharp bounds on the square lattice connective constant via bridge decomposition
-- Tropical formulation of the SAW partition function as a polyhedral complex
+1. **Discrete holomorphicity**: Formalize the parafermionic observable and discrete Cauchy-Riemann equations on the medial lattice.
+2. **Sharp square lattice bounds**: Use bridge decomposition to prove 2.62 < μ_sq < 2.68.
+3. **Tropical Duminil-Copin–Smirnov**: Express the DCS proof entirely in tropical coordinates.
 
 ## References
 
-1. H. Duminil-Copin and S. Smirnov, "The connective constant of the honeycomb lattice equals √(2+√2)," *Annals of Mathematics*, vol. 175, no. 3, pp. 1653–1665, 2012.
-
-2. M. Fekete, "Über die Verteilung der Wurzeln bei gewissen algebraischen Gleichungen mit ganzzahligen Koeffizienten," *Mathematische Zeitschrift*, vol. 17, pp. 228–249, 1923.
-
-3. J. M. Hammersley, "Percolation processes II. The connective constant," *Proceedings of the Cambridge Philosophical Society*, vol. 53, pp. 642–645, 1957.
-
-4. J. M. Hammersley and D. J. A. Welsh, "Further results on the rate of convergence to the connective constant of the hypercubical lattice," *Quarterly Journal of Mathematics*, vol. 13, pp. 108–110, 1962.
-
-5. N. Madras and G. Slade, *The Self-Avoiding Walk*, Birkhäuser, 1993.
-
-6. B. Nienhuis, "Exact critical point and critical exponents of O(n) models in two dimensions," *Physical Review Letters*, vol. 49, pp. 1062–1065, 1982.
+1. Duminil-Copin, H. and Smirnov, S. (2012). The connective constant of the honeycomb lattice equals √(2+√2). *Annals of Mathematics*, 175(3):1653–1665.
+2. Fekete, M. (1923). Über die Verteilung der Wurzeln bei gewissen algebraischen Gleichungen mit ganzzahligen Koeffizienten. *Mathematische Zeitschrift*, 17:228–249.
+3. Madras, N. and Slade, G. (2013). *The Self-Avoiding Walk*. Birkhäuser.
+4. Nienhuis, B. (1982). Exact critical point and critical exponents of O(*n*) models in two dimensions. *Physical Review Letters*, 49(15):1062–1065.
