@@ -148,7 +148,7 @@ def update_index():
     # Find the Catalog root (grandparent of Packages dir) for git commands
     catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json")]
+    json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json"))
 
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
@@ -305,9 +305,9 @@ def update_index():
 // Lightweight index for sidebar, graph, and lineage links.
 // Full package data is loaded on-demand from individual .json files.
 
-window.PACKAGE_INDEX = {json.dumps(package_index, indent=2)};
+window.PACKAGE_INDEX = {json.dumps(package_index, indent=2, sort_keys=True)};
 
-window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2)};
+window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True)};
 """
 
     with open("package_index.js", "w", encoding="utf-8") as out:
@@ -479,7 +479,7 @@ def generate_graph_data(script_dir, package_index):
     graph_js = f"""
 
 // Knowledge Graph Data (auto-generated from lineage.json)
-window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
+window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2, sort_keys=True)};
 """
     with open(db_path, 'a', encoding='utf-8') as f:
         f.write(graph_js)
@@ -547,12 +547,12 @@ def append_future_directions(script_dir, fd_js_path):
             "timestamp": d.get("timestamp", ""),
         })
 
-    display_dirs.sort(key=lambda x: x["priority_score"], reverse=True)
+    display_dirs.sort(key=lambda x: (-x["priority_score"], x.get("id", "")))
 
     fd_js = f"""
 
 // Future Research Directions (auto-generated from future_directions.json)
-window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2)};
+window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2, sort_keys=True)};
 """
     with open(fd_js_path, 'w', encoding='utf-8') as f:
         f.write(fd_js)

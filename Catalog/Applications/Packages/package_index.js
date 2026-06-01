@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d88dcc9c",
     "filename": "rigorous_axiomatic_framework_for_substrate_ind.json",
     "pkg_num": 118,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7305230526315789,
     "title": "Reduction-Enriched Complexity Hierarchies: An Axiomatic Framework for Substrate-Independent Computational Barriers"
   },
   {
@@ -3640,8 +3640,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "rigorous_axiomatic_framework_for_substrate_ind",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7305230526315789,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Reduction-Enriched Complexity Hierarchies: An Axiomatic Framework for Substrate-Independent Computational Barriers"
     }
