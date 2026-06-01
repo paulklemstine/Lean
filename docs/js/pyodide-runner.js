@@ -238,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 editor.className = 'code-editor collapsed';
                 editor.spellcheck = false;
                 editor.value = item.code || '';
-                editor.style.display = 'none';
 
                 // Auto-size editor when shown
                 const autoSizeEditor = () => {
@@ -247,12 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 toggleBtn.addEventListener('click', () => {
-                    if (editor.style.display === 'none') {
-                        editor.style.display = '';
+                    if (editor.classList.contains('collapsed')) {
+                        editor.classList.remove('collapsed');
                         toggleBtn.textContent = 'Hide Source';
                         autoSizeEditor();
                     } else {
-                        editor.style.display = 'none';
+                        editor.classList.add('collapsed');
                         toggleBtn.textContent = 'Show Source';
                     }
                 });
