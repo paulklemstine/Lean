@@ -2150,7 +2150,7 @@ class PiAgentClient:
         if parsed:
             return {
                 "quality": parsed.get("quality", "partial"),
-                "should_retry": parsed.get("should_retry", True),
+                "should_retry": parsed.get("should_retry", parsed.get("quality", "partial") == "partial"),
                 "retry_strategy": parsed.get("retry_strategy", ""),
                 "confidence": float(parsed.get("confidence", 0.5)),
                 "analysis": parsed.get("analysis", ""),

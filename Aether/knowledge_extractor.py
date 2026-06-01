@@ -1080,11 +1080,10 @@ Research mode: {concept.research_mode}
             print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
             job.quality_score = heuristic_score
 
-        # Penalize partial results that should have been retried
+        # Log should_retry flag for monitoring, but don't cap score —
+        # the quality evaluator already factors partiality into its score.
         if qa.get("should_retry"):
-            original_score = job.quality_score
-            job.quality_score = min(job.quality_score, 0.60)
-            print(f"[Evaluate] should_retry=true — capping score {original_score:.3f} → {job.quality_score:.3f}")
+            print(f"[Evaluate] should_retry=true (quality={qa.get('quality','?')}), score={job.quality_score:.3f} — keeping computed score")
 
         print(f"[Evaluate] quality={qa.get('quality','?')}, score={job.quality_score:.3f}, "
               f"sorries={job.sorry_count}, theorems={job.theorem_count}"
