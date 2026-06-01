@@ -71,10 +71,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "42ef5052",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -416,10 +416,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "f8cabeaa",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -479,7 +479,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "4dfc7083",
+    "consumed_by_exp_id": "0fa49dec",
     "timestamp": "2026-05-31T11:52:50.606787"
   },
   {
@@ -521,10 +521,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0a3ba3e",
     "timestamp": "2026-05-31T11:52:55.739624"
   },
   {
@@ -581,10 +581,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3971a79e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da3578b4",
     "timestamp": "2026-05-31T20:23:20.091053+00:00"
   },
   {
@@ -671,10 +671,10 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b3fdee2d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a0058f1",
     "timestamp": "2026-05-31T21:30:39.095810+00:00"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "58d4594d",
-    "consumed_by_exp_id": "e21ad9ff",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T21:56:21.987827+00:00"
   },
   {
@@ -851,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "de323f00",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea8fbe44",
     "timestamp": "2026-05-31T23:50:55.082782+00:00"
   },
   {
@@ -941,10 +941,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a2f51013",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15bec107",
     "timestamp": "2026-06-01T00:32:23.082599+00:00"
   },
   {
@@ -1001,10 +1001,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "3d08bbee",
-    "consumed_by_exp_id": "da87839f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T01:58:13.523824+00:00"
   },
   {
@@ -1151,10 +1151,10 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "priority_score": 0.86,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "28a8abe9",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
@@ -1256,10 +1256,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.84,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "21b24916",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:51.140381"
   },
   {
@@ -1329,10 +1329,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.83,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "01566302",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:53.852323"
   },
   {
@@ -1506,10 +1506,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c6e162ae",
-    "consumed_by_exp_id": "8f3b1e32",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T00:33:23.852704+00:00"
   },
   {
@@ -1626,10 +1626,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "98ff40a1",
-    "consumed_by_exp_id": "2ed20419",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T04:23:31.157148+00:00"
   },
   {
@@ -1736,5 +1736,35 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b99dc9d4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T05:30:08.313200+00:00"
+  },
+  {
+    "id": "fd_2439",
+    "title": "Formalized structural foundations of the Erd",
+    "description": "# Future Directions: Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture\n\n## Synthesis\n\nThis research cycle established the formalized structural foundations of the Erd\u0151s\u2013Faber\u2013Lov\u00e1sz conjecture: definitions of EFL systems, near-pencil configurations, and linear hypergraphs, along with twelve verified theorems capturing the key counting arguments (incidence count = k\u00b2, Fisher pair-sharing bound, degree bound, high-degree vertex sparsity, edge injectivity, unique intersection, and colorability of base cases and disjoint systems).\n\nThe most promising cross-domain connection is between the **matroid exchange property** (already formalized in the Catalog as `uniform_has_exchange`) and the EFL coloring problem. The edges of a k-uniform linear hypergraph form the bases of a matroid-like structure, and the coloring question can be rephrased as a matroid partition problem. The connection between the Fisher-type inequality proved here and Fisher's inequality in combinatorial design theory suggests that **finite geometry methods** (projective planes, Latin squares) could provide the missing link for a complete formal proof.\n\nThe high-degree vertex bound (\u2264 k(k-1)/2 vertices with degree \u2265 2) is the structural heart of the conjecture: it quantifies the sparsity of \"connectors\" that makes coloring possible. Future work should focus on tightening this bound under additional structural hypotheses (e.g., when the dual graph has specific properties) and connecting it to the absorbing method used in the Kang et al. proof.\n\n---\n\n### Direction 1: Matroid Exchange and EFL Partition Duality\n\n**Conjecture**: For any EFL system with parameter k, there exists a partition of the vertex set into k parts, each intersecting every edge in exactly one vertex. Equivalently, the edges form a \"transversal design\" admitting a parallel class partition.\n\n**Test**: Enumerate all EFL systems for k \u2264 5 and verify the partition exists. For the near-pencil, the partition is explicit: the center goes in one part, and each petal contributes one vertex per part.\n\n**Impact**: If true, this would immediately imply EFL (since the partition itself is a k-coloring). The partition perspective would connect EFL to the theory of transversal designs and orthogonal Latin squares, opening new proof strategies via finite geometry.\n\n**Catalog References**: `Bridges/CertificateCompressionExchange.lean` (uniform_has_exchange), `Catalog/Bridges/Pythagorean/CertificateCompressionExchange.lean`\n\n**Proof Strategy**: First prove the conjecture for near-pencils (constructive). Then show that any EFL system can be \"deformed\" to a near-pencil via a sequence of local moves that preserve the partition property. The key lemma would be: if two edges share a vertex, swapping petal elements between them preserves the partition.\n\n**Domain Bridges**: Matroid theory (exchange axiom) <-> Combinatorial design theory (transversal designs) <-> EFL coloring\n\n**Lineage**: Builds on the EFL system definitions and the unique intersection vertex theorem from this cycle. Extends `uniform_has_exchange` to the hypergraph setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Chromatic Number of Linear Hypergraphs\n\n**Conjecture**: The tropical chromatic number of an EFL system (defined via the min-plus semiring as the minimum number of tropical colors such that each edge has a unique tropical maximum) equals the strong chromatic number.\n\n**Test**: Compute tropical chromatic numbers for all EFL systems with k \u2264 4 and compare with the strong chromatic number. Discrepancies would disprove the conjecture.\n\n**Impact**: If true, this would allow importing tropical geometry techniques (Newton polytopes, tropical B\u00e9zout) into the EFL problem. The min-plus structure of tropical coloring is computationally more tractable than the standard coloring formulation.\n\n**Catalog References**: `Tropical/E8LatticeSurgery.lean` (union_find_linear), `EML/EMLv17Core.lean`\n\n**Proof Strategy**: Define the tropical chromatic number for hypergraphs in Lean. Show that for linear hypergraphs, the tropical and standard chromatic numbers coincide by proving that a tropical coloring can be \"lifted\" to a standard coloring (the max-vertex in each edge determines a unique element, which acts as the rainbow representative).\n\n**Domain Bridges**: Tropical geometry (min-plus algebra) <-> Hypergraph coloring (EFL systems) <-> Lattice theory (order structures)\n\n**Lineage**: Builds on the EFL definitions from this cycle and the tropical structures in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Absorbing Method Formalization for Large-k EFL\n\n**Conjecture**: There exists a constant k\u2080 such that for all k \u2265 k\u2080, every EFL system with parameter k admits a strong coloring with k colors, where k\u2080 can be explicitly bounded as k\u2080 \u2264 10^6.\n\n**Test**: Attempt to extract an explicit bound on k\u2080 from the Kang et al. proof. The probabilistic absorbing method gives an existential bound; making it explicit is a concrete computational challenge.\n\n**Impact**: An explicit k\u2080 would reduce the full EFL conjecture to a finite verification problem. Combined with computer enumeration for k < k\u2080, this would complete the proof for all k.\n\n**Catalog References**: `Algebra/CramerModel.lean` (prime_gap_linear_bound), `Algebra/IOFExplorations.lean` (union_bound_iof)\n\n**Proof Strategy**: Formalize the key lemma of the absorbing method: given a partial coloring of 99% of vertices, the remaining 1% can be \"absorbed\" into a complete coloring. This requires formalizing: (a) the random partial coloring step (Lov\u00e1sz Local Lemma), (b) the absorbing structure construction, (c) the extension argument. The union bound from `union_bound_iof` can be used in step (a).\n\n**Domain Bridges**: Probabilistic combinatorics (Lov\u00e1sz Local Lemma) <-> Absorbing method <-> EFL coloring <-> Measure theory (probability bounds)\n\n**Lineage**: Extends the EFL structural foundations from this cycle. Uses the probabilistic framework established in `Algebra/IOFExplorations.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Dual Graph Chromatic Index and Vizing-type Bounds\n\n**Conjecture**: For any EFL system with parameter k, the chromatic index of the dual graph (edges = clubs, adjacency = shared member) is at most k\u22121. This would imply EFL via the duality between strong hypergraph coloring and edge coloring of the dual graph.\n\n**Test**: Compute the chromatic index of the dual graph for near-pencils (should be k\u22121 since the dual is K_k) and for random EFL systems with k \u2264 8.\n\n**Impact**: This would reduce EFL to Vizing's theorem for the dual graph. Since the dual graph has maximum degree at most k\u22121 (each edge shares a vertex with at most k\u22121 others), Vizing's theorem gives chromatic index \u2264 k, exactly the EFL bound.\n\n**Catalog References**: `Bridges/AlgebraEMLClosureComputation.lean`, `Computation/InfoEfficientAlgorithms.lean`\n\n**Proof Strategy**: (1) Define the dual graph of an EFL system formally. (2) Prove the dual graph has maximum degree \u2264 k\u22121. (3) Apply Vizing's theorem (which may need formalization). (4) Translate the edge coloring back to a strong coloring of the original system.\n\n**Domain Bridges**: Graph theory (Vizing's theorem, chromatic index) <-> Hypergraph duality <-> EFL coloring\n\n**Lineage**: Builds directly on the dual adjacency relation defined in this cycle's `Defs.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Sunflower Decomposition and EFL Induction\n\n**Conjecture**: Every EFL system with parameter k \u2265 3 can be decomposed into a sunflower core (edges through the highest-degree vertex) and a residual EFL-like system with parameter k' < k. The conjecture holds for the full system if and only if it holds for the residual.\n\n**Test**: For k = 4, enumerate all EFL systems. For each, remove the star of the maximum-degree vertex and verify the residual satisfies the inductive hypothesis.\n\n**Impact**: This would give an inductive proof of EFL, reducing the problem to smaller instances. The base cases k \u2264 3 could be verified computationally.\n\n**Catalog References**: `Bridges/CertificateCompressionExchange.lean` (uniform_has_exchange)\n\n**Proof Strategy**: (1) Show the maximum-degree vertex v has degree d \u2264 k. (2) Remove v from all edges containing it, creating d edges of size k\u22121. (3) Show the remaining system (k \u2212 d edges of size k, plus d edges of size k\u22121) admits a strong coloring with k colors that extends any coloring of the d shrunk edges. (4) The extension uses the injection_extension principle from this cycle.\n\n**Domain Bridges**: Sunflower theory (Erd\u0151s\u2013Ko\u2013Rado) <-> Inductive combinatorics <-> EFL coloring <-> Matroid deletion/contraction\n\n**Lineage**: Builds on the star/degree analysis and unique intersection vertex theorem from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "3446461e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T06:07:09.936844+00:00"
+  },
+  {
+    "id": "fd_2440",
+    "title": "Formally verified framework for substrate-inde",
+    "description": "# Future Research Directions: Universal Computational Complexity\n\n## Synthesis\n\nThis research cycle established a formally verified framework for substrate-independent computational complexity, proving that diagonal separation barriers, strict resource hierarchies, and simulation transfer phenomena are mathematical invariants of computation rather than artifacts of particular models. The key discovery is that three minimal axioms \u2014 countable program enumeration, resource monotonicity, and simulation composability \u2014 suffice to derive the full structure of complexity hierarchies, including barriers that persist even in hypercomputational settings.\n\nThe most promising cross-domain connection emerges between this universal complexity framework and the existing Catalog work on tropical complexity (`Bridges/TropicalAmplificationEnhanced.lean`) and oracle computation (`Computation/GravityOracle.lean`). The tropical semiring provides a concrete algebraic model where \"complexity\" has a precise meaning (circuit depth over min-plus operations), and our resource hierarchy framework could provide the abstract setting to prove tropical complexity lower bounds transfer across semiring models. Similarly, the gravity oracle model is a concrete instance of our `OracleAugmentation` structure, suggesting that oracle separation results could be unified under the abstract framework.\n\nThe direction with highest breakthrough potential is Direction 1 (Nondeterministic Hierarchy and Abstract P vs NP), because it would formalize the precise point where the universal framework makes contact with the most important open problem in computer science. If successful, it would not resolve P vs NP, but would precisely characterize *what kind* of mathematical object a proof or disproof must be \u2014 eliminating broad classes of approaches and focusing future effort.\n\n---\n\n### Direction 1: Nondeterministic Resource Hierarchies and Abstract P vs NP\n\n**Conjecture**: There exists an extension of the `ResourceHierarchy` structure that captures nondeterministic computation \u2014 specifically, a `VerifierHierarchy` where problem membership is defined by the existence of a short proof verifiable within the resource bound \u2014 such that (a) every `ResourceHierarchy` embeds into a `VerifierHierarchy` with identity overhead, and (b) the diagonal separation theorem applies to yield a separation between the deterministic and verifier hierarchies under a constructivity condition.\n\nFormally: Define `VerifierHierarchy \u03b1` with `class_at n = {L | \u2203 verifier i, \u2200 x \u2208 L, \u2203 witness w, |w| \u2264 n \u2227 verifier accepts (x, w) in cost \u2264 n}`. Conjecture that under a \"constructive diagonalization\" axiom (the diagonal language for the verifier family can be decided deterministically with polynomial overhead in the verification bound), the deterministic hierarchy is strictly contained in the verifier hierarchy.\n\n**Test**: Formalize the `VerifierHierarchy` structure in Lean 4 and attempt to prove the embedding `ResourceHierarchy \u2192 VerifierHierarchy`. If the embedding proof fails, the definition of `VerifierHierarchy` needs refinement. Then test whether the diagonal construction for verifier families yields a language in the verifier class but not the deterministic class.\n\n**Impact**: If true, this would formalize the *structure* of P vs NP as a theorem about abstract hierarchies \u2014 showing that the deterministic/nondeterministic gap is a universal phenomenon, not a Turing machine artifact. If false, the failure would reveal which additional axioms (beyond enumeration and monotonicity) are needed to capture nondeterminism.\n\n**Catalog References**: `Bridges/UniversalComplexity/Core.lean` (ResourceHierarchy, ModelSimulation), `Computation/GravityOracle.lean` (IsGravOracle, oracle models)\n\n**Proof Strategy**: (1) Define `VerifierHierarchy` with a witness-based membership predicate. (2) Prove monotonicity of verifier classes. (3) Construct the embedding from deterministic to verifier hierarchies. (4) Apply the diagonal construction to the verifier enumeration. (5) Show the diagonal verifier language is in the verifier class at a higher level but not in the deterministic class at the same level, using the asymmetry between \"search\" and \"verification.\"\n\n**Domain Bridges**: Universal Complexity Theory \u2194 Proof-Theoretic Cryptography (verifier complexity connects to proof systems in `Bridges/ProofTheoreticCrypto/Core.lean`)\n\n**Lineage**: Builds on `proper_hierarchy_strictMono`, `computationalDiag_not_in_range`, and `simulation_separation_transfer` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Complexity as a Universal Hierarchy Instance\n\n**Conjecture**: The tropical semiring (\u211d \u222a {\u221e}, min, +) complexity \u2014 where circuit complexity is measured by depth of min-plus arithmetic circuits \u2014 instantiates the `ResourceHierarchy` framework, and the abstract diagonal separation theorem yields concrete lower bounds on tropical circuit depth that match or improve known results.\n\nSpecifically: Define `tropicalHierarchy : ResourceHierarchy (\u211d \u2192 \u211d)` where `class_at n = {f | f is computable by a tropical circuit of depth \u2264 n}`. Conjecture that this hierarchy is proper, and that the diagonal witness at each level provides an explicit function family requiring depth exactly n.\n\n**Test**: (1) Formalize `tropicalHierarchy` as a `ResourceHierarchy` instance. (2) Verify monotonicity (trivial). (3) Attempt to prove properness by constructing explicit depth-n functions (e.g., iterated min-plus convolution). (4) Compare the diagonal witness with known tropical lower bounds.\n\n**Impact**: Would bridge abstract complexity theory with concrete algebraic computation, providing a new route to circuit lower bounds via the universal hierarchy framework. Tropical circuits are connected to optimization, auction theory, and phylogenetics, so lower bounds here have broad implications.\n\n**Catalog References**: `Bridges/TropicalAmplificationEnhanced.lean` (tropical_complexity_lower_bound), `Bridges/TropicalCryptographyBreakthrough.lean` (tropical_owf_master_theorem), `Bridges/Caratheodory.lean` (tropical_mirror_theorem)\n\n**Proof Strategy**: (1) Define tropical circuits formally (min, plus, constant gates). (2) Define depth measure. (3) Prove monotonicity. (4) For properness, use the iterated min-plus convolution: conv_n(x\u2081,...,x\u2099) = min_{i+j=n} (f\u1d62(x\u2081,...,x\u2096) + g\u2c7c(x\u2096\u208a\u2081,...,x\u2099)) requires depth proportional to log(n) but not less. (5) Use the existing `tropical_complexity_lower_bound` theorem as a base case.\n\n**Domain Bridges**: Universal Complexity Theory \u2194 Tropical Geometry \u2194 Cryptography (via one-way function constructions over tropical semirings)\n\n**Lineage**: Builds on `ResourceHierarchy.IsProper`, `proper_hierarchy_strictMono`, and the tropical complexity results in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Simulation Categories and Complexity Functors\n\n**Conjecture**: The collection of `ResourceHierarchy` structures with `ModelSimulation` morphisms forms a category `CompHier`, and the assignment of \"separation structure\" (the poset of strict containments between levels) is a functor from `CompHier` to the category of partial orders. Furthermore, this functor reflects isomorphisms: if two hierarchies have isomorphic separation structures via simulations, then they are equivalent as complexity theories.\n\n**Test**: (1) Verify that `ModelSimulation.comp` satisfies category axioms (associativity, identity). (2) Define the \"separation poset\" functor. (3) Check functoriality. (4) Attempt to prove the reflection property: if S\u2081\u2082 and S\u2082\u2081 are mutual simulations with polynomial overhead, then the hierarchies have isomorphic separation structures.\n\n**Impact**: Would establish computational complexity theory as a branch of category theory, potentially importing powerful categorical tools (adjunctions, limits, Kan extensions) for proving complexity-theoretic results. The reflection property would give a precise mathematical formulation of \"model-independence.\"\n\n**Catalog References**: `Bridges/UniversalComplexity/Core.lean` (ModelSimulation, ModelSimulation.comp), `Bridges/ChurchRosserDeBruijn.lean` (ConfluentCostSystem \u2014 another simulation-like structure)\n\n**Proof Strategy**: (1) Define the identity simulation (embed = id, overhead = id). (2) Verify that `ModelSimulation.comp` is associative (up to definitional equality). (3) Define the separation poset: elements are levels n, ordering is class_at m \u2286 class_at n. (4) Show simulation maps between posets. (5) For reflection, use injectivity of the embedding and the separation transfer theorem.\n\n**Domain Bridges**: Universal Complexity Theory \u2194 Category Theory \u2194 Church-Rosser Theory (via confluent cost systems as morphisms)\n\n**Lineage**: Builds on `ModelSimulation.comp` and `simulation_separation_transfer` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Kolmogorov Complexity and the Complexity Hierarchy Gap Theorem\n\n**Conjecture**: There exists a formalization of Borodin's Gap Theorem within the `ResourceHierarchy` framework: for any computable function g, there exists a resource bound f such that `class_at(f(n)) = class_at(g(f(n)))` \u2014 meaning that increasing resources by a factor of g provides no additional computational power at bound f.\n\nThis would complement the strict hierarchy results by showing that while some levels exhibit strict separation, there are always \"gaps\" where the hierarchy plateaus. The interplay between gaps and separations is a deep structural feature of computation.\n\n**Test**: (1) State the gap theorem as a proposition about `ResourceHierarchy`. (2) Verify it requires additional structure beyond monotonicity (a \"Blum axiom\" about decidability of cost bounds). (3) Attempt to prove it using a constructive argument: build f by iterating g, starting from a level where no new programs fit.\n\n**Impact**: The gap theorem reveals that complexity hierarchies have a fractal-like structure: strict separations and collapses alternate in a way determined by the growth rate of the resource function. This is one of the deepest structural results in complexity theory and would demonstrate the power of the abstract framework.\n\n**Catalog References**: `Bridges/UniversalComplexity/Core.lean` (ResourceHierarchy), `Computation/PadicValuationDepth.lean` (ValuationDepthMeasure \u2014 another complexity measure)\n\n**Proof Strategy**: (1) Add a \"Blum axiom\" to `ResourceHierarchy`: the predicate \"program i runs within cost n\" is decidable. (2) Define the gap function construction: f(0) = 0, f(k+1) = g(f(k)) if no new programs fit in [f(k), g(f(k))], otherwise f(k+1) = smallest bound where a new program fits. (3) Show by the pigeonhole principle that the gap case must occur (since there are only finitely many programs with cost \u2264 g(f(k))).\n\n**Domain Bridges**: Universal Complexity Theory \u2194 p-adic Valuation Depth (both involve hierarchical complexity measures with non-trivial gap structures)\n\n**Lineage**: Builds on `ResourceHierarchy` and `proper_hierarchy_strictMono`. Contrasts with the strict hierarchy direction by characterizing *where* the hierarchy fails to be strict.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Oracle Separation Lattice and Independence Results\n\n**Conjecture**: The collection of oracle augmentations of a fixed `ResourceHierarchy` forms a lattice under the containment ordering, and there exist pairs of oracles A, B such that the A-augmented hierarchy and B-augmented hierarchy are incomparable \u2014 neither embeds into the other via bounded simulation.\n\nThis would formalize the \"oracle independence\" phenomenon: some computational enhancements are genuinely orthogonal, not merely stronger or weaker versions of each other.\n\n**Test**: (1) Define the ordering on `OracleAugmentation` structures. (2) Verify lattice properties (meet = intersection of oracle classes, join = union). (3) Construct explicit incomparable oracle augmentations using a diagonal argument: oracle A solves the diagonal for the B-augmented model, and vice versa.\n\n**Impact**: Would provide the first machine-verified formalization of oracle incomparability, demonstrating that the landscape of computational power is not linearly ordered but has genuine multi-dimensional structure. This connects to the P vs NP relativization barrier: the existence of incomparable oracles is what prevents relativizing proofs from resolving P vs NP.\n\n**Catalog References**: `Bridges/UniversalComplexity/Core.lean` (OracleAugmentation, oracle_diagonal_barrier), `Computation/GravityOracle.lean` (IsGravOracle)\n\n**Proof Strategy**: (1) Define partial order on oracle augmentations via pointwise inclusion. (2) Prove meet/join existence. (3) For incomparability, use mutual diagonalization: given the A-augmented language family, construct B as the family whose diagonal is A's diagonal, and vice versa. This creates a pair where neither can simulate the other.\n\n**Domain Bridges**: Universal Complexity Theory \u2194 Lattice Theory \u2194 Oracle Computation (gravity oracle as a concrete instance)\n\n**Lineage**: Builds on `OracleAugmentation`, `oracle_diagonal_barrier`, and `hypercomputation_strict_hierarchy` from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "ac9e5feb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T06:07:52.308664+00:00"
   }
 ];
