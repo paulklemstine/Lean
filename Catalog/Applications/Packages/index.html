@@ -40,7 +40,7 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><a href="index.html">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.149</span></h2>
+                <h2><a href="#" id="home-link">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.150</span></h2>
                 <div class="header-controls">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
                         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -381,6 +381,22 @@
             });
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') authorPopover.classList.add('hidden');
+            });
+        }
+
+        // Home button: reset graph view and show welcome screen
+        const homeLink = document.getElementById('home-link');
+        if (homeLink) {
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const welcomeScreen = document.getElementById('welcome-screen');
+                const packageView = document.getElementById('package-view');
+                const directionsView = document.getElementById('directions-view');
+                if (welcomeScreen) welcomeScreen.classList.remove('hidden');
+                if (packageView) packageView.classList.add('hidden');
+                if (directionsView) directionsView.classList.add('hidden');
+                if (window.Aether) window.Aether.currentPackage = null;
+                if (window._resetCamera) window._resetCamera();
             });
         }
 

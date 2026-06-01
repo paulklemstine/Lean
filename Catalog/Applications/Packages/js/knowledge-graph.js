@@ -99,6 +99,11 @@
         window._stopTrackingCircle = function() {
             hoverTrackId = null;
         };
+        window._resetCamera = function() {
+            camera = { x: 0, y: 0, zoom: 0.024 };
+            cameraTarget = null;
+            hoverTrackId = null;
+        };
 
         // ─── Colors by domain ───
         const DOMAIN_COLORS = {
