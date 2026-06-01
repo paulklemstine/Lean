@@ -206,10 +206,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "14647e7c",
+    "consumed_by_exp_id": "",
     "timestamp": ""
   },
   {
