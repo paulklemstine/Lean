@@ -212,6 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.className = 'code-title';
                 title.textContent = item.name || 'Interactive Python Demo';
 
+                const btnGroup = document.createElement('div');
+                btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = 'source-toggle';
+                toggleBtn.textContent = 'Show Source';
+
                 const runBtn = document.createElement('button');
                 runBtn.className = 'run-btn';
                 if (!window.Aether.pyodideInstance) {
@@ -221,13 +228,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     runBtn.textContent = 'Run Code';
                 }
 
+                btnGroup.appendChild(toggleBtn);
+                btnGroup.appendChild(runBtn);
+
                 header.appendChild(title);
-                header.appendChild(runBtn);
+                header.appendChild(btnGroup);
 
                 const editor = document.createElement('textarea');
-                editor.className = 'code-editor';
+                editor.className = 'code-editor collapsed';
                 editor.spellcheck = false;
                 editor.value = item.code || '';
+                editor.style.display = 'none';
+
+                // Auto-size editor when shown
+                const autoSizeEditor = () => {
+                    editor.style.height = 'auto';
+                    editor.style.height = Math.max(300, editor.scrollHeight) + 'px';
+                };
+
+                toggleBtn.addEventListener('click', () => {
+                    if (editor.style.display === 'none') {
+                        editor.style.display = '';
+                        toggleBtn.textContent = 'Hide Source';
+                        autoSizeEditor();
+                    } else {
+                        editor.style.display = 'none';
+                        toggleBtn.textContent = 'Show Source';
+                    }
+                });
 
                 const output = document.createElement('pre');
                 output.className = 'code-output hidden';
