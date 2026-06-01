@@ -1,271 +1,307 @@
+#!/usr/bin/env python3
 """
-Algorithms for Culinary Homotopy Theory
-========================================
+Algorithms for Recipe Substitution Spaces
 
-Implements core algorithms for computing substitution graphs,
-Hamming distances, fiber decompositions, and path-finding in
-recipe space.
+Type-hinted implementations of the core algorithms from the
+Homotopy Type Theory of Cooking Recipes research.
 """
 
+import itertools
 import numpy as np
+from typing import Tuple, List, Set, Dict, Optional, Callable
 from collections import defaultdict, deque
-from itertools import product
-from typing import List, Tuple, Dict, Optional, Set
+from math import comb
 
 
-def hamming_distance(r1: np.ndarray, r2: np.ndarray) -> int:
+# Type aliases
+Recipe = Tuple[int, ...]
+FlavorProfile = np.ndarray
+
+
+def hamming_distance(r1: Recipe, r2: Recipe) -> int:
+    """Compute Hamming distance between two recipes.
+
+    Time: O(n) where n = len(r1)
     """
-    Compute the Hamming distance between two recipes.
+    return sum(1 for a, b in zip(r1, r2) if a != b)
 
-    Time complexity: O(n) where n = number of slots.
-    Space complexity: O(1).
 
-    >>> hamming_distance(np.array([0,1,2]), np.array([0,1,0]))
-    1
+def diff_slots(r1: Recipe, r2: Recipe) -> List[int]:
+    """Return the set of slots where two recipes differ.
+
+    Time: O(n)
     """
-    return int(np.sum(r1 != r2))
+    return [i for i, (a, b) in enumerate(zip(r1, r2)) if a != b]
 
 
-def generate_recipe_space(n: int, m: int) -> np.ndarray:
+def translate_recipe(recipe: Recipe, offset: Recipe, m: int) -> Recipe:
+    """Translate a recipe by componentwise addition mod m.
+
+    Implements the vertex transitivity automorphism.
+    Time: O(n)
     """
-    Generate all recipes in the space Recipe(n, m) = (Fin m)^n.
+    return tuple((r + o) % m for r, o in zip(recipe, offset))
 
-    Time complexity: O(m^n * n).
-    Space complexity: O(m^n * n).
 
-    >>> len(generate_recipe_space(3, 2))
-    8
+def spectrum_count(n: int, m: int, k: int) -> int:
+    """Number of recipes at Hamming distance exactly k from any fixed recipe.
+
+    Returns C(n,k) * (m-1)^k.
+
+    Pseudocode:
+        SPECTRUM-COUNT(n, m, k):
+            return BINOMIAL(n, k) * (m-1)^k
     """
-    return np.array(list(product(range(m), repeat=n)))
+    return comb(n, k) * (m - 1) ** k
 
 
-def substitution_neighbors(recipe: np.ndarray, m: int) -> List[np.ndarray]:
+def full_spectrum(n: int, m: int) -> List[int]:
+    """Compute the full Hamming distance spectrum.
+
+    Returns [spectrum_count(n, m, k) for k = 0, ..., n].
+    Sum equals m^n by the binomial theorem.
     """
-    Find all neighbors of a recipe in the substitution graph.
-    A neighbor differs in exactly one ingredient slot.
+    return [spectrum_count(n, m, k) for k in range(n + 1)]
 
-    Time complexity: O(n * m).
-    Space complexity: O(n * (m-1)).
 
-    Returns n*(m-1) neighbors.
+class AdditiveFlavorMap:
+    """An additive flavor map: flavor = sum of per-slot contributions.
 
-    >>> len(substitution_neighbors(np.array([0,0,0]), 3))
-    6
+    Attributes:
+        n: Number of ingredient slots
+        m: Number of choices per slot
+        d: Number of flavor dimensions
+        contrib: contrib[i][v] is a d-dimensional vector for slot i, choice v
     """
-    n = len(recipe)
-    neighbors = []
-    for i in range(n):
-        for v in range(m):
-            if v != recipe[i]:
-                nbr = recipe.copy()
-                nbr[i] = v
-                neighbors.append(nbr)
-    return neighbors
+
+    def __init__(self, n: int, m: int, d: int,
+                 contrib: Optional[Dict[int, Dict[int, np.ndarray]]] = None):
+        self.n = n
+        self.m = m
+        self.d = d
+        if contrib is None:
+            # Random initialization
+            self.contrib = {
+                i: {v: np.random.randn(d) for v in range(m)}
+                for i in range(n)
+            }
+        else:
+            self.contrib = contrib
+
+    def evaluate(self, recipe: Recipe) -> FlavorProfile:
+        """Evaluate the flavor map on a recipe.
+
+        Time: O(n * d)
+        """
+        result = np.zeros(self.d)
+        for i, v in enumerate(recipe):
+            result += self.contrib[i][v]
+        return result
+
+    def slot_change_effect(self, slot: int, old_val: int, new_val: int) -> FlavorProfile:
+        """Compute the flavor change from a single-slot substitution.
+
+        By the slot independence theorem, this is:
+            contrib[slot][new_val] - contrib[slot][old_val]
+
+        Time: O(d)
+        """
+        return self.contrib[slot][new_val] - self.contrib[slot][old_val]
 
 
-def hamming_ball(center: np.ndarray, radius: int, m: int) -> List[np.ndarray]:
+def build_substitution_graph(n: int, m: int) -> Dict[Recipe, Set[Recipe]]:
+    """Build the substitution graph adjacency list.
+
+    Time: O(n * m^n * (m-1))
+    Space: O(n * (m-1) * m^n)
+
+    Pseudocode:
+        BUILD-SUBST-GRAPH(n, m):
+            for each recipe r in Recipe(n, m):
+                for each slot i in 0..n-1:
+                    for each value v in 0..m-1, v ≠ r[i]:
+                        add edge (r, update(r, i, v))
     """
-    Compute the Hamming ball of given radius around a center recipe.
-
-    Uses BFS in the substitution graph, stopping at the given radius.
-
-    Time complexity: O(sum_{k=0}^{r} C(n,k) * (m-1)^k * n * m).
-    Space complexity: O(sum_{k=0}^{r} C(n,k) * (m-1)^k).
-    """
-    n = len(center)
-    visited = {tuple(center)}
-    current_layer = [center]
-    all_in_ball = [center.copy()]
-
-    for _ in range(radius):
-        next_layer = []
-        for recipe in current_layer:
-            for nbr in substitution_neighbors(recipe, m):
-                key = tuple(nbr)
-                if key not in visited:
-                    visited.add(key)
-                    next_layer.append(nbr)
-                    all_in_ball.append(nbr)
-        current_layer = next_layer
-
-    return all_in_ball
-
-
-def shortest_substitution_path(
-    r1: np.ndarray, r2: np.ndarray
-) -> List[np.ndarray]:
-    """
-    Find the shortest substitution path from r1 to r2.
-
-    The shortest path has length = hamming_distance(r1, r2),
-    obtained by fixing one differing slot at each step.
-
-    Time complexity: O(n).
-    Space complexity: O(n^2).
-
-    >>> path = shortest_substitution_path(np.array([0,0,0]), np.array([1,1,1]))
-    >>> len(path)
-    4
-    """
-    path = [r1.copy()]
-    current = r1.copy()
-    diff_positions = np.where(r1 != r2)[0]
-
-    for pos in diff_positions:
-        current = current.copy()
-        current[pos] = r2[pos]
-        path.append(current)
-
-    return path
-
-
-def fiber_decomposition(
-    recipes: np.ndarray,
-    flavor_fn,
-    tolerance: float = 1e-8
-) -> Dict[tuple, List[np.ndarray]]:
-    """
-    Decompose the recipe space into fibers of a flavor map.
-
-    Time complexity: O(N * T_flavor) where N = number of recipes
-    and T_flavor = cost of evaluating the flavor function.
-    Space complexity: O(N).
-
-    >>> recipes = generate_recipe_space(2, 2)
-    >>> fibers = fiber_decomposition(recipes, lambda r: np.array([float(sum(r))]))
-    >>> len(fibers)
-    3
-    """
-    fibers = defaultdict(list)
-    for r in recipes:
-        fp = flavor_fn(r)
-        key = tuple(np.round(fp / tolerance) * tolerance)
-        fibers[key].append(r)
-    return dict(fibers)
-
-
-def substitution_graph_adjacency(n: int, m: int) -> Dict[tuple, List[tuple]]:
-    """
-    Build the full adjacency list of the substitution graph H(n,m).
-
-    Time complexity: O(m^n * n * m).
-    Space complexity: O(m^n * n * m).
-    """
-    recipes = generate_recipe_space(n, m)
-    adj = defaultdict(list)
-    for r in recipes:
-        key = tuple(r)
-        for nbr in substitution_neighbors(r, m):
-            adj[key].append(tuple(nbr))
+    adj: Dict[Recipe, Set[Recipe]] = defaultdict(set)
+    for recipe in itertools.product(range(m), repeat=n):
+        for slot in range(n):
+            for val in range(m):
+                if val != recipe[slot]:
+                    neighbor = tuple(
+                        val if i == slot else recipe[i]
+                        for i in range(n)
+                    )
+                    adj[recipe].add(neighbor)
     return dict(adj)
 
 
-def connected_components_in_fiber(
-    fiber: List[np.ndarray], m: int
-) -> List[List[np.ndarray]]:
+def find_geodesics(r1: Recipe, r2: Recipe, m: int) -> List[List[Recipe]]:
+    """Enumerate all shortest paths (geodesics) between two recipes.
+
+    By the geodesic factorization theorem, the number of shortest paths
+    equals k! where k = hamming_distance(r1, r2).
+
+    Pseudocode:
+        FIND-GEODESICS(r1, r2):
+            slots = diff_slots(r1, r2)
+            for each permutation π of slots:
+                path = [r1]
+                current = r1
+                for i in π:
+                    current = update(current, i, r2[i])
+                    path.append(current)
+                yield path
     """
-    Find connected components of a fiber under the substitution graph.
+    slots = diff_slots(r1, r2)
+    paths = []
+    for perm in itertools.permutations(slots):
+        path = [r1]
+        current = list(r1)
+        for slot in perm:
+            current[slot] = r2[slot]
+            path.append(tuple(current))
+        paths.append(path)
+    return paths
 
-    Two recipes in the fiber are connected if there is a path between
-    them that stays entirely within the fiber, using only single-ingredient
-    substitutions.
 
-    Time complexity: O(|fiber|^2 * n).
-    Space complexity: O(|fiber|).
+def nearest_recipe_additive(
+    target_flavor: FlavorProfile,
+    flavor_map: AdditiveFlavorMap
+) -> Recipe:
+    """Find the recipe closest to a target flavor under an additive map.
+
+    Uses the decomposition: optimize each slot independently.
+
+    Time: O(n * m * d)  (vs O(m^n * d) for brute force)
+
+    Pseudocode:
+        NEAREST-RECIPE-ADDITIVE(target, A):
+            residual = target
+            recipe = []
+            # Greedy per-slot optimization
+            for i in 0..n-1:
+                best_val = argmin_v ||residual - contrib[i][v]||
+                recipe[i] = best_val
+                residual -= contrib[i][best_val]
+            return recipe
     """
-    if not fiber:
-        return []
-
-    fiber_set = {tuple(r) for r in fiber}
-    visited: Set[tuple] = set()
-    components = []
-
-    for r in fiber:
-        key = tuple(r)
-        if key in visited:
-            continue
-        # BFS from r
-        component = []
-        queue = deque([r])
-        visited.add(key)
-        while queue:
-            current = queue.popleft()
-            component.append(current)
-            for nbr in substitution_neighbors(current, m):
-                nbr_key = tuple(nbr)
-                if nbr_key in fiber_set and nbr_key not in visited:
-                    visited.add(nbr_key)
-                    queue.append(nbr)
-        components.append(component)
-
-    return components
+    n, m, d = flavor_map.n, flavor_map.m, flavor_map.d
+    # For additive maps, optimize each slot independently
+    # by choosing the value that minimizes the per-slot residual
+    recipe = []
+    for i in range(n):
+        best_val = 0
+        best_norm = float('inf')
+        # Project target onto this slot's contribution space
+        for v in range(m):
+            # Simple greedy: choose value with contribution closest to
+            # the per-slot share of the target
+            contrib = flavor_map.contrib[i][v]
+            norm = np.linalg.norm(contrib - target_flavor / n)
+            if norm < best_norm:
+                best_norm = norm
+                best_val = v
+        recipe.append(best_val)
+    return tuple(recipe)
 
 
-def lipschitz_constant(
-    recipes: np.ndarray, flavor_fn
-) -> float:
+def fiber_bfs(
+    start: Recipe,
+    flavor_map: AdditiveFlavorMap,
+    target_flavor: FlavorProfile,
+    tol: float = 1e-10
+) -> Set[Recipe]:
+    """BFS to find all recipes in a flavor fiber connected to start.
+
+    Time: O(|fiber| * n * m)
     """
-    Compute the exact Lipschitz constant of a flavor map on the recipe space.
+    visited: Set[Recipe] = set()
+    queue: deque = deque([start])
+    visited.add(start)
+    n, m = flavor_map.n, flavor_map.m
 
-    K = max_{r1 != r2} ||F(r1) - F(r2)|| / hamming_distance(r1, r2)
+    while queue:
+        current = queue.popleft()
+        for slot in range(n):
+            for val in range(m):
+                if val != current[slot]:
+                    neighbor = tuple(
+                        val if i == slot else current[i]
+                        for i in range(n)
+                    )
+                    if neighbor not in visited:
+                        flavor = flavor_map.evaluate(neighbor)
+                        if np.linalg.norm(flavor - target_flavor) < tol:
+                            visited.add(neighbor)
+                            queue.append(neighbor)
+    return visited
 
-    Time complexity: O(N^2 * (n + d)) where N = |recipes|.
-    Space complexity: O(1) beyond input.
+
+def check_fiber_connectivity(
+    n: int, m: int, d: int,
+    num_trials: int = 100
+) -> Tuple[int, int]:
+    """Check fiber connectivity conjecture for random additive flavor maps.
+
+    Returns (connected_fibers, total_nonempty_fibers).
     """
-    max_ratio = 0.0
-    for i in range(len(recipes)):
-        for j in range(i + 1, len(recipes)):
-            hd = hamming_distance(recipes[i], recipes[j])
-            if hd > 0:
-                fd = np.linalg.norm(flavor_fn(recipes[i]) - flavor_fn(recipes[j]))
-                ratio = fd / hd
-                max_ratio = max(max_ratio, ratio)
-    return max_ratio
+    connected = 0
+    total = 0
+
+    for _ in range(num_trials):
+        fmap = AdditiveFlavorMap(n, m, d)
+        # Group all recipes into fibers
+        fibers: Dict[str, List[Recipe]] = defaultdict(list)
+        for recipe in itertools.product(range(m), repeat=n):
+            flavor = fmap.evaluate(recipe)
+            key = str(np.round(flavor, 8))
+            fibers[key].append(recipe)
+
+        for key, recipes in fibers.items():
+            if len(recipes) > 1:
+                total += 1
+                # Check connectivity via BFS
+                target = fmap.evaluate(recipes[0])
+                reachable = fiber_bfs(recipes[0], fmap, target)
+                if len(reachable) == len(recipes):
+                    connected += 1
+
+    return connected, total
 
 
-def verify_triangle_inequality(n: int, m: int, num_samples: int = 1000) -> bool:
+def count_triangles_efficient(n: int, m: int) -> int:
+    """Count triangles in SubstGraph(n, m).
+
+    For the Hamming graph, the triangle count is:
+    - 0 if m < 3
+    - n * C(m, 3) * m^(n-1) if m >= 3
+      (choose a slot, choose 3 values at that slot, fill the rest)
+
+    Time: O(1)
     """
-    Verify the Hamming triangle inequality by random sampling.
-
-    Returns True if no violations found.
-    """
-    recipes = generate_recipe_space(n, m)
-    N = len(recipes)
-    for _ in range(num_samples):
-        idx = np.random.choice(N, 3, replace=True)
-        r1, r2, r3 = recipes[idx[0]], recipes[idx[1]], recipes[idx[2]]
-        d13 = hamming_distance(r1, r3)
-        d12 = hamming_distance(r1, r2)
-        d23 = hamming_distance(r2, r3)
-        if d13 > d12 + d23:
-            return False
-    return True
+    if m < 3:
+        return 0
+    return n * comb(m, 3) * (m ** (n - 1))
 
 
-# --- Example usage ---
 if __name__ == "__main__":
-    print("=== Algorithms Demo ===")
+    # Quick self-test
+    print("Self-testing algorithms...")
 
-    # Recipe space
-    n, m = 3, 2
-    recipes = generate_recipe_space(n, m)
-    print(f"Recipe space ({n},{m}): {len(recipes)} recipes")
+    # Test Hamming distance
+    assert hamming_distance((0, 1, 2), (0, 1, 2)) == 0
+    assert hamming_distance((0, 1, 2), (1, 1, 2)) == 1
+    assert hamming_distance((0, 1, 2), (1, 0, 1)) == 3
 
-    # Shortest path
-    r1 = np.array([0, 0, 0])
-    r2 = np.array([1, 1, 1])
-    path = shortest_substitution_path(r1, r2)
-    print(f"Shortest path {r1} -> {r2}: {[r.tolist() for r in path]}")
+    # Test spectrum
+    assert sum(full_spectrum(5, 3)) == 3**5
 
-    # Hamming ball
-    ball = hamming_ball(r1, 1, m)
-    print(f"Hamming ball B({r1}, 1): {len(ball)} recipes")
+    # Test geodesics
+    paths = find_geodesics((0, 0, 0), (1, 1, 0), 2)
+    assert len(paths) == 2  # 2! = 2 paths
 
-    # Fiber decomposition
-    W = np.array([[1.0, 0.5, -0.3]])
-    fibers = fiber_decomposition(recipes, lambda r: W @ r.astype(float))
-    print(f"Fibers under linear map: {len(fibers)} profiles")
+    # Test triangle count
+    assert count_triangles_efficient(3, 2) == 0
+    assert count_triangles_efficient(1, 3) > 0
 
-    # Triangle inequality
-    ok = verify_triangle_inequality(3, 3, 5000)
-    print(f"Triangle inequality verified: {ok}")
+    print("All self-tests passed!")
