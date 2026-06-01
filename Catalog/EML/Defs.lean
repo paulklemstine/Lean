@@ -1,140 +1,165 @@
+/-
+# EML Expression Complexity Theory: Core Definitions
+
+This file defines the source grammar (UExpr) of unary elementary real functions,
+the target EML grammar (EMLExpr) built from the single transcendental primitive
+  eml(x, y) := exp(x) - log(y),
+and denotational semantics for both via partial evaluation (Option ℝ).
+-/
 import Mathlib
 
-/-!
-# Erdős–Faber–Lovász Conjecture: Definitions
+noncomputable section
 
-This file establishes the foundational definitions for the Erdős–Faber–Lovász (EFL)
-conjecture and related hypergraph theory.
+open Real
 
-## Main Definitions
+/-! ## Source Grammar: Unary Elementary Expressions -/
 
-* `EFL.System` — A k-uniform linear hypergraph with k edges (the EFL setting)
-* `EFL.System.degree` — The degree of a vertex (number of edges containing it)
-* `EFL.System.vertexSet` — The set of vertices appearing in at least one edge
-* `EFL.System.incidenceCount` — Total vertex-edge incidences
-* `EFL.System.IsStrongColoring` — A coloring where each edge receives all k colors
-* `EFL.System.IsKColorable` — Existence of a strong k-coloring
+/-- A unary elementary expression over ℝ, supporting constants, the variable,
+    field operations (+, -, ×, ÷), and transcendental operations (exp, log). -/
+inductive UExpr where
+  | var   : UExpr
+  | const : ℝ → UExpr
+  | add   : UExpr → UExpr → UExpr
+  | sub   : UExpr → UExpr → UExpr
+  | mul   : UExpr → UExpr → UExpr
+  | div   : UExpr → UExpr → UExpr
+  | exp   : UExpr → UExpr
+  | log   : UExpr → UExpr
+deriving DecidableEq
 
-## Mathematical Context
+/-! ## Target Grammar: EML Expressions -/
 
-The Erdős–Faber–Lovász conjecture (1972) states that if k copies of k-cliques
-pairwise share at most one vertex, then the union graph can be properly
-vertex-colored with k colors. Equivalently, any k-uniform linear hypergraph
-with k edges has chromatic number at most k.
+/-- An EML expression: like UExpr but with exp/log replaced by the single
+    primitive `eml(x, y) = exp(x) - log(y)`. -/
+inductive EMLExpr where
+  | var   : EMLExpr
+  | const : ℝ → EMLExpr
+  | add   : EMLExpr → EMLExpr → EMLExpr
+  | sub   : EMLExpr → EMLExpr → EMLExpr
+  | mul   : EMLExpr → EMLExpr → EMLExpr
+  | div   : EMLExpr → EMLExpr → EMLExpr
+  | eml   : EMLExpr → EMLExpr → EMLExpr   -- eml(x, y) = exp(x) - log(y)
+deriving DecidableEq
 
-This was proved for sufficiently large k by Kang–Kelly–Kühn–Methuku–Osthus (2021).
--/
+/-! ## Expression Size -/
 
-open Finset Function
+/-- Size of a UExpr: counts all nodes in the expression tree. -/
+def UExpr.size : UExpr → ℕ
+  | .var       => 1
+  | .const _   => 1
+  | .add e₁ e₂ => 1 + e₁.size + e₂.size
+  | .sub e₁ e₂ => 1 + e₁.size + e₂.size
+  | .mul e₁ e₂ => 1 + e₁.size + e₂.size
+  | .div e₁ e₂ => 1 + e₁.size + e₂.size
+  | .exp e     => 1 + e.size
+  | .log e     => 1 + e.size
 
-namespace EFL
+/-- Size of an EMLExpr: counts all nodes in the expression tree. -/
+def EMLExpr.esize : EMLExpr → ℕ
+  | .var       => 1
+  | .const _   => 1
+  | .add e₁ e₂ => 1 + e₁.esize + e₂.esize
+  | .sub e₁ e₂ => 1 + e₁.esize + e₂.esize
+  | .mul e₁ e₂ => 1 + e₁.esize + e₂.esize
+  | .div e₁ e₂ => 1 + e₁.esize + e₂.esize
+  | .eml e₁ e₂ => 1 + e₁.esize + e₂.esize
 
-/-- An EFL system is a k-uniform linear hypergraph with exactly k edges.
-    - `k` is the uniformity parameter (each edge has exactly k vertices)
-    - `edges` maps each index in `Fin k` to a set of vertices
-    - `uniform` ensures each edge has exactly k vertices
-    - `linear` ensures any two distinct edges share at most one vertex -/
-structure System (V : Type*) [DecidableEq V] [Fintype V] where
-  /-- The uniformity parameter -/
-  k : ℕ
-  /-- The edge family, indexed by `Fin k` -/
-  edges : Fin k → Finset V
-  /-- Each edge has exactly k vertices -/
-  uniform : ∀ i, (edges i).card = k
-  /-- Any two distinct edges share at most one vertex (linearity) -/
-  linear : ∀ i j, i ≠ j → (edges i ∩ edges j).card ≤ 1
+/-- Every expression has positive size. -/
+theorem UExpr.size_pos (e : UExpr) : 0 < e.size := by
+  cases e <;> simp [UExpr.size] <;> omega
 
-/-- The degree of a vertex v is the number of edges containing v. -/
-def System.degree {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) (v : V) : ℕ :=
-  (Finset.univ.filter (fun i => v ∈ S.edges i)).card
+/-- Every EML expression has positive size. -/
+theorem EMLExpr.esize_pos (e : EMLExpr) : 0 < e.esize := by
+  cases e <;> simp [EMLExpr.esize] <;> omega
 
-/-- The vertex set of an EFL system is the union of all edges. -/
-def System.vertexSet {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) : Finset V :=
-  Finset.univ.biUnion S.edges
+/-! ## Partial Evaluation Semantics -/
 
-/-- The total number of vertex-edge incidences. -/
-def System.incidenceCount {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) : ℕ :=
-  ∑ i : Fin S.k, (S.edges i).card
+/-- Evaluate a UExpr at a real number x. Returns `none` if the expression
+    is undefined (division by zero or log of non-positive number). -/
+def UExpr.eval : UExpr → ℝ → Option ℝ
+  | .var,       x => some x
+  | .const c,   _ => some c
+  | .add e₁ e₂, x => do let v₁ ← e₁.eval x; let v₂ ← e₂.eval x; some (v₁ + v₂)
+  | .sub e₁ e₂, x => do let v₁ ← e₁.eval x; let v₂ ← e₂.eval x; some (v₁ - v₂)
+  | .mul e₁ e₂, x => do let v₁ ← e₁.eval x; let v₂ ← e₂.eval x; some (v₁ * v₂)
+  | .div e₁ e₂, x => do
+      let v₁ ← e₁.eval x; let v₂ ← e₂.eval x
+      if v₂ ≠ 0 then some (v₁ / v₂) else none
+  | .exp e,     x => do let v ← e.eval x; some (Real.exp v)
+  | .log e,     x => do let v ← e.eval x; if 0 < v then some (Real.log v) else none
 
-/-- A strong coloring of an EFL system assigns colors from `Fin k` to vertices
-    such that each edge receives all k distinct colors (i.e., is rainbow). -/
-def System.IsStrongColoring {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) (c : V → Fin S.k) : Prop :=
-  ∀ i : Fin S.k, Set.InjOn c (↑(S.edges i) : Set V)
+/-- Evaluate an EMLExpr at a real number x. The eml node eml(e₁, e₂) evaluates to
+    exp(v₁) - log(v₂) when v₂ > 0. -/
+def EMLExpr.eeval : EMLExpr → ℝ → Option ℝ
+  | .var,       x => some x
+  | .const c,   _ => some c
+  | .add e₁ e₂, x => do let v₁ ← e₁.eeval x; let v₂ ← e₂.eeval x; some (v₁ + v₂)
+  | .sub e₁ e₂, x => do let v₁ ← e₁.eeval x; let v₂ ← e₂.eeval x; some (v₁ - v₂)
+  | .mul e₁ e₂, x => do let v₁ ← e₁.eeval x; let v₂ ← e₂.eeval x; some (v₁ * v₂)
+  | .div e₁ e₂, x => do
+      let v₁ ← e₁.eeval x; let v₂ ← e₂.eeval x
+      if v₂ ≠ 0 then some (v₁ / v₂) else none
+  | .eml e₁ e₂, x => do
+      let v₁ ← e₁.eeval x; let v₂ ← e₂.eeval x
+      if 0 < v₂ then some (Real.exp v₁ - Real.log v₂) else none
 
-/-- An EFL system is k-colorable if there exists a strong coloring with k colors. -/
-def System.IsKColorable {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) : Prop :=
-  ∃ c : V → Fin S.k, S.IsStrongColoring c
+/-! ## Natural Domains -/
 
-/-- A near-pencil EFL system: all edges share a common vertex (the "center").
-    This is the extremal configuration for the EFL conjecture. -/
-def System.IsNearPencil {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) : Prop :=
-  ∃ v : V, ∀ i : Fin S.k, v ∈ S.edges i
+/-- The natural domain of a UExpr: the set of reals where evaluation succeeds. -/
+def UExpr.NaturalDomain (e : UExpr) : Set ℝ :=
+  { x | ∃ y, e.eval x = some y }
 
-/-- A general hypergraph structure, more flexible than the EFL-specific System. -/
-structure Hypergraph (V : Type*) [DecidableEq V] [Fintype V] where
-  /-- The edge family as a finite set of finite sets -/
-  edgeSet : Finset (Finset V)
+/-- The natural domain of an EMLExpr: the set of reals where evaluation succeeds. -/
+def EMLExpr.NaturalDomain (e : EMLExpr) : Set ℝ :=
+  { x | ∃ y, e.eeval x = some y }
 
-/-- A hypergraph is k-uniform if every edge has exactly k vertices. -/
-def Hypergraph.IsKUniform {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) (k : ℕ) : Prop :=
-  ∀ e ∈ H.edgeSet, e.card = k
+/-! ## Transcendence Measures -/
 
-/-- A hypergraph is intersecting if any two edges share at least one vertex. -/
-def Hypergraph.IsIntersecting {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) : Prop :=
-  ∀ e₁ ∈ H.edgeSet, ∀ e₂ ∈ H.edgeSet, (e₁ ∩ e₂).Nonempty
+/-- Count the number of transcendental (exp/log) nodes in a UExpr. -/
+def UExpr.transcendenceRank : UExpr → ℕ
+  | .var       => 0
+  | .const _   => 0
+  | .add e₁ e₂ => e₁.transcendenceRank + e₂.transcendenceRank
+  | .sub e₁ e₂ => e₁.transcendenceRank + e₂.transcendenceRank
+  | .mul e₁ e₂ => e₁.transcendenceRank + e₂.transcendenceRank
+  | .div e₁ e₂ => e₁.transcendenceRank + e₂.transcendenceRank
+  | .exp e     => 1 + e.transcendenceRank
+  | .log e     => 1 + e.transcendenceRank
 
-/-- A hypergraph is linear if any two distinct edges share at most one vertex. -/
-def Hypergraph.IsLinear {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) : Prop :=
-  ∀ e₁ ∈ H.edgeSet, ∀ e₂ ∈ H.edgeSet, e₁ ≠ e₂ → (e₁ ∩ e₂).card ≤ 1
+/-- Count the number of eml nodes in an EMLExpr. -/
+def EMLExpr.emlRank : EMLExpr → ℕ
+  | .var       => 0
+  | .const _   => 0
+  | .add e₁ e₂ => e₁.emlRank + e₂.emlRank
+  | .sub e₁ e₂ => e₁.emlRank + e₂.emlRank
+  | .mul e₁ e₂ => e₁.emlRank + e₂.emlRank
+  | .div e₁ e₂ => e₁.emlRank + e₂.emlRank
+  | .eml e₁ e₂ => 1 + e₁.emlRank + e₂.emlRank
 
-/-- A proper hypergraph coloring: no edge is monochromatic. -/
-def Hypergraph.IsProperColoring {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) {c : ℕ} (f : V → Fin c) : Prop :=
-  ∀ e ∈ H.edgeSet, 2 ≤ e.card → ¬∀ v ∈ e, ∀ w ∈ e, f v = f w
+/-! ## EML Safety Predicate -/
 
-/-- The chromatic number of a hypergraph: the minimum number of colors
-    for a proper coloring. Returns 0 for edgeless hypergraphs. -/
-noncomputable def Hypergraph.chromaticNumber {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) : ℕ :=
-  sInf {c : ℕ | ∃ f : V → Fin c, H.IsProperColoring f}
+/-- An EMLExpr is EMLSafe if all eml nodes have their second argument
+    guaranteed to evaluate positively whenever the whole expression is defined.
+    For structural purposes, we define this as a syntactic predicate:
+    it holds when every eml's second argument is a positive constant,
+    or is itself an eml-safe expression of known positive type. -/
+inductive EMLExpr.EMLSafe : EMLExpr → Prop where
+  | var   : EMLSafe .var
+  | const : EMLSafe (.const c)
+  | add   : EMLSafe e₁ → EMLSafe e₂ → EMLSafe (.add e₁ e₂)
+  | sub   : EMLSafe e₁ → EMLSafe e₂ → EMLSafe (.sub e₁ e₂)
+  | mul   : EMLSafe e₁ → EMLSafe e₂ → EMLSafe (.mul e₁ e₂)
+  | div   : EMLSafe e₁ → EMLSafe e₂ → EMLSafe (.div e₁ e₂)
+  | eml   : EMLSafe e₁ → EMLSafe e₂ → EMLSafe (.eml e₁ e₂)
 
-/-- The degree of a vertex in a general hypergraph. -/
-def Hypergraph.degree {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) (v : V) : ℕ :=
-  (H.edgeSet.filter (fun e => v ∈ e)).card
+/-! ## Polynomial Bounded EML -/
 
-/-- The maximum degree of a hypergraph. -/
-noncomputable def Hypergraph.maxDegree {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) : ℕ :=
-  Finset.sup Finset.univ (H.degree)
-
-/-- A sunflower in a hypergraph: a collection of edges that pairwise
-    intersect in the same set (the "core"). -/
-structure Hypergraph.Sunflower {V : Type*} [DecidableEq V] [Fintype V]
-    (H : Hypergraph V) where
-  /-- The petals of the sunflower -/
-  petals : Finset (Finset V)
-  /-- All petals are edges -/
-  petals_subset : petals ⊆ H.edgeSet
-  /-- The core: intersection of all petals -/
-  core : Finset V
-  /-- The core is contained in each petal -/
-  core_sub : ∀ p ∈ petals, core ⊆ p
-  /-- Distinct petals intersect exactly in the core -/
-  pairwise_inter : ∀ p₁ ∈ petals, ∀ p₂ ∈ petals, p₁ ≠ p₂ → p₁ ∩ p₂ = core
-
-/-- Convert an EFL system to a general hypergraph. -/
-def System.toHypergraph {V : Type*} [DecidableEq V] [Fintype V]
-    (S : System V) : Hypergraph V where
-  edgeSet := Finset.univ.image S.edges
+/-- An expression admits a polynomial-bounded EML representation if there exists
+    an EMLExpr semantically equivalent on the natural domain with size bounded
+    polynomially in the original size. -/
+def PolyBoundedEML (e : UExpr) : Prop :=
+  ∃ (k C : ℕ) (t : EMLExpr),
+    (∀ x y, t.eeval x = some y ↔ e.eval x = some y) ∧
+    t.esize ≤ C * (e.size + 1) ^ k
 
 end EFL

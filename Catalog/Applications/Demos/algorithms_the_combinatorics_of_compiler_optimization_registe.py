@@ -1,338 +1,281 @@
+#!/usr/bin/env python3
 """
-Register Allocation via Graph Coloring: Core Algorithms
+algorithms.py — Register Allocation Algorithms with Type Hints
 
-This module implements the key algorithms for register allocation modeled
-as graph coloring problems, including greedy coloring, chordal graph recognition,
-perfect elimination ordering, and spill cost optimization.
-
-Type-hinted implementations corresponding to the formally verified theorems
-in Algebra/RegisterAllocation.lean.
+Implements the key algorithms from the research:
+1. Interval graph construction
+2. PEO construction (by right endpoint)
+3. Greedy coloring on PEO
+4. Register pressure computation
+5. Spill set selection
 """
 
-from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional
+from typing import List, Tuple, Set, Optional, Dict
+from dataclasses import dataclass
 
 
 @dataclass
-class InterferenceGraph:
-    """
-    An interference graph for register allocation.
-    Variables are vertices (0..n-1), edges connect simultaneously-live variables.
-    """
-    n: int  # number of variables
-    adj: list[list[bool]]  # adjacency matrix
+class IntervalGraph:
+    """An interval graph representing variable interference."""
+    n: int
+    intervals: List[Tuple[int, int]]
+    adj: List[List[bool]]
 
-    def __post_init__(self) -> None:
-        assert len(self.adj) == self.n
-        for row in self.adj:
-            assert len(row) == self.n
-        for i in range(self.n):
-            assert not self.adj[i][i], "No self-loops"
-            for j in range(self.n):
-                assert self.adj[i][j] == self.adj[j][i], "Symmetric"
+    @classmethod
+    def from_intervals(cls, intervals: List[Tuple[int, int]]) -> 'IntervalGraph':
+        """Build an interval graph from liveness intervals.
 
-    @staticmethod
-    def from_edges(n: int, edges: list[tuple[int, int]]) -> InterferenceGraph:
-        """Construct from edge list."""
+        Two variables interfere iff their intervals overlap.
+        Time complexity: O(n²)
+        """
+        n = len(intervals)
         adj = [[False] * n for _ in range(n)]
-        for u, v in edges:
-            adj[u][v] = True
-            adj[v][u] = True
-        return InterferenceGraph(n=n, adj=adj)
-
-    def neighbors(self, v: int) -> list[int]:
-        """Return sorted list of neighbors of vertex v."""
-        return [u for u in range(self.n) if self.adj[v][u]]
-
-    def degree(self, v: int) -> int:
-        """Degree of vertex v."""
-        return sum(1 for u in range(self.n) if self.adj[v][u])
-
-    def max_degree(self) -> int:
-        """Maximum degree Δ(G)."""
-        if self.n == 0:
-            return 0
-        return max(self.degree(v) for v in range(self.n))
-
-    def is_clique(self, vertices: list[int]) -> bool:
-        """Check if a set of vertices forms a clique."""
-        for i, u in enumerate(vertices):
-            for v in vertices[i + 1:]:
-                if not self.adj[u][v]:
-                    return False
-        return True
-
-    def clique_number(self) -> int:
-        """Compute the clique number ω(G) via brute force (exponential)."""
-        from itertools import combinations
-        omega = 0
-        for k in range(1, self.n + 1):
-            found = False
-            for subset in combinations(range(self.n), k):
-                if self.is_clique(list(subset)):
-                    omega = k
-                    found = True
-                    break
-            if not found:
-                break
-        return omega
-
-    def is_simplicial(self, v: int) -> bool:
-        """Check if vertex v is simplicial (neighbors form a clique)."""
-        nbrs = self.neighbors(v)
-        return self.is_clique(nbrs)
+        for i in range(n):
+            for j in range(i + 1, n):
+                a1, b1 = intervals[i]
+                a2, b2 = intervals[j]
+                if a1 <= b2 and a2 <= b1:
+                    adj[i][j] = True
+                    adj[j][i] = True
+        return cls(n=n, intervals=intervals, adj=adj)
 
 
 @dataclass
-class ColoringResult:
-    """Result of a graph coloring algorithm."""
-    colors: list[int]  # color assignment for each vertex
-    num_colors: int  # number of distinct colors used
-    is_valid: bool  # whether the coloring is proper
+class PerfectEliminationOrdering:
+    """A perfect elimination ordering for a chordal graph."""
+    order: List[int]
+    positions: List[int]  # position[v] = index of v in order
+
+    @classmethod
+    def from_intervals(cls, intervals: List[Tuple[int, int]]) -> 'PerfectEliminationOrdering':
+        """Construct PEO by sorting vertices by right endpoint.
+
+        For interval graphs, ordering by right endpoint always gives a valid PEO.
+        Time complexity: O(n log n)
+        """
+        indexed = sorted(enumerate(intervals), key=lambda x: x[1][1])
+        order = [idx for idx, _ in indexed]
+        positions = [0] * len(intervals)
+        for pos, v in enumerate(order):
+            positions[v] = pos
+        return cls(order=order, positions=positions)
 
 
-def greedy_coloring(G: InterferenceGraph, order: Optional[list[int]] = None) -> ColoringResult:
+@dataclass
+class RegisterAllocation:
+    """Result of register allocation."""
+    coloring: List[int]       # coloring[v] = register assigned to v (-1 if spilled)
+    num_colors: int           # number of registers used
+    spilled: Set[int]         # set of spilled variable indices
+    clique_number: int        # ω(G) = minimum registers needed
+    max_degree: int           # Δ(G) = maximum degree
+    pressure_profile: List[int]  # register pressure at each PEO position
+
+
+def compute_register_pressure(
+    graph: IntervalGraph,
+    peo: PerfectEliminationOrdering
+) -> List[int]:
+    """Compute register pressure at each PEO position.
+
+    Pressure P(i) = |{later neighbors of σ(i)}| + 1
+    The maximum pressure equals the clique number.
+    Time complexity: O(n + m)
     """
-    Greedy graph coloring algorithm.
+    n = graph.n
+    pressure = []
+    for idx in range(n):
+        v = peo.order[idx]
+        later_nbrs = sum(
+            1 for j in range(idx + 1, n)
+            if graph.adj[v][peo.order[j]]
+        )
+        pressure.append(later_nbrs + 1)
+    return pressure
 
-    Processes vertices in the given order (default: 0, 1, ..., n-1).
-    Assigns each vertex the smallest color not used by its already-colored neighbors.
 
-    Theorem (verified in Lean): This uses at most Δ(G) + 1 colors.
+def greedy_color_on_peo(
+    graph: IntervalGraph,
+    peo: PerfectEliminationOrdering,
+    k: int
+) -> List[int]:
+    """Greedy coloring using PEO with k available colors.
 
-    Args:
-        G: The interference graph
-        order: Vertex processing order (default: natural order)
+    Process vertices in PEO order, assigning smallest available color.
+    For chordal graphs, this uses exactly ω(G) colors.
+    Time complexity: O(n + m)
 
-    Returns:
-        ColoringResult with the proper coloring
+    Returns: coloring array, or [-1]*n if k is insufficient.
     """
-    if order is None:
-        order = list(range(G.n))
+    n = graph.n
+    color = [-1] * n
 
-    colors = [-1] * G.n
+    # Process in REVERSE PEO order for optimal chordal coloring
+    for idx in range(n - 1, -1, -1):
+        v = peo.order[idx]
+        used: Set[int] = set()
+        for j in range(n):
+            if graph.adj[v][j] and color[j] >= 0:
+                used.add(color[j])
 
-    for v in order:
-        # Colors used by already-colored neighbors
-        used = set()
-        for u in G.neighbors(v):
-            if colors[u] >= 0:
-                used.add(colors[u])
-
-        # Assign smallest available color
+        # Find smallest available color < k
         c = 0
-        while c in used:
+        while c in used and c < k:
             c += 1
-        colors[v] = c
 
-    num_colors = max(colors) + 1 if G.n > 0 else 0
-    is_valid = all(
-        colors[u] != colors[v]
-        for u in range(G.n)
-        for v in G.neighbors(u)
-    )
+        if c >= k:
+            return [-1] * n  # insufficient colors
+        color[v] = c
 
-    return ColoringResult(colors=colors, num_colors=num_colors, is_valid=is_valid)
+    return color
 
 
-def find_perfect_elimination_ordering(G: InterferenceGraph) -> Optional[list[int]]:
+def compute_clique_number(graph: IntervalGraph) -> int:
+    """Compute clique number using register pressure profile.
+
+    For chordal graphs, ω(G) = max register pressure = max P(i).
+    Time complexity: O(n + m) for chordal graphs
     """
-    Find a perfect elimination ordering (PEO) if the graph is chordal.
+    peo = PerfectEliminationOrdering.from_intervals(graph.intervals)
+    pressure = compute_register_pressure(graph, peo)
+    return max(pressure) if pressure else 0
 
-    Uses the Maximum Cardinality Search (MCS) algorithm:
-    1. Start with an arbitrary vertex
-    2. Always pick the unvisited vertex with the most visited neighbors
-    3. The reverse of this order is a PEO (if the graph is chordal)
 
-    Returns:
-        PEO as a list of vertices, or None if the graph is not chordal.
+def select_spill_set(
+    graph: IntervalGraph,
+    k: int,
+    weights: Optional[List[float]] = None
+) -> Set[int]:
+    """Select variables to spill when k < ω(G).
+
+    Uses degree-based heuristic: iteratively spill the variable with
+    the highest degree (or lowest weight/degree ratio if weighted).
+
+    Returns: set of variable indices to spill.
     """
-    if G.n == 0:
-        return []
+    if weights is None:
+        weights = [1.0] * graph.n
 
-    order: list[int] = []
-    visited = [False] * G.n
-    weights = [0] * G.n
+    omega = compute_clique_number(graph)
+    if k >= omega:
+        return set()
 
-    for _ in range(G.n):
-        # Pick unvisited vertex with maximum weight
-        best = -1
-        best_weight = -1
-        for v in range(G.n):
-            if not visited[v] and weights[v] > best_weight:
-                best = v
-                best_weight = weights[v]
-        if best == -1:
-            break
-
-        order.append(best)
-        visited[best] = True
-
-        # Update weights of unvisited neighbors
-        for u in G.neighbors(best):
-            if not visited[u]:
-                weights[u] += 1
-
-    # Reverse to get PEO
-    peo = list(reversed(order))
-
-    # Verify it's actually a PEO
-    if _verify_peo(G, peo):
-        return peo
-    return None
-
-
-def _verify_peo(G: InterferenceGraph, order: list[int]) -> bool:
-    """Verify that an ordering is a perfect elimination ordering."""
-    pos = {v: i for i, v in enumerate(order)}
-
-    for idx, v in enumerate(order):
-        # Later neighbors of v (those appearing after v in the ordering)
-        later_nbrs = [u for u in G.neighbors(v) if pos[u] > idx]
-
-        # Check that later neighbors form a clique
-        for i, u in enumerate(later_nbrs):
-            for w in later_nbrs[i + 1:]:
-                if not G.adj[u][w]:
-                    return False
-    return True
-
-
-def optimal_coloring_chordal(G: InterferenceGraph) -> Optional[ColoringResult]:
-    """
-    Optimal coloring for chordal graphs using PEO.
-
-    Theorem (verified in Lean): For chordal graphs, greedy coloring along
-    a PEO uses exactly ω(G) colors, achieving χ(G) = ω(G).
-
-    Returns:
-        Optimal ColoringResult, or None if graph is not chordal.
-    """
-    peo = find_perfect_elimination_ordering(G)
-    if peo is None:
-        return None
-    return greedy_coloring(G, order=peo)
-
-
-@dataclass
-class SpillResult:
-    """Result of a spill analysis."""
-    spilled: list[int]  # indices of spilled variables
-    remaining_colors: list[int]  # coloring of non-spilled variables
-    spill_cost: int  # number of variables spilled
-
-
-def degree_based_spilling(G: InterferenceGraph, k: int) -> SpillResult:
-    """
-    Degree-based spilling heuristic for register allocation.
-
-    When k registers are insufficient, iteratively remove the vertex
-    with maximum degree until the remaining graph is k-colorable.
-
-    Theorem (verified in Lean): If the graph has a clique of size m > k,
-    at least m - k vertices must be spilled.
-
-    Args:
-        G: The interference graph
-        k: Number of available registers
-
-    Returns:
-        SpillResult with spilled vertices and remaining coloring
-    """
-    spilled: list[int] = []
-    active = list(range(G.n))
+    spilled: Set[int] = set()
+    remaining_adj = [row[:] for row in graph.adj]
 
     while True:
-        # Build subgraph on active vertices
-        sub_n = len(active)
-        if sub_n == 0:
-            return SpillResult(spilled=spilled, remaining_colors=[], spill_cost=len(spilled))
+        # Recompute clique number on remaining graph
+        remaining_intervals = [
+            graph.intervals[i] if i not in spilled else (0, -1)
+            for i in range(graph.n)
+        ]
+        # Compute degrees
+        degrees = [
+            sum(1 for j in range(graph.n)
+                if j not in spilled and remaining_adj[i][j])
+            for i in range(graph.n)
+        ]
 
-        idx_map = {v: i for i, v in enumerate(active)}
-        sub_adj = [[False] * sub_n for _ in range(sub_n)]
-        for i, u in enumerate(active):
-            for j, v in enumerate(active):
-                if i != j and G.adj[u][v]:
-                    sub_adj[i][j] = True
-
-        sub_G = InterferenceGraph(n=sub_n, adj=sub_adj)
-
-        # Try coloring with k colors
-        result = greedy_coloring(sub_G)
-        if result.num_colors <= k:
-            # Map colors back to original vertices
-            colors = [-1] * G.n
-            for i, v in enumerate(active):
-                colors[v] = result.colors[i]
-            return SpillResult(
-                spilled=spilled,
-                remaining_colors=colors,
-                spill_cost=len(spilled)
+        # Check if k colors suffice
+        max_pressure = 0
+        peo = PerfectEliminationOrdering.from_intervals(graph.intervals)
+        for idx in range(graph.n):
+            v = peo.order[idx]
+            if v in spilled:
+                continue
+            later_nbrs = sum(
+                1 for j in range(idx + 1, graph.n)
+                if peo.order[j] not in spilled and graph.adj[v][peo.order[j]]
             )
+            max_pressure = max(max_pressure, later_nbrs + 1)
 
-        # Spill vertex with maximum degree in subgraph
-        max_deg_vertex = max(range(sub_n), key=lambda v: sub_G.degree(v))
-        original_vertex = active[max_deg_vertex]
-        spilled.append(original_vertex)
-        active.remove(original_vertex)
+        if max_pressure <= k:
+            break
+
+        # Spill vertex with highest degree / lowest weight ratio
+        candidates = [
+            (i, degrees[i] / max(weights[i], 1e-10))
+            for i in range(graph.n) if i not in spilled and degrees[i] > 0
+        ]
+        if not candidates:
+            break
+        victim = max(candidates, key=lambda x: x[1])[0]
+        spilled.add(victim)
+
+    return spilled
 
 
-def chromatic_number_exact(G: InterferenceGraph) -> int:
+def allocate_registers(
+    intervals: List[Tuple[int, int]],
+    k: int,
+    weights: Optional[List[float]] = None
+) -> RegisterAllocation:
+    """Complete register allocation algorithm.
+
+    1. Build interval graph
+    2. Construct PEO
+    3. Compute clique number
+    4. If k ≥ ω: greedy color (no spills)
+    5. If k < ω: select spill set, then greedy color remainder
+
+    Args:
+        intervals: liveness intervals [(start, end), ...]
+        k: number of available registers
+        weights: optional variable access frequencies for spill selection
+
+    Returns: RegisterAllocation with coloring, spills, and analysis
     """
-    Compute exact chromatic number by trying all possible numbers of colors.
+    graph = IntervalGraph.from_intervals(intervals)
+    peo = PerfectEliminationOrdering.from_intervals(intervals)
+    pressure = compute_register_pressure(graph, peo)
+    omega = max(pressure) if pressure else 0
+    degrees = [sum(graph.adj[i]) for i in range(graph.n)]
+    max_deg = max(degrees) if degrees else 0
 
-    This is exponential in general but works for small graphs.
-    """
-    for k in range(G.n + 1):
-        if _is_k_colorable(G, k):
-            return k
-    return G.n  # fallback
+    spilled = select_spill_set(graph, k, weights)
+
+    # Color unspilled vertices: build subgraph without spilled
+    if spilled:
+        # Mask spilled vertices in adjacency
+        sub_adj = [[graph.adj[i][j] and i not in spilled and j not in spilled
+                    for j in range(graph.n)] for i in range(graph.n)]
+        sub_graph = IntervalGraph(n=graph.n, intervals=graph.intervals, adj=sub_adj)
+        coloring = greedy_color_on_peo(sub_graph, peo, k)
+    else:
+        coloring = greedy_color_on_peo(graph, peo, k)
+    for v in spilled:
+        coloring[v] = -1
+
+    num_colors = max(c for c in coloring if c >= 0) + 1 if any(c >= 0 for c in coloring) else 0
+
+    return RegisterAllocation(
+        coloring=coloring,
+        num_colors=num_colors,
+        spilled=spilled,
+        clique_number=omega,
+        max_degree=max_deg,
+        pressure_profile=pressure,
+    )
 
 
-def _is_k_colorable(G: InterferenceGraph, k: int) -> bool:
-    """Check if G is k-colorable via backtracking."""
-    if k == 0:
-        return G.n == 0
+# ─── Example usage ───
 
-    colors = [-1] * G.n
+if __name__ == "__main__":
+    # Example: 8 variables from a simple SSA program
+    intervals = [
+        (0, 3), (1, 5), (2, 4), (3, 7),
+        (5, 8), (6, 9), (4, 6), (7, 10),
+    ]
 
-    def backtrack(v: int) -> bool:
-        if v == G.n:
-            return True
-        for c in range(k):
-            if all(colors[u] != c for u in G.neighbors(v) if colors[u] >= 0):
-                colors[v] = c
-                if backtrack(v + 1):
-                    return True
-                colors[v] = -1
-        return False
+    print("Register Allocation Algorithm Demo")
+    print("=" * 50)
 
-    return backtrack(0)
-
-
-def verify_ssa_conjecture(G: InterferenceGraph) -> dict:
-    """
-    Verify the SSA chromatic number conjecture for a given graph.
-
-    Conjecture: For chordal (SSA) interference graphs,
-    χ(G) = ω(G) = max clique size.
-
-    Returns dict with chi, omega, max_degree, is_chordal, conjecture_holds.
-    """
-    chi = chromatic_number_exact(G)
-    omega = G.clique_number()
-    delta = G.max_degree()
-    peo = find_perfect_elimination_ordering(G)
-    is_chordal = peo is not None
-
-    return {
-        "n": G.n,
-        "chi": chi,
-        "omega": omega,
-        "delta": delta,
-        "is_chordal": is_chordal,
-        "conjecture_holds": chi == omega if is_chordal else None,
-        "brooks_bound": delta + 1,
-        "brooks_satisfied": chi <= delta + 1,
-    }
+    for k in [2, 3, 4, 6]:
+        result = allocate_registers(intervals, k)
+        print(f"\nWith k={k} registers (ω={result.clique_number}, Δ={result.max_degree}):")
+        for i in range(len(intervals)):
+            if i in result.spilled:
+                print(f"  v{i}: SPILLED")
+            else:
+                print(f"  v{i}: R{result.coloring[i]}")
+        print(f"  Registers used: {result.num_colors}, Spilled: {len(result.spilled)}")
