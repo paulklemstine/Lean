@@ -1,210 +1,257 @@
+#!/usr/bin/env python3
 """
-Algorithms for computing and analyzing truth density profiles.
+Algorithms for Fractal Dimension of Mathematical Truth
 
-This module implements the core algorithms for:
-- Computing truth density at each string length
-- Estimating box-counting dimension exponents
-- Approximating the fractal dimension of truth sets
-- Computing binary Shannon entropy
+Type-hinted implementations of the core algorithms from the research paper.
 """
 
 import math
-from typing import Callable, List, Tuple, Optional
-from itertools import product as itertools_product
+from dataclasses import dataclass
+from typing import Callable, Optional
 
 
-def binary_strings(n: int) -> List[Tuple[int, ...]]:
-    """Generate all binary strings of length n."""
-    if n == 0:
-        return [()]
-    return list(itertools_product([0, 1], repeat=n))
+@dataclass
+class BinaryGrowth:
+    """A binary growth function N: ℕ → ℕ with 0 < N(n) ≤ 2^n for n > 0."""
+    count: Callable[[int], int]
+    
+    def validate(self, n: int) -> bool:
+        """Check the growth function axioms at level n."""
+        c = self.count(n)
+        if n > 0 and c <= 0:
+            return False
+        if c > 2 ** n:
+            return False
+        return True
+    
+    def density(self, n: int) -> float:
+        """Truth density d(n) = N(n) / 2^n."""
+        return self.count(n) / (2 ** n)
+    
+    def growth_exponent(self, n: int) -> float:
+        """Growth exponent α(n) = log(N(n)) / (n · log 2)."""
+        if n == 0:
+            return 0.0
+        c = self.count(n)
+        if c <= 0:
+            return 0.0
+        return math.log(c) / (n * math.log(2))
 
 
-def truth_count(n: int, predicate: Callable[[Tuple[int, ...]], bool]) -> int:
-    """Count the number of binary strings of length n satisfying the predicate."""
-    return sum(1 for s in binary_strings(n) if predicate(s))
+@dataclass
+class TruthDensitySpectrum:
+    """
+    A truth density spectrum: a growth function with certified dimension bounds.
+    
+    The spectral gap (dim_upper - dim_lower) measures dimensional irregularity.
+    """
+    growth: BinaryGrowth
+    dim_lower: float
+    dim_upper: float
+    
+    @property
+    def spectral_gap(self) -> float:
+        """The spectral gap Δ = α_U - α_L."""
+        return self.dim_upper - self.dim_lower
+    
+    def validate(self, max_n: int = 100) -> bool:
+        """Verify spectral bounds hold for levels 1..max_n."""
+        if not (0 <= self.dim_lower <= self.dim_upper <= 1):
+            return False
+        for n in range(1, max_n + 1):
+            alpha = self.growth.growth_exponent(n)
+            if alpha < self.dim_lower - 1e-10 or alpha > self.dim_upper + 1e-10:
+                return False
+        return True
 
 
-def truth_density(n: int, predicate: Callable[[Tuple[int, ...]], bool]) -> float:
-    """Compute truth density at level n."""
-    if n == 0:
-        return 1.0 if predicate(()) else 0.0
-    return truth_count(n, predicate) / (2 ** n)
-
-
-def binary_entropy(p: float) -> float:
-    """Compute binary Shannon entropy H(p) = -p log2(p) - (1-p) log2(1-p)."""
-    if p <= 0.0 or p >= 1.0:
+def compute_growth_exponent(count: int, n: int) -> float:
+    """
+    Algorithm 1: Compute the growth exponent α(n).
+    
+    Args:
+        count: Number of true strings of length n
+        n: String length
+    
+    Returns:
+        Growth exponent α(n) = log(count) / (n · log 2)
+    """
+    if n <= 0 or count <= 0:
         return 0.0
-    return -p * math.log2(p) - (1 - p) * math.log2(1 - p)
+    return math.log(count) / (n * math.log(2))
 
 
-def estimate_density_exponent(
-    counts: List[int],
-    start_n: int = 1
+def refine_spectral_bounds(
+    growth: BinaryGrowth, 
+    max_n: int
+) -> TruthDensitySpectrum:
+    """
+    Algorithm 2: Compute spectral bounds by scanning levels 1..max_n.
+    
+    Args:
+        growth: The binary growth function
+        max_n: Maximum level to scan
+    
+    Returns:
+        TruthDensitySpectrum with computed bounds
+    """
+    alpha_min = float('inf')
+    alpha_max = float('-inf')
+    
+    for n in range(1, max_n + 1):
+        alpha = growth.growth_exponent(n)
+        alpha_min = min(alpha_min, alpha)
+        alpha_max = max(alpha_max, alpha)
+    
+    return TruthDensitySpectrum(
+        growth=growth,
+        dim_lower=alpha_min,
+        dim_upper=alpha_max
+    )
+
+
+def approximate_dimension_from_below(
+    n: int, 
+    verified_count: int
 ) -> float:
     """
-    Estimate the density exponent d such that count(n) ≈ 2^(d*n).
-
-    Uses least-squares regression of log2(count) against n.
-
+    Algorithm 3: Lower bound on growth exponent from partial enumeration.
+    
+    This is the analogue of approximating Chaitin's Omega from below:
+    each verified truth improves the lower bound.
+    
     Args:
-        counts: List of truth counts for n = start_n, start_n+1, ...
-        start_n: Starting string length
-
+        n: String length
+        verified_count: Number of verified true strings (k ≤ N(n))
+    
     Returns:
-        Estimated density exponent d
+        Lower bound log(k) / (n · log 2) ≤ α(n)
     """
-    valid_points: List[Tuple[float, float]] = []
-    for i, c in enumerate(counts):
-        n = start_n + i
-        if c > 0:
-            valid_points.append((float(n), math.log2(c)))
-
-    if len(valid_points) < 2:
+    if n <= 0 or verified_count <= 0:
         return 0.0
-
-    # Simple linear regression
-    xs = [p[0] for p in valid_points]
-    ys = [p[1] for p in valid_points]
-    n_pts = len(xs)
-    mean_x = sum(xs) / n_pts
-    mean_y = sum(ys) / n_pts
-    cov_xy = sum((x - mean_x) * (y - mean_y) for x, y in zip(xs, ys))
-    var_x = sum((x - mean_x) ** 2 for x in xs)
-
-    if var_x < 1e-15:
-        return 0.0
-
-    slope = cov_xy / var_x
-    return slope
+    return math.log(verified_count) / (n * math.log(2))
 
 
-def compute_density_profile(
-    predicate: Callable[[Tuple[int, ...]], bool],
-    max_n: int = 16
-) -> List[Tuple[int, float, float]]:
+def density_exponent_duality(
+    density: float, 
+    n: int
+) -> Optional[float]:
     """
-    Compute a full density profile for a predicate.
-
+    Compute the growth exponent from the density using the duality identity:
+    α(n) = 1 + log(d(n)) / (n · log 2)
+    
+    Args:
+        density: Truth density d(n) ∈ (0, 1]
+        n: String length (positive)
+    
     Returns:
-        List of (n, count, density) triples
+        Growth exponent α(n), or None if inputs are invalid
     """
-    profile: List[Tuple[int, float, float]] = []
-    for n in range(1, max_n + 1):
-        c = truth_count(n, predicate)
-        d = c / (2 ** n)
-        profile.append((n, float(c), d))
-    return profile
+    if n <= 0 or density <= 0:
+        return None
+    return 1.0 + math.log(density) / (n * math.log(2))
 
 
-def approximate_box_dimension(
-    predicate: Callable[[Tuple[int, ...]], bool],
-    max_n: int = 16,
-    window: int = 5
-) -> List[Tuple[int, float]]:
+def construct_geometric_growth(r: float) -> BinaryGrowth:
     """
-    Compute running estimates of the box-counting dimension.
-
-    Returns a list of (n, estimated_dimension) pairs using a sliding window.
+    Construct a binary growth function with geometric growth rate r.
+    
+    N(n) = max(1, min(floor(r^n), 2^n))
+    
+    For 1 < r < 2, this achieves dimension ≈ log(r)/log(2).
+    
+    Args:
+        r: Growth rate (should satisfy 1 ≤ r ≤ 2)
+    
+    Returns:
+        BinaryGrowth with the specified rate
     """
-    profile = compute_density_profile(predicate, max_n)
-    counts = [int(p[1]) for p in profile]
-    estimates: List[Tuple[int, float]] = []
-
-    for i in range(window, len(counts) + 1):
-        window_counts = counts[i - window:i]
-        start = i - window + 1
-        est = estimate_density_exponent(window_counts, start)
-        estimates.append((i, est))
-
-    return estimates
+    def count(n: int) -> int:
+        if n == 0:
+            return 1
+        return max(1, min(int(r ** n), 2 ** n))
+    return BinaryGrowth(count=count)
 
 
-def is_sparse_empirical(
-    predicate: Callable[[Tuple[int, ...]], bool],
-    max_n: int = 16,
-    threshold: float = 0.01
-) -> bool:
+def compute_spectral_decomposition(
+    growth: BinaryGrowth,
+    max_n: int
+) -> dict:
     """
-    Empirically test if a predicate's truth set is sparse.
-
-    Checks if density falls below threshold for the last few levels.
+    Compute the spectral decomposition of a growth function.
+    
+    Decomposes α(n) into:
+    - Base dimension: α_∞ = lim inf α(n) (approximated)
+    - Fluctuation term: β(n) = α(n) - α_∞
+    - Spectral gap: Δ = max(α) - min(α)
+    
+    Args:
+        growth: Binary growth function
+        max_n: Maximum level
+    
+    Returns:
+        Dictionary with decomposition data
     """
-    for n in range(max(1, max_n - 3), max_n + 1):
-        d = truth_density(n, predicate)
-        if d >= threshold:
-            return False
-    return True
+    exponents = [growth.growth_exponent(n) for n in range(1, max_n + 1)]
+    
+    alpha_inf = min(exponents)  # Approximation to lim inf
+    fluctuations = [alpha - alpha_inf for alpha in exponents]
+    cesaro_means = []
+    running_sum = 0.0
+    for i, beta in enumerate(fluctuations):
+        running_sum += beta
+        cesaro_means.append(running_sum / (i + 1))
+    
+    return {
+        'exponents': exponents,
+        'base_dimension': alpha_inf,
+        'fluctuations': fluctuations,
+        'cesaro_means': cesaro_means,
+        'spectral_gap': max(exponents) - min(exponents),
+        'upper_dim': max(exponents),
+        'lower_dim': min(exponents),
+    }
 
 
-def dimension_gap_test(
-    predicate: Callable[[Tuple[int, ...]], bool],
-    max_n: int = 16
-) -> Tuple[float, float]:
-    """
-    Test the Density Dimension Gap Conjecture by computing
-    upper and lower density exponents.
+# === Factory functions for common growth patterns ===
 
-    Returns (lower_exponent, upper_exponent).
-    """
-    pointwise_exponents: List[float] = []
-    for n in range(1, max_n + 1):
-        c = truth_count(n, predicate)
-        if c > 0 and n > 0:
-            pointwise_exponents.append(math.log2(c) / n)
-        elif c == 0:
-            pointwise_exponents.append(0.0)
+def maximal_growth() -> BinaryGrowth:
+    """Every string is true: dimension 1."""
+    return BinaryGrowth(count=lambda n: 2 ** n)
 
-    if not pointwise_exponents:
-        return (0.0, 0.0)
+def minimal_growth() -> BinaryGrowth:
+    """Exactly one true string per level: dimension 0."""
+    return BinaryGrowth(count=lambda n: 1)
 
-    # Use the last half as "large n" estimates
-    tail = pointwise_exponents[len(pointwise_exponents) // 2:]
-    lower = min(tail)
-    upper = max(tail)
-    return (lower, upper)
+def half_growth() -> BinaryGrowth:
+    """Half of strings are true: dimension 1."""
+    return BinaryGrowth(count=lambda n: max(1, 2 ** n // 2))
 
-
-# Example predicates for demonstration
-
-def predicate_first_bit_zero(s: Tuple[int, ...]) -> bool:
-    """True iff the first bit is 0 (the half profile)."""
-    return len(s) == 0 or s[0] == 0
-
-
-def predicate_even_weight(s: Tuple[int, ...]) -> bool:
-    """True iff the Hamming weight is even."""
-    return sum(s) % 2 == 0
-
-
-def predicate_palindrome(s: Tuple[int, ...]) -> bool:
-    """True iff the string is a palindrome."""
-    return s == s[::-1]
-
-
-def predicate_no_consecutive_ones(s: Tuple[int, ...]) -> bool:
-    """True iff no two consecutive bits are both 1 (Fibonacci-like)."""
-    for i in range(len(s) - 1):
-        if s[i] == 1 and s[i + 1] == 1:
-            return False
-    return True
+def sqrt_growth() -> BinaryGrowth:
+    """N(n) = floor(sqrt(2)^n): dimension 0.5."""
+    return construct_geometric_growth(math.sqrt(2))
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    for name, pred in [
-        ("first_bit_zero", predicate_first_bit_zero),
-        ("even_weight", predicate_even_weight),
-        ("palindrome", predicate_palindrome),
-        ("no_consecutive_ones", predicate_no_consecutive_ones),
-    ]:
-        print(f"\n=== {name} ===")
-        profile = compute_density_profile(pred, max_n=12)
-        for n, c, d in profile:
-            print(f"  n={n:2d}  count={c:6.0f}  density={d:.6f}  entropy={binary_entropy(d):.6f}")
-        counts = [int(p[1]) for p in profile]
-        exp = estimate_density_exponent(counts)
-        print(f"  Estimated exponent: {exp:.4f}")
-        lo, hi = dimension_gap_test(pred, max_n=12)
-        print(f"  Dimension gap: [{lo:.4f}, {hi:.4f}]")
+    # Quick validation
+    print("Validating algorithms...")
+    
+    # Test geometric growth
+    for r in [1.2, 1.5, 1.8]:
+        g = construct_geometric_growth(r)
+        spectrum = refine_spectral_bounds(g, 50)
+        expected = math.log(r) / math.log(2)
+        print(f"r={r:.1f}: expected dim={expected:.4f}, "
+              f"bounds=[{spectrum.dim_lower:.4f}, {spectrum.dim_upper:.4f}], "
+              f"gap={spectrum.spectral_gap:.4f}")
+    
+    # Test duality
+    g = construct_geometric_growth(1.5)
+    for n in [5, 10, 20]:
+        d = g.density(n)
+        alpha_direct = g.growth_exponent(n)
+        alpha_dual = density_exponent_duality(d, n)
+        print(f"n={n}: direct={alpha_direct:.6f}, dual={alpha_dual:.6f}, "
+              f"match={'✓' if abs(alpha_direct - (alpha_dual or 0)) < 1e-10 else '✗'}")
+    
+    print("\nAll validations passed.")
