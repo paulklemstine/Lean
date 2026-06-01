@@ -4,6 +4,46 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "stochastic_galois_theory_random_permutations_have_.json",
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
+    "domain": "Geometry",
+    "date": "2026-06-01T13:41:53Z",
+    "exp_id": "a1511534",
+    "quality_score": 0.6453740000000001,
+    "quality": "partial",
+    "pkg_num": 94
+  },
+  {
+    "filename": "reflective_type_theory_proving_things_about_provin.json",
+    "title": "Reflective Type Theory: Proving Things About Proving Things",
+    "domain": "Cryptography",
+    "date": "2026-06-01T13:41:16Z",
+    "exp_id": "bc59d5da",
+    "quality_score": 0.7124953271028038,
+    "quality": "substantial",
+    "pkg_num": 93
+  },
+  {
+    "filename": "yamabe_problem_non_compact_case.json",
+    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
+    "domain": "Differential Geometry / Geometric Analysis",
+    "date": "2026-06-01T13:40:42Z",
+    "exp_id": "e750bf27",
+    "quality_score": 0.49938318181818186,
+    "quality": "partial",
+    "pkg_num": 92
+  },
+  {
+    "filename": "complete_newton_hodge_polygon_framework_for_2_dime.json",
+    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
+    "domain": "Logic",
+    "date": "2026-06-01T13:40:06Z",
+    "exp_id": "5082b772",
+    "quality_score": 0.6923000000000001,
+    "quality": "partial",
+    "pkg_num": 91
+  },
+  {
     "filename": "scaling_laws_from_statistical_mechanics.json",
     "title": "Neural Scaling Laws from Statistical Mechanics",
     "domain": "Speculative",
@@ -11,7 +51,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "1d4fa7b3",
     "quality_score": 0.7481675000000001,
     "quality": "substantial",
-    "pkg_num": 92
+    "pkg_num": 90
   },
   {
     "filename": "self_avoiding_walk_connective_constant.json",
@@ -21,7 +61,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8b9fccd7",
     "quality_score": 0.6420956756756757,
     "quality": "partial",
-    "pkg_num": 91
+    "pkg_num": 89
   },
   {
     "filename": "formal_bridge_between_homotopy_type_theory_hott_an.json",
@@ -31,17 +71,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "81ce5201",
     "quality_score": 0.7038752500000001,
     "quality": "substantial",
-    "pkg_num": 90
-  },
-  {
-    "filename": "yamabe_problem_non_compact_case.json",
-    "title": "Yamabe Problem: Non-Compact Case \u2014 Algebraic Backbone",
-    "domain": "Algebra",
-    "date": "2026-06-01T12:30:52Z",
-    "exp_id": "56e76985",
-    "quality_score": 0.6631633333333333,
-    "quality": "partial",
-    "pkg_num": 89
+    "pkg_num": 88
   },
   {
     "filename": "isogeny_based_cryptography_csi_fish.json",
@@ -51,7 +81,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "813b355c",
     "quality_score": 0.7393699999999999,
     "quality": "substantial",
-    "pkg_num": 88
+    "pkg_num": 87
   },
   {
     "filename": "poincar_conjecture_revisited_4d_smooth.json",
@@ -61,7 +91,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ca199fc5",
     "quality_score": 0.8202090769230769,
     "quality": "substantial",
-    "pkg_num": 87
+    "pkg_num": 86
   },
   {
     "filename": "algebraic_skeleton_of_grothendiecks_standard_conje.json",
@@ -71,7 +101,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "25f4209c",
     "quality_score": 0.7286993506493507,
     "quality": "substantial",
-    "pkg_num": 86
+    "pkg_num": 85
   },
   {
     "filename": "borges_library_of_babel_combinatorics_of_everythin.json",
@@ -81,7 +111,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "68aedb1e",
     "quality_score": 0.6561989411764706,
     "quality": "partial",
-    "pkg_num": 85
+    "pkg_num": 84
   },
   {
     "filename": "homotopy_type_theory_as_foundations.json",
@@ -91,7 +121,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ee1ee0cb",
     "quality_score": 0.7138660278745645,
     "quality": "substantial",
-    "pkg_num": 84
+    "pkg_num": 83
   },
   {
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
@@ -101,7 +131,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f67feb4b",
     "quality_score": 0.7161103693181818,
     "quality": "substantial",
-    "pkg_num": 83
+    "pkg_num": 82
   },
   {
     "filename": "anti_mathematics_what_if_all_axioms_were_negated.json",
@@ -111,7 +141,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d8059b0e",
     "quality_score": 0.6856036842105264,
     "quality": "partial",
-    "pkg_num": 82
+    "pkg_num": 81
   },
   {
     "filename": "complete_formal_framework_for_the_security_of_csid.json",
@@ -121,7 +151,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f24c929d",
     "quality_score": 0.7080684615384616,
     "quality": "substantial",
-    "pkg_num": 81
+    "pkg_num": 80
   },
   {
     "filename": "complete_formalized_algebraic_theory_of_quasif.json",
@@ -131,7 +161,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "dc49b350",
     "quality_score": 0.6699192338709679,
     "quality": "partial",
-    "pkg_num": 80
+    "pkg_num": 79
   },
   {
     "filename": "topological_quantum_computing_braiding_universalit.json",
@@ -141,7 +171,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e818d35f",
     "quality_score": 0.6633071428571429,
     "quality": "partial",
-    "pkg_num": 79
+    "pkg_num": 78
   },
   {
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
@@ -151,7 +181,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "b16ddfc2",
     "quality_score": 0.7388586956521739,
     "quality": "substantial",
-    "pkg_num": 78
+    "pkg_num": 77
   },
   {
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
@@ -161,7 +191,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "da4c7c61",
     "quality_score": 0.7100115384615384,
     "quality": "substantial",
-    "pkg_num": 77
+    "pkg_num": 76
   },
   {
     "filename": "flatland_catastrophe_when_2d_physics_breaks.json",
@@ -171,7 +201,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "337baefa",
     "quality_score": 0.7192423076923078,
     "quality": "substantial",
-    "pkg_num": 76
+    "pkg_num": 75
   },
   {
     "filename": "sensitivity_conjecture_extensions.json",
@@ -181,7 +211,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "9db20339",
     "quality_score": 0.72689,
     "quality": "substantial",
-    "pkg_num": 75
+    "pkg_num": 74
   },
   {
     "filename": "digital_immortality_can_a_mind_be_encoded.json",
@@ -191,7 +221,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a9b1a5d3",
     "quality_score": 0.7316979622641508,
     "quality": "substantial",
-    "pkg_num": 74
+    "pkg_num": 73
   },
   {
     "filename": "foundational_infrastructure_for_studying_oracle_hi.json",
@@ -201,7 +231,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d08a3f0d",
     "quality_score": 0.73590125,
     "quality": "substantial",
-    "pkg_num": 73
+    "pkg_num": 72
   },
   {
     "filename": "algebraic_and_combinatorial_foundations_for_random.json",
@@ -211,7 +241,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f977bb97",
     "quality_score": 0.7237490526315788,
     "quality": "substantial",
-    "pkg_num": 72
+    "pkg_num": 71
   },
   {
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
@@ -221,7 +251,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "2fd1181d",
     "quality_score": 0.7068626477541371,
     "quality": "substantial",
-    "pkg_num": 71
+    "pkg_num": 70
   },
   {
     "filename": "unique_games_conjecture.json",
@@ -231,7 +261,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "9ab1ce15",
     "quality_score": 0.7354624999999999,
     "quality": "substantial",
-    "pkg_num": 70
+    "pkg_num": 69
   },
   {
     "filename": "infinite_games_against_death_immortality_strategie.json",
@@ -241,7 +271,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4e3c94e5",
     "quality_score": 0.6771499999999999,
     "quality": "partial",
-    "pkg_num": 69
+    "pkg_num": 68
   },
   {
     "filename": "computational_complexity_of_alien_civilizations.json",
@@ -251,7 +281,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "09ed9e0a",
     "quality_score": 0.75499,
     "quality": "substantial",
-    "pkg_num": 68
+    "pkg_num": 67
   },
   {
     "filename": "social_credit_scores_as_topological_invariants.json",
@@ -261,7 +291,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "faa42070",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 67
+    "pkg_num": 66
   },
   {
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
@@ -271,7 +301,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e657f9e8",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 66
+    "pkg_num": 65
   },
   {
     "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
@@ -281,7 +311,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e6851233",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 65
+    "pkg_num": 64
   },
   {
     "filename": "newton_hodge_polygon_framework_for_the_p_adic_lang.json",
@@ -291,7 +321,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "24a63e9e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 64
+    "pkg_num": 63
   },
   {
     "filename": "p_adic_langlands_for_glq_p.json",
@@ -301,7 +331,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f75c509b",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 63
+    "pkg_num": 62
   },
   {
     "filename": "surveillance_networks_information_theoretic_undete.json",
@@ -311,7 +341,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8f43e9e1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 62
+    "pkg_num": 61
   },
   {
     "filename": "complete_algebraic_theory_of_the_hecke_eigenvalue_.json",
@@ -321,7 +351,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72c3a7a8",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 61
+    "pkg_num": 60
   },
   {
     "filename": "langlands_for_gl_over_q.json",
@@ -331,7 +361,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f2c79f3b",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 60
+    "pkg_num": 59
   },
   {
     "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
@@ -341,7 +371,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72018c51",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 59
+    "pkg_num": 58
   },
   {
     "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
@@ -351,7 +381,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4f5a41e1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 58
+    "pkg_num": 57
   },
   {
     "filename": "complete_formal_framework_for_cellular_automat.json",
@@ -361,7 +391,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ea8fbe44",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 57
+    "pkg_num": 56
   },
   {
     "filename": "quantum_proofs_of_classical_theorems.json",
@@ -371,7 +401,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c0a3ba3e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 56
+    "pkg_num": 55
   },
   {
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
@@ -381,7 +411,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "0fa49dec",
     "quality_score": 0.5239020000000001,
     "quality": "partial",
-    "pkg_num": 55
+    "pkg_num": 54
   },
   {
     "filename": "formal_algebraic_foundations_of_isogeny_base.json",
@@ -391,7 +421,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "da3578b4",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 54
+    "pkg_num": 53
   },
   {
     "filename": "rigorous_formal_framework_for_the_entropy_powe.json",
@@ -401,7 +431,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8a0058f1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 53
+    "pkg_num": 52
   },
   {
     "filename": "unified_framework_for_understanding_self_refer.json",
@@ -411,7 +441,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "15bec107",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 52
+    "pkg_num": 51
   },
   {
     "filename": "artins_conjecture_on_primitive_roots.json",
@@ -421,7 +451,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "42ef5052",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 51
+    "pkg_num": 50
   },
   {
     "filename": "tropical_hodge_theory.json",
@@ -431,7 +461,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "12735337",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 50
+    "pkg_num": 49
   },
   {
     "filename": "erds_faber_lovsz_conjecture.json",
@@ -441,7 +471,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "3446461e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 49
+    "pkg_num": 48
   },
   {
     "filename": "reconstruction_conjecture.json",
@@ -451,7 +481,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "77bc31c0",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 48
+    "pkg_num": 47
   },
   {
     "filename": "fermat_near_misses_in_the_twilight_zone.json",
@@ -461,7 +491,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a5c337ed",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 47
+    "pkg_num": 46
   },
   {
     "filename": "hypercomputation_computing_the_uncomputable.json",
@@ -471,7 +501,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7212b89e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 46
+    "pkg_num": 45
   },
   {
     "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
@@ -481,7 +511,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "06268486",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 45
+    "pkg_num": 44
   },
   {
     "filename": "the_fractal_dimension_of_mathematical_truth.json",
@@ -491,7 +521,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c808b38a",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 44
+    "pkg_num": 43
   },
   {
     "filename": "the_mega_sphere_all_dimensions_at_once.json",
@@ -501,7 +531,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "64431a8e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 43
+    "pkg_num": 42
   },
   {
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
@@ -511,7 +541,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8d4f7af1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 42
+    "pkg_num": 41
   },
   {
     "filename": "hadwigers_conjecture.json",
@@ -521,7 +551,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d0ddefbd",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 41
+    "pkg_num": 40
   },
   {
     "filename": "thermodynamics_of_mathematical_proof.json",
@@ -529,16 +559,6 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "date": "2026-06-01T02:45:09Z",
     "exp_id": "5601e70d",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 40
-  },
-  {
-    "filename": "reflective_type_theory_proving_things_about_provin.json",
-    "title": "Reflective Type Theory: Proving Things About Proving Things",
-    "domain": "Bridges",
-    "date": "2026-06-01T02:44:40Z",
-    "exp_id": "5a7b2b9a",
     "quality_score": 0.7,
     "quality": "substantial",
     "pkg_num": 39
@@ -1000,11 +1020,11 @@ window.PACKAGE_DB_INDEX = {
   },
   "reflective_type_theory_proving_things_about_provin.json": {
     "title": "Reflective Type Theory: Proving Things About Proving Things",
-    "exp_id": "5a7b2b9a",
+    "exp_id": "bc59d5da",
     "source_exp_ids": [
-      "seed_wave7"
+      "seed"
     ],
-    "domain": "Bridges"
+    "domain": "Cryptography"
   },
   "infinite_games_against_death_immortality_strategie.json": {
     "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games",
@@ -1455,12 +1475,12 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Algebra"
   },
   "yamabe_problem_non_compact_case.json": {
-    "title": "Yamabe Problem: Non-Compact Case \u2014 Algebraic Backbone",
-    "exp_id": "56e76985",
+    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
+    "exp_id": "e750bf27",
     "source_exp_ids": [
       "seed"
     ],
-    "domain": "Algebra"
+    "domain": "Differential Geometry / Geometric Analysis"
   },
   "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
@@ -1469,6 +1489,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Bridges"
+  },
+  "complete_newton_hodge_polygon_framework_for_2_dime.json": {
+    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
+    "exp_id": "5082b772",
+    "source_exp_ids": [
+      "24a63e9e"
+    ],
+    "domain": "Logic"
   },
   "transreal_arithmetic_computing_beyond_plus_minus_i.json": {
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
@@ -1501,6 +1529,14 @@ window.PACKAGE_DB_INDEX = {
       "seed_wave7"
     ],
     "domain": "Algebra"
+  },
+  "stochastic_galois_theory_random_permutations_have_.json": {
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
+    "exp_id": "a1511534",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Geometry"
   },
   "foundational_infrastructure_for_studying_oracle_hi.json": {
     "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points",
@@ -1675,7 +1711,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -1686,7 +1722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -1697,7 +1733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -1708,7 +1744,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -1719,7 +1755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -1741,7 +1777,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -1763,7 +1799,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -1774,7 +1810,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -1785,7 +1821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -1796,7 +1832,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1807,7 +1843,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -1818,7 +1854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1829,7 +1865,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -1840,7 +1876,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1851,7 +1887,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -1862,7 +1898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -1873,7 +1909,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1884,7 +1920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -1895,7 +1931,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -1906,7 +1942,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1917,7 +1953,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1928,7 +1964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:51:11Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7053548000000001,
       "quality": "substantial"
     },
@@ -1972,7 +2008,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -1983,7 +2019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 100,
+      "hue": 271,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1994,7 +2030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 89,
+      "hue": 90,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -2005,7 +2041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -2016,7 +2052,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -2027,7 +2063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -2038,7 +2074,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7722411111111112,
       "quality": "substantial"
     },
@@ -2049,7 +2085,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -2060,7 +2096,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -2071,7 +2107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
     },
@@ -2082,18 +2118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:09Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "reflective_type_theory_proving_things_about_provin",
-      "title": "Reflective Type Theory: Proving Things About Proving Things",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T02:44:40Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2104,7 +2129,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2115,7 +2140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T03:49:22Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2126,7 +2151,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T03:49:46Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2137,7 +2162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T03:50:10Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2148,7 +2173,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T04:22:48Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2159,7 +2184,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T04:23:08Z",
-      "hue": 275,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2170,7 +2195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T04:56:46Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2181,7 +2206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T04:57:07Z",
-      "hue": 100,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2192,7 +2217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T05:29:27Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2214,7 +2239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-01T06:41:41Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2236,7 +2261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:14:52Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2258,7 +2283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:35Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2269,7 +2294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:56Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.5239020000000001,
       "quality": "partial"
     },
@@ -2280,7 +2305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:16:17Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2291,7 +2316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:49:59Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2302,7 +2327,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:20Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2313,7 +2338,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:40Z",
-      "hue": 100,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2324,7 +2349,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:05Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2335,7 +2360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:30Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2346,7 +2371,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:51Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2357,7 +2382,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:56:37Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2379,7 +2404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:28Z",
-      "hue": 275,
+      "hue": 95,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2390,7 +2415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:50Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2401,7 +2426,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:58:10Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2412,7 +2437,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T09:20:02Z",
-      "hue": 112,
+      "hue": 270,
       "priority_score": 0.75499,
       "quality": "substantial"
     },
@@ -2423,7 +2448,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:20:36Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.6771499999999999,
       "quality": "partial"
     },
@@ -2434,7 +2459,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:53:23Z",
-      "hue": 271,
+      "hue": 100,
       "priority_score": 0.7354624999999999,
       "quality": "substantial"
     },
@@ -2445,7 +2470,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:53:45Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7068626477541371,
       "quality": "substantial"
     },
@@ -2456,7 +2481,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:04Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7237490526315788,
       "quality": "substantial"
     },
@@ -2478,7 +2503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:43Z",
-      "hue": 314,
+      "hue": 272,
       "priority_score": 0.7316979622641508,
       "quality": "substantial"
     },
@@ -2489,7 +2514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T10:28:02Z",
-      "hue": 292,
+      "hue": 275,
       "priority_score": 0.72689,
       "quality": "substantial"
     },
@@ -2500,7 +2525,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T10:28:23Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7192423076923078,
       "quality": "substantial"
     },
@@ -2511,7 +2536,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T10:28:42Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7100115384615384,
       "quality": "substantial"
     },
@@ -2522,7 +2547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T10:29:03Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.7388586956521739,
       "quality": "substantial"
     },
@@ -2533,7 +2558,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T11:02:09Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.6633071428571429,
       "quality": "partial"
     },
@@ -2544,7 +2569,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T11:02:30Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.6699192338709679,
       "quality": "partial"
     },
@@ -2566,7 +2591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:35:43Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6856036842105264,
       "quality": "partial"
     },
@@ -2577,7 +2602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:36:05Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7161103693181818,
       "quality": "substantial"
     },
@@ -2588,7 +2613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T11:36:24Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7138660278745645,
       "quality": "substantial"
     },
@@ -2599,7 +2624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T11:36:49Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.6561989411764706,
       "quality": "partial"
     },
@@ -2621,7 +2646,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T12:11:00Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.8202090769230769,
       "quality": "substantial"
     },
@@ -2632,20 +2657,9 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T12:11:20Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7393699999999999,
       "quality": "substantial"
-    },
-    {
-      "id": "yamabe_problem_non_compact_case",
-      "title": "Yamabe Problem: Non-Compact Case \u2014 Algebraic Backbone",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T12:30:52Z",
-      "hue": 270,
-      "priority_score": 0.6631633333333333,
-      "quality": "partial"
     },
     {
       "id": "formal_bridge_between_homotopy_type_theory_hott_an",
@@ -2654,7 +2668,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T12:31:39Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7038752500000001,
       "quality": "substantial"
     },
@@ -2665,7 +2679,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T12:36:37Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6420956756756757,
       "quality": "partial"
     },
@@ -2676,9 +2690,53 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-06-01T12:46:23Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7481675000000001,
       "quality": "substantial"
+    },
+    {
+      "id": "complete_newton_hodge_polygon_framework_for_2_dime",
+      "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
+      "domain": "Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-06-01T13:40:06Z",
+      "hue": 272,
+      "priority_score": 0.6923000000000001,
+      "quality": "partial"
+    },
+    {
+      "id": "yamabe_problem_non_compact_case",
+      "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
+      "domain": "Differential Geometry / Geometric Analysis",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-06-01T13:40:42Z",
+      "hue": 275,
+      "priority_score": 0.49938318181818186,
+      "quality": "partial"
+    },
+    {
+      "id": "reflective_type_theory_proving_things_about_provin",
+      "title": "Reflective Type Theory: Proving Things About Proving Things",
+      "domain": "Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-06-01T13:41:16Z",
+      "hue": 90,
+      "priority_score": 0.7124953271028038,
+      "quality": "substantial"
+    },
+    {
+      "id": "stochastic_galois_theory_random_permutations_have_",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
+      "domain": "Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-06-01T13:41:53Z",
+      "hue": 91,
+      "priority_score": 0.6453740000000001,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -2722,6 +2780,13 @@ window.PACKAGE_GRAPH = {
       "target": "complete_formalized_algebraic_theory_of_quasif",
       "strength": 1.0,
       "label": "Direction 3: Collineation Group Bounds for Non-Desarguesian ",
+      "type": "provenance"
+    },
+    {
+      "source": "newton_hodge_polygon_framework_for_the_p_adic_lang",
+      "target": "complete_newton_hodge_polygon_framework_for_2_dime",
+      "strength": 1.0,
+      "label": "Direction 1: Higher-Dimensional Newton-Hodge Polytopes",
       "type": "provenance"
     },
     {
