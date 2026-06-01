@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2243 of the highest-quality
+A curated collection of 2249 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2243
+Total files: 2249
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -49,6 +49,7 @@ import FINAL.Algebra.ComputationalSoundness
 import FINAL.Algebra.Conditional
 import FINAL.Algebra.Congruence
 import FINAL.Algebra.ConnesKreimerCoproduct
+import FINAL.Algebra.ConsciousnessFixedPoint
 import FINAL.Algebra.Constructions
 import FINAL.Algebra.Convergents
 import FINAL.Algebra.CoordinateRingDepth
@@ -923,8 +924,10 @@ import FINAL.Bridges.WreathPressure
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Catalog.BraidingUniversality
 import FINAL.Catalog.EntropyPowerInequality
+import FINAL.Catalog.HardnessReduction
 import FINAL.Catalog.NewtonHodge
 import FINAL.Catalog.SurrealTopologyExtended
+import FINAL.Catalog.TransrealArithmetic
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
 import FINAL.Computation.AlgorithmicCertificate
@@ -983,6 +986,7 @@ import FINAL.Computation.OptimalPlanning
 import FINAL.Computation.OracleAboutOracle
 import FINAL.Computation.OracleApplicationsFrontier
 import FINAL.Computation.OracleBootstrapGPT2
+import FINAL.Computation.OracleHierarchy
 import FINAL.Computation.OracleStrangeLoop
 import FINAL.Computation.PadicValuationDepth
 import FINAL.Computation.PathSemantics
@@ -1042,6 +1046,7 @@ import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
 import FINAL.Cryptography.CSIFiSh
+import FINAL.Cryptography.CSIFiShDeep
 import FINAL.Cryptography.CollatzOWF
 import FINAL.Cryptography.CollatzOneWay
 import FINAL.Cryptography.CommitmentProtocol
@@ -1061,6 +1066,7 @@ import FINAL.Cryptography.Freeness
 import FINAL.Cryptography.GeometricCryptanalysis
 import FINAL.Cryptography.GroupLaw
 import FINAL.Cryptography.HTLCLightning
+import FINAL.Cryptography.HardnessHierarchy
 import FINAL.Cryptography.HybridTelescope
 import FINAL.Cryptography.KyberCompress
 import FINAL.Cryptography.LeftoverHash

@@ -1,1 +1,1 @@
-algorithms.py (CSIDHKeyExchange class)
+algorithms.py

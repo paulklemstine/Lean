@@ -980,33 +980,6 @@ body.light-theme .gallery-img-container {
     white-space: pre;
 }
 
-/* Lean proof cards — collapsible code blocks */
-.code-container {
-    background-color: var(--bg-panel);
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    animation: borderGlow 8s ease-in-out infinite;
-}
-
-.code-container pre {
-    margin: 0;
-    padding: 24px;
-    overflow-x: auto;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    background-color: var(--bg-panel);
-    white-space: pre;
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.code-container pre code {
-    white-space: pre;
-}
-
 /* Interactive Runner */
 .run-btn {
     background: linear-gradient(135deg, #8844ff, #22ccff);
@@ -1062,11 +1035,8 @@ body.light-theme .gallery-img-container {
 }
 
 .code-editor {
-    display: block;
-    width: 100% !important;
-    max-width: none;
-    min-width: 100%;
-    min-height: 300px;
+    width: 100%;
+    min-height: 450px;
     height: auto;
     padding: 20px 24px;
     background-color: var(--bg-panel);
@@ -1075,14 +1045,10 @@ body.light-theme .gallery-img-container {
     font-size: 0.95rem;
     line-height: 1.6;
     border: none;
+    resize: vertical;
+    outline: none;
     border-bottom: 1px solid var(--border-color);
     box-sizing: border-box;
-    outline: none;
-    resize: vertical;
-}
-
-.code-editor.collapsed {
-    display: none;
 }
 
 .code-editor:focus {
@@ -1144,20 +1110,16 @@ body.light-theme .gallery-img-container {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-muted);
-    padding: 5px 14px;
+    padding: 4px 12px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.82em;
-    font-family: var(--font-sans);
-    font-weight: 500;
+    font-size: 0.85em;
     transition: all 0.2s ease;
-    white-space: nowrap;
 }
 
 .source-toggle:hover {
     color: var(--text-main);
     border-color: var(--accent-color, #7c3aed);
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(34, 204, 255, 0.1));
 }
 
 /* Interactive HTML demo frames */

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "date": "2026-06-01T00:33:21Z",
     "exp_id": "c6e162ae",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.717505375,
+    "quality": "substantial",
     "pkg_num": 38
   },
   {
@@ -1111,8 +1111,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.717505375,
+      "quality": "substantial"
     }
   ],
   "edges": [
