@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "79e453e7",
     "filename": "the_fractal_dimension_of_mathematical_truth.json",
     "pkg_num": 121,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6533074999999999,
     "title": "The Fractal Dimension of Mathematical Truth"
   },
   {
@@ -3734,8 +3734,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_fractal_dimension_of_mathematical_truth",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6533074999999999,
+      "quality": "partial",
       "shape": "star",
       "title": "The Fractal Dimension of Mathematical Truth"
     }
