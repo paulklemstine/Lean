@@ -28,7 +28,7 @@ DOMAIN_INDEX = {d: i for i, d in enumerate(DOMAINS)}
 N_DOMAINS = len(DOMAINS)
 
 # Research modes
-MODES = ["prove", "formalize", "counterexample", "sorry_fill"]
+MODES = ["team", "prove", "formalize", "counterexample", "sorry_fill"]
 MODE_INDEX = {m: i for i, m in enumerate(MODES)}
 
 
@@ -395,18 +395,19 @@ class AristotleLoop:
         domain, ucb_score = self.ucb.select_domain(forced_domain)
 
         # Select research mode
-        # PROVE and FORMALIZE produce world-class results (as shown by Aristotle's
-        # tropical robustness and Satake isomorphism). SORRY_FILL is valuable but
-        # tends to produce computational verification, not deep theory.
-        # Prioritize prove/formalize for novelty; sorry_fill for closing problems.
+        # TEAM mode is the default — it organizes subagents for more compute per cycle.
+        # SORRY_FILL is valuable but tends to produce computational verification, not deep theory.
+        # Prioritize team for new research; sorry_fill for closing problems.
         if sorry_targets and domain in {"Pythagorean", "Shared"} and len(sorry_targets) <= 3:
             # Only sorry_fill on Pythagorean/Shared if there are few targets left
             mode = "sorry_fill"
             mode_score = 1.0
         else:
             mode, mode_score = self.ucb.select_mode(domain)
-            # Boost prove and formalize modes — they produce better research
-            if mode == "formalize":
+            # Boost team mode — it gets more bang for the buck per cycle
+            if mode == "team":
+                mode_score *= 1.4
+            elif mode == "formalize":
                 mode_score *= 1.3
             elif mode == "prove":
                 mode_score *= 1.2

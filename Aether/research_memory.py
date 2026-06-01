@@ -240,7 +240,7 @@ class FutureDirection:
     source_path: str
     domains: List[str] = field(default_factory=list)
     proof_strategy: str = ""
-    research_mode: str = "prove"
+    research_mode: str = "team"
     depth_estimate: int = 3
     priority_score: float = 0.5
     status: str = "available"  # available, in_progress, completed
@@ -460,6 +460,9 @@ class FutureDirectionsManager:
 
     def add_direction(self, direction: FutureDirection) -> None:
         """Add a new future direction. Skips if a very similar title already exists."""
+        # Fix auto-generated cycle-summary titles at ingestion time
+        if direction.title.startswith("This research cycle") or direction.title.startswith("This cycle") or direction.title.startswith("This work"):
+            direction.title = self._fix_auto_title(direction.title, direction.description)
         title_lower = direction.title.lower().strip()
         for existing in self._directions:
             if existing.title.lower().strip() == title_lower:
@@ -667,6 +670,59 @@ class FutureDirectionsManager:
             self.prune_directions(cap=DEFAULT_DIRECTION_CAP)
 
         return (added, synthesis_text)
+
+    @staticmethod
+    def _fix_auto_title(title: str, description: str = "") -> str:
+        """Extract a proper research topic title from auto-generated cycle-summary titles.
+
+        Titles like "This research cycle established a rigorous formal framework for the
+        entropy power inequality" describe what the PREVIOUS cycle did, not what to research.
+        Extract the actual mathematical topic from the tail of such titles.
+
+        Returns a cleaned title, or the original if it doesn't match the pattern.
+        """
+        import re
+        bad_prefixes = [
+            r"^This research cycle (established|demonstrated|showed|proved|introduced|developed|created|built|extended|advanced|explored|investigated|initiated|provided|produced)\s+",
+            r"^This cycle (established|demonstrated|showed|proved|introduced|developed|created|built|extended|advanced|explored|investigated|initiated|provided|produced)\s+",
+            r"^This work (established|demonstrated|showed|proved|introduced|developed|created|built|extended|advanced|explored|investigated|initiated|provided|produced)\s+",
+        ]
+        # Remove articles after the verb phrase ("a ", "an ", "the ")
+        article_re = r"(?:a |an |the )?"
+        for prefix in bad_prefixes:
+            m = re.match(prefix + article_re, title, re.IGNORECASE)
+            if m:
+                remainder = title[m.end():].strip()
+                # Capitalize first letter
+                if remainder:
+                    remainder = remainder[0].upper() + remainder[1:]
+                # Truncate at a reasonable length for a title
+                if len(remainder) > 120:
+                    # Try to cut at a natural boundary (comma, period, colon, or "and")
+                    cut = re.search(r'[,.;:]\s', remainder[:120])
+                    if cut:
+                        remainder = remainder[:cut.start()]
+                    else:
+                        remainder = remainder[:117] + "..."
+                return remainder if remainder else title
+        return title
+
+    def fix_existing_auto_titles(self) -> int:
+        """Fix all existing directions with auto-generated cycle-summary titles.
+
+        Returns the number of titles fixed.
+        """
+        fixed = 0
+        for d in self._directions:
+            if d.title.startswith("This research cycle") or d.title.startswith("This cycle") or d.title.startswith("This work"):
+                new_title = self._fix_auto_title(d.title, d.description)
+                if new_title != d.title:
+                    print(f"[TitleFix] \"{d.title[:60]}...\" → \"{new_title[:60]}\"")
+                    d.title = new_title
+                    fixed += 1
+        if fixed:
+            self._save()
+        return fixed
 
     @staticmethod
     def _extract_bold_field(body: str, field_name: str) -> str:

@@ -1703,7 +1703,7 @@ class PiAgentClient:
             "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
             "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
             "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
-            "team": "Lead a research science team: (1) Hypothesis Team brainstorms falsifiable conjectures, (2) Experiment Team proves/disproves them in Lean 4, (3) Analysis Team examines what survived and what failed, (4) Iteration Lead proposes next hypotheses. Science is a loop: hypothesize → experiment → analyze → repeat. Each cycle advances the frontier.",
+            "team": "Lead a research team to maximize scientific output per cycle. ORGANIZE as: (1) Hypothesis Team — brainstorm 3-5 bold, falsifiable conjectures; (2) Experiment Team — prove or disprove each hypothesis in Lean 4; (3) Analysis Team — examine what survived, what failed, and WHY failures failed — failures teach as much as successes; (4) Writing Team — produce all deliverables (article, paper, demos, HTML widgets) from the team's findings. SCIENCE IS A LOOP: explore → identify patterns → hypothesize → validate → upgrade knowledge → repeat. Each subagent contributes its expertise; the Writing Team synthesizes everything into polished output. More minds = more compute = deeper results.",
         }
 
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
@@ -1754,6 +1754,27 @@ class PiAgentClient:
             ## Assignment: {concept.title}
 
             {mode_line}
+
+            ## Research Cycle: Explore → Pattern → Hypothesize → Validate → Upgrade → Repeat
+
+            You are part of an autonomous research system that runs continuously.
+            Each cycle's output feeds the next cycle's input in a positive feedback loop.
+            Your FUTURE_DIRECTIONS.md determines what the next cycle investigates.
+            The quality of your directions determines the quality of future research.
+
+            Follow this cycle model:
+            1. **Explore** — Survey what exists, find gaps, identify anomalies.
+            2. **Pattern** — Detect structures, connections, and regularities.
+            3. **Hypothesize** — Propose falsifiable conjectures bold enough to matter
+               and specific enough to fail. "Study X further" is not a hypothesis.
+            4. **Validate** — Prove or disprove. Failures teach as much as successes.
+            5. **Upgrade** — Integrate what you learned into the knowledge base.
+            6. **Repeat** — Your FUTURE_DIRECTIONS.md prescribes the next cycle's
+               best, most fruitful research directions.
+
+            The Aristotle prompt drives the research directions, which drive results,
+            which drive the next Aristotle prompt — a positive, self-aware, intelligent
+            feedback loop. Make each cycle count.
 
             {depth_requirements}
 
@@ -1833,6 +1854,10 @@ class PiAgentClient:
             ---
 
             ### Direction 1: [Title]
+
+            Titles MUST be concise research topics (e.g. "Tropical Fermat
+            Last Theorem", "Oracle Hierarchy in Computability"), NOT cycle
+            summaries (NOT "This research cycle established...").
 
             **Conjecture**: A precise mathematical statement that can be proved or disproved.
             **Test**: What specific experiment, calculation, or proof attempt would confirm

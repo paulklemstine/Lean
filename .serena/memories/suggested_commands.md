@@ -18,6 +18,13 @@
 - `lake fmt` — Format Lean source files using leanformat
 - No separate linter; Lean's type checker catches most issues
 
+## Running Aether
+
+- `python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 1800 --serve` — Start Aether continuous loop with local docs server (port 8000)
+- `python3 aether_tick.py --serve --serve-port 3000` — Change the docs server port
+- `python3 aether_tick.py --loop --ollama-cloud --interval 1800` — Run without docs server
+- `python3 aether_tick.py --ollama-cloud` — Single tick (no loop)
+
 ## Git
 - Standard git commands: `git status`, `git add`, `git commit`, `git push`
 - Main branch: `master`
