@@ -146,10 +146,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "e8842ac6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.652777+00:00"
   },
   {
@@ -521,10 +521,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "892c306f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae3ff21c",
     "timestamp": "2026-06-01T14:52:14.469364+00:00"
   },
   {
@@ -851,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.95,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "78286831",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75d05e78",
     "timestamp": "2026-06-01T15:28:03.287615+00:00"
   },
   {
@@ -1091,10 +1091,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.87,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "016ae4c9",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.988298+00:00"
   },
   {
@@ -1409,7 +1409,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "071cdf21",
+    "consumed_by_exp_id": "b74722d2",
     "timestamp": "2026-06-01T12:30:30.490561+00:00"
   },
   {
@@ -1796,10 +1796,10 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "035c8fa4",
-    "consumed_by_exp_id": "e923b297",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T14:51:12.142124+00:00"
   },
   {
@@ -1811,10 +1811,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "b12db4e8",
-    "consumed_by_exp_id": "21f2c1db",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T14:51:52.736022+00:00"
   },
   {
@@ -1826,10 +1826,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "7d04715f",
-    "consumed_by_exp_id": "a6ad1c91",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T16:35:54.932558+00:00"
   },
   {
@@ -1856,10 +1856,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "031ed73c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5aa4c237",
     "timestamp": "2026-06-01T17:09:58.296621+00:00"
   },
   {
@@ -1871,10 +1871,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "adade94b",
-    "consumed_by_exp_id": "18e34d1c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T17:10:18.192216+00:00"
   },
   {
@@ -1886,10 +1886,10 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "5c653e4c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2de776a2",
     "timestamp": "2026-06-01T17:10:35.989068+00:00"
   },
   {
@@ -1901,10 +1901,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "26193fdd",
-    "consumed_by_exp_id": "f037c01f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T17:10:58.326227+00:00"
   },
   {
@@ -1916,10 +1916,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "8a2abb60",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "192c4e93",
     "timestamp": "2026-06-01T17:46:24.743156+00:00"
   },
   {
@@ -1931,10 +1931,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "c4d79127",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb20f772",
     "timestamp": "2026-06-01T17:47:00.759873+00:00"
   },
   {
@@ -1946,10 +1946,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.74,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "77da1fcc",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.528114+00:00"
   },
   {
@@ -2111,10 +2111,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d84104a",
     "timestamp": "2026-06-01T12:30:30.554513+00:00"
   },
   {
