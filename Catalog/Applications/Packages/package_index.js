@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "85949394",
     "filename": "the_thermodynamics_of_sorting_entropy_and_computat.json",
     "pkg_num": 140,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.676806,
     "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
@@ -4341,8 +4341,8 @@ window.PACKAGE_GRAPH = {
       "hue": 134,
       "id": "the_thermodynamics_of_sorting_entropy_and_computat",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.676806,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
     }
