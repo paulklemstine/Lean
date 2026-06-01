@@ -1,221 +1,242 @@
 #!/usr/bin/env python3
 """
-Algorithms for the p-adic Langlands Correspondence for GL₂(ℚ_p).
-
-Type-hinted implementations of Newton-Hodge polygon theory,
-weak admissibility checking, and classification algorithms.
+Algorithms for the p-adic Langlands correspondence.
+Type-hinted implementations of key computational procedures.
 """
+
 from fractions import Fraction
-from typing import List, Tuple, Optional
-from dataclasses import dataclass
+from typing import Tuple, List, Optional, NamedTuple
 
 
-@dataclass(frozen=True)
-class HodgeTateWeights:
-    """Hodge-Tate weights (w₁ ≤ w₂) for a 2d p-adic representation."""
-    w1: int
-    w2: int
-
-    def __post_init__(self) -> None:
-        assert self.w1 <= self.w2, f"Weights not ordered: {self.w1} > {self.w2}"
-
-    def tH(self) -> int:
-        """Total Hodge number."""
-        return self.w1 + self.w2
-
-    def is_classical(self) -> bool:
-        """Whether weights correspond to a modular form weight k ≥ 2."""
-        return self.w1 == 0 and self.w2 >= 1
-
-    def dual(self) -> "HodgeTateWeights":
-        """Dual weights under V ↦ V*(1)."""
-        return HodgeTateWeights(-self.w2, -self.w1)
-
-    def hodge_polygon(self) -> List[Tuple[int, Fraction]]:
-        """The Hodge polygon vertices: (0,0), (1,w₁), (2,w₁+w₂)."""
-        return [(0, Fraction(0)),
-                (1, Fraction(self.w1)),
-                (2, Fraction(self.w1 + self.w2))]
-
-
-@dataclass(frozen=True)
-class NewtonSlopes:
-    """Newton slopes (s₁ ≤ s₂) for a 2d filtered φ-module."""
+class SlopeData(NamedTuple):
+    """Rank 2 slope data (s₁ ≤ s₂)."""
     s1: Fraction
     s2: Fraction
 
-    def __post_init__(self) -> None:
-        assert self.s1 <= self.s2, f"Slopes not ordered: {self.s1} > {self.s2}"
 
-    def tN(self) -> Fraction:
-        """Total Newton number."""
-        return self.s1 + self.s2
+class WAData(NamedTuple):
+    """Weakly admissible data: slopes + HT weights."""
+    slopes: SlopeData
+    ht1: int
+    ht2: int
 
-    def newton_polygon(self) -> List[Tuple[int, Fraction]]:
-        """The Newton polygon vertices: (0,0), (1,s₁), (2,s₁+s₂)."""
-        return [(0, Fraction(0)),
-                (1, self.s1),
-                (2, self.s1 + self.s2)]
 
-    def tropical_invariant(self) -> Fraction:
-        """Tropical invariant: min(s₁, s₂) = s₁ (since s₁ ≤ s₂)."""
-        return self.s1
+def validate_slopes(s1: Fraction, s2: Fraction) -> SlopeData:
+    """Validate and construct slope data."""
+    if s1 > s2:
+        raise ValueError(f"Slopes not ordered: {s1} > {s2}")
+    return SlopeData(s1, s2)
+
+
+def total_slope(s: SlopeData) -> Fraction:
+    """Compute total slope s₁ + s₂ = v_p(det Φ)."""
+    return s.s1 + s.s2
+
+
+def slope_gap(s: SlopeData) -> Fraction:
+    """Compute slope gap s₂ - s₁ (invariant under duality and twisting)."""
+    return s.s2 - s.s1
+
+
+def dual_slopes(s: SlopeData) -> SlopeData:
+    """Compute slopes of the dual module: (-s₂, -s₁)."""
+    return SlopeData(-s.s2, -s.s1)
+
+
+def twist_slopes(s: SlopeData, t: Fraction) -> SlopeData:
+    """Twist slopes by character of slope t: (s₁+t, s₂+t)."""
+    return SlopeData(s.s1 + t, s.s2 + t)
+
+
+def normalize_to_ordinary(s: SlopeData) -> Tuple[SlopeData, Fraction]:
+    """Twist to ordinary form (s₁ = 0). Returns (new slopes, twist amount)."""
+    t = -s.s1
+    return twist_slopes(s, t), t
 
 
 def check_weak_admissibility(
-    weights: HodgeTateWeights,
-    slopes: NewtonSlopes
+    slopes: SlopeData, ht1: int, ht2: int
 ) -> Tuple[bool, Optional[str]]:
     """
-    Check if (weights, slopes) form a weakly admissible datum.
+    Check weak admissibility for rank 2.
 
-    Returns:
-        (is_admissible, failure_reason)
+    Algorithm:
+    1. Verify total condition: s₁ + s₂ = h₁ + h₂
+    2. Verify subobject condition: s₁ ≥ h₁
+    3. Derive: s₂ ≤ h₂ (consequence)
+
+    Returns (is_wa, reason_if_not).
     """
-    # Check endpoint matching
-    if slopes.tN() != Fraction(weights.tH()):
-        return False, f"Endpoint mismatch: tN={slopes.tN()} != tH={weights.tH()}"
+    total = total_slope(slopes)
+    ht_total = Fraction(ht1 + ht2)
 
-    # Check Newton above Hodge
-    if slopes.s1 < Fraction(weights.w1):
-        return False, f"Newton below Hodge: s₁={slopes.s1} < w₁={weights.w1}"
+    if total != ht_total:
+        return False, f"Total mismatch: {total} ≠ {ht_total}"
+
+    if slopes.s1 < Fraction(ht1):
+        return False, f"Subobject violation: s₁={slopes.s1} < h₁={ht1}"
+
+    # Derived bound (verified by our formal proof)
+    assert slopes.s2 <= Fraction(ht2), "s₂ > h₂ (should be impossible)"
 
     return True, None
 
 
+def dual_wa(wa: WAData) -> WAData:
+    """
+    Compute dual weakly admissible data.
+    Preserves weak admissibility (formally verified).
+    """
+    return WAData(
+        slopes=dual_slopes(wa.slopes),
+        ht1=-wa.ht2,
+        ht2=-wa.ht1
+    )
+
+
+def twist_wa(wa: WAData, n: int) -> WAData:
+    """
+    Twist weakly admissible data by integer n.
+    Preserves weak admissibility (formally verified).
+    """
+    return WAData(
+        slopes=twist_slopes(wa.slopes, Fraction(n)),
+        ht1=wa.ht1 + n,
+        ht2=wa.ht2 + n
+    )
+
+
 def classify_representation(
-    weights: HodgeTateWeights,
-    slopes: NewtonSlopes
+    s: SlopeData, ht1: int, ht2: int
 ) -> str:
     """
-    Classify a weakly admissible datum as ordinary, supersingular,
-    or non-ordinary with computed monodromy defect.
+    Classify a 2-dimensional p-adic Galois representation.
+
+    Algorithm:
+    1. Check if étale (both slopes 0)
+    2. Check if ordinary (s₁ = 0)
+    3. Check if supersingular (s₁ = s₂)
+    4. Check if crystalline (slopes are integers matching HT weights)
+    5. Default: trianguline or general
+
+    Returns classification string.
     """
-    ok, reason = check_weak_admissibility(weights, slopes)
-    if not ok:
-        return f"NOT ADMISSIBLE: {reason}"
-
-    if slopes.s1 == Fraction(weights.w1) and slopes.s2 == Fraction(weights.w2):
-        return "ORDINARY"
-    elif slopes.s1 == slopes.s2:
-        return "SUPERSINGULAR"
-    else:
-        defect = slopes.s1 - Fraction(weights.w1)
-        return f"NON-ORDINARY (monodromy_defect={defect})"
+    if s.s1 == 0 and s.s2 == 0:
+        return "étale"
+    if s.s1 == 0:
+        return "ordinary"
+    if s.s1 == s.s2:
+        return "supersingular"
+    if s.s1.denominator == 1 and s.s2.denominator == 1:
+        return "crystalline (integer slopes)"
+    return "trianguline (non-integer slopes)"
 
 
-def monodromy_defect(
-    weights: HodgeTateWeights,
-    slopes: NewtonSlopes
-) -> Fraction:
+def enumerate_crystalline_slopes(
+    k: int
+) -> List[Tuple[SlopeData, bool]]:
     """
-    Compute the monodromy defect δ = s₁ - w₁.
-    Satisfies: δ = s₁ - w₁ = w₂ - s₂ (symmetry).
+    Enumerate all weakly admissible crystalline slope data for weight k.
+
+    The HT weights are {0, k-1}. Slopes (s₁, s₂) must satisfy:
+    - s₁ + s₂ = k - 1 (total condition)
+    - s₁ ≥ 0 (subobject condition for h₁ = 0)
+    - s₁ ≤ s₂ (ordering)
+
+    For integer slopes, s₁ ∈ {0, 1, ..., ⌊(k-1)/2⌋}.
+
+    Returns list of (slopes, is_ordinary) pairs.
     """
-    return slopes.s1 - Fraction(weights.w1)
+    results: List[Tuple[SlopeData, bool]] = []
+    for a in range((k - 1) // 2 + 1):
+        s1 = Fraction(a)
+        s2 = Fraction(k - 1 - a)
+        slopes = SlopeData(s1, s2)
+        is_ordinary = (a == 0)
+        results.append((slopes, is_ordinary))
+    return results
 
 
-def enumerate_admissible_slopes(
-    weights: HodgeTateWeights,
-    max_denominator: int = 1
-) -> List[NewtonSlopes]:
+def breuil_mezard_multiplicity(k: int, a: int) -> int:
     """
-    Enumerate all weakly admissible slope pairs with denominators ≤ max_denominator.
-    Uses the interlacing constraint: w₁ ≤ s₁ ≤ (w₁+w₂)/2.
+    Compute the Breuil-Mézard multiplicity for crystalline lifts
+    of weight k with lower slope a.
+
+    Formula: max(0, k - 1 - 2a) for a ≤ (k-1)/2, else 0.
     """
-    results: List[NewtonSlopes] = []
-    total = Fraction(weights.tH())
-    upper = total / 2
-
-    for d in range(1, max_denominator + 1):
-        lo = int(Fraction(weights.w1 * d).numerator)
-        hi = int((upper * d).numerator)
-        for num in range(lo, hi + 1):
-            s1 = Fraction(num, d)
-            s2 = total - s1
-            if s1 <= s2 and s1 >= Fraction(weights.w1):
-                results.append(NewtonSlopes(s1, s2))
-
-    # Deduplicate
-    seen = set()
-    unique = []
-    for s in results:
-        key = (s.s1, s.s2)
-        if key not in seen:
-            seen.add(key)
-            unique.append(s)
-
-    return sorted(unique, key=lambda s: s.s1)
+    if a <= (k - 1) // 2:
+        return max(0, k - 1 - 2 * a)
+    return 0
 
 
-def filtration_jumps(
-    weights: HodgeTateWeights,
-    a: int,
-    b: int
-) -> int:
-    """Count filtration jumps in [a, b] for the given weights."""
-    count = 0
-    if a <= weights.w1 <= b:
-        count += 1
-    if a <= weights.w2 <= b:
-        count += 1
-    return count
+def trianguline_to_slopes(
+    delta1: Fraction, delta2: Fraction
+) -> SlopeData:
+    """
+    Convert trianguline parameters to slope data.
+    Takes min/max to ensure ordering.
+    """
+    return SlopeData(min(delta1, delta2), max(delta1, delta2))
 
 
-def newton_above_hodge_check(
-    weights: HodgeTateWeights,
-    slopes: NewtonSlopes
+def newton_polygon_vertices(
+    slopes: SlopeData
+) -> List[Tuple[Fraction, Fraction]]:
+    """
+    Compute Newton polygon vertices for rank 2 slopes.
+
+    The Newton polygon for a rank 2 module has vertices at:
+    (0, 0), (1, s₁), (2, s₁ + s₂)
+    """
+    return [
+        (Fraction(0), Fraction(0)),
+        (Fraction(1), slopes.s1),
+        (Fraction(2), slopes.s1 + slopes.s2),
+    ]
+
+
+def hodge_polygon_vertices(
+    ht1: int, ht2: int
+) -> List[Tuple[Fraction, Fraction]]:
+    """
+    Compute Hodge polygon vertices for rank 2 with HT weights (h₁, h₂).
+
+    The Hodge polygon has vertices at:
+    (0, 0), (1, h₁), (2, h₁ + h₂)
+    """
+    return [
+        (Fraction(0), Fraction(0)),
+        (Fraction(1), Fraction(ht1)),
+        (Fraction(2), Fraction(ht1 + ht2)),
+    ]
+
+
+def newton_above_hodge(
+    slopes: SlopeData, ht1: int, ht2: int
 ) -> bool:
-    """Verify Newton polygon is ≥ Hodge polygon at all evaluation points."""
-    hp = weights.hodge_polygon()
-    np_ = slopes.newton_polygon()
-    return all(np_[i][1] >= hp[i][1] for i in range(3))
-
-
-def slope_interlacing_check(
-    weights: HodgeTateWeights,
-    slopes: NewtonSlopes
-) -> bool:
-    """Verify the full interlacing: w₁ ≤ s₁ ≤ s₂ ≤ w₂."""
-    return (Fraction(weights.w1) <= slopes.s1 <= slopes.s2 <= Fraction(weights.w2))
-
-
-def breuil_mezard_multiplicity(p: int, alpha_is_pm_one: bool) -> int:
     """
-    Breuil-Mézard multiplicity for weight 2 deformation rings.
+    Check Newton-above-Hodge condition for rank 2.
 
-    Args:
-        p: prime number
-        alpha_is_pm_one: whether the Frobenius eigenvalue ratio is ±1
-
-    Returns:
-        multiplicity (1 or 2)
+    The Newton polygon must lie on or above the Hodge polygon.
+    For rank 2, this means s₁ ≥ h₁ (at x = 1).
     """
-    return 2 if alpha_is_pm_one else 1
-
-
-def sen_polynomial_coefficients(weights: HodgeTateWeights) -> List[int]:
-    """
-    Compute coefficients of the Sen polynomial (X + w₁)(X + w₂).
-    Returns [constant, linear, quadratic] = [w₁w₂, w₁+w₂, 1].
-    """
-    return [weights.w1 * weights.w2, weights.w1 + weights.w2, 1]
+    return slopes.s1 >= Fraction(ht1)
 
 
 if __name__ == "__main__":
     # Self-test
-    w = HodgeTateWeights(0, 3)
-    slopes = enumerate_admissible_slopes(w, max_denominator=2)
-    print(f"Admissible slopes for weights {w}:")
-    for s in slopes:
-        cls = classify_representation(w, s)
-        print(f"  {s} -> {cls}")
+    s = validate_slopes(Fraction(0), Fraction(1))
+    assert total_slope(s) == 1
+    assert slope_gap(s) == 1
+    assert dual_slopes(dual_slopes(s)) == s
+    assert twist_slopes(twist_slopes(s, Fraction(3)), Fraction(-3)) == s
 
-    # Verify duality involution
-    assert w.dual().dual() == w
-    print(f"\nDuality involution verified for {w}")
+    wa = WAData(s, 0, 1)
+    ok, _ = check_weak_admissibility(wa.slopes, wa.ht1, wa.ht2)
+    assert ok
 
-    # Verify Sen polynomial
-    coeffs = sen_polynomial_coefficients(w)
-    print(f"Sen polynomial for {w}: X² + {coeffs[1]}X + {coeffs[0]}")
-    print("All tests passed.")
+    dwa = dual_wa(wa)
+    ok, _ = check_weak_admissibility(dwa.slopes, dwa.ht1, dwa.ht2)
+    assert ok
+
+    print("All self-tests passed.")

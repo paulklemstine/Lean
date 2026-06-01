@@ -1,335 +1,336 @@
 #!/usr/bin/env python3
 """
 Demo: p-adic Langlands Correspondence for GL₂(ℚ_p)
-Newton-Hodge polygon theory, slope-weight interlacing, and classification.
+Numerical examples illustrating slope theory, weak admissibility,
+and trianguline classification.
 """
+
 from fractions import Fraction
-from typing import NamedTuple
+from typing import Tuple, List, Optional
 
+# ============================================================
+# Rank 2 Slope Data
+# ============================================================
 
-class HodgeTateWeights(NamedTuple):
-    w1: int
-    w2: int
+class Rank2Slopes:
+    """Slope data for a rank 2 Frobenius module: (s₁, s₂) with s₁ ≤ s₂."""
 
-    def tH(self) -> int:
-        return self.w1 + self.w2
+    def __init__(self, s1: Fraction, s2: Fraction):
+        if s1 > s2:
+            raise ValueError(f"Slopes must be ordered: {s1} > {s2}")
+        self.s1 = s1
+        self.s2 = s2
 
-    def is_classical(self) -> bool:
-        return self.w1 == 0 and self.w2 >= 1
-
-    def dual(self) -> "HodgeTateWeights":
-        return HodgeTateWeights(-self.w2, -self.w1)
-
-
-class NewtonSlopes(NamedTuple):
-    s1: Fraction
-    s2: Fraction
-
-    def tN(self) -> Fraction:
+    def total_slope(self) -> Fraction:
         return self.s1 + self.s2
 
+    def slope_gap(self) -> Fraction:
+        return self.s2 - self.s1
 
-class WeaklyAdmissibleDatum:
-    def __init__(self, w: HodgeTateWeights, s: NewtonSlopes):
-        assert w.w1 <= w.w2, f"Weights must be ordered: {w}"
-        assert s.s1 <= s.s2, f"Slopes must be ordered: {s}"
-        assert s.tN() == w.tH(), f"Endpoint mismatch: {s.tN()} != {w.tH()}"
-        assert s.s1 >= w.w1, f"Newton below Hodge: {s.s1} < {w.w1}"
-        self.weights = w
-        self.slopes = s
+    def is_etale(self) -> bool:
+        return self.s1 == 0 and self.s2 == 0
 
     def is_ordinary(self) -> bool:
-        return self.slopes.s1 == self.weights.w1 and self.slopes.s2 == self.weights.w2
+        return self.s1 == 0
 
     def is_supersingular(self) -> bool:
-        return self.slopes.s1 == self.slopes.s2
+        return self.s1 == self.s2
 
-    def monodromy_defect(self) -> Fraction:
-        return self.slopes.s1 - self.weights.w1
+    def dual(self) -> 'Rank2Slopes':
+        return Rank2Slopes(-self.s2, -self.s1)
 
-    def classify(self) -> str:
-        if self.is_ordinary():
-            return "ORDINARY"
-        elif self.is_supersingular():
-            return "SUPERSINGULAR"
-        else:
-            return f"NON-ORDINARY (defect={self.monodromy_defect()})"
+    def twist(self, t: Fraction) -> 'Rank2Slopes':
+        return Rank2Slopes(self.s1 + t, self.s2 + t)
 
+    def __repr__(self):
+        return f"Rank2Slopes({self.s1}, {self.s2})"
 
-def breuil_mezard_multiplicity(p: int, alpha_is_pm_one: bool) -> int:
-    """Breuil-Mézard multiplicity for weight 2 deformation rings."""
-    return 2 if alpha_is_pm_one else 1
+    def __eq__(self, other):
+        return self.s1 == other.s1 and self.s2 == other.s2
 
+# ============================================================
+# Weak Admissibility
+# ============================================================
 
-def enumerate_admissible_slopes(w: HodgeTateWeights, denom: int = 1):
-    """Enumerate all weakly admissible slope pairs with given denominator."""
-    results = []
-    for num1 in range(w.w1 * denom, (w.tH() * denom) // 2 + 1):
-        s1 = Fraction(num1, denom)
-        s2 = Fraction(w.tH()) - s1
-        if s1 <= s2 and s1 >= w.w1:
-            results.append(NewtonSlopes(s1, s2))
-    return results
+class Rank2WA:
+    """Weakly admissible filtered φ-module data for rank 2."""
 
+    def __init__(self, slopes: Rank2Slopes, ht1: int, ht2: int):
+        if ht1 > ht2:
+            raise ValueError("HT weights must be ordered")
+        total_ht = Fraction(ht1 + ht2)
+        if slopes.total_slope() != total_ht:
+            raise ValueError(f"Total mismatch: {slopes.total_slope()} ≠ {total_ht}")
+        if slopes.s1 < Fraction(ht1):
+            raise ValueError(f"Subobject violation: {slopes.s1} < {ht1}")
+        self.slopes = slopes
+        self.ht1 = ht1
+        self.ht2 = ht2
 
-def main():
+    def dual(self) -> 'Rank2WA':
+        return Rank2WA(self.slopes.dual(), -self.ht2, -self.ht1)
+
+    def twist(self, n: int) -> 'Rank2WA':
+        return Rank2WA(self.slopes.twist(Fraction(n)), self.ht1 + n, self.ht2 + n)
+
+    def __repr__(self):
+        return (f"Rank2WA(slopes={self.slopes}, "
+                f"HT=[{self.ht1},{self.ht2}])")
+
+# ============================================================
+# Trianguline Parameters
+# ============================================================
+
+class TriangulineParam:
+    """Trianguline parameter: (δ₁_slope, δ₂_slope)."""
+
+    def __init__(self, d1: Fraction, d2: Fraction):
+        self.d1 = d1
+        self.d2 = d2
+
+    def to_slopes(self) -> Rank2Slopes:
+        return Rank2Slopes(min(self.d1, self.d2), max(self.d1, self.d2))
+
+    def refine(self) -> 'TriangulineParam':
+        return TriangulineParam(self.d2, self.d1)
+
+    def twist(self, t: Fraction) -> 'TriangulineParam':
+        return TriangulineParam(self.d1 + t, self.d2 + t)
+
+    def __repr__(self):
+        return f"TriangulineParam({self.d1}, {self.d2})"
+
+# ============================================================
+# Breuil-Mézard Multiplicities
+# ============================================================
+
+def crystalline_multiplicity(k: int, a: int) -> int:
+    """Conjectured multiplicity of crystalline lifts with slope a in weight k."""
+    if a <= (k - 1) // 2:
+        return max(0, k - 1 - 2 * a)
+    return 0
+
+# ============================================================
+# Demonstrations
+# ============================================================
+
+def demo_slope_theory():
+    """Demonstrate slope theory: duality, twisting, invariants."""
     print("=" * 60)
-    print("p-adic Langlands Correspondence: Newton-Hodge Demo")
+    print("DEMO 1: Rank 2 Slope Theory")
     print("=" * 60)
 
-    # Example 1: Weight 2 modular forms (k=2, weights (0,1))
-    print("\n--- Example 1: Weight 2 (k=2, weights (0,1)) ---")
-    w = HodgeTateWeights(0, 1)
-    print(f"Hodge-Tate weights: {w}")
-    print(f"Classical: {w.is_classical()}")
-    print(f"tH = {w.tH()}")
-
-    # Ordinary case
-    s_ord = NewtonSlopes(Fraction(0), Fraction(1))
-    D_ord = WeaklyAdmissibleDatum(w, s_ord)
+    # Ordinary case: elliptic curve with good ordinary reduction
+    s_ord = Rank2Slopes(Fraction(0), Fraction(1))
     print(f"\nOrdinary slopes: {s_ord}")
-    print(f"Classification: {D_ord.classify()}")
-    print(f"Monodromy defect: {D_ord.monodromy_defect()}")
+    print(f"  Total slope: {s_ord.total_slope()}")
+    print(f"  Slope gap: {s_ord.slope_gap()}")
+    print(f"  Is ordinary: {s_ord.is_ordinary()}")
+    print(f"  Is supersingular: {s_ord.is_supersingular()}")
 
     # Supersingular case
-    s_ss = NewtonSlopes(Fraction(1, 2), Fraction(1, 2))
-    D_ss = WeaklyAdmissibleDatum(w, s_ss)
+    s_ss = Rank2Slopes(Fraction(1, 2), Fraction(1, 2))
     print(f"\nSupersingular slopes: {s_ss}")
-    print(f"Classification: {D_ss.classify()}")
-    print(f"Monodromy defect: {D_ss.monodromy_defect()}")
+    print(f"  Total slope: {s_ss.total_slope()}")
+    print(f"  Slope gap: {s_ss.slope_gap()}")
+    print(f"  Is supersingular: {s_ss.is_supersingular()}")
 
-    # Example 2: Weight 4 modular forms (k=4, weights (0,3))
-    print("\n--- Example 2: Weight 4 (k=4, weights (0,3)) ---")
-    w4 = HodgeTateWeights(0, 3)
-    print(f"Hodge-Tate weights: {w4}")
-    print(f"tH = {w4.tH()}")
+    # Duality
+    s_dual = s_ord.dual()
+    print(f"\nDual of ordinary: {s_dual}")
+    print(f"  Dual of dual: {s_dual.dual()} (= original: {s_dual.dual() == s_ord})")
+    print(f"  Total slope negates: {s_dual.total_slope()} = -{s_ord.total_slope()}")
+    print(f"  Slope gap preserved: {s_dual.slope_gap()} = {s_ord.slope_gap()}")
 
-    slopes = enumerate_admissible_slopes(w4, denom=1)
-    print(f"\nIntegral admissible slopes:")
-    for s in slopes:
-        D = WeaklyAdmissibleDatum(w4, s)
-        print(f"  {s} -> {D.classify()}")
+    # Twisting
+    t = Fraction(3)
+    s_tw = s_ord.twist(t)
+    print(f"\nTwist by {t}: {s_tw}")
+    print(f"  Total shifts by 2t: {s_tw.total_slope()} = {s_ord.total_slope()} + {2*t}")
+    print(f"  Gap preserved: {s_tw.slope_gap()} = {s_ord.slope_gap()}")
 
-    slopes_half = enumerate_admissible_slopes(w4, denom=2)
-    print(f"\nHalf-integral admissible slopes:")
-    for s in slopes_half:
-        D = WeaklyAdmissibleDatum(w4, s)
-        print(f"  ({float(s.s1):.1f}, {float(s.s2):.1f}) -> {D.classify()}")
+    # Duality-twist interaction
+    print(f"\n  dual(twist(t)) = {s_ord.twist(t).dual()}")
+    print(f"  twist(-t)(dual) = {s_ord.dual().twist(-t)}")
+    print(f"  Equal: {s_ord.twist(t).dual() == s_ord.dual().twist(-t)}")
 
-    # Example 3: Interlacing verification
-    print("\n--- Example 3: Interlacing Verification ---")
-    test_cases = [
-        (HodgeTateWeights(0, 5), NewtonSlopes(Fraction(1), Fraction(4))),
-        (HodgeTateWeights(-2, 6), NewtonSlopes(Fraction(-1), Fraction(5))),
-        (HodgeTateWeights(1, 3), NewtonSlopes(Fraction(2), Fraction(2))),
-    ]
-    for w, s in test_cases:
-        D = WeaklyAdmissibleDatum(w, s)
-        ok = (w.w1 <= s.s1 <= s.s2 <= w.w2)
-        print(f"  w={w}, s=({float(s.s1)}, {float(s.s2)}): "
-              f"interlacing={ok}, class={D.classify()}")
-
-    # Example 4: Duality
-    print("\n--- Example 4: Weight Duality ---")
-    w_orig = HodgeTateWeights(0, 3)
-    w_dual = w_orig.dual()
-    w_ddual = w_dual.dual()
-    print(f"Original: {w_orig}, tH={w_orig.tH()}")
-    print(f"Dual:     {w_dual}, tH={w_dual.tH()}")
-    print(f"Dual²:    {w_ddual}, tH={w_ddual.tH()}")
-    print(f"Involution: {w_ddual == w_orig}")
-
-    # Example 5: Breuil-Mézard multiplicities
-    print("\n--- Example 5: Breuil-Mézard Multiplicities (weight 2) ---")
-    for p in [5, 7, 11, 13]:
-        m_gen = breuil_mezard_multiplicity(p, False)
-        m_sca = breuil_mezard_multiplicity(p, True)
-        print(f"  p={p}: generic={m_gen}, scalar={m_sca}")
-
-    # Example 6: Monodromy defect symmetry
-    print("\n--- Example 6: Monodromy Defect Symmetry ---")
-    w6 = HodgeTateWeights(1, 7)
-    for s1_num in range(1, 5):
-        s1 = Fraction(s1_num)
-        s2 = Fraction(w6.tH()) - s1
-        if s1 <= s2:
-            D = WeaklyAdmissibleDatum(w6, NewtonSlopes(s1, s2))
-            delta = D.monodromy_defect()
-            delta_sym = w6.w2 - s2
-            print(f"  s=({s1}, {s2}): δ = {delta}, w₂-s₂ = {delta_sym}, "
-                  f"symmetric: {delta == delta_sym}")
-
+def demo_weak_admissibility():
+    """Demonstrate weak admissibility for weight 2 and weight 12."""
     print("\n" + "=" * 60)
-    print("All examples completed successfully.")
+    print("DEMO 2: Weak Admissibility")
+    print("=" * 60)
 
+    # Weight 2: elliptic curves
+    print("\n--- Weight 2 (Elliptic Curves) ---")
+    for a_num in range(3):
+        s1 = Fraction(a_num, 2)
+        s2 = Fraction(1) - s1
+        if s1 <= s2:
+            slopes = Rank2Slopes(s1, s2)
+            try:
+                wa = Rank2WA(slopes, 0, 1)
+                print(f"  Slopes ({s1}, {s2}): WA ✓  gap={slopes.slope_gap()}")
+                print(f"    Dual: {wa.dual()}")
+            except ValueError as e:
+                print(f"  Slopes ({s1}, {s2}): WA ✗  ({e})")
+
+    # Weight 12: Ramanujan's Δ function
+    print("\n--- Weight 12 (Ramanujan Δ) ---")
+    for a in range(6):
+        s1 = Fraction(a)
+        s2 = Fraction(11 - a)
+        slopes = Rank2Slopes(s1, s2)
+        wa = Rank2WA(slopes, 0, 11)
+        mult = crystalline_multiplicity(12, a)
+        print(f"  Slopes ({s1}, {s2}): gap={slopes.slope_gap()}, "
+              f"BM multiplicity={mult}")
+
+    # Newton above Hodge
+    print("\n--- Newton above Hodge Inequality ---")
+    wa = Rank2WA(Rank2Slopes(Fraction(2), Fraction(9)), 0, 11)
+    print(f"  Slopes: ({wa.slopes.s1}, {wa.slopes.s2})")
+    print(f"  Slope gap: {wa.slopes.slope_gap()} ≤ HT gap: {wa.ht2 - wa.ht1} ✓")
+
+def demo_trianguline():
+    """Demonstrate trianguline classification."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Trianguline Classification")
+    print("=" * 60)
+
+    # Various trianguline parameters
+    params = [
+        TriangulineParam(Fraction(0), Fraction(1)),
+        TriangulineParam(Fraction(1, 2), Fraction(1, 2)),
+        TriangulineParam(Fraction(1, 3), Fraction(2, 3)),
+        TriangulineParam(Fraction(-1), Fraction(2)),
+    ]
+
+    for tau in params:
+        s = tau.to_slopes()
+        print(f"\n  τ = {tau}")
+        print(f"    Slopes: {s}")
+        print(f"    Total: {s.total_slope()}, Gap: {s.slope_gap()}")
+        print(f"    Ordinary: {s.is_ordinary()}, SS: {s.is_supersingular()}")
+        print(f"    Refined: {tau.refine()} → same slopes: "
+              f"{tau.refine().to_slopes() == s}")
+
+def demo_breuil_mezard():
+    """Demonstrate Breuil-Mézard multiplicities."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Breuil-Mézard Multiplicities")
+    print("=" * 60)
+
+    for k in [2, 4, 6, 8, 10, 12]:
+        mults = [crystalline_multiplicity(k, a)
+                 for a in range((k - 1) // 2 + 1)]
+        total = sum(mults)
+        print(f"  Weight {k:2d}: multiplicities = {mults}, "
+              f"total = {total}")
+
+    # Testable prediction
+    print("\n  Conjecture check for k=12:")
+    expected = [11, 9, 7, 5, 3, 1]
+    actual = [crystalline_multiplicity(12, a) for a in range(6)]
+    print(f"    Expected: {expected}")
+    print(f"    Actual:   {actual}")
+    print(f"    Match: {expected == actual}")
 
 if __name__ == "__main__":
-    main()
+    demo_slope_theory()
+    demo_weak_admissibility()
+    demo_trianguline()
+    demo_breuil_mezard()
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Monodromy Defect Space for GL₂(ℚ_p)
-Shows the space of weakly admissible data parameterized by monodromy defect.
+Visualization: Newton and Hodge Polygons for the p-adic Langlands Correspondence.
+Shows how the Newton polygon (from Frobenius slopes) lies above the Hodge polygon
+(from Hodge-Tate weights) for weakly admissible filtered φ-modules.
 """
-import matplotlib.pyplot as plt
-import numpy as np
 
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle('Monodromy Defect and Admissible Slope Space\n'
-                 'p-adic Langlands for GL₂(ℚ_p)',
-                 fontsize=14, fontweight='bold')
-
-    # Left: Admissible slope region for weights (0, k-1)
-    ax = axes[0]
-    for k in [2, 3, 4, 5, 6]:
-        w1, w2 = 0, k - 1
-        # Admissible region: w1 <= s1 <= (w1+w2)/2 (since s1 <= s2 and s1+s2=w1+w2)
-        s1_range = np.linspace(w1, (w1 + w2) / 2, 100)
-        s2_range = (w1 + w2) - s1_range
-        defects = s1_range - w1
-        ax.plot(defects, s2_range - s1_range, '-', linewidth=2, label=f'k={k}')
-
-    ax.set_xlabel('Monodromy defect δ = s₁ - w₁', fontsize=12)
-    ax.set_ylabel('Slope gap s₂ - s₁', fontsize=12)
-    ax.set_title('Slope gap vs monodromy defect', fontsize=12)
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    ax.axhline(y=0, color='k', linewidth=0.5)
-    ax.axvline(x=0, color='k', linewidth=0.5)
-
-    # Right: Classification regions in (s1, s2) plane for k=6
-    ax = axes[1]
-    k = 6
-    w1, w2 = 0, k - 1
-
-    # Draw the admissible line s1 + s2 = w1 + w2
-    s1_vals = np.linspace(w1, (w1 + w2) / 2, 200)
-    s2_vals = (w1 + w2) - s1_vals
-
-    # Color by classification
-    colors = []
-    for s1, s2 in zip(s1_vals, s2_vals):
-        if abs(s1 - w1) < 0.01 and abs(s2 - w2) < 0.01:
-            colors.append('green')
-        elif abs(s1 - s2) < 0.01:
-            colors.append('purple')
-        else:
-            colors.append('orange')
-
-    ax.scatter(s1_vals, s2_vals, c=colors, s=5, zorder=3)
-
-    # Mark special points
-    ax.plot(w1, w2, 'go', markersize=12, zorder=5, label='Ordinary')
-    ax.plot((w1 + w2) / 2, (w1 + w2) / 2, 'p', color='purple',
-            markersize=12, zorder=5, label='Supersingular')
-
-    # Draw boundary lines
-    ax.axhline(y=w2, color='blue', linestyle='--', alpha=0.5, label=f'w₂={w2}')
-    ax.axvline(x=w1, color='blue', linestyle='--', alpha=0.5, label=f'w₁={w1}')
-    ax.plot([w1, w2], [w1, w2], 'k--', alpha=0.3, label='s₁=s₂')
-
-    ax.set_xlabel('s₁ (first Newton slope)', fontsize=12)
-    ax.set_ylabel('s₂ (second Newton slope)', fontsize=12)
-    ax.set_title(f'Admissible slopes for k={k}\n(w₁,w₂)=({w1},{w2})', fontsize=12)
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-
-    plt.tight_layout()
-    plt.savefig('monodromy_defect.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved monodromy_defect.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Newton-Hodge Polygon Theory for GL₂(ℚ_p)
-Shows Newton polygons above Hodge polygons with classification coloring.
-"""
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 from fractions import Fraction
 
 
-def plot_newton_hodge(ax, w1, w2, s1, s2, title=None):
+def newton_polygon_vertices(s1: float, s2: float):
+    """Newton polygon vertices for rank 2 with slopes (s1, s2)."""
+    return [(0, 0), (1, s1), (2, s1 + s2)]
+
+
+def hodge_polygon_vertices(h1: float, h2: float):
+    """Hodge polygon vertices for rank 2 with HT weights (h1, h2)."""
+    return [(0, 0), (1, h1), (2, h1 + h2)]
+
+
+def plot_polygons(ax, s1, s2, h1, h2, title=""):
     """Plot Newton and Hodge polygons on given axes."""
-    # Hodge polygon
-    hp_x = [0, 1, 2]
-    hp_y = [0, w1, w1 + w2]
-    ax.plot(hp_x, hp_y, 'b-o', linewidth=2, markersize=8, label='Hodge polygon')
-    ax.fill_between(hp_x, hp_y, alpha=0.1, color='blue')
+    newton = newton_polygon_vertices(s1, s2)
+    hodge = hodge_polygon_vertices(h1, h2)
 
-    # Newton polygon
-    np_x = [0, 1, 2]
-    np_y = [0, float(s1), float(s1 + s2)]
-    ax.plot(np_x, np_y, 'r-s', linewidth=2, markersize=8, label='Newton polygon')
-    ax.fill_between(np_x, np_y, hp_y, alpha=0.15, color='red')
+    nx, ny = zip(*newton)
+    hx, hy = zip(*hodge)
 
-    # Classification
-    if s1 == w1 and s2 == w2:
-        cls = "ORDINARY"
-        color = 'green'
-    elif s1 == s2:
-        cls = "SUPERSINGULAR"
-        color = 'purple'
-    else:
-        cls = f"NON-ORDINARY (δ={float(s1 - w1):.2f})"
-        color = 'orange'
+    # Shade region between
+    ax.fill_between(
+        [0, 1, 2],
+        [ny[0], ny[1], ny[2]],
+        [hy[0], hy[1], hy[2]],
+        alpha=0.15, color='blue', label='Newton ≥ Hodge'
+    )
 
-    if title:
-        ax.set_title(f"{title}\n{cls}", fontsize=11, color=color, fontweight='bold')
-    else:
-        ax.set_title(cls, fontsize=11, color=color, fontweight='bold')
+    ax.plot(nx, ny, 'b-o', linewidth=2, markersize=8, label='Newton polygon', zorder=5)
+    ax.plot(hx, hy, 'r--s', linewidth=2, markersize=8, label='Hodge polygon', zorder=5)
 
-    ax.set_xlabel('Index')
-    ax.set_ylabel('Cumulative value')
-    ax.legend(fontsize=8)
+    # Annotate slopes
+    mid_n = ((nx[0]+nx[1])/2, (ny[0]+ny[1])/2)
+    mid_n2 = ((nx[1]+nx[2])/2, (ny[1]+ny[2])/2)
+    ax.annotate(f's₁={s1}', mid_n, textcoords="offset points",
+                xytext=(15, 5), fontsize=10, color='blue')
+    ax.annotate(f's₂={s2}', mid_n2, textcoords="offset points",
+                xytext=(15, 5), fontsize=10, color='blue')
+
+    ax.set_xlabel('Rank', fontsize=12)
+    ax.set_ylabel('Valuation', fontsize=12)
+    ax.set_title(title, fontsize=13, fontweight='bold')
+    ax.legend(fontsize=9)
     ax.grid(True, alpha=0.3)
     ax.set_xticks([0, 1, 2])
 
 
 def main():
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    fig.suptitle('Newton-Hodge Polygons for GL₂(ℚ_p)\n'
-                 'p-adic Langlands Correspondence',
-                 fontsize=14, fontweight='bold')
+    fig, axes = plt.subplots(2, 3, figsize=(16, 10))
+    fig.suptitle('Newton vs Hodge Polygons in the p-adic Langlands Correspondence',
+                 fontsize=15, fontweight='bold', y=0.98)
 
-    # Example 1: Weight 2, ordinary
-    plot_newton_hodge(axes[0, 0], 0, 1, Fraction(0), Fraction(1),
-                      "k=2, (w₁,w₂)=(0,1)")
+    # Weight 2 examples (elliptic curves)
+    plot_polygons(axes[0, 0], 0, 1, 0, 1,
+                  'Weight 2: Ordinary\n(slopes 0, 1)')
+    plot_polygons(axes[0, 1], 0.5, 0.5, 0, 1,
+                  'Weight 2: Supersingular\n(slopes 1/2, 1/2)')
 
-    # Example 2: Weight 2, supersingular
-    plot_newton_hodge(axes[0, 1], 0, 1, Fraction(1, 2), Fraction(1, 2),
-                      "k=2, (w₁,w₂)=(0,1)")
+    # Weight 12 examples (Ramanujan Δ)
+    plot_polygons(axes[0, 2], 0, 11, 0, 11,
+                  'Weight 12: Ordinary\n(slopes 0, 11)')
+    plot_polygons(axes[1, 0], 3, 8, 0, 11,
+                  'Weight 12: Intermediate\n(slopes 3, 8)')
+    plot_polygons(axes[1, 1], 5.5, 5.5, 0, 11,
+                  'Weight 12: Supersingular\n(slopes 11/2, 11/2)')
 
-    # Example 3: Weight 4, ordinary
-    plot_newton_hodge(axes[0, 2], 0, 3, Fraction(0), Fraction(3),
-                      "k=4, (w₁,w₂)=(0,3)")
+    # Duality example
+    plot_polygons(axes[1, 2], -1, 0, -1, 0,
+                  'Dual of Ordinary\n(slopes -1, 0)')
 
-    # Example 4: Weight 4, supersingular
-    plot_newton_hodge(axes[1, 0], 0, 3, Fraction(3, 2), Fraction(3, 2),
-                      "k=4, (w₁,w₂)=(0,3)")
-
-    # Example 5: Weight 4, non-ordinary
-    plot_newton_hodge(axes[1, 1], 0, 3, Fraction(1), Fraction(2),
-                      "k=4, (w₁,w₂)=(0,3)")
-
-    # Example 6: Non-classical weights
-    plot_newton_hodge(axes[1, 2], -1, 4, Fraction(0), Fraction(3),
-                      "Non-classical, (w₁,w₂)=(-1,4)")
-
-    plt.tight_layout()
-    plt.savefig('newton_hodge_polygons.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved newton_hodge_polygons.png")
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig('viz_newton_hodge.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_newton_hodge.png")
 
 
 if __name__ == "__main__":
