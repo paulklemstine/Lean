@@ -1,216 +1,173 @@
-# Formalizing the Langlands Correspondence for GL₂ over ℚ: Hecke Eigenvalues, Eichler-Shimura, and the Ramanujan Bound
+# Formalized Structures in the Langlands Correspondence for GL₂/ℚ
 
 ## Abstract
 
-We present a formalization of key structural theorems in the Langlands correspondence for GL₂ over ℚ, connecting Hecke eigenforms (automorphic representations) to Galois representations. Our formalization includes:
-
-1. The **Hecke eigenvalue recursion** a(p²) = a(p)² − p^(k−1) derived from the structure of normalized eigenforms.
-2. The **discriminant criterion** for the Ramanujan-Petersson bound: |a_p| ≤ 2p^((k−1)/2) ↔ Δ_p ≤ 0, where Δ_p = a_p² − 4p^(k−1) is the discriminant of the Frobenius characteristic polynomial.
-3. The **Hasse bound** on elliptic curve point counts as a consequence of the weight-2 Ramanujan bound.
-4. The **prime power determination theorem**: Hecke eigenvalues at a good prime determine all prime power coefficients via strong induction on the recursion.
-5. The **trace-determinant identity** connecting the Galois-side Frobenius data to the automorphic-side Hecke eigenvalues.
-
-All theorems are proved without axioms beyond the standard foundations (propext, Classical.choice, Quot.sound). We verify predictions on the Ramanujan τ function and the conductor-11 elliptic curve.
-
-**Keywords**: Langlands correspondence, Hecke eigenforms, Galois representations, Eichler-Shimura, Ramanujan-Petersson bound, modular forms
-
----
+We present a formalization of key algebraic and number-theoretic structures underlying the Langlands correspondence for GL₂ over the rational numbers. Our framework introduces axiomatic structures for Hecke eigenforms and Galois representations, proves the fundamental Hecke-Frobenius polynomial identity at good primes, establishes the strong multiplicity one theorem via induction on the Hecke recursion, derives the Hasse-Weil bound from the Ramanujan-Petersson conjecture, and verifies the correspondence computationally for the Ramanujan Δ function and the elliptic curve X₀(11). We introduce the novel concept of a **Local Langlands Packet** as a discrete structure packaging local Frobenius data, and prove that the packet discriminant governs the Ramanujan bound. All proofs are machine-verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-### 1.1 Background
+The Langlands correspondence for GL₂/ℚ, established through the combined work of Eichler, Shimura, and Deligne, asserts that every cuspidal automorphic representation of GL₂(𝔸_ℚ) of algebraic type corresponds to a 2-dimensional ℓ-adic Galois representation. The correspondence is characterized by the identity of Hecke and Frobenius polynomials at unramified primes.
 
-The Langlands program, initiated by Robert Langlands in his famous 1967 letter to André Weil, predicts profound connections between automorphic representations and Galois representations. For GL₂ over ℚ, this correspondence is a theorem:
+While the full proof involves deep tools from algebraic geometry (étale cohomology, Kuga-Sato varieties, Weil conjectures), the *algebraic structure* of the correspondence—the recursion relations, multiplicativity, discriminant bounds, and multiplicity theorems—can be developed axiomatically and verified computationally.
 
-- **Weight 2 (Eichler-Shimura, 1954-58)**: Weight-2 Hecke eigenforms of level N correspond to isogeny classes of elliptic curves of conductor N.
-- **Weight ≥ 2 (Deligne, 1971)**: Hecke eigenforms of weight k ≥ 2 and level N give rise to 2-dimensional ℓ-adic Galois representations via the étale cohomology of modular curves.
-- **Converse (modularity, Wiles et al., 1995-2001)**: Every elliptic curve over ℚ is modular; more generally, compatible systems of Galois representations with the right properties arise from eigenforms.
+### 1.1 Contributions
 
-### 1.2 Contributions
+1. **Axiomatic framework**: We define `HeckeEigenform`, `GaloisRepGL2`, and `ModularGaloisCorrespondence` as Lean structures, encoding the Hecke recursion as a structural axiom.
 
-We formalize the algebraic and analytic infrastructure connecting the automorphic and Galois sides of the correspondence. Our main contributions are:
+2. **Key theorems proved**:
+   - Hecke eigenvalue at p² from recursion (Theorem 3.1)
+   - Discriminant-Ramanujan equivalence (Theorem 4.1)
+   - Prime power determination and strong multiplicity one (Theorem 5.1)
+   - Hecke-Frobenius polynomial matching (Theorem 6.1)
+   - Hasse-Weil bound from Ramanujan (Theorem 7.1)
+   - Eigenform uniqueness from Galois data (Theorem 8.1)
 
-1. **Definitions**: We introduce `HeckeEigenform`, `EichlerShimuraDatum`, `GaloisRepDatum`, and `ModularGaloisCorrespondence` as Lean 4 structures capturing the essential data of the correspondence.
+3. **Novel structure**: The `LocalLanglandsPacket` (Definition 2.4) packages local data at each prime as a self-contained algebraic object.
 
-2. **Structural theorems**: We prove that the Hecke eigenvalue recursion, the Ramanujan bound, the Hasse point count bound, and the prime power determination theorem all follow from the structural axioms.
-
-3. **Computational verification**: We verify the Hecke recursion and Ramanujan bound for the Ramanujan τ function and the conductor-11 elliptic curve.
-
-4. **Sato-Tate conjecture formalization**: We formalize the second-moment prediction of the Sato-Tate conjecture as a falsifiable computational test.
-
----
+4. **Computational verification**: We verify the Hecke recursion, multiplicativity, and Ramanujan discriminant for the τ function, and Eichler-Shimura point counts for X₀(11).
 
 ## 2. Definitions
 
 ### 2.1 Hecke Eigenforms
 
-A **Hecke eigenform** of weight k ≥ 2 and level N ≥ 1 is characterized by its q-expansion coefficients a(n), satisfying:
+A **Hecke eigenform** of weight k ≥ 2 and level N ≥ 1 is specified by:
+- A function `coeff : ℕ → ℝ` with `coeff 1 = 1`
+- Multiplicativity: `coeff(mn) = coeff(m)·coeff(n)` for coprime m, n
+- Hecke recursion at good primes: `coeff(p^(r+1)) = coeff(p)·coeff(p^r) − p^(k−1)·coeff(p^(r−1))` for r ≥ 1
 
-- **Normalization**: a(1) = 1
-- **Multiplicativity**: a(mn) = a(m)a(n) when gcd(m,n) = 1
-- **Hecke recursion**: For primes p ∤ N and r ≥ 1:
-  a(p^(r+1)) = a(p) · a(p^r) − p^(k−1) · a(p^(r−1))
+### 2.2 Galois Representations
 
-This is formalized as the structure `HeckeEigenform` with fields `weight`, `level`, `coeff`, and proof obligations for the above properties.
+A **2-dimensional Galois representation** (in our framework) is specified by Frobenius data: `trace_frob : ℕ → ℝ` and `det_frob : ℕ → ℝ`.
 
-### 2.2 Multiplicative Arithmetic Functions
+### 2.3 The Correspondence
 
-We define `MultiplicativeArithFn` as a structure capturing functions f: ℕ → ℝ with f(1) = 1 and f(mn) = f(m)f(n) for coprime m, n. Every Hecke eigenform's coefficient sequence is a multiplicative arithmetic function.
+A `ModularGaloisCorrespondence` pairs an eigenform with a Galois representation and requires:
+- **Trace compatibility**: `trace_frob(p) = coeff(p)` at good primes
+- **Determinant compatibility**: `det_frob(p) = p^(k−1)` at good primes
 
-### 2.3 Eichler-Shimura Data
+### 2.4 Local Langlands Packet (Novel)
 
-The `EichlerShimuraDatum` packages an eigenform with the Eichler-Shimura relation: at each good prime p, the characteristic polynomial X² − a_p X + p^(k−1) has roots α, β satisfying α + β = a_p and αβ = p^(k−1).
+A `LocalLanglandsPacket` at prime p packages:
+- The prime p with primality proof
+- Trace t (= Hecke eigenvalue = tr(Frob_p))
+- Determinant d (= p^(k−1) = det(Frob_p))
+- Positivity: d > 0
 
-### 2.4 The Modular-Galois Correspondence
+The **packet discriminant** is defined as `disc = t² − 4d`. This is the discriminant of the Frobenius characteristic polynomial X² − tX + d.
 
-The `ModularGaloisCorrespondence` structure packages:
-- An eigenform f of weight k and level N
-- A Galois representation datum (traces and determinants of Frobenius)
-- Conductor equality: level = conductor
-- Trace compatibility: trace(Frob_p) = a_p for good primes
-- Determinant compatibility: det(Frob_p) = p^(k−1) for good primes
+## 3. Hecke Eigenvalue Recursion
 
----
-
-## 3. Main Results
-
-### 3.1 Hecke Eigenvalue at p² (Theorem 1)
-
-**Theorem** (hecke_eigenvalue_p_squared). *For a Hecke eigenform f of weight k and a prime p ∤ level(f):*
+**Theorem 3.1** (hecke_eigenvalue_p_squared). For a Hecke eigenform f of weight k and a good prime p:
 $$a(p^2) = a(p)^2 - p^{k-1}$$
 
-*Proof sketch.* Apply the Hecke recursion at r = 1: a(p^2) = a(p) · a(p) − p^(k−1) · a(1) = a(p)² − p^(k−1), using the normalization a(1) = 1. □
+*Proof*. Apply the Hecke recursion with r = 1:
+$$a(p^2) = a(p) \cdot a(p) - p^{k-1} \cdot a(1) = a(p)^2 - p^{k-1}$$
+using the normalization a(1) = 1. □
 
-This is the fundamental relation connecting the Hecke eigenvalue at p to the coefficient at p². It is the r = 1 case of the general recursion and is the key formula for the characteristic polynomial of Frobenius.
+## 4. Discriminant and the Ramanujan Bound
 
-### 3.2 Discriminant Criterion for the Ramanujan Bound (Theorem 2)
+**Theorem 4.1** (discriminant_nonpos_implies_bound). If d ≥ 0 and t² ≤ 4d, then |t| ≤ 2√d.
 
-**Theorem** (discriminant_nonpos_implies_bound). *If t² ≤ 4d and d ≥ 0, then |t| ≤ 2√d.*
+*Proof*. Since d ≥ 0, we have √d ≥ 0 and (√d)² = d. The hypothesis gives t² ≤ 4d = (2√d)², so |t| ≤ 2√d. □
 
-*Proof.* Since d ≥ 0, we have (2√d)² = 4d ≥ t². Both |t| and 2√d are non-negative, so |t|² ≤ (2√d)² implies |t| ≤ 2√d. □
+**Corollary** (packet_ramanujan_bound). If a local packet has disc ≤ 0, then |trace| ≤ 2√det. This is the Ramanujan-Petersson bound at a single prime.
 
-**Theorem** (ramanujan_iff_discriminant_nonpos). *The Ramanujan bound |a_p| ≤ 2p^((k−1)/2) holds at prime p if and only if the Frobenius discriminant Δ_p = a_p² − 4p^(k−1) ≤ 0.*
+## 5. Strong Multiplicity One
 
-*Proof.* This is an equivalence between |a_p| ≤ 2p^((k−1)/2) and a_p² ≤ 4p^(k−1), obtained by squaring both sides (valid since both sides are non-negative). □
+**Theorem 5.1** (hecke_prime_power_determined). If f, g are eigenforms of the same weight k with f.coeff(p) = g.coeff(p) at a good prime p, then f.coeff(p^r) = g.coeff(p^r) for all r ≥ 0.
 
-### 3.3 Hasse Bound on Point Counts (Theorem 3)
+*Proof*. By strong induction on r.
+- r = 0: both equal 1 (normalization).
+- r = 1: hypothesis.
+- r = n+2: By the Hecke recursion,
+  $$a_f(p^{n+2}) = a_f(p) \cdot a_f(p^{n+1}) - p^{k-1} \cdot a_f(p^n)$$
+  and similarly for g. By induction, a_f(p^{n+1}) = a_g(p^{n+1}) and a_f(p^n) = a_g(p^n). Since a_f(p) = a_g(p) and the weights match, the right-hand sides agree. □
 
-**Theorem** (hasse_point_count_bound). *For a weight-2 eigenform f satisfying the Ramanujan bound, the point count #E(𝔽_p) = p + 1 − a_p satisfies*
-$$|#E(\mathbb{F}_p) - (p+1)| \leq 2\sqrt{p}$$
+**Corollary** (strong_multiplicity_one_at_prime_powers). If two eigenforms agree at all but finitely many primes, they agree at all prime powers of the non-exceptional primes.
 
-*Proof.* The point count deviation is |#E(𝔽_p) − (p+1)| = |−a_p| = |a_p|. For weight 2, the Ramanujan bound gives |a_p| ≤ 2p^(1/2) = 2√p. □
+## 6. The Hecke-Frobenius Identity
 
-### 3.4 Prime Power Determination (Theorem 4)
+**Theorem 6.1** (hecke_frobenius_poly_match). For a correspondence (f, ρ) and good prime p:
+$$X^2 - a_p X + p^{k-1} = X^2 - \text{tr}(\text{Frob}_p) X + \det(\text{Frob}_p)$$
 
-**Theorem** (hecke_prime_power_determined). *If two eigenforms f, g of the same weight agree at a good prime p (i.e., a_p(f) = a_p(g)), then they agree at all powers of p:*
-$$a(p^r, f) = a(p^r, g) \quad \text{for all } r \geq 0$$
+*Proof*. Direct substitution using trace and determinant compatibility. □
 
-*Proof.* By strong induction on r. Base cases: r = 0 gives a(1) = 1 for both; r = 1 is the hypothesis. For r ≥ 2, the Hecke recursion gives:
-$$a(p^r) = a(p) \cdot a(p^{r-1}) - p^{k-1} \cdot a(p^{r-2})$$
-By the inductive hypothesis, f and g agree at p^(r−1) and p^(r−2), and they agree at p by hypothesis. Since k is the same (by hwt), the recursion gives the same value. □
+This is the fundamental identity of the Langlands correspondence: the Hecke polynomial on the automorphic side equals the Frobenius characteristic polynomial on the Galois side.
 
-### 3.5 Trace-Determinant Identity (Theorem 5)
+## 7. The Hasse-Weil Bound
 
-**Theorem** (trace_det_discriminant). *In a modular-Galois correspondence, the Frobenius discriminant on the Galois side equals the Hecke discriminant on the automorphic side:*
-$$\text{trace}(\text{Frob}_p)^2 - 4\det(\text{Frob}_p) = a_p^2 - 4p^{k-1}$$
+**Theorem 7.1** (hasse_point_count_bound). For a weight-2 eigenform satisfying the Ramanujan bound:
+$$|\#E(\mathbb{F}_p) - (p+1)| \leq 2\sqrt{p}$$
 
-*Proof.* Direct substitution using the trace and determinant compatibility conditions of the correspondence. □
+*Proof*. Since #E(𝔽_p) = p + 1 − a_p, we have |#E(𝔽_p) − (p+1)| = |a_p|. The Ramanujan bound with k = 2 gives |a_p| ≤ 2p^(1/2) = 2√p. □
 
----
+## 8. Eigenform Uniqueness
 
-## 4. Computational Verification
+**Theorem 8.1** (eigenform_uniqueness_from_galois). If two correspondences have the same Frobenius traces at a good prime and the same weight, they yield the same Hecke eigenvalues and Hecke polynomials at that prime.
 
-### 4.1 Ramanujan Τ Function
+*Proof*. Trace compatibility gives a_p = tr(Frob_p) for both, and equal traces yield equal eigenvalues. Equal eigenvalues and equal weights give equal Hecke polynomials. □
 
-The Ramanujan Δ function has weight 12 and level 1, with τ(n) defined by:
-$$\Delta(q) = q \prod_{m=1}^{\infty} (1-q^m)^{24} = \sum_{n=1}^{\infty} \tau(n) q^n$$
+## 9. Computational Verification
 
-We verify:
-- **Hecke recursion**: τ(4) = τ(2)² − 2^11 = 576 − 2048 = −1472 ✓
-- **Multiplicativity**: τ(6) = τ(2)τ(3) = (−24)(252) = −6048 ✓
-- **Ramanujan bound**: |τ(2)| = 24 ≤ 2 · 2^(11/2) ≈ 90.5 ✓
-- **Discriminant**: τ(2)² − 4 · 2^11 = 576 − 8192 = −7616 < 0 ✓
+### 9.1 Ramanujan Δ Function
 
-### 4.2 Conductor-11 Elliptic Curve
+We verify the correspondence for the Ramanujan Δ function (weight 12, level 1):
 
-For E: y² + y = x³ − x² − 10x − 20 (conductor 11):
-- #E(𝔽₂) = 2 + 1 − (−2) = 5 ✓
-- #E(𝔽₃) = 3 + 1 − (−1) = 5 ✓
-- #E(𝔽₅) = 5 + 1 − 1 = 5 ✓
-- |a₇| = 2 ≤ 2√7 ≈ 5.29 ✓
+| p | τ(p) | τ(p)² − 4·p¹¹ | Sign |
+|---|------|----------------|------|
+| 2 | −24 | 576 − 8192 = −7616 | < 0 ✓ |
+| 3 | 252 | 63504 − 708588 = −645084 | < 0 ✓ |
+| 5 | 4830 | 23328900 − 195312500 = −171983600 | < 0 ✓ |
 
----
+The negative discriminants confirm that Frobenius has complex conjugate eigenvalues at these primes—a numerical instance of Deligne's theorem.
 
-## 5. The Sato-Tate Conjecture: A Falsifiable Prediction
+We also verify:
+- **Hecke recursion**: τ(4) = τ(2)² − 2¹¹ = 576 − 2048 = −1472 ✓
+- **Multiplicativity**: τ(6) = τ(2)·τ(3) = (−24)·252 = −6048 ✓
 
-We formalize the Sato-Tate second moment prediction as a computational test:
+### 9.2 Eichler-Shimura for X₀(11)
 
-**Conjecture** (Sato-Tate Second Moment). *For a non-CM eigenform f of weight k:*
-$$\frac{1}{\pi(X)} \sum_{p \leq X} \frac{a_p^2}{p^{k-1}} \to 1 \quad \text{as } X \to \infty$$
+For the elliptic curve E: y² + y = x³ − x² (conductor 11):
 
-This is falsifiable: compute the sum for increasing X and check convergence to 1. For the Ramanujan τ function (weight 12), our computations give:
-- X = 50: moment ≈ 0.87
-- X = 100: moment ≈ 0.91
-- X = 200: moment ≈ 0.94
-- X = 500: moment ≈ 0.97
+| p | a_p | #E(𝔽_p) = p+1−a_p | a_p² ≤ 4p |
+|---|-----|-------------------|-----------|
+| 2 | −2 | 5 | 4 ≤ 8 ✓ |
+| 3 | −1 | 5 | 1 ≤ 12 ✓ |
+| 5 | 1 | 5 | 1 ≤ 20 ✓ |
+| 7 | −2 | 10 | 4 ≤ 28 ✓ |
+| 13 | 4 | 10 | 16 ≤ 52 ✓ |
 
-The convergence toward 1 is consistent with the Sato-Tate conjecture (proved by Barnet-Lamb, Geraghty, Harris, and Taylor in 2011).
+## 10. The Sato-Tate Conjecture
 
----
+We state a falsifiable form of the Sato-Tate conjecture: for the Δ function, the proportion of primes p ≤ X with Satake angle θ_p ≤ π/2 should converge to 1/2 − 1/π ≈ 0.182 as X → ∞.
 
-## 6. Algorithms
+This provides a concrete computational test: count primes up to X with normalized angle in [0, π/2] and check convergence.
 
-### 6.1 Hecke Eigenvalue Recursion
-Given a_p and weight k, compute a(p^r) for all r using the three-term recursion in O(r) time and O(1) space (after the initial values).
+## 11. Discussion
 
-### 6.2 Partial L-function Evaluation
-Compute L(f, s) ≈ Σ_{n≤N} a(n)/n^s using the Euler product for efficiency at primes.
+### 11.1 Scope and Limitations
 
-### 6.3 Sato-Tate Moment Computation
-Average a_p²/p^(k−1) over primes p ≤ X, testing convergence to the predicted second moment.
+Our formalization captures the *algebraic skeleton* of the GL₂ correspondence—the structures, recursions, and bounds—but not the analytic and geometric machinery underlying the existence proof (étale cohomology, automorphic forms theory, Galois cohomology). The correspondence itself is encoded axiomatically.
 
----
+### 11.2 The Local Langlands Packet
 
-## 7. Discussion
+The `LocalLanglandsPacket` structure isolates the local data at each prime as a self-contained object. This is motivated by the local Langlands correspondence, which establishes a bijection between irreducible smooth representations of GL₂(ℚ_p) and 2-dimensional Weil-Deligne representations of the Weil group W_{ℚ_p}.
 
-### 7.1 What We Formalized vs. What Remains
+### 11.3 Analytic Conductor
 
-Our formalization captures the **algebraic structure** of the Langlands correspondence: Hecke eigenform axioms, the correspondence data, and structural consequences. We prove that these axioms imply the key predictions (Ramanujan bound, Hasse bound, multiplicativity).
+We prove positivity of the analytic conductor N·(k/(2π))², which plays a role in the functional equation of the L-function and in subconvexity bounds.
 
-What we do **not** formalize:
-- The **existence** of the correspondence (Deligne's construction via étale cohomology)
-- The **modularity theorem** (the converse direction, Wiles et al.)
-- The **Sato-Tate theorem** (analytic continuation of symmetric power L-functions)
-- **Hecke algebra theory** over the upper half-plane
+## 12. Future Work
 
-These would require substantial algebraic geometry infrastructure not currently available in Mathlib (étale cohomology, modular curves, automorphic representations).
-
-### 7.2 Relation to the Catalog
-
-Our work connects to several existing catalog entries:
-- `TropicalLanglands.lean`: Our `HeckeEigenform` structure provides the classical analogue of the tropical Hecke operators defined there.
-- `GaloisNeuralCorrespondence.lean`: Our `ModularGaloisCorrespondence` is a number-theoretic instance of the general Galois correspondence framework.
-- `BerggrenLanglandsBridge.lean`: Our weight-2 specialization connects to the Berggren tree and Pythagorean triple parametrization via the modular parametrization of elliptic curves.
-
----
-
-## 8. Future Work
-
-1. **Formalize Deligne's theorem**: Construct the ℓ-adic Galois representation attached to a modular form using formal étale cohomology.
-2. **Modularity lifting**: Formalize the Taylor-Wiles method for proving modularity.
-3. **GL_n generalization**: Extend the correspondence structures to higher-rank groups.
-4. **p-adic Langlands**: Formalize the p-adic local Langlands correspondence for GL₂(ℚ_p).
-5. **Sato-Tate formalization**: Prove the Sato-Tate equidistribution from the analytic properties of symmetric power L-functions.
-
----
+1. **Formal L-function theory**: Define the completed L-function Λ(f, s) and prove its functional equation.
+2. **Modularity theorem**: Formalize the Taniyama-Shimura-Weil conjecture (now a theorem) connecting elliptic curves and weight-2 forms.
+3. **Higher rank**: Extend to GL_n with Satake parameters and unramified local Langlands.
+4. **Geometric Langlands**: Connect to the geometric side via sheaves on moduli spaces.
 
 ## References
 
-1. Deligne, P. (1971). Formes modulaires et représentations ℓ-adiques. *Séminaire Bourbaki*, exp. 355.
-2. Deligne, P. (1974). La conjecture de Weil. I. *Publ. Math. IHÉS*, 43, 273–307.
-3. Eichler, M. (1954). Quaternäre quadratische Formen und die Riemannsche Vermutung für die Kongruenzzetafunktion. *Arch. Math.*, 5, 355–366.
-4. Langlands, R.P. (1970). Problems in the theory of automorphic forms. *Lectures in Modern Analysis and Applications III*, Springer LNM 170.
-5. Shimura, G. (1958). Correspondances modulaires et les fonctions ζ de courbes algébriques. *J. Math. Soc. Japan*, 10, 1–28.
-6. Wiles, A. (1995). Modular elliptic curves and Fermat's Last Theorem. *Ann. Math.*, 141(3), 443–551.
-7. Taylor, R. and Wiles, A. (1995). Ring-theoretic properties of certain Hecke algebras. *Ann. Math.*, 141(3), 553–572.
-8. Barnet-Lamb, T., Geraghty, D., Harris, M., and Taylor, R. (2011). A family of Calabi-Yau varieties and potential automorphy II. *Publ. RIMS*, 47, 29–98.
+1. Deligne, P. "Formes modulaires et représentations ℓ-adiques." Séminaire Bourbaki (1971).
+2. Eichler, M. "Quaternäre quadratische Formen und die Riemannsche Vermutung für die Kongruenzzetafunktion." Archiv der Mathematik (1954).
+3. Langlands, R. "Problems in the theory of automorphic forms." Lectures in modern analysis and applications III (1970).
+4. Shimura, G. "Correspondances modulaires et les fonctions ζ de courbes algébriques." Journal of the Mathematical Society of Japan (1958).
+5. Taylor, R. et al. "A family of Calabi-Yau varieties and potential automorphy." Annals of Mathematics (2011).
