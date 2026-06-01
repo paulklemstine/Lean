@@ -12,10 +12,13 @@ Usage:
 
 import argparse
 import asyncio
+import http.server
 import json
 import os
+import socketserver
 import subprocess
 import sys
+import threading
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -268,6 +271,36 @@ def rebuild_commit_push() -> bool:
         return False
 
 
+def start_docs_server(port: int = 8000) -> None:
+    """Start a local HTTP server for docs/ in a daemon thread."""
+    docs_dir = REPO_ROOT / "docs"
+    if not docs_dir.is_dir():
+        print(f"[Serve] docs/ directory not found at {docs_dir}, skipping server")
+        return
+
+    class QuietHandler(http.server.SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=str(docs_dir), **kwargs)
+
+        def log_message(self, format, *args):
+            # Only log on first request, not every asset fetch
+            if args[0].startswith("GET / ") or args[0].startswith("GET /index.html"):
+                super().log_message(format, *args)
+
+    class ReusableTCPServer(socketserver.TCPServer):
+        allow_reuse_address = True
+
+    try:
+        httpd = ReusableTCPServer(("", port), QuietHandler)
+    except OSError as e:
+        print(f"[Serve] Could not start server on port {port}: {e}")
+        return
+
+    thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    print(f"[Serve] Aether docs serving at http://localhost:{port}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
     parser.add_argument("--max-inflight", type=int, default=9)
@@ -279,6 +312,10 @@ def main():
                         help="Run continuously, sleeping between ticks")
     parser.add_argument("--interval", type=int, default=21600,
                         help="Seconds between ticks in loop mode (default: 21600 = 6h)")
+    parser.add_argument("--serve", action="store_true",
+                        help="Start a local HTTP server for the docs site")
+    parser.add_argument("--serve-port", type=int, default=8000,
+                        help="Port for the docs HTTP server (default: 8000)")
     args = parser.parse_args()
 
     # Build config
@@ -290,6 +327,9 @@ def main():
         extractor = KnowledgeExtractor(config=config)
     else:
         extractor = KnowledgeExtractor(config_path=args.config)
+
+    if args.serve:
+        start_docs_server(args.serve_port)
 
     if args.loop:
         print(f"[Tick] Loop mode — interval={args.interval}s, max_inflight={args.max_inflight}")
