@@ -1880,7 +1880,18 @@
                     const sidebarItem = document.querySelector(`.nav-item[data-slug="${node.id}"]`);
                     if (sidebarItem) {
                         sidebarItem.classList.add('graph-highlight');
-                        sidebarItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        // Scroll the sidebar list to make the highlighted item visible
+                        const listContainer = sidebarItem.closest('.package-list-container');
+                        if (listContainer) {
+                            const itemRect = sidebarItem.getBoundingClientRect();
+                            const listRect = listContainer.getBoundingClientRect();
+                            if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
+                                listContainer.scrollTo({
+                                    top: listContainer.scrollTop + itemRect.top - listRect.top - listRect.height / 3,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }
                     }
                 }
 
