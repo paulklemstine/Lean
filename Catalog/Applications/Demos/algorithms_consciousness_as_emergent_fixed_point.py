@@ -1,281 +1,220 @@
+#!/usr/bin/env python3
 """
-Algorithms for Consciousness as Emergent Fixed Point.
+Consciousness as Emergent Fixed Point — Algorithms
 
-Implements the core mathematical constructions:
-- Lawvere diagonal construction
-- Reflective system fixed-point search
-- Self-observation iteration
-- Reflective overhead computation
-- Strange loop operator simulation
+Type-hinted implementations of the core mathematical structures and algorithms.
 """
 
-from typing import Callable, TypeVar, Optional, List, Tuple
-import math
+from __future__ import annotations
+from typing import Callable, Generic, TypeVar, Optional, List, Tuple, Set
+from dataclasses import dataclass
+import numpy as np
 
 T = TypeVar('T')
+M = TypeVar('M')
+
+
+@dataclass
+class ReflectiveSystem(Generic[T]):
+    """A reflective system: a type with surjective self-representation.
+
+    repr maps each element to an endomorphism. Surjectivity means every
+    endomorphism is represented by some element.
+    """
+    repr: Callable[[T], Callable[[T, T], T]]
+
+    def find_fixed_point(self, f: Callable[[T], T], elements: List[T]) -> Optional[T]:
+        """Search for a fixed point of f using the diagonal construction.
+
+        In a truly reflective system, this always succeeds.
+        For finite approximations, we search exhaustively.
+        """
+        for x in elements:
+            if f(x) == x:
+                return x
+        return None
+
+
+@dataclass
+class SelfModelRetract(Generic[T, M]):
+    """A self-model retract: (embed, project) with project ∘ embed = id.
+
+    The system X contains a faithful model M of itself.
+    """
+    embed: Callable[[M], T]
+    project: Callable[[T], M]
+
+    def observe(self, x: T) -> T:
+        """The self-observation operator: embed ∘ project."""
+        return self.embed(self.project(x))
+
+    def verify_idempotence(self, x: T) -> bool:
+        """Verify that observe(observe(x)) == observe(x)."""
+        return self.observe(self.observe(x)) == self.observe(x)
+
+    def iterate_observe(self, x: T, n: int) -> T:
+        """Apply observe n times. Should equal observe(x) for n >= 1."""
+        result = x
+        for _ in range(n):
+            result = self.observe(result)
+        return result
+
+
+@dataclass
+class StrangeLoopOperator(Generic[T]):
+    """A strange loop operator with tangling and absorption.
+
+    Satisfies:
+    - op(op(x)) = op(shift(x))  (tangling)
+    - op(shift(x)) = op(x)      (absorption)
+    Therefore: op(op(x)) = op(x)  (idempotence)
+    """
+    op: Callable[[T], T]
+    shift: Callable[[T], T]
+
+    def verify_tangling(self, x: T) -> bool:
+        """Check op(op(x)) == op(shift(x))."""
+        return self.op(self.op(x)) == self.op(self.shift(x))
+
+    def verify_absorption(self, x: T) -> bool:
+        """Check op(shift(x)) == op(x)."""
+        return self.op(self.shift(x)) == self.op(x)
+
+    def verify_idempotence(self, x: T) -> bool:
+        """Check op(op(x)) == op(x). Follows from tangling + absorption."""
+        return self.op(self.op(x)) == self.op(x)
+
+    def fixed_points(self, elements: List[T]) -> List[T]:
+        """Find all fixed points of op in the given elements."""
+        return [x for x in elements if self.op(x) == x]
+
+    def image(self, elements: List[T]) -> Set[T]:
+        """Compute the image of op. For idempotents, image == fixed points."""
+        return {self.op(x) for x in elements}
+
+
+@dataclass
+class ConsciousnessTower:
+    """A consciousness tower: iterated self-models at increasing depth.
+
+    Level n is R^(n+1). Up zero-pads, down truncates.
+    """
+    def level_dim(self, n: int) -> int:
+        return n + 1
+
+    def up(self, x: np.ndarray, n: int) -> np.ndarray:
+        """Map from level n to level n+1 by zero-padding."""
+        return np.append(x, 0.0)
+
+    def down(self, x: np.ndarray, n: int) -> np.ndarray:
+        """Map from level n+1 to level n by truncation."""
+        return x[:n + 1]
+
+    def observe_at(self, x: np.ndarray, n: int) -> np.ndarray:
+        """Observation operator at level n: up_n ∘ down_n."""
+        return self.up(self.down(x, n), n)
+
+    def verify_retraction(self, x: np.ndarray, n: int) -> bool:
+        """Verify down_n(up_n(x)) == x."""
+        return np.allclose(self.down(self.up(x, n), n), x)
+
+    def verify_stabilization(self, x: np.ndarray, n: int) -> bool:
+        """Verify observe_n(observe_n(x)) == observe_n(x)."""
+        obs1 = self.observe_at(x, n)
+        obs2 = self.observe_at(obs1, n)
+        return np.allclose(obs1, obs2)
 
 
 def lawvere_diagonal(
     phi: Callable[[int], Callable[[int], int]],
     f: Callable[[int], int],
-    domain_size: int,
+    domain: List[int]
 ) -> Optional[int]:
+    """Compute the Lawvere diagonal fixed point.
+
+    Given φ : α → (α → β) and f : β → β, search for a ∈ domain
+    such that φ(a) = x ↦ f(φ(x)(x)), then return φ(a)(a).
     """
-    Lawvere's diagonal construction: find a fixed point of f
-    given a representation map phi.
+    # Construct the diagonal: d(x) = f(φ(x)(x))
+    d = lambda x: f(phi(x)(x))
 
-    If phi is surjective (phi : A -> (A -> B)), constructs the diagonal
-    d(x) = f(phi(x)(x)) and searches for a in the domain such that
-    phi(a) = d, yielding fixed point phi(a)(a).
-
-    For finite domains, this is a brute-force search.
-
-    Args:
-        phi: Representation map from indices to endomorphisms
-        f: The endomorphism whose fixed point we seek
-        domain_size: Size of the domain to search
-
-    Returns:
-        A fixed point of f if found, None otherwise
-    """
-    # Construct the diagonal function d(x) = f(phi(x)(x))
-    diagonal = lambda x: f(phi(x)(x))
-
-    # Search for a such that phi(a) agrees with diagonal on the domain
-    for a in range(domain_size):
-        phi_a = phi(a)
-        # Check if phi(a) = diagonal (on the relevant domain)
-        if all(phi_a(x) == diagonal(x) for x in range(domain_size)):
-            fixed_point = phi_a(a)
-            assert f(fixed_point) == fixed_point, "Lawvere construction failed"
+    # Search for a with φ(a) agreeing with d on all of domain
+    for a in domain:
+        if all(phi(a)(x) == d(x) for x in domain):
+            fixed_point = phi(a)(a)
+            assert f(fixed_point) == fixed_point, "Diagonal construction failed"
             return fixed_point
 
     return None
 
 
-def iterate_self_observation(
-    observe: Callable[[T], T],
-    x0: T,
-    max_iter: int = 100,
-    tolerance: Optional[float] = None,
-    distance: Optional[Callable[[T, T], float]] = None,
-) -> Tuple[T, int]:
-    """
-    Iterate the self-observation operator until convergence.
-
-    For an idempotent operator, this converges in exactly 1 step.
-    For approximately idempotent operators, it converges geometrically.
-
-    Args:
-        observe: The self-observation operator
-        x0: Initial state
-        max_iter: Maximum iterations
-        tolerance: Convergence threshold (requires distance)
-        distance: Distance function for convergence checking
-
-    Returns:
-        Tuple of (converged state, number of iterations)
-    """
-    x = x0
-    for i in range(1, max_iter + 1):
-        x_new = observe(x)
-        if tolerance is not None and distance is not None:
-            if distance(x_new, x) < tolerance:
-                return x_new, i
-        elif x_new == x:
-            return x_new, i
-        x = x_new
-    return x, max_iter
-
-
-def reflective_overhead(n: int) -> float:
-    """
-    Compute the reflective overhead for a finite type of size n.
-
-    The overhead is n^n / n = n^(n-1), measuring how many more
-    endomorphisms there are than states. For n >= 2, this exceeds 1,
-    proving that finite types cannot be reflective.
-
-    Args:
-        n: Size of the finite type
-
-    Returns:
-        The reflective overhead ratio
-    """
-    if n == 0:
-        return 0.0
-    if n == 1:
-        return 1.0
-    return float(n ** (n - 1))
-
-
-def verify_finite_non_reflectivity(n: int) -> dict:
-    """
-    Verify that Fin(n) is not reflective for n >= 2.
-
-    Computes |Fin(n)|, |Fin(n) -> Fin(n)|, and checks that
-    the latter exceeds the former.
-
-    Args:
-        n: Size of the finite type
-
-    Returns:
-        Dictionary with verification results
-    """
-    states = n
-    endomorphisms = n ** n if n > 0 else 1
-    is_reflective_possible = states >= endomorphisms
-    overhead = reflective_overhead(n)
-
-    return {
-        "n": n,
-        "num_states": states,
-        "num_endomorphisms": endomorphisms,
-        "reflective_possible": is_reflective_possible,
-        "overhead": overhead,
-        "verdict": "trivial" if n <= 1 else (
-            "IMPOSSIBLE" if not is_reflective_possible else "possible"
-        ),
-    }
-
-
-def strange_loop_simulate(
-    op: Callable[[float], float],
-    shift: Callable[[float], float],
+def banach_fixed_point(
+    f: Callable[[float], float],
     x0: float,
-    steps: int = 20,
-) -> List[Tuple[int, float, float, float]]:
+    tol: float = 1e-12,
+    max_iter: int = 1000
+) -> Tuple[float, int, List[float]]:
+    """Find fixed point of f by iteration.
+
+    Returns (fixed_point, iterations, trajectory).
     """
-    Simulate a strange loop operator and verify idempotence.
-
-    At each step, records (step, x, op(x), op(op(x))) to verify
-    that op(op(x)) = op(x) (idempotence).
-
-    Args:
-        op: The loop operator
-        shift: The level-shift map
-        x0: Initial state
-        steps: Number of steps to simulate
-
-    Returns:
-        List of (step, x, op(x), op(op(x))) tuples
-    """
-    results = []
+    trajectory = [x0]
     x = x0
-    for i in range(steps):
-        ox = op(x)
-        oox = op(ox)
-        results.append((i, x, ox, oox))
-        x = ox  # iterate
-    return results
+    for i in range(max_iter):
+        x_new = f(x)
+        trajectory.append(x_new)
+        if abs(x_new - x) < tol:
+            return x_new, i + 1, trajectory
+        x = x_new
+    return x, max_iter, trajectory
 
 
-def consciousness_distance(
-    f: Callable[[float], float],
-    x: float,
-) -> float:
+def is_reflective(n: int) -> bool:
+    """Check if Fin(n) can be reflective.
+
+    Returns False for n >= 2 (requires n >= n^n).
     """
-    Compute the consciousness distance: d(x, f(x)).
+    if n <= 1:
+        return True  # Fin(0) vacuously, Fin(1) trivially
+    return n >= n ** n  # Always False for n >= 2
 
-    This measures how far a state is from being a fixed point.
-    A state x is a consciousness fixed point iff distance = 0.
 
-    Args:
-        f: The self-awareness operator
-        x: The state to measure
+def count_endomorphisms(n: int) -> int:
+    """Count endomorphisms of Fin(n): n^n."""
+    return n ** n
 
-    Returns:
-        |x - f(x)| (absolute consciousness distance)
+
+def count_idempotents(n: int) -> int:
+    """Count idempotent endomorphisms of Fin(n).
+
+    An idempotent on {0,...,n-1} is determined by choosing a subset S
+    (the image/fixed points) and a surjection {0,...,n-1} → S.
+    Total: sum_{k=0}^{n} C(n,k) * k^(n-k) * k! / k! = sum C(n,k) * k^(n-k).
+    Wait, more precisely: choose image of size k (C(n,k) ways),
+    then map each non-image element to some image element (k^(n-k) ways).
     """
-    return abs(x - f(x))
+    from math import comb
+    total = 0
+    for k in range(n + 1):
+        total += comb(n, k) * (k ** (n - k))
+    return total
 
 
-def find_fixed_points_numerical(
-    f: Callable[[float], float],
-    x_min: float = -10.0,
-    x_max: float = 10.0,
-    num_points: int = 1000,
-    tolerance: float = 1e-8,
-) -> List[float]:
-    """
-    Find approximate fixed points of f by scanning.
+if __name__ == "__main__":
+    # Quick self-test
+    print("Reflectivity check:")
+    for n in range(2, 6):
+        print(f"  Fin({n}): reflective={is_reflective(n)}, "
+              f"endomorphisms={count_endomorphisms(n)}, "
+              f"idempotents={count_idempotents(n)}")
 
-    Args:
-        f: The endomorphism
-        x_min, x_max: Search range
-        num_points: Number of sample points
-        tolerance: Fixed-point tolerance
+    print("\nBanach fixed point of cos:")
+    fp, iters, _ = banach_fixed_point(np.cos, 0.5)
+    print(f"  Fixed point: {fp:.12f}, iterations: {iters}")
 
-    Returns:
-        List of approximate fixed points
-    """
-    fixed_points = []
-    dx = (x_max - x_min) / num_points
-
-    for i in range(num_points + 1):
-        x = x_min + i * dx
-        if abs(f(x) - x) < tolerance:
-            # Refine with Newton-like iteration
-            for _ in range(50):
-                fx = f(x)
-                if abs(fx - x) < tolerance * 0.01:
-                    break
-                x = fx
-            # Check it's not a duplicate
-            if not any(abs(x - fp) < tolerance * 10 for fp in fixed_points):
-                fixed_points.append(x)
-
-    return fixed_points
-
-
-def self_model_projection_demo(
-    embed: Callable[[int], float],
-    project: Callable[[float], int],
-    test_values: List[float],
-) -> dict:
-    """
-    Demonstrate self-model projection properties.
-
-    Verifies:
-    1. Retraction: project(embed(m)) = m for model states
-    2. Idempotence: observe(observe(x)) = observe(x)
-
-    Args:
-        embed: Embedding from model to system
-        project: Projection from system to model
-        test_values: System states to test
-
-    Returns:
-        Dictionary with verification results
-    """
-    observe = lambda x: embed(project(x))
-
-    retraction_holds = True
-    idempotence_holds = True
-
-    retraction_tests = []
-    for m in range(10):
-        embedded = embed(m)
-        projected = project(embedded)
-        ok = projected == m
-        retraction_tests.append({"m": m, "embed(m)": embedded,
-                                  "project(embed(m))": projected, "ok": ok})
-        if not ok:
-            retraction_holds = False
-
-    idempotence_tests = []
-    for x in test_values:
-        ox = observe(x)
-        oox = observe(ox)
-        ok = abs(oox - ox) < 1e-10
-        idempotence_tests.append({"x": x, "observe(x)": ox,
-                                   "observe²(x)": oox, "ok": ok})
-        if not ok:
-            idempotence_holds = False
-
-    return {
-        "retraction_holds": retraction_holds,
-        "idempotence_holds": idempotence_holds,
-        "retraction_tests": retraction_tests,
-        "idempotence_tests": idempotence_tests,
-    }
+    print("\nConsciousness tower stabilization:")
+    tower = ConsciousnessTower()
+    x = np.array([1.0, 2.0, 3.0, 4.0])  # Level 3
+    for n in range(3):
+        stable = tower.verify_stabilization(x[:n+2], n)
+        print(f"  Level {n}: stabilized={stable}")
