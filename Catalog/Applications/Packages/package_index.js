@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical",
     "date": "2026-06-01T16:35:52Z",
     "exp_id": "7d04715f",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.70234,
+    "quality": "substantial",
     "pkg_num": 103
   },
   {
@@ -2994,8 +2994,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-06-01T16:35:52Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.70234,
+      "quality": "substantial"
     }
   ],
   "edges": [

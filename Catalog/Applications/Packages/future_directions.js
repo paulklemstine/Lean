@@ -288,6 +288,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.761503+00:00"
   },
   {
+    "id": "fd_0088",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.782446+00:00"
+  },
+  {
     "id": "fd_0092",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
@@ -633,6 +648,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:31.085832+00:00"
   },
   {
+    "id": "fd_0029",
+    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry",
+    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.523325+00:00"
+  },
+  {
     "id": "fd_0101",
     "title": "Transfinite Game Theory: Games That Last Forever",
     "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
@@ -676,21 +706,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.489800+00:00"
-  },
-  {
-    "id": "fd_0086",
-    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean",
-    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "priority_score": 0.96,
-    "status": "in_progress",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7d04715f",
-    "timestamp": "2026-06-01T12:30:30.767640+00:00"
   },
   {
     "id": "fd_0100",
@@ -841,21 +856,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:31.042804+00:00"
-  },
-  {
-    "id": "fd_0088",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "priority_score": 0.9299999999999999,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.782446+00:00"
   },
   {
     "id": "fd_0122",
@@ -1066,21 +1066,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.489454+00:00"
-  },
-  {
-    "id": "fd_0029",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domains": [
-      "Novelty",
-      "Tropical"
-    ],
-    "priority_score": 0.87,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.523325+00:00"
   },
   {
     "id": "fd_0114",
@@ -1751,10 +1736,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.78,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4d79127",
     "timestamp": "2026-06-01T12:30:30.639161+00:00"
   },
   {
@@ -1936,6 +1921,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b12db4e8",
     "consumed_by_exp_id": "cc6c346f",
     "timestamp": "2026-06-01T14:51:52.736022+00:00"
+  },
+  {
+    "id": "fd_0159",
+    "title": "Formal bridge between the probabilistic method",
+    "description": "# Future Directions: Probabilistic Method and Tropical Algebra\n\n## Synthesis\n\nThis research cycle established a formal bridge between the probabilistic method in combinatorics and tropical algebra, proving 15 machine-verified theorems including the counting principle, Tur\u00e1n graph triangle-freeness, Mantel's degree-sum bound, Erd\u0151s's Ramsey inequalities, and the LLL algebraic core. The most significant discovery was that the `TropicalCostStructure`\u2014a novel definition capturing the min-plus analogue of the first moment method\u2014provides a natural algebraic framework for probabilistic existence proofs.\n\nThe strongest cross-domain connection is between the LLL algebraic core (product positivity of (1 - x\u1d62)) and tropical fixed-point theory. The LLL witness condition x_i \u2265 p_i \u00b7 \u220f(1 - x_j)\u207b\u00b9 is a fixed-point equation in the tropical semiring, and the Moser-Tardos algorithm is a tropical iteration scheme. This suggests that constructive versions of non-trivial probabilistic arguments may systematically arise from tropical optimization algorithms, connecting to the Catalog's existing tropical spectral theory (`FINAL/Tropical/SpectralTheory.lean`) and iteration results (`FINAL/Tropical/TropicalMatrixIteration.lean`).\n\nThe highest breakthrough potential lies in Direction 1 (Tropical Ramsey Duality), which proposes that Ramsey numbers are optimal values of tropical linear programs. If true, this would connect number-theoretic bounds on Ramsey numbers to tropical geometry\u2014a genuinely new perspective that could import algebraic-geometric tools into extremal combinatorics.\n\n---\n\n### Direction 1: Tropical Ramsey Duality\n\n**Conjecture**: For all k \u2265 3, the Ramsey number R(k,k) equals one plus the minimum n such that every tropical linear program encoding \"number of monochromatic k-cliques in a 2-coloring of K_n\" has optimal value \u2265 1. Formally: define the tropical Ramsey function TR(k) as the largest n such that the min-plus optimization problem min_{c \u2208 {0,1}^{C(n,2)}} \u2295_{S \u2208 C([n],k)} (monochromatic(S,c)) has optimal value 0. Then TR(k) + 1 = R(k,k).\n\n**Test**: Compute TR(3) computationally. We know R(3,3) = 6, so TR(3) should equal 5. Enumerate all 2^{C(5,2)} = 2^{10} = 1024 colorings of K_5 and verify that some coloring has zero monochromatic triangles; then verify that all 2^{C(6,2)} = 2^{15} = 32768 colorings of K_6 contain at least one monochromatic triangle.\n\n**Impact**: If true, Ramsey theory becomes a chapter of tropical convex optimization. The dual tropical program would provide new lower bounds on R(k,k). If false, understanding where the duality breaks reveals fundamental limits of algebraic approaches to Ramsey theory.\n\n**Catalog References**: `FINAL/Tropical/SpectralTheory.lean`, `FINAL/Tropical/TropicalMatrixIteration.lean`\n\n**Proof Strategy**: (1) Define the tropical Ramsey LP formally in Lean 4 using Mathlib's tropical semiring. (2) Prove TR(3) = 5 by computation. (3) Prove TR(k) \u2265 2^{k/2} - 1 using the Erd\u0151s counting argument formalized in this cycle. (4) Investigate whether the tropical dual program admits a spectral interpretation via tropical eigenvalues.\n\n**Domain Bridges**: Tropical algebra \u2194 Ramsey theory \u2194 Linear programming duality\n\n**Lineage**: Builds on `counting_principle`, `erdos_criterion_k3`, `erdos_criterion_k4`, and `TropicalCostStructure` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Constructive Lov\u00e1sz Local Lemma via Tropical Iteration\n\n**Conjecture**: The Moser-Tardos algorithm for the constructive LLL converges in at most \u2308\u03a3\u1d62 x\u1d62/(1-x\u1d62)\u2309 expected resamplings, where x is an LLL witness vector. Moreover, this bound equals the tropical spectral radius of the LLL dependency matrix.\n\n**Test**: Formalize the Moser-Tardos algorithm in Lean 4 as a function on finite state spaces. Prove termination using a tropical potential function \u03a6 = \u03a3\u1d62 log(x\u1d62/(1-x\u1d62)). Verify the bound on small instances (n \u2264 10 events) using `#eval`.\n\n**Impact**: Establishes that constructive probabilistic combinatorics is tropical iteration theory. Opens the door to importing convergence results from tropical matrix theory into algorithm analysis.\n\n**Catalog References**: `FINAL/Tropical/TropicalMatrixIteration.lean`, `FINAL/Tropical/SpectralTheory.lean`\n\n**Proof Strategy**: (1) Define the Moser-Tardos state machine. (2) Define the tropical potential function. (3) Prove that each resampling decreases the potential by at least a fixed amount. (4) Use the `lll_algebraic_core` theorem from this cycle to establish that the potential is bounded. (5) Connect the convergence rate to `tropicalMatMap_iterate_lower_bound` from the Catalog.\n\n**Domain Bridges**: Tropical iteration \u2194 Randomized algorithms \u2194 Convergence analysis\n\n**Lineage**: Builds on `lll_algebraic_core`, `symmetric_lll_bound_pos`, and `AlgLLLConfig` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Full Tur\u00e1n Theorem for General r\n\n**Conjecture**: The Tur\u00e1n graph T(n,r) has exactly (1 - 1/r) \u00b7 n\u00b2/2 - c(n,r) edges, where c(n,r) is an explicit correction term depending on n mod r, and every K_{r+1}-free graph on n vertices has at most this many edges.\n\n**Test**: (1) Compute turanEdgeCount(n, r) for n \u2208 [1..20], r \u2208 [2..5] and verify against the formula. (2) Formalize the edge count formula and prove it equals the computed value. (3) Prove the Zykov symmetrization lemma: every K_{r+1}-free graph can be transformed into a complete r-partite graph without losing edges.\n\n**Impact**: Extends this cycle's Mantel theorem (r=2) to the full Tur\u00e1n theorem, one of the foundational results in extremal graph theory. The formalized proof would be among the first machine-verified proofs of Tur\u00e1n's theorem.\n\n**Catalog References**: `turanGraph`, `turan_bipartite_triangle_free`, `mantel_degree_sum` from this cycle.\n\n**Proof Strategy**: (1) Generalize `turan_bipartite_triangle_free` from r=2 to general r using a pigeonhole argument on r+1 vertices in r classes. (2) Prove the edge count formula by summing over pairs of distinct classes. (3) For optimality, use the Zykov symmetrization argument: given a K_{r+1}-free graph, identify two non-adjacent vertices and merge their neighborhoods, showing edges don't decrease. Iterate to obtain a complete r-partite graph.\n\n**Domain Bridges**: Extremal graph theory \u2194 Tropical optimization (Tur\u00e1n's theorem is the LP dual of the clique problem)\n\n**Lineage**: Directly extends `turanGraph`, `turan_bipartite_triangle_free`, and `mantel_degree_sum` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Chromatic Polynomial\n\n**Conjecture**: The chromatic polynomial P(G, k) of a graph G, evaluated in the tropical semiring, gives the minimum number of monochromatic edges in a k-coloring of G. That is, trop(P)(G, k) = min_{colorings c with k colors} |{edges e : both endpoints same color}|.\n\n**Test**: Compute trop(P)(K_4, 3) and verify it equals the minimum number of monochromatic edges in a 3-coloring of K_4. Since P(K_4, k) = k(k-1)(k-2)(k-3), the tropical version at k=3 should be min(3, 2, 1, 0) = 0, indicating a proper 3-coloring exists (which it does, but K_4 needs 4 colors for proper coloring \u2014 this would disprove the conjecture, which is informative).\n\n**Impact**: If true (possibly after correction), connects graph coloring theory to tropical algebraic geometry. If false, understanding the failure mode reveals the limits of tropicalization as a technique for discrete optimization.\n\n**Catalog References**: `FINAL/Tropical/NormalForm.lean`, `Tropical/ProbabilisticMethod/ErdosMeetsLean.lean`\n\n**Proof Strategy**: (1) Define the chromatic polynomial formally using deletion-contraction. (2) Define tropical evaluation of integer polynomials. (3) Test the conjecture computationally on small graphs. (4) If the conjecture holds with modifications, prove it using inclusion-exclusion in the tropical semiring.\n\n**Domain Bridges**: Tropical algebra \u2194 Graph coloring \u2194 Algebraic combinatorics\n\n**Lineage**: Builds on `TropicalCostStructure` and `tropical_existence_principle` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Theoretic Bounds via Tropical Entropy\n\n**Conjecture**: The Erd\u0151s bound R(k,k) > 2^{k/2} is tight up to polynomial factors because the tropical entropy of a random 2-coloring of K_n concentrates at k/2 \u00b7 log 2. Precisely: define the tropical entropy of a coloring cost function as H_trop = -min_c log\u2082(cost(c)/total_cost). Then for the Ramsey cost function, H_trop = C(k,2) - 1 - log\u2082(C(n,k)) \u2248 k\u00b2/2 when n \u2248 2^{k/2}.\n\n**Test**: Compute H_trop for k = 3,4,5 and n = 2^{k/2} rounded. Verify the tropical entropy is approximately k\u00b2/2 - k log\u2082 k.\n\n**Impact**: Would provide an information-theoretic explanation for why the Erd\u0151s bound is hard to improve: the tropical entropy of the Ramsey cost function is maximized near n = 2^{k/2}, leaving no room for improvement via counting arguments.\n\n**Catalog References**: `Catalog/Tropical/InformationTheory.lean`, `Catalog/Tropical/MutualInformation.lean`\n\n**Proof Strategy**: (1) Define tropical entropy formally. (2) Compute it for the Ramsey cost function. (3) Show it equals C(k,2) - 1 - log\u2082(C(n,k)) when costs are uniform. (4) Prove this is maximized near n = 2^{k/2} using calculus or discrete optimization.\n\n**Domain Bridges**: Information theory \u2194 Tropical algebra \u2194 Ramsey theory \u2194 Entropy optimization\n\n**Lineage**: Builds on `choose_mul_factorial_le_pow`, `pow_two_gt_two_mul`, and `erdos_criterion_k3` from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "7d04715f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T16:35:54.932558+00:00"
   },
   {
     "id": "fd_0031",
