@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2318 of the highest-quality
+A curated collection of 2324 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2318
+Total files: 2324
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -944,6 +944,7 @@ import FINAL.Bridges.WeightedTropicalHodge
 import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.WreathONanScott
 import FINAL.Bridges.WreathPressure
+import FINAL.Bridges.ZeroKnowledgeProofs
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Catalog.BraidingUniversality
 import FINAL.Catalog.EntropyPowerInequality
@@ -2089,6 +2090,7 @@ import FINAL.Tropical.BlockGluing
 import FINAL.Tropical.BoundaryRigidity
 import FINAL.Tropical.BranchingPrograms
 import FINAL.Tropical.Bridge
+import FINAL.Tropical.BridgeDecomposition
 import FINAL.Tropical.Bridges
 import FINAL.Tropical.CPASecurity
 import FINAL.Tropical.CertifiedCanonicalization
@@ -2101,6 +2103,7 @@ import FINAL.Tropical.CompleteGraph
 import FINAL.Tropical.ComplexityTransfer
 import FINAL.Tropical.CompositionalBound
 import FINAL.Tropical.ComputationalHybrid
+import FINAL.Tropical.ConnectiveConstant
 import FINAL.Tropical.ContinuousComparison
 import FINAL.Tropical.Convexity
 import FINAL.Tropical.Core
@@ -2113,6 +2116,7 @@ import FINAL.Tropical.DivisorTheory
 import FINAL.Tropical.DragonTropical
 import FINAL.Tropical.Duality
 import FINAL.Tropical.E8LatticeSurgery
+import FINAL.Tropical.EFLTropicalTheorems
 import FINAL.Tropical.EntanglementWedge
 import FINAL.Tropical.EntropyTropicalDuality
 import FINAL.Tropical.ErdosMeetsLean
@@ -2183,6 +2187,7 @@ import FINAL.Tropical.NNCompilationExtended
 import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NerodeDecidability
 import FINAL.Tropical.NewResearch
+import FINAL.Tropical.Nienhuis
 import FINAL.Tropical.NormalForm
 import FINAL.Tropical.Numerology
 import FINAL.Tropical.OmegaMetaOracle
@@ -2236,6 +2241,7 @@ import FINAL.Tropical.SpectralIdempotentBridge
 import FINAL.Tropical.SpectralTheory
 import FINAL.Tropical.SpectralTransfer
 import FINAL.Tropical.SpectralTropicalBridge
+import FINAL.Tropical.Subadditive
 import FINAL.Tropical.Surgery
 import FINAL.Tropical.Surjectivity_of_the_Tropical_Satake_Transform_for_GL₃
 import FINAL.Tropical.Synthesis
