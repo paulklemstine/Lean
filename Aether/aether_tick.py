@@ -283,9 +283,13 @@ def start_docs_server(port: int = 8000) -> None:
             super().__init__(*args, directory=str(docs_dir), **kwargs)
 
         def log_message(self, format, *args):
-            # Only log on first request, not every asset fetch
-            if args[0].startswith("GET / ") or args[0].startswith("GET /index.html"):
+            # Only log page requests, not every asset fetch or 404
+            if self.path in ('/', '/index.html'):
                 super().log_message(format, *args)
+
+        def log_error(self, format, *args):
+            # Suppress 404 errors for Chrome DevTools probes etc.
+            pass
 
     class ReusableTCPServer(socketserver.TCPServer):
         allow_reuse_address = True
