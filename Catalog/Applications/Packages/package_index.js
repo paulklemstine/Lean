@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "809d9f65",
     "filename": "consciousness_as_emergent_fixed_point.json",
     "pkg_num": 128,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7203913793103449,
     "title": "Consciousness as Emergent Fixed Point"
   },
   {
@@ -3951,8 +3951,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "consciousness_as_emergent_fixed_point",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7203913793103449,
+      "quality": "substantial",
       "shape": "diamond",
       "title": "Consciousness as Emergent Fixed Point"
     }
