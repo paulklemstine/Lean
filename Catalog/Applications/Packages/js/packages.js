@@ -244,6 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (pre.style.display === 'none') {
                             pre.style.display = '';
                             toggleBtn.textContent = 'Hide Code';
+                            // Auto-size: fit height to content
+                            pre.style.height = 'auto';
+                            pre.style.height = pre.scrollHeight + 'px';
                         } else {
                             pre.style.display = 'none';
                             toggleBtn.textContent = 'Show Code';
@@ -473,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Auto-size: set height to fit content when shown
             const autoSizeEditor = () => {
                 editor.style.height = 'auto';
-                editor.style.height = Math.max(450, editor.scrollHeight) + 'px';
+                editor.style.height = editor.scrollHeight + 'px';
             };
 
             // Fetch code from code_file if not resolved yet

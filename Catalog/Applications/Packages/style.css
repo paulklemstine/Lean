@@ -1003,7 +1003,6 @@ body.light-theme .code-container {
     line-height: 1.6;
     background-color: var(--bg-panel);
     white-space: pre;
-    max-height: 600px;
     overflow-y: auto;
 }
 

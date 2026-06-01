@@ -240,10 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 editor.cols = 80;
                 editor.value = item.code || '';
 
-                // Auto-size editor when shown
+                // Auto-size editor when shown: fit to content
                 const autoSizeEditor = () => {
                     editor.style.height = 'auto';
-                    editor.style.height = Math.max(300, editor.scrollHeight) + 'px';
+                    editor.style.height = editor.scrollHeight + 'px';
                 };
 
                 toggleBtn.addEventListener('click', () => {
