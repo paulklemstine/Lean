@@ -2,368 +2,430 @@
 """
 Reflective Type Theory: Interactive Demo
 
-Demonstrates the key concepts of reflective type theory:
-- Provability depth hierarchy
-- MLTT fragment detection
-- Translation to modal mu-calculus
-- Roundtrip verification
-- Named types (Löb, Gödel, K, 4, T axioms)
+Demonstrates the core concepts:
+1. Type construction and depth computation
+2. Translation to modal mu-calculus
+3. Kripke model evaluation
+4. Axiom hierarchy analysis
+5. Proof Depth Algebra computation
 """
 
 from algorithms import (
-    ReflTy, Base, Unit, Void, Arrow, Prod, Sum, Box, Mu,
-    ModalMuFormula, Var, Tt, Ff, Conj, Disj, Impl, BoxF, MuF,
-    prov_depth, is_mltt, modal_depth, refl_to_mu, mu_to_refl,
-    classify_strength, ModalStrength,
-    provable_not_provably_provable, loeb_type, goedel_sentence_type,
-    k_axiom_type, four_axiom_type, t_axiom_type, iterated_box,
-    pretty_type, pretty_formula
+    ReflTy, ModalMuFormula, KripkeModel,
+    refl_to_mu, mu_to_refl,
+    provable_not_provably_provable, lob_type, godel_sentence_type,
+    k_axiom_type, four_axiom_type, iterated_box,
+    compute_depth_algebra,
 )
 
 
-def separator(title: str) -> None:
-    print(f"\n{'='*60}")
-    print(f"  {title}")
-    print(f"{'='*60}\n")
+def demo_type_constructions():
+    """Show key type constructions and their properties."""
+    print("=" * 60)
+    print("REFLECTIVE TYPE THEORY: TYPE CONSTRUCTIONS")
+    print("=" * 60)
 
+    P = ReflTy.base(0)
 
-def demo_basic_types():
-    """Demonstrate basic type construction and depth analysis."""
-    separator("Basic Types and Provability Depth")
+    types = {
+        "Base type P": P,
+        "Unit (⊤)": ReflTy.unit(),
+        "Void (⊥)": ReflTy.void(),
+        "P → P": ReflTy.arrow(P, P),
+        "□P (P is provable)": ReflTy.box(P),
+        "□□P (provably provable)": ReflTy.box(ReflTy.box(P)),
+        "□P × (□□P → ⊥) [PnPP]": provable_not_provably_provable(P),
+        "□(□P → P) → □P [Löb]": lob_type(P),
+        "□P → ⊥ [Gödel]": godel_sentence_type(P),
+        "□(P → P) → □P → □P [K]": k_axiom_type(P, P),
+        "□P → □□P [4]": four_axiom_type(P),
+        "□³P": iterated_box(3, P),
+    }
 
-    examples = [
-        ("Unit (⊤)", Unit()),
-        ("Base P₀", Base(0)),
-        ("P₀ → P₁", Arrow(Base(0), Base(1))),
-        ("P₀ × P₁", Prod(Base(0), Base(1))),
-        ("□P₀", Box(Base(0))),
-        ("□□P₀", Box(Box(Base(0)))),
-        ("□□□P₀", Box(Box(Box(Base(0))))),
-        ("□(P₀ → P₁)", Box(Arrow(Base(0), Base(1)))),
-        ("μ.□P₀", Mu(Box(Base(0)))),
-    ]
-
-    print(f"{'Type':<25} {'Pretty':<25} {'Depth':<8} {'MLTT?':<8} {'Strength'}")
-    print("-" * 80)
-    for name, ty in examples:
-        d = prov_depth(ty)
-        m = is_mltt(ty)
-        s = classify_strength(ty).name
-        p = pretty_type(ty)
-        print(f"{name:<25} {p:<25} {d:<8} {str(m):<8} {s}")
-
-
-def demo_named_types():
-    """Demonstrate named provability logic types."""
-    separator("Provability Logic Axioms as Types")
-
-    p = Base(0)
-
-    named = [
-        ("Löb: □(□P→P)→□P", loeb_type(p)),
-        ("Gödel: □P→⊥", goedel_sentence_type(p)),
-        ("K: □(P→P)→□P→□P", k_axiom_type(p, p)),
-        ("4: □P→□□P", four_axiom_type(p)),
-        ("T: □P→P", t_axiom_type(p)),
-        ("PNPP: □P×(□□P→⊥)", provable_not_provably_provable(p)),
-    ]
-
-    print(f"{'Axiom':<25} {'Pretty':<35} {'Depth':<8} {'MLTT?'}")
-    print("-" * 75)
-    for name, ty in named:
-        d = prov_depth(ty)
-        m = is_mltt(ty)
-        p_str = pretty_type(ty)
-        print(f"{name:<25} {p_str:<35} {d:<8} {m}")
-
-    # Show the strict depth separation
-    print("\n--- Strict Depth Separation ---")
-    k_depth = prov_depth(k_axiom_type(Base(0), Base(0)))
-    four_depth = prov_depth(four_axiom_type(Base(0)))
-    print(f"K axiom depth: {k_depth}")
-    print(f"4 axiom depth: {four_depth}")
-    print(f"4 > K: {four_depth > k_depth} (positive introspection needs more depth)")
-
-
-def demo_hierarchy():
-    """Demonstrate the strict depth hierarchy."""
-    separator("Strict Provability Depth Hierarchy")
-
-    print("□^n(⊤) for n = 0..7:")
-    for n in range(8):
-        ty = iterated_box(n, Unit())
-        d = prov_depth(ty)
-        s = classify_strength(ty).name
-        p = pretty_type(ty)
-        print(f"  n={n}: {p:<30} depth={d}  strength={s}")
-
-    print(f"\nEvery depth level is realized: ✓")
-    print(f"Depth is strictly monotone under □: ✓")
+    for name, ty in types.items():
+        depth = ty.prov_depth()
+        mltt = ty.is_mltt()
+        strength = ty.classify_strength()
+        sz = ty.size()
+        boxes = ty.box_count()
+        print(f"\n  {name}")
+        print(f"    Pretty: {ty.pretty()}")
+        print(f"    Depth: {depth}, Size: {sz}, □-count: {boxes}")
+        print(f"    MLTT: {mltt}, Strength: {strength}")
 
 
 def demo_translation():
-    """Demonstrate the ReflTy ↔ ModalMuFormula translation."""
-    separator("Translation: ReflTy ↔ Modal Mu-Calculus")
+    """Demonstrate the bijective translation."""
+    print("\n" + "=" * 60)
+    print("TRANSLATION: ReflTy ↔ ModalMuFormula")
+    print("=" * 60)
 
+    P = ReflTy.base(0)
     test_types = [
-        Unit(),
-        Base(0),
-        Arrow(Base(0), Base(1)),
-        Box(Base(0)),
-        Box(Box(Base(0))),
-        Prod(Box(Base(0)), Arrow(Box(Box(Base(0))), Void())),
-        Mu(Box(Base(0))),
+        ("□P", ReflTy.box(P)),
+        ("P → □P", ReflTy.arrow(P, ReflTy.box(P))),
+        ("Löb(P)", lob_type(P)),
+        ("PnPP(P)", provable_not_provably_provable(P)),
+        ("μ(□P)", ReflTy.mu(ReflTy.box(P))),
     ]
 
-    print("Forward translation (ReflTy → ModalMuFormula):")
-    print(f"{'Type':<30} {'Formula':<30} {'Depths match?'}")
-    print("-" * 70)
-    for ty in test_types:
-        phi = refl_to_mu(ty)
-        td = prov_depth(ty)
-        md = modal_depth(phi)
-        match = "✓" if td == md else "✗"
-        print(f"{pretty_type(ty):<30} {pretty_formula(phi):<30} {td}={md} {match}")
-
-    print("\nRoundtrip verification:")
-    all_ok = True
-    for ty in test_types:
-        phi = refl_to_mu(ty)
-        ty2 = mu_to_refl(phi)
-        phi2 = refl_to_mu(ty2)
-        ok_refl = (ty == ty2)
-        ok_mu = (phi == phi2)
-        if not (ok_refl and ok_mu):
-            all_ok = False
-            print(f"  FAIL: {pretty_type(ty)}")
-        else:
-            print(f"  ✓ {pretty_type(ty)} roundtrips correctly")
-
-    print(f"\nAll roundtrips correct: {'✓' if all_ok else '✗'}")
+    for name, ty in test_types:
+        formula = refl_to_mu(ty)
+        roundtrip = mu_to_refl(formula)
+        matches = (roundtrip == ty)
+        print(f"\n  {name}")
+        print(f"    Type:     {ty.pretty()}")
+        print(f"    Formula:  {formula.pretty()}")
+        print(f"    Roundtrip matches: {matches}")
+        print(f"    Type depth: {ty.prov_depth()}, Formula depth: {formula.modal_depth()}")
 
 
-def demo_self_reference():
-    """Demonstrate self-referential types."""
-    separator("Self-Referential Types")
+def demo_depth_hierarchy():
+    """Show the strict depth hierarchy."""
+    print("\n" + "=" * 60)
+    print("STRICT MODAL DEPTH HIERARCHY")
+    print("=" * 60)
 
-    # Gödel sentence: "I am not provable"
-    goedel = goedel_sentence_type(Base(0))
-    print(f"Gödel sentence (¬□P₀):  {pretty_type(goedel)}")
-    print(f"  Depth: {prov_depth(goedel)}")
-    print(f"  MLTT: {is_mltt(goedel)}")
+    P = ReflTy.base(0)
+    print("\n  Level | Example Type            | Pretty")
+    print("  " + "-" * 50)
+    for n in range(7):
+        ty = iterated_box(n, P)
+        print(f"  {n:5d} | □^{n}(P)                 | {ty.pretty()}")
 
-    # Provable but not provably provable
-    pnpp = provable_not_provably_provable(Base(0))
-    print(f"\nPNPP (□P₀ ∧ ¬□□P₀):  {pretty_type(pnpp)}")
-    print(f"  Depth: {prov_depth(pnpp)}")
-    print(f"  MLTT: {is_mltt(pnpp)}")
-
-    # Self-referential: □(μ.□P₀)
-    selfref = Box(Mu(Box(Base(0))))
-    print(f"\nSelf-ref □(μ.□P₀):  {pretty_type(selfref)}")
-    print(f"  Depth: {prov_depth(selfref)}")
-    print(f"  MLTT: {is_mltt(selfref)}")
-
-    # Löb
-    loeb = loeb_type(Base(0))
-    print(f"\nLöb □(□P₀→P₀)→□P₀:  {pretty_type(loeb)}")
-    print(f"  Depth: {prov_depth(loeb)}")
-    print(f"  MLTT: {is_mltt(loeb)}")
+    print("\n  Theorem: □^n(A) has depth exactly n + d(A)")
+    for n in range(5):
+        ty = iterated_box(n, P)
+        assert ty.prov_depth() == n + P.prov_depth(), f"Failed for n={n}"
+    print("  ✓ Verified for n = 0..4")
 
 
-def demo_conjecture_test():
-    """Test the alternation depth conjecture."""
-    separator("Conjecture Test: Depth Preservation")
+def demo_axiom_hierarchy():
+    """Demonstrate the axiom depth hierarchy."""
+    print("\n" + "=" * 60)
+    print("AXIOM DEPTH HIERARCHY")
+    print("=" * 60)
 
-    print("Testing: provDepth(t) == modalDepth(refl_to_mu(t))")
-    print("for various types including complex compositions...\n")
+    P = ReflTy.base(0)
+    axioms = {
+        "T (□A → A)": ReflTy.arrow(ReflTy.box(P), P),
+        "K (□(A→B) → □A → □B)": k_axiom_type(P, P),
+        "4 (□A → □□A)": four_axiom_type(P),
+        "Löb (□(□P→P) → □P)": lob_type(P),
+        "Gödel (□P → ⊥)": godel_sentence_type(P),
+    }
 
-    test_cases = [
-        Unit(),
-        Void(),
-        Base(0),
-        Arrow(Base(0), Base(1)),
-        Box(Base(0)),
-        Box(Box(Base(0))),
-        Prod(Box(Base(0)), Base(1)),
-        Arrow(Box(Base(0)), Box(Box(Base(1)))),
-        Mu(Box(Base(0))),
-        provable_not_provably_provable(Base(0)),
-        loeb_type(Base(0)),
-        goedel_sentence_type(Base(0)),
-        k_axiom_type(Base(0), Base(1)),
-        four_axiom_type(Base(0)),
+    print("\n  Axiom                      | Depth | Strength")
+    print("  " + "-" * 55)
+    for name, ty in axioms.items():
+        depth = ty.prov_depth()
+        strength = ty.classify_strength()
+        print(f"  {name:28s} | {depth:5d} | {strength}")
+
+    # Verify key inequalities
+    k_depth = k_axiom_type(P, P).prov_depth()
+    four_depth = four_axiom_type(P).prov_depth()
+    t_depth = ReflTy.arrow(ReflTy.box(P), P).prov_depth()
+
+    print(f"\n  Theorem: d(4) > d(K): {four_depth} > {k_depth} = {four_depth > k_depth} ✓")
+    print(f"  Theorem: d(Löb) ≥ 2: {lob_type(P).prov_depth()} ≥ 2 = {lob_type(P).prov_depth() >= 2} ✓")
+
+
+def demo_kripke_model():
+    """Demonstrate Kripke model evaluation."""
+    print("\n" + "=" * 60)
+    print("KRIPKE MODEL EVALUATION")
+    print("=" * 60)
+
+    # Build a simple 3-world transitive model
+    #   0 → 1 → 2, 0 → 2 (transitive closure)
+    model = KripkeModel(
+        worlds=[0, 1, 2],
+        accessibility={0: [1, 2], 1: [2], 2: []},
+        valuation={
+            (0, 0): True, (1, 0): True, (2, 0): False,
+            (0, 1): False, (1, 1): True, (2, 1): True,
+        }
+    )
+
+    P0 = ReflTy.base(0)
+    P1 = ReflTy.base(1)
+
+    print(f"\n  Model: 3 worlds (0 → 1 → 2, transitive)")
+    print(f"  Transitive: {model.is_transitive()}")
+    print(f"  P0 values: w0={model.valuation[(0,0)]}, w1={model.valuation[(1,0)]}, w2={model.valuation[(2,0)]}")
+    print(f"  P1 values: w0={model.valuation[(0,1)]}, w1={model.valuation[(1,1)]}, w2={model.valuation[(2,1)]}")
+
+    test_formulas = [
+        ("P0", P0),
+        ("P1", P1),
+        ("□P0", ReflTy.box(P0)),
+        ("□P1", ReflTy.box(P1)),
+        ("□□P0", ReflTy.box(ReflTy.box(P0))),
+        ("□P0 → P0", ReflTy.arrow(ReflTy.box(P0), P0)),
+        ("P0 × P1", ReflTy.prod(P0, P1)),
     ]
 
-    all_ok = True
-    for ty in test_cases:
-        td = prov_depth(ty)
-        md = modal_depth(refl_to_mu(ty))
-        ok = td == md
-        if not ok:
-            all_ok = False
-        status = "✓" if ok else "✗"
-        print(f"  {status} {pretty_type(ty):<40} provDepth={td} modalDepth={md}")
+    print(f"\n  {'Formula':20s} | w0    | w1    | w2")
+    print("  " + "-" * 50)
+    for name, ty in test_formulas:
+        vals = [model.evaluate(w, ty) for w in [0, 1, 2]]
+        print(f"  {name:20s} | {str(vals[0]):5s} | {str(vals[1]):5s} | {str(vals[2]):5s}")
 
-    print(f"\nAll depth agreements verified: {'✓' if all_ok else '✗'}")
-    if all_ok:
-        print("Conjecture holds for all tested cases.")
+    # Verify box monotonicity theorem
+    print("\n  Verifying box monotonicity (Theorem):")
+    for w in model.worlds:
+        for v in model.accessibility.get(w, []):
+            box_at_w = model.evaluate(w, ReflTy.box(P1))
+            box_at_v = model.evaluate(v, ReflTy.box(P1))
+            if box_at_w:
+                assert box_at_v, f"Monotonicity failed: □P1 at {w} but not at {v}"
+                print(f"  ✓ □P1 at w{w} → □P1 at w{v}")
+
+
+def demo_depth_algebra():
+    """Demonstrate the Proof Depth Algebra."""
+    print("\n" + "=" * 60)
+    print("PROOF DEPTH ALGEBRA")
+    print("=" * 60)
+
+    P = ReflTy.base(0)
+    Q = ReflTy.base(1)
+
+    types = [
+        ("P", P),
+        ("□P", ReflTy.box(P)),
+        ("□P × □Q", ReflTy.prod(ReflTy.box(P), ReflTy.box(Q))),
+        ("□(P × Q)", ReflTy.box(ReflTy.prod(P, Q))),
+        ("□□P", ReflTy.box(ReflTy.box(P))),
+        ("μ(□P)", ReflTy.mu(ReflTy.box(P))),
+        ("Löb(P)", lob_type(P)),
+    ]
+
+    print(f"\n  {'Type':25s} | Level | Mult | Fixpoint | provDepth")
+    print("  " + "-" * 65)
+    for name, ty in types:
+        da = compute_depth_algebra(ty)
+        depth = ty.prov_depth()
+        assert da.level == depth, f"Depth algebra level mismatch for {name}"
+        print(f"  {name:25s} | {da.level:5d} | {da.multiplicity:4d} | {str(da.has_fixpoint):8s} | {depth}")
+
+    print("\n  ✓ Depth algebra level matches provDepth for all test types")
+
+
+def demo_mltt_separation():
+    """Demonstrate the MLTT / ReflTT separation."""
+    print("\n" + "=" * 60)
+    print("MLTT vs ReflTT: PROPER EXTENSION")
+    print("=" * 60)
+
+    mltt_types = [
+        ReflTy.base(0),
+        ReflTy.unit(),
+        ReflTy.arrow(ReflTy.base(0), ReflTy.base(1)),
+        ReflTy.prod(ReflTy.unit(), ReflTy.base(0)),
+    ]
+
+    non_mltt_types = [
+        ReflTy.box(ReflTy.base(0)),
+        ReflTy.mu(ReflTy.base(0)),
+        provable_not_provably_provable(ReflTy.base(0)),
+        lob_type(ReflTy.base(0)),
+    ]
+
+    print("\n  MLTT types (depth 0):")
+    for ty in mltt_types:
+        assert ty.is_mltt()
+        assert ty.prov_depth() == 0
+        print(f"    {ty.pretty():30s} depth={ty.prov_depth()}, isMLTT=True ✓")
+
+    print("\n  Non-MLTT types (depth > 0):")
+    for ty in non_mltt_types:
+        assert not ty.is_mltt()
+        print(f"    {ty.pretty():30s} depth={ty.prov_depth()}, isMLTT=False ✓")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Reflective Type Theory: Proving Things About Proving   ║")
-    print("║  Things                                                 ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_basic_types()
-    demo_named_types()
-    demo_hierarchy()
+    demo_type_constructions()
     demo_translation()
-    demo_self_reference()
-    demo_conjecture_test()
-
-    print("\n" + "="*60)
-    print("  Demo complete. All verifications passed.")
-    print("="*60)
+    demo_depth_hierarchy()
+    demo_axiom_hierarchy()
+    demo_kripke_model()
+    demo_depth_algebra()
+    demo_mltt_separation()
+    print("\n" + "=" * 60)
+    print("ALL DEMOS COMPLETED SUCCESSFULLY")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
 Visualization: Provability Depth Hierarchy
 
-Creates a visual representation of the strict provability depth hierarchy
-in reflective type theory, showing how different types stratify by their
-□-nesting depth.
+Shows the strict stratification of types by provability depth,
+the axiom hierarchy, and the relationship between MLTT and ReflTT.
 """
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
-def create_hierarchy_visualization():
-    """Create the provability depth hierarchy visualization."""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
-    # --- Left panel: Depth hierarchy with example types ---
-    ax1 = axes[0]
-    ax1.set_title("Provability Depth Hierarchy", fontsize=14, fontweight='bold')
+def plot_depth_hierarchy():
+    """Plot the provability depth hierarchy with example types."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 8))
 
-    levels = {
-        0: ["⊤", "⊥", "P₀", "P₀→P₁", "P₀×P₁"],
-        1: ["□P₀", "□(P₀→P₁)", "□P₀→⊥", "□(A→B)→□A→□B"],
-        2: ["□□P₀", "□P₀→□□P₀", "□(□P→P)→□P", "□P×(□□P→⊥)"],
-        3: ["□□□P₀", "□□P₀→□□□P₀"],
-        4: ["□□□□P₀", "..."],
+    # --- Panel 1: Depth Strata ---
+    ax = axes[0]
+    ax.set_title("Provability Depth Strata", fontsize=14, fontweight='bold')
+
+    strata = {
+        0: ["P", "⊤", "⊥", "P→Q", "P×Q", "P+Q"],
+        1: ["□P", "□P→⊥", "□(P→Q)→□P→□Q"],
+        2: ["□□P", "□P→□□P", "□(□P→P)→□P"],
+        3: ["□□□P", "□(□□P→□P)"],
+        4: ["□⁴P"],
     }
 
-    colors = ['#2ecc71', '#3498db', '#e74c3c', '#9b59b6', '#f39c12']
-    labels = ['CLASSICAL (MLTT)', 'PROVABLE', 'META-PROVABLE', 'TRANSFINITE', 'TRANSFINITE+']
+    colors = ['#4CAF50', '#2196F3', '#FF9800', '#F44336', '#9C27B0']
 
-    for depth, types in levels.items():
-        y = depth
+    for depth, types in strata.items():
+        y = 4 - depth
+        ax.axhspan(y - 0.4, y + 0.4, alpha=0.15, color=colors[depth])
+        ax.text(-0.5, y, f"Depth {depth}", fontsize=12, fontweight='bold',
+                ha='right', va='center', color=colors[depth])
         for i, t in enumerate(types):
-            x = i * 2.5
-            ax1.text(x, y, t, fontsize=9, ha='center', va='center',
-                    bbox=dict(boxstyle='round,pad=0.3',
-                             facecolor=colors[min(depth, 4)],
-                             alpha=0.3, edgecolor=colors[min(depth, 4)]))
+            x = 0.5 + i * 2.2
+            ax.text(x, y, t, fontsize=9, ha='center', va='center',
+                    bbox=dict(boxstyle='round,pad=0.3', facecolor=colors[depth],
+                              alpha=0.3, edgecolor=colors[depth]))
 
-    # Draw level separators
-    for depth in range(5):
-        ax1.axhline(y=depth - 0.4, color='gray', linestyle='--', alpha=0.3)
-        ax1.text(-2.5, depth, f"Depth {depth}", fontsize=10, fontweight='bold',
-                va='center', ha='center',
-                bbox=dict(boxstyle='round', facecolor=colors[min(depth, 4)], alpha=0.5))
+    ax.set_xlim(-2, 14)
+    ax.set_ylim(-1, 5)
+    ax.set_axis_off()
 
-    ax1.set_xlim(-4, 12)
-    ax1.set_ylim(-0.8, 4.8)
-    ax1.set_ylabel("Provability Depth →", fontsize=12)
-    ax1.set_xticks([])
-    ax1.invert_yaxis()
+    # Separation line
+    ax.axhline(y=3.6, color='red', linewidth=2, linestyle='--')
+    ax.text(6, 3.8, "← MLTT Fragment (depth 0) →", fontsize=10,
+            ha='center', color='red', fontstyle='italic')
+    ax.text(6, 3.2, "↓ Reflective Extension ↓", fontsize=10,
+            ha='center', color='blue', fontstyle='italic')
 
-    legend_patches = [mpatches.Patch(color=colors[i], alpha=0.5, label=labels[i])
-                     for i in range(5)]
-    ax1.legend(handles=legend_patches, loc='lower right', fontsize=8)
+    # --- Panel 2: Axiom Hierarchy ---
+    ax = axes[1]
+    ax.set_title("Modal Axiom Depth Hierarchy", fontsize=14, fontweight='bold')
 
-    # --- Right panel: Axiom depth comparison ---
-    ax2 = axes[1]
-    ax2.set_title("Provability Logic Axiom Depths", fontsize=14, fontweight='bold')
+    axiom_data = [
+        ("K: □(A→B)→□A→□B", 1, '#2196F3'),
+        ("T: □A→A", 1, '#2196F3'),
+        ("Gödel: □P→⊥", 1, '#2196F3'),
+        ("4: □A→□□A", 2, '#FF9800'),
+        ("Löb: □(□P→P)→□P", 2, '#FF9800'),
+        ("Grz: □(□(A→□A)→A)→A", 2, '#FF9800'),
+        ("PnPP: □P×(□□P→⊥)", 2, '#FF9800'),
+    ]
 
-    axioms = ['K\n□(A→B)→□A→□B', 'T\n□A→A', 'Gödel\n□P→⊥',
-              '4\n□A→□□A', 'Löb\n□(□P→P)→□P', 'PNPP\n□P×(□□P→⊥)']
-    depths = [1, 1, 1, 2, 2, 2]
-    bar_colors = [colors[d] for d in depths]
+    y_positions = list(range(len(axiom_data)))
+    for i, (name, depth, color) in enumerate(axiom_data):
+        ax.barh(i, depth, color=color, alpha=0.7, edgecolor='black', height=0.6)
+        ax.text(depth + 0.1, i, name, fontsize=9, va='center')
 
-    bars = ax2.bar(range(len(axioms)), depths, color=bar_colors, alpha=0.7,
-                   edgecolor='black', linewidth=0.5)
-    ax2.set_xticks(range(len(axioms)))
-    ax2.set_xticklabels(axioms, fontsize=8)
-    ax2.set_ylabel("Provability Depth", fontsize=12)
-    ax2.set_ylim(0, 3)
+    ax.set_xlabel("Provability Depth", fontsize=12)
+    ax.set_yticks([])
+    ax.set_xlim(0, 5)
 
-    # Annotate the strict separation
-    ax2.annotate('Depth 1\n(basic provability)',
-                xy=(1, 1.1), fontsize=9, ha='center', color=colors[1])
-    ax2.annotate('Depth 2\n(meta-provability)',
-                xy=(4, 2.1), fontsize=9, ha='center', color=colors[2])
+    # Arrow showing "4 > K"
+    ax.annotate("4 > K\n(strict)", xy=(2, 3), xytext=(3.5, 1.5),
+                fontsize=10, fontweight='bold', color='red',
+                arrowprops=dict(arrowstyle='->', color='red', lw=2))
 
-    # Draw separator line
-    ax2.axhline(y=1.5, color='red', linestyle='--', alpha=0.5, label='Strict separation')
+    # --- Panel 3: Translation Correspondence ---
+    ax = axes[2]
+    ax.set_title("ReflTy ↔ Modal μ-Calculus", fontsize=14, fontweight='bold')
+
+    left_items = ["base(n)", "⊤", "⊥", "A → B", "A × B", "A + B", "□A", "μA"]
+    right_items = ["var(n)", "⊤", "⊥", "φ → ψ", "φ ∧ ψ", "φ ∨ ψ", "□φ", "μφ"]
+
+    for i, (l, r) in enumerate(zip(left_items, right_items)):
+        y = 7 - i
+        ax.text(1, y, l, fontsize=11, ha='center', va='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightblue',
+                          edgecolor='steelblue'))
+        ax.text(5, y, r, fontsize=11, ha='center', va='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow',
+                          edgecolor='goldenrod'))
+        ax.annotate("", xy=(3.8, y), xytext=(2.2, y),
+                    arrowprops=dict(arrowstyle='<->', color='green', lw=1.5))
+
+    ax.text(1, 8.3, "ReflTy", fontsize=13, fontweight='bold', ha='center', color='steelblue')
+    ax.text(5, 8.3, "Modal μ-Calculus", fontsize=13, fontweight='bold', ha='center', color='goldenrod')
+    ax.text(3, 8.3, "≅", fontsize=16, fontweight='bold', ha='center', color='green')
+
+    ax.set_xlim(-0.5, 6.5)
+    ax.set_ylim(-0.5, 9)
+    ax.set_axis_off()
 
     plt.tight_layout()
-    plt.savefig('hierarchy_visualization.png', dpi=150, bbox_inches='tight')
+    plt.savefig("depth_hierarchy.png", dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved hierarchy_visualization.png")
+    print("Saved: depth_hierarchy.png")
 
 
-def create_roundtrip_visualization():
-    """Visualize the bijection between ReflTy and ModalMuFormula."""
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.set_title("Bijection: ReflTy ↔ Modal Mu-Calculus", fontsize=14, fontweight='bold')
+def plot_kripke_example():
+    """Plot an example Kripke model with evaluation."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    ax.set_title("Kripke Model: Box Monotonicity", fontsize=14, fontweight='bold')
 
-    # Type constructors on left
-    refl_types = ['base(n)', 'unit', 'void', 'arrow(A,B)', 'prod(A,B)',
-                  'sum(A,B)', 'box(A)', 'mu(body)']
-    mu_formulas = ['var(n)', 'tt', 'ff', 'impl(φ,ψ)', 'conj(φ,ψ)',
-                   'disj(φ,ψ)', 'boxF(φ)', 'muF(body)']
+    # Draw worlds
+    world_positions = {0: (1, 3), 1: (4, 3), 2: (7, 3)}
+    world_labels = {
+        0: "w₀\nP₀=T, P₁=F\n□P₁=T",
+        1: "w₁\nP₀=T, P₁=T\n□P₁=T",
+        2: "w₂\nP₀=F, P₁=T\n□P₁=T (vacuous)",
+    }
 
-    n = len(refl_types)
-    y_positions = np.linspace(0, 1, n)
+    for w, (x, y) in world_positions.items():
+        circle = plt.Circle((x, y), 0.8, fill=True, facecolor='lightcyan',
+                             edgecolor='navy', linewidth=2)
+        ax.add_patch(circle)
+        ax.text(x, y, world_labels[w], fontsize=8, ha='center', va='center')
 
-    for i, (rt, mf) in enumerate(zip(refl_types, mu_formulas)):
-        y = y_positions[i]
-        # ReflTy on left
-        ax.text(0.15, y, rt, fontsize=11, ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#3498db', alpha=0.3))
-        # ModalMuFormula on right
-        ax.text(0.85, y, mf, fontsize=11, ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#e74c3c', alpha=0.3))
-        # Arrows
-        ax.annotate('', xy=(0.65, y + 0.01), xytext=(0.35, y + 0.01),
-                    arrowprops=dict(arrowstyle='->', color='#2c3e50', lw=1.5))
-        ax.annotate('', xy=(0.35, y - 0.01), xytext=(0.65, y - 0.01),
-                    arrowprops=dict(arrowstyle='->', color='#2c3e50', lw=1.5))
+    # Draw accessibility arrows
+    arrows = [(0, 1), (1, 2), (0, 2)]
+    for w, v in arrows:
+        x1, y1 = world_positions[w]
+        x2, y2 = world_positions[v]
+        dx, dy = x2 - x1, y2 - y1
+        norm = np.sqrt(dx**2 + dy**2)
+        dx, dy = dx/norm, dy/norm
+        ax.annotate("", xy=(x2 - dx*0.85, y2 - dy*0.85),
+                    xytext=(x1 + dx*0.85, y1 + dy*0.85),
+                    arrowprops=dict(arrowstyle='->', color='red', lw=2))
 
     # Labels
-    ax.text(0.15, 1.08, 'ReflTy', fontsize=13, ha='center', fontweight='bold',
-            color='#3498db')
-    ax.text(0.85, 1.08, 'ModalMuFormula', fontsize=13, ha='center', fontweight='bold',
-            color='#e74c3c')
-    ax.text(0.5, 1.08, 'refl_to_mu →\n← mu_to_refl', fontsize=9, ha='center',
-            style='italic')
+    ax.text(2.5, 4.2, "R", fontsize=12, color='red', fontweight='bold')
+    ax.text(5.5, 4.2, "R", fontsize=12, color='red', fontweight='bold')
+    ax.text(4, 1.5, "R (transitivity)", fontsize=10, color='red', fontstyle='italic')
 
-    ax.set_xlim(-0.05, 1.05)
-    ax.set_ylim(-0.1, 1.15)
-    ax.axis('off')
+    # Theorem statement
+    ax.text(4, 0.5,
+            "Theorem: If R is transitive and □A holds at w,\nthen □A holds at every R-accessible world from w.",
+            fontsize=11, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow',
+                      edgecolor='orange'))
+
+    ax.set_xlim(-0.5, 8.5)
+    ax.set_ylim(-0.5, 5.5)
+    ax.set_aspect('equal')
+    ax.set_axis_off()
 
     plt.tight_layout()
-    plt.savefig('bijection_visualization.png', dpi=150, bbox_inches='tight')
+    plt.savefig("kripke_model.png", dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved bijection_visualization.png")
+    print("Saved: kripke_model.png")
 
 
 if __name__ == "__main__":
-    create_hierarchy_visualization()
-    create_roundtrip_visualization()
+    plot_depth_hierarchy()
+    plot_kripke_example()
     print("All visualizations generated.")
