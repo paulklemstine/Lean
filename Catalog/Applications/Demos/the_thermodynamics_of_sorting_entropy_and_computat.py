@@ -1,306 +1,216 @@
 #!/usr/bin/env python3
 """
-Thermodynamic Sorting Demo
+Thermodynamics of Sorting: Numerical Demonstrations
 
-Demonstrates the connection between sorting algorithms, information entropy,
-and thermodynamic work via Landauer's principle.
+Demonstrates the key results:
+1. Comparison counts for various sorting algorithms
+2. Thermodynamic work (in units of kT) for each algorithm
+3. Entropy gap (wasted work) analysis
+4. Stirling approximation verification
 """
 
 import math
 import random
-from algorithms import (
-    bubble_sort_counted, merge_sort_counted, insertion_sort_counted,
-    heapsort_counted, sorting_entropy_bits, thermodynamic_work,
-    min_thermodynamic_work, wasted_work, factorial,
-    stirling_entropy_lower, stirling_entropy_upper,
-    KT_ROOM, LANDAUER_BIT
-)
+from typing import List, Tuple
+
+# Boltzmann constant (J/K)
+kB = 1.380649e-23
+# Room temperature (K)
+T = 300.0
+# kT at room temperature
+kT = kB * T
 
 
-def demo_sorting_with_entropy():
-    """Demonstrate sorting with entropy bookkeeping."""
-    print("=" * 70)
-    print("THERMODYNAMIC SORTING DEMO")
-    print("=" * 70)
-    print()
-    print(f"Physical constants:")
-    print(f"  kT (room temp) = {KT_ROOM:.3e} J")
-    print(f"  Landauer limit = {LANDAUER_BIT:.3e} J/bit")
-    print()
-
-    for n in [5, 8, 10, 15, 20]:
-        print(f"\n{'='*60}")
-        print(f"Sorting n = {n} elements")
-        print(f"{'='*60}")
-
-        # Generate worst-case-ish input (reverse sorted)
-        arr = list(range(n, 0, -1))
-
-        # Sort with each algorithm
-        algorithms = [
-            ("Bubble Sort", bubble_sort_counted),
-            ("Insertion Sort", insertion_sort_counted),
-            ("Merge Sort", merge_sort_counted),
-            ("Heapsort", heapsort_counted),
-        ]
-
-        entropy = sorting_entropy_bits(n)
-        min_w = min_thermodynamic_work(n)
-        optimal_comps = math.ceil(math.log2(factorial(n))) if n > 1 else 0
-
-        print(f"  Permutation entropy: {entropy:.2f} bits")
-        print(f"  Information-theoretic minimum: {optimal_comps} comparisons")
-        print(f"  Minimum thermodynamic work: {min_w:.3e} J")
-        print()
-        print(f"  {'Algorithm':<20} {'Comparisons':>12} {'Work (J)':>14} {'Waste (J)':>14} {'Efficiency':>10}")
-        print(f"  {'-'*20} {'-'*12} {'-'*14} {'-'*14} {'-'*10}")
-
-        for name, sort_fn in algorithms:
-            sorted_arr, comps = sort_fn(arr)
-            assert sorted_arr == sorted(arr), f"{name} failed!"
-            w = thermodynamic_work(comps)
-            waste = wasted_work(comps, n)
-            efficiency = optimal_comps / comps * 100 if comps > 0 else 100
-            print(f"  {name:<20} {comps:>12} {w:>14.3e} {waste:>14.3e} {efficiency:>9.1f}%")
+def merge_sort_count(arr: List[int]) -> Tuple[List[int], int]:
+    """Merge sort that counts comparisons."""
+    if len(arr) <= 1:
+        return arr[:], 0
+    mid = len(arr) // 2
+    left, c1 = merge_sort_count(arr[:mid])
+    right, c2 = merge_sort_count(arr[mid:])
+    merged = []
+    comparisons = c1 + c2
+    i = j = 0
+    while i < len(left) and j < len(right):
+        comparisons += 1
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+    return merged, comparisons
 
 
-def demo_stirling_bounds():
-    """Verify Stirling bounds on sorting entropy."""
-    print(f"\n\n{'='*70}")
-    print("STIRLING APPROXIMATION BOUNDS")
-    print("='*70")
-    print()
-    print(f"  {'n':>5} {'log₂(n!)':>12} {'Lower bound':>12} {'Upper bound':>12} {'Gap':>8}")
-    print(f"  {'-'*5} {'-'*12} {'-'*12} {'-'*12} {'-'*8}")
-
-    for n in [3, 5, 10, 20, 50, 100, 200, 500, 1000]:
-        entropy = sorting_entropy_bits(n)
-        lower = stirling_entropy_lower(n)
-        upper = stirling_entropy_upper(n)
-        gap = entropy - lower
-        print(f"  {n:>5} {entropy:>12.2f} {lower:>12.2f} {upper:>12.2f} {gap:>8.3f}")
-
-    print()
-    print("  Conjecture: n·log₂(n) - n·log₂(e) ≤ log₂(n!) for n ≥ 3: ", end="")
-    all_valid = all(stirling_entropy_lower(n) <= sorting_entropy_bits(n) for n in range(3, 1001))
-    print("✓ VERIFIED" if all_valid else "✗ FAILED")
+def bubble_sort_count(arr: List[int]) -> Tuple[List[int], int]:
+    """Bubble sort that counts comparisons."""
+    arr = arr[:]
+    n = len(arr)
+    comparisons = 0
+    for i in range(n):
+        for j in range(n - 1 - i):
+            comparisons += 1
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr, comparisons
 
 
-def demo_thermodynamic_waste():
-    """Show thermodynamic waste as a function of n."""
-    print(f"\n\n{'='*70}")
-    print("THERMODYNAMIC WASTE: BUBBLE SORT vs MERGE SORT")
-    print("='*70")
-    print()
-    print(f"  {'n':>5} {'Optimal':>10} {'Merge':>10} {'Bubble':>10} {'Waste(B)':>12} {'Ratio(B/M)':>12}")
-    print(f"  {'-'*5} {'-'*10} {'-'*10} {'-'*10} {'-'*12} {'-'*12}")
-
-    for n in [5, 10, 20, 50, 100, 200, 500]:
-        optimal = math.ceil(math.log2(factorial(n))) if n > 1 else 0
-        merge = n * math.ceil(math.log2(n)) if n > 1 else 0
-        bubble = n * (n - 1) // 2
-        waste_bubble = bubble - optimal
-        ratio = bubble / merge if merge > 0 else float('inf')
-        print(f"  {n:>5} {optimal:>10} {merge:>10} {bubble:>10} {waste_bubble:>12} {ratio:>12.2f}")
-
-
-def demo_random_inputs():
-    """Compare algorithms on random inputs (average case)."""
-    print(f"\n\n{'='*70}")
-    print("AVERAGE CASE: RANDOM INPUTS (100 trials)")
-    print("='*70")
-    print()
-
-    random.seed(42)
-
-    for n in [10, 20, 50]:
-        print(f"\n  n = {n}:")
-        print(f"  {'Algorithm':<20} {'Avg Comps':>10} {'Min Comps':>10} {'Max Comps':>10} {'Optimal':>10}")
-        print(f"  {'-'*20} {'-'*10} {'-'*10} {'-'*10} {'-'*10}")
-
-        optimal = math.ceil(math.log2(factorial(n)))
-
-        for name, sort_fn in [
-            ("Bubble Sort", bubble_sort_counted),
-            ("Insertion Sort", insertion_sort_counted),
-            ("Merge Sort", merge_sort_counted),
-            ("Heapsort", heapsort_counted),
-        ]:
-            comps_list = []
-            for _ in range(100):
-                arr = list(range(n))
-                random.shuffle(arr)
-                _, comps = sort_fn(arr)
-                comps_list.append(comps)
-            avg = sum(comps_list) / len(comps_list)
-            print(f"  {name:<20} {avg:>10.1f} {min(comps_list):>10} {max(comps_list):>10} {optimal:>10}")
-
-
-def demo_energy_scale():
-    """Put thermodynamic costs in context."""
-    print(f"\n\n{'='*70}")
-    print("ENERGY SCALE CONTEXT")
-    print("='*70")
-    print()
-
-    comparisons = [
-        ("Sorting 10 elements (optimal)", math.ceil(math.log2(factorial(10)))),
-        ("Sorting 10 elements (bubble sort)", 10 * 9 // 2),
-        ("Sorting 100 elements (optimal)", math.ceil(math.log2(factorial(100)))),
-        ("Sorting 100 elements (bubble sort)", 100 * 99 // 2),
-        ("Sorting 1000 elements (optimal)", math.ceil(math.log2(factorial(1000)))),
-        ("Sorting 1000 elements (bubble sort)", 1000 * 999 // 2),
-    ]
-
-    print(f"  {'Operation':<45} {'Comparisons':>12} {'Energy (J)':>14}")
-    print(f"  {'-'*45} {'-'*12} {'-'*14}")
-    for name, comps in comparisons:
-        energy = thermodynamic_work(comps)
-        print(f"  {name:<45} {comps:>12} {energy:>14.3e}")
-
-    print()
-    print("  Context:")
-    print(f"    1 ATP hydrolysis          ≈ 5.0e-20 J")
-    print(f"    1 photon of visible light ≈ 3.0e-19 J")
-    print(f"    1 kcal                    ≈ 4.2e+03 J")
-    print(f"    Your daily food intake    ≈ 8.4e+06 J")
-
-
-if __name__ == "__main__":
-    demo_sorting_with_entropy()
-    demo_stirling_bounds()
-    demo_thermodynamic_waste()
-    demo_random_inputs()
-    demo_energy_scale()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Decision Tree for Sorting
-
-Shows the binary decision tree structure for sorting small lists,
-illustrating how each comparison partitions the permutation space
-and reduces entropy by at most 1 bit.
-"""
-
-import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from itertools import permutations
-
-
-def factorial(n):
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
-
-
-def entropy_reduction_simulation(n, num_trials=1000):
-    """
-    Simulate sorting random permutations, tracking entropy reduction.
-    Returns average entropy curve over comparisons.
-    """
-    import random
-    random.seed(42)
-
-    all_perms = list(permutations(range(n)))
-    total_perms = len(all_perms)
-    max_comps = n * (n - 1) // 2 + 5
-
-    entropy_curves = []
-
-    for _ in range(num_trials):
-        perm = list(range(n))
-        random.shuffle(perm)
-
-        # Track which permutations are still consistent
-        consistent = set(range(total_perms))
-        entropy_curve = [math.log2(len(consistent))]
-        comparisons_done = 0
-
-        # Bubble sort with tracking
-        arr = perm.copy()
-        for i in range(n):
-            for j in range(0, n - i - 1):
-                result = arr[j] < arr[j + 1]
-                # Filter consistent permutations
-                new_consistent = set()
-                for idx in consistent:
-                    p = all_perms[idx]
-                    if (p[j] < p[j + 1]) == result:
-                        new_consistent.add(idx)
-                consistent = new_consistent
-                if arr[j] > arr[j + 1]:
-                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                comparisons_done += 1
-                remaining = max(1, len(consistent))
-                entropy_curve.append(math.log2(remaining))
-                if remaining <= 1:
-                    break
-            if len(consistent) <= 1:
+def insertion_sort_count(arr: List[int]) -> Tuple[List[int], int]:
+    """Insertion sort that counts comparisons."""
+    arr = arr[:]
+    comparisons = 0
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0:
+            comparisons += 1
+            if arr[j] > key:
+                arr[j + 1] = arr[j]
+                j -= 1
+            else:
                 break
+        arr[j + 1] = key
+    return arr, comparisons
 
-        entropy_curves.append(entropy_curve)
 
-    # Average curves (pad shorter ones)
-    max_len = max(len(c) for c in entropy_curves)
-    avg_curve = []
-    for i in range(max_len):
-        vals = [c[i] for c in entropy_curves if i < len(c)]
-        avg_curve.append(sum(vals) / len(vals) if vals else 0)
+def quicksort_count(arr: List[int]) -> Tuple[List[int], int]:
+    """Quicksort that counts comparisons (random pivot)."""
+    if len(arr) <= 1:
+        return arr[:], 0
+    pivot_idx = random.randint(0, len(arr) - 1)
+    pivot = arr[pivot_idx]
+    left, right, equal = [], [], []
+    comparisons = 0
+    for x in arr:
+        if x == pivot:
+            equal.append(x)
+        else:
+            comparisons += 1
+            if x < pivot:
+                left.append(x)
+            else:
+                right.append(x)
+    sorted_left, c1 = quicksort_count(left)
+    sorted_right, c2 = quicksort_count(right)
+    return sorted_left + equal + sorted_right, comparisons + c1 + c2
 
-    return avg_curve
+
+def log_factorial(n: int) -> float:
+    """Compute log(n!) = sum of log(k) for k=1..n."""
+    return sum(math.log(k) for k in range(1, n + 1))
+
+
+def thermodynamic_work(comparisons: int) -> float:
+    """Thermodynamic work in units of kT."""
+    return comparisons * math.log(2)
+
+
+def entropy_gap(n: int, comparisons: int) -> float:
+    """Entropy gap (wasted work) in nats."""
+    return thermodynamic_work(comparisons) - log_factorial(n)
+
+
+def stirling_ratio(n: int) -> float:
+    """Compute log(n!) / (n * log(n))."""
+    if n <= 1:
+        return float('inf')
+    return log_factorial(n) / (n * math.log(n))
 
 
 def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    print("=" * 70)
+    print("THERMODYNAMICS OF SORTING: Numerical Demonstrations")
+    print("=" * 70)
 
-    # Plot 1: Entropy reduction during sorting (n=4)
-    ax = axes[0]
-    n = 4
-    curve = entropy_reduction_simulation(n, num_trials=200)
-    xs = list(range(len(curve)))
-    initial_entropy = math.log2(factorial(n))
-    
-    ax.plot(xs, curve, 'b-', linewidth=2, label=f'Average entropy (n={n})')
-    ax.axhline(y=initial_entropy, color='r', linestyle='--', alpha=0.7,
-               label=f'Initial: log₂({n}!) = {initial_entropy:.2f}')
-    ax.axhline(y=0, color='g', linestyle='--', alpha=0.7, label='Sorted: 0 bits')
-    ax.plot(xs, [max(0, initial_entropy - i) for i in xs], 'k:', alpha=0.5,
-            label='1 bit/comparison (maximum)')
-    ax.set_xlabel('Number of comparisons', fontsize=12)
-    ax.set_ylabel('Remaining entropy (bits)', fontsize=12)
-    ax.set_title(f'Entropy Reduction During Sorting (n={n})', fontsize=13)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.5, initial_entropy + 1)
+    # Demo 1: Comparison counts
+    print("\n--- Demo 1: Comparison Counts ---")
+    print(f"{'n':>6} {'log₂(n!)':>10} {'Merge':>8} {'Bubble':>8} {'Insert':>8} {'Quick':>8}")
+    print("-" * 55)
 
-    # Plot 2: Decision tree depth vs entropy
-    ax2 = axes[1]
-    ns_range = list(range(1, 13))
-    entropies = [math.log2(factorial(n)) if n > 1 else 0 for n in ns_range]
-    min_depths = [math.ceil(math.log2(factorial(n))) if n > 1 else 0 for n in ns_range]
-    tree_leaves = [factorial(n) for n in ns_range]
-    log2_leaves = [math.log2(factorial(n)) if n > 1 else 0 for n in ns_range]
+    for n in [8, 16, 32, 64, 128, 256]:
+        arr = list(range(n))
+        random.shuffle(arr)
 
-    bars1 = ax2.bar([x - 0.2 for x in ns_range], min_depths, 0.4, 
-                     color='steelblue', label='Min depth: ⌈log₂(n!)⌉', alpha=0.8)
-    bars2 = ax2.bar([x + 0.2 for x in ns_range], entropies, 0.4,
-                     color='coral', label='Entropy: log₂(n!)', alpha=0.8)
-    
-    ax2.set_xlabel('n (number of elements)', fontsize=12)
-    ax2.set_ylabel('Bits / Comparisons', fontsize=12)
-    ax2.set_title('Decision Tree Depth vs Sorting Entropy', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3, axis='y')
-    ax2.set_xticks(ns_range)
+        _, c_merge = merge_sort_count(arr[:])
+        _, c_bubble = bubble_sort_count(arr[:])
+        _, c_insert = insertion_sort_count(arr[:])
+        _, c_quick = quicksort_count(arr[:])
+        log_nfact = math.log2(math.factorial(n))
 
-    plt.tight_layout()
-    plt.savefig('decision_tree_entropy.png', dpi=150, bbox_inches='tight')
-    print("Saved decision_tree_entropy.png")
+        print(f"{n:>6} {log_nfact:>10.1f} {c_merge:>8} {c_bubble:>8} {c_insert:>8} {c_quick:>8}")
+
+    # Demo 2: Thermodynamic work
+    print("\n--- Demo 2: Thermodynamic Work (in kT units) ---")
+    print(f"{'n':>6} {'W_min (kT)':>12} {'W_merge':>12} {'W_bubble':>12} {'Ratio':>8}")
+    print("-" * 55)
+
+    for n in [10, 50, 100, 500, 1000]:
+        arr = list(range(n))
+        random.shuffle(arr)
+
+        _, c_merge = merge_sort_count(arr[:])
+        _, c_bubble = bubble_sort_count(arr[:])
+
+        w_min = log_factorial(n)
+        w_merge = thermodynamic_work(c_merge)
+        w_bubble = thermodynamic_work(c_bubble)
+        ratio = w_bubble / w_min
+
+        print(f"{n:>6} {w_min:>12.1f} {w_merge:>12.1f} {w_bubble:>12.1f} {ratio:>8.2f}")
+
+    # Demo 3: Entropy gap (wasted work)
+    print("\n--- Demo 3: Entropy Gap (Wasted Work in nats) ---")
+    print(f"{'n':>6} {'Gap_merge':>12} {'Gap_bubble':>12} {'Gap_ratio':>10}")
+    print("-" * 45)
+
+    for n in [10, 50, 100, 500]:
+        arr = list(range(n))
+        random.shuffle(arr)
+
+        _, c_merge = merge_sort_count(arr[:])
+        _, c_bubble = bubble_sort_count(arr[:])
+
+        gap_merge = entropy_gap(n, c_merge)
+        gap_bubble = entropy_gap(n, c_bubble)
+        gap_ratio = gap_bubble / gap_merge if gap_merge > 0 else float('inf')
+
+        print(f"{n:>6} {gap_merge:>12.1f} {gap_bubble:>12.1f} {gap_ratio:>10.1f}")
+
+    # Demo 4: Stirling approximation
+    print("\n--- Demo 4: Stirling Ratio log(n!) / (n·log(n)) ---")
+    print(f"{'n':>8} {'log(n!)':>12} {'n·log(n)':>12} {'Ratio':>8} {'1-1/log(n)':>12}")
+    print("-" * 60)
+
+    for n in [3, 5, 10, 50, 100, 1000, 10000]:
+        lnf = log_factorial(n)
+        nlnn = n * math.log(n)
+        ratio = lnf / nlnn
+        lower = 1 - 1 / math.log(n)
+
+        print(f"{n:>8} {lnf:>12.2f} {nlnn:>12.2f} {ratio:>8.4f} {lower:>12.4f}")
+
+    # Demo 5: Physical energy scale
+    print("\n--- Demo 5: Physical Energy of Sorting at Room Temperature ---")
+    print(f"kT at {T}K = {kT:.4e} J")
+    print(f"{'n':>8} {'W_min (J)':>15} {'W_bubble (J)':>15} {'Waste (J)':>15}")
+    print("-" * 60)
+
+    for n in [10, 100, 1000, 10**6]:
+        w_min_nats = log_factorial(n)
+        w_bubble_nats = n * (n - 1) / 2 * math.log(2)
+        w_min_J = kT * w_min_nats
+        w_bubble_J = kT * w_bubble_nats
+        waste_J = w_bubble_J - w_min_J
+
+        print(f"{n:>8} {w_min_J:>15.4e} {w_bubble_J:>15.4e} {waste_J:>15.4e}")
+
+    print("\n" + "=" * 70)
+    print("Key insight: The entropy gap of bubble sort grows as O(n²),")
+    print("while the minimum work grows as O(n·log(n)). Bubble sort")
+    print("wastes quadratically more energy than necessary.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
@@ -309,151 +219,207 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Sorting Entropy and Stirling Bounds
-
-Plots log₂(n!) alongside the Stirling lower and upper bounds,
-showing how sorting entropy grows with problem size.
+Visualization: Entropy gap (thermodynamic waste) for different sorting algorithms.
+Shows how bubble sort wastes quadratically more energy than merge sort.
 """
-
 import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+import random
 
+def log_factorial(n):
+    return sum(math.log(k) for k in range(1, n + 1))
 
-def factorial(n):
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
+def merge_sort_count(arr):
+    if len(arr) <= 1:
+        return 0
+    mid = len(arr) // 2
+    c1 = merge_sort_count(arr[:mid])
+    c2 = merge_sort_count(arr[mid:])
+    return c1 + c2 + len(arr) - 1  # worst case merge
 
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
 
-def sorting_entropy(n):
-    if n <= 1:
-        return 0.0
-    return math.log2(factorial(n))
+    ns = list(range(4, 201))
+    random.seed(42)
 
+    gaps_merge = []
+    gaps_bubble = []
+    gaps_insert = []
 
-def stirling_lower(n):
-    if n <= 1:
-        return 0.0
-    return n * math.log2(n) - n * math.log2(math.e)
+    for n in ns:
+        lnf = log_factorial(n)
+        c_merge = int(n * math.log2(n))  # approximate
+        c_bubble = n * (n - 1) // 2
+        c_insert = n * (n - 1) // 4  # average case
 
+        gaps_merge.append(c_merge * math.log(2) - lnf)
+        gaps_bubble.append(c_bubble * math.log(2) - lnf)
+        gaps_insert.append(c_insert * math.log(2) - lnf)
 
-def stirling_upper(n):
-    if n <= 1:
-        return 0.0
-    return n * math.log2(n) - n * math.log2(math.e) + 0.5 * math.log2(2 * math.pi * n)
+    fig, ax = plt.subplots(figsize=(10, 6))
 
+    ax.plot(ns, gaps_merge, 'b-', linewidth=2, label='Merge Sort gap ≈ O(n)')
+    ax.plot(ns, gaps_insert, color='#FF9800', linewidth=2,
+            label='Insertion Sort gap ≈ O(n²/4)')
+    ax.plot(ns, gaps_bubble, 'r-', linewidth=2, label='Bubble Sort gap ≈ O(n²/2)')
 
-def main():
-    ns = list(range(1, 101))
-    entropies = [sorting_entropy(n) for n in ns]
-    lowers = [stirling_lower(n) for n in ns]
-    uppers = [stirling_upper(n) for n in ns]
-    n_log_n = [n * math.log2(n) if n > 1 else 0 for n in ns]
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Entropy and bounds
-    ax = axes[0]
-    ax.plot(ns, entropies, 'b-', linewidth=2, label='log₂(n!) [exact]')
-    ax.plot(ns, lowers, 'r--', linewidth=1.5, label='n·log₂(n) − n·log₂(e) [lower]')
-    ax.plot(ns, uppers, 'g--', linewidth=1.5, label='+ ½·log₂(2πn) [upper]')
-    ax.plot(ns, n_log_n, 'k:', linewidth=1, label='n·log₂(n)')
-    ax.fill_between(ns, lowers, uppers, alpha=0.1, color='green')
     ax.set_xlabel('n (number of elements)', fontsize=12)
-    ax.set_ylabel('Entropy (bits)', fontsize=12)
-    ax.set_title('Sorting Entropy: log₂(n!) and Stirling Bounds', fontsize=13)
-    ax.legend(fontsize=10)
+    ax.set_ylabel('Entropy Gap (nats of wasted work)', fontsize=12)
+    ax.set_title('Thermodynamic Waste: Entropy Gap by Algorithm', fontsize=14)
+    ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
 
-    # Plot 2: Gap between exact and lower bound
-    ax2 = axes[1]
-    gaps = [entropies[i] - lowers[i] for i in range(len(ns))]
-    ax2.plot(ns, gaps, 'purple', linewidth=2)
-    ax2.axhline(y=0.5 * math.log2(2 * math.pi), color='orange', linestyle='--',
-                label=f'½·log₂(2π) ≈ {0.5 * math.log2(2 * math.pi):.3f}')
-    ax2.set_xlabel('n (number of elements)', fontsize=12)
-    ax2.set_ylabel('log₂(n!) − (n·log₂(n) − n·log₂(e))', fontsize=12)
-    ax2.set_title('Stirling Approximation Gap', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
     plt.tight_layout()
-    plt.savefig('sorting_entropy.png', dpi=150, bbox_inches='tight')
-    print("Saved sorting_entropy.png")
+    plt.savefig('entropy_gap.png', dpi=150)
+    print("Saved entropy_gap.png")
 
-
-if __name__ == "__main__":
-    main()
+except ImportError:
+    print("matplotlib not available; skipping visualization")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Thermodynamic Waste of Sorting Algorithms
-
-Compares the thermodynamic work (in units of kT·ln(2)) of different
-sorting algorithms, highlighting the waste of suboptimal algorithms.
+Visualization: Entropy trace during sorting.
+Shows how entropy decreases with each comparison for different algorithms.
 """
-
 import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+import random
 
+def log_factorial(n):
+    return sum(math.log(k) for k in range(1, n + 1))
 
-def factorial(n):
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
+def entropy_after(n, c):
+    return max(0.0, log_factorial(n) - c * math.log(2))
 
+def merge_sort_count(arr):
+    if len(arr) <= 1:
+        return arr[:], 0
+    mid = len(arr) // 2
+    left, c1 = merge_sort_count(arr[:mid])
+    right, c2 = merge_sort_count(arr[mid:])
+    merged, i, j, c = [], 0, 0, c1 + c2
+    while i < len(left) and j < len(right):
+        c += 1
+        if left[i] <= right[j]:
+            merged.append(left[i]); i += 1
+        else:
+            merged.append(right[j]); j += 1
+    merged.extend(left[i:]); merged.extend(right[j:])
+    return merged, c
 
-def main():
-    ns = list(range(2, 51))
-    
-    optimal = [math.ceil(math.log2(factorial(n))) for n in ns]
-    merge = [n * math.ceil(math.log2(n)) for n in ns]
-    bubble = [n * (n - 1) // 2 for n in ns]
-    insertion_worst = [n * (n - 1) // 2 for n in ns]
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Plot 1: Comparison counts
-    ax = axes[0]
-    ax.plot(ns, optimal, 'g-', linewidth=2.5, label='Optimal: ⌈log₂(n!)⌉')
-    ax.plot(ns, merge, 'b-', linewidth=2, label='Merge sort: n⌈log₂n⌉')
-    ax.plot(ns, bubble, 'r-', linewidth=2, label='Bubble sort: n(n-1)/2')
-    ax.fill_between(ns, optimal, bubble, alpha=0.1, color='red', label='Wasted comparisons')
-    ax.set_xlabel('n (number of elements)', fontsize=12)
-    ax.set_ylabel('Worst-case comparisons', fontsize=12)
-    ax.set_title('Comparison Count by Algorithm', fontsize=13)
+def bubble_sort_count(arr):
+    arr, n, c = arr[:], len(arr), 0
+    for i in range(n):
+        for j in range(n - 1 - i):
+            c += 1
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr, c
+
+def insertion_sort_count(arr):
+    arr, c = arr[:], 0
+    for i in range(1, len(arr)):
+        key, j = arr[i], i - 1
+        while j >= 0:
+            c += 1
+            if arr[j] > key:
+                arr[j+1] = arr[j]; j -= 1
+            else:
+                break
+        arr[j+1] = key
+    return arr, c
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    n = 50
+    random.seed(42)
+    arr = list(range(n))
+    random.shuffle(arr)
+
+    _, c_merge = merge_sort_count(arr[:])
+    _, c_bubble = bubble_sort_count(arr[:])
+    _, c_insert = insertion_sort_count(arr[:])
+
+    initial_entropy = log_factorial(n)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    for label, total_c, color in [
+        ("Merge Sort", c_merge, "#2196F3"),
+        ("Insertion Sort", c_insert, "#FF9800"),
+        ("Bubble Sort", c_bubble, "#F44336"),
+    ]:
+        xs = list(range(total_c + 1))
+        ys = [entropy_after(n, c) for c in xs]
+        ax.plot(xs, ys, label=f"{label} ({total_c} comparisons)", color=color, linewidth=2)
+
+    ax.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+    ax.axhline(y=initial_entropy, color='green', linestyle='--', alpha=0.5,
+               label=f'Initial entropy ln({n}!) = {initial_entropy:.1f} nats')
+
+    ax.set_xlabel('Number of Comparisons', fontsize=12)
+    ax.set_ylabel('Remaining Entropy (nats)', fontsize=12)
+    ax.set_title(f'Entropy Reduction During Sorting (n={n})', fontsize=14)
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
-    
-    # Plot 2: Waste ratios
-    ax2 = axes[1]
-    waste_bubble = [(bubble[i] - optimal[i]) / optimal[i] * 100 if optimal[i] > 0 else 0
-                    for i in range(len(ns))]
-    waste_merge = [(merge[i] - optimal[i]) / optimal[i] * 100 if optimal[i] > 0 else 0
-                   for i in range(len(ns))]
-    
-    ax2.plot(ns, waste_bubble, 'r-', linewidth=2, label='Bubble sort waste %')
-    ax2.plot(ns, waste_merge, 'b-', linewidth=2, label='Merge sort waste %')
-    ax2.axhline(y=0, color='g', linestyle='--', linewidth=1)
-    ax2.set_xlabel('n (number of elements)', fontsize=12)
-    ax2.set_ylabel('Extra comparisons (%)', fontsize=12)
-    ax2.set_title('Thermodynamic Waste (% above optimal)', fontsize=13)
+
+    plt.tight_layout()
+    plt.savefig('entropy_trace.png', dpi=150)
+    print("Saved entropy_trace.png")
+
+except ImportError:
+    print("matplotlib not available; skipping visualization")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Stirling approximation bounds.
+Shows log(n!) sandwiched between n*log(n) - n and n*log(n).
+"""
+import math
+
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    ns = list(range(2, 101))
+    log_facts = [sum(math.log(k) for k in range(1, n+1)) for n in ns]
+    upper = [n * math.log(n) for n in ns]
+    lower = [n * math.log(n) - n for n in ns]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Left: absolute values
+    ax1.plot(ns, log_facts, 'b-', linewidth=2, label='ln(n!)')
+    ax1.plot(ns, upper, 'r--', linewidth=1.5, label='n·ln(n)')
+    ax1.plot(ns, lower, 'g--', linewidth=1.5, label='n·ln(n) - n')
+    ax1.fill_between(ns, lower, upper, alpha=0.1, color='blue')
+    ax1.set_xlabel('n', fontsize=12)
+    ax1.set_ylabel('Value (nats)', fontsize=12)
+    ax1.set_title('Stirling Bounds on ln(n!)', fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+
+    # Right: ratio
+    ratios = [lf / (n * math.log(n)) for lf, n in zip(log_facts, ns)]
+    ax2.plot(ns, ratios, 'b-', linewidth=2, label='ln(n!) / (n·ln(n))')
+    ax2.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='y = 1')
+    ax2.set_xlabel('n', fontsize=12)
+    ax2.set_ylabel('Ratio', fontsize=12)
+    ax2.set_title('Convergence of ln(n!)/(n·ln(n)) → 1', fontsize=14)
+    ax2.set_ylim(0.7, 1.05)
     ax2.legend(fontsize=10)
     ax2.grid(True, alpha=0.3)
-    
+
     plt.tight_layout()
-    plt.savefig('thermodynamic_waste.png', dpi=150, bbox_inches='tight')
-    print("Saved thermodynamic_waste.png")
+    plt.savefig('stirling_bounds.png', dpi=150)
+    print("Saved stirling_bounds.png")
 
-
-if __name__ == "__main__":
-    main()
+except ImportError:
+    print("matplotlib not available; skipping visualization")
