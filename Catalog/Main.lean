@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2330 of the highest-quality
+A curated collection of 2335 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2330
+Total files: 2335
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -617,6 +617,7 @@ import FINAL.Bridges.NeuralProofMining
 import FINAL.Bridges.NewtonGirardGeneral
 import FINAL.Bridges.NewtonHodgePolygon
 import FINAL.Bridges.NewtonInteractingFermions
+import FINAL.Bridges.NewtonTropicalBridge
 import FINAL.Bridges.NoetherianFeatureConvergence
 import FINAL.Bridges.NonArchimedeanComputation
 import FINAL.Bridges.NonGroupComparison
@@ -1134,6 +1135,7 @@ import FINAL.Cryptography.SearchDecision
 import FINAL.Cryptography.Security
 import FINAL.Cryptography.SemiconjTransfer
 import FINAL.Cryptography.ShorECDSA
+import FINAL.Cryptography.SurrealBirthdayArithmetic
 import FINAL.Cryptography.SurrealNumberFields
 import FINAL.Cryptography.TVDContraction
 import FINAL.Cryptography.Theorems
@@ -1318,6 +1320,7 @@ import FINAL.Geometry.StereographicSheafAdvanced
 import FINAL.Geometry.StereographicSheafGluing
 import FINAL.Geometry.TensorHom
 import FINAL.Geometry.Theorems
+import FINAL.Geometry.TransfiniteGames
 import FINAL.Geometry.TropicalBrillNoether
 import FINAL.Geometry.TropicalTransversality
 import FINAL.Geometry.UnifiedLightTheory
@@ -2133,6 +2136,7 @@ import FINAL.Tropical.FactorRank
 import FINAL.Tropical.FactorRankSeparation
 import FINAL.Tropical.Fano
 import FINAL.Tropical.FanoIncidence
+import FINAL.Tropical.Fekete
 import FINAL.Tropical.FermatCurve
 import FINAL.Tropical.FermatHypersurface
 import FINAL.Tropical.FiberEntropy
@@ -2263,6 +2267,7 @@ import FINAL.Tropical.TropicalAdvancedTheory
 import FINAL.Tropical.TropicalAgentEpsilon
 import FINAL.Tropical.TropicalBSDAbelianVariety
 import FINAL.Tropical.TropicalBarrier
+import FINAL.Tropical.TropicalBridge
 import FINAL.Tropical.TropicalCells
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension

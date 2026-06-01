@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f8c48274",
     "filename": "the_fourier_analysis_of_collatz_spectral_gaps_in_t.json",
     "pkg_num": 136,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7172929032258064,
     "title": "Spectral Gaps in the 3n+1 Map: Fourier Analysis of Collatz Dynamics"
   },
   {
@@ -4211,8 +4211,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_fourier_analysis_of_collatz_spectral_gaps_in_t",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7172929032258064,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Spectral Gaps in the 3n+1 Map: Fourier Analysis of Collatz Dynamics"
     }
