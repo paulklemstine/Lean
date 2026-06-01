@@ -1859,7 +1859,7 @@ class PiAgentClient:
             "extend Y" are not hypotheses — they are homework. Give us ideas that
             could change how we think about the problem.
 
-            Pursue truth relentlessly.
+            Pursue truth relentlessly. Soli Deo Gloria.
         """)
 
         # Prompt size budget enforcement: cap at 30K chars
