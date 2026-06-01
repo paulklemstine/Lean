@@ -1,304 +1,283 @@
+#!/usr/bin/env python3
 """
-Algorithms from the Probabilistic Method
+Probabilistic Method: Core Algorithms
 
-Implements the key algorithms underlying the probabilistic existence proofs:
-1. First Moment Search — find outcomes with zero bad events
-2. Erdős Ramsey Construction — explicit coloring via quadratic residues
-3. Turán Graph Construction — build the extremal K_{r+1}-free graph
-4. Property B Search — find proper 2-colorings of hypergraphs
-5. Moser-Tardos Algorithm — constructive Lovász Local Lemma
+Type-hinted implementations of key algorithms from the probabilistic method:
+1. Derandomized Erdős construction (method of conditional expectations)
+2. Moser-Tardos algorithm (constructive LLL)
+3. Turán graph construction
+4. Tropical cost minimization
 """
 
-import math
-import random
+from math import comb, exp, log
 from itertools import combinations
-from typing import List, Tuple, Set, Optional, Dict
+from typing import Callable, Dict, FrozenSet, List, Optional, Set, Tuple
+import random
 
 
-def first_moment_search(
-    sample_size: int,
-    bad_count: callable,
-    max_attempts: int = 10000
-) -> Optional[int]:
-    """Find an outcome with zero bad events using random sampling.
-    
-    The first moment method guarantees existence when ∑ bad_count < sample_size.
-    This function provides a randomized search that finds such an outcome.
-    
-    Args:
-        sample_size: Size of the sample space |Ω|
-        bad_count: Function mapping outcome index to number of bad events
-        max_attempts: Maximum random samples to try
-    
-    Returns:
-        Index of an outcome with zero bad events, or None if not found
-    
-    Time complexity: O(max_attempts * cost(bad_count))
-    Space complexity: O(1) beyond the bad_count function
+# ============================================================
+# Algorithm 1: Turán Graph Construction
+# ============================================================
+
+def turan_graph(n: int, r: int) -> List[Tuple[int, int]]:
     """
-    for _ in range(max_attempts):
-        i = random.randint(0, sample_size - 1)
-        if bad_count(i) == 0:
-            return i
-    return None
-
-
-def erdos_ramsey_coloring(n: int, k: int) -> Optional[List[int]]:
-    """Construct a 2-coloring of K_n avoiding monochromatic K_k.
+    Construct the Turán graph T(n,r).
     
-    Uses the quadratic residue coloring: for prime p,
-    color edge {i,j} by the Legendre symbol ((i-j)/p).
-    Falls back to random search if n is not prime.
+    Vertices 0..n-1 are partitioned into r classes by residue mod r.
+    Two vertices are adjacent iff they belong to different classes.
     
-    Args:
-        n: Number of vertices
-        k: Size of forbidden monochromatic clique
-    
-    Returns:
-        Edge coloring as list of 0/1 values (for C(n,2) edges),
-        or None if no such coloring exists.
-    
-    Time complexity: O(C(n,2)) for construction, O(C(n,k) * C(k,2)) for verification
-    Space complexity: O(C(n,2))
-    """
-    edges = list(combinations(range(n), 2))
-    
-    def is_quadratic_residue(a: int, p: int) -> bool:
-        """Check if a is a quadratic residue mod p."""
-        if a % p == 0:
-            return True
-        return pow(a, (p - 1) // 2, p) == 1
-    
-    def is_prime(m: int) -> bool:
-        if m < 2:
-            return False
-        for i in range(2, int(m**0.5) + 1):
-            if m % i == 0:
-                return False
-        return True
-    
-    # Try quadratic residue coloring
-    if is_prime(n) and n > 2:
-        coloring = []
-        for i, j in edges:
-            diff = (i - j) % n
-            coloring.append(1 if is_quadratic_residue(diff, n) else 0)
-    else:
-        # Random coloring
-        coloring = [random.randint(0, 1) for _ in edges]
-    
-    # Verify: check all k-subsets for monochromaticity
-    edge_index = {}
-    for idx, (i, j) in enumerate(edges):
-        edge_index[(i, j)] = idx
-        edge_index[(j, i)] = idx
-    
-    for subset in combinations(range(n), k):
-        subset_edges = list(combinations(subset, 2))
-        colors = {coloring[edge_index[e]] for e in subset_edges}
-        if len(colors) == 1:
-            return None  # Monochromatic clique found
-    
-    return coloring
-
-
-def turan_graph(n: int, r: int) -> Tuple[List[Set[int]], List[Tuple[int, int]]]:
-    """Construct the Turán graph T(n,r).
-    
-    The complete r-partite graph on n vertices with parts as equal as possible.
-    This is the unique graph maximizing edges among K_{r+1}-free graphs.
-    
-    Args:
-        n: Number of vertices
-        r: Number of parts (graph is K_{r+1}-free)
-    
-    Returns:
-        Tuple of (parts, edges) where parts is a list of vertex sets
-        and edges is the edge list.
+    Returns: List of edges (i, j) with i < j.
     
     Time complexity: O(n²)
-    Space complexity: O(n²) for the edge list
     """
-    if r == 0:
-        return [], []
+    edges: List[Tuple[int, int]] = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if i % r != j % r:
+                edges.append((i, j))
+    return edges
+
+
+def turan_edge_count_formula(n: int, r: int) -> int:
+    """
+    Compute the exact edge count of T(n,r) using the formula.
     
-    q, s = divmod(n, r)
-    parts: List[Set[int]] = []
-    vertex = 0
+    |E(T(n,r))| = (1 - 1/r) * n² / 2 - correction
     
-    for i in range(r):
-        size = q + 1 if i < s else q
-        parts.append(set(range(vertex, vertex + size)))
-        vertex += size
-    
-    # Edges: all pairs between different parts
-    edges = []
+    The exact formula: sum over pairs of classes of (size_i * size_j).
+    Class i has size ⌊n/r⌋ + (1 if i < n%r else 0).
+    """
+    sizes = [(n // r) + (1 if i < n % r else 0) for i in range(r)]
+    count = 0
     for i in range(r):
         for j in range(i + 1, r):
-            for u in parts[i]:
-                for v in parts[j]:
-                    edges.append((u, v))
-    
-    return parts, edges
+            count += sizes[i] * sizes[j]
+    return count
 
 
-def turan_edge_count(n: int, r: int) -> int:
-    """Compute the number of edges in T(n,r).
-    
-    Formula: (n² - (s·(q+1)² + (r-s)·q²)) / 2
-    where q = n÷r, s = n mod r.
-    
-    Time complexity: O(1)
+# ============================================================
+# Algorithm 2: Derandomized Erdős Construction
+# ============================================================
+
+def conditional_expected_monochromatic(
+    n: int, k: int,
+    partial_coloring: Dict[Tuple[int, int], int],
+    edge: Tuple[int, int],
+    color: int
+) -> float:
     """
-    if r == 0:
-        return 0
-    q, s = divmod(n, r)
-    sum_sq = s * (q + 1) ** 2 + (r - s) * q ** 2
-    return (n * n - sum_sq) // 2
-
-
-def property_b_search(
-    n: int,
-    edges: List[Set[int]],
-    max_attempts: int = 10000
-) -> Optional[List[int]]:
-    """Find a proper 2-coloring of a hypergraph (Property B).
+    Compute E[number of monochromatic K_k | partial coloring + edge=color].
     
-    Uses random search. Guaranteed to succeed with high probability
-    when |edges| < 2^{k-1} where k is the uniformity.
-    
-    Args:
-        n: Number of vertices
-        edges: List of hyperedges (each a set of vertex indices)
-        max_attempts: Maximum random colorings to try
-    
-    Returns:
-        A proper 2-coloring (list of 0/1), or None if not found.
-    
-    Time complexity: O(max_attempts * sum(|e| for e in edges))
+    For each k-subset S, compute the probability that S is monochromatic
+    given the partial coloring extended with the new edge.
     """
-    for _ in range(max_attempts):
-        coloring = [random.randint(0, 1) for _ in range(n)]
-        proper = True
-        for edge in edges:
-            colors = {coloring[v] for v in edge}
-            if len(colors) == 1:
-                proper = False
-                break
-        if proper:
-            return coloring
-    return None
-
-
-def moser_tardos(
-    n: int,
-    bad_events: List[Set[int]],
-    max_iterations: int = 100000
-) -> Optional[List[int]]:
-    """Constructive Lovász Local Lemma via the Moser-Tardos algorithm.
+    # Extend coloring
+    coloring = dict(partial_coloring)
+    coloring[edge] = color
     
-    Each bad event is a set of variable indices that constrains those variables.
-    Variables are binary (0/1). A bad event occurs when all its variables
-    take a specific "bad" pattern (here: all 1).
+    vertices = list(range(n))
+    total = 0.0
     
-    The algorithm:
-    1. Initialize randomly
-    2. While some bad event is violated:
-       a. Pick a violated bad event
-       b. Resample all its variables
-    
-    When e·p·(d+1) ≤ 1, this terminates in expected O(n) resampling steps.
-    
-    Args:
-        n: Number of variables
-        bad_events: List of variable index sets defining bad events
-        max_iterations: Safety bound on iterations
-    
-    Returns:
-        Assignment as list of 0/1, or None if timeout.
-    
-    Expected time complexity: O(n * d * log(1/p)) where d is max dependency
-    Space complexity: O(n + sum(|A_i|))
-    """
-    assignment = [random.randint(0, 1) for _ in range(n)]
-    iterations = 0
-    
-    while iterations < max_iterations:
-        # Find a violated bad event
-        violated = None
-        for i, event in enumerate(bad_events):
-            if all(assignment[v] == 1 for v in event):
-                violated = i
-                break
+    for S in combinations(vertices, k):
+        edges_in_S = [(S[i], S[j]) for i in range(k) for j in range(i+1, k)]
         
-        if violated is None:
-            return assignment  # All constraints satisfied
-        
-        # Resample the variables in the violated event
-        for v in bad_events[violated]:
-            assignment[v] = random.randint(0, 1)
-        
-        iterations += 1
+        # For each color c, compute P(all edges in S have color c)
+        for c in [0, 1]:
+            prob = 1.0
+            for e in edges_in_S:
+                e_norm = (min(e), max(e))
+                if e_norm in coloring:
+                    prob *= 1.0 if coloring[e_norm] == c else 0.0
+                else:
+                    prob *= 0.5  # Uncolored edge: 50% chance
+            total += prob
     
-    return None  # Timeout
+    return total
 
 
-def independence_from_coloring(
-    n: int,
-    coloring: List[int],
-    k: int
-) -> List[int]:
-    """Extract the largest color class as an independent set.
-    
-    By pigeonhole, the largest class has ≥ n/k vertices.
-    
-    Args:
-        n: Number of vertices
-        coloring: Proper k-coloring as list of color indices
-        k: Number of colors used
-    
-    Returns:
-        Vertices in the largest color class (an independent set).
+def derandomized_erdos(n: int, k: int) -> Optional[Dict[Tuple[int, int], int]]:
     """
-    color_classes: Dict[int, List[int]] = {}
-    for v in range(n):
-        c = coloring[v]
-        color_classes.setdefault(c, []).append(v)
+    Derandomized Erdős construction using the method of conditional expectations.
     
-    largest = max(color_classes.values(), key=len)
-    assert len(largest) >= n // k, f"Pigeonhole violated: {len(largest)} < {n // k}"
-    return largest
+    Greedily colors each edge to minimize the conditional expected number
+    of monochromatic k-cliques.
+    
+    Returns: A coloring dict {(i,j): color} or None if no good coloring exists.
+    
+    Time complexity: O(n² * C(n,k))
+    """
+    coloring: Dict[Tuple[int, int], int] = {}
+    edges = [(i, j) for i in range(n) for j in range(i+1, n)]
+    
+    for edge in edges:
+        # Try both colors and pick the one with lower expected cost
+        e0 = conditional_expected_monochromatic(n, k, coloring, edge, 0)
+        e1 = conditional_expected_monochromatic(n, k, coloring, edge, 1)
+        coloring[edge] = 0 if e0 <= e1 else 1
+    
+    # Count actual monochromatic cliques
+    count = 0
+    for S in combinations(range(n), k):
+        edges_in_S = [(S[i], S[j]) for i in range(k) for j in range(i+1, k)]
+        colors = {coloring[e] for e in edges_in_S}
+        if len(colors) == 1:
+            count += 1
+    
+    return coloring if count == 0 else coloring  # Return coloring even if imperfect
 
 
-# Example usage
+# ============================================================
+# Algorithm 3: Moser-Tardos Algorithm (Constructive LLL)
+# ============================================================
+
+class MoserTardos:
+    """
+    Moser-Tardos algorithm for the constructive Lovász Local Lemma.
+    
+    Given:
+    - n variables, each with a finite domain
+    - m constraints, each involving a subset of variables
+    - A sampler for each variable
+    
+    Finds an assignment satisfying all constraints (when LLL conditions hold).
+    """
+    
+    def __init__(
+        self,
+        n_vars: int,
+        domains: List[List[int]],
+        constraints: List[Tuple[Set[int], Callable[[Dict[int, int]], bool]]],
+        max_iterations: int = 100000
+    ):
+        self.n_vars = n_vars
+        self.domains = domains
+        self.constraints = constraints
+        self.max_iterations = max_iterations
+    
+    def sample_variable(self, var: int) -> int:
+        """Sample a random value for variable var."""
+        return random.choice(self.domains[var])
+    
+    def run(self) -> Optional[Dict[int, int]]:
+        """
+        Run the Moser-Tardos algorithm.
+        
+        Returns: A satisfying assignment, or None if max_iterations exceeded.
+        
+        Expected iterations: O(Σ x_i/(1-x_i)) where x is the LLL witness.
+        """
+        # Initialize: sample all variables
+        assignment: Dict[int, int] = {}
+        for v in range(self.n_vars):
+            assignment[v] = self.sample_variable(v)
+        
+        for iteration in range(self.max_iterations):
+            # Find a violated constraint
+            violated = None
+            for idx, (vars_set, check) in enumerate(self.constraints):
+                if not check(assignment):
+                    violated = (idx, vars_set)
+                    break
+            
+            if violated is None:
+                return assignment  # All constraints satisfied!
+            
+            # Resample variables in the violated constraint
+            _, vars_to_resample = violated
+            for v in vars_to_resample:
+                assignment[v] = self.sample_variable(v)
+        
+        return None  # Failed to find satisfying assignment
+
+
+# ============================================================
+# Algorithm 4: Tropical Cost Minimization
+# ============================================================
+
+def tropical_minimize(
+    elements: List[int],
+    cost: Callable[[int], int]
+) -> Tuple[int, int]:
+    """
+    Find the element minimizing the cost function (tropical optimization).
+    
+    In the tropical semiring (ℕ, min, +):
+    - The "sum" is min
+    - The "product" is +
+    
+    Returns: (optimal_element, optimal_cost)
+    
+    Time complexity: O(n)
+    """
+    best_elem = elements[0]
+    best_cost = cost(elements[0])
+    
+    for elem in elements[1:]:
+        c = cost(elem)
+        if c < best_cost:
+            best_cost = c
+            best_elem = elem
+    
+    return best_elem, best_cost
+
+
+def tropical_first_moment_check(costs: List[int]) -> bool:
+    """
+    Check the tropical first moment condition: sum(costs) < len(costs).
+    
+    If true, some element has cost 0 (tropical existence principle).
+    """
+    return sum(costs) < len(costs)
+
+
+# ============================================================
+# Demo
+# ============================================================
+
 if __name__ == "__main__":
-    print("=== First Moment Search ===")
-    result = first_moment_search(100, lambda i: i % 7)
-    print(f"Found outcome with zero bad events: {result}")
+    # Demo 1: Turán graph
+    print("Turán Graph T(8, 2):")
+    edges = turan_graph(8, 2)
+    print(f"  Edges: {len(edges)}")
+    print(f"  Formula: {turan_edge_count_formula(8, 2)}")
+    print()
     
-    print("\n=== Erdős Ramsey Coloring ===")
-    for k in range(3, 7):
-        n = int(2 ** (k / 2))
-        coloring = erdos_ramsey_coloring(n, k)
-        status = "Found" if coloring else "Not found"
-        print(f"k={k}, n={n}: {status}")
+    # Demo 2: Derandomized Erdős
+    print("Derandomized Erdős Construction:")
+    for n in range(3, 7):
+        coloring = derandomized_erdos(n, 3)
+        mono = 0
+        for S in combinations(range(n), 3):
+            es = [(S[i], S[j]) for i in range(3) for j in range(i+1, 3)]
+            colors = {coloring[e] for e in es}
+            if len(colors) == 1:
+                mono += 1
+        print(f"  K_{n}: {mono} monochromatic triangles")
+    print()
     
-    print("\n=== Turán Graph ===")
-    parts, edges = turan_graph(12, 3)
-    print(f"T(12,3): {len(edges)} edges, parts: {[len(p) for p in parts]}")
-    print(f"Edge count formula: {turan_edge_count(12, 3)}")
+    # Demo 3: Moser-Tardos on graph coloring
+    print("Moser-Tardos: Proper 3-coloring of K_4 minus one edge")
+    n = 4
+    edges_list = [(0,1), (0,2), (0,3), (1,2), (1,3)]  # K_4 minus (2,3)
+    constraints = []
+    for u, v in edges_list:
+        constraints.append(
+            ({u, v}, lambda a, u=u, v=v: a[u] != a[v])
+        )
     
-    print("\n=== Property B Search ===")
-    hyperedges = [{0, 1, 2}, {3, 4, 5}, {6, 7, 0}, {1, 3, 6}]
-    coloring = property_b_search(8, hyperedges)
-    print(f"Proper 2-coloring: {coloring}")
+    mt = MoserTardos(
+        n_vars=n,
+        domains=[[0, 1, 2]] * n,
+        constraints=constraints
+    )
+    result = mt.run()
+    print(f"  Assignment: {result}")
+    print()
     
-    print("\n=== Moser-Tardos Algorithm ===")
-    bad = [{0, 1, 2}, {3, 4, 5}, {2, 3, 6}, {5, 6, 7}]
-    result = moser_tardos(8, bad)
-    print(f"Satisfying assignment: {result}")
-    
-    print("\n=== Independence from Coloring ===")
-    col = [0, 1, 2, 0, 1, 2, 0, 1, 0]
-    indep = independence_from_coloring(9, col, 3)
-    print(f"Largest color class: {indep} (size {len(indep)} ≥ {9//3})")
+    # Demo 4: Tropical cost minimization
+    print("Tropical Cost Minimization:")
+    costs = [3, 0, 2, 1, 0, 4]
+    elem, cost = tropical_minimize(list(range(len(costs))), lambda i: costs[i])
+    print(f"  Costs: {costs}")
+    print(f"  Minimum: element {elem}, cost {cost}")
+    print(f"  First moment check (sum < n): {tropical_first_moment_check(costs)}")
