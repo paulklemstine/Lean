@@ -416,10 +416,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8cabeaa",
     "timestamp": ""
   },
   {
@@ -446,10 +446,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "0281bd3d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:50.273663"
   },
   {
@@ -479,7 +479,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "b99dc9d4",
+    "consumed_by_exp_id": "4dfc7083",
     "timestamp": "2026-05-31T11:52:50.606787"
   },
   {
@@ -506,10 +506,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "ac9e5feb",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:54.021301"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "58d4594d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e21ad9ff",
     "timestamp": "2026-05-31T21:56:21.987827+00:00"
   },
   {
@@ -1001,10 +1001,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3d08bbee",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da87839f",
     "timestamp": "2026-06-01T01:58:13.523824+00:00"
   },
   {
@@ -1151,10 +1151,10 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28a8abe9",
     "timestamp": ""
   },
   {
@@ -1259,7 +1259,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "6f1b7d62",
+    "consumed_by_exp_id": "21b24916",
     "timestamp": "2026-05-31T11:52:51.140381"
   },
   {
@@ -1271,10 +1271,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.84,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "116c082c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T11:52:52.839097"
   },
   {
@@ -1329,10 +1329,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed_wave7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01566302",
     "timestamp": "2026-05-31T11:52:53.852323"
   },
   {
@@ -1506,10 +1506,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c6e162ae",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f3b1e32",
     "timestamp": "2026-06-01T00:33:23.852704+00:00"
   },
   {
@@ -1626,10 +1626,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "98ff40a1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ed20419",
     "timestamp": "2026-06-01T04:23:31.157148+00:00"
   },
   {
