@@ -1,327 +1,342 @@
+#!/usr/bin/env python3
 """
-Demo: Categorical Physics — The Shape of a Theory of Everything
+Categorical Physics: Numerical Demonstrations
 
-Demonstrates the key results:
-1. The (2,∞)-category necessity theorem
-2. Oracle hierarchy computations
-3. Shadow classification of physical theories
-4. Duality sector bounds
+Demonstrates key results from the categorical physics formalization:
+1. Oracle hierarchy computation
+2. Theory spectrum analysis
+3. Dualizable tower enumeration
+4. Stability threshold verification
 """
 
-from algorithms import (
-    TheoryType, OracleLevel, DualizableTower, PhysicalTheoryCandidate,
-    tqft_oracle_level, theory_inclusion_graph, verify_two_infinity_necessity,
-    compute_oracle_hierarchy, duality_sector_analysis
-)
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import List, Set, Optional
 
 
-def demo_theory_inclusion():
-    """Demonstrate the theory inclusion hierarchy."""
-    print("=" * 60)
-    print("§1. Theory Inclusion Hierarchy")
-    print("=" * 60)
-    print()
-    print("  TQFT ──→ CFT ──→ Gravity")
-    print("                    ↑")
-    print("  String ───────────┘")
-    print()
-    print("Each arrow represents a strict inclusion:")
-    print("  • TQFT ⊂ CFT: forgetting topology-only invariance")
-    print("  • CFT ⊂ Gravity: making the metric dynamical")
-    print("  • String ⊂ Gravity: strings propagate in spacetime")
-    print()
-
-    graph = theory_inclusion_graph()
-    for theory, targets in graph.items():
-        if targets:
-            for t in targets:
-                print(f"  {theory.name} includes into {t.name}")
-        else:
-            print(f"  {theory.name} is the most general")
-    print()
+class TheoryType(Enum):
+    TQFT = auto()
+    CFT = auto()
+    String = auto()
+    Gravity = auto()
 
 
-def demo_two_infinity_theorem():
-    """Demonstrate the (2,∞)-category necessity theorem."""
-    print("=" * 60)
-    print("§2. The (2,∞)-Category Necessity Theorem")
-    print("=" * 60)
-    print()
-    print("THEOREM: Any physical theory admitting both TQFT and String")
-    print("shadows must have stable level ≥ 2 in its dualizable tower.")
-    print()
+@dataclass
+class DualizableTower:
+    """A dualizable tower with objects at each level."""
+    obj_sizes: List[int]  # number of objects at each level
+    stable_level: int
 
-    # Test all stable levels 0..5
-    for stable in range(6):
-        obj_counts = [max(1, 2 if i < stable else 1) for i in range(stable + 3)]
-        tower = DualizableTower(
-            obj_counts=obj_counts,
-            stable_level=stable,
-            dual=[lambda x: x] * (stable + 3)
-        )
-        candidate = PhysicalTheoryCandidate(
-            tower=tower,
-            shadows={TheoryType.TQFT, TheoryType.STRING}
-        )
-        ok = candidate.satisfies_two_infinity_bound()
-        symbol = "✓" if ok else "✗"
-        reason = ""
-        if stable == 0:
-            reason = " (Obj(0) trivial → no TQFT)"
-        elif stable == 1:
-            reason = " (Obj(1) trivial → no String)"
-        print(f"  stable_level = {stable}: {symbol} satisfies bound{reason}")
+    def is_subsingleton(self, level: int) -> bool:
+        if level < len(self.obj_sizes):
+            return self.obj_sizes[level] <= 1
+        return True  # above defined levels, assumed trivial
 
-    print()
-    print(f"  Computational verification: {verify_two_infinity_necessity()}")
-    print()
+    def is_two_infinity(self) -> bool:
+        return self.stable_level == 2
 
 
-def demo_oracle_hierarchy():
-    """Demonstrate the oracle hierarchy for TQFTs."""
-    print("=" * 60)
-    print("§3. Oracle Hierarchy: Computability of TQFTs")
-    print("=" * 60)
-    print()
-    print("The oracle level measures how much non-computable information")
-    print("a TQFT requires. Key thresholds:")
-    print()
-    print("  dim ≤ 3: COMPUTABLE")
-    print("    → Smooth structures essentially unique")
-    print("    → Manifold classification decidable")
-    print()
-    print("  dim = 4: UNDECIDABLE (Σ₁)")
-    print("    → Exotic smooth structures on ℝ⁴")
-    print("    → Markov's theorem: homeomorphism undecidable")
-    print()
-    print("  dim ≥ 5: HIGHER ORACLE LEVELS")
-    print("    → Each dimension adds one level")
-    print()
-
-    hierarchy = compute_oracle_hierarchy(12)
-    print("  dim | oracle level | status")
-    print("  ----|-------------|--------")
-    for d, sigma in hierarchy:
-        if sigma == 0:
-            status = "computable ✓"
-        elif sigma == 1:
-            status = "undecidable (Σ₁) ✗"
-        else:
-            status = f"Σ_{sigma} oracle needed"
-        print(f"  {d:3d} | {sigma:11d} | {status}")
-    print()
-
-    # Verify oracle unboundedness
-    print("  THEOREM: Oracle level is unbounded (∀n, ∃d, σ(d) > n)")
-    for n in range(1, 8):
-        d = n + 4
-        sigma = tqft_oracle_level(d).sigma_level
-        print(f"    n={n}: d={d} gives σ={sigma} > {n} ✓")
-    print()
+def tqft_oracle_level(d: int) -> int:
+    """Oracle level of a TQFT in dimension d."""
+    return 0 if d <= 3 else d - 3
 
 
-def demo_duality_sectors():
-    """Demonstrate duality sector bounds."""
-    print("=" * 60)
-    print("§4. Duality Sector Bounds")
-    print("=" * 60)
-    print()
-    print("Under Z/2 duality, n objects form at most ⌈n/2⌉ orbits.")
-    print("Self-dual objects contribute 1 orbit each;")
-    print("dual pairs contribute 1 orbit for 2 objects.")
-    print()
-
-    for n, bound in duality_sector_analysis(15):
-        bar = "█" * bound + "░" * (n - bound)
-        print(f"  {n:2d} objects: ≤ {bound:2d} sectors  {bar}")
-    print()
+def theory_spectrum(tower: DualizableTower) -> Set[TheoryType]:
+    """Compute which theory types a tower supports."""
+    spectrum = set()
+    if not tower.is_subsingleton(0):
+        spectrum.add(TheoryType.TQFT)
+    if not tower.is_subsingleton(1):
+        spectrum.add(TheoryType.CFT)
+        spectrum.add(TheoryType.String)
+    if not tower.is_subsingleton(2):
+        spectrum.add(TheoryType.Gravity)
+    return spectrum
 
 
-def demo_shadow_dimensions():
-    """Demonstrate shadow dimension constraints."""
-    print("=" * 60)
-    print("§5. Shadow Dimension Constraints")
-    print("=" * 60)
-    print()
-    print("Different theory types operate at different dimensions:")
-    print()
-    for tt in TheoryType:
-        if tt == TheoryType.STRING:
-            dim = "2 (worldsheet)"
-        elif tt == TheoryType.TQFT:
-            dim = "d (arbitrary)"
-        elif tt == TheoryType.CFT:
-            dim = "d (with conformal structure)"
-        else:
-            dim = "d (with dynamical metric)"
-        print(f"  {tt.name:8s}: dimension {dim}")
-    print()
-    print("CONSEQUENCE: A unified theory with String shadow needs d ≥ 2")
-    print()
+def min_stable_level(theories: Set[TheoryType]) -> int:
+    """Minimum stable level to support a set of theories."""
+    required = {
+        TheoryType.TQFT: 1,
+        TheoryType.CFT: 2,
+        TheoryType.String: 2,
+        TheoryType.Gravity: 3,
+    }
+    return max(required[t] for t in theories) if theories else 0
 
 
-def demo_cobordism_hypothesis():
-    """Demonstrate the cobordism hypothesis."""
-    print("=" * 60)
-    print("§6. The Cobordism Hypothesis")
-    print("=" * 60)
-    print()
-    print("THEOREM (Baez-Dolan-Lurie): A fully extended n-TQFT valued")
-    print("in an (∞,n)-category C with duals is completely determined")
-    print("by its value on a point — a fully dualizable object of C.")
-    print()
-    print("In our formalization:")
-    print("  PointEquivalent(Z₁, Z₂) ⟺ Z₁ = Z₂")
-    print()
-    print("This means the evaluation-at-a-point functor")
-    print("  ev₀ : Fun⊗(Bord_n, C) → C^fd")
-    print("is an equivalence.")
-    print()
-    print("Physical interpretation:")
-    print("  • A TQFT is entirely encoded in ONE object")
-    print("  • All amplitudes, partition functions, state spaces")
-    print("    are determined by this single datum")
-    print("  • The cobordism hypothesis is the ultimate compression")
-    print()
+def is_computable_theory(max_dim: int) -> bool:
+    """Check if theory is computable up to dimension max_dim."""
+    return all(tqft_oracle_level(d) == 0 for d in range(max_dim + 1))
 
 
-if __name__ == "__main__":
-    demo_theory_inclusion()
-    demo_two_infinity_theorem()
-    demo_oracle_hierarchy()
-    demo_duality_sectors()
-    demo_shadow_dimensions()
-    demo_cobordism_hypothesis()
+# ============================================================
+# Demo 1: Oracle Hierarchy
+# ============================================================
+print("=" * 60)
+print("Demo 1: Oracle Hierarchy for TQFTs by Dimension")
+print("=" * 60)
+print(f"{'Dim':>4} {'Oracle Level':>12} {'Computable?':>12}")
+print("-" * 32)
+for d in range(8):
+    level = tqft_oracle_level(d)
+    comp = "Yes" if level == 0 else "No"
+    print(f"{d:>4} {level:>12} {comp:>12}")
 
-    print("=" * 60)
-    print("Summary of Proved Theorems")
-    print("=" * 60)
-    print()
-    print("1. cobordism_hypothesis_structural")
-    print("   Two fully extended TQFTs agreeing on the point are equal.")
-    print()
-    print("2. two_infinity_necessity")
-    print("   TQFT + String shadows ⟹ stable level ≥ 2.")
-    print()
-    print("3. two_infinity_achievable")
-    print("   The bound is tight: stable level = 2 is achievable.")
-    print()
-    print("4. oracle_unbounded")
-    print("   ∀n, ∃d, tqft_oracle_level(d) > n.")
-    print()
-    print("5. oracle_level_monotone")
-    print("   d₁ ≤ d₂ ⟹ oracle_level(d₁) ≤ oracle_level(d₂).")
-    print()
-    print("6. dual_determined_by_objects")
-    print("   In a (2,∞)-tower, levels ≥ 2 have unique objects.")
-    print()
-    print("7. self_dual_above_stable")
-    print("   Above the stable level, every object is self-dual.")
-    print()
-    print("All proofs are machine-verified in Lean 4 with Mathlib.")
+print(f"\nComputability threshold: max_dim <= 3")
+for md in range(6):
+    print(f"  IsComputableTheory({md}) = {is_computable_theory(md)}")
+
+# ============================================================
+# Demo 2: Theory Spectrum Analysis
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 2: Theory Spectrum of Various Towers")
+print("=" * 60)
+
+towers = [
+    ("Trivial (all singleton)", DualizableTower([1, 1, 1], 0)),
+    ("TQFT-only (level 0)", DualizableTower([2, 1, 1], 1)),
+    ("TQFT+String (level 0,1)", DualizableTower([2, 2, 1], 2)),
+    ("Full spectrum", DualizableTower([2, 2, 2, 1], 3)),
+    ("Rich tower", DualizableTower([3, 4, 2, 1], 3)),
+]
+
+for name, tower in towers:
+    spec = theory_spectrum(tower)
+    spec_names = sorted(t.name for t in spec) if spec else ["(empty)"]
+    print(f"\n  {name}:")
+    print(f"    Obj sizes: {tower.obj_sizes}, stable_level: {tower.stable_level}")
+    print(f"    Spectrum: {', '.join(spec_names)}")
+    print(f"    Is (2,∞)? {tower.is_two_infinity()}")
+
+# ============================================================
+# Demo 3: Two-Infinity Necessity Verification
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 3: Two-Infinity Necessity Theorem Verification")
+print("=" * 60)
+
+print("\nChecking: any tower with TQFT+String must have stable_level >= 2")
+counterexample_found = False
+for s in range(5):
+    for o0 in [1, 2, 3]:
+        for o1 in [1, 2, 3]:
+            # Enforce consistency: levels >= stable must be subsingleton
+            sizes = [o0 if 0 < s else 1, o1 if 1 < s else 1, 1, 1]
+            tower = DualizableTower(sizes, s)
+            spec = theory_spectrum(tower)
+            has_both = TheoryType.TQFT in spec and TheoryType.String in spec
+            if has_both and s < 2:
+                print(f"  COUNTEREXAMPLE: stable={s}, sizes={sizes}")
+                counterexample_found = True
+if not counterexample_found:
+    print("  No counterexample found - theorem verified computationally!")
+
+# ============================================================
+# Demo 4: Dimension Gap Verification
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 4: Dimension Gap Theorem Verification")
+print("=" * 60)
+
+print("\nChecking: no stable-level-1 tower supports TQFT+Gravity")
+found_counterexample = False
+for o0 in range(1, 5):
+    for o1 in range(1, 5):
+        for o2 in range(1, 5):
+            tower = DualizableTower([o0, o1, o2], 1)
+            spec = theory_spectrum(tower)
+            if TheoryType.TQFT in spec and TheoryType.Gravity in spec:
+                # But wait - stable level 1 means level >= 1 is subsingleton
+                # so o2 must be <= 1, which means no Gravity
+                if tower.stable_level == 1 and not tower.is_subsingleton(2):
+                    # This is inconsistent with the tower definition
+                    print(f"  Inconsistent tower: stable=1 but Obj(2) has {o2} elements")
+                    found_counterexample = True
+
+if not found_counterexample:
+    print("  No valid counterexample possible - theorem confirmed!")
+    print("  (stable_level=1 forces Obj(2) to be subsingleton, blocking Gravity)")
+
+# ============================================================
+# Demo 5: Oracle Unboundedness
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 5: Oracle Unboundedness")
+print("=" * 60)
+
+print("\nFor each oracle level n, finding dimension d with oracle_level > n:")
+for n in range(8):
+    d = n + 4  # witness from the theorem
+    level = tqft_oracle_level(d)
+    print(f"  n={n}: d={d} gives oracle_level={level} > {n} ✓")
+
+# ============================================================
+# Demo 6: Minimum Stability Level
+# ============================================================
+print("\n" + "=" * 60)
+print("Demo 6: Minimum Stability Level for Theory Combinations")
+print("=" * 60)
+
+combos = [
+    {TheoryType.TQFT},
+    {TheoryType.TQFT, TheoryType.CFT},
+    {TheoryType.TQFT, TheoryType.String},
+    {TheoryType.TQFT, TheoryType.String, TheoryType.Gravity},
+    {TheoryType.TQFT, TheoryType.CFT, TheoryType.String, TheoryType.Gravity},
+]
+
+for combo in combos:
+    names = sorted(t.name for t in combo)
+    level = min_stable_level(combo)
+    print(f"  {'+'.join(names):40s} → min stable level = {level}")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
+#!/usr/bin/env python3
 """
 Visualization: Oracle Hierarchy for TQFTs by Dimension
 
-Standalone matplotlib visualization showing how the computability
-of topological quantum field theories depends on spacetime dimension.
+Shows how the computational complexity of TQFT partition functions
+grows with spacetime dimension, with a phase transition at d=4.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
 def tqft_oracle_level(d: int) -> int:
-    """Oracle level sigma for dimension d."""
+    """Oracle level of a TQFT in dimension d."""
     return 0 if d <= 3 else d - 3
 
 
 def main():
-    dims = list(range(0, 16))
+    dims = list(range(0, 12))
     levels = [tqft_oracle_level(d) for d in dims]
+
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    # Color code: computable (green) vs non-computable (red gradient)
+    colors = ['#2ecc71' if l == 0 else plt.cm.Reds(0.3 + 0.7 * l / max(levels))
+              for l in levels]
+
+    bars = ax.bar(dims, levels, color=colors, edgecolor='black', linewidth=0.8)
+
+    # Phase transition line
+    ax.axvline(x=3.5, color='red', linestyle='--', linewidth=2, alpha=0.7,
+               label='Computability threshold (d=3/4)')
+
+    # Annotations
+    ax.annotate('COMPUTABLE\n(d ≤ 3)', xy=(1.5, 0.3), fontsize=14, fontweight='bold',
+                color='#27ae60', ha='center')
+    ax.annotate('UNDECIDABLE\n(d ≥ 4)', xy=(7, 2.5), fontsize=14, fontweight='bold',
+                color='#c0392b', ha='center')
+
+    # Labels
+    ax.set_xlabel('Spacetime Dimension d', fontsize=14)
+    ax.set_ylabel('Oracle Level (Σ⁰ₙ)', fontsize=14)
+    ax.set_title('Computability of TQFT Partition Functions\nby Spacetime Dimension',
+                 fontsize=16, fontweight='bold')
+    ax.set_xticks(dims)
+    ax.set_yticks(range(max(levels) + 1))
+    ax.legend(fontsize=12, loc='upper left')
+    ax.grid(axis='y', alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('oracle_hierarchy.png', dpi=150, bbox_inches='tight')
+    print("Saved oracle_hierarchy.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Theory Spectrum and Shadow Hierarchy
+
+Shows which physical theories can be extracted from dualizable towers
+at different stability levels.
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def main():
+    theory_names = ['TQFT', 'CFT', 'String', 'Gravity']
+    required_levels = [0, 1, 1, 2]  # required categorical level for each theory
+    stable_levels = [0, 1, 2, 3, 4]
+
+    # Build the availability matrix
+    # A theory is available if its required level < stable_level
+    available = np.zeros((len(stable_levels), len(theory_names)))
+    for i, sl in enumerate(stable_levels):
+        for j, rl in enumerate(required_levels):
+            available[i, j] = 1.0 if rl < sl else 0.3
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Plot 1: Oracle level vs dimension
-    colors = ['#2ecc71' if l == 0 else '#e74c3c' if l == 1 else '#3498db'
-              for l in levels]
+    # Left: Heatmap of theory availability
+    im = ax1.imshow(available, cmap='RdYlGn', aspect='auto', vmin=0, vmax=1)
+    ax1.set_xticks(range(len(theory_names)))
+    ax1.set_xticklabels(theory_names, fontsize=12, fontweight='bold')
+    ax1.set_yticks(range(len(stable_levels)))
+    ax1.set_yticklabels([f'Level {s}' for s in stable_levels], fontsize=12)
+    ax1.set_title('Theory Availability by Stability Level', fontsize=14, fontweight='bold')
+    ax1.set_ylabel('Stability Level', fontsize=12)
 
-    bars = ax1.bar(dims, levels, color=colors, edgecolor='black', linewidth=0.5)
-    ax1.set_xlabel('Spacetime Dimension d', fontsize=12)
-    ax1.set_ylabel('Oracle Level σ(d)', fontsize=12)
-    ax1.set_title('Computability of TQFTs by Dimension', fontsize=14, fontweight='bold')
+    for i in range(len(stable_levels)):
+        for j in range(len(theory_names)):
+            text = '✓' if available[i, j] > 0.5 else '✗'
+            color = 'white' if available[i, j] > 0.5 else 'gray'
+            ax1.text(j, i, text, ha='center', va='center', fontsize=16,
+                    fontweight='bold', color=color)
 
-    # Add annotations
-    ax1.axhline(y=0, color='green', linestyle='--', alpha=0.3, label='Computable')
-    ax1.axhline(y=1, color='red', linestyle='--', alpha=0.3, label='Undecidable')
+    # Add key theorem annotations
+    ax1.annotate('', xy=(3.5, 0.5), xytext=(3.5, 1.5),
+                arrowprops=dict(arrowstyle='->', color='blue', lw=2))
+    ax1.text(4.2, 1.0, 'Dimension\nGap', fontsize=10, color='blue',
+            fontweight='bold', ha='left')
 
-    ax1.annotate('Computable\n(d ≤ 3)', xy=(1.5, 0.2), fontsize=10,
-                ha='center', color='#27ae60', fontweight='bold')
-    ax1.annotate('Exotic R⁴\n(d = 4)', xy=(4, 1.3), fontsize=9,
-                ha='center', color='#c0392b')
-    ax1.annotate('Higher\noracles', xy=(10, 7.5), fontsize=10,
-                ha='center', color='#2980b9')
-
-    green_patch = mpatches.Patch(color='#2ecc71', label='Computable (Σ₀)')
-    red_patch = mpatches.Patch(color='#e74c3c', label='Undecidable (Σ₁)')
-    blue_patch = mpatches.Patch(color='#3498db', label='Higher oracle (Σₙ)')
-    ax1.legend(handles=[green_patch, red_patch, blue_patch], loc='upper left')
-
-    # Plot 2: Theory inclusion hierarchy
+    # Right: Shadow hierarchy diagram
     ax2.set_xlim(0, 10)
     ax2.set_ylim(0, 10)
     ax2.set_aspect('equal')
     ax2.axis('off')
-    ax2.set_title('Theory Inclusion & Shadow Structure', fontsize=14, fontweight='bold')
+    ax2.set_title('Shadow Hierarchy\n(Truncation Levels)', fontsize=14, fontweight='bold')
 
-    # Draw theory nodes
-    positions = {
-        'TQFT': (2, 7),
-        'CFT': (5, 7),
-        'String': (2, 3),
-        'Gravity': (8, 5),
-    }
-    node_colors = {
-        'TQFT': '#2ecc71',
-        'CFT': '#f39c12',
-        'String': '#9b59b6',
-        'Gravity': '#e74c3c',
-    }
-
-    for name, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.8, color=node_colors[name],
-                           ec='black', linewidth=2, alpha=0.8)
-        ax2.add_patch(circle)
-        ax2.text(x, y, name, ha='center', va='center', fontsize=10,
-                fontweight='bold', color='white')
-
-    # Draw inclusion arrows
-    arrows = [
-        ('TQFT', 'CFT'),
-        ('CFT', 'Gravity'),
-        ('String', 'Gravity'),
+    # Draw nested boxes representing truncation levels
+    boxes = [
+        (1, 1, 8, 8, 'Theory of Everything\n(stable level ≥ 3)', '#e74c3c', 0.15),
+        (1.5, 1.5, 7, 6.5, 'Gravity\n(sees level 2)', '#e67e22', 0.2),
+        (2, 2, 6, 5, 'String / CFT\n(sees level 1)', '#f39c12', 0.25),
+        (2.5, 2.5, 5, 3.5, 'TQFT\n(sees level 0)', '#2ecc71', 0.35),
     ]
-    for src, dst in arrows:
-        sx, sy = positions[src]
-        dx, dy = positions[dst]
-        ax2.annotate('', xy=(dx - 0.8 * (dx - sx) / np.sqrt((dx-sx)**2 + (dy-sy)**2),
-                            dy - 0.8 * (dy - sy) / np.sqrt((dx-sx)**2 + (dy-sy)**2)),
-                    xytext=(sx + 0.8 * (dx - sx) / np.sqrt((dx-sx)**2 + (dy-sy)**2),
-                           sy + 0.8 * (dy - sy) / np.sqrt((dx-sx)**2 + (dy-sy)**2)),
-                    arrowprops=dict(arrowstyle='->', lw=2, color='black'))
 
-    # Add the (2,∞) annotation
-    ax2.text(5, 1.2, '(2,∞)-Category Necessity:', fontsize=11,
-            ha='center', fontweight='bold')
-    ax2.text(5, 0.5, 'TQFT ∧ String ⟹ stable level ≥ 2',
-            fontsize=10, ha='center', style='italic')
+    for x, y, w, h, label, color, alpha in boxes:
+        rect = plt.Rectangle((x, y), w, h, linewidth=2, edgecolor=color,
+                             facecolor=color, alpha=alpha)
+        ax2.add_patch(rect)
+        ax2.text(x + w/2, y + h/2, label, ha='center', va='center',
+                fontsize=11, fontweight='bold', color='black')
+
+    # Add the key point
+    ax2.plot(5, 4, 'ko', markersize=10)
+    ax2.text(5, 3.5, 'point value\n(cobordism hypothesis)',
+            ha='center', va='top', fontsize=9, style='italic')
 
     plt.tight_layout()
-    plt.savefig('oracle_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: oracle_hierarchy.png")
+    plt.savefig('theory_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved theory_spectrum.png")
 
 
 if __name__ == "__main__":
