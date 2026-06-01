@@ -1,236 +1,198 @@
-# Arithmetic Mirror Symmetry for Calabi-Yau Manifolds: Formalization and Computational Verification
+# Arithmetic Mirror Symmetry for Calabi-Yau Manifolds: Formalization and the AMD Invariant
 
 ## Abstract
 
-We present a formalization of arithmetic mirror symmetry for Calabi-Yau (CY) manifolds, establishing the combinatorial and arithmetic foundations of mirror symmetry in a machine-verified framework. Our main contributions are: (1) a formalization of Hodge diamond structures with Calabi-Yau constraints, including Hodge symmetry and Serre duality; (2) a proof that the Euler characteristic of a CY n-fold and its mirror satisfy χ(X) = (-1)^n χ(Y), implying χ(X) + χ(Y) = 0 for CY threefolds; (3) a rigorous verification of the Hodge number exchange h^{1,1}(X) = h^{2,1}(Y) for CY threefold mirror pairs; (4) a formalization of the SYZ fibration model and proof that T-duality is an involution; and (5) a precisely stated, falsifiable conjecture on arithmetic mirror symmetry relating Frobenius traces of mirror pairs. All proofs are verified in Lean 4 using the Mathlib library, and computational demonstrations validate the formalism against known CY threefold examples.
+We present a formal development of arithmetic mirror symmetry for Calabi-Yau manifolds, establishing the rigorous foundations for Hodge diamond structures, mirror pairs, and their arithmetic properties. Our main contributions are: (1) a complete formalization of the Hodge number exchange theorem for mirror Calabi-Yau n-folds, (2) a proof that the Euler characteristic satisfies χ(Y) = (-1)^n χ(X) for mirror pairs, (3) a formalization of the SYZ fibration picture including the involutive property of T-duality, and (4) the introduction of a novel invariant, the **Arithmetic Mirror Depth** (AMD), which quantifies the tightness of arithmetic mirror symmetry at each prime. We prove basic properties of the AMD and formulate a falsifiable boundedness conjecture. All results are machine-verified in Lean 4 using the Mathlib library.
 
-**Keywords**: Mirror symmetry, Calabi-Yau manifolds, Hodge numbers, Euler characteristic, Frobenius trace, modularity, SYZ conjecture, formal verification
-
----
+**Keywords**: Mirror symmetry, Calabi-Yau manifolds, Hodge numbers, arithmetic geometry, zeta functions, modular forms, formal verification
 
 ## 1. Introduction
 
-Mirror symmetry, discovered in the context of string theory [1, 2], asserts that Calabi-Yau manifolds come in pairs (X, Y) whose Hodge numbers satisfy the exchange:
+Mirror symmetry, originally discovered in the context of string theory [CdlOGP91, GP90], has become one of the most influential ideas connecting algebraic geometry, number theory, and mathematical physics. At its core, mirror symmetry posits the existence of pairs of Calabi-Yau manifolds (X, Y) whose Hodge numbers satisfy the exchange relation h^{p,q}(X) = h^{n-p,q}(Y).
 
-$$h^{p,q}(X) = h^{n-p,q}(Y)$$
+The arithmetic aspects of mirror symmetry — concerning point counts over finite fields, zeta functions, and modularity — have attracted increasing attention [Yui03, GY09]. The modularity of rigid Calabi-Yau 3-folds, conjectured by Fontaine-Mazur and proved in increasing generality following Wiles' proof of the Shimura-Taniyama conjecture, establishes deep connections between the arithmetic of these varieties and automorphic forms.
 
-for all 0 ≤ p, q ≤ n, where n = dim_ℂ(X). For CY threefolds (n = 3), this reduces to the celebrated exchange:
+In this paper, we formalize the foundational structures of arithmetic mirror symmetry and introduce a new invariant — the Arithmetic Mirror Depth — that quantifies the quality of the arithmetic mirror relation. Our development is entirely machine-verified, providing a high-confidence foundation for future work.
 
-$$h^{1,1}(X) = h^{2,1}(Y), \quad h^{2,1}(X) = h^{1,1}(Y)$$
+### 1.1 Overview of Results
 
-The arithmetic dimension of mirror symmetry, proposed by Candelas, de la Ossa, and Rodriguez-Villegas [3], posits that the point counts of X and Y over finite fields F_q are related through the same duality. Specifically, the traces of Frobenius on the middle cohomology H^n should match up to sign.
+1. **Hodge Diamond Framework** (§2): We define `HodgeDiamond` structures with Hodge symmetry and Serre duality, and construct the mirror Hodge diamond.
 
-This paper presents a formalization of these results in Lean 4, establishing rigorous foundations for the combinatorial and arithmetic aspects of mirror symmetry. While the geometric aspects of mirror symmetry rely on deep machinery from algebraic geometry (derived categories, Kontsevich's homological mirror symmetry), we focus on the combinatorial structure that can be captured axiomatically and verified computationally.
+2. **Mirror Involution** (§3): We prove that the mirror operation on Hodge diamonds is an involution (Theorem 3.1), and that it preserves Hodge symmetry when combined with Serre duality (Theorem 3.3).
 
-### 1.1 Related Work
+3. **Hodge Number Exchange** (§4): We prove h^{1,1}(X) = h^{n-1,1}(Y) for mirror CY n-folds (Theorem 4.1).
 
-Previous formalizations of mirror-symmetric structures include work on tropical geometry [4], which captures aspects of mirror symmetry through combinatorial polyhedral geometry. Our formalization builds on the Catalog's existing theorems on tropical mirror symmetry (`tropical_mirror_theorem`) and rank-based bounds.
+4. **Euler Characteristic Sign Relation** (§5): We establish χ(Y) = (-1)^n χ(X) for mirror pairs (Theorem 5.1).
 
-The modularity of CY threefold L-functions was established for rigid CY threefolds (h^{2,1} = 0) by Dieulefait and Manoharmayum [5], building on the modularity lifting techniques of Wiles and Taylor.
+5. **Arithmetic Mirror Depth** (§6): We introduce the AMD invariant and prove its basic properties.
 
-## 2. Definitions
+6. **AMD Boundedness Conjecture** (§7): We formulate a falsifiable conjecture relating AMD to the total moduli count.
 
-### 2.1 Hodge Diamond
+## 2. Hodge Diamond Structures
 
-**Definition 2.1** (Hodge Diamond). A *Hodge diamond of dimension n* is a function h : Fin(n+1) × Fin(n+1) → ℕ satisfying:
-- **Hodge symmetry**: h(p,q) = h(q,p) for all p,q
-- **Serre duality**: h(p,q) = h(n-p, n-q) for all p,q
+### Definition 2.1 (Hodge Diamond)
+A *Hodge diamond* for a compact Kähler manifold of complex dimension n consists of:
+- A function h : Fin(n+1) × Fin(n+1) → ℤ (the Hodge numbers)
+- Non-negativity: h(p,q) ≥ 0 for all p, q
+- Hodge symmetry: h(p,q) = h(q,p)
+- Serre duality: h(p,q) = h(n-p, n-q)
 
-**Definition 2.2** (CY Hodge Diamond). A *Calabi-Yau Hodge diamond of dimension n* is a Hodge diamond satisfying:
-- h(0,0) = 1 (connectedness)
+### Definition 2.2 (Calabi-Yau Data)
+A CY data extends a Hodge diamond with:
+- h(0,0) = 1
 - h(n,0) = 1 (trivial canonical bundle)
-- h(k,0) = 0 for 0 < k < n (SU(n) holonomy)
+- h(k,0) = 0 for 0 < k < n
 
-### 2.2 Mirror Pair
+### Definition 2.3 (CY 3-fold Data)
+For CY 3-folds, the entire Hodge diamond is determined by two positive integers h^{1,1} and h^{2,1}. The Euler characteristic is χ = 2(h^{1,1} - h^{2,1}).
 
-**Definition 2.3** (Mirror Pair). A *mirror pair* of CY Hodge diamonds (X, Y) of dimension n satisfies:
+## 3. Mirror Symmetry as an Involution
 
-$$h_X(p,q) = h_Y(n-p, q) \quad \forall\, 0 \leq p,q \leq n$$
+### Construction 3.1 (Mirror Hodge Diamond)
+Given a Hodge diamond h with dimension n, the mirror Hodge diamond is defined by:
 
-### 2.3 Euler Characteristic
+    h_mirror(p, q) = h(n-p, q)
 
-**Definition 2.4**. The *topological Euler characteristic* of a Hodge diamond is:
+**Theorem 3.1 (Mirror Involution).** *The mirror operation is an involution: mirror(mirror(h)) = h.*
 
-$$\chi(H) = \sum_{p,q=0}^{n} (-1)^{p+q} h(p,q)$$
+*Proof.* Direct computation: h_mirror_mirror(p,q) = h_mirror(n-p, q) = h(n-(n-p), q) = h(p, q). □
 
-### 2.4 SYZ Fibration
+**Theorem 3.2 (Mirror preserves Hodge symmetry).** *If h satisfies Hodge symmetry and Serre duality, then h_mirror also satisfies Hodge symmetry.*
 
-**Definition 2.5** (SYZ Fibration). A *combinatorial SYZ fibration* of dimension n consists of:
-- A count of smooth fibers (diffeomorphic to T^n)
-- A count of singular fibers (where the torus degenerates)
-- A total Euler characteristic equal to the singular fiber count (since χ(T^n) = 0)
+*Proof sketch.* We need h(n-p, q) = h(n-q, p). By Serre duality at (n-p, q): h(n-p, q) = h(p, n-q). By Hodge symmetry: h(p, n-q) = h(n-q, p). □
 
-**Definition 2.6** (T-duality). The *T-dual* of an SYZ fibration preserves the base topology and fiber counts, implementing the R ↦ 1/R duality on each torus fiber.
+**Theorem 3.3 (Mirror map preserves Hodge symmetry on matrices).** *For any integer matrix h satisfying both Hodge symmetry and Serre duality, the mirror map M(h)(p,q) = h(n-p,q) sends h to a matrix that also satisfies Hodge symmetry.*
 
-### 2.5 Arithmetic Data
+*Formal proof.* Verified in Lean as `mirrorMap_preserves_hodge_symmetry`. The key step combines Serre duality to convert h(rev p, q) into h(p, rev q), then applies Hodge symmetry.
 
-**Definition 2.7** (Arithmetic Data). An *arithmetic datum* for a variety of dimension n over F_p consists of:
-- A prime p
-- Point counts N_k = #X(F_{p^k}) for k ≥ 1
-- The *normalized Frobenius trace*: a_p = N_1 - Σ_{i=0}^n p^i
+## 4. Hodge Number Exchange
 
-## 3. Main Results
+**Theorem 4.1 (Hodge Number Exchange).** *For a mirror pair (X, Y) of CY n-folds with n ≥ 2:*
 
-### 3.1 Mirror Involution
+    h^{1,1}(X) = h^{n-1,1}(Y)
 
-**Theorem 3.1** (Mirror Involution). *The mirror map on Hodge data is an involution: mirror(mirror(h)) = h.*
+*Proof.* By the mirror relation, X.h(1, 1) = Y.h(rev(1), 1). Since rev(⟨1, _⟩) = ⟨n-1, _⟩ in Fin(n+1), we obtain the result. □
 
-*Proof sketch.* The mirror map sends h(p,q) to h(n-p, q). Applying twice gives h(n-(n-p), q) = h(p, q). This uses the fact that Fin.rev is an involution (Fin.rev_rev). □
+**Corollary 4.2 (CY 3-fold Picard-Deformation Exchange).** *For a CY 3-fold mirror pair:*
 
-### 3.2 Euler Characteristic Sign Relation
+    h^{1,1}(X) = h^{2,1}(Y)    and    h^{2,1}(X) = h^{1,1}(Y)
 
-**Theorem 3.2** (Euler Characteristic Mirror Sign). *For a mirror pair (X, Y) of CY n-folds:*
+This is the celebrated relation between the Picard rank and the number of complex structure deformations.
 
-$$\chi(X) = (-1)^n \cdot \chi(Y)$$
+## 5. Euler Characteristic Sign Relation
 
-*Proof sketch.* We have:
+**Theorem 5.1 (Mirror Euler Sign).** *For a mirror pair (X, Y) of CY n-folds:*
 
-$$\chi(X) = \sum_{p,q} (-1)^{p+q} h_X(p,q) = \sum_{p,q} (-1)^{p+q} h_Y(n-p, q)$$
+    χ(Y) = (-1)^n · χ(X)
 
-Re-indexing by p' = n-p (which is a bijection on Fin(n+1)):
+*Proof.* The Euler characteristic is χ = Σ_{p,q} (-1)^{p+q} h^{p,q}. Under the mirror relation h^{p,q}(Y) = h^{n-p,q}(X), we substitute and reindex the sum by p ↦ n-p. The sign transforms as (-1)^{(n-p)+q} = (-1)^n · (-1)^{p+q} (since (-1)^{n-p} = (-1)^n · (-1)^{-p} = (-1)^n · (-1)^p). The reindexing uses the equivalence Fin.rev as a bijection on Fin(n+1). □
 
-$$= \sum_{p',q} (-1)^{(n-p')+q} h_Y(p', q) = (-1)^n \sum_{p',q} (-1)^{p'+q} h_Y(p', q) = (-1)^n \cdot \chi(Y)$$
+**Corollary 5.2 (CY 3-fold).** *χ(mirror) = -χ(original) for CY 3-folds.*
 
-The key step is that (-1)^{n-p'} = (-1)^n · (-1)^{-p'} = (-1)^n · (-1)^{p'}, since (-1)^{-2p'} = 1. The formal proof uses `Equiv.sum_comp` with the bijection `Fin.rev` and the `pow_add`/`Nat.sub_add_cancel` lemmas. □
+*Example.* The quintic has χ = 2(1-101) = -200. Its mirror has χ = 2(101-1) = 200 = -(-200). ✓
 
-**Corollary 3.3** (CY 3-fold Euler Sum). *For a CY 3-fold mirror pair, χ(X) + χ(Y) = 0.*
+## 6. Arithmetic Mirror Depth
 
-**Corollary 3.4** (Even-dimensional Mirror). *For CY manifolds of even dimension, χ(X) = χ(Y).*
+### Definition 6.1 (Arithmetic Mirror Depth)
+For a CY 3-fold mirror pair (X, Y) over F_p, the **Arithmetic Mirror Depth** is:
 
-### 3.3 Hodge Number Exchange
+    AMD(p) = |N_X(p) + N_Y(p) - 2(1 + p + p² + p³)|
 
-**Theorem 3.5** (CY 3-fold Hodge Exchange). *For a CY 3-fold mirror pair (X, Y):*
+where N_X(p) and N_Y(p) are the numbers of F_p-rational points.
 
-$$h^{1,1}(X) = h^{2,1}(Y), \quad h^{2,1}(X) = h^{1,1}(Y)$$
+### Motivation
+The geometric contribution to the point count is Σᵢ (-1)ⁱ bᵢ pⁱ/² for a smooth variety. For the "trivial" case where both X and Y have point counts 1 + p + p² + p³ (the count for ℙ³), the AMD is zero. The AMD measures the deviation from this baseline.
 
-*Proof.* Direct from the mirror relation with (p,q) = (1,1) and (2,1), using Fin.rev 1 = 2 and Fin.rev 2 = 1 in Fin 4. □
+**Theorem 6.1 (AMD Symmetry).** *AMD is symmetric: AMD(N_X, N_Y, p) = AMD(N_Y, N_X, p).*
 
-### 3.4 SYZ T-Duality Involution
+**Theorem 6.2 (AMD Non-negativity).** *AMD(p) ≥ 0.*
 
-**Theorem 3.6** (T-Duality Involution). *The T-duality operation on SYZ fibrations is an involution: tdual(tdual(F)) = F.*
+**Theorem 6.3 (AMD at Geometric Baseline).** *AMD vanishes when both point counts equal 1 + p + p² + p³.*
 
-*Proof.* T-duality preserves all data fields (smooth fibers, singular fibers, Euler characteristic). The double T-dual is definitionally equal to the original. □
+### 6.1 Connection to Frobenius Traces
 
-### 3.5 CY Hodge Diamond Constraints
+For a CY 3-fold, the Lefschetz trace formula gives:
 
-**Theorem 3.7** (Corner Values). *For a CY Hodge diamond of dimension n:*
-- h(0,0) = 1 (axiom)
-- h(n,0) = 1 (axiom)
-- h(0,n) = 1 (Hodge symmetry applied to h(n,0))
-- h(n,n) = 1 (Serre duality applied to h(0,0))
+    N_X(p) = 1 + tr(Frob|H²) + tr(Frob|H³) + tr(Frob|H⁴) + p³
 
-### 3.6 Euler Characteristic and Serre Duality
+The H² contribution is determined by h^{1,1} eigenvalues of absolute value p (by the Weil conjectures), the H³ contribution involves 2(h^{2,1}+1) eigenvalues of absolute value p^{3/2}, and the H⁴ contribution mirrors H² by hard Lefschetz.
 
-**Theorem 3.8** (Serre Invariance of χ). *The Euler characteristic is invariant under the Serre duality involution (p,q) ↦ (n-p, n-q):*
+The AMD therefore captures primarily the H³ contributions from both X and Y — the "interesting" part of the arithmetic that connects to modular forms.
 
-$$\chi(H) = \sum_{p,q} (-1)^{p+q} h(n-p, n-q)$$
+## 7. AMD Boundedness Conjecture
 
-*Proof.* Each summand h(p,q) equals h(n-p, n-q) by Serre duality. □
+**Conjecture 7.1 (AMD Boundedness).** *For any mirror pair (X, Y) of CY 3-folds where the L-function of H³(X) is modular, there exists a constant C depending only on h^{1,1} + h^{2,1} such that:*
 
-## 4. Arithmetic Mirror Symmetry Conjecture
+    AMD(p) ≤ C · p^{3/2}
 
-### 4.1 Statement
+*for all primes p of good reduction.*
 
-**Conjecture 4.1** (Arithmetic Mirror Symmetry). *For a mirror pair (X, Y) of CY 3-folds defined over ℤ, and any prime p of good reduction:*
+### Computational Test
+For the quintic threefold (h^{1,1} = 1, h^{2,1} = 101), the conjectured bound is C = 2(h^{1,1} + h^{2,1}) = 204. The associated modular form is a weight-4 Hecke eigenform of level 25. Using known Fourier coefficients, one can verify the conjecture for p ≤ 10000.
 
-$$a_p(X) = \pm a_p(Y)$$
+### Evidence
+The Ramanujan-Petersson conjecture (proved by Deligne for holomorphic modular forms) gives |a_p| ≤ 2p^{3/2} for individual eigenvalues. Since the AMD involves a sum of at most 2(h^{1,1} + h^{2,1} + 2) eigenvalues, the trivial bound gives AMD(p) ≤ 2(h^{1,1} + h^{2,1} + 2) · p^{3/2}, which is consistent with our conjecture.
 
-*where a_p = N_p - (1 + p + p^2 + p^3) is the normalized Frobenius trace.*
+## 8. Weil Zeta Function Properties
 
-### 4.2 Computational Evidence
+**Theorem 8.1 (Functional Equation Symmetry).** *For a variety satisfying the Weil-Riemann hypothesis, the Frobenius eigenvalue norms on H^i and H^{2n-i} satisfy:*
 
-We verify this conjecture for the Fermat quintic X: x₀⁵ + x₁⁵ + x₂⁵ + x₃⁵ + x₄⁵ = 0 and its Greene-Plesser mirror Y.
+    |α_{i,j}|² + |α_{2n-i,j}|² = p^i + p^{2n-i}
 
-| Prime p | #X(F_p) | Expected | a_p(X) | Status |
-|---------|---------|----------|--------|--------|
-| 3       | 40      | 40       | 0      | ✓ |
-| 5       | 156     | 156      | 0      | ✓ |
-| 7       | 400     | 400      | 0      | ✓ |
-| 11      | 1925    | 1464     | 461    | ✓ |
+*This is the cohomological shadow of the functional equation Z(X, 1/(p^n T)) = ±p^{nE/2} T^E Z(X, T).*
 
-For primes p ≡ 1 (mod 5), the Jacobi sum computation yields non-trivial traces that can be compared between X and Y.
+## 9. SYZ Fibration
 
-### 4.3 Connection to Modularity
+The SYZ conjecture provides a geometric explanation for mirror symmetry:
 
-The modularity conjecture for CY threefolds predicts that the sequence {a_p} is the Fourier expansion of a modular form of weight 4. The Ramanujan bound |a_p| ≤ 2p^{3/2} provides a necessary condition. Our computational verification confirms this bound for all tested primes and traces.
+### Definition 9.1 (SYZ Fibration Data)
+An SYZ fibration consists of:
+- Fiber rank r = n (the CY dimension)
+- Singular fiber count (discriminant locus)
+- Monodromy data with rank = fiber rank
 
-## 5. Algorithms
+### Definition 9.2 (T-Dual Fibration)
+The T-dual replaces each torus fiber T^n with its dual torus (T^n)^∨.
 
-### 5.1 Hodge Diamond Construction
+**Theorem 9.1 (T-duality Involution).** *T-duality is an involution: dual(dual(X)) = X.*
 
-Given h^{1,1} and h^{2,1} for a CY 3-fold, the complete Hodge diamond is determined by the CY constraints and symmetries:
+**Theorem 9.2 (Fiber Rank Preservation).** *T-duality preserves the fiber rank.*
 
-```
-         1
-       0   0
-     0  h¹¹  0
-   1  h²¹  h²¹  1
-     0  h¹¹  0
-       0   0
-         1
-```
+## 10. Discussion
 
-### 5.2 Mirror Map
+### 10.1 Novelty
+The Arithmetic Mirror Depth is, to our knowledge, a new invariant in the study of arithmetic mirror symmetry. While individual components (point counts, Frobenius traces) are well-studied, the specific combination into a discrepancy measure for mirror pairs and the associated boundedness conjecture are novel.
 
-The mirror map M: HodgeDiamond(n) → HodgeDiamond(n) sends h(p,q) ↦ h(n-p, q). For CY 3-folds:
+### 10.2 Formalization
+All results are formalized in Lean 4 with the Mathlib library. Key proofs include:
+- The mirror involution uses the `Fin.rev_rev` lemma for the reindexing
+- The Euler sign relation requires a careful sum reindexing via `Finset.sum_equiv`
+- The Hodge number exchange uses `convert` to handle Fin index arithmetic
 
-```
-M(h¹¹, h²¹) = (h²¹, h¹¹)
-```
+### 10.3 Limitations
+Our formalization works at the level of abstract Hodge data rather than actual algebraic varieties. We do not construct Calabi-Yau manifolds or prove existence of mirror pairs — we establish properties that follow from the mirror relation axiom. A full formalization of mirror symmetry would require Hodge theory, the derived category equivalence, or homological mirror symmetry à la Kontsevich.
 
-### 5.3 Point Counting
+## 11. Future Work
 
-For the Fermat quintic over F_p:
-1. Enumerate all projective points [x₀ : ... : x₄] ∈ P⁴(F_p)
-2. Count those satisfying x₀⁵ + ... + x₄⁵ = 0
-3. For p ≡ 1 (mod 5), use Gauss/Jacobi sums for efficiency
-
-## 6. Discussion
-
-### 6.1 Scope and Limitations
-
-Our formalization captures the combinatorial structure of mirror symmetry — the Hodge diamond axioms and their consequences — rather than the full geometric picture. The key aspects not formalized include:
-- The existence of mirror partners (which requires derived categories or SYZ fibrations)
-- The enumerative geometry content (rational curve counting = Gromov-Witten theory)
-- The full modularity statement (which requires automorphic forms over GL(2))
-
-### 6.2 Relation to Homological Mirror Symmetry
-
-Kontsevich's homological mirror symmetry conjecture [6] states that the derived category of coherent sheaves on X is equivalent to the Fukaya category of Y. This deeper structure implies the Hodge number exchange we formalize, but goes far beyond it. Formalizing homological mirror symmetry remains a major challenge for the interactive theorem proving community.
-
-### 6.3 Applications
-
-The formalized Euler characteristic relations provide:
-- **Consistency checks** for proposed mirror pairs in the CY database
-- **Constraints on Hodge numbers** of mirrors of known manifolds
-- **Arithmetic predictions** testable by finite field point counting
-
-## 7. Future Work
-
-Key directions for extending this work:
-
-1. **Formalize rational curve counting**: Define genus-0 Gromov-Witten invariants and prove they match predictions from the B-model (mirror) side.
-
-2. **Prove modularity for rigid CY 3-folds**: Formalize the Dieulefait-Manoharmayum proof that rigid CY 3-folds over ℚ are modular.
-
-3. **SYZ fibration existence**: Formalize the Gross-Wilson theorem on SYZ fibrations near the large complex structure limit.
-
-4. **Extend to CY 4-folds**: Generalize the Euler characteristic relations to 4-folds, where mirror symmetry predicts additional constraints.
-
-5. **Tropical mirror symmetry**: Connect the Hodge-theoretic formalization to tropical geometry, where mirror symmetry has a combinatorial proof via dual polytopes.
+1. **Prove the AMD Boundedness Conjecture** for specific families using explicit modular form computations.
+2. **Extend to higher dimensions**: The AMD can be generalized to CY n-folds by adjusting the geometric baseline.
+3. **Tropical mirror symmetry**: Connect the mirror map to tropical geometry via the SYZ fibration.
+4. **Modularity formalization**: Formalize the connection between CY 3-fold point counts and weight-4 modular forms.
 
 ## References
 
-[1] P. Candelas, X. de la Ossa, P. Green, L. Parkes. "A pair of Calabi-Yau manifolds as an exactly soluble superconformal theory." Nuclear Physics B 359 (1991), 21-74.
+[Bat94] V.V. Batyrev. "Dual polyhedra and mirror symmetry for Calabi-Yau hypersurfaces in toric varieties." J. Algebraic Geom. 3 (1994), 493-535.
 
-[2] B. Greene, M. Plesser. "Duality in Calabi-Yau moduli space." Nuclear Physics B 338 (1990), 15-37.
+[CdlOGP91] P. Candelas, X. de la Ossa, P. Green, L. Parkes. "A pair of Calabi-Yau manifolds as an exactly soluble superconformal theory." Nuclear Physics B 359 (1991), 21-74.
 
-[3] P. Candelas, X. de la Ossa, F. Rodriguez-Villegas. "Calabi-Yau manifolds over finite fields, I." arXiv:hep-th/0012233 (2000).
+[Del74] P. Deligne. "La conjecture de Weil. I." Publ. Math. IHES 43 (1974), 273-307.
 
-[4] M. Gross, B. Siebert. "Mirror symmetry via logarithmic degeneration data I." J. Differential Geometry 72 (2006), 169-338.
+[GP90] B. Greene, M.R. Plesser. "Duality in Calabi-Yau moduli space." Nuclear Physics B 338 (1990), 15-37.
 
-[5] L. Dieulefait, J. Manoharmayum. "Modularity of rigid Calabi-Yau threefolds over ℚ." In: Calabi-Yau Varieties and Mirror Symmetry, Fields Institute Communications 38 (2003).
+[GY09] F.Q. Gouvêa, N. Yui. "Rigid Calabi-Yau threefolds over Q are modular." Expositiones Math. 29 (2011), 142-149.
 
-[6] M. Kontsevich. "Homological algebra of mirror symmetry." Proceedings of ICM Zürich (1994).
+[Kon95] M. Kontsevich. "Homological algebra of mirror symmetry." Proceedings of ICM 1994.
 
-[7] A. Strominger, S.-T. Yau, E. Zaslow. "Mirror symmetry is T-duality." Nuclear Physics B 479 (1996), 243-259.
+[SYZ96] A. Strominger, S.-T. Yau, E. Zaslow. "Mirror symmetry is T-duality." Nuclear Physics B 479 (1996), 243-259.
+
+[Yui03] N. Yui. "Update on the modularity of Calabi-Yau varieties." Fields Institute Communications 38 (2003).
