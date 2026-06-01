@@ -1,303 +1,293 @@
+#!/usr/bin/env python3
 """
 Algorithms for Transfinite Game Values
 
-Implements:
-1. Game value computation for finite well-founded games (BFS/DFS)
-2. Cantor Normal Form arithmetic for ordinals below ε₀
-3. Ordinal game construction
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
-from typing import Dict, List, Set, Optional, Tuple
-from dataclasses import dataclass
-from functools import lru_cache
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional, Callable, Iterator
+from enum import Enum
 
 
-# === Algorithm 1: Game Value Computation ===
+# === Ordinal Arithmetic (Cantor Normal Form) ===
 
-def compute_game_values(positions: List[int], 
-                        moves: Dict[int, List[int]]) -> Dict[int, int]:
-    """Compute game values for all positions in a finite well-founded game.
-    
-    Algorithm: Bottom-up computation using topological sort.
-    
-    Time complexity: O(|V| + |E|) where |V| = positions, |E| = total moves
-    Space complexity: O(|V|)
-    
-    Args:
-        positions: List of position identifiers
-        moves: Dict mapping position -> list of successor positions
-    
-    Returns:
-        Dict mapping position -> game value (natural number)
-    
-    Example:
-        >>> positions = [0, 1, 2, 3]
-        >>> moves = {0: [], 1: [0], 2: [1], 3: [2]}
-        >>> compute_game_values(positions, moves)
-        {0: 0, 1: 1, 2: 2, 3: 3}
-    """
-    # Compute in-degree for topological sort
-    in_degree = {p: 0 for p in positions}
-    reverse_moves = {p: [] for p in positions}
-    
-    for p, succs in moves.items():
-        for s in succs:
-            reverse_moves[s].append(p)
-    
-    # Start from terminal positions (no moves)
-    values: Dict[int, int] = {}
-    queue = []
-    remaining = {p: len(moves.get(p, [])) for p in positions}
-    
-    for p in positions:
-        if not moves.get(p, []):
-            values[p] = 0
-            queue.append(p)
-    
-    # Process in topological order
-    while queue:
-        current = queue.pop(0)
-        for parent in reverse_moves[current]:
-            if parent not in values:
-                # Check if all successors have been valued
-                all_valued = all(s in values for s in moves[parent])
-                if all_valued:
-                    values[parent] = max(values[s] + 1 for s in moves[parent])
-                    queue.append(parent)
-    
-    return values
-
-
-# === Algorithm 2: Cantor Normal Form ===
-
-@dataclass(frozen=True, order=True)
-class CNFTerm:
-    """A single term ω^exponent · coefficient in Cantor Normal Form."""
-    exponent: 'CNFOrdinal'
-    coefficient: int
-
-
-@dataclass(frozen=True)
+@dataclass(frozen=True, order=False)
 class CNFOrdinal:
-    """Ordinal in Cantor Normal Form: ω^e₁·c₁ + ω^e₂·c₂ + ...
+    """Ordinal number in Cantor Normal Form (CNF).
     
-    Terms are in strictly decreasing order of exponents.
-    Each coefficient is a positive natural number.
+    Every ordinal below ε₀ can be uniquely written as:
+        ω^(e_1) · c_1 + ω^(e_2) · c_2 + ... + ω^(e_k) · c_k
+    where e_1 > e_2 > ... > e_k and each c_i is a positive integer.
+    
+    We represent this as a tuple of (exponent, coefficient) pairs.
     """
-    terms: Tuple[CNFTerm, ...]
+    terms: tuple[tuple[CNFOrdinal, int], ...] = ()
     
     @staticmethod
-    def zero() -> 'CNFOrdinal':
-        return CNFOrdinal(terms=())
+    def zero() -> CNFOrdinal:
+        return CNFOrdinal()
     
     @staticmethod
-    def from_nat(n: int) -> 'CNFOrdinal':
-        """Convert natural number to CNF ordinal."""
-        if n == 0:
+    def nat(n: int) -> CNFOrdinal:
+        """Create a finite ordinal."""
+        if n <= 0:
             return CNFOrdinal.zero()
-        return CNFOrdinal(terms=(CNFTerm(CNFOrdinal.zero(), n),))
+        return CNFOrdinal(((CNFOrdinal.zero(), n),))
     
     @staticmethod
-    def omega() -> 'CNFOrdinal':
-        """ω = ω^1·1"""
-        return CNFOrdinal(terms=(CNFTerm(CNFOrdinal.from_nat(1), 1),))
+    def omega_to(e: CNFOrdinal, c: int = 1) -> CNFOrdinal:
+        """Create ω^e · c."""
+        if c <= 0:
+            return CNFOrdinal.zero()
+        return CNFOrdinal(((e, c),))
     
     @staticmethod
-    def omega_pow(n: int) -> 'CNFOrdinal':
-        """ω^n for natural number n ≥ 0."""
-        if n == 0:
-            return CNFOrdinal.from_nat(1)
-        return CNFOrdinal(terms=(CNFTerm(CNFOrdinal.from_nat(n), 1),))
-    
-    @staticmethod
-    def omega_pow_omega() -> 'CNFOrdinal':
-        """ω^ω"""
-        return CNFOrdinal(terms=(CNFTerm(CNFOrdinal.omega(), 1),))
+    def omega() -> CNFOrdinal:
+        """The ordinal ω."""
+        return CNFOrdinal.omega_to(CNFOrdinal.nat(1))
     
     def is_zero(self) -> bool:
         return len(self.terms) == 0
     
     def is_finite(self) -> bool:
         return self.is_zero() or (
-            len(self.terms) == 1 and self.terms[0].exponent.is_zero()
+            len(self.terms) == 1 and self.terms[0][0].is_zero()
         )
     
-    def to_nat(self) -> Optional[int]:
+    def is_limit(self) -> bool:
+        """A limit ordinal has no predecessor."""
+        if self.is_zero():
+            return False
+        _, last_exp = self.terms[-1][0], self.terms[-1]
+        return not self.terms[-1][0].is_zero()
+    
+    def finite_value(self) -> int:
+        """Return the finite value if this is a finite ordinal."""
         if self.is_zero():
             return 0
         if self.is_finite():
-            return self.terms[0].coefficient
-        return None
+            return self.terms[0][1]
+        raise ValueError(f"{self} is not finite")
     
-    def __lt__(self, other: 'CNFOrdinal') -> bool:
-        """Compare ordinals in CNF."""
+    def leading_exponent(self) -> CNFOrdinal:
+        """Return the largest exponent in the CNF."""
+        if self.is_zero():
+            return CNFOrdinal.zero()
+        return self.terms[0][0]
+    
+    def __lt__(self, other: CNFOrdinal) -> bool:
+        """Lexicographic comparison on CNF terms."""
         for i in range(max(len(self.terms), len(other.terms))):
             if i >= len(self.terms):
-                return True
+                return True  # self is shorter, hence smaller
             if i >= len(other.terms):
                 return False
-            if self.terms[i].exponent < other.terms[i].exponent:
+            e1, c1 = self.terms[i]
+            e2, c2 = other.terms[i]
+            if e1 < e2:
                 return True
-            if other.terms[i].exponent < self.terms[i].exponent:
+            if e2 < e1:
                 return False
-            if self.terms[i].coefficient < other.terms[i].coefficient:
+            if c1 < c2:
                 return True
-            if other.terms[i].coefficient < self.terms[i].coefficient:
+            if c2 < c1:
                 return False
         return False
     
-    def __le__(self, other):
+    def __le__(self, other: CNFOrdinal) -> bool:
         return self == other or self < other
     
-    def __gt__(self, other):
+    def __gt__(self, other: CNFOrdinal) -> bool:
         return other < self
     
-    def __ge__(self, other):
+    def __ge__(self, other: CNFOrdinal) -> bool:
         return other <= self
     
-    def __str__(self):
+    def __str__(self) -> str:
         if self.is_zero():
             return "0"
         parts = []
-        for term in self.terms:
-            if term.exponent.is_zero():
-                parts.append(str(term.coefficient))
-            elif term.exponent == CNFOrdinal.from_nat(1):
-                if term.coefficient == 1:
-                    parts.append("ω")
-                else:
-                    parts.append(f"ω·{term.coefficient}")
+        for exp, coeff in self.terms:
+            if exp.is_zero():
+                parts.append(str(coeff))
+            elif exp == CNFOrdinal.nat(1):
+                parts.append(f"ω·{coeff}" if coeff > 1 else "ω")
             else:
-                exp_str = str(term.exponent)
-                if term.coefficient == 1:
-                    parts.append(f"ω^{exp_str}")
-                else:
-                    parts.append(f"ω^{exp_str}·{term.coefficient}")
+                base = f"ω^{exp}" if exp.is_finite() else f"ω^({exp})"
+                parts.append(f"{base}·{coeff}" if coeff > 1 else base)
         return " + ".join(parts)
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"CNFOrdinal({self})"
 
 
 def cnf_add(a: CNFOrdinal, b: CNFOrdinal) -> CNFOrdinal:
-    """Add two ordinals in Cantor Normal Form.
-    
-    Note: Ordinal addition is NOT commutative! a + b ≠ b + a in general.
-    The rule: ω^α + ω^β = ω^β if β ≥ α (the smaller term is absorbed).
-    
-    Time complexity: O(|a.terms| + |b.terms|)
-    """
+    """Ordinal addition (NOT commutative: 1 + ω = ω ≠ ω + 1)."""
     if a.is_zero():
         return b
     if b.is_zero():
         return a
     
-    # Find terms in a that have exponent ≥ leading exponent of b
-    b_lead = b.terms[0].exponent
-    kept_terms = []
-    for term in a.terms:
-        if term.exponent > b_lead:
-            kept_terms.append(term)
-        elif term.exponent == b_lead:
-            # Same exponent: add coefficients
-            new_coeff = term.coefficient + b.terms[0].coefficient
-            kept_terms.append(CNFTerm(b_lead, new_coeff))
-            kept_terms.extend(b.terms[1:])
-            return CNFOrdinal(terms=tuple(kept_terms))
-        else:
-            break  # All remaining terms are absorbed by b
+    b_lead = b.terms[0][0]
+    # Drop all terms from a whose exponent is < b's leading exponent
+    kept = [t for t in a.terms if not (t[0] < b_lead)]
     
-    kept_terms.extend(b.terms)
-    return CNFOrdinal(terms=tuple(kept_terms))
+    # If the last kept term has the same exponent as b's first term, merge
+    if kept and kept[-1][0] == b.terms[0][0]:
+        merged = kept[:-1] + [(kept[-1][0], kept[-1][1] + b.terms[0][1])] + list(b.terms[1:])
+        return CNFOrdinal(tuple(merged))
+    
+    return CNFOrdinal(tuple(kept) + b.terms)
 
 
-def cnf_mul_nat(a: CNFOrdinal, n: int) -> CNFOrdinal:
-    """Multiply an ordinal by a natural number.
-    
-    ω^α · n = ω^α · n (just change the leading coefficient)
-    """
-    if n == 0 or a.is_zero():
+def cnf_mul(a: CNFOrdinal, b: CNFOrdinal) -> CNFOrdinal:
+    """Ordinal multiplication for simple cases."""
+    if a.is_zero() or b.is_zero():
         return CNFOrdinal.zero()
-    if a.is_finite():
-        return CNFOrdinal.from_nat(a.to_nat() * n)
-    
-    # Multiply leading term coefficient
-    first = a.terms[0]
-    new_first = CNFTerm(first.exponent, first.coefficient * n)
-    return CNFOrdinal(terms=(new_first,) + a.terms[1:])
+    if a.is_finite() and b.is_finite():
+        return CNFOrdinal.nat(a.finite_value() * b.finite_value())
+    if b.is_finite():
+        # a * n: multiply the leading coefficient by n
+        lead_exp, lead_coeff = a.terms[0]
+        return CNFOrdinal(((lead_exp, lead_coeff * b.finite_value()),) + a.terms[1:])
+    # General case: simplified for ω^a * ω^b = ω^(a+b)
+    if len(a.terms) == 1 and len(b.terms) == 1:
+        new_exp = cnf_add(a.terms[0][0], b.terms[0][0])
+        return CNFOrdinal.omega_to(new_exp, b.terms[0][1])
+    return CNFOrdinal.omega_to(cnf_add(a.leading_exponent(), b.leading_exponent()))
 
 
-# === Algorithm 3: Ordinal Game Construction ===
+# === Game Tree Data Structures ===
 
-def construct_ordinal_game(alpha: int) -> Tuple[List[int], Dict[int, List[int]]]:
-    """Construct the ordinal game for a finite ordinal alpha.
+@dataclass
+class GamePosition:
+    """A position in a well-founded game."""
+    name: str
+    moves: list[GamePosition] = field(default_factory=list)
+    _cached_value: Optional[CNFOrdinal] = field(default=None, repr=False)
+
+
+def game_value(pos: GamePosition) -> CNFOrdinal:
+    """Compute the game value of a position (finite games only).
     
-    Positions: {0, 1, ..., alpha-1}  (if alpha > 0)
-    Moves: position p -> {q | q < p}
-    
-    This gives a game where gameValue(p) = p for all p.
-    The game has value alpha-1 at the "top" position.
-    
-    Time complexity: O(alpha²) for constructing all move sets
-    Space complexity: O(alpha²) for storing moves
-    
-    Args:
-        alpha: A positive natural number
-    
-    Returns:
-        (positions, moves) tuple
-    
-    Example:
-        >>> positions, moves = construct_ordinal_game(5)
-        >>> # Game values: 0→0, 1→1, 2→2, 3→3, 4→4
+    v(p) = sup { v(q) + 1 : q ∈ moves(p) }
     """
-    positions = list(range(alpha))
-    moves = {}
-    for p in positions:
-        moves[p] = list(range(p))  # All positions less than p
-    return positions, moves
+    if pos._cached_value is not None:
+        return pos._cached_value
+    
+    if not pos.moves:
+        pos._cached_value = CNFOrdinal.zero()
+        return pos._cached_value
+    
+    max_val = -1
+    for child in pos.moves:
+        child_val = game_value(child)
+        if child_val.is_finite():
+            max_val = max(max_val, child_val.finite_value())
+    
+    pos._cached_value = CNFOrdinal.nat(max_val + 1)
+    return pos._cached_value
 
 
-# === Example Usage ===
+def build_chain_game(n: int) -> list[GamePosition]:
+    """Build a chain game C_n with positions 0, 1, ..., n.
+    
+    Moves: k → k-1 for k > 0. Position 0 is terminal.
+    Game value at position k equals k.
+    """
+    positions = [GamePosition(name=str(i)) for i in range(n + 1)]
+    for i in range(1, n + 1):
+        positions[i].moves = [positions[i - 1]]
+    return positions
+
+
+def build_binary_tree_game(depth: int) -> GamePosition:
+    """Build a complete binary tree game of given depth.
+    
+    Each non-leaf has two children. Depth d gives value d.
+    """
+    if depth == 0:
+        return GamePosition(name=f"leaf")
+    left = build_binary_tree_game(depth - 1)
+    right = build_binary_tree_game(depth - 1)
+    return GamePosition(name=f"node_d{depth}", moves=[left, right])
+
+
+# === The Omega Tower Algorithm ===
+
+def omega_tower(n: int) -> CNFOrdinal:
+    """Compute omegaTower(n).
+    
+    omegaTower(0) = 1
+    omegaTower(n+1) = ω^(omegaTower(n))
+    """
+    if n == 0:
+        return CNFOrdinal.nat(1)
+    return CNFOrdinal.omega_to(omega_tower(n - 1))
+
+
+# === Game Value Verification ===
+
+def verify_chain_game(n: int) -> bool:
+    """Verify that chainGame(n) has value k at position k for all k ≤ n."""
+    positions = build_chain_game(n)
+    for k in range(n + 1):
+        val = game_value(positions[k])
+        expected = CNFOrdinal.nat(k)
+        if val != expected:
+            print(f"  FAIL: position {k} has value {val}, expected {expected}")
+            return False
+    return True
+
+
+def verify_binary_tree(depth: int) -> bool:
+    """Verify that a binary tree game of depth d has value d at root."""
+    root = build_binary_tree_game(depth)
+    val = game_value(root)
+    expected = CNFOrdinal.nat(depth)
+    return val == expected
+
+
+# === Main verification ===
 
 if __name__ == "__main__":
-    # Chain game
-    print("Chain Game (length 5):")
-    positions = list(range(6))
-    moves = {k: [k-1] if k > 0 else [] for k in range(6)}
-    values = compute_game_values(positions, moves)
-    for p in sorted(values):
-        print(f"  Position {p}: value = {values[p]}")
-    
+    print("Ordinal Arithmetic Verification:")
+    print(f"  ω = {CNFOrdinal.omega()}")
+    print(f"  ω² = {CNFOrdinal.omega_to(CNFOrdinal.nat(2))}")
+    print(f"  ω^ω = {CNFOrdinal.omega_to(CNFOrdinal.omega())}")
     print()
     
-    # Ordinal game
-    print("Ordinal Game (alpha=5):")
-    positions, moves = construct_ordinal_game(5)
-    values = compute_game_values(positions, moves)
-    for p in sorted(values):
-        print(f"  Position {p}: value = {values[p]}")
-    
+    print("Omega Tower:")
+    for i in range(6):
+        print(f"  omegaTower({i}) = {omega_tower(i)}")
     print()
     
-    # CNF arithmetic
-    print("Cantor Normal Form Arithmetic:")
+    print("Chain Game Verification:")
+    for n in range(10):
+        ok = verify_chain_game(n)
+        print(f"  C_{n}: {'PASS' if ok else 'FAIL'}")
+    print()
+    
+    print("Binary Tree Game Verification:")
+    for d in range(8):
+        ok = verify_binary_tree(d)
+        print(f"  depth {d}: {'PASS' if ok else 'FAIL'}")
+    print()
+    
+    print("Ordinal Addition (non-commutative!):")
+    one = CNFOrdinal.nat(1)
     w = CNFOrdinal.omega()
-    w2 = CNFOrdinal.omega_pow(2)
-    ww = CNFOrdinal.omega_pow_omega()
-    
-    print(f"  ω = {w}")
-    print(f"  ω² = {w2}")
-    print(f"  ω^ω = {ww}")
+    print(f"  1 + ω = {cnf_add(one, w)}")
+    print(f"  ω + 1 = {cnf_add(w, one)}")
     print(f"  ω + ω = {cnf_add(w, w)}")
-    print(f"  ω·3 = {cnf_mul_nat(w, 3)}")
-    print(f"  ω·3 + 5 = {cnf_add(cnf_mul_nat(w, 3), CNFOrdinal.from_nat(5))}")
-    print(f"  ω² + ω·3 + 5 = {cnf_add(w2, cnf_add(cnf_mul_nat(w, 3), CNFOrdinal.from_nat(5)))}")
-    
-    # Hierarchy
     print()
-    print("Transfinite Hierarchy:")
-    for n in range(8):
-        print(f"  ω^{n} = {CNFOrdinal.omega_pow(n)}")
-    print(f"  ω^ω = {CNFOrdinal.omega_pow_omega()}")
-    print(f"  ω^{n} < ω^ω for all finite n ✓")
+    
+    print("Separation Results:")
+    for n in range(1, 5):
+        for m in range(1, 4):
+            wn = CNFOrdinal.omega_to(CNFOrdinal.nat(n))
+            wnm = cnf_mul(wn, CNFOrdinal.nat(m))
+            wn1 = CNFOrdinal.omega_to(CNFOrdinal.nat(n + 1))
+            print(f"  ω^{n} · {m} = {wnm} < ω^{n+1} = {wn1}: {wnm < wn1}")
