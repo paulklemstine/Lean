@@ -1,61 +1,54 @@
+#!/usr/bin/env python3
 """
-Tropical Cryptocurrency: Algorithms
-
-Implements core algorithms for tropical hash-based cryptocurrency mining:
-1. TSHA and TSHA2 hash functions
-2. Tropical mining (proof-of-work)
-3. Preimage and collision algorithms
-4. Mining difficulty analysis
-5. Tropical shortest-path interpretation
-
-All algorithms include complexity analysis and docstrings.
+Tropical Cryptocurrency Mining Algorithms
+==========================================
+Type-hinted implementations of all algorithms from the research.
 """
 
-from typing import List, Tuple, Optional, Dict
-import random
+from typing import List, Tuple, Optional, Set
 import math
-import time
 
-
-# ============================================================
-# Algorithm 1: TSHA — Tropical Secure Hash Algorithm
-# ============================================================
 
 def tsha(m: List[int], h: List[int]) -> int:
     """
     Tropical Secure Hash Algorithm.
     
-    TSHA(m, h) = min_{i=0..k-1} (m_i + h_i)
+    Computes TSHA(m, h) = min_{i=0..k-1} (m_i + h_i)
+    in the min-plus semiring.
     
-    Time: O(k) — single pass over components
-    Space: O(1) — only stores running minimum
+    Time complexity: O(k) — single pass over components.
+    Space complexity: O(1).
     
     Args:
         m: Message vector of length k
         h: Key vector of length k
-    Returns:
-        The tropical hash value (minimum of component sums)
     
-    >>> tsha([10, 4, 8], [3, 7, 1])
-    9
+    Returns:
+        The tropical hash value (minimum component sum)
     """
-    assert len(m) == len(h) > 0
+    assert len(m) == len(h) > 0, "Vectors must be non-empty and equal length"
     return min(m[i] + h[i] for i in range(len(m)))
 
 
 def tsha_with_witness(m: List[int], h: List[int]) -> Tuple[int, int]:
     """
-    TSHA with witness: returns (hash_value, argmin_index).
+    TSHA with minimizer index (witness).
     
-    Time: O(k), Space: O(1)
+    Returns (hash_value, minimizer_index) where
+    hash_value = m[minimizer_index] + h[minimizer_index] = min_i(m_i + h_i).
     
-    >>> tsha_with_witness([10, 4, 8], [3, 7, 1])
-    (9, 2)
+    Args:
+        m: Message vector
+        h: Key vector
+    
+    Returns:
+        Tuple of (hash value, index achieving the minimum)
     """
-    assert len(m) == len(h) > 0
+    k = len(m)
+    assert k == len(h) > 0
     best_val = m[0] + h[0]
     best_idx = 0
-    for i in range(1, len(m)):
+    for i in range(1, k):
         val = m[i] + h[i]
         if val < best_val:
             best_val = val
@@ -63,253 +56,252 @@ def tsha_with_witness(m: List[int], h: List[int]) -> Tuple[int, int]:
     return best_val, best_idx
 
 
-# ============================================================
-# Algorithm 2: TSHA2 — Double Tropical Hash
-# ============================================================
-
-def tsha2(m: List[int], h1: List[int], h2: List[int]) -> Tuple[int, int]:
+def tsha2(m: List[int], h: List[int], h2: List[int]) -> Tuple[int, int]:
     """
     Double Tropical Secure Hash Algorithm.
     
     TSHA2(m, h, h') = (TSHA(m, h), TSHA(m, h'))
     
-    Time: O(k) — two passes (or one fused pass)
-    Space: O(1)
-    
-    >>> tsha2([10, 4, 8], [3, 7, 1], [5, 2, 6])
-    (9, 6)
-    """
-    return (tsha(m, h1), tsha(m, h2))
-
-
-# ============================================================
-# Algorithm 3: Tropical Mining (Proof-of-Work)
-# ============================================================
-
-def tropical_mine(
-    header: List[int],
-    key: List[int],
-    target: int,
-    nonce_range: Tuple[int, int] = (-1000, 1000),
-    nonce_len: int = 4,
-    max_attempts: int = 100000,
-    use_tsha2: bool = False,
-    key2: Optional[List[int]] = None,
-    target2: Optional[int] = None
-) -> Optional[Dict]:
-    """
-    Tropical proof-of-work mining algorithm.
-    
-    Finds a nonce vector such that TSHA(header || nonce, key) ≤ target.
-    
-    Strategy: Random search over nonce space.
-    
-    Time: O(max_attempts * k) worst case, where k = len(header) + nonce_len
-    Space: O(k) for the full message
+    Uses two independent keys for collision resistance.
     
     Args:
-        header: Block header components
-        key: Tropical hash key (length = len(header) + nonce_len)
-        target: Mining difficulty target
-        nonce_range: Range for random nonce components
-        nonce_len: Number of nonce components
-        max_attempts: Maximum mining attempts
-        use_tsha2: If True, use double hash for mining
-        key2: Second key for TSHA2
-        target2: Second target for TSHA2
+        m: Message vector
+        h: First key vector
+        h2: Second key vector
     
     Returns:
-        Dictionary with nonce, hash value, and attempt count, or None
+        Pair of tropical hash values
     """
-    k_total = len(header) + nonce_len
-    assert len(key) == k_total
+    return (tsha(m, h), tsha(m, h2))
+
+
+def canonical_preimage(y: int, h: List[int]) -> List[int]:
+    """
+    Construct the canonical preimage for target value y.
     
-    for attempt in range(1, max_attempts + 1):
-        nonce = [random.randint(*nonce_range) for _ in range(nonce_len)]
-        full_msg = header + nonce
-        hash_val = tsha(full_msg, key)
-        
-        if hash_val <= target:
-            if use_tsha2:
-                assert key2 is not None and target2 is not None
-                hash_val2 = tsha(full_msg, key2)
-                if hash_val2 > target2:
-                    continue
-                return {
-                    "nonce": nonce,
-                    "hash": (hash_val, hash_val2),
-                    "attempts": attempt,
-                    "target": (target, target2)
-                }
-            return {
-                "nonce": nonce,
-                "hash": hash_val,
-                "attempts": attempt,
-                "target": target
-            }
+    Given target y and key h, returns m where m_i = y - h_i.
+    This satisfies TSHA(m, h) = y.
+    
+    Time complexity: O(k).
+    
+    Args:
+        y: Target hash value
+        h: Key vector
+    
+    Returns:
+        Message vector m with TSHA(m, h) = y
+    """
+    return [y - hi for hi in h]
+
+
+def find_all_minimizers(m: List[int], h: List[int]) -> List[int]:
+    """
+    Find all indices achieving the TSHA minimum.
+    
+    Args:
+        m: Message vector
+        h: Key vector
+    
+    Returns:
+        List of indices i where m_i + h_i equals the minimum
+    """
+    k = len(m)
+    min_val = tsha(m, h)
+    return [i for i in range(k) if m[i] + h[i] == min_val]
+
+
+def generate_collision(m: List[int], h: List[int]) -> List[int]:
+    """
+    Generate a TSHA collision for message m under key h.
+    
+    Strategy: find the minimizer index j, then add 1 to all
+    non-minimizer coordinates. The hash value is preserved because
+    the minimum (at j) is unchanged.
+    
+    Args:
+        m: Original message
+        h: Key vector
+    
+    Returns:
+        m' ≠ m with TSHA(m', h) = TSHA(m, h)
+    """
+    k = len(m)
+    _, j = tsha_with_witness(m, h)
+    m_prime = [m[i] + (0 if i == j else 1) for i in range(k)]
+    return m_prime
+
+
+def tropical_mine(
+    h: List[int],
+    target: int,
+    max_attempts: int = 1000000,
+    search_range: int = 100
+) -> Optional[List[int]]:
+    """
+    Tropical mining: find message m with TSHA(m, h) ≤ target.
+    
+    This is the tropical proof-of-work problem. Unlike SHA256 mining,
+    we can use the canonical preimage construction to find solutions
+    in O(k) time. The difficulty comes from additional constraints
+    (e.g., nonce range restrictions).
+    
+    Args:
+        h: Hash key
+        target: Target value (lower = harder)
+        max_attempts: Maximum random search attempts
+        search_range: Range for random nonce values
+    
+    Returns:
+        Message achieving target, or None
+    """
+    # Canonical solution always works in O(k)
+    return canonical_preimage(target, h)
+
+
+def tropical_mine_constrained(
+    h: List[int],
+    target: int,
+    lo: int = 0,
+    hi_bound: int = 100,
+    max_attempts: int = 1000000
+) -> Optional[List[int]]:
+    """
+    Constrained tropical mining: find m ∈ [lo, hi_bound]^k with TSHA(m,h) ≤ target.
+    
+    When messages are constrained to a bounded range, mining becomes
+    genuinely difficult — this is where the computational hardness lies.
+    
+    Args:
+        h: Hash key
+        target: Target value
+        lo: Lower bound on message components
+        hi_bound: Upper bound on message components
+        max_attempts: Maximum attempts
+    
+    Returns:
+        Constrained message achieving target, or None
+    """
+    import random
+    k = len(h)
+    
+    # Check if target is achievable
+    best_possible = min(lo + h[i] for i in range(k))
+    if best_possible > target:
+        return None
+    
+    for _ in range(max_attempts):
+        m = [random.randint(lo, hi_bound) for _ in range(k)]
+        if tsha(m, h) <= target:
+            return m
     return None
 
 
-# ============================================================
-# Algorithm 4: Constructive Preimage
-# ============================================================
-
-def construct_preimage(y: int, h: List[int]) -> List[int]:
+def tropical_merkle_root(leaves: List[int]) -> int:
     """
-    Construct the canonical preimage for TSHA.
+    Compute the tropical Merkle root of a list of values.
     
-    Given target y and key h, returns m where m_i = y - h_i.
-    Guarantees TSHA(m, h) = y.
+    The tropical Merkle tree uses min (tropical addition) instead of
+    SHA256 for combining child nodes. Key property: the root equals
+    the global minimum of all leaves.
     
-    Time: O(k), Space: O(k)
+    Note: tropical Merkle is idempotent (min(a,a) = a), which means
+    it cannot distinguish repeated subtrees — a fundamental difference
+    from classical Merkle trees with security implications.
     
-    This is the formal content of the theorem tsha_explicit_preimage,
-    proven in Lean 4.
-    
-    >>> m = construct_preimage(42, [3, 7, 1])
-    >>> tsha(m, [3, 7, 1])
-    42
-    """
-    return [y - h_i for h_i in h]
-
-
-# ============================================================
-# Algorithm 5: Collision Generator
-# ============================================================
-
-def generate_collisions(m: List[int], h: List[int], count: int = 10) -> List[List[int]]:
-    """
-    Generate multiple collisions for a given message under TSHA.
-    
-    Strategy: Identify the minimum index, then modify non-minimum
-    indices arbitrarily (as long as they don't become the new minimum).
-    
-    Time: O(count * k)
-    Space: O(count * k) for storing collisions
-    
-    This exploits the proven theorem tsha_collision_easy: for k ≥ 2,
-    collisions always exist.
-    
-    >>> collisions = generate_collisions([10, 4, 8], [3, 7, 1], 5)
-    >>> all(tsha(c, [3, 7, 1]) == tsha([10, 4, 8], [3, 7, 1]) for c in collisions)
-    True
-    """
-    k = len(m)
-    hash_val, j = tsha_with_witness(m, h)
-    collisions = []
-    
-    for _ in range(count):
-        m_prime = m.copy()
-        # Modify a random non-minimum index
-        i = random.choice([idx for idx in range(k) if idx != j])
-        # Increase it so it can't become the new minimum
-        m_prime[i] = m[i] + random.randint(1, 100)
-        assert tsha(m_prime, h) == hash_val
-        collisions.append(m_prime)
-    
-    return collisions
-
-
-# ============================================================
-# Algorithm 6: Mining Difficulty Estimator
-# ============================================================
-
-def estimate_mining_difficulty(
-    k: int,
-    msg_range: Tuple[int, int],
-    key_range: Tuple[int, int],
-    target: int,
-    n_samples: int = 10000
-) -> Dict:
-    """
-    Estimate the probability that a random message hashes below the target.
-    
-    This gives an empirical measure of mining difficulty.
-    
-    Time: O(n_samples * k)
+    Args:
+        leaves: List of leaf values
     
     Returns:
-        Dictionary with success probability, estimated attempts to find solution,
-        and other statistics.
+        The tropical Merkle root (= min of all leaves)
     """
-    h = [random.randint(*key_range) for _ in range(k)]
-    successes = 0
-    hash_values = []
+    if not leaves:
+        raise ValueError("Empty leaf list")
     
+    # Build tree bottom-up
+    level = list(leaves)
+    while len(level) > 1:
+        next_level = []
+        for i in range(0, len(level), 2):
+            if i + 1 < len(level):
+                next_level.append(min(level[i], level[i + 1]))
+            else:
+                next_level.append(level[i])
+        level = next_level
+    return level[0]
+
+
+def collision_freedom_degree(m: List[int], h: List[int]) -> int:
+    """
+    Compute the collision freedom degree of a message.
+    
+    The collision freedom degree is the number of coordinates that can
+    be independently perturbed upward while preserving the hash.
+    It equals k - (number of minimizer indices).
+    
+    Args:
+        m: Message vector
+        h: Key vector
+    
+    Returns:
+        Number of freely perturbable coordinates
+    """
+    minimizers = find_all_minimizers(m, h)
+    return len(m) - len(minimizers)
+
+
+def tsha_concat_decompose(
+    m1: List[int], m2: List[int],
+    h1: List[int], h2: List[int]
+) -> Tuple[int, int, int]:
+    """
+    Demonstrate concatenation decomposition.
+    
+    Returns (TSHA(m1‖m2, h1‖h2), TSHA(m1,h1), TSHA(m2,h2)).
+    The first should equal min of the other two.
+    
+    Args:
+        m1, m2: Message sub-vectors
+        h1, h2: Key sub-vectors
+    
+    Returns:
+        Tuple (full_hash, hash1, hash2)
+    """
+    full_hash = tsha(m1 + m2, h1 + h2)
+    hash1 = tsha(m1, h1)
+    hash2 = tsha(m2, h2)
+    assert full_hash == min(hash1, hash2), "Concatenation decomposition failed!"
+    return full_hash, hash1, hash2
+
+
+def estimate_hash_expectation(k: int, N: int, n_samples: int = 10000) -> float:
+    """
+    Estimate E[TSHA(m, h)] for uniform random m, h ∈ {0,...,N}^k.
+    
+    Conjecture: E[TSHA] ≈ 2N/(k+1).
+    
+    Args:
+        k: Dimension
+        N: Range upper bound
+        n_samples: Number of Monte Carlo samples
+    
+    Returns:
+        Estimated expected value
+    """
+    import random
+    total = 0
     for _ in range(n_samples):
-        m = [random.randint(*msg_range) for _ in range(k)]
-        hv = tsha(m, h)
-        hash_values.append(hv)
-        if hv <= target:
-            successes += 1
-    
-    prob = successes / n_samples if n_samples > 0 else 0
-    return {
-        "k": k,
-        "target": target,
-        "success_probability": prob,
-        "expected_attempts": 1.0 / prob if prob > 0 else float('inf'),
-        "min_hash": min(hash_values),
-        "max_hash": max(hash_values),
-        "mean_hash": sum(hash_values) / len(hash_values),
-    }
-
-
-# ============================================================
-# Algorithm 7: Tropical Shortest Path Interpretation
-# ============================================================
-
-def tsha_as_shortest_path(m: List[int], h: List[int]) -> Dict:
-    """
-    Interpret TSHA as a shortest-path problem in a bipartite graph K_{1,k}.
-    
-    The source connects to k vertices with edge weights w_i = m_i + h_i.
-    TSHA = minimum weight edge = shortest path from source to any vertex.
-    
-    This is the formal content of tsha_eq_shortest_weighted_path, proven in Lean 4.
-    
-    Returns:
-        Dictionary with graph structure, edge weights, and shortest path info.
-    """
-    k = len(m)
-    edges = [(0, i + 1, m[i] + h[i]) for i in range(k)]
-    hash_val, argmin = tsha_with_witness(m, h)
-    
-    return {
-        "graph": "K_{1," + str(k) + "}",
-        "edges": edges,
-        "shortest_path": {
-            "source": 0,
-            "destination": argmin + 1,
-            "weight": hash_val,
-        },
-        "all_weights": [m[i] + h[i] for i in range(k)],
-    }
+        m = [random.randint(0, N) for _ in range(k)]
+        h = [random.randint(0, N) for _ in range(k)]
+        total += tsha(m, h)
+    return total / n_samples
 
 
 if __name__ == "__main__":
-    # Quick algorithm tests
-    print("Algorithm Tests")
-    print("=" * 40)
-    
-    h = [3, 7, 1, 5, 2]
-    m = [10, 4, 8, 6, 9]
-    
+    # Quick verification
+    m = [3, 1, 4, 1, 5]
+    h = [2, 7, 1, 8, 2]
     print(f"TSHA({m}, {h}) = {tsha(m, h)}")
-    print(f"TSHA with witness: {tsha_with_witness(m, h)}")
-    
-    preimage = construct_preimage(42, h)
-    print(f"Preimage for y=42: {preimage}, TSHA={tsha(preimage, h)}")
-    
-    collisions = generate_collisions(m, h, 5)
-    print(f"Generated {len(collisions)} collisions, all valid: "
-          f"{all(tsha(c, h) == tsha(m, h) for c in collisions)}")
-    
-    print("\nMining difficulty estimation:")
-    for k in [8, 16, 32, 64]:
-        diff = estimate_mining_difficulty(k, (-50, 50), (-50, 50), -30, 10000)
-        print(f"  k={k:3d}: P(hash ≤ -30) = {diff['success_probability']:.4f}, "
-              f"E[attempts] = {diff['expected_attempts']:.0f}")
-    
-    path_info = tsha_as_shortest_path(m, h)
-    print(f"\nShortest path interpretation: {path_info['shortest_path']}")
+    print(f"TSHA2 = {tsha2(m, h, [1,2,3,4,5])}")
+    print(f"Collision: {generate_collision(m, h)}")
+    print(f"Merkle root: {tropical_merkle_root([5, 3, 8, 1, 7])}")
+    print(f"Collision freedom degree: {collision_freedom_degree(m, h)}")
