@@ -1,281 +1,219 @@
 #!/usr/bin/env python3
 """
-Algorithms for Collatz Spectral Analysis
-=========================================
+Algorithms for Spectral Analysis of the Collatz Map
 
-Implements the core algorithms from the research paper:
-1. Fast Collatz exponential sum computation
-2. Spectral gap measurement
-3. Parity ratio estimation
-4. Drift function analysis and critical threshold computation
-
-Time complexity: O(N) per frequency evaluation, O(N·M) for M frequencies.
-Space complexity: O(1) for streaming computation, O(N) for orbit storage.
+Type-hinted implementations of the core algorithms for computing
+parity words, spectral sums, and contraction exponents.
 """
-
-import numpy as np
-from typing import Tuple, List, Optional
-from dataclasses import dataclass
-
-
-@dataclass
-class SpectralGapResult:
-    """Result of a spectral gap measurement."""
-    N: int
-    max_energy: float
-    sqrt_N: float
-    gap_ratio: float  # max_energy / sqrt(N)
-    argmax_omega: float
-    frequencies_tested: int
-
-
-@dataclass
-class ParityAnalysis:
-    """Parity analysis of a Collatz orbit."""
-    n: int
-    total_steps: int
-    odd_count: int
-    even_count: int
-    odd_ratio: float
-    descent_exponent: float
-    spectral_weight: float
-    is_contracting: bool
+import math
+from typing import Optional
 
 
 def collatz_step(n: int) -> int:
-    """Standard Collatz step: n/2 if even, 3n+1 if odd.
+    """Standard Collatz step T(n)."""
+    if n % 2 == 0:
+        return n // 2
+    else:
+        return 3 * n + 1
 
-    Complexity: O(1)
+
+def collatz_orbit(n: int, max_steps: int = 100000) -> list[int]:
+    """Compute the full Collatz orbit until reaching 1."""
+    orbit: list[int] = [n]
+    current = n
+    steps = 0
+    while current != 1 and steps < max_steps:
+        current = collatz_step(current)
+        orbit.append(current)
+        steps += 1
+    return orbit
+
+
+def parity_word(orbit: list[int]) -> list[int]:
+    """Extract binary parity word from orbit: 1 if odd, 0 if even."""
+    return [x % 2 for x in orbit]
+
+
+def odd_step_count(pw: list[int]) -> int:
+    """Count number of 1s (odd steps) in a parity word."""
+    return sum(pw)
+
+
+def parity_density(pw: list[int]) -> float:
+    """Compute the parity density j/k of a parity word."""
+    if len(pw) == 0:
+        return 0.0
+    return sum(pw) / len(pw)
+
+
+def contraction_exponent(j: int, k: int) -> float:
     """
-    return n // 2 if n % 2 == 0 else 3 * n + 1
+    Compute the contraction exponent δ = k·log(2) - j·log(3).
 
-
-def collatz_orbit(n: int, max_steps: int = 100000) -> List[int]:
-    """Compute full Collatz orbit from n to 1 (or max_steps).
-
-    Complexity: O(stopping_time(n))
+    Positive values indicate net orbit contraction.
+    The orbit contracts by a multiplicative factor of 2^k / 3^j.
     """
-    orbit = [n]
+    return k * math.log(2) - j * math.log(3)
+
+
+def contraction_factor(j: int, k: int) -> float:
+    """
+    Compute the contraction factor 2^k / 3^j.
+
+    Values > 1 indicate net contraction.
+    """
+    return (2 ** k) / (3 ** j)
+
+
+def spectral_cos_sum(pw: list[int], omega: float) -> float:
+    """
+    Cosine component of the discrete Fourier transform of the parity word.
+
+    F_cos(ω) = Σ_{k=0}^{K-1} pw[k] · cos(2πωk)
+    """
+    return sum(
+        pw[k] * math.cos(2 * math.pi * omega * k)
+        for k in range(len(pw))
+    )
+
+
+def spectral_sin_sum(pw: list[int], omega: float) -> float:
+    """
+    Sine component of the discrete Fourier transform of the parity word.
+
+    F_sin(ω) = Σ_{k=0}^{K-1} pw[k] · sin(2πωk)
+    """
+    return sum(
+        pw[k] * math.sin(2 * math.pi * omega * k)
+        for k in range(len(pw))
+    )
+
+
+def spectral_energy(pw: list[int], omega: float) -> float:
+    """
+    Spectral energy |F(ω)|² = F_cos² + F_sin² at frequency ω.
+
+    At ω = 0, this equals j² where j = odd_step_count.
+    """
+    c = spectral_cos_sum(pw, omega)
+    s = spectral_sin_sum(pw, omega)
+    return c * c + s * s
+
+
+def spectral_profile(
+    pw: list[int],
+    num_frequencies: int = 100
+) -> list[tuple[float, float]]:
+    """
+    Compute the spectral energy profile over evenly spaced frequencies.
+
+    Returns list of (frequency, energy) pairs.
+    """
+    result: list[tuple[float, float]] = []
+    for i in range(num_frequencies + 1):
+        omega = i / num_frequencies
+        e = spectral_energy(pw, omega)
+        result.append((omega, e))
+    return result
+
+
+def max_spectral_energy_ratio(
+    pw: list[int],
+    num_frequencies: int = 100,
+    exclude_dc: bool = True
+) -> float:
+    """
+    Compute the maximum spectral energy ratio E(ω) / E(0) over non-DC frequencies.
+
+    A small ratio indicates a spectral gap (mixing behavior).
+    """
+    j = odd_step_count(pw)
+    dc_energy = j * j
+    if dc_energy == 0:
+        return 0.0
+
+    max_ratio = 0.0
+    for i in range(1 if exclude_dc else 0, num_frequencies + 1):
+        omega = i / num_frequencies
+        e = spectral_energy(pw, omega)
+        ratio = e / dc_energy
+        if ratio > max_ratio:
+            max_ratio = ratio
+    return max_ratio
+
+
+def verify_spectral_gap_conjecture(
+    max_n: int = 10000,
+    verbose: bool = False
+) -> dict[str, object]:
+    """
+    Test the spectral gap conjecture for all n from 2 to max_n.
+
+    The conjecture states that every Collatz orbit reaching 1 has
+    parity density strictly below log(2)/log(3) ≈ 0.6309.
+
+    Returns a dictionary with:
+    - 'holds': bool — whether the conjecture holds for all tested n
+    - 'max_density': float — maximum parity density observed
+    - 'max_n': int — the n achieving maximum density
+    - 'critical_threshold': float — log(2)/log(3)
+    - 'gap': float — critical_threshold - max_density
+    """
+    critical = math.log(2) / math.log(3)
+    max_density = 0.0
+    max_n_val = 1
+
+    for n in range(2, max_n + 1):
+        orbit = collatz_orbit(n)
+        if orbit[-1] != 1:
+            continue
+        pw = parity_word(orbit)
+        d = parity_density(pw)
+        if d > max_density:
+            max_density = d
+            max_n_val = n
+        if verbose and d > 0.6:
+            print(f"  n={n}: density={d:.6f}, steps={len(orbit)}")
+
+    return {
+        'holds': max_density < critical,
+        'max_density': max_density,
+        'max_n': max_n_val,
+        'critical_threshold': critical,
+        'gap': critical - max_density,
+    }
+
+
+def generalized_map_orbit(
+    n: int,
+    a: int = 3,
+    b: int = 1,
+    max_steps: int = 10000
+) -> Optional[list[int]]:
+    """
+    Orbit under the generalized map: n/2 if even, a*n+b if odd.
+
+    Returns None if the orbit exceeds 10^15 (divergence detected).
+    """
+    orbit: list[int] = [n]
     current = n
     for _ in range(max_steps):
-        if current <= 1:
+        if current == 1:
             break
-        current = collatz_step(current)
+        if current % 2 == 0:
+            current = current // 2
+        else:
+            current = a * current + b
+        if current > 10**15:
+            return None  # Divergence detected
         orbit.append(current)
     return orbit
 
 
-def compute_exponential_sum(N: int, omega: float) -> complex:
-    """
-    Compute the Collatz exponential sum:
-        F_T(ω) = Σ_{n=1}^{N} exp(2πiω·T(n)/n)
-
-    Args:
-        N: Upper limit of summation
-        omega: Frequency parameter
-
-    Returns:
-        Complex value of the exponential sum
-
-    Complexity: O(N)
-    """
-    total = 0.0 + 0.0j
-    for n in range(1, N + 1):
-        Tn = collatz_step(n)
-        phase = 2.0 * np.pi * omega * Tn / n
-        total += np.exp(1j * phase)
-    return total
-
-
-def compute_spectral_energy(N: int, omega: float) -> float:
-    """
-    Compute spectral energy |F_T(ω)|.
-
-    Complexity: O(N)
-    """
-    return abs(compute_exponential_sum(N, omega))
-
-
-def measure_spectral_gap(
-    N: int,
-    num_frequencies: int = 200,
-    omega_range: Tuple[float, float] = (0.01, 10.0)
-) -> SpectralGapResult:
-    """
-    Measure the spectral gap by scanning frequencies.
-
-    The spectral gap is measured as max_ω |F_T(ω)| / √N.
-    If this ratio is bounded as N → ∞, the spectral gap conjecture holds.
-
-    Args:
-        N: Number of terms in the sum
-        num_frequencies: Number of frequencies to test
-        omega_range: Range of frequencies to scan
-
-    Returns:
-        SpectralGapResult with gap measurement
-
-    Complexity: O(N · num_frequencies)
-    """
-    omegas = np.linspace(omega_range[0], omega_range[1], num_frequencies)
-    max_energy = 0.0
-    argmax = 0.0
-
-    for omega in omegas:
-        energy = compute_spectral_energy(N, omega)
-        if energy > max_energy:
-            max_energy = energy
-            argmax = omega
-
-    sqrt_N = np.sqrt(N)
-    return SpectralGapResult(
-        N=N,
-        max_energy=max_energy,
-        sqrt_N=sqrt_N,
-        gap_ratio=max_energy / sqrt_N,
-        argmax_omega=argmax,
-        frequencies_tested=num_frequencies
-    )
-
-
-def analyze_parity(n: int) -> ParityAnalysis:
-    """
-    Full parity analysis of a Collatz orbit.
-
-    Computes the odd/even step counts, descent exponent, spectral weight,
-    and determines whether the orbit is contracting.
-
-    Args:
-        n: Starting value (must be > 1)
-
-    Returns:
-        ParityAnalysis dataclass
-
-    Complexity: O(stopping_time(n))
-    """
-    orbit = collatz_orbit(n)
-    total = len(orbit) - 1
-    if total == 0:
-        return ParityAnalysis(n, 0, 0, 0, 0.0, 0.0, 1.0, True)
-
-    odd_count = sum(1 for x in orbit[:-1] if x % 2 == 1)
-    even_count = total - odd_count
-    odd_ratio = odd_count / total
-
-    # Descent exponent: j*log(3) - (k-j)*log(2)
-    de = odd_count * np.log(3) - even_count * np.log(2)
-
-    # Spectral weight: 3^j / 2^(k-j)
-    sw = 3**odd_count / 2**even_count if even_count < 1000 else np.exp(de)
-
-    return ParityAnalysis(
-        n=n,
-        total_steps=total,
-        odd_count=odd_count,
-        even_count=even_count,
-        odd_ratio=odd_ratio,
-        descent_exponent=de,
-        spectral_weight=sw,
-        is_contracting=(de < 0)
-    )
-
-
-def drift_function(p: float) -> float:
-    """
-    Random walk drift: μ(p) = p·log(3) - (1-p)·log(2).
-
-    The drift is negative for p < p* ≈ 0.3869, where p* is the
-    critical parity threshold.
-
-    Complexity: O(1)
-    """
-    return p * np.log(3) - (1 - p) * np.log(2)
-
-
-def critical_threshold() -> float:
-    """
-    The critical parity threshold p* = log(2)/(log(2)+log(3)).
-
-    Below this threshold, orbits contract on average.
-
-    Complexity: O(1)
-    """
-    return np.log(2) / (np.log(2) + np.log(3))
-
-
-def find_drift_zero(tol: float = 1e-15) -> float:
-    """
-    Find the unique zero of the drift function in (0,1) by bisection.
-
-    This implements the constructive version of our cross-domain theorem
-    (drift_unique_zero_in_unit).
-
-    Complexity: O(log(1/tol))
-    """
-    lo, hi = 0.0, 1.0
-    while hi - lo > tol:
-        mid = (lo + hi) / 2
-        if drift_function(mid) < 0:
-            lo = mid
-        else:
-            hi = mid
-    return (lo + hi) / 2
-
-
-def spectral_weight(j: int, k: int) -> float:
-    """Compute spectral weight 3^j / 2^(k-j)."""
-    return 3**j / 2**(k - j)
-
-
-def descent_exponent(j: int, k: int) -> float:
-    """Compute descent exponent j·log(3) - (k-j)·log(2)."""
-    return j * np.log(3) - (k - j) * np.log(2)
-
-
-def batch_spectral_gap_test(
-    N_values: List[int],
-    num_frequencies: int = 100
-) -> List[SpectralGapResult]:
-    """
-    Run spectral gap test across multiple N values.
-
-    If the gap_ratio stays bounded, the spectral gap conjecture holds.
-
-    Complexity: O(sum(N_i) · num_frequencies)
-    """
-    results = []
-    for N in N_values:
-        result = measure_spectral_gap(N, num_frequencies)
-        results.append(result)
-    return results
-
-
-# ============================================================
-# Example usage
-# ============================================================
-
 if __name__ == "__main__":
-    print("Collatz Spectral Analysis Algorithms")
-    print("=" * 50)
-
-    # Critical threshold
-    p_star = critical_threshold()
-    p_star_bisect = find_drift_zero()
-    print(f"\nCritical threshold (analytical): {p_star:.10f}")
-    print(f"Critical threshold (bisection):  {p_star_bisect:.10f}")
-
-    # Parity analysis
-    print("\nParity Analysis:")
-    for n in [27, 871, 6171, 77031]:
-        analysis = analyze_parity(n)
-        print(f"  n={n}: steps={analysis.total_steps}, "
-              f"odd_ratio={analysis.odd_ratio:.4f}, "
-              f"contracting={analysis.is_contracting}")
-
-    # Spectral gap test
-    print("\nSpectral Gap Test:")
-    N_values = [50, 100, 200, 500]
-    results = batch_spectral_gap_test(N_values, num_frequencies=50)
-    for r in results:
-        print(f"  N={r.N:>5}: max|F_T|={r.max_energy:.2f}, "
-              f"√N={r.sqrt_N:.2f}, ratio={r.gap_ratio:.4f}")
+    # Quick verification
+    result = verify_spectral_gap_conjecture(1000, verbose=True)
+    print(f"\nConjecture holds for n ≤ 1000: {result['holds']}")
+    print(f"Max density: {result['max_density']:.6f}")
+    print(f"Critical threshold: {result['critical_threshold']:.6f}")
+    print(f"Gap: {result['gap']:.6f}")
