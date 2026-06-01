@@ -4,6 +4,56 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "social_credit_scores_as_topological_invariants.json",
+    "title": "Social Credit Scores as Topological Invariants",
+    "domain": "Bridges",
+    "date": "2026-06-01T08:58:10Z",
+    "exp_id": "faa42070",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 74
+  },
+  {
+    "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
+    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
+    "domain": "Bridges",
+    "date": "2026-06-01T08:57:50Z",
+    "exp_id": "e657f9e8",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 73
+  },
+  {
+    "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes",
+    "domain": "Bridges",
+    "date": "2026-06-01T08:57:28Z",
+    "exp_id": "e6851233",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 72
+  },
+  {
+    "filename": "newton_hodge_polygon_framework_for_the_p_adic_lang.json",
+    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
+    "domain": "Bridges",
+    "date": "2026-06-01T08:57:00Z",
+    "exp_id": "24a63e9e",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 71
+  },
+  {
+    "filename": "p_adic_langlands_for_glq_p.json",
+    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
+    "domain": "Bridges",
+    "date": "2026-06-01T08:56:37Z",
+    "exp_id": "f75c509b",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 70
+  },
+  {
     "filename": "surveillance_networks_information_theoretic_undete.json",
     "title": "Surveillance Networks: Information-Theoretic Undetectability",
     "domain": "Bridges",
@@ -11,7 +61,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8f43e9e1",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 72
+    "pkg_num": 69
   },
   {
     "filename": "complete_algebraic_theory_of_the_hecke_eigenvalue_.json",
@@ -21,7 +71,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72c3a7a8",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 71
+    "pkg_num": 68
   },
   {
     "filename": "langlands_for_gl_over_q.json",
@@ -31,7 +81,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f2c79f3b",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 70
+    "pkg_num": 67
   },
   {
     "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
@@ -41,7 +91,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72018c51",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 69
+    "pkg_num": 66
   },
   {
     "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
@@ -51,7 +101,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4f5a41e1",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 68
+    "pkg_num": 65
   },
   {
     "filename": "complete_formal_framework_for_cellular_automat.json",
@@ -61,7 +111,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ea8fbe44",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 67
+    "pkg_num": 64
   },
   {
     "filename": "quantum_proofs_of_classical_theorems.json",
@@ -71,7 +121,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c0a3ba3e",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 66
+    "pkg_num": 63
   },
   {
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
@@ -81,7 +131,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "0fa49dec",
     "quality_score": 0.5239020000000001,
     "quality": "partial",
-    "pkg_num": 65
+    "pkg_num": 62
   },
   {
     "filename": "formal_algebraic_foundations_of_isogeny_base.json",
@@ -91,7 +141,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "da3578b4",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 64
+    "pkg_num": 61
   },
   {
     "filename": "rigorous_formal_framework_for_the_entropy_powe.json",
@@ -101,7 +151,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8a0058f1",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 63
+    "pkg_num": 60
   },
   {
     "filename": "unified_framework_for_understanding_self_refer.json",
@@ -111,7 +161,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "15bec107",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 62
+    "pkg_num": 59
   },
   {
     "filename": "poincar_conjecture_revisited_4d_smooth.json",
@@ -121,7 +171,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4c3cb344",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 61
+    "pkg_num": 58
   },
   {
     "filename": "artins_conjecture_on_primitive_roots.json",
@@ -131,7 +181,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "42ef5052",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 60
+    "pkg_num": 57
   },
   {
     "filename": "tropical_hodge_theory.json",
@@ -141,7 +191,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "12735337",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 59
+    "pkg_num": 56
   },
   {
     "filename": "computational_complexity_of_alien_civilizations.json",
@@ -151,7 +201,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ac9e5feb",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 58
+    "pkg_num": 55
   },
   {
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
@@ -161,7 +211,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "116c082c",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 57
+    "pkg_num": 54
   },
   {
     "filename": "erds_faber_lovsz_conjecture.json",
@@ -171,17 +221,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "3446461e",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 56
-  },
-  {
-    "filename": "social_credit_scores_as_topological_invariants.json",
-    "title": "Social Credit Scores as Topological Invariants: Fixed-Point Attractors, Phase Transitions, and Fractal Stratification",
-    "domain": "MachineLearning",
-    "date": "2026-06-01T05:29:45Z",
-    "exp_id": "0281bd3d",
-    "quality_score": 0.6,
-    "quality": "partial",
-    "pkg_num": 55
+    "pkg_num": 53
   },
   {
     "filename": "reconstruction_conjecture.json",
@@ -191,7 +231,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "77bc31c0",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 54
+    "pkg_num": 52
   },
   {
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
@@ -201,7 +241,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "6f1b7d62",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 53
+    "pkg_num": 51
   },
   {
     "filename": "fermat_near_misses_in_the_twilight_zone.json",
@@ -211,7 +251,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a5c337ed",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 52
+    "pkg_num": 50
   },
   {
     "filename": "hypercomputation_computing_the_uncomputable.json",
@@ -221,7 +261,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7212b89e",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 51
+    "pkg_num": 49
   },
   {
     "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
@@ -231,7 +271,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "06268486",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 50
+    "pkg_num": 48
   },
   {
     "filename": "the_fractal_dimension_of_mathematical_truth.json",
@@ -241,7 +281,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c808b38a",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 49
+    "pkg_num": 47
   },
   {
     "filename": "the_mega_sphere_all_dimensions_at_once.json",
@@ -251,7 +291,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "64431a8e",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 48
+    "pkg_num": 46
   },
   {
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
@@ -261,7 +301,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8d4f7af1",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 47
+    "pkg_num": 45
   },
   {
     "filename": "hadwigers_conjecture.json",
@@ -271,7 +311,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d0ddefbd",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 46
+    "pkg_num": 44
   },
   {
     "filename": "thermodynamics_of_mathematical_proof.json",
@@ -281,7 +321,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5601e70d",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 45
+    "pkg_num": 43
   },
   {
     "filename": "reflective_type_theory_proving_things_about_provin.json",
@@ -291,7 +331,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a7b2b9a",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 44
+    "pkg_num": 42
   },
   {
     "filename": "this_cycle_formalized_the_algebraic_core_of_the_he.json",
@@ -301,7 +341,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ec13a735",
     "quality_score": 0.6,
     "quality": "partial",
-    "pkg_num": 43
+    "pkg_num": 41
   },
   {
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
@@ -311,7 +351,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "13c69dba",
     "quality_score": 0.7527642857142857,
     "quality": "substantial",
-    "pkg_num": 42
+    "pkg_num": 40
   },
   {
     "filename": "this_research_cycle_established_the_mathematical_f.json",
@@ -321,7 +361,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d2b0b7c5",
     "quality_score": 0.7242500000000001,
     "quality": "substantial",
-    "pkg_num": 41
+    "pkg_num": 39
   },
   {
     "filename": "aleph_1_surface_geometry_between_dimensions.json",
@@ -331,7 +371,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "dbb47961",
     "quality_score": 0.720886612244898,
     "quality": "substantial",
-    "pkg_num": 40
+    "pkg_num": 38
   },
   {
     "filename": "this_research_cycle_established_the_foundational_t.json",
@@ -341,7 +381,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "3d08bbee",
     "quality_score": 0.7722411111111112,
     "quality": "substantial",
-    "pkg_num": 39
+    "pkg_num": 37
   },
   {
     "filename": "zombies_and_qualia_mathematics_of_subjective_exper.json",
@@ -351,7 +391,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "1e534e5d",
     "quality_score": 0.7355707481125602,
     "quality": "substantial",
-    "pkg_num": 38
+    "pkg_num": 36
   },
   {
     "filename": "this_research_cycle_formalized_the_algebraic_skele.json",
@@ -361,7 +401,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c572edf3",
     "quality_score": 0.6966124390243902,
     "quality": "partial",
-    "pkg_num": 37
+    "pkg_num": 35
   },
   {
     "filename": "infinite_dimensional_chess_winning_on_the_hilbert_.json",
@@ -371,7 +411,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e8aa6606",
     "quality_score": 0.7194500000000001,
     "quality": "substantial",
-    "pkg_num": 36
+    "pkg_num": 34
   },
   {
     "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
@@ -381,7 +421,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c6e162ae",
     "quality_score": 0.717505375,
     "quality": "substantial",
-    "pkg_num": 35
+    "pkg_num": 33
   },
   {
     "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
@@ -391,7 +431,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f63407cb",
     "quality_score": 0.6939177114686041,
     "quality": "partial",
-    "pkg_num": 34
+    "pkg_num": 32
   },
   {
     "filename": "strange_loops_self_reference_and_gdels_incompleten.json",
@@ -401,7 +441,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a2f51013",
     "quality_score": 0.7400781690140845,
     "quality": "substantial",
-    "pkg_num": 33
+    "pkg_num": 31
   },
   {
     "filename": "isogeny_based_cryptography_csi_fish.json",
@@ -411,7 +451,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "39d27153",
     "quality_score": 0.7184463811268895,
     "quality": "substantial",
-    "pkg_num": 32
+    "pkg_num": 30
   },
   {
     "filename": "one_way_functions_existence_and_hierarchy.json",
@@ -421,7 +461,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "26b0673b",
     "quality_score": 0.7347950000000001,
     "quality": "substantial",
-    "pkg_num": 31
+    "pkg_num": 29
   },
   {
     "filename": "learning_with_errors_hardness_reductions.json",
@@ -431,7 +471,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ec4068d3",
     "quality_score": 0.6829911764705883,
     "quality": "partial",
-    "pkg_num": 30
+    "pkg_num": 28
   },
   {
     "filename": "consciousness_as_emergent_fixed_point.json",
@@ -441,7 +481,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d3f7a259",
     "quality_score": null,
     "quality": "unrated",
-    "pkg_num": 29
+    "pkg_num": 27
   },
   {
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
@@ -451,7 +491,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7ee1e9b0",
     "quality_score": 0.7053548000000001,
     "quality": "substantial",
-    "pkg_num": 28
+    "pkg_num": 26
   },
   {
     "filename": "this_research_cycle_established_a_rigorous_framewo.json",
@@ -461,7 +501,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "de323f00",
     "quality_score": 0.7352763636363637,
     "quality": "substantial",
-    "pkg_num": 27
+    "pkg_num": 25
   },
   {
     "filename": "isomorphisms_of_meaning_when_structures_collide.json",
@@ -471,7 +511,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "1debcf92",
     "quality_score": 0.7206367500000002,
     "quality": "substantial",
-    "pkg_num": 26
+    "pkg_num": 24
   },
   {
     "filename": "surreal_topology_open_sets_at_infinity.json",
@@ -481,7 +521,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e7dbad62",
     "quality_score": 0.6766884516129033,
     "quality": "partial",
-    "pkg_num": 25
+    "pkg_num": 23
   },
   {
     "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
@@ -491,7 +531,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "10ec7af4",
     "quality_score": 0.7302532967032966,
     "quality": "substantial",
-    "pkg_num": 24
+    "pkg_num": 22
   },
   {
     "filename": "tropical_fermats_last_theorem.json",
@@ -501,7 +541,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c27d447a",
     "quality_score": 0.6683460000000001,
     "quality": "partial",
-    "pkg_num": 23
+    "pkg_num": 21
   },
   {
     "filename": "transfinite_game_theory_games_that_last_forever.json",
@@ -511,7 +551,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "09ad0b7d",
     "quality_score": 0.7225286206896553,
     "quality": "substantial",
-    "pkg_num": 22
+    "pkg_num": 20
   },
   {
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
@@ -521,7 +561,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a82cace",
     "quality_score": 0.735339756097561,
     "quality": "substantial",
-    "pkg_num": 21
+    "pkg_num": 19
   },
   {
     "filename": "sierpiski_numbers_covering_systems.json",
@@ -531,17 +571,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7c29780f",
     "quality_score": 0.7134367272727273,
     "quality": "substantial",
-    "pkg_num": 20
-  },
-  {
-    "filename": "p_adic_langlands_for_glq_p.json",
-    "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
-    "domain": "Bridges",
-    "date": "2026-05-31T22:43:23Z",
-    "exp_id": "f95fe11c",
-    "quality_score": 0.7597249152542372,
-    "quality": "substantial",
-    "pkg_num": 19
+    "pkg_num": 18
   },
   {
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
@@ -551,7 +581,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "94584937",
     "quality_score": 0.7406316585365854,
     "quality": "substantial",
-    "pkg_num": 18
+    "pkg_num": 17
   },
   {
     "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
@@ -561,7 +591,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e471f5e9",
     "quality_score": 0.7488625,
     "quality": "substantial",
-    "pkg_num": 17
+    "pkg_num": 16
   },
   {
     "filename": "topological_quantum_computing_braiding_universalit.json",
@@ -570,16 +600,6 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-31T21:56:48Z",
     "exp_id": "831f1fd8",
     "quality_score": 0.7978566666666667,
-    "quality": "substantial",
-    "pkg_num": 16
-  },
-  {
-    "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
-    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-    "domain": "Bridges",
-    "date": "2026-05-31T21:56:19Z",
-    "exp_id": "58d4594d",
-    "quality_score": 0.744326,
     "quality": "substantial",
     "pkg_num": 15
   },
@@ -776,7 +796,7 @@ window.PACKAGE_DB_INDEX = {
   },
   "arithmetic_mirror_symmetry_for_calabi_yau.json": {
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-    "exp_id": "58d4594d",
+    "exp_id": "e657f9e8",
     "source_exp_ids": [
       "seed"
     ],
@@ -823,12 +843,12 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Cryptography"
   },
   "social_credit_scores_as_topological_invariants.json": {
-    "title": "Social Credit Scores as Topological Invariants: Fixed-Point Attractors, Phase Transitions, and Fractal Stratification",
-    "exp_id": "0281bd3d",
+    "title": "Social Credit Scores as Topological Invariants",
+    "exp_id": "faa42070",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "MachineLearning"
+    "domain": "Bridges"
   },
   "this_research_cycle_formalized_the_algebraic_skele.json": {
     "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion",
@@ -1030,6 +1050,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Number Theory / Algebra"
   },
+  "retrocausal_mathematics_where_effects_precede_caus.json": {
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes",
+    "exp_id": "e6851233",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Bridges"
+  },
   "reconstruction_conjecture.json": {
     "title": "Formal Foundations of Graph Reconstruction Theory",
     "exp_id": "77bc31c0",
@@ -1214,6 +1242,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "newton_hodge_polygon_framework_for_the_p_adic_lang.json": {
+    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
+    "exp_id": "24a63e9e",
+    "source_exp_ids": [
+      "f95fe11c"
+    ],
+    "domain": "Bridges"
+  },
   "non_desarguesian_worlds_geometry_without_desargues.json": {
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues",
     "exp_id": "6f1b7d62",
@@ -1295,8 +1331,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges"
   },
   "p_adic_langlands_for_glq_p.json": {
-    "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
-    "exp_id": "f95fe11c",
+    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
+    "exp_id": "f75c509b",
     "source_exp_ids": [
       "seed"
     ],
@@ -1315,7 +1351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -1326,7 +1362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -1337,7 +1373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -1348,7 +1384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -1359,7 +1395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -1370,7 +1406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 95,
+      "hue": 92,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -1381,7 +1417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -1392,7 +1428,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -1403,7 +1439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -1414,7 +1450,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -1425,7 +1461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -1436,7 +1472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1447,7 +1483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -1458,19 +1494,8 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 270,
-      "priority_score": 0.7212349056603773,
-      "quality": "substantial"
-    },
-    {
-      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
-      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T21:56:19Z",
       "hue": 90,
-      "priority_score": 0.744326,
+      "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
     {
@@ -1480,7 +1505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -1491,7 +1516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1502,19 +1527,8 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7406316585365854,
-      "quality": "substantial"
-    },
-    {
-      "id": "p_adic_langlands_for_glq_p",
-      "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T22:43:23Z",
-      "hue": 270,
-      "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
     {
@@ -1524,7 +1538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1535,7 +1549,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -1546,7 +1560,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -1557,7 +1571,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1568,7 +1582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -1579,7 +1593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -1590,7 +1604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1601,7 +1615,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1612,7 +1626,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:51:11Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7053548000000001,
       "quality": "substantial"
     },
@@ -1623,7 +1637,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1645,7 +1659,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7347950000000001,
       "quality": "substantial"
     },
@@ -1667,7 +1681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -1678,7 +1692,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1689,7 +1703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -1700,7 +1714,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -1711,7 +1725,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -1733,7 +1747,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7722411111111112,
       "quality": "substantial"
     },
@@ -1755,7 +1769,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -1766,7 +1780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 134,
+      "hue": 270,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
     },
@@ -1777,7 +1791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:09Z",
-      "hue": 134,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1788,7 +1802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:40Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1799,7 +1813,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1821,7 +1835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T03:49:46Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1843,7 +1857,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T04:22:48Z",
-      "hue": 92,
+      "hue": 275,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1854,7 +1868,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T04:23:08Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1865,7 +1879,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T04:56:46Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1876,7 +1890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T04:57:07Z",
-      "hue": 101,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1887,7 +1901,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T05:29:08Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1898,18 +1912,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T05:29:27Z",
-      "hue": 90,
-      "priority_score": 0.6,
-      "quality": "partial"
-    },
-    {
-      "id": "social_credit_scores_as_topological_invariants",
-      "title": "Social Credit Scores as Topological Invariants: Fixed-Point Attractors, Phase Transitions, and Fractal Stratification",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-06-01T05:29:45Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1920,7 +1923,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T06:07:06Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1931,7 +1934,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T06:07:32Z",
-      "hue": 271,
+      "hue": 89,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1942,7 +1945,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T06:07:49Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1953,7 +1956,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-01T06:41:41Z",
-      "hue": 314,
+      "hue": 100,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1964,7 +1967,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T06:42:03Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1975,7 +1978,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-06-01T07:14:32Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1986,7 +1989,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:14:52Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1997,7 +2000,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:13Z",
-      "hue": 271,
+      "hue": 281,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2008,7 +2011,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:35Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2019,7 +2022,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:56Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.5239020000000001,
       "quality": "partial"
     },
@@ -2030,7 +2033,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:16:17Z",
-      "hue": 91,
+      "hue": 101,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2041,7 +2044,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:49:59Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2052,7 +2055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:20Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2063,7 +2066,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:40Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2074,7 +2077,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:05Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2085,7 +2088,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:30Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -2096,7 +2099,62 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:51Z",
-      "hue": 271,
+      "hue": 90,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "p_adic_langlands_for_glq_p",
+      "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T08:56:37Z",
+      "hue": 270,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "newton_hodge_polygon_framework_for_the_p_adic_lang",
+      "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T08:57:00Z",
+      "hue": 91,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "retrocausal_mathematics_where_effects_precede_caus",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T08:57:28Z",
+      "hue": 90,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T08:57:50Z",
+      "hue": 91,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "social_credit_scores_as_topological_invariants",
+      "title": "Social Credit Scores as Topological Invariants",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T08:58:10Z",
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     }
@@ -2121,6 +2179,13 @@ window.PACKAGE_GRAPH = {
       "target": "formal_algebraic_foundations_of_isogeny_base",
       "strength": 1.0,
       "label": "Direction 1: Expander Graph Properties of Isogeny Cayley Gra",
+      "type": "provenance"
+    },
+    {
+      "source": "p_adic_langlands_for_glq_p",
+      "target": "newton_hodge_polygon_framework_for_the_p_adic_lang",
+      "strength": 1.0,
+      "label": "Direction 1: Tropical Newton Polygons and the p-adic Corresp",
       "type": "provenance"
     },
     {

@@ -1,0 +1,1 @@
+algorithms.py::detect_bifurcations

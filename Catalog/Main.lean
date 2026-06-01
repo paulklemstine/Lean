@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2272 of the highest-quality
+A curated collection of 2276 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2272
+Total files: 2276
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -312,6 +312,7 @@ import FINAL.Bridges.AlgorithmicTropicalKernel
 import FINAL.Bridges.AlmostSimplePressure
 import FINAL.Bridges.AlternatingPermutationSecurity
 import FINAL.Bridges.AntiCancellationLorentzian
+import FINAL.Bridges.ArithmeticMirrorSymmetry
 import FINAL.Bridges.ArithmeticOperadicStability
 import FINAL.Bridges.ArithmeticPersistence
 import FINAL.Bridges.ArithmeticProfileAnalysis
@@ -610,6 +611,7 @@ import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralPDEUniversality
 import FINAL.Bridges.NeuralProofMining
 import FINAL.Bridges.NewtonGirardGeneral
+import FINAL.Bridges.NewtonHodgePolygon
 import FINAL.Bridges.NewtonInteractingFermions
 import FINAL.Bridges.NoetherianFeatureConvergence
 import FINAL.Bridges.NonArchimedeanComputation
@@ -632,6 +634,7 @@ import FINAL.Bridges.OrdinalPRS
 import FINAL.Bridges.OverlapClassInvariants
 import FINAL.Bridges.OverlapClassRigidity
 import FINAL.Bridges.OverlapSpectrumTheory
+import FINAL.Bridges.PadicLanglandsGL2
 import FINAL.Bridges.PadicOperadicNetworks
 import FINAL.Bridges.PadicQuantumInformation
 import FINAL.Bridges.Pareto
@@ -699,6 +702,7 @@ import FINAL.Bridges.Representation
 import FINAL.Bridges.Representer
 import FINAL.Bridges.ResNetTropicalCertified
 import FINAL.Bridges.ResidualRobustness
+import FINAL.Bridges.RetrocausalLogic
 import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
 import FINAL.Bridges.Rigidity
