@@ -221,27 +221,44 @@ def rebuild_commit_push() -> bool:
         return bool(result.stdout.strip())
 
     def _regenerate_index_if_needed():
-        """Regenerate package_index.js and rsync to docs if conflict markers found."""
+        """Regenerate package_index.js and rsync to docs if conflict markers found
+        in any auto-generated website file."""
         pkg_idx = PACKAGES_DIR / "package_index.js"
-        if pkg_idx.exists():
-            content = pkg_idx.read_text(errors="ignore")
-            if "<<<<<<" in content or ">>>>>>" in content:
-                print("[Tick] Conflict markers found in package_index.js, regenerating...")
-                r = subprocess.run(
-                    [sys.executable, "update_index.py"],
-                    cwd=str(PACKAGES_DIR),
-                    capture_output=True, text=True, timeout=60
+        fd_js = PACKAGES_DIR / "future_directions.js"
+        fd_json = PACKAGES_DIR / "future_directions.json"
+        found_conflict = False
+        for path in [pkg_idx, fd_js, fd_json]:
+            if path.exists():
+                content = path.read_text(errors="ignore")
+                if "<<<<<<" in content or ">>>>>>" in content:
+                    print(f"[Tick] Conflict markers found in {path.name}, regenerating...")
+                    found_conflict = True
+        if found_conflict:
+            r = subprocess.run(
+                [sys.executable, "update_index.py"],
+                cwd=str(PACKAGES_DIR),
+                capture_output=True, text=True, timeout=60
+            )
+            if r.returncode == 0:
+                # Re-rsync the fixed files to docs
+                subprocess.run(
+                    ["rsync", "-a", str(PACKAGES_DIR) + "/package_index.js",
+                     str(docs_dir) + "/package_index.js"],
+                    capture_output=True, timeout=30
                 )
-                if r.returncode == 0:
-                    # Re-rsync the fixed file to docs
-                    subprocess.run(
-                        ["rsync", "-a", str(PACKAGES_DIR) + "/package_index.js",
-                         str(docs_dir) + "/package_index.js"],
-                        capture_output=True, timeout=30
-                    )
-                    print("[Tick] package_index.js regenerated after conflict")
-                else:
-                    print(f"[Tick] Regeneration failed: {r.stderr}")
+                subprocess.run(
+                    ["rsync", "-a", str(PACKAGES_DIR) + "/future_directions.js",
+                     str(docs_dir) + "/future_directions.js"],
+                    capture_output=True, timeout=30
+                )
+                subprocess.run(
+                    ["rsync", "-a", str(PACKAGES_DIR) + "/future_directions.json",
+                     str(docs_dir) + "/future_directions.json"],
+                    capture_output=True, timeout=30
+                )
+                print("[Tick] Auto-generated files regenerated after conflict")
+            else:
+                print(f"[Tick] Regeneration failed: {r.stderr}")
 
     # Git add only changed files (not -A which scans everything)
     try:
@@ -277,10 +294,15 @@ def rebuild_commit_push() -> bool:
             if _has_conflict_markers():
                 # Resolve package_index.js conflicts by regenerating it
                 _regenerate_index_if_needed()
-                # Stage the resolved file and continue rebase
+                # Stage the resolved files and continue rebase
                 subprocess.run(
-                    ["git", "add", "Catalog/Applications/Packages/package_index.js",
-                     "docs/package_index.js"],
+                    ["git", "add",
+                     "Catalog/Applications/Packages/package_index.js",
+                     "docs/package_index.js",
+                     "Catalog/Applications/Packages/future_directions.js",
+                     "docs/future_directions.js",
+                     "Catalog/Applications/Packages/future_directions.json",
+                     "docs/future_directions.json"],
                     cwd=str(REPO_ROOT), capture_output=True, timeout=30
                 )
                 rebase_continue = subprocess.run(

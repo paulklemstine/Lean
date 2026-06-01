@@ -4,3538 +4,3538 @@
 
 window.PACKAGE_INDEX = [
   {
-    "filename": "hilberts_hotel_for_primes_an_infinite_hotel_where_.json",
-    "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations",
-    "domain": "Speculative",
     "date": "2026-06-01T18:21:48Z",
+    "domain": "Speculative",
     "exp_id": "77da1fcc",
+    "filename": "hilberts_hotel_for_primes_an_infinite_hotel_where_.json",
+    "pkg_num": 115,
+    "quality": "partial",
     "quality_score": 0.62158775,
-    "quality": "partial",
-    "pkg_num": 115
+    "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations"
   },
   {
-    "filename": "formal_bridge_between_the_probabilistic_method.json",
-    "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs",
-    "domain": "Speculative",
     "date": "2026-06-01T18:21:27Z",
+    "domain": "Speculative",
     "exp_id": "a6ad1c91",
+    "filename": "formal_bridge_between_the_probabilistic_method.json",
+    "pkg_num": 114,
+    "quality": "substantial",
     "quality_score": 0.719284,
-    "quality": "substantial",
-    "pkg_num": 114
+    "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs"
   },
   {
-    "filename": "formal_theory_connecting_classical_impossibili.json",
-    "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions",
-    "domain": "Speculative",
     "date": "2026-06-01T18:21:11Z",
+    "domain": "Speculative",
     "exp_id": "18e34d1c",
+    "filename": "formal_theory_connecting_classical_impossibili.json",
+    "pkg_num": 113,
+    "quality": "partial",
     "quality_score": 0.6224610609756096,
-    "quality": "partial",
-    "pkg_num": 113
+    "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions"
   },
   {
-    "filename": "three_interconnected_results_about_quadratic_pol.json",
-    "title": "Discriminant Uniformity and Splitting Type Distribution",
-    "domain": "Speculative",
     "date": "2026-06-01T18:20:47Z",
+    "domain": "Speculative",
     "exp_id": "21f2c1db",
+    "filename": "three_interconnected_results_about_quadratic_pol.json",
+    "pkg_num": 112,
+    "quality": "partial",
     "quality_score": 0.65157,
-    "quality": "partial",
-    "pkg_num": 112
+    "title": "Discriminant Uniformity and Splitting Type Distribution"
   },
   {
-    "filename": "formal_foundation_for_orbit_shadowing_in_dynam.json",
-    "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems",
-    "domain": "Dynamical Systems / Certified Computation",
     "date": "2026-06-01T18:20:25Z",
+    "domain": "Dynamical Systems / Certified Computation",
     "exp_id": "f037c01f",
+    "filename": "formal_foundation_for_orbit_shadowing_in_dynam.json",
+    "pkg_num": 111,
+    "quality": "partial",
     "quality_score": 0.665185,
-    "quality": "partial",
-    "pkg_num": 111
+    "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems"
   },
   {
-    "filename": "the_p_vs_np_of_sudoku_phase_transitions_in_constra.json",
-    "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity",
-    "domain": "Speculative",
     "date": "2026-06-01T17:46:57Z",
-    "exp_id": "c4d79127",
-    "quality_score": 0.690598275862069,
-    "quality": "partial",
-    "pkg_num": 110
-  },
-  {
-    "filename": "self_improving_proofs_proofs_that_get_simpler_over.json",
-    "title": "Proof Refinement Systems: Self-Improving Proofs",
-    "domain": "Logic / Proof Theory / Mathematical Foundations",
-    "date": "2026-06-01T17:46:21Z",
-    "exp_id": "8a2abb60",
-    "quality_score": 0.7190507194244604,
-    "quality": "substantial",
-    "pkg_num": 109
-  },
-  {
-    "filename": "chaos_as_a_computable_shadow_the_shadowing_lemma_f.json",
-    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs",
-    "domain": "Physics",
-    "date": "2026-06-01T17:10:56Z",
-    "exp_id": "26193fdd",
-    "quality_score": 0.65706875,
-    "quality": "partial",
-    "pkg_num": 108
-  },
-  {
-    "filename": "the_monster_groups_secret_message_moonshine_beyond.json",
-    "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series",
-    "domain": "Physics",
-    "date": "2026-06-01T17:10:33Z",
-    "exp_id": "5c653e4c",
-    "quality_score": 0.7188521428571428,
-    "quality": "substantial",
-    "pkg_num": 107
-  },
-  {
-    "filename": "impossibility_results_for_fun_things_that_cannot_b.json",
-    "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis",
-    "domain": "Computation",
-    "date": "2026-06-01T17:10:16Z",
-    "exp_id": "adade94b",
-    "quality_score": 0.6563341818181818,
-    "quality": "partial",
-    "pkg_num": 106
-  },
-  {
-    "filename": "tropical_cryptocurrency_mining_on_the_min_plus_sem.json",
-    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring",
-    "domain": "Physics",
-    "date": "2026-06-01T17:09:56Z",
-    "exp_id": "031ed73c",
-    "quality_score": 0.6755283783783783,
-    "quality": "partial",
-    "pkg_num": 105
-  },
-  {
-    "filename": "complete_formal_chain_connecting_ssa_program_s.json",
-    "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation",
-    "domain": "Computation",
-    "date": "2026-06-01T17:09:26Z",
-    "exp_id": "69828345",
-    "quality_score": 0.6951788461538462,
-    "quality": "partial",
-    "pkg_num": 104
-  },
-  {
-    "filename": "formalizing_the_probabilistic_method_erdos_meets_l.json",
-    "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs",
-    "domain": "Tropical",
-    "date": "2026-06-01T16:35:52Z",
-    "exp_id": "7d04715f",
-    "quality_score": 0.70234,
-    "quality": "substantial",
-    "pkg_num": 103
-  },
-  {
-    "filename": "mathematical_foundations_for_analyzing_mind.json",
-    "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding",
-    "domain": "Algebra",
-    "date": "2026-06-01T16:02:03Z",
-    "exp_id": "48fcc0d8",
-    "quality_score": 0.7091858260869566,
-    "quality": "substantial",
-    "pkg_num": 102
-  },
-  {
-    "filename": "the_topology_of_knotted_light_how_laser_beams_get_.json",
-    "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra",
-    "domain": "Bridges",
-    "date": "2026-06-01T16:01:42Z",
-    "exp_id": "9096062f",
-    "quality_score": 0.7509785714285714,
-    "quality": "substantial",
-    "pkg_num": 101
-  },
-  {
-    "filename": "computational_complexity_of_alien_civilizations.json",
-    "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory",
-    "domain": "Algebra",
-    "date": "2026-06-01T15:28:01Z",
-    "exp_id": "78286831",
-    "quality_score": 0.7274067741935484,
-    "quality": "substantial",
-    "pkg_num": 100
-  },
-  {
-    "filename": "homotopy_type_theory_of_cooking_recipes_paths_betw.json",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes",
-    "domain": "Algebra",
-    "date": "2026-06-01T15:27:42Z",
-    "exp_id": "e174af4c",
-    "quality_score": 0.7089549723756907,
-    "quality": "substantial",
-    "pkg_num": 99
-  },
-  {
-    "filename": "digital_immortality_can_a_mind_be_encoded.json",
-    "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading",
-    "domain": "MachineLearning",
-    "date": "2026-06-01T14:52:52Z",
-    "exp_id": "7cd2b5be",
-    "quality_score": 0.7107561643835616,
-    "quality": "substantial",
-    "pkg_num": 98
-  },
-  {
-    "filename": "tropical_valuation_functor_as_an_order_preserving_.json",
-    "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity",
-    "domain": "Bridges",
-    "date": "2026-06-01T14:52:31Z",
-    "exp_id": "5392c445",
-    "quality_score": 0.9244453488372093,
-    "quality": "substantial",
-    "pkg_num": 97
-  },
-  {
-    "filename": "reflective_type_theory_refltt_as_a_formal_fram.json",
-    "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic",
-    "domain": "MachineLearning",
-    "date": "2026-06-01T14:52:09Z",
-    "exp_id": "892c306f",
-    "quality_score": 0.736756049822064,
-    "quality": "substantial",
-    "pkg_num": 96
-  },
-  {
-    "filename": "discriminant_uniformity_theorem_for_quad.json",
-    "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields",
-    "domain": "Algebra",
-    "date": "2026-06-01T14:51:50Z",
-    "exp_id": "b12db4e8",
-    "quality_score": 0.7250465517241378,
-    "quality": "substantial",
-    "pkg_num": 95
-  },
-  {
-    "filename": "the_combinatorics_of_compiler_optimization_registe.json",
-    "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality",
-    "domain": "Shared",
-    "date": "2026-06-01T14:51:29Z",
-    "exp_id": "7894af63",
-    "quality_score": 0.6504003865979382,
-    "quality": "partial",
-    "pkg_num": 94
-  },
-  {
-    "filename": "erds_faber_lovsz_conjecture.json",
-    "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization",
-    "domain": "EML",
-    "date": "2026-06-01T14:51:08Z",
-    "exp_id": "035c8fa4",
-    "quality_score": 0.6484295302013423,
-    "quality": "partial",
-    "pkg_num": 93
-  },
-  {
-    "filename": "curvature_induced_computation_when_geodesic_flow_s.json",
-    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
-    "domain": "Pythagorean",
-    "date": "2026-06-01T14:17:42Z",
-    "exp_id": "7298cf4c",
-    "quality_score": 0.7262368372093022,
-    "quality": "substantial",
-    "pkg_num": 92
-  },
-  {
-    "filename": "self_avoiding_walk_connective_constant.json",
-    "title": "Self-Avoiding Walk: Connective Constant",
-    "domain": "EML",
-    "date": "2026-06-01T14:17:20Z",
-    "exp_id": "25b26084",
-    "quality_score": 0.5409767590618337,
-    "quality": "partial",
-    "pkg_num": 91
-  },
-  {
-    "filename": "stochastic_galois_theory_random_permutations_have_.json",
-    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
-    "domain": "Geometry",
-    "date": "2026-06-01T13:41:53Z",
-    "exp_id": "a1511534",
-    "quality_score": 0.6453740000000001,
-    "quality": "partial",
-    "pkg_num": 90
-  },
-  {
-    "filename": "reflective_type_theory_proving_things_about_provin.json",
-    "title": "Reflective Type Theory: Proving Things About Proving Things",
-    "domain": "Cryptography",
-    "date": "2026-06-01T13:41:16Z",
-    "exp_id": "bc59d5da",
-    "quality_score": 0.7124953271028038,
-    "quality": "substantial",
-    "pkg_num": 89
-  },
-  {
-    "filename": "yamabe_problem_non_compact_case.json",
-    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
-    "domain": "Differential Geometry / Geometric Analysis",
-    "date": "2026-06-01T13:40:42Z",
-    "exp_id": "e750bf27",
-    "quality_score": 0.49938318181818186,
-    "quality": "partial",
-    "pkg_num": 88
-  },
-  {
-    "filename": "complete_newton_hodge_polygon_framework_for_2_dime.json",
-    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
-    "domain": "Logic",
-    "date": "2026-06-01T13:40:06Z",
-    "exp_id": "5082b772",
-    "quality_score": 0.6923000000000001,
-    "quality": "partial",
-    "pkg_num": 87
-  },
-  {
-    "filename": "scaling_laws_from_statistical_mechanics.json",
-    "title": "Neural Scaling Laws from Statistical Mechanics",
     "domain": "Speculative",
-    "date": "2026-06-01T12:46:23Z",
-    "exp_id": "1d4fa7b3",
-    "quality_score": 0.7481675000000001,
-    "quality": "substantial",
-    "pkg_num": 86
+    "exp_id": "c4d79127",
+    "filename": "the_p_vs_np_of_sudoku_phase_transitions_in_constra.json",
+    "pkg_num": 110,
+    "quality": "partial",
+    "quality_score": 0.690598275862069,
+    "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity"
   },
   {
-    "filename": "formal_bridge_between_homotopy_type_theory_hott_an.json",
-    "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics",
-    "domain": "Logic",
-    "date": "2026-06-01T12:31:39Z",
-    "exp_id": "81ce5201",
-    "quality_score": 0.7038752500000001,
+    "date": "2026-06-01T17:46:21Z",
+    "domain": "Logic / Proof Theory / Mathematical Foundations",
+    "exp_id": "8a2abb60",
+    "filename": "self_improving_proofs_proofs_that_get_simpler_over.json",
+    "pkg_num": 109,
     "quality": "substantial",
-    "pkg_num": 85
+    "quality_score": 0.7190507194244604,
+    "title": "Proof Refinement Systems: Self-Improving Proofs"
   },
   {
-    "filename": "isogeny_based_cryptography_csi_fish.json",
-    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
-    "domain": "Cryptography",
-    "date": "2026-06-01T12:11:20Z",
-    "exp_id": "813b355c",
-    "quality_score": 0.7393699999999999,
-    "quality": "substantial",
-    "pkg_num": 84
-  },
-  {
-    "filename": "poincar_conjecture_revisited_4d_smooth.json",
-    "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena",
+    "date": "2026-06-01T17:10:56Z",
     "domain": "Physics",
-    "date": "2026-06-01T12:11:00Z",
-    "exp_id": "ca199fc5",
-    "quality_score": 0.8202090769230769,
-    "quality": "substantial",
-    "pkg_num": 83
-  },
-  {
-    "filename": "algebraic_skeleton_of_grothendiecks_standard_conje.json",
-    "title": "Algebraic Skeleton of Grothendieck Standard Conjectures",
-    "domain": "Geometry",
-    "date": "2026-06-01T12:10:41Z",
-    "exp_id": "25f4209c",
-    "quality_score": 0.7286993506493507,
-    "quality": "substantial",
-    "pkg_num": 82
-  },
-  {
-    "filename": "borges_library_of_babel_combinatorics_of_everythin.json",
-    "title": "The Library of Babel: Combinatorial Topology of Everything",
-    "domain": "Geometry",
-    "date": "2026-06-01T11:36:49Z",
-    "exp_id": "68aedb1e",
-    "quality_score": 0.6561989411764706,
+    "exp_id": "26193fdd",
+    "filename": "chaos_as_a_computable_shadow_the_shadowing_lemma_f.json",
+    "pkg_num": 108,
     "quality": "partial",
-    "pkg_num": 81
+    "quality_score": 0.65706875,
+    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
-    "filename": "homotopy_type_theory_as_foundations.json",
-    "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces",
-    "domain": "Shared",
-    "date": "2026-06-01T11:36:24Z",
-    "exp_id": "ee1ee0cb",
-    "quality_score": 0.7138660278745645,
-    "quality": "substantial",
-    "pkg_num": 80
-  },
-  {
-    "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues",
-    "domain": "Algebra",
-    "date": "2026-06-01T11:36:05Z",
-    "exp_id": "f67feb4b",
-    "quality_score": 0.7161103693181818,
-    "quality": "substantial",
-    "pkg_num": 79
-  },
-  {
-    "filename": "anti_mathematics_what_if_all_axioms_were_negated.json",
-    "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms",
-    "domain": "Algebra",
-    "date": "2026-06-01T11:35:43Z",
-    "exp_id": "d8059b0e",
-    "quality_score": 0.6856036842105264,
-    "quality": "partial",
-    "pkg_num": 78
-  },
-  {
-    "filename": "complete_formal_framework_for_the_security_of_csid.json",
-    "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains",
-    "domain": "Shared",
-    "date": "2026-06-01T11:35:17Z",
-    "exp_id": "f24c929d",
-    "quality_score": 0.7080684615384616,
-    "quality": "substantial",
-    "pkg_num": 77
-  },
-  {
-    "filename": "complete_formalized_algebraic_theory_of_quasif.json",
-    "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes",
-    "domain": "Pythagorean",
-    "date": "2026-06-01T11:02:30Z",
-    "exp_id": "dc49b350",
-    "quality_score": 0.6699192338709679,
-    "quality": "partial",
-    "pkg_num": 76
-  },
-  {
-    "filename": "topological_quantum_computing_braiding_universalit.json",
-    "title": "Braiding Universality for Topological Quantum Computing",
+    "date": "2026-06-01T17:10:33Z",
     "domain": "Physics",
-    "date": "2026-06-01T11:02:09Z",
-    "exp_id": "e818d35f",
-    "quality_score": 0.6633071428571429,
+    "exp_id": "5c653e4c",
+    "filename": "the_monster_groups_secret_message_moonshine_beyond.json",
+    "pkg_num": 107,
+    "quality": "substantial",
+    "quality_score": 0.7188521428571428,
+    "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series"
+  },
+  {
+    "date": "2026-06-01T17:10:16Z",
+    "domain": "Computation",
+    "exp_id": "adade94b",
+    "filename": "impossibility_results_for_fun_things_that_cannot_b.json",
+    "pkg_num": 106,
     "quality": "partial",
-    "pkg_num": 75
+    "quality_score": 0.6563341818181818,
+    "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis"
   },
   {
-    "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?",
-    "domain": "Logic/Computability/Incompleteness",
-    "date": "2026-06-01T10:29:03Z",
-    "exp_id": "b16ddfc2",
-    "quality_score": 0.7388586956521739,
-    "quality": "substantial",
-    "pkg_num": 74
-  },
-  {
-    "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?",
-    "domain": "MachineLearning",
-    "date": "2026-06-01T10:28:42Z",
-    "exp_id": "da4c7c61",
-    "quality_score": 0.7100115384615384,
-    "quality": "substantial",
-    "pkg_num": 73
-  },
-  {
-    "filename": "flatland_catastrophe_when_2d_physics_breaks.json",
-    "title": "Flatland Catastrophe: When 2D Physics Breaks",
-    "domain": "Computation",
-    "date": "2026-06-01T10:28:23Z",
-    "exp_id": "337baefa",
-    "quality_score": 0.7192423076923078,
-    "quality": "substantial",
-    "pkg_num": 72
-  },
-  {
-    "filename": "sensitivity_conjecture_extensions.json",
-    "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds",
-    "domain": "Computation",
-    "date": "2026-06-01T10:28:02Z",
-    "exp_id": "9db20339",
-    "quality_score": 0.72689,
-    "quality": "substantial",
-    "pkg_num": 71
-  },
-  {
-    "filename": "foundational_infrastructure_for_studying_oracle_hi.json",
-    "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points",
-    "domain": "Computation",
-    "date": "2026-06-01T09:54:24Z",
-    "exp_id": "d08a3f0d",
-    "quality_score": 0.73590125,
-    "quality": "substantial",
-    "pkg_num": 70
-  },
-  {
-    "filename": "algebraic_and_combinatorial_foundations_for_random.json",
-    "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality",
-    "domain": "Computation",
-    "date": "2026-06-01T09:54:04Z",
-    "exp_id": "f977bb97",
-    "quality_score": 0.7237490526315788,
-    "quality": "substantial",
-    "pkg_num": 69
-  },
-  {
-    "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
-    "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics",
-    "domain": "Computation",
-    "date": "2026-06-01T09:53:45Z",
-    "exp_id": "2fd1181d",
-    "quality_score": 0.7068626477541371,
-    "quality": "substantial",
-    "pkg_num": 68
-  },
-  {
-    "filename": "unique_games_conjecture.json",
-    "title": "Unique Games Conjecture: Mathematical Foundations",
-    "domain": "Computation",
-    "date": "2026-06-01T09:53:23Z",
-    "exp_id": "9ab1ce15",
-    "quality_score": 0.7354624999999999,
-    "quality": "substantial",
-    "pkg_num": 67
-  },
-  {
-    "filename": "infinite_games_against_death_immortality_strategie.json",
-    "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games",
-    "domain": "Computation",
-    "date": "2026-06-01T09:20:36Z",
-    "exp_id": "4e3c94e5",
-    "quality_score": 0.6771499999999999,
+    "date": "2026-06-01T17:09:56Z",
+    "domain": "Physics",
+    "exp_id": "031ed73c",
+    "filename": "tropical_cryptocurrency_mining_on_the_min_plus_sem.json",
+    "pkg_num": 105,
     "quality": "partial",
-    "pkg_num": 66
+    "quality_score": 0.6755283783783783,
+    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "filename": "social_credit_scores_as_topological_invariants.json",
-    "title": "Social Credit Scores as Topological Invariants",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:58:10Z",
-    "exp_id": "faa42070",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 65
-  },
-  {
-    "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
-    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:57:50Z",
-    "exp_id": "e657f9e8",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 64
-  },
-  {
-    "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:57:28Z",
-    "exp_id": "e6851233",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 63
-  },
-  {
-    "filename": "newton_hodge_polygon_framework_for_the_p_adic_lang.json",
-    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:57:00Z",
-    "exp_id": "24a63e9e",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 62
-  },
-  {
-    "filename": "p_adic_langlands_for_glq_p.json",
-    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:56:37Z",
-    "exp_id": "f75c509b",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 61
-  },
-  {
-    "filename": "surveillance_networks_information_theoretic_undete.json",
-    "title": "Surveillance Networks: Information-Theoretic Undetectability",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:23:51Z",
-    "exp_id": "8f43e9e1",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 60
-  },
-  {
-    "filename": "complete_algebraic_theory_of_the_hecke_eigenvalue_.json",
-    "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:23:30Z",
-    "exp_id": "72c3a7a8",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 59
-  },
-  {
-    "filename": "langlands_for_gl_over_q.json",
-    "title": "Langlands Correspondence for GL\u2082 over \u211a",
-    "domain": "Bridges",
-    "date": "2026-06-01T08:23:05Z",
-    "exp_id": "f2c79f3b",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 58
-  },
-  {
-    "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
-    "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:50:40Z",
-    "exp_id": "72018c51",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 57
-  },
-  {
-    "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
-    "title": "Categorical Physics: The Shape of a Theory of Everything",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:50:20Z",
-    "exp_id": "4f5a41e1",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 56
-  },
-  {
-    "filename": "complete_formal_framework_for_cellular_automat.json",
-    "title": "Transfinite Cellular Automata Depth Theory",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:49:59Z",
-    "exp_id": "ea8fbe44",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 55
-  },
-  {
-    "filename": "quantum_proofs_of_classical_theorems.json",
-    "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:16:17Z",
-    "exp_id": "c0a3ba3e",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 54
-  },
-  {
-    "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
-    "title": "Memory Algebra: When Forgetting Is a Mathematical Operation",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:15:56Z",
-    "exp_id": "0fa49dec",
-    "quality_score": 0.5239020000000001,
+    "date": "2026-06-01T17:09:26Z",
+    "domain": "Computation",
+    "exp_id": "69828345",
+    "filename": "complete_formal_chain_connecting_ssa_program_s.json",
+    "pkg_num": 104,
     "quality": "partial",
-    "pkg_num": 53
+    "quality_score": 0.6951788461538462,
+    "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation"
   },
   {
-    "filename": "formal_algebraic_foundations_of_isogeny_base.json",
-    "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:15:35Z",
-    "exp_id": "da3578b4",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 52
-  },
-  {
-    "filename": "rigorous_formal_framework_for_the_entropy_powe.json",
-    "title": "Entropy Power Inequality: Formal Framework and Geometric Connections",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:15:13Z",
-    "exp_id": "8a0058f1",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 51
-  },
-  {
-    "filename": "unified_framework_for_understanding_self_refer.json",
-    "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness",
-    "domain": "Algebra",
-    "date": "2026-06-01T07:14:52Z",
-    "exp_id": "15bec107",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 50
-  },
-  {
-    "filename": "artins_conjecture_on_primitive_roots.json",
-    "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory",
-    "domain": "Number Theory / Algebra",
-    "date": "2026-06-01T06:42:03Z",
-    "exp_id": "42ef5052",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 49
-  },
-  {
-    "filename": "tropical_hodge_theory.json",
-    "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes",
+    "date": "2026-06-01T16:35:52Z",
     "domain": "Tropical",
-    "date": "2026-06-01T06:41:41Z",
-    "exp_id": "12735337",
-    "quality_score": 0.7,
+    "exp_id": "7d04715f",
+    "filename": "formalizing_the_probabilistic_method_erdos_meets_l.json",
+    "pkg_num": 103,
     "quality": "substantial",
-    "pkg_num": 48
+    "quality_score": 0.70234,
+    "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs"
   },
   {
-    "filename": "reconstruction_conjecture.json",
-    "title": "Formal Foundations of Graph Reconstruction Theory",
-    "domain": "EML",
-    "date": "2026-06-01T05:29:27Z",
-    "exp_id": "77bc31c0",
-    "quality_score": 0.7,
+    "date": "2026-06-01T16:02:03Z",
+    "domain": "Algebra",
+    "exp_id": "48fcc0d8",
+    "filename": "mathematical_foundations_for_analyzing_mind.json",
+    "pkg_num": 102,
     "quality": "substantial",
-    "pkg_num": 47
+    "quality_score": 0.7091858260869566,
+    "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding"
   },
   {
-    "filename": "fermat_near_misses_in_the_twilight_zone.json",
-    "title": "Fermat Near-Misses in the Twilight Zone",
-    "domain": "EML",
-    "date": "2026-06-01T04:57:07Z",
-    "exp_id": "a5c337ed",
-    "quality_score": 0.7,
+    "date": "2026-06-01T16:01:42Z",
+    "domain": "Bridges",
+    "exp_id": "9096062f",
+    "filename": "the_topology_of_knotted_light_how_laser_beams_get_.json",
+    "pkg_num": 101,
     "quality": "substantial",
-    "pkg_num": 46
+    "quality_score": 0.7509785714285714,
+    "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra"
   },
   {
-    "filename": "hypercomputation_computing_the_uncomputable.json",
-    "title": "Hypercomputation: Computing the Uncomputable",
+    "date": "2026-06-01T15:28:01Z",
+    "domain": "Algebra",
+    "exp_id": "78286831",
+    "filename": "computational_complexity_of_alien_civilizations.json",
+    "pkg_num": 100,
+    "quality": "substantial",
+    "quality_score": 0.7274067741935484,
+    "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory"
+  },
+  {
+    "date": "2026-06-01T15:27:42Z",
+    "domain": "Algebra",
+    "exp_id": "e174af4c",
+    "filename": "homotopy_type_theory_of_cooking_recipes_paths_betw.json",
+    "pkg_num": 99,
+    "quality": "substantial",
+    "quality_score": 0.7089549723756907,
+    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+  },
+  {
+    "date": "2026-06-01T14:52:52Z",
     "domain": "MachineLearning",
-    "date": "2026-06-01T04:56:46Z",
-    "exp_id": "7212b89e",
-    "quality_score": 0.7,
+    "exp_id": "7cd2b5be",
+    "filename": "digital_immortality_can_a_mind_be_encoded.json",
+    "pkg_num": 98,
     "quality": "substantial",
-    "pkg_num": 45
+    "quality_score": 0.7107561643835616,
+    "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading"
   },
   {
-    "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
-    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
-    "domain": "Logic",
-    "date": "2026-06-01T04:23:08Z",
-    "exp_id": "06268486",
-    "quality_score": 0.7,
+    "date": "2026-06-01T14:52:31Z",
+    "domain": "Bridges",
+    "exp_id": "5392c445",
+    "filename": "tropical_valuation_functor_as_an_order_preserving_.json",
+    "pkg_num": 97,
     "quality": "substantial",
-    "pkg_num": 44
+    "quality_score": 0.9244453488372093,
+    "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity"
   },
   {
-    "filename": "the_fractal_dimension_of_mathematical_truth.json",
-    "title": "The Fractal Dimension of Mathematical Truth",
-    "domain": "Cryptography",
-    "date": "2026-06-01T04:22:48Z",
-    "exp_id": "c808b38a",
-    "quality_score": 0.7,
+    "date": "2026-06-01T14:52:09Z",
+    "domain": "MachineLearning",
+    "exp_id": "892c306f",
+    "filename": "reflective_type_theory_refltt_as_a_formal_fram.json",
+    "pkg_num": 96,
     "quality": "substantial",
-    "pkg_num": 43
+    "quality_score": 0.736756049822064,
+    "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic"
   },
   {
-    "filename": "the_mega_sphere_all_dimensions_at_once.json",
-    "title": "The Mega-Sphere: All Dimensions at Once",
-    "domain": "Physics",
-    "date": "2026-06-01T03:50:10Z",
-    "exp_id": "64431a8e",
-    "quality_score": 0.7,
+    "date": "2026-06-01T14:51:50Z",
+    "domain": "Algebra",
+    "exp_id": "b12db4e8",
+    "filename": "discriminant_uniformity_theorem_for_quad.json",
+    "pkg_num": 95,
     "quality": "substantial",
-    "pkg_num": 42
+    "quality_score": 0.7250465517241378,
+    "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields"
   },
   {
-    "filename": "causal_loops_in_category_theory_when_composition_l.json",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back",
+    "date": "2026-06-01T14:51:29Z",
+    "domain": "Shared",
+    "exp_id": "7894af63",
+    "filename": "the_combinatorics_of_compiler_optimization_registe.json",
+    "pkg_num": 94,
+    "quality": "partial",
+    "quality_score": 0.6504003865979382,
+    "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality"
+  },
+  {
+    "date": "2026-06-01T14:51:08Z",
+    "domain": "EML",
+    "exp_id": "035c8fa4",
+    "filename": "erds_faber_lovsz_conjecture.json",
+    "pkg_num": 93,
+    "quality": "partial",
+    "quality_score": 0.6484295302013423,
+    "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization"
+  },
+  {
+    "date": "2026-06-01T14:17:42Z",
     "domain": "Pythagorean",
-    "date": "2026-06-01T03:49:46Z",
-    "exp_id": "8d4f7af1",
-    "quality_score": 0.7,
+    "exp_id": "7298cf4c",
+    "filename": "curvature_induced_computation_when_geodesic_flow_s.json",
+    "pkg_num": 92,
     "quality": "substantial",
-    "pkg_num": 41
+    "quality_score": 0.7262368372093022,
+    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine"
   },
   {
-    "filename": "hadwigers_conjecture.json",
-    "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory",
+    "date": "2026-06-01T14:17:20Z",
+    "domain": "EML",
+    "exp_id": "25b26084",
+    "filename": "self_avoiding_walk_connective_constant.json",
+    "pkg_num": 91,
+    "quality": "partial",
+    "quality_score": 0.5409767590618337,
+    "title": "Self-Avoiding Walk: Connective Constant"
+  },
+  {
+    "date": "2026-06-01T13:41:53Z",
     "domain": "Geometry",
-    "date": "2026-06-01T03:49:22Z",
-    "exp_id": "d0ddefbd",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 40
-  },
-  {
-    "filename": "thermodynamics_of_mathematical_proof.json",
-    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
-    "domain": "Bridges",
-    "date": "2026-06-01T02:45:09Z",
-    "exp_id": "5601e70d",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 39
-  },
-  {
-    "filename": "this_cycle_formalized_the_algebraic_core_of_the_he.json",
-    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
-    "domain": "Bridges",
-    "date": "2026-06-01T02:44:09Z",
-    "exp_id": "ec13a735",
-    "quality_score": 0.7,
-    "quality": "substantial",
-    "pkg_num": 38
-  },
-  {
-    "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness",
-    "domain": "Bridges",
-    "date": "2026-06-01T02:30:41Z",
-    "exp_id": "13c69dba",
-    "quality_score": 0.7527642857142857,
-    "quality": "substantial",
-    "pkg_num": 37
-  },
-  {
-    "filename": "this_research_cycle_established_the_mathematical_f.json",
-    "title": "Height Cocycles and the Monodromy Classification of Impossible Figures",
-    "domain": "Algebra",
-    "date": "2026-06-01T02:30:11Z",
-    "exp_id": "d2b0b7c5",
-    "quality_score": 0.7242500000000001,
-    "quality": "substantial",
-    "pkg_num": 36
-  },
-  {
-    "filename": "aleph_1_surface_geometry_between_dimensions.json",
-    "title": "Aleph-1 Surface: Geometry Between Dimensions",
-    "domain": "Algebra",
-    "date": "2026-06-01T01:58:32Z",
-    "exp_id": "dbb47961",
-    "quality_score": 0.720886612244898,
-    "quality": "substantial",
-    "pkg_num": 35
-  },
-  {
-    "filename": "this_research_cycle_established_the_foundational_t.json",
-    "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality",
-    "domain": "Algebra",
-    "date": "2026-06-01T01:58:10Z",
-    "exp_id": "3d08bbee",
-    "quality_score": 0.7722411111111112,
-    "quality": "substantial",
-    "pkg_num": 34
-  },
-  {
-    "filename": "zombies_and_qualia_mathematics_of_subjective_exper.json",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience",
-    "domain": "Algebra",
-    "date": "2026-06-01T01:25:32Z",
-    "exp_id": "1e534e5d",
-    "quality_score": 0.7355707481125602,
-    "quality": "substantial",
-    "pkg_num": 33
-  },
-  {
-    "filename": "this_research_cycle_formalized_the_algebraic_skele.json",
-    "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion",
-    "domain": "Algebra",
-    "date": "2026-06-01T01:25:00Z",
-    "exp_id": "c572edf3",
-    "quality_score": 0.6966124390243902,
+    "exp_id": "a1511534",
+    "filename": "stochastic_galois_theory_random_permutations_have_.json",
+    "pkg_num": 90,
     "quality": "partial",
-    "pkg_num": 32
+    "quality_score": 0.6453740000000001,
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
   },
   {
-    "filename": "infinite_dimensional_chess_winning_on_the_hilbert_.json",
-    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board",
+    "date": "2026-06-01T13:41:16Z",
     "domain": "Cryptography",
-    "date": "2026-06-01T01:24:31Z",
-    "exp_id": "e8aa6606",
-    "quality_score": 0.7194500000000001,
+    "exp_id": "bc59d5da",
+    "filename": "reflective_type_theory_proving_things_about_provin.json",
+    "pkg_num": 89,
     "quality": "substantial",
-    "pkg_num": 31
+    "quality_score": 0.7124953271028038,
+    "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
   {
-    "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
-    "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory",
-    "domain": "Computation",
-    "date": "2026-06-01T00:33:21Z",
-    "exp_id": "c6e162ae",
-    "quality_score": 0.717505375,
-    "quality": "substantial",
-    "pkg_num": 30
+    "date": "2026-06-01T13:40:42Z",
+    "domain": "Differential Geometry / Geometric Analysis",
+    "exp_id": "e750bf27",
+    "filename": "yamabe_problem_non_compact_case.json",
+    "pkg_num": 88,
+    "quality": "partial",
+    "quality_score": 0.49938318181818186,
+    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory"
   },
   {
-    "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
+    "date": "2026-06-01T13:40:06Z",
+    "domain": "Logic",
+    "exp_id": "5082b772",
+    "filename": "complete_newton_hodge_polygon_framework_for_2_dime.json",
+    "pkg_num": 87,
+    "quality": "partial",
+    "quality_score": 0.6923000000000001,
+    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules"
+  },
+  {
+    "date": "2026-06-01T12:46:23Z",
+    "domain": "Speculative",
+    "exp_id": "1d4fa7b3",
+    "filename": "scaling_laws_from_statistical_mechanics.json",
+    "pkg_num": 86,
+    "quality": "substantial",
+    "quality_score": 0.7481675000000001,
+    "title": "Neural Scaling Laws from Statistical Mechanics"
+  },
+  {
+    "date": "2026-06-01T12:31:39Z",
+    "domain": "Logic",
+    "exp_id": "81ce5201",
+    "filename": "formal_bridge_between_homotopy_type_theory_hott_an.json",
+    "pkg_num": 85,
+    "quality": "substantial",
+    "quality_score": 0.7038752500000001,
+    "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics"
+  },
+  {
+    "date": "2026-06-01T12:11:20Z",
     "domain": "Cryptography",
-    "date": "2026-06-01T00:32:51Z",
-    "exp_id": "f63407cb",
-    "quality_score": 0.6939177114686041,
+    "exp_id": "813b355c",
+    "filename": "isogeny_based_cryptography_csi_fish.json",
+    "pkg_num": 84,
+    "quality": "substantial",
+    "quality_score": 0.7393699999999999,
+    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh"
+  },
+  {
+    "date": "2026-06-01T12:11:00Z",
+    "domain": "Physics",
+    "exp_id": "ca199fc5",
+    "filename": "poincar_conjecture_revisited_4d_smooth.json",
+    "pkg_num": 83,
+    "quality": "substantial",
+    "quality_score": 0.8202090769230769,
+    "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena"
+  },
+  {
+    "date": "2026-06-01T12:10:41Z",
+    "domain": "Geometry",
+    "exp_id": "25f4209c",
+    "filename": "algebraic_skeleton_of_grothendiecks_standard_conje.json",
+    "pkg_num": 82,
+    "quality": "substantial",
+    "quality_score": 0.7286993506493507,
+    "title": "Algebraic Skeleton of Grothendieck Standard Conjectures"
+  },
+  {
+    "date": "2026-06-01T11:36:49Z",
+    "domain": "Geometry",
+    "exp_id": "68aedb1e",
+    "filename": "borges_library_of_babel_combinatorics_of_everythin.json",
+    "pkg_num": 81,
     "quality": "partial",
-    "pkg_num": 29
+    "quality_score": 0.6561989411764706,
+    "title": "The Library of Babel: Combinatorial Topology of Everything"
   },
   {
-    "filename": "strange_loops_self_reference_and_gdels_incompleten.json",
-    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices",
-    "domain": "Cryptography",
-    "date": "2026-06-01T00:32:20Z",
-    "exp_id": "a2f51013",
-    "quality_score": 0.7400781690140845,
+    "date": "2026-06-01T11:36:24Z",
+    "domain": "Shared",
+    "exp_id": "ee1ee0cb",
+    "filename": "homotopy_type_theory_as_foundations.json",
+    "pkg_num": 80,
     "quality": "substantial",
-    "pkg_num": 28
+    "quality_score": 0.7138660278745645,
+    "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces"
   },
   {
-    "filename": "one_way_functions_existence_and_hierarchy.json",
-    "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption",
-    "domain": "Cryptography",
-    "date": "2026-06-01T00:31:21Z",
-    "exp_id": "26b0673b",
-    "quality_score": 0.7347950000000001,
+    "date": "2026-06-01T11:36:05Z",
+    "domain": "Algebra",
+    "exp_id": "f67feb4b",
+    "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
+    "pkg_num": 79,
     "quality": "substantial",
-    "pkg_num": 27
+    "quality_score": 0.7161103693181818,
+    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
-    "filename": "learning_with_errors_hardness_reductions.json",
-    "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors",
-    "domain": "Cryptography",
-    "date": "2026-06-01T00:30:53Z",
-    "exp_id": "ec4068d3",
-    "quality_score": 0.6829911764705883,
+    "date": "2026-06-01T11:35:43Z",
+    "domain": "Algebra",
+    "exp_id": "d8059b0e",
+    "filename": "anti_mathematics_what_if_all_axioms_were_negated.json",
+    "pkg_num": 78,
     "quality": "partial",
-    "pkg_num": 26
+    "quality_score": 0.6856036842105264,
+    "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms"
   },
   {
-    "filename": "consciousness_as_emergent_fixed_point.json",
-    "title": "Consciousness as Emergent Fixed Point",
-    "domain": "Algebra",
-    "date": "2026-06-01T00:29:11Z",
-    "exp_id": "d3f7a259",
-    "quality_score": null,
-    "quality": "unrated",
-    "pkg_num": 25
-  },
-  {
-    "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
-    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:51:11Z",
-    "exp_id": "7ee1e9b0",
-    "quality_score": 0.7053548000000001,
+    "date": "2026-06-01T11:35:17Z",
+    "domain": "Shared",
+    "exp_id": "f24c929d",
+    "filename": "complete_formal_framework_for_the_security_of_csid.json",
+    "pkg_num": 77,
     "quality": "substantial",
-    "pkg_num": 24
+    "quality_score": 0.7080684615384616,
+    "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains"
   },
   {
-    "filename": "this_research_cycle_established_a_rigorous_framewo.json",
-    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:50:52Z",
-    "exp_id": "de323f00",
-    "quality_score": 0.7352763636363637,
-    "quality": "substantial",
-    "pkg_num": 23
-  },
-  {
-    "filename": "isomorphisms_of_meaning_when_structures_collide.json",
-    "title": "Isomorphisms of Meaning: When Structures Collide",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:50:29Z",
-    "exp_id": "1debcf92",
-    "quality_score": 0.7206367500000002,
-    "quality": "substantial",
-    "pkg_num": 22
-  },
-  {
-    "filename": "surreal_topology_open_sets_at_infinity.json",
-    "title": "Surreal Topology: Open Sets at Infinity",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:17:33Z",
-    "exp_id": "e7dbad62",
-    "quality_score": 0.6766884516129033,
+    "date": "2026-06-01T11:02:30Z",
+    "domain": "Pythagorean",
+    "exp_id": "dc49b350",
+    "filename": "complete_formalized_algebraic_theory_of_quasif.json",
+    "pkg_num": 76,
     "quality": "partial",
-    "pkg_num": 21
+    "quality_score": 0.6699192338709679,
+    "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes"
   },
   {
-    "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
-    "title": "The Unreasonable Effectiveness of Wrong Theories",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:17:11Z",
-    "exp_id": "10ec7af4",
-    "quality_score": 0.7302532967032966,
-    "quality": "substantial",
-    "pkg_num": 20
-  },
-  {
-    "filename": "tropical_fermats_last_theorem.json",
-    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
-    "domain": "Algebra",
-    "date": "2026-05-31T23:16:32Z",
-    "exp_id": "c27d447a",
-    "quality_score": 0.6683460000000001,
+    "date": "2026-06-01T11:02:09Z",
+    "domain": "Physics",
+    "exp_id": "e818d35f",
+    "filename": "topological_quantum_computing_braiding_universalit.json",
+    "pkg_num": 75,
     "quality": "partial",
-    "pkg_num": 19
+    "quality_score": 0.6633071428571429,
+    "title": "Braiding Universality for Topological Quantum Computing"
   },
   {
-    "filename": "transfinite_game_theory_games_that_last_forever.json",
-    "title": "Transfinite Game Theory: Games That Last Forever",
-    "domain": "Computation",
-    "date": "2026-05-31T23:16:13Z",
-    "exp_id": "09ad0b7d",
-    "quality_score": 0.7225286206896553,
+    "date": "2026-06-01T10:29:03Z",
+    "domain": "Logic/Computability/Incompleteness",
+    "exp_id": "b16ddfc2",
+    "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
+    "pkg_num": 74,
     "quality": "substantial",
-    "pkg_num": 18
+    "quality_score": 0.7388586956521739,
+    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
   {
-    "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
-    "title": "Cellular Automata at the Ordinals: Transfinite Computation",
-    "domain": "Computation",
-    "date": "2026-05-31T22:44:03Z",
-    "exp_id": "5a82cace",
-    "quality_score": 0.735339756097561,
-    "quality": "substantial",
-    "pkg_num": 17
-  },
-  {
-    "filename": "sierpiski_numbers_covering_systems.json",
-    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
-    "domain": "Computation",
-    "date": "2026-05-31T22:43:44Z",
-    "exp_id": "7c29780f",
-    "quality_score": 0.7134367272727273,
-    "quality": "substantial",
-    "pkg_num": 16
-  },
-  {
-    "filename": "self_modifying_code_that_cannot_be_stopped.json",
-    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
-    "domain": "Bridges",
-    "date": "2026-05-31T21:57:44Z",
-    "exp_id": "94584937",
-    "quality_score": 0.7406316585365854,
-    "quality": "substantial",
-    "pkg_num": 15
-  },
-  {
-    "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
-    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
-    "domain": "Bridges",
-    "date": "2026-05-31T21:57:15Z",
-    "exp_id": "e471f5e9",
-    "quality_score": 0.7488625,
-    "quality": "substantial",
-    "pkg_num": 14
-  },
-  {
-    "filename": "neural_pde_universality_classes_via_renormalizatio.json",
-    "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
-    "domain": "Bridges",
-    "date": "2026-05-31T21:31:14Z",
-    "exp_id": "46942b74",
-    "quality_score": 0.7212349056603773,
-    "quality": "substantial",
-    "pkg_num": 13
-  },
-  {
-    "filename": "entropy_power_inequality_sharp_version.json",
-    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
-    "domain": "Bridges",
-    "date": "2026-05-31T21:30:36Z",
-    "exp_id": "b3fdee2d",
-    "quality_score": 0.7035288321167883,
-    "quality": "substantial",
-    "pkg_num": 12
-  },
-  {
-    "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
-    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:25:40Z",
-    "exp_id": "6d12eefe",
-    "quality_score": 0.7052853846153846,
-    "quality": "substantial",
-    "pkg_num": 11
-  },
-  {
-    "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:25:11Z",
-    "exp_id": "5d630953",
-    "quality_score": 0.6860414464845499,
-    "quality": "partial",
-    "pkg_num": 10
-  },
-  {
-    "filename": "standard_conjectures_on_algebraic_cycles.json",
-    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:24:43Z",
-    "exp_id": "0554bed3",
-    "quality_score": 0.7282123376623377,
-    "quality": "substantial",
-    "pkg_num": 9
-  },
-  {
-    "filename": "resolution_of_singularities_in_positive_characteri.json",
-    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:23:45Z",
-    "exp_id": "02d2fadb",
-    "quality_score": 0.7457928571428571,
-    "quality": "substantial",
-    "pkg_num": 8
-  },
-  {
-    "filename": "catalans_conjecture_generalizations.json",
-    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:22:48Z",
-    "exp_id": "b52cbca8",
-    "quality_score": 0.6621330000000001,
-    "quality": "partial",
-    "pkg_num": 7
-  },
-  {
-    "filename": "random_matrices_edge_universality.json",
-    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:22:14Z",
-    "exp_id": "941734c2",
-    "quality_score": 0.7068734374999999,
-    "quality": "substantial",
-    "pkg_num": 6
-  },
-  {
-    "filename": "rotas_basis_conjecture.json",
-    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
-    "domain": "Algebra",
-    "date": "2026-05-31T20:19:26Z",
-    "exp_id": "edde521f",
-    "quality_score": 0.7123901951219513,
-    "quality": "substantial",
-    "pkg_num": 5
-  },
-  {
-    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "domain": "Bridges",
-    "date": "2026-05-31T16:23:25Z",
-    "exp_id": "abcc87bf",
-    "quality_score": 0.5950639917089624,
-    "quality": "partial",
-    "pkg_num": 4
-  },
-  {
-    "filename": "biological_topology_protein_folding_as_persistent_.json",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
-    "domain": "Bridges",
-    "date": "2026-05-31T15:45:19Z",
-    "exp_id": "6a2bfb31",
-    "quality_score": 0.7471118604651162,
-    "quality": "substantial",
-    "pkg_num": 3
-  },
-  {
-    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
-    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
-    "domain": "Algebra",
-    "date": "2026-05-31T15:44:02Z",
-    "exp_id": "c3940ca2",
-    "quality_score": 0.722909152542373,
-    "quality": "substantial",
-    "pkg_num": 2
-  },
-  {
-    "filename": "primewise_persistent_homology_detects_exceptional_.json",
-    "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
+    "date": "2026-06-01T10:28:42Z",
     "domain": "MachineLearning",
-    "date": "2026-05-31T14:57:35Z",
-    "exp_id": "2b593e59",
-    "quality_score": 0.7517668674698796,
+    "exp_id": "da4c7c61",
+    "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
+    "pkg_num": 73,
     "quality": "substantial",
-    "pkg_num": 1
+    "quality_score": 0.7100115384615384,
+    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+  },
+  {
+    "date": "2026-06-01T10:28:23Z",
+    "domain": "Computation",
+    "exp_id": "337baefa",
+    "filename": "flatland_catastrophe_when_2d_physics_breaks.json",
+    "pkg_num": 72,
+    "quality": "substantial",
+    "quality_score": 0.7192423076923078,
+    "title": "Flatland Catastrophe: When 2D Physics Breaks"
+  },
+  {
+    "date": "2026-06-01T10:28:02Z",
+    "domain": "Computation",
+    "exp_id": "9db20339",
+    "filename": "sensitivity_conjecture_extensions.json",
+    "pkg_num": 71,
+    "quality": "substantial",
+    "quality_score": 0.72689,
+    "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds"
+  },
+  {
+    "date": "2026-06-01T09:54:24Z",
+    "domain": "Computation",
+    "exp_id": "d08a3f0d",
+    "filename": "foundational_infrastructure_for_studying_oracle_hi.json",
+    "pkg_num": 70,
+    "quality": "substantial",
+    "quality_score": 0.73590125,
+    "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points"
+  },
+  {
+    "date": "2026-06-01T09:54:04Z",
+    "domain": "Computation",
+    "exp_id": "f977bb97",
+    "filename": "algebraic_and_combinatorial_foundations_for_random.json",
+    "pkg_num": 69,
+    "quality": "substantial",
+    "quality_score": 0.7237490526315788,
+    "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality"
+  },
+  {
+    "date": "2026-06-01T09:53:45Z",
+    "domain": "Computation",
+    "exp_id": "2fd1181d",
+    "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
+    "pkg_num": 68,
+    "quality": "substantial",
+    "quality_score": 0.7068626477541371,
+    "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics"
+  },
+  {
+    "date": "2026-06-01T09:53:23Z",
+    "domain": "Computation",
+    "exp_id": "9ab1ce15",
+    "filename": "unique_games_conjecture.json",
+    "pkg_num": 67,
+    "quality": "substantial",
+    "quality_score": 0.7354624999999999,
+    "title": "Unique Games Conjecture: Mathematical Foundations"
+  },
+  {
+    "date": "2026-06-01T09:20:36Z",
+    "domain": "Computation",
+    "exp_id": "4e3c94e5",
+    "filename": "infinite_games_against_death_immortality_strategie.json",
+    "pkg_num": 66,
+    "quality": "partial",
+    "quality_score": 0.6771499999999999,
+    "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games"
+  },
+  {
+    "date": "2026-06-01T08:58:10Z",
+    "domain": "Bridges",
+    "exp_id": "faa42070",
+    "filename": "social_credit_scores_as_topological_invariants.json",
+    "pkg_num": 65,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Social Credit Scores as Topological Invariants"
+  },
+  {
+    "date": "2026-06-01T08:57:50Z",
+    "domain": "Bridges",
+    "exp_id": "e657f9e8",
+    "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
+    "pkg_num": 64,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds"
+  },
+  {
+    "date": "2026-06-01T08:57:28Z",
+    "domain": "Bridges",
+    "exp_id": "e6851233",
+    "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
+    "pkg_num": 63,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+  },
+  {
+    "date": "2026-06-01T08:57:00Z",
+    "domain": "Bridges",
+    "exp_id": "24a63e9e",
+    "filename": "newton_hodge_polygon_framework_for_the_p_adic_lang.json",
+    "pkg_num": 62,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence"
+  },
+  {
+    "date": "2026-06-01T08:56:37Z",
+    "domain": "Bridges",
+    "exp_id": "f75c509b",
+    "filename": "p_adic_langlands_for_glq_p.json",
+    "pkg_num": 61,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations"
+  },
+  {
+    "date": "2026-06-01T08:23:51Z",
+    "domain": "Bridges",
+    "exp_id": "8f43e9e1",
+    "filename": "surveillance_networks_information_theoretic_undete.json",
+    "pkg_num": 60,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Surveillance Networks: Information-Theoretic Undetectability"
+  },
+  {
+    "date": "2026-06-01T08:23:30Z",
+    "domain": "Bridges",
+    "exp_id": "72c3a7a8",
+    "filename": "complete_algebraic_theory_of_the_hecke_eigenvalue_.json",
+    "pkg_num": 59,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082"
+  },
+  {
+    "date": "2026-06-01T08:23:05Z",
+    "domain": "Bridges",
+    "exp_id": "f2c79f3b",
+    "filename": "langlands_for_gl_over_q.json",
+    "pkg_num": 58,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Langlands Correspondence for GL\u2082 over \u211a"
+  },
+  {
+    "date": "2026-06-01T07:50:40Z",
+    "domain": "Algebra",
+    "exp_id": "72018c51",
+    "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
+    "pkg_num": 57,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem"
+  },
+  {
+    "date": "2026-06-01T07:50:20Z",
+    "domain": "Algebra",
+    "exp_id": "4f5a41e1",
+    "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
+    "pkg_num": 56,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Categorical Physics: The Shape of a Theory of Everything"
+  },
+  {
+    "date": "2026-06-01T07:49:59Z",
+    "domain": "Algebra",
+    "exp_id": "ea8fbe44",
+    "filename": "complete_formal_framework_for_cellular_automat.json",
+    "pkg_num": 55,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Transfinite Cellular Automata Depth Theory"
+  },
+  {
+    "date": "2026-06-01T07:16:17Z",
+    "domain": "Algebra",
+    "exp_id": "c0a3ba3e",
+    "filename": "quantum_proofs_of_classical_theorems.json",
+    "pkg_num": 54,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps"
+  },
+  {
+    "date": "2026-06-01T07:15:56Z",
+    "domain": "Algebra",
+    "exp_id": "0fa49dec",
+    "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
+    "pkg_num": 53,
+    "quality": "partial",
+    "quality_score": 0.5239020000000001,
+    "title": "Memory Algebra: When Forgetting Is a Mathematical Operation"
+  },
+  {
+    "date": "2026-06-01T07:15:35Z",
+    "domain": "Algebra",
+    "exp_id": "da3578b4",
+    "filename": "formal_algebraic_foundations_of_isogeny_base.json",
+    "pkg_num": 52,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography"
+  },
+  {
+    "date": "2026-06-01T07:15:13Z",
+    "domain": "Algebra",
+    "exp_id": "8a0058f1",
+    "filename": "rigorous_formal_framework_for_the_entropy_powe.json",
+    "pkg_num": 51,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Entropy Power Inequality: Formal Framework and Geometric Connections"
+  },
+  {
+    "date": "2026-06-01T07:14:52Z",
+    "domain": "Algebra",
+    "exp_id": "15bec107",
+    "filename": "unified_framework_for_understanding_self_refer.json",
+    "pkg_num": 50,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness"
+  },
+  {
+    "date": "2026-06-01T06:42:03Z",
+    "domain": "Number Theory / Algebra",
+    "exp_id": "42ef5052",
+    "filename": "artins_conjecture_on_primitive_roots.json",
+    "pkg_num": 49,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory"
+  },
+  {
+    "date": "2026-06-01T06:41:41Z",
+    "domain": "Tropical",
+    "exp_id": "12735337",
+    "filename": "tropical_hodge_theory.json",
+    "pkg_num": 48,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes"
+  },
+  {
+    "date": "2026-06-01T05:29:27Z",
+    "domain": "EML",
+    "exp_id": "77bc31c0",
+    "filename": "reconstruction_conjecture.json",
+    "pkg_num": 47,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Formal Foundations of Graph Reconstruction Theory"
+  },
+  {
+    "date": "2026-06-01T04:57:07Z",
+    "domain": "EML",
+    "exp_id": "a5c337ed",
+    "filename": "fermat_near_misses_in_the_twilight_zone.json",
+    "pkg_num": 46,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Fermat Near-Misses in the Twilight Zone"
+  },
+  {
+    "date": "2026-06-01T04:56:46Z",
+    "domain": "MachineLearning",
+    "exp_id": "7212b89e",
+    "filename": "hypercomputation_computing_the_uncomputable.json",
+    "pkg_num": 45,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Hypercomputation: Computing the Uncomputable"
+  },
+  {
+    "date": "2026-06-01T04:23:08Z",
+    "domain": "Logic",
+    "exp_id": "06268486",
+    "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
+    "pkg_num": 44,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic"
+  },
+  {
+    "date": "2026-06-01T04:22:48Z",
+    "domain": "Cryptography",
+    "exp_id": "c808b38a",
+    "filename": "the_fractal_dimension_of_mathematical_truth.json",
+    "pkg_num": 43,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "The Fractal Dimension of Mathematical Truth"
+  },
+  {
+    "date": "2026-06-01T03:50:10Z",
+    "domain": "Physics",
+    "exp_id": "64431a8e",
+    "filename": "the_mega_sphere_all_dimensions_at_once.json",
+    "pkg_num": 42,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "The Mega-Sphere: All Dimensions at Once"
+  },
+  {
+    "date": "2026-06-01T03:49:46Z",
+    "domain": "Pythagorean",
+    "exp_id": "8d4f7af1",
+    "filename": "causal_loops_in_category_theory_when_composition_l.json",
+    "pkg_num": 41,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Causal Loops in Category Theory: When Composition Loops Back"
+  },
+  {
+    "date": "2026-06-01T03:49:22Z",
+    "domain": "Geometry",
+    "exp_id": "d0ddefbd",
+    "filename": "hadwigers_conjecture.json",
+    "pkg_num": 40,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory"
+  },
+  {
+    "date": "2026-06-01T02:45:09Z",
+    "domain": "Bridges",
+    "exp_id": "5601e70d",
+    "filename": "thermodynamics_of_mathematical_proof.json",
+    "pkg_num": 39,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof"
+  },
+  {
+    "date": "2026-06-01T02:44:09Z",
+    "domain": "Bridges",
+    "exp_id": "ec13a735",
+    "filename": "this_cycle_formalized_the_algebraic_core_of_the_he.json",
+    "pkg_num": 38,
+    "quality": "substantial",
+    "quality_score": 0.7,
+    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082"
+  },
+  {
+    "date": "2026-06-01T02:30:41Z",
+    "domain": "Bridges",
+    "exp_id": "13c69dba",
+    "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
+    "pkg_num": 37,
+    "quality": "substantial",
+    "quality_score": 0.7527642857142857,
+    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  {
+    "date": "2026-06-01T02:30:11Z",
+    "domain": "Algebra",
+    "exp_id": "d2b0b7c5",
+    "filename": "this_research_cycle_established_the_mathematical_f.json",
+    "pkg_num": 36,
+    "quality": "substantial",
+    "quality_score": 0.7242500000000001,
+    "title": "Height Cocycles and the Monodromy Classification of Impossible Figures"
+  },
+  {
+    "date": "2026-06-01T01:58:32Z",
+    "domain": "Algebra",
+    "exp_id": "dbb47961",
+    "filename": "aleph_1_surface_geometry_between_dimensions.json",
+    "pkg_num": 35,
+    "quality": "substantial",
+    "quality_score": 0.720886612244898,
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
+  },
+  {
+    "date": "2026-06-01T01:58:10Z",
+    "domain": "Algebra",
+    "exp_id": "3d08bbee",
+    "filename": "this_research_cycle_established_the_foundational_t.json",
+    "pkg_num": 34,
+    "quality": "substantial",
+    "quality_score": 0.7722411111111112,
+    "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality"
+  },
+  {
+    "date": "2026-06-01T01:25:32Z",
+    "domain": "Algebra",
+    "exp_id": "1e534e5d",
+    "filename": "zombies_and_qualia_mathematics_of_subjective_exper.json",
+    "pkg_num": 33,
+    "quality": "substantial",
+    "quality_score": 0.7355707481125602,
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
+    "date": "2026-06-01T01:25:00Z",
+    "domain": "Algebra",
+    "exp_id": "c572edf3",
+    "filename": "this_research_cycle_formalized_the_algebraic_skele.json",
+    "pkg_num": 32,
+    "quality": "partial",
+    "quality_score": 0.6966124390243902,
+    "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion"
+  },
+  {
+    "date": "2026-06-01T01:24:31Z",
+    "domain": "Cryptography",
+    "exp_id": "e8aa6606",
+    "filename": "infinite_dimensional_chess_winning_on_the_hilbert_.json",
+    "pkg_num": 31,
+    "quality": "substantial",
+    "quality_score": 0.7194500000000001,
+    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "date": "2026-06-01T00:33:21Z",
+    "domain": "Computation",
+    "exp_id": "c6e162ae",
+    "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
+    "pkg_num": 30,
+    "quality": "substantial",
+    "quality_score": 0.717505375,
+    "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory"
+  },
+  {
+    "date": "2026-06-01T00:32:51Z",
+    "domain": "Cryptography",
+    "exp_id": "f63407cb",
+    "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
+    "pkg_num": 29,
+    "quality": "partial",
+    "quality_score": 0.6939177114686041,
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
+    "date": "2026-06-01T00:32:20Z",
+    "domain": "Cryptography",
+    "exp_id": "a2f51013",
+    "filename": "strange_loops_self_reference_and_gdels_incompleten.json",
+    "pkg_num": 28,
+    "quality": "substantial",
+    "quality_score": 0.7400781690140845,
+    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices"
+  },
+  {
+    "date": "2026-06-01T00:31:21Z",
+    "domain": "Cryptography",
+    "exp_id": "26b0673b",
+    "filename": "one_way_functions_existence_and_hierarchy.json",
+    "pkg_num": 27,
+    "quality": "substantial",
+    "quality_score": 0.7347950000000001,
+    "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption"
+  },
+  {
+    "date": "2026-06-01T00:30:53Z",
+    "domain": "Cryptography",
+    "exp_id": "ec4068d3",
+    "filename": "learning_with_errors_hardness_reductions.json",
+    "pkg_num": 26,
+    "quality": "partial",
+    "quality_score": 0.6829911764705883,
+    "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors"
+  },
+  {
+    "date": "2026-06-01T00:29:11Z",
+    "domain": "Algebra",
+    "exp_id": "d3f7a259",
+    "filename": "consciousness_as_emergent_fixed_point.json",
+    "pkg_num": 25,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Consciousness as Emergent Fixed Point"
+  },
+  {
+    "date": "2026-05-31T23:51:11Z",
+    "domain": "Algebra",
+    "exp_id": "7ee1e9b0",
+    "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
+    "pkg_num": 24,
+    "quality": "substantial",
+    "quality_score": 0.7053548000000001,
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+  },
+  {
+    "date": "2026-05-31T23:50:52Z",
+    "domain": "Algebra",
+    "exp_id": "de323f00",
+    "filename": "this_research_cycle_established_a_rigorous_framewo.json",
+    "pkg_num": 23,
+    "quality": "substantial",
+    "quality_score": 0.7352763636363637,
+    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification"
+  },
+  {
+    "date": "2026-05-31T23:50:29Z",
+    "domain": "Algebra",
+    "exp_id": "1debcf92",
+    "filename": "isomorphisms_of_meaning_when_structures_collide.json",
+    "pkg_num": 22,
+    "quality": "substantial",
+    "quality_score": 0.7206367500000002,
+    "title": "Isomorphisms of Meaning: When Structures Collide"
+  },
+  {
+    "date": "2026-05-31T23:17:33Z",
+    "domain": "Algebra",
+    "exp_id": "e7dbad62",
+    "filename": "surreal_topology_open_sets_at_infinity.json",
+    "pkg_num": 21,
+    "quality": "partial",
+    "quality_score": 0.6766884516129033,
+    "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  {
+    "date": "2026-05-31T23:17:11Z",
+    "domain": "Algebra",
+    "exp_id": "10ec7af4",
+    "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
+    "pkg_num": 20,
+    "quality": "substantial",
+    "quality_score": 0.7302532967032966,
+    "title": "The Unreasonable Effectiveness of Wrong Theories"
+  },
+  {
+    "date": "2026-05-31T23:16:32Z",
+    "domain": "Algebra",
+    "exp_id": "c27d447a",
+    "filename": "tropical_fermats_last_theorem.json",
+    "pkg_num": 19,
+    "quality": "partial",
+    "quality_score": 0.6683460000000001,
+    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem"
+  },
+  {
+    "date": "2026-05-31T23:16:13Z",
+    "domain": "Computation",
+    "exp_id": "09ad0b7d",
+    "filename": "transfinite_game_theory_games_that_last_forever.json",
+    "pkg_num": 18,
+    "quality": "substantial",
+    "quality_score": 0.7225286206896553,
+    "title": "Transfinite Game Theory: Games That Last Forever"
+  },
+  {
+    "date": "2026-05-31T22:44:03Z",
+    "domain": "Computation",
+    "exp_id": "5a82cace",
+    "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
+    "pkg_num": 17,
+    "quality": "substantial",
+    "quality_score": 0.735339756097561,
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "date": "2026-05-31T22:43:44Z",
+    "domain": "Computation",
+    "exp_id": "7c29780f",
+    "filename": "sierpiski_numbers_covering_systems.json",
+    "pkg_num": 16,
+    "quality": "substantial",
+    "quality_score": 0.7134367272727273,
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem"
+  },
+  {
+    "date": "2026-05-31T21:57:44Z",
+    "domain": "Bridges",
+    "exp_id": "94584937",
+    "filename": "self_modifying_code_that_cannot_be_stopped.json",
+    "pkg_num": 15,
+    "quality": "substantial",
+    "quality_score": 0.7406316585365854,
+    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment"
+  },
+  {
+    "date": "2026-05-31T21:57:15Z",
+    "domain": "Bridges",
+    "exp_id": "e471f5e9",
+    "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
+    "pkg_num": 14,
+    "quality": "substantial",
+    "quality_score": 0.7488625,
+    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+  },
+  {
+    "date": "2026-05-31T21:31:14Z",
+    "domain": "Bridges",
+    "exp_id": "46942b74",
+    "filename": "neural_pde_universality_classes_via_renormalizatio.json",
+    "pkg_num": 13,
+    "quality": "substantial",
+    "quality_score": 0.7212349056603773,
+    "title": "Neural PDE Universality Classes via Renormalization Fixed Points"
+  },
+  {
+    "date": "2026-05-31T21:30:36Z",
+    "domain": "Bridges",
+    "exp_id": "b3fdee2d",
+    "filename": "entropy_power_inequality_sharp_version.json",
+    "pkg_num": 12,
+    "quality": "substantial",
+    "quality_score": 0.7035288321167883,
+    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge"
+  },
+  {
+    "date": "2026-05-31T20:25:40Z",
+    "domain": "Algebra",
+    "exp_id": "6d12eefe",
+    "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
+    "pkg_num": 11,
+    "quality": "substantial",
+    "quality_score": 0.7052853846153846,
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory"
+  },
+  {
+    "date": "2026-05-31T20:25:11Z",
+    "domain": "Algebra",
+    "exp_id": "5d630953",
+    "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
+    "pkg_num": 10,
+    "quality": "partial",
+    "quality_score": 0.6860414464845499,
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+  },
+  {
+    "date": "2026-05-31T20:24:43Z",
+    "domain": "Algebra",
+    "exp_id": "0554bed3",
+    "filename": "standard_conjectures_on_algebraic_cycles.json",
+    "pkg_num": 9,
+    "quality": "substantial",
+    "quality_score": 0.7282123376623377,
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives"
+  },
+  {
+    "date": "2026-05-31T20:23:45Z",
+    "domain": "Algebra",
+    "exp_id": "02d2fadb",
+    "filename": "resolution_of_singularities_in_positive_characteri.json",
+    "pkg_num": 8,
+    "quality": "substantial",
+    "quality_score": 0.7457928571428571,
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations"
+  },
+  {
+    "date": "2026-05-31T20:22:48Z",
+    "domain": "Algebra",
+    "exp_id": "b52cbca8",
+    "filename": "catalans_conjecture_generalizations.json",
+    "pkg_num": 7,
+    "quality": "partial",
+    "quality_score": 0.6621330000000001,
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations"
+  },
+  {
+    "date": "2026-05-31T20:22:14Z",
+    "domain": "Algebra",
+    "exp_id": "941734c2",
+    "filename": "random_matrices_edge_universality.json",
+    "pkg_num": 6,
+    "quality": "substantial",
+    "quality_score": 0.7068734374999999,
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution"
+  },
+  {
+    "date": "2026-05-31T20:19:26Z",
+    "domain": "Algebra",
+    "exp_id": "edde521f",
+    "filename": "rotas_basis_conjecture.json",
+    "pkg_num": 5,
+    "quality": "substantial",
+    "quality_score": 0.7123901951219513,
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach"
+  },
+  {
+    "date": "2026-05-31T16:23:25Z",
+    "domain": "Bridges",
+    "exp_id": "abcc87bf",
+    "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
+    "pkg_num": 4,
+    "quality": "partial",
+    "quality_score": 0.5950639917089624,
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  {
+    "date": "2026-05-31T15:45:19Z",
+    "domain": "Bridges",
+    "exp_id": "6a2bfb31",
+    "filename": "biological_topology_protein_folding_as_persistent_.json",
+    "pkg_num": 3,
+    "quality": "substantial",
+    "quality_score": 0.7471118604651162,
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+  },
+  {
+    "date": "2026-05-31T15:44:02Z",
+    "domain": "Algebra",
+    "exp_id": "c3940ca2",
+    "filename": "this_research_cycle_established_a_formal_bridge_be.json",
+    "pkg_num": 2,
+    "quality": "substantial",
+    "quality_score": 0.722909152542373,
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies"
+  },
+  {
+    "date": "2026-05-31T14:57:35Z",
+    "domain": "MachineLearning",
+    "exp_id": "2b593e59",
+    "filename": "primewise_persistent_homology_detects_exceptional_.json",
+    "pkg_num": 1,
+    "quality": "substantial",
+    "quality_score": 0.7517668674698796,
+    "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth"
   }
 ];
 
 window.PACKAGE_DB_INDEX = {
-  "reflective_type_theory_refltt_as_a_formal_fram.json": {
-    "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic",
-    "exp_id": "892c306f",
-    "source_exp_ids": [
-      "bc59d5da"
-    ],
-    "domain": "MachineLearning"
-  },
-  "thermodynamics_of_mathematical_proof.json": {
-    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
-    "exp_id": "5601e70d",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
-  "discriminant_uniformity_theorem_for_quad.json": {
-    "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields",
-    "exp_id": "b12db4e8",
-    "source_exp_ids": [
-      "a1511534"
-    ],
-    "domain": "Algebra"
-  },
-  "isogeny_based_cryptography_csi_fish.json": {
-    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
-    "exp_id": "813b355c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Cryptography"
-  },
-  "primewise_persistent_homology_detects_exceptional_.json": {
-    "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
-    "exp_id": "2b593e59",
-    "source_exp_ids": [
-      "pi_brainstorm"
-    ],
-    "domain": "MachineLearning"
-  },
-  "complete_formalized_algebraic_theory_of_quasif.json": {
-    "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes",
-    "exp_id": "dc49b350",
-    "source_exp_ids": [
-      "6f1b7d62"
-    ],
-    "domain": "Pythagorean"
-  },
-  "the_oracles_burden_how_much_knowledge_is_too_much.json": {
-    "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory",
-    "exp_id": "c6e162ae",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "random_matrices_edge_universality.json": {
-    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
-    "exp_id": "941734c2",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "digital_immortality_can_a_mind_be_encoded.json": {
-    "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading",
-    "exp_id": "7cd2b5be",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "MachineLearning"
-  },
-  "impossibility_results_for_fun_things_that_cannot_b.json": {
-    "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis",
-    "exp_id": "adade94b",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Computation"
-  },
-  "resolution_of_singularities_in_positive_characteri.json": {
-    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
-    "exp_id": "02d2fadb",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "arithmetic_mirror_symmetry_for_calabi_yau.json": {
-    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-    "exp_id": "e657f9e8",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "tropical_cryptocurrency_mining_on_the_min_plus_sem.json": {
-    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring",
-    "exp_id": "031ed73c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Physics"
-  },
-  "reflective_type_theory_proving_things_about_provin.json": {
-    "title": "Reflective Type Theory: Proving Things About Proving Things",
-    "exp_id": "bc59d5da",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Cryptography"
-  },
-  "tropical_valuation_functor_as_an_order_preserving_.json": {
-    "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity",
-    "exp_id": "5392c445",
-    "source_exp_ids": [],
-    "domain": "Bridges"
-  },
-  "formal_bridge_between_the_probabilistic_method.json": {
-    "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs",
-    "exp_id": "a6ad1c91",
-    "source_exp_ids": [
-      "7d04715f"
-    ],
-    "domain": "Speculative"
-  },
-  "chaos_as_a_computable_shadow_the_shadowing_lemma_f.json": {
-    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs",
-    "exp_id": "26193fdd",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Physics"
-  },
-  "infinite_games_against_death_immortality_strategie.json": {
-    "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games",
-    "exp_id": "4e3c94e5",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "this_research_cycle_established_the_foundational_t.json": {
-    "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality",
-    "exp_id": "3d08bbee",
-    "source_exp_ids": [
-      "e7dbad62"
-    ],
-    "domain": "Algebra"
-  },
-  "the_topology_of_knotted_light_how_laser_beams_get_.json": {
-    "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra",
-    "exp_id": "9096062f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "neural_pde_universality_classes_via_renormalizatio.json": {
-    "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
-    "exp_id": "46942b74",
-    "source_exp_ids": [
-      "pi_brainstorm"
-    ],
-    "domain": "Bridges"
-  },
-  "this_cycle_formalized_the_algebraic_core_of_the_he.json": {
-    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
-    "exp_id": "ec13a735",
-    "source_exp_ids": [
-      "c572edf3"
-    ],
-    "domain": "Bridges"
-  },
-  "infinite_dimensional_chess_winning_on_the_hilbert_.json": {
-    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board",
-    "exp_id": "e8aa6606",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Cryptography"
-  },
-  "complete_formal_framework_for_the_security_of_csid.json": {
-    "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains",
-    "exp_id": "f24c929d",
-    "source_exp_ids": [
-      "39d27153"
-    ],
-    "domain": "Shared"
-  },
-  "counterfactual_number_theory_what_if_primes_were_r.json": {
-    "title": "Counterfactual Number Theory: What If Primes Were Random?",
-    "exp_id": "da4c7c61",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "MachineLearning"
-  },
-  "algebraic_and_combinatorial_foundations_for_random.json": {
-    "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality",
-    "exp_id": "f977bb97",
-    "source_exp_ids": [
-      "941734c2"
-    ],
-    "domain": "Computation"
-  },
-  "social_credit_scores_as_topological_invariants.json": {
-    "title": "Social Credit Scores as Topological Invariants",
-    "exp_id": "faa42070",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
-  "this_research_cycle_formalized_the_algebraic_skele.json": {
-    "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion",
-    "exp_id": "c572edf3",
-    "source_exp_ids": [
-      "ab6b7dec"
-    ],
-    "domain": "Algebra"
-  },
-  "tropical_hodge_theory.json": {
-    "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes",
-    "exp_id": "12735337",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Tropical"
-  },
-  "paradoxes_as_theorems_liar_berry_and_russell_made_.json": {
-    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
-    "exp_id": "7ee1e9b0",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "cellular_automata_at_the_ordinals_transfinite_comp.json": {
-    "title": "Cellular Automata at the Ordinals: Transfinite Computation",
-    "exp_id": "5a82cace",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "the_topology_of_impossible_objects_escher_stairs_a.json": {
-    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
-    "exp_id": "e471f5e9",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
-  "anti_mathematics_what_if_all_axioms_were_negated.json": {
-    "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms",
-    "exp_id": "d8059b0e",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "the_p_vs_np_of_sudoku_phase_transitions_in_constra.json": {
-    "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity",
-    "exp_id": "c4d79127",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Speculative"
-  },
-  "the_fractal_dimension_of_mathematical_truth.json": {
-    "title": "The Fractal Dimension of Mathematical Truth",
-    "exp_id": "c808b38a",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Cryptography"
-  },
-  "the_unreasonable_effectiveness_of_wrong_theories.json": {
-    "title": "The Unreasonable Effectiveness of Wrong Theories",
-    "exp_id": "10ec7af4",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "self_modifying_code_that_cannot_be_stopped.json": {
-    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
-    "exp_id": "94584937",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
-  "mind_vs_gdel_can_minds_outperform_algorithms.json": {
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?",
-    "exp_id": "b16ddfc2",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Logic/Computability/Incompleteness"
-  },
-  "algebraic_skeleton_of_grothendiecks_standard_conje.json": {
-    "title": "Algebraic Skeleton of Grothendieck Standard Conjectures",
-    "exp_id": "25f4209c",
-    "source_exp_ids": [
-      "0554bed3"
-    ],
-    "domain": "Geometry"
-  },
-  "three_interconnected_results_about_quadratic_pol.json": {
-    "title": "Discriminant Uniformity and Splitting Type Distribution",
-    "exp_id": "21f2c1db",
-    "source_exp_ids": [
-      "b12db4e8"
-    ],
-    "domain": "Speculative"
-  },
-  "this_research_cycle_established_a_rigorous_framewo.json": {
-    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
-    "exp_id": "de323f00",
-    "source_exp_ids": [
-      "5a82cace"
-    ],
-    "domain": "Algebra"
-  },
-  "poincar_conjecture_revisited_4d_smooth.json": {
-    "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena",
-    "exp_id": "ca199fc5",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Physics"
-  },
-  "the_mega_sphere_all_dimensions_at_once.json": {
-    "title": "The Mega-Sphere: All Dimensions at Once",
-    "exp_id": "64431a8e",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Physics"
-  },
-  "catalans_conjecture_generalizations.json": {
-    "title": "Pillai's Conjecture and Exponential Diophantine Equations",
-    "exp_id": "b52cbca8",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "curvature_induced_computation_when_geodesic_flow_s.json": {
-    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
-    "exp_id": "7298cf4c",
-    "source_exp_ids": [
-      "pi_brainstorm"
-    ],
-    "domain": "Pythagorean"
-  },
-  "self_improving_proofs_proofs_that_get_simpler_over.json": {
-    "title": "Proof Refinement Systems: Self-Improving Proofs",
-    "exp_id": "8a2abb60",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Logic / Proof Theory / Mathematical Foundations"
-  },
-  "langlands_for_gl_over_q.json": {
-    "title": "Langlands Correspondence for GL\u2082 over \u211a",
-    "exp_id": "f2c79f3b",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "the_monster_groups_secret_message_moonshine_beyond.json": {
-    "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series",
-    "exp_id": "5c653e4c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Physics"
-  },
-  "one_way_functions_existence_and_hierarchy.json": {
-    "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption",
-    "exp_id": "26b0673b",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Cryptography"
-  },
-  "complete_formal_framework_for_cellular_automat.json": {
-    "title": "Transfinite Cellular Automata Depth Theory",
-    "exp_id": "ea8fbe44",
-    "source_exp_ids": [
-      "de323f00"
-    ],
-    "domain": "Algebra"
-  },
-  "dream_logic_non_monotone_reasoning_where_contradic.json": {
-    "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics",
-    "exp_id": "2fd1181d",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "this_research_cycle_established_the_mathematical_f.json": {
-    "title": "Height Cocycles and the Monodromy Classification of Impossible Figures",
-    "exp_id": "d2b0b7c5",
-    "source_exp_ids": [
-      "e471f5e9"
-    ],
-    "domain": "Algebra"
-  },
-  "homotopy_type_theory_as_foundations.json": {
-    "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces",
-    "exp_id": "ee1ee0cb",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Shared"
-  },
-  "self_avoiding_walk_connective_constant.json": {
-    "title": "Self-Avoiding Walk: Connective Constant",
-    "exp_id": "25b26084",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "EML"
-  },
-  "formal_foundation_for_orbit_shadowing_in_dynam.json": {
-    "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems",
-    "exp_id": "f037c01f",
-    "source_exp_ids": [
-      "26193fdd"
-    ],
-    "domain": "Dynamical Systems / Certified Computation"
-  },
-  "quantum_proofs_of_classical_theorems.json": {
-    "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps",
-    "exp_id": "c0a3ba3e",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "transfinite_game_theory_games_that_last_forever.json": {
-    "title": "Transfinite Game Theory: Games That Last Forever",
-    "exp_id": "09ad0b7d",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "fermat_near_misses_in_the_twilight_zone.json": {
-    "title": "Fermat Near-Misses in the Twilight Zone",
-    "exp_id": "a5c337ed",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "EML"
-  },
-  "unified_framework_for_understanding_self_refer.json": {
-    "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness",
-    "exp_id": "15bec107",
-    "source_exp_ids": [
-      "a2f51013"
-    ],
-    "domain": "Algebra"
-  },
-  "flatland_catastrophe_when_2d_physics_breaks.json": {
-    "title": "Flatland Catastrophe: When 2D Physics Breaks",
-    "exp_id": "337baefa",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Computation"
-  },
-  "tropical_fermats_last_theorem.json": {
-    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
-    "exp_id": "c27d447a",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "categorical_physics_the_shape_of_a_theory_of_every.json": {
-    "title": "Categorical Physics: The Shape of a Theory of Everything",
-    "exp_id": "4f5a41e1",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "artins_conjecture_on_primitive_roots.json": {
-    "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory",
-    "exp_id": "42ef5052",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Number Theory / Algebra"
-  },
-  "retrocausal_mathematics_where_effects_precede_caus.json": {
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes",
-    "exp_id": "e6851233",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
-  "reconstruction_conjecture.json": {
-    "title": "Formal Foundations of Graph Reconstruction Theory",
-    "exp_id": "77bc31c0",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "EML"
-  },
-  "sierpiski_numbers_covering_systems.json": {
-    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
-    "exp_id": "7c29780f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Computation"
-  },
-  "computational_complexity_of_alien_civilizations.json": {
-    "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory",
-    "exp_id": "78286831",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "surreal_topology_open_sets_at_infinity.json": {
-    "title": "Surreal Topology: Open Sets at Infinity",
-    "exp_id": "e7dbad62",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "entropy_power_inequality_sharp_version.json": {
-    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
-    "exp_id": "b3fdee2d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "biological_topology_protein_folding_as_persistent_.json": {
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
-    "exp_id": "6a2bfb31",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "aleph_1_surface_geometry_between_dimensions.json": {
-    "title": "Aleph-1 Surface: Geometry Between Dimensions",
-    "exp_id": "dbb47961",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "borges_library_of_babel_combinatorics_of_everythin.json": {
-    "title": "The Library of Babel: Combinatorial Topology of Everything",
-    "exp_id": "68aedb1e",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Geometry"
-  },
-  "this_research_cycle_established_a_formal_bridge_be.json": {
-    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
-    "exp_id": "c3940ca2",
-    "source_exp_ids": [
-      "ece3d9d6"
-    ],
-    "domain": "Algebra"
-  },
-  "strange_loops_self_reference_and_gdels_incompleten.json": {
-    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices",
-    "exp_id": "a2f51013",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Cryptography"
-  },
-  "scaling_laws_from_statistical_mechanics.json": {
-    "title": "Neural Scaling Laws from Statistical Mechanics",
-    "exp_id": "1d4fa7b3",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Speculative"
-  },
-  "unique_games_conjecture.json": {
-    "title": "Unique Games Conjecture: Mathematical Foundations",
-    "exp_id": "9ab1ce15",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Computation"
-  },
-  "erds_faber_lovsz_conjecture.json": {
-    "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization",
-    "exp_id": "035c8fa4",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "EML"
-  },
-  "hadwigers_conjecture.json": {
-    "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory",
-    "exp_id": "d0ddefbd",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Geometry"
-  },
-  "tangled_hierarchies_proof_systems_that_reference_t.json": {
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness",
-    "exp_id": "13c69dba",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Bridges"
-  },
   "aboriginal_kinship_as_group_theory_dreamtime_algeb.json": {
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "domain": "Algebra",
     "exp_id": "5d630953",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
-  "homotopy_type_theory_of_cooking_recipes_paths_betw.json": {
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes",
-    "exp_id": "e174af4c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "yamabe_problem_non_compact_case.json": {
-    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
-    "exp_id": "e750bf27",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Differential Geometry / Geometric Analysis"
-  },
-  "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-    "exp_id": "abcc87bf",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Bridges"
-  },
-  "complete_newton_hodge_polygon_framework_for_2_dime.json": {
-    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
-    "exp_id": "5082b772",
-    "source_exp_ids": [
-      "24a63e9e"
-    ],
-    "domain": "Logic"
-  },
-  "transreal_arithmetic_computing_beyond_plus_minus_i.json": {
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
-    "exp_id": "f63407cb",
+  "aleph_1_surface_geometry_between_dimensions.json": {
+    "domain": "Algebra",
+    "exp_id": "dbb47961",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Cryptography"
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
-  "rigorous_formal_framework_for_the_entropy_powe.json": {
-    "title": "Entropy Power Inequality: Formal Framework and Geometric Connections",
-    "exp_id": "8a0058f1",
+  "algebraic_and_combinatorial_foundations_for_random.json": {
+    "domain": "Computation",
+    "exp_id": "f977bb97",
     "source_exp_ids": [
-      "b3fdee2d"
+      "941734c2"
     ],
-    "domain": "Algebra"
+    "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality"
   },
-  "hilberts_hotel_for_primes_an_infinite_hotel_where_.json": {
-    "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations",
-    "exp_id": "77da1fcc",
+  "algebraic_skeleton_of_grothendiecks_standard_conje.json": {
+    "domain": "Geometry",
+    "exp_id": "25f4209c",
     "source_exp_ids": [
-      "seed"
+      "0554bed3"
     ],
-    "domain": "Speculative"
+    "title": "Algebraic Skeleton of Grothendieck Standard Conjectures"
   },
-  "complete_algebraic_theory_of_the_hecke_eigenvalue_.json": {
-    "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082",
-    "exp_id": "72c3a7a8",
-    "source_exp_ids": [
-      "ec13a735"
-    ],
-    "domain": "Bridges"
-  },
-  "mathematical_foundations_for_analyzing_mind.json": {
-    "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding",
-    "exp_id": "48fcc0d8",
-    "source_exp_ids": [
-      "7cd2b5be"
-    ],
-    "domain": "Algebra"
-  },
-  "time_travel_consistency_novikovs_principle_as_a_fi.json": {
-    "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem",
-    "exp_id": "72018c51",
+  "anti_mathematics_what_if_all_axioms_were_negated.json": {
+    "domain": "Algebra",
+    "exp_id": "d8059b0e",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms"
   },
-  "complete_formal_chain_connecting_ssa_program_s.json": {
-    "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation",
-    "exp_id": "69828345",
-    "source_exp_ids": [
-      "7894af63"
-    ],
-    "domain": "Computation"
-  },
-  "stochastic_galois_theory_random_permutations_have_.json": {
-    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
-    "exp_id": "a1511534",
+  "arithmetic_mirror_symmetry_for_calabi_yau.json": {
+    "domain": "Bridges",
+    "exp_id": "e657f9e8",
     "source_exp_ids": [
       "seed"
     ],
-    "domain": "Geometry"
+    "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds"
   },
-  "foundational_infrastructure_for_studying_oracle_hi.json": {
-    "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points",
-    "exp_id": "d08a3f0d",
-    "source_exp_ids": [
-      "c6e162ae"
-    ],
-    "domain": "Computation"
-  },
-  "rotas_basis_conjecture.json": {
-    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
-    "exp_id": "edde521f",
+  "artins_conjecture_on_primitive_roots.json": {
+    "domain": "Number Theory / Algebra",
+    "exp_id": "42ef5052",
     "source_exp_ids": [
       "seed"
     ],
-    "domain": "Algebra"
+    "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory"
   },
-  "isomorphisms_of_meaning_when_structures_collide.json": {
-    "title": "Isomorphisms of Meaning: When Structures Collide",
-    "exp_id": "1debcf92",
+  "biological_topology_protein_folding_as_persistent_.json": {
+    "domain": "Bridges",
+    "exp_id": "6a2bfb31",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+  },
+  "borges_library_of_babel_combinatorics_of_everythin.json": {
+    "domain": "Geometry",
+    "exp_id": "68aedb1e",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "The Library of Babel: Combinatorial Topology of Everything"
+  },
+  "catalans_conjecture_generalizations.json": {
+    "domain": "Algebra",
+    "exp_id": "b52cbca8",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Pillai's Conjecture and Exponential Diophantine Equations"
+  },
+  "categorical_physics_the_shape_of_a_theory_of_every.json": {
+    "domain": "Algebra",
+    "exp_id": "4f5a41e1",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   "causal_loops_in_category_theory_when_composition_l.json": {
-    "title": "Causal Loops in Category Theory: When Composition Loops Back",
+    "domain": "Pythagorean",
     "exp_id": "8d4f7af1",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Pythagorean"
+    "title": "Causal Loops in Category Theory: When Composition Loops Back"
+  },
+  "cellular_automata_at_the_ordinals_transfinite_comp.json": {
+    "domain": "Computation",
+    "exp_id": "5a82cace",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  "chaos_as_a_computable_shadow_the_shadowing_lemma_f.json": {
+    "domain": "Physics",
+    "exp_id": "26193fdd",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+  },
+  "complete_algebraic_theory_of_the_hecke_eigenvalue_.json": {
+    "domain": "Bridges",
+    "exp_id": "72c3a7a8",
+    "source_exp_ids": [
+      "ec13a735"
+    ],
+    "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082"
+  },
+  "complete_formal_chain_connecting_ssa_program_s.json": {
+    "domain": "Computation",
+    "exp_id": "69828345",
+    "source_exp_ids": [
+      "7894af63"
+    ],
+    "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation"
+  },
+  "complete_formal_framework_for_cellular_automat.json": {
+    "domain": "Algebra",
+    "exp_id": "ea8fbe44",
+    "source_exp_ids": [
+      "de323f00"
+    ],
+    "title": "Transfinite Cellular Automata Depth Theory"
+  },
+  "complete_formal_framework_for_the_security_of_csid.json": {
+    "domain": "Shared",
+    "exp_id": "f24c929d",
+    "source_exp_ids": [
+      "39d27153"
+    ],
+    "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains"
+  },
+  "complete_formalized_algebraic_theory_of_quasif.json": {
+    "domain": "Pythagorean",
+    "exp_id": "dc49b350",
+    "source_exp_ids": [
+      "6f1b7d62"
+    ],
+    "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes"
+  },
+  "complete_newton_hodge_polygon_framework_for_2_dime.json": {
+    "domain": "Logic",
+    "exp_id": "5082b772",
+    "source_exp_ids": [
+      "24a63e9e"
+    ],
+    "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules"
+  },
+  "computational_complexity_of_alien_civilizations.json": {
+    "domain": "Algebra",
+    "exp_id": "78286831",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory"
   },
   "consciousness_as_emergent_fixed_point.json": {
-    "title": "Consciousness as Emergent Fixed Point",
+    "domain": "Algebra",
     "exp_id": "d3f7a259",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Consciousness as Emergent Fixed Point"
   },
-  "negative_dimensional_topology_what_lives_in_dimens.json": {
-    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
-    "exp_id": "6d12eefe",
+  "counterfactual_number_theory_what_if_primes_were_r.json": {
+    "domain": "MachineLearning",
+    "exp_id": "da4c7c61",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
-  "newton_hodge_polygon_framework_for_the_p_adic_lang.json": {
-    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
-    "exp_id": "24a63e9e",
+  "curvature_induced_computation_when_geodesic_flow_s.json": {
+    "domain": "Pythagorean",
+    "exp_id": "7298cf4c",
     "source_exp_ids": [
-      "f95fe11c"
+      "pi_brainstorm"
     ],
-    "domain": "Bridges"
+    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine"
   },
-  "non_desarguesian_worlds_geometry_without_desargues.json": {
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues",
-    "exp_id": "f67feb4b",
+  "digital_immortality_can_a_mind_be_encoded.json": {
+    "domain": "MachineLearning",
+    "exp_id": "7cd2b5be",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading"
+  },
+  "discriminant_uniformity_theorem_for_quad.json": {
+    "domain": "Algebra",
+    "exp_id": "b12db4e8",
+    "source_exp_ids": [
+      "a1511534"
+    ],
+    "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields"
+  },
+  "dream_logic_non_monotone_reasoning_where_contradic.json": {
+    "domain": "Computation",
+    "exp_id": "2fd1181d",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics"
   },
-  "memory_editing_when_forgetting_is_a_mathematical_o.json": {
-    "title": "Memory Algebra: When Forgetting Is a Mathematical Operation",
-    "exp_id": "0fa49dec",
+  "entropy_power_inequality_sharp_version.json": {
+    "domain": "Bridges",
+    "exp_id": "b3fdee2d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge"
+  },
+  "erds_faber_lovsz_conjecture.json": {
+    "domain": "EML",
+    "exp_id": "035c8fa4",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization"
+  },
+  "fermat_near_misses_in_the_twilight_zone.json": {
+    "domain": "EML",
+    "exp_id": "a5c337ed",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Algebra"
+    "title": "Fermat Near-Misses in the Twilight Zone"
   },
-  "hypercomputation_computing_the_uncomputable.json": {
-    "title": "Hypercomputation: Computing the Uncomputable",
-    "exp_id": "7212b89e",
+  "flatland_catastrophe_when_2d_physics_breaks.json": {
+    "domain": "Computation",
+    "exp_id": "337baefa",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "MachineLearning"
-  },
-  "sensitivity_conjecture_extensions.json": {
-    "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds",
-    "exp_id": "9db20339",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Computation"
-  },
-  "formalizing_the_probabilistic_method_erdos_meets_l.json": {
-    "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs",
-    "exp_id": "7d04715f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Tropical"
-  },
-  "learning_with_errors_hardness_reductions.json": {
-    "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors",
-    "exp_id": "ec4068d3",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Cryptography"
-  },
-  "the_combinatorics_of_compiler_optimization_registe.json": {
-    "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality",
-    "exp_id": "7894af63",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Shared"
-  },
-  "formal_bridge_between_homotopy_type_theory_hott_an.json": {
-    "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics",
-    "exp_id": "81ce5201",
-    "source_exp_ids": [
-      "b5aa996d"
-    ],
-    "domain": "Logic"
-  },
-  "standard_conjectures_on_algebraic_cycles.json": {
-    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
-    "exp_id": "0554bed3",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Algebra"
-  },
-  "topological_quantum_computing_braiding_universalit.json": {
-    "title": "Braiding Universality for Topological Quantum Computing",
-    "exp_id": "e818d35f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "domain": "Physics"
-  },
-  "zombies_and_qualia_mathematics_of_subjective_exper.json": {
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience",
-    "exp_id": "1e534e5d",
-    "source_exp_ids": [
-      "seed_wave7"
-    ],
-    "domain": "Algebra"
-  },
-  "rigorous_mathematical_framework_for_tangled_hierar.json": {
-    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
-    "exp_id": "06268486",
-    "source_exp_ids": [
-      "13c69dba"
-    ],
-    "domain": "Logic"
+    "title": "Flatland Catastrophe: When 2D Physics Breaks"
   },
   "formal_algebraic_foundations_of_isogeny_base.json": {
-    "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography",
+    "domain": "Algebra",
     "exp_id": "da3578b4",
     "source_exp_ids": [
       "3971a79e"
     ],
-    "domain": "Algebra"
+    "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography"
+  },
+  "formal_bridge_between_homotopy_type_theory_hott_an.json": {
+    "domain": "Logic",
+    "exp_id": "81ce5201",
+    "source_exp_ids": [
+      "b5aa996d"
+    ],
+    "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics"
+  },
+  "formal_bridge_between_the_probabilistic_method.json": {
+    "domain": "Speculative",
+    "exp_id": "a6ad1c91",
+    "source_exp_ids": [
+      "7d04715f"
+    ],
+    "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs"
+  },
+  "formal_foundation_for_orbit_shadowing_in_dynam.json": {
+    "domain": "Dynamical Systems / Certified Computation",
+    "exp_id": "f037c01f",
+    "source_exp_ids": [
+      "26193fdd"
+    ],
+    "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems"
   },
   "formal_theory_connecting_classical_impossibili.json": {
-    "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions",
+    "domain": "Speculative",
     "exp_id": "18e34d1c",
     "source_exp_ids": [
       "adade94b"
     ],
-    "domain": "Speculative"
+    "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions"
   },
-  "surveillance_networks_information_theoretic_undete.json": {
-    "title": "Surveillance Networks: Information-Theoretic Undetectability",
-    "exp_id": "8f43e9e1",
+  "formalizing_the_probabilistic_method_erdos_meets_l.json": {
+    "domain": "Tropical",
+    "exp_id": "7d04715f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs"
+  },
+  "foundational_infrastructure_for_studying_oracle_hi.json": {
+    "domain": "Computation",
+    "exp_id": "d08a3f0d",
+    "source_exp_ids": [
+      "c6e162ae"
+    ],
+    "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points"
+  },
+  "hadwigers_conjecture.json": {
+    "domain": "Geometry",
+    "exp_id": "d0ddefbd",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory"
+  },
+  "hilberts_hotel_for_primes_an_infinite_hotel_where_.json": {
+    "domain": "Speculative",
+    "exp_id": "77da1fcc",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations"
+  },
+  "homotopy_type_theory_as_foundations.json": {
+    "domain": "Shared",
+    "exp_id": "ee1ee0cb",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces"
+  },
+  "homotopy_type_theory_of_cooking_recipes_paths_betw.json": {
+    "domain": "Algebra",
+    "exp_id": "e174af4c",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+  },
+  "hyperbolic_number_theory_arithmetic_on_the_poincar.json": {
+    "domain": "Bridges",
+    "exp_id": "abcc87bf",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  "hypercomputation_computing_the_uncomputable.json": {
+    "domain": "MachineLearning",
+    "exp_id": "7212b89e",
     "source_exp_ids": [
       "seed_wave7"
     ],
-    "domain": "Bridges"
+    "title": "Hypercomputation: Computing the Uncomputable"
+  },
+  "impossibility_results_for_fun_things_that_cannot_b.json": {
+    "domain": "Computation",
+    "exp_id": "adade94b",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis"
+  },
+  "infinite_dimensional_chess_winning_on_the_hilbert_.json": {
+    "domain": "Cryptography",
+    "exp_id": "e8aa6606",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  "infinite_games_against_death_immortality_strategie.json": {
+    "domain": "Computation",
+    "exp_id": "4e3c94e5",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games"
+  },
+  "isogeny_based_cryptography_csi_fish.json": {
+    "domain": "Cryptography",
+    "exp_id": "813b355c",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh"
+  },
+  "isomorphisms_of_meaning_when_structures_collide.json": {
+    "domain": "Algebra",
+    "exp_id": "1debcf92",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Isomorphisms of Meaning: When Structures Collide"
+  },
+  "langlands_for_gl_over_q.json": {
+    "domain": "Bridges",
+    "exp_id": "f2c79f3b",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Langlands Correspondence for GL\u2082 over \u211a"
+  },
+  "learning_with_errors_hardness_reductions.json": {
+    "domain": "Cryptography",
+    "exp_id": "ec4068d3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors"
+  },
+  "mathematical_foundations_for_analyzing_mind.json": {
+    "domain": "Algebra",
+    "exp_id": "48fcc0d8",
+    "source_exp_ids": [
+      "7cd2b5be"
+    ],
+    "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding"
+  },
+  "memory_editing_when_forgetting_is_a_mathematical_o.json": {
+    "domain": "Algebra",
+    "exp_id": "0fa49dec",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Memory Algebra: When Forgetting Is a Mathematical Operation"
+  },
+  "mind_vs_gdel_can_minds_outperform_algorithms.json": {
+    "domain": "Logic/Computability/Incompleteness",
+    "exp_id": "b16ddfc2",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
+  },
+  "negative_dimensional_topology_what_lives_in_dimens.json": {
+    "domain": "Algebra",
+    "exp_id": "6d12eefe",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory"
+  },
+  "neural_pde_universality_classes_via_renormalizatio.json": {
+    "domain": "Bridges",
+    "exp_id": "46942b74",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "title": "Neural PDE Universality Classes via Renormalization Fixed Points"
+  },
+  "newton_hodge_polygon_framework_for_the_p_adic_lang.json": {
+    "domain": "Bridges",
+    "exp_id": "24a63e9e",
+    "source_exp_ids": [
+      "f95fe11c"
+    ],
+    "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence"
+  },
+  "non_desarguesian_worlds_geometry_without_desargues.json": {
+    "domain": "Algebra",
+    "exp_id": "f67feb4b",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+  },
+  "one_way_functions_existence_and_hierarchy.json": {
+    "domain": "Cryptography",
+    "exp_id": "26b0673b",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption"
   },
   "p_adic_langlands_for_glq_p.json": {
-    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
+    "domain": "Bridges",
     "exp_id": "f75c509b",
     "source_exp_ids": [
       "seed"
     ],
-    "domain": "Bridges"
+    "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations"
+  },
+  "paradoxes_as_theorems_liar_berry_and_russell_made_.json": {
+    "domain": "Algebra",
+    "exp_id": "7ee1e9b0",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+  },
+  "poincar_conjecture_revisited_4d_smooth.json": {
+    "domain": "Physics",
+    "exp_id": "ca199fc5",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena"
+  },
+  "primewise_persistent_homology_detects_exceptional_.json": {
+    "domain": "MachineLearning",
+    "exp_id": "2b593e59",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth"
+  },
+  "quantum_proofs_of_classical_theorems.json": {
+    "domain": "Algebra",
+    "exp_id": "c0a3ba3e",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps"
+  },
+  "random_matrices_edge_universality.json": {
+    "domain": "Algebra",
+    "exp_id": "941734c2",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution"
+  },
+  "reconstruction_conjecture.json": {
+    "domain": "EML",
+    "exp_id": "77bc31c0",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Formal Foundations of Graph Reconstruction Theory"
+  },
+  "reflective_type_theory_proving_things_about_provin.json": {
+    "domain": "Cryptography",
+    "exp_id": "bc59d5da",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Reflective Type Theory: Proving Things About Proving Things"
+  },
+  "reflective_type_theory_refltt_as_a_formal_fram.json": {
+    "domain": "MachineLearning",
+    "exp_id": "892c306f",
+    "source_exp_ids": [
+      "bc59d5da"
+    ],
+    "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic"
+  },
+  "resolution_of_singularities_in_positive_characteri.json": {
+    "domain": "Algebra",
+    "exp_id": "02d2fadb",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations"
+  },
+  "retrocausal_mathematics_where_effects_precede_caus.json": {
+    "domain": "Bridges",
+    "exp_id": "e6851233",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+  },
+  "rigorous_formal_framework_for_the_entropy_powe.json": {
+    "domain": "Algebra",
+    "exp_id": "8a0058f1",
+    "source_exp_ids": [
+      "b3fdee2d"
+    ],
+    "title": "Entropy Power Inequality: Formal Framework and Geometric Connections"
+  },
+  "rigorous_mathematical_framework_for_tangled_hierar.json": {
+    "domain": "Logic",
+    "exp_id": "06268486",
+    "source_exp_ids": [
+      "13c69dba"
+    ],
+    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic"
+  },
+  "rotas_basis_conjecture.json": {
+    "domain": "Algebra",
+    "exp_id": "edde521f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach"
+  },
+  "scaling_laws_from_statistical_mechanics.json": {
+    "domain": "Speculative",
+    "exp_id": "1d4fa7b3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Neural Scaling Laws from Statistical Mechanics"
+  },
+  "self_avoiding_walk_connective_constant.json": {
+    "domain": "EML",
+    "exp_id": "25b26084",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Self-Avoiding Walk: Connective Constant"
+  },
+  "self_improving_proofs_proofs_that_get_simpler_over.json": {
+    "domain": "Logic / Proof Theory / Mathematical Foundations",
+    "exp_id": "8a2abb60",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Proof Refinement Systems: Self-Improving Proofs"
+  },
+  "self_modifying_code_that_cannot_be_stopped.json": {
+    "domain": "Bridges",
+    "exp_id": "94584937",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment"
+  },
+  "sensitivity_conjecture_extensions.json": {
+    "domain": "Computation",
+    "exp_id": "9db20339",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds"
+  },
+  "sierpiski_numbers_covering_systems.json": {
+    "domain": "Computation",
+    "exp_id": "7c29780f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem"
+  },
+  "social_credit_scores_as_topological_invariants.json": {
+    "domain": "Bridges",
+    "exp_id": "faa42070",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Social Credit Scores as Topological Invariants"
+  },
+  "standard_conjectures_on_algebraic_cycles.json": {
+    "domain": "Algebra",
+    "exp_id": "0554bed3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives"
+  },
+  "stochastic_galois_theory_random_permutations_have_.json": {
+    "domain": "Geometry",
+    "exp_id": "a1511534",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  "strange_loops_self_reference_and_gdels_incompleten.json": {
+    "domain": "Cryptography",
+    "exp_id": "a2f51013",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices"
+  },
+  "surreal_topology_open_sets_at_infinity.json": {
+    "domain": "Algebra",
+    "exp_id": "e7dbad62",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  "surveillance_networks_information_theoretic_undete.json": {
+    "domain": "Bridges",
+    "exp_id": "8f43e9e1",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Surveillance Networks: Information-Theoretic Undetectability"
+  },
+  "tangled_hierarchies_proof_systems_that_reference_t.json": {
+    "domain": "Bridges",
+    "exp_id": "13c69dba",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  "the_combinatorics_of_compiler_optimization_registe.json": {
+    "domain": "Shared",
+    "exp_id": "7894af63",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality"
+  },
+  "the_fractal_dimension_of_mathematical_truth.json": {
+    "domain": "Cryptography",
+    "exp_id": "c808b38a",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "The Fractal Dimension of Mathematical Truth"
+  },
+  "the_mega_sphere_all_dimensions_at_once.json": {
+    "domain": "Physics",
+    "exp_id": "64431a8e",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "The Mega-Sphere: All Dimensions at Once"
+  },
+  "the_monster_groups_secret_message_moonshine_beyond.json": {
+    "domain": "Physics",
+    "exp_id": "5c653e4c",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series"
+  },
+  "the_oracles_burden_how_much_knowledge_is_too_much.json": {
+    "domain": "Computation",
+    "exp_id": "c6e162ae",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory"
+  },
+  "the_p_vs_np_of_sudoku_phase_transitions_in_constra.json": {
+    "domain": "Speculative",
+    "exp_id": "c4d79127",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity"
+  },
+  "the_topology_of_impossible_objects_escher_stairs_a.json": {
+    "domain": "Bridges",
+    "exp_id": "e471f5e9",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+  },
+  "the_topology_of_knotted_light_how_laser_beams_get_.json": {
+    "domain": "Bridges",
+    "exp_id": "9096062f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra"
+  },
+  "the_unreasonable_effectiveness_of_wrong_theories.json": {
+    "domain": "Algebra",
+    "exp_id": "10ec7af4",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "The Unreasonable Effectiveness of Wrong Theories"
+  },
+  "thermodynamics_of_mathematical_proof.json": {
+    "domain": "Bridges",
+    "exp_id": "5601e70d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof"
+  },
+  "this_cycle_formalized_the_algebraic_core_of_the_he.json": {
+    "domain": "Bridges",
+    "exp_id": "ec13a735",
+    "source_exp_ids": [
+      "c572edf3"
+    ],
+    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082"
+  },
+  "this_research_cycle_established_a_formal_bridge_be.json": {
+    "domain": "Algebra",
+    "exp_id": "c3940ca2",
+    "source_exp_ids": [
+      "ece3d9d6"
+    ],
+    "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies"
+  },
+  "this_research_cycle_established_a_rigorous_framewo.json": {
+    "domain": "Algebra",
+    "exp_id": "de323f00",
+    "source_exp_ids": [
+      "5a82cace"
+    ],
+    "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification"
+  },
+  "this_research_cycle_established_the_foundational_t.json": {
+    "domain": "Algebra",
+    "exp_id": "3d08bbee",
+    "source_exp_ids": [
+      "e7dbad62"
+    ],
+    "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality"
+  },
+  "this_research_cycle_established_the_mathematical_f.json": {
+    "domain": "Algebra",
+    "exp_id": "d2b0b7c5",
+    "source_exp_ids": [
+      "e471f5e9"
+    ],
+    "title": "Height Cocycles and the Monodromy Classification of Impossible Figures"
+  },
+  "this_research_cycle_formalized_the_algebraic_skele.json": {
+    "domain": "Algebra",
+    "exp_id": "c572edf3",
+    "source_exp_ids": [
+      "ab6b7dec"
+    ],
+    "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion"
+  },
+  "three_interconnected_results_about_quadratic_pol.json": {
+    "domain": "Speculative",
+    "exp_id": "21f2c1db",
+    "source_exp_ids": [
+      "b12db4e8"
+    ],
+    "title": "Discriminant Uniformity and Splitting Type Distribution"
+  },
+  "time_travel_consistency_novikovs_principle_as_a_fi.json": {
+    "domain": "Algebra",
+    "exp_id": "72018c51",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem"
+  },
+  "topological_quantum_computing_braiding_universalit.json": {
+    "domain": "Physics",
+    "exp_id": "e818d35f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Braiding Universality for Topological Quantum Computing"
+  },
+  "transfinite_game_theory_games_that_last_forever.json": {
+    "domain": "Computation",
+    "exp_id": "09ad0b7d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Transfinite Game Theory: Games That Last Forever"
+  },
+  "transreal_arithmetic_computing_beyond_plus_minus_i.json": {
+    "domain": "Cryptography",
+    "exp_id": "f63407cb",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  "tropical_cryptocurrency_mining_on_the_min_plus_sem.json": {
+    "domain": "Physics",
+    "exp_id": "031ed73c",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+  },
+  "tropical_fermats_last_theorem.json": {
+    "domain": "Algebra",
+    "exp_id": "c27d447a",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem"
+  },
+  "tropical_hodge_theory.json": {
+    "domain": "Tropical",
+    "exp_id": "12735337",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes"
+  },
+  "tropical_valuation_functor_as_an_order_preserving_.json": {
+    "domain": "Bridges",
+    "exp_id": "5392c445",
+    "source_exp_ids": [],
+    "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity"
+  },
+  "unified_framework_for_understanding_self_refer.json": {
+    "domain": "Algebra",
+    "exp_id": "15bec107",
+    "source_exp_ids": [
+      "a2f51013"
+    ],
+    "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness"
+  },
+  "unique_games_conjecture.json": {
+    "domain": "Computation",
+    "exp_id": "9ab1ce15",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Unique Games Conjecture: Mathematical Foundations"
+  },
+  "yamabe_problem_non_compact_case.json": {
+    "domain": "Differential Geometry / Geometric Analysis",
+    "exp_id": "e750bf27",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory"
+  },
+  "zombies_and_qualia_mathematics_of_subjective_exper.json": {
+    "domain": "Algebra",
+    "exp_id": "1e534e5d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   }
 };
 
 
 // Knowledge Graph Data (auto-generated from lineage.json)
 window.PACKAGE_GRAPH = {
-  "nodes": [
-    {
-      "id": "primewise_persistent_homology_detects_exceptional_",
-      "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-05-31T14:57:35Z",
-      "hue": 270,
-      "priority_score": 0.7517668674698796,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_research_cycle_established_a_formal_bridge_be",
-      "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T15:44:02Z",
-      "hue": 91,
-      "priority_score": 0.722909152542373,
-      "quality": "substantial"
-    },
-    {
-      "id": "biological_topology_protein_folding_as_persistent_",
-      "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T15:45:19Z",
-      "hue": 272,
-      "priority_score": 0.7471118604651162,
-      "quality": "substantial"
-    },
-    {
-      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T16:23:25Z",
-      "hue": 91,
-      "priority_score": 0.5950639917089624,
-      "quality": "partial"
-    },
-    {
-      "id": "rotas_basis_conjecture",
-      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:19:26Z",
-      "hue": 90,
-      "priority_score": 0.7123901951219513,
-      "quality": "substantial"
-    },
-    {
-      "id": "random_matrices_edge_universality",
-      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:22:14Z",
-      "hue": 271,
-      "priority_score": 0.7068734374999999,
-      "quality": "substantial"
-    },
-    {
-      "id": "catalans_conjecture_generalizations",
-      "title": "Pillai's Conjecture and Exponential Diophantine Equations",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
-      "priority_score": 0.6621330000000001,
-      "quality": "partial"
-    },
-    {
-      "id": "resolution_of_singularities_in_positive_characteri",
-      "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:23:45Z",
-      "hue": 92,
-      "priority_score": 0.7457928571428571,
-      "quality": "substantial"
-    },
-    {
-      "id": "standard_conjectures_on_algebraic_cycles",
-      "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:24:43Z",
-      "hue": 272,
-      "priority_score": 0.7282123376623377,
-      "quality": "substantial"
-    },
-    {
-      "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
-      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:25:11Z",
-      "hue": 90,
-      "priority_score": 0.6860414464845499,
-      "quality": "partial"
-    },
-    {
-      "id": "negative_dimensional_topology_what_lives_in_dimens",
-      "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
-      "priority_score": 0.7052853846153846,
-      "quality": "substantial"
-    },
-    {
-      "id": "entropy_power_inequality_sharp_version",
-      "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T21:30:36Z",
-      "hue": 90,
-      "priority_score": 0.7035288321167883,
-      "quality": "substantial"
-    },
-    {
-      "id": "neural_pde_universality_classes_via_renormalizatio",
-      "title": "Neural PDE Universality Classes via Renormalization Fixed Points",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T21:31:14Z",
-      "hue": 92,
-      "priority_score": 0.7212349056603773,
-      "quality": "substantial"
-    },
-    {
-      "id": "the_topology_of_impossible_objects_escher_stairs_a",
-      "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T21:57:15Z",
-      "hue": 90,
-      "priority_score": 0.7488625,
-      "quality": "substantial"
-    },
-    {
-      "id": "self_modifying_code_that_cannot_be_stopped",
-      "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-31T21:57:44Z",
-      "hue": 95,
-      "priority_score": 0.7406316585365854,
-      "quality": "substantial"
-    },
-    {
-      "id": "sierpiski_numbers_covering_systems",
-      "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T22:43:44Z",
-      "hue": 270,
-      "priority_score": 0.7134367272727273,
-      "quality": "substantial"
-    },
-    {
-      "id": "cellular_automata_at_the_ordinals_transfinite_comp",
-      "title": "Cellular Automata at the Ordinals: Transfinite Computation",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T22:44:03Z",
-      "hue": 271,
-      "priority_score": 0.735339756097561,
-      "quality": "substantial"
-    },
-    {
-      "id": "transfinite_game_theory_games_that_last_forever",
-      "title": "Transfinite Game Theory: Games That Last Forever",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-31T23:16:13Z",
-      "hue": 271,
-      "priority_score": 0.7225286206896553,
-      "quality": "substantial"
-    },
-    {
-      "id": "tropical_fermats_last_theorem",
-      "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:16:32Z",
-      "hue": 91,
-      "priority_score": 0.6683460000000001,
-      "quality": "partial"
-    },
-    {
-      "id": "the_unreasonable_effectiveness_of_wrong_theories",
-      "title": "The Unreasonable Effectiveness of Wrong Theories",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:17:11Z",
-      "hue": 91,
-      "priority_score": 0.7302532967032966,
-      "quality": "substantial"
-    },
-    {
-      "id": "surreal_topology_open_sets_at_infinity",
-      "title": "Surreal Topology: Open Sets at Infinity",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:17:33Z",
-      "hue": 272,
-      "priority_score": 0.6766884516129033,
-      "quality": "partial"
-    },
-    {
-      "id": "isomorphisms_of_meaning_when_structures_collide",
-      "title": "Isomorphisms of Meaning: When Structures Collide",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:50:29Z",
-      "hue": 270,
-      "priority_score": 0.7206367500000002,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_research_cycle_established_a_rigorous_framewo",
-      "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:50:52Z",
-      "hue": 90,
-      "priority_score": 0.7352763636363637,
-      "quality": "substantial"
-    },
-    {
-      "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-31T23:51:11Z",
-      "hue": 90,
-      "priority_score": 0.7053548000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "consciousness_as_emergent_fixed_point",
-      "title": "Consciousness as Emergent Fixed Point",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T00:29:11Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "learning_with_errors_hardness_reductions",
-      "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T00:30:53Z",
-      "hue": 90,
-      "priority_score": 0.6829911764705883,
-      "quality": "partial"
-    },
-    {
-      "id": "one_way_functions_existence_and_hierarchy",
-      "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T00:31:21Z",
-      "hue": 92,
-      "priority_score": 0.7347950000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "strange_loops_self_reference_and_gdels_incompleten",
-      "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T00:32:20Z",
-      "hue": 90,
-      "priority_score": 0.7400781690140845,
-      "quality": "substantial"
-    },
-    {
-      "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
-      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T00:32:51Z",
-      "hue": 91,
-      "priority_score": 0.6939177114686041,
-      "quality": "partial"
-    },
-    {
-      "id": "the_oracles_burden_how_much_knowledge_is_too_much",
-      "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T00:33:21Z",
-      "hue": 272,
-      "priority_score": 0.717505375,
-      "quality": "substantial"
-    },
-    {
-      "id": "infinite_dimensional_chess_winning_on_the_hilbert_",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T01:24:31Z",
-      "hue": 90,
-      "priority_score": 0.7194500000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_research_cycle_formalized_the_algebraic_skele",
-      "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T01:25:00Z",
-      "hue": 271,
-      "priority_score": 0.6966124390243902,
-      "quality": "partial"
-    },
-    {
-      "id": "zombies_and_qualia_mathematics_of_subjective_exper",
-      "title": "Zombies and Qualia: Mathematics of Subjective Experience",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T01:25:32Z",
-      "hue": 271,
-      "priority_score": 0.7355707481125602,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_research_cycle_established_the_foundational_t",
-      "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T01:58:10Z",
-      "hue": 292,
-      "priority_score": 0.7722411111111112,
-      "quality": "substantial"
-    },
-    {
-      "id": "aleph_1_surface_geometry_between_dimensions",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T01:58:32Z",
-      "hue": 92,
-      "priority_score": 0.720886612244898,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_research_cycle_established_the_mathematical_f",
-      "title": "Height Cocycles and the Monodromy Classification of Impossible Figures",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T02:30:11Z",
-      "hue": 91,
-      "priority_score": 0.7242500000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "tangled_hierarchies_proof_systems_that_reference_t",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T02:30:41Z",
-      "hue": 90,
-      "priority_score": 0.7527642857142857,
-      "quality": "substantial"
-    },
-    {
-      "id": "this_cycle_formalized_the_algebraic_core_of_the_he",
-      "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T02:44:09Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "thermodynamics_of_mathematical_proof",
-      "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T02:45:09Z",
-      "hue": 272,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "hadwigers_conjecture",
-      "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory",
-      "domain": "Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-06-01T03:49:22Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "causal_loops_in_category_theory_when_composition_l",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back",
-      "domain": "Pythagorean",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-06-01T03:49:46Z",
-      "hue": 271,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "the_mega_sphere_all_dimensions_at_once",
-      "title": "The Mega-Sphere: All Dimensions at Once",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T03:50:10Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "the_fractal_dimension_of_mathematical_truth",
-      "title": "The Fractal Dimension of Mathematical Truth",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T04:22:48Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "rigorous_mathematical_framework_for_tangled_hierar",
-      "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
-      "domain": "Logic",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-06-01T04:23:08Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "hypercomputation_computing_the_uncomputable",
-      "title": "Hypercomputation: Computing the Uncomputable",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-06-01T04:56:46Z",
-      "hue": 275,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "fermat_near_misses_in_the_twilight_zone",
-      "title": "Fermat Near-Misses in the Twilight Zone",
-      "domain": "EML",
-      "primary_domain": "EML",
-      "shape": "octahedron",
-      "date": "2026-06-01T04:57:07Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "reconstruction_conjecture",
-      "title": "Formal Foundations of Graph Reconstruction Theory",
-      "domain": "EML",
-      "primary_domain": "EML",
-      "shape": "octahedron",
-      "date": "2026-06-01T05:29:27Z",
-      "hue": 271,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "tropical_hodge_theory",
-      "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes",
-      "domain": "Tropical",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-06-01T06:41:41Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "artins_conjecture_on_primitive_roots",
-      "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory",
-      "domain": "Number Theory / Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T06:42:03Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "unified_framework_for_understanding_self_refer",
-      "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:14:52Z",
-      "hue": 275,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "rigorous_formal_framework_for_the_entropy_powe",
-      "title": "Entropy Power Inequality: Formal Framework and Geometric Connections",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:15:13Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "formal_algebraic_foundations_of_isogeny_base",
-      "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:15:35Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "memory_editing_when_forgetting_is_a_mathematical_o",
-      "title": "Memory Algebra: When Forgetting Is a Mathematical Operation",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:15:56Z",
-      "hue": 91,
-      "priority_score": 0.5239020000000001,
-      "quality": "partial"
-    },
-    {
-      "id": "quantum_proofs_of_classical_theorems",
-      "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:16:17Z",
-      "hue": 91,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "complete_formal_framework_for_cellular_automat",
-      "title": "Transfinite Cellular Automata Depth Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:49:59Z",
-      "hue": 270,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "categorical_physics_the_shape_of_a_theory_of_every",
-      "title": "Categorical Physics: The Shape of a Theory of Everything",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:50:20Z",
-      "hue": 292,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "time_travel_consistency_novikovs_principle_as_a_fi",
-      "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T07:50:40Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "langlands_for_gl_over_q",
-      "title": "Langlands Correspondence for GL\u2082 over \u211a",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:23:05Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "complete_algebraic_theory_of_the_hecke_eigenvalue_",
-      "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:23:30Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "surveillance_networks_information_theoretic_undete",
-      "title": "Surveillance Networks: Information-Theoretic Undetectability",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:23:51Z",
-      "hue": 91,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "p_adic_langlands_for_glq_p",
-      "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:56:37Z",
-      "hue": 271,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "newton_hodge_polygon_framework_for_the_p_adic_lang",
-      "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:57:00Z",
-      "hue": 100,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "retrocausal_mathematics_where_effects_precede_caus",
-      "title": "Retrocausal Mathematics: Where Effects Precede Causes",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:57:28Z",
-      "hue": 271,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
-      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:57:50Z",
-      "hue": 91,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "social_credit_scores_as_topological_invariants",
-      "title": "Social Credit Scores as Topological Invariants",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T08:58:10Z",
-      "hue": 90,
-      "priority_score": 0.7,
-      "quality": "substantial"
-    },
-    {
-      "id": "infinite_games_against_death_immortality_strategie",
-      "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T09:20:36Z",
-      "hue": 271,
-      "priority_score": 0.6771499999999999,
-      "quality": "partial"
-    },
-    {
-      "id": "unique_games_conjecture",
-      "title": "Unique Games Conjecture: Mathematical Foundations",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T09:53:23Z",
-      "hue": 271,
-      "priority_score": 0.7354624999999999,
-      "quality": "substantial"
-    },
-    {
-      "id": "dream_logic_non_monotone_reasoning_where_contradic",
-      "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T09:53:45Z",
-      "hue": 272,
-      "priority_score": 0.7068626477541371,
-      "quality": "substantial"
-    },
-    {
-      "id": "algebraic_and_combinatorial_foundations_for_random",
-      "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T09:54:04Z",
-      "hue": 91,
-      "priority_score": 0.7237490526315788,
-      "quality": "substantial"
-    },
-    {
-      "id": "foundational_infrastructure_for_studying_oracle_hi",
-      "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T09:54:24Z",
-      "hue": 91,
-      "priority_score": 0.73590125,
-      "quality": "substantial"
-    },
-    {
-      "id": "sensitivity_conjecture_extensions",
-      "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T10:28:02Z",
-      "hue": 90,
-      "priority_score": 0.72689,
-      "quality": "substantial"
-    },
-    {
-      "id": "flatland_catastrophe_when_2d_physics_breaks",
-      "title": "Flatland Catastrophe: When 2D Physics Breaks",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T10:28:23Z",
-      "hue": 95,
-      "priority_score": 0.7192423076923078,
-      "quality": "substantial"
-    },
-    {
-      "id": "counterfactual_number_theory_what_if_primes_were_r",
-      "title": "Counterfactual Number Theory: What If Primes Were Random?",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-06-01T10:28:42Z",
-      "hue": 270,
-      "priority_score": 0.7100115384615384,
-      "quality": "substantial"
-    },
-    {
-      "id": "mind_vs_gdel_can_minds_outperform_algorithms",
-      "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?",
-      "domain": "Logic/Computability/Incompleteness",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-06-01T10:29:03Z",
-      "hue": 271,
-      "priority_score": 0.7388586956521739,
-      "quality": "substantial"
-    },
-    {
-      "id": "topological_quantum_computing_braiding_universalit",
-      "title": "Braiding Universality for Topological Quantum Computing",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T11:02:09Z",
-      "hue": 270,
-      "priority_score": 0.6633071428571429,
-      "quality": "partial"
-    },
-    {
-      "id": "complete_formalized_algebraic_theory_of_quasif",
-      "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes",
-      "domain": "Pythagorean",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-06-01T11:02:30Z",
-      "hue": 92,
-      "priority_score": 0.6699192338709679,
-      "quality": "partial"
-    },
-    {
-      "id": "complete_formal_framework_for_the_security_of_csid",
-      "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains",
-      "domain": "Shared",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T11:35:17Z",
-      "hue": 92,
-      "priority_score": 0.7080684615384616,
-      "quality": "substantial"
-    },
-    {
-      "id": "anti_mathematics_what_if_all_axioms_were_negated",
-      "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T11:35:43Z",
-      "hue": 90,
-      "priority_score": 0.6856036842105264,
-      "quality": "partial"
-    },
-    {
-      "id": "non_desarguesian_worlds_geometry_without_desargues",
-      "title": "Non-Desarguesian Worlds: Geometry Without Desargues",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T11:36:05Z",
-      "hue": 90,
-      "priority_score": 0.7161103693181818,
-      "quality": "substantial"
-    },
-    {
-      "id": "homotopy_type_theory_as_foundations",
-      "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces",
-      "domain": "Shared",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T11:36:24Z",
-      "hue": 270,
-      "priority_score": 0.7138660278745645,
-      "quality": "substantial"
-    },
-    {
-      "id": "borges_library_of_babel_combinatorics_of_everythin",
-      "title": "The Library of Babel: Combinatorial Topology of Everything",
-      "domain": "Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-06-01T11:36:49Z",
-      "hue": 272,
-      "priority_score": 0.6561989411764706,
-      "quality": "partial"
-    },
-    {
-      "id": "algebraic_skeleton_of_grothendiecks_standard_conje",
-      "title": "Algebraic Skeleton of Grothendieck Standard Conjectures",
-      "domain": "Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-06-01T12:10:41Z",
-      "hue": 271,
-      "priority_score": 0.7286993506493507,
-      "quality": "substantial"
-    },
-    {
-      "id": "poincar_conjecture_revisited_4d_smooth",
-      "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T12:11:00Z",
-      "hue": 270,
-      "priority_score": 0.8202090769230769,
-      "quality": "substantial"
-    },
-    {
-      "id": "isogeny_based_cryptography_csi_fish",
-      "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T12:11:20Z",
-      "hue": 90,
-      "priority_score": 0.7393699999999999,
-      "quality": "substantial"
-    },
-    {
-      "id": "formal_bridge_between_homotopy_type_theory_hott_an",
-      "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics",
-      "domain": "Logic",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-06-01T12:31:39Z",
-      "hue": 90,
-      "priority_score": 0.7038752500000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "scaling_laws_from_statistical_mechanics",
-      "title": "Neural Scaling Laws from Statistical Mechanics",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T12:46:23Z",
-      "hue": 90,
-      "priority_score": 0.7481675000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "complete_newton_hodge_polygon_framework_for_2_dime",
-      "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules",
-      "domain": "Logic",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-06-01T13:40:06Z",
-      "hue": 270,
-      "priority_score": 0.6923000000000001,
-      "quality": "partial"
-    },
-    {
-      "id": "yamabe_problem_non_compact_case",
-      "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory",
-      "domain": "Differential Geometry / Geometric Analysis",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-06-01T13:40:42Z",
-      "hue": 271,
-      "priority_score": 0.49938318181818186,
-      "quality": "partial"
-    },
-    {
-      "id": "reflective_type_theory_proving_things_about_provin",
-      "title": "Reflective Type Theory: Proving Things About Proving Things",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T13:41:16Z",
-      "hue": 281,
-      "priority_score": 0.7124953271028038,
-      "quality": "substantial"
-    },
-    {
-      "id": "stochastic_galois_theory_random_permutations_have_",
-      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups",
-      "domain": "Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-06-01T13:41:53Z",
-      "hue": 91,
-      "priority_score": 0.6453740000000001,
-      "quality": "partial"
-    },
-    {
-      "id": "self_avoiding_walk_connective_constant",
-      "title": "Self-Avoiding Walk: Connective Constant",
-      "domain": "EML",
-      "primary_domain": "EML",
-      "shape": "octahedron",
-      "date": "2026-06-01T14:17:20Z",
-      "hue": 91,
-      "priority_score": 0.5409767590618337,
-      "quality": "partial"
-    },
-    {
-      "id": "curvature_induced_computation_when_geodesic_flow_s",
-      "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
-      "domain": "Pythagorean",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-06-01T14:17:42Z",
-      "hue": 271,
-      "priority_score": 0.7262368372093022,
-      "quality": "substantial"
-    },
-    {
-      "id": "erds_faber_lovsz_conjecture",
-      "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization",
-      "domain": "EML",
-      "primary_domain": "EML",
-      "shape": "octahedron",
-      "date": "2026-06-01T14:51:08Z",
-      "hue": 270,
-      "priority_score": 0.6484295302013423,
-      "quality": "partial"
-    },
-    {
-      "id": "the_combinatorics_of_compiler_optimization_registe",
-      "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality",
-      "domain": "Shared",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T14:51:29Z",
-      "hue": 90,
-      "priority_score": 0.6504003865979382,
-      "quality": "partial"
-    },
-    {
-      "id": "discriminant_uniformity_theorem_for_quad",
-      "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T14:51:50Z",
-      "hue": 270,
-      "priority_score": 0.7250465517241378,
-      "quality": "substantial"
-    },
-    {
-      "id": "reflective_type_theory_refltt_as_a_formal_fram",
-      "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-06-01T14:52:09Z",
-      "hue": 271,
-      "priority_score": 0.736756049822064,
-      "quality": "substantial"
-    },
-    {
-      "id": "tropical_valuation_functor_as_an_order_preserving_",
-      "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T14:52:31Z",
-      "hue": 90,
-      "priority_score": 0.9244453488372093,
-      "quality": "substantial"
-    },
-    {
-      "id": "digital_immortality_can_a_mind_be_encoded",
-      "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading",
-      "domain": "MachineLearning",
-      "primary_domain": "MachineLearning",
-      "shape": "sphere_rings",
-      "date": "2026-06-01T14:52:52Z",
-      "hue": 272,
-      "priority_score": 0.7107561643835616,
-      "quality": "substantial"
-    },
-    {
-      "id": "homotopy_type_theory_of_cooking_recipes_paths_betw",
-      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T15:27:42Z",
-      "hue": 90,
-      "priority_score": 0.7089549723756907,
-      "quality": "substantial"
-    },
-    {
-      "id": "computational_complexity_of_alien_civilizations",
-      "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T15:28:01Z",
-      "hue": 271,
-      "priority_score": 0.7274067741935484,
-      "quality": "substantial"
-    },
-    {
-      "id": "the_topology_of_knotted_light_how_laser_beams_get_",
-      "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-01T16:01:42Z",
-      "hue": 91,
-      "priority_score": 0.7509785714285714,
-      "quality": "substantial"
-    },
-    {
-      "id": "mathematical_foundations_for_analyzing_mind",
-      "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-01T16:02:03Z",
-      "hue": 90,
-      "priority_score": 0.7091858260869566,
-      "quality": "substantial"
-    },
-    {
-      "id": "formalizing_the_probabilistic_method_erdos_meets_l",
-      "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs",
-      "domain": "Tropical",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-06-01T16:35:52Z",
-      "hue": 95,
-      "priority_score": 0.70234,
-      "quality": "substantial"
-    },
-    {
-      "id": "complete_formal_chain_connecting_ssa_program_s",
-      "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T17:09:26Z",
-      "hue": 270,
-      "priority_score": 0.6951788461538462,
-      "quality": "partial"
-    },
-    {
-      "id": "tropical_cryptocurrency_mining_on_the_min_plus_sem",
-      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T17:09:56Z",
-      "hue": 90,
-      "priority_score": 0.6755283783783783,
-      "quality": "partial"
-    },
-    {
-      "id": "impossibility_results_for_fun_things_that_cannot_b",
-      "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis",
-      "domain": "Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T17:10:16Z",
-      "hue": 270,
-      "priority_score": 0.6563341818181818,
-      "quality": "partial"
-    },
-    {
-      "id": "the_monster_groups_secret_message_moonshine_beyond",
-      "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T17:10:33Z",
-      "hue": 90,
-      "priority_score": 0.7188521428571428,
-      "quality": "substantial"
-    },
-    {
-      "id": "chaos_as_a_computable_shadow_the_shadowing_lemma_f",
-      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs",
-      "domain": "Physics",
-      "primary_domain": "Physics",
-      "shape": "diamond",
-      "date": "2026-06-01T17:10:56Z",
-      "hue": 90,
-      "priority_score": 0.65706875,
-      "quality": "partial"
-    },
-    {
-      "id": "self_improving_proofs_proofs_that_get_simpler_over",
-      "title": "Proof Refinement Systems: Self-Improving Proofs",
-      "domain": "Logic / Proof Theory / Mathematical Foundations",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-06-01T17:46:21Z",
-      "hue": 91,
-      "priority_score": 0.7190507194244604,
-      "quality": "substantial"
-    },
-    {
-      "id": "the_p_vs_np_of_sudoku_phase_transitions_in_constra",
-      "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T17:46:57Z",
-      "hue": 91,
-      "priority_score": 0.690598275862069,
-      "quality": "partial"
-    },
-    {
-      "id": "formal_foundation_for_orbit_shadowing_in_dynam",
-      "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems",
-      "domain": "Dynamical Systems / Certified Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-06-01T18:20:25Z",
-      "hue": 90,
-      "priority_score": 0.665185,
-      "quality": "partial"
-    },
-    {
-      "id": "three_interconnected_results_about_quadratic_pol",
-      "title": "Discriminant Uniformity and Splitting Type Distribution",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T18:20:47Z",
-      "hue": 271,
-      "priority_score": 0.65157,
-      "quality": "partial"
-    },
-    {
-      "id": "formal_theory_connecting_classical_impossibili",
-      "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T18:21:11Z",
-      "hue": 270,
-      "priority_score": 0.6224610609756096,
-      "quality": "partial"
-    },
-    {
-      "id": "formal_bridge_between_the_probabilistic_method",
-      "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T18:21:27Z",
-      "hue": 91,
-      "priority_score": 0.719284,
-      "quality": "substantial"
-    },
-    {
-      "id": "hilberts_hotel_for_primes_an_infinite_hotel_where_",
-      "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations",
-      "domain": "Speculative",
-      "primary_domain": "Speculative",
-      "shape": "pentagonal_prism",
-      "date": "2026-06-01T18:21:48Z",
-      "hue": 272,
-      "priority_score": 0.62158775,
-      "quality": "partial"
-    }
-  ],
+  "domain_bridges": [],
   "edges": [
     {
-      "source": "random_matrices_edge_universality",
-      "target": "algebraic_and_combinatorial_foundations_for_random",
-      "strength": 1.0,
       "label": "Direction 3: Sparse Random Matrix Spectral Edge",
+      "source": "random_matrices_edge_universality",
+      "strength": 1.0,
+      "target": "algebraic_and_combinatorial_foundations_for_random",
       "type": "provenance"
     },
     {
-      "source": "standard_conjectures_on_algebraic_cycles",
-      "target": "algebraic_skeleton_of_grothendiecks_standard_conje",
-      "strength": 1.0,
       "label": "Direction 3: Tannakian Structure of Pure Motives",
+      "source": "standard_conjectures_on_algebraic_cycles",
+      "strength": 1.0,
+      "target": "algebraic_skeleton_of_grothendiecks_standard_conje",
       "type": "provenance"
     },
     {
+      "label": "Direction 1: Algebraic Proof of the Hecke-Ramanujan Bound",
       "source": "this_cycle_formalized_the_algebraic_core_of_the_he",
+      "strength": 1.0,
       "target": "complete_algebraic_theory_of_the_hecke_eigenvalue_",
-      "strength": 1.0,
-      "label": "Direction 1: Algebraic Proof of the Hecke-Ramanujan Bound",
       "type": "provenance"
     },
     {
-      "source": "the_combinatorics_of_compiler_optimization_registe",
-      "target": "complete_formal_chain_connecting_ssa_program_s",
-      "strength": 1.0,
       "label": "Direction 1: List Coloring of Chordal Interference Graphs",
+      "source": "the_combinatorics_of_compiler_optimization_registe",
+      "strength": 1.0,
+      "target": "complete_formal_chain_connecting_ssa_program_s",
       "type": "provenance"
     },
     {
-      "source": "this_research_cycle_established_a_rigorous_framewo",
-      "target": "complete_formal_framework_for_cellular_automat",
-      "strength": 1.0,
       "label": "Direction 3: Monotone Rule Spectrum Theorem",
+      "source": "this_research_cycle_established_a_rigorous_framewo",
+      "strength": 1.0,
+      "target": "complete_formal_framework_for_cellular_automat",
       "type": "provenance"
     },
     {
-      "source": "isogeny_based_cryptography_csi_fish",
-      "target": "complete_formal_framework_for_the_security_of_csid",
-      "strength": 1.0,
       "label": "Direction 3: Cayley Graph Expansion and Mixing Time",
-      "type": "provenance"
-    },
-    {
-      "source": "non_desarguesian_worlds_geometry_without_desargues",
-      "target": "complete_formalized_algebraic_theory_of_quasif",
-      "strength": 1.0,
-      "label": "Direction 3: Collineation Group Bounds for Non-Desarguesian ",
-      "type": "provenance"
-    },
-    {
-      "source": "newton_hodge_polygon_framework_for_the_p_adic_lang",
-      "target": "complete_newton_hodge_polygon_framework_for_2_dime",
-      "strength": 1.0,
-      "label": "Direction 1: Higher-Dimensional Newton-Hodge Polytopes",
-      "type": "provenance"
-    },
-    {
-      "source": "stochastic_galois_theory_random_permutations_have_",
-      "target": "discriminant_uniformity_theorem_for_quad",
-      "strength": 1.0,
-      "label": "Direction 1: Cubic Splitting Type Distribution Over Finite F",
-      "type": "provenance"
-    },
-    {
       "source": "isogeny_based_cryptography_csi_fish",
-      "target": "formal_algebraic_foundations_of_isogeny_base",
       "strength": 1.0,
+      "target": "complete_formal_framework_for_the_security_of_csid",
+      "type": "provenance"
+    },
+    {
+      "label": "Direction 3: Collineation Group Bounds for Non-Desarguesian ",
+      "source": "non_desarguesian_worlds_geometry_without_desargues",
+      "strength": 1.0,
+      "target": "complete_formalized_algebraic_theory_of_quasif",
+      "type": "provenance"
+    },
+    {
+      "label": "Direction 1: Higher-Dimensional Newton-Hodge Polytopes",
+      "source": "newton_hodge_polygon_framework_for_the_p_adic_lang",
+      "strength": 1.0,
+      "target": "complete_newton_hodge_polygon_framework_for_2_dime",
+      "type": "provenance"
+    },
+    {
+      "label": "Direction 1: Cubic Splitting Type Distribution Over Finite F",
+      "source": "stochastic_galois_theory_random_permutations_have_",
+      "strength": 1.0,
+      "target": "discriminant_uniformity_theorem_for_quad",
+      "type": "provenance"
+    },
+    {
       "label": "Direction 1: Decisional CSIDH Hardness from Computational GA",
+      "source": "isogeny_based_cryptography_csi_fish",
+      "strength": 1.0,
+      "target": "formal_algebraic_foundations_of_isogeny_base",
       "type": "provenance"
     },
     {
-      "source": "homotopy_type_theory_as_foundations",
-      "target": "formal_bridge_between_homotopy_type_theory_hott_an",
-      "strength": 1.0,
       "label": "Direction 2: Eckmann-Hilton for Braided Monoidal Categories",
+      "source": "homotopy_type_theory_as_foundations",
+      "strength": 1.0,
+      "target": "formal_bridge_between_homotopy_type_theory_hott_an",
       "type": "provenance"
     },
     {
-      "source": "formalizing_the_probabilistic_method_erdos_meets_l",
-      "target": "formal_bridge_between_the_probabilistic_method",
-      "strength": 1.0,
       "label": "Direction 1: Tropical Ramsey Duality",
+      "source": "formalizing_the_probabilistic_method_erdos_meets_l",
+      "strength": 1.0,
+      "target": "formal_bridge_between_the_probabilistic_method",
       "type": "provenance"
     },
     {
-      "source": "chaos_as_a_computable_shadow_the_shadowing_lemma_f",
-      "target": "formal_foundation_for_orbit_shadowing_in_dynam",
-      "strength": 1.0,
       "label": "Direction 1: Hyperbolic Shadowing Lemma for Anosov Diffeomor",
+      "source": "chaos_as_a_computable_shadow_the_shadowing_lemma_f",
+      "strength": 1.0,
+      "target": "formal_foundation_for_orbit_shadowing_in_dynam",
       "type": "provenance"
     },
     {
-      "source": "impossibility_results_for_fun_things_that_cannot_b",
-      "target": "formal_theory_connecting_classical_impossibili",
-      "strength": 1.0,
       "label": "Direction 1: Spectral Gap Conjecture for Impossibility Spect",
+      "source": "impossibility_results_for_fun_things_that_cannot_b",
+      "strength": 1.0,
+      "target": "formal_theory_connecting_classical_impossibili",
       "type": "provenance"
     },
     {
-      "source": "the_oracles_burden_how_much_knowledge_is_too_much",
-      "target": "foundational_infrastructure_for_studying_oracle_hi",
-      "strength": 1.0,
       "label": "inspired by",
+      "source": "the_oracles_burden_how_much_knowledge_is_too_much",
+      "strength": 1.0,
+      "target": "foundational_infrastructure_for_studying_oracle_hi",
       "type": "provenance"
     },
     {
-      "source": "digital_immortality_can_a_mind_be_encoded",
-      "target": "mathematical_foundations_for_analyzing_mind",
-      "strength": 1.0,
       "label": "Direction 1: Sparse Connectome Kolmogorov Complexity",
+      "source": "digital_immortality_can_a_mind_be_encoded",
+      "strength": 1.0,
+      "target": "mathematical_foundations_for_analyzing_mind",
       "type": "provenance"
     },
     {
-      "source": "p_adic_langlands_for_glq_p",
-      "target": "newton_hodge_polygon_framework_for_the_p_adic_lang",
-      "strength": 1.0,
       "label": "Direction 1: Tropical Newton Polygons and the p-adic Corresp",
+      "source": "p_adic_langlands_for_glq_p",
+      "strength": 1.0,
+      "target": "newton_hodge_polygon_framework_for_the_p_adic_lang",
       "type": "provenance"
     },
     {
-      "source": "reflective_type_theory_proving_things_about_provin",
-      "target": "reflective_type_theory_refltt_as_a_formal_fram",
-      "strength": 1.0,
       "label": "Direction 1: Complete Typed Provability Logic",
+      "source": "reflective_type_theory_proving_things_about_provin",
+      "strength": 1.0,
+      "target": "reflective_type_theory_refltt_as_a_formal_fram",
       "type": "provenance"
     },
     {
-      "source": "entropy_power_inequality_sharp_version",
-      "target": "rigorous_formal_framework_for_the_entropy_powe",
-      "strength": 1.0,
       "label": "Direction 1: Continuous Entropy Power Inequality via Measure",
+      "source": "entropy_power_inequality_sharp_version",
+      "strength": 1.0,
+      "target": "rigorous_formal_framework_for_the_entropy_powe",
       "type": "provenance"
     },
     {
-      "source": "tangled_hierarchies_proof_systems_that_reference_t",
-      "target": "rigorous_mathematical_framework_for_tangled_hierar",
-      "strength": 1.0,
       "label": "Direction 1: Tropical Entanglement Algebra",
+      "source": "tangled_hierarchies_proof_systems_that_reference_t",
+      "strength": 1.0,
+      "target": "rigorous_mathematical_framework_for_tangled_hierar",
       "type": "provenance"
     },
     {
-      "source": "this_research_cycle_formalized_the_algebraic_skele",
-      "target": "this_cycle_formalized_the_algebraic_core_of_the_he",
-      "strength": 1.0,
       "label": "Direction 1: Algebraic Proof of the Hecke-Ramanujan Bound",
+      "source": "this_research_cycle_formalized_the_algebraic_skele",
+      "strength": 1.0,
+      "target": "this_cycle_formalized_the_algebraic_core_of_the_he",
       "type": "provenance"
     },
     {
-      "source": "cellular_automata_at_the_ordinals_transfinite_comp",
-      "target": "this_research_cycle_established_a_rigorous_framewo",
-      "strength": 1.0,
       "label": "Direction 1: Explicit Depth-2 Construction via XOR Oscillati",
+      "source": "cellular_automata_at_the_ordinals_transfinite_comp",
+      "strength": 1.0,
+      "target": "this_research_cycle_established_a_rigorous_framewo",
       "type": "provenance"
     },
     {
-      "source": "surreal_topology_open_sets_at_infinity",
-      "target": "this_research_cycle_established_the_foundational_t",
-      "strength": 1.0,
       "label": "Direction 1: First-Countability Failure via Coinitiality",
+      "source": "surreal_topology_open_sets_at_infinity",
+      "strength": 1.0,
+      "target": "this_research_cycle_established_the_foundational_t",
       "type": "provenance"
     },
     {
-      "source": "the_topology_of_impossible_objects_escher_stairs_a",
-      "target": "this_research_cycle_established_the_mathematical_f",
-      "strength": 1.0,
       "label": "Direction 1: Higher Cocycles on Cell Complexes",
+      "source": "the_topology_of_impossible_objects_escher_stairs_a",
+      "strength": 1.0,
+      "target": "this_research_cycle_established_the_mathematical_f",
       "type": "provenance"
     },
     {
-      "source": "langlands_for_gl_over_q",
-      "target": "this_research_cycle_formalized_the_algebraic_skele",
-      "strength": 1.0,
       "label": "Direction 2: Modularity Theorem and Elliptic Curve Classific",
+      "source": "langlands_for_gl_over_q",
+      "strength": 1.0,
+      "target": "this_research_cycle_formalized_the_algebraic_skele",
       "type": "provenance"
     },
     {
-      "source": "discriminant_uniformity_theorem_for_quad",
-      "target": "three_interconnected_results_about_quadratic_pol",
-      "strength": 1.0,
       "label": "Direction 1: Cubic Splitting Type Distribution over \ud835\udd3dp for p",
+      "source": "discriminant_uniformity_theorem_for_quad",
+      "strength": 1.0,
+      "target": "three_interconnected_results_about_quadratic_pol",
       "type": "provenance"
     },
     {
-      "source": "strange_loops_self_reference_and_gdels_incompleten",
-      "target": "unified_framework_for_understanding_self_refer",
-      "strength": 1.0,
       "label": "Direction 1: Quantitative Incompleteness via Tropical Provab",
+      "source": "strange_loops_self_reference_and_gdels_incompleten",
+      "strength": 1.0,
+      "target": "unified_framework_for_understanding_self_refer",
       "type": "provenance"
     }
   ],
-  "domain_bridges": []
+  "nodes": [
+    {
+      "date": "2026-05-31T14:57:35Z",
+      "domain": "MachineLearning",
+      "hue": 270,
+      "id": "primewise_persistent_homology_detects_exceptional_",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.7517668674698796,
+      "quality": "substantial",
+      "shape": "sphere_rings",
+      "title": "Primewise Persistent Homology Detects Exceptional Isogeny Volcano Depth"
+    },
+    {
+      "date": "2026-05-31T15:44:02Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "this_research_cycle_established_a_formal_bridge_be",
+      "primary_domain": "Algebra",
+      "priority_score": 0.722909152542373,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "The Lorentzian\u2013Log-Concavity Bridge: Multiplicative Stability, Geometric Tilting, and Depth Hierarchies"
+    },
+    {
+      "date": "2026-05-31T15:45:19Z",
+      "domain": "Bridges",
+      "hue": 272,
+      "id": "biological_topology_protein_folding_as_persistent_",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7471118604651162,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+    },
+    {
+      "date": "2026-05-31T16:23:25Z",
+      "domain": "Bridges",
+      "hue": 91,
+      "id": "hyperbolic_number_theory_arithmetic_on_the_poincar",
+      "primary_domain": "Bridges",
+      "priority_score": 0.5950639917089624,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+    },
+    {
+      "date": "2026-05-31T20:19:26Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "rotas_basis_conjecture",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7123901951219513,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Rota's Basis Conjecture: Formal Framework, Small Cases, and the Greedy Deficiency Approach"
+    },
+    {
+      "date": "2026-05-31T20:22:14Z",
+      "domain": "Algebra",
+      "hue": 271,
+      "id": "random_matrices_edge_universality",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7068734374999999,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Random Matrices: Edge Universality and the Tracy-Widom Distribution"
+    },
+    {
+      "date": "2026-05-31T20:22:48Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "catalans_conjecture_generalizations",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6621330000000001,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Pillai's Conjecture and Exponential Diophantine Equations"
+    },
+    {
+      "date": "2026-05-31T20:23:45Z",
+      "domain": "Algebra",
+      "hue": 92,
+      "id": "resolution_of_singularities_in_positive_characteri",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7457928571428571,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Resolution of Singularities in Positive Characteristic: Formalized Algebraic Foundations"
+    },
+    {
+      "date": "2026-05-31T20:24:43Z",
+      "domain": "Algebra",
+      "hue": 272,
+      "id": "standard_conjectures_on_algebraic_cycles",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7282123376623377,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Standard Conjectures on Algebraic Cycles: Structural Theorems for Lefschetz Modules and Pure Motives"
+    },
+    {
+      "date": "2026-05-31T20:25:11Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6860414464845499,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "date": "2026-05-31T20:25:40Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "negative_dimensional_topology_what_lives_in_dimens",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7052853846153846,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Negative-Dimensional Topology: Euler Characteristics, Pro-Spectra, and Formal Dimension Theory"
+    },
+    {
+      "date": "2026-05-31T21:30:36Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "entropy_power_inequality_sharp_version",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7035288321167883,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Entropy Power Inequality: Sharp Version with Equality Conditions and Brunn-Minkowski Bridge"
+    },
+    {
+      "date": "2026-05-31T21:31:14Z",
+      "domain": "Bridges",
+      "hue": 92,
+      "id": "neural_pde_universality_classes_via_renormalizatio",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7212349056603773,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Neural PDE Universality Classes via Renormalization Fixed Points"
+    },
+    {
+      "date": "2026-05-31T21:57:15Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "the_topology_of_impossible_objects_escher_stairs_a",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7488625,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+    },
+    {
+      "date": "2026-05-31T21:57:44Z",
+      "domain": "Bridges",
+      "hue": 95,
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7406316585365854,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Self-Modifying Halting: Undecidability, Virus Detection, and AI Alignment"
+    },
+    {
+      "date": "2026-05-31T22:43:44Z",
+      "domain": "Computation",
+      "hue": 270,
+      "id": "sierpiski_numbers_covering_systems",
+      "primary_domain": "Computation",
+      "priority_score": 0.7134367272727273,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Sierpi\u0144ski Numbers: Covering Systems and the Chinese Remainder Theorem"
+    },
+    {
+      "date": "2026-05-31T22:44:03Z",
+      "domain": "Computation",
+      "hue": 271,
+      "id": "cellular_automata_at_the_ordinals_transfinite_comp",
+      "primary_domain": "Computation",
+      "priority_score": 0.735339756097561,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "date": "2026-05-31T23:16:13Z",
+      "domain": "Computation",
+      "hue": 271,
+      "id": "transfinite_game_theory_games_that_last_forever",
+      "primary_domain": "Computation",
+      "priority_score": 0.7225286206896553,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "date": "2026-05-31T23:16:32Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "tropical_fermats_last_theorem",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6683460000000001,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Tropical Fermat's Last Theorem: Complete Characterization and Kapranov-Type Theorem"
+    },
+    {
+      "date": "2026-05-31T23:17:11Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "the_unreasonable_effectiveness_of_wrong_theories",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7302532967032966,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "date": "2026-05-31T23:17:33Z",
+      "domain": "Algebra",
+      "hue": 272,
+      "id": "surreal_topology_open_sets_at_infinity",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6766884516129033,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Surreal Topology: Open Sets at Infinity"
+    },
+    {
+      "date": "2026-05-31T23:50:29Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "isomorphisms_of_meaning_when_structures_collide",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7206367500000002,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "date": "2026-05-31T23:50:52Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "this_research_cycle_established_a_rigorous_framewo",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7352763636363637,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Transfinite Cellular Automata: Depth Hierarchy and Oscillation Classification"
+    },
+    {
+      "date": "2026-05-31T23:51:11Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7053548000000001,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "date": "2026-06-01T00:29:11Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "consciousness_as_emergent_fixed_point",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "date": "2026-06-01T00:30:53Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "learning_with_errors_hardness_reductions",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.6829911764705883,
+      "quality": "partial",
+      "shape": "dodecahedron",
+      "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors"
+    },
+    {
+      "date": "2026-06-01T00:31:21Z",
+      "domain": "Cryptography",
+      "hue": 92,
+      "id": "one_way_functions_existence_and_hierarchy",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7347950000000001,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "Cryptographic Hardness Hierarchy: OWF \u2192 PRG \u2192 PRF \u2192 Encryption"
+    },
+    {
+      "date": "2026-06-01T00:32:20Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "strange_loops_self_reference_and_gdels_incompleten",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7400781690140845,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness as Fixed Points in Provability Lattices"
+    },
+    {
+      "date": "2026-06-01T00:32:51Z",
+      "domain": "Cryptography",
+      "hue": 91,
+      "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.6939177114686041,
+      "quality": "partial",
+      "shape": "dodecahedron",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "date": "2026-06-01T00:33:21Z",
+      "domain": "Computation",
+      "hue": 272,
+      "id": "the_oracles_burden_how_much_knowledge_is_too_much",
+      "primary_domain": "Computation",
+      "priority_score": 0.717505375,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "The Oracle's Burden: Formalized Oracle Hierarchy Theory"
+    },
+    {
+      "date": "2026-06-01T01:24:31Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "infinite_dimensional_chess_winning_on_the_hilbert_",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7194500000000001,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "date": "2026-06-01T01:25:00Z",
+      "domain": "Algebra",
+      "hue": 271,
+      "id": "this_research_cycle_formalized_the_algebraic_skele",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6966124390243902,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "The Cassini-Hecke Identity, Tropical Dequantization, and the Langlands Recursion"
+    },
+    {
+      "date": "2026-06-01T01:25:32Z",
+      "domain": "Algebra",
+      "hue": 271,
+      "id": "zombies_and_qualia_mathematics_of_subjective_exper",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7355707481125602,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "date": "2026-06-01T01:58:10Z",
+      "domain": "Algebra",
+      "hue": 292,
+      "id": "this_research_cycle_established_the_foundational_t",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7722411111111112,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality"
+    },
+    {
+      "date": "2026-06-01T01:58:32Z",
+      "domain": "Algebra",
+      "hue": 92,
+      "id": "aleph_1_surface_geometry_between_dimensions",
+      "primary_domain": "Algebra",
+      "priority_score": 0.720886612244898,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "date": "2026-06-01T02:30:11Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "this_research_cycle_established_the_mathematical_f",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7242500000000001,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Height Cocycles and the Monodromy Classification of Impossible Figures"
+    },
+    {
+      "date": "2026-06-01T02:30:41Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "tangled_hierarchies_proof_systems_that_reference_t",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7527642857142857,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "date": "2026-06-01T02:44:09Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "this_cycle_formalized_the_algebraic_core_of_the_he",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082"
+    },
+    {
+      "date": "2026-06-01T02:45:09Z",
+      "domain": "Bridges",
+      "hue": 272,
+      "id": "thermodynamics_of_mathematical_proof",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof"
+    },
+    {
+      "date": "2026-06-01T03:49:22Z",
+      "domain": "Geometry",
+      "hue": 270,
+      "id": "hadwigers_conjecture",
+      "primary_domain": "Geometry",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "hexagonal_prism",
+      "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory"
+    },
+    {
+      "date": "2026-06-01T03:49:46Z",
+      "domain": "Pythagorean",
+      "hue": 271,
+      "id": "causal_loops_in_category_theory_when_composition_l",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "triangular_prism",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "date": "2026-06-01T03:50:10Z",
+      "domain": "Physics",
+      "hue": 270,
+      "id": "the_mega_sphere_all_dimensions_at_once",
+      "primary_domain": "Physics",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "diamond",
+      "title": "The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "date": "2026-06-01T04:22:48Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "the_fractal_dimension_of_mathematical_truth",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "date": "2026-06-01T04:23:08Z",
+      "domain": "Logic",
+      "hue": 270,
+      "id": "rigorous_mathematical_framework_for_tangled_hierar",
+      "primary_domain": "Logic",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "star_of_david",
+      "title": "Spectral Theory of Tangled Hierarchies in Provability Logic"
+    },
+    {
+      "date": "2026-06-01T04:56:46Z",
+      "domain": "MachineLearning",
+      "hue": 275,
+      "id": "hypercomputation_computing_the_uncomputable",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "sphere_rings",
+      "title": "Hypercomputation: Computing the Uncomputable"
+    },
+    {
+      "date": "2026-06-01T04:57:07Z",
+      "domain": "EML",
+      "hue": 270,
+      "id": "fermat_near_misses_in_the_twilight_zone",
+      "primary_domain": "EML",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "octahedron",
+      "title": "Fermat Near-Misses in the Twilight Zone"
+    },
+    {
+      "date": "2026-06-01T05:29:27Z",
+      "domain": "EML",
+      "hue": 271,
+      "id": "reconstruction_conjecture",
+      "primary_domain": "EML",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "octahedron",
+      "title": "Formal Foundations of Graph Reconstruction Theory"
+    },
+    {
+      "date": "2026-06-01T06:41:41Z",
+      "domain": "Tropical",
+      "hue": 270,
+      "id": "tropical_hodge_theory",
+      "primary_domain": "Tropical",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "star",
+      "title": "Tropical Hodge Decomposition on Weighted Polyhedral Complexes"
+    },
+    {
+      "date": "2026-06-01T06:42:03Z",
+      "domain": "Number Theory / Algebra",
+      "hue": 90,
+      "id": "artins_conjecture_on_primitive_roots",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Artin's Conjecture on Primitive Roots: Deep Structural Theory"
+    },
+    {
+      "date": "2026-06-01T07:14:52Z",
+      "domain": "Algebra",
+      "hue": 275,
+      "id": "unified_framework_for_understanding_self_refer",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Diagonal Systems: A Unified Framework for Self-Reference and Incompleteness"
+    },
+    {
+      "date": "2026-06-01T07:15:13Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "rigorous_formal_framework_for_the_entropy_powe",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Entropy Power Inequality: Formal Framework and Geometric Connections"
+    },
+    {
+      "date": "2026-06-01T07:15:35Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "formal_algebraic_foundations_of_isogeny_base",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Formal Algebraic Foundations of Isogeny-Based Cryptography"
+    },
+    {
+      "date": "2026-06-01T07:15:56Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "memory_editing_when_forgetting_is_a_mathematical_o",
+      "primary_domain": "Algebra",
+      "priority_score": 0.5239020000000001,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Memory Algebra: When Forgetting Is a Mathematical Operation"
+    },
+    {
+      "date": "2026-06-01T07:16:17Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "quantum_proofs_of_classical_theorems",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Quantum Proof Compression: A Formal Framework for Proof Complexity Gaps"
+    },
+    {
+      "date": "2026-06-01T07:49:59Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "complete_formal_framework_for_cellular_automat",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Transfinite Cellular Automata Depth Theory"
+    },
+    {
+      "date": "2026-06-01T07:50:20Z",
+      "domain": "Algebra",
+      "hue": 292,
+      "id": "categorical_physics_the_shape_of_a_theory_of_every",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Categorical Physics: The Shape of a Theory of Everything"
+    },
+    {
+      "date": "2026-06-01T07:50:40Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "time_travel_consistency_novikovs_principle_as_a_fi",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Novikov's Self-Consistency Principle as a Fixed-Point Theorem"
+    },
+    {
+      "date": "2026-06-01T08:23:05Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "langlands_for_gl_over_q",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Langlands Correspondence for GL\u2082 over \u211a"
+    },
+    {
+      "date": "2026-06-01T08:23:30Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "complete_algebraic_theory_of_the_hecke_eigenvalue_",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Complete Algebraic Theory of the Hecke Eigenvalue Recursion for GL\u2082"
+    },
+    {
+      "date": "2026-06-01T08:23:51Z",
+      "domain": "Bridges",
+      "hue": 91,
+      "id": "surveillance_networks_information_theoretic_undete",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Surveillance Networks: Information-Theoretic Undetectability"
+    },
+    {
+      "date": "2026-06-01T08:56:37Z",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "p_adic_langlands_for_glq_p",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "p-adic Langlands Correspondence for GL\u2082(\u211a_p): Formalized Foundations"
+    },
+    {
+      "date": "2026-06-01T08:57:00Z",
+      "domain": "Bridges",
+      "hue": 100,
+      "id": "newton_hodge_polygon_framework_for_the_p_adic_lang",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Newton-Hodge Polygon Framework for the p-adic Langlands Correspondence"
+    },
+    {
+      "date": "2026-06-01T08:57:28Z",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "retrocausal_mathematics_where_effects_precede_caus",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "date": "2026-06-01T08:57:50Z",
+      "domain": "Bridges",
+      "hue": 91,
+      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau Manifolds"
+    },
+    {
+      "date": "2026-06-01T08:58:10Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "social_credit_scores_as_topological_invariants",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Social Credit Scores as Topological Invariants"
+    },
+    {
+      "date": "2026-06-01T09:20:36Z",
+      "domain": "Computation",
+      "hue": 271,
+      "id": "infinite_games_against_death_immortality_strategie",
+      "primary_domain": "Computation",
+      "priority_score": 0.6771499999999999,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "Infinite Games Against Death: Immortality Strategies in Computationally Asymmetric Games"
+    },
+    {
+      "date": "2026-06-01T09:53:23Z",
+      "domain": "Computation",
+      "hue": 271,
+      "id": "unique_games_conjecture",
+      "primary_domain": "Computation",
+      "priority_score": 0.7354624999999999,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Unique Games Conjecture: Mathematical Foundations"
+    },
+    {
+      "date": "2026-06-01T09:53:45Z",
+      "domain": "Computation",
+      "hue": 272,
+      "id": "dream_logic_non_monotone_reasoning_where_contradic",
+      "primary_domain": "Computation",
+      "priority_score": 0.7068626477541371,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Quasi-Topological Semantics"
+    },
+    {
+      "date": "2026-06-01T09:54:04Z",
+      "domain": "Computation",
+      "hue": 91,
+      "id": "algebraic_and_combinatorial_foundations_for_random",
+      "primary_domain": "Computation",
+      "priority_score": 0.7237490526315788,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Algebraic and Combinatorial Foundations for Random Matrix Edge Universality"
+    },
+    {
+      "date": "2026-06-01T09:54:24Z",
+      "domain": "Computation",
+      "hue": 91,
+      "id": "foundational_infrastructure_for_studying_oracle_hi",
+      "primary_domain": "Computation",
+      "priority_score": 0.73590125,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Oracle Hierarchy Foundations: Relativization, Independence, and Fixed Points"
+    },
+    {
+      "date": "2026-06-01T10:28:02Z",
+      "domain": "Computation",
+      "hue": 90,
+      "id": "sensitivity_conjecture_extensions",
+      "primary_domain": "Computation",
+      "priority_score": 0.72689,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Boolean Function Sensitivity Theory: Spectral Extensions and Structural Bounds"
+    },
+    {
+      "date": "2026-06-01T10:28:23Z",
+      "domain": "Computation",
+      "hue": 95,
+      "id": "flatland_catastrophe_when_2d_physics_breaks",
+      "primary_domain": "Computation",
+      "priority_score": 0.7192423076923078,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "Flatland Catastrophe: When 2D Physics Breaks"
+    },
+    {
+      "date": "2026-06-01T10:28:42Z",
+      "domain": "MachineLearning",
+      "hue": 270,
+      "id": "counterfactual_number_theory_what_if_primes_were_r",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.7100115384615384,
+      "quality": "substantial",
+      "shape": "sphere_rings",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "date": "2026-06-01T10:29:03Z",
+      "domain": "Logic/Computability/Incompleteness",
+      "hue": 271,
+      "id": "mind_vs_gdel_can_minds_outperform_algorithms",
+      "primary_domain": "Logic",
+      "priority_score": 0.7388586956521739,
+      "quality": "substantial",
+      "shape": "star_of_david",
+      "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
+    },
+    {
+      "date": "2026-06-01T11:02:09Z",
+      "domain": "Physics",
+      "hue": 270,
+      "id": "topological_quantum_computing_braiding_universalit",
+      "primary_domain": "Physics",
+      "priority_score": 0.6633071428571429,
+      "quality": "partial",
+      "shape": "diamond",
+      "title": "Braiding Universality for Topological Quantum Computing"
+    },
+    {
+      "date": "2026-06-01T11:02:30Z",
+      "domain": "Pythagorean",
+      "hue": 92,
+      "id": "complete_formalized_algebraic_theory_of_quasif",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.6699192338709679,
+      "quality": "partial",
+      "shape": "triangular_prism",
+      "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes"
+    },
+    {
+      "date": "2026-06-01T11:35:17Z",
+      "domain": "Shared",
+      "hue": 92,
+      "id": "complete_formal_framework_for_the_security_of_csid",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7080684615384616,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Spectral Security of CSIDH: Torsor Trivialization and Reduction Chains"
+    },
+    {
+      "date": "2026-06-01T11:35:43Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "anti_mathematics_what_if_all_axioms_were_negated",
+      "primary_domain": "Algebra",
+      "priority_score": 0.6856036842105264,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Anti-Mathematics: Systematically Negating the ZFC Axioms"
+    },
+    {
+      "date": "2026-06-01T11:36:05Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "non_desarguesian_worlds_geometry_without_desargues",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7161103693181818,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "date": "2026-06-01T11:36:24Z",
+      "domain": "Shared",
+      "hue": 270,
+      "id": "homotopy_type_theory_as_foundations",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7138660278745645,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Deep Homotopy Type Theory: Eckmann-Hilton, Encode-Decode, and Covering Spaces"
+    },
+    {
+      "date": "2026-06-01T11:36:49Z",
+      "domain": "Geometry",
+      "hue": 272,
+      "id": "borges_library_of_babel_combinatorics_of_everythin",
+      "primary_domain": "Geometry",
+      "priority_score": 0.6561989411764706,
+      "quality": "partial",
+      "shape": "hexagonal_prism",
+      "title": "The Library of Babel: Combinatorial Topology of Everything"
+    },
+    {
+      "date": "2026-06-01T12:10:41Z",
+      "domain": "Geometry",
+      "hue": 271,
+      "id": "algebraic_skeleton_of_grothendiecks_standard_conje",
+      "primary_domain": "Geometry",
+      "priority_score": 0.7286993506493507,
+      "quality": "substantial",
+      "shape": "hexagonal_prism",
+      "title": "Algebraic Skeleton of Grothendieck Standard Conjectures"
+    },
+    {
+      "date": "2026-06-01T12:11:00Z",
+      "domain": "Physics",
+      "hue": 270,
+      "id": "poincar_conjecture_revisited_4d_smooth",
+      "primary_domain": "Physics",
+      "priority_score": 0.8202090769230769,
+      "quality": "substantial",
+      "shape": "diamond",
+      "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena"
+    },
+    {
+      "date": "2026-06-01T12:11:20Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "isogeny_based_cryptography_csi_fish",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7393699999999999,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh"
+    },
+    {
+      "date": "2026-06-01T12:31:39Z",
+      "domain": "Logic",
+      "hue": 90,
+      "id": "formal_bridge_between_homotopy_type_theory_hott_an",
+      "primary_domain": "Logic",
+      "priority_score": 0.7038752500000001,
+      "quality": "substantial",
+      "shape": "star_of_david",
+      "title": "Formal Bridges Between Homotopy Type Theory and Classical Mathematics"
+    },
+    {
+      "date": "2026-06-01T12:46:23Z",
+      "domain": "Speculative",
+      "hue": 90,
+      "id": "scaling_laws_from_statistical_mechanics",
+      "primary_domain": "Speculative",
+      "priority_score": 0.7481675000000001,
+      "quality": "substantial",
+      "shape": "pentagonal_prism",
+      "title": "Neural Scaling Laws from Statistical Mechanics"
+    },
+    {
+      "date": "2026-06-01T13:40:06Z",
+      "domain": "Logic",
+      "hue": 270,
+      "id": "complete_newton_hodge_polygon_framework_for_2_dime",
+      "primary_domain": "Logic",
+      "priority_score": 0.6923000000000001,
+      "quality": "partial",
+      "shape": "star_of_david",
+      "title": "Newton-Hodge Polygon Framework for 2-Dimensional Filtered \u03c6-Modules"
+    },
+    {
+      "date": "2026-06-01T13:40:42Z",
+      "domain": "Differential Geometry / Geometric Analysis",
+      "hue": 271,
+      "id": "yamabe_problem_non_compact_case",
+      "primary_domain": "Geometry",
+      "priority_score": 0.49938318181818186,
+      "quality": "partial",
+      "shape": "hexagonal_prism",
+      "title": "Yamabe Problem: Non-Compact Case \u2014 Bubble Analysis and Obstruction Theory"
+    },
+    {
+      "date": "2026-06-01T13:41:16Z",
+      "domain": "Cryptography",
+      "hue": 281,
+      "id": "reflective_type_theory_proving_things_about_provin",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.7124953271028038,
+      "quality": "substantial",
+      "shape": "dodecahedron",
+      "title": "Reflective Type Theory: Proving Things About Proving Things"
+    },
+    {
+      "date": "2026-06-01T13:41:53Z",
+      "domain": "Geometry",
+      "hue": 91,
+      "id": "stochastic_galois_theory_random_permutations_have_",
+      "primary_domain": "Geometry",
+      "priority_score": 0.6453740000000001,
+      "quality": "partial",
+      "shape": "hexagonal_prism",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "date": "2026-06-01T14:17:20Z",
+      "domain": "EML",
+      "hue": 91,
+      "id": "self_avoiding_walk_connective_constant",
+      "primary_domain": "EML",
+      "priority_score": 0.5409767590618337,
+      "quality": "partial",
+      "shape": "octahedron",
+      "title": "Self-Avoiding Walk: Connective Constant"
+    },
+    {
+      "date": "2026-06-01T14:17:42Z",
+      "domain": "Pythagorean",
+      "hue": 271,
+      "id": "curvature_induced_computation_when_geodesic_flow_s",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.7262368372093022,
+      "quality": "substantial",
+      "shape": "triangular_prism",
+      "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine"
+    },
+    {
+      "date": "2026-06-01T14:51:08Z",
+      "domain": "EML",
+      "hue": 270,
+      "id": "erds_faber_lovsz_conjecture",
+      "primary_domain": "EML",
+      "priority_score": 0.6484295302013423,
+      "quality": "partial",
+      "shape": "octahedron",
+      "title": "Erd\u0151s\u2013Faber\u2013Lov\u00e1sz Conjecture: Structural Theory and Formalization"
+    },
+    {
+      "date": "2026-06-01T14:51:29Z",
+      "domain": "Shared",
+      "hue": 90,
+      "id": "the_combinatorics_of_compiler_optimization_registe",
+      "primary_domain": "Bridges",
+      "priority_score": 0.6504003865979382,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Register Allocation as Graph Coloring: Chordal Structure and Optimality"
+    },
+    {
+      "date": "2026-06-01T14:51:50Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "discriminant_uniformity_theorem_for_quad",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7250465517241378,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Discriminant Uniformity Theorem for Quadratic Polynomials over Finite Fields"
+    },
+    {
+      "date": "2026-06-01T14:52:09Z",
+      "domain": "MachineLearning",
+      "hue": 271,
+      "id": "reflective_type_theory_refltt_as_a_formal_fram",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.736756049822064,
+      "quality": "substantial",
+      "shape": "sphere_rings",
+      "title": "Reflective Type Theory: Proof Depth Algebra and Typed Provability Logic"
+    },
+    {
+      "date": "2026-06-01T14:52:31Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "tropical_valuation_functor_as_an_order_preserving_",
+      "primary_domain": "Bridges",
+      "priority_score": 0.9244453488372093,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Tropical Valuation Functor: An Order-Preserving Semiring Bridge from Algebraic Coefficients to Tropical Convexity"
+    },
+    {
+      "date": "2026-06-01T14:52:52Z",
+      "domain": "MachineLearning",
+      "hue": 272,
+      "id": "digital_immortality_can_a_mind_be_encoded",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.7107561643835616,
+      "quality": "substantial",
+      "shape": "sphere_rings",
+      "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading"
+    },
+    {
+      "date": "2026-06-01T15:27:42Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "homotopy_type_theory_of_cooking_recipes_paths_betw",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7089549723756907,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+    },
+    {
+      "date": "2026-06-01T15:28:01Z",
+      "domain": "Algebra",
+      "hue": 271,
+      "id": "computational_complexity_of_alien_civilizations",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7274067741935484,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Substrate-Independent Computational Complexity: Universal Hierarchy Theory"
+    },
+    {
+      "date": "2026-06-01T16:01:42Z",
+      "domain": "Bridges",
+      "hue": 91,
+      "id": "the_topology_of_knotted_light_how_laser_beams_get_",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7509785714285714,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "The Topology of Knotted Light: Alexander Polynomials and OAM Spectra"
+    },
+    {
+      "date": "2026-06-01T16:02:03Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "mathematical_foundations_for_analyzing_mind",
+      "primary_domain": "Algebra",
+      "priority_score": 0.7091858260869566,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Sparse Connectome Complexity: Information-Theoretic Bounds on Mind Encoding"
+    },
+    {
+      "date": "2026-06-01T16:35:52Z",
+      "domain": "Tropical",
+      "hue": 95,
+      "id": "formalizing_the_probabilistic_method_erdos_meets_l",
+      "primary_domain": "Tropical",
+      "priority_score": 0.70234,
+      "quality": "substantial",
+      "shape": "star",
+      "title": "The Probabilistic Method: Erd\u0151s Meets Lean \u2014 Tropical Foundations of Combinatorial Existence Proofs"
+    },
+    {
+      "date": "2026-06-01T17:09:26Z",
+      "domain": "Computation",
+      "hue": 270,
+      "id": "complete_formal_chain_connecting_ssa_program_s",
+      "primary_domain": "Computation",
+      "priority_score": 0.6951788461538462,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "List Coloring of Chordal Interference Graphs: Optimal Heterogeneous Register Allocation"
+    },
+    {
+      "date": "2026-06-01T17:09:56Z",
+      "domain": "Physics",
+      "hue": 90,
+      "id": "tropical_cryptocurrency_mining_on_the_min_plus_sem",
+      "primary_domain": "Physics",
+      "priority_score": 0.6755283783783783,
+      "quality": "partial",
+      "shape": "diamond",
+      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "date": "2026-06-01T17:10:16Z",
+      "domain": "Computation",
+      "hue": 270,
+      "id": "impossibility_results_for_fun_things_that_cannot_b",
+      "primary_domain": "Computation",
+      "priority_score": 0.6563341818181818,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "A Unified Calculus of Impossibility: Transfer, Composition, and Spectral Analysis"
+    },
+    {
+      "date": "2026-06-01T17:10:33Z",
+      "domain": "Physics",
+      "hue": 90,
+      "id": "the_monster_groups_secret_message_moonshine_beyond",
+      "primary_domain": "Physics",
+      "priority_score": 0.7188521428571428,
+      "quality": "substantial",
+      "shape": "diamond",
+      "title": "Monstrous Moonshine: Character-Theoretic Foundations and McKay-Thompson Series"
+    },
+    {
+      "date": "2026-06-01T17:10:56Z",
+      "domain": "Physics",
+      "hue": 90,
+      "id": "chaos_as_a_computable_shadow_the_shadowing_lemma_f",
+      "primary_domain": "Physics",
+      "priority_score": 0.65706875,
+      "quality": "partial",
+      "shape": "diamond",
+      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+    },
+    {
+      "date": "2026-06-01T17:46:21Z",
+      "domain": "Logic / Proof Theory / Mathematical Foundations",
+      "hue": 91,
+      "id": "self_improving_proofs_proofs_that_get_simpler_over",
+      "primary_domain": "Logic",
+      "priority_score": 0.7190507194244604,
+      "quality": "substantial",
+      "shape": "star_of_david",
+      "title": "Proof Refinement Systems: Self-Improving Proofs"
+    },
+    {
+      "date": "2026-06-01T17:46:57Z",
+      "domain": "Speculative",
+      "hue": 91,
+      "id": "the_p_vs_np_of_sudoku_phase_transitions_in_constra",
+      "primary_domain": "Speculative",
+      "priority_score": 0.690598275862069,
+      "quality": "partial",
+      "shape": "pentagonal_prism",
+      "title": "Phase Transitions in Sudoku Constraint Satisfaction: Box Constraints and Backtracking Complexity"
+    },
+    {
+      "date": "2026-06-01T18:20:25Z",
+      "domain": "Dynamical Systems / Certified Computation",
+      "hue": 90,
+      "id": "formal_foundation_for_orbit_shadowing_in_dynam",
+      "primary_domain": "Computation",
+      "priority_score": 0.665185,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "Formal Foundations for Orbit Shadowing in Dynamical Systems"
+    },
+    {
+      "date": "2026-06-01T18:20:47Z",
+      "domain": "Speculative",
+      "hue": 271,
+      "id": "three_interconnected_results_about_quadratic_pol",
+      "primary_domain": "Speculative",
+      "priority_score": 0.65157,
+      "quality": "partial",
+      "shape": "pentagonal_prism",
+      "title": "Discriminant Uniformity and Splitting Type Distribution"
+    },
+    {
+      "date": "2026-06-01T18:21:11Z",
+      "domain": "Speculative",
+      "hue": 270,
+      "id": "formal_theory_connecting_classical_impossibili",
+      "primary_domain": "Speculative",
+      "priority_score": 0.6224610609756096,
+      "quality": "partial",
+      "shape": "pentagonal_prism",
+      "title": "Equivariant Impossibility Theory: A Formal Framework for Impossibility via Group Actions"
+    },
+    {
+      "date": "2026-06-01T18:21:27Z",
+      "domain": "Speculative",
+      "hue": 91,
+      "id": "formal_bridge_between_the_probabilistic_method",
+      "primary_domain": "Speculative",
+      "priority_score": 0.719284,
+      "quality": "substantial",
+      "shape": "pentagonal_prism",
+      "title": "The Tropical-Probabilistic Bridge: Min-Plus Duality for Existence Proofs"
+    },
+    {
+      "date": "2026-06-01T18:21:48Z",
+      "domain": "Speculative",
+      "hue": 272,
+      "id": "hilberts_hotel_for_primes_an_infinite_hotel_where_",
+      "primary_domain": "Speculative",
+      "priority_score": 0.62158775,
+      "quality": "partial",
+      "shape": "pentagonal_prism",
+      "title": "Hilbert's Hotel for Primes: Asymptotically Identity Permutations"
+    }
+  ]
 };

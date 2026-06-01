@@ -409,12 +409,12 @@ class FutureDirectionsManager:
         self.workspace.mkdir(parents=True, exist_ok=True)
         self._file.write_text(
             json.dumps({
-                "directions": [d.to_dict() for d in self._directions],
-                "pruned": [d.to_dict() for d in self._pruned],
+                "directions": sorted([d.to_dict() for d in self._directions], key=lambda d: d.get("id", "")),
+                "pruned": sorted([d.to_dict() for d in self._pruned], key=lambda d: d.get("id", "")),
                 "cycle_syntheses": self._cycle_syntheses,
                 "recent_domain_counts": self._recent_domain_counts,
                 "recent_theme_keywords": self._recent_theme_keywords,
-            }, indent=2, ensure_ascii=False),
+            }, indent=2, ensure_ascii=False, sort_keys=True),
             encoding="utf-8",
         )
         self._update_snapshot()
@@ -452,9 +452,9 @@ class FutureDirectionsManager:
                 "domain_bridges": d.domain_bridges,
                 "proof_strategy": d.proof_strategy,
             })
-        display.sort(key=lambda x: x["priority_score"], reverse=True)
+        display.sort(key=lambda x: (-x["priority_score"], x.get("id", "")))
         snapshot_path.write_text(
-            json.dumps(display, indent=2, ensure_ascii=False),
+            json.dumps(display, indent=2, ensure_ascii=False, sort_keys=True),
             encoding="utf-8",
         )
 
