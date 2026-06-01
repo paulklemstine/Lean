@@ -4,6 +4,46 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
+    "title": "Categorical Physics: The Shape of a Theory of Everything",
+    "domain": "Speculative",
+    "date": "2026-06-01T04:23:46Z",
+    "exp_id": "64caf9f0",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 54
+  },
+  {
+    "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
+    "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
+    "domain": "Computation",
+    "date": "2026-06-01T04:23:28Z",
+    "exp_id": "98ff40a1",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 53
+  },
+  {
+    "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
+    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
+    "domain": "Logic",
+    "date": "2026-06-01T04:23:08Z",
+    "exp_id": "06268486",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 52
+  },
+  {
+    "filename": "the_fractal_dimension_of_mathematical_truth.json",
+    "title": "The Fractal Dimension of Mathematical Truth",
+    "domain": "Cryptography",
+    "date": "2026-06-01T04:22:48Z",
+    "exp_id": "c808b38a",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 51
+  },
+  {
     "filename": "the_mega_sphere_all_dimensions_at_once.json",
     "title": "The Mega-Sphere: All Dimensions at Once",
     "domain": "Physics",
@@ -634,6 +674,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "the_fractal_dimension_of_mathematical_truth.json": {
+    "title": "The Fractal Dimension of Mathematical Truth",
+    "exp_id": "c808b38a",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Cryptography"
+  },
   "the_unreasonable_effectiveness_of_wrong_theories.json": {
     "title": "The Unreasonable Effectiveness of Wrong Theories",
     "exp_id": "10ec7af4",
@@ -721,6 +769,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "domain": "Algebra"
+  },
+  "categorical_physics_the_shape_of_a_theory_of_every.json": {
+    "title": "Categorical Physics: The Shape of a Theory of Everything",
+    "exp_id": "64caf9f0",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Speculative"
   },
   "artins_conjecture_on_primitive_roots.json": {
     "title": "Artin's Conjecture on Primitive Roots: Index Theory and Safe Prime Analysis",
@@ -866,6 +922,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "memory_editing_when_forgetting_is_a_mathematical_o.json": {
+    "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
+    "exp_id": "98ff40a1",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Computation"
+  },
   "learning_with_errors_hardness_reductions.json": {
     "title": "Formalized Hardness Reduction from Lattice Problems to Learning with Errors",
     "exp_id": "ec4068d3",
@@ -898,6 +962,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "rigorous_mathematical_framework_for_tangled_hierar.json": {
+    "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
+    "exp_id": "06268486",
+    "source_exp_ids": [
+      "13c69dba"
+    ],
+    "domain": "Logic"
+  },
   "p_adic_langlands_for_glq_p.json": {
     "title": "Newton-Hodge Polygon Theory for p-adic Langlands GL\u2082(\u211a_p)",
     "exp_id": "f95fe11c",
@@ -919,7 +991,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -930,7 +1002,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -941,7 +1013,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -952,7 +1024,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -963,7 +1035,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -974,7 +1046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 112,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -985,7 +1057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -996,7 +1068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -1007,7 +1079,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -1018,7 +1090,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -1029,7 +1101,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -1040,7 +1112,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 90,
+      "hue": 314,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1051,7 +1123,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -1062,7 +1134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 100,
+      "hue": 92,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -1073,7 +1145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -1084,7 +1156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -1095,7 +1167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1106,7 +1178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -1117,7 +1189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -1128,7 +1200,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -1139,7 +1211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1172,7 +1244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1183,7 +1255,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -1194,7 +1266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -1205,7 +1277,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -1216,7 +1288,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1227,7 +1299,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1238,7 +1310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:51:11Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7053548000000001,
       "quality": "substantial"
     },
@@ -1249,7 +1321,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1260,7 +1332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:30:53Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.6829911764705883,
       "quality": "partial"
     },
@@ -1271,7 +1343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 95,
+      "hue": 275,
       "priority_score": 0.7347950000000001,
       "quality": "substantial"
     },
@@ -1282,7 +1354,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:50Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7184463811268895,
       "quality": "substantial"
     },
@@ -1293,7 +1365,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -1304,7 +1376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1315,7 +1387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 281,
+      "hue": 90,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -1326,7 +1398,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 281,
+      "hue": 91,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -1337,7 +1409,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -1348,7 +1420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -1370,7 +1442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -1381,7 +1453,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -1392,7 +1464,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 275,
+      "hue": 359,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
     },
@@ -1403,7 +1475,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:09Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1414,7 +1486,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:40Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1436,7 +1508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T03:49:22Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1447,7 +1519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T03:49:46Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1458,12 +1530,63 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T03:50:10Z",
-      "hue": 91,
+      "hue": 271,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "the_fractal_dimension_of_mathematical_truth",
+      "title": "The Fractal Dimension of Mathematical Truth",
+      "domain": "Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-06-01T04:22:48Z",
+      "hue": 271,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "rigorous_mathematical_framework_for_tangled_hierar",
+      "title": "Spectral Theory of Tangled Hierarchies in Provability Logic",
+      "domain": "Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-06-01T04:23:08Z",
+      "hue": 270,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "memory_editing_when_forgetting_is_a_mathematical_o",
+      "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
+      "domain": "Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-06-01T04:23:28Z",
+      "hue": 92,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "categorical_physics_the_shape_of_a_theory_of_every",
+      "title": "Categorical Physics: The Shape of a Theory of Everything",
+      "domain": "Speculative",
+      "primary_domain": "Speculative",
+      "shape": "pentagonal_prism",
+      "date": "2026-06-01T04:23:46Z",
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     }
   ],
   "edges": [
+    {
+      "source": "tangled_hierarchies_proof_systems_that_reference_t",
+      "target": "rigorous_mathematical_framework_for_tangled_hierar",
+      "strength": 1.0,
+      "label": "Direction 1: Tropical Entanglement Algebra",
+      "type": "provenance"
+    },
     {
       "source": "this_research_cycle_formalized_the_algebraic_skele",
       "target": "this_cycle_formalized_the_algebraic_core_of_the_he",

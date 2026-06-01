@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2259 of the highest-quality
+A curated collection of 2264 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2259
+Total files: 2264
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -715,6 +715,7 @@ import FINAL.Bridges.SheafPersistence
 import FINAL.Bridges.SheafProofStateDuality
 import FINAL.Bridges.SimplicialMorse
 import FINAL.Bridges.Skeleton
+import FINAL.Bridges.SocialCreditTopology
 import FINAL.Bridges.SourceCoding
 import FINAL.Bridges.Sp2nExpansionDeep
 import FINAL.Bridges.Sp4HeckeComparison
@@ -966,6 +967,8 @@ import FINAL.Computation.Evasion
 import FINAL.Computation.ExpIrrational
 import FINAL.Computation.FactoringEnergyLandscape
 import FINAL.Computation.FiveDreams
+import FINAL.Computation.FractalTruthDefs
+import FINAL.Computation.FractalTruthTheorems
 import FINAL.Computation.FutureResearchTheorems
 import FINAL.Computation.Glider
 import FINAL.Computation.GoodhartsRepulsor
@@ -979,6 +982,7 @@ import FINAL.Computation.InformationEntropy
 import FINAL.Computation.KarchmerWigderson
 import FINAL.Computation.KolmogorovComplexity
 import FINAL.Computation.KraftShannon
+import FINAL.Computation.MemoryAlgebra
 import FINAL.Computation.MetaOracle
 import FINAL.Computation.MetaOracleFiveQuestions
 import FINAL.Computation.MetaOracleHypotheses
@@ -1053,6 +1057,7 @@ import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
 import FINAL.Cryptography.CSIFiSh
+import FINAL.Cryptography.CSIFiShAdvanced
 import FINAL.Cryptography.CSIFiShDeep
 import FINAL.Cryptography.CollatzOWF
 import FINAL.Cryptography.CollatzOneWay
