@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f618cd9f",
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
     "pkg_num": 119,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7318784087314141,
     "title": "Memory Algebra: When Forgetting Is a Mathematical Operation"
   },
   {
@@ -3669,8 +3669,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "memory_editing_when_forgetting_is_a_mathematical_o",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7318784087314141,
+      "quality": "substantial",
       "shape": "star",
       "title": "Memory Algebra: When Forgetting Is a Mathematical Operation"
     }
