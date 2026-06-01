@@ -1,1 +1,1 @@
-algorithms.py (CSIFiShSignature class)
+algorithms.py
