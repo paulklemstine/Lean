@@ -1877,21 +1877,13 @@
                 // Graph node hover → highlight sidebar item
                 document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
                 if (node) {
-                    const sidebarItem = document.querySelector(`.nav-item[data-slug="${node.id}"]`);
-                    if (sidebarItem) {
-                        sidebarItem.classList.add('graph-highlight');
-                        // Scroll the sidebar list to make the highlighted item visible
-                        const listContainer = sidebarItem.closest('.package-list-container');
-                        if (listContainer) {
-                            const itemRect = sidebarItem.getBoundingClientRect();
-                            const listRect = listContainer.getBoundingClientRect();
-                            if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
-                                listContainer.scrollTo({
-                                    top: listContainer.scrollTop + itemRect.top - listRect.top - listRect.height / 3,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }
+                    // Use sidebar's highlightSidebarItem which handles pagination
+                    if (window.highlightSidebarItem) {
+                        window.highlightSidebarItem(node.id);
+                    } else {
+                        // Fallback: try direct DOM lookup (same page only)
+                        const sidebarItem = document.querySelector(`.nav-item[data-slug="${node.id}"]`);
+                        if (sidebarItem) sidebarItem.classList.add('graph-highlight');
                     }
                 }
 

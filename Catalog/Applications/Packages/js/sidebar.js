@@ -210,3 +210,32 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePagination();
     };
 });
+    // Navigate to the page containing a slug and highlight it
+    window.highlightSidebarItem = function(slug) {
+        if (!slug || !filteredPackages.length) return;
+        const sorted = sortPackages(filteredPackages, currentSort);
+        const idx = sorted.findIndex(p => p.filename.replace('.json', '') === slug);
+        if (idx === -1) return;
+        // Navigate to the page containing this item
+        const targetPage = Math.floor(idx / PAGE_SIZE) + 1;
+        if (targetPage !== currentPage) {
+            currentPage = targetPage;
+            window.renderSidebar(filteredPackages);
+        }
+        // Now the item should be in the DOM — highlight and scroll
+        const item = document.querySelector(`.nav-item[data-slug="${slug}"]`);
+        if (item) {
+            item.classList.add('graph-highlight');
+            const listContainer = item.closest('.package-list-container');
+            if (listContainer) {
+                const itemRect = item.getBoundingClientRect();
+                const listRect = listContainer.getBoundingClientRect();
+                if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
+                    listContainer.scrollTo({
+                        top: listContainer.scrollTop + itemRect.top - listRect.top - listRect.height / 3,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+    };
