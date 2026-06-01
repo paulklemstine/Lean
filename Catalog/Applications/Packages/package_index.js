@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
+    "title": "Categorical Physics: The Shape of a Theory of Everything",
+    "domain": "Speculative",
+    "date": "2026-06-01T04:23:46Z",
+    "exp_id": "64caf9f0",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 54
+  },
+  {
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
     "domain": "Computation",
     "date": "2026-06-01T04:23:28Z",
     "exp_id": "98ff40a1",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6,
+    "quality": "partial",
     "pkg_num": 53
   },
   {
@@ -760,6 +770,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "categorical_physics_the_shape_of_a_theory_of_every.json": {
+    "title": "Categorical Physics: The Shape of a Theory of Everything",
+    "exp_id": "64caf9f0",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Speculative"
+  },
   "artins_conjecture_on_primitive_roots.json": {
     "title": "Artin's Conjecture on Primitive Roots: Index Theory and Safe Prime Analysis",
     "exp_id": "fde037db",
@@ -984,7 +1002,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -1017,7 +1035,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -1028,7 +1046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 112,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -1039,7 +1057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -1061,7 +1079,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 314,
+      "hue": 92,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -1094,7 +1112,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 92,
+      "hue": 314,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1105,7 +1123,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7398349845201239,
       "quality": "substantial"
     },
@@ -1116,7 +1134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -1127,7 +1145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -1138,7 +1156,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 292,
+      "hue": 90,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -1149,7 +1167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 281,
+      "hue": 90,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1171,7 +1189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -1182,7 +1200,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -1193,7 +1211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1204,7 +1222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -1215,7 +1233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -1226,7 +1244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1237,7 +1255,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -1248,7 +1266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -1259,7 +1277,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -1281,7 +1299,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1292,7 +1310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:51:11Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7053548000000001,
       "quality": "substantial"
     },
@@ -1303,7 +1321,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1314,7 +1332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:30:53Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6829911764705883,
       "quality": "partial"
     },
@@ -1325,7 +1343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7347950000000001,
       "quality": "substantial"
     },
@@ -1336,7 +1354,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:50Z",
-      "hue": 292,
+      "hue": 270,
       "priority_score": 0.7184463811268895,
       "quality": "substantial"
     },
@@ -1358,7 +1376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1380,7 +1398,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -1402,7 +1420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -1424,7 +1442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 280,
+      "hue": 91,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -1435,7 +1453,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 112,
+      "hue": 92,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -1446,7 +1464,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 280,
+      "hue": 359,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
     },
@@ -1457,7 +1475,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:09Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1468,7 +1486,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:40Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1490,7 +1508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T03:49:22Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1512,7 +1530,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T03:50:10Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1523,7 +1541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T04:22:48Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1534,7 +1552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T04:23:08Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6,
       "quality": "partial"
     },
@@ -1545,7 +1563,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T04:23:28Z",
-      "hue": 91,
+      "hue": 92,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "categorical_physics_the_shape_of_a_theory_of_every",
+      "title": "Categorical Physics: The Shape of a Theory of Everything",
+      "domain": "Speculative",
+      "primary_domain": "Speculative",
+      "shape": "pentagonal_prism",
+      "date": "2026-06-01T04:23:46Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
