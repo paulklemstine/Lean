@@ -1,380 +1,298 @@
 #!/usr/bin/env python3
 """
-Algorithms for Equivariant Impossibility Detection
-====================================================
+Algorithms for Impossibility Theory
 
-Implements algorithms for:
-1. Enumerating equivariant maps between finite G-sets
-2. Detecting impossible equivariant tasks
-3. Computing orbit decompositions and stabilizers
-4. Testing the stabilizer criterion for task solvability
-
-Complexity analysis:
-- Equivariant map enumeration: O(|Y|^|orbits| · |G| · |X|) with orbit reduction
-- Impossibility detection: Same as enumeration (exhaustive search)
-- Orbit computation: O(|G| · |X|) via BFS
-- Stabilizer computation: O(|G|) per point
-
-Type hints and docstrings included throughout.
+Type-hinted implementations of the key algorithms from the
+equivariant impossibility framework.
 """
 
+from typing import TypeVar, Callable, Optional
+from dataclasses import dataclass
 from itertools import product
-from typing import (Any, Callable, Dict, FrozenSet, List, Optional,
-                    Set, Tuple)
 
 
-# ============================================================
-# Core data structures
-# ============================================================
+T = TypeVar('T')
 
+
+@dataclass
 class GroupAction:
-    """
-    A finite group G acting on a finite set X.
-
-    The group is represented by its elements, multiplication, identity,
-    and inverse operations. The action is a function act: G × X → X
-    satisfying act(e, x) = x and act(g, act(h, x)) = act(g*h, x).
-    """
-
-    def __init__(self, elements: List[Any], set_elements: List[Any],
-                 action: Callable[[Any, Any], Any],
-                 multiply: Callable[[Any, Any], Any],
-                 identity: Any,
-                 inverse: Callable[[Any], Any]):
-        self.G: List[Any] = elements
-        self.X: List[Any] = set_elements
-        self.act = action
-        self.mul = multiply
-        self.e = identity
-        self.inv = inverse
-
-    def orbit(self, x: Any) -> FrozenSet[Any]:
-        """Compute the orbit of x under the group action. O(|G|)."""
-        return frozenset(self.act(g, x) for g in self.G)
-
-    def orbits(self) -> List[FrozenSet[Any]]:
-        """Compute all orbits. O(|G| · |X|)."""
-        visited: Set[Any] = set()
-        result = []
-        for x in self.X:
-            if x not in visited:
-                orb = self.orbit(x)
-                result.append(orb)
-                visited |= orb
-        return result
-
-    def stabilizer(self, x: Any) -> List[Any]:
-        """Compute Stab(x) = {g ∈ G : g·x = x}. O(|G|)."""
-        return [g for g in self.G if self.act(g, x) == x]
+    """A finite group action on a finite set."""
+    group_elements: list[int]
+    domain: list[int]
+    action: Callable[[int, int], int]
+    identity: int
 
     def is_free(self) -> bool:
-        """Check if the action is free. O(|G| · |X|)."""
-        for g in self.G:
-            if g == self.e:
+        """Check if the action is free (no non-identity stabilizer)."""
+        for g in self.group_elements:
+            if g == self.identity:
                 continue
-            for x in self.X:
-                if self.act(g, x) == x:
+            for x in self.domain:
+                if self.action(g, x) == x:
                     return False
         return True
 
     def is_transitive(self) -> bool:
-        """Check if the action is transitive. O(|G|)."""
-        if not self.X:
+        """Check if the action is transitive (single orbit)."""
+        if not self.domain:
             return True
-        return len(self.orbit(self.X[0])) == len(self.X)
+        x0 = self.domain[0]
+        orbit = {self.action(g, x0) for g in self.group_elements}
+        return orbit == set(self.domain)
 
-    def fixed_points(self) -> FrozenSet[Any]:
-        """Compute Fix(G) = {x ∈ X : g·x = x ∀g}. O(|G| · |X|)."""
-        return frozenset(
-            x for x in self.X
-            if all(self.act(g, x) == x for g in self.G)
-        )
+    def fixed_points(self, subgroup: list[int]) -> list[int]:
+        """Compute fixed points of a subgroup."""
+        return [x for x in self.domain
+                if all(self.action(g, x) == x for g in subgroup)]
 
-    def orbit_representatives(self) -> List[Any]:
-        """Choose one representative per orbit. O(|G| · |X|)."""
-        visited: Set[Any] = set()
-        reps = []
-        for x in self.X:
-            if x not in visited:
-                reps.append(x)
-                visited |= self.orbit(x)
-        return reps
+    def stabilizer(self, x: int) -> list[int]:
+        """Compute the stabilizer of a point."""
+        return [g for g in self.group_elements if self.action(g, x) == x]
+
+    def orbit(self, x: int) -> set[int]:
+        """Compute the orbit of a point."""
+        return {self.action(g, x) for g in self.group_elements}
 
 
-# ============================================================
-# Algorithm 1: Enumerate equivariant maps
-# ============================================================
+@dataclass
+class ImpossibilityAnalysis:
+    """Complete impossibility analysis of a group action."""
+    is_free: bool
+    is_transitive: bool
+    is_nontrivial: bool
+    spectrum: list[list[int]]
+    spectrum_minimal: list[list[int]]
+    impossibility_degree: int
+    verdict: str
 
-def enumerate_equivariant_maps(
-    source: GroupAction, target: GroupAction,
-    admissible: Optional[Callable[[Any], Set[Any]]] = None
-) -> List[Dict[Any, Any]]:
+
+def compute_subgroups_cyclic(n: int) -> list[list[int]]:
+    """Compute all subgroups of Z/nZ."""
+    subgroups: list[list[int]] = []
+    for d in range(1, n + 1):
+        if n % d == 0:
+            subgroup = sorted([k * (n // d) % n for k in range(d)])
+            subgroups.append(subgroup)
+    return subgroups
+
+
+def compute_impossibility_spectrum(
+    ga: GroupAction,
+    subgroups: list[list[int]]
+) -> list[list[int]]:
     """
-    Enumerate all equivariant maps f: X → Y satisfying:
-      1. f(g·x) = g·f(x)  for all g ∈ G, x ∈ X
-      2. f(x) ∈ admissible(x)  for all x ∈ X (if provided)
-
-    Algorithm (orbit reduction):
-      - Decompose X into orbits
-      - For each orbit, choose a representative x₀
-      - Try all admissible values y₀ for f(x₀)
-      - Extend f equivariantly: f(g·x₀) = g·y₀
-      - Verify consistency (well-definedness for stabilizer elements)
-
-    Complexity: O(|Y|^k · |G| · |X|) where k = number of orbits.
-    This is exponentially better than brute-force O(|Y|^|X|) when
-    orbits are large.
-
-    Args:
-        source: Group action on the domain X
-        target: Group action on the codomain Y
-        admissible: Optional function x ↦ {admissible outputs at x}
-
-    Returns:
-        List of equivariant maps as dictionaries x → f(x)
-    """
-    if admissible is None:
-        admissible = lambda x: set(target.X)
-
-    # Compute orbit representatives
-    reps = source.orbit_representatives()
-
-    # For each representative, compute which y values are admissible
-    # AND consistent with the stabilizer
-    def admissible_at_rep(x0: Any) -> List[Any]:
-        """Values y₀ that can serve as f(x₀)."""
-        stab = source.stabilizer(x0)
-        candidates = []
-        for y0 in admissible(x0):
-            # Check stabilizer consistency: for h ∈ Stab(x₀),
-            # we need h·y₀ = y₀ (since f(h·x₀) = f(x₀) = y₀
-            # and f(h·x₀) = h·f(x₀) = h·y₀)
-            if all(target.act(h, y0) == y0 for h in stab):
-                candidates.append(y0)
-        return candidates
-
-    # Build candidate sets per orbit
-    orbit_candidates = [admissible_at_rep(r) for r in reps]
-
-    # Enumerate all combinations
-    solutions = []
-    for combo in product(*orbit_candidates):
-        f: Dict[Any, Any] = {}
-        valid = True
-
-        for x0, y0 in zip(reps, combo):
-            # Extend equivariantly over the orbit of x0
-            for g in source.G:
-                gx = source.act(g, x0)
-                gy = target.act(g, y0)
-
-                if gx in f:
-                    # Consistency check
-                    if f[gx] != gy:
-                        valid = False
-                        break
-                else:
-                    f[gx] = gy
-
-                    # Check admissibility
-                    if f[gx] not in admissible(gx):
-                        valid = False
-                        break
-
-            if not valid:
-                break
-
-        if valid and len(f) == len(source.X):
-            solutions.append(f)
-
-    return solutions
-
-
-# ============================================================
-# Algorithm 2: Detect impossible tasks
-# ============================================================
-
-def is_task_impossible(
-    source: GroupAction, target: GroupAction,
-    admissible: Callable[[Any], Set[Any]]
-) -> Tuple[bool, Optional[str]]:
-    """
-    Determine whether an equivariant task is impossible.
-
-    Returns (is_impossible, reason) where reason explains why.
+    Compute the impossibility spectrum: the set of nontrivial subgroups
+    with empty fixed-point set.
 
     Algorithm:
-      1. Check if any orbit representative has empty admissible set → immediate impossibility
-      2. Check stabilizer compatibility for each representative
-      3. If pre-checks pass, do full enumeration
+    1. For each subgroup H, compute X^H (fixed points).
+    2. Include H in spectrum if H is nontrivial and X^H = ∅.
 
-    Complexity: O(|Y|^k · |G| · |X|) worst case, but early termination
-    often much faster.
+    Time complexity: O(|subgroups| * |H| * |X|)
     """
-    # Quick check: empty admissible set
-    for x in source.X:
-        if not admissible(x):
-            return True, f"Empty admissible set at {x}"
+    spectrum: list[list[int]] = []
+    for H in subgroups:
+        if H == [ga.identity]:
+            continue
+        if len(ga.fixed_points(H)) == 0:
+            spectrum.append(H)
+    return spectrum
 
-    # Stabilizer check: for each orbit rep x₀, need ∃ y₀ ∈ adm(x₀)
-    # with Stab(x₀) ⊆ Stab(y₀)
-    reps = source.orbit_representatives()
-    for x0 in reps:
-        stab_x0 = source.stabilizer(x0)
-        has_compatible = False
-        for y0 in admissible(x0):
-            if all(target.act(h, y0) == y0 for h in stab_x0):
-                has_compatible = True
+
+def find_minimal_spectrum(
+    spectrum: list[list[int]]
+) -> list[list[int]]:
+    """
+    Find the minimal elements of the impossibility spectrum.
+
+    A subgroup H is minimal in the spectrum if no proper subgroup
+    of H is also in the spectrum.
+
+    Algorithm:
+    1. Sort spectrum by size (ascending).
+    2. For each H, check if any smaller spectrum member is a subset of H.
+    3. If not, H is minimal.
+    """
+    minimal: list[list[int]] = []
+    spectrum_sets = [set(H) for H in spectrum]
+
+    for i, H_set in enumerate(spectrum_sets):
+        is_minimal = True
+        for j, K_set in enumerate(spectrum_sets):
+            if j == i:
+                continue
+            if K_set < H_set:  # K is a proper subset of H
+                is_minimal = False
                 break
-        if not has_compatible:
-            return True, (f"No stabilizer-compatible output at orbit rep {x0} "
-                         f"(stabilizer has {len(stab_x0)} elements)")
+        if is_minimal:
+            minimal.append(spectrum[i])
 
-    # Full enumeration
-    solutions = enumerate_equivariant_maps(source, target, admissible)
-    if not solutions:
-        return True, "No equivariant map exists (exhaustive search)"
-    return False, None
+    return minimal
 
 
-# ============================================================
-# Algorithm 3: Impossibility witness search
-# ============================================================
-
-def find_impossible_tasks(
-    action: GroupAction,
-    max_admissible_size: Optional[int] = None
-) -> List[Tuple[Callable, str]]:
+def analyze_impossibility(ga: GroupAction, subgroups: list[list[int]]) -> ImpossibilityAnalysis:
     """
-    Search for impossible equivariant tasks on a given G-set.
+    Complete impossibility analysis of a group action.
 
-    Tries several canonical task types:
-    1. Fixed-point task (outputs must be fixed points)
-    2. Constant task (all outputs must equal)
-    3. Singleton-orbit tasks (output in specific orbit)
-
-    Returns list of (admissible_func, description) for impossible tasks.
+    Returns:
+        ImpossibilityAnalysis with all computed invariants.
     """
-    impossible = []
+    is_free = ga.is_free()
+    is_transitive = ga.is_transitive()
+    is_nontrivial = len(ga.group_elements) > 1
 
-    # Task 1: Fixed-point task
-    fp = action.fixed_points()
-    if action.X and not fp:
-        impossible.append(
-            (lambda x: set(), "Fixed-point task (no fixed points exist)")
-        )
+    spectrum = compute_impossibility_spectrum(ga, subgroups)
+    minimal = find_minimal_spectrum(spectrum)
 
-    # Task 2: Constant tasks (try each possible constant value)
-    for c in action.X:
-        adm = lambda x, c=c: {c}
-        is_imp, reason = is_task_impossible(action, action, adm)
-        if is_imp:
-            impossible.append(
-                (adm, f"Constant-value task (must output {c})")
-            )
+    degree = min(len(H) for H in spectrum) if spectrum else 0
 
-    return impossible
+    if is_free and is_nontrivial:
+        verdict = "IMPOSSIBLE: No equivariant constant map exists"
+    elif not is_free:
+        verdict = "POSSIBLE: Action is not free (some stabilizers nontrivial)"
+    else:
+        verdict = "TRIVIAL: Group is trivial"
 
-
-# ============================================================
-# Algorithm 4: Classify tasks on cyclic groups
-# ============================================================
-
-def classify_cyclic_group_tasks(n: int) -> Dict[str, Any]:
-    """
-    Complete classification of equivariant self-tasks on C_n acting on Z/nZ.
-
-    For C_n acting freely and transitively on itself:
-    - Every equivariant self-map is a group translation x ↦ x + k (mod n)
-    - There are exactly n equivariant self-maps
-    - All are injective (bijective, in fact)
-    - None are constant when n > 1
-
-    Returns classification data.
-    """
-    G = list(range(n))
-    X = list(range(n))
-    action = GroupAction(
-        elements=G, set_elements=X,
-        action=lambda g, x: (g + x) % n,
-        multiply=lambda g, h: (g + h) % n,
-        identity=0,
-        inverse=lambda g: (-g) % n
+    return ImpossibilityAnalysis(
+        is_free=is_free,
+        is_transitive=is_transitive,
+        is_nontrivial=is_nontrivial,
+        spectrum=spectrum,
+        spectrum_minimal=minimal,
+        impossibility_degree=degree,
+        verdict=verdict
     )
 
-    # Find all equivariant self-maps
-    all_adm = lambda x: set(X)
-    equi_maps = enumerate_equivariant_maps(action, action, all_adm)
 
-    # Classify each map
-    classifications = []
-    for f in equi_maps:
-        shift = f[0]  # f(0) determines the translation
-        is_id = all(f[x] == x for x in X)
-        is_const = len(set(f.values())) == 1
-        is_inj = len(set(f.values())) == len(X)
-        classifications.append({
-            'map': f,
-            'shift': shift,
-            'is_identity': is_id,
-            'is_constant': is_const,
-            'is_injective': is_inj,
-        })
+def verify_transfer_principle(
+    source_ga: GroupAction,
+    target_ga: GroupAction,
+    phi: Callable[[int], int]
+) -> dict[str, bool]:
+    """
+    Verify the transfer principle: if target action is impossible and
+    phi is surjective, then source action (via phi) is also impossible.
+
+    Returns dict with verification results.
+    """
+    # Check surjectivity
+    image = {phi(h) for h in source_ga.group_elements}
+    is_surjective = image == set(target_ga.group_elements)
+
+    # Check target impossibility
+    target_free = target_ga.is_free()
+    target_nontrivial = len(target_ga.group_elements) > 1
+
+    # Verify: can we find an equivariant constant map via phi?
+    found_constant = False
+    for c in target_ga.domain:
+        valid = True
+        for h in source_ga.group_elements:
+            for x in target_ga.domain:
+                if target_ga.action(phi(h), x) != x:
+                    # f(phi(h) · x) should equal phi(h) · f(x)
+                    # For constant f(y) = c: c should equal phi(h) · c
+                    if target_ga.action(phi(h), c) != c:
+                        valid = False
+                        break
+            if not valid:
+                break
+        if valid:
+            found_constant = True
+            break
 
     return {
-        'n': n,
-        'num_equivariant_maps': len(equi_maps),
-        'all_injective': all(c['is_injective'] for c in classifications),
-        'any_constant': any(c['is_constant'] for c in classifications),
-        'is_free': action.is_free(),
-        'is_transitive': action.is_transitive(),
-        'maps': classifications,
-        'impossible_tasks': find_impossible_tasks(action),
+        "phi_surjective": is_surjective,
+        "target_free": target_free,
+        "target_nontrivial": target_nontrivial,
+        "transfer_applies": is_surjective and target_free and target_nontrivial,
+        "found_equivariant_constant": found_constant,
+        "verified": (is_surjective and target_free and target_nontrivial)
+                    == (not found_constant)
     }
 
 
-# ============================================================
-# Example usage
-# ============================================================
+def verify_product_freeness(
+    ga1: GroupAction, ga2: GroupAction
+) -> dict[str, bool]:
+    """
+    Verify the product freeness theorem: if both actions are free,
+    the product action is free.
+    """
+    free1 = ga1.is_free()
+    free2 = ga2.is_free()
 
-def main():
-    """Demonstrate the algorithms."""
-    print("=" * 60)
-    print("  Equivariant Impossibility — Algorithm Demonstrations")
-    print("=" * 60)
+    # Build product action
+    prod_group = [(g, h) for g in ga1.group_elements for h in ga2.group_elements]
+    prod_domain = [(x, y) for x in ga1.domain for y in ga2.domain]
+    prod_identity = (ga1.identity, ga2.identity)
 
-    # Classify cyclic groups
-    for n in [2, 3, 4, 5, 6]:
-        result = classify_cyclic_group_tasks(n)
-        print(f"\n--- C_{n} on Z/{n}Z ---")
-        print(f"  Free: {result['is_free']}, Transitive: {result['is_transitive']}")
-        print(f"  Equivariant self-maps: {result['num_equivariant_maps']}")
-        print(f"  All injective: {result['all_injective']}")
-        print(f"  Any constant: {result['any_constant']}")
-        print(f"  Impossible tasks found: {len(result['impossible_tasks'])}")
-        for _, desc in result['impossible_tasks']:
-            print(f"    → {desc}")
+    prod_free = True
+    for gh in prod_group:
+        if gh == prod_identity:
+            continue
+        for xy in prod_domain:
+            result = (ga1.action(gh[0], xy[0]), ga2.action(gh[1], xy[1]))
+            if result == xy:
+                prod_free = False
+                break
+        if not prod_free:
+            break
 
-    # Orbit-reduction speedup demonstration
-    print("\n--- Orbit Reduction Speedup ---")
-    for n in [3, 4, 5]:
-        from itertools import permutations
-        perms = [tuple(p) for p in permutations(range(n))]
-        action = GroupAction(
-            elements=perms, set_elements=list(range(n)),
-            action=lambda g, x: g[x],
-            multiply=lambda g, h: tuple(g[h[i]] for i in range(len(g))),
-            identity=tuple(range(n)),
-            inverse=lambda g: tuple(
-                {v: k for k, v in enumerate(g)}[i] for i in range(len(g)))
-        )
-        orbits = action.orbits()
-        print(f"  S_{n}: |G|={len(perms)}, |X|={n}, orbits={len(orbits)}")
-        print(f"    Brute force: {n}^{n} = {n**n} candidates")
-        print(f"    Orbit reduction: {n}^{len(orbits)} = {n**len(orbits)} candidates")
-        equi = enumerate_equivariant_maps(action, action)
-        print(f"    Actual equivariant self-maps: {len(equi)}")
+    return {
+        "action1_free": free1,
+        "action2_free": free2,
+        "product_free": prod_free,
+        "theorem_holds": (free1 and free2) == prod_free or not (free1 and free2)
+    }
 
 
+# === Main demonstration ===
 if __name__ == "__main__":
-    main()
+    print("Impossibility Theory: Algorithm Demonstrations")
+    print("=" * 50)
+
+    # Example 1: Z/5Z on Z/5Z
+    z5 = GroupAction(
+        group_elements=list(range(5)),
+        domain=list(range(5)),
+        action=lambda g, x: (g + x) % 5,
+        identity=0
+    )
+    subgroups_5 = compute_subgroups_cyclic(5)
+    result = analyze_impossibility(z5, subgroups_5)
+    print(f"\nZ/5Z on Z/5Z:")
+    print(f"  {result.verdict}")
+    print(f"  Spectrum size: {len(result.spectrum)}")
+    print(f"  Impossibility degree: {result.impossibility_degree}")
+
+    # Example 2: Z/6Z on Z/6Z
+    z6 = GroupAction(
+        group_elements=list(range(6)),
+        domain=list(range(6)),
+        action=lambda g, x: (g + x) % 6,
+        identity=0
+    )
+    subgroups_6 = compute_subgroups_cyclic(6)
+    result6 = analyze_impossibility(z6, subgroups_6)
+    print(f"\nZ/6Z on Z/6Z:")
+    print(f"  {result6.verdict}")
+    print(f"  Spectrum: {result6.spectrum}")
+    print(f"  Minimal: {result6.spectrum_minimal}")
+    print(f"  Degree: {result6.impossibility_degree}")
+
+    # Example 3: Transfer principle verification
+    z3 = GroupAction(list(range(3)), list(range(3)),
+                     lambda g, x: (g + x) % 3, 0)
+    transfer = verify_transfer_principle(z6, z3, lambda h: h % 3)
+    print(f"\nTransfer Z/6Z → Z/3Z:")
+    for k, v in transfer.items():
+        print(f"  {k}: {v}")
+
+    # Example 4: Product freeness
+    z2 = GroupAction(list(range(2)), list(range(2)),
+                     lambda g, x: (g + x) % 2, 0)
+    prod_result = verify_product_freeness(z2, z3)
+    print(f"\nProduct Z/2Z × Z/3Z:")
+    for k, v in prod_result.items():
+        print(f"  {k}: {v}")
