@@ -27,6 +27,10 @@
             ...e,
             edgeType: e.type,
         }));
+        // Fast lookup: are two nodes connected by an edge?
+        const connectedSet = new Set();
+        graphEdges.forEach(e => { connectedSet.add(e.source + '|' + e.target); connectedSet.add(e.target + '|' + e.source); });
+        function areConnected(idA, idB) { return connectedSet.has(idA + '|' + idB); }
         // Domain bridges for cluster-level connections
         const domainBridges = graphData.domain_bridges || [];
 
@@ -436,6 +440,7 @@
             // ─── Edge springiness: nearby connected nodes attract each other ───
             const EDGE_SPRING_K = 0.08;       // Spring constant — gentle attraction
             const EDGE_SPRING_REST = REST_LENGTH * 0.6;  // Rest length where force is zero
+            const EDGE_DAMPING = 0.03;        // Relative-velocity damping to smooth jitter between connected nodes
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
@@ -446,8 +451,13 @@
                 const f = EDGE_SPRING_K * (d - EDGE_SPRING_REST) / d;
                 const fx = mi.dx * f;
                 const fy = mi.dy * f;
-                a.vx += fx; a.vy += fy;
-                b.vx -= fx; b.vy -= fy;
+                // Damp relative velocity along the spring axis to prevent oscillation
+                const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
+                const relVn = (relVx * mi.dx + relVy * mi.dy) / d;  // relative velocity along edge
+                const dampFx = (mi.dx / d) * relVn * EDGE_DAMPING;
+                const dampFy = (mi.dy / d) * relVn * EDGE_DAMPING;
+                a.vx += fx - dampFx; a.vy += fy - dampFy;
+                b.vx -= fx + dampFx; b.vy -= fy + dampFy;
             });
 
             // ─── Edge crossing avoidance: uncross overlapping edges, keep them uncrossed ───
@@ -644,25 +654,28 @@
                         if (relVn > 0) {
                             // Chain reaction detection: visual effects scale with collision cascade
                             const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
+                            // Connected nodes get inelastic collisions (absorb energy, no bouncing)
+                            const isConnected = areConnected(a.id, b.id);
+                            const bounce = isConnected ? 0.1 : BOUNCE;  // connected: nearly inelastic
                             const totalMass = a.mass + b.mass;
-                            // Elastic impulse: (1+e) = 2 for e=1, conserves both p and KE
-                            const impulseA = (1 + BOUNCE) * relVn * b.mass / totalMass;
-                            const impulseB = (1 + BOUNCE) * relVn * a.mass / totalMass;
+                            // Impulse: (1+e) * relVn * m_other / totalMass
+                            const impulseA = (1 + bounce) * relVn * b.mass / totalMass;
+                            const impulseB = (1 + bounce) * relVn * a.mass / totalMass;
                             a.vx -= impulseA * nx;
                             a.vy -= impulseA * ny;
                             b.vx += impulseB * nx;
                             b.vy += impulseB * ny;
 
-                            // Visual: activate rocket flame trails on both nodes
+                            // Visual: activate rocket flame trails on both nodes (subdued for connected)
                             a.thrustTime = time;
                             a.thrustAngle = Math.atan2(-ny, -nx) + (Math.random() - 0.5) * Math.PI * 0.6;
-                            a.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
+                            a.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
                             b.thrustTime = time;
                             b.thrustAngle = Math.atan2(ny, nx) + (Math.random() - 0.5) * Math.PI * 0.6;
-                            b.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
+                            b.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
 
-                            // Spawn explosion at contact point (capped for performance)
-                            if (explosions.length < MAX_EXPLOSIONS) {
+                            // Spawn explosion at contact point (skip for connected — gentle contact)
+                            if (!isConnected && explosions.length < MAX_EXPLOSIONS) {
                                 const cx = (a.x + b.x) * 0.5;
                                 const cy = (a.y + b.y) * 0.5;
                                 const sparkCount = Math.min(MAX_SPARKS_PER_EXPLOSION, 8 + Math.floor(Math.abs(relVn) * 5));
