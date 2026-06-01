@@ -1,700 +1,543 @@
+#!/usr/bin/env python3
 """
-Applications of Turing Pattern ↔ Algebraic Geometry Correspondence
+Turing's Flowers: Morphogenesis as Algebraic Geometry — Demo
 
-Real-world applications demonstrating the mathematical framework.
+Demonstrates:
+1. Chebyshev polynomial computation and the cos(nθ) = Tₙ(cos θ) identity
+2. Turing instability criterion verification
+3. Pattern generation and algebraic classification
+4. Zero set extraction and polynomial fitting
 """
 
 import numpy as np
-from typing import Dict, List, Tuple
+from typing import Tuple, List
+
+# ============================================================
+# Section 1: Chebyshev Polynomials
+# ============================================================
+
+def chebyshev_T(n: int, x: np.ndarray) -> np.ndarray:
+    """Evaluate Chebyshev polynomial T_n at points x using recurrence."""
+    if n == 0:
+        return np.ones_like(x, dtype=float)
+    if n == 1:
+        return x.copy().astype(float)
+    T_prev2 = np.ones_like(x, dtype=float)
+    T_prev1 = x.copy().astype(float)
+    for _ in range(2, n + 1):
+        T_curr = 2 * x * T_prev1 - T_prev2
+        T_prev2 = T_prev1
+        T_prev1 = T_curr
+    return T_curr
 
 
-# ===== Inline core functions (self-contained) =====
-
-def genus_degree(d: int) -> int:
-    """Genus of a smooth plane curve of degree d."""
-    return max(0, (d - 1) * (d - 2) // 2)
-
-
-def classify_pattern(genus: int) -> str:
-    if genus == 0:
-        return "spots"
-    elif genus == 1:
-        return "stripes"
-    return "labyrinth"
-
-
-def dispersion_discriminant(Du, Dv, a, b, c, d):
-    alpha = Du * Dv
-    beta = a * Dv + d * Du
-    gamma = a * d - b * c
-    return beta**2 - 4 * alpha * gamma
+def verify_chebyshev_identity():
+    """Verify cos(nθ) = T_n(cos θ) numerically."""
+    print("=" * 60)
+    print("CHEBYSHEV IDENTITY VERIFICATION: cos(nθ) = T_n(cos θ)")
+    print("=" * 60)
+    theta = np.linspace(0, 2 * np.pi, 1000)
+    for n in range(6):
+        lhs = np.cos(n * theta)
+        rhs = chebyshev_T(n, np.cos(theta))
+        max_error = np.max(np.abs(lhs - rhs))
+        print(f"  n = {n}: max |cos({n}θ) - T_{n}(cos θ)| = {max_error:.2e}")
+    print()
 
 
-# ===== APPLICATION 1: Biological Pattern Identification =====
+# ============================================================
+# Section 2: Turing Instability
+# ============================================================
 
-def analyze_biological_pattern(pattern_name: str,
-                                estimated_degree: int) -> Dict:
-    """
-    Given a biological pattern and its estimated algebraic degree,
-    predict its topological and algebraic properties.
-    
-    Examples from nature:
-    - Leopard spots: degree 2 (conic sections)
-    - Zebra stripes: degree 3 (cubic curves)
-    - Brain coral: degree 6+ (high-genus labyrinths)
-    """
-    g = genus_degree(estimated_degree)
-    topo = classify_pattern(g)
-    euler = 2 - 2 * g
-    bezout = estimated_degree ** 2
-    
-    return {
-        "pattern": pattern_name,
-        "algebraic_degree": estimated_degree,
-        "genus": g,
-        "topology": topo,
-        "euler_characteristic": euler,
-        "max_self_intersections": bezout,
-        "prediction": f"The {pattern_name} pattern is algebraically a "
-                      f"degree-{estimated_degree} curve (genus {g}), "
-                      f"topologically classified as '{topo}'."
+def check_turing_instability(D1: float, D2: float,
+                              a11: float, a12: float,
+                              a21: float, a22: float) -> dict:
+    """Check Turing instability criterion for a 2-component system."""
+    tr_J = a11 + a22
+    det_J = a11 * a22 - a12 * a21
+    cross_diff = D2 * a11 + D1 * a22
+    discriminant = cross_diff**2 - 4 * D1 * D2 * det_J
+
+    uniform_stable = tr_J < 0 and det_J > 0
+    turing_unstable = uniform_stable and cross_diff > 0 and discriminant > 0
+
+    result = {
+        'tr_J': tr_J,
+        'det_J': det_J,
+        'cross_diff': cross_diff,
+        'discriminant': discriminant,
+        'uniform_stable': uniform_stable,
+        'turing_unstable': turing_unstable,
     }
 
+    if turing_unstable:
+        q_minus = (cross_diff - np.sqrt(discriminant)) / (2 * D1 * D2)
+        q_plus = (cross_diff + np.sqrt(discriminant)) / (2 * D1 * D2)
+        result['q_minus'] = q_minus
+        result['q_plus'] = q_plus
+        result['k_critical'] = np.sqrt((q_minus + q_plus) / 2)
 
-# ===== APPLICATION 2: Parameter Space Explorer =====
-
-def explore_parameter_space(Du_range: Tuple[float, float],
-                             Dv_range: Tuple[float, float],
-                             n_samples: int = 50) -> Dict:
-    """
-    Explore which regions of (Du, Dv) parameter space produce
-    Turing instability for a fixed reaction kinetics.
-    
-    Uses Schnakenberg kinetics: a=0.5, b=-1, c=1, d=-1.5
-    """
-    a_val, b_val, c_val, d_val = 0.5, -1.0, 1.0, -1.5
-    trJ = a_val + d_val
-    detJ = a_val * d_val - b_val * c_val
-    
-    Du_vals = np.linspace(Du_range[0], Du_range[1], n_samples)
-    Dv_vals = np.linspace(Dv_range[0], Dv_range[1], n_samples)
-    
-    results = np.zeros((n_samples, n_samples))
-    
-    for i, Du in enumerate(Du_vals):
-        for j, Dv in enumerate(Dv_vals):
-            if Du <= 0 or Dv <= 0:
-                continue
-            disc = dispersion_discriminant(Du, Dv, a_val, b_val, c_val, d_val)
-            beta = a_val * Dv + d_val * Du
-            
-            if trJ < 0 and detJ > 0 and beta > 0 and disc > 0:
-                results[i, j] = 1.0  # Turing unstable
-    
-    turing_fraction = np.mean(results)
-    
-    return {
-        "Du_range": Du_range,
-        "Dv_range": Dv_range,
-        "turing_fraction": turing_fraction,
-        "stability_map": results,
-        "Du_vals": Du_vals,
-        "Dv_vals": Dv_vals,
-    }
+    return result
 
 
-# ===== APPLICATION 3: Pattern Complexity Metric =====
+def demo_turing_instability():
+    """Demonstrate the Turing instability criterion."""
+    print("=" * 60)
+    print("TURING INSTABILITY CRITERION")
+    print("=" * 60)
 
-def pattern_complexity(n_modes: int) -> Dict:
-    """
-    Compute algebraic complexity metrics for an n-mode pattern.
-    
-    The genus serves as a measure of pattern complexity:
-    higher genus = more topological "holes" = more complex patterns.
-    """
-    degree = 2 * n_modes
-    g = genus_degree(degree)
-    euler = 2 - 2 * g
-    
-    # Motivic density (inverse measures rarity)
-    if g == 0:
-        density = 1.5
-    elif g == 1:
-        density = 1.0
+    # Classic activator-inhibitor: activator self-activates (a11 > 0),
+    # inhibitor self-inhibits (a22 < 0), cross-terms create feedback
+    systems = [
+        ("Gierer-Meinhardt", 0.01, 1.0, 1.0, -1.0, 2.0, -1.5),
+        ("Gray-Scott (spots)", 0.02, 0.08, 0.5, -0.8, 1.5, -2.0),
+        ("Schnakenberg", 0.05, 1.0, 0.8, -1.2, 1.0, -1.0),
+        ("No instability", 0.5, 0.5, -1.0, 0.5, 0.5, -1.0),
+    ]
+
+    for name, D1, D2, a11, a12, a21, a22 in systems:
+        result = check_turing_instability(D1, D2, a11, a12, a21, a22)
+        print(f"\n  System: {name}")
+        print(f"    D₁={D1}, D₂={D2}")
+        print(f"    Jacobian: [[{a11}, {a12}], [{a21}, {a22}]]")
+        print(f"    tr(J) = {result['tr_J']:.4f}")
+        print(f"    det(J) = {result['det_J']:.4f}")
+        print(f"    Cross-diffusion coeff = {result['cross_diff']:.4f}")
+        print(f"    Discriminant = {result['discriminant']:.4f}")
+        print(f"    Uniform stable: {result['uniform_stable']}")
+        print(f"    Turing unstable: {result['turing_unstable']}")
+        if result['turing_unstable']:
+            print(f"    Critical wave numbers: k ∈ [{np.sqrt(result['q_minus']):.4f}, {np.sqrt(result['q_plus']):.4f}]")
+    print()
+
+
+# ============================================================
+# Section 3: Pattern Generation and Classification
+# ============================================================
+
+def generate_pattern(coeffs: List[float], Lx: float = 2*np.pi,
+                     Ly: float = 2*np.pi, nx: int = 200,
+                     ny: int = 200) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Generate a 2D Turing-like pattern from cosine modes."""
+    x = np.linspace(0, Lx, nx)
+    y = np.linspace(0, Ly, ny)
+    X, Y = np.meshgrid(x, y)
+
+    pattern = np.zeros_like(X)
+    for k, a_k in enumerate(coeffs):
+        if abs(a_k) > 1e-15:
+            # Add mode cos(kx) * cos(ky) scaled by coefficient
+            pattern += a_k * np.cos(k * X) * np.cos(k * Y)
+
+    return X, Y, pattern
+
+
+def classify_pattern(coeffs: List[float]) -> str:
+    """Classify pattern type based on algebraic degree."""
+    max_mode = 0
+    for k in range(len(coeffs) - 1, -1, -1):
+        if abs(coeffs[k]) > 1e-15:
+            max_mode = k
+            break
+
+    if max_mode == 0:
+        return "constant (trivial)"
+    elif max_mode == 1:
+        return "linear (stripes)"
+    elif max_mode == 2:
+        return "quadratic (conic: spots/stripes/labyrinths)"
+    elif max_mode <= 3:
+        return "cubic (complex patterns)"
+    elif max_mode <= 6:
+        return f"degree {max_mode} (hexagonal/complex patterns)"
     else:
-        density = 1.0 / (2 * g - 2)
-    
-    return {
-        "n_modes": n_modes,
-        "degree": degree,
-        "genus": g,
-        "euler_characteristic": euler,
-        "motivic_density": density,
-        "complexity_score": g,  # genus as complexity
-        "rarity": 1.0 / density,  # inverse of motivic density
-        "topology": classify_pattern(g),
-    }
+        return f"degree {max_mode} (high-complexity pattern)"
 
+
+def demo_pattern_classification():
+    """Demonstrate pattern classification by algebraic degree."""
+    print("=" * 60)
+    print("PATTERN CLASSIFICATION BY ALGEBRAIC DEGREE")
+    print("=" * 60)
+
+    patterns = [
+        ("Uniform", [1.0]),
+        ("Simple stripes", [0.0, 1.0]),
+        ("Spots (conic)", [0.5, 0.0, 1.0]),
+        ("Hexagonal", [0.3, 0.0, 0.0, 1.0]),
+        ("Complex", [0.1, 0.3, 0.5, 0.2, 0.8]),
+    ]
+
+    for name, coeffs in patterns:
+        ptype = classify_pattern(coeffs)
+        print(f"\n  Pattern: {name}")
+        print(f"    Coefficients: {coeffs}")
+        print(f"    Classification: {ptype}")
+
+        # Verify Chebyshev expansion
+        theta = np.linspace(0, np.pi, 100)
+        x = np.cos(theta)
+
+        # Trigonometric form
+        trig_values = sum(a * np.cos(k * theta) for k, a in enumerate(coeffs))
+        # Polynomial form via Chebyshev
+        poly_values = sum(a * chebyshev_T(k, x) for k, a in enumerate(coeffs))
+        max_diff = np.max(np.abs(trig_values - poly_values))
+        print(f"    Trig ↔ Polynomial agreement: max error = {max_diff:.2e}")
+
+    print()
+
+
+# ============================================================
+# Section 4: Zero Set Analysis
+# ============================================================
+
+def demo_zero_set():
+    """Demonstrate zero set extraction and algebraic structure."""
+    print("=" * 60)
+    print("ZERO SET ALGEBRAIC STRUCTURE")
+    print("=" * 60)
+
+    # 1D: spots pattern cos(2θ) + 0.5
+    theta = np.linspace(0, 2 * np.pi, 10000)
+    u = np.cos(2 * theta) + 0.5  # T₂(cos θ) + 0.5 = 2cos²θ - 1 + 0.5 = 2cos²θ - 0.5
+
+    # Find zero crossings
+    zero_crossings = []
+    for i in range(len(u) - 1):
+        if u[i] * u[i+1] < 0:
+            # Linear interpolation
+            t = theta[i] - u[i] * (theta[i+1] - theta[i]) / (u[i+1] - u[i])
+            zero_crossings.append(t)
+
+    print(f"\n  Pattern: cos(2θ) + 0.5")
+    print(f"  Chebyshev form: T₂(x) + 0.5 = 2x² - 0.5")
+    print(f"  Algebraic zero set: x² = 1/4, i.e., x = ±1/2")
+    print(f"  Corresponding angles: θ = ±π/3 + 2πn")
+    print(f"  Found {len(zero_crossings)} zero crossings in [0, 2π]:")
+    for zc in zero_crossings:
+        x_val = np.cos(zc)
+        print(f"    θ = {zc:.4f} (cos θ = {x_val:.4f})")
+
+    # Verify algebraic: 2x² - 0.5 = 0 → x = ±√(1/4) = ±0.5
+    print(f"\n  Algebraic prediction: cos θ = ±0.5 at θ = π/3, 2π/3, 4π/3, 5π/3")
+    print(f"  π/3 ≈ {np.pi/3:.4f}, 2π/3 ≈ {2*np.pi/3:.4f}, "
+          f"4π/3 ≈ {4*np.pi/3:.4f}, 5π/3 ≈ {5*np.pi/3:.4f}")
+
+    # 2D degree bound demonstration
+    print(f"\n  DEGREE BOUNDS:")
+    for N in range(1, 6):
+        coeffs = [0.0] * (N + 1)
+        coeffs[N] = 1.0
+        ptype = classify_pattern(coeffs)
+        print(f"    N={N} modes → algebraic degree ≤ {N}: {ptype}")
+
+    print()
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
+    print("╔" + "═" * 58 + "╗")
+    print("║  TURING'S FLOWERS: MORPHOGENESIS AS ALGEBRAIC GEOMETRY   ║")
+    print("╚" + "═" * 58 + "╝")
+    print()
+
+    verify_chebyshev_identity()
+    demo_turing_instability()
+    demo_pattern_classification()
+    demo_zero_set()
+
     print("=" * 60)
-    print("APPLICATION 1: Biological Pattern Identification")
+    print("SUMMARY")
     print("=" * 60)
-    
-    patterns = [
-        ("Leopard spots", 2),
-        ("Zebra stripes", 3),
-        ("Giraffe patches", 4),
-        ("Seashell spirals", 5),
-        ("Brain coral", 6),
-    ]
-    
-    for name, deg in patterns:
-        result = analyze_biological_pattern(name, deg)
-        print(f"\n  {result['prediction']}")
-        print(f"    Euler χ = {result['euler_characteristic']}, "
-              f"Max self-intersections = {result['max_self_intersections']}")
-    
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Parameter Space (Turing Instability Region)")
-    print("=" * 60)
-    
-    result = explore_parameter_space((0.001, 0.1), (0.1, 5.0))
-    print(f"\n  Fraction of parameter space with Turing instability: "
-          f"{result['turing_fraction']:.2%}")
-    
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Pattern Complexity Across Modes")
-    print("=" * 60)
-    
-    for n in range(1, 8):
-        c = pattern_complexity(n)
-        print(f"\n  {n} mode(s): degree={c['degree']}, genus={c['genus']}, "
-              f"topology={c['topology']}")
-        print(f"    Motivic density={c['motivic_density']:.4f}, "
-              f"Rarity={c['rarity']:.2f}")
+    print("""
+  Key Results Demonstrated:
+  1. cos(nθ) = T_n(cos θ) verified to machine precision
+  2. Turing instability criterion: algebraic conditions on
+     diffusion coefficients and Jacobian entries
+  3. Pattern classification by algebraic degree of Chebyshev
+     expansion polynomial
+  4. Zero sets are algebraic: pattern boundaries are roots of
+     polynomials in cos θ
+
+  The mathematics of leopard spots is the mathematics of
+  conic sections.
+""")
 
 
+#!/usr/bin/env python3
 """
-Demo: Turing's Flowers — Morphogenesis as Algebraic Geometry
+Visualization: The Chebyshev Bridge — From Trigonometry to Algebra
 
-Demonstrates the connection between reaction-diffusion patterns and algebraic curves.
-Computes dispersion relations, genus-degree values, and pattern classification.
-"""
-
-import numpy as np
-
-
-def dispersion_relation(Du, Dv, a, b, c, d, q):
-    """
-    Evaluate the dispersion relation h(q) = Du*Dv*q^2 - (a*Dv + d*Du)*q + (a*d - b*c).
-    
-    Parameters:
-        Du, Dv: diffusion coefficients
-        a, b, c, d: Jacobian entries
-        q: wavenumber squared (k^2)
-    
-    Returns:
-        Value of h(q). If h(q) < 0, the mode at wavenumber q is unstable.
-    """
-    alpha = Du * Dv
-    beta = a * Dv + d * Du
-    gamma = a * d - b * c
-    return alpha * q**2 - beta * q + gamma
-
-
-def dispersion_discriminant(Du, Dv, a, b, c, d):
-    """
-    Compute the discriminant of the dispersion quadratic.
-    Positive discriminant => Turing instability possible.
-    """
-    alpha = Du * Dv
-    beta = a * Dv + d * Du
-    gamma = a * d - b * c
-    return beta**2 - 4 * alpha * gamma
-
-
-def genus_degree(d):
-    """Genus of a smooth plane curve of degree d."""
-    if d < 2:
-        return 0
-    return (d - 1) * (d - 2) // 2
-
-
-def classify_topology(genus):
-    """Classify pattern type from genus."""
-    if genus == 0:
-        return "spots"
-    elif genus == 1:
-        return "stripes"
-    else:
-        return "labyrinth"
-
-
-def euler_characteristic(genus):
-    """Euler characteristic of a genus-g surface."""
-    return 2 - 2 * genus
-
-
-def bezout_bound(d1, d2):
-    """Maximum intersection points of two curves of degrees d1 and d2."""
-    return d1 * d2
-
-
-def motivic_density(g):
-    """Motivic density of genus-g curves in the moduli space."""
-    if g == 0:
-        return 3.0 / 2.0
-    elif g == 1:
-        return 1.0
-    else:
-        return 1.0 / (2 * g - 2)
-
-
-def check_turing_instability(Du, Dv, a, b, c, d):
-    """
-    Check all conditions for Turing instability.
-    
-    Returns:
-        dict with conditions and whether instability occurs
-    """
-    trJ = a + d
-    detJ = a * d - b * c
-    alpha = Du * Dv
-    beta = a * Dv + d * Du
-    disc = beta**2 - 4 * alpha * detJ
-    
-    results = {
-        "trace_negative": trJ < 0,
-        "det_positive": detJ > 0,
-        "beta_positive": beta > 0,
-        "discriminant_positive": disc > 0,
-        "discriminant": disc,
-        "turing_unstable": trJ < 0 and detJ > 0 and beta > 0 and disc > 0
-    }
-    
-    if disc > 0 and alpha > 0:
-        q_crit = beta / (2 * alpha)
-        h_min = detJ - beta**2 / (4 * alpha)
-        results["critical_wavenumber_sq"] = q_crit
-        results["dispersion_minimum"] = h_min
-    
-    return results
-
-
-# ===== DEMONSTRATIONS =====
-
-print("=" * 60)
-print("DEMO 1: Classic Turing System (Gierer-Meinhardt type)")
-print("=" * 60)
-
-# Parameters for a typical activator-inhibitor system
-Du, Dv = 0.01, 1.0  # inhibitor diffuses much faster
-a_val, b_val, c_val, d_val = 0.5, -1.0, 1.0, -1.5
-
-result = check_turing_instability(Du, Dv, a_val, b_val, c_val, d_val)
-print(f"  Du = {Du}, Dv = {Dv}")
-print(f"  Jacobian = [[{a_val}, {b_val}], [{c_val}, {d_val}]]")
-print(f"  Trace = {a_val + d_val} (need < 0: {result['trace_negative']})")
-print(f"  Det = {a_val * d_val - b_val * c_val} (need > 0: {result['det_positive']})")
-print(f"  β = a·Dv + d·Du = {a_val * Dv + d_val * Du} (need > 0: {result['beta_positive']})")
-print(f"  Discriminant = {result['discriminant']:.4f} (need > 0: {result['discriminant_positive']})")
-print(f"  TURING UNSTABLE: {result['turing_unstable']}")
-
-if 'critical_wavenumber_sq' in result:
-    print(f"  Critical wavenumber² = {result['critical_wavenumber_sq']:.4f}")
-    print(f"  Dispersion minimum = {result['dispersion_minimum']:.4f}")
-
-print()
-print("=" * 60)
-print("DEMO 2: Genus-Degree Formula and Pattern Classification")
-print("=" * 60)
-
-for d in range(1, 9):
-    g = genus_degree(d)
-    topo = classify_topology(g)
-    chi = euler_characteristic(g)
-    density = motivic_density(g)
-    print(f"  Degree {d}: genus = {g}, topology = {topo:10s}, "
-          f"χ = {chi:3d}, motivic density = {density:.4f}")
-
-print()
-print("=" * 60)
-print("DEMO 3: n-Mode Predictions")
-print("=" * 60)
-
-for n in range(1, 6):
-    deg = 2 * n
-    g = genus_degree(deg)
-    topo = classify_topology(g)
-    print(f"  {n} mode(s): predicted degree = {deg}, genus = {g}, topology = {topo}")
-
-print()
-print("=" * 60)
-print("DEMO 4: Bézout Intersection Bounds")
-print("=" * 60)
-
-pairs = [(2, 2), (2, 3), (3, 3), (2, 6), (4, 6)]
-for d1, d2 in pairs:
-    bound = bezout_bound(d1, d2)
-    print(f"  Curves of degree {d1} and {d2}: ≤ {bound} intersection points")
-
-print()
-print("=" * 60)
-print("DEMO 5: Dispersion Relation Values")
-print("=" * 60)
-
-q_values = np.linspace(0, 100, 500)
-h_values = [dispersion_relation(Du, Dv, a_val, b_val, c_val, d_val, q)
-            for q in q_values]
-
-q_min_idx = np.argmin(h_values)
-print(f"  Dispersion minimum at q ≈ {q_values[q_min_idx]:.2f}")
-print(f"  Minimum value h(q) ≈ {h_values[q_min_idx]:.4f}")
-print(f"  Unstable band: q where h(q) < 0")
-
-unstable = [q for q, h in zip(q_values, h_values) if h < 0]
-if unstable:
-    print(f"    q ∈ [{min(unstable):.2f}, {max(unstable):.2f}]")
-else:
-    print("    No unstable band (no patterns form)")
-
-print()
-print("All demos completed successfully.")
-
-
-"""
-Visualization 1: The Dispersion Relation — Heart of Turing Instability
-
-This plot shows the dispersion relation h(q) for a reaction-diffusion system.
-When h(q) dips below zero, the corresponding wavenumber is unstable, creating
-spatial patterns. The shape of this curve determines whether spots, stripes,
-or labyrinths emerge.
-
-The key insight: h(q) is a quadratic in q = k², so pattern formation reduces
-to analyzing a parabola — the simplest algebraic curve.
+Shows how cos(nθ) = T_n(cos θ) converts trigonometric patterns
+into algebraic polynomials, making pattern boundaries into algebraic curves.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-# System parameters (activator-inhibitor, Gierer-Meinhardt type)
-Du, Dv = 0.01, 1.0
-a, b, c, d = 0.5, -1.0, 1.0, -1.5
 
-alpha = Du * Dv
-beta = a * Dv + d * Du
-gamma = a * d - b * c
-disc = beta**2 - 4 * alpha * gamma
+def chebyshev_eval(n, x):
+    if n == 0:
+        return np.ones_like(x, dtype=float)
+    if n == 1:
+        return x.astype(float)
+    t2 = np.ones_like(x, dtype=float)
+    t1 = x.astype(float)
+    for _ in range(2, n + 1):
+        t_new = 2.0 * x * t1 - t2
+        t2 = t1
+        t1 = t_new
+    return t1
 
-q = np.linspace(0, 80, 500)
-h = alpha * q**2 - beta * q + gamma
 
-# Critical points
-q_min = beta / (2 * alpha)
-h_min = gamma - beta**2 / (4 * alpha)
+fig, axes = plt.subplots(3, 2, figsize=(14, 15))
+fig.suptitle("The Chebyshev Bridge: cos(nθ) = Tₙ(cos θ)", fontsize=16, fontweight='bold')
 
-# Roots
-if disc > 0:
-    q1 = (beta - np.sqrt(disc)) / (2 * alpha)
-    q2 = (beta + np.sqrt(disc)) / (2 * alpha)
+theta = np.linspace(0, 2 * np.pi, 1000)
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+for n in range(6):
+    ax = axes[n // 2, n % 2]
 
-# Left: Dispersion relation
-ax = axes[0]
-ax.plot(q, h, 'b-', linewidth=2.5, label='$h(q) = \\alpha q^2 - \\beta q + \\gamma$')
-ax.axhline(y=0, color='k', linewidth=0.8, linestyle='-')
-ax.fill_between(q, h, 0, where=(h < 0), alpha=0.3, color='red',
-                label='Unstable band')
-ax.plot(q_min, h_min, 'ro', markersize=10, zorder=5,
-        label=f'Minimum at $q_c = {q_min:.1f}$')
+    # Trigonometric form
+    trig = np.cos(n * theta)
+    ax.plot(theta, trig, 'b-', linewidth=2, label=f'cos({n}θ)')
 
-if disc > 0:
-    ax.axvline(x=q1, color='gray', linewidth=0.8, linestyle='--', alpha=0.7)
-    ax.axvline(x=q2, color='gray', linewidth=0.8, linestyle='--', alpha=0.7)
-    ax.annotate(f'$q_1 = {q1:.1f}$', xy=(q1, 0), xytext=(q1-8, 0.15),
-                fontsize=10, ha='center',
-                arrowprops=dict(arrowstyle='->', color='gray'))
-    ax.annotate(f'$q_2 = {q2:.1f}$', xy=(q2, 0), xytext=(q2+8, 0.15),
-                fontsize=10, ha='center',
-                arrowprops=dict(arrowstyle='->', color='gray'))
+    # Chebyshev form
+    cheb = chebyshev_eval(n, np.cos(theta))
+    ax.plot(theta, cheb, 'r--', linewidth=2, label=f'T_{n}(cos θ)', alpha=0.7)
 
-ax.set_xlabel('Wavenumber² ($q = k^2$)', fontsize=12)
-ax.set_ylabel('$h(q)$', fontsize=12)
-ax.set_title('Dispersion Relation: When Biology Makes Patterns', fontsize=13)
-ax.legend(fontsize=10, loc='upper right')
-ax.set_ylim(-0.5, 1.5)
-ax.grid(True, alpha=0.3)
+    # Mark zeros
+    for i in range(len(trig) - 1):
+        if trig[i] * trig[i + 1] < 0:
+            t_zero = theta[i] - trig[i] * (theta[i + 1] - theta[i]) / (trig[i + 1] - trig[i])
+            ax.plot(t_zero, 0, 'ko', markersize=6)
 
-# Annotations
-ax.annotate('Patterns form here!\n(modes grow exponentially)',
-            xy=((q1 + q2)/2, h_min/2), fontsize=10, ha='center',
-            color='red', fontweight='bold')
-
-# Right: Parameter space
-ax2 = axes[1]
-Du_vals = np.logspace(-3, -0.5, 100)
-Dv_vals = np.logspace(-1, 1, 100)
-Du_grid, Dv_grid = np.meshgrid(Du_vals, Dv_vals)
-
-# Compute Turing instability region
-trJ = a + d
-detJ = a * d - b * c
-beta_grid = a * Dv_grid + d * Du_grid
-disc_grid = beta_grid**2 - 4 * Du_grid * Dv_grid * detJ
-
-turing_mask = (trJ < 0) & (detJ > 0) & (beta_grid > 0) & (disc_grid > 0)
-
-ax2.contourf(Du_grid, Dv_grid, turing_mask.astype(float),
-             levels=[-0.5, 0.5, 1.5], colors=['#f0f0f0', '#ff6b6b'], alpha=0.7)
-ax2.contour(Du_grid, Dv_grid, turing_mask.astype(float),
-            levels=[0.5], colors=['red'], linewidths=2)
-
-# Mark our example system
-ax2.plot(Du, Dv, 'k*', markersize=15, zorder=5, label='Example system')
-
-ax2.set_xlabel('$D_u$ (activator diffusion)', fontsize=12)
-ax2.set_ylabel('$D_v$ (inhibitor diffusion)', fontsize=12)
-ax2.set_title('Turing Space: Where Patterns Live', fontsize=13)
-ax2.set_xscale('log')
-ax2.set_yscale('log')
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
-# Add text annotation
-ax2.annotate('Turing\ninstability\nregion', xy=(0.01, 2.0),
-             fontsize=12, color='red', fontweight='bold', ha='center')
+    ax.axhline(y=0, color='gray', linewidth=0.5)
+    ax.set_title(f'n = {n}: {2 * n} zeros in [0, 2π], algebraic degree = {n}', fontsize=11)
+    ax.set_xlabel('θ')
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 2 * np.pi)
+    ax.set_ylim(-1.3, 1.3)
 
 plt.tight_layout()
-plt.savefig('viz_dispersion.png', dpi=150, bbox_inches='tight')
+plt.savefig('chebyshev_bridge.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_dispersion.png")
+print("Saved: chebyshev_bridge.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 2: Pattern Classification by Genus
+Visualization: Turing Instability — The Dispersion Relation
 
-Shows the genus-degree formula and how algebraic genus classifies
-biological patterns into spots, stripes, and labyrinths.
-Includes the motivic density curve showing why spots are most common.
+Shows how the dispersion relation h(q) determines which wave numbers
+go unstable, connecting the quadratic discriminant condition to
+pattern formation.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 
-def genus_degree(d):
-    if d < 2:
-        return 0
-    return (d - 1) * (d - 2) // 2
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+fig.suptitle("Turing Instability: From Stability to Pattern Formation", fontsize=14, fontweight='bold')
 
+q = np.linspace(0, 8, 500)
 
-def motivic_density(g):
-    if g == 0:
-        return 1.5
-    elif g == 1:
-        return 1.0
-    elif g >= 2:
-        return 1.0 / (2 * g - 2)
-    return 0
+# Case 1: Stable (no instability)
+ax1 = axes[0]
+D1, D2 = 0.5, 0.5
+a11, a22 = -0.5, -0.5
+det_J = 0.5
+h = D1 * D2 * q**2 - (D2 * a11 + D1 * a22) * q + det_J
+ax1.plot(q, h, 'b-', linewidth=2.5)
+ax1.fill_between(q, 0, h, where=(h > 0), alpha=0.1, color='blue')
+ax1.axhline(y=0, color='k', linewidth=0.5, linestyle='--')
+ax1.set_title('No Instability\nD₂/D₁ = 1 (equal diffusion)', fontsize=11)
+ax1.set_xlabel('q = k²')
+ax1.set_ylabel('h(q)')
+ax1.set_ylim(-0.5, 3)
+ax1.grid(True, alpha=0.3)
+ax1.annotate('h(q) > 0 for all q > 0\n→ Uniform state stable',
+             xy=(3, 1.5), fontsize=9, ha='center',
+             bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
 
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Panel 1: Genus-Degree Formula
-ax = axes[0]
-degrees = list(range(1, 10))
-genera = [genus_degree(d) for d in degrees]
-
-colors = []
-for g in genera:
-    if g == 0:
-        colors.append('#2196F3')  # blue for spots
-    elif g == 1:
-        colors.append('#4CAF50')  # green for stripes
-    else:
-        colors.append('#FF5722')  # red for labyrinths
-
-bars = ax.bar(degrees, genera, color=colors, edgecolor='black', linewidth=0.8)
-ax.set_xlabel('Algebraic Degree $d$', fontsize=12)
-ax.set_ylabel('Genus $g = (d-1)(d-2)/2$', fontsize=12)
-ax.set_title('Genus-Degree Formula', fontsize=13)
-ax.set_xticks(degrees)
-
-# Legend
-spots_patch = mpatches.Patch(color='#2196F3', label='Spots (g=0)')
-stripes_patch = mpatches.Patch(color='#4CAF50', label='Stripes (g=1)')
-lab_patch = mpatches.Patch(color='#FF5722', label='Labyrinth (g≥2)')
-ax.legend(handles=[spots_patch, stripes_patch, lab_patch], fontsize=9)
-ax.grid(True, alpha=0.3, axis='y')
-
-# Panel 2: Motivic Density
+# Case 2: Near threshold
 ax2 = axes[1]
-g_vals = list(range(0, 12))
-densities = [motivic_density(g) for g in g_vals]
-
-ax2.plot(g_vals, densities, 'ko-', linewidth=2, markersize=8)
-ax2.fill_between(g_vals, densities, alpha=0.15, color='blue')
-
-# Highlight spots and stripes
-ax2.plot(0, motivic_density(0), 'o', color='#2196F3', markersize=14, zorder=5)
-ax2.plot(1, motivic_density(1), 'o', color='#4CAF50', markersize=14, zorder=5)
-for g in range(2, 12):
-    ax2.plot(g, motivic_density(g), 'o', color='#FF5722', markersize=10, zorder=5)
-
-ax2.annotate('Spots\n(most common)', xy=(0, 1.5), xytext=(1.5, 1.4),
-             fontsize=10, arrowprops=dict(arrowstyle='->', color='#2196F3'),
-             color='#2196F3', fontweight='bold')
-ax2.annotate('Stripes', xy=(1, 1.0), xytext=(2.5, 1.05),
-             fontsize=10, arrowprops=dict(arrowstyle='->', color='#4CAF50'),
-             color='#4CAF50', fontweight='bold')
-
-ax2.set_xlabel('Genus $g$', fontsize=12)
-ax2.set_ylabel('Motivic Density', fontsize=12)
-ax2.set_title('Why Spots Are Most Common', fontsize=13)
+D1, D2 = 0.01, 0.5
+a11, a22 = 1.0, -1.5
+det_J = 0.5
+sigma = D2 * a11 + D1 * a22
+disc = sigma**2 - 4 * D1 * D2 * det_J
+h = D1 * D2 * q**2 - sigma * q + det_J
+ax2.plot(q, h, 'orange', linewidth=2.5)
+ax2.fill_between(q, 0, h, where=(h < 0), alpha=0.2, color='red')
+ax2.fill_between(q, 0, h, where=(h > 0), alpha=0.1, color='blue')
+ax2.axhline(y=0, color='k', linewidth=0.5, linestyle='--')
+q_min = sigma / (2 * D1 * D2)
+h_min = det_J - sigma**2 / (4 * D1 * D2)
+ax2.plot(q_min, h_min, 'rv', markersize=10)
+ax2.set_title(f'Near Threshold\nσ = {sigma:.3f}, Δ = {disc:.3f}', fontsize=11)
+ax2.set_xlabel('q = k²')
+ax2.set_ylim(-0.5, 3)
 ax2.grid(True, alpha=0.3)
-ax2.set_ylim(0, 1.8)
+if disc > 0:
+    q_minus = (sigma - np.sqrt(disc)) / (2 * D1 * D2)
+    q_plus = (sigma + np.sqrt(disc)) / (2 * D1 * D2)
+    ax2.axvspan(q_minus, q_plus, alpha=0.15, color='red')
+    ax2.annotate(f'Unstable band\nq ∈ [{q_minus:.1f}, {q_plus:.1f}]',
+                 xy=((q_minus + q_plus) / 2, -0.3), fontsize=9, ha='center',
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
-# Panel 3: Euler characteristic
+# Case 3: Strong instability
 ax3 = axes[2]
-euler_chars = [2 - 2 * g for g in g_vals]
-ax3.plot(g_vals, euler_chars, 's-', color='purple', linewidth=2, markersize=8)
-ax3.axhline(y=0, color='k', linewidth=0.8, linestyle='-')
-
-ax3.fill_between(g_vals, euler_chars, 0,
-                 where=[e > 0 for e in euler_chars],
-                 alpha=0.2, color='green', label='χ > 0 (sphere-like)')
-ax3.fill_between(g_vals, euler_chars, 0,
-                 where=[e <= 0 for e in euler_chars],
-                 alpha=0.2, color='red', label='χ ≤ 0 (complex)')
-
-ax3.set_xlabel('Genus $g$', fontsize=12)
-ax3.set_ylabel('Euler Characteristic $\\chi = 2 - 2g$', fontsize=12)
-ax3.set_title('Topology of Pattern Curves', fontsize=13)
-ax3.legend(fontsize=9)
+D1, D2 = 0.005, 2.0
+a11, a22 = 1.0, -1.5
+det_J = 0.5
+sigma = D2 * a11 + D1 * a22
+disc = sigma**2 - 4 * D1 * D2 * det_J
+h = D1 * D2 * q**2 - sigma * q + det_J
+ax3.plot(q, h, 'r-', linewidth=2.5)
+ax3.fill_between(q, 0, h, where=(h < 0), alpha=0.2, color='red')
+ax3.fill_between(q, 0, h, where=(h > 0), alpha=0.1, color='blue')
+ax3.axhline(y=0, color='k', linewidth=0.5, linestyle='--')
+q_min = sigma / (2 * D1 * D2)
+h_min = det_J - sigma**2 / (4 * D1 * D2)
+ax3.plot(q_min, h_min, 'rv', markersize=10)
+ax3.set_title(f'Strong Instability\nD₂/D₁ = {D2/D1:.0f}', fontsize=11)
+ax3.set_xlabel('q = k²')
+ax3.set_ylim(-30, 10)
 ax3.grid(True, alpha=0.3)
-
-# Annotate key points
-ax3.annotate('Sphere (spots)\nχ = 2', xy=(0, 2), xytext=(2, 1.5),
-             fontsize=9, arrowprops=dict(arrowstyle='->', color='purple'))
-ax3.annotate('Torus (stripes)\nχ = 0', xy=(1, 0), xytext=(3, 0.5),
-             fontsize=9, arrowprops=dict(arrowstyle='->', color='purple'))
+if disc > 0:
+    q_minus = (sigma - np.sqrt(disc)) / (2 * D1 * D2)
+    q_plus = (sigma + np.sqrt(disc)) / (2 * D1 * D2)
+    ax3.axvspan(q_minus, q_plus, alpha=0.15, color='red')
+    ax3.annotate(f'Wide unstable band\nMany modes unstable\n→ Complex pattern',
+                 xy=(q_min, h_min + 2), fontsize=9, ha='center',
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
 plt.tight_layout()
-plt.savefig('viz_genus_classification.png', dpi=150, bbox_inches='tight')
+plt.savefig('dispersion_relation.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_genus_classification.png")
+print("Saved: dispersion_relation.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 3: Turing Patterns as Algebraic Curves
+Visualization: Turing Patterns and Their Algebraic Zero Sets
 
-Simulates reaction-diffusion patterns and shows their zero sets
-alongside the algebraic curves they approximate.
+Generates a figure showing Turing patterns alongside their Chebyshev
+polynomial representations and algebraic zero sets.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 
-def simulate_pattern(N=128, pattern_type="spots"):
-    """Generate a synthetic Turing-like pattern."""
-    x = np.linspace(-np.pi, np.pi, N)
-    y = np.linspace(-np.pi, np.pi, N)
-    X, Y = np.meshgrid(x, y)
-    
-    if pattern_type == "spots":
-        # Superposition of modes giving circular spots (degree 2)
-        u = (np.cos(3*X) + np.cos(3*Y) + 
-             0.5 * np.cos(3*X + 3*Y) + 0.3 * np.random.randn(N, N) * 0.1)
-    elif pattern_type == "stripes":
-        # Dominant single-direction mode (degree 2, genus 0 but stripe-like)
-        u = (np.cos(4*X) + 0.1 * np.cos(4*Y) + 
-             0.05 * np.random.randn(N, N))
-    elif pattern_type == "labyrinth":
-        # Many modes, complex pattern
-        u = (np.cos(2*X) * np.cos(3*Y) + np.sin(3*X) * np.cos(2*Y) +
-             0.5 * np.cos(5*X + Y) + 0.3 * np.sin(X + 4*Y) +
-             0.1 * np.random.randn(N, N))
-    else:
-        u = np.random.randn(N, N)
-    
-    return X, Y, u
+def chebyshev_eval(n, x):
+    if n == 0:
+        return np.ones_like(x, dtype=float)
+    if n == 1:
+        return x.astype(float)
+    t2 = np.ones_like(x, dtype=float)
+    t1 = x.astype(float)
+    for _ in range(2, n + 1):
+        t_new = 2.0 * x * t1 - t2
+        t2 = t1
+        t1 = t_new
+    return t1
 
 
-def plot_algebraic_curve(ax, curve_type="conic"):
-    """Plot the algebraic curve approximation."""
-    t = np.linspace(0, 2*np.pi, 200)
-    
-    if curve_type == "conic":
-        # Circles (spots) — degree 2
-        for cx, cy in [(-1.5, -1.5), (-1.5, 0.5), (-1.5, 2.5),
-                        (0.5, -1.5), (0.5, 0.5), (0.5, 2.5),
-                        (2.5, -1.5), (2.5, 0.5), (2.5, 2.5)]:
-            ax.plot(cx + 0.6*np.cos(t), cy + 0.6*np.sin(t),
-                    'r-', linewidth=2, alpha=0.8)
-    elif curve_type == "lines":
-        # Parallel lines (stripes) — degenerate degree 2
-        for y_pos in np.linspace(-3, 3, 7):
-            ax.plot([-3.14, 3.14], [y_pos, y_pos], 'r-', linewidth=2, alpha=0.8)
-    elif curve_type == "sextic":
-        # Sextic curve approximation (labyrinth)
-        theta = np.linspace(0, 2*np.pi, 1000)
-        for r_scale in [0.8, 1.5, 2.3]:
-            r = r_scale * (1 + 0.3 * np.cos(3*theta) + 0.2 * np.sin(5*theta))
-            ax.plot(r * np.cos(theta), r * np.sin(theta),
-                    'r-', linewidth=1.5, alpha=0.7)
+def pattern_2d(coeffs_list, X, Y):
+    """Evaluate pattern P(X,Y) = Σ a_k T_k(X) T_k(Y)."""
+    Z = np.zeros_like(X)
+    for k, a in enumerate(coeffs_list):
+        Z += a * chebyshev_eval(k, X) * chebyshev_eval(k, Y)
+    return Z
 
 
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig = plt.figure(figsize=(16, 12))
+fig.suptitle("Turing Patterns as Algebraic Varieties", fontsize=16, fontweight='bold')
+gs = gridspec.GridSpec(2, 3, hspace=0.35, wspace=0.3)
 
-# Row 1: Turing patterns
-pattern_types = ["spots", "stripes", "labyrinth"]
-titles = [
-    "Spots (Leopard)\nDegree 2, Genus 0",
-    "Stripes (Zebra)\nDegree 3, Genus 1",
-    "Labyrinth (Coral)\nDegree 6, Genus 10"
-]
-curve_types = ["conic", "lines", "sextic"]
+x = np.linspace(-1, 1, 500)
+X, Y = np.meshgrid(x, x)
 
-for i, (ptype, title) in enumerate(zip(pattern_types, titles)):
-    X, Y, u = simulate_pattern(pattern_type=ptype)
-    
-    # Pattern
-    ax = axes[0, i]
-    im = ax.contourf(X, Y, u, levels=20, cmap='RdBu_r')
-    ax.contour(X, Y, u, levels=[0], colors='black', linewidths=1.5)
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.set_aspect('equal')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    
-    # Zero set as algebraic curve
-    ax2 = axes[1, i]
-    ax2.contour(X, Y, u, levels=[0], colors='blue', linewidths=2)
-    plot_algebraic_curve(ax2, curve_types[i])
-    ax2.set_title(f'Zero Set ≈ Algebraic Curve', fontsize=11)
-    ax2.set_aspect('equal')
-    ax2.set_xlabel('x')
-    ax2.set_ylabel('y')
-    ax2.set_xlim(-3.14, 3.14)
-    ax2.set_ylim(-3.14, 3.14)
-    ax2.grid(True, alpha=0.2)
+# Pattern 1: Stripes (degree 1)
+ax1 = fig.add_subplot(gs[0, 0])
+Z1 = chebyshev_eval(1, X)  # T_1(X) = X → stripes
+ax1.contourf(X, Y, Z1, levels=20, cmap='RdBu_r')
+ax1.contour(X, Y, Z1, levels=[0], colors='black', linewidths=2)
+ax1.set_title('Stripes: T₁(X) = X\nDegree 1', fontsize=11)
+ax1.set_xlabel('X = cos(θ)')
+ax1.set_ylabel('Y = cos(φ)')
+ax1.set_aspect('equal')
 
-# Add legend to bottom row
-from matplotlib.lines import Line2D
-legend_elements = [
-    Line2D([0], [0], color='blue', linewidth=2, label='Zero set (computed)'),
-    Line2D([0], [0], color='red', linewidth=2, label='Algebraic curve (fitted)'),
-]
-axes[1, 1].legend(handles=legend_elements, loc='lower center',
-                  bbox_to_anchor=(0.5, -0.25), ncol=2, fontsize=11)
+# Pattern 2: Spots (degree 2)
+ax2 = fig.add_subplot(gs[0, 1])
+Z2 = chebyshev_eval(2, X) + chebyshev_eval(2, Y)  # T_2(X) + T_2(Y)
+ax2.contourf(X, Y, Z2, levels=20, cmap='RdBu_r')
+ax2.contour(X, Y, Z2, levels=[0], colors='black', linewidths=2)
+ax2.set_title('Spots: T₂(X) + T₂(Y)\nDegree 2 (Conic)', fontsize=11)
+ax2.set_xlabel('X = cos(θ)')
+ax2.set_aspect('equal')
 
-plt.suptitle("Turing Patterns Are Algebraic Curves",
-             fontsize=16, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('viz_turing_patterns.png', dpi=150, bbox_inches='tight')
+# Pattern 3: Hexagonal (degree 3)
+ax3 = fig.add_subplot(gs[0, 2])
+Z3 = chebyshev_eval(3, X) + chebyshev_eval(3, Y) + 0.5 * chebyshev_eval(1, X) * chebyshev_eval(1, Y)
+ax3.contourf(X, Y, Z3, levels=20, cmap='RdBu_r')
+ax3.contour(X, Y, Z3, levels=[0], colors='black', linewidths=2)
+ax3.set_title('Complex: T₃(X)+T₃(Y)+½T₁(X)T₁(Y)\nDegree 3', fontsize=11)
+ax3.set_xlabel('X = cos(θ)')
+ax3.set_aspect('equal')
+
+# Pattern 4: Labyrinthine (degree 4)
+ax4 = fig.add_subplot(gs[1, 0])
+Z4 = chebyshev_eval(2, X) * chebyshev_eval(2, Y) - 0.3
+ax4.contourf(X, Y, Z4, levels=20, cmap='RdBu_r')
+ax4.contour(X, Y, Z4, levels=[0], colors='black', linewidths=2)
+ax4.set_title('Labyrinth: T₂(X)·T₂(Y) − 0.3\nDegree 4', fontsize=11)
+ax4.set_xlabel('X = cos(θ)')
+ax4.set_ylabel('Y = cos(φ)')
+ax4.set_aspect('equal')
+
+# 1D Chebyshev polynomials
+ax5 = fig.add_subplot(gs[1, 1])
+theta = np.linspace(0, np.pi, 500)
+x_1d = np.cos(theta)
+for n in range(5):
+    ax5.plot(x_1d, chebyshev_eval(n, x_1d), label=f'T_{n}(x)', linewidth=2)
+ax5.set_title('Chebyshev Polynomials T_n(x)\nBridge: cos(nθ) = T_n(cos θ)', fontsize=11)
+ax5.set_xlabel('x = cos(θ)')
+ax5.set_ylabel('T_n(x)')
+ax5.legend(fontsize=9)
+ax5.grid(True, alpha=0.3)
+ax5.axhline(y=0, color='k', linewidth=0.5)
+
+# Dispersion relation
+ax6 = fig.add_subplot(gs[1, 2])
+q = np.linspace(0, 5, 500)
+D1, D2 = 0.01, 1.0
+a11, a22, det_J = 1.0, -1.5, 0.5
+
+for d_ratio in [10, 50, 100, 200]:
+    D2_var = D1 * d_ratio
+    h = D1 * D2_var * q**2 - (D2_var * a11 + D1 * a22) * q + det_J
+    ax6.plot(q, h, label=f'D₂/D₁ = {d_ratio}', linewidth=2)
+
+ax6.axhline(y=0, color='k', linewidth=1, linestyle='--')
+ax6.set_title('Dispersion Relation h(q)\nTuring instability: h(q) < 0', fontsize=11)
+ax6.set_xlabel('q = k² (squared wave number)')
+ax6.set_ylabel('h(q)')
+ax6.legend(fontsize=9)
+ax6.grid(True, alpha=0.3)
+ax6.set_ylim(-2, 3)
+
+plt.savefig('turing_patterns.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved viz_turing_patterns.png")
+print("Saved: turing_patterns.png")

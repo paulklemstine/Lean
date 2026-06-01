@@ -1,327 +1,352 @@
+#!/usr/bin/env python3
 """
-Algorithms for Turing Pattern Analysis as Algebraic Geometry
+Turing's Flowers: Morphogenesis as Algebraic Geometry — Algorithms
 
-Implements the core algorithms from the research paper:
-1. Turing instability detection
-2. Dispersion analysis
-3. Pattern classification
-4. Algebraic curve fitting to zero sets
+Type-hinted implementations of core algorithms:
+1. Chebyshev polynomial evaluation and expansion
+2. Turing instability analysis
+3. Pattern polynomial construction and degree computation
+4. Zero set extraction and algebraic curve fitting
 """
 
 import numpy as np
-from typing import Tuple, Optional, Dict, List
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
 
 
-class LinearizedRDSystem:
-    """
-    A linearized two-species reaction-diffusion system.
-    
-    The system near steady state is:
-        ∂u/∂t = Du·∇²u + a·u + b·v
-        ∂v/∂t = Dv·∇²v + c·u + d·v
-    
-    Attributes:
-        Du, Dv: Diffusion coefficients (both positive)
-        a, b, c, d: Jacobian entries of the reaction kinetics
-    
-    Time complexity: O(1) for all property computations
-    Space complexity: O(1)
-    """
-    
-    def __init__(self, Du: float, Dv: float,
-                 a: float, b: float, c: float, d: float):
-        assert Du > 0 and Dv > 0, "Diffusion coefficients must be positive"
-        self.Du = Du
-        self.Dv = Dv
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-    
+# ============================================================
+# Data Structures
+# ============================================================
+
+@dataclass
+class TuringSystem:
+    """A two-component reaction-diffusion system."""
+    D1: float  # Diffusion coefficient of activator
+    D2: float  # Diffusion coefficient of inhibitor
+    a11: float  # ∂f/∂u
+    a12: float  # ∂f/∂v
+    a21: float  # ∂g/∂u
+    a22: float  # ∂g/∂v
+
     @property
-    def trace(self) -> float:
-        """Trace of the Jacobian."""
-        return self.a + self.d
-    
+    def trace_J(self) -> float:
+        return self.a11 + self.a22
+
     @property
-    def determinant(self) -> float:
-        """Determinant of the Jacobian."""
-        return self.a * self.d - self.b * self.c
-    
+    def det_J(self) -> float:
+        return self.a11 * self.a22 - self.a12 * self.a21
+
     @property
-    def alpha(self) -> float:
-        """Leading coefficient of dispersion quadratic: Du * Dv."""
-        return self.Du * self.Dv
-    
+    def cross_diff_coeff(self) -> float:
+        return self.D2 * self.a11 + self.D1 * self.a22
+
     @property
-    def beta(self) -> float:
-        """Linear coefficient: a*Dv + d*Du."""
-        return self.a * self.Dv + self.d * self.Du
-    
-    @property
-    def gamma(self) -> float:
-        """Constant term: det J."""
-        return self.determinant
-    
-    @property
-    def discriminant(self) -> float:
-        """Discriminant of the dispersion quadratic: β² - 4αγ."""
-        return self.beta**2 - 4 * self.alpha * self.gamma
-    
-    def dispersion(self, q: float) -> float:
-        """
-        Evaluate the dispersion relation h(q) at wavenumber² = q.
-        
-        h(q) = α·q² - β·q + γ
-        
-        When h(q) < 0, the mode at wavenumber √q is unstable.
-        
-        Time: O(1)
-        """
-        return self.alpha * q**2 - self.beta * q + self.gamma
-    
-    def is_turing_unstable(self) -> bool:
-        """
-        Check the Turing instability criterion.
-        
-        Conditions (all must hold):
-        1. tr(J) < 0  (stable without diffusion — both eigenvalues have Re < 0)
-        2. det(J) > 0  (stable without diffusion — no saddle point)
-        3. β > 0       (necessary for diffusion to destabilize)
-        4. Δ > 0       (dispersion relation achieves negative values)
-        
-        Time: O(1)
-        """
-        return (self.trace < 0 and
-                self.determinant > 0 and
-                self.beta > 0 and
-                self.discriminant > 0)
-    
-    def critical_wavenumber(self) -> Optional[float]:
-        """
-        The critical wavenumber² at which the dispersion minimum occurs.
-        Returns q_c = β / (2α), or None if β ≤ 0.
-        
-        Time: O(1)
-        """
-        if self.beta <= 0:
-            return None
-        return self.beta / (2 * self.alpha)
-    
-    def unstable_band(self) -> Optional[Tuple[float, float]]:
-        """
-        The range of unstable wavenumbers² [q₁, q₂].
-        Returns None if no instability.
-        
-        The roots of h(q) = 0 are:
-            q = (β ± √Δ) / (2α)
-        
-        Time: O(1)
-        """
-        if not self.is_turing_unstable():
-            return None
-        sqrt_disc = np.sqrt(self.discriminant)
-        q1 = (self.beta - sqrt_disc) / (2 * self.alpha)
-        q2 = (self.beta + sqrt_disc) / (2 * self.alpha)
-        return (q1, q2)
+    def dispersion_discriminant(self) -> float:
+        return self.cross_diff_coeff**2 - 4 * self.D1 * self.D2 * self.det_J
 
 
-def genus_degree(d: int) -> int:
-    """
-    Arithmetic genus of a smooth projective plane curve of degree d.
-    
-    Formula: g = (d-1)(d-2)/2
-    
-    This is a fundamental invariant connecting algebraic degree to topology.
-    
-    Time: O(1)
-    Space: O(1)
-    
-    Examples:
-        >>> genus_degree(2)  # conic
-        0
-        >>> genus_degree(3)  # cubic (elliptic curve)
-        1
-        >>> genus_degree(6)  # sextic
-        10
-    """
-    if d < 2:
+@dataclass
+class InstabilityResult:
+    """Result of Turing instability analysis."""
+    uniform_stable: bool
+    turing_unstable: bool
+    trace_J: float
+    det_J: float
+    cross_diff: float
+    discriminant: float
+    q_minus: Optional[float] = None
+    q_plus: Optional[float] = None
+    critical_mode: Optional[float] = None
+
+
+@dataclass
+class MorphogenesisSpectrum:
+    """The algebraic data of a Turing pattern."""
+    system: TuringSystem
+    num_modes: int
+    mode_coeffs: List[float]  # Fourier coefficients a_0, ..., a_N
+
+    @property
+    def algebraic_degree(self) -> int:
+        """The degree of the pattern polynomial."""
+        for k in range(len(self.mode_coeffs) - 1, -1, -1):
+            if abs(self.mode_coeffs[k]) > 1e-15:
+                return k
         return 0
-    return (d - 1) * (d - 2) // 2
 
 
-def classify_pattern(genus: int) -> str:
+# ============================================================
+# Algorithm 1: Chebyshev Polynomial Evaluation
+# ============================================================
+
+def chebyshev_eval(n: int, x: np.ndarray) -> np.ndarray:
     """
-    Classify a Turing pattern by the genus of its algebraic curve.
-    
-    - Genus 0: spots (topologically spherical, e.g., leopard spots)
-    - Genus 1: stripes (topologically toroidal, e.g., zebra stripes)  
-    - Genus ≥ 2: labyrinth (multiply connected, e.g., brain coral)
-    
-    Time: O(1)
+    Evaluate Chebyshev polynomial T_n at array of points x.
+    Uses the three-term recurrence: T_{n+2} = 2x T_{n+1} - T_n.
+
+    Time complexity: O(n * len(x))
+    Space complexity: O(len(x))
     """
-    if genus == 0:
-        return "spots"
-    elif genus == 1:
-        return "stripes"
-    else:
-        return "labyrinth"
+    if n == 0:
+        return np.ones_like(x, dtype=float)
+    if n == 1:
+        return x.astype(float)
+    t_prev2 = np.ones_like(x, dtype=float)
+    t_prev1 = x.astype(float)
+    for _ in range(2, n + 1):
+        t_curr = 2.0 * x * t_prev1 - t_prev2
+        t_prev2 = t_prev1
+        t_prev1 = t_curr
+    return t_curr
 
 
-def predict_pattern(n_modes: int) -> Dict[str, any]:
+def chebyshev_coefficients(n: int) -> List[float]:
     """
-    Predict the algebraic properties of a Turing pattern with n modes.
-    
-    The Turing-Algebraic Conjecture predicts:
-    - Algebraic degree = 2n
-    - Genus = (2n-1)(2n-2)/2
-    - Topology determined by genus
-    
-    Time: O(1)
-    
-    Args:
-        n_modes: Number of unstable Fourier modes
-    
-    Returns:
-        Dictionary with predicted algebraic properties
+    Return coefficients of T_n as a standard polynomial.
+    T_n(x) = sum_k c_k x^k.
+
+    Returns list [c_0, c_1, ..., c_n].
     """
-    degree = 2 * n_modes
-    genus = genus_degree(degree)
-    topology = classify_pattern(genus)
-    euler_char = 2 - 2 * genus
-    
-    return {
-        "n_modes": n_modes,
-        "predicted_degree": degree,
-        "genus": genus,
-        "topology": topology,
-        "euler_characteristic": euler_char,
-        "bezout_self_intersection": degree * degree,
-    }
+    if n == 0:
+        return [1.0]
+    if n == 1:
+        return [0.0, 1.0]
+    # Use recurrence on coefficient vectors
+    prev2 = [1.0]
+    prev1 = [0.0, 1.0]
+    for _ in range(2, n + 1):
+        # 2x * prev1: shift coefficients and multiply by 2
+        shifted = [0.0] + [2.0 * c for c in prev1]
+        # Pad prev2 to same length
+        while len(prev2) < len(shifted):
+            prev2.append(0.0)
+        curr = [shifted[k] - prev2[k] for k in range(len(shifted))]
+        prev2 = prev1
+        prev1 = curr
+    return prev1
 
 
-def simulate_gray_scott(N: int = 128, F: float = 0.04, k: float = 0.06,
-                         Du: float = 0.16, Dv: float = 0.08,
-                         n_steps: int = 10000, dt: float = 1.0) -> Tuple[np.ndarray, np.ndarray]:
+# ============================================================
+# Algorithm 2: Turing Instability Analysis
+# ============================================================
+
+def analyze_instability(system: TuringSystem) -> InstabilityResult:
     """
-    Simulate the Gray-Scott reaction-diffusion model.
-    
-    ∂u/∂t = Du·∇²u - u·v² + F·(1 - u)
-    ∂v/∂t = Dv·∇²v + u·v² - (F + k)·v
-    
-    Uses finite differences on a periodic N×N grid.
-    
-    Time: O(N² · n_steps)
-    Space: O(N²)
-    
-    Args:
-        N: Grid size
-        F: Feed rate
-        k: Kill rate
-        Du, Dv: Diffusion coefficients
-        n_steps: Number of time steps
-        dt: Time step
-    
-    Returns:
-        (u, v): Final concentration fields
+    Analyze a Turing system for diffusion-driven instability.
+
+    The criterion (proved in Lean):
+    Turing unstable ⟺ uniform stable ∧ cross_diff > 0 ∧ discriminant > 0
+
+    Time complexity: O(1)
     """
-    u = np.ones((N, N))
-    v = np.zeros((N, N))
-    
-    # Seed a small perturbation in the center
-    r = N // 4
-    cx, cy = N // 2, N // 2
-    u[cx-r:cx+r, cy-r:cy+r] = 0.50
-    v[cx-r:cx+r, cy-r:cy+r] = 0.25
-    u += 0.05 * np.random.randn(N, N)
-    v += 0.05 * np.random.randn(N, N)
-    
-    for _ in range(n_steps):
-        # Laplacian via finite differences (periodic boundary)
-        Lu = (np.roll(u, 1, 0) + np.roll(u, -1, 0) +
-              np.roll(u, 1, 1) + np.roll(u, -1, 1) - 4 * u)
-        Lv = (np.roll(v, 1, 0) + np.roll(v, -1, 0) +
-              np.roll(v, 1, 1) + np.roll(v, -1, 1) - 4 * v)
-        
-        uvv = u * v * v
-        u += dt * (Du * Lu - uvv + F * (1 - u))
-        v += dt * (Dv * Lv + uvv - (F + k) * v)
-        
-        u = np.clip(u, 0, 1)
-        v = np.clip(v, 0, 1)
-    
-    return u, v
+    tr = system.trace_J
+    det = system.det_J
+    cd = system.cross_diff_coeff
+    disc = system.dispersion_discriminant
+
+    uniform_stable = tr < 0 and det > 0
+    turing_unstable = uniform_stable and cd > 0 and disc > 0
+
+    result = InstabilityResult(
+        uniform_stable=uniform_stable,
+        turing_unstable=turing_unstable,
+        trace_J=tr,
+        det_J=det,
+        cross_diff=cd,
+        discriminant=disc,
+    )
+
+    if turing_unstable:
+        result.q_minus = (cd - np.sqrt(disc)) / (2 * system.D1 * system.D2)
+        result.q_plus = (cd + np.sqrt(disc)) / (2 * system.D1 * system.D2)
+        result.critical_mode = np.sqrt((result.q_minus + result.q_plus) / 2)
+
+    return result
 
 
-def fit_algebraic_curve(points: np.ndarray, max_degree: int = 6) -> Dict[str, any]:
+def dispersion_relation(system: TuringSystem, q: np.ndarray) -> np.ndarray:
     """
-    Fit an algebraic curve to a set of 2D points.
-    
-    Fits polynomials of degree d = 1, 2, ..., max_degree and finds
-    the degree that minimizes the residual.
-    
-    A polynomial of degree d in (x, y) has (d+1)(d+2)/2 monomials.
-    We solve min ||A·c||² where A is the Vandermonde-like matrix.
-    
-    Time: O(n · d² + d⁶) for n points and degree d
-    Space: O(n · d²)
-    
-    Args:
-        points: (n, 2) array of (x, y) coordinates
-        max_degree: Maximum polynomial degree to try
-    
-    Returns:
-        Dictionary with best degree, residuals, and coefficients
+    Evaluate the dispersion relation h(q) = D1*D2*q² - cross_diff*q + det(J).
+
+    Turing instability occurs when h(q) < 0 for some q > 0.
     """
-    x, y = points[:, 0], points[:, 1]
-    n = len(x)
-    
-    residuals = {}
-    coefficients = {}
-    
+    return (system.D1 * system.D2 * q**2
+            - system.cross_diff_coeff * q
+            + system.det_J)
+
+
+# ============================================================
+# Algorithm 3: Pattern Polynomial Construction
+# ============================================================
+
+def pattern_polynomial_eval(coeffs: List[float], x: np.ndarray) -> np.ndarray:
+    """
+    Evaluate the pattern polynomial P(x) = Σ a_k T_k(x).
+
+    This is the algebraic representative of the Turing pattern
+    u(θ) = Σ a_k cos(kθ) under x = cos(θ).
+
+    Time complexity: O(N * len(x)) where N = len(coeffs)
+    """
+    result = np.zeros_like(x, dtype=float)
+    for k, a_k in enumerate(coeffs):
+        if abs(a_k) > 1e-15:
+            result += a_k * chebyshev_eval(k, x)
+    return result
+
+
+def pattern_polynomial_standard(coeffs: List[float]) -> List[float]:
+    """
+    Convert Chebyshev expansion Σ a_k T_k to standard polynomial Σ c_j x^j.
+
+    Returns the standard polynomial coefficients [c_0, c_1, ..., c_d].
+    """
+    max_deg = len(coeffs) - 1
+    result = [0.0] * (max_deg + 1)
+    for k, a_k in enumerate(coeffs):
+        if abs(a_k) > 1e-15:
+            cheb_coeffs = chebyshev_coefficients(k)
+            for j, c_j in enumerate(cheb_coeffs):
+                if j <= max_deg:
+                    result[j] += a_k * c_j
+    # Trim trailing zeros
+    while len(result) > 1 and abs(result[-1]) < 1e-15:
+        result.pop()
+    return result
+
+
+def pattern_degree(coeffs: List[float]) -> int:
+    """
+    Compute the algebraic degree of the pattern polynomial.
+    Equal to the maximum mode number with nonzero coefficient.
+    """
+    for k in range(len(coeffs) - 1, -1, -1):
+        if abs(coeffs[k]) > 1e-15:
+            return k
+    return 0
+
+
+# ============================================================
+# Algorithm 4: Zero Set Extraction
+# ============================================================
+
+def extract_zero_set_1d(coeffs: List[float],
+                        n_points: int = 10000) -> List[float]:
+    """
+    Find the zero set of the pattern u(θ) = Σ a_k cos(kθ).
+
+    Equivalently, find roots of P(x) = Σ a_k T_k(x) in [-1, 1].
+
+    Returns the x-values (cos θ) where the pattern vanishes.
+    """
+    x = np.linspace(-1, 1, n_points)
+    p = pattern_polynomial_eval(coeffs, x)
+
+    roots = []
+    for i in range(len(p) - 1):
+        if p[i] * p[i + 1] < 0:
+            # Linear interpolation for root
+            root = x[i] - p[i] * (x[i + 1] - x[i]) / (p[i + 1] - p[i])
+            roots.append(float(root))
+        elif abs(p[i]) < 1e-10:
+            roots.append(float(x[i]))
+
+    return roots
+
+
+def extract_zero_set_2d(coeffs_2d: List[List[float]],
+                        nx: int = 200, ny: int = 200
+                        ) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Find the zero set of a 2D pattern P(X, Y) = Σ a_{mn} T_m(X) T_n(Y).
+
+    Returns (X_zeros, Y_zeros) arrays of points on the zero set.
+    """
+    x = np.linspace(-1, 1, nx)
+    y = np.linspace(-1, 1, ny)
+    X, Y = np.meshgrid(x, y)
+
+    Z = np.zeros_like(X)
+    for m, row in enumerate(coeffs_2d):
+        Tm = chebyshev_eval(m, X)
+        for n, a_mn in enumerate(row):
+            if abs(a_mn) > 1e-15:
+                Tn = chebyshev_eval(n, Y)
+                Z += a_mn * Tm * Tn
+
+    # Extract zero contour points
+    from numpy import abs as nabs
+    threshold = np.max(nabs(Z)) * 0.01
+    mask = nabs(Z) < threshold
+    return X[mask], Y[mask]
+
+
+# ============================================================
+# Algorithm 5: Algebraic Curve Fitting
+# ============================================================
+
+def fit_algebraic_curve(x_points: np.ndarray, y_points: np.ndarray,
+                        max_degree: int = 6) -> Tuple[int, np.ndarray]:
+    """
+    Fit the zero set points to an algebraic curve of minimal degree.
+
+    For each degree d from 1 to max_degree, fit the polynomial
+    P(x,y) = Σ_{i+j≤d} c_{ij} x^i y^j to the data points
+    using least squares, and select the minimal degree with
+    residual below threshold.
+
+    Returns (degree, coefficients).
+    """
+    best_degree = max_degree
+    best_coeffs = None
+
     for d in range(1, max_degree + 1):
-        # Build monomial matrix: x^i * y^j for i+j <= d
-        monomials = []
+        # Build Vandermonde matrix for monomials x^i y^j with i+j ≤ d
+        n_terms = (d + 1) * (d + 2) // 2
+        A = np.zeros((len(x_points), n_terms))
+        col = 0
         for i in range(d + 1):
             for j in range(d + 1 - i):
-                monomials.append(x**i * y**j)
-        
-        A = np.column_stack(monomials)
-        
-        # Find the null space (smallest singular value)
+                A[:, col] = x_points**i * y_points**j
+                col += 1
+
+        # SVD to find the null space (the curve equation)
         _, s, Vt = np.linalg.svd(A)
-        
-        # The residual is the smallest singular value
-        residuals[d] = s[-1] / s[0] if s[0] > 0 else float('inf')
-        coefficients[d] = Vt[-1]
-    
-    best_degree = min(residuals, key=residuals.get)
-    
-    return {
-        "best_degree": best_degree,
-        "residuals": residuals,
-        "coefficients": coefficients[best_degree],
-        "genus": genus_degree(best_degree),
-        "topology": classify_pattern(genus_degree(best_degree)),
-    }
+        # The last row of Vt is the least-squares solution
+        coeffs = Vt[-1, :]
+        residual = np.min(s) / np.max(s) if np.max(s) > 0 else 0
+
+        if residual < 0.01:  # Good fit
+            best_degree = d
+            best_coeffs = coeffs
+            break
+
+    if best_coeffs is None:
+        best_coeffs = np.zeros(1)
+
+    return best_degree, best_coeffs
 
 
-# Example usage
+# ============================================================
+# Main demonstration
+# ============================================================
+
 if __name__ == "__main__":
-    # Create a Turing system
-    system = LinearizedRDSystem(Du=0.01, Dv=1.0, a=0.5, b=-1.0, c=1.0, d=-1.5)
-    
-    print("Turing Instability Analysis:")
-    print(f"  Is Turing unstable: {system.is_turing_unstable()}")
-    print(f"  Discriminant: {system.discriminant:.4f}")
-    
-    if system.is_turing_unstable():
-        band = system.unstable_band()
-        print(f"  Unstable band: q ∈ [{band[0]:.4f}, {band[1]:.4f}]")
-        print(f"  Critical wavenumber²: {system.critical_wavenumber():.4f}")
-    
-    print("\nPattern Predictions:")
-    for n in range(1, 5):
-        pred = predict_pattern(n)
-        print(f"  {n} mode(s): degree={pred['predicted_degree']}, "
-              f"genus={pred['genus']}, type={pred['topology']}")
+    # Example: Gierer-Meinhardt system
+    gm = TuringSystem(D1=0.01, D2=1.0, a11=1.0, a12=-1.0, a21=2.0, a22=-1.5)
+    result = analyze_instability(gm)
+    print(f"Gierer-Meinhardt system:")
+    print(f"  Turing unstable: {result.turing_unstable}")
+    if result.turing_unstable:
+        print(f"  Critical mode: k ≈ {result.critical_mode:.4f}")
+
+    # Pattern with 2 modes: spots (conic section)
+    spot_coeffs = [0.5, 0.0, 1.0]  # a₀ + a₂ cos(2θ)
+    degree = pattern_degree(spot_coeffs)
+    std_poly = pattern_polynomial_standard(spot_coeffs)
+    print(f"\nSpot pattern coefficients: {spot_coeffs}")
+    print(f"  Algebraic degree: {degree}")
+    print(f"  Standard polynomial: {' + '.join(f'{c:.1f}x^{i}' for i, c in enumerate(std_poly) if abs(c) > 1e-10)}")
+
+    zeros = extract_zero_set_1d(spot_coeffs)
+    print(f"  Zero set (x = cos θ): {[f'{z:.4f}' for z in zeros]}")
