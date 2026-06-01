@@ -40,7 +40,7 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><a href="index.html">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.120</span></h2>
+                <h2><a href="index.html">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.121</span></h2>
                 <div class="header-controls">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
                         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -136,6 +136,7 @@
                         <span class="tag domain-tag" id="pkg-domain">Domain</span>
                         <span class="tag date-tag" id="pkg-date">Date</span>
                         <span class="tag time-tag" id="pkg-time" style="display:none">Time</span>
+                        <button id="lean-download-zip" class="lean-download-btn" style="font-size: 0.85em; padding: 6px 14px; margin-left: 12px;">Download Research Package .zip</button>
                     </div>
                     <h1 id="pkg-title">Package Title</h1>
 
@@ -182,11 +183,8 @@
 
                     <!-- Lean Proofs Tab -->
                     <div class="tab-pane" id="tab-lean">
-                        <div id="lean-header" style="display: none; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div id="lean-header" style="display: none; margin-bottom: 16px;">
                             <span class="section-title" style="color: var(--accent-color, #7c3aed);">Lean 4 Proof Files</span>
-                            <button id="lean-download-zip" class="lean-download-btn" style="font-size: 0.85em; padding: 6px 14px;">
-                                Download Research Package .zip
-                            </button>
                         </div>
                         <div id="lean-files-container"></div>
                     </div>

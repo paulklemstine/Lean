@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pkg-date').textContent = '';
         const timeEl = document.getElementById('pkg-time');
         if (timeEl) timeEl.style.display = 'none';
+        const zipBtn = document.getElementById('lean-download-zip');
+        if (zipBtn) zipBtn.style.display = 'none';
 
         try {
             const resp = await fetch(filename);
@@ -93,6 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
             timeEl.textContent = timeStr;
             timeEl.style.display = timeStr ? 'block' : 'none';
         }
+        // Show the download zip button in the header once package is loaded
+        const zipBtn = document.getElementById('lean-download-zip');
+        if (zipBtn) zipBtn.style.display = 'inline-flex';
 
         // Article
         const articleDiv = document.getElementById('content-article');
