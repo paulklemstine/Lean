@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const mobileToggle = document.getElementById('mobile-toggle');
     const sortMode = document.getElementById('sort-mode');
+    const pageHome = document.getElementById('page-home');
     const pagePrev = document.getElementById('page-prev');
     const pageNext = document.getElementById('page-next');
     const pageIndicator = document.getElementById('page-indicator');
@@ -109,6 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Pagination
+    if (pageHome) {
+        pageHome.addEventListener('click', () => {
+            if (currentPage !== 1) {
+                currentPage = 1;
+                window.renderSidebar(filteredPackages);
+            }
+        });
+    }
     if (pagePrev) {
         pagePrev.addEventListener('click', () => {
             if (currentPage > 1) {
@@ -209,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updatePagination();
     };
-});
+
     // Navigate to the page containing a slug and highlight it
     window.highlightSidebarItem = function(slug) {
         if (!slug || !filteredPackages.length) return;
@@ -239,3 +248,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+});
