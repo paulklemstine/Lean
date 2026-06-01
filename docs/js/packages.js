@@ -467,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const editor = document.createElement('textarea');
             editor.className = 'code-editor';
             editor.spellcheck = false;
+            editor.cols = 80;
             editor.value = resolvedCode;
             editor.style.display = 'none'; // Hidden by default
             // Auto-size: set height to fit content when shown

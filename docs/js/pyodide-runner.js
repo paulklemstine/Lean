@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const editor = document.createElement('textarea');
                 editor.className = 'code-editor collapsed';
                 editor.spellcheck = false;
+                editor.cols = 80;
                 editor.value = item.code || '';
 
                 // Auto-size editor when shown

@@ -1063,7 +1063,9 @@ body.light-theme .gallery-img-container {
 
 .code-editor {
     display: block;
-    width: 100%;
+    width: 100% !important;
+    max-width: none;
+    min-width: 100%;
     min-height: 300px;
     height: auto;
     padding: 20px 24px;
