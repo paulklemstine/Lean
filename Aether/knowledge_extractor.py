@@ -1701,21 +1701,20 @@ Research mode: {concept.research_mode}
         Protects high-priority, Novelty-tagged, and seed directions.
         Runs every ~20 cycles to avoid over-pruning.
         """
-        try:
-            from research_memory import FutureDirectionsManager, FutureDirection
-            fd_manager = FutureDirectionsManager(self.workspace)
+        from research_memory import FutureDirectionsManager, FutureDirection
+        fd_manager = FutureDirectionsManager(self.workspace)
 
-            # Fix auto-generated titles before cleanup review
-            fixed = fd_manager.fix_existing_auto_titles()
-            if fixed:
-                print(f"[Cleanup] Fixed {fixed} auto-generated cycle-summary titles")
+        # Fix auto-generated titles before cleanup review
+        fixed = fd_manager.fix_existing_auto_titles()
+        if fixed:
+            print(f"[Cleanup] Fixed {fixed} auto-generated cycle-summary titles")
 
-            available = [d for d in fd_manager._directions if d.status == "available"]
-            if len(available) < 5:
-                return
+        available = [d for d in fd_manager._directions if d.status == "available"]
+        if len(available) < 5:
+            return
 
-            # Only run every ~20 cycles to avoid over-pruning
-            if self.cycle_count % 20 != 0 and self.cycle_count > 0:
+        # Only run every ~20 cycles to avoid over-pruning
+        if self.cycle_count % 20 != 0 and self.cycle_count > 0:
             return
 
         # Only review the bottom 30% by quality — top directions are protected
@@ -1862,11 +1861,6 @@ Research mode: {concept.research_mode}
             fd_manager._save()
 
         print(f"[Cleanup] Directions cleanup: removed {removed}, protected {skipped}, brainstormed {1 if added_new else 0}. Total available: {len([d for d in fd_manager._directions if d.status == 'available'])}")
-        except Exception as e:
-            import traceback
-            print(f"[Cleanup] Error in future directions cleanup: {e}")
-            traceback.print_exc()
-
     def _mine_structural_holes(self) -> None:
         """Find domain pairs with no edges in the knowledge graph and generate bridge directions.
 
