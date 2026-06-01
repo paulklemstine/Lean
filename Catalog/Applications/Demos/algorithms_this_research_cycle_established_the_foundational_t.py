@@ -1,264 +1,268 @@
 """
-Exchange Family Descent Complexity: Core Algorithms
+Algorithms for Surreal Topology: Order Gaps, Cofinality, and Connectedness.
 
-Type-hinted implementations of the exchange family descent framework.
-Provides data structures for exchange families, descent chains, tropical
-valuations, and product tensorization.
+This module implements computational tools for exploring the topology of
+ordered spaces, including gap detection, cofinality computation, and
+connectedness testing.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Callable, Generic, TypeVar, Optional
+from typing import List, Tuple, Optional, Set, Callable
+from fractions import Fraction
 import math
 
-T = TypeVar('T')
-S = TypeVar('S')
 
-
-@dataclass
-class ExchangeFamily(Generic[T]):
-    """An exchange family: states with a measure and exchange relation.
-
-    The measure strictly decreases under exchanges, guaranteeing termination
-    of any descent process.
-
-    Attributes:
-        states: List of all states in the family.
-        measure: Maps each state to a non-negative integer measure.
-        can_exchange: Returns True if state x can exchange to state y.
+def detect_order_gap(
+    elements: List[Fraction],
+    cut_value: float
+) -> Tuple[List[Fraction], List[Fraction], bool]:
     """
-    states: list[T]
-    measure: Callable[[T], int]
-    can_exchange: Callable[[T, T], bool]
+    Detect a Dedekind gap at a given cut value in a set of rationals.
 
-    def validate(self) -> bool:
-        """Check that all exchanges strictly decrease the measure."""
-        for x in self.states:
-            for y in self.states:
-                if self.can_exchange(x, y):
-                    if self.measure(y) >= self.measure(x):
-                        return False
-        return True
+    A gap exists when the cut value is irrational (not equal to any element)
+    and the lower/upper sets have no max/min respectively.
 
-    def local_minima(self) -> list[T]:
-        """Find all local minima (states with no exchange successors)."""
-        return [x for x in self.states if not any(
-            self.can_exchange(x, y) for y in self.states
-        )]
+    Parameters
+    ----------
+    elements : List[Fraction]
+        Sorted list of rational numbers.
+    cut_value : float
+        The value at which to attempt the cut (e.g., sqrt(2)).
 
-    def successors(self, x: T) -> list[T]:
-        """All states reachable from x by one exchange."""
-        return [y for y in self.states if self.can_exchange(x, y)]
-
-    def max_measure(self) -> int:
-        """Maximum measure across all states."""
-        return max(self.measure(x) for x in self.states)
-
-
-@dataclass
-class DescentChain(Generic[T]):
-    """A descent chain in an exchange family.
-
-    A sequence of states where each consecutive pair is related by exchange.
+    Returns
+    -------
+    lower : List[Fraction]
+        Elements below the cut.
+    upper : List[Fraction]
+        Elements above the cut.
+    is_gap : bool
+        True if this forms a proper gap (no element equals the cut value).
     """
-    family: ExchangeFamily[T]
-    chain: list[T]
-
-    def is_valid(self) -> bool:
-        """Verify this is a valid descent chain."""
-        for i in range(len(self.chain) - 1):
-            if not self.family.can_exchange(self.chain[i], self.chain[i + 1]):
-                return False
-        return True
-
-    def length(self) -> int:
-        """Number of states in the chain."""
-        return len(self.chain)
-
-    def depth(self) -> int:
-        """Number of exchange steps (length - 1)."""
-        return max(0, len(self.chain) - 1)
-
-    def measures(self) -> list[int]:
-        """Sequence of measures along the chain."""
-        return [self.family.measure(x) for x in self.chain]
-
-    def is_maximal(self) -> bool:
-        """True if the chain cannot be extended."""
-        if not self.chain:
-            return True
-        last = self.chain[-1]
-        return not any(self.family.can_exchange(last, y)
-                       for y in self.family.states)
+    lower = [x for x in elements if float(x) < cut_value]
+    upper = [x for x in elements if float(x) > cut_value]
+    on_cut = [x for x in elements if float(x) == cut_value]
+    is_gap = len(on_cut) == 0 and len(lower) > 0 and len(upper) > 0
+    return lower, upper, is_gap
 
 
-@dataclass
-class TropicalDescentValuation(Generic[T]):
-    """A tropical descent valuation assigns costs to exchanges.
-
-    Creates a dual view of descent: instead of counting steps (depth),
-    we measure total computational weight (cost).
+def compute_coinitiality_witness(
+    elements: List[Fraction],
+    point: Fraction,
+    max_depth: int = 100
+) -> Tuple[List[Fraction], bool]:
     """
-    family: ExchangeFamily[T]
-    cost: Callable[[T, T], int]
+    Attempt to find a countable coinitial sequence above a point.
 
-    def chain_cost(self, chain: list[T]) -> int:
-        """Total cost along a descent chain."""
-        return sum(self.cost(chain[i], chain[i + 1])
-                   for i in range(len(chain) - 1))
+    For rational approximations, this always succeeds (rationals have
+    countable coinitiality). For surreal-like structures, it would fail
+    at uncountable coinitiality points.
 
-    def min_cost_per_step(self) -> int:
-        """Minimum cost of any single exchange."""
-        costs = []
-        for x in self.family.states:
-            for y in self.family.states:
-                if self.family.can_exchange(x, y):
-                    costs.append(self.cost(x, y))
-        return min(costs) if costs else 0
+    Parameters
+    ----------
+    elements : List[Fraction]
+        Pool of elements to draw from.
+    point : Fraction
+        The reference point.
+    max_depth : int
+        Maximum sequence length.
 
-    def max_cost_per_step(self) -> int:
-        """Maximum cost of any single exchange."""
-        costs = []
-        for x in self.family.states:
-            for y in self.family.states:
-                if self.family.can_exchange(x, y):
-                    costs.append(self.cost(x, y))
-        return max(costs) if costs else 0
-
-
-def greedy_descent(family: ExchangeFamily[T], start: T) -> DescentChain[T]:
-    """Find a greedy descent chain starting from `start`.
-
-    At each step, choose the successor with the largest measure decrease.
-    Guaranteed to terminate by the exchange_decreasing property.
+    Returns
+    -------
+    sequence : List[Fraction]
+        Decreasing sequence approaching point from above.
+    is_coinitial : bool
+        True if the sequence appears coinitial.
     """
-    chain = [start]
-    current = start
-    while True:
-        succs = family.successors(current)
-        if not succs:
+    above = sorted([x for x in elements if x > point])
+    if not above:
+        return [], False
+
+    sequence = []
+    current_min = above[0]
+    for x in above:
+        if x <= current_min:
+            current_min = x
+            sequence.append(x)
+        if len(sequence) >= max_depth:
             break
-        # Choose successor with smallest measure (greediest descent)
-        best = min(succs, key=family.measure)
-        chain.append(best)
-        current = best
-    return DescentChain(family, chain)
+
+    # Check coinitiality: is every element above point bounded below by some sequence element?
+    is_coinitial = all(
+        any(s <= x for s in sequence)
+        for x in above
+    )
+    return sequence, is_coinitial
 
 
-def longest_descent(family: ExchangeFamily[T], start: T) -> DescentChain[T]:
-    """Find the longest descent chain from `start` (exhaustive search).
-
-    Uses DFS to find the longest path in the exchange DAG.
-    Exponential in the worst case but guaranteed to find the optimum.
+def test_connectedness_rational_cut(
+    cut_value: float,
+    density: int = 1000,
+    bound: int = 10
+) -> dict:
     """
-    best_chain: list[T] = [start]
+    Test disconnectedness of Q at an irrational cut.
 
-    def dfs(current: T, path: list[T]) -> None:
-        nonlocal best_chain
-        if len(path) > len(best_chain):
-            best_chain = list(path)
-        for y in family.successors(current):
-            path.append(y)
-            dfs(y, path)
-            path.pop()
+    Generates a dense subset of Q in [-bound, bound] and checks if the
+    cut at cut_value produces a proper gap (disconnection).
 
-    dfs(start, [start])
-    return DescentChain(family, best_chain)
+    Parameters
+    ----------
+    cut_value : float
+        The irrational number at which to cut (e.g., sqrt(2)).
+    density : int
+        Number of rationals to generate per unit interval.
+    bound : int
+        Range [-bound, bound] for generating rationals.
 
-
-def product_family(
-    e1: ExchangeFamily[T],
-    e2: ExchangeFamily[S]
-) -> ExchangeFamily[tuple[T, S]]:
-    """Construct the product of two exchange families.
-
-    The product measure is the sum. Exchanges happen in one component at a time.
+    Returns
+    -------
+    dict with keys:
+        'lower_count', 'upper_count', 'is_gap', 'cut_value',
+        'lower_max', 'upper_min'
     """
-    states = [(a, b) for a in e1.states for b in e2.states]
+    # Generate dense rationals
+    elements = []
+    for denom in range(1, density + 1):
+        for numer in range(-bound * denom, bound * denom + 1):
+            elements.append(Fraction(numer, denom))
+    elements = sorted(set(elements))
 
-    def measure(p: tuple[T, S]) -> int:
-        return e1.measure(p[0]) + e2.measure(p[1])
+    lower, upper, is_gap = detect_order_gap(elements, cut_value)
 
-    def can_exchange(p: tuple[T, S], q: tuple[T, S]) -> bool:
-        return ((e1.can_exchange(p[0], q[0]) and p[1] == q[1]) or
-                (p[0] == q[0] and e2.can_exchange(p[1], q[1])))
-
-    return ExchangeFamily(states, measure, can_exchange)
-
-
-def depth_cost_tradeoff(
-    valuation: TropicalDescentValuation[T],
-    chain: list[T]
-) -> dict[str, float]:
-    """Compute the depth-cost tradeoff for a given chain.
-
-    Returns bounds and ratios from the fundamental tradeoff theorem.
-    """
-    w = valuation.min_cost_per_step()
-    W = valuation.max_cost_per_step()
-    depth = max(0, len(chain) - 1)
-    total_cost = valuation.chain_cost(chain)
-    head_measure = valuation.family.measure(chain[0]) if chain else 0
-
-    return {
-        'depth': depth,
-        'total_cost': total_cost,
-        'min_cost_per_step': w,
-        'max_cost_per_step': W,
-        'lower_bound': w * depth,
-        'upper_bound': W * depth,
-        'measure_bound': head_measure,
-        'cost_per_depth': total_cost / depth if depth > 0 else 0,
-        'lower_satisfied': w * depth <= total_cost,
-        'upper_satisfied': total_cost <= W * depth,
-        'depth_satisfied': depth <= head_measure,
+    result = {
+        'cut_value': cut_value,
+        'total_elements': len(elements),
+        'lower_count': len(lower),
+        'upper_count': len(upper),
+        'is_gap': is_gap,
     }
+    if lower:
+        result['lower_max'] = float(max(lower))
+    if upper:
+        result['upper_min'] = float(min(upper))
+    if lower and upper:
+        result['gap_width'] = float(min(upper)) - float(max(lower))
+
+    return result
 
 
-def compute_exchange_graph(family: ExchangeFamily[T]) -> dict[T, list[T]]:
-    """Build the exchange DAG as an adjacency list."""
-    return {x: family.successors(x) for x in family.states}
-
-
-def count_states_by_measure(family: ExchangeFamily[T]) -> dict[int, int]:
-    """Count states at each measure level."""
-    counts: dict[int, int] = {}
-    for x in family.states:
-        m = family.measure(x)
-        counts[m] = counts.get(m, 0) + 1
-    return dict(sorted(counts.items()))
-
-
-def verify_binary_conjecture(
-    family: ExchangeFamily[T]
-) -> dict[str, object]:
-    """Test the binary exchange depth bound conjecture.
-
-    Checks whether n+1 ≤ 2^(max_measure + 1) when every state has
-    at most 2 exchange predecessors.
+def gap_free_check(
+    elements: List[Fraction],
+    test_cuts: List[float]
+) -> Tuple[bool, Optional[float]]:
     """
-    n_plus_1 = len(family.states)
-    max_m = family.max_measure()
+    Check if a finite ordered set appears gap-free by testing multiple cuts.
 
-    # Check binary in-degree
-    in_degrees: dict[T, int] = {x: 0 for x in family.states}
-    for x in family.states:
-        for y in family.states:
-            if family.can_exchange(x, y):
-                in_degrees[y] = in_degrees.get(y, 0) + 1
+    Parameters
+    ----------
+    elements : List[Fraction]
+        Sorted list of rational numbers.
+    test_cuts : List[float]
+        Values at which to test for gaps.
 
-    max_in_degree = max(in_degrees.values()) if in_degrees else 0
-    is_binary = max_in_degree <= 2
+    Returns
+    -------
+    is_gap_free : bool
+        True if no gap found at any test cut.
+    first_gap : Optional[float]
+        The first cut value where a gap was found, if any.
+    """
+    for cut in test_cuts:
+        _, _, is_gap = detect_order_gap(elements, cut)
+        if is_gap:
+            return False, cut
+    return True, None
 
-    bound = 2 ** (max_m + 1)
-    conjecture_holds = n_plus_1 <= bound
 
-    return {
-        'n_plus_1': n_plus_1,
-        'max_measure': max_m,
-        'bound': bound,
-        'is_binary': is_binary,
-        'conjecture_holds': conjecture_holds,
-        'max_in_degree': max_in_degree,
-        'log2_ratio': math.log2(n_plus_1) / (max_m + 1) if max_m >= 0 else None,
-    }
+def dyadic_approximation_sequence(
+    x: float,
+    max_depth: int = 20
+) -> List[Fraction]:
+    """
+    Compute the dyadic approximation sequence converging to x.
+
+    This implements the surreal number construction: at each stage,
+    the simplest dyadic rational in the interval is chosen.
+
+    Parameters
+    ----------
+    x : float
+        Target real number.
+    max_depth : int
+        Maximum number of approximation stages.
+
+    Returns
+    -------
+    List[Fraction]
+        Sequence of dyadic rational approximations.
+    """
+    sequence = []
+    for n in range(max_depth):
+        denom = 2 ** n
+        best = None
+        best_dist = float('inf')
+        for k in range(-denom * (int(abs(x)) + 2), denom * (int(abs(x)) + 2) + 1):
+            candidate = Fraction(k, denom)
+            dist = abs(float(candidate) - x)
+            if dist < best_dist:
+                best_dist = dist
+                best = candidate
+        if best is not None and (not sequence or best != sequence[-1]):
+            sequence.append(best)
+    return sequence
+
+
+def order_topology_basis(
+    elements: List[Fraction],
+) -> List[Tuple[Fraction, Fraction]]:
+    """
+    Compute the open interval basis for the order topology on a finite set.
+
+    Parameters
+    ----------
+    elements : List[Fraction]
+        Sorted list of elements.
+
+    Returns
+    -------
+    List of (a, b) pairs representing open intervals (a, b) that form
+    a topological basis.
+    """
+    elements = sorted(set(elements))
+    basis = []
+    for i in range(len(elements)):
+        for j in range(i + 1, len(elements)):
+            # Only include if there's actually an element between
+            between = [x for x in elements if elements[i] < x < elements[j]]
+            if between:
+                basis.append((elements[i], elements[j]))
+    return basis
+
+
+def connected_components_discrete(
+    elements: List[int]
+) -> List[List[int]]:
+    """
+    Compute connected components of a subset of Z with order topology.
+
+    In Z, the order topology is discrete, so connected components are
+    maximal intervals of consecutive integers.
+
+    Parameters
+    ----------
+    elements : List[int]
+        Subset of integers.
+
+    Returns
+    -------
+    List of connected components (maximal consecutive runs).
+    """
+    if not elements:
+        return []
+    elements = sorted(set(elements))
+    components = [[elements[0]]]
+    for i in range(1, len(elements)):
+        if elements[i] == elements[i-1] + 1:
+            components[-1].append(elements[i])
+        else:
+            components.append([elements[i]])
+    return components
