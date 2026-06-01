@@ -1718,9 +1718,9 @@ class PiAgentClient:
                `norm_num`, or `rfl` unless the statement itself is genuinely important.
                If the only proof tactic is enumeration, the theorem is not worth formalizing.
 
-            2. **At least 3 theorems with deep proof tactics**: Your file must contain at
-               least 3 theorems proven using induction, rcases, by_contra, field_simp,
-               or multi-step calc reasoning.
+            2. **At least 3 theorems that demonstrate genuine mathematical insight**:
+               Your file must contain at least 3 theorems where removing any key step
+               would cause the proof to fail. Depth is measured by insight, not tactic count.
 
             3. **Novel definitions**: Define at least one new mathematical structure or concept
                that does not already exist in the Catalog. Check the catalog references to
@@ -1774,19 +1774,20 @@ class PiAgentClient:
             Discover what matters. Prove what you can. Define what needs defining.
             Build on the catalog theorems referenced above (FINAL/ entries are vetted, high-quality — prioritize these).
 
-            Use concrete types (Nat, Real, Finset, Matrix). Avoid trivial tautologies.
-            If a direct proof fails, try the contrapositive, a constructive witness,
-            or structural induction.
+            Choose types appropriate to the problem — abstract where it clarifies,
+            concrete where it grounds. Avoid trivial tautologies.
+            If a direct proof fails, explore alternative approaches: contrapositive,
+            constructive witnesses, categorical arguments, coinduction, computational
+            reflection, or structural induction.
 
             ### Anti-Triviality Rules
             Do NOT produce any of the following:
             - Commutativity/associativity proofs for standard algebraic structures
-              (e.g., `a + b = b + a` for semirings, `a * b * c = a * (b * c)`)
+              UNLESS the result is surprising in context (e.g., proving commutativity
+              in a non-obvious setting like tropical semirings or quantum groups)
             - Wrapper theorems that just unwrap a definition without mathematical insight
             - Proofs that are just `by simp` or `by trivial` with no depth
             - Definitions followed by trivial properties that don't advance understanding
-            If a result seems obvious, prove something STRONGER — the stronger theorem
-            is often easier to prove and more interesting.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
                       ARTICLE.md (Scientific American style), algorithm, demo.py,
@@ -1842,8 +1843,8 @@ class PiAgentClient:
             (Use backtick-enclosed file paths or theorem names from the Catalog.)
             **Proof Strategy**: Outline the key steps or approach. What mathematical
             machinery is needed? What lemmas would need to be established first?
-            **Domain Bridges**: NumberTheory <-> Tropical, Algebra <-> Physics
-            (List domain pairs this connects, using the <-> connector.)
+            **Domain Bridges**: (identify genuine cross-domain connections from
+            this cycle's results, using the <-> connector.)
             **Lineage**: Builds on fd_XXXX and discoveries from exp_XXXXXXXX_XXX
             (Reference specific prior direction IDs or experiment IDs if known, or
             describe which prior results this extends.)
@@ -1858,7 +1859,7 @@ class PiAgentClient:
             "extend Y" are not hypotheses — they are homework. Give us ideas that
             could change how we think about the problem.
 
-            Soli Deo Gloria.
+            Pursue truth relentlessly.
         """)
 
         # Prompt size budget enforcement: cap at 30K chars
