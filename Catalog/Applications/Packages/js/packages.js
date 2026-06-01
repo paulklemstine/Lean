@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Parse lean_proofs into [{name, code}] regardless of format
         const leanFiles = [];
+        const seenLeanCode = new Set(); // Dedup by code content
         if (data.lean_proofs) {
             if (typeof data.lean_proofs === 'string') {
                 const lp = data.lean_proofs;
@@ -146,7 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         for (let i = 1; i < parts.length; i += 2) {
                             const name = parts[i].trim();
                             const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
-                            if (code) leanFiles.push({ name, code });
+                            if (code && !seenLeanCode.has(code)) {
+                                seenLeanCode.add(code);
+                                leanFiles.push({ name, code });
+                            }
                         }
                     } else {
                         // Single file — derive name from package
@@ -159,21 +163,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (typeof entry === 'string') {
                         if (entry.length > 50 && !entry.endsWith('.lean')) {
                             const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                            leanFiles.push({ name: slug + '.lean', code: entry });
+                            if (!seenLeanCode.has(entry)) {
+                                seenLeanCode.add(entry);
+                                leanFiles.push({ name: slug + '.lean', code: entry });
+                            }
                         }
                         // Skip short filename placeholders
                     } else if (typeof entry === 'object' && entry !== null) {
                         // Dict with file, theorems, description, and possibly code
                         const fname = entry.file || entry.name || 'Proof.lean';
                         const basename = fname.split('/').pop();
-                        if (entry.code && entry.code.trim()) {
-                            leanFiles.push({ name: basename, code: entry.code });
-                        } else if (entry.content && entry.content.trim()) {
-                            leanFiles.push({ name: basename, code: entry.content });
-                        } else {
+                        const code = (entry.code && entry.code.trim()) ? entry.code
+                                   : (entry.content && entry.content.trim()) ? entry.content
+                                   : null;
+                        if (code && !seenLeanCode.has(code)) {
+                            seenLeanCode.add(code);
+                            leanFiles.push({ name: basename, code });
+                        } else if (!code) {
                             // No code available — skip this file
                             console.warn('Lean file has no embedded code:', fname);
                         }
+                        // Duplicate code — silently skip
                     }
                 }
             }
