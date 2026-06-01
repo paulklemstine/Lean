@@ -1,336 +1,302 @@
-#!/usr/bin/env python3
 """
-Proof Dynamics: Core Algorithms
+Proof Refinement Systems: Algorithms and Data Structures
 
-Implements the certified normalization, complexity analysis, and
-refinement-chain computation algorithms from the research paper.
-
-All algorithms mirror the formally verified Lean definitions.
+This module implements the core algorithms for proof refinement systems,
+including greedy refinement, exhaustive search for minimal proofs,
+optimizer iteration, and analysis tools.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Callable, Optional, TypeVar, Generic
+import heapq
+from collections import defaultdict
 
 
-# ────────────────────────────────────────────────────────────────
-# Data Types (self-contained)
-# ────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────
+# Core Data Structures
+# ──────────────────────────────────────────────────────────────
 
-class TheoremLabel(Enum):
-    IrrationalSqrt2 = auto()
-    EvenPlusEvenEven = auto()
-    DvdTrans = auto()
-    ParityLemma = auto()
+@dataclass(frozen=True)
+class Proof:
+    """A proof in a refinement system."""
+    id: int
+    theorem_id: int
+    complexity: int
+    label: str = ""
+
+    def __lt__(self, other: "Proof") -> bool:
+        return self.complexity < other.complexity
+
 
 @dataclass
-class ProofSketch:
-    """Base class for proof sketch nodes."""
-    pass
-
-@dataclass
-class Axiom(ProofSketch):
-    label: TheoremLabel
-
-@dataclass
-class Lemma(ProofSketch):
-    label: TheoremLabel
-    sub: ProofSketch
-
-@dataclass
-class Trans(ProofSketch):
-    left: ProofSketch
-    right: ProofSketch
-
-@dataclass
-class Cases(ProofSketch):
-    left: ProofSketch
-    right: ProofSketch
-
-@dataclass
-class Redundant(ProofSketch):
-    inner: ProofSketch
-
-@dataclass
-class Duplicate(ProofSketch):
-    inner: ProofSketch
-
-
-# ────────────────────────────────────────────────────────────────
-# Algorithm 1: Multi-Dimensional Complexity
-# ────────────────────────────────────────────────────────────────
-
-@dataclass
-class ProofComplexity:
-    """Multi-component complexity vector.
+class ProofRefinementSystem:
+    """
+    A proof refinement system with explicit proof and theorem types.
 
     Attributes:
-        length: total node count
-        depth: tree height
-        lemma_count: number of Lemma nodes
-
-    Time complexity: O(n) where n = number of nodes
-    Space complexity: O(d) where d = tree depth (recursion stack)
+        proofs: List of all proofs in the system.
+        theorem_ids: Set of all theorem identifiers.
     """
-    length: int
-    depth: int
-    lemma_count: int
+    proofs: list[Proof] = field(default_factory=list)
+
+    def proves(self, p: Proof) -> int:
+        """Return the theorem ID that proof p establishes."""
+        return p.theorem_id
+
+    def complexity(self, p: Proof) -> int:
+        """Return the complexity of proof p."""
+        return p.complexity
+
+    def is_refinement(self, p_prime: Proof, p: Proof) -> bool:
+        """Check if p_prime is a refinement of p."""
+        return (self.proves(p_prime) == self.proves(p) and
+                self.complexity(p_prime) < self.complexity(p))
+
+    def is_minimal(self, p: Proof) -> bool:
+        """Check if p is a minimal proof (no refinement exists)."""
+        return not any(self.is_refinement(q, p) for q in self.proofs)
+
+    def refinements_of(self, p: Proof) -> list[Proof]:
+        """Return all refinements of p."""
+        return [q for q in self.proofs if self.is_refinement(q, p)]
+
+    def proofs_of_theorem(self, theorem_id: int) -> list[Proof]:
+        """Return all proofs of a given theorem."""
+        return [p for p in self.proofs if p.theorem_id == theorem_id]
+
+    def minimal_proofs(self) -> list[Proof]:
+        """Return all minimal proofs in the system."""
+        return [p for p in self.proofs if self.is_minimal(p)]
 
     @property
-    def score(self) -> int:
-        """Scalar scalarization: sum of components."""
-        return self.length + self.depth + self.lemma_count
-
-    def lex_lt(self, other: ProofComplexity) -> bool:
-        """Lexicographic comparison (self < other)."""
-        if self.length != other.length:
-            return self.length < other.length
-        if self.depth != other.depth:
-            return self.depth < other.depth
-        return self.lemma_count < other.lemma_count
-
-    def __repr__(self):
-        return f"({self.length}, {self.depth}, {self.lemma_count})"
+    def theorem_ids(self) -> set[int]:
+        return {p.theorem_id for p in self.proofs}
 
 
-def compute_complexity(p: ProofSketch) -> ProofComplexity:
-    """Compute the full complexity vector of a proof sketch.
+# ──────────────────────────────────────────────────────────────
+# Algorithms
+# ──────────────────────────────────────────────────────────────
 
-    Time: O(n), Space: O(d)
+def greedy_refine(system: ProofRefinementSystem, p: Proof) -> list[Proof]:
     """
-    if isinstance(p, Axiom):
-        return ProofComplexity(1, 0, 0)
-    if isinstance(p, Lemma):
-        c = compute_complexity(p.sub)
-        return ProofComplexity(1 + c.length, 1 + c.depth, 1 + c.lemma_count)
-    if isinstance(p, (Trans, Cases)):
-        cl = compute_complexity(p.left)
-        cr = compute_complexity(p.right)
-        return ProofComplexity(
-            1 + cl.length + cr.length,
-            1 + max(cl.depth, cr.depth),
-            cl.lemma_count + cr.lemma_count
-        )
-    if isinstance(p, (Redundant, Duplicate)):
-        c = compute_complexity(p.inner)
-        return ProofComplexity(1 + c.length, 1 + c.depth, c.lemma_count)
-    raise TypeError(f"Unknown node type: {type(p)}")
+    Greedy refinement: repeatedly choose the refinement with lowest complexity.
 
+    Returns the refinement chain from p to a locally minimal proof.
 
-# ────────────────────────────────────────────────────────────────
-# Algorithm 2: Semantic Extraction
-# ────────────────────────────────────────────────────────────────
+    Algorithm:
+        1. Start with current proof p
+        2. Find all refinements of p
+        3. Choose the one with minimum complexity
+        4. Repeat until no refinements exist
 
-def semantics(p: ProofSketch) -> TheoremLabel:
-    """Extract the theorem label established by this sketch.
-
-    Time: O(d), Space: O(d)
-    Invariant: preserved under all refinement steps.
-    """
-    if isinstance(p, Axiom): return p.label
-    if isinstance(p, Lemma): return p.label
-    if isinstance(p, Trans): return semantics(p.left)
-    if isinstance(p, Cases): return semantics(p.left)
-    if isinstance(p, Redundant): return semantics(p.inner)
-    if isinstance(p, Duplicate): return semantics(p.inner)
-    raise TypeError
-
-
-# ────────────────────────────────────────────────────────────────
-# Algorithm 3: Greedy Normalization
-# ────────────────────────────────────────────────────────────────
-
-def step_once(p: ProofSketch) -> Optional[ProofSketch]:
-    """Apply one greedy refinement step.
-
-    Returns None if p is already in normal form.
-    Guarantees: score(result) < score(p) when result is not None.
-
-    Time: O(n) per step, Space: O(d)
-
-    Pseudocode:
-        match p with
-        | Redundant(q)        → q
-        | Duplicate(q)        → q
-        | Lemma(a, Redundant(q)) → Lemma(a, q)
-        | Lemma(a, Axiom(_))  → Axiom(a)
-        | Lemma(a, q)         → if q' = step(q) then Lemma(a, q')
-        | Trans(p, q)         → try step(p), then step(q)
-        | Cases(p, q)         → try step(p), then step(q)
-        | Axiom(_)            → None  (normal form)
-    """
-    if isinstance(p, Redundant):
-        return p.inner
-    if isinstance(p, Duplicate):
-        return p.inner
-    if isinstance(p, Lemma):
-        if isinstance(p.sub, Redundant):
-            return Lemma(p.label, p.sub.inner)
-        if isinstance(p.sub, Axiom):
-            return Axiom(p.label)
-        s = step_once(p.sub)
-        return Lemma(p.label, s) if s is not None else None
-    if isinstance(p, Trans):
-        s = step_once(p.left)
-        if s is not None: return Trans(s, p.right)
-        s = step_once(p.right)
-        if s is not None: return Trans(p.left, s)
-        return None
-    if isinstance(p, Cases):
-        s = step_once(p.left)
-        if s is not None: return Cases(s, p.right)
-        s = step_once(p.right)
-        if s is not None: return Cases(p.left, s)
-        return None
-    return None
-
-
-def normalize(p: ProofSketch) -> tuple[ProofSketch, int]:
-    """Normalize a proof sketch, returning (normal_form, steps_taken).
-
-    Convergence: guaranteed by well-foundedness (score decreases at each step).
-    Worst case: O(n) steps where n = initial size.
-    Total time: O(n²) in the worst case.
-    """
-    steps = 0
-    current = p
-    while True:
-        nxt = step_once(current)
-        if nxt is None:
-            return current, steps
-        current = nxt
-        steps += 1
-
-
-# ────────────────────────────────────────────────────────────────
-# Algorithm 4: Refinement Chain with Full Diagnostics
-# ────────────────────────────────────────────────────────────────
-
-@dataclass
-class RefinementDiagnostics:
-    """Full diagnostic report for a refinement chain."""
-    chain: list[ProofSketch]
-    complexities: list[ProofComplexity]
-    scores: list[int]
-    energy_drops: list[int]
-    initial_semantics: TheoremLabel
-    final_semantics: TheoremLabel
-    semantics_preserved: bool
-    total_energy_dissipated: int
-    is_final_normal_form: bool
-
-    def summary(self) -> str:
-        lines = [
-            f"Chain length: {len(self.chain)} states ({len(self.chain)-1} steps)",
-            f"Initial score: {self.scores[0]}",
-            f"Final score: {self.scores[-1]}",
-            f"Total energy dissipated: {self.total_energy_dissipated}",
-            f"Semantics preserved: {self.semantics_preserved}",
-            f"Final is normal form: {self.is_final_normal_form}",
-            f"Energy drops: {self.energy_drops}",
-        ]
-        return "\n".join(lines)
-
-
-def full_refinement_analysis(p: ProofSketch) -> RefinementDiagnostics:
-    """Run complete refinement analysis with diagnostics.
-
-    Time: O(n²) total, Space: O(n·k) where k = chain length.
+    Guaranteed to terminate by well-foundedness (complexity decreases at each step).
     """
     chain = [p]
     current = p
     while True:
-        nxt = step_once(current)
-        if nxt is None:
+        refs = system.refinements_of(current)
+        if not refs:
             break
-        chain.append(nxt)
-        current = nxt
-
-    complexities = [compute_complexity(s) for s in chain]
-    scores = [c.score for c in complexities]
-    energy_drops = [scores[i] - scores[i+1] for i in range(len(scores)-1)]
-
-    return RefinementDiagnostics(
-        chain=chain,
-        complexities=complexities,
-        scores=scores,
-        energy_drops=energy_drops,
-        initial_semantics=semantics(chain[0]),
-        final_semantics=semantics(chain[-1]),
-        semantics_preserved=semantics(chain[0]) == semantics(chain[-1]),
-        total_energy_dissipated=scores[0] - scores[-1],
-        is_final_normal_form=step_once(chain[-1]) is None,
-    )
+        current = min(refs, key=lambda q: q.complexity)
+        chain.append(current)
+    return chain
 
 
-# ────────────────────────────────────────────────────────────────
-# Algorithm 5: Exhaustive Normal-Form Enumeration
-# ────────────────────────────────────────────────────────────────
-
-def sketch_fingerprint(p: ProofSketch) -> tuple:
-    """Convert sketch to hashable fingerprint."""
-    if isinstance(p, Axiom): return ('A', p.label.value)
-    if isinstance(p, Lemma): return ('L', p.label.value, sketch_fingerprint(p.sub))
-    if isinstance(p, Trans): return ('T', sketch_fingerprint(p.left), sketch_fingerprint(p.right))
-    if isinstance(p, Cases): return ('C', sketch_fingerprint(p.left), sketch_fingerprint(p.right))
-    if isinstance(p, Redundant): return ('R', sketch_fingerprint(p.inner))
-    if isinstance(p, Duplicate): return ('D', sketch_fingerprint(p.inner))
-    raise TypeError
-
-
-def enumerate_sketches(depth: int, labels: list[TheoremLabel]) -> list[ProofSketch]:
-    """Generate all proof sketches up to given depth."""
-    if depth == 0:
-        return [Axiom(l) for l in labels]
-    smaller = enumerate_sketches(depth - 1, labels)
-    result = list(smaller)
-    for p in smaller:
-        result.extend([Redundant(p), Duplicate(p)])
-        for l in labels:
-            result.append(Lemma(l, p))
-    for p1 in smaller:
-        for p2 in smaller:
-            result.extend([Trans(p1, p2), Cases(p1, p2)])
-    return result
-
-
-def test_uniqueness_conjecture(max_depth: int,
-                                labels: list[TheoremLabel]) -> dict:
-    """Test normal-form uniqueness conjecture up to given depth.
-
-    Returns dict mapping each label to set of distinct normal forms.
+def exhaustive_minimal(system: ProofRefinementSystem, theorem_id: int) -> Optional[Proof]:
     """
-    sketches = enumerate_sketches(max_depth, labels)
-    groups: dict[TheoremLabel, set] = {}
-    for p in sketches:
-        nf, _ = normalize(p)
-        fp = sketch_fingerprint(nf)
-        s = semantics(p)
-        groups.setdefault(s, set()).add(fp)
-    return {k: len(v) for k, v in groups.items()}
+    Find the globally minimal proof of a theorem by exhaustive search.
+
+    Returns the proof with minimum complexity among all proofs of the theorem.
+    """
+    proofs = system.proofs_of_theorem(theorem_id)
+    if not proofs:
+        return None
+    return min(proofs, key=lambda p: p.complexity)
 
 
-# ────────────────────────────────────────────────────────────────
-# Usage Example
-# ────────────────────────────────────────────────────────────────
+def iterate_optimizer(
+    optimizer: Callable[[Proof], Proof],
+    p: Proof,
+    system: ProofRefinementSystem,
+    max_steps: int = 10000
+) -> tuple[list[Proof], int]:
+    """
+    Iterate a proof optimizer until complexity stabilizes.
+
+    Returns (chain, fixed_point_step) where chain is the sequence of proofs
+    and fixed_point_step is the step at which complexity first stabilized.
+
+    By the Fixed Point Theorem, this always terminates (in at most
+    initial_complexity steps of strict decrease).
+    """
+    chain = [p]
+    current = p
+    for step in range(max_steps):
+        next_proof = optimizer(current)
+        chain.append(next_proof)
+        if system.complexity(next_proof) == system.complexity(current):
+            return chain, step
+        current = next_proof
+    return chain, max_steps
+
+
+def max_refinement_chain(system: ProofRefinementSystem, p: Proof) -> list[Proof]:
+    """
+    Find the longest refinement chain starting from p using DFS.
+
+    Uses depth-first search with memoization to find the chain
+    that makes the maximum number of refinement steps.
+    """
+    memo: dict[int, list[Proof]] = {}
+
+    def dfs(current: Proof) -> list[Proof]:
+        if current.id in memo:
+            return memo[current.id]
+        refs = system.refinements_of(current)
+        if not refs:
+            memo[current.id] = [current]
+            return [current]
+        best = max((dfs(r) for r in refs), key=len)
+        result = [current] + best
+        memo[current.id] = result
+        return result
+
+    return dfs(p)
+
+
+def refinement_dag(system: ProofRefinementSystem, theorem_id: int) -> dict[int, list[int]]:
+    """
+    Build the refinement DAG for a specific theorem.
+
+    Returns adjacency list: node_id -> list of refinement node_ids.
+    """
+    proofs = system.proofs_of_theorem(theorem_id)
+    dag: dict[int, list[int]] = {p.id: [] for p in proofs}
+    for p in proofs:
+        for q in proofs:
+            if system.is_refinement(q, p):
+                dag[p.id].append(q.id)
+    return dag
+
+
+def complexity_spectrum(system: ProofRefinementSystem, theorem_id: int) -> dict[int, int]:
+    """
+    Compute the complexity spectrum: for each complexity value c,
+    how many proofs of the theorem have complexity c?
+    """
+    proofs = system.proofs_of_theorem(theorem_id)
+    spectrum: dict[int, int] = defaultdict(int)
+    for p in proofs:
+        spectrum[p.complexity] += 1
+    return dict(sorted(spectrum.items()))
+
+
+# ──────────────────────────────────────────────────────────────
+# System Constructors
+# ──────────────────────────────────────────────────────────────
+
+def linear_system(n: int) -> ProofRefinementSystem:
+    """
+    Construct the linear system with N+1 proofs of a single theorem,
+    complexities N, N-1, ..., 0.
+
+    This is the canonical example from the Lean formalization.
+    """
+    proofs = [Proof(id=i, theorem_id=0, complexity=n - i,
+                    label=f"P_{i}") for i in range(n + 1)]
+    return ProofRefinementSystem(proofs=proofs)
+
+
+def diamond_system() -> ProofRefinementSystem:
+    """
+    Construct a diamond-shaped system: one proof of complexity 3,
+    two independent refinements of complexity 2, both refining to
+    a single proof of complexity 1.
+
+    This demonstrates non-unique refinement paths.
+    """
+    proofs = [
+        Proof(id=0, theorem_id=0, complexity=3, label="Top"),
+        Proof(id=1, theorem_id=0, complexity=2, label="Left"),
+        Proof(id=2, theorem_id=0, complexity=2, label="Right"),
+        Proof(id=3, theorem_id=0, complexity=1, label="Bottom"),
+    ]
+    return ProofRefinementSystem(proofs=proofs)
+
+
+def multi_theorem_system(num_theorems: int, max_complexity: int) -> ProofRefinementSystem:
+    """
+    Construct a system with multiple theorems, each having proofs
+    at various complexity levels.
+    """
+    proofs = []
+    proof_id = 0
+    for thm in range(num_theorems):
+        for c in range(max_complexity + 1):
+            proofs.append(Proof(id=proof_id, theorem_id=thm,
+                                complexity=c, label=f"T{thm}_C{c}"))
+            proof_id += 1
+    return ProofRefinementSystem(proofs=proofs)
+
+
+# ──────────────────────────────────────────────────────────────
+# Analysis
+# ──────────────────────────────────────────────────────────────
+
+def analyze_system(system: ProofRefinementSystem) -> dict:
+    """Comprehensive analysis of a proof refinement system."""
+    minimal = system.minimal_proofs()
+    theorems = system.theorem_ids
+
+    max_chains = {}
+    for thm_id in theorems:
+        thm_proofs = system.proofs_of_theorem(thm_id)
+        if thm_proofs:
+            top = max(thm_proofs, key=lambda p: p.complexity)
+            chain = max_refinement_chain(system, top)
+            max_chains[thm_id] = len(chain) - 1  # chain length = #edges
+
+    return {
+        "num_proofs": len(system.proofs),
+        "num_theorems": len(theorems),
+        "num_minimal": len(minimal),
+        "max_complexity": max((p.complexity for p in system.proofs), default=0),
+        "min_complexity": min((p.complexity for p in system.proofs), default=0),
+        "max_chain_lengths": max_chains,
+        "complexity_spectra": {
+            thm_id: complexity_spectrum(system, thm_id)
+            for thm_id in theorems
+        },
+    }
+
 
 if __name__ == "__main__":
-    # Example: analyze a complex proof sketch
-    sketch = Redundant(Duplicate(
-        Lemma(TheoremLabel.IrrationalSqrt2,
-            Trans(
-                Redundant(Axiom(TheoremLabel.EvenPlusEvenEven)),
-                Axiom(TheoremLabel.DvdTrans)
-            ))))
+    # Example usage
+    print("=== Linear System (N=5) ===")
+    sys5 = linear_system(5)
+    analysis = analyze_system(sys5)
+    print(f"Proofs: {analysis['num_proofs']}")
+    print(f"Theorems: {analysis['num_theorems']}")
+    print(f"Minimal proofs: {analysis['num_minimal']}")
+    print(f"Max chain length: {analysis['max_chain_lengths']}")
 
-    diag = full_refinement_analysis(sketch)
-    print("Full Refinement Analysis:")
-    print(diag.summary())
-    print()
+    top = max(sys5.proofs, key=lambda p: p.complexity)
+    chain = greedy_refine(sys5, top)
+    print(f"Greedy chain: {[p.complexity for p in chain]}")
+    print(f"Chain bound satisfied: {len(chain)-1} <= {top.complexity}")
 
-    # Test uniqueness conjecture
-    labels = list(TheoremLabel)[:2]
-    for d in range(1, 3):
-        result = test_uniqueness_conjecture(d, labels)
-        print(f"Depth {d}: normal forms per label = {result}")
+    print("\n=== Diamond System ===")
+    diamond = diamond_system()
+    analysis = analyze_system(diamond)
+    print(f"Proofs: {analysis['num_proofs']}")
+    print(f"Max chain length: {analysis['max_chain_lengths']}")
+    top = diamond.proofs[0]
+    chain = max_refinement_chain(diamond, top)
+    print(f"Max chain: {[p.label for p in chain]}")
+
+    print("\n=== Multi-Theorem System (3 theorems, max complexity 4) ===")
+    multi = multi_theorem_system(3, 4)
+    analysis = analyze_system(multi)
+    print(f"Proofs: {analysis['num_proofs']}")
+    print(f"Theorems: {analysis['num_theorems']}")
+    print(f"Max chain lengths: {analysis['max_chain_lengths']}")
