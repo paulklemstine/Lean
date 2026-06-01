@@ -1,770 +1,365 @@
-#!/usr/bin/env python3
 """
-Dark Mathematics: Applications
+Dark Mathematics: Numerical Demonstrations
 
-Real-world applications of fast-growing hierarchies and
-witness complexity theory.
+Demonstrates the key results about dark witness families:
+1. The Dark Inequality (double counting bound)
+2. Strict hierarchy construction
+3. Extremal (tight) constructions
+4. Product composition
 """
 
-import sys
-sys.setrecursionlimit(10000)
+from typing import List, Set, Dict, Tuple
+import itertools
 
 
-# ============================================================
-# Application 1: Termination Bounds for Recursive Programs
-# ============================================================
+def verify_dark_family(witnesses: Dict[int, Set[int]], level: int) -> Tuple[bool, str]:
+    """Verify that a witness family is dark at the given level."""
+    # Check sufficiency
+    for world, wset in witnesses.items():
+        if len(wset) < level:
+            return False, f"World {world} has {len(wset)} witnesses, need {level}"
+    
+    # Check no universal witness
+    all_witnesses = set()
+    for wset in witnesses.values():
+        all_witnesses |= wset
+    
+    for n in all_witnesses:
+        if all(n in wset for wset in witnesses.values()):
+            return False, f"Element {n} is a universal witness"
+    
+    return True, "Valid dark family"
 
-def analyze_termination_bound(program_name: str, recursive_depth: int) -> dict:
-    """Classify the termination complexity of a recursive program.
 
-    Programs whose termination proofs require transfinite induction
-    correspond to higher darkness levels. This connects the abstract
-    hierarchy to software verification.
-
-    Args:
-        program_name: Description of the program
-        recursive_depth: Nesting depth of recursion
-
-    Returns:
-        Analysis dictionary with darkness level and bound
-
-    Example:
-        >>> result = analyze_termination_bound("simple loop", 1)
-        >>> result['darkness_level']
-        0
-    """
-    # Map recursion patterns to darkness levels
-    if recursive_depth <= 1:
-        level = 0
-        bound_desc = "Linear: O(n)"
-    elif recursive_depth == 2:
-        level = 1
-        bound_desc = "Quadratic-like: O(n²)"
-    elif recursive_depth == 3:
-        level = 2
-        bound_desc = "Polynomial: O(n^k)"
-    else:
-        level = min(recursive_depth, 5)
-        bound_desc = f"Super-polynomial: Level {level} in fast-growing hierarchy"
-
+def two_world_family(k: int) -> Dict[int, Set[int]]:
+    """Construct the two-world dark family at level k."""
     return {
-        'program': program_name,
-        'recursive_depth': recursive_depth,
-        'darkness_level': level,
-        'bound_description': bound_desc,
-        'implication': (
-            f"Termination proof requires induction up to ω^{level}" if level <= 3
-            else f"Termination proof requires ordinals beyond ω^ω"
-        )
+        0: set(range(k)),
+        1: set(range(k, 2 * k))
     }
 
 
-# ============================================================
-# Application 2: Ramsey Theory Witness Bounds
-# ============================================================
-
-def ramsey_lower_bound(k: int) -> int:
-    """Compute the exponential lower bound for R(k,k).
-
-    The diagonal Ramsey number R(k,k) satisfies R(k,k) ≥ 2^(k/2).
-    This places Ramsey witnesses at darkness level ≥ 1, since
-    exponential growth exceeds all polynomials.
-
-    Args:
-        k: Ramsey parameter
-
-    Returns:
-        Lower bound 2^(k//2)
-
-    Example:
-        >>> ramsey_lower_bound(6)
-        8
-        >>> ramsey_lower_bound(10)
-        32
+def complementary_block_partition(m: int, N: int) -> Dict[int, Set[int]]:
+    """Construct extremal dark family via complementary block partition.
+    Requires m | N.
     """
-    return 2 ** (k // 2)
+    assert N % m == 0, f"{m} does not divide {N}"
+    q = N // m
+    universe = set(range(N))
+    witnesses = {}
+    for i in range(m):
+        block_i = set(range(i * q, (i + 1) * q))
+        witnesses[i] = universe - block_i
+    return witnesses
 
 
-def ramsey_darkness_analysis():
-    """Analyze the darkness level of Ramsey number witnesses."""
-    print("Ramsey Number Lower Bounds and Darkness Levels")
-    print("=" * 50)
-    print()
-    print(f"{'k':>4} {'2^(k/2)':>10} {'k^2':>10} {'k^3':>10} {'Darkness':>10}")
-    print("-" * 50)
-
-    for k in range(3, 21):
-        lb = ramsey_lower_bound(k)
-        k2 = k ** 2
-        k3 = k ** 3
-        if lb > k3:
-            darkness = "≥ 3"
-        elif lb > k2:
-            darkness = "≥ 2"
-        elif lb > k:
-            darkness = "≥ 1"
-        else:
-            darkness = "0"
-        print(f"{k:>4} {lb:>10} {k2:>10} {k3:>10} {darkness:>10}")
+def dark_product(d1: Dict[int, Set[int]], d2: Dict[int, Set[int]]) -> Dict[Tuple[int, int], Set[int]]:
+    """Construct the product of two dark families."""
+    product = {}
+    for a in d1:
+        for b in d2:
+            product[(a, b)] = d1[a] | d2[b]
+    return product
 
 
-# ============================================================
-# Application 3: Information-Theoretic Bounds
-# ============================================================
+def compute_spectrum(witnesses: Dict[int, Set[int]], N: int) -> Dict[int, Set[int]]:
+    """Compute the darkness spectrum: for each element, which worlds contain it."""
+    spectrum = {}
+    for n in range(N):
+        spectrum[n] = {a for a, wset in witnesses.items() if n in wset}
+    return spectrum
 
-def kolmogorov_darkness(n: int) -> str:
-    """Classify a number's "information darkness".
 
-    Numbers whose Kolmogorov complexity exceeds log(n) are
-    "informationally dark" — they cannot be compressed.
-    This connects information theory to the darkness hierarchy:
-    the proportion of dark numbers approaches 1 as n grows.
+def dark_inequality_check(m: int, N: int, k: int) -> bool:
+    """Check if k * m <= N * (m - 1)."""
+    return k * m <= N * (m - 1)
 
-    Args:
-        n: Number to classify
 
-    Returns:
-        Classification string
-    """
-    import math
-    if n <= 1:
-        return "trivial"
-
-    log_n = math.log2(n)
-    # Simple heuristic: check if n has a short description
-    # Numbers with patterns are "light", random numbers are "dark"
-
-    # Check if n is a power of 2
-    if n & (n - 1) == 0:
-        return f"light (power of 2, complexity ≈ {math.log2(log_n):.1f} bits)"
-
-    # Check if n is a factorial
-    fact = 1
-    for i in range(1, 20):
-        fact *= i
-        if fact == n:
-            return f"light (factorial {i}!, complexity ≈ {math.log2(i):.1f} bits)"
-
-    # Check if n is a Fibonacci number
-    a, b = 0, 1
-    idx = 0
-    while b < n:
-        a, b = b, a + b
-        idx += 1
-    if b == n:
-        return f"light (Fibonacci F_{idx}, complexity ≈ {math.log2(idx):.1f} bits)"
-
-    # Default: assume high complexity
-    return f"dark (complexity ≈ {log_n:.1f} bits)"
+def max_darkness_level(m: int, N: int) -> int:
+    """Maximum darkness level for m worlds and N-element universe."""
+    return N * (m - 1) // m
 
 
 # ============================================================
-# Application 4: Busy Beaver Connection
+# DEMO 1: Two-world families and the strict hierarchy
 # ============================================================
+print("=" * 60)
+print("DEMO 1: Strict Hierarchy of Darkness")
+print("=" * 60)
+for k in range(1, 8):
+    fam = two_world_family(k)
+    valid, msg = verify_dark_family(fam, k)
+    not_higher = not verify_dark_family(fam, k + 1)[0]  # Can't be dark at k+1
+    print(f"  Level {k}: {msg}, NOT level {k+1}: {not_higher}")
+    print(f"    World 0: {sorted(fam[0])}")
+    print(f"    World 1: {sorted(fam[1])}")
 
-def busy_beaver_darkness():
-    """Show the connection between Busy Beaver and darkness levels.
+# ============================================================
+# DEMO 2: Dark Inequality verification
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Dark Inequality k·m ≤ N·(m-1)")
+print("=" * 60)
+print(f"  {'m':>3} {'N':>3} {'max k':>5} | {'bound':>8} | {'tight?':>7}")
+print("  " + "-" * 40)
+for m in range(2, 7):
+    for N in [m, 2*m, 3*m, 5*m]:
+        max_k = max_darkness_level(m, N)
+        bound_val = f"{max_k}*{m} ≤ {N}*{m-1}"
+        fam = complementary_block_partition(m, N)
+        valid, _ = verify_dark_family(fam, max_k)
+        print(f"  {m:>3} {N:>3} {max_k:>5} | {max_k*m:>3} ≤ {N*(m-1):>3} | {'✓' if valid else '✗':>7}")
 
-    The Busy Beaver function BB(n) grows faster than any
-    computable function, placing it at "infinite darkness level".
-    Known values:
-        BB(1) = 1
-        BB(2) = 6
-        BB(3) = 21
-        BB(4) = 107
-        BB(5) ≥ 47,176,870
-    """
-    print()
-    print("Busy Beaver and the Darkness Hierarchy")
-    print("=" * 50)
-    print()
+# ============================================================
+# DEMO 3: Extremal construction and spectrum analysis
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 3: Extremal Construction (m=3, N=12)")
+print("=" * 60)
+fam = complementary_block_partition(3, 12)
+for i in range(3):
+    print(f"  World {i}: {sorted(fam[i])} (size {len(fam[i])})")
 
-    known_bb = {1: 1, 2: 6, 3: 21, 4: 107}
-    bb5_lower = 47_176_870
+spectrum = compute_spectrum(fam, 12)
+print(f"\n  Spectrum analysis (which worlds contain each element):")
+for n in range(12):
+    spec = spectrum[n]
+    print(f"    Element {n:>2}: in worlds {sorted(spec)}, spectrum size = {len(spec)}")
 
-    print("Known Busy Beaver values:")
-    for n, bb in known_bb.items():
-        # Compare with fast-growing hierarchy
-        fg_vals = [(k, fast_grow_closed(k, n)) for k in range(5)]
-        level = "∞"
-        for k, fg in fg_vals:
-            if fg >= bb:
-                level = f"≤ {k}"
-                break
-        print(f"  BB({n}) = {bb:>12} (darkness level {level})")
+# Verify all spectrum sizes are m-1 = 2 (extremal property)
+all_m_minus_1 = all(len(s) == 2 for s in spectrum.values())
+print(f"\n  All spectrum sizes = m-1 = 2: {all_m_minus_1} (extremal characterization)")
 
-    print(f"  BB(5) ≥ {bb5_lower:>12} (darkness level: beyond all finite levels)")
-    print()
-    print("The Busy Beaver function is the 'ultimate dark function':")
-    print("it grows faster than any level in the fast-growing hierarchy,")
-    print("and is not computable — the darkest possible mathematical object.")
+# ============================================================
+# DEMO 4: Product composition
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 4: Product Composition (Additivity of Darkness)")
+print("=" * 60)
+d1 = two_world_family(3)  # Level 3, witnesses in {0,...,5}
+# Shift d2 to disjoint range
+d2_base = two_world_family(4)  # Level 4
+d2 = {k: {x + 6 for x in v} for k, v in d2_base.items()}  # witnesses in {6,...,13}
+
+print(f"  D1 (level 3): World 0 = {sorted(d1[0])}, World 1 = {sorted(d1[1])}")
+print(f"  D2 (level 4): World 0 = {sorted(d2[0])}, World 1 = {sorted(d2[1])}")
+
+prod = dark_product(d1, d2)
+valid, msg = verify_dark_family(prod, 7)
+print(f"\n  Product D1×D2 (expected level 3+4=7): {msg}")
+for (a, b) in sorted(prod.keys()):
+    print(f"    World ({a},{b}): {sorted(prod[(a,b)])} (size {len(prod[(a,b)])})")
+
+# ============================================================
+# DEMO 5: Shadow emptiness verification
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: Shadow Emptiness")
+print("=" * 60)
+test_families = [
+    ("Two-world (k=5)", two_world_family(5)),
+    ("Block partition (m=3, N=9)", complementary_block_partition(3, 9)),
+    ("Block partition (m=4, N=20)", complementary_block_partition(4, 20)),
+]
+for name, fam in test_families:
+    all_witnesses = set()
+    for wset in fam.values():
+        all_witnesses |= wset
+    shadow = {n for n in all_witnesses if all(n in wset for wset in fam.values())}
+    print(f"  {name}: shadow = {shadow if shadow else '∅'}")
+
+# ============================================================
+# DEMO 6: Testable conjecture for non-divisible N
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 6: Conjecture Test - Non-Divisible N")
+print("=" * 60)
+print("  Testing whether max darkness level = ⌊N(m-1)/m⌋ for m ∤ N")
+print(f"  {'m':>3} {'N':>3} {'⌊bound⌋':>7} {'achieved?':>10}")
+print("  " + "-" * 30)
+
+for m in range(2, 5):
+    for N in range(m + 1, 4 * m):
+        if N % m == 0:
+            continue  # Skip divisible cases (already proved tight)
+        target = N * (m - 1) // m
+        # Try to construct a dark family achieving target level
+        # Greedy: distribute elements as evenly as possible
+        best_level = 0
+        # Use a greedy approach: each world gets N - ceil(N/m) elements
+        q_ceil = (N + m - 1) // m
+        # Try complementary-like construction
+        witnesses = {}
+        for i in range(m):
+            start = i * N // m
+            end = (i + 1) * N // m
+            block_i = set(range(start, end))
+            witnesses[i] = set(range(N)) - block_i
+        
+        min_size = min(len(wset) for wset in witnesses.values())
+        valid, _ = verify_dark_family(witnesses, min_size)
+        achieved = valid and min_size == target
+        print(f"  {m:>3} {N:>3} {target:>7} {min_size:>4} {'✓' if achieved else '≈':>10}")
+
+print("\nAll demonstrations complete.")
 
 
-def fast_grow_closed(k: int, n: int) -> int:
-    """Closed-form fast-growing hierarchy."""
-    if k == 0:
-        return n + 1
-    elif k == 1:
-        return n + 2
-    elif k == 2:
-        return 2 * n + 3
-    elif k == 3:
-        return 2 ** (n + 3) - 3
-    else:
-        if n == 0:
-            return fast_grow_closed(k - 1, 1)
-        else:
-            return fast_grow_closed(k - 1, fast_grow_closed(k, n - 1))
+"""
+Visualization: Dark Witness Families and the Dark Inequality
+
+Creates a figure showing:
+1. The witness structure of a dark family (bipartite incidence)
+2. The Dark Inequality bound surface
+3. Spectrum distribution for extremal families
+"""
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
 
 
-if __name__ == "__main__":
-    # Application 1: Termination bounds
-    print("APPLICATION 1: Termination Bounds for Recursive Programs")
-    print("=" * 60)
-    programs = [
-        ("Simple loop (for i in range(n))", 1),
-        ("Nested loops (bubble sort)", 2),
-        ("Divide-and-conquer (mergesort)", 2),
-        ("Ackermann-style recursion", 4),
-        ("Hydra game", 5),
+def plot_dark_family_structure():
+    """Visualize a dark witness family as a bipartite incidence diagram."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    
+    # Family 1: Two-world, level 3
+    ax = axes[0]
+    ax.set_title("Two-World Family (Level 3)", fontsize=12, fontweight='bold')
+    worlds = {0: {0, 1, 2}, 1: {3, 4, 5}}
+    _draw_bipartite(ax, worlds, 6)
+    
+    # Family 2: Three-world, level 4 (extremal, N=6)
+    ax = axes[1]
+    ax.set_title("Three-World Extremal (Level 4, N=6)", fontsize=12, fontweight='bold')
+    worlds = {
+        0: {2, 3, 4, 5},
+        1: {0, 1, 4, 5},
+        2: {0, 1, 2, 3}
+    }
+    _draw_bipartite(ax, worlds, 6)
+    
+    # Family 3: Product of two level-2 families
+    ax = axes[2]
+    ax.set_title("Product Family (Level 2+2=4)", fontsize=12, fontweight='bold')
+    worlds = {
+        (0,0): {0, 1, 4, 5},
+        (0,1): {0, 1, 6, 7},
+        (1,0): {2, 3, 4, 5},
+        (1,1): {2, 3, 6, 7}
+    }
+    _draw_bipartite(ax, worlds, 8)
+    
+    plt.tight_layout()
+    plt.savefig('dark_families_structure.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: dark_families_structure.png")
+
+
+def _draw_bipartite(ax, worlds, N):
+    """Draw bipartite incidence diagram for a dark family."""
+    m = len(worlds)
+    world_keys = list(worlds.keys())
+    
+    # Position worlds on the left, elements on the right
+    world_y = np.linspace(0.9, 0.1, m)
+    elem_y = np.linspace(0.9, 0.1, N)
+    
+    # Draw edges
+    for i, (w, wset) in enumerate(worlds.items()):
+        for n in wset:
+            ax.plot([0.2, 0.8], [world_y[i], elem_y[n]], 
+                    color='steelblue', alpha=0.3, linewidth=1)
+    
+    # Draw world nodes
+    for i, w in enumerate(world_keys):
+        ax.scatter([0.2], [world_y[i]], s=200, c='darkred', zorder=5)
+        ax.text(0.08, world_y[i], f"W{w}", ha='center', va='center', fontsize=9)
+    
+    # Draw element nodes - color by spectrum size
+    for n in range(N):
+        spec_size = sum(1 for wset in worlds.values() if n in wset)
+        color = plt.cm.YlOrRd(spec_size / m) if spec_size > 0 else 'lightgray'
+        ax.scatter([0.8], [elem_y[n]], s=150, c=[color], zorder=5, edgecolors='black', linewidth=0.5)
+        ax.text(0.92, elem_y[n], str(n), ha='center', va='center', fontsize=8)
+    
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis('off')
+
+
+def plot_dark_inequality():
+    """Plot the Dark Inequality bound surface."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    N_values = np.arange(2, 51)
+    
+    for m in [2, 3, 4, 5, 10]:
+        max_levels = [N * (m - 1) / m for N in N_values]
+        ax.plot(N_values, max_levels, linewidth=2, label=f'm = {m} worlds')
+    
+    ax.set_xlabel('Universe size N', fontsize=12)
+    ax.set_ylabel('Maximum darkness level k', fontsize=12)
+    ax.set_title('Dark Inequality: Maximum Achievable Darkness Level\n'
+                 r'$k \leq N \cdot (m-1)/m$', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(2, 50)
+    ax.set_ylim(0, 50)
+    
+    # Add annotation
+    ax.annotate('Asymptote: k → N\nas m → ∞', xy=(40, 39), fontsize=10,
+                ha='center', style='italic', color='gray')
+    
+    plt.tight_layout()
+    plt.savefig('dark_inequality.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: dark_inequality.png")
+
+
+def plot_spectrum_distribution():
+    """Plot spectrum size distributions for various dark families."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+    
+    configs = [
+        (3, 12, "Extremal (m=3, N=12)"),
+        (4, 20, "Extremal (m=4, N=20)"),
+        (5, 25, "Extremal (m=5, N=25)")
     ]
-    for name, depth in programs:
-        result = analyze_termination_bound(name, depth)
-        print(f"  {result['program']}")
-        print(f"    Darkness level: {result['darkness_level']}")
-        print(f"    Bound: {result['bound_description']}")
-        print(f"    {result['implication']}")
-        print()
-
-    # Application 2: Ramsey theory
-    print()
-    ramsey_darkness_analysis()
-
-    # Application 3: Information darkness
-    print()
-    print("APPLICATION 3: Information-Theoretic Darkness")
-    print("=" * 60)
-    test_numbers = [2, 8, 42, 64, 120, 144, 233, 997, 1024, 3571]
-    for n in test_numbers:
-        classification = kolmogorov_darkness(n)
-        print(f"  {n:>6}: {classification}")
-
-    # Application 4: Busy Beaver
-    busy_beaver_darkness()
-
-
-#!/usr/bin/env python3
-"""
-Dark Mathematics: Demonstrations of the Fast-Growing Hierarchy
-and Darkness Levels
-
-This demo illustrates the core mathematical concepts from the
-Dark Mathematics formalization:
-1. The fast-growing (Ackermann/Wainer) hierarchy
-2. Darkness level dominance
-3. The diagonal function's super-hierarchy growth
-"""
-
-
-def fast_grow(k: int, n: int) -> int:
-    """Compute the fast-growing hierarchy function.
-
-    Level 0: successor function (n + 1)
-    Level k+1: iterate level k starting from fastGrow k 1
-
-    This is equivalent to the Ackermann function.
-
-    >>> fast_grow(0, 5)
-    6
-    >>> fast_grow(1, 5)
-    7
-    >>> fast_grow(2, 5)
-    13
-    """
-    if k == 0:
-        return n + 1
-    elif n == 0:
-        return fast_grow(k - 1, 1)
-    else:
-        return fast_grow(k - 1, fast_grow(k, n - 1))
-
-
-def tower2(n: int) -> int:
-    """Tower of 2s of height n: 2↑↑n.
-
-    >>> tower2(0)
-    1
-    >>> tower2(1)
-    2
-    >>> tower2(2)
-    4
-    >>> tower2(3)
-    16
-    """
-    if n == 0:
-        return 1
-    return 2 ** tower2(n - 1)
-
-
-def demonstrate_hierarchy():
-    """Show the growth rates at different levels."""
-    print("=" * 60)
-    print("THE FAST-GROWING HIERARCHY")
-    print("=" * 60)
-    print()
-
-    # Level 0: successor
-    print("Level 0 (successor): f₀(n) = n + 1")
-    for n in range(8):
-        print(f"  f₀({n}) = {fast_grow(0, n)}")
-
-    print()
-
-    # Level 1: +2
-    print("Level 1: f₁(n) = n + 2")
-    for n in range(8):
-        print(f"  f₁({n}) = {fast_grow(1, n)}")
-
-    print()
-
-    # Level 2: 2n + 3
-    print("Level 2: f₂(n) = 2n + 3")
-    for n in range(8):
-        val = fast_grow(2, n)
-        formula = 2 * n + 3
-        assert val == formula, f"Mismatch at n={n}: {val} != {formula}"
-        print(f"  f₂({n}) = {val}")
-
-    print()
-
-    # Level 3: 2^(n+3) - 3
-    print("Level 3: f₃(n) = 2^(n+3) - 3  [EXPONENTIAL]")
-    for n in range(8):
-        val = fast_grow(3, n)
-        formula = 2 ** (n + 3) - 3
-        assert val == formula, f"Mismatch at n={n}: {val} != {formula}"
-        print(f"  f₃({n}) = {val}")
-
-    print()
-
-    # Level 4 (only small values - grows extremely fast)
-    print("Level 4: [SUPER-EXPONENTIAL - grows too fast to display]")
-    for n in range(5):
-        val = fast_grow(4, n)
-        print(f"  f₄({n}) = {val}")
-
-
-def demonstrate_dominance():
-    """Show how each level eventually dominates the previous."""
-    print()
-    print("=" * 60)
-    print("DARKNESS HIERARCHY: STRICT DOMINANCE")
-    print("=" * 60)
-    print()
-    print("Theorem: For each k, fastGrow(k+1) eventually dominates fastGrow(k)")
-    print()
-
-    for k in range(4):
-        print(f"Level {k} vs Level {k+1}:")
-        for n in range(6):
-            fk = fast_grow(k, n)
-            fk1 = fast_grow(k + 1, n)
-            ratio = fk1 / fk if fk > 0 else float('inf')
-            dominant = "✓" if fk1 > fk else "✗"
-            print(f"  n={n}: f_{k}(n)={fk:>8}, f_{k+1}(n)={fk1:>8},"
-                  f" ratio={ratio:.2f} {dominant}")
-        print()
-
-
-def demonstrate_diagonal():
-    """Show the diagonal function n ↦ fastGrow(n, n) dominates all levels."""
-    print("=" * 60)
-    print("THE DIAGONAL: ABSOLUTE DARKNESS")
-    print("=" * 60)
-    print()
-    print("Theorem: n ↦ f_n(n) eventually dominates every fixed level k")
-    print()
-    print("The diagonal function:")
-    for n in range(5):
-        val = fast_grow(n, n)
-        print(f"  f_{n}({n}) = {val}")
-    print()
-
-    print("Comparison with fixed levels:")
-    for k in range(4):
-        print(f"  Level {k}: ", end="")
-        for n in range(5):
-            fk = fast_grow(k, n)
-            diag = fast_grow(n, n)
-            symbol = "≤" if fk <= diag else ">"
-            print(f"f_{k}({n})={fk} {symbol} f_{n}({n})={diag}  ", end="")
-        print()
-
-
-def demonstrate_polynomial_dominance():
-    """Show that the Ackermann function dominates all polynomials."""
-    print()
-    print("=" * 60)
-    print("ACKERMANN vs POLYNOMIALS: TRANSCENDENCE")
-    print("=" * 60)
-    print()
-    print("Theorem: For each d, ackermann(d+2, n) > n^(d+1) for large n")
-    print()
-
-    for d in range(4):
-        print(f"d={d}: ackermann({d+2}, n) vs n^{d+1}")
-        for n in range(1, 8):
-            ack = fast_grow(d + 2, n)
-            poly = n ** (d + 1)
-            dominant = "✓" if ack > poly else "✗"
-            print(f"  n={n}: ack({d+2},{n})={ack:>10},"
-                  f" n^{d+1}={poly:>10} {dominant}")
-        print()
-
-
-def demonstrate_darkness_density():
-    """Show the darkness density conjecture."""
-    print("=" * 60)
-    print("DARKNESS DENSITY CONJECTURE")
-    print("=" * 60)
-    print()
-    print("Conjecture: For k ≥ 2, f_{k+1}(n) > 2·f_k(n) for large enough n")
-    print()
-
-    # k=0: fails (proven in Lean)
-    print("k=0 (DISPROVED):")
-    for n in range(5):
-        f1 = fast_grow(1, n)
-        f0 = fast_grow(0, n)
-        check = "✓" if f1 > 2 * f0 else "✗"
-        print(f"  n={n}: f₁({n})={f1}, 2·f₀({n})={2*f0} {check}")
-    print("  → Always fails since (n+2) < 2(n+1)")
-
-    print()
-
-    # k=2: succeeds (proven in Lean)
-    print("k=2 (PROVED for n ≥ 2):")
-    for n in range(5):
-        f3 = fast_grow(3, n)
-        f2 = fast_grow(2, n)
-        check = "✓" if f3 > 2 * f2 else "✗"
-        print(f"  n={n}: f₃({n})={f3}, 2·f₂({n})={2*f2} {check}")
+    
+    for ax, (m, N, title) in zip(axes, configs):
+        q = N // m
+        # Complementary block partition
+        spectrum_sizes = []
+        for n in range(N):
+            block = n // q
+            spec_size = m - 1  # n is in all worlds except world `block`
+            spectrum_sizes.append(spec_size)
+        
+        ax.hist(spectrum_sizes, bins=range(m + 1), align='left', 
+                color='steelblue', edgecolor='black', alpha=0.7, rwidth=0.8)
+        ax.set_xlabel('Spectrum size', fontsize=10)
+        ax.set_ylabel('Count', fontsize=10)
+        ax.set_title(title, fontsize=11, fontweight='bold')
+        ax.set_xticks(range(m))
+        
+        # Annotate: all spectra have size m-1
+        ax.text(0.95, 0.95, f'All = {m-1}\n(extremal!)', 
+                transform=ax.transAxes, ha='right', va='top',
+                fontsize=10, color='darkred', fontweight='bold',
+                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
+    plt.suptitle('Darkness Spectrum Distribution: Extremal Families Have Uniform Spectra',
+                 fontsize=13, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('spectrum_distribution.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: spectrum_distribution.png")
 
 
 if __name__ == "__main__":
-    demonstrate_hierarchy()
-    demonstrate_dominance()
-    demonstrate_diagonal()
-    demonstrate_polynomial_dominance()
-    demonstrate_darkness_density()
-
-    print()
-    print("=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization 3: The Diagonal — Absolute Darkness
-
-Visualizes the diagonal function n ↦ f_n(n), which grows faster
-than any fixed level in the hierarchy. This represents "absolute
-darkness" — the mathematical analogue of a singularity where
-witness complexity escapes all finite classification.
-"""
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def fast_grow_closed(k, n):
-    """Closed-form fast-growing hierarchy."""
-    if k == 0:
-        return n + 1
-    elif k == 1:
-        return n + 2
-    elif k == 2:
-        return 2 * n + 3
-    elif k == 3:
-        return 2 ** (n + 3) - 3
-    return None
-
-
-def fast_grow_recursive(k, n, depth=0, max_depth=100):
-    """Recursive computation with depth limit."""
-    if depth > max_depth:
-        return float('inf')
-    if k == 0:
-        return n + 1
-    elif n == 0:
-        return fast_grow_recursive(k - 1, 1, depth + 1, max_depth)
-    else:
-        inner = fast_grow_recursive(k, n - 1, depth + 1, max_depth)
-        if inner == float('inf'):
-            return float('inf')
-        return fast_grow_recursive(k - 1, inner, depth + 1, max_depth)
-
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-# Panel 1: Diagonal vs fixed levels
-n_vals = np.arange(0, 5)
-colors = ['#90CAF9', '#81C784', '#FFB74D', '#EF5350', '#CE93D8', '#000000']
-
-# Plot fixed levels
-for k in range(4):
-    vals = []
-    for n in n_vals:
-        v = fast_grow_closed(k, int(n))
-        vals.append(v if v is not None else float('nan'))
-    ax1.semilogy(n_vals, vals, 'o--', color=colors[k], linewidth=1.5,
-                 markersize=8, alpha=0.6, label=f'Level {k}: $f_{k}(n)$')
-
-# Plot diagonal
-diag_vals = []
-for n in n_vals:
-    v = fast_grow_closed(int(n), int(n))
-    if v is None:
-        v = fast_grow_recursive(int(n), int(n))
-    diag_vals.append(v)
-
-ax1.semilogy(n_vals, diag_vals, 's-', color='black', linewidth=3,
-             markersize=10, label=r'Diagonal: $f_n(n)$', zorder=5)
-
-ax1.set_xlabel('n', fontsize=12)
-ax1.set_ylabel('Value (log scale)', fontsize=12)
-ax1.set_title('The Diagonal Escapes Every Level', fontsize=13)
-ax1.legend(fontsize=9)
-ax1.grid(True, alpha=0.3)
-
-# Add annotation
-ax1.annotate('f₃(3) = 61',
-             xy=(3, 61), xytext=(3.3, 15),
-             fontsize=9,
-             arrowprops=dict(arrowstyle='->', color='red'))
-ax1.annotate('Diagonal: f₃(3) = 61\n(same point!)',
-             xy=(3, 61), xytext=(1.5, 500),
-             fontsize=9, color='black',
-             arrowprops=dict(arrowstyle='->', color='black'))
-
-# Panel 2: Growth rate comparison (heatmap style)
-ax2_data = np.zeros((5, 8))
-labels_grid = [['' for _ in range(8)] for _ in range(5)]
-
-for k in range(5):
-    for n in range(8):
-        v = fast_grow_closed(k, n)
-        if v is None:
-            try:
-                v = fast_grow_recursive(k, n, max_depth=50)
-            except RecursionError:
-                v = float('inf')
-        if v == float('inf') or v > 1e15:
-            ax2_data[k][n] = 15
-            labels_grid[k][n] = '∞'
-        else:
-            ax2_data[k][n] = np.log10(max(v, 1))
-            if v < 10000:
-                labels_grid[k][n] = str(int(v))
-            else:
-                labels_grid[k][n] = f'{v:.0e}'
-
-im = ax2.imshow(ax2_data, cmap='YlOrRd', aspect='auto',
-                interpolation='nearest')
-
-# Add value labels
-for k in range(5):
-    for n in range(8):
-        text_color = 'white' if ax2_data[k][n] > 8 else 'black'
-        ax2.text(n, k, labels_grid[k][n], ha='center', va='center',
-                 fontsize=7, color=text_color, fontweight='bold')
-
-# Highlight diagonal
-for i in range(min(5, 8)):
-    ax2.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1,
-                                fill=False, edgecolor='blue',
-                                linewidth=3))
-
-ax2.set_xlabel('n (input)', fontsize=12)
-ax2.set_ylabel('k (level)', fontsize=12)
-ax2.set_title('Fast-Growing Hierarchy Values\n(Blue boxes = diagonal)',
-              fontsize=13)
-ax2.set_xticks(range(8))
-ax2.set_yticks(range(5))
-ax2.set_yticklabels([f'Level {k}' for k in range(5)])
-
-cbar = plt.colorbar(im, ax=ax2, label='log₁₀(value)')
-
-plt.suptitle('Absolute Darkness: The Diagonal Function Escapes All Finite Levels',
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('viz_diagonal.png', dpi=150, bbox_inches='tight')
-print("Saved viz_diagonal.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 2: Darkness Dominance Ratios
-
-Visualizes the ratio f_{k+1}(n) / f_k(n) for successive levels,
-showing how the dominance gap widens. This illustrates the strict
-hierarchy theorem: each darkness level is qualitatively harder
-than the previous one.
-"""
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def fast_grow_closed(k, n):
-    """Closed-form fast-growing hierarchy."""
-    if k == 0:
-        return n + 1
-    elif k == 1:
-        return n + 2
-    elif k == 2:
-        return 2 * n + 3
-    elif k == 3:
-        return 2 ** (n + 3) - 3
-    return None
-
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-colors = ['#2196F3', '#4CAF50', '#FF9800']
-titles = [
-    r'$f_1(n) / f_0(n)$: Level 0→1',
-    r'$f_2(n) / f_1(n)$: Level 1→2',
-    r'$f_3(n) / f_2(n)$: Level 2→3',
-]
-
-for idx, k in enumerate(range(3)):
-    ax = axes[idx]
-    n_max = 12 if k < 2 else 10
-    n_vals = np.arange(0, n_max)
-
-    ratios = []
-    for n in n_vals:
-        fk = fast_grow_closed(k, int(n))
-        fk1 = fast_grow_closed(k + 1, int(n))
-        ratios.append(fk1 / fk if fk > 0 else 0)
-
-    bars = ax.bar(n_vals, ratios, color=colors[idx], alpha=0.7, edgecolor='white')
-
-    # Color bars differently when ratio > 2 (density conjecture)
-    for i, (bar, ratio) in enumerate(zip(bars, ratios)):
-        if ratio > 2:
-            bar.set_facecolor('#F44336')
-            bar.set_alpha(0.8)
-
-    ax.axhline(y=2, color='red', linestyle='--', alpha=0.5,
-               label='Density threshold (ratio = 2)')
-    ax.axhline(y=1, color='gray', linestyle='-', alpha=0.3)
-
-    ax.set_xlabel('n', fontsize=11)
-    ax.set_ylabel('Ratio', fontsize=11)
-    ax.set_title(titles[idx], fontsize=12)
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.2, axis='y')
-
-    if k == 2:
-        ax.set_yscale('log')
-        ax.set_ylabel('Ratio (log scale)', fontsize=11)
-
-# Add explanatory text
-fig.text(0.5, -0.05,
-         'Red bars: ratio exceeds 2 (darkness density threshold).\n'
-         'The exponential jump at Level 2→3 shows why level 3 darkness '
-         'is qualitatively different.',
-         ha='center', fontsize=10, style='italic',
-         bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-
-plt.suptitle('Darkness Dominance: How Fast Does Each Level Outgrow the Previous?',
-             fontsize=14, fontweight='bold')
-plt.tight_layout()
-plt.savefig('viz_dominance.png', dpi=150, bbox_inches='tight')
-print("Saved viz_dominance.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: The Fast-Growing Hierarchy
-
-Visualizes the growth rates of different levels of the fast-growing
-hierarchy, showing how each level eventually dominates the previous one.
-This is the core visual representation of the "darkness hierarchy" —
-each level represents a deeper layer of mathematical unknowability.
-"""
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def fast_grow_closed(k, n):
-    """Closed-form fast-growing hierarchy."""
-    if k == 0:
-        return n + 1
-    elif k == 1:
-        return n + 2
-    elif k == 2:
-        return 2 * n + 3
-    elif k == 3:
-        return 2 ** (n + 3) - 3
-    return None
-
-
-# Create figure with two panels
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-# Panel 1: Linear scale (levels 0-2)
-n_vals = np.arange(0, 15)
-colors = ['#2196F3', '#4CAF50', '#FF9800', '#F44336', '#9C27B0']
-labels = [
-    r'Level 0: $f_0(n) = n+1$ (successor)',
-    r'Level 1: $f_1(n) = n+2$ (addition)',
-    r'Level 2: $f_2(n) = 2n+3$ (multiplication)',
-]
-
-for k in range(3):
-    vals = [fast_grow_closed(k, int(n)) for n in n_vals]
-    ax1.plot(n_vals, vals, 'o-', color=colors[k], linewidth=2,
-             markersize=6, label=labels[k])
-
-ax1.set_xlabel('n', fontsize=12)
-ax1.set_ylabel('f_k(n)', fontsize=12)
-ax1.set_title('Fast-Growing Hierarchy (Linear Scale)', fontsize=14)
-ax1.legend(fontsize=9, loc='upper left')
-ax1.grid(True, alpha=0.3)
-ax1.set_xlim(-0.5, 14.5)
-
-# Panel 2: Log scale (levels 0-3)
-n_vals2 = np.arange(0, 12)
-labels2 = labels + [r'Level 3: $f_3(n) = 2^{n+3}-3$ (exponential)']
-
-for k in range(4):
-    vals = [fast_grow_closed(k, int(n)) for n in n_vals2]
-    ax2.semilogy(n_vals2, vals, 'o-', color=colors[k], linewidth=2,
-                 markersize=6, label=labels2[k])
-
-# Add reference lines
-poly_vals = [int(n)**3 + 1 for n in n_vals2]
-ax2.semilogy(n_vals2, poly_vals, '--', color='gray', linewidth=1.5,
-             alpha=0.7, label=r'Reference: $n^3+1$')
-
-ax2.set_xlabel('n', fontsize=12)
-ax2.set_ylabel('f_k(n) [log scale]', fontsize=12)
-ax2.set_title('Fast-Growing Hierarchy (Log Scale)', fontsize=14)
-ax2.legend(fontsize=9, loc='upper left')
-ax2.grid(True, alpha=0.3)
-ax2.set_xlim(-0.5, 11.5)
-
-# Add annotation about darkness levels
-ax2.annotate('Each level is a\n"layer of darkness"',
-             xy=(8, fast_grow_closed(3, 8)),
-             xytext=(5, 10),
-             fontsize=10,
-             arrowprops=dict(arrowstyle='->', color='red'),
-             bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-
-plt.suptitle('The Darkness Hierarchy: Layers of Mathematical Unknowability',
-             fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('viz_hierarchy.png', dpi=150, bbox_inches='tight')
-print("Saved viz_hierarchy.png")
+    plot_dark_family_structure()
+    plot_dark_inequality()
+    plot_spectrum_distribution()
+    print("All visualizations generated.")

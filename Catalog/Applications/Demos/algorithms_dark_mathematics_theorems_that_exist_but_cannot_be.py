@@ -1,296 +1,267 @@
-#!/usr/bin/env python3
 """
-Dark Mathematics: Algorithms
+Dark Mathematics: Core Algorithms
 
-Implements the core algorithms for computing with fast-growing hierarchies,
-darkness levels, and witness complexity bounds.
+Type-hinted implementations of key algorithms for dark witness families,
+including construction, verification, spectral analysis, and optimization.
 """
 
-from typing import Callable, Optional, Tuple
-import sys
-
-sys.setrecursionlimit(10000)
+from typing import Dict, Set, Tuple, List, Optional
+from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: Fast-Growing Hierarchy (Memoized)
-# ============================================================
+@dataclass
+class DarkWitnessFamily:
+    """A dark witness family: finite witness sets indexed by worlds.
+    
+    Attributes:
+        witnesses: mapping from world index to finite witness set
+        level: guaranteed minimum witnesses per world
+    """
+    witnesses: Dict[int, Set[int]]
+    level: int
+    
+    @property
+    def num_worlds(self) -> int:
+        return len(self.witnesses)
+    
+    @property
+    def universe(self) -> Set[int]:
+        """Union of all witness sets."""
+        result: Set[int] = set()
+        for wset in self.witnesses.values():
+            result |= wset
+        return result
+    
+    @property
+    def universe_size(self) -> int:
+        return max(max(wset) for wset in self.witnesses.values() if wset) + 1
 
-def fast_grow_memo(k: int, n: int, memo: Optional[dict] = None) -> int:
-    """Memoized fast-growing hierarchy computation.
 
-    Time complexity: O(A(k,n)) where A is the Ackermann function
-    Space complexity: O(A(k,n)) for memoization table
-
-    Args:
-        k: Level in the hierarchy (0 = successor, 1 = +2, 2 = 2n+3, ...)
-        n: Input value
-        memo: Optional memoization dictionary
-
+def verify_dark(family: DarkWitnessFamily) -> Tuple[bool, Optional[str]]:
+    """Verify that a witness family satisfies the dark properties.
+    
     Returns:
-        fastGrow(k, n) = Ackermann(k, n)
-
-    Example:
-        >>> fast_grow_memo(2, 5)
-        13
-        >>> fast_grow_memo(3, 3)
-        61
+        (is_valid, error_message) where error_message is None if valid.
+    
+    Time complexity: O(m * N) where m = worlds, N = universe size.
     """
-    if memo is None:
-        memo = {}
-    key = (k, n)
-    if key in memo:
-        return memo[key]
+    if family.level <= 0:
+        return False, "Level must be positive"
+    
+    # Check sufficiency condition
+    for world, wset in family.witnesses.items():
+        if len(wset) < family.level:
+            return False, f"World {world}: {len(wset)} < {family.level} witnesses"
+    
+    # Check universality negation
+    universe = family.universe
+    for n in universe:
+        if all(n in wset for wset in family.witnesses.values()):
+            return False, f"Element {n} is universal"
+    
+    return True, None
 
-    if k == 0:
-        result = n + 1
-    elif n == 0:
-        result = fast_grow_memo(k - 1, 1, memo)
-    else:
-        inner = fast_grow_memo(k, n - 1, memo)
-        result = fast_grow_memo(k - 1, inner, memo)
 
-    memo[key] = result
-    return result
-
-
-# ============================================================
-# Algorithm 2: Closed-Form Evaluators
-# ============================================================
-
-def fast_grow_closed(k: int, n: int) -> int:
-    """Compute fastGrow using closed-form formulas where available.
-
-    Level 0: n + 1
-    Level 1: n + 2
-    Level 2: 2n + 3
-    Level 3: 2^(n+3) - 3
-    Level ≥ 4: falls back to recursive computation
-
-    Time complexity: O(1) for k ≤ 3, O(A(k,n)) for k ≥ 4
-
-    Example:
-        >>> fast_grow_closed(3, 10)
-        8189
+def compute_shadow(family: DarkWitnessFamily) -> Set[int]:
+    """Compute the shadow: elements in ALL witness sets.
+    
+    For valid dark families, this is always empty (Shadow Emptiness Theorem).
+    
+    Time complexity: O(N * m).
     """
-    if k == 0:
-        return n + 1
-    elif k == 1:
-        return n + 2
-    elif k == 2:
-        return 2 * n + 3
-    elif k == 3:
-        return 2 ** (n + 3) - 3
-    else:
-        return fast_grow_memo(k, n)
+    universe = family.universe
+    return {n for n in universe 
+            if all(n in wset for wset in family.witnesses.values())}
 
 
-# ============================================================
-# Algorithm 3: Darkness Level Classifier
-# ============================================================
-
-def classify_darkness_level(
-    f: Callable[[int], int],
-    max_level: int = 5,
-    test_range: int = 20
-) -> int:
-    """Classify the darkness level of a growth function.
-
-    Given a monotone function f: ℕ → ℕ, determines the smallest
-    level k such that f(n) ≤ fastGrow(k, n) for all tested n.
-
-    Algorithm:
-    1. For each level k from 0 to max_level:
-       - Check if f(n) ≤ fastGrow(k, n) for all n in test_range
-       - If yes, return k as the darkness level
-    2. If no level found, return max_level + 1
-
-    Time complexity: O(max_level * test_range * max_computation)
-    Space complexity: O(max_level * test_range) for memoization
-
-    Args:
-        f: Function to classify
-        max_level: Maximum hierarchy level to check
-        test_range: Range of n values to test
-
-    Returns:
-        Estimated darkness level
-
-    Example:
-        >>> classify_darkness_level(lambda n: n**2)
-        2
-        >>> classify_darkness_level(lambda n: 2**n)
-        3
+def compute_spectrum(family: DarkWitnessFamily, N: int) -> Dict[int, Set[int]]:
+    """Compute the darkness spectrum: for each element, which worlds contain it.
+    
+    The spectrum of element n is the set of worlds where n is a witness.
+    By the Spectrum Bound theorem, |spec(n)| < m for all n.
+    
+    Time complexity: O(N * m).
     """
-    memo = {}
-    for k in range(max_level + 1):
-        all_bounded = True
-        for n in range(test_range):
-            try:
-                fn = f(n)
-                fgn = fast_grow_memo(k, n, memo)
-                if fn > fgn:
-                    all_bounded = False
-                    break
-            except (RecursionError, OverflowError):
-                break
-        if all_bounded:
-            return k
-    return max_level + 1
+    spectrum: Dict[int, Set[int]] = {}
+    for n in range(N):
+        spectrum[n] = {w for w, wset in family.witnesses.items() if n in wset}
+    return spectrum
 
 
-# ============================================================
-# Algorithm 4: Dominance Threshold Finder
-# ============================================================
-
-def find_dominance_threshold(
-    f: Callable[[int], int],
-    g: Callable[[int], int],
-    max_search: int = 1000
-) -> Optional[int]:
-    """Find the threshold N where f eventually dominates g.
-
-    Returns the smallest N such that f(n) > g(n) for all tested n ≥ N.
-
-    Time complexity: O(max_search * cost_of_f_and_g)
-
-    Args:
-        f: Dominating function
-        g: Dominated function
-        max_search: Maximum n to search
-
-    Returns:
-        Threshold N, or None if not found
-
-    Example:
-        >>> find_dominance_threshold(
-        ...     lambda n: fast_grow_closed(2, n),
-        ...     lambda n: fast_grow_closed(1, n)
-        ... )
-        0
+def spectral_gap(family: DarkWitnessFamily) -> int:
+    """Compute the spectral gap: max|spec(n)| - min|spec(n)| over active elements.
+    
+    For extremal families, the spectral gap is conjectured to be 0.
     """
-    for N in range(max_search):
-        all_dominate = True
-        for n in range(N, min(N + 50, max_search)):
-            try:
-                if f(n) <= g(n):
-                    all_dominate = False
-                    break
-            except (RecursionError, OverflowError):
-                break
-        if all_dominate:
-            return N
-    return None
+    N = family.universe_size
+    spectrum = compute_spectrum(family, N)
+    active = {n: s for n, s in spectrum.items() if len(s) > 0}
+    if not active:
+        return 0
+    sizes = [len(s) for s in active.values()]
+    return max(sizes) - min(sizes)
 
 
 # ============================================================
-# Algorithm 5: Witness Complexity Estimator
+# Construction algorithms
 # ============================================================
 
-def estimate_witness_complexity(
-    predicate: Callable[[int, int], bool],
-    max_n: int = 50,
-    max_witness: int = 10000
-) -> list:
-    """Estimate the minimum witness function for an existential statement.
-
-    For a predicate P(n, w), finds the minimum w such that P(n, w)
-    holds for each n, and classifies the growth rate.
-
-    Algorithm:
-    1. For each n in range, find smallest w with P(n, w)
-    2. Record the sequence of minimum witnesses
-    3. Classify the growth rate using classify_darkness_level
-
-    Time complexity: O(max_n * max_witness * cost_of_predicate)
-
-    Args:
-        predicate: P(n, w) -> bool
-        max_n: Range of n values
-        max_witness: Maximum witness to search
-
-    Returns:
-        List of (n, min_witness) pairs
-
-    Example:
-        >>> # Witness for "w > n^2"
-        >>> results = estimate_witness_complexity(
-        ...     lambda n, w: w > n**2, max_n=10
-        ... )
-        >>> results[5]  # min w > 25 is 26
-        (5, 26)
+def construct_two_world(k: int) -> DarkWitnessFamily:
+    """Construct the canonical two-world dark family at level k.
+    
+    World 0: {0, ..., k-1}
+    World 1: {k, ..., 2k-1}
+    
+    Time complexity: O(k).
     """
-    results = []
-    for n in range(max_n):
-        for w in range(max_witness):
-            try:
-                if predicate(n, w):
-                    results.append((n, w))
-                    break
-            except (RecursionError, OverflowError):
-                results.append((n, None))
-                break
-        else:
-            results.append((n, None))
+    return DarkWitnessFamily(
+        witnesses={0: set(range(k)), 1: set(range(k, 2 * k))},
+        level=k
+    )
+
+
+def construct_complementary_blocks(m: int, N: int) -> DarkWitnessFamily:
+    """Construct the extremal dark family via complementary block partition.
+    
+    Achieves the maximum darkness level N - N/m when m | N.
+    World i gets all elements except block i = {i*q, ..., (i+1)*q - 1} where q = N/m.
+    
+    Precondition: m >= 2, m | N, N > 0.
+    Time complexity: O(N).
+    """
+    assert m >= 2 and N > 0 and N % m == 0
+    q = N // m
+    universe = set(range(N))
+    witnesses: Dict[int, Set[int]] = {}
+    for i in range(m):
+        block = set(range(i * q, (i + 1) * q))
+        witnesses[i] = universe - block
+    return DarkWitnessFamily(witnesses=witnesses, level=N - q)
+
+
+def construct_product(d1: DarkWitnessFamily, d2: DarkWitnessFamily) -> DarkWitnessFamily:
+    """Construct the product of two dark families with disjoint witness ranges.
+    
+    The product family has level = d1.level + d2.level.
+    Worlds are indexed by pairs (a, b).
+    
+    Precondition: witness ranges of d1 and d2 are disjoint.
+    Time complexity: O(m1 * m2 * N).
+    """
+    witnesses: Dict[Tuple[int, int], Set[int]] = {}
+    for a, w1 in d1.witnesses.items():
+        for b, w2 in d2.witnesses.items():
+            witnesses[(a, b)] = w1 | w2
+    return DarkWitnessFamily(
+        witnesses=witnesses,
+        level=d1.level + d2.level
+    )
+
+
+# ============================================================
+# Analysis algorithms
+# ============================================================
+
+def dark_inequality_bound(m: int, N: int) -> int:
+    """Maximum darkness level allowed by the Dark Inequality.
+    
+    k <= N * (m-1) / m, so max k = floor(N * (m-1) / m).
+    """
+    return N * (m - 1) // m
+
+
+def find_max_darkness(m: int, N: int) -> Tuple[int, Optional[DarkWitnessFamily]]:
+    """Find the maximum achievable darkness level for m worlds and N elements.
+    
+    Uses greedy construction: distribute elements to maximize minimum coverage.
+    Returns (max_level, achieving_family).
+    
+    Time complexity: O(N * m) for the greedy construction.
+    """
+    # Greedy: assign each element to m-1 worlds, cycling which world is excluded
+    witnesses: Dict[int, Set[int]] = {i: set() for i in range(m)}
+    for n in range(N):
+        excluded = n % m  # Exclude world (n mod m) for element n
+        for i in range(m):
+            if i != excluded:
+                witnesses[i].add(n)
+    
+    min_size = min(len(wset) for wset in witnesses.values())
+    family = DarkWitnessFamily(witnesses=witnesses, level=min_size)
+    
+    valid, _ = verify_dark(family)
+    if valid:
+        return min_size, family
+    return 0, None
+
+
+def enumerate_all_dark_families(m: int, N: int, level: int) -> List[DarkWitnessFamily]:
+    """Enumerate all dark families over Fin m with N-bounded witnesses at given level.
+    
+    Warning: exponential in N and m. Only use for small parameters.
+    """
+    from itertools import combinations
+    
+    results: List[DarkWitnessFamily] = []
+    universe = set(range(N))
+    
+    # Each world must have at least `level` elements from {0,...,N-1}
+    # and no element can be in all worlds
+    possible_sets = [s for r in range(level, N + 1) 
+                     for s in combinations(range(N), r)]
+    
+    # Too many combinations for large parameters
+    if len(possible_sets) ** m > 100000:
+        return results
+    
+    from itertools import product
+    for combo in product(possible_sets, repeat=m):
+        witnesses = {i: set(combo[i]) for i in range(m)}
+        family = DarkWitnessFamily(witnesses=witnesses, level=level)
+        valid, _ = verify_dark(family)
+        if valid:
+            results.append(family)
+    
     return results
 
 
-# ============================================================
-# Algorithm 6: Tower Function
-# ============================================================
-
-def tower2(n: int) -> int:
-    """Compute the tower of 2s of height n.
-
-    tower2(0) = 1
-    tower2(n+1) = 2^tower2(n)
-
-    Time complexity: O(n) multiplications (but results grow astronomically)
-
-    Example:
-        >>> tower2(3)
-        16
-        >>> tower2(4)
-        65536
-    """
-    if n == 0:
-        return 1
-    return 2 ** tower2(n - 1)
-
-
-# ============================================================
-# Main: Run examples
-# ============================================================
-
 if __name__ == "__main__":
-    print("=== Fast-Growing Hierarchy (Closed Form) ===")
-    for k in range(4):
-        vals = [fast_grow_closed(k, n) for n in range(8)]
-        print(f"Level {k}: {vals}")
-
-    print()
-    print("=== Darkness Level Classification ===")
-    test_functions = [
-        ("n + 1 (successor)", lambda n: n + 1),
-        ("n^2 (quadratic)", lambda n: n ** 2),
-        ("2^n (exponential)", lambda n: 2 ** n),
-        ("n! (factorial)", lambda n: 1 if n == 0 else n * test_functions[3][1](n-1)),
-    ]
-    for name, f in test_functions:
-        level = classify_darkness_level(f)
-        print(f"  {name}: darkness level {level}")
-
-    print()
-    print("=== Dominance Thresholds ===")
-    for k in range(3):
-        threshold = find_dominance_threshold(
-            lambda n, k=k: fast_grow_closed(k + 1, n),
-            lambda n, k=k: fast_grow_closed(k, n)
-        )
-        print(f"  Level {k+1} dominates Level {k} from n={threshold}")
-
-    print()
-    print("=== Tower Function ===")
-    for n in range(6):
-        val = tower2(n)
-        print(f"  tower2({n}) = {val}")
+    # Quick verification of all algorithms
+    print("Testing algorithms...")
+    
+    # Two-world family
+    for k in [1, 5, 10, 100]:
+        f = construct_two_world(k)
+        valid, err = verify_dark(f)
+        assert valid, f"Two-world family at level {k} failed: {err}"
+        assert compute_shadow(f) == set(), "Shadow not empty!"
+    
+    # Complementary blocks
+    for m, N in [(2, 10), (3, 12), (4, 20), (5, 25)]:
+        f = construct_complementary_blocks(m, N)
+        valid, err = verify_dark(f)
+        assert valid, f"Block partition m={m} N={N} failed: {err}"
+        assert f.level == N - N // m
+        gap = spectral_gap(f)
+        assert gap == 0, f"Extremal family has nonzero spectral gap: {gap}"
+    
+    # Product
+    d1 = construct_two_world(3)
+    d2 = DarkWitnessFamily(
+        witnesses={0: {10, 11, 12, 13}, 1: {14, 15, 16, 17}},
+        level=4
+    )
+    prod = construct_product(d1, d2)
+    valid, err = verify_dark(prod)
+    assert valid, f"Product failed: {err}"
+    assert prod.level == 7
+    
+    # Dark inequality
+    for m in range(2, 6):
+        for N in range(m, 5 * m, m):
+            bound = dark_inequality_bound(m, N)
+            level, fam = find_max_darkness(m, N)
+            assert level <= bound, f"Exceeded bound! m={m} N={N}"
+            assert level == bound, f"Didn't achieve bound m={m} N={N}: {level} < {bound}"
+    
+    print("All algorithm tests passed!")
