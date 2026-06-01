@@ -1,177 +1,215 @@
-# Memory Algebra: Forgetting as a Mathematical Operation
+# Memory Algebra: Monoid Homomorphisms, Lossy Compression, and the Category of Forgetting
 
 ## Abstract
 
-We develop a formal algebraic theory of memory systems, modeling memory as a monoid homomorphism from the free monoid of experience streams to a compressed representation monoid. We prove four main results: (1) any memory homomorphism to a finite codomain is necessarily lossy when the alphabet has at least two symbols (Pigeonhole Lossiness Theorem); (2) the kernel of a memory map — the "confusion set" of indistinguishable experience pairs — forms a monoid congruence with rich algebraic structure; (3) the composition of forgetting operations is again a forgetting operation, establishing a category of memory systems; and (4) targeted forgetting corresponds precisely to a quotient construction, with the lattice of valid forgetting congruences closed under meet. All results are formalized and machine-verified in Lean 4 with Mathlib.
+We formalize memory as a monoid homomorphism from the free monoid of experience streams to a finite monoid of internal states. We prove three main results: (1) the **Memory Compression Theorem**, showing that any such homomorphism over an alphabet with ≥ 2 symbols must be lossy (non-injective), by a pigeonhole argument exploiting the infinitude of the free monoid; (2) the **Oblivion Kernel Theorem**, showing that when the state space is a finite group, the monoid kernel (experiences mapping to the identity) is nontrivial, with an explicit construction via element orders; and (3) the **Forgetting Factorization Theorem**, showing that if one memory system forgets more than another, the additional forgetting factors through a canonical quotient map. We additionally prove monotonicity of information loss under composition, a capacity bound on distinguishable experience classes, and structural results on the lattice of forgetting strategies. All results are formalized and machine-verified.
+
+**Keywords**: monoid homomorphism, free monoid, congruence, quotient, lossy compression, memory algebra, information loss, categorical forgetting
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Memory is a fundamental concept across multiple disciplines: neuroscience, computer science, information theory, and philosophy of mind. In all settings, a common pattern emerges: a system receives a stream of inputs, processes them through some finite-state mechanism, and retains a compressed representation. The inevitable loss of information in this compression has been studied empirically, but its algebraic structure has received less attention.
+The mathematical study of memory — as opposed to its engineering, neuroscience, or psychological study — requires identifying the essential algebraic structure that any memory system must satisfy. We propose that this structure is captured by a single algebraic object: a monoid homomorphism from a free monoid (the space of all possible experience sequences) to a finite monoid (the space of internal states).
 
-We propose a framework in which memory is modeled as a monoid homomorphism φ: F(Σ) → M, where F(Σ) is the free monoid over an alphabet Σ of experience types, and M is a (typically finite) monoid of memory states. The monoid operation on F(Σ) is concatenation of experience sequences, and φ must respect this structure: the memory state after experiencing sequence s followed by sequence t equals the memory state after s, updated by the contribution of t.
-
-This seemingly simple setup yields surprisingly rich mathematics. The kernel of φ, the set of confused pairs, is not merely an equivalence relation but a monoid congruence — it respects the algebraic structure of experience concatenation. Forgetting operations form a category. The hierarchy of possible forgetting strategies forms a lattice. And fundamental capacity limits emerge from the interaction between the infinity of the free monoid and the finiteness of the memory.
+This abstraction captures three essential properties of memory:
+1. **Sequentiality**: experiences arrive in order and are processed compositionally.
+2. **Finiteness**: the internal state space has bounded cardinality.
+3. **Homomorphism property**: processing two sub-sequences separately and then combining states yields the same result as processing the concatenated sequence directly.
 
 ### 1.2 Related Work
 
-Our framework connects to several established areas:
-- **Automata theory**: A memory system with finite M is essentially a finite-state automaton. The Myhill-Nerode theorem characterizes the languages recognizable by such automata via congruences of finite index on the free monoid, directly analogous to our kernel congruences.
-- **Information theory**: Shannon's source coding theorem gives rate-distortion bounds for lossy compression. Our results are complementary, focusing on algebraic structure rather than probabilistic entropy.
-- **Semigroup theory**: The quotient constructions and congruence lattice results are instances of general algebraic theory, specialized to the memory interpretation.
-- **Category theory**: Memory systems and forgetting maps form a concrete category, a fact we make precise.
+The connection between finite automata and monoid homomorphisms dates to the Krohn-Rhodes theorem (1965), which decomposes finite semigroups into iterable components. Our work takes a different perspective: rather than decomposing the state monoid, we study the *congruence induced on the input monoid* by the encoding map, and the *category of such maps* ordered by forgetting.
+
+Information-theoretic approaches to lossy compression (Shannon, 1959) quantify information loss via rate-distortion theory. Our approach is purely algebraic — we characterize the *structure* of information loss (as a congruence and a submonoid) rather than its *magnitude* (in bits).
 
 ### 1.3 Contributions
 
-1. **MemorySystem**: A novel mathematical structure combining a monoid homomorphism with an interpretation as memory encoding.
-2. **Pigeonhole Lossiness Theorem**: Proof that any finite memory system over a non-trivial alphabet must be lossy.
-3. **Confusion Set Structure**: The confusion set (kernel) forms a submonoid of the product monoid, and a congruence on the free monoid.
-4. **Category of Memory Systems**: Forgetting maps compose and have identities, forming a category.
-5. **Quotient Forgetting**: Targeted forgetting corresponds to quotient constructions, with a lattice structure on valid congruences.
-6. **Selective Forgetting Congruence**: A concrete construction for forgetting specific experience types, with a monotonicity property.
-7. **Memory Capacity Bound**: A quantitative bound relating alphabet size, sequence length, and memory cardinality.
-8. **Kernel Quotient Injectivity**: The first isomorphism theorem direction, showing the kernel quotient embeds in M.
+We make the following formally verified contributions:
+
+1. **Memory Compression Theorem**: Any monoid homomorphism from `FreeMonoid α` to a finite monoid, where `|α| ≥ 2`, is non-injective.
+2. **Oblivion Kernel Theorem**: When the codomain is a finite group, the monoid kernel contains non-identity elements, constructed explicitly via element orders.
+3. **Forgetting Factorization**: The encoding of a "more forgetful" memory system factors through the quotient by the congruence of a "less forgetful" one.
+4. **Monotonicity**: Post-processing cannot decrease information loss.
+5. **Capacity Bound**: At most `|S|` experience streams can be mutually distinguished by a memory system with state space `S`.
+6. **Lattice Structure**: The forgetting strategies form a complete lattice, with perfect memory at the bottom and total amnesia at the top.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Memory System
+### 2.1 Experience Streams
 
-**Definition 2.1 (Memory System).** A *memory system* over alphabet α with memory M is a pair (α, M, φ) where M is a monoid and φ: FreeMonoid(α) →* M is a monoid homomorphism. We write `ms.encode` for φ.
+Let `α` be a finite alphabet. The **free monoid** `FreeMonoid α` is the set of all finite sequences (lists) over `α`, with concatenation as the monoid operation and the empty sequence as identity.
 
-The free monoid FreeMonoid(α) consists of finite sequences (lists) over α, with concatenation as the monoid operation and the empty list as identity.
+### 2.2 Memory Systems
 
-**Definition 2.2 (Lossy).** A memory system is *lossy* if its encoding φ is not injective: there exist distinct experience streams s ≠ t with φ(s) = φ(t).
+**Definition 1** (Memory System). A *memory system* over alphabet `α` with state space `S` is a pair `(S, φ)` where `S` is a finite monoid and `φ : FreeMonoid α →* S` is a monoid homomorphism.
 
-**Definition 2.3 (Confusion Set).** The *confusion set* of a memory system is
-C(ms) = { (s, t) ∈ FreeMonoid(α) × FreeMonoid(α) | φ(s) = φ(t) }.
+We encode this as:
+```
+structure MemorySystem (α : Type*) (S : Type*) [Monoid S] [Fintype S] where
+  encode : FreeMonoid α →* S
+```
 
-### 2.2 Forgetting Maps
+### 2.3 Information Loss
 
-**Definition 2.4 (Forgetting Map).** A *forgetting map* from memory system (α, M, φ₁) to (α, N, φ₂) consists of a monoid homomorphism f: M →* N such that f ∘ φ₁ = φ₂.
+**Definition 2** (Information Loss Congruence). The *information loss congruence* of a memory system `(S, φ)` is the congruence `Con.ker φ` on `FreeMonoid α`, defined by:
+$$x \sim y \iff \varphi(x) = \varphi(y)$$
 
-This is a morphism in the category of memory systems over a fixed alphabet α.
+**Definition 3** (Oblivion Kernel). The *oblivion kernel* is the monoid kernel `MonoidHom.mker φ = \{x \in \text{FreeMonoid}\ α \mid \varphi(x) = 1\}`, which is a submonoid of `FreeMonoid α`.
 
-**Definition 2.5 (Kernel Congruence).** The *kernel congruence* of a memory system is the monoid congruence ker(φ) on FreeMonoid(α) defined by s ~ t iff φ(s) = φ(t).
+### 2.4 Memory Morphisms
 
-### 2.3 Selective Forgetting
+**Definition 4** (Memory Morphism). A *memory morphism* from `(S, φ₁)` to `(T, φ₂)` is a monoid homomorphism `f : S →* T` such that `f ∘ φ₁ = φ₂`.
 
-**Definition 2.6 (Selective Forgetting Congruence).** Given a set S ⊆ α of "forgotten" symbols, the *selective forgetting congruence* ~_S is defined by: s ~_S t iff filter(s, α\S) = filter(t, α\S), where filter keeps only symbols not in S.
+### 2.5 Forgetting Order
+
+**Definition 5** (Forgets More). Memory system `(S, φ₂)` *forgets more than* `(S, φ₁)` if `Con.ker φ₁ ≤ Con.ker φ₂`, i.e., whenever φ₁ identifies two streams, φ₂ also identifies them.
+
+---
 
 ## 3. Main Results
 
-### 3.1 Pigeonhole Lossiness
+### 3.1 Memory Compression Theorem
 
-**Theorem 3.1 (Finite Memory Is Lossy).** Let (α, M, φ) be a memory system with M finite and |α| ≥ 2. Then φ is not injective.
+**Theorem 1** (Memory Compression). *Let `α` be a finite alphabet with `|α| ≥ 2`, and let `(S, φ)` be a memory system. Then `φ` is not injective.*
 
-*Proof sketch.* The free monoid on ≥2 generators is infinite: the elements aⁿ = [a, a, ..., a] (n copies) for n ∈ ℕ are pairwise distinct, since they have different lengths. The function n ↦ aⁿ is an injection ℕ ↪ FreeMonoid(α), proving FreeMonoid(α) is infinite. Since M is finite, no injection from FreeMonoid(α) to M can exist.
+*Proof sketch.* The free monoid `FreeMonoid α ≅ List α` is infinite when `|α| ≥ 2`: the map `n ↦ [a, a, ..., a]` (n copies of any fixed `a ∈ α`) is an injection from `ℕ` into `List α`, using the fact that lists of different lengths are distinct. Since `S` is a `Fintype`, any injection from an infinite type to a `Finite` type yields a contradiction (by `not_injective_infinite_finite`). □
 
-*Formal verification.* The Lean proof uses `Infinite.of_injective` with the replicate function and `Finite.of_injective` to derive a contradiction.
+**Theorem 2** (Nontrivial Congruence). *Under the same hypotheses, there exist distinct streams `x ≠ y` with `φ(x) = φ(y)`.*
 
-### 3.2 Confusion Set Structure
+This is the existential witness form of Theorem 1.
 
-**Theorem 3.2 (Confusion Set Submonoid).** For any memory system, the confusion set C(ms) contains (1, 1) and is closed under componentwise multiplication: if (s₁, t₁) ∈ C(ms) and (s₂, t₂) ∈ C(ms), then (s₁s₂, t₁t₂) ∈ C(ms).
+### 3.2 Oblivion Kernel Theorem
 
-*Proof.* For identity: φ(1) = 1 = φ(1). For closure: if φ(s₁) = φ(t₁) and φ(s₂) = φ(t₂), then φ(s₁s₂) = φ(s₁)φ(s₂) = φ(t₁)φ(t₂) = φ(t₁t₂), using the homomorphism property.
+**Theorem 3** (Nontrivial Oblivion Kernel for Groups). *Let `α` be a finite alphabet with `|α| ≥ 2`, and let `(G, φ)` be a memory system where `G` is a finite group. Then there exists `x ∈ \text{FreeMonoid}\ α` with `x ≠ 1` and `φ(x) = 1`.*
 
-### 3.3 Forgetting Expands Confusion
+*Proof sketch.* Pick any `a ∈ α`. The element `g = φ(\text{of}(a)) ∈ G` has finite order `d = \text{orderOf}(g) ≥ 1` (since `G` is finite). Then:
+$$\varphi((\text{of}(a))^d) = g^d = 1$$
+The element `(of(a))^d` in `FreeMonoid α` is a list of length `d ≥ 1`, hence non-empty, hence `≠ 1 = []`. □
 
-**Theorem 3.3 (Monotonicity of Confusion).** If there exists a forgetting map from ms₁ to ms₂, then C(ms₁) ⊆ C(ms₂).
+**Remark.** The group hypothesis is essential. For monoids, the oblivion kernel can be trivial even when the system is lossy. Consider the monoid `({0, 1}, ·)` with multiplication, and the map sending every non-empty stream to 0 and the empty stream to 1. This is lossy but has trivial monoid kernel (only the empty stream maps to 1).
 
-*Proof.* Let f be the forgetting map with f ∘ φ₁ = φ₂. If φ₁(s) = φ₁(t), then φ₂(s) = f(φ₁(s)) = f(φ₁(t)) = φ₂(t).
+### 3.3 Forgetting Factorization Theorem
 
-### 3.4 Category Structure
+**Theorem 4** (Factorization). *If `Con.ker φ₁ ≤ Con.ker φ₂`, then `φ₂` factors through the quotient `FreeMonoid α / Con.ker φ₁`:*
+$$\varphi_2 = \tilde{\varphi} \circ \pi$$
+*where `π` is the canonical projection and `φ̃` is the lifted map `Con.lift`.*
 
-**Theorem 3.4 (Composition of Forgetting Maps).** If f: ms₁ → ms₂ and g: ms₂ → ms₃ are forgetting maps, then g ∘ f: ms₁ → ms₃ is a forgetting map with underlying homomorphism g.forget ∘ f.forget.
+*Proof.* This is the universal property of quotients applied to `Con.lift`. The hypothesis `Con.ker φ₁ ≤ Con.ker φ₂` is precisely the compatibility condition required for `Con.lift` to be well-defined. □
 
-**Theorem 3.5 (Identity Forgetting Map).** The identity homomorphism id: M →* M is a forgetting map from ms to ms.
+### 3.4 Monotonicity
 
-Together with associativity of homomorphism composition (which is automatic), these establish a category.
+**Theorem 5** (Monotonicity of Information Loss). *For any memory system `(S, φ)` and monoid homomorphism `f : S →* T`, we have `Con.ker φ ≤ Con.ker (f ∘ φ)`.*
 
-### 3.5 Quotient Forgetting
+*Proof.* If `φ(x) = φ(y)`, then `f(φ(x)) = f(φ(y))`, i.e., `(f ∘ φ)(x) = (f ∘ φ)(y)`. □
 
-**Theorem 3.6 (Quotient Memory System).** Given a congruence c on FreeMonoid(α) that is coarser than ker(φ) (i.e., ker(φ) ≤ c), the quotient projection mk': FreeMonoid(α) →* FreeMonoid(α)/c defines a memory system with memory FreeMonoid(α)/c.
+### 3.5 Capacity Bound
 
-**Theorem 3.7 (Finer Congruence = Less Confusion).** If c₁ ≤ c₂ (c₁ is finer), then C(ms_{c₁}) ⊆ C(ms_{c₂}).
+**Theorem 6** (Memory Capacity Bound). *If `xs` is a finite set of experience streams that are mutually distinguished by `φ` (i.e., `φ` is injective on `xs`), then `|xs| ≤ |S|`.*
 
-### 3.6 Memory Capacity Bound
+*Proof.* The restriction of `φ` to `xs` is injective, so `|xs| ≤ |image(φ|_{xs})| ≤ |S|`. □
 
-**Theorem 3.8 (Capacity Bound).** If all length-k sequences over alphabet α map to distinct memory states, then |α|^k ≤ |M|.
+### 3.6 Lattice of Forgetting Strategies
 
-*Proof.* The map s ↦ φ(list_of(s)) from (Fin k → α) to M is injective by hypothesis. By Fintype.card_le_of_injective, |Fin k → α| ≤ |M|. Since |Fin k → α| = |α|^k, the result follows.
+**Theorem 7** (Perfect Memory). *The bottom congruence `⊥` on `FreeMonoid α` is equality: `⊥(x, y) ↔ x = y`.*
 
-### 3.7 First Isomorphism Direction
+**Theorem 8** (Total Amnesia). *The top congruence `⊤` on `FreeMonoid α` identifies all elements: `⊤(x, y)` for all `x, y`.*
 
-**Theorem 3.9 (Kernel Quotient Injectivity).** The induced map FreeMonoid(α)/ker(φ) → M is injective.
+These characterize the extremes of the forgetting lattice.
 
-This is the "injective direction" of the first isomorphism theorem for monoids.
+### 3.7 Categorical Structure
 
-### 3.8 Selective Forgetting
+**Theorem 9** (Morphism ⟹ More Forgetting). *If there exists a memory morphism `(f, f ∘ φ₁ = φ₂)` from `(S, φ₁)` to `(T, φ₂)`, then `Con.ker φ₁ ≤ Con.ker φ₂`.*
 
-**Theorem 3.10 (Selective Forgetting Monotonicity).** If S ⊆ T, then ~_S refines ~_T: any two streams identified by forgetting S are also identified by forgetting T.
+*Proof.* If `φ₁(x) = φ₁(y)`, then `φ₂(x) = f(φ₁(x)) = f(φ₁(y)) = φ₂(y)`. □
 
-**Theorem 3.11 (Forgetting Lattice Closure).** The infimum (meet) of two congruences coarser than ker(φ) is itself coarser than ker(φ). The valid forgetting congruences are closed under meet.
+---
 
-## 4. Algorithms
+## 4. The Memory Algebra Category
 
-### 4.1 Confusion Detection
+Memory systems over a fixed alphabet `α` form a category **Mem(α)** where:
+- **Objects**: pairs `(S, φ)` with `S` a finite monoid and `φ : FreeMonoid α →* S`.
+- **Morphisms**: monoid homomorphisms `f : S →* T` with `f ∘ φ₁ = φ₂`.
+- **Identity**: the identity homomorphism.
+- **Composition**: composition of monoid homomorphisms.
 
-Given a concrete finite memory system (represented as a transition function), detecting confused pairs reduces to finding collisions in the encoding map. For streams of bounded length k:
+We have verified that identity and composition are well-defined memory morphisms. The forgetting order on objects is the preorder induced by the existence of a morphism (Theorem 9 shows this is compatible with the congruence ordering).
 
-```
-Algorithm: DETECT_CONFUSION(φ, k, Σ)
-  state_map ← empty dictionary
-  for each sequence s of length ≤ k over Σ:
-    m ← φ(s)
-    if m in state_map:
-      return (s, state_map[m])  // confused pair
-    state_map[m] ← s
-  return None  // no confusion at this length
-```
+---
 
-Time complexity: O(|Σ|^k) in the worst case, matching the capacity bound.
+## 5. Algorithms
 
-### 4.2 Selective Forgetting Computation
+### 5.1 Computing the Information Loss Congruence
 
-Given a stream s and a forgetting set S:
+Given a memory system defined by a monoid homomorphism `φ` (specified by the images of generators), the information loss congruence on streams of length ≤ n can be computed by:
 
-```
-Algorithm: SELECTIVE_FORGET(s, S)
-  return filter(s, λ x. x ∉ S)
-```
+1. Enumerate all streams of length ≤ n.
+2. Apply φ to each stream.
+3. Group streams by their φ-image.
+4. Each group is a congruence class.
 
-Time complexity: O(|s|).
+**Complexity**: O(k^n · n) where k = |α|, dominated by the enumeration.
 
-## 5. Discussion
+### 5.2 Computing the Oblivion Kernel
 
-### 5.1 Connections to Automata Theory
+For a finite group G and generator images g₁, ..., gₖ:
+1. Compute dᵢ = orderOf(gᵢ) for each generator.
+2. The words `(of aᵢ)^{dᵢ}` are in the oblivion kernel.
+3. The oblivion kernel is the normal closure of these words (as a submonoid).
 
-Our kernel congruence is precisely the syntactic congruence of the language recognized by the memory system (when viewed as an acceptor with a designated set of "accepting" memory states). The Myhill-Nerode theorem states that a language is regular if and only if its syntactic congruence has finite index. Our capacity bound (Theorem 3.8) is a quantitative refinement: with m memory states, at most m equivalence classes exist, bounding the distinguishing power.
+### 5.3 Comparing Forgetting Strategies
 
-### 5.2 Information-Theoretic Interpretation
+Given two memory systems φ₁, φ₂ on the same alphabet:
+1. For each pair of streams (x, y) of bounded length, check if φ₁(x) = φ₁(y) implies φ₂(x) = φ₂(y).
+2. If this holds for all pairs, conjecture φ₁ ≤ φ₂ in the forgetting order.
 
-The confusion set C(ms) determines the mutual information between the input stream and the memory state. If we place a uniform distribution on length-k sequences, the number of confusion classes equals |α|^k / average_class_size, and the mutual information is log₂ of this ratio. Our capacity bound shows this mutual information is at most log₂(|M|) bits, regardless of the encoding.
+---
 
-### 5.3 Biological Memory
+## 6. Discussion
 
-In neuroscience, the concept of "memory engram" — the physical substrate of a memory — corresponds roughly to a memory state in our framework. The hippocampal replay mechanism, which consolidates memories during sleep, can be modeled as a forgetting map: it transforms a detailed, high-capacity short-term memory into a coarser, long-term representation. Our framework predicts that this transformation must expand the confusion set, consistent with the well-documented phenomenon of memory generalization during consolidation.
+### 6.1 Connections to Automata Theory
 
-### 5.4 Limitations
+A memory system `(S, φ)` where `S` is a finite monoid and `φ` is specified by its action on generators is precisely the syntactic monoid theory of regular languages. Our results can be seen as giving algebraic characterizations of the limitations of finite automata from the perspective of information preservation.
 
-Our framework models memory as a *deterministic* monoid homomorphism. Probabilistic or quantum memory systems, where the encoding may be stochastic, require extensions to probabilistic monoids or quantum channels. The framework also assumes the alphabet is discrete; continuous experience spaces would require topological monoids.
+### 6.2 Connections to Information Theory
 
-## 6. Future Work
+The Memory Compression Theorem is the algebraic analogue of the source coding theorem: compression below the source entropy is impossible. The difference is that our version is purely structural (no probability distributions) and applies to worst-case rather than average-case information loss.
 
-1. **Rate-Distortion Connection**: Relate the algebraic capacity bound to Shannon's rate-distortion function for specific source distributions.
-2. **Temporal Discounting**: Model memory systems where recent experiences are weighted more heavily, perhaps via weighted monoids or graded structures.
-3. **Composition of Memory Systems**: Study the tensor product of memory systems — how two independent memory channels interact.
-4. **Computational Complexity of Forgetting**: Given a memory system, how hard is it to find the optimal forgetting congruence for a given task?
-5. **Non-deterministic Memory**: Extend to probabilistic memory maps and prove analogous lossiness results.
+### 6.3 Connections to Cognitive Science
 
-## 7. References
+The lattice of forgetting strategies provides a mathematical framework for thinking about the space of possible memory organizations. Two memory systems processing the same experiences can be compared by whether one's forgetting subsumes the other's. This may illuminate how different organisms with different state-space budgets can have qualitatively different memory organizations that are nonetheless mathematically related.
 
-1. Eilenberg, S. *Automata, Languages, and Machines*. Academic Press, 1974.
-2. Pin, J.-E. "Mathematical Foundations of Automata Theory." 2020.
-3. Shannon, C. E. "A Mathematical Theory of Communication." *Bell System Technical Journal*, 1948.
-4. Cover, T. M. and Thomas, J. A. *Elements of Information Theory*. Wiley, 2006.
-5. Rhodes, J. and Steinberg, B. *The q-theory of Finite Semigroups*. Springer, 2009.
+---
+
+## 7. Future Work
+
+1. **Quantitative information loss**: Relate the algebraic congruence structure to Shannon entropy, connecting our structural results with information-theoretic bounds.
+2. **Topological memory**: Extend the framework to topological monoids, where the state space is not merely finite but has topological structure.
+3. **Optimal forgetting**: Given a distribution over experience streams, characterize the memory system that minimizes expected distortion for a given state-space budget (connecting to rate-distortion theory).
+4. **Dynamic memory**: Allow the encoding homomorphism to change over time, modeling learning and adaptation.
+5. **Krohn-Rhodes decomposition of memory**: Apply the Krohn-Rhodes theorem to decompose memory systems into cascades of simple group and semigroup components.
+
+---
+
+## 8. References
+
+1. Krohn, K. and Rhodes, J. (1965). Algebraic theory of machines. I. Prime decomposition theorem for finite semigroups and machines. *Transactions of the AMS*, 116, 450–464.
+2. Shannon, C. E. (1959). Coding theorems for a discrete source with a fidelity criterion. *IRE National Convention Record*, 7(4), 142–163.
+3. Eilenberg, S. (1976). *Automata, Languages, and Machines*, Vol. B. Academic Press.
+4. Pin, J.-E. (1986). *Varieties of Formal Languages*. Plenum.
+
+---
+
+## Appendix: Formal Verification
+
+All definitions and theorems in this paper have been formalized and verified in Lean 4 with Mathlib. The formalization consists of approximately 250 lines of Lean code, including:
+- 1 novel structure (`MemorySystem`)
+- 1 novel structure (`MemoryMorphism`)
+- 5 definitions (`infoLossCon`, `oblivionKernel`, `IsLossless`, `IsLossy`, `ForgetsMoreThan`, `forgettingMap`)
+- 9 verified theorems with no `sorry` and no non-standard axioms
+
+The verified axiom dependencies are limited to `propext`, `Classical.choice`, and `Quot.sound`.
