@@ -886,7 +886,6 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
-<<<<<<< Updated upstream
   "thermodynamics_of_mathematical_proof.json": {
     "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
     "exp_id": "5601e70d",
@@ -911,8 +910,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "MachineLearning"
   },
-=======
->>>>>>> Stashed changes
   "complete_formalized_algebraic_theory_of_quasif.json": {
     "title": "Formalized Nucleus Defect Theory for Quasifields and Non-Desarguesian Planes",
     "exp_id": "dc49b350",
@@ -943,7 +940,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "seed"
     ],
-<<<<<<< Updated upstream
     "domain": "Tropical"
   },
   "paradoxes_as_theorems_liar_berry_and_russell_made_.json": {
@@ -1024,8 +1020,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "5a82cace"
     ],
-=======
->>>>>>> Stashed changes
     "domain": "Algebra"
   },
   "poincar_conjecture_revisited_4d_smooth.json": {

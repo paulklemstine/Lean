@@ -42,6 +42,14 @@ class GitAutomator:
         return ok
 
     def push(self, remote: str = "origin", branch: str = "master") -> bool:
+        # Pull with rebase first to handle remote divergence from concurrent pushes
+        pull_ok, pull_out = self._run(
+            ["git", "pull", "--rebase", remote, branch], timeout=120
+        )
+        if not pull_ok:
+            # Rebase conflict — abort and report failure rather than corrupting files
+            self._run(["git", "rebase", "--abort"])
+            return False
         ok, out = self._run(["git", "push", remote, branch], timeout=120)
         if not ok:
             ok, out = self._run(["git", "push", "-u", remote, branch], timeout=120)

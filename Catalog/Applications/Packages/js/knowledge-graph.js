@@ -1890,7 +1890,7 @@
                 if (tooltip) {
                     if (node) {
                         tooltip.classList.remove('tooltip-hidden');
-                        tooltip.querySelector('.tooltip-title').textContent = node.title || node.id;
+                        tooltip.querySelector('.tooltip-title').textContent = (node.pkgNum ? node.pkgNum + '. ' : '') + (node.title || node.id);
                         tooltip.querySelector('.tooltip-domain').textContent = node.primary_domain || node.domain || '';
                         const scoreEl = tooltip.querySelector('.tooltip-score');
                         if (scoreEl) {

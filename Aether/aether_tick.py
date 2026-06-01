@@ -212,6 +212,37 @@ def rebuild_commit_push() -> bool:
     except Exception as e:
         print(f"[Tick] docs sync error: {e}")
 
+    def _has_conflict_markers():
+        """Check if any tracked file has git merge conflict markers."""
+        result = subprocess.run(
+            ["git", "ls-files", "--unmerged"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10
+        )
+        return bool(result.stdout.strip())
+
+    def _regenerate_index_if_needed():
+        """Regenerate package_index.js and rsync to docs if conflict markers found."""
+        pkg_idx = PACKAGES_DIR / "package_index.js"
+        if pkg_idx.exists():
+            content = pkg_idx.read_text(errors="ignore")
+            if "<<<<<<" in content or ">>>>>>" in content:
+                print("[Tick] Conflict markers found in package_index.js, regenerating...")
+                r = subprocess.run(
+                    [sys.executable, "update_index.py"],
+                    cwd=str(PACKAGES_DIR),
+                    capture_output=True, text=True, timeout=60
+                )
+                if r.returncode == 0:
+                    # Re-rsync the fixed file to docs
+                    subprocess.run(
+                        ["rsync", "-a", str(PACKAGES_DIR) + "/package_index.js",
+                         str(docs_dir) + "/package_index.js"],
+                        capture_output=True, timeout=30
+                    )
+                    print("[Tick] package_index.js regenerated after conflict")
+                else:
+                    print(f"[Tick] Regeneration failed: {r.stderr}")
+
     # Git add only changed files (not -A which scans everything)
     try:
         # Stage specific directories instead of -A
@@ -234,28 +265,44 @@ def rebuild_commit_push() -> bool:
             cwd=str(REPO_ROOT), capture_output=True, timeout=30
         )
 
-        # Stash unstaged changes before pull to avoid "cannot pull with rebase" errors
-        stash = subprocess.run(
-            ["git", "stash", "--include-untracked"],
-            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
-        )
-        had_stash = stash.returncode == 0 and "No local changes" not in (stash.stdout or "")
-
-        # Pull with rebase to handle remote changes
+        # Pull with rebase — NO stash dance. All changes are committed,
+        # so there should be no dirty working tree. If rebase conflicts
+        # occur on auto-generated files, we regenerate them afterward.
         pull = subprocess.run(
-            ["git", "pull", "--rebase", "-X", "ours", "origin", "master"],
+            ["git", "pull", "--rebase", "origin", "master"],
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
         )
         if pull.returncode != 0:
-            subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
-            if had_stash:
-                subprocess.run(["git", "stash", "pop"], cwd=str(REPO_ROOT), capture_output=True)
-            print(f"[Tick] git pull --rebase failed: {pull.stderr}")
-            return False
+            # Check if the conflict is on auto-generated files we can fix
+            if _has_conflict_markers():
+                # Resolve package_index.js conflicts by regenerating it
+                _regenerate_index_if_needed()
+                # Stage the resolved file and continue rebase
+                subprocess.run(
+                    ["git", "add", "Catalog/Applications/Packages/package_index.js",
+                     "docs/package_index.js"],
+                    cwd=str(REPO_ROOT), capture_output=True, timeout=30
+                )
+                rebase_continue = subprocess.run(
+                    ["git", "rebase", "--continue"],
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+                    # Provide empty editor via env
+                )
+                if rebase_continue.returncode != 0:
+                    # If still failing, try with --no-edit
+                    subprocess.run(["git", "-c", "core.editor=true", "rebase", "--continue"],
+                                   cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+                    if _has_conflict_markers():
+                        subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                        print("[Tick] git rebase --continue still has conflicts, aborted")
+                        return False
+            else:
+                subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                print(f"[Tick] git pull --rebase failed (non-auto-resolvable): {pull.stderr}")
+                return False
 
-        # Restore stashed changes after successful pull
-        if had_stash:
-            subprocess.run(["git", "stash", "pop"], cwd=str(REPO_ROOT), capture_output=True)
+        # Final safety check: regenerate index if any conflict markers leaked through
+        _regenerate_index_if_needed()
 
         push = subprocess.run(
             ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
