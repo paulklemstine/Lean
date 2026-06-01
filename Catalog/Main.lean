@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2294 of the highest-quality
+A curated collection of 2298 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2294
+Total files: 2298
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -79,6 +79,7 @@ import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.Design
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
+import FINAL.Algebra.DiscriminantUniformity
 import FINAL.Algebra.Distance
 import FINAL.Algebra.DruzkowskiTheory
 import FINAL.Algebra.ECDLP
@@ -898,6 +899,7 @@ import FINAL.Bridges.TropicalUltrametricDuality
 import FINAL.Bridges.TropicalUltrametricQuantumUncertainty
 import FINAL.Bridges.TropicalUnivalence
 import FINAL.Bridges.TropicalValuationDistillation
+import FINAL.Bridges.TropicalValuationFunctor
 import FINAL.Bridges.TropicalValuationSecretSharingDuality
 import FINAL.Bridges.TropicalVoronoiDecoderDuality
 import FINAL.Bridges.UltrametricBarronCompressionDuality
@@ -1546,6 +1548,7 @@ import FINAL.MachineLearning.QuantumNeuralArchitecture
 import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.RamseyDNA
 import FINAL.MachineLearning.RecipeComplexity
+import FINAL.MachineLearning.ReflTTDepthAlgebra
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
 import FINAL.MachineLearning.ResNetLipschitz
@@ -2038,6 +2041,7 @@ import FINAL.Shared.Fib_gcd_identity
 import FINAL.Shared.FibonacciLTE
 import FINAL.Shared.Foundations
 import FINAL.Shared.MutualInformation
+import FINAL.Shared.RegisterGraphColoring
 import FINAL.Shared.Theorems
 import FINAL.Tropical.ACCanonical
 import FINAL.Tropical.ACNormalForm

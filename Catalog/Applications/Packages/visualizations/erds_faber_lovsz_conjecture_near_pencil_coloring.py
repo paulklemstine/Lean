@@ -1,0 +1,1 @@
+def near_pencil_coloring(system):\n    is_np, center = system.is_near_pencil()\n    coloring = {center: 0}\n    for i, edge in enumerate(system.edges):\n        non_center = sorted(edge - {center})\n        for j, v in enumerate(non_center):\n            coloring[v] = j + 1\n    return coloring

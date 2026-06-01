@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "date": "2026-06-01T14:52:52Z",
     "exp_id": "7cd2b5be",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7107561643835616,
+    "quality": "substantial",
     "pkg_num": 99
   },
   {
@@ -2878,8 +2878,8 @@ window.PACKAGE_GRAPH = {
       "shape": "sphere_rings",
       "date": "2026-06-01T14:52:52Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7107561643835616,
+      "quality": "substantial"
     }
   ],
   "edges": [
