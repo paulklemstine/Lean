@@ -860,15 +860,24 @@ Research mode: {concept.research_mode}
                 else:
                     content = fp.read_text(encoding='utf-8', errors='ignore')
                 rel_path = fp.relative_to(extract_dir) if extract_dir in fp.parents else fp.name
+                # Strip _aristotle project directory prefixes (e.g. c6e162ae_aristotle/)
+                # These are temporary extraction dirs, not real Catalog paths
+                clean_parts = []
+                for p in rel_path.parts:
+                    if re.match(r'^[0-9a-f]+_aristotle$', p):
+                        continue
+                    clean_parts.append(p)
+                clean_rel = Path(*clean_parts) if clean_parts else rel_path
                 # Deduplicate by catalog-relative path to avoid writing same file twice
-                dedup_key = str(rel_path).replace('\\', '/')
+                dedup_key = str(clean_rel).replace('\\', '/')
                 # For files under Catalog/ subdirectory, strip that prefix for dedup
                 if "Catalog/" in dedup_key:
                     dedup_key = dedup_key.split("Catalog/", 1)[1]
                 if dedup_key in seen_paths:
                     continue
                 seen_paths.add(dedup_key)
-                header = f"-- DIFF: {rel_path}\n" if is_diff_file else f"-- NEW_FILE: {rel_path}\n"
+                # Use the cleaned path in headers so downstream gets real Catalog paths
+                header = f"-- DIFF: {clean_rel}\n" if is_diff_file else f"-- NEW_FILE: {clean_rel}\n"
                 parts.append(f"{header}{content}\n")
             job.result_lean = "\n\n".join(parts)
 
@@ -2360,7 +2369,13 @@ Research mode: {concept.research_mode}
                     for entry in lp_list:
                         if isinstance(entry, dict):
                             fname = entry.get("file", "") or entry.get("name", "")
-                            existing_files.add(fname.split("/")[-1])
+                            # Clean _aristotle project dir prefixes from existing entries
+                            clean_fname = "/".join(p for p in fname.split("/") if not re.match(r'^[0-9a-f]+_aristotle$', p))
+                            if clean_fname != fname:
+                                entry["file"] = clean_fname
+                                if "name" in entry:
+                                    entry["name"] = clean_fname
+                            existing_files.add(clean_fname.split("/")[-1].replace(".lean", ""))
                 # Parse -- NEW_FILE: markers from result_lean (skip DIFF entries —
                 # those are patches, not complete files)
                 _pattern = re.compile(r'^-- NEW_FILE:\s*(.+?)$', re.MULTILINE)
@@ -2369,6 +2384,8 @@ Research mode: {concept.research_mode}
                 _new_entries = []
                 for i in range(1, len(_splits), 2):
                     fname = _splits[i].strip()
+                    # Clean _aristotle project dir prefixes
+                    fname = "/".join(p for p in fname.split("/") if not re.match(r'^[0-9a-f]+_aristotle$', p))
                     code = _splits[i + 1].strip() if i + 1 < len(_splits) else ""
                     basename = fname.split("/")[-1].replace(".lean", "")
                     if basename not in existing_files and code:
