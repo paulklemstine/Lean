@@ -1,226 +1,294 @@
-# Persistent Homological Quantum Error Correction: Chain Complex Functoriality and Barcode Distance Bounds
+# Height Cocycles and the Monodromy Classification of Impossible Figures
 
 ## Abstract
 
-We establish a rigorous mathematical framework connecting persistent homology to quantum error-correcting codes through the functorial properties of chain complex morphisms over F₂. Our central result is that chain morphisms induced by simplicial inclusions in a filtered complex preserve the kernel of boundary operators — the algebraic incarnation of logical operators in CSS codes — providing a mechanism by which topological persistence controls code distance. We formalize graded F₂ chain complexes, prove that homotopic chain morphisms agree on homology (modulo boundaries), and derive quantitative bounds connecting barcode structure to quantum code parameters via the quantum Singleton bound. We state the Barcode Distance Conjecture — that a persistence bar [ε, δ) yields a CSS code of distance ≥ ⌈δ/ε⌉ — and verify it for the toric code family. All main results are formalized and verified in Lean 4 with Mathlib.
+We develop a rigorous mathematical framework for the classification of impossible figures using height cocycles on cycle graphs. The central result is the **Monodromy Classification Theorem**: a height cocycle on the cycle graph Cₙ is a coboundary (realizable as a consistent 3D height assignment) if and only if its monodromy — the sum of edge weights around the cycle — vanishes. We prove this theorem constructively, providing an explicit height reconstruction algorithm for the realizable case. We extend the framework to orientation cocycles, proving that the orientation monodromy (product of ±1 local orientations) classifies figures as orientable or non-orientable, and establish the odd-parity criterion for non-orientability. We derive the Hodge decomposition for cycle graphs, the perturbation stability of impossibility, and rational rigidity of the monodromy invariant. All main results have been formally verified in Lean 4 with the Mathlib library.
 
-**Keywords**: persistent homology, quantum error correction, CSS codes, chain complexes, topological data analysis, quantum LDPC codes
+**Keywords**: impossible figures, height cocycles, monodromy, discrete cohomology, cycle graphs, Penrose triangle, orientation cocycles, Hodge decomposition
 
 ---
 
 ## 1. Introduction
 
-The connection between topology and quantum error correction has been a productive theme since Kitaev's introduction of the toric code [Kit03]. The toric code, defined on a triangulated torus, encodes 2 logical qubits with distance L on 2L² physical qubits. Its error-correcting properties arise directly from the homology of the torus: logical operators correspond to homologically nontrivial 1-cycles, and the distance equals the systolic length of the surface.
+Impossible figures — drawings that appear locally consistent but are globally unrealizable in three-dimensional Euclidean space — have fascinated artists, psychologists, and mathematicians since the pioneering work of Penrose and Penrose (1958) and the art of M.C. Escher. Despite extensive study in visual perception and computer graphics, the mathematical foundations of impossibility have lacked a unified, formally verified treatment.
 
-Persistent homology [ELZ02, ZC05] extends classical homology by tracking how topological features evolve across a filtration — a nested family of simplicial complexes K₀ ⊆ K₁ ⊆ ⋯ ⊆ K_T. Each feature is described by a "bar" [b, d) recording its birth time b and death time d. Long-lived features (large d - b) are considered topologically significant, while short-lived features represent noise.
+This paper develops such a treatment using the language of discrete cohomology. We model an impossible figure as a **height cocycle** on a cycle graph: a real-valued function on directed edges encoding local height differences between adjacent vertices. The key observation is that a figure is realizable if and only if the cocycle is a **coboundary** — that is, it arises as the discrete differential of a global height function.
 
-In this paper, we show that persistence controls not just topological significance, but also quantum error-correcting capability. The key observation is that each filtered chain complex produces a family of CSS codes, and the inclusion-induced chain morphisms between filtration levels preserve the logical operators of these codes. Features that persist longer must have higher-weight representatives, directly linking persistence to code distance.
+The obstruction to realizability is the **monodromy**: the sum of edge weights around the cycle. This is the discrete analogue of the period integral in de Rham cohomology. The Monodromy Classification Theorem states that the monodromy provides a complete invariant: a cocycle is a coboundary if and only if the monodromy vanishes.
 
-### 1.1 Main Contributions
+### 1.1 Related Work
 
-1. **Graded F₂ chain complex formalism** (Definition 3.1): We define graded chain complexes with filtration levels on generators, capturing the combinatorial structure of filtered simplicial complexes.
+The connection between impossible figures and cohomology was observed informally by several authors. Sugihara (1986) characterized impossible objects through linear algebraic conditions on vertex heights. Huffman (1971) and Clowes (1971) developed junction-labeling approaches for line drawings. Our contribution formalizes these ideas in the language of cochains and coboundaries on graphs, proves the classification theorem constructively, and extends it to orientation cocycles and the Hodge decomposition.
 
-2. **Chain morphism functoriality** (Theorem 4.1): We prove that chain morphisms preserve ker(∂₂), establishing that logical operators transport across filtration levels.
+### 1.2 Contributions
 
-3. **Composition theorem** (Theorem 4.2): We show that compositions of chain morphisms are again chain morphisms, enabling multi-step persistence tracking.
-
-4. **Homotopy invariance** (Theorem 5.1): We prove that homotopic chain morphisms agree on homology modulo boundaries, establishing the well-definedness of persistent homology classes in the code setting.
-
-5. **Quantitative bounds** (Theorems 6.1–6.5): We derive bounds connecting barcode parameters to CSS code parameters via the quantum Singleton bound, including the persistent Singleton-Hamming tradeoff.
-
-6. **Barcode Distance Conjecture** (Conjecture 7.1): We formulate and partially verify a quantitative conjecture linking persistence ratios to code distances.
-
----
-
-## 2. Preliminaries
-
-### 2.1 CSS Codes
-
-A CSS (Calderbank-Shor-Steane) code on n qubits is defined by two binary matrices H_x ∈ F₂^{r_x × n} and H_z ∈ F₂^{r_z × n} satisfying the CSS orthogonality condition:
-
-$$H_x \cdot H_z^T = 0$$
-
-The X-logical operators are vectors v ∈ F₂^n with H_z · v = 0 (in ker H_z). The X-stabilizers are vectors in im(H_x^T). The X-distance is the minimum Hamming weight of a nontrivial X-logical operator (one that is not a stabilizer).
-
-### 2.2 Chain Complexes
-
-An F₂ chain complex C₀ →^{∂₁} C₁ →^{∂₂} C₂ consists of F₂-vector spaces and linear maps satisfying ∂₂ ∘ ∂₁ = 0. This condition is equivalent to CSS orthogonality when we set H_x = ∂₁^T and H_z = ∂₂.
-
-### 2.3 Persistent Homology
-
-A filtered chain complex is a sequence of chain complexes connected by chain morphisms (inclusion-induced maps). The persistent homology module records which homology classes born at stage s survive to stage t, encoded by the persistent Betti numbers β(s,t).
-
-### 2.4 Hamming Weight
-
-For v ∈ F₂^n, the Hamming weight wt(v) = |{i : v_i ≠ 0}|. We prove the triangle inequality wt(u + v) ≤ wt(u) + wt(v) by showing that supp(u + v) ⊆ supp(u) ∪ supp(v) and applying the union bound.
+1. **Monodromy Classification Theorem** (Theorem 3.1): Complete characterization of coboundaries on cycle graphs via vanishing monodromy.
+2. **Constructive height reconstruction** (Theorem 3.2): Explicit algorithm for building height functions from zero-monodromy cocycles.
+3. **Orientation cocycle theory** (Section 4): Classification of orientability via the orientation monodromy product and the odd-parity criterion.
+4. **Hodge decomposition** (Section 5): Unique decomposition of cocycles into coboundary and harmonic parts.
+5. **Perturbation stability** (Theorem 6.1): Impossibility is stable under perturbations smaller than the monodromy.
+6. **Rational rigidity** (Theorem 6.2): Rational cocycles have rational monodromy.
+7. **Formal verification**: All main results verified in Lean 4 with Mathlib.
 
 ---
 
-## 3. Graded F₂ Chain Complexes
+## 2. Definitions
 
-**Definition 3.1** (GradedF2ChainComplex). A graded F₂ chain complex of type (m, n, p) consists of:
-- Boundary maps d₁ ∈ F₂^{n×m} and d₂ ∈ F₂^{p×n} with d₂ · d₁ = 0
-- Grade functions grade₀ : Fin m → ℕ, grade₁ : Fin n → ℕ, grade₂ : Fin p → ℕ
+### 2.1 Cycle Graph Cocycles
 
-The grade functions assign a filtration level to each generator. At level t, the subcomplex includes only generators with grade ≤ t.
+**Definition 2.1** (Cycle Graph). The cycle graph Cₙ (n ≥ 1) has vertex set {0, 1, ..., n−1} and directed edges i → (i+1) mod n for each i.
 
-**Theorem 3.2** (Monotonicity of generator count). For a graded chain complex G, the function t ↦ |{i : grade₁(i) ≤ t}| is monotonically non-decreasing.
+**Definition 2.2** (Height Cocycle). A *height cocycle* on Cₙ is a function ω : {0, ..., n−1} → ℝ, where ω(i) represents the height difference along edge i → (i+1) mod n.
 
-*Proof.* If t₁ ≤ t₂, then {i : grade₁(i) ≤ t₁} ⊆ {i : grade₁(i) ≤ t₂}, so the cardinality is non-decreasing. □
+Formally, the space of height cocycles is C¹(Cₙ; ℝ) = ℝⁿ (one real value per edge).
 
-**Definition 3.3** (Filtration depth). The filtration depth of a grade function grade : Fin n → ℕ is the number of distinct values in its image. We prove that filtration depth ≤ n (at most one distinct value per generator) and that a constant grade function has depth ≤ 1.
+**Definition 2.3** (Monodromy). The *monodromy* of a cocycle ω is:
 
----
+    M(ω) = Σᵢ₌₀ⁿ⁻¹ ω(i)
 
-## 4. Chain Morphisms and Functoriality
+This is the total height discrepancy accumulated in one traversal of the cycle.
 
-**Definition 4.1** (F2ChainMorphism). A chain morphism φ : C₁ → C₂ between F₂ chain complexes consists of matrices f₀, f₋₁, f₁ satisfying the commutativity conditions:
-- d₁₂ · f₋₁ = f₀ · d₁₁ (lower square commutes)
-- d₂₂ · f₀ = f₁ · d₂₁ (upper square commutes)
+**Definition 2.4** (Coboundary). A cocycle ω is a *coboundary* if there exists a height function h : {0, ..., n−1} → ℝ such that:
 
-**Theorem 4.2** (Functoriality — kernel preservation). If φ : C₁ → C₂ is a chain morphism and v ∈ ker(d₂₁), then f₀(v) ∈ ker(d₂₂).
+    ω(i) = h((i+1) mod n) − h(i)   for all i
 
-*Proof.* We compute:
-$$d_{2,2} \cdot (f_0 \cdot v) = (d_{2,2} \cdot f_0) \cdot v = (f_1 \cdot d_{2,1}) \cdot v = f_1 \cdot (d_{2,1} \cdot v) = f_1 \cdot 0 = 0$$
+Coboundaries correspond to the image of the discrete differential δ : C⁰(Cₙ; ℝ) → C¹(Cₙ; ℝ).
 
-using the upper commutativity condition d₂₂ · f₀ = f₁ · d₂₁. □
+**Definition 2.5** (Impossibility Index). The *impossibility index* of ω is |M(ω)|. It measures "how impossible" the figure is: zero for realizable, positive for impossible.
 
-**Theorem 4.3** (Composition). Given chain morphisms φ : C₁ → C₂ and ψ : C₂ → C₃, the composition ψ ∘ φ (with component matrices ψ.f₀ · φ.f₀, etc.) is a chain morphism.
+### 2.2 Impossible Figures
 
-*Proof.* The lower commutativity condition for the composition:
-$$d_{1,3} \cdot (\psi.f_{-1} \cdot \phi.f_{-1}) = (\psi.f_0 \cdot \phi.f_0) \cdot d_{1,1}$$
+**Definition 2.6** (Impossible Figure). An *impossible figure* is a pair (Cₙ, ω) where ω is a height cocycle with M(ω) ≠ 0.
 
-follows from the individual conditions by matrix associativity:
-$$d_{1,3} \cdot (\psi.f_{-1} \cdot \phi.f_{-1}) = (d_{1,3} \cdot \psi.f_{-1}) \cdot \phi.f_{-1} = (\psi.f_0 \cdot d_{1,2}) \cdot \phi.f_{-1} = \psi.f_0 \cdot (d_{1,2} \cdot \phi.f_{-1}) = \psi.f_0 \cdot (\phi.f_0 \cdot d_{1,1}) = (\psi.f_0 \cdot \phi.f_0) \cdot d_{1,1}$$
+**Example 2.7** (Penrose Triangle). The Penrose triangle corresponds to n = 3 with ω(0) = ω(1) = ω(2) = 1. The monodromy is M(ω) = 3 ≠ 0.
 
-The upper condition is analogous. □
+**Example 2.8** (Escher Staircase). An Escher staircase with 4 flights corresponds to n = 4 with ω(i) = 2 for all i. The monodromy is M(ω) = 8.
 
-**Corollary 4.4.** Composed chain morphisms preserve kernels: if v ∈ ker(d₂₁), then (ψ ∘ φ).f₀ · v ∈ ker(d₂₃).
+### 2.3 Orientation Cocycles
 
----
+**Definition 2.9** (Orientation Cocycle). An *orientation cocycle* on Cₙ is a function σ : {0, ..., n−1} → {+1, −1}, where σ(i) indicates whether orientation is preserved (+1) or reversed (−1) at edge i.
 
-## 5. Chain Homotopy and Code Equivalence
+**Definition 2.10** (Orientation Monodromy). The *orientation monodromy* is:
 
-**Definition 5.1** (ChainHomotopyF2). A chain homotopy between morphisms f, g : C₁ → C₂ consists of maps h₀₁ : C₁¹ → C₂⁰ and h₁₂ : C₁² → C₂¹ satisfying the homotopy relation (over F₂, where subtraction = addition):
+    M_or(σ) = Πᵢ₌₀ⁿ⁻¹ σ(i)
 
-$$f + g = d_1 \circ h_{01} + h_{12} \circ d_2$$
+**Definition 2.11** (Non-orientability). A figure is *non-orientable* if M_or(σ) = −1.
 
-**Theorem 5.2** (Homotopic morphisms agree on ker(d₂) modulo boundaries). If H is a chain homotopy between f and g, and v ∈ ker(d₂), then:
+### 2.4 Cohomology
 
-$$f(v) + g(v) = d_1(h_{01}(v))$$
+**Definition 2.12** (Cohomologous). Two cocycles ω₁, ω₂ are *cohomologous* if ω₁ − ω₂ is a coboundary. This is an equivalence relation.
 
-*Proof.* From the homotopy relation, (f + g) · v = (d₁ · h₀₁ + h₁₂ · d₂) · v. Since d₂ · v = 0, the second term vanishes: h₁₂ · (d₂ · v) = h₁₂ · 0 = 0. Thus f(v) + g(v) = d₁ · (h₀₁ · v), which is a boundary in C₂. □
-
-**Corollary 5.3.** Over F₂, if f(v) + g(v) is a boundary, then f(v) and g(v) represent the same homology class. This means the persistent homology class tracked by v is independent of the choice of chain morphism (up to homotopy), establishing well-definedness of the persistent quantum code.
+The first cohomology group H¹(Cₙ; ℝ) = C¹(Cₙ; ℝ) / B¹(Cₙ; ℝ) classifies cocycles up to coboundary equivalence.
 
 ---
 
-## 6. Quantitative Bounds
+## 3. The Monodromy Classification Theorem
 
-### 6.1 Quantum Singleton Bound
+### 3.1 The Telescoping Lemma
 
-**Theorem 6.1.** For a CSS code [[n, k, d]], the quantum Singleton bound gives 2d + k ≤ n + 2, hence d ≤ (n - k)/2 + 1.
+**Lemma 3.1** (Telescoping Sum). For any function h : Fin n → ℝ and n ≥ 1:
 
-### 6.2 Persistence-Rate Tradeoff
+    Σᵢ₌₀ⁿ⁻¹ (h((i+1) mod n) − h(i)) = 0
 
-**Theorem 6.2.** Under the Singleton bound, the encoding rate satisfies:
+*Proof sketch.* The map i ↦ (i+1) mod n is a permutation of {0, ..., n−1}. By the permutation invariance of finite sums:
 
-$$\frac{k}{n} \leq 1 - \frac{2(d-1)}{n} + \frac{2}{n}$$
+    Σᵢ h((i+1) mod n) = Σᵢ h(i)
 
-*Proof.* From 2d + k ≤ n + 2, we get k ≤ n - 2(d - 1) + 2. Dividing by n (which is positive) gives the result after algebraic simplification. □
+Therefore their difference is zero. □
 
-### 6.3 Genus-Distance Bound
+### 3.2 Forward Direction
 
-**Theorem 6.3.** For a genus-g surface code with n physical qubits, k = 2g logical qubits, and distance d: d ≤ (n - 2g)/2 + 1.
+**Theorem 3.1** (Coboundary ⟹ Zero Monodromy). If ω is a coboundary, then M(ω) = 0.
 
-### 6.4 Persistent Singleton-Hamming Tradeoff
+*Proof.* Let h be the height function with ω(i) = h((i+1) mod n) − h(i). Then:
 
-**Theorem 6.4.** For a t-error-correcting code (d = 2t + 1) satisfying Singleton: k + 4t ≤ n.
+    M(ω) = Σᵢ ω(i) = Σᵢ (h((i+1) mod n) − h(i)) = 0
 
-### 6.5 BPT Bound
+by the Telescoping Lemma. □
 
-**Theorem 6.5** (Weak BPT bound). For any CSS code with k ≤ n and d ≤ n: kd² ≤ n³. The tight BPT bound for 2D topological codes gives kd² ≤ O(n), but our proof establishes the weaker polynomial bound directly.
+### 3.3 Backward Direction
 
-### 6.6 Distance Scaling
+**Theorem 3.2** (Zero Monodromy ⟹ Coboundary). If M(ω) = 0, then ω is a coboundary.
 
-**Theorem 6.6.** The Singleton bound implies 4d² ≤ (n + 2)², established via nlinarith from the constraint 2d ≤ n + 2. For the toric code, d = L and n = 2L², giving d² = n/2 — a tight example.
+*Proof.* Define the partial sum height function:
 
----
+    h(k) = Σᵢ₌₀ᵏ⁻¹ ω(i)   (with h(0) = 0)
 
-## 7. The Barcode Distance Conjecture
+For 0 ≤ k < n−1:
+    h((k+1) mod n) − h(k) = h(k+1) − h(k) = ω(k) ✓
 
-**Conjecture 7.1** (Barcode Distance Conjecture). For any simplicial complex K with a persistence bar [ε, δ) in H₁(K; F₂), the CSS code derived from the filtration at scale δ has X-distance at least ⌈δ/ε⌉.
+For k = n−1:
+    h(0) − h(n−1) = 0 − Σᵢ₌₀ⁿ⁻² ω(i) = ω(n−1)
 
-**Verification for the toric code.** For the L × L toric code: ε = 1 (birth of the fundamental cycle), δ = L (death scale), and d = L = ⌈L/1⌉. ✓
+where the last step uses M(ω) = 0, i.e., ω(n−1) = −Σᵢ₌₀ⁿ⁻² ω(i). □
 
-**Testable prediction.** Compute the Vietoris-Rips barcode of 100 random points on a flat torus. Construct CSS codes at 20 filtration scales. Measure the minimum X-distance. If any prediction fails, the conjecture is falsified.
+### 3.4 The Classification Theorem
 
-**Conjecture 7.2** (Persistent Distance Monotonicity). For any filtered simplicial complex K₀ ⊆ K₁ ⊆ ⋯ ⊆ K_T, the CSS code distance sequence d(0,t) is non-decreasing in t. This follows from the chain morphism functoriality theorem under the assumption that persistent logicals retain their weight structure through inclusions.
+**Theorem 3.3** (Monodromy Classification). A cocycle ω on Cₙ is a coboundary if and only if M(ω) = 0.
 
----
+*Proof.* Combine Theorems 3.1 and 3.2. □
 
-## 8. Persistence Barcodes and Code Optimization
+**Corollary 3.4.** The first cohomology H¹(Cₙ; ℝ) ≅ ℝ, with the isomorphism given by the monodromy map M : C¹(Cₙ; ℝ) → ℝ.
 
-### 8.1 Total Persistence Bound
-
-**Theorem 8.1.** For a barcode with numBars bars: totalPersistence ≤ numBars × maxPersistence.
-
-*Proof.* Each bar's persistence is at most the maximum persistence. Sum over all bars. □
-
-### 8.2 Hypergraph Product from Künneth
-
-The Künneth theorem for the product of two spaces gives H₁(X × Y) ≅ H₀(X) ⊗ H₁(Y) ⊕ H₁(X) ⊗ H₀(Y), yielding the dimension formula for hypergraph product codes: dim H₁ = b₁₀·b₂₁ + b₁₁·b₂₀. For X = Y = S¹: b₁₀ = b₁₁ = 1, giving dim H₁(T²) = 2, confirming the toric code's k = 2.
-
-### 8.3 Weight Enumerator
-
-The weight enumerator A_w = |{v ∈ S : wt(v) = w}| satisfies A_w = 0 for w > n (the code length), and ∑_w A_w ≤ |S|. The minimum distance is the smallest w > 0 with A_w > 0 among nontrivial logicals.
+**Corollary 3.5.** Two cocycles ω₁, ω₂ are cohomologous if and only if M(ω₁) = M(ω₂).
 
 ---
 
-## 9. Applications and Algorithms
+## 4. Orientation Cocycle Theory
 
-### 9.1 Code Construction Pipeline
+### 4.1 The ±1 Monodromy Theorem
 
-1. **Input**: Point cloud P ⊂ ℝ^d
-2. **Filtration**: Build Vietoris-Rips complex VR(P, r) for increasing r
-3. **Persistence**: Compute H₁ barcode using standard persistence algorithm
-4. **Selection**: Choose scale r* maximizing predicted distance-rate product
-5. **Output**: CSS code (H_x, H_z) from the chain complex at scale r*
+**Theorem 4.1.** For any orientation cocycle σ on Cₙ, the orientation monodromy M_or(σ) ∈ {+1, −1}.
 
-### 9.2 Complexity
+*Proof.* Each factor σ(i) ∈ {+1, −1} has |σ(i)| = 1. Therefore |M_or(σ)| = Πᵢ |σ(i)| = 1, so M_or(σ) ∈ {+1, −1}. □
 
-Computing the persistence barcode of N simplices requires O(N^ω) operations where ω ≤ 3 is the matrix multiplication exponent. For n points in ℝ^d, the Vietoris-Rips complex has O(n^{d+1}/d!) simplices.
+### 4.2 The Odd-Parity Criterion
+
+**Theorem 4.2** (Odd-Parity Criterion). An orientation cocycle σ is non-orientable if and only if the number of edges with σ(i) = −1 is odd.
+
+*Proof.* Let k = |{i : σ(i) = −1}|. Each σ(i) equals (−1)^[σ(i)=−1], so:
+
+    M_or(σ) = Πᵢ σ(i) = (−1)^k
+
+This is −1 if and only if k is odd. □
+
+**Remark.** This theorem provides the connection between impossible figures and non-orientable surfaces. The Möbius strip corresponds to a cycle with an odd number of orientation reversals — precisely the condition for non-orientability.
 
 ---
 
-## 10. Discussion
+## 5. The Hodge Decomposition
 
-### 10.1 Relation to Existing Work
+### 5.1 Decomposition Theorem
 
-Our framework extends previous work on topological quantum codes by adding the persistence layer. Kitaev's toric code is the special case of a single filtration step. Freedman-Meyer-Luo's approach via systolic geometry corresponds to the case where persistence equals the systole. The hypergraph product codes of Tillich-Zémor can be viewed as Künneth products in our framework.
+**Theorem 5.1** (Hodge Decomposition for Cycle Graphs). Every cocycle ω on Cₙ has a unique decomposition:
 
-### 10.2 Limitations
+    ω = δf + ω_h
 
-The Barcode Distance Conjecture remains unproven in general. Our formalization works with abstract chain complexes and does not yet connect to the geometric realization of simplicial complexes. The persistent distance monotonicity conjecture is assumed as an axiom rather than derived from first principles.
+where δf is a coboundary and ω_h is harmonic (constant on all edges):
 
-### 10.3 Future Directions
+    ω_h(i) = M(ω) / n   for all i
 
-1. **Prove the Barcode Distance Conjecture** for restricted families (e.g., triangulated surfaces, Vietoris-Rips complexes of manifolds).
-2. **Non-CSS codes** from persistent cohomology with non-commutative coefficients.
-3. **Quantum LDPC codes** from sparse filtered complexes.
-4. **Interleaving distance** as a metric on quantum code families.
+*Proof.* Define ω_h(i) = M(ω)/n. Then M(ω_h) = n · M(ω)/n = M(ω), so M(ω − ω_h) = 0. By the classification theorem, ω − ω_h = δf for some f. Uniqueness follows from the fact that a coboundary that is also harmonic (constant) must have zero monodromy, hence must equal the zero function (since the constant must be M/n = 0/n = 0). □
+
+### 5.2 Interpretation
+
+The harmonic part ω_h represents the "pure impossibility" — the irreducible component that cannot be gauged away. The coboundary part δf represents height variations that are consistent and could be built. The impossibility index equals n · |ω_h(i)| for any i.
+
+---
+
+## 6. Stability and Rigidity
+
+### 6.1 Perturbation Stability
+
+**Theorem 6.1.** If M(ω) ≠ 0 and |M(ε)| < |M(ω)|, then M(ω + ε) ≠ 0.
+
+*Proof.* By linearity, M(ω + ε) = M(ω) + M(ε). If this were zero, then M(ε) = −M(ω), so |M(ε)| = |M(ω)|, contradicting the hypothesis. □
+
+**Interpretation.** Impossibility is an open condition in the space of cocycles. The stability radius equals |M(ω)| — the impossibility index itself.
+
+### 6.2 Rational Rigidity
+
+**Theorem 6.2.** If all edge weights ω(i) are rational, then M(ω) is rational.
+
+*Proof.* The monodromy is a finite sum of rational numbers, hence rational. □
+
+**Corollary.** The impossibility index of a rational figure is rational.
+
+---
+
+## 7. Algorithms
+
+### 7.1 Impossibility Detection
+
+**Input:** Edge weights ω(0), ..., ω(n−1)  
+**Output:** Whether the figure is impossible
+
+1. Compute M = Σᵢ ω(i)
+2. Return M ≠ 0
+
+**Complexity:** O(n) time, O(1) space.
+
+### 7.2 Height Reconstruction
+
+**Input:** Edge weights ω(0), ..., ω(n−1) with M(ω) = 0  
+**Output:** Height function h(0), ..., h(n−1)
+
+1. Set h(0) = 0
+2. For k = 1, ..., n−1: set h(k) = h(k−1) + ω(k−1)
+
+**Complexity:** O(n) time, O(n) space.
+
+### 7.3 Hodge Decomposition
+
+**Input:** Edge weights ω(0), ..., ω(n−1)  
+**Output:** Coboundary part δf and harmonic part ω_h
+
+1. Compute M = Σᵢ ω(i)
+2. Set ω_h(i) = M/n for all i
+3. Set (δf)(i) = ω(i) − M/n for all i
+
+**Complexity:** O(n) time, O(n) space.
+
+---
+
+## 8. Applications
+
+### 8.1 Computer Vision
+
+In scene understanding, a vision system may extract local depth cues from shading, texture, or stereo that assign relative heights to adjacent regions. The monodromy detects inconsistencies: a nonzero monodromy indicates that the depth cues are globally contradictory (perhaps due to a reflection, occlusion, or actual impossible object in the scene). The impossibility index quantifies the severity of the inconsistency.
+
+### 8.2 Computer Graphics
+
+When rendering 3D scenes from 2D specifications, the height reconstruction algorithm provides an optimal consistent depth assignment when one exists. The Hodge decomposition can be used to "fix" inconsistent specifications by removing the harmonic (impossible) component, yielding the closest realizable figure.
+
+### 8.3 Cognitive Science
+
+The monodromy provides a quantitative measure of the "strength" of an impossible figure as a visual stimulus. Figures with higher impossibility index are predicted to produce stronger cognitive conflict. This prediction is testable through response-time experiments.
+
+---
+
+## 9. Discussion
+
+### 9.1 Connection to de Rham Theory
+
+The Monodromy Classification Theorem is the discrete analogue of the following result from de Rham theory: a closed 1-form on the circle S¹ is exact if and only if its integral over S¹ vanishes. The cycle graph Cₙ serves as a combinatorial model of S¹, edge weights correspond to 1-forms, height functions to 0-forms, the discrete differential to the exterior derivative, and the monodromy to the period integral.
+
+### 9.2 Limitations and Extensions
+
+The current framework is limited to cycle graphs. For general graphs, the first cohomology has dimension β₁ (the first Betti number), and realizability requires all monodromies around independent cycles to vanish. For simplicial complexes, higher-dimensional cocycles capture higher-order impossibilities.
+
+### 9.3 The Cohomological Viewpoint
+
+The monodromy classification can be stated in the language of sheaf cohomology: a height cocycle defines a ℝ-valued presheaf on the cycle graph, and the obstruction to its being a sheaf (having global sections) is classified by H¹. This perspective opens the door to generalizations involving non-abelian coefficient groups, twisted coefficients, and higher-categorical structures.
+
+---
+
+## 10. Future Work
+
+1. **Higher cocycles on simplicial complexes**: Extend the theory to 2-cocycles on triangulated surfaces, classifying "surface impossibilities."
+2. **Non-abelian monodromy**: Replace ℝ with non-abelian groups (e.g., SO(3)) to model impossible figures with rotational, not just translational, inconsistencies.
+3. **Spectral theory**: Develop a spectral decomposition of the coboundary operator on general graphs, relating the eigenvalues to the graph's topological properties.
+4. **Quantum impossibility**: Investigate connections between cocycle obstructions and contextuality in quantum mechanics (both are cohomological phenomena).
 
 ---
 
 ## References
 
-- [Kit03] A. Kitaev, "Fault-tolerant quantum computation by anyons," Ann. Phys. 303, 2-30 (2003).
-- [ELZ02] H. Edelsbrunner, D. Letscher, A. Zomorodian, "Topological persistence and simplification," Discrete Comput. Geom. 28, 511-533 (2002).
-- [ZC05] A. Zomorodian, G. Carlsson, "Computing persistent homology," Discrete Comput. Geom. 33, 249-274 (2005).
-- [CSS96] A.R. Calderbank, P.W. Shor, "Good quantum error-correcting codes exist," Phys. Rev. A 54, 1098 (1996).
-- [TZ14] J.-P. Tillich, G. Zémor, "Quantum LDPC codes with positive rate and minimum distance proportional to the square root of the blocklength," IEEE Trans. Inform. Theory 60, 1193-1202 (2014).
-- [BPT10] S. Bravyi, D. Poulin, B. Terhal, "Tradeoffs for reliable quantum information storage in 2D systems," Phys. Rev. Lett. 104, 050503 (2010).
+1. Penrose, L.S. and Penrose, R. (1958). "Impossible objects: a special type of visual illusion." *British Journal of Psychology*, 49(1), 31–33.
+2. Sugihara, K. (1986). *Machine Interpretation of Line Drawings*. MIT Press.
+3. Huffman, D.A. (1971). "Impossible Objects as Nonsense Sentences." *Machine Intelligence*, 6, 295–323.
+4. Clowes, M.B. (1971). "On seeing things." *Artificial Intelligence*, 2(1), 79–116.
+5. Bott, R. and Tu, L.W. (1982). *Differential Forms in Algebraic Topology*. Springer.
 
 ---
 
-*All main theorems in this paper have been formalized and verified in Lean 4 with the Mathlib library. The formalization files contain complete, sorry-free proofs.*
+## Appendix: Formal Verification
+
+All definitions and theorems in Sections 2–6 have been formally verified in Lean 4 using the Mathlib library (v4.28.0). The formalization includes:
+
+- 7 novel definitions (CycleCocycle, monodromy, IsCoboundary, ImpossibleFigure, OrientationCocycle, etc.)
+- 14 formally verified theorems with complete proofs and no axioms beyond the standard Lean foundations
+- Constructive height reconstruction via partial sums
+- The Penrose triangle as a concrete impossible figure instance
+
+The complete Lean source is available in `Algebra/ImpossibleFigures/`.
