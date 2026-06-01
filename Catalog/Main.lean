@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2316 of the highest-quality
+A curated collection of 2317 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2316
+Total files: 2317
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -2307,6 +2307,7 @@ import FINAL.Tropical.Tropical_Certified_Robustness_for_Multi_Class_ReLU_Network
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Residual_Neural_Networks_with_Skip_Connections
 import FINAL.Tropical.Tropical_Feynman_Calculus_via_Maslov_Dequantization_of_the_SPB_Classical_Action
 import FINAL.Tropical.Tropical_Hecke_Trace_Formula_for_GL₂
+import FINAL.Tropical.TuringMorphogenesis
 import FINAL.Tropical.Union
 import FINAL.Tropical.UniversalOracleTeam2
 import FINAL.Tropical.Universality

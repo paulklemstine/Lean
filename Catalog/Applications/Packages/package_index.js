@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ce02d01b",
     "filename": "turings_flowers_morphogenesis_as_algebraic_geometr.json",
     "pkg_num": 120,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.715329411764706,
     "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
@@ -3698,8 +3698,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "turings_flowers_morphogenesis_as_algebraic_geometr",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.715329411764706,
+      "quality": "substantial",
       "shape": "star",
       "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
     }
