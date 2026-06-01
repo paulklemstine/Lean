@@ -1616,7 +1616,7 @@
                 const hoverPulse = isHovered ? 1.8 + 0.4 * Math.sin(time * 6) : 1;
                 const pulse = (1 + 0.04 * Math.sin(time * 1.5 + node.phase)) * hoverPulse;
                 const massScale = 0.7 + (node.mass || 1) * 0.3;  // bigger mass = bigger visual
-                const r = (node.radius || 22) * pulse * massScale * camera.zoom;
+                const r = Math.max(8, Math.min(16, (node.radius || 22) * pulse * massScale * camera.zoom));
 
                 // Pulsing brightness — brighter for higher mass (suns vs planets)
                 const brightPulse = 0.8 + 0.2 * Math.sin(time * 2 + node.phase);
@@ -1707,7 +1707,7 @@
                 const col = nodeColor(node);
                 const pulse = 1 + 0.04 * Math.sin(time * 1.5 + node.phase);
                 const massScale = 0.7 + (node.mass || 1) * 0.3;
-                const r = (node.radius || 22) * pulse * massScale * camera.zoom;
+                const r = Math.max(8, Math.min(16, (node.radius || 22) * pulse * massScale * camera.zoom));
                 const massBright = Math.min(1, (node.mass || 1) * 0.4);
                 const adjustedL = Math.min(col.l * 0.8 + 15 + massBright * 10, 95);
                 const adjColor = { h: col.h, s: col.s, l: adjustedL };
@@ -1763,12 +1763,13 @@
 
         // ─── Interaction ───
         function findNodeAt(sx, sy) {
-            const w = screenToWorld(sx, sy);
             let closest = null, closestDist = Infinity;
             graphNodes.forEach(n => {
-                const dx = w.x - n.x, dy = w.y - n.y;
+                const sp = worldToScreen(n.x, n.y);
+                const dx = sx - sp.x, dy = sy - sp.y;
                 const d = Math.sqrt(dx * dx + dy * dy);
-                if (d < n.radius * 1.5 && d < closestDist) {
+                // Fixed 16px screen radius with 1.5x hitbox padding
+                if (d < 24 && d < closestDist) {
                     closest = n;
                     closestDist = d;
                 }
