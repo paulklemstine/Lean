@@ -1,0 +1,1 @@
+def extract(action, z0, z1): return action.multiply(z0, action.inverse(z1))

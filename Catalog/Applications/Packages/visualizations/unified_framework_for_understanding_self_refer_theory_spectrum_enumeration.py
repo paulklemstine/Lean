@@ -1,0 +1,1 @@
+See algorithms.py: theory_spectrum(pa)
