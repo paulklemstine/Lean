@@ -1,289 +1,324 @@
 #!/usr/bin/env python3
 """
-Algorithms for Knot Lattice Theory
-===================================
+Algorithms for Lattice Path – Alexander Polynomial Connections
 
-Implements the core algorithms for computing lattice path properties,
-area generating functions, and knot lattice structures.
+Type-hinted implementations of the core algorithms:
+1. Lattice path area computation
+2. Lattice path enumeration 
+3. Q-binomial coefficient computation
+4. Knot lattice validation
+5. Alexander polynomial from lattice paths
 """
 
+from typing import List, Tuple, Dict, Set, Optional, Iterator
 from itertools import combinations
-from math import comb, factorial
-from typing import List, Tuple, Dict, Optional, Set
-from collections import defaultdict
+from collections import Counter
+from functools import lru_cache
 
 
 # ============================================================
-# Algorithm 1: Lattice Path Area Computation
-# Time: O(m + n), Space: O(1)
+# Core Data Types
 # ============================================================
 
-def compute_path_area(path: List[bool], start_height: int = 0) -> int:
-    """Compute area under a lattice path.
+Step = str  # 'E' (East) or 'N' (North)
+Path = List[Step]
+Position = Tuple[int, int]
+Polynomial = Dict[int, int]  # power -> coefficient
+
+
+# ============================================================
+# Algorithm 1: Area Computation
+# ============================================================
+
+def compute_area(path: Path, initial_height: int = 0) -> int:
+    """Compute the area under a lattice path.
     
-    Algorithm: Linear scan maintaining running height.
-    - East step (True): add current height to area
-    - North step (False): increment height
+    The area counts unit squares between the path and the x-axis.
+    Each East step at height h contributes h to the area.
+    Each North step increases the height by 1.
     
-    Time: O(len(path)), Space: O(1)
+    Complexity: O(|path|) time, O(1) space.
     
     Args:
-        path: List of bools (True=East, False=North)
-        start_height: Initial height (default 0)
+        path: Sequence of 'E' and 'N' steps
+        initial_height: Starting height (default 0)
     
     Returns:
         Area under the path
-        
-    Example:
-        >>> compute_path_area([True, False, True, False])  # ENEN
-        1
-        >>> compute_path_area([False, True, False, True])  # NENE
-        3
+    
+    >>> compute_area(['N', 'N', 'E', 'E'])
+    4
+    >>> compute_area(['E', 'E', 'N', 'N'])
+    0
+    >>> compute_area(['N', 'E', 'N', 'E'])
+    3
     """
-    area = 0
-    h = start_height
+    h = initial_height
+    total = 0
     for step in path:
-        if step:
-            area += h
-        else:
+        if step == 'E':
+            total += h
+        elif step == 'N':
             h += 1
-    return area
+    return total
 
 
-# ============================================================
-# Algorithm 2: Path Complement and Area Verification
-# Time: O(m + n), Space: O(m + n)
-# ============================================================
-
-def compute_complement(path: List[bool]) -> List[bool]:
-    """Compute the complement of a lattice path (swap E ↔ N).
+def compute_area_shifted(path: Path, h: int) -> int:
+    """Verify the area shift lemma: areaAux(h, p) = area(p) + h * countE(p).
     
-    Time: O(len(path)), Space: O(len(path))
+    This computes area(p) + h * countE(p) directly.
     """
-    return [not s for s in path]
-
-
-def verify_area_complement(path: List[bool]) -> Tuple[int, int, int, bool]:
-    """Verify the Area Complement Theorem for a given path.
-    
-    Returns: (area, complement_area, m*n, is_valid)
-    
-    Example:
-        >>> verify_area_complement([True, False, True, False])
-        (1, 3, 4, True)
-    """
-    m = sum(1 for s in path if s)
-    n = sum(1 for s in path if not s)
-    a = compute_path_area(path)
-    ac = compute_path_area(compute_complement(path))
-    return (a, ac, m * n, a + ac == m * n)
+    base_area = compute_area(path)
+    count_e = sum(1 for s in path if s == 'E')
+    return base_area + h * count_e
 
 
 # ============================================================
-# Algorithm 3: Area Generating Function via Dynamic Programming
-# Time: O(m * n * min(m, n)), Space: O(m * n)
+# Algorithm 2: Path Enumeration
 # ============================================================
 
-def area_gf_dp(m: int, n: int) -> Dict[int, int]:
-    """Compute area generating function using dynamic programming.
+def enumerate_paths(m: int, n: int) -> Iterator[Path]:
+    """Enumerate all lattice paths from (0,0) to (m,n).
     
-    Uses the recurrence: the number of paths from (0,0) to (m,n)
-    with area a equals the number from (0,0) to (m-1,n) with area a-n
-    (last step East from height n) plus the number from (0,0) to (m,n-1)
-    with area a (last step North, area unchanged).
+    A path consists of m East steps and n North steps in some order.
+    We enumerate by choosing which m+n positions are North steps.
     
-    Time: O(m * n * min(m,n)), Space: O(m * n)
-    
-    Returns:
-        Dict mapping area -> count of paths with that area
-        
-    Example:
-        >>> area_gf_dp(2, 2)
-        {0: 1, 1: 1, 2: 2, 3: 1, 4: 1}
-    """
-    # dp[i][j] = dict mapping area -> count for paths to (i,j)
-    dp = [[{} for _ in range(n + 1)] for _ in range(m + 1)]
-    dp[0][0] = {0: 1}
-    
-    for i in range(m + 1):
-        for j in range(n + 1):
-            if i == 0 and j == 0:
-                continue
-            current = {}
-            # From (i-1, j) via East step: adds j to area
-            if i > 0:
-                for area, count in dp[i-1][j].items():
-                    new_area = area + j
-                    current[new_area] = current.get(new_area, 0) + count
-            # From (i, j-1) via North step: area unchanged
-            if j > 0:
-                for area, count in dp[i][j-1].items():
-                    current[area] = current.get(area, 0) + count
-            dp[i][j] = current
-    
-    return dict(sorted(dp[m][n].items()))
-
-
-# ============================================================
-# Algorithm 4: Q-Binomial Coefficient
-# Time: O(m * n), Space: O(m * n)  
-# ============================================================
-
-def q_binomial(m_plus_n: int, m: int, q: float = 2.0) -> float:
-    """Compute the q-binomial coefficient [m+n choose m]_q.
-    
-    The q-binomial coefficient is the generating function of lattice
-    paths weighted by area, evaluated at q.
-    
-    Uses the recurrence: [n choose k]_q = [n-1 choose k-1]_q + q^k * [n-1 choose k]_q
-    
-    Time: O(n * k), Space: O(n * k)
-    
-    Example:
-        >>> q_binomial(4, 2, 1.0)  # Should equal C(4,2) = 6
-        6.0
-    """
-    n = m_plus_n
-    k = m
-    if k < 0 or k > n:
-        return 0.0
-    
-    # dp[i][j] = [i choose j]_q
-    dp = [[0.0] * (k + 1) for _ in range(n + 1)]
-    for i in range(n + 1):
-        dp[i][0] = 1.0
-    
-    for i in range(1, n + 1):
-        for j in range(1, min(i, k) + 1):
-            dp[i][j] = dp[i-1][j-1] + (q ** j) * dp[i-1][j]
-    
-    return dp[n][k]
-
-
-# ============================================================
-# Algorithm 5: Knot Lattice Path Enumeration with Forbidden Regions
-# Time: O(C(m+n, m) * (m+n)), Space: O(C(m+n, m))
-# ============================================================
-
-def enumerate_avoiding_paths(m: int, n: int, 
-                              forbidden: Set[Tuple[int, int]]) -> List[List[bool]]:
-    """Enumerate lattice paths from (0,0) to (m,n) avoiding forbidden points.
-    
-    Time: O(C(m+n,m) * (m+n))
-    Space: O(C(m+n,m))
+    Complexity: O(C(m+n, n) * (m+n)) time.
     
     Args:
-        m: Number of East steps
-        n: Number of North steps
-        forbidden: Set of (x,y) points to avoid
-        
+        m: Number of East steps (x-displacement)
+        n: Number of North steps (y-displacement)
+    
+    Yields:
+        Each lattice path as a list of 'E' and 'N' steps
+    """
+    total = m + n
+    for north_positions in combinations(range(total), n):
+        path = ['E'] * total
+        for pos in north_positions:
+            path[pos] = 'N'
+        yield path
+
+
+def count_paths(m: int, n: int) -> int:
+    """Count lattice paths from (0,0) to (m,n).
+    
+    Uses the recursive formula matching the binomial coefficient.
+    pathCount(m, 0) = pathCount(0, n) = 1
+    pathCount(m+1, n+1) = pathCount(m, n+1) + pathCount(m+1, n)
+    
+    Result: C(m+n, n)
+    """
+    @lru_cache(maxsize=None)
+    def _count(m: int, n: int) -> int:
+        if m == 0 or n == 0:
+            return 1
+        return _count(m - 1, n) + _count(m, n - 1)
+    return _count(m, n)
+
+
+# ============================================================
+# Algorithm 3: Q-Binomial Coefficient
+# ============================================================
+
+def poly_add(p: Polynomial, q: Polynomial) -> Polynomial:
+    """Add two polynomials."""
+    result = dict(p)
+    for k, v in q.items():
+        result[k] = result.get(k, 0) + v
+    return {k: v for k, v in result.items() if v != 0}
+
+
+def poly_shift(p: Polynomial, shift: int) -> Polynomial:
+    """Multiply polynomial by q^shift."""
+    return {k + shift: v for k, v in p.items()}
+
+
+def q_binomial(m: int, n: int) -> Polynomial:
+    """Compute the Gaussian binomial coefficient [m+n choose n]_q.
+    
+    Uses the recurrence derived from the area shift lemma:
+    [m+n choose n]_q = [m-1+n choose n]_q + q^m * [m+n-1 choose n-1]_q
+    
+    Equivalently: first step East -> Q(m-1, n), area unchanged
+                  first step North -> Q(m, n-1), area shifts by +m
+    
     Returns:
-        List of valid paths (as bool lists)
+        Polynomial as {power: coefficient} dictionary
+    
+    >>> q_binomial(2, 2)
+    {0: 1, 1: 1, 2: 2, 3: 1, 4: 1}
     """
-    result = []
+    @lru_cache(maxsize=None)
+    def _qb(m: int, n: int) -> tuple:
+        if m == 0 or n == 0:
+            return ((0, 1),)
+        p1 = dict(_qb(m - 1, n))   # first step East
+        p2 = dict(_qb(m, n - 1))   # first step North, shifted by m
+        p2_shifted = {k + m: v for k, v in p2.items()}
+        result = dict(p1)
+        for k, v in p2_shifted.items():
+            result[k] = result.get(k, 0) + v
+        return tuple(sorted(result.items()))
     
-    def backtrack(x: int, y: int, path: List[bool]):
-        if (x, y) in forbidden:
-            return
-        if x == m and y == n:
-            result.append(path[:])
-            return
-        if x < m:
-            path.append(True)
-            backtrack(x + 1, y, path)
-            path.pop()
-        if y < n:
-            path.append(False)
-            backtrack(x, y + 1, path)
-            path.pop()
-    
-    if (0, 0) not in forbidden:
-        backtrack(0, 0, [])
-    
-    return result
+    return dict(_qb(m, n))
 
 
-def forbidden_region_gf(m: int, n: int,
-                         forbidden: Set[Tuple[int, int]]) -> Dict[int, int]:
-    """Area generating function for paths avoiding a forbidden region.
+def q_binomial_from_enumeration(m: int, n: int) -> Polynomial:
+    """Compute q-binomial by explicitly enumerating paths and counting areas.
     
-    Returns dict mapping area -> count.
+    This is the "definition" side: Σ_{paths p} q^{area(p)}.
     """
-    paths = enumerate_avoiding_paths(m, n, forbidden)
-    gf = {}
-    for p in paths:
-        a = compute_path_area(p)
-        gf[a] = gf.get(a, 0) + 1
-    return dict(sorted(gf.items()))
+    area_counts: Dict[int, int] = Counter()
+    for path in enumerate_paths(m, n):
+        area_counts[compute_area(path)] += 1
+    return dict(sorted(area_counts.items()))
+
+
+def verify_q_binomial(m: int, n: int) -> bool:
+    """Verify that the recurrence and enumeration give the same q-binomial."""
+    from_recurrence = q_binomial(m, n)
+    from_enum = q_binomial_from_enumeration(m, n)
+    return from_recurrence == from_enum
 
 
 # ============================================================
-# Algorithm 6: Alexander Polynomial Candidate from Knot Lattice
-# Time: O(C(2n, n) * 2n), Space: O(C(2n, n))
+# Algorithm 4: Knot Lattice
 # ============================================================
 
-def alexander_candidate(n: int, signs: List[bool],
-                        forbidden: Set[Tuple[int, int]]) -> Dict[int, int]:
-    """Compute the Alexander polynomial candidate from a knot lattice.
+class KnotLattice:
+    """A knot lattice encodes a knot diagram as lattice path constraints.
     
-    For an n-crossing knot with given signs and forbidden region,
-    compute the area-weighted generating function of avoiding paths.
-    
-    The result is a dict mapping exponent -> coefficient, representing
-    a Laurent polynomial centered at n*n/2.
-    
-    Args:
-        n: Number of crossings
-        signs: Sign of each crossing (True=positive, False=negative)
-        forbidden: Forbidden region in the n×n grid
-        
-    Returns:
-        Dict mapping area -> coefficient
+    Attributes:
+        crossings: Number of crossings in the knot diagram
+        forbidden: Set of forbidden grid positions
+        writhe_signs: List of writhe signs (+1 or -1) for each crossing
     """
-    return forbidden_region_gf(n, n, forbidden)
+    
+    def __init__(self, crossings: int, forbidden: Set[Position],
+                 writhe_signs: List[int]):
+        assert len(writhe_signs) == crossings
+        assert all(w in (1, -1) for w in writhe_signs)
+        self.crossings = crossings
+        self.forbidden = forbidden
+        self.writhe_signs = writhe_signs
+    
+    def path_positions(self, path: Path) -> List[Position]:
+        """Compute positions visited by a path starting from (0,0)."""
+        x, y = 0, 0
+        positions = [(x, y)]
+        for step in path:
+            if step == 'E':
+                x += 1
+            else:
+                y += 1
+            positions.append((x, y))
+        return positions
+    
+    def is_valid(self, path: Path) -> bool:
+        """Check if a path avoids all forbidden positions."""
+        for pos in self.path_positions(path):
+            if pos in self.forbidden:
+                return False
+        return True
+    
+    def valid_paths(self, m: int, n: int) -> Iterator[Path]:
+        """Enumerate all valid paths from (0,0) to (m,n)."""
+        for path in enumerate_paths(m, n):
+            if self.is_valid(path):
+                yield path
+    
+    def generating_function(self, m: int, n: int) -> Polynomial:
+        """Compute the area-weighted generating function over valid paths."""
+        gf: Dict[int, int] = Counter()
+        for path in self.valid_paths(m, n):
+            gf[compute_area(path)] += 1
+        return dict(sorted(gf.items()))
 
 
 # ============================================================
-# Main: Algorithm Demonstrations
+# Algorithm 5: Specific Knot Lattices
+# ============================================================
+
+def unknot_lattice() -> KnotLattice:
+    """The unknot: no crossings, no forbidden positions."""
+    return KnotLattice(crossings=0, forbidden=set(), writhe_signs=[])
+
+
+def trefoil_lattice() -> KnotLattice:
+    """The trefoil knot lattice: 3 crossings, forbidden at (1,2) and (2,1)."""
+    return KnotLattice(
+        crossings=3,
+        forbidden={(1, 2), (2, 1)},
+        writhe_signs=[1, 1, 1]
+    )
+
+
+def swap_path(path: Path) -> Path:
+    """Complement path: swap E <-> N."""
+    return ['N' if s == 'E' else 'E' for s in path]
+
+
+# ============================================================
+# Algorithm 6: Complement Theorem Verification
+# ============================================================
+
+def verify_complement_theorem(m: int, n: int) -> bool:
+    """Verify area(p) + area(swap(p)) = m*n for all paths from (0,0) to (m,n)."""
+    for path in enumerate_paths(m, n):
+        if compute_area(path) + compute_area(swap_path(path)) != m * n:
+            return False
+    return True
+
+
+def poly_to_string(p: Polynomial) -> str:
+    """Format a polynomial as a readable string."""
+    if not p:
+        return "0"
+    terms = []
+    for k in sorted(p.keys()):
+        coeff = p[k]
+        if coeff == 0:
+            continue
+        if k == 0:
+            terms.append(str(coeff))
+        elif coeff == 1:
+            terms.append(f"q^{k}")
+        elif coeff == -1:
+            terms.append(f"-q^{k}")
+        else:
+            terms.append(f"{coeff}q^{k}")
+    return " + ".join(terms).replace("+ -", "- ")
+
+
+# ============================================================
+# Main
 # ============================================================
 
 if __name__ == "__main__":
-    print("Algorithm Demonstrations")
-    print("=" * 60)
+    print("=== Lattice Path Algorithms ===\n")
     
-    # Demo 1: Area computation
-    print("\n1. Path Area Computation:")
-    paths_demo = [
-        ([True, True, False, False], "EENN"),
-        ([True, False, True, False], "ENEN"),
-        ([False, True, False, True], "NENE"),
-        ([False, False, True, True], "NNEE"),
-    ]
-    for path, name in paths_demo:
-        a, ac, mn, valid = verify_area_complement(path)
-        print(f"   {name}: area={a}, complement_area={ac}, "
-              f"sum={a+ac}, m*n={mn}, ✓={valid}")
+    # Verify complement theorem
+    for m in range(1, 5):
+        for n in range(1, 5):
+            assert verify_complement_theorem(m, n), f"Failed at ({m},{n})"
+    print("✓ Complement theorem verified for all m,n ≤ 4")
     
-    # Demo 2: DP generating function
-    print("\n2. Area GF via Dynamic Programming:")
-    for m, n in [(2, 2), (3, 3), (2, 3)]:
-        gf = area_gf_dp(m, n)
-        terms = " + ".join(f"{c}q^{a}" for a, c in gf.items())
-        print(f"   [{m+n} choose {m}]_q = {terms}")
+    # Verify q-binomial
+    for m in range(5):
+        for n in range(5):
+            assert verify_q_binomial(m, n), f"Failed at ({m},{n})"
+    print("✓ Q-binomial recurrence matches enumeration for m,n ≤ 4")
     
-    # Demo 3: q-binomial
-    print("\n3. Q-Binomial at q=1 (should equal binomial coefficient):")
-    for m_n, m in [(4, 2), (6, 3), (8, 4)]:
-        val = q_binomial(m_n, m, 1.0)
-        print(f"   [{m_n} choose {m}]_1 = {val:.0f} = C({m_n},{m}) = {comb(m_n, m)}")
+    # Show q-binomials
+    print("\nGaussian binomial coefficients:")
+    for m, n in [(2, 2), (3, 2), (3, 3), (4, 3)]:
+        qb = q_binomial(m, n)
+        print(f"  [{m+n} choose {n}]_q = {poly_to_string(qb)}")
     
-    # Demo 4: Forbidden region paths
-    print("\n4. Paths avoiding forbidden regions:")
-    for name, m, n, forbidden in [
-        ("Trefoil", 3, 3, {(1, 1)}),
-        ("Figure-8", 4, 4, {(1, 1), (2, 2)}),
-    ]:
-        gf = forbidden_region_gf(m, n, forbidden)
-        total = sum(gf.values())
-        terms = " + ".join(f"{c}q^{a}" for a, c in gf.items())
-        print(f"   {name}: {total} paths, GF = {terms}")
+    # Trefoil analysis
+    print("\nTrefoil knot lattice analysis:")
+    K = trefoil_lattice()
+    gf = K.generating_function(3, 3)
+    print(f"  Generating function: {poly_to_string(gf)}")
+    print(f"  Number of valid paths: {sum(gf.values())}")
