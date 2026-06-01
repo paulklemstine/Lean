@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "date": "2026-06-01T02:45:09Z",
     "exp_id": "5601e70d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6,
+    "quality": "partial",
     "pkg_num": 47
   },
   {
@@ -1372,8 +1372,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6,
+      "quality": "partial"
     }
   ],
   "edges": [

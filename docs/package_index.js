@@ -4,6 +4,36 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "thermodynamics_of_mathematical_proof.json",
+    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
+    "domain": "Bridges",
+    "date": "2026-06-01T02:45:09Z",
+    "exp_id": "5601e70d",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 47
+  },
+  {
+    "filename": "reflective_type_theory_proving_things_about_provin.json",
+    "title": "Reflective Type Theory: Proving Things About Proving Things",
+    "domain": "Bridges",
+    "date": "2026-06-01T02:44:40Z",
+    "exp_id": "5a7b2b9a",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 46
+  },
+  {
+    "filename": "this_cycle_formalized_the_algebraic_core_of_the_he.json",
+    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
+    "domain": "Bridges",
+    "date": "2026-06-01T02:44:09Z",
+    "exp_id": "ec13a735",
+    "quality_score": 0.6,
+    "quality": "partial",
+    "pkg_num": 45
+  },
+  {
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness",
     "domain": "Bridges",
@@ -446,6 +476,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "thermodynamics_of_mathematical_proof.json": {
+    "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
+    "exp_id": "5601e70d",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Bridges"
+  },
   "isogeny_based_cryptography_csi_fish.json": {
     "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Security of Post-Quantum Group Action Cryptography",
     "exp_id": "39d27153",
@@ -494,6 +532,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Bridges"
   },
+  "reflective_type_theory_proving_things_about_provin.json": {
+    "title": "Reflective Type Theory: Proving Things About Proving Things",
+    "exp_id": "5a7b2b9a",
+    "source_exp_ids": [
+      "seed_wave7"
+    ],
+    "domain": "Bridges"
+  },
   "this_research_cycle_established_the_foundational_t.json": {
     "title": "Surreal Topology: Order Gaps, Connectedness, and Cofinality",
     "exp_id": "3d08bbee",
@@ -507,6 +553,14 @@ window.PACKAGE_DB_INDEX = {
     "exp_id": "46942b74",
     "source_exp_ids": [
       "pi_brainstorm"
+    ],
+    "domain": "Bridges"
+  },
+  "this_cycle_formalized_the_algebraic_core_of_the_he.json": {
+    "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
+    "exp_id": "ec13a735",
+    "source_exp_ids": [
+      "c572edf3"
     ],
     "domain": "Bridges"
   },
@@ -811,7 +865,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -822,7 +876,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.722909152542373,
       "quality": "substantial"
     },
@@ -833,7 +887,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -844,7 +898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 272,
+      "hue": 275,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -855,7 +909,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -866,7 +920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -877,7 +931,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 95,
+      "hue": 272,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -888,7 +942,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -899,7 +953,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -910,7 +964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 112,
+      "hue": 90,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -921,7 +975,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -954,7 +1008,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -965,7 +1019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:19Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.744326,
       "quality": "substantial"
     },
@@ -976,7 +1030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.7978566666666667,
       "quality": "substantial"
     },
@@ -987,7 +1041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -998,7 +1052,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -1009,7 +1063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.6995549999999999,
       "quality": "partial"
     },
@@ -1020,7 +1074,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 100,
+      "hue": 271,
       "priority_score": 0.7597249152542372,
       "quality": "substantial"
     },
@@ -1031,7 +1085,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1042,7 +1096,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 100,
+      "hue": 271,
       "priority_score": 0.735339756097561,
       "quality": "substantial"
     },
@@ -1053,7 +1107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -1064,7 +1118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1075,7 +1129,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:51Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.676823846153846,
       "quality": "partial"
     },
@@ -1086,7 +1140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7302532967032966,
       "quality": "substantial"
     },
@@ -1108,7 +1162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 112,
+      "hue": 95,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1119,7 +1173,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1141,7 +1195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1152,7 +1206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:30:53Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6829911764705883,
       "quality": "partial"
     },
@@ -1163,7 +1217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7347950000000001,
       "quality": "substantial"
     },
@@ -1174,7 +1228,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:50Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7184463811268895,
       "quality": "substantial"
     },
@@ -1185,7 +1239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 91,
+      "hue": 112,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -1196,7 +1250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1207,7 +1261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -1218,7 +1272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -1229,7 +1283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 292,
+      "hue": 272,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -1240,7 +1294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -1251,7 +1305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7722411111111112,
       "quality": "substantial"
     },
@@ -1262,7 +1316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -1273,7 +1327,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 91,
+      "hue": 359,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -1284,12 +1338,52 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
+    },
+    {
+      "id": "this_cycle_formalized_the_algebraic_core_of_the_he",
+      "title": "Cassini-Hecke Identity: Algebraic Foundations of the Hecke Eigenvalue Recursion for GL\u2082",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T02:44:09Z",
+      "hue": 271,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "reflective_type_theory_proving_things_about_provin",
+      "title": "Reflective Type Theory: Proving Things About Proving Things",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T02:44:40Z",
+      "hue": 90,
+      "priority_score": 0.6,
+      "quality": "partial"
+    },
+    {
+      "id": "thermodynamics_of_mathematical_proof",
+      "title": "Landauer's Principle for Mathematical Reasoning: Thermodynamic Costs of Proof",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-01T02:45:09Z",
+      "hue": 271,
+      "priority_score": 0.6,
+      "quality": "partial"
     }
   ],
   "edges": [
+    {
+      "source": "this_research_cycle_formalized_the_algebraic_skele",
+      "target": "this_cycle_formalized_the_algebraic_core_of_the_he",
+      "strength": 1.0,
+      "label": "Direction 1: Algebraic Proof of the Hecke-Ramanujan Bound",
+      "type": "provenance"
+    },
     {
       "source": "cellular_automata_at_the_ordinals_transfinite_comp",
       "target": "this_research_cycle_established_a_rigorous_framewo",
