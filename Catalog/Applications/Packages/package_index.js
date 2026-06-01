@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "curvature_induced_computation_when_geodesic_flow_s.json",
+    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
+    "domain": "Pythagorean",
+    "date": "2026-06-01T14:17:42Z",
+    "exp_id": "7298cf4c",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 95
+  },
+  {
     "filename": "self_avoiding_walk_connective_constant.json",
     "title": "Self-Avoiding Walk: Connective Constant",
     "domain": "EML",
     "date": "2026-06-01T14:17:20Z",
     "exp_id": "25b26084",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5409767590618337,
+    "quality": "partial",
     "pkg_num": 94
   },
   {
@@ -1218,6 +1228,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra"
   },
+  "curvature_induced_computation_when_geodesic_flow_s.json": {
+    "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
+    "exp_id": "7298cf4c",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "domain": "Pythagorean"
+  },
   "langlands_for_gl_over_q.json": {
     "title": "Langlands Correspondence for GL\u2082 over \u211a",
     "exp_id": "f2c79f3b",
@@ -1711,7 +1729,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 91,
+      "hue": 275,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -1755,7 +1773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7123901951219513,
       "quality": "substantial"
     },
@@ -1766,7 +1784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -1777,7 +1795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -1788,7 +1806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -1810,7 +1828,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -1821,7 +1839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -1832,7 +1850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1843,7 +1861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 271,
+      "hue": 275,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -1854,7 +1872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1865,7 +1883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -1876,7 +1894,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1909,7 +1927,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 112,
+      "hue": 90,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1942,7 +1960,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1975,7 +1993,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1986,7 +2004,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:30:53Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6829911764705883,
       "quality": "partial"
     },
@@ -1997,7 +2015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.7347950000000001,
       "quality": "substantial"
     },
@@ -2008,7 +2026,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 91,
+      "hue": 112,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -2019,7 +2037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -2030,7 +2048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -2041,7 +2059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -2052,7 +2070,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -2063,7 +2081,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 112,
+      "hue": 271,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -2074,7 +2092,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 270,
+      "hue": 179,
       "priority_score": 0.7722411111111112,
       "quality": "substantial"
     },
@@ -2085,7 +2103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -2096,7 +2114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -2129,7 +2147,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2140,7 +2158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T03:49:22Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2151,7 +2169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T03:49:46Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2173,7 +2191,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T04:22:48Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2195,7 +2213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T04:56:46Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2206,7 +2224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T04:57:07Z",
-      "hue": 314,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2217,7 +2235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T05:29:27Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2228,7 +2246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T06:07:06Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2239,7 +2257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-01T06:41:41Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2261,7 +2279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:14:52Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2272,7 +2290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:13Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2283,7 +2301,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:35Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2305,7 +2323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:16:17Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2316,7 +2334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:49:59Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2327,7 +2345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:20Z",
-      "hue": 281,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2338,7 +2356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:40Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2349,7 +2367,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:05Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2360,7 +2378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:30Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2371,7 +2389,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:51Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2382,7 +2400,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:56:37Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2393,7 +2411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:00Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2404,7 +2422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:28Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2415,7 +2433,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:50Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2426,7 +2444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:58:10Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2437,7 +2455,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T09:20:02Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.75499,
       "quality": "substantial"
     },
@@ -2470,7 +2488,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:53:45Z",
-      "hue": 91,
+      "hue": 359,
       "priority_score": 0.7068626477541371,
       "quality": "substantial"
     },
@@ -2481,7 +2499,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:04Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7237490526315788,
       "quality": "substantial"
     },
@@ -2503,7 +2521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:43Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7316979622641508,
       "quality": "substantial"
     },
@@ -2514,7 +2532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T10:28:02Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.72689,
       "quality": "substantial"
     },
@@ -2536,7 +2554,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T10:28:42Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.7100115384615384,
       "quality": "substantial"
     },
@@ -2547,7 +2565,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T10:29:03Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7388586956521739,
       "quality": "substantial"
     },
@@ -2558,7 +2576,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T11:02:09Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.6633071428571429,
       "quality": "partial"
     },
@@ -2569,7 +2587,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T11:02:30Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.6699192338709679,
       "quality": "partial"
     },
@@ -2580,7 +2598,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T11:35:17Z",
-      "hue": 91,
+      "hue": 101,
       "priority_score": 0.7080684615384616,
       "quality": "substantial"
     },
@@ -2591,7 +2609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:35:43Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6856036842105264,
       "quality": "partial"
     },
@@ -2602,7 +2620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:36:05Z",
-      "hue": 112,
+      "hue": 270,
       "priority_score": 0.7161103693181818,
       "quality": "substantial"
     },
@@ -2613,7 +2631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T11:36:24Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7138660278745645,
       "quality": "substantial"
     },
@@ -2624,7 +2642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T11:36:49Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.6561989411764706,
       "quality": "partial"
     },
@@ -2635,7 +2653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T12:10:41Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7286993506493507,
       "quality": "substantial"
     },
@@ -2657,7 +2675,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T12:11:20Z",
-      "hue": 270,
+      "hue": 179,
       "priority_score": 0.7393699999999999,
       "quality": "substantial"
     },
@@ -2668,7 +2686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T12:31:39Z",
-      "hue": 90,
+      "hue": 89,
       "priority_score": 0.7038752500000001,
       "quality": "substantial"
     },
@@ -2679,7 +2697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-06-01T12:46:23Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7481675000000001,
       "quality": "substantial"
     },
@@ -2690,7 +2708,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T13:40:06Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6923000000000001,
       "quality": "partial"
     },
@@ -2701,7 +2719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T13:40:42Z",
-      "hue": 91,
+      "hue": 314,
       "priority_score": 0.49938318181818186,
       "quality": "partial"
     },
@@ -2735,6 +2753,17 @@ window.PACKAGE_GRAPH = {
       "shape": "octahedron",
       "date": "2026-06-01T14:17:20Z",
       "hue": 90,
+      "priority_score": 0.5409767590618337,
+      "quality": "partial"
+    },
+    {
+      "id": "curvature_induced_computation_when_geodesic_flow_s",
+      "title": "Curvature-Induced Computation: When Geodesic Flow Simulates a Turing Machine",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-06-01T14:17:42Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
