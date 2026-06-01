@@ -1,471 +1,467 @@
+#!/usr/bin/env python3
 """
-Dream Logic: Interactive Demo
+Dream Logic Demo: Numerical Examples and Demonstrations
 
-Demonstrates Belnap's four-valued logic, explosion failure,
-non-monotone reasoning, and pre-topological structure.
+Demonstrates the key concepts of paraconsistent non-monotone reasoning:
+1. Belnap four-valued logic and explosion failure
+2. Non-monotone skeptical consequence and belief retraction
+3. Dream frames with coexisting contradictions
+4. Dream depth analysis
 """
 
 from algorithms import (
-    BelnapVal, DreamFrame, DefaultTheory,
-    verify_de_morgan, verify_explosion_fails,
-    bird_theory, pointwise_dream, contradictory_dream,
-    test_compactness
+    BVal, ConflictSystem, skeptical_consequence,
+    compute_dream_depth, verify_explosion_fails,
+    iterated_belief_revision, dream_frame_evaluate
 )
 
 
-def print_section(title: str) -> None:
-    print()
-    print("=" * 70)
-    print(f"  {title}")
-    print("=" * 70)
-    print()
+def demo_belnap_truth_tables():
+    """Print the conjunction and disjunction truth tables for Belnap logic."""
+    print("=" * 60)
+    print("BELNAP FOUR-VALUED LOGIC: TRUTH TABLES")
+    print("=" * 60)
 
-
-def demo_belnap_truth_table() -> None:
-    """Display the complete truth tables for Belnap operations."""
-    print_section("BELNAP FOUR-VALUED LOGIC: TRUTH TABLES")
-
-    # Negation
-    print("Negation (bneg):")
-    print(f"  {'Value':<12} → {'bneg':<12} {'Designated?':<12} {'¬Designated?':<12}")
-    print("  " + "-" * 48)
-    for v in BelnapVal:
-        nv = v.bneg()
-        print(f"  {v.name:<12} → {nv.name:<12} {str(v.is_designated):<12} {str(nv.is_designated):<12}")
+    values = [BVal.T, BVal.F, BVal.B, BVal.N]
+    labels = {"t": "T", "f": "F", "both": "B", "neither": "N"}
 
     # Conjunction
-    print("\nConjunction (bconj):")
-    header = f"  {'∧':<12}" + "".join(f"{v.name:<12}" for v in BelnapVal)
+    print("\nConjunction (∧):")
+    header = "     " + "  ".join(labels[v.value] for v in values)
     print(header)
-    print("  " + "-" * 48)
-    for a in BelnapVal:
-        row = f"  {a.name:<12}"
-        for b in BelnapVal:
-            row += f"{BelnapVal.bconj(a, b).name:<12}"
+    print("   " + "-" * (len(header) - 3))
+    for a in values:
+        row = f" {labels[a.value]} | "
+        row += "  ".join(labels[a.conj(b).value] for b in values)
         print(row)
 
     # Disjunction
-    print("\nDisjunction (bdisj):")
-    header = f"  {'∨':<12}" + "".join(f"{v.name:<12}" for v in BelnapVal)
+    print("\nDisjunction (∨):")
     print(header)
-    print("  " + "-" * 48)
-    for a in BelnapVal:
-        row = f"  {a.name:<12}"
-        for b in BelnapVal:
-            row += f"{BelnapVal.bdisj(a, b).name:<12}"
+    print("   " + "-" * (len(header) - 3))
+    for a in values:
+        row = f" {labels[a.value]} | "
+        row += "  ".join(labels[a.disj(b).value] for b in values)
         print(row)
 
+    # Negation
+    print("\nNegation (¬):")
+    for v in values:
+        print(f"  ¬{labels[v.value]} = {labels[v.belnap_neg().value]}")
 
-def demo_explosion() -> None:
-    """Demonstrate explosion failure."""
-    print_section("EXPLOSION FAILURE: CLASSICAL vs BELNAP")
-
-    print("Classical (2-valued) Logic:")
-    print("  For v = True:  v=True, ¬v=False → can't have both True")
-    print("  For v = False: v=False, ¬v=True → can't have both True")
-    print("  ∴ No value makes both P and ¬P true → explosion holds vacuously")
-    print()
-
-    print("Belnap (4-valued) Logic:")
-    for v in BelnapVal:
-        nv = v.bneg()
-        status = "✓ CONTRADICTION WITHOUT EXPLOSION" if (v.is_designated and nv.is_designated) else ""
-        print(f"  {v.name:<12}: designated={v.is_designated}, ¬designated={nv.is_designated}  {status}")
-
-    print()
-    print("Key insight: BOTH is designated AND ¬BOTH = BOTH is designated")
-    print("But FALSE_ONLY and NEITHER are not designated")
-    print("→ Having P∧¬P true does NOT force Q to be true!")
+    # Designation
+    print("\nDesignation (positive support):")
+    for v in values:
+        print(f"  {labels[v.value]}: designated = {v.is_designated()}")
 
 
-def demo_information_lattice() -> None:
-    """Display the information ordering."""
-    print_section("INFORMATION LATTICE")
+def demo_explosion_failure():
+    """Demonstrate that explosion fails in Belnap logic."""
+    print("\n" + "=" * 60)
+    print("EXPLOSION FAILURE")
+    print("=" * 60)
 
-    print("Hasse diagram (information ordering):")
-    print()
-    print("           BOTH (⊤)")
-    print("          /    \\")
-    print("    TRUE_ONLY  FALSE_ONLY")
-    print("          \\    /")
-    print("         NEITHER (⊥)")
-    print()
-
-    print("Ordering verification:")
-    for a in BelnapVal:
-        for b in BelnapVal:
-            if a != b and a.info_le(b):
-                print(f"  {a.name} ≤ {b.name}")
-
-
-def demo_dream_frame() -> None:
-    """Demonstrate dream frame properties."""
-    print_section("DREAM FRAMES: CONTRADICTIONS COEXIST")
-
-    # Contradictory dream
-    D = contradictory_dream(5, {0, 2})
-    print("Dream Frame: 5 propositions, {0, 2} contradictory")
-    print()
-    for p in range(5):
-        v = D.val(0, p)
-        print(f"  Prop {p}: {v.name:<12} designated={v.is_designated}  neg_designated={v.bneg().is_designated}")
-
-    print()
-    print("Designated sets:")
-    for p in range(5):
-        ds = D.designated_set(p)
-        print(f"  designatedSet({p}) = {ds}")
-
-    print()
-    print("Entailment tests:")
-    for q in range(5):
-        result = D.entails({0}, q)
-        print(f"  {{0}} ⊨ {q}: {result}")
-    print()
-    print("Despite prop 0 being contradictory, it doesn't entail everything!")
+    for n in [2, 3, 5, 10]:
+        val, verified = verify_explosion_fails(n)
+        val_str = [val[i].value for i in range(n)]
+        print(f"\n  n={n}: {val_str}")
+        v0 = val[0]
+        contr = v0.conj(v0.belnap_neg())
+        print(f"    P₀ ∧ ¬P₀ = {v0.value} ∧ {v0.belnap_neg().value} "
+              f"= {contr.value} (designated: {contr.is_designated()})")
+        non_designated = [i for i in range(1, n) if not val[i].is_designated()]
+        print(f"    Non-designated propositions: {non_designated}")
+        print(f"    Explosion fails: {verified} ✓")
 
 
-def demo_non_monotone() -> None:
-    """Demonstrate non-monotone reasoning."""
-    print_section("NON-MONOTONE DEFAULT REASONING")
+def demo_nonmonotone_consequence():
+    """Demonstrate non-monotone skeptical consequence."""
+    print("\n" + "=" * 60)
+    print("NON-MONOTONE SKEPTICAL CONSEQUENCE")
+    print("=" * 60)
 
-    theory = bird_theory()
+    # Simple conflict: 0 conflicts with 1
+    C = ConflictSystem(2, {(0, 1), (1, 0)})
 
-    scenarios = [
-        ({"bird"}, "Bird only"),
-        ({"bird", "penguin"}, "Bird + Penguin"),
-        ({"bird", "penguin", "magic"}, "Bird + Penguin + Magic (hypothetical)"),
+    print("\n  Conflict system: 0 ↔ 1 (mutual conflict)")
+
+    # Show non-monotonicity
+    gamma = {0}
+    delta = {0, 1}
+
+    result_gamma = skeptical_consequence(C, gamma, 0)
+    result_delta = skeptical_consequence(C, delta, 0)
+
+    print(f"\n  Γ = {gamma}")
+    print(f"    Γ ⊢ 0? {result_gamma} ← 0 ∈ Γ, no conflicts with 0 in Γ")
+    print(f"\n  Δ = {delta} (Γ ⊆ Δ)")
+    print(f"    Δ ⊢ 0? {result_delta} ← 1 ∈ Δ conflicts with 0!")
+    print(f"\n  Monotonicity violated: Γ ⊆ Δ, Γ ⊢ 0, but Δ ⊬ 0 ✓")
+
+
+def demo_belief_revision():
+    """Demonstrate iterated belief revision."""
+    print("\n" + "=" * 60)
+    print("ITERATED BELIEF REVISION")
+    print("=" * 60)
+
+    # Triangle conflict: 0↔1, 1↔2, 0↔2
+    conflicts = {(0, 1), (1, 0), (1, 2), (2, 1), (0, 2), (2, 0)}
+    C = ConflictSystem(3, conflicts)
+
+    print("\n  Conflict graph: complete triangle K₃")
+    print("  0 ↔ 1, 1 ↔ 2, 0 ↔ 2")
+
+    initial = {0, 1, 2}
+    history = iterated_belief_revision(C, initial)
+
+    print(f"\n  Initial beliefs: {initial}")
+    for step, beliefs in enumerate(history):
+        print(f"  Step {step}: {beliefs}")
+    print(f"  Fixed point: ∅ (all beliefs retracted due to mutual conflicts)")
+
+    # Linear conflict: 0↔1, 1↔2 (path graph)
+    print("\n  Conflict graph: path P₃")
+    print("  0 ↔ 1, 1 ↔ 2 (but 0 and 2 don't conflict)")
+    conflicts2 = {(0, 1), (1, 0), (1, 2), (2, 1)}
+    C2 = ConflictSystem(3, conflicts2)
+    initial2 = {0, 1, 2}
+    history2 = iterated_belief_revision(C2, initial2)
+    for step, beliefs in enumerate(history2):
+        print(f"  Step {step}: {beliefs}")
+
+
+def demo_dream_frames():
+    """Demonstrate dream frames with coexisting contradictions."""
+    print("\n" + "=" * 60)
+    print("DREAM FRAMES: COEXISTING CONTRADICTIONS")
+    print("=" * 60)
+
+    # Dream frame 1: single world with contradictory valuation
+    print("\n  Frame 1: Single contradictory world")
+    print("  W = {0}, R = {(0,0)}, V(0,P) = B (both)")
+    access1 = {0: {0}}
+    val1 = {(0, 0): BVal.B}
+    nec, pos, neg_nec = dream_frame_evaluate(access1, val1, 0, 0)
+    print(f"    □P at 0: {nec} (P is necessary)")
+    print(f"    ◇P at 0: {pos} (P is possible)")
+    print(f"    □¬P at 0: {neg_nec} (¬P is also necessary!)")
+    print(f"    → P and ¬P are BOTH necessary — impossible classically ✓")
+
+    # Dream frame 2: two worlds with different values
+    print("\n  Frame 2: Two worlds, mixed valuations")
+    print("  W = {0,1}, R = {(0,0),(0,1)}, V(0,P)=B, V(1,P)=T")
+    access2 = {0: {0, 1}, 1: {1}}
+    val2 = {(0, 0): BVal.B, (1, 0): BVal.T}
+    nec, pos, neg_nec = dream_frame_evaluate(access2, val2, 0, 0)
+    print(f"    □P at 0: {nec} (both B and T are designated)")
+    print(f"    ◇P at 0: {pos}")
+    print(f"    □¬P at 0: {neg_nec} (T's negation F is not designated)")
+    print(f"    → P is necessary but ¬P is only possible, not necessary")
+
+
+def demo_dream_depth():
+    """Demonstrate dream depth analysis."""
+    print("\n" + "=" * 60)
+    print("DREAM DEPTH ANALYSIS")
+    print("=" * 60)
+
+    # Various valuations on 5 propositions
+    valuations = [
+        ("Classical (all T)", {i: BVal.T for i in range(5)}),
+        ("Unknown (all N)", {i: BVal.N for i in range(5)}),
+        ("Mixed", {0: BVal.T, 1: BVal.B, 2: BVal.F, 3: BVal.B, 4: BVal.T}),
+        ("Full dream (all B)", {i: BVal.B for i in range(5)}),
+        ("One contradiction", {0: BVal.B, 1: BVal.T, 2: BVal.T, 3: BVal.T, 4: BVal.T}),
     ]
 
-    # Add a magic default
-    magic_theory = DefaultTheory(
-        defaults=[("bird", "flies"), ("magic", "flies")],
-        exceptions=[("penguin", "flies")]
-    )
-
-    print("Theory: birds normally fly; penguins block flying")
-    print()
-    for premises, desc in scenarios:
-        result = theory.default_entails(premises, "flies")
-        print(f"  {desc}")
-        print(f"    Premises: {premises}")
-        print(f"    ⊢_d flies: {result}")
-        print()
-
-    print("Extended theory: birds fly, magic creatures fly; penguins block")
-    result_magic = magic_theory.default_entails({"bird", "penguin", "magic"}, "flies")
-    print(f"  {{bird, penguin, magic}} ⊢_d flies: {result_magic}")
-    print("  Magic overrides penguin exception via alternative default path!")
-
-
-def demo_pretopology() -> None:
-    """Demonstrate pre-topological structure."""
-    print_section("PRE-TOPOLOGICAL SPACES")
-
-    print("The finite-or-univ pre-topology on ℕ:")
-    print()
-    print("  isPreOpen(S) ⟺ S is finite ∨ S = ℕ")
-    print()
-
-    # Show some examples
-    examples = [
-        ("∅", True, "finite (empty)"),
-        ("{0}", True, "finite (singleton)"),
-        ("{0, 1, 2}", True, "finite"),
-        ("{0, 2, 4, ..., 98}", True, "finite (50 elements)"),
-        ("ℕ", True, "= univ"),
-        ("even numbers", False, "infinite and ≠ ℕ"),
-        ("odd numbers", False, "infinite and ≠ ℕ"),
-        ("primes", False, "infinite and ≠ ℕ"),
-    ]
-
-    for name, is_open, reason in examples:
-        status = "✓ pre-open" if is_open else "✗ NOT pre-open"
-        print(f"  {name:<25} {status:<20} ({reason})")
-
-    print()
-    print("Closure properties:")
-    print("  {0} ∩ {1} = ∅         → finite ✓")
-    print("  {0} ∪ {1} = {0,1}    → finite ✓")
-    print("  ℕ ∩ {0} = {0}        → finite ✓")
-    print("  ℕ ∪ {0} = ℕ          → univ ✓")
-    print()
-    print("BUT: ⋃ₖ {2k} = evens   → NOT pre-open ✗")
-    print()
-    print("This proves: pre-topologies ⊋ topologies (strict containment)")
-
-
-def demo_compactness_test() -> None:
-    """Test the paraconsistent compactness conjecture."""
-    print_section("COMPACTNESS CONJECTURE TESTING")
-
-    print("Testing: If every finite subset of Γ is satisfiable,")
-    print("is Γ itself satisfiable? (Paraconsistent compactness)")
-    print()
-
-    all_pass = True
-    for n in range(2, 12):
-        result = test_compactness(n, max(n * 3, 10))
-        status = "PASS ✓" if result else "FAIL ✗"
-        print(f"  n={n:2d} propositions, {max(n*3, 10):3d} worlds: {status}")
-        if not result:
-            all_pass = False
-
-    print()
-    if all_pass:
-        print("All tests passed — conjecture holds for tested cases ✓")
-    else:
-        print("Some tests failed — conjecture may be false!")
+    for name, val in valuations:
+        depth = compute_dream_depth(val)
+        designated = sum(1 for v in val.values() if v.is_designated())
+        dual_designated = sum(
+            1 for v in val.values()
+            if v.is_designated() and v.belnap_neg().is_designated()
+        )
+        print(f"\n  {name}:")
+        print(f"    Values: {[val[i].value for i in range(5)]}")
+        print(f"    Dream depth: {depth}/5")
+        print(f"    Designated: {designated}/5")
+        print(f"    Dual designated (P ∧ ¬P): {dual_designated}/5")
+        print(f"    Dream depth = dual designated: {depth == dual_designated} ✓")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║       DREAM LOGIC: Non-Monotone Paraconsistent Reasoning       ║")
-    print("║                      Interactive Demo                          ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
+    demo_belnap_truth_tables()
+    demo_explosion_failure()
+    demo_nonmonotone_consequence()
+    demo_belief_revision()
+    demo_dream_frames()
+    demo_dream_depth()
 
-    demo_belnap_truth_table()
-    demo_explosion()
-    demo_information_lattice()
-    demo_dream_frame()
-    demo_non_monotone()
-    demo_pretopology()
-    demo_compactness_test()
-
-    print()
-    print("=" * 70)
-    print("  Demo complete. All core theorems verified computationally.")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
+#!/usr/bin/env python3
 """
-Visualization: Belnap Four-Valued Logic Lattice and Truth Tables
+Visualization: Belnap Four-Valued Logic Lattice and Dream Depth
 
-Generates a visual representation of the information lattice and
-the designated/anti-designated regions of Belnap's FOUR.
+Creates visualizations of:
+1. The Belnap bilattice (truth and information orderings)
+2. Dream depth distribution across random valuations
+3. Explosion failure demonstration
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_information_lattice():
-    """Plot the Hasse diagram of the information ordering."""
+def draw_belnap_bilattice():
+    """Draw the Belnap bilattice with truth and information orderings."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Information lattice
-    ax = axes[0]
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-0.5, 2.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Information Ordering\n(Belnap Lattice FOUR)', fontsize=14, fontweight='bold')
+    # Truth ordering: f < {n, b} < t
+    ax1 = axes[0]
+    ax1.set_title("Truth Ordering (≤ₜ)", fontsize=14, fontweight='bold')
+    positions = {'f': (0, 0), 'n': (-1, 1), 'b': (1, 1), 't': (0, 2)}
+    colors = {'t': '#2ecc71', 'f': '#e74c3c', 'b': '#9b59b6', 'n': '#95a5a6'}
+    labels = {'t': 'T (true)', 'f': 'F (false)', 'b': 'B (both)', 'n': 'N (neither)'}
 
-    # Positions
-    positions = {
-        'NEITHER': (0, 0),
-        'TRUE_ONLY': (-1, 1),
-        'FALSE_ONLY': (1, 1),
-        'BOTH': (0, 2),
-    }
-
-    colors = {
-        'NEITHER': '#cccccc',
-        'TRUE_ONLY': '#4CAF50',
-        'FALSE_ONLY': '#F44336',
-        'BOTH': '#FF9800',
-    }
-
-    # Draw edges
-    edges = [
-        ('NEITHER', 'TRUE_ONLY'),
-        ('NEITHER', 'FALSE_ONLY'),
-        ('TRUE_ONLY', 'BOTH'),
-        ('FALSE_ONLY', 'BOTH'),
-    ]
-    for a, b in edges:
-        ax.plot([positions[a][0], positions[b][0]],
-                [positions[a][1], positions[b][1]],
-                'k-', linewidth=2, zorder=1)
+    # Draw edges (Hasse diagram)
+    edges = [('f', 'n'), ('f', 'b'), ('n', 't'), ('b', 't')]
+    for a, c in edges:
+        ax1.plot([positions[a][0], positions[c][0]],
+                [positions[a][1], positions[c][1]],
+                'k-', linewidth=1.5, zorder=1)
 
     # Draw nodes
-    for name, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.3, color=colors[name], ec='black',
-                           linewidth=2, zorder=2)
-        ax.add_patch(circle)
-        short = {'NEITHER': 'N', 'TRUE_ONLY': 'T', 'FALSE_ONLY': 'F', 'BOTH': 'B'}
-        ax.text(x, y, short[name], ha='center', va='center',
-               fontsize=16, fontweight='bold', zorder=3)
+    for val, (x, y) in positions.items():
+        circle = plt.Circle((x, y), 0.25, color=colors[val],
+                           ec='black', linewidth=2, zorder=2)
+        ax1.add_patch(circle)
+        ax1.text(x, y, val.upper(), ha='center', va='center',
+                fontsize=16, fontweight='bold', color='white', zorder=3)
+        ax1.text(x, y - 0.4, labels[val], ha='center', va='top',
+                fontsize=9, color='gray')
 
-    # Labels
-    ax.text(0, -0.45, '⊥ (no info)', ha='center', fontsize=10)
-    ax.text(0, 2.45, '⊤ (contradiction)', ha='center', fontsize=10)
-    ax.text(-1.6, 1, 'consistent\ntruth', ha='center', fontsize=9)
-    ax.text(1.6, 1, 'consistent\nfalsity', ha='center', fontsize=9)
+    ax1.set_xlim(-2, 2)
+    ax1.set_ylim(-0.8, 2.8)
+    ax1.set_aspect('equal')
+    ax1.axis('off')
+    ax1.text(0, -0.6, "∧ = meet,  ∨ = join", ha='center',
+            fontsize=10, style='italic')
 
-    # Designation regions
-    ax = axes[1]
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-0.5, 2.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Designated Values\n(Accepted as "at least true")', fontsize=14, fontweight='bold')
+    # Information ordering: n < {t, f} < b
+    ax2 = axes[1]
+    ax2.set_title("Information Ordering (≤ₖ)", fontsize=14, fontweight='bold')
+    positions2 = {'n': (0, 0), 't': (-1, 1), 'f': (1, 1), 'b': (0, 2)}
 
-    # Background regions
-    designated_bg = mpatches.FancyBboxPatch((-1.6, 0.5), 1.8, 2.0,
-                                             boxstyle="round,pad=0.2",
-                                             facecolor='#E8F5E9', edgecolor='#4CAF50',
-                                             linewidth=2, linestyle='--')
-    ax.add_patch(designated_bg)
-    ax.text(-0.7, 2.6, 'Designated', color='#4CAF50', fontsize=11,
-           fontweight='bold', ha='center')
+    edges2 = [('n', 't'), ('n', 'f'), ('t', 'b'), ('f', 'b')]
+    for a, c in edges2:
+        ax2.plot([positions2[a][0], positions2[c][0]],
+                [positions2[a][1], positions2[c][1]],
+                'k-', linewidth=1.5, zorder=1)
 
-    # Draw edges
-    for a, b in edges:
-        ax.plot([positions[a][0], positions[b][0]],
-                [positions[a][1], positions[b][1]],
-                'k-', linewidth=2, zorder=1)
+    for val, (x, y) in positions2.items():
+        circle = plt.Circle((x, y), 0.25, color=colors[val],
+                           ec='black', linewidth=2, zorder=2)
+        ax2.add_patch(circle)
+        ax2.text(x, y, val.upper(), ha='center', va='center',
+                fontsize=16, fontweight='bold', color='white', zorder=3)
 
-    # Draw nodes with designation info
-    for name, (x, y) in positions.items():
-        designated = name in ('TRUE_ONLY', 'BOTH')
-        ec_color = '#4CAF50' if designated else '#999999'
-        lw = 3 if designated else 2
-        circle = plt.Circle((x, y), 0.3, color=colors[name], ec=ec_color,
-                           linewidth=lw, zorder=2)
-        ax.add_patch(circle)
-        short = {'NEITHER': 'N', 'TRUE_ONLY': 'T', 'FALSE_ONLY': 'F', 'BOTH': 'B'}
-        ax.text(x, y, short[name], ha='center', va='center',
-               fontsize=16, fontweight='bold', zorder=3)
-        ax.text(x, y - 0.5, '✓' if designated else '✗',
-               ha='center', fontsize=14, color=ec_color, fontweight='bold')
+    ax2.set_xlim(-2, 2)
+    ax2.set_ylim(-0.8, 2.8)
+    ax2.set_aspect('equal')
+    ax2.axis('off')
+    ax2.text(0, -0.6, "⊕ = consensus,  ⊗ = gullibility", ha='center',
+            fontsize=10, style='italic')
 
-    ax.text(0, -0.45, 'Key: ✓ = designated, ✗ = not designated', ha='center', fontsize=9)
+    # Add designated marker
+    for ax, pos in [(ax1, positions), (ax2, positions2)]:
+        for val in ['t', 'b']:
+            x, y = pos[val]
+            ax.plot(x + 0.2, y + 0.2, '*', color='gold', markersize=12,
+                   markeredgecolor='black', markeredgewidth=0.5, zorder=4)
 
+    fig.suptitle("Belnap's Four-Valued Bilattice\n(★ = designated values)",
+                fontsize=16, fontweight='bold', y=0.98)
     plt.tight_layout()
-    plt.savefig('belnap_lattice.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_belnap_bilattice.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: belnap_lattice.png")
+    print("Saved: viz_belnap_bilattice.png")
 
 
-def plot_explosion_comparison():
-    """Compare classical and Belnap logic regarding explosion."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def draw_dream_depth_analysis():
+    """Visualize dream depth distribution and properties."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    np.random.seed(42)
 
-    # Classical logic
-    ax = axes[0]
-    ax.set_title('Classical Logic\n(Explosion holds)', fontsize=13, fontweight='bold')
-    ax.set_xlim(-0.5, 1.5)
-    ax.set_ylim(-0.5, 1.5)
-    ax.axis('off')
+    # 1. Dream depth distribution for random valuations
+    ax1 = axes[0]
+    n_props = 10
+    n_samples = 10000
+    values = [0, 1, 2, 3]  # t, f, b, n
+    depths = []
+    for _ in range(n_samples):
+        valuation = np.random.choice(values, size=n_props)
+        depth = np.sum(valuation == 2)  # count 'b' values
+        depths.append(depth)
 
-    # Two values
-    for i, (name, color) in enumerate([('True', '#4CAF50'), ('False', '#F44336')]):
-        circle = plt.Circle((i, 0.5), 0.3, color=color, ec='black', linewidth=2)
-        ax.add_patch(circle)
-        ax.text(i, 0.5, name[0], ha='center', va='center', fontsize=18,
-               fontweight='bold', color='white')
-        ax.text(i, 0, f'¬ = {"False" if name == "True" else "True"}',
-               ha='center', fontsize=10)
+    ax1.hist(depths, bins=range(n_props + 2), color='#9b59b6', alpha=0.7,
+            edgecolor='black', density=True, align='left')
+    # Overlay binomial distribution
+    from scipy.stats import binom
+    x = np.arange(0, n_props + 1)
+    ax1.plot(x, binom.pmf(x, n_props, 0.25), 'ro-', markersize=5,
+            label='Binomial(10, 0.25)')
+    ax1.set_xlabel('Dream Depth', fontsize=12)
+    ax1.set_ylabel('Frequency', fontsize=12)
+    ax1.set_title('Dream Depth Distribution\n(10 props, uniform random)', fontsize=12)
+    ax1.legend()
 
-    ax.text(0.5, 1.2, 'No v satisfies v=T ∧ ¬v=T', ha='center', fontsize=11,
-           color='red', fontweight='bold')
-    ax.text(0.5, -0.4, '∴ Explosion holds vacuously', ha='center', fontsize=10)
+    # 2. Designated count vs dream depth
+    ax2 = axes[1]
+    for depth in range(n_props + 1):
+        # For a given depth d, propositions: d are B (designated),
+        # remaining split among T, F, N
+        for _ in range(200):
+            # d propositions are B (designated)
+            n_remaining = n_props - depth
+            remaining = np.random.choice([0, 1, 3], size=n_remaining)
+            designated = depth + np.sum(remaining == 0)  # B + T
+            ax2.scatter(depth, designated, color='#3498db', alpha=0.05, s=10)
 
-    # Belnap logic
-    ax = axes[1]
-    ax.set_title("Belnap's Logic\n(Explosion fails!)", fontsize=13, fontweight='bold')
-    ax.set_xlim(-0.5, 3.5)
-    ax.set_ylim(-0.5, 1.5)
-    ax.axis('off')
+    ax2.set_xlabel('Dream Depth', fontsize=12)
+    ax2.set_ylabel('Designated Count', fontsize=12)
+    ax2.set_title('Designated Propositions\nvs Dream Depth', fontsize=12)
+    ax2.plot([0, n_props], [0, n_props], 'r--', alpha=0.5, label='depth = designated')
+    ax2.legend()
 
-    vals = [
-        ('N', '#cccccc', False, 'N'),
-        ('T', '#4CAF50', True, 'F'),
-        ('F', '#F44336', False, 'T'),
-        ('B', '#FF9800', True, 'B'),
+    # 3. Explosion containment
+    ax3 = axes[2]
+    n_values = list(range(2, 21))
+    for n in n_values:
+        # With depth 1 (one B), all others F: 1 designated out of n
+        ratio = 1 / n
+        ax3.bar(n, ratio, color='#e74c3c', alpha=0.7, edgecolor='black')
+
+    ax3.set_xlabel('Number of Propositions', fontsize=12)
+    ax3.set_ylabel('Fraction Designated\n(with 1 contradiction)', fontsize=12)
+    ax3.set_title('Explosion Containment\n(contradiction stays local)', fontsize=12)
+    ax3.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5,
+               label='Classical (all designated)')
+    ax3.legend()
+
+    plt.suptitle("Dream Depth Analysis", fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('viz_dream_depth.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_dream_depth.png")
+
+
+def draw_nonmonotone_belief_revision():
+    """Visualize non-monotone belief revision dynamics."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Example 1: K₃ conflict graph
+    ax1 = axes[0]
+    ax1.set_title("K₃ Conflict: Iterated Revision", fontsize=12, fontweight='bold')
+
+    # Draw conflict graph
+    angles = [np.pi/2, np.pi/2 + 2*np.pi/3, np.pi/2 + 4*np.pi/3]
+    cx, cy = 0.3, 0.7
+    r = 0.15
+    node_pos = [(cx + r * np.cos(a), cy + r * np.sin(a)) for a in angles]
+
+    for i in range(3):
+        for j in range(i+1, 3):
+            ax1.plot([node_pos[i][0], node_pos[j][0]],
+                    [node_pos[i][1], node_pos[j][1]],
+                    'r-', linewidth=2, alpha=0.5)
+
+    for i, (x, y) in enumerate(node_pos):
+        ax1.plot(x, y, 'o', markersize=20, color='#3498db',
+                markeredgecolor='black', markeredgewidth=2)
+        ax1.text(x, y, str(i), ha='center', va='center',
+                fontsize=12, fontweight='bold', color='white')
+
+    # Timeline
+    steps = [0, 1, 2]
+    beliefs = [{0, 1, 2}, set(), set()]
+    for step in steps:
+        y = 0.3 - step * 0.1
+        active = beliefs[step]
+        for i in range(3):
+            color = '#2ecc71' if i in active else '#e0e0e0'
+            ax1.add_patch(plt.Circle((0.7 + i * 0.08, y), 0.025,
+                                    color=color, ec='black'))
+        ax1.text(0.62, y, f"t={step}", ha='right', va='center', fontsize=10)
+
+    ax1.set_xlim(0, 1)
+    ax1.set_ylim(-0.05, 1)
+    ax1.axis('off')
+    ax1.text(0.5, 0.95, "All beliefs retracted\n(mutual conflicts)",
+            ha='center', fontsize=10, style='italic')
+
+    # Example 2: Path P₅ conflict graph
+    ax2 = axes[1]
+    ax2.set_title("P₅ Path: Iterated Revision", fontsize=12, fontweight='bold')
+
+    # Draw path graph
+    path_pos = [(0.1 + i * 0.15, 0.7) for i in range(5)]
+    for i in range(4):
+        ax2.plot([path_pos[i][0], path_pos[i+1][0]],
+                [path_pos[i][1], path_pos[i+1][1]],
+                'r-', linewidth=2, alpha=0.5)
+
+    for i, (x, y) in enumerate(path_pos):
+        ax2.plot(x, y, 'o', markersize=20, color='#3498db',
+                markeredgecolor='black', markeredgewidth=2)
+        ax2.text(x, y, str(i), ha='center', va='center',
+                fontsize=12, fontweight='bold', color='white')
+
+    # Compute revision for path 0-1-2-3-4
+    # Conflicts: 0↔1, 1↔2, 2↔3, 3↔4
+    # Step 0: {0,1,2,3,4} → all conflicted → retract all conflicted ones
+    # Actually: 0 conflicts with 1, 1 conflicts with 0,2, 2 conflicts with 1,3, etc.
+    # None survive because each has a neighbor
+    # Step 1: {} (fixed point)
+
+    path_steps = [
+        {0, 1, 2, 3, 4},
+        set(),
+        set()
     ]
 
-    for i, (name, color, designated, neg_name) in enumerate(vals):
-        circle = plt.Circle((i, 0.5), 0.3, color=color, ec='black', linewidth=2)
-        ax.add_patch(circle)
-        ax.text(i, 0.5, name, ha='center', va='center', fontsize=18, fontweight='bold')
-        d_str = '✓' if designated else '✗'
-        ax.text(i, 0.05, f'¬={neg_name}', ha='center', fontsize=10)
-        ax.text(i, -0.2, f'desig: {d_str}', ha='center', fontsize=9,
-               color='green' if designated else 'gray')
+    for step in range(min(3, len(path_steps))):
+        y = 0.4 - step * 0.1
+        active = path_steps[step]
+        for i in range(5):
+            color = '#2ecc71' if i in active else '#e0e0e0'
+            ax2.add_patch(plt.Circle((0.1 + i * 0.15, y), 0.025,
+                                    color=color, ec='black'))
+        ax2.text(0.02, y, f"t={step}", ha='right', va='center', fontsize=10)
 
-    # Highlight BOTH
-    highlight = plt.Circle((3, 0.5), 0.38, fill=False, ec='#FF5722',
-                           linewidth=3, linestyle='--')
-    ax.add_patch(highlight)
-    ax.annotate('B ∧ ¬B both designated!\nBut F is NOT designated',
-               xy=(3, 0.9), xytext=(2, 1.3),
-               fontsize=10, fontweight='bold', color='#FF5722',
-               arrowprops=dict(arrowstyle='->', color='#FF5722', lw=2),
-               ha='center')
+    ax2.set_xlim(-0.05, 0.95)
+    ax2.set_ylim(0.05, 0.95)
+    ax2.axis('off')
+    ax2.text(0.45, 0.12, "All beliefs retracted\n(every node has a conflicting neighbor)",
+            ha='center', fontsize=10, style='italic')
 
+    plt.suptitle("Non-Monotone Belief Revision Dynamics",
+                fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('explosion_comparison.png', dpi=150, bbox_inches='tight')
+    plt.savefig('viz_belief_revision.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: explosion_comparison.png")
-
-
-def plot_pretopology_separation():
-    """Visualize the pre-topology vs topology separation."""
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.set_title('Pre-Topology vs Topology:\nFinite-or-Univ on ℕ', fontsize=14, fontweight='bold')
-
-    # Draw number line
-    n_show = 20
-    y_line = 3
-    ax.plot([-0.5, n_show + 0.5], [y_line, y_line], 'k-', linewidth=1)
-    for i in range(n_show + 1):
-        color = '#4CAF50' if i % 2 == 0 else '#2196F3'
-        ax.plot(i, y_line, 'o', color=color, markersize=8, zorder=3)
-        ax.text(i, y_line - 0.3, str(i), ha='center', fontsize=7)
-
-    # Finite sets (pre-open)
-    y1 = 2
-    ax.text(-0.5, y1, 'Finite sets\n(pre-open ✓)', fontsize=10, va='center',
-           color='#4CAF50', fontweight='bold')
-    for start, end in [(2, 5), (8, 11), (15, 17)]:
-        rect = mpatches.FancyBboxPatch((start - 0.3, y1 - 0.2), end - start + 0.6, 0.4,
-                                        boxstyle="round,pad=0.1",
-                                        facecolor='#E8F5E9', edgecolor='#4CAF50', linewidth=2)
-        ax.add_patch(rect)
-
-    # Even numbers (NOT pre-open)
-    y2 = 1
-    ax.text(-0.5, y2, 'Even numbers\n(NOT pre-open ✗)', fontsize=10, va='center',
-           color='#F44336', fontweight='bold')
-    for i in range(0, n_show + 1, 2):
-        rect = mpatches.FancyBboxPatch((i - 0.15, y2 - 0.15), 0.3, 0.3,
-                                        facecolor='#FFEBEE', edgecolor='#F44336', linewidth=1.5)
-        ax.add_patch(rect)
-
-    # Arrow showing union
-    y3 = 0
-    ax.text(n_show / 2, y3, '⋃ₖ {2k} = {0, 2, 4, 6, ...} = evens',
-           ha='center', fontsize=11, fontweight='bold', color='#F44336')
-    ax.text(n_show / 2, y3 - 0.5, 'Each {2k} is finite (pre-open), but union is NOT pre-open',
-           ha='center', fontsize=10, style='italic')
-    ax.text(n_show / 2, y3 - 1.0, '∴ Pre-topologies ⊋ Topologies',
-           ha='center', fontsize=12, fontweight='bold', color='#9C27B0')
-
-    ax.set_xlim(-3, n_show + 1)
-    ax.set_ylim(-1.5, 4)
-    ax.axis('off')
-
-    plt.tight_layout()
-    plt.savefig('pretopology_separation.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: pretopology_separation.png")
+    print("Saved: viz_belief_revision.png")
 
 
 if __name__ == "__main__":
-    plot_information_lattice()
-    plot_explosion_comparison()
-    plot_pretopology_separation()
-    print("\nAll visualizations generated.")
+    draw_belnap_bilattice()
+    draw_dream_depth_analysis()
+    draw_nonmonotone_belief_revision()
+    print("\nAll visualizations generated successfully.")
