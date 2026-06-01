@@ -1,382 +1,372 @@
 #!/usr/bin/env python3
 """
-Formal Spectral Moonshine: Core Algorithms
+Algorithms for Monstrous Moonshine Computations
 
-Implements the algorithms whose correctness is verified in the Lean formalization:
-1. Multiplicity decoder via class function inner products
-2. Moonshine packet construction and manipulation
-3. Fourier expansion and inversion on finite group class functions
-4. Spectral weight computation
-
-Application keywords: class functions, irreducible characters, Fourier inversion,
-graded representations, spectral decoding, harmonic analysis
+Type-hinted implementations of the key algorithms from the research paper:
+1. Multiplicity recovery from McKay-Thompson coefficients
+2. Inner product identity verification
+3. Trace dominance checking
+4. j-function coefficient computation via modular equations
 """
 
-import numpy as np
-from math import comb
-from typing import List, Tuple, Dict, Optional
+from fractions import Fraction
+from typing import List, Tuple, Optional, Dict
+import math
 
 
-# ============================================================
-# Algorithm 1: Class Function Inner Product
-# ============================================================
-
-def class_function_inner_product(
-    f: np.ndarray,
-    g: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int
-) -> complex:
+class CharacterTable:
     """
-    Compute the inner product of two class functions on a finite group.
-    
-    Formula: <f, g> = (1/|G|) Σ_C |C| · f(C) · conj(g(C))
-    
-    where the sum is over conjugacy classes C.
-    
-    This is the computational core verified by ClassFn.cfInner in the Lean formalization.
-    
-    Parameters:
-        f: values of first class function on each conjugacy class
-        g: values of second class function on each conjugacy class
-        class_sizes: number of elements in each conjugacy class
-        group_order: |G|
-    
-    Returns:
-        The inner product <f, g> as a complex number
-    
-    Complexity: O(k) where k is the number of conjugacy classes
-    
-    Example:
-        >>> table, sizes, order, _, _ = s3_data()
-        >>> class_function_inner_product(table[0], table[1], sizes, order)
-        0j  # orthogonality of trivial and sign characters
-    """
-    return np.sum(class_sizes * f * np.conj(g)) / group_order
+    A character table for a finite group with n conjugacy classes.
 
-
-# ============================================================
-# Algorithm 2: Multiplicity Decoder
-# ============================================================
-
-def decode_multiplicities(
-    class_fn: np.ndarray,
-    character_table: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int
-) -> np.ndarray:
-    """
-    Decode the irreducible multiplicities of a class function.
-    
-    Given a class function f (e.g., the character of a representation),
-    compute its decomposition into irreducible characters:
-    
-        m_i = <f, χ_i> = (1/|G|) Σ_C |C| · f(C) · conj(χ_i(C))
-    
-    This is the verified algorithm (decodeMultiplicities_correct in Lean).
-    
-    Parameters:
-        class_fn: values of the class function on each conjugacy class
-        character_table: rows = irreducible characters, columns = conjugacy classes
+    Attributes:
+        n: number of conjugacy classes (= number of irreps)
         class_sizes: sizes of conjugacy classes
-        group_order: |G|
-    
-    Returns:
-        Array of multiplicities, one per irreducible character
-    
-    Complexity: O(k²) where k is the number of conjugacy classes
-                (equivalently, number of irreducible representations)
+        group_order: order of the group
+        chi: character values chi[i][j] = value of i-th irrep on j-th class
     """
-    num_irreps = character_table.shape[0]
-    multiplicities = np.zeros(num_irreps, dtype=complex)
-    for i in range(num_irreps):
-        multiplicities[i] = class_function_inner_product(
-            class_fn, character_table[i], class_sizes, group_order
-        )
-    return multiplicities
 
-
-# ============================================================
-# Algorithm 3: Fourier Expansion (Reconstruction)
-# ============================================================
-
-def fourier_expand(
-    class_fn: np.ndarray,
-    character_table: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Compute the Fourier expansion of a class function.
-    
-    Decomposes f into its spectral components:
-        f(g) = Σ_i <f, χ_i> · χ_i(g)
-    
-    Verified by classFn_fourier_expansion in the Lean formalization.
-    
-    Parameters:
-        class_fn: values on each conjugacy class
-        character_table: rows = irreducible characters
-        class_sizes: sizes of conjugacy classes
-        group_order: |G|
-    
-    Returns:
-        (coefficients, reconstructed): Fourier coefficients and reconstructed function
-    
-    Complexity: O(k²) where k is the number of conjugacy classes
-    """
-    coefficients = decode_multiplicities(
-        class_fn, character_table, class_sizes, group_order
-    )
-    reconstructed = np.zeros(len(class_fn), dtype=complex)
-    for i, c in enumerate(coefficients):
-        reconstructed += c * character_table[i]
-    return coefficients, reconstructed
-
-
-def verify_fourier_inversion(
-    class_fn: np.ndarray,
-    character_table: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int,
-    tol: float = 1e-10
-) -> Tuple[bool, float]:
-    """
-    Verify Fourier inversion: f = Σ_i <f, χ_i> · χ_i.
-    
-    Returns (success, max_error).
-    """
-    _, reconstructed = fourier_expand(
-        class_fn, character_table, class_sizes, group_order
-    )
-    error = np.max(np.abs(class_fn - reconstructed))
-    return error < tol, error
-
-
-# ============================================================
-# Algorithm 4: Spectral Weight Computation
-# ============================================================
-
-def spectral_weights(
-    class_fn: np.ndarray,
-    character_table: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int
-) -> np.ndarray:
-    """
-    Compute the spectral weight vector of a class function.
-    
-    The spectral weight w_i = |<f, χ_i>|² measures how much of f's
-    "information content" resides in the i-th irreducible representation.
-    
-    Verified by spectralWeight definition in the Lean formalization.
-    
-    Parameters:
-        class_fn: values on each conjugacy class
-        character_table: rows = irreducible characters
-        class_sizes: sizes of conjugacy classes
-        group_order: |G|
-    
-    Returns:
-        Array of spectral weights (real, non-negative)
-    
-    Complexity: O(k²)
-    """
-    coeffs = decode_multiplicities(
-        class_fn, character_table, class_sizes, group_order
-    )
-    return np.abs(coeffs) ** 2
-
-
-def verify_parseval(
-    f: np.ndarray,
-    g: np.ndarray,
-    character_table: np.ndarray,
-    class_sizes: np.ndarray,
-    group_order: int,
-    tol: float = 1e-10
-) -> Tuple[bool, complex, complex]:
-    """
-    Verify Parseval's theorem: <f,g> = Σ_i <f,χ_i> · conj(<g,χ_i>).
-    
-    Verified by classFn_parseval in the Lean formalization.
-    
-    Returns (success, direct_inner, parseval_sum).
-    """
-    direct = class_function_inner_product(f, g, class_sizes, group_order)
-    f_coeffs = decode_multiplicities(f, character_table, class_sizes, group_order)
-    g_coeffs = decode_multiplicities(g, character_table, class_sizes, group_order)
-    parseval = np.sum(f_coeffs * np.conj(g_coeffs))
-    return abs(direct - parseval) < tol, direct, parseval
-
-
-# ============================================================
-# Algorithm 5: Moonshine Packet Operations
-# ============================================================
-
-class MoonshinePacket:
-    """
-    A graded sequence of class functions representing moonshine-type series data.
-    
-    T_g(q) = Σ_{n≥0} a_n(g) q^n
-    
-    where each a_n is a class function on G.
-    
-    Verified properties:
-    - Extensionality (MoonshinePacket.ext in Lean)
-    - Additivity under direct sum (gradedTrace_directSum_eq_add)
-    - Evaluation consistency (ext_of_eval)
-    """
-    
-    def __init__(self, character_table: np.ndarray, class_sizes: np.ndarray,
-                 group_order: int, name: str = ""):
-        self.character_table = character_table
+    def __init__(
+        self,
+        class_sizes: List[int],
+        chi: List[List[Fraction]],
+    ) -> None:
+        self.n = len(class_sizes)
         self.class_sizes = class_sizes
-        self.group_order = group_order
-        self.name = name
-        self._coeffs: Dict[int, np.ndarray] = {}
-    
-    def set_coeff(self, n: int, values: np.ndarray):
-        """Set the degree-n coefficient class function."""
-        self._coeffs[n] = np.array(values, dtype=complex)
-    
-    def get_coeff(self, n: int) -> np.ndarray:
-        """Get the degree-n coefficient class function."""
-        num_classes = self.character_table.shape[1]
-        return self._coeffs.get(n, np.zeros(num_classes, dtype=complex))
-    
-    def eval_series(self, class_idx: int, n_max: int) -> np.ndarray:
-        """Evaluate the McKay-Thompson series T_{g}(q) up to degree n_max."""
-        return np.array([self.get_coeff(n)[class_idx] for n in range(n_max + 1)])
-    
-    def decode_degree(self, n: int) -> np.ndarray:
-        """Decode multiplicities at degree n."""
-        return decode_multiplicities(
-            self.get_coeff(n), self.character_table,
-            self.class_sizes, self.group_order
-        )
-    
-    def __add__(self, other: 'MoonshinePacket') -> 'MoonshinePacket':
-        """Direct sum of moonshine packets (verified by gradedTrace_directSum_eq_add)."""
-        result = MoonshinePacket(
-            self.character_table, self.class_sizes,
-            self.group_order, f"({self.name}⊕{other.name})"
-        )
-        all_degrees = set(self._coeffs.keys()) | set(other._coeffs.keys())
-        for n in all_degrees:
-            result.set_coeff(n, self.get_coeff(n) + other.get_coeff(n))
-        return result
-    
-    def spectral_profile(self, n: int) -> np.ndarray:
-        """Compute spectral weight profile at degree n."""
-        return spectral_weights(
-            self.get_coeff(n), self.character_table,
-            self.class_sizes, self.group_order
-        )
+        self.group_order = sum(class_sizes)
+        self.chi = chi
+
+        assert len(chi) == self.n
+        assert all(len(row) == self.n for row in chi)
+
+    def rep_dim(self, i: int) -> Fraction:
+        """Dimension of the i-th irreducible representation."""
+        return self.chi[i][0]
+
+    def verify_row_orthogonality(self) -> bool:
+        """Verify row orthogonality: sum_k |C_k| chi_i(k) chi_j(k) = |G| delta_ij."""
+        for i in range(self.n):
+            for j in range(self.n):
+                inner = sum(
+                    Fraction(self.class_sizes[k]) * self.chi[i][k] * self.chi[j][k]
+                    for k in range(self.n)
+                )
+                expected = Fraction(self.group_order) if i == j else Fraction(0)
+                if inner != expected:
+                    return False
+        return True
+
+    def verify_column_orthogonality(self) -> bool:
+        """Verify column orthogonality: sum_i chi_i(k) chi_i(l) = (|G|/|C_k|) delta_kl."""
+        for k in range(self.n):
+            for l in range(self.n):
+                inner = sum(
+                    self.chi[i][k] * self.chi[i][l]
+                    for i in range(self.n)
+                )
+                expected = (
+                    Fraction(self.group_order, self.class_sizes[k])
+                    if k == l
+                    else Fraction(0)
+                )
+                if inner != expected:
+                    return False
+        return True
+
+    def verify_burnside_identity(self) -> bool:
+        """Verify sum of squared dimensions equals group order."""
+        total = sum(self.rep_dim(i) ** 2 for i in range(self.n))
+        return total == Fraction(self.group_order)
 
 
-# ============================================================
-# Algorithm 6: Log-Concavity Test
-# ============================================================
-
-def test_log_concavity(
-    sequence: List[float],
-    start: int = 1,
-    tol: float = 1e-10
-) -> Tuple[bool, List[int]]:
+class MoonshineDatum:
     """
-    Test whether a sequence is log-concave: a(n)² ≥ a(n-1) · a(n+1).
-    
-    Parameters:
-        sequence: the sequence to test
-        start: first index to test
-        tol: numerical tolerance
-    
+    A moonshine datum: a character table plus graded multiplicities.
+
+    The graded module V = ⊕_m V_m decomposes as:
+        V_m = ⊕_i mult[i][m] copies of ρ_i
+
+    The McKay-Thompson coefficient for class j at grade m is:
+        a_m(g_j) = sum_i mult[i][m] * chi_i(g_j)
+    """
+
+    def __init__(
+        self,
+        char_table: CharacterTable,
+        mult: Dict[Tuple[int, int], int],
+        max_grade: int,
+    ) -> None:
+        self.ct = char_table
+        self.mult = mult
+        self.max_grade = max_grade
+
+    def get_mult(self, i: int, m: int) -> Fraction:
+        """Get multiplicity of irrep i at grade m."""
+        return Fraction(self.mult.get((i, m), 0))
+
+    def mckay_coeff(self, j: int, m: int) -> Fraction:
+        """
+        McKay-Thompson coefficient: trace of class-j element on V_m.
+
+        a_m(g_j) = sum_i mult(i, m) * chi_i(g_j)
+        """
+        return sum(
+            self.get_mult(i, m) * self.ct.chi[i][j]
+            for i in range(self.ct.n)
+        )
+
+    def graded_dim(self, m: int) -> Fraction:
+        """
+        Graded dimension: dim(V_m) = sum_i mult(i, m) * dim(ρ_i).
+        Equals mckay_coeff(0, m) (identity element).
+        """
+        return sum(
+            self.get_mult(i, m) * self.ct.rep_dim(i)
+            for i in range(self.ct.n)
+        )
+
+
+def compute_multiplicity(
+    datum: MoonshineDatum,
+    i: int,
+    m: int,
+) -> Fraction:
+    """
+    Multiplicity Recovery Algorithm.
+
+    Recovers mult(i, m) from McKay-Thompson coefficients using
+    character orthogonality:
+
+        mult(i, m) = (1/|G|) * sum_j |C_j| * chi_i(g_j) * a_m(g_j)
+
+    Args:
+        datum: moonshine datum with character table
+        i: index of irreducible representation
+        m: grade
+
     Returns:
-        (is_log_concave, violation_indices)
+        The multiplicity of ρ_i in V_m
+    """
+    ct = datum.ct
+    total = sum(
+        Fraction(ct.class_sizes[j]) * ct.chi[i][j] * datum.mckay_coeff(j, m)
+        for j in range(ct.n)
+    )
+    return total / Fraction(ct.group_order)
+
+
+def verify_inner_product_identity(
+    datum: MoonshineDatum,
+    m: int,
+    m_prime: int,
+) -> Tuple[bool, Fraction, Fraction]:
+    """
+    Verify the moonshine inner product identity:
+
+    sum_j |C_j| * a_m(g_j) * a_{m'}(g_j) = |G| * sum_i mult(i,m) * mult(i,m')
+
+    Args:
+        datum: moonshine datum
+        m, m_prime: grades to compare
+
+    Returns:
+        (identity_holds, lhs_value, rhs_value)
+    """
+    ct = datum.ct
+
+    lhs = sum(
+        Fraction(ct.class_sizes[j])
+        * datum.mckay_coeff(j, m)
+        * datum.mckay_coeff(j, m_prime)
+        for j in range(ct.n)
+    )
+
+    rhs = Fraction(ct.group_order) * sum(
+        datum.get_mult(i, m) * datum.get_mult(i, m_prime)
+        for i in range(ct.n)
+    )
+
+    return (lhs == rhs, lhs, rhs)
+
+
+def check_trace_dominance(
+    datum: MoonshineDatum,
+    max_grade: int,
+) -> List[Tuple[int, int, Fraction, Fraction]]:
+    """
+    Check trace dominance: |a_m(g_j)| ≤ a_m(e) for all j, m.
+
+    Returns list of violations (j, m, |a_m(g_j)|, a_m(e)).
     """
     violations = []
-    for n in range(max(start, 1), len(sequence) - 1):
-        if sequence[n] ** 2 + tol < sequence[n-1] * sequence[n+1]:
-            violations.append(n)
-    return len(violations) == 0, violations
+    for m in range(max_grade + 1):
+        dim_m = datum.mckay_coeff(0, m)  # identity trace = dimension
+        for j in range(datum.ct.n):
+            trace = datum.mckay_coeff(j, m)
+            if abs(trace) > dim_m:
+                violations.append((j, m, abs(trace), dim_m))
+    return violations
 
 
-# ============================================================
-# Utility: Character Tables
-# ============================================================
+def j_coefficients_from_recursion(num_terms: int) -> List[int]:
+    """
+    Compute j-function coefficients using the recursion relation.
 
-def s3_data():
-    """Character table data for S₃."""
-    table = np.array([
-        [1,  1,  1],
-        [1, -1,  1],
-        [2,  0, -1],
-    ], dtype=complex)
-    sizes = np.array([1, 3, 2])
-    return table, sizes, 6, ['triv', 'sign', 'std'], ['e', '(12)', '(123)']
+    The j-function satisfies j(q) = E_4(q)^3 / Delta(q) where
+    E_4 is the Eisenstein series and Delta is the discriminant function.
+
+    We use the fact that Delta = q * prod_{n>=1} (1-q^n)^24
+    and E_4 = 1 + 240 * sum_{n>=1} sigma_3(n) q^n.
+
+    Returns coefficients c_{-1}, c_0, c_1, ..., c_{num_terms-2}.
+    """
+    N = num_terms + 5  # compute extra terms for safety
+
+    # Compute sigma_3(n) = sum of cubes of divisors
+    def sigma3(n: int) -> int:
+        return sum(d**3 for d in range(1, n + 1) if n % d == 0)
+
+    # E_4 coefficients: E_4 = 1 + 240 * sum sigma_3(n) q^n
+    e4 = [0] * N
+    e4[0] = 1
+    for n in range(1, N):
+        e4[n] = 240 * sigma3(n)
+
+    # E_4^3 coefficients (by convolution)
+    e4_sq = [0] * N
+    for n in range(N):
+        for k in range(n + 1):
+            e4_sq[n] += e4[k] * e4[n - k]
+
+    e4_cube = [0] * N
+    for n in range(N):
+        for k in range(n + 1):
+            e4_cube[n] += e4_sq[k] * e4[n - k]
+
+    # Delta coefficients: Delta = q * prod (1-q^n)^24
+    # Ramanujan's tau function: Delta = sum tau(n) q^n
+    # Use the recurrence for the partition-like product
+    prod_coeffs = [0] * N
+    prod_coeffs[0] = 1
+    for m in range(1, N):
+        for n in range(m, N):
+            prod_coeffs[n] -= 24 * prod_coeffs[n - m]
+        # This is wrong — need to use the full product expansion
+        # Let's use a cleaner approach
+
+    # Actually, compute Delta = eta(q)^24 where eta = q^{1/24} prod (1-q^n)
+    # Delta = q * prod_{n>=1} (1-q^n)^24
+    # So Delta[n] = coefficient of q^n in q * prod (1-q^k)^24
+    # = coefficient of q^{n-1} in prod (1-q^k)^24
+
+    # Compute prod (1-q^k)^24 up to order N
+    p = [0] * N
+    p[0] = 1
+    for k in range(1, N):
+        # Multiply by (1 - q^k)^24
+        # We do this by multiplying by (1 - q^k) twenty-four times
+        for _ in range(24):
+            for n in range(N - 1, k - 1, -1):
+                p[n] -= p[n - k]
+
+    # Delta[n] = p[n-1] for n >= 1, Delta[0] = 0
+    delta = [0] * N
+    for n in range(1, N):
+        delta[n] = p[n - 1]
+
+    # j = E_4^3 / Delta
+    # j[n] * Delta = E_4^3, so we can recover j by division
+    # j = sum j[n] q^n where j[-1] = 1 (coefficient of q^{-1})
+    # So j * Delta = E_4^3
+    # sum_n j[n] * sum_m delta[m] q^{n+m} = sum_k e4_cube[k] q^k
+    # For the coefficient of q^k: sum_{n: n+m=k} j[n] * delta[m] = e4_cube[k]
+    # Since delta[0] = 0 and delta[1] = 1:
+    # j has a pole at q=0: j = q^{-1} + 744 + ...
+    # j[n] for n >= -1
+
+    # j * Delta = E_4^3
+    # Coefficient of q^k in j*Delta: sum_{m=1}^{k+1} j[k-m] * delta[m]
+    # where j is indexed starting from -1
+    # So j[-1]*delta[k+1] + j[0]*delta[k] + ... + j[k-1]*delta[1] = e4_cube[k]
+
+    # Let's index j as j_coeffs[i] = j[i-1] so j_coeffs[0] = j[-1], j_coeffs[1] = j[0], etc.
+    j_coeffs = [0] * num_terms
+    for k in range(num_terms):
+        # Coefficient of q^k: sum_{i=0}^{k} j_coeffs[i] * delta[k - i + 1] = e4_cube[k]
+        # j_coeffs[k] * delta[1] + sum_{i=0}^{k-1} j_coeffs[i] * delta[k-i+1] = e4_cube[k]
+        rhs = e4_cube[k]
+        for i in range(k):
+            idx = k - i + 1
+            if idx < N:
+                rhs -= j_coeffs[i] * delta[idx]
+        j_coeffs[k] = rhs // delta[1]  # delta[1] = 1
+
+    return j_coeffs
 
 
-def a5_data():
-    """Character table data for A₅."""
-    phi = (1 + np.sqrt(5)) / 2
-    psi = (1 - np.sqrt(5)) / 2
-    table = np.array([
-        [1,  1,   1,    1,    1   ],
-        [3, -1,   0,    phi,  psi ],
-        [3, -1,   0,    psi,  phi ],
-        [4,  0,   1,   -1,   -1   ],
-        [5,  1,  -1,    0,    0   ],
-    ], dtype=complex)
-    sizes = np.array([1, 15, 20, 12, 12])
-    return table, sizes, 60, ['1', '3a', '3b', '4', '5'], \
-           ['e', '(12)(34)', '(123)', '(12345)', '(13245)']
+def demonstrate_algorithms():
+    """Run all algorithm demonstrations."""
+    print("=" * 60)
+    print("Algorithm Demonstrations")
+    print("=" * 60)
 
+    # Build S₃ character table
+    ct = CharacterTable(
+        class_sizes=[1, 3, 2],
+        chi=[
+            [Fraction(1), Fraction(1), Fraction(1)],
+            [Fraction(1), Fraction(-1), Fraction(1)],
+            [Fraction(2), Fraction(0), Fraction(-1)],
+        ],
+    )
 
-# ============================================================
-# Example Usage
-# ============================================================
+    print(f"\n1. Character table verification for S₃:")
+    print(f"   Row orthogonality: {ct.verify_row_orthogonality()}")
+    print(f"   Column orthogonality: {ct.verify_column_orthogonality()}")
+    print(f"   Burnside identity: {ct.verify_burnside_identity()}")
+
+    # Build moonshine datum
+    mult = {(0, 0): 1, (2, 0): 1, (0, 1): 2, (1, 1): 1, (2, 1): 3}
+    datum = MoonshineDatum(ct, mult, max_grade=1)
+
+    print(f"\n2. Moonshine datum for S₃:")
+    for m in range(2):
+        print(f"   Grade {m}: dim = {datum.graded_dim(m)}")
+        for j in range(ct.n):
+            print(f"     a_{m}(g_{j}) = {datum.mckay_coeff(j, m)}")
+
+    print(f"\n3. Multiplicity recovery:")
+    for m in range(2):
+        for i in range(ct.n):
+            recovered = compute_multiplicity(datum, i, m)
+            actual = datum.get_mult(i, m)
+            print(f"   mult({i}, {m}) = {recovered} (actual: {actual}) "
+                  f"{'✓' if recovered == actual else '✗'}")
+
+    print(f"\n4. Inner product identity:")
+    for m in range(2):
+        for mp in range(m, 2):
+            ok, lhs, rhs = verify_inner_product_identity(datum, m, mp)
+            print(f"   (m={m}, m'={mp}): LHS={lhs}, RHS={rhs} {'✓' if ok else '✗'}")
+
+    print(f"\n5. Trace dominance:")
+    violations = check_trace_dominance(datum, 1)
+    print(f"   Violations: {len(violations)}")
+    if violations:
+        for v in violations:
+            print(f"     class {v[0]}, grade {v[1]}: |trace|={v[2]} > dim={v[3]}")
+    else:
+        print("   All traces bounded by dimensions ✓")
+
+    print(f"\n6. j-function coefficients (first 12):")
+    j_coeffs = j_coefficients_from_recursion(12)
+    for i, c in enumerate(j_coeffs):
+        print(f"   c_{i-1} = {c}")
+
+    # Verify against known values
+    known = [1, 744, 196884, 21493760, 864299970, 20245856256]
+    all_match = all(j_coeffs[i] == known[i] for i in range(min(len(known), len(j_coeffs))))
+    print(f"\n   Match known values: {all_match} ✓" if all_match else "   MISMATCH ✗")
+
 
 if __name__ == "__main__":
-    print("=== Algorithms Module: Self-Test ===\n")
-    
-    # Test with S₃
-    table, sizes, order, irr_names, _ = s3_data()
-    
-    # Test orthogonality
-    print("Orthogonality of S₃ irreducible characters:")
-    for i in range(3):
-        for j in range(3):
-            ip = class_function_inner_product(table[i], table[j], sizes, order)
-            print(f"  <{irr_names[i]}, {irr_names[j]}> = {ip:.4f}", end="")
-        print()
-    
-    # Test Fourier inversion
-    print("\nFourier inversion test:")
-    test_fn = np.array([5, 1, 2], dtype=complex)
-    success, error = verify_fourier_inversion(test_fn, table, sizes, order)
-    print(f"  f = {test_fn}, inversion error = {error:.2e}, success = {success}")
-    
-    # Test Parseval
-    print("\nParseval test:")
-    f = np.array([3, 1, 0], dtype=complex)
-    g = np.array([2, 0, -1], dtype=complex)
-    success, direct, parseval = verify_parseval(f, g, table, sizes, order)
-    print(f"  <f,g> direct = {direct}, Parseval = {parseval}, match = {success}")
-    
-    # Test MoonshinePacket
-    print("\nMoonshine packet test:")
-    p1 = MoonshinePacket(table, sizes, order, "V1")
-    p1.set_coeff(0, table[0])
-    p1.set_coeff(1, table[2])
-    
-    p2 = MoonshinePacket(table, sizes, order, "V2")
-    p2.set_coeff(0, table[1])
-    p2.set_coeff(1, table[0])
-    
-    p_sum = p1 + p2
-    print(f"  (V1⊕V2) degree 0: {p_sum.get_coeff(0)}")
-    print(f"  Expected: {table[0] + table[1]}")
-    print(f"  Match: {np.allclose(p_sum.get_coeff(0), table[0] + table[1])}")
-    
-    print("\n=== All self-tests passed ===")
+    demonstrate_algorithms()

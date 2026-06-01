@@ -1,322 +1,265 @@
-# Formal Spectral Moonshine: A Verified Framework for Moonshine as an Information-Theoretic Transform
+# Character-Theoretic Foundations of Monstrous Moonshine: Algebraic Constraints on McKay-Thompson Series
 
 ## Abstract
 
-We develop the first machine-verified algebraic framework for *moonshine-type transforms* between finite group representation theory and formal q-series. Our approach introduces three new mathematical structures — class function inner products, moonshine packets, and spectral weight vectors — and proves a suite of rigorous theorems establishing that McKay-Thompson-type series data uniquely determines graded representation-theoretic information. The central results are: (1) a reconstruction theorem showing that graded virtual G-modules are determined by their trace class functions; (2) a Fourier inversion theorem for class functions on finite groups; (3) a Parseval identity connecting the class-function inner product to spectral decomposition; (4) a verified multiplicity decoding algorithm with a machine-checked correctness proof; and (5) a partition function additivity theorem bridging representation theory to statistical mechanics. All proofs are formalized in Lean 4 with Mathlib and verified by computer. We also state a falsifiable computational conjecture on eventual log-concavity of symmetric power multiplicities and verify it experimentally for groups up to order 60.
+We develop an abstract algebraic framework for monstrous moonshine, formalizing the connection between finite group character theory and graded module structures that give rise to McKay-Thompson series. Working with abstract *character tables* satisfying row and column orthogonality, and *moonshine data* consisting of graded modules with group actions, we prove three structural theorems: (1) the Burnside dimension identity (sum of squared irreducible dimensions equals group order) from column orthogonality, (2) a *multiplicity recovery theorem* showing that character orthogonality uniquely determines graded representation multiplicities from McKay-Thompson coefficients, and (3) a *moonshine inner product identity* computing cross-grade representation overlaps from weighted inner products of McKay-Thompson coefficients. These results are formalized in Lean 4 with machine-verified proofs, providing a rigorous foundation for computational moonshine. We also formulate a *trace dominance conjecture* and discuss its computational testability.
 
-**Keywords:** monstrous moonshine, McKay-Thompson series, class functions, irreducible characters, Fourier inversion on finite groups, graded representations, q-series, spectral decoding, harmonic analysis, representation theory, partition functions, formal verification
-
----
+**Keywords**: Monstrous moonshine, Monster group, McKay-Thompson series, character orthogonality, formal verification, modular forms
 
 ## 1. Introduction
 
-### 1.1 Background
+### 1.1 Historical Context
 
-The monstrous moonshine conjecture, formulated by Conway and Norton (1979) following McKay's observation of the coincidence between the j-function coefficients and dimensions of Monster representations, established a profound and unexpected connection between the representation theory of the Monster group M and modular functions on the upper half-plane. The conjecture was proved by Borcherds (1992) using vertex algebras and the no-ghost theorem from string theory.
+Monstrous moonshine began with McKay's 1978 observation that 196,884 = 196,883 + 1, connecting the j-function coefficient to the Monster group's smallest faithful representation dimension [1]. Conway and Norton's systematic investigation [2] revealed that every coefficient of the j-function decomposes as a non-negative integer combination of dimensions of irreducible Monster representations, and conjectured that the associated McKay-Thompson series are Hauptmoduls for genus-zero subgroups of SL(2, ℝ).
 
-Despite the depth of Borcherds' proof and subsequent developments (generalized moonshine, umbral moonshine, Mathieu moonshine), the *algebraic infrastructure* underlying moonshine — the precise sense in which q-expansion coefficients determine and are determined by representation-theoretic data — has not been formalized in a machine-verified setting. This gap means that:
+Frenkel, Lepowsky, and Meurman constructed the Moonshine module V♮ [3], a graded representation of the Monster whose graded traces give the McKay-Thompson series. Borcherds proved the genus-zero property using the Monster Lie algebra and the no-ghost theorem from string theory [4], earning the Fields Medal.
 
-1. The correctness of computational moonshine tables (e.g., the 194 McKay-Thompson series) rests on unverified calculations.
-2. New moonshine conjectures cannot be automatically certified.
-3. The interface between moonshine data and other mathematical domains (harmonic analysis, information theory, statistical mechanics) remains informal.
+### 1.2 Our Contribution
 
-### 1.2 Contributions
+We isolate the *algebraic* constraints that character orthogonality imposes on any moonshine-type datum, independent of the specific properties of the Monster group or modular forms. Our approach:
 
-We address this gap by developing a formal framework we call *spectral moonshine*, consisting of:
+1. **Abstracts** the character table structure into axioms (row/column orthogonality, class equation)
+2. **Defines** a moonshine datum as a graded module decomposition compatible with a character table
+3. **Proves** structural identities constraining McKay-Thompson coefficients
+4. **Identifies** which properties are purely algebraic consequences of character theory and which require additional input (modularity, genus-zero property)
 
-- **New definitions**: `ClassFn G R` (class functions as a first-class algebraic object), `MoonshinePacket G R` (graded class-function-valued series), `IsVirtualCharacter` (formal notion of virtual character), `spectralWeight` (cross-domain connection to information theory), and `decodeMultiplicities` (verified algorithm).
+All results are formalized in Lean 4 using the Mathlib library, with machine-verified proofs.
 
-- **Core theorems** (all machine-verified):
-  - *Reconstruction uniqueness* (`graded_module_determined_by_traces`): equal trace class functions imply equal irreducible multiplicity profiles.
-  - *Fourier inversion* (`classFn_fourier_expansion`): class functions are reconstructed from inner products with an orthonormal basis.
-  - *Parseval identity* (`classFn_parseval`): the inner product of class functions equals the sum of products of Fourier coefficients.
-  - *Multiplicity recovery* (`multiplicity_eq_cfInner_of_virtual_character`): for virtual characters, inner products recover integer multiplicities.
-  - *Decoder correctness* (`decodeMultiplicities_correct`): the multiplicity decoding algorithm is provably correct.
-  - *Partition function additivity* (`gradedTrace_directSum_eq_add`): partition functions are additive under direct sums.
+## 2. Definitions
 
-- **Computational experiments**: Multiplicity decoding for S₃, S₄, and A₅, Fourier inversion verification, Parseval theorem validation, and log-concavity conjecture testing.
+### 2.1 Character Tables
 
-### 1.3 Relationship to Prior Work
+**Definition 2.1** (Character Table). A *character table* of order n consists of:
+- A function `classSize : {0, ..., n-1} → ℕ⁺` giving conjugacy class sizes
+- A positive integer `groupOrder`
+- A matrix `χ : {0,...,n-1} × {0,...,n-1} → ℚ` of character values
 
-Our framework builds on classical representation theory (Serre, 1977; Fulton-Harris, 1991) but differs in three ways:
+subject to the axioms:
 
-1. **Formalization**: All results are machine-verified in Lean 4 with Mathlib, using no axioms beyond propext, Classical.choice, and Quot.sound.
-2. **Packaging**: The moonshine packet structure provides a single algebraic object encapsulating the entirety of McKay-Thompson series data.
-3. **Cross-domain bridges**: We explicitly connect to information theory (spectral weights/entropy) and statistical mechanics (partition function additivity).
+(CT1) **Class equation**: Σⱼ classSize(j) = groupOrder
 
----
+(CT2) **Identity class**: classSize(0) = 1
 
-## 2. Definitions and Notation
+(CT3) **Trivial character**: χ(0, j) = 1 for all j
 
-### 2.1 Class Functions
+(CT4) **Row orthogonality**: Σₖ classSize(k) · χ(i,k) · χ(j,k) = groupOrder · δᵢⱼ
 
-**Definition 2.1** (ClassFn). Let G be a finite group and R a type. A *class function* on G with values in R is a function f : G → R satisfying f(hgh⁻¹) = f(g) for all g, h ∈ G.
+(CT5) **Column orthogonality**: Σᵢ χ(i,k) · χ(i,l) = (groupOrder / classSize(k)) · δₖₗ
 
-In our formalization:
+**Remark.** We work over ℚ rather than ℂ. For the Monster group, all character values are rational integers (as the Monster has all Schur indices equal to 1 and all characters real-valued), so this restriction loses no generality for our application. For groups with complex characters, the framework extends by replacing ℚ with ℂ and conjugating appropriately.
 
-```
-structure ClassFn (G : Type*) [Group G] (R : Type*) where
-  toFun : G → R
-  conj_invariant : ∀ g h : G, toFun (h * g * h⁻¹) = toFun g
-```
+**Definition 2.2** (Representation Dimension). The *dimension* of the i-th irreducible representation is repDim(i) := χ(i, 0), the character value at the identity class.
 
-Class functions inherit pointwise algebraic structure: they form an AddCommGroup and a Module over any commutative ring.
+### 2.2 Moonshine Data
 
-### 2.2 Inner Product
+**Definition 2.3** (Moonshine Datum). A *moonshine datum* of order n extends a character table with:
+- A multiplicity function `mult : {0,...,n-1} × ℕ → ℕ`
 
-**Definition 2.2** (Class function inner product). For class functions f, g : ClassFn G ℂ:
+interpreted as: mult(i, m) is the multiplicity of the i-th irreducible representation in the m-th graded component of the moonshine module.
 
-$$\langle f, g \rangle = \frac{1}{|G|} \sum_{x \in G} f(x) \overline{g(x)}$$
+**Definition 2.4** (McKay-Thompson Coefficient). The *McKay-Thompson coefficient* for the j-th conjugacy class at grade m is:
 
-This is the standard inner product from representation theory (Serre, Ch. 2). We prove:
+mckayCoeff(j, m) := Σᵢ mult(i, m) · χ(i, j)
 
-- **Conjugate symmetry**: ⟨f, g⟩ = conj(⟨g, f⟩) (Theorem `cfInner_comm`)
-- **Linearity**: ⟨f₁ + f₂, g⟩ = ⟨f₁, g⟩ + ⟨f₂, g⟩ (Theorem `cfInner_add_left`)
-- **Scalar homogeneity**: ⟨cf, g⟩ = c⟨f, g⟩ (Theorem `cfInner_smul_left`)
+This represents the trace of a class-j element acting on the m-th graded component.
 
-### 2.3 Moonshine Packets
+**Definition 2.5** (Graded Dimension). The *graded dimension* at grade m is:
 
-**Definition 2.3** (MoonshinePacket). A *moonshine packet* for G over R is a function coeff : ℕ → ClassFn G R, representing the coefficient data:
-
-$$T_g(q) = \sum_{n \geq 0} a_n(g) q^n$$
-
-where each $a_n$ is a class function.
-
-### 2.4 Virtual Characters
-
-**Definition 2.4**. A class function f is a *virtual character* with respect to an orthonormal family {χᵢ}ᵢ∈I if there exist integers mᵢ such that:
-
-$$f(g) = \sum_{i \in I} m_i \chi_i(g) \quad \forall g \in G$$
-
-### 2.5 Spectral Weight
-
-**Definition 2.5**. The *spectral weight* of f with respect to χ is:
-
-$$w(f, \chi) = |\langle f, \chi \rangle|^2$$
-
-This connects to information theory: the spectral weights form a distribution measuring the "information content" of f in each irreducible sector.
-
----
+gradedDim(m) := Σᵢ mult(i, m) · repDim(i)
 
 ## 3. Main Results
 
-### 3.1 Reconstruction Theorem
+### 3.1 Burnside's Dimension Identity
 
-**Theorem 3.1** (graded_module_determined_by_traces). Let A, B : ℕ → ClassFn G ℂ. If A(n)(g) = B(n)(g) for all n and g, then for any class function χ:
+**Theorem 3.1** (sum_dim_sq_eq_order). *For any character table T of order n:*
 
-$$\text{mult}(A(n), \chi) = \text{mult}(B(n), \chi) \quad \forall n$$
+Σᵢ repDim(i)² = groupOrder
 
-*Proof sketch.* The hypothesis implies A(n) = B(n) as class functions (by extensionality). Since multiplicityOf is defined as the inner product, equal class functions yield equal inner products. □
+*Proof sketch.* Apply column orthogonality (CT5) with k = l = 0 (the identity class):
 
-*Significance.* This is the formal content of "the McKay-Thompson data determines the representation data." It shows that no information is lost in passing from graded representations to graded trace class functions.
+Σᵢ χ(i, 0) · χ(i, 0) = groupOrder / classSize(0) = groupOrder / 1 = groupOrder
 
-### 3.2 Fourier Inversion
+Since repDim(i) = χ(i, 0), this gives Σᵢ repDim(i)² = groupOrder. □
 
-**Theorem 3.2** (classFn_fourier_expansion). Let {χᵢ}ᵢ be a complete orthonormal basis of class functions. Then for any class function f:
+**Remark.** For the Monster, this gives Σᵢ dᵢ² = |M| ≈ 8 × 10⁵³, where the sum runs over all 194 irreducible representations. The trivial representation contributes 1² = 1, the smallest faithful representation contributes 196,883² ≈ 3.9 × 10¹⁰, and the balance comes from the remaining 192 representations.
 
-$$f(g) = \sum_i \langle f, \chi_i \rangle \cdot \chi_i(g) \quad \forall g \in G$$
+### 3.2 Identity McKay-Thompson Series
 
-*Proof.* Direct from the completeness hypothesis. □
+**Theorem 3.2** (mckay_identity_eq_gradedDim). *For any moonshine datum M:*
 
-*Significance.* This recasts moonshine as spectral decoding: the irreducible characters serve as frequency components, and the inner products are Fourier coefficients. Any class function — in particular, any McKay-Thompson series coefficient — can be reconstructed from its projections onto the irreducible basis.
+mckayCoeff(0, m) = gradedDim(m)
 
-### 3.3 Multiplicity Recovery
+*Proof.* By definition, mckayCoeff(0, m) = Σᵢ mult(i, m) · χ(i, 0) = Σᵢ mult(i, m) · repDim(i) = gradedDim(m). □
 
-**Theorem 3.3** (multiplicity_eq_cfInner_of_virtual_character). Let {χᵢ} be orthonormal and f = Σ mᵢχᵢ a virtual character. Then:
+**Interpretation.** The McKay-Thompson series for the identity element is the generating function of graded dimensions—this is the j-function (minus 744) for the Monster's moonshine module.
 
-$$\langle f, \chi_i \rangle = m_i$$
+### 3.3 Multiplicity Recovery Theorem
 
-*Proof.* By linearity of the inner product:
+**Theorem 3.3** (multiplicity_recovery). *For any moonshine datum M, irrep index i, and grade m:*
 
-$$\langle f, \chi_i \rangle = \sum_j m_j \langle \chi_j, \chi_i \rangle = \sum_j m_j \delta_{ji} = m_i$$
+mult(i, m) · groupOrder = Σⱼ classSize(j) · χ(i, j) · mckayCoeff(j, m)
 
-The formal proof expands f using the virtual character hypothesis, applies linearity lemmas (`cfInner_add_left`, `cfInner_smul_left`), and collapses the sum using orthonormality. □
+*Proof sketch.* Expand mckayCoeff(j, m) = Σᵢ' mult(i', m) · χ(i', j). The right-hand side becomes:
 
-*Significance.* This provides the exact integer multiplicities from inner product computations, turning the moonshine decoder into a provably correct algorithm.
+Σⱼ classSize(j) · χ(i, j) · Σᵢ' mult(i', m) · χ(i', j)
+= Σᵢ' mult(i', m) · Σⱼ classSize(j) · χ(i, j) · χ(i', j)
+= Σᵢ' mult(i', m) · groupOrder · δᵢᵢ'     (by row orthogonality CT4)
+= mult(i, m) · groupOrder
 
-### 3.4 Parseval Identity
+The swap of summation order is justified by finiteness. □
 
-**Theorem 3.4** (classFn_parseval). For a complete orthonormal basis {χᵢ}:
+**Significance.** This theorem is the mathematical engine behind moonshine computations. It says that knowing the 194 McKay-Thompson series completely determines the representation content of each graded piece. In practice, this means:
 
-$$\langle f, g \rangle = \sum_i \langle f, \chi_i \rangle \overline{\langle g, \chi_i \rangle}$$
+1. The Monster's character table (a 194 × 194 matrix) plus the McKay-Thompson coefficient vectors determine all multiplicities.
+2. The j-function alone (which gives mckayCoeff(0, m)) provides only partial information—you need all 194 series for complete recovery.
+3. The formula provides an efficient algorithm: computing mult(i, m) requires summing over 194 terms, not decomposing a representation of dimension ~ e^(4π√m).
 
-*Proof.* Substitute the Fourier expansion of f into the definition of ⟨f, g⟩ and use linearity and orthonormality to collapse the double sum. □
+### 3.4 McKay-Thompson Inner Product Identity
 
-*Significance.* Parseval's identity is the bridge to energy conservation: the total inner product equals the sum of spectral component products. This connects moonshine to harmonic analysis and information theory.
+**Theorem 3.4** (moonshine_inner_product_identity). *For any moonshine datum M and grades m, m':*
 
-### 3.5 Partition Function Additivity
+Σⱼ classSize(j) · mckayCoeff(j, m) · mckayCoeff(j, m') = groupOrder · Σᵢ mult(i, m) · mult(i, m')
 
-**Theorem 3.5** (gradedTrace_directSum_eq_add). For moonshine packets A, B:
+*Proof sketch.* Expand both McKay-Thompson coefficients, swap summation order, and apply row orthogonality. The cross terms vanish by the Kronecker delta, leaving only the diagonal terms. □
 
-$$(A + B).\text{coeff}(n)(g) = A.\text{coeff}(n)(g) + B.\text{coeff}(n)(g)$$
+**Corollary 3.5** (mckay_coeff_sq_sum). *Setting m = m':*
 
-*Significance.* This is the representation-theoretic analogue of the fundamental law of statistical mechanics: the partition function of a combined system is the sum of individual partition functions. It validates the formal treatment of moonshine packets under direct sum.
+Σⱼ classSize(j) · mckayCoeff(j, m)² = groupOrder · Σᵢ mult(i, m)²
 
-### 3.6 Decoder Correctness
+**Interpretation.** The left-hand side is a "character inner product" of the McKay-Thompson coefficient vector with itself. The right-hand side counts the total squared multiplicity. This provides:
 
-**Theorem 3.6** (decodeMultiplicities_correct). The function `decodeMultiplicities f basis` computes the correct Fourier coefficients for any virtual character f with respect to an orthonormal basis.
+1. A *consistency check* on McKay-Thompson series: the weighted sum of squares must equal |M| times a sum of perfect squares.
+2. A *lower bound* on the number of distinct irreps appearing at grade m: the number of non-zero mult(i, m) is at least (Σᵢ mult(i, m))² / (Σᵢ mult(i, m)²) by Cauchy-Schwarz.
+3. A *correlation measure* between grades: Theorem 3.4 with m ≠ m' measures how similar the representation content of Vₘ and Vₘ' is.
 
-*Proof.* Reduces to Theorem 3.3. □
+### 3.5 Trace Dominance
 
----
+**Definition 3.6** (Trace Dominance). A moonshine datum satisfies *trace dominance* if for all conjugacy classes j and grades m:
 
-## 4. Algorithms
+|mckayCoeff(j, m)| ≤ mckayCoeff(0, m)
 
-### 4.1 Multiplicity Decoder
+**Conjecture 3.7.** Every moonshine datum arising from a genuine group representation (with non-negative integer multiplicities) satisfies trace dominance.
 
-**Algorithm 1: DecodeMultiplicities**
+**Justification.** If V_m is a genuine representation, then mckayCoeff(j, m) = tr(g_j | V_m) where g_j is a representative of the j-th class. By the triangle inequality for traces, |tr(g | V)| ≤ dim(V) = tr(1 | V) = mckayCoeff(0, m).
+
+**Remark.** In the abstract setting, trace dominance is not automatic: the "multiplicities" are non-negative integers and "character values" are rational numbers satisfying orthogonality, but the McKay-Thompson coefficient is a signed sum that could exceed the dimension in pathological cases if the character values are large. For genuine representations (where character values are sums of roots of unity), the bound holds.
+
+## 4. The Monster Group: Specific Numerics
+
+### 4.1 The Monster Order
+
+The Monster group M has order:
+
+|M| = 2⁴⁶ · 3²⁰ · 5⁹ · 7⁶ · 11² · 13³ · 17 · 19 · 23 · 29 · 31 · 41 · 47 · 59 · 71
+
+This factors into exactly 15 distinct primes—the *supersingular primes*. We verify:
+
+- **Divisibility by 24**: 24 | |M|, reflecting the connection to the 24-dimensional Leech lattice.
+- **Number of primes**: The Monster order has exactly 15 distinct prime factors.
+
+### 4.2 Thompson's Observations
+
+The first moonshine decompositions were observed by Thompson:
+
+- 196,884 = 196,883 + 1
+- 21,493,760 = 21,296,876 + 196,883 + 1
+
+Here 1, 196,883, and 21,296,876 are the dimensions of the three smallest irreducible Monster representations.
+
+### 4.3 Monster Moonshine Datum
+
+We define a `MonsterMoonshineDatum` as a MoonshineDatum with 194 conjugacy classes, group order equal to |M|, and the constraint that gradedDim(1) = 196,884 (matching the j-function's first coefficient). The zeroth graded component is constrained to be the trivial representation.
+
+## 5. Algorithms
+
+### 5.1 Multiplicity Computation
+
+**Algorithm 1: ComputeMultiplicity**
+
+Input: Character table χ, class sizes |C_j|, group order |G|, McKay-Thompson coefficients aₘ(j)
+Output: mult(i, m) for all i
 
 ```
-Input: Class function f (values on conjugacy classes), 
-       Character table T, Class sizes s, Group order |G|
-Output: Multiplicity vector m
-
-for i = 1 to k:                    // k = number of irreps
-    m[i] = (1/|G|) Σ_j s[j] · f[j] · conj(T[i,j])
-return m
+for each irrep i:
+    mult(i, m) = (1/|G|) * Σⱼ |C_j| * χ(i, j) * aₘ(j)
 ```
 
-**Complexity:** O(k²) where k is the number of conjugacy classes.
-**Space:** O(k) for the output vector.
-**Correctness:** Verified by `decodeMultiplicities_correct` in Lean.
+This runs in O(n²) time where n is the number of conjugacy classes.
 
-### 4.2 Fourier Reconstruction
+### 5.2 Inner Product Verification
 
-**Algorithm 2: FourierReconstruct**
+**Algorithm 2: VerifyInnerProduct**
 
-```
-Input: Multiplicity vector m, Character table T
-Output: Reconstructed class function f
-
-for j = 1 to k:                    // j = conjugacy class index
-    f[j] = Σ_i m[i] · T[i,j]
-return f
-```
-
-**Complexity:** O(k²).
-**Correctness:** Verified by `classFn_fourier_expansion`.
-**Round-trip property:** FourierReconstruct(DecodeMultiplicities(f)) = f.
-
-### 4.3 Parseval Verification
-
-**Algorithm 3: VerifyParseval**
+Input: Moonshine datum (character table + multiplicities)
+Output: Boolean (whether the inner product identity holds)
 
 ```
-Input: Class functions f, g, Character table T, Class sizes s, |G|
-Output: Boolean (whether Parseval holds within tolerance)
-
-direct = (1/|G|) Σ_j s[j] · f[j] · conj(g[j])
-m_f = DecodeMultiplicities(f)
-m_g = DecodeMultiplicities(g)
-parseval = Σ_i m_f[i] · conj(m_g[i])
-return |direct - parseval| < ε
+for each pair (m, m'):
+    LHS = Σⱼ |C_j| * mckayCoeff(j, m) * mckayCoeff(j, m')
+    RHS = |G| * Σᵢ mult(i, m) * mult(i, m')
+    if LHS ≠ RHS: return False
+return True
 ```
 
----
+### 5.3 Trace Dominance Check
 
-## 5. Computational Experiments
+**Algorithm 3: CheckTraceDominance**
 
-### 5.1 S₃ Verification
+Input: McKay-Thompson coefficients aₘ(j) for all j, m up to M
+Output: Boolean (whether trace dominance holds up to grade M)
 
-For S₃ (order 6, 3 conjugacy classes, 3 irreducible representations):
+```
+for m = 0 to M:
+    d = aₘ(identity)  # graded dimension
+    for each class j:
+        if |aₘ(j)| > d: return False
+return True
+```
 
-| Degree | Class function | Multiplicities (triv, sign, std) |
-|--------|---------------|--------------------------------|
-| 0      | [1, 1, 1]     | (1, 0, 0)                     |
-| 1      | [2, 0, -1]    | (0, 0, 1)                     |
-| 2      | [6, 0, 0]     | (1, 1, 2)                     |
+## 6. Discussion
 
-Fourier inversion verified with zero error at all degrees.
-Parseval's theorem verified: ⟨f, g⟩_direct = ⟨f, g⟩_Parseval = 1+0j for test functions.
+### 6.1 What is Algebraic vs. What Requires Modularity
 
-### 5.2 A₅ Experiments
+Our results show that the *algebraic* constraints of character orthogonality are already powerful:
+- They determine all multiplicities from McKay-Thompson series (Theorem 3.3)
+- They relate inner products of McKay-Thompson coefficients to representation overlaps (Theorem 3.4)
+- They constrain the "energy" (L² norm) of McKay-Thompson coefficient vectors (Corollary 3.5)
 
-For A₅ (order 60, 5 conjugacy classes):
-- Symmetric power dimensions dim(Sym^n(3a)) = C(n+2, 2) form a log-concave sequence.
-- Fourier coefficients of the identity class function of Sym^n distribute across all 5 irreducibles.
-- Spectral energy concentrates increasingly on higher-dimensional irreducibles.
+What they do *not* determine:
+- Why the McKay-Thompson series are modular functions (this requires the vertex algebra structure)
+- Why they are Hauptmoduls for genus-zero groups (this requires Borcherds' Monster Lie algebra argument)
+- Why the supersingular primes divide |M| (this remains an open problem)
 
-### 5.3 Log-Concavity Conjecture
+### 6.2 Connections to Physics
 
-**Conjecture.** For G = A₅ and V its 3-dimensional irreducible representation, the dimension sequence dim(Sym^n(V)) = C(n+2, n) is log-concave for all n ≥ 1.
+The moonshine module V♮ can be interpreted as the space of states of a bosonic string propagating on the Leech lattice torus ℝ²⁴/Λ₂₄, orbifolded by a ℤ/2ℤ reflection. The graded dimension generating function is:
 
-**Computational evidence:** Verified for n ≤ 100. The log-concavity ratio a(n)²/(a(n-1)·a(n+1)) decreases monotonically toward 1, with:
-- n=2: ratio 1.200
-- n=5: ratio 1.050
-- n=10: ratio 1.015
-- n=50: ratio 1.001
+Σₘ dim(Vₘ) qᵐ = j(q) - 744
 
-**Remark.** For binomial coefficient sequences C(n+d-1, n) with fixed d, log-concavity is a classical result. The conjecture becomes genuinely interesting when extended to the full multiplicity sequences (not just dimensions), which requires the complete character table computation including all conjugacy classes.
+The constant 744 corresponds to the 24 non-compact dimensions of the bosonic string. McKay-Thompson series T_g(q) arise as twisted partition functions—the partition function of the bosonic string with boundary conditions twisted by the Monster element g.
 
----
+### 6.3 Relation to Umbral Moonshine
 
-## 6. Cross-Domain Connections
+Our algebraic framework extends beyond the Monster. Any finite group G with a graded module V satisfying appropriate modularity conditions gives rise to a moonshine datum. Umbral moonshine [5] identifies similar correspondences for other sporadic groups, with the Hauptmodul property replaced by mock modular forms.
 
-### 6.1 Harmonic Analysis
+## 7. Future Work
 
-The Fourier inversion theorem (Theorem 3.2) and Parseval identity (Theorem 3.4) establish a complete harmonic analysis framework on class function spaces. The irreducible characters form an orthonormal basis, and the inner product formula provides perfect reconstruction.
-
-This parallels classical Fourier analysis on locally compact abelian groups (Pontryagin duality), but specialized to the finite, potentially non-abelian setting where the "frequencies" are matrix-valued (irreducible representations) rather than scalar-valued (characters of abelian groups).
-
-### 6.2 Information Theory
-
-The spectral weight vector w(f) = (|⟨f, χ₁⟩|², ..., |⟨f, χₖ⟩|²) provides a probability distribution (after normalization) over irreducible representations. The Shannon entropy:
-
-$$H(f) = -\sum_i p_i \log_2 p_i, \quad p_i = \frac{w_i}{\sum_j w_j}$$
-
-measures the "symmetry complexity" of f. Low entropy corresponds to class functions concentrated in few irreducibles (high symmetry), while high entropy corresponds to class functions spread across many irreducibles (low symmetry). The regular character achieves maximum entropy.
-
-### 6.3 Statistical Mechanics
-
-The partition function additivity theorem (Theorem 3.5) establishes the formal analogue of the fundamental law of statistical mechanics for graded representations. In the moonshine context, this means the McKay-Thompson series of a direct sum of graded modules is the sum of the individual series — a basic but essential structural property for building complex moonshine packets from simpler components.
-
----
-
-## 7. Discussion
-
-### 7.1 What We Prove vs. What We Don't
-
-Our framework establishes the *algebraic* infrastructure of moonshine: the precise sense in which q-expansion data determines and is determined by representation-theoretic data. We do **not** prove:
-
-- The modularity of McKay-Thompson series (this requires analytic properties beyond our algebraic framework).
-- The existence of the Frenkel-Lepowsky-Meurman vertex algebra V♮.
-- Any property specific to the Monster group (our results hold for arbitrary finite groups).
-
-The key contribution is the *formal language* in which these deeper results could be stated and verified, not the deep results themselves.
-
-### 7.2 Limitations
-
-1. **No analytic content.** Our framework treats q-series purely algebraically (as formal power series). The modularity statements that make moonshine truly miraculous require analytic continuation and convergence arguments not present here.
-
-2. **Orthonormality as hypothesis.** We assume the existence of a complete orthonormal basis of class functions (the irreducible characters) rather than constructing one. Building a complete character theory from first principles in Lean would require substantially more infrastructure.
-
-3. **No Monster-specific results.** All theorems apply to arbitrary finite groups. Specializing to the Monster would require explicit character table data (a 194 × 194 matrix) and associated computational verification.
-
-### 7.3 Comparison with Existing Tools
-
-No existing formal verification system (Lean, Coq, Isabelle, Agda) contains a verified moonshine framework. Mathlib provides some representation theory infrastructure (`Representation`, `LinearMap.trace`) but lacks class functions, character orthogonality, and moonshine-specific structures.
-
----
-
-## 8. Future Work
-
-1. **Full character theory.** Formalize the construction of irreducible characters and prove orthogonality from first principles (Schur's lemma + averaging over G).
-
-2. **Modularity.** Connect moonshine packets to formal modular forms, proving transformation properties under SL₂(ℤ).
-
-3. **Replicability.** Formalize the replication formulas that characterize McKay-Thompson series among all modular functions.
-
-4. **Umbral moonshine.** Extend the framework to mock modular forms and Niemeier lattices.
-
-5. **Computational Monster moonshine.** Implement the 194 McKay-Thompson series using explicit data and verify consistency with the formal framework.
-
----
+1. **Extend the framework to complex characters**: Replace ℚ with ℂ and incorporate character conjugation in the orthogonality relations.
+2. **Formalize modularity conditions**: Define modular functions in Lean and connect them to McKay-Thompson series.
+3. **Prove trace dominance abstractly**: Establish the conjecture for all genuine representation-theoretic moonshine data.
+4. **Connect to vertex algebras**: Formalize the vertex algebra structure on V♮ and derive the McKay-Thompson series from it.
+5. **Investigate the product of McKay-Thompson series**: Study convergence and modularity of the weighted product Π_g T_g(q)^{1/|C_G(g)|}.
 
 ## References
 
-1. Conway, J.H., Norton, S.P. (1979). "Monstrous Moonshine." *Bull. London Math. Soc.* 11, 308–339.
-2. Borcherds, R.E. (1992). "Monstrous moonshine and monstrous Lie superalgebras." *Invent. Math.* 109, 405–444.
-3. Frenkel, I., Lepowsky, J., Meurman, A. (1988). *Vertex Operator Algebras and the Monster.* Academic Press.
-4. Serre, J.-P. (1977). *Linear Representations of Finite Groups.* Springer GTM 42.
-5. Gannon, T. (2006). *Moonshine beyond the Monster.* Cambridge University Press.
-6. Duncan, J.F.R., Griffin, M.J., Ono, K. (2015). "Moonshine." *Research in the Mathematical Sciences* 2:11.
+[1] J. McKay, "Graphs, singularities, and finite groups," *Proc. Sympos. Pure Math.* 37 (1980), 183-186.
+
+[2] J.H. Conway, S.P. Norton, "Monstrous moonshine," *Bull. London Math. Soc.* 11 (1979), 308-339.
+
+[3] I. Frenkel, J. Lepowsky, A. Meurman, *Vertex Operator Algebras and the Monster*, Academic Press, 1988.
+
+[4] R.E. Borcherds, "Monstrous moonshine and monstrous Lie superalgebras," *Inventiones Math.* 109 (1992), 405-444.
+
+[5] M.C.N. Cheng, J.F.R. Duncan, J.A. Harvey, "Umbral moonshine," *Commun. Number Theory Phys.* 8 (2014), 101-242.
+
+[6] T. Gannon, *Moonshine beyond the Monster: The Bridge Connecting Algebra, Modular Forms and Physics*, Cambridge University Press, 2006.
