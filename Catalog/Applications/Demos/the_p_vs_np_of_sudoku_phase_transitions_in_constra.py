@@ -1,790 +1,314 @@
-#!/usr/bin/env python3
 """
-Applications of Phase Transition Theory to Real-World Problems
+Demo: Phase Transitions in Sudoku Constraint Satisfaction
 
-Demonstrates how the mathematical framework for CSP phase transitions
-applies beyond Sudoku to practical domains:
-
-1. Scheduling: Employee shift assignment as Latin square completion
-2. Frequency Assignment: Radio channel allocation as graph coloring
-3. Experimental Design: Balanced factorial designs
+Demonstrates the key mathematical results from the formalization:
+1. Constraint degree decomposition (Sudoku = Latin + Box)
+2. Phase transition detection via sampling
+3. Hardness peak analysis
+4. Convergence of constraint degree ratio to 3/2
 """
 
 import random
-from typing import Optional
+import math
+from algorithms import (
+    sudoku_constraint_degree,
+    latin_square_constraint_degree,
+    box_additional_constraints,
+    critical_density,
+    constraint_interaction_strength,
+    cluster_ratio,
+    hardness_function,
+    constraint_degree_ratio,
+    generate_random_partial_latin_square,
+    is_latin_square_completable,
+    backtracking_tree_size,
+)
 
 
-# ============================================================================
-# Application 1: Employee Scheduling
-# ============================================================================
-
-def scheduling_example():
-    """
-    Employee scheduling as Latin square completion.
-
-    n employees must be assigned to n shifts over n days.
-    Each employee works exactly one shift per day.
-    Each shift is covered by exactly one employee per day.
-    This is exactly a Latin square!
-
-    The phase transition tells us: if we pre-assign more than
-    (n²-1)/n² fraction of the schedule, the remaining assignments
-    are likely to be either forced or impossible.
-    """
+def demo_degree_decomposition():
+    """Demonstrate the Box-Row Interaction Theorem."""
     print("=" * 60)
-    print("Application 1: Employee Scheduling")
-    print("=" * 60)
-
-    n = 5  # 5 employees, 5 shifts, 5 days
-    dc = (n**2 - 1) / n**2
-
-    print(f"\n  {n} employees × {n} shifts × {n} days")
-    print(f"  Total slots: {n**2}")
-    print(f"  Critical density: {dc:.4f}")
-    print(f"  Critical pre-assignments: {int(dc * n**2)} out of {n**2}")
-
-    # Generate a valid schedule (Cayley table)
-    schedule = [[(i + j) % n for j in range(n)] for i in range(n)]
-
-    employees = ["Alice", "Bob", "Carol", "Dave", "Eve"]
-    shifts = ["Morning", "Afternoon", "Evening", "Night", "Graveyard"]
-    days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
-
-    print(f"\n  Complete valid schedule:")
-    header = "  " + " ".join(f"{d:>10}" for d in days)
-    print(header)
-    for i, emp in enumerate(employees):
-        row = "  " + " ".join(f"{shifts[schedule[i][j]]:>10}" for j in range(n))
-        print(f"  {emp:>6}: {row}")
-
-    # Pre-assign some slots and show the phase
-    for frac in [0.5, 0.75, 0.9, 0.96]:
-        k = int(frac * n**2)
-        phase = "SAT" if frac < dc - 1/n**2 else ("UNSAT" if frac > dc + 1/n**2 else "CRITICAL")
-        print(f"\n  Pre-assign {k}/{n**2} slots (d={frac:.2f}): Phase = {phase}")
-
-
-# ============================================================================
-# Application 2: Frequency Assignment
-# ============================================================================
-
-def frequency_assignment_example():
-    """
-    Radio frequency assignment as graph coloring.
-
-    n transmitters must be assigned one of n frequencies.
-    Transmitters that can interfere must use different frequencies.
-    The interference graph is the constraint graph.
-
-    For a grid layout of transmitters, the constraint graph is
-    the Rook's graph, and frequency assignment = Latin square.
-    The phase transition predicts when frequency assignment
-    becomes infeasible.
-    """
-    print("\n" + "=" * 60)
-    print("Application 2: Radio Frequency Assignment")
+    print("THEOREM: Sudoku Degree Decomposition")
+    print("  sudokuDegree(n) = latinDegree(n) + boxExtra(n)")
+    print("  3n² - 2n - 1 = 2(n² - 1) + (n-1)²")
     print("=" * 60)
 
-    n = 4  # 4×4 grid of transmitters, 4 frequencies
-    dc = (n**2 - 1) / n**2
+    for n in range(2, 10):
+        sd = sudoku_constraint_degree(n)
+        ld = latin_square_constraint_degree(n)
+        ba = box_additional_constraints(n)
+        assert sd == ld + ba, f"Decomposition failed for n={n}!"
+        grid_size = n * n
+        print(f"  n={n} ({grid_size}×{grid_size} grid): "
+              f"Sudoku={sd}, Latin={ld}, Box={ba}, "
+              f"Verified: {ld}+{ba}={ld+ba} ✓")
 
-    print(f"\n  {n}×{n} grid of transmitters, {n} available frequencies")
-    print(f"  Constraint degree (interfering neighbors): {2*(n-1)}")
-    print(f"  Total constraints: {n**2 * (n-1)}")
-    print(f"  Critical pre-assignment density: {dc:.4f}")
-
-    # Valid assignment
-    assignment = [[(i + j) % n + 1 for j in range(n)] for i in range(n)]
-
-    print(f"\n  Valid frequency assignment (MHz bands):")
-    freq_names = {1: "900", 2: "1800", 3: "2100", 4: "2600"}
-    for i in range(n):
-        row = " ".join(f"{freq_names[assignment[i][j]]:>5}" for j in range(n))
-        print(f"    {row}")
-
-    # Constraint satisfaction check
-    conflicts = 0
-    for i in range(n):
-        for j in range(n):
-            # Check row
-            for jj in range(j+1, n):
-                if assignment[i][j] == assignment[i][jj]:
-                    conflicts += 1
-            # Check column
-            for ii in range(i+1, n):
-                if assignment[i][j] == assignment[ii][j]:
-                    conflicts += 1
-    print(f"\n  Frequency conflicts: {conflicts}")
-    print(f"  Assignment valid: {conflicts == 0}")
+    print()
 
 
-# ============================================================================
-# Application 3: Experimental Design
-# ============================================================================
-
-def experimental_design_example():
-    """
-    Balanced experimental design as Latin square.
-
-    In agricultural experiments, a Latin square design ensures
-    that each treatment appears exactly once in each row (soil type)
-    and each column (irrigation level).
-
-    The phase transition tells us the maximum number of constraints
-    (pre-determined treatment assignments) before the design
-    becomes infeasible.
-    """
-    print("\n" + "=" * 60)
-    print("Application 3: Agricultural Experimental Design")
+def demo_phase_transition_small():
+    """Demonstrate phase transition for 4×4 Latin squares."""
+    print("=" * 60)
+    print("EXPERIMENT: Phase Transition in 4×4 Latin Squares")
+    print(f"  Critical density d_c = {critical_density(4):.4f}")
     print("=" * 60)
 
     n = 4
-    dc = (n**2 - 1) / n**2
+    total = n * n
+    num_samples = 50
 
-    treatments = ["Fertilizer A", "Fertilizer B", "Fertilizer C", "Control"]
-    soils = ["Sandy", "Clay", "Loam", "Silt"]
-    irrigations = ["Low", "Medium", "High", "Flood"]
-
-    # Generate balanced design
-    design = [[(i + j) % n for j in range(n)] for i in range(n)]
-
-    print(f"\n  Balanced Latin Square Design (n={n}):")
-    print(f"  Rows = soil types, Columns = irrigation levels")
-    header = "         " + " ".join(f"{irr:>14}" for irr in irrigations)
-    print(header)
-    for i, soil in enumerate(soils):
-        row = " ".join(f"{treatments[design[i][j]]:>14}" for j in range(n))
-        print(f"  {soil:>7}: {row}")
-
-    print(f"\n  Properties:")
-    print(f"    Each treatment appears in each soil type: ✓")
-    print(f"    Each treatment appears at each irrigation: ✓")
-    print(f"    Critical pre-assignment density: {dc:.4f}")
-    print(f"    Max pre-determined assignments: {int(dc * n**2)}/{n**2}")
-
-
-# ============================================================================
-# Summary: Phase Transition Implications
-# ============================================================================
-
-def summary():
-    """Summarize the practical implications of phase transitions."""
-    print("\n" + "=" * 60)
-    print("Summary: Phase Transition Implications")
-    print("=" * 60)
-
-    print("""
-  The critical density d_c(n) = (n²-1)/n² governs the feasibility
-  of assignment problems across domains:
-
-  ┌──────────────┬────────┬────────┬──────────────────────┐
-  │ Domain       │   n    │  d_c   │ Interpretation       │
-  ├──────────────┼────────┼────────┼──────────────────────┤
-  │ 4×4 Sudoku   │   2    │ 0.750  │ 12/16 cells filled   │
-  │ 9×9 Sudoku   │   3    │ 0.889  │ 72/81 cells filled   │
-  │ Scheduling   │   5    │ 0.960  │ 24/25 slots fixed    │
-  │ Frequencies  │   4    │ 0.938  │ 15/16 assigned       │
-  │ Experiments  │   4    │ 0.938  │ 15/16 pre-determined │
-  │ 16×16 Sudoku │   4    │ 0.938  │ 15/16 cells filled   │
-  └──────────────┴────────┴────────┴──────────────────────┘
-
-  Key insight: At the phase transition, there is on average
-  exactly ONE free degree of freedom per constraint group.
-  This is the universal signature of criticality in CSPs.
-    """)
-
-
-if __name__ == "__main__":
-    scheduling_example()
-    frequency_assignment_example()
-    experimental_design_example()
-    summary()
-
-
-#!/usr/bin/env python3
-"""Build PACKAGE.json from all deliverables."""
-import json
-import os
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Read all files
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-viz1 = read_file('viz_phase_transition.py')
-viz2 = read_file('viz_hardness_landscape.py')
-viz3 = read_file('viz_rook_graph.py')
-interactive1 = read_file('interactive_phase_slider.html')
-interactive2 = read_file('interactive_latin_square.html')
-
-lean_defs = read_file('Speculative/AutoResearch/SudokuPhaseTransition/Defs.lean')
-lean_thms = read_file('Speculative/AutoResearch/SudokuPhaseTransition/Theorems.lean')
-lean_proofs = f"-- Defs.lean\n{lean_defs}\n\n-- Theorems.lean\n{lean_thms}"
-
-package = {
-    "title": "Phase Transitions in Constraint Satisfaction: The P vs NP of Sudoku",
-    "domain": "Combinatorics / Constraint Satisfaction / Phase Transitions",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Phase Transition Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications Demo",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Phase Classifier",
-            "pseudocode": "PhaseClassify(n, d):\n  d_c ← (n² - 1) / n²\n  w ← 1 / n²\n  if d < d_c - w: return SAT\n  if d > d_c + w: return UNSAT\n  return CRITICAL\n\nTime: O(1), Space: O(1)",
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Phase Transition Curves",
-            "code": viz1,
-            "description": "Shows how satisfiability probability drops sharply at the critical density d_c(n) = (n²-1)/n² for different grid sizes, demonstrating the universality of the phase transition."
-        },
-        {
-            "name": "Hardness Landscape",
-            "code": viz2,
-            "description": "Illustrates the easy-hard-easy pattern: computational hardness peaks sharply at the phase transition, with entropy collapsing from 1 to 0."
-        },
-        {
-            "name": "Rook's Graph Connection",
-            "code": viz3,
-            "description": "Visualizes the cross-domain equivalence between Latin square completion and graph coloring on the Rook's graph K_n □ K_n."
-        }
-    ],
-    "interactive_demos": [
-        {
-            "name": "Phase Transition Explorer",
-            "html": interactive1,
-            "description": "Interactive slider to explore how grid size and density affect the phase classification (SAT/CRITICAL/UNSAT) with real-time visualization."
-        },
-        {
-            "name": "Latin Square Builder",
-            "html": interactive2,
-            "description": "Click cells to toggle pre-filled status and watch the phase classification change in real time as constraint density increases."
-        }
-    ],
-    "lean_proofs": lean_proofs
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print("PACKAGE.json created successfully")
-print(f"Size: {os.path.getsize('PACKAGE.json')} bytes")
-
-
-#!/usr/bin/env python3
-"""
-Demonstration of Phase Transitions in Sudoku / Latin Square Constraint Satisfaction
-
-This script demonstrates the key mathematical results about phase transitions
-in constraint satisfaction problems, using Latin squares as the primary example.
-
-Key results demonstrated:
-1. Critical density d_c(n) = (n²-1)/n² for n×n Latin squares
-2. Monotonicity of satisfiability probability
-3. Phase transition sharpness scaling as 1/n²
-4. Connection to graph coloring (Rook's graph)
-"""
-
-import random
-import time
-from typing import Optional
-
-
-def critical_density(n: int) -> float:
-    """Compute the conjectured critical density d_c(n) = (n²-1)/n²."""
-    if n <= 0:
-        raise ValueError("n must be positive")
-    return (n**2 - 1) / n**2
-
-
-def free_cells_at_critical(n: int) -> float:
-    """Number of free cells at the critical density: n² * (1 - d_c(n)) = 1."""
-    return n**2 * (1 - critical_density(n))
-
-
-def constraint_degree(n: int) -> int:
-    """Constraint degree: each cell conflicts with 2(n-1) others in a Latin square."""
-    return 2 * (n - 1)
-
-
-def constraint_graph_edges(n: int) -> int:
-    """Total edges in the Rook's graph for an n×n board."""
-    return n**2 * (n - 1)
-
-
-def is_latin_square(grid: list[list[int]], n: int) -> bool:
-    """Check if grid is a valid Latin square of order n."""
-    for i in range(n):
-        if len(set(grid[i])) != n:
-            return False
-        col = [grid[j][i] for j in range(n)]
-        if len(set(col)) != n:
-            return False
-    return True
-
-
-def generate_cayley_latin_square(n: int) -> list[list[int]]:
-    """Generate a Latin square using the Cayley table: f(i,j) = (i+j) mod n."""
-    return [[(i + j) % n for j in range(n)] for i in range(n)]
-
-
-def random_partial_assignment(n: int, density: float) -> list[list[Optional[int]]]:
-    """Generate a random partial assignment with given density."""
-    square = generate_cayley_latin_square(n)
-    k = int(density * n**2)
-    cells = [(i, j) for i in range(n) for j in range(n)]
-    random.shuffle(cells)
-    filled = set(cells[:k])
-    return [
-        [square[i][j] if (i, j) in filled else None for j in range(n)]
-        for i in range(n)
-    ]
-
-
-def count_completions_backtrack(grid: list[list[Optional[int]]], n: int) -> int:
-    """Count valid Latin square completions by backtracking (small n only)."""
-    # Find first empty cell
-    for i in range(n):
-        for j in range(n):
-            if grid[i][j] is None:
-                count = 0
-                row_vals = {grid[i][jj] for jj in range(n) if grid[i][jj] is not None}
-                col_vals = {grid[ii][j] for ii in range(n) if grid[ii][j] is not None}
-                used = row_vals | col_vals
-                for v in range(n):
-                    if v not in used:
-                        grid[i][j] = v
-                        count += count_completions_backtrack(grid, n)
-                        grid[i][j] = None
-                return count
-    return 1  # All cells filled, valid completion
-
-
-def measure_solve_time(n: int, density: float, trials: int = 10) -> float:
-    """Measure average solve time at a given density."""
-    total = 0.0
-    for _ in range(trials):
-        grid = random_partial_assignment(n, density)
-        start = time.perf_counter()
-        count_completions_backtrack(grid, n)
-        total += time.perf_counter() - start
-    return total / trials
-
-
-def main():
-    print("=" * 70)
-    print("Phase Transitions in Constraint Satisfaction: Demonstration")
-    print("=" * 70)
-
-    # 1. Critical density values
-    print("\n--- Critical Density d_c(n) = (n²-1)/n² ---")
-    for n in [2, 3, 4, 5, 6, 8, 10]:
-        dc = critical_density(n)
-        gap = 1 - dc
-        free = free_cells_at_critical(n)
-        print(f"  n={n:2d}: d_c = {dc:.6f}, "
-              f"1-d_c = 1/{n**2} = {gap:.6f}, "
-              f"free cells at d_c = {free:.1f}")
-
-    # 2. Phase transition universality: 1 - d_c(n) = 1/n² exactly
-    print("\n--- Phase Transition Universality Test ---")
-    print("  Testing: 1 - d_c(n) = 1/n² for n = 1..20")
-    all_pass = True
-    for n in range(1, 21):
-        gap = 1 - critical_density(n)
-        expected = 1 / n**2
-        if abs(gap - expected) > 1e-15:
-            print(f"  FAIL at n={n}: {gap} != {expected}")
-            all_pass = False
-    print(f"  Result: {'ALL PASSED' if all_pass else 'SOME FAILED'}")
-
-    # 3. Cayley table construction
-    print("\n--- Cayley Table Latin Square (n=4) ---")
-    sq = generate_cayley_latin_square(4)
-    for row in sq:
-        print(f"  {row}")
-    print(f"  Valid Latin square: {is_latin_square(sq, 4)}")
-
-    # 4. Constraint graph properties
-    print("\n--- Constraint Graph (Rook's Graph) Properties ---")
-    for n in [3, 4, 5, 9]:
-        deg = constraint_degree(n)
-        edges = constraint_graph_edges(n)
-        vertices = n**2
-        print(f"  n={n}: vertices={vertices}, degree={deg}, "
-              f"edges={edges}")
-
-    # 5. Phase transition experiment (small n)
-    print("\n--- Phase Transition Experiment (n=4) ---")
-    n = 4
-    print(f"  Critical density: {critical_density(n):.4f}")
-    densities = [0.0, 0.25, 0.50, 0.625, 0.75, 0.8125, 0.875, 0.9375, 1.0]
-    for d in densities:
-        trials = 20
+    for num_filled in range(0, total + 1):
+        d = num_filled / total
         sat_count = 0
-        for _ in range(trials):
-            grid = random_partial_assignment(n, d)
-            completions = count_completions_backtrack(grid, n)
-            if completions > 0:
+
+        for _ in range(num_samples):
+            partial = generate_random_partial_latin_square(n, num_filled)
+            if partial is None:
+                continue
+            grid = [[-1] * n for _ in range(n)]
+            for r, c, v in partial:
+                grid[r][c] = v
+            if is_latin_square_completable(grid, n):
                 sat_count += 1
-        prob = sat_count / trials
-        marker = " <-- d_c" if abs(d - critical_density(n)) < 0.01 else ""
-        print(f"  d={d:.4f}: P(SAT)={prob:.2f}{marker}")
 
-    # 6. Free cells at critical density
-    print("\n--- Free Cells at Critical Density ---")
-    print("  Theorem: n² × (1 - d_c(n)) = 1 for all n ≥ 1")
-    for n in range(1, 11):
-        fc = n**2 * (1 - critical_density(n))
-        print(f"  n={n:2d}: n² × (1 - d_c) = {fc:.10f}")
+        sat_prob = sat_count / num_samples
+        bar = "█" * int(sat_prob * 40)
+        marker = " ← d_c" if abs(d - critical_density(n)) < 0.05 else ""
+        print(f"  d={d:.3f} ({num_filled:2d}/{total}): P(sat)={sat_prob:.2f} {bar}{marker}")
 
-    print("\n" + "=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
+    print()
+
+
+def demo_hardness_peak():
+    """Demonstrate the hardness peak theorem."""
+    print("=" * 60)
+    print("THEOREM: Hardness Peak at d = 1/2")
+    print("  H(d) = d(1-d)n⁴ ≤ H(1/2) = n⁴/4")
+    print("=" * 60)
+
+    n = 3
+    max_h = hardness_function(n, 0.5)
+    print(f"  For n={n}: max hardness H(1/2) = {max_h:.1f}")
+    print()
+
+    for d_pct in range(0, 105, 5):
+        d = d_pct / 100
+        h = hardness_function(n, d)
+        bar_len = int(h / max_h * 50) if max_h > 0 else 0
+        bar = "█" * bar_len
+        dc = critical_density(n)
+        marker = " ← d_c" if abs(d - dc) < 0.025 else ""
+        print(f"  d={d:.2f}: H={h:8.1f} {bar}{marker}")
+
+    print()
+
+
+def demo_degree_ratio_convergence():
+    """Demonstrate convergence of Sudoku/Latin degree ratio to 3/2."""
+    print("=" * 60)
+    print("THEOREM: Constraint Degree Ratio → 3/2")
+    print("  (3n² - 2n - 1) / (2(n² - 1)) → 3/2 as n → ∞")
+    print("=" * 60)
+
+    for n in [2, 3, 4, 5, 10, 20, 50, 100, 500, 1000]:
+        r = constraint_degree_ratio(n)
+        gap = abs(r - 1.5)
+        expected_gap = 1 / (n + 1)
+        print(f"  n={n:5d}: ratio={r:.8f}, |ratio - 3/2|={gap:.8f}, "
+              f"1/(n+1)={expected_gap:.8f}")
+
+    print()
+
+
+def demo_cluster_ratio():
+    """Demonstrate cluster ratio at critical density."""
+    print("=" * 60)
+    print("THEOREM: Cluster Ratio at Critical Density = 1/n")
+    print("=" * 60)
+
+    for n in range(2, 15):
+        dc = critical_density(n)
+        cr = cluster_ratio(n, dc)
+        expected = 1 / n
+        print(f"  n={n:3d}: d_c={dc:.6f}, cluster_ratio={cr:.6f}, "
+              f"1/n={expected:.6f}, match={abs(cr - expected) < 1e-10}")
+
+    print()
+
+
+def demo_backtracking_phases():
+    """Demonstrate easy/hard phases via backtracking tree size."""
+    print("=" * 60)
+    print("THEOREM: Easy Phase (effective branching < 1)")
+    print("  Tree size shrinks exponentially when eff. branching < 1")
+    print("=" * 60)
+
+    depth = 10
+    for eff_b in [0.3, 0.5, 0.7, 0.9, 1.0, 1.1, 1.5, 2.0, 3.0]:
+        # decompose into branching * (1 - pruning)
+        branching = eff_b * 2  # arbitrary decomposition
+        pruning = 0.5
+        size = backtracking_tree_size(branching, depth, pruning)
+        phase = "EASY" if eff_b < 1 else ("CRITICAL" if eff_b == 1.0 else "HARD")
+        print(f"  eff_b={eff_b:.1f}: tree_size={size:12.1f}, phase={phase}")
+
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    print("\n🔬 CSP Phase Transition Demo\n")
+    demo_degree_decomposition()
+    demo_degree_ratio_convergence()
+    demo_cluster_ratio()
+    demo_hardness_peak()
+    demo_backtracking_phases()
+    demo_phase_transition_small()
+    print("✅ All demonstrations complete.")
 
 
-#!/usr/bin/env python3
 """
-Visualization 2: Computational Hardness Landscape
+Visualization: Phase Transition in Constraint Satisfaction
 
-Shows the 'hardness peak' at the phase transition: instances near the critical
-density d_c are exponentially harder to solve than those far from it.
-This is the computational signature of criticality in CSPs.
+Standalone script generating publication-quality plots of the CSP
+phase transition, constraint degree decomposition, and convergence behavior.
 """
 
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 
+
+def sudoku_constraint_degree(n):
+    return 3 * n**2 - 2 * n - 1
+
+def latin_square_constraint_degree(n):
+    return 2 * (n**2 - 1)
+
+def box_additional_constraints(n):
+    return (n - 1) ** 2
 
 def critical_density(n):
-    """Critical density d_c(n) = (n²-1)/n²."""
     return (n**2 - 1) / n**2
 
+def hardness_function(n, d):
+    return d * (1 - d) * n**4
 
-def hardness_model(d, n):
-    """
-    Model computational hardness (backtracks) as a function of density.
-    Hardness peaks sharply at d_c with height ~ exp(n).
-    """
-    dc = critical_density(n)
-    width = 1 / n**2
-    peak_height = np.exp(n)
-    return peak_height * np.exp(-((d - dc) / width)**2)
+def constraint_degree_ratio(n):
+    return (3*n**2 - 2*n - 1) / (2*(n**2 - 1))
+
+def cluster_ratio(n, d):
+    return (1 - d) * n
 
 
-def entropy_model(d, n):
-    """
-    Model constraint entropy H(d) as a function of density.
-    Entropy decreases from ~1 (unconstrained) to ~0 (fully determined).
-    """
-    dc = critical_density(n)
-    return 1 / (1 + np.exp(n**2 * (d - dc)))
+def plot_degree_decomposition():
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ns = np.arange(2, 20)
+    sudoku = [sudoku_constraint_degree(n) for n in ns]
+    latin = [latin_square_constraint_degree(n) for n in ns]
+    box = [box_additional_constraints(n) for n in ns]
+
+    ax.bar(ns - 0.2, latin, 0.4, label='Latin Square (row+col)', color='#2196F3', alpha=0.8)
+    ax.bar(ns + 0.2, box, 0.4, bottom=[latin[i] for i in range(len(ns))],
+           label='Box Extra', color='#FF5722', alpha=0.8)
+    ax.bar(ns + 0.2, latin, 0.4, label='_', color='#2196F3', alpha=0.3)
+    ax.plot(ns, sudoku, 'ko-', markersize=5, label='Sudoku Total', linewidth=2)
+
+    ax.set_xlabel('Box size n', fontsize=14)
+    ax.set_ylabel('Constraint Degree', fontsize=14)
+    ax.set_title('Sudoku = Latin Square + Box Constraints\n'
+                 'sudokuDegree(n) = 2(n²-1) + (n-1)²', fontsize=14)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('viz_degree_decomposition.png', dpi=150)
+    plt.close()
+    print("Saved: viz_degree_decomposition.png")
 
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-densities = np.linspace(0, 1, 500)
+def plot_ratio_convergence():
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ns = np.arange(2, 200)
+    ratios = [constraint_degree_ratio(n) for n in ns]
+    gaps = [abs(r - 1.5) for r in ratios]
+    expected = [1/(n+1) for n in ns]
 
-# Left: Hardness landscape
-ax1 = axes[0]
-colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
-ns = [2, 3, 4, 5]
+    ax.plot(ns, ratios, 'b-', linewidth=2, label='Sudoku/Latin degree ratio')
+    ax.axhline(y=1.5, color='r', linestyle='--', linewidth=1.5, label='Limit = 3/2')
+    ax.fill_between(ns, ratios, 1.5, alpha=0.1, color='blue')
 
-for n, color in zip(ns, colors):
-    dc = critical_density(n)
-    hardness = hardness_model(densities, n)
-    # Normalize for display
-    hardness_norm = hardness / hardness.max()
-    ax1.plot(densities, hardness_norm, color=color, linewidth=2.5,
-             label=f'n={n}')
-    ax1.axvline(dc, color=color, linestyle='--', alpha=0.3)
-
-ax1.set_xlabel('Density (d)', fontsize=13)
-ax1.set_ylabel('Relative Computational Hardness', fontsize=13)
-ax1.set_title('Hardness Peak at Phase Transition', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=11)
-ax1.set_xlim(0, 1)
-ax1.grid(True, alpha=0.3)
-
-# Annotate the easy-hard-easy pattern
-ax1.annotate('EASY\n(few constraints)',
-             xy=(0.15, 0.05), fontsize=11, color='green',
-             ha='center', fontweight='bold')
-ax1.annotate('HARD\n(critical)',
-             xy=(critical_density(3), 0.85), fontsize=11, color='red',
-             ha='center', fontweight='bold',
-             arrowprops=dict(arrowstyle='->', color='red'),
-             xytext=(critical_density(3) - 0.15, 0.95))
-ax1.annotate('EASY\n(over-constrained)',
-             xy=(0.97, 0.05), fontsize=11, color='green',
-             ha='center', fontweight='bold')
-
-# Right: Entropy vs density
-ax2 = axes[1]
-
-for n, color in zip(ns, colors):
-    dc = critical_density(n)
-    entropy = entropy_model(densities, n)
-    ax2.plot(densities, entropy, color=color, linewidth=2.5,
-             label=f'n={n}')
-    ax2.axvline(dc, color=color, linestyle='--', alpha=0.3)
-
-ax2.axhline(1/np.e, color='gray', linestyle=':', alpha=0.5,
-            label=r'$H = 1/e$ threshold')
-ax2.set_xlabel('Density (d)', fontsize=13)
-ax2.set_ylabel('Constraint Entropy H(d)', fontsize=13)
-ax2.set_title('Entropy Collapse at Phase Transition', fontsize=14, fontweight='bold')
-ax2.legend(fontsize=11, loc='upper right')
-ax2.set_xlim(0, 1)
-ax2.set_ylim(-0.05, 1.05)
-ax2.grid(True, alpha=0.3)
-
-# Shade regions
-ax2.fill_between(densities, 1/np.e, 1.05,
-                 where=densities < critical_density(3),
-                 alpha=0.05, color='green')
-ax2.fill_between(densities, -0.05, 1/np.e,
-                 where=densities > critical_density(3),
-                 alpha=0.05, color='red')
-
-plt.tight_layout()
-plt.savefig('hardness_landscape.png', dpi=150, bbox_inches='tight')
-print("Saved: hardness_landscape.png")
+    ax.set_xlabel('Box size n', fontsize=14)
+    ax.set_ylabel('Degree Ratio', fontsize=14)
+    ax.set_title('Constraint Degree Ratio Converges to 3/2\n'
+                 '|ratio - 3/2| = 1/(n+1)', fontsize=14)
+    ax.legend(fontsize=12, loc='lower right')
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(1.0, 1.6)
+    plt.tight_layout()
+    plt.savefig('viz_ratio_convergence.png', dpi=150)
+    plt.close()
+    print("Saved: viz_ratio_convergence.png")
 
 
-#!/usr/bin/env python3
-"""
-Visualization 1: Phase Transition Curves for Latin Square CSPs
+def plot_hardness_landscape():
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-Shows how the satisfiability probability drops sharply at the critical density
-d_c(n) = (n²-1)/n² for different grid sizes. The sharpness of the transition
-increases with n, demonstrating the universality of the phase transition.
+    for idx, n in enumerate([3, 5, 9]):
+        ax = axes[idx]
+        ds = np.linspace(0, 1, 200)
+        hs = [hardness_function(n, d) for d in ds]
+        dc = critical_density(n)
 
-Uses simulated data based on the theoretical sigmoid model.
-"""
+        ax.plot(ds, hs, 'b-', linewidth=2)
+        ax.axvline(x=dc, color='r', linestyle='--', linewidth=1.5,
+                   label=f'd_c = {dc:.3f}')
+        ax.axvline(x=0.5, color='g', linestyle=':', linewidth=1.5,
+                   label='d = 1/2 (max)')
 
-import numpy as np
-import matplotlib.pyplot as plt
+        h_at_dc = hardness_function(n, dc)
+        ax.plot(dc, h_at_dc, 'ro', markersize=8)
+        ax.plot(0.5, hardness_function(n, 0.5), 'g^', markersize=8)
 
+        ax.set_xlabel('Density d', fontsize=12)
+        ax.set_ylabel('H(d)', fontsize=12)
+        ax.set_title(f'n={n} ({n**2}×{n**2} grid)', fontsize=13)
+        ax.legend(fontsize=10)
+        ax.grid(True, alpha=0.3)
 
-def critical_density(n):
-    """Critical density d_c(n) = (n²-1)/n²."""
-    return (n**2 - 1) / n**2
-
-
-def sat_probability_model(d, n, sharpness=None):
-    """
-    Model for satisfiability probability as a function of density.
-    Uses a sigmoid centered at d_c with sharpness proportional to n².
-    """
-    dc = critical_density(n)
-    if sharpness is None:
-        sharpness = n**2 * 2  # Sharpness scales with n²
-    return 1 / (1 + np.exp(sharpness * (d - dc)))
-
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Left panel: Phase transition curves for different n
-ax1 = axes[0]
-densities = np.linspace(0, 1, 500)
-colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63', '#9C27B0']
-ns = [2, 3, 4, 5, 6]
-
-for n, color in zip(ns, colors):
-    dc = critical_density(n)
-    probs = sat_probability_model(densities, n)
-    ax1.plot(densities, probs, color=color, linewidth=2.5,
-             label=f'n={n} (d_c={dc:.3f})')
-    ax1.axvline(dc, color=color, linestyle='--', alpha=0.3, linewidth=1)
-
-ax1.set_xlabel('Density of Pre-filled Cells (d)', fontsize=13)
-ax1.set_ylabel('P(Satisfiable)', fontsize=13)
-ax1.set_title('Phase Transition in Latin Square Completion', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=11, loc='center left')
-ax1.set_xlim(0, 1)
-ax1.set_ylim(-0.05, 1.05)
-ax1.axhline(0.5, color='gray', linestyle=':', alpha=0.5)
-ax1.grid(True, alpha=0.3)
-
-# Shade the SAT and UNSAT regions for n=3
-dc3 = critical_density(3)
-ax1.fill_between([0, dc3 - 1/9], [1.05, 1.05], alpha=0.05, color='green')
-ax1.fill_between([dc3 + 1/9, 1], [1.05, 1.05], alpha=0.05, color='red')
-ax1.text(0.2, 0.95, 'SAT', fontsize=14, color='green', alpha=0.7,
-         ha='center', fontweight='bold')
-ax1.text(0.97, 0.95, 'UNSAT', fontsize=14, color='red', alpha=0.7,
-         ha='center', fontweight='bold')
-
-# Right panel: Critical density convergence
-ax2 = axes[1]
-ns_range = np.arange(2, 21)
-dc_values = [(n**2 - 1) / n**2 for n in ns_range]
-gaps = [1 / n**2 for n in ns_range]
-
-ax2.plot(ns_range, dc_values, 'o-', color='#2196F3', linewidth=2,
-         markersize=8, label=r'$d_c(n) = (n^2-1)/n^2$')
-ax2.axhline(1.0, color='gray', linestyle='--', alpha=0.5, label='Limit = 1')
-
-ax2_twin = ax2.twinx()
-ax2_twin.bar(ns_range, gaps, alpha=0.3, color='#FF9800', width=0.6,
-             label=r'Window width $1/n^2$')
-ax2_twin.set_ylabel('Phase Transition Window Width', fontsize=12, color='#FF9800')
-ax2_twin.tick_params(axis='y', labelcolor='#FF9800')
-
-ax2.set_xlabel('Grid Order n', fontsize=13)
-ax2.set_ylabel('Critical Density d_c(n)', fontsize=13)
-ax2.set_title('Critical Density Convergence', fontsize=14, fontweight='bold')
-ax2.legend(fontsize=11, loc='lower right')
-ax2.set_ylim(0.6, 1.02)
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('phase_transition_curves.png', dpi=150, bbox_inches='tight')
-print("Saved: phase_transition_curves.png")
+    plt.suptitle('Hardness Function H(d) = d(1-d)n⁴', fontsize=15, y=1.02)
+    plt.tight_layout()
+    plt.savefig('viz_hardness_landscape.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_hardness_landscape.png")
 
 
-#!/usr/bin/env python3
-"""
-Visualization 3: Rook's Graph and the CSP-Graph Coloring Connection
+def plot_cluster_ratio():
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ns = np.arange(2, 30)
+    crs = [1/n for n in ns]
+    dcs = [critical_density(n) for n in ns]
 
-Shows the constraint graph (Rook's graph) for Latin squares, illustrating
-the cross-domain connection between constraint satisfaction and graph theory.
-A valid Latin square is exactly a proper n-coloring of the Rook's graph.
-"""
+    ax2 = ax.twinx()
+    ax.bar(ns, crs, color='#4CAF50', alpha=0.7, label='Cluster ratio at d_c')
+    ax2.plot(ns, dcs, 'ro-', markersize=4, linewidth=2, label='Critical density d_c')
 
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-
-
-def draw_rook_graph(ax, n, show_coloring=True):
-    """Draw the Rook's graph for an n×n board with optional Latin square coloring."""
-    # Colors for the Latin square (Cayley table)
-    cmap = plt.cm.Set3
-    colors_list = [cmap(i / n) for i in range(n)]
-
-    cell_size = 1.0
-    margin = 0.1
-
-    # Draw cells
-    for i in range(n):
-        for j in range(n):
-            x = j * cell_size
-            y = (n - 1 - i) * cell_size
-
-            if show_coloring:
-                val = (i + j) % n
-                color = colors_list[val]
-            else:
-                color = 'lightgray'
-
-            rect = patches.FancyBboxPatch(
-                (x + margin/2, y + margin/2),
-                cell_size - margin, cell_size - margin,
-                boxstyle="round,pad=0.05",
-                facecolor=color, edgecolor='black', linewidth=1.5
-            )
-            ax.add_patch(rect)
-
-            # Draw the value
-            if show_coloring:
-                val = (i + j) % n
-                ax.text(x + cell_size/2, y + cell_size/2, str(val),
-                       ha='center', va='center', fontsize=14, fontweight='bold')
-
-    # Draw constraint edges (a subset for clarity)
-    # Row constraints
-    for i in range(n):
-        y = (n - 1 - i) * cell_size + cell_size/2
-        for j in range(n - 1):
-            x1 = j * cell_size + cell_size - margin/2
-            x2 = (j + 1) * cell_size + margin/2
-            ax.plot([x1, x2], [y, y], 'r-', alpha=0.3, linewidth=1.5)
-
-    # Column constraints
-    for j in range(n):
-        x = j * cell_size + cell_size/2
-        for i in range(n - 1):
-            y1 = (n - 1 - i) * cell_size + margin/2
-            y2 = (n - 2 - i) * cell_size + cell_size - margin/2
-            ax.plot([x, x], [y1, y2], 'b-', alpha=0.3, linewidth=1.5)
-
-    ax.set_xlim(-0.2, n * cell_size + 0.2)
-    ax.set_ylim(-0.2, n * cell_size + 0.2)
-    ax.set_aspect('equal')
-    ax.axis('off')
+    ax.set_xlabel('Grid size n', fontsize=14)
+    ax.set_ylabel('Cluster ratio 1/n', fontsize=14, color='#4CAF50')
+    ax2.set_ylabel('Critical density d_c', fontsize=14, color='red')
+    ax.set_title('Solution Clustering at Phase Transition\n'
+                 'Cluster ratio = 1/n → 0 as grid grows', fontsize=14)
+    ax.legend(loc='upper left', fontsize=12)
+    ax2.legend(loc='upper right', fontsize=12)
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('viz_cluster_ratio.png', dpi=150)
+    plt.close()
+    print("Saved: viz_cluster_ratio.png")
 
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5.5))
-
-# Panel 1: Rook's graph structure (n=4, no coloring)
-ax1 = axes[0]
-draw_rook_graph(ax1, 4, show_coloring=False)
-ax1.set_title("Rook's Graph K₄ □ K₄\n(Constraint Structure)", fontsize=13, fontweight='bold')
-
-# Add legend for constraints
-ax1.plot([], [], 'r-', linewidth=2, label='Row constraints')
-ax1.plot([], [], 'b-', linewidth=2, label='Column constraints')
-ax1.legend(loc='lower center', fontsize=10, ncol=2)
-
-# Panel 2: Valid coloring = Latin square
-ax2 = axes[1]
-draw_rook_graph(ax2, 4, show_coloring=True)
-ax2.set_title("Valid 4-Coloring\n= Latin Square", fontsize=13, fontweight='bold')
-
-# Panel 3: Statistics comparison
-ax3 = axes[2]
-ns = list(range(2, 11))
-degrees = [2*(n-1) for n in ns]
-edges = [n**2 * (n-1) for n in ns]
-chromatic = ns  # χ(Rook's graph) = n
-dc_vals = [(n**2-1)/n**2 for n in ns]
-
-ax3_twin = ax3.twinx()
-
-bars = ax3.bar([n - 0.2 for n in ns], degrees, 0.35, color='#2196F3',
-               alpha=0.7, label='Degree 2(n-1)')
-ax3.bar([n + 0.2 for n in ns], chromatic, 0.35, color='#4CAF50',
-        alpha=0.7, label='χ = n')
-
-line = ax3_twin.plot(ns, dc_vals, 'ro-', linewidth=2, markersize=6,
-                     label='d_c(n)')
-
-ax3.set_xlabel('Grid Order n', fontsize=12)
-ax3.set_ylabel('Graph Parameter', fontsize=12, color='#2196F3')
-ax3_twin.set_ylabel('Critical Density', fontsize=12, color='red')
-ax3.set_title('Rook Graph Properties\nvs Critical Density', fontsize=13, fontweight='bold')
-
-# Combine legends
-lines1, labels1 = ax3.get_legend_handles_labels()
-lines2, labels2 = ax3_twin.get_legend_handles_labels()
-ax3.legend(lines1 + lines2, labels1 + labels2, loc='upper left', fontsize=9)
-
-ax3.set_xticks(ns)
-ax3.grid(True, alpha=0.3, axis='y')
-
-plt.tight_layout()
-plt.savefig('rook_graph_connection.png', dpi=150, bbox_inches='tight')
-print("Saved: rook_graph_connection.png")
+if __name__ == "__main__":
+    plot_degree_decomposition()
+    plot_ratio_convergence()
+    plot_hardness_landscape()
+    plot_cluster_ratio()
+    print("\nAll visualizations generated.")
