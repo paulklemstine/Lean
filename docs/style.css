@@ -1062,6 +1062,7 @@ body.light-theme .gallery-img-container {
 }
 
 .code-editor {
+    display: block;
     width: 100%;
     min-height: 300px;
     height: auto;
