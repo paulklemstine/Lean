@@ -7,7 +7,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "this_research_cycle_established_a_formal_bridge_be",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T15:44:02Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "rotas_basis_conjecture",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:19:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "random_matrices_edge_universality",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "catalans_conjecture_generalizations",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "resolution_of_singularities_in_positive_characteri",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "aboriginal_kinship_as_group_theory_dreamtime_algeb",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "negative_dimensional_topology_what_lives_in_dimens",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "entropy_power_inequality_sharp_version",
@@ -115,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:56Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "neural_pde_universality_classes_via_renormalizatio",
@@ -124,7 +124,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 272
+      "hue": 100
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:56:48Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_topology_of_impossible_objects_escher_stairs_a",
@@ -151,7 +151,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "self_modifying_code_that_cannot_be_stopped",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "langlands_for_gl_over_q",
@@ -169,7 +169,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:11:39Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "p_adic_langlands_for_glq_p",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T22:43:23Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -187,7 +187,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "cellular_automata_at_the_ordinals_transfinite_comp",
@@ -196,7 +196,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:44:03Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "transfinite_game_theory_games_that_last_forever",
@@ -214,7 +214,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "artins_conjecture_on_primitive_roots",
@@ -232,7 +232,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:11Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "surreal_topology_open_sets_at_infinity",
@@ -241,7 +241,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "isomorphisms_of_meaning_when_structures_collide",
@@ -250,7 +250,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "this_research_cycle_established_a_rigorous_framewo",
@@ -259,7 +259,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
@@ -277,7 +277,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "learning_with_errors_hardness_reductions",
@@ -286,7 +286,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:30:53Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "one_way_functions_existence_and_hierarchy",
@@ -295,7 +295,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "isogeny_based_cryptography_csi_fish",
@@ -304,7 +304,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "strange_loops_self_reference_and_gdels_incompleten",
@@ -313,7 +313,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -331,7 +331,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "infinite_dimensional_chess_winning_on_the_hilbert_",
@@ -340,7 +340,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 92
+      "hue": 281
     },
     {
       "id": "this_research_cycle_formalized_the_algebraic_skele",
@@ -349,7 +349,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "zombies_and_qualia_mathematics_of_subjective_exper",
@@ -367,7 +367,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "aleph_1_surface_geometry_between_dimensions",
@@ -385,7 +385,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 359
+      "hue": 271
     },
     {
       "id": "tangled_hierarchies_proof_systems_that_reference_t",
@@ -394,7 +394,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "this_cycle_formalized_the_algebraic_core_of_the_he",
@@ -403,7 +403,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:09Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "reflective_type_theory_proving_things_about_provin",
@@ -412,7 +412,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:40Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "thermodynamics_of_mathematical_proof",
@@ -421,7 +421,34 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
-      "hue": 271
+      "hue": 90
+    },
+    {
+      "id": "hadwigers_conjecture",
+      "title": "Hadwiger's Conjecture: Graph Minors, Chromatic Number, and Structural Graph Theory",
+      "domain": "Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-06-01T03:49:22Z",
+      "hue": 91
+    },
+    {
+      "id": "causal_loops_in_category_theory_when_composition_l",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-06-01T03:49:46Z",
+      "hue": 270
+    },
+    {
+      "id": "the_mega_sphere_all_dimensions_at_once",
+      "title": "The Mega-Sphere: All Dimensions at Once",
+      "domain": "Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-06-01T03:50:10Z",
+      "hue": 91
     }
   ],
   "edges": [

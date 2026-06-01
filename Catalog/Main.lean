@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2257 of the highest-quality
+A curated collection of 2259 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2257
+Total files: 2259
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1243,6 +1243,7 @@ import FINAL.Geometry.EulerTopology
 import FINAL.Geometry.GapMatterResearch
 import FINAL.Geometry.GenusFormula
 import FINAL.Geometry.GravitationalWaves
+import FINAL.Geometry.HadwigerConjecture
 import FINAL.Geometry.HamiltonianBridge
 import FINAL.Geometry.HappyEnd
 import FINAL.Geometry.InverseStereoMobiusNext
@@ -1696,6 +1697,7 @@ import FINAL.Pythagorean.CanonicalKernelCalculus
 import FINAL.Pythagorean.CanonicalPaths
 import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
+import FINAL.Pythagorean.CausalLoops
 import FINAL.Pythagorean.CertificateComplexity
 import FINAL.Pythagorean.CertificateCompression
 import FINAL.Pythagorean.CertificateExpanders

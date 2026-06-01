@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "date": "2026-06-01T03:50:10Z",
     "exp_id": "64431a8e",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6,
+    "quality": "partial",
     "pkg_num": 50
   },
   {
@@ -1459,8 +1459,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-06-01T03:50:10Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6,
+      "quality": "partial"
     }
   ],
   "edges": [
