@@ -396,7 +396,7 @@
 
         function simulate() {
             // Logarithmic time zoom: time ∝ 1/zoom
-            timeScale = 0.048 * Math.pow(camera.zoom, -0.6);
+            timeScale = 0.096 * Math.pow(camera.zoom, -0.6);
             if (timeScale <= 0) return;
 
             // ─── Edge contraction pulse: one edge at a time, cycle through all ───
