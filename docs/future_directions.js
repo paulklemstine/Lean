@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "id": "fd_0008",
+    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back",
+    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.492679+00:00"
+  },
+  {
     "id": "fd_0010",
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
@@ -16,6 +31,156 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.494005+00:00"
+  },
+  {
+    "id": "fd_0015",
+    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)",
+    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "adade94b",
+    "timestamp": "2026-06-01T12:30:30.498448+00:00"
+  },
+  {
+    "id": "fd_0016",
+    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?",
+    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.499504+00:00"
+  },
+  {
+    "id": "fd_0022",
+    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function",
+    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.508792+00:00"
+  },
+  {
+    "id": "fd_0036",
+    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement",
+    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.542003+00:00"
+  },
+  {
+    "id": "fd_0064",
+    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields",
+    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.652777+00:00"
+  },
+  {
+    "id": "fd_0065",
+    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology",
+    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.657673+00:00"
+  },
+  {
+    "id": "fd_0067",
+    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids",
+    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.667149+00:00"
+  },
+  {
+    "id": "fd_0073",
+    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries",
+    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.695662+00:00"
+  },
+  {
+    "id": "fd_0075",
+    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count",
+    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.706858+00:00"
+  },
+  {
+    "id": "fd_0076",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.711975+00:00"
   },
   {
     "id": "fd_0082",
@@ -33,6 +198,36 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.744530+00:00"
   },
   {
+    "id": "fd_0085",
+    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor",
+    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.761503+00:00"
+  },
+  {
+    "id": "fd_0095",
+    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times",
+    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.827686+00:00"
+  },
+  {
     "id": "fd_0097",
     "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness",
     "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
@@ -48,6 +243,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.840437+00:00"
   },
   {
+    "id": "fd_0102",
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
+    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.870934+00:00"
+  },
+  {
     "id": "fd_0106",
     "title": "Social Credit Scores as Topological Invariants",
     "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
@@ -61,6 +271,66 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.894923+00:00"
+  },
+  {
+    "id": "fd_0108",
+    "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
+    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.907112+00:00"
+  },
+  {
+    "id": "fd_0118",
+    "title": "Surreal Topology: Open Sets at Infinity",
+    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.970403+00:00"
+  },
+  {
+    "id": "fd_0134",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
+    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:31.067326+00:00"
+  },
+  {
+    "id": "fd_0138",
+    "title": "Causal Loops in Category Theory: When Composition Loops Back",
+    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:31.092242+00:00"
   },
   {
     "id": "fd_0003",
@@ -108,6 +378,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.486497+00:00"
   },
   {
+    "id": "fd_0034",
+    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck",
+    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.98,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.536490+00:00"
+  },
+  {
     "id": "fd_0099",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
@@ -136,6 +421,36 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:31.085832+00:00"
+  },
+  {
+    "id": "fd_0012",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.495596+00:00"
+  },
+  {
+    "id": "fd_0055",
+    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry",
+    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.97,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.608699+00:00"
   },
   {
     "id": "fd_0101",
@@ -181,6 +496,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.489800+00:00"
+  },
+  {
+    "id": "fd_0079",
+    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces",
+    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.96,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.728070+00:00"
   },
   {
     "id": "fd_0086",
@@ -288,6 +618,81 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.976561+00:00"
   },
   {
+    "id": "fd_0148",
+    "title": "This cycle formalized the foundational theory of self-avoiding walks on \u2124\u00b2 and t",
+    "description": "# Future Directions: Self-Avoiding Walk Research\n\n## Synthesis\n\nThis cycle formalized the foundational theory of self-avoiding walks on \u2124\u00b2 and the hexagonal lattice, establishing the submultiplicativity of SAW counts, the existence of the connective constant via Fekete's lemma, and the algebraic properties of the Nienhuis constant \u221a(2+\u221a2). The most significant cross-domain connection is between combinatorial path-counting (submultiplicativity), real analysis (Fekete's lemma for subadditive sequences), and algebraic number theory (the minimal polynomial of the hexagonal connective constant).\n\nThe highest breakthrough potential lies in Direction 1: formalizing discrete holomorphicity on planar graphs, which would open the door not just to the Duminil-Copin\u2013Smirnov theorem but to the entire field of discrete complex analysis and its applications to statistical mechanics. The bridge decomposition (Direction 3) offers a more tractable intermediate step that could yield new rigorous bounds on the square lattice connective constant. The connection to tropical geometry (Direction 5) is speculative but could link SAW theory to the existing Catalog's tropical algebra infrastructure.\n\n---\n\n### Direction 1: Discrete Holomorphicity and the Parafermionic Observable\n\n**Conjecture**: The parafermionic observable F(z) = \u03a3_{\u03c9: a\u2192z} x_c^{|\u03c9|} e^{-i\u03c3\u03b8(\u03c9)} with \u03c3 = 5/8 and x_c = 1/\u221a(2+\u221a2) satisfies discrete Cauchy-Riemann equations on the medial lattice of the hexagonal lattice.\n\n**Test**: Formalize the medial lattice of the hexagonal lattice, define F(z) as a sum over walks, and verify the discrete Cauchy-Riemann equations for small domains (say, a 3\u00d73 hexagonal patch) computationally in Lean via `native_decide` or `#eval`. If the equations hold for small patches, proceed to the general proof.\n\n**Impact**: This would be the first step toward a complete formalization of the Duminil-Copin\u2013Smirnov theorem, one of the landmark results in mathematical physics of the 21st century. It would also provide infrastructure for formalizing other results in discrete complex analysis.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (hexagonal lattice definitions, HexAdj, HexWalk)\n\n**Proof Strategy**: (1) Define the medial lattice of the hexagonal lattice. Each edge of the hexagonal lattice corresponds to a vertex of the medial lattice. (2) Define the discrete derivative operators \u2202_s and \u2202\u0304_s on the medial lattice. (3) Define the parafermionic observable F as a formal sum. (4) Prove that local cancellations in the sum yield the discrete CR equations. The key identity is that for each interior vertex of the medial lattice, the three terms contributing to \u2202\u0304F cancel due to the specific choice of \u03c3 = 5/8.\n\n**Domain Bridges**: Complex Analysis <-> Combinatorics <-> Statistical Mechanics\n\n**Lineage**: Builds on HexAdj, HexWalk, nienhuis_algebraic_identity from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Connective Constant Bounds for \u2124\u00b2\n\n**Conjecture**: The connective constant \u03bc of the square lattice \u2124\u00b2 satisfies 2.625 < \u03bc < 2.680, provable using only elementary combinatorial arguments (no analysis or physics).\n\n**Test**: Prove a_lower \u2264 c_n for all n \u2264 N using explicit constructions (e.g., spiral walks, L-shaped walks), and c_n \u2264 a_upper using the tree-like structure of SAWs. Specifically, try to prove c_n \u2264 4 \u00b7 3^{n-1} (upper bound from excluded neighbors) and c_n \u2265 2^n (walks along two axes and their reflections) in Lean.\n\n**Impact**: Rigorous, computer-verified bounds on \u03bc(\u2124\u00b2) would be a concrete contribution to the open problem. Even crude bounds, if formally verified, have value because they are machine-checked.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (sawCount, sawCount_submultiplicative, one_le_sawCount)\n\n**Proof Strategy**: (1) Upper bound: Prove c_n \u2264 4 \u00b7 3^{n-1} by induction\u2014at each step after the first, the walker has at most 3 choices (cannot return). This requires showing that for n \u2265 1, each SAW of length n extends to at most 3 SAWs of length n+1 at each step. (2) Lower bound: Construct explicit families of walks\u2014e.g., \"staircase\" walks alternating between x and y directions, giving c_n \u2265 2^{\u230an/2\u230b}. (3) Improved bounds using the Hammersley-Welsh method with bridges.\n\n**Domain Bridges**: Combinatorics <-> Number Theory (growth rates) <-> Analysis (Fekete's lemma)\n\n**Lineage**: Direct extension of sawCount_submultiplicative, walk_coord_bound' from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Bridge Decomposition and Renewal Theory\n\n**Conjecture**: The bridge generating function b(x) = \u03a3 b_n x^n satisfies the identity \u03c7(x) = b(x) / (1 - b(x))\u00b2 where \u03c7(x) = \u03a3 c_n x^n is the SAW generating function, and this identity can be formalized in Lean using formal power series.\n\n**Test**: Verify the identity numerically for n \u2264 12 by computing bridge counts and SAW counts. Then formalize the renewal equation in Lean using `PowerSeries` from Mathlib.\n\n**Impact**: The bridge decomposition is the standard tool for converting between SAW bounds and bridge bounds. Formalizing it would provide machinery for systematic improvement of connective constant bounds.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (Bridge, bridgeCount), `Algebra/Advanced.lean` (algebraic structures)\n\n**Proof Strategy**: (1) Formalize the bridge decomposition theorem: every SAW decomposes uniquely into a sequence of bridges. (2) This gives the generating function identity c_n = \u03a3_{k\u22651} \u03a3_{n\u2081+...+n_k=n} b_{n\u2081} \u00b7 ... \u00b7 b_{n_k} for walks that can be decomposed into k bridges. (3) In generating function language: \u03c7(x) = \u03a3_{k\u22651} b(x)^k = b(x)/(1-b(x)) (for one-directional bridges). The full identity accounts for the 2D structure. (4) Use Mathlib's `PowerSeries` for formal manipulation.\n\n**Domain Bridges**: Combinatorics <-> Formal Power Series <-> Renewal Theory\n\n**Lineage**: Builds on Bridge structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: High-Dimensional SAW and Mean-Field Behavior (Hara-Slade)\n\n**Conjecture**: For self-avoiding walks on \u2124^d with d \u2265 5, the connective constant satisfies \u03bc(\u2124^d) = 2d - 1 - 1/(2d) - O(1/d\u00b2), and the critical exponents take their mean-field values \u03b3 = 1, \u03bd = 1/2.\n\n**Test**: Formalize SAW on \u2124^d (generalizing from \u2124\u00b2), define the lace expansion, and prove the first-order asymptotic \u03bc \u2248 2d-1 for large d. For a concrete test: prove c_1(\u2124^d) = 2d and c_2(\u2124^d) = 2d(2d-1).\n\n**Impact**: The Hara-Slade theorem (1992) is the foundational result establishing mean-field behavior for SAW in high dimensions. Formalizing it would connect the SAW theory to the broader landscape of mean-field critical behavior.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (LatticeWalk generalization needed)\n\n**Proof Strategy**: (1) Generalize LatticeWalk to \u2124^d by replacing \u2124 \u00d7 \u2124 with \u2124^d (using `Fin d \u2192 \u2124`). (2) Define the lace expansion: express c_n as a perturbative series around the simple random walk. (3) For d \u2265 5, show the lace expansion converges, giving precise asymptotics. (4) The first step (\u03bc \u2248 2d-1) follows from elementary counting.\n\n**Domain Bridges**: Combinatorics <-> Analysis (perturbation theory) <-> Probability (random walks)\n\n**Lineage**: Generalizes the \u2124\u00b2 formalization from this cycle to arbitrary dimension.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Tropical Self-Avoiding Walks\n\n**Conjecture**: There exists a meaningful \"tropical SAW count\" defined over the tropical semiring (\u211d \u222a {\u221e}, min, +) that encodes extremal properties of self-avoiding paths, and the tropical connective constant equals the logarithm of the classical connective constant: \u03bc_trop = log(\u03bc).\n\n**Test**: Define a tropical weight on SAW paths (e.g., the minimum total displacement or energy), compute the tropical generating function for small n, and check whether the tropical connective constant equals log(2.638...) \u2248 0.970.\n\n**Impact**: This would create a novel bridge between tropical geometry (well-developed in the Catalog) and SAW theory. If the tropical formulation simplifies certain aspects of SAW theory, it could provide new proof techniques for bounding \u03bc.\n\n**Catalog References**: `Tropical/` (tropical algebra infrastructure), `Computation/SelfAvoidingWalk/Basic.lean`\n\n**Proof Strategy**: (1) Define the tropical SAW weight as the min-plus analogue of the counting function: instead of counting walks, take the minimum over all walks of some cost function. (2) Show this satisfies a tropical analogue of submultiplicativity. (3) Prove tropical Fekete's lemma (min-plus subadditivity implies limit existence). (4) Relate the tropical and classical connective constants via the Maslov dequantization: as \u210f \u2192 0, the log of the classical partition function approaches the tropical one.\n\n**Domain Bridges**: Tropical Algebra <-> Combinatorics <-> Statistical Mechanics\n\n**Lineage**: Connects to existing Catalog tropical infrastructure.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "25b26084",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T14:17:22.411549+00:00"
+  },
+  {
+    "id": "fd_0149",
+    "title": "Formal mathematical chain connecting Smale h",
+    "description": "# Future Directions: Curvature-Induced Computation\n\n## Synthesis\n\nThis research cycle established the formal mathematical chain connecting Smale horseshoe dynamics to computational universality: **horseshoe \u2192 full symbolic shift \u2192 Boolean function encoding**. The orbit realization theorem (Theorem 4.1) is the critical bridge \u2014 it shows that horseshoe dynamics can prescribe arbitrary symbolic itineraries, which we then exploit to encode computation. The entropy characterization (h = log d) provides a quantitative handle, and the sub-horseshoe construction shows that degree \u2265 2 suffices for universality.\n\nThe most promising cross-domain connection is between the **entropy/complexity interface** and the **Catalog's existing work on computational complexity** (e.g., `Computation/GravityOracle.lean`, `Computation/InfoEfficientAlgorithms.lean`). The geodesic oracle model (`IsGravOracle`, `GravTruthSet`) in the Catalog already formalizes computation via geometric oracles \u2014 our horseshoe universality result could provide the *mechanism* by which such oracles achieve their computational power. Bridging these would yield a unified theory of geometric computation.\n\nThe highest breakthrough potential lies in Direction 1 (Geometric Complexity Classes), which could establish a completely new complexity theory based on curvature, with natural connections to both circuit complexity (via the non-uniform encoding) and ergodic theory (via the entropy characterization).\n\n---\n\n### Direction 1: Geometric Complexity Classes via Horseshoe Degree\n\n**Conjecture**: For any Boolean function f : {0,1}^n \u2192 {0,1}, define its *geometric complexity* \u03b3(f) as the minimum horseshoe degree d such that f can be encoded by a degree-d horseshoe with read time at most n. Then:\n(a) \u03b3(PARITY_n) = 2 for all n (parity is geometrically easy).\n(b) There exists a family of functions {f_n} in P/poly with \u03b3(f_n) \u2192 \u221e (some polynomial-time functions are geometrically hard).\n(c) The class of functions with bounded geometric complexity is strictly contained in P/poly.\n\n**Test**: (a) Prove by explicit construction that a degree-2 horseshoe encodes PARITY using the word w(k) = input(k) for k < n and w(n) = \u2295input(k). For (b), candidate functions include majority or threshold functions \u2014 verify computationally that encoding MAJ_n requires horseshoe degree growing with n, or find an explicit degree-2 encoding.\n\n**Impact**: If true, geometric complexity would be a new complexity measure incomparable to circuit depth/size. Functions that are \"easy\" in Boolean complexity but \"hard\" geometrically (or vice versa) would reveal structural differences between sequential and dynamical computation. If false, the collapse \u03b3(f) = O(1) for all P/poly functions would mean horseshoe dynamics is polynomially equivalent to circuits.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `Pythagorean/GeodesicComputation.lean` (horseshoe_encodes_boolean_function, horseshoe_universal)\n\n**Proof Strategy**: For (a), construct the word explicitly and apply horseshoe_orbit_realization. For (b), use a counting argument: the number of degree-d horseshoe encodings with read time n is at most d^(n+1), which for fixed d is exponential in n but smaller than the number of Boolean functions 2^(2^n). Formalize via Fintype.card bounds.\n\n**Domain Bridges**: Symbolic dynamics (horseshoe degree) \u2194 Circuit complexity (circuit size/depth) \u2194 Ergodic theory (topological entropy)\n\n**Lineage**: Builds on horseshoe_encodes_boolean_function and horseshoe_itinerary_count from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Uniform Universality via Markov Partitions\n\n**Conjecture**: There exists a compact hyperbolic surface \u03a3_g (genus g \u2265 2) and a Markov partition P of its geodesic flow such that the associated subshift of finite type (SFT) is *sofic universal* \u2014 meaning every sofic shift is a factor of the SFT. Consequently, the geodesic flow achieves *uniform* computational universality: a single partition encodes a universal Turing machine, with the input encoded in the initial condition and the computation proceeding via the flow.\n\n**Test**: For the modular surface SL(2,\u2124)\\\u210d, compute the transition matrix of the continued-fraction Markov partition and verify that the associated SFT has a topologically mixing component whose entropy exceeds log(2). Then show that any binary SFT embeds as a subsystem, which implies universality by the Krieger embedding theorem.\n\n**Impact**: Uniform universality would mean that a *fixed* geometric system (specific manifold + specific partition) simulates *all* Turing machines, not just individual Boolean functions. This would make the curvature-computation connection as strong as possible and connect to undecidability results (e.g., the orbit problem for the geodesic flow would be undecidable).\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (Horseshoe, horseshoe_orbit_realization), `Computation/GravityOracle.lean` (IsGravOracle)\n\n**Proof Strategy**: \n1. Formalize subshifts of finite type (transition matrix, forbidden words).\n2. Prove the Krieger embedding theorem: any SFT with entropy < log(d) embeds into the full d-shift.\n3. Show the modular surface's Markov partition has large enough entropy.\n4. Combine to get uniform universality.\n\n**Domain Bridges**: Hyperbolic geometry (modular surface) \u2194 Number theory (continued fractions) \u2194 Computability (universal TM simulation)\n\n**Lineage**: Extends the non-uniform universality of horseshoe_encodes_boolean_function to uniform universality.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Entropy-Curvature Duality for Horseshoe Degree\n\n**Conjecture**: For a compact Riemannian manifold (M, g) with sectional curvature K satisfying -b\u00b2 \u2264 K \u2264 -a\u00b2 < 0, the maximum horseshoe degree d_max of the time-1 geodesic flow map satisfies:\n\n    exp((dim M - 1) \u00b7 a) \u2264 d_max \u2264 exp(C(M) \u00b7 b)\n\nwhere C(M) depends only on the topology of M (e.g., its systole or first Betti number). In particular, d_max is determined up to polynomial factors by the curvature bounds.\n\n**Test**: Compute d_max for the geodesic flow on hyperbolic surfaces of genus g with constant curvature K = -1. By Gauss-Bonnet, Area(\u03a3_g) = 4\u03c0(g-1), and the entropy of the geodesic flow is 1. Verify that d_max grows with g (more topology \u2192 more horseshoes), and check the conjectured bounds against known entropy formulas.\n\n**Impact**: This would quantify the exact relationship between curvature and computational capacity, providing a \"curvature \u2194 entropy \u2194 computation\" dictionary. It would also yield new results in Riemannian geometry: curvature pinching conditions would directly imply bounds on symbolic complexity.\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (symbolicEntropy, entropy_mono, horseshoe_entropy_positive)\n\n**Proof Strategy**:\n1. Formalize Manning's entropy inequality h_top \u2265 (n-1)\u00b7a for K \u2264 -a\u00b2.\n2. Use Katok's horseshoe theorem: h_top > 0 implies horseshoes of degree \u2265 exp(h_top - \u03b5) for any \u03b5 > 0.\n3. For the upper bound, use Margulis's asymptotic formula for orbit counting.\n\n**Domain Bridges**: Riemannian geometry (curvature bounds) \u2194 Ergodic theory (entropy) \u2194 Symbolic dynamics (horseshoe degree)\n\n**Lineage**: Builds on entropy_equals_growth_rate and horseshoe_entropy_positive from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Horseshoes and Combinatorial Universality\n\n**Conjecture**: The *tropical horseshoe* \u2014 defined as a piecewise-linear map on a tropical polytope satisfying the crossing property with respect to tropical half-spaces \u2014 has a well-defined symbolic dynamics that is computationally universal. Moreover, the tropical entropy of a tropical horseshoe of degree d equals the tropical logarithm of d (i.e., d itself, since tropical log = identity).\n\n**Test**: Define a tropical horseshoe on the tropical torus \u211d\u00b2/\u2124\u00b2 with the tropical metric max(|x\u2081-y\u2081|, |x\u2082-y\u2082|). Construct explicit PL strips and verify the crossing property. Compute the number of distinct tropical geodesic itineraries of length n and verify it equals d^n.\n\n**Impact**: Tropical geometry provides a combinatorial/polyhedral shadow of classical geometry. If tropical horseshoes exhibit the same universality, it would:\n(a) Provide an entirely combinatorial proof of curvature \u2192 computation (avoiding analysis).\n(b) Connect to the Catalog's tropical algebraic work.\n(c) Yield explicit, computable examples testable by direct enumeration.\n\n**Catalog References**: `Tropical/TropicalEntropy.lean`, `Pythagorean/TropicalArithmeticUniversality.lean`, `Pythagorean/TropicalUniversality.lean`, `Pythagorean/GeodesicComputation.lean`\n\n**Proof Strategy**:\n1. Define TropicalHorseshoe as a specialization of Horseshoe with X = \u211d^n and PL dynamics.\n2. Verify that the orbit realization theorem applies (it does \u2014 it's purely set-theoretic).\n3. Construct explicit tropical horseshoes via PL maps on polytopes.\n4. Compute tropical entropy and compare to classical entropy.\n\n**Domain Bridges**: Tropical geometry (PL maps, polytopes) \u2194 Symbolic dynamics (horseshoe, shift) \u2194 Combinatorics (word enumeration)\n\n**Lineage**: Builds on Horseshoe definition and orbit realization from this cycle, connects to Catalog tropical theory.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Horseshoe Persistence Under Metric Perturbation\n\n**Conjecture**: Let (M, g\u2080) be a compact manifold with a horseshoe of degree d for the time-1 geodesic flow. There exists \u03b5 > 0 (depending on d and the curvature bounds of g\u2080) such that for any metric g with ||g - g\u2080||_{C\u00b2} < \u03b5, the geodesic flow of g also admits a horseshoe of degree d. Moreover, the symbolic dynamics of the perturbed horseshoe is topologically conjugate to the original.\n\n**Test**: For hyperbolic surfaces, compute the structural stability radius as a function of genus and curvature. Verify that small perturbations of the constant-curvature metric on \u03a3\u2082 preserve the horseshoe structure, using numerical geodesic flow integration.\n\n**Impact**: Structural stability of horseshoes under metric perturbation would mean that computational universality is a *robust* geometric property \u2014 not an artifact of special metrics. This connects to the broader question: is the computational capacity of a universe stable under small changes in the geometry?\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (Horseshoe, CurvatureComputationBridge)\n\n**Proof Strategy**:\n1. Use Smale's structural stability theorem for Axiom A flows.\n2. Verify that the geodesic flow on a negatively curved manifold satisfies Axiom A + no-cycle condition.\n3. Apply the persistence of homoclinic intersections under C\u00b9-small perturbations (Newhouse's theorem for the creation is not needed; Smale's theorem for preservation suffices).\n\n**Domain Bridges**: Riemannian geometry (metric perturbation) \u2194 Dynamical systems (structural stability) \u2194 Computational universality (robustness)\n\n**Lineage**: Builds on CurvatureComputationBridge from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "7298cf4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T14:17:43.811923+00:00"
+  },
+  {
+    "id": "fd_0153",
+    "title": "Algebraic foundations of Reflective Type The",
+    "description": "# Future Directions: Reflective Type Theory\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of Reflective Type Theory (ReflTT), proving that provability depth forms a tropical semiring homomorphism from the type algebra to (\u2115, max, +). The key results \u2014 the Depth-Complexity Gap Theorem, the strict axiom hierarchy (T \u2264 K < 4 \u2264 L\u00f6b), subject reduction for proof terms, and the bijective correspondence with the modal mu-calculus \u2014 together establish ReflTT as a rigorous framework for studying self-referential provability.\n\nThe most promising cross-domain connection is the bridge to tropical algebra. The Catalog contains extensive tropical geometry infrastructure (e.g., `discounted_tropical_has_fixed_point` in `MachineLearning/TropicalTimeTravel.lean`, `tropical_ctc_fixed_point_exists` in `MachineLearning/TropicalCTC.lean`), and our proof that the depth function is a tropical semiring homomorphism creates a direct pipeline for importing tropical fixed-point theorems into provability reasoning. The depth filtration also resembles a graded structure on a monoidal category, connecting to the categorical theorems in `EML/CategoryTheorems.lean`.\n\nThe highest breakthrough potential lies in Direction 1 (Full Subject Reduction), which would complete the metatheory of the proof term language and unlock the full propositions-as-types correspondence for provability. Direction 3 (Tropical Fixed-Point Transfer) is the most novel cross-domain bridge, potentially importing Banach-style fixed-point theorems from tropical analysis into provability logic. Direction 5 (Computational Depth Analysis) is the most immediately testable, providing concrete falsifiable predictions.\n\n---\n\n### Direction 1: Full Subject Reduction and Normalization for ReflTT\n\n**Conjecture**: The typing relation for ReflTT proof terms satisfies full subject reduction (well-typed terms reduce to well-typed terms under all reduction rules, including \u03b2-reduction with proper substitution) and weak normalization (every well-typed term without \u03bc-unfolding has a normal form), but NOT strong normalization due to the \u03bc/unfold interaction enabling infinite reduction sequences.\n\n**Test**: (a) Implement substitution for RTerm with de Bruijn indices and verify that \u03b2-reduction (app(lam(body), arg) \u2192 body[arg/0]) preserves typing. (b) Construct an explicit non-terminating reduction sequence using \u03bc and unfold. (c) Prove weak normalization for the \u03bc-free fragment by showing that type size strictly decreases under reduction.\n\n**Impact**: If subject reduction holds with substitution, ReflTT becomes a fully-fledged proof calculus, not just a type language. This would justify interpreting proof terms as actual proofs of provability statements. If weak normalization holds for the \u03bc-free fragment, it establishes decidability of type-checking for that fragment.\n\n**Catalog References**: `MachineLearning/ReflTTDepthAlgebra.lean` (subject_reduction_fst, subject_reduction_snd, subject_reduction_fold_unfold)\n\n**Proof Strategy**: \n1. Define substitution `subst : RTerm \u2192 \u2115 \u2192 RTerm \u2192 RTerm` with proper de Bruijn index shifting.\n2. Prove a substitution lemma: if Typing (A :: \u0393) body B and Typing \u0393 arg A, then Typing \u0393 (subst body 0 arg) B.\n3. Extend the Reduces relation with \u03b2-reduction.\n4. Prove subject reduction by case analysis on the reduction rule.\n5. For weak normalization, define a size measure on typed terms and show it decreases under reduction in the \u03bc-free fragment.\n\n**Domain Bridges**: Type theory <-> proof theory <-> computability theory\n\n**Lineage**: Extends subject_reduction_fst, subject_reduction_snd, subject_reduction_fold_unfold from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Depth Algebra as Graded Monad\n\n**Conjecture**: The depth filtration F_0 \u2286 F_1 \u2286 F_2 \u2286 ... can be organized as a graded monad on the category of types, where the grading monoid is (\u2115, +, 0), the unit \u03b7_A : A \u2192 F_0(A) embeds MLTT types into the filtration, and the multiplication \u03bc_{m,n} : F_m(F_n(A)) \u2192 F_{m+n}(A) corresponds to iterBox_add (\u25a1^m(\u25a1^n(A)) = \u25a1^(m+n)(A)).\n\n**Test**: (a) Define a functor F_n : RType \u2192 Set RType mapping each type to the set of types at depth \u2264 n that contain it as a subexpression. (b) Verify the monad laws (unit, associativity) hold for iterBox. (c) Check whether the Kleisli category of this monad has interesting structure.\n\n**Impact**: If ReflTT forms a graded monad, it connects to the rich categorical semantics literature (e.g., graded monads for computational effects). This would provide categorical tools for reasoning about depth \u2014 e.g., the depth of a composition could be computed from the depths of its parts using the graded monad structure.\n\n**Catalog References**: `EML/CategoryTheorems.lean`, `iterBox_add` and `iterBox_depth` from `MachineLearning/ReflTTDepthAlgebra.lean`\n\n**Proof Strategy**:\n1. Define a category whose objects are RTypes and morphisms are depth-bounded type transformations.\n2. Show iterBox satisfies the graded monad laws: \u03b7 \u226b \u03bc = id, \u03bc \u226b \u03bc = \u03bc \u226b F(\u03bc).\n3. The key lemma is iterBox_add, which already provides the multiplication law.\n4. Use Mathlib's category theory library to formalize the graded monad structure.\n\n**Domain Bridges**: Type theory <-> category theory <-> algebraic topology (graded structures)\n\n**Lineage**: Builds on iterBox_add, iterBox_depth, tower_injective from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Fixed-Point Transfer to Provability\n\n**Conjecture**: The tropical fixed-point theorems in the Catalog (e.g., `discounted_tropical_has_fixed_point`) can be transferred, via the depth homomorphism, to fixed-point theorems about provability depth. Specifically, if f : \u2115 \u2192 \u2115 is a contraction mapping in the tropical metric (d_trop(x,y) = |max(x,c) - max(y,c)|) and f arises from a type-forming operation, then the corresponding type operation has a fixed-depth point.\n\n**Test**: (a) Define a \"type-level contraction\" as a function F : RType \u2192 RType satisfying |d(F(A)) - d(F(B))| \u2264 \u03b1 \u00b7 |d(A) - d(B)| for some \u03b1 < 1. (b) Show that \u03bc-types, when the body has bounded box-depth increase, satisfy this contraction property. (c) Use the tropical fixed-point theorem to derive a bound on the fixed-point depth.\n\n**Impact**: This would be the first formal bridge between tropical analysis and provability logic. It would allow importing quantitative fixed-point bounds from tropical geometry into type-theoretic reasoning, potentially giving tight depth bounds for recursive provability definitions.\n\n**Catalog References**: `FINAL/MachineLearning/TropicalTimeTravel.lean` (discounted_tropical_has_fixed_point), `FINAL/MachineLearning/TropicalCTC.lean` (tropical_ctc_fixed_point_exists), `depth_tropical_factorization` from this cycle\n\n**Proof Strategy**:\n1. Formalize a tropical metric on provability depths.\n2. Define \"depth-contractive\" type operations and show \u03bc can produce them.\n3. Apply the existing tropical fixed-point theorems via the depth homomorphism.\n4. The key step is showing that the depth homomorphism is continuous in the tropical metric.\n\n**Domain Bridges**: Tropical geometry <-> provability logic <-> fixed-point theory\n\n**Lineage**: Builds on depth_tropical_factorization, and Catalog theorems discounted_tropical_has_fixed_point, tropical_ctc_fixed_point_exists.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Decidability of Depth-Bounded Type Inhabitation\n\n**Conjecture**: The type inhabitation problem for ReflTT restricted to types of depth \u2264 k is decidable for each fixed k, but the complexity grows non-elementarily in k. Specifically, for depth 0 (MLTT fragment), inhabitation is PSPACE-complete; for depth 1, it is EXPTIME-complete; and for each additional depth level, the complexity class increases by one exponential.\n\n**Test**: (a) Implement an enumeration algorithm for closed terms of bounded size and depth. (b) Test inhabitation for specific types at depths 0, 1, 2 by brute-force enumeration. (c) Prove that depth-0 inhabitation reduces to propositional logic (known PSPACE-complete).\n\n**Impact**: If the complexity hierarchy is strict, it provides a precise computational characterization of the \"cost of reflection\" \u2014 each additional level of meta-reasoning adds exactly one exponential of computational difficulty.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `MachineLearning/ReflTTDepthAlgebra.lean` (iterBox_unit_minimal, depth_complexity_lower_bound)\n\n**Proof Strategy**:\n1. Show that depth-0 inhabitation is equivalent to intuitionistic propositional logic (well-known PSPACE-complete).\n2. Show that depth-1 inhabitation can simulate one level of quantifier alternation, connecting to EXPTIME.\n3. Use the depth filtration to show that each level strictly increases the class of expressible problems.\n\n**Domain Bridges**: Computability theory <-> type theory <-> complexity theory\n\n**Lineage**: Builds on mltt_depth_zero, depth_complexity_lower_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Computational Validation of the Proof Depth Gap Conjecture\n\n**Conjecture**: For all n \u2264 5 and all well-typed closed terms t of type \u25a1^n(\u22a4), the boxI-depth of t equals exactly n.\n\n**Test**: (a) Write a Lean function that enumerates all closed RTerm values of bounded size. (b) Filter for those that are well-typed at type \u25a1^n(\u22a4). (c) Verify that all such terms have boxI-depth \u2265 n. (d) For n = 1, 2, 3, this should be computationally feasible (the number of small terms is manageable).\n\n**Impact**: If the conjecture holds computationally for n \u2264 5, it strongly supports the general conjecture and motivates a full inductive proof. If a counterexample is found, it would reveal an unexpected interaction between typing rules and term structure, pointing to a subtlety in the boxI rule.\n\n**Catalog References**: `MachineLearning/ReflTTDepthAlgebra.lean` (boxI_depth_pos, boxI_typed_depth, RTerm.boxIDepth)\n\n**Proof Strategy**:\n1. Define a decidable type-checking function for RTerm (possible since all types are decidably equal and context lookup is computable).\n2. Enumerate terms up to size 10 at each depth level.\n3. Use `#eval` in Lean to run the computation.\n4. If successful, attempt to generalize to an inductive proof using the structure of the typing derivation.\n\n**Domain Bridges**: Computability <-> type theory <-> combinatorics (term enumeration)\n\n**Lineage**: Builds on boxI_depth_pos, boxI_typed_depth from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "892c306f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T14:52:14.469364+00:00"
+  },
+  {
+    "id": "fd_0154",
+    "title": "Rigorous bridge between algebraic linear algebra and tr",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis cycle established a rigorous bridge between algebraic linear algebra and tropical convex geometry via the tropical valuation functor. The central discovery is that the p-adic valuation \u2014 viewed as a map from a commutative semiring to the extended naturals \u2014 satisfies precisely the axioms needed to transport algebraic linear combinations into tropical convex hull membership. The bridge theorem (Theorem 5.5 / `valuation_bridge_tropical_hull_mem`) is constructive: the tropical coefficients are the valuations of the algebraic coefficients, providing an algorithmic pipeline from coefficient data to tropical certificates.\n\nThe most promising cross-domain connection is between this valuation bridge and the existing tropical Helly theorem in the Catalog (`Speculative/AutoResearch/TropicalHelly.lean`). The Helly theorem provides intersection properties of tropical convex sets, while our bridge provides a systematic way to *produce* points in tropical convex hulls from algebraic data. Composing these two results would yield a powerful tool: given algebraic inequalities on coefficients, one could derive combinatorial intersection properties of the resulting tropical point sets, connecting number-theoretic divisibility conditions to finite-dimensional optimization bounds.\n\nThe highest breakthrough potential lies in Direction 1 (Tropical Newton Polygon Bridge), because it would connect the valuation functor to classical algebraic geometry through Newton polygons, potentially yielding new algorithms for polynomial root counting via tropical certificates. This is tractable because Newton polygon theory is well-developed and many key results exist in Mathlib's polynomial API.\n\n---\n\n### Direction 1: Tropical Newton Polygon Bridge\n\n**Conjecture**: For a polynomial f(x) = \u2211 a\u1d62x\u2071 \u2208 \u2124[x] and a prime p, the lower convex hull of the points {(i, v\u209a(a\u1d62))} in \u211d\u00b2 equals the tropical curve defined by the tropicalization of f under the p-adic valuation. Moreover, the slopes of this Newton polygon determine the p-adic valuations of the roots of f, counted with multiplicity (a formalization of the classical Newton polygon theorem).\n\n**Test**: For f(x) = x\u00b3 + 6x\u00b2 + 12x + 8 = (x+2)\u00b3 and p=2, compute the Newton polygon of {(0, v\u2082(8)), (1, v\u2082(12)), (2, v\u2082(6)), (3, v\u2082(1))} = {(0,3), (1,2), (2,1), (3,0)}. The unique slope is -1, predicting all roots have v\u2082 = 1. Indeed v\u2082(2) = 1, confirming. Test with f(x) = x\u00b2 - 5 for p=5 to check a non-trivial case.\n\n**Impact**: If formalized, this would connect the tropical valuation functor to classical algebraic geometry and Hensel's lemma, providing a computational pipeline from polynomial coefficients to root valuation bounds. It would also connect to Puiseux series and the theory of tropical varieties.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (the `TropicalValuation` structure and `padicTropicalValuation`), Mathlib's `Polynomial.roots`, `padicValNat`.\n\n**Proof Strategy**: \n1. Define the Newton polygon of a polynomial as the lower convex hull of {(i, v(a\u1d62))}.\n2. Prove that the slopes are non-increasing using convexity.\n3. Use Hensel's lemma (available in Mathlib for p-adic numbers) to show each slope segment of length m corresponds to m roots with that p-adic valuation.\n4. Key lemma: the tropicalization of f is the tropical polynomial trop(f)(x) = min_i(v(a\u1d62) + i\u00b7x), and its \"roots\" (points of non-differentiability) correspond to Newton polygon slopes.\n\n**Domain Bridges**: Algebra (polynomial ring theory) \u2194 Tropical Geometry (tropical curves) \u2194 Number Theory (p-adic analysis, Hensel's lemma)\n\n**Lineage**: Builds on the `TropicalValuation` structure and `padicTropicalValuation` from this cycle. Extends the coordinatewise valuation to polynomial coefficients.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Surjectivity and Lattice Gaps\n\n**Conjecture**: The tropical surjectivity conjecture (`tropVal_surjective_hull_conjecture`) is FALSE in general. Specifically, for p=2, n=2, k=2, and generators x\u2081 = (1,0), x\u2082 = (0,1), the point y = (1,1) lies in the tropical convex hull of {(v\u2082(1), v\u2082(0)), (v\u2082(0), v\u2082(1))} = {(0,\u22a4), (\u22a4,0)} but is NOT the coordinatewise valuation of any \u2115-linear combination c\u2081(1,0) + c\u2082(0,1) = (c\u2081, c\u2082). However, the conjecture IS true when restricted to generators with all entries being powers of p.\n\n**Test**: Enumerate v\u2082(c\u2081, c\u2082) for c\u2081, c\u2082 \u2208 {0,...,1000}. The achievable valuation pairs are {(v\u2082(c\u2081), v\u2082(c\u2082)) : c\u2081,c\u2082 \u2208 \u2115} = {(a,b) : a,b \u2208 \u2115\u221e} (all pairs). Now compare to the tropical hull. For the standard basis generators, the tropical hull is all of (\u2115\u221e)\u00b2, so surjectivity holds trivially. Test with generators (2,3), (4,6) to find a non-trivial counterexample.\n\n**Impact**: Characterizing when surjectivity holds would determine when tropical certificates can be \"lifted\" back to algebraic witnesses \u2014 essential for using tropical methods in lattice cryptanalysis. A precise characterization theorem would be a significant contribution to tropical convexity theory.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`tropVal_surjective_hull_conjecture`, `tropConvHull`), `Speculative/AutoResearch/TropicalHelly.lean` (`tropConvexHull`).\n\n**Proof Strategy**:\n1. Construct an explicit counterexample by finding generators whose tropical hull contains unreachable points.\n2. Identify the obstruction: it should relate to \"tropical rank\" or \"tropical linear dependence.\"\n3. Prove surjectivity under the p-power hypothesis using the structure theorem for p-adic integers.\n4. Formalize the characterization: surjectivity holds iff the generators satisfy a \"tropical independence\" condition.\n\n**Domain Bridges**: Tropical Geometry (convex hulls) \u2194 Cryptography (lattice problems, LWE) \u2194 Algebra (p-adic analysis)\n\n**Lineage**: Directly tests the falsifiable conjecture stated in this cycle's Lean formalization.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Helly\u2013Valuation Composition\n\n**Conjecture**: Composing the tropical valuation bridge with the tropical Helly theorem yields a finite intersection theorem for algebraic solution sets. Specifically: if algebraic solution sets S\u2081,...,S\u2098 in \u2115\u207f have the property that every (n+1)-element subfamily has non-empty intersection of their tropical valuation images, then the intersection of all tropical valuation images is non-empty.\n\n**Test**: Take p=2, n=2 (so Helly number = n+1 = 3). Define three sets S\u2081, S\u2082, S\u2083 \u2282 \u2115\u00b2 as solution sets of simple divisibility conditions. Compute their tropical (v\u2082) images. Verify that pairwise intersection of images is non-empty, but triple intersection may or may not be. The Helly-type theorem would predict that if all triples intersect, all four-wise intersections do too.\n\n**Impact**: This would give a finite combinatorial condition (checkable in polynomial time) for the existence of solutions to systems of divisibility constraints \u2014 a problem that arises naturally in cryptanalysis and coding theory.\n\n**Catalog References**: `Speculative/AutoResearch/TropicalHelly.lean` (`tropical_helly`, `IsTropConvex`, `tropConvexHull`), `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`coordVal`, `tropConvHull`).\n\n**Proof Strategy**:\n1. Verify that valuation images of algebraic sets are tropically convex (this requires checking the sets are closed under the relevant algebraic operations).\n2. Apply the tropical Helly theorem from the Catalog.\n3. Lift the tropical intersection back to the algebraic setting using the bridge theorem.\n4. Key difficulty: the valuation images may not be tropically convex in general, so identify sufficient conditions on the algebraic sets.\n\n**Domain Bridges**: Combinatorics (Helly-type theorems) \u2194 Tropical Geometry (tropical convexity) \u2194 Algebra (divisibility) \u2194 Cryptography (lattice problems)\n\n**Lineage**: Composes the bridge theorem from this cycle with the tropical Helly theorem already in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Valuation for Neural Network Depth Certification\n\n**Conjecture**: The tropical valuation of the Lipschitz constant product \u220f L\u1d62 of an n-layer neural network, expressed as a sum \u2211 v\u209a(L\u1d62) in tropical algebra, provides a tighter robustness certificate than the naive product bound when the Lipschitz constants have shared prime factors. Specifically, if all L\u1d62 are powers of a single prime p, then the tropical depth \u2211 v\u209a(L\u1d62) grows linearly while the product L\u207f grows exponentially, and the valuation bridge provides robustness certificates of quality O(n) rather than O(p\u207f).\n\n**Test**: Take a 10-layer network with Lipschitz constants all equal to L = 2. The naive bound gives 2\u00b9\u2070 = 1024. The tropical depth gives v\u2082(2\u00b9\u2070) = 10. Compare the information content: if the input perturbation is \u03b4, the tropical certificate says the output perturbation has v\u2082 \u2265 v\u2082(\u03b4) + 10, which is a much more refined bound than just \"output perturbation \u2264 1024\u03b4.\"\n\n**Impact**: This would provide a new class of robustness certificates for neural networks based on number-theoretic structure of the weights, complementing existing Lipschitz-based approaches with tropical-algebraic refinements.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`LipschitzCompositionChain`, `tropVal_prod`), `FINAL/Bridges/ActivationNerveMarginCosheaf.lean` (robustness certificates).\n\n**Proof Strategy**:\n1. Apply `tropVal_prod` to the Lipschitz chain to get \u2211 v\u209a(L\u1d62).\n2. Show that this tropical sum provides divisibility constraints on the output perturbation.\n3. Prove that for p-power Lipschitz constants, the tropical certificate is exponentially tighter.\n4. Connect to the activation nerve cosheaf framework for local-to-global certificate composition.\n\n**Domain Bridges**: Machine Learning (neural network robustness) \u2194 Tropical Geometry (tropical products) \u2194 Number Theory (p-adic valuations)\n\n**Lineage**: Extends the `tropVal_prod` theorem from this cycle and connects to the robustness certification framework in `FINAL/Bridges/ActivationNerveMarginCosheaf.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Valuation on Polynomial Rings and Tropical Varieties\n\n**Conjecture**: The tropical valuation functor extends canonically to polynomial rings R[x] via the \"minimum coefficient valuation\": for f = \u2211 a\u1d62x\u2071, define V(f) = min_i v(a\u1d62). This extension V : R[x] \u2192 \u2115\u221e satisfies the tropical valuation axioms (with appropriate modifications for the polynomial ring structure), and the tropical variety of f (defined as the set of x where the minimum is achieved at least twice) corresponds to the set of slopes of the Newton polygon.\n\n**Test**: For f = 2x\u00b2 + 3x + 4 \u2208 \u2124[x] with p=2: v\u2082(2)=1, v\u2082(3)=0, v\u2082(4)=2. The minimum coefficient valuation is V(f) = 0. The Newton polygon has vertices at (0,2), (1,0), (2,1), with slopes -2 and 1. The tropical variety should be {-2, 1}. Verify by direct computation.\n\n**Impact**: This would give a functorial framework for computing tropical varieties algorithmically, connecting polynomial arithmetic to tropical geometry through a single valuation map.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`TropicalValuation`), Mathlib's `Polynomial`, `MvPolynomial`.\n\n**Proof Strategy**:\n1. Define V(f) = inf_i v(a\u1d62) and verify the tropical valuation axioms.\n2. Show V(f\u00b7g) = V(f) + V(g) using the iterated ultrametric inequality and careful analysis of the product's coefficients.\n3. Define the tropical variety as {x : trop(f)(x) is achieved by \u2265 2 terms} and connect to Newton polygon slopes.\n4. Key difficulty: V(f+g) \u2265 min(V(f), V(g)) requires careful handling of coefficient cancellation.\n\n**Domain Bridges**: Algebra (polynomial rings) \u2194 Tropical Geometry (tropical varieties) \u2194 Algebraic Geometry (Newton polygons)\n\n**Lineage**: Natural extension of the `TropicalValuation` structure to more complex algebraic objects.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "5392c445",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T14:52:33.758423+00:00"
+  },
+  {
+    "id": "fd_0156",
+    "title": "Formal algebraic foundation for recipe subst",
+    "description": "# Future Research Directions: Culinary Homotopy and Substitution Algebras\n\n## Synthesis\n\nThis research cycle established the formal algebraic foundation for recipe substitution spaces by proving ten structural theorems about the Hamming graph H(n,m) in the culinary context. The key discoveries are: (1) the sharp dichotomy between triangle-free behavior (m=2, binary choices) and triangle-rich behavior (m\u22653), which reveals how the *number* of available ingredient options fundamentally determines the topology of recipe space; (2) the slot independence theorem for additive flavor maps, which provides a decomposition principle reducing exponential-complexity recipe optimization to linear-complexity per-slot optimization; and (3) vertex transitivity via translation, establishing that recipe space has no privileged \"base recipe.\"\n\nThe most promising cross-domain connection is between the substitution graph and error-correcting codes. A \"cuisine\" \u2014 a carefully curated set of recipes \u2014 can be viewed as a code in H(n,m), and the coding-theoretic notions of minimum distance, covering radius, and packing radius translate directly into culinary concepts: how different must recipes be to count as \"distinct dishes,\" how many substitutions to reach any desired flavor from a fixed repertoire, and how densely can a cuisine pack recipes without confusion. The existing Catalog work on algebraic circuits (`Algebra/AlgebraicCircuitComplexity.lean`) and tropical geometry (`Algebra/TropicalDragon.lean`) may connect via the algebraic structure of the Hamming association scheme.\n\nThe highest breakthrough potential lies in Direction 1 (Fiber Connectivity Conjecture), because a positive result would enable efficient computational recipe generation via connected-path algorithms, while a negative result would reveal unexpected obstructions to continuous recipe adaptation \u2014 both outcomes with immediate practical implications.\n\n---\n\n### Direction 1: Fiber Connectivity of Additive Flavor Maps\n\n**Conjecture**: For a \"generic\" additive flavor map A : AdditiveFlavorMap(n, m, d) with d < n and m \u2265 2, every nonempty flavor fiber (the set of recipes producing a given flavor profile) is connected in the substitution graph SubstGraph(n, m). Here \"generic\" means the per-slot contribution vectors {A.contrib(i, v, \u00b7) | v \u2208 Fin m} are in general position (no unexpected linear dependencies across slots).\n\n**Mathematical context**: An additive flavor map assigns to each recipe r a flavor profile A.eval(r, k) = \u03a3\u1d62 A.contrib(i, r(i), k). A fiber is connected if any two recipes with the same flavor profile can be linked by a sequence of single-ingredient substitutions, each preserving the flavor. This is equivalent to asking whether the \"flavor-preserving substitution graph\" (the subgraph of SubstGraph restricted to a fiber) is connected.\n\n**Test**: For n = 5, m = 3, d = 2, generate 10,000 random additive flavor maps (sampling contrib values uniformly from [0,1]). For each, enumerate all m^n = 243 recipes, group into fibers, and check connectivity of each fiber in SubstGraph. If any fiber is disconnected, the conjecture is falsified. Record the fraction of connected fibers as a function of d/n.\n\n**Impact**: If true, this guarantees that recipe adaptation is always possible through incremental substitutions \u2014 a cook can always transform one recipe into another with the same flavor by changing one ingredient at a time. This would enable efficient gradient-free recipe optimization algorithms. If false, it identifies \"flavor barriers\" \u2014 sets of substitutions that cannot be achieved incrementally, requiring simultaneous multi-ingredient changes.\n\n**Catalog References**: `Algebra/RecipeHomotopy.lean` (slot_independence, SubstGraph), `MachineLearning/CulinaryHomotopy/Basic.lean` (FlavorMap, flavorFiber)\n\n**Proof Strategy**: For the positive direction, try induction on the number of differing slots k = hdist(r\u2081, r\u2082). For k = 1, the two recipes are adjacent and in the same fiber, so they're connected. For k > 1, find an intermediate recipe r' with hdist(r\u2081, r') = 1, hdist(r', r\u2082) = k-1, and A.eval(r') = A.eval(r\u2081). This requires solving A.contrib(i, v, \u00b7) = A.contrib(i, r\u2081(i), \u00b7) for some v \u2260 r\u2081(i) at some slot i, which the genericity condition should guarantee.\n\n**Domain Bridges**: Coding theory (error-correcting codes on Hamming graphs) \u2194 Culinary science (recipe adaptation) \u2194 Combinatorial optimization (fiber connectivity in product graphs)\n\n**Lineage**: Builds on slot_independence and translate_preserves_hdist from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: The Culinary Association Scheme and Spectral Analysis\n\n**Conjecture**: The eigenvalues of the adjacency matrix of SubstGraph(n, m) restricted to a flavor fiber F determine the mixing time of the \"random substitution walk\" on F. Specifically, if \u03bb\u2081 \u2265 \u03bb\u2082 \u2265 ... are the eigenvalues of the fiber's adjacency matrix, then the mixing time is \u0398(log|F| / (1 - \u03bb\u2082/\u03bb\u2081)).\n\n**Mathematical context**: The full Hamming graph H(n,m) has a well-known eigenvalue spectrum given by the Krawtchouk polynomials: \u03bb\u2096 = (m-1)n - mk for k = 0,1,...,n, with multiplicity C(n,k)(m-1)^k. When restricting to a flavor fiber, the spectrum changes, and the question is how the fiber structure affects the spectral gap.\n\n**Test**: For n = 4, m = 3, d = 1, compute the adjacency matrix of SubstGraph restricted to each fiber of 100 random additive flavor maps. Compute eigenvalues and compare mixing times predicted by the spectral gap with actual mixing times from random walk simulations.\n\n**Impact**: Would provide theoretical guarantees for random recipe exploration algorithms \u2014 how many random substitutions are needed to \"explore\" the full set of recipes with a given flavor profile.\n\n**Catalog References**: `Algebra/RecipeHomotopy.lean` (SubstGraph, spectrumCount, spectrum_sum)\n\n**Proof Strategy**: Use the association scheme structure of the Hamming graph. The fiber restriction can be analyzed via the projection of Krawtchouk polynomials onto the fiber's characteristic function. The spectral gap bound follows from standard Markov chain theory.\n\n**Domain Bridges**: Association schemes (algebraic combinatorics) \u2194 Markov chain mixing (probability) \u2194 Recipe exploration (culinary optimization)\n\n**Lineage**: Builds on spectrum_sum and recipe_card from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Nonlinear Flavor Maps and Interaction Tensors\n\n**Conjecture**: For a flavor map with pairwise interactions (F(r) = \u03a3\u1d62 a\u1d62(r\u1d62) + \u03a3\u1d62<\u2c7c b\u1d62\u2c7c(r\u1d62, r\u2c7c)), the slot independence theorem generalizes to: changing slot i affects the flavor by a\u1d62(v) - a\u1d62(r\u1d62) + \u03a3\u2c7c\u2260\u1d62 [b\u1d62\u2c7c(v, r\u2c7c) - b\u1d62\u2c7c(r\u1d62, r\u2c7c)]. Moreover, the number of \"effective degrees of freedom\" in a fiber is determined by the rank of the interaction tensor.\n\n**Mathematical context**: The additive flavor map is a first-order approximation. Real cooking involves substantial ingredient interactions: sugar and protein undergo Maillard reactions, acid affects gluten development, fat mediates volatile compound release. A pairwise interaction model captures the leading-order nonlinearity. The interaction tensor b : (Fin n \u00d7 Fin n) \u2192 (Fin m \u00d7 Fin m) \u2192 (Fin d \u2192 \u211d) encodes these pairwise effects.\n\n**Test**: Formalize the pairwise flavor map in Lean 4 and prove the generalized slot independence theorem. Then compute, for n = 4, m = 3, d = 2, the average fiber size and connectivity as a function of the interaction strength \u2016b\u2016/\u2016a\u2016.\n\n**Impact**: Would extend the mathematical framework from the idealized additive case to a physically more realistic model, capturing ingredient synergies and antagonisms. The rank of the interaction tensor would provide a measure of \"culinary complexity.\"\n\n**Catalog References**: `Algebra/RecipeHomotopy.lean` (AdditiveFlavorMap, slot_independence)\n\n**Proof Strategy**: Define `PairwiseFlavorMap` as a structure with linear and quadratic contributions. The generalized independence theorem follows by the same summation argument as slot_independence, but with additional terms from the interaction matrix. The key lemma is that changing slot i only affects terms involving index i.\n\n**Domain Bridges**: Tensor decomposition (multilinear algebra) \u2194 Flavor chemistry (food science) \u2194 ANOVA models (statistics)\n\n**Lineage**: Directly extends slot_independence from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Homotopy Type of the Recipe Clique Complex\n\n**Conjecture**: The clique complex of SubstGraph(n, m) (the simplicial complex whose k-simplices are (k+1)-cliques) is homotopy equivalent to a wedge of spheres. For m = 2, it has the homotopy type of the (n-1)-sphere (since the clique complex of the hypercube graph is the boundary of the cross-polytope). For m \u2265 3, the homotopy type has non-trivial higher homology determined by the K\u00fcnneth formula applied to the product structure of H(n,m).\n\n**Mathematical context**: The substitution graph SubstGraph(n,m) is the Hamming graph H(n,m), which is the Cartesian product of n copies of the complete graph K_m. The clique complex of K_m is the (m-1)-simplex \u0394^{m-1}. The clique complex of a Cartesian product of graphs is related to (but not equal to) the product of the clique complexes, and the precise relationship involves the tensor product of simplicial sets.\n\n**Test**: For small cases (n \u2264 4, m \u2264 4), compute the homology groups of the clique complex of H(n,m) using computational algebraic topology software (e.g., GUDHI or Ripser). Compare with predictions from the K\u00fcnneth formula.\n\n**Impact**: Would establish the precise homotopy type of recipe space, connecting the combinatorial structure of ingredient substitution to algebraic topology. The fundamental group \u03c0\u2081 would classify \"recipe loops\" \u2014 sequences of substitutions that return to the starting recipe \u2014 up to continuous deformation.\n\n**Catalog References**: `Algebra/RecipeHomotopy.lean` (SubstGraph, triangle_free_m2, triangle_exists_m3, four_cycle_exists)\n\n**Proof Strategy**: For m = 2, the clique complex of the hypercube Q_n is known. Each edge corresponds to a single bit flip, and the maximal cliques are edges (since Q_n is triangle-free). So the clique complex is just Q_n itself as a 1-dimensional simplicial complex, whose fundamental group is the free group on n(n-1)/2 generators (the independent 4-cycles). For m \u2265 3, use the product structure and K\u00fcnneth theorem.\n\n**Domain Bridges**: Algebraic topology (homotopy groups of simplicial complexes) \u2194 Graph theory (clique complexes of Hamming graphs) \u2194 Culinary science (recipe loop classification)\n\n**Lineage**: Builds on triangle_free_m2, triangle_exists_m3, and four_cycle_exists from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Optimal Cuisine Design via Coding Theory\n\n**Conjecture**: The maximum number of recipes in a \"cuisine\" (a subset of Recipe(n,m)) such that no two recipes have Hamming distance less than d is given by the Singleton bound m^{n-d+1}, and this bound is achieved by MDS (maximum distance separable) cuisines analogous to Reed-Solomon codes.\n\n**Mathematical context**: In coding theory, an [n, k, d]_m code is a subset of (Fin m)^n with m^k elements and minimum Hamming distance d. The Singleton bound states m^k \u2264 m^{n-d+1}. MDS codes achieve this bound with equality. Translating to the culinary context: a \"d-separated cuisine\" is a collection of recipes where any two differ in at least d ingredient slots. The Singleton bound limits how many recipes can be in such a cuisine.\n\n**Test**: For n = 6, m = 4, d = 3, enumerate all maximal d-separated cuisines and verify whether any achieve the Singleton bound m^{n-d+1} = 4^4 = 256. Compare with known MDS code constructions (Reed-Solomon codes exist for m = prime power).\n\n**Impact**: Would provide principled guidelines for designing recipe collections (cookbooks) where every recipe is \"sufficiently different\" from every other, avoiding redundancy. The MDS construction would give explicit cookbook designs.\n\n**Catalog References**: `Algebra/RecipeHomotopy.lean` (SubstGraph, hdist_triangle, spectrum_sum), `Algebra/CodingTheory/Defs.lean`\n\n**Proof Strategy**: The Singleton bound follows from a standard pigeonhole argument on coordinate projections. Prove that projecting an [n,k,d]_m code onto any n-d+1 coordinates gives an injective map, hence m^k \u2264 m^{n-d+1}. For MDS construction, use the Reed-Solomon approach: identify Fin m with a finite field (when m is a prime power) and use polynomial evaluation codes.\n\n**Domain Bridges**: Coding theory (error-correcting codes) \u2194 Culinary science (cookbook design) \u2194 Finite geometry (MDS codes and arcs)\n\n**Lineage**: Builds on recipe_card and spectrum_sum from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.95,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "e174af4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T15:27:45.189603+00:00"
+  },
+  {
     "id": "fd_0116",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
@@ -333,19 +738,19 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:31.042804+00:00"
   },
   {
-    "id": "fd_0065",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "id": "fd_0078",
+    "title": "Categorification of Entropy: The Information Loss of Functors",
+    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
     "domains": [
       "Novelty",
-      "Computation"
+      "Algebra"
     ],
     "priority_score": 0.9299999999999999,
     "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.657673+00:00"
+    "timestamp": "2026-06-01T12:30:30.722495+00:00"
   },
   {
     "id": "fd_0088",
@@ -361,6 +766,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.782446+00:00"
+  },
+  {
+    "id": "fd_0092",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.9299999999999999,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00"
   },
   {
     "id": "fd_0122",
@@ -386,10 +806,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.9199999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a2abb60",
     "timestamp": "2026-06-01T12:30:30.516572+00:00"
   },
   {
@@ -468,19 +888,19 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:31.012168+00:00"
   },
   {
-    "id": "fd_0022",
-    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function",
-    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "id": "fd_0093",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
       "Algebra"
     ],
-    "priority_score": 0.89,
+    "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.508792+00:00"
+    "timestamp": "2026-06-01T12:30:30.814374+00:00"
   },
   {
     "id": "fd_0080",
@@ -513,6 +933,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:31.061234+00:00"
   },
   {
+    "id": "fd_0054",
+    "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology",
+    "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics \u2014 it measures the emotional diversity of a social network.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.8899999999999999,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.604974+00:00"
+  },
+  {
     "id": "fd_0018",
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
@@ -528,19 +963,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.502441+00:00"
   },
   {
-    "id": "fd_0036",
-    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement",
-    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
+    "id": "fd_0039",
+    "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking",
+    "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Algebra"
     ],
     "priority_score": 0.88,
     "status": "available",
     "research_mode": "team",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.542003+00:00"
+    "timestamp": "2026-06-01T12:30:30.551386+00:00"
+  },
+  {
+    "id": "fd_0070",
+    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm",
+    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-06-01T12:30:30.681497+00:00"
   },
   {
     "id": "fd_0091",
@@ -708,36 +1158,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.691072+00:00"
   },
   {
-    "id": "fd_0118",
-    "title": "Surreal Topology: Open Sets at Infinity",
-    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.970403+00:00"
-  },
-  {
-    "id": "fd_0123",
-    "title": "Computational Complexity of Alien Civilizations",
-    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "78286831",
-    "timestamp": "2026-06-01T12:30:31.000041+00:00"
-  },
-  {
     "id": "fd_0005",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
@@ -843,34 +1263,19 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:31.018128+00:00"
   },
   {
-    "id": "fd_0138",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
+    "id": "fd_0157",
+    "title": "Rigorous axiomatic framework for substrate-ind",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established a rigorous axiomatic framework for substrate-independent computational complexity. The core contribution \u2014 the `ComplexityHierarchy` structure \u2014 captures the minimal axioms (monotonicity, strictness) from which all structural hierarchy theorems follow. We proved 10 theorems covering infinite separation, simulation transfer, diagonal separation, oracle non-collapse, substrate independence, and hypercomputational barriers, all fully machine-verified.\n\nThe most promising cross-domain connection emerging from this cycle is the bridge between our abstract hierarchy framework and the existing Geometric Complexity Theory (GCT) formalization in the Catalog (`Catalog/Algebra/GCT/Foundation.lean`). GCT's obstruction witnesses serve as concrete instantiations of our abstract separation witnesses, suggesting a deeper unification: the representation-theoretic obstructions of GCT may be precisely the diagonal separators of our abstract framework, specialized to the algebraic setting. This connection has the highest breakthrough potential because it could link our model-independent results to concrete P vs NP attack strategies.\n\nA secondary promising direction connects to the Kolmogorov complexity formalization (`Catalog/Computation/KolmogorovComplexity.lean`) and EML theory (`Catalog/EML/EMLv17Core.lean`). Kolmogorov complexity provides a natural \"complexity measure\" that could instantiate our abstract framework, while EML's information-theoretic perspective could yield quantitative refinements of our qualitative separation results.\n\n---\n\n### Direction 1: Reduction-Enriched Complexity Hierarchies\n\n**Conjecture**: The `ComplexityHierarchy` framework can be extended with an abstract notion of \"reduction\" (a preorder on problems compatible with level membership) such that every level contains a maximum element under this preorder \u2014 i.e., abstract completeness emerges from the axioms alone, without reference to any specific model.\n\nFormally: given a complexity hierarchy H with a compatible preorder \u2264_r on problems (where x \u2264_r y and y \u2208 level(n) implies x \u2208 level(n)), if the hierarchy admits effective enumeration of reductions, then each level(n+1) \\ level(n) contains an element that is \u2264_r-maximal within level(n+1).\n\n**Test**: Formalize the reduction-enriched hierarchy in Lean 4. Attempt to prove the abstract completeness theorem. If the proof succeeds, instantiate it with concrete reductions (many-one, Turing, truth-table) to verify it yields standard completeness results. If it fails, identify which additional axioms are needed \u2014 this failure itself would illuminate what makes completeness structurally different from hierarchy separation.\n\n**Impact**: If true, this would show that NP-completeness (and completeness at every level) is not an accident of Turing machines but a structural inevitability. This would substantially strengthen the substrate independence thesis. If false, the failure would identify a genuinely model-dependent aspect of complexity theory.\n\n**Catalog References**: `Computation/UniversalComplexity.lean`, `Catalog/Algebra/GCT/Foundation.lean`\n\n**Proof Strategy**: \n1. Define `ReductionEnrichedHierarchy` extending `ComplexityHierarchy` with a preorder and compatibility axiom.\n2. Add an enumeration axiom for reductions.\n3. Use a diagonalization-like argument to construct maximal elements: enumerate all problems at level n+1, and for each, check whether it reduces to the candidate. \n4. The key lemma is that the \"hardest\" problem at each level exists by a Zorn's-lemma-style argument (or its constructive replacement).\n\n**Domain Bridges**: Abstract complexity theory \u2194 Order theory / lattice theory \u2194 GCT obstruction maps\n\n**Lineage**: Builds on `ComplexityHierarchy` and `FrameworkSimulation` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: GCT Obstruction Maps as Diagonal Separators\n\n**Conjecture**: The GCT obstruction witnesses (representation-theoretic multiplicity gaps) can be shown to be instances of the abstract diagonal separators in our `DiagonalizableFramework`, when the hierarchy is instantiated to algebraic complexity classes (VP, VNP).\n\nFormally: there exists a `DiagonalizableFramework` D whose levels correspond to algebraic complexity classes (bounded-degree determinantal complexity) and whose diagonal function `diag` produces, at each level, a polynomial family whose representation-theoretic multiplicities provide GCT obstruction witnesses.\n\n**Test**: \n1. Define an algebraic complexity hierarchy using the GCT structures from `Catalog/Algebra/GCT/Foundation.lean`.\n2. Construct a `DiagonalizableFramework` instance over this hierarchy.\n3. Verify that the `obstruction_implies_noncontainment` theorem from GCT corresponds to the `diagonal_separation` theorem from our framework.\n4. If the construction works, prove the correspondence formally. If not, identify which GCT axioms are not captured by our framework.\n\n**Impact**: This would unify two major approaches to computational complexity lower bounds \u2014 the combinatorial (hierarchy theorems) and the algebraic (GCT) \u2014 under a single abstract framework. It would also validate our framework by showing it captures non-trivial existing mathematics.\n\n**Catalog References**: `Catalog/Algebra/GCT/Foundation.lean` (GCTSystem, ObstructionWitness, obstruction_implies_noncontainment), `Computation/UniversalComplexity.lean`\n\n**Proof Strategy**:\n1. Map GCT's `inClosure` relation to level membership: define level(n) as the set of polynomials with determinantal complexity \u2264 n.\n2. Use GCT's `small_circuit_closure` axiom to establish monotonicity.\n3. Use obstruction witnesses to establish strictness (under suitable assumptions about multiplicity growth).\n4. The diagonal function would use the permanent polynomial family, which is the canonical hard family in GCT.\n\n**Domain Bridges**: Abstract complexity theory \u2194 Algebraic geometry (orbit closures) \u2194 Representation theory (Schur-Weyl duality)\n\n**Lineage**: Builds on `DiagonalizableFramework` and `diagonal_separation` from this cycle, and `GCTSystem` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Kolmogorov Complexity as a Natural Complexity Measure\n\n**Conjecture**: Kolmogorov complexity provides a natural instantiation of the `ComplexityHierarchy` framework where the levels correspond to sets of strings with bounded Kolmogorov complexity, and the strict hierarchy corresponds to the uncomputability of Kolmogorov complexity at successively higher oracle levels.\n\nFormally: define level(n) as the set of strings x with K^{(n)}(x) \u2264 |x| (where K^{(n)} is Kolmogorov complexity relative to the n-th Turing jump), and prove this forms a `ComplexityHierarchy`.\n\n**Test**: Formalize the Kolmogorov hierarchy using the existing `Catalog/Computation/KolmogorovComplexity.lean` definitions. Prove monotonicity and strictness. For strictness, the key argument uses the uncomputability of K relative to each oracle level, combined with the existence of strings that are complex relative to one level but simple relative to the next.\n\n**Impact**: This would connect our abstract framework to algorithmic information theory, one of the deepest areas of theoretical computer science. It would also provide a \"complexity hierarchy\" that is fundamentally different from time/space hierarchies, validating that our axioms capture genuine generality.\n\n**Catalog References**: `Catalog/Computation/KolmogorovComplexity.lean`, `Computation/UniversalComplexity.lean`\n\n**Proof Strategy**:\n1. Define levels using relativized Kolmogorov complexity.\n2. Monotonicity follows from the fact that a more powerful oracle can only decrease complexity.\n3. Strictness requires showing that the n-th Turing jump solves problems that the (n-1)-th jump cannot \u2014 this is a standard result in computability theory (Post's theorem).\n4. Diagonal separators correspond to strings that are \"complex\" at one level but \"simple\" at the next.\n\n**Domain Bridges**: Abstract complexity \u2194 Algorithmic information theory \u2194 Computability theory (Turing jumps)\n\n**Lineage**: Builds on `ComplexityHierarchy` from this cycle and Kolmogorov complexity definitions from the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Quantitative Hierarchy Gaps via EML Theory\n\n**Conjecture**: The qualitative strictness axiom of `ComplexityHierarchy` can be refined to a quantitative statement using EML (Ensemble Meta-Learning) theory's information-theoretic tools: the \"size\" of the gap between level(n) and level(n+1), measured by an appropriate ensemble complexity metric, grows at least logarithmically in n.\n\nFormally: define a measure \u03bc on the type \u03b1 and define gap(n) = \u03bc(level(n+1) \\ level(n)). Under suitable axioms about \u03bc (related to EML's ensemble complexity), prove gap(n) \u2265 c \u00b7 log(n) for some constant c > 0.\n\n**Test**: \n1. Extend `ComplexityHierarchy` with a measure on \u03b1.\n2. Formalize gap(n) as the measure of the symmetric difference between consecutive levels.\n3. Attempt to prove logarithmic growth under the EML-inspired axioms.\n4. Computationally verify the bound for specific instantiations (e.g., the time hierarchy for Turing machines, where the gap between DTIME(n^k) and DTIME(n^{k+1}) is known to have specific density properties).\n\n**Impact**: This would transform our qualitative framework into a quantitative one, enabling statements not just about the existence of separations but about their magnitude. It could yield new connections between complexity theory and information theory.\n\n**Catalog References**: `Catalog/EML/EMLv17Core.lean` (eml, emlDiag, sigmaEml), `Catalog/EML/AdvancedTheory.lean` (ensembleComplexity), `Computation/UniversalComplexity.lean`\n\n**Proof Strategy**:\n1. Import the ensemble complexity metric from EML theory.\n2. Axiomatize the compatibility between the hierarchy's levels and the EML measure.\n3. Use the EML diagonalization (emlDiag) as a quantitative refinement of our abstract diag function.\n4. The logarithmic bound should follow from a counting argument: at level n, the number of \"new\" problems is bounded below by the information-theoretic content of the diagonal construction.\n\n**Domain Bridges**: Abstract complexity \u2194 Information theory (EML) \u2194 Measure theory\n\n**Lineage**: Builds on `ComplexityHierarchy` from this cycle and EML core definitions from the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Complexity Hierarchies\n\n**Conjecture**: The tropical (min-plus) semiring gives rise to a natural complexity hierarchy where the levels correspond to tropical circuits of bounded size, and the strict hierarchy theorem holds with a constructive diagonal witness based on tropical permanent vs tropical determinant separation.\n\nFormally: define a `ComplexityHierarchy` over tropical polynomial families where level(n) consists of families computable by tropical circuits of size \u2264 n. Prove strictness using the known exponential gap between tropical permanent and tropical circuit complexity.\n\n**Test**: \n1. Define tropical circuit complexity using the min-plus semiring from `Catalog/Computation/TropicalThermodynamicComplexity.lean`.\n2. Construct the hierarchy and prove monotonicity.\n3. For strictness, use the counting argument: there are (n+1)^{n\u00b2} tropical polynomials on n variables, but only exp(O(s log s)) computable by circuits of size s.\n4. Verify this counting argument computationally for small n using the demo.py framework.\n\n**Impact**: This would provide a concrete, non-Turing-machine instantiation of our abstract framework in a setting where exponential lower bounds are provable (unlike Boolean complexity, where we cannot prove superlinear lower bounds unconditionally). It would validate that our framework captures settings where hierarchy theorems are not just conjectured but proved.\n\n**Catalog References**: `Catalog/Computation/TropicalThermodynamicComplexity.lean`, `Catalog/Tropical/`, `Computation/UniversalComplexity.lean`\n\n**Proof Strategy**:\n1. Use the tropical semiring formalization from the Catalog.\n2. Define tropical circuit complexity as a function from polynomial families to \u2115.\n3. Monotonicity: a circuit of size s can be padded to size s+1.\n4. Strictness: counting argument \u2014 the number of distinct tropical polynomials grows faster than the number of small circuits.\n5. The diagonal witness is the tropical permanent, which requires exponential tropical circuit size.\n\n**Domain Bridges**: Abstract complexity \u2194 Tropical algebra (min-plus semiring) \u2194 Combinatorial optimization\n\n**Lineage**: Builds on `ComplexityHierarchy` from this cycle and tropical algebra formalizations from the Catalog.\n\n**Ambition**: extension\n",
     "domains": [
-      "Novelty",
-      "Algebra"
+      "Algebra",
+      "Computation"
     ],
     "priority_score": 0.85,
     "status": "available",
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "78286831",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:31.092242+00:00"
-  },
-  {
-    "id": "fd_0015",
-    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)",
-    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.498448+00:00"
+    "timestamp": "2026-06-01T15:28:03.287615+00:00"
   },
   {
     "id": "fd_0047",
@@ -903,21 +1308,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.612729+00:00"
   },
   {
-    "id": "fd_0073",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.695662+00:00"
-  },
-  {
     "id": "fd_0104",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation",
     "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
@@ -948,21 +1338,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.925627+00:00"
   },
   {
-    "id": "fd_0016",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.499504+00:00"
-  },
-  {
     "id": "fd_0021",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
@@ -991,21 +1366,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.589354+00:00"
-  },
-  {
-    "id": "fd_0076",
-    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem",
-    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.711975+00:00"
   },
   {
     "id": "fd_0112",
@@ -1098,51 +1458,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.617168+00:00"
   },
   {
-    "id": "fd_0075",
-    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count",
-    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.706858+00:00"
-  },
-  {
-    "id": "fd_0095",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.827686+00:00"
-  },
-  {
-    "id": "fd_0102",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
-    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.870934+00:00"
-  },
-  {
     "id": "fd_0117",
     "title": "The Unreasonable Effectiveness of Wrong Theories",
     "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
@@ -1218,51 +1533,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.600658+00:00"
   },
   {
-    "id": "fd_0067",
-    "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids",
-    "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.81,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.667149+00:00"
-  },
-  {
-    "id": "fd_0085",
-    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor",
-    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.81,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.761503+00:00"
-  },
-  {
-    "id": "fd_0108",
-    "title": "Memory Editing: When Forgetting Is a Mathematical Operation",
-    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.81,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.907112+00:00"
-  },
-  {
     "id": "fd_0127",
     "title": "Borges' Library of Babel: Combinatorics of Everything",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
@@ -1276,21 +1546,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:31.024124+00:00"
-  },
-  {
-    "id": "fd_0008",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.492679+00:00"
   },
   {
     "id": "fd_0020",
@@ -1321,21 +1576,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.530929+00:00"
-  },
-  {
-    "id": "fd_0064",
-    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields",
-    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.652777+00:00"
   },
   {
     "id": "fd_0071",
@@ -1381,21 +1621,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.937834+00:00"
-  },
-  {
-    "id": "fd_0134",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:31.067326+00:00"
   },
   {
     "id": "fd_0017",
@@ -1503,21 +1728,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.525722+00:00"
   },
   {
-    "id": "fd_0034",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.78,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.536490+00:00"
-  },
-  {
     "id": "fd_0052",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
@@ -1548,21 +1758,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.639161+00:00"
   },
   {
-    "id": "fd_0012",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.77,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.495596+00:00"
-  },
-  {
     "id": "fd_0024",
     "title": "The Mathematics of Memes: Viral Information Topology",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
@@ -1591,21 +1786,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.564171+00:00"
-  },
-  {
-    "id": "fd_0055",
-    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry",
-    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.77,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.608699+00:00"
   },
   {
     "id": "fd_0069",
@@ -1698,21 +1878,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.630214+00:00"
   },
   {
-    "id": "fd_0079",
-    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces",
-    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.76,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.728070+00:00"
-  },
-  {
     "id": "fd_0006",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
@@ -1726,36 +1891,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.491505+00:00"
-  },
-  {
-    "id": "fd_0148",
-    "title": "This cycle formalized the foundational theory of self-avoiding walks on \u2124\u00b2 and t",
-    "description": "# Future Directions: Self-Avoiding Walk Research\n\n## Synthesis\n\nThis cycle formalized the foundational theory of self-avoiding walks on \u2124\u00b2 and the hexagonal lattice, establishing the submultiplicativity of SAW counts, the existence of the connective constant via Fekete's lemma, and the algebraic properties of the Nienhuis constant \u221a(2+\u221a2). The most significant cross-domain connection is between combinatorial path-counting (submultiplicativity), real analysis (Fekete's lemma for subadditive sequences), and algebraic number theory (the minimal polynomial of the hexagonal connective constant).\n\nThe highest breakthrough potential lies in Direction 1: formalizing discrete holomorphicity on planar graphs, which would open the door not just to the Duminil-Copin\u2013Smirnov theorem but to the entire field of discrete complex analysis and its applications to statistical mechanics. The bridge decomposition (Direction 3) offers a more tractable intermediate step that could yield new rigorous bounds on the square lattice connective constant. The connection to tropical geometry (Direction 5) is speculative but could link SAW theory to the existing Catalog's tropical algebra infrastructure.\n\n---\n\n### Direction 1: Discrete Holomorphicity and the Parafermionic Observable\n\n**Conjecture**: The parafermionic observable F(z) = \u03a3_{\u03c9: a\u2192z} x_c^{|\u03c9|} e^{-i\u03c3\u03b8(\u03c9)} with \u03c3 = 5/8 and x_c = 1/\u221a(2+\u221a2) satisfies discrete Cauchy-Riemann equations on the medial lattice of the hexagonal lattice.\n\n**Test**: Formalize the medial lattice of the hexagonal lattice, define F(z) as a sum over walks, and verify the discrete Cauchy-Riemann equations for small domains (say, a 3\u00d73 hexagonal patch) computationally in Lean via `native_decide` or `#eval`. If the equations hold for small patches, proceed to the general proof.\n\n**Impact**: This would be the first step toward a complete formalization of the Duminil-Copin\u2013Smirnov theorem, one of the landmark results in mathematical physics of the 21st century. It would also provide infrastructure for formalizing other results in discrete complex analysis.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (hexagonal lattice definitions, HexAdj, HexWalk)\n\n**Proof Strategy**: (1) Define the medial lattice of the hexagonal lattice. Each edge of the hexagonal lattice corresponds to a vertex of the medial lattice. (2) Define the discrete derivative operators \u2202_s and \u2202\u0304_s on the medial lattice. (3) Define the parafermionic observable F as a formal sum. (4) Prove that local cancellations in the sum yield the discrete CR equations. The key identity is that for each interior vertex of the medial lattice, the three terms contributing to \u2202\u0304F cancel due to the specific choice of \u03c3 = 5/8.\n\n**Domain Bridges**: Complex Analysis <-> Combinatorics <-> Statistical Mechanics\n\n**Lineage**: Builds on HexAdj, HexWalk, nienhuis_algebraic_identity from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Connective Constant Bounds for \u2124\u00b2\n\n**Conjecture**: The connective constant \u03bc of the square lattice \u2124\u00b2 satisfies 2.625 < \u03bc < 2.680, provable using only elementary combinatorial arguments (no analysis or physics).\n\n**Test**: Prove a_lower \u2264 c_n for all n \u2264 N using explicit constructions (e.g., spiral walks, L-shaped walks), and c_n \u2264 a_upper using the tree-like structure of SAWs. Specifically, try to prove c_n \u2264 4 \u00b7 3^{n-1} (upper bound from excluded neighbors) and c_n \u2265 2^n (walks along two axes and their reflections) in Lean.\n\n**Impact**: Rigorous, computer-verified bounds on \u03bc(\u2124\u00b2) would be a concrete contribution to the open problem. Even crude bounds, if formally verified, have value because they are machine-checked.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (sawCount, sawCount_submultiplicative, one_le_sawCount)\n\n**Proof Strategy**: (1) Upper bound: Prove c_n \u2264 4 \u00b7 3^{n-1} by induction\u2014at each step after the first, the walker has at most 3 choices (cannot return). This requires showing that for n \u2265 1, each SAW of length n extends to at most 3 SAWs of length n+1 at each step. (2) Lower bound: Construct explicit families of walks\u2014e.g., \"staircase\" walks alternating between x and y directions, giving c_n \u2265 2^{\u230an/2\u230b}. (3) Improved bounds using the Hammersley-Welsh method with bridges.\n\n**Domain Bridges**: Combinatorics <-> Number Theory (growth rates) <-> Analysis (Fekete's lemma)\n\n**Lineage**: Direct extension of sawCount_submultiplicative, walk_coord_bound' from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Bridge Decomposition and Renewal Theory\n\n**Conjecture**: The bridge generating function b(x) = \u03a3 b_n x^n satisfies the identity \u03c7(x) = b(x) / (1 - b(x))\u00b2 where \u03c7(x) = \u03a3 c_n x^n is the SAW generating function, and this identity can be formalized in Lean using formal power series.\n\n**Test**: Verify the identity numerically for n \u2264 12 by computing bridge counts and SAW counts. Then formalize the renewal equation in Lean using `PowerSeries` from Mathlib.\n\n**Impact**: The bridge decomposition is the standard tool for converting between SAW bounds and bridge bounds. Formalizing it would provide machinery for systematic improvement of connective constant bounds.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (Bridge, bridgeCount), `Algebra/Advanced.lean` (algebraic structures)\n\n**Proof Strategy**: (1) Formalize the bridge decomposition theorem: every SAW decomposes uniquely into a sequence of bridges. (2) This gives the generating function identity c_n = \u03a3_{k\u22651} \u03a3_{n\u2081+...+n_k=n} b_{n\u2081} \u00b7 ... \u00b7 b_{n_k} for walks that can be decomposed into k bridges. (3) In generating function language: \u03c7(x) = \u03a3_{k\u22651} b(x)^k = b(x)/(1-b(x)) (for one-directional bridges). The full identity accounts for the 2D structure. (4) Use Mathlib's `PowerSeries` for formal manipulation.\n\n**Domain Bridges**: Combinatorics <-> Formal Power Series <-> Renewal Theory\n\n**Lineage**: Builds on Bridge structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: High-Dimensional SAW and Mean-Field Behavior (Hara-Slade)\n\n**Conjecture**: For self-avoiding walks on \u2124^d with d \u2265 5, the connective constant satisfies \u03bc(\u2124^d) = 2d - 1 - 1/(2d) - O(1/d\u00b2), and the critical exponents take their mean-field values \u03b3 = 1, \u03bd = 1/2.\n\n**Test**: Formalize SAW on \u2124^d (generalizing from \u2124\u00b2), define the lace expansion, and prove the first-order asymptotic \u03bc \u2248 2d-1 for large d. For a concrete test: prove c_1(\u2124^d) = 2d and c_2(\u2124^d) = 2d(2d-1).\n\n**Impact**: The Hara-Slade theorem (1992) is the foundational result establishing mean-field behavior for SAW in high dimensions. Formalizing it would connect the SAW theory to the broader landscape of mean-field critical behavior.\n\n**Catalog References**: `Computation/SelfAvoidingWalk/Basic.lean` (LatticeWalk generalization needed)\n\n**Proof Strategy**: (1) Generalize LatticeWalk to \u2124^d by replacing \u2124 \u00d7 \u2124 with \u2124^d (using `Fin d \u2192 \u2124`). (2) Define the lace expansion: express c_n as a perturbative series around the simple random walk. (3) For d \u2265 5, show the lace expansion converges, giving precise asymptotics. (4) The first step (\u03bc \u2248 2d-1) follows from elementary counting.\n\n**Domain Bridges**: Combinatorics <-> Analysis (perturbation theory) <-> Probability (random walks)\n\n**Lineage**: Generalizes the \u2124\u00b2 formalization from this cycle to arbitrary dimension.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Tropical Self-Avoiding Walks\n\n**Conjecture**: There exists a meaningful \"tropical SAW count\" defined over the tropical semiring (\u211d \u222a {\u221e}, min, +) that encodes extremal properties of self-avoiding paths, and the tropical connective constant equals the logarithm of the classical connective constant: \u03bc_trop = log(\u03bc).\n\n**Test**: Define a tropical weight on SAW paths (e.g., the minimum total displacement or energy), compute the tropical generating function for small n, and check whether the tropical connective constant equals log(2.638...) \u2248 0.970.\n\n**Impact**: This would create a novel bridge between tropical geometry (well-developed in the Catalog) and SAW theory. If the tropical formulation simplifies certain aspects of SAW theory, it could provide new proof techniques for bounding \u03bc.\n\n**Catalog References**: `Tropical/` (tropical algebra infrastructure), `Computation/SelfAvoidingWalk/Basic.lean`\n\n**Proof Strategy**: (1) Define the tropical SAW weight as the min-plus analogue of the counting function: instead of counting walks, take the minimum over all walks of some cost function. (2) Show this satisfies a tropical analogue of submultiplicativity. (3) Prove tropical Fekete's lemma (min-plus subadditivity implies limit existence). (4) Relate the tropical and classical connective constants via the Maslov dequantization: as \u210f \u2192 0, the log of the classical partition function approaches the tropical one.\n\n**Domain Bridges**: Tropical Algebra <-> Combinatorics <-> Statistical Mechanics\n\n**Lineage**: Connects to existing Catalog tropical infrastructure.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "25b26084",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T14:17:22.411549+00:00"
-  },
-  {
-    "id": "fd_0149",
-    "title": "Formal mathematical chain connecting Smale h",
-    "description": "# Future Directions: Curvature-Induced Computation\n\n## Synthesis\n\nThis research cycle established the formal mathematical chain connecting Smale horseshoe dynamics to computational universality: **horseshoe \u2192 full symbolic shift \u2192 Boolean function encoding**. The orbit realization theorem (Theorem 4.1) is the critical bridge \u2014 it shows that horseshoe dynamics can prescribe arbitrary symbolic itineraries, which we then exploit to encode computation. The entropy characterization (h = log d) provides a quantitative handle, and the sub-horseshoe construction shows that degree \u2265 2 suffices for universality.\n\nThe most promising cross-domain connection is between the **entropy/complexity interface** and the **Catalog's existing work on computational complexity** (e.g., `Computation/GravityOracle.lean`, `Computation/InfoEfficientAlgorithms.lean`). The geodesic oracle model (`IsGravOracle`, `GravTruthSet`) in the Catalog already formalizes computation via geometric oracles \u2014 our horseshoe universality result could provide the *mechanism* by which such oracles achieve their computational power. Bridging these would yield a unified theory of geometric computation.\n\nThe highest breakthrough potential lies in Direction 1 (Geometric Complexity Classes), which could establish a completely new complexity theory based on curvature, with natural connections to both circuit complexity (via the non-uniform encoding) and ergodic theory (via the entropy characterization).\n\n---\n\n### Direction 1: Geometric Complexity Classes via Horseshoe Degree\n\n**Conjecture**: For any Boolean function f : {0,1}^n \u2192 {0,1}, define its *geometric complexity* \u03b3(f) as the minimum horseshoe degree d such that f can be encoded by a degree-d horseshoe with read time at most n. Then:\n(a) \u03b3(PARITY_n) = 2 for all n (parity is geometrically easy).\n(b) There exists a family of functions {f_n} in P/poly with \u03b3(f_n) \u2192 \u221e (some polynomial-time functions are geometrically hard).\n(c) The class of functions with bounded geometric complexity is strictly contained in P/poly.\n\n**Test**: (a) Prove by explicit construction that a degree-2 horseshoe encodes PARITY using the word w(k) = input(k) for k < n and w(n) = \u2295input(k). For (b), candidate functions include majority or threshold functions \u2014 verify computationally that encoding MAJ_n requires horseshoe degree growing with n, or find an explicit degree-2 encoding.\n\n**Impact**: If true, geometric complexity would be a new complexity measure incomparable to circuit depth/size. Functions that are \"easy\" in Boolean complexity but \"hard\" geometrically (or vice versa) would reveal structural differences between sequential and dynamical computation. If false, the collapse \u03b3(f) = O(1) for all P/poly functions would mean horseshoe dynamics is polynomially equivalent to circuits.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `Pythagorean/GeodesicComputation.lean` (horseshoe_encodes_boolean_function, horseshoe_universal)\n\n**Proof Strategy**: For (a), construct the word explicitly and apply horseshoe_orbit_realization. For (b), use a counting argument: the number of degree-d horseshoe encodings with read time n is at most d^(n+1), which for fixed d is exponential in n but smaller than the number of Boolean functions 2^(2^n). Formalize via Fintype.card bounds.\n\n**Domain Bridges**: Symbolic dynamics (horseshoe degree) \u2194 Circuit complexity (circuit size/depth) \u2194 Ergodic theory (topological entropy)\n\n**Lineage**: Builds on horseshoe_encodes_boolean_function and horseshoe_itinerary_count from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Uniform Universality via Markov Partitions\n\n**Conjecture**: There exists a compact hyperbolic surface \u03a3_g (genus g \u2265 2) and a Markov partition P of its geodesic flow such that the associated subshift of finite type (SFT) is *sofic universal* \u2014 meaning every sofic shift is a factor of the SFT. Consequently, the geodesic flow achieves *uniform* computational universality: a single partition encodes a universal Turing machine, with the input encoded in the initial condition and the computation proceeding via the flow.\n\n**Test**: For the modular surface SL(2,\u2124)\\\u210d, compute the transition matrix of the continued-fraction Markov partition and verify that the associated SFT has a topologically mixing component whose entropy exceeds log(2). Then show that any binary SFT embeds as a subsystem, which implies universality by the Krieger embedding theorem.\n\n**Impact**: Uniform universality would mean that a *fixed* geometric system (specific manifold + specific partition) simulates *all* Turing machines, not just individual Boolean functions. This would make the curvature-computation connection as strong as possible and connect to undecidability results (e.g., the orbit problem for the geodesic flow would be undecidable).\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (Horseshoe, horseshoe_orbit_realization), `Computation/GravityOracle.lean` (IsGravOracle)\n\n**Proof Strategy**: \n1. Formalize subshifts of finite type (transition matrix, forbidden words).\n2. Prove the Krieger embedding theorem: any SFT with entropy < log(d) embeds into the full d-shift.\n3. Show the modular surface's Markov partition has large enough entropy.\n4. Combine to get uniform universality.\n\n**Domain Bridges**: Hyperbolic geometry (modular surface) \u2194 Number theory (continued fractions) \u2194 Computability (universal TM simulation)\n\n**Lineage**: Extends the non-uniform universality of horseshoe_encodes_boolean_function to uniform universality.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Entropy-Curvature Duality for Horseshoe Degree\n\n**Conjecture**: For a compact Riemannian manifold (M, g) with sectional curvature K satisfying -b\u00b2 \u2264 K \u2264 -a\u00b2 < 0, the maximum horseshoe degree d_max of the time-1 geodesic flow map satisfies:\n\n    exp((dim M - 1) \u00b7 a) \u2264 d_max \u2264 exp(C(M) \u00b7 b)\n\nwhere C(M) depends only on the topology of M (e.g., its systole or first Betti number). In particular, d_max is determined up to polynomial factors by the curvature bounds.\n\n**Test**: Compute d_max for the geodesic flow on hyperbolic surfaces of genus g with constant curvature K = -1. By Gauss-Bonnet, Area(\u03a3_g) = 4\u03c0(g-1), and the entropy of the geodesic flow is 1. Verify that d_max grows with g (more topology \u2192 more horseshoes), and check the conjectured bounds against known entropy formulas.\n\n**Impact**: This would quantify the exact relationship between curvature and computational capacity, providing a \"curvature \u2194 entropy \u2194 computation\" dictionary. It would also yield new results in Riemannian geometry: curvature pinching conditions would directly imply bounds on symbolic complexity.\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (symbolicEntropy, entropy_mono, horseshoe_entropy_positive)\n\n**Proof Strategy**:\n1. Formalize Manning's entropy inequality h_top \u2265 (n-1)\u00b7a for K \u2264 -a\u00b2.\n2. Use Katok's horseshoe theorem: h_top > 0 implies horseshoes of degree \u2265 exp(h_top - \u03b5) for any \u03b5 > 0.\n3. For the upper bound, use Margulis's asymptotic formula for orbit counting.\n\n**Domain Bridges**: Riemannian geometry (curvature bounds) \u2194 Ergodic theory (entropy) \u2194 Symbolic dynamics (horseshoe degree)\n\n**Lineage**: Builds on entropy_equals_growth_rate and horseshoe_entropy_positive from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Horseshoes and Combinatorial Universality\n\n**Conjecture**: The *tropical horseshoe* \u2014 defined as a piecewise-linear map on a tropical polytope satisfying the crossing property with respect to tropical half-spaces \u2014 has a well-defined symbolic dynamics that is computationally universal. Moreover, the tropical entropy of a tropical horseshoe of degree d equals the tropical logarithm of d (i.e., d itself, since tropical log = identity).\n\n**Test**: Define a tropical horseshoe on the tropical torus \u211d\u00b2/\u2124\u00b2 with the tropical metric max(|x\u2081-y\u2081|, |x\u2082-y\u2082|). Construct explicit PL strips and verify the crossing property. Compute the number of distinct tropical geodesic itineraries of length n and verify it equals d^n.\n\n**Impact**: Tropical geometry provides a combinatorial/polyhedral shadow of classical geometry. If tropical horseshoes exhibit the same universality, it would:\n(a) Provide an entirely combinatorial proof of curvature \u2192 computation (avoiding analysis).\n(b) Connect to the Catalog's tropical algebraic work.\n(c) Yield explicit, computable examples testable by direct enumeration.\n\n**Catalog References**: `Tropical/TropicalEntropy.lean`, `Pythagorean/TropicalArithmeticUniversality.lean`, `Pythagorean/TropicalUniversality.lean`, `Pythagorean/GeodesicComputation.lean`\n\n**Proof Strategy**:\n1. Define TropicalHorseshoe as a specialization of Horseshoe with X = \u211d^n and PL dynamics.\n2. Verify that the orbit realization theorem applies (it does \u2014 it's purely set-theoretic).\n3. Construct explicit tropical horseshoes via PL maps on polytopes.\n4. Compute tropical entropy and compare to classical entropy.\n\n**Domain Bridges**: Tropical geometry (PL maps, polytopes) \u2194 Symbolic dynamics (horseshoe, shift) \u2194 Combinatorics (word enumeration)\n\n**Lineage**: Builds on Horseshoe definition and orbit realization from this cycle, connects to Catalog tropical theory.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Horseshoe Persistence Under Metric Perturbation\n\n**Conjecture**: Let (M, g\u2080) be a compact manifold with a horseshoe of degree d for the time-1 geodesic flow. There exists \u03b5 > 0 (depending on d and the curvature bounds of g\u2080) such that for any metric g with ||g - g\u2080||_{C\u00b2} < \u03b5, the geodesic flow of g also admits a horseshoe of degree d. Moreover, the symbolic dynamics of the perturbed horseshoe is topologically conjugate to the original.\n\n**Test**: For hyperbolic surfaces, compute the structural stability radius as a function of genus and curvature. Verify that small perturbations of the constant-curvature metric on \u03a3\u2082 preserve the horseshoe structure, using numerical geodesic flow integration.\n\n**Impact**: Structural stability of horseshoes under metric perturbation would mean that computational universality is a *robust* geometric property \u2014 not an artifact of special metrics. This connects to the broader question: is the computational capacity of a universe stable under small changes in the geometry?\n\n**Catalog References**: `Pythagorean/GeodesicComputation.lean` (Horseshoe, CurvatureComputationBridge)\n\n**Proof Strategy**:\n1. Use Smale's structural stability theorem for Axiom A flows.\n2. Verify that the geodesic flow on a negatively curved manifold satisfies Axiom A + no-cycle condition.\n3. Apply the persistence of homoclinic intersections under C\u00b9-small perturbations (Newhouse's theorem for the creation is not needed; Smale's theorem for preservation suffices).\n\n**Domain Bridges**: Riemannian geometry (metric perturbation) \u2194 Dynamical systems (structural stability) \u2194 Computational universality (robustness)\n\n**Lineage**: Builds on CurvatureComputationBridge from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "7298cf4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T14:17:43.811923+00:00"
   },
   {
     "id": "fd_0150",
@@ -1801,36 +1936,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b12db4e8",
     "consumed_by_exp_id": "cc6c346f",
     "timestamp": "2026-06-01T14:51:52.736022+00:00"
-  },
-  {
-    "id": "fd_0153",
-    "title": "Algebraic foundations of Reflective Type The",
-    "description": "# Future Directions: Reflective Type Theory\n\n## Synthesis\n\nThis research cycle established the algebraic foundations of Reflective Type Theory (ReflTT), proving that provability depth forms a tropical semiring homomorphism from the type algebra to (\u2115, max, +). The key results \u2014 the Depth-Complexity Gap Theorem, the strict axiom hierarchy (T \u2264 K < 4 \u2264 L\u00f6b), subject reduction for proof terms, and the bijective correspondence with the modal mu-calculus \u2014 together establish ReflTT as a rigorous framework for studying self-referential provability.\n\nThe most promising cross-domain connection is the bridge to tropical algebra. The Catalog contains extensive tropical geometry infrastructure (e.g., `discounted_tropical_has_fixed_point` in `MachineLearning/TropicalTimeTravel.lean`, `tropical_ctc_fixed_point_exists` in `MachineLearning/TropicalCTC.lean`), and our proof that the depth function is a tropical semiring homomorphism creates a direct pipeline for importing tropical fixed-point theorems into provability reasoning. The depth filtration also resembles a graded structure on a monoidal category, connecting to the categorical theorems in `EML/CategoryTheorems.lean`.\n\nThe highest breakthrough potential lies in Direction 1 (Full Subject Reduction), which would complete the metatheory of the proof term language and unlock the full propositions-as-types correspondence for provability. Direction 3 (Tropical Fixed-Point Transfer) is the most novel cross-domain bridge, potentially importing Banach-style fixed-point theorems from tropical analysis into provability logic. Direction 5 (Computational Depth Analysis) is the most immediately testable, providing concrete falsifiable predictions.\n\n---\n\n### Direction 1: Full Subject Reduction and Normalization for ReflTT\n\n**Conjecture**: The typing relation for ReflTT proof terms satisfies full subject reduction (well-typed terms reduce to well-typed terms under all reduction rules, including \u03b2-reduction with proper substitution) and weak normalization (every well-typed term without \u03bc-unfolding has a normal form), but NOT strong normalization due to the \u03bc/unfold interaction enabling infinite reduction sequences.\n\n**Test**: (a) Implement substitution for RTerm with de Bruijn indices and verify that \u03b2-reduction (app(lam(body), arg) \u2192 body[arg/0]) preserves typing. (b) Construct an explicit non-terminating reduction sequence using \u03bc and unfold. (c) Prove weak normalization for the \u03bc-free fragment by showing that type size strictly decreases under reduction.\n\n**Impact**: If subject reduction holds with substitution, ReflTT becomes a fully-fledged proof calculus, not just a type language. This would justify interpreting proof terms as actual proofs of provability statements. If weak normalization holds for the \u03bc-free fragment, it establishes decidability of type-checking for that fragment.\n\n**Catalog References**: `MachineLearning/ReflTTDepthAlgebra.lean` (subject_reduction_fst, subject_reduction_snd, subject_reduction_fold_unfold)\n\n**Proof Strategy**: \n1. Define substitution `subst : RTerm \u2192 \u2115 \u2192 RTerm \u2192 RTerm` with proper de Bruijn index shifting.\n2. Prove a substitution lemma: if Typing (A :: \u0393) body B and Typing \u0393 arg A, then Typing \u0393 (subst body 0 arg) B.\n3. Extend the Reduces relation with \u03b2-reduction.\n4. Prove subject reduction by case analysis on the reduction rule.\n5. For weak normalization, define a size measure on typed terms and show it decreases under reduction in the \u03bc-free fragment.\n\n**Domain Bridges**: Type theory <-> proof theory <-> computability theory\n\n**Lineage**: Extends subject_reduction_fst, subject_reduction_snd, subject_reduction_fold_unfold from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Depth Algebra as Graded Monad\n\n**Conjecture**: The depth filtration F_0 \u2286 F_1 \u2286 F_2 \u2286 ... can be organized as a graded monad on the category of types, where the grading monoid is (\u2115, +, 0), the unit \u03b7_A : A \u2192 F_0(A) embeds MLTT types into the filtration, and the multiplication \u03bc_{m,n} : F_m(F_n(A)) \u2192 F_{m+n}(A) corresponds to iterBox_add (\u25a1^m(\u25a1^n(A)) = \u25a1^(m+n)(A)).\n\n**Test**: (a) Define a functor F_n : RType \u2192 Set RType mapping each type to the set of types at depth \u2264 n that contain it as a subexpression. (b) Verify the monad laws (unit, associativity) hold for iterBox. (c) Check whether the Kleisli category of this monad has interesting structure.\n\n**Impact**: If ReflTT forms a graded monad, it connects to the rich categorical semantics literature (e.g., graded monads for computational effects). This would provide categorical tools for reasoning about depth \u2014 e.g., the depth of a composition could be computed from the depths of its parts using the graded monad structure.\n\n**Catalog References**: `EML/CategoryTheorems.lean`, `iterBox_add` and `iterBox_depth` from `MachineLearning/ReflTTDepthAlgebra.lean`\n\n**Proof Strategy**:\n1. Define a category whose objects are RTypes and morphisms are depth-bounded type transformations.\n2. Show iterBox satisfies the graded monad laws: \u03b7 \u226b \u03bc = id, \u03bc \u226b \u03bc = \u03bc \u226b F(\u03bc).\n3. The key lemma is iterBox_add, which already provides the multiplication law.\n4. Use Mathlib's category theory library to formalize the graded monad structure.\n\n**Domain Bridges**: Type theory <-> category theory <-> algebraic topology (graded structures)\n\n**Lineage**: Builds on iterBox_add, iterBox_depth, tower_injective from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Fixed-Point Transfer to Provability\n\n**Conjecture**: The tropical fixed-point theorems in the Catalog (e.g., `discounted_tropical_has_fixed_point`) can be transferred, via the depth homomorphism, to fixed-point theorems about provability depth. Specifically, if f : \u2115 \u2192 \u2115 is a contraction mapping in the tropical metric (d_trop(x,y) = |max(x,c) - max(y,c)|) and f arises from a type-forming operation, then the corresponding type operation has a fixed-depth point.\n\n**Test**: (a) Define a \"type-level contraction\" as a function F : RType \u2192 RType satisfying |d(F(A)) - d(F(B))| \u2264 \u03b1 \u00b7 |d(A) - d(B)| for some \u03b1 < 1. (b) Show that \u03bc-types, when the body has bounded box-depth increase, satisfy this contraction property. (c) Use the tropical fixed-point theorem to derive a bound on the fixed-point depth.\n\n**Impact**: This would be the first formal bridge between tropical analysis and provability logic. It would allow importing quantitative fixed-point bounds from tropical geometry into type-theoretic reasoning, potentially giving tight depth bounds for recursive provability definitions.\n\n**Catalog References**: `FINAL/MachineLearning/TropicalTimeTravel.lean` (discounted_tropical_has_fixed_point), `FINAL/MachineLearning/TropicalCTC.lean` (tropical_ctc_fixed_point_exists), `depth_tropical_factorization` from this cycle\n\n**Proof Strategy**:\n1. Formalize a tropical metric on provability depths.\n2. Define \"depth-contractive\" type operations and show \u03bc can produce them.\n3. Apply the existing tropical fixed-point theorems via the depth homomorphism.\n4. The key step is showing that the depth homomorphism is continuous in the tropical metric.\n\n**Domain Bridges**: Tropical geometry <-> provability logic <-> fixed-point theory\n\n**Lineage**: Builds on depth_tropical_factorization, and Catalog theorems discounted_tropical_has_fixed_point, tropical_ctc_fixed_point_exists.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Decidability of Depth-Bounded Type Inhabitation\n\n**Conjecture**: The type inhabitation problem for ReflTT restricted to types of depth \u2264 k is decidable for each fixed k, but the complexity grows non-elementarily in k. Specifically, for depth 0 (MLTT fragment), inhabitation is PSPACE-complete; for depth 1, it is EXPTIME-complete; and for each additional depth level, the complexity class increases by one exponential.\n\n**Test**: (a) Implement an enumeration algorithm for closed terms of bounded size and depth. (b) Test inhabitation for specific types at depths 0, 1, 2 by brute-force enumeration. (c) Prove that depth-0 inhabitation reduces to propositional logic (known PSPACE-complete).\n\n**Impact**: If the complexity hierarchy is strict, it provides a precise computational characterization of the \"cost of reflection\" \u2014 each additional level of meta-reasoning adds exactly one exponential of computational difficulty.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `MachineLearning/ReflTTDepthAlgebra.lean` (iterBox_unit_minimal, depth_complexity_lower_bound)\n\n**Proof Strategy**:\n1. Show that depth-0 inhabitation is equivalent to intuitionistic propositional logic (well-known PSPACE-complete).\n2. Show that depth-1 inhabitation can simulate one level of quantifier alternation, connecting to EXPTIME.\n3. Use the depth filtration to show that each level strictly increases the class of expressible problems.\n\n**Domain Bridges**: Computability theory <-> type theory <-> complexity theory\n\n**Lineage**: Builds on mltt_depth_zero, depth_complexity_lower_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Computational Validation of the Proof Depth Gap Conjecture\n\n**Conjecture**: For all n \u2264 5 and all well-typed closed terms t of type \u25a1^n(\u22a4), the boxI-depth of t equals exactly n.\n\n**Test**: (a) Write a Lean function that enumerates all closed RTerm values of bounded size. (b) Filter for those that are well-typed at type \u25a1^n(\u22a4). (c) Verify that all such terms have boxI-depth \u2265 n. (d) For n = 1, 2, 3, this should be computationally feasible (the number of small terms is manageable).\n\n**Impact**: If the conjecture holds computationally for n \u2264 5, it strongly supports the general conjecture and motivates a full inductive proof. If a counterexample is found, it would reveal an unexpected interaction between typing rules and term structure, pointing to a subtlety in the boxI rule.\n\n**Catalog References**: `MachineLearning/ReflTTDepthAlgebra.lean` (boxI_depth_pos, boxI_typed_depth, RTerm.boxIDepth)\n\n**Proof Strategy**:\n1. Define a decidable type-checking function for RTerm (possible since all types are decidably equal and context lookup is computable).\n2. Enumerate terms up to size 10 at each depth level.\n3. Use `#eval` in Lean to run the computation.\n4. If successful, attempt to generalize to an inductive proof using the structure of the typing derivation.\n\n**Domain Bridges**: Computability <-> type theory <-> combinatorics (term enumeration)\n\n**Lineage**: Builds on boxI_depth_pos, boxI_typed_depth from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "892c306f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T14:52:14.469364+00:00"
-  },
-  {
-    "id": "fd_0154",
-    "title": "Rigorous bridge between algebraic linear algebra and tr",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis cycle established a rigorous bridge between algebraic linear algebra and tropical convex geometry via the tropical valuation functor. The central discovery is that the p-adic valuation \u2014 viewed as a map from a commutative semiring to the extended naturals \u2014 satisfies precisely the axioms needed to transport algebraic linear combinations into tropical convex hull membership. The bridge theorem (Theorem 5.5 / `valuation_bridge_tropical_hull_mem`) is constructive: the tropical coefficients are the valuations of the algebraic coefficients, providing an algorithmic pipeline from coefficient data to tropical certificates.\n\nThe most promising cross-domain connection is between this valuation bridge and the existing tropical Helly theorem in the Catalog (`Speculative/AutoResearch/TropicalHelly.lean`). The Helly theorem provides intersection properties of tropical convex sets, while our bridge provides a systematic way to *produce* points in tropical convex hulls from algebraic data. Composing these two results would yield a powerful tool: given algebraic inequalities on coefficients, one could derive combinatorial intersection properties of the resulting tropical point sets, connecting number-theoretic divisibility conditions to finite-dimensional optimization bounds.\n\nThe highest breakthrough potential lies in Direction 1 (Tropical Newton Polygon Bridge), because it would connect the valuation functor to classical algebraic geometry through Newton polygons, potentially yielding new algorithms for polynomial root counting via tropical certificates. This is tractable because Newton polygon theory is well-developed and many key results exist in Mathlib's polynomial API.\n\n---\n\n### Direction 1: Tropical Newton Polygon Bridge\n\n**Conjecture**: For a polynomial f(x) = \u2211 a\u1d62x\u2071 \u2208 \u2124[x] and a prime p, the lower convex hull of the points {(i, v\u209a(a\u1d62))} in \u211d\u00b2 equals the tropical curve defined by the tropicalization of f under the p-adic valuation. Moreover, the slopes of this Newton polygon determine the p-adic valuations of the roots of f, counted with multiplicity (a formalization of the classical Newton polygon theorem).\n\n**Test**: For f(x) = x\u00b3 + 6x\u00b2 + 12x + 8 = (x+2)\u00b3 and p=2, compute the Newton polygon of {(0, v\u2082(8)), (1, v\u2082(12)), (2, v\u2082(6)), (3, v\u2082(1))} = {(0,3), (1,2), (2,1), (3,0)}. The unique slope is -1, predicting all roots have v\u2082 = 1. Indeed v\u2082(2) = 1, confirming. Test with f(x) = x\u00b2 - 5 for p=5 to check a non-trivial case.\n\n**Impact**: If formalized, this would connect the tropical valuation functor to classical algebraic geometry and Hensel's lemma, providing a computational pipeline from polynomial coefficients to root valuation bounds. It would also connect to Puiseux series and the theory of tropical varieties.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (the `TropicalValuation` structure and `padicTropicalValuation`), Mathlib's `Polynomial.roots`, `padicValNat`.\n\n**Proof Strategy**: \n1. Define the Newton polygon of a polynomial as the lower convex hull of {(i, v(a\u1d62))}.\n2. Prove that the slopes are non-increasing using convexity.\n3. Use Hensel's lemma (available in Mathlib for p-adic numbers) to show each slope segment of length m corresponds to m roots with that p-adic valuation.\n4. Key lemma: the tropicalization of f is the tropical polynomial trop(f)(x) = min_i(v(a\u1d62) + i\u00b7x), and its \"roots\" (points of non-differentiability) correspond to Newton polygon slopes.\n\n**Domain Bridges**: Algebra (polynomial ring theory) \u2194 Tropical Geometry (tropical curves) \u2194 Number Theory (p-adic analysis, Hensel's lemma)\n\n**Lineage**: Builds on the `TropicalValuation` structure and `padicTropicalValuation` from this cycle. Extends the coordinatewise valuation to polynomial coefficients.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Surjectivity and Lattice Gaps\n\n**Conjecture**: The tropical surjectivity conjecture (`tropVal_surjective_hull_conjecture`) is FALSE in general. Specifically, for p=2, n=2, k=2, and generators x\u2081 = (1,0), x\u2082 = (0,1), the point y = (1,1) lies in the tropical convex hull of {(v\u2082(1), v\u2082(0)), (v\u2082(0), v\u2082(1))} = {(0,\u22a4), (\u22a4,0)} but is NOT the coordinatewise valuation of any \u2115-linear combination c\u2081(1,0) + c\u2082(0,1) = (c\u2081, c\u2082). However, the conjecture IS true when restricted to generators with all entries being powers of p.\n\n**Test**: Enumerate v\u2082(c\u2081, c\u2082) for c\u2081, c\u2082 \u2208 {0,...,1000}. The achievable valuation pairs are {(v\u2082(c\u2081), v\u2082(c\u2082)) : c\u2081,c\u2082 \u2208 \u2115} = {(a,b) : a,b \u2208 \u2115\u221e} (all pairs). Now compare to the tropical hull. For the standard basis generators, the tropical hull is all of (\u2115\u221e)\u00b2, so surjectivity holds trivially. Test with generators (2,3), (4,6) to find a non-trivial counterexample.\n\n**Impact**: Characterizing when surjectivity holds would determine when tropical certificates can be \"lifted\" back to algebraic witnesses \u2014 essential for using tropical methods in lattice cryptanalysis. A precise characterization theorem would be a significant contribution to tropical convexity theory.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`tropVal_surjective_hull_conjecture`, `tropConvHull`), `Speculative/AutoResearch/TropicalHelly.lean` (`tropConvexHull`).\n\n**Proof Strategy**:\n1. Construct an explicit counterexample by finding generators whose tropical hull contains unreachable points.\n2. Identify the obstruction: it should relate to \"tropical rank\" or \"tropical linear dependence.\"\n3. Prove surjectivity under the p-power hypothesis using the structure theorem for p-adic integers.\n4. Formalize the characterization: surjectivity holds iff the generators satisfy a \"tropical independence\" condition.\n\n**Domain Bridges**: Tropical Geometry (convex hulls) \u2194 Cryptography (lattice problems, LWE) \u2194 Algebra (p-adic analysis)\n\n**Lineage**: Directly tests the falsifiable conjecture stated in this cycle's Lean formalization.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Helly\u2013Valuation Composition\n\n**Conjecture**: Composing the tropical valuation bridge with the tropical Helly theorem yields a finite intersection theorem for algebraic solution sets. Specifically: if algebraic solution sets S\u2081,...,S\u2098 in \u2115\u207f have the property that every (n+1)-element subfamily has non-empty intersection of their tropical valuation images, then the intersection of all tropical valuation images is non-empty.\n\n**Test**: Take p=2, n=2 (so Helly number = n+1 = 3). Define three sets S\u2081, S\u2082, S\u2083 \u2282 \u2115\u00b2 as solution sets of simple divisibility conditions. Compute their tropical (v\u2082) images. Verify that pairwise intersection of images is non-empty, but triple intersection may or may not be. The Helly-type theorem would predict that if all triples intersect, all four-wise intersections do too.\n\n**Impact**: This would give a finite combinatorial condition (checkable in polynomial time) for the existence of solutions to systems of divisibility constraints \u2014 a problem that arises naturally in cryptanalysis and coding theory.\n\n**Catalog References**: `Speculative/AutoResearch/TropicalHelly.lean` (`tropical_helly`, `IsTropConvex`, `tropConvexHull`), `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`coordVal`, `tropConvHull`).\n\n**Proof Strategy**:\n1. Verify that valuation images of algebraic sets are tropically convex (this requires checking the sets are closed under the relevant algebraic operations).\n2. Apply the tropical Helly theorem from the Catalog.\n3. Lift the tropical intersection back to the algebraic setting using the bridge theorem.\n4. Key difficulty: the valuation images may not be tropically convex in general, so identify sufficient conditions on the algebraic sets.\n\n**Domain Bridges**: Combinatorics (Helly-type theorems) \u2194 Tropical Geometry (tropical convexity) \u2194 Algebra (divisibility) \u2194 Cryptography (lattice problems)\n\n**Lineage**: Composes the bridge theorem from this cycle with the tropical Helly theorem already in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Valuation for Neural Network Depth Certification\n\n**Conjecture**: The tropical valuation of the Lipschitz constant product \u220f L\u1d62 of an n-layer neural network, expressed as a sum \u2211 v\u209a(L\u1d62) in tropical algebra, provides a tighter robustness certificate than the naive product bound when the Lipschitz constants have shared prime factors. Specifically, if all L\u1d62 are powers of a single prime p, then the tropical depth \u2211 v\u209a(L\u1d62) grows linearly while the product L\u207f grows exponentially, and the valuation bridge provides robustness certificates of quality O(n) rather than O(p\u207f).\n\n**Test**: Take a 10-layer network with Lipschitz constants all equal to L = 2. The naive bound gives 2\u00b9\u2070 = 1024. The tropical depth gives v\u2082(2\u00b9\u2070) = 10. Compare the information content: if the input perturbation is \u03b4, the tropical certificate says the output perturbation has v\u2082 \u2265 v\u2082(\u03b4) + 10, which is a much more refined bound than just \"output perturbation \u2264 1024\u03b4.\"\n\n**Impact**: This would provide a new class of robustness certificates for neural networks based on number-theoretic structure of the weights, complementing existing Lipschitz-based approaches with tropical-algebraic refinements.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`LipschitzCompositionChain`, `tropVal_prod`), `FINAL/Bridges/ActivationNerveMarginCosheaf.lean` (robustness certificates).\n\n**Proof Strategy**:\n1. Apply `tropVal_prod` to the Lipschitz chain to get \u2211 v\u209a(L\u1d62).\n2. Show that this tropical sum provides divisibility constraints on the output perturbation.\n3. Prove that for p-power Lipschitz constants, the tropical certificate is exponentially tighter.\n4. Connect to the activation nerve cosheaf framework for local-to-global certificate composition.\n\n**Domain Bridges**: Machine Learning (neural network robustness) \u2194 Tropical Geometry (tropical products) \u2194 Number Theory (p-adic valuations)\n\n**Lineage**: Extends the `tropVal_prod` theorem from this cycle and connects to the robustness certification framework in `FINAL/Bridges/ActivationNerveMarginCosheaf.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Valuation on Polynomial Rings and Tropical Varieties\n\n**Conjecture**: The tropical valuation functor extends canonically to polynomial rings R[x] via the \"minimum coefficient valuation\": for f = \u2211 a\u1d62x\u2071, define V(f) = min_i v(a\u1d62). This extension V : R[x] \u2192 \u2115\u221e satisfies the tropical valuation axioms (with appropriate modifications for the polynomial ring structure), and the tropical variety of f (defined as the set of x where the minimum is achieved at least twice) corresponds to the set of slopes of the Newton polygon.\n\n**Test**: For f = 2x\u00b2 + 3x + 4 \u2208 \u2124[x] with p=2: v\u2082(2)=1, v\u2082(3)=0, v\u2082(4)=2. The minimum coefficient valuation is V(f) = 0. The Newton polygon has vertices at (0,2), (1,0), (2,1), with slopes -2 and 1. The tropical variety should be {-2, 1}. Verify by direct computation.\n\n**Impact**: This would give a functorial framework for computing tropical varieties algorithmically, connecting polynomial arithmetic to tropical geometry through a single valuation map.\n\n**Catalog References**: `Speculative/AutoResearch/Bridges/TropicalValuationFunctor.lean` (`TropicalValuation`), Mathlib's `Polynomial`, `MvPolynomial`.\n\n**Proof Strategy**:\n1. Define V(f) = inf_i v(a\u1d62) and verify the tropical valuation axioms.\n2. Show V(f\u00b7g) = V(f) + V(g) using the iterated ultrametric inequality and careful analysis of the product's coefficients.\n3. Define the tropical variety as {x : trop(f)(x) is achieved by \u2265 2 terms} and connect to Newton polygon slopes.\n4. Key difficulty: V(f+g) \u2265 min(V(f), V(g)) requires careful handling of coefficient cancellation.\n\n**Domain Bridges**: Algebra (polynomial rings) \u2194 Tropical Geometry (tropical varieties) \u2194 Algebraic Geometry (Newton polygons)\n\n**Lineage**: Natural extension of the `TropicalValuation` structure to more complex algebraic objects.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "5392c445",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T14:52:33.758423+00:00"
   },
   {
     "id": "fd_0155",
@@ -1923,21 +2028,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-06-01T12:30:30.567597+00:00"
   },
   {
-    "id": "fd_0078",
-    "title": "Categorification of Entropy: The Information Loss of Functors",
-    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.73,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.722495+00:00"
-  },
-  {
     "id": "fd_0090",
     "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right",
     "description": "The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost rigorous' (a proof that is correct in spirit but has small gaps), then drops sharply (because mathematicians are suspicious of proofs that look correct but might have subtle errors), before recovering for fully rigorous proofs. The 'mathematical uncanny valley' function U(r) where r in [0,1] is the rigor level: U(0) = high (informal intuition is accepted), U(0.8) = low (almost rigorous but with gaps \u2014 very suspicious), U(1.0) = high (fully rigorous proof, formally verified). Conjecture: U(r) has a unique minimum at r = 1 - epsilon where epsilon is the 'gap size' that triggers the most suspicion. For Lean 4 proofs: U(1) = 1 (compiles), U(0.99) = 0.1 (almost compiles but has a 'sorry'), U(0.5) = 0.5 (sketch proof, accepted as intuition). Test: survey 100 mathematicians on their confidence in proofs at varying rigor levels and fit the uncanny valley curve. Impact: almost-right proofs are less trusted than informal intuitions. Formal verification escapes the uncanny valley.",
@@ -1951,21 +2041,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.795915+00:00"
-  },
-  {
-    "id": "fd_0092",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.73,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00"
   },
   {
     "id": "fd_0014",
@@ -2056,81 +2131,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-06-01T12:30:30.554513+00:00"
-  },
-  {
-    "id": "fd_0093",
-    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature",
-    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.814374+00:00"
-  },
-  {
-    "id": "fd_0054",
-    "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology",
-    "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics \u2014 it measures the emotional diversity of a social network.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.69,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.604974+00:00"
-  },
-  {
-    "id": "fd_0039",
-    "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking",
-    "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.68,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.551386+00:00"
-  },
-  {
-    "id": "fd_0070",
-    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm",
-    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.68,
-    "status": "available",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-06-01T12:30:30.681497+00:00"
-  },
-  {
-    "id": "fd_0046",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes",
-    "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "priority_score": 0.66,
-    "status": "in_progress",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "e174af4c",
-    "timestamp": "2026-06-01T12:30:30.574847+00:00"
   },
   {
     "id": "fd_0045",
