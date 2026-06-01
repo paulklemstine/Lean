@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2303 of the highest-quality
+A curated collection of 2307 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2303
+Total files: 2307
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -999,6 +999,7 @@ import FINAL.Computation.InformationEntropy
 import FINAL.Computation.KarchmerWigderson
 import FINAL.Computation.KolmogorovComplexity
 import FINAL.Computation.KraftShannon
+import FINAL.Computation.ListColoringChordal
 import FINAL.Computation.MemoryAlgebra
 import FINAL.Computation.MetaOracle
 import FINAL.Computation.MetaOracleFiveQuestions
@@ -1131,6 +1132,7 @@ import FINAL.Cryptography.Theorems
 import FINAL.Cryptography.TropicalCryptoBridge
 import FINAL.Cryptography.TropicalCryptoPrimitives
 import FINAL.Cryptography.TropicalCryptoRobustnessBridge
+import FINAL.Cryptography.TropicalCryptocurrencyMining
 import FINAL.Cryptography.TropicalCryptographyBreakthrough
 import FINAL.Cryptography.TropicalEntropy
 import FINAL.Cryptography.TropicalGammaSpread
@@ -1655,6 +1657,7 @@ import FINAL.Physics.Krawtchouk
 import FINAL.Physics.Landauer
 import FINAL.Physics.LongTimeMetastability
 import FINAL.Physics.LorentzBerggrenThermodynamic
+import FINAL.Physics.MonstrousMoonshine
 import FINAL.Physics.MoonshotQuantum
 import FINAL.Physics.OrbitalGoalDynamics
 import FINAL.Physics.PauliClosureFoundations
@@ -1663,6 +1666,7 @@ import FINAL.Physics.PersistentHomologicalQEC2
 import FINAL.Physics.PlanckSpacetime
 import FINAL.Physics.QuantumE8ModularForms
 import FINAL.Physics.SelectionRules
+import FINAL.Physics.ShadowingLemma
 import FINAL.Physics.SmoothFourManifolds
 import FINAL.Physics.SpectralGap
 import FINAL.Physics.SpectralTheory

@@ -1,0 +1,1 @@
+See algorithms.py: PerfectEliminationOrdering.from_mcs()
