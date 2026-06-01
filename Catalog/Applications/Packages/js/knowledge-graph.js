@@ -198,7 +198,7 @@
         // No static repulsion — gravity pulls nodes together, rocket thrust on collision pushes apart
         const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
-        const DAMPING = 0.9998;            // Slow entropy decrease — system gradually cools and orders
+        const DAMPING = 0.997;              // Friction — system stabilizes over ~3s
         const NODE_RADIUS = 22;
         const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
         const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
