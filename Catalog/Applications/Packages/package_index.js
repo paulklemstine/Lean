@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7ad39151",
     "filename": "the_fundamental_theorem_of_cakes_algebraic_geometr.json",
     "pkg_num": 132,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7173772727272727,
     "title": "The Fundamental Theorem of Cakes: Stratified Moduli Theory for Layered Geometric Objects"
   },
   {
@@ -4081,8 +4081,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "the_fundamental_theorem_of_cakes_algebraic_geometr",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7173772727272727,
+      "quality": "substantial",
       "shape": "octahedron",
       "title": "The Fundamental Theorem of Cakes: Stratified Moduli Theory for Layered Geometric Objects"
     }
