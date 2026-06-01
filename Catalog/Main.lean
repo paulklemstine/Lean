@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2270 of the highest-quality
+A curated collection of 2271 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2270
+Total files: 2271
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -180,6 +180,7 @@ import FINAL.Algebra.NewtonPersistence
 import FINAL.Algebra.NilpotenceTheory
 import FINAL.Algebra.Nilpotent
 import FINAL.Algebra.Normalization
+import FINAL.Algebra.NovikovFixedPoint
 import FINAL.Algebra.NsqPlusOne
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
