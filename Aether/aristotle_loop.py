@@ -12,6 +12,7 @@ decision-making instead of heuristic/random domain selection.
 """
 
 import math
+import random
 import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple, Any
@@ -127,26 +128,33 @@ class UCBSelector:
             return forced_domain, score
 
         if self.total_selections == 0:
-            # Cold start: no domain preference — let future directions drive selection
-            # Return the first available domain with infinite UCB (explore first)
+            # Cold start: no domain preference — randomly pick among all domains
+            # to avoid always selecting the first one (Algebra)
             if self.domain_stats:
-                first_domain = next(iter(self.domain_stats.keys()))
-                return first_domain, float('inf')
+                chosen = random.choice(list(self.domain_stats.keys()))
+                return chosen, float('inf')
             return "Bridges", float('inf')
 
         best_domain = None
         best_score = -float('inf')
+        inf_domains = []  # Domains with ucb=inf (unexplored)
 
         for domain, stats in self.domain_stats.items():
             if stats.n_selections == 0:
                 # Unexplored domain gets infinity UCB (explore first)
-                score = float('inf')
+                inf_domains.append(domain)
+                continue
             else:
                 score = self._ucb_score(domain)
 
             if score > best_score:
                 best_score = score
                 best_domain = domain
+
+        # When multiple domains have ucb=inf, randomly pick among them
+        # instead of always taking the first one in iteration order
+        if inf_domains:
+            return random.choice(inf_domains), float('inf')
 
         return best_domain or "Pythagorean", best_score
 

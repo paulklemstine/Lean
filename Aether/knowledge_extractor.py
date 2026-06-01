@@ -35,6 +35,7 @@ import tempfile
 import time
 import uuid
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -1348,6 +1349,15 @@ Research mode: {concept.research_mode}
         Returns a dict mapping each file's original path to its authorized
         target path (or "REJECT" if Pi says not to integrate).
         """
+        # Strip _aristotle project dir prefixes (e.g. c6e162ae_aristotle/) from
+        # file paths before including them in the review listing
+        for p in batch:
+            path = p.get("path", "")
+            if path:
+                cleaned_parts = [part for part in path.replace("\\", "/").split("/")
+                                 if not re.match(r'^[0-9a-f]+_aristotle', part)]
+                p["path"] = "/".join(cleaned_parts) if cleaned_parts else path
+
         # Build a compact listing of the batch
         listing_parts = []
         for i, p in enumerate(batch):
@@ -1391,7 +1401,12 @@ Research mode: {concept.research_mode}
         for i, p in enumerate(batch):
             pi_decision = result.get(str(i), p["path"])
             if isinstance(pi_decision, str):
-                plan[p["path"]] = pi_decision
+                # Strip _aristotle prefix from Pi's response paths too
+                cleaned_decision = "/".join(
+                    part for part in pi_decision.replace("\\", "/").split("/")
+                    if not re.match(r'^[0-9a-f]+_aristotle', part)
+                )
+                plan[p["path"]] = cleaned_decision or pi_decision
             else:
                 plan[p["path"]] = p["path"]  # Fallback: keep original path
 
