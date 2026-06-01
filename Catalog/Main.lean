@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2278 of the highest-quality
+A curated collection of 2283 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2278
+Total files: 2283
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -967,8 +967,10 @@ import FINAL.Computation.Compression
 import FINAL.Computation.ConfigurationSpace
 import FINAL.Computation.Criticality
 import FINAL.Computation.Defs
+import FINAL.Computation.DigitalImmortality
 import FINAL.Computation.DivergenceTheory
 import FINAL.Computation.Diversity
+import FINAL.Computation.DreamLogic
 import FINAL.Computation.EMLChurchTuring
 import FINAL.Computation.Entropy
 import FINAL.Computation.EntropyBarrier
@@ -1009,11 +1011,13 @@ import FINAL.Computation.OracleAboutOracle
 import FINAL.Computation.OracleApplicationsFrontier
 import FINAL.Computation.OracleBootstrapGPT2
 import FINAL.Computation.OracleHierarchy
+import FINAL.Computation.OracleHierarchyFoundations
 import FINAL.Computation.OracleStrangeLoop
 import FINAL.Computation.PadicValuationDepth
 import FINAL.Computation.PathSemantics
 import FINAL.Computation.Propagation
 import FINAL.Computation.QuantumBerggrenWalk
+import FINAL.Computation.RandomMatrixFoundations
 import FINAL.Computation.RectStillLife
 import FINAL.Computation.ResearchQuestions
 import FINAL.Computation.Resolution
@@ -1042,6 +1046,7 @@ import FINAL.Computation.TropicalCompressionDuality
 import FINAL.Computation.TropicalLossyCompression
 import FINAL.Computation.TropicalThermodynamicComplexity
 import FINAL.Computation.TurboQuantAnalysis
+import FINAL.Computation.UniqueGamesTheory
 import FINAL.Computation.UniversalOracleTeam
 import FINAL.Computation.WidthToSize
 import FINAL.Core.ParentDescent
