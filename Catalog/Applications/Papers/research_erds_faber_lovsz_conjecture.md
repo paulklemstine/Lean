@@ -1,216 +1,259 @@
-# Structural Foundations of the Erdős–Faber–Lovász Conjecture: Formalized Counting Arguments and Extremal Bounds
+# Formalized Structural Theory of the Erdős–Faber–Lovász Conjecture
 
 ## Abstract
 
-We formalize the structural theory underlying the Erdős–Faber–Lovász (EFL) conjecture, establishing machine-verified proofs of the key counting arguments, degree bounds, and extremal properties of EFL systems. An EFL system with parameter *k* consists of *k* sets (edges), each of size *k*, with pairwise intersection at most 1. We prove that: (1) the incidence count equals *k*², (2) the total pairwise intersection sum is bounded by *k*(*k*−1) (Fisher-type bound), (3) every vertex has degree at most *k*, (4) the number of vertices with degree ≥ 2 is at most *k*(*k*−1)/2, (5) distinct indices yield distinct edges for *k* ≥ 2, (6) the unique intersection property (linearity implies at most one shared vertex), and (7) the conjecture holds for disjoint systems and for *k* ≤ 1. We introduce the formalization of EFL systems, near-pencil configurations, linear hypergraphs, and strong colorings as novel mathematical structures.
+We present a comprehensive formalization of the structural theory underlying the Erdős–Faber–Lovász (EFL) conjecture. We introduce formal definitions of EFL systems (k-uniform linear hypergraphs with k edges) and general hypergraph structures, and prove 16 theorems establishing key combinatorial properties. Our results include the incidence count identity, Fisher-type pair-sharing bounds, edge injectivity, vertex set size bounds, double counting identities, degree bounds, the exclusive vertex lemma, high-degree vertex bounds, near-pencil structural analysis, the EFL conjecture for small cases (k ∈ {0, 1, 2}), and the exact vertex count for near-pencil configurations. All proofs are machine-verified and use only standard axioms.
 
 ## 1. Introduction
 
-### 1.1 Background
+The Erdős–Faber–Lovász conjecture, posed in 1972, states that if k complete graphs on k vertices each pairwise share at most one vertex, then the vertices of their union can be properly colored with k colors [1]. This conjecture, resolved for sufficiently large k by Kang, Kelly, Kühn, Methuku, and Osthus in 2021 [2], has inspired extensive research in extremal combinatorics, hypergraph theory, and probabilistic methods.
 
-The Erdős–Faber–Lovász (EFL) conjecture, posed in 1972 [1], is one of the most celebrated open problems in combinatorics. In its hypergraph formulation:
+In hypergraph-theoretic terms, the conjecture states: any k-uniform linear hypergraph with exactly k edges has chromatic number at most k. Here "linear" means any two edges share at most one vertex, and "k-uniform" means every edge has exactly k vertices.
 
-**Conjecture (EFL).** *Let F₁, ..., Fₖ be k-element subsets of a set V with |Fᵢ ∩ Fⱼ| ≤ 1 for all i ≠ j. Then V can be colored with k colors so that each Fᵢ receives k distinct colors (is rainbow).*
+### 1.1 Contributions
 
-The conjecture was proved for sufficiently large *k* by Kang, Kelly, Kühn, Methuku, and Osthus [2] in 2021, using a sophisticated combination of probabilistic and absorbing methods. The full conjecture for all *k* remains open.
+We contribute:
 
-### 1.2 Contributions
+1. **Novel definitions**: A comprehensive type-theoretic framework for EFL systems and general hypergraphs, including notions of k-uniformity, intersecting families, linearity, sunflower structures, proper colorings, and chromatic number.
 
-We provide:
-1. A complete formalization of EFL systems, near-pencil configurations, and linear hypergraph structures.
-2. Machine-verified proofs of 12 non-trivial structural theorems.
-3. Analysis of the near-pencil as the extremal configuration.
-4. Computational verification of key bounds for *k* ≤ 100.
-5. Identification of promising directions for extending the formalized theory.
+2. **16 verified theorems**: A complete structural analysis of EFL systems, including base cases, counting arguments, and near-pencil analysis.
 
-### 1.3 Related Work
+3. **The exclusive vertex lemma**: A formalized proof that every edge in an EFL system with k ≥ 2 contains at least one vertex of degree exactly 1, providing a novel structural decomposition.
 
-The EFL conjecture has been studied extensively. Key partial results include:
-- Hindman [3]: proved for *k* ≤ 10.
-- Chang and Lawler [4]: proved the weaker bound of 3k/2 − 1 colors.
-- Kahn [5]: proved the fractional version using entropy methods.
-- Sánchez-Arroyo [6]: proved NP-hardness of the general hypergraph coloring problem.
-- Kang et al. [2]: proved for sufficiently large *k* using absorbing methods.
+4. **Near-pencil geometry**: A complete analysis showing near-pencil configurations have exactly k² − k + 1 vertices, with disjoint non-center parts.
+
+5. **Falsifiable conjecture**: We state a conjecture about the relationship between the number of degree-1 vertices and the chromatic number.
 
 ## 2. Definitions
 
-### 2.1 EFL System
+### 2.1 EFL Systems
 
-**Definition 1 (EFL System).** An EFL system with parameter *k* over a finite type *V* consists of:
-- A natural number *k* ≥ 0
-- A family of edges `edges : Fin k → Finset V`
-- **k-uniformity**: `∀ i, |edges(i)| = k`
-- **Linearity**: `∀ i ≠ j, |edges(i) ∩ edges(j)| ≤ 1`
+**Definition 2.1** (EFL System). An *EFL system* over a finite type V consists of:
+- A natural number k (the uniformity parameter)
+- A function `edges : Fin k → Finset V` (the edge family)
+- A proof that `∀ i, (edges i).card = k` (k-uniformity)
+- A proof that `∀ i j, i ≠ j → (edges i ∩ edges j).card ≤ 1` (linearity)
 
-### 2.2 Strong Coloring
+**Definition 2.2** (Degree). The *degree* of a vertex v in an EFL system S is:
+```
+deg_S(v) = |{i ∈ Fin k : v ∈ edges(i)}|
+```
 
-**Definition 2 (Strong Coloring).** A function `c : V → ℕ` is a strong coloring of an EFL system *S* if `c` is injective on each edge. The system is *k-colorable* if there exists a strong coloring using colors in `{0, ..., k-1}`.
+**Definition 2.3** (Strong Coloring). A *strong coloring* of an EFL system S is a function `c : V → Fin k` such that c is injective on each edge.
 
-### 2.3 Near-Pencil
+**Definition 2.4** (k-Colorability). An EFL system is *k-colorable* if there exists a strong coloring.
 
-**Definition 3 (Near-Pencil).** A near-pencil with parameter *k* consists of:
-- A center vertex shared by all *k* edges
-- *k* petals of *k*−1 vertices each, pairwise disjoint and disjoint from the center
-- Total vertices: *k*² − *k* + 1
+**Definition 2.5** (Near-Pencil). An EFL system is a *near-pencil* if all edges share a common vertex.
 
-### 2.4 Vertex Degree and Star
+### 2.2 General Hypergraphs
 
-**Definition 4.** The degree of vertex *v* is `|{i : v ∈ edges(i)}|`. The star of *v* is this index set.
+**Definition 2.6** (Hypergraph). A *hypergraph* over V is a pair (V, E) where E ⊆ P(V) is a finite collection of finite subsets.
 
-### 2.5 Linear Hypergraph
+**Definition 2.7** (k-Uniform, Intersecting, Linear). A hypergraph is:
+- *k-uniform* if every edge has exactly k vertices
+- *intersecting* if every two edges share at least one vertex
+- *linear* if every two distinct edges share at most one vertex
 
-**Definition 5.** A linear hypergraph is a family of finite sets (edges) where any two distinct edges share at most one element.
+**Definition 2.8** (Sunflower). A *sunflower* in a hypergraph is a collection of edges with a common core such that distinct petals intersect exactly in the core.
 
 ## 3. Main Results
 
-### 3.1 Incidence Count (Theorem 1)
+### 3.1 Counting Results
 
-**Theorem.** *The incidence count of an EFL system with parameter k equals k².*
+**Theorem 3.1** (Incidence Count). For any EFL system with parameter k:
+```
+∑ᵢ |edges(i)| = k²
+```
 
-*Proof.* By k-uniformity, each of the *k* edges has *k* elements. Hence
-$$\sum_{i=0}^{k-1} |E_i| = \sum_{i=0}^{k-1} k = k \cdot k = k^2.$$
+*Proof sketch.* Each of the k edges has exactly k vertices; direct computation gives k · k = k².
 
-This is the simplest double-counting identity and serves as a baseline consistency check. □
+**Theorem 3.2** (Double Counting Identity). For any EFL system:
+```
+∑_v deg(v) = k²
+```
 
-### 3.2 Fisher Pair-Sharing Bound (Theorem 2)
+*Proof sketch.* The left side counts vertex-edge incidences by vertex; the right side counts by edge. Both equal the total incidence count. The formal proof uses `Finset.sum_comm` to swap the order of summation.
 
-**Theorem.** *For any EFL system S,*
-$$\sum_{i \neq j} |E_i \cap E_j| \leq k(k-1).$$
+**Theorem 3.3** (Pair-Sharing Bound). For any EFL system:
+```
+∑ᵢ ∑_{j≠i} |edges(i) ∩ edges(j)| ≤ k(k−1)
+```
 
-*Proof.* By linearity, each term `|E_i ∩ E_j| ≤ 1`. The number of ordered pairs `(i,j)` with `i ≠ j` is `k(k-1)`. The result follows by summing. □
+*Proof sketch.* Each term |edges(i) ∩ edges(j)| ≤ 1 by linearity. There are k(k−1) ordered pairs (i,j) with i ≠ j.
 
-**Remark.** The near-pencil achieves equality: every pair of edges shares the center vertex.
+### 3.2 Structural Results
 
-### 3.3 Degree Bound (Theorem 3)
+**Theorem 3.4** (Degree Bound). For any vertex v: deg(v) ≤ k.
 
-**Theorem.** *Every vertex in an EFL system has degree at most k.*
+*Proof sketch.* deg(v) = |filter P (Fin.univ)| ≤ |Fin.univ| = k.
 
-*Proof.* The degree is the cardinality of a subset of `Fin k`, hence bounded by *k*. □
+**Theorem 3.5** (Edge Injectivity for k ≥ 2). If k ≥ 2, then the edge function is injective: distinct indices give distinct edges.
 
-### 3.4 High-Degree Vertex Bound (Theorem 4)
+*Proof sketch.* If edges(i) = edges(j) with i ≠ j, then |edges(i) ∩ edges(j)| = |edges(i)| = k ≥ 2, contradicting linearity.
 
-**Theorem.** *The number of vertices with degree ≥ 2 is at most k(k-1)/2.*
+**Theorem 3.6** (Vertex Set Bounds). For k > 0:
+```
+k ≤ |vertexSet| ≤ k²
+```
 
-*Proof.* Each vertex of degree ≥ 2 lies in the intersection of some pair of distinct edges. By linearity, each pair of edges shares at most one vertex. Hence the number of high-degree vertices is bounded by the number of unordered edge pairs, which is *k*(*k*−1)/2. □
+*Proof sketch.* Lower bound: a single edge has k vertices, all in the vertex set. Upper bound: the vertex set is the union of k sets of size k.
 
-This bound is achieved by configurations where every pair of edges shares exactly one vertex (e.g., projective planes when *k*−1 is a prime power).
+**Theorem 3.7** (High-Degree Vertex Bound). The number of vertices with degree ≥ 2 is at most k(k−1)/2.
 
-### 3.5 Edge Injectivity (Theorem 5)
+*Proof sketch.* Each high-degree vertex determines a pair of distinct edges containing it. By linearity, distinct vertices determine distinct edge pairs. The number of edge pairs is C(k,2) = k(k−1)/2.
 
-**Theorem.** *For k ≥ 2, the edge function is injective: distinct indices yield distinct edges.*
+### 3.3 The Exclusive Vertex Lemma
 
-*Proof.* If `edges(i) = edges(j)` for `i ≠ j`, then `|edges(i) ∩ edges(j)| = |edges(i)| = k ≥ 2`, contradicting linearity. □
+**Theorem 3.8** (Exclusive Vertex Lemma). For k ≥ 2, every edge contains at least one vertex of degree exactly 1.
 
-### 3.6 Unique Intersection (Theorem 6)
+*Proof sketch.* Consider edge i. The "shared" vertices of edge i — those appearing in at least one other edge — inject into the set of other edge indices {j : j ≠ i}. The injection sends each shared vertex v to some j ≠ i with v ∈ edges(j); this is well-defined since deg(v) ≥ 2, and injective since |edges(i) ∩ edges(j)| ≤ 1 implies at most one vertex of edge i is shared with any given edge j. Since the codomain has k−1 elements and edge i has k vertices, at least one vertex has degree 1. ∎
 
-**Theorem.** *If vertices u and v both belong to edges i and j with i ≠ j, then u = v.*
+This result has important implications for coloring algorithms: the degree-1 vertices provide "free" coloring choices that constrain the rest of the problem.
 
-*Proof.* Both u and v lie in `edges(i) ∩ edges(j)`, which has cardinality ≤ 1 by linearity. Hence `u = v`. □
+### 3.4 Near-Pencil Analysis
 
-This theorem formalizes the key structural rigidity of linear hypergraphs: the intersection of two distinct edges is at most a singleton.
+**Theorem 3.9** (Near-Pencil Intersection). In a near-pencil with center v₀, for i ≠ j:
+```
+edges(i) ∩ edges(j) = {v₀}
+```
 
-### 3.7 Colorability of Disjoint Systems (Theorem 7)
+*Proof sketch.* The intersection contains v₀ and has cardinality ≤ 1 by linearity; hence it equals {v₀}.
 
-**Theorem.** *If all edges of an EFL system are pairwise disjoint, the system is k-colorable.*
+**Theorem 3.10** (Near-Pencil Unique Edge). In a near-pencil, every non-center vertex belongs to exactly one edge.
 
-*Proof.* Since each edge has exactly *k* elements and edges are pairwise disjoint, we can independently assign a bijection from each edge to `{0, ..., k-1}`. No vertex appears in two edges, so there are no coloring conflicts. □
+*Proof sketch.* If v ≠ v₀ belongs to edges i and edges j with i ≠ j, then {v, v₀} ⊆ edges(i) ∩ edges(j), giving |edges(i) ∩ edges(j)| ≥ 2, contradicting linearity.
 
-### 3.8 Intersection Dichotomy (Theorem 8)
+**Theorem 3.11** (Near-Pencil Vertex Count). For k ≥ 2, a near-pencil has exactly k² − k + 1 vertices.
 
-**Theorem.** *Any two distinct edges intersect in exactly 0 or 1 vertices.*
+*Proof sketch.* The vertex set decomposes as {v₀} ∪ ⊔ᵢ (edges(i) \ {v₀}). The k disjoint sets each have k−1 elements (by Theorem 3.10), giving 1 + k(k−1) = k² − k + 1.
 
-*Proof.* Immediate from linearity: `|E_i ∩ E_j| ≤ 1`, so the cardinality is 0 or 1. □
+### 3.5 Base Cases
 
-### 3.9 EFL for k ≤ 1 (Theorems 9-10)
+**Theorem 3.12** (EFL for k = 0). Any EFL system with k = 0 over an empty type is k-colorable.
 
-**Theorem.** *EFL holds for k = 0 and k = 1.*
+**Theorem 3.13** (EFL for k = 1). Any EFL system with k = 1 is k-colorable.
 
-*Proof.* For *k* = 0, there are no edges; any coloring is vacuously valid. For *k* = 1, there is one edge of size 1 containing one vertex; coloring that vertex with color 0 suffices. □
+*Proof sketch.* A single edge with one vertex needs only one color.
 
-## 4. Structural Analysis
+**Theorem 3.14** (EFL for k = 2). Any EFL system with k = 2 is k-colorable.
 
-### 4.1 The Near-Pencil Extremum
+*Proof sketch.* Two 2-element edges sharing at most one vertex; exhaustive case analysis on the four overlap patterns.
 
-The near-pencil is conjectured to be the unique extremal configuration for EFL. It has:
-- Exactly *k*² − *k* + 1 vertices
-- One vertex of degree *k* (the center)
-- *k*(*k*−1) vertices of degree 1 (petals)
-- Chromatic number exactly *k*
+## 4. The Conjecture and Open Questions
 
-The near-pencil achieves equality in the Fisher bound and has the minimum number of vertices among "maximally sharing" configurations.
+### 4.1 The EFL Conjecture
 
-### 4.2 Degree-Sum Identity
+**Conjecture (EFL).** Every EFL system with parameter k is k-colorable.
 
-The degree sum ∑ deg(v) = k² follows from double-counting the vertex-edge incidence relation. This constrains the degree sequence: for example, at most one vertex can have degree *k* (otherwise the sum would exceed *k*²).
+This conjecture, proved for sufficiently large k by Kang–Kelly–Kühn–Methuku–Osthus [2], remains open for small finite k. Our formalization includes:
+- Proofs for k ∈ {0, 1, 2}
+- The full conjecture statement as a formally stated sorry
 
-### 4.3 Sparsity of Connectors
+### 4.2 A Falsifiable Conjecture
 
-Our high-degree vertex bound shows that at most *k*(*k*−1)/2 vertices are "connectors" (degree ≥ 2). The remaining ≥ *k*² − *k*(*k*−1)/2 vertex-edge incidences come from degree-1 vertices. This structural sparsity is the key insight enabling probabilistic coloring approaches: the connectors can be handled deterministically (e.g., by absorbing), while the specialists are colored randomly.
+**Conjecture 4.1** (Degree-1 Coloring Bound). For k ≥ 2, the number of degree-1 vertices in an EFL system is at least k. Moreover, the maximum number of degree-1 vertices is achieved by the near-pencil (with k(k−1) degree-1 vertices).
+
+*Computational test.* Enumerate all EFL systems for k ∈ {3, 4, 5} and verify the minimum number of degree-1 vertices equals k.
+
+### 4.3 Near-Pencil Colorability
+
+The near-pencil colorability theorem (that near-pencil systems are k-colorable) follows from the structural analysis: the non-center parts are disjoint, so coloring reduces to independently assigning k−1 colors to k−1 elements per edge. This is stated but not yet formally verified in our framework.
 
 ## 5. Algorithms
 
-### 5.1 Greedy Rainbow Coloring
-
-We implement a greedy algorithm that processes vertices in decreasing degree order:
+### 5.1 Near-Pencil Coloring Algorithm
 
 ```
-for v in vertices (sorted by decreasing degree):
-    forbidden ← colors used by v's neighbors in same edges
-    c(v) ← min({0,...,k-1} \ forbidden)
+Input: Near-pencil EFL system S with center v₀
+Output: Strong k-coloring c
+
+1. Set c(v₀) ← 0
+2. For each edge i ∈ {0, ..., k−1}:
+   a. Enumerate the non-center vertices of edge i as v₁, ..., vₖ₋₁
+   b. For j = 1 to k−1: set c(vⱼ) ← j
+3. For any v ∉ vertexSet: set c(v) ← 0
+4. Return c
 ```
 
-**Theorem (Computational).** Greedy coloring succeeds (uses ≤ k colors) for all near-pencil configurations with k ≤ 100.
+**Correctness.** On each edge i, the coloring assigns colors {0, 1, ..., k−1} to k distinct vertices, achieving injectivity. The non-center vertices of distinct edges receive independent assignments that don't conflict because those vertices are in disjoint sets.
 
-### 5.2 Probabilistic Coloring Estimate
+**Complexity.** O(k²) time, O(k²) space.
 
-For a random k-coloring of the near-pencil:
-- P(valid) ≈ (k!/k^k)^(k-1) / k, which decays super-exponentially in k.
-- For k=2: P ≈ 0.25; for k=3: P ≈ 0.012; for k ≥ 4: P ≈ 0.
+### 5.2 Greedy Coloring for General EFL Systems
 
-This motivates the need for derandomization in probabilistic proofs.
+```
+Input: EFL system S
+Output: Coloring c (possibly using more than k colors)
 
-## 6. Falsifiable Conjecture
+1. Initialize c(v) ← undefined for all v
+2. Order vertices by decreasing degree
+3. For each vertex v in order:
+   a. Let F = {c(u) : u ∈ edge(i) for some i with v ∈ edge(i)}
+   b. Set c(v) ← min({0,...,k-1} \ F)
+4. Return c
+```
 
-**Conjecture (Tight Greedy Bound).** For every EFL system with parameter *k*, the greedy rainbow coloring algorithm (processing vertices in decreasing degree order) uses at most *k* colors.
+**Analysis.** This greedy algorithm uses at most Δ + 1 colors where Δ is the maximum degree. Since Δ ≤ k for EFL systems, the greedy bound gives k + 1 colors — one more than the conjectured optimum.
 
-**Test.** Enumerate all EFL systems for *k* ≤ 5 and verify greedy coloring succeeds. This is computationally feasible: for *k* = 4, the number of distinct EFL systems (up to isomorphism) is bounded by the number of (0,1)-matrices satisfying the linearity constraint.
+## 6. Discussion
 
-**Impact.** If true, this would give an elementary constructive proof of EFL, bypassing the probabilistic machinery of [2]. If false, the counterexample would reveal EFL systems requiring non-greedy coloring strategies.
+### 6.1 Relationship to Design Theory
 
-## 7. Discussion
+EFL systems are closely related to *balanced incomplete block designs* (BIBDs) and *near-pencil designs*. A near-pencil is precisely a degenerate Steiner system where all blocks pass through a single point. The Fisher inequality in design theory — that the number of blocks is at least the number of points — has a direct analog in our edge bound for intersecting linear hypergraphs.
 
-### 7.1 Formalization Insights
+### 6.2 Probabilistic Approaches
 
-The formalization revealed several subtleties:
-1. The Fin 0 issue: colorability definitions using `Fin k` colors require careful handling when *k* = 0, since `Fin 0` is empty.
-2. The distinction between strong coloring (rainbow on each edge) and proper coloring (no monochromatic edge) is crucial for k-uniform hypergraphs.
-3. Linearity (|E_i ∩ E_j| ≤ 1) is the core structural property enabling all counting arguments.
+The Kang–Kelly–Kühn–Methuku–Osthus proof [2] uses the randomized nibble method:
 
-### 7.2 Connections to Other Areas
+1. **Semi-random process**: Color most vertices using a random process, controlled to maintain near-uniform distributions.
+2. **Absorption**: Show that the uncolored vertices can be handled by a deterministic cleanup step.
+3. **Regularity**: Use a form of hypergraph regularity to control the random process.
 
-The EFL conjecture connects to:
-- **Matroid theory**: the independent sets of a linear hypergraph form a matroid.
-- **Finite geometry**: near-pencils arise as degenerate projective planes.
-- **Tropical geometry**: the coloring problem has a natural tropical formulation via min-plus algebra.
+Our structural results (especially the exclusive vertex lemma and degree bounds) provide the deterministic infrastructure on which such probabilistic arguments can be built.
 
-## 8. Future Work
+### 6.3 Computational Complexity
 
-1. Formalize EFL for k = 2 (constructive proof using explicit coloring).
-2. Formalize the near-pencil as a valid EFL system and prove its k-colorability.
-3. Establish the fractional chromatic number bound using linear programming duality.
-4. Connect to matroid exchange properties (building on `uniform_has_exchange`).
-5. Formalize the Kang et al. absorbing lemma for the large-k case.
+Determining whether a hypergraph can be properly colored with k colors is NP-hard in general. However, the strong structural constraints of EFL systems (linearity, k-uniformity, exactly k edges) suggest that coloring EFL systems might be polynomial-time solvable. This remains open.
+
+## 7. Future Work
+
+1. **Complete the near-pencil colorability proof** by formalizing the piecewise coloring construction.
+2. **Prove the linear intersecting edge bound** (|E| ≤ k² − k + 1) for general k-uniform linear intersecting hypergraphs.
+3. **Extend to k = 3, 4, 5** using case analysis or computational methods.
+4. **Formalize the absorption method** from the Kang et al. proof.
+5. **Explore connections to tropical geometry** and chromatic polynomials.
 
 ## References
 
-[1] P. Erdős, "Problems and results in graph theory and combinatorics," *Proc. 5th British Combinatorial Conference*, 1975.
+[1] P. Erdős, "Problems and results in graph theory and combinatorics," *Proceedings of the Fifth British Combinatorial Conference*, 1975.
 
-[2] D. Y. Kang, T. Kelly, D. Kühn, A. Methuku, D. Osthus, "A proof of the Erdős–Faber–Lovász conjecture," *Annals of Mathematics*, 198(2), 2023.
+[2] D. Y. Kang, T. Kelly, D. Kühn, A. Methuku, and D. Osthus, "A proof of the Erdős–Faber–Lovász conjecture," *Annals of Mathematics*, vol. 198, no. 2, pp. 537–618, 2023.
 
-[3] N. Hindman, "On a conjecture of Erdős, Faber, and Lovász about n-colorings," *Canadian J. Math.*, 33(3), 1981.
+[3] J. Kahn, "Coloring nearly-disjoint hypergraphs with n + o(n) colors," *Journal of Combinatorial Theory, Series A*, vol. 59, pp. 31–39, 1992.
 
-[4] W. I. Chang, E. L. Lawler, "Edge coloring of hypergraphs and a conjecture of Erdős, Faber, Lovász," *Combinatorica*, 8(3), 1988.
+[4] C. Berge, *Hypergraphs: Combinatorics of Finite Sets*, North-Holland, 1989.
 
-[5] J. Kahn, "Coloring nearly-disjoint hypergraphs with n + o(n) colors," *J. Combin. Theory Ser. A*, 59(1), 1992.
+## Appendix: Theorem Summary
 
-[6] A. Sánchez-Arroyo, "Determining the total colouring number is NP-hard," *Discrete Math.*, 78(3), 1989.
+| # | Theorem | File | Status |
+|---|---------|------|--------|
+| 1 | incidence_count_eq_sq | Theorems.lean | ✓ Proved |
+| 2 | pairwise_intersection_sum_bound | Theorems.lean | ✓ Proved |
+| 3 | efl_zero | Theorems.lean | ✓ Proved |
+| 4 | degree_le_k | Theorems.lean | ✓ Proved |
+| 5 | edges_injective_of_k_ge_two | Theorems.lean | ✓ Proved |
+| 6 | vertexSet_card_ge_k | Theorems.lean | ✓ Proved |
+| 7 | vertexSet_card_le_sq | Theorems.lean | ✓ Proved |
+| 8 | degree_sum_eq_incidence | Theorems.lean | ✓ Proved |
+| 9 | efl_one | Theorems.lean | ✓ Proved |
+| 10 | vertexSet_nonempty | Theorems.lean | ✓ Proved |
+| 11 | high_degree_vertex_bound | Theorems.lean | ✓ Proved |
+| 12 | near_pencil_inter_eq_singleton | Advanced.lean | ✓ Proved |
+| 13 | near_pencil_unique_edge | Advanced.lean | ✓ Proved |
+| 14 | near_pencil_erase_card | Advanced.lean | ✓ Proved |
+| 15 | efl_two | Advanced.lean | ✓ Proved |
+| 16 | edge_has_exclusive_vertex | Advanced.lean | ✓ Proved |
+| 17 | near_pencil_vertexSet_card | Advanced.lean | ✓ Proved |
+| 18 | linear_intersecting_edge_bound | Theorems.lean | □ Open |
+| 19 | near_pencil_colorable | Theorems.lean | □ Open |
+| 20 | efl_conjecture | Theorems.lean | □ Open |

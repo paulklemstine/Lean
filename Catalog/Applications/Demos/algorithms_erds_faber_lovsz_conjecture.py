@@ -1,190 +1,292 @@
 """
-Algorithms for Erdős–Faber–Lovász Conjecture
+Algorithms for the Erdős–Faber–Lovász Conjecture
 
-Type-hinted implementations of key algorithms related to the EFL conjecture:
-1. EFL system construction and validation
-2. Greedy coloring for linear hypergraphs
-3. Near-pencil construction
-4. Probabilistic coloring bound (Kang–Kelly–Kühn–Methuku–Osthus approach)
+Type-hinted implementations of coloring algorithms and structural analysis
+for k-uniform linear hypergraphs (EFL systems).
 """
 
-from typing import List, Set, Dict, Tuple, Optional
-import random
+from typing import List, Set, Dict, Tuple, Optional, FrozenSet
 from itertools import combinations
+import random
 
 
 class EFLSystem:
-    """An EFL system: k sets of size k with pairwise intersection ≤ 1."""
-
-    def __init__(self, edges: List[Set[int]]) -> None:
-        self.edges = edges
+    """A k-uniform linear hypergraph with k edges.
+    
+    Represents an EFL system: k sets (edges), each of size k,
+    where any two distinct edges share at most one element.
+    """
+    
+    def __init__(self, edges: List[Set[int]]):
+        """Initialize an EFL system from a list of sets.
+        
+        Args:
+            edges: List of sets, each of the same size k = len(edges),
+                   with pairwise intersection size ≤ 1.
+        
+        Raises:
+            ValueError: If the system violates EFL constraints.
+        """
         self.k = len(edges)
-
-    def is_valid(self) -> bool:
-        """Check k-uniformity and linearity."""
-        # k-uniformity
-        for e in self.edges:
+        self.edges = [frozenset(e) for e in edges]
+        self._validate()
+    
+    def _validate(self) -> None:
+        """Verify EFL constraints: k-uniformity and linearity."""
+        for i, e in enumerate(self.edges):
             if len(e) != self.k:
-                return False
-        # linearity
+                raise ValueError(
+                    f"Edge {i} has size {len(e)}, expected {self.k}"
+                )
         for i, j in combinations(range(self.k), 2):
-            if len(self.edges[i] & self.edges[j]) > 1:
-                return False
-        return True
-
+            inter = self.edges[i] & self.edges[j]
+            if len(inter) > 1:
+                raise ValueError(
+                    f"Edges {i} and {j} share {len(inter)} vertices "
+                    f"(max 1 allowed): {inter}"
+                )
+    
+    @property
     def vertex_set(self) -> Set[int]:
-        """Union of all edges."""
-        result: Set[int] = set()
-        for e in self.edges:
-            result |= e
-        return result
-
+        """Return the set of all vertices."""
+        return set().union(*self.edges)
+    
     def degree(self, v: int) -> int:
-        """Number of edges containing vertex v."""
+        """Return the degree of vertex v (number of edges containing v)."""
         return sum(1 for e in self.edges if v in e)
-
-    def high_degree_vertices(self) -> Set[int]:
-        """Vertices with degree ≥ 2."""
-        return {v for v in self.vertex_set() if self.degree(v) >= 2}
-
+    
+    def degree_sequence(self) -> List[int]:
+        """Return the sorted degree sequence (descending)."""
+        return sorted(
+            [self.degree(v) for v in self.vertex_set],
+            reverse=True
+        )
+    
     def incidence_count(self) -> int:
-        """Total vertex-edge incidences. Should equal k²."""
+        """Return the total number of vertex-edge incidences (should be k²)."""
         return sum(len(e) for e in self.edges)
+    
+    def is_near_pencil(self) -> Tuple[bool, Optional[int]]:
+        """Check if the system is a near-pencil.
+        
+        Returns:
+            (True, center_vertex) if near-pencil, (False, None) otherwise.
+        """
+        if self.k == 0:
+            return True, None
+        common = set(self.edges[0])
+        for e in self.edges[1:]:
+            common &= e
+        if common:
+            return True, min(common)
+        return False, None
+    
+    def exclusive_vertices(self) -> Dict[int, int]:
+        """Find degree-1 vertices and their unique edge index.
+        
+        Returns:
+            Dict mapping vertex -> edge index for all degree-1 vertices.
+        """
+        result = {}
+        for i, e in enumerate(self.edges):
+            for v in e:
+                if self.degree(v) == 1:
+                    result[v] = i
+        return result
+    
+    def high_degree_vertices(self) -> Set[int]:
+        """Return vertices with degree ≥ 2."""
+        return {v for v in self.vertex_set if self.degree(v) >= 2}
+    
+    def pairwise_intersection_sum(self) -> int:
+        """Sum of |edges[i] ∩ edges[j]| over all ordered pairs i ≠ j."""
+        total = 0
+        for i, j in combinations(range(self.k), 2):
+            total += 2 * len(self.edges[i] & self.edges[j])
+        return total
 
 
-def construct_near_pencil(k: int) -> EFLSystem:
+def near_pencil_coloring(system: EFLSystem) -> Dict[int, int]:
+    """Color a near-pencil EFL system with k colors.
+    
+    Algorithm:
+    1. Assign color 0 to the center vertex.
+    2. For each edge i, assign colors 1,...,k-1 to non-center vertices.
+    3. Uncolored vertices get color 0.
+    
+    Args:
+        system: A near-pencil EFL system.
+    
+    Returns:
+        Dict mapping vertex -> color (in range [0, k)).
+    
+    Raises:
+        ValueError: If the system is not a near-pencil.
     """
-    Construct the near-pencil EFL system with parameter k.
-
-    The near-pencil has:
-    - One center vertex (0) shared by all k edges
-    - k petals of k-1 vertices each, all disjoint
-
-    Total vertices: 1 + k*(k-1) = k² - k + 1
-    """
-    center = 0
-    edges: List[Set[int]] = []
-    next_vertex = 1
-    for i in range(k):
-        edge: Set[int] = {center}
-        for _ in range(k - 1):
-            edge.add(next_vertex)
-            next_vertex += 1
-        edges.append(edge)
-    return EFLSystem(edges)
-
-
-def construct_disjoint_system(k: int) -> EFLSystem:
-    """
-    Construct the disjoint EFL system: k disjoint edges of size k.
-    Total vertices: k².
-    """
-    edges: List[Set[int]] = []
-    for i in range(k):
-        edges.append(set(range(i * k, (i + 1) * k)))
-    return EFLSystem(edges)
-
-
-def greedy_rainbow_coloring(system: EFLSystem) -> Optional[Dict[int, int]]:
-    """
-    Greedy coloring algorithm for EFL systems.
-
-    Attempts to color vertices so that each edge receives all distinct colors.
-    Uses a greedy strategy: process vertices in decreasing degree order,
-    assign the smallest color not already used in any edge containing v.
-
-    Returns a coloring dict {vertex: color} or None if greedy fails.
-    """
-    k = system.k
-    vertices = sorted(system.vertex_set(),
-                       key=lambda v: system.degree(v), reverse=True)
-
+    is_np, center = system.is_near_pencil()
+    if not is_np:
+        raise ValueError("System is not a near-pencil")
+    
     coloring: Dict[int, int] = {}
+    
+    if system.k == 0:
+        return coloring
+    
+    assert center is not None
+    coloring[center] = 0
+    
+    for i, edge in enumerate(system.edges):
+        non_center = sorted(edge - {center})
+        for j, v in enumerate(non_center):
+            coloring[v] = j + 1  # Colors 1 through k-1
+    
+    return coloring
 
+
+def greedy_coloring(system: EFLSystem) -> Dict[int, int]:
+    """Greedy coloring of an EFL system.
+    
+    Colors vertices in decreasing degree order, using the smallest
+    available color that doesn't create a conflict on any edge.
+    
+    Args:
+        system: An EFL system.
+    
+    Returns:
+        Dict mapping vertex -> color.
+    """
+    vertices = sorted(
+        system.vertex_set,
+        key=lambda v: -system.degree(v)
+    )
+    
+    coloring: Dict[int, int] = {}
+    
     for v in vertices:
-        # Find colors used in edges containing v
+        # Find colors used by neighbors on shared edges
         forbidden: Set[int] = set()
-        for e in system.edges:
-            if v in e:
-                for u in e:
+        for edge in system.edges:
+            if v in edge:
+                for u in edge:
                     if u in coloring:
                         forbidden.add(coloring[u])
-
+        
         # Assign smallest available color
         color = 0
         while color in forbidden:
             color += 1
         coloring[v] = color
-
-    # Verify: all colors < k?
-    max_color = max(coloring.values()) if coloring else 0
-    if max_color >= k:
-        return None  # Greedy used too many colors
+    
     return coloring
 
 
-def verify_strong_coloring(system: EFLSystem, coloring: Dict[int, int]) -> bool:
-    """Verify that a coloring is a valid strong (rainbow) coloring."""
-    for e in system.edges:
-        colors_in_edge = set()
-        for v in e:
+def verify_strong_coloring(
+    system: EFLSystem,
+    coloring: Dict[int, int]
+) -> bool:
+    """Verify that a coloring is a strong k-coloring.
+    
+    Checks that the coloring is injective on each edge.
+    """
+    for edge in system.edges:
+        colors_used = set()
+        for v in edge:
             if v not in coloring:
                 return False
-            if coloring[v] in colors_in_edge:
-                return False  # Two vertices in same edge have same color
-            colors_in_edge.add(coloring[v])
+            c = coloring[v]
+            if c in colors_used:
+                return False
+            colors_used.add(c)
     return True
 
 
-def probabilistic_coloring_bound(k: int, trials: int = 1000) -> float:
+def make_near_pencil(k: int) -> EFLSystem:
+    """Construct the near-pencil EFL system with parameter k.
+    
+    The center vertex is 0. Edge i has vertices {0, i*k+1, ..., i*k+k-1}
+    for i = 0, ..., k-1 (using shifted indexing to ensure distinctness).
+    
+    Actually, we use: center = 0, edge i = {0} ∪ {i*(k-1)+1, ..., i*(k-1)+(k-1)}.
     """
-    Estimate the probability that a random coloring of the near-pencil
-    is a valid strong coloring.
+    if k == 0:
+        return EFLSystem([])
+    
+    center = 0
+    edges = []
+    for i in range(k):
+        non_center = set(range(1 + i * (k - 1), 1 + (i + 1) * (k - 1)))
+        if k == 1:
+            non_center = set()
+        edges.append({center} | non_center)
+    
+    return EFLSystem(edges)
 
-    For the near-pencil with parameter k, a random assignment of k colors
-    to k² - k + 1 vertices. Estimates P(valid).
 
-    This demonstrates why probabilistic approaches need careful derandomization:
-    the probability is very small for large k.
+def make_disjoint_system(k: int) -> EFLSystem:
+    """Construct a disjoint EFL system (all edges pairwise disjoint).
+    
+    Edge i = {i*k, i*k+1, ..., i*k+k-1}.
+    This is the "loosest" EFL configuration.
     """
-    if k <= 0:
-        return 1.0
-
-    system = construct_near_pencil(k)
-    vertices = sorted(system.vertex_set())
-    n_valid = 0
-
-    for _ in range(trials):
-        coloring = {v: random.randint(0, k - 1) for v in vertices}
-        if verify_strong_coloring(system, coloring):
-            n_valid += 1
-
-    return n_valid / trials
+    edges = [set(range(i * k, (i + 1) * k)) for i in range(k)]
+    return EFLSystem(edges)
 
 
-def fisher_pair_bound(system: EFLSystem) -> Tuple[int, int]:
+def enumerate_efl_systems(k: int, max_vertices: int = None) -> List[EFLSystem]:
+    """Enumerate some EFL systems with parameter k.
+    
+    For small k, generates several canonical EFL configurations.
+    Not exhaustive for k > 3.
     """
-    Compute the actual pairwise intersection sum and the Fisher bound k*(k-1).
+    if max_vertices is None:
+        max_vertices = k * k
+    
+    systems = []
+    
+    # Near-pencil
+    systems.append(make_near_pencil(k))
+    
+    # Disjoint system
+    if k >= 2:
+        systems.append(make_disjoint_system(k))
+    
+    # For k = 3, some intermediate configurations
+    if k == 3:
+        # Two edges share a vertex, third is disjoint from one
+        systems.append(EFLSystem([{0, 1, 2}, {0, 3, 4}, {5, 6, 7}]))
+        # Chain: each consecutive pair shares a vertex
+        systems.append(EFLSystem([{0, 1, 2}, {2, 3, 4}, {4, 5, 6}]))
+        # Triangle: each pair shares one vertex
+        systems.append(EFLSystem([{0, 1, 2}, {0, 3, 4}, {1, 3, 5}]))
+    
+    return systems
 
-    Returns (actual_sum, bound).
-    The theorem guarantees actual_sum ≤ bound.
+
+def structural_analysis(system: EFLSystem) -> Dict:
+    """Perform complete structural analysis of an EFL system.
+    
+    Returns a dictionary with all key invariants.
     """
-    total = 0
-    for i, j in combinations(range(system.k), 2):
-        total += len(system.edges[i] & system.edges[j])
-    # Note: theorem uses ordered pairs, so multiply by 2
-    return 2 * total, system.k * (system.k - 1)
-
-
-def sunflower_core_analysis(system: EFLSystem) -> Dict[int, int]:
-    """
-    Analyze the sunflower structure: for each vertex, compute its degree.
-    In EFL theory, vertices of high degree form sunflower cores.
-
-    Returns {vertex: degree} for all vertices.
-    """
-    return {v: system.degree(v) for v in system.vertex_set()}
-
-
-# Type alias for clarity
-ColoringResult = Dict[int, int]
+    k = system.k
+    vs = system.vertex_set
+    is_np, center = system.is_near_pencil()
+    exclusive = system.exclusive_vertices()
+    high_deg = system.high_degree_vertices()
+    
+    return {
+        'k': k,
+        'num_vertices': len(vs),
+        'vertex_set_lower_bound': k,
+        'vertex_set_upper_bound': k ** 2,
+        'incidence_count': system.incidence_count(),
+        'expected_incidence': k ** 2,
+        'degree_sequence': system.degree_sequence(),
+        'max_degree': max(system.degree_sequence()) if vs else 0,
+        'is_near_pencil': is_np,
+        'center_vertex': center,
+        'num_exclusive_vertices': len(exclusive),
+        'num_high_degree_vertices': len(high_deg),
+        'high_degree_bound': k * (k - 1) // 2,
+        'pairwise_intersection_sum': system.pairwise_intersection_sum(),
+        'pairwise_bound': k * (k - 1),
+    }

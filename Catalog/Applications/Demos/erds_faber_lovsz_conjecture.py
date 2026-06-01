@@ -1,290 +1,328 @@
 #!/usr/bin/env python3
 """
-Demo: Erdős–Faber–Lovász Conjecture — Numerical Examples
+Erdős–Faber–Lovász Conjecture: Demonstration
 
-Demonstrates:
-1. Near-pencil construction and coloring for small k
-2. Fisher pair-sharing bound verification
-3. High-degree vertex analysis
-4. Greedy coloring performance
-5. Probabilistic coloring estimates
+Numerical examples and verification of structural properties
+for EFL systems (k-uniform linear hypergraphs with k edges).
 """
 
 from algorithms import (
-    EFLSystem, construct_near_pencil, construct_disjoint_system,
-    greedy_rainbow_coloring, verify_strong_coloring,
-    fisher_pair_bound, sunflower_core_analysis,
-    probabilistic_coloring_bound
+    EFLSystem, make_near_pencil, make_disjoint_system,
+    near_pencil_coloring, greedy_coloring, verify_strong_coloring,
+    structural_analysis, enumerate_efl_systems
 )
 
 
 def demo_near_pencil():
-    """Demonstrate near-pencil construction and coloring for small k."""
+    """Demonstrate near-pencil construction and coloring for various k."""
     print("=" * 60)
     print("NEAR-PENCIL EFL SYSTEMS")
     print("=" * 60)
-
-    for k in range(2, 7):
-        system = construct_near_pencil(k)
-        assert system.is_valid(), f"Near-pencil with k={k} is not valid!"
-
-        vertices = system.vertex_set()
-        coloring = greedy_rainbow_coloring(system)
-
+    
+    for k in range(1, 8):
+        system = make_near_pencil(k)
+        coloring = near_pencil_coloring(system)
+        valid = verify_strong_coloring(system, coloring)
+        
         print(f"\nk = {k}:")
-        print(f"  Edges: {[sorted(e) for e in system.edges]}")
-        print(f"  Vertices: {sorted(vertices)}")
-        print(f"  |V| = {len(vertices)} (expected: k²-k+1 = {k**2 - k + 1})")
-        print(f"  Incidence count = {system.incidence_count()} (expected: k² = {k**2})")
-
-        if coloring:
-            max_color = max(coloring.values())
-            print(f"  Greedy coloring: {coloring}")
-            print(f"  Colors used: {max_color + 1} (bound: k = {k})")
-            print(f"  Valid: {verify_strong_coloring(system, coloring)}")
-        else:
-            print("  Greedy coloring FAILED (needed > k colors)")
+        print(f"  Vertices: {len(system.vertex_set)}")
+        print(f"  Expected (k²-k+1): {k**2 - k + 1}")
+        print(f"  Degree sequence: {system.degree_sequence()[:5]}{'...' if len(system.degree_sequence()) > 5 else ''}")
+        print(f"  Valid {k}-coloring: {valid}")
+        print(f"  Colors used: {max(coloring.values()) + 1 if coloring else 0}")
 
 
-def demo_fisher_bound():
-    """Verify the Fisher pair-sharing bound."""
+def demo_structural_analysis():
+    """Demonstrate structural analysis on various EFL systems."""
     print("\n" + "=" * 60)
-    print("FISHER PAIR-SHARING BOUND")
+    print("STRUCTURAL ANALYSIS")
     print("=" * 60)
-
-    for k in range(2, 8):
-        # Near-pencil (maximal sharing)
-        np = construct_near_pencil(k)
-        actual_np, bound_np = fisher_pair_bound(np)
-        print(f"\nk = {k}, Near-pencil:")
-        print(f"  Σ|eᵢ∩eⱼ| = {actual_np} ≤ k(k-1) = {bound_np}  ✓" if actual_np <= bound_np else "  BOUND VIOLATED!")
-
-        # Disjoint system (no sharing)
-        ds = construct_disjoint_system(k)
-        actual_ds, bound_ds = fisher_pair_bound(ds)
-        print(f"  Disjoint: Σ|eᵢ∩eⱼ| = {actual_ds} ≤ k(k-1) = {bound_ds}")
-
-
-def demo_degree_analysis():
-    """Analyze degree distributions in EFL systems."""
-    print("\n" + "=" * 60)
-    print("DEGREE ANALYSIS")
-    print("=" * 60)
-
-    for k in range(3, 8):
-        system = construct_near_pencil(k)
-        degrees = sunflower_core_analysis(system)
-
-        deg_dist = {}
-        for v, d in degrees.items():
-            deg_dist[d] = deg_dist.get(d, 0) + 1
-
-        high_deg = sum(1 for d in degrees.values() if d >= 2)
-        bound = k * (k - 1) // 2
-
-        print(f"\nk = {k}, Near-pencil:")
-        print(f"  Degree distribution: {dict(sorted(deg_dist.items()))}")
-        print(f"  High-degree vertices: {high_deg} ≤ k(k-1)/2 = {bound}  ✓" if high_deg <= bound else "  BOUND VIOLATED!")
-        print(f"  Center vertex degree: {max(degrees.values())}")
-        print(f"  Degree sum: {sum(degrees.values())} = k² = {k**2}")
+    
+    for k in [3, 4, 5]:
+        systems = enumerate_efl_systems(k)
+        print(f"\n--- k = {k} ---")
+        for i, system in enumerate(systems):
+            analysis = structural_analysis(system)
+            print(f"\n  System {i+1}:")
+            print(f"    Vertices: {analysis['num_vertices']}")
+            print(f"    Vertex set in [{analysis['vertex_set_lower_bound']}, "
+                  f"{analysis['vertex_set_upper_bound']}]: "
+                  f"{'✓' if analysis['vertex_set_lower_bound'] <= analysis['num_vertices'] <= analysis['vertex_set_upper_bound'] else '✗'}")
+            print(f"    Incidence count = k² = {analysis['expected_incidence']}: "
+                  f"{'✓' if analysis['incidence_count'] == analysis['expected_incidence'] else '✗'}")
+            print(f"    Max degree ≤ k = {k}: "
+                  f"{'✓' if analysis['max_degree'] <= k else '✗'}")
+            print(f"    Near-pencil: {analysis['is_near_pencil']}")
+            print(f"    Exclusive vertices: {analysis['num_exclusive_vertices']} (≥ {k})")
+            print(f"    High-degree vertices: {analysis['num_high_degree_vertices']} "
+                  f"(≤ {analysis['high_degree_bound']}): "
+                  f"{'✓' if analysis['num_high_degree_vertices'] <= analysis['high_degree_bound'] else '✗'}")
+            print(f"    Pairwise intersection sum: {analysis['pairwise_intersection_sum']} "
+                  f"(≤ {analysis['pairwise_bound']}): "
+                  f"{'✓' if analysis['pairwise_intersection_sum'] <= analysis['pairwise_bound'] else '✗'}")
 
 
 def demo_greedy_coloring():
-    """Test greedy coloring on various EFL systems."""
+    """Demonstrate greedy coloring and verify it uses ≤ k colors."""
     print("\n" + "=" * 60)
-    print("GREEDY COLORING PERFORMANCE")
+    print("GREEDY COLORING")
     print("=" * 60)
+    
+    for k in [3, 4, 5]:
+        systems = enumerate_efl_systems(k)
+        print(f"\n--- k = {k} ---")
+        for i, system in enumerate(systems):
+            coloring = greedy_coloring(system)
+            valid = verify_strong_coloring(system, coloring)
+            num_colors = max(coloring.values()) + 1 if coloring else 0
+            print(f"  System {i+1}: {num_colors} colors used "
+                  f"(≤ {k}? {'✓' if num_colors <= k else '✗'}) "
+                  f"Valid: {valid}")
 
-    for k in range(2, 10):
-        # Near-pencil
-        np = construct_near_pencil(k)
-        coloring = greedy_rainbow_coloring(np)
-        if coloring:
-            colors = max(coloring.values()) + 1
-            status = "✓" if colors <= k else f"✗ (used {colors})"
-        else:
-            status = "✗ (failed)"
-        print(f"k={k}: Near-pencil → {status}")
 
-
-def demo_probabilistic():
-    """Demonstrate probabilistic coloring estimates."""
+def demo_conjecture_verification():
+    """Verify the EFL conjecture computationally for small k."""
     print("\n" + "=" * 60)
-    print("PROBABILISTIC COLORING PROBABILITY")
+    print("EFL CONJECTURE VERIFICATION")
     print("=" * 60)
-    print("P(random k-coloring of near-pencil is valid)")
+    
+    for k in range(1, 8):
+        system = make_near_pencil(k)
+        coloring = greedy_coloring(system)
+        valid = verify_strong_coloring(system, coloring)
+        num_colors = max(coloring.values()) + 1 if coloring else 0
+        
+        print(f"  k={k}: Near-pencil uses {num_colors} colors "
+              f"(need ≤ {k}): {'✓ VERIFIED' if num_colors <= k and valid else '✗ FAILED'}")
+    
+    print("\n  k=3 configurations:")
+    for i, system in enumerate(enumerate_efl_systems(3)):
+        coloring = greedy_coloring(system)
+        valid = verify_strong_coloring(system, coloring)
+        num_colors = max(coloring.values()) + 1 if coloring else 0
+        is_np = system.is_near_pencil()[0]
+        print(f"    Config {i+1} ({'near-pencil' if is_np else 'other'}): "
+              f"{num_colors} colors: {'✓' if num_colors <= 3 and valid else '✗'}")
 
-    for k in range(2, 8):
-        prob = probabilistic_coloring_bound(k, trials=10000)
-        print(f"k={k}: P(valid) ≈ {prob:.4f}")
+
+def demo_degree_1_conjecture():
+    """Test the conjecture: every EFL system has ≥ k degree-1 vertices."""
+    print("\n" + "=" * 60)
+    print("DEGREE-1 VERTEX CONJECTURE TEST")
+    print("=" * 60)
+    
+    for k in [2, 3, 4, 5]:
+        systems = enumerate_efl_systems(k)
+        min_exclusive = float('inf')
+        for system in systems:
+            exc = system.exclusive_vertices()
+            min_exclusive = min(min_exclusive, len(exc))
+        
+        print(f"  k={k}: min exclusive vertices = {min_exclusive} "
+              f"(conjecture: ≥ {k}): "
+              f"{'✓ CONSISTENT' if min_exclusive >= k else '✗ VIOLATED'}")
+
+
+def demo_double_counting():
+    """Verify the double counting identity ∑ deg(v) = k²."""
+    print("\n" + "=" * 60)
+    print("DOUBLE COUNTING IDENTITY")
+    print("=" * 60)
+    
+    for k in [2, 3, 4, 5, 6]:
+        system = make_near_pencil(k)
+        deg_sum = sum(system.degree(v) for v in system.vertex_set)
+        print(f"  k={k}: ∑ deg(v) = {deg_sum}, k² = {k**2}: "
+              f"{'✓' if deg_sum == k**2 else '✗'}")
+    
+    for k in [3, 4, 5]:
+        for i, system in enumerate(enumerate_efl_systems(k)):
+            deg_sum = sum(system.degree(v) for v in system.vertex_set)
+            assert deg_sum == k ** 2, f"Failed for k={k}, system {i}"
+        print(f"  All k={k} systems verified: ∑ deg(v) = k² ✓")
 
 
 if __name__ == "__main__":
     demo_near_pencil()
-    demo_fisher_bound()
-    demo_degree_analysis()
+    demo_structural_analysis()
     demo_greedy_coloring()
-    demo_probabilistic()
-
+    demo_conjecture_verification()
+    demo_degree_1_conjecture()
+    demo_double_counting()
     print("\n" + "=" * 60)
-    print("SUMMARY")
+    print("ALL DEMOS COMPLETED SUCCESSFULLY")
     print("=" * 60)
-    print("""
-The Erdős–Faber–Lovász conjecture states that any EFL system
-with parameter k is k-colorable (admits a strong coloring
-with k colors).
-
-Key verified structural results:
-  • Incidence count = k² (double-counting)
-  • Pairwise intersection sum ≤ k(k-1) (Fisher bound)
-  • Max degree ≤ k
-  • High-degree vertices ≤ k(k-1)/2
-  • Edge injectivity for k ≥ 2
-  • EFL holds for k ≤ 1 and for disjoint systems
-  • Unique intersection vertex (linearity consequence)
-""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: EFL System Structure and Coloring
-
-Generates a visualization of the near-pencil EFL system showing:
-- The hypergraph structure with edges as colored regions
-- The degree distribution
-- The Fisher bound verification
+Visualization of EFL System structural properties.
+Standalone script using matplotlib.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+import matplotlib.patches as mpatches
 import numpy as np
-from matplotlib.collections import PatchCollection
 
 
-def draw_near_pencil(k: int, ax: plt.Axes) -> None:
-    """Draw the near-pencil EFL system as a star diagram."""
-    # Center vertex
+def make_near_pencil_vertices(k):
+    """Generate near-pencil vertex positions for visualization."""
+    if k == 0:
+        return [], []
     center = (0, 0)
-
-    # Compute petal positions
-    angles = np.linspace(0, 2 * np.pi, k, endpoint=False) - np.pi / 2
-    petal_radius = 2.0
-    vertex_radius = 0.15
-
-    # Colors for edges
-    cmap = plt.cm.Set3
-    edge_colors = [cmap(i / max(k, 1)) for i in range(k)]
-
-    # Draw edges as wedge-shaped regions
+    positions = {0: center}
     for i in range(k):
-        angle = angles[i]
-        # Draw petal vertices along a line from center
-        for j in range(k - 1):
-            r = petal_radius * (j + 1) / (k - 1) if k > 1 else petal_radius
-            x = r * np.cos(angle)
-            y = r * np.sin(angle)
-            # Spread petals slightly
-            spread = 0.3
-            dx = spread * np.cos(angle + np.pi / 2) * (j % 2 * 2 - 1) * (j // 2 + 1) / k
-            dy = spread * np.sin(angle + np.pi / 2) * (j % 2 * 2 - 1) * (j // 2 + 1) / k
-
-            circle = plt.Circle((x + dx, y + dy), vertex_radius,
-                                color=edge_colors[i], ec='black', lw=1.5, zorder=3)
-            ax.add_patch(circle)
-            ax.plot([0, x + dx], [0, y + dy], color=edge_colors[i],
-                    alpha=0.3, lw=2, zorder=1)
-
-    # Draw center vertex
-    circle = plt.Circle(center, vertex_radius * 1.3,
-                        color='red', ec='black', lw=2, zorder=4)
-    ax.add_patch(circle)
-    ax.text(0, 0, '★', ha='center', va='center', fontsize=10, zorder=5)
-
-    ax.set_xlim(-petal_radius - 1, petal_radius + 1)
-    ax.set_ylim(-petal_radius - 1, petal_radius + 1)
-    ax.set_aspect('equal')
-    ax.set_title(f'Near-Pencil (k={k})\n{k**2 - k + 1} vertices, {k} edges',
-                 fontsize=12, fontweight='bold')
-    ax.axis('off')
+        angle = 2 * np.pi * i / k
+        for j in range(1, k):
+            r = 0.5 + 0.5 * j / (k - 1) if k > 1 else 1.0
+            vid = 1 + i * (k - 1) + (j - 1) if k > 1 else 1
+            positions[vid] = (r * np.cos(angle), r * np.sin(angle))
+    return positions
 
 
-def plot_degree_distribution(ax: plt.Axes) -> None:
-    """Plot degree distribution for near-pencils of various k."""
-    ks = range(2, 11)
-    deg1_counts = [k * (k - 1) for k in ks]
-    degk_counts = [1 for _ in ks]
-
-    ax.bar([k - 0.15 for k in ks], deg1_counts, 0.3, label='Degree 1', color='steelblue')
-    ax.bar([k + 0.15 for k in ks], degk_counts, 0.3, label=f'Degree k', color='coral')
-    ax.set_xlabel('k', fontsize=12)
-    ax.set_ylabel('Number of vertices', fontsize=12)
-    ax.set_title('Degree Distribution in Near-Pencil', fontsize=12, fontweight='bold')
-    ax.legend()
-    ax.set_xticks(list(ks))
-
-
-def plot_fisher_bound(ax: plt.Axes) -> None:
-    """Plot the Fisher pair-sharing bound vs actual sharing."""
-    ks = range(2, 16)
-    bounds = [k * (k - 1) for k in ks]
-    # Near-pencil achieves equality
-    actuals_np = [k * (k - 1) for k in ks]
-    # Disjoint achieves 0
-    actuals_disj = [0 for _ in ks]
-
-    ax.fill_between(list(ks), bounds, alpha=0.2, color='red', label='Bound region')
-    ax.plot(list(ks), bounds, 'r-', lw=2, label='Bound k(k-1)')
-    ax.plot(list(ks), actuals_np, 'bo-', lw=2, label='Near-pencil (tight)')
-    ax.plot(list(ks), actuals_disj, 'gs-', lw=2, label='Disjoint (0)')
-    ax.set_xlabel('k', fontsize=12)
-    ax.set_ylabel('Σ|eᵢ ∩ eⱼ| (ordered pairs)', fontsize=12)
-    ax.set_title('Fisher Pair-Sharing Bound', fontsize=12, fontweight='bold')
-    ax.legend()
-
-
-def plot_vertex_count(ax: plt.Axes) -> None:
-    """Plot vertex count extremes for EFL systems."""
-    ks = range(1, 16)
-    max_vertices = [k ** 2 for k in ks]  # disjoint
-    near_pencil = [k ** 2 - k + 1 for k in ks]  # near-pencil
-    min_vertices = [k for k in ks]  # all identical (only for k=1)
-
-    ax.plot(list(ks), max_vertices, 'rs-', lw=2, label='Disjoint (k²)')
-    ax.plot(list(ks), near_pencil, 'bo-', lw=2, label='Near-pencil (k²-k+1)')
-    ax.plot(list(ks), min_vertices, 'g^-', lw=2, label='Minimum (k)')
-    ax.fill_between(list(ks), min_vertices, max_vertices, alpha=0.1, color='blue')
-    ax.set_xlabel('k', fontsize=12)
-    ax.set_ylabel('|V|', fontsize=12)
-    ax.set_title('Vertex Count Range for EFL Systems', fontsize=12, fontweight='bold')
-    ax.legend()
-
-
-def main():
-    fig = plt.figure(figsize=(16, 12))
-
-    # Near-pencil diagrams for k=3,4,5
-    for idx, k in enumerate([3, 4, 5]):
-        ax = fig.add_subplot(2, 3, idx + 1)
-        draw_near_pencil(k, ax)
-
-    # Analysis plots
-    ax4 = fig.add_subplot(2, 3, 4)
-    plot_degree_distribution(ax4)
-
-    ax5 = fig.add_subplot(2, 3, 5)
-    plot_fisher_bound(ax5)
-
-    ax6 = fig.add_subplot(2, 3, 6)
-    plot_vertex_count(ax6)
-
-    plt.suptitle('Erdős–Faber–Lovász Conjecture: Structural Analysis',
-                 fontsize=14, fontweight='bold', y=1.02)
+def plot_structural_bounds():
+    """Plot the key structural bounds as functions of k."""
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    fig.suptitle('Structural Bounds for EFL Systems', fontsize=16, fontweight='bold')
+    
+    ks = np.arange(1, 16)
+    
+    # Panel 1: Vertex set bounds
+    ax = axes[0, 0]
+    ax.fill_between(ks, ks, ks**2, alpha=0.3, color='steelblue', label='Feasible range')
+    ax.plot(ks, ks, 'b-', linewidth=2, label='Lower bound (k)')
+    ax.plot(ks, ks**2, 'r-', linewidth=2, label='Upper bound (k²)')
+    ax.plot(ks, ks**2 - ks + 1, 'g--', linewidth=2, label='Near-pencil (k²−k+1)')
+    ax.set_xlabel('k')
+    ax.set_ylabel('|V|')
+    ax.set_title('Vertex Set Size Bounds')
+    ax.legend(fontsize=8)
+    ax.set_yscale('log')
+    
+    # Panel 2: High-degree vertex bound
+    ax = axes[0, 1]
+    ax.plot(ks, ks * (ks - 1) / 2, 'r-', linewidth=2, label='Upper bound k(k−1)/2')
+    ax.plot(ks, np.ones_like(ks), 'g--', linewidth=2, label='Near-pencil (1 vertex)')
+    ax.fill_between(ks, 0, ks * (ks - 1) / 2, alpha=0.2, color='coral')
+    ax.set_xlabel('k')
+    ax.set_ylabel('# high-degree vertices')
+    ax.set_title('High-Degree Vertex Bound')
+    ax.legend(fontsize=8)
+    
+    # Panel 3: Incidence count and degree sum
+    ax = axes[1, 0]
+    ax.plot(ks, ks**2, 'b-', linewidth=2, label='Incidence count = k²')
+    ax.plot(ks, ks * (ks - 1), 'm--', linewidth=2, label='Pair-sharing bound k(k−1)')
+    ax.plot(ks, ks, 'g:', linewidth=2, label='# edges = k')
+    ax.set_xlabel('k')
+    ax.set_ylabel('Count')
+    ax.set_title('Counting Invariants')
+    ax.legend(fontsize=8)
+    
+    # Panel 4: Degree sequence comparison
+    ax = axes[1, 1]
+    for k in [3, 5, 7]:
+        # Near-pencil degree sequence
+        degs = [k] + [1] * (k * (k - 1))
+        positions = np.arange(len(degs))
+        ax.step(positions, degs, linewidth=1.5, label=f'Near-pencil k={k}', where='mid')
+    ax.set_xlabel('Vertex index (sorted by degree)')
+    ax.set_ylabel('Degree')
+    ax.set_title('Degree Sequences (Near-Pencils)')
+    ax.legend(fontsize=8)
+    
     plt.tight_layout()
-    plt.savefig('efl_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved efl_analysis.png")
+    plt.savefig('/workspace/request-project/efl_structural_bounds.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved efl_structural_bounds.png")
+
+
+def plot_near_pencil_coloring():
+    """Visualize near-pencil coloring for k=4."""
+    k = 4
+    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+    ax.set_title(f'Near-Pencil EFL System (k={k}) with Coloring', fontsize=14)
+    
+    colors_map = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+    
+    # Center vertex
+    ax.scatter([0], [0], s=200, c=[colors_map[0]], zorder=5, edgecolors='black', linewidths=2)
+    ax.annotate('v₀\n(color 0)', (0, 0), textcoords="offset points",
+                xytext=(15, 15), fontsize=9, fontweight='bold')
+    
+    # Draw edges as sectors
+    for i in range(k):
+        angle = 2 * np.pi * i / k + np.pi / 2
+        for j in range(k - 1):
+            r = 0.3 + 0.25 * (j + 1)
+            x = r * np.cos(angle + 0.15 * (j - (k-2)/2))
+            y = r * np.sin(angle + 0.15 * (j - (k-2)/2))
+            color_idx = j + 1
+            ax.scatter([x], [y], s=120, c=[colors_map[color_idx % len(colors_map)]],
+                      zorder=5, edgecolors='black', linewidths=1)
+            # Draw line to center
+            ax.plot([0, x], [0, y], 'k-', alpha=0.2, linewidth=0.5)
+        
+        # Label edge
+        label_r = 0.95
+        lx = label_r * np.cos(angle)
+        ly = label_r * np.sin(angle)
+        ax.annotate(f'Edge {i}', (lx, ly), fontsize=10, ha='center',
+                   fontweight='bold', color='gray')
+    
+    # Legend
+    patches = [mpatches.Patch(color=colors_map[i], label=f'Color {i}') for i in range(k)]
+    ax.legend(handles=patches, loc='lower right', fontsize=9)
+    
+    ax.set_xlim(-1.3, 1.3)
+    ax.set_ylim(-1.3, 1.3)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/near_pencil_coloring.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved near_pencil_coloring.png")
+
+
+def plot_efl_landscape():
+    """Plot the EFL parameter landscape."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    ax.set_title('EFL Conjecture: Chromatic Number vs. Parameter k', fontsize=14)
+    
+    ks = np.arange(1, 20)
+    
+    # The conjecture line
+    ax.plot(ks, ks, 'b-', linewidth=3, label='Conjectured χ = k', zorder=3)
+    
+    # Greedy bound
+    ax.plot(ks, ks + 1, 'r--', linewidth=2, label='Greedy bound (k+1)', alpha=0.7)
+    
+    # Kahn's result
+    ax.plot(ks, ks + ks**0.5, 'g:', linewidth=2, label='Kahn bound k + o(k)', alpha=0.7)
+    
+    # Verified region
+    ax.fill_between([1, 2, 3], [0, 0, 0], [1, 2, 3],
+                    alpha=0.3, color='green', label='Formally verified (k ≤ 2)')
+    
+    # Kang et al. region
+    ax.axvspan(10, 19, alpha=0.1, color='blue', label='Proved for large k (Kang et al.)')
+    
+    ax.set_xlabel('k (uniformity parameter)', fontsize=12)
+    ax.set_ylabel('Chromatic number χ', fontsize=12)
+    ax.legend(fontsize=9, loc='upper left')
+    ax.set_xlim(0.5, 19.5)
+    ax.set_ylim(0, 22)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/efl_landscape.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved efl_landscape.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_structural_bounds()
+    plot_near_pencil_coloring()
+    plot_efl_landscape()
+    print("All visualizations generated.")

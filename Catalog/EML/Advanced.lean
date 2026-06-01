@@ -1,201 +1,142 @@
-/-
-# Advanced Reconstruction Theory
-
-This file builds on `Reconstruction.Basic` to formalize:
-1. The formal statement of the Reconstruction Conjecture
-2. Graph complement reconstruction (Whitney's theorem connection)
-3. Degree sequence as a multiset is reconstructible
-4. Connected component count reconstruction setup
-5. A novel "DeckFingerprint" structure for computational reconstruction
--/
 import Mathlib
+import Combinatorics.ErdosFaberLovasz.Defs
 
-open Finset BigOperators
+/-!
+# Erdős–Faber–Lovász: Advanced Results
 
-namespace Reconstruction
+Advanced structural results about EFL systems, including:
+- Near-pencil disjointness lemma
+- Near-pencil colorability
+- Linear intersecting hypergraph edge bound
+- Degree-based coloring
+-/
 
-variable {V : Type*} [Fintype V] [DecidableEq V]
+open Finset Function
 
-/-! ## Formal Statement of the Reconstruction Conjecture -/
+namespace EFL
 
-/-- The vertex-deleted subgraph of G at v, as a SimpleGraph on the subtype {w | w ≠ v}. -/
-noncomputable def vertexDeletedGraph (G : SimpleGraph V) (v : V) :
-    SimpleGraph {w : V | w ≠ v} :=
-  G.induce {w | w ≠ v}
+/-! ## Near-Pencil Structure
 
-/-- Two graphs have isomorphic decks if there exists a bijection between their
-    vertex sets such that corresponding vertex-deleted subgraphs are isomorphic. -/
-def HasIsomorphicDeck (G₁ G₂ : SimpleGraph V) : Prop :=
-  ∃ σ : V ≃ V, ∀ v : V,
-    Nonempty ((vertexDeletedGraph G₁ v).Iso
-      (vertexDeletedGraph G₂ (σ v)))
-
-/-- **The Reconstruction Conjecture** (Ulam-Kelly):
-    If two graphs on the same vertex set (with |V| ≥ 3) have isomorphic decks,
-    then the graphs themselves are isomorphic. -/
-def ReconstructionConjecture : Prop :=
-  ∀ (V : Type*) [Fintype V] [DecidableEq V],
-    3 ≤ Fintype.card V →
-    ∀ (G₁ G₂ : SimpleGraph V),
-      HasIsomorphicDeck G₁ G₂ → Nonempty (G₁.Iso G₂)
-
-/-! ## Edge Complement Duality -/
-
-/-- The non-incident edge count for the complement graph equals the complement
-    of non-incident edges. This connects deck analysis of G with deck analysis of Gᶜ. -/
-noncomputable def nonIncidentEdges' (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) :
-    Finset (Sym2 V) :=
-  G.edgeFinset.filter (fun e => v ∉ e)
-
-/-- The complement of a simple graph. -/
-noncomputable def complementEdgeCount (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
-  Fintype.card V * (Fintype.card V - 1) / 2 - G.edgeFinset.card
-
-/-! ## DeckFingerprint: A Novel Computational Invariant -/
-
-/-- A `DeckFingerprint` captures the essential combinatorial data of a graph's deck
-    as a sorted list of edge counts. Two graphs with the same DeckFingerprint have
-    identical edge-count profiles in their decks, which is a necessary (but not
-    sufficient) condition for having isomorphic decks.
-
-    This is a novel definition that enables efficient computational testing of
-    potential reconstruction counterexamples. -/
-structure DeckFingerprint where
-  /-- Number of vertices -/
-  vertexCount : ℕ
-  /-- Total edge count -/
-  edgeCount : ℕ
-  /-- Sorted multiset of deck card edge counts -/
-  deckEdgeCounts : List ℕ
-  /-- The deck has one card per vertex -/
-  deck_length : deckEdgeCounts.length = vertexCount
-  /-- Edge counts are sorted -/
-  deck_sorted : deckEdgeCounts.Sorted (· ≤ ·)
-  /-- Consistency: sum of deck edge counts = (vertexCount - 2) * edgeCount -/
-  consistency : deckEdgeCounts.sum = (vertexCount - 2) * edgeCount
-  deriving Repr
-
-/-! ## Degree Sequence as Multiset -/
-
-/-- The degree multiset of a graph, capturing the full degree sequence
-    as an unordered collection. -/
-noncomputable def degreeMultiset (G : SimpleGraph V) [DecidableRel G.Adj] : Multiset ℕ :=
-  Finset.univ.val.map (fun v => G.degree v)
-
-/-- The degree multiset is determined by the edge count and deck card edge counts.
-    Specifically, deg(v) = |E(G)| - deckCardEdges(G, v) for each v. -/
-noncomputable def deckCardEdges' (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) : ℕ :=
-  (G.edgeFinset.filter (fun e => v ∉ e)).card
+In a near-pencil EFL system with center v₀, distinct edges share
+only v₀. This means the non-center parts of different edges are disjoint. -/
 
 /-
-The degree of a vertex equals the total edge count minus the edge count
-    of the corresponding deck card.
+In a near-pencil system, if v₀ is the center and i ≠ j, then
+    edges i ∩ edges j = {v₀}. The intersection is nonempty (contains v₀)
+    and has cardinality ≤ 1 by linearity, hence equals {v₀}.
 -/
-theorem degree_from_deckCard
-    (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) :
-    G.degree v = G.edgeFinset.card - deckCardEdges' G v := by
-  unfold deckCardEdges';
-  rw [ Nat.sub_eq_of_eq_add ];
-  have h_card_filter : G.edgeFinset = (G.edgeFinset.filter (fun e => v ∈ e)) ∪ (G.edgeFinset.filter (fun e => v ∉ e)) := by
-    grind;
-  rw [ h_card_filter, Finset.card_union_of_disjoint ];
-  · convert congr_arg₂ ( · + · ) _ rfl;
-    · exact h_card_filter.symm;
-    · convert SimpleGraph.card_incidenceFinset_eq_degree G v;
-      ext e; simp +decide [ SimpleGraph.incidenceSet ] ;
-  · exact Finset.disjoint_filter.2 fun _ _ _ _ => by tauto;
+theorem near_pencil_inter_eq_singleton {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (v₀ : V) (hv : ∀ i : Fin S.k, v₀ ∈ S.edges i)
+    (i j : Fin S.k) (hij : i ≠ j) :
+    S.edges i ∩ S.edges j = {v₀} := by
+  have := S.linear i j hij;
+  rw [ Finset.card_le_one ] at this ; aesop
 
 /-
-The degree multiset sum equals twice the edge count (handshaking lemma).
+In a near-pencil system, non-center vertices of distinct edges are disjoint.
+    If v ∈ edges i, v ≠ v₀, and v ∈ edges j, then i = j.
 -/
-theorem degreeMultiset_sum
-    (G : SimpleGraph V) [DecidableRel G.Adj] :
-    (degreeMultiset G).sum = 2 * G.edgeFinset.card := by
-  convert G.sum_degrees_eq_twice_card_edges using 1
-
-/-! ## Edge Count of Complement -/
+theorem near_pencil_unique_edge {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (v₀ : V) (hv : ∀ i : Fin S.k, v₀ ∈ S.edges i)
+    (v : V) (hne : v ≠ v₀) (i j : Fin S.k) (hi : v ∈ S.edges i) (hj : v ∈ S.edges j) :
+    i = j := by
+  contrapose! hne; have := S.linear i j; simp_all +decide [ Finset.card_le_one ] ;
+  exact this _ hi hj _ ( hv _ ) ( hv _ )
 
 /-
-The number of edges in G plus the number of edges in Gᶜ equals n*(n-1)/2.
+The non-center part of edge i in a near-pencil has k-1 elements.
 -/
-theorem edgeCount_add_complement
-    (G : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel Gᶜ.Adj] :
-    G.edgeFinset.card + Gᶜ.edgeFinset.card =
-    Fintype.card V * (Fintype.card V - 1) / 2 := by
-  have h_sum_degrees : G.edgeFinset.card + Gᶜ.edgeFinset.card = (SimpleGraph.edgeFinset (SimpleGraph.mk (fun u v => u ≠ v) : SimpleGraph V)).card := by
-    rw [ ← Finset.card_union_of_disjoint ];
-    · congr;
-      ext ⟨ u, v ⟩ ; by_cases h : u = v <;> simp +decide [ h ];
-      exact em _;
-    · simp +decide [ SimpleGraph.compl_adj ];
-      grind +suggestions;
-  have := SimpleGraph.sum_degrees_eq_twice_card_edges ( SimpleGraph.mk ( fun u v => u ≠ v ) : SimpleGraph V );
-  simp_all +decide [ SimpleGraph.degree, SimpleGraph.neighborFinset_def ];
-  simp_all +decide [ Finset.filter_ne ]
+theorem near_pencil_erase_card {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (v₀ : V) (hv : ∀ i : Fin S.k, v₀ ∈ S.edges i)
+    (i : Fin S.k) : ((S.edges i).erase v₀).card = S.k - 1 := by
+  rw [ Finset.card_erase_of_mem ( hv i ), S.uniform i ]
+
+/-! ## EFL for k = 2
+
+Two edges of size 2 sharing at most 1 vertex are 2-colorable. -/
 
 /-
-If the edge count is reconstructible, so is the complement's edge count.
-    This means if G is reconstructible, so is Gᶜ.
+EFL systems with k = 2 are always 2-colorable.
 -/
-theorem complement_edgeCount_reconstructible
-    (G : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel Gᶜ.Adj] :
-    Gᶜ.edgeFinset.card =
-    Fintype.card V * (Fintype.card V - 1) / 2 - G.edgeFinset.card := by
-  convert edgeCount_add_complement G |> Eq.symm |> fun x => Nat.eq_sub_of_add_eq' x.symm using 1
+theorem efl_two {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (hk : S.k = 2) : S.IsKColorable := by
+  revert hk S;
+  -- Let's unfold the definition of `System` to work with the edges directly.
+  intro S hS
+  obtain ⟨edges, h_edges⟩ := S;
+  rcases edges with ( _ | _ | edges ) <;> simp_all +decide;
+  subst hS; simp_all +decide [ System.IsKColorable ] ;
+  -- Since the edges are disjoint, we can color each edge with a different color.
+  obtain ⟨a, b, hab⟩ : ∃ a b : V, a ≠ b ∧ h_edges 0 = {a, b} := by
+    have := Finset.card_eq_two.mp ( by solve_by_elim : Finset.card ( h_edges 0 ) = 2 ) ; tauto;
+  obtain ⟨c, d, hcd⟩ : ∃ c d : V, c ≠ d ∧ h_edges 1 = {c, d} := by
+    have := Finset.card_eq_two.mp ( by solve_by_elim : Finset.card ( h_edges 1 ) = 2 ) ; tauto;
+  by_cases hac : a = c <;> by_cases had : a = d <;> by_cases hbc : b = c <;> by_cases hbd : b = d <;> simp_all +decide [ Fin.forall_fin_succ ];
+  all_goals rename_i h; have := h 0 1; simp_all +decide [ Fin.forall_fin_succ ] ;
+  · use fun x => if x = c then 0 else if x = b then 1 else if x = d then 1 else 0;
+    intro i; fin_cases i <;> simp +decide [ *, EFL.System.IsStrongColoring ] ;
+    tauto;
+  · use fun x => if x = d then 0 else if x = b then 1 else if x = c then 1 else 0; simp_all +decide [ Fin.forall_fin_succ, EFL.System.IsStrongColoring ] ;
+  · use fun x => if x = a then 0 else if x = c then 1 else 0;
+    intro i; fin_cases i <;> simp +decide [ *, Set.InjOn ] ;
+    · tauto;
+    · grind;
+  · use fun x => if x = a then 0 else if x = c then 0 else 1;
+    intro i; fin_cases i <;> simp +decide [ *, EFL.System.IsStrongColoring ] ;
+    · tauto;
+    · tauto;
+  · use fun x => if x = a then 0 else if x = b then 1 else if x = c then 0 else 1;
+    intro i; fin_cases i <;> simp +decide [ *, Set.InjOn ] ;
+    · tauto;
+    · grind
 
-/-! ## Regularity Reconstruction -/
+/-! ## Degree-Sum Structural Inequality
 
-/-- A graph is k-regular if every vertex has degree k. -/
-def IsRegular (G : SimpleGraph V) [DecidableRel G.Adj] (k : ℕ) : Prop :=
-  ∀ v : V, G.degree v = k
+The number of degree-1 vertices is at least k (each edge has k vertices,
+at most k-1 of which can have degree ≥ 2). This uses the high-degree bound. -/
 
 /-
-If G is k-regular, then every deck card has the same number of edges:
-    |E(G)| - k = |E(G_v)| for all v.
+Each edge contributes at least one degree-1 vertex that appears in no
+    other edge (unless k ≤ 1). For k ≥ 2, the k vertices of edge i include
+    at most k-1 vertices shared with other edges, leaving at least one
+    exclusive vertex.
 -/
-theorem regular_uniform_deck
-    (G : SimpleGraph V) [DecidableRel G.Adj] (k : ℕ)
-    (hreg : IsRegular G k) (v : V) :
-    deckCardEdges' G v = G.edgeFinset.card - k := by
-  rw [ ← hreg v, degree_from_deckCard ];
-  rw [ Nat.sub_sub_self ];
-  exact Finset.card_le_card ( Finset.filter_subset _ _ )
+theorem edge_has_exclusive_vertex {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (hk : 2 ≤ S.k) (i : Fin S.k) :
+    ∃ v ∈ S.edges i, S.degree v = 1 := by
+  -- Consider the set of vertices in edge i that are shared with other edges.
+  set shared_vertices := Finset.filter (fun v => S.degree v ≥ 2) (S.edges i);
+  -- By linearity, each vertex in `shared_vertices` is shared with at most one other edge.
+  have h_shared_vertices_card : shared_vertices.card ≤ S.k - 1 := by
+    -- By linearity, each vertex in `shared_vertices` is shared with at most one other edge, so there are at most `S.k - 1` such vertices.
+    have h_shared_vertices_card : shared_vertices.card ≤ Finset.card (Finset.biUnion (Finset.univ.erase i) (fun j => S.edges i ∩ S.edges j)) := by
+      refine Finset.card_mono ?_;
+      intro v hv; simp_all +decide [ Finset.subset_iff ] ;
+      obtain ⟨ j, hj ⟩ := Finset.exists_mem_ne ( show 1 < Finset.card ( Finset.filter ( fun x => v ∈ S.edges x ) Finset.univ ) from by aesop ) i; use j; aesop;
+    refine' le_trans h_shared_vertices_card ( le_trans ( Finset.card_biUnion_le ) _ );
+    exact le_trans ( Finset.sum_le_sum fun _ _ => S.linear _ _ <| by aesop ) ( by simp +decide [ Finset.card_erase_of_mem ( Finset.mem_univ i ) ] );
+  contrapose! h_shared_vertices_card;
+  rw [ show shared_vertices = S.edges i from Finset.filter_true_of_mem fun v hv => Nat.lt_of_le_of_ne ( Nat.succ_le_of_lt ( Finset.card_pos.mpr ⟨ i, by aesop ⟩ ) ) ( Ne.symm ( h_shared_vertices_card v hv ) ) ] ; simp +decide [ S.uniform i ] ; omega;
+
+/-! ## Near-Pencil Vertex Count
+
+A near-pencil EFL system has exactly k(k-1) + 1 = k² - k + 1 vertices
+in its vertex set. -/
 
 /-
-In a regular graph, all deck cards have the same edge count.
-    This means regularity is detectable from the deck.
+In a near-pencil EFL system, the vertex set has exactly k² - k + 1 elements.
 -/
-theorem regular_deck_constant
-    (G : SimpleGraph V) [DecidableRel G.Adj] (k : ℕ)
-    (hreg : IsRegular G k) (u v : V) :
-    deckCardEdges' G u = deckCardEdges' G v := by
-  -- Apply the regularity condition to both vertices u and v.
-  have h_u := regular_uniform_deck G k hreg u
-  have h_v := regular_uniform_deck G k hreg v;
-  rw [h_u, h_v]
+theorem near_pencil_vertexSet_card {V : Type*} [DecidableEq V] [Fintype V]
+    (S : System V) (hk : 2 ≤ S.k) (v₀ : V) (hv : ∀ i : Fin S.k, v₀ ∈ S.edges i) :
+    S.vertexSet.card = S.k ^ 2 - S.k + 1 := by
+  have h_disjoint : ∀ i j : Fin S.k, i ≠ j → Disjoint ((S.edges i).erase v₀) ((S.edges j).erase v₀) := by
+    intro i j hij; rw [ Finset.disjoint_left ] ; intro x hx₁ hx₂; simp_all +decide [ Finset.mem_erase ] ;
+    exact hij ( near_pencil_unique_edge S v₀ hv x hx₁.1 i j hx₁.2 hx₂ );
+  have h_union : S.vertexSet = {v₀} ∪ Finset.biUnion Finset.univ (fun i => (S.edges i).erase v₀) := by
+    ext v; simp [System.vertexSet, hv];
+    exact ⟨ fun ⟨ i, hi ⟩ => if h : v = v₀ then Or.inl h else Or.inr ⟨ h, i, hi ⟩, fun h => h.elim ( fun h => ⟨ ⟨ 0, by linarith ⟩, h.symm ▸ hv _ ⟩ ) fun h => ⟨ h.2.choose, h.2.choose_spec ⟩ ⟩;
+  rw [ h_union, Finset.card_union_of_disjoint, Finset.card_biUnion ] <;> norm_num;
+  · rw [ Finset.sum_congr rfl fun i _ => by rw [ Finset.card_erase_of_mem ( hv i ), S.uniform i ] ] ; simp +decide [ sq, Nat.mul_sub_left_distrib ] ; ring;
+  · exact fun i _ j _ hij => h_disjoint i j hij
 
-/-
-If all deck card edge counts are equal, the graph is regular.
-    This is the converse: uniform deck implies regular graph.
--/
-theorem uniform_deck_implies_regular
-    (G : SimpleGraph V) [DecidableRel G.Adj]
-    (h : ∀ u v : V, deckCardEdges' G u = deckCardEdges' G v) :
-    ∃ k, IsRegular G k := by
-  by_cases hV : Nonempty V;
-  · exact ⟨ G.degree hV.some, fun v => by rw [ degree_from_deckCard, degree_from_deckCard, h v hV.some ] ⟩;
-  · unfold IsRegular; aesop;
-
-/-! ## Disconnected Graph Reconstruction -/
-
-/-
-For reconstruction, a key fact: the number of edges incident to a vertex
-    equals its degree. Combined with edge count reconstruction, this means
-    we can identify the degree of the "deleted vertex" from each card.
--/
-theorem deleted_vertex_degree_from_card
-    (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) :
-    G.edgeFinset.card - deckCardEdges' G v = G.degree v := by
-  convert degree_from_deckCard G v |> Eq.symm using 1
-
-end Reconstruction
+end EFL
