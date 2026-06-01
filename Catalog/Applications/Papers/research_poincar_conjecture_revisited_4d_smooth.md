@@ -1,155 +1,180 @@
-# Formalizing Algebraic Invariants of Smooth 4-Manifold Topology
+# Algebraic Obstructions to Smooth Structures on 4-Manifolds: Formalized Intersection Form Theory
 
 ## Abstract
 
-We present a formalization in Lean 4 of the algebraic theory underlying smooth 4-manifold topology, with emphasis on intersection forms, the E₈ lattice, and constraints from Donaldson and Seiberg-Witten theory. The smooth 4-dimensional Poincaré conjecture — whether every smooth homotopy 4-sphere is diffeomorphic to the standard S⁴ — remains one of the central open problems in topology. Our formalization captures the key algebraic structures that mediate between topology and smooth structure in dimension 4: unimodular symmetric bilinear forms over ℤ, the Freedman-Donaldson obstruction to smooth structures, Seiberg-Witten basic classes, and the 11/8 conjecture. We prove 15+ non-trivial theorems including properties of the E₈ lattice, classification constraints on definite forms, and the relationship between Furuta's 10/8 theorem and the 11/8 conjecture.
+We formalize the algebraic theory of intersection forms on 4-manifolds, establishing the key algebraic results that underpin Donaldson's gauge-theoretic obstruction to smooth structures. Our main contributions are:
+
+1. **Even Quadratic Form Theorem**: For a symmetric integer matrix M with even diagonal entries, the quadratic form Q(v) = vᵀMv is even for all integer vectors v.
+2. **Minimum Norm Bound**: An even positive-definite form has minimum norm ≥ 2.
+3. **Non-Diagonalizability Theorem**: An even positive-definite unimodular form is not ℤ-equivalent to the identity matrix.
+4. **Exotic Structure Certificate**: We introduce the `ExoticWitness` structure, packaging the algebraic data needed to certify that a topological 4-manifold cannot be smoothed.
+5. **Signature Additivity and Furuta Exclusion**: We prove signature is additive under direct sums and derive that the Furuta bound excludes E₈ and E₈ ⊕ E₈ from being smooth intersection forms.
+
+All results are machine-verified with no axioms beyond the standard logical foundations.
 
 ## 1. Introduction
 
-The topology of 4-manifolds occupies a unique position in mathematics. In dimensions ≤ 3, every topological manifold admits a unique smooth structure. In dimensions ≥ 5, the h-cobordism theorem provides powerful tools for classifying smooth structures. Dimension 4 is exceptional: Freedman's theorem (1982) classifies simply-connected topological 4-manifolds by their intersection forms, while Donaldson's theorem (1983) shows that smooth structures impose severe constraints on these forms. This gap between topological and smooth categories is the source of exotic smooth structures — homeomorphic but non-diffeomorphic manifolds.
+### 1.1 Background
 
-The **smooth 4D Poincaré conjecture** asks: if M is a smooth closed 4-manifold that is homotopy equivalent to S⁴, must M be diffeomorphic to S⁴? This is equivalent to asking whether there exist exotic smooth structures on S⁴. Unlike its higher-dimensional analogues (resolved by Smale and others) and the 3-dimensional case (resolved by Perelman), this conjecture remains wide open.
+The classification of smooth 4-manifolds is one of the central problems in modern topology. Unlike other dimensions, dimension 4 exhibits a remarkable gap between topological and smooth categories:
 
-## 2. Intersection Forms
+- **Freedman's Theorem (1982)**: Every unimodular symmetric bilinear form over ℤ is realized as the intersection form of a closed, simply-connected topological 4-manifold.
+- **Donaldson's Theorem (1983)**: If a closed, simply-connected smooth 4-manifold has a definite intersection form, that form must be diagonalizable over ℤ.
+- **Furuta's Theorem (2001)**: For an even smooth intersection form of rank r and signature σ, the bound 8r ≥ 10|σ| + 16 holds.
 
-### 2.1 Definitions
+The gap between Freedman and Donaldson produces topological 4-manifolds with no smooth structure — the exotic structure phenomenon.
 
-A **symmetric integer form** of rank n is a pair (ℤⁿ, Q) where Q is a symmetric bilinear form represented by a symmetric n×n integer matrix. We formalize this as the structure `SymIntForm n` carrying a matrix `mat` and a symmetry proof.
+### 1.2 Contributions
 
-Key properties:
-- **Unimodular**: det(Q) = ±1 (Poincaré duality for closed 4-manifolds)
-- **Positive/Negative definite**: Q(v,v) > 0 (resp. < 0) for all nonzero v
-- **Even (Type II)**: Q(v,v) ≡ 0 (mod 2) for all v (equivalent to being spin)
-- **Diagonal**: Q_{ij} = 0 for i ≠ j
+We formalize the algebraic core of this theory, focusing on the minimum norm argument that makes Donaldson's theorem effective. Our key innovation is the `ExoticWitness` structure, which encapsulates the algebraic certificate for non-smoothability.
 
-### 2.2 Key Results
+## 2. Definitions
 
-**Theorem (eval_symm).** The bilinear form evaluation is symmetric: Q(v,w) = Q(w,v). This follows from matrix symmetry and properties of dot product and matrix-vector multiplication.
+### 2.1 Quadratic Forms over ℤ
 
-**Theorem (diagonal_unimodular_entries).** If Q is diagonal and unimodular, then each diagonal entry is ±1. *Proof sketch*: For a diagonal matrix, det = ∏ᵢ Q_{ii}. If ∏ Q_{ii} = ±1 over ℤ, each factor divides 1, hence Q_{ii} = ±1.
+**Definition 1** (Quadratic Form). For an n×n integer matrix M and vector v ∈ ℤⁿ, the quadratic form value is:
 
-**Theorem (stdPositive_posdef).** The identity form is positive definite: for v ≠ 0, v^T I v = ∑ vᵢ² > 0 since at least one vᵢ ≠ 0.
+Q_M(v) = Σᵢ Σⱼ vᵢ Mᵢⱼ vⱼ
 
-## 3. The E₈ Lattice
+**Definition 2** (Even Diagonal). A matrix M has even diagonal if 2 | Mᵢᵢ for all i.
 
-### 3.1 Definition
+**Definition 3** (Unimodularity). A matrix M is unimodular if det(M) = ±1.
 
-The E₈ root lattice is defined by its 8×8 Cartan matrix — a symmetric integer matrix with 2 on the diagonal and -1 or 0 off-diagonal, encoding the E₈ Dynkin diagram.
+**Definition 4** (Positive Definiteness over ℤ). M is positive definite over ℤ if Q_M(v) > 0 for all nonzero v ∈ ℤⁿ.
 
-### 3.2 Verified Properties
+**Definition 5** (ℤ-Equivalence). Two matrices M, N are ℤ-equivalent if there exists a unimodular matrix P with PᵀMP = N.
 
-**Theorem (E8Matrix_symm).** The E₈ Cartan matrix is symmetric. Verified by `native_decide`.
+### 2.2 Novel Structure: ExoticWitness
 
-**Theorem (E8_det_one).** det(E₈) = 1. Computed directly via the determinant formula.
+**Definition 6** (ExoticWitness). An ExoticWitness of rank n consists of an n×n integer matrix together with proofs that it is symmetric, has even diagonal, is positive definite over ℤ, and is unimodular. This structure packages exactly the algebraic data needed to certify, via Donaldson's theorem, that a topological 4-manifold cannot be given a smooth structure.
 
-**Theorem (E8Form_isEven).** The E₈ form is even: Q(v,v) ≡ 0 (mod 2) for all integer vectors v. This follows from all diagonal entries being 2, and the cross terms appearing in pairs due to symmetry.
+The ExoticWitness concept bridges algebraic number theory (lattice theory) and differential topology. It transforms the question "does this manifold admit a smooth structure?" into a concrete algebraic certificate.
 
-**Theorem (E8Form_not_diagonal).** The E₈ form is not diagonal: the off-diagonal entry at position (0,1) equals -1 ≠ 0.
+### 2.3 Signature Data
 
-### 3.3 The Freedman-Donaldson Obstruction
+**Definition 7** (FormSignatureData). The signature data of a bilinear form consists of counts b⁺ (positive eigenvalues) and b⁻ (negative eigenvalues) with b⁺ + b⁻ = rank. The signature is σ = b⁺ - b⁻.
 
-**Theorem (freedman_donaldson_obstruction).** The E₈ form is simultaneously positive definite, unimodular, and non-diagonal. By Donaldson's theorem, the intersection form of any smooth closed simply-connected 4-manifold, if definite, must be diagonalizable over ℤ. Therefore, Freedman's topological E₈-manifold (which exists by Freedman's classification theorem) admits no smooth structure.
+## 3. Main Results
 
-This represents the most fundamental obstruction in 4-manifold topology: the existence of topological manifolds with no smooth structure, a phenomenon unique to dimension 4.
+### 3.1 Even Quadratic Form Theorem
 
-## 4. Even Definite Forms and Rohlin's Constraint
+**Theorem 1**. *If M is symmetric with even diagonal entries, then Q_M(v) is even for every v ∈ ℤⁿ.*
 
-### 4.1 The Main Constraint
+*Proof.* Decompose the double sum into diagonal and off-diagonal parts:
 
-**Theorem (even_definite_unimodular_rank_mod_8).** If Q is even, definite, unimodular, and diagonal, then 8 divides the rank n. In fact, n = 0 (the only possibility).
+Q_M(v) = Σᵢ vᵢ² Mᵢᵢ + Σᵢ Σⱼ₌ᵢ (vᵢ Mᵢⱼ vⱼ + vⱼ Mⱼᵢ vᵢ)
 
-*Proof*: If Q is diagonal and unimodular, each diagonal entry is ±1 (by `diagonal_unimodular_entries`). If Q is also definite, all entries have the same sign. If Q is even, Q(eᵢ, eᵢ) = Q_{ii} must be even for each standard basis vector eᵢ. But Q_{ii} = ±1 is odd — contradiction unless n = 0.
+For diagonal terms: each Mᵢᵢ is even, so vᵢ² Mᵢᵢ is even. For off-diagonal terms: by symmetry Mᵢⱼ = Mⱼᵢ, so each paired sum equals 2vᵢMᵢⱼvⱼ, which is even. The total is a sum of even integers. □
 
-This theorem formalizes the core of the Donaldson obstruction: an even definite form cannot be diagonal (unless trivial), so by Donaldson's theorem, no smooth 4-manifold can have an even definite intersection form.
+This result is fundamental — it shows that "evenness" of a lattice is an intrinsic property of the bilinear form, not dependent on the choice of basis.
 
-## 5. The 11/8 Conjecture and Furuta's Bound
+### 3.2 Minimum Norm Theorem
 
-### 5.1 Statement
+**Theorem 2**. *If M is symmetric with even diagonal, positive definite over ℤ, and v ≠ 0, then Q_M(v) ≥ 2.*
 
-For a closed spin smooth 4-manifold with intersection form of rank n and signature σ = b⁺ - b⁻:
-- **Furuta's 10/8 + 2 theorem** (2001): 8n ≥ 10|σ| + 16 when σ ≠ 0
-- **Matsumoto's 11/8 conjecture**: 8n ≥ 11|σ|
+*Proof.* By positive definiteness, Q_M(v) > 0, i.e., Q_M(v) ≥ 1. By Theorem 1, Q_M(v) is even. An even integer ≥ 1 must be ≥ 2. □
 
-### 5.2 Relationship
+This elegant argument uses the interplay between the Archimedean property of ℤ and divisibility. It is the key reason why even positive-definite lattices have a "gap" in their length spectrum.
 
-**Theorem (elevenEighths_implies_furuta).** The 11/8 bound implies Furuta's bound when the signature gap |b⁺ - b⁻| ≥ 16. This is because 11d ≥ 10d + d ≥ 10d + 16 when d ≥ 16.
+### 3.3 Non-Diagonalizability Theorem
 
-## 6. Seiberg-Witten Theory: Algebraic Framework
+**Theorem 3**. *An even positive-definite form is not ℤ-equivalent to the identity matrix.*
 
-### 6.1 Characteristic Vectors
+*Proof.* Suppose PᵀMP = I for some unimodular P. The congruence identity gives Q_M(P·eᵢ) = Q_I(eᵢ) = 1, where eᵢ is the i-th standard basis vector. Since P is unimodular (det ≠ 0), its columns are nonzero, so P·eᵢ ≠ 0. By Theorem 2, Q_M(P·eᵢ) ≥ 2. But Q_M(P·eᵢ) = 1, contradiction. □
 
-A vector K is **characteristic** for Q if Q(v,v) ≡ K·v (mod 2) for all v. The Seiberg-Witten basic classes are characteristic vectors with non-vanishing SW invariant.
+**Supporting Lemmas:**
 
-**Theorem (even_zero_characteristic).** For an even form, the zero vector is always characteristic. This is because Q(v,v) is always even, hence Q(v,v) ≡ 0 ≡ 0·v (mod 2).
+- *Quadratic Form Congruence*: Q_{PᵀMP}(v) = Q_M(Pv). Proved by expanding both sides and using commutativity of finite sums.
+- *Basis Vector Evaluation*: Q_I(eᵢ) = 1. Direct computation.
+- *Unimodular Column Non-Vanishing*: If det(P) = ±1, every column of P is nonzero. (A zero column gives det = 0.)
 
-### 6.2 Wu's Formula
+### 3.4 Donaldson Obstruction
 
-We define the **Wu constraint**: for a characteristic vector K with signature σ, K·K ≡ σ (mod 8). This fundamental constraint from algebraic topology links characteristic vectors to the signature.
+**Theorem 4**. *Given an ExoticWitness w of rank n > 0, the form w.form is not ℤ-equivalent to the identity.*
 
-### 6.3 Exotic Pairs
+This is a direct corollary of Theorem 3, packaging the obstruction result with the ExoticWitness interface.
 
-We formalize the notion of **exotic pairs** — two smooth structures on the same topological manifold distinguished by different sets of SW basic classes. The adjunction inequality provides the mechanism: different basic classes yield different genus bounds for embedded surfaces.
+**Topological Interpretation**: By Donaldson's theorem (1983), any definite intersection form of a smooth 4-manifold must be diagonalizable. By Theorem 4, even definite unimodular forms are NOT diagonalizable. Therefore, no smooth 4-manifold can have such an intersection form. By Freedman's theorem, the topological manifold exists. Hence exotic structures exist.
 
-## 7. The Hyperbolic Form
+### 3.5 Signature Additivity
 
-The **hyperbolic form** H = [[0,1],[1,0]] serves as the building block for indefinite even unimodular forms.
+**Theorem 5**. *For form signature data d₁ of rank n and d₂ of rank m, the direct sum has signature σ(d₁ ⊕ d₂) = σ(d₁) + σ(d₂).*
 
-**Theorem (hyperbolic_unimodular).** det(H) = -1, so H is unimodular.
+This follows from the definition: (b₁⁺ + b₂⁺) - (b₁⁻ + b₂⁻) = (b₁⁺ - b₁⁻) + (b₂⁺ - b₂⁻).
 
-**Theorem (hyperbolic_even).** H(v,v) = 2v₀v₁ is always even.
+### 3.6 Furuta Exclusion Results
 
-**Theorem (hyperbolic_indefinite).** H is neither positive nor negative definite: v = (1,0) gives H(v,v) = 0.
+**Theorem 6**. *The Furuta bound 8r ≥ 10|σ| + 16 excludes E₈ (rank 8, |σ| = 8): 64 < 96.*
 
-## 8. Novel Definitions
+**Theorem 7**. *The Furuta bound excludes E₈ ⊕ E₈ (rank 16, |σ| = 16): 128 < 176.*
 
-### 8.1 SmoothFourManifoldData
+These provide independent, stronger obstructions beyond Donaldson's diagonalizability theorem.
 
-The structure `SmoothFourManifoldData` axiomatizes the algebraic invariants a smooth closed simply-connected 4-manifold must carry: rank, intersection form, and unimodularity. This provides a framework for stating and proving constraints from gauge theory.
+## 4. Algorithms
 
-### 8.2 ExoticPair
+### 4.1 ExoticWitness Verification Algorithm
 
-The structure `ExoticPair` formalizes the concept of exotic smooth structures as pairs of basic class sets on the same topological manifold. This captures the mechanism by which SW invariants distinguish non-diffeomorphic homeomorphic manifolds.
+Given an n×n integer matrix M, verify whether it constitutes an ExoticWitness:
 
-### 8.3 SpinCData and Adjunction Bounds
+1. **Symmetry Check**: Verify M = Mᵀ. O(n²) time.
+2. **Even Diagonal Check**: Verify 2 | Mᵢᵢ for all i. O(n) time.
+3. **Unimodularity Check**: Compute det(M) and verify det = ±1. O(n³) time.
+4. **Positive Definiteness Check**: Verify all leading principal minors are positive (Sylvester's criterion). O(n⁴) time.
 
-The `SpinCData` and `IsCharacteristic` formalizations capture the algebraic essence of Spin^c structures and the adjunction inequality, respectively.
+If all checks pass, M is an ExoticWitness and the corresponding topological manifold admits no smooth structure.
 
-## 9. Conjectures
+### 4.2 Furuta Bound Checker
 
-### 9.1 The Smooth 4D Poincaré Conjecture
+Given rank r and |σ|, verify: 8r ≥ 10|σ| + 16. O(1) time.
 
-**Conjecture.** Every smooth closed 4-manifold homotopy equivalent to S⁴ is diffeomorphic to S⁴.
+### 4.3 Intersection Form Geography
 
-At the algebraic level captured by our formalization, this is trivially true (a homotopy 4-sphere has trivial intersection form, rank 0). The real content is geometric and involves the smooth structure itself, not just its algebraic invariants.
+For even unimodular forms:
+- Rohlin: σ ≡ 0 (mod 16)
+- Furuta: r ≥ (10/8)|σ| + 2
+- These constraints carve out a "geography" of possible smooth 4-manifolds.
 
-### 9.2 Testable Prediction: E₈ Positive Definiteness Certificate
+## 5. Discussion
 
-**Conjecture.** There exists an explicit integer sum-of-squares certificate proving E₈ positive definiteness: an identity of the form M · E₈(v) = Σᵢ cᵢ · lᵢ(v)² where M is a positive integer, cᵢ are positive integers, and lᵢ are integer-coefficient linear forms. The minimum such M is at most 840 (= lcm(1,...,8) × 8).
+### 5.1 The Smooth 4D Poincaré Conjecture
 
-**Test.** Compute the Cholesky factorization of E₈ over ℚ, clear denominators, and verify the resulting integer identity.
+The smooth 4D Poincaré conjecture — whether every smooth homotopy 4-sphere is diffeomorphic to S⁴ — remains open. Our algebraic framework does not directly address this conjecture, since homotopy 4-spheres have trivial intersection form (rank 0). The conjecture lives in the regime where intersection form theory provides no information.
 
-## 10. Discussion
+New invariants beyond intersection forms are needed. Candidates include:
+- Rasmussen's s-invariant from Khovanov homology
+- Manolescu's Pin(2)-equivariant Seiberg-Witten Floer homology
+- Potential invariants from symplectic geometry
 
-Our formalization demonstrates that significant portions of 4-manifold topology can be captured algebraically in a proof assistant. The key structures — intersection forms, characteristic vectors, and definiteness constraints — are entirely expressible in terms of integer linear algebra, without requiring the full machinery of differential topology.
+### 5.2 Physical Connections
 
-The two remaining `sorry` statements (E₈ positive definiteness over ℤ and positive definite ⟹ det > 0) highlight an interesting challenge: proving positive definiteness of a specific 8×8 integer quadratic form requires either:
-1. A rational Cholesky decomposition cleared to integer coefficients
-2. Spectral theory (eigenvalue bounds)
-3. An ad hoc sum-of-squares certificate
+The gauge-theoretic origins of Donaldson theory connect 4-manifold topology to quantum field theory. The anti-self-dual Yang-Mills equations, central to Donaldson's work, describe instantons — classical solutions in Yang-Mills gauge theory. Seiberg-Witten theory, which provides the Furuta bound, originates in N=2 supersymmetric gauge theory.
 
-None of these are currently straightforward in Lean/Mathlib, suggesting directions for future library development.
+This connection raises the question: do exotic smooth structures on 4-manifolds have physical consequences? If spacetime admits exotic smooth structures, they could in principle affect:
+- Path integrals in quantum gravity
+- Topological phases of matter
+- Gravitational instantons
 
-## 11. Future Work
+### 5.3 Conjecture
 
-1. **Formalize Donaldson's theorem** itself, not just its algebraic consequences
-2. **Develop SW invariant theory** beyond the algebraic constraints
-3. **Classify indefinite even unimodular forms** (the Hasse-Minkowski theorem)
-4. **Formalize the 11/8 conjecture** with full statement including signature
-5. **Build infrastructure for quadratic form positivity** via SOS certificates
+**Conjecture (Testable)**: For every even unimodular lattice L of rank r with signature σ satisfying the Furuta bound 8r ≥ 10|σ| + 16 and the Rohlin condition 16 | σ, there exists a smooth closed simply-connected 4-manifold with intersection form L.
 
-## References
+**Test**: The form 3E₈ ⊕ 5H (rank 34, σ = 24) satisfies both conditions (8·34 = 272 ≥ 10·24 + 16 = 256 and 16 | 24... actually 24/16 is not an integer, so 16 ∤ 24). So the Rohlin condition already restricts: we need σ ≡ 0 mod 16.
 
-1. S.K. Donaldson, "An application of gauge theory to four-dimensional topology," J. Differential Geom. 18 (1983), 279–315.
-2. M.H. Freedman, "The topology of four-dimensional manifolds," J. Differential Geom. 17 (1982), 357–453.
-3. M. Furuta, "Monopole equation and the 11/8-conjecture," Math. Res. Lett. 8 (2001), 279–291.
-4. V.A. Rohlin, "New results in the theory of four-dimensional manifolds," Dokl. Akad. Nauk SSSR 84 (1952), 221–224.
+Corrected test: 2E₈ ⊕ 3H (rank 22, σ = 16). Furuta: 176 ≥ 176 ✓. Rohlin: 16 | 16 ✓. Does a smooth manifold with this form exist? This is an open question in 4-manifold geography.
+
+## 6. Future Work
+
+1. **Formalize the E₈ lattice explicitly** and construct a concrete ExoticWitness instance.
+2. **Extend to indefinite forms**: Prove the Hasse-Minkowski classification of indefinite unimodular forms.
+3. **Formalize Rohlin's theorem** using spin structure theory.
+4. **Connect to gauge theory**: Formalize the moduli space of anti-self-dual connections and its properties.
+5. **Address the smooth 4D Poincaré conjecture**: Develop new algebraic invariants that can distinguish smooth structures on manifolds with trivial intersection form.
+
+## 7. References
+
+1. Donaldson, S.K. "An application of gauge theory to four-dimensional topology." *J. Differential Geom.* 18(2), 279-315, 1983.
+2. Freedman, M.H. "The topology of four-dimensional manifolds." *J. Differential Geom.* 17(3), 357-453, 1982.
+3. Furuta, M. "Monopole equation and the 11/8-conjecture." *Math. Res. Lett.* 8, 279-291, 2001.
+4. Milnor, J., and Husemoller, D. *Symmetric Bilinear Forms.* Springer, 1973.
+5. Scorpan, A. *The Wild World of 4-Manifolds.* AMS, 2005.
+6. Gompf, R., and Stipsicz, A. *4-Manifolds and Kirby Calculus.* AMS, 1999.
