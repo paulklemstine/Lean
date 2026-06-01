@@ -1,75 +1,73 @@
-# The Geometry That Shouldn't Exist
+# When Triangles Refuse to Align: The Strange Geometry Beyond Desargues
 
-## How mathematicians discovered entire worlds where triangles break the rules
+## A Hidden World of Mathematical Rebellion
 
-In 1639, a sixteen-year-old French prodigy named Girard Desargues published a theorem so fundamental that for centuries, mathematicians assumed it was an inevitable truth of geometry itself. The theorem says something deceptively simple: if two triangles are "in perspective" from a point — meaning the lines connecting corresponding vertices all meet at a single point — then they must also be in perspective from a line — the intersections of their corresponding sides must all lie on a single line.
+Imagine two triangles floating in space, each vertex connected by a line that passes through a single point — like the spokes of a wheel emanating from a hub. In 1648, the French mathematician Girard Desargues discovered something remarkable: the intersections of corresponding sides of these triangles always line up. Always. Without exception.
 
-For over two hundred years, nobody questioned this. Why would they? In the flat geometry of Euclid, and even in the projective geometry that Desargues helped create, the theorem always holds. It seemed as inescapable as 2 + 2 = 4.
+Or so mathematicians believed for nearly three centuries.
 
-Then, in the early twentieth century, mathematicians made a shocking discovery: Desargues was wrong. Not wrong in the sense that his proof had an error — his proof was impeccable. Wrong in the sense that his theorem was not a universal truth of geometry. There exist perfectly consistent geometric worlds where Desargues' theorem fails.
+In 1943, Marshall Hall Jr. shattered this certainty by constructing a mathematical universe — a perfectly consistent geometry — where Desargues' theorem simply *fails*. Two triangles can be perspective from a point without being perspective from a line. It was as if someone had found a world where parallel lines could cross, or where the angles of a triangle didn't add up to 180 degrees. Except this was far stranger: this geometry wasn't curved or warped. It obeyed all the same basic incidence rules as ordinary geometry. The difference lay in something far more subtle — in the algebra hiding beneath the geometric surface.
 
-## A Universe of Alternative Geometries
+## The Algebra-Geometry Connection
 
-The story begins with an unexpected connection between geometry and algebra.
+To understand what Hall discovered, we need to appreciate one of mathematics' deepest insights: geometry and algebra are two languages for the same reality.
 
-Every geometric space can be "coordinatized" — described using numbers, the way we use x and y coordinates on a flat plane. When mathematicians coordinatize a projective plane (a geometry where every pair of lines meets, with no parallel lines), the numbers they use don't have to be ordinary real numbers. They can be elements of any algebraic system that supports addition, subtraction, multiplication, and division.
+Every geometric plane can be "coordinatized" — assigned a number system that describes it, much the way latitude and longitude describe the Earth. For ordinary Euclidean geometry, that number system is the real numbers. For the projective geometry of perspective drawing and Renaissance art, it's any *division ring* — a number system where you can add, subtract, multiply, and divide (except by zero), where multiplication is associative: (a × b) × c always equals a × (b × c).
 
-The key insight is this: Desargues' theorem holds in a projective plane if and only if the coordinate system is a *division ring* — an algebraic structure where multiplication is associative. That is, where a × (b × c) always equals (a × b) × c.
+Desargues' theorem, it turns out, is not really about triangles at all. It's about *associativity*. The theorem holds in a geometry precisely when the underlying number system has associative multiplication. Take away associativity, and Desargues' theorem crumbles.
 
-This opens a door to a question that seems absurd at first: what happens if you build a coordinate system where multiplication is NOT associative?
+## The Hall Quasifield: Breaking the Rules
 
-## Breaking the Rules
+Hall's construction begins with GF(9) — the finite field with nine elements, built by extending the integers modulo 3 with a square root of -1 (call it α). In this tiny number system, 1 + 1 + 1 = 0, and α² = -1 = 2.
 
-The answer is that you get a perfectly valid geometry — one with points, lines, and all the expected properties of a projective plane — except that Desargues' theorem fails. Some pairs of perspective triangles simply refuse to be perspective from a line.
+The field GF(9) has a natural symmetry: the *Frobenius automorphism* σ, which maps each element to its cube. In coordinates, σ(a + bα) = a + 2bα. This map is like a mirror that fixes the base field GF(3) and flips everything else.
 
-The algebraic structures that make this possible are called *quasifields*. They're like ordinary number systems, but with a weaker multiplication rule. Instead of full associativity, they only require "right distributivity" — the rule that (a + b) × c = a × c + b × c. This single weakening is enough to shatter Desargues' theorem while preserving everything else about projective geometry.
+Hall's genius was to use this mirror selectively. He defined a new multiplication ○ on GF(9):
 
-The first concrete example was constructed by Marshall Hall Jr. in 1943. Hall took the finite field with 3 elements (the numbers 0, 1, 2 with arithmetic modulo 3) and built a 9-element quasifield by "twisting" the multiplication in a quadratic extension. The result was the Hall plane of order 9 — the smallest non-Desarguesian projective plane, with 91 points and 91 lines.
+- If the right-hand factor is in the base field GF(3): multiply normally.
+- If the right-hand factor is *not* in GF(3): first apply the Frobenius mirror to the left factor, then multiply.
 
-## The Nucleus: Where Associativity Survives
+The result is a *quasifield* — an algebraic structure that satisfies right distributivity (a + b) ○ c = a ○ c + b ○ c, has identity elements, and allows unique division. But this quasifield is *not* a field, because its multiplication is neither associative nor left-distributive.
 
-Inside every quasifield lurks a hidden structure called the *nucleus* — the set of elements that still associate with everything else. It's like finding a pocket of normal physics inside an alien universe.
+The failure of associativity can be witnessed concretely. Take x = α, y = α, z = 1 + α:
 
-The nucleus always contains at least 0 and 1, and it's closed under addition and multiplication. This means the nucleus forms a sub-division-ring — a perfectly well-behaved algebraic system embedded inside the unruly quasifield. The size of the nucleus measures how "non-associative" the quasifield is.
+- (x ○ y) ○ z = (1 + α)
+- x ○ (y ○ z) = (2 + 2α)
 
-For a Hall quasifield of order q², the nucleus has exactly q elements. The difference q² - q is the "defect" — a precise measurement of how badly Desargues' theorem fails. When the defect is zero, the quasifield is actually a field, and Desargues' theorem holds perfectly.
+These are different. In 81 elements' worth of arithmetic, associativity breaks down on this single triple. One counterexample is all it takes.
 
-## Symmetry Lost
+## A Plane with 91 Points
 
-One of the most profound consequences of breaking Desargues' theorem is the loss of symmetry.
+The Hall quasifield gives birth to the *Hall plane* — a projective plane with 9² + 9 + 1 = 91 points and 91 lines. Every line passes through exactly 10 points. Every point lies on exactly 10 lines. Any two points determine a unique line. Any two lines meet in a unique point. All the basic axioms of projective geometry hold perfectly.
 
-In a Desarguesian plane of order n, the symmetry group — the set of all transformations that preserve the geometry — is PGL(3, n), which has order n³(n³ - 1)(n² - 1). This is an enormous group. For the plane of order 9, it has 42,456,960 symmetries.
+And yet, Desargues' theorem fails. There exist configurations of two triangles, perspective from a point, whose corresponding sides do *not* meet on a common line.
 
-The Hall plane of order 9 has far fewer: its symmetry group has only 9² × 8 × 9 × 8 = 41,472 symmetries — roughly a thousand times fewer. And the gap grows dramatically with the order. For larger planes, the symmetry group of the non-Desarguesian plane becomes vanishingly small compared to its Desarguesian cousin.
+This is the smallest non-Desarguesian projective plane, and its discovery opened a floodgate. Mathematicians went on to find non-Desarguesian planes of every prime-power-squared order: 9, 16, 25, 49, 64, 81, and infinitely beyond. Each one represents a fundamentally different geometry — a universe with its own internal logic, its own symmetries, its own surprises.
 
-This reveals a deep principle: *less algebraic structure means less geometric symmetry*. The loss of associativity doesn't just affect which theorems hold — it fundamentally constrains the richness of the geometry's symmetry group. We proved that the symmetry loss scales as the fourth power of the field size.
+## The Symmetry Gap
+
+One of the most striking features of non-Desarguesian planes is their *reduced symmetry*. The standard Desarguesian plane of order q has a collineation group (its group of geometric symmetries) of size |PGL(3, q)| — a number that grows rapidly with q. For q = 9, this is over 42 million symmetries.
+
+The Hall plane, by contrast, has far fewer. Its collineation group is strictly smaller than PGL(3, 9). The loss of associativity in the algebra translates directly into a loss of symmetry in the geometry. Fewer algebraic identities mean fewer geometric transformations that preserve the structure.
+
+This symmetry gap is not just a curiosity — it has deep implications for coding theory, network design, and the foundations of geometry itself.
 
 ## Why It Matters
 
-The study of non-Desarguesian planes isn't just mathematical curiosity. It touches on deep questions across mathematics:
+The existence of non-Desarguesian planes challenges our intuitions about what geometry *is*. We tend to think of geometric theorems as universal truths, but Desargues' theorem teaches us that even the most natural-seeming geometric facts can be accidents of algebra.
 
-**Coding theory**: Projective planes are intimately connected to error-correcting codes. Non-Desarguesian planes yield codes with different distance properties than their Desarguesian cousins, which has implications for data transmission.
+The story also illustrates a profound duality: every question about geometric configurations is secretly a question about algebraic structure, and vice versa. The associativity of multiplication — something we take for granted when we balance our checkbooks — turns out to be the precise algebraic condition that determines whether triangles in perspective must have collinear meets.
 
-**Combinatorics**: The question of which orders admit projective planes is one of the great unsolved problems in combinatorics. Non-Desarguesian constructions show that prime power orders admit multiple distinct planes, while the existence question for non-prime-power orders (like 6, 10, 12...) remains wide open. The non-existence of a projective plane of order 10 was one of the great computer-aided mathematical results of the 1980s.
+In combinatorics, non-Desarguesian planes provide optimal structures for error-correcting codes and experimental designs. In physics, they hint at exotic symmetries that might describe the geometry of spacetime at scales where our usual assumptions break down.
 
-**Algebra**: Non-associative algebras — structures where a × (b × c) ≠ (a × b) × c — arise naturally in physics (the octonions) and genetics (gametic algebras). The connection to geometry provides a visual, spatial way to understand these abstract structures.
+Perhaps most importantly, they remind us that mathematics is not a single monolithic edifice. It is a vast landscape of possible structures, each consistent, each beautiful, each revealing something different about the nature of abstract truth.
 
-**Quantum information**: Recent work has connected projective planes to mutually unbiased bases in quantum mechanics, which are fundamental to quantum cryptography and quantum state tomography.
+## The Frontier
 
-## The Spectrum Problem
+The classification of finite projective planes remains one of the great unsolved problems in combinatorics. We know that Desarguesian planes exist for every prime power order, and that non-Desarguesian planes exist for every prime power squared order greater than 4. But the question of which orders admit projective planes at all — the famous *prime power conjecture* — remains wide open.
 
-Perhaps the most tantalizing open question is the *spectrum problem*: for which orders do non-Desarguesian planes exist?
+No one has ever found a projective plane of order 6, or 10, or any non-prime-power order. A famous computer search in 1989 ruled out order 10 after years of computation. But whether projective planes of order 12 or 14 or 15 exist remains unknown.
 
-We know they exist for every order that is a square of a prime power and at least 9. For prime orders, no non-Desarguesian plane can exist — the Artin-Zorn theorem guarantees that the only quasifield of prime order is a field.
+What we do know is that when they exist, they come in bewildering variety. At order 9, there are exactly four non-isomorphic planes: the Desarguesian plane, the Hall plane, its dual, and the Hughes plane. At order 16, there are already hundreds. The taxonomy of these geometric universes is a rich and active area of research, connecting algebra, combinatorics, group theory, and computer science in unexpected ways.
 
-But for non-prime-power orders, we don't even know if projective planes exist at all, let alone non-Desarguesian ones. The prime power conjecture — that projective planes exist only for prime power orders — has been open for over a century.
-
-The number of distinct non-Desarguesian planes at a given order grows rapidly. For order p⁴, there are at least two (Hall and derived Hall). For order p⁶, at least three. The growth appears to be at least exponential in the exponent, suggesting an incredibly rich landscape of alternative geometries waiting to be explored.
-
-## A Lesson in Mathematical Humility
-
-The existence of non-Desarguesian planes teaches us something profound about the nature of mathematical truth. For centuries, Desargues' theorem seemed as solid and inevitable as any fact in mathematics. It took a radical shift in perspective — asking "what if multiplication doesn't associate?" — to reveal that this "obvious" truth was actually a contingent fact, dependent on hidden algebraic assumptions.
-
-Today, we understand that geometry is not one thing but many. Each algebraic structure gives rise to its own geometric world, with its own symmetries, its own theorems, and its own surprises. The non-Desarguesian planes are a reminder that mathematical reality is far richer than our intuitions suggest — and that the most productive questions in mathematics are often the ones that seem most absurd when first posed.
-
-*What other "obvious" mathematical truths might turn out to be contingent? What geometric worlds remain undiscovered, waiting for someone to ask the right impossible question?*
+In the end, the story of non-Desarguesian geometry is a story about the fertility of mathematical rebellion. By asking "what if this basic law fails?", Hall and his successors discovered not chaos but new order — new symmetries, new structures, and new connections that continue to surprise and inspire mathematicians today.

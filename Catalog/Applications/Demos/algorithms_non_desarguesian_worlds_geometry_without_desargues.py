@@ -1,244 +1,228 @@
 """
 Non-Desarguesian Geometry: Core Algorithms
 
-Implements quasifield arithmetic, nucleus computation, and
-projective plane construction for Hall quasifields.
-
-All algorithms are type-hinted and self-contained.
+Implements Hall quasifield arithmetic, projective plane construction,
+and non-Desarguesian property verification.
 """
 
-from typing import List, Tuple, Set, Dict, Optional
-from itertools import product
+from typing import Tuple, List, Optional, Set, Dict
 
 
-def gf_add(a: int, b: int, p: int) -> int:
-    """Add two elements in GF(p)."""
-    return (a + b) % p
+# Type aliases
+Element = Tuple[int, int]  # Element of GF(p^2) as (a, b) representing a + b*alpha
 
 
-def gf_mul(a: int, b: int, p: int) -> int:
-    """Multiply two elements in GF(p)."""
-    return (a * b) % p
+def gf9_add(x: Element, y: Element, p: int = 3) -> Element:
+    """Addition in GF(p^2): component-wise mod p."""
+    return ((x[0] + y[0]) % p, (x[1] + y[1]) % p)
 
 
-def gf_neg(a: int, p: int) -> int:
-    """Negate an element in GF(p)."""
-    return (-a) % p
+def gf9_neg(x: Element, p: int = 3) -> Element:
+    """Negation in GF(p^2)."""
+    return ((-x[0]) % p, (-x[1]) % p)
 
 
-def gf_inv(a: int, p: int) -> int:
-    """Multiplicative inverse in GF(p). Requires a != 0."""
-    if a == 0:
-        raise ValueError("Cannot invert 0")
-    return pow(a, p - 2, p)
-
-
-def gf_pow(a: int, n: int, p: int) -> int:
-    """Raise a to the power n in GF(p)."""
-    return pow(a, n, p)
-
-
-class HallQuasifield:
+def gf9_mul(x: Element, y: Element, p: int = 3) -> Element:
+    """Standard field multiplication in GF(p^2) = GF(p)[alpha]/(alpha^2 + 1).
+    
+    (a + b*alpha)(c + d*alpha) = (ac - bd) + (ad + bc)*alpha
+    In characteristic p, -1 = p-1, so -bd = (p-1)*bd.
+    For p=3: -bd = 2*bd.
     """
-    Hall quasifield of order q^2 over GF(q) where q = p^k.
+    a, b = x
+    c, d = y
+    return ((a * c + (p - 1) * b * d) % p, (a * d + b * c) % p)
 
-    Elements are pairs (a, b) from GF(q).
-    Addition is componentwise.
-    Multiplication uses the Frobenius automorphism to twist.
 
-    For the standard Hall construction over GF(q) with irreducible
-    polynomial x^2 - alpha (where alpha is a nonsquare):
-
-    (a, b) * (c, d) = (ac + alpha * b * d^q, ad + bc) when d != 0
-    (a, b) * (c, 0) = (ac, bc)
+def frobenius(x: Element, p: int = 3) -> Element:
+    """Frobenius automorphism on GF(p^2): x -> x^p.
+    
+    For GF(p)[alpha]/(alpha^2 + 1):
+    sigma(a + b*alpha) = a + b*alpha^p
+    alpha^p = alpha * alpha^(p-1)
+    
+    For p=3: alpha^3 = alpha * alpha^2 = alpha * (-1) = -alpha = 2*alpha
+    So sigma(a, b) = (a, (p-1)*b)
     """
-
-    def __init__(self, p: int, k: int = 1):
-        """Initialize Hall quasifield over GF(p^k)."""
-        self.p = p
-        self.k = k
-        self.q = p ** k
-        self.order = self.q ** 2
-
-        # For simplicity, work with GF(p) when k=1
-        if k > 1:
-            raise NotImplementedError("Only k=1 (prime fields) supported")
-
-        # Find a nonsquare in GF(q)
-        squares = {gf_mul(x, x, self.q) for x in range(self.q)}
-        self.alpha = next(x for x in range(1, self.q) if x not in squares)
-
-        # Elements are (a, b) pairs
-        self.elements: List[Tuple[int, int]] = [
-            (a, b) for a in range(self.q) for b in range(self.q)
-        ]
-        self.zero = (0, 0)
-        self.one = (1, 0)
-
-    def add(self, x: Tuple[int, int], y: Tuple[int, int]) -> Tuple[int, int]:
-        """Add two elements componentwise."""
-        return (gf_add(x[0], y[0], self.q), gf_add(x[1], y[1], self.q))
-
-    def neg(self, x: Tuple[int, int]) -> Tuple[int, int]:
-        """Negate an element."""
-        return (gf_neg(x[0], self.q), gf_neg(x[1], self.q))
-
-    def mul(self, x: Tuple[int, int], y: Tuple[int, int]) -> Tuple[int, int]:
-        """
-        Multiply using Hall's twisted multiplication.
-
-        (a,b) * (c,d) = (ac + alpha*b*d^q, ad + bc) for d != 0
-        (a,b) * (c,0) = (ac, bc)
-
-        Since we work in GF(p), the Frobenius d^q = d^p.
-        For k=1, d^p = d (Frobenius is identity on GF(p)).
-        So we need a different twist for k=1.
-
-        Standard Hall twist for prime p (using a non-standard multiplication):
-        (a,b) * (c,d) = (ac + alpha*bd, ad + bc + beta*bd) for suitable beta
-        This is NOT associative when alpha is a nonsquare.
-        """
-        a, b = x
-        c, d = y
-
-        if d == 0:
-            return (gf_mul(a, c, self.q), gf_mul(b, c, self.q))
-
-        # Twisted multiplication
-        # Use: (a,b)*(c,d) = (ac + alpha*b*d, ad + bc)
-        # This gives a quasifield when alpha is a nonsquare
-        r1 = gf_add(gf_mul(a, c, self.q),
-                     gf_mul(self.alpha, gf_mul(b, d, self.q), self.q),
-                     self.q)
-        r2 = gf_add(gf_mul(a, d, self.q),
-                     gf_mul(b, c, self.q),
-                     self.q)
-        return (r1, r2)
-
-    def is_associative_triple(
-        self, x: Tuple[int, int], y: Tuple[int, int], z: Tuple[int, int]
-    ) -> bool:
-        """Check if x*(y*z) == (x*y)*z."""
-        return self.mul(x, self.mul(y, z)) == self.mul(self.mul(x, y), z)
-
-    def compute_left_nucleus(self) -> Set[Tuple[int, int]]:
-        """Compute the left nucleus: {a | a(bc) = (ab)c for all b,c}."""
-        nucleus = set()
-        for a in self.elements:
-            in_nucleus = True
-            for b in self.elements:
-                if not in_nucleus:
-                    break
-                for c in self.elements:
-                    if not self.is_associative_triple(a, b, c):
-                        in_nucleus = False
-                        break
-            if in_nucleus:
-                nucleus.add(a)
-        return nucleus
-
-    def compute_middle_nucleus(self) -> Set[Tuple[int, int]]:
-        """Compute the middle nucleus: {b | a(bc) = (ab)c for all a,c}."""
-        nucleus = set()
-        for b in self.elements:
-            in_nucleus = True
-            for a in self.elements:
-                if not in_nucleus:
-                    break
-                for c in self.elements:
-                    if not self.is_associative_triple(a, b, c):
-                        in_nucleus = False
-                        break
-            if in_nucleus:
-                nucleus.add(b)
-        return nucleus
-
-    def compute_right_nucleus(self) -> Set[Tuple[int, int]]:
-        """Compute the right nucleus: {c | a(bc) = (ab)c for all a,b}."""
-        nucleus = set()
-        for c in self.elements:
-            in_nucleus = True
-            for a in self.elements:
-                if not in_nucleus:
-                    break
-                for b in self.elements:
-                    if not self.is_associative_triple(a, b, c):
-                        in_nucleus = False
-                        break
-            if in_nucleus:
-                nucleus.add(c)
-        return nucleus
-
-    def compute_defect(self) -> int:
-        """Compute the defect: |Q| - |N_l|."""
-        return self.order - len(self.compute_left_nucleus())
-
-    def find_nonassociative_triple(
-        self,
-    ) -> Optional[Tuple[Tuple[int, int], Tuple[int, int], Tuple[int, int]]]:
-        """Find a triple (a,b,c) where a(bc) != (ab)c, if one exists."""
-        for a in self.elements:
-            for b in self.elements:
-                for c in self.elements:
-                    if not self.is_associative_triple(a, b, c):
-                        return (a, b, c)
-        return None
-
-    def verify_right_distributivity(self) -> bool:
-        """Verify (a+b)*c = a*c + b*c for all a,b,c."""
-        for a in self.elements:
-            for b in self.elements:
-                for c in self.elements:
-                    lhs = self.mul(self.add(a, b), c)
-                    rhs = self.add(self.mul(a, c), self.mul(b, c))
-                    if lhs != rhs:
-                        return False
-        return True
+    return (x[0], ((p - 1) * x[1]) % p)
 
 
-def compute_pgl_order(q: int) -> int:
-    """Compute |PGL(3,q)| = q^3 * (q^3-1) * (q^2-1)."""
-    return q**3 * (q**3 - 1) * (q**2 - 1)
+def hall_mul(x: Element, y: Element, p: int = 3) -> Element:
+    """Hall multiplication on GF(p^2).
+    
+    x ○ y = x * y          if y in GF(p) (i.e., y[1] = 0)
+    x ○ y = sigma(x) * y   if y not in GF(p) (i.e., y[1] != 0)
+    
+    Expanding for p=3, alpha^2 = -1 = 2:
+    d = 0: (ac, bc)
+    d != 0: (ac + bd, ad + 2bc)
+    """
+    a, b = x
+    c, d = y
+    if d % p == 0:
+        return ((a * c) % p, (b * c) % p)
+    else:
+        return ((a * c + b * d) % p, (a * d + (p - 1) * b * c) % p)
 
 
-def compute_hall_collineation_bound(q: int) -> int:
-    """Upper bound on Hall plane collineation group: q^2*(q^2-1)*q*(q-1)."""
-    return q**2 * (q**2 - 1) * q * (q - 1)
+def is_associative(mul_fn, elements: List[Element], p: int = 3) -> Tuple[bool, Optional[Tuple[Element, Element, Element]]]:
+    """Check if a multiplication is associative over given elements.
+    Returns (True, None) if associative, (False, (x, y, z)) with witness otherwise.
+    """
+    for x in elements:
+        for y in elements:
+            for z in elements:
+                lhs = mul_fn(mul_fn(x, y, p), z, p)
+                rhs = mul_fn(x, mul_fn(y, z, p), p)
+                if lhs != rhs:
+                    return False, (x, y, z)
+    return True, None
 
 
-def symmetry_ratio(q: int) -> float:
-    """Compute the ratio PGL/Hall, measuring symmetry loss."""
-    hall = compute_hall_collineation_bound(q)
-    pgl = compute_pgl_order(q**2)
-    return pgl / hall if hall > 0 else float('inf')
+def is_right_distributive(mul_fn, add_fn, elements: List[Element], p: int = 3) -> bool:
+    """Check right distributivity: (a + b) ○ c = a ○ c + b ○ c."""
+    for a in elements:
+        for b in elements:
+            for c in elements:
+                lhs = mul_fn(add_fn(a, b, p), c, p)
+                rhs = add_fn(mul_fn(a, c, p), mul_fn(b, c, p), p)
+                if lhs != rhs:
+                    return False
+    return True
 
 
-def projective_plane_parameters(n: int) -> Dict[str, int]:
-    """Compute basic parameters of a projective plane of order n."""
+def is_left_distributive(mul_fn, add_fn, elements: List[Element], p: int = 3) -> bool:
+    """Check left distributivity: a ○ (b + c) = a ○ b + a ○ c."""
+    for a in elements:
+        for b in elements:
+            for c in elements:
+                lhs = mul_fn(a, add_fn(b, c, p), p)
+                rhs = add_fn(mul_fn(a, b, p), mul_fn(a, c, p), p)
+                if lhs != rhs:
+                    return False
+    return True
+
+
+def gf_elements(p: int = 3) -> List[Element]:
+    """Generate all elements of GF(p^2)."""
+    return [(a, b) for a in range(p) for b in range(p)]
+
+
+def build_hall_plane(p: int = 3) -> Dict:
+    """Construct the Hall projective plane of order p^2.
+    
+    Points: (x, y) for x, y in GF(p^2), plus ideal points [m] for m in GF(p^2), plus [infinity].
+    Lines: [m, b] = {(x, m○x + b) : x in GF(p^2)} ∪ {[m]},
+           plus [infinity_line] = {[m] : m in GF(p^2)} ∪ {[infinity]}.
+    
+    Returns dict with points, lines, and incidence data.
+    """
+    elements = gf_elements(p)
+    n = p * p  # order
+    
+    # Points
+    affine_points = [(x, y) for x in elements for y in elements]
+    ideal_points = [('ideal', m) for m in elements]
+    inf_point = ('infinity',)
+    
+    all_points = affine_points + ideal_points + [inf_point]
+    
+    # Lines
+    affine_lines = []
+    for m in elements:
+        for b in elements:
+            line_points = set()
+            for x in elements:
+                mx = hall_mul(m, x, p)
+                y = gf9_add(mx, b, p)
+                line_points.add((x, y))
+            line_points.add(('ideal', m))
+            affine_lines.append(('line', m, b, frozenset(line_points)))
+    
+    # Vertical lines: x = c
+    vertical_lines = []
+    for c in elements:
+        line_points = set()
+        for y in elements:
+            line_points.add((c, y))
+        line_points.add(inf_point)
+        vertical_lines.append(('vline', c, frozenset(line_points)))
+    
+    # Line at infinity
+    inf_line_points = set(ideal_points) | {inf_point}
+    inf_line = ('inf_line', frozenset(inf_line_points))
+    
+    all_lines = affine_lines + vertical_lines + [inf_line]
+    
     return {
         'order': n,
-        'num_points': n**2 + n + 1,
-        'num_lines': n**2 + n + 1,
-        'points_per_line': n + 1,
-        'lines_per_point': n + 1,
-        'total_incidences': (n + 1) * (n**2 + n + 1),
+        'num_points': len(all_points),
+        'num_lines': len(all_lines),
+        'points': all_points,
+        'lines': all_lines,
+        'expected_points': n**2 + n + 1,
+        'expected_lines': n**2 + n + 1,
     }
 
 
-if __name__ == "__main__":
-    # Quick test
-    print("=== Hall Quasifield Tests ===")
-    for p in [3, 5, 7]:
-        hq = HallQuasifield(p)
-        print(f"\nHall quasifield over GF({p}), order {hq.order}:")
-        print(f"  Nonsquare alpha = {hq.alpha}")
-        print(f"  Right distributive: {hq.verify_right_distributivity()}")
-
-        triple = hq.find_nonassociative_triple()
-        if triple:
-            a, b, c = triple
-            print(f"  Non-associative: {a}*({b}*{c}) != ({a}*{b})*{c}")
-            print(f"    LHS = {hq.mul(a, hq.mul(b, c))}")
-            print(f"    RHS = {hq.mul(hq.mul(a, b), c)}")
+def verify_plane_axioms(plane: Dict, p: int = 3) -> Dict:
+    """Verify projective plane axioms for a constructed plane."""
+    points = plane['points']
+    lines = plane['lines']
+    
+    # Extract point sets for each line
+    def get_line_points(line):
+        if line[0] == 'line':
+            return line[3]
+        elif line[0] == 'vline':
+            return line[2]
         else:
-            print("  ASSOCIATIVE (this is a field)")
+            return line[1]
+    
+    line_point_sets = [get_line_points(l) for l in lines]
+    
+    # Check: each line has n+1 points
+    n = plane['order']
+    line_sizes = [len(ps) for ps in line_point_sets]
+    uniform = all(s == n + 1 for s in line_sizes)
+    
+    # Check: two points determine a unique line (sample check)
+    sample_checks = 0
+    axiom1_ok = True
+    for i, p1 in enumerate(points[:20]):
+        for p2 in points[i+1:i+20]:
+            if p1 == p2:
+                continue
+            containing = [j for j, ps in enumerate(line_point_sets) if p1 in ps and p2 in ps]
+            if len(containing) != 1:
+                axiom1_ok = False
+            sample_checks += 1
+    
+    return {
+        'num_points': len(points),
+        'num_lines': len(lines),
+        'uniform_line_size': uniform,
+        'line_size': n + 1,
+        'axiom1_sample_ok': axiom1_ok,
+        'sample_checks': sample_checks,
+    }
+
+
+def collineation_group_order_hall(q: int) -> int:
+    """Known collineation group order for the Hall plane of order q^2.
+    
+    For the Hall plane of order q^2 (q a prime power, q > 2):
+    |Aut(Hall(q^2))| = q^2 * (q^2 - 1)^2 * 2
+    
+    This is much smaller than |PGL(3, q^2)|.
+    """
+    n = q * q
+    return n * (n - 1) ** 2 * 2
+
+
+def pgl_order(d: int, q: int) -> int:
+    """Order of PGL(d, GF(q))."""
+    numerator = 1
+    for i in range(d):
+        numerator *= q**d - q**i
+    return numerator // (q - 1)
