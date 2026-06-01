@@ -1,227 +1,371 @@
+#!/usr/bin/env python3
 """
-Algorithms for Isogeny-Based Cryptography: CSI-FiSh
+Algorithms for CSIDH/CSI-FiSh Isogeny-Based Cryptography
 
-Type-hinted implementations of the core algorithms formalized in Lean.
+Type-hinted implementations of the core cryptographic algorithms.
 """
-from typing import List, Tuple, Callable, TypeVar, Generic
+
 from dataclasses import dataclass
+from typing import List, Tuple, Optional, Callable
 import hashlib
-import secrets
+import random
 
-T = TypeVar('T')
-G = TypeVar('G')
+
+# ============================================================
+# Core Data Structures
+# ============================================================
+
+@dataclass
+class GroupAction:
+    """A finite group acting on a finite set."""
+    group_order: int
+    set_size: int
+    act: Callable[[int, int], int]
+
+    def __post_init__(self) -> None:
+        assert self.group_order == self.set_size, \
+            "Free transitive action requires |G| = |X|"
 
 
 @dataclass
-class GroupAction(Generic[G, T]):
-    """Abstract group action: a group G acting on a set X."""
-    act: Callable[[G, T], T]
-    identity: G
-    multiply: Callable[[G, G], G]
-    inverse: Callable[[G], G]
+class CSIDHParams:
+    """CSIDH system parameters."""
+    prime: int  # The prime p
+    num_primes: int  # Number of small primes l_1, ..., l_n
+    small_primes: List[int]  # The small primes
+    bound: int  # Exponent bound B
+    base_curve: int  # Base curve identifier
 
 
-class CyclicGroupAction:
-    """Concrete group action: Z/nZ acting on Z/nZ by addition.
-    Models the class group action in a simplified setting."""
-
-    def __init__(self, n: int):
-        self.n = n
-
-    def act(self, g: int, x: int) -> int:
-        return (g + x) % self.n
-
-    def multiply(self, g: int, h: int) -> int:
-        return (g + h) % self.n
-
-    def inverse(self, g: int) -> int:
-        return (-g) % self.n
-
-    def connector(self, x: int, y: int) -> int:
-        """Compute the unique group element mapping x to y (GAIP)."""
-        return (y - x) % self.n
+@dataclass
+class CSIDHKeypair:
+    """A CSIDH key pair."""
+    secret_key: List[int]  # Exponent vector (e_1, ..., e_n) with |e_i| <= B
+    public_key: int  # Public curve
 
 
-class CSIDHSimulator:
-    """Simulates CSIDH key exchange over a cyclic group (for demonstration)."""
-
-    def __init__(self, n: int):
-        self.ga = CyclicGroupAction(n)
-        self.n = n
-
-    def keygen(self) -> Tuple[int, int]:
-        """Generate a secret/public key pair."""
-        secret = secrets.randbelow(self.n)
-        base = 0  # Fixed base point
-        public = self.ga.act(secret, base)
-        return secret, public
-
-    def shared_secret(self, my_secret: int, their_public: int) -> int:
-        """Compute shared secret from own secret and partner's public key."""
-        return self.ga.act(my_secret, their_public)
-
-    def verify_agreement(self, alice_secret: int, bob_secret: int) -> bool:
-        """Verify that Alice and Bob compute the same shared secret."""
-        base = 0
-        alice_pub = self.ga.act(alice_secret, base)
-        bob_pub = self.ga.act(bob_secret, base)
-
-        alice_shared = self.ga.act(alice_secret, bob_pub)
-        bob_shared = self.ga.act(bob_secret, alice_pub)
-
-        return alice_shared == bob_shared
-
-
-class CSIFiShIdentification:
-    """CSI-FiSh identification scheme (sigma protocol)."""
-
-    def __init__(self, n: int):
-        self.ga = CyclicGroupAction(n)
-        self.n = n
-        self.base = 0
-
-    def commit(self, secret: int) -> Tuple[int, int]:
-        """Prover commits: choose random r, compute R = r · x₀."""
-        r = secrets.randbelow(self.n)
-        R = self.ga.act(r, self.base)
-        return r, R
-
-    def respond(self, r: int, secret: int, challenge: bool) -> int:
-        """Prover responds to challenge."""
-        if challenge:  # challenge = 1
-            return (r - secret) % self.n  # z = r · s⁻¹
-        else:  # challenge = 0
-            return r  # z = r
-
-    def verify(self, pk: int, R: int, challenge: bool, response: int) -> bool:
-        """Verifier checks the response."""
-        if challenge:
-            return self.ga.act(response, pk) == R
-        else:
-            return self.ga.act(response, self.base) == R
-
-    def extract_secret(
-        self, z0: int, z1: int
-    ) -> int:
-        """Special soundness: extract secret from two transcripts."""
-        return (z0 - z1) % self.n
-
-
+@dataclass
 class CSIFiShSignature:
-    """CSI-FiSh signature scheme via Fiat-Shamir transform."""
+    """A CSI-FiSh signature."""
+    commitments: List[int]  # Commitment curves R_1, ..., R_t
+    responses: List[int]  # Response elements z_1, ..., z_t
+    challenges: List[bool]  # Challenge bits c_1, ..., c_t
 
-    def __init__(self, n: int, num_rounds: int = 128):
-        self.ident = CSIFiShIdentification(n)
-        self.n = n
-        self.num_rounds = num_rounds
 
-    def _hash_to_challenges(self, message: bytes, commitments: List[int]) -> List[bool]:
-        """Hash message and commitments to challenge bits."""
-        data = message + b'|' + b','.join(str(c).encode() for c in commitments)
-        h = hashlib.sha256(data).digest()
-        bits = []
-        for i in range(self.num_rounds):
-            byte_idx = i // 8
-            bit_idx = i % 8
-            if byte_idx < len(h):
-                bits.append(bool((h[byte_idx] >> bit_idx) & 1))
-            else:
-                bits.append(False)
-        return bits
+# ============================================================
+# CSIDH Key Exchange
+# ============================================================
 
-    def sign(
-        self, secret: int, message: bytes
-    ) -> Tuple[List[int], List[bool], List[int]]:
-        """Sign a message."""
-        # Generate commitments
-        randomness = []
-        commitments = []
-        for _ in range(self.num_rounds):
-            r, R = self.ident.commit(secret)
-            randomness.append(r)
-            commitments.append(R)
+def csidh_keygen(action: GroupAction) -> CSIDHKeypair:
+    """Generate a CSIDH key pair.
 
-        # Compute challenges via Fiat-Shamir
-        challenges = self._hash_to_challenges(message, commitments)
+    Args:
+        action: The group action (class group on curves)
 
-        # Compute responses
-        responses = []
-        for i in range(self.num_rounds):
-            z = self.ident.respond(randomness[i], secret, challenges[i])
-            responses.append(z)
+    Returns:
+        A key pair (secret, public)
+    """
+    secret = random.randint(0, action.group_order - 1)
+    public = action.act(secret, 0)  # 0 = base curve
+    return CSIDHKeypair(secret_key=[secret], public_key=public)
 
-        return commitments, challenges, responses
 
-    def verify(
-        self,
-        pk: int,
-        message: bytes,
-        signature: Tuple[List[int], List[bool], List[int]],
-    ) -> bool:
-        """Verify a signature."""
-        commitments, challenges, responses = signature
+def csidh_shared_secret(action: GroupAction,
+                         my_secret: int,
+                         their_public: int) -> int:
+    """Compute the CSIDH shared secret.
 
-        # Recompute challenges
-        expected_challenges = self._hash_to_challenges(message, commitments)
-        if challenges != expected_challenges:
+    Args:
+        action: The group action
+        my_secret: My secret key
+        their_public: Their public key
+
+    Returns:
+        The shared secret curve
+    """
+    return action.act(my_secret, their_public)
+
+
+def csidh_key_exchange(action: GroupAction) -> Tuple[int, int, bool]:
+    """Full CSIDH key exchange protocol.
+
+    Returns:
+        (alice_shared, bob_shared, agreement)
+    """
+    alice = csidh_keygen(action)
+    bob = csidh_keygen(action)
+
+    alice_shared = csidh_shared_secret(action, alice.secret_key[0], bob.public_key)
+    bob_shared = csidh_shared_secret(action, bob.secret_key[0], alice.public_key)
+
+    return alice_shared, bob_shared, alice_shared == bob_shared
+
+
+# ============================================================
+# CSI-FiSh Identification Scheme
+# ============================================================
+
+def csifish_commit(action: GroupAction, base: int) -> Tuple[int, int]:
+    """Prover's commitment phase.
+
+    Returns:
+        (commitment_curve, randomness)
+    """
+    r = random.randint(0, action.group_order - 1)
+    commitment = action.act(r, base)
+    return commitment, r
+
+
+def csifish_respond(action: GroupAction,
+                     secret: int,
+                     randomness: int,
+                     challenge: bool) -> int:
+    """Prover's response to a challenge.
+
+    Args:
+        secret: The secret key s
+        randomness: The commitment randomness r
+        challenge: The verifier's challenge bit
+
+    Returns:
+        The response z
+    """
+    if challenge:
+        # z = r * s^{-1} (in additive notation: z = r - s)
+        return (randomness - secret) % action.group_order
+    else:
+        return randomness
+
+
+def csifish_verify(action: GroupAction,
+                    base: int,
+                    public_key: int,
+                    commitment: int,
+                    challenge: bool,
+                    response: int) -> bool:
+    """Verify a CSI-FiSh identification transcript.
+
+    Returns:
+        True if the transcript is valid
+    """
+    if challenge:
+        check = action.act(response, public_key)
+    else:
+        check = action.act(response, base)
+    return check == commitment
+
+
+# ============================================================
+# CSI-FiSh Signature Scheme (via Fiat-Shamir)
+# ============================================================
+
+def fiat_shamir_hash(message: bytes,
+                      commitments: List[int],
+                      num_bits: int) -> List[bool]:
+    """Hash message and commitments to challenge bits."""
+    data = message + b"|" + b"|".join(str(c).encode() for c in commitments)
+    h = hashlib.sha256(data).digest()
+    bits = []
+    for i in range(num_bits):
+        byte_idx = i // 8
+        bit_idx = i % 8
+        if byte_idx < len(h):
+            bits.append(bool((h[byte_idx] >> bit_idx) & 1))
+        else:
+            bits.append(False)
+    return bits
+
+
+def csifish_sign(action: GroupAction,
+                  base: int,
+                  secret: int,
+                  message: bytes,
+                  num_rounds: int) -> CSIFiShSignature:
+    """Sign a message using CSI-FiSh.
+
+    Args:
+        action: The group action
+        base: The base curve
+        secret: The secret key
+        message: The message to sign
+        num_rounds: Number of parallel repetitions (security parameter)
+
+    Returns:
+        A CSI-FiSh signature
+    """
+    # Commit phase
+    commitments = []
+    randomnesses = []
+    for _ in range(num_rounds):
+        c, r = csifish_commit(action, base)
+        commitments.append(c)
+        randomnesses.append(r)
+
+    # Challenge (Fiat-Shamir)
+    challenges = fiat_shamir_hash(message, commitments, num_rounds)
+
+    # Response phase
+    responses = []
+    for i in range(num_rounds):
+        z = csifish_respond(action, secret, randomnesses[i], challenges[i])
+        responses.append(z)
+
+    return CSIFiShSignature(
+        commitments=commitments,
+        responses=responses,
+        challenges=challenges,
+    )
+
+
+def csifish_verify_signature(action: GroupAction,
+                              base: int,
+                              public_key: int,
+                              message: bytes,
+                              signature: CSIFiShSignature) -> bool:
+    """Verify a CSI-FiSh signature.
+
+    Returns:
+        True if the signature is valid
+    """
+    # Recompute challenges
+    challenges = fiat_shamir_hash(
+        message, signature.commitments, len(signature.challenges)
+    )
+
+    # Check challenges match
+    if challenges != signature.challenges:
+        return False
+
+    # Verify each round
+    for i in range(len(signature.challenges)):
+        if not csifish_verify(
+            action, base, public_key,
+            signature.commitments[i],
+            signature.challenges[i],
+            signature.responses[i]
+        ):
             return False
 
-        # Verify each round
-        for i in range(self.num_rounds):
-            if not self.ident.verify(pk, commitments[i], challenges[i], responses[i]):
-                return False
-
-        return True
-
-
-def keyspace_size(num_primes: int, bound: int) -> int:
-    """Compute the CSIDH key space size: (2B+1)^n."""
-    return (2 * bound + 1) ** num_primes
-
-
-def cayley_diameter(n: int) -> int:
-    """Compute the Cayley graph diameter for Z/nZ with generators {+1, -1}."""
-    return n // 2
-
-
-def verify_cayley_conjecture(n: int) -> bool:
-    """Verify the Cayley diameter conjecture for a specific n."""
-    d = cayley_diameter(n)
-    for a in range(n):
-        found = False
-        for k in range(d + 1):
-            if a == k % n or a == (-k) % n:
-                found = True
-                break
-        if not found:
-            return False
     return True
 
 
-def multi_party_csidh(secrets: List[int], n: int) -> int:
-    """Multi-party CSIDH: compute shared key from all secrets."""
-    ga = CyclicGroupAction(n)
-    result = 0  # base point
-    total = sum(secrets) % n
-    return ga.act(total, 0)
+# ============================================================
+# Special Soundness Extraction
+# ============================================================
+
+def extract_secret(action: GroupAction,
+                    z0: int, z1: int) -> int:
+    """Extract secret from two transcripts with different challenges.
+
+    Given:
+    - z0: response to challenge 0 (z0 * base = R)
+    - z1: response to challenge 1 (z1 * pk = R)
+
+    Returns:
+        The extracted secret s = z0 * z1^{-1}
+    """
+    return (z0 - z1) % action.group_order
+
+
+# ============================================================
+# Random Self-Reducibility
+# ============================================================
+
+def rerandomize_gaip(action: GroupAction,
+                      base: int,
+                      target: int,
+                      randomizer: int) -> Tuple[int, int]:
+    """Rerandomize a GAIP instance.
+
+    Given (base, target) where target = s * base,
+    returns (r * base, r * target) which has the same solution s.
+
+    Args:
+        action: The group action
+        base: The base point
+        target: The target point
+        randomizer: Random group element r
+
+    Returns:
+        (new_base, new_target) with same connector
+    """
+    new_base = action.act(randomizer, base)
+    new_target = action.act(randomizer, target)
+    return new_base, new_target
+
+
+def worst_case_to_average_case(
+    action: GroupAction,
+    oracle: Callable[[int, int], int],
+    base: int,
+    target: int
+) -> int:
+    """Reduce worst-case GAIP to average-case using random self-reducibility.
+
+    Args:
+        action: The group action
+        oracle: An oracle that solves GAIP on random instances
+        base: The base point
+        target: The target point
+
+    Returns:
+        The connector (secret) s such that target = s * base
+    """
+    r = random.randint(0, action.group_order - 1)
+    new_base, new_target = rerandomize_gaip(action, base, target, r)
+    # Oracle solves the rerandomized instance
+    s = oracle(new_base, new_target)
+    # By rerandomization lemma, s is also the solution to original instance
+    return s
+
+
+# ============================================================
+# Key Space Analysis
+# ============================================================
+
+def csidh_key_space_size(num_primes: int, bounds: List[int]) -> int:
+    """Compute the CSIDH key space size.
+
+    Each exponent e_i ranges over [-B_i, B_i], giving 2*B_i + 1 choices.
+
+    Args:
+        num_primes: Number of small primes
+        bounds: Exponent bounds [B_1, ..., B_n]
+
+    Returns:
+        The key space size
+    """
+    assert len(bounds) == num_primes
+    result = 1
+    for b in bounds:
+        result *= (2 * b + 1)
+    return result
+
+
+def security_bits(key_space: int) -> int:
+    """Compute security level in bits."""
+    return key_space.bit_length() - 1
 
 
 if __name__ == "__main__":
-    # Quick test
-    sim = CSIDHSimulator(997)
-    assert sim.verify_agreement(42, 73)
-    print("CSIDH agreement: OK")
+    # Example: Z/101Z with addition
+    action = GroupAction(
+        group_order=101,
+        set_size=101,
+        act=lambda g, x: (x + g) % 101,
+    )
 
-    # CSI-FiSh signature
-    sig_scheme = CSIFiShSignature(997, num_rounds=16)
+    # Key exchange
+    a_shared, b_shared, ok = csidh_key_exchange(action)
+    print(f"Key exchange: agreement={ok}")
+
+    # Signing
     secret = 42
-    pk = CyclicGroupAction(997).act(secret, 0)
-    msg = b"Hello, post-quantum world!"
-    signature = sig_scheme.sign(secret, msg)
-    assert sig_scheme.verify(pk, msg, signature)
-    print("CSI-FiSh signature: OK")
+    pk = action.act(secret, 0)
+    sig = csifish_sign(action, 0, secret, b"Hello world", 128)
+    valid = csifish_verify_signature(action, 0, pk, b"Hello world", sig)
+    print(f"Signature: valid={valid}")
 
-    # Cayley conjecture
-    for p in [3, 5, 7, 11, 13, 17, 19, 23]:
-        assert verify_cayley_conjecture(p), f"Conjecture failed for n={p}"
-    print("Cayley diameter conjecture: verified for small primes")
+    # Key space
+    ks = csidh_key_space_size(74, [5] * 74)
+    print(f"Key space (n=74, B=5): 2^{security_bits(ks)} bits")

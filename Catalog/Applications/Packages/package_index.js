@@ -4,14 +4,24 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "isogeny_based_cryptography_csi_fish.json",
+    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
+    "domain": "Cryptography",
+    "date": "2026-06-01T12:11:20Z",
+    "exp_id": "813b355c",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 88
+  },
+  {
     "filename": "poincar_conjecture_revisited_4d_smooth.json",
     "title": "Algebraic Obstructions to Smooth 4-Manifold Structures: Intersection Forms and Exotic Phenomena",
     "domain": "Physics",
     "date": "2026-06-01T12:11:00Z",
     "exp_id": "ca199fc5",
-    "quality_score": null,
-    "quality": "unrated",
-    "pkg_num": 88
+    "quality_score": 0.8202090769230769,
+    "quality": "substantial",
+    "pkg_num": 87
   },
   {
     "filename": "algebraic_skeleton_of_grothendiecks_standard_conje.json",
@@ -21,7 +31,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "25f4209c",
     "quality_score": 0.7286993506493507,
     "quality": "substantial",
-    "pkg_num": 87
+    "pkg_num": 86
   },
   {
     "filename": "borges_library_of_babel_combinatorics_of_everythin.json",
@@ -31,7 +41,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "68aedb1e",
     "quality_score": 0.6561989411764706,
     "quality": "partial",
-    "pkg_num": 86
+    "pkg_num": 85
   },
   {
     "filename": "homotopy_type_theory_as_foundations.json",
@@ -41,7 +51,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ee1ee0cb",
     "quality_score": 0.7138660278745645,
     "quality": "substantial",
-    "pkg_num": 85
+    "pkg_num": 84
   },
   {
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
@@ -51,7 +61,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f67feb4b",
     "quality_score": 0.7161103693181818,
     "quality": "substantial",
-    "pkg_num": 84
+    "pkg_num": 83
   },
   {
     "filename": "anti_mathematics_what_if_all_axioms_were_negated.json",
@@ -61,7 +71,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d8059b0e",
     "quality_score": 0.6856036842105264,
     "quality": "partial",
-    "pkg_num": 83
+    "pkg_num": 82
   },
   {
     "filename": "complete_formal_framework_for_the_security_of_csid.json",
@@ -71,7 +81,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f24c929d",
     "quality_score": 0.7080684615384616,
     "quality": "substantial",
-    "pkg_num": 82
+    "pkg_num": 81
   },
   {
     "filename": "complete_formalized_algebraic_theory_of_quasif.json",
@@ -81,7 +91,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "dc49b350",
     "quality_score": 0.6699192338709679,
     "quality": "partial",
-    "pkg_num": 81
+    "pkg_num": 80
   },
   {
     "filename": "topological_quantum_computing_braiding_universalit.json",
@@ -91,7 +101,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e818d35f",
     "quality_score": 0.6633071428571429,
     "quality": "partial",
-    "pkg_num": 80
+    "pkg_num": 79
   },
   {
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
@@ -101,7 +111,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "b16ddfc2",
     "quality_score": 0.7388586956521739,
     "quality": "substantial",
-    "pkg_num": 79
+    "pkg_num": 78
   },
   {
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
@@ -111,7 +121,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "da4c7c61",
     "quality_score": 0.7100115384615384,
     "quality": "substantial",
-    "pkg_num": 78
+    "pkg_num": 77
   },
   {
     "filename": "flatland_catastrophe_when_2d_physics_breaks.json",
@@ -121,7 +131,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "337baefa",
     "quality_score": 0.7192423076923078,
     "quality": "substantial",
-    "pkg_num": 77
+    "pkg_num": 76
   },
   {
     "filename": "sensitivity_conjecture_extensions.json",
@@ -131,7 +141,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "9db20339",
     "quality_score": 0.72689,
     "quality": "substantial",
-    "pkg_num": 76
+    "pkg_num": 75
   },
   {
     "filename": "digital_immortality_can_a_mind_be_encoded.json",
@@ -141,7 +151,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a9b1a5d3",
     "quality_score": 0.7316979622641508,
     "quality": "substantial",
-    "pkg_num": 75
+    "pkg_num": 74
   },
   {
     "filename": "foundational_infrastructure_for_studying_oracle_hi.json",
@@ -151,7 +161,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d08a3f0d",
     "quality_score": 0.73590125,
     "quality": "substantial",
-    "pkg_num": 74
+    "pkg_num": 73
   },
   {
     "filename": "algebraic_and_combinatorial_foundations_for_random.json",
@@ -161,7 +171,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f977bb97",
     "quality_score": 0.7237490526315788,
     "quality": "substantial",
-    "pkg_num": 73
+    "pkg_num": 72
   },
   {
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
@@ -171,7 +181,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "2fd1181d",
     "quality_score": 0.7068626477541371,
     "quality": "substantial",
-    "pkg_num": 72
+    "pkg_num": 71
   },
   {
     "filename": "unique_games_conjecture.json",
@@ -181,7 +191,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "9ab1ce15",
     "quality_score": 0.7354624999999999,
     "quality": "substantial",
-    "pkg_num": 71
+    "pkg_num": 70
   },
   {
     "filename": "infinite_games_against_death_immortality_strategie.json",
@@ -191,7 +201,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4e3c94e5",
     "quality_score": 0.6771499999999999,
     "quality": "partial",
-    "pkg_num": 70
+    "pkg_num": 69
   },
   {
     "filename": "computational_complexity_of_alien_civilizations.json",
@@ -201,7 +211,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "09ed9e0a",
     "quality_score": 0.75499,
     "quality": "substantial",
-    "pkg_num": 69
+    "pkg_num": 68
   },
   {
     "filename": "social_credit_scores_as_topological_invariants.json",
@@ -211,7 +221,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "faa42070",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 68
+    "pkg_num": 67
   },
   {
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
@@ -221,7 +231,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e657f9e8",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 67
+    "pkg_num": 66
   },
   {
     "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
@@ -231,7 +241,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e6851233",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 66
+    "pkg_num": 65
   },
   {
     "filename": "newton_hodge_polygon_framework_for_the_p_adic_lang.json",
@@ -241,7 +251,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "24a63e9e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 65
+    "pkg_num": 64
   },
   {
     "filename": "p_adic_langlands_for_glq_p.json",
@@ -251,7 +261,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f75c509b",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 64
+    "pkg_num": 63
   },
   {
     "filename": "surveillance_networks_information_theoretic_undete.json",
@@ -261,7 +271,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8f43e9e1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 63
+    "pkg_num": 62
   },
   {
     "filename": "complete_algebraic_theory_of_the_hecke_eigenvalue_.json",
@@ -271,7 +281,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72c3a7a8",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 62
+    "pkg_num": 61
   },
   {
     "filename": "langlands_for_gl_over_q.json",
@@ -281,7 +291,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f2c79f3b",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 61
+    "pkg_num": 60
   },
   {
     "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
@@ -291,7 +301,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "72018c51",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 60
+    "pkg_num": 59
   },
   {
     "filename": "categorical_physics_the_shape_of_a_theory_of_every.json",
@@ -301,7 +311,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "4f5a41e1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 59
+    "pkg_num": 58
   },
   {
     "filename": "complete_formal_framework_for_cellular_automat.json",
@@ -311,7 +321,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ea8fbe44",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 58
+    "pkg_num": 57
   },
   {
     "filename": "quantum_proofs_of_classical_theorems.json",
@@ -321,7 +331,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c0a3ba3e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 57
+    "pkg_num": 56
   },
   {
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
@@ -331,7 +341,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "0fa49dec",
     "quality_score": 0.5239020000000001,
     "quality": "partial",
-    "pkg_num": 56
+    "pkg_num": 55
   },
   {
     "filename": "formal_algebraic_foundations_of_isogeny_base.json",
@@ -341,7 +351,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "da3578b4",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 55
+    "pkg_num": 54
   },
   {
     "filename": "rigorous_formal_framework_for_the_entropy_powe.json",
@@ -351,7 +361,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8a0058f1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 54
+    "pkg_num": 53
   },
   {
     "filename": "unified_framework_for_understanding_self_refer.json",
@@ -361,7 +371,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "15bec107",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 53
+    "pkg_num": 52
   },
   {
     "filename": "artins_conjecture_on_primitive_roots.json",
@@ -371,7 +381,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "42ef5052",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 52
+    "pkg_num": 51
   },
   {
     "filename": "tropical_hodge_theory.json",
@@ -381,7 +391,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "12735337",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 51
+    "pkg_num": 50
   },
   {
     "filename": "erds_faber_lovsz_conjecture.json",
@@ -391,7 +401,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "3446461e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 50
+    "pkg_num": 49
   },
   {
     "filename": "reconstruction_conjecture.json",
@@ -401,7 +411,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "77bc31c0",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 49
+    "pkg_num": 48
   },
   {
     "filename": "fermat_near_misses_in_the_twilight_zone.json",
@@ -411,7 +421,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "a5c337ed",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 48
+    "pkg_num": 47
   },
   {
     "filename": "hypercomputation_computing_the_uncomputable.json",
@@ -421,7 +431,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "7212b89e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 47
+    "pkg_num": 46
   },
   {
     "filename": "rigorous_mathematical_framework_for_tangled_hierar.json",
@@ -431,7 +441,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "06268486",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 46
+    "pkg_num": 45
   },
   {
     "filename": "the_fractal_dimension_of_mathematical_truth.json",
@@ -441,7 +451,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c808b38a",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 45
+    "pkg_num": 44
   },
   {
     "filename": "the_mega_sphere_all_dimensions_at_once.json",
@@ -451,7 +461,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "64431a8e",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 44
+    "pkg_num": 43
   },
   {
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
@@ -461,7 +471,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "8d4f7af1",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 43
+    "pkg_num": 42
   },
   {
     "filename": "hadwigers_conjecture.json",
@@ -471,7 +481,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d0ddefbd",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 42
+    "pkg_num": 41
   },
   {
     "filename": "thermodynamics_of_mathematical_proof.json",
@@ -481,7 +491,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5601e70d",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 41
+    "pkg_num": 40
   },
   {
     "filename": "reflective_type_theory_proving_things_about_provin.json",
@@ -491,7 +501,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a7b2b9a",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 40
+    "pkg_num": 39
   },
   {
     "filename": "this_cycle_formalized_the_algebraic_core_of_the_he.json",
@@ -501,7 +511,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "ec13a735",
     "quality_score": 0.7,
     "quality": "substantial",
-    "pkg_num": 39
+    "pkg_num": 38
   },
   {
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
@@ -511,7 +521,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "13c69dba",
     "quality_score": 0.7527642857142857,
     "quality": "substantial",
-    "pkg_num": 38
+    "pkg_num": 37
   },
   {
     "filename": "this_research_cycle_established_the_mathematical_f.json",
@@ -521,7 +531,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "d2b0b7c5",
     "quality_score": 0.7242500000000001,
     "quality": "substantial",
-    "pkg_num": 37
+    "pkg_num": 36
   },
   {
     "filename": "aleph_1_surface_geometry_between_dimensions.json",
@@ -531,7 +541,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "dbb47961",
     "quality_score": 0.720886612244898,
     "quality": "substantial",
-    "pkg_num": 36
+    "pkg_num": 35
   },
   {
     "filename": "this_research_cycle_established_the_foundational_t.json",
@@ -541,7 +551,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "3d08bbee",
     "quality_score": 0.7722411111111112,
     "quality": "substantial",
-    "pkg_num": 35
+    "pkg_num": 34
   },
   {
     "filename": "zombies_and_qualia_mathematics_of_subjective_exper.json",
@@ -551,7 +561,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "1e534e5d",
     "quality_score": 0.7355707481125602,
     "quality": "substantial",
-    "pkg_num": 34
+    "pkg_num": 33
   },
   {
     "filename": "this_research_cycle_formalized_the_algebraic_skele.json",
@@ -561,7 +571,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c572edf3",
     "quality_score": 0.6966124390243902,
     "quality": "partial",
-    "pkg_num": 33
+    "pkg_num": 32
   },
   {
     "filename": "infinite_dimensional_chess_winning_on_the_hilbert_.json",
@@ -571,7 +581,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "e8aa6606",
     "quality_score": 0.7194500000000001,
     "quality": "substantial",
-    "pkg_num": 32
+    "pkg_num": 31
   },
   {
     "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
@@ -581,7 +591,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "c6e162ae",
     "quality_score": 0.717505375,
     "quality": "substantial",
-    "pkg_num": 31
+    "pkg_num": 30
   },
   {
     "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
@@ -591,7 +601,7 @@ window.PACKAGE_INDEX = [
     "exp_id": "f63407cb",
     "quality_score": 0.6939177114686041,
     "quality": "partial",
-    "pkg_num": 30
+    "pkg_num": 29
   },
   {
     "filename": "strange_loops_self_reference_and_gdels_incompleten.json",
@@ -600,16 +610,6 @@ window.PACKAGE_INDEX = [
     "date": "2026-06-01T00:32:20Z",
     "exp_id": "a2f51013",
     "quality_score": 0.7400781690140845,
-    "quality": "substantial",
-    "pkg_num": 29
-  },
-  {
-    "filename": "isogeny_based_cryptography_csi_fish.json",
-    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Security of Post-Quantum Group Action Cryptography",
-    "domain": "Cryptography",
-    "date": "2026-06-01T00:31:50Z",
-    "exp_id": "39d27153",
-    "quality_score": 0.7184463811268895,
     "quality": "substantial",
     "pkg_num": 28
   },
@@ -895,8 +895,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges"
   },
   "isogeny_based_cryptography_csi_fish.json": {
-    "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Security of Post-Quantum Group Action Cryptography",
-    "exp_id": "39d27153",
+    "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
+    "exp_id": "813b355c",
     "source_exp_ids": [
       "seed"
     ],
@@ -1603,7 +1603,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-31T14:57:35Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7517668674698796,
       "quality": "substantial"
     },
@@ -1625,7 +1625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T15:45:19Z",
-      "hue": 134,
+      "hue": 95,
       "priority_score": 0.7471118604651162,
       "quality": "substantial"
     },
@@ -1636,7 +1636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T16:23:25Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.5950639917089624,
       "quality": "partial"
     },
@@ -1658,7 +1658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:14Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7068734374999999,
       "quality": "substantial"
     },
@@ -1669,7 +1669,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:22:48Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6621330000000001,
       "quality": "partial"
     },
@@ -1680,7 +1680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:23:45Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7457928571428571,
       "quality": "substantial"
     },
@@ -1691,7 +1691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:24:43Z",
-      "hue": 270,
+      "hue": 101,
       "priority_score": 0.7282123376623377,
       "quality": "substantial"
     },
@@ -1702,7 +1702,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:11Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6860414464845499,
       "quality": "partial"
     },
@@ -1713,7 +1713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T20:25:40Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7052853846153846,
       "quality": "substantial"
     },
@@ -1724,7 +1724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:30:36Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7035288321167883,
       "quality": "substantial"
     },
@@ -1735,7 +1735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:31:14Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.7212349056603773,
       "quality": "substantial"
     },
@@ -1746,7 +1746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:15Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7488625,
       "quality": "substantial"
     },
@@ -1757,7 +1757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-31T21:57:44Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7406316585365854,
       "quality": "substantial"
     },
@@ -1768,7 +1768,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T22:43:44Z",
-      "hue": 270,
+      "hue": 292,
       "priority_score": 0.7134367272727273,
       "quality": "substantial"
     },
@@ -1790,7 +1790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-31T23:16:13Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7225286206896553,
       "quality": "substantial"
     },
@@ -1801,7 +1801,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:16:32Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6683460000000001,
       "quality": "partial"
     },
@@ -1823,7 +1823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:17:33Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6766884516129033,
       "quality": "partial"
     },
@@ -1834,7 +1834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:29Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7206367500000002,
       "quality": "substantial"
     },
@@ -1845,7 +1845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:50:52Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7352763636363637,
       "quality": "substantial"
     },
@@ -1856,7 +1856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-31T23:51:11Z",
-      "hue": 292,
+      "hue": 112,
       "priority_score": 0.7053548000000001,
       "quality": "substantial"
     },
@@ -1867,7 +1867,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T00:29:11Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     },
@@ -1889,19 +1889,8 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:31:21Z",
-      "hue": 270,
+      "hue": 112,
       "priority_score": 0.7347950000000001,
-      "quality": "substantial"
-    },
-    {
-      "id": "isogeny_based_cryptography_csi_fish",
-      "title": "Isogeny-Based Cryptography: CSI-FiSh \u2014 Formalized Security of Post-Quantum Group Action Cryptography",
-      "domain": "Cryptography",
-      "primary_domain": "Cryptography",
-      "shape": "dodecahedron",
-      "date": "2026-06-01T00:31:50Z",
-      "hue": 270,
-      "priority_score": 0.7184463811268895,
       "quality": "substantial"
     },
     {
@@ -1911,7 +1900,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:20Z",
-      "hue": 92,
+      "hue": 112,
       "priority_score": 0.7400781690140845,
       "quality": "substantial"
     },
@@ -1922,7 +1911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T00:32:51Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6939177114686041,
       "quality": "partial"
     },
@@ -1933,7 +1922,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T00:33:21Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.717505375,
       "quality": "substantial"
     },
@@ -1944,7 +1933,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T01:24:31Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7194500000000001,
       "quality": "substantial"
     },
@@ -1955,7 +1944,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:00Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6966124390243902,
       "quality": "partial"
     },
@@ -1966,7 +1955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:25:32Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7355707481125602,
       "quality": "substantial"
     },
@@ -1977,7 +1966,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:10Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7722411111111112,
       "quality": "substantial"
     },
@@ -1988,7 +1977,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T01:58:32Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.720886612244898,
       "quality": "substantial"
     },
@@ -1999,7 +1988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T02:30:11Z",
-      "hue": 280,
+      "hue": 90,
       "priority_score": 0.7242500000000001,
       "quality": "substantial"
     },
@@ -2010,7 +1999,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:30:41Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7527642857142857,
       "quality": "substantial"
     },
@@ -2032,7 +2021,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:44:40Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2043,7 +2032,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T02:45:09Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2065,7 +2054,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T03:49:46Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2076,7 +2065,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T03:50:10Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2087,7 +2076,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-01T04:22:48Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2098,7 +2087,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T04:23:08Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2120,7 +2109,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T04:57:07Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2131,7 +2120,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-06-01T05:29:27Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2153,7 +2142,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-01T06:41:41Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2164,7 +2153,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T06:42:03Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2175,7 +2164,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:14:52Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2186,7 +2175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:13Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2208,7 +2197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:15:56Z",
-      "hue": 91,
+      "hue": 89,
       "priority_score": 0.5239020000000001,
       "quality": "partial"
     },
@@ -2219,7 +2208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:16:17Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2241,7 +2230,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:20Z",
-      "hue": 359,
+      "hue": 275,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2252,7 +2241,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T07:50:40Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2263,7 +2252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:05Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2285,7 +2274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:23:51Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2296,7 +2285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:56:37Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2307,7 +2296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:00Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2318,7 +2307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:28Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2329,7 +2318,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:57:50Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2340,7 +2329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T08:58:10Z",
-      "hue": 271,
+      "hue": 101,
       "priority_score": 0.7,
       "quality": "substantial"
     },
@@ -2351,7 +2340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T09:20:02Z",
-      "hue": 95,
+      "hue": 101,
       "priority_score": 0.75499,
       "quality": "substantial"
     },
@@ -2362,7 +2351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:20:36Z",
-      "hue": 359,
+      "hue": 91,
       "priority_score": 0.6771499999999999,
       "quality": "partial"
     },
@@ -2373,7 +2362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:53:23Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7354624999999999,
       "quality": "substantial"
     },
@@ -2384,7 +2373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:53:45Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7068626477541371,
       "quality": "substantial"
     },
@@ -2395,7 +2384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:04Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7237490526315788,
       "quality": "substantial"
     },
@@ -2406,7 +2395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:24Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.73590125,
       "quality": "substantial"
     },
@@ -2417,7 +2406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T09:54:43Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7316979622641508,
       "quality": "substantial"
     },
@@ -2428,7 +2417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T10:28:02Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.72689,
       "quality": "substantial"
     },
@@ -2439,7 +2428,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-01T10:28:23Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7192423076923078,
       "quality": "substantial"
     },
@@ -2450,7 +2439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-01T10:28:42Z",
-      "hue": 101,
+      "hue": 280,
       "priority_score": 0.7100115384615384,
       "quality": "substantial"
     },
@@ -2461,7 +2450,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-01T10:29:03Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7388586956521739,
       "quality": "substantial"
     },
@@ -2472,7 +2461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T11:02:09Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.6633071428571429,
       "quality": "partial"
     },
@@ -2483,7 +2472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-01T11:02:30Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6699192338709679,
       "quality": "partial"
     },
@@ -2494,7 +2483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T11:35:17Z",
-      "hue": 95,
+      "hue": 179,
       "priority_score": 0.7080684615384616,
       "quality": "substantial"
     },
@@ -2505,7 +2494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:35:43Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.6856036842105264,
       "quality": "partial"
     },
@@ -2516,7 +2505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-01T11:36:05Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7161103693181818,
       "quality": "substantial"
     },
@@ -2527,7 +2516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-01T11:36:24Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7138660278745645,
       "quality": "substantial"
     },
@@ -2538,7 +2527,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T11:36:49Z",
-      "hue": 90,
+      "hue": 179,
       "priority_score": 0.6561989411764706,
       "quality": "partial"
     },
@@ -2549,7 +2538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-01T12:10:41Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7286993506493507,
       "quality": "substantial"
     },
@@ -2560,7 +2549,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-01T12:11:00Z",
-      "hue": 90,
+      "hue": 272,
+      "priority_score": 0.8202090769230769,
+      "quality": "substantial"
+    },
+    {
+      "id": "isogeny_based_cryptography_csi_fish",
+      "title": "Isogeny-Based Cryptography: Random Self-Reducibility and Security Composition for CSIDH/CSI-FiSh",
+      "domain": "Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-06-01T12:11:20Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -2598,7 +2598,7 @@ window.PACKAGE_GRAPH = {
       "source": "isogeny_based_cryptography_csi_fish",
       "target": "complete_formal_framework_for_the_security_of_csid",
       "strength": 1.0,
-      "label": "Direction 2: Security Reduction from D-CSIDH to GAIP",
+      "label": "Direction 3: Cayley Graph Expansion and Mixing Time",
       "type": "provenance"
     },
     {
@@ -2612,7 +2612,7 @@ window.PACKAGE_GRAPH = {
       "source": "isogeny_based_cryptography_csi_fish",
       "target": "formal_algebraic_foundations_of_isogeny_base",
       "strength": 1.0,
-      "label": "Direction 1: Expander Graph Properties of Isogeny Cayley Gra",
+      "label": "Direction 1: Decisional CSIDH Hardness from Computational GA",
       "type": "provenance"
     },
     {

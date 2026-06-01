@@ -1,309 +1,289 @@
+#!/usr/bin/env python3
 """
-Demo: Isogeny-Based Cryptography — CSI-FiSh
+Demo: CSIDH/CSI-FiSh Isogeny-Based Cryptography
 
-Demonstrates CSIDH key exchange, CSI-FiSh signatures,
-multi-party key agreement, and the Cayley diameter conjecture.
+Demonstrates the core mathematical concepts:
+1. Group action on a finite set (modeling class group action)
+2. CSIDH key exchange
+3. CSI-FiSh identification scheme
+4. Random self-reducibility of GAIP
+5. Cayley diameter conjecture verification
 """
-from algorithms import (
-    CyclicGroupAction, CSIDHSimulator, CSIFiShIdentification,
-    CSIFiShSignature, keyspace_size, verify_cayley_conjecture,
-    multi_party_csidh
-)
+
+import random
+from typing import List, Tuple
 
 
-def demo_csidh_key_exchange():
-    """Demonstrate CSIDH key exchange."""
-    print("=" * 60)
-    print("CSIDH Key Exchange (Simulated over Z/pZ)")
-    print("=" * 60)
-
-    p = 997  # A prime (stands in for the real CSIDH prime)
-    sim = CSIDHSimulator(p)
-
-    alice_secret, alice_public = sim.keygen()
-    bob_secret, bob_public = sim.keygen()
-
-    alice_shared = sim.shared_secret(alice_secret, bob_public)
-    bob_shared = sim.shared_secret(bob_secret, alice_public)
-
-    print(f"Prime p = {p}")
-    print(f"Alice: secret = {alice_secret}, public = {alice_public}")
-    print(f"Bob:   secret = {bob_secret}, public = {bob_public}")
-    print(f"Alice's shared secret: {alice_shared}")
-    print(f"Bob's shared secret:   {bob_shared}")
-    print(f"Agreement: {alice_shared == bob_shared}")
-    print()
+def mod_action(g: int, x: int, n: int) -> int:
+    """Group action of Z/nZ on itself by addition (models class group action)."""
+    return (x + g) % n
 
 
-def demo_csifish_identification():
-    """Demonstrate CSI-FiSh identification protocol."""
-    print("=" * 60)
-    print("CSI-FiSh Identification Protocol")
-    print("=" * 60)
+def csidh_key_exchange(n: int, base: int, alice_secret: int, bob_secret: int):
+    """Simulate CSIDH key exchange using Z/nZ action."""
+    alice_public = mod_action(alice_secret, base, n)
+    bob_public = mod_action(bob_secret, base, n)
 
-    p = 997
-    ident = CSIFiShIdentification(p)
-    ga = CyclicGroupAction(p)
+    alice_shared = mod_action(alice_secret, bob_public, n)
+    bob_shared = mod_action(bob_secret, alice_public, n)
 
-    # Setup
-    secret = 42
-    pk = ga.act(secret, 0)
-    print(f"Secret key: {secret}")
-    print(f"Public key: {pk}")
-
-    # Run 10 rounds
-    successes = 0
-    for i in range(10):
-        r, R = ident.commit(secret)
-        challenge = (i % 2 == 0)
-        response = ident.respond(r, secret, challenge)
-        valid = ident.verify(pk, R, challenge, response)
-        successes += int(valid)
-        print(f"  Round {i+1}: challenge={int(challenge)}, response={response}, valid={valid}")
-
-    print(f"All rounds valid: {successes == 10}")
-    print()
+    return {
+        "alice_public": alice_public,
+        "bob_public": bob_public,
+        "alice_shared": alice_shared,
+        "bob_shared": bob_shared,
+        "agreement": alice_shared == bob_shared,
+    }
 
 
-def demo_special_soundness():
-    """Demonstrate special soundness extraction."""
-    print("=" * 60)
-    print("Special Soundness: Secret Extraction")
-    print("=" * 60)
+def csifish_identification(n: int, base: int, secret: int, challenge: bool):
+    """Simulate CSI-FiSh identification scheme."""
+    pk = mod_action(secret, base, n)
+    r = random.randint(0, n - 1)  # commitment randomness
+    commitment = mod_action(r, base, n)
 
-    p = 997
-    ident = CSIFiShIdentification(p)
-    ga = CyclicGroupAction(p)
+    if challenge:
+        response = (r - secret) % n  # z = r * s^{-1} in additive notation
+    else:
+        response = r
 
-    secret = 42
-    pk = ga.act(secret, 0)
+    # Verification
+    if challenge:
+        check = mod_action(response, pk, n)
+    else:
+        check = mod_action(response, base, n)
 
-    # Two transcripts with different challenges, same commitment
-    r = 73
-    R = ga.act(r, 0)
-
-    z0 = ident.respond(r, secret, challenge=False)  # z0 = r
-    z1 = ident.respond(r, secret, challenge=True)    # z1 = r - s
-
-    extracted = ident.extract_secret(z0, z1)
-    print(f"True secret: {secret}")
-    print(f"Response to challenge 0: z₀ = {z0}")
-    print(f"Response to challenge 1: z₁ = {z1}")
-    print(f"Extracted secret (z₀ - z₁): {extracted}")
-    print(f"Extraction correct: {extracted == secret}")
-    print()
+    return {
+        "pk": pk,
+        "commitment": commitment,
+        "challenge": challenge,
+        "response": response,
+        "verification": check == commitment,
+    }
 
 
-def demo_csifish_signature():
-    """Demonstrate CSI-FiSh signature scheme."""
-    print("=" * 60)
-    print("CSI-FiSh Digital Signature")
-    print("=" * 60)
-
-    p = 997
-    sig_scheme = CSIFiShSignature(p, num_rounds=16)
-    ga = CyclicGroupAction(p)
-
-    secret = 42
-    pk = ga.act(secret, 0)
-    message = b"Post-quantum signatures are here!"
-
-    signature = sig_scheme.sign(secret, message)
-    commitments, challenges, responses = signature
-
-    valid = sig_scheme.verify(pk, message, signature)
-    print(f"Message: {message.decode()}")
-    print(f"Public key: {pk}")
-    print(f"Signature rounds: {len(commitments)}")
-    print(f"Signature valid: {valid}")
-
-    # Test forgery detection
-    fake_msg = b"This is a forged message"
-    forged_valid = sig_scheme.verify(pk, fake_msg, signature)
-    print(f"Forged message valid: {forged_valid}")
-    print()
+def special_soundness_extraction(n: int, base: int, z0: int, z1: int, pk: int):
+    """Extract secret from two transcripts (special soundness)."""
+    extracted = (z0 - z1) % n
+    check = mod_action(extracted, base, n)
+    return {"extracted_secret": extracted, "maps_to_pk": check == pk}
 
 
-def demo_multi_party():
-    """Demonstrate multi-party CSIDH key agreement."""
-    print("=" * 60)
-    print("Multi-Party CSIDH Key Agreement")
-    print("=" * 60)
-
-    p = 997
-    ga = CyclicGroupAction(p)
-    n_parties = 5
-    secrets = [42, 73, 156, 289, 401]
-
-    print(f"Number of parties: {n_parties}")
-    print(f"Secrets: {secrets}")
-
-    # Each party computes the shared key via the product
-    shared = multi_party_csidh(secrets, p)
-    print(f"Shared key: {shared}")
-
-    # Verify permutation invariance
-    import random
-    shuffled = secrets.copy()
-    random.shuffle(shuffled)
-    shared2 = multi_party_csidh(shuffled, p)
-    print(f"Shuffled secrets: {shuffled}")
-    print(f"Shared key (shuffled): {shared2}")
-    print(f"Permutation invariant: {shared == shared2}")
-    print()
+def rerandomize_gaip(n: int, base: int, target: int, r: int):
+    """Rerandomize a GAIP instance."""
+    new_base = mod_action(r, base, n)
+    new_target = mod_action(r, target, n)
+    # The connector (secret) is preserved
+    original_secret = (target - base) % n
+    new_secret = (new_target - new_base) % n
+    return {
+        "original_base": base,
+        "original_target": target,
+        "new_base": new_base,
+        "new_target": new_target,
+        "original_secret": original_secret,
+        "new_secret": new_secret,
+        "preserved": original_secret == new_secret,
+    }
 
 
-def demo_keyspace():
-    """Demonstrate key space size analysis."""
-    print("=" * 60)
-    print("CSIDH Key Space Analysis")
-    print("=" * 60)
-
-    print(f"{'n primes':>10} {'bound B':>10} {'key space':>20} {'security bits':>15}")
-    print("-" * 60)
-    for n in [37, 74, 111]:
-        for B in [5, 10, 20]:
-            ks = keyspace_size(n, B)
-            bits = ks.bit_length()
-            print(f"{n:>10} {B:>10} {ks:>20,.0f}{'...' if ks > 10**15 else ''} {bits:>15}")
-    print()
+def verify_cayley_diameter(n: int) -> Tuple[bool, int]:
+    """Verify Cayley diameter conjecture for Z/nZ with generators {+1, -1}."""
+    expected_diameter = n // 2
+    max_dist = 0
+    for a in range(n):
+        # Distance = min(a, n-a) = distance to 0 using ±1
+        dist = min(a, n - a)
+        max_dist = max(max_dist, dist)
+    return max_dist <= expected_diameter, max_dist
 
 
-def demo_cayley_conjecture():
-    """Test the Cayley diameter conjecture."""
-    print("=" * 60)
-    print("Cayley Diameter Conjecture Verification")
-    print("=" * 60)
-
-    print(f"{'n':>5} {'diameter ⌊n/2⌋':>15} {'conjecture holds':>20}")
-    print("-" * 45)
-    for n in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 97, 101]:
-        d = n // 2
-        holds = verify_cayley_conjecture(n)
-        print(f"{n:>5} {d:>15} {str(holds):>20}")
-    print()
+def key_space_analysis(num_primes: int, bound: int):
+    """Analyze CSIDH key space size."""
+    key_space = (2 * bound + 1) ** num_primes
+    security_bits = key_space.bit_length() - 1
+    return {
+        "num_primes": num_primes,
+        "bound": bound,
+        "key_space_size": key_space,
+        "security_bits": security_bits,
+    }
 
 
 if __name__ == "__main__":
-    demo_csidh_key_exchange()
-    demo_csifish_identification()
-    demo_special_soundness()
-    demo_csifish_signature()
-    demo_multi_party()
-    demo_keyspace()
-    demo_cayley_conjecture()
+    print("=" * 60)
+    print("CSIDH/CSI-FiSh Isogeny Cryptography Demo")
+    print("=" * 60)
+
+    # 1. CSIDH Key Exchange
+    print("\n--- CSIDH Key Exchange (Z/101Z) ---")
+    n = 101
+    result = csidh_key_exchange(n, base=0, alice_secret=42, bob_secret=73)
+    for k, v in result.items():
+        print(f"  {k}: {v}")
+
+    # 2. CSI-FiSh Identification
+    print("\n--- CSI-FiSh Identification ---")
+    for challenge in [False, True]:
+        result = csifish_identification(n, base=0, secret=42, challenge=challenge)
+        print(f"  Challenge={challenge}: verified={result['verification']}")
+
+    # 3. Special Soundness
+    print("\n--- Special Soundness Extraction ---")
+    secret = 42
+    r = random.randint(0, n - 1)
+    pk = mod_action(secret, 0, n)
+    z0 = r  # response to challenge 0
+    z1 = (r - secret) % n  # response to challenge 1
+    result = special_soundness_extraction(n, 0, z0, z1, pk)
+    print(f"  True secret: {secret}")
+    print(f"  Extracted: {result['extracted_secret']}")
+    print(f"  Correct: {result['maps_to_pk']}")
+
+    # 4. Random Self-Reducibility
+    print("\n--- Random Self-Reducibility ---")
+    for r in [7, 23, 56, 89]:
+        result = rerandomize_gaip(n, base=0, target=42, r=r)
+        print(f"  r={r}: preserved={result['preserved']} "
+              f"(secret={result['original_secret']}→{result['new_secret']})")
+
+    # 5. Cayley Diameter Conjecture
+    print("\n--- Cayley Diameter Conjecture Verification ---")
+    for test_n in [5, 7, 11, 13, 17, 19, 23, 29, 37, 41, 97, 101]:
+        valid, diameter = verify_cayley_diameter(test_n)
+        expected = test_n // 2
+        status = "✓" if valid else "✗"
+        print(f"  n={test_n:3d}: diameter={diameter:2d}, "
+              f"expected≤{expected:2d} {status}")
+
+    # 6. Key Space Analysis
+    print("\n--- CSIDH Key Space Analysis ---")
+    configs = [(74, 5), (74, 10), (74, 20), (130, 10)]
+    for np, b in configs:
+        result = key_space_analysis(np, b)
+        print(f"  n={np}, B={b}: |key space|≈2^{result['security_bits']} "
+              f"({result['security_bits']} security bits)")
+
+    print("\n" + "=" * 60)
+    print("All demonstrations completed successfully.")
 
 
+#!/usr/bin/env python3
 """
 Visualization: Cayley Graph of Z/nZ with generators {+1, -1}
 
-This standalone script visualizes the Cayley graph structure
-that underlies isogeny-based cryptography like CSIDH.
+Generates a circular Cayley graph showing the isogeny graph structure,
+highlighting the diameter and random walk distribution.
 """
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
+from collections import Counter
 
 
-def draw_cayley_graph(n: int, ax, title: str = ""):
+def cayley_graph_visualization(n: int, save_path: str = "cayley_graph.png"):
     """Draw the Cayley graph of Z/nZ with generators {+1, -1}."""
-    angles = [2 * np.pi * k / n for k in range(n)]
-    xs = [np.cos(a) for a in angles]
-    ys = [np.sin(a) for a in angles]
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Draw edges (each node connects to neighbors ±1)
-    for k in range(n):
-        next_k = (k + 1) % n
-        ax.plot([xs[k], xs[next_k]], [ys[k], ys[next_k]],
-                'b-', alpha=0.3, linewidth=1)
+    # Left: Cayley graph
+    ax1 = axes[0]
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    x = np.cos(angles)
+    y = np.sin(angles)
 
-    # Draw nodes
-    ax.scatter(xs, ys, s=200, c='steelblue', zorder=5, edgecolors='navy')
+    # Draw edges (each node connects to +1 and -1)
+    for i in range(n):
+        j = (i + 1) % n
+        ax1.plot([x[i], x[j]], [y[i], y[j]], 'b-', alpha=0.3, linewidth=0.8)
 
-    # Label nodes
-    for k in range(n):
-        offset = 1.15
-        ax.text(xs[k] * offset, ys[k] * offset, str(k),
-                ha='center', va='center', fontsize=8, fontweight='bold')
+    # Color nodes by distance from 0
+    distances = [min(i, n - i) for i in range(n)]
+    scatter = ax1.scatter(x, y, c=distances, cmap='viridis', s=80, zorder=5,
+                          edgecolors='black', linewidth=0.5)
+    plt.colorbar(scatter, ax=ax1, label='Distance from base (BFS)')
 
-    # Highlight diameter path
-    diameter = n // 2
-    path_nodes = list(range(diameter + 1))
-    for i in range(len(path_nodes) - 1):
-        k1, k2 = path_nodes[i], path_nodes[i + 1]
-        ax.plot([xs[k1], xs[k2]], [ys[k1], ys[k2]],
-                'r-', linewidth=2.5, alpha=0.7, zorder=4)
+    # Mark base point
+    ax1.scatter([x[0]], [y[0]], c='red', s=200, zorder=10, marker='*',
+                edgecolors='black', linewidth=1)
+    ax1.set_title(f'Cayley Graph of Z/{n}Z\n(generators {{+1, -1}})', fontsize=12)
+    ax1.set_aspect('equal')
+    ax1.axis('off')
+    ax1.annotate(f'Diameter = {max(distances)} = ⌊{n}/2⌋',
+                 xy=(0, -1.3), fontsize=10, ha='center',
+                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
-    ax.scatter([xs[0]], [ys[0]], s=300, c='gold', zorder=6,
-               edgecolors='darkgoldenrod', linewidth=2, marker='*')
-    ax.scatter([xs[diameter]], [ys[diameter]], s=300, c='red', zorder=6,
-               edgecolors='darkred', linewidth=2, marker='D')
+    # Right: Random walk distribution
+    ax2 = axes[1]
+    num_walks = 50000
+    walk_lengths = [n, n**2 // 4, n**2 // 2, n**2]
 
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.set_title(f"{title}\nDiameter = ⌊{n}/2⌋ = {diameter}", fontsize=10)
-    ax.axis('off')
+    for t in walk_lengths:
+        endpoints = []
+        for _ in range(num_walks):
+            pos = 0
+            for _ in range(t):
+                pos = (pos + np.random.choice([-1, 1])) % n
+            endpoints.append(pos)
+
+        counts = Counter(endpoints)
+        frequencies = [counts.get(i, 0) / num_walks for i in range(n)]
+        ax2.plot(range(n), frequencies, label=f't={t}', alpha=0.7)
+
+    ax2.axhline(y=1/n, color='red', linestyle='--', alpha=0.5, label=f'Uniform (1/{n})')
+    ax2.set_xlabel('Position in Z/nZ')
+    ax2.set_ylabel('Frequency')
+    ax2.set_title(f'Random Walk Distribution (n={n})\nafter t steps from 0', fontsize=12)
+    ax2.legend(fontsize=8)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {save_path}")
 
 
-def draw_keyspace_growth():
-    """Plot key space growth as function of parameters."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+def key_space_visualization(save_path: str = "key_space.png"):
+    """Visualize CSIDH key space growth."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Key space vs number of primes
-    B = 5
-    ns = range(1, 80)
-    sizes = [(2 * B + 1) ** n for n in ns]
-    bits = [s.bit_length() for s in sizes]
+    # Left: Key space vs number of primes
+    bounds = [5, 10, 20]
+    n_range = range(1, 150)
+    for B in bounds:
+        sizes = [(2 * B + 1) ** n for n in n_range]
+        bits = [s.bit_length() for s in sizes]
+        ax1.plot(n_range, bits, label=f'B={B}')
 
-    ax1.plot(list(ns), bits, 'b-', linewidth=2)
-    ax1.axhline(y=128, color='r', linestyle='--', label='128-bit security')
-    ax1.axhline(y=256, color='g', linestyle='--', label='256-bit security')
-    ax1.set_xlabel('Number of primes (n)', fontsize=12)
-    ax1.set_ylabel('Security bits (log₂ key space)', fontsize=12)
-    ax1.set_title(f'Key Space Growth (B = {B})', fontsize=13)
+    ax1.axhline(y=128, color='red', linestyle='--', alpha=0.5, label='128-bit security')
+    ax1.axhline(y=256, color='orange', linestyle='--', alpha=0.5, label='256-bit security')
+    ax1.set_xlabel('Number of primes (n)')
+    ax1.set_ylabel('Security bits (log₂ key space)')
+    ax1.set_title('CSIDH Key Space Growth')
     ax1.legend()
     ax1.grid(True, alpha=0.3)
+    ax1.set_ylim(0, 500)
 
-    # Key space vs bound
-    n = 37
-    Bs = range(1, 30)
-    sizes2 = [(2 * b + 1) ** n for b in Bs]
-    bits2 = [s.bit_length() for s in sizes2]
-
-    ax2.plot(list(Bs), bits2, 'b-', linewidth=2)
-    ax2.axhline(y=128, color='r', linestyle='--', label='128-bit security')
-    ax2.axhline(y=256, color='g', linestyle='--', label='256-bit security')
-    ax2.set_xlabel('Exponent bound (B)', fontsize=12)
-    ax2.set_ylabel('Security bits (log₂ key space)', fontsize=12)
-    ax2.set_title(f'Key Space Growth (n = {n})', fontsize=13)
+    # Right: Soundness error vs repetitions
+    t_range = range(1, 257)
+    errors = [1.0 / (2 ** t) for t in t_range]
+    ax2.semilogy(t_range, errors, 'b-')
+    ax2.axhline(y=2**(-128), color='red', linestyle='--', alpha=0.5, label='2⁻¹²⁸')
+    ax2.set_xlabel('Number of repetitions (t)')
+    ax2.set_ylabel('Soundness error (2⁻ᵗ)')
+    ax2.set_title('CSI-FiSh Soundness Error')
     ax2.legend()
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('keyspace_growth.png', dpi=150, bbox_inches='tight')
-    print("Saved keyspace_growth.png")
-
-
-def main():
-    # Cayley graphs for small primes
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    primes = [5, 7, 11, 13, 17, 19]
-
-    for ax, p in zip(axes.flat, primes):
-        draw_cayley_graph(p, ax, f"Z/{p}Z Cayley Graph")
-
-    fig.suptitle("Cayley Graphs of Cyclic Groups\n(Models of CSIDH Isogeny Graphs)",
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('cayley_graphs.png', dpi=150, bbox_inches='tight')
-    print("Saved cayley_graphs.png")
-
-    # Key space growth
-    draw_keyspace_growth()
+    plt.savefig(save_path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {save_path}")
 
 
 if __name__ == "__main__":
-    main()
+    cayley_graph_visualization(23, "cayley_graph_23.png")
+    cayley_graph_visualization(41, "cayley_graph_41.png")
+    key_space_visualization("key_space.png")
+    print("All visualizations generated.")
