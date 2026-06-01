@@ -71,10 +71,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51ef5081",
     "timestamp": ""
   },
   {
@@ -266,10 +266,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "542bccae",
     "timestamp": ""
   },
   {
@@ -341,10 +341,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "548621ce",
     "timestamp": ""
   },
   {
@@ -573,6 +573,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-31T20:24:16.081669+00:00"
   },
   {
+<<<<<<< Updated upstream
+=======
+    "id": "fd_2388",
+    "title": "Algebraic skeleton of Grothendieck's standard conject",
+    "description": "# Future Directions: Standard Conjectures on Algebraic Cycles\n\n## Synthesis\n\nThis cycle established the algebraic skeleton of Grothendieck's standard conjectures, formalizing and proving structural theorems about Lefschetz modules, pure motives, K\u00fcnneth projectors, and weight filtrations. The key discovery is that the linear-algebraic consequences of the standard conjectures \u2014 rank additivity, direct sum decomposition, Hodge index, and weight filtration purity \u2014 can be proved unconditionally, without any geometric input.\n\nThe most promising cross-domain connection is between the **Hodge index theorem** (proved here for rank-2 forms) and the **tropical Hodge theory** developed in the Catalog's `Tropical/HodgeTheory/Foundations.lean`. The Hodge index theorem constrains intersection forms on algebraic surfaces; its tropical analog constrains valuations on tropical varieties. Bridging these two would connect our abstract Lefschetz module framework to the combinatorial setting of tropical geometry, potentially yielding a purely combinatorial proof strategy for the standard conjectures in special cases.\n\nThe highest breakthrough potential lies in Direction 1 (Hard Lefschetz decomposition), because formalizing the full primitive decomposition would unlock the proof of B \u27f9 C \u27f9 D, completing the implication chain that Kleiman established but which has never been formalized. Direction 3 (motivic Galois group) has the broadest impact: formalizing the Tannakian structure of motives would connect to the Langlands program and provide a foundation for motivic integration.\n\n---\n\n### Direction 1: Hard Lefschetz Decomposition for Abstract Lefschetz Modules\n\n**Conjecture**: For any Lefschetz module (V, L, Q) where L satisfies the Hard Lefschetz condition (L^k : V_{n-k} \u2192 V_{n+k} is an isomorphism for all k), the space V admits a unique primitive decomposition V = \u2295_{j\u22650} L^j \u00b7 P_{n-2j} where P_i = ker(L^{n-i+1} : V_i \u2192 V_{n+i+2}) is the primitive subspace in degree i.\n\n**Test**: Formalize the decomposition for a graded Lefschetz module with V = \u211a^{2n+1} and L = shift operator. Verify that the primitive pieces are linearly independent and span V. Test computationally for n = 1, 2, 3 by constructing explicit Lefschetz operators on \u211a-vector spaces of Betti-number dimensions matching known varieties (\u2119^n, Grassmannians, hypersurfaces).\n\n**Impact**: If proved, this would formalize the first step of Kleiman's proof that B \u27f9 C \u27f9 D. The primitive decomposition is the key structural result needed to construct K\u00fcnneth projectors from the Lefschetz operator.\n\n**Catalog References**: `Algebra/StandardConjectures/Defs.lean` (LefschetzModule, primitiveSpace), `Tropical/HodgeTheory/Foundations.lean`\n\n**Proof Strategy**: Define a graded Lefschetz module with graded pieces V_0, ..., V_{2n}. Prove by induction on n that L^k is injective from V_{n-k} to V_{n+k} implies the primitive decomposition exists. Key lemma: ker(L^{k+1}) \u2229 V_{n-k} has the correct dimension. Use the existing `LefschetzModule.primitiveSpace` definition as the base case.\n\n**Domain Bridges**: Algebra <-> Topology, Algebra <-> Tropical\n\n**Lineage**: Builds on `complement_idempotent`, `PureMotive.rank_add_complement_rank`, and `numKer_Lefschetz_stable` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Hodge-Riemann Bilinear Relations in Abstract Setting\n\n**Conjecture**: For a polarized Lefschetz module (V, L, Q) with Q positive definite on the (appropriately signed) primitive subspace, the Hodge-Riemann bilinear relations hold: (-1)^{(n-k)(n-k-1)/2} Q(\u03be, L^{n-2k}\u03be\u0304) > 0 for all nonzero primitive classes \u03be \u2208 P^k, where \u03be\u0304 is the complex conjugate in a suitable complexification.\n\n**Test**: Construct explicit polarized Lefschetz modules modeling H*(\u2119^n), H*(elliptic curve), and H*(K3 surface) and verify the bilinear relations numerically. For the K3 surface, the intersection form has signature (3, 19) on H^2, and the Hodge-Riemann relations should give the correct sign pattern on primitive classes.\n\n**Impact**: The Hodge-Riemann relations are the key analytic input that converts the algebraic structure of Lefschetz modules into signature constraints. Formalizing them would complete the Hodge index theorem in all dimensions (our current result is only for rank 2).\n\n**Catalog References**: `Algebra/StandardConjectures/Theorems.lean` (hodge_index_rank2), `Catalog/Algebra/HodgeConjecture/Defs.lean` (PolarizedHS), `Catalog/Algebra/HodgeDecomposition/Basic.lean`\n\n**Proof Strategy**: Define a complexified Lefschetz module (V_\u2102, L, Q_\u2102). Formalize the Weil operator C acting on V_\u2102. Prove that Q(\u03be, C\u03be) defines a positive-definite Hermitian form on primitive classes. The key difficulty is formalizing the complexification and the Weil operator; the algebraic content then follows from spectral theory of Hermitian forms.\n\n**Domain Bridges**: Algebra <-> Analysis, Algebra <-> Physics (K\u00e4hler geometry)\n\n**Lineage**: Extends `hodge_index_rank2` from rank 2 to arbitrary rank, builds on `PolarizedHS` from `HodgeConjecture/Defs.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tannakian Structure of Pure Motives\n\n**Conjecture**: The category of pure motives (as defined by our `PureMotive` structure, with morphisms being linear maps commuting with projectors) forms a rigid abelian tensor category. If Standard Conjecture D holds (numKer = homKer for all Lefschetz modules), this category is furthermore Tannakian, and its Tannaka dual is the *motivic Galois group* G_mot.\n\n**Test**: Formalize the tensor product of two pure motives M\u2081 = (V\u2081, p\u2081, m\u2081) and M\u2082 = (V\u2082, p\u2082, m\u2082) as M\u2081 \u2297 M\u2082 = (V\u2081 \u2297 V\u2082, p\u2081 \u2297 p\u2082, m\u2081 + m\u2082). Verify that p\u2081 \u2297 p\u2082 is idempotent. Prove that the Tate motive \u211a(1) = (\u211a, id, 1) is a unit for the twist operation.\n\n**Impact**: The motivic Galois group is the conjectural symmetry group governing all cohomology theories simultaneously. Formalizing its definition would provide a foundation for motivic integration (used in the Langlands program) and connect algebraic geometry to representation theory.\n\n**Catalog References**: `Algebra/StandardConjectures/Defs.lean` (PureMotive), `Algebra/CategoryTheory.lean`, `Catalog/Algebra/HodgeConjecture/Theorems.lean`\n\n**Proof Strategy**: Step 1: Define morphisms of pure motives as f : V\u2081 \u2192 V\u2082 with p\u2082 \u2218 f \u2218 p\u2081 = f. Step 2: Define tensor product and verify idempotency of p\u2081 \u2297 p\u2082 (uses `complement_idempotent` generalized to tensor products). Step 3: Define the fiber functor to \u211a-vector spaces. Step 4: Verify Tannakian axioms using Deligne's theorem.\n\n**Domain Bridges**: Algebra <-> Category Theory, Algebra <-> Number Theory\n\n**Lineage**: Builds on `PureMotive.complement`, `PureMotive.rank_add_complement_rank`, and the K\u00fcnneth projector theorems from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Computational Falsification of the Primitive Bound Conjecture\n\n**Conjecture**: The primitive bound conjecture (dim ker L \u2264 d/2 + 1 for compatible nondegenerate (Q, L)) is FALSE for arbitrary Lefschetz modules but TRUE for \"geometric\" ones satisfying additional axioms (e.g., Hard Lefschetz, Hodge-Riemann relations).\n\n**Test**: Construct explicit counterexamples by:\n1. Building a 6\u00d76 symmetric nondegenerate Q with L-compatible L having ker(L) of dimension 4 (> 6/2+1 = 4, so the bound is tight).\n2. Searching over rational matrices using lattice reduction (LLL/BKZ) to find exact rational counterexamples.\n3. If no counterexamples exist, prove the conjecture using the spectral theory of self-adjoint operators.\n\n**Impact**: If the conjecture is true, it identifies a new algebraic consequence of L-compatibility that goes beyond what was previously known. If false, the counterexample would reveal the precise additional axiom (beyond compatibility and nondegeneracy) needed to control the primitive dimension \u2014 illuminating the gap between algebra and geometry.\n\n**Catalog References**: `Algebra/StandardConjectures/Theorems.lean` (conjecture_primitive_bound), `Algebra/StandardConjectures/Defs.lean` (LefschetzModule, primitiveSpace)\n\n**Proof Strategy**: For the proof direction: use the fact that Q-compatibility forces L to be Q-self-adjoint, so L is diagonalizable over \u211d. The kernel dimension is the multiplicity of eigenvalue 0, which is constrained by the rank-nullity theorem and the nondegeneracy of Q. Key lemma: if Q is nondegenerate and QL = L^TQ, then rank(L) \u2265 d/2 - 1.\n\n**Domain Bridges**: Algebra <-> Computation, Algebra <-> Optimization\n\n**Lineage**: Direct extension of `conjecture_primitive_bound` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Standard Conjectures via Lefschetz Modules\n\n**Conjecture**: The standard conjectures have tropical analogs: for a tropical variety X of dimension n, the tropical Lefschetz operator L_trop on the tropical cohomology H^*_trop(X) satisfies: (a) Hard Lefschetz (L_trop^k is an isomorphism in complementary degrees), (b) the tropical K\u00fcnneth projectors are \"algebraic\" in the tropical sense, and (c) tropical numerical equivalence equals tropical homological equivalence.\n\n**Test**: Formalize the tropical Lefschetz operator for tropical \u2119^2 (the standard tropical 2-simplex) and verify Hard Lefschetz computationally. The tropical Betti numbers of \u2119^2_trop are (1, 0, 1, 0, 1), matching the classical case. Verify that L_trop : H^0 \u2192 H^2 is an isomorphism (both are 1-dimensional).\n\n**Impact**: If true, this would establish the standard conjectures in the tropical setting \u2014 a potentially easier target than the classical algebraic setting. Tropical geometry provides a \"combinatorial shadow\" of algebraic geometry, and proving the conjectures there could provide insight into the classical case.\n\n**Catalog References**: `Tropical/HodgeTheory/Foundations.lean`, `Tropical/HodgeCorrespondence.lean`, `Algebra/StandardConjectures/Defs.lean` (LefschetzModule)\n\n**Proof Strategy**: Define a tropical Lefschetz module by equipping tropical cohomology with the tropical intersection pairing and the operator induced by intersecting with a tropical hyperplane. Apply the abstract theorems from this cycle (standardD_of_nondegenerate, k\u00fcnneth_two_projectors) to conclude the tropical standard conjectures hold whenever the tropical intersection pairing is nondegenerate.\n\n**Domain Bridges**: Algebra <-> Tropical, Topology <-> Combinatorics\n\n**Lineage**: Bridges this cycle's Lefschetz module framework with the tropical Hodge theory in the Catalog.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0554bed3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-31T20:24:46.559290+00:00"
+  },
+  {
+>>>>>>> Stashed changes
     "id": "fd_2389",
     "title": "Complete formal framework for Aboriginal kinship system",
     "description": "# Future Directions: Aboriginal Kinship as Group Theory\n\n## Synthesis\n\nThis cycle established a complete formal framework for Aboriginal kinship systems as finite abelian group theory. The central discovery is that cross-cousin marriage \u2014 one of the most universal marriage rules in human societies \u2014 is not an independent cultural axiom but an algebraic theorem: it follows necessarily from the group structure of section systems. This connects kinship anthropology directly to the theory of elementary abelian 2-groups (\u2124\u2082)\u207f and their subgroup lattices.\n\nThe most promising cross-domain connection is between **kinship algebra and coding theory**. The 4-section and 8-subsection systems are precisely the groups underlying binary linear codes (the repetition code and Hamming code, respectively). Marriage rules correspond to coset leaders, descent rules to generator matrices, and the two-generator bound theorem reveals that 8-subsection systems have the same structural constraint as length-3 binary codes: two generators span only a 2-dimensional subspace. This suggests that information-theoretic bounds (like the Singleton bound) may have anthropological analogs constraining kinship system design.\n\nThe highest breakthrough potential lies in Direction 1 (non-abelian kinship), which would connect to representation theory and potentially to quantum information theory through the structure of non-abelian finite groups acting on kinship states.\n\n---\n\n### Direction 1: Non-Abelian Kinship Systems and the Ambrym Problem\n\n**Conjecture**: The Ambrym kinship system of Vanuatu, which has 6 sections with asymmetric marriage rules, is faithfully modeled by the symmetric group S\u2083 (the smallest non-abelian group of order 6) acting by left multiplication, with marriage corresponding to a transposition and descent to a 3-cycle.\n\n**Test**: Formalize the Ambrym marriage and descent tables from the ethnographic record (Deacon 1927, Layard 1942). Check whether the composition rules match the multiplication table of S\u2083. Specifically, verify: (1) marriage applied twice returns to the original section (transposition property), (2) descent applied three times returns to the original section (3-cycle property), and (3) marriage and descent do not commute (non-abelian property).\n\n**Impact**: If true, this would be the first verified formalization of a non-abelian kinship system, proving that Weil's algebraic framework extends beyond the abelian case. This would connect kinship theory to representation theory: the irreducible representations of S\u2083 would correspond to \"modes\" of kinship information. If false, it would reveal that the Ambrym system requires a more complex algebraic structure (possibly a groupoid rather than a group), which would itself be a significant theoretical finding.\n\n**Catalog References**: `Algebra/FutureExploration.lean` (symmetric_group_order), `Algebra/FourierAnalysis/Theorems.lean` (uncertainty on finite abelian groups \u2014 extending to non-abelian would be novel)\n\n**Proof Strategy**: Define a `NonAbelianKinshipSystem` structure using `MulGroup G` instead of `AddCommGroup G`. Instantiate with `Equiv.Perm (Fin 3)` (which is S\u2083 in Lean/Mathlib). Encode the Ambrym rules as specific permutations. Prove that marriage is a transposition, descent is a 3-cycle, and they generate all of S\u2083. Then prove the analog of the cross-cousin marriage theorem fails (or takes a modified form) in the non-abelian setting.\n\n**Domain Bridges**: Algebra <-> Anthropology, RepresentationTheory <-> Combinatorics\n\n**Lineage**: Builds directly on the `KinshipSystem` definition from this cycle. Extends the abelian theory to the non-abelian case.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Kinship Lattice and Classification of All Systems on (\u2124\u2082)\u207f\n\n**Conjecture**: The number of distinct kinship systems (up to group automorphism) on (\u2124\u2082)\u207f equals the number of ordered pairs of linearly independent nonzero vectors in \ud835\udd3d\u2082\u207f, modulo GL(n, \ud835\udd3d\u2082). For n = 2, this count is 1 (all kinship systems on \u2124\u2082\u00b2 are isomorphic). For n = 3, this count is 1 (all kinship systems on \u2124\u2082\u00b3 are isomorphic). For n = 4, the count grows.\n\n**Test**: Enumerate all valid (m, d) pairs in (\u2124\u2082)\u207f for n = 2, 3, 4. For each pair, compute the automorphism orbit. Count distinct orbits. Verify computationally that the count matches the formula (2\u207f \u2212 1)(2\u207f \u2212 2) / |GL(n, \ud835\udd3d\u2082)|.\n\n**Impact**: If true, this gives a complete classification of kinship systems on elementary abelian 2-groups. Combined with the two-generator bound (Direction 3), this would determine exactly which group-theoretic structures can support kinship systems and how many distinct social organizations each supports. This connects to the classification of linear codes over \ud835\udd3d\u2082.\n\n**Catalog References**: `Algebra/AboriginalKinship/Defs.lean` (KinshipSystem), `Algebra/AboriginalKinship/Theorems.lean` (two_generators_not_full_conjecture)\n\n**Proof Strategy**: Define the action of GL(n, \ud835\udd3d\u2082) on the set of kinship systems by conjugation. Use Burnside's lemma to count orbits. For small n, this is computationally verifiable. For general n, use the structure theory of GL(n, \ud835\udd3d\u2082) (its order is \u220f\u1d62 (2\u207f \u2212 2\u2071)) and the orbit-stabilizer theorem.\n\n**Domain Bridges**: Algebra <-> Combinatorics, CodingTheory <-> Anthropology\n\n**Lineage**: Extends the two-generator bound theorem and the Weil generation theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Kinship Entropy and Information-Theoretic Bounds\n\n**Conjecture**: In any kinship system (G, m, d) on a finite abelian group G, the Shannon entropy of the section distribution after k random marriage-and-descent steps satisfies H(k) \u2264 log\u2082|G| \u2212 log\u2082(|G|/|\u27e8m,d\u27e9|), where \u27e8m,d\u27e9 is the subgroup generated by m and d. Equality holds if and only if the initial distribution is uniform on a coset of \u27e8m,d\u27e9.\n\n**Test**: Simulate random walks on (\u2124\u2082)\u00b3 using the Aranda kinship system. At each step, apply either marriage (with probability p) or descent (with probability 1\u2212p). Measure the empirical entropy after k steps for k = 1, 10, 100, 1000. Compare with the conjectured bound. If the empirical entropy exceeds the bound for any k, the conjecture is disproved.\n\n**Impact**: If true, this provides a precise information-theoretic characterization of how much \"social information\" the kinship system carries. The gap log\u2082(|G|/|\u27e8m,d\u27e9|) quantifies the information lost when using only marriage and descent (without the third generator). For 8-subsection systems, this gap is exactly 1 bit \u2014 the bit carried by the patrilineal/matrilineal distinction.\n\n**Catalog References**: `Algebra/FourierAnalysis/Theorems.lean` (uncertainty_principle_finite_abelian), `EML/AdvancedTheory.lean` (ensemble_complexity_additive)\n\n**Proof Strategy**: Use the Fourier transform on the finite abelian group G. The entropy bound follows from the uncertainty principle for finite abelian groups (already in the catalog). The key technical lemma is that the random walk on G generated by {m, d, \u2212m, \u2212d} converges to the uniform distribution on \u27e8m, d\u27e9 in O(log |G|) steps.\n\n**Domain Bridges**: Algebra <-> InformationTheory, FourierAnalysis <-> Anthropology\n\n**Lineage**: Builds on the two-generator bound theorem and connects to the Fourier analysis uncertainty principle in the catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Group Extensions and Historical Kinship Transitions\n\n**Conjecture**: The historical transition from 4-section to 8-subsection systems (documented in the ethnographic record for several Aboriginal groups) corresponds to a non-split group extension 0 \u2192 \u2124\u2082 \u2192 (\u2124\u2082)\u00b3 \u2192 (\u2124\u2082)\u00b2 \u2192 0, where the quotient map sends the 8-subsection kinship system to the 4-section kinship system in a way that preserves the marriage offset.\n\n**Test**: Formalize the group extension 0 \u2192 \u2124\u2082 \u2192 (\u2124\u2082)\u00b3 \u2192 (\u2124\u2082)\u00b2 \u2192 0 in Lean. Define a morphism of kinship systems: a pair (\u03c6: G \u2192 H, compatible with marriage and descent offsets). Verify that the quotient map (\u2124\u2082)\u00b3 \u2192 (\u2124\u2082)\u00b2 sending (a,b,c) \u21a6 (a,b) satisfies \u03c6(m\u2088) = m\u2084 and \u03c6(d\u2088) = d\u2084 for appropriate choices of offsets.\n\n**Impact**: If true, this provides a formal model for cultural evolution of kinship systems. The extension theory of abelian groups (Ext functor) would predict which transitions are possible and which are obstructed. The cohomological classification of extensions H\u00b2(\u2124\u2082\u00b2, \u2124\u2082) would enumerate all possible 8-subsection systems that can arise from a given 4-section system.\n\n**Catalog References**: `Algebra/AboriginalKinship/Defs.lean` (KinshipSystem, kariera, aranda), `Algebra/KaroubiIdempotent.lean` (algebraic structure theory)\n\n**Proof Strategy**: Use Mathlib's group extension API (if available) or build the short exact sequence manually. Define `KinshipMorphism` as a structure with a group homomorphism \u03c6 : G \u2192+ H satisfying \u03c6(m_G) = m_H and \u03c6(d_G) = d_H. Prove that the projection (\u2124\u2082)\u00b3 \u2192 (\u2124\u2082)\u00b2 is a kinship morphism from the Aranda to the Kariera system. Classify all extensions using H\u00b2(\u2124\u2082\u00b2, \u2124\u2082) \u2245 \u2124\u2082.\n\n**Domain Bridges**: Algebra <-> HistoricalAnthropology, HomologicalAlgebra <-> CulturalEvolution\n\n**Lineage**: Extends the Kariera and Aranda concrete systems from this cycle into a structural relationship.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Cayley Graph Spectral Theory and Kinship Mixing Times\n\n**Conjecture**: The Cayley graph of the Kariera kinship system (\u2124\u2082 \u00d7 \u2124\u2082 with generators {(1,0), (0,1)}) has spectral gap \u03bb\u2081 = 1 and mixing time \u03c4_mix = 2. The Cayley graph of the Aranda system (\u2124\u2082\u00b3 with generators {(1,0,0), (0,1,1)}) has spectral gap \u03bb\u2081 = 1 and mixing time \u03c4_mix = 3.\n\n**Test**: Compute the adjacency matrix of each Cayley graph. Find its eigenvalues. Verify that the second-largest eigenvalue (in absolute value) gives spectral gap 1. Simulate a random walk on each graph and verify that it mixes (reaches uniform distribution on the generated subgroup) in exactly \u03c4_mix steps.\n\n**Impact**: The spectral gap controls how quickly \"social information\" diffuses through the kinship network. A spectral gap of 1 means the system equilibrates in the fastest possible time for a graph of that diameter. If the conjecture holds, it means Aboriginal kinship systems are *optimally mixing* \u2014 they spread kinship connections through the entire group as efficiently as the group structure allows. This would be a remarkable optimality result with implications for cultural evolution theory.\n\n**Catalog References**: `Algebra/FourierAnalysis/Theorems.lean` (Fourier analysis on finite groups), `Computation/InfoEfficientAlgorithms.lean` (information-efficient algorithms and mixing)\n\n**Proof Strategy**: The adjacency matrix of the Cayley graph of an abelian group with generators S is diagonalized by the characters of G. The eigenvalues are \u03bb_\u03c7 = \u03a3_{s\u2208S} \u03c7(s) for each character \u03c7. For (\u2124\u2082)\u00b2, the characters are (\u22121)^{a\u00b7x} for a \u2208 (\u2124\u2082)\u00b2, and the eigenvalues can be computed explicitly. The spectral gap is then max{|\u03bb_\u03c7| : \u03c7 \u2260 1}. Use the Fourier theory already in the catalog to formalize this.\n\n**Domain Bridges**: Algebra <-> SpectralTheory, GraphTheory <-> Anthropology\n\n**Lineage**: Builds on the Weil generation theorem and the kinship group structure from this cycle, connecting to the Fourier analysis framework in the catalog.\n\n**Ambition**: extension\n",
@@ -611,10 +629,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b5aa996d",
-    "consumed_by_exp_id": "81ce5201",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-31T21:30:58.327170+00:00"
   },
   {
@@ -641,10 +659,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "58d4594d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ec23044",
     "timestamp": "2026-05-31T21:56:21.987827+00:00"
   },
   {
@@ -776,10 +794,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7ee1e9b0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44b6873b",
     "timestamp": "2026-05-31T23:51:14.460825+00:00"
   },
   {
@@ -881,10 +899,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3d08bbee",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e80a6672",
     "timestamp": "2026-06-01T01:58:13.523824+00:00"
   },
   {
@@ -1165,11 +1183,16 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Topology"
     ],
+<<<<<<< Updated upstream
     "priority_score": 0.97,
     "status": "available",
+=======
+    "priority_score": 0.96,
+    "status": "in_progress",
+>>>>>>> Stashed changes
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2031a1e0",
     "timestamp": ""
   },
   {
@@ -1420,11 +1443,16 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Analysis"
     ],
+<<<<<<< Updated upstream
     "priority_score": 0.9299999999999999,
+=======
+    "priority_score": 0.9199999999999999,
+>>>>>>> Stashed changes
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
+<<<<<<< Updated upstream
     "timestamp": ""
   },
   {
@@ -1439,6 +1467,8 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
+=======
+>>>>>>> Stashed changes
     "timestamp": ""
   },
   {
@@ -1705,10 +1735,14 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "priority_score": 0.84,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
+<<<<<<< Updated upstream
     "consumed_by_exp_id": "25b26084",
+=======
+    "consumed_by_exp_id": "",
+>>>>>>> Stashed changes
     "timestamp": ""
   },
   {
@@ -1719,6 +1753,24 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "priority_score": 0.83,
+<<<<<<< Updated upstream
+=======
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": ""
+  },
+  {
+    "id": "seed_219",
+    "title": "Bourgain's Slicing Problem",
+    "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
+    "domains": [
+      "Geometry",
+      "Analysis"
+    ],
+    "priority_score": 0.83,
+>>>>>>> Stashed changes
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
