@@ -1,310 +1,310 @@
 #!/usr/bin/env python3
 """
-Escher Filtrations — Core Algorithms
+Algorithms for Escher Staircase computations.
 
-Implements algorithms for computing and analyzing Escher filtrations:
-1. p-adic valuation (membership depth in prime-power filtrations)
-2. Escher filtration verification (strict descent + vanishing core)
-3. Polynomial vanishing order computation
-4. Independent Escher rank estimation
-
-All algorithms are exact for integer arithmetic and polynomial arithmetic.
+Provides implementations for:
+1. Chain Defect computation in Z/(n)
+2. Escher Height computation between ideals
+3. Ascending/descending chain enumeration
+4. Ideal lattice construction
 """
 
-from typing import List, Tuple, Optional, Callable
+from typing import List, Tuple, Set, Dict, Optional, FrozenSet
+from dataclasses import dataclass
+from functools import lru_cache
 import math
 
 
-# ============================================================
-# Algorithm 1: p-adic Valuation (Membership Depth)
-# ============================================================
+@dataclass
+class IdealInZn:
+    """Represents an ideal (d) in Z/(n), where d | n."""
+    generator: int
+    modulus: int
 
-def p_adic_valuation(x: int, p: int) -> int:
+    def __post_init__(self) -> None:
+        assert self.modulus % self.generator == 0, \
+            f"{self.generator} does not divide {self.modulus}"
+
+    def __le__(self, other: 'IdealInZn') -> bool:
+        """(a) ⊆ (b) in Z/(n) iff b | a."""
+        assert self.modulus == other.modulus
+        return self.generator % other.generator == 0
+
+    def __lt__(self, other: 'IdealInZn') -> bool:
+        return self <= other and self.generator != other.generator
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, IdealInZn):
+            return NotImplemented
+        return self.generator == other.generator and self.modulus == other.modulus
+
+    def __hash__(self) -> int:
+        return hash((self.generator, self.modulus))
+
+    def __repr__(self) -> str:
+        if self.generator == self.modulus:
+            return "(0)"
+        elif self.generator == 1:
+            return f"Z/{self.modulus}"
+        return f"({self.generator})"
+
+
+def ideal_lattice(n: int) -> List[IdealInZn]:
     """
-    Compute v_p(x) = max{n : p^n | x}.
-
-    Time complexity: O(log_p(|x|))
-    Space complexity: O(1)
-
+    Construct the lattice of ideals in Z/(n).
+    
+    Ideals of Z/(n) are in bijection with divisors of n:
+    divisor d corresponds to ideal (d)/(n) ≅ Z/(n/d).
+    
     Args:
-        x: An integer
-        p: A prime number (≥ 2)
-
+        n: The modulus
+        
     Returns:
-        The p-adic valuation of x. Returns -1 for x = 0 (representing ∞).
-
-    Examples:
-        >>> p_adic_valuation(72, 2)
-        3
-        >>> p_adic_valuation(72, 3)
-        2
-        >>> p_adic_valuation(0, 5)
-        -1
+        List of all ideals, ordered by containment (ascending)
     """
-    if x == 0:
-        return -1
-    x = abs(x)
-    v = 0
-    while x % p == 0:
-        v += 1
-        x //= p
-    return v
+    divisors = sorted([d for d in range(1, n + 1) if n % d == 0], reverse=True)
+    return [IdealInZn(d, n) for d in divisors]
 
 
-# ============================================================
-# Algorithm 2: Escher Filtration Verification
-# ============================================================
-
-def verify_escher_filtration_principal(
-    a: int,
-    bound: int,
-    max_depth: int = 20
-) -> Tuple[bool, str]:
+def chain_defect(n: int) -> int:
     """
-    Verify that the principal ideal filtration (a^n)ℤ is an Escher filtration
-    up to a finite bound.
-
-    Checks:
-    1. Strict descent: a^n ∉ (a^(n+1)) for each n ≤ max_depth
-    2. Vanishing core: no nonzero x with |x| ≤ bound is in (a^n) for all n ≤ max_depth
-
-    Time complexity: O(bound * max_depth)
-    Space complexity: O(1)
-
+    Compute the chain defect of Z/(n).
+    
+    The chain defect is the maximum length of a strictly ascending chain
+    of ideals minus 1 (the number of strict inclusions).
+    
+    Algorithm: Find the longest path in the divisibility DAG of n's divisors.
+    
+    Time complexity: O(d(n)^2) where d(n) is the number of divisors.
+    
     Args:
-        a: The generator (should be |a| ≥ 2 for nontrivial filtration)
-        bound: Check vanishing core for |x| ≤ bound
-        max_depth: Maximum filtration depth to check
-
+        n: The modulus
+        
     Returns:
-        (is_escher, explanation) tuple
-
-    Examples:
-        >>> ok, msg = verify_escher_filtration_principal(2, 1000)
-        >>> ok
-        True
+        Chain defect value
     """
-    a = abs(a)
-    if a <= 1:
-        return (False, f"|a| = {a} ≤ 1: a is a unit or zero, no strict descent possible")
-
-    # Check strict descent
-    for n in range(max_depth):
-        # a^n should NOT be divisible by a^(n+1)
-        an = a ** n
-        an1 = a ** (n + 1)
-        if an % an1 == 0:
-            return (False, f"Strict descent fails at n={n}: a^{n} is divisible by a^{n+1}")
-
-    # Check vanishing core
-    effective_depth = min(max_depth, int(math.log(bound, a)) + 2) if a > 1 else max_depth
-    for x in range(1, bound + 1):
-        if all(x % (a ** n) == 0 for n in range(effective_depth)):
-            return (False, f"Vanishing core fails: x={x} is in (a^n) for all n ≤ {effective_depth}")
-
-    return (True, f"Escher filtration verified: strict descent for n ≤ {max_depth}, "
-                  f"vanishing core for |x| ≤ {bound}")
+    ideals = ideal_lattice(n)
+    
+    # Dynamic programming on the DAG
+    memo: Dict[int, int] = {}
+    
+    def longest_chain_from(idx: int) -> int:
+        if idx in memo:
+            return memo[idx]
+        best = 1  # Just this ideal alone
+        for j in range(len(ideals)):
+            if j != idx and ideals[idx] < ideals[j]:
+                best = max(best, 1 + longest_chain_from(j))
+        memo[idx] = best
+        return best
+    
+    max_len = max(longest_chain_from(i) for i in range(len(ideals)))
+    return max_len - 1  # Defect = number of strict inclusions
 
 
-# ============================================================
-# Algorithm 3: Polynomial Vanishing Order
-# ============================================================
-
-def poly_vanishing_order(coeffs: List[int]) -> int:
+def escher_height(n: int, gen_I: int, gen_J: int) -> int:
     """
-    Compute the X-adic membership depth of a polynomial.
-
-    Given f(X) = sum_i coeffs[i] * X^i, returns the smallest i
-    with coeffs[i] ≠ 0. Returns -1 for the zero polynomial.
-
-    Time complexity: O(deg(f))
-    Space complexity: O(1)
-
+    Compute the Escher Height between ideals (gen_I) and (gen_J) in Z/(n).
+    
+    This is the maximum length of a strictly ascending chain from (gen_I)
+    to (gen_J), including both endpoints.
+    
     Args:
-        coeffs: Coefficient list [a_0, a_1, ..., a_d]
-
+        n: The modulus
+        gen_I: Generator of the smaller ideal (gen_J | gen_I)
+        gen_J: Generator of the larger ideal
+        
     Returns:
-        The vanishing order (membership depth in X-adic filtration)
-
-    Examples:
-        >>> poly_vanishing_order([0, 0, 3, 1])
-        2
-        >>> poly_vanishing_order([5])
-        0
-        >>> poly_vanishing_order([0, 0, 0])
-        -1
+        Maximum chain length (number of ideals in the chain)
     """
-    for i, c in enumerate(coeffs):
-        if c != 0:
-            return i
-    return -1
+    assert n % gen_I == 0 and n % gen_J == 0
+    assert gen_I % gen_J == 0, f"({gen_I}) is not contained in ({gen_J})"
+    
+    # Find all ideals between (gen_I) and (gen_J)
+    between: List[int] = []
+    for d in range(1, n + 1):
+        if n % d == 0 and gen_I % d == 0 and d % gen_J == 0:
+            between.append(d)
+    
+    # Longest chain from gen_I to gen_J
+    memo: Dict[int, int] = {}
+    
+    def longest_to_target(d: int) -> int:
+        if d == gen_J:
+            return 1
+        if d in memo:
+            return memo[d]
+        best = 0
+        for d2 in between:
+            if d != d2 and d % d2 == 0:
+                result = longest_to_target(d2)
+                if result > 0:
+                    best = max(best, 1 + result)
+        memo[d] = best
+        return best
+    
+    return longest_to_target(gen_I)
 
 
-def poly_multiply_by_xn(coeffs: List[int], n: int) -> List[int]:
+def enumerate_maximal_chains(n: int) -> List[List[IdealInZn]]:
     """
-    Multiply polynomial by X^n (prepend n zeros).
-
-    Examples:
-        >>> poly_multiply_by_xn([1, 2], 3)
-        [0, 0, 0, 1, 2]
-    """
-    return [0] * n + coeffs
-
-
-def verify_poly_vanishing_core(max_deg: int) -> bool:
-    """
-    Verify vanishing core for X-adic filtration on polynomials up to degree max_deg.
-
-    For every nonzero polynomial of degree ≤ max_deg, check that it exits
-    the X-adic filtration at some finite stage.
-
-    Time complexity: O(max_deg)
-    Space complexity: O(1)
-
-    Examples:
-        >>> verify_poly_vanishing_core(100)
-        True
-    """
-    # Any nonzero polynomial f of degree d has vanishing order ≤ d < d+1,
-    # so f ∉ (X^(d+1)). This is a tautology for finite-degree polynomials.
-    # We verify it concretely for small examples.
-    for d in range(max_deg + 1):
-        # X^d has vanishing order exactly d, so it's NOT in (X^(d+1))
-        coeffs = [0] * d + [1]
-        order = poly_vanishing_order(coeffs)
-        assert order == d, f"Expected order {d}, got {order}"
-        assert order < d + 1, f"X^{d} should not be in (X^{d+1})"
-    return True
-
-
-# ============================================================
-# Algorithm 4: Independent Escher Rank Estimation
-# ============================================================
-
-def estimate_independent_rank(
-    n_vars: int,
-    max_deg: int = 5
-) -> Tuple[int, str]:
-    """
-    Estimate the independent Escher rank of k[X_1, ..., X_n].
-
-    Tests whether the n coordinate filtrations (X_i^m)_{m≥0} are independent
-    with joint vanishing core.
-
-    Independence means: for each i, the filtration (X_i^m) is an Escher filtration,
-    and the joint intersection ∩_i ∩_m (X_i^m) = {0}.
-
-    Time complexity: O(max_deg^n) for exhaustive monomial check
-    Space complexity: O(1)
-
+    Enumerate all maximal ascending chains of ideals in Z/(n).
+    
+    A maximal chain is one where no ideal can be inserted between
+    consecutive elements.
+    
     Args:
-        n_vars: Number of variables
-        max_deg: Maximum degree to check
-
+        n: The modulus
+        
     Returns:
-        (rank_lower_bound, explanation)
-
-    Examples:
-        >>> rank, msg = estimate_independent_rank(3, 5)
-        >>> rank
-        3
+        List of maximal chains (each chain is a list of ideals)
     """
-    # Each coordinate X_i gives an independent Escher filtration.
-    # For any nonzero monomial X_1^{a_1} ... X_n^{a_n}:
-    #   - depth in X_i-filtration = a_i
-    #   - it exits the X_i-filtration at stage a_i + 1
-    # These depths are independent (knowing a_i tells nothing about a_j for j ≠ i).
+    ideals = ideal_lattice(n)
+    
+    # Build Hasse diagram (cover relations)
+    covers: Dict[int, List[int]] = {i: [] for i in range(len(ideals))}
+    for i in range(len(ideals)):
+        for j in range(len(ideals)):
+            if i != j and ideals[i] < ideals[j]:
+                # Check if j covers i (no ideal strictly between them)
+                is_cover = True
+                for k in range(len(ideals)):
+                    if k != i and k != j and ideals[i] < ideals[k] and ideals[k] < ideals[j]:
+                        is_cover = False
+                        break
+                if is_cover:
+                    covers[i].append(j)
+    
+    # Find all maximal chains using DFS
+    chains: List[List[IdealInZn]] = []
+    
+    def dfs(idx: int, current_chain: List[int]) -> None:
+        if not covers[idx]:  # No covers = maximal element
+            chains.append([ideals[i] for i in current_chain])
+            return
+        for j in covers[idx]:
+            dfs(j, current_chain + [j])
+    
+    # Start from minimal elements (those with no predecessors)
+    min_elements = []
+    for i in range(len(ideals)):
+        is_min = True
+        for j in range(len(ideals)):
+            if j != i and ideals[j] < ideals[i]:
+                is_min = False
+                break
+        if is_min:
+            min_elements.append(i)
+    
+    for m in min_elements:
+        dfs(m, [m])
+    
+    return chains
 
-    # Verify: no nonzero monomial of degree ≤ max_deg is in all (X_i^m) for all m
-    count_checked = 0
-    for total_deg in range(max_deg + 1):
-        # Generate all monomials of degree total_deg in n_vars variables
-        # Each has at least one exponent < max_deg + 1, so it exits some filtration
-        count_checked += 1  # Representative check
 
-    explanation = (
-        f"Lower bound: {n_vars} independent Escher filtrations in k[X_1,...,X_{n_vars}]\n"
-        f"  Each X_i-filtration is Escher (degree argument).\n"
-        f"  Joint vanishing core holds: any nonzero polynomial has finite degree,\n"
-        f"  so it exits each X_i-filtration at some finite stage.\n"
-        f"  Checked monomials up to degree {max_deg}."
-    )
-
-    return (n_vars, explanation)
-
-
-# ============================================================
-# Algorithm 5: Filtration Spectrum Computation
-# ============================================================
-
-def filtration_spectrum(a: int, max_n: int) -> List[int]:
+def descending_chain_intersection(generators: List[int]) -> int:
     """
-    Compute the Escher spectrum s(n) = |E(n)/E(n+1)| for the filtration (a^n)ℤ.
-
-    For the ideal (a^n)ℤ in ℤ, the quotient E(n)/E(n+1) ≅ ℤ/aℤ,
-    so s(n) = |a| for all n.
-
-    Time complexity: O(max_n)
-    Space complexity: O(max_n)
-
+    Compute the intersection of a descending chain of ideals in Z.
+    
+    For ideals (a_1) ⊇ (a_2) ⊇ ... in Z, the intersection is (lcm(a_1, a_2, ...)).
+    
     Args:
-        a: Generator of the filtration
-        max_n: Number of spectrum values to compute
-
+        generators: List of generators [a_1, a_2, ...] where a_i | a_{i+1}
+        
     Returns:
-        List of spectrum values [s(0), s(1), ..., s(max_n-1)]
-
-    Examples:
-        >>> filtration_spectrum(2, 5)
-        [2, 2, 2, 2, 2]
-        >>> filtration_spectrum(3, 3)
-        [3, 3, 3]
+        Generator of the intersection (0 if the lcm diverges)
     """
-    return [abs(a)] * max_n
+    running_lcm = generators[0]
+    for g in generators[1:]:
+        running_lcm = math.lcm(running_lcm, g)
+    return running_lcm
 
 
-def main():
-    print("=" * 60)
-    print("ESCHER FILTRATIONS — ALGORITHM DEMONSTRATIONS")
-    print("=" * 60)
+def is_escher_chain_possible(generators: List[int]) -> Tuple[bool, str]:
+    """
+    Check whether a descending chain in Z could be an Escher chain
+    (i.e., has nontrivial intersection).
+    
+    Args:
+        generators: List of generators of the descending chain
+        
+    Returns:
+        (is_possible, explanation)
+    """
+    if len(generators) < 2:
+        return False, "Chain too short"
+    
+    # Verify descending
+    for i in range(len(generators) - 1):
+        if generators[i + 1] % generators[i] != 0:
+            return False, f"({generators[i]}) does not contain ({generators[i+1]})"
+    
+    # Verify strict descent
+    for i in range(len(generators) - 1):
+        if generators[i] == generators[i + 1]:
+            return False, f"Chain is not strictly descending at index {i}"
+    
+    # Compute intersection (lcm)
+    lcm = descending_chain_intersection(generators)
+    
+    if lcm == 0:
+        return False, "Intersection is trivial (generators grow without bound)"
+    
+    # In a finite chain, lcm is always finite
+    return False, f"Intersection = ({lcm}), but in Z (a PID), extending to an infinite strictly descending chain forces intersection to (0)"
 
-    # Algorithm 1: p-adic valuation
-    print("\n--- Algorithm 1: p-adic Valuation ---")
-    for x in [72, 100, 1024, 2310]:
-        for p in [2, 3, 5, 7]:
-            v = p_adic_valuation(x, p)
-            print(f"  v_{p}({x}) = {v}")
 
-    # Algorithm 2: Escher filtration verification
-    print("\n--- Algorithm 2: Filtration Verification ---")
-    for a in [2, 3, 5, 7]:
-        ok, msg = verify_escher_filtration_principal(a, 1000)
-        print(f"  a = {a}: {'✓' if ok else '✗'} — {msg}")
-
-    # Edge case: a = 1 (unit)
-    ok, msg = verify_escher_filtration_principal(1, 100)
-    print(f"  a = 1: {'✓' if ok else '✗'} — {msg}")
-
-    # Algorithm 3: Polynomial vanishing order
-    print("\n--- Algorithm 3: Polynomial Vanishing Order ---")
-    ok = verify_poly_vanishing_core(50)
-    print(f"  Vanishing core verified for degrees ≤ 50: {ok}")
-
-    # Algorithm 4: Independent rank estimation
-    print("\n--- Algorithm 4: Independent Escher Rank ---")
-    for n in range(1, 5):
-        rank, msg = estimate_independent_rank(n)
-        print(f"  k[X_1,...,X_{n}]: rank ≥ {rank}")
-
-    # Algorithm 5: Filtration spectrum
-    print("\n--- Algorithm 5: Filtration Spectrum ---")
-    for a in [2, 3, 6]:
-        spec = filtration_spectrum(a, 8)
-        print(f"  (a={a})ℤ spectrum: {spec}")
-
-    print("\n" + "=" * 60)
-    print("All algorithm demonstrations completed.")
+def chain_defect_from_prime_factorization(prime_powers: List[int]) -> int:
+    """
+    Compute chain defect of Z/(p1^a1 * p2^a2 * ... * pk^ak).
+    
+    The chain defect equals sum(a_i), which is the total number of
+    prime factors counted with multiplicity.
+    
+    This follows because the ideal lattice of Z/(n) is a product of chains,
+    and the longest chain in a product of chains of lengths a_1, ..., a_k
+    has length a_1 + ... + a_k.
+    
+    Args:
+        prime_powers: List of prime power exponents [a_1, a_2, ..., a_k]
+        
+    Returns:
+        Chain defect = sum of exponents
+    """
+    return sum(prime_powers)
 
 
 if __name__ == "__main__":
-    main()
+    print("Chain Defect Examples:")
+    for n in [6, 12, 24, 30, 60, 120, 360]:
+        cd = chain_defect(n)
+        print(f"  Z/({n}): chain defect = {cd}")
+    
+    print("\nEscher Height Examples (in Z/(360)):")
+    pairs = [(360, 1), (180, 1), (60, 1), (360, 6)]
+    for a, b in pairs:
+        if 360 % a == 0 and 360 % b == 0 and a % b == 0:
+            eh = escher_height(360, a, b)
+            print(f"  ({a}) → ({b}): height = {eh}")
+    
+    print("\nMaximal Chains in Z/(12):")
+    chains = enumerate_maximal_chains(12)
+    for i, chain in enumerate(chains):
+        print(f"  Chain {i+1}: {' ⊂ '.join(str(ideal) for ideal in chain)}")
+    
+    print("\nDescending Chain Analysis:")
+    gens = [2, 4, 8, 16, 32, 64]
+    possible, explanation = is_escher_chain_possible(gens)
+    print(f"  Chain: {' ⊃ '.join(f'({g})' for g in gens)}")
+    print(f"  Escher chain possible? {possible}")
+    print(f"  Reason: {explanation}")
+    
+    print("\nChain Defect from Factorization:")
+    examples = [
+        ("2^3 * 3^2 * 5", [3, 2, 1]),
+        ("2^4 * 3", [4, 1]),
+        ("2 * 3 * 5 * 7", [1, 1, 1, 1]),
+    ]
+    for name, powers in examples:
+        cd = chain_defect_from_prime_factorization(powers)
+        print(f"  Z/({name}): chain defect = {cd} = {' + '.join(map(str, powers))}")
