@@ -1,308 +1,150 @@
 """
-Algorithms for Logistic Map Cryptography
+Logistic Map Cipher — Core Algorithms
 
-Implements the core algorithms discussed in the research paper:
-1. Logistic Map Iteration (with precision control)
-2. Chebyshev Semiconjugacy Verification
-3. Logistic Cipher (encrypt/decrypt)
-4. Keystream Generation with Statistical Testing
-5. Period Detection via Floyd's Algorithm
-6. Polynomial Degree Computation
-
-All algorithms include complexity analysis in docstrings.
+Type-hinted implementations of the logistic cipher and its analysis tools.
 """
 
-import math
-from typing import Generator, Optional
+from typing import List, Tuple
+import struct
 
 
 def logistic_map(x: float, r: float = 4.0) -> float:
-    """
-    The logistic map f(x) = r*x*(1-x).
-
-    Time: O(1)
-    Space: O(1)
-
-    Args:
-        x: Current state in [0, 1]
-        r: Parameter (default 4.0 for full chaos)
-
-    Returns:
-        Next state f(x)
-    """
+    """The logistic map f(x) = r * x * (1 - x)."""
     return r * x * (1.0 - x)
 
 
-def logistic_iterate(x0: float, n: int, r: float = 4.0) -> float:
-    """
-    Compute f^n(x0), the n-th iterate of the logistic map.
-
-    Time: O(n)
-    Space: O(1)
-
-    Args:
-        x0: Initial condition
-        n: Number of iterations
-        r: Parameter
-
-    Returns:
-        f^n(x0)
-    """
-    x = x0
-    for _ in range(n):
-        x = logistic_map(x, r)
-    return x
-
-
-def logistic_orbit(x0: float, n: int, r: float = 4.0) -> list:
-    """
-    Compute the full orbit [x0, f(x0), f²(x0), ..., f^n(x0)].
-
-    Time: O(n)
-    Space: O(n)
-
-    Args:
-        x0: Initial condition
-        n: Number of iterations
-        r: Parameter
-
-    Returns:
-        List of orbit points
-    """
+def logistic_orbit(x0: float, n: int, r: float = 4.0) -> List[float]:
+    """Generate n iterates of the logistic map starting from x0."""
     orbit = [x0]
     x = x0
-    for _ in range(n):
+    for _ in range(n - 1):
         x = logistic_map(x, r)
         orbit.append(x)
     return orbit
 
 
-def keystream_generator(seed: float, warmup: int = 100,
-                        r: float = 4.0) -> Generator[float, None, None]:
+def logistic_keystream(x0: float, warmup: int, length: int,
+                       r: float = 4.0) -> List[int]:
     """
-    Generate an infinite keystream from the logistic map.
-
-    After `warmup` transient iterations, yields successive iterates.
-
-    Time per yield: O(1) amortized (O(warmup) for first yield)
-    Space: O(1)
+    Generate a keystream of `length` bytes from the logistic map.
 
     Args:
-        seed: Initial condition in (0, 1)
-        warmup: Transient iterations to skip
-        r: Parameter
-
-    Yields:
-        Keystream values in [0, 1]
-    """
-    x = seed
-    for _ in range(warmup):
-        x = logistic_map(x, r)
-    while True:
-        x = logistic_map(x, r)
-        yield x
-
-
-def logistic_encrypt(plaintext: list, seed: float,
-                     warmup: int = 100) -> list:
-    """
-    Encrypt using the logistic cipher (additive stream cipher).
-
-    Algorithm:
-        1. Generate keystream K from seed with warmup iterations
-        2. Ciphertext C_i = (M_i + K_i) mod 1
-
-    Time: O(warmup + len(plaintext))
-    Space: O(len(plaintext))
-
-    Args:
-        plaintext: List of floats in [0, 1]
-        seed: Cipher key (initial condition)
-        warmup: Transient skip
+        x0: Initial seed in (0, 1)
+        warmup: Number of iterations to discard before generating keystream
+        length: Number of keystream bytes to generate
+        r: Logistic map parameter (default 4.0)
 
     Returns:
-        Ciphertext as list of floats
+        List of integers in [0, 255] representing the keystream.
     """
-    ks = keystream_generator(seed, warmup)
-    return [(m + next(ks)) % 1.0 for m in plaintext]
+    x = x0
+    # Warm-up phase
+    for _ in range(warmup):
+        x = logistic_map(x, r)
+    # Generate keystream
+    keystream = []
+    for _ in range(length):
+        x = logistic_map(x, r)
+        keystream.append(int(x * 256) % 256)
+    return keystream
 
 
-def logistic_decrypt(ciphertext: list, seed: float,
-                     warmup: int = 100) -> list:
+def logistic_encrypt(plaintext: bytes, x0: float, warmup: int = 100,
+                     r: float = 4.0) -> bytes:
     """
-    Decrypt using the logistic cipher.
+    Encrypt plaintext using the logistic cipher.
 
-    Algorithm:
-        1. Generate same keystream K from seed
-        2. Plaintext M_i = (C_i - K_i) mod 1
+    Args:
+        plaintext: The message to encrypt
+        x0: Secret seed in (0, 1)
+        warmup: Number of warm-up iterations
+        r: Logistic map parameter
 
-    Time: O(warmup + len(ciphertext))
-    Space: O(len(ciphertext))
+    Returns:
+        Ciphertext bytes
     """
-    ks = keystream_generator(seed, warmup)
-    return [(c - next(ks)) % 1.0 for c in ciphertext]
+    ks = logistic_keystream(x0, warmup, len(plaintext), r)
+    return bytes(p ^ k for p, k in zip(plaintext, ks))
+
+
+def logistic_decrypt(ciphertext: bytes, x0: float, warmup: int = 100,
+                     r: float = 4.0) -> bytes:
+    """
+    Decrypt ciphertext using the logistic cipher.
+    Identical to encryption (XOR is its own inverse).
+    """
+    return logistic_encrypt(ciphertext, x0, warmup, r)
 
 
 def lyapunov_exponent(x0: float, n: int, r: float = 4.0) -> float:
     """
     Estimate the Lyapunov exponent of the logistic map.
 
-    λ = lim (1/n) Σ log|f'(x_k)| where f'(x) = r(1 - 2x)
-
-    For r=4, the theoretical value is log(2) ≈ 0.693.
-
-    Time: O(n)
-    Space: O(1)
-
-    Args:
-        x0: Initial condition
-        n: Number of iterations for averaging
-        r: Parameter
-
-    Returns:
-        Estimated Lyapunov exponent
+    The Lyapunov exponent λ = lim (1/n) Σ log|f'(x_i)|
+    For r=4, the theoretical value is log(2) ≈ 0.6931.
     """
+    import math
     x = x0
     total = 0.0
     for _ in range(n):
-        deriv = abs(r * (1.0 - 2.0 * x))
+        deriv = abs(r * (1 - 2 * x))
         if deriv > 0:
             total += math.log(deriv)
         x = logistic_map(x, r)
     return total / n
 
 
-def floyd_period_detection(x0: float, r: float = 4.0,
-                           tolerance: float = 1e-12,
-                           max_iter: int = 10**7) -> Optional[int]:
+def sensitivity_test(x0: float, epsilon: float, n: int,
+                     r: float = 4.0) -> List[float]:
     """
-    Detect period of the logistic map orbit using Floyd's algorithm.
+    Measure how a perturbation of epsilon in x0 grows over n iterations.
 
-    Time: O(period)
-    Space: O(1)
-
-    Args:
-        x0: Initial condition
-        r: Parameter
-        tolerance: Floating-point comparison tolerance
-        max_iter: Maximum iterations before giving up
-
-    Returns:
-        Period length, or None if not found
+    Returns list of |f^k(x0) - f^k(x0 + epsilon)| for k = 0, ..., n-1.
     """
-    # Phase 1: Find a meeting point
-    tortoise = logistic_map(x0, r)
-    hare = logistic_map(logistic_map(x0, r), r)
-    steps = 0
-    while abs(tortoise - hare) > tolerance and steps < max_iter:
-        tortoise = logistic_map(tortoise, r)
-        hare = logistic_map(logistic_map(hare, r), r)
-        steps += 1
-
-    if steps >= max_iter:
-        return None
-
-    # Phase 2: Find the period
-    period = 1
-    hare = logistic_map(tortoise, r)
-    while abs(tortoise - hare) > tolerance and period < max_iter:
-        hare = logistic_map(hare, r)
-        period += 1
-
-    return period if period < max_iter else None
+    orbit1 = logistic_orbit(x0, n, r)
+    orbit2 = logistic_orbit(x0 + epsilon, n, r)
+    return [abs(a - b) for a, b in zip(orbit1, orbit2)]
 
 
-def chebyshev_verify(theta: float, n: int) -> dict:
+def frequency_test(bits: List[int]) -> float:
     """
-    Verify the Chebyshev semiconjugacy: f^n(sin²θ) = sin²(2^n θ).
+    NIST SP 800-22 Frequency (Monobit) Test.
 
-    Time: O(n)
-    Space: O(1)
-
-    Returns:
-        Dict with left_side, right_side, absolute_error, relative_error
+    Returns the proportion of ones (should be close to 0.5 for random data).
     """
-    x0 = math.sin(theta) ** 2
-    left = logistic_iterate(x0, n)
-    right = math.sin((2**n) * theta) ** 2
-    abs_err = abs(left - right)
-    rel_err = abs_err / max(abs(right), 1e-300)
-    return {
-        "left_side": left,
-        "right_side": right,
-        "absolute_error": abs_err,
-        "relative_error": rel_err,
-    }
+    ones = sum(bits)
+    return ones / len(bits)
 
 
-def statistical_frequency_test(seed: float, n: int = 10000,
-                                warmup: int = 100) -> dict:
+def runs_test(bits: List[int]) -> int:
     """
-    Run a simple frequency test on the logistic map keystream.
-
-    Divides [0,1] into bins and checks uniformity under the
-    arcsine (invariant) measure.
-
-    Time: O(n)
-    Space: O(n_bins)
-
-    Returns:
-        Dict with bin_counts, chi_squared, p_value_approx
+    Count the number of runs (maximal sequences of identical bits).
+    For random data, expected number of runs ≈ 2n*p*(1-p) + 1.
     """
-    n_bins = 10
-    counts = [0] * n_bins
-    ks = keystream_generator(seed, warmup)
-
-    for _ in range(n):
-        val = next(ks)
-        bin_idx = min(int(val * n_bins), n_bins - 1)
-        counts[bin_idx] += 1
-
-    # Expected under arcsine distribution: P([a,b]) = (2/π)(arcsin(√b) - arcsin(√a))
-    expected = []
-    for i in range(n_bins):
-        a, b = i / n_bins, (i + 1) / n_bins
-        prob = (2 / math.pi) * (math.asin(math.sqrt(b)) - math.asin(math.sqrt(a)))
-        expected.append(n * prob)
-
-    chi_sq = sum((o - e)**2 / e for o, e in zip(counts, expected))
-
-    return {
-        "bin_counts": counts,
-        "expected_counts": [round(e, 1) for e in expected],
-        "chi_squared": chi_sq,
-        "degrees_of_freedom": n_bins - 1,
-        "passes_at_5pct": chi_sq < 16.919,  # χ²(9, 0.05) = 16.919
-    }
+    runs = 1
+    for i in range(1, len(bits)):
+        if bits[i] != bits[i - 1]:
+            runs += 1
+    return runs
 
 
-if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
+def chebyshev_conjugacy(theta: float) -> float:
+    """
+    The Chebyshev conjugacy: x = sin²(π*θ).
+    Transforms the logistic map into the doubling map θ → 2θ mod 1.
+    """
+    import math
+    return math.sin(math.pi * theta) ** 2
 
-    # Lyapunov exponent
-    lam = lyapunov_exponent(0.3, 100000)
-    print(f"Lyapunov exponent estimate: {lam:.6f}")
-    print(f"Theoretical value (log 2):  {math.log(2):.6f}")
-    print(f"Relative error:             {abs(lam - math.log(2)) / math.log(2):.2e}")
 
-    # Semiconjugacy
-    print(f"\nChebyshev semiconjugacy at θ=0.3:")
-    for n in [1, 5, 10, 20]:
-        result = chebyshev_verify(0.3, n)
-        print(f"  n={n:2d}: error = {result['absolute_error']:.2e}")
+def doubling_map(theta: float) -> float:
+    """The doubling map: θ → 2θ mod 1."""
+    return (2 * theta) % 1.0
 
-    # Statistical test
-    print(f"\nStatistical frequency test:")
-    stats = statistical_frequency_test(0.3, 100000)
-    print(f"  χ² = {stats['chi_squared']:.2f} (df={stats['degrees_of_freedom']})")
-    print(f"  Passes at 5%: {stats['passes_at_5pct']}")
 
-    # Encryption
-    print(f"\nEncryption round-trip:")
-    msg = [0.1, 0.2, 0.3, 0.4, 0.5]
-    key = 0.7654321
-    enc = logistic_encrypt(msg, key)
-    dec = logistic_decrypt(enc, key)
-    print(f"  Original:  {msg}")
-    print(f"  Decrypted: {[round(d, 10) for d in dec]}")
-    print(f"  Max error: {max(abs(m-d) for m, d in zip(msg, dec)):.2e}")
+def iterate_degree(n: int) -> int:
+    """
+    The degree of f^n for the logistic map (degree 2).
+    Returns 2^n — the number of roots and thus the search space for inversion.
+    """
+    return 2 ** n
