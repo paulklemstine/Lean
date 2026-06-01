@@ -1,361 +1,277 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Knotted Light OAM Spectral Analysis
+Algorithms for Knotted Light Topology
 
-Implements the core algorithms connecting Alexander polynomials to
-orbital angular momentum spectra of structured light beams.
-
-Algorithms:
-1. Alexander polynomial root finding on the unit circle
-2. OAM mode extraction from knot diagrams
-3. Connected sum spectral computation
-4. Cyclotomic decomposition detection
+Type-hinted implementations of the core algorithms for computing
+knot invariants and OAM spectra.
 """
+
 import numpy as np
-from typing import List, Tuple, Dict, Optional
-import cmath
+from typing import List, Tuple, Dict, Callable, Optional
 
 
-class AlexanderPolynomial:
+# --- Polynomial Representation ---
+
+class KnotPolynomial:
     """
-    Represents the Alexander polynomial Δ_K(t) of a knot K.
-
-    The polynomial is stored as a list of integer coefficients
-    [a_0, a_1, ..., a_d] where Δ_K(t) = a_0 + a_1*t + ... + a_d*t^d.
-
-    Attributes
-    ----------
-    coeffs : List[int]
-        Coefficient list, lowest degree first
-    name : str
-        Human-readable knot name
-    crossing_number : int
-        Minimal crossing number of the knot
+    Represents a knot's Alexander polynomial as a list of integer coefficients.
+    coeffs[i] is the coefficient of t^i.
     """
-
-    def __init__(self, coeffs: List[int], name: str = "", crossing_number: int = 0):
+    
+    def __init__(self, coeffs: List[int], name: str = ""):
         self.coeffs = coeffs
         self.name = name
-        self.crossing_number = crossing_number
-
-    @property
-    def degree(self) -> int:
-        """Degree of the polynomial."""
-        return len(self.coeffs) - 1
-
+        self.degree = len(coeffs) - 1
+    
     def eval(self, t: complex) -> complex:
-        """
-        Evaluate Δ_K(t) using Horner's method.
-
-        Time complexity: O(d) where d = degree
-        Space complexity: O(1)
-        """
-        result = complex(0, 0)
-        for c in reversed(self.coeffs):
-            result = result * t + c
-        return result
-
-    def eval_unit_circle(self, theta: float) -> complex:
-        """Evaluate at e^{2πiθ}."""
-        t = cmath.exp(2j * cmath.pi * theta)
-        return self.eval(t)
-
-    def spectral_weights(self) -> Dict[int, int]:
-        """Return Fourier mode amplitudes {k: a_k}."""
-        return {k: c for k, c in enumerate(self.coeffs)}
-
-    def verify_normalization(self) -> bool:
-        """Check that Δ_K(1) = 1."""
-        return abs(self.eval(1.0) - 1.0) < 1e-10
-
-    def discriminant(self) -> Optional[float]:
-        """Discriminant for degree-2 polynomials: b² - 4ac."""
+        """Evaluate the polynomial at a complex value t."""
+        return sum(c * t**i for i, c in enumerate(self.coeffs))
+    
+    def determinant(self) -> int:
+        """Compute the knot determinant |Δ(-1)|."""
+        return abs(round(self.eval(-1).real))
+    
+    def fox_value(self) -> int:
+        """Compute Δ(1) (Fox normalization)."""
+        return round(self.eval(1).real)
+    
+    def is_palindromic(self) -> bool:
+        """Check if the polynomial is palindromic (coefficients read same both ways)."""
+        n = len(self.coeffs)
+        return all(self.coeffs[i] == self.coeffs[n - 1 - i] for i in range(n // 2 + 1))
+    
+    def seifert_genus(self) -> int:
+        """Compute the Seifert genus (= degree / 2 for Alexander polynomials)."""
+        return self.degree // 2
+    
+    def discriminant(self) -> Optional[int]:
+        """Compute discriminant for quadratic polynomials only."""
         if self.degree != 2:
             return None
         a, b, c = self.coeffs[2], self.coeffs[1], self.coeffs[0]
-        return b**2 - 4*a*c
-
-    def __mul__(self, other: 'AlexanderPolynomial') -> 'AlexanderPolynomial':
-        """
-        Connected sum: Δ_{K₁#K₂} = Δ_{K₁} · Δ_{K₂}.
-
-        Time complexity: O(d₁ · d₂) where d_i = degree of polynomial i
-        """
-        d1, d2 = len(self.coeffs), len(other.coeffs)
-        result = [0] * (d1 + d2 - 1)
-        for i, a in enumerate(self.coeffs):
-            for j, b in enumerate(other.coeffs):
-                result[i + j] += a * b
-        return AlexanderPolynomial(
-            result,
-            name=f"{self.name} # {other.name}",
-            crossing_number=self.crossing_number + other.crossing_number
-        )
-
-
-# ============================================================
-# Standard knot library
-# ============================================================
-
-KNOT_LIBRARY = {
-    'unknot': AlexanderPolynomial([1], "Unknot", 0),
-    'trefoil': AlexanderPolynomial([1, -1, 1], "Trefoil (3₁)", 3),
-    'figure_eight': AlexanderPolynomial([-1, 3, -1], "Figure-Eight (4₁)", 4),
-    'cinquefoil': AlexanderPolynomial([1, -1, 1, -1, 1], "Cinquefoil (5₁)", 5),
-    'three_twist': AlexanderPolynomial([1, -3, 5, -3, 1], "Three-Twist (5₂)", 5),
-    'granny': AlexanderPolynomial([1, -2, 3, -2, 1], "Granny (3₁ # 3₁)", 6),
-}
+        return b**2 - 4 * a * c
+    
+    def __mul__(self, other: 'KnotPolynomial') -> 'KnotPolynomial':
+        """Multiply two polynomials (connected sum of knots)."""
+        n = len(self.coeffs)
+        m = len(other.coeffs)
+        result = [0] * (n + m - 1)
+        for i in range(n):
+            for j in range(m):
+                result[i + j] += self.coeffs[i] * other.coeffs[j]
+        return KnotPolynomial(result, f"{self.name}#{other.name}")
+    
+    def __repr__(self) -> str:
+        terms = []
+        for i, c in enumerate(self.coeffs):
+            if c == 0:
+                continue
+            if i == 0:
+                terms.append(str(c))
+            elif i == 1:
+                terms.append(f"{c}t" if c != 1 else "t")
+            else:
+                terms.append(f"{c}t^{i}" if c != 1 else f"t^{i}")
+        return " + ".join(terms) if terms else "0"
 
 
-# ============================================================
-# Algorithm 1: OAM Mode Extraction
-# ============================================================
+# --- Predefined Knot Polynomials ---
 
-def find_oam_modes(
-    poly: AlexanderPolynomial,
-    n_points: int = 10000,
-    tolerance: float = 1e-8
-) -> List[Tuple[float, float]]:
+UNKNOT = KnotPolynomial([1], "unknot")
+TREFOIL = KnotPolynomial([1, -1, 1], "trefoil")
+FIGURE_EIGHT = KnotPolynomial([1, -3, 1], "figure-eight")
+CINQUEFOIL = KnotPolynomial([1, -1, 1, -1, 1], "cinquefoil")
+
+
+# --- OAM Spectrum Algorithm ---
+
+def compute_oam_spectrum(
+    poly: KnotPolynomial,
+    N: int,
+    tolerance: float = 1e-10
+) -> List[int]:
     """
-    Find OAM modes by scanning for roots of Δ_K on the unit circle.
-
-    Algorithm:
-    1. Evaluate |Δ_K(e^{2πik/N})| for k = 0, ..., N-1
-    2. Find local minima below tolerance
-    3. Refine each minimum using Newton's method
-
-    Parameters
-    ----------
-    poly : AlexanderPolynomial
-        The knot's Alexander polynomial
-    n_points : int
-        Number of sample points on the unit circle
-    tolerance : float
-        Threshold for root detection
-
-    Returns
-    -------
-    List[Tuple[float, float]]
-        List of (theta, |Δ_K(e^{2πiθ})|) pairs
-
-    Time complexity: O(N · d) where d = degree of polynomial
-    Space complexity: O(N)
+    Compute the OAM spectrum of a knotted light beam.
+    
+    For a knot K with Alexander polynomial Δ_K and parameter N,
+    returns {l ∈ [0, N) : |Δ_K(e^{2πil/N})| < tolerance}.
+    
+    Args:
+        poly: Alexander polynomial of the knot
+        N: Period parameter (related to crossing number or knot symmetry)
+        tolerance: Numerical tolerance for root detection
+    
+    Returns:
+        List of integers l where the polynomial vanishes at the N-th root of unity
     """
-    # Phase 1: Coarse scan
-    values = np.array([
-        abs(poly.eval_unit_circle(k / n_points))
-        for k in range(n_points)
-    ])
-
-    # Phase 2: Find minima
-    candidates = []
-    for k in range(n_points):
-        if values[k] < tolerance:
-            theta = k / n_points
-            candidates.append((theta, values[k]))
-
-    # Phase 3: Merge nearby roots
-    if not candidates:
-        return []
-
-    merged = [candidates[0]]
-    for theta, val in candidates[1:]:
-        if theta - merged[-1][0] > 2.0 / n_points:
-            merged.append((theta, val))
-        elif val < merged[-1][1]:
-            merged[-1] = (theta, val)
-
-    return merged
+    spectrum: List[int] = []
+    for l in range(N):
+        root_of_unity = np.exp(2j * np.pi * l / N)
+        value = poly.eval(root_of_unity)
+        if abs(value) < tolerance:
+            spectrum.append(l)
+    return spectrum
 
 
-def find_real_roots(poly: AlexanderPolynomial) -> List[float]:
+def classify_root_structure(poly: KnotPolynomial) -> str:
     """
-    Find real roots using numpy's polynomial root finder.
-
-    Time complexity: O(d³) where d = degree (eigenvalue computation)
+    Classify whether roots lie on the unit circle (crystalline OAM spectrum)
+    or off it (metallic/continuous).
+    
+    For palindromic quadratics t^2 + bt + 1:
+    - |b| < 2: all roots on unit circle (crystalline)
+    - |b| = 2: degenerate (roots at ±1)
+    - |b| > 2: real roots off unit circle (metallic)
     """
-    if poly.degree == 0:
-        return []
-    np_coeffs = poly.coeffs[::-1]  # numpy wants highest degree first
-    roots = np.roots(np_coeffs)
-    return sorted([r.real for r in roots if abs(r.imag) < 1e-10])
+    if not poly.is_palindromic():
+        return "non-palindromic (general)"
+    
+    disc = poly.discriminant()
+    if disc is None:
+        # Higher degree: check numerically
+        roots_on_circle = True
+        for l in range(360):
+            t = np.exp(2j * np.pi * l / 360)
+            if abs(poly.eval(t)) < 1e-8:
+                continue
+        # Check all roots numerically
+        coeffs = poly.coeffs[::-1]
+        roots = np.roots(coeffs)
+        all_unit = all(abs(abs(r) - 1) < 1e-8 for r in roots)
+        return "crystalline (all roots on unit circle)" if all_unit else "metallic (roots off unit circle)"
+    
+    if disc < 0:
+        return "crystalline (negative discriminant, roots on unit circle)"
+    elif disc == 0:
+        return "degenerate (discriminant = 0)"
+    else:
+        return "metallic (positive discriminant, real roots)"
 
 
-# ============================================================
-# Algorithm 2: Cyclotomic Detection
-# ============================================================
-
-def cyclotomic_polynomial(n: int) -> List[int]:
+def find_cyclotomic_match(poly: KnotPolynomial, max_n: int = 100) -> Optional[int]:
     """
-    Compute the n-th cyclotomic polynomial Φ_n(t) using Möbius inversion.
-
-    Φ_n(t) = ∏_{d|n} (t^d - 1)^{μ(n/d)}
-
-    Time complexity: O(n · d(n)) where d(n) = number of divisors
+    Check if the polynomial matches a cyclotomic polynomial Φ_n for n ≤ max_n.
+    
+    Uses the fact that Φ_n has roots at primitive n-th roots of unity.
     """
-    # Start with polynomial 1
-    result = [1]
-
-    def poly_mul(p, q):
-        r = [0] * (len(p) + len(q) - 1)
-        for i, a in enumerate(p):
-            for j, b in enumerate(q):
-                r[i+j] += a * b
-        return r
-
-    def poly_div(p, q):
-        """Polynomial division assuming exact division over ℤ."""
-        p = list(p)
-        result = [0] * (len(p) - len(q) + 1)
-        for i in range(len(result) - 1, -1, -1):
-            result[i] = p[i + len(q) - 1] // q[-1]
-            for j in range(len(q)):
-                p[i + j] -= result[i] * q[j]
-        return result
-
-    def mobius(n):
-        if n == 1:
-            return 1
-        factors = set()
-        d = 2
-        m = n
-        while d * d <= m:
-            if m % d == 0:
-                factors.add(d)
-                while m % d == 0:
-                    m //= d
-            d += 1
-        if m > 1:
-            factors.add(m)
-        if len(factors) != len(set(factors)):
-            return 0
-        # Check for squared factors
-        m = n
-        for p in factors:
-            if m % (p * p) == 0:
-                return 0
-        return (-1) ** len(factors)
-
-    # Compute Φ_n using the formula: Φ_n(x) = ∏_{d|n} (x^d - 1)^{μ(n/d)}
-    # Equivalently: x^n - 1 = ∏_{d|n} Φ_d(x)
-    # So Φ_n(x) = (x^n - 1) / ∏_{d|n, d<n} Φ_d(x)
-    numerator = [0] * (n + 1)
-    numerator[0] = -1
-    numerator[n] = 1  # x^n - 1
-
-    for d in range(1, n):
-        if n % d == 0:
-            phi_d = cyclotomic_polynomial(d)
-            numerator = poly_div(numerator, phi_d)
-
-    return numerator
-
-
-def is_cyclotomic(poly: AlexanderPolynomial, max_n: int = 100) -> Optional[int]:
-    """
-    Check if the Alexander polynomial is a cyclotomic polynomial Φ_n.
-
-    Returns n if Δ_K = Φ_n, else None.
-
-    Time complexity: O(max_n² · d)
-    """
+    from numpy.polynomial import polynomial as P
+    
     for n in range(1, max_n + 1):
-        phi_n = cyclotomic_polynomial(n)
-        if len(phi_n) == len(poly.coeffs) and all(
-            a == b for a, b in zip(phi_n, poly.coeffs)
-        ):
+        # Compute cyclotomic polynomial Φ_n
+        cyclotomic_coeffs = compute_cyclotomic(n)
+        if len(cyclotomic_coeffs) != len(poly.coeffs):
+            continue
+        if all(abs(a - b) < 1e-10 for a, b in zip(cyclotomic_coeffs, poly.coeffs)):
             return n
     return None
 
 
-# ============================================================
-# Algorithm 3: Spectral Measure Computation
-# ============================================================
-
-def spectral_measure(poly: AlexanderPolynomial, n_points: int = 1000) -> np.ndarray:
+def compute_cyclotomic(n: int) -> List[int]:
     """
-    Compute the spectral density |Δ_K(e^{2πiθ})|² on the unit circle.
-
-    This gives the OAM power spectrum of the knotted light beam.
-
-    Parameters
-    ----------
-    poly : AlexanderPolynomial
-        Alexander polynomial
-    n_points : int
-        Resolution of the spectral density
-
-    Returns
-    -------
-    np.ndarray
-        Array of shape (n_points, 2) with columns [theta, |Δ_K|²]
-
-    Time complexity: O(N · d)
+    Compute the n-th cyclotomic polynomial coefficients.
+    Uses the formula Φ_n(x) = Π_{d|n} (x^d - 1)^{μ(n/d)}
     """
-    thetas = np.linspace(0, 1, n_points, endpoint=False)
-    density = np.array([
-        abs(poly.eval_unit_circle(theta))**2
-        for theta in thetas
-    ])
-    return np.column_stack([thetas, density])
+    def mobius(k: int) -> int:
+        if k == 1:
+            return 1
+        factors = []
+        temp = k
+        for p in range(2, k + 1):
+            if temp % p == 0:
+                count = 0
+                while temp % p == 0:
+                    temp //= p
+                    count += 1
+                if count > 1:
+                    return 0
+                factors.append(p)
+        return (-1) ** len(factors)
+    
+    def divisors(k: int) -> List[int]:
+        return [d for d in range(1, k + 1) if k % d == 0]
+    
+    # Start with polynomial 1
+    result = np.array([1.0])
+    
+    for d in divisors(n):
+        mu = mobius(n // d)
+        if mu == 0:
+            continue
+        # x^d - 1
+        xd_minus_1 = np.zeros(d + 1)
+        xd_minus_1[0] = -1
+        xd_minus_1[d] = 1
+        
+        if mu == 1:
+            result = np.polymul(result, xd_minus_1)
+        elif mu == -1:
+            result, remainder = np.polydiv(result, xd_minus_1)
+    
+    return [int(round(c)) for c in result[::-1]]
 
 
-# ============================================================
-# DEMONSTRATION
-# ============================================================
+def connected_sum_spectrum(
+    poly1: KnotPolynomial,
+    poly2: KnotPolynomial,
+    N: int
+) -> Tuple[List[int], List[int], List[int]]:
+    """
+    Compute OAM spectra of individual knots and their connected sum.
+    
+    Returns (spectrum1, spectrum2, spectrum_sum) where spectrum_sum
+    is the union of spectrum1 and spectrum2 (since product polynomial
+    vanishes where either factor does).
+    """
+    s1 = compute_oam_spectrum(poly1, N)
+    s2 = compute_oam_spectrum(poly2, N)
+    product = poly1 * poly2
+    s_sum = compute_oam_spectrum(product, N)
+    return s1, s2, s_sum
 
-if __name__ == '__main__':
-    print("=" * 60)
-    print("KNOTTED LIGHT ALGORITHMS — Full Demonstration")
-    print("=" * 60)
 
-    # Demo 1: OAM mode extraction
-    print("\n--- Algorithm 1: OAM Mode Extraction ---")
-    for name, poly in KNOT_LIBRARY.items():
-        modes = find_oam_modes(poly)
-        real_roots = find_real_roots(poly)
-        print(f"\n  {poly.name}:")
-        print(f"    Alexander poly: {poly.coeffs}")
-        print(f"    Δ(1) = {poly.eval(1.0).real:.0f} (normalized: {poly.verify_normalization()})")
-        print(f"    Degree: {poly.degree}, Crossing #: {poly.crossing_number}")
-        if modes:
-            print(f"    Unit circle roots: {[(f'{t:.4f}', f'{v:.2e}') for t, v in modes]}")
-        else:
-            print(f"    Unit circle roots: none")
-        if real_roots:
-            print(f"    Real roots: {[f'{r:.6f}' for r in real_roots]}")
-        else:
-            print(f"    Real roots: none")
+def knot_invariant_table(polys: List[KnotPolynomial]) -> List[Dict]:
+    """Generate a table of knot invariants."""
+    results = []
+    for p in polys:
+        result = {
+            'name': p.name,
+            'polynomial': repr(p),
+            'degree': p.degree,
+            'determinant': p.determinant(),
+            'fox_value': p.fox_value(),
+            'palindromic': p.is_palindromic(),
+            'seifert_genus': p.seifert_genus(),
+            'root_type': classify_root_structure(p),
+        }
+        cyc = find_cyclotomic_match(p)
+        if cyc is not None:
+            result['cyclotomic'] = f"Φ_{cyc}"
+        results.append(result)
+    return results
 
-    # Demo 2: Cyclotomic detection
-    print("\n--- Algorithm 2: Cyclotomic Detection ---")
-    for name, poly in KNOT_LIBRARY.items():
-        n = is_cyclotomic(poly)
-        if n:
-            print(f"  {poly.name}: Δ_K = Φ_{n} (cyclotomic)")
-        else:
-            print(f"  {poly.name}: not cyclotomic")
 
-    # Demo 3: Connected sum
-    print("\n--- Algorithm 3: Connected Sum ---")
-    trefoil = KNOT_LIBRARY['trefoil']
-    fig8 = KNOT_LIBRARY['figure_eight']
-    product = trefoil * fig8
-    print(f"  {trefoil.name} # {fig8.name}:")
-    print(f"    Alexander poly: {product.coeffs}")
-    print(f"    Degree: {product.degree}")
-    print(f"    Real roots: {[f'{r:.6f}' for r in find_real_roots(product)]}")
-    modes = find_oam_modes(product)
-    print(f"    Unit circle modes: {len(modes)}")
-
-    # Demo 4: Spectral measure
-    print("\n--- Algorithm 4: Spectral Measure ---")
-    for name in ['trefoil', 'figure_eight']:
-        poly = KNOT_LIBRARY[name]
-        spectrum = spectral_measure(poly, n_points=100)
-        min_val = spectrum[:, 1].min()
-        max_val = spectrum[:, 1].max()
-        print(f"  {poly.name}: spectral density range [{min_val:.4f}, {max_val:.4f}]")
-
-    print("\n" + "=" * 60)
-    print("All algorithm demonstrations complete.")
+if __name__ == "__main__":
+    print("=== Knot Invariant Table ===")
+    table = knot_invariant_table([UNKNOT, TREFOIL, FIGURE_EIGHT, CINQUEFOIL])
+    for entry in table:
+        print(f"\n{entry['name'].upper()}:")
+        for k, v in entry.items():
+            if k != 'name':
+                print(f"  {k}: {v}")
+    
+    print("\n=== OAM Spectra ===")
+    for poly in [TREFOIL, FIGURE_EIGHT, CINQUEFOIL]:
+        for N in [6, 10, 12, 30]:
+            spec = compute_oam_spectrum(poly, N)
+            if spec:
+                print(f"  {poly.name} mod {N}: {spec}")
+    
+    print("\n=== Connected Sum ===")
+    s1, s2, s_sum = connected_sum_spectrum(TREFOIL, TREFOIL, 6)
+    print(f"  Trefoil spectrum mod 6: {s1}")
+    print(f"  Granny knot spectrum mod 6: {s_sum}")
+    
+    print("\n=== Root Classification ===")
+    for b in range(-4, 5):
+        p = KnotPolynomial([1, b, 1], f"t²+{b}t+1")
+        print(f"  b={b:+d}: {classify_root_structure(p)}")
