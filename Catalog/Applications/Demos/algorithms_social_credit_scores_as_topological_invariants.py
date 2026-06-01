@@ -1,213 +1,256 @@
+#!/usr/bin/env python3
 """
-Algorithms for Social Credit Scoring Dynamics.
+Algorithms for Social Credit Score Dynamics
 
-Type-hinted implementations of scoring dynamics, phase transition detection,
-and Cantor IFS attractor approximation.
+Type-hinted implementations of the core algorithms from the paper.
 """
 
-from typing import Callable, List, Tuple, Dict, Set
-import numpy as np
+from typing import Callable
+import math
 
 
-def iterate_scoring(
-    update: Callable[[np.ndarray], np.ndarray],
-    init: np.ndarray,
-    steps: int
-) -> List[np.ndarray]:
-    """Iterate a scoring update rule from initial scores.
+def iterate_contraction(
+    update: Callable[[float], float],
+    x0: float,
+    kappa: float,
+    epsilon: float = 1e-10,
+    max_iter: int = 10000,
+) -> tuple[float, int]:
+    """
+    Iterate a κ-contraction mapping to find its unique fixed point.
 
     Args:
-        update: Function mapping score vector to updated score vector.
-        init: Initial score vector of shape (n,).
-        steps: Number of iterations.
+        update: The contraction mapping T : [0,1] → [0,1].
+        x0: Initial score in [0,1].
+        kappa: Contraction rate, must satisfy 0 ≤ κ < 1.
+        epsilon: Convergence tolerance.
+        max_iter: Maximum number of iterations.
 
     Returns:
-        List of score vectors at each step (length steps+1).
+        (fixed_point, iterations): The approximate fixed point and
+        the number of iterations performed.
+
+    Convergence guarantee: After n iterations,
+        |T^n(x₀) - x*| ≤ κ^n / (1-κ) · |T(x₀) - x₀|
     """
-    trajectory: List[np.ndarray] = [init.copy()]
-    current = init.copy()
-    for _ in range(steps):
-        current = update(current)
-        trajectory.append(current.copy())
-    return trajectory
+    assert 0 <= kappa < 1, f"Contraction rate must be in [0,1), got {kappa}"
+    assert 0 <= x0 <= 1, f"Initial score must be in [0,1], got {x0}"
+
+    x = x0
+    for i in range(1, max_iter + 1):
+        x_new = update(x)
+        if abs(x_new - x) < epsilon * (1 - kappa):
+            return x_new, i
+        x = x_new
+    return x, max_iter
 
 
-def find_fixed_point(
-    update: Callable[[np.ndarray], np.ndarray],
-    init: np.ndarray,
-    tol: float = 1e-10,
-    max_iter: int = 10000
-) -> Tuple[np.ndarray, int]:
-    """Find fixed point of a scoring dynamics via iteration.
+def find_fixed_points(
+    f: Callable[[float], float],
+    n_samples: int = 10000,
+    tolerance: float = 1e-8,
+) -> list[float]:
+    """
+    Find all fixed points of f : [0,1] → [0,1] by sampling.
+
+    Uses sign changes of g(x) = f(x) - x to locate fixed points,
+    then refines with bisection.
 
     Args:
-        update: Scoring update rule.
-        init: Initial score vector.
-        tol: Convergence tolerance (sup-norm).
-        max_iter: Maximum iterations.
+        f: The map whose fixed points we seek.
+        n_samples: Number of sample points in [0,1].
+        tolerance: Precision of fixed point location.
 
     Returns:
-        Tuple of (fixed_point, iterations_used).
+        List of approximate fixed points, sorted.
     """
-    current = init.copy()
-    for step in range(max_iter):
-        next_scores = update(current)
-        if np.max(np.abs(next_scores - current)) < tol:
-            return next_scores, step + 1
-        current = next_scores
-    return current, max_iter
+    fixed_points: list[float] = []
+    dx = 1.0 / n_samples
+
+    for i in range(n_samples):
+        x_lo = i * dx
+        x_hi = (i + 1) * dx
+        g_lo = f(x_lo) - x_lo
+        g_hi = f(x_hi) - x_hi
+
+        if abs(g_lo) < tolerance:
+            if not fixed_points or abs(fixed_points[-1] - x_lo) > tolerance:
+                fixed_points.append(x_lo)
+        elif g_lo * g_hi < 0:
+            # Bisection
+            lo, hi = x_lo, x_hi
+            for _ in range(100):
+                mid = (lo + hi) / 2
+                g_mid = f(mid) - mid
+                if abs(g_mid) < tolerance:
+                    break
+                if g_lo * g_mid < 0:
+                    hi = mid
+                else:
+                    lo = mid
+                    g_lo = g_mid
+            fixed_points.append((lo + hi) / 2)
+
+    return sorted(set(round(fp, 8) for fp in fixed_points))
 
 
-def assign_tier(thresholds: np.ndarray, score: float) -> int:
-    """Assign a tier to a score based on sorted thresholds.
-
-    The tier is the count of thresholds that the score exceeds or equals.
+def detect_bifurcations(
+    family: Callable[[float, float], float],
+    a_min: float,
+    a_max: float,
+    n_params: int = 1000,
+) -> list[tuple[float, int, int]]:
+    """
+    Detect bifurcation points in a parameterized family of maps.
 
     Args:
-        thresholds: Sorted array of threshold values.
-        score: The score to classify.
+        family: A function (a, x) → f_a(x) parameterized by a.
+        a_min, a_max: Parameter range to scan.
+        n_params: Number of parameter values to test.
 
     Returns:
-        Integer tier in {0, 1, ..., len(thresholds)}.
+        List of (a_value, fp_count_before, fp_count_after) at
+        bifurcation points.
     """
-    return int(np.sum(thresholds <= score))
+    da = (a_max - a_min) / n_params
+    bifurcations: list[tuple[float, int, int]] = []
+
+    prev_count = len(find_fixed_points(lambda x: family(a_min, x)))
+
+    for i in range(1, n_params + 1):
+        a = a_min + i * da
+        curr_count = len(find_fixed_points(lambda x, a=a: family(a, x)))
+        if curr_count != prev_count:
+            bifurcations.append((a, prev_count, curr_count))
+        prev_count = curr_count
+
+    return bifurcations
 
 
-def detect_phase_transitions(
-    thresholds: np.ndarray,
-    scores: np.ndarray,
-    epsilon: float
-) -> List[Dict[str, object]]:
-    """Detect phase transitions caused by threshold perturbation.
+def cantor_set_intervals(n_stages: int) -> list[tuple[float, float]]:
+    """
+    Compute the intervals at stage n of the Cantor set construction.
 
-    For each threshold, shifts it by epsilon and checks which
-    individuals change tier.
+    At each stage, the middle third of every interval is removed.
 
     Args:
-        thresholds: Current threshold values.
-        scores: Score vector for the population.
-        epsilon: Perturbation magnitude.
+        n_stages: Number of removal stages.
 
     Returns:
-        List of dicts with keys: threshold_index, individual,
-        old_tier, new_tier.
+        List of (left, right) endpoints of surviving intervals.
     """
-    transitions: List[Dict[str, object]] = []
-    for t_idx in range(len(thresholds)):
-        perturbed = thresholds.copy()
-        perturbed[t_idx] += epsilon
-        for i, s in enumerate(scores):
-            old_tier = assign_tier(thresholds, s)
-            new_tier = assign_tier(perturbed, s)
-            if old_tier != new_tier:
-                transitions.append({
-                    'threshold_index': t_idx,
-                    'individual': i,
-                    'old_tier': old_tier,
-                    'new_tier': new_tier,
-                })
-    return transitions
-
-
-def cantor_ifs_iterate(
-    c: float = 1/3,
-    depth: int = 8
-) -> List[Tuple[float, float]]:
-    """Approximate the Cantor IFS attractor by iterating interval removal.
-
-    Uses the IFS {x -> cx, x -> cx + (1-c)} with contraction ratio c.
-
-    Args:
-        c: Contraction ratio (must be < 0.5 for Cantor set).
-        depth: Number of iteration levels.
-
-    Returns:
-        List of (left, right) intervals approximating the attractor.
-    """
-    intervals: List[Tuple[float, float]] = [(0.0, 1.0)]
-    for _ in range(depth):
-        new_intervals: List[Tuple[float, float]] = []
+    intervals = [(0.0, 1.0)]
+    for _ in range(n_stages):
+        new_intervals: list[tuple[float, float]] = []
         for a, b in intervals:
-            new_intervals.append((c * a, c * b))
-            new_intervals.append((c * a + (1 - c), c * b + (1 - c)))
+            w = (b - a) / 3
+            new_intervals.append((a, a + w))
+            new_intervals.append((b - w, b))
         intervals = new_intervals
     return intervals
 
 
-def compute_box_counting_dimension(
-    c: float,
-    depths: List[int]
+def cantor_set_measure(n_stages: int) -> float:
+    """
+    Compute the total Lebesgue measure at stage n.
+
+    Returns (2/3)^n, demonstrating measure-zero convergence.
+    """
+    return (2.0 / 3.0) ** n_stages
+
+
+def logistic_bifurcation_diagram(
+    a_min: float = 0.0,
+    a_max: float = 4.0,
+    n_params: int = 2000,
+    n_warmup: int = 500,
+    n_plot: int = 200,
+) -> list[tuple[float, float]]:
+    """
+    Compute the bifurcation diagram of the logistic map.
+
+    For each parameter value a, iterates f_a(x) = ax(1-x) from x=0.5,
+    discards transients, and records the attractor.
+
+    Args:
+        a_min, a_max: Parameter range.
+        n_params: Number of parameter values.
+        n_warmup: Iterations to discard (transient).
+        n_plot: Iterations to record (attractor).
+
+    Returns:
+        List of (a, x) points on the bifurcation diagram.
+    """
+    points: list[tuple[float, float]] = []
+    da = (a_max - a_min) / n_params
+
+    for i in range(n_params + 1):
+        a = a_min + i * da
+        x = 0.5
+        for _ in range(n_warmup):
+            x = a * x * (1 - x)
+        for _ in range(n_plot):
+            x = a * x * (1 - x)
+            points.append((a, x))
+
+    return points
+
+
+def score_entropy(
+    f: Callable[[float], float],
+    n_grid: int = 1000,
+    period_max: int = 20,
 ) -> float:
-    """Estimate box-counting dimension of the IFS attractor.
+    """
+    Estimate the topological entropy of a map f : [0,1] → [0,1].
+
+    Uses the growth rate of period-n points: h = lim (1/n) log(#periodic points of period n).
 
     Args:
-        c: Contraction ratio.
-        depths: List of depths to compute at.
+        f: The map.
+        n_grid: Grid resolution for finding periodic points.
+        period_max: Maximum period to check.
 
     Returns:
-        Estimated dimension via linear regression on log-log plot.
+        Estimated topological entropy.
     """
-    log_counts = []
-    log_scales = []
-    for k in depths:
-        n_boxes = 2 ** k
-        scale = c ** k
-        log_counts.append(np.log(n_boxes))
-        log_scales.append(-np.log(scale))
+    def compose_n(f: Callable[[float], float], n: int) -> Callable[[float], float]:
+        def fn(x: float) -> float:
+            for _ in range(n):
+                x = f(x)
+            return x
+        return fn
 
-    # Linear regression: dim = slope of log(N) vs log(1/scale)
-    coeffs = np.polyfit(log_scales, log_counts, 1)
-    return float(coeffs[0])
+    entropies: list[float] = []
+    for n in range(1, period_max + 1):
+        fn = compose_n(f, n)
+        periodic = find_fixed_points(fn, n_samples=n_grid * n)
+        count = max(len(periodic), 1)
+        entropies.append(math.log(count) / n)
 
-
-def contractive_update(
-    scores: np.ndarray,
-    c: float = 0.5,
-    target: float = 0.5
-) -> np.ndarray:
-    """A simple contractive scoring update: pull toward a target.
-
-    update(s) = c * s + (1-c) * target
-
-    This is c-contractive with the unique fixed point at target.
-
-    Args:
-        scores: Current score vector.
-        c: Contraction factor (0 <= c < 1).
-        target: Target score (the fixed point).
-
-    Returns:
-        Updated score vector.
-    """
-    return c * scores + (1 - c) * target
+    return max(entropies) if entropies else 0.0
 
 
-def monotone_scoring_example(
-    n: int = 10,
-    steps: int = 50
-) -> Tuple[List[np.ndarray], int]:
-    """Run a monotone scoring example and find convergence step.
+if __name__ == "__main__":
+    # Demo: contraction convergence
+    kappa = 0.5
+    fp, iters = iterate_contraction(lambda x: 0.5 * x + 0.25, 0.0, kappa)
+    print(f"Contraction fixed point: {fp:.10f} (iterations: {iters})")
 
-    Uses a rank-preserving mean-regression update.
+    # Demo: logistic fixed points
+    for a in [0.5, 1.0, 1.5, 2.0, 3.0]:
+        fps = find_fixed_points(lambda x, a=a: a * x * (1 - x))
+        print(f"Logistic a={a:.1f}: fixed points = {fps}")
 
-    Args:
-        n: Population size.
-        steps: Number of iterations.
+    # Demo: bifurcation detection
+    bifs = detect_bifurcations(
+        lambda a, x: a * x * (1 - x), 0.0, 3.5, n_params=500
+    )
+    for a, before, after in bifs:
+        print(f"Bifurcation at a ≈ {a:.3f}: {before} → {after} fixed points")
 
-    Returns:
-        Tuple of (trajectory, convergence_step).
-    """
-    rng = np.random.default_rng(42)
-    init = rng.random(n)
-
-    def update(s: np.ndarray) -> np.ndarray:
-        mean = np.mean(s)
-        return 0.8 * s + 0.2 * mean
-
-    trajectory = iterate_scoring(update, init, steps)
-
-    # Find convergence step
-    for step in range(1, len(trajectory)):
-        if np.max(np.abs(trajectory[step] - trajectory[step-1])) < 1e-12:
-            return trajectory, step
-    return trajectory, steps
+    # Demo: Cantor set
+    for n in range(6):
+        intervals = cantor_set_intervals(n)
+        print(f"Cantor stage {n}: {len(intervals)} intervals, "
+              f"measure = {cantor_set_measure(n):.6f}")
