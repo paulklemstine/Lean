@@ -980,6 +980,41 @@ body.light-theme .gallery-img-container {
     white-space: pre;
 }
 
+/* Lean proof cards — collapsible code blocks */
+.code-container {
+    background-color: var(--bg-panel);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    animation: borderGlow 8s ease-in-out infinite;
+}
+
+body.light-theme .code-container {
+    animation: none;
+}
+
+.code-container pre {
+    margin: 0;
+    padding: 24px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    background-color: var(--bg-panel);
+    white-space: pre;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+body.light-theme .code-container pre {
+    background-color: #f8fafc;
+}
+
+.code-container pre code {
+    white-space: pre;
+}
+
 /* Interactive Runner */
 .run-btn {
     background: linear-gradient(135deg, #8844ff, #22ccff);
@@ -1035,8 +1070,12 @@ body.light-theme .gallery-img-container {
 }
 
 .code-editor {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
     width: 100%;
-    min-height: 450px;
+    min-height: 300px;
     height: auto;
     padding: 20px 24px;
     background-color: var(--bg-panel);
@@ -1044,15 +1083,34 @@ body.light-theme .gallery-img-container {
     font-family: var(--font-mono);
     font-size: 0.95rem;
     line-height: 1.6;
-    border: none;
-    resize: vertical;
-    outline: none;
-    border-bottom: 1px solid var(--border-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
     box-sizing: border-box;
+    outline: none;
+    resize: vertical;
+    tab-size: 4;
+}
+
+.code-editor.collapsed {
+    display: none;
 }
 
 .code-editor:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-glow);
     background-color: var(--bg-elevated);
+}
+
+body.light-theme .code-editor {
+    background-color: #f8fafc;
+    color: #0f172a;
+    border-color: #e2e8f0;
+}
+
+body.light-theme .code-editor:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: #ffffff;
 }
 
 .code-output {
@@ -1110,16 +1168,20 @@ body.light-theme .gallery-img-container {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-muted);
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.85em;
+    font-size: 0.82em;
+    font-family: var(--font-sans);
+    font-weight: 500;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .source-toggle:hover {
     color: var(--text-main);
     border-color: var(--accent-color, #7c3aed);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(34, 204, 255, 0.1));
 }
 
 /* Interactive HTML demo frames */

@@ -209,6 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     nameSpan.className = 'code-title';
                     nameSpan.textContent = file.name;
 
+                    const headerRight = document.createElement('div');
+                    headerRight.style.cssText = 'display: flex; gap: 12px; align-items: center;';
+
                     const meta = document.createElement('span');
                     meta.style.cssText = 'color: var(--text-muted); font-size: 0.85em;';
                     const thmCount = (file.code.match(/\btheorem\b/g) || []).length;
@@ -220,14 +223,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (sorryCount > 0) metaText += ` · ${sorryCount} sorrys`;
                     meta.textContent = metaText;
 
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'source-toggle';
+                    toggleBtn.textContent = 'Show Code';
+
+                    headerRight.appendChild(meta);
+                    headerRight.appendChild(toggleBtn);
+
                     header.appendChild(nameSpan);
-                    header.appendChild(meta);
+                    header.appendChild(headerRight);
 
                     const pre = document.createElement('pre');
+                    pre.style.display = 'none'; // Collapsed by default
                     const codeEl = document.createElement('code');
                     codeEl.className = 'language-lean';
                     codeEl.textContent = file.code;
                     pre.appendChild(codeEl);
+
+                    toggleBtn.addEventListener('click', () => {
+                        if (pre.style.display === 'none') {
+                            pre.style.display = '';
+                            toggleBtn.textContent = 'Hide Code';
+                        } else {
+                            pre.style.display = 'none';
+                            toggleBtn.textContent = 'Show Code';
+                        }
+                    });
 
                     card.appendChild(header);
                     card.appendChild(pre);
@@ -446,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const editor = document.createElement('textarea');
             editor.className = 'code-editor';
             editor.spellcheck = false;
+            editor.cols = 80;
             editor.value = resolvedCode;
             editor.style.display = 'none'; // Hidden by default
             // Auto-size: set height to fit content when shown
