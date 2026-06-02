@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "035aa5c3",
     "filename": "the_periodic_table_is_a_lie_elements_as_eigenvalue.json",
     "pkg_num": 170,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.682708,
     "title": "The Periodic Table as Spectral Theory"
   },
   {
@@ -5344,8 +5344,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_periodic_table_is_a_lie_elements_as_eigenvalue",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.682708,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "The Periodic Table as Spectral Theory"
     }
