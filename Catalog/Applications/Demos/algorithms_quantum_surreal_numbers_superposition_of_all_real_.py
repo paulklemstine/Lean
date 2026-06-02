@@ -1,257 +1,251 @@
+#!/usr/bin/env python3
 """
-Quantum Surreal Numbers: Algorithms
-====================================
+Quantum Surreal Numbers: Core Algorithms
 
-Algorithms for quantum state manipulation, measurement simulation,
-tropical cost computation, and standard-part filtering.
-
-Soli Deo Gloria
+Type-hinted implementations of the key algorithms from the quantum surreal
+number framework, including probability computation, measurement, and
+scale decomposition analysis.
 """
 
-import numpy as np
-from typing import List, Tuple, Optional
 from dataclasses import dataclass
+from typing import List, Tuple, Optional
+import math
 
 
 @dataclass
-class MeasurementResult:
-    """Result of a quantum measurement"""
-    outcome: int
-    probability: float
-    post_state: 'QuantumStateAlg'
-    tropical_cost: float
+class QState:
+    """A normalized quantum state over a finite basis."""
+    amplitudes: List[float]
+
+    def __post_init__(self) -> None:
+        norm_sq = sum(a**2 for a in self.amplitudes)
+        if abs(norm_sq - 1.0) > 1e-10:
+            norm = math.sqrt(norm_sq)
+            self.amplitudes = [a / norm for a in self.amplitudes]
+
+    @property
+    def dim(self) -> int:
+        return len(self.amplitudes)
+
+    def probability(self, i: int) -> float:
+        """Born rule probability for basis state i."""
+        return self.amplitudes[i] ** 2
 
 
-class QuantumStateAlg:
+@dataclass
+class ScaleDecomp:
+    """A scale decomposition partitioning basis states into sectors."""
+    is_observable: List[bool]
+
+    @property
+    def obs_indices(self) -> List[int]:
+        return [i for i, obs in enumerate(self.is_observable) if obs]
+
+    @property
+    def inf_indices(self) -> List[int]:
+        return [i for i, obs in enumerate(self.is_observable) if not obs]
+
+
+@dataclass
+class BoolProjection:
+    """A Boolean projection operator."""
+    keep: List[bool]
+
+    def complement(self) -> 'BoolProjection':
+        return BoolProjection(keep=[not k for k in self.keep])
+
+    def apply(self, state: QState) -> List[float]:
+        return [
+            state.amplitudes[i] if self.keep[i] else 0.0
+            for i in range(state.dim)
+        ]
+
+
+def observable_probability(state: QState, decomp: ScaleDecomp) -> float:
     """
-    Quantum state with complex amplitudes over n basis states.
+    Compute the observable probability: sum of |α_i|² for observable i.
 
-    Implements the Born rule, density matrix construction,
-    standard-part filtering, and tropical cost mapping.
+    This is the "standard part" of the total probability — what a
+    macroscopic observer actually measures.
 
-    Time complexity for n basis states:
-    - Construction: O(n)
-    - Probability computation: O(1) per outcome
-    - Total probability: O(n)
-    - Density matrix: O(n²)
-    - Shannon entropy: O(n)
-    - Tropical cost vector: O(n)
-    - Standard-part filter: O(n)
+    Time: O(n), Space: O(1)
     """
-
-    def __init__(self, amplitudes: List[complex]):
-        self.amp = np.array(amplitudes, dtype=complex)
-        self.n = len(amplitudes)
-
-    def prob(self, i: int) -> float:
-        """Born rule: P(i) = |α_i|². O(1)"""
-        return abs(self.amp[i]) ** 2
-
-    def prob_vector(self) -> np.ndarray:
-        """Full probability vector. O(n)"""
-        return np.abs(self.amp) ** 2
-
-    def total_prob(self) -> float:
-        """Sum of all probabilities. O(n)"""
-        return float(np.sum(self.prob_vector()))
-
-    def normalize(self) -> 'QuantumStateAlg':
-        """Return normalized version. O(n)"""
-        norm = np.sqrt(self.total_prob())
-        if norm < 1e-15:
-            raise ValueError("Cannot normalize zero state")
-        return QuantumStateAlg((self.amp / norm).tolist())
-
-    def density_matrix(self) -> np.ndarray:
-        """Density matrix ρ = |ψ⟩⟨ψ|. O(n²)"""
-        return np.outer(self.amp, np.conj(self.amp))
-
-    def shannon_entropy(self) -> float:
-        """Shannon entropy H(ψ) = -Σ p_i log(p_i). O(n)"""
-        pv = self.prob_vector()
-        H = 0.0
-        for p in pv:
-            if p > 1e-15:
-                H -= p * np.log(p)
-        return H
-
-    def tropical_cost_vector(self) -> np.ndarray:
-        """Map probabilities to tropical costs: -log(p). O(n)"""
-        pv = self.prob_vector()
-        costs = np.full(self.n, np.inf)
-        mask = pv > 1e-15
-        costs[mask] = -np.log(pv[mask])
-        return costs
-
-    def standard_part_filter(self, epsilon: float) -> np.ndarray:
-        """
-        Standard-part filtering: set probabilities below ε to 0.
-
-        This models the collapse of infinitesimal probabilities in
-        quantum surreal number measurement.
-
-        Algorithm:
-        1. Compute probability vector p
-        2. For each p_i: if p_i < ε, set to 0
-        3. Return filtered vector
-
-        Properties (proved in Lean):
-        - Idempotent: filter(filter(p)) = filter(p)
-        - Preserves nonnegativity
-        - Monotone: preserves ordering of surviving probabilities
-
-        O(n) time, O(n) space
-        """
-        pv = self.prob_vector()
-        return np.where(pv < epsilon, 0.0, pv)
-
-    def measure(self, rng: Optional[np.random.Generator] = None) -> MeasurementResult:
-        """
-        Simulate quantum measurement.
-
-        Algorithm:
-        1. Compute probability vector
-        2. Sample outcome from distribution
-        3. Collapse to basis state
-        4. Compute tropical cost of outcome
-
-        O(n) time
-        """
-        if rng is None:
-            rng = np.random.default_rng()
-
-        pv = self.prob_vector()
-        pv = pv / pv.sum()  # Normalize for numerical stability
-
-        outcome = rng.choice(self.n, p=pv)
-
-        # Post-measurement state (collapse)
-        post_amp = np.zeros(self.n, dtype=complex)
-        post_amp[outcome] = 1.0
-        post_state = QuantumStateAlg(post_amp.tolist())
-
-        # Tropical cost
-        tc = -np.log(pv[outcome]) if pv[outcome] > 0 else np.inf
-
-        return MeasurementResult(
-            outcome=int(outcome),
-            probability=float(pv[outcome]),
-            post_state=post_state,
-            tropical_cost=tc
-        )
-
-    def expectation_value(self, observable: np.ndarray) -> complex:
-        """
-        Compute ⟨ψ|A|ψ⟩ for observable A.
-
-        For Hermitian A, the result is guaranteed real
-        (proved: hermitian_expectation_real).
-
-        O(n²) time
-        """
-        return complex(np.conj(self.amp) @ observable @ self.amp)
-
-    def inner_product(self, other: 'QuantumStateAlg') -> complex:
-        """Inner product ⟨self|other⟩. O(n)"""
-        return complex(np.conj(self.amp) @ other.amp)
+    return sum(
+        state.amplitudes[i] ** 2
+        for i in decomp.obs_indices
+    )
 
 
-def quantum_tropical_transform(probs: np.ndarray) -> np.ndarray:
+def infinitesimal_probability(state: QState, decomp: ScaleDecomp) -> float:
     """
-    Transform a quantum probability distribution into tropical costs.
+    Compute the infinitesimal probability: sum of |α_i|² for infinitesimal i.
 
-    The map p ↦ -log(p) converts:
-    - Multiplication of probabilities → Addition of costs
-    - Max probability → Min cost (proved: min_tropicalCost_iff_max_prob)
+    This is the "dark probability" — quantum probability hiding in
+    unobservable modes.
 
-    This is the fundamental bridge between quantum measurement
-    and tropical optimization.
+    Time: O(n), Space: O(1)
+    """
+    return sum(
+        state.amplitudes[i] ** 2
+        for i in decomp.inf_indices
+    )
+
+
+def probability_defect(state: QState, decomp: ScaleDecomp) -> float:
+    """
+    Compute the probability defect: δ = 1 - P_obs.
+
+    By the conservation theorem, δ = P_inf.
+
+    Time: O(n), Space: O(1)
+    """
+    return 1.0 - observable_probability(state, decomp)
+
+
+def verify_conservation(state: QState, decomp: ScaleDecomp,
+                        tol: float = 1e-10) -> bool:
+    """
+    Verify the probability conservation theorem: P_obs + P_inf = 1.
+
+    Returns True if conservation holds within tolerance.
+
+    Time: O(n), Space: O(1)
+    """
+    p_obs = observable_probability(state, decomp)
+    p_inf = infinitesimal_probability(state, decomp)
+    return abs(p_obs + p_inf - 1.0) < tol
+
+
+def measurement_probability(proj: BoolProjection, state: QState) -> float:
+    """
+    Compute the Born-rule probability of a measurement outcome.
+
+    Time: O(n), Space: O(n)
+    """
+    projected = proj.apply(state)
+    return sum(a**2 for a in projected)
+
+
+def post_measurement_state(proj: BoolProjection, state: QState) -> Optional[QState]:
+    """
+    Compute the post-measurement state after projection and renormalization.
+
+    Returns None if the measurement has zero probability (impossible outcome).
+
+    Time: O(n), Space: O(n)
+    """
+    projected = proj.apply(state)
+    norm_sq = sum(a**2 for a in projected)
+    if norm_sq < 1e-15:
+        return None
+    norm = math.sqrt(norm_sq)
+    return QState(amplitudes=[a / norm for a in projected])
+
+
+def inner_product(state1: QState, state2: QState) -> float:
+    """
+    Compute the inner product of two quantum states.
+
+    Time: O(n), Space: O(1)
+    """
+    return sum(
+        state1.amplitudes[i] * state2.amplitudes[i]
+        for i in range(state1.dim)
+    )
+
+
+def observable_inner_product(state1: QState, state2: QState,
+                              decomp: ScaleDecomp) -> float:
+    """
+    Compute the inner product restricted to the observable sector.
+
+    Time: O(|obsSet|), Space: O(1)
+    """
+    return sum(
+        state1.amplitudes[i] * state2.amplitudes[i]
+        for i in decomp.obs_indices
+    )
+
+
+def verify_cauchy_schwarz(state1: QState, state2: QState,
+                           decomp: ScaleDecomp,
+                           tol: float = 1e-10) -> bool:
+    """
+    Verify the observable Cauchy-Schwarz inequality:
+    ⟨ψ|φ⟩²_obs ≤ P_obs(ψ) · P_obs(φ)
+
+    Time: O(n), Space: O(1)
+    """
+    ip = observable_inner_product(state1, state2, decomp)
+    p1 = observable_probability(state1, decomp)
+    p2 = observable_probability(state2, decomp)
+    return ip**2 <= p1 * p2 + tol
+
+
+def classify_state(state: QState, decomp: ScaleDecomp) -> dict:
+    """
+    Classify a quantum state's relationship to a scale decomposition.
+
+    Returns a dictionary with:
+    - observable_prob: P_obs
+    - infinitesimal_prob: P_inf
+    - defect: δ
+    - is_fully_observable: whether δ = 0
+    - dark_ratio: fraction of probability in infinitesimal sector
+
+    Time: O(n), Space: O(1)
+    """
+    p_obs = observable_probability(state, decomp)
+    p_inf = infinitesimal_probability(state, decomp)
+    defect = 1.0 - p_obs
+
+    return {
+        'observable_prob': p_obs,
+        'infinitesimal_prob': p_inf,
+        'defect': defect,
+        'is_fully_observable': abs(defect) < 1e-10,
+        'dark_ratio': p_inf if p_inf > 1e-15 else 0.0,
+    }
+
+
+def graded_decomposition(state: QState,
+                          scales: List[int]) -> List[Tuple[int, float]]:
+    """
+    Compute a multi-layer (tropical valuation) decomposition of probability.
+
+    Given integer scale assignments for each basis state, compute the
+    total probability at each scale level.
 
     Args:
-        probs: Probability vector (positive entries)
+        state: A quantum state
+        scales: Integer scale for each basis element (0 = observable,
+                positive = increasingly infinitesimal)
 
     Returns:
-        Tropical cost vector
+        List of (scale, probability) pairs, sorted by scale.
 
-    Complexity: O(n) time, O(n) space
+    Time: O(n log n), Space: O(k) where k = number of distinct scales
     """
-    costs = np.full_like(probs, np.inf)
-    mask = probs > 1e-15
-    costs[mask] = -np.log(probs[mask])
-    return costs
+    layer_probs: dict[int, float] = {}
+    for i, s in enumerate(scales):
+        prob = state.amplitudes[i] ** 2
+        layer_probs[s] = layer_probs.get(s, 0.0) + prob
+
+    return sorted(layer_probs.items())
 
 
-def inverse_tropical_transform(costs: np.ndarray) -> np.ndarray:
-    """
-    Inverse transform: tropical costs → probabilities.
-    c ↦ exp(-c)
+if __name__ == '__main__':
+    # Quick self-test
+    psi = QState(amplitudes=[1.0, 1.0, 0.5])
+    decomp = ScaleDecomp(is_observable=[True, True, False])
 
-    Complexity: O(n)
-    """
-    probs = np.zeros_like(costs)
-    mask = np.isfinite(costs)
-    probs[mask] = np.exp(-costs[mask])
-    return probs
+    info = classify_state(psi, decomp)
+    print("State classification:", info)
+    print("Conservation holds:", verify_conservation(psi, decomp))
 
-
-def spectral_decomposition_check(matrix: np.ndarray) -> Tuple[bool, np.ndarray, np.ndarray]:
-    """
-    Check if a matrix is Hermitian and compute its spectral decomposition.
-
-    For a density matrix ρ = |ψ⟩⟨ψ|, the eigenvalues are the measurement
-    probabilities and the eigenvectors are the measurement basis states.
-
-    Returns:
-        (is_hermitian, eigenvalues, eigenvectors)
-
-    Complexity: O(n³) using standard eigenvalue algorithms
-    """
-    is_hermitian = np.allclose(matrix, matrix.conj().T)
-    eigenvalues, eigenvectors = np.linalg.eigh(matrix)
-    return is_hermitian, eigenvalues, eigenvectors
-
-
-if __name__ == "__main__":
-    print("Quantum Surreal Numbers: Algorithm Demonstrations")
-    print("=" * 50)
-
-    # Create state
-    psi = QuantumStateAlg([1/np.sqrt(3), 1j/np.sqrt(3), -1/np.sqrt(3)])
-    print(f"\nState: {psi.amp}")
-    print(f"Probabilities: {psi.prob_vector()}")
-    print(f"Total prob: {psi.total_prob():.6f}")
-    print(f"Entropy: {psi.shannon_entropy():.6f}")
-    print(f"Tropical costs: {psi.tropical_cost_vector()}")
-
-    # Standard part filtering
-    print(f"\nStandard-part filter (ε=0.4):")
-    print(f"  Filtered probs: {psi.standard_part_filter(0.4)}")
-
-    # Measurement simulation
-    print(f"\nMeasurement simulation (1000 trials):")
-    rng = np.random.default_rng(42)
-    counts = [0] * 3
-    for _ in range(1000):
-        result = psi.measure(rng)
-        counts[result.outcome] += 1
-    print(f"  Counts: {counts}")
-    print(f"  Frequencies: {[c/1000 for c in counts]}")
-    print(f"  Expected: {psi.prob_vector().tolist()}")
-
-    # Tropical bridge
-    print(f"\nTropical bridge:")
-    probs = np.array([0.5, 0.3, 0.2])
-    costs = quantum_tropical_transform(probs)
-    recovered = inverse_tropical_transform(costs)
-    print(f"  Probs: {probs}")
-    print(f"  Costs: {costs}")
-    print(f"  Recovered: {recovered}")
-    print(f"  Round-trip: {np.allclose(probs, recovered)}")
-
-    # Spectral decomposition
-    rho = psi.density_matrix()
-    is_herm, evals, evecs = spectral_decomposition_check(rho)
-    print(f"\nSpectral decomposition of ρ:")
-    print(f"  Hermitian: {is_herm}")
-    print(f"  Eigenvalues: {evals}")
-    print(f"  All ≥ 0: {all(ev >= -1e-12 for ev in evals)}")
+    # Graded decomposition
+    psi2 = QState(amplitudes=[1.0, 1.0, 0.5, 0.3, 0.1])
+    layers = graded_decomposition(psi2, [0, 0, 1, 1, 2])
+    print("\nGraded decomposition:")
+    for scale, prob in layers:
+        print(f"  Scale {scale}: probability = {prob:.6f}")

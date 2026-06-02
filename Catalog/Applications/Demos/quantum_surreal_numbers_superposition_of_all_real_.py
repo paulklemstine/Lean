@@ -1,740 +1,416 @@
+#!/usr/bin/env python3
 """
-Quantum Surreal Numbers: Applications
-=======================================
+Quantum Surreal Numbers: Demonstration
 
-Real-world applications of the quantum surreal number framework:
-1. Quantum key distribution security analysis
-2. Portfolio optimization via tropical-quantum bridge
-3. Signal detection with infinitesimal filtering
-
-Soli Deo Gloria
+Numerical examples illustrating the key concepts:
+1. Probability defect for states with infinitesimal components
+2. Post-measurement normalization
+3. Observable Cauchy-Schwarz bound
 """
 
 import numpy as np
 from typing import List, Tuple
 
+def make_quantum_state(amplitudes: List[float]) -> np.ndarray:
+    """Create a normalized quantum state from raw amplitudes."""
+    amp = np.array(amplitudes, dtype=float)
+    norm = np.sqrt(np.sum(amp**2))
+    if norm == 0:
+        raise ValueError("Zero state cannot be normalized")
+    return amp / norm
+
+def probability_defect(state: np.ndarray, observable_mask: np.ndarray) -> float:
+    """Compute the probability defect: 1 - sum of |alpha_i|^2 for observable i."""
+    probs = state**2
+    obs_prob = np.sum(probs[observable_mask])
+    return 1.0 - obs_prob
+
+def observable_prob(state: np.ndarray, observable_mask: np.ndarray) -> float:
+    """Compute observable probability."""
+    return np.sum(state[observable_mask]**2)
+
+def infinitesimal_prob(state: np.ndarray, observable_mask: np.ndarray) -> float:
+    """Compute infinitesimal probability."""
+    return np.sum(state[~observable_mask]**2)
+
+def post_measurement(state: np.ndarray, keep_mask: np.ndarray) -> np.ndarray:
+    """Apply projection and renormalize."""
+    projected = state * keep_mask.astype(float)
+    norm_sq = np.sum(projected**2)
+    if norm_sq == 0:
+        raise ValueError("Projection has zero probability")
+    return projected / np.sqrt(norm_sq)
+
+def obs_inner_product(state1: np.ndarray, state2: np.ndarray,
+                      observable_mask: np.ndarray) -> float:
+    """Inner product restricted to observable sector."""
+    return np.sum(state1[observable_mask] * state2[observable_mask])
 
 # ============================================================
-# Application 1: Quantum Key Distribution Security
+# Demo 1: The Probability Defect
 # ============================================================
+print("=" * 60)
+print("DEMO 1: Probability Defect")
+print("=" * 60)
+print()
+print("Consider a quantum state |ψ⟩ = α₀|0⟩ + α₁|1⟩ + α₂|ε⟩")
+print("where |0⟩ and |1⟩ are observable, but |ε⟩ is infinitesimal.")
+print()
 
-def qkd_security_analysis(n_states: int = 4, noise_level: float = 0.05):
-    """
-    Analyze quantum key distribution security using the standard-part filter.
+# Simulate different amounts of "infinitesimal" amplitude
+for eps_amp in [0.0, 0.1, 0.3, 0.5, 0.7, 0.9]:
+    # State: (1, 1, eps) normalized
+    state = make_quantum_state([1.0, 1.0, eps_amp])
+    mask = np.array([True, True, False])  # first two observable
 
-    In QKD, an eavesdropper introduces small perturbations to quantum states.
-    The standard-part filter models the detection threshold: perturbations
-    below the threshold are undetectable (infinitesimal in the surreal sense).
+    delta = probability_defect(state, mask)
+    p_obs = observable_prob(state, mask)
+    p_inf = infinitesimal_prob(state, mask)
 
-    Args:
-        n_states: Number of basis states in the protocol
-        noise_level: Eavesdropper's perturbation strength
-    """
-    print("=" * 60)
-    print("APPLICATION 1: Quantum Key Distribution Security")
-    print("=" * 60)
-
-    # Clean state
-    clean = np.zeros(n_states, dtype=complex)
-    clean[0] = 1.0
-
-    # Eavesdropper perturbed state
-    noise = noise_level * np.random.randn(n_states) + \
-            1j * noise_level * np.random.randn(n_states)
-    perturbed = clean + noise
-    perturbed = perturbed / np.linalg.norm(perturbed)
-
-    # Probability distributions
-    clean_probs = np.abs(clean) ** 2
-    perturbed_probs = np.abs(perturbed) ** 2
-
-    # Standard-part filtering at various thresholds
-    print(f"\nClean state probabilities:    {clean_probs}")
-    print(f"Perturbed state probabilities: {np.round(perturbed_probs, 6)}")
-
-    for epsilon in [0.1, 0.01, 0.001]:
-        filtered = np.where(perturbed_probs < epsilon, 0.0, perturbed_probs)
-        detectable = np.sum(filtered != clean_probs)
-        print(f"\n  ε = {epsilon}:")
-        print(f"    Filtered probs: {np.round(filtered, 6)}")
-        print(f"    Detectable perturbations: {detectable}")
-        print(f"    Security: {'SECURE' if detectable == 0 else 'BREACH DETECTED'}")
-
+    print(f"  ε-amplitude = {eps_amp:.1f}")
+    print(f"    State = [{state[0]:.4f}, {state[1]:.4f}, {state[2]:.4f}]")
+    print(f"    P_obs = {p_obs:.6f}, P_inf = {p_inf:.6f}, "
+          f"P_obs + P_inf = {p_obs + p_inf:.6f}")
+    print(f"    Defect δ = {delta:.6f}")
+    print()
 
 # ============================================================
-# Application 2: Portfolio Optimization via Tropical Bridge
+# Demo 2: The Key Quantum Surreal Example
 # ============================================================
+print("=" * 60)
+print("DEMO 2: The Quantum Surreal State |ψ⟩ = (1/√2)|0⟩ + (1/√2)|ε⟩")
+print("=" * 60)
+print()
+print("This is the canonical example from the research direction.")
+print("In true surreal arithmetic, ε is infinitesimal and st(ε²/2) = 0.")
+print("We simulate with decreasing finite values of ε:")
+print()
 
-def tropical_portfolio_optimization():
-    """
-    Use the quantum-tropical bridge for portfolio optimization.
+for eps_val in [1.0, 0.1, 0.01, 0.001, 1e-10, 1e-100]:
+    # |ψ⟩ = (1/√2)|0⟩ + (1/√2)|ε⟩, but ε is the BASIS LABEL
+    # The amplitudes are both 1/√2, the key is what we OBSERVE
+    state = make_quantum_state([1.0, 1.0])
+    mask = np.array([True, False])  # only |0⟩ is observable
 
-    The key insight: the tropical cost map p ↦ -log(p) transforms
-    probability maximization into cost minimization. In portfolio theory:
-    - Asset return probabilities → tropical risk costs
-    - Product of independent probabilities → sum of tropical costs
-    - Maximum probability portfolio → minimum tropical cost portfolio
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Portfolio Optimization via Tropical Bridge")
-    print("=" * 60)
+    p_obs = observable_prob(state, mask)
+    p_inf = infinitesimal_prob(state, mask)
+    delta = probability_defect(state, mask)
 
-    # Hypothetical asset return probabilities (probability of positive return)
-    assets = ["Tech", "Bonds", "Gold", "Crypto"]
-    return_probs = np.array([0.65, 0.80, 0.55, 0.40])
+    print(f"  ε = {eps_val:.0e}: P_obs = {p_obs:.4f}, "
+          f"P_inf = {p_inf:.4f}, δ = {delta:.4f}")
 
-    # Tropical costs
-    costs = -np.log(return_probs)
-
-    print(f"\nAsset return probabilities:")
-    for name, p, c in zip(assets, return_probs, costs):
-        print(f"  {name:8s}: P(+return) = {p:.2f}, tropical cost = {c:.4f}")
-
-    # Portfolio combinations (2-asset)
-    print(f"\n2-Asset portfolios (tropical cost = sum of individual costs):")
-    for i in range(len(assets)):
-        for j in range(i+1, len(assets)):
-            joint_prob = return_probs[i] * return_probs[j]
-            joint_cost = costs[i] + costs[j]
-            verify_cost = -np.log(joint_prob)
-            print(f"  {assets[i]}+{assets[j]}: "
-                  f"P = {joint_prob:.4f}, "
-                  f"cost = {joint_cost:.4f} "
-                  f"(verify: {abs(joint_cost - verify_cost) < 1e-12})")
-
-    # Optimal portfolio = minimum tropical cost
-    best_pair = None
-    best_cost = float('inf')
-    for i in range(len(assets)):
-        for j in range(i+1, len(assets)):
-            c = costs[i] + costs[j]
-            if c < best_cost:
-                best_cost = c
-                best_pair = (i, j)
-
-    i, j = best_pair
-    print(f"\nOptimal 2-asset portfolio: {assets[i]} + {assets[j]}")
-    print(f"  Minimum tropical cost: {best_cost:.4f}")
-    print(f"  Maximum joint probability: {return_probs[i]*return_probs[j]:.4f}")
-
+print()
+print("  → The probability defect is always 0.5, regardless of how small ε is!")
+print("  → In the surreal limit, half the probability is 'dark'.")
 
 # ============================================================
-# Application 3: Signal Detection with Infinitesimal Filtering
+# Demo 3: Post-Measurement Normalization
 # ============================================================
+print()
+print("=" * 60)
+print("DEMO 3: Post-Measurement Normalization")
+print("=" * 60)
+print()
 
-def signal_detection_filtering():
-    """
-    Apply standard-part filtering to signal detection.
+state = make_quantum_state([3.0, 4.0, 1.0, 2.0])
+print(f"Initial state: {state}")
+print(f"Sum of squares: {np.sum(state**2):.6f}")
 
-    In radar/sonar, signals below a detection threshold are indistinguishable
-    from noise. The standard-part filter formalizes this: signals with
-    "infinitesimal" (sub-threshold) probability are mapped to zero.
+# Project onto first two components
+keep = np.array([True, True, False, False])
+post = post_measurement(state, keep)
+print(f"\nAfter projecting onto observable sector {keep}:")
+print(f"Post-measurement state: {post}")
+print(f"Sum of squares: {np.sum(post**2):.6f}")
+print("→ Properly renormalized to 1!")
 
-    The idempotency theorem (stdPart_idempotent) guarantees that
-    re-processing filtered signals doesn't change the result.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Signal Detection with Standard-Part Filter")
-    print("=" * 60)
+# ============================================================
+# Demo 4: Observable Cauchy-Schwarz
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 4: Observable Cauchy-Schwarz Inequality")
+print("=" * 60)
+print()
 
-    np.random.seed(42)
+np.random.seed(42)
+for trial in range(5):
+    # Random states
+    psi = make_quantum_state(np.random.randn(6))
+    phi = make_quantum_state(np.random.randn(6))
+    mask = np.array([True, True, True, False, False, False])
 
-    # True signal + noise
-    n_channels = 10
-    true_signal = np.zeros(n_channels)
-    true_signal[2] = 0.8   # Strong signal
-    true_signal[5] = 0.15  # Weak signal
-    true_signal[7] = 0.05  # Very weak signal
+    ip = obs_inner_product(psi, phi, mask)
+    p1 = observable_prob(psi, mask)
+    p2 = observable_prob(phi, mask)
 
-    noise = 0.03 * np.abs(np.random.randn(n_channels))
-    observed = true_signal + noise
+    lhs = ip**2
+    rhs = p1 * p2
 
-    # Normalize to probabilities
-    observed = observed / observed.sum()
+    print(f"  Trial {trial+1}: ⟨ψ|φ⟩²_obs = {lhs:.6f} ≤ "
+          f"P_obs(ψ)·P_obs(φ) = {rhs:.6f}  "
+          f"{'✓' if lhs <= rhs + 1e-12 else '✗'}")
 
-    print(f"\nTrue signal channels: 2 (strong), 5 (weak), 7 (very weak)")
-    print(f"Observed probabilities: {np.round(observed, 4)}")
+# ============================================================
+# Demo 5: Probability Defect vs Number of Infinitesimal Modes
+# ============================================================
+print()
+print("=" * 60)
+print("DEMO 5: Defect Scaling with Infinitesimal Mode Count")
+print("=" * 60)
+print()
 
-    # Standard-part filtering at different thresholds
-    for epsilon in [0.05, 0.02, 0.005]:
-        filtered = np.where(observed < epsilon, 0.0, observed)
-        detected = np.where(filtered > 0)[0]
-        print(f"\n  ε = {epsilon}:")
-        print(f"    Detected channels: {detected.tolist()}")
-        print(f"    Filtered probs: {np.round(filtered, 4)}")
+n_total = 20
+print(f"System with {n_total} basis states, equal amplitudes.")
+for n_inf in range(0, n_total + 1, 4):
+    state = make_quantum_state([1.0] * n_total)
+    mask = np.array([True] * (n_total - n_inf) + [False] * n_inf)
+    delta = probability_defect(state, mask)
+    print(f"  {n_inf:2d} infinitesimal modes → δ = {delta:.4f} "
+          f"(= {n_inf}/{n_total} = {n_inf/n_total:.4f})")
 
-        # Verify idempotency
-        double_filtered = np.where(filtered < epsilon, 0.0, filtered)
-        assert np.allclose(filtered, double_filtered)
-        print(f"    Idempotent: ✓ (stdPart_idempotent)")
-
-
-if __name__ == "__main__":
-    print("Quantum Surreal Numbers: Applications")
-    print("Soli Deo Gloria\n")
-
-    qkd_security_analysis()
-    tropical_portfolio_optimization()
-    signal_detection_filtering()
-
-    print("\n" + "=" * 60)
-    print("All applications demonstrated successfully!")
-    print("=" * 60)
+print()
+print("→ For equal amplitudes, defect = (# infinitesimal modes) / (total modes)")
+print()
+print("All demonstrations complete. ✓")
 
 
+#!/usr/bin/env python3
 """
-Quantum Surreal Numbers: Demonstrations
-========================================
+Visualization: Observable Cauchy-Schwarz Inequality
 
-Concrete numerical examples demonstrating the theorems proved in the
-Lean 4 formalization of quantum surreal numbers.
-
-Soli Deo Gloria
-"""
-
-import numpy as np
-from typing import List, Tuple
-
-
-class QuantumState:
-    """A quantum state over n basis states with complex amplitudes."""
-
-    def __init__(self, amplitudes: List[complex]):
-        self.amp = np.array(amplitudes, dtype=complex)
-        self.n = len(amplitudes)
-
-    def prob(self, i: int) -> float:
-        """Born rule probability: P(i) = |α_i|²"""
-        return abs(self.amp[i]) ** 2
-
-    def total_prob(self) -> float:
-        """Total probability mass"""
-        return sum(self.prob(i) for i in range(self.n))
-
-    def is_normalized(self) -> bool:
-        """Check if total probability equals 1"""
-        return abs(self.total_prob() - 1.0) < 1e-12
-
-    def inner(self, other: 'QuantumState') -> complex:
-        """Inner product ⟨self|other⟩"""
-        return sum(np.conj(self.amp[i]) * other.amp[i] for i in range(self.n))
-
-    def density_matrix(self) -> np.ndarray:
-        """Density matrix ρ = |ψ⟩⟨ψ|"""
-        return np.outer(self.amp, np.conj(self.amp))
-
-    def shannon_entropy(self) -> float:
-        """Shannon entropy of the probability distribution"""
-        H = 0.0
-        for i in range(self.n):
-            p = self.prob(i)
-            if p > 1e-15:
-                H -= p * np.log(p)
-        return H
-
-    def observable_prob(self, i: int, epsilon: float) -> float:
-        """Standard-part filtered probability"""
-        p = self.prob(i)
-        return 0.0 if p < epsilon else p
-
-
-def tropical_cost(p: float) -> float:
-    """Tropical cost: -log(p)"""
-    return -np.log(p) if p > 0 else float('inf')
-
-
-def basis_state(n: int, j: int) -> QuantumState:
-    """Create basis state |j⟩ in n-dimensional space"""
-    amp = [0.0] * n
-    amp[j] = 1.0
-    return QuantumState(amp)
-
-
-def demo_probability_properties():
-    """Demonstrate probability theorems"""
-    print("=" * 60)
-    print("DEMO 1: Probability Properties")
-    print("=" * 60)
-
-    psi = QuantumState([1/np.sqrt(3), 1j/np.sqrt(3), -1/np.sqrt(3)])
-    print(f"\nState |ψ⟩ = (1/√3)|0⟩ + (i/√3)|1⟩ + (-1/√3)|2⟩")
-    print(f"Amplitudes: {psi.amp}")
-
-    for i in range(3):
-        p = psi.prob(i)
-        print(f"  P({i}) = {p:.6f} ≥ 0 ✓ (prob_nonneg)")
-
-    total = psi.total_prob()
-    print(f"\nTotal probability: {total:.6f}")
-    print(f"  Is normalized: {psi.is_normalized()} ✓ (IsNormalized)")
-
-    for i in range(3):
-        assert psi.prob(i) <= total + 1e-12
-        print(f"  P({i}) ≤ totalProb: {psi.prob(i):.6f} ≤ {total:.6f} ✓ (prob_le_totalProb)")
-
-
-def demo_basis_states():
-    """Demonstrate basis state theorems"""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Basis State Properties")
-    print("=" * 60)
-
-    n = 4
-    for j in range(n):
-        ej = basis_state(n, j)
-        print(f"\nBasis state |{j}⟩:")
-        print(f"  Is normalized: {ej.is_normalized()} ✓ (basis_isNormalized)")
-        print(f"  P({j}) = {ej.prob(j):.1f} ✓ (basis_prob_self)")
-        for k in range(n):
-            if k != j:
-                print(f"  P({k}) = {ej.prob(k):.1f} ✓ (basis_prob_other)")
-
-    print("\nOrthogonality:")
-    for j in range(n):
-        for k in range(j+1, n):
-            ip = basis_state(n, j).inner(basis_state(n, k))
-            print(f"  ⟨{j}|{k}⟩ = {ip:.1f} ✓ (basis_orthogonal)")
-
-
-def demo_standard_part():
-    """Demonstrate standard part (infinitesimal collapse) theorems"""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Standard Part Filter (Infinitesimal Collapse)")
-    print("=" * 60)
-
-    epsilon = 0.01
-    print(f"\nThreshold ε = {epsilon}")
-
-    values = [0.5, 0.001, 0.01, 0.0, 1e-10]
-    for p in values:
-        filtered = 0.0 if p < epsilon else p
-        print(f"  stdPart({p}, {epsilon}) = {filtered}")
-        if p < epsilon:
-            print(f"    → Filtered to 0 ✓ (stdPart_zero_of_small)")
-        else:
-            print(f"    → Preserved ✓ (stdPart_eq_of_large)")
-
-    # Idempotency
-    print(f"\nIdempotency (stdPart_idempotent):")
-    for p in [0.5, 0.001]:
-        sp = 0.0 if p < epsilon else p
-        sp2 = 0.0 if sp < epsilon else sp
-        print(f"  stdPart(stdPart({p}, {epsilon}), {epsilon}) = {sp2} = stdPart({p}, {epsilon}) = {sp} ✓")
-
-
-def demo_density_matrix():
-    """Demonstrate density matrix theorems"""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Density Matrix Properties")
-    print("=" * 60)
-
-    psi = QuantumState([1/np.sqrt(2), 1j/np.sqrt(2)])
-    rho = psi.density_matrix()
-
-    print(f"\nState |ψ⟩ = (1/√2)|0⟩ + (i/√2)|1⟩")
-    print(f"Density matrix ρ =\n{rho}")
-
-    # Hermiticity
-    print(f"\nρ is Hermitian: {np.allclose(rho, rho.conj().T)} ✓ (densityMatrix_isHermitian)")
-
-    # Trace
-    trace = np.trace(rho)
-    print(f"Tr(ρ) = {trace:.6f} ✓ (densityMatrix_trace_one)")
-
-    # Positive semidefiniteness
-    eigenvalues = np.linalg.eigvalsh(rho)
-    print(f"Eigenvalues: {eigenvalues}")
-    print(f"All eigenvalues ≥ 0: {all(ev >= -1e-12 for ev in eigenvalues)} ✓ (densityMatrix_pos_semidef)")
-
-
-def demo_tropical_bridge():
-    """Demonstrate quantum-tropical bridge theorems"""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Quantum-Tropical Bridge")
-    print("=" * 60)
-
-    probs = [0.5, 0.3, 0.15, 0.05]
-    print(f"\nProbability distribution: {probs}")
-    costs = [tropical_cost(p) for p in probs]
-    print(f"Tropical costs (-log p): {[f'{c:.4f}' for c in costs]}")
-
-    print(f"\ntropicalCost(1) = {tropical_cost(1):.1f} ✓ (tropicalCost_one)")
-
-    for p in probs:
-        assert tropical_cost(p) >= 0
-        print(f"tropicalCost({p}) = {tropical_cost(p):.4f} ≥ 0 ✓ (tropicalCost_nonneg)")
-
-    # Antitone property
-    print(f"\nAntitone property (tropicalCost_antitone):")
-    for i in range(len(probs)-1):
-        for j in range(i+1, len(probs)):
-            if probs[i] >= probs[j]:
-                assert tropical_cost(probs[i]) <= tropical_cost(probs[j]) + 1e-12
-                print(f"  {probs[i]} ≥ {probs[j]} ⟹ cost({probs[i]}) ≤ cost({probs[j]}): "
-                      f"{tropical_cost(probs[i]):.4f} ≤ {tropical_cost(probs[j]):.4f} ✓")
-
-    # Multiplicative → additive
-    p, q = 0.5, 0.3
-    print(f"\nMultiplicative-to-additive (tropicalCost_mul):")
-    print(f"  cost({p}×{q}) = cost({p*q}) = {tropical_cost(p*q):.6f}")
-    print(f"  cost({p}) + cost({q}) = {tropical_cost(p) + tropical_cost(q):.6f}")
-    print(f"  Equal: {abs(tropical_cost(p*q) - tropical_cost(p) - tropical_cost(q)) < 1e-12} ✓")
-
-
-def demo_entropy():
-    """Demonstrate entropy theorems"""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Quantum Entropy")
-    print("=" * 60)
-
-    for n in [2, 3, 4]:
-        # Basis state entropy
-        e0 = basis_state(n, 0)
-        print(f"\nn = {n}:")
-        print(f"  Basis state |0⟩ entropy: {e0.shannon_entropy():.6f} ✓ (entropy_basis_eq_zero)")
-
-        # Uniform superposition entropy
-        uniform = QuantumState([1/np.sqrt(n)] * n)
-        H = uniform.shannon_entropy()
-        print(f"  Uniform state entropy: {H:.6f}")
-        print(f"  log({n}) = {np.log(n):.6f}")
-        print(f"  H = log(n): {abs(H - np.log(n)) < 1e-12} ✓ (conjecture: entropy_uniform = log n)")
-        print(f"  H ≤ log(n): {H <= np.log(n) + 1e-12} ✓ (conjecture: entropy bound)")
-
-
-def demo_equal_superposition():
-    """Demonstrate the equal superposition theorem"""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Equal Superposition (equal_superposition_probs_two)")
-    print("=" * 60)
-
-    psi = QuantumState([1/np.sqrt(2), 1/np.sqrt(2)])
-    print(f"\n|ψ⟩ = (1/√2)|0⟩ + (1/√2)|1⟩")
-    print(f"P(0) = {psi.prob(0):.6f} = 1/2 ✓")
-    print(f"P(1) = {psi.prob(1):.6f} = 1/2 ✓")
-    print(f"Normalized: {psi.is_normalized()} ✓")
-
-
-if __name__ == "__main__":
-    print("Quantum Surreal Numbers: Demonstration Suite")
-    print("Soli Deo Gloria\n")
-
-    demo_probability_properties()
-    demo_basis_states()
-    demo_standard_part()
-    demo_density_matrix()
-    demo_tropical_bridge()
-    demo_entropy()
-    demo_equal_superposition()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully!")
-    print("=" * 60)
-
-
-"""
-Visualization: Quantum State Probability Landscape
-===================================================
-
-Visualizes the probability distribution of a parameterized quantum state
-|ψ(θ,φ)⟩ = cos(θ)|0⟩ + sin(θ)e^{iφ}|1⟩ on the Bloch sphere,
-showing how the Born rule maps amplitudes to probabilities.
-
-The heatmap shows P(0) = cos²(θ) as a function of θ and φ,
-demonstrating that probability depends only on |amplitude|, not phase.
+Demonstrates how the observable inner product bound tightens
+as the probability defect increases, using random quantum states.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+def make_random_state(n: int, rng: np.random.Generator) -> np.ndarray:
+    """Create a random normalized quantum state."""
+    raw = rng.standard_normal(n)
+    return raw / np.linalg.norm(raw)
+
+def obs_prob(state: np.ndarray, mask: np.ndarray) -> float:
+    return np.sum(state[mask]**2)
+
+def obs_ip(s1: np.ndarray, s2: np.ndarray, mask: np.ndarray) -> float:
+    return np.sum(s1[mask] * s2[mask])
+
+# Generate data
+rng = np.random.default_rng(42)
+n = 10
+n_trials = 2000
+
+results = []
+for _ in range(n_trials):
+    # Random number of observable modes (1 to n-1)
+    n_obs = rng.integers(1, n)
+    mask = np.zeros(n, dtype=bool)
+    mask[:n_obs] = True
+    rng.shuffle(mask)
+
+    psi = make_random_state(n, rng)
+    phi = make_random_state(n, rng)
+
+    ip = obs_ip(psi, phi, mask)
+    p1 = obs_prob(psi, mask)
+    p2 = obs_prob(phi, mask)
+
+    avg_defect = (1 - p1 + 1 - p2) / 2
+    lhs = ip**2
+    rhs = p1 * p2
+
+    results.append((avg_defect, lhs, rhs))
+
+results = np.array(results)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+
+scatter = ax.scatter(results[:, 0], results[:, 1] / np.maximum(results[:, 2], 1e-15),
+                     c=results[:, 2], cmap='viridis', alpha=0.3, s=8)
+ax.axhline(y=1.0, color='red', linewidth=2, linestyle='--',
+           label='Cauchy-Schwarz Bound')
+ax.set_xlabel('Average Probability Defect $\\bar{\\delta}$', fontsize=12)
+ax.set_ylabel('$\\langle\\psi|\\phi\\rangle^2_{obs} / (P_{obs}(\\psi) \\cdot P_{obs}(\\phi))$',
+              fontsize=12)
+ax.set_title('Observable Cauchy-Schwarz: All Points Below the Red Line', fontsize=13)
+ax.legend(fontsize=11)
+ax.set_ylim(-0.05, 1.5)
+ax.grid(True, alpha=0.3)
+
+cbar = plt.colorbar(scatter)
+cbar.set_label('$P_{obs}(\\psi) \\cdot P_{obs}(\\phi)$', fontsize=10)
+
+plt.tight_layout()
+plt.savefig('cauchy_schwarz_bound.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved cauchy_schwarz_bound.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Measurement Collapse and Renormalization
+
+Shows how projecting onto the observable sector and renormalizing
+transforms the quantum state, with before/after comparison.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def make_state(amps: list) -> np.ndarray:
+    a = np.array(amps, dtype=float)
+    return a / np.linalg.norm(a)
+
+# Create a state with mixed observable/infinitesimal components
+n = 8
+labels = [f'$|{i}\\rangle$' for i in range(4)] + \
+         [f'$|\\varepsilon_{i}\\rangle$' for i in range(4)]
+obs_mask = np.array([True]*4 + [False]*4)
+
+# State with significant infinitesimal components
+state = make_state([3, 2, 4, 1, 2, 3, 1, 2])
+
+# Post-measurement
+projected = state * obs_mask.astype(float)
+norm = np.linalg.norm(projected)
+post_state = projected / norm
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# Pre-measurement
+colors = ['#2196F3' if obs else '#FF5722' for obs in obs_mask]
+bars1 = axes[0].bar(range(n), state**2, color=colors, edgecolor='white',
+                     linewidth=0.5)
+axes[0].set_xticks(range(n))
+axes[0].set_xticklabels(labels, fontsize=9)
+axes[0].set_ylabel('$|\\alpha_i|^2$', fontsize=12)
+axes[0].set_title('Before Measurement', fontsize=13)
+axes[0].set_ylim(0, 0.45)
+p_obs = np.sum(state[obs_mask]**2)
+p_inf = np.sum(state[~obs_mask]**2)
+axes[0].text(0.95, 0.95, f'$P_{{obs}} = {p_obs:.3f}$\n$P_{{inf}} = {p_inf:.3f}$\n$\\delta = {p_inf:.3f}$',
+             transform=axes[0].transAxes, fontsize=10,
+             verticalalignment='top', horizontalalignment='right',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+
+# After projection (unnormalized)
+axes[1].bar(range(n), projected**2, color=colors, edgecolor='white',
+            linewidth=0.5, alpha=0.7)
+axes[1].set_xticks(range(n))
+axes[1].set_xticklabels(labels, fontsize=9)
+axes[1].set_ylabel('$|P\\alpha_i|^2$', fontsize=12)
+axes[1].set_title('After Projection (unnormalized)', fontsize=13)
+axes[1].set_ylim(0, 0.45)
+total = np.sum(projected**2)
+axes[1].text(0.95, 0.95, f'$\\sum |P\\alpha_i|^2 = {total:.3f}$\n(< 1)',
+             transform=axes[1].transAxes, fontsize=10,
+             verticalalignment='top', horizontalalignment='right',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+
+# After renormalization
+colors_post = ['#4CAF50' if obs else '#BDBDBD' for obs in obs_mask]
+axes[2].bar(range(n), post_state**2, color=colors_post, edgecolor='white',
+            linewidth=0.5)
+axes[2].set_xticks(range(n))
+axes[2].set_xticklabels(labels, fontsize=9)
+axes[2].set_ylabel('$|\\alpha\'_i|^2$', fontsize=12)
+axes[2].set_title('After Renormalization', fontsize=13)
+axes[2].set_ylim(0, 0.45)
+axes[2].text(0.95, 0.95, f'$\\sum |\\alpha\'_i|^2 = {np.sum(post_state**2):.3f}$\n(= 1 ✓)',
+             transform=axes[2].transAxes, fontsize=10,
+             verticalalignment='top', horizontalalignment='right',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+
+# Legend
+from matplotlib.patches import Patch
+legend_elements = [
+    Patch(facecolor='#2196F3', label='Observable sector'),
+    Patch(facecolor='#FF5722', label='Infinitesimal sector'),
+    Patch(facecolor='#4CAF50', label='Post-measurement'),
+]
+fig.legend(handles=legend_elements, loc='lower center', ncol=3,
+           fontsize=11, bbox_to_anchor=(0.5, -0.02))
+
+plt.suptitle('Quantum Surreal Measurement: Projection and Renormalization',
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('measurement_collapse.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved measurement_collapse.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Probability Defect as a Function of Infinitesimal Amplitude
+
+Shows how the probability defect grows as more amplitude is pushed into
+the infinitesimal sector, and how conservation is maintained.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
+def make_state(obs_amp: float, inf_amp: float) -> np.ndarray:
+    """Create normalized state with given observable and infinitesimal amplitudes."""
+    raw = np.array([obs_amp, obs_amp, inf_amp])
+    return raw / np.linalg.norm(raw)
 
 # Parameters
-theta = np.linspace(0, np.pi, 200)
-phi = np.linspace(0, 2*np.pi, 200)
-THETA, PHI = np.meshgrid(theta, phi)
-
-# Probability of outcome 0: P(0) = |cos(θ)|² = cos²(θ)
-P0 = np.cos(THETA)**2
-
-# Probability of outcome 1: P(1) = |sin(θ)|² = sin²(θ)
-P1 = np.sin(THETA)**2
-
-# Shannon entropy: H = -P0*log(P0) - P1*log(P1)
-H = np.zeros_like(P0)
-mask0 = P0 > 1e-15
-mask1 = P1 > 1e-15
-H[mask0] -= P0[mask0] * np.log(P0[mask0])
-H[mask1] -= P1[mask1] * np.log(P1[mask1])
-
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-# Plot 1: P(0) heatmap
-im0 = axes[0].pcolormesh(theta, phi, P0, cmap='viridis', shading='auto')
-axes[0].set_xlabel('θ (polar angle)', fontsize=12)
-axes[0].set_ylabel('φ (azimuthal angle)', fontsize=12)
-axes[0].set_title('P(|0⟩) = cos²(θ)\nBorn Rule Probability', fontsize=13)
-plt.colorbar(im0, ax=axes[0], label='Probability')
-axes[0].set_xticks([0, np.pi/4, np.pi/2, 3*np.pi/4, np.pi])
-axes[0].set_xticklabels(['0', 'π/4', 'π/2', '3π/4', 'π'])
-axes[0].set_yticks([0, np.pi, 2*np.pi])
-axes[0].set_yticklabels(['0', 'π', '2π'])
-
-# Plot 2: Entropy heatmap
-im1 = axes[1].pcolormesh(theta, phi, H, cmap='inferno', shading='auto')
-axes[1].set_xlabel('θ (polar angle)', fontsize=12)
-axes[1].set_ylabel('φ (azimuthal angle)', fontsize=12)
-axes[1].set_title('Shannon Entropy H(ψ)\nMaximum at Equal Superposition', fontsize=13)
-plt.colorbar(im1, ax=axes[1], label='Entropy (nats)')
-axes[1].set_xticks([0, np.pi/4, np.pi/2, 3*np.pi/4, np.pi])
-axes[1].set_xticklabels(['0', 'π/4', 'π/2', '3π/4', 'π'])
-axes[1].set_yticks([0, np.pi, 2*np.pi])
-axes[1].set_yticklabels(['0', 'π', '2π'])
-
-# Plot 3: Tropical cost of P(0)
-TC = np.full_like(P0, np.nan)
-TC[mask0] = -np.log(P0[mask0])
-im2 = axes[2].pcolormesh(theta, phi, TC, cmap='plasma', shading='auto',
-                          vmin=0, vmax=5)
-axes[2].set_xlabel('θ (polar angle)', fontsize=12)
-axes[2].set_ylabel('φ (azimuthal angle)', fontsize=12)
-axes[2].set_title('Tropical Cost = −log P(|0⟩)\nQuantum-Tropical Bridge', fontsize=13)
-plt.colorbar(im2, ax=axes[2], label='Tropical cost')
-axes[2].set_xticks([0, np.pi/4, np.pi/2, 3*np.pi/4, np.pi])
-axes[2].set_xticklabels(['0', 'π/4', 'π/2', '3π/4', 'π'])
-axes[2].set_yticks([0, np.pi, 2*np.pi])
-axes[2].set_yticklabels(['0', 'π', '2π'])
-
-fig.suptitle('Quantum Surreal Numbers: Probability, Entropy, and Tropical Cost',
-             fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('viz_probability_landscape.png', dpi=150, bbox_inches='tight')
-print("Saved viz_probability_landscape.png")
-
-
-"""
-Visualization: Standard Part Filter and Infinitesimal Collapse
-===============================================================
-
-Visualizes the standard-part filtering mechanism that models
-infinitesimal probability collapse in quantum surreal numbers.
-
-Shows how sub-threshold probabilities are mapped to zero,
-demonstrating the proved properties:
-- stdPart_zero_of_small: values below ε map to 0
-- stdPart_eq_of_large: values above ε are preserved
-- stdPart_idempotent: applying twice = applying once
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Plot 1: Standard part function for various ε
-ax = axes[0, 0]
-p = np.linspace(0, 1, 500)
-for eps in [0.05, 0.1, 0.2, 0.3]:
-    sp = np.where(p < eps, 0.0, p)
-    ax.plot(p, sp, label=f'ε = {eps}', linewidth=2)
-ax.plot(p, p, '--', color='gray', alpha=0.5, label='Identity')
-ax.set_xlabel('Input probability p', fontsize=12)
-ax.set_ylabel('stdPart(p, ε)', fontsize=12)
-ax.set_title('Standard Part Filter\n(Infinitesimal Collapse)', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-# Plot 2: A quantum state before and after filtering
-ax = axes[0, 1]
-n = 8
-np.random.seed(42)
-raw_probs = np.random.exponential(0.3, n)
-raw_probs = raw_probs / raw_probs.sum()
-
-epsilon = 0.08
-filtered = np.where(raw_probs < epsilon, 0.0, raw_probs)
-
-x = np.arange(n)
-width = 0.35
-ax.bar(x - width/2, raw_probs, width, label='Original P(i)', color='steelblue', alpha=0.8)
-ax.bar(x + width/2, filtered, width, label=f'Filtered (ε={epsilon})', color='coral', alpha=0.8)
-ax.axhline(y=epsilon, color='red', linestyle='--', alpha=0.7, label=f'Threshold ε={epsilon}')
-ax.set_xlabel('Basis state index', fontsize=12)
-ax.set_ylabel('Probability', fontsize=12)
-ax.set_title('Probability Filtering\n(Infinitesimal Outcomes Removed)', fontsize=13)
-ax.legend(fontsize=10)
-ax.set_xticks(x)
-
-# Plot 3: Idempotency demonstration
-ax = axes[1, 0]
-epsilons = np.linspace(0.01, 0.5, 50)
-p_test = 0.15
-
-values = []
-for eps in epsilons:
-    sp1 = 0.0 if p_test < eps else p_test
-    sp2 = 0.0 if sp1 < eps else sp1
-    values.append((sp1, sp2))
-
-sp1_vals = [v[0] for v in values]
-sp2_vals = [v[1] for v in values]
-
-ax.plot(epsilons, sp1_vals, 'b-', linewidth=2.5, label='stdPart(p, ε)')
-ax.plot(epsilons, sp2_vals, 'r--', linewidth=2, label='stdPart(stdPart(p, ε), ε)')
-ax.axhline(y=p_test, color='green', linestyle=':', alpha=0.7, label=f'p = {p_test}')
-ax.set_xlabel('Threshold ε', fontsize=12)
-ax.set_ylabel('Filtered value', fontsize=12)
-ax.set_title(f'Idempotency: stdPart ∘ stdPart = stdPart\n(p = {p_test})', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-# Plot 4: Entropy before and after filtering
-ax = axes[1, 1]
-n_states = 20
-np.random.seed(123)
-amplitudes = np.random.randn(n_states) + 1j * np.random.randn(n_states)
-amplitudes = amplitudes / np.linalg.norm(amplitudes)
-probs = np.abs(amplitudes) ** 2
-
-eps_range = np.linspace(0, 0.15, 100)
-entropies = []
-n_surviving = []
+eps_range = np.linspace(0, 2, 200)
+p_obs_list = []
+p_inf_list = []
+defect_list = []
 
 for eps in eps_range:
-    filtered_p = np.where(probs < eps, 0.0, probs)
-    total = filtered_p.sum()
-    if total > 0:
-        normalized = filtered_p / total
-        H = 0.0
-        for p_val in normalized:
-            if p_val > 1e-15:
-                H -= p_val * np.log(p_val)
-        entropies.append(H)
-    else:
-        entropies.append(0.0)
-    n_surviving.append(np.sum(filtered_p > 0))
+    state = make_state(1.0, eps)
+    p_obs = state[0]**2 + state[1]**2
+    p_inf = state[2]**2
+    p_obs_list.append(p_obs)
+    p_inf_list.append(p_inf)
+    defect_list.append(1 - p_obs)
 
-ax2 = ax.twinx()
-ax.plot(eps_range, entropies, 'b-', linewidth=2, label='Entropy')
-ax2.plot(eps_range, n_surviving, 'r--', linewidth=2, label='# surviving states')
-ax.set_xlabel('Threshold ε', fontsize=12)
-ax.set_ylabel('Shannon Entropy H', color='blue', fontsize=12)
-ax2.set_ylabel('Surviving states', color='red', fontsize=12)
-ax.set_title(f'Entropy vs. Filtering Threshold\n({n_states}-state system)', fontsize=13)
-lines1, labels1 = ax.get_legend_handles_labels()
-lines2, labels2 = ax2.get_legend_handles_labels()
-ax.legend(lines1 + lines2, labels1 + labels2, fontsize=10, loc='center right')
-ax.grid(True, alpha=0.3)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-fig.suptitle('Standard Part Filter: Infinitesimal Probability Collapse',
-             fontsize=15, fontweight='bold')
+# Left: Stacked area chart
+ax1.fill_between(eps_range, 0, p_obs_list, alpha=0.7, color='#2196F3',
+                 label='Observable Probability $P_{obs}$')
+ax1.fill_between(eps_range, p_obs_list, 1, alpha=0.7, color='#FF5722',
+                 label='Dark Probability $P_{inf}$')
+ax1.axhline(y=1, color='black', linewidth=0.5, linestyle='--', alpha=0.5)
+ax1.set_xlabel('Infinitesimal Amplitude $\\alpha_\\varepsilon$', fontsize=12)
+ax1.set_ylabel('Probability', fontsize=12)
+ax1.set_title('Probability Conservation with Dark Sector', fontsize=13)
+ax1.legend(loc='center right', fontsize=10)
+ax1.set_ylim(0, 1.05)
+ax1.set_xlim(0, 2)
+ax1.grid(True, alpha=0.3)
+
+# Right: Defect curve
+ax2.plot(eps_range, defect_list, color='#FF5722', linewidth=2.5,
+         label='Probability Defect $\\delta$')
+ax2.fill_between(eps_range, 0, defect_list, alpha=0.2, color='#FF5722')
+ax2.axhline(y=0.5, color='gray', linewidth=0.5, linestyle=':', alpha=0.7)
+ax2.set_xlabel('Infinitesimal Amplitude $\\alpha_\\varepsilon$', fontsize=12)
+ax2.set_ylabel('Defect $\\delta = 1 - P_{obs}$', fontsize=12)
+ax2.set_title('Probability Defect Growth', fontsize=13)
+ax2.legend(fontsize=10)
+ax2.set_ylim(0, 1.05)
+ax2.set_xlim(0, 2)
+ax2.grid(True, alpha=0.3)
+
+# Annotate the key point
+half_idx = np.argmin(np.abs(np.array(defect_list) - 0.5))
+ax2.annotate(f'δ = 0.5 at α ≈ {eps_range[half_idx]:.2f}',
+             xy=(eps_range[half_idx], 0.5),
+             xytext=(eps_range[half_idx] + 0.3, 0.6),
+             fontsize=10,
+             arrowprops=dict(arrowstyle='->', color='black'),
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='wheat', alpha=0.7))
+
 plt.tight_layout()
-plt.savefig('viz_standard_part.png', dpi=150, bbox_inches='tight')
-print("Saved viz_standard_part.png")
-
-
-"""
-Visualization: Quantum-Tropical Bridge
-========================================
-
-Visualizes the cross-domain bridge between quantum probability
-and tropical geometry. The map p ↦ -log(p) transforms:
-- Probability maximization → Tropical cost minimization
-- Multiplication → Addition (tropicalCost_mul)
-- The order is reversed (min_tropicalCost_iff_max_prob)
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Plot 1: The tropical cost function
-ax = axes[0, 0]
-p = np.linspace(0.01, 1.0, 500)
-tc = -np.log(p)
-ax.plot(p, tc, 'b-', linewidth=2.5)
-ax.fill_between(p, 0, tc, alpha=0.1, color='blue')
-ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
-ax.axvline(x=1, color='green', linestyle='--', alpha=0.5, label='p=1: cost=0')
-ax.set_xlabel('Probability p', fontsize=12)
-ax.set_ylabel('Tropical cost = −log(p)', fontsize=12)
-ax.set_title('Tropical Cost Function\n(Monotone decreasing, proved)', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_xlim(0, 1.05)
-ax.set_ylim(-0.2, 5)
-
-# Plot 2: Multiplicative-to-additive property
-ax = axes[0, 1]
-p_vals = np.linspace(0.1, 0.9, 20)
-q_vals = np.linspace(0.1, 0.9, 20)
-P, Q = np.meshgrid(p_vals, q_vals)
-
-cost_product = -np.log(P * Q)
-cost_sum = -np.log(P) + (-np.log(Q))
-
-# They should be equal
-error = np.abs(cost_product - cost_sum)
-im = ax.pcolormesh(p_vals, q_vals, np.log10(error + 1e-16), cmap='RdYlGn_r',
-                    shading='auto', vmin=-16, vmax=-14)
-ax.set_xlabel('p', fontsize=12)
-ax.set_ylabel('q', fontsize=12)
-ax.set_title('tropicalCost(p·q) = tropicalCost(p) + tropicalCost(q)\n'
-             'Error (log₁₀ scale, ≈ machine epsilon)', fontsize=13)
-plt.colorbar(im, ax=ax, label='log₁₀(error)')
-
-# Plot 3: Order reversal demonstration
-ax = axes[1, 0]
-probs = np.array([0.4, 0.25, 0.2, 0.1, 0.05])
-costs = -np.log(probs)
-labels = [f'State {i}' for i in range(len(probs))]
-
-x = np.arange(len(probs))
-width = 0.35
-
-ax_right = ax.twinx()
-bars1 = ax.bar(x - width/2, probs, width, color='steelblue', alpha=0.8, label='Probability')
-bars2 = ax_right.bar(x + width/2, costs, width, color='coral', alpha=0.8, label='Tropical cost')
-
-ax.set_xlabel('Quantum state', fontsize=12)
-ax.set_ylabel('Probability', color='steelblue', fontsize=12)
-ax_right.set_ylabel('Tropical cost', color='coral', fontsize=12)
-ax.set_title('Order Reversal: max prob ↔ min cost\n(min_tropicalCost_iff_max_prob)', fontsize=13)
-ax.set_xticks(x)
-ax.set_xticklabels(labels, fontsize=10)
-
-lines1, labels1 = ax.get_legend_handles_labels()
-lines2, labels2 = ax_right.get_legend_handles_labels()
-ax.legend(lines1 + lines2, labels1 + labels2, fontsize=10)
-
-# Plot 4: Density matrix spectrum as tropical costs
-ax = axes[1, 1]
-# Create a 4-state quantum system
-np.random.seed(42)
-amp = np.random.randn(4) + 1j * np.random.randn(4)
-amp = amp / np.linalg.norm(amp)
-rho = np.outer(amp, np.conj(amp))
-eigenvalues = np.linalg.eigvalsh(rho)
-eigenvalues = eigenvalues[eigenvalues > 1e-12]
-
-if len(eigenvalues) > 0:
-    trop_evals = -np.log(eigenvalues)
-
-    ax.stem(range(len(eigenvalues)), eigenvalues, linefmt='b-', markerfmt='bo',
-            basefmt='gray', label='Eigenvalues (probabilities)')
-    ax2 = ax.twinx()
-    ax2.stem(range(len(trop_evals)), trop_evals, linefmt='r-', markerfmt='rs',
-             basefmt='gray', label='Tropical eigenvalues')
-
-    ax.set_xlabel('Eigenvalue index', fontsize=12)
-    ax.set_ylabel('Eigenvalue λ', color='blue', fontsize=12)
-    ax2.set_ylabel('Tropical cost −log(λ)', color='red', fontsize=12)
-    ax.set_title('Density Matrix Spectrum\nand Tropical Transform', fontsize=13)
-    lines1, labels1 = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax.legend(lines1 + lines2, labels1 + labels2, fontsize=10)
-
-fig.suptitle('Quantum-Tropical Bridge: Probability ↔ Optimization',
-             fontsize=15, fontweight='bold')
-plt.tight_layout()
-plt.savefig('viz_tropical_bridge.png', dpi=150, bbox_inches='tight')
-print("Saved viz_tropical_bridge.png")
+plt.savefig('probability_defect.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved probability_defect.png")

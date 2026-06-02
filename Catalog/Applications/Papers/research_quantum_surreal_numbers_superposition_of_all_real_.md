@@ -1,356 +1,239 @@
-# Quantum Surreal Numbers: Superposition of All Real Numbers
+# Quantum Surreal Numbers: Probability Defects in Non-Archimedean Quantum States
 
 ## Abstract
 
-We introduce a rigorous mathematical framework for quantum surreal numbers — quantum states defined as superpositions of real-valued basis outcomes with complex amplitudes. Working within a formalized setting, we establish 19 theorems covering the Born rule probability theory, basis state structure, density matrix properties, standard-part filtering for infinitesimal probability collapse, and a cross-domain bridge between quantum measurement and tropical geometry. Our main contributions include: (1) a complete probability theory for finite quantum states proving nonnegativity, normalization bounds, and the Born rule; (2) a proof that density matrices of pure states are Hermitian, trace-one, and positive semidefinite; (3) a standard-part filter with proved idempotency that models infinitesimal probability collapse; (4) a quantum-tropical bridge theorem establishing that the map p ↦ −log(p) converts probability maximization to tropical cost minimization; and (5) a proof that expectation values of Hermitian operators are always real. All theorems are machine-verified with no unproved assumptions.
+We develop a rigorous mathematical framework for quantum states over non-Archimedean graded basis sets, modeling the interaction between quantum superposition and infinitesimal structure. By partitioning a quantum state's basis into an observable sector and an infinitesimal sector — inspired by the scale structure of Conway's surreal numbers — we derive a probability conservation law that splits the Born rule into observable and "dark" components. We prove that the observable probability is always at most 1, with equality precisely when all infinitesimal amplitudes vanish. We establish measurement theory for Boolean projections, including a post-measurement normalization theorem, and prove both full and sector-restricted versions of the Cauchy-Schwarz inequality. All results have been formally verified in the Lean 4 proof assistant with the Mathlib library.
 
-**Keywords**: Quantum states, surreal numbers, Born rule, density matrices, tropical geometry, standard-part map, Hermitian operators, spectral theory
+**Keywords:** Quantum mechanics, surreal numbers, non-Archimedean fields, Born rule, probability defect, projection operators, spectral theory
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Conway's surreal numbers [Conway, 1976] constitute the largest ordered field, containing the real numbers, ordinal numbers, and a rich hierarchy of infinitesimals and infinite elements. Despite their foundational significance, surreal numbers have seen limited application to physics. We propose that the scale structure of surreal numbers — specifically, the partition of surreal elements into standard (observable) and nonstandard (infinitesimal) components — provides a natural framework for studying quantum systems with multi-scale structure.
 
-Conway's surreal numbers (Conway, 1976) form the largest ordered field, containing all real numbers alongside infinitesimals and transfinite numbers. Independently, quantum mechanics describes physical systems through superpositions — linear combinations of basis states with complex amplitudes. The intersection of these theories is largely unexplored.
+The key observation is simple: if a quantum state's basis elements are labeled by surreal numbers, then some basis states may correspond to infinitesimal values. The Born rule probability of observing such a state — the square of its amplitude — may itself be infinitesimal, hence unobservable under the standard part map. This creates a "probability defect": the total observable probability falls short of 1 by exactly the amount of probability hiding in infinitesimal modes.
 
-We propose *quantum surreal states*: finite superpositions |ψ⟩ = Σᵢ αᵢ|i⟩ where the basis states represent real-valued outcomes and αᵢ are complex amplitudes. While a full formalization of surreal-valued quantum mechanics would require substantial foundational work, we establish the core theory for finite-dimensional quantum states and prove that the "standard part" map — which rounds infinitesimal surreal numbers to their nearest real value — naturally models the physical phenomenon of measurement threshold.
+This paper formalizes this observation and develops its consequences. We work axiomatically, abstracting the essential features of the surreal scale structure into a simple partition (the `ScaleDecomp` structure) and deriving results that hold for any finite-dimensional quantum system equipped with such a partition.
 
-### 1.2 Related Work
+## 2. Definitions and Setup
 
-- **Surreal numbers**: Conway (1976), Knuth (1974), Gonshor (1986). The surreal number field **No** is the unique maximal ordered field.
-- **Quantum mechanics formalization**: Various efforts in proof assistants (Boender et al., 2015).
-- **Tropical geometry**: Mikhalkin (2006), Maclagan & Sturmfels (2015). The tropical semiring (ℝ ∪ {∞}, min, +) has deep connections to algebraic geometry and optimization.
-- **Non-standard analysis in quantum mechanics**: Albeverio et al. (1986) applied nonstandard analysis to quantum field theory.
+### 2.1 Quantum States
 
-### 1.3 Contributions
+**Definition 2.1** (QState). A *quantum state* on `Fin n` is a function `amp : Fin n → ℝ` satisfying the Born rule normalization:
 
-1. **Novel structure**: `QSState n` — quantum superposition over n basis states (§2)
-2. **19 machine-verified theorems** with no unproved lemmas (§3-§7)
-3. **Standard-part filter**: Idempotent operator modeling infinitesimal collapse (§5)
-4. **Quantum-tropical bridge**: Rigorous connection to tropical optimization (§6)
-5. **Falsifiable conjecture**: Entropy bound H(ψ) ≤ log(n) with computational evidence (§8)
+$$\sum_{i=0}^{n-1} |\alpha_i|^2 = 1$$
 
-## 2. Definitions and Notation
+We work with real amplitudes for simplicity; the complex case follows by treating real and imaginary parts separately.
 
-### 2.1 Core Structure
+### 2.2 Scale Decomposition
 
-**Definition 2.1** (Quantum State). A *quantum state* on n basis states is a pair `QSState n := ⟨amp : Fin n → ℂ⟩` where `amp i` is the complex amplitude of basis state i.
+**Definition 2.2** (ScaleDecomp). A *scale decomposition* on `Fin n` is a Boolean function `isObservable : Fin n → Bool` that partitions the basis into:
+- The *observable set* `obsSet = {i : isObservable(i) = true}`
+- The *infinitesimal set* `infSet = {i : isObservable(i) = false}`
 
-**Definition 2.2** (Born Probability). The *measurement probability* of outcome i is `prob(ψ, i) := ‖ψ.amp(i)‖²`.
+This models the key structure of surreal numbers: each basis element has a "scale" determining whether it contributes to observable physics (finite surreal values) or hides in the infinitesimal sector.
 
-**Definition 2.3** (Total Probability). `totalProb(ψ) := Σᵢ prob(ψ, i)`.
+### 2.3 Sector Probabilities
 
-**Definition 2.4** (Normalization). A state ψ is *normalized* if `totalProb(ψ) = 1`.
+**Definition 2.3**. The *observable probability* of a state ψ under decomposition s is:
 
-**Definition 2.5** (Basis State). `basis(j) := ⟨λi. if i = j then 1 else 0⟩`.
+$$P_{\text{obs}}(\psi, s) = \sum_{i \in \text{obsSet}} |\alpha_i|^2$$
 
-**Definition 2.6** (Inner Product). `⟨ψ|φ⟩ := Σᵢ conj(ψ.amp(i)) · φ.amp(i)`.
+The *infinitesimal probability* is:
 
-**Definition 2.7** (Scalar Multiplication). `smul(c, ψ) := ⟨λi. c · ψ.amp(i)⟩`.
+$$P_{\text{inf}}(\psi, s) = \sum_{i \in \text{infSet}} |\alpha_i|^2$$
 
-### 2.2 Standard-Part Filter
+The *probability defect* is:
 
-**Definition 2.8** (Standard Part). For p, ε ∈ ℝ:
-```
-stdPart(p, ε) := if p < ε then 0 else p
-```
+$$\delta(\psi, s) = 1 - P_{\text{obs}}(\psi, s)$$
 
-This models the standard part map from nonstandard analysis: infinitesimal quantities (those below threshold ε) are mapped to zero.
+### 2.4 Boolean Projections
 
-**Definition 2.9** (Observable Probability). `observableProb(ψ, i, ε) := stdPart(prob(ψ, i), ε)`.
+**Definition 2.4** (BoolProjection). A *Boolean projection* on `Fin n` is a function `keep : Fin n → Bool`. Its action on a state is:
 
-### 2.3 Density Matrix
+$$(P\psi)_i = \begin{cases} \alpha_i & \text{if } \text{keep}(i) = \text{true} \\ 0 & \text{otherwise} \end{cases}$$
 
-**Definition 2.10** (Density Matrix). `ρ(ψ)ᵢⱼ := ψ.amp(i) · conj(ψ.amp(j))`.
+The *complement* of P is the projection with `keep' = ¬keep`.
 
-### 2.4 Tropical Cost
+## 3. Main Results
 
-**Definition 2.11** (Tropical Cost). `tropicalCost(p) := −log(p)` for p > 0.
+### 3.1 Probability Conservation (Theorem 1)
 
-### 2.5 Shannon Entropy
+**Theorem 3.1** (prob_conservation). *For any quantum state ψ and scale decomposition s:*
 
-**Definition 2.12** (Shannon Entropy). `H(ψ) := −Σᵢ (if prob(ψ,i) = 0 then 0 else prob(ψ,i) · log(prob(ψ,i)))`.
+$$P_{\text{obs}}(\psi, s) + P_{\text{inf}}(\psi, s) = 1$$
 
-## 3. Probability Theory
+*Proof sketch.* The observable and infinitesimal sets are disjoint (by construction) and their union is the full basis `Fin n`. Therefore:
 
-### 3.1 Basic Properties
+$$P_{\text{obs}} + P_{\text{inf}} = \sum_{i \in \text{obsSet}} |\alpha_i|^2 + \sum_{i \in \text{infSet}} |\alpha_i|^2 = \sum_{i \in \text{obsSet} \cup \text{infSet}} |\alpha_i|^2 = \sum_{i} |\alpha_i|^2 = 1$$
 
-**Theorem 3.1** (prob_nonneg). For any state ψ and index i: `prob(ψ, i) ≥ 0`.
+The formal proof uses `Finset.sum_union` with the disjointness hypothesis `obs_inf_disjoint` and the covering hypothesis `obs_inf_union`. □
 
-*Proof sketch*: Direct from the definition `prob(ψ, i) = ‖ψ.amp(i)‖²` and the fact that squares of norms are nonnegative. □
+### 3.2 Observable Probability Bound (Theorem 2)
 
-**Theorem 3.2** (totalProb_nonneg). `totalProb(ψ) ≥ 0`.
+**Theorem 3.2** (observable_prob_le_one). *For any quantum state ψ and scale decomposition s:*
 
-*Proof sketch*: Sum of nonneg terms (by Theorem 3.1) via `Finset.sum_nonneg`. □
+$$P_{\text{obs}}(\psi, s) \leq 1$$
 
-**Theorem 3.3** (prob_le_totalProb). `prob(ψ, i) ≤ totalProb(ψ)`.
+*Proof.* Immediate from Theorem 3.1 and non-negativity of P_inf. □
 
-*Proof sketch*: Each term in a sum of nonneg values is at most the sum, by `Finset.single_le_sum`. □
+### 3.3 Characterization of Fully Observable States (Theorem 3)
 
-**Theorem 3.4** (prob_le_one_of_normalized). If ψ is normalized, then `prob(ψ, i) ≤ 1`.
+**Theorem 3.3** (observable_eq_one_iff_no_infinitesimal). *The following are equivalent:*
+1. $P_{\text{obs}}(\psi, s) = 1$
+2. $\forall i,\ \text{isObservable}(i) = \text{false} \implies \alpha_i = 0$
 
-*Proof sketch*: Combine Theorem 3.3 with `totalProb(ψ) = 1`. □
+*Proof sketch.* (1⇒2): If P_obs = 1, then P_inf = 0 by conservation. Since P_inf is a sum of non-negative terms (squares) equaling zero, each term is zero, hence each infinitesimal amplitude vanishes. (2⇒1): If all infinitesimal amplitudes are zero, then P_inf = 0, so P_obs = 1 by conservation. □
 
-### 3.2 Basis States
+This theorem provides the sharp criterion for when the probability defect vanishes. It formalizes the physical intuition that infinitesimal modes are "quantum dark matter" — they exist mathematically but contribute nothing to observable predictions.
 
-**Theorem 3.5** (basis_isNormalized). Basis states are normalized: `totalProb(basis(j)) = 1`.
+### 3.4 Complementary Projection Completeness (Theorem 4)
 
-*Proof sketch*: The sum has one nonzero term at i = j (where ‖1‖² = 1) and all others are ‖0‖² = 0. Use `Finset.sum_eq_single`. □
+**Theorem 3.4** (born_rule_complementary). *For any Boolean projection P and quantum state ψ:*
 
-**Theorem 3.6** (basis_orthogonal). `⟨basis(j)|basis(k)⟩ = 0` when j ≠ k.
+$$\Pr[P|\psi] + \Pr[\bar{P}|\psi] = 1$$
 
-*Proof sketch*: Each term in the inner product sum has a zero factor (either the j-th or k-th amplitude is 0). □
+*Proof sketch.* For each basis element i, either keep(i) = true (contributing α_i² to the first term and 0 to the second) or keep(i) = false (contributing 0 to the first and α_i² to the second). Summing over all i gives ∑ α_i² = 1. □
 
-**Theorem 3.7** (basis_prob_self). `prob(basis(j), j) = 1`.
+### 3.5 Post-Measurement Normalization (Theorem 5)
 
-*Proof sketch*: `‖1‖² = 1`. □
+**Theorem 3.5** (post_measurement_normalized). *If P is a Boolean projection with Pr[P|ψ] > 0, then the post-measurement state*
 
-**Theorem 3.8** (basis_prob_other). `prob(basis(j), k) = 0` when j ≠ k.
+$$\psi'_i = \frac{(P\psi)_i}{\sqrt{\sum_j |(P\psi)_j|^2}}$$
 
-*Proof sketch*: `‖0‖² = 0`. □
+*satisfies ∑ |ψ'_i|² = 1.*
 
-## 4. Scalar Multiplication
+*Proof.* Factor out 1/√(norm²) from the sum, use the fact that (√x)² = x for x ≥ 0, and simplify to norm²/norm² = 1. □
 
-**Theorem 4.1** (smul_prob). `prob(smul(c, ψ), i) = ‖c‖² · prob(ψ, i)`.
+This theorem validates the projection postulate of quantum mechanics within our framework.
 
-*Proof sketch*: `‖c · α‖² = ‖c‖² · ‖α‖²` by `norm_mul` and `mul_pow`. □
+### 3.6 Cauchy-Schwarz for Quantum States (Theorem 6)
 
-**Theorem 4.2** (smul_totalProb). `totalProb(smul(c, ψ)) = ‖c‖² · totalProb(ψ)`.
+**Theorem 3.6** (quantum_cauchy_schwarz). *For any two quantum states ψ, φ:*
 
-*Proof sketch*: Apply Theorem 4.1 termwise and factor using `Finset.mul_sum`. □
+$$\langle\psi|\phi\rangle^2 \leq 1$$
 
-## 5. Standard-Part Filter
+*Proof.* By the classical Cauchy-Schwarz inequality for finite sums (Finset.sum_mul_sq_le_sq_mul_sq in Mathlib):
 
-### 5.1 Basic Properties
+$$\left(\sum_i \alpha_i \beta_i\right)^2 \leq \left(\sum_i \alpha_i^2\right)\left(\sum_i \beta_i^2\right) = 1 \cdot 1 = 1$$
 
-**Theorem 5.1** (stdPart_zero_of_small). If p < ε, then `stdPart(p, ε) = 0`.
+□
 
-**Theorem 5.2** (stdPart_eq_of_large). If ε ≤ p, then `stdPart(p, ε) = p`.
+### 3.7 Observable Cauchy-Schwarz (Theorem 7)
 
-**Theorem 5.3** (stdPart_nonneg). If p ≥ 0 and ε ≥ 0, then `stdPart(p, ε) ≥ 0`.
+**Theorem 3.7** (obs_cauchy_schwarz). *For any two quantum states ψ, φ and scale decomposition s:*
 
-### 5.2 Idempotency
+$$\langle\psi|\phi\rangle_{\text{obs}}^2 \leq P_{\text{obs}}(\psi, s) \cdot P_{\text{obs}}(\phi, s)$$
 
-**Theorem 5.4** (stdPart_idempotent). For ε ≥ 0: `stdPart(stdPart(p, ε), ε) = stdPart(p, ε)`.
+*Proof.* Apply Cauchy-Schwarz restricted to the observable sector. □
 
-*Proof sketch*: Case analysis on p < ε.
-- Case p < ε: stdPart(p, ε) = 0. Then stdPart(0, ε) = 0 since 0 ≤ ε implies ¬(ε < 0)... more carefully: if ε = 0, then p < 0 (impossible if p ≥ 0, but we don't assume this) and stdPart(p, 0) = 0, stdPart(0, 0) = 0. If ε > 0, then 0 < ε, so stdPart(0, ε) = 0. Either way, result = 0 = stdPart(p, ε). ✓
-- Case p ≥ ε: stdPart(p, ε) = p. Since p ≥ ε, stdPart(p, ε) = p. ✓
+This is perhaps the most physically interesting result. It says that the observable distinguishability of two quantum states is bounded not just by 1 (as in the full Cauchy-Schwarz inequality) but by the product of their observable probabilities. States with large probability defects are harder to distinguish observationally.
 
-The formal proof uses `split_ifs` and `linarith`. □
+## 4. The Probability Defect
 
-**Significance**: Idempotency means the filter is a *projection* — applying it repeatedly doesn't change the result. Physically, once infinitesimal probabilities are removed, they stay removed.
+### 4.1 Defect Equals Infinitesimal Probability
 
-## 6. Density Matrix Theory
+**Theorem 4.1** (prob_defect_eq_infinitesimal). $\delta(\psi, s) = P_{\text{inf}}(\psi, s)$.
 
-**Theorem 6.1** (densityMatrix_isHermitian). `ρ(ψ)† = ρ(ψ)`.
+This follows immediately from probability conservation.
 
-*Proof sketch*: `conj(ρᵢⱼ) = conj(αᵢ · conj(αⱼ)) = conj(conj(αⱼ)) · conj(αᵢ) = αⱼ · conj(αᵢ) = ρⱼᵢ`. Uses `star_mul` and `star_star`. □
+### 4.2 Defect Characterization
 
-**Theorem 6.2** (densityMatrix_trace_eq_totalProb). `Tr(ρ(ψ)) = totalProb(ψ)`.
+**Theorem 4.2** (prob_defect_zero_iff). $\delta(\psi, s) = 0$ if and only if all infinitesimal amplitudes vanish.
 
-*Proof sketch*: `Tr(ρ) = Σᵢ ρᵢᵢ = Σᵢ αᵢ · conj(αᵢ) = Σᵢ ‖αᵢ‖²`. Uses `Complex.mul_conj`. □
+This follows from Theorem 3.3.
 
-**Theorem 6.3** (densityMatrix_trace_one). If ψ is normalized, `Tr(ρ(ψ)) = 1`.
+### 4.3 Physical Interpretation
 
-*Proof sketch*: Immediate from Theorem 6.2 and normalization. □
+The probability defect has a natural physical interpretation. Consider a quantum system where basis states are labeled by surreal numbers, and the scale decomposition separates standard from infinitesimal values. The defect δ measures the total probability "hiding" in states with infinitesimal labels. Since the standard part of an infinitesimal is zero, this probability is invisible to any finite-precision measurement.
 
-**Theorem 6.4** (densityMatrix_pos_semidef). For all v ∈ ℂⁿ: `Re(v† · ρ(ψ) · v) ≥ 0`.
+This connects to several ideas in mathematical physics:
 
-*Proof sketch*: Let w = Σᵢ conj(vᵢ) · αᵢ. Then v†ρv = w · conj(w) = |w|² ≥ 0. The proof establishes the factorization using Finset.sum manipulation, then applies `Complex.normSq_nonneg`. □
+1. **Renormalization**: In quantum field theory, infinities arise from summing over all momentum modes. The scale decomposition provides a rigorous framework for separating "relevant" (finite) from "irrelevant" (infinitesimal/infinite) modes.
 
-## 7. Quantum-Tropical Bridge
+2. **Decoherence**: Environmental decoherence effectively projects a quantum state onto a preferred basis. In the surreal framework, the "preferred basis" is naturally the observable sector.
 
-### 7.1 Tropical Cost Properties
+3. **The measurement problem**: The inability to observe infinitesimal probabilities provides a mathematical mechanism for why certain quantum outcomes never occur — not because they're forbidden, but because they're infinitesimally unlikely.
 
-**Theorem 7.1** (tropicalCost_nonneg). For 0 < p ≤ 1: `tropicalCost(p) ≥ 0`.
+## 5. Connections to Existing Work
 
-*Proof sketch*: log(p) ≤ 0 for p ∈ (0,1], so −log(p) ≥ 0. □
+### 5.1 Hyperreal Probability
 
-**Theorem 7.2** (tropicalCost_antitone). If 0 < p ≤ q, then `tropicalCost(q) ≤ tropicalCost(p)`.
+Benci et al. [2013] developed a theory of non-Archimedean probability using the hyperreal numbers. Our framework differs in using surreal numbers (which contain the hyperreals) and in focusing on the quantum-mechanical setting (normalized states, projections, measurement).
 
-*Proof sketch*: Monotonicity of log implies −log is antitone. □
+### 5.2 Non-standard Quantum Mechanics
 
-**Theorem 7.3** (tropicalCost_one). `tropicalCost(1) = 0`.
+Albeverio et al. [1986] applied nonstandard analysis to quantum mechanics, using hyperreal amplitudes in path integrals. Our approach is complementary: rather than making the amplitudes nonstandard, we make the *basis labels* nonstandard and study the consequences for observable probability.
 
-**Theorem 7.4** (tropicalCost_mul). For p, q > 0:
-```
-tropicalCost(p · q) = tropicalCost(p) + tropicalCost(q)
-```
+### 5.3 Surreal Analysis
 
-*Proof sketch*: −log(pq) = −(log p + log q) = (−log p) + (−log q). Uses `Real.log_mul`. □
+Recent work by Ehrlich [2012] and others has developed analysis on surreal numbers, including integration and exponential functions. A natural extension of our work would be to define surreal-valued inner products and study the resulting Hilbert space structure.
 
-**Significance**: This theorem is the bridge between quantum probability (multiplicative) and tropical algebra (additive). Joint probabilities of independent events multiply; their tropical costs add.
+## 6. Open Questions and Conjectures
 
-### 7.2 Order Reversal
+### 6.1 Spectral Theorem for Surreal Operators
 
-**Theorem 7.5** (min_tropicalCost_iff_max_prob). For p, q > 0:
-```
-tropicalCost(p) ≤ tropicalCost(q) ↔ q ≤ p
-```
+**Conjecture 6.1**. Every self-adjoint operator on a finite-dimensional quantum surreal Hilbert space admits a spectral decomposition with surreal eigenvalues:
 
-*Proof sketch*: −log(p) ≤ −log(q) iff log(q) ≤ log(p) iff q ≤ p (since log is strictly monotone on ℝ₊). □
+$$A = \sum_\lambda \lambda \cdot P_\lambda$$
 
-**Significance**: The most probable outcome has the smallest tropical cost. This establishes that quantum measurement (finding the most probable outcome) is equivalent to tropical optimization (finding the minimum cost path). In the classical limit of quantum mechanics, where path integrals are dominated by the stationary phase, this correspondence becomes exact.
+where the sum ranges over surreal eigenvalues and P_λ are projection operators.
 
-## 8. Observable Theory and Entropy
+**Test**: Construct a 2×2 self-adjoint matrix with one real and one infinitesimal eigenvalue. Verify that the spectral decomposition separates observable and infinitesimal sectors.
 
-**Theorem 8.1** (hermitian_expectation_real). For Hermitian A: `Im(⟨ψ|A|ψ⟩) = 0`.
+### 6.2 Entanglement and Dark Probability
 
-*Proof sketch*: Show conj(⟨ψ|A|ψ⟩) = ⟨ψ|A|ψ⟩. Using A = A†:
-```
-conj(Σᵢⱼ conj(ψᵢ) Aᵢⱼ ψⱼ) = Σᵢⱼ ψᵢ conj(Aᵢⱼ) conj(ψⱼ)
-                               = Σᵢⱼ ψᵢ Aⱼᵢ conj(ψⱼ)     [Hermiticity]
-                               = Σⱼᵢ ψⱼ Aᵢⱼ conj(ψᵢ)     [swap indices]
-                               = Σᵢⱼ conj(ψᵢ) Aᵢⱼ ψⱼ     [rearrange]
-```
-Hence ⟨ψ|A|ψ⟩ = conj(⟨ψ|A|ψ⟩), implying Im = 0. □
+**Conjecture 6.2**. In a bipartite system with dark probability, the entanglement entropy of the observable sector is strictly less than the total entanglement entropy.
 
-**Theorem 8.2** (entropy_basis_eq_zero). `H(basis(j)) = 0`.
+### 6.3 Dynamics
 
-*Proof sketch*: For basis state j, prob(i) = δᵢⱼ. The only nonzero term has prob = 1, contributing 1·log(1) = 0. □
+**Question**: Does there exist a natural unitary dynamics on quantum surreal states that preserves the scale decomposition? If so, the probability defect would be a conserved quantity — a new kind of quantum number.
 
-**Theorem 8.3** (equal_superposition_probs_two). For ψ = (1/√2, 1/√2): `prob(0) = prob(1) = 1/2`.
+## 7. Algorithms
 
-### 8.4 Falsifiable Conjecture
+### 7.1 Computing the Probability Defect
 
-**Conjecture 8.4** (Entropy Bound). For any normalized n-state quantum system (n ≥ 2):
-```
-H(ψ) ≤ log(n)
-```
-with equality if and only if ψ is the uniform superposition.
+**Input**: A quantum state ψ (array of n amplitudes) and a Boolean mask `isObservable`.
 
-**Computational evidence**: Verified for n = 2, 3, ..., 1000 by random sampling (10⁶ states per dimension). No counterexample found. The conjecture would follow from the classical entropy bound for probability distributions, but the formal connection requires showing that the probability vector of a normalized quantum state forms a valid probability distribution.
-
-## 9. Algorithms
-
-### 9.1 Standard-Part Filter
+**Output**: The probability defect δ(ψ, s).
 
 ```
-Algorithm: StandardPartFilter(probs, ε)
-Input: Probability vector probs[0..n-1], threshold ε ≥ 0
-Output: Filtered probability vector
-
-for i = 0 to n-1:
-    if probs[i] < ε:
-        probs[i] ← 0
-return probs
-
-Time: O(n)
-Space: O(1) additional
-Properties: Idempotent, monotone, preserves nonnegativity
+function ProbabilityDefect(amplitudes, isObservable):
+    total = 0
+    for i = 0 to n-1:
+        if not isObservable[i]:
+            total += amplitudes[i]^2
+    return total
 ```
 
-### 9.2 Quantum-Tropical Transform
+Time complexity: O(n). Space complexity: O(1).
+
+### 7.2 Post-Measurement Renormalization
+
+**Input**: A quantum state ψ, a Boolean projection P with nonzero probability.
+
+**Output**: The post-measurement state ψ'.
 
 ```
-Algorithm: QuantumTropicalTransform(probs)
-Input: Probability vector probs[0..n-1] (positive entries)
-Output: Tropical cost vector
-
-for i = 0 to n-1:
-    if probs[i] > 0:
-        costs[i] ← -log(probs[i])
-    else:
-        costs[i] ← +∞
-return costs
-
-Time: O(n)
-Space: O(n)
-Inverse: p[i] = exp(-costs[i])
+function PostMeasurement(amplitudes, keep):
+    norm_sq = sum(amplitudes[i]^2 for i where keep[i])
+    result = [0] * n
+    for i = 0 to n-1:
+        if keep[i]:
+            result[i] = amplitudes[i] / sqrt(norm_sq)
+    return result
 ```
 
-### 9.3 Density Matrix Construction
+## 8. Conclusion
 
-```
-Algorithm: DensityMatrix(amplitudes)
-Input: Complex amplitude vector amp[0..n-1]
-Output: n × n Hermitian matrix ρ
+We have developed a rigorous mathematical framework for quantum states equipped with a non-Archimedean scale structure. The key results — probability conservation, the characterization of fully observable states, post-measurement normalization, and the observable Cauchy-Schwarz inequality — have been formally verified in Lean 4, ensuring their correctness with machine-checked certainty.
 
-for i = 0 to n-1:
-    for j = 0 to n-1:
-        ρ[i][j] ← amp[i] · conj(amp[j])
-return ρ
-
-Time: O(n²)
-Space: O(n²)
-Properties: Hermitian (Thm 6.1), trace = totalProb (Thm 6.2), PSD (Thm 6.4)
-```
-
-## 10. Applications
-
-### 10.1 Quantum Key Distribution
-
-The standard-part filter models eavesdropper detection thresholds. When an eavesdropper perturbs a quantum state, the perturbation introduces new probability mass on previously-zero basis states. If these perturbations are below the filter threshold ε, they are undetectable — the eavesdropper succeeds. The idempotency theorem guarantees that the detection result is stable under repeated filtering.
-
-### 10.2 Portfolio Optimization
-
-The tropical bridge transforms portfolio return probability maximization into cost minimization:
-- Asset i has return probability pᵢ
-- Independent portfolio: P(all return) = Πᵢ pᵢ
-- Tropical cost: Σᵢ (−log pᵢ)
-- Minimum-cost portfolio = maximum-probability portfolio (Theorem 7.5)
-
-### 10.3 Signal Detection
-
-The standard-part filter formalizes the signal/noise distinction. Signals with probability below the noise floor (threshold ε) are mapped to zero. The nonnegativity theorem ensures filtered probabilities remain valid. Idempotency ensures stability.
-
-## 11. Discussion
-
-### 11.1 Limitations
-
-- The current framework handles finite-dimensional states only. Extension to infinite-dimensional Hilbert spaces requires measure-theoretic foundations.
-- Surreal numbers are modeled via the standard-part filter rather than direct construction. A full surreal-valued quantum mechanics would require formalizing surreal numbers and their algebraic properties.
-- The entropy conjecture (Conjecture 8.4) remains unproved.
-
-### 11.2 Connections to Existing Theory
-
-The density matrix theorems (§6) reproduce standard quantum information theory results. The tropical bridge (§7) connects to the well-known "dequantization" phenomenon where tropical limits of quantum objects yield classical combinatorial structures. The standard-part filter (§5) is analogous to the standard part map in Robinson's nonstandard analysis.
-
-## 12. Future Work
-
-1. **Full spectral theorem**: Prove spectral decomposition for self-adjoint operators on quantum surreal Hilbert spaces.
-2. **Infinite-dimensional extension**: Extend to separable Hilbert spaces with measure-theoretic probability.
-3. **Entropy bound**: Prove Conjecture 8.4 (H(ψ) ≤ log n).
-4. **Tropical spectral theory**: Combine the density matrix spectrum with the tropical bridge.
-5. **Surreal integration**: Build integration theory for surreal-valued quantum amplitudes.
+The framework opens several avenues for future research: extending to infinite-dimensional Hilbert spaces, connecting to surreal-valued spectral theory, and exploring the physical implications of dark probability for quantum information and measurement theory.
 
 ## References
 
 1. Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
 2. Knuth, D.E. (1974). *Surreal Numbers*. Addison-Wesley.
-3. Gonshor, H. (1986). *An Introduction to the Theory of Surreal Numbers*. Cambridge University Press.
-4. Mikhalkin, G. (2006). Tropical geometry and its applications. *Proc. ICM Madrid*.
-5. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-6. Albeverio, S., Fenstad, J., Høegh-Krohn, R., & Lindstrøm, T. (1986). *Nonstandard Methods in Stochastic Analysis and Mathematical Physics*. Academic Press.
-7. Nielsen, M.A. & Chuang, I.L. (2000). *Quantum Computation and Quantum Information*. Cambridge University Press.
-
-## Appendix: Theorem Summary
-
-| # | Name | Statement | Domain |
-|---|------|-----------|--------|
-| 1 | prob_nonneg | prob(ψ,i) ≥ 0 | Probability |
-| 2 | totalProb_nonneg | totalProb(ψ) ≥ 0 | Probability |
-| 3 | prob_le_totalProb | prob(ψ,i) ≤ totalProb(ψ) | Probability |
-| 4 | prob_le_one_of_normalized | If normalized, prob(ψ,i) ≤ 1 | Probability |
-| 5 | basis_isNormalized | Basis states are normalized | Basis |
-| 6 | basis_orthogonal | ⟨j|k⟩ = 0 for j ≠ k | Basis |
-| 7 | basis_prob_self | prob(basis(j), j) = 1 | Basis |
-| 8 | basis_prob_other | prob(basis(j), k) = 0 for j ≠ k | Basis |
-| 9 | smul_prob | Scaling scales probabilities by |c|² | Scalar |
-| 10 | smul_totalProb | Scaling scales total probability | Scalar |
-| 11 | stdPart_zero_of_small | Filter removes small values | Filter |
-| 12 | stdPart_eq_of_large | Filter preserves large values | Filter |
-| 13 | stdPart_idempotent | Filter is idempotent | Filter |
-| 14 | stdPart_nonneg | Filter preserves nonnegativity | Filter |
-| 15 | densityMatrix_isHermitian | ρ is Hermitian | Density |
-| 16 | densityMatrix_trace_eq_totalProb | Tr(ρ) = totalProb | Density |
-| 17 | densityMatrix_trace_one | Tr(ρ) = 1 if normalized | Density |
-| 18 | densityMatrix_pos_semidef | ρ is positive semidefinite | Density |
-| 19 | hermitian_expectation_real | ⟨ψ|A|ψ⟩ ∈ ℝ for Hermitian A | Observable |
-| 20 | tropicalCost_nonneg | tropicalCost(p) ≥ 0 for p ∈ (0,1] | Tropical |
-| 21 | tropicalCost_antitone | tropicalCost is decreasing | Tropical |
-| 22 | tropicalCost_one | tropicalCost(1) = 0 | Tropical |
-| 23 | tropicalCost_mul | Cost of product = sum of costs | Tropical |
-| 24 | min_tropicalCost_iff_max_prob | Min cost ↔ max probability | Tropical |
-| 25 | entropy_basis_eq_zero | H(basis(j)) = 0 | Entropy |
-| 26 | equal_superposition_probs_two | Equal superposition has P = 1/2 | Entropy |
+3. Ehrlich, P. (2012). "The absolute arithmetic continuum and the unification of all numbers great and small." *Bulletin of Symbolic Logic*, 18(1), 1-45.
+4. Benci, V., Horsten, L., & Wenmackers, S. (2013). "Non-Archimedean probability." *Milan Journal of Mathematics*, 81, 121-151.
+5. Albeverio, S., Fenstad, J.E., Høegh-Krohn, R., & Lindstrøm, T. (1986). *Nonstandard Methods in Stochastic Analysis and Mathematical Physics*. Academic Press.
+6. von Neumann, J. (1932). *Mathematische Grundlagen der Quantenmechanik*. Springer.
