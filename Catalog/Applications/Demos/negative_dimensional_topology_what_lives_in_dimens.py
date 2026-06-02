@@ -1,348 +1,270 @@
+#!/usr/bin/env python3
 """
-Negative-Dimensional Topology: Demonstration
+Negative-Dimensional Topology: Numerical Demonstrations
 
-Numerical examples verifying the key theorems from the formal theory.
-"""
-
-from algorithms import (
-    FormalDimObj, NegDimSpace, NegDimCW, ProSpectrum,
-    suspend, desuspend, suspend_iter, product,
-    stabilization_steps, verify_double_suspension_involution,
-    verify_consecutive_sum, euler_char_neg_dim, uniform_cw_euler
-)
-
-
-def demo_euler_char_formula():
-    """Demonstrate χ = (-1)^n · |π₀| for negative dimensions."""
-    print("=" * 60)
-    print("EULER CHARACTERISTIC FORMULA: χ = (-1)^(-dim) · |π₀|")
-    print("=" * 60)
-
-    for dim in range(0, -6, -1):
-        for components in [1, 2, 3, 5]:
-            X = NegDimSpace(dim=dim, components=components)
-            print(f"  dim={dim:3d}, |π₀|={components}: χ = {X.euler_char:4d}"
-                  f"  [(-1)^{-dim} · {components} = {((-1)**(-dim))*components}]")
-    print()
-
-
-def demo_suspension_involution():
-    """Demonstrate χ(Σ²X) = χ(X) for various spaces."""
-    print("=" * 60)
-    print("DOUBLE SUSPENSION INVOLUTION: χ(Σ²X) = χ(X)")
-    print("=" * 60)
-
-    test_cases = [
-        FormalDimObj(dim=-3, euler=-5),
-        FormalDimObj(dim=-1, euler=-2),
-        FormalDimObj(dim=0, euler=3),
-        FormalDimObj(dim=-10, euler=7),
-        FormalDimObj(dim=5, euler=-100),
-    ]
-
-    for X in test_cases:
-        result = verify_double_suspension_involution(X)
-        SX = suspend(X)
-        SSX = suspend(SX)
-        print(f"  X={X} → ΣX={SX} → Σ²X={SSX}  "
-              f"χ(X)={X.euler}, χ(Σ²X)={SSX.euler}  ✓={result}")
-    print()
-
-
-def demo_pro_spectrum():
-    """Demonstrate pro-spectrum periodicity."""
-    print("=" * 60)
-    print("PRO-SPECTRUM PERIODICITY")
-    print("=" * 60)
-
-    base = FormalDimObj(dim=-5, euler=-3)
-    ps = ProSpectrum(base)
-
-    print(f"  Base: {base}")
-    print(f"  Euler sequence: {ps.euler_sequence(12)}")
-    print(f"  Dim sequence:   {ps.dim_sequence(12)}")
-    print(f"  Even levels all = {ps.space(0).euler}: "
-          f"{all(ps.space(2*k).euler == ps.space(0).euler for k in range(6))}")
-    print(f"  Odd levels all = {2 - ps.space(0).euler}: "
-          f"{all(ps.space(2*k+1).euler == 2 - ps.space(0).euler for k in range(6))}")
-
-    # Verify consecutive sums
-    sums = [ps.space(n).euler + ps.space(n+1).euler for n in range(10)]
-    print(f"  Consecutive sums: {sums}  (all = 2: {all(s == 2 for s in sums)})")
-    print()
-
-
-def demo_stabilization():
-    """Demonstrate the stabilization theorem."""
-    print("=" * 60)
-    print("STABILIZATION: Every space reaches positive dimension")
-    print("=" * 60)
-
-    for dim in [-1, -5, -10, -50, -100]:
-        X = FormalDimObj(dim=dim, euler=(-1)**(-dim) * 3)
-        steps = stabilization_steps(X)
-        result = suspend_iter(X, steps)
-        print(f"  dim={dim:4d}: need {steps:4d} suspensions → dim={result.dim}")
-    print()
-
-
-def demo_product_formula():
-    """Demonstrate χ(X × Y) = χ(X) · χ(Y)."""
-    print("=" * 60)
-    print("KÜNNETH PRODUCT FORMULA: χ(X × Y) = χ(X) · χ(Y)")
-    print("=" * 60)
-
-    pairs = [
-        (FormalDimObj(-2, 3), FormalDimObj(-1, -2)),
-        (FormalDimObj(-3, -5), FormalDimObj(-4, 7)),
-        (FormalDimObj(0, 1), FormalDimObj(-5, -1)),
-    ]
-
-    for X, Y in pairs:
-        P = product(X, Y)
-        print(f"  {X} × {Y}")
-        print(f"    = {P}")
-        print(f"    χ(X)·χ(Y) = {X.euler}·{Y.euler} = {X.euler * Y.euler} = χ(X×Y) ✓")
-    print()
-
-
-def demo_sign_theorems():
-    """Demonstrate sign theorems for Euler characteristic."""
-    print("=" * 60)
-    print("SIGN THEOREMS: Even codim → χ > 0, Odd codim → χ < 0")
-    print("=" * 60)
-
-    for dim in range(0, -11, -1):
-        X = NegDimSpace(dim=dim, components=4)
-        codim = -dim
-        parity = "even" if codim % 2 == 0 else "odd"
-        sign = "+" if X.euler_char > 0 else "-"
-        print(f"  dim={dim:3d}, codim={codim:2d} ({parity:4s}): "
-              f"χ = {X.euler_char:4d} ({sign})")
-    print()
-
-
-def demo_neg_dim_cw():
-    """Demonstrate negative-dimensional CW complex Euler characteristics."""
-    print("=" * 60)
-    print("NEGATIVE-DIMENSIONAL CW COMPLEXES")
-    print("=" * 60)
-
-    # Uniform CW complexes
-    print("  Uniform (all cells = 1):")
-    for codim in range(11):
-        chi = uniform_cw_euler(codim)
-        print(f"    codim={codim:2d}: χ = {chi}")
-
-    print()
-    print("  Non-uniform examples:")
-    examples = [
-        NegDimCW(codim=2, cells=[3, 2, 1]),
-        NegDimCW(codim=3, cells=[1, 4, 2, 3]),
-        NegDimCW(codim=4, cells=[2, 1, 3, 1, 2]),
-    ]
-    for C in examples:
-        print(f"    codim={C.codim}, cells={C.cells}: "
-              f"χ={C.euler_char}, total={C.total_cells}, "
-              f"|χ|≤total: {abs(C.euler_char) <= C.total_cells}")
-    print()
-
-
-def demo_classification():
-    """Demonstrate the classification theorem."""
-    print("=" * 60)
-    print("CLASSIFICATION: Same χ ⟹ same |π₀|")
-    print("=" * 60)
-
-    # Two spaces with same χ must have same components
-    cases = [
-        (NegDimSpace(-2, 5), NegDimSpace(-4, 5)),
-        (NegDimSpace(-1, 3), NegDimSpace(-3, 3)),
-        (NegDimSpace(0, 7), NegDimSpace(-6, 7)),
-    ]
-    for X, Y in cases:
-        print(f"  X(dim={X.dim}, k={X.components}): χ={X.euler_char}")
-        print(f"  Y(dim={Y.dim}, k={Y.components}): χ={Y.euler_char}")
-        same_chi = X.euler_char == Y.euler_char
-        same_comp = X.components == Y.components
-        print(f"    Same χ: {same_chi}, Same |π₀|: {same_comp}")
-        print()
-
-
-def demo_conjecture_test():
-    """Test the uniform cell complex conjecture for even codimension."""
-    print("=" * 60)
-    print("CONJECTURE TEST: Uniform even-codim CW has χ = 1")
-    print("=" * 60)
-
-    results = []
-    for n in range(51):
-        codim = 2 * n
-        chi = uniform_cw_euler(codim)
-        results.append(chi == 1)
-        if n <= 10 or n % 10 == 0:
-            print(f"  n={n:3d}, codim={codim:3d}: χ = {chi}  ✓={chi == 1}")
-
-    all_pass = all(results)
-    print(f"\n  All {len(results)} cases pass: {all_pass}")
-    print()
-
-
-if __name__ == "__main__":
-    demo_euler_char_formula()
-    demo_suspension_involution()
-    demo_pro_spectrum()
-    demo_stabilization()
-    demo_product_formula()
-    demo_sign_theorems()
-    demo_neg_dim_cw()
-    demo_classification()
-    demo_conjecture_test()
-    print("All demonstrations complete.")
-
-
-"""
-Visualization: Negative-Dimensional Euler Characteristics
-
-Standalone matplotlib visualization of the key results.
+Demonstrates the key theorems:
+1. Spectrum gap: consecutive Euler chars sum to 2
+2. Cesàro convergence: average Euler char → 1
+3. Suspension-product non-commutativity
+4. Poincaré duality for palindromic Betti sequences
+5. Uniform cell theorem
 """
 
+from dataclasses import dataclass
+from typing import List, Tuple
+
+
+@dataclass
+class FormalDimObj:
+    """Formal dimension object with dimension and Euler characteristic."""
+    dim: int
+    euler: int
+
+    def suspend(self) -> 'FormalDimObj':
+        return FormalDimObj(self.dim + 1, 2 - self.euler)
+
+    def suspend_iter(self, n: int) -> 'FormalDimObj':
+        result = self
+        for _ in range(n):
+            result = result.suspend()
+        return result
+
+    def product(self, other: 'FormalDimObj') -> 'FormalDimObj':
+        return FormalDimObj(self.dim + other.dim, self.euler * other.euler)
+
+
+def neg_dim_sphere(d: int) -> FormalDimObj:
+    """Formal sphere S^d."""
+    return FormalDimObj(d, 1 + (-1)**d)
+
+
+# === Demonstration 1: Spectrum Gap ===
+print("=" * 60)
+print("THEOREM: Spectrum Gap")
+print("χ(Σⁿ X) + χ(Σⁿ⁺¹ X) = 2 for all X, n")
+print("=" * 60)
+
+test_objects = [
+    FormalDimObj(-3, 5),
+    FormalDimObj(-1, 0),   # empty space
+    FormalDimObj(0, 2),    # point
+    FormalDimObj(-5, -7),
+]
+
+for X in test_objects:
+    print(f"\nX = (dim={X.dim}, χ={X.euler})")
+    for n in range(6):
+        sn = X.suspend_iter(n)
+        sn1 = X.suspend_iter(n + 1)
+        gap = sn.euler + sn1.euler
+        print(f"  n={n}: χ(Σ^{n}X)={sn.euler:4d}, χ(Σ^{n+1}X)={sn1.euler:4d}, sum={gap}")
+        assert gap == 2, f"Spectrum gap failed!"
+
+
+# === Demonstration 2: Cesàro Convergence ===
+print("\n" + "=" * 60)
+print("THEOREM: Cesàro Convergence")
+print("Average of χ over 2(k+1) terms = 1 exactly")
+print("=" * 60)
+
+X = FormalDimObj(-2, 42)
+print(f"\nX = (dim={X.dim}, χ={X.euler})")
+for k in range(8):
+    n_terms = 2 * (k + 1)
+    total = sum(X.suspend_iter(i).euler for i in range(n_terms))
+    avg = total / n_terms
+    print(f"  {n_terms:3d} terms: sum={total:6d}, avg={avg:.6f}")
+    assert total == n_terms, f"Even count sum failed!"
+
+print(f"\nOdd count sums (2k+1 terms):")
+for k in range(8):
+    n_terms = 2 * k + 1
+    total = sum(X.suspend_iter(i).euler for i in range(n_terms))
+    expected = 2 * k + X.euler
+    avg = total / n_terms if n_terms > 0 else 0
+    print(f"  {n_terms:3d} terms: sum={total:6d}, expected={expected:6d}, avg={avg:.6f}")
+    assert total == expected, f"Odd count sum failed!"
+
+
+# === Demonstration 3: Suspension-Product Non-Commutativity ===
+print("\n" + "=" * 60)
+print("THEOREM: Suspension-Product Non-Commutativity")
+print("Σ(X×Y) ≠ (ΣX)×Y when χ(Y) ≠ 1")
+print("=" * 60)
+
+for X in [FormalDimObj(0, 2), FormalDimObj(-1, 0), FormalDimObj(1, 3)]:
+    for Y in [FormalDimObj(0, 2), FormalDimObj(-1, 0), FormalDimObj(1, 3)]:
+        lhs = X.product(Y).suspend().euler  # Σ(X×Y)
+        rhs = X.suspend().product(Y).euler  # (ΣX)×Y
+        diff = lhs - rhs
+        status = "EQUAL" if diff == 0 else "DIFFER"
+        print(f"  X=(d={X.dim},χ={X.euler}), Y=(d={Y.dim},χ={Y.euler}): "
+              f"Σ(X×Y).χ={lhs}, (ΣX×Y).χ={rhs}, diff={diff} [{status}]")
+        if Y.euler != 1:
+            assert diff != 0, "Non-commutativity failed!"
+
+
+# === Demonstration 4: Poincaré Duality ===
+print("\n" + "=" * 60)
+print("THEOREM: Negative-Dimensional Poincaré Duality")
+print("Palindromic Betti with even codim ⟹ χ ≡ β_k (mod 2)")
+print("=" * 60)
+
+def euler_from_betti(betti: List[int]) -> int:
+    return sum((-1)**i * b for i, b in enumerate(betti))
+
+# Test with palindromic sequences
+palindromic_tests = [
+    [1, 2, 1],          # codim=2, k=1
+    [3, 5, 5, 3],       # codim=3 - not even, skip
+    [1, 0, 1, 0, 1],    # codim=4, k=2
+    [2, 3, 4, 3, 2],    # codim=4, k=2
+    [1, 1, 1, 1, 1, 1, 1],  # codim=6, k=3
+    [5, 2, 7, 3, 7, 2, 5],  # codim=6, k=3
+]
+
+for betti in palindromic_tests:
+    codim = len(betti) - 1
+    if codim % 2 != 0:
+        continue
+    k = codim // 2
+    # Check palindromic
+    is_palindrome = all(betti[i] == betti[codim - i] for i in range(codim + 1))
+    if not is_palindrome:
+        continue
+    chi = euler_from_betti(betti)
+    beta_k = betti[k]
+    print(f"  β={betti}, codim={codim}, k={k}: χ={chi}, β_k={beta_k}, "
+          f"χ mod 2 = {chi % 2}, β_k mod 2 = {beta_k % 2}")
+    assert chi % 2 == beta_k % 2, "Poincaré duality failed!"
+
+
+# === Demonstration 5: Uniform Cell Theorem ===
+print("\n" + "=" * 60)
+print("THEOREM: Uniform Cell — all βᵢ=1, codim=2k ⟹ χ=1")
+print("=" * 60)
+
+for k in range(10):
+    codim = 2 * k
+    betti = [1] * (codim + 1)
+    chi = euler_from_betti(betti)
+    print(f"  codim={codim:2d} (2k, k={k}): β={betti[:5]}{'...' if len(betti)>5 else ''}, χ={chi}")
+    assert chi == 1, f"Uniform cell theorem failed for k={k}!"
+
+
+# === Demonstration 6: Empty Space and Point Oscillation ===
+print("\n" + "=" * 60)
+print("THEOREM: Empty Space and Point Oscillation")
+print("=" * 60)
+
+empty = FormalDimObj(-1, 0)
+point = FormalDimObj(0, 2)
+
+print("\nEmpty space (dim=-1, χ=0) under suspension:")
+for n in range(12):
+    s = empty.suspend_iter(n)
+    expected = 0 if n % 2 == 0 else 2
+    marker = "✓" if s.euler == expected else "✗"
+    print(f"  Σ^{n:2d}(∅) = (dim={s.dim:3d}, χ={s.euler}) {marker}")
+
+print("\nPoint (dim=0, χ=2) under suspension:")
+for n in range(12):
+    s = point.suspend_iter(n)
+    expected = 2 if n % 2 == 0 else 0
+    marker = "✓" if s.euler == expected else "✗"
+    print(f"  Σ^{n:2d}(pt) = (dim={s.dim:3d}, χ={s.euler}) {marker}")
+
+
+print("\n" + "=" * 60)
+print("ALL DEMONSTRATIONS PASSED ✓")
+print("=" * 60)
+
+
+#!/usr/bin/env python3
+"""Visualization: Euler characteristic spectrum under iterated suspension."""
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
-def euler_char(dim: int, components: int) -> int:
-    """χ = (-1)^(-dim) · components"""
-    return ((-1) ** (-dim)) * components
+def suspend_euler(euler: int, n: int) -> int:
+    """O(1) computation of χ(Σⁿ X)."""
+    return euler if n % 2 == 0 else 2 - euler
 
 
-def suspend_euler(chi: int) -> int:
-    """χ(ΣX) = 2 - χ(X)"""
-    return 2 - chi
+def make_spectrum_plot():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-
-def plot_euler_sign_pattern():
-    """Plot the sign alternation of Euler characteristic across dimensions."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left: Euler characteristic vs dimension for various component counts
-    dims = list(range(0, -16, -1))
-    for k in [1, 2, 3, 5]:
-        chis = [euler_char(d, k) for d in dims]
-        ax1.plot(dims, chis, 'o-', label=f'|π₀| = {k}', markersize=6)
-
-    ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-    ax1.set_xlabel('Dimension', fontsize=12)
-    ax1.set_ylabel('Euler Characteristic χ', fontsize=12)
-    ax1.set_title('Euler Characteristic in Negative Dimensions', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Right: Sign pattern as a heatmap
-    dims_short = list(range(0, -11, -1))
-    components_list = list(range(1, 8))
-    data = np.array([[euler_char(d, k) for d in dims_short] for k in components_list])
-    signs = np.sign(data)
-
-    im = ax2.imshow(signs, cmap='RdBu', aspect='auto', vmin=-1, vmax=1,
-                    extent=[dims_short[0] + 0.5, dims_short[-1] - 0.5,
-                            components_list[-1] + 0.5, components_list[0] - 0.5])
-    ax2.set_xlabel('Dimension', fontsize=12)
-    ax2.set_ylabel('Components |π₀|', fontsize=12)
-    ax2.set_title('Sign Pattern: Blue = Positive, Red = Negative', fontsize=13)
-    ax2.set_xticks(dims_short)
-    ax2.set_yticks(components_list)
-
-    plt.tight_layout()
-    plt.savefig('euler_sign_pattern.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: euler_sign_pattern.png")
-
-
-def plot_pro_spectrum():
-    """Plot pro-spectrum Euler characteristic periodicity."""
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
-
-    # Different base Euler characteristics
-    bases = [-3, -1, 0, 2, 5]
-    levels = list(range(16))
-
-    for base_chi in bases:
-        chi_seq = [base_chi]
-        for _ in range(15):
-            chi_seq.append(2 - chi_seq[-1])
-        ax1.plot(levels, chi_seq, 'o-', label=f'χ₀ = {base_chi}', markersize=5)
-
-    ax1.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='y = 1 (midpoint)')
-    ax1.set_xlabel('Spectrum Level n', fontsize=12)
-    ax1.set_ylabel('Euler Characteristic χ(Xₙ)', fontsize=12)
-    ax1.set_title('Pro-Spectrum Euler Characteristic Periodicity', fontsize=13)
-    ax1.legend(fontsize=9, loc='upper right')
-    ax1.grid(True, alpha=0.3)
-
-    # Consecutive sums
-    base_chi = -3
-    chi_seq = [base_chi]
-    for _ in range(15):
-        chi_seq.append(2 - chi_seq[-1])
-
-    sums = [chi_seq[n] + chi_seq[n+1] for n in range(15)]
-    ax2.bar(range(15), sums, color='steelblue', alpha=0.7)
-    ax2.axhline(y=2, color='red', linestyle='--', linewidth=2, label='Always = 2')
-    ax2.set_xlabel('Level n', fontsize=12)
-    ax2.set_ylabel('χ(Xₙ) + χ(Xₙ₊₁)', fontsize=12)
-    ax2.set_title(f'Consecutive Sum Theorem (base χ = {base_chi})', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.set_ylim(0, 3)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('pro_spectrum_periodicity.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: pro_spectrum_periodicity.png")
-
-
-def plot_stabilization():
-    """Plot the stabilization map from negative to positive dimensions."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    start_dims = [-10, -7, -5, -3, -1]
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(start_dims)))
-
-    for i, start_dim in enumerate(start_dims):
-        steps = max(0, 1 - start_dim)
-        dims = [start_dim + n for n in range(steps + 3)]
-        ax.plot(range(len(dims)), dims, 'o-', color=colors[i],
-                label=f'Start dim = {start_dim}', markersize=6, linewidth=2)
-        # Mark where we cross zero
-        cross_idx = -start_dim
-        if cross_idx < len(dims):
-            ax.plot(cross_idx, 0, 's', color=colors[i], markersize=12,
-                    markeredgecolor='black', markeredgewidth=2, zorder=5)
-
-    ax.axhline(y=0, color='red', linestyle='--', linewidth=2, alpha=0.7,
-               label='dim = 0 (threshold)')
-    ax.fill_between(range(15), -12, 0, alpha=0.1, color='red',
-                     label='Negative dimension')
-    ax.fill_between(range(15), 0, 5, alpha=0.1, color='green',
-                     label='Positive dimension')
-
-    ax.set_xlabel('Number of Suspensions', fontsize=12)
-    ax.set_ylabel('Dimension', fontsize=12)
-    ax.set_title('Stabilization: Suspension Lifts to Positive Dimension', fontsize=13)
-    ax.legend(fontsize=9)
+    # Plot 1: Multiple base Euler chars
+    ax = axes[0, 0]
+    n_levels = 20
+    bases = [("∅ (χ=0)", 0, -1), ("pt (χ=2)", 2, 0),
+             ("S¹ (χ=0)", 0, 1), ("(χ=5)", 5, -3)]
+    for label, euler, dim in bases:
+        levels = range(n_levels)
+        eulers = [suspend_euler(euler, n) for n in levels]
+        dims = [dim + n for n in levels]
+        ax.plot(dims, eulers, 'o-', label=label, markersize=4, alpha=0.8)
+    ax.set_xlabel("Dimension")
+    ax.set_ylabel("Euler Characteristic")
+    ax.set_title("Euler Characteristic Spectrum")
+    ax.legend()
     ax.grid(True, alpha=0.3)
-    ax.set_xlim(-0.5, 13)
+    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='Cesàro limit')
+
+    # Plot 2: Cesàro averages
+    ax = axes[0, 1]
+    for label, euler, _ in bases:
+        N_values = range(1, 40)
+        averages = []
+        for N in N_values:
+            s = sum(suspend_euler(euler, n) for n in range(N))
+            averages.append(s / N)
+        ax.plot(list(N_values), averages, '-', label=label, alpha=0.8)
+    ax.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Limit = 1')
+    ax.set_xlabel("Number of Terms")
+    ax.set_ylabel("Cesàro Average")
+    ax.set_title("Cesàro Convergence to 1")
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    # Plot 3: Spectrum gap visualization
+    ax = axes[1, 0]
+    euler_base = 7
+    n_levels = 15
+    levels = list(range(n_levels))
+    eulers = [suspend_euler(euler_base, n) for n in levels]
+    gaps = [eulers[n] + eulers[n+1] for n in range(n_levels - 1)]
+
+    ax.bar(levels, eulers, alpha=0.6, color=['steelblue' if n%2==0 else 'coral' for n in levels])
+    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
+    for n in range(n_levels - 1):
+        ax.annotate(f'Σ={gaps[n]}', xy=(n + 0.5, max(eulers[n], eulers[n+1]) + 0.3),
+                   fontsize=7, ha='center', color='green')
+    ax.set_xlabel("Suspension Level n")
+    ax.set_ylabel("χ(Σⁿ X)")
+    ax.set_title(f"Spectrum Gap (base χ={euler_base}): consecutive sum = 2")
+    ax.grid(True, alpha=0.3)
+
+    # Plot 4: Suspension-product defect
+    ax = axes[1, 1]
+    y_eulers = range(-5, 6)
+    defects = [2 * (1 - ye) for ye in y_eulers]
+    ax.bar(list(y_eulers), defects, alpha=0.7, color=['red' if d != 0 else 'green' for d in defects])
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.axvline(x=1, color='green', linestyle='--', linewidth=2, label='χ(Y)=1: commutes')
+    ax.set_xlabel("χ(Y)")
+    ax.set_ylabel("χ(Σ(X×Y)) - χ((ΣX)×Y)")
+    ax.set_title("Suspension-Product Defect = 2(1 - χ(Y))")
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('stabilization_bridge.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: stabilization_bridge.png")
+    plt.savefig('neg_dim_spectrum.png', dpi=150, bbox_inches='tight')
+    print("Saved neg_dim_spectrum.png")
 
 
 if __name__ == "__main__":
-    plot_euler_sign_pattern()
-    plot_pro_spectrum()
-    plot_stabilization()
-    print("All visualizations generated.")
+    make_spectrum_plot()
