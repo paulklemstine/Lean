@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9a1bb263",
     "filename": "sheaf_cohomology_of_data_the_topology_of_missing_i.json",
     "pkg_num": 162,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6967668421052633,
     "title": "Sheaf Cohomology of Missing Data: The Topology of Missing Information"
   },
   {
@@ -5084,8 +5084,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sheaf_cohomology_of_data_the_topology_of_missing_i",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6967668421052633,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Sheaf Cohomology of Missing Data: The Topology of Missing Information"
     }
