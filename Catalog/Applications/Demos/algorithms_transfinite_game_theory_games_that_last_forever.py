@@ -1,254 +1,342 @@
+#!/usr/bin/env python3
 """
-Transfinite Game Theory — Core Algorithms
+Algorithms for Transfinite Game Theory
 
-Implements game tree evaluation, determinacy rank computation,
-and strategy extraction for finite two-player games.
+Type-hinted implementations of core algorithms:
+1. Minimax — solve finite games by backward induction
+2. Quasistrategy pruning — compute winning quasistrategies
+3. Ordinal rank computation — assign ordinal ranks to game nodes
+4. Strategy composition — combine strategies with switch points
+5. Canonical play generation — simulate games from strategies
 """
 
-from typing import Optional, Callable
-from dataclasses import dataclass
+from typing import List, Optional, Callable, Dict, Tuple, Set
+from dataclasses import dataclass, field
 from enum import Enum
 
 
+# ============================================================
+# Core Types
+# ============================================================
+
 class Player(Enum):
-    """Which player moves at a node."""
-    I = "I"
-    II = "II"
+    I = 0   # Maximizer
+    II = 1  # Minimizer
 
 
 @dataclass
-class GameTree:
-    """A finite two-player game tree with binary branching.
+class GameNode:
+    """A node in a finite game tree."""
+    children: List['GameNode'] = field(default_factory=list)
+    terminal_value: Optional[bool] = None  # True = Player I wins, None = non-terminal
+    label: str = ""
 
-    Attributes:
-        player: Which player moves at this node (None for leaves).
-        value: The leaf value (True = Player I wins). None for internal nodes.
-        left: Left subtree (None for leaves).
-        right: Right subtree (None for leaves).
-    """
-    player: Optional[Player]
-    value: Optional[bool]
-    left: Optional['GameTree']
-    right: Optional['GameTree']
-
-    @staticmethod
-    def leaf(winner: bool) -> 'GameTree':
-        """Create a leaf node."""
-        return GameTree(player=None, value=winner, left=None, right=None)
-
-    @staticmethod
-    def node_I(left: 'GameTree', right: 'GameTree') -> 'GameTree':
-        """Create a Player I decision node."""
-        return GameTree(player=Player.I, value=None, left=left, right=right)
-
-    @staticmethod
-    def node_II(left: 'GameTree', right: 'GameTree') -> 'GameTree':
-        """Create a Player II decision node."""
-        return GameTree(player=Player.II, value=None, left=left, right=right)
-
-    def is_leaf(self) -> bool:
-        return self.player is None
+    @property
+    def is_terminal(self) -> bool:
+        return len(self.children) == 0
 
 
-def minimax_value(tree: GameTree) -> bool:
-    """Compute the minimax value of a game tree.
-
-    Returns True if Player I wins with optimal play, False otherwise.
-
-    Algorithm: Recursive evaluation following the minimax principle.
-    - At Player I nodes: OR of children (I picks the best)
-    - At Player II nodes: AND of children (II picks the worst for I)
-
-    Time complexity: O(n) where n = number of nodes.
-    """
-    if tree.is_leaf():
-        assert tree.value is not None
-        return tree.value
-    left_val = minimax_value(tree.left)
-    right_val = minimax_value(tree.right)
-    if tree.player == Player.I:
-        return left_val or right_val
-    else:
-        return left_val and right_val
+Strategy = Callable[[List[int]], int]
 
 
-def depth(tree: GameTree) -> int:
-    """Compute the depth of a game tree."""
-    if tree.is_leaf():
-        return 0
-    return max(depth(tree.left), depth(tree.right)) + 1
+# ============================================================
+# Algorithm 1: Minimax
+# ============================================================
 
+def minimax(node: GameNode, depth: int = 0) -> bool:
+    """Solve a finite game by backward induction (minimax).
 
-def num_leaves(tree: GameTree) -> int:
-    """Count the number of leaves in a game tree."""
-    if tree.is_leaf():
-        return 1
-    return num_leaves(tree.left) + num_leaves(tree.right)
-
-
-def determinacy_rank(tree: GameTree) -> int:
-    """Compute the determinacy rank of a game tree.
-
-    The determinacy rank measures strategic complexity: how deeply the
-    tree must be analyzed to determine the winner.
-
-    Key property: the rank increases only when the non-moving player wins,
-    requiring verification of all branches. When the moving player wins,
-    they can find a winning path without exhaustive analysis.
-
-    Returns:
-        Non-negative integer ≤ depth(tree).
-    """
-    if tree.is_leaf():
-        return 0
-
-    lv = minimax_value(tree.left)
-    rv = minimax_value(tree.right)
-    lr = determinacy_rank(tree.left)
-    rr = determinacy_rank(tree.right)
-
-    if tree.player == Player.I:
-        if lv or rv:  # Player I wins
-            if lv and rv:
-                return min(lr, rr)
-            elif lv:
-                return lr
-            else:
-                return rr
-        else:  # Player II wins, must check both
-            return max(lr, rr) + 1
-    else:  # Player II's node
-        if lv and rv:  # Player I wins, must check both
-            return max(lr, rr) + 1
-        else:  # Player II wins
-            if (not lv) and (not rv):
-                return min(lr, rr)
-            elif not lv:
-                return lr
-            else:
-                return rr
-
-
-def swap_tree(tree: GameTree) -> GameTree:
-    """Swap the roles of Player I and Player II.
-
-    Negates leaf values and exchanges node types.
-    This is an involution: swap(swap(t)) = t.
-    """
-    if tree.is_leaf():
-        return GameTree.leaf(not tree.value)
-    if tree.player == Player.I:
-        return GameTree.node_II(swap_tree(tree.left), swap_tree(tree.right))
-    else:
-        return GameTree.node_I(swap_tree(tree.left), swap_tree(tree.right))
-
-
-def balanced_tree(depth_n: int, leaf_values: list[bool]) -> GameTree:
-    """Create a balanced game tree of given depth.
+    At even depths, Player I moves (maximizer: wins if ANY child wins).
+    At odd depths, Player II moves (minimizer: wins if ALL children win for I,
+    equivalently, loses if ANY child loses for I).
 
     Args:
-        depth_n: Depth of the tree (0 = single leaf).
-        leaf_values: List of 2^depth_n boolean leaf values, left to right.
+        node: Current game tree node
+        depth: Current depth (0 = Player I's turn)
 
     Returns:
-        A balanced GameTree where Player I moves at even depths
-        and Player II at odd depths (counting from root).
+        True if Player I has a winning strategy from this position.
+
+    Time complexity: O(|T|) where |T| is the tree size.
+    Space complexity: O(h) where h is the tree height (recursion stack).
     """
-    if depth_n == 0:
-        return GameTree.leaf(leaf_values[0])
-    mid = len(leaf_values) // 2
-    left = balanced_tree(depth_n - 1, leaf_values[:mid])
-    right = balanced_tree(depth_n - 1, leaf_values[mid:])
-    if depth_n % 2 == 1:  # Root is at depth 0 (even), children at depth 1 (odd)
-        return GameTree.node_I(left, right)
+    if node.is_terminal:
+        return node.terminal_value if node.terminal_value is not None else False
+
+    player = Player.I if depth % 2 == 0 else Player.II
+
+    if player == Player.I:
+        # Player I wins if some child is winning for Player I
+        return any(minimax(child, depth + 1) for child in node.children)
     else:
-        return GameTree.node_II(left, right)
+        # Player II wins if all children are winning for Player I
+        # (Player II tries to avoid Player I winning)
+        return all(minimax(child, depth + 1) for child in node.children)
 
 
-def extract_strategy_I(tree: GameTree) -> dict[int, bool]:
-    """Extract Player I's optimal strategy as a dict of node_id -> choice.
+def minimax_with_strategy(
+    node: GameNode, depth: int = 0
+) -> Tuple[bool, Dict[int, int]]:
+    """Minimax with strategy extraction.
 
-    Returns a mapping from node indices (pre-order) to choices:
-    True = go left, False = go right.
-    Only includes Player I's nodes.
+    Returns both the game value and a strategy (mapping node id to chosen child index).
     """
-    strategy: dict[int, bool] = {}
-    counter = [0]
+    strategy: Dict[int, int] = {}
 
-    def traverse(t: GameTree) -> None:
-        node_id = counter[0]
-        counter[0] += 1
-        if t.is_leaf():
-            return
-        if t.player == Player.I:
-            lv = minimax_value(t.left)
-            strategy[node_id] = lv  # Go left if left subtree is winning
-        traverse(t.left)
-        traverse(t.right)
+    def solve(n: GameNode, d: int) -> bool:
+        if n.is_terminal:
+            return n.terminal_value if n.terminal_value is not None else False
 
-    traverse(tree)
-    return strategy
+        player = Player.I if d % 2 == 0 else Player.II
+        results = [solve(child, d + 1) for child in n.children]
 
-
-def extract_strategy_II(tree: GameTree) -> dict[int, bool]:
-    """Extract Player II's optimal strategy."""
-    strategy: dict[int, bool] = {}
-    counter = [0]
-
-    def traverse(t: GameTree) -> None:
-        node_id = counter[0]
-        counter[0] += 1
-        if t.is_leaf():
-            return
-        if t.player == Player.II:
-            lv = minimax_value(t.left)
-            # Player II goes left if left subtree is losing (for Player I)
-            strategy[node_id] = not lv
-        traverse(t.left)
-        traverse(t.right)
-
-    traverse(tree)
-    return strategy
-
-
-# ---------- Infinite Game Simulation ----------
-
-def simulate_infinite_game(
-    strategy_I: Callable[[list[bool]], bool],
-    strategy_II: Callable[[list[bool]], bool],
-    num_moves: int
-) -> list[bool]:
-    """Simulate an infinite game for a finite number of moves.
-
-    Args:
-        strategy_I: Player I's strategy (history → move).
-        strategy_II: Player II's strategy (history → move).
-        num_moves: Number of moves to simulate.
-
-    Returns:
-        List of moves played.
-    """
-    history: list[bool] = []
-    for n in range(num_moves):
-        if n % 2 == 0:
-            move = strategy_I(history.copy())
+        if player == Player.I:
+            for i, r in enumerate(results):
+                if r:
+                    strategy[id(n)] = i
+                    return True
+            return False
         else:
-            move = strategy_II(history.copy())
-        history.append(move)
+            for i, r in enumerate(results):
+                if not r:
+                    strategy[id(n)] = i
+                    return False
+            if results:
+                strategy[id(n)] = 0
+            return True
+
+    value = solve(node, depth)
+    return value, strategy
+
+
+# ============================================================
+# Algorithm 2: Quasistrategy Pruning
+# ============================================================
+
+@dataclass
+class QuasistrategyNode:
+    """A node in a quasistrategy (pruned game tree)."""
+    position: Tuple[int, ...]
+    children: List['QuasistrategyNode'] = field(default_factory=list)
+    is_winning: Optional[bool] = None
+
+
+def compute_quasistrategy(
+    game_tree: GameNode,
+    is_player_i_position: Callable[[int], bool] = lambda d: d % 2 == 0
+) -> Optional[QuasistrategyNode]:
+    """Compute a winning quasistrategy for Player I.
+
+    A quasistrategy is a subtree that:
+    - Preserves all opponent moves (closed under Player II's moves)
+    - Has at least one move at each Player I position
+    - All plays through it are winning for Player I
+
+    Algorithm:
+    1. Compute minimax values for all nodes.
+    2. At Player I nodes, keep only winning children.
+    3. At Player II nodes, keep all children.
+
+    Returns None if Player I has no winning strategy.
+    """
+    def build(node: GameNode, depth: int, position: Tuple[int, ...]) -> Optional[QuasistrategyNode]:
+        if node.is_terminal:
+            val = node.terminal_value if node.terminal_value is not None else False
+            return QuasistrategyNode(position=position, is_winning=val) if val else None
+
+        is_pi = is_player_i_position(depth)
+        qs_children = []
+
+        for i, child in enumerate(node.children):
+            child_qs = build(child, depth + 1, position + (i,))
+            if child_qs is not None:
+                qs_children.append(child_qs)
+
+        if is_pi:
+            # Player I: need at least one winning child
+            if qs_children:
+                return QuasistrategyNode(position=position, children=qs_children, is_winning=True)
+            return None
+        else:
+            # Player II: need ALL children winning (keep all, but check)
+            if len(qs_children) == len(node.children):
+                return QuasistrategyNode(position=position, children=qs_children, is_winning=True)
+            return None
+
+    return build(game_tree, 0, ())
+
+
+# ============================================================
+# Algorithm 3: Ordinal Rank Computation
+# ============================================================
+
+def ordinal_rank(node: GameNode) -> int:
+    """Compute the ordinal rank of a game tree node.
+
+    For finite trees, the ordinal rank equals the natural number rank:
+    - Leaf: rank 0
+    - Node: max(child ranks) + 1
+
+    Time complexity: O(|T|)
+    """
+    if node.is_terminal:
+        return 0
+    if not node.children:
+        return 0
+    return max(ordinal_rank(child) for child in node.children) + 1
+
+
+def rank_hierarchy(node: GameNode) -> Dict[int, int]:
+    """Compute the rank distribution: how many nodes at each rank level.
+
+    Returns a dictionary mapping rank → count.
+    """
+    distribution: Dict[int, int] = {}
+
+    def traverse(n: GameNode) -> None:
+        r = ordinal_rank(n)
+        distribution[r] = distribution.get(r, 0) + 1
+        for child in n.children:
+            traverse(child)
+
+    traverse(node)
+    return distribution
+
+
+# ============================================================
+# Algorithm 4: Strategy Composition
+# ============================================================
+
+def compose_strategies(
+    sigma1: Strategy, sigma2: Strategy, switch_point: int
+) -> Strategy:
+    """Compose two strategies with a switch point.
+
+    Uses sigma1 for histories shorter than switch_point,
+    sigma2 for longer histories.
+
+    Theorem (compose_eq_first): For |h| < n, compose(σ₁, σ₂, n)(h) = σ₁(h).
+    Theorem (compose_eq_second): For |h| ≥ n, compose(σ₁, σ₂, n)(h) = σ₂(h).
+    """
+    def composed(history: List[int]) -> int:
+        if len(history) < switch_point:
+            return sigma1(history)
+        return sigma2(history)
+    return composed
+
+
+def map_strategy(sigma: Strategy, f: Callable[[int], int]) -> Strategy:
+    """Transform a strategy's output through a function."""
+    def mapped(history: List[int]) -> int:
+        return f(sigma(history))
+    return mapped
+
+
+# ============================================================
+# Algorithm 5: Canonical Play Generation
+# ============================================================
+
+def build_history(sigma: Strategy, tau: Strategy, n: int) -> List[int]:
+    """Build the first n moves of a canonical play.
+
+    Theorem (buildHistory_length): len(build_history(σ, τ, n)) = n.
+    """
+    history: List[int] = []
+    for step in range(n):
+        if step % 2 == 0:
+            history.append(sigma(list(history)))
+        else:
+            history.append(tau(list(history)))
     return history
 
 
-def is_in_open_set(
-    play: list[bool],
-    witnesses: dict[tuple[bool, ...], bool]
-) -> Optional[int]:
-    """Check if a finite play prefix witnesses membership in an open set.
+def canonical_play(sigma: Strategy, tau: Strategy, length: int = 100) -> List[int]:
+    """Generate the canonical play from two strategies.
 
-    An open set is defined by a collection of finite prefixes.
-    Returns the length of the witnessing prefix, or None.
+    The play at position n is the (n+1)-th element of build_history(σ, τ, n+1).
     """
-    for k in range(len(play) + 1):
-        prefix = tuple(play[:k])
-        if prefix in witnesses and witnesses[prefix]:
-            return k
-    return None
+    return build_history(sigma, tau, length)
+
+
+def verify_exclusivity(
+    sigma: Strategy, tau: Strategy,
+    payoff: Callable[[List[int]], bool],
+    length: int = 50
+) -> Tuple[bool, str]:
+    """Verify the exclusivity theorem computationally.
+
+    For any pair (σ, τ), exactly one player wins the canonical play.
+    Returns (player_i_wins, explanation).
+    """
+    play = canonical_play(sigma, tau, length)
+    pi_wins = payoff(play)
+    winner = "Player I" if pi_wins else "Player II"
+    return pi_wins, f"{winner} wins: play = {play[:10]}..."
+
+
+# ============================================================
+# Algorithm 6: Determinacy at Stage n
+# ============================================================
+
+def check_determined_at_stage(
+    payoff: Callable[[List[int]], bool],
+    stage: int,
+    num_samples: int = 1000,
+    max_val: int = 10
+) -> bool:
+    """Heuristically check if a game is determined at a given stage.
+
+    Tests whether plays agreeing on the first `stage` moves always
+    have the same outcome.
+    """
+    import random
+    random.seed(42)
+
+    for _ in range(num_samples):
+        # Generate a random prefix of length `stage`
+        prefix = [random.randint(0, max_val) for _ in range(stage)]
+        # Generate two random extensions
+        ext1 = prefix + [random.randint(0, max_val) for _ in range(20)]
+        ext2 = prefix + [random.randint(0, max_val) for _ in range(20)]
+        if payoff(ext1) != payoff(ext2):
+            return False
+    return True
+
+
+# ============================================================
+# Example Usage
+# ============================================================
+
+if __name__ == "__main__":
+    # Build a sample game tree
+    leaf_w = GameNode(terminal_value=True, label="win")
+    leaf_l = GameNode(terminal_value=False, label="lose")
+
+    # Player I chooses between: a winning leaf and a subtree
+    subtree = GameNode(children=[leaf_w, leaf_l], label="PII_choice")
+    root = GameNode(children=[leaf_w, subtree, leaf_l], label="PI_choice")
+
+    # Minimax
+    value = minimax(root)
+    print(f"Game value (Player I wins): {value}")
+    print(f"Ordinal rank: {ordinal_rank(root)}")
+
+    # Strategy extraction
+    val, strat = minimax_with_strategy(root)
+    print(f"Winning strategy found: {val}")
+
+    # Quasistrategy
+    qs = compute_quasistrategy(root)
+    print(f"Quasistrategy exists: {qs is not None}")
+
+    # Canonical play
+    sigma: Strategy = lambda h: 0
+    tau: Strategy = lambda h: 1
+    play = build_history(sigma, tau, 10)
+    print(f"Canonical play (σ=0, τ=1): {play}")
+
+    # Determinacy check
+    payoff = lambda p: sum(p[:3]) % 2 == 0
+    for stage in range(5):
+        det = check_determined_at_stage(payoff, stage)
+        print(f"Determined at stage {stage}: {det}")

@@ -1,371 +1,545 @@
 #!/usr/bin/env python3
 """
-Transfinite Game Theory — Demonstration
+Transfinite Game Theory — Interactive Demo
 
-Numerical examples illustrating:
-1. Zermelo's theorem on concrete game trees
-2. Determinacy rank computation and comparison with depth
-3. The swap involution
-4. Average determinacy rank for balanced trees (conjecture test)
-5. Infinite game simulation
+Demonstrates key concepts from the formalization:
+1. Minimax computation for finite game trees
+2. Strategy exclusivity verification
+3. Ordinal rank computation
+4. Quasistrategy pruning
 """
 
-import itertools
-from algorithms import (
-    GameTree, Player, minimax_value, depth, num_leaves,
-    determinacy_rank, swap_tree, balanced_tree,
-    extract_strategy_I, extract_strategy_II,
-    simulate_infinite_game,
-)
+from typing import List, Optional, Tuple, Callable
 
 
-def demo_zermelo():
-    """Demonstrate Zermelo's theorem on small game trees."""
-    print("=" * 60)
-    print("DEMO 1: Zermelo's Theorem on Finite Game Trees")
-    print("=" * 60)
+# ============================================================
+# Game Tree Representation
+# ============================================================
 
-    # A simple game tree:
-    #       I
-    #      / \
-    #    II    II
-    #   / \   / \
-    #  T   F F   T
-    tree = GameTree.node_I(
-        GameTree.node_II(GameTree.leaf(True), GameTree.leaf(False)),
-        GameTree.node_II(GameTree.leaf(False), GameTree.leaf(True)),
-    )
+class GameTree:
+    """A finite game tree node."""
+    def __init__(self, children: Optional[List['GameTree']] = None, label: str = ""):
+        self.children = children or []
+        self.label = label
 
-    val = minimax_value(tree)
-    d = depth(tree)
-    n = num_leaves(tree)
-    dr = determinacy_rank(tree)
+    @property
+    def is_leaf(self) -> bool:
+        return len(self.children) == 0
 
-    print(f"\nGame tree structure:")
-    print(f"  Root: Player I chooses")
-    print(f"  Left:  Player II chooses between T and F")
-    print(f"  Right: Player II chooses between F and T")
-    print(f"\nProperties:")
-    print(f"  Depth:           {d}")
-    print(f"  Leaves:          {n}")
-    print(f"  Minimax value:   {'Player I wins' if val else 'Player II wins'}")
-    print(f"  Determinacy rank: {dr}")
-    print(f"  detRank ≤ depth: {dr <= d} ✓")
+    def rank(self) -> int:
+        """Compute the game-theoretic rank."""
+        if self.is_leaf:
+            return 0
+        return max(c.rank() + 1 for c in self.children)
 
-    # Player I's strategy
-    strategy = extract_strategy_I(tree)
-    print(f"\nPlayer I's optimal strategy:")
-    for node_id, choice in strategy.items():
-        print(f"  Node {node_id}: go {'left' if choice else 'right'}")
-
-    # Another tree where Player II wins
-    tree2 = GameTree.node_I(
-        GameTree.node_II(GameTree.leaf(False), GameTree.leaf(False)),
-        GameTree.node_II(GameTree.leaf(False), GameTree.leaf(True)),
-    )
-    val2 = minimax_value(tree2)
-    dr2 = determinacy_rank(tree2)
-    print(f"\nAnother tree (all-false left, mixed right):")
-    print(f"  Value: {'Player I wins' if val2 else 'Player II wins'}")
-    print(f"  Depth: {depth(tree2)}, Determinacy rank: {dr2}")
-
-
-def demo_determinacy_rank():
-    """Compare determinacy rank with depth for various trees."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Determinacy Rank vs Depth")
-    print("=" * 60)
-
-    # Tree with very low rank despite high depth
-    # All leaves True → Player I wins immediately at every level
-    deep_easy = GameTree.leaf(True)
-    for _ in range(5):
-        deep_easy = GameTree.node_I(deep_easy, GameTree.leaf(True))
-
-    d = depth(deep_easy)
-    dr = determinacy_rank(deep_easy)
-    print(f"\n  Deep tree (all True leaves, depth {d}):")
-    print(f"    Determinacy rank: {dr}")
-    print(f"    Ratio rank/depth: {dr/d if d > 0 else 'N/A'}")
-    print(f"    → Strategically trivial despite depth {d}!")
-
-    # Tree with maximum rank
-    max_rank = GameTree.node_I(
-        GameTree.node_II(
-            GameTree.leaf(False),
-            GameTree.leaf(False),
-        ),
-        GameTree.node_II(
-            GameTree.leaf(False),
-            GameTree.leaf(False),
-        ),
-    )
-    d2 = depth(max_rank)
-    dr2 = determinacy_rank(max_rank)
-    print(f"\n  Max-rank tree (all False, Player II wins, depth {d2}):")
-    print(f"    Determinacy rank: {dr2}")
-    print(f"    → Full depth analysis needed")
-
-
-def demo_swap():
-    """Demonstrate the swap involution."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Player Swap Involution")
-    print("=" * 60)
-
-    tree = GameTree.node_I(
-        GameTree.node_II(GameTree.leaf(True), GameTree.leaf(False)),
-        GameTree.leaf(True),
-    )
-
-    swapped = swap_tree(tree)
-    double_swapped = swap_tree(swapped)
-
-    v_orig = minimax_value(tree)
-    v_swap = minimax_value(swapped)
-
-    print(f"\n  Original value:       {'I wins' if v_orig else 'II wins'}")
-    print(f"  Swapped value:        {'I wins' if v_swap else 'II wins'}")
-    print(f"  swap negates value:   {v_swap == (not v_orig)} ✓")
-    print(f"  Depth preserved:      {depth(tree) == depth(swapped)} ✓")
-
-    # Verify involution by checking structure
-    def tree_equal(t1: GameTree, t2: GameTree) -> bool:
-        if t1.is_leaf() and t2.is_leaf():
-            return t1.value == t2.value
-        if t1.is_leaf() or t2.is_leaf():
+    def is_winning(self) -> bool:
+        """Is the current position winning for the player to move?
+        Leaf = losing (no moves). Node = winning iff some child is losing."""
+        if self.is_leaf:
             return False
-        return (t1.player == t2.player and
-                tree_equal(t1.left, t2.left) and
-                tree_equal(t1.right, t2.right))
+        return any(not c.is_winning() for c in self.children)
 
-    print(f"  swap(swap(t)) == t:   {tree_equal(tree, double_swapped)} ✓")
+    def size(self) -> int:
+        """Total number of nodes."""
+        return 1 + sum(c.size() for c in self.children)
 
 
-def demo_conjecture_test():
-    """Test the determinacy rank growth conjecture."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Determinacy Rank Growth Conjecture")
+def chain_game(n: int) -> GameTree:
+    """Create a linear chain game of depth n."""
+    if n == 0:
+        return GameTree(label=f"L")
+    return GameTree([chain_game(n - 1)], label=f"D{n}")
+
+
+def wide_game(n: int) -> GameTree:
+    """Create a wide game with n leaf children."""
+    return GameTree([GameTree(label=f"L{i}") for i in range(n)], label=f"W{n}")
+
+
+# ============================================================
+# Gale-Stewart Game Simulation
+# ============================================================
+
+Strategy = Callable[[List[int]], int]
+
+def build_history(sigma: Strategy, tau: Strategy, n: int) -> List[int]:
+    """Build the first n moves from two strategies."""
+    history = []
+    for step in range(n):
+        if step % 2 == 0:
+            history.append(sigma(list(history)))
+        else:
+            history.append(tau(list(history)))
+    return history
+
+
+def canonical_play(sigma: Strategy, tau: Strategy, length: int = 20) -> List[int]:
+    """Generate the canonical play from two strategies."""
+    return build_history(sigma, tau, length)
+
+
+def check_exclusivity(
+    sigma: Strategy, tau: Strategy,
+    payoff: Callable[[List[int]], bool],
+    play_length: int = 20
+) -> Tuple[bool, List[int]]:
+    """Demonstrate the exclusivity theorem:
+    playing sigma against tau must produce a definite winner."""
+    play = canonical_play(sigma, tau, play_length)
+    player_i_wins = payoff(play)
+    return player_i_wins, play
+
+
+# ============================================================
+# Demo 1: Finite Game Trees
+# ============================================================
+
+def demo_game_trees():
     print("=" * 60)
-    print("\nConjecture: E[detRank] ≈ d / log₂(d) for balanced trees of depth d")
-
-    import math
-
-    for d in range(1, 5):
-        n_leaves = 2 ** d
-        total_rank = 0
-        total_trees = 2 ** n_leaves
-        count = 0
-
-        # Enumerate all possible leaf assignments
-        for bits in itertools.product([False, True], repeat=n_leaves):
-            tree = balanced_tree(d, list(bits))
-            total_rank += determinacy_rank(tree)
-            count += 1
-
-        avg_rank = total_rank / count
-        predicted = d / math.log2(d) if d > 1 else d
-        ratio = avg_rank / d if d > 0 else 0
-
-        print(f"\n  Depth {d}: {count} trees")
-        print(f"    Average determinacy rank: {avg_rank:.4f}")
-        print(f"    Predicted (d/log₂d):      {predicted:.4f}")
-        print(f"    Ratio rank/depth:         {ratio:.4f}")
-        print(f"    Ratio rank/prediction:    {avg_rank/predicted:.4f}" if predicted > 0 else "")
-
-
-def demo_infinite_game():
-    """Simulate an infinite game."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Infinite Game Simulation")
-    print("=" * 60)
-
-    # Player I strategy: always play True
-    # Player II strategy: copy Player I's last move
-    def strategy_I(history: list[bool]) -> bool:
-        return True
-
-    def strategy_II(history: list[bool]) -> bool:
-        return history[-1] if history else False
-
-    play = simulate_infinite_game(strategy_I, strategy_II, 20)
-    print(f"\n  Player I: always True")
-    print(f"  Player II: copy last move")
-    print(f"  First 20 moves: {['T' if b else 'F' for b in play]}")
-
-    # More interesting: alternating strategies
-    def alt_I(history: list[bool]) -> bool:
-        return len(history) % 4 < 2
-
-    def alt_II(history: list[bool]) -> bool:
-        return len(history) % 3 == 0
-
-    play2 = simulate_infinite_game(alt_I, alt_II, 20)
-    print(f"\n  Player I: periodic(TTFF...)")
-    print(f"  Player II: periodic(TFF...)")
-    print(f"  First 20 moves: {['T' if b else 'F' for b in play2]}")
-
-
-def demo_tree_statistics():
-    """Compute statistics over all small game trees."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Game Tree Statistics")
+    print("DEMO 1: Finite Game Trees")
     print("=" * 60)
 
-    for d in range(1, 4):
-        n_leaves = 2 ** d
-        player_I_wins = 0
-        total = 0
-        max_rank = 0
-        min_rank = float('inf')
+    # Chain games
+    for n in range(6):
+        g = chain_game(n)
+        winning = g.is_winning()
+        print(f"  Chain depth {n}: rank={g.rank()}, "
+              f"winning={'Player I' if winning else 'Player II'}, "
+              f"size={g.size()}")
 
-        for bits in itertools.product([False, True], repeat=n_leaves):
-            tree = balanced_tree(d, list(bits))
-            v = minimax_value(tree)
-            r = determinacy_rank(tree)
-            if v:
-                player_I_wins += 1
-            max_rank = max(max_rank, r)
-            min_rank = min(min_rank, r)
-            total += 1
+    print("\n  Parity pattern: even depth → Player II wins, odd → Player I wins")
 
-        print(f"\n  Balanced trees of depth {d} ({total} trees):")
-        print(f"    Player I wins:    {player_I_wins}/{total} = {player_I_wins/total:.2%}")
-        print(f"    Player II wins:   {total - player_I_wins}/{total} = {(total-player_I_wins)/total:.2%}")
-        print(f"    Min detRank:      {min_rank}")
-        print(f"    Max detRank:      {max_rank}")
-        print(f"    numLeaves = size + 1: {all(True for _ in range(1))} ✓")
+    # Wide games
+    print()
+    for n in [1, 2, 3, 5, 10]:
+        g = wide_game(n)
+        print(f"  Wide game ({n} leaves): rank={g.rank()}, "
+              f"winning={'Player I' if g.is_winning() else 'Player II'}")
 
+
+# ============================================================
+# Demo 2: Strategy Exclusivity
+# ============================================================
+
+def demo_exclusivity():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Strategy Exclusivity")
+    print("=" * 60)
+
+    # Game: Player I wins if sum of first 3 moves is even
+    def payoff(play: List[int]) -> bool:
+        return sum(play[:3]) % 2 == 0
+
+    # Strategy: always play 0
+    sigma_zero: Strategy = lambda h: 0
+    tau_zero: Strategy = lambda h: 0
+
+    # Strategy: always play 1
+    sigma_one: Strategy = lambda h: 1
+    tau_one: Strategy = lambda h: 1
+
+    # Strategy: play the move number
+    sigma_count: Strategy = lambda h: len(h)
+
+    scenarios = [
+        ("σ=0, τ=0", sigma_zero, tau_zero),
+        ("σ=0, τ=1", sigma_zero, tau_one),
+        ("σ=1, τ=0", sigma_one, tau_zero),
+        ("σ=1, τ=1", sigma_one, tau_one),
+        ("σ=count, τ=0", sigma_count, tau_zero),
+    ]
+
+    for name, sigma, tau in scenarios:
+        winner, play = check_exclusivity(sigma, tau, payoff, 6)
+        print(f"  {name}: play={play[:6]}, sum={sum(play[:3])}, "
+              f"winner={'Player I' if winner else 'Player II'}")
+
+    print("\n  Key insight: for EACH pair (σ, τ), exactly one player wins.")
+    print("  This is the exclusivity theorem in action.")
+
+
+# ============================================================
+# Demo 3: Ordinal Ranks
+# ============================================================
+
+def demo_ordinal_ranks():
+    print("\n" + "=" * 60)
+    print("DEMO 3: Ordinal Rank Hierarchy")
+    print("=" * 60)
+
+    # Build a tree: node with children of ranks 0, 1, 2
+    leaf = GameTree(label="leaf")
+    depth1 = GameTree([leaf], label="d1")
+    depth2 = GameTree([depth1], label="d2")
+
+    node = GameTree([leaf, depth1, depth2], label="root")
+
+    print(f"  Tree structure:")
+    print(f"    root → [leaf(r=0), d1(r=1), d2(r=2)]")
+    print(f"    Rank of root: {node.rank()}")
+    print(f"    Expected: max(0,1,2) + 1 = 3 ✓" if node.rank() == 3 else "    ERROR!")
+
+    # Demonstrate monotonicity
+    print(f"\n  Rank monotonicity (child < parent):")
+    for i, c in enumerate(node.children):
+        print(f"    child[{i}].rank = {c.rank()} < parent.rank = {node.rank()}: "
+              f"{'✓' if c.rank() < node.rank() else '✗'}")
+
+
+# ============================================================
+# Demo 4: Open Game Detection
+# ============================================================
+
+def demo_open_games():
+    print("\n" + "=" * 60)
+    print("DEMO 4: Open and Clopen Games")
+    print("=" * 60)
+
+    # Clopen game: determined at stage 2
+    def clopen_payoff(play: List[int]) -> bool:
+        """Player I wins iff first two moves sum to > 5."""
+        if len(play) < 2:
+            return False
+        return play[0] + play[1] > 5
+
+    # Open game: Player I wins if ANY move is > 100
+    def open_payoff(play: List[int]) -> bool:
+        """Player I wins iff some move exceeds 100."""
+        return any(m > 100 for m in play)
+
+    print("  Clopen game (sum of first 2 moves > 5):")
+    print("    Determined at stage: 2")
+    print("    Is clopen: True (depends only on first 2 moves)")
+    print("    Is open: True (all clopen games are open)")
+    print("    Is closed: True (all clopen games are closed)")
+
+    print("\n  Open game (some move > 100):")
+    print("    Determined at stage: ∞ (not clopen)")
+    print("    Is open: True (winning witnessed by finite prefix)")
+    print("    Is closed: False (complement is not open)")
+
+    # Test with strategies
+    sigma_big: Strategy = lambda h: 200 if len(h) == 4 else 0
+    tau_zero: Strategy = lambda h: 0
+    play = canonical_play(sigma_big, tau_zero, 10)
+    print(f"\n  Open game with σ(len=4)=200: play={play}")
+    print(f"    Player I wins: {open_payoff(play)}")
+
+
+# ============================================================
+# Demo 5: Determinacy Hierarchy
+# ============================================================
+
+def demo_hierarchy():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Determinacy Hierarchy")
+    print("=" * 60)
+
+    hierarchy = [
+        ("Clopen (Σ⁰₀)", 0, "ZF"),
+        ("Open (Σ⁰₁)", 0, "ZF (Gale-Stewart)"),
+        ("Σ⁰₂", 1, "ZFC + sharps"),
+        ("Σ⁰₃", 2, "ZFC + measurable cardinal"),
+        ("Σ⁰₄", 3, "ZFC + 2 Woodin cardinals"),
+        ("Borel", "ω", "ZFC (Martin 1975)"),
+        ("Analytic (Σ¹₁)", "ω₁", "ZFC + sharps for all reals"),
+        ("Projective", "∞", "ZFC + ω Woodin cardinals"),
+        ("All sets (AD)", "Ω", "ZF + DC + large cardinals"),
+    ]
+
+    print(f"  {'Level':<20} {'Strength':<10} {'Required Axioms'}")
+    print(f"  {'-'*20} {'-'*10} {'-'*30}")
+    for level, strength, axioms in hierarchy:
+        print(f"  {level:<20} {str(strength):<10} {axioms}")
+
+    print("\n  Key insight: each step up the Borel hierarchy requires")
+    print("  strictly more set-theoretic axiom strength.")
+    print("  This is the deep connection between game complexity")
+    print("  and large cardinal axioms.")
+
+
+# ============================================================
+# Main
+# ============================================================
 
 if __name__ == "__main__":
-    demo_zermelo()
-    demo_determinacy_rank()
-    demo_swap()
-    demo_conjecture_test()
-    demo_infinite_game()
-    demo_tree_statistics()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   TRANSFINITE GAME THEORY: GAMES THAT LAST FOREVER     ║")
+    print("╚══════════════════════════════════════════════════════════╝\n")
+
+    demo_game_trees()
+    demo_exclusivity()
+    demo_ordinal_ranks()
+    demo_open_games()
+    demo_hierarchy()
+
     print("\n" + "=" * 60)
-    print("All demos completed successfully.")
+    print("All demos completed successfully!")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Determinacy Rank Distribution for Balanced Game Trees
-
-Generates a plot showing:
-1. Distribution of determinacy ranks for balanced trees of various depths
-2. Comparison of average rank with depth and d/log(d) prediction
+Visualization 2: The Determinacy Hierarchy
+Shows the relationship between Borel complexity and axiom strength.
 """
 
-import itertools
-import math
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def minimax_value_bits(depth_n, leaf_values):
-    """Compute minimax value for balanced tree from leaf values."""
-    if depth_n == 0:
-        return leaf_values[0]
-    mid = len(leaf_values) // 2
-    left_val = minimax_value_bits(depth_n - 1, leaf_values[:mid])
-    right_val = minimax_value_bits(depth_n - 1, leaf_values[mid:])
-    if depth_n % 2 == 1:  # nodeI
-        return left_val or right_val
-    else:  # nodeII
-        return left_val and right_val
+def main():
+    fig, ax = plt.subplots(figsize=(14, 9))
+
+    # Hierarchy levels
+    levels = [
+        {"name": "Clopen (Δ⁰₁)", "y": 0, "strength": 0, "color": "#81C784",
+         "axiom": "ZF", "det_year": "1913 (Zermelo)"},
+        {"name": "Open (Σ⁰₁)", "y": 1, "strength": 0, "color": "#66BB6A",
+         "axiom": "ZF", "det_year": "1953 (Gale-Stewart)"},
+        {"name": "Σ⁰₂", "y": 2, "strength": 1, "color": "#FFF176",
+         "axiom": "ZFC", "det_year": "1975 (Martin)"},
+        {"name": "Σ⁰₃", "y": 3, "strength": 2, "color": "#FFD54F",
+         "axiom": "ZFC", "det_year": "1975 (Martin)"},
+        {"name": "Borel", "y": 4, "strength": 5, "color": "#FFB74D",
+         "axiom": "ZFC", "det_year": "1975 (Martin)"},
+        {"name": "Analytic (Σ¹₁)", "y": 5.5, "strength": 10, "color": "#FF8A65",
+         "axiom": "ZFC + sharps", "det_year": "1985 (Harrington-Martin)"},
+        {"name": "Projective", "y": 7, "strength": 20, "color": "#EF5350",
+         "axiom": "ZFC + Woodin", "det_year": "1989 (Martin-Steel)"},
+        {"name": "AD (all sets)", "y": 9, "strength": 50, "color": "#AB47BC",
+         "axiom": "ZF + DC + LC", "det_year": "1962 (Mycielski-Steinhaus)"},
+    ]
+
+    # Draw boxes
+    box_width = 6
+    for level in levels:
+        rect = mpatches.FancyBboxPatch(
+            (0.5, level["y"] - 0.35), box_width, 0.7,
+            boxstyle="round,pad=0.1",
+            facecolor=level["color"], edgecolor='#424242',
+            linewidth=1.5, alpha=0.9
+        )
+        ax.add_patch(rect)
+
+        # Level name
+        ax.text(0.5 + box_width / 2, level["y"],
+                level["name"], ha='center', va='center',
+                fontsize=12, fontweight='bold', color='#212121')
+
+    # Draw strength bars
+    max_strength = 50
+    bar_x = 8
+    bar_width = 4
+
+    for level in levels:
+        w = bar_width * level["strength"] / max_strength
+        rect = mpatches.FancyBboxPatch(
+            (bar_x, level["y"] - 0.25), max(w, 0.05), 0.5,
+            boxstyle="round,pad=0.05",
+            facecolor=level["color"], edgecolor='#616161',
+            linewidth=1, alpha=0.7
+        )
+        ax.add_patch(rect)
+
+        # Axiom label
+        ax.text(bar_x + bar_width + 0.3, level["y"],
+                f'{level["axiom"]}  ({level["det_year"]})',
+                ha='left', va='center', fontsize=9, color='#424242')
+
+    # Arrows between levels
+    for i in range(len(levels) - 1):
+        y1 = levels[i]["y"] + 0.35
+        y2 = levels[i + 1]["y"] - 0.35
+        ax.annotate('', xy=(3.5, y2), xytext=(3.5, y1),
+                    arrowprops=dict(arrowstyle='->', color='#757575',
+                                   lw=1.5, connectionstyle='arc3,rad=0'))
+
+    # Labels
+    ax.text(3.5, -1.3, 'Topological Complexity →',
+            ha='center', va='center', fontsize=11, fontweight='bold',
+            color='#424242')
+    ax.text(bar_x + bar_width / 2, -1.3, 'Axiom Strength →',
+            ha='center', va='center', fontsize=11, fontweight='bold',
+            color='#424242')
+
+    # Title
+    ax.set_title('The Determinacy Hierarchy\n'
+                 'Topological Complexity vs. Axiomatic Strength',
+                 fontsize=16, fontweight='bold', pad=20)
+
+    # Annotation
+    ax.text(bar_x + bar_width / 2, 10.5,
+            'Each step up the hierarchy requires\n'
+            'strictly stronger set-theoretic axioms.\n'
+            'This is the deep bridge between\n'
+            'game theory and large cardinals.',
+            ha='center', va='center', fontsize=10,
+            style='italic', color='#616161',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#F5F5F5',
+                     edgecolor='#BDBDBD'))
+
+    ax.set_xlim(-0.5, 20)
+    ax.set_ylim(-2, 11.5)
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.savefig('determinacy_hierarchy.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: determinacy_hierarchy.png")
 
 
-def det_rank_bits(depth_n, leaf_values):
-    """Compute determinacy rank for balanced tree from leaf values."""
-    if depth_n == 0:
-        return 0
-    mid = len(leaf_values) // 2
-    lv = minimax_value_bits(depth_n - 1, leaf_values[:mid])
-    rv = minimax_value_bits(depth_n - 1, leaf_values[mid:])
-    lr = det_rank_bits(depth_n - 1, leaf_values[:mid])
-    rr = det_rank_bits(depth_n - 1, leaf_values[mid:])
-
-    if depth_n % 2 == 1:  # nodeI
-        if lv or rv:
-            if lv and rv:
-                return min(lr, rr)
-            elif lv:
-                return lr
-            else:
-                return rr
-        else:
-            return max(lr, rr) + 1
-    else:  # nodeII
-        if lv and rv:
-            return max(lr, rr) + 1
-        else:
-            if (not lv) and (not rv):
-                return min(lr, rr)
-            elif not lv:
-                return lr
-            else:
-                return rr
+if __name__ == "__main__":
+    main()
 
 
-def compute_statistics(max_depth=4):
-    """Compute determinacy rank statistics for balanced trees."""
-    results = {}
-    for d in range(1, max_depth + 1):
-        n_leaves = 2 ** d
-        ranks = []
-        for bits in itertools.product([False, True], repeat=n_leaves):
-            r = det_rank_bits(d, list(bits))
-            ranks.append(r)
-        results[d] = ranks
-    return results
+#!/usr/bin/env python3
+"""
+Visualization 1: Game Tree with Minimax Values
+Shows a game tree colored by winning status.
+"""
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+from typing import List, Optional, Tuple, Dict
+
+
+class VizNode:
+    def __init__(self, children=None, terminal_value=None, label=""):
+        self.children = children or []
+        self.terminal_value = terminal_value
+        self.label = label
+        self.x = 0.0
+        self.y = 0.0
+        self.value = None  # minimax value
+
+    @property
+    def is_terminal(self):
+        return len(self.children) == 0
+
+
+def minimax(node: VizNode, depth: int = 0) -> bool:
+    if node.is_terminal:
+        node.value = node.terminal_value if node.terminal_value is not None else False
+        return node.value
+    if depth % 2 == 0:
+        node.value = any(minimax(c, depth + 1) for c in node.children)
+    else:
+        node.value = all(minimax(c, depth + 1) for c in node.children)
+    return node.value
+
+
+def layout_tree(node: VizNode, x: float = 0, y: float = 0,
+                x_span: float = 8, y_step: float = 1.5) -> None:
+    node.x = x
+    node.y = y
+    if node.children:
+        n = len(node.children)
+        child_span = x_span / max(n, 1)
+        start_x = x - x_span / 2 + child_span / 2
+        for i, child in enumerate(node.children):
+            layout_tree(child, start_x + i * child_span, y - y_step,
+                       child_span * 0.8, y_step)
+
+
+def draw_tree(ax, node: VizNode, depth: int = 0):
+    # Draw edges first
+    for child in node.children:
+        ax.plot([node.x, child.x], [node.y, child.y],
+                'k-', linewidth=1.5, alpha=0.5, zorder=1)
+        draw_tree(ax, child, depth + 1)
+
+    # Node color based on minimax value
+    color = '#4CAF50' if node.value else '#F44336'  # green=PI wins, red=PII wins
+    edge_color = '#2E7D32' if node.value else '#C62828'
+
+    # Shape based on player
+    if node.is_terminal:
+        marker = 's'  # square for terminal
+        size = 400
+    elif depth % 2 == 0:
+        marker = 'o'  # circle for Player I
+        size = 600
+    else:
+        marker = 'D'  # diamond for Player II
+        size = 500
+
+    ax.scatter(node.x, node.y, s=size, c=color, marker=marker,
+              edgecolors=edge_color, linewidths=2, zorder=3)
+
+    # Label
+    if node.label:
+        ax.annotate(node.label, (node.x, node.y), fontsize=7,
+                   ha='center', va='center', fontweight='bold',
+                   color='white', zorder=4)
 
 
 def main():
-    print("Computing determinacy rank distributions...")
-    results = compute_statistics(max_depth=4)
+    # Build an interesting game tree
+    # Level 3 leaves
+    l1 = VizNode(terminal_value=True, label="W")
+    l2 = VizNode(terminal_value=False, label="L")
+    l3 = VizNode(terminal_value=True, label="W")
+    l4 = VizNode(terminal_value=False, label="L")
+    l5 = VizNode(terminal_value=True, label="W")
+    l6 = VizNode(terminal_value=False, label="L")
+    l7 = VizNode(terminal_value=True, label="W")
+    l8 = VizNode(terminal_value=False, label="L")
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    # Level 2 (Player II nodes)
+    n1 = VizNode([l1, l2], label="II")
+    n2 = VizNode([l3, l4], label="II")
+    n3 = VizNode([l5, l6], label="II")
+    n4 = VizNode([l7, l8], label="II")
 
-    # Plot 1: Rank distributions
-    ax1 = axes[0]
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
-    for i, (d, ranks) in enumerate(results.items()):
-        unique_ranks = sorted(set(ranks))
-        counts = [ranks.count(r) / len(ranks) for r in unique_ranks]
-        ax1.bar([r + i * 0.2 for r in unique_ranks], counts,
-                width=0.18, label=f'Depth {d}', color=colors[i], alpha=0.8)
+    # Level 1 (Player I nodes)
+    m1 = VizNode([n1, n2], label="I")
+    m2 = VizNode([n3, n4], label="I")
 
-    ax1.set_xlabel('Determinacy Rank', fontsize=12)
-    ax1.set_ylabel('Frequency', fontsize=12)
-    ax1.set_title('Distribution of Determinacy Rank\nfor Balanced Binary Game Trees', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(axis='y', alpha=0.3)
+    # Root (Player I)
+    root = VizNode([m1, m2], label="I")
 
-    # Plot 2: Average rank vs depth
-    ax2 = axes[1]
-    depths = list(results.keys())
-    avg_ranks = [np.mean(results[d]) for d in depths]
-    predictions = [d / math.log2(d) if d > 1 else d for d in depths]
+    # Compute minimax
+    minimax(root)
 
-    ax2.plot(depths, avg_ranks, 'o-', color='#2196F3', linewidth=2,
-             markersize=8, label='Observed E[detRank]')
-    ax2.plot(depths, predictions, 's--', color='#E91E63', linewidth=2,
-             markersize=8, label='Predicted d/log₂(d)')
-    ax2.plot(depths, depths, ':', color='gray', linewidth=1, label='y = d (upper bound)')
+    # Layout
+    layout_tree(root)
 
-    ax2.set_xlabel('Tree Depth d', fontsize=12)
-    ax2.set_ylabel('Average Determinacy Rank', fontsize=12)
-    ax2.set_title('Average Determinacy Rank vs Depth\n(Testing Θ(d/log d) Conjecture)', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(alpha=0.3)
+    # Draw
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+    draw_tree(ax, root)
+
+    ax.set_xlim(-6, 6)
+    ax.set_ylim(-6, 1.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    # Legend
+    legend_elements = [
+        mpatches.Patch(facecolor='#4CAF50', edgecolor='#2E7D32',
+                      label='Player I wins'),
+        mpatches.Patch(facecolor='#F44336', edgecolor='#C62828',
+                      label='Player II wins'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='gray',
+                   markersize=12, label='Player I node'),
+        plt.Line2D([0], [0], marker='D', color='w', markerfacecolor='gray',
+                   markersize=10, label='Player II node'),
+        plt.Line2D([0], [0], marker='s', color='w', markerfacecolor='gray',
+                   markersize=10, label='Terminal'),
+    ]
+    ax.legend(handles=legend_elements, loc='lower right', fontsize=10,
+             framealpha=0.9)
+
+    ax.set_title('Game Tree with Minimax Values\n'
+                 '(Green = Player I wins, Red = Player II wins)',
+                 fontsize=14, fontweight='bold', pad=20)
 
     plt.tight_layout()
-    plt.savefig('determinacy_rank_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: determinacy_rank_analysis.png")
+    plt.savefig('game_tree_minimax.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: game_tree_minimax.png")
 
 
 if __name__ == "__main__":

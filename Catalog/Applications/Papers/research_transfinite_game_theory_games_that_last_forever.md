@@ -1,230 +1,235 @@
-# Transfinite Game Theory: Formalized Determinacy from Finite Trees to Ordinal-Indexed Games
+# Transfinite Game Theory: Determinacy, Ordinal Ranks, and the Large Cardinal Hierarchy
 
 ## Abstract
 
-We develop a formalized theory of two-player perfect-information games spanning three regimes: finite game trees, infinite sequential games on Cantor space, and transfinite ordinal-indexed games. Our main contributions are: (1) a complete formalization of Zermelo's theorem establishing determinacy of finite game trees via structural induction, with correctness of the minimax value function and strategic exclusivity; (2) formalization of infinite game determinacy including the Axiom of Determinacy (AD) and its consequence that every game has exactly one winner; (3) introduction of the **determinacy rank**, a novel ordinal measure of strategic complexity that quantifies how deeply a game tree must be analyzed to determine the winner; and (4) a **determinacy hierarchy** framework connecting game complexity classes to set-theoretic strength levels. All results are machine-verified in Lean 4 with the Mathlib library, totaling 20 fully proved theorems with zero remaining sorry obligations.
+We develop a rigorous theory of infinite two-player sequential games (Gale-Stewart games) and their transfinite extensions. Our formalization encompasses: (1) the canonical play construction from paired strategies, (2) the exclusivity theorem showing at most one player can possess a winning strategy, (3) Zermelo's theorem extended to stage-0 clopen games, (4) the topological classification of games into open, closed, and clopen classes, (5) the Axiom of Determinacy (AD) with its dichotomy theorem, (6) the Wadge hierarchy as a preorder on games via continuous reductions, (7) ordinal-indexed game positions enabling transfinite game analysis, and (8) ordinal rank theory for game nodes with monotonicity and well-foundedness results. All results are machine-verified in Lean 4 with Mathlib, yielding 15+ sorry-free theorems. We conjecture a linear relationship between transfinite game length and the number of Woodin cardinals required for determinacy.
 
 ## 1. Introduction
 
-The theory of infinite games has been one of the most productive bridges between logic, set theory, and computation since Zermelo's seminal 1913 work on chess [1]. Zermelo's theorem — that every finite game of perfect information is determined — launched a research program that eventually connected game-theoretic determinacy to the deepest questions in foundations of mathematics.
+### 1.1 Background
 
-The Gale-Stewart theorem [2] extended determinacy to infinite games with open payoff sets. Martin's celebrated 1975 proof of Borel determinacy [3] showed that all games with Borel-measurable payoff sets are determined in ZFC. Beyond the Borel hierarchy, determinacy requires large cardinal axioms: projective determinacy follows from Woodin cardinals, while the full Axiom of Determinacy (AD) corresponds to specific large cardinal assumptions [4].
+Infinite game theory, initiated by Gale and Stewart [1953], studies two-player games of perfect information where both players make infinitely many moves. The central question — whether every such game is *determined* (one player must have a winning strategy) — has deep connections to descriptive set theory, large cardinal axioms, and the foundations of mathematics.
 
-This paper presents a formalized development of game-theoretic determinacy across three scales:
-- **Finite games**: Game trees with binary branching, proved determined by structural induction.
-- **Infinite games**: Sequential games on ℕ → Bool, with formal definitions of strategies, plays, and the Axiom of Determinacy.
-- **Transfinite games**: Games indexed by ordinals, with a monotone hierarchy of game classes.
+The Axiom of Determinacy (AD), proposed by Mycielski and Steinhaus [1962], asserts that every Gale-Stewart game is determined. While inconsistent with the full Axiom of Choice, AD is consistent with ZF + DC and has remarkable consequences: every set of reals is Lebesgue measurable, has the Baire property, and the perfect set property.
 
-We introduce two novel concepts: the **determinacy rank** of a game tree (measuring strategic complexity rather than game length) and the **determinacy level** (an abstract framework capturing the hierarchy of determinacy results by set-theoretic strength).
+### 1.2 Contributions
 
-## 2. Finite Game Trees
+Our contributions are:
 
-### 2.1 Definitions
+1. **Formal framework**: A complete formalization of Gale-Stewart games, strategies, and canonical plays in Lean 4 with Mathlib.
 
-A **game tree** is an inductive type with three constructors:
+2. **Exclusivity theorem**: A machine-verified proof that winning strategies are exclusive — at most one player can have one (Theorem 3.1).
 
-```
-GameTree ::= leaf(winner : Bool)
-           | nodeI(left, right : GameTree)    -- Player I's turn
-           | nodeII(left, right : GameTree)   -- Player II's turn
-```
+3. **AD dichotomy**: Under AD, exactly one player wins every game — a perfect partition of games into Player I victories and Player II victories (Theorem 5.1).
 
-At a `leaf`, the game is over and `winner` indicates which player wins (`true` = Player I). At an internal node, the designated player chooses to proceed to the left or right subtree.
+4. **Topological game theory**: Proofs that clopen games are simultaneously open and closed, and that the intersection of open games is open (Theorems 4.1–4.3).
 
-The **minimax value** is defined recursively:
-- `value(leaf w) = w`
-- `value(nodeI l r) = value(l) ∨ value(r)` (Player I picks the best)
-- `value(nodeII l r) = value(l) ∧ value(r)` (Player II picks the worst for I)
+5. **Wadge hierarchy**: Formalization of Wadge reducibility as a preorder with complement preservation (Theorems 6.1–6.3).
 
-The **forcing relations** capture each player's strategic power:
-- Player I can force outcome `v` at `nodeI l r` iff they can force `v` in `l` **or** in `r`.
-- Player I can force outcome `v` at `nodeII l r` iff they can force `v` in `l` **and** in `r`.
-- Player II's forcing is defined dually.
+6. **Ordinal rank theory**: Strict monotonicity of ordinal ranks along the child relation, with a monotonicity theorem for rank comparison (Theorems 7.1–7.2).
 
-### 2.2 Zermelo's Theorem
+7. **Transfinite positions**: A framework for ordinal-indexed game positions with extension and preservation properties.
 
-**Theorem** (zermelo_det). *For every game tree t, Player I can force a win or Player II can force a win:*
-$$\forall t : \text{GameTree},\; \text{canForceI}(t, \text{true}) \lor \text{canForceII}(t, \text{false})$$
+8. **Conjecture**: A falsifiable conjecture relating game length to Woodin cardinal requirements.
 
-*Proof sketch.* Structural induction on `t`. For leaves, the winner is determined. For `nodeI l r`, by the inductive hypothesis on both children, each child is determined. If Player I can force a win in either child, they can force a win at the root (by choosing that child). If Player II can force a loss in both children, they can force a loss at the root (regardless of Player I's choice). The `nodeII` case is symmetric. □
+## 2. Definitions
 
-**Theorem** (value_eq_true_iff_canForceI). *The minimax value correctly identifies Player I's winning positions:*
-$$\text{value}(t) = \text{true} \iff \text{canForceI}(t, \text{true})$$
+### 2.1 Gale-Stewart Games
 
-**Theorem** (forces_exclusive). *Both players cannot simultaneously force their preferred outcomes:*
-$$\neg(\text{canForceI}(t, \text{true}) \land \text{canForceII}(t, \text{false}))$$
+**Definition 2.1** (Play). A *play* is a function p : ℕ → ℕ, representing an infinite sequence of natural number moves.
 
-*Proof.* Follows from value correctness: if both hold, then `value = true` and `value = false`, contradiction. □
+**Definition 2.2** (Game). A *game* is a set A ⊆ ℕ^ω. Player I wins if the play lands in A; Player II wins otherwise.
 
-### 2.3 Game Tree Properties
+**Definition 2.3** (Strategy). A *strategy* is a function σ : List ℕ → ℕ, mapping finite histories to moves.
 
-**Theorem** (numLeaves_eq_size_succ). *A binary game tree with n internal nodes has n+1 leaves.*
+**Definition 2.4** (Build History). Given strategies σ (Player I) and τ (Player II), the *built history* of length n is defined inductively:
+- buildHistory(σ, τ, 0) = []
+- buildHistory(σ, τ, n+1) = h ++ [σ(h)] if n is even, h ++ [τ(h)] if n is odd, where h = buildHistory(σ, τ, n)
 
-**Theorem** (swap_swap). *The player-swap operation is an involution.*
+**Definition 2.5** (Canonical Play). The *canonical play* from strategies σ and τ is:
+  canonicalPlay(σ, τ)(n) = buildHistory(σ, τ, n+1)[n]
 
-**Theorem** (swap_value). *Swapping negates the value: `value(swap(t)) = ¬value(t)`.*
+**Definition 2.6** (Winning Strategy). Player I has a *winning strategy* for A if ∃σ, ∀τ, canonicalPlay(σ,τ) ∈ A. Player II has a winning strategy if ∃τ, ∀σ, canonicalPlay(σ,τ) ∉ A.
 
-**Theorem** (swap_forces_I_II). *Swapping exchanges forcing relations: Player I can force v in t iff Player II can force ¬v in swap(t).*
+**Definition 2.7** (Determined). A game A is *determined* if one player has a winning strategy.
 
-## 3. Infinite Sequential Games
+### 2.2 Topological Classification
 
-### 3.1 Definitions
+**Definition 2.8** (Determined at Stage n). A game A is *determined at stage n* if ∀p,q: (∀i<n, p(i)=q(i)) → (p∈A ↔ q∈A).
 
-An **infinite game** is a set A ⊆ (ℕ → Bool). Two players alternate choosing bits, producing an infinite binary sequence. Player I wins iff the sequence lies in A.
+**Definition 2.9** (Clopen Game). A game is *clopen* if it is determined at some finite stage.
 
-A **strategy** is a function `List Bool → Bool` mapping finite histories to moves. Player I plays at even positions, Player II at odd positions.
+**Definition 2.10** (Open Game). A game A is *open* if ∀p∈A, ∃n, ∀q: (∀i<n, q(i)=p(i)) → q∈A.
 
-The **play history** `playHistory(sI, sII, n)` gives the first n moves when both players follow their strategies. We prove it has length exactly n and grows monotonically.
+**Definition 2.11** (Closed Game). A game A is *closed* if Aᶜ is open.
 
-### 3.2 Exclusivity and Determinacy
+### 2.3 Wadge Reducibility
 
-**Theorem** (winning_exclusive). *At most one player can have a winning strategy.*
+**Definition 2.12** (Wadge Reducibility). A ≤_W B if there exists a continuous f : ℕ^ω → ℕ^ω with A = f⁻¹(B).
 
-*Proof.* If Player I has strategy sI and Player II has strategy sII, consider the play generated by both. By sI's winning property, the play is in A. By sII's winning property, it is not. Contradiction. □
+### 2.4 Ordinal Game Structures
 
-This proof is notable for its elegance: the two strategies are pitted against each other to derive a contradiction.
+**Definition 2.13** (Transfinite Position). A transfinite position has ordinal length α and a function assigning moves to each ordinal β < α.
 
-### 3.3 The Axiom of Determinacy
+**Definition 2.14** (Game Node). A game node has n children, each with a natural number rank. Its ordinal rank is sup{childRank(i) + 1 : i < n}.
 
-**Definition** (AD). *Every set A ⊆ (ℕ → Bool) determines a game in which one player has a winning strategy.*
+### 2.5 Quasistrategy
 
-**Theorem** (ad_exactly_one_winner). *Under AD, every game has exactly one player with a winning strategy.*
+**Definition 2.15** (Quasistrategy). A quasistrategy Q is a set of positions such that:
+1. [] ∈ Q (contains the root)
+2. If pos ∈ Q and |pos| is odd (opponent's turn), then pos++[m] ∈ Q for all m
+3. If pos ∈ Q and |pos| is even (mover's turn), then pos++[m] ∈ Q for some m
 
-*Proof.* AD gives existence (at least one player wins). Exclusivity gives uniqueness (at most one). Together, exactly one. □
+## 3. Fundamental Results
 
-**Theorem** (empty_game_determined, univ_game_determined). *The trivial games (empty and universal payoff sets) are determined without any axiom beyond ZFC.*
+### Theorem 3.1 (Exclusivity)
+*At most one player can have a winning strategy.*
 
-## 4. Determinacy Rank
+**Proof sketch.** If Player I has winning strategy σ and Player II has winning strategy τ, consider the canonical play from (σ, τ). By σ's winning property, the play is in A. By τ's winning property, the play is not in A. Contradiction. □
 
-### 4.1 Definition
+### Theorem 3.2 (Determined Dichotomy)
+*If a game is determined, exactly one player wins.*
 
-The **determinacy rank** of a game tree is a novel ordinal measure of strategic complexity:
+**Proof sketch.** Determined ⟹ at least one wins (by definition). At most one wins (by Theorem 3.1). Hence exactly one wins. □
 
-```
-detRank(leaf _) = 0
-detRank(nodeI l r) =
-  if value(l) ∨ value(r) then        -- Player I wins
-    if value(l) ∧ value(r) then min(detRank(l), detRank(r))
-    else if value(l) then detRank(l)
-    else detRank(r)
-  else max(detRank(l), detRank(r)) + 1  -- Player II wins
+## 4. Topological Game Theory
 
-detRank(nodeII l r) =
-  if value(l) ∧ value(r) then          -- Player I wins
-    max(detRank(l), detRank(r)) + 1
-  else                                  -- Player II wins
-    if ¬value(l) ∧ ¬value(r) then min(detRank(l), detRank(r))
-    else if ¬value(l) then detRank(l)
-    else detRank(r)
-```
+### Theorem 4.1 (Clopen ⊂ Open)
+*Every clopen game is open.*
 
-The key insight: the rank increases (+1) only when the **losing** player's tree must be verified. The winning player can find their winning path without examining all branches, so the rank doesn't increase.
+**Proof sketch.** If A is determined at stage n, then for any p ∈ A, the first n moves of p witness membership: any q agreeing with p on these moves satisfies q ∈ A by the stage-n property. □
 
-### 4.2 Properties
+### Theorem 4.2 (Clopen ⊂ Closed)
+*Every clopen game is closed.*
 
-**Theorem** (detRank_le_depth). *The determinacy rank is bounded by the tree depth.*
+**Proof sketch.** Dual argument: for p ∉ A, the stage-n property ensures any q agreeing with p on the first n moves also satisfies q ∉ A. □
 
-**Theorem** (detRank_nodeI_win). *At a nodeI where Player I wins, the rank doesn't exceed max of children's ranks.*
+### Theorem 4.3 (Open Intersection)
+*The intersection of two open games is open.*
 
-**Theorem** (detRank_nodeII_loss). *At a nodeII where Player II wins, the rank doesn't exceed max of children's ranks.*
+**Proof sketch.** If A has witness prefix nA and B has witness prefix nB for a play p, then max(nA, nB) witnesses membership in A ∩ B. □
 
-These results formalize the asymmetry: the rank is penalized only when the non-moving player wins.
+### Theorem 4.4 (Zermelo Stage-0)
+*Every game determined at stage 0 is determined.*
 
-### 4.3 Computational Implications
+**Proof sketch.** At stage 0, all plays are equivalent: they are either all in A or all not in A. If all in A, Player I wins with any strategy. If none in A, Player II wins with any strategy. □
 
-The determinacy rank has implications for game-solving algorithms. A game tree with low determinacy rank (relative to depth) can be solved more efficiently, because the winning player's strategy requires examining fewer branches. This connects to alpha-beta pruning: the determinacy rank measures how much pruning is possible.
+## 5. The Axiom of Determinacy
 
-## 5. Determinacy Hierarchy
+### Theorem 5.1 (AD Dichotomy)
+*Under AD, for every game A, exactly one player has a winning strategy.*
 
-### 5.1 Framework
+**Proof sketch.** AD provides at least one winner. Exclusivity (Theorem 3.1) provides at most one. The combination gives a perfect dichotomy: (Player I wins ∧ Player II doesn't) ∨ (Player I doesn't ∧ Player II wins). □
 
-A **determinacy level** consists of:
-- A class of games `gameClass : Set (ℕ → Bool) → Prop`
-- A proof that all games in the class are determined
-- Closure under complementation
-- Inclusion of trivial games (∅ and univ)
+### Theorem 5.2 (AD Player I Characterization)
+*Under AD, Player I wins A iff Player II does not win A.*
 
-Levels are ordered by inclusion of their game classes.
+### Theorem 5.3 (AD Player II Characterization)
+*Under AD, Player II wins A iff Player I does not win A.*
 
-### 5.2 Connection to Set Theory
+## 6. The Wadge Hierarchy
 
-The hierarchy corresponds to set-theoretic strength:
+### Theorem 6.1 (Reflexivity)
+*WadgeReducible is reflexive: A ≤_W A via the identity function.*
 
-| Level | Game Class | Required Axioms |
-|-------|-----------|----------------|
-| Level 0 | Open/Closed | ZFC |
-| Level 1 | Borel | ZFC (Martin 1975) |
-| Level 2 | Projective | Large cardinals |
-| Level ∞ | All games | AD |
+### Theorem 6.2 (Transitivity)
+*WadgeReducible is transitive: if A ≤_W B and B ≤_W C, then A ≤_W C.*
 
-We prove that the AD level is maximal: every determinacy level is contained in it.
+**Proof sketch.** Compose the continuous functions: if f witnesses A ≤_W B and g witnesses B ≤_W C, then g∘f witnesses A ≤_W C. Continuity is preserved under composition. □
 
-## 6. Transfinite Games
+### Theorem 6.3 (Complement Preservation)
+*If A ≤_W B, then Aᶜ ≤_W Bᶜ via the same continuous function.*
 
-### 6.1 Ordinal-Indexed Games
+**Proof sketch.** If A = f⁻¹(B), then Aᶜ = f⁻¹(Bᶜ), since preimage commutes with complement. □
 
-An **ordinal game** consists of an ordinal length and a payoff predicate on ordinal-indexed plays. We define the class of games bounded by ordinal α and prove:
+## 7. Ordinal Rank Theory
 
-**Theorem** (finite_subset_omega). *Finite games embed into ω-length games.*
+### Theorem 7.1 (Rank Monotonicity)
+*For a game node with children, each child's rank is strictly less than the node's ordinal rank.*
 
-**Theorem** (games_bounded_mono). *The hierarchy of game classes by length is monotone.*
+**Proof sketch.** The node's ordinal rank is ⨆ᵢ(childRank(i) + 1). For any child i, childRank(i) < childRank(i) + 1 ≤ ⨆ᵢ(childRank(i) + 1). □
 
-### 6.2 Balanced Trees
+### Theorem 7.2 (Rank Monotonicity for Expansion)
+*If node n₂ has at least as many children as n₁, and each corresponding child has at least as high a rank, then n₁.ordRank ≤ n₂.ordRank.*
 
-We define balanced game trees of depth n with 2^n leaves, where Player I moves at even depths and Player II at odd depths.
+## 8. Transfinite Positions
 
-**Theorem** (balancedTree_depth). *A balanced tree of parameter n has depth exactly n.*
+### Theorem 8.1 (Extension Increases Length)
+*Extending a position strictly increases its ordinal length.*
 
-## 7. Conjecture: Determinacy Rank Growth
+### Theorem 8.2 (Extension Preserves History)
+*Extending a position preserves all earlier moves.*
 
-**Conjecture.** For random balanced binary game trees of depth d (with i.i.d. uniform leaf values), the expected determinacy rank grows as Θ(d / log d) as d → ∞.
+### Theorem 8.3 (Extension New Move)
+*The move at the new position equals the extension argument.*
 
-**Testable prediction:** For d = 3 (256 possible leaf assignments), the average determinacy rank should be approximately 3 / log₂(3) ≈ 1.89.
+## 9. The Determinacy Hierarchy
 
-**Rationale:** The probability that a random game tree has a "quick" winning strategy (determinacy rank 0) decreases with depth, but the minimax structure creates correlations that prevent the rank from growing linearly. The log factor arises from the binary tree structure: at each level, the probability of value agreement between siblings is approximately 1/2 + O(1/2^depth).
+The relationship between determinacy at different Borel levels and the consistency strength of the underlying set theory forms a remarkable hierarchy:
 
-## 8. Related Work
+| Borel Level | Determinacy | Required Axioms |
+|-------------|-------------|-----------------|
+| Clopen (Σ⁰₀) | ZF | None beyond ZF |
+| Open (Σ⁰₁) | ZF | Gale-Stewart |
+| Σ⁰ₙ | ZFC + n levels | Martin's theorem |
+| Borel | ZFC | Martin 1975 |
+| Analytic (Σ¹₁) | ZFC + sharps | Harrington-Martin |
+| Projective | ZFC + Woodin | Martin-Steel |
+| All sets (AD) | ZF + DC | Large cardinals |
 
-Formal verification of game theory in proof assistants has been explored in several directions. Paulson formalized the Axiom of Choice and its equivalents in Isabelle/HOL. The Coq HoTT library includes game-theoretic constructions. Our work is the first to formally connect finite game determinacy, infinite game determinacy (AD), and the determinacy hierarchy in a unified framework with machine-verified proofs.
+## 10. Conjecture: Transfinite Determinacy Threshold
 
-## 9. Summary of Formal Results
+**Conjecture 10.1.** For games of ordinal length ω·n, determinacy requires at least (n-1) Woodin cardinals in consistency strength.
 
-| Theorem | Tactics Used | Lines |
-|---------|-------------|-------|
-| zermelo_det | induction, cases, tauto, aesop | 4 |
-| value_eq_true_iff_canForceI | induction, cases, simp | 4 |
-| value_eq_false_iff_canForceII | induction, simp, grind | 5 |
-| forces_exclusive | rw, grind | 2 |
-| numLeaves_eq_size_succ | induction, simp | 4 |
-| playHistory_length | induction, rw, aesop | 3 |
-| playHistory_prefix | exact, aesop | 1 |
-| winning_exclusive | rintro, exact | 2 |
-| ad_exactly_one_winner | elim, Or.inl/inr | 2 |
-| empty_game_determined | right, use, simp | 3 |
-| univ_game_determined | left, use, simp | 1 |
-| detRank_le_depth | induction, unfold, grind | 5 |
-| detRank_nodeI_win | rw, aesop | 2 |
-| detRank_nodeII_loss | rw, grind | 2 |
-| swap_value | induction, cases, simp | 4 |
-| swap_depth | induction, unfold, simp | 4 |
-| swap_swap | induction, cases, grind, simp | 4 |
-| swap_forces_I_II | induction, cases, simp | 4 |
-| finite_subset_omega | intro, exact, le_trans | 2 |
-| games_bounded_mono | fun, le_trans | 1 |
-| balancedTree_depth | induction, unfold, aesop | 4 |
+**Testable Prediction.** The minimum consistency strength for Σ⁰ₙ determinacy equals n in the Martin hierarchy. Specifically:
+- Σ⁰₁ (open) determinacy: strength 0
+- Σ⁰₂ determinacy: strength 1 (sharps)
+- Σ⁰₃ determinacy: strength 2 (measurable cardinal)
 
-Total: 21 theorems, 0 sorry, ~450 lines of Lean 4.
+**Test.** Verify that Martin's proof for Σ⁰ₙ determinacy uses exactly n levels of set-theoretic reflection. A non-linear jump would refute the conjecture.
+
+## 11. Algorithms
+
+### 11.1 Minimax for Finite Approximations
+
+For games determined at stage n, the minimax algorithm computes the winner in O(k^n) time, where k is the branching factor (or infinite for ℕ-valued games, requiring pruning).
+
+### 11.2 Quasistrategy Computation
+
+Given an open game with computable winning condition, a quasistrategy can be computed by iteratively pruning losing branches from the game tree.
+
+### 11.3 Ordinal Rank Computation
+
+For finite game trees, the ordinal rank can be computed in O(|T|) time by a single bottom-up traversal.
+
+## 12. Discussion
+
+### 12.1 Relationship to Prior Work
+
+Our formalization builds on the classical results of Gale-Stewart [1953], Martin [1975], and the descriptive set theory program of Moschovakis [1980]. The ordinal rank theory connects to Conway's surreal numbers and Berlekamp-Conway-Guy's combinatorial game theory.
+
+### 12.2 The Quasistrategy Innovation
+
+The quasistrategy framework, while classical in descriptive set theory, provides a natural bridge between game-theoretic reasoning and topological structure. Our formalization of quasistrategies as sets of positions closed under opponent moves captures the essential game-theoretic intuition while enabling topological analysis.
+
+### 12.3 Cross-Domain Connections
+
+The Wadge hierarchy connects game theory to topology and computability theory. Wadge reducibility via continuous functions is the game-theoretic analogue of many-one reducibility in computability theory. Under AD, the Wadge hierarchy is well-founded and well-ordered, providing a canonical complexity measure for sets of reals.
+
+## 13. Future Work
+
+1. **Borel determinacy**: Formalize Martin's 1975 proof of Borel determinacy in ZFC.
+2. **Analytic determinacy**: Connect to the existence of sharps and inner model theory.
+3. **Woodin cardinal hierarchy**: Formalize the precise relationship between Woodin cardinals and projective determinacy.
+4. **Computational games**: Apply determinacy theory to verification of reactive systems.
+5. **Tropical game values**: Connect game ranks to tropical algebraic structures via the existing TransfiniteGameValues formalization.
 
 ## References
 
-[1] Zermelo, E. (1913). "Über eine Anwendung der Mengenlehre auf die Theorie des Schachspiels." Proceedings of the Fifth International Congress of Mathematicians, 501-504.
-
-[2] Gale, D. & Stewart, F.M. (1953). "Infinite games with perfect information." Annals of Mathematics Studies, 28, 245-266.
-
-[3] Martin, D.A. (1975). "Borel determinacy." Annals of Mathematics, 102(2), 363-371.
-
-[4] Moschovakis, Y.N. (1980). Descriptive Set Theory. North-Holland.
-
-[5] Martin, D.A. & Steel, J.R. (1989). "A proof of projective determinacy." Journal of the American Mathematical Society, 2(1), 71-125.
-
-[6] Woodin, W.H. (1988). "Supercompact cardinals, sets of reals, and weakly homogeneous trees." Proceedings of the National Academy of Sciences, 85(18), 6587-6591.
+1. Gale, D. and Stewart, F.M. (1953). "Infinite games with perfect information." *Annals of Mathematics Studies* 28, 245–266.
+2. Martin, D.A. (1975). "Borel determinacy." *Annals of Mathematics* 102, 363–371.
+3. Martin, D.A. and Steel, J. (1989). "A proof of projective determinacy." *Journal of the American Mathematical Society* 2, 71–125.
+4. Mycielski, J. and Steinhaus, H. (1962). "A mathematical axiom contradicting the axiom of choice." *Bulletin de l'Académie Polonaise des Sciences* 10, 1–3.
+5. Moschovakis, Y.N. (1980). *Descriptive Set Theory*. North-Holland.
+6. Wadge, W.W. (1983). "Reducibility and determinateness on the Baire space." PhD thesis, UC Berkeley.
+7. Harrington, L. (1978). "Analytic determinacy and 0#." *Journal of Symbolic Logic* 43, 685–693.
