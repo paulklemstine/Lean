@@ -1,204 +1,183 @@
+#!/usr/bin/env python3
 """
-Algorithms for Functorial Entropy
+Functorial Entropy: Core Algorithms
 
-Implements efficient computation of functorial entropy and related quantities.
+Type-hinted implementations of the key algorithms for computing
+and analyzing functorial entropy.
 """
 
 import math
 from collections import Counter
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import TypeVar, Callable, Sequence
+
+T = TypeVar('T')
+U = TypeVar('U')
 
 
-def functorial_entropy(
-    f: Callable[[int], int],
-    domain: List[int],
-    codomain: Optional[List[int]] = None
-) -> float:
+def fiber_card(f: dict[T, U], b: U) -> int:
     """
-    Compute the functorial entropy H(f) = sum_b (|f^{-1}(b)|/|A|) * log(|f^{-1}(b)|).
+    Compute the fiber cardinality |f⁻¹(b)|.
     
-    Time complexity: O(|domain| + |codomain|)
-    Space complexity: O(|codomain|)
-    
-    Args:
-        f: Function from domain elements to codomain elements.
-        domain: List of domain elements.
-        codomain: Optional list of codomain elements. If None, uses the image of f.
-    
-    Returns:
-        The functorial entropy H(f) ≥ 0.
-    
-    Examples:
-        >>> functorial_entropy(lambda x: x, [0,1,2])  # identity
-        0.0
-        >>> functorial_entropy(lambda x: 0, [0,1,2])  # constant
-        1.0986122886681098
-        >>> abs(functorial_entropy(lambda x: x % 2, [0,1,2,3]) - math.log(2)) < 1e-10
-        True
+    Time: O(|domain|)
+    Space: O(1)
     """
-    n = len(domain)
+    return sum(1 for v in f.values() if v == b)
+
+
+def fiber_sizes(f: dict[T, U]) -> dict[U, int]:
+    """
+    Compute all fiber sizes at once.
+    
+    Time: O(|domain|)
+    Space: O(|codomain|)
+    """
+    return dict(Counter(f.values()))
+
+
+def functorial_entropy(f: dict[T, U]) -> float:
+    """
+    Compute the functorial entropy H(f) = Σ_b (n_b/N) · log(n_b).
+    
+    Time: O(|domain|)
+    Space: O(|codomain|)
+    
+    Properties:
+    - H(f) ≥ 0
+    - H(f) = 0 iff f is injective
+    - H(f) ≤ log(|domain|)
+    """
+    n: int = len(f)
     if n == 0:
         return 0.0
     
-    # Count fiber sizes
-    fiber_counts = Counter(f(a) for a in domain)
-    
-    # Compute entropy
-    H = 0.0
-    for b, count in fiber_counts.items():
-        if count > 0:
-            H += (count / n) * math.log(count)
-    
-    return H
+    sizes: dict[U, int] = fiber_sizes(f)
+    return sum(
+        (s / n) * math.log(s)
+        for s in sizes.values()
+        if s > 0
+    )
 
 
-def fiber_distribution(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> Dict[int, int]:
+def shannon_entropy(probs: Sequence[float]) -> float:
     """
-    Compute the fiber size distribution {b: |f^{-1}(b)|}.
+    Compute Shannon entropy H(p) = -Σ p_i · log(p_i).
     
-    Time complexity: O(|domain|)
-    Space complexity: O(|image(f)|)
+    Time: O(|probs|)
     """
-    return dict(Counter(f(a) for a in domain))
+    return -sum(p * math.log(p) for p in probs if p > 0)
 
 
-def is_information_preserving(
-    f: Callable[[int], int],
-    domain: List[int],
-    tol: float = 1e-10
-) -> bool:
+def fiber_distribution(f: dict[T, U], codomain: Sequence[U]) -> list[float]:
     """
-    Check if f is information-preserving (H(f) = 0, equivalently f is injective).
+    Compute the fiber distribution q(b) = |f⁻¹(b)| / |domain|.
     
-    Time complexity: O(|domain|)
-    Space complexity: O(|image(f)|)
+    Time: O(|domain| + |codomain|)
     """
-    return functorial_entropy(f, domain) < tol
+    n: int = len(f)
+    if n == 0:
+        return [0.0] * len(codomain)
+    sizes: dict[U, int] = fiber_sizes(f)
+    return [sizes.get(b, 0) / n for b in codomain]
 
 
-def landauer_cost(
-    f: Callable[[int], int],
-    domain: List[int],
-    temperature: float = 300.0,
-    k_boltzmann: float = 1.380649e-23
-) -> float:
+def entropy_via_shannon_bridge(f: dict[T, U], codomain: Sequence[U]) -> float:
     """
-    Compute the Landauer thermodynamic cost of the computation f.
+    Compute H(f) using the Shannon bridge: H(f) = log|α| - H_Shannon(q).
     
-    Cost = kT * H(f)
+    This is mathematically equivalent to functorial_entropy but
+    demonstrates the bridge theorem.
+    """
+    n: int = len(f)
+    if n == 0:
+        return 0.0
+    q: list[float] = fiber_distribution(f, codomain)
+    return math.log(n) - shannon_entropy(q)
+
+
+def landauer_cost(f: dict[T, T], kT: float) -> float:
+    """
+    Compute the Landauer cost of a computation: kT · H(f).
     
     Args:
-        f: The computation (function).
-        domain: The state space.
-        temperature: Temperature in Kelvin (default: room temperature).
-        k_boltzmann: Boltzmann constant in J/K.
+        f: Function from a finite set to itself
+        kT: Temperature parameter (Boltzmann constant × temperature)
     
     Returns:
-        Minimum energy dissipation in Joules.
+        Minimum energy dissipation required by Landauer's principle
     """
-    kT = k_boltzmann * temperature
-    return kT * functorial_entropy(f, domain)
+    return kT * functorial_entropy(f)
+
+
+def is_uniform_fiber(f: dict[T, U]) -> tuple[bool, int]:
+    """
+    Check if f has uniform fibers (all nonempty fibers have the same size).
+    
+    Returns:
+        (is_uniform, fiber_size) — fiber_size is 0 if domain is empty
+    """
+    sizes: dict[U, int] = fiber_sizes(f)
+    nonzero_sizes: set[int] = {s for s in sizes.values() if s > 0}
+    if len(nonzero_sizes) <= 1:
+        return True, (nonzero_sizes.pop() if nonzero_sizes else 0)
+    return False, 0
+
+
+def verify_composition_monotonicity(
+    f: dict[T, U],
+    g: dict[U, object]
+) -> tuple[bool, float, float]:
+    """
+    Verify H(g∘f) ≥ H(f) for given f and g.
+    
+    Returns:
+        (holds, H_f, H_gf)
+    """
+    gf: dict[T, object] = {a: g[f[a]] for a in f}
+    h_f: float = functorial_entropy(f)
+    h_gf: float = functorial_entropy(gf)
+    return h_gf >= h_f - 1e-12, h_f, h_gf
 
 
 def entropy_decomposition(
-    f: Callable[[int], int],
-    domain: List[int]
-) -> Dict[str, float]:
+    f: dict[T, U],
+    g: dict[U, object]
+) -> dict[str, float]:
     """
-    Decompose the entropy into per-fiber contributions.
+    Decompose the entropy of a composition g∘f.
     
-    Returns a dict with:
-    - 'total': total functorial entropy
-    - 'max_possible': log(|domain|)
-    - 'efficiency': H(f) / log(|domain|), the "collapse fraction"
-    - 'per_fiber': dict of {codomain_element: contribution_to_entropy}
+    Returns a dictionary with:
+    - H_f: entropy of f
+    - H_g: entropy of g
+    - H_gf: entropy of g∘f
+    - gain: H(g∘f) - H(f) (always ≥ 0)
     """
-    n = len(domain)
-    if n == 0:
-        return {'total': 0.0, 'max_possible': 0.0, 'efficiency': 0.0, 'per_fiber': {}}
-    
-    fiber_counts = Counter(f(a) for a in domain)
-    per_fiber = {}
-    total = 0.0
-    
-    for b, count in fiber_counts.items():
-        if count > 0:
-            contrib = (count / n) * math.log(count)
-            per_fiber[b] = contrib
-            total += contrib
-    
-    max_H = math.log(n)
-    efficiency = total / max_H if max_H > 0 else 0.0
+    gf: dict[T, object] = {a: g[f[a]] for a in f}
+    h_f: float = functorial_entropy(f)
+    h_g: float = functorial_entropy(g)
+    h_gf: float = functorial_entropy(gf)
     
     return {
-        'total': total,
-        'max_possible': max_H,
-        'efficiency': efficiency,
-        'per_fiber': per_fiber
+        "H_f": h_f,
+        "H_g": h_g,
+        "H_gf": h_gf,
+        "gain": h_gf - h_f,
     }
 
 
-def verify_composition_conjecture(
-    f: Callable[[int], int],
-    g: Callable[[int], int],
-    domain_a: List[int],
-    domain_b: List[int],
-    domain_c: List[int]
-) -> Tuple[bool, float, float]:
-    """
-    Verify the composition superadditivity conjecture:
-    If f: A → B is surjective, then H(g) ≤ H(g ∘ f).
-    
-    Returns:
-        (conjecture_holds, H_g, H_gf)
-    """
-    # Check f is surjective
-    image_f = set(f(a) for a in domain_a)
-    is_surj = all(b in image_f for b in domain_b)
-    
-    gf = lambda x: g(f(x))
-    H_g = functorial_entropy(g, domain_b, domain_c)
-    H_gf = functorial_entropy(gf, domain_a, domain_c)
-    
-    return (H_g <= H_gf + 1e-10, H_g, H_gf)
-
-
-def uniform_fiber_entropy(k: int) -> float:
-    """
-    Compute the functorial entropy for a function with uniform fibers of size k.
-    By the uniform fiber theorem, this is exactly log(k).
-    
-    >>> abs(uniform_fiber_entropy(1)) < 1e-15
-    True
-    >>> abs(uniform_fiber_entropy(2) - math.log(2)) < 1e-15
-    True
-    """
-    if k <= 0:
-        return 0.0
-    return math.log(k)
-
-
 if __name__ == "__main__":
-    print("=== Functorial Entropy Algorithms ===\n")
+    # Example usage
+    f = {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
+    print(f"f = {f}")
+    print(f"H(f) = {functorial_entropy(f):.6f}")
+    print(f"Uniform fibers: {is_uniform_fiber(f)}")
     
-    # Example: entropy decomposition
-    domain = list(range(12))
-    f = lambda x: x % 4  # uniform fibers of size 3
+    g = {0: 0, 1: 0, 2: 1}
+    print(f"\ng = {g}")
+    print(f"H(g) = {functorial_entropy(g):.6f}")
     
-    decomp = entropy_decomposition(f, domain)
-    print(f"f(x) = x mod 4 on {{0,...,11}}")
-    print(f"  Total entropy: {decomp['total']:.6f}")
-    print(f"  log(3) = {math.log(3):.6f}")
-    print(f"  Max possible: {decomp['max_possible']:.6f}")
-    print(f"  Collapse efficiency: {decomp['efficiency']:.4f}")
-    print(f"  Per-fiber contributions: {decomp['per_fiber']}")
-    print()
+    holds, h_f, h_gf = verify_composition_monotonicity(f, g)
+    print(f"\nH(f) = {h_f:.6f}, H(g∘f) = {h_gf:.6f}")
+    print(f"H(g∘f) ≥ H(f): {holds}")
     
-    # Landauer cost
-    f_erase = lambda x: 0  # total erasure
-    cost = landauer_cost(f_erase, domain)
-    print(f"Landauer cost of erasing 12-state system at 300K: {cost:.4e} J")
-    print(f"  Compare to: kT * ln(12) = {1.380649e-23 * 300 * math.log(12):.4e} J")
+    decomp = entropy_decomposition(f, g)
+    print(f"\nDecomposition: {decomp}")
