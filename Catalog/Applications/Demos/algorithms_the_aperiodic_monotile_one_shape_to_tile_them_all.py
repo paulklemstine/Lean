@@ -1,222 +1,218 @@
 """
-Algorithms for Aperiodic Monotile Substitution Systems
-======================================================
+Algorithms for the Aperiodic Monotile (Hat Tile) Spectrum
 
-Implements the core algorithms from the research paper:
-1. Inflation factor computation
-2. Spectral gap computation
-3. Pisot number certification
-4. Tropical eigenvalue computation
-5. Hat spectrum analysis
+Implements:
+1. Hat spectrum parameterization (edge lengths, areas, edge ratios)
+2. Substitution matrix spectral analysis
+3. Tile patch generation via substitution
 """
 
 import math
-from typing import Tuple, Optional
+from typing import Tuple, List, Dict
 
+# ============================================================
+# Algorithm 1: Hat Spectrum Parameterization
+# ============================================================
 
-def inflation_factor(t: float) -> float:
-    """Compute the area inflation factor for the hat spectrum at parameter t.
+def edge_length_a(t: float) -> float:
+    """Compute edge length a(t) = (1-t) + t*sqrt(3) for t in [0,1]."""
+    return (1.0 - t) + t * math.sqrt(3)
 
-    Algorithm 1 from the research paper.
+def edge_length_b(t: float) -> float:
+    """Compute edge length b(t) = t + (1-t)*sqrt(3) for t in [0,1]."""
+    return t + (1.0 - t) * math.sqrt(3)
 
-    Args:
-        t: Parameter in [0, 1]
+def edge_ratio(t: float) -> float:
+    """Compute the edge ratio a(t)/b(t)."""
+    return edge_length_a(t) / edge_length_b(t)
 
-    Returns:
-        The area inflation factor σ(t) = (c(t) + √(c(t)² - 4)) / 2
+def hat_tile_area(t: float, scale: float = 1.0) -> float:
+    """Compute the area of a hat tile at parameter t with given scale.
 
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Example:
-        >>> inflation_factor(0.0)  # The hat
-        3.732050808...
-        >>> inflation_factor(1.0)  # The turtle
-        3.732050808...
-        >>> inflation_factor(0.5)  # Midpoint
-        3.186140661...
+    The hat is composed of 8 kites, each with area sqrt(3)/4 * s^2.
+    Total area = 2*sqrt(3)*s^2.
     """
-    c = 4 - 2 * t * (1 - t)
-    delta = c * c - 4
-    if delta < 0:
-        raise ValueError(f"Negative discriminant at t={t}: delta={delta}")
-    return (c + math.sqrt(delta)) / 2
+    s = edge_length_a(t) * scale
+    return 2.0 * math.sqrt(3) * s ** 2
+
+def critical_parameter() -> float:
+    """The critical parameter t* = 1/2 where a(t) = b(t)."""
+    return 0.5
+
+def is_aperiodic(t: float, tol: float = 1e-10) -> bool:
+    """Check if the tile at parameter t is aperiodic (t != 1/2)."""
+    return abs(t - 0.5) > tol
 
 
-def spectral_gap(t: float) -> float:
-    """Compute the spectral gap for the hat spectrum at parameter t.
+# ============================================================
+# Algorithm 2: Expansion Factor Analysis
+# ============================================================
 
-    Algorithm 2 from the research paper.
+def hat_expansion_factor() -> float:
+    """The linear expansion factor lambda = 2 + sqrt(3)."""
+    return 2.0 + math.sqrt(3)
 
-    Args:
-        t: Parameter in [0, 1]
+def hat_expansion_conjugate() -> float:
+    """The conjugate 2 - sqrt(3), which is 1/lambda."""
+    return 2.0 - math.sqrt(3)
 
-    Returns:
-        The spectral gap √(c(t)² - 4)
+def verify_minimal_polynomial(lam: float) -> float:
+    """Verify lambda^2 - 4*lambda + 1 = 0. Returns the residual."""
+    return lam**2 - 4*lam + 1
 
-    Example:
-        >>> spectral_gap(0.0)
-        3.464101615...
-        >>> spectral_gap(0.5)  # Minimum gap
-        2.872281323...
+def verify_conjugate_product(lam: float, lam_bar: float) -> float:
+    """Verify lambda * lambda_bar = 1. Returns the residual."""
+    return lam * lam_bar - 1.0
+
+def area_expansion_factor() -> float:
+    """The area expansion factor lambda^2 = 7 + 4*sqrt(3)."""
+    lam = hat_expansion_factor()
+    return lam ** 2
+
+def tile_count_at_level(n: int) -> float:
+    """Approximate number of tiles in a level-n supertile.
+
+    The area grows as lambda^(2n), so the tile count is approximately
+    lambda^(2n) (since all tiles have the same area at a given parameter).
     """
-    c = 4 - 2 * t * (1 - t)
-    delta = c * c - 4
-    if delta < 0:
-        raise ValueError(f"Negative discriminant at t={t}")
-    return math.sqrt(delta)
+    lam = hat_expansion_factor()
+    return lam ** (2 * n)
 
 
-def is_pisot(b: int, c: int) -> Tuple[bool, Optional[float], Optional[float]]:
-    """Verify the Pisot property for roots of x² - bx + c = 0.
+# ============================================================
+# Algorithm 3: Substitution Matrix Analysis
+# ============================================================
 
-    Algorithm 3 from the research paper.
+def substitution_matrix() -> List[List[int]]:
+    """The 4x4 substitution matrix for the hat metatile system (H,T,P,F).
 
-    Args:
-        b: The trace (sum of roots)
-        c: The norm (product of roots)
-
-    Returns:
-        Tuple of (is_pisot, larger_root, smaller_root)
-
-    Example:
-        >>> is_pisot(4, 1)  # Hat inflation
-        (True, 3.732..., 0.267...)
-        >>> is_pisot(3, 1)  # Golden ratio squared
-        (True, 2.618..., 0.381...)
+    M[i][j] = number of copies of metatile type i in the supertile of type j.
     """
-    discriminant = b * b - 4 * c
-    if discriminant <= 0:
-        return (False, None, None)
+    return [
+        [1, 0, 0, 1],
+        [1, 1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 1]
+    ]
 
-    sqrt_d = math.sqrt(discriminant)
-    alpha = (b + sqrt_d) / 2
-    alpha_conj = (b - sqrt_d) / 2
+def matrix_multiply(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
+    """Multiply two square matrices."""
+    n = len(A)
+    C = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                C[i][j] += A[i][k] * B[k][j]
+    return C
 
-    is_pisot_num = alpha > 1 and abs(alpha_conj) < 1
-    return (is_pisot_num, alpha, alpha_conj)
+def matrix_power(M: List[List[float]], p: int) -> List[List[float]]:
+    """Compute M^p by repeated squaring."""
+    n = len(M)
+    result = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+    base = [row[:] for row in M]
+    while p > 0:
+        if p % 2 == 1:
+            result = matrix_multiply(result, base)
+        base = matrix_multiply(base, base)
+        p //= 2
+    return result
 
+def metatile_counts_at_level(n: int) -> List[List[float]]:
+    """Compute M^n to get metatile counts at substitution level n."""
+    M = [[float(x) for x in row] for row in substitution_matrix()]
+    return matrix_power(M, n)
 
-def tropical_eigenvalue_2x2(a11: float, a12: float, a21: float, a22: float) -> float:
-    """Compute the tropical (max-plus) eigenvalue of a 2×2 matrix.
+def metatile_frequencies(n: int) -> List[float]:
+    """Compute the relative frequency of each metatile type at level n.
 
-    In the max-plus semiring, the eigenvalue is:
-        λ_trop = max(a11, a22, (a12 + a21) / 2)
-
-    This equals log of the Perron-Frobenius eigenvalue when the
-    matrix entries are logs of a nonnegative matrix.
-
-    Args:
-        a11, a12, a21, a22: Matrix entries (in tropical/log space)
-
-    Returns:
-        The tropical eigenvalue
-
-    Example:
-        >>> # Log of hat substitution matrix [[3,1],[1,1]]
-        >>> tropical_eigenvalue_2x2(math.log(3), math.log(1), math.log(1), math.log(1))
-        1.098...  # ≈ log(3)
+    Returns [freq_H, freq_T, freq_P, freq_F] where freq_X is the
+    proportion of type-X metatiles in a level-n H-supertile.
     """
-    diag_max = max(a11, a22)
-    cycle_avg = (a12 + a21) / 2
-    return max(diag_max, cycle_avg)
+    Mn = metatile_counts_at_level(n)
+    # Column 0 = supertile of type H
+    col = [Mn[i][0] for i in range(4)]
+    total = sum(col)
+    return [c / total for c in col]
 
 
-def topological_entropy(t: float) -> float:
-    """Compute the topological entropy of the hat spectrum tiling at parameter t.
+# ============================================================
+# Algorithm 4: Hat Tile Vertex Generation
+# ============================================================
 
-    The topological entropy h = log(σ(t)) measures the complexity growth rate.
+def hat_vertices(a: float, b: float) -> List[Tuple[float, float]]:
+    """Generate the 13 vertices of the hat tile with edge lengths a and b.
 
-    Args:
-        t: Parameter in [0, 1]
-
-    Returns:
-        The topological entropy log(σ(t))
-
-    Example:
-        >>> topological_entropy(0.0)  # Hat
-        1.317...
-        >>> topological_entropy(0.5)  # Minimum entropy
-        1.158...
+    The hat is constructed from kites of the hexagonal Laves tiling.
+    Vertices are given in counterclockwise order.
     """
-    return math.log(inflation_factor(t))
+    s3 = math.sqrt(3)
+
+    # The hat tile vertices (in a coordinate system aligned with the hex grid)
+    # Based on the Smith et al. vertex coordinates
+    vertices = [
+        (0, 0),
+        (a, 0),
+        (a + b * 0.5, b * s3 / 2),
+        (a + b * 0.5 + a * 0.5, b * s3 / 2 + a * s3 / 2),
+        (a + b, b * s3),
+        (a + b - a * 0.5, b * s3 + a * s3 / 2),
+        (b, b * s3),
+        (b - a * 0.5, b * s3 - a * s3 / 2),
+        (-a * 0.5, b * s3 / 2 + a * s3 / 2),
+        (-a, b * s3 / 2 + a * s3 / 2 - b * s3 / 2),
+        (-a - b * 0.5, a * s3 / 2),
+        (-b * 0.5, a * s3 / 2 - b * s3 / 2),
+        (-b * 0.5 + a * 0.5, 0),
+    ]
+    return vertices
 
 
-def enumerate_quadratic_pisot_numbers(max_trace: int = 20) -> list:
-    """Enumerate quadratic Pisot numbers with norm 1.
+def hat_spectrum_sample(num_points: int = 100) -> List[Dict]:
+    """Sample the hat spectrum at evenly spaced parameter values.
 
-    These are roots of x² - bx + 1 for integer b ≥ 3.
-    Each such root is a Pisot number whose conjugate is 1/α.
-
-    Args:
-        max_trace: Maximum trace value to enumerate
-
-    Returns:
-        List of (trace, pisot_number, conjugate) triples
-
-    Example:
-        >>> results = enumerate_quadratic_pisot_numbers(10)
-        >>> results[0]  # b=3: golden ratio squared
-        (3, 2.618..., 0.381...)
+    Returns a list of dicts with keys: t, a, b, ratio, area, is_aperiodic.
     """
     results = []
-    for b in range(3, max_trace + 1):
-        ok, alpha, alpha_conj = is_pisot(b, 1)
-        if ok:
-            results.append((b, alpha, alpha_conj))
+    for i in range(num_points + 1):
+        t = i / num_points
+        a = edge_length_a(t)
+        b = edge_length_b(t)
+        results.append({
+            't': t,
+            'a': a,
+            'b': b,
+            'ratio': a / b,
+            'area': hat_tile_area(t),
+            'is_aperiodic': is_aperiodic(t),
+        })
     return results
 
 
-def hat_spectrum_analysis(n_points: int = 101) -> dict:
-    """Comprehensive analysis of the hat spectrum.
-
-    Args:
-        n_points: Number of sample points in [0, 1]
-
-    Returns:
-        Dictionary with analysis results
-    """
-    ts = [i / (n_points - 1) for i in range(n_points)]
-    inflations = [inflation_factor(t) for t in ts]
-    gaps = [spectral_gap(t) for t in ts]
-    entropies = [topological_entropy(t) for t in ts]
-
-    min_gap_idx = min(range(len(gaps)), key=lambda i: gaps[i])
-    max_gap_idx = max(range(len(gaps)), key=lambda i: gaps[i])
-
-    return {
-        "parameters": ts,
-        "inflation_factors": inflations,
-        "spectral_gaps": gaps,
-        "entropies": entropies,
-        "min_gap": gaps[min_gap_idx],
-        "min_gap_t": ts[min_gap_idx],
-        "max_gap": gaps[max_gap_idx],
-        "max_gap_t": ts[max_gap_idx],
-        "min_entropy": min(entropies),
-        "max_entropy": max(entropies),
-    }
-
-
 if __name__ == "__main__":
-    print("=== Quadratic Pisot Numbers with Norm 1 ===")
-    pisots = enumerate_quadratic_pisot_numbers(12)
-    for b, alpha, conj in pisots:
-        print(f"  b={b:2d}: α = {alpha:.6f}, α' = {conj:.6f}, "
-              f"char poly: x² - {b}x + 1")
+    # Quick verification
+    lam = hat_expansion_factor()
+    lam_bar = hat_expansion_conjugate()
+
+    print("=== Expansion Factor Properties ===")
+    print(f"lambda = {lam:.10f}")
+    print(f"lambda_bar = {lam_bar:.10f}")
+    print(f"lambda^2 - 4*lambda + 1 = {verify_minimal_polynomial(lam):.2e}")
+    print(f"lambda * lambda_bar = {verify_conjugate_product(lam, lam_bar) + 1:.10f}")
+    print(f"lambda + lambda_bar = {lam + lam_bar:.10f}")
     print()
 
-    print("=== Hat Spectrum Analysis ===")
-    analysis = hat_spectrum_analysis(21)
-    print(f"  Min spectral gap: {analysis['min_gap']:.6f} at t = {analysis['min_gap_t']:.2f}")
-    print(f"  Max spectral gap: {analysis['max_gap']:.6f} at t = {analysis['max_gap_t']:.2f}")
-    print(f"  Entropy range: [{analysis['min_entropy']:.6f}, {analysis['max_entropy']:.6f}]")
+    print("=== Hat Spectrum Boundary Values ===")
+    print(f"t=0 (hat):    a={edge_length_a(0):.4f}, b={edge_length_b(0):.4f}")
+    print(f"t=0.5 (crit): a={edge_length_a(0.5):.4f}, b={edge_length_b(0.5):.4f}")
+    print(f"t=1 (turtle): a={edge_length_a(1):.4f}, b={edge_length_b(1):.4f}")
     print()
 
-    print("=== Tropical Eigenvalue Bridge ===")
-    sigma = inflation_factor(0.0)
-    h = topological_entropy(0.0)
-    print(f"  Hat inflation factor: σ = {sigma:.6f}")
-    print(f"  Topological entropy: h = log(σ) = {h:.6f}")
-    print(f"  Tropical eigenvalue of log-matrix: {h:.6f}")
-    print(f"  Bridge verified: log(σ) = λ_trop(log M) ✓")
+    print("=== Tile Counts at Substitution Levels ===")
+    for n in range(8):
+        count = tile_count_at_level(n)
+        print(f"Level {n}: ~{count:.1f} tiles")
+    print()
+
+    print("=== Metatile Frequencies (level 10 H-supertile) ===")
+    freqs = metatile_frequencies(10)
+    print(f"H: {freqs[0]:.6f}, T: {freqs[1]:.6f}, P: {freqs[2]:.6f}, F: {freqs[3]:.6f}")
