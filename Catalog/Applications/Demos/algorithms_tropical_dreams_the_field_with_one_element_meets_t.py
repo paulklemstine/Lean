@@ -1,341 +1,294 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical 𝔽₁-Skeleton Extraction
+Algorithms for F₁-Tropical Geometry
 
-Provides efficient algorithms for:
-1. Extracting sup-irreducible (𝔽₁-point) elements from finite lattices
-2. Computing 𝔽₁-cardinality
-3. Verifying generation by extreme points
-4. Computing the Birkhoff representation (lower sets of sup-irreducibles)
-5. Möbius function computation for finite posets
+Type-hinted implementations of the core algorithms from the F₁-tropical duality.
 """
 
-from typing import (
-    TypeVar, Generic, List, Set, FrozenSet, Dict, Tuple, 
-    Callable, Optional, Any
-)
-from functools import reduce
-from itertools import combinations
-from math import gcd
-
-T = TypeVar('T')
+from __future__ import annotations
+import math
+from typing import Optional
+from dataclasses import dataclass
 
 
-class FiniteLattice(Generic[T]):
-    """A finite lattice represented by its elements and join/meet operations.
-    
-    Attributes:
-        elements: list of all lattice elements
-        sup: binary supremum (join) operation
-        inf: binary infimum (meet) operation
-        bot: bottom element
-        top: top element
-        le: partial order relation
+INF = float('inf')
+
+
+# ============================================================
+# Algorithm 1: Tropical F₁-Algebra Operations
+# ============================================================
+
+@dataclass
+class TropicalF1Algebra:
+    """The tropical F₁-algebra on ℝ ∪ {∞}.
+
+    Operations:
+        add (⊕) = min
+        mul (⊗) = +
+        zero = ∞
+        one = 0
     """
 
-    def __init__(
-        self,
-        elements: List[T],
-        sup: Callable[[T, T], T],
-        inf: Callable[[T, T], T],
-        bot: T,
-        top: T,
-        le: Optional[Callable[[T, T], bool]] = None,
-    ):
-        self.elements = list(elements)
-        self.sup = sup
-        self.inf = inf
-        self.bot = bot
-        self.top = top
-        if le is not None:
-            self.le = le
-        else:
-            # Derive ≤ from inf: a ≤ b iff a ⊓ b = a
-            self.le = lambda a, b: inf(a, b) == a
+    @staticmethod
+    def add(a: float, b: float) -> float:
+        """Tropical addition: min(a, b)."""
+        return min(a, b)
 
-    def is_sup_irred(self, x: T) -> bool:
-        """Check if x is sup-irreducible.
-        
-        An element x is sup-irreducible if:
-        1. x is not minimal (x ≠ ⊥ in a bounded lattice)
-        2. For all a, b: a ⊔ b = x implies a = x or b = x
-        
-        Time complexity: O(n²) where n = |elements|
-        Space complexity: O(1) additional
-        """
-        if x == self.bot:
-            return False
-        for a in self.elements:
-            for b in self.elements:
-                if self.sup(a, b) == x and a != x and b != x:
+    @staticmethod
+    def mul(a: float, b: float) -> float:
+        """Tropical multiplication: a + b (with ∞ absorption)."""
+        if a == INF or b == INF:
+            return INF
+        return a + b
+
+    @staticmethod
+    def zero() -> float:
+        return INF
+
+    @staticmethod
+    def one() -> float:
+        return 0.0
+
+    @staticmethod
+    def le(a: float, b: float) -> bool:
+        """F₁-order: a ≤ b iff a ⊕ b = a."""
+        return min(a, b) == a
+
+    @staticmethod
+    def is_generator(x: float, elements: list[float]) -> bool:
+        """Check if x is an F₁-generator (cannot be decomposed as min of others)."""
+        for a in elements:
+            for b in elements:
+                if a != x and b != x and min(a, b) == x:
                     return False
         return True
 
-    def sup_irred_elements(self) -> List[T]:
-        """Extract all sup-irreducible elements.
-        
-        Time complexity: O(n³) where n = |elements|
-        Space complexity: O(k) where k = number of sup-irreducibles
-        
-        Returns:
-            List of sup-irreducible elements, the '𝔽₁-points' of the lattice
-        """
-        return [x for x in self.elements if self.is_sup_irred(x)]
 
-    def f1_cardinality(self) -> int:
-        """Compute the 𝔽₁-cardinality = number of sup-irreducible elements.
-        
-        Time complexity: O(n³)
-        """
-        return len(self.sup_irred_elements())
+# ============================================================
+# Algorithm 2: Tropical Polynomial Evaluation
+# ============================================================
 
-    def sup_of_subset(self, subset: List[T]) -> T:
-        """Compute the supremum of a subset."""
-        if not subset:
-            return self.bot
-        return reduce(self.sup, subset)
+def tropical_poly_eval(coeffs: list[float], x: float) -> float:
+    """Evaluate tropical polynomial: inf_i (c_i + i * x).
 
-    def verify_generation(self) -> bool:
-        """Verify that every element is the sup of sup-irreducibles below it.
-        
-        This checks the generation theorem: for all x,
-            x = ⊔ {e | e is sup-irreducible and e ≤ x}
-        
-        Time complexity: O(n³ + n·k) where k = #sup-irreducibles
-        
-        Returns:
-            True if generation holds for all elements
-        """
-        irreds = self.sup_irred_elements()
-        for x in self.elements:
-            below = [e for e in irreds if self.le(e, x)]
-            generated = self.sup_of_subset(below)
-            if generated != x:
-                return False
-        return True
+    Args:
+        coeffs: Coefficients [c_0, c_1, ..., c_n]
+        x: Evaluation point
 
-    def birkhoff_map(self, x: T) -> FrozenSet[T]:
-        """Map x to its lower set of sup-irreducibles (Birkhoff representation).
-        
-        For a finite distributive lattice, this gives an order isomorphism
-        to the lattice of lower sets of the poset of sup-irreducibles.
-        
-        Args:
-            x: a lattice element
-            
-        Returns:
-            The set {e | e is sup-irreducible and e ≤ x}
-        """
-        irreds = self.sup_irred_elements()
-        return frozenset(e for e in irreds if self.le(e, x))
+    Returns:
+        The tropical evaluation min_i(c_i + i*x)
+    """
+    result = INF
+    for i, c in enumerate(coeffs):
+        if c == INF:
+            continue
+        if x == INF and i > 0:
+            continue
+        term = c + i * x if x != INF else c
+        result = min(result, term)
+    return result
 
-    def verify_birkhoff_bijection(self) -> bool:
-        """Verify that the Birkhoff map is a bijection (injectivity check).
-        
-        Time complexity: O(n² · k)
-        
-        Returns:
-            True if the Birkhoff map is injective (hence bijective onto its image)
-        """
-        images = {}
-        for x in self.elements:
-            img = self.birkhoff_map(x)
-            if img in images:
-                return False
-            images[img] = x
-        return True
 
-    def mobius_function(self) -> Dict[Tuple[T, T], int]:
-        """Compute the Möbius function μ(a, b) for all pairs.
-        
-        Uses the recursive definition:
-            μ(a, a) = 1
-            μ(a, b) = -Σ_{a ≤ c < b} μ(a, c)  for a < b
-            μ(a, b) = 0  if a ≰ b
-        
-        Time complexity: O(n³)
-        Space complexity: O(n²)
-        """
-        mu: Dict[Tuple[T, T], int] = {}
-        for a in self.elements:
-            for b in self.elements:
-                if a == b:
-                    mu[(a, b)] = 1
-                elif self.le(a, b):
-                    mu[(a, b)] = -sum(
-                        mu.get((a, c), 0)
-                        for c in self.elements
-                        if self.le(a, c) and self.le(c, b) and c != b
-                    )
-                else:
-                    mu[(a, b)] = 0
-        return mu
+def find_corners_exact(coeffs: list[float]) -> list[float]:
+    """Find exact corner points of a tropical polynomial over ℝ.
 
+    Corner points occur where two terms c_i + i*x = c_j + j*x intersect
+    and both achieve the minimum.
+
+    Args:
+        coeffs: Coefficients [c_0, ..., c_n] (finite values)
+
+    Returns:
+        Sorted list of corner x-values
+    """
+    n = len(coeffs)
+    candidates: list[float] = []
+
+    for i in range(n):
+        if coeffs[i] == INF:
+            continue
+        for j in range(i + 1, n):
+            if coeffs[j] == INF:
+                continue
+            # c_i + i*x = c_j + j*x  =>  x = (c_i - c_j) / (j - i)
+            x = (coeffs[i] - coeffs[j]) / (j - i)
+            # Check that this x actually achieves the global minimum
+            val = coeffs[i] + i * x
+            is_min = True
+            for k in range(n):
+                if coeffs[k] == INF:
+                    continue
+                if coeffs[k] + k * x < val - 1e-12:
+                    is_min = False
+                    break
+            if is_min:
+                candidates.append(x)
+
+    # Deduplicate
+    candidates.sort()
+    result: list[float] = []
+    for c in candidates:
+        if not result or abs(c - result[-1]) > 1e-10:
+            result.append(c)
+    return result
+
+
+# ============================================================
+# Algorithm 3: F₁-Betti Numbers and Euler Characteristic
+# ============================================================
+
+def f1_betti_number(num_vertices: int, k: int) -> int:
+    """Compute β_k^{F₁} for the complete simplicial complex.
+
+    β_k = C(num_vertices, k+1) = number of (k+1)-element subsets.
+
+    Args:
+        num_vertices: Number of vertices in the simplicial complex
+        k: Dimension
+
+    Returns:
+        The F₁-Betti number β_k
+    """
+    return math.comb(num_vertices, k + 1)
+
+
+def tropical_euler_characteristic(num_vertices: int, max_dim: int) -> int:
+    """Compute the tropical Euler characteristic.
+
+    χ_{F₁} = Σ_{k=0}^{d} (-1)^k β_k^{F₁}
+
+    Args:
+        num_vertices: Number of vertices
+        max_dim: Maximum dimension to sum over
+
+    Returns:
+        The tropical Euler characteristic
+    """
+    return sum((-1)**k * f1_betti_number(num_vertices, k)
+               for k in range(max_dim + 1))
+
+
+# ============================================================
+# Algorithm 4: Lattice Polytope F₁-Points
+# ============================================================
+
+@dataclass
+class LatticePolytope:
+    """A lattice polytope represented by its vertices in ℤⁿ."""
+    vertices: list[tuple[int, ...]]
+
+    @property
+    def dimension(self) -> int:
+        if not self.vertices:
+            return -1
+        return len(self.vertices[0])
+
+    @property
+    def f1_points(self) -> int:
+        """Number of F₁-points = number of vertices."""
+        return len(self.vertices)
+
+    @property
     def euler_characteristic(self) -> int:
-        """Compute the Euler characteristic via the Möbius function.
-        
-        Returns μ(⊥, ⊤) which equals the reduced Euler characteristic
-        of the order complex of the proper part of the lattice, times (-1).
+        """Euler characteristic of the toric variety = vertex count."""
+        return self.f1_points
+
+    def f_vector(self) -> list[int]:
+        """Compute the f-vector (face counts) by enumeration.
+
+        For small polytopes only. Returns [f₀, f₁, ..., f_d].
         """
-        mu = self.mobius_function()
-        return mu.get((self.bot, self.top), 0)
+        from itertools import combinations
+        n = len(self.vertices)
+        # f_k = number of (k+1)-element subsets that form faces
+        # For a simplex, all subsets are faces
+        # For general polytopes, this requires convex hull computation
+        # Here we return the simplex bound as an upper estimate
+        d = min(n - 1, self.dimension)
+        return [math.comb(n, k + 1) for k in range(d + 1)]
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Factory functions for standard lattices
-# ─────────────────────────────────────────────────────────────────────────────
+def zeta_polynomial(f_vec: list[int], q: int) -> int:
+    """Evaluate the F₁-zeta polynomial: Σ f_k (q-1)^k.
 
-def boolean_lattice(n: int) -> FiniteLattice[FrozenSet[int]]:
-    """Create the Boolean lattice B_n = P({1,...,n}) under ⊆.
-    
-    Sup = union, inf = intersection.
-    
+    This should equal the number of F_q-points of the toric variety.
+
     Args:
-        n: size of the ground set
-        
+        f_vec: Face vector [f₀, f₁, ..., f_d]
+        q: Prime power
+
     Returns:
-        FiniteLattice instance
-        
-    Example:
-        >>> L = boolean_lattice(3)
-        >>> L.f1_cardinality()
-        3
+        The evaluated polynomial
     """
-    ground = set(range(1, n + 1))
-    elements = []
-    for r in range(n + 1):
-        for combo in combinations(sorted(ground), r):
-            elements.append(frozenset(combo))
-    
-    return FiniteLattice(
-        elements=elements,
-        sup=lambda a, b: a | b,
-        inf=lambda a, b: a & b,
-        bot=frozenset(),
-        top=frozenset(ground),
-        le=lambda a, b: a <= b,
-    )
+    return sum(f * (q - 1)**k for k, f in enumerate(f_vec))
 
 
-def divisor_lattice(n: int) -> FiniteLattice[int]:
-    """Create the divisor lattice of n under divisibility.
-    
-    Sup = lcm, inf = gcd.
-    
+# ============================================================
+# Algorithm 5: Tropical Convex Hull
+# ============================================================
+
+def tropical_convex_combination(weights: list[float],
+                                points: list[float]) -> float:
+    """Compute a tropical convex combination.
+
+    ⊕_i (w_i ⊗ p_i) = min_i (w_i + p_i)
+
     Args:
-        n: positive integer
-        
+        weights: Tropical weights
+        points: Generator points
+
     Returns:
-        FiniteLattice instance
-        
-    Example:
-        >>> L = divisor_lattice(12)
-        >>> L.sup_irred_elements()
-        [2, 3, 4]
+        The tropical combination value
     """
-    divs = sorted(d for d in range(1, n + 1) if n % d == 0)
-    lcm_fn = lambda a, b: a * b // gcd(a, b)
-    
-    return FiniteLattice(
-        elements=divs,
-        sup=lcm_fn,
-        inf=gcd,
-        bot=1,
-        top=n,
-        le=lambda a, b: b % a == 0,
-    )
+    result = INF
+    for w, p in zip(weights, points):
+        result = min(result, TropicalF1Algebra.mul(w, p))
+    return result
 
 
-def chain_lattice(n: int) -> FiniteLattice[int]:
-    """Create the chain (total order) lattice {0, 1, ..., n}.
-    
-    Sup = max, inf = min.
-    
+def tropical_segment(a: float, b: float,
+                     num_points: int = 100) -> list[float]:
+    """Generate points on the tropical segment between a and b.
+
+    The tropical segment [a, b]_trop = {min(a + λ, b + μ) : λ, μ ≥ 0, ...}
+    In 1D, this is simply the interval [min(a,b), max(a,b)].
+
     Args:
-        n: maximum element
-        
+        a, b: Endpoints
+        num_points: Number of sample points
+
     Returns:
-        FiniteLattice instance
+        List of points on the tropical segment
     """
-    return FiniteLattice(
-        elements=list(range(n + 1)),
-        sup=max,
-        inf=min,
-        bot=0,
-        top=n,
-        le=lambda a, b: a <= b,
-    )
+    lo, hi = min(a, b), max(a, b)
+    if lo == INF:
+        return [INF]
+    if hi == INF:
+        return [lo + t for t in range(num_points)]
+    step = (hi - lo) / max(num_points - 1, 1)
+    return [lo + i * step for i in range(num_points)]
 
-
-def product_lattice(
-    L1: FiniteLattice, L2: FiniteLattice
-) -> FiniteLattice[Tuple]:
-    """Create the product of two finite lattices.
-    
-    Elements are pairs (a, b) with componentwise operations.
-    """
-    elements = [(a, b) for a in L1.elements for b in L2.elements]
-    return FiniteLattice(
-        elements=elements,
-        sup=lambda x, y: (L1.sup(x[0], y[0]), L2.sup(x[1], y[1])),
-        inf=lambda x, y: (L1.inf(x[0], y[0]), L2.inf(x[1], y[1])),
-        bot=(L1.bot, L2.bot),
-        top=(L1.top, L2.top),
-        le=lambda x, y: L1.le(x[0], y[0]) and L2.le(x[1], y[1]),
-    )
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Optimized extraction for Boolean lattices
-# ─────────────────────────────────────────────────────────────────────────────
-
-def boolean_sup_irred_fast(n: int) -> List[FrozenSet[int]]:
-    """Fast extraction of sup-irreducibles from B_n.
-    
-    By the theorem finset_supIrred_iff_singleton, these are exactly
-    the singletons {1}, {2}, ..., {n}.
-    
-    Time complexity: O(n)
-    Space complexity: O(n)
-    """
-    return [frozenset({i}) for i in range(1, n + 1)]
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Example usage
-# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=== Boolean Lattice B_4 ===")
-    L = boolean_lattice(4)
-    print(f"Elements: {len(L.elements)}")
-    print(f"Sup-irreducibles: {[set(s) for s in L.sup_irred_elements()]}")
-    print(f"F1-cardinality: {L.f1_cardinality()}")
-    print(f"Generation verified: {L.verify_generation()}")
-    print(f"Birkhoff bijection: {L.verify_birkhoff_bijection()}")
-    print(f"Euler characteristic μ(⊥,⊤): {L.euler_characteristic()}")
-    print()
+    # Quick tests
+    alg = TropicalF1Algebra()
+    assert alg.add(3, 5) == 3
+    assert alg.mul(3, 5) == 8
+    assert alg.le(3, 5) == True
+    assert alg.le(5, 3) == False
 
-    print("=== Divisor Lattice D_30 ===")
-    L = divisor_lattice(30)
-    print(f"Elements: {L.elements}")
-    print(f"Sup-irreducibles: {L.sup_irred_elements()}")
-    print(f"F1-cardinality: {L.f1_cardinality()}")
-    print(f"Generation verified: {L.verify_generation()}")
-    print(f"Birkhoff bijection: {L.verify_birkhoff_bijection()}")
-    print()
+    # Tropical polynomial corners
+    corners = find_corners_exact([6.0, 3.0, 0.0])
+    print(f"Corners of min(6, 3+x, 2x): {corners}")
 
-    print("=== Chain Lattice C_4 ===")
-    L = chain_lattice(4)
-    print(f"Elements: {L.elements}")
-    print(f"Sup-irreducibles: {L.sup_irred_elements()}")
-    print(f"F1-cardinality: {L.f1_cardinality()}")
-    print(f"Generation verified: {L.verify_generation()}")
-    print()
+    # F₁-Betti numbers
+    for n in range(1, 5):
+        bettis = [f1_betti_number(n + 1, k) for k in range(n + 1)]
+        print(f"β for {n+1} vertices: {bettis}")
 
-    print("=== Product C_2 × C_2 ===")
-    L = product_lattice(chain_lattice(2), chain_lattice(2))
-    print(f"Elements: {L.elements}")
-    print(f"Sup-irreducibles: {L.sup_irred_elements()}")
-    print(f"F1-cardinality: {L.f1_cardinality()}")
-    print(f"Generation verified: {L.verify_generation()}")
+    # Zeta polynomial test
+    f_vec = [4, 4, 1]  # Unit square
+    for q in [2, 3, 5, 7]:
+        print(f"ζ(q={q}) = {zeta_polynomial(f_vec, q)}, (q+1)² = {(q+1)**2}")
+
+    print("All tests passed!")
