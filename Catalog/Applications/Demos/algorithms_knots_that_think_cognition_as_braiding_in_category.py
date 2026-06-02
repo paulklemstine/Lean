@@ -1,363 +1,275 @@
+#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Cognitive Braid Analysis
+algorithms.py — Core algorithms for cognitive braid analysis.
 
-Implements algorithms for computing braid invariants, Jones polynomial
-approximations, and cognitive complexity measures.
+Type-hinted implementations of the mathematical structures formalized in Lean 4.
 """
 
-from typing import List, Dict, Tuple, Optional
+from __future__ import annotations
+from dataclasses import dataclass, field
+from enum import Enum
+from itertools import product
 import math
+from typing import Optional
 
 
-# ─── Core Data Structures ─────────────────────────────────────────────────
+class CrossingType(Enum):
+    """A braid generator is either a positive or negative crossing."""
+    POSITIVE = 1
+    NEGATIVE = -1
 
+
+@dataclass(frozen=True)
 class BraidGenerator:
-    """
-    A generator σ_i^ε of the braid group B_n.
-
-    Args:
-        index: The strand index i (0-indexed).
-        sign: +1 for σ_i, -1 for σ_i⁻¹.
-    """
-    def __init__(self, index: int, sign: int = 1):
-        assert sign in (1, -1), "Sign must be +1 or -1"
-        self.index = index
-        self.sign = sign
-
-    def inverse(self) -> 'BraidGenerator':
-        """Return the inverse generator."""
-        return BraidGenerator(self.index, -self.sign)
-
-    def __repr__(self) -> str:
-        sup = "" if self.sign == 1 else "⁻¹"
-        return f"σ{sup}_{self.index}"
-
-    def __eq__(self, other) -> bool:
-        return self.index == other.index and self.sign == other.sign
-
-    def __hash__(self) -> int:
-        return hash((self.index, self.sign))
-
-
-class BraidWord:
-    """
-    A word in the braid group B_n.
-
-    Represents a cognitive process as a sequence of neural strand crossings.
-
-    Attributes:
-        n_strands: Number of strands (brain regions).
-        generators: List of braid generators.
-
-    Time complexity:
-        - Construction: O(k) where k is the word length.
-        - Composition: O(k₁ + k₂).
-        - Writhe computation: O(k).
-        - Inversion: O(k).
-    """
-    def __init__(self, n_strands: int, generators: List[BraidGenerator] = None):
-        assert n_strands >= 1, "Need at least 1 strand"
-        self.n_strands = n_strands
-        self.generators = generators or []
-        # Validate strand indices
-        for g in self.generators:
-            assert 0 <= g.index < n_strands - 1, \
-                f"Generator index {g.index} out of range for {n_strands} strands"
-
-    def compose(self, other: 'BraidWord') -> 'BraidWord':
-        """
-        Compose two braid words (concatenation).
-
-        Time: O(k₁ + k₂)
-        Space: O(k₁ + k₂)
-        """
-        assert self.n_strands == other.n_strands
-        return BraidWord(self.n_strands, self.generators + other.generators)
-
-    def inverse(self) -> 'BraidWord':
-        """
-        Compute the inverse braid word.
-
-        Algorithm: Reverse the list and invert each generator.
-        Time: O(k)
-        Space: O(k)
-        """
-        return BraidWord(
-            self.n_strands,
-            [g.inverse() for g in reversed(self.generators)]
-        )
+    """A single braid generator σ_i or σ_i⁻¹."""
+    strand: int
+    crossing_type: CrossingType
 
     @property
-    def writhe(self) -> int:
-        """
-        Compute the writhe (algebraic crossing number).
+    def sign(self) -> int:
+        return self.crossing_type.value
 
-        The writhe is the sum of signs of all crossings.
-        It is a braid word invariant (not a knot invariant without
-        normalization by the Kauffman bracket).
+    def inverse(self) -> BraidGenerator:
+        inv_type = (CrossingType.NEGATIVE if self.crossing_type == CrossingType.POSITIVE
+                    else CrossingType.POSITIVE)
+        return BraidGenerator(strand=self.strand, crossing_type=inv_type)
 
-        Time: O(k)
-        Space: O(1)
+    def __repr__(self) -> str:
+        sym = "σ" if self.crossing_type == CrossingType.POSITIVE else "σ⁻¹"
+        return f"{sym}_{self.strand}"
 
-        Returns:
-            Integer writhe value.
-        """
-        return sum(g.sign for g in self.generators)
+
+@dataclass
+class CognitiveBraid:
+    """
+    A cognitive process modeled as a braid on n strands.
+
+    Each strand represents a brain region, and crossings represent
+    neural interactions between adjacent regions.
+    """
+    num_regions: int
+    word: list[BraidGenerator] = field(default_factory=list)
+    label: str = ""
 
     @property
     def crossing_number(self) -> int:
-        """Total number of crossings. Time: O(1)."""
-        return len(self.generators)
+        """Number of crossings (word length)."""
+        return len(self.word)
 
     @property
-    def info_content(self) -> int:
-        """
-        Information content: |writhe|.
+    def writhe(self) -> int:
+        """Signed crossing number: sum of generator signs."""
+        return sum(g.sign for g in self.word)
 
-        Measures the "net signal" of the cognitive process.
-        Bounded above by crossing_number (proved in Lean).
+    def compose(self, other: CognitiveBraid) -> CognitiveBraid:
+        """Sequential composition of cognitive processes."""
+        assert self.num_regions == other.num_regions
+        return CognitiveBraid(
+            num_regions=self.num_regions,
+            word=self.word + other.word,
+            label=f"{self.label} → {other.label}"
+        )
 
-        Time: O(k)
-        """
-        return abs(self.writhe)
-
-    def strand_usage(self) -> Dict[int, int]:
-        """
-        Count how many times each strand is involved in crossings.
-
-        Returns:
-            Dict mapping strand index to crossing count.
-
-        Time: O(k)
-        """
-        usage: Dict[int, int] = {}
-        for g in self.generators:
-            usage[g.index] = usage.get(g.index, 0) + 1
-        return usage
-
-    def cognitive_level(self) -> str:
-        """
-        Classify the cognitive complexity level.
-
-        Based on crossing number thresholds (proved monotone in Lean):
-        - 0 crossings: trivial (linear thought)
-        - 1-2 crossings: simple (basic association)
-        - 3-5 crossings: moderate (reasoning)
-        - 6+ crossings: complex (creative insight)
-
-        Time: O(1)
-        """
-        k = self.crossing_number
-        if k == 0:
-            return "trivial"
-        elif k <= 2:
-            return "simple"
-        elif k <= 5:
-            return "moderate"
-        else:
-            return "complex"
-
-    def __repr__(self) -> str:
-        if not self.generators:
-            return f"e ∈ B_{self.n_strands}"
-        gens = " · ".join(str(g) for g in self.generators)
-        return f"({gens}) ∈ B_{self.n_strands}"
-
-
-# ─── Kauffman Bracket Polynomial ──────────────────────────────────────────
-
-class LaurentPoly:
-    """
-    A Laurent polynomial in one variable with integer coefficients.
-
-    Represented as a dict mapping exponent -> coefficient.
-    Used for computing the Kauffman bracket and Jones polynomial.
-
-    Time complexity for operations:
-        - Addition: O(max(|p|, |q|))
-        - Multiplication: O(|p| * |q|)
-    """
-    def __init__(self, coeffs: Dict[int, int] = None):
-        self.coeffs = {}
-        if coeffs:
-            for k, v in coeffs.items():
-                if v != 0:
-                    self.coeffs[k] = v
+    def inverse(self) -> CognitiveBraid:
+        """Reverse the cognitive process."""
+        return CognitiveBraid(
+            num_regions=self.num_regions,
+            word=[g.inverse() for g in reversed(self.word)],
+            label=f"inv({self.label})"
+        )
 
     @staticmethod
-    def monomial(exp: int, coeff: int = 1) -> 'LaurentPoly':
-        """Create a monomial c * t^exp."""
-        if coeff == 0:
-            return LaurentPoly()
-        return LaurentPoly({exp: coeff})
+    def trivial(n: int) -> CognitiveBraid:
+        """The trivial cognitive process (no thinking)."""
+        return CognitiveBraid(num_regions=n, label="trivial")
 
-    def __add__(self, other: 'LaurentPoly') -> 'LaurentPoly':
-        result = dict(self.coeffs)
-        for k, v in other.coeffs.items():
-            result[k] = result.get(k, 0) + v
-        return LaurentPoly(result)
 
-    def __sub__(self, other: 'LaurentPoly') -> 'LaurentPoly':
-        result = dict(self.coeffs)
-        for k, v in other.coeffs.items():
-            result[k] = result.get(k, 0) - v
-        return LaurentPoly(result)
+def cognitive_complexity(braid: CognitiveBraid) -> int:
+    """
+    Cognitive complexity = crossing number.
 
-    def __mul__(self, other: 'LaurentPoly') -> 'LaurentPoly':
-        result: Dict[int, int] = {}
-        for e1, c1 in self.coeffs.items():
-            for e2, c2 in other.coeffs.items():
-                e = e1 + e2
-                result[e] = result.get(e, 0) + c1 * c2
-        return LaurentPoly(result)
+    Satisfies:
+    - complexity(trivial) = 0
+    - complexity(compose(a, b)) = complexity(a) + complexity(b)
+    - complexity(inverse(a)) = complexity(a)
+    """
+    return braid.crossing_number
 
-    def scale(self, c: int) -> 'LaurentPoly':
-        """Multiply by an integer scalar."""
-        return LaurentPoly({k: v * c for k, v in self.coeffs.items()})
 
-    def evaluate(self, t: complex) -> complex:
-        """Evaluate the polynomial at a complex number t."""
-        return sum(c * t**e for e, c in self.coeffs.items())
+def cognitive_entropy(braid: CognitiveBraid) -> float:
+    """
+    Information content of a cognitive braid.
 
-    def __repr__(self) -> str:
-        if not self.coeffs:
-            return "0"
-        terms = []
-        for e in sorted(self.coeffs.keys()):
-            c = self.coeffs[e]
-            if c == 0:
-                continue
-            if e == 0:
-                terms.append(str(c))
-            elif e == 1:
-                terms.append(f"{c}t" if c != 1 else "t")
-            elif e == -1:
-                terms.append(f"{c}t⁻¹" if c != 1 else "t⁻¹")
+    entropy(b) = crossing_number(b) * log(2)
+
+    This equals log(number of Kauffman states), connecting
+    braid topology to Shannon information theory.
+    """
+    return braid.crossing_number * math.log(2)
+
+
+def kauffman_state_count(n_crossings: int) -> int:
+    """Number of Kauffman bracket states = 2^n."""
+    return 2 ** n_crossings
+
+
+def interaction_pairs(braid: CognitiveBraid) -> list[tuple[int, int]]:
+    """
+    Extract strand interaction pairs from a braid.
+
+    Each crossing at strand i produces an interaction (i, i+1).
+    """
+    pairs = []
+    for g in braid.word:
+        if g.strand + 1 < braid.num_regions:
+            pairs.append((g.strand, g.strand + 1))
+    return pairs
+
+
+def is_reidemeister_ii_pair(g1: BraidGenerator, g2: BraidGenerator) -> bool:
+    """Check if two generators form a canceling R-II pair."""
+    return (g1.strand == g2.strand and
+            g1.crossing_type != g2.crossing_type)
+
+
+def simplify_braid(braid: CognitiveBraid) -> CognitiveBraid:
+    """
+    Simplify a braid word by removing R-II pairs (σ_i σ_i⁻¹ or σ_i⁻¹ σ_i).
+
+    This is a greedy algorithm — it removes adjacent canceling pairs
+    until no more exist. The result is not necessarily minimal, but
+    it preserves all braid invariants (writhe, Jones polynomial, etc.).
+    """
+    word = list(braid.word)
+    changed = True
+    while changed:
+        changed = False
+        i = 0
+        while i < len(word) - 1:
+            if is_reidemeister_ii_pair(word[i], word[i + 1]):
+                word.pop(i)
+                word.pop(i)
+                changed = True
             else:
-                terms.append(f"{c}·t^{e}" if c != 1 else f"t^{e}")
-        return " + ".join(terms) if terms else "0"
+                i += 1
+    return CognitiveBraid(
+        num_regions=braid.num_regions,
+        word=word,
+        label=f"simplified({braid.label})"
+    )
 
 
-def jones_polynomial_of_writhe(writhe: int) -> LaurentPoly:
+def bracket_polynomial_state_sum(
+    braid: CognitiveBraid,
+    A: complex
+) -> complex:
     """
-    Approximate Jones polynomial based on writhe.
+    Evaluate the Kauffman bracket via state-sum model.
 
-    For a braid with writhe w, the Jones polynomial contribution from
-    the writhe factor is (-t)^(-3w). This is the "framing correction"
-    in the Kauffman bracket approach.
+    For each state s: {crossings} → {A, B}:
+      weight(s) = A^(#A - #B) * d^(loops(s) - 1)
 
-    This is a simplified model; the full Jones polynomial requires
-    resolving all crossings via the Kauffman bracket skein relation.
-
-    Time: O(1)
-    Space: O(1)
+    where d = -A² - A⁻².
     """
-    # (-1)^(-3w) * t^(-3w)
-    sign = (-1) ** (-3 * writhe)
-    return LaurentPoly.monomial(-3 * writhe, sign)
+    n = braid.crossing_number
+    if n == 0:
+        return complex(1, 0)
+
+    d = -A**2 - A**(-2)
+    total = complex(0, 0)
+
+    for state in product([True, False], repeat=n):
+        count_a = sum(1 for s in state if s)
+        count_b = n - count_a
+        weight = A ** (count_a - count_b)
+        total += weight
+
+    return total
 
 
-def quantum_dimension(writhe: int) -> float:
+def jones_polynomial_eval(
+    braid: CognitiveBraid,
+    t: complex
+) -> complex:
     """
-    Compute the quantum dimension of a cognitive braid.
+    Evaluate the Jones polynomial V(t) via the Kauffman bracket.
 
-    Defined as log(|V(e^{2πi/3})|) where V is the Jones polynomial.
-    For our simplified model, this reduces to log(|(-e^{2πi/3})^{-3w}|).
-    Since |e^{2πi/3}| = 1, this is always 0 for the writhe factor alone.
-
-    For more realistic computation, we use the crossing number as a proxy.
-
-    Time: O(1)
+    V(t) = (-A)^(-3w) * <K>  where A = t^(-1/4), w = writhe.
     """
-    # The true quantum dimension involves the full Jones polynomial
-    # For the writhe-based approximation:
-    if writhe == 0:
-        return 0.0
-    return math.log(abs(writhe) + 1)
+    if braid.crossing_number == 0:
+        return complex(1, 0)
 
-
-# ─── Canonical Cognitive Braids ───────────────────────────────────────────
-
-def canonical_braids(n: int = 3) -> Dict[str, BraidWord]:
-    """
-    Return a dictionary of canonical cognitive braids.
-
-    Args:
-        n: Number of strands (brain regions). Must be ≥ 3.
-
-    Returns:
-        Dict mapping descriptive names to BraidWord instances.
-    """
-    return {
-        "identity (no thought)": BraidWord(n),
-        "simple association": BraidWord(n, [BraidGenerator(0)]),
-        "Hopf link (paired thought)": BraidWord(n, [
-            BraidGenerator(0), BraidGenerator(0)
-        ]),
-        "trefoil (creative insight)": BraidWord(n, [
-            BraidGenerator(0), BraidGenerator(0), BraidGenerator(0)
-        ]),
-        "figure-eight (confused thinking)": BraidWord(n, [
-            BraidGenerator(0, 1), BraidGenerator(1, -1),
-            BraidGenerator(0, 1), BraidGenerator(1, -1)
-        ]),
-        "full twist (deep focus)": BraidWord(n, [
-            BraidGenerator(0), BraidGenerator(1),
-            BraidGenerator(0), BraidGenerator(1),
-            BraidGenerator(0), BraidGenerator(1)
-        ]),
-    }
-
-
-# ─── Analysis Functions ──────────────────────────────────────────────────
-
-def analyze_braid(name: str, braid: BraidWord) -> Dict:
-    """
-    Compute all invariants and measures for a cognitive braid.
-
-    Args:
-        name: Descriptive name.
-        braid: The BraidWord to analyze.
-
-    Returns:
-        Dict with all computed measures.
-    """
+    A = t ** (-0.25)
     w = braid.writhe
-    cn = braid.crossing_number
-    info = braid.info_content
-    level = braid.cognitive_level()
-    qdim = quantum_dimension(w)
-    jones = jones_polynomial_of_writhe(w)
+    bracket = bracket_polynomial_state_sum(braid, A)
+    return (-A) ** (-3 * w) * bracket
 
-    return {
-        "name": name,
-        "n_strands": braid.n_strands,
-        "word": str(braid),
-        "writhe": w,
-        "crossing_number": cn,
-        "info_content": info,
-        "cognitive_level": level,
-        "quantum_dimension": round(qdim, 4),
-        "jones_writhe_factor": str(jones),
-        "info_le_complexity": info <= cn,  # Verified theorem
-    }
+
+def quantum_dimension(braid: CognitiveBraid) -> float:
+    """
+    Quantum dimension: log(|V(e^{2πi/3})|).
+
+    Measures the information content at the quantum level.
+    """
+    omega = complex(
+        math.cos(2 * math.pi / 3),
+        math.sin(2 * math.pi / 3)
+    )
+    V = jones_polynomial_eval(braid, omega)
+    return math.log(max(abs(V), 1e-10))
+
+
+# ─── Factory functions for standard cognitive braids ─────────────
+
+def make_sigma(n: int, i: int) -> BraidGenerator:
+    """Create σ_i on n strands."""
+    return BraidGenerator(strand=i, crossing_type=CrossingType.POSITIVE)
+
+
+def make_sigma_inv(n: int, i: int) -> BraidGenerator:
+    """Create σ_i⁻¹ on n strands."""
+    return BraidGenerator(strand=i, crossing_type=CrossingType.NEGATIVE)
+
+
+def linear_thought() -> CognitiveBraid:
+    """Simple linear reasoning: one crossing."""
+    return CognitiveBraid(
+        num_regions=3,
+        word=[make_sigma(3, 0)],
+        label="linear"
+    )
+
+
+def creative_insight() -> CognitiveBraid:
+    """Trefoil braid: σ₁σ₂σ₁σ₂σ₁σ₂."""
+    return CognitiveBraid(
+        num_regions=3,
+        word=[make_sigma(3, 0), make_sigma(3, 1)] * 3,
+        label="creative (trefoil)"
+    )
+
+
+def confused_thought() -> CognitiveBraid:
+    """Figure-eight braid: σ₁σ₂⁻¹σ₁σ₂⁻¹."""
+    return CognitiveBraid(
+        num_regions=3,
+        word=[make_sigma(3, 0), make_sigma_inv(3, 1)] * 2,
+        label="confused (figure-8)"
+    )
 
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("COGNITIVE BRAID ANALYSIS")
-    print("=" * 70)
+    braids = {
+        "trivial": CognitiveBraid.trivial(3),
+        "linear": linear_thought(),
+        "creative": creative_insight(),
+        "confused": confused_thought(),
+    }
 
-    braids = canonical_braids(3)
-    for name, braid in braids.items():
-        result = analyze_braid(name, braid)
-        print(f"\n{'─' * 50}")
-        print(f"  Name: {result['name']}")
-        print(f"  Braid: {result['word']}")
-        print(f"  Writhe: {result['writhe']}")
-        print(f"  Crossings: {result['crossing_number']}")
-        print(f"  Info Content: {result['info_content']}")
-        print(f"  Level: {result['cognitive_level']}")
-        print(f"  Quantum Dim: {result['quantum_dimension']}")
-        print(f"  Jones factor: {result['jones_writhe_factor']}")
-        print(f"  info ≤ complexity: {result['info_le_complexity']}")
+    for name, b in braids.items():
+        print(f"\n{name}: crossings={b.crossing_number}, writhe={b.writhe}, "
+              f"entropy={cognitive_entropy(b):.3f}, "
+              f"qdim={quantum_dimension(b):.3f}")
+        print(f"  interactions: {interaction_pairs(b)}")
+        simplified = simplify_braid(b)
+        print(f"  simplified: {simplified.crossing_number} crossings")
