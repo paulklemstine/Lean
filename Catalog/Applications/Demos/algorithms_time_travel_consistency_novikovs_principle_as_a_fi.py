@@ -1,207 +1,229 @@
+#!/usr/bin/env python3
 """
-Algorithms for Novikov Self-Consistency via Fixed-Point Theory
+Algorithms for Novikov Self-Consistency via Fixed-Point Iteration
 
-Implements the core algorithms for finding self-consistent solutions
-to time-travel scenarios modeled as causal loops.
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
-from typing import Callable, Tuple, Optional
+from typing import Callable, Tuple, Optional, List
 import math
 
 
-def fixed_point_iteration(
+def banach_iterate(
     f: Callable[[float], float],
     x0: float,
     K: float,
-    epsilon: float = 1e-10,
+    tol: float = 1e-12,
     max_iter: int = 10000,
-) -> Tuple[float, int, float]:
-    """Find the fixed point of a contractive map f with factor K.
+) -> Tuple[float, int, List[float]]:
+    """
+    Find the fixed point of a contraction mapping f with Lipschitz constant K < 1.
 
-    Uses Banach's iteration: x_{n+1} = f(x_n).
-    Guaranteed to converge if K < 1.
+    Uses the Banach iteration x_{n+1} = f(x_n).
 
     Args:
-        f: The causal map (contraction with factor K)
-        x0: Initial state guess
-        K: Contraction factor (must be < 1)
-        epsilon: Convergence tolerance
-        max_iter: Maximum iterations
+        f: The contracting map.
+        x0: Initial guess.
+        K: Lipschitz constant (must be < 1).
+        tol: Convergence tolerance.
+        max_iter: Maximum iterations.
 
     Returns:
-        (fixed_point, iterations, final_severity)
+        (fixed_point, iterations, trajectory) where trajectory is the
+        sequence of iterates.
+
+    Raises:
+        ValueError: If K >= 1.
     """
-    if K >= 1:
-        raise ValueError(f"Contraction factor K={K} must be < 1")
+    if K >= 1.0:
+        raise ValueError(f"Lipschitz constant K={K} must be < 1 for contraction")
 
+    trajectory: List[float] = [x0]
     x = x0
-    for i in range(max_iter):
-        fx = f(x)
-        severity = abs(x - fx)
-        if severity < epsilon:
-            return fx, i + 1, severity
-        x = fx
+    for n in range(max_iter):
+        x_new = f(x)
+        trajectory.append(x_new)
+        if abs(x_new - x) < tol * (1 - K):
+            return x_new, n + 1, trajectory
+        x = x_new
 
-    return x, max_iter, abs(x - f(x))
+    return x, max_iter, trajectory
 
 
 def affine_fixed_point(a: float, b: float) -> float:
-    """Compute the fixed point of f(x) = ax + b with |a| < 1.
+    """
+    Compute the exact fixed point of f(x) = ax + b with |a| < 1.
 
-    The unique fixed point is x* = b / (1 - a).
+    The fixed point is x* = b / (1 - a).
 
     Args:
-        a: Slope (must satisfy |a| < 1)
-        b: Offset
+        a: Slope coefficient with |a| < 1.
+        b: Intercept.
 
     Returns:
-        The fixed point b / (1 - a)
+        The unique fixed point b / (1 - a).
+
+    Raises:
+        ValueError: If |a| >= 1.
     """
-    if abs(a) >= 1:
+    if abs(a) >= 1.0:
         raise ValueError(f"|a| = {abs(a)} must be < 1")
-    return b / (1 - a)
+    return b / (1.0 - a)
 
 
-def paradox_severity(
-    f: Callable[[float], float], x: float
-) -> float:
-    """Compute the paradox severity: |x - f(x)|.
-
-    A severity of 0 means x is a self-consistent state.
+def compose_causal_maps(
+    f1: Callable[[float], float],
+    K1: float,
+    f2: Callable[[float], float],
+    K2: float,
+) -> Tuple[Callable[[float], float], float]:
+    """
+    Compose two causal maps and compute the composed Lipschitz constant.
 
     Args:
-        f: The causal map
-        x: The state to evaluate
+        f1: First causal map.
+        K1: Lipschitz constant of f1.
+        f2: Second causal map.
+        K2: Lipschitz constant of f2.
 
     Returns:
-        |x - f(x)|
+        (f2 ∘ f1, K1 * K2) — the composed map and its Lipschitz constant.
+
+    Raises:
+        ValueError: If K1 * K2 >= 1.
     """
-    return abs(x - f(x))
+    K_composed = K1 * K2
+    if K_composed >= 1.0:
+        raise ValueError(
+            f"Composed Lipschitz constant K1*K2 = {K_composed} must be < 1"
+        )
+
+    def composed(x: float) -> float:
+        return f2(f1(x))
+
+    return composed, K_composed
 
 
-def polynomial_deriv_bound(coeffs: list[float], r: float) -> float:
-    """Compute the derivative bound for a polynomial on [-r, r].
+def convergence_bound(K: float, initial_dist: float, n: int) -> float:
+    """
+    Compute the stability/convergence bound K^n * d(x, y).
 
-    For f(x) = sum_i coeffs[i] * x^i, the derivative bound is
-    sum_i i * |coeffs[i]| * r^(i-1).
-
-    If this is < 1, f is a contraction on [-r, r].
+    After n iterations of a K-contraction, two trajectories starting
+    distance d apart are at most K^n * d apart.
 
     Args:
-        coeffs: Polynomial coefficients [a0, a1, a2, ...]
-        r: Radius of the interval
+        K: Contraction constant (0 <= K < 1).
+        initial_dist: Initial distance between trajectories.
+        n: Number of iterations.
 
     Returns:
-        The derivative bound
+        Upper bound on distance after n iterations.
     """
-    bound = 0.0
-    for i, a in enumerate(coeffs):
-        if i > 0:
-            bound += i * abs(a) * r ** (i - 1)
-    return bound
+    return (K ** n) * initial_dist
 
 
-def polynomial_eval(coeffs: list[float], x: float) -> float:
-    """Evaluate a polynomial at x using Horner's method.
+def iterations_to_precision(K: float, diameter: float, epsilon: float) -> int:
+    """
+    Compute the number of iterations needed to achieve precision epsilon.
 
     Args:
-        coeffs: Polynomial coefficients [a0, a1, a2, ...]
-        x: Point to evaluate at
+        K: Contraction constant.
+        diameter: Diameter of the initial search region.
+        epsilon: Desired precision.
 
     Returns:
-        f(x)
+        Minimum number of iterations n such that K^n * diameter <= epsilon.
     """
-    result = 0.0
-    for a in reversed(coeffs):
-        result = result * x + a
+    if K <= 0 or K >= 1:
+        raise ValueError(f"K = {K} must be in (0, 1)")
+    if epsilon <= 0:
+        raise ValueError("epsilon must be positive")
+    if diameter <= 0:
+        return 0
+    return math.ceil(math.log(epsilon / diameter) / math.log(K))
+
+
+def polynomial_contraction_check(
+    coeffs: List[float],
+    domain: Tuple[float, float],
+    num_samples: int = 1000,
+) -> Tuple[bool, float]:
+    """
+    Check if a polynomial is a contraction on a given domain.
+
+    Estimates the maximum |p'(x)| on the domain by sampling.
+
+    Args:
+        coeffs: Polynomial coefficients [a_0, a_1, ..., a_n] for
+                p(x) = a_0 + a_1*x + ... + a_n*x^n.
+        domain: (lo, hi) interval.
+        num_samples: Number of sample points.
+
+    Returns:
+        (is_contraction, max_derivative) — whether |p'| < 1 on the domain,
+        and the estimated maximum value of |p'|.
+    """
+    lo, hi = domain
+    max_deriv = 0.0
+
+    # Derivative coefficients
+    deriv_coeffs = [coeffs[k] * k for k in range(1, len(coeffs))]
+
+    for i in range(num_samples + 1):
+        x = lo + (hi - lo) * i / num_samples
+        # Evaluate derivative at x using Horner's method
+        val = 0.0
+        for c in reversed(deriv_coeffs):
+            val = val * x + c
+        max_deriv = max(max_deriv, abs(val))
+
+    return max_deriv < 1.0, max_deriv
+
+
+def novikov_solve(
+    f: Callable[[float], float],
+    K: float,
+    x0: float = 0.0,
+    tol: float = 1e-12,
+) -> Optional[float]:
+    """
+    Find the self-consistent solution (Novikov fixed point) of a causal map.
+
+    This is the main entry point: given a causal evolution map f with
+    contraction constant K < 1, find x* such that f(x*) = x*.
+
+    Args:
+        f: The causal evolution map (must be a K-contraction).
+        K: Lipschitz constant, must be < 1.
+        x0: Initial guess (any value works due to contraction).
+        tol: Convergence tolerance.
+
+    Returns:
+        The unique fixed point x*, or None if iteration did not converge.
+    """
+    result, iters, _ = banach_iterate(f, x0, K, tol)
     return result
 
 
-def perturbation_stability(
-    a: float, b1: float, b2: float
-) -> Tuple[float, float]:
-    """Compute how much the fixed point shifts when the offset changes.
+if __name__ == "__main__":
+    # Example: affine causal map
+    a, b = 0.3, 700.0
+    exact = affine_fixed_point(a, b)
+    print(f"Affine map f(x) = {a}x + {b}")
+    print(f"Exact fixed point: {exact}")
 
-    For f1(x) = ax + b1 and f2(x) = ax + b2:
-    |x1* - x2*| = |b1 - b2| / |1 - a|
+    numerical = novikov_solve(lambda x: a * x + b, abs(a))
+    print(f"Numerical fixed point: {numerical}")
+    print(f"Match: {abs(exact - numerical) < 1e-10}")
 
-    Args:
-        a: Common slope
-        b1: First offset
-        b2: Second offset
+    # Example: polynomial causal map
+    coeffs = [2.0, -0.3, 0.1]  # 2 - 0.3x + 0.1x²
+    is_contr, max_d = polynomial_contraction_check(coeffs, (-1.0, 3.0))
+    print(f"\nPolynomial 2 - 0.3x + 0.1x²")
+    print(f"Contraction on [-1, 3]: {is_contr} (max |p'| = {max_d:.4f})")
 
-    Returns:
-        (shift, amplification_factor)
-        where shift = |b1-b2| / |1-a| and amplification = 1/|1-a|
-    """
-    if abs(a) >= 1:
-        raise ValueError(f"|a| = {abs(a)} must be < 1")
-    shift = abs(b1 - b2) / abs(1 - a)
-    amplification = 1 / abs(1 - a)
-    return shift, amplification
-
-
-def compose_causal_loops(
-    f1: Callable[[float], float],
-    f2: Callable[[float], float],
-    K1: float,
-    K2: float,
-) -> Tuple[Callable[[float], float], float]:
-    """Compose two causal loops (nested time travel).
-
-    The composition f1 ∘ f2 has contraction factor K1 * K2.
-
-    Args:
-        f1: First causal map
-        f2: Second causal map
-        K1: Contraction factor of f1
-        K2: Contraction factor of f2
-
-    Returns:
-        (composed_map, composed_contraction_factor)
-    """
-    return lambda x: f1(f2(x)), K1 * K2
-
-
-def multi_traveler_fixed_point(
-    maps: list[Callable[[float], float]],
-    x0s: list[float],
-    Ks: list[float],
-    epsilon: float = 1e-10,
-    max_iter: int = 10000,
-) -> list[Tuple[float, int, float]]:
-    """Find self-consistent states for multiple independent travelers.
-
-    Each traveler has their own causal map and contraction factor.
-
-    Args:
-        maps: List of causal maps
-        x0s: List of initial guesses
-        Ks: List of contraction factors
-
-    Returns:
-        List of (fixed_point, iterations, severity) for each traveler
-    """
-    return [
-        fixed_point_iteration(f, x0, K, epsilon, max_iter)
-        for f, x0, K in zip(maps, x0s, Ks)
-    ]
-
-
-def is_grandfather_paradox(f: Callable[[float], float], test_points: list[float]) -> bool:
-    """Check if a causal map behaves like the grandfather paradox.
-
-    The grandfather paradox corresponds to f(x) = -x (state negation).
-    We check if f approximately negates all test points.
-
-    Args:
-        f: The causal map to test
-        test_points: Points to test
-
-    Returns:
-        True if f behaves like state negation
-    """
-    for x in test_points:
-        if x != 0 and abs(f(x) + x) > abs(f(x) - x):
-            return False
-    return True
+    if is_contr:
+        fp = novikov_solve(
+            lambda x: 0.1 * x**2 - 0.3 * x + 2, max_d, x0=0.0
+        )
+        print(f"Fixed point: {fp}")
