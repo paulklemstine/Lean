@@ -1,303 +1,325 @@
+#!/usr/bin/env python3
 """
-Algorithms for Cellular Automata Reversibility Analysis
-
-Type-hinted implementations of the core algorithms from the
-Galois Theory of Cellular Automata research.
+Algorithms for Reversible Cellular Automata Analysis
+=====================================================
+Type-hinted implementations of core algorithms.
 """
 
-from typing import Callable, Dict, FrozenSet, List, Optional, Set, Tuple
-from itertools import product
-from functools import reduce
+from typing import Callable, Dict, List, Optional, Set, Tuple
+import itertools
 
 
-# --- Core Types ---
+# ---------------------------------------------------------------------------
+# Core CA Types and Functions
+# ---------------------------------------------------------------------------
 
-Config = Tuple[bool, ...]
+Config = List[bool]
 LocalRule = Callable[[bool, bool, bool], bool]
 
 
-def wolfram_rule(number: int) -> LocalRule:
-    """Convert a Wolfram rule number (0-255) to a local rule function.
-    
-    The rule number encodes the output for each of the 8 possible
-    3-cell neighborhoods in binary.
-    
+def wolfram_to_rule(rule_number: int) -> LocalRule:
+    """Convert Wolfram rule number (0-255) to local rule function.
+
+    The Wolfram encoding maps each 3-bit neighborhood (a,b,c) to a
+    single output bit. The neighborhood index is 4a + 2b + c.
+
     Args:
-        number: Integer 0-255 identifying the elementary CA rule.
-        
+        rule_number: Integer in [0, 255].
+
     Returns:
-        A function (left, center, right) -> bool.
+        A function (Bool, Bool, Bool) -> Bool implementing the rule.
     """
-    assert 0 <= number <= 255, f"Rule number must be 0-255, got {number}"
-    bits = [(number >> i) & 1 == 1 for i in range(8)]
-    
-    def rule(left: bool, center: bool, right: bool) -> bool:
-        index = (int(left) << 2) | (int(center) << 1) | int(right)
-        return bits[index]
-    
+    def rule(a: bool, b: bool, c: bool) -> bool:
+        index = (int(a) << 2) | (int(b) << 1) | int(c)
+        return bool((rule_number >> index) & 1)
     return rule
 
 
-def global_map(rule: LocalRule, config: Config) -> Config:
-    """Apply a CA local rule to a periodic configuration.
-    
+def rule_to_wolfram(f: LocalRule) -> int:
+    """Convert a local rule function to its Wolfram number.
+
     Args:
-        rule: The local rule function.
-        config: A periodic configuration (tuple of bools).
-        
+        f: A function (Bool, Bool, Bool) -> Bool.
+
     Returns:
-        The next-generation configuration.
+        Integer in [0, 255] encoding the rule.
+    """
+    number = 0
+    for a in [False, True]:
+        for b in [False, True]:
+            for c in [False, True]:
+                index = (int(a) << 2) | (int(b) << 1) | int(c)
+                if f(a, b, c):
+                    number |= (1 << index)
+    return number
+
+
+def apply_global_map(f: LocalRule, config: Config) -> Config:
+    """Apply a CA rule to a cyclic configuration.
+
+    Each cell's new value is computed from (left, center, right) neighbors
+    with cyclic boundary conditions.
+
+    Args:
+        f: Local rule function.
+        config: Configuration as list of bools.
+
+    Returns:
+        New configuration after one time step.
+
+    Time complexity: O(n) where n = len(config).
     """
     n = len(config)
-    return tuple(
-        rule(config[(i - 1) % n], config[i], config[(i + 1) % n])
-        for i in range(n)
-    )
+    return [f(config[(i - 1) % n], config[i], config[(i + 1) % n])
+            for i in range(n)]
 
 
-def is_bijective_on_size(rule: LocalRule, n: int) -> bool:
-    """Test whether a CA rule gives a bijective global map on configs of size n.
-    
+# ---------------------------------------------------------------------------
+# Reversibility Testing
+# ---------------------------------------------------------------------------
+
+def test_injectivity(rule_number: int, n: int) -> bool:
+    """Test if a rule's global map is injective on size-n configurations.
+
+    Enumerates all 2^n configurations and checks for collisions.
+
     Args:
-        rule: The local rule.
-        n: Configuration size.
-        
+        rule_number: Wolfram rule number.
+        n: Configuration size (positive integer).
+
     Returns:
-        True if the global map is bijective (i.e., a permutation of configs).
+        True if the global map is injective on size-n configs.
+
+    Time complexity: O(n · 2^n).
     """
-    all_configs = list(product([False, True], repeat=n))
-    images = set()
-    for config in all_configs:
-        img = global_map(rule, config)
-        if img in images:
+    f = wolfram_to_rule(rule_number)
+    seen: Set[Tuple[bool, ...]] = set()
+    for bits in itertools.product([False, True], repeat=n):
+        result = tuple(apply_global_map(f, list(bits)))
+        if result in seen:
             return False
-        images.add(img)
-    return len(images) == len(all_configs)
+        seen.add(result)
+    return True
 
 
-def find_reversible_rules(n: int, max_rule: int = 256) -> List[int]:
-    """Find all reversible elementary CA rules for configurations of size n.
-    
+def classify_reversibility(max_test_size: int = 8) -> Tuple[List[int], List[int]]:
+    """Classify all 256 elementary CA rules as reversible or not.
+
+    A rule is classified as reversible if its global map is injective
+    for all tested configuration sizes.
+
     Args:
-        n: Configuration size to test.
-        max_rule: Number of rules to test (default 256 for elementary CAs).
-        
+        max_test_size: Maximum configuration size to test.
+
     Returns:
-        List of rule numbers that are reversible on size-n configs.
+        (reversible_rules, non_reversible_rules) as sorted lists.
     """
-    reversible = []
-    for r in range(max_rule):
-        rule = wolfram_rule(r)
-        if is_bijective_on_size(rule, n):
+    reversible: List[int] = []
+    non_reversible: List[int] = []
+    for r in range(256):
+        if all(test_injectivity(r, n) for n in range(1, max_test_size + 1)):
             reversible.append(r)
-    return reversible
+        else:
+            non_reversible.append(r)
+    return reversible, non_reversible
 
 
-def orbit(rule: LocalRule, config: Config, max_steps: int = 1000) -> List[Config]:
-    """Compute the orbit of a configuration until it cycles back.
-    
+def find_collision(rule_number: int, max_n: int = 12
+                   ) -> Optional[Tuple[int, Config, Config, Config]]:
+    """Find two distinct configurations that map to the same output.
+
     Args:
-        rule: The local rule.
-        config: Starting configuration.
-        max_steps: Maximum iterations before giving up.
-        
+        rule_number: Wolfram rule number.
+        max_n: Maximum configuration size to search.
+
     Returns:
-        List of configurations in the orbit (starting from config).
+        (n, config1, config2, shared_output) if collision found, else None.
     """
-    path = [config]
-    current = config
-    for _ in range(max_steps):
-        current = global_map(rule, current)
-        if current == config:
-            break
-        path.append(current)
-    return path
-
-
-def orbit_period(rule: LocalRule, config: Config, max_steps: int = 10000) -> int:
-    """Compute the period of a configuration under a CA rule.
-    
-    Args:
-        rule: The local rule.
-        config: Starting configuration.
-        max_steps: Maximum steps to search.
-        
-    Returns:
-        The smallest positive p such that f^p(config) = config, or -1 if not found.
-    """
-    current = config
-    for step in range(1, max_steps + 1):
-        current = global_map(rule, current)
-        if current == config:
-            return step
-    return -1
-
-
-def reversibility_index(rule: LocalRule, n: int) -> int:
-    """Compute the reversibility index: number of configs sharing an image with another.
-    
-    Args:
-        rule: The local rule.
-        n: Configuration size.
-        
-    Returns:
-        Count of configurations s such that ∃ t ≠ s with f(t) = f(s).
-    """
-    all_configs = list(product([False, True], repeat=n))
-    image_map: Dict[Config, List[Config]] = {}
-    
-    for config in all_configs:
-        img = global_map(rule, config)
-        image_map.setdefault(img, []).append(config)
-    
-    count = 0
-    for preimages in image_map.values():
-        if len(preimages) > 1:
-            count += len(preimages)
-    return count
-
-
-def composition_group_order(rules: List[LocalRule], n: int,
-                            max_elements: int = 100000) -> int:
-    """Estimate the order of the group generated by given rules' global maps.
-    
-    Uses BFS on the Cayley graph of the generated group.
-    
-    Args:
-        rules: List of generating local rules.
-        n: Configuration size.
-        max_elements: Maximum group elements to explore.
-        
-    Returns:
-        The number of distinct permutations found.
-    """
-    # Represent permutations as tuples of images
-    all_configs = list(product([False, True], repeat=n))
-    config_to_idx = {c: i for i, c in enumerate(all_configs)}
-    
-    def rule_to_perm(rule: LocalRule) -> Tuple[int, ...]:
-        return tuple(config_to_idx[global_map(rule, c)] for c in all_configs)
-    
-    def compose_perms(p1: Tuple[int, ...], p2: Tuple[int, ...]) -> Tuple[int, ...]:
-        return tuple(p1[p2[i]] for i in range(len(p1)))
-    
-    identity = tuple(range(len(all_configs)))
-    generators = [rule_to_perm(r) for r in rules]
-    # Also add inverses
-    inv_generators = []
-    for g in generators:
-        inv = [0] * len(g)
-        for i, gi in enumerate(g):
-            inv[gi] = i
-        inv_generators.append(tuple(inv))
-    
-    all_gens = generators + inv_generators
-    
-    seen: Set[Tuple[int, ...]] = {identity}
-    frontier = [identity]
-    
-    while frontier and len(seen) < max_elements:
-        new_frontier = []
-        for perm in frontier:
-            for gen in all_gens:
-                composed = compose_perms(gen, perm)
-                if composed not in seen:
-                    seen.add(composed)
-                    new_frontier.append(composed)
-        frontier = new_frontier
-    
-    return len(seen)
-
-
-def classify_single_input(rule_number: int) -> Optional[str]:
-    """Classify whether a rule is single-input and describe its structure.
-    
-    Args:
-        rule_number: Wolfram rule number (0-255).
-        
-    Returns:
-        Description string if single-input, None otherwise.
-    """
-    rule = wolfram_rule(rule_number)
-    
-    # Check left-dependent
-    left_vals = {}
-    is_left = True
-    for l in [False, True]:
-        outputs = set()
-        for c in [False, True]:
-            for r in [False, True]:
-                outputs.add(rule(l, c, r))
-        if len(outputs) > 1:
-            is_left = False
-            break
-        left_vals[l] = outputs.pop()
-    
-    if is_left:
-        if left_vals[False] != left_vals[True]:
-            g_name = "id" if left_vals[False] == False else "not"
-            return f"left-dependent, g={g_name}"
-    
-    # Check center-dependent
-    center_vals = {}
-    is_center = True
-    for c in [False, True]:
-        outputs = set()
-        for l in [False, True]:
-            for r in [False, True]:
-                outputs.add(rule(l, c, r))
-        if len(outputs) > 1:
-            is_center = False
-            break
-        center_vals[c] = outputs.pop()
-    
-    if is_center:
-        if center_vals[False] != center_vals[True]:
-            g_name = "id" if center_vals[False] == False else "not"
-            return f"center-dependent, g={g_name}"
-    
-    # Check right-dependent
-    right_vals = {}
-    is_right = True
-    for r in [False, True]:
-        outputs = set()
-        for l in [False, True]:
-            for c in [False, True]:
-                outputs.add(rule(l, c, r))
-        if len(outputs) > 1:
-            is_right = False
-            break
-        right_vals[r] = outputs.pop()
-    
-    if is_right:
-        if right_vals[False] != right_vals[True]:
-            g_name = "id" if right_vals[False] == False else "not"
-            return f"right-dependent, g={g_name}"
-    
+    f = wolfram_to_rule(rule_number)
+    for n in range(1, max_n + 1):
+        seen: Dict[Tuple[bool, ...], Config] = {}
+        for bits in itertools.product([False, True], repeat=n):
+            config = list(bits)
+            result = tuple(apply_global_map(f, config))
+            if result in seen:
+                return (n, seen[result], config, list(result))
+            seen[result] = config
     return None
 
 
-if __name__ == "__main__":
-    print("=== Cellular Automata Reversibility Analysis ===\n")
-    
-    # Classify all 256 elementary CA rules
-    print("Single-input rules (candidate reversible rules):")
+# ---------------------------------------------------------------------------
+# Dependency Analysis
+# ---------------------------------------------------------------------------
+
+def analyze_dependency(rule_number: int) -> Dict[str, bool]:
+    """Determine which inputs a rule genuinely depends on.
+
+    A rule depends on input position p if there exist values of the
+    other inputs such that changing p changes the output.
+
+    Args:
+        rule_number: Wolfram rule number.
+
+    Returns:
+        Dict with keys 'left', 'center', 'right' (bool values).
+    """
+    f = wolfram_to_rule(rule_number)
+    return {
+        "left": any(f(False, b, c) != f(True, b, c)
+                    for b in [False, True] for c in [False, True]),
+        "center": any(f(a, False, c) != f(a, True, c)
+                      for a in [False, True] for c in [False, True]),
+        "right": any(f(a, b, False) != f(a, b, True)
+                     for a in [False, True] for b in [False, True]),
+    }
+
+
+def is_single_dependency(rule_number: int) -> Optional[Tuple[str, str]]:
+    """Check if a rule is single-dependent and identify its structure.
+
+    Args:
+        rule_number: Wolfram rule number.
+
+    Returns:
+        (position, transform_type) if single-dependent, None otherwise.
+        position ∈ {'left', 'center', 'right'}
+        transform_type ∈ {'identity', 'complement', 'const_false', 'const_true'}
+    """
+    deps = analyze_dependency(rule_number)
+    dep_count = sum(deps.values())
+
+    if dep_count > 1:
+        return None
+
+    f = wolfram_to_rule(rule_number)
+
+    if dep_count == 0:
+        # Constant rule
+        val = f(False, False, False)
+        return ("none", "const_true" if val else "const_false")
+
+    if deps["left"]:
+        pos = "left"
+        t_false = f(False, False, False)
+        t_true = f(True, False, False)
+    elif deps["center"]:
+        pos = "center"
+        t_false = f(False, False, False)
+        t_true = f(False, True, False)
+    else:
+        pos = "right"
+        t_false = f(False, False, False)
+        t_true = f(False, False, True)
+
+    if t_false == False and t_true == True:
+        transform = "identity"
+    elif t_false == True and t_true == False:
+        transform = "complement"
+    elif t_false == t_true:
+        transform = "const_true" if t_false else "const_false"
+    else:
+        transform = "identity"  # shouldn't reach here
+
+    return (pos, transform)
+
+
+# ---------------------------------------------------------------------------
+# Group Operations
+# ---------------------------------------------------------------------------
+
+def compose_global_maps(rule1: int, rule2: int, n: int) -> Dict[Tuple[bool, ...], Tuple[bool, ...]]:
+    """Compute the composition of two global maps on size-n configurations.
+
+    Args:
+        rule1: First rule to apply (outer).
+        rule2: Second rule to apply (inner).
+        n: Configuration size.
+
+    Returns:
+        Dict mapping input configs to output configs.
+    """
+    f1 = wolfram_to_rule(rule1)
+    f2 = wolfram_to_rule(rule2)
+    result = {}
+    for bits in itertools.product([False, True], repeat=n):
+        config = list(bits)
+        intermediate = apply_global_map(f2, config)
+        output = apply_global_map(f1, intermediate)
+        result[bits] = tuple(output)
+    return result
+
+
+def compute_group_table(rules: List[int], n: int) -> Dict[Tuple[int, int], Optional[int]]:
+    """Compute the multiplication table for global maps on size-n configs.
+
+    For each pair of rules, checks if their composition equals the global
+    map of some elementary rule.
+
+    Args:
+        rules: List of rule numbers.
+        n: Configuration size.
+
+    Returns:
+        Dict mapping (r1, r2) to the rule number of their composition,
+        or None if no elementary rule matches.
+    """
+    # Precompute all global maps
+    maps: Dict[int, Dict[Tuple[bool, ...], Tuple[bool, ...]]] = {}
     for r in range(256):
-        classification = classify_single_input(r)
-        if classification:
-            print(f"  Rule {r:3d}: {classification}")
-    
-    print()
-    
-    # Find reversible rules for various sizes
-    for n in [3, 4, 5, 6, 7, 8]:
-        rev = find_reversible_rules(n)
-        print(f"Reversible rules for n={n}: {rev}")
-    
-    print()
-    
-    # Compute reversibility indices for some non-reversible rules
-    print("Reversibility indices (n=5):")
-    for r in [0, 30, 90, 110, 150, 204, 170]:
-        idx = reversibility_index(wolfram_rule(r), 5)
-        print(f"  Rule {r:3d}: index = {idx}")
+        f = wolfram_to_rule(r)
+        m = {}
+        for bits in itertools.product([False, True], repeat=n):
+            config = list(bits)
+            m[bits] = tuple(apply_global_map(f, config))
+        maps[r] = m
+
+    table = {}
+    for r1 in rules:
+        for r2 in rules:
+            comp = compose_global_maps(r1, r2, n)
+            found = None
+            for r in range(256):
+                if maps[r] == comp:
+                    found = r
+                    break
+            table[(r1, r2)] = found
+
+    return table
+
+
+# ---------------------------------------------------------------------------
+# Inverse Construction
+# ---------------------------------------------------------------------------
+
+INVERSE_MAP = {
+    204: 204,  # identity -> identity
+    170: 240,  # right shift -> left shift
+    240: 170,  # left shift -> right shift
+    51: 51,    # complement -> complement
+    85: 15,    # complement-right -> complement-left
+    15: 85,    # complement-left -> complement-right
+}
+
+
+def get_inverse_rule(rule_number: int) -> Optional[int]:
+    """Get the inverse rule for a reversible elementary CA.
+
+    Args:
+        rule_number: Must be one of {15, 51, 85, 170, 204, 240}.
+
+    Returns:
+        The rule number of the inverse, or None if not reversible.
+    """
+    return INVERSE_MAP.get(rule_number)
+
+
+if __name__ == "__main__":
+    # Quick demonstration
+    rev, nonrev = classify_reversibility()
+    print(f"Reversible rules: {rev}")
+    print(f"Non-reversible rules: {len(nonrev)} rules")
+
+    for r in rev:
+        sd = is_single_dependency(r)
+        inv = get_inverse_rule(r)
+        print(f"  Rule {r}: {sd}, inverse = Rule {inv}")
