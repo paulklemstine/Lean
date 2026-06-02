@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ec0b5727",
     "filename": "formal_foundations_of_the_independence_compl.json",
     "pkg_num": 255,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.726364538882804,
     "title": "Independence Complex of Argumentation Frameworks: Formal Foundations"
   },
   {
@@ -8192,8 +8192,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "formal_foundations_of_the_independence_compl",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.726364538882804,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Independence Complex of Argumentation Frameworks: Formal Foundations"
     }
