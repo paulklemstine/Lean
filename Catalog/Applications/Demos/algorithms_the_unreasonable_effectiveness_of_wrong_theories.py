@@ -1,220 +1,267 @@
+#!/usr/bin/env python3
 """
-Algorithms for Theory Perturbation and Effectiveness Analysis
-
-Implements the mathematical framework from the formal Lean proofs:
-- PerturbationChain: geometric decay correction sequences
-- TheoryDefect: error distribution analysis
-- Theory comparison and optimal truncation
+Algorithms for Perturbation Theory on Theory Space.
+Type-hinted implementations of the key algorithms from the research.
 """
 
-from typing import List, Tuple, Callable, Optional
+from dataclasses import dataclass
+from typing import Callable, List, Optional, Tuple
 import math
 
 
-class PerturbationChain:
-    """A sequence of corrections with geometrically decaying magnitudes.
-    
-    Models the structure T_true ≈ T₀ + ε·T₁ + ε²·T₂ + ...
-    where each correction is bounded by |c_{k+1}| ≤ r·|c_k|.
+@dataclass
+class PerturbationTheory:
+    """A perturbation theory: base + Σ ε^(k+1) * c_k."""
+    base: float
+    corrections: List[float]
+    coupling: float
+
+    @property
+    def max_correction(self) -> float:
+        """Maximum absolute correction coefficient (M bound)."""
+        return max(abs(c) for c in self.corrections) if self.corrections else 0.0
+
+    def partial_sum(self, order: int) -> float:
+        """Compute the partial sum T_n = base + Σ_{k<n} ε^(k+1) * c_k."""
+        result = self.base
+        for k in range(min(order, len(self.corrections))):
+            result += self.coupling ** (k + 1) * self.corrections[k]
+        return result
+
+    def wrongness_at(self, k: int) -> float:
+        """The wrongness at order k: ε^(k+1) * c_k."""
+        if k >= len(self.corrections):
+            return 0.0
+        return self.coupling ** (k + 1) * self.corrections[k]
+
+    def truth_value(self) -> float:
+        """The truth value (full series sum)."""
+        return self.partial_sum(len(self.corrections))
+
+    def truncation_error(self, order: int) -> float:
+        """Absolute error of the order-n truncation."""
+        return abs(self.truth_value() - self.partial_sum(order))
+
+
+def truncation_error_bound(M: float, coupling: float, order: int) -> float:
     """
-    
-    def __init__(self, corrections: List[float], ratio: float):
-        """Initialize a perturbation chain.
-        
-        Args:
-            corrections: List of correction magnitudes
-            ratio: Geometric decay ratio (must satisfy |ratio| < 1)
-        
-        Raises:
-            ValueError: If |ratio| >= 1
-        """
-        if abs(ratio) >= 1:
-            raise ValueError(f"|ratio| = {abs(ratio)} must be < 1")
-        self.corrections = corrections
-        self.ratio = ratio
-    
-    def partial_sum(self, n: int) -> float:
-        """Compute the partial sum of corrections up to order n."""
-        return sum(self.corrections[:n])
-    
-    def tail_bound(self, n: int) -> float:
-        """Upper bound on remaining error after n terms.
-        
-        Implements Theorem 3.4: Σ_{k≥n} |c_k| ≤ |c₀|·|r|^n / (1 - |r|)
-        """
-        if not self.corrections:
-            return 0.0
-        c0 = abs(self.corrections[0])
-        r = abs(self.ratio)
-        if r == 0:
-            return 0.0
-        return c0 * r ** n / (1 - r)
-    
-    def optimal_truncation(self, target_accuracy: float) -> int:
-        """Minimum number of terms for target accuracy.
-        
-        Finds smallest N such that tail_bound(N) ≤ target_accuracy.
-        """
-        if not self.corrections or target_accuracy <= 0:
-            return len(self.corrections)
-        c0 = abs(self.corrections[0])
-        r = abs(self.ratio)
-        if r == 0:
-            return 1
-        # Solve: c0 * r^N / (1 - r) ≤ target
-        # r^N ≤ target * (1 - r) / c0
-        rhs = target_accuracy * (1 - r) / c0
-        if rhs >= 1:
-            return 0
-        if rhs <= 0:
-            return len(self.corrections)
-        return math.ceil(math.log(rhs) / math.log(r))
-    
-    def verify_geometric_decay(self) -> bool:
-        """Check that corrections satisfy geometric decay property."""
-        r = abs(self.ratio)
-        for k in range(len(self.corrections) - 1):
-            if abs(self.corrections[k + 1]) > r * abs(self.corrections[k]) + 1e-12:
-                return False
-        return True
+    Compute the theoretical truncation error bound.
 
+    For a theory with GeomBounded corrections (|c_k| ≤ M) and |ε| < 1:
+        error ≤ M * |ε|^(n+1) / (1 - |ε|)
 
-class TheoryDefect:
-    """Measures the error distribution of a theory across phenomena.
-    
-    Captures both magnitude and structure of wrongness.
-    """
-    
-    def __init__(self, predictions: List[float], truth: List[float]):
-        """Initialize theory defect from predictions and ground truth.
-        
-        Args:
-            predictions: Theory's predictions on each phenomenon
-            truth: Ground truth values
-        
-        Raises:
-            ValueError: If lengths don't match
-        """
-        if len(predictions) != len(truth):
-            raise ValueError("Predictions and truth must have same length")
-        self.predictions = predictions
-        self.truth = truth
-        self.n = len(predictions)
-    
-    def pointwise_error(self, i: int) -> float:
-        """Absolute error at phenomenon i."""
-        return abs(self.predictions[i] - self.truth[i])
-    
-    def squared_errors(self) -> List[float]:
-        """Squared error at each phenomenon."""
-        return [(p - t) ** 2 for p, t in zip(self.predictions, self.truth)]
-    
-    def total_squared_error(self) -> float:
-        """Total squared error across all phenomena."""
-        return sum(self.squared_errors())
-    
-    def mean_squared_error(self) -> float:
-        """Mean squared error."""
-        if self.n == 0:
-            return 0.0
-        return self.total_squared_error() / self.n
-    
-    def effectiveness_domain(self, threshold: float) -> List[int]:
-        """Phenomena where squared error is at most threshold.
-        
-        By Theorem 3.5, if MSE ≤ ε, this is guaranteed non-empty.
-        By Theorem 3.6, this has size ≥ n/2 when threshold = 2·MSE.
-        """
-        errs = self.squared_errors()
-        return [i for i, e in enumerate(errs) if e <= threshold]
-    
-    def concentration_ratio(self) -> float:
-        """Ratio of max error to mean error.
-        
-        High concentration → errors focused on few phenomena.
-        Low concentration → errors spread uniformly.
-        """
-        errs = self.squared_errors()
-        if not errs:
-            return 0.0
-        mean_err = sum(errs) / len(errs)
-        if mean_err == 0:
-            return 0.0
-        return max(errs) / mean_err
+    Args:
+        M: Upper bound on correction coefficients
+        coupling: Perturbation parameter ε
+        order: Truncation order n
 
-
-def compare_theories(
-    theory_a: TheoryDefect,
-    theory_b: TheoryDefect
-) -> Tuple[List[int], List[int], List[int]]:
-    """Compare two theories, finding where each is superior.
-    
-    Implements the wrong_theory_local_superiority theorem:
-    even if A has lower total error, B can be better on specific phenomena.
-    
     Returns:
-        Tuple of (domain_A, domain_B, ties) where each is a list of
-        phenomenon indices where that theory is superior.
+        Upper bound on the truncation error
     """
-    n = theory_a.n
-    errs_a = theory_a.squared_errors()
-    errs_b = theory_b.squared_errors()
-    
-    domain_a: List[int] = []
-    domain_b: List[int] = []
-    ties: List[int] = []
-    
-    for i in range(n):
-        if errs_a[i] < errs_b[i]:
-            domain_a.append(i)
-        elif errs_b[i] < errs_a[i]:
-            domain_b.append(i)
-        else:
-            ties.append(i)
-    
-    return domain_a, domain_b, ties
+    eps = abs(coupling)
+    if eps >= 1.0:
+        return float('inf')
+    return M * eps ** (order + 1) / (1.0 - eps)
 
 
-def perturbation_convergence_demo(
-    base_value: float,
-    ratio: float,
-    n_terms: int = 20
-) -> List[Tuple[int, float, float]]:
-    """Demonstrate perturbation series convergence.
-    
-    Creates a geometric perturbation chain and shows convergence
-    of partial sums with error bounds.
-    
+def optimal_truncation(theory: PerturbationTheory,
+                        tolerance: float = 1e-10) -> Tuple[int, float]:
+    """
+    Find the optimal truncation order minimizing prediction error.
+
+    Implements the Optimal Truncation Algorithm:
+    1. Compute truth value (full series)
+    2. Evaluate error at each truncation order
+    3. Return the order with minimum error
+
+    Args:
+        theory: The perturbation theory to truncate
+        tolerance: Numerical tolerance for comparison
+
     Returns:
-        List of (n_terms, partial_sum, error_bound) tuples
+        (optimal_order, minimum_error) tuple
     """
-    corrections = [base_value * ratio ** k for k in range(n_terms)]
-    chain = PerturbationChain(corrections, ratio)
-    
-    results = []
-    for n in range(1, n_terms + 1):
-        ps = chain.partial_sum(n)
-        eb = chain.tail_bound(n)
-        results.append((n, ps, eb))
-    
-    return results
+    true_val = theory.truth_value()
+    best_order = 0
+    best_error = abs(true_val - theory.base)
+
+    for n in range(1, len(theory.corrections) + 1):
+        pred = theory.partial_sum(n)
+        error = abs(true_val - pred)
+        if error < best_error - tolerance:
+            best_error = error
+            best_order = n
+
+    return best_order, best_error
 
 
-def half_domain_verification(
-    predictions: List[float],
-    truth: List[float]
-) -> Tuple[float, int, int, bool]:
-    """Verify the half-domain theorem for given predictions.
-    
+def adaptive_truncation(theory: PerturbationTheory,
+                         target_precision: float) -> Tuple[int, float]:
+    """
+    Find the minimum truncation order achieving target precision.
+
+    Uses the theoretical error bound as a stopping criterion:
+    Stop at order n when M * |ε|^(n+1) / (1 - |ε|) < target_precision.
+
+    Args:
+        theory: The perturbation theory
+        target_precision: Desired precision δ > 0
+
     Returns:
-        Tuple of (mse, effective_count, n, theorem_holds)
-        where effective_count is the number of phenomena with
-        squared error ≤ 2·MSE, and theorem_holds checks if
-        effective_count ≥ n/2.
+        (truncation_order, achieved_precision) tuple
     """
-    defect = TheoryDefect(predictions, truth)
-    mse = defect.mean_squared_error()
-    effective = defect.effectiveness_domain(2 * mse)
-    n = defect.n
-    holds = len(effective) * 2 >= n
-    return mse, len(effective), n, holds
+    M = theory.max_correction
+    eps = abs(theory.coupling)
+
+    if eps >= 1.0:
+        raise ValueError("Coupling parameter |ε| must be < 1 for convergence")
+
+    n = 0
+    while truncation_error_bound(M, theory.coupling, n) > target_precision:
+        n += 1
+        if n > len(theory.corrections):
+            break
+
+    actual_error = theory.truncation_error(n)
+    return n, actual_error
+
+
+def overshoot_check(c1: float, c2: float) -> dict:
+    """
+    Check whether the Approximation Overshoot Theorem applies.
+
+    Conditions for base theory to outperform first-order correction:
+    1. c1 * c2 ≤ 0 (opposite signs)
+    2. |c1| ≤ 2 * |c2| (overshoot condition)
+
+    Args:
+        c1: First-order correction
+        c2: Second-order correction
+
+    Returns:
+        Dictionary with analysis results
+    """
+    opposite_signs = c1 * c2 <= 0
+    overshoot_condition = abs(c1) <= 2 * abs(c2)
+    theorem_applies = opposite_signs and overshoot_condition
+
+    base_error = abs(c1 + c2)
+    corrected_error = abs(c2)
+    base_wins = base_error <= corrected_error
+
+    return {
+        "c1": c1,
+        "c2": c2,
+        "opposite_signs": opposite_signs,
+        "overshoot_condition": overshoot_condition,
+        "theorem_applies": theorem_applies,
+        "base_error": base_error,
+        "corrected_error": corrected_error,
+        "base_wins": base_wins,
+        "theorem_verified": not theorem_applies or base_wins,
+    }
+
+
+def theory_distance(predict1: float, predict2: float) -> float:
+    """Compute the theory distance between two predictions."""
+    return abs(predict1 - predict2)
+
+
+def wrongness_series(theory: PerturbationTheory) -> List[float]:
+    """
+    Compute the wrongness series: cumulative sum of wrongness terms.
+
+    Returns the sequence S_n = Σ_{k<n} w_k where w_k = ε^(k+1) * c_k.
+    By the Wrongness Convergence Theorem, this converges to truth - base.
+    """
+    partial_sums = []
+    running_sum = 0.0
+    for k in range(len(theory.corrections)):
+        running_sum += theory.wrongness_at(k)
+        partial_sums.append(running_sum)
+    return partial_sums
+
+
+def phenomenon_selection(theories: List[PerturbationTheory],
+                          truncation_order: int) -> Tuple[int, float]:
+    """
+    Find the phenomenon best-predicted by the truncated theory.
+
+    By the Phenomenon Selection Theorem, the best phenomenon has error
+    at most the average error across all phenomena.
+
+    Args:
+        theories: List of perturbation theories (one per phenomenon)
+        truncation_order: Order at which to truncate
+
+    Returns:
+        (best_index, best_error) tuple
+    """
+    errors = [t.truncation_error(truncation_order) for t in theories]
+    best_idx = min(range(len(errors)), key=lambda i: errors[i])
+    avg_error = sum(errors) / len(errors)
+
+    assert errors[best_idx] <= avg_error + 1e-15, \
+        "Phenomenon Selection Theorem violated!"
+
+    return best_idx, errors[best_idx]
+
+
+def test_asymptotic_wrongness_conjecture(
+    theory: PerturbationTheory
+) -> Tuple[bool, float]:
+    """
+    Test the Asymptotic Wrongness Conjecture for a specific theory.
+
+    For alternating-sign corrections, tests whether:
+    |truth - base| ≤ 2 * min_n |truth - T_n|
+
+    Returns:
+        (conjecture_holds, ratio) tuple
+    """
+    true_val = theory.truth_value()
+    base_error = abs(true_val - theory.base)
+
+    _, opt_error = optimal_truncation(theory)
+
+    if opt_error < 1e-15:
+        return True, 0.0
+
+    ratio = base_error / opt_error
+    return ratio <= 2.0, ratio
+
+
+# ============================================================
+# Example usage
+# ============================================================
+if __name__ == "__main__":
+    import random
+    random.seed(42)
+
+    # Create a sample perturbation theory
+    corrections = [random.uniform(-5, 5) for _ in range(30)]
+    theory = PerturbationTheory(
+        base=1.0,
+        corrections=corrections,
+        coupling=0.3,
+    )
+
+    print("Theory Analysis")
+    print(f"  Base: {theory.base}")
+    print(f"  Coupling: {theory.coupling}")
+    print(f"  Max correction: {theory.max_correction:.4f}")
+    print(f"  Truth value: {theory.truth_value():.6f}")
+
+    # Optimal truncation
+    opt_n, opt_err = optimal_truncation(theory)
+    print(f"\nOptimal truncation: order {opt_n}, error {opt_err:.2e}")
+
+    # Adaptive truncation
+    adapt_n, adapt_err = adaptive_truncation(theory, 1e-6)
+    print(f"Adaptive truncation (δ=1e-6): order {adapt_n}, error {adapt_err:.2e}")
+
+    # Wrongness series
+    ws = wrongness_series(theory)
+    print(f"\nWrongness series limit: {ws[-1]:.6f}")
+    print(f"Truth - base: {theory.truth_value() - theory.base:.6f}")
+    print(f"Match: {abs(ws[-1] - (theory.truth_value() - theory.base)) < 1e-10}")
