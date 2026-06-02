@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b3cfeae2",
     "filename": "tropical_dreams_the_field_with_one_element_meets_t.json",
     "pkg_num": 149,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.693820875,
     "title": "The F\u2081-Tropical Duality: Field with One Element Meets Tropical Geometry"
   },
   {
@@ -4644,8 +4644,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tropical_dreams_the_field_with_one_element_meets_t",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.693820875,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The F\u2081-Tropical Duality: Field with One Element Meets Tropical Geometry"
     }
