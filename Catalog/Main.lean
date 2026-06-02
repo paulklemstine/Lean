@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2356 of the highest-quality
+A curated collection of 2360 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2356
+Total files: 2360
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1371,6 +1371,7 @@ import FINAL.Logic.HomotopyTypeTheory
 import FINAL.Logic.HyperAgentTheory
 import FINAL.Logic.IncrementalRecompute
 import FINAL.Logic.InterventionSequencing
+import FINAL.Logic.LGVFoundation
 import FINAL.Logic.LightNumberLine
 import FINAL.Logic.LogSumExp
 import FINAL.Logic.ModularComposition
@@ -1713,8 +1714,11 @@ import FINAL.Physics.TropicalDiffusion
 import FINAL.Physics.TropicalDiffusionRegularity
 import FINAL.Physics.TropicalLanglands
 import FINAL.Physics.TropicalMirrorSymmetry
+import FINAL.Physics.TropicalProofComplexity
+import FINAL.Physics.TropicalProofThermodynamics
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
+import FINAL.Physics.UncannyValley
 import FINAL.Physics.V12_VariationalPrinciples
 import FINAL.Physics.VonNeumannEntropy
 import FINAL.Physics.WeightEnumerator

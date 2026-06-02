@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "25d1d937",
     "filename": "the_fourier_transform_of_the_riemann_zeta_hearing_.json",
     "pkg_num": 177,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6312605238095238,
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
@@ -5575,8 +5575,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_fourier_transform_of_the_riemann_zeta_hearing_",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6312605238095238,
+      "quality": "partial",
       "shape": "diamond",
       "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
     }
