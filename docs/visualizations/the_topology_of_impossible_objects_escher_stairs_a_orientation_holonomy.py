@@ -1,8 +1,8 @@
-def holonomy(signs):
-    result = 1
+def holonomy(signs: list[int]) -> int:
+    h = 1
     for s in signs:
-        result *= s
-    return result
+        h *= s
+    return h
 
-def is_orientable(signs):
-    return holonomy(signs) == 1
+def is_non_orientable(signs: list[int]) -> bool:
+    return holonomy(signs) == -1

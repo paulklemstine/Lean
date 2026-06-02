@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3741be59",
     "filename": "foundational_theory_of_fermat_near_misses_wi.json",
     "pkg_num": 201,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6485006842105263,
     "title": "Foundational Theory of Fermat Near-Misses"
   },
   {
@@ -6389,8 +6389,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "foundational_theory_of_fermat_near_misses_wi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6485006842105263,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Foundational Theory of Fermat Near-Misses"
     }
