@@ -1,247 +1,256 @@
-# Sheaf-Theoretic Data Integration: Consistency, Coboundary, and Imputation
+# Sheaf-Theoretic Data Integration: Cohomological Foundations for Database Consistency and Imputation
 
 ## Abstract
 
-We develop a rigorous mathematical framework connecting database consistency with sheaf theory. A partial database — a data matrix with missing entries — is modeled as a partial section of a sheaf over a discrete topological space. The sheaf condition (pairwise consistency on overlaps) determines whether partial databases from different sources can be consistently merged. We prove that the coboundary norm — counting total disagreements across all pairs — characterizes the sheaf condition exactly: it equals zero if and only if the data satisfies the sheaf condition. We introduce the *sheaf filtration*, a novel structure modeling progressive imputation as a filtered complex, and prove that monotone filtrations are automatically consistent. We derive exponential bounds on the probability that random databases satisfy the sheaf condition, showing that consistency degrades as (1-r)^C where r is the per-constraint disagreement rate and C is the overlap constraint count. Finally, we implement a sheaf imputation algorithm and demonstrate its superiority over mean and KNN imputation on structured data. All main theorems are formally verified in Lean 4 with Mathlib.
-
-**Keywords**: Sheaf theory, data integration, missing data imputation, coboundary operator, consistency, Čech cohomology, formal verification
+We develop a rigorous mathematical framework connecting sheaf theory to database consistency and data imputation. A database with missing entries is modeled as a partial section of a presheaf over the poset of feature subsets. The sheaf condition — that locally consistent data can be glued into a global section — is formalized as pairwise consistency of partial databases. We introduce the *consistency defect*, a quantitative measure of how far a database family deviates from the sheaf condition, and prove it is bounded above by the overlap count. We establish the fundamental cohomological identity δ² = 0 for the discrete Čech coboundary operator, connecting database consistency to Čech cohomology. A key result shows that consistency probability decays exponentially with the number of constraints, quantifying the "curse of dimensionality" for data integration. We prove that for any candidate completion, the pairwise disagreement between partial databases is bounded by the sum of imputation costs, providing a tight connection between inconsistency and imputation error. All results are formalized and verified in Lean 4 with Mathlib.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Data integration — the problem of combining information from multiple incomplete sources into a coherent whole — is among the most fundamental challenges in data science. The standard approaches (mean imputation, KNN imputation, multiple imputation by chained equations) treat missing data as a statistical problem: estimate the missing values from the observed distribution. These methods ignore the *structural* constraints that arise when multiple partial views of the same underlying data must be reconciled.
 
-Missing data is ubiquitous in modern databases. Medical records, survey data, sensor networks, and experimental datasets all contain gaps. The standard approaches — listwise deletion, mean imputation, KNN imputation, MICE — treat missing values as a statistical nuisance to be managed rather than a structural feature to be exploited.
+We propose a fundamentally different perspective: databases with missing entries are *partial sections* of a sheaf, and data integration is the problem of extending partial sections to global sections. This perspective, rooted in algebraic geometry, provides a natural language for expressing consistency constraints and measuring the obstructions to consistent completion.
 
-We propose a fundamentally different perspective: a database with missing entries is a *partial section* of a sheaf, and the imputation problem is equivalent to *extending a partial section to a global section*. This reframing connects database consistency to the rich mathematical theory of sheaves, Čech cohomology, and homological algebra.
+### 1.1 Contributions
 
-### 1.2 Related Work
+1. **FeaturePresheaf**: A novel formalization of databases as presheaves over the inclusion poset of feature subsets, with proven functoriality of restriction maps (Section 3).
 
-The use of sheaf theory in data analysis has precedents in topological data analysis (Ghrist, 2008; Curry, 2014), where cellular sheaves are used to model consistency constraints on sensor networks. Robinson (2014) developed sheaf-theoretic methods for multi-model data fusion. Our contribution differs in three ways: (1) we formalize the connection between the coboundary norm and the sheaf condition as a biconditional theorem, (2) we introduce the novel concept of sheaf filtrations for progressive imputation, and (3) all results are formally verified.
+2. **Čech Cohomology for Databases**: The discrete Čech coboundary operators δ⁰ and δ¹, with a machine-verified proof of the fundamental identity δ¹ ∘ δ⁰ = 0 (Section 5).
 
-### 1.3 Contributions
+3. **Consistency Defect Bound**: A proof that the total consistency defect is bounded by the overlap count, providing a computable upper bound on the cohomological obstruction (Section 6).
 
-1. **Formal framework**: We define partial databases, consistency, gluing, and the sheaf condition in a type-theoretic setting suitable for formal verification (Section 2).
-2. **Coboundary characterization**: We prove that the coboundary norm equals zero if and only if the sheaf condition holds (Theorem 3.1).
-3. **Sheaf filtration**: We introduce the sheaf filtration structure and prove that monotone filtrations are automatically consistent (Theorem 4.1).
-4. **Exponential decay**: We prove that consistency probability decays exponentially in the constraint count (Section 5).
-5. **Sheaf imputation algorithm**: We implement and evaluate a practical imputation algorithm based on projecting onto pairwise consistency constraints (Section 6).
+4. **Exponential Decay Theorem**: A proof that consistency probability vanishes as the number of constraints grows, using the convergence of geometric series (Section 7).
 
-## 2. Definitions
+5. **Imputation Cost Bound**: For any two partial databases and any candidate completion, disagreement ≤ sum of imputation costs — connecting sheaf cohomology to optimization (Section 8).
+
+6. **Iterative Gluing Infrastructure**: Formalization of foldl-based gluing with a proof that the accumulator's information is preserved through iteration (Section 4).
+
+All results are formalized in Lean 4 with Mathlib and verified by the Lean kernel, ensuring correctness with mathematical certainty.
+
+## 2. Preliminaries
 
 ### 2.1 Partial Databases
 
-**Definition 2.1** (Partial Database). A *partial database* over a grid of nRows × nCols positions with value type V is a function
+**Definition 2.1** (Partial Database). A *partial database* with nRows rows and nCols columns over value type V is a function:
+```
+PartialDB(nRows, nCols, V) = (Fin nRows × Fin nCols) → Option V
+```
+where `none` represents a missing entry.
 
-    PartialDB(nRows, nCols, V) = (Fin nRows × Fin nCols) → Option V
+**Definition 2.2** (Domain). The *domain* of a partial database db is:
+```
+dom(db) = {p | db(p) ≠ none}
+```
 
-where `Option V` is the type `V ∪ {none}`, with `none` representing a missing entry.
+**Definition 2.3** (Consistency). Two partial databases db₁, db₂ are *consistent* if:
+```
+∀ p, ∀ v₁ v₂, db₁(p) = some(v₁) → db₂(p) = some(v₂) → v₁ = v₂
+```
 
-**Definition 2.2** (Domain). The *domain* of a partial database db is
-
-    dom(db) = {p : Fin nRows × Fin nCols | db(p) ≠ none}
-
-**Definition 2.3** (Consistent Pair). Two partial databases db₁, db₂ are *consistent* if they agree on their overlap:
-
-    ConsistentPair(db₁, db₂) ↔ ∀ p v₁ v₂, db₁(p) = some(v₁) → db₂(p) = some(v₂) → v₁ = v₂
-
-**Definition 2.4** (Sheaf Condition). A family of partial databases {dbᵢ}ᵢ∈ι satisfies the *sheaf condition* if every pair is consistent:
-
-    SheafCondition({dbᵢ}) ↔ ∀ i j, ConsistentPair(dbᵢ, dbⱼ)
+**Definition 2.4** (Sheaf Condition). A family {dbᵢ}ᵢ∈I satisfies the *sheaf condition* if every pair is consistent.
 
 ### 2.2 Gluing
 
-**Definition 2.5** (Gluing Map). The gluing of two partial databases db₁, db₂ is defined by:
-
-    GluingMap(db₁, db₂)(p) = match db₁(p) with
-      | some(v) → some(v)
-      | none → db₂(p)
-
-This prefers db₁ where both are defined; when db₁ and db₂ are consistent, the choice doesn't matter.
-
-### 2.3 Restriction
-
-**Definition 2.6** (Restriction). The restriction of db to a subset S ⊆ Fin nRows × Fin nCols is:
-
-    db|_S(p) = if p ∈ S then db(p) else none
-
-## 3. The Coboundary Characterization
-
-### 3.1 Disagreement and Coboundary Norm
-
-**Definition 3.1** (Disagreement Indicator). For databases db₁, db₂ with decidable equality on V:
-
-    disagreementAt(db₁, db₂, p) = match db₁(p), db₂(p) with
-      | some(v₁), some(v₂) → if v₁ = v₂ then 0 else 1
-      | _, _ → 0
-
-**Definition 3.2** (Coboundary Norm). For a family {dbᵢ}ᵢ∈Fin(n):
-
-    ‖δ⁰‖ = Σᵢ Σⱼ Σᵣ Σ_c disagreementAt(dbᵢ, dbⱼ, (r,c))
-
-This sums disagreements over all pairs (i,j) and all positions (r,c).
-
-### 3.2 Main Theorem
-
-**Theorem 3.1** (Coboundary Characterization). *For any family of partial databases with decidable value equality:*
-
-    ‖δ⁰‖ = 0 ↔ SheafCondition({dbᵢ})
-
-*Proof sketch.*
-
-(⇒) If ‖δ⁰‖ = 0, then every summand is 0. For any i, j, p and values v₁, v₂ with dbᵢ(p) = some(v₁) and dbⱼ(p) = some(v₂), the summand disagreementAt(dbᵢ, dbⱼ, p) = 0 forces v₁ = v₂ (since both are defined, the only way the indicator is 0 is if they're equal).
-
-(⇐) If the sheaf condition holds, then for any i, j, p: if both databases are defined at p, consistency forces v₁ = v₂, making the indicator 0. If either is undefined, the indicator is 0 by definition. Hence every summand is 0.
-
-The full proof is formalized in Lean 4, using `Finset.sum_eq_zero_iff` to decompose the quadruple sum and pattern matching on the `Option` constructors. □
-
-## 4. Sheaf Filtrations
-
-### 4.1 Definition
-
-**Definition 4.1** (Sheaf Filtration). A *sheaf filtration* of depth d is a structure consisting of:
-- A family of partial databases `level : Fin d → PartialDB(nRows, nCols, V)`
-- Monotonicity: `∀ i ≤ j, ∀ p v, level(i)(p) = some(v) → level(j)(p) = some(v)`
-- Consistency: `SheafCondition(level)`
-
-The monotonicity condition says that information only grows across levels: once a cell is filled, it's never changed. The consistency condition says that all levels are pairwise compatible.
-
-### 4.2 Auto-Consistency Theorem
-
-**Theorem 4.1** (Monotone Filtrations are Automatically Consistent). *If a family of partial databases satisfies the monotonicity condition, then it automatically satisfies the sheaf condition.*
-
-*Proof.* Given i, j, a position p, and values v₁, v₂ with level(i)(p) = some(v₁) and level(j)(p) = some(v₂), we case-split on i ≤ j:
-- If i ≤ j: monotonicity gives level(j)(p) = some(v₁). Combining with level(j)(p) = some(v₂), injectivity of `some` gives v₁ = v₂.
-- If j < i: monotonicity gives level(i)(p) = some(v₂). Combining with level(i)(p) = some(v₁), injectivity gives v₁ = v₂.
-
-This proof is formalized using `by_cases` on the ordering, `push_neg` to convert ¬(i ≤ j) to j < i, and `Option.some.inj` for injectivity. □
-
-### 4.3 Domain Accumulation
-
-**Theorem 4.2** (Final Level Contains All Information). *In any sheaf filtration of positive depth, the final level's domain contains all domains of previous levels:*
-
-    ∀ i, dom(level(i)) ⊆ dom(level(depth-1))
-
-*Proof.* If p ∈ dom(level(i)), there exists v with level(i)(p) = some(v). By monotonicity (since i ≤ depth-1), level(depth-1)(p) = some(v) ≠ none, so p ∈ dom(level(depth-1)). □
-
-## 5. Exponential Decay of Consistency
-
-### 5.1 Constraint Counting
-
-**Definition 5.1** (Overlap Constraint Count). For n partial databases over a grid of nRows × nCols:
-
-    C(n, nRows, nCols) = n(n-1)/2 · nRows · nCols
-
-The factor n(n-1)/2 counts unordered pairs; each pair contributes nRows · nCols position-wise checks.
-
-**Theorem 5.1** (Quadratic Growth). The constraint count grows at most quadratically:
-
-    C(n, nRows, nCols) ≤ n² · nRows · nCols
-
-### 5.2 Probability Model
-
-**Definition 5.2** (Consistency Probability). For independent constraints with per-constraint disagreement rate r:
-
-    P(consistent) = (1-r)^C
-
-**Theorem 5.2** (Monotone Decay). The consistency probability is:
-- Monotone decreasing in C (more constraints → lower probability)
-- Monotone decreasing in r (higher noise → lower probability)
-- Equal to 1 when r = 0 (no noise → always consistent)
-- Equal to 0 when r = 1 and C > 0 (maximum noise → never consistent)
-
-**Theorem 5.3** (Multiplicative Composition). Combining independent constraint sets:
-
-    P(consistent | C₁ + C₂) = P(consistent | C₁) · P(consistent | C₂)
-
-### 5.3 Conjecture
-
-**Conjecture 5.1** (Exponential Consistency Decay). For uniformly random databases with missing rate r, n columns, and k rows:
-
-    P(sheaf condition) = (1-r)^{C(n,k,n)}
-
-where C(n,k,n) = n(n-1)/2 · k · n.
-
-**Testable prediction**: For n=10, k=100, r=0.3, the probability is approximately (0.7)^{4500} ≈ 10^{-697}.
-
-**Falsification test**: Generate 10⁶ random 100×10 databases at 30% missing rate and count how many satisfy the sheaf condition. The conjecture predicts zero.
-
-## 6. Sheaf Imputation Algorithm
-
-### 6.1 Algorithm
-
+**Definition 2.5** (Gluing Map). The gluing of db₁ and db₂ is:
 ```
-SHEAF-IMPUTE(observed, mask, max_iter):
-  result ← observed with missing values initialized to column means
-  for iteration = 1 to max_iter:
-    for each pair of columns (c₁, c₂):
-      S ← rows where both c₁ and c₂ are observed
-      if |S| < 3: continue
-      Fit linear model: c₂ = a·c₁ + b using data in S
-      For rows missing c₂ but having c₁:
-        result[r, c₂] ← 0.5·result[r, c₂] + 0.5·(a·result[r, c₁] + b)
-      For rows missing c₁ but having c₂:
-        result[r, c₁] ← 0.5·result[r, c₁] + 0.5·(result[r, c₂] - b)/a
-    if converged: break
-  return result
+Glue(db₁, db₂)(p) = db₁(p)   if db₁(p) ≠ none
+                   = db₂(p)   otherwise
 ```
 
-### 6.2 Theoretical Justification
+## 3. Feature Presheaf
 
-The algorithm iteratively projects onto pairwise consistency constraints. Each pair (c₁, c₂) defines a constraint surface: the set of complete databases where the values in columns c₁ and c₂ satisfy the learned linear relationship. The algorithm alternates projections onto these constraint surfaces, converging to a point in their intersection — the sheaf-consistent completion closest to the initial estimate.
+The central novel construction is the feature presheaf, which captures the sheaf-theoretic structure of a database.
 
-This is a form of *alternating projections* (von Neumann, 1950; Bauschke & Borwein, 1996), which converges for convex constraint sets. The linear constraints here are convex, ensuring convergence.
+**Definition 3.1** (Feature Presheaf). A *FeaturePresheaf* over (nRows, nCols, V) consists of:
+- For each S ⊆ Fin(nCols), a type `sections(S)` of "sections over S"
+- For each T ⊆ S, a restriction map `restrict(h : T ⊆ S) : sections(S) → sections(T)`
+- Identity: `restrict(S ⊆ S) = id`
+- Composition: `restrict(U ⊆ T) ∘ restrict(T ⊆ S) = restrict(U ⊆ S)`
 
-### 6.3 Experimental Results
+**Definition 3.2** (Database Presheaf). Given a complete database `data : Fin(nRows) → Fin(nCols) → V`, the *database presheaf* assigns:
+- `sections(S) = Fin(nRows) → (S → V)` (row vectors restricted to columns in S)
+- `restrict(h)(f)(row)(col) = f(row)(⟨col.val, h(col.prop)⟩)` (projection)
 
-On synthetic data (200 rows × 10 columns, rank-3 latent structure with Gaussian noise):
+**Theorem 3.3** (Presheaf Gluing). The database presheaf satisfies the gluing condition: for any cover S = S₁ ∪ S₂ and any section s over S, the restrictions to S₁ and S₂ agree on S₁ ∩ S₂.
 
-| Missing Rate | RMSE (Mean) | RMSE (Sheaf) | Improvement |
-|:---:|:---:|:---:|:---:|
-| 10% | 1.82 | 1.21 | 33.5% |
-| 20% | 1.85 | 1.35 | 27.0% |
-| 30% | 1.87 | 1.52 | 18.7% |
-| 50% | 1.90 | 1.78 | 6.3% |
+*Proof sketch*: Both restrictions evaluate to the same underlying data value at each position in the intersection.
 
-The sheaf method's advantage comes from exploiting inter-column correlations, which mean imputation ignores entirely.
+**Corollary 3.4**. Complete databases are flasque sheaves. The sheaf condition is automatic when global data exists; violations arise only from partial observations.
 
-## 7. Connections to Existing Work
+## 4. Iterative Gluing
 
-### 7.1 Catalog Bridges
+**Theorem 4.1** (Foldl Gluing Preservation). For any accumulator acc and list of databases dbs:
+```
+acc(p) = some(v) → foldlGluing(acc, dbs)(p) = some(v)
+```
 
-Our work connects to several results in the existing formal verification catalog:
+*Proof*: By induction on the list. The base case is trivial. The inductive step uses the fact that GluingMap' preserves the left operand's defined values.
 
-- **`locally_consistent_has_global_section`** (Catalog: MachineLearning/Coboundary.lean): Our `coboundary_zero_iff_sheaf` generalizes this to the biconditional case, providing a quantitative characterization rather than just a sufficient condition.
-- **`overlap_pair_count_bound`** (Catalog: Bridges/SheafObstruction.lean): Our `overlap_quadratic_growth` provides a complementary bound on the constraint count, connecting it to the probability model.
-- **`conjecture_stirling_entropy_bounds`** (Catalog: Computation/ThermodynamicSorting.lean): The exponential decay theorem relates to entropy bounds through the information-theoretic interpretation: consistency probability = exp(-H) where H is the "sheaf entropy" measuring information loss.
+**Theorem 4.2** (Consistency Preservation under Gluing). If db₁, db₂, db₃ are such that db₁ is consistent with db₃ and db₂ is consistent with db₃, then Glue(db₁, db₂) is consistent with db₃.
 
-### 7.2 Topological Data Analysis
+*Proof*: Case analysis on whether db₁(p) is defined. If yes, consistency follows from the db₁-db₃ hypothesis. If no, the gluing falls through to db₂, and consistency follows from the db₂-db₃ hypothesis.
 
-Our framework connects to the broader program of applying algebraic topology to data analysis. The sheaf filtration concept is directly analogous to the persistent homology filtration in TDA, but applied to data consistency rather than geometric structure.
+## 5. Čech Cohomology
 
-## 8. Discussion
+### 5.1 Coboundary Operators
 
-### 8.1 Limitations
+**Definition 5.1** (δ⁰). The degree-0 coboundary operator:
+```
+δ⁰(σ)(i, j) = σ(j) - σ(i)
+```
 
-The current framework assumes a fixed value type V with decidable equality. Extending to continuous-valued databases requires replacing the discrete coboundary with a metric coboundary (measuring distance rather than equality), which changes the mathematics significantly.
+**Definition 5.2** (δ¹). The degree-1 coboundary operator:
+```
+δ¹(τ)(i, j, k) = τ(j,k) - τ(i,k) + τ(i,j)
+```
 
-The exponential decay model assumes independence of constraints, which is a strong assumption in practice. Real databases have correlations that could make the decay slower (if correlations create redundant constraints) or faster (if they create additional constraints).
+**Theorem 5.3** (δ² = 0). For all σ and all triples (i,j,k):
+```
+δ¹(δ⁰(σ))(i,j,k) = (σ(k)-σ(j)) - (σ(k)-σ(i)) + (σ(j)-σ(i)) = 0
+```
 
-### 8.2 Future Directions
+*Proof*: Direct algebraic computation via `ring`.
 
-1. **Metric coboundary**: Replace discrete disagreement with continuous distance measures for real-valued data.
-2. **Higher cohomology**: Extend to H¹ and H² obstructions, capturing higher-order inconsistencies.
-3. **Categorical databases**: Formalize the connection to categorical databases and functorial data migration.
-4. **Persistent sheaf cohomology**: Develop a persistent version that tracks how consistency changes as the missing rate varies.
+This is the foundation of Čech cohomology. It defines:
+- **Z¹ = ker(δ¹)**: 1-cocycles (locally consistent data)
+- **B¹ = im(δ⁰)**: 1-coboundaries (trivially consistent data)
+- **H¹ = Z¹/B¹**: First cohomology (obstructions to global consistency)
 
-## 9. Conclusion
+## 6. Consistency Defect Bound
 
-We have established a rigorous connection between database consistency and sheaf theory, proving that the coboundary norm exactly characterizes the sheaf condition, that monotone filtrations are automatically consistent, and that consistency probability decays exponentially in the constraint count. The sheaf imputation algorithm translates these theoretical insights into a practical method that outperforms standard approaches on structured data. All main theorems are formally verified in Lean 4, providing machine-checked certainty for the mathematical foundations.
+**Definition 6.1** (Disagreement). The disagreement at position p:
+```
+disagree(db₁, db₂, p) = 1   if both defined and unequal
+                       = 0   otherwise
+```
+
+**Definition 6.2** (Pairwise Disagreement). Total disagreements:
+```
+D(db₁, db₂) = Σ_{r,c} disagree(db₁, db₂, (r,c))
+```
+
+**Definition 6.3** (Consistency Defect). Total defect of a family:
+```
+defect({dbᵢ}) = Σ_{i,j} D(dbᵢ, dbⱼ)
+```
+
+**Definition 6.4** (Overlap Count). Number of pairwise overlapping positions:
+```
+overlap({dbᵢ}) = Σ_{i,j} Σ_{r,c} [dbᵢ(r,c) ≠ none ∧ dbⱼ(r,c) ≠ none]
+```
+
+**Theorem 6.5** (Defect ≤ Overlap). `defect({dbᵢ}) ≤ overlap({dbᵢ})`.
+
+*Proof*: Pointwise, each disagreement indicator is ≤ the overlap indicator, since disagreement requires both databases to be defined (overlap).
+
+**Properties**:
+- `D(db, db) = 0` (self-disagreement is zero)
+- `D(db₁, db₂) = D(db₂, db₁)` (symmetry)
+
+## 7. Exponential Consistency Decay
+
+**Definition 7.1** (Consistency Probability). `P(r, C) = (1-r)^C`.
+
+**Theorem 7.2** (Multiplicativity). `P(r, C₁+C₂) = P(r,C₁) · P(r,C₂)`.
+
+**Theorem 7.3** (Exponential Vanishing). For 0 < r < 1:
+```
+∀ ε > 0, ∃ N, ∀ C ≥ N, P(r, C) < ε
+```
+
+*Proof*: The base 1-r satisfies 0 < 1-r < 1, so the geometric sequence (1-r)^n → 0 by the standard convergence result `tendsto_pow_atTop_nhds_zero_of_lt_one`.
+
+**Boundary values**:
+- `P(0, C) = 1` (no disagreements → always consistent)
+- `P(1, C) = 0` for C > 0 (total disagreement → never consistent)
+
+## 8. Imputation Quality
+
+**Definition 8.1** (Imputation Cost). For observed partial database and candidate completion:
+```
+cost(observed, candidate) = Σ_{r,c} [observed(r,c) = some(v) ∧ candidate(r,c) ≠ v]
+```
+
+**Theorem 8.2** (Zero Cost Characterization). `cost = 0 ⟺ candidate extends observed`.
+
+**Theorem 8.3** (Pair Cost Bound). For any two partial databases db₁, db₂ and any candidate:
+```
+D(db₁, db₂) ≤ cost(db₁, candidate) + cost(db₂, candidate)
+```
+
+*Proof sketch*: At each position where db₁ and db₂ disagree, the candidate must differ from at least one of them (by the pigeonhole principle). The sum of costs at that position is therefore at least 1 = the disagreement.
+
+**Significance**: This theorem establishes a direct connection between the sheaf-theoretic obstruction (disagreement) and the optimization objective (imputation cost). Minimizing total cost across all partial databases simultaneously minimizes inconsistency.
+
+## 9. Algorithms
+
+### 9.1 Sheaf Imputation Algorithm
+
+```
+Input: Observed partial database, feature subsets {S₁,...,Sₖ}
+Output: Completed database
+
+1. Initialize missing values with column means
+2. Repeat until convergence:
+   a. For each pair (Sᵢ, Sⱼ) with i < j:
+      - Compute overlap Sᵢ ∩ Sⱼ
+      - Average values from both restrictions on the overlap
+      - Update imputed values
+3. Return completed database
+```
+
+### 9.2 Consistency Checking
+
+```
+Input: Family of partial databases {db₁,...,dbₙ}
+Output: Boolean (sheaf condition) + defect measure
+
+1. For each pair (i,j):
+   a. Compute D(dbᵢ, dbⱼ) = Σ_{r,c} disagree(dbᵢ, dbⱼ, (r,c))
+2. defect = Σ_{i,j} D(dbᵢ, dbⱼ)
+3. Return (defect = 0, defect)
+```
+
+## 10. Falsifiable Conjecture
+
+**Conjecture 10.1** (Sheaf Beats Mean). For databases with n ≥ 10 features and correlated columns, sheaf-based imputation achieves lower mean squared error than mean imputation when the missing rate r < 0.5.
+
+**Rationale**: For n ≥ 10, the number of overlap constraints n(n-1)/2 exceeds n, providing exponentially more consistency constraints than the number of features. These constraints encode inter-feature correlations that mean imputation ignores.
+
+**Test protocol**:
+1. Generate 1000 random databases with n = 20 columns, k = 100 rows, with correlated column groups.
+2. Introduce missing values at rate r ∈ {0.1, 0.2, 0.3, 0.4, 0.5}.
+3. Compare MSE of sheaf imputation vs mean imputation against ground truth.
+4. **Falsification criterion**: If mean imputation achieves lower MSE in > 5% of trials for any r < 0.5, the conjecture is false.
+
+## 11. Discussion
+
+### 11.1 Related Work
+
+The connection between sheaves and data has been explored in topological data analysis (Curry, 2014; Robinson, 2014), but primarily for network data and signal processing. Our contribution formalizes the specific connection to tabular databases and data imputation, providing machine-verified proofs of the key structural results.
+
+### 11.2 Limitations
+
+The current framework assumes a finite, discrete value space. Extension to continuous values requires measure-theoretic sheaves, which are substantially more complex. The exponential decay result assumes independence of missing entries, which may not hold in practice (missing-not-at-random scenarios).
+
+### 11.3 Broader Impact
+
+The sheaf-theoretic perspective suggests new quality metrics for databases: instead of measuring the percentage of missing values, we should measure the consistency defect (H¹ norm). This metric captures not just the quantity of missing data, but the structural coherence of what remains.
+
+## 12. Future Work
+
+1. **Higher Cohomology**: Extend beyond H¹ to H² and higher, capturing obstructions to higher-order consistency (e.g., three-way consistency among triples of data sources).
+
+2. **Continuous Values**: Develop a measure-theoretic version of the data sheaf for real-valued databases, connecting to optimal transport theory.
+
+3. **Computational Complexity**: Analyze the complexity of computing the consistency defect and the optimal sheaf imputation.
+
+4. **Tropical Sheaves**: Connect to tropical geometry, where the "consistency probability" has a natural interpretation in terms of tropical intersection theory.
 
 ## References
 
-1. Curry, J. (2014). "Sheaves, cosheaves, and applications." PhD thesis, University of Pennsylvania.
-2. Ghrist, R. (2008). "Barcodes: The persistent topology of data." *Bulletin of the AMS*, 45(1), 61-75.
-3. Robinson, M. (2014). *Topological Signal Processing*. Springer.
-4. von Neumann, J. (1950). "Functional operators, Vol. II." *Annals of Mathematics Studies*, No. 22.
-5. Bauschke, H. & Borwein, J. (1996). "On projection algorithms for solving convex feasibility problems." *SIAM Review*, 38(3), 367-426.
-6. Serre, J.-P. (1955). "Faisceaux algébriques cohérents." *Annals of Mathematics*, 61(2), 197-278.
+1. Curry, J. (2014). Sheaves, cosheaves and applications. *arXiv:1303.3255v2*.
+2. Grothendieck, A. (1957). Sur quelques points d'algèbre homologique. *Tōhoku Math. J.*
+3. Leray, J. (1946). L'anneau d'homologie d'une représentation. *C. R. Acad. Sci. Paris*.
+4. Robinson, M. (2014). *Topological Signal Processing*. Springer.
+5. Rubin, D. B. (1976). Inference and missing data. *Biometrika*, 63(3), 581-592.
+6. van Buuren, S. (2018). *Flexible Imputation of Missing Data*. CRC Press.
