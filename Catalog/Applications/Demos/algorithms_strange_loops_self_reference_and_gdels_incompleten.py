@@ -1,292 +1,344 @@
+#!/usr/bin/env python3
 """
-Algorithms for Strange Loops and Self-Referential Systems
+Strange Loops: Algorithms for Self-Reference and Incompleteness
 
-Type-hinted implementations of the key algorithms from the formalization.
+Type-hinted implementations of the key algorithms from the research.
 """
 
-from typing import Callable, Optional, TypeVar, Generic, List, Tuple, Set, Dict
+from typing import Callable, TypeVar, Optional, Set, List, Tuple, Dict
 from dataclasses import dataclass
-from enum import Enum
+import itertools
 
-T = TypeVar('T')
-
-
-class TruthValue(Enum):
-    TRUE = "true"
-    FALSE = "false"
-    UNDECIDABLE = "undecidable"
+A = TypeVar('A')
+B = TypeVar('B')
 
 
-@dataclass
-class Sentence:
-    """A sentence in a formal system, identified by index."""
-    index: int
-    name: str
-    is_self_referential: bool = False
-    depth: int = 0
+# ===========================================================================
+# Algorithm 1: Lawvere Diagonal Construction
+# ===========================================================================
 
-
-@dataclass
-class FormalSystem:
-    """A formal system with sentences, provability, and truth predicates."""
-    sentences: List[Sentence]
-    provable: Callable[[Sentence], bool]
-    true_: Callable[[Sentence], bool]
-
-    def is_sound(self) -> bool:
-        """Check soundness: all provable sentences are true."""
-        return all(
-            self.true_(s) for s in self.sentences if self.provable(s)
-        )
-
-
-def lawvere_fixed_point(
-    phi: Callable[[int], Callable[[int], bool]],
-    domain: List[int],
-    g: Callable[[bool], bool]
-) -> Optional[Tuple[int, bool]]:
+def lawvere_diagonal(
+    repr_func: Callable[[A], Callable[[A], B]],
+    t: Callable[[B], B],
+    domain: List[A]
+) -> Dict[A, B]:
     """
-    Lawvere's Fixed-Point Theorem (computational version).
+    Construct the Lawvere diagonal map: d(a) = t(repr(a)(a)).
 
-    Given phi: A -> (A -> B) and g: B -> B, find b such that g(b) = b.
-    Returns (witness_index, fixed_point_value) or None.
+    Given a representation map repr : A → (A → B) and an endomorphism t : B → B,
+    returns the diagonal function d : A → B.
 
-    Algorithm:
-    1. Define d(a) = g(phi(a)(a))  -- the diagonal
-    2. Search for a0 such that phi(a0) = d
-    3. Then phi(a0)(a0) = g(phi(a0)(a0)) is the fixed point
+    If repr is surjective, then t has a fixed point (by Lawvere's theorem).
+    If t has no fixed point, then d is not in the range of repr.
+
+    Time complexity: O(|domain|) applications of repr and t.
+
+    Args:
+        repr_func: Map from elements to functions
+        t: Endomorphism of the codomain
+        domain: The domain A as a list
+
+    Returns:
+        Dictionary mapping each a to t(repr(a)(a))
     """
-    # Compute the diagonal function
-    diag = {a: g(phi(a)(a)) for a in domain}
+    return {a: t(repr_func(a)(a)) for a in domain}
 
-    # Search for a0 where phi(a0) agrees with diag on all of domain
-    for a0 in domain:
-        if all(phi(a0)(a) == diag[a] for a in domain):
-            fixed = phi(a0)(a0)
-            return (a0, fixed)
 
+def find_fixed_point(
+    t: Callable[[B], B],
+    domain: List[B]
+) -> Optional[B]:
+    """
+    Find a fixed point of t by exhaustive search.
+
+    Args:
+        t: Endomorphism
+        domain: Finite domain to search
+
+    Returns:
+        A fixed point b with t(b) = b, or None if none exists
+    """
+    for b in domain:
+        if t(b) == b:
+            return b
     return None
 
 
-def diagonal_argument(
-    encoding: Callable[[int], Callable[[int], bool]],
-    n: int
-) -> Callable[[int], bool]:
+def verify_lawvere(
+    repr_func: Callable[[A], Callable[[A], B]],
+    t: Callable[[B], B],
+    domain_a: List[A],
+    domain_b: List[B]
+) -> Tuple[bool, Optional[B]]:
     """
-    Cantor's diagonal argument: construct a predicate not in the range
-    of the encoding function.
+    Verify Lawvere's fixed-point theorem for a concrete instance.
 
-    Given encoding: N -> (N -> Bool), construct P such that
-    for all i in [0,n), encoding(i) != P.
+    Checks whether repr is surjective and, if so, finds the fixed point
+    guaranteed by the theorem.
+
+    Returns:
+        (is_surjective, fixed_point_or_none)
     """
-    return lambda x: not encoding(x)(x) if x < n else False
+    # Check surjectivity: every function A → B must be represented
+    all_functions = list(itertools.product(domain_b, repeat=len(domain_a)))
+    represented = set()
+    for a in domain_a:
+        f = repr_func(a)
+        image = tuple(f(x) for x in domain_a)
+        represented.add(image)
+
+    is_surj = len(represented) >= len(all_functions)
+    fp = find_fixed_point(t, domain_b)
+
+    return (is_surj, fp)
 
 
-def construct_goedel_sentence(
-    provability: Callable[[int], bool],
-    diag: Callable[[Callable[[int], bool], int], bool]
-) -> int:
+# ===========================================================================
+# Algorithm 2: Cantor Diagonal
+# ===========================================================================
+
+def cantor_antidiagonal(
+    listing: List[List[bool]]
+) -> List[bool]:
     """
-    Construct the Gödel sentence for a system.
+    Construct the Cantor anti-diagonal from a listing.
 
-    The Gödel sentence G satisfies: True(G) <-> not Provable(G)
-    We use the diagonal lemma to find G such that
-    G's truth value equals not-provable(G).
+    Given a matrix where listing[i] represents the i-th function,
+    constructs a function that differs from listing[i] at position i.
+
+    This function is NOT in the listing, proving non-surjectivity.
+
+    Time complexity: O(n) where n = len(listing).
     """
-    # The predicate "not provable"
-    not_provable = lambda s: not provability(s)
-    # Apply diagonal to get the self-referential sentence
-    # Returns the index of the Gödel sentence
-    return diag(not_provable, 0)
+    n = len(listing)
+    return [not listing[i][i] for i in range(n)]
 
 
-class ProvabilityAlgebra:
+# ===========================================================================
+# Algorithm 3: Finite Formal System
+# ===========================================================================
+
+@dataclass
+class FormalSystemState:
+    """State of a finite formal system."""
+    n_sentences: int
+    provable: Set[int]  # Set of provable sentence indices
+
+    def neg(self, s: int) -> int:
+        """Negation: maps s to s + n and vice versa."""
+        if s < self.n_sentences:
+            return s + self.n_sentences
+        return s - self.n_sentences
+
+    def is_consistent(self) -> bool:
+        """O(n) consistency check."""
+        for s in range(self.n_sentences):
+            if s in self.provable and self.neg(s) in self.provable:
+                return False
+        return True
+
+    def is_complete(self) -> bool:
+        """O(n) completeness check."""
+        for s in range(self.n_sentences):
+            if s not in self.provable and self.neg(s) not in self.provable:
+                return False
+        return True
+
+    def independent_sentences(self) -> List[int]:
+        """Return all independent sentences. O(n)."""
+        return [s for s in range(self.n_sentences)
+                if s not in self.provable and self.neg(s) not in self.provable]
+
+    def independence_density(self) -> float:
+        """Fraction of sentences that are independent."""
+        if self.n_sentences == 0:
+            return 0.0
+        return len(self.independent_sentences()) / self.n_sentences
+
+
+def detect_goedel_sentence(
+    system: FormalSystemState
+) -> Optional[int]:
     """
-    A provability algebra over a finite set of sentences.
+    Detect a Gödel-like sentence in a finite formal system.
 
-    Models the closure operator on sets of sentence indices,
-    representing logical consequence.
+    A Gödel sentence is one that is independent AND has the self-referential
+    property that adding it or its negation would create new derivable consequences.
+
+    In finite systems, we use independence as a proxy for the Gödel property.
+
+    Time complexity: O(n).
+
+    Returns:
+        Index of a Gödel-like sentence, or None
     """
-
-    def __init__(self, n: int, rules: List[Tuple[Set[int], int]]):
-        """
-        Initialize with n sentences and derivation rules.
-        Each rule (premises, conclusion) says: if all premises are in S,
-        then conclusion is in closure(S).
-        """
-        self.n = n
-        self.rules = rules
-
-    def closure(self, s: Set[int]) -> Set[int]:
-        """Compute the closure of a set of sentences under the rules."""
-        result = set(s)
-        changed = True
-        while changed:
-            changed = False
-            for premises, conclusion in self.rules:
-                if premises.issubset(result) and conclusion not in result:
-                    result.add(conclusion)
-                    changed = True
-        return result
-
-    def is_fixed_point(self, s: Set[int]) -> bool:
-        """Check if s is a fixed point (complete theory)."""
-        return self.closure(s) == s
-
-    def least_fixed_point(self) -> Set[int]:
-        """Compute the least fixed point starting from empty set."""
-        return self.closure(set())
-
-    def find_diagonal_sentence(self) -> Optional[int]:
-        """
-        Try to find a diagonal sentence: one whose membership in any
-        fixed point is equivalent to its non-membership.
-        Returns None if no such sentence exists.
-        """
-        lfp = self.least_fixed_point()
-        for i in range(self.n):
-            # Check if i is in exactly those fixed points where it "shouldn't" be
-            in_lfp = i in lfp
-            # A true diagonal sentence would cause a contradiction
-            if in_lfp:
-                # Test: remove i and see if closure adds it back
-                test = lfp - {i}
-                if i not in self.closure(test):
-                    return i  # i is not forced by other sentences
-        return None
+    independent = system.independent_sentences()
+    return independent[0] if independent else None
 
 
-class StrangeLoopDetector:
+def enumerate_consistent_extensions(
+    base: FormalSystemState
+) -> List[FormalSystemState]:
     """
-    Detects strange loops in formal systems.
+    Enumerate all consistent one-step extensions of a formal system.
 
-    A strange loop exists when:
-    1. Level N contains a statement about Level N-1
-    2. Level N-1 contains a statement that, when decoded, refers to Level N
-    3. This creates a self-referential cycle
+    For each independent sentence, we can consistently add either the
+    sentence or its negation, creating two branches — this is the
+    lattice-theoretic view of Gödel's branching.
+
+    Time complexity: O(n * 2^k) where k is the number of independent sentences.
+    (Exponential, but demonstrates the branching structure.)
     """
+    independent = base.independent_sentences()
+    extensions = []
 
-    def __init__(self, levels: int):
-        self.levels = levels
-        self.references: Dict[int, List[Tuple[int, str]]] = {
-            i: [] for i in range(levels)
-        }
-
-    def add_reference(self, from_level: int, to_level: int, description: str):
-        """Record that from_level references to_level."""
-        self.references[from_level].append((to_level, description))
-
-    def find_loops(self) -> List[List[int]]:
-        """Find all strange loops (cycles in the reference graph)."""
-        loops = []
-        for start in range(self.levels):
-            self._dfs(start, [start], set(), loops)
-        return loops
-
-    def _dfs(self, node: int, path: List[int], visited: Set[int],
-             loops: List[List[int]]):
-        visited.add(node)
-        for next_node, _ in self.references[node]:
-            if next_node == path[0] and len(path) > 1:
-                loops.append(list(path))
-            elif next_node not in visited:
-                self._dfs(next_node, path + [next_node], visited, loops)
-        visited.discard(node)
-
-    def classify_loop(self, loop: List[int]) -> str:
-        """Classify a loop by its properties."""
-        if len(loop) == 1:
-            return "direct_self_reference"
-        elif len(loop) == 2:
-            return "mutual_reference"
-        else:
-            return f"tangled_hierarchy_depth_{len(loop)}"
-
-
-def iterate_diagonal(
-    diag: Callable[[Callable[[int], bool]], int],
-    true_pred: Callable[[int], bool],
-    provable: Callable[[int], bool],
-    depth: int
-) -> List[int]:
-    """
-    Iterate the diagonal operator to produce a hierarchy of
-    self-referential sentences at increasing depths.
-
-    Returns list of sentence indices at each depth.
-    """
-    sentences = []
-    for d in range(depth):
-        if d == 0:
-            # Base: Gödel sentence G0 = diag(not_provable)
-            s = diag(lambda x: not provable(x))
-        else:
-            # Inductive: G_{n+1} = diag(lambda s: s == G_n and true(s))
-            prev = sentences[-1]
-            s = diag(lambda x, p=prev: x == p and true_pred(x))
-        sentences.append(s)
-    return sentences
-
-
-def self_reference_depth(
-    sentence_id: int,
-    references: Dict[int, List[int]],
-    max_depth: int = 100
-) -> int:
-    """
-    Compute the self-reference depth of a sentence.
-
-    Depth 0: no self-reference
-    Depth n+1: refers to sentences of depth n
-    """
-    if sentence_id not in references or not references[sentence_id]:
-        return 0
-
-    visited = set()
-    depth = 0
-    current = {sentence_id}
-
-    while current and depth < max_depth:
-        next_level = set()
-        for s in current:
-            if s in visited:
-                continue
-            visited.add(s)
-            if s in references:
-                for ref in references[s]:
-                    if ref == sentence_id:
-                        return depth + 1  # Found self-reference
-                    next_level.add(ref)
-        current = next_level
-        depth += 1
-
-    return 0  # No self-reference found within max_depth
-
-
-def incompleteness_certificate(
-    system: FormalSystem,
-    goedel_idx: int
-) -> Dict[str, any]:
-    """
-    Generate an incompleteness certificate for a formal system.
-
-    Returns a dictionary with:
-    - goedel_sentence: the index of the Gödel sentence
-    - is_true: whether the Gödel sentence is true
-    - is_provable: whether it's provable
-    - is_sound: whether the system is sound
-    - is_complete: whether it's complete (if sound, should be False)
-    """
-    g = system.sentences[goedel_idx]
-    return {
-        "goedel_sentence": goedel_idx,
-        "is_true": system.true_(g),
-        "is_provable": system.provable(g),
-        "is_sound": system.is_sound(),
-        "is_complete": all(
-            system.provable(s) for s in system.sentences if system.true_(s)
-        ),
-        "incompleteness_witness": (
-            system.true_(g) and not system.provable(g)
+    for s in independent:
+        # Branch 1: add s
+        ext1 = FormalSystemState(
+            n_sentences=base.n_sentences,
+            provable=base.provable | {s}
         )
-    }
+        if ext1.is_consistent():
+            extensions.append(ext1)
+
+        # Branch 2: add neg(s)
+        ext2 = FormalSystemState(
+            n_sentences=base.n_sentences,
+            provable=base.provable | {base.neg(s)}
+        )
+        if ext2.is_consistent():
+            extensions.append(ext2)
+
+    return extensions
+
+
+# ===========================================================================
+# Algorithm 4: Independence Density Estimation
+# ===========================================================================
+
+def estimate_independence_density(
+    n_sentences: int,
+    n_axioms: int,
+    n_trials: int = 1000,
+    seed: int = 42
+) -> Tuple[float, float]:
+    """
+    Estimate the average independence density for random consistent theories.
+
+    Creates random consistent theories with n_sentences sentences and
+    approximately n_axioms axioms, then measures independence density.
+
+    Args:
+        n_sentences: Number of base sentences
+        n_axioms: Approximate number of axioms to add
+        n_trials: Number of random trials
+        seed: Random seed
+
+    Returns:
+        (mean_density, std_density)
+    """
+    import random
+    random.seed(seed)
+
+    densities = []
+
+    for _ in range(n_trials):
+        system = FormalSystemState(n_sentences=n_sentences, provable=set())
+
+        for _ in range(n_axioms):
+            s = random.randint(0, n_sentences - 1)
+            if random.random() < 0.5:
+                if system.neg(s) not in system.provable:
+                    system.provable.add(s)
+            else:
+                if s not in system.provable:
+                    system.provable.add(system.neg(s))
+
+        if system.is_consistent():
+            densities.append(system.independence_density())
+
+    if not densities:
+        return (0.0, 0.0)
+
+    mean = sum(densities) / len(densities)
+    variance = sum((d - mean) ** 2 for d in densities) / len(densities)
+    std = variance ** 0.5
+
+    return (mean, std)
+
+
+# ===========================================================================
+# Algorithm 5: Strange Loop Hierarchy Construction
+# ===========================================================================
+
+@dataclass
+class HierarchyLevel:
+    """A level in a strange loop hierarchy."""
+    name: str
+    axioms: Set[str]
+    independent: Set[str]
+
+    def extend_with(self, sentence: str) -> 'HierarchyLevel':
+        """Create a new level by adding an independent sentence as an axiom."""
+        return HierarchyLevel(
+            name=f"{self.name} + {sentence}",
+            axioms=self.axioms | {sentence},
+            independent=self.independent - {sentence}
+        )
+
+
+def build_strange_loop_hierarchy(
+    base_name: str = "PA",
+    n_levels: int = 5
+) -> List[HierarchyLevel]:
+    """
+    Construct a strange loop hierarchy demonstrating essential incompleteness.
+
+    Each level adds the previous level's Gödel sentence as an axiom,
+    spawning a new Gödel sentence at the next level.
+
+    Args:
+        base_name: Name of the base theory
+        n_levels: Number of levels to construct
+
+    Returns:
+        List of hierarchy levels
+    """
+    levels = []
+    current = HierarchyLevel(
+        name=base_name,
+        axioms=set(),
+        independent={f"G_{1}"}
+    )
+    levels.append(current)
+
+    for i in range(1, n_levels):
+        goedel = f"G_{i}"
+        next_goedel = f"G_{i+1}"
+        current = HierarchyLevel(
+            name=current.extend_with(goedel).name,
+            axioms=current.axioms | {goedel},
+            independent={next_goedel}
+        )
+        levels.append(current)
+
+    return levels
+
+
+if __name__ == "__main__":
+    # Quick demonstration
+    print("Cantor anti-diagonal of [[T,F,T],[F,T,F],[T,T,F]]:")
+    ad = cantor_antidiagonal([[True, False, True], [False, True, False], [True, True, False]])
+    print(f"  {['T' if x else 'F' for x in ad]}")
+
+    print("\nIndependence density estimation:")
+    for n in [10, 50, 100, 500]:
+        mean, std = estimate_independence_density(n, n // 3)
+        print(f"  n={n:3d}, axioms≈{n//3}: density = {mean:.3f} ± {std:.3f}")
+
+    print("\nStrange loop hierarchy:")
+    hierarchy = build_strange_loop_hierarchy("PA", 5)
+    for level in hierarchy:
+        print(f"  {level.name}")
+        print(f"    Axioms: {level.axioms}")
+        print(f"    Independent: {level.independent}")

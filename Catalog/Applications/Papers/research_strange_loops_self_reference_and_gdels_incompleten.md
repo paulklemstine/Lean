@@ -1,330 +1,292 @@
-# Strange Loops as Fixed Points: A Unified Framework for Self-Reference and Incompleteness
+# Strange Loops: Self-Reference and Gödel's Incompleteness as Fixed Points in Provability
 
 ## Abstract
 
-We formalize the concept of a "strange loop" — a self-referential structure arising inevitably in sufficiently powerful formal systems — as a fixed-point phenomenon in the lattice of provability predicates. Building on Lawvere's categorical formulation of diagonal arguments, we define a **StrangeLoop** as a formal system equipped with a diagonal operator satisfying the fixed-point property, and prove that every strange loop is necessarily incomplete: it contains true sentences that cannot be proved. We establish connections to Cantor's theorem, Tarski's undefinability theorem, Rice's theorem, and the Knaster-Tarski fixed-point theorem, unifying these classical results under a single algebraic framework. We introduce **provability algebras** — closure operators on finite sets of sentence indices — and prove that any provability algebra admitting a diagonal sentence has no fixed points, providing a lattice-theoretic formulation of incompleteness. We also formalize **tangled hierarchies** — formal systems with self-referential meta-levels — and prove their necessary incompleteness. All results have been machine-verified in Lean 4 with Mathlib.
+We present a unified formalization of Gödel's incompleteness phenomena through the lens of
+fixed-point theory and categorical diagonalization. Our framework consists of three layers:
+(1) Lawvere's fixed-point theorem as the categorical root of all diagonal arguments;
+(2) Abstract formal systems with explicit Gödel sentence properties, from which we derive
+incompleteness, independence, and essential incompleteness; and (3) Provability algebras
+that capture the algebraic structure of provable sentences. All results are machine-verified
+in Lean 4 with Mathlib. We prove 13 theorems including Lawvere's fixed-point theorem
+(axiom-free), Cantor's theorem as a corollary, an abstract Gödel incompleteness theorem,
+Tarski's undefinability theorem, and the independence of Gödel sentences. We introduce
+the novel concept of `GoedelSentenceProperty` — the minimal self-referential conditions
+from which incompleteness follows — and `ProvabilityAlgebra` as an algebraic framework
+for studying provability fixed points.
 
-**Keywords**: Gödel's incompleteness theorem, Lawvere fixed-point theorem, strange loops, self-reference, provability algebras, diagonal arguments, tangled hierarchies
+**Keywords**: Gödel incompleteness, Lawvere fixed-point theorem, self-reference, strange loops,
+diagonal argument, provability, Tarski undefinability
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Gödel's incompleteness theorems (1931) are among the most profound results in mathematical
+logic. The First Incompleteness Theorem states that any consistent, recursively enumerable
+extension of Robinson arithmetic is incomplete: there exist true arithmetic statements that
+the system cannot prove. The Second states that such a system cannot prove its own consistency.
 
-Gödel's incompleteness theorems (1931) demonstrated that any consistent, sufficiently powerful formal system contains true but unprovable sentences. The standard proof relies on arithmetic encoding (Gödel numbering) and the diagonal lemma, which constructs a sentence equivalent to its own unprovability.
+These results are traditionally proved through a complex machinery of Gödel numbering,
+representability of recursive functions, and the diagonal lemma. While this construction is
+technically correct, it obscures the *essential* logical structure: incompleteness arises
+from the interaction of consistency with self-referential fixed points.
 
-Lawvere (1969) observed that the diagonal lemma — and indeed all classical diagonal arguments — arise from a single categorical principle: if a morphism A → B^A is epi, then every endomorphism of B has a fixed point. This insight suggests that incompleteness is not an artifact of arithmetic encoding but a structural consequence of self-reference.
+### 1.1 Contributions
 
-Hofstadter (1979) coined the term "strange loop" for self-referential structures where traversing a hierarchy of levels returns unexpectedly to the starting point. While philosophically evocative, Hofstadter's notion lacked formal precision.
+1. **Lawvere's Fixed-Point Theorem** (Theorem 1): We give a clean constructive proof that
+   if `repr : A → (A → B)` is surjective, every `t : B → B` has a fixed point. This is
+   proved without any axioms.
 
-### 1.2 Contributions
+2. **Cantor's Theorem** (Theorem 3): Derived as a corollary of Lawvere, using the fact that
+   `Not : Prop → Prop` has no fixed point.
 
-This paper makes the following contributions:
+3. **Tarski's Undefinability** (Theorem 5): We prove that the "meta-level diagonal lemma"
+   (∀ P, ∃ g, Provable g ↔ P g) is incompatible with consistency, formalizing Tarski's
+   insight that truth cannot be internalized.
 
-1. **Definition of StrangeLoop** (§3): A formal system equipped with a diagonal operator satisfying a precise fixed-point specification. This captures Hofstadter's intuition in a mathematically rigorous framework.
+4. **Abstract Gödel Incompleteness** (Theorems 6-10): Using our novel `GoedelSentenceProperty`
+   structure, we derive incompleteness, independence, and essential incompleteness from
+   minimal assumptions.
 
-2. **Gödel's Theorem from Strange Loops** (§4): A direct proof that every strange loop is incomplete, without arithmetic encoding or Gödel numbering.
+5. **Provability Algebra** (Theorems 11-13): We develop an algebraic framework for
+   provability and prove fixed-point unprovability results.
 
-3. **Unified Diagonal Framework** (§5): Derivation of Cantor's theorem, Tarski's undefinability, and Rice's theorem as corollaries of Lawvere's fixed-point theorem.
+### 1.2 Related Work
 
-4. **Provability Algebras** (§6): Introduction of closure operators on finite sets of sentence indices, with proofs of fixed-point existence and diagonal incompleteness.
+Lawvere (1969) first identified the categorical commonality among diagonal arguments.
+Yanofsky (2003) gave an accessible exposition. Our formalization follows the spirit of
+these works but adds the Gödel incompleteness layer with explicit self-referential
+fixed-point conditions, bridging the gap between the categorical and proof-theoretic
+perspectives.
 
-5. **Tangled Hierarchy Incompleteness** (§7): Formalization of hierarchical formal systems with self-referential top levels, proving their necessary incompleteness.
+## 2. Lawvere's Fixed-Point Theorem
 
-6. **Second Incompleteness Analog** (§8): A formulation of Gödel's second theorem showing that no strange loop can prove its own consistency, given a formalized derivability condition.
+### 2.1 Statement and Proof
 
-7. **Lattice-Theoretic Incompleteness** (§9): The gap between least and greatest fixed points of a provability operator as a measure of incompleteness.
-
-### 1.3 Related Work
-
-Yanofsky (2003) provided a universal approach to self-referential paradoxes using a simplified version of Lawvere's argument. Our work extends this by:
-- Introducing the StrangeLoop structure as a first-class mathematical object
-- Connecting to lattice-theoretic fixed points via provability algebras
-- Formalizing tangled hierarchies as a separate construction
-- Providing machine-verified proofs of all results
-
-The catalog's existing work on tropical metamathematics (Logic/TropicalMetamathematics.lean) establishes incompleteness for tropical proof systems using idempotent operators. Our framework generalizes this by working with arbitrary formal systems rather than tropical-specific constructions.
-
-## 2. Preliminaries
-
-### 2.1 Notation
-
-We work in classical logic with the axiom of choice. For a type A, we write `A → Prop` for the type of predicates on A. A function f : A → A is **monotone** with respect to a partial order ≤ if a ≤ b implies f(a) ≤ f(b).
-
-### 2.2 Lawvere's Fixed-Point Theorem
-
-**Theorem 2.1** (Lawvere). Let φ : A → (A → B) be a surjective function. Then for every g : B → B, there exists b : B such that g(b) = b.
-
-*Proof sketch.* By surjectivity, there exists a₀ with φ(a₀) = λa. g(φ(a)(a)). Then b = φ(a₀)(a₀) satisfies g(b) = g(φ(a₀)(a₀)) = φ(a₀)(a₀) = b. □
-
-### 2.3 Knaster-Tarski Theorem
-
-**Theorem 2.2** (Knaster-Tarski). Let (L, ≤) be a complete lattice and f : L → L a monotone function. Then f has a least fixed point lfp(f) = ⊓{x ∈ L | f(x) ≤ x} and a greatest fixed point gfp(f) = ⊔{x ∈ L | x ≤ f(x)}.
-
-## 3. Strange Loops
-
-### 3.1 Definition
-
-**Definition 3.1** (Formal System). A **formal system** is a triple (S, Prov, True) where:
-- S is a type (the sentences)
-- Prov : S → Prop is the provability predicate
-- True : S → Prop is the truth predicate
-- Soundness: ∀ s, Prov(s) → True(s)
-
-**Definition 3.2** (Strange Loop). A **strange loop** is a formal system (S, Prov, True) equipped with a diagonal operator diag : (S → Prop) → S satisfying:
-
-∀ P : S → Prop, True(diag(P)) ↔ P(diag(P))
-
-This is the **diagonal specification**: for any property P, the sentence diag(P) is true if and only if P holds of diag(P) itself.
-
-**Definition 3.3** (Gödel Sentence). The **Gödel sentence** of a strange loop L is:
-G_L := diag(λs. ¬Prov(s))
-
-### 3.2 Intuition
-
-The diagonal operator is the formal incarnation of self-reference. Given any property P, diag(P) is a sentence that "says" P holds of itself. When P is "not provable," diag(P) says "I am not provable" — the Gödel sentence.
-
-The key insight is that the diagonal operator is the *only* ingredient needed for incompleteness, beyond basic soundness. No arithmetic, no encoding, no specific logical system — just the ability to construct self-referential sentences.
-
-## 4. The Incompleteness Theorem
-
-### 4.1 Main Result
-
-**Theorem 4.1** (Gödel Sentence Theorem). Let L be a strange loop. Then:
-1. True(G_L) — the Gödel sentence is true
-2. ¬Prov(G_L) — the Gödel sentence is not provable
-
-*Proof.* Let G = diag(λs. ¬Prov(s)). By the diagonal specification:
-  True(G) ↔ ¬Prov(G)
-
-Suppose Prov(G). By soundness, True(G). By the diagonal specification, ¬Prov(G). Contradiction. Therefore ¬Prov(G).
-
-Since ¬Prov(G), by the diagonal specification (right-to-left), True(G). □
-
-**Corollary 4.2** (Incompleteness). Every strange loop is incomplete: ∃ s, True(s) ∧ ¬Prov(s).
-
-**Corollary 4.3** (Non-Completeness). No strange loop can prove all truths: ¬(∀ s, True(s) → Prov(s)).
-
-### 4.2 Stability Under Iteration
-
-**Definition 4.4** (Iterated Diagonal). Define iterDiag : ℕ → (S → Prop) → S by:
-- iterDiag(0, P) = diag(P)
-- iterDiag(n+1, P) = diag(λs. s = iterDiag(n, P) ∧ True(s))
-
-**Theorem 4.5** (Base Iteration Unprovable). ¬Prov(iterDiag(0, λs.¬Prov(s))).
-
-**Theorem 4.6** (Gödel Sentence Stability). ¬Prov(diag(λs. s = G_L)).
-
-*Proof.* If Prov(diag(λs. s = G_L)), then by soundness, True(diag(λs. s = G_L)). By the diagonal specification, diag(λs. s = G_L) = G_L. But then Prov(G_L), contradicting Theorem 4.1(2). □
-
-## 5. Unified Diagonal Framework
-
-### 5.1 Cantor's Theorem
-
-**Theorem 5.1.** For any type A, there is no surjection f : A → (A → Prop).
-
-*Proof.* If f were surjective, Lawvere's theorem (Theorem 2.1) with g = ¬ would give b with ¬b = b, which is impossible since ¬ has no fixed point in Prop (by classical logic, via `simp`). □
-
-### 5.2 Tarski's Undefinability
-
-**Theorem 5.2.** For any φ : A → (A → Prop) (whether surjective or not), the predicate P(a) = ¬φ(a)(a) is not in the range of φ: ∀ a, φ(a) ≠ P.
-
-*Proof.* If φ(a) = P for some a, then φ(a)(a) = P(a) = ¬φ(a)(a), giving φ(a)(a) ↔ ¬φ(a)(a), which is contradictory. □
-
-### 5.3 Rice's Theorem (Abstract Form)
-
-**Theorem 5.3.** If φ : A → (A → Prop) is surjective, then for every P : (A → Prop) → Prop, the property P ∘ φ is trivial (holds for all a or for no a).
-
-*Proof.* By contradiction: if P ∘ φ is non-trivial, the existence of both a witness and a counter-witness, combined with the surjectivity of φ, contradicts Cantor's theorem (Theorem 5.1). □
-
-## 6. Provability Algebras
-
-### 6.1 Definition
-
-**Definition 6.1** (Provability Algebra). A **provability algebra** on n sentences is a closure operator c : P(Fin n) → P(Fin n) satisfying:
-- Monotonicity: S ⊆ T → c(S) ⊆ c(T)
-- Extensiveness: S ⊆ c(S)
-- Idempotency: c(c(S)) = c(S)
-
-**Definition 6.2** (Theory Space). The **theory space** of a provability algebra is the set of fixed points: {S | c(S) = S}.
-
-### 6.2 Fixed-Point Results
-
-**Theorem 6.3** (Least Fixed Point). Every provability algebra has a least fixed point, obtained as the closure of the intersection of all fixed points.
-
-**Theorem 6.4** (Full Set Fixed). For any provability algebra, c(Fin n) = Fin n (the full set is always a fixed point).
-
-### 6.3 Diagonal Incompleteness
-
-**Theorem 6.5** (Provability Algebra Incompleteness). If a provability algebra admits a diagonal sentence i such that for every fixed point S, i ∈ S ↔ i ∉ S, then the algebra has no fixed points.
-
-*Proof.* Suppose c(S) = S. Then i ∈ S ↔ i ∉ S, which is a contradiction (by `tauto`). □
-
-This theorem shows that the existence of a diagonal sentence is *incompatible with having any fixed point*. In a provability algebra where fixed points represent complete theories, a diagonal sentence means no complete theory exists — pure incompleteness.
-
-## 7. Tangled Hierarchies
-
-### 7.1 Definition
-
-**Definition 7.1** (Self-Referential Hierarchy). A **self-referential hierarchy** of depth d consists of:
-- Sentence types S₀, S₁, ..., S_d for each level
-- Truth predicates True_l : S_l → Prop for each level
-- Provability predicates Prov_l : S_l → Prop for each level
-- Soundness at each level: Prov_l(s) → True_l(s)
-- A diagonal operator at the top level: diag : (S_d → Prop) → S_d
-- Diagonal specification at the top level
-
-### 7.2 Incompleteness
-
-**Theorem 7.2** (Tangled Hierarchy Incompleteness). The top level of any self-referential hierarchy is incomplete.
-
-*Proof.* Construct the Gödel sentence at the top level: G = diag(λs. ¬Prov_d(s)). By `by_contra` and the diagonal specification, if G is not true, then it must be provable, but soundness makes it true — contradiction. So G is true. And G cannot be provable by the standard argument. □
-
-This theorem formalizes Hofstadter's insight: when a hierarchy of formal levels becomes "tangled" — when the top level can refer to itself — it necessarily contains gaps in its provability.
-
-## 8. The Second Incompleteness Analog
-
-**Theorem 8.1.** Let L be a strange loop, and let Con be a sentence such that:
-1. True(Con) ↔ ¬Prov(G_L) (Con expresses consistency)
-2. Prov(Con) → Prov(G_L) (formalized derivability condition)
-
-Then ¬Prov(Con) — the system cannot prove its own consistency.
-
-*Proof.* If Prov(Con), then Prov(G_L) by condition (2). But by soundness, True(Con), so ¬Prov(G_L) by condition (1). Contradiction. □
-
-The formalized derivability condition (2) is the key assumption corresponding to the Hilbert-Bernays-Löb derivability conditions in the standard treatment.
-
-## 9. Lattice-Theoretic Incompleteness
-
-### 9.1 The LFP-GFP Gap
-
-**Theorem 9.1.** For any monotone f on a complete lattice, if lfp(f) ≠ gfp(f), then lfp(f) < gfp(f).
-
-*Proof.* By the Knaster-Tarski theorem, lfp(f) ≤ gfp(f). Combined with the inequality hypothesis, we get strict inequality. □
-
-### 9.2 Interpretation
-
-When f is a provability closure operator:
-- lfp(f) represents the **provable truths** — what can be derived from the axioms
-- gfp(f) represents the **consistent truths** — what is compatible with the axioms
-- The gap lfp(f) < gfp(f) is the **incompleteness gap**
-
-Elements in gfp(f) \ lfp(f) are precisely the Gödel-type sentences: true (in the maximal consistent theory) but not provable (not in the minimal closed theory).
-
-## 10. Productive Sets and Constructive Incompleteness
-
-**Theorem 10.1** (Productive Truth Set). For any strange loop L and any set E of sentences with E ⊆ {s | Prov(s)}, there exists s with True(s) and s ∉ E.
-
-*Proof.* Take s = G_L. By Theorem 4.1, True(G_L). If G_L ∈ E, then Prov(G_L) (since E ⊆ {s | Prov(s)}), contradicting Theorem 4.1(2). □
-
-This theorem captures the constructive content of incompleteness: the set of truths is not merely "not enumerable" — it is *productive*, meaning we can always effectively produce a missing element.
-
-## 11. Algorithms
-
-### 11.1 Diagonal Construction
-
+**Definition 1** (Diagonal Map). Given `repr : A → (A → B)` and `t : B → B`, the
+*Lawvere diagonal* is:
 ```
-Algorithm DiagonalConstruction(φ, P):
-  Input: encoding φ : N → (N → Prop), property P : Sentence → Prop
-  Output: sentence s with True(s) ↔ P(s)
-  
-  1. Compute d(n) = P(φ(n)(n)) for each n
-  2. Find n₀ with φ(n₀) = d  (exists by surjectivity)
-  3. Return s = φ(n₀)(n₀)
+lawvereDiag(repr, t)(a) = t(repr(a)(a))
 ```
 
-### 11.2 Closure Computation
+**Theorem 1** (Lawvere's Fixed-Point Theorem). If `repr : A → (A → B)` is surjective
+and `t : B → B` is any endomorphism, then `t` has a fixed point.
+
+*Proof.* Define `d : A → B` by `d(a) = t(repr(a)(a))`. Since `repr` is surjective,
+there exists `a₀` with `repr(a₀) = d`. Evaluating at `a₀`:
 
 ```
-Algorithm ClosureComputation(rules, S):
-  Input: derivation rules, initial set S
-  Output: closure(S)
-  
-  1. result ← S
-  2. repeat
-  3.   changed ← false
-  4.   for each rule (premises, conclusion) in rules:
-  5.     if premises ⊆ result and conclusion ∉ result:
-  6.       result ← result ∪ {conclusion}
-  7.       changed ← true
-  8. until not changed
-  9. return result
+repr(a₀)(a₀) = d(a₀) = t(repr(a₀)(a₀))
 ```
 
-### 11.3 Strange Loop Detection
+So `b := repr(a₀)(a₀)` satisfies `t(b) = b`. ∎
 
-```
-Algorithm StrangeLoopDetection(levels, references):
-  Input: hierarchy levels, reference graph
-  Output: list of strange loops (cycles)
-  
-  1. loops ← []
-  2. for each level l:
-  3.   DFS(l, [l], ∅, loops)
-  4. return loops
+The proof is constructive and uses no axioms — it works in any type theory.
 
-Subroutine DFS(node, path, visited, loops):
-  1. visited ← visited ∪ {node}
-  2. for each (next, _) in references[node]:
-  3.   if next = path[0] and |path| > 1:
-  4.     loops.append(path)
-  5.   else if next ∉ visited:
-  6.     DFS(next, path ++ [next], visited, loops)
-  7. visited ← visited \ {node}
-```
+**Theorem 2** (Contrapositive). If `t` has no fixed point, then `lawvereDiag(repr, t)`
+is not in the range of `repr` — hence `repr` is not surjective.
 
-## 12. Open Questions and Conjectures
+### 2.2 Cantor's Theorem
 
-### 12.1 Self-Reference Depth Hierarchy Conjecture
+**Theorem 3** (Cantor). No function `f : A → (A → Prop)` is surjective.
 
-**Conjecture 12.1.** For any strange loop L and any n ∈ ℕ:
-iterDiag(L, n, λs.¬Prov(s)) ≠ iterDiag(L, n+1, λs.¬Prov(s))
+*Proof.* Apply Lawvere with `t = Not`. If `f` were surjective, `Not` would have a
+fixed point: some `p` with `¬p = p`. But this is impossible (Theorem 4). ∎
 
-That is, iterated diagonals produce genuinely distinct sentences at each depth.
+**Theorem 4**. For all `p : Prop`, `¬p ≠ p`.
 
-**Testable prediction**: In any concrete implementation of a strange loop (e.g., Peano arithmetic with its standard Gödel encoding), the iterated Gödel sentences at depths 0, 1, 2, ... should be mutually non-equivalent under the system's provability relation.
+*Proof.* If `¬p = p`, then `p ↔ ¬p`, which is a classical contradiction. ∎
 
-### 12.2 Immune Set Structure
+### 2.3 Universality
 
-What is the structure of sets that are "immune" to a diagonal operator? We have shown that no universal immune set exists (Theorem: no_universal_immune), but the classification of immune sets — their cardinalities, closure properties, and relationship to the theory space — remains open.
+Lawvere's theorem unifies:
+- **Cantor** (1891): ℝ is uncountable (take B = {0,1}, t = flip).
+- **Russell** (1901): No set of all sets (take B = Prop, t = Not).
+- **Turing** (1936): Halting problem (take B = {halt, loop}, t = swap).
+- **Gödel** (1931): Incompleteness (take B = Prop, t = Not, through the provability predicate).
 
-## 13. Discussion
+## 3. Tarski's Undefinability
 
-### 13.1 Comparison with Tropical Metamathematics
+### 3.1 The Meta-Level Diagonal Lemma
 
-The catalog's tropical metamathematics framework (Logic/TropicalMetamathematics.lean) establishes incompleteness for tropical proof systems — formal systems where provability costs are measured in a tropical (min-plus) semiring. Our StrangeLoop framework generalizes this: a tropical proof system with an idempotent evaluator is a special case of a strange loop, where the diagonal operator is derived from the idempotent fixed-point construction.
+**Definition 2** (Meta-Diagonal). A formal system `F` has the *meta-level diagonal
+property* if for every `P : Sentence → Prop`, there exists `g` with `Provable(g) ↔ P(g)`.
 
-The key advantage of the StrangeLoop framework is its minimality: we require only a formal system and a diagonal operator, without committing to any specific algebraic structure on the sentences.
+This is stronger than Gödel's diagonal lemma (which gives *provable* equivalence in the
+object language, not meta-level equivalence). The distinction is crucial.
 
-### 13.2 Connection to Consciousness Fixed Points
+**Theorem 5** (Tarski's Undefinability). If a formal system has the meta-diagonal
+property, it is inconsistent.
 
-The catalog's consciousness fixed-point theory (Speculative/Consciousness/FixedPointTheory.lean) defines consciousness as a fixed point of self-reflection. Our strange loop framework provides a formal counterpart: a "conscious state" is a fixed point of the reflection operator, and the Gödel sentence is a "conscious truth" — a sentence that "knows" its own status within the system.
+*Proof.* Apply the meta-diagonal to `P(s) = ¬Provable(s)`. Get `g` with
+`Provable(g) ↔ ¬Provable(g)`. This is contradictory: no proposition can be
+biconditional with its own negation. From `False`, anything follows. ∎
 
-The parallel is not merely metaphorical. Both results follow from the same mathematical principle (Lawvere's theorem / Knaster-Tarski), and both demonstrate that sufficiently rich self-reference inevitably produces stable configurations that cannot be "unwound."
+**Interpretation.** This formalizes Tarski's insight: if a system could perfectly
+internalize self-reference at the meta-level (semantic truth = provability for all
+self-referential constructions), the system would be inconsistent. Truth and
+provability must diverge.
 
-## 14. Conclusion
+## 4. Abstract Gödel Incompleteness
 
-We have established that strange loops — self-referential structures in formal systems — are mathematically equivalent to fixed points of diagonal operators. This equivalence:
+### 4.1 The Gödel Sentence Property
 
-1. Provides a minimal, algebraic proof of Gödel's incompleteness theorem
-2. Unifies Cantor's, Tarski's, Rice's, and Gödel's theorems under Lawvere's fixed-point theorem
-3. Introduces provability algebras as a lattice-theoretic model of incompleteness
-4. Formalizes tangled hierarchies and proves their necessary incompleteness
-5. Establishes the second incompleteness theorem as a consequence of formalized derivability
+**Definition 3** (GoedelSentenceProperty). A *Gödel sentence* for a formal system `F`
+is a sentence `G` with two properties:
+1. **Self-refuting**: `Provable(G) → Provable(neg(G))`
+2. **Self-affirming**: `Provable(neg(G)) → Provable(G)`
 
-All results have been machine-verified in Lean 4 with Mathlib, ensuring correctness beyond any reasonable doubt. The formalization comprises approximately 420 lines of Lean code, with 15+ theorems and no remaining sorries.
+This captures the essence of the Gödel sentence without requiring the full machinery
+of arithmetization. Property (1) corresponds to the fact that if G is provable, the
+system can internalize this fact and derive ¬G (since G "says" it is unprovable).
+Property (2) corresponds to ω-consistency or Rosser's strengthening.
+
+### 4.2 Main Theorems
+
+**Theorem 6** (Gödel's First Incompleteness). If `F` has a Gödel sentence and is
+consistent, then `F` is not complete.
+
+*Proof.* Suppose `F` is complete: `∀ s, Provable(s) ∨ Provable(neg(s))`. Apply to `G`:
+- If `Provable(G)`: by self-refuting, `Provable(neg(G))`. Both hold, contradicting consistency.
+- If `Provable(neg(G))`: by self-affirming, `Provable(G)`. Same contradiction. ∎
+
+**Theorem 7** (Non-Provability of G). `¬Provable(G)`.
+
+*Proof.* If `Provable(G)`, then `Provable(neg(G))` by self-refuting, contradicting
+consistency. ∎
+
+**Theorem 8** (Non-Provability of ¬G). `¬Provable(neg(G))`.
+
+*Proof.* If `Provable(neg(G))`, then `Provable(G)` by self-affirming, contradicting
+consistency. ∎
+
+**Theorem 9** (Independence). `G` is independent: `¬Provable(G) ∧ ¬Provable(neg(G))`.
+
+*Proof.* Combine Theorems 7 and 8. ∎
+
+**Theorem 10** (Essential Incompleteness). Any consistent system with a Gödel sentence
+has an independent sentence.
+
+*Proof.* The Gödel sentence itself is independent by Theorem 9. ∎
+
+### 4.3 Discussion
+
+The strength of this formalization is its minimality. We do not assume:
+- Gödel numbering
+- Recursive enumerability of theorems
+- Representability of recursive functions
+- Peano arithmetic or Robinson arithmetic
+
+We assume *only* the existence of a sentence with the self-refuting and self-affirming
+properties, plus consistency. This isolates the pure logical core of incompleteness.
+
+The weakness is that we do not *construct* the Gödel sentence — we assume its existence.
+The construction requires the full machinery of arithmetization, which is orthogonal to
+the logical argument.
+
+## 5. Provability Algebras
+
+### 5.1 Definition
+
+**Definition 4** (ProvabilityAlgebra). A *provability algebra* consists of:
+- A type `Formula`
+- A predicate `Prov : Formula → Prop`
+- A negation `neg : Formula → Formula`
+- Soundness: `Prov(a) → Prov(neg(a)) → False`
+
+**Theorem 11** (Consistency). Every provability algebra is consistent.
+
+### 5.2 Gödel Fixed Points
+
+**Definition 5** (GoedelFP). A *Gödel fixed point* in a provability algebra is a
+formula `φ` with the self-refuting and self-affirming properties.
+
+**Theorem 12**. The Gödel fixed point is not provable: `¬Prov(φ)`.
+
+**Theorem 13**. The negation of the Gödel fixed point is not provable: `¬Prov(neg(φ))`.
+
+## 6. The Strange Loop Hierarchy
+
+### 6.1 Mathematical Model
+
+We define a `StrangeLoopHierarchy` as a system with levels, content at each level,
+and a distinguished self-referential level with a self-map that has a fixed point.
+The fixed point IS the strange loop — the level of the hierarchy that refers to itself.
+
+### 6.2 Connection to Lawvere
+
+**Theorem 14** (Connection). If a strange loop hierarchy has a surjective representation
+map at some level, then every endomorphism at that level has a fixed point. This is
+a direct application of Lawvere's theorem, connecting the categorical and hierarchical
+perspectives.
+
+## 7. Conjecture and Testable Predictions
+
+**Conjecture** (Independence Pervasiveness). In a "generic" consistent theory with n
+sentences and a Gödel sentence, the fraction of independent sentences grows with n.
+
+**Test**: Enumerate all consistent theories over n propositional variables (for small n,
+e.g., n ≤ 8) that possess the Gödel sentence property. Count the fraction of sentences
+that are independent in each. The conjecture predicts this fraction increases with n.
+
+**Computational Evidence**: Our demo.py script simulates finite formal systems and
+measures independence ratios, providing initial evidence for the conjecture.
+
+## 8. Algorithms
+
+### 8.1 Gödel Sentence Detection
+
+Given a finite formal system represented as a directed graph (edges represent
+"provability implies provability of negation" and vice versa), detecting a Gödel
+sentence reduces to finding a vertex with both in-edge from its negation and
+out-edge to its negation.
+
+### 8.2 Independence Enumeration
+
+For finite propositional theories, independence can be computed by:
+1. Building the provability closure (modus ponens, negation rules).
+2. Checking each sentence for independence (neither it nor its negation in the closure).
+
+Time complexity: O(n²) for n sentences with simple closure rules.
+
+## 9. Future Work
+
+1. Construct concrete Gödel sentences in formalized Peano arithmetic.
+2. Extend the provability algebra framework to capture Löb's theorem.
+3. Investigate the lattice structure of consistent extensions more deeply.
+4. Connect to computability theory via Rice's theorem and the halting problem.
+5. Explore the relationship between strange loops and categorical fixed-point operators.
+
+## 10. Conclusion
+
+We have presented a unified framework connecting Lawvere's fixed-point theorem,
+Gödel's incompleteness, Tarski's undefinability, and the mathematical theory of
+strange loops. The 13 machine-verified theorems demonstrate that incompleteness
+arises from a single phenomenon — the diagonal argument — and that self-referential
+fixed points are the mathematical essence of strange loops.
+
+The key insight is that the Gödel sentence's self-refuting and self-affirming
+properties, combined with consistency, are *sufficient* for incompleteness. No
+additional structure is needed. This minimal formulation isolates the pure logic
+of the result and reveals it as a manifestation of the same diagonal principle
+that underlies Cantor's theorem and Lawvere's fixed-point theorem.
 
 ## References
 
-1. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38(1), 173-198.
+1. Gödel, K. (1931). "Über formal unentscheidbare Sätze der Principia Mathematica
+   und verwandter Systeme I." *Monatshefte für Mathematik und Physik*, 38, 173-198.
 
-2. Lawvere, F.W. (1969). Diagonal arguments and cartesian closed categories. *Lecture Notes in Mathematics*, 92, 134-145.
+2. Lawvere, F.W. (1969). "Diagonal Arguments and Cartesian Closed Categories."
+   *Category Theory, Homology Theory and their Applications II*, Lecture Notes in
+   Mathematics, Vol. 92, 134-145.
 
-3. Hofstadter, D.R. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.
+3. Tarski, A. (1933). "The Concept of Truth in Formalized Languages." In *Logic,
+   Semantics, Metamathematics*, pp. 152-278.
 
-4. Yanofsky, N.S. (2003). A universal approach to self-referential paradoxes, incompleteness and fixed points. *Bulletin of Symbolic Logic*, 9(3), 362-386.
+4. Hofstadter, D. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.
 
-5. Knaster, B. (1928). Un théorème sur les fonctions d'ensembles. *Annales de la Société Polonaise de Mathématique*, 6, 133-134.
+5. Yanofsky, N.S. (2003). "A Universal Approach to Self-Referential Paradoxes,
+   Incompleteness and Fixed Points." *Bulletin of Symbolic Logic*, 9(3), 362-386.
 
-6. Tarski, A. (1955). A lattice-theoretical fixpoint theorem and its applications. *Pacific Journal of Mathematics*, 5(2), 285-309.
+6. Boolos, G. (1993). *The Logic of Provability*. Cambridge University Press.
 
-7. Rice, H.G. (1953). Classes of recursively enumerable sets and their decision problems. *Transactions of the American Mathematical Society*, 74(2), 358-366.
+7. Smullyan, R. (1992). *Gödel's Incompleteness Theorems*. Oxford University Press.

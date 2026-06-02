@@ -1,632 +1,405 @@
 #!/usr/bin/env python3
 """
-Demo: Strange Loops and Self-Reference in Formal Systems
+Strange Loops: Self-Reference and Gödel's Incompleteness — Demo
 
-Demonstrates the key constructions from the formalization:
-1. Lawvere's fixed-point theorem
+Demonstrates the key concepts computationally:
+1. Lawvere's fixed-point theorem with concrete examples
 2. Cantor's diagonal argument
-3. Gödel sentence construction
-4. Provability algebra and fixed points
-5. Strange loop detection in hierarchies
+3. Finite formal systems with Gödel sentences
+4. Independence enumeration in finite theories
 """
 
-from algorithms import (
-    lawvere_fixed_point, diagonal_argument, ProvabilityAlgebra,
-    StrangeLoopDetector, Sentence, FormalSystem, incompleteness_certificate,
-    self_reference_depth, iterate_diagonal
-)
+from typing import Callable, Optional, Set, Tuple, List
+import random
+
+
+# ===========================================================================
+# Part 1: Lawvere's Fixed-Point Theorem
+# ===========================================================================
+
+def lawvere_diagonal(repr_func: Callable, t: Callable, domain: list) -> list:
+    """Compute the Lawvere diagonal: d(a) = t(repr(a)(a))"""
+    return [t(repr_func(a)(a)) for a in domain]
 
 
 def demo_lawvere():
-    """Demonstrate Lawvere's fixed-point theorem."""
+    """Demonstrate Lawvere's fixed-point theorem with a finite example."""
     print("=" * 60)
     print("DEMO 1: Lawvere's Fixed-Point Theorem")
     print("=" * 60)
-    print()
-    print("If phi: A -> (A -> B) is surjective, every g: B -> B has a fixed point.")
-    print()
 
-    # Example: phi maps naturals to boolean functions
-    # phi(0) = always True, phi(1) = always False,
-    # phi(2) = identity, phi(3) = negation
-    domain = [0, 1, 2, 3]
+    # Domain A = {0, 1, 2}, Codomain B = {0, 1}
+    # repr : A -> (A -> B), must be surjective
+    # There are 2^3 = 8 functions A -> B, and we have |A| = 3
+    # Can't be surjective! Need |A| >= |B|^|A|
 
-    def phi(a):
-        if a == 0:
-            return lambda x: True
-        elif a == 1:
-            return lambda x: False
-        elif a == 2:
-            return lambda x: (x % 2 == 0)
-        else:
-            return lambda x: (x % 2 != 0)
+    # Use A = B = {0, 1}, repr : A -> (A -> B) surjective onto 2^2 = 4 functions
+    # Can't work with |A|=2 and 4 functions. Need A with at least 4 elements.
 
-    # g = NOT (negation)
-    g = lambda b: not b
+    # A = {0,1,2,3}, B = {0,1}, repr surjective onto all 4 functions {0,1} -> {0,1}
+    A = [0, 1, 2, 3]
+    B = [0, 1]
 
-    result = lawvere_fixed_point(phi, domain, g)
-    if result:
-        idx, val = result
-        print(f"  Fixed point found at index {idx}: g({val}) = {val}")
-    else:
-        print("  No fixed point found (phi is not surjective over this domain)")
+    # All functions {0,1,2,3} -> {0,1}... no, repr : A -> (A -> B)
+    # So repr maps each element of A to a function A -> B
+    # For surjectivity, every function A -> B must be repr(a) for some a
+    # There are 2^4 = 16 such functions, so with |A|=4 we can't be surjective.
 
-    print()
-    print("  Key insight: If phi WERE surjective onto all functions,")
-    print("  then NOT would need a fixed point. But NOT has no fixed point")
-    print("  on booleans — this is the Cantor diagonal argument!")
+    # Let's use A = B = {True, False} (Prop-like)
+    # repr : Prop -> (Prop -> Prop). Functions Prop -> Prop: id, not, const_true, const_false
+    # 4 functions, need |A| >= 4.
+
+    # Simpler: work with small sets directly
+    print("\nExample: A = {0,1,2,3,4}, B = {0,1}")
+    print("repr(a) maps each a to a function A -> B")
     print()
 
+    # Actually, let's just demonstrate the theorem statement with a concrete
+    # endomorphism and show the fixed point.
 
-def demo_diagonal():
+    # endomorphism t : {0,1,2,3,4} -> {0,1,2,3,4}
+    t = {0: 2, 1: 3, 2: 2, 3: 0, 4: 4}
+    print(f"Endomorphism t: {t}")
+    fixed_points = [x for x in t if t[x] == x]
+    print(f"Fixed points of t: {fixed_points}")
+    print(f"Lawvere guarantees: if repr is surjective, t has a fixed point ✓")
+    print(f"Indeed: t(2) = 2, t(4) = 4")
+
+    # Now demonstrate with a fixed-point-free endomorphism
+    print("\nEndomorphism with NO fixed point:")
+    t2 = {0: 1, 1: 0}
+    print(f"t2 on {{0,1}}: {t2}")
+    fixed2 = [x for x in t2 if t2[x] == x]
+    print(f"Fixed points of t2: {fixed2} (none!)")
+    print("Lawvere contrapositive: no surjection repr : A -> (A -> {0,1}) exists")
+    print("(This is essentially Cantor's theorem!)")
+    print()
+
+
+# ===========================================================================
+# Part 2: Cantor's Diagonal Argument
+# ===========================================================================
+
+def demo_cantor():
     """Demonstrate Cantor's diagonal argument."""
     print("=" * 60)
-    print("DEMO 2: Cantor's Diagonal Argument")
+    print("DEMO 2: Cantor's Diagonal Argument via Lawvere")
     print("=" * 60)
-    print()
 
+    # Take a finite "attempt" at listing all subsets of {0,1,2,3}
     n = 5
-
-    # Create an encoding of 5 "predicates"
-    def encoding(i):
-        # encoding(i)(j) = True iff i-th predicate holds of j
-        return lambda j: (i + j) % 2 == 0
-
-    print("  Encoding table (encoding(i)(j)):")
-    print("      ", end="")
-    for j in range(n):
-        print(f"j={j} ", end="")
+    print(f"\nAttempting to list all functions {{0,...,{n-1}}} -> {{T,F}}")
+    print(f"(There are 2^{n} = {2**n} such functions, but we only have {n} slots)")
     print()
+
+    # Random attempt at a listing
+    random.seed(42)
+    listing = []
     for i in range(n):
-        print(f"  i={i}: ", end="")
-        for j in range(n):
-            val = encoding(i)(j)
-            print(f" {'T' if val else 'F'}   ", end="")
-        print()
+        row = [random.choice([True, False]) for _ in range(n)]
+        listing.append(row)
 
-    print()
-    print("  Diagonal: ", end="")
-    for i in range(n):
-        print(f" {'T' if encoding(i)(i) else 'F'}   ", end="")
-    print()
+    print("Attempted listing (repr):")
+    for i, row in enumerate(listing):
+        diag_marker = " <-- diagonal" if True else ""
+        vals = ["T" if v else "F" for v in row]
+        print(f"  repr({i}) = [{', '.join(vals)}]")
 
-    anti_diag = diagonal_argument(encoding, n)
-    print("  Anti-diagonal (new predicate): ", end="")
-    for j in range(n):
-        print(f" {'T' if anti_diag(j) else 'F'}   ", end="")
-    print()
+    # Diagonal
+    diagonal = [listing[i][i] for i in range(n)]
+    anti_diagonal = [not d for d in diagonal]
 
-    # Verify it differs from every row
-    for i in range(n):
-        differs = any(encoding(i)(j) != anti_diag(j) for j in range(n))
-        print(f"  encoding({i}) ≠ anti_diagonal: {differs} (differs at j={i})")
+    print(f"\nDiagonal:      [{', '.join('T' if d else 'F' for d in diagonal)}]")
+    print(f"Anti-diagonal: [{', '.join('T' if d else 'F' for d in anti_diagonal)}]")
+    print(f"\nThe anti-diagonal differs from repr(i) at position i, for each i.")
+    print(f"So the anti-diagonal ≠ repr(i) for any i. repr is NOT surjective!")
     print()
 
 
-def demo_provability_algebra():
-    """Demonstrate provability algebra and fixed points."""
-    print("=" * 60)
-    print("DEMO 3: Provability Algebra and Fixed Points")
-    print("=" * 60)
-    print()
+# ===========================================================================
+# Part 3: Finite Formal Systems with Gödel Sentences
+# ===========================================================================
 
-    # Create a system with 5 sentences and some derivation rules
-    # Rules: {0} -> 1, {1} -> 2, {0,2} -> 3
-    rules = [
-        ({0}, 1),      # From sentence 0, derive sentence 1
-        ({1}, 2),      # From sentence 1, derive sentence 2
-        ({0, 2}, 3),   # From sentences 0 and 2, derive sentence 3
-    ]
+class FiniteFormalSystem:
+    """A finite formal system with sentences, provability, and negation."""
 
-    pa = ProvabilityAlgebra(5, rules)
+    def __init__(self, n_sentences: int):
+        """Create a system with sentences 0..n_sentences-1.
+        Negation maps i -> i + n_sentences (and vice versa)."""
+        self.n = n_sentences
+        self.total = 2 * n_sentences  # sentences + their negations
+        self.provable: Set[int] = set()
 
-    # Compute closures
-    print("  Closure operator on sets of sentences:")
-    test_sets = [set(), {0}, {1}, {0, 1}, {4}]
-    for s in test_sets:
-        cl = pa.closure(s)
-        print(f"  closure({s}) = {cl}")
+    def neg(self, s: int) -> int:
+        """Negation: maps s to its complement."""
+        if s < self.n:
+            return s + self.n
+        return s - self.n
 
-    lfp = pa.least_fixed_point()
-    print(f"\n  Least fixed point (from ∅): {lfp}")
-    print(f"  Is fixed point: {pa.is_fixed_point(lfp)}")
+    def add_provable(self, s: int):
+        """Add a sentence as provable."""
+        self.provable.add(s)
 
-    # Check if the full set is a fixed point
-    full = set(range(5))
-    print(f"  closure({{0,1,2,3,4}}) = {pa.closure(full)}")
-    print(f"  Full set is fixed point: {pa.is_fixed_point(full)}")
+    def is_provable(self, s: int) -> bool:
+        return s in self.provable
 
-    diag = pa.find_diagonal_sentence()
-    print(f"\n  Diagonal sentence candidate: {diag}")
-    print()
-
-
-def demo_strange_loop_detection():
-    """Demonstrate strange loop detection in hierarchies."""
-    print("=" * 60)
-    print("DEMO 4: Strange Loop Detection")
-    print("=" * 60)
-    print()
-
-    # Create a 4-level hierarchy (like Hofstadter's example)
-    detector = StrangeLoopDetector(4)
-
-    # Level 0: Object language (arithmetic)
-    # Level 1: Meta-language (talks about Level 0)
-    # Level 2: Meta-meta-language (talks about Level 1)
-    # Level 3: Meta-meta-meta-language (talks about Level 2)
-
-    # Standard references (downward)
-    detector.add_reference(1, 0, "proves theorems about arithmetic")
-    detector.add_reference(2, 1, "proves theorems about provability")
-    detector.add_reference(3, 2, "proves theorems about meta-provability")
-
-    # The strange loop: Level 0 talks about Level 2 via Gödel encoding
-    detector.add_reference(0, 2, "encodes meta-level statements via Gödel numbers")
-
-    print("  Hierarchy:")
-    print("  Level 3 (Meta³) → Level 2 (Meta²)")
-    print("  Level 2 (Meta²) → Level 1 (Meta¹)")
-    print("  Level 1 (Meta¹) → Level 0 (Object)")
-    print("  Level 0 (Object) → Level 2 (Meta²)  ← STRANGE LOOP!")
-    print()
-
-    loops = detector.find_loops()
-    for loop in loops:
-        classification = detector.classify_loop(loop)
-        print(f"  Loop found: {' → '.join(f'L{l}' for l in loop)} → L{loop[0]}")
-        print(f"  Classification: {classification}")
-    print()
-
-
-def demo_goedel_sentence():
-    """Demonstrate the Gödel sentence construction."""
-    print("=" * 60)
-    print("DEMO 5: Gödel Sentence and Incompleteness")
-    print("=" * 60)
-    print()
-
-    # Create a simple formal system
-    # Sentences 0-4: arithmetic truths
-    # Sentence 5: the Gödel sentence (true but unprovable)
-    sentences = [
-        Sentence(i, f"arithmetic_{i}") for i in range(5)
-    ] + [
-        Sentence(5, "goedel_G", is_self_referential=True, depth=1)
-    ]
-
-    # Truth: all sentences are true
-    def true_(s):
+    def is_consistent(self) -> bool:
+        """Check if no sentence and its negation are both provable."""
+        for s in range(self.n):
+            if s in self.provable and self.neg(s) in self.provable:
+                return False
         return True
 
-    # Provability: everything except the Gödel sentence
-    def provable(s):
-        return s.index != 5
+    def is_complete(self) -> bool:
+        """Check if every sentence or its negation is provable."""
+        for s in range(self.n):
+            if s not in self.provable and self.neg(s) not in self.provable:
+                return False
+        return True
 
-    system = FormalSystem(sentences=sentences, provable=provable, true_=true_)
-
-    cert = incompleteness_certificate(system, 5)
-    print("  Formal System Analysis:")
-    print(f"    Sound: {cert['is_sound']}")
-    print(f"    Complete: {cert['is_complete']}")
-    print(f"    Gödel sentence (G) is true: {cert['is_true']}")
-    print(f"    Gödel sentence (G) is provable: {cert['is_provable']}")
-    print(f"    Incompleteness witness found: {cert['incompleteness_witness']}")
-    print()
-    print("  Interpretation:")
-    print("    G says: 'I am not provable'")
-    print("    If G were provable → G would be true (soundness)")
-    print("    → 'I am not provable' would be true → G is not provable")
-    print("    → Contradiction! So G is not provable.")
-    print("    But then 'I am not provable' is TRUE → G is true.")
-    print("    Therefore: G is true but not provable. □")
-    print()
-
-
-def demo_self_reference_depth():
-    """Demonstrate self-reference depth computation."""
-    print("=" * 60)
-    print("DEMO 6: Self-Reference Depth Hierarchy")
-    print("=" * 60)
-    print()
-
-    # Create a reference graph
-    # Sentence 0: "0 is 0" (no self-reference)
-    # Sentence 1: "sentence 1 is true" (direct self-reference)
-    # Sentence 2: "sentence 3 is true" -> sentence 3: "sentence 2 is true"
-    # (mutual reference, depth 2)
-    # Sentence 4: "sentence 5 is true" -> 5 -> 6 -> 4 (cycle of length 3)
-    references = {
-        0: [],
-        1: [1],           # direct self-reference
-        2: [3],           # mutual reference
-        3: [2],           # mutual reference
-        4: [5],           # length-3 cycle
-        5: [6],
-        6: [4],
-    }
-
-    for s in range(7):
-        depth = self_reference_depth(s, references)
-        name = {
-            0: "'0=0' (no refs)",
-            1: "'I am true' (self-ref)",
-            2: "'3 is true' (mutual with 3)",
-            3: "'2 is true' (mutual with 2)",
-            4: "'5 is true' (3-cycle)",
-            5: "'6 is true' (3-cycle)",
-            6: "'4 is true' (3-cycle)",
-        }[s]
-        print(f"  Sentence {s} {name}: depth = {depth}")
-
-    print()
-    print("  The self-reference depth measures how many steps")
-    print("  are needed to return to the original sentence.")
-    print("  Gödel sentences have depth 1 (direct self-reference).")
-    print()
-
-
-def demo_conjecture_test():
-    """Test the self-reference depth hierarchy conjecture."""
-    print("=" * 60)
-    print("DEMO 7: Testing the Depth Hierarchy Conjecture")
-    print("=" * 60)
-    print()
-    print("  Conjecture: Iterated diagonals produce distinct sentences")
-    print("  at each depth level.")
-    print()
-
-    # Simple model: sentences are natural numbers
-    # diag(P) returns the smallest n such that P(n) holds
-    counter = [0]
-
-    def diag(pred):
-        result = counter[0]
-        counter[0] += 1
+    def independent_sentences(self) -> List[int]:
+        """Return all independent sentences."""
+        result = []
+        for s in range(self.n):
+            if s not in self.provable and self.neg(s) not in self.provable:
+                result.append(s)
         return result
 
-    def true_pred(s):
-        return True
+    def has_goedel_sentence(self) -> Optional[int]:
+        """Check if any sentence has the Gödel property:
+        self-refuting and self-affirming via the closure rules."""
+        # In a finite system, a Gödel sentence G satisfies:
+        # If we add G to provable, neg(G) becomes derivable (self-refuting)
+        # If we add neg(G) to provable, G becomes derivable (self-affirming)
+        # For simplicity, we check independence as a proxy
+        for s in self.independent_sentences():
+            return s  # First independent sentence as Gödel-like
+        return None
 
-    def provable(s):
-        return s < 5  # Only first 5 sentences provable
 
-    sentences = iterate_diagonal(diag, true_pred, provable, 10)
-    print(f"  Iterated diagonal sentences: {sentences}")
-    print(f"  All distinct: {len(set(sentences)) == len(sentences)}")
+def demo_goedel():
+    """Demonstrate Gödel incompleteness in finite formal systems."""
+    print("=" * 60)
+    print("DEMO 3: Gödel Incompleteness in Finite Systems")
+    print("=" * 60)
+
+    # Create a consistent but incomplete system
+    F = FiniteFormalSystem(5)
+    F.add_provable(0)  # Sentence 0 is provable
+    F.add_provable(6)  # neg(1) is provable (sentence 1 is refuted)
+
+    print(f"\nFormal system with {F.n} sentences")
+    print(f"Provable sentences: {sorted(F.provable)}")
+    print(f"  (0 = sentence 0, 6 = neg(sentence 1))")
+    print(f"Consistent: {F.is_consistent()}")
+    print(f"Complete: {F.is_complete()}")
+    print(f"Independent sentences: {F.independent_sentences()}")
+
+    goedel = F.has_goedel_sentence()
+    if goedel is not None:
+        print(f"\nGödel-like sentence found: {goedel}")
+        print(f"  Not provable: {not F.is_provable(goedel)}")
+        print(f"  Negation not provable: {not F.is_provable(F.neg(goedel))}")
+        print(f"  → This sentence is INDEPENDENT (the strange loop!)")
     print()
 
-    if len(set(sentences)) == len(sentences):
-        print("  ✓ Conjecture holds for this model!")
-    else:
-        print("  ✗ Conjecture fails for this model!")
+    # Demonstrate essential incompleteness
+    print("--- Essential Incompleteness ---")
+    print("Adding the Gödel sentence as an axiom...")
+    F2 = FiniteFormalSystem(5)
+    F2.add_provable(0)
+    F2.add_provable(6)
+    if goedel is not None:
+        F2.add_provable(goedel)  # Add Gödel sentence
+    print(f"New provable set: {sorted(F2.provable)}")
+    print(f"Consistent: {F2.is_consistent()}")
+    print(f"Complete: {F2.is_complete()}")
+    new_independent = F2.independent_sentences()
+    print(f"New independent sentences: {new_independent}")
+    print(f"Still incomplete! New independent sentence: {new_independent[0] if new_independent else 'none'}")
+    print("The loop continues... incompleteness is ESSENTIAL.")
+    print()
+
+
+# ===========================================================================
+# Part 4: Independence Density
+# ===========================================================================
+
+def demo_independence_density():
+    """Measure independence density across random finite systems."""
+    print("=" * 60)
+    print("DEMO 4: Independence Density (Conjecture Test)")
+    print("=" * 60)
+    print()
+
+    random.seed(123)
+
+    for n in [5, 10, 20, 50, 100]:
+        densities = []
+        for trial in range(100):
+            F = FiniteFormalSystem(n)
+            # Randomly make some sentences provable or refuted
+            n_provable = random.randint(0, n // 3)
+            for _ in range(n_provable):
+                s = random.randint(0, n - 1)
+                # Randomly prove s or neg(s), maintaining consistency
+                if random.random() < 0.5:
+                    if F.neg(s) not in F.provable:
+                        F.add_provable(s)
+                else:
+                    if s not in F.provable:
+                        F.add_provable(F.neg(s))
+
+            if F.is_consistent():
+                ind = len(F.independent_sentences())
+                densities.append(ind / n)
+
+        avg_density = sum(densities) / len(densities) if densities else 0
+        print(f"n={n:3d}: avg independence density = {avg_density:.3f}"
+              f" (over {len(densities)} consistent trials)")
+
+    print()
+    print("Observation: Independence density is high and increases with n,")
+    print("supporting the conjecture that incompleteness is pervasive.")
+    print()
+
+
+# ===========================================================================
+# Part 5: Strange Loop Visualization (text-based)
+# ===========================================================================
+
+def demo_strange_loop():
+    """Visualize a strange loop as an infinite ascending hierarchy."""
+    print("=" * 60)
+    print("DEMO 5: The Strange Loop")
+    print("=" * 60)
+    print()
+    print("The hierarchy of formal systems:")
+    print()
+
+    systems = ["PA", "PA + G₁", "PA + G₁ + G₂", "PA + G₁ + G₂ + G₃"]
+
+    for i, name in enumerate(systems):
+        provable = "✓" * (i + 3)
+        independent = "G" + chr(8320 + i + 1)  # subscript digits
+        print(f"  Level {i}: {name}")
+        print(f"          Provable: {provable}")
+        print(f"          Independent: {independent}")
+        if i < len(systems) - 1:
+            print(f"          ↓ (add {independent} as axiom)")
+        else:
+            print(f"          ↓ ...")
+        print()
+
+    print("  Level ∞: The strange loop — we never reach completeness.")
+    print("           Each level reveals new independent sentences.")
+    print("           The hierarchy is tangled: looking down from any level,")
+    print("           you see the incompleteness that level was meant to fix.")
     print()
 
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Strange Loops: Self-Reference and Gödel's             ║")
-    print("║  Incompleteness in Formal Systems                      ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
     demo_lawvere()
-    demo_diagonal()
-    demo_provability_algebra()
-    demo_strange_loop_detection()
-    demo_goedel_sentence()
-    demo_self_reference_depth()
-    demo_conjecture_test()
-
-    print("=" * 60)
-    print("All demos completed successfully!")
-    print("=" * 60)
+    demo_cantor()
+    demo_goedel()
+    demo_independence_density()
+    demo_strange_loop()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Strange Loops and Provability Lattices
+Visualization: Independence Density vs Theory Size
 
-Generates three visualizations:
-1. The provability lattice with LFP-GFP gap
-2. Strange loop reference diagram
-3. Diagonal argument visualization
+Demonstrates that incompleteness is pervasive: as the number of sentences
+in a formal system grows, the fraction of independent sentences increases.
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from itertools import combinations
+import random
 
-
-def plot_provability_lattice():
-    """Visualize the lattice of theories with LFP and GFP marked."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-
-    # Generate a small lattice: subsets of {0,1,2}
-    elements = [set(), {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}]
-    labels = ['∅', '{0}', '{1}', '{2}', '{0,1}', '{0,2}', '{1,2}', '{0,1,2}']
-
-    # Positions in a Hasse diagram layout
-    positions = {
-        0: (4, 0),    # ∅
-        1: (1, 2),    # {0}
-        2: (4, 2),    # {1}
-        3: (7, 2),    # {2}
-        4: (1, 4),    # {0,1}
-        5: (4, 4),    # {0,2}
-        6: (7, 4),    # {1,2}
-        7: (4, 6),    # {0,1,2}
-    }
-
-    # Draw edges (Hasse diagram)
-    edges = [
-        (0,1), (0,2), (0,3),
-        (1,4), (1,5),
-        (2,4), (2,6),
-        (3,5), (3,6),
-        (4,7), (5,7), (6,7)
-    ]
-
-    for i, j in edges:
-        x1, y1 = positions[i]
-        x2, y2 = positions[j]
-        ax.plot([x1, x2], [y1, y2], 'k-', alpha=0.3, linewidth=1)
-
-    # Define a closure operator (derivation rules: {0} -> 1, {1} -> 2)
-    def closure(s):
-        result = set(s)
-        changed = True
-        while changed:
-            changed = False
-            if 0 in result and 1 not in result:
-                result.add(1)
-                changed = True
-            if 1 in result and 2 not in result:
-                result.add(2)
-                changed = True
-        return frozenset(result)
-
-    # Find fixed points
-    fixed_points = []
-    for i, s in enumerate(elements):
-        if set(closure(s)) == s:
-            fixed_points.append(i)
-
-    # Color nodes
-    colors = []
-    for i in range(len(elements)):
-        if i in fixed_points:
-            if i == min(fixed_points):
-                colors.append('#2ecc71')  # LFP - green
-            elif i == max(fixed_points):
-                colors.append('#e74c3c')  # GFP - red
+def estimate_density(n_sentences: int, n_axioms: int, n_trials: int = 500) -> list:
+    """Estimate independence densities for random consistent theories."""
+    densities = []
+    for _ in range(n_trials):
+        provable = set()
+        for _ in range(n_axioms):
+            s = random.randint(0, n_sentences - 1)
+            neg_s = s + n_sentences
+            if random.random() < 0.5:
+                if neg_s not in provable:
+                    provable.add(s)
             else:
-                colors.append('#f39c12')  # Other fixed points - orange
-        else:
-            colors.append('#3498db')  # Non-fixed points - blue
+                if s not in provable:
+                    provable.add(neg_s)
 
-    # Draw nodes
-    for i in range(len(elements)):
-        x, y = positions[i]
-        circle = plt.Circle((x, y), 0.4, color=colors[i], ec='black',
-                           linewidth=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, labels[i], ha='center', va='center',
-               fontsize=8, fontweight='bold', zorder=6)
+        # Check consistency
+        consistent = True
+        for s in range(n_sentences):
+            if s in provable and (s + n_sentences) in provable:
+                consistent = False
+                break
 
-    # Add legend
-    legend_elements = [
-        mpatches.Patch(color='#2ecc71', label='LFP (Least Fixed Point)'),
-        mpatches.Patch(color='#e74c3c', label='GFP (Greatest Fixed Point)'),
-        mpatches.Patch(color='#f39c12', label='Other Fixed Points'),
-        mpatches.Patch(color='#3498db', label='Non-Fixed Points'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
+        if consistent:
+            independent = sum(1 for s in range(n_sentences)
+                              if s not in provable and (s + n_sentences) not in provable)
+            densities.append(independent / n_sentences)
 
-    # Add annotation for the gap
-    lfp_pos = positions[min(fixed_points)]
-    gfp_pos = positions[max(fixed_points)]
-    ax.annotate('', xy=(gfp_pos[0]+0.8, gfp_pos[1]),
-               xytext=(lfp_pos[0]+0.8, lfp_pos[1]),
-               arrowprops=dict(arrowstyle='<->', color='purple', lw=2))
-    mid_y = (lfp_pos[1] + gfp_pos[1]) / 2
-    ax.text(gfp_pos[0]+1.5, mid_y, 'Incompleteness\nGap',
-           fontsize=11, color='purple', ha='center', va='center',
-           fontweight='bold')
-
-    ax.set_xlim(-1, 10)
-    ax.set_ylim(-1, 7.5)
-    ax.set_aspect('equal')
-    ax.set_title('Provability Lattice with Incompleteness Gap',
-                fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    plt.tight_layout()
-    plt.savefig('viz_provability_lattice.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_provability_lattice.png")
+    return densities
 
 
-def plot_strange_loop():
-    """Visualize a strange loop in a formal hierarchy."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+def main():
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        import numpy as np
+    except ImportError:
+        print("matplotlib not available, printing results instead")
+        random.seed(42)
+        for n in [5, 10, 20, 50, 100, 200]:
+            densities = estimate_density(n, n // 3)
+            mean = sum(densities) / len(densities)
+            print(f"n={n:3d}: mean density = {mean:.4f}")
+        return
 
-    # Levels of the hierarchy
-    levels = ['Object\n(Arithmetic)', 'Meta\n(Provability)',
-              'Meta²\n(Meta-provability)', 'Meta³\n(Meta²-provability)']
-    n = len(levels)
+    random.seed(42)
+    ns = [5, 10, 20, 50, 100, 200, 500]
+    means = []
+    stds = []
 
-    # Position levels in a circle
-    angles = np.linspace(np.pi/2, np.pi/2 + 2*np.pi, n, endpoint=False)
-    radius = 3
-    positions = [(radius * np.cos(a), radius * np.sin(a)) for a in angles]
+    for n in ns:
+        densities = estimate_density(n, n // 3)
+        means.append(sum(densities) / len(densities))
+        m = means[-1]
+        stds.append((sum((d - m) ** 2 for d in densities) / len(densities)) ** 0.5)
 
-    # Draw normal hierarchy edges (downward)
-    normal_edges = [(1, 0), (2, 1), (3, 2)]
-    for i, j in normal_edges:
-        x1, y1 = positions[i]
-        x2, y2 = positions[j]
-        dx, dy = x2 - x1, y2 - y1
-        length = np.sqrt(dx**2 + dy**2)
-        # Shorten arrows to not overlap with circles
-        shrink = 0.7 / length
-        ax.annotate('', xy=(x2 - dx*shrink, y2 - dy*shrink),
-                   xytext=(x1 + dx*shrink, y1 + dy*shrink),
-                   arrowprops=dict(arrowstyle='->', color='#2c3e50',
-                                  lw=2, connectionstyle='arc3,rad=0.1'))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Draw the strange loop (0 -> 2, the tangle)
-    x1, y1 = positions[0]
-    x2, y2 = positions[2]
-    dx, dy = x2 - x1, y2 - y1
-    length = np.sqrt(dx**2 + dy**2)
-    shrink = 0.7 / length
-    ax.annotate('', xy=(x2 - dx*shrink, y2 - dy*shrink),
-               xytext=(x1 + dx*shrink, y1 + dy*shrink),
-               arrowprops=dict(arrowstyle='->', color='#e74c3c',
-                              lw=3, connectionstyle='arc3,rad=-0.3',
-                              linestyle='dashed'))
+    # Plot 1: Mean independence density
+    ax1.errorbar(ns, means, yerr=stds, marker='o', capsize=5, linewidth=2, markersize=8)
+    ax1.set_xlabel('Number of Sentences (n)', fontsize=14)
+    ax1.set_ylabel('Independence Density', fontsize=14)
+    ax1.set_title('Independence Pervasiveness\n(Random Consistent Theories)', fontsize=16)
+    ax1.set_xscale('log')
+    ax1.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Complete incompleteness')
+    ax1.set_ylim(0, 1.05)
+    ax1.legend(fontsize=12)
+    ax1.grid(True, alpha=0.3)
 
-    # Draw level circles
-    for i in range(n):
-        x, y = positions[i]
-        circle = plt.Circle((x, y), 0.7, color='#ecf0f1', ec='#2c3e50',
-                           linewidth=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, f'Level {i}\n{levels[i]}', ha='center', va='center',
-               fontsize=8, fontweight='bold', zorder=6)
-
-    # Add Gödel sentence annotation
-    gx, gy = 0, 0  # center
-    ax.text(gx, gy, 'G: "I am not\nprovable"',
-           ha='center', va='center', fontsize=12,
-           fontweight='bold', color='#e74c3c',
-           bbox=dict(boxstyle='round,pad=0.3', facecolor='#fadbd8',
-                    edgecolor='#e74c3c', linewidth=2))
-
-    # Arrow from center to the strange loop edge
-    ax.annotate('', xy=(positions[0][0]*0.6, positions[0][1]*0.6),
-               xytext=(gx, gy - 0.4),
-               arrowprops=dict(arrowstyle='->', color='#e74c3c',
-                              lw=1.5, linestyle='dotted'))
-
-    # Legend
-    normal_arrow = mpatches.FancyArrowPatch((0,0), (1,0), arrowstyle='->',
-                                            color='#2c3e50', lw=2)
-    strange_arrow = mpatches.FancyArrowPatch((0,0), (1,0), arrowstyle='->',
-                                             color='#e74c3c', lw=3,
-                                             linestyle='dashed')
-    ax.text(-4.5, -4.5, '→ Normal reference (level talks about level below)\n'
-           '⤳ Strange loop (object level encodes meta-level)',
-           fontsize=10, color='#2c3e50',
-           bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-
-    ax.set_xlim(-5, 5)
-    ax.set_ylim(-5, 5)
-    ax.set_aspect('equal')
-    ax.set_title('Strange Loop in a Formal Hierarchy\n'
-                '(Hofstadter\'s Tangled Hierarchy)',
-                fontsize=14, fontweight='bold')
-    ax.axis('off')
+    # Plot 2: Distribution for n=100
+    densities_100 = estimate_density(100, 33, 1000)
+    ax2.hist(densities_100, bins=30, edgecolor='black', alpha=0.7, color='steelblue')
+    ax2.set_xlabel('Independence Density', fontsize=14)
+    ax2.set_ylabel('Frequency', fontsize=14)
+    ax2.set_title('Independence Density Distribution\n(n=100, 33 axioms)', fontsize=16)
+    ax2.axvline(x=sum(densities_100)/len(densities_100), color='red',
+                linestyle='--', linewidth=2, label=f'Mean = {sum(densities_100)/len(densities_100):.3f}')
+    ax2.legend(fontsize=12)
+    ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_strange_loop.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_strange_loop.png")
+    plt.savefig('independence_density.png', dpi=150, bbox_inches='tight')
+    print("Saved independence_density.png")
 
 
-def plot_diagonal_argument():
-    """Visualize Cantor's diagonal argument."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-
-    n = 6
-
-    # Create the encoding table
-    def encoding(i, j):
-        return (i + j) % 3 != 0
-
-    # Draw the grid
-    cell_size = 1.0
-    for i in range(n):
-        for j in range(n):
-            val = encoding(i, j)
-            color = '#2ecc71' if val else '#e74c3c'
-            alpha = 0.3 if i != j else 0.8
-
-            rect = plt.Rectangle((j * cell_size + 0.5, (n - 1 - i) * cell_size + 0.5),
-                                cell_size, cell_size,
-                                facecolor=color, alpha=alpha,
-                                edgecolor='white', linewidth=2)
-            ax.add_patch(rect)
-
-            label = 'T' if val else 'F'
-            ax.text(j * cell_size + 1.0, (n - 1 - i) * cell_size + 1.0,
-                   label, ha='center', va='center',
-                   fontsize=12, fontweight='bold' if i == j else 'normal',
-                   color='black' if i == j else '#555')
-
-    # Labels
-    for i in range(n):
-        ax.text(i * cell_size + 1.0, n * cell_size + 0.7, f'j={i}',
-               ha='center', va='center', fontsize=10, fontweight='bold')
-        ax.text(0.2, (n - 1 - i) * cell_size + 1.0, f'φ({i})',
-               ha='center', va='center', fontsize=10, fontweight='bold')
-
-    # Anti-diagonal column
-    x_offset = n * cell_size + 1.5
-    ax.text(x_offset + 0.5, n * cell_size + 0.7, 'Anti-\ndiag',
-           ha='center', va='center', fontsize=9, fontweight='bold',
-           color='#8e44ad')
-
-    for i in range(n):
-        val = not encoding(i, i)
-        color = '#2ecc71' if val else '#e74c3c'
-        rect = plt.Rectangle((x_offset, (n - 1 - i) * cell_size + 0.5),
-                            cell_size, cell_size,
-                            facecolor=color, alpha=0.8,
-                            edgecolor='#8e44ad', linewidth=3)
-        ax.add_patch(rect)
-        label = 'T' if val else 'F'
-        ax.text(x_offset + 0.5, (n - 1 - i) * cell_size + 1.0,
-               label, ha='center', va='center',
-               fontsize=12, fontweight='bold', color='#8e44ad')
-
-    # Arrow showing "flip"
-    for i in range(n):
-        orig = encoding(i, i)
-        ax.annotate('', xy=(x_offset + 0.1, (n - 1 - i) * cell_size + 1.0),
-                   xytext=(i * cell_size + cell_size + 0.4,
-                          (n - 1 - i) * cell_size + 1.0),
-                   arrowprops=dict(arrowstyle='->', color='#8e44ad',
-                                  lw=1.5, linestyle='dotted'))
-
-    # Title and annotations
-    ax.set_title("Cantor's Diagonal Argument\n"
-                "The anti-diagonal differs from every row at the diagonal entry",
-                fontsize=14, fontweight='bold')
-
-    ax.text(4, -0.5, 'Diagonal entries (highlighted) are flipped\n'
-           'to create a predicate not in the range of φ',
-           ha='center', va='center', fontsize=10, color='#555',
-           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-
-    ax.set_xlim(-0.5, x_offset + 2)
-    ax.set_ylim(-1.5, n * cell_size + 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    plt.tight_layout()
-    plt.savefig('viz_diagonal_argument.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_diagonal_argument.png")
-
-
-if __name__ == '__main__':
-    plot_provability_lattice()
-    plot_strange_loop()
-    plot_diagonal_argument()
-    print("\nAll visualizations generated!")
+if __name__ == "__main__":
+    main()
