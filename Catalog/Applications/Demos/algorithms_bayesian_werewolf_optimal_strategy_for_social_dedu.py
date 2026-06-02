@@ -1,330 +1,274 @@
 #!/usr/bin/env python3
 """
-Bayesian Werewolf: Algorithms for Optimal Social Deduction
-==========================================================
+Algorithms for Bayesian Werewolf game analysis.
 
-Implements the core algorithms from the research:
-1. Markov chain villager win probability (exact computation)
-2. Bayesian posterior update mechanism
-3. Monte Carlo simulation of Werewolf games
-4. Optimal elimination strategy via posterior maximization
-
-All algorithms include docstrings, type hints, and complexity analysis.
+Provides:
+  1. Exact win probability computation (memoized recursion)
+  2. Monte Carlo simulation for validation
+  3. Bayesian posterior update for social deduction
+  4. Game tree analysis for optimal strategy computation
 """
-
-from __future__ import annotations
+from fractions import Fraction
 from functools import lru_cache
-from typing import Optional
-import math
+from typing import List, Tuple, Dict, Optional
 import random
 
 
-# ─── Algorithm 1: Exact Villager Win Probability ───────────────────
-# Time: O(w * v) via memoization
-# Space: O(w * v) for the memo table
+# ============================================================
+# Algorithm 1: Exact Win Probability (Dynamic Programming)
+# ============================================================
 
 @lru_cache(maxsize=None)
-def villager_win_prob_exact(w: int, v: int) -> float:
-    """
-    Compute the exact villager win probability under random elimination.
-
-    This implements the Markov chain absorption probability.
-    The recursion matches the Lean-verified definition `villagerWinProb`.
-
-    Parameters:
-        w: Number of remaining werewolves
-        v: Number of remaining villagers
-
+def random_win_prob(v: int, w: int) -> Fraction:
+    """Compute exact villager win probability under random elimination.
+    
+    Uses the recursion:
+        P(v, 0) = 1
+        P(v, w) = 0                           if v ≤ w + 1
+        P(v, w) = (w/(v+w-1)) * P(v-1, w-1) 
+                + ((v-1)/(v+w-1)) * P(v-2, w)  otherwise
+    
+    Args:
+        v: Number of remaining villagers (≥ 0)
+        w: Number of remaining werewolves (≥ 0)
+    
     Returns:
-        Probability that villagers win under random elimination
-
-    Complexity:
-        Time:  O(w * v) with memoization
-        Space: O(w * v) for cache
+        Exact rational probability as a Fraction
+    
+    Complexity: O(v * w) time and space with memoization.
     """
     if w == 0:
-        return 1.0 if v > 0 else 0.0
-    if w >= v:
-        return 0.0
-    if v <= 1:
-        return 0.0
-    tot = w + v
-    p_correct = w / tot    # prob of eliminating a werewolf
-    p_incorrect = v / tot  # prob of eliminating a villager
-    return (p_correct * villager_win_prob_exact(w - 1, v - 1) +
-            p_incorrect * villager_win_prob_exact(w, v - 2))
+        return Fraction(1)
+    if v <= w + 1:
+        return Fraction(0)
+    total = v + w - 1
+    return (Fraction(w, total) * random_win_prob(v - 1, w - 1) +
+            Fraction(v - 1, total) * random_win_prob(v - 2, w))
 
 
-# ─── Algorithm 2: Bayesian Posterior Update ────────────────────────
-# Time: O(n) per update
-# Space: O(n) for the belief vector
-
-class BayesianWerewolfTracker:
-    """
-    Maintains Bayesian posterior probabilities for each player being a werewolf.
-
-    The tracker starts with a uniform prior (k/n for each player) and
-    updates based on observed events:
-    - Survival through night (slightly increases suspicion)
-    - Voting patterns (wolves tend to protect each other)
-    - Elimination results (reveals true identity)
-
-    Complexity:
-        Initialization: O(n)
-        Each update:     O(n)
-        Space:           O(n)
-    """
-
-    def __init__(self, n: int, k: int):
-        """
-        Initialize with uniform prior.
-
-        Args:
-            n: Total number of players
-            k: Number of werewolves
-        """
-        self.n = n
-        self.k = k
-        self.alive = list(range(n))
-        self.belief = [k / n] * n  # P(player i is wolf)
-        self.known_wolves: set[int] = set()
-        self.known_villagers: set[int] = set()
-
-    def update_elimination(self, player: int, is_wolf: bool) -> None:
-        """
-        Update beliefs after a player is eliminated and their role revealed.
-
-        Args:
-            player: Index of eliminated player
-            is_wolf: Whether the eliminated player was a werewolf
-        """
-        if player in self.alive:
-            self.alive.remove(player)
-
-        if is_wolf:
-            self.known_wolves.add(player)
-            self.belief[player] = 1.0
-            remaining_wolves = self.k - len(self.known_wolves)
-        else:
-            self.known_villagers.add(player)
-            self.belief[player] = 0.0
-            remaining_wolves = self.k - len(self.known_wolves)
-
-        # Redistribute probability among remaining unknown players
-        unknown = [i for i in self.alive
-                   if i not in self.known_wolves and i not in self.known_villagers]
-        if unknown:
-            for i in unknown:
-                self.belief[i] = remaining_wolves / len(unknown)
-
-    def update_vote_pattern(self, voter: int, target: int,
-                            wolf_protect_prob: float = 0.3) -> None:
-        """
-        Update beliefs based on voting patterns.
-
-        Wolves are less likely to vote for other wolves (wolf_protect_prob).
-        This is the Bayesian likelihood update.
-
-        Args:
-            voter: Index of the voter
-            target: Index of the vote target
-            wolf_protect_prob: P(wolf votes for wolf) vs P(wolf votes for villager)
-        """
-        unknown = [i for i in self.alive
-                   if i not in self.known_wolves and i not in self.known_villagers]
-        if voter not in unknown or target not in unknown:
-            return
-
-        # Likelihood ratio: P(vote | voter is wolf) / P(vote | voter is villager)
-        # If target has high wolf probability, a wolf is LESS likely to vote for them
-        p_target_wolf = self.belief[target]
-
-        # P(vote for target | voter is wolf) ∝ (1 - wolf_protect_prob) * p_target_wolf
-        #                                     + wolf_protect_prob * (1 - p_target_wolf)
-        # P(vote for target | voter is villager) ∝ p_target_wolf (random/rational)
-
-        lr_wolf = (1 - wolf_protect_prob) * p_target_wolf + wolf_protect_prob * (1 - p_target_wolf)
-        lr_villager = p_target_wolf + 0.5 * (1 - p_target_wolf)  # slight random component
-
-        if lr_villager > 0:
-            ratio = lr_wolf / lr_villager
-            # Bayesian update for the voter
-            prior = self.belief[voter]
-            posterior_unnorm = prior * ratio
-            normalizer = posterior_unnorm + (1 - prior) * 1.0
-            if normalizer > 0:
-                self.belief[voter] = posterior_unnorm / normalizer
-
-    def get_most_suspicious(self) -> Optional[int]:
-        """
-        Return the player with highest posterior probability of being a werewolf.
-
-        This implements the optimal Bayesian strategy: vote for the player
-        who is most likely to be a werewolf.
-
-        Returns:
-            Index of most suspicious player, or None if no players alive
-        """
-        unknown = [i for i in self.alive
-                   if i not in self.known_wolves and i not in self.known_villagers]
-        if not unknown:
-            return None
-        return max(unknown, key=lambda i: self.belief[i])
-
-    def entropy(self) -> float:
-        """Total Shannon entropy of the belief state."""
-        total = 0.0
-        for i in self.alive:
-            p = self.belief[i]
-            if 0 < p < 1:
-                total += -(p * math.log(p) + (1 - p) * math.log(1 - p))
-        return total
-
-
-# ─── Algorithm 3: Monte Carlo Werewolf Simulation ──────────────────
-# Time: O(num_games * n) per simulation
-# Space: O(n) per game
-
-def simulate_werewolf_game(n: int, k: int, strategy: str = "random",
-                           seed: Optional[int] = None) -> bool:
-    """
-    Simulate a single Werewolf game.
-
+def random_win_prob_table(max_v: int, max_w: int) -> Dict[Tuple[int, int], Fraction]:
+    """Compute win probability for all (v, w) up to given bounds.
+    
     Args:
-        n: Total number of players
-        k: Number of werewolves
-        strategy: "random" (uniform random), "bayesian" (posterior-maximizing)
-        seed: Random seed for reproducibility
-
+        max_v: Maximum number of villagers
+        max_w: Maximum number of werewolves
+    
     Returns:
-        True if villagers win, False if werewolves win
+        Dictionary mapping (v, w) to exact win probability
     """
-    if seed is not None:
-        random.seed(seed)
-
-    wolves = set(random.sample(range(n), k))
-    villagers = set(range(n)) - wolves
-    alive = set(range(n))
-
-    tracker = BayesianWerewolfTracker(n, k) if strategy == "bayesian" else None
-
-    while True:
-        # Check win conditions
-        alive_wolves = wolves & alive
-        alive_villagers = villagers & alive
-
-        if len(alive_wolves) == 0:
-            return True  # Villagers win
-        if len(alive_wolves) >= len(alive_villagers):
-            return False  # Werewolves win
-
-        # Day phase: vote to eliminate
-        if strategy == "random":
-            target = random.choice(list(alive))
-        elif strategy == "bayesian" and tracker is not None:
-            target = tracker.get_most_suspicious()
-            if target is None:
-                target = random.choice(list(alive))
-        else:
-            target = random.choice(list(alive))
-
-        is_wolf = target in wolves
-        alive.discard(target)
-        if tracker:
-            tracker.update_elimination(target, is_wolf)
-
-        # Check after day elimination
-        alive_wolves = wolves & alive
-        alive_villagers = villagers & alive
-
-        if len(alive_wolves) == 0:
-            return True
-        if len(alive_wolves) >= len(alive_villagers):
-            return False
-
-        # Night phase: werewolves kill a villager
-        if alive_villagers:
-            victim = random.choice(list(alive_villagers))
-            alive.discard(victim)
-            if tracker:
-                tracker.update_elimination(victim, False)
-
-
-def estimate_win_probability(n: int, k: int, num_games: int = 100000,
-                             strategy: str = "random",
-                             seed: int = 42) -> float:
-    """
-    Estimate villager win probability by Monte Carlo simulation.
-
-    Args:
-        n: Total players
-        k: Werewolves
-        num_games: Number of simulations
-        strategy: "random" or "bayesian"
-        seed: Base random seed
-
-    Returns:
-        Estimated probability of villagers winning
-
-    Complexity:
-        Time:  O(num_games * n)
-        Space: O(n)
-    """
-    random.seed(seed)
-    wins = sum(1 for _ in range(num_games)
-               if simulate_werewolf_game(n, k, strategy))
-    return wins / num_games
-
-
-# ─── Algorithm 4: Win Probability Table ────────────────────────────
-
-def compute_win_prob_table(max_n: int = 15) -> dict[tuple[int, int], float]:
-    """
-    Compute exact villager win probabilities for all valid (k, n-k) pairs.
-
-    Returns:
-        Dictionary mapping (k, v) to exact win probability
-
-    Complexity:
-        Time:  O(max_n^3) total
-        Space: O(max_n^2) for table
-    """
-    table = {}
-    for n in range(3, max_n + 1):
-        for k in range(1, n // 2):
-            v = n - k
-            table[(k, v)] = villager_win_prob_exact(k, v)
+    table: Dict[Tuple[int, int], Fraction] = {}
+    for w in range(max_w + 1):
+        for v in range(max_v + 1):
+            table[(v, w)] = random_win_prob(v, w)
     return table
 
 
+# ============================================================
+# Algorithm 2: Monte Carlo Simulation
+# ============================================================
+
+def simulate_game(v: int, w: int) -> bool:
+    """Simulate a single game with random elimination.
+    
+    Args:
+        v: Initial number of villagers
+        w: Initial number of werewolves
+    
+    Returns:
+        True if villagers win, False if werewolves win
+    """
+    cv, cw = v, w
+    while cw > 0:
+        # Night phase: werewolves kill one villager
+        cv -= 1
+        # Check werewolf victory
+        if cw >= cv:
+            return False
+        # Day phase: random elimination
+        total = cv + cw
+        if random.random() < cw / total:
+            cw -= 1  # Werewolf caught
+        else:
+            cv -= 1  # Villager lost
+    return True  # All werewolves eliminated
+
+
+def monte_carlo_win_prob(v: int, w: int, num_trials: int = 100000) -> float:
+    """Estimate win probability by Monte Carlo simulation.
+    
+    Args:
+        v: Number of villagers
+        w: Number of werewolves
+        num_trials: Number of simulation runs
+    
+    Returns:
+        Estimated win probability (float between 0 and 1)
+    """
+    if w == 0:
+        return 1.0
+    if v <= w + 1:
+        return 0.0
+    wins = sum(1 for _ in range(num_trials) if simulate_game(v, w))
+    return wins / num_trials
+
+
+# ============================================================
+# Algorithm 3: Bayesian Posterior Update
+# ============================================================
+
+class BayesianTracker:
+    """Tracks posterior probabilities in a social deduction game.
+    
+    Maintains P(W_i | evidence) for each player i, updated after
+    each round of voting and elimination.
+    """
+    
+    def __init__(self, num_players: int, num_werewolves: int):
+        """Initialize with uniform prior.
+        
+        Args:
+            num_players: Total number of players
+            num_werewolves: Number of werewolves
+        """
+        self.n = num_players
+        self.k = num_werewolves
+        self.alive = list(range(num_players))
+        # Prior: each player has probability k/n of being a werewolf
+        self.posterior = {i: Fraction(num_werewolves, num_players) 
+                        for i in range(num_players)}
+        self.eliminated: List[int] = []
+        self.known_roles: Dict[int, str] = {}
+    
+    def update_after_night_kill(self, victim: int) -> None:
+        """Update posteriors after a night kill.
+        
+        The victim is confirmed to be a villager (werewolves only kill villagers).
+        This increases the posterior probability for all surviving players.
+        
+        Args:
+            victim: Index of the eliminated player
+        """
+        self.alive.remove(victim)
+        self.eliminated.append(victim)
+        self.known_roles[victim] = "villager"
+        del self.posterior[victim]
+        
+        # Renormalize: remaining werewolves are k - (known werewolves eliminated)
+        known_wolves = sum(1 for p, r in self.known_roles.items() if r == "werewolf")
+        remaining_wolves = self.k - known_wolves
+        total_alive = len(self.alive)
+        
+        if total_alive > 0 and remaining_wolves > 0:
+            for i in self.alive:
+                self.posterior[i] = Fraction(remaining_wolves, total_alive)
+    
+    def update_after_day_vote(self, eliminated: int, was_werewolf: bool) -> None:
+        """Update posteriors after a day elimination.
+        
+        Args:
+            eliminated: Index of the eliminated player
+            was_werewolf: Whether the eliminated player was a werewolf
+        """
+        self.alive.remove(eliminated)
+        self.eliminated.append(eliminated)
+        self.known_roles[eliminated] = "werewolf" if was_werewolf else "villager"
+        del self.posterior[eliminated]
+        
+        # Renormalize
+        known_wolves = sum(1 for p, r in self.known_roles.items() if r == "werewolf")
+        remaining_wolves = self.k - known_wolves
+        total_alive = len(self.alive)
+        
+        if total_alive > 0 and remaining_wolves > 0:
+            for i in self.alive:
+                self.posterior[i] = Fraction(remaining_wolves, total_alive)
+    
+    def recommend_target(self) -> int:
+        """Recommend the player with highest posterior probability.
+        
+        Returns:
+            Index of the player most likely to be a werewolf
+        """
+        return max(self.alive, key=lambda i: self.posterior.get(i, Fraction(0)))
+    
+    def get_posteriors(self) -> Dict[int, float]:
+        """Get current posteriors as floats.
+        
+        Returns:
+            Dictionary mapping player index to posterior probability
+        """
+        return {i: float(self.posterior[i]) for i in self.alive}
+
+
+# ============================================================
+# Algorithm 4: Game Tree Analysis (Small Games)
+# ============================================================
+
+@lru_cache(maxsize=None)
+def optimal_win_prob(v: int, w: int) -> Fraction:
+    """Compute optimal win probability with perfect information.
+    
+    This assumes villagers can always identify werewolves perfectly
+    (best case). It gives an upper bound on Bayesian play.
+    
+    Under perfect information, villagers always vote correctly,
+    so the game reduces to: can villagers eliminate all werewolves
+    before werewolves reach parity?
+    
+    Args:
+        v: Number of villagers
+        w: Number of werewolves
+    
+    Returns:
+        Win probability with perfect information (always 0 or 1)
+    """
+    if w == 0:
+        return Fraction(1)
+    if v <= w:  # Werewolves win immediately
+        return Fraction(0)
+    # Night: v → v-1. If w ≥ v-1, werewolves win.
+    if w >= v - 1:
+        return Fraction(0)
+    # Day: with perfect info, always catch a werewolf
+    # State becomes (v-1, w-1)
+    return optimal_win_prob(v - 1, w - 1)
+
+
+def verify_conjecture(max_v: int = 50, max_w: int = 20) -> bool:
+    """Verify the skip-two monotonicity conjecture computationally.
+    
+    Checks P(v, w) ≤ P(v+2, w) for all v ≤ max_v, w ≤ max_w.
+    
+    Args:
+        max_v: Maximum v to check
+        max_w: Maximum w to check
+    
+    Returns:
+        True if no violations found
+    """
+    for w in range(1, max_w + 1):
+        for v in range(1, max_v + 1):
+            if random_win_prob(v, w) > random_win_prob(v + 2, w):
+                return False
+    return True
+
+
 if __name__ == "__main__":
-    print("Bayesian Werewolf Algorithms — Quick Test")
-    print("=" * 50)
-
-    # Test exact computation
-    print("\nExact win probabilities:")
-    for n in [5, 7, 9, 11]:
-        for k in range(1, n // 2):
-            v = n - k
-            p = villager_win_prob_exact(k, v)
-            print(f"  n={n}, k={k}: P(villagers win) = {p:.6f}")
-
-    # Test Monte Carlo
-    print("\nMonte Carlo comparison (n=7, k=2, 50k games):")
-    p_random = estimate_win_probability(7, 2, 50000, "random")
-    p_bayesian = estimate_win_probability(7, 2, 50000, "bayesian")
-    p_exact = villager_win_prob_exact(2, 5)
-    print(f"  Exact:    {p_exact:.6f}")
-    print(f"  Random:   {p_random:.6f}")
-    print(f"  Bayesian: {p_bayesian:.6f}")
-
-    # Test Bayesian tracker
-    print("\nBayesian tracker demo (n=7, k=2):")
-    tracker = BayesianWerewolfTracker(7, 2)
-    print(f"  Initial beliefs: {[f'{p:.3f}' for p in tracker.belief]}")
-    print(f"  Initial entropy: {tracker.entropy():.4f}")
-    tracker.update_elimination(3, True)  # Player 3 revealed as wolf
-    print(f"  After revealing player 3 as wolf:")
-    print(f"  Beliefs: {[f'{p:.3f}' for p in tracker.belief]}")
-    print(f"  Entropy: {tracker.entropy():.4f}")
-    print(f"  Most suspicious: player {tracker.get_most_suspicious()}")
+    # Validate Monte Carlo against exact computation
+    print("Validation: Monte Carlo vs. Exact")
+    print("-" * 50)
+    test_cases = [(3, 1), (5, 2), (7, 2), (5, 1), (6, 2)]
+    for v, w in test_cases:
+        exact = float(random_win_prob(v, w))
+        mc = monte_carlo_win_prob(v, w, num_trials=100000)
+        print(f"  P({v},{w}): exact={exact:.4f}, MC={mc:.4f}, diff={abs(exact-mc):.4f}")
+    
+    print()
+    print(f"Skip-two conjecture verified: {verify_conjecture()}")
+    
+    print()
+    print("Perfect information upper bounds:")
+    for v, w in test_cases:
+        opt = optimal_win_prob(v, w)
+        rand = random_win_prob(v, w)
+        print(f"  ({v},{w}): random={float(rand):.4f}, perfect={float(opt):.4f}")
