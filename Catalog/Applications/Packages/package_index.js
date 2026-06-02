@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "86832c79",
     "filename": "quantum_proofs_of_classical_theorems.json",
     "pkg_num": 183,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7183372608695653,
     "title": "Quantum Proof Advantage: Formal Framework and Structure Theorems"
   },
   {
@@ -5784,8 +5784,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "quantum_proofs_of_classical_theorems",
       "primary_domain": "Speculative",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7183372608695653,
+      "quality": "substantial",
       "shape": "pentagonal_prism",
       "title": "Quantum Proof Advantage: Formal Framework and Structure Theorems"
     }
