@@ -1,307 +1,265 @@
+#!/usr/bin/env python3
 """
-Algorithms for Impossible Figure Analysis via Monodromy Theory.
+algorithms.py — Type-hinted implementations of impossible figure algorithms.
 
-This module implements the key algorithms from the cocycle obstruction
-framework for impossible figures:
-- Monodromy computation
-- Realizability testing
-- Height function construction
-- Orientation cocycle analysis
-- Euler characteristic computation
+Implements the core algorithms from the formal theory:
+1. Monodromy computation
+2. Realizability testing via monodromy
+3. Height function construction (when realizable)
+4. Obstruction degree classification
+5. Orientation holonomy computation
+6. Wedge sum realizability analysis
+7. Rational approximation of impossible figures
 """
 
-from typing import List, Optional, Tuple
+from typing import List, Tuple, Optional, Dict
+from dataclasses import dataclass
 from fractions import Fraction
 import math
 
 
+@dataclass
+class CycleWeights:
+    """Weight function on edges of an n-cycle graph."""
+    weights: List[float]
+
+    @property
+    def n(self) -> int:
+        return len(self.weights)
+
+    def monodromy(self) -> float:
+        """Compute the monodromy (sum of weights around the cycle).
+
+        Theorem: monodromy = 0 iff the figure is realizable.
+        """
+        return sum(self.weights)
+
+    def is_realizable(self, tol: float = 1e-12) -> bool:
+        """Test realizability: a figure is realizable iff monodromy = 0."""
+        return abs(self.monodromy()) < tol
+
+    def obstruction_degree(self) -> int:
+        """Compute the obstruction degree ∈ {-1, 0, +1}.
+
+        +1: ascending impossibility (Escher ascending)
+        -1: descending impossibility (Escher descending)
+         0: realizable (consistent height function exists)
+        """
+        m = self.monodromy()
+        if m > 1e-12:
+            return 1
+        elif m < -1e-12:
+            return -1
+        return 0
+
+    def rotate(self, k: int) -> 'CycleWeights':
+        """Cyclically rotate the weights by k positions.
+
+        Theorem: monodromy is invariant under rotation.
+        """
+        n = self.n
+        if n == 0:
+            return CycleWeights([])
+        rotated = [self.weights[(i + k) % n] for i in range(n)]
+        return CycleWeights(rotated)
+
+    def construct_height(self) -> Optional[List[float]]:
+        """Construct the height function h: Fin n → ℝ if realizable.
+
+        Uses the constructive proof: h(i) = Σ_{j < i} w(j).
+        Returns None if not realizable.
+        """
+        if not self.is_realizable():
+            return None
+        heights = [0.0]
+        for i in range(self.n):
+            heights.append(heights[-1] + self.weights[i])
+        return heights[:-1]  # Return only h(0), ..., h(n-1)
+
+    def scale(self, c: float) -> 'CycleWeights':
+        """Scale weights by constant c.
+
+        Theorem: monodromy(c·w) = c · monodromy(w).
+        """
+        return CycleWeights([c * w for w in self.weights])
+
+    def negate(self) -> 'CycleWeights':
+        """Negate all weights.
+
+        Theorem: obstruction_degree(-w) = -obstruction_degree(w).
+        """
+        return CycleWeights([-w for w in self.weights])
+
+
+@dataclass
+class WedgeCocycle:
+    """Two cycles sharing a vertex (wedge sum), with independent weights."""
+    cycle1: CycleWeights
+    cycle2: CycleWeights
+
+    def monodromy_vector(self) -> Tuple[float, float]:
+        """The monodromy vector in ℝ².
+
+        Theorem: The wedge is realizable iff both components are zero.
+        """
+        return (self.cycle1.monodromy(), self.cycle2.monodromy())
+
+    def is_realizable(self) -> bool:
+        """A wedge cocycle is realizable iff both monodromies vanish."""
+        m1, m2 = self.monodromy_vector()
+        return abs(m1) < 1e-12 and abs(m2) < 1e-12
+
+
+@dataclass
+class OrientationCocycle:
+    """Orientation signs (±1) on edges of an n-cycle."""
+    signs: List[int]
+
+    def __post_init__(self):
+        assert all(s in (1, -1) for s in self.signs), "Signs must be ±1"
+
+    def holonomy(self) -> int:
+        """Compute orientation holonomy (product of signs).
+
+        Theorem: holonomy ∈ {-1, +1}.
+        """
+        result = 1
+        for s in self.signs:
+            result *= s
+        return result
+
+    def is_orientable(self) -> bool:
+        """Orientable iff holonomy = +1."""
+        return self.holonomy() == 1
+
+    def is_non_orientable(self) -> bool:
+        """Non-orientable iff holonomy = -1.
+
+        Theorem: non-orientable iff odd number of -1 signs.
+        """
+        return self.holonomy() == -1
+
+    def reversal_count(self) -> int:
+        """Count the number of orientation-reversing edges."""
+        return sum(1 for s in self.signs if s == -1)
+
+    def double_cover(self) -> 'OrientationCocycle':
+        """Construct the orientation double cover (all signs +1).
+
+        Theorem: The double cover is always orientable.
+        """
+        return OrientationCocycle([1] * (2 * len(self.signs)))
+
+
+def penrose_polygon(k: int, delta: float = 1.0) -> CycleWeights:
+    """Construct a Penrose k-gon with uniform weights.
+
+    Theorem: monodromy = k·δ ≠ 0, so the figure is impossible for δ ≠ 0.
+    """
+    return CycleWeights([delta] * k)
+
+
+def rational_approximation(
+    weights: CycleWeights,
+    epsilon: float
+) -> Tuple[List[Fraction], float]:
+    """Approximate an impossible figure with rational weights.
+
+    Returns (rational_weights, monodromy_error).
+
+    Theorem: For any ε > 0, there exists a rational weight function
+    with monodromy within ε of the original.
+    """
+    rational_weights = []
+    for w in weights.weights:
+        # Find closest rational with denominator ≤ 1/epsilon
+        frac = Fraction(w).limit_denominator(int(1 / epsilon) + 1)
+        rational_weights.append(frac)
+
+    original_mono = weights.monodromy()
+    rational_mono = float(sum(rational_weights))
+    error = abs(original_mono - rational_mono)
+
+    return rational_weights, error
+
+
+def classify_impossible_figures(
+    n: int,
+    samples: int = 1000
+) -> Dict[int, int]:
+    """Sample random weight functions and classify by obstruction degree.
+
+    Returns count of {-1: descending, 0: realizable, +1: ascending}.
+    """
+    import random
+    counts = {-1: 0, 0: 0, 1: 0}
+    for _ in range(samples):
+        weights = CycleWeights([random.gauss(0, 1) for _ in range(n)])
+        deg = weights.obstruction_degree()
+        counts[deg] += 1
+    return counts
+
+
+# ─── Algorithm: Monodromy Computation ───
+
 def compute_monodromy(weights: List[float]) -> float:
-    """Compute the monodromy of a weight function on a cycle graph.
-    
-    The monodromy is the sum of all edge weights, measuring the total
-    height gain after traversing the full cycle.
-    
-    Args:
-        weights: Edge weights w(i) for i = 0, ..., n-1.
-        
-    Returns:
-        The monodromy μ(w) = Σ w(i).
-        
-    Time complexity: O(n)
-    
-    >>> compute_monodromy([1.0, 1.0, 1.0])
-    3.0
-    >>> compute_monodromy([1.0, -1.0, 0.5, -0.5])
-    0.0
+    """
+    Algorithm: Monodromy Computation
+
+    Input: Weight function w: {0, ..., n-1} → ℝ
+    Output: Monodromy m = Σᵢ w(i)
+
+    Pseudocode:
+      m ← 0
+      for i ← 0 to n-1:
+        m ← m + w(i)
+      return m
+
+    Complexity: O(n) time, O(1) space
+    Correctness: By definition of monodromy as ∑ᵢ w(i)
     """
     return sum(weights)
 
 
-def is_realizable(weights: List[float], tol: float = 1e-12) -> bool:
-    """Test whether a weight function is realizable (monodromy ≈ 0).
-    
-    A weight function is realizable iff its monodromy vanishes.
-    We use a tolerance for floating-point comparison.
-    
-    Args:
-        weights: Edge weights on the cycle.
-        tol: Tolerance for zero-testing.
-        
-    Returns:
-        True if |μ(w)| < tol.
-        
-    >>> is_realizable([1.0, -0.5, -0.5])
-    True
-    >>> is_realizable([1.0, 1.0, 1.0])
-    False
+def test_realizability(weights: List[float]) -> Tuple[bool, Optional[List[float]]]:
     """
-    return abs(compute_monodromy(weights)) < tol
+    Algorithm: Realizability Test and Height Construction
 
+    Input: Weight function w: {0, ..., n-1} → ℝ
+    Output: (is_realizable, height_function_or_None)
 
-def construct_height_function(weights: List[float]) -> Optional[List[float]]:
-    """Construct a height realization if one exists.
-    
-    If the monodromy is zero, constructs h(i) = Σ_{j<i} w(j).
-    
-    Args:
-        weights: Edge weights on the cycle.
-        
-    Returns:
-        Height function h : [0, ..., n-1] → ℝ if realizable, None otherwise.
-        
-    >>> construct_height_function([1.0, -0.5, -0.5])
-    [0.0, 1.0, 0.5]
-    >>> construct_height_function([1.0, 1.0, 1.0]) is None
-    True
+    Pseudocode:
+      m ← monodromy(w)
+      if |m| > ε:
+        return (False, None)
+      h(0) ← 0
+      for i ← 1 to n-1:
+        h(i) ← h(i-1) + w(i-1)
+      return (True, h)
+
+    Complexity: O(n) time, O(n) space
+    Correctness: By the monodromy classification theorem
     """
-    if not is_realizable(weights):
-        return None
-    
-    n = len(weights)
-    h = [0.0] * n
-    for i in range(1, n):
-        h[i] = h[i-1] + weights[i-1]
-    return h
-
-
-def verify_realization(weights: List[float], heights: List[float], 
-                       tol: float = 1e-10) -> bool:
-    """Verify that a height function is a valid realization.
-    
-    Checks that h(succ(i)) - h(i) = w(i) for all i.
-    
-    Args:
-        weights: Edge weights.
-        heights: Proposed height function.
-        tol: Tolerance for comparison.
-        
-    Returns:
-        True if the heights are consistent with the weights.
-    """
-    n = len(weights)
-    if len(heights) != n:
-        return False
-    for i in range(n):
-        succ_i = (i + 1) % n
-        if abs(heights[succ_i] - heights[i] - weights[i]) > tol:
-            return False
-    return True
-
-
-def is_escher_staircase(weights: List[float]) -> bool:
-    """Test whether a weight function is an Escher staircase (all positive).
-    
-    >>> is_escher_staircase([1.0, 2.0, 0.5])
-    True
-    >>> is_escher_staircase([1.0, -1.0, 0.5])
-    False
-    """
-    return all(w > 0 for w in weights)
-
-
-def is_descending_escher(weights: List[float]) -> bool:
-    """Test whether a weight function is a descending Escher staircase.
-    
-    >>> is_descending_escher([-1.0, -2.0, -0.5])
-    True
-    """
-    return all(w < 0 for w in weights)
-
-
-def penrose_weights(delta: float, n: int = 3) -> List[float]:
-    """Generate Penrose triangle weights with step size delta.
-    
-    Args:
-        delta: The height increment at each edge.
-        n: Number of edges (default 3 for the triangle).
-        
-    Returns:
-        Constant weight function [delta, delta, ..., delta].
-        
-    >>> penrose_weights(1.0)
-    [1.0, 1.0, 1.0]
-    """
-    return [delta] * n
-
-
-def orientation_holonomy(signs: List[int]) -> int:
-    """Compute the holonomy of an orientation cocycle.
-    
-    Each sign should be +1 or -1.
-    
-    Args:
-        signs: List of ±1 values assigned to edges.
-        
-    Returns:
-        Product of all signs (always ±1).
-        
-    >>> orientation_holonomy([1, 1, -1, -1])
-    1
-    >>> orientation_holonomy([1, -1, 1])
-    -1
-    """
-    result = 1
-    for s in signs:
-        assert s in (1, -1), f"Sign must be ±1, got {s}"
-        result *= s
-    return result
-
-
-def is_orientable(signs: List[int]) -> bool:
-    """Test orientability of a surface from its orientation cocycle.
-    
-    >>> is_orientable([1, 1, 1])
-    True
-    >>> is_orientable([1, -1, 1])
-    False
-    """
-    return orientation_holonomy(signs) == 1
-
-
-def count_reversals(signs: List[int]) -> int:
-    """Count the number of orientation-reversing edges.
-    
-    >>> count_reversals([1, -1, 1, -1, -1])
-    3
-    """
-    return sum(1 for s in signs if s == -1)
-
-
-def euler_characteristic(vertices: int, edges: int, faces: int) -> int:
-    """Compute the Euler characteristic χ = V - E + F.
-    
-    >>> euler_characteristic(1, 2, 1)  # Klein bottle / Torus
-    0
-    >>> euler_characteristic(1, 0, 1)  # Sphere
-    2
-    >>> euler_characteristic(1, 1, 1)  # RP²
-    1
-    """
-    return vertices - edges + faces
-
-
-def connected_sum_euler(chi1: int, chi2: int) -> int:
-    """Euler characteristic of connected sum: χ(M # N) = χ(M) + χ(N) - 2.
-    
-    >>> connected_sum_euler(2, 2)  # S² # S² ~ S² (genus 0)
-    2
-    >>> connected_sum_euler(0, 0)  # T² # T² (genus 2)
-    -2
-    >>> connected_sum_euler(1, 1)  # RP² # RP² (Klein bottle)
-    0
-    """
-    return chi1 + chi2 - 2
-
-
-def rational_approximation(weights: List[float], epsilon: float
-                           ) -> List[Fraction]:
-    """Find rational weights approximating given real weights.
-    
-    Guarantees |w(i) - w'(i)| < epsilon for all i and
-    |μ(w) - μ(w')| < epsilon.
-    
-    Args:
-        weights: Real-valued edge weights.
-        epsilon: Approximation tolerance.
-        
-    Returns:
-        Rational weight function close to the original.
-    """
-    n = len(weights)
-    eps_per_edge = epsilon / (n + 1)
-    result = []
-    for w in weights:
-        # Find rational approximation within eps_per_edge
-        frac = Fraction(w).limit_denominator(
-            int(1 / eps_per_edge) + 1
-        )
-        result.append(frac)
-    return result
-
-
-def classify_impossible_figure(weights: List[float]) -> dict:
-    """Complete classification of an impossible figure.
-    
-    Returns a dictionary with:
-    - monodromy: the monodromy value
-    - realizable: whether a height function exists
-    - is_escher: whether it's an ascending Escher staircase
-    - is_descending: whether it's a descending staircase
-    - height_function: the realization if one exists
-    
-    >>> result = classify_impossible_figure([1.0, 1.0, 1.0])
-    >>> result['monodromy']
-    3.0
-    >>> result['realizable']
-    False
-    >>> result['is_escher']
-    True
-    """
-    mono = compute_monodromy(weights)
-    realizable = is_realizable(weights)
-    heights = construct_height_function(weights) if realizable else None
-    
-    return {
-        'monodromy': mono,
-        'realizable': realizable,
-        'is_escher': is_escher_staircase(weights),
-        'is_descending': is_descending_escher(weights),
-        'height_function': heights,
-        'n_edges': len(weights),
-        'classification': 'realizable' if realizable else 'impossible'
-    }
-
-
-def monodromy_bound(weights: List[float]) -> Tuple[float, float]:
-    """Compute the monodromy and its theoretical upper bound.
-    
-    Returns (|μ(w)|, n * max|w(i)|).
-    
-    >>> monodromy_bound([1.0, -2.0, 0.5])
-    (0.5, 6.0)
-    """
-    n = len(weights)
-    B = max(abs(w) for w in weights) if weights else 0.0
-    return (abs(compute_monodromy(weights)), n * B)
+    cw = CycleWeights(weights)
+    if not cw.is_realizable():
+        return (False, None)
+    heights = cw.construct_height()
+    return (True, heights)
 
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
-    
-    # Demo: Penrose triangle
-    print("=== Penrose Triangle (δ=1) ===")
-    pw = penrose_weights(1.0)
-    result = classify_impossible_figure(pw)
-    print(f"Weights: {pw}")
-    print(f"Monodromy: {result['monodromy']}")
-    print(f"Realizable: {result['realizable']}")
-    print(f"Classification: {result['classification']}")
-    
-    print("\n=== Realizable 4-cycle ===")
-    rw = [1.0, -0.5, 0.5, -1.0]
-    result = classify_impossible_figure(rw)
-    print(f"Weights: {rw}")
-    print(f"Monodromy: {result['monodromy']}")
-    print(f"Realizable: {result['realizable']}")
-    print(f"Heights: {result['height_function']}")
+    # Quick self-test
+    pt = penrose_polygon(3, 1.0)
+    assert not pt.is_realizable()
+    assert pt.monodromy() == 3.0
+    assert pt.obstruction_degree() == 1
+
+    realizable = CycleWeights([1.0, -1.0])
+    assert realizable.is_realizable()
+    assert realizable.construct_height() == [0.0, 1.0]
+
+    mobius = OrientationCocycle([1, 1, -1])
+    assert mobius.is_non_orientable()
+    assert mobius.double_cover().is_orientable()
+
+    print("All self-tests passed.")
