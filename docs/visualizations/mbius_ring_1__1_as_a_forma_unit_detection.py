@@ -1,0 +1,1 @@
+def is_unit(z): s, t = z.re + z.im, z.re - z.im; return abs(s) == 1 and abs(t) == 1

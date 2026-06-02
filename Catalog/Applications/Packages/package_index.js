@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b32c69e7",
     "filename": "gravity_from_information_spacetime_as_a_quantum_er.json",
     "pkg_num": 224,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6551573793103449,
     "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
   },
   {
@@ -7140,8 +7140,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "gravity_from_information_spacetime_as_a_quantum_er",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6551573793103449,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
     }

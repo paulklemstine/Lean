@@ -1,0 +1,1 @@
+def norm(z): return (z.re + z.im) * (z.re - z.im)
