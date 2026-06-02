@@ -1,297 +1,253 @@
 #!/usr/bin/env python3
 """
-Gödel's Casino: Algorithms
+Gödel's Casino: Core Algorithms
 
-Implements the core algorithms from the research paper:
-1. Selective Strategy computation
-2. Casino simulation with statistical analysis
-3. Incompleteness gap calculation
-4. Tropical profit computation
-5. Decidable fraction profit bound verification
+Type-hinted implementations of the key algorithms from the formalization.
 """
 
-import random
+from typing import List, Tuple, Dict, Callable, Optional
 from dataclasses import dataclass
-from typing import List, Callable, Tuple, Dict
-import math
+from enum import Enum
+
+
+class Bet(Enum):
+    """A bet in Gödel's Casino."""
+    TRUE = "true"
+    FALSE = "false"
+    ABSTAIN = "abstain"
 
 
 @dataclass
 class CasinoRound:
-    """A round in Gödel's Casino with truth value and decidability flag."""
+    """A single round: ground truth and decidability flag."""
     truth: bool
-    is_decidable: bool
+    decidable: bool
 
 
 @dataclass
-class GameResult:
-    """Result of a complete casino game."""
-    profit: int
-    decidable_count: int
-    undecidable_count: int
-    correct_bets: int
-    incorrect_bets: int
-    abstentions: int
+class OracleCasino:
+    """A full casino game with n rounds."""
+    rounds: List[CasinoRound]
+
+    @property
+    def n(self) -> int:
+        return len(self.rounds)
+
+    @property
+    def dec_count(self) -> int:
+        return sum(1 for r in self.rounds if r.decidable)
+
+    @property
+    def undec_count(self) -> int:
+        return self.n - self.dec_count
+
+    @property
+    def incompleteness_entropy(self) -> float:
+        if self.n == 0:
+            return 0.0
+        return self.undec_count / self.n
+
+    @property
+    def decidable_fraction(self) -> float:
+        if self.n == 0:
+            return 0.0
+        return self.dec_count / self.n
 
 
-Strategy = Callable[[CasinoRound], str]
+Strategy = Callable[[CasinoRound], Bet]
 
 
-def bet_payoff(truth: bool, bet: str) -> int:
-    """
-    Compute payoff for a single bet.
-
-    Args:
-        truth: The ground truth of the statement
-        bet: One of "TRUE", "FALSE", "ABSTAIN"
-
-    Returns:
-        +1 for correct bet, -1 for incorrect bet, 0 for abstain
-    """
-    if bet == "ABSTAIN":
+def payoff(truth: bool, bet: Bet) -> int:
+    """Compute the payoff of a bet given the truth value."""
+    if bet == Bet.ABSTAIN:
         return 0
-    elif bet == "TRUE":
+    elif bet == Bet.TRUE:
         return 1 if truth else -1
-    elif bet == "FALSE":
+    else:  # FALSE
         return -1 if truth else 1
-    raise ValueError(f"Invalid bet: {bet}")
 
 
-def selective_strategy(round: CasinoRound) -> str:
+def selective_strategy(round: CasinoRound) -> Bet:
     """
-    The selective strategy: bet correctly on decidable, abstain on undecidable.
-
-    Time complexity: O(1) per round (assumes decidability oracle is constant time)
-    Space complexity: O(1)
-
-    This is the optimal strategy proved in Theorem 3.5.
+    The selective strategy: bet correctly on decidable rounds, abstain otherwise.
+    
+    This is the optimal strategy in Gödel's Casino.
+    Guaranteed profit = number of decidable rounds.
     """
-    if round.is_decidable:
-        return "TRUE" if round.truth else "FALSE"
-    return "ABSTAIN"
+    if round.decidable:
+        return Bet.TRUE if round.truth else Bet.FALSE
+    return Bet.ABSTAIN
 
 
-def naive_strategy(_round: CasinoRound) -> str:
-    """Always bet TRUE. Used as a baseline comparison."""
-    return "TRUE"
+def naive_true_strategy(_round: CasinoRound) -> Bet:
+    """Always bet TRUE. Vulnerable to adversarial truth assignments."""
+    return Bet.TRUE
 
 
-def random_strategy(_round: CasinoRound) -> str:
-    """Random bet between TRUE and FALSE."""
-    return random.choice(["TRUE", "FALSE"])
+def naive_false_strategy(_round: CasinoRound) -> Bet:
+    """Always bet FALSE. Vulnerable to adversarial truth assignments."""
+    return Bet.FALSE
 
 
-def contrarian_strategy(_round: CasinoRound) -> str:
-    """Always bet FALSE. Dual of naive strategy."""
-    return "FALSE"
+def casino_profit(casino: OracleCasino, strategy: Strategy) -> int:
+    """Compute the total profit of a strategy on a casino game."""
+    return sum(payoff(r.truth, strategy(r)) for r in casino.rounds)
 
 
-def play_game(strategy: Strategy, rounds: List[CasinoRound]) -> GameResult:
+def verify_selective_profit(casino: OracleCasino) -> Tuple[int, int, bool]:
     """
-    Play a complete casino game.
-
-    Args:
-        strategy: Function mapping rounds to bets
-        rounds: List of casino rounds
-
-    Returns:
-        GameResult with full statistics
-
-    Time complexity: O(n) where n = len(rounds)
-    Space complexity: O(1)
+    Verify that selective strategy profit equals decidable count.
+    
+    Returns (profit, dec_count, they_match).
     """
-    profit = 0
-    decidable_count = 0
-    correct = 0
-    incorrect = 0
-    abstentions = 0
-
-    for r in rounds:
-        if r.is_decidable:
-            decidable_count += 1
-        bet = strategy(r)
-        p = bet_payoff(r.truth, bet)
-        profit += p
-        if p > 0:
-            correct += 1
-        elif p < 0:
-            incorrect += 1
-        else:
-            abstentions += 1
-
-    return GameResult(
-        profit=profit,
-        decidable_count=decidable_count,
-        undecidable_count=len(rounds) - decidable_count,
-        correct_bets=correct,
-        incorrect_bets=incorrect,
-        abstentions=abstentions
-    )
+    profit = casino_profit(casino, selective_strategy)
+    dec = casino.dec_count
+    return profit, dec, profit == dec
 
 
-def tropical_optimal_payoff(_round: CasinoRound) -> int:
+def verify_entropy_duality(casino: OracleCasino) -> Tuple[float, float, float]:
     """
-    Tropical (max-plus) optimal payoff.
-    Always returns 1 (Theorem 4.2).
-
-    In the max-plus semiring, this is max(betPayoff(TRUE), betPayoff(FALSE), 0) = 1.
+    Verify the entropy-profit duality: entropy + dec_fraction = 1.
+    
+    Returns (entropy, dec_fraction, sum).
     """
-    return 1
+    e = casino.incompleteness_entropy
+    d = casino.decidable_fraction
+    return e, d, e + d
 
 
-def incompleteness_gap(rounds: List[CasinoRound]) -> int:
+@dataclass
+class AugmentedCasino:
+    """Casino with base decidability and oracle extension."""
+    rounds: List[CasinoRound]
+    oracle_extension: List[bool]
+
+    def combined_decidable(self, i: int) -> bool:
+        return self.rounds[i].decidable or self.oracle_extension[i]
+
+    @property
+    def base_count(self) -> int:
+        return sum(1 for r in self.rounds if r.decidable)
+
+    @property
+    def combined_count(self) -> int:
+        return sum(1 for i in range(len(self.rounds)) if self.combined_decidable(i))
+
+    @property
+    def information_value(self) -> int:
+        """The information value of the oracle extension."""
+        return self.combined_count - self.base_count
+
+
+def oracle_union(o1: List[bool], o2: List[bool]) -> List[bool]:
+    """Compute the union of two oracles."""
+    return [a or b for a, b in zip(o1, o2)]
+
+
+@dataclass
+class LayeredCasino:
     """
-    Compute the incompleteness gap: |rounds| - decidable_count.
-
-    This is the irreducible cost of incompleteness (Theorem in the paper).
+    A layered casino with L+1 oracle levels.
+    Each level decides a superset of the previous level.
     """
-    dec = sum(1 for r in rounds if r.is_decidable)
-    return len(rounds) - dec
+    truths: List[bool]
+    oracles: List[List[bool]]  # oracles[level][statement]
+
+    def layer_dec_count(self, level: int) -> int:
+        return sum(1 for d in self.oracles[level] if d)
+
+    def layer_profit(self, level: int) -> int:
+        """Selective strategy profit at a given level."""
+        return self.layer_dec_count(level)
+
+    def verify_monotonicity(self) -> bool:
+        """Verify that layer profits are monotonically increasing."""
+        for k in range(len(self.oracles) - 1):
+            if self.layer_dec_count(k) > self.layer_dec_count(k + 1):
+                return False
+        return True
 
 
-def decidable_fraction(rounds: List[CasinoRound]) -> float:
+def strategy_dominates(
+    s1: Callable[[bool], Bet],
+    s2: Callable[[bool], Bet],
+    oracle: List[bool]
+) -> bool:
     """
-    Compute the decidable fraction of a game.
-
-    Returns a value in [0, 1] representing the proportion of decidable rounds.
+    Check if strategy s1 dominates s2 by testing all truth assignments.
+    
+    For small n, this is exhaustive. For large n, it samples.
     """
-    if not rounds:
-        return 0.0
-    dec = sum(1 for r in rounds if r.is_decidable)
-    return dec / len(rounds)
+    n = len(oracle)
+    if n > 20:
+        # Sample-based check
+        import random
+        for _ in range(10000):
+            truths = [random.choice([True, False]) for _ in range(n)]
+            profit1 = sum(payoff(t, s1(t)) for t in truths)
+            profit2 = sum(payoff(t, s2(t)) for t in truths)
+            if profit1 < profit2:
+                return False
+        return True
+    else:
+        # Exhaustive check
+        for mask in range(2 ** n):
+            truths = [(mask >> i) & 1 == 1 for i in range(n)]
+            profit1 = sum(payoff(t, s1(t)) for t in truths)
+            profit2 = sum(payoff(t, s2(t)) for t in truths)
+            if profit1 < profit2:
+                return False
+        return True
 
 
-def verify_bridge_theorem(rounds: List[CasinoRound]) -> Tuple[int, int, bool]:
-    """
-    Verify the Tropical-Casino Bridge Theorem:
-    selective_profit * |rounds| = decidable_count * tropical_total
-
-    Returns:
-        (lhs, rhs, equal)
-    """
-    sel_profit = play_game(selective_strategy, rounds).profit
-    dec_count = sum(1 for r in rounds if r.is_decidable)
-    trop_total = sum(tropical_optimal_payoff(r) for r in rounds)
-
-    lhs = sel_profit * len(rounds)
-    rhs = dec_count * trop_total
-    return lhs, rhs, lhs == rhs
+def binary_zero_sum_check() -> bool:
+    """Verify the binary casino zero-sum property."""
+    for bet in [Bet.TRUE, Bet.FALSE]:
+        s = payoff(True, bet) + payoff(False, bet)
+        if s != 0:
+            return False
+    return True
 
 
-def verify_profit_bound(rounds: List[CasinoRound], k: int) -> Tuple[bool, int, int]:
-    """
-    Verify the decidable fraction profit bound:
-    If k * decidable_count >= |rounds|, then k * selective_profit >= |rounds|.
-
-    Args:
-        rounds: Casino game rounds
-        k: Bound parameter
-
-    Returns:
-        (hypothesis_holds, k_times_profit, n)
-    """
-    dec_count = sum(1 for r in rounds if r.is_decidable)
-    n = len(rounds)
-    sel_profit = play_game(selective_strategy, rounds).profit
-
-    hypothesis = k * dec_count >= n
-    conclusion = k * sel_profit >= n
-    return hypothesis and conclusion == hypothesis, k * sel_profit, n
-
-
-def simulate_casino(
-    n: int,
-    decidable_frac: float,
-    num_trials: int = 1000,
-    adversarial: bool = False
-) -> Dict[str, float]:
-    """
-    Monte Carlo simulation of Gödel's Casino.
-
-    Args:
-        n: Number of rounds per game
-        decidable_frac: Fraction of rounds that are decidable
-        num_trials: Number of games to simulate
-        adversarial: If True, undecidable statements are all FALSE
-
-    Returns:
-        Dictionary with average profits for each strategy
-    """
-    results = {
-        "selective_avg": 0.0,
-        "naive_avg": 0.0,
-        "random_avg": 0.0,
-        "advantage_avg": 0.0,
-        "bridge_verified": 0,
-    }
-
-    for _ in range(num_trials):
-        rounds = []
-        for _ in range(n):
-            is_dec = random.random() < decidable_frac
-            if adversarial and not is_dec:
-                truth = False
-            else:
-                truth = random.choice([True, False])
-            rounds.append(CasinoRound(truth=truth, is_decidable=is_dec))
-
-        sel = play_game(selective_strategy, rounds).profit
-        nai = play_game(naive_strategy, rounds).profit
-        ran = play_game(random_strategy, rounds).profit
-
-        results["selective_avg"] += sel / num_trials
-        results["naive_avg"] += nai / num_trials
-        results["random_avg"] += ran / num_trials
-        results["advantage_avg"] += (sel - nai) / num_trials
-
-        _, _, verified = verify_bridge_theorem(rounds)
-        if verified:
-            results["bridge_verified"] += 1
-
-    results["bridge_verified"] /= num_trials  # Convert to fraction
-    return results
-
-
-if __name__ == "__main__":
-    print("Gödel's Casino: Algorithm Verification")
-    print("=" * 50)
-
-    # Test 1: Bridge theorem
+if __name__ == '__main__':
+    import random
     random.seed(42)
-    for _ in range(100):
-        n = random.randint(5, 200)
-        d = random.random()
-        rounds = []
-        for _ in range(n):
-            rounds.append(CasinoRound(
-                truth=random.choice([True, False]),
-                is_decidable=random.random() < d
-            ))
-        lhs, rhs, eq = verify_bridge_theorem(rounds)
-        assert eq, f"Bridge theorem failed: {lhs} != {rhs}"
-    print("✓ Bridge theorem verified on 100 random instances")
-
-    # Test 2: Profit bound
-    for _ in range(100):
-        n = random.randint(5, 200)
-        d = random.random()
-        rounds = []
-        for _ in range(n):
-            rounds.append(CasinoRound(
-                truth=random.choice([True, False]),
-                is_decidable=random.random() < d
-            ))
-        dec = sum(1 for r in rounds if r.is_decidable)
-        if dec > 0:
-            k = math.ceil(n / dec)
-            ok, kp, nn = verify_profit_bound(rounds, k)
-            assert ok, f"Profit bound failed: k={k}, profit={kp}, n={nn}"
-    print("✓ Profit bound verified on 100 random instances")
-
-    # Test 3: Simulation
-    print("\nSimulation results (n=100, 1000 trials):")
-    for d in [0.2, 0.5, 0.8]:
-        r = simulate_casino(100, d, 1000)
-        print(f"  d={d:.1f}: selective={r['selective_avg']:.1f}, "
-              f"naive={r['naive_avg']:.1f}, "
-              f"bridge_verified={r['bridge_verified']:.0%}")
+    
+    # Create a sample casino
+    n = 20
+    rounds = [CasinoRound(
+        truth=random.choice([True, False]),
+        decidable=random.random() < 0.4
+    ) for _ in range(n)]
+    casino = OracleCasino(rounds)
+    
+    print("=== Gödel's Casino Algorithms ===\n")
+    
+    # Verify selective profit
+    profit, dec, match = verify_selective_profit(casino)
+    print(f"Selective profit: {profit}, Decidable count: {dec}, Match: {match}")
+    
+    # Verify entropy duality
+    e, d, s = verify_entropy_duality(casino)
+    print(f"Entropy: {e:.3f}, Dec fraction: {d:.3f}, Sum: {s:.3f}")
+    
+    # Verify binary zero-sum
+    print(f"Binary zero-sum holds: {binary_zero_sum_check()}")
+    
+    # Test layered casino
+    truths = [random.choice([True, False]) for _ in range(n)]
+    oracles = []
+    decided = set()
+    for level in range(5):
+        new = set(random.sample(
+            [i for i in range(n) if i not in decided],
+            min(3, n - len(decided))
+        ))
+        decided |= new
+        oracles.append([i in decided for i in range(n)])
+    
+    layered = LayeredCasino(truths, oracles)
+    print(f"\nLayered casino monotonicity holds: {layered.verify_monotonicity()}")
+    for level in range(5):
+        print(f"  Level {level}: decidable={layered.layer_dec_count(level)}, "
+              f"profit={layered.layer_profit(level)}")
