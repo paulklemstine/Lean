@@ -1,7 +1,6 @@
-def hall_mul(x, y, p=3):
-    a, b = x
-    c, d = y
-    if d % p == 0:
-        return ((a * c) % p, (b * c) % p)
+def hall_mul(x, y, q, alpha_sq):
+    if y[1] == 0:
+        return ((x[0]*y[0])%q, (x[1]*y[0])%q)
     else:
-        return ((a * c + b * d) % p, (a * d + (p - 1) * b * c) % p)
+        sx = frobenius(x, q)
+        return field_mul(sx, y, q, alpha_sq)

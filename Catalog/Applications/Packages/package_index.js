@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d19ef963",
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
     "pkg_num": 219,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7269264285714285,
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
@@ -6974,8 +6974,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "non_desarguesian_worlds_geometry_without_desargues",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7269264285714285,
+      "quality": "substantial",
       "shape": "cube",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
     }
