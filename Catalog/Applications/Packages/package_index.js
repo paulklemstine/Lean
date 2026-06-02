@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4e5f2534",
     "filename": "quantum_surreal_numbers_superposition_of_all_real_.json",
     "pkg_num": 172,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7241068936170212,
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
@@ -5409,8 +5409,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "quantum_surreal_numbers_superposition_of_all_real_",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7241068936170212,
+      "quality": "substantial",
       "shape": "triangular_prism",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
