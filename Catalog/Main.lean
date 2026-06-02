@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2422 of the highest-quality
+A curated collection of 2424 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2422
+Total files: 2424
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -123,6 +123,7 @@ import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
+import FINAL.Algebra.GrowthRate
 import FINAL.Algebra.HDWalletCascade
 import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HeckeRecursion
@@ -1402,6 +1403,7 @@ import FINAL.Logic.Framework
 import FINAL.Logic.Freivalds
 import FINAL.Logic.FundamentalTheorem
 import FINAL.Logic.GLKripke
+import FINAL.Logic.GaleStewartCore
 import FINAL.Logic.GuardedFixpoint
 import FINAL.Logic.GuardedTrace
 import FINAL.Logic.HigherBootstrap

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f6544362",
     "filename": "rigorous_foundations_for_gale_stewart_infinite_g.json",
     "pkg_num": 257,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7340692307692309,
     "title": "Rigorous Foundations for Gale-Stewart Infinite Game Theory"
   },
   {
@@ -8264,8 +8264,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "rigorous_foundations_for_gale_stewart_infinite_g",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7340692307692309,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Rigorous Foundations for Gale-Stewart Infinite Game Theory"
     }
