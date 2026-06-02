@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "66ec4316",
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
     "pkg_num": 231,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7105957142857142,
     "title": "Self-Modifying Computation and Undecidability"
   },
   {
@@ -7378,8 +7378,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7105957142857142,
+      "quality": "substantial",
       "shape": "star",
       "title": "Self-Modifying Computation and Undecidability"
     }
