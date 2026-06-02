@@ -1,256 +1,241 @@
 #!/usr/bin/env python3
 """
-Algorithms for Social Credit Score Dynamics
+Social Credit Score Dynamics: Core Algorithms
 
-Type-hinted implementations of the core algorithms from the paper.
+Type-hinted implementations of the mathematical algorithms
+formalized in Lean 4.
 """
 
 from typing import Callable
 import math
 
 
-def iterate_contraction(
-    update: Callable[[float], float],
-    x0: float,
-    kappa: float,
-    epsilon: float = 1e-10,
-    max_iter: int = 10000,
-) -> tuple[float, int]:
+def logistic_map(mu: float, x: float) -> float:
     """
-    Iterate a κ-contraction mapping to find its unique fixed point.
+    The logistic scoring function f_μ(x) = μ·x·(1-x).
 
-    Args:
-        update: The contraction mapping T : [0,1] → [0,1].
-        x0: Initial score in [0,1].
-        kappa: Contraction rate, must satisfy 0 ≤ κ < 1.
-        epsilon: Convergence tolerance.
-        max_iter: Maximum number of iterations.
+    Parameters:
+        mu: Feedback intensity parameter (μ ∈ [0, 4] for [0,1] → [0,1])
+        x: Current score value
 
     Returns:
-        (fixed_point, iterations): The approximate fixed point and
-        the number of iterations performed.
-
-    Convergence guarantee: After n iterations,
-        |T^n(x₀) - x*| ≤ κ^n / (1-κ) · |T(x₀) - x₀|
+        Updated score value
     """
-    assert 0 <= kappa < 1, f"Contraction rate must be in [0,1), got {kappa}"
-    assert 0 <= x0 <= 1, f"Initial score must be in [0,1], got {x0}"
-
-    x = x0
-    for i in range(1, max_iter + 1):
-        x_new = update(x)
-        if abs(x_new - x) < epsilon * (1 - kappa):
-            return x_new, i
-        x = x_new
-    return x, max_iter
+    return mu * x * (1.0 - x)
 
 
-def find_fixed_points(
+def logistic_derivative(mu: float, x: float) -> float:
+    """
+    Derivative of the logistic map: f'_μ(x) = μ·(1 - 2x).
+
+    Parameters:
+        mu: Feedback intensity parameter
+        x: Point at which to evaluate the derivative
+
+    Returns:
+        Derivative value f'_μ(x)
+    """
+    return mu * (1.0 - 2.0 * x)
+
+
+def nontrivial_fixed_point(mu: float) -> float:
+    """
+    Non-trivial fixed point of the logistic map: x* = 1 - 1/μ.
+
+    Parameters:
+        mu: Feedback intensity (must be nonzero)
+
+    Returns:
+        The non-trivial fixed point x* = (μ-1)/μ
+
+    Raises:
+        ValueError: if mu is zero
+    """
+    if mu == 0:
+        raise ValueError("μ must be nonzero")
+    return 1.0 - 1.0 / mu
+
+
+def classify_fixed_point_stability(mu: float) -> str:
+    """
+    Classify the stability of the non-trivial fixed point of f_μ.
+
+    Returns one of:
+        "nonexistent" (μ ≤ 0): no viable non-trivial fixed point
+        "pre_bifurcation" (0 < μ < 1): x* < 0, only x=0 is viable
+        "bifurcation" (μ = 1): transcritical bifurcation, x* = 0
+        "stable" (1 < μ < 3): |f'(x*)| < 1, linearly stable
+        "marginal" (μ = 3): |f'(x*)| = 1, onset of period doubling
+        "unstable" (μ > 3): |f'(x*)| > 1, period doubling cascade
+    """
+    if mu <= 0:
+        return "nonexistent"
+    if mu < 1:
+        return "pre_bifurcation"
+    if mu == 1:
+        return "bifurcation"
+    if mu < 3:
+        return "stable"
+    if mu == 3:
+        return "marginal"
+    return "unstable"
+
+
+def iterate_scoring(
     f: Callable[[float], float],
-    n_samples: int = 10000,
-    tolerance: float = 1e-8,
+    x0: float,
+    n_iterations: int
 ) -> list[float]:
     """
-    Find all fixed points of f : [0,1] → [0,1] by sampling.
+    Iterate a scoring function f starting from x0 for n iterations.
 
-    Uses sign changes of g(x) = f(x) - x to locate fixed points,
-    then refines with bisection.
-
-    Args:
-        f: The map whose fixed points we seek.
-        n_samples: Number of sample points in [0,1].
-        tolerance: Precision of fixed point location.
+    Parameters:
+        f: Scoring function (maps [0,1] → [0,1])
+        x0: Initial score
+        n_iterations: Number of iterations
 
     Returns:
-        List of approximate fixed points, sorted.
+        List of score values [x0, f(x0), f²(x0), ..., fⁿ(x0)]
     """
-    fixed_points: list[float] = []
-    dx = 1.0 / n_samples
-
-    for i in range(n_samples):
-        x_lo = i * dx
-        x_hi = (i + 1) * dx
-        g_lo = f(x_lo) - x_lo
-        g_hi = f(x_hi) - x_hi
-
-        if abs(g_lo) < tolerance:
-            if not fixed_points or abs(fixed_points[-1] - x_lo) > tolerance:
-                fixed_points.append(x_lo)
-        elif g_lo * g_hi < 0:
-            # Bisection
-            lo, hi = x_lo, x_hi
-            for _ in range(100):
-                mid = (lo + hi) / 2
-                g_mid = f(mid) - mid
-                if abs(g_mid) < tolerance:
-                    break
-                if g_lo * g_mid < 0:
-                    hi = mid
-                else:
-                    lo = mid
-                    g_lo = g_mid
-            fixed_points.append((lo + hi) / 2)
-
-    return sorted(set(round(fp, 8) for fp in fixed_points))
+    trajectory: list[float] = [x0]
+    x = x0
+    for _ in range(n_iterations):
+        x = f(x)
+        trajectory.append(x)
+    return trajectory
 
 
-def detect_bifurcations(
-    family: Callable[[float, float], float],
-    a_min: float,
-    a_max: float,
-    n_params: int = 1000,
-) -> list[tuple[float, int, int]]:
+def find_fixed_point_bisection(
+    f: Callable[[float], float],
+    a: float = 0.0,
+    b: float = 1.0,
+    tol: float = 1e-14,
+    max_iter: int = 200
+) -> float:
     """
-    Detect bifurcation points in a parameterized family of maps.
+    Find a fixed point of f in [a,b] using bisection on g(x) = f(x) - x.
 
-    Args:
-        family: A function (a, x) → f_a(x) parameterized by a.
-        a_min, a_max: Parameter range to scan.
-        n_params: Number of parameter values to test.
+    Requires g(a) and g(b) to have opposite signs (guaranteed if f: [0,1] → [0,1]).
+
+    Parameters:
+        f: Continuous function mapping [a,b] to [a,b]
+        a, b: Interval endpoints
+        tol: Tolerance for convergence
+        max_iter: Maximum bisection steps
 
     Returns:
-        List of (a_value, fp_count_before, fp_count_after) at
-        bifurcation points.
+        Approximate fixed point x* with |f(x*) - x*| < tol
     """
-    da = (a_max - a_min) / n_params
-    bifurcations: list[tuple[float, int, int]] = []
+    def g(x: float) -> float:
+        return f(x) - x
 
-    prev_count = len(find_fixed_points(lambda x: family(a_min, x)))
+    ga = g(a)
+    for _ in range(max_iter):
+        mid = (a + b) / 2.0
+        gm = g(mid)
+        if abs(gm) < tol:
+            return mid
+        if ga * gm <= 0:
+            b = mid
+        else:
+            a = mid
+            ga = gm
+    return (a + b) / 2.0
 
-    for i in range(1, n_params + 1):
-        a = a_min + i * da
-        curr_count = len(find_fixed_points(lambda x, a=a: family(a, x)))
-        if curr_count != prev_count:
-            bifurcations.append((a, prev_count, curr_count))
-        prev_count = curr_count
 
-    return bifurcations
-
-
-def cantor_set_intervals(n_stages: int) -> list[tuple[float, float]]:
+def cantor_stage_measure(n: int) -> float:
     """
-    Compute the intervals at stage n of the Cantor set construction.
+    Measure of the Cantor set after n stages of middle-third removal.
 
-    At each stage, the middle third of every interval is removed.
+    The measure is (2/3)^n, which converges to 0 as n → ∞.
 
-    Args:
-        n_stages: Number of removal stages.
+    Parameters:
+        n: Number of removal stages
 
     Returns:
-        List of (left, right) endpoints of surviving intervals.
+        Total Lebesgue measure of remaining intervals
     """
-    intervals = [(0.0, 1.0)]
-    for _ in range(n_stages):
-        new_intervals: list[tuple[float, float]] = []
-        for a, b in intervals:
-            w = (b - a) / 3
-            new_intervals.append((a, a + w))
-            new_intervals.append((b - w, b))
-        intervals = new_intervals
-    return intervals
+    return (2.0 / 3.0) ** n
 
 
-def cantor_set_measure(n_stages: int) -> float:
-    """
-    Compute the total Lebesgue measure at stage n.
-
-    Returns (2/3)^n, demonstrating measure-zero convergence.
-    """
-    return (2.0 / 3.0) ** n_stages
+def cantor_interval_count(n: int) -> int:
+    """Number of intervals remaining after n Cantor stages: 2^n."""
+    return 2 ** n
 
 
-def logistic_bifurcation_diagram(
-    a_min: float = 0.0,
-    a_max: float = 4.0,
-    n_params: int = 2000,
+def cantor_interval_length(n: int) -> float:
+    """Length of each interval after n Cantor stages: (1/3)^n."""
+    return (1.0 / 3.0) ** n
+
+
+def bifurcation_diagram(
+    mu_min: float = 0.5,
+    mu_max: float = 4.0,
+    mu_steps: int = 1000,
     n_warmup: int = 500,
     n_plot: int = 200,
+    x0: float = 0.5
 ) -> list[tuple[float, float]]:
     """
     Compute the bifurcation diagram of the logistic map.
 
-    For each parameter value a, iterates f_a(x) = ax(1-x) from x=0.5,
-    discards transients, and records the attractor.
+    For each μ value, iterate the logistic map from x0, discard transients,
+    and record the attractor points.
 
-    Args:
-        a_min, a_max: Parameter range.
-        n_params: Number of parameter values.
-        n_warmup: Iterations to discard (transient).
-        n_plot: Iterations to record (attractor).
+    Parameters:
+        mu_min, mu_max: Parameter range
+        mu_steps: Number of μ values to sample
+        n_warmup: Iterations to discard (transient)
+        n_plot: Iterations to record (attractor)
+        x0: Initial condition
 
     Returns:
-        List of (a, x) points on the bifurcation diagram.
+        List of (μ, x) pairs representing the bifurcation diagram
     """
     points: list[tuple[float, float]] = []
-    da = (a_max - a_min) / n_params
-
-    for i in range(n_params + 1):
-        a = a_min + i * da
-        x = 0.5
+    for i in range(mu_steps):
+        mu = mu_min + (mu_max - mu_min) * i / (mu_steps - 1)
+        x = x0
+        # Warm up
         for _ in range(n_warmup):
-            x = a * x * (1 - x)
+            x = logistic_map(mu, x)
+        # Record attractor
         for _ in range(n_plot):
-            x = a * x * (1 - x)
-            points.append((a, x))
-
+            x = logistic_map(mu, x)
+            points.append((mu, x))
     return points
 
 
-def score_entropy(
-    f: Callable[[float], float],
-    n_grid: int = 1000,
-    period_max: int = 20,
-) -> float:
+def feigenbaum_ratio(mu_values: list[float]) -> list[float]:
     """
-    Estimate the topological entropy of a map f : [0,1] → [0,1].
+    Compute successive Feigenbaum ratios from bifurcation parameter values.
 
-    Uses the growth rate of period-n points: h = lim (1/n) log(#periodic points of period n).
+    Given μ₁, μ₂, μ₃, ..., computes (μₙ - μₙ₋₁)/(μₙ₊₁ - μₙ) for each n.
+    These ratios should approach the Feigenbaum constant δ ≈ 4.6692...
 
-    Args:
-        f: The map.
-        n_grid: Grid resolution for finding periodic points.
-        period_max: Maximum period to check.
+    Parameters:
+        mu_values: List of successive bifurcation parameters
 
     Returns:
-        Estimated topological entropy.
+        List of Feigenbaum ratios
     """
-    def compose_n(f: Callable[[float], float], n: int) -> Callable[[float], float]:
-        def fn(x: float) -> float:
-            for _ in range(n):
-                x = f(x)
-            return x
-        return fn
-
-    entropies: list[float] = []
-    for n in range(1, period_max + 1):
-        fn = compose_n(f, n)
-        periodic = find_fixed_points(fn, n_samples=n_grid * n)
-        count = max(len(periodic), 1)
-        entropies.append(math.log(count) / n)
-
-    return max(entropies) if entropies else 0.0
+    ratios: list[float] = []
+    for i in range(1, len(mu_values) - 1):
+        gap_prev = mu_values[i] - mu_values[i - 1]
+        gap_next = mu_values[i + 1] - mu_values[i]
+        if abs(gap_next) > 1e-15:
+            ratios.append(gap_prev / gap_next)
+    return ratios
 
 
 if __name__ == "__main__":
-    # Demo: contraction convergence
-    kappa = 0.5
-    fp, iters = iterate_contraction(lambda x: 0.5 * x + 0.25, 0.0, kappa)
-    print(f"Contraction fixed point: {fp:.10f} (iterations: {iters})")
+    # Quick self-test
+    print("Logistic map at μ=2.5, x=0.5:", logistic_map(2.5, 0.5))
+    print("Non-trivial fixed point at μ=2.5:", nontrivial_fixed_point(2.5))
+    print("Stability at μ=2.5:", classify_fixed_point_stability(2.5))
+    print("Cantor measure at n=10:", cantor_stage_measure(10))
 
-    # Demo: logistic fixed points
-    for a in [0.5, 1.0, 1.5, 2.0, 3.0]:
-        fps = find_fixed_points(lambda x, a=a: a * x * (1 - x))
-        print(f"Logistic a={a:.1f}: fixed points = {fps}")
-
-    # Demo: bifurcation detection
-    bifs = detect_bifurcations(
-        lambda a, x: a * x * (1 - x), 0.0, 3.5, n_params=500
-    )
-    for a, before, after in bifs:
-        print(f"Bifurcation at a ≈ {a:.3f}: {before} → {after} fixed points")
-
-    # Demo: Cantor set
-    for n in range(6):
-        intervals = cantor_set_intervals(n)
-        print(f"Cantor stage {n}: {len(intervals)} intervals, "
-              f"measure = {cantor_set_measure(n):.6f}")
+    # Feigenbaum test
+    known_bifurcations = [3.0, 1 + math.sqrt(6), 3.5441, 3.5644]
+    ratios = feigenbaum_ratio(known_bifurcations)
+    print("Feigenbaum ratios:", [f"{r:.3f}" for r in ratios])

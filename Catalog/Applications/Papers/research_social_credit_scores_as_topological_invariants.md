@@ -1,224 +1,190 @@
-# Social Credit Scores as Topological Invariants: Fixed Points, Phase Transitions, and Cantor Attractors in Scoring Dynamics
+# Social Credit Score Dynamics: Fixed Points, Bifurcations, and Cantor Attractors in Scoring Systems
 
 ## Abstract
 
-We develop a mathematical framework for analyzing social credit systems as continuous maps from a population space to a totally ordered scoring set. Working within the framework of general topology and dynamical systems, we establish five main results: (1) a Stratification Theorem showing that continuous scoring on connected spaces necessarily creates disjoint level-set partitions with asymmetric boundary behavior; (2) a Contraction Convergence theorem proving geometric convergence of iterated scoring under Lipschitz conditions; (3) a Threshold Boundary Density result using the intermediate value property on preconnected spaces; (4) a Phase Transition theorem for the logistic scoring map demonstrating bifurcation at a critical parameter value; and (5) an Attractor Dimension Collapse result showing that iterated threshold-and-rescale dynamics produces a nonempty Cantor-type attractor. All results are formalized and machine-verified in the Lean 4 theorem prover with the Mathlib library.
+We develop a mathematical framework for analyzing social credit scoring systems as continuous self-maps on the unit interval. Our main contributions are: (1) a proof that every continuous scoring function has at least one equilibrium score (the 1D Brouwer fixed-point theorem applied to scoring dynamics), (2) a uniqueness theorem for contractive scoring systems, (3) a complete bifurcation analysis of the logistic scoring model f_μ(x) = μx(1−x), establishing transcritical bifurcation at μ = 1 and period-doubling onset at μ = 3, (4) a stability analysis via derivative computation at fixed points, and (5) a proof that iterated exclusion dynamics produce Cantor-type attractors of measure zero. All results are formally verified in the Lean 4 proof assistant using the Mathlib library.
+
+**Keywords**: dynamical systems, fixed-point theory, bifurcation theory, social credit systems, Cantor sets, logistic map, phase transitions
 
 ## 1. Introduction
 
-Social credit systems — broadly construed as any mechanism that assigns numerical scores to individuals based on observed behavior within a social network — raise fundamental mathematical questions about the interaction between continuous functions and topological structure. When a connected social fabric is projected onto a one-dimensional scale, the resulting dynamics exhibit phenomena familiar from the theory of iterated function systems: contraction to fixed points, bifurcation under parameter variation, and fractal attractor structure.
+Social credit scoring systems—broadly defined as algorithms that assign numerical scores to individuals based on behavioral, social, and transactional data—have become increasingly prevalent in modern societies. From FICO credit scores and academic h-indices to platform-specific reputation metrics and governmental social credit programs, such systems share a common mathematical structure: they are functions that map a space of individual attributes to a totally ordered set of scores.
 
-This paper develops the mathematical theory systematically. We work in the setting of general topological spaces and metric spaces, using Mathlib's extensive library of topological and analytical results.
+When these scoring functions are iterated—today's scores influencing tomorrow's inputs—the resulting dynamical system exhibits rich mathematical structure. This paper formalizes these dynamics and proves several fundamental theorems about the inevitable features of any continuous scoring system.
 
 ### 1.1 Related Work
 
-The mathematical study of social dynamics has deep roots in game theory (Nash equilibria as fixed points), social choice theory (Arrow's impossibility theorem as a topological obstruction), and network science (spectral properties of social graphs). Our contribution is to formalize the *topological* consequences of scoring — consequences that hold regardless of the specific scoring mechanism.
+The study of iterated maps on intervals has a deep history in dynamical systems theory, beginning with Poincaré's qualitative theory of differential equations and continuing through the pioneering work of May (1976) on the logistic map, Feigenbaum (1978) on universality in period-doubling cascades, and the extensive theory of symbolic dynamics and topological entropy.
 
-The use of the logistic map as a model for social dynamics connects to the extensive literature on period-doubling cascades and the Feigenbaum universality. Our phase transition result (Theorem 4) identifies the precise bifurcation point where qualitative behavior changes.
+Our contribution is not to the pure mathematics of interval maps—which is well-established—but rather to the systematic application of these tools to scoring systems, formalized with machine-verified proofs.
 
-## 2. Definitions
+### 1.2 Overview of Results
 
-### 2.1 Scoring System
+We establish five main results:
 
-**Definition 2.1** (ScoringSystem). A *scoring system* on a topological space P consists of:
-- A continuous function `score : P → ℝ` satisfying `0 ≤ score(x) ≤ 1` for all `x ∈ P`.
+1. **Score Equilibrium Existence** (Theorem 3.1): Every continuous f: [0,1] → [0,1] has a fixed point.
+2. **Contraction Uniqueness** (Theorem 3.2): Contractive scoring has at most one equilibrium.
+3. **Logistic Fixed-Point Classification** (Theorem 4.1): Complete classification of logistic map fixed points.
+4. **Stability Analysis** (Theorems 5.1–5.3): Derivative-based stability of logistic equilibria.
+5. **Cantor Attractor** (Theorem 6.1): Exclusion dynamics produce measure-zero attractors.
 
-The score function maps each individual in the population to a value in the unit interval [0,1], representing their "credit rating."
+## 2. Definitions and Framework
 
-### 2.2 Threshold System
+### 2.1 Score Dynamics
 
-**Definition 2.2** (ThresholdSystem). A *threshold system* extends a scoring system with a parameter `θ ∈ (0,1)` that partitions the population into:
-- The *approved set* `A = {x : score(x) ≥ θ}` — a closed set (preimage of [θ,∞) under a continuous function).
-- The *rejected set* `R = {x : score(x) < θ}` — an open set (preimage of (-∞,θ) under a continuous function).
+**Definition 2.1** (Score Dynamics). A *score dynamics system* is a quadruple (f, C, L, U) where:
+- f: ℝ → ℝ is the scoring function
+- C: f is continuous
+- L: ∀ x ∈ [0,1], f(x) ≥ 0
+- U: ∀ x ∈ [0,1], f(x) ≤ 1
 
-### 2.3 Iterated Score Dynamics
+The unit interval [0,1] represents normalized credit scores, and the conditions L, U ensure that scores remain in the valid range.
 
-**Definition 2.3** (IteratedScoreDynamics). An *iterated score dynamics* consists of:
-- An update function `T : [0,1] → [0,1]` that maps scores to updated scores.
-- A contraction rate `κ ∈ [0,1)` satisfying `|T(x) - T(y)| ≤ κ|x - y|` for all `x, y ∈ [0,1]`.
+**Definition 2.2** (Score Equilibrium). A value x ∈ [0,1] is a *score equilibrium* if f(x) = x.
 
-The iterates `T^n(x)` represent the score of an individual after n rounds of evaluation.
+**Definition 2.3** (Contractive Scoring). A score dynamics system is *contractive* with ratio c ∈ [0,1) if |f(x) − f(y)| ≤ c|x − y| for all x, y ∈ ℝ.
 
-### 2.4 Logistic Scoring Map
+### 2.2 The Logistic Scoring Model
 
-**Definition 2.4** (logisticScore). The *logistic scoring map* with parameter `a ≥ 0` is:
-```
-f_a(x) = a · x · (1 - x)
-```
-This maps [0,1] to [0,1] when `0 ≤ a ≤ 4`, and serves as a canonical model for nonlinear scoring dynamics.
+**Definition 2.4**. The *logistic scoring function* with parameter μ is f_μ(x) = μx(1−x).
 
-### 2.5 Middle-Third Removal (Novel Definition)
+This maps [0,1] to [0,1] when μ ∈ [0,4]. The parameter μ controls the strength of social feedback: low μ represents weak scoring influence, high μ represents strong feedback loops.
 
-**Definition 2.5** (middleThirdRemoval). The *middle-third removal construction* defines a nested sequence of sets:
-- Stage 0: `C_0 = [0,1]`
-- Stage n+1: Within each interval of width `3^{-n}` in `C_n`, retain only the left third and right third, removing the open middle third.
+**Definition 2.5**. The *logistic derivative* is f'_μ(x) = μ(1 − 2x).
 
-The *Cantor attractor* is the intersection `C = ∩_n C_n`.
+### 2.3 Cantor Construction
 
-This construction models iterative refinement of social scoring where "mediocre" scores (the middle third of each class) are eliminated at each round, forcing polarization.
+**Definition 2.6**. The *Cantor stage measure* after n iterations of middle-third removal is M(n) = (2/3)^n.
 
-## 3. Main Results
+**Definition 2.7**. The *bifurcation locus* of the logistic family is B = {(μ,x) ∈ ℝ² : f_μ(x) = x}.
 
-### 3.1 Theorem 1: Score Invariance in [0,1]
+## 3. Fundamental Theorems
 
-**Theorem** (iterN_mem_unit). *For any iterated score dynamics D and initial score x ∈ [0,1], the n-th iterate satisfies D.iterN(x, n) ∈ [0,1] for all n ∈ ℕ.*
+### 3.1 Score Equilibrium Existence
 
-*Proof sketch.* Induction on n. The base case is the hypothesis. The inductive step uses the closure properties `update_nonneg` and `update_le_one`. □
+**Theorem 3.1** (Score Fixed Point Existence). *For any score dynamics system S, there exists x ∈ [0,1] with S.f(x) = x.*
 
-### 3.2 Theorem 2: Geometric Contraction of Consecutive Iterates
+*Proof sketch.* Define g(x) = f(x) − x. Then g is continuous on [0,1], g(0) = f(0) ≥ 0, and g(1) = f(1) − 1 ≤ 0. By the intermediate value theorem, there exists x ∈ [0,1] with g(x) = 0, i.e., f(x) = x. □
 
-**Theorem** (consecutive_contraction). *For any iterated score dynamics D with contraction rate κ and initial score x ∈ [0,1]:*
-```
-|D.iterN(x, n+1) - D.iterN(x, n)| ≤ κ^n · |D.update(x) - x|
-```
+This result is the social-dynamics analogue of Brouwer's fixed-point theorem in one dimension. Its significance is that *no continuous scoring algorithm can avoid creating self-reinforcing equilibrium scores*. The existence of fixed points is a topological invariant of the scoring map.
 
-*Proof sketch.* Induction on n. The base case is immediate. For the inductive step, apply the contraction property to consecutive iterates (which lie in [0,1] by Theorem 1), obtaining:
-```
-|T(T^{n+1}(x)) - T(T^n(x))| ≤ κ · |T^{n+1}(x) - T^n(x)| ≤ κ · κ^n · |T(x) - x|
-```
-□
+### 3.2 Contraction Uniqueness
 
-This estimate is the key ingredient for proving Cauchy convergence of the iterate sequence.
+**Theorem 3.2** (Contraction Fixed-Point Uniqueness). *If f is contractive with ratio c < 1, and f(x) = x, f(y) = y, then x = y.*
 
-### 3.3 Theorem 3: Two-Point Contraction
+*Proof.* Suppose x ≠ y. Then |x − y| = |f(x) − f(y)| ≤ c|x − y| with c < 1 and |x − y| > 0. Dividing both sides by |x − y| yields 1 ≤ c, contradicting c < 1. □
 
-**Theorem** (two_point_contraction). *For any two initial scores x, y ∈ [0,1]:*
-```
-|D.iterN(x, n) - D.iterN(y, n)| ≤ κ^n · |x - y|
-```
+Combined with Theorem 3.1, this establishes that contractive scoring systems have a *unique* equilibrium—the mathematical basis of social consensus under compressive scoring.
 
-*Proof sketch.* Induction on n, using the contraction property at each step and the invariance of [0,1] under iteration. □
+## 4. Logistic Model: Fixed-Point Classification
 
-This theorem establishes that the long-term behavior of the scoring system is independent of initial conditions: any two starting scores converge exponentially fast to the same limit.
+### 4.1 Fixed Points
 
-### 3.4 Theorem 4: Threshold Preimage via Intermediate Value
+**Theorem 4.1** (Logistic Fixed-Point Classification). *For μ ≠ 0, x is a fixed point of f_μ if and only if x = 0 or x = 1 − 1/μ.*
 
-**Theorem** (threshold_preimage_nonempty). *Let P be a preconnected topological space and S a threshold system on P. If there exist individuals a, b with score(a) < θ < score(b), then there exists p ∈ P with score(p) = θ.*
+*Proof.* f_μ(x) = x ⟺ μx(1−x) = x ⟺ x(μ(1−x) − 1) = 0 ⟺ x = 0 or μ − μx − 1 = 0 ⟺ x = 0 or x = (μ−1)/μ = 1 − 1/μ. □
 
-*Proof sketch.* The continuous image of a preconnected space is preconnected in ℝ. A preconnected subset of ℝ containing points below and above θ must contain θ itself (it is an interval). □
+**Theorem 4.2** (Non-trivial Fixed Point). *For μ ≠ 0, f_μ(1 − 1/μ) = 1 − 1/μ.*
 
-This is a topological version of the intermediate value theorem. It says that in a connected society, if anyone is above the threshold and anyone is below, then someone is *exactly at* the threshold — the boundary is always occupied.
+### 4.2 Bifurcation Analysis
 
-### 3.5 Theorem 5: Boundary Asymmetry
+**Theorem 4.3** (Pre-bifurcation). *For 0 < μ < 1, the non-trivial fixed point 1 − 1/μ is negative.*
 
-**Theorem** (approved_closed, rejected_open). *The approved set {x : score(x) ≥ θ} is closed, and the rejected set {x : score(x) < θ} is open.*
+This means for weak scoring (μ < 1), only the trivial equilibrium x = 0 is viable.
 
-*Proof sketch.* The approved set is the preimage of the closed set [θ, ∞) under the continuous function `score`. The rejected set is the preimage of the open set (-∞, θ). □
+**Theorem 4.4** (Post-bifurcation). *For μ > 1, the non-trivial fixed point 1 − 1/μ is positive.*
 
-The mathematical consequence is stark: the boundary between classes is *asymmetric*. Points on the boundary (score exactly θ) belong to the approved class, not the rejected class. There is no neutral ground.
+**Theorem 4.5** (Unit Interval). *For 1 < μ ≤ 4, the non-trivial fixed point lies in (0,1).*
 
-### 3.6 Theorem 6: Level Set Partition
+The transition at μ = 1 is a *transcritical bifurcation*: the two fixed-point branches x = 0 and x = 1 − 1/μ cross at (μ,x) = (1,0) and exchange stability.
 
-**Theorem** (score_nontrivial_partition). *If score(a) ≠ score(b), then the level sets score⁻¹({score(a)}) and score⁻¹({score(b)}) are both nonempty and have empty intersection.*
+## 5. Stability Analysis
 
-*Proof sketch.* Nonemptiness: a and b are witnesses. Disjointness: if x is in both, then score(x) = score(a) = score(b), contradicting the hypothesis. □
+### 5.1 Derivative at Fixed Points
 
-### 3.7 Theorem 7: Logistic Map Phase Transition
+**Theorem 5.1** (Derivative at Non-trivial Fixed Point). *f'_μ(1 − 1/μ) = 2 − μ.*
 
-**Theorem** (logisticScore_nontrivial_fixed_point). *When a > 1 (and a ≤ 4), the logistic map f_a(x) = ax(1-x) has a non-trivial fixed point at x₀ = 1 - 1/a, with 0 < x₀ < 1.*
+*Proof.* f'_μ(x) = μ(1 − 2x). At x = 1 − 1/μ: μ(1 − 2(1 − 1/μ)) = μ(1 − 2 + 2/μ) = μ(−1 + 2/μ) = −μ + 2 = 2 − μ. □
 
-*Proof sketch.* Direct computation: f_a(x₀) = a(1-1/a)(1/a) = (1-1/a) = x₀. The bounds 0 < x₀ < 1 follow from a > 1. □
+### 5.2 Stability Regions
 
-**Theorem** (logisticScore_unique_fixed_point). *When 0 < a < 1, the only fixed point in [0,1] is x = 0.*
+**Theorem 5.2** (Stability for 1 < μ < 3). *When 1 < μ < 3, the non-trivial fixed point is linearly stable: |f'_μ(1 − 1/μ)| < 1.*
 
-*Proof sketch.* From ax(1-x) = x, we get x(a(1-x) - 1) = 0. If x > 0, then a(1-x) = 1, so x = 1 - 1/a < 0 (since a < 1), contradicting x ≥ 0. □
+*Proof.* |2 − μ| < 1 ⟺ −1 < 2 − μ < 1 ⟺ 1 < μ < 3. □
 
-Together, these two theorems establish a *phase transition* at a = 1: the qualitative structure of the fixed point set changes discontinuously as the parameter crosses the critical value.
+**Theorem 5.3** (Instability for μ > 3). *When μ > 3, the non-trivial fixed point is linearly unstable: |f'_μ(1 − 1/μ)| > 1.*
 
-### 3.8 Theorem 8: Cantor Attractor
+*Proof.* For μ > 3, 2 − μ < −1, so |2 − μ| = μ − 2 > 1. □
 
-**Theorem** (cantorAttractor_nonempty). *The Cantor attractor ∩_n C_n is nonempty.*
+The transition at μ = 3 marks the onset of period-doubling, where the stable fixed point gives way to a stable period-2 cycle.
 
-*Proof sketch.* The point 0 belongs to every stage C_n (proved by induction). Hence 0 ∈ ∩_n C_n. Similarly for 1. □
+## 6. Cantor Attractor Theory
 
-Supporting lemmas:
-- **middleThirdRemoval_antitone**: The sequence C_n is nested (C_{n+1} ⊆ C_n).
-- **middleThirdRemoval_subset_unit**: Every stage is contained in [0,1].
-- **zero_mem_middleThirdRemoval**: 0 survives every stage.
-- **one_mem_middleThirdRemoval**: 1 survives every stage.
+### 6.1 Exclusion Dynamics
 
-## 4. Algorithms
+Consider a scoring system that iteratively removes "middle" scores from each surviving interval (the middle third). After n iterations:
+- 2^n intervals remain (cantorIntervalCount)
+- Each has length 3^{−n} (cantorIntervalLength)
+- Total measure is (2/3)^n (cantorStageMeasure)
 
-### 4.1 Score Iteration Algorithm
+**Theorem 6.1** (Measure Decomposition). *M(n) = 2^n · 3^{−n}.*
 
-```
-Input: update function T, initial score x₀, contraction rate κ, tolerance ε
-Output: Approximate fixed point x*
+**Theorem 6.2** (Cantor Attractor Measure Zero). *lim_{n→∞} M(n) = 0.*
 
-n ← ⌈log(ε/|T(x₀) - x₀|) / log(κ)⌉
-x ← x₀
-for i = 1 to n:
-    x ← T(x)
-return x
-```
+*Proof.* Since 0 ≤ 2/3 < 1, the sequence (2/3)^n converges to 0 by the geometric series theorem. □
 
-The convergence guarantee from Theorem 2 ensures that after n iterations, |x - x*| ≤ ε.
+This result shows that exclusion-based scoring produces an attractor of Lebesgue measure zero — a Cantor-type dust. The social distribution collapses from a continuum to a totally disconnected fractal.
 
-### 4.2 Bifurcation Detection Algorithm
+## 7. Topological Properties
 
-```
-Input: Parameterized map f_a, parameter range [a_min, a_max], resolution δ
-Output: Set of bifurcation points
+### 7.1 Bifurcation Locus
 
-bifurcations ← ∅
-for a = a_min to a_max step δ:
-    fp_count_before ← count_fixed_points(f_a)
-    fp_count_after ← count_fixed_points(f_{a+δ})
-    if fp_count_before ≠ fp_count_after:
-        bifurcations ← bifurcations ∪ {a}
-return bifurcations
-```
+**Definition 7.1**. The bifurcation locus B = {(μ,x) : μx(1−x) = x} ⊂ ℝ².
 
-### 4.3 Cantor Set Approximation Algorithm
+**Theorem 7.1** (Closedness). *B is a closed subset of ℝ².*
 
-```
-Input: Stage count N
-Output: Set of intervals approximating C_N
+*Proof.* B is the zero set of the continuous function g(μ,x) = μx(1−x) − x, hence closed. □
 
-intervals ← {[0, 1]}
-for stage = 1 to N:
-    new_intervals ← ∅
-    for [a, b] in intervals:
-        w ← (b - a) / 3
-        new_intervals ← new_intervals ∪ {[a, a+w], [b-w, b]}
-    intervals ← new_intervals
-return intervals
-```
+## 8. Feigenbaum Universality (Conjecture)
 
-## 5. Discussion
+### 8.1 Period-Doubling Cascade
 
-### 5.1 Universality of Phase Transitions
+The first period-doubling bifurcation occurs at μ₁ = 3. The second occurs at μ₂ = 1 + √6 ≈ 3.449.
 
-The logistic map phase transition at a = 1 is a special case of a much broader phenomenon. Any smooth one-parameter family of scoring maps f_a : [0,1] → [0,1] with f_0(x) = 0 and ∂f_a/∂a|_{a=0} > 0 will exhibit a transcritical bifurcation at some critical parameter value. The specific value a = 1 for the logistic map is determined by the condition that the derivative at the fixed point equals 1.
+**Theorem 8.1** (Feigenbaum Bound). *3.4 < μ₂ < 3.5.*
 
-### 5.2 Social Implications of Topological Asymmetry
+**Conjecture 8.1** (Feigenbaum Universality). *The ratio (μ_n − μ_{n−1})/(μ_{n+1} − μ_n) approaches the Feigenbaum constant δ ≈ 4.66920... as n → ∞.* This is a statement about the universal geometry of parameter space for unimodal maps.
 
-The approved_closed / rejected_open asymmetry (Theorem 5) has a concrete interpretation: individuals arbitrarily close to the threshold from below are classified as rejected, while the threshold itself belongs to the approved class. In practice, this means that the boundary between social classes is inherently one-sided — there is no "neutral zone" in a threshold-based scoring system.
+### 8.2 Testable Prediction
 
-### 5.3 Contraction vs. Expansion Regimes
+The Feigenbaum constant predicts μ₃ ≈ μ₂ + (μ₂ − μ₁)/δ ≈ 3.449 + 0.449/4.669 ≈ 3.545. A computational verification at this parameter value should reveal a period-8 cycle, confirming the universal scaling.
 
-The contraction convergence theorem (Theorems 2-3) applies only when κ < 1. When the scoring update expands distances (κ > 1), the system can exhibit chaotic behavior, sensitive dependence on initial conditions, and fractal attractor structure. The transition from contractive to expansive dynamics corresponds to the transition from a stable, predictable scoring system to one that amplifies small differences.
+## 9. Discussion
 
-### 5.4 The Cantor Attractor as Social Fragmentation
+### 9.1 Implications for Scoring System Design
 
-The middle-third removal construction models a scoring system that iteratively eliminates individuals with "average" scores. The mathematical consequence — convergence to a Cantor set — means that the long-term stable population distribution is a totally disconnected, measure-zero set. Every survivor is isolated from every other survivor by removed intervals. This is a mathematical model of extreme social fragmentation driven by iterative selection against mediocrity.
+Our results establish that:
 
-## 6. Conjecture
+1. **Fixed points are inevitable** — system designers must identify and understand the equilibria their algorithms create.
+2. **Contraction ensures uniqueness** — but at the cost of suppressing score diversity.
+3. **Phase transitions are parameter-sensitive** — small changes in feedback intensity can qualitatively alter system behavior.
+4. **Exclusion fragments continuously** — iterated removal of middle scores produces fractal stratification.
 
-**Conjecture** (Scoring Entropy Bound). For the logistic map at parameter a = 4, the number of distinct periodic orbits of period k (excluding the trivial fixed point at 0) equals 2^k - 1.
+### 9.2 Limitations
 
-**Testable prediction**: Compute periodic orbits of f_4(x) = 4x(1-x) for k = 1, 2, 3, 4 and verify the counts 1, 1, 3, 7 (which are 2^k - 1 for the number of primitive period-k orbits... actually the count of *all* period-k points is 2^k, and excluding the fixed point gives 2^k - 1 period-k points, not orbits). More precisely: the map f_4 is conjugate to the tent map, which is semiconjugate to the shift on {0,1}^ℕ, so it has exactly 2^k periodic points of period dividing k.
+Our model treats scoring as a one-dimensional map, which captures essential dynamics but omits multi-dimensional interactions, network effects, and stochastic perturbations. Extensions to higher dimensions would invoke the full Brouwer fixed-point theorem.
 
-## 7. Future Work
+## 10. Future Work
 
-- Extend the phase transition analysis to the full period-doubling cascade (parameters a > 3).
-- Connect the Cantor attractor dimension to the contraction rate via Hausdorff dimension estimates.
-- Formalize the connection between scoring dynamics and shift spaces via symbolic dynamics.
-- Develop multi-dimensional scoring systems (vector-valued scores) and study the topology of their level sets.
+1. **Network topology**: Extend to scoring on graphs where individual scores depend on neighbors.
+2. **Stochastic perturbations**: Add noise and study the stationary distribution.
+3. **Multi-dimensional scoring**: Apply Brouwer's theorem in higher dimensions.
+4. **Entropy of scoring dynamics**: Compute topological entropy as a complexity measure.
 
 ## References
 
-1. Banach, S. "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales." *Fundamenta Mathematicae* 3 (1922): 133-181.
-2. May, R. M. "Simple mathematical models with very complicated dynamics." *Nature* 261 (1976): 459-467.
-3. Devaney, R. L. *An Introduction to Chaotic Dynamical Systems.* Westview Press, 2003.
-4. Munkres, J. R. *Topology.* 2nd ed. Prentice Hall, 2000.
+1. Brouwer, L.E.J. (1911). Über Abbildung von Mannigfaltigkeiten. *Math. Ann.* 71, 97–115.
+2. May, R.M. (1976). Simple mathematical models with very complicated dynamics. *Nature* 261, 459–467.
+3. Feigenbaum, M.J. (1978). Quantitative universality for a class of nonlinear transformations. *J. Stat. Phys.* 19, 25–52.
+4. Devaney, R.L. (1989). *An Introduction to Chaotic Dynamical Systems*. Addison-Wesley.
+5. Strogatz, S.H. (2015). *Nonlinear Dynamics and Chaos*. Westview Press, 2nd edition.
