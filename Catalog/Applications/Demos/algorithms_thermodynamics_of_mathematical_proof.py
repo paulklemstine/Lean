@@ -1,44 +1,32 @@
+#!/usr/bin/env python3
 """
-Algorithms for Landauer's Principle Applied to Mathematical Proof
+Algorithms for Proof Thermodynamics
 
-This module implements the core algorithms for computing thermodynamic
-costs of proof traces, erasure-creation gaps, and related quantities.
+Type-hinted implementations of the core algorithms from the
+Landauer Principle for Mathematical Proof framework.
 """
 
 import math
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
-
-
-# Physical constants
-KB = 1.380649e-23  # Boltzmann constant in J/K
-ROOM_TEMP = 300.0  # Room temperature in K
-LANDAUER_ONE_BIT = KB * ROOM_TEMP * math.log(2)  # ~2.87e-21 J
+from typing import Optional
 
 
 @dataclass
 class ProofConfig:
-    """A proof configuration with a given number of microstates."""
+    """A proof configuration with a given cardinality."""
     cardinality: int
-    label: str = ""
 
     def __post_init__(self) -> None:
-        if self.cardinality < 1:
-            raise ValueError("Cardinality must be positive")
+        assert self.cardinality > 0, "Configuration must have positive cardinality"
 
     @property
     def entropy(self) -> float:
-        """Counting entropy: log(cardinality) in nats."""
+        """Information-theoretic entropy (natural log of cardinality)."""
         return math.log(self.cardinality)
 
     @property
-    def entropy_bits(self) -> float:
-        """Counting entropy in bits: log2(cardinality)."""
-        return math.log2(self.cardinality)
-
-    @property
     def descriptive_complexity(self) -> float:
-        """Descriptive complexity: log2(cardinality)."""
+        """Descriptive complexity in bits."""
         return math.log2(self.cardinality)
 
 
@@ -48,162 +36,191 @@ class ProofStep:
     source: ProofConfig
     target: ProofConfig
 
+    def __post_init__(self) -> None:
+        assert self.source.cardinality >= self.target.cardinality, \
+            "Surjective map requires |source| >= |target|"
+
     @property
     def erasure(self) -> float:
-        """Information-theoretic erasure in nats."""
+        """Information-theoretic erasure of this step."""
         return self.source.entropy - self.target.entropy
 
     @property
-    def erasure_bits(self) -> float:
-        """Information-theoretic erasure in bits."""
-        return self.source.entropy_bits - self.target.entropy_bits
-
-    @property
     def is_reversible(self) -> bool:
-        """Whether the step is reversible (same cardinality)."""
+        """Whether this step is reversible (bijective)."""
         return self.source.cardinality == self.target.cardinality
 
-    def landauer_cost(self, kB: float = KB, T: float = ROOM_TEMP) -> float:
-        """Thermodynamic cost in joules."""
+    def landauer_cost(self, kB: float, T: float) -> float:
+        """Thermodynamic cost at given kB and T."""
         return kB * T * self.erasure
 
 
 @dataclass
-class ErasureCreationGap:
-    """Captures both erasure and creation in a proof step."""
-    erasure: float  # bits erased
-    creation: float  # bits created
-
-    @property
-    def gap(self) -> float:
-        """Net erasure (erasure - creation)."""
-        return self.erasure - self.creation
-
-    def net_cost(self, kB: float = KB, T: float = ROOM_TEMP) -> float:
-        """Net thermodynamic cost in joules."""
-        return kB * T * self.gap * math.log(2)
-
-
 class ProofTrace:
-    """A sequence of proof configurations forming a complete proof trace."""
+    """A sequence of proof configurations forming a complete proof."""
+    cardinalities: list[int]
 
-    def __init__(self, configs: List[ProofConfig]) -> None:
-        if len(configs) < 2:
-            raise ValueError("Trace must have at least 2 configurations")
-        self.configs = configs
-        self.steps = [
-            ProofStep(configs[i], configs[i + 1])
-            for i in range(len(configs) - 1)
-        ]
+    def __post_init__(self) -> None:
+        assert len(self.cardinalities) >= 2, "Trace needs at least 2 configurations"
+        for c in self.cardinalities:
+            assert c > 0, "All cardinalities must be positive"
+        for i in range(len(self.cardinalities) - 1):
+            assert self.cardinalities[i] >= self.cardinalities[i + 1], \
+                f"Surjectivity violated at step {i}"
 
     @property
     def length(self) -> int:
-        """Number of steps."""
-        return len(self.steps)
+        """Number of steps in the trace."""
+        return len(self.cardinalities) - 1
 
-    def step_erasures(self) -> List[float]:
-        """Per-step erasure in nats."""
+    @property
+    def configs(self) -> list[ProofConfig]:
+        """List of proof configurations."""
+        return [ProofConfig(c) for c in self.cardinalities]
+
+    @property
+    def steps(self) -> list[ProofStep]:
+        """List of proof steps."""
+        return [
+            ProofStep(ProofConfig(self.cardinalities[i]),
+                      ProofConfig(self.cardinalities[i + 1]))
+            for i in range(self.length)
+        ]
+
+    def step_erasures(self) -> list[float]:
+        """Erasure at each step."""
         return [s.erasure for s in self.steps]
 
     def total_erasure(self) -> float:
-        """Total erasure (telescoping sum) in nats."""
+        """Total erasure across the trace (sum of step erasures)."""
         return sum(self.step_erasures())
 
-    def total_positive_erasure(self) -> float:
-        """Total positive erasure (only counting destructive steps)."""
-        return sum(max(0, e) for e in self.step_erasures())
+    def boundary_erasure(self) -> float:
+        """Boundary erasure (initial entropy - final entropy)."""
+        return (math.log(self.cardinalities[0]) -
+                math.log(self.cardinalities[-1]))
 
-    def total_negative_erasure(self) -> float:
-        """Total entropy increase (creative steps)."""
-        return sum(min(0, e) for e in self.step_erasures())
+    def verify_telescoping(self, tol: float = 1e-10) -> bool:
+        """Verify the telescoping property: total = boundary."""
+        return abs(self.total_erasure() - self.boundary_erasure()) < tol
 
-    def max_step_erasure(self) -> float:
-        """Maximum per-step erasure."""
-        return max(self.step_erasures())
+    def verify_monotonicity(self) -> bool:
+        """Verify entropy is monotonically non-increasing."""
+        entropies = [math.log(c) for c in self.cardinalities]
+        return all(entropies[i] >= entropies[i + 1]
+                   for i in range(len(entropies) - 1))
 
-    def peak_entropy(self) -> float:
-        """Maximum entropy among all configurations."""
-        return max(c.entropy for c in self.configs)
+    def find_bottleneck(self) -> tuple[int, float]:
+        """Find the step with maximum erasure."""
+        erasures = self.step_erasures()
+        max_idx = max(range(len(erasures)), key=lambda i: erasures[i])
+        return max_idx, erasures[max_idx]
 
-    def verification_cost_bound(self, kB: float = KB, T: float = ROOM_TEMP) -> float:
-        """Upper bound on verification cost: kB * T * len * max_step_erasure."""
-        return kB * T * self.length * self.max_step_erasure()
+    def average_erasure(self) -> float:
+        """Average erasure per step."""
+        return self.total_erasure() / self.length
 
-    def total_landauer_cost(self, kB: float = KB, T: float = ROOM_TEMP) -> float:
-        """Total Landauer cost in joules."""
+    def verify_concentration(self) -> bool:
+        """Verify concentration: max step erasure >= average."""
+        _, max_e = self.find_bottleneck()
+        return max_e >= self.average_erasure() - 1e-10
+
+    def thermodynamic_cost(self, kB: float, T: float) -> float:
+        """Total thermodynamic cost."""
         return kB * T * self.total_erasure()
 
-    def is_tautological(self) -> bool:
-        """Whether start and end have equal entropy."""
-        return abs(self.configs[0].entropy - self.configs[-1].entropy) < 1e-12
 
-    def erasure_profile(self) -> List[Tuple[int, float, float]]:
-        """Returns (step_index, cumulative_erasure, current_entropy) tuples."""
-        profile = [(0, 0.0, self.configs[0].entropy)]
-        cumulative = 0.0
-        for i, step in enumerate(self.steps):
-            cumulative += step.erasure
-            profile.append((i + 1, cumulative, self.configs[i + 1].entropy))
-        return profile
+@dataclass
+class ErasureProfile:
+    """Erasure and creation at each step of a proof."""
+    erasures: list[float]
+    creations: list[float]
+
+    def __post_init__(self) -> None:
+        assert len(self.erasures) == len(self.creations)
+        assert all(e >= 0 for e in self.erasures)
+        assert all(c >= 0 for c in self.creations)
+
+    @property
+    def length(self) -> int:
+        return len(self.erasures)
+
+    @property
+    def total_erasure(self) -> float:
+        return sum(self.erasures)
+
+    @property
+    def total_creation(self) -> float:
+        return sum(self.creations)
+
+    def net_cost(self, kB: float, T: float) -> float:
+        return kB * T * (self.total_erasure - self.total_creation)
+
+    def erasure_exceeds_creation(self) -> bool:
+        return self.total_erasure > self.total_creation
 
 
-def compute_exponential_erasure(n: int) -> dict:
-    """Compute erasure for collapsing 2^n states to 1.
+def thermodynamic_depth(m: int, k: int) -> float:
+    """Compute thermodynamic depth: log(m) - log(k)."""
+    assert m >= k > 0
+    return math.log(m) - math.log(k)
 
-    Args:
-        n: Number of bits to erase.
 
-    Returns:
-        Dictionary with erasure metrics.
+def exponential_collapse_cost(n: int) -> float:
+    """Cost of collapsing 2^n states to 1: n * ln(2)."""
+    return n * math.log(2)
+
+
+def erasure_to_description_ratio(n: int) -> float:
+    """Ratio of erasure cost to description complexity for 2^n → 1."""
+    if n <= 1:
+        return n * math.log(2)
+    erasure = n * math.log(2)
+    description = math.log2(n)
+    return erasure / description
+
+
+def optimal_even_trace(m: int, k: int, num_steps: int) -> Optional[ProofTrace]:
+    """Construct a trace from m to k with roughly even erasure per step.
+
+    Uses geometric spacing: each step reduces cardinality by factor (m/k)^(1/L).
     """
-    source = ProofConfig(2**n, f"2^{n} states")
-    target = ProofConfig(1, "1 state")
-    step = ProofStep(source, target)
-    return {
-        "n": n,
-        "source_cardinality": source.cardinality,
-        "erasure_nats": step.erasure,
-        "erasure_bits": step.erasure_bits,
-        "expected_nats": n * math.log(2),
-        "landauer_cost_joules": step.landauer_cost(),
-        "is_reversible": step.is_reversible,
-    }
+    if m < k or k <= 0 or num_steps < 1:
+        return None
+    ratio = (m / k) ** (1.0 / num_steps)
+    cardinalities = []
+    current = float(m)
+    for i in range(num_steps + 1):
+        cardinalities.append(max(int(round(current)), k if i == num_steps else 1))
+        current /= ratio
+    # Ensure monotonicity and exact endpoints
+    cardinalities[0] = m
+    cardinalities[-1] = k
+    for i in range(1, len(cardinalities)):
+        cardinalities[i] = min(cardinalities[i], cardinalities[i - 1])
+        cardinalities[i] = max(cardinalities[i], k)
+    try:
+        return ProofTrace(cardinalities)
+    except AssertionError:
+        return None
 
 
-def find_optimal_trace(
-    start_card: int, end_card: int, max_intermediate: int = 1000
-) -> Optional[ProofTrace]:
-    """Find the minimum-erasure proof trace between two cardinalities.
+if __name__ == "__main__":
+    # Quick demo
+    print("Thermodynamic Depth Examples:")
+    for n in [4, 8, 16]:
+        d = thermodynamic_depth(2**n, 1)
+        print(f"  D(2^{n}, 1) = {d:.4f} = {n} × ln(2)")
 
-    For surjective maps, the optimal is always the direct step.
-    This function demonstrates that detours increase positive erasure.
-    """
-    # Direct trace
-    direct = ProofTrace([
-        ProofConfig(start_card, "start"),
-        ProofConfig(end_card, "end"),
-    ])
-    return direct
+    print("\nProof Trace Verification:")
+    trace = ProofTrace([1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1])
+    print(f"  Telescoping: {trace.verify_telescoping()}")
+    print(f"  Monotonicity: {trace.verify_monotonicity()}")
+    print(f"  Concentration: {trace.verify_concentration()}")
+    idx, val = trace.find_bottleneck()
+    print(f"  Bottleneck at step {idx}: erasure = {val:.4f}")
 
-
-def erasure_creation_analysis(
-    erasure_bits: float, creation_bits: float,
-    kB: float = KB, T: float = ROOM_TEMP
-) -> dict:
-    """Analyze the erasure-creation gap.
-
-    Args:
-        erasure_bits: Bits of information erased.
-        creation_bits: Bits of new information introduced.
-
-    Returns:
-        Dictionary with gap analysis.
-    """
-    gap = ErasureCreationGap(erasure_bits, creation_bits)
-    return {
-        "erasure_bits": erasure_bits,
-        "creation_bits": creation_bits,
-        "gap_bits": gap.gap,
-        "net_cost_joules": gap.net_cost(kB, T),
-        "cost_positive": gap.gap > 0,
-    }
+    print("\nExponential Erasure Gap:")
+    for n in [2, 4, 8, 16, 32]:
+        r = erasure_to_description_ratio(n)
+        print(f"  n={n:3d}: ratio = {r:.2f}")
