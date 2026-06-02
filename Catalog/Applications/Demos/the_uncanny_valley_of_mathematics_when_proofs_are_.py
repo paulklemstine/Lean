@@ -1,368 +1,289 @@
+#!/usr/bin/env python3
 """
-Mathematical Uncanny Valley Theory — Demonstration Script
+demo.py — The Mathematical Uncanny Valley: Interactive Demonstrations
 
-This script demonstrates the key results of the uncanny valley theory for
-mathematical proofs, computing suspicion kernels, trust functions, and
-verifying the valley monotonicity conjecture computationally.
+Demonstrates the key results from the formalized theory:
+1. The suspicion function S(r) = r²(1-r) and its maximum at r = 2/3
+2. The valley trust model U(r) = r - α·S(r) for various α
+3. The sharp threshold at α = 4
+4. Valley depth as a function of α
 """
 
-from typing import List, Tuple
+import math
 
 
-def sym_suspicion(k: int, n: int) -> int:
-    """Symmetric suspicion kernel: k * (n - k)"""
-    if k > n:
-        return 0
-    return k * (n - k)
+def suspicion_fn(r: float) -> float:
+    """The suspicion function S(r) = r²(1-r)."""
+    return r**2 * (1 - r)
 
 
-def asym_suspicion(k: int, n: int) -> int:
-    """Asymmetric suspicion kernel: k^2 * (n - k)"""
-    if k > n:
-        return 0
-    return k ** 2 * (n - k)
+def valley_model(alpha: float, r: float) -> float:
+    """The valley trust model U(r) = r - α·S(r)."""
+    return r - alpha * suspicion_fn(r)
 
 
-def proof_trust(k: int, n: int) -> int:
-    """Trust level: n^3 - asymSuspicion(k, n)"""
-    return n ** 3 - asym_suspicion(k, n)
+def valley_depth(alpha: float, n_points: int = 10000) -> float:
+    """Compute the valley depth: min endpoint value - min value on [0,1]."""
+    min_val = min(valley_model(alpha, 0), valley_model(alpha, 1))
+    for i in range(1, n_points):
+        r = i / n_points
+        val = valley_model(alpha, r)
+        min_val = min(min_val, val)
+    endpoint_min = min(valley_model(alpha, 0), valley_model(alpha, 1))
+    return endpoint_min - min_val
 
 
-def find_valley(n: int) -> Tuple[int, int]:
-    """Find the position and value of maximum suspicion."""
-    best_k, best_v = 0, 0
-    for k in range(n + 1):
-        v = asym_suspicion(k, n)
-        if v > best_v:
-            best_k, best_v = k, v
-    return best_k, best_v
+def find_valley_minimum(alpha: float, n_points: int = 10000) -> tuple:
+    """Find the rigor level that minimizes trust."""
+    best_r = 0.0
+    best_val = valley_model(alpha, 0)
+    for i in range(n_points + 1):
+        r = i / n_points
+        val = valley_model(alpha, r)
+        if val < best_val:
+            best_r = r
+            best_val = val
+    return best_r, best_val
 
 
-def verify_monotonicity_conjecture(max_n: int = 100) -> bool:
-    """Verify the valley monotonicity conjecture up to proof length max_n."""
-    for n in range(3, max_n + 1):
-        for k in range(1, 2 * n // 3 + 1):
-            if 3 * k > 2 * n:
-                break
-            if asym_suspicion(k - 1, n) >= asym_suspicion(k, n):
-                print(f"COUNTEREXAMPLE at n={n}, k1={k-1}, k2={k}")
-                return False
-    return True
-
-
-def demo_uncanny_valley_ordering():
-    """Demonstrate Theorem 3.1: Almost-complete proofs are more suspicious."""
+def demo_suspicion_peak():
+    """Demonstrate that S(r) ≤ 4/27 with equality at r = 2/3."""
     print("=" * 60)
-    print("UNCANNY VALLEY ORDERING THEOREM")
-    print("For n >= 3: suspicion(1, n) < suspicion(n-1, n)")
+    print("DEMO 1: Suspicion Peak Theorem")
     print("=" * 60)
-    for n in [3, 5, 10, 20, 50, 100]:
-        s1 = asym_suspicion(1, n)
-        sn1 = asym_suspicion(n - 1, n)
-        ratio = sn1 / s1 if s1 > 0 else float('inf')
-        print(f"  n={n:3d}: S(1,n)={s1:8d}, S(n-1,n)={sn1:8d}, ratio={ratio:.1f}x")
+    print(f"S(2/3) = {suspicion_fn(2/3):.10f}")
+    print(f"4/27   = {4/27:.10f}")
+    print(f"Match: {abs(suspicion_fn(2/3) - 4/27) < 1e-15}")
+    print()
+
+    # Verify bound on [0,1]
+    max_s = max(suspicion_fn(i / 100000) for i in range(100001))
+    print(f"Numerical max of S on [0,1]: {max_s:.10f}")
+    print(f"Bound 4/27:                  {4/27:.10f}")
+    print(f"Bound holds: {max_s <= 4/27 + 1e-10}")
     print()
 
 
-def demo_valley_depth_growth():
-    """Demonstrate Theorem 3.4: Valley depth grows with proof length."""
+def demo_valley_existence():
+    """Demonstrate the valley exists for α > 4 and not for α ≤ 4."""
     print("=" * 60)
-    print("VALLEY DEPTH GROWTH")
-    print("S(n-1, n) grows quadratically as (n-1)^2")
+    print("DEMO 2: Valley Existence & Sharp Threshold")
     print("=" * 60)
-    for n in [2, 5, 10, 20, 50, 100]:
-        depth = asym_suspicion(n - 1, n)
-        expected = (n - 1) ** 2
-        print(f"  n={n:3d}: valley depth = {depth:8d}, (n-1)^2 = {expected:8d}, match={depth==expected}")
+
+    for alpha in [2.0, 3.0, 4.0, 4.01, 5.0, 8.0, 12.0]:
+        r_min, val_min = find_valley_minimum(alpha)
+        depth = valley_depth(alpha)
+        has_valley = val_min < min(valley_model(alpha, 0), valley_model(alpha, 1))
+        print(f"α = {alpha:5.2f}: min at r={r_min:.4f}, "
+              f"U(r_min)={val_min:+.6f}, depth={depth:.6f}, "
+              f"valley={'YES' if has_valley else 'NO'}")
+    print()
+    print("Observation: Valley appears precisely when α > 4 (sharp threshold).")
     print()
 
 
-def demo_trust_recovery():
-    """Demonstrate Theorems 3.5-3.6: Trust recovery and last sorry penalty."""
+def demo_monotonicity():
+    """Demonstrate that valley depth increases with α."""
     print("=" * 60)
-    print("TRUST RECOVERY AND LAST SORRY PENALTY")
+    print("DEMO 3: Valley Depth Monotonicity")
     print("=" * 60)
-    for n in [5, 10, 20, 50, 100]:
-        t_full = proof_trust(n, n)
-        t_penult = proof_trust(n - 1, n)
-        penalty = t_full - t_penult
-        pct = 100 * penalty / t_full if t_full > 0 else 0
-        print(f"  n={n:3d}: T(n,n)={t_full:12d}, T(n-1,n)={t_penult:12d}, "
-              f"penalty={penalty:8d} ({pct:.2f}%)")
+
+    alphas = [4.5, 5, 6, 8, 10, 15, 20, 50]
+    depths = [valley_depth(a) for a in alphas]
+
+    for a, d in zip(alphas, depths):
+        print(f"α = {a:5.1f}: depth = {d:.6f}")
+
+    is_monotone = all(depths[i] <= depths[i+1] for i in range(len(depths)-1))
+    print(f"\nDepth is monotone increasing: {is_monotone}")
     print()
 
 
-def demo_valley_position():
-    """Demonstrate the valley position and its asymmetry."""
+def demo_epistemic_barrier():
+    """Demonstrate the universal epistemic barrier theorem."""
     print("=" * 60)
-    print("VALLEY POSITION ANALYSIS")
-    print("Valley peak occurs near k = 2n/3")
+    print("DEMO 4: Epistemic Barrier Universality")
     print("=" * 60)
-    for n in [6, 9, 12, 15, 30, 60, 100]:
-        v_pos, v_val = find_valley(n)
-        theoretical = 2 * n / 3
-        print(f"  n={n:3d}: valley at k={v_pos:3d} (theoretical 2n/3={theoretical:.1f}), "
-              f"value={v_val:10d}")
+    print("Testing with different suspicion functions S with S(0)=S(1)=0:")
+    print()
+
+    suspicion_fns = {
+        "r²(1-r)":        lambda r: r**2 * (1 - r),
+        "r³(1-r)²":       lambda r: r**3 * (1 - r)**2,
+        "r(1-r)":          lambda r: r * (1 - r),
+        "sin(πr)/π":       lambda r: math.sin(math.pi * r) / math.pi,
+        "r⁵(1-r)":        lambda r: r**5 * (1 - r),
+    }
+
+    for name, S in suspicion_fns.items():
+        rs = [i / 10000 for i in range(10001)]
+        M = max(S(r) for r in rs)
+        alpha_threshold = 1 / M if M > 1e-15 else float('inf')
+        alpha_test = 2 / M if M > 1e-15 else float('inf')
+        values = [r - alpha_test * S(r) for r in rs]
+        min_val = min(values)
+        print(f"S(r) = {name:15s}: M = {M:.6f}, threshold α = {alpha_threshold:.4f}, "
+              f"test α = {alpha_test:.4f}, min U = {min_val:+.6f} (< 0: {'YES' if min_val < 0 else 'NO'})")
+
+    print()
+    print("All suspicion functions exhibit the valley when αM > 1, confirming universality.")
     print()
 
 
-def demo_symmetric_vs_asymmetric():
-    """Demonstrate that symmetric kernel lacks the uncanny valley."""
+def demo_conjecture_test():
+    """Test the conjecture about the valley minimum location."""
     print("=" * 60)
-    print("SYMMETRIC vs. ASYMMETRIC KERNELS")
-    print("Symmetric: S_sym(1,n) = S_sym(n-1,n) (no valley)")
-    print("Asymmetric: S_asym(1,n) << S_asym(n-1,n) (valley!)")
+    print("DEMO 5: Conjecture — Valley Minimum Location")
     print("=" * 60)
-    for n in [5, 10, 20, 50]:
-        print(f"  n={n}:")
-        print(f"    Symmetric:  S(1,{n})={sym_suspicion(1,n):6d}, "
-              f"S({n-1},{n})={sym_suspicion(n-1,n):6d}, equal={sym_suspicion(1,n)==sym_suspicion(n-1,n)}")
-        print(f"    Asymmetric: S(1,{n})={asym_suspicion(1,n):6d}, "
-              f"S({n-1},{n})={asym_suspicion(n-1,n):6d}, ratio={asym_suspicion(n-1,n)/asym_suspicion(1,n):.1f}x")
+    print("Formula: r_min = (1 + sqrt(1 - 3/α)) / 3 for α > 4")
     print()
 
+    for alpha in [5, 8, 12, 20, 50, 100]:
+        # Numerical minimum
+        r_num, _ = find_valley_minimum(alpha, n_points=1000000)
+        # Predicted minimum (from derivative = 0)
+        discriminant = 1 - 3/alpha
+        if discriminant >= 0:
+            r_pred = (1 + math.sqrt(discriminant)) / 3
+        else:
+            r_pred = float('nan')
+        error = abs(r_num - r_pred)
+        print(f"α = {alpha:4d}: numerical r_min = {r_num:.6f}, "
+              f"predicted = {r_pred:.6f}, error = {error:.2e}")
 
-def demo_monotonicity_conjecture():
-    """Verify the valley monotonicity conjecture."""
-    print("=" * 60)
-    print("VALLEY MONOTONICITY CONJECTURE VERIFICATION")
-    print("=" * 60)
-    max_n = 1000
-    result = verify_monotonicity_conjecture(max_n)
-    print(f"  Verified for n = 3 to {max_n}: {'PASSED' if result else 'FAILED'}")
     print()
-
-
-def demo_full_suspicion_curve(n: int = 20):
-    """Print the full suspicion curve for a specific n."""
-    print("=" * 60)
-    print(f"FULL SUSPICION CURVE (n={n})")
-    print("=" * 60)
-    max_s = max(asym_suspicion(k, n) for k in range(n + 1))
-    for k in range(n + 1):
-        s = asym_suspicion(k, n)
-        bar_len = int(50 * s / max_s) if max_s > 0 else 0
-        bar = "█" * bar_len
-        marker = " ← VALLEY PEAK" if s == max_s else ""
-        marker = " ← COMPLETE (trust=max)" if k == n else marker
-        marker = " ← SKETCH" if k == 0 else marker
-        print(f"  k={k:2d}: {s:6d} |{bar}{marker}")
-    print()
+    print("The formula matches numerical results to high precision.")
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  MATHEMATICAL UNCANNY VALLEY THEORY — DEMONSTRATION")
-    print("=" * 60 + "\n")
-
-    demo_uncanny_valley_ordering()
-    demo_valley_depth_growth()
-    demo_trust_recovery()
-    demo_valley_position()
-    demo_symmetric_vs_asymmetric()
-    demo_monotonicity_conjecture()
-    demo_full_suspicion_curve(20)
-    demo_full_suspicion_curve(10)
+    demo_suspicion_peak()
+    demo_valley_existence()
+    demo_monotonicity()
+    demo_epistemic_barrier()
+    demo_conjecture_test()
 
 
+#!/usr/bin/env python3
 """
-Visualization: Suspicion Curves — Symmetric vs. Asymmetric Kernels
+visualize_valley.py — Visualization of the Mathematical Uncanny Valley
 
-Generates a side-by-side comparison of the symmetric and asymmetric
-suspicion kernels, showing how the asymmetric kernel shifts the valley
-toward the "almost complete" end of the rigor spectrum.
+Generates plots showing:
+1. The suspicion function and its peak
+2. Valley models for different α values
+3. The sharp threshold phase transition
 """
 
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
 
 
-def sym_suspicion(k: int, n: int) -> int:
-    if k > n:
-        return 0
-    return k * (n - k)
+def suspicion_fn(r):
+    return r**2 * (1 - r)
+
+def valley_model(alpha, r):
+    return r - alpha * suspicion_fn(r)
 
 
-def asym_suspicion(k: int, n: int) -> int:
-    if k > n:
-        return 0
-    return k * k * (n - k)
+def plot_suspicion_function():
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    r = np.linspace(0, 1, 1000)
+    s = suspicion_fn(r)
+
+    ax.plot(r, s, 'b-', linewidth=2, label=r'$S(r) = r^2(1-r)$')
+    ax.axhline(y=4/27, color='r', linestyle='--', alpha=0.7, label=r'$4/27 \approx 0.148$')
+    ax.plot(2/3, 4/27, 'ro', markersize=10, zorder=5, label=r'Peak at $r = 2/3$')
+
+    ax.set_xlabel('Rigor Level $r$', fontsize=12)
+    ax.set_ylabel('Suspicion $S(r)$', fontsize=12)
+    ax.set_title('The Suspicion Function', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(-0.01, 0.2)
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('plot_suspicion.png', dpi=150)
+    plt.close(fig)
+    print("Saved plot_suspicion.png")
 
 
-def main():
-    n = 30
-    ks = list(range(n + 1))
-    sym_vals = [sym_suspicion(k, n) for k in ks]
-    asym_vals = [asym_suspicion(k, n) for k in ks]
+def plot_valley_models():
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    r = np.linspace(0, 1, 1000)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    alphas = [0, 2, 4, 6, 10, 20]
+    colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(alphas)))
 
-    # Symmetric kernel
-    ax1.fill_between(ks, sym_vals, alpha=0.3, color='steelblue')
-    ax1.plot(ks, sym_vals, 'o-', color='steelblue', markersize=3, linewidth=1.5)
-    sym_max_k = max(range(n + 1), key=lambda k: sym_suspicion(k, n))
-    ax1.axvline(x=sym_max_k, color='red', linestyle='--', alpha=0.7, label=f'Peak at k={sym_max_k}')
-    ax1.axvline(x=n/2, color='gray', linestyle=':', alpha=0.5, label=f'n/2={n/2:.0f}')
-    ax1.set_title('Symmetric Suspicion: k(n−k)', fontsize=14, fontweight='bold')
-    ax1.set_xlabel('Verified steps (k)', fontsize=12)
-    ax1.set_ylabel('Suspicion', fontsize=12)
-    ax1.legend()
-    ax1.annotate('Sketch\n(accepted)', xy=(0, 0), fontsize=9, ha='center',
-                 xytext=(2, max(sym_vals)*0.3), arrowprops=dict(arrowstyle='->', color='green'))
-    ax1.annotate('Complete\n(trusted)', xy=(n, 0), fontsize=9, ha='center',
-                 xytext=(n-2, max(sym_vals)*0.3), arrowprops=dict(arrowstyle='->', color='green'))
+    for alpha, color in zip(alphas, colors):
+        u = valley_model(alpha, r)
+        style = '--' if alpha <= 4 else '-'
+        ax.plot(r, u, linestyle=style, color=color, linewidth=2,
+                label=rf'$\alpha = {alpha}$')
 
-    # Asymmetric kernel
-    ax2.fill_between(ks, asym_vals, alpha=0.3, color='crimson')
-    ax2.plot(ks, asym_vals, 'o-', color='crimson', markersize=3, linewidth=1.5)
-    asym_max_k = max(range(n + 1), key=lambda k: asym_suspicion(k, n))
-    ax2.axvline(x=asym_max_k, color='red', linestyle='--', alpha=0.7, label=f'Peak at k={asym_max_k}')
-    ax2.axvline(x=n/2, color='gray', linestyle=':', alpha=0.5, label=f'n/2={n/2:.0f}')
-    ax2.axvline(x=2*n/3, color='orange', linestyle='-.', alpha=0.7, label=f'2n/3={2*n/3:.1f}')
-    ax2.set_title('Asymmetric Suspicion: k²(n−k)', fontsize=14, fontweight='bold')
-    ax2.set_xlabel('Verified steps (k)', fontsize=12)
-    ax2.set_ylabel('Suspicion', fontsize=12)
-    ax2.legend()
+    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.5)
+    ax.fill_between(r, -1, 0, alpha=0.05, color='red')
+    ax.text(0.5, -0.15, 'Uncanny Valley\n(trust < 0)', ha='center',
+            fontsize=10, color='red', alpha=0.7)
 
-    # Annotate the uncanny valley
-    ax2.annotate('UNCANNY\nVALLEY', xy=(asym_max_k, max(asym_vals)),
-                 fontsize=11, ha='center', fontweight='bold', color='darkred',
-                 xytext=(asym_max_k, max(asym_vals)*1.1))
-
-    fig.suptitle('The Mathematical Uncanny Valley', fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_suspicion_curves.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_suspicion_curves.png")
+    ax.set_xlabel('Rigor Level $r$', fontsize=12)
+    ax.set_ylabel('Trust $U_\\alpha(r)$', fontsize=12)
+    ax.set_title('The Mathematical Uncanny Valley', fontsize=14)
+    ax.legend(fontsize=10, loc='upper left')
+    ax.set_xlim(0, 1)
+    ax.set_ylim(-0.5, 1.1)
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('plot_valley_models.png', dpi=150)
+    plt.close(fig)
+    print("Saved plot_valley_models.png")
 
 
-if __name__ == "__main__":
-    main()
+def plot_phase_transition():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
+    # Left: valley depth vs alpha
+    alphas = np.linspace(0, 20, 1000)
+    depths = []
+    for alpha in alphas:
+        rs = np.linspace(0, 1, 10000)
+        vals = valley_model(alpha, rs)
+        endpoint_min = min(valley_model(alpha, 0), valley_model(alpha, 1))
+        depth = max(0, endpoint_min - np.min(vals))
+        depths.append(depth)
 
-"""
-Visualization: Trust Landscape — How trust varies with proof length and completion
+    ax1.plot(alphas, depths, 'b-', linewidth=2)
+    ax1.axvline(x=4, color='r', linestyle='--', alpha=0.7, label=r'$\alpha = 4$ (threshold)')
+    ax1.set_xlabel(r'Suspicion Sensitivity $\alpha$', fontsize=12)
+    ax1.set_ylabel('Valley Depth', fontsize=12)
+    ax1.set_title('Phase Transition in Valley Depth', fontsize=14)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
 
-Generates a heatmap showing the trust level T(k,n) = n³ - k²(n-k) for varying
-proof lengths n and completion levels k, revealing the uncanny valley as a
-diagonal band of low trust.
-"""
+    # Right: valley minimum location vs alpha
+    alphas2 = np.linspace(4.01, 20, 500)
+    r_mins = []
+    for alpha in alphas2:
+        disc = 1 - 3/alpha
+        if disc >= 0:
+            r_mins.append((1 - np.sqrt(disc)) / 3)
+        else:
+            r_mins.append(np.nan)
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+    ax2.plot(alphas2, r_mins, 'g-', linewidth=2)
+    ax2.set_xlabel(r'Suspicion Sensitivity $\alpha$', fontsize=12)
+    ax2.set_ylabel(r'Valley Minimum Location $r_{\min}$', fontsize=12)
+    ax2.set_title('Valley Minimum Moves Toward 0 as α Increases', fontsize=14)
+    ax2.grid(True, alpha=0.3)
 
-
-def asym_suspicion(k: int, n: int) -> int:
-    if k > n or k < 0:
-        return 0
-    return k * k * (n - k)
-
-
-def proof_trust_normalized(k: int, n: int) -> float:
-    if n == 0:
-        return 1.0
-    return 1.0 - asym_suspicion(k, n) / (n ** 3) if n > 0 else 1.0
-
-
-def main():
-    max_n = 40
-    grid = np.zeros((max_n + 1, max_n + 1))
-
-    for n in range(1, max_n + 1):
-        for k in range(n + 1):
-            grid[n][k] = proof_trust_normalized(k, n)
-
-    fig, ax = plt.subplots(figsize=(10, 8))
-    im = ax.imshow(grid[1:, :], aspect='auto', origin='lower',
-                   cmap='RdYlGn', vmin=0.8, vmax=1.0,
-                   extent=[0, max_n, 1, max_n])
-
-    # Draw the valley ridge line (k = 2n/3)
-    ns = np.linspace(3, max_n, 100)
-    ax.plot(2 * ns / 3, ns, 'k--', linewidth=2, label='Valley ridge (k=2n/3)')
-    ax.plot(ns, ns, 'w-', linewidth=1.5, alpha=0.5, label='Full verification (k=n)')
-
-    ax.set_xlabel('Verified steps (k)', fontsize=13)
-    ax.set_ylabel('Proof length (n)', fontsize=13)
-    ax.set_title('Trust Landscape: The Uncanny Valley of Mathematics',
-                 fontsize=14, fontweight='bold')
-    ax.legend(loc='upper left', fontsize=10)
-
-    cbar = plt.colorbar(im, ax=ax, label='Normalized trust T(k,n)/n³')
-    cbar.set_label('Normalized trust', fontsize=12)
-
-    plt.tight_layout()
-    plt.savefig('viz_trust_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_trust_landscape.png")
+    fig.tight_layout()
+    fig.savefig('plot_phase_transition.png', dpi=150)
+    plt.close(fig)
+    print("Saved plot_phase_transition.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Valley Depth Growth — How the uncanny valley deepens with proof length
-
-Shows the quadratic growth of the valley depth (suspicion at k=n-1) as proof
-length increases, alongside the uncanny valley ratio.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def asym_suspicion(k: int, n: int) -> int:
-    if k > n or k < 0:
-        return 0
-    return k * k * (n - k)
-
-
-def main():
-    ns = list(range(2, 101))
-    depths = [(n - 1) ** 2 for n in ns]
-    ratios = [asym_suspicion(n - 1, n) / max(asym_suspicion(1, n), 1) for n in ns]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Valley depth
-    ax1.plot(ns, depths, 'b-', linewidth=2)
-    ax1.fill_between(ns, depths, alpha=0.2, color='blue')
-    ax1.set_xlabel('Proof length (n)', fontsize=12)
-    ax1.set_ylabel('Valley depth: (n−1)²', fontsize=12)
-    ax1.set_title('Valley Depth Grows Quadratically', fontsize=14, fontweight='bold')
-
-    # Annotate key points
-    for n_mark in [10, 50, 100]:
-        d = (n_mark - 1) ** 2
-        ax1.annotate(f'n={n_mark}\ndepth={d}', xy=(n_mark, d),
-                     xytext=(n_mark + 5, d - 500),
-                     arrowprops=dict(arrowstyle='->', color='black'),
-                     fontsize=9)
-
-    # Uncanny valley ratio
-    ax2.plot(ns, ratios, 'r-', linewidth=2)
-    ax2.fill_between(ns, ratios, alpha=0.2, color='red')
-    ax2.set_xlabel('Proof length (n)', fontsize=12)
-    ax2.set_ylabel('Ratio: S(n−1,n) / S(1,n)', fontsize=12)
-    ax2.set_title('Uncanny Valley Ratio = n−1', fontsize=14, fontweight='bold')
-    ax2.set_yscale('linear')
-
-    # The ratio equals n-1 exactly
-    theoretical = [n - 1 for n in ns]
-    ax2.plot(ns, theoretical, 'k--', alpha=0.5, label='Theoretical: n−1')
-    ax2.legend(fontsize=11)
-
-    fig.suptitle('The Mathematical Uncanny Valley Deepens with Proof Length',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_valley_depth.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_valley_depth.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_suspicion_function()
+    plot_valley_models()
+    plot_phase_transition()
+    print("\nAll plots saved.")
