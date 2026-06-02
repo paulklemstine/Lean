@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "08e8b163",
     "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
     "pkg_num": 167,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71007,
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
@@ -5243,8 +5243,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "negative_dimensional_topology_what_lives_in_dimens",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71007,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
