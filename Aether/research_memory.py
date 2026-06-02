@@ -6,6 +6,7 @@ and guide future research toward novel ground.
 """
 
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -1015,6 +1016,73 @@ class FutureDirectionsManager:
                 return d
         return None
 
+    @staticmethod
+    def _tokenize(text: str) -> Set[str]:
+        """Extract meaningful tokens from text for Jaccard similarity.
+
+        Filters stop words and very short tokens, lowercases.
+        """
+        stop_words = {
+            "the", "and", "or", "for", "in", "to", "is", "are", "by", "with",
+            "from", "that", "this", "it", "as", "be", "can", "we", "has", "had",
+            "was", "were", "been", "have", "will", "would", "could", "should",
+            "may", "might", "shall", "not", "but", "all", "any", "each", "every",
+            "both", "few", "more", "most", "other", "some", "such", "than", "too",
+            "very", "just", "also", "then", "when", "where", "how", "what", "which",
+            "who", "why", "if", "into", "over", "under", "about", "between",
+            "through", "during", "before", "after", "above", "below", "only",
+            "own", "there", "their", "they", "them", "these", "those",
+        }
+        words = re.findall(r'[a-zA-Z]{4,}', text.lower())
+        return {w for w in words if w not in stop_words}
+
+    def _estimate_direction_similarity(
+        self, direction: FutureDirection, recent_directions: List[FutureDirection]
+    ) -> float:
+        """Compute max Jaccard similarity between a direction and recent completed ones.
+
+        Feature set per direction: domains ∪ tokenized(proof_strategy)
+        ∪ tokenized(description[:100]) ∪ {ambition_level}
+
+        Returns the highest similarity score (0-1) against any recent direction.
+        """
+        import re as _re
+
+        # Build feature set for the candidate direction
+        features = set(direction.domains)
+        if direction.proof_strategy:
+            features |= self._tokenize(direction.proof_strategy)
+        if direction.description:
+            features |= self._tokenize(direction.description[:100])
+        if direction.ambition_level:
+            features.add(direction.ambition_level)
+
+        if not features:
+            return 0.0
+
+        max_sim = 0.0
+        for recent in recent_directions:
+            recent_features = set(recent.domains)
+            if recent.proof_strategy:
+                recent_features |= self._tokenize(recent.proof_strategy)
+            if recent.description:
+                recent_features |= self._tokenize(recent.description[:100])
+            if recent.ambition_level:
+                recent_features.add(recent.ambition_level)
+
+            if not recent_features:
+                continue
+
+            intersection = len(features & recent_features)
+            union = len(features | recent_features)
+            if union == 0:
+                continue
+            sim = intersection / union
+            if sim > max_sim:
+                max_sim = sim
+
+        return max_sim
+
     def get_stats(self) -> dict:
         """Return stats about direction consumption."""
         from collections import Counter
@@ -1274,19 +1342,15 @@ class FutureDirectionsManager:
         # novelty_bonus: wild/frontier directions tagged "Novelty" get a boost
         novelty_bonus = 0.10 if "Novelty" in direction.domains else 0.0
 
-        # anti-repetition penalty: directions that repeat recent theme keywords get penalized
-        # For each keyword in the direction that appears 3+ times in recent completions,
-        # apply a -0.03 penalty (capped at -0.15 total)
+        # anti-repetition penalty: Jaccard similarity against recent completed directions
+        # Higher overlap with recently completed work = more redundant = penalized
+        # Feature set: domains ∪ tokenized(proof_strategy) ∪ tokenized(description[:100]) ∪ {ambition_level}
         repetition_penalty = 0.0
-        if self._recent_theme_keywords:
-            title_words = set(w.lower().strip(".,;:!?()[]") for w in direction.title.split() if len(w) > 4)
-            desc_words = set(w.lower().strip(".,;:!?()[]") for w in direction.description.split() if len(w) > 5)
-            direction_keywords = title_words | desc_words
-            for kw in direction_keywords:
-                kw_count = self._recent_theme_keywords.get(kw, 0)
-                if kw_count >= 3:
-                    repetition_penalty -= 0.03
-            repetition_penalty = max(repetition_penalty, -0.15)
+        recent_completed = [d for d in self._directions if d.status == "completed"][-20:]
+        if recent_completed:
+            max_sim = self._estimate_direction_similarity(direction, recent_completed)
+            repetition_penalty = -0.05 * max_sim  # up to -0.20 for very similar
+            repetition_penalty = max(repetition_penalty, -0.20)
 
         # ArXiv directions earn their priority through quality scoring, not a flat boost.
         # The quality score already accounts for source_bonus, novelty, description depth, etc.

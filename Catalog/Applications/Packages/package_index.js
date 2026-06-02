@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2c089df6",
     "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
     "pkg_num": 259,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7139942857142858,
     "title": "Novikov Self-Consistency Principle as a Fixed-Point Theorem"
   },
   {
@@ -8329,8 +8329,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "time_travel_consistency_novikovs_principle_as_a_fi",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7139942857142858,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Novikov Self-Consistency Principle as a Fixed-Point Theorem"
     }

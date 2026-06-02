@@ -798,6 +798,47 @@ class CatalogAnalyzer:
         missing.sort(key=lambda x: -x[2])
         return missing[:limit]
 
+    def estimate_all_domain_costs(self) -> Dict[str, Dict[str, Any]]:
+        """Estimate proof cost per domain from catalog statistics.
+
+        Returns dict: {domain: {avg_proof_length, sorry_density, theorem_count, cost_score}}
+        where cost_score is 0-1 (higher = more expensive to prove in).
+
+        Cost formula: (avg_proof_length / 200) * (1 + sorry_density * 5)
+        Normalized and clamped to [0, 1].
+        """
+        if self._summaries is None:
+            self.scan()
+
+        costs = {}
+        for domain, files in self._domain_index.items():
+            total_lines = sum(f.size_lines for f in files)
+            total_sorries = sum(f.sorry_count for f in files)
+            total_decls = sum(len(f.declarations) for f in files)
+            file_count = len(files)
+
+            avg_proof_length = total_lines / max(file_count, 1)
+            sorry_density = total_sorries / max(total_decls, 1)
+
+            # Count theorems specifically (not defs/structures)
+            theorem_count = sum(
+                1 for f in files for d in f.declarations
+                if any(kw in d.lower() for kw in ('theorem', 'lemma'))
+            )
+
+            # Cost score: longer proofs and more sorries = more expensive
+            raw_cost = (avg_proof_length / 200.0) * (1.0 + sorry_density * 5.0)
+            cost_score = min(1.0, max(0.0, raw_cost))
+
+            costs[domain] = {
+                "avg_proof_length": round(avg_proof_length, 1),
+                "sorry_density": round(sorry_density, 4),
+                "theorem_count": theorem_count,
+                "cost_score": round(cost_score, 3),
+            }
+
+        return costs
+
     def find_under_explored_domains(self) -> List[Dict]:
         """Find domains with many declarations but few deep theorems.
 

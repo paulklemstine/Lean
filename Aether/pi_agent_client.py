@@ -1632,6 +1632,7 @@ class PiAgentClient:
         recent_successes: Optional[List[Dict]] = None,
         recent_failures: Optional[List[Dict]] = None,
         theorem_context: str = "",
+        insight_extractor=None,
     ) -> str:
         """Write a streamlined Aristotle prompt (5-10K chars).
 
@@ -1740,6 +1741,13 @@ class PiAgentClient:
         if theorem_context:
             theorem_section = f"\n### Previously Proved Theorems\n{theorem_context[:1000]}\n"
 
+        # Insight extractor: guardrails and strategy hints from Aether's own theorems
+        guardrails_section = ""
+        strategy_hints_section = ""
+        if insight_extractor:
+            guardrails_section = insight_extractor.build_guardrails_section(concept)
+            strategy_hints_section = insight_extractor.build_strategy_hints_section(concept)
+
         # Catalog references — prioritize FINAL (vetted, high-quality) files
         catalog_section = ""
         if ref_section:
@@ -1788,6 +1796,8 @@ class PiAgentClient:
             ### Existing Verified Theorems
             {focused_context}
             {theorem_section}
+            {guardrails_section}
+            {strategy_hints_section}
             {catalog_section}
             ---
 
@@ -1892,11 +1902,13 @@ class PiAgentClient:
         if len(direct_prompt) > PROMPT_BUDGET:
             original_len = len(direct_prompt)
             # Progressively truncate lower-priority sections
-            # Priority: assignment > mode > depth > focused_context > refs > breakthrough > theorems
+            # Priority: assignment > mode > depth > guardrails > focused_context > refs > breakthrough > theorems
             sections = [
                 ("### Catalog Breakthrough Analysis\n", 2000),
                 ("### Key Theorems Available", 2000),
                 ("### Existing Verified Theorems\n", 2000),
+                ("## Recommended Proof Strategies", 1000),
+                ("## Known Barriers", 3000),
                 ("### Catalog Reference Files", 8000),
             ]
             for marker, max_len in sections:
