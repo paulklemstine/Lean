@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "901858ec",
     "filename": "fractal_dimension_of_proof_search_how_hard_is_it_t.json",
     "pkg_num": 187,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6924357142857143,
     "title": "Fractal Dimension of Proof Search"
   },
   {
@@ -5921,8 +5921,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fractal_dimension_of_proof_search_how_hard_is_it_t",
       "primary_domain": "Speculative",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6924357142857143,
+      "quality": "partial",
       "shape": "pentagonal_prism",
       "title": "Fractal Dimension of Proof Search"
     }
