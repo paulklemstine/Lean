@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "317899e2",
     "filename": "the_periodic_table_of_finite_groups_chemistry_meet.json",
     "pkg_num": 252,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6803615060240964,
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
@@ -8078,8 +8078,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_periodic_table_of_finite_groups_chemistry_meet",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6803615060240964,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
     }
