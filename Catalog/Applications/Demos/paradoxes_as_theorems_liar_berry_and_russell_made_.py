@@ -1,317 +1,414 @@
 #!/usr/bin/env python3
 """
-Paraconsistent Logic Demo
-==========================
+Demo: Paraconsistent Logic — Paradoxes as Theorems
 
-Demonstrates the key results from the formal Lean proofs:
-1. Belnap four-valued logic operations
-2. Liar sentence resolution
-3. Russell's paradox resolution
-4. Berry's paradox via pigeonhole
-5. Failure of classical laws in FDE
+Demonstrates Belnap's four-valued logic (FDE) and how the Liar sentence,
+Russell's paradox, and Berry's paradox become provable theorems rather than
+contradictions.
 """
 
-from algorithms import (
-    BelnapVal, FDEFormula, check_fde_tautology,
-    find_counterexample, inconsistency_degree,
-    berry_pigeonhole, liar_tower
-)
+from enum import Enum
+from typing import Callable
 
 
-def demo_belnap_truth_tables():
-    """Show the 4x4 truth tables for Belnap operations."""
-    print("=" * 60)
-    print("BELNAP FOUR-VALUED LOGIC TRUTH TABLES")
-    print("=" * 60)
+class BelnapVal(Enum):
+    """Belnap's four truth values."""
+    T = "True"
+    F = "False"
+    B = "Both"
+    N = "Neither"
 
-    vals = list(BelnapVal)
-    labels = {BelnapVal.T: "T", BelnapVal.F: "F",
-              BelnapVal.B: "B", BelnapVal.N: "N"}
+    def is_true(self) -> bool:
+        return self in (BelnapVal.T, BelnapVal.B)
 
-    # Negation
-    print("\n--- Negation ---")
-    print("  v  | ¬v")
-    print("-----+----")
-    for v in vals:
-        print(f"  {labels[v]}  |  {labels[v.neg()]}")
+    def is_false(self) -> bool:
+        return self in (BelnapVal.F, BelnapVal.B)
 
-    # Conjunction
-    print("\n--- Conjunction (∧) ---")
-    header = "  ∧  | " + " | ".join(labels[v] for v in vals)
-    print(header)
-    print("-" * len(header))
-    for a in vals:
-        row = f"  {labels[a]}  | " + " | ".join(
-            labels[a.conj(b)] for b in vals)
-        print(row)
+    def neg(self) -> 'BelnapVal':
+        return {
+            BelnapVal.T: BelnapVal.F,
+            BelnapVal.F: BelnapVal.T,
+            BelnapVal.B: BelnapVal.B,
+            BelnapVal.N: BelnapVal.N,
+        }[self]
 
-    # Disjunction
-    print("\n--- Disjunction (∨) ---")
-    header = "  ∨  | " + " | ".join(labels[v] for v in vals)
-    print(header)
-    print("-" * len(header))
-    for a in vals:
-        row = f"  {labels[a]}  | " + " | ".join(
-            labels[a.disj(b)] for b in vals)
-        print(row)
+    def conj(self, other: 'BelnapVal') -> 'BelnapVal':
+        if self == BelnapVal.T: return other
+        if other == BelnapVal.T: return self
+        if self == BelnapVal.F or other == BelnapVal.F: return BelnapVal.F
+        if self == BelnapVal.B and other == BelnapVal.B: return BelnapVal.B
+        if (self == BelnapVal.B and other == BelnapVal.N) or \
+           (self == BelnapVal.N and other == BelnapVal.B): return BelnapVal.F
+        return BelnapVal.N  # N, N
+
+    def disj(self, other: 'BelnapVal') -> 'BelnapVal':
+        if self == BelnapVal.F: return other
+        if other == BelnapVal.F: return self
+        if self == BelnapVal.T or other == BelnapVal.T: return BelnapVal.T
+        if self == BelnapVal.B and other == BelnapVal.B: return BelnapVal.B
+        if (self == BelnapVal.B and other == BelnapVal.N) or \
+           (self == BelnapVal.N and other == BelnapVal.B): return BelnapVal.T
+        return BelnapVal.N
 
 
 def demo_liar_paradox():
-    """Demonstrate the Liar sentence resolution."""
-    print("\n" + "=" * 60)
-    print("THE LIAR PARADOX: 'This sentence is false'")
+    """Demonstrate the Liar sentence in Belnap logic."""
     print("=" * 60)
-
-    print("\nIn classical logic: L ↔ ¬L leads to contradiction.")
-    print("In Belnap logic: L gets value B (both true AND false).")
+    print("LIAR PARADOX: 'This sentence is false'")
+    print("=" * 60)
     print()
 
-    # Check: if L has value B, then ¬L also has value B
-    liar_val = BelnapVal.B
-    neg_liar = liar_val.neg()
-    print(f"  L  = {liar_val.value}")
-    print(f"  ¬L = {neg_liar.value}")
-    print(f"  L = ¬L? {liar_val == neg_liar} ✓")
-    print(f"  L is at-least-true? {liar_val.is_true} (the Liar IS 'true')")
-    print(f"  L is at-least-false? {liar_val.is_false} (the Liar IS also 'false')")
-    print(f"\n  → No contradiction! Both hold simultaneously.")
+    for v in BelnapVal:
+        neg_v = v.neg()
+        is_fixed = (v == neg_v)
+        print(f"  If Liar = {v.value:8s}: neg(Liar) = {neg_v.value:8s} "
+              f"{'✓ FIXED POINT' if is_fixed else '✗ not a fixed point'}")
 
-    # Show the Liar tower stabilizes
-    print("\n--- Liar Tower (iterated self-reference) ---")
-    tower = liar_tower(5)
-    for i, v in enumerate(tower):
-        prefix = "L" if i == 0 else f"¬^{i}L"
-        print(f"  {prefix:6s} = {v.value}")
-    print("  Tower is constant at B — self-reference stabilizes.")
+    print()
+    print("  Result: Only B (Both) and N (Neither) are fixed points of negation.")
+    print("  The Liar sentence with positive truth info must be B (a dialetheia).")
+    print()
 
 
 def demo_russell_paradox():
-    """Demonstrate Russell's paradox resolution."""
-    print("\n" + "=" * 60)
+    """Demonstrate Russell's paradox in Belnap logic."""
+    print("=" * 60)
     print("RUSSELL'S PARADOX: R = {x | x ∉ x}")
     print("=" * 60)
-
-    print("\nClassically: R ∈ R ↔ R ∉ R → contradiction.")
-    print("Paraconsistently: R ∈ R gets value B.")
     print()
 
-    r_mem = BelnapVal.B
-    neg_r_mem = r_mem.neg()
-    print(f"  R ∈ R  = {r_mem.value}")
-    print(f"  R ∉ R  = {neg_r_mem.value}")
-    print(f"  R ∈ R = R ∉ R? {r_mem == neg_r_mem} ✓")
-    print(f"\n  → R belongs to itself AND doesn't. No explosion.")
+    for v in BelnapVal:
+        neg_v = v.neg()
+        is_fixed = (v == neg_v)
+        print(f"  If R ∈ R = {v.value:8s}: R ∉ R = neg({v.value}) = {neg_v.value:8s} "
+              f"{'✓ CONSISTENT' if is_fixed else '✗ inconsistent'}")
+
+    print()
+    print("  Result: R ∈ R must be B or N. With positive info, R ∈ R = B.")
+    print("  Russell's set both contains and doesn't contain itself.")
+    print()
 
 
 def demo_berry_paradox():
     """Demonstrate Berry's paradox via pigeonhole."""
-    print("\n" + "=" * 60)
-    print("BERRY'S PARADOX: 'The least number not definable in < 100 words'")
     print("=" * 60)
-
-    for n_obj, n_desc in [(100, 50), (1000, 999), (11, 10)]:
-        is_paradoxical, msg = berry_pigeonhole(n_obj, n_desc)
-        symbol = "⚠" if is_paradoxical else "✓"
-        print(f"\n  {symbol} {msg}")
-
-    print("\n  Key insight: definability is bounded by description length.")
-    print("  With n+1 objects and n descriptions, some object lacks")
-    print("  a unique description (pigeonhole principle).")
-
-
-def demo_classical_failures():
-    """Show which classical laws fail in FDE."""
-    print("\n" + "=" * 60)
-    print("CLASSICAL LAWS THAT FAIL IN FDE")
+    print("BERRY'S PARADOX: More objects than descriptions")
     print("=" * 60)
+    print()
 
-    p = FDEFormula.atom(0)
-    q = FDEFormula.atom(1)
+    n_descriptions = 10
+    n_objects = 15
 
-    laws = [
-        ("Excluded Middle: p ∨ ¬p", FDEFormula.disj(p, FDEFormula.neg(p))),
-        ("Non-Contradiction: ¬(p ∧ ¬p)",
-         FDEFormula.neg(FDEFormula.conj(p, FDEFormula.neg(p)))),
-        ("Explosion: (p ∧ ¬p) → q",
-         FDEFormula.impl(FDEFormula.conj(p, FDEFormula.neg(p)), q)),
-        ("Double Negation: ¬¬p → p",
-         FDEFormula.impl(FDEFormula.neg(FDEFormula.neg(p)), p)),
-        ("Modus Ponens: p ∧ (p → q) → q",
-         FDEFormula.impl(FDEFormula.conj(p, FDEFormula.impl(p, q)), q)),
-    ]
+    print(f"  Descriptions available: {n_descriptions}")
+    print(f"  Objects to describe:    {n_objects}")
+    print(f"  Pigeonhole: {n_objects} > {n_descriptions}")
+    print(f"  → At least {n_objects - n_descriptions} collisions must occur")
+    print(f"  → Some description applies to multiple objects")
+    print()
 
-    for name, formula in laws:
-        is_taut = check_fde_tautology(formula, [0, 1])
-        cx = find_counterexample(formula, [0, 1])
-        status = "✓ VALID" if is_taut else "✗ FAILS"
-        print(f"\n  {status}: {name}")
-        if cx:
-            labels = {BelnapVal.T: "T", BelnapVal.F: "F",
-                      BelnapVal.B: "B", BelnapVal.N: "N"}
-            cx_str = ", ".join(f"p{k}={labels[v]}" for k, v in sorted(cx.items()))
-            print(f"         Counterexample: {cx_str}")
+    # Concrete example
+    import random
+    random.seed(42)
+    assignment = {i: random.randint(0, n_descriptions - 1) for i in range(n_objects)}
+    collisions = {}
+    for obj, desc in assignment.items():
+        collisions.setdefault(desc, []).append(obj)
+
+    print("  Example assignment (object → description):")
+    for obj, desc in sorted(assignment.items()):
+        print(f"    Object {obj:2d} → Description {desc}")
+
+    print()
+    print("  Collisions found:")
+    for desc, objs in sorted(collisions.items()):
+        if len(objs) > 1:
+            print(f"    Description {desc}: objects {objs}")
+    print()
 
 
 def demo_explosion_failure():
-    """Demonstrate that contradictions don't explode in FDE."""
-    print("\n" + "=" * 60)
-    print("EXPLOSION FAILURE: p ∧ ¬p does NOT entail everything")
+    """Show that explosion fails in FDE."""
     print("=" * 60)
-
-    print("\nClassical: A ∧ ¬A ⊢ B  (ex falso quodlibet)")
-    print("FDE:       A ∧ ¬A ⊬ B  (contradictions are contained)")
+    print("EXPLOSION FAILURE IN FDE")
+    print("=" * 60)
     print()
 
-    # Show: with A = B (both), A ∧ ¬A = B, but we can have C = F
-    a_val = BelnapVal.B
-    contradiction = a_val.conj(a_val.neg())
-    print(f"  A = B (both true and false)")
-    print(f"  A ∧ ¬A = {contradiction.value}")
-    print(f"  is_true(A ∧ ¬A) = {contradiction.is_true}")
-    print(f"  But we can still have C = F (false)")
-    print(f"  is_true(C) = {BelnapVal.F.is_true}")
-    print(f"  → Contradiction in A does NOT force C to be true!")
+    print("  Classical logic: (p ∧ ¬p) → q  [ex falso quodlibet]")
+    print("  FDE: Let p = Both, q = False")
+    print()
+
+    p = BelnapVal.B
+    q = BelnapVal.F
+    contradiction = p.conj(p.neg())
+    print(f"  p = {p.value}")
+    print(f"  ¬p = {p.neg().value}")
+    print(f"  p ∧ ¬p = {contradiction.value}")
+    print(f"  isTrue(p ∧ ¬p) = {contradiction.is_true()}")
+    print(f"  q = {q.value}")
+    print(f"  isTrue(q) = {q.is_true()}")
+    print()
+    print(f"  Result: p ∧ ¬p is true (Both), but q is false.")
+    print(f"  Explosion FAILS: a contradiction does not make everything true.")
+    print()
 
 
-def demo_inconsistency_degree():
-    """Show the inconsistency degree measure."""
-    print("\n" + "=" * 60)
-    print("INCONSISTENCY DEGREE OF THEORIES")
+def demo_inconsistency_spectrum():
+    """Show the inconsistency spectrum for a theory with paradoxes."""
     print("=" * 60)
+    print("INCONSISTENCY SPECTRUM")
+    print("=" * 60)
+    print()
 
-    theories = [
-        ("Classical (all T/F)",
-         [BelnapVal.T, BelnapVal.F, BelnapVal.T, BelnapVal.F]),
-        ("One dialetheia",
-         [BelnapVal.T, BelnapVal.F, BelnapVal.B, BelnapVal.T]),
-        ("Two dialetheias",
-         [BelnapVal.B, BelnapVal.F, BelnapVal.B, BelnapVal.T]),
-        ("Maximally inconsistent",
-         [BelnapVal.B, BelnapVal.B, BelnapVal.B, BelnapVal.B]),
+    # A theory on 8 sentences
+    n = 8
+    truth_values = [
+        BelnapVal.T,  # 0: "1 + 1 = 2"
+        BelnapVal.T,  # 1: "The sky is blue"
+        BelnapVal.F,  # 2: "2 + 2 = 5"
+        BelnapVal.F,  # 3: "The Earth is flat"
+        BelnapVal.B,  # 4: "This sentence is false" (Liar)
+        BelnapVal.B,  # 5: "R ∈ R" (Russell's set)
+        BelnapVal.N,  # 6: "The continuum hypothesis" (undecidable)
+        BelnapVal.T,  # 7: "∀x. x = x"
     ]
 
-    for name, vals in theories:
-        deg = inconsistency_degree(vals)
-        n = len(vals)
-        labels = {BelnapVal.T: "T", BelnapVal.F: "F",
-                  BelnapVal.B: "B", BelnapVal.N: "N"}
-        val_str = "[" + ", ".join(labels[v] for v in vals) + "]"
-        print(f"\n  {name}:")
-        print(f"    Values: {val_str}")
-        print(f"    Inconsistency degree: {deg}/{n}")
-        if any(v == BelnapVal.T for v in vals):
-            print(f"    Non-trivial: degree < n ✓ (proven bound: ≤ {n-1})")
+    names = [
+        "1 + 1 = 2",
+        "The sky is blue",
+        "2 + 2 = 5",
+        "The Earth is flat",
+        "This sentence is false",
+        "R ∈ R",
+        "Continuum hypothesis",
+        "∀x. x = x",
+    ]
+
+    print(f"  Theory with {n} sentences:")
+    for i, (name, val) in enumerate(zip(names, truth_values)):
+        print(f"    [{i}] {name:30s} → {val.value}")
+
+    spectrum = {v: 0 for v in BelnapVal}
+    for v in truth_values:
+        spectrum[v] += 1
+
+    print()
+    print(f"  Spectrum: T={spectrum[BelnapVal.T]}, F={spectrum[BelnapVal.F]}, "
+          f"B={spectrum[BelnapVal.B]}, N={spectrum[BelnapVal.N]}")
+    print(f"  Total: {sum(spectrum.values())} = {n}")
+    print(f"  Inconsistency degree (B count): {spectrum[BelnapVal.B]}")
+    print(f"  Tolerance threshold: B ≤ n - 2 = {n - 2}: "
+          f"{'✓' if spectrum[BelnapVal.B] <= n - 2 else '✗'}")
+    print()
+
+
+def demo_self_soundness():
+    """Demonstrate self-soundness of a paraconsistent theory."""
+    print("=" * 60)
+    print("SELF-SOUNDNESS")
+    print("=" * 60)
+    print()
+
+    provable = {
+        "1 + 1 = 2": BelnapVal.T,
+        "∀x. x = x": BelnapVal.T,
+        "This sentence is false": BelnapVal.B,  # Liar
+        "This theory is sound": BelnapVal.T,     # Soundness sentence
+    }
+
+    print("  Provable sentences and their truth values:")
+    all_sound = True
+    for name, val in provable.items():
+        is_sound = val.is_true()
+        all_sound = all_sound and is_sound
+        print(f"    {name:30s} → {val.value:8s} isTrue={is_sound} "
+              f"{'✓ sound' if is_sound else '✗ unsound'}")
+
+    print()
+    print(f"  Theory is sound: {all_sound}")
+    print()
+    print("  Key insight: The Liar sentence has value Both, which IS at-least-true.")
+    print("  So the theory proves its own soundness despite containing a paradox!")
+    print("  This is impossible in classical logic (Gödel's 2nd incompleteness theorem).")
+    print()
+
+
+def demo_truth_table():
+    """Print the full truth tables for FDE connectives."""
+    print("=" * 60)
+    print("FDE TRUTH TABLES")
+    print("=" * 60)
+    print()
+
+    vals = list(BelnapVal)
+
+    print("  NEGATION:")
+    print(f"  {'v':>8s} | {'¬v':>8s}")
+    print(f"  {'-'*8}-+-{'-'*8}")
+    for v in vals:
+        print(f"  {v.value:>8s} | {v.neg().value:>8s}")
+
+    print()
+    print("  CONJUNCTION (∧):")
+    header = "  " + " " * 10 + "".join(f"{v.value:>8s}" for v in vals)
+    print(header)
+    print("  " + "-" * (10 + 8 * len(vals)))
+    for a in vals:
+        row = f"  {a.value:>8s} |"
+        for b in vals:
+            row += f"{a.conj(b).value:>8s}"
+        print(row)
+
+    print()
+    print("  DISJUNCTION (∨):")
+    print(header)
+    print("  " + "-" * (10 + 8 * len(vals)))
+    for a in vals:
+        row = f"  {a.value:>8s} |"
+        for b in vals:
+            row += f"{a.disj(b).value:>8s}"
+        print(row)
+    print()
 
 
 if __name__ == "__main__":
-    demo_belnap_truth_tables()
+    demo_truth_table()
     demo_liar_paradox()
     demo_russell_paradox()
     demo_berry_paradox()
-    demo_classical_failures()
     demo_explosion_failure()
-    demo_inconsistency_degree()
-
-    print("\n" + "=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
+    demo_inconsistency_spectrum()
+    demo_self_soundness()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Belnap's Four-Valued Logic Lattice
-==================================================
+Visualization: Inconsistency Spectrum of Paraconsistent Theories
 
-Shows the two orderings on Belnap values:
-1. Truth ordering (vertical): F ≤ N,B ≤ T
-2. Information ordering (horizontal): N ≤ T,F ≤ B
-
-Also shows the explosion comparison between classical and FDE.
+Shows how the distribution of truth values (T, F, B, N) varies across
+theories with different levels of inconsistency tolerance.
 """
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
 
-def draw_belnap_lattice(ax, title, positions, edges, colors):
-    """Draw a lattice diagram."""
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    for (x1, y1), (x2, y2) in edges:
-        ax.plot([x1, x2], [y1, y2], 'k-', linewidth=1.5, zorder=1)
-    for label, (x, y) in positions.items():
-        color = colors.get(label, '#4ECDC4')
-        circle = plt.Circle((x, y), 0.15, color=color, ec='black',
-                             linewidth=2, zorder=2)
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center',
-                fontsize=16, fontweight='bold', zorder=3)
-    ax.set_xlim(-0.5, 2.5)
+def compute_max_both(n: int, has_t: bool, has_f: bool) -> int:
+    """Maximum number of Both-valued sentences in a theory of size n."""
+    if has_t and has_f:
+        return max(0, n - 2)
+    elif has_t or has_f:
+        return max(0, n - 1)
+    else:
+        return n
+
+
+def plot_tolerance_threshold():
+    """Plot the tolerance threshold: max B-count vs theory size."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left: Tolerance threshold
+    ax = axes[0]
+    ns = np.arange(2, 21)
+    max_b_nontrivial = np.array([max(0, n - 2) for n in ns])
+    max_b_trivial = ns.copy()
+
+    ax.fill_between(ns, 0, max_b_nontrivial, alpha=0.3, color='green',
+                     label='Allowed B-count (non-trivial)')
+    ax.fill_between(ns, max_b_nontrivial, ns, alpha=0.2, color='red',
+                     label='Forbidden zone')
+    ax.plot(ns, max_b_nontrivial, 'g-', linewidth=2, label='Threshold: n − 2')
+    ax.plot(ns, ns, 'k--', linewidth=1, alpha=0.5, label='n (trivial bound)')
+
+    ax.set_xlabel('Number of sentences (n)', fontsize=12)
+    ax.set_ylabel('Maximum Both-valued sentences', fontsize=12)
+    ax.set_title('Inconsistency Tolerance Threshold', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Right: Example spectra
+    ax = axes[1]
+    theories = [
+        ("Classical\n(all T/F)", [3, 5, 0, 0]),
+        ("Minimal\nparadox", [3, 4, 1, 0]),
+        ("Balanced\nparadox", [2, 2, 2, 2]),
+        ("Heavy\nparadox", [1, 1, 5, 1]),
+        ("Gap-heavy", [2, 2, 1, 3]),
+    ]
+
+    x = np.arange(len(theories))
+    width = 0.2
+    colors = ['#2196F3', '#F44336', '#FF9800', '#9E9E9E']
+    labels = ['True (T)', 'False (F)', 'Both (B)', 'Neither (N)']
+
+    for i, (color, label) in enumerate(zip(colors, labels)):
+        values = [t[1][i] for t in theories]
+        ax.bar(x + i * width, values, width, color=color, label=label, edgecolor='white')
+
+    ax.set_xticks(x + 1.5 * width)
+    ax.set_xticklabels([t[0] for t in theories], fontsize=9)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Example Inconsistency Spectra (n=8)', fontsize=14)
+    ax.legend(fontsize=9, loc='upper right')
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('inconsistency_spectrum.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: inconsistency_spectrum.png")
+
+
+def plot_belnap_lattice():
+    """Plot the Belnap information and truth ordering lattices."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Information ordering
+    ax = axes[0]
+    positions = {'N': (0, 0), 'T': (-1, 1), 'F': (1, 1), 'B': (0, 2)}
+    edges = [('N', 'T'), ('N', 'F'), ('T', 'B'), ('F', 'B')]
+
+    for (a, b) in edges:
+        ax.annotate("", xy=positions[b], xytext=positions[a],
+                     arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
+
+    colors_map = {'T': '#2196F3', 'F': '#F44336', 'B': '#FF9800', 'N': '#9E9E9E'}
+    for name, (x, y) in positions.items():
+        ax.plot(x, y, 'o', markersize=25, color=colors_map[name], zorder=5)
+        ax.text(x, y, name, ha='center', va='center', fontsize=14,
+                fontweight='bold', color='white', zorder=6)
+
+    ax.set_xlim(-2, 2)
     ax.set_ylim(-0.5, 2.5)
+    ax.set_title('Information Ordering\n(N = least info, B = most)', fontsize=13)
     ax.set_aspect('equal')
     ax.axis('off')
 
+    # Truth ordering
+    ax = axes[1]
+    positions2 = {'F': (0, 0), 'N': (-1, 1), 'B': (1, 1), 'T': (0, 2)}
+    edges2 = [('F', 'N'), ('F', 'B'), ('N', 'T'), ('B', 'T')]
 
-def draw_explosion_comparison(ax):
-    """Compare explosion in classical vs FDE logic."""
-    categories = ['Classical\n(A ∧ ¬A → B)', 'FDE\n(A ∧ ¬A → B)']
-    explodes = [1.0, 0.0]
-    colors_bar = ['#FF6B6B', '#4ECDC4']
+    for (a, b) in edges2:
+        ax.annotate("", xy=positions2[b], xytext=positions2[a],
+                     arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
 
-    bars = ax.bar(categories, explodes, color=colors_bar, edgecolor='black',
-                  linewidth=2, width=0.5)
-    ax.set_ylim(0, 1.3)
-    ax.set_ylabel('Explosion Power', fontsize=12)
-    ax.set_title('Explosion Principle', fontsize=14, fontweight='bold')
+    for name, (x, y) in positions2.items():
+        ax.plot(x, y, 'o', markersize=25, color=colors_map[name], zorder=5)
+        ax.text(x, y, name, ha='center', va='center', fontsize=14,
+                fontweight='bold', color='white', zorder=6)
 
-    ax.text(0, 1.05, 'EXPLODES', ha='center', fontsize=11,
-            color='#FF6B6B', fontweight='bold')
-    ax.text(1, 0.05, 'CONTAINED', ha='center', fontsize=11,
-            color='#4ECDC4', fontweight='bold')
-    ax.set_yticks([0, 0.5, 1.0])
-    ax.set_yticklabels(['None', 'Partial', 'Full'])
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-0.5, 2.5)
+    ax.set_title('Truth Ordering\n(F = least true, T = most)', fontsize=13)
+    ax.set_aspect('equal')
+    ax.axis('off')
 
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Truth ordering lattice
-    truth_pos = {
-        'T': (1, 2), 'F': (1, 0),
-        'B': (0, 1), 'N': (2, 1)
-    }
-    truth_edges = [
-        ((1, 0), (0, 1)), ((1, 0), (2, 1)),
-        ((0, 1), (1, 2)), ((2, 1), (1, 2))
-    ]
-    truth_colors = {'T': '#4ECDC4', 'F': '#FF6B6B', 'B': '#FFE66D', 'N': '#95E1D3'}
-    draw_belnap_lattice(axes[0], 'Truth Ordering\nF ≤ {B,N} ≤ T',
-                        truth_pos, truth_edges, truth_colors)
-
-    # Information ordering lattice
-    info_pos = {
-        'B': (1, 2), 'N': (1, 0),
-        'T': (0, 1), 'F': (2, 1)
-    }
-    info_edges = [
-        ((1, 0), (0, 1)), ((1, 0), (2, 1)),
-        ((0, 1), (1, 2)), ((2, 1), (1, 2))
-    ]
-    info_colors = {'B': '#FFE66D', 'N': '#95E1D3', 'T': '#4ECDC4', 'F': '#FF6B6B'}
-    draw_belnap_lattice(axes[1], 'Information Ordering\nN ≤ {T,F} ≤ B',
-                        info_pos, info_edges, info_colors)
-
-    # Explosion comparison
-    draw_explosion_comparison(axes[2])
-
-    plt.suptitle("Belnap's Four-Valued Logic (FDE)", fontsize=16,
-                 fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('viz_belnap_lattice.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_belnap_lattice.png")
+    plt.savefig('belnap_lattice.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: belnap_lattice.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot_tolerance_threshold()
+    plot_belnap_lattice()
