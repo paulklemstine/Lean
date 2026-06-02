@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ee1b4a6d",
     "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
     "pkg_num": 178,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7272275000000001,
     "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
   {
@@ -5611,8 +5611,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "the_oracles_burden_how_much_knowledge_is_too_much",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7272275000000001,
+      "quality": "substantial",
       "shape": "cube",
       "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
     }

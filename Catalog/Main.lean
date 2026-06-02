@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2360 of the highest-quality
+A curated collection of 2362 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2360
+Total files: 2362
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1022,6 +1022,7 @@ import FINAL.Computation.OptimalPlanning
 import FINAL.Computation.OracleAboutOracle
 import FINAL.Computation.OracleApplicationsFrontier
 import FINAL.Computation.OracleBootstrapGPT2
+import FINAL.Computation.OracleBurden
 import FINAL.Computation.OracleHierarchy
 import FINAL.Computation.OracleHierarchyFoundations
 import FINAL.Computation.OracleStrangeLoop
@@ -1708,6 +1709,7 @@ import FINAL.Physics.Spectrum
 import FINAL.Physics.StabilizerBounds
 import FINAL.Physics.Teleportation
 import FINAL.Physics.Theorems
+import FINAL.Physics.TheorySpacePerturbation
 import FINAL.Physics.ToricCode
 import FINAL.Physics.TropicalBarrier
 import FINAL.Physics.TropicalDiffusion
