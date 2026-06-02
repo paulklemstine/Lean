@@ -246,6 +246,14 @@ LOWER_TO_CATALOG_DIR = {
     "differential_galois_theory": "Algebra",
     "quantum information theory": "Cryptography",
     "quantum_information_theory": "Cryptography",
+    # Additional sub-domains that were falling through to Speculative
+    "differential geometry": "Geometry",
+    "differential_geometry": "Geometry",
+    "differentialgeometry": "Geometry",
+    "theoretical physics": "Physics",
+    "theoretical_physics": "Physics",
+    "theoreticalphysics": "Physics",
+    "mathematics": "Algebra",
 }
 
 

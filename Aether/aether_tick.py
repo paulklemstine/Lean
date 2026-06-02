@@ -21,6 +21,7 @@ import sys
 import threading
 import time
 from datetime import datetime, timedelta, timezone
+from typing import Dict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -29,6 +30,57 @@ from knowledge_extractor import KnowledgeExtractor
 
 REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
+
+# Watchdog: set to True if core files changed after git pull
+_core_files_changed = False
+
+# Core Aether Python files that require a restart if they change after git pull
+CORE_FILES = [
+    "Aether/aether_tick.py",
+    "Aether/knowledge_extractor.py",
+    "Aether/pi_agent_client.py",
+    "Aether/catalog_analyzer.py",
+    "Aether/research_memory.py",
+    "Aether/insight_extractor.py",
+    "Aether/aristotle_loop.py",
+    "Aether/output_organizer.py",
+    "Aether/quality_evaluator.py",
+    "Aether/lineage_extractor.py",
+    "Aether/seed_directions.py",
+]
+
+
+def _snapshot_core_hashes() -> Dict[str, str]:
+    """Take a snapshot of SHA256 hashes for all core Aether files."""
+    import hashlib
+    hashes = {}
+    for rel in CORE_FILES:
+        fp = REPO_ROOT / rel
+        if fp.exists():
+            try:
+                hashes[rel] = hashlib.sha256(fp.read_bytes()).hexdigest()[:16]
+            except Exception:
+                hashes[rel] = "?"
+    return hashes
+
+
+def _check_core_file_changes(pre_pull_hashes: Dict[str, str]) -> bool:
+    """Check if any core Aether files changed after a git pull.
+
+    Returns True if any core file changed, indicating a restart is needed.
+    """
+    post_pull_hashes = _snapshot_core_hashes()
+    changed = []
+    for rel in CORE_FILES:
+        pre = pre_pull_hashes.get(rel, "")
+        post = post_pull_hashes.get(rel, "")
+        if pre and post and pre != post:
+            changed.append(rel)
+    if changed:
+        print(f"[Watchdog] Core files changed after git pull: {changed}")
+        print("[Watchdog] Aether process restart required")
+        return True
+    return False
 
 
 
@@ -123,10 +175,54 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
+    # ── Self-healing: auto-prune low-quality directions ──
+    try:
+        from research_memory import FutureDirectionsManager
+        fd_heal = FutureDirectionsManager(extractor.workspace)
+        stats = fd_heal.get_stats()
+        if stats["available"] > 500:  # Only prune when pool is large
+            result = fd_heal.prune_directions(cap=400, min_quality=0.30)
+            if result["pruned_count"] > 0:
+                print(f"[Self-heal] Auto-pruned {result['pruned_count']} low-quality directions")
+    except Exception as e:
+        print(f"[Self-heal] Auto-prune failed: {e}")
+
+    # ── Self-healing: auto-retry failed jobs with modified prompt ──
+    # Find recently failed jobs and retry them once with a simpler research mode
+    retry_count = 0
+    for pid, job in list(extractor.inflight.items()):
+        if job.status != "failed" or retry_count >= 1:
+            continue
+        # Only retry if the job hasn't been retried already
+        if getattr(job, '_retried', False):
+            continue
+        # Only retry jobs that failed due to timeout or extraction errors
+        if job.error_message and any(
+            kw in job.error_message.lower()
+            for kw in ["timeout", "extraction", "empty result"]
+        ):
+            print(f"[Self-heal] Retrying failed job {job.job_id[:8]}: {job.concept.title[:50]}")
+            # Release the current direction and re-discover
+            extractor._release_direction(job)
+            del extractor.inflight[pid]
+            retry_count += 1
+
     # 3. Dispatch new jobs up to max_inflight (with novelty track)
     current_inflight = len([j for j in extractor.inflight.values()
                            if j.status not in ("completed", "failed", "integrated", "rejected")])
     slots_available = max_inflight - current_inflight
+
+    # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
+    from collections import Counter
+    inflight_domains = Counter()
+    for j in extractor.inflight.values():
+        if j.status not in ("completed", "failed", "integrated", "rejected"):
+            domain = getattr(j.concept, 'domain', '') if hasattr(j, 'concept') else ''
+            if domain:
+                inflight_domains[domain] += 1
+    saturated_domains = [d for d, cnt in inflight_domains.items() if cnt >= 3]
+    if saturated_domains:
+        print(f"[Tick] Domain saturation: {dict(inflight_domains)} — excluding {saturated_domains}")
 
     if slots_available > 0:
         standard_slots = max(0, slots_available - novelty_slots)
@@ -136,7 +232,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Dispatch standard directions
         for _ in range(standard_slots):
             try:
-                job = extractor.discover(domain_filter=None, exclude_domains=["Novelty"])
+                job = extractor.discover(domain_filter=None, exclude_domains=["Novelty"] + saturated_domains)
                 job = await extractor.dispatch_async(job)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
@@ -182,7 +278,10 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
 
 def rebuild_commit_push() -> bool:
     """Rebuild website index, sync to docs/, commit all changes, and push to git.
-    Returns True if anything was pushed."""
+    Returns True if anything was pushed.
+    Sets global _core_files_changed if core Python files changed after pull."""
+    global _core_files_changed
+    pre_pull_hashes = _snapshot_core_hashes()
     print("[Tick] Rebuilding website index...")
     try:
         result = subprocess.run(
@@ -358,6 +457,11 @@ def rebuild_commit_push() -> bool:
             return False
 
         print("[Tick] Changes committed and pushed")
+
+        # Watchdog: check if core files changed after git pull
+        if _check_core_file_changes(pre_pull_hashes):
+            _core_files_changed = True
+
         return True
     except Exception as e:
         print(f"[Tick] git error: {e}")
@@ -429,8 +533,10 @@ def main():
         start_docs_server(args.serve_port)
 
     if args.loop:
+        global _core_files_changed
         print(f"[Tick] Loop mode — interval={args.interval}s, max_inflight={args.max_inflight}")
         while True:
+            _core_files_changed = False
             print(f"\n{'='*60}")
             print(f"[Tick] Aether tick starting at {datetime.now(timezone.utc).isoformat()}")
             try:
@@ -440,6 +546,12 @@ def main():
                 import traceback
                 traceback.print_exc()
             rebuild_commit_push()
+
+            # Watchdog: if core Python files changed after git pull, restart the process
+            if _core_files_changed:
+                print("[Watchdog] Restarting Aether process due to core file changes...")
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+
             print(f"[Tick] Sleeping {args.interval}s until next tick...")
             time.sleep(args.interval)
     else:

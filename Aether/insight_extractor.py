@@ -43,6 +43,7 @@ class InsightExtractor:
             "cross_domain_bridges": [],
             "last_scan_cycle": "",
             "scanned_theorems": [],  # hashes of already-scanned theorem statements
+            "tactic_patterns": {},   # domain -> {tactic: count, tactic_pair: count}
         }
 
     def _save(self) -> None:
@@ -93,6 +94,9 @@ class InsightExtractor:
         # Update cost estimates from catalog
         if self.catalog_analyzer:
             self._update_cost_estimates()
+
+        # Extract tactic usage patterns from this cycle's Lean code
+        self.extract_tactic_patterns(job)
 
         # Record scan cycle
         if hasattr(job, "exp_id") and job.exp_id:
@@ -217,6 +221,81 @@ class InsightExtractor:
         self._insights["strategies"] = self._insights["strategies"][-50:]
         self._insights["cross_domain_bridges"] = self._insights["cross_domain_bridges"][-50:]
 
+    # ─── Post-Cycle Novelty Audit ────────────────────────────────
+
+    def audit_novelty(self, job, catalog_analyzer=None) -> Optional[float]:
+        """Evaluate whether a cycle's results were genuinely novel or re-treading.
+
+        Uses LLM to compare the cycle's theorems against existing Catalog content.
+        Returns a 0-1 novelty score (0 = entirely redundant, 1 = fully novel).
+
+        This score feeds back into direction quality scoring, so directions
+        that produce novel results get boosted and those producing redundant
+        work get penalized.
+        """
+        if not self.pi_agent:
+            return None
+
+        # Collect new theorem statements
+        new_theorems = self._collect_new_theorems(job)
+        if not new_theorems:
+            return None
+
+        # Get existing catalog context for comparison
+        domain = getattr(job.concept, "domain", "") if hasattr(job, "concept") else ""
+        existing_context = ""
+        if catalog_analyzer:
+            existing_context = catalog_analyzer.build_focused_context(
+                domain=domain,
+                concept_description=" ".join(t["statement"][:80] for t in new_theorems[:5]),
+                max_theorems=10,
+            )[:1500]
+
+        # Build theorem listing
+        theorem_lines = [f"{t['name']}: {t['statement'][:120]}" for t in new_theorems[:15]]
+        theorem_text = "\n".join(theorem_lines)
+
+        system_prompt = (
+            "You are a mathematical novelty evaluator. Compare newly proved theorems "
+            "against existing results in the Catalog. Rate how novel the new results are.\n\n"
+            "Respond with JSON only: {\"novelty_score\": 0.0-1.0, \"reasoning\": \"1-2 sentences\", "
+            "\"redundant_theorems\": [\"list of theorem names that duplicate known results\"]}\n\n"
+            "Scoring guide:\n"
+            "- 0.0-0.3: Mostly duplicates or trivial extensions of known results\n"
+            "- 0.4-0.6: Some novel results mixed with known territory\n"
+            "- 0.7-0.9: Mostly novel, with genuine new definitions or structures\n"
+            "- 1.0: Entirely new mathematical territory, no overlap"
+        )
+
+        user_prompt = f"New theorems to evaluate (domain: {domain}):\n\n{theorem_text}"
+        if existing_context:
+            user_prompt += f"\n\nExisting Catalog theorems for comparison:\n{existing_context}"
+
+        try:
+            raw = self.pi_agent._call_ollama(system=system_prompt, user=user_prompt, timeout=60)
+            parsed = self.pi_agent._parse_json_response(raw)
+            if parsed and isinstance(parsed, dict):
+                score = parsed.get("novelty_score", 0.5)
+                # Clamp to 0-1
+                score = max(0.0, min(1.0, float(score)))
+                # Store the audit result
+                audits = self._insights.setdefault("novelty_audits", [])
+                audits.append({
+                    "exp_id": getattr(job, "exp_id", ""),
+                    "domain": domain,
+                    "novelty_score": score,
+                    "reasoning": parsed.get("reasoning", ""),
+                    "redundant_theorems": parsed.get("redundant_theorems", []),
+                })
+                # Cap audit history
+                self._insights["novelty_audits"] = audits[-50:]
+                self._save()
+                return score
+        except Exception as e:
+            print(f"[InsightExtractor] Novelty audit failed: {e}")
+
+        return None
+
     # ─── Cost Estimation ────────────────────────────────────────
 
     def _update_cost_estimates(self) -> None:
@@ -338,6 +417,12 @@ class InsightExtractor:
             line = f"- **{s.get('pattern', 'Pattern')}**: {s.get('description', '')}"
             lines.append(line)
 
+        # Also include tactic patterns if available
+        tactic_hints = self.get_tactic_hints(domain)
+        if tactic_hints:
+            lines.append("")
+            lines.append(tactic_hints)
+
         text = "\n".join(lines)
         if len(text) > 1000:
             text = text[:997] + "..."
@@ -353,4 +438,133 @@ class InsightExtractor:
             "cross_domain_bridges": len(self._insights.get("cross_domain_bridges", [])),
             "cost_estimates": len(self._insights.get("cost_estimates", {})),
             "scanned_theorems": len(self._insights.get("scanned_theorems", [])),
+            "tactic_domains": len(self._insights.get("tactic_patterns", {})),
         }
+
+    # ─── Proof Complexity Patterns ───────────────────────────────
+
+    # Tactics that indicate genuine mathematical depth
+    DEEP_TACTICS = {
+        "induction", "rcases", "obtain", "by_contra", "by_cases",
+        "omega", "linarith", "nlinarith", "field_simp", "ring_nf",
+        "push_cast", "norm_cast", "ext", "funext", "conv",
+        "calc", "have", "suffices", "refine", "apply",
+        "exact", "constructor", "cases", "match",
+    }
+
+    # Shallow tactics that indicate trivial/automated proofs
+    SHALLOW_TACTICS = {"native_decide", "decide", "rfl", "simp", "trivial"}
+
+    def extract_tactic_patterns(self, job) -> None:
+        """Extract tactic usage patterns from a job's Lean code.
+
+        Tracks:
+        - Per-domain tactic frequency (which tactics are used most)
+        - Tactic pair co-occurrence (which tactics appear together)
+        - Sorry density (how many sorries per file)
+        - Deep-vs-shallow ratio (genuine proofs vs automated)
+
+        These patterns inform future Aristotle prompts about what proof
+        structures work in each domain.
+        """
+        domain = getattr(job.concept, "domain", "Unknown") if hasattr(job, "concept") else "Unknown"
+        lean_files = getattr(job, "lean_files", []) or []
+
+        patterns = self._insights.setdefault("tactic_patterns", {})
+        domain_patterns = patterns.setdefault(domain, {
+            "tactic_counts": {},
+            "tactic_pairs": {},
+            "sorry_density": 0.0,
+            "deep_ratio": 0.0,
+            "total_theorems": 0,
+            "total_files": 0,
+        })
+
+        for lf in lean_files:
+            if not isinstance(lf, dict):
+                continue
+            code = lf.get("code", "")
+            if not code:
+                continue
+
+            domain_patterns["total_files"] = domain_patterns.get("total_files", 0) + 1
+
+            # Count tactics
+            tactic_counts = domain_patterns.get("tactic_counts", {})
+            found_tactics = set()
+            for tactic in self.DEEP_TACTICS | self.SHALLOW_TACTICS:
+                # Match tactic at start of line (by tac_name) or standalone
+                count = len(re.findall(
+                    rf'(?:^|\n)\s*(?:by\s+)?{re.escape(tactic)}\b',
+                    code,
+                ))
+                if count > 0:
+                    tactic_counts[tactic] = tactic_counts.get(tactic, 0) + count
+                    found_tactics.add(tactic)
+            domain_patterns["tactic_counts"] = tactic_counts
+
+            # Track tactic pairs (co-occurrence within same file)
+            tactic_pairs = domain_patterns.get("tactic_pairs", {})
+            found_list = sorted(found_tactics)
+            for i, t1 in enumerate(found_list):
+                for t2 in found_list[i+1:]:
+                    pair = f"{t1}+{t2}"
+                    tactic_pairs[pair] = tactic_pairs.get(pair, 0) + 1
+            domain_patterns["tactic_pairs"] = tactic_pairs
+
+            # Count theorems and sorries
+            theorem_count = len(re.findall(r'(?:theorem|lemma)\s+', code))
+            sorry_count = code.count("sorry")
+            domain_patterns["total_theorems"] = domain_patterns.get("total_theorems", 0) + theorem_count
+
+            # Deep vs shallow ratio
+            deep_count = sum(tactic_counts.get(t, 0) for t in self.DEEP_TACTICS)
+            shallow_count = sum(tactic_counts.get(t, 0) for t in self.SHALLOW_TACTICS)
+            total_tactics = deep_count + shallow_count
+            if total_tactics > 0:
+                domain_patterns["deep_ratio"] = round(deep_count / total_tactics, 3)
+
+            # Sorry density
+            total_theorems = domain_patterns.get("total_theorems", 1)
+            if total_theorems > 0:
+                domain_patterns["sorry_density"] = round(
+                    sorry_count / total_theorems, 4
+                )
+
+        self._save()
+
+    def get_tactic_hints(self, domain: str) -> str:
+        """Build a compact tactic hints string for the Aristotle prompt.
+
+        Shows the most effective tactic patterns for a domain based on
+        historical data.
+        """
+        patterns = self._insights.get("tactic_patterns", {})
+        domain_patterns = patterns.get(domain, {})
+        if not domain_patterns:
+            return ""
+
+        lines = ["### Proof Approach Patterns (from past cycles)", ""]
+
+        # Top tactics
+        tactic_counts = domain_patterns.get("tactic_counts", {})
+        if tactic_counts:
+            top_tactics = sorted(tactic_counts.items(), key=lambda x: -x[1])[:5]
+            tactic_str = ", ".join(f"{t} ({n})" for t, n in top_tactics)
+            lines.append(f"Most-used tactics: {tactic_str}")
+
+        # Deep ratio
+        deep_ratio = domain_patterns.get("deep_ratio", 0)
+        if deep_ratio > 0:
+            depth_label = "deep" if deep_ratio > 0.6 else "mixed" if deep_ratio > 0.3 else "shallow"
+            lines.append(f"Proof depth profile: {deep_ratio:.0%} deep tactics ({depth_label} domain)")
+
+        # Top tactic pairs (co-occurring tactics)
+        tactic_pairs = domain_patterns.get("tactic_pairs", {})
+        if tactic_pairs:
+            top_pairs = sorted(tactic_pairs.items(), key=lambda x: -x[1])[:3]
+            pair_str = ", ".join(f"{p} ({n})" for p, n in top_pairs)
+            lines.append(f"Common tactic combos: {pair_str}")
+
+        text = "\n".join(lines)
+        return text[:800]  # cap at 800 chars

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9161fab9",
     "filename": "the_prime_number_crossword_filling_the_gaps_in_the.json",
     "pkg_num": 261,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6930666666666666,
     "title": "The Prime Gap Crossword: Modular Sieve Constraints and Forcing Patterns"
   },
   {
@@ -8387,8 +8387,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_prime_number_crossword_filling_the_gaps_in_the",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6930666666666666,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Prime Gap Crossword: Modular Sieve Constraints and Forcing Patterns"
     }

@@ -2918,6 +2918,21 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Insights] Warning: insight extraction failed: {e}")
 
+        # 6d. NOVELTY AUDIT: evaluate whether cycle results are genuinely novel
+        try:
+            novelty_score = self.insight_extractor.audit_novelty(job, self.catalog_analyzer)
+            if novelty_score is not None:
+                print(f"[Insights] Novelty audit: score={novelty_score:.2f}")
+                # Feed back into direction quality: adjust the consumed direction
+                from research_memory import FutureDirectionsManager
+                fd_mgr = FutureDirectionsManager(self.workspace)
+                direction = fd_mgr.get_direction_for_exp(job.job_id)
+                if direction and direction.outcome_quality == 0:
+                    direction.outcome_quality = novelty_score
+                    fd_mgr._save()
+        except Exception as e:
+            print(f"[Insights] Warning: novelty audit failed: {e}")
+
         # 7. CLEANUP — dedup, workspace removal, sync verification
         job = self.cleanup_catalog(job)
 

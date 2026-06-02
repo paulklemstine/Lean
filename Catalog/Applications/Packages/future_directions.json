@@ -37,7 +37,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0001",
       "lineage_refs": [],
@@ -112,7 +112,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Combinatorics"
+        "Algebra"
       ],
       "id": "fd_0004",
       "lineage_refs": [],
@@ -131,13 +131,13 @@
       "arc_id": "",
       "arc_position": 0,
       "catalog_references": [],
-      "consumed_by_exp_id": "8acda19f",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0005",
       "lineage_refs": [],
@@ -147,7 +147,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-01T12:30:30.491025+00:00",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     },
@@ -162,7 +162,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0006",
       "lineage_refs": [],
@@ -187,7 +187,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0007",
       "lineage_refs": [],
@@ -287,7 +287,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0011",
       "lineage_refs": [],
@@ -337,7 +337,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0013",
       "lineage_refs": [],
@@ -362,7 +362,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0014",
       "lineage_refs": [],
@@ -462,7 +462,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0018",
       "lineage_refs": [],
@@ -487,7 +487,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0019",
       "lineage_refs": [],
@@ -512,7 +512,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0020",
       "lineage_refs": [],
@@ -612,7 +612,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0024",
       "lineage_refs": [],
@@ -687,7 +687,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0027",
       "lineage_refs": [],
@@ -762,7 +762,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0030",
       "lineage_refs": [],
@@ -787,7 +787,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0031",
       "lineage_refs": [],
@@ -812,7 +812,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0032",
       "lineage_refs": [],
@@ -1012,7 +1012,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0040",
       "lineage_refs": [],
@@ -1037,7 +1037,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0041",
       "lineage_refs": [],
@@ -1187,7 +1187,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0047",
       "lineage_refs": [],
@@ -1256,13 +1256,13 @@
       "arc_id": "",
       "arc_position": 0,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c2a011be",
       "depth_estimate": 3,
       "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0050",
       "lineage_refs": [],
@@ -1272,7 +1272,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:30.589354+00:00",
       "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
     },
@@ -1312,7 +1312,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0052",
       "lineage_refs": [],
@@ -1337,7 +1337,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Analysis"
+        "Algebra"
       ],
       "id": "fd_0053",
       "lineage_refs": [],
@@ -1412,7 +1412,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0056",
       "lineage_refs": [],
@@ -1437,7 +1437,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0057",
       "lineage_refs": [],
@@ -1512,7 +1512,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0060",
       "lineage_refs": [],
@@ -1712,7 +1712,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0068",
       "lineage_refs": [],
@@ -2112,7 +2112,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0084",
       "lineage_refs": [],
@@ -2281,7 +2281,7 @@
       "arc_id": "",
       "arc_position": 0,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9cf115ef",
       "depth_estimate": 3,
       "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
       "domain_bridges": [],
@@ -2297,7 +2297,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:30.801778+00:00",
       "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
     },
@@ -2412,7 +2412,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Topology"
+        "Geometry"
       ],
       "id": "fd_0096",
       "lineage_refs": [],
@@ -3162,7 +3162,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0126",
       "lineage_refs": [],
@@ -3187,7 +3187,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "Combinatorics"
+        "Algebra"
       ],
       "id": "fd_0127",
       "lineage_refs": [],
@@ -3287,7 +3287,7 @@
       "domain_bridges": [],
       "domains": [
         "Novelty",
-        "NumberTheory"
+        "Algebra"
       ],
       "id": "fd_0131",
       "lineage_refs": [],
@@ -3511,8 +3511,8 @@
       "description": "Conjecture: There exists a compact Riemannian manifold M of dimension <= 4 with explicitly constructible metric g such that the symbolic coding of its geodesic flow is computationally universal, in the precise sense that for every Turing machine T and input x, one can algorithmically produce a finite set of geodesic initial conditions and a finite observation partition P for which T halts on x if and only if some geodesic from that set enters a designated cell of P. Test: Confirm by constructing such an explicit manifold/metric pair and proving the bidirectional reduction, then numerically validating the encoding on benchmark universal machines; refute by proving that geodesic flows on all compact manifolds up to dimension 4 admit structural constraints preventing universal symbolic dynamics of this kind. Impact: This would turn curvature itself into a substrate for computation, linking differential geometry, dynamical systems, and computability, and could yield new geometric notions of complexity, physical analog models of computation, and fresh undecidability results in classical mechanics.",
       "domain_bridges": [],
       "domains": [
-        "Differential Geometry",
-        "Computability Theory"
+        "Geometry",
+        "Computation"
       ],
       "id": "fd_0140",
       "lineage_refs": [],
@@ -4461,8 +4461,8 @@
       "description": "Conjecture: For any finitely axiomatized formal theory T with a computably enumerable proof graph G_T (nodes = statements up to bounded length, directed edges = one-step derivability), there exists a scale-dependent graph Laplacian flow whose renormalized low-frequency spectrum converges to a theory-invariant universality class, and this spectral universality class predicts asymptotic proof-complexity exponents for broad families of statements in T. Test: Construct proof graphs for multiple inequivalent presentations of the same theory (for example, different axiom systems for arithmetic, group theory, or propositional fragments), compute coarse-grained Laplacian spectra under graph renormalization, and check whether (1) the infrared spectral data are stable across presentations of the same theory, (2) distinct theories separate into different spectral classes, and (3) measured proof-length growth rates for benchmark theorem families correlate with the predicted exponents from the limiting spectrum. The conjecture is refuted if the renormalized spectra fail to stabilize, depend strongly on presentation, or do not predict observed proof-complexity scaling better than null graph statistics. Impact: This would create a quantitative 'statistical physics of theoremhood,' enabling theory comparison by universality class, new lower-bound heuristics for automated theorem proving, and a bridge between renormalization ideas in physics and the geometry of formal reasoning.",
       "domain_bridges": [],
       "domains": [
-        "Mathematical Logic",
-        "Statistical Physics"
+        "Logic",
+        "Physics"
       ],
       "id": "fd_0178",
       "lineage_refs": [],
@@ -4806,7 +4806,7 @@
       "arc_id": "",
       "arc_position": 0,
       "catalog_references": [],
-      "consumed_by_exp_id": "a74a9300",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "# Future Directions: Birthday-Stratified Surreal Arithmetic\n\n## Synthesis\n\nThis research cycle established a formally verified foundation connecting surreal birthday arithmetic to 2-adic number theory and dyadic approximation. The central bridge is the Birthday–Denomination Principle: a dyadic rational m/2ⁿ with odd numerator m is irreducible in the dyadic hierarchy, meaning its surreal birthday equals exactly n (the 2-adic valuation of the denominator). This principle connects combinatorial game theory (PGame birthdays, Hessenberg ordinal addition) to number theory (2-adic valuations, divisibility) and analysis (density, convergence of dyadic sequences).\n\nThe most promising cross-domain connection discovered is the **valuation-theoretic structure** of the birthday filtration. The dyadic valuation ν₂(q) = padicValNat(2, q.den) is subadditive under both addition and multiplication, meaning it behaves like a non-Archimedean valuation. This connects directly to the Catalog's tropical semiring work (e.g., `Cryptography/TropicalMinPlusOWF.lean`, `Cryptography/TropicalPostQuantumPrimitives.lean`), since tropical valuations share this subadditive structure. The two-dimensional game complexity measure (birthday, depth) introduced in this cycle provides a natural \"tropical pair\" that could serve as coordinates in a tropical-geometric model of game spaces.\n\nThe highest breakthrough potential lies in Direction 1 (formalizing No_ω ≅ ℤ[1/2] as an ordered ring isomorphism), which would be the first machine-verified proof of a foundational result in combinatorial game theory. Direction 2 (birthday bounds for multiplication) would unlock the full ring structure of the birthday filtration. Direction 3 (tropical-surreal bridge) offers the most novel cross-domain potential, connecting two apparently distant areas of mathematics through their shared valuation-theoretic structure.\n\n---\n\n### Direction 1: Surreal–Dyadic Ordered Ring Isomorphism No_ω ≅ ℤ[1/2]\n\n**Conjecture**: There exists a constructive, formally verified order-preserving ring isomorphism between the quotient of numeric PGames of finite birthday (modulo game equivalence ≈) and the dyadic rationals ℤ[1/2] = {m/2ⁿ : m ∈ ℤ, n ∈ ℕ} with their standard ring structure and ordering.\n\n**Test**: (a) Construct the embedding φ: ℤ[1/2] → Surreal by recursion on the dyadic valuation, mapping m/2ⁿ to the surreal {⌊m/2⁻¹⌋/2ⁿ⁻¹ | ⌈m/2⁻¹⌉/2ⁿ⁻¹} (the simplicity construction). (b) Verify φ is a ring homomorphism: φ(a+b) ≈ φ(a) + φ(b) and φ(a·b) ≈ φ(a) · φ(b). (c) Verify φ is order-preserving and injective. (d) Verify surjectivity: every numeric PGame of finite birthday is equivalent to φ(q) for some q.\n\n**Impact**: This would be the first machine-checked proof that Conway's surreal construction produces the dyadic rationals at day ω. It would validate the Birthday–Valuation Isomorphism conjecture stated in this cycle and open the door to formalizing the full surreal number field (including all reals at day ω²).\n\n**Catalog References**: `Cryptography/SurrealBirthdayArithmetic.lean` (IsDyadic, DyadicSubring, birthday_denomination_principle, BirthdayValuationConjecture)\n\n**Proof Strategy**:\n1. Define the embedding φ by well-founded recursion on the dyadic valuation (established in this cycle as `dyadicVal`).\n2. For integers (valuation 0), use the existing PGame.ofNat/PGame.ofInt embedding.\n3. For m/2ⁿ⁺¹ with m odd, construct the surreal as the simplest number between ⌊m/2⌋/2ⁿ and ⌈m/2⌉/2ⁿ.\n4. Use the Birthday–Denomination Principle to show this construction produces a game with birthday exactly n+1.\n5. Verify the ring homomorphism properties using PGame addition and multiplication theorems from Mathlib.\n\n**Domain Bridges**: Combinatorial Game Theory (PGame/Surreal) <-> Number Theory (2-adic valuation, ℤ[1/2]) <-> Algebra (ring isomorphisms)\n\n**Lineage**: Builds on this cycle's IsDyadic, DyadicSubring, birthday_denomination_principle, even_numerator_simplifies, and dyadicVal definitions.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Birthday Bounds for Surreal Multiplication\n\n**Conjecture**: For numeric PGames x, y of finite birthday, birthday(x · y) ≤ birthday(x) · birthday(y) + birthday(x) + birthday(y). More precisely, if birthday(x) = m and birthday(y) = n, then birthday(x · y) ≤ m · n + m + n.\n\n**Test**: (a) Compute birthday(x · y) for all surreal pairs with birthday ≤ 3 and verify the bound. (b) Attempt to prove the bound using the recursive definition of PGame multiplication and induction on birthday. (c) Look for counterexamples at birthday 4 or 5.\n\n**Impact**: If true, this would establish that the birthday filtration is closed under multiplication (with a polynomial bound), completing the ring structure of the filtration. Combined with Direction 1, it would show that the birthday function is a submultiplicative valuation on the surreal field. If the bound is tight, it would give the exact \"birthday cost\" of multiplication.\n\n**Catalog References**: `Cryptography/SurrealBirthdayArithmetic.lean` (birthday_add_nadd, birthday_add_le_of_nat, BirthdayFiltration, add_mem_birthdayFiltration)\n\n**Proof Strategy**:\n1. Start with the Mathlib definition of PGame.mul and its birthday properties (if any exist).\n2. Use structural induction on the recursive definition of multiplication.\n3. Key lemma: if x = {xL | xR} and y = {yL | yR}, then (x·y) has options involving xL·y + x·yL − xL·yL, each of which has birthday bounded by induction.\n4. The bound m·n + m + n arises from the recursion depth: multiplication recurses on pairs (xL, y), (x, yL), and (xL, yL), giving a product-like complexity.\n\n**Domain Bridges**: Game Theory (PGame multiplication) <-> Number Theory (submultiplicative valuations) <-> Algebra (filtered ring structures)\n\n**Lineage**: Extends birthday_add_nadd and the birthday filtration from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical–Surreal Valuation Bridge\n\n**Conjecture**: There exists a structure-preserving map from the birthday-graded surreal ring (ℤ[1/2], ν₂) to the tropical semiring (ℝ ∪ {∞}, min, +) that sends the dyadic valuation ν₂ to the tropical norm. Specifically, the map q ↦ ν₂(q) sends addition in ℤ[1/2] to tropical addition (min) and satisfies ν₂(p + q) ≥ min(ν₂(p), ν₂(q)) with equality when ν₂(p) ≠ ν₂(q).\n\n**Test**: (a) Verify the ultrametric inequality ν₂(p + q) ≥ min(ν₂(p), ν₂(q)) for 100 random pairs of dyadic rationals. (b) Verify equality when ν₂(p) ≠ ν₂(q) for the same pairs. (c) Find the precise condition for strict inequality when ν₂(p) = ν₂(q).\n\n**Impact**: This would formally connect surreal number theory to tropical geometry, showing that the birthday hierarchy has the same algebraic structure as tropical valuations. It would unlock tropical-geometric methods for analyzing game complexity: the \"tropicalization\" of the surreal field would be a computable invariant with applications to algorithmic game theory.\n\n**Catalog References**: `Cryptography/TropicalMinPlusOWF.lean` (tropical_key_space_exponential), `Cryptography/TropicalPostQuantum.lean` (tropical_key_space_lower_bound), `Cryptography/SurrealBirthdayArithmetic.lean` (dyadicVal_add_le, dyadicVal_mul_le)\n\n**Proof Strategy**:\n1. Show that ν₂ satisfies the ultrametric inequality: this strengthens the subadditivity dyadicVal_add_le to ν₂(p+q) ≥ min(ν₂(p), ν₂(q)).\n2. The key insight: if p.den and q.den have different 2-adic valuations, then (p+q).den has valuation equal to the maximum of the two (the \"leading term\" dominates).\n3. When valuations are equal, cancellation can reduce the valuation (this is the \"non-trivial\" case).\n4. Construct the explicit functor from (ℤ[1/2], +, ×) to the tropical semiring.\n\n**Domain Bridges**: Surreal Number Theory (birthday valuation) <-> Tropical Geometry (tropical semiring) <-> Cryptography (tropical security bounds)\n\n**Lineage**: Builds on dyadicVal_add_le, dyadicVal_mul_le from this cycle, and the Catalog's tropical semiring infrastructure.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Transfinite Birthday Arithmetic and the Rational Completion\n\n**Conjecture**: At birthday ω², the surreal construction produces all rational numbers. More precisely, every rational q ∈ ℚ can be represented as a numeric PGame with birthday < ω². The birthday of q = p/r (with gcd(p,r) = 1 and r > 0) relates to the prime factorization of r: birthday(q) = ω · (number of distinct odd prime factors of r) + ν₂(r).\n\n**Test**: (a) Verify that 1/3 has birthday ω (it requires the first \"limit\" construction). (b) Verify that 1/6 has birthday ω + 1 (denominator 6 = 2 · 3 has one odd prime and one power of 2). (c) Verify that 1/5 has birthday ω (one odd prime). (d) Check whether 1/15 has birthday 2ω (two odd primes).\n\n**Impact**: This would extend the birthday–valuation correspondence from ℤ[1/2] to all of ℚ, showing that the surreal birthday encodes the full prime factorization structure of the denominator. It would connect surreal number theory to the arithmetic of all primes, not just 2.\n\n**Catalog References**: `Cryptography/SurrealBirthdayArithmetic.lean` (all results), `Computation/PadicValuationDepth.lean` (ValuationDepthMeasure)\n\n**Proof Strategy**:\n1. Define the surreal representation of 1/p for odd primes p as the simplest surreal in the interval (0, 1) with the required multiplicative property.\n2. Show that this construction requires ω steps (a limit ordinal) because no finite-birthday surreal can have the property that p copies sum to 1.\n3. Generalize to arbitrary q = p/r by composing the prime-specific constructions.\n4. Use transfinite induction on the number of prime factors.\n\n**Domain Bridges**: Number Theory (prime factorization) <-> Ordinal Arithmetic (ω-indexed constructions) <-> Game Theory (transfinite surreal construction)\n\n**Lineage**: Extends the Birthday–Denomination Principle and dyadicVal from this cycle to the full rational field.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Game Depth as a Computational Complexity Measure\n\n**Conjecture**: For any PGame x of finite birthday n, gameDepth(x) ≤ 2ⁿ − 1. Furthermore, this bound is tight: for each n, there exists a PGame of birthday n achieving depth exactly 2ⁿ − 1.\n\n**Test**: (a) Enumerate all PGames of birthday ≤ 4 and compute their game depth. (b) Verify the upper bound for each. (c) Identify the maximizers and characterize their structure.\n\n**Impact**: This would establish a precise relationship between construction complexity (birthday) and strategic complexity (depth), showing that depth grows at most exponentially in birthday. Combined with the game complexity measure, it would give a complete two-dimensional complexity theory for finite combinatorial games.\n\n**Catalog References**: `Cryptography/SurrealBirthdayArithmetic.lean` (gameDepth, GameComplexity, gameDepth_neg, gameComplexity_neg)\n\n**Proof Strategy**:\n1. Upper bound: by induction on birthday. A game of birthday n has options of birthday < n, so by induction each option has depth ≤ 2ⁿ⁻¹ − 1, giving depth ≤ 2ⁿ⁻¹ for the game, and 2ⁿ − 1 overall.\n2. Lower bound: construct the \"maximal depth game\" D(n) recursively: D(0) = 0, D(n+1) = {D(n) | D(n)}. Show birthday(D(n)) = n and depth(D(n)) = 2ⁿ − 1.\n3. The exponential relationship means that game depth provides a strictly finer measure than birthday for classifying game positions.\n\n**Domain Bridges**: Game Theory (depth/birthday) <-> Computational Complexity (exponential gaps) <-> Analysis (growth rates)\n\n**Lineage**: Extends gameDepth and GameComplexity from this cycle.\n\n**Ambition**: extension\n",
       "domain_bridges": [],
@@ -4822,7 +4822,7 @@
       "research_mode": "team",
       "source_exp_id": "e4bf6dd4",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e4bf6dd4",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-01T23:21:03.449278+00:00",
       "title": "Formally verified foundation connecting surrea"
     },
@@ -6186,8 +6186,8 @@
       "description": "Conjecture: For any sufficiently large formalized mathematical theory T (drawn from distinct areas such as algebra, topology, analysis, and combinatorics), construct its theorem-dependency graph G(T) with vertices as theorems/definitions and directed edges as minimal dependency relations. After coarse-graining G(T) by repeatedly contracting strongly interdependent subgraphs into meta-nodes, the normalized spectrum of the graph Laplacian converges to a domain-independent limiting distribution up to finite-size error; equivalently, mature theories lie in the same universality class under proof-network renormalization, while artificially generated or immature theory corpora do not. Test: Build theorem graphs from multiple proof assistants (Lean, Coq, Isabelle, HOL Light), define an explicit coarse-graining scheme, and compare spectral measures across scales using Wasserstein distance and hypothesis testing against null models (random DAGs, citation-like graphs, synthetically generated theorem systems). The conjecture is confirmed if unrelated mature theories exhibit statistically significant spectral collapse to the same fixed distribution across renormalization levels, and refuted if spectra remain theory-specific or match null models. Impact: This would suggest a hidden large-scale law of mathematical structure, enable quantitative measures of theory maturity and compressibility, guide automated theorem proving via scale-aware proof search, and provide a new bridge between renormalization in physics, spectral graph theory, and the architecture of formal knowledge.",
       "domain_bridges": [],
       "domains": [
-        "Mathematics",
-        "Theoretical Physics"
+        "Algebra",
+        "Physics"
       ],
       "id": "fd_0247",
       "lineage_refs": [],
@@ -6636,8 +6636,8 @@
       "description": "Conjecture: There exists a coarse-graining operator on formal proof dependency hypergraphs such that, across large corpora of mathematical theories, the induced flow has finitely many stable universality classes characterized by scale-invariant critical exponents (for example, growth rates of reusable lemmas, proof-depth distributions, and dependency clustering), and these classes predict cross-domain transferability of proof techniques better than surface domain labels. Test: Build proof dependency hypergraphs from multiple formal libraries (for example Lean, Coq, Isabelle), define several explicit coarse-graining schemes, and check whether repeated coarse-graining drives disparate theories toward a small number of invariant statistical fixed-point signatures; confirm if these signatures robustly predict theorem-proving transfer success on held-out domains, and refute if no stable fixed points or predictive universality classes appear beyond trivial corpus artifacts. Impact: This would create a physics-style theory of mathematical structure, enabling automated theorem provers to choose proof strategies by universality class, revealing deep common organization across algebra, topology, analysis, and logic, and potentially giving the first quantitative phase diagram of mathematics itself.",
       "domain_bridges": [],
       "domains": [
-        "Mathematical Logic",
-        "Statistical Physics"
+        "Logic",
+        "Physics"
       ],
       "id": "fd_0265",
       "lineage_refs": [],
@@ -7917,7 +7917,7 @@
       "id": "fd_0316",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.95,
+      "priority_score": 1.0,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "a00bddaf",
@@ -7942,7 +7942,7 @@
       "id": "fd_0317",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.95,
+      "priority_score": 1.0,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "eee98c2c",
@@ -7992,7 +7992,7 @@
       "id": "fd_0319",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.95,
+      "priority_score": 1.0,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "eb22a5b3",
@@ -8017,7 +8017,7 @@
       "id": "fd_0320",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.85,
+      "priority_score": 0.95,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "1cb7703b",
@@ -8042,7 +8042,7 @@
       "id": "fd_0321",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.85,
+      "priority_score": 0.95,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "8d0f3a1f",
@@ -8067,7 +8067,7 @@
       "id": "fd_0322",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.85,
+      "priority_score": 0.95,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "2c089df6",
@@ -8092,7 +8092,7 @@
       "id": "fd_0323",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.85,
+      "priority_score": 0.95,
       "proof_strategy": "",
       "research_mode": "team",
       "source_exp_id": "ea577b8f",
@@ -8100,6 +8100,56 @@
       "status": "available",
       "timestamp": "2026-06-02T23:13:43.700451+00:00",
       "title": "Formal connection between ReLU neural networ"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Hypergraph Ramsey Theory\n\n## Synthesis\n\nThis research cycle established a formal framework for r-uniform hypergraph Ramsey theory, proving the probabilistic lower bound (Erdős counting argument), structural properties (symmetry, monotonicity, antimonotonicity), tower function analysis, and the iterated stepping-up reduction. The single remaining open formalization challenge — the Erdős-Rado stepping-up lemma itself — connects to deep questions about how combinatorial complexity scales with structural uniformity.\n\nThe most promising cross-domain connection is between hypergraph Ramsey theory and the existing algebraic circuit complexity work in the Catalog (`Algebra/AlgebraicCircuitComplexity.lean`). Circuit lower bounds and Ramsey-type arguments share a common structure: both require showing that avoiding certain patterns demands exponential resources. The tower function hierarchy we formalized mirrors the depth hierarchy in circuit complexity, where each additional level of alternation adds an exponential layer to the required circuit size.\n\nThe highest breakthrough potential lies in Direction 1 (completing the stepping-up lemma), as it would unlock the full tower-bound machinery and enable connections to the Hales-Jewett theorem already formalized in the Catalog. Direction 3 (tropical Ramsey connections) offers the most novel cross-domain potential.\n\n---\n\n### Direction 1: Completing the Erdős-Rado Stepping-Up Lemma\n\n**Conjecture**: The stepping-up lemma can be formalized in Lean 4 by decomposing it into three independent sub-lemmas: (a) a binary string assignment lemma, (b) a pigeonhole extraction lemma for Finsets, and (c) a clique lifting lemma.\n\n**Test**: Formalize and prove each sub-lemma independently. If all three compile without sorry, compose them into the full stepping-up proof. Verify that `#print axioms stepping_up_statement` shows no `sorryAx`.\n\n**Impact**: Completing this proof would yield the first fully verified tower bound for hypergraph Ramsey numbers. It would also verify the `iterated_stepping_up` theorem (which currently depends on the sorry'd stepping-up lemma), establishing the full complexity hierarchy.\n\n**Catalog References**: `Algebra/Ramsey/HypergraphDefs.lean`, `Algebra/Ramsey/Defs.lean`\n\n**Proof Strategy**:\n1. **Binary string lemma**: Given n = 2^N + 1 elements and a coloring χ of (r+1)-subsets, fix the maximum element m. For each element v ≠ m, define a function f_v : P_{r-1}([n] \\ {v,m}) → Bool via f_v(T) = χ(T ∪ {v, m}). This creates a \"signature\" for each element.\n2. **Pigeonhole lemma**: Among 2^N elements with signatures in a space of size at most 2^{C(N-1, r-1)}, find a subset of size N where all signatures agree on relevant subsets. This requires careful cardinality accounting.\n3. **Clique lifting lemma**: Given a monochromatic r-clique S in the reduced coloring, show that S ∪ {m} forms a monochromatic (r+1)-clique in the original coloring. The key is that the signature agreement ensures compatibility.\n\n**Domain Bridges**: Hypergraph Ramsey (Combinatorics) <-> Circuit Depth Hierarchy (Complexity Theory) — both exhibit tower-type growth from iterated lifting arguments.\n\n**Lineage**: Builds on the probabilistic lower bound and tower function from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Improved Lower Bounds via the Lovász Local Lemma\n\n**Conjecture**: The probabilistic lower bound R₃(k,k) ≥ 2^{ck²} can be improved to R₃(k,k) ≥ 2^{c'k²·log(k)} using a formalization of the Lovász Local Lemma (LLL) applied to hypergraph colorings.\n\n**Test**: Formalize the symmetric version of the LLL in Lean 4. Apply it to the hypergraph Ramsey setting by defining a dependency graph on potential monochromatic k-cliques. Compute the resulting lower bound and verify it exceeds the first-moment bound for k ≥ 10.\n\n**Impact**: Any super-exponential improvement to the lower bound would narrow the gap between the known single-exponential lower bound and the double-exponential upper bound. Even a logarithmic factor improvement would be significant, suggesting that the true growth rate may be intermediate.\n\n**Catalog References**: `Algebra/Ramsey/HypergraphDefs.lean` (probabilistic lower bound), `Algebra/Probabilistic.lean` (graph Ramsey lower bound)\n\n**Proof Strategy**:\n1. Formalize the symmetric LLL: If each event A_i has P(A_i) ≤ p, each depends on at most d other events, and ep(d+1) ≤ 1, then P(∩ Ā_i) > 0.\n2. In the Ramsey setting, A_S = \"k-subset S is monochromatic.\" Each A_S has probability 2·2^{-C(k,r)}.\n3. The dependency: A_S and A_T are dependent iff |S ∩ T| ≥ r. Count the number of T with |S ∩ T| ≥ r — this gives d ≤ C(k,r)·C(n-r, k-r).\n4. The LLL condition ep(d+1) ≤ 1 gives a stronger lower bound on R_r(k,k).\n\n**Domain Bridges**: Probability Theory (LLL) <-> Combinatorics (Ramsey) <-> Computational Complexity (derandomization of LLL)\n\n**Lineage**: Extends the probabilistic lower bound proved in this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Ramsey Numbers and Valuation-Based Colorings\n\n**Conjecture**: There exists a \"tropical Ramsey number\" T_r(k) defined over the tropical semiring (ℝ ∪ {∞}, min, +) such that T_r(k) ≤ R_r(k,k), and the tropical version admits tighter analysis via valuation theory.\n\n**Test**: Define tropical hypergraph colorings where edges are colored by tropical values (min of coordinate differences). Compute T₃(3), T₃(4) and compare to R₃(3,3) = 4, R₃(4,4) = 13. If T₃(k) < R₃(k,k) for small k, the tropical relaxation captures meaningful structure.\n\n**Impact**: Tropical methods have revolutionized algebraic geometry and optimization. A tropical analog of Ramsey theory could provide new tools for bounding Ramsey numbers by leveraging the algebraic structure of the tropical semiring. The p-adic valuation connection (existing in `Algebra/Tropical_p_adic_Valuation_Bounds...`) could yield number-theoretic approaches to combinatorial bounds.\n\n**Catalog References**: `Tropical/` (tropical semiring formalization), `Algebra/Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors.lean`\n\n**Proof Strategy**:\n1. Define tropical coloring: χ_trop(S) = min_{i ∈ S} v_p(a_i) for a sequence a_1, ..., a_n and a prime p.\n2. A \"monochromatic\" tropical k-clique means all r-subsets have the same tropical value.\n3. Show this is a relaxation of the Boolean Ramsey problem by considering the {0, ∞} case.\n4. Use the structure theory of tropical varieties to bound T_r(k).\n\n**Domain Bridges**: Tropical Geometry <-> Ramsey Theory <-> p-adic Analysis — a novel bridge connecting three apparently unrelated areas.\n\n**Lineage**: Inspired by the tower function analysis in this cycle and the tropical valuation work in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Computational Verification of R₃(4,4) = 13\n\n**Conjecture**: The known value R₃(4,4) = 13 can be verified in Lean 4 via a combination of:\n(a) A computational proof that HyperRamseyProp 3 13 4 4 (checking all colorings of 3-subsets of [13], or using symmetry reduction), and\n(b) A constructive witness that ¬HyperRamseyProp 3 12 4 4 (exhibiting a specific coloring of 3-subsets of [12] with no monochromatic K₄^{(3)}).\n\n**Test**: Implement the verification in Lean using `native_decide` for the upper bound and a direct witness construction for the lower bound. The upper bound requires checking 2^{C(13,3)} = 2^{286} colorings (infeasible directly), so symmetry reduction via the automorphism group of K₁₃ is essential.\n\n**Impact**: This would be the first formally verified exact hypergraph Ramsey number beyond trivial cases. It would demonstrate that formal verification can handle combinatorial exhaustive search at meaningful scales.\n\n**Catalog References**: `Algebra/Ramsey/HypergraphDefs.lean` (framework), `Algebra/Ramsey/Defs.lean` (graph Ramsey framework)\n\n**Proof Strategy**:\n1. For the lower bound ¬HyperRamseyProp 3 12 4 4: The known extremal coloring of 3-subsets of [12] can be encoded directly as a term in Lean. Verify by `native_decide` or explicit checking that no 4-element subset is monochromatic.\n2. For the upper bound HyperRamseyProp 3 13 4 4: Use the Pasch configuration and Steiner triple system structure. The key insight: among the C(13,3) = 286 triples, any 2-coloring must create a monochromatic K₄^{(3)} among the 13 elements.\n3. Reduce to checking O(10^6) cases via automorphism group S₁₃ acting on colorings.\n\n**Domain Bridges**: Formal Verification <-> Computational Combinatorics <-> Group Theory (automorphism reduction)\n\n**Lineage**: Builds on `hyper_ramsey_3_3_le_4` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Ramsey Multiplicity and the Stepping-Up Gap\n\n**Conjecture**: For 3-uniform hypergraphs, the number of monochromatic k-cliques in any 2-coloring of the 3-subsets of [n] (for n = R₃(k,k)) grows at least polynomially in n. Specifically: for n ≥ R₃(k,k), every 2-coloring of P₃([n]) contains at least n^{k-3}/k! monochromatic k-cliques.\n\n**Test**: For k = 3 and n = 4, 5, 6, ..., 10, enumerate all 2-colorings of 3-subsets and count the minimum number of monochromatic K₃^{(3)} across all colorings. Verify the polynomial lower bound computationally. If any n yields fewer than n^0/6 = 1/6 monochromatic copies, the conjecture is false.\n\n**Impact**: Ramsey multiplicity results give quantitative strengthening of Ramsey-type theorems. They connect to flag algebras (Razborov's method) and could yield new approaches to bounding Ramsey numbers themselves, as lower bounds on multiplicity constrain the structure of extremal colorings.\n\n**Catalog References**: `Algebra/Ramsey/HypergraphDefs.lean`, `Algebra/Probabilistic.lean`\n\n**Proof Strategy**:\n1. Define `monochromaticCount r χ k n` = number of k-subsets of [n] that are monochromatic under χ.\n2. Use the probabilistic method: in a random coloring, the expected count is C(n,k) · 2 · 2^{-C(k,r)}.\n3. Show that the minimum over all colorings is at least a constant fraction of the expected value.\n4. For the polynomial bound, use convexity arguments (Jensen's inequality) on the distribution of monochromatic copies.\n\n**Domain Bridges**: Ramsey Theory <-> Flag Algebras <-> Extremal Combinatorics\n\n**Lineage**: Extends the probabilistic lower bound from this cycle into a multiplicity setting.\n\n**Ambition**: extension\n",
+      "domain_bridges": [],
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_0324",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "research_mode": "team",
+      "source_exp_id": "0a34e894",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0a34e894",
+      "status": "available",
+      "timestamp": "2026-06-02T23:46:37.442076+00:00",
+      "title": "Formal framework for r-uniform hypergraph Rams"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Research Directions: Prime Gap Crossword\n\n## Synthesis\n\nThis research cycle established a rigorous automaton-theoretic framework for analyzing prime gap patterns through modular sieves. The central discovery is that prime gap sequences are not independent — they are constrained by a finite-state automaton whose states are residue classes modulo a primorial. We proved explicit forcing patterns (gap words that uniquely determine the next gap) and showed that admissibility is periodic, enabling infinitely many realizations of every admissible pattern.\n\nThe most promising cross-domain connection is between the Gap Automaton and symbolic dynamics: the automaton defines a subshift of finite type on gap words, where forbidden patterns correspond to inadmissible extensions. This connects prime number theory to ergodic theory and topological dynamics, opening new avenues for density arguments. The work also bridges to the Catalog's existing sieve and closure frameworks (e.g., `Bridges.ForcingPatterns`, `MachineLearning.PrimeGaps.*`), providing a formal foundation that can be extended to larger sieves and more refined gap statistics.\n\nThe highest breakthrough potential lies in Direction 1 (Spectral Gap of the Crossword Automaton), which could yield new quantitative results on prime gap correlations by analyzing the transition matrix of the automaton. If the spectral gap of this matrix governs the mixing rate of gap patterns, it would provide a completely new tool for studying prime distribution.\n\n---\n\n### Direction 1: Spectral Gap of the Crossword Automaton\n\n**Conjecture**: The transition matrix T of the gap automaton over sieve S = {2, 3, ..., p_k} with gap alphabet {2, 4, 6, ..., 2B} has a spectral gap λ₁ - λ₂ ≥ c/log(∏S) for some absolute constant c > 0, where λ₁ ≥ λ₂ ≥ ... are the eigenvalues sorted by magnitude.\n\n**Test**: Compute the transition matrices for sieves {2,3}, {2,3,5}, {2,3,5,7}, {2,3,5,7,11} and measure the spectral gap. Plot λ₁ - λ₂ versus log(∏S). If the spectral gap decays faster than 1/log(∏S), the conjecture fails.\n\n**Impact**: If true, the spectral gap would imply exponential mixing of gap patterns — after O(log(∏S)²) steps, the automaton \"forgets\" its initial state. This would give a new proof that gap correlations decay, independent of sieve theory. If false, it would reveal that certain gap patterns have long-range correlations enforced by the automaton structure.\n\n**Catalog References**: `Bridges/ForcingPatterns.lean`, `Bridges/PrimeGapCrosswordDeep.lean`\n\n**Proof Strategy**: Define the transition matrix T_{ij} = #{gaps g : state i transitions to state j under g} / #{valid gaps from state i}. Compute T for small sieves explicitly. For the general bound, use the Perron-Frobenius theorem (T is non-negative) and relate the spectral gap to the diameter of the automaton graph. Key lemma: every state is reachable from every other state in O(∏S) steps (connectedness of the automaton).\n\n**Domain Bridges**: Number Theory (prime gaps) ↔ Spectral Graph Theory (automaton eigenvalues) ↔ Ergodic Theory (mixing rates)\n\n**Lineage**: Builds on the Gap Automaton definition and forcing pattern results from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Forcing Pattern Density Growth Rate\n\n**Conjecture**: The number F(S, B, k) of forcing patterns of length k over sieve S with gap bound B satisfies F(S, B, k) ≥ c · α^k for constants c > 0 and α > 1 depending on S and B. That is, forcing patterns grow exponentially in length.\n\n**Test**: Compute F({2,3}, 6, k) for k = 1, ..., 10. Compute F({2,3,5}, 30, k) for k = 1, ..., 8. Fit exponential growth models. If growth is sub-exponential (e.g., polynomial), the conjecture fails.\n\n**Impact**: Exponential growth of forcing patterns would mean that the \"deterministic fraction\" of the prime gap sequence does not vanish. This would provide a quantitative version of the Forcing Density Conjecture and give new structural information about prime gaps that goes beyond what probabilistic models predict.\n\n**Catalog References**: `Bridges/PrimeGapCrosswordDeep.lean` (ForcingDensityConjecture, explicit_forcing_23, explicit_forcing_23_alt)\n\n**Proof Strategy**: Analyze the automaton's transition graph. Forcing patterns correspond to paths that converge to a single state. Count such paths using the transfer matrix method: the number of forcing paths of length k equals the number of paths in the automaton graph that end at a node with out-degree 1 (in the restricted graph). Key lemma: the restricted graph has at least one cycle, giving exponential growth.\n\n**Domain Bridges**: Combinatorics (path counting) ↔ Number Theory (prime gaps) ↔ Automata Theory (state reachability)\n\n**Lineage**: Direct extension of the forcing pattern analysis from this cycle. Builds on Theorems explicit_forcing_23, exists_forcing_pattern, and the ForcingDensityConjecture.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Higher-Order Sieve Admissibility and the Selberg Sieve Connection\n\n**Conjecture**: The number of S-admissible residues for a random gap word of length k drawn from the gap alphabet is concentrated around φ(∏S) · ∏_{q ∈ S} (1 - ℓ_q/q)^k, where ℓ_q is the number of distinct residues mod q hit by the gap word's positions. In particular, the admissible count decays exponentially in the word length.\n\n**Test**: For sieve {2,3,5} (M = 30), generate random gap words of lengths 1 through 20 from the valid gap alphabet. Compute the average number of admissible residues at each length. Compare to the predicted exponential decay.\n\n**Impact**: This would connect the combinatorial sieve admissibility framework to the Selberg sieve, which counts integers avoiding prescribed residue classes. If the decay rate matches the Selberg sieve prediction, it would validate the sieve-theoretic interpretation of our framework. If the decay is faster or slower, it would reveal structural features of prime gaps beyond what the Selberg sieve captures.\n\n**Catalog References**: `Bridges/PrimeGapCrosswordDeep.lean` (admissible_residues_anti_mono, card_avoids_single_prime), `MachineLearning/PrimeGaps/Admissible.lean`\n\n**Proof Strategy**: For a single prime q, each gap position reduces the admissible residues by a factor of (1 - 1/q) on average (since each position eliminates one residue class mod q if the position is coprime to q). For independent positions, the factors multiply. The key difficulty is that positions are not independent — they are cumulative sums. Establish concentration bounds using martingale arguments on the cumulative sum sequence.\n\n**Domain Bridges**: Analytic Number Theory (Selberg sieve) ↔ Probability Theory (concentration inequalities) ↔ Combinatorics (lattice point counting)\n\n**Lineage**: Extends the admissible residue counting results and anti-monotonicity theorems from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Prime Gap Patterns as a Subshift of Finite Type\n\n**Conjecture**: The set of all infinite gap sequences g(1), g(2), g(3), ... that are S-admissible for every starting index forms a subshift of finite type (SFT) over the gap alphabet. The topological entropy of this SFT equals log(λ₁(T)), where λ₁(T) is the largest eigenvalue of the transition matrix from Direction 1.\n\n**Test**: Compute the forbidden words (gap sequences that are not S-admissible) for sieve {2,3} up to length 5. Verify that the forbidden set is finitely generated (every forbidden word contains a shorter forbidden word). Compute the topological entropy and compare to log(λ₁(T)).\n\n**Impact**: Embedding prime gap analysis in the framework of symbolic dynamics would open the door to powerful tools: variational principles, equilibrium states, thermodynamic formalism. This could yield new results on the distribution of gap patterns by applying ergodic-theoretic machinery. The connection to topological entropy would give a precise measure of the \"complexity\" of the prime gap sequence as filtered through the sieve.\n\n**Catalog References**: `Bridges/PrimeGapCrosswordDeep.lean` (GapAutomaton, GapAutomatonState)\n\n**Proof Strategy**: Show that the set of forbidden words is determined by a finite set of minimal forbidden words (MFWs). Each MFW corresponds to a gap sequence with no admissible residue. The SFT is then defined by avoiding all MFWs. The transition matrix T encodes the allowed transitions between automaton states, and standard results (Lind-Marcus) give entropy = log(λ₁(T)).\n\n**Domain Bridges**: Symbolic Dynamics (subshifts of finite type) ↔ Number Theory (prime gaps) ↔ Thermodynamic Formalism (entropy, equilibrium states)\n\n**Lineage**: Builds on the Gap Automaton and forcing pattern framework from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Effective Bounds on Minimal Forcing Length\n\n**Conjecture**: For sieve S with k primes and gap bound B = max(S) + 1, every gap word of length ≥ C · ∏_{q ∈ S} (q - 1) is forcing, where C is an absolute constant. That is, sufficiently long gap words are always forcing.\n\n**Test**: For sieve {2,3} (product of (q-1) = 1·2 = 2), check if all words of length ≥ 2C are forcing for C = 1, 2, 3. For sieve {2,3,5} (product = 1·2·4 = 8), check words of length ≥ 8C. Find the minimal forcing length for each sieve empirically.\n\n**Impact**: An effective bound on minimal forcing length would give a concrete version of the Forcing Density Conjecture. It would mean that after seeing enough consecutive prime gaps, the next gap is determined by the sieve — a remarkable structural constraint. This would have implications for prime prediction algorithms and for understanding the \"memory\" of the prime gap sequence.\n\n**Catalog References**: `Bridges/PrimeGapCrosswordDeep.lean` (forcing_density_base, ForcingDensityConjecture)\n\n**Proof Strategy**: Use the pigeonhole principle on automaton states. After ∏_{q ∈ S}(q-1) steps, the automaton must revisit a state (since there are at most ∏(q-1) non-empty state subsets). If the automaton is \"eventually contracting\" (each cycle reduces the state size), then after enough cycles, the state becomes a singleton (forcing). Key lemma: show that no periodic orbit of the automaton has state size > 1 (all cycles are contracting).\n\n**Domain Bridges**: Combinatorics (pigeonhole principle) ↔ Automata Theory (state convergence) ↔ Number Theory (prime gaps)\n\n**Lineage**: Direct extension of the forcing pattern analysis. The explicit forcing results for {2,3} provide the base case.\n\n**Ambition**: extension\n",
+      "domain_bridges": [],
+      "domains": [
+        "Computation",
+        "Pythagorean"
+      ],
+      "id": "fd_0325",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "research_mode": "team",
+      "source_exp_id": "9161fab9",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9161fab9",
+      "status": "available",
+      "timestamp": "2026-06-02T23:47:05.880436+00:00",
+      "title": "Rigorous automaton-theoretic framework for ana"
     }
   ],
   "pruned": [],

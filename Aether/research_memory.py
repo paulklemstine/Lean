@@ -480,6 +480,20 @@ class FutureDirectionsManager:
         # Cap domains at 2 to prevent domain count inflation
         if len(direction.domains) > 2:
             direction.domains = direction.domains[:2]
+        # Normalize domain names to valid Catalog directories
+        try:
+            from output_organizer import normalize_domain
+            direction.domains = [normalize_domain(d) for d in direction.domains]
+            # Deduplicate after normalization (e.g. "NumberTheory" and "Algebra" both → "Algebra")
+            seen = set()
+            unique = []
+            for d in direction.domains:
+                if d not in seen:
+                    seen.add(d)
+                    unique.append(d)
+            direction.domains = unique[:2]
+        except ImportError:
+            pass
         self._directions.append(direction)
         self._save()
 
