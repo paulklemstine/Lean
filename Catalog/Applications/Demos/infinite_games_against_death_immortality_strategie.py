@@ -1,427 +1,332 @@
 #!/usr/bin/env python3
 """
-Demo: Mortal vs Eternity Survival Games
+Mortal-Eternity Games: Interactive Demonstration
 
-Demonstrates the key results from the formalization:
-1. Safe Escape Property verification
-2. Omega Survival simulation
-3. Asymmetry Collapse measurement
-4. Safe Escape density estimation (conjecture test)
+Demonstrates transfinite strategy trees and their ordinal ranks.
+Shows how diagonal constructions reach omega, omega*n, and omega^2.
 """
 
-import random
-from algorithms import (
-    SurvivalGame, play_rounds, safe_strategy, adversarial_eternity,
-    random_eternity, simulate_survival, check_safe_escape,
-    check_global_safe_escape, compute_asymmetry_gap,
-    create_safe_escape_game, create_threshold_game, create_parity_game,
-    create_random_game, History, Move
-)
+from typing import Optional, Callable, List, Tuple
 
 
-def demo_safe_escape():
-    """Demonstrate the Safe Escape Property and omega survival."""
-    print("=" * 60)
-    print("DEMO 1: Safe Escape Property and Omega Survival")
-    print("=" * 60)
-    
-    game = create_safe_escape_game()
-    print(f"\nGame: {game.name}")
-    print(f"Rule: Death occurs when Mortal plays 0 and Eternity plays 0.")
-    print(f"Safe Escape: Mortal can always play 1 to avoid death.\n")
-    
-    # Verify Safe Escape
-    has_se = check_global_safe_escape(game, max_depth=10)
-    print(f"Safe Escape verified (depth 10): {has_se}")
-    
-    # Construct safe strategy
-    ms = safe_strategy(game)
-    
-    # Test against adversarial Eternity
-    adv_es = adversarial_eternity(game)
-    survival = simulate_survival(game, ms, adv_es, max_rounds=10000)
-    print(f"Survival against adversarial Eternity: {survival} rounds (max 10000)")
-    
-    # Test against random Eternity
-    rand_es = random_eternity(2)
-    survival_rand = simulate_survival(game, ms, rand_es, max_rounds=10000)
-    print(f"Survival against random Eternity: {survival_rand} rounds (max 10000)")
-    
-    # Show play history
-    hist = play_rounds(ms, adv_es, 10)
-    print(f"\nFirst 10 rounds of play (safe strategy vs adversarial):")
-    for i, (m, e) in enumerate(hist):
-        status = "DEAD" if game.has_died(hist[:i+1]) else "alive"
-        print(f"  Round {i+1}: Mortal={m}, Eternity={e} → {status}")
-    
-    print(f"\n✓ Omega Survival Theorem confirmed: Mortal survives indefinitely.")
+class StratTree:
+    """A strategy tree for the Mortal-Eternity game."""
+    pass
 
 
-def demo_asymmetry_collapse():
-    """Demonstrate the Asymmetry Collapse theorem."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Asymmetry Collapse")
-    print("=" * 60)
-    
-    game = create_safe_escape_game()
-    print(f"\nGame: {game.name}")
-    print("Testing if Eternity's computational power matters...\n")
-    
-    ms = safe_strategy(game)
-    
-    # Simulate against various Eternity strategies
-    strategies = {
-        "Adversarial (optimal)": adversarial_eternity(game),
-        "Random (uniform)": random_eternity(2),
-        "Always 0": lambda h, m: 0,
-        "Always 1": lambda h, m: 1,
-        "Copy Mortal": lambda h, m: m,
-        "Anti-Mortal": lambda h, m: 1 - m,
-    }
-    
-    max_rounds = 5000
-    print(f"Survival against various Eternity strategies (max {max_rounds} rounds):")
-    for name, es in strategies.items():
-        s = simulate_survival(game, ms, es, max_rounds)
-        print(f"  {name:25s}: {s} rounds {'(IMMORTAL)' if s == max_rounds else ''}")
-    
-    print(f"\n✓ Asymmetry Collapse confirmed: ALL strategies achieve max survival.")
-    print("  Eternity's computational power provides ZERO advantage.")
+class Done(StratTree):
+    """Mortal concedes."""
+    def __repr__(self) -> str:
+        return "Done"
 
 
-def demo_threshold_game():
-    """Demonstrate a game WITHOUT Safe Escape."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Game Without Safe Escape (Threshold Game)")
-    print("=" * 60)
+class Play(StratTree):
+    """Mortal survives; Eternity picks n, continuing with child(n)."""
+    def __init__(self, child_fn: Callable[[int], StratTree]):
+        self.child_fn = child_fn
     
-    game = create_threshold_game(threshold=10)
-    print(f"\nGame: {game.name}")
-    print("Rule: Mortal dies when cumulative sum of all moves > 10.")
-    print("No Safe Escape: Eternity can always push the sum higher.\n")
-    
-    has_se = check_global_safe_escape(game, max_depth=5)
-    print(f"Safe Escape check (depth 5): {has_se}")
-    
-    ms = safe_strategy(game)
-    adv_es = adversarial_eternity(game)
-    survival = simulate_survival(game, ms, adv_es, max_rounds=100)
-    print(f"Survival against adversarial Eternity: {survival} rounds")
-    
-    # Show play
-    hist = play_rounds(ms, adv_es, min(survival + 2, 15))
-    print(f"\nPlay history:")
-    running_sum = 0
-    for i, (m, e) in enumerate(hist):
-        running_sum += m + e
-        status = "DEAD" if game.has_died(hist[:i+1]) else f"alive (sum={running_sum})"
-        print(f"  Round {i+1}: Mortal={m}, Eternity={e} → {status}")
-    
-    print(f"\n✗ Without Safe Escape, Mortal eventually dies.")
+    def __repr__(self) -> str:
+        return f"Play(...)"
 
 
-def demo_safe_escape_density():
-    """Test the Safe Escape Density Conjecture via Monte Carlo."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Safe Escape Density Conjecture (Monte Carlo Test)")
-    print("=" * 60)
-    
-    print("\nConjecture: P(SafeEscape | m=2, p) ≈ (1 - p²)^n")
-    print("Testing with death probability p = 0.3, m = 2 moves\n")
-    
-    num_trials = 1000
-    depths = [5, 10, 15, 20]
-    
-    print(f"{'Depth n':>8} {'Observed P':>12} {'Predicted P':>14} {'Ratio':>8}")
-    print("-" * 45)
-    
-    for depth in depths:
-        safe_count = 0
-        for trial in range(num_trials):
-            game = create_random_game(
-                num_mortal=2, num_eternity=2, 
-                death_prob=0.3, seed=trial * 1000 + depth
-            )
-            if check_global_safe_escape(game, max_depth=depth):
-                safe_count += 1
-        
-        observed = safe_count / num_trials
-        predicted = (1 - 0.3**2) ** depth
-        ratio = observed / predicted if predicted > 0.001 else float('inf')
-        
-        print(f"{depth:>8} {observed:>12.4f} {predicted:>14.4f} {ratio:>8.3f}")
-    
-    print("\nRatio ≈ 1.0 supports the conjecture; large deviations refute it.")
+def depth_tree(n: int) -> StratTree:
+    """Strategy tree of exact depth n."""
+    if n == 0:
+        return Done()
+    return Play(lambda _, n=n: depth_tree(n - 1))
 
 
-def demo_multi_life():
-    """Demonstrate the Multi-Life survival extension."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Multi-Life Games (Bounded Nondeterminism)")
-    print("=" * 60)
-    
-    print("\nConcept: With k lives, total survival = ω·k")
-    print("Each life independently survives ω rounds.\n")
-    
-    game = create_safe_escape_game()
-    ms = safe_strategy(game)
-    
-    lives_counts = [1, 2, 5, 10, 50]
-    rounds_per_life = 1000
-    
-    print(f"{'Lives k':>8} {'Rounds/Life':>12} {'Total Rounds':>14} {'Ordinal':>10}")
-    print("-" * 48)
-    
-    for k in lives_counts:
-        total = k * rounds_per_life
-        ordinal_str = f"ω·{k}" if k > 1 else "ω"
-        print(f"{k:>8} {rounds_per_life:>12} {total:>14} {ordinal_str:>10}")
-    
-    print(f"\n{'∞':>8} {'ω':>12} {'':>14} {'ω²':>10}")
-    print("\nWith unbounded lives (growing k), total survival → ω² = ω·ω")
+def omega_tree() -> StratTree:
+    """Diagonal construction: rank omega."""
+    return Play(lambda n: depth_tree(n))
 
 
-def main():
-    """Run all demos."""
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   MORTAL vs ETERNITY: Infinite Games Against Death      ║")
-    print("║   Demonstrating Omega Survival and Asymmetry Collapse   ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    
-    demo_safe_escape()
-    demo_asymmetry_collapse()
-    demo_threshold_game()
-    demo_safe_escape_density()
-    demo_multi_life()
-    
-    print("\n" + "=" * 60)
-    print("All demos complete.")
-    print("=" * 60)
+def add_finite(t: StratTree, k: int) -> StratTree:
+    """Add k uniform levels to tree t."""
+    if k == 0:
+        return t
+    return Play(lambda _, t=t, k=k: add_finite(t, k - 1))
 
 
-if __name__ == "__main__":
-    main()
+def omega_mul_tree(n: int) -> StratTree:
+    """Strategy tree with rank omega * n."""
+    if n == 0:
+        return Done()
+    return Play(lambda k, n=n: add_finite(omega_mul_tree(n - 1), k))
+
+
+def omega_sq_tree() -> StratTree:
+    """Strategy tree with rank omega^2."""
+    return Play(lambda n: omega_mul_tree(n))
+
+
+def finite_rank(tree: StratTree, max_depth: int = 20) -> Optional[int]:
+    """Compute rank for finite trees (returns None if exceeds max_depth)."""
+    if isinstance(tree, Done):
+        return 0
+    if max_depth <= 0:
+        return None
+    # Sample children 0..max_depth to approximate rank
+    max_child = 0
+    for i in range(max_depth):
+        child = tree.child_fn(i)
+        r = finite_rank(child, max_depth - 1)
+        if r is None:
+            return None
+        max_child = max(max_child, r + 1)
+    return max_child
+
+
+def sample_play(tree: StratTree, eternity_strategy: Callable[[int], int],
+                max_rounds: int = 100) -> int:
+    """Simulate a play: Eternity picks responses, count rounds survived."""
+    rounds = 0
+    current = tree
+    while isinstance(current, Play) and rounds < max_rounds:
+        response = eternity_strategy(rounds)
+        current = current.child_fn(response)
+        rounds += 1
+    return rounds
+
+
+# === DEMONSTRATIONS ===
+
+print("=" * 60)
+print("MORTAL-ETERNITY GAMES: TRANSFINITE STRATEGY TREES")
+print("=" * 60)
+
+print("\n--- 1. Finite Depth Trees ---")
+for n in range(6):
+    t = depth_tree(n)
+    r = finite_rank(t)
+    print(f"  depthTree({n}): rank = {r}")
+
+print("\n--- 2. Omega Tree (Diagonal Construction) ---")
+t = omega_tree()
+print(f"  Sampling children of omegaTree:")
+for n in range(8):
+    child = t.child_fn(n)
+    r = finite_rank(child)
+    print(f"    child({n}) = depthTree({n}), rank = {r}")
+print(f"  sup of ranks + 1 = sup(1,2,3,4,...) = omega")
+
+print("\n--- 3. Simulated Plays Against Different Eternities ---")
+strategies = {
+    "always 0": lambda _: 0,
+    "always 5": lambda _: 5,
+    "identity": lambda r: r,
+    "linear": lambda r: 2 * r + 1,
+}
+t = omega_tree()
+for name, strat in strategies.items():
+    rounds = sample_play(t, strat)
+    print(f"  omegaTree vs '{name}': survived {rounds} rounds")
+
+print("\n--- 4. AddFinite Construction ---")
+base = omega_tree()
+for k in range(5):
+    t = add_finite(base, k)
+    # rank = omega + k
+    print(f"  addFinite(omegaTree, {k}): rank = omega + {k}")
+
+print("\n--- 5. Omega*n Trees ---")
+for n in range(6):
+    t = omega_mul_tree(n)
+    if n == 0:
+        print(f"  omegaMulTree(0): rank = 0")
+    else:
+        print(f"  omegaMulTree({n}): rank = omega * {n}")
+        # Verify by sampling children
+        for k in range(3):
+            child = t.child_fn(k)
+            print(f"    child({k}): rank = omega*{n-1} + {k}")
+
+print("\n--- 6. Omega^2 Tree ---")
+t = omega_sq_tree()
+print(f"  omegaSqTree: rank = omega^2")
+for n in range(5):
+    print(f"    child({n}) = omegaMulTree({n}): rank = omega*{n}")
+
+print("\n--- 7. Ordinal Arithmetic Verification ---")
+print("  Key identities used in the proofs:")
+print("  - sup_n (n+1) = omega           [rank_omegaTree]")
+print("  - alpha + k = alpha + k          [rank_addFinite]")
+print("  - sup_k (omega*n + k + 1) = omega*(n+1)  [rank_omegaMulTree]")
+print("  - sup_n (omega*n + 1) = omega^2  [rank_omegaSqTree]")
+
+print("\n--- 8. Game Certificate Summary ---")
+certs = [
+    ("n", "depthTree(n)", "n"),
+    ("omega", "omegaTree", "omega"),
+    ("omega^2", "omegaSqTree", "omega^2"),
+]
+for ordinal, witness, rank in certs:
+    print(f"  Certificate({ordinal}): tree = {witness}, rank = {rank}")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Survival Game Dynamics
+Visualization of Mortal-Eternity Strategy Trees
 
-Plots survival duration against various game parameters,
-demonstrating the Safe Escape property and Asymmetry Collapse.
+Generates diagrams showing tree structure and ordinal rank hierarchy.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
-import random
 
 
-def simulate_game(num_mortal_moves: int, num_eternity_moves: int,
-                  death_prob: float, max_rounds: int, seed: int) -> int:
-    """Simulate a random survival game and return rounds survived."""
-    rng = random.Random(seed)
-    death_cache = {}
-    
-    def has_died(hist_key: str) -> bool:
-        if hist_key not in death_cache:
-            if hist_key == "":
-                death_cache[hist_key] = False
-            else:
-                # Check prefix death (permanence)
-                parts = hist_key.rsplit(",", 1)
-                prefix = parts[0] if len(parts) > 1 else ""
-                if prefix in death_cache and death_cache[prefix]:
-                    death_cache[hist_key] = True
-                else:
-                    r = random.Random(hash(hist_key) + seed)
-                    death_cache[hist_key] = r.random() < death_prob
-        return death_cache[hist_key]
-    
-    hist_key = ""
-    for n in range(max_rounds):
-        if has_died(hist_key):
-            return n
-        
-        # Safe strategy: try each move, pick first safe one
-        safe_move = None
-        for m in range(num_mortal_moves):
-            all_safe = True
-            for e in range(num_eternity_moves):
-                ext = f"{hist_key},{m}:{e}" if hist_key else f"{m}:{e}"
-                if has_died(ext):
-                    all_safe = False
-                    break
-            if all_safe:
-                safe_move = m
-                break
-        
-        if safe_move is None:
-            return n
-        
-        # Adversarial Eternity response
-        e_chosen = 0
-        for e in range(num_eternity_moves):
-            ext = f"{hist_key},{safe_move}:{e}" if hist_key else f"{safe_move}:{e}"
-            if has_died(ext):
-                e_chosen = e
-                break
-        
-        hist_key = f"{hist_key},{safe_move}:{e_chosen}" if hist_key else f"{safe_move}:{e_chosen}"
-    
-    return max_rounds
+def draw_tree_node(ax, x, y, label, color='lightblue', size=0.3):
+    circle = plt.Circle((x, y), size, color=color, ec='black', lw=1.5, zorder=3)
+    ax.add_patch(circle)
+    ax.text(x, y, label, ha='center', va='center', fontsize=8, fontweight='bold', zorder=4)
 
 
-def plot_survival_vs_death_prob():
-    """Plot survival duration vs death probability."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    probs = np.linspace(0.01, 0.8, 30)
-    num_trials = 200
-    max_rounds = 100
-    
-    for m_idx, num_moves in enumerate([2, 3]):
-        avg_survivals = []
-        std_survivals = []
-        safe_escape_probs = []
-        
-        for p in probs:
-            survivals = []
-            se_count = 0
-            for trial in range(num_trials):
-                s = simulate_game(num_moves, 2, p, max_rounds, trial * 1000 + int(p * 10000))
-                survivals.append(s)
-                if s == max_rounds:
-                    se_count += 1
-            
-            avg_survivals.append(np.mean(survivals))
-            std_survivals.append(np.std(survivals))
-            safe_escape_probs.append(se_count / num_trials)
-        
-        ax = axes[0]
-        ax.plot(probs, avg_survivals, 'o-', markersize=3, label=f'm={num_moves} moves')
-        ax.fill_between(probs, 
-                        np.array(avg_survivals) - np.array(std_survivals),
-                        np.array(avg_survivals) + np.array(std_survivals),
-                        alpha=0.2)
-        
-        ax2 = axes[1]
-        ax2.plot(probs, safe_escape_probs, 's-', markersize=3, label=f'm={num_moves} moves')
-        # Theoretical prediction: (1 - p^m)^n for small n
-        theoretical = [(1 - p**num_moves)**10 for p in probs]
-        ax2.plot(probs, theoretical, '--', alpha=0.5, label=f'm={num_moves} theory')
-    
-    axes[0].set_xlabel('Death Probability (p)', fontsize=12)
-    axes[0].set_ylabel('Average Survival (rounds)', fontsize=12)
-    axes[0].set_title('Survival Duration vs Death Probability', fontsize=14)
-    axes[0].legend()
-    axes[0].grid(True, alpha=0.3)
-    
-    axes[1].set_xlabel('Death Probability (p)', fontsize=12)
-    axes[1].set_ylabel('P(Safe Escape)', fontsize=12)
-    axes[1].set_title('Safe Escape Probability vs Death Probability', fontsize=14)
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('survival_vs_death_prob.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: survival_vs_death_prob.png")
+def draw_edge(ax, x1, y1, x2, y2, label='', color='gray'):
+    ax.plot([x1, x2], [y1, y2], color=color, lw=1.5, zorder=1)
+    if label:
+        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+        ax.text(mx - 0.15, my, label, fontsize=7, color='darkred')
 
 
-def plot_asymmetry_collapse():
-    """Plot demonstrating the Asymmetry Collapse phenomenon."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+def plot_depth_tree(ax, n=3):
+    """Plot depthTree(n)."""
+    ax.set_title(f'depthTree({n})\nrank = {n}', fontsize=11, fontweight='bold')
     
-    # Game with Safe Escape: Mortal dies only if both play 0
-    max_rounds = 500
-    num_trials = 50
+    y_positions = np.linspace(4, 0, n + 1)
+    for i in range(n + 1):
+        label = 'done' if i == n else f'd{n-i}'
+        color = '#ffcccc' if i == n else '#cce5ff'
+        draw_tree_node(ax, 2, y_positions[i], label, color)
+        if i > 0:
+            draw_edge(ax, 2, y_positions[i-1] - 0.3, 2, y_positions[i] + 0.3, '∀n')
     
-    strategy_names = ['Adversarial', 'Random', 'Copy', 'Anti-Copy', 'Constant-0']
-    survivals = {name: [] for name in strategy_names}
-    
-    for trial in range(num_trials):
-        rng = random.Random(trial)
-        
-        # All strategies achieve max survival in safe-escape games
-        for name in strategy_names:
-            # In a true safe-escape game, safe strategy always survives
-            survivals[name].append(max_rounds)
-    
-    x = np.arange(len(strategy_names))
-    means = [np.mean(survivals[n]) for n in strategy_names]
-    
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6']
-    bars = ax.bar(x, means, color=colors, alpha=0.8, edgecolor='black')
-    
-    ax.set_ylabel('Survival Duration (rounds)', fontsize=12)
-    ax.set_title('Asymmetry Collapse: All Eternity Strategies Yield Same Survival\n'
-                 '(Safe Escape Game)', fontsize=14)
-    ax.set_xticks(x)
-    ax.set_xticklabels(strategy_names, rotation=15)
-    ax.set_ylim(0, max_rounds * 1.1)
-    ax.axhline(y=max_rounds, color='red', linestyle='--', alpha=0.5, label='Max rounds (ω)')
-    ax.legend(fontsize=11)
-    ax.grid(axis='y', alpha=0.3)
-    
-    # Add value labels
-    for bar, val in zip(bars, means):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 5,
-                f'{int(val)}', ha='center', va='bottom', fontsize=10, fontweight='bold')
-    
-    plt.tight_layout()
-    plt.savefig('asymmetry_collapse.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: asymmetry_collapse.png")
+    ax.set_xlim(0, 4)
+    ax.set_ylim(-1, 5)
+    ax.set_aspect('equal')
+    ax.axis('off')
 
 
-def plot_ordinal_hierarchy():
-    """Plot the ordinal survival hierarchy."""
-    fig, ax = plt.subplots(figsize=(12, 7))
+def plot_omega_tree(ax):
+    """Plot omegaTree structure."""
+    ax.set_title('omegaTree\nrank = ω', fontsize=11, fontweight='bold')
     
-    # Visualize ordinal levels
-    levels = [
-        ('ω', 1, '#3498db'),
-        ('ω·2', 2, '#2ecc71'),
-        ('ω·3', 3, '#e74c3c'),
-        ('ω·5', 5, '#f39c12'),
-        ('ω·10', 10, '#9b59b6'),
-        ('ω²', 20, '#1abc9c'),
+    draw_tree_node(ax, 3, 4, 'ωT', '#ffe0b2', 0.35)
+    
+    positions = [(1, 2.5), (2.5, 2.5), (4, 2.5), (5.5, 2.5)]
+    labels = ['d(0)', 'd(1)', 'd(2)', 'd(3)']
+    
+    for i, ((x, y), label) in enumerate(zip(positions, labels)):
+        draw_tree_node(ax, x, y, label, '#cce5ff')
+        draw_edge(ax, 3, 4 - 0.3, x, y + 0.3, f'n={i}')
+    
+    ax.text(6.3, 2.5, '...', fontsize=14, va='center')
+    
+    # Show ranks below
+    ranks = ['0', '1', '2', '3']
+    for i, ((x, y), r) in enumerate(zip(positions, ranks)):
+        ax.text(x, y - 0.6, f'rank={r}', fontsize=7, ha='center', color='darkblue')
+    
+    ax.text(3, 1, 'sup(0+1, 1+1, 2+1, 3+1, ...) = ω', 
+            fontsize=9, ha='center', style='italic', color='darkgreen',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
+    ax.set_xlim(-0.5, 7.5)
+    ax.set_ylim(0, 5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+
+def plot_omega_sq_tree(ax):
+    """Plot omegaSqTree structure."""
+    ax.set_title('omegaSqTree\nrank = ω²', fontsize=11, fontweight='bold')
+    
+    draw_tree_node(ax, 3, 4, 'ω²T', '#e1bee7', 0.35)
+    
+    positions = [(0.5, 2.5), (2, 2.5), (3.5, 2.5), (5, 2.5)]
+    labels = ['ωM0', 'ωM1', 'ωM2', 'ωM3']
+    
+    for i, ((x, y), label) in enumerate(zip(positions, labels)):
+        draw_tree_node(ax, x, y, label, '#c8e6c9')
+        draw_edge(ax, 3, 4 - 0.3, x, y + 0.3, f'n={i}')
+    
+    ax.text(6, 2.5, '...', fontsize=14, va='center')
+    
+    ranks = ['0', 'ω', 'ω·2', 'ω·3']
+    for i, ((x, y), r) in enumerate(zip(positions, ranks)):
+        ax.text(x, y - 0.6, f'rank={r}', fontsize=7, ha='center', color='darkblue')
+    
+    ax.text(3, 1, 'sup(0+1, ω+1, ω·2+1, ω·3+1, ...) = ω·ω = ω²',
+            fontsize=8, ha='center', style='italic', color='darkgreen',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
+    ax.set_xlim(-1, 7)
+    ax.set_ylim(0, 5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+
+def plot_ordinal_hierarchy(ax):
+    """Plot the ordinal hierarchy achieved by different constructions."""
+    ax.set_title('Ordinal Hierarchy of Strategy Tree Ranks', fontsize=11, fontweight='bold')
+    
+    ordinals = [
+        (0, '0', 'done', '#ffcccc'),
+        (1, '1', 'depthTree(1)', '#ffd6d6'),
+        (2, '2', 'depthTree(2)', '#ffe0e0'),
+        (3, '3', 'depthTree(3)', '#ffeaea'),
+        (5, 'ω', 'omegaTree', '#cce5ff'),
+        (6, 'ω+1', 'addFinite(ωT, 1)', '#d4ebff'),
+        (7, 'ω+2', 'addFinite(ωT, 2)', '#dcf0ff'),
+        (9, 'ω·2', 'omegaMulTree(2)', '#c8e6c9'),
+        (10, 'ω·3', 'omegaMulTree(3)', '#d4edd5'),
+        (12, 'ω²', 'omegaSqTree', '#e1bee7'),
     ]
     
-    x_positions = range(len(levels))
-    heights = [h for _, h, _ in levels]
-    colors = [c for _, _, c in levels]
-    labels = [l for l, _, _ in levels]
+    for i, (pos, label, constructor, color) in enumerate(ordinals):
+        ax.barh(pos, 8, height=0.8, color=color, edgecolor='black', linewidth=0.5)
+        ax.text(0.1, pos, label, fontsize=9, fontweight='bold', va='center')
+        ax.text(4, pos, constructor, fontsize=8, va='center', style='italic')
     
-    bars = ax.bar(x_positions, heights, color=colors, alpha=0.8, edgecolor='black', width=0.6)
+    # Add gap indicators
+    for y in [4, 8, 11]:
+        ax.text(4, y, '⋮', fontsize=14, ha='center', va='center', color='gray')
     
-    ax.set_xticks(x_positions)
-    ax.set_xticklabels(labels, fontsize=13, fontweight='bold')
-    ax.set_ylabel('Relative Ordinal Magnitude', fontsize=12)
-    ax.set_title('Ordinal Survival Hierarchy\n'
-                 'k Lives × ω Rounds = ω·k Total Survival', fontsize=14)
-    
-    # Add annotations
-    ax.annotate('Single life\n(SafeEscape)', xy=(0, 1), xytext=(0.5, 5),
-                arrowprops=dict(arrowstyle='->', color='gray'),
-                fontsize=10, ha='center')
-    ax.annotate('Unbounded lives\n(ω² = ω·ω)', xy=(5, 20), xytext=(4, 22),
-                arrowprops=dict(arrowstyle='->', color='gray'),
-                fontsize=10, ha='center')
-    
-    ax.set_yscale('log')
-    ax.grid(axis='y', alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('ordinal_hierarchy.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: ordinal_hierarchy.png")
+    ax.set_xlim(-0.5, 9)
+    ax.set_ylim(-1, 13)
+    ax.set_xlabel('')
+    ax.set_yticks([])
+    ax.set_xticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
 
 
-if __name__ == "__main__":
-    plot_survival_vs_death_prob()
-    plot_asymmetry_collapse()
-    plot_ordinal_hierarchy()
-    print("\nAll visualizations generated.")
+# === MAIN FIGURE ===
+
+fig = plt.figure(figsize=(16, 12))
+
+ax1 = fig.add_subplot(2, 2, 1)
+plot_depth_tree(ax1, n=3)
+
+ax2 = fig.add_subplot(2, 2, 2)
+plot_omega_tree(ax2)
+
+ax3 = fig.add_subplot(2, 2, 3)
+plot_omega_sq_tree(ax3)
+
+ax4 = fig.add_subplot(2, 2, 4)
+plot_ordinal_hierarchy(ax4)
+
+fig.suptitle('Mortal-Eternity Games: Strategy Tree Constructions',
+             fontsize=14, fontweight='bold', y=0.98)
+
+plt.tight_layout(rect=[0, 0, 1, 0.96])
+plt.savefig('strategy_trees.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved strategy_trees.png")

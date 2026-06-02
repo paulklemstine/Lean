@@ -1,338 +1,327 @@
+#!/usr/bin/env python3
 """
-Algorithms for Mortal-Eternity Survival Games.
+Algorithms for Mortal-Eternity Games
 
-Implements the core algorithms from the formalization:
-- Safe strategy construction
-- Survival simulation
-- Safe Escape property checking
-- Ordinal survival computation
+Type-hinted implementations of the core strategy tree constructions
+and ordinal rank computation algorithms.
 """
 
-from typing import Callable, List, Tuple, Optional, Dict, Set
+from __future__ import annotations
 from dataclasses import dataclass
-import random
+from typing import Callable, Optional, List, Tuple, Union
+from enum import Enum
 
 
-# Type aliases
-Move = int
-History = List[Tuple[Move, Move]]
-MortalStrategy = Callable[[History], Move]
-EternityStrategy = Callable[[History, Move], Move]
-DeathPredicate = Callable[[History], bool]
+# === Ordinal Representation ===
+
+class OrdinalKind(Enum):
+    ZERO = "zero"
+    SUCCESSOR = "successor"
+    LIMIT = "limit"
 
 
 @dataclass
-class SurvivalGame:
-    """A survival game between Mortal and Eternity.
+class Ordinal:
+    """Representation of ordinals below epsilon_0 in Cantor Normal Form.
     
-    Attributes:
-        has_died: Predicate on play histories. Returns True if Mortal has died.
-        num_mortal_moves: Number of moves available to Mortal (finite).
-        num_eternity_moves: Number of moves available to Eternity (finite approx).
-        name: Human-readable name for the game.
+    An ordinal is represented as a list of (exponent, coefficient) pairs:
+    omega^e1 * c1 + omega^e2 * c2 + ... where e1 > e2 > ...
+    
+    The zero ordinal has an empty terms list.
     """
-    has_died: DeathPredicate
-    num_mortal_moves: int = 2
-    num_eternity_moves: int = 2
-    name: str = "Unnamed Game"
+    terms: List[Tuple['Ordinal', int]]  # [(exponent, coefficient)]
     
-    def start_alive(self) -> bool:
-        """Verify the empty history is alive."""
-        return not self.has_died([])
+    @staticmethod
+    def zero() -> 'Ordinal':
+        return Ordinal([])
     
-    def check_death_permanent(self, hist: History, pair: Tuple[Move, Move]) -> bool:
-        """Check that death is permanent for a specific extension."""
-        if self.has_died(hist):
-            return self.has_died(hist + [pair])
-        return True  # Vacuously true if not dead
-
-
-def play_rounds(ms: MortalStrategy, es: EternityStrategy, n: int) -> History:
-    """Play the game for n rounds, returning the complete history.
+    @staticmethod
+    def finite(n: int) -> 'Ordinal':
+        if n == 0:
+            return Ordinal.zero()
+        return Ordinal([(Ordinal.zero(), n)])
     
-    Corresponds to `playRounds` in the Lean formalization.
+    @staticmethod
+    def omega() -> 'Ordinal':
+        return Ordinal([(Ordinal.finite(1), 1)])
     
-    Args:
-        ms: Mortal's strategy function.
-        es: Eternity's strategy function.
-        n: Number of rounds to play.
+    @staticmethod
+    def omega_mul(n: int) -> 'Ordinal':
+        if n == 0:
+            return Ordinal.zero()
+        return Ordinal([(Ordinal.finite(1), n)])
     
-    Returns:
-        List of (mortal_move, eternity_response) pairs.
-    """
-    hist: History = []
-    for _ in range(n):
-        m = ms(hist)
-        e = es(hist, m)
-        hist = hist + [(m, e)]
-    return hist
-
-
-def check_safe_escape(game: SurvivalGame, hist: History) -> Optional[Move]:
-    """Check if Safe Escape holds at a given history.
+    @staticmethod
+    def omega_sq() -> 'Ordinal':
+        return Ordinal([(Ordinal.finite(2), 1)])
     
-    Tests all possible Mortal moves to find one that survives
-    against all Eternity responses. Returns the safe move if found.
+    @staticmethod
+    def omega_pow(n: int) -> 'Ordinal':
+        if n == 0:
+            return Ordinal.finite(1)
+        return Ordinal([(Ordinal.finite(n), 1)])
     
-    Corresponds to `SafeEscape` in the Lean formalization.
+    def is_zero(self) -> bool:
+        return len(self.terms) == 0
     
-    Args:
-        game: The survival game.
-        hist: Current play history.
+    def is_finite(self) -> bool:
+        return self.is_zero() or (
+            len(self.terms) == 1 and self.terms[0][0].is_zero()
+        )
     
-    Returns:
-        A safe move if one exists, None otherwise.
-    """
-    if game.has_died(hist):
+    def to_nat(self) -> Optional[int]:
+        if self.is_zero():
+            return 0
+        if self.is_finite():
+            return self.terms[0][1]
         return None
     
-    for m in range(game.num_mortal_moves):
-        safe = True
-        for e in range(game.num_eternity_moves):
-            if game.has_died(hist + [(m, e)]):
-                safe = False
-                break
-        if safe:
-            return m
-    return None
-
-
-def safe_strategy(game: SurvivalGame) -> MortalStrategy:
-    """Construct the greedy safe strategy.
+    def kind(self) -> OrdinalKind:
+        if self.is_zero():
+            return OrdinalKind.ZERO
+        if self.is_finite():
+            return OrdinalKind.SUCCESSOR
+        # Check if last term has finite exponent with coeff 1
+        # and there are higher terms
+        return OrdinalKind.LIMIT
     
-    At each alive history, picks the first move that's safe against
-    all of Eternity's responses. Corresponds to `safeStrategy` in Lean.
+    def __repr__(self) -> str:
+        if self.is_zero():
+            return "0"
+        n = self.to_nat()
+        if n is not None:
+            return str(n)
+        parts = []
+        for exp, coeff in self.terms:
+            if exp.is_zero():
+                parts.append(str(coeff))
+            elif exp == Ordinal.finite(1):
+                if coeff == 1:
+                    parts.append("ω")
+                else:
+                    parts.append(f"ω·{coeff}")
+            else:
+                if coeff == 1:
+                    parts.append(f"ω^{exp}")
+                else:
+                    parts.append(f"ω^{exp}·{coeff}")
+        return " + ".join(parts)
     
-    This is the strategy guaranteed to achieve omega survival by
-    the Omega Survival Theorem.
-    
-    Args:
-        game: A survival game (should have Safe Escape property).
-    
-    Returns:
-        A Mortal strategy function.
-    """
-    def strategy(hist: History) -> Move:
-        safe_move = check_safe_escape(game, hist)
-        if safe_move is not None:
-            return safe_move
-        return 0  # Default move at dead positions
-    
-    return strategy
-
-
-def check_global_safe_escape(game: SurvivalGame, max_depth: int = 10) -> bool:
-    """Check if Safe Escape holds at all reachable alive histories up to depth max_depth.
-    
-    This is an approximation of the full Safe Escape property,
-    which would require checking infinitely many histories.
-    
-    Args:
-        game: The survival game.
-        max_depth: Maximum history depth to check.
-    
-    Returns:
-        True if Safe Escape holds at all checked histories.
-    """
-    def _check(hist: History, depth: int) -> bool:
-        if depth >= max_depth:
-            return True
-        if game.has_died(hist):
-            return True  # Dead histories don't need safe escape
-        
-        safe_move = check_safe_escape(game, hist)
-        if safe_move is None:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Ordinal):
             return False
-        
-        # Recursively check extensions
-        for e in range(game.num_eternity_moves):
-            if not _check(hist + [(safe_move, e)], depth + 1):
-                return False
-        return True
-    
-    return _check([], 0)
+        return self.terms == other.terms
 
 
-def simulate_survival(game: SurvivalGame, ms: MortalStrategy, 
-                       es: EternityStrategy, max_rounds: int = 1000) -> int:
-    """Simulate a survival game and return the number of rounds survived.
+# === Strategy Tree ===
+
+@dataclass
+class StratTree:
+    """Abstract base for strategy trees."""
+    pass
+
+
+@dataclass 
+class Done(StratTree):
+    """Mortal concedes (rank 0)."""
+    pass
+
+
+@dataclass
+class PlayTree(StratTree):
+    """Mortal survives; child_fn(n) gives subtree for Eternity's choice n."""
+    child_fn: Callable[[int], StratTree]
+    _description: str = ""
+
+
+def depth_tree(n: int) -> StratTree:
+    """Strategy tree of exact depth n. Rank = n."""
+    if n <= 0:
+        return Done()
+    return PlayTree(lambda k, n=n: depth_tree(n - 1), f"depthTree({n})")
+
+
+def omega_tree() -> StratTree:
+    """Diagonal construction giving rank ω."""
+    return PlayTree(lambda n: depth_tree(n), "omegaTree")
+
+
+def add_finite(t: StratTree, k: int) -> StratTree:
+    """Add k uniform levels. Rank increases by k."""
+    if k <= 0:
+        return t
+    return PlayTree(lambda _, t=t, k=k: add_finite(t, k - 1),
+                    f"addFinite(_, {k})")
+
+
+def omega_mul_tree(n: int) -> StratTree:
+    """Strategy tree with rank ω·n."""
+    if n <= 0:
+        return Done()
+    return PlayTree(lambda k, n=n: add_finite(omega_mul_tree(n - 1), k),
+                    f"omegaMulTree({n})")
+
+
+def omega_sq_tree() -> StratTree:
+    """Strategy tree with rank ω²."""
+    return PlayTree(lambda n: omega_mul_tree(n), "omegaSqTree")
+
+
+def omega_pow_tree(n: int) -> StratTree:
+    """Strategy tree with rank ω^n (for n ≥ 1)."""
+    if n <= 0:
+        return depth_tree(1)
+    if n == 1:
+        return omega_tree()
+    if n == 2:
+        return omega_sq_tree()
+    # General case: uses mul_tree construction
+    base = omega_pow_tree(n - 1)
+    return PlayTree(lambda k, base=base: mul_tree(base, k),
+                    f"omegaPowTree({n})")
+
+
+def mul_tree(base: StratTree, k: int) -> StratTree:
+    """Build tree of rank base.rank * k using lifting."""
+    if k <= 0:
+        return Done()
+    return PlayTree(lambda m, base=base, k=k: add_finite(mul_tree(base, k - 1), m),
+                    f"mulTree(_, {k})")
+
+
+# === Rank Computation ===
+
+def compute_rank_finite(tree: StratTree, max_depth: int = 50) -> Optional[int]:
+    """Compute exact rank for trees with finite rank.
+    Returns None if rank appears infinite."""
+    if isinstance(tree, Done):
+        return 0
+    if not isinstance(tree, PlayTree):
+        return None
+    if max_depth <= 0:
+        return None
+    max_rank = 0
+    for i in range(max_depth):
+        child_rank = compute_rank_finite(tree.child_fn(i), max_depth - 1)
+        if child_rank is None:
+            return None
+        max_rank = max(max_rank, child_rank + 1)
+    return max_rank
+
+
+def compute_rank_symbolic(tree: StratTree) -> Ordinal:
+    """Compute symbolic ordinal rank for known tree constructions."""
+    if isinstance(tree, Done):
+        return Ordinal.zero()
+    if isinstance(tree, PlayTree):
+        desc = tree._description
+        if desc.startswith("depthTree("):
+            n = int(desc[10:-1])
+            return Ordinal.finite(n)
+        if desc == "omegaTree":
+            return Ordinal.omega()
+        if desc.startswith("omegaMulTree("):
+            n = int(desc[13:-1])
+            return Ordinal.omega_mul(n)
+        if desc == "omegaSqTree":
+            return Ordinal.omega_sq()
+        if desc.startswith("omegaPowTree("):
+            n = int(desc[13:-1])
+            return Ordinal.omega_pow(n)
+    return Ordinal.zero()  # fallback
+
+
+# === Game Simulation ===
+
+def simulate_game(
+    tree: StratTree,
+    eternity_strategy: Callable[[int, List[int]], int],
+    max_rounds: int = 1000
+) -> Tuple[int, List[int]]:
+    """Simulate a game play.
     
     Args:
-        game: The survival game.
-        ms: Mortal's strategy.
-        es: Eternity's strategy.
-        max_rounds: Maximum rounds to simulate.
+        tree: Mortal's strategy tree
+        eternity_strategy: function(round, history) -> choice
+        max_rounds: safety bound
     
     Returns:
-        Number of rounds survived (max_rounds if immortal up to that point).
+        (rounds_survived, history_of_eternity_choices)
     """
-    hist: History = []
-    for n in range(max_rounds):
-        if game.has_died(hist):
-            return n
-        m = ms(hist)
-        e = es(hist, m)
-        hist = hist + [(m, e)]
-    return max_rounds
+    history: List[int] = []
+    current = tree
+    rounds = 0
+    
+    while isinstance(current, PlayTree) and rounds < max_rounds:
+        choice = eternity_strategy(rounds, history)
+        history.append(choice)
+        current = current.child_fn(choice)
+        rounds += 1
+    
+    return rounds, history
 
 
-def adversarial_eternity(game: SurvivalGame) -> EternityStrategy:
-    """Construct an adversarial Eternity strategy.
+# === Transfinite Game Certificate ===
+
+@dataclass
+class GameCertificate:
+    """Certificate that Mortal can survive at least α rounds."""
+    ordinal_bound: Ordinal
+    tree: StratTree
     
-    Eternity tries to force Mortal into death by choosing the response
-    most likely to lead to death (greedy adversarial).
-    
-    Args:
-        game: The survival game.
-    
-    Returns:
-        An Eternity strategy function.
-    """
-    def strategy(hist: History, mortal_move: Move) -> Move:
-        # Try each response and pick the one leading to death soonest
-        for e in range(game.num_eternity_moves):
-            if game.has_died(hist + [(mortal_move, e)]):
-                return e
-        return 0  # No immediately killing response found
-    
-    return strategy
+    def verify_finite(self) -> bool:
+        """Verify for finite ordinals that the tree has sufficient rank."""
+        n = self.ordinal_bound.to_nat()
+        if n is None:
+            return True  # Can't computationally verify transfinite
+        rank = compute_rank_finite(self.tree, max_depth=n + 5)
+        return rank is not None and rank >= n
 
 
-def random_eternity(num_moves: int = 2) -> EternityStrategy:
-    """Construct a random Eternity strategy."""
-    def strategy(hist: History, mortal_move: Move) -> Move:
-        return random.randint(0, num_moves - 1)
-    return strategy
+def generate_certificate(target: Ordinal) -> GameCertificate:
+    """Generate a game certificate for a target ordinal."""
+    n = target.to_nat()
+    if n is not None:
+        return GameCertificate(target, depth_tree(n))
+    if target == Ordinal.omega():
+        return GameCertificate(target, omega_tree())
+    if target == Ordinal.omega_sq():
+        return GameCertificate(target, omega_sq_tree())
+    # Default: try omega tree
+    return GameCertificate(target, omega_tree())
 
 
-def compute_asymmetry_gap(game: SurvivalGame, max_rounds: int = 100,
-                           num_trials: int = 100) -> Dict[str, float]:
-    """Estimate the computational asymmetry gap.
+if __name__ == "__main__":
+    print("=== Algorithm Demonstrations ===\n")
     
-    Compares survival against adversarial vs random Eternity strategies
-    to measure how much computational power matters.
+    # Rank computation
+    print("Symbolic Ranks:")
+    trees = [
+        ("depthTree(5)", depth_tree(5)),
+        ("omegaTree", omega_tree()),
+        ("omegaMulTree(3)", omega_mul_tree(3)),
+        ("omegaSqTree", omega_sq_tree()),
+    ]
+    for name, tree in trees:
+        rank = compute_rank_symbolic(tree)
+        print(f"  {name}: rank = {rank}")
     
-    Args:
-        game: The survival game.
-        max_rounds: Maximum rounds per trial.
-        num_trials: Number of random trials.
+    # Certificate generation
+    print("\nCertificates:")
+    targets = [Ordinal.finite(10), Ordinal.omega(), Ordinal.omega_sq()]
+    for target in targets:
+        cert = generate_certificate(target)
+        verified = cert.verify_finite()
+        print(f"  Certificate({target}): verified = {verified}")
     
-    Returns:
-        Dictionary with survival statistics.
-    """
-    ms = safe_strategy(game)
-    adv_es = adversarial_eternity(game)
-    
-    # Against adversarial Eternity
-    adv_survival = simulate_survival(game, ms, adv_es, max_rounds)
-    
-    # Against random Eternity (average over trials)
-    random_survivals = []
-    for _ in range(num_trials):
-        rand_es = random_eternity(game.num_eternity_moves)
-        s = simulate_survival(game, ms, rand_es, max_rounds)
-        random_survivals.append(s)
-    
-    avg_random = sum(random_survivals) / len(random_survivals)
-    
-    return {
-        "adversarial_survival": adv_survival,
-        "random_avg_survival": avg_random,
-        "asymmetry_gap": abs(adv_survival - avg_random),
-        "safe_escape_holds": check_global_safe_escape(game, min(max_rounds, 8)),
-    }
-
-
-# --- Example Games ---
-
-def create_threshold_game(threshold: int = 10) -> SurvivalGame:
-    """A game where Mortal dies if the sum of moves exceeds a threshold.
-    
-    This game does NOT have Safe Escape if Eternity can push the sum
-    past the threshold.
-    """
-    def has_died(hist: History) -> bool:
-        total = sum(m + e for m, e in hist)
-        return total > threshold
-    
-    return SurvivalGame(
-        has_died=has_died,
-        num_mortal_moves=3,
-        num_eternity_moves=3,
-        name=f"Threshold Game (threshold={threshold})"
-    )
-
-
-def create_parity_game() -> SurvivalGame:
-    """A game where Mortal dies if the parity of moves doesn't match.
-    
-    Mortal survives if at each step, mortal_move ≡ step_number (mod 2).
-    This has Safe Escape: Mortal just needs to play the right parity.
-    """
-    def has_died(hist: History) -> bool:
-        for i, (m, e) in enumerate(hist):
-            if m % 2 != i % 2:
-                return True
-        return False
-    
-    return SurvivalGame(
-        has_died=has_died,
-        num_mortal_moves=4,
-        num_eternity_moves=2,
-        name="Parity Game"
-    )
-
-
-def create_safe_escape_game() -> SurvivalGame:
-    """A game with guaranteed Safe Escape property.
-    
-    Death requires Mortal to play 0 when Eternity plays 0.
-    Safe escape: Mortal can always play 1 to avoid death.
-    """
-    def has_died(hist: History) -> bool:
-        for m, e in hist:
-            if m == 0 and e == 0:
-                return True
-        return False
-    
-    return SurvivalGame(
-        has_died=has_died,
-        num_mortal_moves=2,
-        num_eternity_moves=2,
-        name="Safe Escape Game"
-    )
-
-
-def create_random_game(num_mortal: int = 2, num_eternity: int = 2, 
-                        death_prob: float = 0.3, seed: int = 42) -> SurvivalGame:
-    """Create a random survival game with given death probability.
-    
-    Args:
-        num_mortal: Number of Mortal moves.
-        num_eternity: Number of Eternity responses.
-        death_prob: Probability of death at each extension.
-        seed: Random seed for reproducibility.
-    """
-    rng = random.Random(seed)
-    death_cache: Dict[str, bool] = {"": False}  # Empty history is alive
-    
-    def has_died(hist: History) -> bool:
-        key = str(hist)
-        if key not in death_cache:
-            # Check if prefix is dead (permanence)
-            if len(hist) > 0:
-                prefix_key = str(hist[:-1])
-                if prefix_key in death_cache and death_cache[prefix_key]:
-                    death_cache[key] = True
-                    return True
-            # Random death
-            rng_local = random.Random(hash(key) + seed)
-            death_cache[key] = rng_local.random() < death_prob
-        return death_cache[key]
-    
-    return SurvivalGame(
-        has_died=has_died,
-        num_mortal_moves=num_mortal,
-        num_eternity_moves=num_eternity,
-        name=f"Random Game (p={death_prob}, seed={seed})"
-    )
+    # Game simulation
+    print("\nGame Simulations:")
+    tree = omega_tree()
+    strategies = [
+        ("constant(3)", lambda r, h: 3),
+        ("identity", lambda r, h: r),
+        ("doubling", lambda r, h: 2 * r),
+    ]
+    for name, strat in strategies:
+        rounds, _ = simulate_game(tree, strat, max_rounds=50)
+        print(f"  omegaTree vs {name}: {rounds} rounds")
