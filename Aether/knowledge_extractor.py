@@ -136,6 +136,14 @@ class KnowledgeExtractor:
 
         self.research_context = ResearchContext(self.workspace)
 
+        # Insight extractor: meta-feedback loop from Aether's own theorems
+        from insight_extractor import InsightExtractor
+        self.insight_extractor = InsightExtractor(
+            workspace=self.workspace,
+            pi_agent=self.pi_agent,
+            catalog_analyzer=self.catalog_analyzer,
+        )
+
         # ArXiv miner for fresh ideas pipeline
         arxiv_cfg = self.config.get("arxiv", {})
         if arxiv_cfg.get("enabled", False):
@@ -317,6 +325,14 @@ class KnowledgeExtractor:
             # The direction provides the concept idea; the loop provides the domain target.
             # This prevents Pythagorean (56% of directions' domains[0]) from dominating dispatch.
             loop_domain = loop_result['domain']
+
+            # Cost-aware direction weighting: adjust breakthrough potential by domain cost
+            # High-cost domains get slightly reduced weight (0.8x max penalty)
+            # Low-cost domains get slight boost (1.2x)
+            cost_score = self.insight_extractor.get_cost_estimate(normalize_domain(loop_domain))
+            cost_factor = 1.2 - cost_score * 0.4  # ranges from 0.8 (expensive) to 1.2 (cheap)
+            adjusted_breakthrough = best_dir.priority_score * cost_factor
+
             concept = ResearchConcept(
                 title=best_dir.title,
                 domain=normalize_domain(loop_domain),
@@ -326,7 +342,7 @@ class KnowledgeExtractor:
                 catalog_references=best_dir.catalog_references or [],
                 research_mode=best_dir.research_mode or "prove",
                 novelty_estimate=min(1.0, best_dir.priority_score),
-                breakthrough_potential=best_dir.priority_score,
+                breakthrough_potential=adjusted_breakthrough,
                 key_references=[],
             )
         else:
@@ -448,6 +464,7 @@ class KnowledgeExtractor:
             catalog_context=catalog_context,
             recent_successes=[{'concept_title': r.concept_title, 'domain': r.domain, 'quality': r.proof_quality} for r in self.memory._cache[-3:]],
             theorem_context=theorem_context,
+            insight_extractor=self.insight_extractor,
         )
 
         # AUGMENT the prompt to explicitly request ALL deliverables
@@ -2889,6 +2906,17 @@ Research mode: {concept.research_mode}
 
         # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
         self._extract_future_directions(job)
+
+        # 6c. INSIGHT EXTRACTION: scan new theorems for meta-insights
+        # (guardrails, strategies, cost estimates for future cycles)
+        try:
+            self.insight_extractor.scan_new_theorems(job)
+            istats = self.insight_extractor.stats()
+            if any(v > 0 for v in istats.values()):
+                print(f"[Insights] barriers={istats['barriers']}, strategies={istats['strategies']}, "
+                      f"bridges={istats['cross_domain_bridges']}, costs={istats['cost_estimates']}")
+        except Exception as e:
+            print(f"[Insights] Warning: insight extraction failed: {e}")
 
         # 7. CLEANUP — dedup, workspace removal, sync verification
         job = self.cleanup_catalog(job)

@@ -10,7 +10,7 @@ Provides two key capabilities:
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 # Tactics considered "interesting" (non-trivial proof effort) — shared with quality_evaluator
 DEEP_TACTICS = {

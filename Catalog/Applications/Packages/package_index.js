@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ea577b8f",
     "filename": "the_hodge_conjecture_for_neural_networks_algebraic.json",
     "pkg_num": 259,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.715056153846154,
     "title": "Algebraic Cycles in Neural Network Decision Surfaces: The Piecewise-Linear Hodge Property"
   },
   {
@@ -8329,8 +8329,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_hodge_conjecture_for_neural_networks_algebraic",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.715056153846154,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Algebraic Cycles in Neural Network Decision Surfaces: The Piecewise-Linear Hodge Property"
     }
