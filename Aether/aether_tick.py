@@ -282,45 +282,69 @@ def rebuild_commit_push() -> bool:
             cwd=str(REPO_ROOT), capture_output=True, timeout=30
         )
 
-        # Pull with rebase — NO stash dance. All changes are committed,
-        # so there should be no dirty working tree. If rebase conflicts
-        # occur on auto-generated files, we regenerate them afterward.
+        # Pull with merge (not rebase) — .gitattributes marks auto-generated
+        # files with merge=ours so they resolve automatically. Merge handles
+        # conflicts in one step instead of replaying every local commit.
         pull = subprocess.run(
-            ["git", "pull", "--rebase", "origin", "master"],
-            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
+            ["git", "pull", "--no-rebase", "origin", "master"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
         )
         if pull.returncode != 0:
             # Check if the conflict is on auto-generated files we can fix
             if _has_conflict_markers():
-                # Resolve package_index.js conflicts by regenerating it
+                # Regenerate auto-generated files to resolve conflicts
                 _regenerate_index_if_needed()
-                # Stage the resolved files and continue rebase
+                # Also resolve workspace future_directions.json if conflicted
+                ws_fd = REPO_ROOT / "Aether" / ".aether_workspace" / "future_directions.json"
+                if ws_fd.exists():
+                    content = ws_fd.read_text(errors="ignore")
+                    if "<<<<<<" in content or ">>>>>>" in content:
+                        # Take our version (local) for the workspace file
+                        subprocess.run(
+                            ["git", "checkout", "--ours", str(ws_fd)],
+                            cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                        )
+                        subprocess.run(["git", "add", str(ws_fd)],
+                                       cwd=str(REPO_ROOT), capture_output=True, timeout=10)
+                # Stage all auto-generated resolved files
+                auto_gen_files = [
+                    "Catalog/Applications/Packages/package_index.js",
+                    "Catalog/Applications/Packages/future_directions.js",
+                    "Catalog/Applications/Packages/future_directions.json",
+                    "Catalog/Applications/Packages/future_directions_snapshot.json",
+                    "docs/package_index.js",
+                    "docs/future_directions.js",
+                    "docs/future_directions.json",
+                    "docs/future_directions_snapshot.json",
+                ]
+                # For any remaining conflicted auto-gen files, take ours
+                for f in auto_gen_files:
+                    fp = REPO_ROOT / f
+                    if fp.exists():
+                        content = fp.read_text(errors="ignore")
+                        if "<<<<<<" in content or ">>>>>>" in content:
+                            subprocess.run(
+                                ["git", "checkout", "--ours", f],
+                                cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                            )
+                # Stage all changes and complete the merge
                 subprocess.run(
-                    ["git", "add",
-                     "Catalog/Applications/Packages/package_index.js",
-                     "docs/package_index.js",
-                     "Catalog/Applications/Packages/future_directions.js",
-                     "docs/future_directions.js",
-                     "Catalog/Applications/Packages/future_directions.json",
-                     "docs/future_directions.json"],
+                    ["git", "add"] + auto_gen_files + [str(ws_fd)],
                     cwd=str(REPO_ROOT), capture_output=True, timeout=30
                 )
-                rebase_continue = subprocess.run(
-                    ["git", "rebase", "--continue"],
-                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
-                    # Provide empty editor via env
+                # Complete the merge commit
+                merge_result = subprocess.run(
+                    ["git", "-c", "core.editor=true", "commit", "--no-edit"],
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
                 )
-                if rebase_continue.returncode != 0:
-                    # If still failing, try with --no-edit
-                    subprocess.run(["git", "-c", "core.editor=true", "rebase", "--continue"],
-                                   cwd=str(REPO_ROOT), capture_output=True, timeout=60)
-                    if _has_conflict_markers():
-                        subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
-                        print("[Tick] git rebase --continue still has conflicts, aborted")
-                        return False
+                if merge_result.returncode != 0:
+                    print(f"[Tick] Merge commit failed: {merge_result.stderr}")
+                    subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                    return False
+                print("[Tick] Merge conflicts on auto-generated files resolved")
             else:
-                subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
-                print(f"[Tick] git pull --rebase failed (non-auto-resolvable): {pull.stderr}")
+                subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                print(f"[Tick] git pull failed (non-auto-resolvable): {pull.stderr}")
                 return False
 
         # Final safety check: regenerate index if any conflict markers leaked through

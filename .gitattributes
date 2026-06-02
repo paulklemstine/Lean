@@ -1,0 +1,11 @@
+# Auto-generated website files — always take our version on merge conflicts
+# since update_index.py regenerates these on every tick.
+Catalog/Applications/Packages/package_index.js merge=ours
+Catalog/Applications/Packages/future_directions.js merge=ours
+Catalog/Applications/Packages/future_directions.json merge=ours
+Catalog/Applications/Packages/future_directions_snapshot.json merge=ours
+docs/package_index.js merge=ours
+docs/future_directions.js merge=ours
+docs/future_directions.json merge=ours
+docs/future_directions_snapshot.json merge=ours
+Aether/.aether_workspace/future_directions.json merge=ours
