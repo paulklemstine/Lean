@@ -1,338 +1,257 @@
-# The Topology of Argumentation: Simplicial Complexes, Fixed Points, and the Shape of Debates
+# The Independence Complex of Argumentation Frameworks: Topology, Semantics, and a Counterexample
 
 ## Abstract
 
-We present a formally verified development of Dung's argumentation frameworks (1995) with a topological perspective. We define the *argumentation complex* — the abstract simplicial complex of conflict-free sets — and prove its fundamental properties: downward closure (simplicial complex axiom), the Fundamental Lemma of argumentation (admissible extensions can be grown incrementally), monotonicity of the characteristic function (bridging to Knaster-Tarski fixed-point theory), and existence of preferred extensions in finite frameworks. We establish cross-domain connections to graph theory (conflict-free sets as independent sets, with a tight bound for complete graphs) and lattice theory (the characteristic function as a monotone operator). All results are machine-verified in Lean 4 with Mathlib. We provide computational experiments on random frameworks and three real-world applications (policy debate, legal reasoning, scientific hypothesis evaluation).
+We develop the theory of the **independence complex** of abstract argumentation frameworks (Dung, 1995), formally establishing that the collection of conflict-free sets forms an abstract simplicial complex via the hereditary property. We prove fundamental structural theorems connecting argumentation semantics (admissible, preferred, stable, complete, and grounded extensions) to topological features of this complex. Our main results include: (1) stable extensions are preferred extensions; (2) the characteristic function is monotone, enabling fixed-point computation of the grounded extension; (3) the number of conflict-free sets grows exponentially in the size of the maximum independent set; and (4) a counterexample disproving the conjectured relationship between the Euler characteristic of the independence complex and the argumentation semantics (|preferred extensions| − |grounded extension|). All results have been formally verified in Lean 4 using the Mathlib library.
 
-**Keywords**: argumentation framework, simplicial complex, preferred extension, characteristic function, Euler characteristic, formal verification, Knaster-Tarski theorem
+**Keywords**: argumentation framework, simplicial complex, independence complex, preferred extension, Euler characteristic, formal verification
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Abstract argumentation frameworks, introduced by Dung (1995), provide a formal model of defeasible reasoning. An argumentation framework AF = (A, R) consists of a finite set A of arguments and an attack relation R ⊆ A × A. Various semantics — admissible, preferred, stable, complete, and grounded — define which subsets of arguments are "acceptable."
 
-Abstract argumentation theory, initiated by Dung [1], provides a domain-independent framework for analyzing conflicting arguments. An argumentation framework AF = (A, R) consists of a finite set A of arguments and an attack relation R ⊆ A × A. The fundamental question is: given such a framework, which collections of arguments constitute "reasonable" positions?
+The **independence complex** (also called the **conflict-free complex**) of an argumentation framework is the abstract simplicial complex whose simplices are the conflict-free subsets of A. This construction is well-known in combinatorics as the **independence complex** of a graph (where the graph is the symmetric closure of the attack relation), and has been studied extensively in topological combinatorics (Kozlov, 2008; Jonsson, 2008).
 
-While Dung's theory has been extensively studied in AI and logic, its topological structure has received comparatively little attention. In this paper, we develop the topological perspective systematically, proving that the conflict-free sets of any argumentation framework form an abstract simplicial complex and establishing connections between the topology of this complex and the semantics of the framework.
+In this paper, we establish rigorous connections between the topological properties of the independence complex and the argumentation-theoretic semantics. We prove several structural theorems and disprove a natural conjecture about the Euler characteristic.
 
-### 1.2 Contributions
+### 1.1 Contributions
 
-1. **Formal definitions and proofs** (§2-4): Complete Lean 4 formalization of argumentation frameworks, conflict-free sets, admissible sets, the characteristic function, and preferred extensions. All 12 theorems are machine-verified.
+1. **Formal foundations**: Complete Lean 4 formalization of argumentation frameworks, including conflict-free sets, admissibility, preferred/stable/complete/grounded extensions, and the independence complex.
 
-2. **Novel definition** (§2.6): The *argumentation complex* K(AF) — the abstract simplicial complex of conflict-free sets — formalized as a computable Finset of Finsets.
+2. **Stability implies preference** (Theorem 5.1): Every stable extension is a preferred extension. While known in the literature, our proof is cleanly formalized and makes explicit the role of conflict-freeness.
 
-3. **Fundamental Lemma** (§3.3): Formal proof that adding an acceptable argument to an admissible set preserves admissibility (under conflict-freeness).
+3. **Monotonicity of the characteristic function** (Theorem 4.1): The function mapping a set S to all arguments defended by S is monotone. This is the foundation for the Knaster-Tarski computation of the grounded extension.
 
-4. **Cross-domain bridges** (§4):
-   - *Argumentation ↔ Order Theory*: The characteristic function as a monotone operator on the Finset lattice, connecting to Knaster-Tarski fixed-point theory.
-   - *Argumentation ↔ Graph Theory*: Conflict-free sets as independent sets, with a tight bound for complete attack graphs.
+4. **Exponential growth of conflict-free sets** (Theorem 6.1): If there exists a conflict-free set of size k, the independence complex has at least 2^k faces. This follows from the hereditary property.
 
-5. **Computational experiments** (§5): Analysis of 200 random frameworks, testing conjectures about the relationship between the Euler characteristic and semantic properties.
-
-6. **Applications** (§6): Three worked examples demonstrating the theory in policy debate, legal reasoning, and scientific hypothesis evaluation.
-
-### 1.3 Related Work
-
-Dung's original paper [1] established the foundational definitions and proved the Fundamental Lemma informally. Baroni et al. [2] survey argumentation semantics. The connection to simplicial complexes is implicit in the independence complex literature from combinatorial topology [3]. Our contribution is the explicit formalization and the development of the topological perspective with machine-verified proofs.
+5. **Disproof of the Euler characteristic conjecture** (Theorem 7.1): The Euler characteristic of the independence complex does NOT equal |preferred extensions| − |grounded extension| in general.
 
 ---
 
-## 2. Definitions and Notation
+## 2. Preliminaries
 
-### 2.1 Argumentation Framework
+### 2.1 Argumentation Frameworks
 
-**Definition 2.1** (ArgFramework). An *argumentation framework* is a pair AF = (α, attack) where α is a finite type and attack : α → α → Prop is a binary relation.
+**Definition 2.1** (Dung, 1995). An *argumentation framework* is a pair AF = (A, R) where A is a finite set of *arguments* and R ⊆ A × A is the *attack relation*. We write (a, b) ∈ R or a → b to mean "a attacks b."
 
-In Lean 4:
-```lean
-structure ArgFramework (α : Type*) where
-  attack : α → α → Prop
-```
+**Definition 2.2**. A set S ⊆ A is *conflict-free* if for all a, b ∈ S, (a, b) ∉ R.
 
-### 2.2 Conflict-Free Sets
+**Definition 2.3**. A set S ⊆ A *defends* an argument a if for every b such that (b, a) ∈ R, there exists c ∈ S with (c, b) ∈ R.
 
-**Definition 2.2** (ConflictFree). A set S ⊆ A is *conflict-free* if ∀ a ∈ S, ∀ b ∈ S, ¬attack(a, b).
+**Definition 2.4**. A set S ⊆ A is *admissible* if it is conflict-free and defends all its members.
 
-```lean
-def ConflictFree (S : Finset α) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, ¬AF.attack a b
-```
+**Definition 2.5**. A *preferred extension* is a maximal admissible set (with respect to set inclusion).
 
-### 2.3 Acceptability and Admissibility
+**Definition 2.6**. A *stable extension* is a conflict-free set S such that for every a ∉ S, there exists b ∈ S with (b, a) ∈ R.
 
-**Definition 2.3** (Acceptable). An argument a is *acceptable* with respect to S if ∀ b, attack(b, a) → ∃ c ∈ S, attack(c, b).
+**Definition 2.7**. A *complete extension* is an admissible set that contains every argument it defends.
 
-**Definition 2.4** (Admissible). A set S is *admissible* if it is conflict-free and every member is acceptable with respect to S.
+**Definition 2.8**. The *grounded extension* is the smallest complete extension.
 
-### 2.4 Characteristic Function
+### 2.2 Abstract Simplicial Complexes
 
-**Definition 2.5** (charFunc). The *characteristic function* F : P(A) → P(A) maps S to {a ∈ A | a is acceptable w.r.t. S}.
+**Definition 2.9**. An *abstract simplicial complex* on a vertex set V is a collection K of finite subsets of V (called *faces* or *simplices*) satisfying:
+1. ∅ ∈ K
+2. If σ ∈ K and τ ⊆ σ, then τ ∈ K (hereditary property)
 
-```lean
-def charFunc (S : Finset α) : Finset α :=
-  Finset.univ.filter fun a =>
-    ∀ b, AF.attack b a → ∃ c ∈ S, AF.attack c b
-```
+**Definition 2.10**. The *f-vector* of K is the sequence (f₀, f₁, f₂, ...) where fₖ = |{σ ∈ K : |σ| = k + 1}|.
 
-### 2.5 Preferred Extensions
-
-**Definition 2.6** (IsPreferred). S is a *preferred extension* if it is admissible and maximal: ∀ T, Admissible T → S ⊆ T → T ⊆ S.
-
-### 2.6 The Argumentation Complex (Novel)
-
-**Definition 2.7** (ArgumentComplex). The *argumentation complex* K(AF) is the family of all conflict-free sets:
-
-```lean
-def argumentComplex : Finset (Finset α) :=
-  Finset.univ.filter fun S => AF.ConflictFree S
-```
-
-This is our key novel definition. It captures the "shape" of the debate as a topological object.
+**Definition 2.11**. The *Euler characteristic* of K is χ(K) = Σₖ (-1)^k fₖ.
 
 ---
 
-## 3. Main Results
+## 3. The Independence Complex
 
-### 3.1 Simplicial Complex Structure
+**Theorem 3.1** (Hereditary Property). *If S is conflict-free and T ⊆ S, then T is conflict-free.*
 
-**Theorem 3.1** (conflictFree_mono). If S ⊆ T and T is conflict-free, then S is conflict-free.
+*Proof.* If a, b ∈ T, then a, b ∈ S (since T ⊆ S), so (a, b) ∉ R by conflict-freeness of S. □
 
-*Proof sketch*: Immediate from the definition — attacks between members of S would also be attacks between members of T. ∎
+**Corollary 3.2**. The collection of conflict-free subsets of an argumentation framework forms an abstract simplicial complex (the *independence complex*).
 
-**Corollary 3.2** (argumentComplex_downClosed). K(AF) is downward-closed: T ∈ K(AF) and S ⊆ T implies S ∈ K(AF). This establishes that K(AF) is an abstract simplicial complex.
+**Theorem 3.3** (Singleton Characterization). *{a} is conflict-free if and only if (a, a) ∉ R.*
 
-**Theorem 3.3** (empty_mem_argumentComplex). ∅ ∈ K(AF).
+**Theorem 3.4** (Attack Exclusion). *If (a, b) ∈ R, then {a, b} is not conflict-free. Hence the edge {a, b} is not a simplex of the independence complex.*
 
-### 3.2 Basic Admissibility
-
-**Theorem 3.4** (admissible_empty). ∅ is admissible in any framework.
-
-**Theorem 3.5** (self_attack_not_in_admissible). If attack(a, a), then a ∉ S for any admissible S.
-
-*Proof*: Suppose a ∈ S. Since S is admissible, it is conflict-free, so ¬attack(a, a). Contradiction. ∎
-
-### 3.3 The Fundamental Lemma
-
-**Theorem 3.6** (acceptable_mono). If S ⊆ T and a is acceptable w.r.t. S, then a is acceptable w.r.t. T.
-
-*Proof*: Any counter-attacker in S is also in T. ∎
-
-**Theorem 3.7** (fundamental_lemma). If S is admissible, a is acceptable w.r.t. S, and S ∪ {a} is conflict-free, then S ∪ {a} is admissible.
-
-*Proof sketch*: 
-1. S ∪ {a} is conflict-free by hypothesis.
-2. For any x ∈ S ∪ {a}:
-   - If x ∈ S: x is acceptable w.r.t. S (admissibility), hence w.r.t. S ∪ {a} (Theorem 3.6).
-   - If x = a: a is acceptable w.r.t. S (hypothesis), hence w.r.t. S ∪ {a} (Theorem 3.6). ∎
-
-This is the key constructive principle: preferred extensions can be built incrementally.
-
-### 3.4 Characteristic Function Properties
-
-**Theorem 3.8** (charFunc_mono). S ⊆ T implies F(S) ⊆ F(T).
-
-*Proof*: If a ∈ F(S), then a is acceptable w.r.t. S. By Theorem 3.6, a is acceptable w.r.t. T, so a ∈ F(T). ∎
-
-**Theorem 3.9** (admissible_le_charFunc). If S is admissible, then S ⊆ F(S).
-
-*Proof*: For each a ∈ S, admissibility gives acceptable(S, a), so a ∈ F(S). ∎
-
-### 3.5 Existence of Preferred Extensions
-
-**Theorem 3.10** (preferred_extension_exists). Every finite argumentation framework has at least one preferred extension.
-
-*Proof sketch*: The set of admissible extensions is nonempty (contains ∅) and finite. Among all admissible sets, let S₀ have maximum cardinality. If T ⊇ S₀ is admissible, then |T| ≥ |S₀| (subset) and |T| ≤ |S₀| (maximality), so T = S₀. Therefore S₀ is preferred. ∎
-
-### 3.6 Cross-Domain Results
-
-**Theorem 3.11** (conflictFree_complete_le_one). If attack(a, b) for all a ≠ b, then |S| ≤ 1 for any conflict-free S.
-
-*Proof*: By contradiction — two distinct elements would attack each other. ∎
-
-This connects argumentation theory to graph theory: the conflict-free sets are exactly the independent sets of the attack graph, and the independence number of the complete graph is 1.
-
-**Definition 3.12** (charFuncMono). The characteristic function as a monotone operator:
-
-```lean
-def charFuncMono : Finset α →o Finset α where
-  toFun := AF.charFunc
-  monotone' := fun _ _ h => AF.charFunc_mono h
-```
-
-By the Knaster-Tarski theorem, this monotone operator has a least fixed point (the grounded extension) and a greatest fixed point, connecting argumentation semantics to lattice theory.
-
-**Theorem 3.13** (no_attacks_unique_preferred). If ∀ a b, ¬attack(a, b), then Finset.univ is the unique preferred extension.
-
-### 3.14 Fixed-Point Characterization
-
-**Theorem 3.14** (admissible_in_fixed_point). If S is admissible, T is a fixed point of F, and S ⊆ T, then S ⊆ F(T).
+This means that each attack removes an edge from the complete graph, creating a "hole" in the 1-skeleton of the independence complex.
 
 ---
 
-## 4. Algorithms
+## 4. The Characteristic Function
 
-### 4.1 Conflict-Free Set Enumeration
+**Definition 4.1**. The *characteristic function* F: 2^A → 2^A maps a set S to F(S) = {a ∈ A : S defends a}.
+
+**Theorem 4.1** (Monotonicity). *If S ⊆ T, then F(S) ⊆ F(T).*
+
+*Proof.* If a ∈ F(S), then for every attacker b of a, there exists c ∈ S ⊆ T with c attacking b. Hence a ∈ F(T). □
+
+**Corollary 4.2** (Unattacked Arguments). *If a is unattacked (no b with (b, a) ∈ R), then a ∈ F(∅). In particular, unattacked arguments are in the grounded extension.*
+
+**Theorem 4.3** (Defense Monotonicity). *If S ⊆ T and S defends a, then T defends a.*
+
+This is a restatement of Theorem 4.1 at the level of individual arguments.
+
+---
+
+## 5. Stable Extensions are Preferred
+
+**Theorem 5.1**. *Every stable extension is admissible.*
+
+*Proof.* Let S be stable. Conflict-freeness is given. For defense: if b attacks a ∈ S and b ∈ S, then S has internal conflict — contradiction. If b ∉ S, stability gives c ∈ S with c attacking b. □
+
+**Theorem 5.2**. *Every stable extension is a preferred extension (in frameworks without self-attacks).*
+
+*Proof.* By Theorem 5.1, S is admissible. Suppose T ⊇ S is admissible with T ≠ S. Take a ∈ T \ S. Since a ∉ S and S is stable, there exists b ∈ S ⊆ T with (b, a) ∈ R. But a, b ∈ T contradicts T being conflict-free. Hence no proper admissible superset exists, so S is preferred. □
+
+Note: the converse fails in general. There exist preferred extensions that are not stable.
+
+---
+
+## 6. Exponential Growth of Conflict-Free Sets
+
+**Theorem 6.1**. *If AF has a conflict-free set of size k, then |K(AF)| ≥ 2^k, where K(AF) is the independence complex.*
+
+*Proof.* Let S be conflict-free with |S| = k. By the hereditary property (Theorem 3.1), every subset of S is also conflict-free, hence a face of K(AF). The number of subsets of S is 2^k. Since distinct subsets give distinct faces, |K(AF)| ≥ 2^k. □
+
+**Corollary 6.2**. *The independence number α(AF) = max{|S| : S is conflict-free} satisfies |K(AF)| ≥ 2^{α(AF)}.*
+
+This result highlights the combinatorial richness of the independence complex: large peaceful coalitions create exponentially many sub-coalitions.
+
+---
+
+## 7. The Euler Characteristic Conjecture: A Counterexample
+
+**Conjecture 7.1** (False). *For any argumentation framework AF, the Euler characteristic of the independence complex equals |preferred extensions| − |grounded extension|.*
+
+**Theorem 7.1** (Counterexample). *The conjecture is false. The two-argument framework AF = ({0, 1}, {(0, 1)}) provides a counterexample.*
+
+*Proof.* In this framework, argument 0 attacks argument 1.
+
+**Conflict-free sets:** ∅, {0}, {1}. Note that {0, 1} is NOT conflict-free.
+
+**f-vector:** f₀ = 2 (two singletons), f₁ = 0 (no conflict-free pairs).
+
+**Euler characteristic:** χ = (-1)^0 · 2 = 2.
+
+**Preferred extension:** {0} is the unique preferred extension. Proof:
+- {0} is admissible: conflict-free (no self-attack) and self-defending (nothing attacks 0).
+- {0} is maximal: any admissible superset would need to contain 1, but {0,1} is not conflict-free.
+
+**Grounded extension:** {0} (the smallest complete extension, with |{0}| = 1).
+
+**Conjecture prediction:** |{preferred ext.}| − |grounded ext.| = 1 − 1 = 0.
+
+**Actual Euler characteristic:** χ = 2 ≠ 0. □
+
+**Discussion.** The failure reveals a fundamental disconnect between the *topological* invariants of the independence complex and the *logical* semantics of argumentation. The Euler characteristic counts faces with alternating signs — a purely combinatorial quantity — while preferred and grounded extensions involve the strategic notion of defense. These quantities inhabit different conceptual worlds, and no simple linear formula connects them.
+
+---
+
+## 8. Additional Structural Results
+
+**Theorem 8.1** (Conflict-Free Intersection). *If S is conflict-free, then S ∩ T is conflict-free for any T.*
+
+*Proof.* S ∩ T ⊆ S, so this follows from the hereditary property. □
+
+**Theorem 8.2** (Unattacked Extension). *If S is conflict-free, a is unattacked (∀b, (b,a) ∉ R), and a does not attack any member of S (∀b ∈ S, (a,b) ∉ R), then S ∪ {a} is conflict-free.*
+
+This theorem characterizes when a new argument can be safely added to a coalition without creating internal conflict.
+
+---
+
+## 9. Algorithms
+
+### 9.1 Computing the Independence Complex
 
 ```
-Algorithm: ENUMERATE-CONFLICT-FREE(AF)
-Input: ArgFramework AF = (A, R)
-Output: List of all conflict-free sets
+Input: AF = (A, R)
+Output: K(AF) = {S ⊆ A : S is conflict-free}
 
-1. result ← [∅]
-2. for k = 1 to |A| do
-3.   for each k-subset S of A do
-4.     if IS-CONFLICT-FREE(S) then
-5.       result.append(S)
-6. return result
+for each S in powerset(A):
+    if no (a,b) ∈ R with a,b ∈ S:
+        add S to K
 ```
 
-**Complexity**: O(2^|A| · |R|) time, O(2^|A|) space.
+Complexity: O(2^|A| · |A|²) in the worst case.
 
-### 4.2 Grounded Extension via Iteration
-
-```
-Algorithm: GROUNDED-EXTENSION(AF)
-Input: ArgFramework AF = (A, R)
-Output: Grounded extension
-
-1. S ← ∅
-2. repeat
-3.   S' ← F(S)  // characteristic function
-4.   if S' = S then return S
-5.   S ← S'
-6. until convergence
-```
-
-**Complexity**: O(|A|² · |R|) time (at most |A| iterations, each O(|A| · |R|)). Convergence guaranteed by monotonicity of F and finiteness of A.
-
-### 4.3 Preferred Extension via Fundamental Lemma
+### 9.2 Computing the Grounded Extension
 
 ```
-Algorithm: INCREMENTAL-PREFERRED(AF)
-Input: ArgFramework AF = (A, R)
-Output: One preferred extension
+Input: AF = (A, R)
+Output: G = grounded extension
 
-1. S ← ∅
-2. repeat
-3.   found ← false
-4.   for each a ∈ A \ S do
-5.     if IS-CONFLICT-FREE(S ∪ {a}) and IS-ACCEPTABLE(S, a) then
-6.       S ← S ∪ {a}
-7.       found ← true; break
-8. until ¬found
-9. return S
+G ← ∅
+repeat:
+    G_new ← {a ∈ A : ∀ b attacking a, ∃ c ∈ G attacking b}
+    if G_new = G: return G
+    G ← G_new
 ```
 
-**Complexity**: O(|A|² · |R|) time. This directly implements the Fundamental Lemma: each addition preserves admissibility.
+Converges in at most |A| iterations by monotonicity (Theorem 4.1).
 
-### 4.4 Euler Characteristic
+### 9.3 Euler Characteristic Computation
 
 ```
-Algorithm: EULER-CHARACTERISTIC(AF)
-Input: ArgFramework AF = (A, R)
+Input: K(AF) = independence complex
 Output: χ(K(AF))
 
-1. χ ← 0
-2. for each nonempty S ∈ ENUMERATE-CONFLICT-FREE(AF) do
-3.   χ ← χ + (-1)^(|S|-1)
-4. return χ
+for k = 0 to dim(K):
+    f_k ← |{S ∈ K : |S| = k+1}|
+    χ += (-1)^k * f_k
+return χ
 ```
 
-**Complexity**: O(2^|A| · |R|) time.
+---
+
+## 10. Discussion and Open Problems
+
+### 10.1 Corrected Euler Characteristic Relations
+
+While the naive conjecture χ = |preferred| − |grounded| fails, the question of *what* the Euler characteristic encodes about the argumentation semantics remains open. Possible corrected relations might involve:
+
+- The number of complete extensions
+- The Möbius function of the lattice of admissible sets
+- The reduced Euler characteristic (subtracting 1 for the empty face)
+
+### 10.2 Homological Analysis
+
+The independence complex of a graph is a well-studied object in topological combinatorics. Known results include:
+
+- **Kozlov's theorem**: The independence complex of a cycle C_n has the homotopy type of either S^1 (for n divisible by 3) or a wedge of circles.
+- **Matching complexes**: Related simplicial complexes arise from matchings in graphs.
+
+Extending these results to argumentation frameworks (where the attack relation may be asymmetric) is an open problem.
+
+### 10.3 Persistent Homology
+
+As arguments are added or removed, the independence complex changes. Tracking topological features across this filtration using persistent homology could reveal when and how debates undergo "topological phase transitions."
 
 ---
 
-## 5. Computational Experiments
+## 11. Conclusion
 
-### 5.1 Random Framework Survey
+We have established a rigorous mathematical foundation for studying the topology of argumentation frameworks through the independence complex. Our key contributions are:
 
-We generated 200 random argumentation frameworks with |A| ∈ {3, 4, 5, 6} and attack probability p ∈ [0, 0.6]. For each, we computed:
-- Conflict-free set count |K(AF)|
-- Euler characteristic χ(K(AF))
-- Number of preferred extensions
-- Grounded extension size
+1. A complete formal verification (in Lean 4) of the independence complex construction and its properties.
+2. Proof that stable extensions are preferred extensions, connecting domination to defense.
+3. An exponential lower bound on the number of conflict-free sets.
+4. A definitive counterexample to the Euler characteristic conjecture, revealing a fundamental gap between topological and semantic invariants.
 
-**Key findings**:
-
-| Attack Density | Avg χ | Avg |Preferred| | Avg |Grounded| |
-|:-:|:-:|:-:|:-:|
-| 0.0–0.1 | 1.0 | 1.0 | 4.2 |
-| 0.1–0.2 | 0.8 | 1.3 | 3.1 |
-| 0.2–0.3 | 0.5 | 1.8 | 2.0 |
-| 0.3–0.4 | 0.2 | 2.4 | 1.1 |
-| 0.4–0.6 | -0.1 | 3.1 | 0.5 |
-
-**Observation**: The Euler characteristic decreases monotonically with attack density, while the number of preferred extensions increases. This suggests an inverse relationship between topological simplicity and semantic multiplicity.
-
-### 5.2 Simplicial Complex Verification
-
-For all 200 frameworks, we verified computationally that the conflict-free sets form an abstract simplicial complex (downward-closed). This matches our formal proof (Theorem 3.2).
-
-### 5.3 Euler Characteristic Conjecture
-
-The original conjecture — that χ(K(AF)) = |preferred extensions| - |grounded extension| — does **not** hold in general. Our computational survey found counterexamples. However, the weaker conjecture that χ correlates with semantic complexity (measured by the number of preferred extensions) appears supported by the data.
-
----
-
-## 6. Applications
-
-### 6.1 Policy Debate Analysis
-
-We model a climate policy debate with 7 arguments (carbon tax, economic harm, green jobs, nuclear, renewables, baseload, safety risk) and 7 attack relations. The framework yields 2 preferred extensions, representing two coherent policy positions, and a grounded extension representing universally accepted claims.
-
-### 6.2 Legal Reasoning
-
-A courtroom scenario with 6 arguments (guilty, alibi, witness, unreliable, motive, no evidence) yields preferred extensions corresponding to "guilty" and "not guilty" positions, with the grounded extension capturing the minimum defensible legal position.
-
-### 6.3 Scientific Hypothesis Evaluation
-
-Competing hypotheses (dark matter vs. MOND) with supporting/attacking evidence yield multiple preferred extensions, each representing a coherent scientific position given the current evidence.
-
----
-
-## 7. Discussion
-
-### 7.1 Significance
-
-The formal verification of the Fundamental Lemma and the existence of preferred extensions provides mathematical certainty for results that are foundational to argumentation theory. The cross-domain bridges — to lattice theory via the monotone characteristic function and to graph theory via the independence number — demonstrate that argumentation theory is not an isolated island but is deeply connected to classical mathematics.
-
-### 7.2 Limitations
-
-- Our Euler characteristic conjecture was falsified in its strong form. The topology of the argumentation complex does not directly encode the semantics in the conjectured way.
-- The exponential complexity of computing the full argumentation complex limits practical applications to frameworks with |A| ≤ 20-25.
-- We have not yet formalized homology groups; our topological analysis relies on the Euler characteristic as a proxy.
-
-### 7.3 Open Questions
-
-1. **Euler Characteristic–Semantics Relationship**: Is there a precise formula relating χ(K(AF)) to the number of preferred extensions, or only a statistical correlation?
-2. **Homology of Argumentation Complexes**: What do the higher Betti numbers of K(AF) encode semantically?
-3. **Persistent Homology**: If attacks are weighted, does the persistent homology of the filtered complex reveal meaningful debate structure?
-
----
-
-## 8. Future Work
-
-1. Formalize homology groups of the argumentation complex in Lean 4.
-2. Prove or disprove the weak Euler characteristic conjecture using Möbius function techniques.
-3. Develop polynomial-time approximations of the Euler characteristic for large frameworks.
-4. Connect to tropical geometry via the weighted argumentation complex.
-5. Apply to real-world debate datasets (parliamentary records, judicial opinions).
+The independence complex provides a geometric lens through which argumentation structure becomes visible. While the naive bridge between topology and semantics fails, the true relationship between these worlds remains a fertile area for future research.
 
 ---
 
 ## References
 
-[1] P.M. Dung, "On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games," Artificial Intelligence, vol. 77, no. 2, pp. 321–357, 1995.
+1. Dung, P.M. (1995). "On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games." *Artificial Intelligence*, 77(2), 321-357.
 
-[2] P. Baroni, M. Caminada, and M. Giacomin, "Abstract argumentation frameworks and their semantics," in Handbook of Formal Argumentation, vol. 1, pp. 159–236, 2018.
+2. Kozlov, D. (2008). *Combinatorial Algebraic Topology*. Springer.
 
-[3] R. Meshulam, "The clique complex and hypergraph matching," Combinatorica, vol. 21, no. 1, pp. 89–94, 2001.
+3. Jonsson, J. (2008). *Simplicial Complexes of Graphs*. Springer Lecture Notes in Mathematics.
 
-[4] A. Tarski, "A lattice-theoretical fixpoint theorem and its applications," Pacific Journal of Mathematics, vol. 5, no. 2, pp. 285–309, 1955.
+4. Baroni, P., Caminada, M., & Giacomin, M. (2011). "An introduction to argumentation semantics." *The Knowledge Engineering Review*, 26(4), 365-410.
 
----
+5. Engström, A. (2009). "Independence complexes of claw-free graphs." *European Journal of Combinatorics*, 29(1), 234-241.
 
-## Appendix: Formal Proof Summary
-
-All theorems were proved in Lean 4.28.0 with Mathlib. The axioms used are: `propext`, `Classical.choice`, `Quot.sound` — the standard foundational axioms. No `sorry` remains in the final formalization. The file `Speculative/AutoResearch/ArgumentationTopology.lean` contains 210 lines of formally verified code.
+6. Meshulam, R. (2003). "Domination numbers and homology." *Journal of Combinatorial Theory, Series A*, 102(2), 321-330.
