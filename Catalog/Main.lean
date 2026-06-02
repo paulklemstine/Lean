@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2367 of the highest-quality
+A curated collection of 2370 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2367
+Total files: 2370
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -271,6 +271,7 @@ import FINAL.Algebra.StrangeLight
 import FINAL.Algebra.StrangeLoops
 import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.Surface
+import FINAL.Algebra.SurveillanceRateDistortion
 import FINAL.Algebra.Sylvester
 import FINAL.Algebra.SymmCube
 import FINAL.Algebra.Symmetry
@@ -1529,6 +1530,7 @@ import FINAL.MachineLearning.IterateBound
 import FINAL.MachineLearning.Kardashev
 import FINAL.MachineLearning.KardashevBound
 import FINAL.MachineLearning.KnotLatticeAlexander
+import FINAL.MachineLearning.KnotPolynomialSpectra
 import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LSEBound
 import FINAL.MachineLearning.LSEConvergence
@@ -1685,6 +1687,7 @@ import FINAL.Physics.DiscreteNoetherConverse
 import FINAL.Physics.DiscreteNoetherShadow
 import FINAL.Physics.EigenvalueRepulsion_2
 import FINAL.Physics.Entanglement
+import FINAL.Physics.FlatlandCatastrophe
 import FINAL.Physics.FlatlandGravity
 import FINAL.Physics.Foundations
 import FINAL.Physics.GaugeCodeDistance

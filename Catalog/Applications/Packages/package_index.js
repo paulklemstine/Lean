@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b38b145c",
     "filename": "flatland_catastrophe_when_2d_physics_breaks.json",
     "pkg_num": 188,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6933262068965518,
     "title": "Flatland Catastrophe: Mathematical Pathologies of 2D Newtonian Gravity"
   },
   {
@@ -5963,8 +5963,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "flatland_catastrophe_when_2d_physics_breaks",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6933262068965518,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Flatland Catastrophe: Mathematical Pathologies of 2D Newtonian Gravity"
     }
