@@ -1,257 +1,232 @@
-#!/usr/bin/env python3
 """
-Information Geometry of Optimization: Core Algorithms
+Information Geometry of Optimization: Algorithms
 
-Implements natural gradient descent and related algorithms for optimization
-on statistical manifolds equipped with the Fisher information metric.
-
-Key algorithms:
-1. NaturalGradientDescent - preconditions gradient by inverse Fisher matrix
-2. StandardGradientDescent - baseline comparison
-3. AdaptiveNaturalGradient - adapts step size using manifold curvature
-4. ConvergenceBoundComputer - computes theoretical convergence bounds
+Type-hinted implementations of natural gradient descent, mirror descent,
+and Bregman divergence computations.
 """
 
+from typing import Callable, List, Tuple
 import numpy as np
-from typing import Callable, Optional, Tuple, List
+from numpy.typing import NDArray
 
 
-class FisherMetric:
+Vector = NDArray[np.float64]
+Matrix = NDArray[np.float64]
+
+
+def fisher_information_gaussian(mu: float, sigma: float) -> Matrix:
+    """Fisher information matrix for 1D Gaussian N(mu, sigma^2).
+
+    G = [[1/sigma^2, 0], [0, 2/sigma^2]]
     """
-    Fisher information metric on a parameter space.
-    
-    Represents a positive-definite matrix G with eigenvalues in [λ_min, λ_max].
-    The condition number κ = λ_max / λ_min determines the geometry distortion.
-    
-    Complexity: O(d²) storage, O(d³) for inverse computation.
+    return np.array([
+        [1.0 / sigma**2, 0.0],
+        [0.0, 2.0 / sigma**2]
+    ])
+
+
+def natural_gradient(
+    grad: Vector,
+    fisher: Matrix
+) -> Vector:
+    """Compute natural gradient: G^{-1} @ grad.
+
+    Args:
+        grad: Euclidean gradient ∇L(θ)
+        fisher: Fisher information matrix G(θ)
+
+    Returns:
+        Natural gradient g̃ = G⁻¹ ∇L
     """
-    
-    def __init__(self, G: np.ndarray):
-        """
-        Initialize with a positive-definite matrix G.
-        
-        Args:
-            G: d×d positive-definite matrix (Fisher information matrix)
-        """
-        self.G = G
-        self.d = G.shape[0]
-        eigenvalues = np.linalg.eigvalsh(G)
-        self.lambda_min = float(eigenvalues[0])
-        self.lambda_max = float(eigenvalues[-1])
-        assert self.lambda_min > 0, "G must be positive definite"
-        self.G_inv = np.linalg.inv(G)
-    
-    @property
-    def condition_number(self) -> float:
-        """Condition number κ = λ_max / λ_min ≥ 1."""
-        return self.lambda_max / self.lambda_min
-    
-    def natural_gradient(self, grad: np.ndarray) -> np.ndarray:
-        """
-        Compute natural gradient: G⁻¹ · grad.
-        
-        This is the steepest descent direction on the Riemannian manifold
-        with metric G, not in Euclidean space.
-        
-        Time complexity: O(d²) (matrix-vector multiply)
-        """
-        return self.G_inv @ grad
+    return np.linalg.solve(fisher, grad)
 
 
-class NaturalGradientDescent:
+def natural_gradient_descent(
+    loss_fn: Callable[[Vector], float],
+    grad_fn: Callable[[Vector], Vector],
+    fisher_fn: Callable[[Vector], Matrix],
+    theta0: Vector,
+    step_sizes: List[float],
+    max_iter: int = 1000
+) -> Tuple[List[Vector], List[float]]:
+    """Natural gradient descent on a statistical manifold.
+
+    θ_{t+1} = θ_t - η_t · G(θ_t)⁻¹ · ∇L(θ_t)
+
+    Args:
+        loss_fn: Loss function L(θ)
+        grad_fn: Gradient function ∇L(θ)
+        fisher_fn: Fisher information matrix G(θ)
+        theta0: Initial parameters
+        step_sizes: List of step sizes η_t
+        max_iter: Maximum iterations
+
+    Returns:
+        (trajectory, losses): parameter trajectory and loss values
     """
-    Natural gradient descent optimizer.
-    
-    Updates: θ_{t+1} = θ_t - η · G⁻¹(θ_t) · ∇L(θ_t)
-    
-    Convergence rate:
-    - Convex: L(θ_T) - L* ≤ D²/(2T)  (independent of κ)
-    - Strongly convex: L(θ_T) - L* ≤ Δ₀ · exp(-T/d)
-    
-    Time complexity per step: O(d³) if G changes, O(d²) if G is fixed.
-    Space complexity: O(d²) for storing G⁻¹.
+    theta = theta0.copy()
+    trajectory = [theta.copy()]
+    losses = [loss_fn(theta)]
+
+    for t in range(min(max_iter, len(step_sizes))):
+        grad = grad_fn(theta)
+        fisher = fisher_fn(theta)
+        nat_grad = natural_gradient(grad, fisher)
+        theta = theta - step_sizes[t] * nat_grad
+        trajectory.append(theta.copy())
+        losses.append(loss_fn(theta))
+
+    return trajectory, losses
+
+
+def standard_gradient_descent(
+    loss_fn: Callable[[Vector], float],
+    grad_fn: Callable[[Vector], Vector],
+    theta0: Vector,
+    step_sizes: List[float],
+    max_iter: int = 1000
+) -> Tuple[List[Vector], List[float]]:
+    """Standard gradient descent (Euclidean).
+
+    θ_{t+1} = θ_t - η_t · ∇L(θ_t)
+
+    Args:
+        loss_fn: Loss function L(θ)
+        grad_fn: Gradient function ∇L(θ)
+        theta0: Initial parameters
+        step_sizes: List of step sizes η_t
+        max_iter: Maximum iterations
+
+    Returns:
+        (trajectory, losses): parameter trajectory and loss values
     """
-    
-    def __init__(self, 
-                 loss_fn: Callable[[np.ndarray], float],
-                 grad_fn: Callable[[np.ndarray], np.ndarray],
-                 fisher_fn: Callable[[np.ndarray], np.ndarray],
-                 eta: float = 0.1,
-                 fixed_fisher: bool = False):
-        """
-        Args:
-            loss_fn: Loss function L(θ)
-            grad_fn: Gradient ∇L(θ)
-            fisher_fn: Fisher information matrix G(θ)
-            eta: Step size
-            fixed_fisher: If True, compute G⁻¹ only once (faster)
-        """
-        self.loss_fn = loss_fn
-        self.grad_fn = grad_fn
-        self.fisher_fn = fisher_fn
-        self.eta = eta
-        self.fixed_fisher = fixed_fisher
-        self._cached_metric = None
-    
-    def step(self, theta: np.ndarray) -> Tuple[np.ndarray, float]:
-        """
-        Perform one natural gradient step.
-        
-        Returns: (new_theta, loss_value)
-        Time: O(d³) if Fisher changes, O(d²) if fixed
-        """
-        loss = self.loss_fn(theta)
-        grad = self.grad_fn(theta)
-        
-        if self._cached_metric is None or not self.fixed_fisher:
-            G = self.fisher_fn(theta)
-            self._cached_metric = FisherMetric(G)
-        
-        nat_grad = self._cached_metric.natural_gradient(grad)
-        new_theta = theta - self.eta * nat_grad
-        
-        return new_theta, loss
-    
-    def optimize(self, theta0: np.ndarray, n_steps: int) -> Tuple[np.ndarray, List[float]]:
-        """
-        Run n_steps of natural gradient descent.
-        
-        Returns: (final_theta, loss_history)
-        Time: O(n_steps · d³)
-        """
-        theta = theta0.copy()
-        losses = []
-        
-        for _ in range(n_steps):
-            theta, loss = self.step(theta)
-            losses.append(loss)
-        
-        return theta, losses
+    theta = theta0.copy()
+    trajectory = [theta.copy()]
+    losses = [loss_fn(theta)]
+
+    for t in range(min(max_iter, len(step_sizes))):
+        grad = grad_fn(theta)
+        theta = theta - step_sizes[t] * grad
+        trajectory.append(theta.copy())
+        losses.append(loss_fn(theta))
+
+    return trajectory, losses
 
 
-class StandardGradientDescent:
+def bregman_divergence(
+    phi: Callable[[Vector], float],
+    grad_phi: Callable[[Vector], Vector],
+    x: Vector,
+    y: Vector
+) -> float:
+    """Compute Bregman divergence D_φ(x, y) = φ(x) - φ(y) - ⟨∇φ(y), x - y⟩.
+
+    Args:
+        phi: Strictly convex generating function φ
+        grad_phi: Gradient of φ
+        x, y: Points in parameter space
+
+    Returns:
+        D_φ(x, y)
     """
-    Standard gradient descent optimizer (baseline comparison).
-    
-    Updates: θ_{t+1} = θ_t - η · ∇L(θ_t)
-    
-    Convergence rate:
-    - Convex: L(θ_T) - L* ≤ β‖θ₀-θ*‖²/(2T)  (depends on κ)
-    - Strongly convex: L(θ_T) - L* ≤ Δ₀ · (1-1/κ)^T
-    
-    Time complexity per step: O(d) for gradient evaluation.
-    Space complexity: O(d).
+    return phi(x) - phi(y) - np.dot(grad_phi(y), x - y)
+
+
+def mirror_descent(
+    loss_fn: Callable[[Vector], float],
+    grad_loss: Callable[[Vector], Vector],
+    grad_phi: Callable[[Vector], Vector],
+    grad_phi_inv: Callable[[Vector], Vector],
+    theta0: Vector,
+    step_sizes: List[float],
+    max_iter: int = 1000
+) -> Tuple[List[Vector], List[float]]:
+    """Mirror descent with Bregman divergence.
+
+    Dual update: η̃_{t+1} = ∇φ(θ_t) - η_t · ∇L(θ_t)
+    Primal recovery: θ_{t+1} = (∇φ)⁻¹(η̃_{t+1})
+
+    Args:
+        loss_fn: Loss function
+        grad_loss: Gradient of loss
+        grad_phi: Gradient of generating function
+        grad_phi_inv: Inverse of grad_phi (maps dual to primal)
+        theta0: Initial parameters
+        step_sizes: Step sizes
+        max_iter: Maximum iterations
+
+    Returns:
+        (trajectory, losses)
     """
-    
-    def __init__(self,
-                 loss_fn: Callable[[np.ndarray], float],
-                 grad_fn: Callable[[np.ndarray], np.ndarray],
-                 eta: float = 0.01):
-        self.loss_fn = loss_fn
-        self.grad_fn = grad_fn
-        self.eta = eta
-    
-    def step(self, theta: np.ndarray) -> Tuple[np.ndarray, float]:
-        loss = self.loss_fn(theta)
-        grad = self.grad_fn(theta)
-        return theta - self.eta * grad, loss
-    
-    def optimize(self, theta0: np.ndarray, n_steps: int) -> Tuple[np.ndarray, List[float]]:
-        theta = theta0.copy()
-        losses = []
-        for _ in range(n_steps):
-            theta, loss = self.step(theta)
-            losses.append(loss)
-        return theta, losses
+    theta = theta0.copy()
+    trajectory = [theta.copy()]
+    losses = [loss_fn(theta)]
+
+    for t in range(min(max_iter, len(step_sizes))):
+        dual = grad_phi(theta)
+        g = grad_loss(theta)
+        dual_next = dual - step_sizes[t] * g
+        theta = grad_phi_inv(dual_next)
+        trajectory.append(theta.copy())
+        losses.append(loss_fn(theta))
+
+    return trajectory, losses
 
 
-class ConvergenceBoundComputer:
+def condition_number(matrix: Matrix) -> float:
+    """Compute condition number κ = λ_max / λ_min."""
+    eigenvalues = np.linalg.eigvalsh(matrix)
+    return float(eigenvalues[-1] / eigenvalues[0])
+
+
+def alpha_divergence(p: Vector, q: Vector, alpha: float) -> float:
+    """Compute α-divergence D_α(p || q).
+
+    D_α(p||q) = (4/(1-α²)) (1 - ∫ p^{(1+α)/2} q^{(1-α)/2})
+
+    For discrete distributions (probability vectors).
     """
-    Computes theoretical convergence bounds for natural vs standard GD.
-    
-    Implements the bounds proved in the formal verification:
-    - natGradGapBound: D²/(2T) for convex losses
-    - natGradStrongConvexBound: Δ₀ · exp(-T/d) for strongly convex losses
-    - gdStrongConvexBound: Δ₀ · (1-1/κ)^T for strongly convex losses with GD
-    """
-    
-    @staticmethod
-    def nat_grad_convex(diameter: float, T: int) -> float:
-        """Natural gradient bound for convex losses: D²/(2T)."""
-        assert T > 0, "T must be positive"
-        return diameter**2 / (2 * T)
-    
-    @staticmethod
-    def nat_grad_strongly_convex(delta0: float, d: int, T: int) -> float:
-        """Natural gradient bound for strongly convex losses: Δ₀·exp(-T/d)."""
-        return delta0 * np.exp(-T / d)
-    
-    @staticmethod
-    def gd_strongly_convex(delta0: float, kappa: float, T: int) -> float:
-        """Standard GD bound for strongly convex losses: Δ₀·(1-1/κ)^T."""
-        return delta0 * (1 - 1/kappa)**T
-    
-    @staticmethod
-    def iterations_for_epsilon(diameter: float, epsilon: float) -> int:
-        """
-        Minimum iterations for ε-accuracy with natural gradient (convex case).
-        
-        Returns: ⌈D²/(2ε)⌉ + 1
-        This is proved in natGrad_iteration_count.
-        """
-        return int(np.ceil(diameter**2 / (2 * epsilon))) + 1
-    
-    @staticmethod
-    def speedup_factor(kappa: float, d: int, T: int) -> float:
-        """
-        Ratio of GD bound to NG bound at step T.
-        
-        For large κ, this grows exponentially in T.
-        """
-        gd = (1 - 1/kappa)**T
-        ng = np.exp(-T / d)
-        return gd / max(ng, 1e-300)
-
-
-def demo_algorithms():
-    """Demonstrate the algorithms on a concrete quadratic problem."""
-    d = 5
-    kappa = 50
-    
-    # Create quadratic: f(x) = 0.5 x^T A x - b^T x
-    eigenvalues = np.linspace(1, kappa, d)
-    A = np.diag(eigenvalues)
-    b = np.ones(d)
-    x_opt = np.linalg.solve(A, b)
-    f_opt = 0.5 * x_opt @ A @ x_opt - b @ x_opt
-    
-    loss_fn = lambda x: 0.5 * x @ A @ x - b @ x
-    grad_fn = lambda x: A @ x - b
-    fisher_fn = lambda x: A  # Fisher = Hessian for quadratic
-    
-    x0 = np.zeros(d)
-    n_steps = 100
-    
-    # Natural gradient
-    ng = NaturalGradientDescent(loss_fn, grad_fn, fisher_fn, eta=1.0, fixed_fisher=True)
-    x_ng, losses_ng = ng.optimize(x0, n_steps)
-    
-    # Standard gradient
-    sgd = StandardGradientDescent(loss_fn, grad_fn, eta=1.0/kappa)
-    x_sgd, losses_sgd = sgd.optimize(x0, n_steps)
-    
-    print(f"Quadratic problem: d={d}, κ={kappa}")
-    print(f"  Natural GD final loss gap: {losses_ng[-1] - f_opt:.2e}")
-    print(f"  Standard GD final loss gap: {losses_sgd[-1] - f_opt:.2e}")
-    
-    # Theoretical bounds
-    bc = ConvergenceBoundComputer()
-    delta0 = loss_fn(x0) - f_opt
-    print(f"\nTheoretical bounds after {n_steps} steps:")
-    print(f"  NG bound (strongly convex): {bc.nat_grad_strongly_convex(delta0, d, n_steps):.2e}")
-    print(f"  GD bound (strongly convex): {bc.gd_strongly_convex(delta0, kappa, n_steps):.2e}")
-    print(f"  Speedup factor: {bc.speedup_factor(kappa, d, n_steps):.1f}x")
+    if abs(alpha - 1.0) < 1e-10:
+        # KL divergence
+        mask = p > 0
+        return float(np.sum(p[mask] * np.log(p[mask] / q[mask])))
+    elif abs(alpha + 1.0) < 1e-10:
+        # Reverse KL
+        mask = q > 0
+        return float(np.sum(q[mask] * np.log(q[mask] / p[mask])))
+    else:
+        a = (1 + alpha) / 2
+        b = (1 - alpha) / 2
+        integral = np.sum(p**a * q**b)
+        return float(4.0 / (1.0 - alpha**2) * (1.0 - integral))
 
 
 if __name__ == "__main__":
-    demo_algorithms()
+    # Quick test: natural gradient on a 2D quadratic with bad conditioning
+    A = np.array([[100.0, 0.0], [0.0, 1.0]])  # condition number 100
+
+    def loss(theta: Vector) -> float:
+        return 0.5 * theta @ A @ theta
+
+    def grad(theta: Vector) -> Vector:
+        return A @ theta
+
+    def fisher(theta: Vector) -> Matrix:
+        return A  # For quadratic, Fisher = Hessian
+
+    theta0 = np.array([1.0, 1.0])
+
+    # Natural gradient: should converge in 1 step (since G=A, G^{-1}A = I)
+    eta = [1.0] * 10
+    traj_nat, losses_nat = natural_gradient_descent(loss, grad, fisher, theta0, eta, 10)
+
+    # Standard GD: slow due to condition number
+    eta_std = [0.005] * 200  # small step size needed for stability
+    traj_std, losses_std = standard_gradient_descent(loss, grad, theta0, eta_std, 200)
+
+    print("=== Natural Gradient vs Standard GD ===")
+    print(f"Initial loss: {losses_nat[0]:.4f}")
+    print(f"Natural GD after 1 step: {losses_nat[1]:.6f}")
+    print(f"Standard GD after 10 steps: {losses_std[10]:.4f}")
+    print(f"Standard GD after 100 steps: {losses_std[100]:.4f}")
+    print(f"Condition number: {condition_number(A):.0f}")
