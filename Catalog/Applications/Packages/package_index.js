@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8a1e758a",
     "filename": "rigorous_mathematical_framework_connecting_int.json",
     "pkg_num": 203,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7707953846153847,
     "title": "Tropical Proof Complexity: Cost-Error Duality in Interactive Proof Systems"
   },
   {
@@ -6461,8 +6461,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "rigorous_mathematical_framework_connecting_int",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7707953846153847,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Tropical Proof Complexity: Cost-Error Duality in Interactive Proof Systems"
     }
