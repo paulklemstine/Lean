@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "16a98fab",
     "filename": "the_aperiodic_monotile_one_shape_to_tile_them_all.json",
     "pkg_num": 245,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7446674193548387,
     "title": "Algebraic Foundations of the Aperiodic Monotile Hat Spectrum"
   },
   {
@@ -7847,8 +7847,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_aperiodic_monotile_one_shape_to_tile_them_all",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7446674193548387,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "Algebraic Foundations of the Aperiodic Monotile Hat Spectrum"
     }
