@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dcf06550",
     "filename": "the_poincare_conjecture_for_data_manifold_detectio.json",
     "pkg_num": 239,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6945844444444444,
     "title": "The Poincar\u00e9 Threshold for Data: Manifold Detection via Persistent Homology"
   },
   {
@@ -7645,8 +7645,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6945844444444444,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "The Poincar\u00e9 Threshold for Data: Manifold Detection via Persistent Homology"
     }
