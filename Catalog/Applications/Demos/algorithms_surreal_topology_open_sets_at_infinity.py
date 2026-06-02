@@ -1,306 +1,205 @@
 #!/usr/bin/env python3
 """
-Surreal Topology: Algorithms
+Algorithms for Surreal Topology Computations
 
 Type-hinted implementations of key algorithms from the surreal topology research.
 """
 
 from fractions import Fraction
 from typing import List, Tuple, Set, Optional, Callable
-from dataclasses import dataclass
 import math
-
-
-@dataclass
-class Interval:
-    """An open interval (left, right) in a linear order."""
-    left: float
-    right: float
-    
-    def contains(self, x: float) -> bool:
-        return self.left < x < self.right
-    
-    def is_empty(self) -> bool:
-        return self.left >= self.right
-    
-    def intersect(self, other: 'Interval') -> 'Interval':
-        return Interval(max(self.left, other.left), min(self.right, other.right))
-    
-    def __repr__(self) -> str:
-        return f"({self.left}, {self.right})"
 
 
 def bounded_day_dyadics(n: int) -> List[Fraction]:
     """
-    Generate surreal numbers of birthday ≤ n (dyadic rationals k/2^n, |k| ≤ 2^n).
+    Compute all surreal numbers born on or before day n (restricted to dyadics).
     
-    Algorithm: Enumerate integers k from -2^n to 2^n and form k/2^n.
-    Time complexity: O(2^n)
-    Space complexity: O(2^n)
+    Day n surreals include rationals k/2^n for |k| ≤ 2^n.
     
     Args:
-        n: Maximum birthday (generation number)
+        n: The day number (non-negative integer)
     
     Returns:
-        Sorted list of dyadic rationals representing surreal numbers of birthday ≤ n
+        Sorted list of dyadic rationals born by day n
     """
+    result: Set[Fraction] = set()
+    bound = 2 ** n
     denom = 2 ** n
-    return sorted(set(Fraction(k, denom) for k in range(-denom, denom + 1)))
+    for k in range(-bound, bound + 1):
+        result.add(Fraction(k, denom))
+    return sorted(result)
 
 
-def finite_cover_test(
-    elements: List[float],
-    cover_points: List[float]
-) -> Tuple[bool, List[float]]:
-    """
-    Test whether {(-∞, a) : a ∈ cover_points} covers all elements.
-    
-    This implements the non-compactness test: for a linear order with no maximum,
-    any finite cover by initial segments must fail.
-    
-    Algorithm:
-        1. Find max of cover_points
-        2. Any element ≥ max is uncovered
-    
-    Time complexity: O(n + m) where n = |elements|, m = |cover_points|
-    
-    Args:
-        elements: Elements to be covered
-        cover_points: Upper bounds of initial segments
-    
-    Returns:
-        (is_covered, uncovered_elements) tuple
-    """
-    if not cover_points:
-        return False, elements
-    
-    max_cover = max(cover_points)
-    uncovered = [x for x in elements if x >= max_cover]
-    return len(uncovered) == 0, uncovered
-
-
-def surreal_open_extension(
+def open_set_extension(
     embedding: Callable[[Fraction], float],
-    source_elements: List[Fraction],
-    open_set: Set[Fraction]
-) -> List[Interval]:
+    open_set: Callable[[Fraction], bool],
+    test_point: float,
+    search_depth: int = 10
+) -> bool:
     """
-    Compute the surreal open extension of an open set via an order embedding.
+    Check if a point lies in the open set extension through an order embedding.
     
-    Given f: α ↪o β (order embedding) and U ⊆ α, compute:
-        SurrealOpenExtension(f, U) = ⋃ {(f(a), f(b)) : a < b, (a,b) ⊆ U}
-    
-    Algorithm:
-        1. For each pair a < b in source_elements
-        2. Check if Ioo(a, b) ⊆ U (all intermediate elements are in U)
-        3. If so, add interval (f(a), f(b)) to the extension
-        4. Merge overlapping intervals for the final result
-    
-    Time complexity: O(n^2 * m) where n = |source_elements|, m = check cost
+    Given ι: ℚ ↪ ℝ (the standard embedding) and an open set U ⊆ ℚ,
+    the extension is ⋃ {(ι(a), ι(b)) | Ioo(a,b) ⊆ U, a < b}.
     
     Args:
-        embedding: Order-preserving map f: α → β
-        source_elements: Sorted elements of the source order
-        open_set: The open set U ⊆ α to extend
+        embedding: Order embedding function ι: ℚ → ℝ
+        open_set: Characteristic function of the open set U ⊆ ℚ
+        test_point: Point to test membership in the extension
+        search_depth: Denominator bound for rational search
     
     Returns:
-        List of disjoint open intervals forming the extension
+        True if we found a covering interval (may return False even if covered,
+        due to finite search)
     """
-    intervals: List[Interval] = []
-    sorted_elems = sorted(source_elements)
-    
-    for i, a in enumerate(sorted_elems):
-        for j in range(i + 1, len(sorted_elems)):
-            b = sorted_elems[j]
-            # Check if Ioo(a, b) ⊆ U
-            ioo = {x for x in sorted_elems if a < x < b}
-            if ioo and ioo <= open_set:
-                fa, fb = embedding(a), embedding(b)
-                intervals.append(Interval(fa, fb))
-    
-    # Merge overlapping intervals
-    return merge_intervals(intervals)
+    # Search for rational interval (a, b) with Ioo(a,b) ⊆ U and ι(a) < test_point < ι(b)
+    denom = 2 ** search_depth
+    for k_a in range(-denom, denom):
+        a = Fraction(k_a, denom)
+        if embedding(a) >= test_point:
+            continue
+        for k_b in range(k_a + 1, denom + 1):
+            b = Fraction(k_b, denom)
+            if embedding(b) <= test_point:
+                continue
+            # Check if Ioo(a, b) ⊆ U (sample check)
+            all_in = True
+            for k_mid in range(k_a + 1, k_b):
+                mid = Fraction(k_mid, denom)
+                if not open_set(mid):
+                    all_in = False
+                    break
+            if all_in:
+                return True
+    return False
 
 
-def merge_intervals(intervals: List[Interval]) -> List[Interval]:
+def cofinality_gap_witness(
+    sequence: List[float],
+    lower_bound: float
+) -> Optional[float]:
     """
-    Merge overlapping intervals into a minimal set of disjoint intervals.
+    Find a gap witness between a lower bound and a sequence.
     
-    Time complexity: O(n log n)
-    """
-    if not intervals:
-        return []
-    
-    sorted_ivs = sorted(intervals, key=lambda iv: iv.left)
-    merged = [sorted_ivs[0]]
-    
-    for iv in sorted_ivs[1:]:
-        if iv.left <= merged[-1].right:
-            merged[-1] = Interval(merged[-1].left, max(merged[-1].right, iv.right))
-        else:
-            merged.append(iv)
-    
-    return merged
-
-
-def hausdorff_separation(
-    x: float, y: float, dense_elements: List[float]
-) -> Optional[Tuple[float, Interval, Interval]]:
-    """
-    Find explicit Hausdorff-separating neighborhoods for x < y in a dense order.
-    
-    Algorithm:
-        1. Find z between x and y (midpoint or element from dense set)
-        2. Return Iio(z) as neighborhood of x and Ioi(z) as neighborhood of y
-    
-    Time complexity: O(n) for searching dense_elements
+    Given x (lower_bound) and sequence f with x < f(n),
+    find y with x < y < f(n) for all n.
     
     Args:
-        x: First point
-        y: Second point (must have x < y)
-        dense_elements: Sorted list of elements from a dense subset
+        sequence: List of values all above lower_bound
+        lower_bound: The point x
     
     Returns:
-        (z, nhd_x, nhd_y) where z separates, nhd_x ∋ x, nhd_y ∋ y
+        A gap witness y, or None if sequence is empty
     """
-    if x >= y:
+    if not sequence:
         return None
     
-    # Find element between x and y
-    between = [z for z in dense_elements if x < z < y]
-    if between:
-        z = between[len(between) // 2]  # Take middle element
+    min_val = min(sequence)
+    if min_val <= lower_bound:
+        return None
+    
+    # Midpoint between lower_bound and minimum
+    return (lower_bound + min_val) / 2
+
+
+def detect_disconnection(
+    points: List[float],
+    gap_test: Callable[[float], bool]
+) -> Tuple[List[float], List[float]]:
+    """
+    Detect a disconnection in an ordered set via a gap.
+    
+    Given an ordered set of points and a gap predicate (True = above gap),
+    partition the points into lower and upper components.
+    
+    Args:
+        points: Sorted list of points in the ordered set
+        gap_test: Returns True if a point is above the gap
+    
+    Returns:
+        Tuple of (lower_component, upper_component)
+    """
+    lower = [p for p in points if not gap_test(p)]
+    upper = [p for p in points if gap_test(p)]
+    return lower, upper
+
+
+def long_line_cover_refinement(
+    n_ordinals: int,
+    interval_count: int = 10,
+    overlap: float = 0.1
+) -> Tuple[int, int]:
+    """
+    Compute cover refinement statistics for finite approximation to long line.
+    
+    Approximates n × [0,1) with lexicographic order and computes:
+    - Number of open sets in a standard cover
+    - Estimate of minimum locally finite refinement size
+    
+    Args:
+        n_ordinals: Number of ordinal copies (approximating ω₁)
+        interval_count: Number of intervals per [0,1) copy
+        overlap: Fractional overlap between adjacent intervals
+    
+    Returns:
+        Tuple of (cover_size, estimated_refinement_size)
+    """
+    # Standard cover: overlapping intervals in each copy of [0,1)
+    # plus "transition" intervals at ordinal boundaries
+    cover_size = n_ordinals * interval_count + (n_ordinals - 1)
+    
+    # At limit ordinals (simulated), the cofinality creates refinement issues
+    # Each predecessor ordinal's intervals need to be coordinated
+    # Estimated refinement grows as n * log(n) for finite approximations
+    if n_ordinals > 1:
+        refinement_size = int(n_ordinals * math.log2(n_ordinals) * interval_count)
     else:
-        z = (x + y) / 2  # Fallback to midpoint
+        refinement_size = interval_count
     
-    return (z, Interval(float('-inf'), z), Interval(z, float('inf')))
+    return cover_size, refinement_size
 
 
-def coinitiality_test(
-    point: Fraction,
-    elements: List[Fraction],
-    max_seq_length: int = 10
-) -> Tuple[bool, List[Fraction]]:
+def dyadic_density_at_scale(n: int, interval: Tuple[float, float]) -> int:
     """
-    Test whether a point has countable coinitiality in a finite order.
-    
-    For a finite order, coinitiality is always finite (hence countable).
-    We compute the smallest elements above the point.
-    
-    Algorithm:
-        1. Filter elements above the point
-        2. Sort and take the smallest ones
-    
-    Time complexity: O(n log n)
+    Count day-n dyadic surreal numbers in a given interval.
     
     Args:
-        point: The point to test
-        elements: Sorted elements of the order
-        max_seq_length: Maximum number of coinitial elements to return
+        n: Day number
+        interval: (lower, upper) bounds
     
     Returns:
-        (has_countable_coinitiality, coinitial_sequence)
+        Count of day-n dyadics in the interval
     """
-    above = sorted([x for x in elements if x > point])
-    coinitial_seq = above[:max_seq_length]
-    # In a finite order, coinitiality is always countable
-    return True, coinitial_seq
-
-
-def connected_components_finite(
-    elements: List[float],
-    adjacency_threshold: float
-) -> List[List[float]]:
-    """
-    Compute connected components of a finite ordered set with given adjacency threshold.
-    
-    In the discrete topology on a finite set, every point is its own component.
-    With a threshold, adjacent elements (distance < threshold) are connected.
-    
-    This tests the conjecture that countable dense order fragments are totally 
-    disconnected in the order topology (singleton components).
-    
-    Algorithm:
-        1. Sort elements
-        2. Group consecutive elements with gap < threshold
-    
-    Time complexity: O(n log n)
-    
-    Args:
-        elements: Points in the space
-        adjacency_threshold: Maximum gap for adjacency
-    
-    Returns:
-        List of connected components (each a list of elements)
-    """
-    if not elements:
-        return []
-    
-    sorted_elems = sorted(elements)
-    components: List[List[float]] = [[sorted_elems[0]]]
-    
-    for x in sorted_elems[1:]:
-        if x - components[-1][-1] < adjacency_threshold:
-            components[-1].append(x)
-        else:
-            components.append([x])
-    
-    return components
-
-
-def contraction_to_zero(q: Fraction, steps: int) -> List[Fraction]:
-    """
-    Generate the contraction-to-zero sequence: q, q/2, q/4, ..., q/2^steps.
-    
-    This models the contractibility of intervals in ordered fields — every
-    closed interval [a, b] can be continuously contracted to a point via
-    the homotopy H(x, t) = (1-t)x + ta.
-    
-    Args:
-        q: Starting value
-        steps: Number of halving steps
-    
-    Returns:
-        List of values [q, q/2, q/4, ..., q/2^steps]
-    """
-    return [q / (2 ** i) for i in range(steps + 1)]
+    a, b = interval
+    count = 0
+    denom = 2 ** n
+    bound = 2 ** n
+    for k in range(-bound, bound + 1):
+        val = k / denom
+        if a < val < b:
+            count += 1
+    return count
 
 
 if __name__ == "__main__":
-    # Quick test of all algorithms
-    print("Testing algorithms...")
+    # Example: bounded day dyadics
+    print("Day 3 dyadics:", [float(x) for x in bounded_day_dyadics(3)])
+    print()
     
-    # Test bounded_day_dyadics
-    d3 = bounded_day_dyadics(3)
-    print(f"Birthday ≤ 3: {len(d3)} dyadics")
+    # Example: cofinality gap
+    seq = [2.0 + 1/n for n in range(1, 6)]
+    witness = cofinality_gap_witness(seq, 2.0)
+    print(f"Gap witness for sequence approaching 2 from above: {witness}")
+    print()
     
-    # Test finite_cover_test
-    covered, uncovered = finite_cover_test(
-        [float(x) for x in d3],
-        [1.0, 2.0, 3.0]
-    )
-    print(f"Cover test: covered={covered}, uncovered={len(uncovered)} elements")
+    # Example: disconnection detection
+    rationals = [i/10 for i in range(-20, 21)]
+    sqrt2 = math.sqrt(2)
+    lower, upper = detect_disconnection(rationals, lambda x: x > sqrt2)
+    print(f"ℚ disconnection at √2: |lower| = {len(lower)}, |upper| = {len(upper)}")
+    print()
     
-    # Test surreal_open_extension
-    U = {x for x in d3 if Fraction(0) < x < Fraction(1)}
-    ext = surreal_open_extension(float, d3, U)
-    print(f"Surreal extension of (0,1): {len(ext)} intervals")
-    
-    # Test Hausdorff separation
-    sep = hausdorff_separation(0.3, 0.7, [float(x) for x in d3])
-    if sep:
-        print(f"Separation: z={sep[0]}, nhd_x={sep[1]}, nhd_y={sep[2]}")
-    
-    # Test coinitiality
-    has_ci, seq = coinitiality_test(Fraction(0), d3)
-    print(f"Coinitiality at 0: {has_ci}, seq={seq[:5]}")
-    
-    # Test connected components
-    comps = connected_components_finite([float(x) for x in d3], 0.01)
-    print(f"Connected components (threshold=0.01): {len(comps)} components")
-    
-    # Test contraction
-    ct = contraction_to_zero(Fraction(1), 5)
-    print(f"Contraction: {ct}")
-    
-    print("All tests passed ✓")
+    # Example: long line cover
+    for n in [5, 10, 50, 100]:
+        cover, refine = long_line_cover_refinement(n)
+        print(f"Long line approx n={n}: cover={cover}, refinement≈{refine}")
