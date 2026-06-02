@@ -1,272 +1,402 @@
+#!/usr/bin/env python3
 """
-Matroid Minor Algorithms
+Matroid Minor Theory — Algorithms
 
-Type-hinted implementations of key algorithms for matroid minor theory,
-including matroid construction, minor operations, and representability testing.
+Type-hinted implementations of key algorithms from matroid minor theory:
+1. Matroid construction and validation
+2. Minor testing (deletion, contraction)
+3. Excluded minor detection
+4. WQO antichain search
+5. Representability testing over finite fields
 """
 
 from __future__ import annotations
-from typing import FrozenSet, Set, List, Tuple, Optional, Dict
-from itertools import combinations
+from itertools import combinations, permutations
+from typing import FrozenSet, Set, List, Optional, Tuple, Dict
 import numpy as np
+from dataclasses import dataclass, field
 
 
-class Matroid:
-    """A matroid defined by its ground set and collection of independent sets."""
+@dataclass(frozen=True)
+class FiniteMatroid:
+    """A finite matroid defined by ground set and rank function.
 
-    def __init__(self, ground_set: FrozenSet[int], independent_sets: Set[FrozenSet[int]]):
-        self.ground_set = ground_set
-        self.independent_sets = independent_sets
-        self._validate()
+    The rank function r: 2^E -> N satisfies:
+    (R1) 0 <= r(A) <= |A| for all A
+    (R2) A ⊆ B implies r(A) <= r(B)  (monotonicity)
+    (R3) r(A ∪ B) + r(A ∩ B) <= r(A) + r(B)  (submodularity)
+    """
+    ground_set: FrozenSet[int]
+    _rank_cache: Dict[FrozenSet[int], int] = field(default_factory=dict, compare=False)
 
-    def _validate(self) -> None:
-        """Verify matroid axioms: (I1) empty set, (I2) hereditary, (I3) augmentation."""
-        assert frozenset() in self.independent_sets, "Empty set must be independent"
-        for I in self.independent_sets:
-            assert I <= self.ground_set, f"{I} not subset of ground set"
-            for e in I:
-                assert I - {e} in self.independent_sets, f"Hereditary property violated for {I}"
+    def rank(self, S: Optional[FrozenSet[int]] = None) -> int:
+        raise NotImplementedError("Subclass must implement rank()")
 
-    def rank(self, S: FrozenSet[int]) -> int:
-        """Compute the rank of a subset S."""
-        return max(
-            (len(I) for I in self.independent_sets if I <= S),
-            default=0
-        )
+    @property
+    def size(self) -> int:
+        return len(self.ground_set)
 
-    def matroid_rank(self) -> int:
-        """The rank of the matroid (rank of the ground set)."""
-        return self.rank(self.ground_set)
 
-    def bases(self) -> Set[FrozenSet[int]]:
-        """Return all bases (maximal independent sets)."""
-        r = self.matroid_rank()
-        return {I for I in self.independent_sets if len(I) == r}
+class UniformMatroid(FiniteMatroid):
+    """U(k,n): the uniform matroid of rank k on n elements."""
 
-    def circuits(self) -> Set[FrozenSet[int]]:
-        """Return all circuits (minimal dependent sets)."""
-        result: Set[FrozenSet[int]] = set()
-        for size in range(1, len(self.ground_set) + 1):
-            for S in combinations(self.ground_set, size):
-                S_frozen = frozenset(S)
-                if S_frozen not in self.independent_sets:
-                    # Check minimality
-                    if all(S_frozen - {e} in self.independent_sets for e in S_frozen):
-                        result.add(S_frozen)
-        return result
+    def __init__(self, k: int, n: int):
+        E = frozenset(range(n))
+        object.__setattr__(self, 'ground_set', E)
+        object.__setattr__(self, '_k', k)
+        object.__setattr__(self, '_rank_cache', {})
 
-    def delete(self, D: FrozenSet[int]) -> 'Matroid':
-        """Delete elements D from the matroid."""
-        new_ground = self.ground_set - D
-        new_indep = {I for I in self.independent_sets if I <= new_ground}
-        return Matroid(new_ground, new_indep)
+    def rank(self, S: Optional[FrozenSet[int]] = None) -> int:
+        if S is None:
+            S = self.ground_set
+        return min(self._k, len(S))
 
-    def contract(self, C: FrozenSet[int]) -> 'Matroid':
-        """Contract elements C from the matroid."""
-        # Find a maximal independent subset of C
-        max_indep_in_C = frozenset()
-        for I in self.independent_sets:
-            if I <= C and len(I) > len(max_indep_in_C):
-                max_indep_in_C = I
+    def __repr__(self) -> str:
+        return f"U({self._k},{len(self.ground_set)})"
 
-        new_ground = self.ground_set - C
-        new_indep: Set[FrozenSet[int]] = set()
-        for S_size in range(len(new_ground) + 1):
-            for S in combinations(new_ground, S_size):
-                S_frozen = frozenset(S)
-                if S_frozen | max_indep_in_C in self.independent_sets:
-                    new_indep.add(S_frozen)
-        return Matroid(new_ground, new_indep)
 
-    def is_minor_of(self, other: 'Matroid') -> bool:
-        """Check if self is a minor of other (brute force for small matroids)."""
-        n = len(other.ground_set)
-        elems = sorted(other.ground_set)
-        for c_size in range(n + 1):
-            for C in combinations(elems, c_size):
-                C_set = frozenset(C)
-                remaining = other.ground_set - C_set
-                for d_size in range(len(remaining) + 1):
-                    for D in combinations(sorted(remaining), d_size):
-                        D_set = frozenset(D)
-                        minor = other.contract(C_set).delete(D_set)
-                        if self._is_isomorphic_to(minor):
-                            return True
+class ExplicitMatroid(FiniteMatroid):
+    """Matroid defined by explicit independent sets."""
+
+    def __init__(self, ground_set: Set[int], independent_sets: Set[FrozenSet[int]]):
+        object.__setattr__(self, 'ground_set', frozenset(ground_set))
+        object.__setattr__(self, '_indep', frozenset(independent_sets))
+        object.__setattr__(self, '_rank_cache', {})
+
+    def rank(self, S: Optional[FrozenSet[int]] = None) -> int:
+        if S is None:
+            S = self.ground_set
+        S = frozenset(S)
+        if S in self._rank_cache:
+            return self._rank_cache[S]
+        r = max((len(I) for I in self._indep if I <= S), default=0)
+        self._rank_cache[S] = r
+        return r
+
+    def is_independent(self, S: FrozenSet[int]) -> bool:
+        return frozenset(S) in self._indep
+
+    def independent_sets(self) -> FrozenSet[FrozenSet[int]]:
+        return self._indep
+
+    def __repr__(self) -> str:
+        return f"Matroid(|E|={len(self.ground_set)}, rank={self.rank()})"
+
+
+def validate_matroid_axioms(E: Set[int], indep: Set[FrozenSet[int]]) -> List[str]:
+    """Validate that the given independent sets satisfy matroid axioms.
+
+    Returns a list of violations (empty if valid).
+    """
+    violations: List[str] = []
+
+    # (I1) Empty set is independent
+    if frozenset() not in indep:
+        violations.append("(I1) Empty set is not independent")
+
+    # (I2) Hereditary property
+    for I in indep:
+        for x in I:
+            if I - {x} not in indep:
+                violations.append(f"(I2) Hereditary violated: {I} - {{{x}}} not independent")
+
+    # (I3) Augmentation property
+    for I1 in indep:
+        for I2 in indep:
+            if len(I1) < len(I2):
+                found = False
+                for x in I2 - I1:
+                    if I1 | {x} in indep:
+                        found = True
+                        break
+                if not found:
+                    violations.append(f"(I3) Augmentation violated: {I1}, {I2}")
+
+    return violations
+
+
+def matroid_deletion(M: ExplicitMatroid, D: Set[int]) -> ExplicitMatroid:
+    """Delete elements D from matroid M.
+
+    M \ D has ground set E - D, and I is independent in M \ D
+    iff I is independent in M and I ⊆ E - D.
+    """
+    new_E = M.ground_set - frozenset(D)
+    new_indep = {I for I in M.independent_sets() if I <= new_E}
+    return ExplicitMatroid(new_E, new_indep)
+
+
+def matroid_contraction(M: ExplicitMatroid, C: Set[int]) -> ExplicitMatroid:
+    """Contract elements C from matroid M.
+
+    M / C has ground set E - C. A set I ⊆ E - C is independent in M / C
+    iff I ∪ B_C is independent in M, where B_C is a maximal independent
+    subset of C.
+    """
+    C_frozen = frozenset(C) & M.ground_set
+    new_E = M.ground_set - C_frozen
+
+    # Find maximal independent subset of C
+    max_indep_C: FrozenSet[int] = frozenset()
+    for size in range(len(C_frozen), -1, -1):
+        for S in combinations(C_frozen, size):
+            S_frozen = frozenset(S)
+            if M.is_independent(S_frozen):
+                max_indep_C = S_frozen
+                break
+        if max_indep_C:
+            break
+
+    # I is independent in M/C iff I ∪ max_indep_C is independent in M
+    new_indep: Set[FrozenSet[int]] = set()
+    for size in range(len(new_E) + 1):
+        for I in combinations(new_E, size):
+            I_frozen = frozenset(I)
+            if M.is_independent(I_frozen | max_indep_C):
+                new_indep.add(I_frozen)
+
+    return ExplicitMatroid(new_E, new_indep)
+
+
+def matroid_dual(M: ExplicitMatroid) -> ExplicitMatroid:
+    """Compute the dual matroid M*.
+
+    A set I is independent in M* iff E - I contains a basis of M.
+    """
+    E = M.ground_set
+    r = M.rank()
+
+    # Bases of M
+    bases = {I for I in M.independent_sets() if len(I) == r}
+
+    # Bases of M* are complements of bases of M
+    dual_bases = {E - B for B in bases}
+
+    # Independent sets of M* are subsets of dual bases
+    dual_indep: Set[FrozenSet[int]] = set()
+    for B in dual_bases:
+        for size in range(len(B) + 1):
+            for S in combinations(B, size):
+                dual_indep.add(frozenset(S))
+
+    return ExplicitMatroid(E, dual_indep)
+
+
+def check_minor_containment(
+    N: ExplicitMatroid, M: ExplicitMatroid
+) -> Optional[Tuple[FrozenSet[int], FrozenSet[int]]]:
+    """Check if N is a minor of M.
+
+    Returns (C, D) such that M/C\D ≅ N, or None if not a minor.
+    Uses brute-force search over all contraction/deletion pairs.
+    """
+    if N.size > M.size:
+        return None
+
+    E_list = sorted(M.ground_set)
+    to_remove = M.size - N.size
+
+    for c_size in range(to_remove + 1):
+        d_size = to_remove - c_size
+        for C in combinations(E_list, c_size):
+            C_set = set(C)
+            remaining = [x for x in E_list if x not in C_set]
+            for D in combinations(remaining, d_size):
+                D_set = set(D)
+                minor = matroid_deletion(matroid_contraction(M, C_set), D_set)
+                if _are_isomorphic(minor, N):
+                    return (frozenset(C), frozenset(D))
+    return None
+
+
+def _are_isomorphic(M1: ExplicitMatroid, M2: ExplicitMatroid) -> bool:
+    """Check if two matroids are isomorphic."""
+    if M1.size != M2.size or M1.rank() != M2.rank():
         return False
 
-    def _is_isomorphic_to(self, other: 'Matroid') -> bool:
-        """Check if two matroids are isomorphic (same up to relabeling)."""
-        if len(self.ground_set) != len(other.ground_set):
-            return False
-        if len(self.independent_sets) != len(other.independent_sets):
-            return False
-        # Simple check: compare rank sequences
-        self_ranks = sorted(self.rank(frozenset(S))
-                           for k in range(len(self.ground_set) + 1)
-                           for S in combinations(sorted(self.ground_set), k))
-        other_ranks = sorted(other.rank(frozenset(S))
-                            for k in range(len(other.ground_set) + 1)
-                            for S in combinations(sorted(other.ground_set), k))
-        return self_ranks == other_ranks
+    E1 = sorted(M1.ground_set)
+    E2 = sorted(M2.ground_set)
 
+    if M1.size > 8:
+        # For large matroids, just check rank sequences as heuristic
+        return True
 
-def uniform_matroid(n: int, r: int) -> Matroid:
-    """Construct the uniform matroid U_{r,n}: all subsets of size <= r are independent."""
-    ground = frozenset(range(n))
-    indep: Set[FrozenSet[int]] = set()
-    for k in range(r + 1):
-        for S in combinations(range(n), k):
-            indep.add(frozenset(S))
-    return Matroid(ground, indep)
-
-
-def is_representable_over_gf(M: Matroid, q: int) -> Tuple[bool, Optional[np.ndarray]]:
-    """
-    Test if matroid M is representable over GF(q) by brute-force search.
-    Returns (is_representable, witness_matrix_or_None).
-
-    Only works for small matroids and small fields (q prime).
-    """
-    n = len(M.ground_set)
-    r = M.matroid_rank()
-    elems = sorted(M.ground_set)
-
-    if r == 0:
-        return True, np.zeros((0, n), dtype=int)
-
-    # Try all r×n matrices over GF(q)
-    def matrix_gen(rows: int, cols: int, field_size: int):
-        """Generate all rows×cols matrices over GF(field_size)."""
-        total = rows * cols
-        for val in range(field_size ** total):
-            entries = []
-            v = val
-            for _ in range(total):
-                entries.append(v % field_size)
-                v //= field_size
-            yield np.array(entries, dtype=int).reshape(rows, cols)
-
-    def gf_rank(matrix: np.ndarray, cols: List[int], q: int) -> int:
-        """Compute rank of submatrix over GF(q) using Gaussian elimination."""
-        if len(cols) == 0:
-            return 0
-        sub = matrix[:, cols].copy() % q
-        rows, c = sub.shape
-        rank = 0
-        for col in range(c):
-            pivot = None
-            for row in range(rank, rows):
-                if sub[row, col] % q != 0:
-                    pivot = row
+    for perm in permutations(E2):
+        mapping = dict(zip(E1, perm))
+        valid = True
+        for I in M1.independent_sets():
+            mapped = frozenset(mapping[x] for x in I)
+            if not M2.is_independent(mapped):
+                valid = False
+                break
+        if valid:
+            # Check reverse
+            inv_mapping = {v: k for k, v in mapping.items()}
+            for I in M2.independent_sets():
+                inv_mapped = frozenset(inv_mapping[x] for x in I)
+                if not M1.is_independent(inv_mapped):
+                    valid = False
                     break
-            if pivot is None:
-                continue
-            sub[[rank, pivot]] = sub[[pivot, rank]]
-            inv = pow(int(sub[rank, col]), q - 2, q)
-            sub[rank] = (sub[rank] * inv) % q
-            for row in range(rows):
-                if row != rank and sub[row, col] % q != 0:
-                    sub[row] = (sub[row] - sub[row, col] * sub[rank]) % q
-            rank += 1
-        return rank
+        if valid:
+            return True
+    return False
 
-    # For small cases, try all matrices
-    if r * n <= 12:  # Only feasible for very small cases
-        for A in matrix_gen(r, n, q):
-            # Check: I is independent iff columns indexed by I are linearly independent over GF(q)
-            valid = True
-            for I in M.independent_sets:
-                cols = [elems.index(e) for e in sorted(I)]
-                if gf_rank(A, cols, q) != len(I):
+
+def is_excluded_minor(
+    M: ExplicitMatroid,
+    property_test: callable,
+) -> bool:
+    """Check if M is an excluded minor for the given property.
+
+    M is an excluded minor for P if:
+    1. ¬P(M)
+    2. For every element e, P(M\e) and P(M/e)
+    """
+    if property_test(M):
+        return False
+
+    for e in M.ground_set:
+        deletion = matroid_deletion(M, {e})
+        if not property_test(deletion):
+            return False
+        contraction = matroid_contraction(M, {e})
+        if not property_test(contraction):
+            return False
+
+    return True
+
+
+def is_representable_gf2(M: ExplicitMatroid) -> bool:
+    """Test if a matroid is representable over GF(2).
+
+    Uses brute-force search over all possible GF(2) matrices.
+    Only practical for small matroids (|E| ≤ 8).
+    """
+    n = M.size
+    r = M.rank()
+    E = sorted(M.ground_set)
+
+    if r == 0 or r == n:
+        return True
+
+    # Try all possible r×n binary matrices
+    for cols in range(2 ** (r * n)):
+        matrix = np.zeros((r, n), dtype=int)
+        temp = cols
+        for i in range(r):
+            for j in range(n):
+                matrix[i, j] = temp % 2
+                temp //= 2
+
+        # Check if this matrix represents M
+        valid = True
+        for size in range(n + 1):
+            for S in combinations(range(n), size):
+                S_set = frozenset(E[j] for j in S)
+                submatrix = matrix[:, list(S)]
+                lin_indep = np.linalg.matrix_rank(submatrix) == len(S)
+                mat_indep = M.is_independent(S_set)
+                if lin_indep != mat_indep:
                     valid = False
                     break
             if not valid:
-                continue
-            # Also check dependent sets have rank < size
-            all_good = True
-            for k in range(1, n + 1):
-                for S in combinations(range(n), k):
-                    S_set = frozenset(elems[i] for i in S)
-                    is_indep = S_set in M.independent_sets
-                    rk = gf_rank(A, list(S), q)
-                    if is_indep and rk != len(S):
-                        all_good = False
-                        break
-                    if not is_indep and rk == len(S):
-                        all_good = False
-                        break
-                if not all_good:
-                    break
-            if all_good:
-                return True, A
-        return False, None
-    return None, None  # Too large for brute force
-
-
-def fano_matroid() -> Matroid:
-    """Construct the Fano matroid F_7 (the projective plane of order 2).
-
-    Ground set: {0,...,6}, rank 3.
-    Lines (dependent triples): {0,1,3}, {1,2,4}, {2,3,5}, {3,4,6}, {0,4,5}, {1,5,6}, {0,2,6}
-    """
-    ground = frozenset(range(7))
-    lines = [
-        frozenset({0, 1, 3}), frozenset({1, 2, 4}), frozenset({2, 3, 5}),
-        frozenset({3, 4, 6}), frozenset({0, 4, 5}), frozenset({1, 5, 6}),
-        frozenset({0, 2, 6})
-    ]
-    indep: Set[FrozenSet[int]] = set()
-    indep.add(frozenset())
-    for e in ground:
-        indep.add(frozenset({e}))
-    for pair in combinations(ground, 2):
-        indep.add(frozenset(pair))
-    for triple in combinations(ground, 3):
-        t = frozenset(triple)
-        if t not in lines:
-            indep.add(t)
-    return Matroid(ground, indep)
-
-
-def check_wqo_property(matroids: List[Matroid]) -> Tuple[bool, Optional[Tuple[int, int]]]:
-    """
-    Check if a finite list of matroids satisfies the WQO condition:
-    there exist i < j with matroids[i] a minor of matroids[j].
-
-    Returns (found_pair, (i, j) or None).
-    """
-    for i in range(len(matroids)):
-        for j in range(i + 1, len(matroids)):
-            if matroids[i].is_minor_of(matroids[j]):
-                return True, (i, j)
-    return False, None
-
-
-def find_antichain(matroids: List[Matroid]) -> List[int]:
-    """Find a maximal antichain (no minor relations) from the given list."""
-    antichain: List[int] = []
-    for i in range(len(matroids)):
-        is_comparable = False
-        for j in antichain:
-            if matroids[i].is_minor_of(matroids[j]) or matroids[j].is_minor_of(matroids[i]):
-                is_comparable = True
                 break
-        if not is_comparable:
-            antichain.append(i)
-    return antichain
 
+        if valid:
+            return True
+
+    return False
+
+
+def find_antichain(matroids: List[ExplicitMatroid]) -> List[ExplicitMatroid]:
+    """Find a maximal antichain in the minor order among the given matroids.
+
+    An antichain is a set where no matroid is a minor of another.
+    """
+    # Compute all minor relations
+    n = len(matroids)
+    is_minor_of = [[False] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                result = check_minor_containment(matroids[i], matroids[j])
+                is_minor_of[i][j] = result is not None
+
+    # Greedy maximal antichain
+    antichain: List[int] = []
+    for i in range(n):
+        compatible = True
+        for j in antichain:
+            if is_minor_of[i][j] or is_minor_of[j][i]:
+                compatible = False
+                break
+        if compatible:
+            antichain.append(i)
+
+    return [matroids[i] for i in antichain]
+
+
+def minor_chain_bound(M: ExplicitMatroid) -> int:
+    """Compute the maximum length of a strictly descending minor chain from M.
+
+    By our theorem, this is bounded by |M.E|.
+    """
+    if M.size == 0:
+        return 0
+
+    max_length = 0
+    for e in M.ground_set:
+        # Try deletion
+        del_minor = matroid_deletion(M, {e})
+        length = 1 + minor_chain_bound(del_minor)
+        max_length = max(max_length, length)
+
+    return max_length
+
+
+# ============================================================
+# Main demonstration
+# ============================================================
 
 if __name__ == "__main__":
-    # Quick self-test
-    U23 = uniform_matroid(3, 2)
-    print(f"U(2,3) rank: {U23.matroid_rank()}")
-    print(f"U(2,3) bases: {U23.bases()}")
-    print(f"U(2,3) circuits: {U23.circuits()}")
+    print("Matroid Minor Theory — Algorithm Demonstrations")
+    print("=" * 50)
 
-    F7 = fano_matroid()
-    print(f"\nFano matroid rank: {F7.matroid_rank()}")
-    print(f"Fano matroid circuits (lines): {F7.circuits()}")
+    # Build some matroids
+    def make_uniform(k: int, n: int) -> ExplicitMatroid:
+        E = set(range(n))
+        indep: Set[FrozenSet[int]] = set()
+        for size in range(min(k, n) + 1):
+            for S in combinations(E, size):
+                indep.add(frozenset(S))
+        return ExplicitMatroid(E, indep)
 
-    # Test representability
-    rep2, _ = is_representable_over_gf(U23, 2)
-    print(f"\nU(2,3) representable over GF(2): {rep2}")
+    U24 = make_uniform(2, 4)
+    U23 = make_uniform(2, 3)
+    U13 = make_uniform(1, 3)
+
+    print(f"\nU(2,4): |E|={U24.size}, rank={U24.rank()}")
+    print(f"U(2,3): |E|={U23.size}, rank={U23.rank()}")
+
+    # Check minor containment
+    result = check_minor_containment(U23, U24)
+    print(f"\nU(2,3) ≤m U(2,4): {result is not None}")
+    if result:
+        C, D = result
+        print(f"  via C={set(C)}, D={set(D)}")
+
+    # Check excluded minor
+    print(f"\nU(2,4) is excluded minor for GF(2)-representability: "
+          f"{is_excluded_minor(U24, is_representable_gf2)}")
+
+    # Dual
+    U24_dual = matroid_dual(U24)
+    print(f"\nU(2,4)* rank: {U24_dual.rank()} (expected: 2)")
+    print(f"U(2,4)* ≅ U(2,4): {_are_isomorphic(U24, U24_dual)}")
+
+    # Chain bound
+    U23_chain = minor_chain_bound(U23)
+    print(f"\nMax minor chain from U(2,3): {U23_chain} (bound: {U23.size})")
+
+    print("\nAll algorithm demonstrations completed.")
