@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "583e86a3",
     "filename": "bayesian_werewolf_optimal_strategy_for_social_dedu.json",
     "pkg_num": 211,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6552284119106699,
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
@@ -6714,8 +6714,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "bayesian_werewolf_optimal_strategy_for_social_dedu",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6552284119106699,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
