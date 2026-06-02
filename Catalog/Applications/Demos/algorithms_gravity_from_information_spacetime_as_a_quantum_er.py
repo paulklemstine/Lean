@@ -1,182 +1,232 @@
 #!/usr/bin/env python3
 """
-Algorithms for Holographic Code Construction and Analysis
-
-Type-hinted implementations of the key algorithms from the
-"Gravity from Information" framework.
+Algorithms for holographic quantum error-correcting codes.
+Type-hinted implementations of the code-geometry correspondence.
 """
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Tuple, List, Set, FrozenSet
 import math
 
 
-@dataclass
-class QECCode:
-    """Quantum error-correcting code with parameters [[n, k, d]]."""
+@dataclass(frozen=True)
+class StabilizerCodeParams:
+    """Parameters [[n, k, d]] of a quantum stabilizer code."""
     n: int  # physical qubits
     k: int  # logical qubits
     d: int  # code distance
 
-    def __post_init__(self) -> None:
-        assert self.n > 0, "n must be positive"
-        assert 0 <= self.k <= self.n, "k must satisfy 0 <= k <= n"
-        assert 0 < self.d <= self.n, "d must satisfy 0 < d <= n"
+    def __post_init__(self):
+        assert self.k <= self.n, f"k={self.k} > n={self.n}"
+        assert self.d >= 1, f"d={self.d} < 1"
+        assert self.d <= self.n, f"d={self.d} > n={self.n}"
 
-    def satisfies_singleton(self) -> bool:
-        """Check quantum Singleton bound: n - k >= 2(d - 1)."""
-        return self.n - self.k >= 2 * (self.d - 1)
+    def satisfies_singleton_bound(self) -> bool:
+        """Check k + 2d <= n + 2."""
+        return self.k + 2 * self.d <= self.n + 2
 
-    def saturates_singleton(self) -> bool:
-        """Check Singleton saturation: k + 2(d-1) = n."""
-        return self.k + 2 * (self.d - 1) == self.n
+    def saturates_singleton_bound(self) -> bool:
+        """Check k + 2d = n + 2 (quantum MDS)."""
+        return self.k + 2 * self.d == self.n + 2
 
-    def rate(self) -> float:
-        """Code rate k/n."""
-        return self.k / self.n
+    def erasure_correction_capacity(self) -> int:
+        """Maximum number of correctable erasures: floor((d-1)/2)."""
+        return (self.d - 1) // 2
 
-    def relative_distance(self) -> float:
-        """Relative distance d/n."""
-        return self.d / self.n
+    def redundancy(self) -> int:
+        """Number of parity check qubits: n - k."""
+        return self.n - self.k
 
-    def info_density(self) -> float:
-        """Information density k/n."""
-        return self.k / self.n
-
-    def prot_density(self) -> float:
-        """Protection density d/n."""
-        return self.d / self.n
-
-    def redundancy(self) -> float:
-        """Redundancy n/k."""
-        if self.k == 0:
-            return float('inf')
-        return self.n / self.k
+    def redundancy_ratio(self) -> float:
+        """Fraction of physical qubits used for error protection."""
+        return self.redundancy() / self.n if self.n > 0 else 0.0
 
 
-@dataclass
-class HolographicParams:
-    """Spacetime geometry parameters for holographic code construction."""
-    area: int       # boundary area in Planck units
-    geodesic: int   # minimal geodesic length in Planck units
+@dataclass(frozen=True)
+class HolographicCode:
+    """A stabilizer code with holographic (RT) constraint 4k = n."""
+    params: StabilizerCodeParams
+    boundary_area: int   # in Planck units (= n)
+    bulk_geodesic_length: int  # in Planck units (= 2d)
 
-    def __post_init__(self) -> None:
-        assert self.area > 0 and self.area % 4 == 0
-        assert self.geodesic > 0 and self.geodesic % 2 == 0
-        assert self.geodesic <= self.area
+    def __post_init__(self):
+        assert self.boundary_area == self.params.n
+        assert self.bulk_geodesic_length == 2 * self.params.d
+        assert 4 * self.params.k == self.params.n, \
+            f"RT formula violated: 4*{self.params.k} != {self.params.n}"
 
-    def to_code(self) -> QECCode:
-        """Construct holographic code from geometry."""
-        return QECCode(
-            n=self.area,
-            k=self.area // 4,
-            d=self.geodesic // 2
+    @staticmethod
+    def from_boundary_area(area: int, saturated: bool = True) -> 'HolographicCode':
+        """Construct a holographic code from boundary area.
+        If saturated=True, uses the saturated Singleton bound."""
+        assert area % 4 == 0, f"Area {area} must be divisible by 4"
+        k = area // 4
+        if saturated:
+            # k + 2d = n + 2 => d = (n - k + 2) / 2 = (3n/4 + 2) / 2
+            d_twice = 3 * k + 2
+            assert d_twice % 2 == 0, "Need even 3k+2 for integer d"
+            d = d_twice // 2
+        else:
+            d = 1  # minimal distance
+        params = StabilizerCodeParams(n=area, k=k, d=d)
+        return HolographicCode(
+            params=params,
+            boundary_area=area,
+            bulk_geodesic_length=2 * d,
         )
 
 
-def compose_codes(c1: QECCode, c2: QECCode) -> QECCode:
-    """Compose two codes where c1 encodes into c2's logical space.
+def compute_holographic_entropy(
+    boundary_size: int,
+    region_size: int,
+    total_sites: int,
+) -> float:
+    """Compute holographic entropy for a boundary region.
+    Uses the discrete RT formula: S(m) ∝ log(sin(πm/n)).
     
-    Requires: c1.n == c2.k
-    Returns: code with parameters (c2.n, c1.k, min(c1.d, c2.d))
-    """
-    assert c1.n == c2.k, f"c1.n={c1.n} must equal c2.k={c2.k}"
-    return QECCode(n=c2.n, k=c1.k, d=min(c1.d, c2.d))
-
-
-def holographic_entropy(a: int) -> int:
-    """Holographic entanglement entropy S(a) = a // 4."""
-    return a // 4
-
-
-def find_singleton_saturating_codes(n_max: int) -> list[QECCode]:
-    """Find all Singleton-saturating codes with n <= n_max.
+    Args:
+        boundary_size: not used (for compatibility)
+        region_size: number of sites in the region
+        total_sites: total number of boundary sites
     
-    These are quantum MDS codes satisfying k + 2(d-1) = n.
+    Returns:
+        Entropy value (proportional to RT surface area)
     """
-    codes: list[QECCode] = []
-    for n in range(1, n_max + 1):
-        for d in range(1, n + 1):
-            k = n - 2 * (d - 1)
-            if k >= 0 and k <= n:
-                code = QECCode(n=n, k=k, d=d)
-                if code.saturates_singleton():
-                    codes.append(code)
-    return codes
+    if region_size == 0 or region_size == total_sites:
+        return 0.0
+    # Continuous RT formula for CFT₂: S = (c/3) * log(sin(πm/n))
+    # We use c = 1 for simplicity
+    theta = math.pi * region_size / total_sites
+    return (1.0 / 3.0) * math.log(total_sites * math.sin(theta) / math.pi)
 
 
-def singleton_tradeoff_curve(n: int) -> list[tuple[float, float]]:
-    """Compute the information-protection tradeoff curve for given n.
+def verify_strong_subadditivity(
+    entropy_fn,
+    total_sites: int,
+    a_size: int,
+    b_size: int,
+    c_size: int,
+) -> Tuple[bool, float]:
+    """Verify SSA: S(ABC) + S(B) <= S(AB) + S(BC).
     
-    Returns list of (rho_I, rho_P) pairs for Singleton-saturating codes.
+    Returns (satisfied, deficit) where deficit = RHS - LHS.
     """
-    points: list[tuple[float, float]] = []
-    for d in range(1, (n + 2) // 2 + 1):
-        k = n - 2 * (d - 1)
-        if k >= 0:
-            points.append((k / n, d / n))
-    return points
+    assert a_size + b_size + c_size <= total_sites
+    s_abc = entropy_fn(0, a_size + b_size + c_size, total_sites)
+    s_b = entropy_fn(0, b_size, total_sites)
+    s_ab = entropy_fn(0, a_size + b_size, total_sites)
+    s_bc = entropy_fn(0, b_size + c_size, total_sites)
+    lhs = s_abc + s_b
+    rhs = s_ab + s_bc
+    return (lhs <= rhs + 1e-10, rhs - lhs)
 
 
-def geometric_singleton_bound(area: int) -> int:
-    """Maximum geodesic length satisfying the Singleton bound.
+def verify_monogamy(
+    entropy_fn,
+    total_sites: int,
+    a_size: int,
+    b_size: int,
+    c_size: int,
+) -> Tuple[bool, float]:
+    """Verify monogamy: I(A:C) = S(A) + S(C) - S(AC) <= 2*S(A).
     
-    Returns: max geodesic such that the holographic code satisfies Singleton.
-    geodesic <= 3*area/4 + 2
+    Returns (satisfied, bound_minus_mi).
     """
-    return 3 * area // 4 + 2
+    assert a_size + b_size + c_size == total_sites
+    s_a = entropy_fn(0, a_size, total_sites)
+    s_c = entropy_fn(0, c_size, total_sites)
+    s_ac = entropy_fn(0, a_size + c_size, total_sites)
+    mi = s_a + s_c - s_ac
+    bound = 2 * s_a
+    return (mi <= bound + 1e-10, bound - mi)
 
 
-def verify_info_protection_tradeoff(code: QECCode) -> dict[str, float]:
-    """Verify and report the information-protection tradeoff.
+class EntanglementWedge:
+    """Entanglement wedge assignment for a discrete holographic code.
     
-    Returns dict with rho_I, rho_P, lhs (rho_I + 2*rho_P),
-    bound (1 + 2/n), and margin.
+    Models the bulk as a set of points, with each boundary region
+    mapped to a subset of bulk points.
     """
-    rho_I = code.info_density()
-    rho_P = code.prot_density()
-    lhs = rho_I + 2 * rho_P
-    bound = 1 + 2 / code.n
-    return {
-        "rho_I": rho_I,
-        "rho_P": rho_P,
-        "lhs": lhs,
-        "bound": bound,
-        "margin": bound - lhs,
-        "satisfied": lhs <= bound + 1e-12
-    }
-
-
-def code_hierarchy(layers: list[QECCode]) -> Optional[QECCode]:
-    """Compose a hierarchy of codes (from innermost to outermost).
     
-    Each layer must satisfy: layer[i].n == layer[i+1].k.
-    Returns the composed code, or None if composition is invalid.
+    def __init__(self, n_boundary: int, n_bulk: int):
+        self.n_boundary = n_boundary
+        self.n_bulk = n_bulk
+        # Simple model: boundary site i controls bulk points in its "causal wedge"
+        self._wedge_cache: dict = {}
+    
+    def wedge(self, region: FrozenSet[int]) -> FrozenSet[int]:
+        """Compute the entanglement wedge of a boundary region.
+        
+        Simple model: bulk point j is in wedge(A) if |A| > n/2,
+        or if j is "closest" to some site in A.
+        """
+        key = region
+        if key in self._wedge_cache:
+            return self._wedge_cache[key]
+        
+        if len(region) == 0:
+            result = frozenset()
+        elif len(region) == self.n_boundary:
+            result = frozenset(range(self.n_bulk))
+        elif len(region) >= self.n_boundary // 2 + 1:
+            # Majority region gets all bulk points
+            result = frozenset(range(self.n_bulk))
+        else:
+            # Assign bulk points proportionally
+            ratio = len(region) / self.n_boundary
+            n_bulk_pts = max(1, int(ratio * self.n_bulk))
+            # Assign contiguous bulk points based on boundary position
+            sorted_region = sorted(region)
+            center = sum(sorted_region) / len(sorted_region)
+            center_bulk = int(center * self.n_bulk / self.n_boundary)
+            start = max(0, center_bulk - n_bulk_pts // 2)
+            end = min(self.n_bulk, start + n_bulk_pts)
+            result = frozenset(range(start, end))
+        
+        self._wedge_cache[key] = result
+        return result
+    
+    def verify_nesting(self, A: FrozenSet[int], B: FrozenSet[int]) -> bool:
+        """Check if A ⊆ B implies wedge(A) ⊆ wedge(B)."""
+        if not A.issubset(B):
+            return True  # vacuously true
+        return self.wedge(A).issubset(self.wedge(B))
+    
+    def verify_complementarity(self, A: FrozenSet[int]) -> bool:
+        """Check if wedge(A) ∪ wedge(Aᶜ) = bulk."""
+        all_boundary = frozenset(range(self.n_boundary))
+        complement = all_boundary - A
+        union = self.wedge(A) | self.wedge(complement)
+        return union == frozenset(range(self.n_bulk))
+
+
+def singleton_geodesic_bound(boundary_area: int) -> int:
+    """Compute the maximum bulk geodesic length allowed by the
+    RT-strengthened Singleton bound: 4L ≤ 3A + 8."""
+    return (3 * boundary_area + 8) // 4
+
+
+def optimal_redundancy_allocation(
+    total_qubits: int,
+    target_distance: int,
+) -> Optional[StabilizerCodeParams]:
+    """Find optimal code parameters for given n and target d.
+    
+    Maximizes k subject to Singleton bound k + 2d ≤ n + 2.
     """
-    if not layers:
+    k_max = total_qubits - 2 * target_distance + 2
+    if k_max < 0:
         return None
-    result = layers[0]
-    for i in range(1, len(layers)):
-        if result.n != layers[i].k:
-            return None
-        result = compose_codes(result, layers[i])
-    return result
+    if target_distance > total_qubits:
+        return None
+    return StabilizerCodeParams(n=total_qubits, k=k_max, d=target_distance)
 
 
-if __name__ == "__main__":
-    # Example: AdS_3 holographic code
-    params = HolographicParams(area=100, geodesic=50)
-    code = params.to_code()
-    print(f"Holographic code: [[{code.n}, {code.k}, {code.d}]]")
-    print(f"Singleton bound satisfied: {code.satisfies_singleton()}")
-    print(f"Rate: {code.rate():.4f}")
-    print(f"Tradeoff: {verify_info_protection_tradeoff(code)}")
-
-    # Example: code hierarchy
-    c1 = QECCode(n=4, k=2, d=2)   # Inner code
-    c2 = QECCode(n=8, k=4, d=3)   # Middle code
-    c3 = QECCode(n=20, k=8, d=5)  # Outer code
-    composed = code_hierarchy([c1, c2, c3])
-    if composed:
-        print(f"\nComposed code: [[{composed.n}, {composed.k}, {composed.d}]]")
-        print(f"Singleton: {composed.satisfies_singleton()}")
+if __name__ == '__main__':
+    # Quick test
+    code = HolographicCode.from_boundary_area(32, saturated=True)
+    print(f"Holographic code: [[{code.params.n}, {code.params.k}, {code.params.d}]]")
+    print(f"  Singleton saturated: {code.params.saturates_singleton_bound()}")
+    print(f"  Redundancy ratio: {code.params.redundancy_ratio():.2%}")
+    print(f"  Erasure capacity: {code.params.erasure_correction_capacity()}")
+    print(f"  Geodesic bound: L ≤ {singleton_geodesic_bound(32)}")
