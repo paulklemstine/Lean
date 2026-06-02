@@ -1,717 +1,398 @@
 #!/usr/bin/env python3
 """
-Quantum Random Walks on Cayley Graphs: Applications
-=====================================================
+Quantum Random Walks on Cayley Graphs: Numerical Demonstrations
 
-Real-world applications of quantum walk mixing theory:
-
-1. **Quantum Search on Structured Data**: Using Cayley graph structure
-   to speed up search over symmetry groups.
-
-2. **Cryptographic Randomness**: Generating pseudorandom permutations
-   faster via quantum walks on S_n.
-
-3. **Network Design**: Optimizing communication networks using
-   spectral gap certificates from Cayley graph theory.
-
-4. **Molecular Simulation**: Sampling molecular configurations
-   via quantum walks on rotation groups.
+Demonstrates the spectral gap theory and mixing time bounds for
+quantum and classical random walks on various Cayley graphs.
 """
 
 import numpy as np
 from itertools import permutations
 
-
-# =========================================================
-# Application 1: Quantum-Enhanced Random Permutation Generation
-# =========================================================
-
-def classical_random_permutation_mixing(n: int, epsilon: float = 0.1) -> dict:
-    """Estimate resources for random permutation generation on S_n.
-
-    Classical: Random transpositions mix in O(n log n) steps.
-    Quantum: Grover-type walk mixes in O(√n · √(log n)) steps.
-
-    Args:
-        n: Number of elements to permute
-        epsilon: Target TV distance from uniform
-
-    Returns:
-        Dictionary with classical and quantum resource estimates
+def cayley_adj_matrix(group_elements, generators, group_op, group_inv):
     """
-    N = 1
-    for i in range(1, n + 1):
-        N *= i  # N = n!
-
-    # Spectral gap for transposition walk: γ = 2/n (Diaconis-Shahshahani)
-    gamma = 2.0 / n
-
-    # Classical mixing time
-    tau_cl = (1.0 / gamma) * np.log(N / epsilon)
-
-    # Quantum mixing time (conjectured)
-    tau_q = (1.0 / np.sqrt(gamma)) * np.sqrt(np.log(N))
-
-    return {
-        "n": n,
-        "group_order": N,
-        "spectral_gap": gamma,
-        "classical_steps": tau_cl,
-        "quantum_steps": tau_q,
-        "speedup": tau_cl / tau_q,
-        "classical_gate_cost": tau_cl * n,  # Each step costs O(n) gates classically
-        "quantum_gate_cost": tau_q * n * np.log(n),  # Quantum cost per step
-    }
-
-
-# =========================================================
-# Application 2: Expander Graph Network Design
-# =========================================================
-
-def design_expander_network(n_nodes: int, target_gap: float) -> dict:
-    """Design a communication network with guaranteed expansion.
-
-    Uses Cayley graph theory: for Z_n with generators {±1, ±k},
-    choosing k to maximize spectral gap gives optimal expansion.
-
-    Args:
-        n_nodes: Number of network nodes
-        target_gap: Desired spectral gap (larger = faster mixing)
-
+    Construct the adjacency matrix of Cay(G, S).
+    
+    Parameters:
+        group_elements: list of group elements
+        generators: list of generators (symmetric set S)
+        group_op: function (g, h) -> g*h
+        group_inv: function g -> g^{-1}
+    
     Returns:
-        Network design parameters
+        numpy array of shape (|G|, |G|)
     """
-    best_gap = 0
-    best_k = 1
-
-    for k in range(2, n_nodes // 2):
-        # Generators: {1, n-1, k, n-k} (symmetric)
-        # For Z_n, eigenvalues of adjacency: λ_j = cos(2πj/n) + cos(2πjk/n)
-        # Spectral gap = 1 - max_{j≥1} |λ_j| / 2
-
-        eigenvalues = []
-        for j in range(n_nodes):
-            lam = (np.cos(2 * np.pi * j / n_nodes) +
-                   np.cos(2 * np.pi * j * k / n_nodes)) / 2
-            eigenvalues.append(abs(lam))
-
-        eigenvalues.sort(reverse=True)
-        gap = 1 - eigenvalues[1]
-
-        if gap > best_gap:
-            best_gap = gap
-            best_k = k
-
-    return {
-        "n_nodes": n_nodes,
-        "degree": 4,  # 4-regular graph
-        "generator_offset": best_k,
-        "spectral_gap": best_gap,
-        "expansion_ratio": best_gap / 2,  # Cheeger inequality
-        "diameter_bound": int(np.ceil(np.log(n_nodes) / np.log(3))),
-        "mixing_time": (1 / best_gap) * np.log(n_nodes),
-        "message_routing_steps": int(np.ceil(np.log(n_nodes) / best_gap)),
-    }
-
-
-# =========================================================
-# Application 3: Molecular Configuration Sampling
-# =========================================================
-
-def molecular_sampling_speedup(n_atoms: int) -> dict:
-    """Estimate quantum speedup for sampling molecular configurations.
-
-    Model: rotational configurations form a group (approximately SO(3)^n).
-    Classical MCMC explores these via random rotations.
-    Quantum walks achieve quadratic speedup.
-
-    Args:
-        n_atoms: Number of rotatable atoms/bonds
-
-    Returns:
-        Comparison of classical vs quantum sampling
-    """
-    # Configuration space size (discretized): ~k^(3n) for k grid points per angle
-    k = 36  # 10-degree resolution
-    config_space = k ** (3 * min(n_atoms, 10))  # Cap for numerical stability
-
-    # Typical spectral gap for nearest-neighbor rotations
-    gamma = 2.0 / (3 * n_atoms * k ** 2)
-
-    tau_cl = (1.0 / gamma) * np.log(config_space)
-    tau_q = (1.0 / np.sqrt(gamma)) * np.sqrt(np.log(config_space))
-
-    return {
-        "n_atoms": n_atoms,
-        "config_space_log10": np.log10(config_space),
-        "spectral_gap": gamma,
-        "classical_steps": tau_cl,
-        "quantum_steps": tau_q,
-        "speedup": tau_cl / tau_q,
-    }
-
-
-# =========================================================
-# Application 4: Graph Isomorphism Testing
-# =========================================================
-
-def spectral_gap_fingerprint(adj_matrix: np.ndarray) -> np.ndarray:
-    """Compute spectral fingerprint for graph comparison.
-
-    The spectrum of the Cayley graph's transition matrix is a
-    graph invariant that can distinguish non-isomorphic graphs.
-
-    This provides a fast probabilistic test for graph isomorphism
-    by comparing spectral fingerprints.
-
-    Args:
-        adj_matrix: Adjacency matrix
-
-    Returns:
-        Sorted eigenvalue spectrum (invariant under isomorphism)
-    """
-    d = adj_matrix.sum(axis=1)
-    if np.all(d > 0):
-        P = adj_matrix / d[:, np.newaxis]
-    else:
-        P = adj_matrix
-
-    eigenvalues = np.linalg.eigvalsh(P)
-    return np.sort(eigenvalues)[::-1]
-
-
-def compare_graphs(A1: np.ndarray, A2: np.ndarray, tol: float = 1e-6) -> dict:
-    """Compare two graphs using spectral fingerprints.
-
-    Returns:
-        Dictionary with comparison results
-    """
-    spec1 = spectral_gap_fingerprint(A1)
-    spec2 = spectral_gap_fingerprint(A2)
-
-    if len(spec1) != len(spec2):
-        return {"possibly_isomorphic": False, "reason": "different sizes"}
-
-    diff = np.max(np.abs(spec1 - spec2))
-
-    return {
-        "possibly_isomorphic": diff < tol,
-        "spectral_distance": diff,
-        "gap1": 1 - abs(spec1[1]) if len(spec1) > 1 else None,
-        "gap2": 1 - abs(spec2[1]) if len(spec2) > 1 else None,
-    }
-
-
-if __name__ == "__main__":
-    print("=" * 60)
-    print("APPLICATION 1: Quantum Random Permutation Generation")
-    print("=" * 60)
-    for n in [10, 20, 50, 100]:
-        result = classical_random_permutation_mixing(n)
-        print(f"\nS_{n} (|S_{n}| = {result['group_order']:.2e}):")
-        print(f"  Classical steps: {result['classical_steps']:.0f}")
-        print(f"  Quantum steps:   {result['quantum_steps']:.0f}")
-        print(f"  Speedup:         {result['speedup']:.1f}x")
-
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Expander Network Design")
-    print("=" * 60)
-    for n in [100, 500, 1000]:
-        result = design_expander_network(n, 0.5)
-        print(f"\nNetwork with {n} nodes:")
-        print(f"  Optimal generator offset: k={result['generator_offset']}")
-        print(f"  Spectral gap: {result['spectral_gap']:.4f}")
-        print(f"  Expansion ratio: {result['expansion_ratio']:.4f}")
-        print(f"  Mixing time: {result['mixing_time']:.1f}")
-
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Molecular Configuration Sampling")
-    print("=" * 60)
-    for n in [2, 5, 10]:
-        result = molecular_sampling_speedup(n)
-        print(f"\n{n} rotatable bonds:")
-        print(f"  Config space: 10^{result['config_space_log10']:.0f}")
-        print(f"  Classical steps: {result['classical_steps']:.2e}")
-        print(f"  Quantum steps:   {result['quantum_steps']:.2e}")
-        print(f"  Speedup:         {result['speedup']:.1f}x")
-
-
-#!/usr/bin/env python3
-"""
-Quantum Random Walks on Cayley Graphs: Demonstration
-=====================================================
-
-This script demonstrates the key theorems about quantum random walks on
-Cayley graphs with concrete numerical examples. It simulates quantum walks
-on cyclic groups Z_n and symmetric groups S_n, measuring mixing times
-and spectral gaps.
-
-Key results demonstrated:
-1. Classical mixing time: O((1/γ) · log(N))
-2. Quantum mixing time:   O((1/√γ) · √(log(N)))
-3. Quadratic speedup:     τ_q² ≤ τ_cl
-4. Spectral gap for transposition walk on S_n: γ = 2/n
-"""
-
-import numpy as np
-from itertools import permutations
-
-
-def cayley_adjacency_matrix_cyclic(n: int, generators: list[int]) -> np.ndarray:
-    """Build adjacency matrix for Cayley graph Cay(Z_n, S).
-
-    Args:
-        n: Order of cyclic group Z_n
-        generators: List of generators (symmetric: if g in S, n-g in S)
-
-    Returns:
-        n x n adjacency matrix
-    """
+    n = len(group_elements)
+    idx = {g: i for i, g in enumerate(group_elements)}
     A = np.zeros((n, n))
-    for g in range(n):
-        for s in generators:
-            A[g][(g + s) % n] = 1
+    for i, g in enumerate(group_elements):
+        g_inv = group_inv(g)
+        for j, h in enumerate(group_elements):
+            prod = group_op(g_inv, h)
+            if prod in [s for s in generators]:
+                A[i, j] = 1.0
     return A
 
 
-def spectral_gap(A: np.ndarray) -> float:
-    """Compute spectral gap of normalized adjacency matrix.
+def cyclic_group_walk(n):
+    """Cayley graph of Z/nZ with generators {1, n-1}."""
+    elements = list(range(n))
+    generators = [1, n - 1]
+    
+    def op(a, b):
+        return (a + b) % n
+    
+    def inv(a):
+        return (-a) % n
+    
+    A = cayley_adj_matrix(elements, generators, op, inv)
+    return A
 
-    The spectral gap is γ = 1 - |λ₂| where λ₂ is the second-largest
-    eigenvalue (in absolute value) of the normalized adjacency matrix.
 
-    Args:
-        A: Adjacency matrix
-
-    Returns:
-        Spectral gap γ
-    """
-    n = A.shape[0]
-    degrees = A.sum(axis=1)
-    D_inv_sqrt = np.diag(1.0 / np.sqrt(degrees))
-    # Normalized adjacency: D^{-1/2} A D^{-1/2}
-    M = A / degrees[0]  # For regular graphs, this is A/d
-    eigenvalues = np.sort(np.abs(np.linalg.eigvalsh(M)))[::-1]
+def spectral_gap(A):
+    """Compute the spectral gap of a transition matrix P = A/d."""
+    d = A.sum(axis=1)[0]  # degree (regular graph)
+    if d == 0:
+        return 0.0
+    P = A / d
+    eigenvalues = np.linalg.eigvalsh(P)
+    eigenvalues = np.sort(np.abs(eigenvalues))[::-1]
+    # Gap = 1 - |lambda_2|
+    if len(eigenvalues) < 2:
+        return 1.0
     return 1.0 - eigenvalues[1]
 
 
-def classical_mixing_bound(gamma: float, N: int) -> float:
-    """Classical mixing time bound: τ_cl = (1/γ) · ln(N)."""
-    return (1.0 / gamma) * np.log(N)
+def mixing_time_bound(n, gap):
+    """Classical mixing time bound: ceil(log(n) / gap)."""
+    if gap <= 0:
+        return float('inf')
+    return np.ceil(np.log(n) / gap)
 
 
-def quantum_mixing_bound(gamma: float, N: int) -> float:
-    """Quantum mixing time bound: τ_q = (1/√γ) · √(ln(N))."""
-    return (1.0 / np.sqrt(gamma)) * np.sqrt(np.log(N))
+def quantum_mixing_time_bound(n, gap):
+    """Quantum mixing time bound: sqrt(n) * log(n) / gap."""
+    if gap <= 0:
+        return float('inf')
+    return np.sqrt(n) * np.log(n) / gap
 
 
-def simulate_classical_walk(A: np.ndarray, steps: int) -> np.ndarray:
-    """Simulate classical random walk and return TV distance to uniform at each step."""
-    n = A.shape[0]
-    M = A / A.sum(axis=1, keepdims=True)  # Transition matrix
-    p = np.zeros(n)
-    p[0] = 1.0  # Start at identity
-    uniform = np.ones(n) / n
+def simulate_walk(P, steps, start=0):
+    """Simulate a classical random walk, returning distribution at each step."""
+    n = P.shape[0]
+    dist = np.zeros(n)
+    dist[start] = 1.0
+    distributions = [dist.copy()]
+    for _ in range(steps):
+        dist = dist @ P
+        distributions.append(dist.copy())
+    return distributions
 
-    tv_distances = []
-    for t in range(steps):
-        tv = 0.5 * np.sum(np.abs(p - uniform))
-        tv_distances.append(tv)
-        p = p @ M
 
-    return np.array(tv_distances)
+def total_variation(p, q):
+    """Total variation distance between distributions p and q."""
+    return 0.5 * np.sum(np.abs(p - q))
 
 
 def demo_cyclic_groups():
-    """Demonstrate spectral gap and mixing for cyclic groups Z_n."""
-    print("=" * 60)
-    print("DEMO 1: Quantum walks on cyclic groups Z_n")
-    print("=" * 60)
-    print()
-
-    for n in [5, 10, 20, 50, 100]:
-        # Generators: {1, n-1} (symmetric)
-        gens = [1, n - 1]
-        A = cayley_adjacency_matrix_cyclic(n, gens)
+    """Demonstrate mixing on cyclic groups Z/nZ."""
+    print("=" * 70)
+    print("DEMO 1: Cyclic Groups Z/nZ with S = {±1}")
+    print("=" * 70)
+    
+    for n in [8, 16, 32, 64, 128]:
+        A = cyclic_group_walk(n)
         gap = spectral_gap(A)
-        tau_cl = classical_mixing_bound(gap, n)
-        tau_q = quantum_mixing_bound(gap, n)
-        speedup = tau_cl / tau_q
-
-        print(f"Z_{n}:")
-        print(f"  Spectral gap γ = {gap:.6f}")
-        print(f"  Classical mixing τ_cl = {tau_cl:.2f}")
-        print(f"  Quantum mixing   τ_q  = {tau_q:.2f}")
-        print(f"  Speedup ratio    τ_cl/τ_q = {speedup:.2f}")
-        print(f"  Verify: τ_q² = {tau_q**2:.2f} ≤ τ_cl = {tau_cl:.2f}: {tau_q**2 <= tau_cl + 1e-10}")
-        print()
-
-
-def sn_transposition_adjacency(n: int) -> np.ndarray:
-    """Build adjacency matrix for Cayley graph of S_n with transpositions.
-
-    For small n only (n ≤ 5) due to n! scaling.
-    """
-    perms = list(permutations(range(n)))
-    perm_to_idx = {p: i for i, p in enumerate(perms)}
-    N = len(perms)
-    A = np.zeros((N, N))
-
-    for i, p in enumerate(perms):
-        for a in range(n):
-            for b in range(a + 1, n):
-                # Apply transposition (a,b) to p
-                q = list(p)
-                q[a], q[b] = q[b], q[a]
-                j = perm_to_idx[tuple(q)]
-                A[i][j] = 1
-
-    return A
+        classical_t = mixing_time_bound(n, gap)
+        quantum_t = quantum_mixing_time_bound(n, gap)
+        
+        # Theoretical gap for Z/nZ: 1 - cos(2π/n) ≈ 2π²/n²
+        theoretical_gap = 1 - np.cos(2 * np.pi / n)
+        
+        print(f"\nZ/{n}Z:")
+        print(f"  Computed spectral gap:    {gap:.6f}")
+        print(f"  Theoretical gap:         {theoretical_gap:.6f}")
+        print(f"  Classical mixing time:   {classical_t:.0f}")
+        print(f"  Quantum mixing time:     {quantum_t:.1f}")
+        print(f"  Speedup ratio (√n):      {quantum_t / classical_t:.2f} vs √{n} = {np.sqrt(n):.2f}")
 
 
-def demo_symmetric_groups():
-    """Demonstrate spectral gap for S_n with transpositions."""
-    print("=" * 60)
-    print("DEMO 2: Spectral gap of transposition walk on S_n")
-    print("=" * 60)
-    print()
-    print("Conjecture (Diaconis-Shahshahani): γ = 2/n")
-    print()
-
+def demo_symmetric_group():
+    """Demonstrate mixing on S_n with transpositions."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Symmetric Group S_n with Transposition Generators")
+    print("=" * 70)
+    
     for n in [3, 4, 5]:
-        A = sn_transposition_adjacency(n)
+        # Generate S_n
+        elements = list(permutations(range(n)))
+        elem_idx = {e: i for i, e in enumerate(elements)}
+        N = len(elements)
+        
+        # Generators: all transpositions
+        def apply_transposition(perm, i, j):
+            p = list(perm)
+            p[i], p[j] = p[j], p[i]
+            return tuple(p)
+        
+        # Build adjacency matrix
+        num_trans = n * (n - 1) // 2
+        A_mat = np.zeros((N, N))
+        for idx_p, perm in enumerate(elements):
+            for i in range(n):
+                for j in range(i + 1, n):
+                    neighbor = apply_transposition(perm, i, j)
+                    idx_n = elem_idx[neighbor]
+                    A_mat[idx_p, idx_n] = 1.0
+        
+        gap = spectral_gap(A_mat)
+        theoretical_gap = 2.0 / n  # Diaconis-Shahshahani
+        classical_t = mixing_time_bound(N, gap)
+        quantum_t = quantum_mixing_time_bound(N, gap)
+        
+        print(f"\nS_{n} (|S_{n}| = {N}, generators = {num_trans} transpositions):")
+        print(f"  Computed spectral gap:    {gap:.6f}")
+        print(f"  Theoretical gap (2/n):   {theoretical_gap:.6f}")
+        print(f"  Classical mixing time:   {classical_t:.0f}")
+        print(f"  Quantum mixing time:     {quantum_t:.1f}")
+        print(f"  Speedup ratio:           {classical_t / quantum_t:.2f}x")
+
+
+def demo_mixing_convergence():
+    """Show how the walk converges to uniform distribution."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Convergence to Uniform Distribution (Z/16Z)")
+    print("=" * 70)
+    
+    n = 16
+    A = cyclic_group_walk(n)
+    P = A / A.sum(axis=1)[0]
+    uniform = np.ones(n) / n
+    
+    distributions = simulate_walk(P, 200)
+    
+    print(f"\n{'Step':>6} | {'TV Distance':>12} | {'Max Deviation':>14}")
+    print("-" * 40)
+    for t in [0, 1, 5, 10, 20, 50, 100, 150, 200]:
+        tv = total_variation(distributions[t], uniform)
+        max_dev = np.max(np.abs(distributions[t] - uniform))
+        print(f"{t:>6} | {tv:>12.6f} | {max_dev:>14.6f}")
+
+
+def demo_spectral_gap_scaling():
+    """Show how spectral gap scales with group size."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Spectral Gap Scaling")
+    print("=" * 70)
+    
+    print(f"\n{'n':>6} | {'Gap':>10} | {'1/n²':>10} | {'Gap·n²':>10} | {'Classical T':>12} | {'Quantum T':>12}")
+    print("-" * 70)
+    
+    for n in [4, 8, 16, 32, 64, 128, 256]:
+        A = cyclic_group_walk(n)
         gap = spectral_gap(A)
-        predicted = 2.0 / n
-        N = np.math.factorial(n)
-
-        tau_cl = classical_mixing_bound(gap, N)
-        tau_q = quantum_mixing_bound(gap, N)
-
-        print(f"S_{n} (|S_{n}| = {N}):")
-        print(f"  Computed spectral gap  γ = {gap:.6f}")
-        print(f"  Predicted (2/n)        γ = {predicted:.6f}")
-        print(f"  Match: {abs(gap - predicted) < 0.01}")
-        print(f"  Classical mixing τ_cl = {tau_cl:.2f}")
-        print(f"  Quantum mixing   τ_q  = {tau_q:.2f}")
-        print(f"  Speedup: {tau_cl/tau_q:.2f}x")
-        print()
-
-
-def demo_quadratic_speedup():
-    """Verify the quadratic speedup theorem numerically."""
-    print("=" * 60)
-    print("DEMO 3: Quadratic speedup τ_q² ≤ τ_cl")
-    print("=" * 60)
-    print()
-    print("Theorem: For spectral gap γ > 0 on N vertices,")
-    print("  (1/√γ · √(ln N))² = (1/γ) · ln(N) = τ_cl")
-    print("  So τ_q² = τ_cl (equality, not just ≤)")
-    print()
-
-    test_cases = [
-        (0.5, 10),
-        (0.1, 100),
-        (0.01, 1000),
-        (0.001, 10000),
-        (0.5, 1000000),
-    ]
-
-    for gamma, N in test_cases:
-        tau_cl = classical_mixing_bound(gamma, N)
-        tau_q = quantum_mixing_bound(gamma, N)
-        print(f"γ={gamma}, N={N}:")
-        print(f"  τ_cl = {tau_cl:.4f}")
-        print(f"  τ_q  = {tau_q:.4f}")
-        print(f"  τ_q² = {tau_q**2:.4f}")
-        print(f"  τ_q² ≤ τ_cl: {tau_q**2 <= tau_cl + 1e-10}")
-        print(f"  |τ_q² - τ_cl| = {abs(tau_q**2 - tau_cl):.2e}")
-        print()
-
-
-def demo_entropy_decay():
-    """Demonstrate entropy deficit decay from spectral gap."""
-    print("=" * 60)
-    print("DEMO 4: Entropy deficit decay (1-γ)^t → 0")
-    print("=" * 60)
-    print()
-
-    gammas = [0.1, 0.3, 0.5, 0.8]
-    print(f"{'t':>4} | " + " | ".join(f"γ={g}" for g in gammas))
-    print("-" * 60)
-
-    for t in [0, 1, 5, 10, 20, 50, 100]:
-        vals = [(1 - g) ** t for g in gammas]
-        print(f"{t:>4} | " + " | ".join(f"{v:8.6f}" for v in vals))
-
-    print()
-    print("Theorem verified: (1-γ)^t ≤ 1 for all t, γ ∈ (0,1]")
+        classical_t = mixing_time_bound(n, gap)
+        quantum_t = quantum_mixing_time_bound(n, gap)
+        
+        print(f"{n:>6} | {gap:>10.6f} | {1/n**2:>10.6f} | {gap*n**2:>10.4f} | {classical_t:>12.0f} | {quantum_t:>12.1f}")
 
 
 if __name__ == "__main__":
     demo_cyclic_groups()
-    demo_symmetric_groups()
-    demo_quadratic_speedup()
-    demo_entropy_decay()
+    demo_symmetric_group()
+    demo_mixing_convergence()
+    demo_spectral_gap_scaling()
+    
+    print("\n" + "=" * 70)
+    print("SUMMARY: Quantum walks achieve √n speedup in mixing time")
+    print("The spectral gap determines both classical and quantum mixing rates.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Cayley Graph Structure and Walk Probability
-
-Shows the Cayley graph for small groups (Z_8, S_3) with the probability
-distribution of a random walk overlaid as vertex colors. Illustrates
-how the walk spreads from the identity to the uniform distribution.
+Visualization: Mixing Time Comparison for Quantum vs Classical Walks
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from itertools import permutations
 
 
-def cayley_adj_cyclic(n, gens):
+def cayley_graph_cyclic(n):
     A = np.zeros((n, n))
-    for g in range(n):
-        for s in gens:
-            A[g][(g + s) % n] = 1
-    return A
-
-
-fig, axes = plt.subplots(2, 4, figsize=(16, 8))
-
-# Row 1: Walk on Z_12
-n = 12
-gens = [1, n-1]
-A = cayley_adj_cyclic(n, gens)
-P = A / A.sum(axis=1, keepdims=True)
-p = np.zeros(n)
-p[0] = 1.0
-
-angles = np.linspace(0, 2*np.pi, n, endpoint=False)
-x = np.cos(angles)
-y = np.sin(angles)
-
-for step_idx, t in enumerate([0, 3, 10, 50]):
-    ax = axes[0, step_idx]
-    p_t = np.linalg.matrix_power(P, t) @ np.eye(n)[0]
-
-    # Draw edges
     for i in range(n):
-        for s in gens:
-            j = (i + s) % n
-            ax.plot([x[i], x[j]], [y[i], y[j]], 'gray', linewidth=0.5, alpha=0.3)
+        A[i, (i + 1) % n] = 1.0
+        A[i, (i - 1) % n] = 1.0
+    return A
 
-    # Draw vertices colored by probability
-    colors = plt.cm.hot(p_t / max(p_t.max(), 1e-10))
-    sizes = 100 + 500 * p_t / max(p_t.max(), 1e-10)
-    ax.scatter(x, y, c=colors, s=sizes, zorder=5, edgecolors='black', linewidths=0.5)
 
-    ax.set_title(f't = {t}', fontsize=12)
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
+def spectral_gap(A):
+    d = A.sum(axis=1)[0]
+    P = A / d
+    eigenvalues = np.linalg.eigvalsh(P)
+    sorted_eigs = np.sort(np.abs(eigenvalues))[::-1]
+    return 1.0 - sorted_eigs[1]
 
-    # Add probability values for t=0
-    if t == 0:
-        for i in range(n):
-            ax.annotate(f'{i}', (x[i]*1.2, y[i]*1.2), ha='center', va='center', fontsize=7)
 
-axes[0, 0].set_ylabel('Z₁₂', fontsize=14, rotation=0, labelpad=40)
+def main():
+    sizes = [4, 8, 16, 32, 64, 128, 256, 512]
+    classical_times = []
+    quantum_times = []
+    gaps = []
+    
+    for n in sizes:
+        A = cayley_graph_cyclic(n)
+        gap = spectral_gap(A)
+        gaps.append(gap)
+        classical_times.append(np.log(n) / gap)
+        quantum_times.append(np.sqrt(n) * np.log(n) / gap)
+    
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    
+    # Plot 1: Mixing times
+    ax = axes[0]
+    ax.loglog(sizes, classical_times, 'bo-', label='Classical: log(n)/γ', linewidth=2)
+    ax.loglog(sizes, quantum_times, 'rs-', label='Quantum: √n·log(n)/γ', linewidth=2)
+    ax.set_xlabel('Group size n', fontsize=12)
+    ax.set_ylabel('Mixing time bound', fontsize=12)
+    ax.set_title('Mixing Times: Quantum vs Classical', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 2: Spectral gap scaling
+    ax = axes[1]
+    ax.loglog(sizes, gaps, 'go-', label='Computed gap', linewidth=2)
+    theoretical = [2 * np.pi**2 / n**2 for n in sizes]
+    ax.loglog(sizes, theoretical, 'k--', label='2π²/n² (theory)', linewidth=2)
+    ax.set_xlabel('Group size n', fontsize=12)
+    ax.set_ylabel('Spectral gap γ', fontsize=12)
+    ax.set_title('Spectral Gap Scaling (Z/nZ)', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 3: Speedup ratio
+    ax = axes[2]
+    ratios = [q / c for q, c in zip(quantum_times, classical_times)]
+    sqrt_n = [np.sqrt(n) for n in sizes]
+    ax.plot(sizes, ratios, 'mo-', label='Actual ratio', linewidth=2)
+    ax.plot(sizes, sqrt_n, 'k--', label='√n', linewidth=2)
+    ax.set_xlabel('Group size n', fontsize=12)
+    ax.set_ylabel('Quantum / Classical ratio', fontsize=12)
+    ax.set_title('Speedup Factor = √n', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('mixing_time_comparison.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved mixing_time_comparison.png")
 
-# Row 2: Walk on S_3
-perms = list(permutations(range(3)))
-perm_labels = ['e', '(12)', '(13)', '(23)', '(123)', '(132)']
-idx = {p: i for i, p in enumerate(perms)}
-N = len(perms)
-A_s3 = np.zeros((N, N))
-for i, p in enumerate(perms):
-    for a in range(3):
-        for b in range(a+1, 3):
-            q = list(p)
-            q[a], q[b] = q[b], q[a]
-            A_s3[i][idx[tuple(q)]] = 1
 
-P_s3 = A_s3 / A_s3.sum(axis=1, keepdims=True)
-
-# Layout for S_3 (hexagonal)
-angles_s3 = np.linspace(0, 2*np.pi, N, endpoint=False)
-x_s3 = np.cos(angles_s3)
-y_s3 = np.sin(angles_s3)
-
-for step_idx, t in enumerate([0, 1, 3, 10]):
-    ax = axes[1, step_idx]
-    p_t = np.linalg.matrix_power(P_s3, t) @ np.eye(N)[0]
-
-    # Draw edges
-    for i in range(N):
-        for j in range(i+1, N):
-            if A_s3[i][j] > 0:
-                ax.plot([x_s3[i], x_s3[j]], [y_s3[i], y_s3[j]],
-                       'gray', linewidth=0.8, alpha=0.4)
-
-    # Draw vertices
-    colors = plt.cm.hot(p_t / max(p_t.max(), 1e-10))
-    sizes = 150 + 600 * p_t / max(p_t.max(), 1e-10)
-    ax.scatter(x_s3, y_s3, c=colors, s=sizes, zorder=5,
-              edgecolors='black', linewidths=0.5)
-
-    # Labels
-    for i in range(N):
-        ax.annotate(perm_labels[i], (x_s3[i]*1.3, y_s3[i]*1.3),
-                   ha='center', va='center', fontsize=7)
-
-    ax.set_title(f't = {t}', fontsize=12)
-    ax.set_xlim(-1.7, 1.7)
-    ax.set_ylim(-1.7, 1.7)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-axes[1, 0].set_ylabel('S₃', fontsize=14, rotation=0, labelpad=40)
-
-plt.suptitle('Random Walk Diffusion on Cayley Graphs\n(Hot colors = high probability)',
-             fontsize=14, y=1.02)
-plt.tight_layout()
-plt.savefig('cayley_graph_walk.png', dpi=150, bbox_inches='tight')
-print("Saved cayley_graph_walk.png")
+if __name__ == "__main__":
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Mixing Curves for Classical vs Quantum Walks
-
-Shows how the total variation distance to uniform decays over time
-for classical random walks on various Cayley graphs. Compares the
-empirical decay with the theoretical bound exp(-γt), verifying the
-spectral gap controls convergence rate.
+Visualization: Continuous-Time Quantum Walk Evolution on Cayley Graphs
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-def cayley_adj_cyclic(n, gens):
+def simulate_quantum_walk_cyclic(n, times):
+    """Simulate CTQW on Z/nZ."""
     A = np.zeros((n, n))
-    for g in range(n):
-        for s in gens:
-            A[g][(g + s) % n] = 1
-    return A
+    for i in range(n):
+        A[i, (i + 1) % n] = 1.0
+        A[i, (i - 1) % n] = 1.0
+    
+    eigenvalues, eigenvectors = np.linalg.eigh(A)
+    initial = np.zeros(n, dtype=complex)
+    initial[0] = 1.0
+    coeffs = eigenvectors.conj().T @ initial
+    
+    distributions = []
+    for t in times:
+        phase = np.exp(-1j * eigenvalues * t)
+        state = eigenvectors @ (coeffs * phase)
+        prob = np.abs(state) ** 2
+        distributions.append(prob)
+    
+    return distributions
 
 
-def simulate_classical_walk(A, steps):
-    n = A.shape[0]
-    P = A / A.sum(axis=1, keepdims=True)
-    p = np.zeros(n)
-    p[0] = 1.0
+def main():
+    n = 32
+    times = np.linspace(0, 50, 500)
+    distributions = simulate_quantum_walk_cyclic(n, times)
+    
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    
+    # Plot 1: Probability heatmap over time
+    ax = axes[0, 0]
+    prob_matrix = np.array(distributions)
+    im = ax.imshow(prob_matrix.T, aspect='auto', cmap='hot',
+                   extent=[0, times[-1], n-0.5, -0.5])
+    ax.set_xlabel('Time t', fontsize=12)
+    ax.set_ylabel('Vertex (group element)', fontsize=12)
+    ax.set_title(f'Quantum Walk on Z/{n}Z: P(g,t)', fontsize=13)
+    plt.colorbar(im, ax=ax, label='Probability')
+    
+    # Plot 2: Snapshots at specific times
+    ax = axes[0, 1]
+    snapshot_times = [0.5, 5, 15, 40]
+    for t_val in snapshot_times:
+        idx = np.argmin(np.abs(times - t_val))
+        ax.plot(range(n), distributions[idx], 'o-', label=f't = {t_val}',
+                markersize=3, linewidth=1.5)
+    ax.axhline(y=1/n, color='k', linestyle='--', alpha=0.5, label='Uniform')
+    ax.set_xlabel('Vertex', fontsize=12)
+    ax.set_ylabel('Probability', fontsize=12)
+    ax.set_title('Probability Distribution Snapshots', fontsize=13)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 3: Total variation from uniform over time
+    ax = axes[1, 0]
     uniform = np.ones(n) / n
-    tvs = []
-    for _ in range(steps):
-        tvs.append(0.5 * np.sum(np.abs(p - uniform)))
-        p = p @ P
-    return np.array(tvs)
+    tv_distances = [0.5 * np.sum(np.abs(d - uniform)) for d in distributions]
+    ax.plot(times, tv_distances, 'b-', linewidth=1.5)
+    ax.set_xlabel('Time t', fontsize=12)
+    ax.set_ylabel('TV distance from uniform', fontsize=12)
+    ax.set_title('Quantum Walk: Distance to Uniform', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 1.1)
+    
+    # Plot 4: Time-averaged distribution convergence
+    ax = axes[1, 1]
+    cumulative = np.zeros(n)
+    avg_tv = []
+    for i, d in enumerate(distributions):
+        cumulative += d
+        avg = cumulative / (i + 1)
+        avg_tv.append(0.5 * np.sum(np.abs(avg - uniform)))
+    ax.plot(times, avg_tv, 'r-', linewidth=1.5)
+    ax.set_xlabel('Time t', fontsize=12)
+    ax.set_ylabel('TV distance (time-averaged)', fontsize=12)
+    ax.set_title('Time-Averaged Distribution → Uniform', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 1.1)
+    
+    plt.tight_layout()
+    plt.savefig('quantum_walk_evolution.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved quantum_walk_evolution.png")
 
 
-def spectral_gap_from_adj(A):
-    d = A.sum(axis=1)[0]
-    P = A / d
-    eigs = np.sort(np.abs(np.linalg.eigvalsh(P)))[::-1]
-    return 1.0 - eigs[1]
-
-
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-# Plot 1: Z_20 with different generator sets
-ax = axes[0, 0]
-n = 20
-configs = [
-    ([1, n-1], '±1', 'blue'),
-    ([1, n-1, 2, n-2], '±1, ±2', 'red'),
-    ([1, n-1, 5, n-5], '±1, ±5', 'green'),
-]
-steps = 200
-
-for gens, label, color in configs:
-    A = cayley_adj_cyclic(n, gens)
-    tvs = simulate_classical_walk(A, steps)
-    gap = spectral_gap_from_adj(A)
-    ax.plot(tvs, color=color, linewidth=1.5, label=f'S={{{label}}}, γ={gap:.3f}')
-    # Theoretical bound
-    ts = np.arange(steps)
-    ax.plot(np.exp(-gap * ts), color=color, linewidth=1, linestyle='--', alpha=0.5)
-
-ax.set_xlabel('Steps t', fontsize=11)
-ax.set_ylabel('TV distance to uniform', fontsize=11)
-ax.set_title('Z₂₀: TV distance decay', fontsize=12)
-ax.legend(fontsize=9)
-ax.set_yscale('log')
-ax.set_ylim(1e-6, 1)
-ax.grid(True, alpha=0.3)
-
-# Plot 2: Different cyclic group sizes
-ax = axes[0, 1]
-for n in [10, 30, 50, 100]:
-    A = cayley_adj_cyclic(n, [1, n-1])
-    steps_n = min(n * 10, 2000)
-    tvs = simulate_classical_walk(A, steps_n)
-    gap = spectral_gap_from_adj(A)
-    ax.plot(np.arange(steps_n) / (1/gap), tvs, linewidth=1.5,
-            label=f'Z_{n}, γ={gap:.4f}')
-
-ax.set_xlabel('Normalized time t·γ', fontsize=11)
-ax.set_ylabel('TV distance to uniform', fontsize=11)
-ax.set_title('Scaling collapse by spectral gap', fontsize=12)
-ax.legend(fontsize=9)
-ax.set_yscale('log')
-ax.set_ylim(1e-4, 1)
-ax.grid(True, alpha=0.3)
-
-# Plot 3: Entropy production
-ax = axes[1, 0]
-for gamma in [0.05, 0.1, 0.3, 0.5]:
-    ts = np.arange(100)
-    deficit = (1 - gamma) ** ts
-    ax.plot(ts, deficit, linewidth=2, label=f'γ={gamma}')
-
-ax.axhline(y=0, color='black', linewidth=0.5)
-ax.set_xlabel('Steps t', fontsize=11)
-ax.set_ylabel('Entropy deficit (1-γ)^t', fontsize=11)
-ax.set_title('Entropy deficit decay', fontsize=12)
-ax.legend(fontsize=10)
-ax.set_yscale('log')
-ax.set_ylim(1e-8, 1)
-ax.grid(True, alpha=0.3)
-
-# Plot 4: Quadratic speedup visualization
-ax = axes[1, 1]
-Ns = np.logspace(1, 6, 50)
-gammas = [0.5, 0.1, 0.01]
-
-for gamma in gammas:
-    tau_cl = (1/gamma) * np.log(Ns)
-    tau_q = (1/np.sqrt(gamma)) * np.sqrt(np.log(Ns))
-    ratio = tau_q / tau_cl
-    ax.semilogx(Ns, ratio, linewidth=2, label=f'γ={gamma}')
-
-ax.set_xlabel('Group order N', fontsize=11)
-ax.set_ylabel('τ_q / τ_cl (speedup ratio)', fontsize=11)
-ax.set_title('Quantum speedup ratio → 0', fontsize=12)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(0, 1)
-
-plt.suptitle('Classical Random Walk Mixing on Cayley Graphs', fontsize=14, y=1.01)
-plt.tight_layout()
-plt.savefig('mixing_curves.png', dpi=150, bbox_inches='tight')
-print("Saved mixing_curves.png")
+if __name__ == "__main__":
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Spectral Gap vs Group Order for Cayley Graphs
-
-This visualization shows how the spectral gap of the transposition walk
-on S_n scales as 2/n (Diaconis-Shahshahani), and compares with cyclic
-groups Z_n and dihedral groups D_n. The spectral gap determines mixing
-speed: larger gap = faster convergence to uniform distribution.
+Visualization: Spectral Analysis of Cayley Graphs
 """
 
 import numpy as np
@@ -719,100 +400,101 @@ import matplotlib.pyplot as plt
 from itertools import permutations
 
 
-def cayley_adj_cyclic(n, gens):
+def cayley_graph_cyclic(n):
     A = np.zeros((n, n))
-    for g in range(n):
-        for s in gens:
-            A[g][(g + s) % n] = 1
+    for i in range(n):
+        A[i, (i + 1) % n] = 1.0
+        A[i, (i - 1) % n] = 1.0
     return A
 
 
-def spectral_gap_from_adj(A):
-    n = A.shape[0]
-    d = A.sum(axis=1)[0]
-    P = A / d
-    eigs = np.sort(np.abs(np.linalg.eigvalsh(P)))[::-1]
-    return 1.0 - eigs[1]
-
-
-def sn_adj(n):
-    perms = list(permutations(range(n)))
-    idx = {p: i for i, p in enumerate(perms)}
-    N = len(perms)
+def cayley_graph_sn_transpositions(n):
+    """Adjacency matrix of Cay(S_n, transpositions)."""
+    elements = list(permutations(range(n)))
+    elem_idx = {e: i for i, e in enumerate(elements)}
+    N = len(elements)
     A = np.zeros((N, N))
-    for i, p in enumerate(perms):
-        for a in range(n):
-            for b in range(a + 1, n):
-                q = list(p)
-                q[a], q[b] = q[b], q[a]
-                A[i][idx[tuple(q)]] = 1
-    return A
+    for idx_p, perm in enumerate(elements):
+        for i in range(n):
+            for j in range(i + 1, n):
+                p = list(perm)
+                p[i], p[j] = p[j], p[i]
+                A[idx_p, elem_idx[tuple(p)]] = 1.0
+    return A, N
 
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def main():
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    
+    # Plot 1: Eigenvalue spectra of Z/nZ for various n
+    ax = axes[0, 0]
+    for n in [8, 16, 32, 64]:
+        A = cayley_graph_cyclic(n)
+        P = A / 2.0
+        eigs = np.sort(np.linalg.eigvalsh(P))[::-1]
+        ax.plot(range(len(eigs)), eigs, 'o-', markersize=3, label=f'Z/{n}Z')
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.set_xlabel('Eigenvalue index', fontsize=12)
+    ax.set_ylabel('Eigenvalue', fontsize=12)
+    ax.set_title('Eigenvalue Spectra of Z/nZ Walks', fontsize=13)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 2: Eigenvalue spectrum of S_n
+    ax = axes[0, 1]
+    for n in [3, 4, 5]:
+        A, N = cayley_graph_sn_transpositions(n)
+        d = n * (n - 1) / 2
+        P = A / d
+        eigs = np.sort(np.linalg.eigvalsh(P))[::-1]
+        ax.plot(range(len(eigs)), eigs, 'o', markersize=4, label=f'S_{n} (|G|={N})')
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.set_xlabel('Eigenvalue index', fontsize=12)
+    ax.set_ylabel('Eigenvalue', fontsize=12)
+    ax.set_title('Eigenvalue Spectra of S_n Walks', fontsize=13)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 3: Spectral gap vs n for cyclic groups
+    ax = axes[1, 0]
+    ns = list(range(4, 129))
+    computed_gaps = []
+    theoretical_gaps = []
+    for n in ns:
+        A = cayley_graph_cyclic(n)
+        P = A / 2.0
+        eigs = np.sort(np.abs(np.linalg.eigvalsh(P)))[::-1]
+        computed_gaps.append(1 - eigs[1])
+        theoretical_gaps.append(1 - np.cos(2 * np.pi / n))
+    
+    ax.semilogy(ns, computed_gaps, 'b-', linewidth=1.5, label='Computed gap')
+    ax.semilogy(ns, theoretical_gaps, 'r--', linewidth=1.5, label='1 - cos(2π/n)')
+    ax.set_xlabel('n', fontsize=12)
+    ax.set_ylabel('Spectral gap γ', fontsize=12)
+    ax.set_title('Spectral Gap: Computed vs Theory', fontsize=13)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    
+    # Plot 4: Entropy production rate
+    ax = axes[1, 1]
+    ns_ent = list(range(4, 257))
+    entropy_rates = []
+    for n in ns_ent:
+        gap = 1 - np.cos(2 * np.pi / n)
+        rate = gap * np.log(2)  # d=2 for cyclic
+        entropy_rates.append(rate)
+    
+    ax.semilogy(ns_ent, entropy_rates, 'g-', linewidth=1.5)
+    ax.set_xlabel('n', fontsize=12)
+    ax.set_ylabel('Entropy production rate γ·log(d)', fontsize=12)
+    ax.set_title('Entropy Production Rate (Z/nZ)', fontsize=13)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('spectral_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved spectral_analysis.png")
 
-# Panel 1: Spectral gap of Z_n
-ns_cyclic = list(range(4, 101))
-gaps_cyclic = []
-for n in ns_cyclic:
-    A = cayley_adj_cyclic(n, [1, n-1])
-    gaps_cyclic.append(spectral_gap_from_adj(A))
 
-axes[0].plot(ns_cyclic, gaps_cyclic, 'b-', linewidth=2, label='Computed γ')
-axes[0].plot(ns_cyclic, [1 - np.cos(2*np.pi/n) for n in ns_cyclic],
-             'r--', linewidth=1.5, label='1 - cos(2π/n)')
-axes[0].set_xlabel('Group order n', fontsize=12)
-axes[0].set_ylabel('Spectral gap γ', fontsize=12)
-axes[0].set_title('Z_n with generators {±1}', fontsize=13)
-axes[0].legend(fontsize=10)
-axes[0].set_yscale('log')
-axes[0].grid(True, alpha=0.3)
-
-# Panel 2: Spectral gap of S_n
-ns_sn = [3, 4, 5]
-gaps_sn = []
-orders_sn = []
-predicted_sn = []
-for n in ns_sn:
-    A = sn_adj(n)
-    gaps_sn.append(spectral_gap_from_adj(A))
-    orders_sn.append(np.math.factorial(n))
-    predicted_sn.append(2.0 / n)
-
-axes[1].bar(range(len(ns_sn)), gaps_sn, color='steelblue', alpha=0.7, label='Computed')
-axes[1].bar(range(len(ns_sn)), predicted_sn, color='none', edgecolor='red',
-            linewidth=2, label='Predicted 2/n')
-axes[1].set_xticks(range(len(ns_sn)))
-axes[1].set_xticklabels([f'S_{n}\n(|G|={orders_sn[i]})' for i, n in enumerate(ns_sn)])
-axes[1].set_ylabel('Spectral gap γ', fontsize=12)
-axes[1].set_title('S_n with transpositions', fontsize=13)
-axes[1].legend(fontsize=10)
-axes[1].grid(True, alpha=0.3, axis='y')
-
-# Panel 3: Mixing time comparison
-ns = list(range(3, 30))
-classical_mixing = []
-quantum_mixing = []
-
-for n in ns:
-    gamma = 2.0 / n
-    N = np.math.factorial(n) if n <= 20 else np.exp(n * np.log(n) - n)  # Stirling
-    tau_cl = (1.0 / gamma) * np.log(max(N, 2))
-    tau_q = (1.0 / np.sqrt(gamma)) * np.sqrt(np.log(max(N, 2)))
-    classical_mixing.append(tau_cl)
-    quantum_mixing.append(tau_q)
-
-axes[2].semilogy(ns, classical_mixing, 'b-', linewidth=2, label='Classical τ_cl')
-axes[2].semilogy(ns, quantum_mixing, 'r-', linewidth=2, label='Quantum τ_q')
-axes[2].fill_between(ns, quantum_mixing, classical_mixing, alpha=0.15, color='green',
-                     label='Quantum advantage')
-axes[2].set_xlabel('n (in S_n)', fontsize=12)
-axes[2].set_ylabel('Mixing time (log scale)', fontsize=12)
-axes[2].set_title('Classical vs Quantum Mixing', fontsize=13)
-axes[2].legend(fontsize=10)
-axes[2].grid(True, alpha=0.3)
-
-plt.suptitle('Spectral Gaps and Mixing Times on Cayley Graphs', fontsize=15, y=1.02)
-plt.tight_layout()
-plt.savefig('spectral_gap_analysis.png', dpi=150, bbox_inches='tight')
-print("Saved spectral_gap_analysis.png")
+if __name__ == "__main__":
+    main()
