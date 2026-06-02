@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2376 of the highest-quality
+A curated collection of 2381 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2376
+Total files: 2381
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1182,6 +1182,7 @@ import FINAL.EML.AdvancedTheory
 import FINAL.EML.AdversarialRobustness
 import FINAL.EML.AlgebraicMaxClosure
 import FINAL.EML.AlignmentSafetyTheory
+import FINAL.EML.AntiMath
 import FINAL.EML.ApproximationBounds
 import FINAL.EML.AutoMLTheory
 import FINAL.EML.Basic
@@ -1223,6 +1224,7 @@ import FINAL.EML.ExtendedTheory
 import FINAL.EML.FederatedLearningTheory
 import FINAL.EML.FenchelYoungBridge
 import FINAL.EML.FermatNearMiss
+import FINAL.EML.FermatNearMissDeep
 import FINAL.EML.FixedPointConvergence
 import FINAL.EML.FreivaldsAmplification
 import FINAL.EML.FutureResearch
@@ -1251,6 +1253,7 @@ import FINAL.EML.OpenQuestions
 import FINAL.EML.PhotonResearchRound3
 import FINAL.EML.PhotonResearchRound4
 import FINAL.EML.PhotonicFrontier
+import FINAL.EML.PitchClass
 import FINAL.EML.PolyhedronCodomain
 import FINAL.EML.PrimewisePersistence
 import FINAL.EML.ProductApproximation
@@ -1278,6 +1281,7 @@ import FINAL.EML.ThermodynamicChaitinBarrier
 import FINAL.EML.TimeSeriesTheory
 import FINAL.EML.TrainingDynamics
 import FINAL.EML.TransferLearningBounds
+import FINAL.EML.TropicalTruthGeometry
 import FINAL.EML.TwoPhase
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
@@ -1713,6 +1717,7 @@ import FINAL.Physics.PersistentHomologicalQEC
 import FINAL.Physics.PersistentHomologicalQEC2
 import FINAL.Physics.PlanckSpacetime
 import FINAL.Physics.QuantumE8ModularForms
+import FINAL.Physics.QuantumShells
 import FINAL.Physics.SelbergCensus
 import FINAL.Physics.SelectionRules
 import FINAL.Physics.ShadowingLemma

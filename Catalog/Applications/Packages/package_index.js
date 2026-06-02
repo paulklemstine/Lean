@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "04bdee23",
     "filename": "fermat_near_misses_in_the_twilight_zone.json",
     "pkg_num": 197,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6554324090909092,
     "title": "Fermat Near-Misses: Structure, Distribution, and ABC Connections"
   },
   {
@@ -6259,8 +6259,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "fermat_near_misses_in_the_twilight_zone",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6554324090909092,
+      "quality": "partial",
       "shape": "octahedron",
       "title": "Fermat Near-Misses: Structure, Distribution, and ABC Connections"
     }
