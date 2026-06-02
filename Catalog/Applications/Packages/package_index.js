@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "372e2673",
     "filename": "thermodynamics_of_mathematical_proof.json",
     "pkg_num": 161,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7155585714285715,
     "title": "Thermodynamic Depth of Mathematical Proof: A Landauer Principle for Logical Reasoning"
   },
   {
@@ -5055,8 +5055,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "thermodynamics_of_mathematical_proof",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7155585714285715,
+      "quality": "substantial",
       "shape": "star",
       "title": "Thermodynamic Depth of Mathematical Proof: A Landauer Principle for Logical Reasoning"
     }
