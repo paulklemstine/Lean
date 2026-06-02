@@ -2,11 +2,12 @@
 """
 Fermat Near-Misses: Numerical Demonstrations
 
-Explores triples (a, b, c) where |a^n + b^n - c^n| is small,
-demonstrating the theoretical results proved in Lean.
+Explores near-misses to Fermat's Last Theorem — triples (a,b,c) where
+|a^n + b^n - c^n| is small but nonzero.
 """
 
 import math
+from typing import List, Tuple
 
 
 def fermat_defect(n: int, a: int, b: int, c: int) -> int:
@@ -14,292 +15,291 @@ def fermat_defect(n: int, a: int, b: int, c: int) -> int:
     return a**n + b**n - c**n
 
 
-def consecutive_power_gap(n: int, c: int) -> int:
+def radical(n: int) -> int:
+    """Compute the radical of n (product of distinct prime factors)."""
+    if n <= 1:
+        return max(n, 1)
+    rad = 1
+    d = 2
+    temp = n
+    while d * d <= temp:
+        if temp % d == 0:
+            rad *= d
+            while temp % d == 0:
+                temp //= d
+        d += 1
+    if temp > 1:
+        rad *= temp
+    return rad
+
+
+def find_near_misses(n: int, N: int, max_defect: int) -> List[Tuple[int, int, int, int]]:
+    """Find triples (a,b,c) with 1 ≤ a ≤ b ≤ c ≤ N and |a^n + b^n - c^n| ≤ max_defect."""
+    results = []
+    for c in range(2, N + 1):
+        cn = c**n
+        for a in range(1, c + 1):
+            an = a**n
+            if an > cn + max_defect:
+                break
+            for b in range(a, c + 1):
+                bn = b**n
+                defect = an + bn - cn
+                if abs(defect) <= max_defect:
+                    results.append((a, b, c, defect))
+    return results
+
+
+def quality_ratio(n: int, a: int, b: int, c: int) -> float:
+    """Compute the quality ratio |a^n + b^n - c^n| / c^n."""
+    return abs(fermat_defect(n, a, b, c)) / c**n
+
+
+def power_gap(c: int, n: int) -> int:
     """Compute (c+1)^n - c^n."""
     return (c + 1)**n - c**n
 
 
-def near_miss_quality(n: int, a: int, b: int, c: int) -> float:
-    """Relative quality: |defect| / c^n. Lower is better."""
-    if c == 0:
-        return float('inf')
-    return abs(fermat_defect(n, a, b, c)) / c**n
+def abc_quality(a: int, b: int, c: int) -> float:
+    """Compute the ABC quality: log(c) / log(rad(abc))."""
+    r = radical(a * b * c)
+    if r <= 1:
+        return 0.0
+    return math.log(c) / math.log(r)
 
 
-def find_best_near_misses(n: int, N: int, top_k: int = 10):
-    """Find the best near-misses with max(a,b,c) ≤ N for exponent n."""
-    results = []
-    for c in range(1, N + 1):
-        for a in range(1, N + 1):
-            for b in range(a, N + 1):  # b ≥ a by symmetry
-                d = fermat_defect(n, a, b, c)
-                if d != 0:
-                    results.append((abs(d), a, b, c, d))
-    results.sort()
-    return results[:top_k]
+def main():
+    print("=" * 70)
+    print("FERMAT NEAR-MISSES: NUMERICAL EXPLORATION")
+    print("=" * 70)
 
+    # Demo 1: Unit family (1, c, c) with defect 1
+    print("\n--- Demo 1: Unit Family (1, c, c) ---")
+    print(f"{'n':>3} {'c':>5} {'defect':>10} {'quality':>15}")
+    for n in range(2, 8):
+        for c in [10, 100, 1000]:
+            d = fermat_defect(n, 1, c, c)
+            q = quality_ratio(n, 1, c, c)
+            print(f"{n:>3} {c:>5} {d:>10} {q:>15.2e}")
 
-def verify_power_gap_bounds(n: int, max_c: int = 20):
-    """Verify the power gap sandwich: n*c^(n-1) ≤ gap ≤ n*(c+1)^(n-1)."""
-    print(f"\n{'='*60}")
-    print(f"Power Gap Bounds Verification (n={n})")
-    print(f"{'='*60}")
-    print(f"{'c':>4} {'gap':>12} {'lower':>12} {'upper':>12} {'OK?':>5}")
-    print(f"{'-'*4:>4} {'-'*12:>12} {'-'*12:>12} {'-'*12:>12} {'-'*5:>5}")
-    for c in range(max_c + 1):
-        gap = consecutive_power_gap(n, c)
-        lower = n * c**(n - 1) if n >= 1 else 0
-        upper = n * (c + 1)**(n - 1)
-        ok = lower <= gap <= upper
-        print(f"{c:>4} {gap:>12} {lower:>12} {upper:>12} {'✓' if ok else '✗':>5}")
+    # Demo 2: Near-misses for n=3
+    print("\n--- Demo 2: Near-Misses for n=3, N=50, |defect| ≤ 100 ---")
+    misses = find_near_misses(3, 50, 100)
+    misses.sort(key=lambda x: abs(x[3]))
+    print(f"Found {len(misses)} near-misses")
+    print(f"{'a':>5} {'b':>5} {'c':>5} {'defect':>10} {'quality':>12}")
+    for a, b, c, d in misses[:20]:
+        q = quality_ratio(3, a, b, c)
+        print(f"{a:>5} {b:>5} {c:>5} {d:>10} {q:>12.6f}")
 
+    # Demo 3: Power gap sandwich verification
+    print("\n--- Demo 3: Power Gap Sandwich ---")
+    print(f"{'c':>5} {'n':>3} {'lower':>12} {'gap':>12} {'upper':>12}")
+    for c in [5, 10, 20]:
+        for n in [2, 3, 5]:
+            lower = n * c**(n - 1)
+            gap = power_gap(c, n)
+            upper = n * (c + 1)**(n - 1)
+            print(f"{c:>5} {n:>3} {lower:>12} {gap:>12} {upper:>12}")
 
-def verify_gap_monotonicity(n: int, max_c: int = 15):
-    """Verify that power gaps are strictly increasing for n ≥ 2."""
-    print(f"\n{'='*60}")
-    print(f"Power Gap Strict Monotonicity (n={n})")
-    print(f"{'='*60}")
-    gaps = [consecutive_power_gap(n, c) for c in range(max_c + 1)]
-    for c in range(max_c):
-        increasing = gaps[c] < gaps[c + 1]
-        print(f"  gap({c}) = {gaps[c]:>10}  <  gap({c+1}) = {gaps[c+1]:>10}  {'✓' if increasing else '✗'}")
+    # Demo 4: Geometric decay of quality
+    print("\n--- Demo 4: Quality Decay (c=10) ---")
+    c = 10
+    print(f"{'n':>3} {'quality':>20} {'ratio':>12}")
+    prev_q = None
+    for n in range(1, 12):
+        q = 1.0 / c**n
+        ratio = q / prev_q if prev_q else float('nan')
+        print(f"{n:>3} {q:>20.2e} {ratio:>12.4f}")
+        prev_q = q
 
-
-def demonstrate_quality_decay(max_n: int = 15):
-    """Show super-exponential decay of near-miss quality 1/c^n."""
-    print(f"\n{'='*60}")
-    print(f"Super-Exponential Quality Decay (c=2)")
-    print(f"{'='*60}")
-    print(f"{'n':>4} {'1/2^n':>20} {'ratio':>12}")
-    print(f"{'-'*4:>4} {'-'*20:>20} {'-'*12:>12}")
-    prev = 1.0
-    for n in range(1, max_n + 1):
-        q = 1.0 / 2**n
-        ratio = q / prev if prev > 0 else 0
-        print(f"{n:>4} {q:>20.12f} {ratio:>12.6f}")
-        prev = q
-
-
-def compute_spectrum(n: int, N: int) -> set:
-    """Compute the near-miss spectrum for exponent n with bound N."""
-    spectrum = set()
-    for a in range(1, N + 1):
-        for b in range(1, N + 1):
-            for c in range(1, N + 1):
-                spectrum.add(fermat_defect(n, a, b, c))
-    return spectrum
-
-
-def demonstrate_spectrum_growth(n: int = 3):
-    """Show how the spectrum grows with N."""
-    print(f"\n{'='*60}")
-    print(f"Spectrum Growth (n={n})")
-    print(f"{'='*60}")
-    for N in [2, 3, 5, 8, 10]:
-        spec = compute_spectrum(n, N)
-        min_pos = min(d for d in spec if d > 0) if any(d > 0 for d in spec) else None
-        max_neg = max(d for d in spec if d < 0) if any(d < 0 for d in spec) else None
-        print(f"  N={N:>3}: |spectrum| = {len(spec):>6}, "
-              f"range [{min(spec):>8}, {max(spec):>8}], "
-              f"min_pos={min_pos}, max_neg={max_neg}")
-        if 0 in spec:
-            print(f"         ⚠ 0 is in spectrum (Fermat equation has solution!)")
-        else:
-            print(f"         ✓ 0 not in spectrum")
-
-
-def famous_near_misses():
-    """Display famous Fermat near-misses from mathematical history."""
-    print(f"\n{'='*60}")
-    print(f"Famous Fermat Near-Misses")
-    print(f"{'='*60}")
-    cases = [
-        (3, 1, 12, 10, "Ramanujan taxi number related"),
-        (3, 10, 9, 12, "10³ + 9³ = 1729 = 12³ + 1"),
-        (3, 6, 8, 9, "Euler's near miss"),
-        (3, 71, 138, 144, "Large cubic near-miss"),
-        (5, 27, 84, 85, "Quintic near-miss"),
-        (3, 135, 138, 172, "Another cubic near-miss"),
+    # Demo 5: Famous near-misses
+    print("\n--- Demo 5: Famous Near-Misses ---")
+    famous = [
+        (3, 6, 8, 9, "Ramanujan taxi"),
+        (3, 10, 9, 12, "Euler"),
+        (3, 1, 12, 10, "Simple"),
     ]
-    for n, a, b, c, desc in cases:
+    for n, a, b, c, name in famous:
         d = fermat_defect(n, a, b, c)
-        q = near_miss_quality(n, a, b, c)
-        print(f"  {a}^{n} + {b}^{n} - {c}^{n} = {d}")
-        print(f"    quality = {q:.2e}  ({desc})")
-        print()
+        q = quality_ratio(n, a, b, c)
+        print(f"{name:>20}: {a}^{n} + {b}^{n} - {c}^{n} = {d} (quality={q:.6f})")
 
+    # Demo 6: Mixed-term sum positivity
+    print("\n--- Demo 6: Mixed-Term Sum (a+b)^n - a^n - b^n ---")
+    for n in [2, 3, 4, 5]:
+        for a, b in [(1, 1), (2, 3), (5, 7)]:
+            mt = (a + b)**n - a**n - b**n
+            print(f"  n={n}, a={a}, b={b}: mixed_term = {mt} > 0 ✓" if mt > 0 else f"  n={n}, a={a}, b={b}: mixed_term = {mt}")
 
-def conjecture_test(n: int = 3, N_values: list = None):
-    """Test the conjecture that min coprime defect grows polynomially."""
-    if N_values is None:
-        N_values = [5, 10, 15, 20]
-    print(f"\n{'='*60}")
-    print(f"Conjecture Test: Coprime Gap Growth (n={n})")
-    print(f"{'='*60}")
-    for N in N_values:
+    # Demo 7: Conjecture test — minimum defect for n=3
+    print("\n--- Demo 7: Conjecture Test (min coprime defect for n=3) ---")
+    for N in [10, 30, 50, 80]:
         min_defect = float('inf')
-        best_triple = None
-        for a in range(1, N + 1):
-            for b in range(a, N + 1):
-                for c in range(1, N + 1):
-                    d = abs(fermat_defect(n, a, b, c))
-                    if d > 0 and math.gcd(math.gcd(a, b), c) == 1:
-                        if a != b or True:  # include all
-                            if d < min_defect:
-                                min_defect = d
-                                best_triple = (a, b, c)
-        print(f"  N={N:>3}: min coprime |defect| = {min_defect:>6}, "
-              f"triple = {best_triple}")
+        best = None
+        for c in range(2, N + 1):
+            for a in range(1, c + 1):
+                for b in range(a, c + 1):
+                    if math.gcd(math.gcd(a, b), c) != 1:
+                        continue
+                    d = abs(fermat_defect(3, a, b, c))
+                    if 0 < d < min_defect:
+                        min_defect = d
+                        best = (a, b, c)
+        bound = N  # c^(n-2) = c^1 for n=3
+        print(f"  N={N:>3}: min|defect| = {min_defect:>6} at {best}, c^(n-2)={best[2] if best else '?'}, {'HOLDS' if min_defect >= best[2] else 'FAILS'}")
+
+    # Demo 8: Radical computation
+    print("\n--- Demo 8: Radical Examples ---")
+    for n in [12, 30, 60, 100, 360]:
+        print(f"  radical({n}) = {radical(n)}, ratio = {radical(n)/n:.4f}")
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║     FERMAT NEAR-MISSES: NUMERICAL DEMONSTRATIONS       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    # 1. Verify power gap sandwich bounds
-    verify_power_gap_bounds(3, max_c=12)
-    verify_power_gap_bounds(5, max_c=8)
-
-    # 2. Gap monotonicity
-    verify_gap_monotonicity(3)
-
-    # 3. Super-exponential decay
-    demonstrate_quality_decay()
-
-    # 4. Spectrum growth
-    demonstrate_spectrum_growth(n=3)
-
-    # 5. Famous near-misses
-    famous_near_misses()
-
-    # 6. Conjecture test
-    conjecture_test(n=3)
-
-    print("\n✓ All demonstrations completed successfully.")
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Power Gap Sandwich Bounds
+Visualization: Fermat Near-Miss Distribution
 
-Shows the consecutive power gap (c+1)^n - c^n sandwiched between
-n*c^(n-1) (lower) and n*(c+1)^(n-1) (upper) for various exponents.
+Generates plots showing the distribution of Fermat near-misses,
+power gap bounds, and quality decay.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 
-def consecutive_power_gap(n, c):
-    return (c + 1)**n - c**n
+def fermat_defect(n, a, b, c):
+    return a**n + b**n - c**n
 
 
-def lower_bound(n, c):
-    return n * c**(n - 1)
-
-
-def upper_bound(n, c):
-    return n * (c + 1)**(n - 1)
+def radical(n):
+    if n <= 1:
+        return max(n, 1)
+    rad = 1
+    d = 2
+    temp = n
+    while d * d <= temp:
+        if temp % d == 0:
+            rad *= d
+            while temp % d == 0:
+                temp //= d
+        d += 1
+    if temp > 1:
+        rad *= temp
+    return rad
 
 
 def plot_power_gap_sandwich():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Power Gap Sandwich: n·c^(n-1) ≤ (c+1)^n - c^n ≤ n·(c+1)^(n-1)',
-                 fontsize=14, fontweight='bold')
+    """Plot the power gap sandwich bounds for various n."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    exponents = [2, 3, 4, 5]
-    max_c = 15
+    for idx, n in enumerate([2, 3, 5]):
+        cs = np.arange(1, 50)
+        gaps = [(c + 1)**n - c**n for c in cs]
+        lowers = [n * c**(n - 1) for c in cs]
+        uppers = [n * (c + 1)**(n - 1) for c in cs]
 
-    for ax, n in zip(axes.flat, exponents):
-        cs = np.arange(1, max_c + 1)
-        gaps = [consecutive_power_gap(n, c) for c in cs]
-        lowers = [lower_bound(n, c) for c in cs]
-        uppers = [upper_bound(n, c) for c in cs]
-
-        ax.fill_between(cs, lowers, uppers, alpha=0.2, color='blue',
-                        label='Sandwich region')
-        ax.plot(cs, gaps, 'ro-', markersize=4, linewidth=2,
-                label=f'(c+1)^{n} - c^{n}')
-        ax.plot(cs, lowers, 'b--', linewidth=1, alpha=0.7,
-                label=f'{n}·c^{n-1}')
-        ax.plot(cs, uppers, 'g--', linewidth=1, alpha=0.7,
-                label=f'{n}·(c+1)^{n-1}')
-
+        ax = axes[idx]
+        ax.fill_between(cs, lowers, uppers, alpha=0.3, color='blue', label='Sandwich band')
+        ax.plot(cs, gaps, 'r-', linewidth=2, label='Actual gap')
+        ax.plot(cs, lowers, 'b--', linewidth=1, label=f'{n}·c^{n-1}')
+        ax.plot(cs, uppers, 'b:', linewidth=1, label=f'{n}·(c+1)^{n-1}')
         ax.set_xlabel('c')
-        ax.set_ylabel('Gap value')
-        ax.set_title(f'n = {n}')
+        ax.set_ylabel('(c+1)^n - c^n')
+        ax.set_title(f'Power Gap Sandwich (n={n})')
         ax.legend(fontsize=8)
-        ax.grid(True, alpha=0.3)
+        ax.set_yscale('log')
 
     plt.tight_layout()
-    plt.savefig('viz_power_gap_sandwich.png', dpi=150, bbox_inches='tight')
+    plt.savefig('power_gap_sandwich.png', dpi=150)
     plt.close()
-    print("Saved: viz_power_gap_sandwich.png")
+    print("Saved power_gap_sandwich.png")
 
 
 def plot_quality_decay():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    fig.suptitle('Super-Exponential Decay of Near-Miss Quality',
-                 fontsize=14, fontweight='bold')
+    """Plot quality ratio decay for different c values."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Left: quality vs n for different c values
-    ns = np.arange(1, 16)
+    ns = np.arange(1, 20)
     for c in [2, 3, 5, 10]:
         qualities = [1.0 / c**n for n in ns]
-        ax1.semilogy(ns, qualities, 'o-', markersize=4, label=f'c = {c}')
+        ax.semilogy(ns, qualities, 'o-', label=f'c = {c}', markersize=4)
 
-    ax1.set_xlabel('Exponent n')
-    ax1.set_ylabel('Quality 1/c^n (log scale)')
-    ax1.set_title('Quality decay for trivial near-misses (1, c, c)')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
+    # Show the 1/2^n envelope
+    envelope = [0.5**n for n in ns]
+    ax.semilogy(ns, envelope, 'k--', linewidth=2, alpha=0.5, label='(1/2)^n bound')
 
-    # Right: ratio of consecutive qualities
-    for c in [2, 3, 5]:
-        ratios = [1.0/c for _ in ns]
-        ax2.plot(ns, ratios, '--', linewidth=2, label=f'1/{c} (exact ratio for c={c})')
-
-    ax2.set_xlabel('Exponent n')
-    ax2.set_ylabel('Quality ratio q(n+1)/q(n)')
-    ax2.set_title('Decay ratio ≤ 1/2 (proved for c ≥ 2)')
-    ax2.axhline(y=0.5, color='red', linestyle=':', linewidth=2, label='1/2 bound')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 0.6)
-
-    plt.tight_layout()
-    plt.savefig('viz_quality_decay.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_quality_decay.png")
-
-
-def plot_gap_monotonicity():
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.set_title('Power Gap Strict Monotonicity (proved for n ≥ 2)',
-                 fontsize=14, fontweight='bold')
-
-    max_c = 12
-    cs = list(range(max_c + 1))
-    for n in [2, 3, 4, 5]:
-        gaps = [consecutive_power_gap(n, c) for c in cs]
-        ax.plot(cs, gaps, 'o-', markersize=5, linewidth=2, label=f'n = {n}')
-
-    ax.set_xlabel('c', fontsize=12)
-    ax.set_ylabel('(c+1)^n - c^n', fontsize=12)
-    ax.legend(fontsize=11)
+    ax.set_xlabel('Exponent n')
+    ax.set_ylabel('Quality ratio 1/c^n')
+    ax.set_title('Super-Exponential Decay of Near-Miss Quality')
+    ax.legend()
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('viz_gap_monotonicity.png', dpi=150, bbox_inches='tight')
+    plt.savefig('quality_decay.png', dpi=150)
     plt.close()
-    print("Saved: viz_gap_monotonicity.png")
+    print("Saved quality_decay.png")
+
+
+def plot_near_miss_heatmap():
+    """Plot heatmap of Fermat defects for n=3."""
+    N = 30
+    n = 3
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Heatmap of |defect| for fixed c
+    for idx, c in enumerate([20, 30]):
+        data = np.zeros((c, c))
+        for a in range(1, c + 1):
+            for b in range(1, c + 1):
+                d = abs(fermat_defect(n, a, b, c))
+                data[a - 1, b - 1] = np.log10(max(d, 1))
+
+        ax = axes[idx]
+        im = ax.imshow(data, origin='lower', cmap='viridis', aspect='equal')
+        ax.set_xlabel('b')
+        ax.set_ylabel('a')
+        ax.set_title(f'log₁₀|a³ + b³ - {c}³|')
+        plt.colorbar(im, ax=ax, shrink=0.8)
+
+    plt.suptitle('Fermat Defect Heatmaps (n=3)', fontsize=14)
+    plt.tight_layout()
+    plt.savefig('near_miss_heatmap.png', dpi=150)
+    plt.close()
+    print("Saved near_miss_heatmap.png")
+
+
+def plot_mixed_term_growth():
+    """Plot mixed-term sum growth showing binomial cross-term accumulation."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ns = range(2, 15)
+    for a, b in [(1, 1), (1, 2), (2, 3), (3, 5)]:
+        mts = [(a + b)**n - a**n - b**n for n in ns]
+        ax.semilogy(list(ns), mts, 'o-', label=f'a={a}, b={b}', markersize=5)
+
+    ax.set_xlabel('Exponent n')
+    ax.set_ylabel('Mixed-term sum (a+b)^n - a^n - b^n')
+    ax.set_title('Growth of Mixed Terms (Always Positive for n ≥ 2)')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('mixed_term_growth.png', dpi=150)
+    plt.close()
+    print("Saved mixed_term_growth.png")
 
 
 if __name__ == "__main__":
     plot_power_gap_sandwich()
     plot_quality_decay()
-    plot_gap_monotonicity()
-    print("All visualizations generated.")
+    plot_near_miss_heatmap()
+    plot_mixed_term_growth()
+    print("\nAll visualizations generated.")

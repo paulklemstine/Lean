@@ -1,233 +1,213 @@
 #!/usr/bin/env python3
 """
-Fermat Near-Misses: Core Algorithms
+Algorithms for Fermat Near-Miss Analysis
 
-Type-hinted implementations of the key computational procedures
-for finding and analyzing Fermat near-misses.
+Type-hinted implementations of the core algorithms used in the
+Fermat near-miss research.
 """
 
-from typing import List, Tuple, Set, Optional
-from math import gcd, floor, ceil, log
-from dataclasses import dataclass
-
-
-@dataclass
-class NearMiss:
-    """A Fermat near-miss triple with its defect and quality."""
-    n: int
-    a: int
-    b: int
-    c: int
-    defect: int
-    quality: float
-
-    def __repr__(self) -> str:
-        return (f"NearMiss(n={self.n}, ({self.a},{self.b},{self.c}), "
-                f"defect={self.defect}, quality={self.quality:.2e})")
+from typing import List, Tuple, Optional
+import math
 
 
 def fermat_defect(n: int, a: int, b: int, c: int) -> int:
-    """Compute the signed Fermat defect a^n + b^n - c^n.
+    """
+    Compute the Fermat defect: a^n + b^n - c^n.
 
-    Args:
-        n: The exponent (≥ 1)
-        a, b, c: Positive integers
+    Parameters:
+        n: The exponent (≥ 2 for interesting cases)
+        a, b, c: Positive integers forming the triple
 
     Returns:
-        The integer a^n + b^n - c^n
+        The signed defect. Zero iff (a,b,c) is a Fermat solution.
     """
     return a**n + b**n - c**n
 
 
-def consecutive_power_gap(n: int, c: int) -> int:
-    """Compute the gap between consecutive n-th powers: (c+1)^n - c^n.
+def mixed_term_sum(n: int, a: int, b: int) -> int:
+    """
+    Compute the mixed-term sum: (a+b)^n - a^n - b^n.
 
-    Theorem (proved in Lean): This satisfies the sandwich inequality
-        n * c^(n-1) ≤ gap ≤ n * (c+1)^(n-1)
+    This equals the sum of all mixed binomial terms C(n,k) * a^k * b^(n-k)
+    for 0 < k < n. Always positive for a, b > 0 and n ≥ 2.
 
-    Args:
-        n: The exponent (≥ 1)
-        c: Non-negative integer
+    Parameters:
+        n: The exponent (≥ 2)
+        a, b: Positive integers
 
     Returns:
-        (c+1)^n - c^n
+        The mixed-term sum (always positive for valid inputs)
     """
-    return (c + 1)**n - c**n
+    return (a + b)**n - a**n - b**n
 
 
-def near_miss_quality(n: int, a: int, b: int, c: int) -> float:
-    """Compute the relative quality |defect| / c^n.
-
-    Lower quality values indicate closer near-misses.
-    Quality 0 would mean an exact Fermat solution (impossible for n ≥ 3
-    by Fermat's Last Theorem).
-
-    Theorem (proved in Lean): For the family (1, c, c), quality = 1/c^n,
-    which decays super-exponentially in n.
+def radical(n: int) -> int:
     """
-    if c <= 0:
+    Compute the radical of n: the product of its distinct prime factors.
+
+    The radical is the key quantity in the ABC conjecture:
+    for a + b = c with gcd(a,b) = 1, the conjecture says
+    c < rad(abc)^(1+ε) for all ε > 0 with finitely many exceptions.
+
+    Parameters:
+        n: A positive integer
+
+    Returns:
+        The radical of n
+    """
+    if n <= 1:
+        return max(n, 1)
+    rad = 1
+    d = 2
+    temp = abs(n)
+    while d * d <= temp:
+        if temp % d == 0:
+            rad *= d
+            while temp % d == 0:
+                temp //= d
+        d += 1
+    if temp > 1:
+        rad *= temp
+    return rad
+
+
+def quality_ratio(n: int, a: int, b: int, c: int) -> float:
+    """
+    Compute the Fermat quality ratio |a^n + b^n - c^n| / c^n.
+
+    Smaller values indicate better near-misses. The unit family
+    (1, c, c) achieves quality 1/c^n, which vanishes as c → ∞.
+
+    Parameters:
+        n: The exponent
+        a, b, c: The triple (c must be positive)
+
+    Returns:
+        The quality ratio in [0, ∞)
+    """
+    if c == 0:
         return float('inf')
     return abs(fermat_defect(n, a, b, c)) / c**n
 
 
-def optimal_c_for_sum(n: int, a: int, b: int) -> int:
-    """Find the c that minimizes |a^n + b^n - c^n|.
+def power_gap_bounds(c: int, n: int) -> Tuple[int, int, int]:
+    """
+    Compute the power gap and its sandwich bounds.
 
-    Uses the n-th root to find the closest perfect power to a^n + b^n.
+    Returns (lower_bound, gap, upper_bound) where:
+        lower = n * c^(n-1)
+        gap = (c+1)^n - c^n
+        upper = n * (c+1)^(n-1)
 
-    Args:
-        n: The exponent
-        a, b: Positive integers
+    The sandwich theorem guarantees lower ≤ gap ≤ upper.
+
+    Parameters:
+        c: Base (non-negative integer)
+        n: Exponent (≥ 1)
 
     Returns:
-        The c that minimizes |fermat_defect(n, a, b, c)|
+        Tuple (lower, gap, upper)
     """
-    s = a**n + b**n
-    c_approx = s ** (1.0 / n)
-    c_floor = max(1, int(floor(c_approx)))
-    c_ceil = c_floor + 1
-
-    d_floor = abs(s - c_floor**n)
-    d_ceil = abs(s - c_ceil**n)
-
-    return c_floor if d_floor <= d_ceil else c_ceil
+    lower = n * c**(n - 1)
+    gap = (c + 1)**n - c**n
+    upper = n * (c + 1)**(n - 1)
+    return lower, gap, upper
 
 
-def search_near_misses(
+def find_best_near_misses(
     n: int,
     N: int,
-    max_defect: Optional[int] = None,
-    coprime_only: bool = False,
-    top_k: int = 20
-) -> List[NearMiss]:
-    """Search for the best Fermat near-misses with entries bounded by N.
+    count: int = 10,
+    coprime_only: bool = False
+) -> List[Tuple[int, int, int, int, float]]:
+    """
+    Find the best near-misses for x^n + y^n ≈ z^n up to bound N.
 
     Algorithm:
-        For each (a, b) with 1 ≤ a ≤ b ≤ N, find the optimal c
-        minimizing |a^n + b^n - c^n|, then filter and sort by quality.
+    1. For each c from 2 to N, compute c^n
+    2. For each pair (a, b) with 1 ≤ a ≤ b ≤ c, compute |a^n + b^n - c^n|
+    3. Track the smallest nonzero defects
 
-    Args:
-        n: Exponent (should be ≥ 3 for non-trivial results)
-        N: Upper bound on max(a, b, c)
-        max_defect: If set, only return misses with |defect| ≤ this
-        coprime_only: If True, only return coprime triples
-        top_k: Number of best results to return
+    Parameters:
+        n: The exponent (≥ 3 for FLT relevance)
+        N: Upper bound on triple entries
+        count: Number of best misses to return
+        coprime_only: If True, only consider triples with gcd = 1
 
     Returns:
-        List of NearMiss objects, sorted by quality (best first)
+        List of (a, b, c, defect, quality) tuples, sorted by quality
     """
-    results: List[NearMiss] = []
+    results: List[Tuple[int, int, int, int, float]] = []
 
-    for a in range(1, N + 1):
-        for b in range(a, N + 1):
-            # Find optimal c
-            c_opt = optimal_c_for_sum(n, a, b)
-            # Also check neighbors
-            for c in range(max(1, c_opt - 1), min(N + 1, c_opt + 2)):
-                d = fermat_defect(n, a, b, c)
+    for c in range(2, N + 1):
+        cn = c**n
+        for a in range(1, c + 1):
+            an = a**n
+            for b in range(a, c + 1):
+                if coprime_only and math.gcd(math.gcd(a, b), c) != 1:
+                    continue
+                d = an + b**n - cn
                 if d == 0:
-                    continue  # Exact solution (shouldn't happen for n ≥ 3)
-
-                if max_defect is not None and abs(d) > max_defect:
                     continue
+                q = abs(d) / cn
+                results.append((a, b, c, d, q))
 
-                if coprime_only and gcd(gcd(a, b), c) != 1:
-                    continue
-
-                q = abs(d) / c**n
-                results.append(NearMiss(n=n, a=a, b=b, c=c, defect=d, quality=q))
-
-    results.sort(key=lambda m: (abs(m.defect), m.quality))
-    return results[:top_k]
+    results.sort(key=lambda x: x[4])
+    return results[:count]
 
 
-def compute_spectrum(n: int, N: int) -> Set[int]:
-    """Compute the Fermat Near-Miss Spectrum for exponent n, bound N.
+def near_miss_density(n: int, N: int, D: int) -> float:
+    """
+    Compute the near-miss density: fraction of triples with |defect| ≤ D.
 
-    The spectrum S(n, N) = {a^n + b^n - c^n : 1 ≤ a,b,c ≤ N}.
-
-    Theorem (proved in Lean):
-        - 1 ∈ S(n, N) for all N ≥ 1, n ≥ 1
-        - S(n, N) ⊆ S(n, M) when N ≤ M (monotonicity)
-        - 0 ∉ S(n, N) for n ≥ 3 (equivalent to FLT)
+    Parameters:
+        n: The exponent
+        N: Bound on triple entries
+        D: Maximum allowed defect
 
     Returns:
-        Set of all achievable defect values
+        Density in [0, 1]
     """
-    spectrum: Set[int] = set()
+    total = 0
+    hits = 0
     for a in range(1, N + 1):
         for b in range(1, N + 1):
             for c in range(1, N + 1):
-                spectrum.add(a**n + b**n - c**n)
-    return spectrum
+                total += 1
+                if abs(fermat_defect(n, a, b, c)) <= D:
+                    hits += 1
+    return hits / total if total > 0 else 0.0
 
 
-def spectrum_density(n: int, N: int) -> float:
-    """Compute the density of the spectrum: |S(n,N)| / range_width.
-
-    As N grows, the spectrum covers a larger fraction of the interval
-    [-(N^n - 2), 2*N^n - 1].
+def abc_quality_triple(a: int, b: int, c: int) -> float:
     """
-    spec = compute_spectrum(n, N)
-    if not spec:
-        return 0.0
-    range_width = max(spec) - min(spec) + 1
-    return len(spec) / range_width
+    Compute the ABC quality of a triple: log(max(a,b,c)) / log(rad(a*b*c)).
 
+    High quality triples are rare and relate to deep number theory.
+    The ABC conjecture says the quality is bounded for coprime triples.
 
-def verify_gap_sandwich(n: int, max_c: int = 100) -> bool:
-    """Verify the power gap sandwich inequality for all c up to max_c.
-
-    Checks: n * c^(n-1) ≤ (c+1)^n - c^n ≤ n * (c+1)^(n-1)
-
-    Returns True if all checks pass.
-    """
-    for c in range(max_c + 1):
-        gap = consecutive_power_gap(n, c)
-        lower = n * c**(n - 1) if n >= 1 else 0
-        upper = n * (c + 1)**(n - 1)
-        if not (lower <= gap <= upper):
-            return False
-    return True
-
-
-def min_coprime_defect(n: int, N: int) -> Tuple[int, Tuple[int, int, int]]:
-    """Find the minimum nonzero |defect| among coprime triples bounded by N.
-
-    This is used to test the conjecture that the minimum grows polynomially.
+    Parameters:
+        a, b, c: Positive integers
 
     Returns:
-        (min_defect, (a, b, c)) - the minimum defect and achieving triple
+        The ABC quality
     """
-    best_d = float('inf')
-    best_triple = (0, 0, 0)
-
-    for a in range(1, N + 1):
-        for b in range(a, N + 1):
-            c_opt = optimal_c_for_sum(n, a, b)
-            for c in range(max(1, c_opt - 1), min(N + 1, c_opt + 2)):
-                d = abs(fermat_defect(n, a, b, c))
-                if d > 0 and gcd(gcd(a, b), c) == 1 and d < best_d:
-                    best_d = d
-                    best_triple = (a, b, c)
-
-    return (int(best_d), best_triple)
+    r = radical(a * b * c)
+    if r <= 1:
+        return 0.0
+    return math.log(max(a, b, c)) / math.log(r)
 
 
 if __name__ == "__main__":
-    # Quick demonstration
-    print("=== Fermat Near-Miss Search (n=3, N=50) ===")
-    misses = search_near_misses(3, 50, top_k=10)
-    for m in misses:
-        print(f"  {m}")
+    # Quick self-test
+    assert fermat_defect(3, 1, 1, 1) == 1
+    assert fermat_defect(2, 3, 4, 5) == 0
+    assert mixed_term_sum(2, 1, 1) == 2  # (1+1)^2 - 1 - 1 = 2
+    assert radical(12) == 6
+    assert radical(30) == 30
 
-    print(f"\n=== Gap Sandwich Verification ===")
-    for n in [3, 4, 5]:
-        ok = verify_gap_sandwich(n, 50)
-        print(f"  n={n}: {'✓ Verified' if ok else '✗ FAILED'}")
+    print("All self-tests passed.")
 
-    print(f"\n=== Spectrum Sizes ===")
-    for n in [3, 4]:
-        for N in [3, 5, 8]:
-            spec = compute_spectrum(n, N)
-            print(f"  |S({n},{N})| = {len(spec)}, 0∈S: {0 in spec}")
+    print("\nTop 10 near-misses for n=3, N=30:")
+    for a, b, c, d, q in find_best_near_misses(3, 30, 10, coprime_only=True):
+        print(f"  ({a}, {b}, {c}): defect={d}, quality={q:.6f}")
