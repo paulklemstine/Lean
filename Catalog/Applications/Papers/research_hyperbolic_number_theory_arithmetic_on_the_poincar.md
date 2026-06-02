@@ -2,281 +2,202 @@
 
 ## Abstract
 
-We develop a rigorous framework for arithmetic on the Poincaré disk model of hyperbolic geometry. The central construction is Möbius addition on the open interval (−1, 1), which we prove forms an abelian group — resolving the question of whether the one-dimensional Möbius gyrogroup admits full associativity. We establish the existence and strict monotonicity of Möbius orbits (the hyperbolic analog of integer lattices), prove the metric properties of hyperbolic distance, and construct a novel convolution ring on orbit-indexed functions with rigorously verified commutativity and associativity. We bridge this framework to classical number theory by embedding Pythagorean triples into the disk and proving closure under Möbius addition. All principal results are machine-verified in Lean 4 with the Mathlib library.
+We develop a rigorous algebraic and geometric framework for arithmetic on the Poincaré disk, establishing five main results with machine-verified proofs. First, we prove the **Blaschke disk-preservation identity**: for a Möbius transformation $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$, the identity $|\bar{b}z+\bar{a}|^2(1-|\varphi(z)|^2) = (|a|^2-|b|^2)(1-|z|^2)$ holds, giving a clean proof that disk automorphisms preserve the hyperbolic metric. Second, we prove that **Einstein addition** (relativistic velocity addition) defines a commutative group on $(-1,1)$, including the non-trivial closure and associativity properties. Third, we establish the **rapidity homomorphism theorem**: $\operatorname{artanh}(a \oplus b) = \operatorname{artanh}(a) + \operatorname{artanh}(b)$, showing that hyperbolic arithmetic is isomorphic to ordinary addition. Fourth, we prove the **Chebyshev-cosine duality** $T_n(\cos\theta) = \cos(n\theta)$ and the **Chebyshev composition formula** $T_m(T_n(x)) = T_{mn}(x)$ for all real $x$, the latter requiring polynomial extensionality arguments. Fifth, we prove **orbit discreteness** for integer lattices.
 
-**Keywords**: Hyperbolic geometry, Möbius addition, gyrogroup, Poincaré disk, Dirichlet convolution, Pythagorean triples, formal verification
+**Keywords**: Poincaré disk, Einstein addition, Chebyshev polynomials, Möbius transformation, hyperbolic geometry, Selberg trace formula
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The integers $\mathbb{Z}$ are the fundamental objects of number theory, living on the flat real line with addition as their group operation. A natural question arises: what happens to arithmetic on a curved space?
 
-Classical number theory is built on the arithmetic of the integers ℤ, which lives on the one-dimensional Euclidean line. The additive structure is that of a free abelian group, and the multiplicative structure gives rise to the theory of primes, the Riemann zeta function, and the Prime Number Theorem.
+The Poincaré disk $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$ is the standard model of the hyperbolic plane. Its isometries are Möbius transformations of the form $\varphi(z) = e^{i\theta}(z-a)/(1-\bar{a}z)$, and the group $\operatorname{PSL}_2(\mathbb{Z})$ acts on $\mathbb{D}$ via the Cayley transform from the upper half-plane. The orbit of any point under this action defines a discrete subset of $\mathbb{D}$ — the "hyperbolic integers."
 
-A natural question arises: what happens when we replace the Euclidean line with a hyperbolic one? The Poincaré disk model of hyperbolic geometry provides a concrete setting where this question can be made precise. The "arithmetic" on the disk is governed by Möbius addition — a binary operation derived from the composition of Möbius transformations.
+In this paper, we establish the algebraic and geometric foundations needed to study number theory in this curved setting. Our results are:
 
-### 1.2 Prior Work
+1. **Blaschke identity** (Theorem 3.1): The fundamental metric identity for disk automorphisms.
+2. **Einstein group** (Theorems 4.1–4.5): $(-1,1)$ with Einstein addition is a commutative group.
+3. **Rapidity isomorphism** (Theorem 5.1): The artanh map is a group isomorphism $(-1,1) \xrightarrow{\sim} \mathbb{R}$.
+4. **Chebyshev duality and composition** (Theorems 6.1–6.2): $T_n(\cos\theta) = \cos(n\theta)$ and $T_m \circ T_n = T_{mn}$.
+5. **Orbit discreteness** (Theorems 7.1–7.2): Integer lattices in $\mathbb{R}$ are discrete.
 
-The gyrogroup structure of Möbius addition was introduced by Ungar [1] in the context of Einstein's velocity addition in special relativity. The general theory of gyrogroups has been developed by Ungar and others [2, 3], but the one-dimensional case — which simplifies dramatically — has received less attention in the formal mathematics literature.
-
-The connection between hyperbolic geometry and number theory is well-studied in the context of Fuchsian groups and the Selberg trace formula [4, 5]. However, the elementary algebraic approach via Möbius orbits and convolution rings that we develop here appears to be new.
-
-### 1.3 Contributions
-
-1. **Full associativity of 1D Möbius addition** (Theorem 3.1): We prove that Möbius addition on (−1, 1) is associative, commutative, has identity 0, and every element has an inverse — making it an abelian group.
-
-2. **Möbius orbit theory** (Theorems 4.1–4.4): We define the orbit of 0 under iterated Möbius addition, prove it is strictly monotone for positive generators, and establish that all orbit points lie in the disk.
-
-3. **Hyperbolic convolution ring** (Theorems 5.1–5.3): We construct a commutative, associative, unital ring of ℕ-indexed functions under the Cauchy product, establishing the algebraic foundation for hyperbolic analytic number theory.
-
-4. **Pythagorean–hyperbolic bridge** (Theorems 6.1–6.2): We prove that Pythagorean triples embed into the disk and are closed under Möbius addition.
-
-5. **Hyperbolic distance properties** (Theorems 7.1–7.4): We establish self-distance zero, symmetry, positivity for distinct points, and boundedness.
+All proofs have been formally verified in Lean 4 with the Mathlib library.
 
 ## 2. Preliminaries
 
-### 2.1 The Poincaré Disk Model
+### 2.1 The Poincaré Disk
 
-The Poincaré disk model represents the hyperbolic plane as the open unit disk 𝔻 = {z ∈ ℂ : |z| < 1} equipped with the metric
+The Poincaré disk is the open unit disk $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$ equipped with the Riemannian metric $ds^2 = 4|dz|^2/(1-|z|^2)^2$. The hyperbolic distance is:
+$$d(z_1, z_2) = \operatorname{artanh}\left(\frac{|z_1-z_2|}{|1-\bar{z}_1 z_2|}\right)$$
 
-$$ds^2 = \frac{4(dx^2 + dy^2)}{(1 - x^2 - y^2)^2}$$
+### 2.2 Möbius Transformations
 
-In one dimension, this reduces to the open interval (−1, 1) with metric ds = 2dx/(1 − x²).
+A Möbius transformation of the disk has the form $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$ where $|a|^2 - |b|^2 = 1$. These form the group $\operatorname{SU}(1,1)/\{\pm I\}$, isomorphic to $\operatorname{PSL}_2(\mathbb{R})$.
 
-### 2.2 Möbius Addition
+### 2.3 Notation
 
-For z, w ∈ 𝔻, the **Möbius addition** is defined by:
+We write $\|z\|^2 = |z|^2 = z\bar{z}$ for the squared modulus (normSq in the formalization). The star ring endomorphism $\star$ denotes complex conjugation.
 
-$$z \oplus w = \frac{z + w}{1 + \bar{z}w}$$
+## 3. The Blaschke Disk-Preservation Identity
 
-In the one-dimensional real case (z, w ∈ (−1, 1)), the complex conjugate is trivial and this simplifies to:
+### 3.1 Core Algebraic Identity
 
-$$a \oplus b = \frac{a + b}{1 + ab}$$
+**Theorem 3.1** (blaschke_normSq_difference). *For all $a, b, z \in \mathbb{C}$:*
+$$|a + b\bar{z}|^2 - |az + b|^2 = (|a|^2 - |b|^2)(1 - |z|^2)$$
 
-This is our central object of study.
+*Proof sketch.* Expand both normSq expressions using $|w|^2 = w\bar{w}$:
+$$|a + b\bar{z}|^2 = |a|^2 + a\overline{b}\cdot z + \bar{a}b\bar{z} + |b|^2|z|^2$$
+$$|az + b|^2 = |a|^2|z|^2 + a\overline{b}\cdot z + \bar{a}b\bar{z} + |b|^2$$
 
-### 2.3 Connection to Hyperbolic Trigonometry
+The cross terms $a\bar{b}z + \bar{a}b\bar{z}$ are identical and cancel in the difference, leaving $(|a|^2 + |b|^2|z|^2) - (|a|^2|z|^2 + |b|^2) = (|a|^2 - |b|^2)(1 - |z|^2)$. □
 
-A fundamental identity connects Möbius addition to the hyperbolic tangent:
+**Theorem 3.2** (blaschke_disk_identity). *For $\bar{b}z + \bar{a} \neq 0$:*
+$$|\bar{b}z + \bar{a}|^2 \cdot \left(1 - \left|\frac{az+b}{\bar{b}z+\bar{a}}\right|^2\right) = (|a|^2 - |b|^2)(1 - |z|^2)$$
 
-$$\tanh(x) \oplus \tanh(y) = \tanh(x + y)$$
+*Proof sketch.* Note that $\bar{b}z + \bar{a} = \overline{a + b\bar{z}}$, so $|\bar{b}z+\bar{a}|^2 = |a+b\bar{z}|^2$. Then:
+$$|\bar{b}z+\bar{a}|^2\left(1 - \frac{|az+b|^2}{|\bar{b}z+\bar{a}|^2}\right) = |a+b\bar{z}|^2 - |az+b|^2$$
+and apply Theorem 3.1. □
 
-This shows that Möbius addition on (−1, 1) is isomorphic to ordinary addition on ℝ via the tanh/arctanh bijection.
+**Corollary.** When $|a|^2 - |b|^2 = 1$, the map $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$ satisfies $|\varphi(z)|^2 < 1$ whenever $|z|^2 < 1$. Thus $\varphi$ maps $\mathbb{D}$ into $\mathbb{D}$.
 
-## 3. The Möbius Group Structure
-
-### 3.1 Well-definedness
-
-**Lemma 3.1** (Denominator Positivity). *For a, b ∈ (−1, 1), we have 1 + ab > 0.*
-
-*Proof.* Since |a| < 1 and |b| < 1, we have |ab| ≤ |a| · |b| < 1, so 1 + ab ≥ 1 − |ab| > 0. ∎
-
-**Theorem 3.1** (Disk Preservation). *If |a| < 1 and |b| < 1, then |a ⊕ b| < 1.*
-
-*Proof.* We show |a + b|² < |1 + ab|², which expands to (a + b)² < (1 + ab)², equivalently (1 − a²)(1 − b²) > 0. This holds since |a| < 1 and |b| < 1. ∎
-
-### 3.2 Group Axioms
-
-**Theorem 3.2** (Abelian Group). *The structure ((−1, 1), ⊕, 0, −) is an abelian group.*
-
-*Proof.* We verify:
-- **Closure**: Theorem 3.1.
-- **Identity**: a ⊕ 0 = (a + 0)/(1 + 0) = a.
-- **Inverse**: a ⊕ (−a) = (a − a)/(1 − a²) = 0.
-- **Commutativity**: a ⊕ b = (a + b)/(1 + ab) = (b + a)/(1 + ba) = b ⊕ a.
-- **Associativity**: This is the deepest property. We compute:
-  - (a ⊕ b) ⊕ c = ((a+b)/(1+ab) + c) / (1 + (a+b)c/(1+ab))
-  - = (a + b + c(1+ab)) / (1 + ab + (a+b)c)
-  - = (a + b + c + abc) / (1 + ab + ac + bc)
-
-  Similarly, a ⊕ (b ⊕ c) yields the same expression. ∎
-
-Note: This associativity is special to the one-dimensional case. In 2D, the complex conjugate in z̄w introduces a phase rotation that breaks associativity, necessitating the gyration operator.
-
-## 4. Möbius Orbit Theory
+## 4. Einstein Addition: The Hyperbolic Group on (-1, 1)
 
 ### 4.1 Definition
 
-**Definition 4.1** (Möbius Orbit). For a generator g ∈ (0, 1), the Möbius orbit is the sequence:
-- O(g, 0) = 0
-- O(g, n+1) = g ⊕ O(g, n)
+**Definition.** Einstein addition on $\mathbb{R}$ is defined by:
+$$a \oplus b = \frac{a + b}{1 + ab}$$
 
-### 4.2 Basic Properties
+This is the relativistic velocity addition formula with $c = 1$.
 
-**Theorem 4.1** (Disk Membership). *For |g| < 1 and all n ∈ ℕ, |O(g, n)| < 1.*
+### 4.2 Group Axioms
 
-*Proof.* By induction using the disk preservation theorem. ∎
+**Theorem 4.1** (einstein_denom_pos). *If $|a| < 1$ and $|b| < 1$, then $1 + ab > 0$.*
 
-**Theorem 4.2** (Nonnegativity). *For 0 < g < 1 and all n, O(g, n) ≥ 0.*
+*Proof.* Since $-1 < a < 1$ and $-1 < b < 1$, we have $ab > -1$, so $1 + ab > 0$. □
 
-*Proof.* By induction. The base case O(g, 0) = 0 is clear. For the inductive step, O(g, n+1) = (g + O(g,n))/(1 + g · O(g,n)). The numerator g + O(g,n) ≥ g > 0, and the denominator is positive by Lemma 3.1. ∎
+**Theorem 4.2** (einstein_fundamental_identity). *$(1+ab)^2 - (a+b)^2 = (1-a^2)(1-b^2)$.*
 
-### 4.3 Monotonicity
+*Proof.* Direct algebraic verification (ring). □
 
-**Lemma 4.1** (Möbius Increment). *For 0 < g < 1 and |x| < 1, we have x < g ⊕ x.*
+**Theorem 4.3** (einstein_add_closure). *If $|a| < 1$ and $|b| < 1$, then $|a \oplus b| < 1$.*
 
-*Proof.* We show g ⊕ x − x > 0:
-$$\frac{g + x}{1 + gx} - x = \frac{g + x - x(1 + gx)}{1 + gx} = \frac{g(1 - x^2)}{1 + gx}$$
-Since g > 0, 1 − x² > 0 (as |x| < 1), and 1 + gx > 0, the expression is positive. ∎
+*Proof.* By Theorem 4.2, $(1+ab)^2 - (a+b)^2 = (1-a^2)(1-b^2) > 0$ since $|a|, |b| < 1$. Since $1+ab > 0$ (Theorem 4.1), this gives $|a+b| < 1+ab$, hence $|(a+b)/(1+ab)| < 1$. □
 
-**Theorem 4.3** (Strict Monotonicity). *For 0 < g < 1, the orbit O(g, ·) is strictly increasing.*
+**Theorem 4.4** (einstein_add_assoc). *$(a \oplus b) \oplus c = a \oplus (b \oplus c)$ when all denominators are nonzero.*
 
-*Proof.* O(g, n+1) = g ⊕ O(g, n) > O(g, n) by Lemma 4.1 and Theorem 4.1. ∎
+*Proof.* Expanding both sides as rational functions and clearing denominators yields a polynomial identity, verified by the `grind` tactic. □
 
-### 4.4 Hyperbolic Norm
+**Theorem 4.5.** *$a \oplus 0 = a$, $a \oplus (-a) = 0$, and $a \oplus b = b \oplus a$.*
 
-**Definition 4.2** (Hyperbolic Norm). *N_H(g, n) = |O(g, n)|.*
+### 4.3 Significance
 
-**Theorem 4.4** (Norm Monotonicity). *For 0 < g < 1, N_H(g, ·) is monotonically increasing.*
+The group $(-1, 1, \oplus)$ is the 1-dimensional analogue of the Poincaré disk with Möbius composition. It is isomorphic to $(\mathbb{R}, +)$ via the rapidity map (Section 5), but the Einstein presentation reveals the hyperbolic geometry directly.
 
-*Proof.* Since O(g, n) ≥ 0 by Theorem 4.2, N_H(g, n) = O(g, n). The result follows from Theorem 4.3. ∎
+## 5. The Rapidity Isomorphism
 
-## 5. The Hyperbolic Convolution Ring
+### 5.1 Definition and Main Result
 
-### 5.1 Definition
+**Definition.** The rapidity function is $\rho(x) = \frac{1}{2}\ln\frac{1+x}{1-x}$ for $x \in (-1,1)$.
 
-**Definition 5.1** (Hyperbolic Convolution). For functions f, g : ℕ → ℝ:
-$$(f \star g)(n) = \sum_{k=0}^{n} f(k) \cdot g(n-k)$$
+**Theorem 5.1** (rapidity_einstein_homomorphism). *For $|a| < 1$ and $|b| < 1$:*
+$$\rho(a \oplus b) = \rho(a) + \rho(b)$$
 
-This is the standard Cauchy product, but we interpret it as multiplication in the ring of functions on the Möbius orbit.
+*Proof sketch.* Compute:
+$$\frac{1 + \frac{a+b}{1+ab}}{1 - \frac{a+b}{1+ab}} = \frac{1+ab+a+b}{1+ab-a-b} = \frac{(1+a)(1+b)}{(1-a)(1-b)}$$
 
-### 5.2 Ring Properties
+Therefore:
+$$\rho(a \oplus b) = \frac{1}{2}\ln\frac{(1+a)(1+b)}{(1-a)(1-b)} = \frac{1}{2}\ln\frac{1+a}{1-a} + \frac{1}{2}\ln\frac{1+b}{1-b} = \rho(a) + \rho(b)$$
 
-**Theorem 5.1** (Identity). *The delta function δ(0) = 1, δ(n) = 0 for n > 0, satisfies δ ⋆ f = f.*
+using $\ln(xy) = \ln x + \ln y$ for positive reals. □
 
-*Proof.* (δ ⋆ f)(n) = Σ_{k=0}^{n} δ(k) · f(n−k). Only the k = 0 term survives, giving 1 · f(n) = f(n). ∎
+### 5.2 Interpretation
 
-**Theorem 5.2** (Commutativity). *f ⋆ g = g ⋆ f.*
+This theorem shows that $\rho : ((-1,1), \oplus) \to (\mathbb{R}, +)$ is a group isomorphism. The inverse is $\rho^{-1}(r) = \tanh(r)$. Hyperbolic arithmetic is ordinary arithmetic "in disguise" — the rapidity map removes the curvature.
 
-*Proof.* Substitute k ↦ n − k in the sum, using the symmetry of the range and mul_comm. ∎
+In physics, $\rho(v)$ is the rapidity of a particle with velocity $v$ (in units of $c$). The fact that rapidities add linearly while velocities don't is the key to understanding relativistic kinematics.
 
-**Theorem 5.3** (Associativity). *(f ⋆ g) ⋆ h = f ⋆ (g ⋆ h).*
+## 6. Chebyshev Polynomials and Trace-Distance Duality
 
-*Proof.* Both sides expand to Σ_{i+j+k=n} f(i)g(j)h(k). The left side groups by i+j first, the right by j+k. Equality follows from exchanging the order of summation (Fubini for finite sums). This is the deepest algebraic result, requiring careful reindexing of double sums. ∎
+### 6.1 Definitions and Basic Properties
 
-### 5.3 Significance
+**Definition.** Chebyshev polynomials of the first kind:
+$$T_0(x) = 1, \quad T_1(x) = x, \quad T_{n+2}(x) = 2xT_{n+1}(x) - T_n(x)$$
 
-The convolution ring (ℕ → ℝ, +, ⋆) is isomorphic to the ring of formal power series ℝ[[x]], where the convolution product corresponds to series multiplication. This establishes the connection to:
+### 6.2 The Chebyshev-Cosine Duality
 
-1. **Generating functions** for combinatorial quantities on the orbit
-2. **Dirichlet series** in hyperbolic analytic number theory
-3. **L-functions** attached to representations of the hyperbolic lattice group
+**Theorem 6.1** (chebyshevT_cos). *$T_n(\cos\theta) = \cos(n\theta)$ for all $n \in \mathbb{N}$ and $\theta \in \mathbb{R}$.*
 
-## 6. The Pythagorean–Hyperbolic Bridge
+*Proof.* Induction on $n$ using strong induction. Base cases $n=0,1$ are immediate. For $n+2$:
+$$T_{n+2}(\cos\theta) = 2\cos\theta \cdot \cos((n+1)\theta) - \cos(n\theta)$$
+The product-to-sum formula $2\cos\alpha\cos\beta = \cos(\alpha-\beta) + \cos(\alpha+\beta)$ with $\alpha = \theta$, $\beta = (n+1)\theta$ gives:
+$$= \cos(n\theta) + \cos((n+2)\theta) - \cos(n\theta) = \cos((n+2)\theta) \quad \square$$
 
-### 6.1 Embedding
+### 6.3 The Composition Formula
 
-**Theorem 6.1** (Pythagorean Embedding). *If (a, b, c) is a Pythagorean triple with b > 0, then a/c ∈ (0, 1) is a disk point.*
+**Theorem 6.2** (chebyshevT_comp). *$T_m(T_n(\cos\theta)) = T_{mn}(\cos\theta)$ for all $m, n, \theta$.*
 
-*Proof.* Since a² + b² = c² and b > 0, we have a² < c², so a < c, giving 0 ≤ a/c < 1. ∎
+*Proof.* By Theorem 6.1: $T_m(T_n(\cos\theta)) = T_m(\cos(n\theta)) = \cos(mn\theta) = T_{mn}(\cos\theta)$. □
 
-### 6.2 Closure
+**Theorem 6.3** (chebyshevT_comp_general). *$T_m(T_n(x)) = T_{mn}(x)$ for ALL $x \in \mathbb{R}$.*
 
-**Theorem 6.2** (Möbius Closure). *The Möbius sum of two Pythagorean disk points remains in the disk.*
+*Proof.* Both sides are polynomial functions of $x$. They agree for all $x \in [-1,1]$ (since every such $x$ is $\cos\theta$ for some $\theta$). Since $[-1,1]$ is infinite and two polynomials agreeing on an infinite set must be identical, the equality holds for all $x \in \mathbb{R}$.
 
-*Proof.* Direct from the disk preservation theorem applied to the ratios a₁/c₁ and a₂/c₂. ∎
+The formal proof constructs explicit polynomial representations of both sides using Mathlib's `Polynomial` type, verifies they agree on the infinite set $\{cos\theta : \theta \in \mathbb{R}\} \supseteq [-1,1]$, and applies the polynomial identity principle (a nonzero polynomial has finitely many roots). □
 
-### 6.3 Explicit Computation
+### 6.4 Application: Trace-Distance Duality
 
-**Example.** The Möbius sum of 3/5 (from (3,4,5)) and 5/13 (from (5,12,13)) is:
+For $\gamma \in \operatorname{SL}_2(\mathbb{Z})$ with $|\operatorname{tr}(\gamma)| = t$, the hyperbolic distance from $i$ to $\gamma \cdot i$ satisfies $\cosh(d(i, \gamma \cdot i)) = t/2$. The $n$-th iterate has trace $2T_n(t/2)$, so by the composition formula:
 
-$$\frac{3}{5} \oplus \frac{5}{13} = \frac{3/5 + 5/13}{1 + (3/5)(5/13)} = \frac{64/65}{80/65} = \frac{4}{5}$$
+$$\operatorname{tr}(\gamma^{mn}) = 2T_{mn}(t/2) = 2T_m(T_n(t/2)) = 2T_m(\operatorname{tr}(\gamma^n)/2)$$
 
-This yields 4/5, which is the ratio from the "complementary" triple (4, 3, 5). The Pythagorean-rational points on the disk are connected by Möbius arithmetic.
+This recurrence is the key to counting orbit points in hyperbolic space and connects to the Selberg trace formula.
 
-## 7. Hyperbolic Distance
+## 7. Orbit Discreteness
 
-### 7.1 Definition
+**Theorem 7.1** (int_is_discrete). *The set $\mathbb{Z} \subset \mathbb{R}$ is discrete: for every $R > 0$, the set $\{n \in \mathbb{Z} : |n| < R\}$ is finite.*
 
-**Definition 7.1**. The hyperbolic distance proxy between a, b ∈ (−1, 1) is:
-$$d_H(a, b) = |a \ominus b| = |a \oplus (−b)|$$
+**Theorem 7.2** (scaled_int_is_discrete). *For $c \neq 0$, the set $\{cn : n \in \mathbb{Z}\}$ is discrete.*
 
-This is a monotone function of the true hyperbolic distance artanh(|a ⊖ b|).
+These results establish the discreteness paradigm that extends to orbits of SL₂(ℤ) acting on the Poincaré disk. The orbit $\operatorname{SL}_2(\mathbb{Z}) \cdot 0$ is discrete in $\mathbb{D}$ — a consequence of the discreteness of SL₂(ℤ) in SL₂(ℝ).
 
-### 7.2 Metric Properties
+## 8. Discussion and Future Work
 
-**Theorem 7.1** (Self-distance). d_H(a, a) = 0.
+### 8.1 Unique Factorization
 
-**Theorem 7.2** (Symmetry). d_H(a, b) = d_H(b, a).
+Since $\operatorname{PSL}_2(\mathbb{Z}) \cong \mathbb{Z}/2 \star \mathbb{Z}/3$ (the free product), every group element has a unique reduced word in the generators $S$ and $T$. This provides a natural notion of "unique factorization" for hyperbolic integers. Formalizing this requires the normal form theorem for free products.
 
-**Theorem 7.3** (Positivity). d_H(a, b) > 0 for a ≠ b.
+### 8.2 The Prime Geodesic Theorem
 
-**Theorem 7.4** (Boundedness). d_H(a, b) < 1 for all a, b ∈ (−1, 1).
+The number of primitive closed geodesics of length at most $R$ on $\operatorname{PSL}_2(\mathbb{Z}) \backslash \mathbb{H}$ is asymptotic to $e^R / R$ as $R \to \infty$ (Huber's theorem). This is the hyperbolic analogue of the prime number theorem and follows from the Selberg trace formula.
 
-## 8. Falsifiable Conjecture
+### 8.3 The Selberg Zeta Function
 
-### 8.1 Statement
+The Selberg zeta function $Z(s) = \prod_{\{p\}} \prod_{k=0}^{\infty} (1 - e^{-(s+k)\ell(p)})$ satisfies a functional equation and has its nontrivial zeros at $s = 1/2 \pm ir_j$ where $\lambda_j = 1/4 + r_j^2$ are eigenvalues of the Laplacian. Unlike the Riemann zeta function, the location of these zeros is a *theorem*, not a conjecture.
 
-**Conjecture (Non-Associativity in 2D).** For complex disk points z₁, z₂, z₃ with |zᵢ| < 1, define complex Möbius addition z₁ ⊕ z₂ = (z₁ + z₂)/(1 + z̄₁z₂). The associativity defect
+### 8.4 Connections to Physics
 
-$$\delta(z_1, z_2, z_3) = |(z_1 \oplus z_2) \oplus z_3 - z_1 \oplus (z_2 \oplus z_3)|$$
+Einstein addition is not just an analogy — it IS the velocity addition formula of special relativity. The rapidity isomorphism is the standard tool of relativistic kinematics. The Poincaré disk model appears naturally in:
 
-is generically nonzero.
+- Quantum information (the Bloch ball is hyperbolic)
+- AdS/CFT correspondence (Anti-de Sitter space is hyperbolic)
+- Machine learning (hyperbolic embeddings for hierarchical data)
 
-### 8.2 Testable Prediction
+## 9. Summary of Formal Results
 
-For z₁ = 0.3 + 0.4i, z₂ = 0.1 − 0.2i, z₃ = −0.1 + 0.3i, compute δ and verify δ > 0.
-
-For the 1D case, we proved δ(1/3, 1/5, 1/7) = 0 (Theorem 3.2), confirming the contrast.
-
-### 8.3 Computational Verification
-
-The accompanying Python code (demo.py) computes the defect for these test values, confirming δ ≈ 0.0089 > 0 in the 2D case.
-
-## 9. Algorithms
-
-### 9.1 Möbius Orbit Computation
-
-```
-ALGORITHM: MoebiusOrbit(g, n)
-INPUT: Generator g ∈ (0,1), number of steps n
-OUTPUT: Array of orbit points [O(0), O(1), ..., O(n)]
-
-orbit[0] ← 0
-for i ← 1 to n:
-    orbit[i] ← (g + orbit[i-1]) / (1 + g * orbit[i-1])
-return orbit
-```
-
-Time complexity: O(n) using exact rational arithmetic.
-
-### 9.2 Hyperbolic Convolution
-
-```
-ALGORITHM: HypConvolve(f, g, N)
-INPUT: Functions f, g : [0..N] → ℝ
-OUTPUT: (f ⋆ g) evaluated at 0, 1, ..., N
-
-for n ← 0 to N:
-    result[n] ← Σ_{k=0}^{n} f[k] * g[n-k]
-return result
-```
-
-Time complexity: O(N²) naively, O(N log N) via FFT.
-
-## 10. Discussion and Future Work
-
-### 10.1 Toward a Hyperbolic Prime Number Theorem
-
-The orbit monotonicity and norm bounds established here provide the foundation for defining "hyperbolic primes" as orbit indices that cannot be expressed as convolution products of smaller indices. The growth rate of the hyperbolic prime counting function π_H(R) is conjectured to follow π_H(R) ~ R²/(2 log R), reflecting the quadratic volume growth of hyperbolic balls.
-
-### 10.2 The Selberg Connection
-
-The hyperbolic zeta function ζ_H(s) = Σ N_H(g, n)^{−2s} is related to the Selberg zeta function through the spectral theory of the Laplacian on hyperbolic surfaces. This connection could provide new approaches to the distribution of zeros.
-
-### 10.3 Higher-Dimensional Extensions
-
-Extending from 1D to 2D introduces the full gyrogroup structure with non-trivial gyrations. The construction of a convolution ring in this non-associative setting requires gyrogroup-theoretic tools not yet available in Mathlib.
+| Theorem | Statement | Lean Name |
+|---------|-----------|-----------|
+| Blaschke identity | $\|a+b\bar{z}\|^2 - \|az+b\|^2 = (\|a\|^2-\|b\|^2)(1-\|z\|^2)$ | `blaschke_normSq_difference` |
+| Disk preservation | $\|\bar{b}z+\bar{a}\|^2(1-\|\varphi(z)\|^2) = (\|a\|^2-\|b\|^2)(1-\|z\|^2)$ | `blaschke_disk_identity` |
+| Einstein closure | $\|a\|,\|b\|<1 \Rightarrow \|a\oplus b\|<1$ | `einstein_add_closure` |
+| Associativity | $(a\oplus b)\oplus c = a\oplus(b\oplus c)$ | `einstein_add_assoc` |
+| Rapidity homomorphism | $\rho(a\oplus b) = \rho(a)+\rho(b)$ | `rapidity_einstein_homomorphism` |
+| Chebyshev-cosine | $T_n(\cos\theta)=\cos(n\theta)$ | `chebyshevT_cos` |
+| Chebyshev composition | $T_m \circ T_n = T_{mn}$ | `chebyshevT_comp_general` |
+| Integer discreteness | $\mathbb{Z}$ is discrete in $\mathbb{R}$ | `int_is_discrete` |
 
 ## References
 
-[1] A. A. Ungar, *Thomas rotation and the parametrization of the Lorentz transformation group*, Found. Phys. Lett. 1 (1988), 57–89.
-
-[2] A. A. Ungar, *Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity*, World Scientific, 2008.
-
-[3] T. Suksumran, *The algebra of gyrogroups: Cayley's theorem, Lagrange's theorem and isomorphism theorems*, in: Essays in Mathematics and its Applications, Springer, 2016.
-
-[4] A. Selberg, *Harmonic analysis and discontinuous groups in weakly symmetric Riemannian spaces with applications to Dirichlet series*, J. Indian Math. Soc. 20 (1956), 47–87.
-
-[5] P. Sarnak, *Arithmetic quantum chaos*, Israel Math. Conf. Proc. 8 (1995), 183–236.
-
-[6] H. Iwaniec, *Spectral Methods of Automorphic Forms*, AMS, 2002.
+1. Ungar, A.A. *Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity.* World Scientific, 2008.
+2. Beardon, A.F. *The Geometry of Discrete Groups.* Springer, 1983.
+3. Selberg, A. "Harmonic analysis and discontinuous groups in weakly symmetric Riemannian spaces with applications to Dirichlet series." *J. Indian Math. Soc.* 20, 47–87, 1956.
+4. Iwaniec, H. *Spectral Methods of Automorphic Forms.* AMS, 2002.
+5. Mason, J.C. and Handscomb, D.C. *Chebyshev Polynomials.* CRC Press, 2003.
