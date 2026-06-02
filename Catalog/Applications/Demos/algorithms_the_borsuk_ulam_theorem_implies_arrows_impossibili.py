@@ -1,180 +1,184 @@
 """
-Algorithms for Social Choice Theory and the Arrow-Borsuk-Ulam Connection.
+Algorithms for Social Choice Theory and Preference Topology
 
-This module implements core algorithms for analyzing voting systems,
-detecting Condorcet cycles, verifying Arrow's axioms, and computing
-topological invariants of preference spaces.
+Type-hinted implementations of the key algorithms from the
+Borsuk-Ulam–Arrow bridge formalization.
 """
 
-from itertools import permutations, product
 from typing import Callable, Optional
+from itertools import permutations
 
 
-# --- Core Types ---
+# ============================================================
+# Core Types
+# ============================================================
 
-Ballot = tuple[int, ...]  # A permutation of (0, 1, ..., k-1) representing ranks
-Profile = tuple[Ballot, ...]  # One ballot per voter
-SWF = Callable[[Profile], Ballot]  # Social welfare function
+Ranking = tuple[int, ...]  # A strict linear order (permutation)
+Profile = list[Ranking]     # A preference profile (list of rankings)
+SWF = Callable[[Profile], Ranking]  # Social welfare function
 
 
-def prefers(ballot: Ballot, a: int, b: int) -> bool:
-    """Check if alternative `a` is preferred to `b` under the given ballot.
-    
-    A ballot is a ranking: ballot[i] = rank of alternative i.
-    Lower rank = more preferred.
+# ============================================================
+# Preference Operations
+# ============================================================
+
+def prefers(ranking: Ranking, a: int, b: int) -> bool:
+    """Check if ranking prefers a to b (lower index = more preferred)."""
+    return ranking.index(a) < ranking.index(b)
+
+
+def reverse_ranking(ranking: Ranking) -> Ranking:
+    """The antipodal ranking: reverse the preference order."""
+    return tuple(reversed(ranking))
+
+
+def reverse_profile(profile: Profile) -> Profile:
+    """Reverse all voters' preferences (the antipodal map on L(n)^k)."""
+    return [reverse_ranking(r) for r in profile]
+
+
+# ============================================================
+# Kendall Distance
+# ============================================================
+
+def kendall_distance(r1: Ranking, r2: Ranking) -> int:
     """
-    return ballot[a] < ballot[b]
-
-
-def antipodal_ballot(ballot: Ballot) -> Ballot:
-    """Compute the antipodal (reversed) ballot.
+    Kendall tau distance: number of pairwise disagreements.
     
-    If ballot[i] = r, then antipodal[i] = k - 1 - r.
-    This reverses all pairwise comparisons.
+    This is the discrete metric on the preference manifold L(n).
+    Properties:
+    - kendall_distance(r, r) = 0
+    - kendall_distance(r1, r2) = kendall_distance(r2, r1)
+    - kendall_distance(r, reverse(r)) = n*(n-1)/2 (maximum)
+    - kendall_distance(r1, r2) <= kendall_distance(r1, reverse(r1)) for all r2
     """
-    k = len(ballot)
-    return tuple(k - 1 - r for r in ballot)
+    n = len(r1)
+    return sum(
+        1 for i in range(n) for j in range(i + 1, n)
+        if prefers(r1, i, j) != prefers(r2, i, j)
+    )
 
 
-def antipodal_profile(profile: Profile) -> Profile:
-    """Reverse all voters' preferences."""
-    return tuple(antipodal_ballot(b) for b in profile)
+# ============================================================
+# Condorcet Curvature
+# ============================================================
+
+def support_count(profile: Profile, a: int, b: int) -> int:
+    """Count voters preferring a to b."""
+    return sum(1 for r in profile if prefers(r, a, b))
 
 
-# --- Majority Rule ---
-
-def majority_count(profile: Profile, a: int, b: int) -> int:
-    """Count voters who prefer alternative `a` to `b`."""
-    return sum(1 for ballot in profile if prefers(ballot, a, b))
+def majority_beats(profile: Profile, a: int, b: int) -> bool:
+    """Does a majority-beat b?"""
+    return support_count(profile, a, b) > support_count(profile, b, a)
 
 
-def majority_prefers(profile: Profile, a: int, b: int) -> bool:
-    """Check if majority prefers `a` to `b` (strict majority)."""
-    n = len(profile)
-    return 2 * majority_count(profile, a, b) > n
-
-
-def majority_tournament(profile: Profile, k: int) -> dict[tuple[int, int], bool]:
-    """Compute the full majority tournament for k alternatives."""
-    tournament = {}
-    for a in range(k):
-        for b in range(k):
-            if a != b:
-                tournament[(a, b)] = majority_prefers(profile, a, b)
-    return tournament
-
-
-# --- Condorcet Cycle Detection ---
-
-def has_condorcet_cycle(profile: Profile, k: int) -> Optional[tuple[int, ...]]:
-    """Detect a Condorcet cycle in the majority tournament.
-    
-    Returns the cycle as a tuple if found, None otherwise.
-    Uses DFS-based cycle detection in the majority tournament graph.
+def condorcet_curvature(profile: Profile, n: int) -> int:
     """
-    tournament = majority_tournament(profile, k)
+    Condorcet curvature: number of directed 3-cycles in majority relation.
     
-    # Build adjacency list
-    adj: dict[int, list[int]] = {i: [] for i in range(k)}
-    for (a, b), wins in tournament.items():
-        if wins:
-            adj[a].append(b)
+    - Curvature = 0: majority rule is transitive (flat preference space)
+    - Curvature > 0: Condorcet paradox exists (curved preference space)
     
-    # DFS cycle detection
-    WHITE, GRAY, BLACK = 0, 1, 2
-    color = [WHITE] * k
-    parent = [-1] * k
+    Arrow's theorem is driven by the existence of curvature in general:
+    for n >= 3, there always exist profiles with positive curvature.
+    """
+    count = 0
+    for a in range(n):
+        for b in range(n):
+            if b == a:
+                continue
+            for c in range(n):
+                if c == a or c == b:
+                    continue
+                if (majority_beats(profile, a, b) and
+                    majority_beats(profile, b, c) and
+                    majority_beats(profile, c, a)):
+                    count += 1
+    return count
+
+
+def condorcet_winner(profile: Profile, n: int) -> Optional[int]:
+    """
+    Find the Condorcet winner if one exists.
     
-    def dfs(u: int) -> Optional[list[int]]:
-        color[u] = GRAY
-        for v in adj[u]:
-            if color[v] == GRAY:
-                # Found a cycle - reconstruct it
-                cycle = [v, u]
-                x = u
-                while parent[x] != v and parent[x] != -1:
-                    x = parent[x]
-                    cycle.append(x)
-                return cycle
-            if color[v] == WHITE:
-                parent[v] = u
-                result = dfs(v)
-                if result is not None:
-                    return result
-        color[u] = BLACK
-        return None
-    
-    for i in range(k):
-        if color[i] == WHITE:
-            cycle = dfs(i)
-            if cycle is not None:
-                return tuple(cycle)
+    A Condorcet winner majority-beats every other alternative.
+    By our theorem condorcet_winner_unique, at most one can exist.
+    """
+    for w in range(n):
+        if all(majority_beats(profile, w, b) for b in range(n) if b != w):
+            return w
     return None
 
 
-# --- Arrow's Axioms Verification ---
+# ============================================================
+# Arrow's Axiom Checking
+# ============================================================
 
-def check_pareto(f: SWF, k: int, n: int) -> bool:
-    """Verify that SWF f satisfies the Pareto condition.
-    
-    For all profiles where all voters agree on a > b, 
-    the social outcome must also have a > b.
-    """
-    all_ballots = list(permutations(range(k)))
-    
-    for ballot in all_ballots:
-        # Unanimous profile: everyone votes the same
-        profile = tuple([ballot] * n)
-        social = f(profile)
-        
-        for a in range(k):
-            for b in range(k):
-                if a != b and prefers(ballot, a, b):
+def check_pareto(swf: SWF, n: int, k: int) -> bool:
+    """Check if SWF satisfies Pareto efficiency (for small n, k)."""
+    orders = list(permutations(range(n)))
+    for indices in range(len(orders) ** k):
+        profile = []
+        idx = indices
+        for _ in range(k):
+            profile.append(orders[idx % len(orders)])
+            idx //= len(orders)
+
+        social = swf(profile)
+        for a in range(n):
+            for b in range(n):
+                if a != b and all(prefers(r, a, b) for r in profile):
                     if not prefers(social, a, b):
                         return False
     return True
 
 
-def check_iia(f: SWF, k: int, n: int) -> bool:
-    """Verify Independence of Irrelevant Alternatives.
-    
-    For all profile pairs agreeing on (a,b) comparisons for all voters,
-    the social preference on (a,b) must agree.
-    """
-    all_ballots = list(permutations(range(k)))
-    all_profiles = list(product(all_ballots, repeat=n))
-    
-    for a in range(k):
-        for b in range(k):
-            if a == b:
-                continue
-            # Group profiles by their (a,b) pattern
-            groups: dict[tuple[bool, ...], list[Profile]] = {}
-            for profile in all_profiles:
-                pattern = tuple(prefers(ballot, a, b) for ballot in profile)
-                groups.setdefault(pattern, []).append(profile)
-            
-            for _pattern, profiles_in_group in groups.items():
-                social_prefs = set()
-                for profile in profiles_in_group:
-                    social = f(profile)
-                    social_prefs.add(prefers(social, a, b))
-                if len(social_prefs) > 1:
-                    return False
+def check_iia(swf: SWF, n: int, k: int) -> bool:
+    """Check if SWF satisfies Independence of Irrelevant Alternatives."""
+    orders = list(permutations(range(n)))
+    all_profiles = []
+    for indices in range(len(orders) ** k):
+        profile = []
+        idx = indices
+        for _ in range(k):
+            profile.append(orders[idx % len(orders)])
+            idx //= len(orders)
+        all_profiles.append(profile)
+
+    for P in all_profiles:
+        for Q in all_profiles:
+            social_P = swf(P)
+            social_Q = swf(Q)
+            for a in range(n):
+                for b in range(n):
+                    if a == b:
+                        continue
+                    # Check if all voters agree on a vs b
+                    agree = all(
+                        prefers(P[i], a, b) == prefers(Q[i], a, b)
+                        for i in range(k)
+                    )
+                    if agree:
+                        if prefers(social_P, a, b) != prefers(social_Q, a, b):
+                            return False
     return True
 
 
-def check_non_dictatorial(f: SWF, k: int, n: int) -> bool:
-    """Verify non-dictatorship."""
-    all_ballots = list(permutations(range(k)))
-    all_profiles = list(product(all_ballots, repeat=n))
-    
-    for d in range(n):
+def find_dictator(swf: SWF, n: int, k: int) -> Optional[int]:
+    """Find a dictator for the SWF, or None if non-dictatorial."""
+    orders = list(permutations(range(n)))
+    for d in range(k):
         is_dictator = True
-        for profile in all_profiles:
-            social = f(profile)
-            for a in range(k):
-                for b in range(k):
+        for indices in range(len(orders) ** k):
+            profile = []
+            idx = indices
+            for _ in range(k):
+                profile.append(orders[idx % len(orders)])
+                idx //= len(orders)
+            social = swf(profile)
+            for a in range(n):
+                for b in range(n):
                     if a != b and prefers(profile[d], a, b):
                         if not prefers(social, a, b):
                             is_dictator = False
@@ -184,98 +188,49 @@ def check_non_dictatorial(f: SWF, k: int, n: int) -> bool:
             if not is_dictator:
                 break
         if is_dictator:
-            return False  # Found a dictator
-    return True
+            return d
+    return None
 
 
-def verify_arrow(f: SWF, k: int, n: int) -> dict[str, bool]:
-    """Full Arrow axiom verification."""
-    return {
-        'pareto': check_pareto(f, k, n),
-        'iia': check_iia(f, k, n),
-        'non_dictatorial': check_non_dictatorial(f, k, n),
-    }
+# ============================================================
+# Dictator SWF
+# ============================================================
+
+def make_dictator_swf(d: int) -> SWF:
+    """Create a dictator SWF for voter d."""
+    return lambda profile: profile[d]
 
 
-# --- Exhaustive Arrow Search ---
+# ============================================================
+# Majority Rule SWF (not always well-defined for n >= 3)
+# ============================================================
 
-def find_arrow_compliant_swfs(k: int, n: int) -> list[SWF]:
-    """Enumerate all SWFs satisfying Pareto and IIA for small k, n.
-    
-    Returns the list of compliant SWFs. By Arrow's theorem,
-    all should be dictatorial for k >= 3.
+def majority_rule_swf(profile: Profile) -> Ranking:
     """
-    all_ballots = list(permutations(range(k)))
-    all_profiles = list(product(all_ballots, repeat=n))
-    
-    # For small cases, represent SWF as a dictionary
-    # Try all dictatorial SWFs first
-    dictatorial_swfs = []
-    for d in range(n):
-        def make_dict_swf(d: int = d) -> SWF:
-            def swf(profile: Profile) -> Ballot:
-                return profile[d]
-            return swf
-        dictatorial_swfs.append(make_dict_swf())
-    
-    return dictatorial_swfs
-
-
-# --- Topological Invariants ---
-
-def kendall_distance(b1: Ballot, b2: Ballot) -> int:
-    """Compute the Kendall tau distance between two ballots.
-    
-    This counts the number of pairwise disagreements.
+    Majority rule: rank alternatives by Borda count.
+    WARNING: This is NOT majority rule in the strict sense (which may not
+    produce a transitive ranking). This is Borda count, which always produces
+    a ranking but does NOT satisfy IIA.
     """
-    k = len(b1)
-    dist = 0
-    for i in range(k):
-        for j in range(i + 1, k):
-            if (b1[i] < b1[j]) != (b2[i] < b2[j]):
-                dist += 1
-    return dist
+    n = len(profile[0])
+    scores = [0] * n
+    for r in profile:
+        for pos, alt in enumerate(r):
+            scores[alt] += (n - 1 - pos)
+    return tuple(sorted(range(n), key=lambda x: -scores[x]))
 
 
-def is_antipodal_pair(b1: Ballot, b2: Ballot) -> bool:
-    """Check if two ballots are antipodal (reversed preferences)."""
-    return b2 == antipodal_ballot(b1)
+if __name__ == "__main__":
+    # Quick test
+    n, k = 3, 2
+    print(f"Testing dictator SWF (n={n}, k={k}):")
+    swf = make_dictator_swf(0)
+    print(f"  Pareto: {check_pareto(swf, n, k)}")
+    print(f"  IIA: {check_iia(swf, n, k)}")
+    print(f"  Dictator: voter {find_dictator(swf, n, k)}")
 
-
-def preference_sphere_embedding(ballot: Ballot) -> list[float]:
-    """Embed a ballot into R^{k-1} via pairwise comparison coordinates.
-    
-    Uses the first k-1 pairwise comparisons (0 vs 1, 0 vs 2, ..., 0 vs k-1)
-    mapped to {-1, +1}.
-    """
-    k = len(ballot)
-    coords = []
-    for j in range(1, k):
-        coords.append(1.0 if prefers(ballot, 0, j) else -1.0)
-    return coords
-
-
-def pareto_antipodal_test(f: SWF, k: int, n: int) -> bool:
-    """Test the Pareto-antipodal conflict.
-    
-    For each unanimous profile, verify that f(p) != f(antipodal(p))
-    in the Pareto-relevant sense.
-    """
-    all_ballots = list(permutations(range(k)))
-    
-    for ballot in all_ballots:
-        profile = tuple([ballot] * n)
-        anti_profile = antipodal_profile(profile)
-        
-        social = f(profile)
-        anti_social = f(anti_profile)
-        
-        # Check that they differ on some pair where Pareto applies
-        for a in range(k):
-            for b in range(k):
-                if a != b and prefers(ballot, a, b):
-                    # All voters prefer a > b in profile
-                    # All voters prefer b > a in anti_profile
-                    if prefers(social, a, b) and prefers(anti_social, a, b):
-                        return False  # Violation!
-    return True
+    print(f"\nTesting Borda count (n={n}, k={k}):")
+    print(f"  Pareto: {check_pareto(majority_rule_swf, n, k)}")
+    print(f"  IIA: {check_iia(majority_rule_swf, n, k)}")
+    print(f"  Dictator: {find_dictator(majority_rule_swf, n, k)}")
+    print("  (Borda violates IIA — confirming Arrow's theorem!)")
