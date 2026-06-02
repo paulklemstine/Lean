@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a6ebe879",
     "filename": "stone_duality_for_machine_learning_neural_networks.json",
     "pkg_num": 183,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7167536923076923,
     "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
   },
   {
@@ -5784,8 +5784,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "stone_duality_for_machine_learning_neural_networks",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7167536923076923,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
     }

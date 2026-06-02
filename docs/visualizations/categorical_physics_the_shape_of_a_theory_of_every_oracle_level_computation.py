@@ -1,2 +1,2 @@
-def tqft_oracle_level(d: int) -> int:
-    return 0 if d <= 3 else d - 3
+def compute_oracle_level(d: int) -> int:
+    return max(0, d - 3)
