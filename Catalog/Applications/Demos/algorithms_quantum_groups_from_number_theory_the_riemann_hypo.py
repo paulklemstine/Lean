@@ -1,262 +1,251 @@
+#!/usr/bin/env python3
 """
-Quantum Group Casimir Spectrum Algorithms
+algorithms.py — Type-hinted implementations of the quantum zeta spectrum algorithms.
 
-Type-hinted implementations of q-integer and q-Casimir spectrum computations.
+Implements q-integers, q-Casimir eigenvalues, the Chebyshev recurrence,
+product-to-sum decomposition, Dirichlet kernel summation, and spectral
+statistics computation.
 """
 
-from typing import List, Tuple
-import math
+from typing import List, Tuple, Optional
+import numpy as np
 
 
-def q_integer(q: float, n: int) -> float:
-    """Compute the q-integer [n]_q = 1 + q + q^2 + ... + q^{n-1}.
+def q_integer(theta: float, n: int) -> float:
+    """
+    Compute the trigonometric q-integer [n]_q = sin(nθ)/sin(θ).
 
-    For q != 1, uses the geometric sum formula (q^n - 1)/(q - 1).
-    For q == 1, returns n.
+    For q = e^{iθ}, the q-integer generalizes natural numbers
+    to the quantum group setting. In the classical limit θ → 0,
+    [n]_q → n.
 
     Args:
-        q: Deformation parameter (positive real).
-        n: Non-negative integer.
+        theta: The deformation parameter (θ where q = e^{iθ}).
+        n: The integer label (non-negative).
 
     Returns:
-        The q-integer [n]_q.
+        The q-integer value.
     """
-    if n == 0:
-        return 0.0
-    if abs(q - 1.0) < 1e-15:
+    sin_theta = np.sin(theta)
+    if abs(sin_theta) < 1e-15:
         return float(n)
-    return (q**n - 1.0) / (q - 1.0)
+    return np.sin(n * theta) / sin_theta
 
 
-def q_integer_recursive(q: float, n: int) -> float:
-    """Compute [n]_q using the recurrence [n+1]_q = 1 + q * [n]_q.
-
-    More numerically stable for large n with q close to 1.
+def q_casimir(theta: float, n: int) -> float:
     """
-    result = 0.0
-    for _ in range(n):
-        result = 1.0 + q * result
-    return result
+    Compute the q-Casimir eigenvalue C_q(n) = [n]_q · [n+1]_q.
 
-
-def q_casimir(q: float, n: int) -> float:
-    """Compute the q-Casimir eigenvalue lambda_n = [n]_q * [n+1]_q.
+    This is the eigenvalue of the Casimir element of quantum SU(2)
+    acting on the n-th irreducible representation.
 
     Args:
-        q: Deformation parameter.
-        n: Representation label.
+        theta: The deformation parameter.
+        n: The representation label.
 
     Returns:
         The q-Casimir eigenvalue.
     """
-    return q_integer(q, n) * q_integer(q, n + 1)
+    return q_integer(theta, n) * q_integer(theta, n + 1)
 
 
-def q_casimir_spectrum(q: float, N: int) -> List[float]:
-    """Compute the first N q-Casimir eigenvalues using O(N) recurrence.
+def casimir_via_cosines(theta: float, n: int) -> float:
+    """
+    Compute the q-Casimir eigenvalue using the product-to-sum formula:
+    C_q(n) = (cos(θ) - cos((2n+1)θ)) / (2 sin²(θ))
 
-    Uses [n+1]_q = 1 + q * [n]_q to avoid recomputation.
+    This decomposition separates the constant and oscillatory parts.
 
     Args:
-        q: Deformation parameter.
-        N: Number of eigenvalues to compute.
+        theta: The deformation parameter.
+        n: The representation label.
 
     Returns:
-        List [lambda_0, lambda_1, ..., lambda_{N-1}].
+        The q-Casimir eigenvalue.
     """
-    spectrum: List[float] = []
-    q_int_prev = 0.0  # [0]_q
-    q_int_curr = 1.0  # [1]_q
-    for n in range(N):
-        spectrum.append(q_int_prev * q_int_curr)
-        q_int_prev = q_int_curr
-        q_int_curr = 1.0 + q * q_int_curr
-    return spectrum
+    sin_theta = np.sin(theta)
+    if abs(sin_theta) < 1e-15:
+        return float(n * (n + 1))
+    return (np.cos(theta) - np.cos((2 * n + 1) * theta)) / (2 * sin_theta ** 2)
 
 
-def spectral_gaps(q: float, N: int) -> List[float]:
-    """Compute spectral gaps using the recurrence Delta_{n+1} = q^2 * Delta_n + q^{n+1} * (1+q).
+def chebyshev_recurrence(
+    theta: float, n_max: int
+) -> List[float]:
+    """
+    Compute q-integers [0]_q, [1]_q, ..., [n_max]_q using the
+    Chebyshev recurrence: [n+2]_q = 2cos(θ)·[n+1]_q - [n]_q.
+
+    This is O(n_max) and avoids repeated trigonometric evaluations.
 
     Args:
-        q: Deformation parameter.
-        N: Number of gaps to compute.
+        theta: The deformation parameter.
+        n_max: Maximum index to compute.
 
     Returns:
-        List [Delta_0, Delta_1, ..., Delta_{N-1}].
+        List of q-integers from index 0 to n_max.
     """
-    gaps: List[float] = []
-    delta = 1.0 + q  # Delta_0 = lambda_1 - lambda_0 = (1+q) - 0
-    q_power = q       # q^{n+1} starting at n=0
-    q_sq = q * q
-    for _ in range(N):
-        gaps.append(delta)
-        delta = q_sq * delta + q_power * (1.0 + q)
-        q_power *= q
-    return gaps
+    if n_max < 0:
+        return []
+
+    sin_theta = np.sin(theta)
+    cos_theta = np.cos(theta)
+
+    result: List[float] = [0.0]  # [0]_q = 0
+    if n_max == 0:
+        return result
+
+    if abs(sin_theta) < 1e-15:
+        return [float(k) for k in range(n_max + 1)]
+
+    result.append(1.0)  # [1]_q = 1
+
+    two_cos = 2.0 * cos_theta
+    for _ in range(2, n_max + 1):
+        next_val = two_cos * result[-1] - result[-2]
+        result.append(next_val)
+
+    return result
 
 
-def spectral_gaps_from_formula(q: float, N: int) -> List[float]:
-    """Compute gaps using explicit formula: Delta_n = [n+1]_q * q^n * (1+q)."""
-    gaps: List[float] = []
-    q_int = 1.0  # [1]_q
-    q_power = 1.0  # q^0
-    for n in range(N):
-        gaps.append(q_int * q_power * (1.0 + q))
-        q_int = 1.0 + q * q_int  # [n+2]_q
-        q_power *= q
-    return gaps
+def casimir_spectrum(theta: float, n_max: int) -> List[float]:
+    """
+    Compute the q-Casimir spectrum {C_q(0), C_q(1), ..., C_q(n_max)}.
 
-
-def spectral_zeta(q: float, s: float, N: int) -> float:
-    """Compute the finite spectral zeta function zeta_C(s, N) = sum_{n=1}^{N} lambda_n^{-s}.
+    Uses the Chebyshev recurrence for efficiency.
 
     Args:
-        q: Deformation parameter.
-        s: Complex exponent (real part).
-        N: Truncation.
+        theta: The deformation parameter.
+        n_max: Maximum representation label.
 
     Returns:
-        Partial sum of the spectral zeta function.
+        List of q-Casimir eigenvalues.
     """
-    spectrum = q_casimir_spectrum(q, N + 1)
-    total = 0.0
-    for n in range(1, N + 1):
-        if spectrum[n] > 0:
-            total += spectrum[n] ** (-s)
-    return total
+    q_ints = chebyshev_recurrence(theta, n_max + 1)
+    return [q_ints[n] * q_ints[n + 1] for n in range(n_max + 1)]
 
 
-def pair_correlation(eigenvalues: List[float], num_bins: int = 100,
-                     max_r: float = 3.0) -> Tuple[List[float], List[float]]:
-    """Compute the pair correlation function R_2(r) for a spectrum.
-
-    Normalizes spacings by the mean spacing and computes the histogram
-    of all pair differences.
+def dirichlet_kernel_sum(
+    theta: float, n_max: int
+) -> List[float]:
+    """
+    Compute partial sums S(N) = Σ_{k=1}^{N} cos(kθ) using the
+    Dirichlet kernel identity:
+    S(N) = (sin((N+1)θ) + sin(Nθ) - sin(θ)) / (2sin(θ))
 
     Args:
-        eigenvalues: Sorted list of eigenvalues.
-        num_bins: Number of histogram bins.
-        max_r: Maximum normalized distance to consider.
+        theta: The angle parameter.
+        n_max: Maximum number of terms.
 
     Returns:
-        Tuple of (bin_centers, R2_values).
+        List of partial sums S(1), S(2), ..., S(n_max).
     """
-    N = len(eigenvalues)
-    if N < 3:
-        return [], []
+    sin_theta = np.sin(theta)
+    if abs(sin_theta) < 1e-15:
+        return [float(k) for k in range(1, n_max + 1)]
 
-    # Compute mean spacing
-    spacings = [eigenvalues[i+1] - eigenvalues[i] for i in range(N-1)]
-    mean_spacing = sum(spacings) / len(spacings)
+    result: List[float] = []
+    for N in range(1, n_max + 1):
+        s = (np.sin((N + 1) * theta) + np.sin(N * theta) - np.sin(theta)) / (
+            2 * sin_theta
+        )
+        result.append(s)
+    return result
 
-    # Normalize eigenvalues
-    normalized = [e / mean_spacing for e in eigenvalues]
 
-    # Compute pair differences
-    diffs: List[float] = []
+def pair_correlation(
+    spectrum: List[float], delta: float
+) -> float:
+    """
+    Compute the pair correlation function R₂(δ) for a spectrum.
+
+    R₂(δ) = (1/N) · #{(i,j) : i≠j, |λ_i - λ_j| < δ}
+
+    Args:
+        spectrum: List of eigenvalues.
+        delta: The correlation window.
+
+    Returns:
+        The pair correlation value.
+    """
+    N = len(spectrum)
+    if N <= 1:
+        return 0.0
+
+    count = 0
     for i in range(N):
-        for j in range(i+1, min(i+50, N)):  # limit to nearby pairs
-            d = abs(normalized[j] - normalized[i])
-            if d < max_r * N:
-                diffs.append(d / N * len(eigenvalues))
+        for j in range(N):
+            if i != j and abs(spectrum[i] - spectrum[j]) < delta:
+                count += 1
 
-    # Histogram
-    bin_width = max_r / num_bins
-    bins = [0.0] * num_bins
-    for d in diffs:
-        idx = int(d / bin_width)
-        if 0 <= idx < num_bins:
-            bins[idx] += 1
+    return count / N
+
+
+def spacing_statistics(
+    spectrum: List[float],
+) -> Tuple[float, float, float]:
+    """
+    Compute nearest-neighbor spacing statistics.
+
+    Returns (mean_spacing, std_spacing, level_repulsion_parameter)
+    where the level repulsion parameter β is estimated from the
+    spacing distribution. β = 1 for GOE, β = 2 for GUE, β = 0 for Poisson.
+
+    Args:
+        spectrum: List of eigenvalues.
+
+    Returns:
+        Tuple of (mean spacing, std spacing, estimated β).
+    """
+    sorted_spec = sorted(spectrum)
+    spacings = [
+        sorted_spec[i + 1] - sorted_spec[i]
+        for i in range(len(sorted_spec) - 1)
+    ]
+    spacings = [s for s in spacings if abs(s) > 1e-12]
+
+    if not spacings:
+        return (0.0, 0.0, 0.0)
+
+    mean_s = float(np.mean(spacings))
+    std_s = float(np.std(spacings))
 
     # Normalize
-    total_pairs = N * (N - 1) / 2
-    bin_centers = [(i + 0.5) * bin_width for i in range(num_bins)]
-    r2_values = [b / (total_pairs * bin_width) * N for b in bins]
+    if mean_s > 1e-12:
+        normalized = [s / mean_s for s in spacings]
+        # Estimate β from the probability of small spacings
+        # P(s < 0.1) ~ s^β for small s
+        small_count = sum(1 for s in normalized if s < 0.1)
+        total = len(normalized)
+        # Rough β estimate
+        if small_count > 0 and total > 0:
+            p_small = small_count / total
+            # For Poisson, P(s<0.1) ≈ 0.1; for GUE, P(s<0.1) ≈ 0.01/3
+            beta_est = max(0.0, -np.log(p_small / 0.1) / np.log(10))
+        else:
+            beta_est = 2.0  # Strong level repulsion
+    else:
+        beta_est = 0.0
 
-    return bin_centers, r2_values
-
-
-def nearest_neighbor_spacing(eigenvalues: List[float]) -> List[float]:
-    """Compute normalized nearest-neighbor spacings.
-
-    Args:
-        eigenvalues: Sorted list of eigenvalues.
-
-    Returns:
-        List of spacings normalized by mean spacing.
-    """
-    N = len(eigenvalues)
-    spacings = [eigenvalues[i+1] - eigenvalues[i] for i in range(N-1)]
-    mean_s = sum(spacings) / len(spacings) if spacings else 1.0
-    return [s / mean_s for s in spacings]
+    return (mean_s, std_s, beta_est)
 
 
-def gue_wigner_surmise(s: float) -> float:
-    """GUE Wigner surmise: P(s) = (32/pi^2) * s^2 * exp(-4s^2/pi).
+if __name__ == "__main__":
+    gamma1 = 14.134725
+    theta = np.pi * gamma1
 
-    Args:
-        s: Normalized spacing.
+    print("q-Integer spectrum (first 10):")
+    q_ints = chebyshev_recurrence(theta, 10)
+    for i, q in enumerate(q_ints):
+        print(f"  [{i}]_q = {q:.8f}")
 
-    Returns:
-        Probability density.
-    """
-    return (32.0 / math.pi**2) * s**2 * math.exp(-4.0 * s**2 / math.pi)
+    print("\nq-Casimir spectrum (first 10):")
+    spec = casimir_spectrum(theta, 10)
+    for i, c in enumerate(spec):
+        print(f"  C_q({i}) = {c:.8f}")
 
-
-def poisson_spacing(s: float) -> float:
-    """Poisson spacing distribution: P(s) = exp(-s).
-
-    Args:
-        s: Normalized spacing.
-
-    Returns:
-        Probability density.
-    """
-    return math.exp(-s)
-
-
-def symmetric_q_integer(alpha: float, n: int) -> float:
-    """Compute the symmetric q-integer [n]_q = sin(n*pi*alpha)/sin(pi*alpha).
-
-    For q = e^{2*pi*i*alpha} on the unit circle.
-
-    Args:
-        alpha: Parameter (related to Riemann zeros by alpha = gamma/(2*pi)).
-        n: Non-negative integer.
-
-    Returns:
-        The symmetric q-integer.
-    """
-    denom = math.sin(math.pi * alpha)
-    if abs(denom) < 1e-15:
-        return float(n)
-    return math.sin(n * math.pi * alpha) / denom
-
-
-def symmetric_q_casimir(alpha: float, n: int) -> float:
-    """Compute the symmetric q-Casimir eigenvalue using sin-based q-integers."""
-    return symmetric_q_integer(alpha, n) * symmetric_q_integer(alpha, n + 1)
-
-
-def verify_multiplication_formula(q: float, n: int, m: int) -> Tuple[float, float, float]:
-    """Verify the multiplication formula [nm]_q = [n]_q * [m]_{q^n}.
-
-    Returns (lhs, rhs, relative_error).
-    """
-    lhs = q_integer(q, n * m)
-    rhs = q_integer(q, n) * q_integer(q**n, m)
-    rel_err = abs(lhs - rhs) / max(abs(lhs), 1e-15)
-    return lhs, rhs, rel_err
-
-
-def verify_gap_recurrence(q: float, n: int) -> Tuple[float, float, float]:
-    """Verify the gap recurrence Delta_{n+1} = q^2 * Delta_n + q^{n+1} * (1+q).
-
-    Returns (lhs, rhs, relative_error).
-    """
-    spectrum = q_casimir_spectrum(q, n + 3)
-    delta_n = spectrum[n+1] - spectrum[n]
-    delta_n1 = spectrum[n+2] - spectrum[n+1]
-    rhs = q**2 * delta_n + q**(n+1) * (1 + q)
-    rel_err = abs(delta_n1 - rhs) / max(abs(delta_n1), 1e-15)
-    return delta_n1, rhs, rel_err
+    print("\nSpacing statistics:")
+    mean_s, std_s, beta = spacing_statistics(spec)
+    print(f"  Mean spacing: {mean_s:.6f}")
+    print(f"  Std spacing:  {std_s:.6f}")
+    print(f"  Estimated β:  {beta:.3f}")
