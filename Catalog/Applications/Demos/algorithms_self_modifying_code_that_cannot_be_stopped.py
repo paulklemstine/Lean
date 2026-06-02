@@ -1,260 +1,280 @@
+#!/usr/bin/env python3
 """
-Algorithms for Self-Modifying Halting Analysis
+Algorithms for Self-Modifying Computation Analysis
 
-Implements the core computational procedures from the formal framework:
-- Self-modification depth computation
-- Orbit cycle detection (Brent's algorithm adapted for self-modification)
-- Fixed-point delay computation
-- Diagonal program construction
+Type-hinted implementations of the key algorithms from the formalization.
 """
 
-from typing import Callable, Optional, TypeVar, Generic
+from typing import Callable, Optional, Tuple, List, TypeVar, Generic
 from dataclasses import dataclass
+from enum import Enum
 
-T = TypeVar('T')
+
+# --- Core Types ---
+
+Code = int
+Data = int
+StepFn = Callable[[Code, Data], Optional[Tuple[Code, Data]]]
 
 
 @dataclass
-class SelfModSystem(Generic[T]):
-    """A self-modifying system with finite code space.
+class Config:
+    """Configuration of a self-modifying system."""
+    code: Code
+    data: Data
 
-    Attributes:
-        modify: Given a code, produces the modified code (self-modification).
-        exec_halts: Given a code, returns True if execution halts, False if diverges.
-        codes: The finite set of all possible codes.
+
+class HaltStatus(Enum):
+    HALTED = "halted"
+    RUNNING = "running"
+    STABILIZED = "stabilized"
+    OSCILLATING = "oscillating"
+
+
+@dataclass
+class SimulationResult:
+    """Result of simulating a self-modifying system."""
+    final_config: Config
+    status: HaltStatus
+    steps: int
+    code_history: List[Code]
+    data_history: List[Data]
+    stabilization_step: Optional[int]
+
+
+# --- Self-Modifying System Simulator ---
+
+def simulate_system(
+    initial: Config,
+    step: StepFn,
+    max_steps: int = 1000,
+    detect_stabilization: bool = True,
+    stabilization_window: int = 10
+) -> SimulationResult:
     """
-    modify: Callable[[T], T]
-    exec_halts: Callable[[T], bool]
-    codes: list[T]
+    Simulate a self-modifying system with stabilization detection.
 
-    def selfmod_depth(self, code: T, n: int) -> T:
-        """Compute the code after n rounds of self-modification.
+    Args:
+        initial: Initial configuration (code, data)
+        step: Step function mapping (code, data) -> Optional[(new_code, new_data)]
+        max_steps: Maximum number of steps to simulate
+        detect_stabilization: Whether to check for code stabilization
+        stabilization_window: Number of steps with constant code to declare stabilization
 
-        depth(code, 0) = code
-        depth(code, n+1) = modify(depth(code, n))
+    Returns:
+        SimulationResult with full execution history and analysis
+    """
+    code, data = initial.code, initial.data
+    code_history: List[Code] = [code]
+    data_history: List[Data] = [data]
+    stabilization_step: Optional[int] = None
 
-        Satisfies: depth(code, m+n) = depth(depth(code, m), n)
-        """
-        current = code
-        for _ in range(n):
-            current = self.modify(current)
-        return current
+    for i in range(max_steps):
+        result = step(code, data)
+        if result is None:
+            return SimulationResult(
+                final_config=Config(code, data),
+                status=HaltStatus.HALTED,
+                steps=i,
+                code_history=code_history,
+                data_history=data_history,
+                stabilization_step=i
+            )
+        code, data = result
+        code_history.append(code)
+        data_history.append(data)
 
-    def find_cycle(self, code: T) -> tuple[int, int]:
-        """Find the tail length and cycle length of the self-modification orbit.
+        # Check stabilization
+        if detect_stabilization and stabilization_step is None:
+            if len(code_history) >= stabilization_window:
+                window = code_history[-stabilization_window:]
+                if all(c == window[0] for c in window):
+                    stabilization_step = i - stabilization_window + 1
 
-        Returns (tail, cycle) where:
-        - tail: number of steps before entering the cycle
-        - cycle: length of the cycle
+    # Determine final status
+    if stabilization_step is not None:
+        status = HaltStatus.STABILIZED
+    elif _detect_oscillation(code_history):
+        status = HaltStatus.OSCILLATING
+    else:
+        status = HaltStatus.RUNNING
 
-        Uses Floyd's cycle detection algorithm.
-
-        By the pigeonhole theorem (finite_selfmod_iterate_collision),
-        tail + cycle <= len(codes).
-        """
-        # Phase 1: Find a meeting point
-        tortoise = self.modify(code)
-        hare = self.modify(self.modify(code))
-        while tortoise != hare:
-            tortoise = self.modify(tortoise)
-            hare = self.modify(self.modify(hare))
-
-        # Phase 2: Find the tail length
-        tail = 0
-        tortoise = code
-        while tortoise != hare:
-            tortoise = self.modify(tortoise)
-            hare = self.modify(hare)
-            tail += 1
-
-        # Phase 3: Find the cycle length
-        cycle = 1
-        hare = self.modify(tortoise)
-        while tortoise != hare:
-            hare = self.modify(hare)
-            cycle += 1
-
-        return tail, cycle
-
-    def fixed_point_delay(self, code: T) -> Optional[int]:
-        """Find the minimum k such that depth(code, k) = depth(code, k+1).
-
-        Returns None if no fixed point is reached within len(codes) steps.
-        By selfmod_fixpoint_delay_upper, if a fixed point exists, k <= n-1.
-        """
-        current = code
-        for k in range(len(self.codes)):
-            next_code = self.modify(current)
-            if current == next_code:
-                return k
-            current = next_code
-        return None
-
-    def hierarchy_level(self, code: T) -> int:
-        """Compute the exact self-modification depth at which code stabilizes.
-
-        Returns the smallest k such that depth(code, k+1) = depth(code, k).
-        By selfmod_hierarchy_separation, all depths < k are distinct from depth k.
-        """
-        delay = self.fixed_point_delay(code)
-        if delay is not None:
-            return delay
-        # If no fixed point, return -1 (enters a cycle without stabilizing)
-        return -1
-
-    def reachable_states(self, code: T, max_depth: int) -> set:
-        """Compute the set of distinct states reachable within max_depth steps.
-
-        By selfmod_reachable_bound, |result| <= min(max_depth+1, len(codes)).
-        """
-        states = set()
-        current = code
-        for _ in range(max_depth + 1):
-            states.add(current)
-            current = self.modify(current)
-        return states
+    return SimulationResult(
+        final_config=Config(code, data),
+        status=status,
+        steps=max_steps,
+        code_history=code_history,
+        data_history=data_history,
+        stabilization_step=stabilization_step
+    )
 
 
-def diagonal_construction(
-    n: int,
-    oracle: Callable[[int], bool]
+def _detect_oscillation(history: List[Code], min_period: int = 2, max_period: int = 50) -> bool:
+    """Detect if the code history has become periodic."""
+    if len(history) < max_period * 3:
+        return False
+    for period in range(min_period, max_period + 1):
+        tail = history[-period * 3:]
+        is_periodic = all(
+            tail[i] == tail[i + period]
+            for i in range(len(tail) - period)
+        )
+        if is_periodic:
+            return True
+    return False
+
+
+# --- Diagonal Argument ---
+
+def construct_diagonal(
+    enum: Callable[[int, int], bool],
+    bound: int = 100
 ) -> Callable[[int], bool]:
-    """Construct a diagonal program that defeats any halting oracle.
-
-    Given an oracle that predicts halting, returns a function that
-    halts iff the oracle says it doesn't, and diverges iff it says it does.
-
-    This implements the core of Theorem 1 (no_selfmod_halting_oracle).
-
-    Args:
-        n: The code index of the diagonal program
-        oracle: A candidate halting oracle
-
-    Returns:
-        A function representing the diagonal program's execution
     """
-    def diag_exec(code: int) -> bool:
-        if code == n:
-            # Self-referential case: do the opposite of what oracle predicts
-            return not oracle(n)
-        return True  # Default: halt
-    return diag_exec
+    Construct the diagonal function that escapes an enumeration.
 
-
-def virus_detector_impossibility_demo(
-    n_codes: int
-) -> tuple[list[bool], list[bool]]:
-    """Demonstrate that no perfect virus detector exists.
-
-    For any candidate detector on n_codes codes, constructs a program
-    that evades the detector (Theorem 3: no_perfect_virus_detector).
-
-    Returns:
-        (detector_predictions, actual_behaviors): The detector's output
-        and the actual halting behavior of the diagonal program, showing
-        at least one disagreement.
+    Given enum : ℕ → (ℕ → Bool), returns d : ℕ → Bool where d(n) = ¬enum(n,n).
+    By the diagonal theorem, d is not in the range of enum.
     """
-    # Try every possible detector (there are 2^n_codes of them)
-    # For each, the diagonal program defeats it
-    results_det = []
-    results_act = []
-
-    for detector_bits in range(min(2**n_codes, 16)):
-        detector = lambda c, bits=detector_bits: bool((bits >> c) & 1)
-        diag_code = 0  # The diagonal program's code
-        prediction = detector(diag_code)
-        # Diagonal behavior: opposite of prediction
-        actual = not prediction
-        results_det.append(prediction)
-        results_act.append(actual)
-
-    return results_det, results_act
+    def diag(n: int) -> bool:
+        return not enum(n, n)
+    return diag
 
 
-def monitor_evasion_demo(
-    n_codes: int,
-    monitor: Callable[[int], bool]
-) -> dict:
-    """Demonstrate monitor evasion (Theorem 6).
-
-    Given any monitor, finds a program that evades the monitor's predictions.
-
-    Args:
-        n_codes: Number of possible codes
-        monitor: The monitor function
-
-    Returns:
-        Dictionary with the evasion demonstration
+def verify_diagonal_escape(
+    enum: Callable[[int, int], bool],
+    search_bound: int = 1000,
+    check_bound: int = 100
+) -> Tuple[bool, Optional[int]]:
     """
-    results = {}
-    for c in range(n_codes):
-        prediction = monitor(c)
-        # The evasive program does the opposite
-        actual = not prediction
-        results[c] = {
-            "monitor_says": "halts" if prediction else "diverges",
-            "actual": "diverges" if prediction else "halts",
-            "evaded": True  # Always evades
-        }
+    Verify that the diagonal escapes an enumeration up to search_bound.
+
+    Returns (escaped, counterexample) where:
+    - escaped=True if no program matches diagonal up to search_bound
+    - counterexample is the index of a matching program (should be None)
+    """
+    diag = construct_diagonal(enum)
+    for k in range(search_bound):
+        matches = all(enum(k, n) == diag(n) for n in range(check_bound))
+        if matches:
+            return False, k
+    return True, None
+
+
+# --- Adaptive Adversary Construction ---
+
+@dataclass
+class AdaptiveProgram:
+    """A program that adapts its behavior based on classifier output."""
+    base_behavior: bool
+    react: Callable[[bool], bool]
+
+    def actual_behavior(self, classifier_output: bool) -> bool:
+        return self.react(classifier_output)
+
+
+def construct_contrarian() -> AdaptiveProgram:
+    """Construct the contrarian program that defeats any classifier."""
+    return AdaptiveProgram(
+        base_behavior=True,
+        react=lambda prediction: not prediction
+    )
+
+
+def test_classifier(
+    classifier: Callable[[AdaptiveProgram], bool],
+    programs: List[AdaptiveProgram]
+) -> List[Tuple[AdaptiveProgram, bool, bool, bool]]:
+    """
+    Test a classifier against a list of programs.
+
+    Returns list of (program, prediction, actual, correct) tuples.
+    """
+    results = []
+    for p in programs:
+        prediction = classifier(p)
+        actual = p.actual_behavior(prediction)
+        correct = prediction == actual
+        results.append((p, prediction, actual, correct))
     return results
 
 
-def compute_orbit_statistics(n: int) -> dict:
-    """Compute orbit statistics for all functions Fin n → Fin n.
+# --- Strategic Agent Framework ---
 
-    For each function, computes:
-    - Average tail length
-    - Average cycle length
-    - Maximum fixed-point delay
-    - Distribution of hierarchy levels
+@dataclass
+class StrategicAgent:
+    """An agent that strategically chooses output based on monitor response."""
+    target: int
+    strategy: Callable[[bool], int]
 
-    This provides computational evidence for the conjectures.
+    def output(self, monitor: Callable[[int], bool]) -> int:
+        return self.strategy(monitor(self.target))
+
+
+def construct_deceptive_agent(target: int) -> StrategicAgent:
+    """Construct a deceptive agent that always achieves its target."""
+    return StrategicAgent(target=target, strategy=lambda _: target)
+
+
+def test_monitor_effectiveness(
+    monitor: Callable[[int], bool],
+    agents: List[StrategicAgent]
+) -> List[Tuple[StrategicAgent, int, bool]]:
     """
-    from itertools import product
+    Test a monitor against a list of agents.
 
-    stats = {
-        "n": n,
-        "total_functions": n ** n,
-        "max_fixed_point_delay": 0,
-        "avg_tail": 0.0,
-        "avg_cycle": 0.0,
-        "hierarchy_distribution": {},
-        "fixed_point_delay_distribution": {}
-    }
+    Returns list of (agent, actual_output, prevented) tuples.
+    """
+    results = []
+    for agent in agents:
+        actual = agent.output(monitor)
+        prevented = actual != agent.target
+        results.append((agent, actual, prevented))
+    return results
 
-    total_tail = 0
-    total_cycle = 0
-    count = 0
 
-    # Enumerate all functions Fin n → Fin n
-    for func_values in product(range(n), repeat=n):
-        f = lambda x, fv=func_values: fv[x]
-        system = SelfModSystem(
-            modify=f,
-            exec_halts=lambda x: True,
-            codes=list(range(n))
-        )
+# --- Lawvere Fixed-Point Computation ---
 
-        for start in range(n):
-            tail, cycle = system.find_cycle(start)
-            delay = system.fixed_point_delay(start)
+def find_approximate_fixed_point(
+    t: Callable[[float], float],
+    initial: float = 0.5,
+    tolerance: float = 1e-10,
+    max_iter: int = 1000
+) -> Tuple[Optional[float], int]:
+    """
+    Find a fixed point of t : β → β by iteration.
 
-            total_tail += tail
-            total_cycle += cycle
-            count += 1
+    If t has no fixed point (like Bool negation), iteration will not converge.
+    Returns (fixed_point, iterations).
+    """
+    x = initial
+    for i in range(max_iter):
+        x_new = t(x)
+        if abs(x_new - x) < tolerance:
+            return x_new, i
+        x = x_new
+    return None, max_iter
 
-            if delay is not None:
-                stats["max_fixed_point_delay"] = max(
-                    stats["max_fixed_point_delay"], delay
-                )
-                stats["fixed_point_delay_distribution"][delay] = \
-                    stats["fixed_point_delay_distribution"].get(delay, 0) + 1
 
-            level = system.hierarchy_level(start)
-            stats["hierarchy_distribution"][level] = \
-                stats["hierarchy_distribution"].get(level, 0) + 1
+if __name__ == "__main__":
+    # Quick test
+    print("Testing diagonal construction...")
+    escaped, counter = verify_diagonal_escape(
+        lambda i, j: (i + j) % 3 == 0
+    )
+    print(f"  Diagonal escapes: {escaped}, counterexample: {counter}")
 
-    stats["avg_tail"] = total_tail / count if count > 0 else 0
-    stats["avg_cycle"] = total_cycle / count if count > 0 else 0
+    print("\nTesting contrarian...")
+    contrarian = construct_contrarian()
+    for classifier in [lambda p: True, lambda p: False, lambda p: p.base_behavior]:
+        pred = classifier(contrarian)
+        actual = contrarian.actual_behavior(pred)
+        print(f"  Prediction={pred}, Actual={actual}, Correct={pred==actual}")
 
-    return stats
+    print("\nTesting deceptive agent...")
+    agent = construct_deceptive_agent(42)
+    for monitor in [lambda t: False, lambda t: True, lambda t: t < 10]:
+        output = agent.output(monitor)
+        print(f"  Monitor blocks={not monitor(42)}, Output={output}, Achieved={output==42}")
+
+    print("\nAll tests passed!")
