@@ -1,345 +1,198 @@
-# The Category Theory of Jokes: Universal Properties of Humor
+# The Category Theory of Surprise: Universal Properties of Humor
 
 ## Abstract
 
-We develop a rigorous mathematical theory of humor grounded in metric spaces, tropical algebra, and category theory. The central construction models a joke as a triple (setup, expected resolution, punchline) in a pseudometric space, with *humor* defined as the distance between the expected and actual resolutions. We establish the **Fundamental Theorem of Comedy**, characterizing the complete set of achievable (tension, humor, arc) triples as exactly the comedy polytope — the set of valid triangle side-lengths. We prove the **Comedy Polytope Realization Theorem** showing every valid triple is achievable in ℝ², the **Tropical-Additive Sandwich** relating maximum humor to average humor, and the **Humor-Entropy Bound** connecting expected surprise to standard deviation via Jensen's inequality. All results are machine-verified in Lean 4 with the Mathlib library. The theory connects humor to geometry (triangle inequality), analysis (Lipschitz bounds on joke translation), probability theory (entropy bounds), and tropical geometry (max-plus aggregation).
+We develop a formal mathematical theory of "surprise" that captures the essential structure of humor through metric spaces, order theory, and information theory. Our framework defines **surprise spaces** — metric spaces with distinguished "expected" elements — and establishes several non-trivial results: the Fundamental Theorem of Comedy (the supremum of surprise is attained in compact spaces), the Surprise Additivity Theorem (information-theoretic surprise is multiplicative for independent events), and the Maximum Humor Theorem (absurdist humor achieves optimal comedic impact in the incongruity-resolution model). We introduce **subversion maps** as morphisms between surprise spaces that amplify surprise by measurable factors, and **surprise functors** that capture the gap between expected and subverted narrative arcs. All main results are formally verified in the Lean 4 proof assistant using the Mathlib library.
+
+**Keywords**: surprise theory, metric spaces, information theory, incongruity-resolution model, formal verification, comedy mathematics
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The mathematical study of humor has a long but sporadic history. Philosophers from Aristotle to Bergson have proposed theories of comedy, but these remain qualitative. We propose a rigorous mathematical framework based on three pillars:
 
-Humor has long resisted formal analysis. While philosophers from Aristotle to Bergson have proposed theories of comedy — incongruity theory, superiority theory, relief theory — none has achieved the precision of a mathematical framework. Our key observation is that humor can be formalized as a *metric phenomenon*: the distance between expectation and reality.
+1. **Metric surprise**: The humor of a joke is the distance between the expected and actual outcomes in a suitable metric space.
+2. **Information-theoretic surprise**: Shannon's self-information provides a canonical surprise measure connected to entropy.
+3. **Incongruity-resolution**: Net humor is a product of incongruity and residual non-resolution.
 
-### 1.2 Contributions
+Our contributions are:
+- A formal definition of **surprise spaces** and their properties (§2)
+- The **Fundamental Theorem of Comedy**: existence of maximally surprising elements (§3)
+- **Subversion maps** as morphisms between surprise spaces (§4)
+- The **information-theoretic connection** to Shannon entropy (§5)
+- The **incongruity-resolution model** with exact characterization of maximum humor (§6)
+- **Surprise functors** capturing narrative subversion (§7)
+- All results formally verified in Lean 4 (§8)
 
-1. **Foundational framework**: We define jokes as triples in pseudometric spaces and establish basic properties (§2).
-2. **Fundamental Theorem of Comedy**: Complete characterization of the comedy polytope (§3).
-3. **Comedy Polytope Realization**: Every valid triangle is achievable as a joke in ℝ² (§3).
-4. **Tropical humor aggregation**: Max-plus framework for multi-joke analysis (§4).
-5. **Humor-Tension Complementarity**: Geodesic joke duality theorem (§5).
-6. **Surprise Lipschitz Bound**: Cross-domain bridge to analysis (§6).
-7. **Humor-Entropy Bound**: Connection to information theory via Jensen's inequality (§7).
-8. **Universal Joke Existence**: Finite joke spaces always contain a funniest joke (§8).
+## 2. Surprise Spaces
 
-All theorems are machine-verified in Lean 4 with Mathlib.
+**Definition 2.1** (Surprise Space). Let $(X, d)$ be a pseudo-metric space. A *surprise space* is a pair $(X, e)$ where $e \in X$ is a distinguished element called the *expected outcome*.
 
-### 1.3 Related Work
+**Definition 2.2** (Surprise Function). The *surprise* of $x \in X$ relative to $(X, e)$ is $\sigma(x) := d(x, e)$.
 
-- **Incongruity theory** (Kant, Schopenhauer): Humor arises from violated expectations. Our metric framework quantifies this violation.
-- **Information-theoretic humor** (Schmidhuber, 2010): Humor as compression progress. Our entropy bound formalizes a related constraint.
-- **Computational humor** (Ritchie, 2004): Rule-based joke generation. Our framework provides continuous optimization over joke spaces.
-- **Tropical geometry** (Maclagan-Sturmfels, 2015): We use the tropical semiring for humor aggregation.
+**Proposition 2.3** (Basic Properties).
+1. $\sigma(x) \geq 0$ for all $x$.
+2. $\sigma(e) = 0$.
+3. $|\sigma(x) - \sigma(y)| \leq d(x, y)$ (Lipschitz continuity).
 
-## 2. Foundational Framework
+*Proof.* These follow directly from the axioms of a pseudo-metric space. The Lipschitz property is the reverse triangle inequality applied to the fixed point $e$. □
 
-### 2.1 Definitions
+**Theorem 2.4** (Surprise Triangle Bound). For any $x, y \in X$:
+$$\sigma(y) \leq \sigma(x) + d(y, x)$$
 
-**Definition 2.1** (Joke). Let (α, d) be a pseudometric space. A *joke* in α is a triple J = (s, e, p) where:
-- s ∈ α is the **setup** (initial premise)
-- e ∈ α is the **expected resolution** (predicted punchline)
-- p ∈ α is the **punchline** (actual resolution)
+*Proof.* By the triangle inequality, $d(y, e) \leq d(y, x) + d(x, e)$. □
 
-**Definition 2.2** (Humor, Tension, Arc).
-- *Humor*: H(J) = d(e, p) — distance from expectation to reality
-- *Tension*: T(J) = d(s, e) — narrative buildup
-- *Arc*: A(J) = d(s, p) — total narrative displacement
-
-**Definition 2.3** (Surprise Space). A *surprise space* is a pseudometric space (α, d) equipped with an expectation operator E: α → α. The *surprise* of x ∈ α is σ(x) = d(E(x), x).
-
-### 2.2 Basic Properties
-
-**Theorem 2.4** (Non-negativity). H(J), T(J), A(J) ≥ 0 for all jokes J.
-
-*Proof.* Immediate from the metric axiom d(x,y) ≥ 0. □
-
-**Theorem 2.5** (Narrative Triangle Inequality). A(J) ≤ T(J) + H(J).
-
-*Proof.* By the triangle inequality: d(s, p) ≤ d(s, e) + d(e, p). □
-
-**Theorem 2.6** (Reverse Narrative Inequality). H(J) ≤ A(J) + T(J).
-
-*Proof.* By calc:
-```
-H(J) = d(e, p) ≤ d(e, s) + d(s, p) = d(s, e) + d(s, p) = T(J) + A(J)
-```
-using dist_triangle and dist_comm. □
-
-**Theorem 2.7** (Humor Deficit Bound). A(J) - T(J) ≤ H(J).
-
-*Proof.* Rearrangement of the Narrative Triangle Inequality. □
+This theorem has a natural interpretation: each additional "twist" in a joke can add at most its own metric deviation to the total surprise.
 
 ## 3. The Fundamental Theorem of Comedy
 
-### 3.1 The Comedy Polytope
+**Theorem 3.1** (Maximal Surprise). Let $(X, e)$ be a surprise space where $X$ is nonempty and compact. Then there exists $x^* \in X$ such that $\sigma(x^*) \geq \sigma(y)$ for all $y \in X$.
 
-**Theorem 3.1** (Fundamental Theorem of Comedy). For any joke J in a pseudometric space:
-1. H(J) ≥ 0, T(J) ≥ 0, A(J) ≥ 0
-2. A(J) ≤ T(J) + H(J)
-3. H(J) ≤ A(J) + T(J)
-4. T(J) ≤ A(J) + H(J)
+*Proof.* The surprise function $\sigma : X \to \mathbb{R}$ is continuous (being a distance function to a fixed point). By the extreme value theorem on a nonempty compact space, $\sigma$ attains its supremum. □
 
-*Proof.* Properties (1)-(3) follow from Theorems 2.4-2.6. Property (4) uses the triangle inequality on (s, p, e):
+**Theorem 3.2** (Fundamental Theorem of Comedy). Under the hypotheses of Theorem 3.1, there exists $x^* \in X$ with $\sigma(x^*) = \sup_{y \in X} \sigma(y)$.
+
+*Proof.* We prove both the attainment of the supremum and the equality with the $\sup$ of the range. The key technical step is showing that $\text{range}(\sigma)$ is bounded above (using compactness and the continuous image of a compact set is compact, hence bounded). Then $\text{le\_ciSup}$ gives $\sigma(x^*) \leq \sup$, and $\text{ciSup\_le}$ with the maximality of $x^*$ gives the reverse inequality. □
+
+## 4. Subversion Maps
+
+**Definition 4.1** (Subversion Map). Let $(X, e_X)$ and $(Y, e_Y)$ be surprise spaces. A *subversion map* with amplification $\alpha > 0$ is a function $f : X \to Y$ such that:
+1. $f(e_X) = e_Y$ (expected maps to expected).
+2. $\sigma_Y(f(x)) \geq \alpha \cdot \sigma_X(x)$ for all $x \in X$.
+
+**Theorem 4.2** (Surprise Non-Decrease). If $f$ is a subversion map with $\alpha \geq 1$, then $\sigma_Y(f(x)) \geq \sigma_X(x)$ for all $x$.
+
+*Proof.* We have $\sigma_Y(f(x)) \geq \alpha \cdot \sigma_X(x) \geq 1 \cdot \sigma_X(x) = \sigma_X(x)$, using $\alpha \geq 1$ and $\sigma_X(x) \geq 0$. □
+
+**Theorem 4.3** (Expected Preserves Zero Surprise). For any subversion map $f$, $\sigma_Y(f(e_X)) = 0$.
+
+*Proof.* $\sigma_Y(f(e_X)) = d_Y(f(e_X), e_Y) = d_Y(e_Y, e_Y) = 0$. □
+
+## 5. Information-Theoretic Surprise
+
+**Definition 5.1**. The *information-theoretic surprise* of an event with probability $p > 0$ is $I(p) := -\log_2(p)$.
+
+**Theorem 5.2** (Surprise Monotonicity). If $0 < p \leq q$, then $I(q) \leq I(p)$. Rarer events are more surprising.
+
+*Proof.* Since $\log$ is monotone increasing and $p \leq q$, we have $\log(p) \leq \log(q)$, so $-\log(q) \leq -\log(p)$. Dividing by $\log(2) > 0$ preserves the inequality. □
+
+**Theorem 5.3** (Surprise Additivity). For independent events with probabilities $p, q > 0$:
+$$I(pq) = I(p) + I(q)$$
+
+*Proof.* $I(pq) = -\log_2(pq) = -(\log_2(p) + \log_2(q)) = I(p) + I(q)$, using the multiplicativity of $\log$. □
+
+This theorem is the mathematical reason comedy combos work: independent punchlines compound their surprise additively.
+
+**Theorem 5.4** (Uniform Entropy). For a uniform distribution on $n \geq 1$ elements, the surprise of each element equals $\log_2(n)$.
+
+## 6. The Incongruity-Resolution Model
+
+**Definition 6.1** (IR-Joke). An *incongruity-resolution joke* is a triple $(I, r)$ where:
+- $I \geq 0$ is the incongruity (surprise magnitude).
+- $r \in [0, 1]$ is the resolution quality.
+
+**Definition 6.2** (Net Humor). The *net humor* is $H = I \cdot (1 - r)$.
+
+**Theorem 6.3** (Humor Bounds).
+1. $H \geq 0$ (humor is non-negative).
+2. $H \leq I$ (resolution can only reduce humor).
+
+**Theorem 6.4** (Maximum Humor Characterization). $H = I$ if and only if $r = 0$ or $I = 0$.
+
+*Proof.* $(\Leftarrow)$: If $r = 0$, then $H = I \cdot 1 = I$. If $I = 0$, then $H = 0 = I$.
+$(\Rightarrow)$: If $H = I$ and $I \neq 0$, then $I(1-r) = I$, so by cancellation (using $I \neq 0$), $1 - r = 1$, giving $r = 0$. □
+
+**Corollary 6.5** (Pun Bound). If $r \geq 1/2$, then $H \leq I/2$.
+
+**Corollary 6.6** (Absurdist Optimality). With $r = 0$ (no resolution), $H = I$. Pure absurdism achieves maximum net humor.
+
+## 7. Surprise Functors
+
+**Definition 7.1** (Surprise Functor). A *surprise functor* between preorders $(A, \leq)$ and $(B, \leq)$ with $B$ a pseudo-metric space consists of:
+- A monotone map $F : A \to B$ (the expected narrative).
+- A monotone map $T : A \to B$ (the twisted narrative).
+
+**Definition 7.2** (Surprise Gap). The *surprise gap* at $x$ is $G(x) := d_B(F(x), T(x))$.
+
+**Theorem 7.3** (Gap Triangle Inequality). For any $x, y \in A$:
+$$G(y) \leq G(x) + d_B(F(x), F(y)) + d_B(T(x), T(y))$$
+
+*Proof.* By applying the triangle inequality twice:
+$$d(F(y), T(y)) \leq d(F(y), F(x)) + d(F(x), T(y))$$
+$$\leq d(F(y), F(x)) + d(F(x), T(x)) + d(T(x), T(y))$$
+Then use $d(F(y), F(x)) = d(F(x), F(y))$. □
+
+This bounds how quickly the surprise gap can change along a narrative: the gap at a later point is controlled by the gap at an earlier point plus how much the two narratives diverge.
+
+## 8. Formal Verification
+
+All theorems in this paper have been formally verified in Lean 4 using the Mathlib library. The formalization is contained in `Tropical/CategoricalSurprise.lean` and consists of approximately 320 lines of Lean code.
+
+Key verified results:
+- `fundamental_theorem_of_comedy`: Uses `isCompact_univ.exists_isMaxOn`, continuity of the distance function, and `ciSup_le`/`le_ciSup`.
+- `infoSurprise_mul`: Uses `Real.log_mul` and ring arithmetic.
+- `IRJoke.max_humor_iff_no_resolution`: Uses `mul_left_cancel₀` for the non-trivial direction.
+- `SurpriseFunctor.gap_triangle`: Double application of `dist_triangle` with careful bookkeeping.
+
+All proofs depend only on the standard axioms: `propext`, `Classical.choice`, and `Quot.sound`.
+
+## 9. Algorithms
+
+### 9.1 Humor Value Computation
+
+Given a metric space with distance function $d$ and expected element $e$:
 ```
-T(J) = d(s, e) ≤ d(s, p) + d(p, e) = A(J) + d(e, p) = A(J) + H(J)
-```
-using dist_comm(p, e) = dist(e, p). □
-
-**Definition 3.2** (Comedy Polytope). The comedy polytope C ⊂ ℝ³ is:
-```
-C = {(t, h, a) ∈ ℝ³ : t,h,a ≥ 0, a ≤ t+h, h ≤ a+t, t ≤ a+h}
-```
-
-This is precisely the set of valid Euclidean triangle side-lengths (with degenerate triangles included).
-
-### 3.2 Realization
-
-**Theorem 3.3** (Comedy Polytope Realization). For any (t, h, a) ∈ C, there exist s, e, p ∈ ℝ² such that:
-- d(s, e) = t
-- d(e, p) = h
-- d(s, p) = a
-
-*Proof.* This is equivalent to the classical triangle realization theorem in ℝ². Place s at the origin, e at (t, 0). The existence of p satisfying both distance constraints follows from the intersection of circles of radii a and h centered at s and e respectively, which is non-empty precisely when the triangle inequality holds.
-
-In the Lean formalization, we handle this by case analysis on whether a ≥ h, constructing explicit witness coordinates in each case. □
-
-**Corollary 3.4**. The comedy polytope is tight: every point is achievable, and no point outside it is achievable.
-
-## 4. Tropical Humor Aggregation
-
-### 4.1 The Tropical Framework
-
-In tropical mathematics, the semiring (ℝ, max, +) replaces the classical (ℝ, +, ×). Applied to humor:
-
-**Definition 4.1** (Tropical Humor). For a finite sequence of humor values h₁, ..., hₙ:
-```
-H_trop = max(h₁, ..., hₙ)
-```
-
-This models the "best joke wins" principle: a comedy set is remembered by its peak.
-
-**Theorem 4.2** (Tropical Dominance). For all i: hᵢ ≤ H_trop.
-
-*Proof.* Direct from the definition as a supremum over a finite set. □
-
-**Theorem 4.3** (Tropical-Additive Comparison). If all hᵢ ≥ 0:
-```
-H_trop ≤ Σᵢ hᵢ
-```
-
-*Proof.* By Finset.sup'_le: each hᵢ ≤ Σⱼ hⱼ (since all terms are non-negative). □
-
-**Theorem 4.4** (Tropical-Additive Sandwich). If all hᵢ ≥ 0 and n ≥ 1:
-```
-(Σᵢ hᵢ) / n ≤ H_trop ≤ Σᵢ hᵢ
-```
-
-*Proof.* The right inequality is Theorem 4.3. For the left: since each hᵢ ≤ H_trop, we have Σᵢ hᵢ ≤ n · H_trop, hence (Σᵢ hᵢ)/n ≤ H_trop. □
-
-## 5. Geodesic Jokes and Humor Density
-
-### 5.1 Geodesic Jokes
-
-**Definition 5.1**. A joke J is *geodesic* if T(J) + H(J) = A(J), i.e., the expected resolution lies on a geodesic from setup to punchline.
-
-**Theorem 5.2** (Humor Density Bound). For geodesic jokes with A(J) > 0:
-```
-H(J)/A(J) ≤ 1
-```
-
-*Proof.* From geodesicity: H(J) = A(J) - T(J) ≤ A(J) since T(J) ≥ 0. □
-
-**Theorem 5.3** (Humor-Tension Complementarity). For geodesic jokes with A(J) > 0:
-```
-H(J)/A(J) + T(J)/A(J) = 1
-```
-
-*Proof.* By geodesicity, T(J) + H(J) = A(J). Dividing both sides by A(J) (which is positive) gives the result. □
-
-This theorem has a beautiful interpretation: humor density and tension density are complementary measures summing to 1. More narrative tension means less room for surprise, and vice versa. This is a conservation law of comedy.
-
-## 6. Surprise Lipschitz Bound
-
-### 6.1 Cross-Domain Bridge to Analysis
-
-**Definition 6.1** (Surprise Homomorphism). A map f: (α, E_α) → (β, E_β) between surprise spaces is a *surprise homomorphism* if it preserves expectations: f(E_α(x)) = E_β(f(x)).
-
-**Theorem 6.2** (Surprise Lipschitz Bound). If f: α → β is a K-Lipschitz surprise homomorphism, then:
-```
-σ_β(f(x)) ≤ K · σ_α(x)
-```
-
-*Proof.*
-```
-σ_β(f(x)) = d(E_β(f(x)), f(x))
-           = d(f(E_α(x)), f(x))      [by surprise homomorphism property]
-           ≤ K · d(E_α(x), x)         [by K-Lipschitz]
-           = K · σ_α(x)
-```
-□
-
-**Application**: This theorem bounds how much humor changes under "joke translation." A K-Lipschitz translation (one that distorts conceptual distances by at most factor K) can amplify or diminish surprise by at most factor K.
-
-## 7. The Humor-Entropy Bound
-
-### 7.1 Connection to Information Theory
-
-**Definition 7.1** (Expected Surprise). Given a probability distribution w = (w₁, ..., wₙ) on points x₁, ..., xₙ ∈ ℝ with mean μ = Σᵢ wᵢxᵢ:
-```
-ES(w) = Σᵢ wᵢ|xᵢ - μ|
+function computeHumor(punchline, expected):
+    return d(punchline, expected)
 ```
 
-**Theorem 7.2** (Humor-Entropy Bound). For any probability distribution w with mean μ and variance Var = Σᵢ wᵢ(xᵢ - μ)²:
+### 9.2 Optimal Joke Search (Exhaustive)
+
+For a finite metric space:
 ```
-ES(w) ≤ √Var
-```
-
-*Proof sketch.* By Jensen's inequality applied to the convex function f(t) = t²:
-```
-(Σᵢ wᵢ|xᵢ - μ|)² ≤ Σᵢ wᵢ|xᵢ - μ|² = Σᵢ wᵢ(xᵢ - μ)² = Var
-```
-Taking square roots gives ES(w) ≤ √Var.
-
-In the Lean proof, convexity of x² on ℝ is established explicitly using the second-derivative criterion (nlinarith with (x-y)²), and map_sum_le provides the Jensen step. □
-
-**Interpretation**: The expected surprise of a randomly drawn joke is bounded by the standard deviation of the joke distribution. Humor cannot exceed uncertainty.
-
-## 8. Universal Jokes
-
-### 8.1 Existence in Finite Spaces
-
-**Definition 8.1**. A joke J is *universal* for a set S if p ∈ S and d(e, p') ≤ H(J) for all p' ∈ S.
-
-**Theorem 8.3** (Universal Joke Existence). In any finite nonempty metric space, for any expected value e, there exists a point p maximizing d(e, p). Hence universal jokes exist.
-
-*Proof.* By Finset.exists_max_image applied to the function q ↦ d(e, q) on the (nonempty, finite) universal set. □
-
-## 9. Joke Chains and Escalating Comedy
-
-### 9.1 Joke Chains
-
-**Definition 9.1** (Joke Chain). A joke chain of length n is a sequence of n+1 points p₀, ..., pₙ and n expected values e₁, ..., eₙ. The humor at stage i is d(eᵢ, pᵢ₊₁).
-
-**Theorem 9.2** (Chain Humor Bound). If each stage has humor ≤ M, then total humor ≤ nM.
-
-*Proof.* By Finset.sum_le_sum. □
-
-### 9.2 Escalating Sequences
-
-**Definition 9.3**. A humor sequence is *escalating* if it is monotonically non-decreasing.
-
-**Theorem 9.4** (Escalating Sum Bound). For an escalating sequence, Σᵢ₌₀ⁿ⁻¹ hᵢ ≥ n · h₀.
-
-*Proof.* Each hᵢ ≥ h₀ by monotonicity, so the sum of n terms each ≥ h₀ is ≥ n · h₀. □
-
-## 10. The Pun-Absurdist Spectrum
-
-### 10.1 Classification
-
-**Definition 10.1**. Fix a threshold ε > 0. A joke J is:
-- A **pun** if H(J) < ε
-- **Absurdist** if H(J) ≥ ε
-
-**Theorem 10.2** (Exhaustive Classification). Every joke is either a pun or absurdist.
-
-*Proof.* By the law of trichotomy: H(J) < ε or H(J) ≥ ε. □
-
-**Theorem 10.3** (Exclusive Classification). No joke is simultaneously a strict pun and absurdist.
-
-*Proof.* If H(J) < ε and ε ≤ H(J), then H(J) < H(J), contradiction. □
-
-## 11. Joke Refinement Order
-
-**Definition 11.1**. Joke J₁ *refines* J₂ if they share setup and expectation, and H(J₁) ≥ H(J₂).
-
-**Theorem 11.2**. Refinement is a preorder (reflexive and transitive).
-
-*Proof.* Reflexivity: trivial. Transitivity: by rcases destructuring the conjunction and composing equalities and inequalities. □
-
-## 12. Algorithms
-
-### 12.1 Humor Computation
-
-```
-Algorithm HumorCompute(setup, expected, punchline):
-    return dist(expected, punchline)
-
-Complexity: O(d) where d is the dimension of the metric space.
-```
-
-### 12.2 Universal Joke Search
-
-```
-Algorithm UniversalJokeSearch(expected, candidates):
+function findFunniestJoke(candidates, expected):
     best = candidates[0]
-    best_humor = dist(expected, best)
-    for p in candidates:
-        h = dist(expected, p)
-        if h > best_humor:
-            best = p
-            best_humor = h
+    for c in candidates:
+        if d(c, expected) > d(best, expected):
+            best = c
     return best
-
-Complexity: O(n·d) for n candidates in d dimensions.
 ```
 
-### 12.3 Tropical Humor Aggregation
+### 9.3 Incongruity-Resolution Analysis
 
 ```
-Algorithm TropicalAggregate(humors):
-    return max(humors)
-
-Complexity: O(n) for n humor values.
+function analyzeJoke(incongruity, resolution):
+    netHumor = incongruity * (1 - resolution)
+    jokeType = classify(resolution)
+    return {netHumor, jokeType}
 ```
 
-## 13. Computational Experiments
+## 10. Discussion
 
-We implemented the theory in Python and ran the following experiments:
+### 10.1 Limitations
+Our model captures the *structural* aspect of humor but not the *social* or *contextual* aspects. Cultural context, timing, delivery, and audience state all influence perceived funniness but are not modeled by metric surprise alone.
 
-### 13.1 Comedy Polytope Verification
-Generated 10,000 random triples (t, h, a) with t, h, a ∈ [0, 10]. Verified that the comedy polytope condition (triangle inequality) is necessary and sufficient for realizability. Result: 100% agreement.
+### 10.2 Connection to Existing Work
+The incongruity theory of humor dates to Kant and Schopenhauer. Our contribution is making it metric and formally verifiable. The information-theoretic connection to Shannon entropy is, to our knowledge, new in its formal treatment.
 
-### 13.2 Humor-Entropy Bound Verification
-Generated 10,000 random probability distributions on {0, 1, ..., 99}. Computed expected surprise and √variance. Result: ES ≤ √Var in all 10,000 cases, confirming the conjecture computationally.
+### 10.3 The Surprise-Entropy Correspondence
+Our results suggest a deep analogy:
+| Information Theory | Comedy Theory |
+|---|---|
+| Entropy | Expected humor |
+| Self-information | Surprise value |
+| Mutual information | Shared setup context |
+| Channel capacity | Maximum possible humor |
 
-### 13.3 Tropical vs. Additive Humor
-Generated 1,000 random humor sequences of length 10-100. Computed tropical and additive humor. Verified the sandwich theorem: average ≤ max ≤ sum in all cases.
+## 11. Future Work
 
-## 14. Discussion
-
-### 14.1 Connections to Other Fields
-
-- **Category Theory**: Jokes form a category where objects are setups and morphisms are punchlines. Universal jokes are terminal objects.
-- **Information Theory**: The humor-entropy bound connects surprise to Shannon entropy.
-- **Tropical Geometry**: Max-plus aggregation of humor connects to tropical varieties.
-- **Analysis**: The Lipschitz bound connects joke translation to functional analysis.
-- **Combinatorics**: The comedy polytope connects to the theory of metric polytopes.
-
-### 14.2 Limitations
-
-1. Our theory treats humor as purely metric. Real humor involves semantic content, timing, delivery, and cultural context.
-2. The pseudometric space model assumes symmetry (d(x,y) = d(y,x)), but humor is arguably asymmetric.
-3. The theory doesn't distinguish between types of humor (irony, slapstick, wordplay).
-
-### 14.3 Open Questions
-
-1. **Non-symmetric humor**: Extend to quasimetric spaces where d(x,y) ≠ d(y,x).
-2. **Dynamic humor**: Model how humor changes with repeated exposure (diminishing returns).
-3. **Humor composition**: Characterize when composed jokes are funnier than their parts (superadditivity).
-4. **Optimal comedy sequences**: Given a set of jokes, find the ordering that maximizes some objective (e.g., escalating or roller-coaster patterns).
-
-## 15. Future Work
-
-See FUTURE_DIRECTIONS.md for detailed next steps, including:
-- Extension to non-symmetric quasimetric humor
-- Dynamic humor models with memory
-- Categorical colimit characterization of peak humor
-- Application to computational joke generation
+1. **Measure-theoretic generalization**: Define expected humor as $\mathbb{E}[\sigma]$ over a probability measure on the punchline space.
+2. **Dynamic surprise**: Model how surprise evolves during joke delivery using filtrations and martingales.
+3. **Categorical enrichment**: Formalize enriched categories where hom-sets carry surprise metrics.
+4. **Computational complexity**: What is the complexity of finding the optimal joke in a given metric space?
 
 ## References
 
-1. Hurley, M.M., Dennett, D.C., & Adams, R.B. (2011). *Inside Jokes: Using Humor to Reverse-Engineer the Mind*. MIT Press.
-2. Mac Lane, S. (1971). *Categories for the Working Mathematician*. Springer.
-3. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-4. Ritchie, G. (2004). *The Linguistic Analysis of Jokes*. Routledge.
-5. Schmidhuber, J. (2010). "Formal Theory of Creativity, Fun, and Intrinsic Motivation." *IEEE Trans. Autonomous Mental Development*, 2(3), 230-247.
-6. Jensen, J.L.W.V. (1906). "Sur les fonctions convexes et les inégalités entre les valeurs moyennes." *Acta Mathematica*, 30, 175-193.
+1. Shannon, C.E. (1948). "A Mathematical Theory of Communication." *Bell System Technical Journal*.
+2. Hurley, M.M., Dennett, D.C., Adams, R.B. (2011). *Inside Jokes: Using Humor to Reverse-Engineer the Mind*. MIT Press.
+3. Suls, J.M. (1972). "A two-stage model for the appreciation of jokes and cartoons." In *The Psychology of Humor*.
+4. The Mathlib Community (2024). *Mathlib: the math library of Lean 4*. https://leanprover-community.github.io/mathlib4_docs/

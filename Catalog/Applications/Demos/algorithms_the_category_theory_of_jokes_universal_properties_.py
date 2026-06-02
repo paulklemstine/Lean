@@ -1,293 +1,251 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms from the Category Theory of Jokes
+Algorithms for Categorical Surprise Theory
 
-Implements the core algorithms described in the research paper:
-1. HumorCompute — O(d) humor value computation
-2. UniversalJokeSearch — O(n·d) funniest punchline search
-3. TropicalAggregate — O(n) max-plus humor aggregation
-4. ComedyPolytopeCheck — O(1) validity check for (tension, humor, arc)
-5. ComedyPolytopeRealize — O(1) triangle realization in ℝ²
-6. HumorEntropyBound — O(n) expected surprise vs std dev
-7. OptimalComedyOrdering — O(n log n) escalating sequence optimization
+Type-hinted implementations of the core algorithms from the research paper.
 """
 
-import numpy as np
-from typing import Tuple, List, Optional
+import math
+from dataclasses import dataclass
+from typing import List, Tuple, Optional, Callable
 
 
-def humor_compute(expected: np.ndarray, punchline: np.ndarray) -> float:
+# ============================================================
+# Data Structures
+# ============================================================
+
+@dataclass
+class SurpriseSpace:
+    """A metric space with a distinguished expected element."""
+    expected: float
+    
+    def surprise(self, x: float) -> float:
+        """Compute the surprise value of x."""
+        return abs(x - self.expected)
+    
+    def find_optimal(self, candidates: List[float]) -> Tuple[float, float]:
+        """Find the maximally surprising element (Fundamental Theorem of Comedy)."""
+        if not candidates:
+            raise ValueError("Cannot find optimal in empty set")
+        best = max(candidates, key=self.surprise)
+        return best, self.surprise(best)
+
+
+@dataclass
+class Joke:
+    """A joke: expected resolution paired with actual punchline."""
+    expected_resolution: float
+    actual_punchline: float
+    
+    @property
+    def humor_value(self) -> float:
+        return abs(self.expected_resolution - self.actual_punchline)
+
+
+@dataclass  
+class IRJoke:
+    """Incongruity-Resolution joke model."""
+    incongruity: float
+    resolution: float
+    
+    def __post_init__(self) -> None:
+        assert self.incongruity >= 0, "Incongruity must be non-negative"
+        assert 0 <= self.resolution <= 1, "Resolution must be in [0, 1]"
+    
+    @property
+    def net_humor(self) -> float:
+        return self.incongruity * (1 - self.resolution)
+    
+    @property
+    def joke_type(self) -> str:
+        if self.resolution < 0.1:
+            return "absurdist"
+        elif self.resolution < 0.3:
+            return "dark"
+        elif self.resolution < 0.6:
+            return "observational"
+        elif self.resolution < 0.8:
+            return "wordplay"
+        else:
+            return "pun"
+
+
+@dataclass
+class SubversionMap:
+    """A surprise-amplifying map between spaces."""
+    source: SurpriseSpace
+    target: SurpriseSpace
+    transform: Callable[[float], float]
+    amplification: float
+    
+    def apply(self, x: float) -> float:
+        return self.transform(x)
+    
+    def verify_amplification(self, x: float) -> bool:
+        """Check the amplification property at a point."""
+        target_surprise = self.target.surprise(self.apply(x))
+        source_surprise = self.source.surprise(x)
+        return target_surprise >= self.amplification * source_surprise - 1e-10
+
+
+@dataclass
+class SurpriseFunctor:
+    """A pair of monotone maps with measurable gap."""
+    expected_map: Callable[[float], float]
+    twist_map: Callable[[float], float]
+    
+    def gap(self, x: float) -> float:
+        return abs(self.expected_map(x) - self.twist_map(x))
+
+
+# ============================================================
+# Core Algorithms
+# ============================================================
+
+def compute_info_surprise(p: float) -> float:
     """
-    Compute the humor value of a joke.
-
-    Humor = dist(expected, punchline) in Euclidean space.
-
-    Args:
-        expected: The expected resolution vector.
-        punchline: The actual punchline vector.
-
-    Returns:
-        The humor value (non-negative real).
-
-    Complexity: O(d) where d = dimension.
-
-    Example:
-        >>> humor_compute(np.array([0, 0]), np.array([3, 4]))
-        5.0
+    Compute information-theoretic surprise: -log₂(p).
+    
+    Algorithm: Direct computation using log₂.
+    Complexity: O(1)
     """
-    return float(np.linalg.norm(np.asarray(expected) - np.asarray(punchline)))
+    if p <= 0:
+        return float('inf')
+    return -math.log2(p)
 
 
-def universal_joke_search(
-    expected: np.ndarray,
-    candidates: np.ndarray
-) -> Tuple[int, float]:
+def compute_uniform_entropy(n: int) -> float:
     """
-    Find the punchline that maximizes humor (distance from expected).
-
-    This is the universal joke — the terminal object in the category
-    of jokes with fixed setup and expectation.
-
-    Args:
-        expected: The expected resolution vector (shape: (d,)).
-        candidates: Array of candidate punchlines (shape: (n, d)).
-
-    Returns:
-        Tuple of (best_index, max_humor).
-
-    Complexity: O(n·d).
-
-    Example:
-        >>> expected = np.array([0, 0])
-        >>> candidates = np.array([[1, 0], [3, 4], [2, 2]])
-        >>> idx, humor = universal_joke_search(expected, candidates)
-        >>> print(f"Best punchline index: {idx}, humor: {humor}")
-        Best punchline index: 1, humor: 5.0
+    Compute entropy of uniform distribution on n elements: log₂(n).
+    
+    Algorithm: H = -Σ (1/n) log₂(1/n) = log₂(n)
+    Complexity: O(1)
     """
-    distances = np.linalg.norm(candidates - expected, axis=1)
-    best_idx = int(np.argmax(distances))
-    return best_idx, float(distances[best_idx])
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return math.log2(n)
 
 
-def tropical_aggregate(humors: np.ndarray) -> float:
+def find_optimal_joke(
+    candidates: List[float],
+    expected: float
+) -> Tuple[float, float]:
     """
-    Tropical humor aggregation: max of individual humors.
-
-    In the tropical semiring (max, +), this is the "sum" operation.
-    Models the "best joke wins" principle.
-
-    Args:
-        humors: Array of humor values.
-
-    Returns:
-        Maximum humor value.
-
-    Complexity: O(n).
-
-    Example:
-        >>> tropical_aggregate(np.array([1.0, 5.0, 3.0, 2.0]))
-        5.0
+    Find the maximally surprising punchline.
+    
+    Algorithm: Linear scan (argmax of surprise function).
+    Complexity: O(n) where n = len(candidates)
+    Correctness: Guaranteed by Fundamental Theorem of Comedy 
+                 (maximum exists in finite/compact spaces).
+    
+    Returns: (optimal_punchline, humor_value)
     """
-    if len(humors) == 0:
-        return 0.0
-    return float(np.max(humors))
+    if not candidates:
+        raise ValueError("No candidates")
+    space = SurpriseSpace(expected)
+    return space.find_optimal(candidates)
 
 
-def comedy_polytope_check(t: float, h: float, a: float) -> bool:
+def analyze_comedy_routine(humor_values: List[float]) -> dict:
     """
-    Check if (tension, humor, arc) is in the comedy polytope.
-
-    The comedy polytope is the set of valid triangle side-lengths:
-    t ≥ 0, h ≥ 0, a ≥ 0, and all three triangle inequalities hold.
-
-    Args:
-        t: Tension value.
-        h: Humor value.
-        a: Arc value.
-
-    Returns:
-        True if the triple is achievable as a joke.
-
-    Complexity: O(1).
-
-    Example:
-        >>> comedy_polytope_check(3, 4, 5)
-        True
-        >>> comedy_polytope_check(1, 1, 10)
-        False
+    Analyze a comedy routine (sequence of humor values).
+    
+    Algorithm: Single-pass statistics.
+    Complexity: O(n)
+    
+    Returns: Dictionary with total, average, peak, and monotonicity check.
     """
-    return (t >= 0 and h >= 0 and a >= 0 and
-            a <= t + h and h <= a + t and t <= a + h)
+    if not humor_values:
+        return {"total": 0.0, "average": 0.0, "peak": 0.0}
+    
+    total = sum(humor_values)
+    average = total / len(humor_values)
+    peak = max(humor_values)
+    
+    return {
+        "total": total,
+        "average": average,
+        "peak": peak,
+        "count": len(humor_values),
+        "average_le_peak": average <= peak + 1e-10,
+    }
 
 
-def comedy_polytope_realize(
-    t: float, h: float, a: float
-) -> Optional[Tuple[np.ndarray, np.ndarray, np.ndarray]]:
+def compute_gap_profile(
+    functor: SurpriseFunctor,
+    points: List[float]
+) -> List[Tuple[float, float]]:
     """
-    Realize a valid (tension, humor, arc) triple as a joke in ℝ².
-
-    Given valid triangle side-lengths, constructs three points
-    s, e, p ∈ ℝ² such that dist(s,e) = t, dist(e,p) = h, dist(s,p) = a.
-
-    Args:
-        t: Tension value.
-        h: Humor value.
-        a: Arc value.
-
-    Returns:
-        Tuple (setup, expected, punchline) as 2D numpy arrays,
-        or None if the triple is not in the comedy polytope.
-
-    Complexity: O(1).
-
-    Example:
-        >>> s, e, p = comedy_polytope_realize(3, 4, 5)
-        >>> np.linalg.norm(s - e)  # ≈ 3.0
-        3.0
+    Compute the surprise gap profile along a sequence of points.
+    
+    Algorithm: Evaluate gap at each point.
+    Complexity: O(n)
+    
+    Returns: List of (point, gap) pairs.
     """
-    if not comedy_polytope_check(t, h, a):
-        return None
-
-    s = np.array([0.0, 0.0])
-    e = np.array([t, 0.0])
-
-    if a < 1e-15:
-        p = np.array([0.0, 0.0])
-    elif t < 1e-15:
-        p = np.array([a, 0.0])
-    else:
-        # Law of cosines: cos(angle at s) = (t² + a² - h²) / (2ta)
-        cos_theta = (t**2 + a**2 - h**2) / (2 * t * a)
-        cos_theta = np.clip(cos_theta, -1.0, 1.0)
-        sin_theta = np.sqrt(max(0, 1 - cos_theta**2))
-        p = np.array([a * cos_theta, a * sin_theta])
-
-    return s, e, p
+    return [(x, functor.gap(x)) for x in points]
 
 
-def humor_entropy_bound(
-    points: np.ndarray,
-    weights: np.ndarray
-) -> Tuple[float, float, bool]:
+def verify_gap_triangle(
+    functor: SurpriseFunctor,
+    x: float,
+    y: float
+) -> bool:
     """
-    Compute expected surprise and √variance, verify the bound.
-
-    The Humor-Entropy Theorem states: E[|X - μ|] ≤ √Var(X).
-
-    Args:
-        points: Array of point values.
-        weights: Probability weights (must sum to 1, non-negative).
-
-    Returns:
-        Tuple of (expected_surprise, sqrt_variance, bound_satisfied).
-
-    Complexity: O(n).
-
-    Example:
-        >>> pts = np.array([0, 1, 2, 3, 4])
-        >>> wts = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
-        >>> es, sv, ok = humor_entropy_bound(pts, wts)
-        >>> print(f"E[|X-μ|]={es:.4f} ≤ √Var={sv:.4f}: {ok}")
+    Verify the gap triangle inequality: gap(y) ≤ gap(x) + d_F(x,y) + d_T(x,y).
+    
+    Algorithm: Direct computation and comparison.
+    Complexity: O(1)
     """
-    mean = np.sum(weights * points)
-    expected_surprise = np.sum(weights * np.abs(points - mean))
-    variance = np.sum(weights * (points - mean)**2)
-    sqrt_var = np.sqrt(variance)
-    return float(expected_surprise), float(sqrt_var), expected_surprise <= sqrt_var + 1e-12
+    gap_y = functor.gap(y)
+    gap_x = functor.gap(x)
+    d_F = abs(functor.expected_map(x) - functor.expected_map(y))
+    d_T = abs(functor.twist_map(x) - functor.twist_map(y))
+    return gap_y <= gap_x + d_F + d_T + 1e-10
 
 
-def optimal_comedy_ordering(humors: np.ndarray) -> np.ndarray:
+def optimal_ir_decomposition(
+    humor_target: float,
+    max_incongruity: float = 10.0,
+    resolution_step: float = 0.01
+) -> IRJoke:
     """
-    Find the optimal ordering of jokes for escalating comedy.
-
-    The Escalating Sum Lower Bound theorem guarantees that monotonically
-    increasing humor sequences maximize the lower bound on total humor.
-    This function returns the indices that sort jokes by increasing humor.
-
-    Args:
-        humors: Array of humor values.
-
-    Returns:
-        Array of indices giving the optimal escalating order.
-
-    Complexity: O(n log n).
-
-    Example:
-        >>> humors = np.array([5.0, 1.0, 3.0, 2.0, 4.0])
-        >>> order = optimal_comedy_ordering(humors)
-        >>> print(humors[order])
-        [1. 2. 3. 4. 5.]
+    Find the IR decomposition that achieves a target humor value
+    with minimum incongruity (most efficient joke).
+    
+    Algorithm: For each resolution level, compute required incongruity.
+               Choose the decomposition with minimum incongruity.
+    Complexity: O(1/resolution_step)
+    
+    The optimal is always r=0, I=humor_target (absurdist).
+    But if we want r > 0 (some resolution), I must be larger.
     """
-    return np.argsort(humors)
+    best: Optional[IRJoke] = None
+    best_incongruity = float('inf')
+    
+    r = 0.0
+    while r <= 0.99:
+        # I * (1-r) = humor_target => I = humor_target / (1-r)
+        required_inc = humor_target / (1 - r)
+        if required_inc <= max_incongruity and required_inc < best_incongruity:
+            best_incongruity = required_inc
+            best = IRJoke(required_inc, r)
+        r += resolution_step
+    
+    if best is None:
+        raise ValueError(f"Cannot achieve humor {humor_target} within bounds")
+    return best
 
-
-def surprise_lipschitz_bound(
-    surprise_original: float,
-    lipschitz_constant: float
-) -> float:
-    """
-    Compute the upper bound on surprise after a K-Lipschitz translation.
-
-    By the Surprise Lipschitz Bound theorem, if f is K-Lipschitz and
-    preserves expectations, then surprise(f(x)) ≤ K · surprise(x).
-
-    Args:
-        surprise_original: Surprise value in the original space.
-        lipschitz_constant: The Lipschitz constant K of the translation.
-
-    Returns:
-        Upper bound on the translated surprise.
-
-    Complexity: O(1).
-
-    Example:
-        >>> surprise_lipschitz_bound(5.0, 2.0)
-        10.0
-    """
-    return lipschitz_constant * surprise_original
-
-
-# ============================================================================
-# Example usage
-# ============================================================================
 
 if __name__ == "__main__":
-    print("Algorithm Examples:")
-    print()
-
-    # Humor computation
-    h = humor_compute(np.array([0, 0]), np.array([3, 4]))
-    print(f"1. Humor of joke (expected=[0,0], punchline=[3,4]): {h}")
-
-    # Universal joke search
-    expected = np.array([0.0, 0.0])
-    candidates = np.array([[1, 0], [3, 4], [2, 2], [0, 1]])
-    idx, max_h = universal_joke_search(expected, candidates)
-    print(f"2. Universal joke: index={idx}, punchline={candidates[idx]}, humor={max_h}")
-
-    # Tropical aggregation
-    humors = np.array([1.0, 5.0, 3.0, 2.0])
-    print(f"3. Tropical humor of {humors}: {tropical_aggregate(humors)}")
-
-    # Comedy polytope
-    print(f"4. (3,4,5) in polytope: {comedy_polytope_check(3, 4, 5)}")
-    print(f"   (1,1,10) in polytope: {comedy_polytope_check(1, 1, 10)}")
-
-    # Realization
-    result = comedy_polytope_realize(3, 4, 5)
-    if result:
-        s, e, p = result
-        print(f"5. Realized (3,4,5): s={s}, e={e}, p={p}")
-        print(f"   Verification: t={np.linalg.norm(s-e):.4f}, "
-              f"h={np.linalg.norm(e-p):.4f}, a={np.linalg.norm(s-p):.4f}")
-
-    # Humor-entropy bound
-    pts = np.array([0.0, 1.0, 2.0, 3.0, 4.0])
-    wts = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
-    es, sv, ok = humor_entropy_bound(pts, wts)
-    print(f"6. Humor-Entropy: E[|X-μ|]={es:.4f} ≤ √Var={sv:.4f}: {ok}")
-
-    # Optimal ordering
-    humors = np.array([5.0, 1.0, 3.0, 2.0, 4.0])
-    order = optimal_comedy_ordering(humors)
-    print(f"7. Optimal order for {humors}: indices={order}, escalating={humors[order]}")
+    # Quick demonstration
+    space = SurpriseSpace(expected=5.0)
+    optimal, humor = space.find_optimal([1.0, 3.0, 5.0, 7.0, 10.0])
+    print(f"Optimal punchline: {optimal}, humor: {humor}")
+    
+    joke = IRJoke(incongruity=8.0, resolution=0.3)
+    print(f"IR Joke: type={joke.joke_type}, net_humor={joke.net_humor}")
+    
+    print(f"Uniform entropy (n=8): {compute_uniform_entropy(8):.4f} bits")
+    
+    routine = analyze_comedy_routine([3.0, 5.0, 7.0, 2.0, 9.0])
+    print(f"Routine analysis: {routine}")
