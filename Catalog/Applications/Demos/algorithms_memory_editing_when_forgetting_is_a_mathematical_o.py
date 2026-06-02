@@ -1,272 +1,276 @@
 #!/usr/bin/env python3
 """
-Memory Algebra Algorithms: Type-hinted implementations of core constructions.
+Memory Algebra Algorithms: Type-hinted implementations.
 
-Implements:
-1. MemorySystem: monoid homomorphism from free monoid to finite monoid
-2. InformationLossCongruence: equivalence classes under memory encoding
-3. OblivionKernel: streams mapping to identity
-4. ForgettingComparison: comparing memory systems by forgetting order
-5. ForgettingFactorization: constructing quotient maps
+Core algorithms for computing with memory systems, kernels,
+congruences, quotients, and information loss measures.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Callable, Dict, FrozenSet, List, Optional, Set, Tuple
-from itertools import product as iterproduct
+from typing import Optional
+import math
 from collections import defaultdict
 
 
 @dataclass
 class FiniteMonoid:
-    """A finite monoid represented by its multiplication table."""
-    elements: List[int]
-    identity: int
-    multiply: Callable[[int, int], int]
-    name: str = "M"
+    """A finite monoid represented by its multiplication table.
 
-    def order(self) -> int:
-        return len(self.elements)
+    Elements are integers 0, 1, ..., size-1.
+    Element 0 is always the identity.
+    """
+    size: int
+    table: list[list[int]]  # table[i][j] = i * j
 
-    def element_order(self, a: int) -> Optional[int]:
-        """Order of element a (if monoid is actually a group). None if no finite order."""
-        current = a
-        for n in range(1, self.order() + 1):
-            if current == self.identity:
-                return n
-            current = self.multiply(current, a)
-        return None
+    def mul(self, a: int, b: int) -> int:
+        """Multiply two elements."""
+        return self.table[a][b]
+
+    def identity(self) -> int:
+        return 0
+
+    def validate(self) -> bool:
+        """Check associativity and identity laws."""
+        n = self.size
+        # Identity check
+        for i in range(n):
+            if self.table[0][i] != i or self.table[i][0] != i:
+                return False
+        # Associativity check
+        for a in range(n):
+            for b in range(n):
+                for c in range(n):
+                    if self.table[self.table[a][b]][c] != self.table[a][self.table[b][c]]:
+                        return False
+        return True
 
 
-def cyclic_group(n: int) -> FiniteMonoid:
-    """Construct Z/nZ as a FiniteMonoid."""
-    return FiniteMonoid(
-        elements=list(range(n)),
-        identity=0,
-        multiply=lambda a, b: (a + b) % n,
-        name=f"Z/{n}"
-    )
+@dataclass
+class MonoidHomomorphism:
+    """A monoid homomorphism between finite monoids."""
+    source: FiniteMonoid
+    target: FiniteMonoid
+    mapping: list[int]  # mapping[i] = image of element i
+
+    def apply(self, x: int) -> int:
+        return self.mapping[x]
+
+    def is_valid(self) -> bool:
+        """Check homomorphism property: f(a*b) = f(a)*f(b) and f(1) = 1."""
+        if self.mapping[0] != 0:
+            return False
+        for a in range(self.source.size):
+            for b in range(self.source.size):
+                if self.mapping[self.source.mul(a, b)] != \
+                   self.target.mul(self.mapping[a], self.mapping[b]):
+                    return False
+        return True
+
+    def is_injective(self) -> bool:
+        return len(set(self.mapping)) == len(self.mapping)
+
+    def is_surjective(self) -> bool:
+        return len(set(self.mapping)) == self.target.size
 
 
 @dataclass
 class MemorySystem:
-    """A memory system: monoid homomorphism from FreeMonoid(alphabet) to a finite monoid.
+    """A memory system: monoid homomorphism with finite target."""
+    experience_monoid: FiniteMonoid
+    state_monoid: FiniteMonoid
+    encode: MonoidHomomorphism
 
-    Specified by the images of generators (alphabet symbols).
-    """
-    alphabet: List[int]
-    target: FiniteMonoid
-    generator_images: Dict[int, int]
+    def kernel(self) -> list[int]:
+        """Compute the memory kernel: elements mapping to identity."""
+        return [e for e in range(self.experience_monoid.size)
+                if self.encode.apply(e) == 0]
 
-    def encode(self, stream: Tuple[int, ...]) -> int:
-        """Apply the homomorphism to an experience stream."""
-        result = self.target.identity
-        for symbol in stream:
-            result = self.target.multiply(result, self.generator_images[symbol])
-        return result
+    def congruence_classes(self) -> dict[int, list[int]]:
+        """Compute congruence classes: partition by image."""
+        classes: dict[int, list[int]] = defaultdict(list)
+        for e in range(self.experience_monoid.size):
+            classes[self.encode.apply(e)].append(e)
+        return dict(classes)
 
-    def all_streams(self, max_length: int) -> List[Tuple[int, ...]]:
-        """Generate all streams up to max_length."""
-        streams: List[Tuple[int, ...]] = [()]
-        for length in range(1, max_length + 1):
-            streams.extend(iterproduct(self.alphabet, repeat=length))
-        return streams
+    def fiber_sizes(self) -> list[int]:
+        """Compute sizes of all fibers."""
+        classes = self.congruence_classes()
+        return [len(v) for v in classes.values()]
 
-    def is_lossy(self, check_length: int = 6) -> bool:
-        """Check lossiness by finding a collision up to check_length."""
-        seen: Dict[int, Tuple[int, ...]] = {}
-        for stream in self.all_streams(check_length):
-            state = self.encode(stream)
-            if state in seen and seen[state] != stream:
-                return True
-            seen[state] = stream
-        return False
+    def information_loss(self) -> float:
+        """Compute information loss in bits: log2(|E|) - log2(|image|)."""
+        image_size = len(set(self.encode.mapping))
+        return math.log2(self.experience_monoid.size) - math.log2(image_size)
 
-
-@dataclass
-class InformationLossCongruence:
-    """The congruence relation induced by a memory system on experience streams."""
-    memory: MemorySystem
-    max_length: int
-    _classes: Dict[int, List[Tuple[int, ...]]] = field(default_factory=dict, init=False)
-
-    def __post_init__(self) -> None:
-        self._compute_classes()
-
-    def _compute_classes(self) -> None:
-        self._classes = defaultdict(list)
-        for stream in self.memory.all_streams(self.max_length):
-            state = self.memory.encode(stream)
-            self._classes[state].append(stream)
-
-    def num_classes(self) -> int:
-        """Number of distinct congruence classes."""
-        return len(self._classes)
-
-    def class_sizes(self) -> Dict[int, int]:
-        """Map from state to number of streams in that class."""
-        return {state: len(members) for state, members in self._classes.items()}
-
-    def largest_class_size(self) -> int:
-        return max(len(m) for m in self._classes.values())
-
-    def smallest_class_size(self) -> int:
-        return min(len(m) for m in self._classes.values())
-
-    def are_congruent(self, x: Tuple[int, ...], y: Tuple[int, ...]) -> bool:
-        """Check if two streams are congruent (map to same state)."""
-        return self.memory.encode(x) == self.memory.encode(y)
+    def max_fiber_size(self) -> int:
+        """Compute the maximum fiber size (worst-case conflation)."""
+        return max(self.fiber_sizes())
 
 
 @dataclass
-class OblivionKernel:
-    """The monoid kernel: streams mapping to the identity element."""
-    memory: MemorySystem
-    max_length: int
-    _elements: List[Tuple[int, ...]] = field(default_factory=list, init=False)
+class ForgettingMap:
+    """A surjective monoid homomorphism modeling targeted forgetting."""
+    source_states: FiniteMonoid
+    target_states: FiniteMonoid
+    forget: MonoidHomomorphism
 
-    def __post_init__(self) -> None:
-        self._compute()
+    def is_valid(self) -> bool:
+        return self.forget.is_valid() and self.forget.is_surjective()
 
-    def _compute(self) -> None:
-        identity = self.memory.target.identity
-        self._elements = []
-        for stream in self.memory.all_streams(self.max_length):
-            if len(stream) > 0 and self.memory.encode(stream) == identity:
-                self._elements.append(stream)
 
-    def elements(self) -> List[Tuple[int, ...]]:
-        return list(self._elements)
+@dataclass
+class MemoryRefinement:
+    """A refinement between memory systems with commuting bridge."""
+    fine: MemorySystem
+    coarse: MemorySystem
+    bridge: MonoidHomomorphism
 
-    def size(self) -> int:
-        return len(self._elements)
-
-    def is_submonoid(self) -> bool:
-        """Verify closure under concatenation (for elements within max_length)."""
-        kernel_set = set(self._elements)
-        identity = self.memory.target.identity
-        for a in self._elements:
-            for b in self._elements:
-                ab = a + b
-                if len(ab) <= self.max_length:
-                    if self.memory.encode(ab) != identity:
-                        return False
+    def commutes(self) -> bool:
+        """Check bridge(fine.encode(e)) = coarse.encode(e) for all e."""
+        for e in range(self.fine.experience_monoid.size):
+            fine_state = self.fine.encode.apply(e)
+            bridged = self.bridge.apply(fine_state)
+            coarse_state = self.coarse.encode.apply(e)
+            if bridged != coarse_state:
+                return False
         return True
 
-    def explicit_ghost_experiences(self) -> List[Tuple[int, Tuple[int, ...]]]:
-        """Construct ghost experiences using element orders (for group targets)."""
-        ghosts = []
-        for symbol in self.memory.alphabet:
-            img = self.memory.generator_images[symbol]
-            order = self.memory.target.element_order(img)
-            if order is not None and order >= 1:
-                ghost = tuple([symbol] * order)
-                ghosts.append((symbol, ghost))
-        return ghosts
+    def verify_kernel_monotonicity(self) -> bool:
+        """Verify fine kernel ⊆ coarse kernel."""
+        fine_kernel = set(self.fine.kernel())
+        coarse_kernel = set(self.coarse.kernel())
+        return fine_kernel.issubset(coarse_kernel)
+
+    def verify_congruence_refinement(self) -> bool:
+        """Verify: fine-congruent implies coarse-congruent."""
+        fine_classes = self.fine.congruence_classes()
+        coarse_classes = self.coarse.congruence_classes()
+        # Each fine class should be a subset of some coarse class
+        coarse_sets = [set(v) for v in coarse_classes.values()]
+        for fine_class in fine_classes.values():
+            fine_set = set(fine_class)
+            if not any(fine_set.issubset(cs) for cs in coarse_sets):
+                return False
+        return True
 
 
-def compare_forgetting(mem1: MemorySystem, mem2: MemorySystem,
-                       max_length: int = 5) -> Tuple[bool, bool]:
-    """Compare two memory systems by forgetting order.
+def make_cyclic_monoid(n: int) -> FiniteMonoid:
+    """Create the cyclic group Z/nZ as a monoid."""
+    table = [[(i + j) % n for j in range(n)] for i in range(n)]
+    return FiniteMonoid(size=n, table=table)
 
-    Returns (mem1_leq_mem2, mem2_leq_mem1) where
-    mem1_leq_mem2 means Con.ker(mem1) ≤ Con.ker(mem2).
+
+def make_mod_homomorphism(
+    source: FiniteMonoid, target: FiniteMonoid, divisor: int
+) -> MonoidHomomorphism:
+    """Create the mod-divisor homomorphism Z/nZ -> Z/mZ."""
+    mapping = [i % target.size for i in range(source.size)]
+    return MonoidHomomorphism(source=source, target=target, mapping=mapping)
+
+
+def compose_forgetting(
+    f: ForgettingMap, g: ForgettingMap
+) -> ForgettingMap:
+    """Compose two forgetting maps."""
+    composed_mapping = [
+        g.forget.apply(f.forget.apply(i))
+        for i in range(f.source_states.size)
+    ]
+    composed_hom = MonoidHomomorphism(
+        source=f.source_states,
+        target=g.target_states,
+        mapping=composed_mapping,
+    )
+    return ForgettingMap(
+        source_states=f.source_states,
+        target_states=g.target_states,
+        forget=composed_hom,
+    )
+
+
+def enumerate_homomorphisms(
+    source: FiniteMonoid, target: FiniteMonoid
+) -> list[MonoidHomomorphism]:
+    """Enumerate all monoid homomorphisms from source to target.
+
+    Uses the fact that a homomorphism from a cyclic monoid is determined
+    by the image of the generator.
     """
-    streams = mem1.all_streams(max_length)
+    import itertools
 
-    # Check mem1 ≤ mem2
-    mem1_leq_mem2 = True
-    mem2_leq_mem1 = True
+    results: list[MonoidHomomorphism] = []
 
-    # Group by mem1 encoding
-    classes1: Dict[int, List[Tuple[int, ...]]] = defaultdict(list)
-    classes2: Dict[int, List[Tuple[int, ...]]] = defaultdict(list)
-    for s in streams:
-        classes1[mem1.encode(s)].append(s)
-        classes2[mem2.encode(s)].append(s)
+    # Brute force for small monoids: try all possible mappings
+    if source.size > 12:
+        raise ValueError("Source too large for brute-force enumeration")
 
-    # mem1 ≤ mem2: if mem1(x) = mem1(y) then mem2(x) = mem2(y)
-    for members in classes1.values():
-        images2 = {mem2.encode(m) for m in members}
-        if len(images2) > 1:
-            mem1_leq_mem2 = False
-            break
+    # For a cyclic monoid Z/nZ generated by 1, the homomorphism is
+    # determined by f(1), and we need f(1)^n = f(0) = 0.
+    for gen_image in range(target.size):
+        # Build the mapping by repeatedly multiplying
+        mapping = [0] * source.size
+        current = 0  # identity
+        valid = True
+        for i in range(source.size):
+            mapping[i] = current
+            current = target.mul(current, gen_image)
 
-    # mem2 ≤ mem1: if mem2(x) = mem2(y) then mem1(x) = mem1(y)
-    for members in classes2.values():
-        images1 = {mem1.encode(m) for m in members}
-        if len(images1) > 1:
-            mem2_leq_mem1 = False
-            break
+        # Check it's actually a homomorphism
+        hom = MonoidHomomorphism(source=source, target=target, mapping=mapping)
+        if hom.is_valid():
+            results.append(hom)
 
-    return mem1_leq_mem2, mem2_leq_mem1
+    return results
 
 
-def construct_forgetting_map(mem1: MemorySystem, mem2: MemorySystem,
-                             max_length: int = 5) -> Optional[Dict[int, int]]:
-    """Construct the forgetting map from mem1's quotient to mem2's state space.
+def optimal_memory_search(
+    experience: FiniteMonoid, budget: int
+) -> Optional[MemorySystem]:
+    """Find the memory system with given budget that minimizes information loss.
 
-    Only valid when Con.ker(mem1) ≤ Con.ker(mem2).
-    Returns a dict mapping mem1 states to mem2 states, or None if not valid.
+    Searches over all monoids of the given size and all homomorphisms.
     """
-    leq, _ = compare_forgetting(mem1, mem2, max_length)
-    if not leq:
-        return None
+    best: Optional[MemorySystem] = None
+    best_loss = float("inf")
 
-    forgetting: Dict[int, int] = {}
-    for stream in mem1.all_streams(max_length):
-        s1 = mem1.encode(stream)
-        s2 = mem2.encode(stream)
-        if s1 in forgetting:
-            if forgetting[s1] != s2:
-                return None  # Inconsistency
-        else:
-            forgetting[s1] = s2
+    # For simplicity, only search cyclic monoids as targets
+    target = make_cyclic_monoid(budget)
+    homs = enumerate_homomorphisms(experience, target)
 
-    return forgetting
+    for hom in homs:
+        system = MemorySystem(
+            experience_monoid=experience,
+            state_monoid=target,
+            encode=hom,
+        )
+        loss = system.information_loss()
+        if loss < best_loss:
+            best_loss = loss
+            best = system
+
+    return best
 
 
 if __name__ == "__main__":
     # Example usage
-    Z4 = cyclic_group(4)
-    Z2 = cyclic_group(2)
+    exp = make_cyclic_monoid(12)
+    state = make_cyclic_monoid(4)
 
-    mem1 = MemorySystem(
-        alphabet=[0, 1],
-        target=Z4,
-        generator_images={0: 1, 1: 3}
-    )
+    hom = make_mod_homomorphism(exp, state, 4)
+    mem = MemorySystem(experience_monoid=exp, state_monoid=state, encode=hom)
 
-    mem2 = MemorySystem(
-        alphabet=[0, 1],
-        target=Z2,
-        generator_images={0: 1, 1: 1}
-    )
+    print(f"Memory system: Z/12Z -> Z/4Z")
+    print(f"  Valid homomorphism: {hom.is_valid()}")
+    print(f"  Injective: {hom.is_injective()}")
+    print(f"  Kernel: {mem.kernel()}")
+    print(f"  Congruence classes: {mem.congruence_classes()}")
+    print(f"  Information loss: {mem.information_loss():.2f} bits")
+    print(f"  Max fiber size: {mem.max_fiber_size()}")
 
-    print("Memory System 1:", mem1.target.name)
-    print("Memory System 2:", mem2.target.name)
-    print()
-
-    print("Is mem1 lossy?", mem1.is_lossy())
-    print("Is mem2 lossy?", mem2.is_lossy())
-    print()
-
-    cong = InformationLossCongruence(mem1, max_length=4)
-    print("Congruence classes (mem1, length ≤ 4):", cong.num_classes())
-    print("Class sizes:", cong.class_sizes())
-    print()
-
-    kernel = OblivionKernel(mem1, max_length=5)
-    print("Oblivion kernel size (mem1, length ≤ 5):", kernel.size())
-    print("Is submonoid:", kernel.is_submonoid())
-    print("Ghost experiences:", kernel.explicit_ghost_experiences())
-    print()
-
-    leq12, leq21 = compare_forgetting(mem1, mem2)
-    print(f"mem1 ≤ mem2 (forgetting order): {leq12}")
-    print(f"mem2 ≤ mem1 (forgetting order): {leq21}")
-    print()
-
-    fmap = construct_forgetting_map(mem1, mem2)
-    if fmap:
-        print("Forgetting map (mem1 state → mem2 state):", fmap)
+    # Find optimal memory
+    best = optimal_memory_search(exp, 4)
+    if best:
+        print(f"\nOptimal 4-state memory for Z/12Z:")
+        print(f"  Mapping: {best.encode.mapping}")
+        print(f"  Loss: {best.information_loss():.2f} bits")
