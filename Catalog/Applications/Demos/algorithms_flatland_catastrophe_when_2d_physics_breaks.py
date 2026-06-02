@@ -1,232 +1,241 @@
 #!/usr/bin/env python3
 """
-Algorithms for Flatland Gravity Analysis
+Algorithms for Dimensional Gravity Analysis
 
-Type-hinted implementations of the core computational methods
-for analyzing 2D gravitational dynamics.
+Type-hinted implementations of the key mathematical algorithms
+used in the Flatland Catastrophe analysis.
 """
 
 import math
-from typing import Tuple, List, Optional
+from typing import List, Tuple, Optional
 from dataclasses import dataclass
 
 
 @dataclass
-class GravitySystem:
-    """A 2D gravitational system with central mass."""
-    G: float  # Gravitational constant
-    M: float  # Central mass
-    m: float  # Orbiting mass
-    L: float  # Angular momentum
+class GravitationalDimension:
+    """A gravitational theory in n spatial dimensions."""
+    n: int
+
+    def __post_init__(self) -> None:
+        if self.n < 2:
+            raise ValueError(f"Dimension must be ≥ 2, got {self.n}")
 
     @property
-    def k(self) -> float:
-        """Gravitational coupling constant."""
-        return self.G * self.M * self.m
+    def force_exponent(self) -> int:
+        """Force exponent: F ∝ r^(1-n)."""
+        return 1 - self.n
 
-    def circular_orbit_radius(self) -> float:
-        """Radius of the circular orbit: r₀ = |L|/√(mk)."""
-        return abs(self.L) / math.sqrt(self.m * self.k)
+    @property
+    def stability_param(self) -> int:
+        """Stability parameter σ = 4 - n."""
+        return 4 - self.n
 
-    def effective_potential(self, r: float) -> float:
-        """Effective potential: V_eff(r) = k·ln(r) + L²/(2mr²)."""
-        return self.k * math.log(r) + self.L**2 / (2 * self.m * r**2)
+    @property
+    def has_stable_orbits(self) -> bool:
+        """Whether circular orbits are linearly stable."""
+        return self.stability_param > 0
 
-    def radial_acceleration(self, r: float) -> float:
-        """Radial acceleration: a_r = -k/r + L²/(mr³)."""
-        return -self.k / r + self.L**2 / (self.m * r**3)
+    @property
+    def apsidal_ratio(self) -> Optional[float]:
+        """Apsidal angle ratio 1/√(4-n), or None if unstable."""
+        if self.stability_param <= 0:
+            return None
+        return 1.0 / math.sqrt(self.stability_param)
 
-    def angular_velocity(self, r: float) -> float:
-        """Angular velocity: ω = L/(mr²)."""
-        return self.L / (self.m * r**2)
+    @property
+    def has_closed_orbits(self) -> bool:
+        """Whether orbits close (apsidal ratio is rational).
+        In practice, only n=3 gives rational ratio (1/√1 = 1)."""
+        if not self.has_stable_orbits:
+            return False
+        # √(4-n) is rational iff (4-n) is a perfect square
+        s = self.stability_param
+        root = int(math.isqrt(s))
+        return root * root == s
+
+    @property
+    def has_escape_velocity(self) -> bool:
+        """Whether particles can escape to infinity."""
+        return self.n >= 3
+
+    @property
+    def is_logarithmic(self) -> bool:
+        """Whether the potential is logarithmic (n=2 case)."""
+        return self.n == 2
+
+    def classify(self) -> str:
+        """Classify the gravitational dimension."""
+        if self.n == 2:
+            return "flatland"
+        elif self.n == 3:
+            return "goldilocks"
+        elif self.n == 4:
+            return "marginal"
+        else:
+            return "catastrophic"
+
+    def viability_score(self) -> int:
+        """Count viability conditions: stability + closure + escape."""
+        return (
+            (1 if self.has_stable_orbits else 0) +
+            (1 if self.has_closed_orbits else 0) +
+            (1 if self.has_escape_velocity else 0)
+        )
 
 
-def apsidal_angle_ratio(force_exponent: float) -> float:
-    """Compute the apsidal angle ratio for a power-law force F ∝ r^α.
-    
-    Returns 1/√(3+α). For closed orbits, this must be rational.
-    
-    Args:
-        force_exponent: The exponent α in F ∝ r^α
-        
-    Returns:
-        The apsidal angle ratio, or inf if 3+α ≤ 0
+def effective_potential_2d(r: float, L: float, k: float = 1.0) -> float:
+    """2D effective potential: V_eff(r) = k·ln(r) + L²/(2r²)."""
+    if r <= 0:
+        raise ValueError("r must be positive")
+    return k * math.log(r) + L**2 / (2 * r**2)
+
+
+def effective_potential_deriv_2d(r: float, L: float, k: float = 1.0) -> float:
+    """Derivative of 2D effective potential: V_eff'(r) = k/r - L²/r³."""
+    if r <= 0:
+        raise ValueError("r must be positive")
+    return k / r - L**2 / r**3
+
+
+def effective_potential_deriv2_2d(r: float, L: float, k: float = 1.0) -> float:
+    """Second derivative: V_eff''(r) = -k/r² + 3L²/r⁴."""
+    if r <= 0:
+        raise ValueError("r must be positive")
+    return -k / r**2 + 3 * L**2 / r**4
+
+
+def circular_orbit_radius(L: float, k: float = 1.0, m: float = 1.0) -> float:
+    """Circular orbit radius: r₀ = |L|/√(mk)."""
+    return abs(L) / math.sqrt(m * k)
+
+
+def verify_critical_point(L: float, k: float = 1.0) -> Tuple[float, float]:
+    """Verify that r₀ = |L|/√k is a critical point of V_eff.
+    Returns (V_eff'(r₀), V_eff''(r₀))."""
+    r0 = circular_orbit_radius(L, k)
+    deriv1 = effective_potential_deriv_2d(r0, L, k)
+    deriv2 = effective_potential_deriv2_2d(r0, L, k)
+    return deriv1, deriv2
+
+
+def simulate_orbit(
+    n_dim: int,
+    steps: int = 10000,
+    dt: float = 0.001,
+    r0: float = 1.0,
+    vr0: float = 0.1,
+    L: float = 1.0,
+    k: float = 1.0,
+) -> List[Tuple[float, float]]:
+    """Simulate a gravitational orbit in n dimensions.
+
+    Uses Störmer-Verlet integration for the radial equation:
+      r'' = L²/r³ - k·r^(1-n)
+
+    Returns list of (r, θ) pairs.
     """
-    discriminant = 3 + force_exponent
-    if discriminant <= 0:
-        return float('inf')  # No stable oscillation
-    return 1.0 / math.sqrt(discriminant)
+    r = r0
+    vr = vr0
+    theta = 0.0
+    trajectory: List[Tuple[float, float]] = []
 
+    force_exp = 1 - n_dim  # F ∝ r^(1-n)
 
-def bertrand_parameter(dimension: int) -> int:
-    """Compute the Bertrand stability parameter for n-dimensional gravity.
-    
-    For n-dimensional gravity, the force law is F ∝ r^(1-n),
-    so the Bertrand parameter is 3 + (1-n) = 4-n.
-    
-    Orbits are stable iff 4-n > 0 (i.e., n < 4).
-    Orbits close iff √(4-n) is rational.
-    """
-    return 4 - dimension
+    for _ in range(steps):
+        trajectory.append((r, theta))
 
+        # Radial acceleration: centrifugal - gravitational
+        ar = L**2 / r**3 - k * r**force_exp
 
-def is_goldilocks_dimension(n: int) -> bool:
-    """Check if dimension n supports both stable AND closed orbits.
-    
-    Requires:
-    1. stabilityDiscriminant = 4-n > 0  (stable circular orbits)
-    2. bertrandParameter = 4-n is a perfect square  (closed orbits)
-    
-    Only n=3 satisfies both conditions.
-    """
-    bp = bertrand_parameter(n)
-    if bp <= 0:
-        return False
-    sqrt_bp = math.isqrt(bp)
-    return sqrt_bp * sqrt_bp == bp
-
-
-@dataclass
-class OrbitState:
-    """State of a particle in radial coordinates."""
-    r: float      # Radial distance
-    rdot: float   # Radial velocity
-    theta: float  # Angle
-    t: float      # Time
-
-
-def integrate_orbit(sys: GravitySystem, initial: OrbitState,
-                    dt: float, n_steps: int) -> List[OrbitState]:
-    """Integrate the equations of motion for 2D gravity using Störmer-Verlet.
-    
-    The equations of motion in polar coordinates are:
-    - r̈ = -k/r + L²/(mr³)  (radial)
-    - θ̇ = L/(mr²)           (angular)
-    
-    Args:
-        sys: The gravitational system
-        initial: Initial state
-        dt: Time step
-        n_steps: Number of integration steps
-        
-    Returns:
-        List of orbit states
-    """
-    states = [initial]
-    r = initial.r
-    rdot = initial.rdot
-    theta = initial.theta
-    t = initial.t
-
-    for _ in range(n_steps):
-        # Current acceleration
-        a_r = sys.radial_acceleration(r)
-
-        # Position update (Verlet)
-        r_new = r + rdot * dt + 0.5 * a_r * dt**2
+        # Störmer-Verlet
+        r_new = r + vr * dt + 0.5 * ar * dt**2
         r_new = max(r_new, 1e-6)  # Prevent collision
 
-        # New acceleration
-        a_r_new = sys.radial_acceleration(r_new)
+        ar_new = L**2 / r_new**3 - k * r_new**force_exp
+        vr = vr + 0.5 * (ar + ar_new) * dt
+        r = r_new
+        theta += L / r**2 * dt
 
-        # Velocity update
-        rdot_new = rdot + 0.5 * (a_r + a_r_new) * dt
-
-        # Angular update
-        omega = sys.angular_velocity(r)
-        theta_new = theta + omega * dt
-
-        # Time update
-        t_new = t + dt
-
-        state = OrbitState(r_new, rdot_new, theta_new, t_new)
-        states.append(state)
-
-        r, rdot, theta, t = r_new, rdot_new, theta_new, t_new
-
-    return states
+    return trajectory
 
 
-def find_apsides(states: List[OrbitState]) -> List[Tuple[int, float, float]]:
-    """Find periapsis and apoapsis points in an orbit.
-    
-    Returns list of (index, radius, angle) for each apsis.
+def compute_apsidal_positions(
+    alpha: float, N: int
+) -> List[float]:
+    """Compute the fractional parts {n·α} for n = 0, ..., N-1.
+
+    For 2D gravity, α = 1/√2 gives the apsidal angular positions.
     """
-    apsides = []
-    for i in range(1, len(states) - 1):
-        r_prev = states[i-1].r
-        r_curr = states[i].r
-        r_next = states[i+1].r
-
-        if (r_curr <= r_prev and r_curr <= r_next) or \
-           (r_curr >= r_prev and r_curr >= r_next):
-            apsides.append((i, r_curr, states[i].theta))
-
-    return apsides
+    return [n * alpha - math.floor(n * alpha) for n in range(N)]
 
 
-def compute_apsidal_angles(apsides: List[Tuple[int, float, float]]) -> List[float]:
-    """Compute successive apsidal angles from a list of apsides.
-    
-    The apsidal angle is the angular difference between successive apsides.
-    For 2D gravity, this should be approximately π/√2 ≈ 2.2214.
+def is_equidistributed(
+    sequence: List[float], n_bins: int = 20, tolerance: float = 0.3
+) -> bool:
+    """Test whether a sequence in [0,1) is approximately equidistributed.
+
+    Uses chi-squared-like test: check if all bins have
+    counts within tolerance of the expected count.
     """
-    angles = []
-    for i in range(1, len(apsides)):
-        d_theta = apsides[i][2] - apsides[i-1][2]
-        angles.append(d_theta)
-    return angles
+    N = len(sequence)
+    expected = N / n_bins
+    bins = [0] * n_bins
+
+    for x in sequence:
+        bin_idx = min(int(x * n_bins), n_bins - 1)
+        bins[bin_idx] += 1
+
+    return all(abs(count - expected) / expected < tolerance for count in bins)
 
 
-def dimensional_analysis() -> List[dict]:
-    """Analyze all dimensions from 1 to 7 for gravitational orbit properties."""
-    results = []
-    for n in range(1, 8):
-        bp = bertrand_parameter(n)
-        force_exp = 1 - n
-        if bp > 0:
-            ratio = apsidal_angle_ratio(float(force_exp))
-            stable = True
-            # Check if ratio is "close to rational" (approximate test)
-            # True rationality is proven in the Lean formalization
-            close_to_rational = abs(ratio - round(ratio * 10) / 10) < 0.001
-        else:
-            ratio = None
-            stable = False
-            close_to_rational = False
+def goldilocks_search(max_dim: int = 20) -> List[int]:
+    """Search for Goldilocks dimensions among n = 2, ..., max_dim.
 
-        results.append({
-            'dimension': n,
-            'force_exponent': force_exp,
-            'bertrand_parameter': bp,
-            'stable': stable,
-            'apsidal_ratio': ratio,
-            'goldilocks': is_goldilocks_dimension(n),
-        })
-    return results
+    A dimension is Goldilocks if it has stable orbits, closed orbits,
+    and escape velocity. Returns list of qualifying dimensions.
+    """
+    result: List[int] = []
+    for n in range(2, max_dim + 1):
+        g = GravitationalDimension(n)
+        if g.viability_score() == 3:
+            result.append(n)
+    return result
 
+
+def conjectured_intersections(N: int) -> int:
+    """Conjectured self-intersection count after N radial oscillations: N(N-1)/2."""
+    return N * (N - 1) // 2
+
+
+# ============================================================
+# Self-tests
+# ============================================================
 
 if __name__ == "__main__":
-    # Example usage
-    sys = GravitySystem(G=1.0, M=1.0, m=1.0, L=1.0)
-    r0 = sys.circular_orbit_radius()
-    print(f"Circular orbit radius: {r0:.6f}")
+    # Test GravitationalDimension
+    for n in range(2, 8):
+        g = GravitationalDimension(n)
+        print(f"n={n}: class={g.classify():15s} score={g.viability_score()}/3 "
+              f"stable={g.has_stable_orbits} closed={g.has_closed_orbits} "
+              f"escape={g.has_escape_velocity}")
 
-    # Integrate orbit starting slightly outside circular orbit
-    initial = OrbitState(r=r0 * 1.3, rdot=0.0, theta=0.0, t=0.0)
-    states = integrate_orbit(sys, initial, dt=0.005, n_steps=20000)
+    # Verify Goldilocks uniqueness
+    goldilocks = goldilocks_search(100)
+    print(f"\nGoldilocks dimensions (n ≤ 100): {goldilocks}")
+    assert goldilocks == [3], f"Expected [3], got {goldilocks}"
 
-    # Find apsides
-    apsides = find_apsides(states)
-    print(f"Found {len(apsides)} apsides")
+    # Verify critical point
+    for L in [0.5, 1.0, 2.0]:
+        d1, d2 = verify_critical_point(L)
+        print(f"L={L}: V'(r₀) = {d1:.2e}, V''(r₀) = {d2:.4f} > 0 ✓")
+        assert abs(d1) < 1e-10, f"Critical point check failed: V'(r₀) = {d1}"
+        assert d2 > 0, f"Stability check failed: V''(r₀) = {d2}"
 
-    if len(apsides) > 2:
-        angles = compute_apsidal_angles(apsides)
-        mean_angle = sum(angles) / len(angles)
-        print(f"Mean apsidal angle: {mean_angle:.6f} (theory: {math.pi/math.sqrt(2):.6f})")
+    # Test equidistribution
+    alpha = 1.0 / math.sqrt(2)
+    fracs = compute_apsidal_positions(alpha, 10000)
+    eq = is_equidistributed(fracs)
+    print(f"\nEquidistribution of {{n/√2}} (N=10000): {eq}")
+    assert eq, "Equidistribution test failed"
 
-    # Dimensional analysis
-    print("\nDimensional Analysis:")
-    for r in dimensional_analysis():
-        print(f"  dim={r['dimension']}: stable={r['stable']}, "
-              f"goldilocks={r['goldilocks']}, ratio={r['apsidal_ratio']}")
+    print("\nAll tests passed ✓")
