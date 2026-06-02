@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "769664c2",
     "filename": "formal_foundations_connecting_polynomial_algebra.json",
     "pkg_num": 142,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.718975512195122,
     "title": "Polynomial Iterate Degree Theory and Algebraic Foundations of Chaos-Based Cryptography"
   },
   {
@@ -4413,8 +4413,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "formal_foundations_connecting_polynomial_algebra",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.718975512195122,
+      "quality": "substantial",
       "shape": "triangular_prism",
       "title": "Polynomial Iterate Degree Theory and Algebraic Foundations of Chaos-Based Cryptography"
     }
