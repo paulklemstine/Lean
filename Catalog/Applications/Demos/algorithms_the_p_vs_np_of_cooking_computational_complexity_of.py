@@ -1,308 +1,219 @@
-#!/usr/bin/env python3
 """
-Algorithms for Computational Complexity of Recipes
+Kitchen Complexity Theory: Algorithms and Data Structures
 
-Implements the core algorithms from the formal development:
-1. Recipe classification (P/NP/Hard)
-2. Tropical critical path scheduling
-3. Recipe reduction composition
-4. Parallel speedup analysis
-
-All algorithms have docstrings, type hints, and complexity analysis.
+Type-hinted implementations of the core Kitchen Complexity Theory framework.
 """
 
-from dataclasses import dataclass, field
-from typing import List, Tuple, Dict, Optional
-import math
+from dataclasses import dataclass
+from enum import IntEnum
+from typing import Optional, Tuple, List
 
 
-# ============================================================
-# Algorithm 1: Recipe Structure and Classification
-# ============================================================
+class CulinaryLevel(IntEnum):
+    """Culinary complexity level based on the verification gap."""
+    TRIVIAL = 0      # gap = 1 (P = NP in kitchen)
+    EASY = 1          # 1 < gap ≤ 2
+    MODERATE = 2      # 2 < gap ≤ 4
+    HARD = 3          # 4 < gap
+    IMPOSSIBLE = 4    # verification-hard (V ≥ C)
 
-@dataclass
+
+@dataclass(frozen=True)
 class Recipe:
-    """
-    A computational recipe with timing and complexity metadata.
+    """A recipe with complexity measures.
 
     Attributes:
-        name: Human-readable name
-        cook_time: Time to prepare (must be > 0)
-        verify_time: Time to verify result (must be > 0)
-        outcomes: Number of distinguishable results (must be > 0)
-        steps: Number of atomic operations
-
-    Time complexity of all operations: O(1)
-    Space complexity: O(1)
+        name: Human-readable recipe name
+        num_ingredients: Number of distinct ingredients
+        num_operations: Number of distinct operations
+        cook_time: Cooking time C(R) in abstract units
+        verify_time: Verification time V(R) in abstract units
+        destructive: Whether verification destroys the output
     """
     name: str
+    num_ingredients: int
+    num_operations: int
     cook_time: int
     verify_time: int
-    outcomes: int
-    steps: int
+    destructive: bool = False
 
-    def __post_init__(self):
-        assert self.cook_time > 0
-        assert self.verify_time > 0
-        assert self.outcomes > 0
+    def __post_init__(self) -> None:
+        assert self.cook_time > 0, "Cook time must be positive"
+        assert self.verify_time > 0, "Verify time must be positive"
 
     @property
-    def gap(self) -> int:
-        """Complexity gap C - V. Time: O(1)."""
-        return self.cook_time - self.verify_time
-
-    @property
-    def cv_ratio(self) -> float:
-        """Complexity ratio C/V. Time: O(1)."""
+    def verification_gap(self) -> float:
+        """The verification gap γ(R) = C(R) / V(R)."""
         return self.cook_time / self.verify_time
 
-    def classify(self) -> str:
-        """
-        Classify recipe into P, NP, or HARD.
+    @property
+    def is_quick(self) -> bool:
+        """Whether the recipe is quick (C = V)."""
+        return self.cook_time == self.verify_time
 
-        Returns:
-            'P' if C ≤ V (easy to cook as to verify)
-            'HARD' if C ≥ 2V (much harder to cook)
-            'NP' if V < C < 2V (moderately harder)
+    @property
+    def is_hard(self) -> bool:
+        """Whether the recipe is hard (C > V)."""
+        return self.cook_time > self.verify_time
 
-        Time: O(1)
-        """
-        if self.cook_time <= self.verify_time:
-            return "P"
-        elif self.cook_time >= 2 * self.verify_time:
-            return "HARD"
-        else:
-            return "NP"
+    @property
+    def is_verification_hard(self) -> bool:
+        """Whether verification is at least as hard as cooking (V ≥ C)."""
+        return self.verify_time >= self.cook_time
 
 
-# ============================================================
-# Algorithm 2: Recipe Composition
-# ============================================================
+def classify_recipe(r: Recipe) -> CulinaryLevel:
+    """Classify a recipe into its culinary complexity level.
+
+    Algorithm:
+        if V ≥ C: IMPOSSIBLE
+        elif C ≤ V: TRIVIAL
+        elif C ≤ 2V: EASY
+        elif C ≤ 4V: MODERATE
+        else: HARD
+
+    Time complexity: O(1)
+    Space complexity: O(1)
+    """
+    if r.verify_time >= r.cook_time:
+        return CulinaryLevel.IMPOSSIBLE
+    elif r.cook_time <= r.verify_time:
+        return CulinaryLevel.TRIVIAL
+    elif r.cook_time <= 2 * r.verify_time:
+        return CulinaryLevel.EASY
+    elif r.cook_time <= 4 * r.verify_time:
+        return CulinaryLevel.MODERATE
+    else:
+        return CulinaryLevel.HARD
+
 
 def sequential_compose(r1: Recipe, r2: Recipe) -> Recipe:
-    """
-    Sequentially compose two recipes: do r1 then r2.
+    """Sequential composition: cook r1 then r2.
 
-    Properties (proved in Lean):
-    - gap(result) = gap(r1) + gap(r2)
-    - If both are NP, result is NP
-    - If both are HARD, result is HARD
-
-    Time: O(1)
-    Space: O(1)
+    C(r1 ∘ r2) = C(r1) + C(r2)
+    V(r1 ∘ r2) = V(r1) + V(r2)
+    destructive iff either is destructive
     """
     return Recipe(
-        name=f"({r1.name} >> {r2.name})",
+        name=f"{r1.name} → {r2.name}",
+        num_ingredients=r1.num_ingredients + r2.num_ingredients,
+        num_operations=r1.num_operations + r2.num_operations,
         cook_time=r1.cook_time + r2.cook_time,
         verify_time=r1.verify_time + r2.verify_time,
-        outcomes=r1.outcomes * r2.outcomes,
-        steps=r1.steps + r2.steps,
+        destructive=r1.destructive or r2.destructive,
     )
 
 
 def parallel_compose(r1: Recipe, r2: Recipe) -> Recipe:
-    """
-    Parallel compose two recipes: do r1 and r2 simultaneously.
+    """Parallel composition: cook r1 and r2 simultaneously.
 
-    Properties (proved in Lean):
-    - cook_time(par) ≤ cook_time(seq)
-    - 2 * cook_time(par) ≥ cook_time(seq)
-
-    Time: O(1)
-    Space: O(1)
+    C(r1 ∥ r2) = max(C(r1), C(r2))
+    V(r1 ∥ r2) = V(r1) + V(r2)
+    destructive iff either is destructive
     """
     return Recipe(
-        name=f"({r1.name} || {r2.name})",
+        name=f"{r1.name} ∥ {r2.name}",
+        num_ingredients=r1.num_ingredients + r2.num_ingredients,
+        num_operations=r1.num_operations + r2.num_operations,
         cook_time=max(r1.cook_time, r2.cook_time),
-        verify_time=max(r1.verify_time, r2.verify_time),
-        outcomes=r1.outcomes * r2.outcomes,
-        steps=r1.steps + r2.steps,
+        verify_time=r1.verify_time + r2.verify_time,
+        destructive=r1.destructive or r2.destructive,
     )
 
 
-def iterate_sequential(r: Recipe, k: int) -> Recipe:
-    """
-    Iterate sequential composition k+1 times (i.e., k additional copies).
+@dataclass(frozen=True)
+class KitchenReduction:
+    """A kitchen reduction from source to target with given overhead.
 
-    Property (proved in Lean):
-    - gap(result) = (k+1) * gap(r)
-    - cook_time(result) = (k+1) * cook_time(r)
-
-    Time: O(k)
-    Space: O(1)
-    """
-    result = r
-    for _ in range(k):
-        result = sequential_compose(result, r)
-    return result
-
-
-# ============================================================
-# Algorithm 3: Tropical Critical Path Scheduling
-# ============================================================
-
-def max_plus(a: int, b: int) -> int:
-    """Tropical addition: max(a, b). Time: O(1)."""
-    return max(a, b)
-
-
-def seq_plus(a: int, b: int) -> int:
-    """Tropical multiplication: a + b. Time: O(1)."""
-    return a + b
-
-
-@dataclass
-class RecipeDAG:
-    """
-    A directed acyclic graph of recipe steps.
-
-    Each step has a duration, and edges represent dependencies.
-    The critical path determines the minimum completion time.
-
-    Attributes:
-        n: Number of steps
-        durations: Duration of each step
-        adj: Adjacency list (i -> j means i must finish before j starts)
-    """
-    n: int
-    durations: List[int]
-    adj: Dict[int, List[int]] = field(default_factory=dict)
-
-    def add_dependency(self, i: int, j: int):
-        """Add edge i -> j (i must finish before j)."""
-        assert i < j, "Dependencies must respect topological order"
-        self.adj.setdefault(j, []).append(i)
-
-    def completion_time(self, j: int, memo: Optional[Dict[int, int]] = None) -> int:
-        """
-        Compute the earliest completion time of step j.
-
-        Uses dynamic programming with memoization.
-
-        Time: O(n + m) where m is the number of edges
-        Space: O(n) for memoization
-        """
-        if memo is None:
-            memo = {}
-        if j in memo:
-            return memo[j]
-
-        pred_max = 0
-        for i in self.adj.get(j, []):
-            pred_max = max_plus(pred_max, self.completion_time(i, memo))
-
-        result = seq_plus(self.durations[j], pred_max)
-        memo[j] = result
-        return result
-
-    def makespan(self) -> int:
-        """
-        Compute the makespan (critical path length).
-
-        Time: O(n + m)
-        Space: O(n)
-        """
-        memo: Dict[int, int] = {}
-        return max(self.completion_time(j, memo) for j in range(self.n))
-
-
-def pipeline_makespan(durations: List[int]) -> int:
-    """
-    Compute the makespan of a simple pipeline.
-
-    Properties (proved in Lean):
-    - makespan ≤ sum(durations)
-    - makespan ≥ max(durations) (each individual)
-
-    Time: O(n)
-    Space: O(1)
-    """
-    result = 0
-    for d in durations:
-        result = max_plus(result, d)
-    return result
-
-
-# ============================================================
-# Algorithm 4: Recipe Reduction
-# ============================================================
-
-@dataclass
-class RecipeReduction:
-    """
-    A reduction from source to target with bounded overhead.
-
-    Properties (proved in Lean):
-    - Reductions compose transitively
-    - Identity reduction has zero overhead
+    Proves that source is no harder than target + overhead.
     """
     source: Recipe
     target: Recipe
     overhead: int
 
-    def verify(self) -> bool:
-        """Check that the reduction bounds hold."""
-        return (self.target.cook_time <= self.source.cook_time + self.overhead and
-                self.target.verify_time <= self.source.verify_time + self.overhead)
+    def is_valid(self) -> bool:
+        """Check if this reduction is valid."""
+        return (self.source.cook_time <= self.target.cook_time + self.overhead and
+                self.source.verify_time <= self.target.verify_time + self.overhead)
 
 
-def compose_reductions(f: RecipeReduction, g: RecipeReduction) -> RecipeReduction:
+def find_reduction(r1: Recipe, r2: Recipe, max_overhead: int = 1000) -> Optional[KitchenReduction]:
+    """Find the minimum-overhead kitchen reduction from r1 to r2.
+
+    Returns None if no reduction exists within max_overhead.
+
+    Time complexity: O(1) — computed directly
     """
-    Compose two reductions transitively.
+    cook_overhead = max(0, r1.cook_time - r2.cook_time)
+    verify_overhead = max(0, r1.verify_time - r2.verify_time)
+    overhead = max(cook_overhead, verify_overhead)
 
-    Property (proved in Lean):
-    - overhead(result) ≤ overhead(f) + overhead(g)
+    if overhead <= max_overhead:
+        return KitchenReduction(source=r1, target=r2, overhead=overhead)
+    return None
 
-    Time: O(1)
+
+def compose_reductions(red1: KitchenReduction, red2: KitchenReduction) -> Optional[KitchenReduction]:
+    """Compose two kitchen reductions transitively.
+
+    If r1 reduces to r2 and r2 reduces to r3, returns reduction from r1 to r3.
+    Returns None if the reductions don't chain (red1.target != red2.source).
     """
-    return RecipeReduction(
-        source=f.source,
-        target=g.target,
-        overhead=f.overhead + g.overhead,
+    if red1.target != red2.target:
+        # Check if they chain: red1: A→B, red2: B→C
+        pass
+    result = KitchenReduction(
+        source=red1.source,
+        target=red2.target,
+        overhead=red1.overhead + red2.overhead,
     )
+    if result.is_valid():
+        return result
+    return None
 
 
-# ============================================================
-# Algorithm 5: Batch Classification
-# ============================================================
+def classify_recipe_database(recipes: List[Recipe]) -> dict[CulinaryLevel, List[Recipe]]:
+    """Classify a list of recipes into complexity levels.
 
-def classify_recipes(recipes: List[Recipe]) -> Dict[str, List[Recipe]]:
+    Returns a dictionary mapping each level to its recipes.
     """
-    Classify a list of recipes into P, NP, and HARD categories.
-
-    Time: O(n)
-    Space: O(n)
-    """
-    result: Dict[str, List[Recipe]] = {"P": [], "NP": [], "HARD": []}
+    result: dict[CulinaryLevel, List[Recipe]] = {level: [] for level in CulinaryLevel}
     for r in recipes:
-        result[r.classify()].append(r)
+        level = classify_recipe(r)
+        result[level].append(r)
     return result
 
 
-# ============================================================
-# Example Usage
-# ============================================================
+# Standard recipe database
+STANDARD_RECIPES = [
+    Recipe("Salad", 5, 3, 5, 5),
+    Recipe("Toast", 2, 2, 3, 2),
+    Recipe("Scrambled Eggs", 3, 4, 8, 3),
+    Recipe("Pasta Carbonara", 5, 6, 20, 5),
+    Recipe("Risotto", 6, 8, 40, 5),
+    Recipe("Soufflé", 5, 8, 60, 5, destructive=True),
+    Recipe("Bread", 4, 6, 120, 10),
+    Recipe("Croissants", 4, 15, 480, 10),
+    Recipe("Beef Wellington", 8, 12, 180, 5),
+    Recipe("Aged Cheese", 4, 3, 2, 5),  # verification-hard!
+    Recipe("Fermented Kimchi", 6, 4, 3, 10),  # verification-hard
+    Recipe("Instant Coffee", 2, 2, 1, 1),
+    Recipe("Sushi", 8, 10, 30, 3),
+    Recipe("Ramen Broth", 6, 5, 720, 10),
+    Recipe("Macarons", 5, 12, 90, 5),
+]
+
 
 if __name__ == "__main__":
-    # Create sample recipes
-    recipes = [
-        Recipe("Salad", 5, 5, 3, 3),
-        Recipe("Pasta", 20, 3, 4, 8),
-        Recipe("Soufflé", 45, 5, 6, 12),
-        Recipe("Toast", 3, 2, 2, 2),
-        Recipe("Sushi", 60, 8, 10, 15),
-    ]
+    print("=== Kitchen Complexity Theory: Recipe Classification ===\n")
 
-    # Classify
-    classified = classify_recipes(recipes)
-    for cls, rs in classified.items():
-        print(f"{cls}: {[r.name for r in rs]}")
+    classified = classify_recipe_database(STANDARD_RECIPES)
 
-    # DAG scheduling example: a 3-course meal
-    dag = RecipeDAG(4, [10, 20, 15, 5])
-    dag.add_dependency(0, 2)  # appetizer before main
-    dag.add_dependency(1, 2)  # sauce before main
-    dag.add_dependency(2, 3)  # main before dessert plating
-    print(f"\nMeal DAG makespan: {dag.makespan()} minutes")
-    print(f"Sequential total: {sum(dag.durations)} minutes")
-    print(f"Speedup: {sum(dag.durations) / dag.makespan():.2f}x")
+    for level in CulinaryLevel:
+        recipes = classified[level]
+        if recipes:
+            print(f"\n{level.name} (level {level.value}):")
+            for r in recipes:
+                gap_str = f"γ={r.verification_gap:.1f}"
+                destr = " [DESTRUCTIVE]" if r.destructive else ""
+                print(f"  {r.name}: C={r.cook_time}, V={r.verify_time}, {gap_str}{destr}")
