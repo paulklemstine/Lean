@@ -1,464 +1,394 @@
 #!/usr/bin/env python3
 """
-Matroid Minor Theory — Demonstration Script
+Matroid Minors and the Robertson-Seymour Conjecture: Demonstrations
 
-Demonstrates key concepts from matroid minor theory:
-1. Matroid construction and independence testing
-2. Deletion and contraction operations
-3. Minor relation checking
-4. Excluded minor detection
-5. Antichain enumeration
+This script demonstrates key concepts from matroid minor theory,
+including matroid representations, minor operations, and forbidden
+minor checking.
 """
+import itertools
+from typing import List, Set, FrozenSet, Tuple, Optional, Dict
 
-from itertools import combinations
-from typing import FrozenSet, Set, Optional
 
+# ── Matroid representation ──────────────────────────────────────────
 
 class Matroid:
-    """A finite matroid defined by its ground set and collection of independent sets."""
+    """A matroid defined by its ground set and independent sets."""
 
-    def __init__(self, ground_set: Set[int], independent_sets: Set[FrozenSet[int]]):
-        self.E = frozenset(ground_set)
-        self.indep = {frozenset(s) for s in independent_sets}
-        # Validate matroid axioms
-        assert frozenset() in self.indep, "Empty set must be independent"
-        for I in self.indep:
-            assert I <= self.E, f"Independent set {I} not subset of ground set"
-            for x in I:
-                assert I - {x} in self.indep, f"Hereditary property violated for {I}"
+    def __init__(self, ground: Set[int], indep: Set[FrozenSet[int]]):
+        self.ground = frozenset(ground)
+        self.indep = frozenset(indep)
 
-    def is_independent(self, S: Set[int]) -> bool:
-        return frozenset(S) in self.indep
+    def rank(self, S: FrozenSet[int]) -> int:
+        """Rank of a subset: size of largest independent subset."""
+        best = 0
+        for r in range(len(S) + 1):
+            for combo in itertools.combinations(S, r):
+                if frozenset(combo) in self.indep:
+                    best = max(best, r)
+        return best
 
-    def rank(self, S: Optional[Set[int]] = None) -> int:
-        """Rank of a subset (or the whole matroid if S is None)."""
-        if S is None:
-            S = self.E
-        return max((len(I) for I in self.indep if I <= frozenset(S)), default=0)
-
-    def bases(self) -> Set[FrozenSet[int]]:
-        """All bases (maximal independent sets)."""
-        r = self.rank()
-        return {I for I in self.indep if len(I) == r}
-
-    def circuits(self) -> Set[FrozenSet[int]]:
-        """All circuits (minimal dependent sets)."""
-        result = set()
-        for size in range(1, len(self.E) + 1):
-            for S in combinations(self.E, size):
-                S = frozenset(S)
-                if S not in self.indep:
-                    # Check minimality
-                    if all(S - {x} in self.indep for x in S):
-                        result.add(S)
-        return result
+    def total_rank(self) -> int:
+        return self.rank(self.ground)
 
     def delete(self, D: Set[int]) -> 'Matroid':
         """Delete elements D from the matroid."""
-        new_E = self.E - frozenset(D)
-        new_indep = {I for I in self.indep if I <= new_E}
-        return Matroid(new_E, new_indep)
+        new_ground = self.ground - D
+        new_indep = {I for I in self.indep if I <= new_ground}
+        return Matroid(new_ground, new_indep)
 
     def contract(self, C: Set[int]) -> 'Matroid':
         """Contract elements C from the matroid."""
-        C = frozenset(C) & self.E
         # Find a maximal independent subset of C
+        C_fs = frozenset(C) & self.ground
         max_indep_C = frozenset()
-        for size in range(len(C), -1, -1):
-            for S in combinations(C, size):
-                S = frozenset(S)
-                if S in self.indep:
-                    max_indep_C = S
-                    break
-            if max_indep_C:
-                break
-
-        new_E = self.E - C
+        for r in range(len(C_fs) + 1):
+            for combo in itertools.combinations(C_fs, r):
+                fc = frozenset(combo)
+                if fc in self.indep and len(fc) > len(max_indep_C):
+                    max_indep_C = fc
+        new_ground = self.ground - C_fs
         new_indep = set()
-        for I_sub in self.indep:
-            if I_sub >= max_indep_C:
-                remainder = I_sub - C
-                if remainder <= new_E:
-                    new_indep.add(remainder)
-        # Ensure hereditary property
-        to_add = set()
-        for I in new_indep:
-            for size in range(len(I)):
-                for S in combinations(I, size):
-                    to_add.add(frozenset(S))
-        new_indep |= to_add
-        return Matroid(new_E, new_indep)
+        for I in self.indep:
+            if I <= new_ground | max_indep_C and max_indep_C <= I | (I & new_ground):
+                new_indep.add(I & new_ground)
+        # More precise: I is independent in contraction iff I ∪ max_indep_C is independent
+        new_indep = set()
+        for sub_size in range(len(new_ground) + 1):
+            for combo in itertools.combinations(new_ground, sub_size):
+                fc = frozenset(combo)
+                if fc | max_indep_C in self.indep:
+                    new_indep.add(fc)
+        return Matroid(new_ground, new_indep)
 
     def dual(self) -> 'Matroid':
-        """The dual matroid M*."""
-        bases = self.bases()
-        if not bases:
-            # Every subset is independent in the dual
-            new_indep = {frozenset(S) for size in range(len(self.E) + 1)
-                         for S in combinations(self.E, size)}
-            return Matroid(self.E, new_indep)
-
-        dual_bases = {self.E - B for B in bases}
-        # Independent sets are subsets of bases
+        """Dual matroid: bases of dual = complements of bases of original."""
+        bases = {I for I in self.indep
+                 if not any(I < J for J in self.indep)}
+        dual_bases = {self.ground - B for B in bases}
+        # Independent sets of dual = subsets of dual bases
         dual_indep = set()
         for B in dual_bases:
-            for size in range(len(B) + 1):
-                for S in combinations(B, size):
-                    dual_indep.add(frozenset(S))
-        return Matroid(self.E, dual_indep)
+            for r in range(len(B) + 1):
+                for combo in itertools.combinations(B, r):
+                    dual_indep.add(frozenset(combo))
+        return Matroid(self.ground, dual_indep)
 
-    def is_isomorphic_to(self, other: 'Matroid') -> bool:
-        """Check if two matroids are isomorphic (brute force for small matroids)."""
-        if len(self.E) != len(other.E):
-            return False
-        if self.rank() != other.rank():
-            return False
-        from itertools import permutations
-        E1 = sorted(self.E)
-        E2 = sorted(other.E)
-        for perm in permutations(E2):
-            mapping = dict(zip(E1, perm))
-            valid = True
-            for I in self.indep:
-                mapped = frozenset(mapping[x] for x in I)
-                if mapped not in other.indep:
-                    valid = False
-                    break
-            if not valid:
-                continue
-            for I in other.indep:
-                inv_mapped = frozenset(
-                    E1[perm.index(x)] if x in perm else x for x in I
-                )
-                # Actually check the inverse
-                inv_mapping = {v: k for k, v in mapping.items()}
-                inv_mapped = frozenset(inv_mapping[x] for x in I)
-                if inv_mapped not in self.indep:
-                    valid = False
-                    break
-            if valid:
-                return True
+    def is_minor_of(self, other: 'Matroid') -> bool:
+        """Check if self is a minor of other (brute force for small matroids)."""
+        # Try all possible C, D subsets
+        other_ground = list(other.ground)
+        n = len(other_ground)
+        for mask_c in range(1 << n):
+            for mask_d in range(1 << n):
+                if mask_c & mask_d:
+                    continue  # C and D must be disjoint for clean minor
+                C = {other_ground[i] for i in range(n) if mask_c & (1 << i)}
+                D = {other_ground[i] for i in range(n) if mask_d & (1 << i)}
+                minor = other.contract(C).delete(D)
+                if minor.ground == self.ground and minor.indep == self.indep:
+                    return True
         return False
+
+    def __eq__(self, other):
+        return self.ground == other.ground and self.indep == other.indep
+
+    def __hash__(self):
+        return hash((self.ground, self.indep))
 
     def __repr__(self):
-        return f"Matroid(E={set(self.E)}, rank={self.rank()})"
+        return f"Matroid(|E|={len(self.ground)}, rank={self.total_rank()})"
 
 
-def uniform_matroid(k: int, n: int) -> Matroid:
-    """The uniform matroid U_{k,n}: all subsets of size ≤ k are independent."""
-    E = set(range(n))
+# ── Standard matroid constructions ──────────────────────────────────
+
+def uniform_matroid(n: int, r: int) -> Matroid:
+    """U(r,n): uniform matroid of rank r on n elements."""
+    ground = set(range(n))
     indep = set()
-    for size in range(min(k, n) + 1):
-        for S in combinations(E, size):
-            indep.add(frozenset(S))
-    return Matroid(E, indep)
+    for k in range(r + 1):
+        for combo in itertools.combinations(range(n), k):
+            indep.add(frozenset(combo))
+    return Matroid(ground, indep)
 
 
-def is_minor(N: Matroid, M: Matroid) -> bool:
-    """Check if N is a minor of M (brute force for small matroids)."""
-    if len(N.E) > len(M.E):
-        return False
-    E_list = sorted(M.E)
-    target_size = len(M.E) - len(N.E)
-    for total_remove in range(target_size + 1):
-        contract_size = total_remove
-        delete_size = target_size - contract_size
-        for C in combinations(E_list, contract_size):
-            remaining = [x for x in E_list if x not in C]
-            for D in combinations(remaining, delete_size):
-                minor = M.contract(set(C)).delete(set(D))
-                if minor.is_isomorphic_to(N):
-                    return True
-    return False
+def graphic_matroid(n_vertices: int, edges: List[tuple]) -> Matroid:
+    """Graphic matroid: independent sets = forests."""
+    ground = set(range(len(edges)))
+    indep = set()
+    for k in range(len(edges) + 1):
+        for combo in itertools.combinations(range(len(edges)), k):
+            # Check if the selected edges form a forest
+            edge_set = [edges[i] for i in combo]
+            if is_forest(n_vertices, edge_set):
+                indep.add(frozenset(combo))
+    return Matroid(ground, indep)
 
 
-def find_antichains(matroids: list) -> list:
-    """Find all maximal antichains in the minor order."""
-    # Simple: find elements not comparable to any other
-    antichain = []
-    for i, M in enumerate(matroids):
-        is_dominated = False
-        for j, N in enumerate(matroids):
-            if i != j and is_minor(M, N) and not is_minor(N, M):
-                is_dominated = True
-                break
-        if not is_dominated:
-            antichain.append(M)
-    return antichain
-
-
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-if __name__ == "__main__":
-    print("=" * 60)
-    print("MATROID MINOR THEORY — DEMONSTRATIONS")
-    print("=" * 60)
-
-    # 1. Uniform matroids
-    print("\n--- 1. Uniform Matroids ---")
-    U24 = uniform_matroid(2, 4)
-    U23 = uniform_matroid(2, 3)
-    U13 = uniform_matroid(1, 3)
-    print(f"U(2,4) = {U24}")
-    print(f"U(2,3) = {U23}")
-    print(f"U(1,3) = {U13}")
-    print(f"Bases of U(2,4): {[set(b) for b in U24.bases()]}")
-    print(f"Circuits of U(2,4): {[set(c) for c in U24.circuits()]}")
-
-    # 2. Deletion and contraction
-    print("\n--- 2. Deletion and Contraction ---")
-    M = uniform_matroid(2, 4)
-    M_del = M.delete({3})
-    M_con = M.contract({3})
-    print(f"U(2,4) \\ {{3}} = {M_del}")
-    print(f"  Rank: {M_del.rank()}, |E|: {len(M_del.E)}")
-    print(f"U(2,4) / {{3}} = {M_con}")
-    print(f"  Rank: {M_con.rank()}, |E|: {len(M_con.E)}")
-
-    # 3. Duality
-    print("\n--- 3. Duality ---")
-    M = uniform_matroid(2, 4)
-    Md = M.dual()
-    print(f"U(2,4)* = {Md}")
-    print(f"U(2,4)* has rank {Md.rank()} (should be 2 = 4-2)")
-    print(f"Bases of U(2,4)*: {[set(b) for b in Md.bases()]}")
-    Mdd = Md.dual()
-    print(f"U(2,4)** isomorphic to U(2,4): {Mdd.is_isomorphic_to(M)}")
-
-    # 4. Minor relation
-    print("\n--- 4. Minor Relation ---")
-    print(f"U(2,3) ≤m U(2,4): {is_minor(U23, U24)}")
-    print(f"U(1,3) ≤m U(2,4): {is_minor(U13, U24)}")
-
-    # 5. Excluded minor for binary representability
-    print("\n--- 5. Excluded Minor: U(2,4) for GF(2) ---")
-    print(f"U(2,4) is the excluded minor for binary representability.")
-    print(f"U(2,4) has {len(U24.E)} elements, rank {U24.rank()}")
-    print(f"Deleting any element gives U(2,3), which IS binary-representable.")
-    for e in U24.E:
-        minor = U24.delete({e})
-        print(f"  U(2,4) \\ {{{e}}} = {minor}, rank = {minor.rank()}")
-
-    # 6. Antichain example
-    print("\n--- 6. Antichain in Minor Order ---")
-    small_matroids = [uniform_matroid(k, n) for n in range(2, 5) for k in range(n + 1)]
-    print(f"Generated {len(small_matroids)} uniform matroids")
-    print("Checking minor relations (this may take a moment)...")
-
-    # 7. Chain length bound
-    print("\n--- 7. Minor Chain Length Bound ---")
-    M4 = uniform_matroid(2, 4)
-    M3 = uniform_matroid(2, 3)
-    M2 = uniform_matroid(2, 2)
-    M1 = uniform_matroid(1, 1)
-    print(f"Chain: {M1} <m {M2} <m {M3} <m {M4}")
-    print(f"Chain length: 3, |E| of largest: {len(M4.E)} = 4")
-    print(f"Bound verified: 3 ≤ 4 ✓")
-
-    print("\n" + "=" * 60)
-    print("All demonstrations completed successfully.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Excluded Minors for Representability
-
-Shows the known excluded minors for representability over various finite fields,
-illustrating how the complexity grows with field size.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-
-def main():
-    # Known data about excluded minors for F_q-representability
-    fields = {
-        'GF(2)': {
-            'q': 2,
-            'excluded': ['U(2,4)'],
-            'count': 1,
-            'status': 'Complete (Tutte 1958)'
-        },
-        'GF(3)': {
-            'q': 3,
-            'excluded': ['U(2,5)', 'U(3,5)', 'F₇', 'F₇*'],
-            'count': 4,
-            'status': 'Complete (Bixby, Seymour 1979)'
-        },
-        'GF(4)': {
-            'q': 4,
-            'excluded': ['U(2,6)', 'U(4,6)', 'P₆', 'F₇⁻', '(F₇⁻)*', 'P₈', 'P₈"', '+7 more'],
-            'count': 7,  # known so far, not complete
-            'status': 'Partial (Geelen et al.)'
-        },
-        'GF(5)': {
-            'q': 5,
-            'excluded': ['U(2,7)', 'U(5,7)', '...many more...'],
-            'count': 564,  # known lower bound
-            'status': 'Partial (>564 known)'
-        },
-    }
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: Bar chart of excluded minor counts
-    ax1 = axes[0]
-    names = list(fields.keys())
-    counts = [fields[f]['count'] for f in names]
-    colors = ['#2ecc71', '#3498db', '#e74c3c', '#9b59b6']
-
-    bars = ax1.bar(names, counts, color=colors, edgecolor='black', linewidth=1.5)
-    ax1.set_ylabel('Number of Excluded Minors', fontsize=12)
-    ax1.set_xlabel('Field', fontsize=12)
-    ax1.set_title('Growth of Excluded Minor Count\nwith Field Size', fontsize=14)
-    ax1.set_yscale('log')
-
-    for bar, count, name in zip(bars, counts, names):
-        status = fields[name]['status']
-        ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() * 1.1,
-                 f'{count}', ha='center', va='bottom', fontweight='bold', fontsize=12)
-
-    # Add status annotations
-    for i, name in enumerate(names):
-        status = fields[name]['status']
-        ax1.text(i, 0.5, status, ha='center', va='bottom', fontsize=7,
-                 rotation=0, color='gray')
-
-    # Right: Conceptual diagram of the Robertson-Seymour structure
-    ax2 = axes[1]
-    ax2.set_xlim(0, 10)
-    ax2.set_ylim(0, 10)
-    ax2.set_aspect('equal')
-    ax2.axis('off')
-    ax2.set_title('Robertson-Seymour Structure\nfor Representable Matroids', fontsize=14)
-
-    # Draw nested sets
-    colors_nested = ['#e8f8f5', '#d5f5e3', '#fadbd8', '#f5eef8']
-    labels = ['All Matroids\n(NOT WQO)', 'GF(5)-rep\n(WQO conjectured)',
-              'GF(3)-rep\n(WQO proved)', 'GF(2)-rep = Graphs\n(Robertson-Seymour)']
-    radii = [4.5, 3.5, 2.5, 1.5]
-    center = (5, 5)
-
-    for r, color, label in zip(radii, colors_nested, labels):
-        circle = plt.Circle(center, r, facecolor=color, edgecolor='black',
-                            linewidth=2, alpha=0.7)
-        ax2.add_patch(circle)
-        y_offset = r - 0.4 if r > 2 else 0
-        ax2.text(center[0], center[1] + y_offset, label,
-                 ha='center', va='center', fontsize=8, fontweight='bold')
-
-    # Add "infinite antichain" marker outside
-    ax2.annotate('∃ infinite\nantichain', xy=(9, 9), fontsize=9,
-                 ha='center', color='red', fontweight='bold',
-                 bbox=dict(boxstyle='round,pad=0.3', facecolor='#ffcccc'))
-    ax2.annotate('', xy=(8, 7.5), xytext=(9, 8.7),
-                 arrowprops=dict(arrowstyle='->', color='red', lw=2))
-
-    plt.tight_layout()
-    plt.savefig('excluded_minors.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: excluded_minors.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Minor Lattice of Small Uniform Matroids
-
-Displays the Hasse diagram of the minor partial order on uniform matroids
-U(k,n) for small n, showing which matroids are minors of which.
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from itertools import combinations
-
-
-def uniform_rank_function(k, n, S):
-    """Rank of subset S in U(k,n)."""
-    return min(k, len(S))
-
-
-def is_minor_uniform(k1, n1, k2, n2):
-    """Check if U(k1,n1) is a minor of U(k2,n2).
-
-    U(k1,n1) ≤m U(k2,n2) iff k1 ≤ k2 and n1-k1 ≤ n2-k2.
-    (Need enough elements to delete and enough rank to contract.)
-    """
-    return k1 <= k2 and (n1 - k1) <= (n2 - k2)
-
-
-def is_cover(k1, n1, k2, n2, all_matroids):
-    """Check if U(k1,n1) is covered by U(k2,n2) in the minor order.
-
-    i.e., k1,n1 ≤m k2,n2 and there's no k3,n3 strictly between them.
-    """
-    if not is_minor_uniform(k1, n1, k2, n2):
-        return False
-    if (k1, n1) == (k2, n2):
-        return False
-    for k3, n3 in all_matroids:
-        if (k3, n3) != (k1, n1) and (k3, n3) != (k2, n2):
-            if is_minor_uniform(k1, n1, k3, n3) and is_minor_uniform(k3, n3, k2, n2):
-                return False
+def is_forest(n: int, edges: list) -> bool:
+    """Check if edges form a forest (acyclic graph)."""
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return False
+        parent[a] = b
+        return True
+    for u, v in edges:
+        if not union(u, v):
+            return False
     return True
 
 
+# ── Demonstrations ──────────────────────────────────────────────────
+
+def demo_uniform_matroids():
+    """Demonstrate uniform matroids and their minor operations."""
+    print("=" * 60)
+    print("DEMO 1: Uniform Matroids and Minors")
+    print("=" * 60)
+
+    U24 = uniform_matroid(4, 2)
+    print(f"\nU(2,4) = {U24}")
+    print(f"  Ground set: {set(U24.ground)}")
+    print(f"  Rank: {U24.total_rank()}")
+    print(f"  # independent sets: {len(U24.indep)}")
+
+    # Delete element 3
+    U24_d3 = U24.delete({3})
+    print(f"\nU(2,4) \\ {{3}} = {U24_d3}")
+    print(f"  Ground set: {set(U24_d3.ground)}")
+    print(f"  Rank: {U24_d3.total_rank()}")
+
+    # Contract element 0
+    U24_c0 = U24.contract({0})
+    print(f"\nU(2,4) / {{0}} = {U24_c0}")
+    print(f"  Ground set: {set(U24_c0.ground)}")
+    print(f"  Rank: {U24_c0.total_rank()}")
+
+    # Check: U(2,3) is a minor of U(2,4)
+    U23 = uniform_matroid(3, 2)
+    # U(2,3) on {0,1,2} should be isomorphic to U24 \ {3}
+    print(f"\nU(2,3) ground = {set(U23.ground)}")
+    print(f"U(2,4)\\{{3}} ground = {set(U24_d3.ground)}")
+    print(f"U(2,3) == U(2,4)\\{{3}}: {U23 == U24_d3}")
+
+
+def demo_graphic_matroids():
+    """Demonstrate graphic matroids (connection to Robertson-Seymour)."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Graphic Matroids (Graph Minors)")
+    print("=" * 60)
+
+    # K4 complete graph
+    edges_K4 = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+    M_K4 = graphic_matroid(4, edges_K4)
+    print(f"\nGraphic matroid of K4: {M_K4}")
+    print(f"  # edges (ground set size): {len(M_K4.ground)}")
+    print(f"  Rank: {M_K4.total_rank()}")
+
+    # K3 (triangle)
+    edges_K3 = [(0,1), (0,2), (1,2)]
+    M_K3 = graphic_matroid(3, edges_K3)
+    print(f"\nGraphic matroid of K3: {M_K3}")
+    print(f"  Rank: {M_K3.total_rank()}")
+
+    # Delete edge 5 (edge (2,3)) from K4
+    M_K4_d = M_K4.delete({5})
+    print(f"\nM(K4) \\ {{edge(2,3)}}: {M_K4_d}")
+    print(f"  Rank: {M_K4_d.total_rank()}")
+
+
+def demo_duality():
+    """Demonstrate matroid duality and the dual-minor theorem."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Matroid Duality")
+    print("=" * 60)
+
+    U24 = uniform_matroid(4, 2)
+    U24_dual = U24.dual()
+    print(f"\nU(2,4): rank = {U24.total_rank()}")
+    print(f"U(2,4)*: rank = {U24_dual.total_rank()}")
+    print(f"U(2,4)* should be U(2,4) (self-dual): {U24 == U24_dual}")
+
+    U13 = uniform_matroid(3, 1)
+    U13_dual = U13.dual()
+    print(f"\nU(1,3): rank = {U13.total_rank()}")
+    print(f"U(1,3)*: rank = {U13_dual.total_rank()}")
+    print(f"U(1,3)* should be U(2,3)")
+
+    # Verify dual_dual = identity
+    U24_dd = U24_dual.dual()
+    print(f"\nU(2,4)** == U(2,4): {U24 == U24_dd}")
+
+
+def demo_forbidden_minors():
+    """Demonstrate the forbidden minor concept."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Forbidden Minors for Graphic Matroids")
+    print("=" * 60)
+
+    # U(2,4) is the forbidden minor for graphic matroids of rank ≤ 1
+    # (i.e., forests). Any graph containing U(2,4) as a minor has a cycle.
+    U24 = uniform_matroid(4, 2)
+
+    # Check: is U(2,4) graphic?
+    # U(2,4) has 4 elements, all pairs independent, all triples dependent
+    # This is the cycle matroid of... actually U(2,4) is NOT graphic
+    # (it's the matroid of 4 points in general position in rank 2)
+    print(f"\nU(2,4) = {U24}")
+    print("U(2,4) is NOT graphic — it's a forbidden minor for graphic matroids")
+
+    # The key theorem: if a minor-closed property has the RS property,
+    # then its set of forbidden minors is finite.
+    print("\nKey Theorem (formalized in Lean):")
+    print("  If C has the Robertson-Seymour property (WQO by minors)")
+    print("  and P is minor-closed, then the set of forbidden minors")
+    print("  for P within C is finite (no infinite antichain).")
+
+
+def demo_rs_conjecture():
+    """Discuss the Robertson-Seymour conjecture for matroids."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Robertson-Seymour Conjecture for Matroids")
+    print("=" * 60)
+
+    print("""
+The Robertson-Seymour Theorem (for graphs):
+  For any infinite sequence G₁, G₂, G₃, ... of finite graphs,
+  there exist i < j such that Gᵢ is a minor of Gⱼ.
+
+The Matroid RS Conjecture (for F_q-representable matroids):
+  For any finite field F_q and any infinite sequence M₁, M₂, M₃, ...
+  of F_q-representable matroids, there exist i < j such that
+  Mᵢ is a minor of Mⱼ.
+
+Status:
+  q = 2 (binary matroids ≈ graphs): PROVED (Robertson-Seymour, 2004)
+  q = 3 (ternary matroids): OPEN (Geelen-Gerards-Whittle program)
+  q = 4 (GF(4)-representable): OPEN
+  General q: OPEN
+
+Our formalized results (in Lean 4):
+  1. Duality preserves the minor relation: N ≤m M ↔ N✶ ≤m M✶
+  2. RS property implies no infinite antichains
+  3. RS + minor-closed ⟹ finite forbidden minors
+  4. Forbidden minor characterization theorem (under well-foundedness)
+  5. Duality of forbidden minors: FM(P✶) = (FM(P))✶
+  6. MatroidWQO structure: bundles RS + dual-closure + minor-closure
+""")
+
+
+if __name__ == "__main__":
+    demo_uniform_matroids()
+    demo_graphic_matroids()
+    demo_duality()
+    demo_forbidden_minors()
+    demo_rs_conjecture()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Minor Lattice of Small Matroids
+
+Generates a Hasse diagram of the minor ordering on uniform matroids U(r,n)
+for small r and n, showing which matroids are minors of which.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import itertools
+
+
+def uniform_matroid_indep(n, r):
+    """Return independent sets of U(r,n)."""
+    indep = set()
+    for k in range(r + 1):
+        for combo in itertools.combinations(range(n), k):
+            indep.add(frozenset(combo))
+    return frozenset(range(n)), indep
+
+
+def is_minor_uniform(r1, n1, r2, n2):
+    """Check if U(r1,n1) is a minor of U(r2,n2).
+    U(r1,n1) ≤m U(r2,n2) iff r1 ≤ r2 and n1 - r1 ≤ n2 - r2."""
+    return r1 <= r2 and (n1 - r1) <= (n2 - r2) and n1 <= n2
+
+
 def main():
-    max_n = 5
+    # Generate uniform matroids U(r,n) for 0 ≤ r ≤ n ≤ 5
+    matroids = []
+    for n in range(1, 7):
+        for r in range(n + 1):
+            matroids.append((r, n))
 
-    # Generate all uniform matroids U(k,n) with 0 ≤ k ≤ n ≤ max_n
-    matroids = [(k, n) for n in range(max_n + 1) for k in range(n + 1)]
+    # Compute Hasse diagram edges (cover relations)
+    edges = []
+    for i, (r1, n1) in enumerate(matroids):
+        for j, (r2, n2) in enumerate(matroids):
+            if i == j:
+                continue
+            if is_minor_uniform(r1, n1, r2, n2):
+                # Check it's a cover: no intermediate matroid
+                is_cover = True
+                for k, (r3, n3) in enumerate(matroids):
+                    if k == i or k == j:
+                        continue
+                    if (is_minor_uniform(r1, n1, r3, n3) and
+                        is_minor_uniform(r3, n3, r2, n2)):
+                        is_cover = False
+                        break
+                if is_cover:
+                    edges.append((i, j))
 
-    # Position: x = k, y = n
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+    # Layout: x = r, y = n
+    fig, ax = plt.subplots(1, 1, figsize=(12, 10))
 
-    # Draw cover relations
-    for i, (k1, n1) in enumerate(matroids):
-        for j, (k2, n2) in enumerate(matroids):
-            if is_cover(k1, n1, k2, n2, matroids):
-                ax.plot([k1, k2], [n1, n2], 'b-', alpha=0.3, linewidth=1.5)
+    # Position nodes
+    positions = {}
+    for idx, (r, n) in enumerate(matroids):
+        x = r - n / 2  # center each row
+        y = n
+        positions[idx] = (x, y)
+
+    # Draw edges
+    for i, j in edges:
+        x1, y1 = positions[i]
+        x2, y2 = positions[j]
+        ax.plot([x1, x2], [y1, y2], 'b-', alpha=0.3, linewidth=0.8)
 
     # Draw nodes
-    for k, n in matroids:
-        color = plt.cm.viridis(k / max(max_n, 1))
-        ax.plot(k, n, 'o', markersize=20, color=color, markeredgecolor='black',
-                markeredgewidth=1.5, zorder=5)
-        ax.text(k, n, f"U({k},{n})", ha='center', va='center', fontsize=6,
-                fontweight='bold', zorder=6)
+    for idx, (r, n) in enumerate(matroids):
+        x, y = positions[idx]
+        color = plt.cm.viridis(r / max(n, 1))
+        ax.plot(x, y, 'o', color=color, markersize=12, zorder=5,
+                markeredgecolor='black', markeredgewidth=0.5)
+        ax.annotate(f'U({r},{n})', (x, y), textcoords="offset points",
+                    xytext=(0, 10), ha='center', fontsize=7, fontweight='bold')
 
-    ax.set_xlabel('Rank k', fontsize=14)
-    ax.set_ylabel('Size n', fontsize=14)
-    ax.set_title('Minor Lattice of Uniform Matroids U(k,n)\n'
-                 'Edges show cover relations in the minor order',
-                 fontsize=14)
-    ax.set_xlim(-0.5, max_n + 0.5)
-    ax.set_ylim(-0.5, max_n + 0.5)
+    ax.set_title('Hasse Diagram: Minor Order on Uniform Matroids U(r,n)',
+                 fontsize=14, fontweight='bold')
+    ax.set_xlabel('Shifted rank (r - n/2)', fontsize=11)
+    ax.set_ylabel('Ground set size n', fontsize=11)
     ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, alpha=0.2)
 
-    # Add legend
-    legend_text = (
-        "U(k₁,n₁) ≤m U(k₂,n₂) iff\n"
-        "k₁ ≤ k₂ and n₁-k₁ ≤ n₂-k₂"
-    )
-    ax.text(0.02, 0.98, legend_text, transform=ax.transAxes,
-            verticalalignment='top', fontsize=10,
+    # Legend
+    legend_text = ("U(r₁,n₁) ≤m U(r₂,n₂)  ⟺  r₁≤r₂ and n₁-r₁≤n₂-r₂\n"
+                   "Lines show cover relations (immediate minors)")
+    ax.text(0.02, 0.02, legend_text, transform=ax.transAxes,
+            fontsize=9, verticalalignment='bottom',
             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
     plt.tight_layout()
     plt.savefig('minor_lattice.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: minor_lattice.png")
+    print("Saved minor_lattice.png")
 
 
 if __name__ == "__main__":
