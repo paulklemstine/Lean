@@ -9,3 +9,4 @@ docs/future_directions.js merge=ours
 docs/future_directions.json merge=ours
 docs/future_directions_snapshot.json merge=ours
 Aether/.aether_workspace/future_directions.json merge=ours
+Aether/.aether_workspace/insights.json merge=ours
