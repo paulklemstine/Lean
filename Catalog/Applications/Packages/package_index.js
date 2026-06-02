@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "53207d7f",
     "filename": "the_topology_of_argumentation_why_debates_have_hol.json",
     "pkg_num": 247,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7375119565217392,
     "title": "The Topology of Argumentation: Why Debates Have Holes"
   },
   {
@@ -7905,8 +7905,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_topology_of_argumentation_why_debates_have_hol",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7375119565217392,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
     }
