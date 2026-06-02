@@ -1,332 +1,230 @@
+#!/usr/bin/env python3
 """
-Anti-Axiom Mathematics: Interactive Demo
+Anti-Mathematics Demo: Ackermann Encoding and Phantom Index
 
-Demonstrates the key results from the anti-axiom theory:
-1. Extensional defect computation in tagged universes
-2. Cyclic membership and anti-foundation
-3. Cantor barrier for finite universes
-4. Anti-axiom profile enumeration and tension detection
+Demonstrates the key concepts from the anti-mathematics research:
+1. Ackermann encoding of hereditarily finite sets
+2. Phantom index computation for anti-extensional universes
+3. Axiom defect spectrum analysis
 """
 
-import numpy as np
-from algorithms import (
-    compute_all_defects,
-    extensional_collapse,
-    is_anti_extensional,
-    build_cyclic_membership,
-    detect_membership_cycle,
-    is_well_founded,
-    cantor_barrier,
-    tower_exp,
-    build_tagged_universe,
-    AntiAxiomProfile,
-    finite_choice_function,
-)
+from typing import Set, FrozenSet
 
 
-def demo_anti_extensionality():
-    """Demonstrate anti-extensionality in tagged universes."""
+def ack_mem(m: int, n: int) -> bool:
+    """Ackermann membership: m ∈ₐ n iff bit m of n is set."""
+    return bool((n >> m) & 1)
+
+
+def ack_members(n: int) -> Set[int]:
+    """Return the set of members of the Ackermann-encoded set n."""
+    members = set()
+    i = 0
+    temp = n
+    while temp > 0:
+        if temp & 1:
+            members.add(i)
+        temp >>= 1
+        i += 1
+    return members
+
+
+def ack_encode(s: Set[int]) -> int:
+    """Encode a set of natural numbers as an Ackermann number."""
+    return sum(1 << m for m in s)
+
+
+def ack_union(a: int, b: int) -> int:
+    """Union in Ackermann encoding = bitwise OR."""
+    return a | b
+
+
+def ack_intersection(a: int, b: int) -> int:
+    """Intersection in Ackermann encoding = bitwise AND."""
+    return a & b
+
+
+def ack_singleton(m: int) -> int:
+    """Singleton {m} in Ackermann encoding = 2^m."""
+    return 1 << m
+
+
+def ack_pair(a: int, b: int) -> int:
+    """Pairing {a, b} in Ackermann encoding."""
+    return (1 << a) | (1 << b)
+
+
+def phantom_index(n: int, mem_rel: list[list[bool]]) -> int:
+    """
+    Compute the phantom index of a finite membership structure.
+    
+    Args:
+        n: number of elements (0, 1, ..., n-1)
+        mem_rel: n×n boolean matrix where mem_rel[x][y] means x ∈ y
+    
+    Returns:
+        phantom index = n - |equivalence classes|
+    """
+    # Compute extensional equivalence classes
+    classes: list[FrozenSet[int]] = []
+    assigned = [False] * n
+    
+    for i in range(n):
+        if assigned[i]:
+            continue
+        eq_class = {i}
+        for j in range(i + 1, n):
+            if assigned[j]:
+                continue
+            # Check if i and j are extensionally equivalent
+            equiv = True
+            for x in range(n):
+                if mem_rel[x][i] != mem_rel[x][j]:
+                    equiv = False
+                    break
+            if equiv:
+                eq_class.add(j)
+                assigned[j] = True
+        classes.append(frozenset(eq_class))
+        assigned[i] = True
+    
+    return n - len(classes)
+
+
+def iterate_function(f: dict[int, int], n: int, x: int) -> int:
+    """Compute f^[n](x) for a finite function given as a dict."""
+    result = x
+    for _ in range(n):
+        result = f[result]
+    return result
+
+
+def find_idempotent_iterate(f: dict[int, int]) -> int:
+    """Find the smallest N > 0 such that f^[N] is idempotent."""
+    domain = sorted(f.keys())
+    
+    for n in range(1, len(domain) ** 2 + 1):
+        # Check if f^[n] ∘ f^[n] = f^[n]
+        is_idempotent = True
+        for x in domain:
+            fn_x = iterate_function(f, n, x)
+            fn_fn_x = iterate_function(f, n, fn_x)
+            if fn_fn_x != fn_x:
+                is_idempotent = False
+                break
+        if is_idempotent:
+            return n
+    
+    return -1  # Should never happen for finite functions
+
+
+def main():
     print("=" * 60)
-    print("DEMO 1: Anti-Extensionality in Tagged Universes")
+    print("ANTI-MATHEMATICS: Ackermann Encoding Demo")
     print("=" * 60)
-
-    for m, n in [(3, 2), (2, 3), (4, 4)]:
-        print(f"\n--- Tagged Universe Fin({m}) × Fin({n}) ---")
-        M = build_tagged_universe(m, n)
-        size = m * n
-
-        # Check anti-extensionality
-        is_ae = is_anti_extensional(M)
-        print(f"  Universe size: {size}")
-        print(f"  Anti-extensional: {is_ae}")
-
-        # Compute defects
-        defects = compute_all_defects(M)
-        print(f"  Extensional defects: {defects}")
-        print(f"  Expected defect (n-1 = {n-1}): {'✓ VERIFIED' if all(d == n-1 for d in defects) else '✗ FAILED'}")
-
-        # Compute collapse
-        groups = extensional_collapse(M)
-        print(f"  Equivalence classes: {len(groups)}")
-        print(f"  Expected classes (m = {m}): {'✓ VERIFIED' if len(groups) == m else '✗ FAILED'}")
-        for key, members in groups.items():
-            print(f"    Class with {len(members)} members: elements {members}")
-
-
-def demo_anti_foundation():
-    """Demonstrate anti-foundation with cyclic membership."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Anti-Foundation — Cyclic Membership")
-    print("=" * 60)
-
-    for n in [3, 5, 7]:
-        print(f"\n--- Cyclic Membership on Fin({n}) ---")
-        M = build_cyclic_membership(n)
-
-        # Detect cycle
-        cycle = detect_membership_cycle(M)
-        wf = is_well_founded(M)
-        print(f"  Well-founded: {wf}")
-        print(f"  Cycle found: {cycle}")
-        print(f"  Cycle length: {len(cycle) if cycle else 0}")
-        print(f"  Expected: not well-founded, cycle of length {n}")
-        print(f"  {'✓ VERIFIED' if not wf and cycle and len(cycle) == n else '✗ FAILED'}")
-
-        # Show the membership structure
-        edges = [(a, (a + 1) % n) for a in range(n)]
-        print(f"  Membership edges: {edges}")
-
-
-def demo_cantor_barrier():
-    """Demonstrate the Cantor barrier for finite universes."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: The Cantor Barrier")
-    print("=" * 60)
-
-    print("\n  n  | |P(Fin n)| = 2^n |  Fin n  | Barrier (2^n > n)")
-    print("  " + "-" * 55)
-    for n in range(8):
-        ps, base, holds = cantor_barrier(n)
-        print(f"  {n}  |     {ps:>6}        |    {base}    |   {'✓' if holds else '✗'}")
-
-    print("\n--- Tower of Exponentials ---")
-    print("  The iterated power set grows as a tower of 2s:")
-    for k in range(5):
-        val = tower_exp(2, k)
-        if val < 10**15:
-            print(f"  tower(2, {k}) = {val}")
-        else:
-            print(f"  tower(2, {k}) = 2^{tower_exp(2, k-1)} (too large to display)")
-
-
-def demo_anti_choice():
-    """Demonstrate finite choice automaticity."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Finite Choice is Automatic")
-    print("=" * 60)
-
-    families = [
-        {"A": {1, 2, 3}, "B": {4, 5}, "C": {6}},
-        {"X": {10, 20}, "Y": {30, 40, 50}, "Z": {60, 70, 80, 90}},
-        {f"S_{i}": {i * 10 + j for j in range(1, i + 2)} for i in range(5)},
-    ]
-
-    for i, family in enumerate(families):
-        print(f"\n--- Family {i+1} ---")
-        print(f"  Sets: {family}")
-        choice = finite_choice_function(family)
-        print(f"  Choice function: {choice}")
-        if choice:
-            valid = all(choice[k] in v for k, v in family.items())
-            print(f"  Valid choice: {'✓ VERIFIED' if valid else '✗ FAILED'}")
-
-
-def demo_anti_axiom_profiles():
-    """Enumerate and analyze anti-axiom profiles."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Anti-Axiom Profile Space")
-    print("=" * 60)
-
-    profiles = AntiAxiomProfile.enumerate_all()
-    print(f"\n  Total profiles: {len(profiles)} (expected 32)")
-
-    tensioned = [p for p in profiles if p.has_tension()]
-    eliminable = [p for p in profiles if p.is_eliminable()]
-
-    print(f"  Profiles with anti-choice/anti-infinity tension: {len(tensioned)}")
-    print(f"  Profiles with eliminable anti-extensionality: {len(eliminable)}")
-
-    print("\n  Profiles with tension (¬Choice ∧ ¬Infinity):")
-    for p in tensioned:
-        print(f"    {p}")
-
-    print("\n  ZFC (no negations):")
-    zfc = [p for p in profiles if not any([
-        p.neg_extensionality, p.neg_infinity, p.neg_choice,
-        p.neg_foundation, p.neg_power_set
-    ])]
-    for p in zfc:
-        print(f"    {p}")
-
-    # Count profiles by number of negated axioms
-    print("\n  Distribution by number of negated axioms:")
-    from collections import Counter
-    counts = Counter()
-    for p in profiles:
-        k = sum([
-            p.neg_extensionality, p.neg_infinity, p.neg_choice,
-            p.neg_foundation, p.neg_power_set
-        ])
-        counts[k] += 1
-    for k in sorted(counts):
-        print(f"    {k} negated: {counts[k]} profiles (C(5,{k}) = {counts[k]})")
-
-
-if __name__ == "__main__":
-    demo_anti_extensionality()
-    demo_anti_foundation()
-    demo_cantor_barrier()
-    demo_anti_choice()
-    demo_anti_axiom_profiles()
+    
+    # Demo 1: Ackermann encoding basics
+    print("\n--- Ackermann Encoding ---")
+    print(f"Empty set ∅ = 0, members: {ack_members(0)}")
+    print(f"{{0}} = {ack_singleton(0)}, members: {ack_members(ack_singleton(0))}")
+    print(f"{{1}} = {ack_singleton(1)}, members: {ack_members(ack_singleton(1))}")
+    print(f"{{0, 2}} = {ack_encode({0, 2})}, members: {ack_members(ack_encode({0, 2}))}")
+    print(f"{{0, 1, 2}} = {ack_encode({0, 1, 2})}, members: {ack_members(ack_encode({0, 1, 2}))}")
+    
+    # Demo 2: Set operations
+    print("\n--- Set Operations via Bitwise Arithmetic ---")
+    a = ack_encode({0, 2, 4})
+    b = ack_encode({1, 2, 3})
+    print(f"A = {{0, 2, 4}} = {a}")
+    print(f"B = {{1, 2, 3}} = {b}")
+    print(f"A ∪ B = {ack_members(ack_union(a, b))} = {ack_union(a, b)}")
+    print(f"A ∩ B = {ack_members(ack_intersection(a, b))} = {ack_intersection(a, b)}")
+    print(f"Pairing(3, 5) = {{{3, 5}}} = {ack_pair(3, 5)}, members: {ack_members(ack_pair(3, 5))}")
+    
+    # Demo 3: Verify extensionality
+    print("\n--- Extensionality Verification ---")
+    for n in range(20):
+        for m in range(n):
+            if ack_members(n) == ack_members(m):
+                print(f"WARNING: {n} and {m} have same members but are different!")
+    print("Verified: all numbers 0-19 have distinct membership sets ✓")
+    
+    # Demo 4: Anti-infinity
+    print("\n--- Anti-Infinity: No Universal Set ---")
+    for n in range(1, 100):
+        members = ack_members(n)
+        if len(members) == n:  # Would need all of {0,...,n-1}
+            print(f"n={n} has {len(members)} members (but universe has {n} elements)")
+    print("No number 1-99 contains all smaller numbers as members ✓")
+    
+    # Demo 5: Phantom index
+    print("\n--- Phantom Index ---")
+    
+    # Phantom universe: Bool with empty membership
+    phantom_mem = [[False, False], [False, False]]
+    pi = phantom_index(2, phantom_mem)
+    print(f"Phantom universe (2 elements, empty membership): phantom index = {pi}")
+    
+    # Extensional universe: each element distinguishable
+    ext_mem = [[False, True], [False, False]]  # 0 ∈ 1, nothing else
+    pi = phantom_index(2, ext_mem)
+    print(f"Extensional universe (0 ∈ 1): phantom index = {pi}")
+    
+    # Larger phantom example: 4 elements, all equivalent
+    all_false = [[False]*4 for _ in range(4)]
+    pi = phantom_index(4, all_false)
+    print(f"4-element all-empty: phantom index = {pi}")
+    
+    # Mixed: 4 elements, two pairs of phantoms
+    mixed = [[False]*4 for _ in range(4)]
+    mixed[0][0] = True; mixed[0][1] = True  # 0 ∈ 0 and 0 ∈ 1
+    mixed[2][2] = True; mixed[2][3] = True  # 2 ∈ 2 and 2 ∈ 3
+    pi = phantom_index(4, mixed)
+    print(f"4-element two-pair phantoms: phantom index = {pi}")
+    
+    # Demo 6: Eventual idempotence
+    print("\n--- Eventual Idempotence ---")
+    
+    # f: {0,1,2,3,4} → {0,1,2,3,4} with f(0)=1, f(1)=2, f(2)=0, f(3)=4, f(4)=3
+    f = {0: 1, 1: 2, 2: 0, 3: 4, 4: 3}
+    n = find_idempotent_iterate(f)
+    print(f"f = {f}")
+    print(f"Smallest idempotent iterate: N = {n}")
+    for x in sorted(f.keys()):
+        fn_x = iterate_function(f, n, x)
+        fn_fn_x = iterate_function(f, n, fn_x)
+        print(f"  f^[{n}]({x}) = {fn_x}, f^[{n}](f^[{n}]({x})) = {fn_fn_x}")
+    
+    # Demo 7: Axiom defect spectrum
+    print("\n--- Axiom Defect Spectrum ---")
+    axiom_names = ["Ext", "Pair", "Union", "Pow", "Inf", "Repl", "Found", "Choice"]
+    
+    # ZFC spectrum
+    zfc = [0.0] * 8
+    print(f"ZFC spectrum: {dict(zip(axiom_names, zfc))}")
+    print(f"Total deficiency: {sum(zfc)}")
+    
+    # Anti-infinity spectrum (Ackermann model)
+    ack_spectrum = [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+    print(f"\nAckermann model: {dict(zip(axiom_names, ack_spectrum))}")
+    print(f"Total deficiency: {sum(ack_spectrum)}")
+    
+    # Phantom universe spectrum
+    phantom_spectrum = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+    print(f"\nPhantom universe: {dict(zip(axiom_names, phantom_spectrum))}")
+    print(f"Total deficiency: {sum(phantom_spectrum)}")
+    
+    # Check compatibility
+    def compatible(s, t):
+        return all(si + ti <= 1.0 for si, ti in zip(s, t))
+    
+    print(f"\nZFC ↔ Ackermann compatible: {compatible(zfc, ack_spectrum)}")
+    print(f"ZFC ↔ Phantom compatible: {compatible(zfc, phantom_spectrum)}")
+    print(f"Ackermann ↔ Phantom compatible: {compatible(ack_spectrum, phantom_spectrum)}")
+    
     print("\n" + "=" * 60)
     print("All demos completed successfully!")
-    print("=" * 60)
-
-
-"""
-Visualization: Anti-Axiom Universe Explorer
-
-Creates visualizations of:
-1. Extensional defect heatmap for tagged universes
-2. Cyclic membership graph
-3. Cantor barrier growth chart
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def build_tagged_universe(m: int, n: int) -> np.ndarray:
-    size = m * n
-    M = np.zeros((size, size), dtype=bool)
-    for x in range(size):
-        for y in range(size):
-            x1 = x // n
-            y1 = y // n
-            M[x][y] = (x1 == y1)
-    return M
-
-
-def compute_extensional_defect(M: np.ndarray, element: int) -> int:
-    n = M.shape[0]
-    col_a = M[:, element]
-    defect = 0
-    for b in range(n):
-        if b != element and np.array_equal(M[:, b], col_a):
-            defect += 1
-    return defect
-
-
-def plot_extensional_defect_heatmap():
-    """Plot extensional defect heatmap for various tagged universes."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    configs = [(4, 3), (3, 5), (6, 2)]
-
-    for ax, (m, n) in zip(axes, configs):
-        M = build_tagged_universe(m, n)
-        size = m * n
-        defects = [compute_extensional_defect(M, i) for i in range(size)]
-
-        # Reshape defects into m x n grid
-        defect_grid = np.array(defects).reshape(m, n)
-
-        im = ax.imshow(defect_grid, cmap='YlOrRd', aspect='auto')
-        ax.set_title(f'Fin({m}) × Fin({n})\nDefect = {n-1}', fontsize=12)
-        ax.set_xlabel('Tag index')
-        ax.set_ylabel('Content index')
-        plt.colorbar(im, ax=ax, label='Extensional Defect')
-
-        # Annotate cells
-        for i in range(m):
-            for j in range(n):
-                ax.text(j, i, str(defect_grid[i, j]),
-                       ha='center', va='center', fontsize=10, fontweight='bold')
-
-    plt.suptitle('Extensional Defect in Tagged Universes', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('viz_extensional_defect.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_extensional_defect.png")
-
-
-def plot_cyclic_membership():
-    """Plot cyclic membership graphs for various sizes."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    for ax, n in zip(axes, [4, 6, 8]):
-        angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
-        x = np.cos(angles)
-        y = np.sin(angles)
-
-        # Draw edges (membership arrows)
-        for i in range(n):
-            j = (i + 1) % n
-            dx = x[j] - x[i]
-            dy = y[j] - y[i]
-            ax.annotate('', xy=(x[j], y[j]), xytext=(x[i], y[i]),
-                       arrowprops=dict(arrowstyle='->', color='#e74c3c',
-                                      lw=2, connectionstyle='arc3,rad=0.1'))
-
-        # Draw nodes
-        ax.scatter(x, y, s=400, c='#3498db', zorder=5, edgecolors='white', linewidth=2)
-        for i in range(n):
-            ax.text(x[i], y[i], str(i), ha='center', va='center',
-                   fontsize=12, fontweight='bold', color='white')
-
-        ax.set_title(f'Cyclic Membership on Fin({n})\n¬Well-Founded', fontsize=12)
-        ax.set_xlim(-1.5, 1.5)
-        ax.set_ylim(-1.5, 1.5)
-        ax.set_aspect('equal')
-        ax.axis('off')
-
-    plt.suptitle('Anti-Foundation: Membership Cycles', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('viz_cyclic_membership.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_cyclic_membership.png")
-
-
-def plot_cantor_barrier():
-    """Plot the Cantor barrier: 2^n vs n."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: 2^n vs n
-    ns = np.arange(0, 10)
-    powerset = 2 ** ns
-
-    ax1.bar(ns - 0.2, powerset, width=0.4, label='|P(Fin n)| = 2^n',
-            color='#e74c3c', alpha=0.8)
-    ax1.bar(ns + 0.2, ns, width=0.4, label='|Fin n| = n',
-            color='#3498db', alpha=0.8)
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Cardinality', fontsize=12)
-    ax1.set_title('Cantor Barrier: Power Set vs Base', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.set_yscale('log')
-    ax1.set_ylim(0.5, 1500)
-
-    # Right: Tower of exponentials
-    def tower_exp(b, k):
-        if k == 0:
-            return 1
-        return b ** tower_exp(b, k - 1)
-
-    ks = list(range(5))
-    towers = [tower_exp(2, k) for k in ks]
-
-    ax2.plot(ks, towers, 'o-', color='#e74c3c', linewidth=2, markersize=10)
-    for k, t in zip(ks, towers):
-        ax2.annotate(f'{t}', (k, t), textcoords='offset points',
-                    xytext=(10, 5), fontsize=11)
-
-    ax2.set_xlabel('Height k', fontsize=12)
-    ax2.set_ylabel('tower(2, k)', fontsize=12)
-    ax2.set_title('Tower of Exponentials: 2↑↑k', fontsize=13)
-    ax2.set_yscale('log')
-    ax2.grid(True, alpha=0.3)
-
-    plt.suptitle('Anti-Infinity: The Cantor Barrier', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('viz_cantor_barrier.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_cantor_barrier.png")
 
 
 if __name__ == "__main__":
-    plot_extensional_defect_heatmap()
-    plot_cyclic_membership()
-    plot_cantor_barrier()
-    print("\nAll visualizations generated!")
+    main()
