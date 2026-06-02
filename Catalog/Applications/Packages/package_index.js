@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "11649112",
     "filename": "ramanujans_taxicab_number_as_a_sum_of_three_cubes_.json",
     "pkg_num": 152,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6659883636363637,
     "title": "Ramanujan's Taxicab Number 1729: Three-Cube Representations and the Inversion Principle"
   },
   {
@@ -4745,8 +4745,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "ramanujans_taxicab_number_as_a_sum_of_three_cubes_",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6659883636363637,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Ramanujan's Taxicab Number 1729: Three-Cube Representations and the Inversion Principle"
     }
