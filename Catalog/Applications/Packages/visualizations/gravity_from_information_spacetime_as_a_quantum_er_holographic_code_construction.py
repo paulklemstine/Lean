@@ -1,5 +1,4 @@
-def holographic_code(area, geodesic):
-    return (area, area // 4, geodesic // 2)
-
-def singleton_check(n, k, d):
-    return n - k >= 2 * (d - 1)
+def construct_from_planck(area: int, geodesic: int) -> tuple:
+    n, k, d = area, area // 4, geodesic // 2
+    assert k + 2 * d <= n + 2
+    return (n, k, d)
