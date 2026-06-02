@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "333dcf81",
     "filename": "erdos_renyi_on_acid_random_graphs_that_hallucinate.json",
     "pkg_num": 193,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.731727,
     "title": "Spectral Theory of Complex-Weighted Random Graphs"
   },
   {
@@ -6129,8 +6129,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "erdos_renyi_on_acid_random_graphs_that_hallucinate",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.731727,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Spectral Theory of Complex-Weighted Random Graphs"
     }
