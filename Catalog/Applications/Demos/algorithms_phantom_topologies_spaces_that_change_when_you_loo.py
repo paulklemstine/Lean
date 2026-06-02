@@ -1,300 +1,304 @@
+#!/usr/bin/env python3
 """
-Algorithms for Phantom Topology Computation
-=============================================
+Phantom Topology Algorithms
 
-Core algorithms for computing phantom systems, consensus topologies,
-phantom numbers, and disagreement metrics on finite sets.
+Type-hinted implementations of key algorithms for computing with
+phantom topologies on finite sets.
 """
 
-from itertools import combinations, chain
-from typing import List, Set, Tuple, Optional, FrozenSet, Dict
+from typing import FrozenSet, List, Optional, Set, Dict, Tuple
+from itertools import combinations
 
 
-# ============================================================
 # Type aliases
-# ============================================================
 Element = int
 Subset = FrozenSet[Element]
-Topology = Set[Subset]
+Topology = FrozenSet[Subset]
+PhantomTopology = List[Topology]  # Indexed list of observer topologies
 
 
-def powerset(s: List[Element]) -> List[Tuple[Element, ...]]:
-    """Generate all subsets of a list as tuples."""
-    return list(chain.from_iterable(combinations(s, r) for r in range(len(s) + 1)))
-
-
-def to_frozensets(opens: List[Tuple]) -> Topology:
-    """Convert a list of tuples to a set of frozensets."""
-    return {frozenset(o) for o in opens}
-
-
-# ============================================================
-# Algorithm 1: Topology Validation
-# ============================================================
-def is_topology(X: List[Element], opens: List[Tuple]) -> bool:
+def generate_topology(generators: Set[Subset], universe: Subset) -> Topology:
     """
-    Check if a collection of subsets forms a topology on X.
+    Generate the smallest topology on `universe` containing all `generators`.
 
-    A topology must:
-    1. Contain the empty set and X itself
-    2. Be closed under finite intersections
-    3. Be closed under arbitrary unions
-
-    Time complexity: O(2^|opens| * |opens|)
-    Space complexity: O(|opens|)
+    Closes the generator set under:
+    - Contains ∅ and universe
+    - Finite intersections
+    - Arbitrary unions
 
     Args:
-        X: The ground set
-        opens: List of subsets (as tuples) proposed as open sets
+        generators: Initial collection of subsets to include as open sets
+        universe: The full ground set X
 
     Returns:
-        True if opens forms a valid topology on X
+        The generated topology as a frozenset of frozensets
     """
-    opens_set = {frozenset(o) for o in opens}
-    X_frozen = frozenset(X)
+    opens: Set[Subset] = {frozenset(), universe}
+    opens.update(generators)
 
-    # Axiom 1: Empty set and X
-    if frozenset() not in opens_set or X_frozen not in opens_set:
-        return False
+    changed = True
+    while changed:
+        changed = False
+        new_opens = set(opens)
 
-    # Axiom 2: Finite intersections (pairwise suffices by induction)
-    for a in opens_set:
-        for b in opens_set:
-            if (a & b) not in opens_set:
-                return False
+        # Close under pairwise intersection
+        opens_list = list(opens)
+        for i in range(len(opens_list)):
+            for j in range(i, len(opens_list)):
+                inter = opens_list[i] & opens_list[j]
+                if inter not in new_opens:
+                    new_opens.add(inter)
+                    changed = True
 
-    # Axiom 3: Arbitrary unions
-    opens_list = list(opens_set)
-    for subset_indices in powerset(list(range(len(opens_list)))):
-        union = frozenset()
-        for i in subset_indices:
-            union = union | opens_list[i]
-        if union not in opens_set:
-            return False
+        # Close under pairwise union
+        opens_list = list(new_opens)
+        for i in range(len(opens_list)):
+            for j in range(i, len(opens_list)):
+                union = opens_list[i] | opens_list[j]
+                if union not in new_opens:
+                    new_opens.add(union)
+                    changed = True
 
-    return True
+        opens = new_opens
+
+    return frozenset(opens)
 
 
-# ============================================================
-# Algorithm 2: Enumerate All Topologies
-# ============================================================
-def enumerate_topologies(X: List[Element]) -> List[Topology]:
+def compute_consensus(observers: PhantomTopology) -> Topology:
     """
-    Enumerate all topologies on a finite set X.
+    Compute the consensus topology: intersection of all observer open-set families.
 
-    Uses brute-force enumeration over all subfamilies of the power set.
-    Practical only for |X| ≤ 4.
-
-    Time complexity: O(2^(2^|X|) * validation_cost)
-    Space complexity: O(2^|X|)
+    A set U is consensus-open iff every observer considers U open.
 
     Args:
-        X: The ground set (list of elements)
-
-    Returns:
-        List of all valid topologies, each as a set of frozensets
-    """
-    all_subsets = [tuple(sorted(s)) for s in powerset(X)]
-    topologies = []
-
-    for r in range(len(all_subsets) + 1):
-        for combo in combinations(all_subsets, r):
-            candidate = list(combo)
-            if is_topology(X, candidate):
-                topologies.append(to_frozensets(candidate))
-
-    return topologies
-
-
-# ============================================================
-# Algorithm 3: Consensus Topology
-# ============================================================
-def consensus_topology(X: List[Element], topologies: List[Topology]) -> Topology:
-    """
-    Compute the consensus topology of multiple observer topologies.
-
-    The consensus is the intersection of all topologies as families of open sets.
-    A set U is consensus-open iff it is open in EVERY observer's topology.
-
-    This corresponds to the supremum (⨆) in the TopologicalSpace lattice.
-
-    Time complexity: O(2^|X| * |topologies|)
-    Space complexity: O(2^|X|)
-
-    Args:
-        X: The ground set
-        topologies: List of observer topologies
+        observers: List of topologies, one per observer
 
     Returns:
         The consensus topology
+
+    Complexity: O(|observers| * max_topology_size)
     """
-    if not topologies:
-        return {frozenset(), frozenset(X)}
+    if not observers:
+        return frozenset()
 
-    consensus = topologies[0].copy()
-    for top in topologies[1:]:
-        consensus = consensus & top
+    result: Set[Subset] = set(observers[0])
+    for topology in observers[1:]:
+        result &= set(topology)
+    return frozenset(result)
 
-    return consensus
 
-
-# ============================================================
-# Algorithm 4: Phantom Number (Proper)
-# ============================================================
-def proper_phantom_number(X: List[Element], target: Topology,
-                          max_observers: int = 4) -> Optional[int]:
+def is_strictly_finer(tau1: Topology, tau2: Topology) -> bool:
     """
-    Compute the proper phantom number: minimum number of topologies,
-    each strictly finer than the target, whose consensus equals the target.
+    Check if tau1 is strictly finer than tau2.
 
-    A topology τ₁ is strictly finer than τ₂ if τ₁ ⊃ τ₂ (as sets of opens).
-
-    Time complexity: O(T^max_observers) where T = number of topologies
-    Space complexity: O(T)
+    tau1 is strictly finer iff every tau2-open set is tau1-open,
+    but not vice versa (tau1 has extra open sets).
 
     Args:
-        X: The ground set
-        target: The target topology
+        tau1: Candidate finer topology
+        tau2: Candidate coarser topology
+
+    Returns:
+        True iff tau1 is strictly finer than tau2
+    """
+    return set(tau2) < set(tau1)
+
+
+def compute_phantom_spectrum(
+    observers: PhantomTopology,
+    consensus_top: Topology,
+    universe: Subset
+) -> Dict[Element, Set[int]]:
+    """
+    Compute the phantom spectrum at each point.
+
+    The spectrum at x is the set of observer indices i such that
+    observer i sees some open set containing x that isn't consensus-open.
+
+    Args:
+        observers: List of observer topologies
+        consensus_top: The consensus topology
+        universe: The ground set X
+
+    Returns:
+        Dictionary mapping each x in X to its phantom spectrum
+    """
+    spectrum: Dict[Element, Set[int]] = {x: set() for x in universe}
+
+    for i, topology in enumerate(observers):
+        extra_opens = set(topology) - set(consensus_top)
+        for U in extra_opens:
+            for x in U:
+                spectrum[x].add(i)
+
+    return spectrum
+
+
+def compute_strict_phantom_number(
+    tau: Topology,
+    all_topologies: List[Topology],
+    max_observers: int = 10
+) -> int:
+    """
+    Compute the strict phantom number of a topology.
+
+    Searches for the minimum number n ≥ 2 of strictly finer topologies
+    whose consensus equals tau.
+
+    Args:
+        tau: Target topology
+        all_topologies: All topologies on the ground set
         max_observers: Maximum number of observers to try
 
     Returns:
-        The proper phantom number, or None if not found within max_observers
+        The strict phantom number (0 if no strict representation exists)
+
+    Complexity: Exponential in the number of finer topologies
     """
-    all_tops = enumerate_topologies(X)
+    finer = [t for t in all_topologies if is_strictly_finer(t, tau)]
+    if not finer:
+        return 0  # tau is discrete (or maximal)
 
-    # Filter to topologies strictly finer than target
-    finer = [top for top in all_tops if top > target]
-
-    for n in range(1, max_observers + 1):
+    for n in range(2, min(max_observers, len(finer)) + 1):
         for combo in combinations(finer, n):
-            if consensus_topology(X, list(combo)) == target:
+            if compute_consensus(list(combo)) == tau:
                 return n
+
+    return 0  # Not found within max_observers
+
+
+def phantom_entropy(
+    spectrum: Dict[Element, Set[int]],
+    num_observers: int
+) -> Dict[Element, float]:
+    """
+    Compute the phantom entropy at each point.
+
+    H(x) = log₂|Spec(x)| / log₂|O| ∈ [0, 1]
+
+    Measures how much observers disagree at each point.
+    H(x) = 0 means no observer deviates at x.
+    H(x) = 1 means all observers deviate at x.
+
+    Args:
+        spectrum: Phantom spectrum at each point
+        num_observers: Total number of observers
+
+    Returns:
+        Dictionary mapping each point to its phantom entropy
+    """
+    import math
+
+    if num_observers <= 1:
+        return {x: 0.0 for x in spectrum}
+
+    log_n = math.log2(num_observers)
+    entropy: Dict[Element, float] = {}
+
+    for x, spec in spectrum.items():
+        if len(spec) == 0:
+            entropy[x] = 0.0
+        else:
+            entropy[x] = math.log2(len(spec)) / log_n
+
+    return entropy
+
+
+def find_phantom_decomposition(
+    tau: Topology,
+    all_topologies: List[Topology],
+    n_observers: int = 2
+) -> Optional[PhantomTopology]:
+    """
+    Find a strict phantom representation with exactly n_observers observers.
+
+    Args:
+        tau: Target topology to decompose
+        all_topologies: All topologies on the ground set
+        n_observers: Desired number of observers
+
+    Returns:
+        A list of observer topologies, or None if no decomposition exists
+    """
+    finer = [t for t in all_topologies if is_strictly_finer(t, tau)]
+
+    for combo in combinations(finer, n_observers):
+        if compute_consensus(list(combo)) == tau:
+            return list(combo)
 
     return None
 
 
-# ============================================================
-# Algorithm 5: Disagreement Metric
-# ============================================================
-def disagreement_metric(top1: Topology, top2: Topology) -> int:
+def enumerate_topologies(n: int) -> List[Topology]:
     """
-    Compute the disagreement between two topologies: the size of the
-    symmetric difference of their open sets.
+    Enumerate all topologies on {0, 1, ..., n-1}.
 
-    This is a pseudo-metric on the space of topologies.
-
-    Time complexity: O(|top1| + |top2|)
-    Space complexity: O(|top1| + |top2|)
+    Warning: The number of topologies grows extremely fast:
+    n=1: 1, n=2: 4, n=3: 29, n=4: 355, n=5: 6942
 
     Args:
-        top1: First topology
-        top2: Second topology
+        n: Size of the ground set
 
     Returns:
-        |top1 △ top2| (size of symmetric difference)
+        List of all topologies on {0, ..., n-1}
     """
-    return len(top1.symmetric_difference(top2))
+    X = frozenset(range(n))
+    power_set: List[Subset] = []
+    for mask in range(1 << n):
+        power_set.append(frozenset(i for i in range(n) if mask & (1 << i)))
+
+    required = {frozenset(), X}
+    optional = [s for s in power_set if s not in required]
+
+    topologies: List[Topology] = []
+    for mask in range(1 << len(optional)):
+        candidate: Set[Subset] = set(required)
+        for i in range(len(optional)):
+            if mask & (1 << i):
+                candidate.add(optional[i])
+
+        # Quick validity check
+        valid = True
+        candidate_list = list(candidate)
+        for i in range(len(candidate_list)):
+            for j in range(i, len(candidate_list)):
+                if candidate_list[i] & candidate_list[j] not in candidate:
+                    valid = False
+                    break
+                if candidate_list[i] | candidate_list[j] not in candidate:
+                    valid = False
+                    break
+            if not valid:
+                break
+
+        if valid:
+            topologies.append(frozenset(candidate))
+
+    return topologies
 
 
-# ============================================================
-# Algorithm 6: Phantom Entropy
-# ============================================================
-def phantom_entropy(topologies: List[Topology], X: List[Element]) -> float:
-    """
-    Compute the phantom entropy of a phantom system: measures how much
-    observers disagree. Defined as the average pairwise disagreement
-    normalized by the total number of subsets.
-
-    Time complexity: O(|observers|^2 * 2^|X|)
-
-    Args:
-        topologies: List of observer topologies
-        X: The ground set
-
-    Returns:
-        Normalized entropy value in [0, 1]
-    """
-    n = len(topologies)
-    if n <= 1:
-        return 0.0
-
-    total_subsets = 2 ** len(X)
-    total_disagreement = 0
-    pairs = 0
-
-    for i in range(n):
-        for j in range(i + 1, n):
-            total_disagreement += disagreement_metric(topologies[i], topologies[j])
-            pairs += 1
-
-    if pairs == 0:
-        return 0.0
-
-    return total_disagreement / (pairs * total_subsets)
-
-
-# ============================================================
-# Algorithm 7: Observer Lattice
-# ============================================================
-def observer_refinement_lattice(X: List[Element]) -> Dict[int, List[int]]:
-    """
-    Build the refinement lattice of all topologies on X.
-    An edge from i to j means topology i is strictly finer than topology j.
-
-    Returns adjacency list of the Hasse diagram.
-
-    Time complexity: O(T^2 * 2^|X|)
-    """
-    all_tops = enumerate_topologies(X)
-    n = len(all_tops)
-
-    # Build covering relation
-    covers: Dict[int, List[int]] = {i: [] for i in range(n)}
-
-    for i in range(n):
-        for j in range(n):
-            if i != j and all_tops[i] > all_tops[j]:
-                # Check if i covers j (no topology between them)
-                is_cover = True
-                for k in range(n):
-                    if k != i and k != j:
-                        if all_tops[i] > all_tops[k] > all_tops[j]:
-                            is_cover = False
-                            break
-                if is_cover:
-                    covers[i].append(j)
-
-    return covers
-
-
-# ============================================================
-# Example usage
-# ============================================================
 if __name__ == "__main__":
-    X = [0, 1]
-    print(f"Ground set: {X}")
+    # Quick test
+    X = frozenset({0, 1, 2})
+    tops = enumerate_topologies(3)
+    print(f"Number of topologies on {{0,1,2}}: {len(tops)}")
 
-    tops = enumerate_topologies(X)
-    print(f"\nAll {len(tops)} topologies on {set(X)}:")
-    for i, top in enumerate(tops):
-        print(f"  τ_{i}: {{{', '.join(str(set(s)) for s in sorted(top, key=len))}}}")
+    # Find discrete topology
+    discrete = frozenset(frozenset(s) for mask in range(1 << 3)
+                         for s in [frozenset(i for i in range(3) if mask & (1 << i))])
+    print(f"Discrete has {len(discrete)} open sets")
+    print(f"Discrete phantom number: {compute_strict_phantom_number(discrete, tops)}")
 
-    print("\nPhantom numbers (proper):")
-    for i, top in enumerate(tops):
-        pn = proper_phantom_number(X, top)
-        if pn is None:
-            pn_str = "∞ (is already minimal)"
-        else:
-            pn_str = str(pn)
-        print(f"  τ_{i}: proper phantom number = {pn_str}")
+    # Find indiscrete
+    indiscrete = frozenset({frozenset(), X})
+    spn = compute_strict_phantom_number(indiscrete, tops)
+    print(f"Indiscrete phantom number: {spn}")
 
-    print("\nDisagreement matrix:")
-    for i in range(len(tops)):
-        row = [disagreement_metric(tops[i], tops[j]) for j in range(len(tops))]
-        print(f"  τ_{i}: {row}")
-
-    print("\nPhantom entropy examples:")
-    for i in range(len(tops)):
-        for j in range(i + 1, len(tops)):
-            ent = phantom_entropy([tops[i], tops[j]], X)
-            print(f"  {{τ_{i}, τ_{j}}}: entropy = {ent:.3f}")
+    # Compute all phantom numbers
+    print("\nPhantom number distribution:")
+    dist: Dict[int, int] = {}
+    for tau in tops:
+        spn = compute_strict_phantom_number(tau, tops)
+        dist[spn] = dist.get(spn, 0) + 1
+    for k in sorted(dist):
+        print(f"  spn={k}: {dist[k]} topologies")
