@@ -1,188 +1,253 @@
-# Surveillance Networks: Information-Theoretic Undetectability and the Privacy-Utility Tradeoff
+# Surveillance Networks: Information-Theoretic Undetectability and the Privacy-Utility Exclusion Theorem
 
 ## Abstract
 
-We formalize the privacy-utility tradeoff in finite surveillance networks as a discrete rate-distortion problem. A network on *n* nodes is modeled as an adjacency matrix in {0,1}^{n×n}, and a surveillance channel is a deterministic map from network configurations to a finite code alphabet. We define edge distortion as the Hamming distance between adjacency matrices and prove five main theorems:
+We formalize the privacy-utility tradeoff in surveillance of finite networks as a rate-distortion problem. A network state space S equipped with a separating distortion measure d is observed through an encoding-decoding channel (encode : S → C, decode : C → S), where the rate is log|C| and the distortion is the worst-case reconstruction error. We prove the **Surveillance-Privacy Exclusion Theorem**: for any network with |S| ≥ 2 distinguishable states, no channel can simultaneously achieve zero distortion (perfect surveillance) and codebook size ≤ 1 (perfect privacy). We establish quantitative bounds: zero distortion requires rate ≥ log|S|, and zero rate forces nonzero distortion on at least one state. For dynamic networks observed over T time steps, the codebook must have ≥ |S|^T entries for perfect reconstruction. We introduce a normalized privacy level and prove that surveillance-capable channels have privacy ≤ 0 while privacy-preserving channels have privacy ≥ 1, demonstrating a strict separation on the Pareto frontier. All results are formalized and machine-verified in Lean 4 with Mathlib.
 
-1. **Privacy-Surveillance Mutual Exclusion**: No channel on a non-trivial configuration space can be simultaneously trivial (all inputs mapped to one code) and injective (all inputs mapped to distinct codes).
+**Keywords**: Rate-distortion theory, surveillance networks, privacy-utility tradeoff, information-theoretic bounds, formal verification.
 
-2. **Packing Bound**: The channel image size is bounded below by the packing number of any (2D)-separated subset of configurations, for any channel achieving worst-case distortion ≤ D.
-
-3. **Trivial Channel Distortion**: Any reconstruction from a trivial channel must incur nonzero distortion on at least one of any two distinct inputs.
-
-4. **Identity Channel Zero Distortion**: The identity channel (transmitting the full configuration) achieves zero distortion.
-
-5. **Fiber Product Bound**: The number of configurations is at most the product of the channel image size and the maximum fiber size (pigeonhole bound).
-
-All results are proved for arbitrary finite networks and hold without distributional assumptions. The proofs have been formalized in Lean 4 with Mathlib.
+---
 
 ## 1. Introduction
 
-The tension between surveillance capability and individual privacy is a defining challenge of the information age. While this tension is typically discussed in legal and ethical terms, it has a precise mathematical structure rooted in information theory.
+The tension between surveillance capability and privacy preservation is one of the defining challenges of the information age. While policy discussions typically frame this as a question of trade-offs and balance, we show that the fundamental conflict has a precise mathematical formulation — and a clean impossibility result.
 
-Shannon's rate-distortion theory [Shannon 1959] characterizes the minimum information rate needed to describe a source within a given distortion tolerance. We adapt this framework to surveillance networks, where the "source" is the configuration of a social network and the "distortion" measures reconstruction error of the network's edge structure.
+Our approach models the problem as a rate-distortion problem from information theory. The "source" is the state of a finite social network (an adjacency matrix or equivalent structure). The "observer" implements a lossy compression scheme: encode the network state into a compact code, then decode to reconstruct. The *rate* measures how much information is collected; the *distortion* measures reconstruction quality.
 
-Our main contribution is a formalization of the privacy-utility tradeoff that makes the following intuition precise: *any surveillance system that collects less than the full network state must accept nonzero reconstruction error, and the minimum error is determined by combinatorial packing constraints.*
+The central insight is elementary but powerful: **perfect reconstruction of a non-trivial network requires the encoding to be injective**, which forces the codebook to be at least as large as the state space, making the rate strictly positive. Conversely, a constant encoding (zero rate) produces a constant reconstruction, which must fail on some state of a non-degenerate network.
 
-### 1.1 Related Work
+### 1.1 Contributions
 
-The rate-distortion theory for finite sources is classical [Cover & Thomas 2006, Ch. 10]. Observer-relative coding theories have been developed in the context of operadic deep learning [prior catalog work]. The specific application to surveillance networks, with formal verification, appears to be new.
+1. **Novel formalization** of the surveillance-privacy tradeoff as a rate-distortion problem with explicit definitions of network distortion, observation channels, surveillance capability, and privacy preservation.
+2. **Surveillance-Privacy Exclusion Theorem** (Theorem 4.1): mutual exclusivity of perfect surveillance and perfect privacy.
+3. **Quantitative bounds** (Theorems 4.2–4.4): minimum rate for zero distortion, forced distortion at zero rate, and codebook size lower bounds.
+4. **Dynamic extension** (Theorem 6.1): exponential growth of codebook requirements with observation duration.
+5. **Privacy level framework** (Theorems 7.1–7.2): normalized privacy metric with proved separation between surveillance-capable and privacy-preserving channels.
+6. **Concrete instantiation** via Hamming distortion on edge sets (Theorem 5.1), connecting abstract results to network combinatorics.
+7. **Complete machine verification** of all results in Lean 4 / Mathlib.
+
+### 1.2 Related Work
+
+Our work connects to several strands of research:
+
+- **Rate-distortion theory** (Shannon 1959): The classical theory optimizes over all encoding-decoding pairs for a given source distribution. Our formulation is distribution-free (worst-case), making it suitable for adversarial settings.
+- **Differential privacy** (Dwork et al. 2006): DP provides per-record privacy guarantees via randomized mechanisms. Our results are deterministic and apply to exact reconstruction, complementing the DP framework.
+- **Network information theory** (Cover & Thomas 2006): Classical results on multi-terminal source coding apply to distributed observation. Our single-observer model is the base case.
+- **Non-Archimedean rate-distortion** (this catalog): The ultrametric observer rate-distortion theorem of the companion file provides a structural analogue where the covering number equals the congruence index. Our results are more elementary but apply to a broader class of distortions.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Network Configurations
+### 2.1 Network Distortion
 
-**Definition 1** (NetworkConfig). A *network configuration* on *n* nodes is a function `adj : Fin n → Fin n → Bool`. The set of all configurations is denoted `NetworkConfig(n)` and has cardinality 2^{n²}.
+**Definition 2.1** (Network Distortion). A *network distortion* on a finite type S is a function d : S × S → ℝ satisfying:
+- (Non-negativity) d(x, y) ≥ 0 for all x, y
+- (Self-zero) d(x, x) = 0 for all x
+- (Symmetry) d(x, y) = d(y, x) for all x, y
 
-### 2.2 Edge Distortion
+This is a pseudometric without the triangle inequality — we do not need the triangle inequality for any of our results.
 
-**Definition 2** (edgeDistortion). The *edge distortion* between configurations g₁, g₂ ∈ NetworkConfig(n) is:
+**Definition 2.2** (Separating). A distortion d is *separating* if d(x, y) = 0 implies x = y. This is the analogue of a metric (as opposed to a pseudometric).
 
-$$d(g_1, g_2) = |\{(i,j) \in [n] \times [n] : g_1(i,j) \neq g_2(i,j)\}|$$
+**Definition 2.3** (Non-degenerate). A distortion is *non-degenerate* if there exist x, y with d(x, y) > 0.
 
-This is the Hamming distance on the adjacency matrix viewed as a binary string of length n².
+**Lemma 2.1**. A separating distortion on a state space with |S| ≥ 2 is non-degenerate.
 
-**Proposition 1**. Edge distortion is a pseudometric:
-- d(g, g) = 0 for all g
-- d(g₁, g₂) = d(g₂, g₁) for all g₁, g₂
-- d(g₁, g₃) ≤ d(g₁, g₂) + d(g₂, g₃) for all g₁, g₂, g₃
+### 2.2 Observation Channel
 
-Moreover, d(g₁, g₂) = 0 iff g₁ = g₂, so it is in fact a metric.
+**Definition 2.4** (Observation Channel). An *observation channel* on S with codebook C consists of:
+- An encoding function encode : S → C
+- A decoding function decode : C → S
 
-### 2.3 Surveillance Channels
+**Definition 2.5** (Rate). The *rate* of a channel is R = log|C|.
 
-**Definition 3** (SurveillanceChannel). A *surveillance channel* on n-node networks with code alphabet C is a function `encode : NetworkConfig(n) → C`.
+**Definition 2.6** (Surveillance Capable). A channel is *surveillance-capable* if d(s, decode(encode(s))) = 0 for all s ∈ S.
 
-**Definition 4** (ReconstructionMap). A *reconstruction map* is a function `decode : C → NetworkConfig(n)`.
+**Definition 2.7** (Privacy Preserving). A channel is *privacy-preserving* if |C| ≤ 1.
 
-**Definition 5** (channelImageSize). The *channel image size* is |{encode(g) : g ∈ NetworkConfig(n)}|.
+---
 
-**Definition 6** (isTrivialChannel). A channel is *trivial* if encode(g₁) = encode(g₂) for all g₁, g₂.
+## 3. Core Lemmas
 
-**Definition 7** (isInjectiveChannel). A channel is *injective* if encode is injective.
+The proof architecture consists of three elementary lemmas that chain together.
 
-### 2.4 Privacy Defect
+**Lemma 3.1** (Roundtrip Identity). If a channel is surveillance-capable with a separating distortion, then decode ∘ encode = id.
 
-**Definition 8** (privacyDefect). The *privacy defect* of a channel is:
+*Proof sketch*. For any s, d(s, decode(encode(s))) = 0 by surveillance capability. Since d is separating, decode(encode(s)) = s. □
 
-$$\delta = \begin{cases} 0 & \text{if } |NetworkConfig(n)| \leq 1 \\ \frac{k - 1}{N - 1} & \text{otherwise} \end{cases}$$
+**Lemma 3.2** (Injectivity from Roundtrip). If decode ∘ encode = id, then encode is injective.
 
-where k = channelImageSize and N = |NetworkConfig(n)|.
+*Proof sketch*. If encode(s₁) = encode(s₂), then s₁ = decode(encode(s₁)) = decode(encode(s₂)) = s₂. □
 
-### 2.5 Packing Sets
+**Lemma 3.3** (Pigeonhole). If encode : S → C is injective, then |S| ≤ |C|.
 
-**Definition 9** (IsPackingSet). A set S ⊆ NetworkConfig(n) is a *D-packing set* if d(g₁, g₂) > D for all distinct g₁, g₂ ∈ S.
+*Proof sketch*. Standard finite cardinality bound for injective functions. □
 
-## 3. Main Results
+**Lemma 3.4** (Constant Encoding). If |C| ≤ 1, then encode is constant: encode(s₁) = encode(s₂) for all s₁, s₂.
 
-### 3.1 Theorem 1: Privacy-Surveillance Mutual Exclusion
+*Proof sketch*. |C| ≤ 1 implies C is a subsingleton, so all elements are equal. □
 
-**Theorem** (privacy_surveillance_exclusion). Let ch be a surveillance channel on NetworkConfig(n) with code alphabet C. If there exist distinct g₁, g₂ ∈ NetworkConfig(n) (i.e., n ≥ 1), then ch cannot be simultaneously trivial and injective.
+---
 
-*Proof sketch.* A trivial channel has image size ≤ 1 (by `trivialChannel_imageSize_le_one`). An injective channel on a set with two distinct elements has image size ≥ 2 (by `injectiveChannel_imageSize_ge_two`). These are contradictory. □
+## 4. Main Results
 
-**Remark.** This theorem has a purely combinatorial proof that does not require any distributional assumptions. It holds for all finite networks, including directed, weighted, and dynamic variants.
+### Theorem 4.1: Surveillance-Privacy Exclusion
 
-### 3.2 Theorem 2: Packing Bound
+**Theorem** (Surveillance-Privacy Exclusion). Let S be a finite type with |S| ≥ 2, d a separating distortion on S, and (encode, decode) an observation channel with codebook C. Then it is not the case that the channel is both surveillance-capable and privacy-preserving.
 
-**Theorem** (packing_bound). Let ch be a surveillance channel with reconstruction map rec achieving distortion d(g, rec(ch(g))) ≤ D for all g ∈ S. If S is a (2D)-packing set, then |S| ≤ channelImageSize(ch).
+*Proof*. Suppose both hold. By Lemma 3.1, decode ∘ encode = id. By Lemma 3.2, encode is injective. By Lemma 3.3, |S| ≤ |C|. But privacy-preserving means |C| ≤ 1, so |S| ≤ 1, contradicting |S| ≥ 2. □
 
-*Proof sketch.* We show that ch.encode is injective on S. Suppose for contradiction that g₁ ≠ g₂ ∈ S with ch(g₁) = ch(g₂). Then:
-$$d(g_1, g_2) \leq d(g_1, rec(ch(g_1))) + d(rec(ch(g_1)), g_2)$$
-$$= d(g_1, rec(ch(g_1))) + d(rec(ch(g_2)), g_2) \leq D + D = 2D$$
+### Theorem 4.2: Positive Rate for Zero Distortion
 
-But S is (2D)-separated, so d(g₁, g₂) > 2D, contradiction. Since ch is injective on S, |S| = |ch(S)| ≤ channelImageSize(ch). □
+**Theorem**. If a channel is surveillance-capable with a separating distortion, then R ≥ log|S|.
 
-**Corollary.** The minimum channel image size to achieve worst-case distortion D is at least the maximum (2D)-packing number of NetworkConfig(n).
+*Proof*. From the lemma chain, |S| ≤ |C|, so log|S| ≤ log|C| = R. □
 
-### 3.3 Theorem 3: Trivial Channel Distortion
+### Theorem 4.3: Reconstruction Failure at Zero Rate
 
-**Theorem** (trivialChannel_distortion_nonzero). For a trivial channel ch with any reconstruction map rec, and any two distinct configurations g₁ ≠ g₂:
+**Theorem**. If d is separating and non-degenerate, |C| ≤ 1, and S is nonempty, then there exists s ∈ S with d(s, decode(encode(s))) > 0.
 
-$$d(g_1, rec(ch(g_1))) \neq 0 \quad \text{or} \quad d(g_2, rec(ch(g_2))) \neq 0$$
+*Proof*. Let x, y with d(x, y) > 0 (non-degeneracy). Since encode is constant (Lemma 3.4), encode(x) = encode(y), so decode(encode(x)) = decode(encode(y)) =: z. If d(x, z) = 0, then x = z by separation, so d(y, z) = d(y, x) > 0. Either way, some state has positive distortion. □
 
-*Proof sketch.* Since ch is trivial, ch(g₁) = ch(g₂), so rec(ch(g₁)) = rec(ch(g₂)). If both distortions were zero, then g₁ = rec(ch(g₁)) = rec(ch(g₂)) = g₂, contradicting g₁ ≠ g₂. □
+### Theorem 4.4: Counting Bound
 
-### 3.4 Theorem 4: Identity Channel
+**Theorem**. If a channel is surveillance-capable with a separating distortion, then |S| ≤ |C|.
 
-**Theorem** (identityChannel_zero_distortion). The identity channel (encode = id) with identity reconstruction achieves d(g, g) = 0 for all g.
+*Proof*. Direct composition of Lemmas 3.1–3.3. □
 
-**Theorem** (identityChannel_injective). The identity channel is injective.
+---
 
-**Theorem** (identityChannel_not_trivial). The identity channel is not trivial whenever the configuration space contains two distinct elements.
+## 5. Hamming Distortion on Edge Sets
 
-### 3.5 Theorem 5: Fiber Product Bound
+**Definition 5.1** (Hamming Edge Distortion). For graphs on n vertices represented as adjacency functions f : Fin n → Fin n → Bool, the Hamming distortion is:
 
-**Theorem** (fiber_product_bound). For any surveillance channel ch:
+d(g₁, g₂) = Σᵢ Σⱼ 𝟙[g₁(i,j) ≠ g₂(i,j)]
 
-$$|NetworkConfig(n)| \leq channelImageSize(ch) \times \max_{c \in im(ch)} |ch^{-1}(c)|$$
+This counts the number of edges on which two graphs disagree.
 
-*Proof sketch.* Partition NetworkConfig(n) into fibers ch⁻¹(c) for each c in the image. The number of fibers is channelImageSize(ch). Each fiber has size at most maxFiberSize. The total is bounded by the product. □
+**Theorem 5.1**. The Hamming edge distortion is separating.
 
-### 3.6 Additional Results
+*Proof*. If d(g₁, g₂) = 0, then every term in the sum is 0, so g₁(i,j) = g₂(i,j) for all i, j, giving g₁ = g₂. □
 
-**Theorem** (injectiveChannel_imageSize_eq). An injective channel has image size equal to Fintype.card(NetworkConfig n).
+**Corollary 5.1**. For networks with n ≥ 2 vertices, any observation channel achieving perfect reconstruction under Hamming distortion must have codebook size ≥ 2^(n²).
 
-**Theorem** (dyn_privacy_surveillance_exclusion). For dynamic networks (sequences of configurations), no function can be simultaneously injective and constant.
+---
 
-**Theorem** (privacyDefect_trivial). A trivial channel has privacy defect 0.
+## 6. Dynamic Networks
 
-## 4. Dynamic Network Extension
+**Definition 6.1** (Trajectory Channel). For a state space S and time horizon T, a trajectory channel encodes sequences (Fin T → S) into a codebook C.
 
-We extend the theory to dynamic networks DynNetwork(n, T) — sequences of T snapshots from NetworkConfig(n). The total distortion is the sum of per-snapshot distortions:
+**Theorem 6.1** (Dynamic Surveillance Exclusion). If a trajectory channel achieves zero per-step distortion with a separating distortion, then |C| ≥ |S|^T.
 
-$$d_{total}(D_1, D_2) = \sum_{t=1}^T d(D_1(t), D_2(t))$$
+*Proof*. Zero per-step distortion implies the trajectory decoding roundtrip is the identity (by separation at each time step + funext). Hence the trajectory encoding is injective. The state space of trajectories has cardinality |S|^T (product of T copies of S), so |C| ≥ |S|^T. □
 
-We prove that total distortion is zero iff the dynamic networks are identical (totalEdgeDistortion_eq_zero_iff), and that the privacy-surveillance exclusion extends to the dynamic setting.
+This exponential lower bound means that observing a network with just 100 distinguishable states over 10 time steps requires a codebook of at least 100¹⁰ = 10²⁰ entries — more entries than there are grains of sand on Earth.
 
-## 5. Algorithms
+---
 
-### 5.1 Greedy Packing
+## 7. Privacy Level and Pareto Frontier
 
-The packing bound requires computing packing sets. A greedy algorithm processes configurations in order, adding each to the packing set if it is sufficiently far from all existing members. This achieves a maximal (not maximum) packing set in O(|S|² · n²) time.
+**Definition 7.1** (Privacy Level). The *privacy level* of a channel is π = 1 - R/R_max = 1 - log|C|/log|S|.
 
-### 5.2 Optimal Reconstruction
+When |S| ≥ 2, we have R_max = log|S| > 0, so this is well-defined and ranges naturally:
+- π = 1 when |C| ≤ 1 (full privacy)
+- π = 0 when |C| = |S| (borderline)
+- π < 0 when |C| > |S| (over-instrumented)
 
-Given a fixed channel, the optimal reconstruction minimizes worst-case distortion within each fiber. For each code value c, we find the configuration in ch⁻¹(c) that minimizes the maximum distortion to other members of the fiber. This is a minimax center computation, solvable in O(|fiber|² · n²) per fiber.
+**Theorem 7.1**. If a channel is surveillance-capable with a separating distortion and |S| ≥ 2, then π ≤ 0.
 
-## 6. Quantitative Analysis
+*Proof*. R ≥ log|S| implies R/log|S| ≥ 1, so π = 1 - R/log|S| ≤ 0. □
 
-For small networks (n = 2), we can enumerate all 16 configurations and compute exact tradeoff curves.
+**Theorem 7.2**. If a channel is privacy-preserving and |S| ≥ 2, then π ≥ 1.
 
-| Channel Type | Image Size | Privacy Defect | Max Distortion |
-|---|---|---|---|
-| Trivial (constant) | 1 | 0.000 | 4 |
-| Hash mod 2 | 2 | 0.067 | 3 |
-| Hash mod 4 | 4 | 0.200 | 2 |
-| Hash mod 8 | 8 | 0.467 | 1 |
-| Identity | 16 | 1.000 | 0 |
+*Proof*. |C| ≤ 1 implies log|C| ≤ 0, and log|S| > 0 (since |S| ≥ 2), so log|C|/log|S| ≤ 0, giving π = 1 - log|C|/log|S| ≥ 1. □
 
-The table illustrates the monotone tradeoff: as image size increases (less privacy), distortion decreases (better surveillance).
+**Corollary 7.1**. The privacy levels of surveillance-capable channels (π ≤ 0) and privacy-preserving channels (π ≥ 1) are separated by a gap of at least 1 on the real line. There is no channel that is both surveillance-capable and privacy-preserving.
 
-## 7. Discussion
+---
 
-### 7.1 Information-Theoretic vs. Computational Privacy
+## 8. Conjectures and Future Directions
 
-Our results are information-theoretic: they bound what is *possible* regardless of computational resources. In practice, computational constraints provide an additional privacy layer — even if the information-theoretic constraint permits surveillance, the computational cost of optimal reconstruction may be prohibitive.
+### Conjecture 8.1: Surveillance Entropy Bound
 
-### 7.2 Connection to Shannon Theory
+For networks with n vertices under Hamming distortion, we conjecture that the minimum rate to achieve average distortion ≤ D is bounded below by n² · H(D/n²), where H is the binary entropy function. This connects our worst-case framework to the classical Shannon rate-distortion function for i.i.d. Bernoulli sources.
 
-Our packing bound is the combinatorial (zero-error) analog of Shannon's rate-distortion function R(D). In the probabilistic setting with a uniform prior over NetworkConfig(n), Shannon's theorem gives R(D) = n² - H(D/n²) for normalized distortion, where H is binary entropy. Our results are prior-free and provide deterministic guarantees.
+**Testable prediction**: For n = 2 (4 potential edges), compute the exact rate-distortion function under uniform distribution and verify it matches 4(1 - H(D/4)) for small D.
 
-### 7.3 Privacy by Design
+### Conjecture 8.2: Differential Privacy Connection
 
-The fiber product bound suggests a design principle for privacy-preserving surveillance: engineer channels with large, well-distributed fibers. If every fiber contains many configurations that differ in the sensitive attributes (e.g., specific personal connections), the channel provides useful aggregate information while protecting individual relationships.
+For ε-differentially private observation mechanisms (randomized channels), we conjecture that the distortion is bounded below by Ω(exp(-ε)) for any network with |S| ≥ 2. This would formalize the relationship between our deterministic exclusion theorem and the differential privacy framework.
 
-## 8. Future Work
+---
 
-1. **Probabilistic extension**: Characterize the Shannon rate-distortion function for network configurations with non-uniform priors.
-2. **Adversarial setting**: Game-theoretic extensions where network participants actively obfuscate connections.
-3. **Approximate privacy**: Differential privacy connections — when does adding noise to the channel achieve (ε, δ)-differential privacy?
-4. **Temporal correlations**: Exploit temporal structure in dynamic networks for tighter bounds.
-5. **Hypergraph extension**: Extend to higher-order interactions (group meetings, multi-party communications).
+## 9. Algorithmic Implications
+
+### Algorithm: Minimum-Rate Surveillance
+
+Given a separating distortion d and a target distortion threshold δ ≥ 0, the minimum-rate observation channel can be computed by:
+
+1. Compute the equivalence relation d(x, y) ≤ δ on S (which is a tolerance relation, not necessarily transitive without ultrametric structure).
+2. Find the minimum set cover of S under this relation.
+3. The optimal rate equals log of the set cover number.
+
+For the ultrametric case (companion file), this reduces to counting congruence classes.
+
+### Algorithm: Privacy-Optimal Reconstruction
+
+Given a rate budget R, find the channel minimizing worst-case distortion:
+
+1. Choose codebook C with |C| = ⌊exp(R)⌋.
+2. Partition S into |C| clusters minimizing maximum intra-cluster distortion.
+3. Assign one representative per cluster as the decoder output.
+
+This is NP-hard in general (equivalent to k-center clustering), but polynomial for ultrametric distortions.
+
+---
+
+## 10. Discussion
+
+The surveillance-privacy exclusion theorem, while elementary in proof, has several notable features:
+
+1. **Distribution-free**: Unlike classical rate-distortion theory, our results hold for worst-case distortion without assuming a source distribution. This makes them applicable in adversarial settings where the network state is chosen by an adversary.
+
+2. **Deterministic**: We consider deterministic encoding-decoding pairs. Randomized mechanisms (as in differential privacy) can achieve better tradeoffs, but cannot escape the fundamental tension.
+
+3. **Structural**: The proof reveals *why* perfect surveillance requires information — it's not a computational complexity argument but a counting argument. The impossibility is structural, not computational.
+
+4. **Scalable**: The dynamic extension shows that the impossibility scales exponentially with observation duration, making long-term perfect surveillance information-theoretically untenable.
+
+The connection to the ultrametric observer rate-distortion theorem in the companion file suggests a deeper algebraic structure. When the distortion satisfies the ultrametric inequality, the rate-distortion curve becomes a step function determined by the congruence spectrum — an algebraic invariant of the observer family. Investigating whether similar spectral structure exists for non-ultrametric distortions is an open question.
+
+---
 
 ## References
 
-1. Shannon, C.E. (1959). "Coding theorems for a discrete source with a fidelity criterion." IRE National Convention Record, 7(4), 142-163.
+1. Shannon, C.E. (1959). "Coding theorems for a discrete source with a fidelity criterion." *IRE National Convention Record*, Part 4, 142–163.
 2. Cover, T.M. & Thomas, J.A. (2006). *Elements of Information Theory*, 2nd ed. Wiley.
-3. Dwork, C. (2006). "Differential privacy." ICALP 2006. Springer LNCS 4052.
+3. Dwork, C. et al. (2006). "Calibrating noise to sensitivity in private data analysis." *TCC*, 265–284.
+4. Berger, T. (1971). *Rate Distortion Theory: A Mathematical Basis for Data Compression*. Prentice-Hall.
+
+---
+
+## Appendix: Formal Verification
+
+All theorems in this paper have been formalized and verified in Lean 4 with Mathlib. The formal development is in `Catalog/Algebra/SurveillanceRateDistortion.lean`. Key formal definitions and theorems:
+
+| Paper Reference | Lean Name |
+|---|---|
+| Def 2.1 | `NetworkDistortion` |
+| Def 2.2 | `NetworkDistortion.Separating` |
+| Def 2.4 | `ObservationChannel` |
+| Def 2.6 | `SurveillanceCapable` |
+| Def 2.7 | `PrivacyPreserving` |
+| Thm 4.1 | `surveillance_privacy_exclusion` |
+| Thm 4.2 | `positive_rate_for_zero_distortion` |
+| Thm 4.3 | `exists_nonzero_distortion_at_zero_rate` |
+| Thm 4.4 | `rate_distortion_counting_bound` |
+| Thm 5.1 | `hammingEdgeDistortion_separating` |
+| Thm 6.1 | `dynamic_surveillance_exclusion` |
+| Thm 7.1 | `surveillance_channel_low_privacy` |
+| Thm 7.2 | `privacy_channel_high_privacy` |
+
+All proofs use only the standard axioms (propext, Classical.choice, Quot.sound).

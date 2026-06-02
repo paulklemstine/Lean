@@ -2,226 +2,224 @@
 """
 Surveillance Networks: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the formal theory.
+Type-hinted implementations of the key algorithms from the rate-distortion
+framework for surveillance networks.
 """
 
-from typing import List, Tuple, Set, Dict, Callable, Optional
-import itertools
+from __future__ import annotations
 import math
+from dataclasses import dataclass
+from typing import TypeVar, Generic, Callable
+
+S = TypeVar('S')
+C = TypeVar('C')
 
 
-# Type aliases
-AdjMatrix = Tuple[Tuple[bool, ...], ...]
-Code = int
+@dataclass
+class NetworkDistortion(Generic[S]):
+    """A distortion measure on a finite state space."""
+    states: list[S]
+    d: Callable[[S, S], float]
+
+    def is_separating(self) -> bool:
+        """Check if the distortion separates points."""
+        for x in self.states:
+            for y in self.states:
+                if x != y and self.d(x, y) == 0:
+                    return False
+        return True
+
+    def is_nondegenerate(self) -> bool:
+        """Check if the distortion is non-degenerate."""
+        return any(
+            self.d(x, y) > 0
+            for x in self.states
+            for y in self.states
+        )
 
 
-def generate_all_configs(n: int) -> List[AdjMatrix]:
-    """Generate all 2^(n²) network configurations on n nodes.
+@dataclass
+class ObservationChannel(Generic[S, C]):
+    """An encoding-decoding observation channel."""
+    encode: Callable[[S], C]
+    decode: Callable[[C], S]
+    codebook: list[C]
 
-    Args:
-        n: Number of nodes in the network.
+    def rate(self) -> float:
+        """Compute the rate (log of codebook size)."""
+        return math.log(len(self.codebook)) if self.codebook else 0.0
 
-    Returns:
-        List of all possible adjacency matrices.
+    def worst_case_distortion(
+        self,
+        nd: NetworkDistortion[S]
+    ) -> float:
+        """Compute worst-case distortion over all states."""
+        return max(
+            nd.d(s, self.decode(self.encode(s)))
+            for s in nd.states
+        )
+
+    def is_surveillance_capable(
+        self,
+        nd: NetworkDistortion[S]
+    ) -> bool:
+        """Check if channel achieves zero distortion."""
+        return all(
+            nd.d(s, self.decode(self.encode(s))) == 0
+            for s in nd.states
+        )
+
+    def is_privacy_preserving(self) -> bool:
+        """Check if codebook has at most one element."""
+        return len(self.codebook) <= 1
+
+    def privacy_level(self, state_count: int) -> float:
+        """Compute normalized privacy level."""
+        max_rate = math.log(state_count) if state_count > 1 else 1.0
+        return 1.0 - self.rate() / max_rate
+
+
+def greedy_codebook(
+    nd: NetworkDistortion[S],
+    max_distortion: float
+) -> list[S]:
     """
-    configs: List[AdjMatrix] = []
-    for bits in itertools.product([False, True], repeat=n * n):
-        adj = tuple(tuple(bits[i * n + j] for j in range(n)) for i in range(n))
-        configs.append(adj)
-    return configs
+    Greedy algorithm for minimum-size codebook achieving given distortion.
 
+    Algorithm:
+    1. Start with all states uncovered
+    2. Greedily pick the state covering the most uncovered states
+    3. Repeat until all states are covered
 
-def edge_distortion(g1: AdjMatrix, g2: AdjMatrix) -> int:
-    """Compute edge distortion (Hamming distance) between two configs.
-
-    This is the number of directed edge slots where the configurations disagree.
-
-    Args:
-        g1: First adjacency matrix.
-        g2: Second adjacency matrix.
-
-    Returns:
-        Number of disagreeing edges.
+    Returns: list of codebook representatives
     """
-    n = len(g1)
-    return sum(1 for i in range(n) for j in range(n) if g1[i][j] != g2[i][j])
+    uncovered: set[int] = set(range(len(nd.states)))
+    codebook: list[S] = []
+
+    while uncovered:
+        best_idx = -1
+        best_count = -1
+        for i in range(len(nd.states)):
+            count = sum(
+                1 for j in uncovered
+                if nd.d(nd.states[i], nd.states[j]) <= max_distortion
+            )
+            if count > best_count:
+                best_count = count
+                best_idx = i
+
+        codebook.append(nd.states[best_idx])
+        uncovered -= {
+            j for j in uncovered
+            if nd.d(nd.states[best_idx], nd.states[j]) <= max_distortion
+        }
+
+    return codebook
 
 
-def channel_image_size(encode: Callable[[AdjMatrix], Code],
-                       configs: List[AdjMatrix]) -> int:
-    """Compute the channel image size (number of distinct codes).
-
-    Args:
-        encode: The surveillance channel encoding function.
-        configs: All possible network configurations.
-
-    Returns:
-        Number of distinct code values in the image.
+def rate_distortion_curve(
+    nd: NetworkDistortion[S],
+    distortion_values: list[float]
+) -> list[tuple[float, float, int]]:
     """
-    return len(set(encode(g) for g in configs))
+    Compute the rate-distortion curve.
 
-
-def privacy_defect(encode: Callable[[AdjMatrix], Code],
-                   configs: List[AdjMatrix]) -> float:
-    """Compute the privacy defect of a channel.
-
-    Privacy defect is normalized to [0, 1]:
-    - 0 = maximal privacy (trivial channel)
-    - 1 = no privacy (injective channel)
-
-    Args:
-        encode: The surveillance channel encoding function.
-        configs: All possible network configurations.
-
-    Returns:
-        Privacy defect value in [0, 1].
+    Returns: list of (distortion, rate, codebook_size) tuples
     """
-    N = len(configs)
-    if N <= 1:
-        return 0.0
-    img = channel_image_size(encode, configs)
-    return (img - 1) / (N - 1)
+    results = []
+    for D in distortion_values:
+        cb = greedy_codebook(nd, D)
+        rate = math.log2(len(cb)) if cb else 0.0
+        results.append((D, rate, len(cb)))
+    return results
 
 
-def max_fiber_size(encode: Callable[[AdjMatrix], Code],
-                   configs: List[AdjMatrix]) -> int:
-    """Compute the maximum fiber size (largest preimage).
-
-    Args:
-        encode: The surveillance channel encoding function.
-        configs: All possible network configurations.
-
-    Returns:
-        Size of the largest fiber (preimage of a code value).
+def verify_exclusion_theorem(
+    nd: NetworkDistortion[S],
+    channel: ObservationChannel[S, C]
+) -> dict[str, bool | str]:
     """
-    fibers: Dict[Code, int] = {}
-    for g in configs:
-        c = encode(g)
-        fibers[c] = fibers.get(c, 0) + 1
-    return max(fibers.values()) if fibers else 0
+    Verify the surveillance-privacy exclusion theorem for a given channel.
 
-
-def find_packing_set(configs: List[AdjMatrix], D: int) -> List[AdjMatrix]:
-    """Find a maximal packing set with separation > D.
-
-    A packing set is a set of configurations where every pair has
-    edge distortion > D. This is found greedily.
-
-    Args:
-        configs: Pool of network configurations.
-        D: Minimum separation threshold.
-
-    Returns:
-        A maximal packing set.
+    Returns a dict with:
+    - 'is_surveillance_capable': bool
+    - 'is_privacy_preserving': bool
+    - 'exclusion_holds': bool (True if not both)
+    - 'explanation': str
     """
-    packing: List[AdjMatrix] = []
-    for g in configs:
-        if all(edge_distortion(g, p) > D for p in packing):
-            packing.append(g)
-    return packing
+    surv = channel.is_surveillance_capable(nd)
+    priv = channel.is_privacy_preserving()
+
+    if surv and priv:
+        # This should be impossible for |S| >= 2 with separating distortion
+        return {
+            'is_surveillance_capable': True,
+            'is_privacy_preserving': True,
+            'exclusion_holds': False,
+            'explanation': 'BUG: Both properties hold simultaneously!'
+        }
+    elif surv:
+        return {
+            'is_surveillance_capable': True,
+            'is_privacy_preserving': False,
+            'exclusion_holds': True,
+            'explanation': f'Surveillance-capable but not privacy-preserving '
+                          f'(codebook size = {len(channel.codebook)} > 1)'
+        }
+    elif priv:
+        return {
+            'is_surveillance_capable': False,
+            'is_privacy_preserving': True,
+            'exclusion_holds': True,
+            'explanation': f'Privacy-preserving but not surveillance-capable '
+                          f'(distortion = {channel.worst_case_distortion(nd):.2f})'
+        }
+    else:
+        return {
+            'is_surveillance_capable': False,
+            'is_privacy_preserving': False,
+            'exclusion_holds': True,
+            'explanation': 'Neither property holds (intermediate channel)'
+        }
 
 
-def optimal_reconstruction(encode: Callable[[AdjMatrix], Code],
-                          configs: List[AdjMatrix]) -> Callable[[Code], AdjMatrix]:
-    """Find the optimal reconstruction map for a given channel.
-
-    For each code value, finds the config that minimizes the maximum
-    distortion within the fiber (minimax reconstruction).
-
-    Args:
-        encode: The surveillance channel encoding function.
-        configs: All possible network configurations.
-
-    Returns:
-        Reconstruction function mapping codes to configs.
+def dynamic_codebook_bound(
+    state_count: int,
+    time_steps: int
+) -> int:
     """
-    # Group configs by code
-    fibers: Dict[Code, List[AdjMatrix]] = {}
-    for g in configs:
-        c = encode(g)
-        if c not in fibers:
-            fibers[c] = []
-        fibers[c].append(g)
+    Compute the minimum codebook size for perfect dynamic surveillance.
 
-    # For each fiber, find the centroid (minimizes max distortion)
-    reconstruction: Dict[Code, AdjMatrix] = {}
-    for code, fiber in fibers.items():
-        best_config: Optional[AdjMatrix] = None
-        best_max_dist = float('inf')
-        for candidate in fiber:
-            max_dist = max(edge_distortion(candidate, g) for g in fiber)
-            if max_dist < best_max_dist:
-                best_max_dist = max_dist
-                best_config = candidate
-        reconstruction[code] = best_config  # type: ignore
-
-    default = configs[0]
-    return lambda c: reconstruction.get(c, default)
-
-
-def worst_case_distortion(encode: Callable[[AdjMatrix], Code],
-                          decode: Callable[[Code], AdjMatrix],
-                          configs: List[AdjMatrix]) -> int:
-    """Compute worst-case distortion of a channel-reconstruction pair.
-
-    Args:
-        encode: Channel encoding function.
-        decode: Reconstruction function.
-        configs: All possible network configurations.
-
-    Returns:
-        Maximum distortion over all configs.
+    For a network with |S| states observed over T time steps,
+    the minimum codebook size is |S|^T.
     """
-    return max(edge_distortion(g, decode(encode(g))) for g in configs)
+    return state_count ** time_steps
 
 
-def privacy_utility_curve(n: int,
-                          num_channels: int = 100) -> List[Tuple[float, float]]:
-    """Compute the privacy-utility tradeoff curve by sampling random channels.
-
-    Args:
-        n: Number of nodes.
-        num_channels: Number of random channels to sample.
-
-    Returns:
-        List of (privacy_defect, worst_case_distortion) pairs.
-    """
-    import random
-    configs = generate_all_configs(n)
-    curve: List[Tuple[float, float]] = []
-
-    for num_codes in range(1, len(configs) + 1):
-        # Random channel with `num_codes` code values
-        def make_channel(nc: int) -> Callable[[AdjMatrix], Code]:
-            mapping = {g: random.randint(0, nc - 1) for g in configs}
-            return lambda g: mapping[g]
-
-        encode = make_channel(num_codes)
-        decode = optimal_reconstruction(encode, configs)
-        pd = privacy_defect(encode, configs)
-        wcd = worst_case_distortion(encode, decode, configs)
-        curve.append((pd, float(wcd)))
-
-    return curve
-
-
+# Example usage
 if __name__ == "__main__":
-    # Example usage
-    n = 2
-    configs = generate_all_configs(n)
-    print(f"Network on {n} nodes: {len(configs)} configurations")
+    # Create a simple 2-node network
+    states = [(False, False), (False, True), (True, False), (True, True)]
 
-    # Identity channel
-    identity: Callable[[AdjMatrix], Code] = lambda g: hash(g)
-    print(f"Identity channel image size: {channel_image_size(identity, configs)}")
-    print(f"Identity privacy defect: {privacy_defect(identity, configs):.4f}")
+    def hamming_d(s1: tuple[bool, ...], s2: tuple[bool, ...]) -> float:
+        return sum(1 for a, b in zip(s1, s2) if a != b)
 
-    # Constant channel
-    constant: Callable[[AdjMatrix], Code] = lambda g: 0
-    print(f"Constant channel image size: {channel_image_size(constant, configs)}")
-    print(f"Constant privacy defect: {privacy_defect(constant, configs):.4f}")
+    nd = NetworkDistortion(states=states, d=hamming_d)
 
-    # Packing bound
-    for D in [0, 1, 2, 3]:
-        packing = find_packing_set(configs, 2 * D)
-        print(f"D={D}: packing size = {len(packing)} (lower bound on channel size)")
+    print(f"State space size: {len(states)}")
+    print(f"Separating: {nd.is_separating()}")
+    print(f"Non-degenerate: {nd.is_nondegenerate()}")
+    print()
+
+    # Rate-distortion curve
+    curve = rate_distortion_curve(nd, [0, 1, 2])
+    print("Rate-Distortion Curve:")
+    for D, R, cb_size in curve:
+        print(f"  D={D:.0f}: R={R:.2f} bits, codebook size={cb_size}")
+    print()
+
+    # Dynamic scaling
+    print("Dynamic Codebook Bounds:")
+    for T in [1, 2, 5, 10]:
+        bound = dynamic_codebook_bound(len(states), T)
+        print(f"  T={T}: |S|^T = {bound}")
