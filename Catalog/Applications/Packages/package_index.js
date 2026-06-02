@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "eb5c00af",
     "filename": "rigorous_spectral_framework_for_understanding.json",
     "pkg_num": 237,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7223484285714286,
     "title": "Prime Spectral Framework: Frequency, Amplitude, and Dissonance of Primes"
   },
   {
@@ -7580,8 +7580,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "rigorous_spectral_framework_for_understanding",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7223484285714286,
+      "quality": "substantial",
       "shape": "triangular_prism",
       "title": "Prime Spectral Framework: Frequency, Amplitude, and Dissonance of Primes"
     }
