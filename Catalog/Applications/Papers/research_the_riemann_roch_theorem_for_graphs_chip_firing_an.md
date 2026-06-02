@@ -1,201 +1,219 @@
-# The Riemann-Roch Theorem for Graphs: Chip-Firing, Canonical Divisors, and Formal Verification
+# The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor
 
 ## Abstract
 
-We present a formalization of the foundational theory of divisors on finite graphs, following the Baker-Norine framework (2007). We define graph divisors, chip-firing operations, the canonical divisor, genus, linear equivalence, and divisor rank over the vertex type `Fin n`. We prove several key structural theorems: (1) chip-firing preserves divisor degree, (2) the degree of the canonical divisor equals 2g - 2, (3) the genus of the complete graph K_n is (n-1)(n-2)/2, (4) the canonical divisor of K_n assigns n-3 chips to each vertex, (5) divisors of negative degree cannot be equivalent to effective divisors, and (6) linear equivalence preserves degree. We verify computationally that the Riemann-Roch formula r(D) - r(K-D) = deg(D) + 1 - g holds for all tested divisors on K_3, K_4, K_5, K_6, and cycle graphs. We confirm the conjecture that the canonical divisor of K_n has rank g - 1 for n = 3, 4, 5, 6.
+We present a formal development of the Baker-Norine theory of divisors on finite graphs, establishing the foundational algebraic and combinatorial structures underlying the graph-theoretic Riemann-Roch theorem. Our formalization covers divisors as chip configurations, the graph Laplacian and chip-firing dynamics, the canonical divisor, and the genus of a graph. We prove thirteen theorems, including the canonical divisor degree identity deg(K_G) = 2g − 2, the chip-firing conservation law, the genus formula for complete graphs, and the Riemann-Roch degree identity for the canonical divisor self-pairing. All results are machine-verified, establishing a rigorous foundation for further formalization of the full Baker-Norine Riemann-Roch theorem.
 
 ## 1. Introduction
 
-The Riemann-Roch theorem is a central result in algebraic geometry, relating the dimension of the space of meromorphic functions on a compact Riemann surface to the topology of the surface. In 2007, Baker and Norine [1] proved a combinatorial analogue for finite graphs, replacing Riemann surfaces with graphs, meromorphic functions with chip-firing equivalence classes, and the genus of a surface with the cyclomatic number.
+The Riemann-Roch theorem is one of the central results in algebraic geometry, relating the dimension of the space of meromorphic functions on a compact Riemann surface to the topology of the surface. In 2007, Baker and Norine [1] discovered a remarkable graph-theoretic analogue: for a divisor D on a connected graph G,
 
-The chip-firing game, independently studied in combinatorics and statistical physics (as the abelian sandpile model), provides the computational engine for this theory. A divisor on a graph is a function D: V → ℤ, thought of as a distribution of "chips" on vertices. Firing a vertex v sends one chip along each edge to the corresponding neighbor, costing v exactly deg(v) chips. Two divisors are linearly equivalent if one can be obtained from the other by a sequence of firings and anti-firings.
+$$r(D) - r(K_G - D) = \deg(D) + 1 - g(G)$$
 
-### 1.1 Main Results
+where r(D) is the rank of D, K_G is the canonical divisor, and g(G) = |E| − |V| + 1 is the genus (cyclomatic number, first Betti number) of G.
 
-We establish the following formally verified results:
+The chip-firing game provides the combinatorial engine: vertices of a graph hold integer numbers of "chips," and firing a vertex v sends one chip along each incident edge. Two divisors are linearly equivalent if one can be obtained from the other by a sequence of firings. This notion of equivalence plays the role of linear equivalence of divisors on algebraic curves.
 
-**Theorem 1 (Chip-Firing Conservation).** For any divisor D on a simple graph G and any vertex v, deg(fire_v(D)) = deg(D).
-
-**Theorem 2 (Canonical Divisor Degree).** For any simple graph G with genus g, deg(K_G) = 2g - 2.
-
-**Theorem 3 (Complete Graph Genus).** The genus of K_n is (n-1)(n-2)/2 for n ≥ 2.
-
-**Theorem 4 (Negative Degree Obstruction).** If deg(D) < 0, then D is not linearly equivalent to any effective divisor.
-
-**Theorem 5 (Linear Equivalence Preserves Degree).** If D₁ ~ D₂, then deg(D₁) = deg(D₂).
-
-**Theorem 6 (Complete Graph Canonical Divisor).** For K_n, K_G(v) = n - 3 for all vertices v.
+Our contribution is a complete formalization of the algebraic infrastructure underlying Baker-Norine theory, with proofs of the key structural identities. This establishes a verified foundation for future work on the full Riemann-Roch theorem and its applications to tropical geometry and coding theory.
 
 ## 2. Definitions
 
-### 2.1 Graph Divisors
+### 2.1 Divisors
 
-**Definition 1.** A *divisor* on a graph with vertex set `Fin n` is a function D: Fin n → ℤ. The *degree* of D is deg(D) = Σ_{v ∈ Fin n} D(v).
+Let G = (V, E) be a finite graph with vertex set V and edge set E. A **divisor** on G is a formal integer-valued function on V:
 
-In our formalization, `GraphDivisor n` is defined as `Fin n → ℤ`, which inherits the additive group structure from `ℤ`.
+$$\text{Div}(G) = \{D : V \to \mathbb{Z}\}$$
 
-### 2.2 Chip-Firing
+We think of D(v) as the number of "chips" at vertex v. The **degree** of a divisor is:
 
-**Definition 2.** Given a simple graph G on `Fin n` and a divisor D, *firing vertex v* produces the divisor:
+$$\deg(D) = \sum_{v \in V} D(v)$$
 
-fire_v(D)(w) = D(w) - deg_G(v)  if w = v
-fire_v(D)(w) = D(w) + 1         if G.Adj(v, w)
-fire_v(D)(w) = D(w)             otherwise
+A divisor is **effective** if D(v) ≥ 0 for all v.
 
-### 2.3 The Firing Vector
+### 2.2 The Graph Laplacian and Chip-Firing
 
-**Definition 3.** The *firing vector* at v is the divisor f_v defined by:
+For a simple graph G, define the **edge weight** between vertices u and w:
 
-f_v(w) = -deg_G(v)  if w = v
-f_v(w) = 1          if G.Adj(v, w)
-f_v(w) = 0          otherwise
+$$e(u, w) = \begin{cases} 1 & \text{if } u \sim w \\ 0 & \text{otherwise} \end{cases}$$
 
-Chip-firing D at v yields D + f_v (pointwise).
+**Chip-firing** at vertex v transforms a divisor D into D' where:
+- D'(v) = D(v) − deg(v)
+- D'(w) = D(w) + e(v, w) for w ≠ v
 
-### 2.4 Linear Equivalence
+The **Laplacian vector** Δ_v encodes this transformation: Δ_v(v) = −deg(v) and Δ_v(w) = e(v, w) for w ≠ v.
 
-**Definition 4.** Two divisors D₁, D₂ are *linearly equivalent* (D₁ ~ D₂) if there exists a function f: Fin n → ℤ such that for all w:
+### 2.3 Linear Equivalence
 
-D₂(w) = D₁(w) + Σ_v f(v) · f_v(w)
+Two divisors D and D' are **linearly equivalent** (D ~ D') if there exists a function f : V → ℤ such that:
 
-This is equivalent to D₂ - D₁ being in the image of the Laplacian operator.
+$$D'(w) - D(w) = \sum_{v \in V} f(v) \cdot \Delta_v(w) \quad \forall w$$
 
-### 2.5 The Canonical Divisor and Genus
+This is equivalent to saying D' − D lies in the image of the graph Laplacian.
 
-**Definition 5.** The *canonical divisor* K_G is defined by K_G(v) = deg_G(v) - 2 for each vertex v.
+### 2.4 The Canonical Divisor and Genus
 
-**Definition 6.** The *genus* of G is g(G) = |E(G)| - |V(G)| + 1, the cyclomatic number (first Betti number).
+The **canonical divisor** K_G assigns to each vertex v the value:
 
-### 2.6 Effective Divisors and Rank
+$$K_G(v) = \deg_G(v) - 2$$
 
-**Definition 7.** A divisor D is *effective* if D(v) ≥ 0 for all v.
+The **genus** of G is the cyclomatic number:
 
-**Definition 8.** D has *rank at least r* if for every effective divisor E with deg(E) = r, D - E is linearly equivalent to an effective divisor.
+$$g(G) = |E| - |V| + 1$$
 
-## 3. Proofs of Main Results
+For connected graphs, this equals the number of independent cycles.
 
-### 3.1 Chip-Firing Conservation (Theorem 1)
+## 3. Main Results
 
-**Proof sketch.** We compute:
+### 3.1 Chip-Firing Conservation Law
 
-deg(fire_v(D)) = Σ_w fire_v(D)(w)
-= (D(v) - deg(v)) + Σ_{w adj v} (D(w) + 1) + Σ_{w not adj v, w≠v} D(w)
-= D(v) - deg(v) + Σ_{w adj v} D(w) + |{w : G.Adj v w}| + Σ_{w not adj v, w≠v} D(w)
-= Σ_w D(w) - deg(v) + deg(v)
-= deg(D)
+**Theorem 1** (Laplacian Row Sum). *For any vertex v, ∑_w Δ_v(w) = 0.*
 
-The key step uses the fact that |{w : G.Adj v w}| = deg(v) by definition.
+*Proof.* The sum decomposes as Δ_v(v) + ∑_{w≠v} Δ_v(w) = −deg(v) + ∑_{w≠v} e(v,w). Since G is simple and loopless, e(v,v) = 0, so ∑_{w≠v} e(v,w) = ∑_w e(v,w) = |N(v)| = deg(v). The total is 0. □
 
-### 3.2 Canonical Divisor Degree (Theorem 2)
+**Theorem 2** (Chip-Firing Preserves Degree). *For any divisor D and vertex v, deg(fire_v(D)) = deg(D).*
 
-**Proof sketch.** 
+*Proof.* Immediate from Theorem 1: deg(fire_v(D)) = deg(D) + ∑_w Δ_v(w) = deg(D) + 0. □
 
-deg(K_G) = Σ_v (deg_G(v) - 2) = (Σ_v deg_G(v)) - 2|V|
+### 3.2 The Canonical Degree Identity
 
-By the handshaking lemma, Σ_v deg_G(v) = 2|E|. Therefore:
+**Theorem 3** (Canonical Divisor Degree). *For any finite graph G, deg(K_G) = 2g(G) − 2.*
 
-deg(K_G) = 2|E| - 2|V| = 2(|E| - |V|) = 2(g - 1) = 2g - 2
+*Proof.* By the handshaking lemma, ∑_v deg(v) = 2|E|. Therefore:
+$$\deg(K_G) = \sum_v (\deg(v) - 2) = 2|E| - 2|V| = 2(|E| - |V| + 1) - 2 = 2g - 2. \quad \square$$
 
-The formal proof uses `sum_degrees_eq_twice_edges` (the handshaking lemma from Mathlib) and algebraic simplification.
+This identity mirrors the classical result for algebraic curves, where the degree of the canonical class equals 2g − 2.
 
-### 3.3 Complete Graph Genus (Theorem 3)
+### 3.3 The Riemann-Roch Degree Identity
 
-**Proof sketch.** K_n has n vertices and n(n-1)/2 edges. Therefore:
+**Theorem 4** (Riemann-Roch Self-Pairing). *deg(K_G) + 1 − g(G) = g(G) − 1.*
 
-g(K_n) = n(n-1)/2 - n + 1 = (n² - n - 2n + 2)/2 = (n² - 3n + 2)/2 = (n-1)(n-2)/2
+*Proof.* Substituting Theorem 3: (2g − 2) + 1 − g = g − 1. □
 
-### 3.4 Negative Degree Obstruction (Theorem 4)
+This identity captures what happens when we substitute D = K_G into the Riemann-Roch formula r(D) − r(K_G − D) = deg(D) + 1 − g. The right-hand side becomes g − 1, and since K_G − K_G = 0, the formula reads r(K_G) − r(0) = g − 1. For connected graphs with g ≥ 1, r(0) = 0, yielding r(K_G) = g − 1.
 
-**Proof sketch.** Suppose for contradiction that D ~ D' where D' is effective. By Theorem 5, deg(D) = deg(D'). Since D' is effective, deg(D') = Σ_v D'(v) ≥ 0. But deg(D) < 0, contradiction.
+### 3.4 Complementary Divisor Symmetry
 
-### 3.5 Linear Equivalence Preserves Degree (Theorem 5)
+**Theorem 5** (Complementary Degree). *For any divisor D, deg(K_G − D) = 2g − 2 − deg(D).*
 
-**Proof sketch.** If D₂(w) = D₁(w) + Σ_v f(v) · f_v(w), then:
+This symmetry is at the heart of Baker-Norine: the Riemann-Roch formula relates the rank of D to the rank of its complement K_G − D.
 
-deg(D₂) = Σ_w D₂(w) = Σ_w D₁(w) + Σ_w Σ_v f(v) · f_v(w)
-= deg(D₁) + Σ_v f(v) · (Σ_w f_v(w))
-= deg(D₁) + Σ_v f(v) · 0    [by the firing vector sum = 0]
-= deg(D₁)
+### 3.5 Linear Equivalence Preserves Degree
 
-The key lemma is `firingVector_sum_eq_zero`: the sum of the firing vector entries is zero.
+**Theorem 6**. *If D ~ D', then deg(D) = deg(D').*
 
-### 3.6 Complete Graph Properties (Theorem 6)
+*Proof.* Summing D'(w) − D(w) = ∑_v f(v) Δ_v(w) over all w and exchanging summation order:
+$$\deg(D') - \deg(D) = \sum_v f(v) \underbrace{\sum_w \Delta_v(w)}_{=0} = 0. \quad \square$$
 
-For K_n, every vertex has degree n - 1, so K_G(v) = (n-1) - 2 = n - 3. The complete graph K_n is `⊤` in the `SimpleGraph` lattice.
+## 4. Complete Graph Analysis
 
-## 4. Computational Verification
+### 4.1 Degree and Edge Count
 
-### 4.1 Riemann-Roch Verification
+**Theorem 7**. *In K_n (n ≥ 1), every vertex has degree n − 1.*
 
-We implemented the Dhar burning algorithm for computing q-reduced divisors and verified the Riemann-Roch formula r(D) - r(K-D) = deg(D) + 1 - g for:
+**Theorem 8**. *K_n has n(n−1)/2 edges.*
 
-- All divisors of the form (a, b, 0) with a, b ∈ {-2, ..., 4} on K_3
-- Multiple representative divisors on K_4 and K_5
-- All cycle graphs C_3 through C_6
+### 4.2 Genus Formula
 
-All tests pass, confirming the Baker-Norine theorem computationally.
+**Theorem 9** (Complete Graph Genus). *For n ≥ 2, g(K_n) = (n−1)(n−2)/2.*
 
-### 4.2 Canonical Rank Conjecture
+| n | Vertices | Edges | Genus |
+|---|----------|-------|-------|
+| 2 | 2 | 1 | 0 |
+| 3 | 3 | 3 | 1 |
+| 4 | 4 | 6 | 3 |
+| 5 | 5 | 10 | 6 |
+| 6 | 6 | 15 | 10 |
 
-**Conjecture.** For the complete graph K_n with n ≥ 3, rank(K_{K_n}) = g - 1 where g = (n-1)(n-2)/2.
+The genus grows quadratically, reflecting the rapidly increasing number of independent cycles.
 
-| n | g | K_{K_n} | rank(K) | g - 1 | Verified |
-|---|---|---------|---------|-------|----------|
-| 3 | 1 | (0,0,0) | 0 | 0 | ✓ |
-| 4 | 3 | (1,1,1,1) | 2 | 2 | ✓ |
-| 5 | 6 | (2,2,2,2,2) | 5 | 5 | ✓ |
-| 6 | 10 | (3,3,3,3,3,3) | 9 | 9 | ✓ |
+### 4.3 Canonical Divisor of Complete Graphs
 
-This conjecture follows from the Baker-Norine Riemann-Roch theorem applied to D = K_G: by symmetry of the formula, r(K) - r(0) = deg(K) + 1 - g = (2g-2) + 1 - g = g - 1. Since the zero divisor has rank 0 (it is effective but cannot absorb any chip removal), we get r(K) = g - 1.
+**Theorem 10** (Uniform Canonical Divisor). *For K_n, K_{K_n}(v) = n − 3 for all v.*
 
-## 5. Algorithms
+**Theorem 11** (Complete Graph Canonical Degree). *deg(K_{K_n}) = n(n − 3).*
 
-### 5.1 Dhar's Burning Algorithm
+The uniformity of the canonical divisor on K_n is a special feature of vertex-transitive graphs. It means every vertex starts with the same "canonical chip count," making K_n a natural testing ground for Riemann-Roch.
 
-Dhar's burning algorithm determines whether a divisor is q-reduced. Starting a fire at the sink vertex q:
+### 4.4 Chip-Firing on Complete Graphs
 
-1. A vertex v burns if the number of edges from v to burnt vertices exceeds D(v)
-2. The fire propagates until no more vertices burn
-3. D is q-reduced iff all vertices burn
+**Theorem 12** (Complete Graph Firing). *On K_n, firing vertex v sends exactly one chip to every other vertex.*
 
-The q-reduced form is computed by alternating between anti-firing negative vertices and firing unburnt sets from Dhar's test.
+**Theorem 13** (Complete Graph Chip Loss). *On K_n, the fired vertex loses exactly n − 1 chips.*
 
-### 5.2 Rank Computation
+These results show that chip-firing on K_n has a particularly clean structure: it's a "democratic" redistribution where each neighbor gets exactly one chip.
 
-The rank is computed by:
-1. Check if D is equivalent to an effective divisor (using q-reduction)
-2. Incrementally test: for each k, verify that for ALL effective E of degree k, D - E is equivalent to an effective divisor
-3. The rank is the largest k for which step 2 succeeds
+## 5. The Full Riemann-Roch Theorem
 
-Complexity: O(C(n+k-1, k) · T_reduce) per rank level, where T_reduce is the cost of q-reduction.
+The Baker-Norine theorem [1] states:
+
+$$r(D) - r(K_G - D) = \deg(D) + 1 - g(G)$$
+
+where the **rank** r(D) is defined as the largest integer r such that for every effective divisor E of degree r, D − E is linearly equivalent to an effective divisor (with r(D) = −1 if D is not equivalent to any effective divisor).
+
+Our formalization establishes all the structural prerequisites for this theorem:
+- The degree map and its properties (additivity, conservation under firing)
+- The canonical divisor and its fundamental degree identity
+- Linear equivalence and its degree-preserving property
+- The complementary divisor degree formula
+
+What remains is the combinatorial core: proving the existence of the q-reduced divisor (Dhar's burning algorithm) and the rank inequality. These require additional combinatorial machinery including superstable configurations and the theory of G-parking functions.
 
 ## 6. Connections to Tropical Geometry
 
-The Baker-Norine theorem is a cornerstone of tropical geometry, which studies degenerations of algebraic varieties using combinatorial methods. The key insight is that a metric graph (a graph with edge lengths) is a tropical curve, and the chip-firing game computes the tropical analogue of the Jacobian variety.
+The Baker-Norine theorem has deep connections to tropical geometry:
 
-Our formalization of divisors on `Fin n` corresponds to the case of unit edge lengths. The canonical divisor K_G corresponds to the canonical class of the tropical curve, and the genus g = |E| - |V| + 1 is the topological genus.
+1. **Metric graphs and tropical curves**: A metric graph (graph with edge lengths) is a tropical curve. Divisors on metric graphs generalize divisors on combinatorial graphs, and the Riemann-Roch theorem extends to this setting.
 
-## 7. Future Work
+2. **Specialization**: Baker's specialization lemma shows that the rank of a divisor on an algebraic curve can only increase when specializing to a combinatorial graph. This provides a powerful tool for bounding ranks on curves.
 
-1. **Metric graphs**: Extend the formalization to graphs with varying edge lengths, connecting to tropical Jacobians.
-2. **Full Riemann-Roch proof**: Formalize the Baker-Norine proof, which requires Dhar's algorithm and the theory of q-reduced divisors.
-3. **Specialization lemma**: Prove Baker's specialization lemma, which shows that the rank of a divisor can only decrease under specialization from curves to graphs.
-4. **Jacobian structure**: Formalize the Jacobian group of a graph (the quotient of degree-0 divisors by principal divisors) and prove it is isomorphic to the sandpile group.
+3. **Tropical Jacobians**: The group of divisors modulo linear equivalence (the Jacobian) corresponds to the critical group of the graph, which is isomorphic to the cokernel of the Laplacian matrix.
 
-## 8. Discussion
+4. **Kirchhoff's theorem**: The order of the Jacobian (number of spanning trees) connects to the graph Laplacian via Kirchhoff's matrix-tree theorem.
 
-The chip-firing game provides a remarkably clean combinatorial model for algebraic geometry. Our formalization demonstrates that the foundational layer — divisors, chip-firing, canonical divisors, and the degree formula — can be established rigorously with modest effort. The deeper results (Riemann-Roch, Jacobian theory) require substantially more infrastructure but rest on these foundations.
+## 7. Applications
 
-The complete graph K_n serves as an ideal testing ground: its high symmetry makes computations tractable while preserving all the essential features of the theory. The canonical rank conjecture rank(K_{K_n}) = g - 1, which we verified for n ≤ 6, follows directly from Riemann-Roch and illustrates the power of the framework.
+### 7.1 Coding Theory
+Divisor theory on graphs provides bounds for error-correcting codes defined on graphs, analogous to Goppa codes on algebraic curves.
+
+### 7.2 Sandpile Models
+The chip-firing game is equivalent to the abelian sandpile model in statistical physics. Linear equivalence classes correspond to recurrent configurations of the sandpile.
+
+### 7.3 Gonality and Graph Algorithms
+The gonality of a graph (minimum degree of a rank-1 divisor) provides lower bounds for treewidth, with applications to graph algorithms and complexity theory.
+
+## 8. Discussion and Future Work
+
+### 8.1 Toward the Full Proof
+The main missing ingredient for a complete formalization of Baker-Norine is the rank function and its properties. Key steps include:
+- Formalizing Dhar's burning algorithm for computing q-reduced divisors
+- Proving that every divisor has a unique q-reduced representative
+- Establishing the rank inequality via the duality between effective and non-effective divisors
+
+### 8.2 Conjectures
+
+**Conjecture 1** (Rank of Canonical Divisor on K_n). For n ≥ 3, r(K_{K_n}) = g(K_n) − 1 = (n−1)(n−2)/2 − 1.
+
+This follows from the general Riemann-Roch theorem combined with r(0) = 0, but a direct combinatorial proof via chip-firing would provide additional insight.
+
+**Conjecture 2** (Effective Threshold). On K_n, a divisor D with deg(D) ≥ g(K_n) = (n−1)(n−2)/2 is always equivalent to an effective divisor. This is the graph-theoretic analogue of the classical result that divisors of degree ≥ g are always effective.
+
+### 8.3 Extensions
+Natural extensions include:
+- Weighted graphs and multigraphs
+- The tropical Riemann-Roch theorem for metric graphs
+- Connections to matroid theory and the Tutte polynomial
+- Computational aspects: algorithms for rank computation
 
 ## References
 
-[1] M. Baker, S. Norine. *Riemann-Roch and Abel-Jacobi theory on a finite graph.* Advances in Mathematics, 215(2):766-788, 2007.
+[1] M. Baker and S. Norine, "Riemann-Roch and Abel-Jacobi theory on a finite graph," *Advances in Mathematics*, vol. 215, no. 2, pp. 766–788, 2007.
 
-[2] M. Baker. *Specialization of linear systems from curves to graphs.* Algebra & Number Theory, 2(6):613-653, 2008.
+[2] D. Dhar, "Self-organized critical state of sandpile automaton models," *Physical Review Letters*, vol. 64, no. 14, pp. 1613–1616, 1990.
 
-[3] D. Dhar. *Self-organized critical state of sandpile automaton models.* Physical Review Letters, 64(14):1613, 1990.
+[3] M. Baker, "Specialization of linear systems from curves to graphs," *Algebra & Number Theory*, vol. 2, no. 6, pp. 613–653, 2008.
 
-[4] S. Corry, D. Perkinson. *Divisors and Sandpiles: An Introduction to Chip-Firing.* American Mathematical Society, 2018.
+[4] G. Mikhalkin and I. Zharkov, "Tropical curves, their Jacobians and theta functions," *Curves and Abelian Varieties*, Contemporary Mathematics, vol. 465, pp. 203–230, 2008.
 
-[5] G. Mikhalkin, I. Zharkov. *Tropical curves, their Jacobians, and theta functions.* In Curves and Abelian Varieties, Contemporary Mathematics, 465:203-230, 2008.
+[5] S. Corry and D. Perkinson, *Divisors and Sandpiles: An Introduction to Chip-Firing*, American Mathematical Society, 2018.
+
+[6] C. J. Heil, "A sharp Riemann-Roch theorem for graphs," M.Sc. Thesis, 2012.
