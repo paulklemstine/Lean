@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ade92380",
     "filename": "phantom_topologies_spaces_that_change_when_you_loo.json",
     "pkg_num": 209,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.73421,
     "title": "Phantom Topologies: Observer-Dependent Topological Spaces"
   },
   {
@@ -6656,8 +6656,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "phantom_topologies_spaces_that_change_when_you_loo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73421,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Phantom Topologies: Observer-Dependent Topological Spaces"
     }
