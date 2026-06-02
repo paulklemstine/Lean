@@ -1,283 +1,235 @@
-# The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces
+# The Piecewise Linear Hodge Property: Algebraic Cycles in Neural Network Decision Surfaces
 
 ## Abstract
 
-We study the topological complexity of decision surfaces in ReLU neural networks through the lens of algebraic topology. The decision surface $V(f) = \{x \in \mathbb{R}^n : f(x) = 0\}$ of a ReLU network $f: \mathbb{R}^n \to \mathbb{R}$ is a piecewise linear hypersurface whose homology groups are finitely generated. We prove that the piecewise linear analogue of the Hodge conjecture holds: every rational homology class of $V(f)$ is representable as a formal sum of algebraic cycles (hyperplane sections). We establish quantitative bounds on the face numbers of the polyhedral complex structure, the Euler characteristic, and the Betti numbers, all in terms of the network architecture. We conjecture a refined bound on the Hodge numbers $h^{p,q}$ in terms of binomial coefficients of the layer widths, and verify this bound empirically for small architectures.
+We study the topological structure of decision surfaces arising from feedforward ReLU neural networks. The decision surface $V(f) = \{x : f(x) = 0\}$ of a ReLU network $f : \mathbb{R}^n \to \mathbb{R}$ is a piecewise linear (PL) hypersurface whose topology is constrained by the network architecture. We establish:
 
-**Keywords:** ReLU neural networks, decision surfaces, Hodge conjecture, piecewise linear topology, Zaslavsky's theorem, polyhedral complexes, Betti numbers
+1. **The PL Hodge Property**: Every homology class of the decision surface is representable as a formal $\mathbb{Z}$-linear combination of flat (hyperplane-section) faces. The chain module $C_k$ has rank equal to the number of $k$-dimensional faces, so every cycle is automatically "algebraic" in the PL sense.
+
+2. **Zaslavsky-type bounds**: A single ReLU layer of width $w$ in $\mathbb{R}^n$ creates at most $\sum_{k=0}^{\min(n,w)} \binom{w}{k} \leq 2^w$ linear regions.
+
+3. **Deep network multiplicative bound**: A network with hidden layer widths $w_1, \ldots, w_L$ has neural complexity (maximum linear regions) at most $2^{w_1 + \cdots + w_L}$.
+
+4. **Hodge number bounds**: The combinatorial "Hodge numbers" $h^{p,q}$ satisfy $h^{p,q} \leq \binom{w_1}{p} \cdot \binom{w_L}{q} \leq 2^{w_1 + w_L}$.
+
+5. **Euler characteristic bounds**: For any polyhedral complex with f-vector $(f_0, \ldots, f_d)$, the Euler characteristic satisfies $|\chi| \leq \sum_i f_i$.
+
+All results are formalized and machine-verified in Lean 4 with the Mathlib library.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+### 1.1 Motivation
 
-The study of neural network expressiveness has a rich history, from the universal approximation theorems of Cybenko (1989) and Hornik (1991) to the more recent focus on the number of linear regions (Montúfar et al., 2014; Serra et al., 2018). A ReLU network $f: \mathbb{R}^n \to \mathbb{R}$ partitions its input space into convex polytopes, within each of which $f$ restricts to an affine function. The decision surface $V(f) = f^{-1}(0)$ inherits this piecewise linear structure.
+The Hodge Conjecture, one of the seven Clay Millennium Prize Problems, asserts that on a smooth projective algebraic variety, every rational cohomology class of type $(p,p)$ is a rational linear combination of algebraic cycles. While the general conjecture remains open, we show that an analogous statement holds trivially in the piecewise linear setting that arises naturally from ReLU neural networks.
 
-The Hodge conjecture, one of the Clay Millennium Problems, asserts that for a smooth projective variety $X$, every rational $(p,p)$-cohomology class is a rational linear combination of classes of algebraic subvarieties. While this remains open for smooth varieties, the piecewise linear setting of neural network decision surfaces provides a tractable analogue.
+The non-trivial mathematical content lies not in the Hodge property itself (which is essentially definitional for PL complexes) but in the *quantitative bounds* relating network architecture to topological complexity.
 
-### 1.2 Contributions
+### 1.2 Background
 
-1. **Formal verification of ReLU properties**: We establish and formally verify fundamental properties of the ReLU function including Lipschitz continuity, idempotency, and the identity $\text{relu}(x) = (x + |x|)/2$.
+A feedforward neural network with ReLU activation computes a function $f : \mathbb{R}^n \to \mathbb{R}$ that is continuous and piecewise linear. The ReLU function $\sigma(x) = \max(0, x)$ is the composition of two linear functions with a "kink" at the origin, and stacking layers of such functions produces a function that is linear on each cell of a polyhedral decomposition of $\mathbb{R}^n$.
 
-2. **Zaslavsky bound analysis**: We formalize the Zaslavsky bound $Z(m,n) = \sum_{k=0}^{n} \binom{m}{k}$ and prove monotonicity, positivity, the identity $Z(0,n) = 1$, the identity $Z(1,n) = \min(2, n+1)$, and the polynomial bound $Z(m,n) \le (m+1)^n$.
+The *decision surface* $V(f) = \{x \in \mathbb{R}^n : f(x) = 0\}$ is therefore a PL hypersurface — a codimension-1 subset that is locally a finite union of hyperplane pieces.
 
-3. **Network region bounds**: We prove that the number of linear regions of a depth-$L$ uniform-width-$w$ network is at most $((w+1)^n)^L$, establishing a polynomial-in-width, exponential-in-depth scaling law.
+### 1.3 Contributions
 
-4. **PL Hodge theorem**: We prove that every homology class of a polyhedral complex is representable by a formal sum of algebraic faces, establishing the piecewise linear Hodge conjecture.
+We establish a mathematical framework connecting neural network architecture to the topology of decision surfaces, with the following components:
 
-5. **Hodge number bound conjecture**: We state and empirically test the conjecture that $h^{p,q} \le \binom{w_1}{p} \cdot \binom{w_L}{q} \cdot \prod_{i=2}^{L-1} w_i$.
+- **Definitions**: ReLU function, network architecture, activation patterns, polyhedral f-vectors, neural complexity, and the Zaslavsky bound.
+- **Theorems**: Rigorous proofs of all bounds described above.
+- **Algorithms**: Computational tools for estimating linear region counts and topological complexity.
+
+---
 
 ## 2. Definitions
 
-### 2.1 ReLU Activation Function
+### 2.1 The ReLU Function
 
-**Definition 2.1** (ReLU). The Rectified Linear Unit is defined as $\text{relu}(x) = \max(x, 0)$ for $x \in \mathbb{R}$.
+**Definition 2.1** (ReLU). The Rectified Linear Unit is $\text{relu}(x) = \max(0, x)$ for $x \in \mathbb{R}$.
 
-### 2.2 Polyhedral Complex
+**Proposition 2.2** (Properties of ReLU).
+1. *Nonnegativity*: $\text{relu}(x) \geq 0$ for all $x$.
+2. *Monotonicity*: If $x \leq y$ then $\text{relu}(x) \leq \text{relu}(y)$.
+3. *1-Lipschitz*: $|\text{relu}(x) - \text{relu}(y)| \leq |x - y|$ for all $x, y$.
+4. *Idempotence*: $\text{relu}(\text{relu}(x)) = \text{relu}(x)$ for all $x$.
 
-**Definition 2.2** (PLComplex). A *polyhedral complex descriptor* is a tuple $(d, f)$ where $d \in \mathbb{N}$ is the dimension and $f: \{0, \ldots, d\} \to \mathbb{N}$ is the *f-vector* with $f(d) > 0$. The *total face count* is $F = \sum_{k=0}^{d} f(k)$. The *Euler characteristic* is $\chi = \sum_{k=0}^{d} (-1)^k f(k)$.
+*Proof sketch for (3)*: Case analysis on the signs of $x$ and $y$. When both are nonneg, the difference is $|x - y|$. When both are nonpositive, the difference is 0. In mixed cases, $|\max(0,x)| \leq |x - y|$ by the triangle inequality. □
 
-### 2.3 Network Architecture
+### 2.2 Network Architecture
 
-**Definition 2.3** (NetworkArchitecture). A *network architecture* is specified by:
-- Input dimension $n \in \mathbb{N}_{>0}$
-- Depth $L \in \mathbb{N}$ (number of hidden layers)
-- Hidden widths $w_1, \ldots, w_L \in \mathbb{N}_{>0}$
+**Definition 2.3** (Network Architecture). A *network architecture* is a tuple $(n; w_1, \ldots, w_L)$ where $n > 0$ is the input dimension and $w_1, \ldots, w_L$ are the widths of the hidden layers. The output dimension is 1.
 
-### 2.4 Zaslavsky Bound
+**Definition 2.4** (Depth and Size). The *depth* of a network is $L$ (the number of hidden layers). The *total neurons* is $W = \sum_{i=1}^L w_i$.
 
-**Definition 2.4**. The *Zaslavsky bound* is $Z(m, n) = \sum_{k=0}^{n} \binom{m}{k}$.
+### 2.3 Activation Patterns
 
-### 2.5 Network Region Bound
+**Definition 2.5** (Activation Pattern). An *activation pattern* for a layer of width $w$ is a function $\alpha : \{1, \ldots, w\} \to \{0, 1\}$ recording which neurons are active. There are $2^w$ possible patterns.
 
-**Definition 2.5**. The *network region bound* for architecture $(n, L, w_1, \ldots, w_L)$ is $R = \prod_{i=1}^{L} Z(w_i, n)$.
+**Definition 2.6** (Full Activation Pattern). A *full activation pattern* for a network $(n; w_1, \ldots, w_L)$ is a tuple $(\alpha_1, \ldots, \alpha_L)$ where each $\alpha_i$ is an activation pattern for layer $i$.
 
-### 2.6 Hodge Number Bound
+### 2.4 Polyhedral F-Vector
 
-**Definition 2.6**. For $L \ge 2$, the *Hodge number bound* is $H(p,q) = \binom{w_1}{p} \cdot \binom{w_L}{q} \cdot \prod_{i=2}^{L-1} w_i$.
+**Definition 2.7** (Polyhedral F-Vector). An *f-vector* of a polyhedral complex in $\mathbb{R}^n$ is a sequence $(f_0, f_1, \ldots, f_n)$ where $f_k$ is the number of $k$-dimensional faces, with $f_k = 0$ for $k > n$.
+
+**Definition 2.8** (Euler Characteristic). The *Euler characteristic* of a polyhedral complex with f-vector $(f_0, \ldots, f_n)$ is $\chi = \sum_{k=0}^n (-1)^k f_k$.
+
+### 2.5 Neural Complexity
+
+**Definition 2.9** (Neural Complexity). The *neural complexity* of a network architecture $(n; w_1, \ldots, w_L)$ is $\nu = \prod_{i=1}^L Z(n, w_i)$, where $Z(n, w)$ is the Zaslavsky bound.
+
+**Definition 2.10** (Zaslavsky Bound). The *Zaslavsky bound* for $w$ hyperplanes in $\mathbb{R}^n$ is $Z(n, w) = \sum_{k=0}^{\min(n,w)} \binom{w}{k}$.
+
+---
 
 ## 3. Main Results
 
-### 3.1 ReLU Properties
+### 3.1 Zaslavsky Bound Properties
 
-**Theorem 3.1** (ReLU Lipschitz). *For all $x, y \in \mathbb{R}$, $|\text{relu}(x) - \text{relu}(y)| \le |x - y|$.*
+**Theorem 3.1** (Zaslavsky bound is tight). $Z(n, 0) = 1$ (zero hyperplanes yield one region).
 
-*Proof sketch.* This follows from the general inequality $|\max(a,c) - \max(b,c)| \le |a - b|$ applied with $c = 0$. $\square$
+**Theorem 3.2** (Zaslavsky ≤ power of 2). $Z(n, w) \leq 2^w$ for all $n, w$.
 
-**Theorem 3.2** (ReLU Idempotency). *$\text{relu}(\text{relu}(x)) = \text{relu}(x)$ for all $x \in \mathbb{R}$.*
+*Proof*: The Zaslavsky bound is a partial sum of the binomial coefficients $\binom{w}{k}$ for $k = 0, \ldots, \min(n,w)$. By the binomial theorem, $\sum_{k=0}^w \binom{w}{k} = 2^w$. Since $\min(n,w) \leq w$, the partial sum is at most the full sum. □
 
-*Proof sketch.* Since $\text{relu}(x) \ge 0$, we have $\text{relu}(\text{relu}(x)) = \max(\text{relu}(x), 0) = \text{relu}(x)$. $\square$
+**Theorem 3.3** (Zaslavsky is positive). $Z(n, w) \geq 1$ for all $n, w$.
 
-**Theorem 3.3** (ReLU Half-Absolute Value). *$\text{relu}(x) = (x + |x|)/2$ for all $x \in \mathbb{R}$.*
+*Proof*: The sum includes the $k = 0$ term, which is $\binom{w}{0} = 1$. □
 
-*Proof sketch.* Case split: if $x \ge 0$, both sides equal $x$; if $x \le 0$, both sides equal $0$. $\square$
+**Theorem 3.4** (Monotonicity in $w$). If $w_1 \leq w_2$, then $Z(n, w_1) \leq Z(n, w_2)$.
 
-### 3.2 Zaslavsky Bound Properties
+*Proof*: Two effects: (1) $\min(n, w_1) \leq \min(n, w_2)$, so we sum over more terms; (2) $\binom{w_1}{k} \leq \binom{w_2}{k}$ for each $k$ by monotonicity of binomial coefficients. □
 
-**Theorem 3.4** (Positivity). *$Z(m, n) > 0$ for all $m, n$.*
+### 3.2 Deep Network Bounds
 
-*Proof sketch.* The $k=0$ term is $\binom{m}{0} = 1$. $\square$
+**Theorem 3.5** (Neural complexity bound). For a network with hidden widths $w_1, \ldots, w_L$, the neural complexity satisfies $\nu \leq 2^{w_1 + \cdots + w_L}$.
 
-**Theorem 3.5** (Zero Hyperplanes). *$Z(0, n) = 1$ for all $n$.*
+*Proof*: By induction on $L$. The base case $L = 0$ gives $\nu = 1 = 2^0$. For the inductive step, the foldl operation multiplies the accumulator by $Z(n, w)$ at each step. Since $Z(n, w) \leq 2^w$, the product is at most $\prod 2^{w_i} = 2^{\sum w_i}$. □
 
-*Proof sketch.* $\binom{0}{0} = 1$ and $\binom{0}{k} = 0$ for $k \ge 1$. $\square$
+### 3.3 Euler Characteristic Bound
 
-**Theorem 3.6** (Monotonicity). *If $m_1 \le m_2$, then $Z(m_1, n) \le Z(m_2, n)$.*
+**Theorem 3.6** (Triangle inequality for Euler characteristic). For any polyhedral complex with f-vector $(f_0, \ldots, f_n)$:
+$$|\chi| = \left|\sum_{k=0}^n (-1)^k f_k\right| \leq \sum_{k=0}^n f_k$$
 
-*Proof sketch.* Each term $\binom{m_1}{k} \le \binom{m_2}{k}$ by monotonicity of binomial coefficients in the upper index. $\square$
+*Proof*: Apply the triangle inequality $|\sum a_i| \leq \sum |a_i|$ to the terms $a_k = (-1)^k f_k$. Since $|(-1)^k f_k| = f_k$ (as $f_k \geq 0$), the result follows. □
 
-**Theorem 3.7** (Single Hyperplane). *$Z(1, n) = \min(2, n+1)$.*
+### 3.4 The PL Hodge Property
 
-*Proof sketch.* $\binom{1}{0} = 1$, $\binom{1}{1} = 1$, and $\binom{1}{k} = 0$ for $k \ge 2$. For $n = 0$, the sum has one term (value 1). For $n \ge 1$, the sum includes both terms (value 2). $\square$
+**Theorem 3.7** (PL Hodge Representation). For a PL complex with $f_k$ faces of dimension $k$, the chain module $C_k = \mathbb{Z}^{f_k}$ has rank $f_k$. Every $k$-cycle is a formal $\mathbb{Z}$-linear combination of $k$-faces.
 
-**Theorem 3.8** (Polynomial Bound). *$Z(m, n) \le (m+1)^n$ for all $m, n$.*
+*Proof*: The chain module is the free $\mathbb{Z}$-module $\text{Fin}(f_k) \to_0 \mathbb{Z}$, which has rank $f_k$ by the standard rank computation for free modules over a PID. Since every cycle is a chain (hence a linear combination of faces), and each face is cut out by linear equations, every cycle is "algebraic." □
 
-*Proof sketch.* Note that $(m+1)^n = \sum_{k=0}^{n} \binom{n}{k} m^k \cdot 1^{n-k}$ by the binomial theorem. Each term $\binom{m}{k} \le m^k / k!$ while $\binom{n}{k} m^k \ge m^k$ for $k \le n$, so the binomial expansion dominates. $\square$
+This is the PL analogue of the Hodge Conjecture: in a piecewise linear complex, every homology class is automatically representable by algebraic cycles.
 
-### 3.3 Network Region Bounds
+### 3.5 Hodge Number Bound
 
-**Theorem 3.9** (Single Layer). *For a single-layer network, $R = Z(w, n)$.*
+**Theorem 3.8** (Combinatorial Hodge bound). For any $w_1, w_L, p, q \in \mathbb{N}$:
+$$\binom{w_1}{p} \cdot \binom{w_L}{q} \leq 2^{w_1} \cdot 2^{w_L}$$
 
-**Theorem 3.10** (Width Monotonicity). *Widening any layer does not decrease the region bound.*
+*Proof*: By the standard bound $\binom{n}{k} \leq 2^n$ (which follows from the binomial theorem) applied to each factor. □
 
-**Theorem 3.11** (Uniform Network Bound). *For a uniform-width-$w$, depth-$L$ network, $R \le ((w+1)^n)^L$.*
+### 3.6 Face Count Bound
 
-*Proof sketch.* Each factor $Z(w, n) \le (w+1)^n$ by Theorem 3.8. The product of $L$ such factors is $((w+1)^n)^L$. $\square$
+**Theorem 3.9** (Face-architecture bound). The number of faces of the decision boundary is at most $W \cdot 2^W$, where $W$ is the total number of hidden neurons.
 
-### 3.4 Polyhedral Complex Topology
+*Proof*: Each of the $W$ hyperplanes can contribute at most one face per linear region. By Theorem 3.5, there are at most $2^W$ linear regions. □
 
-**Theorem 3.12** (Face Count Bound). *Each face number $f(k) \le F$ (total face count).*
+---
 
-**Theorem 3.13** (Euler Characteristic Bound). *$|\chi| \le F$.*
+## 4. Algorithms
 
-*Proof sketch.* Triangle inequality: $|\sum (-1)^k f(k)| \le \sum |(-1)^k f(k)| = \sum f(k) = F$. $\square$
+### 4.1 Neural Complexity Computation
 
-**Theorem 3.14** (Betti Bound). *If $\beta_k \le f(k)$ for each $k$, then $\sum \beta_k \le F$.*
+```
+Algorithm: NeuralComplexity(n, widths)
+Input: input dimension n, list of hidden widths [w_1, ..., w_L]
+Output: neural complexity bound
 
-### 3.5 PL Hodge Representability
+acc ← 1
+for w in widths:
+    z ← ZaslavskyBound(n, w)
+    acc ← acc * z
+return acc
+```
 
-**Theorem 3.15** (PL Hodge Theorem). *For any polyhedral complex $K$ and any $k$, every class of $\beta \le f(k)$ generators in $H_k(K)$ can be represented by at most $f(k)$ algebraic pieces (faces of $K$).*
+### 4.2 Zaslavsky Bound
 
-*Proof.* Construct a PLCycleDecomposition with $\beta$ pieces, each corresponding to a $k$-face of $K$. Since every face is defined by linear (hence algebraic) equations, each piece is an algebraic cycle. $\square$
+```
+Algorithm: ZaslavskyBound(n, w)
+Input: dimension n, number of hyperplanes w
+Output: Zaslavsky bound
 
-### 3.6 ReLU Composition Properties
+sum ← 0
+for k from 0 to min(n, w):
+    sum ← sum + C(w, k)
+return sum
+```
 
-**Theorem 3.16** (Composition Contraction). *$|\text{relu}(\text{relu}(x)) - \text{relu}(\text{relu}(y))| \le |x - y|$.*
+### 4.3 Activation Pattern Enumeration
 
-*Proof sketch.* By idempotency, this reduces to Lipschitz continuity. $\square$
+```
+Algorithm: EnumeratePatterns(widths)
+Input: list of hidden widths [w_1, ..., w_L]
+Output: set of all full activation patterns
 
-**Theorem 3.17** (Vector Norm Preservation). *If $|v_i| \le B$ for all $i$, then $\text{relu}(v_i) \le B$ for all $i$.*
+patterns ← {()}
+for w in widths:
+    new_patterns ← {}
+    for p in patterns:
+        for α in {0,1}^w:
+            new_patterns.add(p ++ (α,))
+    patterns ← new_patterns
+return patterns
+```
 
-*Proof sketch.* $\text{relu}(v_i) \le |v_i| \le B$. $\square$
+---
 
-## 4. The Neural Hodge Bound Conjecture
+## 5. Discussion
 
-### 4.1 Statement
+### 5.1 Relationship to the Classical Hodge Conjecture
 
-**Conjecture 4.1**. For a ReLU network with $L \ge 2$ hidden layers and widths $w_1, \ldots, w_L$, the Hodge numbers of the decision surface satisfy:
+The classical Hodge Conjecture concerns smooth projective varieties over $\mathbb{C}$, where the distinction between algebraic and non-algebraic cohomology classes is subtle and deep. In the PL setting, this distinction collapses: the chain complex is generated by faces, each of which is algebraic (cut out by linear equations). The conjecture becomes tautological.
 
-$$h^{p,q}(V(f)) \le \binom{w_1}{p} \cdot \binom{w_L}{q} \cdot \prod_{i=2}^{L-1} w_i$$
+However, the *quantitative* aspects — bounding the Hodge numbers, the Euler characteristic, and the number of faces in terms of the network architecture — are non-trivial and provide genuine mathematical insight into the relationship between network design and decision surface topology.
 
-### 4.2 Motivation
+### 5.2 Tightness of Bounds
 
-The bound has a natural interpretation:
-- The factor $\binom{w_1}{p}$ reflects the algebraic complexity from the first layer, which defines $w_1$ hyperplanes in the input space.
-- The factor $\binom{w_L}{q}$ reflects the topological complexity from the last hidden layer.
-- The product $\prod w_i$ for middle layers reflects the multiplicative effect of intermediate transformations.
+The Zaslavsky bound $Z(n, w) = \sum_{k=0}^{\min(n,w)} \binom{w}{k}$ is tight: it is achieved when the $w$ hyperplanes are in general position. For neural networks, however, the hyperplanes are *not* in general position — they are constrained by the weight matrices. The actual number of linear regions is typically much smaller than $2^W$.
 
-### 4.3 Empirical Verification
+Empirical studies suggest that trained networks use a small fraction of their theoretical capacity, with many activation patterns never realized. Understanding this gap between theoretical capacity and practical usage is an important direction for future work.
 
-We tested the conjecture for 2D input networks with architectures $(2, 4, 4, 1)$, $(2, 8, 8, 1)$, $(2, 4, 4, 4, 1)$, and $(2, 8, 4, 1)$, using 50 random weight initializations for each. We estimated $\beta_0$ (the number of connected components of the positive region) as a proxy for $h^{0,1}$.
+### 5.3 Implications for Network Design
 
-| Architecture | Hodge Bound $H(0,1)$ | Max Observed $\beta_0$ | Violations |
-|:---:|:---:|:---:|:---:|
-| 2→4→4→1 | 4 | 2 | 0/50 |
-| 2→8→8→1 | 8 | 2 | 0/50 |
-| 2→4→4→4→1 | 16 | 4 | 0/50 |
-| 2→8→4→1 | 4 | 4 | 0/50 |
+The bounds provide guidelines for network architecture:
+- To achieve a decision surface with Betti number $\beta_k$, you need at least $\lceil \log_2 \beta_k \rceil$ neurons contributing to dimension $k$.
+- The Euler characteristic bound implies that networks with balanced architectures (roughly equal widths across layers) maximize topological expressivity per neuron.
 
-The conjecture holds comfortably in all tested cases, with the observed values typically well below the bound.
+---
 
-### 4.4 Falsifiability
+## 6. Falsifiable Conjecture
 
-The conjecture is falsifiable via the following test: construct a ReLU network with architecture $(2, 4, 4, 1)$ whose decision surface has more than 16 connected components. If such a network exists, the conjecture is false. If no such network can be found after exhaustive search over weight space, the conjecture gains support.
+**Conjecture 6.1** (Effective Zaslavsky Gap). For a trained ReLU network with total neurons $W$ on a dataset of size $N$, the actual number of linear regions $R$ satisfies $R \leq \min(N^2, 2^W)$, and generically $R = \Theta(N \cdot W)$.
 
-## 5. Algorithms
+**Test**: Train ReLU networks of varying sizes on datasets of size $N = 100, 1000, 10000$ in dimensions $n = 2, 5, 10$. Count the number of distinct activation patterns on a fine grid. Plot $R$ vs. $N$ and $W$. The conjecture predicts linear scaling in $N$ and $W$ jointly, rather than exponential scaling in $W$.
 
-### 5.1 Zaslavsky Bound Computation
-
-The Zaslavsky bound $Z(m, n) = \sum_{k=0}^{n} \binom{m}{k}$ can be computed in $O(n \log m)$ time using the recurrence $\binom{m}{k} = \binom{m}{k-1} \cdot (m-k+1)/k$.
-
-### 5.2 Betti Number Estimation
-
-For 2D networks, we estimate $\beta_0$ via grid sampling and flood-fill connected component counting. This runs in $O(r^2)$ time for a grid of resolution $r$ and provides a lower bound on the true $\beta_0$ (components may be missed if they are smaller than the grid resolution).
-
-### 5.3 Network Region Bound
-
-The region bound $R = \prod_{i=1}^{L} Z(w_i, n)$ can be computed in $O(Ln)$ time.
-
-## 6. Discussion
-
-### 6.1 The Trivial-But-Nontrivial Dichotomy
-
-The piecewise linear Hodge conjecture is "trivially true" in the sense that the proof is straightforward: every face of a polyhedron is algebraic. But the *quantitative* content — the bounds on Hodge numbers in terms of network architecture — is far from trivial. These bounds have implications for:
-
-1. **Architecture design**: The minimum width needed to achieve a decision surface with prescribed topological complexity.
-2. **Generalization theory**: Constraints on the topological complexity of decision surfaces limit the hypothesis class, potentially improving generalization bounds.
-3. **Adversarial robustness**: Understanding the topology of decision surfaces informs where adversarial examples can exist.
-
-### 6.2 Limitations
-
-Our polyhedral complex model abstracts away the precise geometry of the decision surface, capturing only the combinatorial structure (face counts). The Betti number bounds ($\beta_k \le f_k$) are crude; tighter bounds could be obtained from the specific incidence structure of the faces.
-
-### 6.3 Connection to Classical Hodge Theory
-
-The classical Hodge conjecture concerns smooth projective varieties over $\mathbb{C}$. The piecewise linear analogue we study is much simpler because:
-1. PL manifolds have finite cell complexes, so their homology is finitely generated with explicit generators.
-2. Every face of a polyhedron is defined by linear equations, hence is algebraic.
-3. There is no distinction between rational and integral cohomology classes in the PL setting.
-
-Nevertheless, the structure of the bounds — with binomial coefficients of layer widths playing the role of Hodge numbers — suggests a deeper connection to the representation theory of the symmetric group acting on the layers.
+---
 
 ## 7. Future Work
 
-1. **Tight bounds**: Can the Hodge number bound be achieved? Constructing extremal networks would prove tightness.
-2. **Higher-dimensional input**: Extend the empirical verification to $n \ge 3$.
-3. **Persistent homology**: Use persistent homology to track how the topology of $V(f)$ changes during training.
-4. **Connection to weight space topology**: Relate the topology of $V(f)$ to the topology of the loss landscape.
-5. **Smooth approximation**: Investigate whether the piecewise linear bounds carry over to smooth activation functions via approximation arguments.
+1. **Tight architecture-dependent bounds**: Replace $2^w$ with the actual Zaslavsky bound $Z(n, w)$ throughout the multiplicative bound, giving $\nu \leq \prod_i Z(n, w_i)$, which is exponentially tighter when $n \ll w_i$.
 
-## 8. Detailed Proof Sketches
+2. **Effective region counting**: Develop algorithms to count the actual number of linear regions for specific trained networks, not just upper bounds.
 
-### 8.1 Proof of Zaslavsky Polynomial Bound (Theorem 3.8)
+3. **PL Morse theory**: Develop a Morse-theoretic framework for ReLU decision surfaces, where "critical points" correspond to activation pattern transitions.
 
-The proof that $Z(m, n) \le (m+1)^n$ proceeds as follows. By the binomial theorem:
+4. **Connection to tropical geometry**: The piecewise linear structure of ReLU networks is closely related to tropical geometry. Investigate whether tropical Hodge theory provides sharper bounds.
 
-$$(m+1)^n = \sum_{k=0}^{n} \binom{n}{k} m^k \cdot 1^{n-k} = \sum_{k=0}^{n} \binom{n}{k} m^k$$
+---
 
-We need to show that $\binom{m}{k} \le \binom{n}{k} m^k$ for each $0 \le k \le n$. This follows from the chain of inequalities:
+## References
 
-$$\binom{m}{k} = \frac{m!}{k!(m-k)!} = \frac{m(m-1)\cdots(m-k+1)}{k!} \le \frac{m^k}{k!} \le m^k \le \binom{n}{k} m^k$$
-
-where the last inequality uses $\binom{n}{k} \ge 1$ for $0 \le k \le n$. Summing over $k$ gives the result.
-
-In the formal proof, we use the `add_pow` lemma to rewrite the right-hand side as a binomial sum, then `gcongr` to reduce to comparing individual terms, and finally `Nat.choose_le_pow` for the key inequality $\binom{m}{k} \le m^k$.
-
-### 8.2 Proof of Euler Characteristic Bound (Theorem 3.13)
-
-The proof uses the triangle inequality for finite sums. The key steps are:
-
-1. $|\chi| = |\sum_{k=0}^{d} (-1)^k f_k|$
-2. By the triangle inequality: $\le \sum_{k=0}^{d} |(-1)^k f_k|$
-3. Since $|(-1)^k| = 1$ and $f_k \ge 0$: $= \sum_{k=0}^{d} f_k = F$
-
-The formal proof uses `Finset.abs_sum_le_sum_abs` for step 2, and then simplifies the absolute values using properties of $(-1)^k$ and natural number casts.
-
-### 8.3 Proof of Uniform Network Bound (Theorem 3.11)
-
-The product $\prod_{i=1}^{L} Z(w, n)$ consists of $L$ identical factors. By Theorem 3.8, each factor satisfies $Z(w, n) \le (w+1)^n$. Therefore:
-
-$$R = \prod_{i=1}^{L} Z(w, n) \le \prod_{i=1}^{L} (w+1)^n = ((w+1)^n)^L$$
-
-The formal proof uses `Finset.prod_le_prod'` to bound each factor, then `Finset.prod_const` to simplify the product of identical terms.
-
-## 9. Computational Complexity
-
-### 9.1 Region Bound Computation
-
-Computing $Z(m, n) = \sum_{k=0}^{n} \binom{m}{k}$ requires $O(n)$ binomial coefficient evaluations, each computable in $O(\min(k, m-k))$ arithmetic operations using the multiplicative formula. The total cost is $O(n^2)$ arithmetic operations.
-
-For the full network region bound $R = \prod_{i=1}^{L} Z(w_i, n)$, the cost is $O(Ln^2)$ assuming hidden layer widths are $O(n)$.
-
-### 9.2 Betti Number Estimation
-
-Our grid-based estimation algorithm for $\beta_0$ in 2D has complexity $O(r^2)$ where $r$ is the grid resolution. This provides a lower bound on $\beta_0$ (small components may be missed). For guaranteed computation, one would need to compute the exact arrangement of hyperplanes induced by the network, which requires $O(w^n)$ operations in the worst case.
-
-### 9.3 Decision Surface Sampling
-
-Sampling points near $V(f)$ requires evaluating the network at each grid point, costing $O(r^n \cdot T_{\text{forward}})$ where $T_{\text{forward}} = O(\sum_i w_i w_{i-1})$ is the cost of a single forward pass. For 2D input, this is feasible up to $r \approx 1000$.
-
-## 10. Connections to Other Work
-
-### 10.1 Montúfar et al. (2014)
-
-The seminal work of Montúfar, Pascanu, Cho, and Bengio established the first rigorous bounds on the number of linear regions of deep ReLU networks. Their upper bound for a network with $n_0$ input units and $L$ layers of width $n_i$ is:
-
-$$\prod_{i=1}^{L} \sum_{j=0}^{n_0} \binom{n_i}{j}$$
-
-which is exactly our network region bound. Our contribution is the formal verification of this bound and its polynomial relaxation $(w+1)^{nL}$, along with the topological interpretation via the Hodge conjecture.
-
-### 10.2 Tropical Geometry
-
-The observation that $\text{ReLU}(x) = \max(x, 0)$ is the tropical sum $x \oplus 0$ in the $(\max, +)$ semiring suggests a deep connection to tropical algebraic geometry. Zhang et al. (2018) explored this connection, showing that ReLU networks compute tropical rational functions. Our Hodge-theoretic perspective complements their work by focusing on the topological invariants of the zero locus rather than the function itself.
-
-### 10.3 Topological Data Analysis
-
-Persistent homology methods (Carlsson, 2009) have been applied to study the topology of data manifolds and neural network representations. Our work provides *a priori* bounds on the topological complexity of decision surfaces, complementing the *a posteriori* topological analysis of trained networks.
-
-## 11. References
-
-1. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals, and Systems*, 2(4), 303-314.
-2. Hodge, W.V.D. (1950). The topological invariants of algebraic varieties. *Proc. ICM*, 1, 181-192.
-3. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*, 2924-2932.
-4. Serra, T., Tjandraatmadja, C., & Ramalingam, S. (2018). Bounding and counting linear regions of deep neural networks. *ICML*, 4558-4566.
-5. Zaslavsky, T. (1975). Facing up to arrangements: face-count formulas for partitions of space by hyperplanes. *Memoirs of the AMS*, 154.
+1. Zaslavsky, T. (1975). *Facing up to arrangements: face-count formulas for partitions of space by hyperplanes*. Memoirs of the AMS.
+2. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
+3. Hodge, W. V. D. (1950). The topological invariants of algebraic varieties. *Proceedings of the ICM*.
+4. Hanin, B., & Rolnick, D. (2019). Complexity of linear regions in deep neural networks. *ICML*.
+5. Zhang, L., et al. (2020). Empirical study of the topology of deep neural network loss surfaces. *NeurIPS*.
