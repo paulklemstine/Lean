@@ -1,260 +1,313 @@
+#!/usr/bin/env python3
 """
-Algorithms for Prime Frequency Spectrum Analysis
+Algorithms for Prime Spectral Analysis of the Riemann Zeta Function.
 
-Implements the algorithms described in the research paper for computing
-prime frequencies, finite prime signals, and spectral analysis.
+Type-hinted implementations of:
+1. Prime spectrum computation
+2. Spectral consonance analysis
+3. Fourier transform of zeta on the critical line
+4. Spectral density estimation
+5. Dissonance measure computation
 """
 
-import numpy as np
+from math import log, sqrt, pi, floor, ceil
 from typing import List, Tuple, Optional
+import numpy as np
 
+
+# ============================================================
+# Algorithm 1: Prime Sieve and Spectrum Construction
+# ============================================================
 
 def sieve_of_eratosthenes(n: int) -> List[int]:
     """
-    Compute all primes up to n using the Sieve of Eratosthenes.
-    
-    Time complexity: O(n log log n)
-    Space complexity: O(n)
-    
+    Standard sieve of Eratosthenes.
+
     Args:
         n: Upper bound for prime search
+
     Returns:
-        Sorted list of all primes p with 2 ≤ p ≤ n
-    
-    Example:
-        >>> sieve_of_eratosthenes(20)
-        [2, 3, 5, 7, 11, 13, 17, 19]
+        Sorted list of primes ≤ n
+
+    Complexity: O(n log log n) time, O(n) space
     """
     if n < 2:
         return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
     for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
+        if sieve[i]:
             for j in range(i * i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+                sieve[j] = False
+    return [i for i in range(n + 1) if sieve[i]]
 
 
-def compute_prime_frequencies(primes: List[int]) -> List[Tuple[int, float]]:
+def compute_prime_spectrum(n: int) -> List[Tuple[int, float, float]]:
     """
-    Compute the prime frequency spectrum: (p, log(p)/(2π)) for each prime.
-    
-    Time complexity: O(K) where K = len(primes)
-    
+    Compute the prime spectrum up to n.
+
+    Each prime p contributes a spectral line at:
+      - Frequency: f(p) = log(p) / (2π)
+      - Amplitude: w(p) = 1 / √p
+
     Args:
-        primes: List of prime numbers
+        n: Upper bound for prime search
+
     Returns:
-        List of (prime, frequency) pairs
-    
-    Example:
-        >>> compute_prime_frequencies([2, 3, 5])
-        [(2, 0.1103...), (3, 0.1749...), (5, 0.2562...)]
+        List of (prime, frequency, weight) tuples, sorted by frequency
     """
-    return [(p, np.log(p) / (2 * np.pi)) for p in primes]
+    primes = sieve_of_eratosthenes(n)
+    return [(p, log(p) / (2 * pi), 1.0 / sqrt(p)) for p in primes]
 
 
-def compute_spectral_gaps(primes: List[int]) -> List[Tuple[int, int, float]]:
+# ============================================================
+# Algorithm 2: Spectral Consonance Analysis
+# ============================================================
+
+def frequency_ratio(p: int, q: int) -> float:
     """
-    Compute spectral gaps between consecutive primes.
-    
+    Compute the spectral frequency ratio log(q)/log(p).
+
+    This ratio determines the "musical interval" between primes p and q.
+    By Gelfond-Schneider, this is always irrational for distinct primes.
+
     Args:
-        primes: Sorted list of primes
+        p: First prime (must be ≥ 2)
+        q: Second prime (must be ≥ 2)
+
     Returns:
-        List of (p, q, gap) triples where gap = (log(q) - log(p))/(2π)
-    
-    Example:
-        >>> compute_spectral_gaps([2, 3, 5, 7])
-        [(2, 3, 0.0645...), (3, 5, 0.0813...), (5, 7, 0.0535...)]
+        log(q) / log(p)
     """
+    return log(q) / log(p)
+
+
+def best_rational_approximation(x: float, max_denom: int) -> Tuple[int, int, float]:
+    """
+    Find the best rational approximation a/b to x with b ≤ max_denom.
+
+    Uses the Stern-Brocot tree / mediants for efficiency.
+
+    Args:
+        x: Real number to approximate
+        max_denom: Maximum denominator allowed
+
+    Returns:
+        (a, b, distance) where |x - a/b| = distance is minimized
+    """
+    best_a, best_b = round(x), 1
+    best_dist = abs(x - best_a)
+
+    for b in range(1, max_denom + 1):
+        a = round(x * b)
+        dist = abs(x - a / b)
+        if dist < best_dist:
+            best_dist = dist
+            best_a, best_b = a, b
+
+    return best_a, best_b, best_dist
+
+
+def spectral_consonance_matrix(primes: List[int], max_denom: int = 50) -> np.ndarray:
+    """
+    Compute the consonance matrix for a set of primes.
+
+    Entry (i,j) = min distance of log(p_j)/log(p_i) from rationals with
+    denominator ≤ max_denom. Small values indicate "near-consonance."
+
+    Args:
+        primes: List of primes
+        max_denom: Maximum denominator for rational approximation
+
+    Returns:
+        n×n matrix of consonance values
+    """
+    n = len(primes)
+    matrix = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                matrix[i, j] = 0.0
+            else:
+                ratio = frequency_ratio(primes[i], primes[j])
+                _, _, dist = best_rational_approximation(ratio, max_denom)
+                matrix[i, j] = dist
+    return matrix
+
+
+# ============================================================
+# Algorithm 3: Zeta on Critical Line via Dirichlet Sum
+# ============================================================
+
+def zeta_critical_line(t: float, N: int = 1000) -> complex:
+    """
+    Approximate ζ(1/2 + it) using partial Dirichlet sum.
+
+    Z(t) ≈ Σ_{n=1}^{N} n^{-1/2 - it}
+
+    Args:
+        t: Real parameter (imaginary part on critical line)
+        N: Number of terms in partial sum
+
+    Returns:
+        Complex value ζ(1/2 + it)
+    """
+    result = 0j
+    for n in range(1, N + 1):
+        result += n ** (-0.5 - 1j * t)
+    return result
+
+
+def zeta_critical_line_vectorized(t_array: np.ndarray, N: int = 1000) -> np.ndarray:
+    """
+    Vectorized computation of ζ(1/2 + it) for an array of t values.
+
+    Args:
+        t_array: Array of real parameters
+        N: Number of terms in Dirichlet sum
+
+    Returns:
+        Array of complex values
+    """
+    result = np.zeros(len(t_array), dtype=complex)
+    for n in range(1, N + 1):
+        result += n ** (-0.5 - 1j * t_array)
+    return result
+
+
+# ============================================================
+# Algorithm 4: Windowed Fourier Transform of Zeta
+# ============================================================
+
+def fourier_transform_zeta(
+    omega_values: np.ndarray,
+    T: float = 100.0,
+    dt: float = 0.1,
+    N_dirichlet: int = 200,
+    window_type: str = "gaussian"
+) -> np.ndarray:
+    """
+    Compute the windowed Fourier transform of Z(t) = ζ(1/2+it).
+
+    F[Z](ω) = ∫ Z(t) · w(t) · e^{-2πiωt} dt
+
+    where w(t) is a window function ensuring convergence.
+
+    Args:
+        omega_values: Frequencies at which to evaluate the FT
+        T: Half-width of the integration window
+        dt: Time step for numerical integration
+        N_dirichlet: Terms in Dirichlet sum for Z(t)
+        window_type: "gaussian" or "hann"
+
+    Returns:
+        Complex array of Fourier transform values
+    """
+    t_values = np.arange(-T, T, dt)
+
+    # Window function
+    if window_type == "gaussian":
+        sigma = T / 3
+        window = np.exp(-t_values**2 / (2 * sigma**2))
+    elif window_type == "hann":
+        window = 0.5 * (1 + np.cos(pi * t_values / T))
+    else:
+        window = np.ones_like(t_values)
+
+    # Compute Z(t)
+    Z_values = zeta_critical_line_vectorized(t_values, N_dirichlet)
+    Z_windowed = Z_values * window
+
+    # Fourier transform
+    result = np.zeros(len(omega_values), dtype=complex)
+    for i, omega in enumerate(omega_values):
+        integrand = Z_windowed * np.exp(-2j * pi * omega * t_values)
+        result[i] = np.sum(integrand) * dt
+
+    return result
+
+
+# ============================================================
+# Algorithm 5: Spectral Density Estimation
+# ============================================================
+
+def spectral_density(f: float, n_primes: int = 10000) -> Tuple[int, float]:
+    """
+    Count prime spectral lines below frequency f and compare with
+    the PNT prediction e^{2πf} / (2πf).
+
+    Args:
+        f: Frequency threshold
+        n_primes: Number of primes to consider
+
+    Returns:
+        (actual_count, predicted_count)
+    """
+    x = np.exp(2 * pi * f)
+    primes = sieve_of_eratosthenes(int(min(x + 100, 10**7)))
+    actual = sum(1 for p in primes if log(p) / (2 * pi) <= f)
+    predicted = x / (2 * pi * f) if f > 0 else 0
+    return actual, predicted
+
+
+# ============================================================
+# Algorithm 6: Spectral Weight Partial Sums
+# ============================================================
+
+def spectral_weight_sum(n: int) -> Tuple[float, float]:
+    """
+    Compute Σ_{p prime, p ≤ n} 1/√p and compare with bound n/√2.
+
+    Args:
+        n: Upper bound
+
+    Returns:
+        (actual_sum, upper_bound)
+    """
+    primes = sieve_of_eratosthenes(n)
+    actual = sum(1.0 / sqrt(p) for p in primes)
+    bound = n / sqrt(2)
+    return actual, bound
+
+
+# ============================================================
+# Algorithm 7: Frequency Gap Analysis
+# ============================================================
+
+def frequency_gaps(n: int) -> List[Tuple[int, int, float, float]]:
+    """
+    Compute frequency gaps between consecutive primes and lower bounds.
+
+    Args:
+        n: Upper bound for primes
+
+    Returns:
+        List of (p, q, gap, lower_bound) for consecutive primes p < q
+    """
+    primes = sieve_of_eratosthenes(n)
     gaps = []
     for i in range(len(primes) - 1):
         p, q = primes[i], primes[i + 1]
-        gap = (np.log(q) - np.log(p)) / (2 * np.pi)
-        gaps.append((p, q, gap))
+        gap = log(q) / (2 * pi) - log(p) / (2 * pi)
+        lower = log(1 + 1.0 / p) / (2 * pi)
+        gaps.append((p, q, gap, lower))
     return gaps
 
 
-def evaluate_prime_signal(primes: List[int], t_values: np.ndarray) -> np.ndarray:
-    """
-    Evaluate the finite prime signal D_N(t) = Σ_p (1/√p) cos(t·log(p)).
-    
-    Time complexity: O(K × M) where K = len(primes), M = len(t_values)
-    
-    Args:
-        primes: List of primes to include
-        t_values: Array of time points at which to evaluate
-    Returns:
-        Array of signal values D_N(t)
-    
-    Example:
-        >>> primes = [2, 3, 5]
-        >>> t = np.array([0.0])
-        >>> evaluate_prime_signal(primes, t)  # Sum of 1/√p for p in primes
-        array([1.485...])
-    """
-    signal = np.zeros_like(t_values, dtype=float)
-    for p in primes:
-        amplitude = 1.0 / np.sqrt(p)
-        log_p = np.log(p)
-        signal += amplitude * np.cos(t_values * log_p)
-    return signal
-
-
-def spectral_analysis_fft(
-    primes: List[int],
-    T: float = 500.0,
-    M: int = 2**16
-) -> Tuple[np.ndarray, np.ndarray, List[Tuple[float, float]]]:
-    """
-    Compute the spectral analysis of the prime signal via FFT.
-    
-    Samples D_N(t) at M uniformly spaced points in [-T, T],
-    computes the FFT, and identifies peaks.
-    
-    Time complexity: O(K·M + M log M)
-    
-    Args:
-        primes: List of primes
-        T: Time range [-T, T]
-        M: Number of sample points (should be power of 2)
-    Returns:
-        (freq_axis, magnitude, peaks) where peaks = [(freq, height), ...]
-    
-    Example:
-        >>> primes = sieve_of_eratosthenes(50)
-        >>> freqs, mag, peaks = spectral_analysis_fft(primes)
-    """
-    t = np.linspace(-T, T, M)
-    signal = evaluate_prime_signal(primes, t)
-    
-    spectrum = np.fft.fft(signal)
-    freqs = np.fft.fftfreq(M, d=(2 * T) / M)
-    
-    # Take positive frequencies only
-    pos_mask = freqs > 0
-    freq_axis = freqs[pos_mask]
-    magnitude = np.abs(spectrum[pos_mask])
-    
-    # Peak detection
-    threshold = 0.05 * np.max(magnitude)
-    peaks = []
-    for i in range(2, len(magnitude) - 2):
-        if (magnitude[i] > magnitude[i-1] and magnitude[i] > magnitude[i+1]
-                and magnitude[i] > threshold):
-            peaks.append((freq_axis[i], magnitude[i]))
-    
-    # Sort by height
-    peaks.sort(key=lambda x: -x[1])
-    
-    return freq_axis, magnitude, peaks
-
-
-def match_peaks_to_primes(
-    peaks: List[Tuple[float, float]],
-    primes: List[int],
-    tolerance: float = 0.01
-) -> List[Tuple[float, float, Optional[int], float]]:
-    """
-    Match detected spectral peaks to predicted prime frequencies.
-    
-    Args:
-        peaks: List of (frequency, height) pairs from FFT
-        primes: List of primes to match against
-        tolerance: Maximum frequency difference for a match
-    Returns:
-        List of (peak_freq, peak_height, matched_prime, error) tuples
-    """
-    prime_freqs = {p: np.log(p) / (2 * np.pi) for p in primes}
-    results = []
-    
-    for peak_f, peak_h in peaks:
-        best_prime = None
-        best_error = float('inf')
-        
-        for p, pf in prime_freqs.items():
-            error = abs(peak_f - pf)
-            if error < best_error:
-                best_error = error
-                best_prime = p
-        
-        if best_error < tolerance:
-            results.append((peak_f, peak_h, best_prime, best_error))
-        else:
-            results.append((peak_f, peak_h, None, best_error))
-    
-    return results
-
-
-def tropical_decomposition(n: int, primes: List[int]) -> List[Tuple[int, int, float]]:
-    """
-    Tropical decomposition of n: express primeFreq(n) as a sum of prime frequencies.
-    
-    Uses the factorization n = p1^a1 * p2^a2 * ... to compute
-    primeFreq(n) = a1*primeFreq(p1) + a2*primeFreq(p2) + ...
-    
-    Args:
-        n: Positive integer to decompose
-        primes: List of primes to use for factorization
-    Returns:
-        List of (prime, exponent, contribution) triples
-    
-    Example:
-        >>> tropical_decomposition(12, [2, 3, 5])
-        [(2, 2, 0.2207...), (3, 1, 0.1749...)]
-    """
-    if n <= 0:
-        raise ValueError("n must be positive")
-    
-    factors = []
-    remaining = n
-    for p in primes:
-        if p * p > remaining:
-            break
-        exp = 0
-        while remaining % p == 0:
-            exp += 1
-            remaining //= p
-        if exp > 0:
-            freq = np.log(p) / (2 * np.pi)
-            factors.append((p, exp, exp * freq))
-    
-    if remaining > 1:
-        freq = np.log(remaining) / (2 * np.pi)
-        factors.append((remaining, 1, freq))
-    
-    return factors
-
-
-def verify_tropical_homomorphism(a: int, b: int) -> Tuple[float, float, float]:
-    """
-    Verify the tropical homomorphism: primeFreq(a*b) = primeFreq(a) + primeFreq(b).
-    
-    Args:
-        a, b: Positive integers
-    Returns:
-        (lhs, rhs, error) where lhs = primeFreq(a*b), rhs = primeFreq(a) + primeFreq(b)
-    """
-    lhs = np.log(a * b) / (2 * np.pi)
-    rhs = np.log(a) / (2 * np.pi) + np.log(b) / (2 * np.pi)
-    return lhs, rhs, abs(lhs - rhs)
-
-
 if __name__ == "__main__":
-    # Example usage
-    primes = sieve_of_eratosthenes(100)
-    print("Prime frequencies:")
-    for p, f in compute_prime_frequencies(primes[:10]):
-        print(f"  p={p}, freq={f:.8f}")
-    
-    print("\nSpectral gaps:")
-    for p, q, gap in compute_spectral_gaps(primes[:10]):
-        print(f"  ({p}, {q}): gap = {gap:.8f}")
-    
-    print("\nTropical decomposition of 360 = 2^3 * 3^2 * 5:")
-    for p, exp, contrib in tropical_decomposition(360, primes):
-        print(f"  {p}^{exp}: contribution = {contrib:.8f}")
-    
-    total = sum(c for _, _, c in tropical_decomposition(360, primes))
-    direct = np.log(360) / (2 * np.pi)
-    print(f"  Total = {total:.8f}, direct = {direct:.8f}, error = {abs(total-direct):.2e}")
+    # Quick self-test
+    spectrum = compute_prime_spectrum(30)
+    print("Prime Spectrum (p ≤ 30):")
+    for p, f, w in spectrum:
+        print(f"  p={p:>2}, freq={f:.6f}, weight={w:.6f}")
+
+    print("\nConsonance matrix (first 5 primes):")
+    small = [2, 3, 5, 7, 11]
+    mat = spectral_consonance_matrix(small, max_denom=50)
+    for i, p in enumerate(small):
+        row = " ".join(f"{mat[i,j]:.4f}" for j in range(len(small)))
+        print(f"  p={p:>2}: {row}")
+
+    print("\nSpectral density test:")
+    for f in [0.5, 1.0, 1.5, 2.0]:
+        actual, predicted = spectral_density(f)
+        print(f"  f={f:.1f}: actual={actual}, predicted={predicted:.1f}")
