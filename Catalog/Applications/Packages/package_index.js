@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1ec1afe4",
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
     "pkg_num": 310,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6664140639097744,
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
@@ -10031,8 +10031,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6664140639097744,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
