@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2426 of the highest-quality
+A curated collection of 2431 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2426
+Total files: 2431
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -352,6 +352,7 @@ import FINAL.Bridges.BerggrenTransferDuality
 import FINAL.Bridges.BerggrenTropicalLensing
 import FINAL.Bridges.BerggrenVoronoiDuality
 import FINAL.Bridges.BetaClassCanonicity
+import FINAL.Bridges.BirthdayValuationBridge
 import FINAL.Bridges.BisimCohomology
 import FINAL.Bridges.BisimMinimization
 import FINAL.Bridges.BisimulationMetric
@@ -680,6 +681,7 @@ import FINAL.Bridges.PrimeSpectrumCodingTheorem
 import FINAL.Bridges.PrimeTorsionEchoes
 import FINAL.Bridges.PrimewisePersistenceBarrier
 import FINAL.Bridges.PrimewisePersistentHomology
+import FINAL.Bridges.PrivacySurveillanceConservation
 import FINAL.Bridges.ProfileRecovery
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
@@ -697,6 +699,7 @@ import FINAL.Bridges.ProvabilitySpectralTheory
 import FINAL.Bridges.PseudofiniteDimension
 import FINAL.Bridges.QuantumBerggrenFourier
 import FINAL.Bridges.QuantumBerggrenWalks
+import FINAL.Bridges.QuantumCasimirSpectral
 import FINAL.Bridges.QuantumClassicalBridge
 import FINAL.Bridges.QuantumDPPEntanglement
 import FINAL.Bridges.QuantumDagger
@@ -760,6 +763,7 @@ import FINAL.Bridges.SpectralPhaseTransitions
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
 import FINAL.Bridges.SpectralReciprocity
+import FINAL.Bridges.SpernerNashEquilibria
 import FINAL.Bridges.StabilizerGaloisConcatenation
 import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
@@ -1752,6 +1756,7 @@ import FINAL.Physics.PeriodicTableSpectral
 import FINAL.Physics.PersistentHomologicalQEC
 import FINAL.Physics.PersistentHomologicalQEC2
 import FINAL.Physics.PlanckSpacetime
+import FINAL.Physics.ProofSearchInformation
 import FINAL.Physics.QuantumE8ModularForms
 import FINAL.Physics.QuantumShells
 import FINAL.Physics.SelbergCensus

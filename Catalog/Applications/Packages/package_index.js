@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9cf115ef",
     "filename": "information_theoretic_limits_of_proof_search_how_h.json",
     "pkg_num": 266,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67123,
     "title": "Information-Theoretic Limits of Proof Search"
   },
   {
@@ -8553,8 +8553,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "information_theoretic_limits_of_proof_search_how_h",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67123,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Information-Theoretic Limits of Proof Search"
     }
