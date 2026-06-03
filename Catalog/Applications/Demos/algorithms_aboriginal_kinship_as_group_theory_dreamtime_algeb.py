@@ -1,292 +1,246 @@
+#!/usr/bin/env python3
 """
-Aboriginal Kinship Systems: Group-Theoretic Algorithms
+Algorithms for Aboriginal Kinship Group Theory
 
-Implements the core algorithms for computing kinship relations
-in Aboriginal section and subsection systems modeled as finite
-abelian groups (Z2)^n.
+Type-hinted implementations of the core algorithms for analyzing
+kinship systems as finite group structures.
 """
 
-from typing import Tuple, List, Set, Dict, Optional
-from itertools import product
+from typing import Tuple, Set, List, Dict, Optional
+from itertools import product as cartesian_product
 from dataclasses import dataclass
 
 
 # Type aliases
-Z2 = int  # Elements are 0 or 1, arithmetic mod 2
-Section4 = Tuple[Z2, Z2]
-Section8 = Tuple[Z2, Z2, Z2]
+Element = Tuple[int, ...]
+Group = Set[Element]
 
 
-def z2_add(a: Tuple[Z2, ...], b: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-    """Add two elements of (Z2)^n."""
+def z2n_add(a: Element, b: Element) -> Element:
+    """Addition in Z_2^n (componentwise XOR)."""
     return tuple((x + y) % 2 for x, y in zip(a, b))
 
 
-def z2_neg(a: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-    """Negate an element of (Z2)^n. (Same as identity since -1 = 1 mod 2.)"""
-    return a  # In Z2, every element is its own inverse
-
-
-def z2_sub(a: Tuple[Z2, ...], b: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-    """Subtract two elements of (Z2)^n."""
-    return z2_add(a, z2_neg(b))
-
-
-def z2_zero(n: int) -> Tuple[Z2, ...]:
-    """The zero element of (Z2)^n."""
+def z2n_zero(n: int) -> Element:
+    """Zero element of Z_2^n."""
     return tuple(0 for _ in range(n))
+
+
+def z2n_elements(n: int) -> List[Element]:
+    """All elements of Z_2^n."""
+    return list(cartesian_product(range(2), repeat=n))
 
 
 @dataclass
 class KinshipSystem:
-    """A kinship system on (Z2)^n with marriage and descent offsets.
+    """A kinship system on Z_2^n."""
+    n: int  # dimension
+    marriage_offset: Element
+    descent_offset: Element
 
-    Attributes:
-        n: Dimension (n=2 for 4-section, n=3 for 8-subsection)
-        marriage: Marriage offset element
-        descent: Descent offset element
-        section_names: Optional human-readable names for sections
-    """
-    n: int
-    marriage: Tuple[Z2, ...]
-    descent: Tuple[Z2, ...]
-    section_names: Optional[Dict[Tuple[Z2, ...], str]] = None
+    def marriage_partner(self, section: Element) -> Element:
+        """Compute marriage partner section."""
+        return z2n_add(section, self.marriage_offset)
 
-    def __post_init__(self) -> None:
-        assert len(self.marriage) == self.n
-        assert len(self.descent) == self.n
-        assert z2_add(self.marriage, self.marriage) == z2_zero(self.n), \
-            "Marriage must be an involution (2m = 0)"
-        assert self.marriage != z2_zero(self.n), "Exogamy: marriage offset must be nonzero"
-        assert self.descent != z2_zero(self.n), "Descent must be nontrivial"
-        assert self.marriage != self.descent, "Marriage and descent must be independent"
+    def child_section(self, mother: Element) -> Element:
+        """Compute child's section from mother's section."""
+        return z2n_add(mother, self.descent_offset)
 
-    def marry(self, section: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-        """Compute the marriage-eligible section for a given section.
+    def nth_descendant(self, section: Element, n: int) -> Element:
+        """Compute n-th matrilineal descendant's section."""
+        result = section
+        for _ in range(n):
+            result = z2n_add(result, self.descent_offset)
+        return result
 
-        Algorithm: O(n) addition in (Z2)^n.
-        """
-        return z2_add(section, self.marriage)
+    def patri_offset(self) -> Element:
+        """Patrilineal offset (determined by marriage + descent)."""
+        return z2n_add(self.descent_offset, self.marriage_offset)
 
-    def descend(self, section: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-        """Compute the child's section from the mother's section.
+    def is_complete(self) -> bool:
+        """Check if marriage and descent generate the entire group."""
+        return len(self.generate_closure()) == 2 ** self.n
 
-        Algorithm: O(n) addition in (Z2)^n.
-        """
-        return z2_add(section, self.descent)
+    def generate_closure(self) -> Set[Element]:
+        """Generate the subgroup closure of {marriage, descent}."""
+        closure: Set[Element] = {z2n_zero(self.n)}
+        queue = [self.marriage_offset, self.descent_offset]
+        for elem in queue:
+            if elem not in closure:
+                # Add all sums with existing elements
+                new_elements = []
+                for existing in closure:
+                    s = z2n_add(existing, elem)
+                    if s not in closure:
+                        new_elements.append(s)
+                closure.add(elem)
+                closure.update(new_elements)
+                queue.extend(new_elements)
+        return closure
 
-    def ascend(self, section: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-        """Compute the mother's section from the child's section (inverse descent).
+    def moiety_subgroup(self) -> Set[Element]:
+        """Compute the moiety subgroup generated by descent alone."""
+        zero = z2n_zero(self.n)
+        return {zero, self.descent_offset}  # order 2 in Z_2^n
 
-        Algorithm: O(n) subtraction in (Z2)^n.
-        In Z2, subtraction equals addition, so this is the same as descend.
-        """
-        return z2_sub(section, self.descent)
+    def moiety_index(self) -> int:
+        """Compute the index of the moiety subgroup."""
+        return 2 ** self.n // len(self.moiety_subgroup())
 
-    def cross_cousin(self, section: Tuple[Z2, ...]) -> Tuple[Z2, ...]:
-        """Compute the section of the mother's brother's daughter.
+    def marriage_crosses_moiety(self) -> bool:
+        """Check if marriage always crosses moiety boundaries."""
+        return self.marriage_offset not in self.moiety_subgroup()
 
-        By the Cross-Cousin Marriage Theorem, this always equals marry(section).
+    def verify_involution(self) -> bool:
+        """Verify marriage is an involution."""
+        zero = z2n_zero(self.n)
+        return z2n_add(self.marriage_offset, self.marriage_offset) == zero
 
-        Algorithm:
-            1. Ascend to mother's section: s - d
-            2. Marry to get uncle's wife's section: (s - d) + m
-            3. Descend to get cousin's section: (s - d) + m + d = s + m
+    def verify_commutativity(self) -> bool:
+        """Verify marriage and descent commute."""
+        for s in z2n_elements(self.n):
+            path1 = self.child_section(self.marriage_partner(s))
+            path2 = self.marriage_partner(self.child_section(s))
+            if path1 != path2:
+                return False
+        return True
 
-        Time complexity: O(n)
-        """
-        mother = self.ascend(section)
-        uncles_wife = self.marry(mother)
-        cousin = self.descend(uncles_wife)
-        return cousin
-
-    def descend_n(self, section: Tuple[Z2, ...], generations: int) -> Tuple[Z2, ...]:
-        """Compute the section after n generations of descent.
-
-        Uses the formula: descendN(s, n) = s + n * descent
-
-        Algorithm: O(n) since in Z2, n * d = (n mod 2) * d
-        """
-        if generations % 2 == 0:
-            return section
-        else:
-            return self.descend(section)
-
-    def can_marry(self, s: Tuple[Z2, ...], t: Tuple[Z2, ...]) -> bool:
-        """Check if two sections can intermarry.
-
-        Algorithm: O(n) comparison.
-        """
-        return z2_sub(t, s) == self.marriage
-
-    def moiety(self, section: Tuple[Z2, ...]) -> Z2:
-        """Compute the moiety (first component) of a section."""
-        return section[0]
-
-    def generation_class(self, section: Tuple[Z2, ...]) -> Z2:
-        """Compute the generation class (second component) of a section."""
-        return section[1] if self.n >= 2 else 0
-
-    def all_sections(self) -> List[Tuple[Z2, ...]]:
-        """List all sections of the kinship system."""
-        return list(product([0, 1], repeat=self.n))
-
-    def marriage_pairs(self) -> List[Tuple[Tuple[Z2, ...], Tuple[Z2, ...]]]:
-        """List all marriage pairs."""
-        pairs = []
-        for s in self.all_sections():
-            t = self.marry(s)
-            if s <= t:  # Avoid duplicates
-                pairs.append((s, t))
-        return pairs
-
-    def generated_subgroup(self) -> Set[Tuple[Z2, ...]]:
-        """Compute the subgroup generated by marriage and descent offsets.
-
-        Algorithm: Closure under addition, starting from {0, m, d}.
-        Since the group is finite, this terminates in O(|G|^2) steps.
-        """
-        subgroup = {z2_zero(self.n), self.marriage, self.descent}
-        changed = True
-        while changed:
-            changed = False
-            new_elements = set()
-            for a in subgroup:
-                for b in subgroup:
-                    c = z2_add(a, b)
-                    if c not in subgroup:
-                        new_elements.add(c)
-                        changed = True
-            subgroup |= new_elements
-        return subgroup
-
-    def is_full_generator(self) -> bool:
-        """Check if marriage and descent generate the full group."""
-        return len(self.generated_subgroup()) == 2 ** self.n
-
-    def section_name(self, s: Tuple[Z2, ...]) -> str:
-        """Get human-readable name for a section."""
-        if self.section_names and s in self.section_names:
-            return self.section_names[s]
-        return str(s)
+    def descent_period(self) -> int:
+        """Compute the period of the descent operation."""
+        zero = z2n_zero(self.n)
+        current = self.descent_offset
+        period = 1
+        while current != zero:
+            current = z2n_add(current, self.descent_offset)
+            period += 1
+            if period > 2 ** self.n:
+                raise ValueError("Period exceeds group order")
+        return period
 
 
-def kariera() -> KinshipSystem:
-    """The Kariera 4-section kinship system.
+def enumerate_kinship_systems(n: int) -> List[KinshipSystem]:
+    """Enumerate all valid kinship systems on Z_2^n."""
+    systems: List[KinshipSystem] = []
+    zero = z2n_zero(n)
+    elements = z2n_elements(n)
 
-    Sections: A=(0,0), B=(1,0), C=(0,1), D=(1,1)
-    Marriage: A↔B, C↔D
-    Descent: A→C, B→D, C→A, D→B
-    """
-    return KinshipSystem(
-        n=2,
-        marriage=(1, 0),
-        descent=(0, 1),
-        section_names={
-            (0, 0): "A", (1, 0): "B",
-            (0, 1): "C", (1, 1): "D"
-        }
-    )
+    for m in elements:
+        if m == zero:
+            continue
+        # In Z_2^n, every element has order dividing 2, so m + m = 0 always
+        if z2n_add(m, m) != zero:
+            continue
+        for d in elements:
+            if d == zero or d == m:
+                continue
+            systems.append(KinshipSystem(n, m, d))
 
-
-def aranda() -> KinshipSystem:
-    """The Aranda 8-subsection kinship system.
-
-    Subsections: 8 elements of (Z2)^3
-    Marriage offset: (1,0,0)
-    Descent offset: (0,1,1)
-    """
-    names = {}
-    labels = ["A₁", "B₁", "C₁", "D₁", "A₂", "B₂", "C₂", "D₂"]
-    for i, s in enumerate(product([0, 1], repeat=3)):
-        names[s] = labels[i]
-    return KinshipSystem(
-        n=3,
-        marriage=(1, 0, 0),
-        descent=(0, 1, 1),
-        section_names=names
-    )
-
-
-def verify_cross_cousin_theorem(ks: KinshipSystem) -> bool:
-    """Verify the cross-cousin marriage theorem for all sections.
-
-    The theorem states: crossCousin(s) = marry(s) for all s.
-    Returns True if verified for all sections.
-    """
-    for s in ks.all_sections():
-        if ks.cross_cousin(s) != ks.marry(s):
-            return False
-    return True
-
-
-def verify_marriage_involution(ks: KinshipSystem) -> bool:
-    """Verify that marry(marry(s)) = s for all sections."""
-    for s in ks.all_sections():
-        if ks.marry(ks.marry(s)) != s:
-            return False
-    return True
-
-
-def verify_grandchild_return(ks: KinshipSystem) -> bool:
-    """Verify that descend(descend(s)) = s for all sections."""
-    for s in ks.all_sections():
-        if ks.descend(ks.descend(s)) != s:
-            return False
-    return True
-
-
-def classify_kinship_systems(n: int) -> List[KinshipSystem]:
-    """Enumerate all valid kinship systems on (Z2)^n.
-
-    A valid system requires:
-    - marriage ≠ 0, descent ≠ 0, marriage ≠ descent
-    - marriage + marriage = 0 (automatic in Z2)
-
-    Returns list of all valid systems (may contain isomorphic duplicates).
-    """
-    zero = z2_zero(n)
-    elements = list(product([0, 1], repeat=n))
-    nonzero = [e for e in elements if e != zero]
-
-    systems = []
-    for m in nonzero:
-        for d in nonzero:
-            if m != d:
-                systems.append(KinshipSystem(n=n, marriage=m, descent=d))
     return systems
 
 
-def two_generator_bound_test(n: int = 3) -> Dict[str, any]:
-    """Test the two-generator bound conjecture for (Z2)^n.
+def enumerate_complete_systems(n: int) -> List[KinshipSystem]:
+    """Enumerate all complete kinship systems on Z_2^n."""
+    return [ks for ks in enumerate_kinship_systems(n) if ks.is_complete()]
 
-    Conjecture: For n ≥ 3, no two nonzero distinct elements generate (Z2)^n.
 
-    Returns test results including max subgroup size found.
+def classify_up_to_automorphism(
+    systems: List[KinshipSystem],
+) -> Dict[int, List[KinshipSystem]]:
     """
-    zero = z2_zero(n)
-    elements = list(product([0, 1], repeat=n))
-    nonzero = [e for e in elements if e != zero]
+    Classify kinship systems up to group automorphism of Z_2^n.
+    Two systems are equivalent if an automorphism of Z_2^n maps one to the other.
+    Returns a dict mapping orbit id to list of systems in that orbit.
+    """
+    n = systems[0].n if systems else 0
+    if n == 0:
+        return {}
 
-    max_size = 0
-    full_count = 0
-    total_pairs = 0
+    # Generate GL(n, F_2) - all invertible n×n binary matrices
+    def mat_mult(A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
+        n = len(A)
+        return [[sum(A[i][k] * B[k][j] for k in range(n)) % 2
+                 for j in range(n)] for i in range(n)]
 
-    for i, m in enumerate(nonzero):
-        for d in nonzero[i+1:]:
-            ks = KinshipSystem(n=n, marriage=m, descent=d)
-            sg = ks.generated_subgroup()
-            size = len(sg)
-            max_size = max(max_size, size)
-            if size == 2**n:
-                full_count += 1
-            total_pairs += 1
+    def mat_vec(A: List[List[int]], v: Element) -> Element:
+        n = len(A)
+        return tuple(sum(A[i][j] * v[j] for j in range(n)) % 2 for i in range(n))
 
-    return {
-        "n": n,
-        "group_order": 2**n,
-        "pairs_tested": total_pairs,
-        "max_subgroup_size": max_size,
-        "full_generators": full_count,
-        "conjecture_holds": full_count == 0
-    }
+    def det2(A: List[List[int]]) -> int:
+        """Determinant mod 2 for small matrices."""
+        n = len(A)
+        if n == 1:
+            return A[0][0]
+        total = 0
+        for j in range(n):
+            minor = [[A[i][k] for k in range(n) if k != j]
+                     for i in range(1, n)]
+            total += A[0][j] * det2(minor)
+        return total % 2
+
+    # Generate all invertible matrices
+    all_mats = []
+    for entries in cartesian_product(range(2), repeat=n*n):
+        mat = [list(entries[i*n:(i+1)*n]) for i in range(n)]
+        if det2(mat) == 1:
+            all_mats.append(mat)
+
+    # Classify orbits
+    assigned: Set[int] = set()
+    orbits: Dict[int, List[KinshipSystem]] = {}
+    orbit_id = 0
+
+    for i, ks in enumerate(systems):
+        if i in assigned:
+            continue
+        orbit_id += 1
+        orbits[orbit_id] = [ks]
+        assigned.add(i)
+
+        for A in all_mats:
+            m_img = mat_vec(A, ks.marriage_offset)
+            d_img = mat_vec(A, ks.descent_offset)
+            # Find matching system
+            for j, ks2 in enumerate(systems):
+                if j in assigned:
+                    continue
+                if ks2.marriage_offset == m_img and ks2.descent_offset == d_img:
+                    orbits[orbit_id].append(ks2)
+                    assigned.add(j)
+                    break
+
+    return orbits
+
+
+def odd_order_obstruction(n: int) -> bool:
+    """
+    Check whether Z_n has any nonzero element of order 2.
+    Returns True if there IS an obstruction (no kinship system possible).
+    """
+    for m in range(1, n):
+        if (2 * m) % n == 0:
+            return False  # Found an element of order 2
+    return True  # No element of order 2 → obstruction
+
+
+if __name__ == "__main__":
+    # Demo: enumerate and classify systems on Z_2^2
+    print("Kinship systems on Z₂ × Z₂:")
+    systems = enumerate_kinship_systems(2)
+    print(f"  Total valid systems: {len(systems)}")
+    complete = enumerate_complete_systems(2)
+    print(f"  Complete systems: {len(complete)}")
+
+    orbits = classify_up_to_automorphism(complete)
+    print(f"  Orbits under GL(2, F₂): {len(orbits)}")
+    for oid, orbit in orbits.items():
+        print(f"    Orbit {oid}: {len(orbit)} systems")
+        for ks in orbit:
+            print(f"      m={ks.marriage_offset}, d={ks.descent_offset}")
+
+    print()
+
+    # Demo: odd-order obstruction
+    print("Odd-order obstruction check:")
+    for n in range(2, 10):
+        obs = odd_order_obstruction(n)
+        print(f"  Z_{n}: {'OBSTRUCTED' if obs else 'POSSIBLE'}")
