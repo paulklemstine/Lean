@@ -1,300 +1,157 @@
-# The Fermi Paradox as a Pigeonhole Principle: Rigorous Foundations
+# The Fermi Paradox as a Pigeonhole Principle: Formal Foundations for the Great Filter
 
 ## Abstract
 
-We provide a rigorous mathematical framework for the Fermi paradox using the pigeonhole principle, tropical geometry, and information theory. We define a parameterized Drake equation model and prove: (1) a *reverse pigeonhole theorem* bounding the number of empty planets; (2) a *Great Filter dichotomy* showing that the expected number of civilizations is less than 1 if and only if the per-planet probability is below a sharp threshold; (3) a *tropical bottleneck theorem* connecting the dominant filter to max-plus algebra; (4) an *entropy-rarity duality* linking civilization probability to information content; and (5) a *threshold conjecture* with both proof (for ≤3 factors) and constructive disproof (for ≥4 factors). All theorems are formally verified in Lean 4 with Mathlib. Under conservative parameter estimates, we compute E[civilizations] ≈ 0.1, providing mathematical justification for the proposition that we are alone.
+We present a formal mathematical framework for analyzing the Fermi paradox through the lens of the pigeonhole principle and elementary probability bounds. We introduce the **Drake Filter Model**, a parametric structure capturing the Drake equation as a base count of candidate sites passed through a chain of independent filter probabilities. Within this framework, we prove three main results: (1) the **Great Filter Theorem**, showing that if the product of n filter probabilities is less than c^n, at least one filter must be less than c — establishing the mathematical inevitability of a "Great Filter"; (2) a **Temporal Pigeonhole** result, proving that when civilizations are fewer than time epochs, at least one epoch must be empty; and (3) a **Filter Chain Bound**, demonstrating that the expected number of civilizations decays exponentially with the number of filter steps. We additionally prove a **Contact Window Sparsity** theorem showing that when total civilization-years are less than cosmic time, temporal gaps in coverage are guaranteed. All results have been formally verified.
 
-**Keywords**: Fermi paradox, pigeonhole principle, Drake equation, tropical geometry, information theory, formal verification
-
----
+**Keywords**: Fermi paradox, Drake equation, pigeonhole principle, Great Filter, existential risk
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The Fermi paradox — the apparent contradiction between the high probability of extraterrestrial civilizations and the lack of evidence for them — has generated extensive literature across astrophysics, philosophy, and astrobiology [1, 2, 3]. Proposed resolutions range from the "Zoo Hypothesis" to self-destruction scenarios to the "Dark Forest" theory.
 
-The Fermi paradox — the apparent contradiction between the high probability of extraterrestrial civilizations and the lack of evidence for them — has generated extensive discussion across astrophysics, philosophy, and mathematics since Fermi's 1950 observation. Prior analyses have been largely qualitative or based on point estimates of the Drake equation parameters.
+We argue that the paradox admits a purely mathematical resolution grounded in two classical combinatorial principles: the pigeonhole principle and the monotonicity of finite products. Our approach formalizes the Drake equation not as a numerical estimate but as a *mathematical structure* — a product of filters applied to a base count — and derives rigorous consequences from this structure.
 
-We take a different approach: we treat the Fermi paradox as a problem in discrete mathematics and probability theory, applying the pigeonhole principle in its "reverse" form. This yields clean, provable bounds that are independent of specific parameter estimates.
+### 1.1 Contributions
 
-### 1.2 Contributions
+1. **DrakeFilterModel**: A novel mathematical structure formalizing the Drake equation as a parametric filter chain (Definition 2.1).
+2. **Great Filter Theorem**: A pigeonhole-type result for multiplicative structures (Theorem 3.2).
+3. **Temporal Pigeonhole**: Application of the classical pigeonhole principle to civilization timelines (Theorem 4.1).
+4. **Filter Chain Bound**: Exponential decay of expected civilizations with filter count (Theorem 5.1).
+5. **Contact Window Sparsity**: Guaranteed temporal gaps when civilization-years are scarce (Theorem 6.1).
 
-1. **Formal framework**: A Lean 4 formalization of the Drake equation as a structured type with well-formedness conditions.
-2. **Reverse Pigeonhole Theorem**: If k civilizations are distributed among n > k planets, at least n − k planets are uninhabited.
-3. **Great Filter Dichotomy**: A sharp threshold theorem: E[N] < 1 ⟺ p < 1/n.
-4. **Tropical Bottleneck Analysis**: Connection to tropical (max-plus) geometry for identifying the dominant filter.
-5. **Entropy-Rarity Duality**: The information content of finding ET equals the filter strength divided by ln(2).
-6. **Falsifiable Threshold Conjecture**: Proved for ≤3 factors, constructively disproved for ≥4.
-7. **Computational verification**: Monte Carlo simulations confirming analytical predictions.
+All results have been formally verified using the Lean 4 theorem prover with the Mathlib library.
 
-### 1.3 Related Work
+## 2. The Drake Filter Model
 
-- **Drake (1961)**: Original formulation of the Drake equation.
-- **Hart (1975)**: "An Explanation for the Absence of Extraterrestrials on Earth" — first rigorous treatment.
-- **Sandberg, Drexler, Ord (2018)**: "Dissolving the Fermi Paradox" — uncertainty analysis showing wide confidence intervals.
-- **Tropical geometry**: Mikhalkin (2006), Maclagan & Sturmfels (2015) for foundations of tropical algebraic geometry.
+### Definition 2.1 (Drake Filter Model)
 
-Our work is distinguished by its formal verification and the novel connections to tropical geometry and information theory.
+A **Drake Filter Model** of arity n consists of:
+- A function `filters : Fin n → ℝ` with each `filters(i) ∈ (0, 1]`
+- A positive real `base_count > 0`
 
----
+The **expected number of civilizations** is defined as:
 
-## 2. Definitions and Notation
+$$E = \text{base\_count} \times \prod_{i=0}^{n-1} \text{filters}(i)$$
 
-### 2.1 Drake Parameters
+### Proposition 2.2 (Positivity)
+For any Drake Filter Model D, E(D) > 0.
 
-**Definition 2.1** (DrakeParams). A Drake parameter set is a tuple (n, p) where:
-- n ∈ ℕ is the number of habitable planets
-- p ∈ [0, 1] is the per-planet probability of technological civilization
+*Proof.* The base count is positive and each filter is positive, so their product is positive. □
 
-The **expected number of civilizations** is E[N] = n · p.
+### Proposition 2.3 (Base Count Bound)
+For any Drake Filter Model D, E(D) ≤ base_count.
 
-### 2.2 Civilization Assignment
+*Proof.* Since each filter is in (0, 1], their product is at most 1, hence E(D) = base_count × ∏ filters ≤ base_count × 1 = base_count. □
 
-**Definition 2.2** (CivilizationAssignment). A civilization assignment is a function f : Fin k → Fin n mapping k civilizations to n planets. The **occupancy** of planet j is:
+### Remark 2.4
+The classical Drake equation parameters map to our model as follows: the base count incorporates the star formation rate and the number of candidate habitable planets, while the filters correspond to the conditional probabilities of life → intelligence → technology → detection.
 
-$$\text{civCount}(f, j) = |\{i \in \text{Fin}(k) : f(i) = j\}|$$
+## 3. The Great Filter Theorem
 
-A planet j is **empty** if civCount(f, j) = 0.
+### Theorem 3.1 (Product Lower Bound)
+Let f : Fin n → ℝ and c ≥ 0. If f(i) ≥ c for all i, then ∏ f(i) ≥ c^n.
 
-### 2.3 Tropical Drake Vector
+*Proof.* By induction on n. The base case n = 0 gives the empty product 1 ≥ c^0 = 1. For the inductive step, we factor the product and apply the inductive hypothesis to the first n-1 factors, then multiply by the bound on the nth factor. More directly, this follows from the monotonicity of finite products: replacing each f(i) with the smaller value c can only decrease the product. □
 
-**Definition 2.3** (TropicalDrakeVector). A tropical Drake vector of dimension k is a function v : Fin k → ℝ, where v(i) = −log(pᵢ) represents the "filter strength" of the i-th step. The **tropical bottleneck** is max_i v(i), and the **total filter strength** is Σᵢ v(i).
+### Theorem 3.2 (Great Filter Theorem — Pigeonhole for Products)
+Let f : Fin n → ℝ and c ≥ 0. If ∏ f(i) < c^n, then ∃ i such that f(i) < c.
 
-### 2.4 Filter Strength and Surprise
+*Proof.* By contrapositive. If f(i) ≥ c for all i, then by Theorem 3.1, ∏ f(i) ≥ c^n, contradicting the hypothesis. □
 
-**Definition 2.4**. For Drake parameters (n, p):
-- **Filter strength**: F = −ln(p)
-- **Civilization surprise**: S = −log₂(p) = F / ln(2)
+### Corollary 3.3 (Drake Great Filter)
+If E(D) < base_count × c^n, then some filter is less than c.
 
----
+*Proof.* Since E(D) = base_count × ∏ filters and base_count > 0, the hypothesis implies ∏ filters < c^n. Apply Theorem 3.2. □
 
-## 3. Main Results
+### Discussion
+The Great Filter Theorem establishes that a "Great Filter" — at least one extraordinarily restrictive step — is a mathematical *certainty* whenever the Drake equation yields a small expected count. The theorem does not identify which filter is the Great Filter; it merely guarantees that at least one exists.
 
-### 3.1 Reverse Pigeonhole Theorem
+For the Drake equation with n = 7 parameters, if the overall probability per habitable planet is less than 10⁻²², then at least one filter must be less than (10⁻²²)^(1/7) ≈ 7.2 × 10⁻⁴. This is a rigorous lower bound on the severity of the Great Filter.
 
-**Theorem 3.1** (reverse_pigeonhole). For k < n and any f : Fin k → Fin n, the number of empty planets satisfies:
+## 4. Temporal Pigeonhole
 
-$$\text{numEmptyPlanets}(f) \geq n - k$$
+### Theorem 4.1 (Temporal Pigeonhole)
+If N < T and f : Fin N → Fin T is any function mapping civilizations to time epochs, then there exists t ∈ Fin T such that f(i) ≠ t for all i.
 
-*Proof sketch*. The image of f has cardinality at most k (by Finset.card_image_le). The non-empty planets are a subset of the image, so there are at most k non-empty planets. The remaining n − k planets are empty.
+*Proof.* Since |Fin N| = N < T = |Fin T|, the function f cannot be surjective. Hence there exists t not in the range of f. □
 
-**Corollary 3.2** (empty_planets_complement). The same bound holds for k ≤ n (handling the boundary case k = n trivially).
+### Interpretation
+If the total number of civilizations that have ever existed in a galaxy (N) is less than the number of distinct time epochs (T), then at least one epoch has no civilization. With current estimates suggesting N is very small (possibly less than 10) and T on the order of 10⁴ (million-year epochs over 13 billion years), most epochs are guaranteed to be empty.
 
-*Significance*: With n ≈ 10¹⁰ and k = 1, at least 10¹⁰ − 1 planets are empty. The Fermi paradox is the *expected* outcome.
+## 5. Filter Chain Exponential Decay
 
-### 3.2 Drake Expected Value Bound
+### Theorem 5.1 (Filter Chain Bound)
+If each filter satisfies filters(i) ≤ p for some p ≥ 0, then E(D) ≤ base_count × p^n.
 
-**Theorem 3.3** (drake_expected_lt_one). If p < 1/n, then E[N] = n · p < 1.
+*Proof.* Since each filter is nonneg (being positive) and at most p, the product of filters is at most p^n by monotonicity of finite products. Multiply by base_count. □
 
-*Proof sketch*. Direct multiplication: n · p < n · (1/n) = 1.
+### Theorem 5.2 (Filter Extension Monotonicity)
+For any Drake Filter Model D and any p ∈ (0, 1], E(D) × p ≤ E(D).
 
-**Theorem 3.4** (conservative_drake_lt_one). For conservative parameters (n = 10¹⁰, p = 10⁻¹¹):
+*Proof.* Since E(D) > 0 and p ≤ 1, we have E(D) × p ≤ E(D) × 1 = E(D). □
 
-$$E[N] = 10^{10} \times 10^{-11} = 10^{-1} = 0.1 < 1$$
+### Discussion
+These results quantify the exponential sensitivity of the Drake equation. With n = 7 filters each at probability 0.1, the expected count is base_count × 10⁻⁷. Adding three more filters at the same probability drops it to base_count × 10⁻¹⁰ — a thousandfold decrease per additional filter.
 
-### 3.3 Probabilistic Bounds
+This exponential sensitivity suggests that **model uncertainty** in the number of relevant filters is itself a major source of uncertainty in the Drake equation. Even if we are confident about the values of known filters, unknown or unconsidered filters could dramatically reduce the expected count.
 
-**Theorem 3.5** (markov_zero_bound). If n · p < 1, then 1 − n · p > 0.
+## 6. Contact Window Sparsity
 
-*Significance*: By the union bound, P(at least one civilization) ≤ E[N]. When E[N] < 1, there is positive probability of zero civilizations. Under the Poisson approximation, P(N = 0) = e^{−λ} where λ = np. For λ = 0.1, P(N = 0) ≈ 0.905.
+### Theorem 6.1 (Contact Window Gap)
+If N civilizations each occupy at most L consecutive time slots out of T total, and N × L < T, then there exists a time slot not covered by any civilization.
 
-**Theorem 3.6** (union_bound_civilizations). If E[N] < 1, then 1 − E[N] > 0.
+*Proof.* By contradiction. If every time slot t ∈ {0, ..., T-1} is covered by some civilization i (meaning starts(i) ≤ t < starts(i) + L), then the union of all civilization intervals covers all T slots. But the total coverage is at most N × L (each civilization covers at most L slots). Since N × L < T, we have a contradiction: T slots cannot be covered by less than T units of coverage. □
 
-### 3.4 Great Filter Dichotomy
+### Interpretation
+This theorem formalizes the intuition that brief civilizations spread across cosmic time inevitably leave temporal gaps. If 100 civilizations each last 10,000 years in a galaxy with a 13-billion-year history, the total coverage is 10⁶ years out of 1.3 × 10¹⁰ — less than 0.01%. The theorem guarantees that at least 99.99% of cosmic history has no civilization present.
 
-**Theorem 3.7** (great_filter_dichotomy). For n ≥ 1:
+## 7. Falsifiable Conjecture
 
-$$(p < 1/n \wedge E[N] < 1) \quad \lor \quad (p \geq 1/n \wedge E[N] \geq 1)$$
+### Conjecture 7.1 (Critical Filter Threshold)
+For any Drake model with n ≥ 7 filters where all filters are in (0, 1] and the product of all filters is less than c^n, at least one filter is less than c.
 
-*Proof sketch*. By lt_or_ge on p vs 1/n. In the first case, Theorem 3.3 applies. In the second, E[N] = n·p ≥ n·(1/n) = 1.
+This is a direct consequence of the Great Filter Theorem (Theorem 3.2) and is therefore not a conjecture but a theorem. The interesting empirical question is: **which filter is the Great Filter?**
 
-*Significance*: The dichotomy is sharp. There is no "gray zone" where E[N] is close to 1 without being determined by the relationship between p and 1/n.
+### Computational Test
+We can evaluate the Drake equation with various parameter distributions:
 
-### 3.5 Tropical Bottleneck Theorem
+| Scenario | R* | f_p | n_e | f_l | f_i | f_c | L | N (Milky Way) |
+|----------|-----|-----|-----|-----|-----|-----|-----|---------------|
+| Optimistic | 3 | 1 | 0.4 | 1 | 0.5 | 0.5 | 10⁹ | 1.5 × 10⁸ |
+| Moderate | 1.5 | 0.5 | 0.1 | 0.1 | 0.1 | 0.1 | 10⁴ | 0.75 |
+| Pessimistic | 1.5 | 0.5 | 0.01 | 0.01 | 0.01 | 0.01 | 100 | 7.5 × 10⁻⁷ |
 
-**Theorem 3.8** (tropical_bottleneck_le_total). For nonneg v : Fin n → ℝ:
+The moderate scenario already yields fewer than one civilization per galaxy. The pessimistic scenario yields fewer than one per million galaxies.
 
-$$\text{tropicalBottleneck}(v) \leq \text{totalFilterStrength}(v)$$
+## 8. Related Work
 
-*Proof*. The maximum of nonneg terms is at most their sum. Uses Finset.sup'_le and Finset.single_le_sum.
+Our approach is most closely related to the work of Sandberg, Drexler, and Ord [3], who argued that the Fermi paradox dissolves when parameter uncertainties are properly propagated through the Drake equation. Their key insight — that products of uncertain small numbers can be much smaller than products of expected values — aligns with our Filter Chain Bound.
 
-**Theorem 3.9** (tropical_filter_amplification). If v(i) ≥ c for all i, then:
+The Great Filter concept originates with Hanson [2], who argued qualitatively that at least one step in the development of technological civilization must be extraordinarily improbable. Our Great Filter Theorem (Theorem 3.2) provides a formal, quantitative version of this argument.
 
-$$\text{totalFilterStrength}(v) \geq n \cdot c$$
+The temporal pigeonhole argument relates to the work of Carter [4] on the anthropic principle, which observes that our existence provides no evidence about the probability of life elsewhere.
 
-*Proof*. Sum of n terms each ≥ c is ≥ n·c.
+## 9. Future Work
 
-*Cross-domain connection*: These results connect the Fermi paradox to tropical algebraic geometry. The Drake equation, viewed through the tropical lens, becomes a tropical linear form, and the Great Filter is the tropical maximum — the single hardest evolutionary transition.
+1. **Bayesian Drake models**: Extend the framework to handle uncertain parameters using probability distributions over filter values, and derive posterior bounds on individual filters.
 
-### 3.6 Entropy-Rarity Duality
+2. **Correlated filters**: Our model assumes independent filters. In reality, filters may be correlated (e.g., planets with life are more likely to develop intelligence). Analyzing the correlated case could tighten or loosen bounds.
 
-**Theorem 3.10** (surprise_eq_filter_div_ln2).
+3. **Spatial structure**: Incorporate the spatial distribution of civilizations and the finite speed of light to derive bounds on detection probability as a function of distance.
 
-$$\text{civilizationSurprise}(d) = \frac{\text{filterStrength}(d)}{\ln 2}$$
+4. **Dynamic filters**: Allow filter values to change over cosmic time (e.g., early-universe metallicity constraints vs. late-universe conditions).
 
-*Proof*. By definition, logb(2, x) = log(x)/log(2), so −logb(2, p) = −log(p)/log(2) = F/ln(2).
+## References
 
-*Significance*: Information theory provides a natural measure of how "surprising" finding ET would be. For p = 10⁻¹¹, the surprise is ≈ 36.5 bits.
+[1] Drake, F. (1965). "The radio search for intelligent extraterrestrial life." *Current Aspects of Exobiology*.
 
-### 3.7 Bayesian Silence Theorem
+[2] Hanson, R. (1998). "The Great Filter — Are We Almost Past It?" Available at hanson.gmu.edu.
 
-**Theorem 3.11** (silence_implies_rare). If m > 0 and m · p ≤ 1, then p ≤ 1/m.
+[3] Sandberg, A., Drexler, E., Ord, T. (2018). "Dissolving the Fermi Paradox." *arXiv:1806.02404*.
 
-*Significance*: Every null observation tightens the bound on p. After surveying m = 10⁴ planets, we can conclude p ≤ 10⁻⁴.
+[4] Carter, B. (1983). "The anthropic principle and its implications for biological evolution." *Philosophical Transactions of the Royal Society A*.
 
-### 3.8 Threshold Conjecture
+## Appendix: Formal Verification
 
-**Theorem 3.12** (great_filter_threshold_disproof). There exist v : Fin 4 → ℝ with all v(i) ≥ 10⁻³ and ∏ᵢ v(i) < 10⁻¹⁰.
-
-*Witness*: v(i) = 10⁻³ for all i. Product = 10⁻¹² < 10⁻¹⁰.
-
-**Theorem 3.13** (great_filter_threshold_k3). For v : Fin 3 → ℝ with all v(i) ≥ 10⁻³:
-
-$$\prod_i v(i) \geq 10^{-9} > 10^{-10}$$
-
-*Significance*: With ≤ 3 independent steps, a catastrophic single bottleneck (< 10⁻³) is necessary. With ≥ 4 steps, moderate improbabilities suffice.
-
----
-
-## 4. Algorithms
-
-### 4.1 Drake Expected Value Computation
-
-```
-Input: n (planets), p (per-planet probability)
-Output: E[N], classification
-
-1. Compute λ = n × p
-2. If λ < 1: return (λ, "STRONG_FILTER")
-3. Else: return (λ, "WEAK_FILTER")
-
-Time: O(1). Space: O(1).
-```
-
-### 4.2 Tropical Bottleneck Identification
-
-```
-Input: factors p₁, ..., pₖ
-Output: bottleneck index, dominance ratio
-
-1. For i = 1..k: compute sᵢ = -log(pᵢ)
-2. Find j = argmax_i sᵢ
-3. Compute total S = Σᵢ sᵢ
-4. Return (j, sⱼ/S)
-
-Time: O(k). Space: O(k).
-```
-
-### 4.3 Bayesian Silence Bound
-
-```
-Input: m (planets checked), α (significance level)
-Output: upper bound on p
-
-1. Compute bound = -ln(α) / m
-2. Return bound
-
-Time: O(1). Space: O(1).
-```
-
-### 4.4 Monte Carlo Fermi Simulation
-
-```
-Input: n (planets), p (probability), T (trials)
-Output: distribution of civilization counts
-
-1. Compute λ = n × p
-2. For t = 1..T:
-   a. Sample K ~ Poisson(λ)
-   b. Record K
-3. Return histogram of K values
-
-Time: O(T). Space: O(max_K).
-```
-
----
-
-## 5. Computational Experiments
-
-### 5.1 Conservative Parameter Scan
-
-| Scenario | n | p | E[N] | P(N=0) | Regime |
-|----------|---|---|------|--------|--------|
-| Ultra-conservative | 10¹⁰ | 10⁻¹¹ | 0.1 | 0.905 | Strong |
-| Conservative | 10¹⁰ | 10⁻¹⁰ | 1.0 | 0.368 | Boundary |
-| Moderate | 10¹⁰ | 10⁻⁹ | 10 | 4.5×10⁻⁵ | Weak |
-| Optimistic | 10¹⁰ | 10⁻⁸ | 100 | ~0 | Weak |
-
-### 5.2 Monte Carlo Results (100,000 trials, λ = 0.1)
-
-| Statistic | Simulated | Analytical |
-|-----------|-----------|------------|
-| Mean | 0.100 | 0.100 |
-| P(N=0) | 0.905 | 0.905 |
-| P(N=1) | 0.090 | 0.090 |
-| P(N≥2) | 0.005 | 0.005 |
-
-### 5.3 Tropical Bottleneck Analysis
-
-For factors (abiogenesis=0.01, complexity=10⁻³, intelligence=10⁻⁵, technology=10⁻³, survival=0.01):
-
-| Factor | Probability | Strength | Rank |
-|--------|------------|----------|------|
-| Intelligence | 10⁻⁵ | 11.5 | 1 (BOTTLENECK) |
-| Complexity | 10⁻³ | 6.9 | 2 |
-| Technology | 10⁻³ | 6.9 | 3 |
-| Abiogenesis | 0.01 | 4.6 | 4 |
-| Survival | 0.01 | 4.6 | 5 |
-
-Bottleneck dominance: 33%. Intelligence is the most likely Great Filter.
-
----
-
-## 6. Discussion
-
-### 6.1 Interpretation
-
-Our results formalize the intuition that the Fermi paradox requires no exotic physics — only arithmetic. The reverse pigeonhole theorem shows that silence is the default state when civilizations are rare. The Great Filter dichotomy makes the threshold precise. The tropical bottleneck analysis identifies the dominant uncertainty.
-
-### 6.2 Limitations
-
-1. **Independence assumption**: We assume Drake factors are independent. Correlations (e.g., planets suitable for abiogenesis being more suitable for intelligence) could change the analysis.
-2. **Point estimates**: Our conservative parameters are themselves uncertain. The Sandberg-Drexler-Ord analysis shows that parameter uncertainty alone can dissolve the paradox.
-3. **Temporal structure**: We ignore the temporal dynamics of civilization rise and fall.
-
-### 6.3 The Role of Tropical Geometry
-
-The connection to tropical geometry is, to our knowledge, novel. The max-plus semiring is the natural algebraic setting for analyzing chains of multiplicative probabilities in log-space. This suggests deeper connections to tropical linear algebra (feasibility of filter-strength vectors) and tropical optimization (minimizing total filter strength subject to observational constraints).
-
----
-
-## 7. Future Work
-
-1. **Temporal pigeonhole**: Extend to time-varying probability, modeling the Great Filter as a time-dependent process.
-2. **Correlated factors**: Drop the independence assumption using copulas or graphical models.
-3. **Tropical optimization**: Formulate the "optimal filter" problem in tropical geometry and solve it.
-4. **Measure-theoretic formulation**: Replace the discrete model with a continuous Poisson point process on the space of planets.
-5. **Observational Bayesian analysis**: Incorporate actual SETI survey data into the Bayesian silence bound.
-
----
-
-## 8. References
-
-1. Drake, F. D. (1961). "Discussion at Space Science Board-National Academy of Sciences Conference on Extraterrestrial Intelligent Life."
-2. Hart, M. H. (1975). "An Explanation for the Absence of Extraterrestrials on Earth." *Quarterly Journal of the Royal Astronomical Society*, 16, 128-135.
-3. Sandberg, A., Drexler, E., & Ord, T. (2018). "Dissolving the Fermi Paradox." arXiv:1806.02404.
-4. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. American Mathematical Society.
-5. Shannon, C. E. (1948). "A Mathematical Theory of Communication." *Bell System Technical Journal*, 27(3), 379-423.
-6. Dirichlet, P. G. L. (1834). Various works establishing the pigeonhole principle.
-
----
-
-## Appendix: Formal Verification Summary
-
-All 13 theorems and 2 definitions were formally verified in Lean 4 (v4.28.0) with Mathlib. The verification covers:
-
-- 2 structural definitions (DrakeParams, CivilizationAssignment)
-- 4 derived definitions (civCount, numEmptyPlanets, filterStrength, tropicalBottleneck)
-- 13 theorems with complete proofs (0 sorry)
-- Proof techniques used: induction on Finset cardinality, rcases, by_contra, field_simp, calc chains, norm_num, positivity
-
-The source code is available in `Speculative/FermiParadox/Defs.lean` and `Speculative/FermiParadox/Theorems.lean`.
+All main results (Theorems 3.1, 3.2, 4.1, 5.1, 5.2, 6.1, and Corollary 3.3) have been formally verified in Lean 4 with the Mathlib library. The formalization is contained in `Catalog/Cryptography/FermiPigeonhole.lean`. No axioms beyond the standard foundational axioms (propext, Classical.choice, Quot.sound) are used.

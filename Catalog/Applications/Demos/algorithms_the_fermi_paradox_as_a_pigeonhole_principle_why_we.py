@@ -1,294 +1,287 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Fermi Paradox Pigeonhole Analysis
+Algorithms for Fermi Paradox Analysis via the Pigeonhole Principle.
 
-Implements:
-1. Drake equation computation with uncertainty propagation
-2. Tropical bottleneck identification (max-plus algebra)
-3. Bayesian inference from silence
-4. Monte Carlo simulation of civilization emergence
-5. Great Filter threshold analysis
+Provides type-hinted implementations of the Drake Filter Model,
+Great Filter detection, temporal overlap analysis, and filter
+sensitivity computation.
 """
 
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
 import math
-import random
-from typing import Optional
 
 
-class DrakeParams:
+@dataclass
+class DrakeFilterModel:
+    """A parametric model of the Drake equation as a chain of filters.
+
+    Attributes:
+        filters: List of filter probabilities, each in (0, 1].
+        base_count: Number of candidate sites (e.g., habitable planets).
     """
-    Parameters of the Drake equation.
-    
-    N = R* × f_p × n_e × f_l × f_i × f_c × L
-    
-    We combine factors into per_planet_prob = f_l × f_i × f_c
-    and keep num_planets = R* × f_p × n_e × T (total habitable planets).
-    
-    Time complexity: O(1) for all computations.
-    Space complexity: O(1).
-    """
-    
-    def __init__(self, num_planets: int, per_planet_prob: float):
-        assert 0 <= per_planet_prob <= 1, "Probability must be in [0, 1]"
-        assert num_planets >= 0, "Number of planets must be non-negative"
-        self.num_planets = num_planets
-        self.per_planet_prob = per_planet_prob
-    
+    filters: List[float]
+    base_count: float
+
+    def __post_init__(self) -> None:
+        assert self.base_count > 0, "Base count must be positive"
+        for i, f in enumerate(self.filters):
+            assert 0 < f <= 1, f"Filter {i} = {f} not in (0, 1]"
+
     @property
+    def n_filters(self) -> int:
+        """Number of filters in the model."""
+        return len(self.filters)
+
     def expected_civilizations(self) -> float:
-        """E[N] = n × p. O(1)."""
-        return self.num_planets * self.per_planet_prob
-    
-    @property
-    def filter_strength(self) -> float:
-        """-ln(p). O(1)."""
-        if self.per_planet_prob <= 0:
-            return float('inf')
-        return -math.log(self.per_planet_prob)
-    
-    @property
-    def surprise_bits(self) -> float:
-        """-log₂(p). O(1)."""
-        if self.per_planet_prob <= 0:
-            return float('inf')
-        return -math.log2(self.per_planet_prob)
-    
-    def is_strong_filter(self) -> bool:
-        """Whether p < 1/n (strong filter regime). O(1)."""
-        if self.num_planets == 0:
-            return True
-        return self.per_planet_prob < 1.0 / self.num_planets
-    
-    def prob_zero_civilizations(self) -> float:
-        """
-        P(N=0) = (1-p)^n, exact Bernoulli calculation.
-        Uses log to avoid underflow.
-        O(1).
-        """
-        if self.per_planet_prob <= 0:
-            return 1.0
-        if self.per_planet_prob >= 1:
+        """Compute the expected number of civilizations: base × ∏ filters."""
+        product = 1.0
+        for f in self.filters:
+            product *= f
+        return self.base_count * product
+
+    def filter_product(self) -> float:
+        """Compute the product of all filters."""
+        product = 1.0
+        for f in self.filters:
+            product *= f
+        return product
+
+    def great_filter_index(self) -> int:
+        """Return the index of the smallest (most restrictive) filter."""
+        return min(range(self.n_filters), key=lambda i: self.filters[i])
+
+    def great_filter_bound(self) -> float:
+        """Upper bound on the smallest filter: product^(1/n)."""
+        p = self.filter_product()
+        if p <= 0 or self.n_filters == 0:
             return 0.0
-        log_prob = self.num_planets * math.log1p(-self.per_planet_prob)
-        return math.exp(log_prob)
-    
-    def prob_zero_poisson(self) -> float:
-        """
-        P(N=0) ≈ e^{-λ} where λ = n×p (Poisson approximation).
-        Valid when n is large and p is small.
-        O(1).
-        """
-        lam = self.expected_civilizations
-        return math.exp(-lam)
+        return p ** (1.0 / self.n_filters)
 
 
-def tropical_bottleneck_analysis(
-    factor_names: list[str],
-    factor_values: list[float]
-) -> dict:
-    """
-    Identify the Great Filter bottleneck using tropical (max-plus) algebra.
-    
-    In the tropical semiring (ℝ ∪ {-∞}, max, +):
-    - Addition becomes max (identifies dominant factor)
-    - Multiplication becomes + (combines independent factors)
-    
-    The Drake equation product p₁ × p₂ × ... × pₖ becomes
-    the tropical sum (-log p₁) ⊕ (-log p₂) ⊕ ... ⊕ (-log pₖ)
-    where ⊕ = max finds the bottleneck.
-    
-    Time: O(k) where k = number of factors.
-    Space: O(k).
-    
+def great_filter_theorem(
+    filters: List[float],
+    threshold: float
+) -> Tuple[bool, Optional[int]]:
+    """Verify the Great Filter Theorem: if ∏ filters < threshold^n,
+    find an index i where filters[i] < threshold.
+
     Args:
-        factor_names: Names of Drake factors
-        factor_values: Probability values (each in (0, 1])
-    
+        filters: List of positive real factors.
+        threshold: The per-filter threshold c.
+
     Returns:
-        Dictionary with bottleneck analysis results
+        (exists, index): Whether a filter below threshold exists, and its index.
     """
-    assert len(factor_names) == len(factor_values)
-    k = len(factor_values)
-    
-    # Tropical representation: -log of each factor
-    tropical = [-math.log(f) for f in factor_values]
-    
-    # Bottleneck = tropical max
-    bottleneck_idx = max(range(k), key=lambda i: tropical[i])
-    bottleneck_val = tropical[bottleneck_idx]
-    
-    # Total filter = tropical product = ordinary sum
-    total = sum(tropical)
-    
-    # Dominance ratio: how much the bottleneck contributes
-    dominance = bottleneck_val / total if total > 0 else 0
-    
-    # Rank all factors by filter strength
-    ranked = sorted(range(k), key=lambda i: tropical[i], reverse=True)
-    
+    n = len(filters)
+    product = 1.0
+    for f in filters:
+        product *= f
+
+    if product >= threshold ** n:
+        return (False, None)
+
+    # The theorem guarantees existence; find the witness
+    for i, f in enumerate(filters):
+        if f < threshold:
+            return (True, i)
+
+    # Should never reach here if product < threshold^n
+    raise AssertionError("Great Filter Theorem violated — this cannot happen")
+
+
+def temporal_pigeonhole(
+    n_civilizations: int,
+    n_epochs: int,
+    assignments: Optional[List[int]] = None
+) -> Tuple[bool, Optional[int]]:
+    """Apply the temporal pigeonhole principle.
+
+    If n_civilizations < n_epochs, find an empty epoch.
+
+    Args:
+        n_civilizations: Number of civilizations (pigeons).
+        n_epochs: Number of time epochs (holes).
+        assignments: Optional list mapping civilization i to epoch.
+
+    Returns:
+        (has_empty, epoch): Whether an empty epoch exists, and one such epoch.
+    """
+    if n_civilizations >= n_epochs:
+        return (False, None)
+
+    if assignments is None:
+        # Without specific assignments, the theorem guarantees existence
+        # Return the first epoch past the civilization count
+        return (True, n_civilizations)
+
+    occupied = set(assignments)
+    for t in range(n_epochs):
+        if t not in occupied:
+            return (True, t)
+
+    return (False, None)
+
+
+def contact_window_analysis(
+    T: int,
+    starts: List[int],
+    L: int
+) -> Tuple[bool, Optional[int], float]:
+    """Analyze contact window sparsity.
+
+    Given N civilizations each occupying L consecutive time slots
+    starting at positions in `starts`, find uncovered time slots.
+
+    Args:
+        T: Total number of time slots.
+        starts: Starting time of each civilization.
+        L: Duration of each civilization (in slots).
+
+    Returns:
+        (has_gap, gap_slot, coverage_fraction):
+            Whether a gap exists, an example gap slot, and the total coverage fraction.
+    """
+    N = len(starts)
+
+    # Count covered slots
+    covered = set()
+    for s in starts:
+        for t in range(s, min(s + L, T)):
+            covered.add(t)
+
+    coverage = len(covered) / T if T > 0 else 0.0
+
+    # Find a gap
+    for t in range(T):
+        if t not in covered:
+            return (True, t, coverage)
+
+    return (False, None, coverage)
+
+
+def filter_sensitivity_analysis(
+    model: DrakeFilterModel
+) -> List[Tuple[int, float, float]]:
+    """Compute the sensitivity of E[civilizations] to each filter.
+
+    Returns a list of (index, filter_value, elasticity) tuples,
+    sorted by elasticity (highest first).
+
+    The elasticity of E w.r.t. filter i is ∂log(E)/∂log(f_i) = 1
+    for a pure product model. However, the *variance contribution*
+    (proportional to 1/f_i² for uncertain filters) varies.
+    """
+    results = []
+    E = model.expected_civilizations()
+
+    for i, f in enumerate(model.filters):
+        # Elasticity is always 1 for a product model
+        elasticity = 1.0
+        # Variance contribution proxy: smaller filters contribute more variance
+        variance_proxy = 1.0 / (f * f) if f > 0 else float('inf')
+        results.append((i, f, variance_proxy))
+
+    # Sort by variance contribution (descending)
+    results.sort(key=lambda x: -x[2])
+    return results
+
+
+def exponential_decay_table(
+    base_count: float,
+    filter_prob: float,
+    max_filters: int = 20
+) -> List[Tuple[int, float, bool]]:
+    """Generate a table showing exponential decay of expected civilizations.
+
+    Args:
+        base_count: Number of candidate sites.
+        filter_prob: Per-filter probability.
+        max_filters: Maximum number of filters to compute.
+
+    Returns:
+        List of (n_filters, expected_count, is_alone) tuples.
+    """
+    results = []
+    for n in range(1, max_filters + 1):
+        E = base_count * (filter_prob ** n)
+        results.append((n, E, E < 1.0))
+    return results
+
+
+def drake_monte_carlo(
+    base_count: float,
+    filter_ranges: List[Tuple[float, float]],
+    n_samples: int = 100000,
+    seed: int = 42
+) -> dict:
+    """Monte Carlo analysis of the Drake equation with uncertain parameters.
+
+    Args:
+        base_count: Fixed base count.
+        filter_ranges: List of (low, high) ranges for each filter (uniform dist).
+        n_samples: Number of Monte Carlo samples.
+        seed: Random seed.
+
+    Returns:
+        Dictionary with statistics about the distribution of E[civilizations].
+    """
+    import random
+    rng = random.Random(seed)
+
+    log_E_values = []
+    E_values = []
+    min_filter_per_sample = []
+
+    for _ in range(n_samples):
+        filters = [rng.uniform(lo, hi) for lo, hi in filter_ranges]
+        log_prod = sum(math.log(f) for f in filters)
+        log_E = math.log(base_count) + log_prod
+        E = math.exp(log_E)
+
+        log_E_values.append(log_E)
+        E_values.append(E)
+        min_filter_per_sample.append(min(filters))
+
+    E_values.sort()
+    n = len(E_values)
+
     return {
-        "factors": dict(zip(factor_names, factor_values)),
-        "tropical_values": dict(zip(factor_names, tropical)),
-        "bottleneck_name": factor_names[bottleneck_idx],
-        "bottleneck_strength": bottleneck_val,
-        "total_filter_strength": total,
-        "bottleneck_dominance": dominance,
-        "ranking": [(factor_names[i], tropical[i]) for i in ranked],
-        "combined_probability": math.exp(-total),
+        "mean_E": sum(E_values) / n,
+        "median_E": E_values[n // 2],
+        "p5_E": E_values[int(0.05 * n)],
+        "p95_E": E_values[int(0.95 * n)],
+        "prob_alone": sum(1 for e in E_values if e < 1) / n,
+        "mean_min_filter": sum(min_filter_per_sample) / n,
+        "mean_log_E": sum(log_E_values) / n,
     }
 
 
-def bayesian_silence_bound(
-    planets_checked: int,
-    confidence: float = 0.95
-) -> float:
-    """
-    Bayesian upper bound on per-planet probability from observing silence.
-    
-    If we check m planets and find 0 civilizations, the (1-α) upper
-    credible bound on p is -ln(α)/m.
-    
-    For a uniform prior on p, the posterior is Beta(1, m+1),
-    and the (1-α) quantile is 1 - α^{1/(m+1)}.
-    
-    Time: O(1). Space: O(1).
-    
-    Args:
-        planets_checked: Number of planets surveyed with null result
-        confidence: Confidence level (default 0.95)
-    
-    Returns:
-        Upper bound on per-planet probability
-    """
-    assert 0 < confidence < 1
-    assert planets_checked > 0
-    alpha = 1 - confidence
-    # Beta posterior quantile
-    return 1 - alpha ** (1.0 / (planets_checked + 1))
-
-
-def monte_carlo_fermi(
-    num_planets: int,
-    per_planet_prob: float,
-    num_simulations: int = 100000,
-    seed: Optional[int] = None
-) -> dict:
-    """
-    Monte Carlo simulation of civilization emergence.
-    
-    For each simulation, independently sample whether each planet
-    develops a civilization (Bernoulli trial with probability p).
-    
-    Time: O(num_simulations) using Poisson approximation.
-    Space: O(1) per simulation.
-    
-    Args:
-        num_planets: Number of habitable planets
-        per_planet_prob: Per-planet probability
-        num_simulations: Number of Monte Carlo trials
-        seed: Random seed for reproducibility
-    
-    Returns:
-        Dictionary with simulation statistics
-    """
-    if seed is not None:
-        random.seed(seed)
-    
-    lam = num_planets * per_planet_prob  # Poisson parameter
-    
-    # Use Poisson approximation (valid for large n, small p)
-    counts = []
-    zero_count = 0
-    for _ in range(num_simulations):
-        # Poisson random variable
-        k = 0
-        p_acc = math.exp(-lam)
-        u = random.random()
-        cum = p_acc
-        while u > cum and k < 1000:
-            k += 1
-            p_acc *= lam / k
-            cum += p_acc
-        counts.append(k)
-        if k == 0:
-            zero_count += 1
-    
-    mean_count = sum(counts) / len(counts)
-    max_count = max(counts)
-    
-    return {
-        "lambda": lam,
-        "simulations": num_simulations,
-        "mean_civilizations": mean_count,
-        "max_civilizations": max_count,
-        "prob_zero": zero_count / num_simulations,
-        "prob_zero_exact": math.exp(-lam),
-        "prob_at_least_one": 1 - zero_count / num_simulations,
-    }
-
-
-def great_filter_threshold(
-    target_prob: float,
-    min_factor: float,
-    max_factors: int = 20
-) -> dict:
-    """
-    Find the minimum number of factors k such that
-    min_factor^k < target_prob.
-    
-    This determines: how many independent "filter steps" are needed
-    if each step has probability at least min_factor?
-    
-    Time: O(max_factors). Space: O(1).
-    """
-    results = {}
-    for k in range(1, max_factors + 1):
-        product = min_factor ** k
-        results[k] = {
-            "product": product,
-            "below_target": product < target_prob,
-        }
-        if product < target_prob:
-            return {
-                "min_k": k,
-                "target_prob": target_prob,
-                "min_factor": min_factor,
-                "critical_product": product,
-                "all_results": results
-            }
-    return {
-        "min_k": None,
-        "message": f"Could not reach target with {max_factors} factors",
-        "all_results": results
-    }
-
-
-# Example usage
 if __name__ == "__main__":
-    print("=== Drake Equation Analysis ===")
-    drake = DrakeParams(10**10, 1e-11)
-    print(f"Expected civilizations: {drake.expected_civilizations:.4f}")
-    print(f"Strong filter? {drake.is_strong_filter()}")
-    print(f"P(zero) exact: {drake.prob_zero_civilizations():.6f}")
-    print(f"P(zero) Poisson: {drake.prob_zero_poisson():.6f}")
-    print(f"Filter strength: {drake.filter_strength:.1f} nats")
-    print(f"Surprise: {drake.surprise_bits:.1f} bits")
-    
-    print("\n=== Tropical Bottleneck ===")
-    result = tropical_bottleneck_analysis(
-        ["f_l (life)", "f_i (intelligence)", "f_c (communication)"],
-        [0.1, 1e-4, 1e-6]
+    # Example usage
+    print("=== Drake Filter Model Example ===")
+    model = DrakeFilterModel(
+        filters=[0.5, 0.1, 0.01, 0.01, 0.01, 0.01],
+        base_count=1.5e10  # habitable planets * star formation
     )
-    print(f"Bottleneck: {result['bottleneck_name']}")
-    print(f"Dominance: {result['bottleneck_dominance']:.1%}")
-    print(f"Ranking: {result['ranking']}")
-    
-    print("\n=== Monte Carlo Simulation ===")
-    mc = monte_carlo_fermi(10**10, 1e-11, num_simulations=100000, seed=42)
-    print(f"Mean civilizations: {mc['mean_civilizations']:.4f}")
-    print(f"P(zero) simulated: {mc['prob_zero']:.4f}")
-    print(f"P(zero) exact: {mc['prob_zero_exact']:.4f}")
-    
-    print("\n=== Great Filter Threshold ===")
-    result = great_filter_threshold(1e-10, 1e-3)
-    print(f"Minimum factors needed: {result['min_k']}")
-    print(f"At k={result['min_k']}: product = {result['critical_product']:.2e}")
+    print(f"Expected civilizations: {model.expected_civilizations():.3e}")
+    print(f"Great Filter index: {model.great_filter_index()}")
+    print(f"Great Filter bound: {model.great_filter_bound():.6f}")
+
+    # Great Filter Theorem
+    exists, idx = great_filter_theorem(model.filters, 0.05)
+    print(f"\nGreat Filter Theorem (threshold=0.05): exists={exists}, index={idx}")
+
+    # Temporal Pigeonhole
+    has_empty, epoch = temporal_pigeonhole(10, 13000)
+    print(f"\nTemporal Pigeonhole (10 civs, 13000 epochs): empty={has_empty}, epoch={epoch}")
+
+    # Monte Carlo
+    print("\n=== Monte Carlo Analysis ===")
+    results = drake_monte_carlo(
+        base_count=1e10,
+        filter_ranges=[(0.001, 1.0)] * 7,
+        n_samples=100000
+    )
+    for k, v in results.items():
+        print(f"  {k}: {v:.6f}")
