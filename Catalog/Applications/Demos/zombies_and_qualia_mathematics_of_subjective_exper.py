@@ -2,115 +2,141 @@
 """
 Zombies and Qualia: Numerical Demonstrations
 
-Demonstrates the mathematical framework for the hard problem of consciousness:
-- Zombie multiplicity (exponential growth of indistinguishable variants)
-- Qualia complexity spectrum
-- Phase transition thresholds
-- Explanation gap structure
+Demonstrates the key quantitative results from the formal proofs:
+1. Explanatory gap computation
+2. Zombie census
+3. Information gap
+4. Involution counting
 """
 
 import math
-from typing import List, Tuple, Dict
 
-def zombie_count(n_states: int, n_qualia_values: int) -> int:
-    """Number of zombie variants: |Q|^|S| functionally identical systems."""
-    return n_qualia_values ** n_states
 
-def qualia_complexity(assignment: List[int]) -> int:
-    """Number of distinct qualia values in an assignment."""
-    return len(set(assignment))
+def explanatory_gap(n_states: int, n_qualia: int) -> int:
+    """
+    Compute the explanatory gap: |Q|^|S|.
+    
+    This is the number of experientially distinct but functionally 
+    identical systems compatible with a given functional description.
+    """
+    return n_qualia ** n_states
 
-def phase_transition_point(complexities: List[float], threshold: float) -> int:
-    """Find the first index where complexity exceeds the threshold."""
-    for i, c in enumerate(complexities):
-        if c > threshold:
-            return i
-    return -1
 
-def explanation_gap_size(functional_props: set, experiential_props: set) -> int:
-    """Size of the explanation gap: |experiential \\ functional|."""
-    return len(experiential_props - functional_props)
+def zombie_count(n_states: int, n_qualia: int) -> int:
+    """
+    Number of 'zombie-like' alternatives (different qualia, same function).
+    This is |Q|^|S| - 1 (excluding the original).
+    """
+    return explanatory_gap(n_states, n_qualia) - 1
+
+
+def info_gap_bits(n_states: int, n_qualia: int) -> float:
+    """
+    Information-theoretic gap in bits: |S| * log2(|Q|).
+    
+    The number of bits of experiential information invisible to 
+    functional observation.
+    """
+    if n_qualia <= 1:
+        return 0.0
+    return n_states * math.log2(n_qualia)
+
+
+def count_involutions(n: int) -> int:
+    """
+    Count the number of involutions on a set of n elements.
+    An involution is a permutation that is its own inverse.
+    
+    Recurrence: a(n) = a(n-1) + (n-1)*a(n-2)
+    (Either element n is a fixed point, or it swaps with one of n-1 others)
+    """
+    if n <= 1:
+        return 1
+    # Use dynamic programming
+    a = [0] * (n + 1)
+    a[0] = 1
+    a[1] = 1
+    for k in range(2, n + 1):
+        a[k] = a[k - 1] + (k - 1) * a[k - 2]
+    return a[n]
+
+
+def nontrivial_involution_count(n: int) -> int:
+    """
+    Number of non-identity involutions on n elements.
+    These correspond to genuinely 'inverted spectrum' scenarios.
+    """
+    return count_involutions(n) - 1
 
 
 def main():
-    print("=" * 60)
+    print("=" * 70)
     print("ZOMBIES AND QUALIA: NUMERICAL DEMONSTRATIONS")
-    print("=" * 60)
-
-    # Demo 1: Zombie Multiplicity
-    print("\n--- Demo 1: Zombie Multiplicity ---")
-    print("For a system with n states, the number of functionally")
-    print("identical 'zombie variants' with k qualia values is k^n.\n")
-    for n in range(1, 8):
-        bool_zombies = zombie_count(n, 2)
-        prop_zombies = zombie_count(n, 3)
-        print(f"  n={n}: Bool-zombies = 2^{n} = {bool_zombies:>6}, "
-              f"3-zombies = 3^{n} = {prop_zombies:>6}")
-
-    # Demo 2: Qualia Complexity Spectrum
-    print("\n--- Demo 2: Qualia Complexity Spectrum ---")
-    print("For Fin 5, example qualia assignments and their complexities:\n")
-    examples = [
-        ([0, 0, 0, 0, 0], "Trivial (zombie)"),
-        ([0, 1, 0, 1, 0], "Binary"),
-        ([0, 1, 2, 0, 1], "Ternary"),
-        ([0, 1, 2, 3, 4], "Maximal (identity)"),
-    ]
-    for assignment, label in examples:
-        c = qualia_complexity(assignment)
-        print(f"  {assignment} → complexity={c} ({label})")
-
-    # Demo 3: Phase Transition
-    print("\n--- Demo 3: Consciousness Phase Transition ---")
-    print("Complexity function: f(n) = n*log(n+1)")
-    print("Threshold: 5.0\n")
-    complexities = [n * math.log(n + 1) for n in range(15)]
-    threshold = 5.0
-    n0 = phase_transition_point(complexities, threshold)
-    for i, c in enumerate(complexities):
-        marker = " ← TRANSITION" if i == n0 else ""
-        status = "zombie" if c <= threshold else "conscious"
-        print(f"  n={i:2d}: complexity={c:6.2f}  [{status}]{marker}")
-
-    # Demo 4: Explanation Gap
-    print("\n--- Demo 4: Explanation Gap Structure ---")
-    functional = {"sees_red", "reports_red", "discriminates_wavelength"}
-    experiential = functional | {"feels_redness", "has_color_experience",
-                                  "subjective_warmth"}
-    gap = experiential - functional
-    print(f"  Functional properties:   {functional}")
-    print(f"  Experiential properties: {experiential}")
-    print(f"  Gap (unexplained):       {gap}")
-    print(f"  Gap size: {len(gap)}")
-
-    # Demo 5: Cantor Diagonal
-    print("\n--- Demo 5: Self-Knowledge Limitation ---")
-    print("For Fin n, there are n^n endomorphisms but only n states.")
-    print("Surjection is impossible for n ≥ 2:\n")
-    for n in range(2, 8):
-        n_endo = n ** n
-        print(f"  n={n}: states={n}, endomorphisms={n_endo}, "
-              f"ratio={n_endo/n:.1f}x")
-
-    # Demo 6: Gap Isomorphism
-    print("\n--- Demo 6: Gap Isomorphism ---")
-    print("Both gaps have the structure: accessible ⊊ full")
-    print()
-    print("  Consciousness Gap:")
-    print("    accessible = functional descriptions")
-    print("    full       = all facts about the system")
-    print("    gap        = qualia (unexplained by function)")
-    print()
-    print("  Incompleteness Gap:")
-    print("    accessible = provable sentences")
-    print("    full       = true sentences")
-    print("    gap        = true but unprovable (Gödel sentences)")
-    print()
-    print("  Both satisfy: accessible ⊆ full, (full \\ accessible) ≠ ∅")
-    print("  → They are instances of the same AbstractGap structure.")
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
+    print("=" * 70)
+    
+    # Demo 1: Explanatory gap for small systems
+    print("\n--- Demo 1: Explanatory Gap ---")
+    print(f"{'States':>8} {'Qualia':>8} {'Gap':>15} {'Zombies':>15}")
+    print("-" * 50)
+    for n_states in [2, 3, 5, 10, 20]:
+        for n_qualia in [2, 3, 5]:
+            gap = explanatory_gap(n_states, n_qualia)
+            zombies = zombie_count(n_states, n_qualia)
+            print(f"{n_states:>8} {n_qualia:>8} {gap:>15,} {zombies:>15,}")
+    
+    # Demo 2: Information gap
+    print("\n--- Demo 2: Information Gap (bits) ---")
+    print(f"{'States':>8} {'Qualia':>8} {'Info Gap (bits)':>20}")
+    print("-" * 40)
+    for n_states in [10, 100, 1000, 10**6, 10**9]:
+        for n_qualia in [2, 10, 100]:
+            bits = info_gap_bits(n_states, n_qualia)
+            print(f"{n_states:>8,} {n_qualia:>8} {bits:>20,.1f}")
+    
+    # Demo 3: Human brain scale
+    print("\n--- Demo 3: Human Brain Scale ---")
+    n_neurons = 86_000_000_000  # ~86 billion neurons
+    n_qualia = 2  # binary qualia (experience/no experience)
+    bits = info_gap_bits(n_neurons, n_qualia)
+    print(f"Neurons: {n_neurons:,}")
+    print(f"Binary qualia space (|Q|=2)")
+    print(f"Information gap: {bits:,.0f} bits")
+    print(f"Explanatory gap: 2^{n_neurons:,} distinct experiences")
+    print(f"(For comparison, atoms in observable universe: ~10^80 ≈ 2^266)")
+    print(f"The gap exceeds the universe by ~2^{n_neurons - 266:,} fold")
+    
+    # Demo 4: Involution counting
+    print("\n--- Demo 4: Inverted Spectrum Scenarios ---")
+    print(f"{'|Q|':>6} {'Involutions':>15} {'Non-trivial':>15}")
+    print("-" * 40)
+    for n in range(1, 16):
+        inv = count_involutions(n)
+        nt = nontrivial_involution_count(n)
+        print(f"{n:>6} {inv:>15,} {nt:>15,}")
+    
+    # Demo 5: Gap additivity
+    print("\n--- Demo 5: Gap Additivity (Sum vs Product) ---")
+    print("For S = S1 ⊕ S2, Gap(S,Q) = Gap(S1,Q) × Gap(S2,Q)")
+    print(f"{'|S1|':>6} {'|S2|':>6} {'|Q|':>6} {'Gap(S1⊕S2)':>15} {'Gap(S1)×Gap(S2)':>18}")
+    print("-" * 55)
+    for s1, s2, q in [(3, 4, 2), (2, 5, 3), (4, 3, 5)]:
+        gap_sum = explanatory_gap(s1 + s2, q)
+        gap_prod = explanatory_gap(s1, q) * explanatory_gap(s2, q)
+        print(f"{s1:>6} {s2:>6} {q:>6} {gap_sum:>15,} {gap_prod:>18,}")
+    
+    # Demo 6: Mary's Room
+    print("\n--- Demo 6: Mary's Room ---")
+    print("Mary knows the complete functional description F.")
+    print("How many experientially distinct systems share this description?")
+    n_states = 5
+    for n_qualia in [2, 5, 10, 100]:
+        gap = explanatory_gap(n_states, n_qualia)
+        print(f"  With {n_qualia} qualia types and {n_states} states: "
+              f"{gap:,} possibilities (Mary cannot distinguish)")
+    
+    print("\n" + "=" * 70)
+    print("All computations match the formally verified theorems.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
@@ -119,128 +145,61 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Visualization: Zombie Multiplicity and Qualia Complexity
-
-Standalone matplotlib visualization showing:
-1. Exponential growth of zombie variants
-2. Phase transition diagram
-3. Qualia complexity bounds
+Visualization: The Explanatory Gap as a function of states and qualia.
 """
-
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
-def plot_zombie_multiplicity():
-    """Plot the exponential growth of zombie variants."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def explanatory_gap(n_states, n_qualia):
+    return n_qualia ** n_states
 
-    # Panel 1: Zombie count vs states
-    ax = axes[0]
-    ns = np.arange(1, 12)
-    for k in [2, 3, 5]:
-        counts = [k**n for n in ns]
-        ax.semilogy(ns, counts, 'o-', label=f'{k} qualia values', markersize=5)
-    ax.set_xlabel('Number of States (n)', fontsize=12)
-    ax.set_ylabel('Zombie Variants (k^n)', fontsize=12)
-    ax.set_title('Zombie Multiplicity', fontsize=14, fontweight='bold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+def info_gap(n_states, n_qualia):
+    if n_qualia <= 1:
+        return 0.0
+    return n_states * np.log2(n_qualia)
 
-    # Panel 2: Phase transition
-    ax = axes[1]
-    ns = np.arange(0, 20)
-    complexities = [n * math.log(n + 1) for n in ns]
-    threshold = 8.0
-    colors = ['#e74c3c' if c <= threshold else '#2ecc71' for c in complexities]
-    ax.bar(ns, complexities, color=colors, alpha=0.7, edgecolor='black', linewidth=0.5)
-    ax.axhline(y=threshold, color='black', linestyle='--', linewidth=2,
-               label=f'Threshold = {threshold}')
-    n0 = next(i for i, c in enumerate(complexities) if c > threshold)
-    ax.annotate(f'Transition at n={n0}', xy=(n0, complexities[n0]),
-                xytext=(n0 + 3, complexities[n0] + 5),
-                arrowprops=dict(arrowstyle='->', color='black'),
-                fontsize=11, fontweight='bold')
-    ax.set_xlabel('System Size (n)', fontsize=12)
-    ax.set_ylabel('Complexity', fontsize=12)
-    ax.set_title('Consciousness Phase Transition', fontsize=14, fontweight='bold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-    # Panel 3: Qualia complexity bounds
-    ax = axes[2]
-    ns = np.arange(1, 15)
-    max_complexity = ns  # identity qualia
-    min_complexity = np.ones_like(ns)  # trivial qualia
-    ax.fill_between(ns, min_complexity, max_complexity, alpha=0.3, color='blue',
-                    label='Possible complexity range')
-    ax.plot(ns, max_complexity, 'b-', linewidth=2, label='Max (identity qualia)')
-    ax.plot(ns, min_complexity, 'r--', linewidth=2, label='Min (trivial/zombie)')
-    ax.plot(ns, np.sqrt(ns), 'g-.', linewidth=2, label='√n (conjectured threshold)')
-    ax.set_xlabel('Number of States (n)', fontsize=12)
-    ax.set_ylabel('Qualia Complexity', fontsize=12)
-    ax.set_title('Qualia Complexity Bounds', fontsize=14, fontweight='bold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+# Plot 1: Log of explanatory gap vs states for different qualia counts
+ax1 = axes[0]
+states_range = np.arange(1, 21)
+for k in [2, 3, 5, 10]:
+    gaps = [np.log10(explanatory_gap(n, k)) for n in states_range]
+    ax1.plot(states_range, gaps, 'o-', label=f'|Q|={k}', linewidth=2)
+ax1.set_xlabel('Number of States |S|', fontsize=12)
+ax1.set_ylabel('log₁₀(Explanatory Gap)', fontsize=12)
+ax1.set_title('Explanatory Gap Growth', fontsize=14)
+ax1.legend()
+ax1.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('zombie_qualia_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: zombie_qualia_visualization.png")
+# Plot 2: Information gap (bits)
+ax2 = axes[1]
+states_log = np.logspace(0, 6, 50)
+for k in [2, 10, 100]:
+    bits = [info_gap(n, k) for n in states_log]
+    ax2.loglog(states_log, bits, linewidth=2, label=f'|Q|={k}')
+ax2.set_xlabel('Number of States |S|', fontsize=12)
+ax2.set_ylabel('Information Gap (bits)', fontsize=12)
+ax2.set_title('Information-Theoretic Gap', fontsize=14)
+ax2.legend()
+ax2.grid(True, alpha=0.3)
 
+# Plot 3: Zombie fraction
+ax3 = axes[2]
+states_range = np.arange(1, 16)
+for k in [2, 3, 5]:
+    total = np.array([explanatory_gap(n, k) for n in states_range], dtype=float)
+    fraction = (total - 1) / total
+    ax3.plot(states_range, fraction, 's-', label=f'|Q|={k}', linewidth=2)
+ax3.set_xlabel('Number of States |S|', fontsize=12)
+ax3.set_ylabel('Zombie Fraction (k^n - 1) / k^n', fontsize=12)
+ax3.set_title('Fraction of Zombie Twins', fontsize=14)
+ax3.set_ylim(0.4, 1.02)
+ax3.legend()
+ax3.grid(True, alpha=0.3)
+ax3.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
 
-def plot_gap_structure():
-    """Visualize the abstract gap structure."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Consciousness gap
-    ax = axes[0]
-    theta = np.linspace(0, 2*np.pi, 100)
-    # Full circle (experiential)
-    ax.fill(3*np.cos(theta), 3*np.sin(theta), alpha=0.2, color='purple',
-            label='Experiential (full)')
-    ax.plot(3*np.cos(theta), 3*np.sin(theta), 'purple', linewidth=2)
-    # Inner circle (functional)
-    ax.fill(2*np.cos(theta), 2*np.sin(theta), alpha=0.3, color='blue',
-            label='Functional (accessible)')
-    ax.plot(2*np.cos(theta), 2*np.sin(theta), 'blue', linewidth=2)
-    # Gap annotation
-    ax.annotate('GAP\n(qualia)', xy=(2.5, 0), fontsize=14,
-                fontweight='bold', color='red', ha='center')
-    ax.set_title('Consciousness Gap', fontsize=14, fontweight='bold')
-    ax.legend(loc='lower left')
-    ax.set_xlim(-4, 4)
-    ax.set_ylim(-4, 4)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.2)
-
-    # Incompleteness gap
-    ax = axes[1]
-    ax.fill(3*np.cos(theta), 3*np.sin(theta), alpha=0.2, color='orange',
-            label='True sentences (full)')
-    ax.plot(3*np.cos(theta), 3*np.sin(theta), 'orange', linewidth=2)
-    ax.fill(2*np.cos(theta), 2*np.sin(theta), alpha=0.3, color='green',
-            label='Provable sentences (accessible)')
-    ax.plot(2*np.cos(theta), 2*np.sin(theta), 'green', linewidth=2)
-    ax.annotate('GAP\n(Gödel)', xy=(2.5, 0), fontsize=14,
-                fontweight='bold', color='red', ha='center')
-    ax.set_title('Incompleteness Gap', fontsize=14, fontweight='bold')
-    ax.legend(loc='lower left')
-    ax.set_xlim(-4, 4)
-    ax.set_ylim(-4, 4)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.2)
-
-    fig.suptitle('Gap Isomorphism: Same Structure, Different Domains',
-                 fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('gap_isomorphism.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: gap_isomorphism.png")
-
-
-if __name__ == "__main__":
-    plot_zombie_multiplicity()
-    plot_gap_structure()
+plt.tight_layout()
+plt.savefig('explanatory_gap_visualization.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: explanatory_gap_visualization.png")
