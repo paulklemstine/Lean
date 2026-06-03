@@ -1,249 +1,231 @@
 #!/usr/bin/env python3
 """
-Algorithms for the Library of Babel: Combinatorial Topology
+Library of Babel: Core Algorithms
 
-Type-hinted implementations of the key algorithms from the formalization.
+Type-hinted implementations of the key algorithms from the research.
 """
 
-from typing import List, Dict, Tuple, Optional, Callable
+from typing import List, Dict, Tuple, Optional, Callable, Set
 import math
 
 
-# --- Core Types ---
-
-Symbol = int  # Elements of Fin(α), represented as 0..α-1
-Book = List[Symbol]  # A book is a list of symbols
-
-
-def make_book(symbols: List[int], alpha: int) -> Book:
-    """Create a valid book, checking all symbols are in range."""
-    assert all(0 <= s < alpha for s in symbols), f"All symbols must be in [0, {alpha})"
-    return list(symbols)
-
-
-# --- Hamming Distance ---
-
-def hamming_distance(b1: Book, b2: Book) -> int:
+def hamming_distance(x: List[int], y: List[int]) -> int:
     """
-    Compute the Hamming distance between two books.
-    
-    Time complexity: O(N) where N = len(b1) = len(b2)
-    Space complexity: O(1)
-    
-    Satisfies:
-    - Symmetry: hamming_distance(b1, b2) == hamming_distance(b2, b1)
-    - Identity: hamming_distance(b1, b2) == 0 iff b1 == b2
-    - Triangle: hamming_distance(b1, b3) <= hamming_distance(b1, b2) + hamming_distance(b2, b3)
-    - Bound: hamming_distance(b1, b2) <= len(b1)
+    Compute the Hamming distance between two words.
+
+    Time complexity: O(n) where n = len(x) = len(y)
+
+    Args:
+        x: First word (list of symbol indices)
+        y: Second word (list of symbol indices)
+
+    Returns:
+        Number of positions where x and y differ
     """
-    assert len(b1) == len(b2), "Books must have equal length"
-    return sum(1 for a, c in zip(b1, b2) if a != c)
+    assert len(x) == len(y), "Words must have equal length"
+    return sum(1 for a, b in zip(x, y) if a != b)
 
 
-def hamming_ball(center: Book, radius: int, alpha: int) -> int:
+def hamming_ball_volume(n: int, k: int, r: int) -> int:
     """
-    Count the number of books within Hamming distance r of center.
-    
-    |B(b, r)| = Σ_{k=0}^{r} C(N, k) · (α-1)^k
-    
-    This is the volume of a Hamming ball, used in sphere-packing bounds.
+    Compute the volume (cardinality) of a Hamming ball.
+
+    V(n, k, r) = sum_{i=0}^{r} C(n, i) * (k-1)^i
+
+    Args:
+        n: Word length
+        k: Alphabet size
+        r: Ball radius
+
+    Returns:
+        Number of words within Hamming distance r of any center
     """
-    n = len(center)
     total = 0
-    for k in range(min(radius, n) + 1):
-        total += math.comb(n, k) * (alpha - 1) ** k
+    for i in range(min(r, n) + 1):
+        total += math.comb(n, i) * (k - 1) ** i
     return total
 
 
-# --- Symbol Spectrum ---
-
-def symbol_spectrum(book: Book, alpha: int) -> List[int]:
+def hamming_bound(n: int, k: int, t: int) -> int:
     """
-    Compute the symbol frequency spectrum.
-    
-    Returns a list of length α where spectrum[c] = count of symbol c in book.
-    Invariant: sum(spectrum) == len(book)
-    
-    Time: O(N), Space: O(α)
+    Compute the Hamming (sphere-packing) bound for error-correcting codes.
+
+    For a code with minimum distance d = 2t + 1, the maximum code size is
+    at most k^n / V(n, k, t).
+
+    Args:
+        n: Codeword length
+        k: Alphabet size
+        t: Error-correction capability (t = (d-1)/2)
+
+    Returns:
+        Upper bound on code size
     """
-    spectrum = [0] * alpha
-    for s in book:
-        spectrum[s] += 1
-    return spectrum
+    vol = hamming_ball_volume(n, k, t)
+    return k ** n // vol
 
 
-def is_uniform(book: Book, alpha: int) -> bool:
-    """Check if a book has uniform symbol distribution."""
-    spec = symbol_spectrum(book, alpha)
-    return len(set(spec)) <= 1
-
-
-def spectrum_entropy(book: Book, alpha: int) -> float:
+def entropy_profile(word: List[int], max_scale: Optional[int] = None) -> Dict[int, int]:
     """
-    Compute the Shannon entropy of the book's symbol distribution.
-    H = -Σ p_c log₂(p_c)
-    
-    Maximum entropy (log₂ α) indicates uniform distribution.
+    Compute the entropy profile of a word at multiple scales.
+
+    For each scale s, counts the number of distinct s-grams
+    (contiguous substrings of length s).
+
+    Args:
+        word: Input word as list of symbol indices
+        max_scale: Maximum scale to compute (default: min(len(word), 20))
+
+    Returns:
+        Dictionary mapping scale s to number of distinct s-grams
     """
-    n = len(book)
-    if n == 0:
+    n = len(word)
+    if max_scale is None:
+        max_scale = min(n, 20)
+
+    profile: Dict[int, int] = {}
+    for s in range(1, max_scale + 1):
+        if s > n:
+            break
+        sgrams: Set[Tuple[int, ...]] = set()
+        for i in range(n - s + 1):
+            sgrams.add(tuple(word[i:i + s]))
+        profile[s] = len(sgrams)
+    return profile
+
+
+def is_maximally_complex(
+    word: List[int],
+    alphabet_size: int,
+    threshold: int
+) -> bool:
+    """
+    Check if a word is maximally complex up to a given threshold.
+
+    A word is maximally complex at threshold t if for all 1 ≤ s ≤ t,
+    the number of distinct s-grams equals min(n - s + 1, k^s).
+
+    Args:
+        word: Input word
+        alphabet_size: Size of the alphabet
+        threshold: Maximum scale to check
+
+    Returns:
+        True if the word is maximally complex at all scales up to threshold
+    """
+    n = len(word)
+    profile = entropy_profile(word, threshold)
+
+    for s in range(1, threshold + 1):
+        if s > n:
+            return False
+        expected = min(n - s + 1, alphabet_size ** s)
+        if profile.get(s, 0) != expected:
+            return False
+    return True
+
+
+def compressibility_ratio(
+    compress: Callable[[List[int]], List[int]],
+    decompress: Callable[[List[int]], List[int]],
+    words: List[List[int]]
+) -> float:
+    """
+    Compute the fraction of words that are compressible under a scheme.
+
+    A word w is compressible if decompress(compress(w)) == w.
+
+    Args:
+        compress: Compression function
+        decompress: Decompression function
+        words: List of words to test
+
+    Returns:
+        Fraction of words that roundtrip successfully
+    """
+    if not words:
         return 0.0
-    spec = symbol_spectrum(book, alpha)
-    entropy = 0.0
-    for count in spec:
-        if count > 0:
-            p = count / n
-            entropy -= p * math.log2(p)
-    return entropy
+    compressible = sum(1 for w in words if decompress(compress(w)) == w)
+    return compressible / len(words)
 
 
-# --- Incompressibility Analysis ---
-
-def compressible_fraction(alpha: int, n: int, m: int) -> float:
+def expected_hamming_distance(n: int, k: int) -> float:
     """
-    Upper bound on the fraction of books compressible from length N to length M.
-    
-    fraction ≤ α^M / α^N = α^(M-N) = α^(-k) where k = N - M
-    
-    For α = 25, k = 1: fraction ≤ 0.04 (4%)
-    For α = 25, k = 100: fraction ≤ 10^(-140)
+    Compute the expected Hamming distance between two random words.
+
+    E[d_H(x, y)] = n * (k-1) / k
+
+    Args:
+        n: Word length
+        k: Alphabet size
+
+    Returns:
+        Expected Hamming distance
     """
-    if m >= n:
-        return 1.0
-    return alpha ** (m - n)
+    return n * (k - 1) / k
 
 
-def incompressible_count_bound(alpha: int, n: int, m: int) -> Tuple[int, int]:
+def hamming_distance_std(n: int, k: int) -> float:
     """
-    Return (min_incompressible, total) where min_incompressible is the minimum
-    number of books that cannot be compressed from length N to length M.
-    
-    min_incompressible = α^N - α^M
+    Compute the standard deviation of Hamming distance between random words.
+
+    Std[d_H(x, y)] = sqrt(n * (k-1) / k^2)
+
+    Args:
+        n: Word length
+        k: Alphabet size
+
+    Returns:
+        Standard deviation of Hamming distance
     """
-    total = alpha ** n
-    compressible = alpha ** m
-    return (total - compressible, total)
+    return math.sqrt(n * (k - 1) / k ** 2)
 
 
-# --- Edit Operations ---
-
-def single_edit(book: Book, position: int, new_symbol: Symbol) -> Book:
+def hamming_distance_exact_count(n: int, k: int, d: int) -> int:
     """
-    Create a new book by changing one character.
-    The result has Hamming distance exactly 1 from the original
-    (if new_symbol ≠ book[position]).
+    Compute the exact number of words at Hamming distance d from a fixed word.
+
+    Count = C(n, d) * (k-1)^d
+
+    Args:
+        n: Word length
+        k: Alphabet size
+        d: Target Hamming distance
+
+    Returns:
+        Number of words at exactly distance d
     """
-    result = list(book)
-    result[position] = new_symbol
-    return result
+    if d < 0 or d > n:
+        return 0
+    return math.comb(n, d) * (k - 1) ** d
 
 
-def edit_path(b1: Book, b2: Book) -> List[Book]:
+def library_statistics() -> Dict[str, object]:
     """
-    Construct a minimum-length edit path from b1 to b2.
-    Each step changes exactly one character.
-    Path length = hamming_distance(b1, b2) + 1.
-    
-    This witnesses the combinatorial connectivity of the Babel space.
+    Compute key statistics for the Library of Babel.
+
+    Returns:
+        Dictionary with library statistics
     """
-    assert len(b1) == len(b2)
-    path = [list(b1)]
-    current = list(b1)
-    for i in range(len(b1)):
-        if current[i] != b2[i]:
-            current = list(current)
-            current[i] = b2[i]
-            path.append(current)
-    return path
+    n = 410 * 3200  # book length
+    k = 25  # alphabet size
 
-
-def count_neighbors(n: int, alpha: int) -> int:
-    """
-    Number of books at Hamming distance exactly 1 from any given book.
-    Each of N positions can be changed to any of (α-1) alternative symbols.
-    """
-    return (alpha - 1) * n
-
-
-# --- Topological Analysis ---
-
-def clopen_set_membership(book: Book, position: int, symbol: Symbol) -> bool:
-    """
-    Check if a book belongs to the clopen basis set C(i, c) = {b : b[i] = c}.
-    These sets form a clopen basis for the product topology,
-    witnessing covering dimension 0.
-    """
-    return book[position] == symbol
-
-
-def separate_books(b1: Book, b2: Book) -> Optional[Tuple[int, int, int]]:
-    """
-    Find a separating clopen set for two distinct books.
-    Returns (position, b1[position], b2[position]) or None if books are equal.
-    
-    This witnesses total disconnectedness: any two distinct points
-    are separated by a clopen set.
-    """
-    for i in range(len(b1)):
-        if b1[i] != b2[i]:
-            return (i, b1[i], b2[i])
-    return None
-
-
-# --- Babel Library Parameters ---
-
-class BabelLibrary:
-    """The Library of Babel with specific parameters."""
-    
-    def __init__(self, alpha: int = 25, pages: int = 410,
-                 lines_per_page: int = 40, chars_per_line: int = 80):
-        self.alpha = alpha
-        self.pages = pages
-        self.lines_per_page = lines_per_page
-        self.chars_per_line = chars_per_line
-        self.book_length = pages * lines_per_page * chars_per_line
-    
-    @property
-    def total_books_log10(self) -> float:
-        """Log base 10 of total number of books."""
-        return self.book_length * math.log10(self.alpha)
-    
-    @property
-    def neighbors_per_book(self) -> int:
-        """Number of books at Hamming distance 1 from any given book."""
-        return (self.alpha - 1) * self.book_length
-    
-    @property
-    def diameter(self) -> int:
-        """Maximum Hamming distance (= book length)."""
-        return self.book_length
-    
-    @property
-    def clopen_basis_size(self) -> int:
-        """Number of basic clopen sets in the product topology."""
-        return self.alpha * self.book_length
-    
-    def compressible_fraction(self, savings: int) -> float:
-        """Fraction of books compressible by `savings` characters."""
-        return self.alpha ** (-savings)
-    
-    def summary(self) -> str:
-        """Print summary of library parameters and theorems."""
-        lines = [
-            f"Library of Babel Parameters:",
-            f"  Alphabet size: {self.alpha}",
-            f"  Book length: {self.book_length:,}",
-            f"  Total books: ≈ 10^{self.total_books_log10:,.0f}",
-            f"  Neighbors per book: {self.neighbors_per_book:,}",
-            f"  Hamming diameter: {self.diameter:,}",
-            f"  Clopen basis size: {self.clopen_basis_size:,}",
-            f"  Covering dimension: 0",
-            f"  Compressible by 1 char: ≤ {self.compressible_fraction(1):.2%}",
-            f"  Compressible by 100 chars: ≤ 10^{-100*math.log10(self.alpha):.0f}",
-        ]
-        return "\n".join(lines)
+    return {
+        "alphabet_size": k,
+        "book_length": n,
+        "library_size_log10": n * math.log10(k),
+        "expected_hamming_distance": expected_hamming_distance(n, k),
+        "hamming_distance_std": hamming_distance_std(n, k),
+        "fraction_compressible_1char": k ** (n - 1) / k ** n,
+        "incompressible_fraction_lower_bound": 1 - 1 / k,
+    }
 
 
 if __name__ == "__main__":
-    lib = BabelLibrary()
-    print(lib.summary())
+    stats = library_statistics()
+    print("Library of Babel Statistics:")
+    for key, value in stats.items():
+        if isinstance(value, float):
+            print(f"  {key}: {value:.4f}")
+        else:
+            print(f"  {key}: {value}")
