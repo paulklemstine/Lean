@@ -1,409 +1,448 @@
 #!/usr/bin/env python3
 """
-Prime Gap Crossword: Demonstration Script
+Prime Gap Crossword: Demonstrations and Numerical Experiments
 
-Demonstrates the key results from the prime gap crossword analysis:
-1. Prime residue classes and gap constraints
-2. Sieve-based admissibility
-3. Forcing patterns
-4. Conditional gap probabilities
+Demonstrates the key results from the prime gap crossword theory:
+1. Mod-6 gap grammar verification
+2. Primorial automaton mod-30 analysis
+3. Forcing pattern search
+4. Gap distribution statistics
 """
 
-from algorithms import (
-    primes_up_to, prime_gaps, admissible_residues, admissible_next_gaps,
-    is_forcing, find_forcing_patterns, gap_pattern_statistics,
-    conditional_gap_probabilities, forcing_fraction, is_prime
-)
+from sympy import isprime, nextprime, primerange
+from collections import Counter, defaultdict
+import math
 
 
-def demo_prime_residues():
-    """Demonstrate prime residue classes mod 6 and mod 30."""
+def prime_gaps(limit: int) -> list[tuple[int, int, int]]:
+    """Generate (p, q, gap) for consecutive primes up to limit."""
+    primes = list(primerange(2, limit))
+    return [(primes[i], primes[i+1], primes[i+1] - primes[i])
+            for i in range(len(primes) - 1)]
+
+
+def demo_no_prime_triplet():
+    """Verify: no p > 3 has p, p+2, p+4 all prime."""
     print("=" * 60)
-    print("DEMO 1: Prime Residue Classes")
+    print("DEMO 1: No Prime Triplet Theorem")
     print("=" * 60)
-
-    primes = primes_up_to(100)
-    print(f"\nPrimes up to 100: {primes}")
-
-    print("\nPrimes > 3 mod 6:")
-    for p in primes:
-        if p > 3:
-            print(f"  {p} ≡ {p % 6} (mod 6)", end="")
-            if p % 6 not in [1, 5]:
-                print(" *** VIOLATION ***")
-            else:
-                print()
-
-    print("\nPrimes > 5 mod 30:")
-    valid_residues = {1, 7, 11, 13, 17, 19, 23, 29}
-    for p in primes:
-        if p > 5:
-            r = p % 30
-            assert r in valid_residues, f"{p} mod 30 = {r} not in valid set!"
-    print(f"  All primes > 5 have residue mod 30 in {sorted(valid_residues)} ✓")
+    print("Checking all p up to 10^6: can p, p+2, p+4 all be prime for p > 3?")
+    
+    for p in range(5, 1_000_001):
+        if isprime(p) and isprime(p + 2) and isprime(p + 4):
+            print(f"  COUNTEREXAMPLE FOUND: {p}, {p+2}, {p+4}")
+            return
+    
+    print("  No counterexample found (as expected).")
+    print("  The only prime triplet {p, p+2, p+4} is {3, 5, 7}.\n")
 
 
-def demo_twin_prime_residue():
-    """Demonstrate that twin primes > 3 satisfy p ≡ 5 (mod 6)."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Twin Prime Residue Constraint")
+def demo_mod6_grammar():
+    """Verify the mod-6 gap grammar."""
     print("=" * 60)
-
-    primes = primes_up_to(1000)
-    twin_primes = [(p, p + 2) for p in primes if is_prime(p + 2) and p > 3]
-    print(f"\nTwin prime pairs (p, p+2) with p > 3 up to 1000:")
-    for p, q in twin_primes:
-        print(f"  ({p}, {q}): p ≡ {p % 6} (mod 6)")
-        assert p % 6 == 5, f"Twin prime {p} not ≡ 5 mod 6!"
-    print(f"\n  All {len(twin_primes)} twin prime pairs satisfy p ≡ 5 (mod 6) ✓")
-
-
-def demo_sieve_admissibility():
-    """Demonstrate sieve-based admissibility analysis."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Sieve Admissibility Analysis")
+    print("DEMO 2: Mod-6 Gap Grammar")
     print("=" * 60)
+    
+    gaps = prime_gaps(1_000_000)
+    # Skip first gap (2→3) and gaps involving 3
+    large_gaps = [(p, q, g) for p, q, g in gaps if p > 3]
+    
+    mod6_counts = Counter()
+    state_transition = defaultdict(Counter)
+    
+    for p, q, g in large_gaps:
+        mod6_counts[g % 6] += 1
+        state_transition[p % 6][q % 6] += 1
+    
+    print("Gap mod 6 distribution (primes > 3):")
+    for r in sorted(mod6_counts.keys()):
+        print(f"  gap ≡ {r} (mod 6): {mod6_counts[r]} occurrences")
+    
+    print("\nVerification: only residues 0, 2, 4 appear:", 
+          set(mod6_counts.keys()) <= {0, 2, 4})
+    
+    print("\nState transitions (p%6 → q%6):")
+    for s1 in [1, 5]:
+        for s2 in [1, 5]:
+            print(f"  {s1} → {s2}: {state_transition[s1][s2]} times")
+    print()
 
-    S = {2, 3}
-    M = 6  # primorial of {2,3}
 
-    print(f"\nSieve S = {S}, primorial M = {M}")
+def demo_primorial_automaton():
+    """Analyze the mod-30 primorial automaton."""
+    print("=" * 60)
+    print("DEMO 3: Primorial Automaton (mod 30)")
+    print("=" * 60)
+    
+    admissible = {1, 7, 11, 13, 17, 19, 23, 29}
+    print(f"Admissible residues mod 30: {sorted(admissible)}")
+    print(f"Count: {len(admissible)} = φ(30)")
+    
+    # Compute admissible gaps from each state
+    print("\nAdmissible gaps (mod 30) from each state:")
+    for r in sorted(admissible):
+        gaps = [g for g in range(1, 31) if (r + g) % 30 in admissible]
+        print(f"  State {r:2d}: gaps = {gaps} ({len(gaps)} options)")
+    
+    # Verify all primes > 5 land in admissible residues
+    violations = 0
+    for p in primerange(7, 100_000):
+        if p % 30 not in admissible:
+            violations += 1
+    print(f"\nPrimes 7..100000 violating mod-30 admissibility: {violations}")
+    
+    # Actual gap distribution mod 30
+    gaps = prime_gaps(100_000)
+    large_gaps = [(p, q, g) for p, q, g in gaps if p > 5]
+    mod30_gaps = Counter(g % 30 for _, _, g in large_gaps)
+    print(f"\nGap mod 30 distribution (first 10000 gaps, primes > 5):")
+    for r in sorted(mod30_gaps.keys()):
+        print(f"  gap ≡ {r:2d} (mod 30): {mod30_gaps[r]:5d}")
+    print()
 
-    # Test various gap words
-    test_words = [[2], [4], [6], [2, 4], [4, 2], [2, 4, 2], [6, 4, 2]]
-    for w in test_words:
-        residues = admissible_residues(S, w, M)
-        print(f"\n  Gap word {w}:")
-        print(f"    Admissible residues mod {M}: {residues}")
-        print(f"    Count: {len(residues)}")
+
+def demo_three_prime_span():
+    """Verify the three-prime span theorem."""
+    print("=" * 60)
+    print("DEMO 4: Three-Prime Span Theorem")
+    print("=" * 60)
+    
+    primes = list(primerange(5, 1_000_000))
+    min_span = float('inf')
+    min_triple = None
+    span_counts = Counter()
+    
+    for i in range(len(primes) - 2):
+        span = primes[i+2] - primes[i]
+        span_counts[span] += 1
+        if span < min_span:
+            min_span = span
+            min_triple = (primes[i], primes[i+1], primes[i+2])
+    
+    print(f"Minimum span among consecutive prime triples > 3: {min_span}")
+    print(f"Achieved by: {min_triple}")
+    print(f"\nSpan distribution (first 10 values):")
+    for span in sorted(span_counts.keys())[:10]:
+        print(f"  span = {span:3d}: {span_counts[span]:6d} triples")
+    
+    assert min_span >= 6, "THREE-PRIME SPAN THEOREM VIOLATED!"
+    print(f"\n✓ Theorem verified: all spans ≥ 6\n")
+
+
+def demo_twin_prime_forcing():
+    """Verify that after twin primes, the next gap ≥ 4."""
+    print("=" * 60)
+    print("DEMO 5: Twin Prime Forcing Rule")
+    print("=" * 60)
+    
+    gaps = prime_gaps(10_000_000)
+    twin_next_gaps = []
+    
+    for i in range(len(gaps) - 1):
+        p, q, g1 = gaps[i]
+        _, r, g2 = gaps[i + 1]
+        if g1 == 2 and p > 3:
+            twin_next_gaps.append(g2)
+    
+    if twin_next_gaps:
+        min_next = min(twin_next_gaps)
+        next_counter = Counter(twin_next_gaps)
+        print(f"Twin primes found (p > 3): {len(twin_next_gaps)}")
+        print(f"Minimum next gap after twin pair: {min_next}")
+        print(f"\nNext gap distribution after twin primes:")
+        for g in sorted(next_counter.keys())[:8]:
+            print(f"  gap = {g:3d}: {next_counter[g]:6d} times")
+        
+        assert min_next >= 4, "TWIN PRIME FORCING RULE VIOLATED!"
+        print(f"\n✓ Theorem verified: all next gaps ≥ 4\n")
 
 
 def demo_forcing_patterns():
-    """Demonstrate forcing pattern detection."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Forcing Patterns")
+    """Search for forcing patterns in the mod-30 automaton."""
     print("=" * 60)
-
-    S = {2, 3}
-    B = 6
-    M = 6
-
-    print(f"\nSieve S = {S}, gap bound B = {B}")
-
-    # Check specific patterns
-    test_words = [[2], [4], [6], [2, 4], [4, 2], [2, 4, 2]]
-    for w in test_words:
-        forced, g = is_forcing(S, w, B, M)
-        next_gaps = admissible_next_gaps(S, w, B, M)
-        if forced:
-            print(f"\n  Word {w}: FORCING → next gap = {g}")
-        else:
-            print(f"\n  Word {w}: not forcing, admissible next gaps = {next_gaps}")
-
-    print(f"\n  Finding all forcing patterns up to length 3...")
-    patterns = find_forcing_patterns(S, B, 3, M)
-    print(f"  Found {len(patterns)} forcing patterns:")
-    for w, g in patterns[:20]:
-        print(f"    {w} → {g}")
-
-
-def demo_gap_statistics():
-    """Demonstrate gap pattern statistics."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Gap Pattern Statistics")
+    print("DEMO 6: Forcing Pattern Search (mod 30)")
     print("=" * 60)
-
-    limit = 100000
-    print(f"\nPrime gap patterns up to {limit}:")
-
-    # Gap frequency
-    gaps = prime_gaps(limit)
-    gap_counts = {}
-    for g in gaps:
-        gap_counts[g] = gap_counts.get(g, 0) + 1
-
-    print("\n  Gap frequency distribution:")
-    for g in sorted(gap_counts.keys())[:15]:
-        bar = "█" * (gap_counts[g] // 20)
-        print(f"    gap {g:3d}: {gap_counts[g]:5d} {bar}")
-
-    # Consecutive gap sum ≥ 4
-    violations = 0
-    for i in range(1, len(gaps) - 1):  # skip gap at index 0 (gap=1 between 2,3)
-        if gaps[i] + gaps[i + 1] < 4:
-            violations += 1
-    print(f"\n  Consecutive gap sum < 4 violations (after gap 1): {violations}")
-
-
-def demo_conditional_probabilities():
-    """Demonstrate conditional gap probabilities."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Conditional Gap Probabilities")
-    print("=" * 60)
-
-    limit = 1000000
-    print(f"\nConditional P(next gap | previous gap) up to {limit}:")
-
-    probs = conditional_gap_probabilities(limit, context_length=1)
-    for context in sorted(probs.keys())[:8]:
-        print(f"\n  After gap {context[0]}:")
-        for g, p in sorted(probs[context].items())[:5]:
-            bar = "▓" * int(p * 40)
-            print(f"    P(next={g:3d}) = {p:.4f} {bar}")
-
-
-def demo_forcing_density():
-    """Demonstrate forcing fraction computation."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Forcing Density")
-    print("=" * 60)
-
-    S = {2, 3}
-    B = 6
-
-    for length in range(1, 5):
-        frac = forcing_fraction(S, B, length)
-        print(f"\n  Sieve {S}, B={B}, max_length={length}: "
-              f"forcing fraction = {frac:.4f}")
+    
+    admissible = {1, 7, 11, 13, 17, 19, 23, 29}
+    
+    def admissible_next_gaps(state: int, bound: int) -> list[int]:
+        """Find admissible even gaps from state within bound."""
+        return [g for g in range(2, bound + 1, 2) 
+                if (state + g) % 30 in admissible]
+    
+    forcing_count = 0
+    print(f"Searching for forcing patterns (bound B = 6)...")
+    
+    for start_state in sorted(admissible):
+        for g1 in range(2, 31, 2):
+            s1 = (start_state + g1) % 30
+            if s1 not in admissible:
+                continue
+            for g2 in range(2, 31, 2):
+                s2 = (s1 + g2) % 30
+                if s2 not in admissible:
+                    continue
+                next_gaps = admissible_next_gaps(s2, 6)
+                if len(next_gaps) == 1:
+                    if forcing_count < 5:
+                        print(f"  State {start_state} → [{g1}, {g2}] → "
+                              f"state {s2}: forced gap = {next_gaps[0]}")
+                    forcing_count += 1
+    
+    print(f"\nTotal forcing patterns found (depth 2, bound 6): {forcing_count}")
+    print()
 
 
 if __name__ == "__main__":
-    demo_prime_residues()
-    demo_twin_prime_residue()
-    demo_sieve_admissibility()
+    demo_no_prime_triplet()
+    demo_mod6_grammar()
+    demo_primorial_automaton()
+    demo_three_prime_span()
+    demo_twin_prime_forcing()
     demo_forcing_patterns()
-    demo_gap_statistics()
-    demo_conditional_probabilities()
-    demo_forcing_density()
-
-    print("\n" + "=" * 60)
-    print("ALL DEMOS COMPLETE")
-    print("=" * 60)
+    print("All demonstrations completed successfully.")
 
 
 #!/usr/bin/env python3
 """
-Visualization 2: Forcing Patterns and Automaton States
+Visualization: Prime Gap Mod-6 Grammar State Machine
+
+Creates a visualization of the two-state Markov chain governing
+prime gap residues modulo 6.
 """
-import matplotlib
-matplotlib.use('Agg')
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+from sympy import primerange
+from collections import Counter
+
+
+def compute_transition_probs(limit: int = 1_000_000) -> dict:
+    """Compute empirical transition probabilities for the mod-6 state machine."""
+    primes = list(primerange(5, limit))
+    transitions = Counter()
+    state_counts = Counter()
+    
+    for i in range(len(primes) - 1):
+        s1 = primes[i] % 6
+        s2 = primes[i+1] % 6
+        transitions[(s1, s2)] += 1
+        state_counts[s1] += 1
+    
+    probs = {}
+    for (s1, s2), count in transitions.items():
+        probs[(s1, s2)] = count / state_counts[s1]
+    
+    return probs
+
+
+def plot_state_machine():
+    """Plot the mod-6 prime gap state machine with transition probabilities."""
+    probs = compute_transition_probs()
+    
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    
+    # Left: State machine diagram
+    ax = axes[0]
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-1.5, 1.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    ax.set_title('Mod-6 Prime Gap State Machine', fontsize=14, fontweight='bold')
+    
+    # Draw states
+    circle1 = plt.Circle((-0.8, 0), 0.4, fill=True, facecolor='#3498db',
+                         edgecolor='black', linewidth=2, alpha=0.8)
+    circle2 = plt.Circle((0.8, 0), 0.4, fill=True, facecolor='#e74c3c',
+                         edgecolor='black', linewidth=2, alpha=0.8)
+    ax.add_patch(circle1)
+    ax.add_patch(circle2)
+    ax.text(-0.8, 0, 'State 1\np ≡ 1\n(mod 6)', ha='center', va='center',
+            fontsize=10, fontweight='bold', color='white')
+    ax.text(0.8, 0, 'State 5\np ≡ 5\n(mod 6)', ha='center', va='center',
+            fontsize=10, fontweight='bold', color='white')
+    
+    # Self-loops
+    arc1 = patches.FancyArrowPatch((-0.8, 0.4), (-0.8, 0.42),
+                                    connectionstyle="arc3,rad=-2.5",
+                                    arrowstyle='->', mutation_scale=15,
+                                    color='#3498db', linewidth=2)
+    ax.annotate('', xy=(-1.1, 0.35), xytext=(-0.5, 0.35),
+                arrowprops=dict(arrowstyle='->', color='#3498db', lw=2,
+                               connectionstyle='arc3,rad=-1.5'))
+    ax.text(-0.8, 0.85, f'gap ≡ 0 (mod 6)\n{probs.get((1,1), 0):.1%}',
+            ha='center', va='center', fontsize=9, color='#2c3e50',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#d5e8f0'))
+    
+    ax.annotate('', xy=(1.1, 0.35), xytext=(0.5, 0.35),
+                arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=2,
+                               connectionstyle='arc3,rad=-1.5'))
+    ax.text(0.8, 0.85, f'gap ≡ 0 (mod 6)\n{probs.get((5,5), 0):.1%}',
+            ha='center', va='center', fontsize=9, color='#2c3e50',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#f5d5d5'))
+    
+    # Cross transitions
+    ax.annotate('', xy=(0.35, 0.15), xytext=(-0.35, 0.15),
+                arrowprops=dict(arrowstyle='->', color='#2ecc71', lw=2.5))
+    ax.text(0, 0.35, f'gap ≡ 4 (mod 6)\n{probs.get((1,5), 0):.1%}',
+            ha='center', va='center', fontsize=9, color='#2c3e50',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#d5f0d5'))
+    
+    ax.annotate('', xy=(-0.35, -0.15), xytext=(0.35, -0.15),
+                arrowprops=dict(arrowstyle='->', color='#f39c12', lw=2.5))
+    ax.text(0, -0.35, f'gap ≡ 2 (mod 6)\n{probs.get((5,1), 0):.1%}',
+            ha='center', va='center', fontsize=9, color='#2c3e50',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#f0e8d5'))
+    
+    # Right: Gap distribution by mod-6 class
+    ax2 = axes[1]
+    primes = list(primerange(5, 100_000))
+    gaps = [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+    
+    mod6_classes = {0: [], 2: [], 4: []}
+    for g in gaps:
+        r = g % 6
+        if r in mod6_classes:
+            mod6_classes[r].append(g)
+    
+    colors = ['#3498db', '#f39c12', '#2ecc71']
+    labels = ['gap ≡ 0 (mod 6)', 'gap ≡ 2 (mod 6)', 'gap ≡ 4 (mod 6)']
+    
+    gap_range = range(2, 41, 2)
+    gap_counts_by_class = {}
+    for r, c, label in zip([0, 2, 4], colors, labels):
+        counts = Counter(mod6_classes[r])
+        values = [counts.get(g, 0) for g in gap_range]
+        ax2.bar([g + (r/6 - 0.33)*0.6 for g in gap_range], values,
+                width=0.6, color=c, alpha=0.7, label=label)
+    
+    ax2.set_xlabel('Gap Size', fontsize=12)
+    ax2.set_ylabel('Count', fontsize=12)
+    ax2.set_title('Gap Distribution by Mod-6 Class\n(primes 5 to 100,000)',
+                  fontsize=14, fontweight='bold')
+    ax2.legend(fontsize=10)
+    ax2.set_xticks(list(gap_range))
+    
+    plt.tight_layout()
+    plt.savefig('viz_gap_grammar.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_gap_grammar.png")
+
+
+if __name__ == "__main__":
+    plot_state_machine()
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Primorial Automaton Mod-30 Transition Heatmap
+
+Creates a heatmap showing which gap values are admissible from each
+state in the mod-30 primorial automaton.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from math import gcd
-from functools import reduce
 
 
-def admissible_at(S, gaps, a):
-    positions = [0]
-    for g in gaps:
-        positions.append(positions[-1] + g)
-    interior = set()
-    for i in range(len(positions) - 1):
-        for j in range(positions[i] + 1, positions[i + 1]):
-            interior.add(j)
-    for t in positions:
-        if any((a + t) % q == 0 for q in S):
-            return False
-    for u in interior:
-        if not any((a + u) % q == 0 for q in S):
-            return False
-    return True
+def compute_admissible_residues(modulus: int) -> list[int]:
+    """Compute all residues coprime to modulus."""
+    return sorted(r for r in range(modulus) if gcd(r, modulus) == 1)
 
 
-def admissible_residues(S, gaps, M):
-    return [a for a in range(M) if admissible_at(S, gaps, a)]
+def build_admissibility_matrix(modulus: int, max_gap: int) -> tuple:
+    """Build the admissibility matrix for the primorial automaton.
+    
+    Returns (matrix, states, gaps) where matrix[i][j] = 1 if gap j
+    is admissible from state i.
+    """
+    states = compute_admissible_residues(modulus)
+    gaps = list(range(2, max_gap + 1, 2))
+    
+    matrix = np.zeros((len(states), len(gaps)))
+    for i, s in enumerate(states):
+        for j, g in enumerate(gaps):
+            if gcd((s + g) % modulus, modulus) == 1:
+                matrix[i][j] = 1
+    
+    return matrix, states, gaps
 
 
-def admissible_next_gaps(S, w, B, M):
-    return [g for g in range(1, B + 1)
-            if len(admissible_residues(S, w + [g], M)) > 0]
-
-
-def main():
-    S = {2, 3}
-    M = 6
-    B = 6
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-    # Plot 1: Admissible residue count as words grow
+def plot_heatmap():
+    """Create the admissibility heatmap."""
+    fig, axes = plt.subplots(1, 2, figsize=(18, 6))
+    
+    # Mod-30 automaton
+    matrix30, states30, gaps30 = build_admissibility_matrix(30, 60)
+    
     ax = axes[0]
-    words_to_check = [
-        [], [2], [4], [6],
-        [2, 4], [4, 2], [6, 2],
-        [2, 4, 2], [4, 2, 4], [6, 2, 6],
-    ]
-    labels = [str(w) if w else '[]' for w in words_to_check]
-    counts = [len(admissible_residues(S, w, M)) for w in words_to_check]
-    colors = ['green' if c == 1 else 'steelblue' if c > 0 else 'red' for c in counts]
-    ax.barh(range(len(labels)), counts, color=colors, alpha=0.8)
-    ax.set_yticks(range(len(labels)))
-    ax.set_yticklabels(labels, fontsize=8)
-    ax.set_xlabel('# Admissible Residues mod 6')
-    ax.set_title('Admissible Residue Count\n(green = forcing)')
-
-    # Plot 2: Next-gap branching factor
-    ax = axes[1]
-    test_words = [
-        [2], [4], [6],
-        [2, 4], [4, 2], [6, 2], [2, 6],
-        [2, 4, 2], [4, 2, 4],
-    ]
-    labels2 = [str(w) for w in test_words]
-    branch_factors = [len(admissible_next_gaps(S, w, B, M)) for w in test_words]
-    colors2 = ['green' if b == 1 else 'orange' if b == 2 else 'red' for b in branch_factors]
-    ax.barh(range(len(labels2)), branch_factors, color=colors2, alpha=0.8)
-    ax.set_yticks(range(len(labels2)))
-    ax.set_yticklabels(labels2, fontsize=8)
-    ax.set_xlabel('# Admissible Next Gaps')
-    ax.set_title('Branching Factor\n(green = forcing, 1 choice)')
-
-    # Plot 3: Gap automaton state diagram for {2,3} sieve
-    ax = axes[2]
-    # States are residues mod 6: {1, 5} are valid start states
-    # Draw transitions
-    valid_states = [1, 5]
-    gap_values = [2, 4, 6]
-
-    ax.set_xlim(-2, 4)
-    ax.set_ylim(-2, 4)
-
-    # Draw states
-    for i, s in enumerate(valid_states):
-        circle = plt.Circle((i * 2.5, 1.5), 0.5, fill=False,
-                           edgecolor='black', linewidth=2)
-        ax.add_patch(circle)
-        ax.text(i * 2.5, 1.5, str(s), ha='center', va='center', fontsize=16)
-
-    # Draw transitions
-    transitions = {
-        (1, 2): 5, (1, 4): 1, (1, 6): 5,  # wait, (1+2)%6=3, not valid
-        (5, 2): 1, (5, 4): 5, (5, 6): 1,  # wait, (5+2)%6=1, valid
-    }
-    # Actually: from state r, gap g leads to (r+g)%6 if it's in {1,5}
-    actual_transitions = {}
-    for r in valid_states:
-        for g in gap_values:
-            target = (r + g) % 6
-            if target in valid_states:
-                actual_transitions[(r, g)] = target
-
-    ax.text(1.25, -0.5, 'Gap Automaton States\nmod 6, sieve {2,3}',
-            ha='center', va='center', fontsize=10)
-
-    for (r, g), t in actual_transitions.items():
-        r_idx = valid_states.index(r)
-        t_idx = valid_states.index(t)
-        if r_idx == t_idx:
-            # Self-loop
-            ax.annotate('', xy=(r_idx * 2.5, 2.1), xytext=(r_idx * 2.5 + 0.3, 2.5),
-                       arrowprops=dict(arrowstyle='->', color='blue', lw=1.5))
-            ax.text(r_idx * 2.5, 2.7, f'g={g}', ha='center', fontsize=8, color='blue')
-        else:
-            offset = 0.15 * (gap_values.index(g) - 1)
-            ax.annotate('', xy=(t_idx * 2.5 - 0.5, 1.5 + offset),
-                       xytext=(r_idx * 2.5 + 0.5, 1.5 + offset),
-                       arrowprops=dict(arrowstyle='->', color='blue', lw=1.5))
-            mid_x = (r_idx + t_idx) * 2.5 / 2
-            ax.text(mid_x, 1.5 + offset + 0.25, f'g={g}', ha='center',
-                   fontsize=8, color='blue')
-
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Gap Automaton\nValid: 1↔5 mod 6')
-
+    im = ax.imshow(matrix30, cmap='RdYlGn', aspect='auto', interpolation='nearest')
+    ax.set_yticks(range(len(states30)))
+    ax.set_yticklabels([str(s) for s in states30])
+    ax.set_xticks(range(len(gaps30)))
+    ax.set_xticklabels([str(g) for g in gaps30], rotation=45, fontsize=7)
+    ax.set_ylabel('State (residue mod 30)', fontsize=12)
+    ax.set_xlabel('Gap value', fontsize=12)
+    ax.set_title('Mod-30 Primorial Automaton\nGreen = admissible, Red = forbidden',
+                fontsize=13, fontweight='bold')
+    
+    # Add admissible count per state
+    for i in range(len(states30)):
+        count = int(matrix30[i].sum())
+        ax.text(len(gaps30) + 0.5, i, f'{count}', va='center', fontsize=9,
+                fontweight='bold', color='#2c3e50')
+    
+    # Admissibility fraction plot
+    ax2 = axes[1]
+    primorials = [6, 30, 210]
+    labels = ['mod 6\n(2,3)', 'mod 30\n(2,3,5)', 'mod 210\n(2,3,5,7)']
+    
+    fractions = []
+    for m in primorials:
+        states = compute_admissible_residues(m)
+        total_even_gaps = m // 2  # Even gaps in one period
+        avg_admissible = 0
+        for s in states:
+            admissible = sum(1 for g in range(2, m + 1, 2)
+                           if gcd((s + g) % m, m) == 1)
+            avg_admissible += admissible
+        avg_admissible /= len(states)
+        fractions.append(avg_admissible / total_even_gaps)
+    
+    euler_products = []
+    for m, primes_list in [(6, [2, 3]), (30, [2, 3, 5]), (210, [2, 3, 5, 7])]:
+        prod = 1.0
+        for p in primes_list:
+            prod *= (1 - 1/p)
+        euler_products.append(prod)
+    
+    x = range(len(primorials))
+    width = 0.35
+    bars1 = ax2.bar([xi - width/2 for xi in x], fractions, width,
+                    label='Admissible fraction', color='#3498db', alpha=0.8)
+    bars2 = ax2.bar([xi + width/2 for xi in x], euler_products, width,
+                    label='Euler product ∏(1-1/p)', color='#e74c3c', alpha=0.8)
+    
+    ax2.set_xticks(list(x))
+    ax2.set_xticklabels(labels, fontsize=10)
+    ax2.set_ylabel('Fraction', fontsize=12)
+    ax2.set_title('Sieve Rejection Rate\nvs. Euler Product Prediction',
+                 fontsize=13, fontweight='bold')
+    ax2.legend(fontsize=10)
+    ax2.set_ylim(0, 0.7)
+    
+    for bar in bars1:
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+                f'{bar.get_height():.3f}', ha='center', fontsize=9)
+    for bar in bars2:
+        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+                f'{bar.get_height():.3f}', ha='center', fontsize=9)
+    
     plt.tight_layout()
-    plt.savefig('forcing_patterns.png', dpi=150, bbox_inches='tight')
-    print("Saved: forcing_patterns.png")
+    plt.savefig('viz_primorial_automaton.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_primorial_automaton.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization 1: Prime Gap Distribution and Residue Analysis
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def is_prime(n):
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0: return False
-        i += 6
-    return True
-
-
-def primes_up_to(n):
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, n + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, n + 1) if sieve[i]]
-
-
-def main():
-    limit = 100000
-    primes = primes_up_to(limit)
-    gaps = [primes[i+1] - primes[i] for i in range(len(primes)-1)]
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Plot 1: Gap distribution
-    ax = axes[0, 0]
-    gap_vals = sorted(set(gaps))[:20]
-    counts = [gaps.count(g) for g in gap_vals]
-    ax.bar(gap_vals, counts, color='steelblue', alpha=0.8)
-    ax.set_xlabel('Gap size')
-    ax.set_ylabel('Frequency')
-    ax.set_title(f'Prime Gap Distribution (primes up to {limit})')
-
-    # Plot 2: Gap vs prime index
-    ax = axes[0, 1]
-    indices = range(len(gaps))
-    ax.scatter(indices, gaps, s=0.5, alpha=0.3, c='darkblue')
-    ax.set_xlabel('Prime index')
-    ax.set_ylabel('Gap size')
-    ax.set_title('Prime Gaps vs Index')
-
-    # Plot 3: Gaps mod 6
-    ax = axes[1, 0]
-    gaps_gt3 = [g for g, p in zip(gaps[1:], primes[1:]) if p > 3]
-    mod6_counts = [0] * 6
-    for g in gaps_gt3:
-        mod6_counts[g % 6] += 1
-    ax.bar(range(6), mod6_counts, color=['crimson' if i % 2 == 1 else 'steelblue' for i in range(6)])
-    ax.set_xlabel('Gap mod 6')
-    ax.set_ylabel('Frequency')
-    ax.set_title('Prime Gaps mod 6 (for primes > 3)')
-    ax.set_xticks(range(6))
-
-    # Plot 4: Consecutive gap pairs
-    ax = axes[1, 1]
-    if len(gaps) > 1:
-        x = gaps[1:-1]
-        y = gaps[2:]
-        ax.scatter(x, y, s=1, alpha=0.2, c='darkgreen')
-        ax.set_xlabel('Gap g(n)')
-        ax.set_ylabel('Gap g(n+1)')
-        ax.set_title('Consecutive Gap Pairs')
-        ax.axhline(y=2, color='red', linestyle='--', alpha=0.3)
-        ax.axvline(x=2, color='red', linestyle='--', alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('prime_gap_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: prime_gap_analysis.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot_heatmap()

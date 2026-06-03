@@ -1,221 +1,214 @@
-# The Prime Gap Crossword: Modular Sieve Constraints and Forcing Patterns in Prime Gap Sequences
+# Prime Gap Crossword: Modular Forcing and Admissibility Theory
 
 ## Abstract
 
-We develop a finite-state automaton framework for analyzing prime gap sequences through modular sieve constraints. Given a finite set S of small primes, we define S-admissibility of gap words — sequences of consecutive prime differences — via residue class compatibility modulo the primorial ∏S. We prove that admissibility is periodic, anti-monotone under sieve refinement, and yields infinitely many realizations. We identify explicit *forcing patterns*: gap words that uniquely determine the next gap within a bounded range. Over the sieve {2, 3} with gap bound 6, we prove that [2] forces next gap 4 and [4] forces next gap 2. We formalize the Gap Automaton — a finite-state machine whose states are admissible residue sets — and prove that forcing states have unique residues. All results are formally verified in Lean 4 with Mathlib.
+We develop a systematic theory of prime gap constraints arising from modular arithmetic, viewing the sequence of prime gaps as a word over an alphabet governed by finite-state automata. We establish that every prime p > 3 has residue 1 or 5 modulo 6, creating a two-state machine that constrains admissible gap values. Extending to modulo 30 = 2·3·5, we obtain an 8-state automaton where over 73% of potential gap values are immediately ruled inadmissible. We prove the no-prime-triplet theorem (p, p+2, p+4 cannot all be prime for p > 3), the three-prime span bound (consecutive triples of primes > 3 span at least 6), and the twin-prime forcing rule (the gap after a twin prime pair exceeds 3). We define the primorial state machine and forcing patterns, and state the Hardy-Littlewood gap conjecture in formal terms suitable for future mechanized verification.
+
+**Keywords**: Prime gaps, modular arithmetic, sieve theory, finite automata, Hardy-Littlewood conjecture, twin primes
 
 ## 1. Introduction
 
-The prime gap sequence g(n) = p(n+1) - p(n), where p(n) denotes the n-th prime, has been studied extensively. The distribution of prime gaps is central to questions ranging from the twin prime conjecture to the Hardy-Littlewood conjectures. While the average gap near p is approximately log(p), the fine structure of the gap sequence exhibits intricate patterns.
+The sequence of prime gaps g(n) = p(n+1) - p(n) for n ≥ 1, where p(n) denotes the n-th prime, is one of the most studied objects in analytic number theory. The first few values are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, ... (OEIS A001223). Despite intense study, fundamental questions about this sequence remain open: the twin prime conjecture (g(n) = 2 infinitely often), Cramér's conjecture (g(n) = O((log p(n))²)), and the precise distribution of gap sizes.
 
-We propose a *crossword* metaphor: each prime gap is like a cell in a crossword puzzle, constrained by divisibility rules. The "rules" arise from fixing a sieve set S of small primes and analyzing which gap sequences are compatible with the modular constraints imposed by S.
+In this paper, we take a different approach. Rather than studying the asymptotic distribution of individual gaps, we examine the *grammar* of gap sequences — the local constraints that determine which gap patterns are admissible. Our key insight is that fixing a set S of small primes induces a finite-state automaton on prime gap sequences, where the states are residue classes modulo ∏S and transitions correspond to gap values.
 
-### 1.1 Main Contributions
+### 1.1 Main Results
 
-1. **Sieve admissibility framework** (Section 3): formal definitions of gap word positions, interior sets, avoidance and hit conditions, and S-admissibility.
+1. **No-Prime-Triplet Theorem** (Theorem 3.1): For p > 3, the numbers p, p+2, p+4 cannot all be prime.
 
-2. **Structural theorems** (Section 4): prime residue classes mod 6 and mod 30; consecutive gap sum bounds; twin prime residue constraints.
+2. **Mod-6 Gap Grammar** (Theorems 4.1–4.3): The gap between consecutive primes > 3 is constrained to specific residue classes mod 6, depending on the starting prime's residue.
 
-3. **Forcing patterns** (Section 5): explicit computation showing [2] → 4 and [4] → 2 over {2,3}-sieve with bound 6.
+3. **Three-Prime Span Bound** (Theorem 5.1): For three consecutive primes p < q < r with p > 3, we have r - p ≥ 6.
 
-4. **Gap Automaton** (Section 6): a finite-state machine formalizing the crossword dynamics.
+4. **Twin-Prime Forcing Rule** (Theorem 6.1): After a twin prime pair (p, p+2) with p > 3, the next gap is at least 4.
 
-5. **Periodicity and monotonicity** (Section 7): admissibility is periodic modulo the primorial and anti-monotone under sieve refinement.
+5. **Primorial State Machine** (Definition 7.1): An 8-state automaton modulo 30 that tracks admissible prime positions.
 
-6. **Forcing Density Conjecture** (Section 8): a falsifiable conjecture about the density of forcing patterns.
+6. **Admissibility Density Bound** (Theorem 7.2): At most 8 out of 30 gap values (mod 30) are admissible from any state.
 
 ## 2. Preliminaries
 
-**Notation.** We write p(n) for the n-th prime (1-indexed), g(n) = p(n+1) - p(n) for the n-th prime gap, and [g₁, g₂, ..., gₖ] for a *gap word* of length k.
+### 2.1 Notation
 
-**Definition 2.1** (Gap Word Positions). For a gap word w = [g₁, ..., gₖ], the *positions* are the cumulative sums P(w) = {0, g₁, g₁+g₂, ..., g₁+...+gₖ}.
+Let p(n) denote the n-th prime number (p(1) = 2, p(2) = 3, p(3) = 5, ...). Define the prime gap function g(n) = p(n+1) - p(n). We write a ≡ b (mod m) for congruence and a | b for divisibility.
 
-**Definition 2.2** (Interior Set). The *interior* of w is I(w) = ∪ᵢ (P(w)ᵢ, P(w)ᵢ₊₁) ∩ ℤ, i.e., all integers strictly between consecutive positions.
+### 2.2 Basic Properties
 
-**Definition 2.3** (Sieve Admissibility). Let S be a finite set of primes. A gap word w is *S-admissible at residue a* if:
-- Every position t ∈ P(w) satisfies: a + t is not divisible by any q ∈ S.
-- Every interior point u ∈ I(w) satisfies: a + u is divisible by at least one q ∈ S.
+**Lemma 2.1** (Gap Parity). For primes p, q > 2 with p < q, the gap q - p is even.
 
-w is *S-admissible* if it is S-admissible at some residue a.
+*Proof.* Both p and q are odd (as primes greater than 2), so their difference is even. □
 
-## 3. Sieve Admissibility Framework
+**Lemma 2.2** (Gap Telescoping). For natural numbers p ≤ q ≤ r, (q - p) + (r - q) = r - p.
 
-### 3.1 Avoidance and Hit Properties
+*Proof.* Immediate from arithmetic. □
 
-**Lemma 3.1** (Anti-monotonicity of Avoidance). If S ⊆ T, then AvoidsPrimes(T, n) implies AvoidsPrimes(S, n).
+## 3. The No-Prime-Triplet Theorem
 
-**Lemma 3.2** (Monotonicity of Hit). If S ⊆ T, then HitByPrimes(S, n) implies HitByPrimes(T, n).
+**Theorem 3.1.** For any integer p > 3, if p and p + 2 are both prime, then p + 4 is not prime.
 
-These follow immediately from the definitions and establish that enlarging the sieve makes avoidance harder and hitting easier.
+*Proof.* Among the three integers p, p + 2, p + 4, we examine their residues modulo 3.
 
-### 3.2 Periodicity
+- If p ≡ 0 (mod 3): Then 3 | p. Since p > 3 and p is prime, this is a contradiction.
+- If p ≡ 1 (mod 3): Then p + 2 ≡ 0 (mod 3), so 3 | (p + 2). Since p + 2 > 5 > 3, this contradicts the primality of p + 2.
+- If p ≡ 2 (mod 3): Then p + 4 ≡ 0 (mod 3), so 3 | (p + 4). Since p + 4 > 7 > 3, this means p + 4 is composite.
 
-**Theorem 3.3** (Admissibility Periodicity). Let S be a finite set of primes and M > 0 with q | M for all q ∈ S. If w is S-admissible at a, then w is S-admissible at a + M.
+In each case, the three numbers cannot all be prime. □
 
-*Proof.* For avoidance: q ∤ (a + t) iff q ∤ (a + M + t), since q | M implies q | ((a + M + t) - (a + t)). For hitting: q | (a + u) implies q | (a + M + u) since q | M. □
+**Remark.** The triplet (3, 5, 7) is the unique prime triplet with common difference 2. The theorem shows this is an isolated phenomenon arising from the special role of 3.
 
-**Corollary 3.4** (Infinite Realizations). If S-admissible gap word w exists, then there exist a, M > 0 such that w is S-admissible at a + kM for all k ∈ ℕ.
+## 4. The Mod-6 Gap Grammar
 
-*Proof.* Take M = ∏_{q ∈ S} q. Since all q ∈ S are positive (being prime), M > 0. Each q ∈ S divides M by construction. Apply Theorem 3.3 inductively. □
+**Theorem 4.1** (Prime Residues mod 6). Every prime p > 3 satisfies p ≡ 1 or p ≡ 5 (mod 6).
 
-## 4. Structural Theorems
+*Proof.* The residues 0, 2, 4 mod 6 are even, hence divisible by 2. The residue 3 mod 6 is divisible by 3. Since p > 3 is prime, it avoids all four excluded residues. □
 
-### 4.1 Prime Residue Classes
+**Theorem 4.2** (Gap Residues mod 6). For primes p, q > 3 with p < q, the gap q - p satisfies (q - p) ≡ 0, 2, or 4 (mod 6).
 
-**Theorem 4.1** (Mod 6 Classification). Every prime p > 3 satisfies p ≡ 1 or 5 (mod 6).
+*Proof.* By Theorem 4.1, p ≡ 1 or 5 and q ≡ 1 or 5 (mod 6). Computing all four cases:
+| p mod 6 | q mod 6 | (q - p) mod 6 |
+|---------|---------|---------------|
+| 1       | 1       | 0             |
+| 1       | 5       | 4             |
+| 5       | 1       | 2             |
+| 5       | 5       | 0             |
 
-*Proof.* Since p > 3, p is coprime to both 2 and 3. The residues mod 6 coprime to 6 are {1, 5}. □
+All outcomes lie in {0, 2, 4}. □
 
-**Theorem 4.2** (Mod 30 Classification). Every prime p > 5 satisfies p mod 30 ∈ {1, 7, 11, 13, 17, 19, 23, 29}.
+**Theorem 4.3** (State-Dependent Gap Grammar).
+- (a) If p ≡ 1 (mod 6), the gap to the next prime is ≡ 0 or 4 (mod 6).
+- (b) If p ≡ 5 (mod 6), the gap to the next prime is ≡ 0 or 2 (mod 6).
 
-*Proof.* p is coprime to 2, 3, and 5. The 8 residues mod 30 coprime to 30 form the stated set. □
+*Proof.* Immediate from the table above, restricting to the row corresponding to p's residue. □
 
-**Corollary 4.3**. The gap alphabet size modulo 30 is at most |{1,7,11,13,17,19,23,29}|² = 64 ordered pairs, but symmetry and the structure of differences reduce this significantly.
+**Corollary 4.4.** The mod-6 gap grammar defines a two-state Markov chain:
+- State 1 → State 1 (gap ≡ 0 mod 6) or State 1 → State 5 (gap ≡ 4 mod 6)
+- State 5 → State 1 (gap ≡ 2 mod 6) or State 5 → State 5 (gap ≡ 0 mod 6)
 
-### 4.2 Gap Constraints
+## 5. The Three-Prime Span Bound
 
-**Theorem 4.4** (Gap Evenness). For primes p, q with 3 < p < q, the gap q - p is even.
+**Theorem 5.1.** Let p < q < r be three consecutive primes with p > 3. Then r - p ≥ 6.
 
-*Proof.* Both p and q are odd (being primes greater than 2), so their difference is even. □
+*Proof.* By Lemma 2.1, both gaps q - p and r - q are even. Since p < q < r, both gaps are positive, hence each is ≥ 2. If both gaps were exactly 2, we would have q = p + 2 and r = p + 4, contradicting Theorem 3.1. Therefore at least one gap is ≥ 4, giving r - p = (q - p) + (r - q) ≥ 2 + 4 = 6. □
 
-**Theorem 4.5** (Consecutive Gap Sum). For consecutive primes p < q < r with p, q > 2, we have (q - p) + (r - q) ≥ 4.
+**Remark.** The bound is tight: the triples (5, 7, 11), (11, 13, 17), (17, 19, 23), (29, 31, 37) all achieve r - p = 6.
 
-*Proof.* Each gap is at least 2 (since consecutive odd numbers differ by at least 2), so their sum is at least 4. □
+## 6. The Twin-Prime Forcing Rule
 
-### 4.3 Twin Prime Residue
+**Theorem 6.1.** Let p, p + 2, r be consecutive primes with p > 3 and r > p + 2. Then r - (p + 2) ≥ 4.
 
-**Theorem 4.6** (Twin Prime Residue). If p and p + 2 are both prime with p > 3, then p ≡ 5 (mod 6).
+*Proof.* By Theorem 3.1, p + 4 is not prime. The number p + 3 is even (since p is odd), hence not prime. So no prime lies in {p + 3, p + 4}. The next candidate is p + 5, but p + 5 has the same parity as p + 3 if p is even — however, p is odd (prime > 3), so p + 5 is even. Wait: p is odd, so p + 3 is even, p + 4 is odd but not prime (by Theorem 3.1), and p + 5 is even. So r ≥ p + 6, giving r - (p + 2) ≥ 4.
 
-*Proof.* By Theorem 4.1, p ≡ 1 or 5 (mod 6). If p ≡ 1, then p + 2 ≡ 3 (mod 6), so 3 | (p+2). Since p + 2 > 5 > 3, this contradicts primality. Hence p ≡ 5. □
+More precisely: r > p + 2 and r ≠ p + 3 (since p + 3 is even) and r ≠ p + 4 (by Theorem 3.1). So r ≥ p + 5. But r and p + 2 are both odd primes, so r - (p + 2) is even. Since r - (p + 2) ≥ 3 and even, r - (p + 2) ≥ 4. □
 
-This theorem illustrates the forcing principle: the gap pattern [2] determines the residue class of the starting prime.
+## 7. The Primorial State Machine
 
-## 5. Forcing Patterns
+### 7.1 Definition
 
-### 5.1 Definitions
+**Definition 7.1** (Primorial State). The *primorial state* of a prime p > 5 is its residue modulo 30 = 2 · 3 · 5. The set of admissible states is:
 
-**Definition 5.1** (Forcing Pattern). A gap word w is *S-forcing with bound B* if there exists a unique g ∈ {1, ..., B} such that w ++ [g] is S-admissible. We call g the *forced gap*.
+$$\mathcal{A}_{30} = \{1, 7, 11, 13, 17, 19, 23, 29\}$$
 
-**Definition 5.2** (Next Gap Admissibility). Gap g is an *admissible next gap* for word w over S if w ++ [g] is S-admissible.
+These are exactly the residues coprime to 30, and |𝒜₃₀| = φ(30) = 8.
 
-### 5.2 Explicit Forcing Results
+**Theorem 7.1.** Every prime p > 5 has p mod 30 ∈ 𝒜₃₀.
 
-**Theorem 5.3** (Forcing [2] → 4). Over sieve {2, 3} with gap bound 6, the word [2] forces next gap 4.
+*Proof.* A prime p > 5 is coprime to 2, 3, and 5, hence coprime to 30. The residues coprime to 30 are exactly 𝒜₃₀. □
 
-*Proof.* First, [2, 4] is admissible at a = 5: positions {0, 2, 6} all avoid {2, 3} at offset 5 (giving 5, 7, 11), and interior {1, 3, 4, 5} at offset 5 gives {6, 8, 9, 10}, each divisible by 2 or 3. For uniqueness, we check each h ∈ {1, 2, 3, 5, 6} and show [2, h] is not admissible at any residue mod 6. This requires case analysis on residues, which we perform exhaustively. □
+### 7.2 Transition Rules
 
-**Theorem 5.4** (Forcing [4] → 2). Over sieve {2, 3} with gap bound 6, the word [4] forces next gap 2.
+**Definition 7.2** (Admissible Gaps). For a state r ∈ 𝒜₃₀, the set of admissible gaps modulo 30 is:
 
-*Proof.* Similar exhaustive analysis. [4, 2] is admissible at a = 1. □
+$$G(r) = \{g \in \{0, 1, \ldots, 29\} : (r + g) \bmod 30 \in \mathcal{A}_{30}\}$$
 
-**Theorem 5.5** (Existence of Forcing Patterns). There exist a sieve set S of primes, a nonempty gap word w, and a positive gap g such that w is S-forcing for g.
+**Theorem 7.2** (Admissibility Density Bound). For every r ∈ 𝒜₃₀, |G(r)| ≤ 8.
 
-*Proof.* Take S = {2, 3}, w = [2], g = 4, B = 6. Apply Theorem 5.3. □
+*Proof.* The map g ↦ (r + g) mod 30 is a bijection on ℤ/30ℤ, so |G(r)| = |𝒜₃₀| = 8 for every r. □
 
-### 5.3 Forcing Transfer
+**Corollary 7.3.** The primorial automaton rules out at least 22 out of 30 potential gap values (mod 30) from any state, a rejection rate of over 73%.
 
-**Theorem 5.6** (Forcing Transfer). If w is S-forcing for g with bound B, and w is also T-admissible for g, and every T-admissible extension is S-admissible, then w is T-forcing for g.
+### 7.3 Transition Table
 
-This lemma allows transferring forcing results between sieves, enabling modular reasoning about forcing patterns.
+The complete transition table for the 8-state automaton:
 
-## 6. The Gap Automaton
+| From \ Gap mod 30 | 2 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 22 | 24 | 26 | 28 | 30≡0 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | — | — | 7 | — | 11 | 13 | — | 17 | 19 | — | 23 | — | — | 29 | 1 |
+| 7 | — | 11 | 13 | — | 17 | 19 | — | 23 | — | — | 29 | 1 | — | — | 7 |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
-### 6.1 Definition
+(Each "—" represents an inadmissible transition where the target is divisible by 2, 3, or 5.)
 
-**Definition 6.1** (Gap Automaton State). A *state* of the gap automaton over modulus M is a subset of Fin(M) — the currently admissible residue classes.
+## 8. Forcing Patterns
 
-**Definition 6.2** (Forcing State). A state is *forcing* if it contains exactly one admissible residue.
+### 8.1 Definition
 
-**Theorem 6.3** (Forcing State Uniqueness). A forcing state has a unique element.
+**Definition 8.1.** A gap word w = (g₁, ..., gₖ) is *forcing with bound B* over sieve S if there exists a unique positive integer g ≤ B such that the extended word (g₁, ..., gₖ, g) is S-admissible.
 
-*Proof.* A set of cardinality 1 has exactly one element. □
+### 8.2 The Forcing Pattern Conjecture
 
-### 6.2 Automaton Dynamics
+**Conjecture 8.1** (Forcing Pattern Conjecture). For every bound B ≥ 2, there exists a gap word w and a gap value g such that w is forcing with bound B over the sieve {2, 3, 5}. Equivalently, the mod-30 automaton has paths that lead to states where only one transition is possible within the bounded gap alphabet.
 
-The gap automaton processes gap words left-to-right. Starting from an initial state (all residues coprime to the sieve primes), each gap value g transitions the state by:
-1. Shifting residues by g modulo M.
-2. Filtering to those where the interior constraints are satisfied.
+**Computational Evidence.** For B = 6, the word [6, 4, 2] starting from state 1 leads to state 13. The admissible gaps from 13 within {2, 4, 6} are: 13 + 4 = 17 ∈ 𝒜₃₀ and 13 + 6 = 19 ∈ 𝒜₃₀. So this is not forcing (two options). For B = 2, from state 29, the only admissible gap in {2} is 2 (29 + 2 = 31 ≡ 1 mod 30 ∈ 𝒜₃₀), which IS forcing.
 
-The state can only shrink or stay the same — it never grows. This monotonicity is what makes forcing inevitable for sufficiently constrained patterns.
+## 9. Connection to Hardy-Littlewood
 
-### 6.3 State Space Analysis
+The Hardy-Littlewood conjecture on prime gaps predicts that the number π₂(N; g) of primes p ≤ N such that p + g is also prime satisfies:
 
-For sieve {2, 3}, M = 6, the initial state is {1, 5} (2 elements). After gap 2: state becomes {5} → forcing. After gap 4: state becomes {1} → forcing. After gap 6: state stays {1, 5} → not forcing.
+$$\pi_2(N; g) \sim \mathfrak{S}(g) \cdot \frac{N}{(\log N)^2}$$
 
-This reveals the automaton structure: gaps 2 and 4 are "convergent" (reduce state to a singleton), while gap 6 is "neutral" (preserves state).
+where the singular series 𝔖(g) is:
 
-## 7. Monotonicity and Refinement
+$$\mathfrak{S}(g) = 2C_2 \prod_{\substack{p | g \\ p \text{ prime} \\ p \geq 3}} \frac{p - 1}{p - 2}$$
 
-**Theorem 7.1** (Admissibility Anti-monotonicity). If S ⊆ T, then every T-admissible gap word is S-admissible.
+and C₂ = ∏_{p≥3} (1 - 1/(p-1)²) ≈ 0.6601618 is the twin prime constant.
 
-*Proof.* T-avoidance implies S-avoidance (fewer primes to avoid). T-hitting implies S-hitting only if we had more primes — but wait, actually the interior condition requires hitting by at least one prime in S. Since S ⊆ T, if q ∈ S divides a + u, then q ∈ T also divides a + u. But a T-admissible word requires hitting by T-primes, which may include primes not in S. The correct statement is: T-admissibility implies S-avoidance-admissibility (the avoidance part transfers). The hitting part requires S-primes specifically. □
+Our mod-30 automaton provides a finite approximation to this singular series: the admissibility constraints from {2, 3, 5} account for the leading factors in 𝔖(g). The automaton's transition probabilities (treating each admissible transition as equally likely) approximate the Hardy-Littlewood prediction at the level of the first three primes in the Euler product.
 
-**Corollary 7.2**. Adding primes to the sieve can only make forcing easier — a forcing pattern over S remains forcing over any T ⊇ S (if the transfer conditions of Theorem 5.6 are met).
+## 10. Algorithms
 
-## 8. The Forcing Density Conjecture
+### 10.1 Gap Admissibility Check
 
-**Conjecture 8.1** (Forcing Density). For every finite sieve S containing {2, 3}, every gap bound B ≥ 6, and every length k, there exists a gap word w of length ≥ k and a positive gap g such that w is S-forcing for g with bound B.
+```
+INPUT: sieve primes S, gap word w, bound B
+OUTPUT: set of admissible next gaps
 
-### 8.1 Evidence
+for g = 2 to B step 2:
+    admissible = true
+    for each starting residue r coprime to ∏S:
+        if (r + sum(w) + g) mod ∏S is coprime to ∏S:
+            and all interior positions r + sum(w) + k (0 < k < g) are hit by some s ∈ S:
+                record g as admissible from r
+    if g is admissible from some r: output g
+```
 
-- For k = 1: proved (Theorem 5.5).
-- For k = 2: computationally verified. For example, [2, 4] forces next gap 2, and [4, 2] forces next gap 4.
-- For k ≤ 5: computationally verified over sieve {2, 3} with B = 6.
+### 10.2 Forcing Pattern Search
 
-### 8.2 Testable Prediction
+```
+INPUT: sieve primes S, max word length L, gap bound B
+OUTPUT: forcing patterns
 
-The conjecture predicts that for the sieve {2, 3, 5} (M = 30, B = 30), there exist forcing patterns of length ≥ 10. This is computationally testable by exhaustive search over the automaton state space.
+for each word w of length 1 to L over even alphabet ≤ B:
+    A = admissible_next_gaps(S, w, B)
+    if |A| = 1:
+        output (w, A[0]) as forcing pattern
+```
 
-### 8.3 Implications
+## 11. Discussion
 
-If true, the conjecture implies that the prime gap crossword has arbitrarily long "deterministic runs" — sections where each gap is uniquely determined by the sieve constraints and the preceding gaps. This would provide a new perspective on the structure of prime gaps, complementary to probabilistic models like Cramér's conjecture.
+The prime gap crossword framework reveals that much of the apparent randomness in prime gaps is illusory — it arises from the interaction of simple modular constraints. The mod-6 grammar eliminates 50% of potential gap values; the mod-30 automaton eliminates over 73%. Extending to modulo 210 = 2·3·5·7 would eliminate approximately 77%, and so on.
 
-## 9. Algorithms
+The key insight is that these constraints are *compositional*: the admissibility of a gap pattern is determined by the tensor product of constraints from each small prime. This algebraic structure underlies the Hardy-Littlewood singular series and explains why the product formula works so well.
 
-### 9.1 Admissibility Checking
+## 12. Future Work
 
-Given sieve S, gap word w, and modulus M = ∏S:
-1. Compute positions P(w) and interior I(w).
-2. For each a ∈ {0, ..., M-1}: check avoidance and hitting conditions.
-3. Return the set of admissible residues.
-
-Time complexity: O(M · |P(w)| · |S| + M · |I(w)| · |S|).
-
-### 9.2 Forcing Detection
-
-Given sieve S, word w, bound B, modulus M:
-1. For each g ∈ {1, ..., B}: check if w ++ [g] is S-admissible.
-2. If exactly one g passes, w is forcing.
-
-### 9.3 Forcing Pattern Search
-
-Breadth-first or depth-first search over the space of admissible gap words, checking forcing at each node. The search tree is bounded by the automaton state space, which has at most 2^(φ(M)) nodes.
-
-## 10. Discussion
-
-### 10.1 Relation to Hardy-Littlewood
-
-The Hardy-Littlewood conjecture predicts the asymptotic density of prime k-tuples. Our sieve admissibility framework captures a necessary condition for a prime k-tuple to exist: the gap word must be sieve-admissible. The Hardy-Littlewood singular series ∏_p (correction factor) corresponds to refining the sieve with increasing sets of primes.
-
-### 10.2 Relation to the Cramér Model
-
-In Cramér's random model, consecutive gaps are independent. Our forcing results demonstrate that this independence fails at the modular level — the sieve constraints create correlations. These correlations are weak for small sieves but grow with sieve refinement.
-
-### 10.3 Limitations
-
-Our framework captures only *necessary* conditions from small prime divisibility. The actual prime gap sequence is further constrained by the absence of large prime factors, which our finite sieve cannot capture. The forcing patterns we identify are "sieve-theoretic" — they constrain which gaps are possible, but do not guarantee which gaps actually occur.
-
-## 11. Future Work
-
-1. Extend forcing pattern analysis to larger sieves ({2,3,5}, {2,3,5,7}).
-2. Quantify the growth rate of forcing pattern density as sieve size increases.
-3. Connect the Gap Automaton to Gallagher's theorem on the distribution of prime gaps.
-4. Investigate whether the Forcing Density Conjecture implies new bounds on prime gaps.
+1. **Extend to larger primorials**: Analyze the automaton modulo 210 (8 × 48 = 48 states) and characterize its forcing patterns.
+2. **Quantitative forcing density**: Prove that forcing patterns occur with positive density among all gap words.
+3. **Connection to Maier's theorem**: Relate the automaton's structure to the irregular distribution of primes in short intervals.
+4. **Computational verification**: Test Hardy-Littlewood predictions against the automaton's transition frequencies up to 10^10.
 
 ## References
 
-1. Hardy, G.H. and Littlewood, J.E. "Some problems of 'Partitio Numerorum': III." *Acta Mathematica* 44 (1923): 1-70.
-2. Maynard, J. "Small gaps between primes." *Annals of Mathematics* 181 (2015): 383-413.
-3. Gallagher, P.X. "On the distribution of primes in short intervals." *Mathematika* 23 (1976): 4-9.
-4. Goldston, D.A., Pintz, J., and Yıldırım, C.Y. "Primes in tuples I." *Annals of Mathematics* 170 (2009): 819-862.
-5. Cramér, H. "On the order of magnitude of the difference between consecutive prime numbers." *Acta Arithmetica* 2 (1936): 23-46.
+1. Hardy, G.H. and Littlewood, J.E. "Some problems of 'Partitio numerorum'; III: On the expression of a number as a sum of primes." *Acta Mathematica* 44 (1923): 1–70.
+2. Cramér, H. "On the order of magnitude of the difference between consecutive prime numbers." *Acta Arithmetica* 2 (1936): 23–46.
+3. Maier, H. "Primes in short intervals." *Michigan Mathematical Journal* 32.2 (1985): 221–225.
+4. Goldston, D.A., Pintz, J., and Yıldırım, C.Y. "Primes in tuples I." *Annals of Mathematics* 170.2 (2009): 819–862.
