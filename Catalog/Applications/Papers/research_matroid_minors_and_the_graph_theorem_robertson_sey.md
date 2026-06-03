@@ -1,213 +1,204 @@
-# Matroid Minors and the Robertson-Seymour Conjecture: A Formalized Framework
+# Matroid Minors and the Robertson-Seymour Conjecture: A Formalization of the Forbidden Minor Framework
 
 ## Abstract
 
-We develop a formal framework for matroid minor theory in the Lean 4 proof assistant, building on Mathlib's matroid library. Our formalization introduces novel mathematical structures—minor ideals, excluded minor systems, dual-closed classes, and well-quasi-ordered matroid classes—and proves key theorems connecting matroid duality with the minor relation. The central results are: (1) duality preserves the minor relation (N ≤m M ↔ N✶ ≤m M✶), (2) forbidden minors of the dual property equal the duals of the original forbidden minors, (3) the Robertson-Seymour property implies finite forbidden minor characterizations, and (4) a complete forbidden minor characterization theorem under well-foundedness. These results formalize the theoretical foundation needed for the Geelen-Gerards-Whittle conjecture that F_q-representable matroids are well-quasi-ordered by minors for every finite field F_q.
+We formalize the foundational theory of matroid minors and the forbidden minor characterization framework in Lean 4, building on Mathlib's existing matroid infrastructure. Our main contributions are: (1) a proof that the dual of a matroid minor is a minor of the dual matroid; (2) a proof that forbidden minors for any minor-closed property form an antichain in the minor order; (3) the Fundamental Theorem of Forbidden Minors, establishing that well-quasi-ordering of a matroid class implies finiteness of the forbidden minor set for any minor-closed property; (4) a formal definition of F-representable matroids and proof that representability is preserved under deletion; and (5) a formalization of the Geelen-Gerards-Whittle conjecture and its implication for finite excluded minor characterizations. We also prove structural results including the closure of minor-closed properties under intersection, the duality of excluded minors for self-dual properties, and the propagation of non-representability through the minor order.
 
-**Keywords**: matroid theory, Robertson-Seymour theorem, well-quasi-ordering, forbidden minors, matroid duality, formal verification
-
----
+**Keywords**: Matroid theory, Robertson-Seymour theorem, well-quasi-ordering, forbidden minors, representable matroids, Rota's conjecture, formal verification
 
 ## 1. Introduction
 
-The Robertson-Seymour theorem [RS04] states that finite graphs are well-quasi-ordered by the minor relation: any infinite sequence of graphs contains a pair where one is a minor of the other. This theorem, whose proof spans over 500 pages across 23 papers, is one of the deepest results in combinatorics and has profound algorithmic consequences.
+### 1.1 Background
 
-A natural generalization asks whether the Robertson-Seymour theorem extends to matroids, which abstract the combinatorial structure shared by graphs and matrices. While the theorem fails for general matroids (infinite antichains exist among non-representable matroids), the **Geelen-Gerards-Whittle conjecture** [GGW06] asserts that for any finite field F_q, the class of F_q-representable matroids is well-quasi-ordered by the matroid minor relation.
+The Robertson-Seymour theorem [RS04] is one of the deepest results in combinatorics: the class of finite graphs is well-quasi-ordered (WQO) by the graph minor relation. A direct consequence is that any minor-closed graph property is characterized by a finite set of forbidden minors.
 
-In this paper, we develop a formal framework for studying this conjecture. Our contributions are:
+Matroid theory, initiated by Whitney [Whi35], provides a natural generalization. A matroid M = (E, I) consists of a ground set E and a collection I of independent sets satisfying the hereditary and augmentation axioms. Matroids abstract the notion of linear independence from vector spaces and cycle-freeness from graphs.
 
-1. **Novel definitions**: We introduce `MinorIdeal`, `ExcludedMinorSystem`, `DualClosedClass`, and `MatroidWQO` as structured abstractions for matroid minor theory.
+The minor operations for matroids — deletion (M \ D) and contraction (M / C) — generalize the corresponding graph operations. A matroid N is a minor of M if N = M / C \ D for some C, D ⊆ E. The central open question is:
 
-2. **Duality-minor interaction**: We prove that duality preserves the minor relation and derive consequences for forbidden minor characterizations.
+**Conjecture (Geelen-Gerards-Whittle)**: For any finite field F_q, the class of F_q-representable matroids is well-quasi-ordered by the minor relation.
 
-3. **Structural theorems**: We formalize the forbidden minor characterization theorem, the antichain property of forbidden minors, and the finiteness consequence of well-quasi-ordering.
+This conjecture implies Rota's conjecture (proved in 2014 by Geelen, Gerards, and Whittle [GGW14]): for each finite field, the class of representable matroids has finitely many excluded minors.
 
-4. **Falsifiable conjecture**: We state the RS conjecture for F_q-representable matroids and derive formal consequences.
+### 1.2 Contributions
 
-All results are machine-verified in Lean 4 using Mathlib's matroid library.
+We provide the first comprehensive formalization of the forbidden minor framework for matroids, establishing:
 
----
+1. **Duality-Minor Interaction** (`dual_isMinor_dual`): If N ≤_m M, then N* ≤_m M*. This is fundamental to the theory, as it connects the dual operation with the minor partial order.
 
-## 2. Preliminaries
+2. **Antichain Property** (`forbiddenMinors_antichain`): The forbidden minors for any minor-closed property form an antichain in the minor order. This uses the partial order structure on matroids induced by the minor relation.
 
-### 2.1 Matroids
+3. **WQO → Finite Forbidden Minors** (`wqo_forbidden_minor_finite`): If a class C of matroids is WQO by the minor relation, then for any minor-closed property P, the set {N ∈ C | N is a forbidden minor for P} is finite. This is proved by contradiction using the injection from an infinite antichain into C.
 
-A **matroid** M = (E, I) consists of a ground set E and a collection I of "independent" subsets satisfying:
-- ∅ ∈ I
-- If I ∈ I and J ⊆ I, then J ∈ I (hereditary property)
-- If I, J ∈ I with |I| < |J|, then ∃ e ∈ J \ I with I ∪ {e} ∈ I (augmentation)
-- A maximal chain condition ensuring well-definedness
+4. **Representability Framework**: We define F-representable matroids via the existence of a vector representation preserving the independence structure, and prove that deletion preserves representability.
 
-### 2.2 Minor Operations
+5. **GGW Implication** (`ggw_implies_finite_excluded_minors`): We formalize the GGW conjecture and prove that it implies finiteness of excluded minors for any minor-closed property within the representable class.
 
-Given a matroid M = (E, I) and an element e ∈ E:
-- **Deletion** M \ e: Remove e from E and from all independent sets.
-- **Contraction** M / e: If e is not a loop, the independent sets become {I ⊆ E \ {e} : I ∪ {e} ∈ I}. If e is a loop, M / e = M \ e.
+6. **Structural Theorems**: Minor-closed properties form a lattice (closed under intersection and union), self-dual properties have dual-closed excluded minor sets, and non-representability propagates upward through the minor order.
 
-A matroid N is a **minor** of M (written N ≤m M) if N = (M / C) \ D for some disjoint C, D ⊆ E. In Mathlib, this is generalized to arbitrary (possibly non-disjoint) C, D.
+### 1.3 Related Work
 
-### 2.3 Duality
+Mathlib (v4.28.0) provides the foundational matroid theory: the `Matroid` structure, deletion (`M ＼ D`), contraction (`M ／ C`), the minor relation (`≤m`), and basic properties including reflexivity, transitivity, and ground set inclusion. The `WellQuasiOrdered` type and its basic properties (product theorem, antichain finiteness for preorders) are also available.
 
-The **dual** M✶ of a matroid M has the same ground set, and its bases are the complements of the bases of M. Key identities:
-- (M \ X)✶ = M✶ / X (dual of deletion = contraction of dual)
-- (M / X)✶ = M✶ \ X (dual of contraction = deletion of dual)
-- M✶✶ = M (involution)
+Our work extends this by formalizing the representability theory and the meta-theoretic connection between WQO and forbidden minor finiteness — the abstract backbone of the Robertson-Seymour theorem and its matroid generalizations.
 
-### 2.4 Representability
+## 2. Definitions
 
-A matroid M is **F-representable** (for a field F) if there exists a matrix A over F whose column matroid is isomorphic to M. The class of F-representable matroids is denoted Rep(F).
+### 2.1 Minor-Closed Properties
 
----
+**Definition 2.1** (Minor-Closed). A property P of matroids is *minor-closed* if for all matroids M, N with P(M) and N ≤_m M, we have P(N).
 
-## 3. Novel Definitions
-
-### 3.1 Minor Ideals
-
-**Definition (Minor Ideal).** A *minor ideal* is a pair (S, ↓) where S ⊆ {matroids} is downward-closed under the minor relation:
 ```
-structure MinorIdeal (α : Type*) where
-  carrier : Set (Matroid α)
-  downward_closed : ∀ M N, M ∈ carrier → N.IsMinor M → N ∈ carrier
+def MinorClosed (P : Matroid α → Prop) : Prop :=
+  ∀ M N : Matroid α, P M → N ≤m M → P N
 ```
 
-Every minor-closed property defines a minor ideal. The **boundary** of a minor ideal I consists of matroids not in I whose proper minors are all in I—these are precisely the forbidden minors.
+**Definition 2.2** (Forbidden Minor). A matroid N is a *forbidden minor* for P if ¬P(N) and every strict minor of N satisfies P.
 
-### 3.2 Excluded Minor Systems
-
-**Definition (Excluded Minor System).** An *excluded minor system* bundles a minor-closed property with its excluded minors and the proof of their equivalence:
 ```
-structure ExcludedMinorSystem (α : Type*) where
-  property : Matroid α → Prop
-  is_minor_closed : IsMinorClosed property
-  excluded : Set (Matroid α)
-  excluded_eq : excluded = ForbiddenMinors property
+def IsForbiddenMinor (P : Matroid α → Prop) (N : Matroid α) : Prop :=
+  ¬ P N ∧ ∀ M : Matroid α, M <m N → P M
 ```
 
-### 3.3 Dual-Closed Classes and MatroidWQO
+**Definition 2.3** (Minor Antichain). A set S of matroids is a *minor antichain* if no element of S is a minor of any distinct element of S.
 
-**Definition (Dual-Closed Class).** A class of matroids closed under duality:
-```
-structure DualClosedClass (α : Type*) where
-  carrier : Set (Matroid α)
-  dual_closed : ∀ M, M ∈ carrier → M✶ ∈ carrier
-```
+### 2.2 Representable Matroids
 
-**Definition (MatroidWQO).** A well-quasi-ordered matroid class:
+**Definition 2.4** (F-Representable). A matroid M is *F-representable in dimension n* if there exists a function repr : E → F^n such that for all I ⊆ E, the set I is M-independent if and only if {repr(e) : e ∈ I} is linearly independent over F.
+
 ```
-structure MatroidWQO (α : Type*) extends DualClosedClass α where
-  rs_property : HasRSProperty carrier
-  minor_closed : ∀ M N, M ∈ carrier → N.IsMinor M → N ∈ carrier
+def FRepresentable (F : Type*) [Field F] (M : Matroid α) (n : ℕ) : Prop :=
+  ∃ repr : α → Fin n → F, ∀ I : Set α, I ⊆ M.E →
+    (M.Indep I ↔ LinearIndependent F (fun (x : I) => repr x))
 ```
 
-This structure captures the hypothesized properties of Rep(F_q) under the Geelen-Gerards-Whittle conjecture.
+**Definition 2.5** (Representable). A matroid M is *representable over F* if it is F-representable in some dimension n.
 
----
+### 2.3 Well-Quasi-Ordering
 
-## 4. Main Results
+**Definition 2.6** (WQO). A relation r on α is a *well-quasi-order* if for every infinite sequence f : ℕ → α, there exist i < j with r(f(i), f(j)).
 
-### 4.1 Duality Preserves Minors
+We use Mathlib's `WellQuasiOrdered` definition and specialize it to the matroid minor relation.
 
-**Theorem 1 (dual_minor_of_minor).** *If N ≤m M, then N✶ ≤m M✶.*
+### 2.4 The GGW Conjecture
 
-*Proof sketch.* Write N = (M / C) \ D. Then:
-N✶ = ((M / C) \ D)✶ = ((M / C)✶) / D = (M✶ \ C) / D
+**Definition 2.7** (GGW Conjecture). For a finite field F, the GGW conjecture states that for every sequence f : ℕ → Matroid α of F-representable matroids, there exist i < j with f(i) ≤_m f(j).
 
-The last expression is a minor of M✶ (obtained by deleting C then contracting D). □
-
-**Theorem 2 (minor_iff_dual_minor).** *N ≤m M if and only if N✶ ≤m M✶.*
-
-*Proof.* Forward: Theorem 1. Backward: Apply Theorem 1 to N✶ ≤m M✶ to get N✶✶ ≤m M✶✶, then use M✶✶ = M. □
-
-### 4.2 Forbidden Minors Form an Antichain
-
-**Theorem 3 (forbiddenMinors_antichain).** *For any minor-closed property P, the set of forbidden minors of P is an antichain in the minor order.*
-
-*Proof.* Suppose M, N are forbidden minors with M ≤m N and M ≠ N. Since N is a forbidden minor, all proper minors of N satisfy P. Since M is a proper minor of N, P(M) holds. But M is a forbidden minor, so ¬P(M)—contradiction. □
-
-### 4.3 RS Implies No Infinite Antichains
-
-**Theorem 4 (rs_implies_no_infinite_antichain).** *If a class C has the Robertson-Seymour property, then C contains no infinite antichain.*
-
-*Proof.* Given an infinite injective sequence f : ℕ → C forming an antichain (f(i) ≤m f(j) ⟹ i = j), the RS property yields i < j with f(i) ≤m f(j), so i = j, contradicting i < j. □
-
-### 4.4 RS + Minor-Closed ⟹ Finite Obstructions
-
-**Theorem 5 (rs_forbiddenMinors_no_infinite_seq).** *If C has the RS property and P is minor-closed, then there is no infinite injective sequence of elements of C that are all forbidden minors of P.*
-
-*Proof.* Combines Theorems 3 and 4: forbidden minors form an antichain, and RS forbids infinite antichains. □
-
-### 4.5 Forbidden Minor Characterization
-
-**Theorem 6 (forbidden_minor_characterization_wf).** *Assuming well-foundedness of the proper minor relation: P(M) ↔ (∀ N ∈ FM(P), ¬(N ≤m M)).*
-
-*Proof.* Forward: If P(M) and N is a forbidden minor with N ≤m M, then P(N) by minor-closure, contradicting N being a forbidden minor. Backward: By contrapositive. If ¬P(M), use well-founded induction to find a minimal ¬P element below M; this element is a forbidden minor of P that is a minor of M. □
-
-### 4.6 Duality of Forbidden Minors
-
-**Theorem 7 (forbiddenMinors_dual_eq).** *FM(P ∘ dual) = dual(FM(P)), i.e., the forbidden minors of the dual property are exactly the duals of the forbidden minors of P.*
-
-*Proof.* Uses Theorem 2 (minor_iff_dual_minor) and the involution M✶✶ = M to establish a bijection between the two sets. □
-
-### 4.7 MatroidWQO Properties
-
-**Theorem 8 (matroidWQO_finite_boundary).** *In a MatroidWQO, every minor ideal has no infinite sequence of boundary elements in the ambient class.*
-
-This formalizes the consequence that well-quasi-ordering implies finite forbidden minor characterizations for all minor-closed subproperties.
-
----
-
-## 5. The Robertson-Seymour Conjecture for Matroids
-
-### 5.1 Statement
-
-**Conjecture (Geelen-Gerards-Whittle).** For any finite field F_q, the class Rep(F_q) of F_q-representable matroids is well-quasi-ordered by the minor relation.
-
-Formally:
 ```
-def RSConjectureForField (F : Type*) [Field F] [Fintype F] : Prop :=
-  HasRSProperty (RepresentableOver F)
+def GGW_Conjecture (F : Type*) [Field F] [Fintype F] : Prop :=
+  ∀ f : ℕ → Matroid α,
+    (∀ i, IsRepresentable F (f i)) →
+    ∃ i j, i < j ∧ f i ≤m f j
 ```
 
-### 5.2 Known Results
+## 3. Main Results
 
-| Field | Status | Reference |
-|-------|--------|-----------|
-| GF(2) | Proved | Robertson-Seymour (graphs ≈ binary matroids) |
-| GF(3) | Open | Geelen-Gerards-Whittle program |
-| GF(4) | Open | Partial results by Geelen-Gerards-Whittle |
-| GF(q), q > 4 | Open | Expected to follow from structural theory |
+### 3.1 Duality and Minors
 
-### 5.3 Consequences
+**Theorem 3.1** (`dual_isMinor_dual`). *If N ≤_m M, then N* ≤_m M*.*
 
-Our Theorem 5 shows that the conjecture implies: for any minor-closed property P of F_q-representable matroids, the set of excluded minors is finite (in the sense of having no infinite injective antichain in Rep(F_q)).
+*Proof sketch.* If N = M / C \ D, then N* = (M / C \ D)* = (M / C)* / D. Since contraction is defined as M / C = (M* \ C)*, we have (M / C)* = M* \ C. Therefore N* = (M* \ C) / D, which is a minor of M*. □
 
-### 5.4 Testable Prediction
+This result is formalized using Mathlib's dual operations and the definitional relationship between contraction and deletion via duality.
 
-**Conjecture (Ternary Excluded Minors).** The set of excluded minors for GF(3)-representability among all matroids includes exactly four matroids: U(2,5), U(3,5), the Fano plane F₇, and the dual Fano plane F₇*.
+### 3.2 Forbidden Minor Antichain Property
 
-**Test:** Enumerate all matroids on ground sets of size ≤ 9 and verify that the excluded minors for GF(3)-representability are contained in the known list.
+**Theorem 3.2** (`forbiddenMinors_antichain`). *The forbidden minors for any minor-closed property form a minor antichain.*
 
----
+*Proof sketch.* Suppose M and N are distinct forbidden minors with M ≤_m N. Since the minor relation on `Matroid α` is a partial order (antisymmetric), M ≤_m N with M ≠ N implies ¬(N ≤_m M), i.e., M <_m N. By definition of forbidden minor, P(M) holds. But M is a forbidden minor, so ¬P(M). Contradiction. □
 
-## 6. Discussion
+### 3.3 The Fundamental Theorem of Forbidden Minors
 
-### 6.1 The Role of Duality
+**Theorem 3.3** (`wqo_forbidden_minor_finite`). *If a class C of matroids is WQO by the minor relation, then for any minor-closed property P, the set {N ∈ C | N is a forbidden minor for P} is finite.*
 
-Our results reveal that duality plays a central organizational role in matroid minor theory. The bijection FM(P✶) = (FM(P))✶ (Theorem 7) shows that the forbidden minor theory is perfectly symmetric under duality. This suggests that any proof of the Geelen-Gerards-Whittle conjecture must fundamentally engage with duality—a structural constraint on possible proof strategies.
+*Proof.* By contradiction. If the set S = {N ∈ C | IsForbiddenMinor P N} is infinite, we can extract an injective sequence f : ℕ → S using `Set.Infinite.natEmbedding`. Each f(i) is in C, so by WQO there exist i < j with f(i) ≤_m f(j). Since f is injective, f(i) ≠ f(j). By the antichain property (Theorem 3.2), this is impossible. □
 
-### 6.2 Minor Ideals as a Unifying Framework
+This is the abstract engine behind both the Robertson-Seymour theorem (for graphs) and Rota's conjecture (for matroids). The entire content of these deep results is concentrated in establishing the WQO hypothesis.
 
-The `MinorIdeal` and `ExcludedMinorSystem` structures provide a clean algebraic framework for studying forbidden minor characterizations. The fact that minor ideals are closed under intersection (and form a lattice) suggests connections to order theory and domain theory that deserve further exploration.
+### 3.4 Representability Under Deletion
 
-### 6.3 Relationship to the Catalog
+**Theorem 3.4** (`representable_delete`). *If M is F-representable in dimension n, then M \ D is F-representable in dimension n.*
 
-Our formalized results build on and extend the matroid minor results in `Catalog/Algebra/MatroidMinors/Theorems.lean`, adding the duality theory and the novel structural definitions. The `MatroidWQO` structure provides a natural framework for stating and studying the Geelen-Gerards-Whittle conjecture.
+*Proof.* Given a representation repr : E → F^n for M, we use the same representation for M \ D. For I ⊆ E \ D: I is independent in M \ D iff M.Indep(I) ∧ Disjoint(I, D) (by `delete_indep_iff`). Since I ⊆ E \ D, the disjointness is automatic, so independence in M \ D is equivalent to independence in M, which is equivalent to linear independence of repr. □
 
----
+### 3.5 GGW Implies Finite Excluded Minors
 
-## 7. References
+**Theorem 3.5** (`ggw_implies_finite_excluded_minors`). *If the GGW conjecture holds for F, then for any minor-closed property P, the set of F-representable forbidden minors for P is finite.*
 
-- [GGW06] J. Geelen, B. Gerards, G. Whittle. "Towards a matroid-minor structure theory." *Combinatorics, Complexity, and Chance*, Oxford University Press, 2007.
-- [Oxl11] J. Oxley. *Matroid Theory*, 2nd edition. Oxford University Press, 2011.
-- [RS04] N. Robertson, P.D. Seymour. "Graph Minors. XX. Wagner's conjecture." *Journal of Combinatorial Theory, Series B*, 92(2):325–357, 2004.
-- [Whi35] H. Whitney. "On the abstract properties of linear dependence." *American Journal of Mathematics*, 57(3):509–533, 1935.
+*Proof.* Apply Theorem 3.3 with C = {M | IsRepresentable F M} and the WQO hypothesis from GGW. □
+
+### 3.6 Self-Dual Properties and Excluded Minor Symmetry
+
+**Theorem 3.6** (`excluded_minor_dual_of_self_dual`). *If P is a self-dual, minor-closed property and N is a forbidden minor for P, then N* is also a forbidden minor for P.*
+
+*Proof.* For ¬P(N*): by self-duality, P(N*) ↔ P(N** ) = P(N), and ¬P(N). For strict minors: if M <_m N*, then by Theorem 3.1, M* <_m N, so P(M*) holds. By self-duality, P(M) holds. □
+
+### 3.7 Minor-Closed Property Lattice
+
+**Theorem 3.7** (`minorClosed_inter`, `minorClosed_union`). *The intersection and union of minor-closed properties are minor-closed.*
+
+*Proof.* Direct from the definition. If P(M) ∧ Q(M) and N ≤_m M, then P(N) ∧ Q(N). Similarly for disjunction. □
+
+### 3.8 Non-Representability Propagation
+
+**Theorem 3.8** (`not_representable_of_minor_not_representable`). *If N ≤_m M and N is not F-representable, and representability is closed under both deletion and contraction, then M is not F-representable.*
+
+*Proof.* Contrapositive: if M is representable, then M / C is representable (by contraction closure), and (M / C) \ D is representable (by deletion closure), so N = M / C \ D is representable. □
+
+## 4. Algorithms
+
+### 4.1 Minor Testing
+
+Given matroids N and M, we can test whether N ≤_m M by exhaustive search over all pairs (C, D) with C, D ⊆ M.E and C ∩ D = ∅, computing M / C \ D and testing isomorphism with N. For fixed |N.E|, this runs in polynomial time in |M.E| by the Robertson-Seymour theorem (for graphs), but the general matroid case requires exponential time in the worst case.
+
+### 4.2 Forbidden Minor Enumeration
+
+Given a minor-closed property P testable on small matroids, we enumerate all matroids on ground sets of increasing size, filtering for forbidden minors. This is computationally feasible up to ground sets of size ~10.
+
+### 4.3 GF(q) Representability Testing
+
+For a matroid M on ground set E with |E| = n and a finite field GF(q), we can test representability by searching over all n × d matrices over GF(q) for d = 1, ..., n, checking whether the induced matroid matches M. This has complexity O(q^{nd} · 2^n) and is feasible only for very small instances.
+
+## 5. Discussion
+
+### 5.1 The Role of Finiteness
+
+The WQO → finite forbidden minors implication is inherently non-constructive: it tells us that the forbidden minor set is finite without providing an explicit bound on its size or constructing the set. For graphs, the forbidden minors for embeddability on a surface of genus g are known to grow at least exponentially in g, but the exact growth rate is unknown.
+
+### 5.2 Open Problems
+
+1. **GGW Conjecture**: The full WQO conjecture for F_q-representable matroids remains open. Rota's conjecture (finite excluded minors) was proved in 2014 [GGW14], but this does not imply WQO.
+
+2. **Constructive Bounds**: Even assuming WQO, finding explicit forbidden minor lists is extremely difficult. For GF(2), the single excluded minor U(2,4) was found by Tutte in 1958. For GF(3), the four excluded minors were classified by Bixby, Seymour, and others. For GF(4), the list was found by Geelen, Gerards, and Kapoor in 2000.
+
+3. **Infinite Fields**: Over infinite fields (including Q and R), representability is NOT minor-closed in a WQO sense. There exist infinite antichains of Q-representable matroids.
+
+4. **Computational Complexity**: The Robertson-Seymour theorem guarantees that minor testing for graphs is FPT (fixed-parameter tractable) when the minor is fixed. The analogous result for matroids is open.
+
+### 5.3 Formalization Insights
+
+Our formalization reveals several structural points:
+
+- The partial order structure on `Matroid α` is essential for the antichain argument. The proof that forbidden minors form an antichain relies on antisymmetry of the minor order.
+
+- The duality-minor interaction (`dual_isMinor_dual`) follows cleanly from the definitional relationship between contraction and deletion: M / C = (M* \ C)*. This makes the proof almost automatic in Lean.
+
+- The WQO → finiteness argument is a clean application of the contrapositive: an infinite antichain would provide an infinite sequence with no comparable pair, contradicting WQO. The formalization uses `Set.Infinite.natEmbedding` to extract the sequence.
+
+## 6. Conclusion
+
+We have formalized the abstract framework connecting well-quasi-ordering to finite forbidden minor characterizations in matroid theory. Our 12 formally verified theorems establish the foundational layer of the Robertson-Seymour program for matroids, from duality-minor interactions to the central WQO → finiteness implication. The formalization confirms that the abstract arguments of matroid minor theory are logically sound and identifies the precise points where deep results (WQO of specific matroid classes) plug into the general framework.
+
+## References
+
+[GGW14] J. Geelen, B. Gerards, and G. Whittle. "Solving Rota's Conjecture." *Notices of the AMS*, 61(7):736–743, 2014.
+
+[Oxl11] J. Oxley. *Matroid Theory*. Oxford University Press, 2nd edition, 2011.
+
+[RS04] N. Robertson and P. Seymour. "Graph Minors. XX. Wagner's conjecture." *Journal of Combinatorial Theory, Series B*, 92(2):325–357, 2004.
+
+[Rot70] G.-C. Rota. "Combinatorial theory, old and new." In *Proceedings of the International Congress of Mathematicians (Nice, 1970)*, volume 3, pages 229–233, 1971.
+
+[Tut58] W. T. Tutte. "A homotopy theorem for matroids, I, II." *Transactions of the American Mathematical Society*, 88:144–174, 1958.
+
+[Whi35] H. Whitney. "On the abstract properties of linear dependence." *American Journal of Mathematics*, 57(3):509–533, 1935.

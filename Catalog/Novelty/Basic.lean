@@ -1,209 +1,202 @@
 /-
-# Poincaré Conjecture for Data: Manifold Detection via Persistent Homology
+Copyright (c) 2024 Harmonic Research. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
 
-This module formalizes the key mathematical structures connecting persistent homology
-to manifold detection.
+/-!
+# Matroid Minors and the Robertson-Seymour Conjecture for Representable Matroids
+
+This file develops the theory of matroid minors, minor-closed properties, and the
+connection to well-quasi-ordering. We formalize:
+
+1. **Minor-closed properties**: A property of matroids is minor-closed if it is preserved
+   under taking minors.
+2. **Forbidden minor characterization**: If a class of matroids is WQO by the minor relation,
+   then any minor-closed property is characterized by a finite set of forbidden minors.
+3. **Representable matroids**: A matroid is F-representable if its independent sets correspond
+   to linearly independent sets of vectors over F.
+4. **Representability is minor-closed**: Deletion preserves representability.
+5. **Duality and minors**: The dual of a minor is a minor of the dual.
 
 ## Main Results
 
-* `rips_monotone` - VR complexes grow monotonically with ε
-* `rips_complete_of_large_eps` - VR becomes complete simplex at large ε
-* `nerve_rips_bridge` - Triangle inequality connects nerve covers to Rips edges
-* `rips_zero_faces` - At scale 0, only singletons survive (metric space)
-* `mem_rips_iff_birth` - Face membership characterized by birth time
+* `MinorClosed`: Definition of minor-closed properties.
+* `FRepresentable`: Definition of representable matroids over a field.
+* `isRepresentable_delete`: Representability is preserved under deletion.
+* `dual_isMinor_dual`: The dual of a minor is a minor of the dual.
+* `wqo_forbidden_minor_finite`: WQO → finite forbidden minors for any minor-closed property.
+* `ggw_implies_finite_excluded_minors`: GGW conjecture → finite excluded minors.
+
+## References
+
+* Geelen, Gerards, Whittle: "Towards a structure theory for matrices and matroids"
+* Robertson, Seymour: "Graph Minors" series
+* Oxley: "Matroid Theory"
 -/
 
-import Mathlib
+open Set Matroid
 
-open Finset Set
-
-/-! ## Abstract Simplicial Complex -/
-
-/-- An abstract simplicial complex on a type α is a downward-closed collection
-    of finite subsets. -/
-structure ASComplex (α : Type*) where
-  faces : Set (Finset α)
-  empty_mem : ∅ ∈ faces
-  down_closed : ∀ {σ τ : Finset α}, σ ∈ faces → τ ⊆ σ → τ ∈ faces
-
-namespace ASComplex
+noncomputable section
 
 variable {α : Type*}
 
-/-- The k-skeleton consists of all faces of dimension ≤ k. -/
-def skeleton (K : ASComplex α) (k : ℕ) : Set (Finset α) :=
-  {σ ∈ K.faces | σ.card ≤ k + 1}
+/-! ## Minor-Closed Properties -/
 
-end ASComplex
+/-- A property of matroids is **minor-closed** if whenever `M` satisfies the property
+and `N` is a minor of `M`, then `N` also satisfies the property. -/
+def MinorClosed (P : Matroid α → Prop) : Prop :=
+  ∀ M N : Matroid α, P M → N ≤m M → P N
 
-/-! ## Vietoris-Rips Complex -/
+/-- A matroid `N` is a **forbidden minor** for a property `P` if `N` does not satisfy `P`,
+but every proper minor of `N` does satisfy `P`. -/
+def IsForbiddenMinor (P : Matroid α → Prop) (N : Matroid α) : Prop :=
+  ¬ P N ∧ ∀ M : Matroid α, M <m N → P M
 
-/-- The Vietoris-Rips complex of a finite pseudometric space at scale ε.
-    A simplex σ is included iff σ ⊆ S and every pair of points in σ is within distance ε. -/
-def RipsComplex {α : Type*} [PseudoMetricSpace α] (S : Finset α) (ε : ℝ) :
-    ASComplex α where
-  faces := {σ : Finset α | σ ⊆ S ∧ ∀ x ∈ σ, ∀ y ∈ σ, dist x y ≤ ε}
-  empty_mem := ⟨empty_subset S, fun x hx => absurd hx (Finset.notMem_empty x)⟩
-  down_closed := fun ⟨hσS, hσ⟩ hτσ =>
-    ⟨hτσ.trans hσS, fun x hx y hy => hσ x (hτσ hx) y (hτσ hy)⟩
+/-- The set of all forbidden minors for a minor-closed property. -/
+def ForbiddenMinors (P : Matroid α → Prop) : Set (Matroid α) :=
+  { N | IsForbiddenMinor P N }
 
-/-! ## Core Rips Complex Theorems -/
+/-- A matroid minor antichain is a set of matroids where no one is a minor of another. -/
+def IsMinorAntichain (S : Set (Matroid α)) : Prop :=
+  ∀ M N : Matroid α, M ∈ S → N ∈ S → M ≠ N → ¬(M ≤m N)
 
-/-- **Monotonicity**: If ε₁ ≤ ε₂, every face of VR(S,ε₁) is a face of VR(S,ε₂).
-    This is the filtration property that makes persistent homology possible. -/
-theorem rips_monotone {α : Type*} [PseudoMetricSpace α] (S : Finset α) {ε₁ ε₂ : ℝ}
-    (h : ε₁ ≤ ε₂) (σ : Finset α) :
-    σ ∈ (RipsComplex S ε₁).faces → σ ∈ (RipsComplex S ε₂).faces :=
-  fun ⟨hσS, hσ⟩ => ⟨hσS, fun x hx y hy => le_trans (hσ x hx y hy) h⟩
-
-/-- **Completeness**: When ε exceeds the diameter, every subset of S is a face. -/
-theorem rips_complete_of_large_eps {α : Type*} [PseudoMetricSpace α]
-    (S : Finset α) (ε : ℝ)
-    (hε : ∀ x ∈ S, ∀ y ∈ S, dist x y ≤ ε)
-    (σ : Finset α) (hσ : σ ⊆ S) : σ ∈ (RipsComplex S ε).faces :=
-  ⟨hσ, fun x hx y hy => hε x (hσ hx) y (hσ hy)⟩
-
-/-- **Filtration nesting**: The faces grow as ε increases. -/
-theorem rips_filtration_nested {α : Type*} [PseudoMetricSpace α]
-    (S : Finset α) {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
-    (RipsComplex S ε₁).faces ⊆ (RipsComplex S ε₂).faces :=
-  fun _ hσ => rips_monotone S h _ hσ
-
-/-- At scale 0, only singletons and the empty set are faces in a metric space. -/
-theorem rips_zero_faces {α : Type*} [MetricSpace α] (S : Finset α) (σ : Finset α) :
-    σ ∈ (RipsComplex S 0).faces → σ.card ≤ 1 := by
-  intro ⟨_, hσ⟩
-  by_contra h
-  push_neg at h
-  obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp h
-  have hd := hσ a ha b hb
-  have : a = b := dist_eq_zero.mp (le_antisymm hd dist_nonneg)
-  exact hab this
-
-/-- **Perturbation stability**: Increasing ε only adds faces. -/
-theorem rips_perturbation {α : Type*} [PseudoMetricSpace α]
-    (S : Finset α) {ε δ : ℝ} (hδ : 0 ≤ δ)
-    (σ : Finset α) (hσ : σ ∈ (RipsComplex S ε).faces) :
-    σ ∈ (RipsComplex S (ε + δ)).faces :=
-  rips_monotone S (le_add_of_nonneg_right hδ) σ hσ
-
-/-! ## Covering and Packing Numbers -/
-
-/-- A finite set C is an ε-cover of S if every point of S is within distance ε
-    of some point in C. -/
-def IsEpsCover {α : Type*} [PseudoMetricSpace α]
-    (S : Finset α) (C : Finset α) (ε : ℝ) : Prop :=
-  ∀ x ∈ S, ∃ c ∈ C, dist x c ≤ ε
-
-/-- A finite set P is ε-separated if every pair of distinct points has distance > ε. -/
-def IsEpsSeparated {α : Type*} [PseudoMetricSpace α]
-    (P : Finset α) (ε : ℝ) : Prop :=
-  ∀ x ∈ P, ∀ y ∈ P, x ≠ y → ε < dist x y
-
-/-- **Self-covering**: S ε-covers itself for ε ≥ 0. -/
-theorem self_cover {α : Type*} [PseudoMetricSpace α] (S : Finset α) {ε : ℝ}
-    (hε : 0 ≤ ε) : IsEpsCover S S ε :=
-  fun x hx => ⟨x, hx, by rw [dist_self]; exact hε⟩
-
-/-- **Cover monotonicity**: Increasing ε preserves covers. -/
-theorem cover_monotone {α : Type*} [PseudoMetricSpace α] (S C : Finset α)
-    {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) (hC : IsEpsCover S C ε₁) :
-    IsEpsCover S C ε₂ :=
-  fun x hx => let ⟨c, hc, hd⟩ := hC x hx; ⟨c, hc, le_trans hd h⟩
-
-/-- **Maximal packing = cover**: A maximal ε-separated subset is an ε-cover. -/
-theorem maximal_packing_is_cover {α : Type*} [PseudoMetricSpace α]
-    (S P : Finset α) (ε : ℝ)
-    (hMax : ∀ x ∈ S, x ∉ P → ∃ p ∈ P, dist x p ≤ ε)
-    (_hP : P ⊆ S) (hε : 0 ≤ ε) :
-    IsEpsCover S P ε := by
-  intro x hx
-  by_cases hxP : x ∈ P
-  · exact ⟨x, hxP, by rw [dist_self]; exact hε⟩
-  · exact hMax x hx hxP
-
-/-! ## Nerve-Rips Bridge -/
-
-section NerveRips
-
-variable {α : Type*} [PseudoMetricSpace α] [DecidableEq α]
+/-! ## Duality and Minors -/
 
 /-
-**Nerve-Rips bridge theorem**: If two cover centers c₁, c₂ both have a witness
-    point x within ε of each, then {c₁, c₂} is an edge in VR(S, 2ε).
-    This uses the triangle inequality: dist(c₁, c₂) ≤ dist(c₁, x) + dist(x, c₂) ≤ 2ε.
+The dual of a minor is a minor of the dual. This is a fundamental structural result
+in matroid theory connecting duality with the minor relation.
+
+Proof: If `N = M ／ C ＼ D`, then `N✶ = (M ／ C ＼ D)✶ = (M ／ C)✶ ／ D`
+and since contraction is defined as `M ／ C = (M✶ ＼ C)✶`, we have
+`(M ／ C)✶ = M✶ ＼ C`, so `N✶ = (M✶ ＼ C) ／ D = M✶ ／ D ＼ C` (after commuting).
 -/
-theorem nerve_rips_bridge
-    (S : Finset α) {ε : ℝ} (hε : 0 ≤ ε)
-    {c₁ c₂ : α} (hc₁S : c₁ ∈ S) (hc₂S : c₂ ∈ S)
-    {x : α} (hxc₁ : dist x c₁ ≤ ε) (hxc₂ : dist x c₂ ≤ ε) :
-    ({c₁, c₂} : Finset α) ∈ (RipsComplex S (2 * ε)).faces := by
-  constructor;
-  · aesop_cat;
-  · simp +zetaDelta at *;
-    exact ⟨ ⟨ hε, by linarith [ dist_triangle_left c₁ c₂ x, dist_triangle_right c₁ c₂ x, dist_comm x c₁, dist_comm x c₂ ] ⟩, by linarith [ dist_triangle_left c₂ c₁ x, dist_triangle_right c₂ c₁ x, dist_comm x c₁, dist_comm x c₂ ], hε ⟩
+theorem dual_isMinor_dual {M N : Matroid α} (h : N ≤m M) : N✶ ≤m M✶ := by
+  obtain ⟨ C, D, h ⟩ := h;
+  grind +suggestions
+
+/-! ## Forbidden Minor Properties -/
+
+/-- Every strict minor of a forbidden minor satisfies the property.
+This is immediate from the definition. -/
+theorem forbidden_minor_strict {P : Matroid α → Prop} (_hP : MinorClosed P)
+    (N : Matroid α) (hN : IsForbiddenMinor P N) (M : Matroid α) (hM : M <m N) :
+    P M :=
+  hN.2 M hM
 
 /-
-**Edge inclusion**: Close points form an edge in VR(S, ε).
+The forbidden minors of a minor-closed property form an antichain under
+the minor relation. No forbidden minor can be a minor of another forbidden minor.
 -/
-theorem rips_edge_of_close
-    (S : Finset α) {ε : ℝ} (hε : 0 ≤ ε)
-    {x y : α} (hx : x ∈ S) (hy : y ∈ S) (hxy : dist x y ≤ ε) :
-    ({x, y} : Finset α) ∈ (RipsComplex S ε).faces := by
-  refine' ⟨ _, _ ⟩;
-  · grind +revert;
-  · simp +decide [ *, dist_comm ]
+theorem forbiddenMinors_antichain {P : Matroid α → Prop} (_hP : MinorClosed P) :
+    IsMinorAntichain (ForbiddenMinors P) := by
+  intro M N hM hN hMN hMN';
+  cases' hM with hM₁ hM₂;
+  cases' hN with hN₁ hN₂;
+  exact hM₁ ( hN₂ M ( lt_of_le_of_ne hMN' hMN ) )
 
-end NerveRips
+/-! ## Representable Matroids -/
 
-/-! ## Birth Time -/
+/-- A matroid `M` is **F-representable in dimension n** if there exists an assignment of
+vectors in F^n to elements of the ground set such that the independent sets of M
+correspond exactly to the linearly independent sets of vectors. -/
+def FRepresentable (F : Type*) [Field F] (M : Matroid α) (n : ℕ) : Prop :=
+  ∃ repr : α → Fin n → F, ∀ I : Set α, I ⊆ M.E →
+    (M.Indep I ↔ LinearIndependent F (fun (x : I) => repr x))
 
-section BirthTime
+/-- A matroid is representable over `F` if it has an `F`-representation of some dimension. -/
+def IsRepresentable (F : Type*) [Field F] (M : Matroid α) : Prop :=
+  ∃ n : ℕ, FRepresentable F M n
 
-variable {α : Type*} [PseudoMetricSpace α]
-
-/-- The birth time of a simplex is the maximum pairwise distance. -/
-noncomputable def birthTime (σ : Finset α) : ℝ :=
-  if h : σ.Nonempty then
-    σ.sup' h (fun x => σ.sup' h (fun y => dist x y))
-  else 0
+/-! ## Representability is Minor-Closed -/
 
 /-
-**Birth time characterization**: A face appears in VR(S, ε) iff ε ≥ its birth time.
+Deletion preserves representability: if `M` is `F`-representable, so is `M ＼ D`.
+The representation is simply the restriction of the original representation
+to the remaining elements.
 -/
-theorem mem_rips_iff_birth (S : Finset α) (σ : Finset α)
-    (hσS : σ ⊆ S) (hσ : σ.Nonempty) (ε : ℝ) :
-    σ ∈ (RipsComplex S ε).faces ↔ birthTime σ ≤ ε := by
-  simp +decide [ birthTime, Finset.sup'_le_iff, Finset.le_sup'_iff, RipsComplex ];
-  split_ifs ; simp +decide [ *, Finset.sup'_le_iff ]
+theorem representable_delete {F : Type*} [Field F] {M : Matroid α} {n : ℕ}
+    (h : FRepresentable F M n) (D : Set α) :
+    FRepresentable F (M ＼ D) n := by
+  obtain ⟨repr, hrepr⟩ := h;
+  refine' ⟨ repr, fun I hI => _ ⟩;
+  simp_all +decide [ Matroid.delete_indep_iff ];
+  grind
 
-end BirthTime
+/-- Representability (as a property) is minor-closed for deletion. -/
+theorem isRepresentable_delete {F : Type*} [Field F] {M : Matroid α}
+    (h : IsRepresentable F M) (D : Set α) : IsRepresentable F (M ＼ D) := by
+  obtain ⟨n, rep⟩ := h
+  exact ⟨n, representable_delete rep D⟩
 
-/-! ## Detection Threshold -/
-
-/-- The sphere signature captures the homological profile of S^d. -/
-structure SphereSignature where
-  dim : ℕ
-  connected : Prop
-  hasTopCycle : Prop
-  intermediateVanish : Prop
-
-/-- Whether a signature matches S^d. -/
-def SphereSignature.isSpherelike (b : SphereSignature) : Prop :=
-  b.connected ∧ b.hasTopCycle ∧ b.intermediateVanish
-
-/-- The Poincaré threshold: the infimum scale at which sphere-like topology appears. -/
-noncomputable def poincareThreshold (detector : ℝ → SphereSignature) : ℝ :=
-  sInf {ε : ℝ | 0 < ε ∧ (detector ε).isSpherelike}
-
-/-- The volumetric detection threshold: n^{-1/d} scaling. -/
-noncomputable def volumetricThreshold (n : ℕ) (d : ℕ) (vol : ℝ) : ℝ :=
-  vol * (n : ℝ) ^ (-(1 : ℝ) / (d : ℝ))
+/-! ## Well-Quasi-Ordering and Forbidden Minors -/
 
 /-
-**Threshold positivity**: The volumetric threshold is positive.
+**Fundamental Theorem of Forbidden Minors**: If a class of matroids `C` is
+well-quasi-ordered by the minor relation, then any minor-closed property `P`
+has at most finitely many forbidden minors within `C`.
+
+This is the abstract backbone of the Robertson-Seymour theorem and its matroid
+generalizations. The proof is by contradiction: if the forbidden minors formed
+an infinite set, we could extract an infinite sequence from them, contradicting
+WQO (since forbidden minors form an antichain).
 -/
-theorem volumetricThreshold_pos {n d : ℕ} {vol : ℝ}
-    (hn : 0 < n) (hd : 0 < d) (hvol : 0 < vol) :
-    0 < volumetricThreshold n d vol := by
-  exact mul_pos hvol ( Real.rpow_pos_of_pos ( Nat.cast_pos.mpr hn ) _ )
+theorem wqo_forbidden_minor_finite
+    (C : Set (Matroid α))
+    (hWQO : ∀ f : ℕ → Matroid α, (∀ i, f i ∈ C) →
+      ∃ i j, i < j ∧ f i ≤m f j)
+    (P : Matroid α → Prop)
+    (_hP : MinorClosed P) :
+    Set.Finite {N ∈ C | IsForbiddenMinor P N} := by
+  contrapose! hWQO;
+  obtain ⟨f, hf⟩ : ∃ f : ℕ → Matroid α, (∀ i, f i ∈ {N ∈ C | IsForbiddenMinor P N}) ∧ Function.Injective f := by
+    have := hWQO.natEmbedding;
+    exact ⟨ _, fun i => this i |>.2, Subtype.val_injective.comp this.injective ⟩;
+  refine' ⟨ f, fun i => hf.1 i |>.1, fun i j hij h => _ ⟩;
+  have := hf.1 i; have := hf.1 j; simp_all +decide [ IsForbiddenMinor ] ;
+  exact absurd ( this ( f i ) ( lt_of_le_of_ne h ( hf.2.ne hij.ne ) ) ) ( by have := hf.1 i; tauto )
+
+/-! ## The Geelen-Gerards-Whittle Conjecture -/
+
+/-- **Conjecture (Geelen-Gerards-Whittle)**: For any finite field F_q, the class of
+F_q-representable matroids is well-quasi-ordered by the minor relation.
+
+This would generalize the Robertson-Seymour theorem from graphs
+(F_2-representable matroids) to all finite fields. -/
+def GGW_Conjecture (F : Type*) [Field F] [Fintype F] : Prop :=
+  ∀ f : ℕ → Matroid α,
+    (∀ i, IsRepresentable F (f i)) →
+    ∃ i j, i < j ∧ f i ≤m f j
+
+/-
+If the GGW conjecture holds for representable matroids over F, then for any
+minor-closed property P, the set of F-representable forbidden minors is finite.
+-/
+theorem ggw_implies_finite_excluded_minors
+    (F : Type*) [Field F] [Fintype F]
+    (hGGW : @GGW_Conjecture α F _ _)
+    (P : Matroid α → Prop)
+    (hP : MinorClosed P) :
+    Set.Finite {N : Matroid α | IsRepresentable F N ∧ IsForbiddenMinor P N} := by
+  convert wqo_forbidden_minor_finite { N | IsRepresentable F N } _ P hP using 1 ; aesop ( simp_config := { singlePass := true } ) ;
+
+/-! ## Uniform Matroids -/
+
+/-- The rank of a uniform matroid U(k,n) is min(k,n). -/
+def uniformRank (k n : ℕ) : ℕ := min k n
+
+/-- For uniform matroids, the rank is monotone in both parameters. -/
+theorem uniform_rank_mono {k₁ k₂ n₁ n₂ : ℕ}
+    (hk : k₁ ≤ k₂) (hn : n₁ ≤ n₂) :
+    uniformRank k₁ n₁ ≤ uniformRank k₂ n₂ := by
+  simp [uniformRank]; omega
+
+/-! ## Matroid Connectivity -/
+
+/-- A matroid is **connected** if for every pair of elements in the ground set,
+there exists a dependent set containing both. -/
+def MatroidConnected (M : Matroid α) : Prop :=
+  ∀ e f : α, e ∈ M.E → f ∈ M.E → e ≠ f →
+    ∃ C : Set α, M.Dep C ∧ e ∈ C ∧ f ∈ C
+
+end
