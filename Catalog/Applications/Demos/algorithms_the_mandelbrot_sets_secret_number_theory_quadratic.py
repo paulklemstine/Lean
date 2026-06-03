@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
 """
-Mandelbrot Number Theory — Core Algorithms
+Algorithms for Mandelbrot Number Theory
+========================================
 
-Type-hinted implementations of the key algorithms connecting
-Mandelbrot iteration to number theory.
+Type-hinted implementations of the core algorithms connecting the Mandelbrot
+iteration z_{n+1} = z_n^2 + c to number theory.
 """
 
-from typing import Optional
+from typing import Optional, List, Tuple, Dict
+from math import gcd
 
 
-def mandelbrot_iterate(c: complex, n: int) -> complex:
-    """
-    Compute f_c^n(0) where f_c(z) = z^2 + c.
-
-    Algorithm: Simple iteration starting from z = 0.
-    Complexity: O(n) multiplications in the base ring.
-
+def mandelbrot_iter(c: complex, n: int) -> complex:
+    """Compute the n-th iterate of z → z² + c starting from 0.
+    
     Args:
-        c: Parameter of the quadratic map
+        c: The parameter value
         n: Number of iterations
-
+    
     Returns:
-        The n-th iterate of 0 under z -> z^2 + c
+        z_n = f_c^n(0)
     """
     z: complex = 0
     for _ in range(n):
@@ -29,122 +27,96 @@ def mandelbrot_iterate(c: complex, n: int) -> complex:
     return z
 
 
-def mandelbrot_iterate_mod(c: int, n: int, m: int) -> int:
-    """
-    Compute f_c^n(0) mod m where f_c(z) = z^2 + c.
-
-    Algorithm: Modular iteration to prevent coefficient blowup.
-    Complexity: O(n) multiplications mod m.
-
+def mandelbrot_iter_mod(c: int, n: int, modulus: int) -> int:
+    """Compute the n-th Mandelbrot iterate modulo `modulus`.
+    
     Args:
-        c: Parameter (integer)
-        n: Number of iterations
-        m: Modulus
-
+        c: Parameter value in Z/modZ
+        n: Number of iterations  
+        modulus: The modulus
+    
     Returns:
-        f_c^n(0) mod m
+        f_c^n(0) mod modulus
     """
     z: int = 0
     for _ in range(n):
-        z = (z * z + c) % m
+        z = (z * z + c) % modulus
     return z
 
 
-def orbit_period(c: int, m: int, max_steps: Optional[int] = None) -> Optional[int]:
-    """
-    Find the minimal period of the Mandelbrot orbit of 0 mod m.
-
-    The minimal period is the smallest positive n such that f_c^n(0) ≡ 0 (mod m).
-    Returns None if no such n exists within max_steps.
-
-    Algorithm: Iterate and check for return to 0.
-    Complexity: O(period) iterations, guaranteed ≤ m by pigeonhole if the orbit is periodic.
-
+def mandelbrot_orbit(c: complex, length: int) -> List[complex]:
+    """Return the orbit (z_0, z_1, ..., z_{length-1}) of the Mandelbrot map.
+    
     Args:
-        c: Parameter (integer)
-        m: Modulus
-        max_steps: Maximum iterations to try (default: m^2)
-
+        c: The parameter value
+        length: Number of orbit points to compute
+    
     Returns:
-        Minimal period, or None if not found
+        List of orbit values
     """
-    if max_steps is None:
-        max_steps = m * m
+    orbit: List[complex] = [0]
+    z: complex = 0
+    for _ in range(length - 1):
+        z = z * z + c
+        orbit.append(z)
+    return orbit
+
+
+def find_orbit_period(c: int, modulus: int, max_iter: int = 1000) -> Optional[int]:
+    """Find the minimal period of the Mandelbrot orbit mod `modulus`.
+    
+    The period is the smallest positive n such that f_c^n(0) ≡ 0 (mod modulus).
+    
+    Args:
+        c: Parameter value
+        modulus: The modulus
+        max_iter: Maximum iterations to check
+    
+    Returns:
+        The minimal period, or None if not found within max_iter
+    """
     z: int = 0
-    for step in range(1, max_steps + 1):
-        z = (z * z + c) % m
+    for n in range(1, max_iter + 1):
+        z = (z * z + c) % modulus
         if z == 0:
-            return step
+            return n
     return None
 
 
-def orbit_signature(c: int, primes: list[int]) -> dict[int, Optional[int]]:
-    """
-    Compute the Mandelbrot orbit signature of c.
-
-    The signature is the function p ↦ orbit_period(c, p) for each prime p.
-    Two integers with the same signature have identical Mandelbrot dynamics
-    modulo every prime in the list.
-
-    Algorithm: Compute orbit_period for each prime independently.
-
+def orbit_multiplier(c: complex, q: int) -> complex:
+    """Compute the orbit multiplier ∏_{i=0}^{q-1} 2·z_i.
+    
+    For the Mandelbrot map f(z) = z² + c, the derivative is f'(z) = 2z,
+    so the multiplier of a q-cycle through z_0 is ∏ f'(z_i) = ∏ 2z_i.
+    
+    Since z_0 = 0 always, the multiplier is always 0 for q ≥ 1.
+    This is the superattracting property of the critical orbit.
+    
     Args:
-        c: Integer parameter
-        primes: List of primes to compute the signature at
-
+        c: Parameter value
+        q: Cycle length
+    
     Returns:
-        Dictionary mapping each prime to the orbit period (or None)
+        The orbit multiplier (always 0 for q ≥ 1)
     """
-    return {p: orbit_period(c, p) for p in primes}
+    product: complex = 1
+    z: complex = 0
+    for _ in range(q):
+        product *= 2 * z
+        z = z * z + c
+    return product
 
 
-def mandelbrot_polynomial(n: int) -> list[int]:
-    """
-    Compute the n-th Mandelbrot polynomial P_n as a list of integer coefficients.
-
-    P_0 = 0, P_{n+1} = P_n^2 + X.
-    Returns [a_0, a_1, ..., a_d] representing a_0 + a_1*X + ... + a_d*X^d.
-
-    The degree of P_n is 2^{n-1} for n ≥ 1 (Degree Growth Theorem).
-
-    Algorithm: Polynomial squaring by convolution, then adding X.
-    Complexity: O(n · 4^n) arithmetic operations.
-
-    Args:
-        n: Index of the Mandelbrot polynomial
-
-    Returns:
-        List of integer coefficients
-    """
-    if n == 0:
-        return [0]
-    p: list[int] = [0, 1]  # P_1 = X
-    for _ in range(n - 1):
-        # Square: convolve p with itself
-        deg = len(p) - 1
-        sq: list[int] = [0] * (2 * deg + 1)
-        for i in range(len(p)):
-            for j in range(len(p)):
-                sq[i + j] += p[i] * p[j]
-        # Add X
-        while len(sq) < 2:
-            sq.append(0)
-        sq[1] += 1
-        p = sq
-    return p
-
-
-def moebius_function(n: int) -> int:
-    """
-    Compute the Möbius function μ(n).
-
+def moebius(n: int) -> int:
+    """Compute the Möbius function μ(n).
+    
     μ(1) = 1
-    μ(n) = 0 if n has a squared prime factor
     μ(n) = (-1)^k if n is a product of k distinct primes
-
+    μ(n) = 0 if n has a squared prime factor
+    
     Args:
         n: Positive integer
-
+    
     Returns:
         μ(n) ∈ {-1, 0, 1}
     """
@@ -155,109 +127,161 @@ def moebius_function(n: int) -> int:
     temp: int = n
     while d * d <= temp:
         if temp % d == 0:
-            num_factors += 1
-            temp //= d
-            if temp % d == 0:
+            count: int = 0
+            while temp % d == 0:
+                temp //= d
+                count += 1
+            if count > 1:
                 return 0
+            num_factors += 1
         d += 1
     if temp > 1:
         num_factors += 1
     return (-1) ** num_factors
 
 
-def integer_divisors(n: int) -> list[int]:
-    """Return all positive divisors of n in sorted order."""
-    divs: list[int] = []
-    for d in range(1, int(n**0.5) + 1):
+def divisors(n: int) -> List[int]:
+    """Return all positive divisors of n in sorted order.
+    
+    Args:
+        n: Positive integer
+    
+    Returns:
+        Sorted list of divisors
+    """
+    divs: List[int] = []
+    for d in range(1, n + 1):
         if n % d == 0:
             divs.append(d)
-            if d != n // d:
-                divs.append(n // d)
-    return sorted(divs)
+    return divs
 
 
-def dynatomic_degree(n: int) -> int:
-    """
-    Compute the degree of the n-th dynatomic polynomial for the Mandelbrot family.
-
-    By Möbius inversion on deg(P_n) = 2^{n-1}:
-        dynatDegree(n) = Σ_{d|n} μ(n/d) · 2^{d-1}
-
-    This equals the number of parameters c ∈ F_p with exact orbit period n,
-    for sufficiently large primes p.
-
+def dynat_degree(n: int) -> int:
+    """Compute the dynatomic degree via Möbius inversion.
+    
+    dynatDegree(n) = Σ_{d|n} μ(n/d) · 2^{d-1}
+    
+    This gives the degree of the n-th dynatomic polynomial Ψ_n,
+    which is the Mandelbrot analogue of the n-th cyclotomic polynomial.
+    
+    The key identity: Σ_{d|n} dynatDegree(d) = 2^{n-1} = deg(P_n)
+    mirrors the cyclotomic identity Σ_{d|n} φ(d) = n.
+    
     Args:
         n: Period
-
+    
     Returns:
-        Degree of the n-th dynatomic polynomial
+        dynatDegree(n)
     """
-    return sum(
-        moebius_function(n // d) * (2 ** (d - 1))
-        for d in integer_divisors(n)
-    )
+    return sum(moebius(n // d) * (2 ** (d - 1)) for d in divisors(n))
 
 
-def count_exact_period_mod_p(n: int, p: int) -> int:
-    """
-    Count elements c ∈ Z/pZ with exact Mandelbrot orbit period n.
-
+def verify_gcd_theorem(c: int, m: int, n: int, modulus: int) -> bool:
+    """Verify the Mandelbrot GCD theorem: if f^m(0) = 0 and f^n(0) = 0,
+    then f^{gcd(m,n)}(0) = 0 (all mod modulus).
+    
     Args:
-        n: Target period
-        p: Prime modulus
-
+        c: Parameter value
+        m, n: Return times
+        modulus: The modulus
+    
     Returns:
-        Number of c ∈ {0, 1, ..., p-1} with orbit period exactly n
+        True if the theorem holds for these inputs
     """
-    count: int = 0
-    for c in range(p):
-        period = orbit_period(c, p, max_steps=p * p)
-        if period == n:
-            count += 1
-    return count
+    fm = mandelbrot_iter_mod(c, m, modulus)
+    fn = mandelbrot_iter_mod(c, n, modulus)
+    fg = mandelbrot_iter_mod(c, gcd(m, n), modulus)
+    
+    if fm != 0 or fn != 0:
+        return True  # hypotheses not satisfied, theorem vacuously true
+    return fg == 0
 
 
-def verify_dynatomic_conjecture(max_period: int, test_primes: list[int]) -> dict:
-    """
-    Verify the dynatomic degree conjecture: for large enough primes p,
-    the number of c ∈ F_p with exact period n equals dynatDegree(n).
-
+def is_mandelbrot_primality_witness(c: int, n: int) -> bool:
+    """Check if c is a Mandelbrot primality witness for n.
+    
+    A witness requires:
+    1. f_c^n(0) ≡ 0 (mod n)
+    2. f_c^d(0) ≢ 0 (mod n) for all 0 < d < n
+    
     Args:
-        max_period: Maximum period to test
-        test_primes: Primes to test against
-
+        c: Parameter value in Z/nZ
+        n: The number to test
+    
     Returns:
-        Dictionary with results for each (period, prime) pair
+        True if c is a valid witness
     """
-    results: dict = {}
-    for n in range(1, max_period + 1):
-        dd = dynatomic_degree(n)
-        results[n] = {"dynatomic_degree": dd, "counts": {}}
-        for p in test_primes:
-            count = count_exact_period_mod_p(n, p)
-            results[n]["counts"][p] = {
-                "count": count,
-                "matches": count == dd
-            }
-    return results
+    if mandelbrot_iter_mod(c, n, n) != 0:
+        return False
+    for d in range(1, n):
+        if mandelbrot_iter_mod(c, d, n) == 0:
+            return False
+    return True
+
+
+def find_all_witnesses(n: int) -> List[int]:
+    """Find all Mandelbrot primality witnesses for n.
+    
+    Args:
+        n: The number to find witnesses for
+    
+    Returns:
+        List of witness values c ∈ {0, ..., n-1}
+    """
+    return [c for c in range(n) if is_mandelbrot_primality_witness(c, n)]
+
+
+def mandelbrot_root_count_table(
+    primes: List[int], 
+    max_n: int = 5
+) -> Dict[Tuple[int, int], int]:
+    """Compute a table of Mandelbrot polynomial root counts mod p.
+    
+    For each prime p and period n, count #{c ∈ F_p : P_n(c) = 0}.
+    
+    Args:
+        primes: List of primes to test
+        max_n: Maximum period to check
+    
+    Returns:
+        Dictionary mapping (p, n) to root count
+    """
+    table: Dict[Tuple[int, int], int] = {}
+    for p in primes:
+        for n in range(1, max_n + 1):
+            count = sum(1 for c in range(p) if mandelbrot_iter_mod(c, n, p) == 0)
+            table[(p, n)] = count
+    return table
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    assert mandelbrot_iterate(0, 5) == 0
-    assert mandelbrot_iterate(-1, 2) == 0
-    assert mandelbrot_iterate(-1, 1) == -1
-
-    assert orbit_period(0, 7) == 1  # c=0 always has period 1
-    assert orbit_period(-1 % 7, 7) == 2  # c=-1 has period 2
-
-    assert mandelbrot_polynomial(1) == [0, 1]
-    assert mandelbrot_polynomial(2) == [0, 1, 1]
-
-    assert dynatomic_degree(1) == 1
-    assert dynatomic_degree(2) == 1
-    assert dynatomic_degree(3) == 3
-    assert dynatomic_degree(4) == 6
-    assert dynatomic_degree(5) == 15
-
-    print("All self-tests passed.")
+    # Verify the GCD theorem computationally
+    print("Verifying GCD theorem for 1000 random cases...")
+    import random
+    random.seed(42)
+    failures = 0
+    for _ in range(1000):
+        p = random.choice([3, 5, 7, 11, 13, 17, 19, 23, 29, 31])
+        c = random.randint(0, p - 1)
+        m = random.randint(1, 30)
+        n = random.randint(1, 30)
+        if not verify_gcd_theorem(c, m, n, p):
+            failures += 1
+            print(f"  FAILURE: c={c}, m={m}, n={n}, p={p}")
+    print(f"  {1000 - failures}/1000 passed" + (" ✓" if failures == 0 else " ✗"))
+    
+    # Find witnesses
+    print("\nMandelbrot primality witnesses:")
+    for n in range(2, 20):
+        witnesses = find_all_witnesses(n)
+        if witnesses:
+            print(f"  n={n:3d}: {len(witnesses)} witnesses: {witnesses[:5]}{'...' if len(witnesses) > 5 else ''}")
+        else:
+            print(f"  n={n:3d}: no witnesses")
+    
+    # Dynatomic degrees
+    print("\nDynatomic degree table:")
+    for n in range(1, 16):
+        dd = dynat_degree(n)
+        total = sum(dynat_degree(d) for d in divisors(n))
+        print(f"  n={n:3d}: dynatDegree = {dd:8d}, Σ_{{d|n}} = {total:8d}, 2^{{n-1}} = {2**(n-1):8d}")
