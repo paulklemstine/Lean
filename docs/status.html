@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Status Dashboard</title>
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --card-bg: #131a2b;
+            --border: #1e2d4a;
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --text: #e2e8f0;
+            --text-dim: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .header { background: linear-gradient(135deg, #0a0e17 0%, #1a1040 100%); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+        .header .back:hover { text-decoration: underline; }
+        .header .refresh { color: var(--text-dim); font-size: 0.8rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+        .card h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 0.75rem; }
+        .stat-value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.25rem; }
+        .domain-bar { display: flex; align-items: center; margin: 0.4rem 0; }
+        .domain-bar .name { width: 100px; font-size: 0.8rem; color: var(--text-dim); text-align: right; padding-right: 0.5rem; }
+        .domain-bar .bar-container { flex: 1; height: 20px; background: #1a2240; border-radius: 4px; overflow: hidden; }
+        .domain-bar .bar { height: 100%; border-radius: 4px; transition: width 0.5s; }
+        .domain-bar .count { width: 40px; font-size: 0.8rem; color: var(--text-dim); padding-left: 0.5rem; }
+        .job-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+        .job-row:last-child { border-bottom: none; }
+        .job-domain { color: var(--accent); font-weight: 500; }
+        .job-title { flex: 1; margin: 0 0.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .job-time { color: var(--text-dim); font-size: 0.8rem; }
+        .stale { color: var(--warning); }
+        .insight-card { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .insight-stat { text-align: center; }
+        .insight-stat .num { font-size: 1.5rem; font-weight: 700; }
+        .insight-stat .label { font-size: 0.7rem; color: var(--text-dim); }
+        .quality-chart { display: flex; align-items: flex-end; gap: 2px; height: 80px; margin-top: 0.5rem; }
+        .quality-bar { width: 12px; background: var(--accent); border-radius: 2px 2px 0 0; transition: height 0.3s; }
+        .quality-bar:hover { background: var(--accent2); }
+        .full-width { grid-column: 1 / -1; }
+        .cycle-row { display: flex; gap: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+        .cycle-row:last-child { border-bottom: none; }
+        .badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 9999px; font-weight: 500; }
+        .badge-algebra { background: #3b82f620; color: #3b82f6; }
+        .badge-geometry { background: #10b98120; color: #10b981; }
+        .badge-computation { background: #f59e0b20; color: #f59e0b; }
+        .badge-novelty { background: #7c3aed20; color: #7c3aed; }
+        .badge-logic { background: #ec489920; color: #ec4899; }
+        .badge-physics { background: #06b6d420; color: #06b6d4; }
+        .badge-tropical { background: #84cc1620; color: #84cc16; }
+        .badge-other { background: #64748b20; color: #64748b; }
+        .error { color: var(--error); }
+        .loading { opacity: 0.5; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>⚡ Aether Status</h1>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:center;">
+            <a href="index.html" class="back">← Graph View</a>
+            <span class="refresh" id="refresh-info">Loading...</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Overview Stats -->
+        <div class="card" id="overview">
+            <h2>Overview</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+                <div><div class="stat-value" id="available">—</div><div class="stat-label">Available</div></div>
+                <div><div class="stat-value" id="inflight">—</div><div class="stat-label">In Flight</div></div>
+                <div><div class="stat-value" id="completed">—</div><div class="stat-label">Completed</div></div>
+            </div>
+        </div>
+
+        <!-- Quality Summary -->
+        <div class="card" id="quality-card">
+            <h2>Avg Quality (last 50)</h2>
+            <div class="stat-value" id="avg-quality">—</div>
+            <div class="stat-label" id="quality-samples">No quality data yet</div>
+            <div class="quality-chart" id="quality-chart"></div>
+        </div>
+
+        <!-- Insight Store -->
+        <div class="card" id="insights-card">
+            <h2>Insight Store</h2>
+            <div class="insight-card" id="insights-stats">
+                <div class="insight-stat"><div class="num" id="barriers">—</div><div class="label">Barriers</div></div>
+                <div class="insight-stat"><div class="num" id="strategies">—</div><div class="label">Strategies</div></div>
+                <div class="insight-stat"><div class="num" id="bridges">—</div><div class="label">Bridges</div></div>
+                <div class="insight-stat"><div class="num" id="costs">—</div><div class="label">Cost Est.</div></div>
+            </div>
+        </div>
+
+        <!-- Domain Distribution -->
+        <div class="card" id="domain-card">
+            <h2>Available by Domain</h2>
+            <div id="domain-bars"></div>
+        </div>
+
+        <!-- Inflight Jobs -->
+        <div class="card full-width" id="inflight-card">
+            <h2>Inflight Jobs</h2>
+            <div id="inflight-list">
+                <div class="job-row"><span class="loading">Loading...</span></div>
+            </div>
+        </div>
+
+        <!-- Recent Cycles -->
+        <div class="card full-width" id="cycles-card">
+            <h2>Recent Cycles</h2>
+            <div id="cycles-list">
+                <div class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Domain Stats -->
+        <div class="card full-width" id="domain-stats-card">
+            <h2>Per-Domain Performance</h2>
+            <div id="domain-stats"></div>
+        </div>
+    </div>
+
+    <script>
+    const COLORS = {
+        'Algebra': '#3b82f6',
+        'Geometry': '#10b981',
+        'Computation': '#f59e0b',
+        'Novelty': '#7c3aed',
+        'Logic': '#ec4899',
+        'Physics': '#06b6d4',
+        'Pythagorean': '#84cc16',
+        'Tropical': '#f97316',
+        'Cryptography': '#a855f7',
+        'Bridges': '#14b8a6',
+        'Applications': '#6366f1',
+        'EML': '#eab308',
+        'MachineLearning': '#22d3ee',
+        'Shared': '#94a3b8',
+    };
+
+    function badgeClass(domain) {
+        const d = (domain || '').toLowerCase();
+        if (d.includes('algebra')) return 'badge-algebra';
+        if (d.includes('geometry')) return 'badge-geometry';
+        if (d.includes('computation')) return 'badge-computation';
+        if (d.includes('novelty')) return 'badge-novelty';
+        if (d.includes('logic')) return 'badge-logic';
+        if (d.includes('physics')) return 'badge-physics';
+        if (d.includes('tropical')) return 'badge-tropical';
+        return 'badge-other';
+    }
+
+    async function loadData() {
+        try {
+            const [fdResp, inflightResp, insightsResp, analyticsResp] = await Promise.all([
+                fetch('future_directions.json').catch(() => null),
+                fetch('aether_status/inflight_jobs.json').catch(() => null),
+                fetch('aether_status/insights.json').catch(() => null),
+                fetch('aether_status/cycle_analytics.json').catch(() => null),
+            ]);
+
+            // Future Directions
+            if (fdResp && fdResp.ok) {
+                const fdData = await fdResp.json();
+                const directions = Array.isArray(fdData) ? fdData : (fdData.directions || []);
+                const available = directions.filter(d => d.status === 'available');
+                const inflight = directions.filter(d => d.status === 'in_progress');
+                const completed = directions.filter(d => d.status === 'completed');
+                const pruned = directions.filter(d => d.status === 'pruned');
+
+                document.getElementById('available').textContent = available.length;
+                document.getElementById('inflight').textContent = inflight.length;
+                document.getElementById('completed').textContent = completed.length;
+
+                // Domain bars
+                const domainCounts = {};
+                available.forEach(d => {
+                    (d.domains || []).forEach(dom => {
+                        domainCounts[dom] = (domainCounts[dom] || 0) + 1;
+                    });
+                });
+                const sorted = Object.entries(domainCounts).sort((a, b) => b[1] - a[1]);
+                const maxCount = Math.max(...sorted.map(s => s[1]), 1);
+                const totalAvail = sorted.reduce((s, e) => s + e[1], 0);
+
+                let barsHtml = '';
+                sorted.forEach(([domain, count]) => {
+                    const pct = ((count / totalAvail) * 100).toFixed(1);
+                    const color = COLORS[domain] || '#64748b';
+                    const barW = Math.max(2, (count / maxCount) * 100);
+                    barsHtml += `<div class="domain-bar">
+                        <span class="name">${domain}</span>
+                        <div class="bar-container"><div class="bar" style="width:${barW}%;background:${color}"></div></div>
+                        <span class="count">${count} (${pct}%)</span>
+                    </div>`;
+                });
+                document.getElementById('domain-bars').innerHTML = barsHtml;
+
+                // Inflight jobs from directions
+                const now = Date.now() / 1000;
+                let jobsHtml = '';
+                inflight.forEach(d => {
+                    const ts = d.timestamp ? new Date(d.timestamp).getTime() / 1000 : 0;
+                    const ageMin = ts ? ((now - ts) / 60).toFixed(0) : '?';
+                    const staleClass = ageMin !== '?' && parseInt(ageMin) > 120 ? 'stale' : '';
+                    const domain = (d.domains || [])[0] || '?';
+                    const badge = badgeClass(domain);
+                    jobsHtml += `<div class="job-row ${staleClass}">
+                        <span class="job-domain"><span class="badge ${badge}">${domain}</span></span>
+                        <span class="job-title">${(d.title || '').substring(0, 60)}</span>
+                        <span class="job-time">${ageMin}min</span>
+                    </div>`;
+                });
+                if (!jobsHtml) jobsHtml = '<div class="job-row">No inflight jobs</div>';
+                document.getElementById('inflight-list').innerHTML = jobsHtml;
+            }
+
+            // Insights
+            if (insightsResp && insightsResp.ok) {
+                const insights = await insightsResp.json();
+                document.getElementById('barriers').textContent = (insights.barriers || []).length;
+                document.getElementById('strategies').textContent = (insights.strategies || []).length;
+                document.getElementById('bridges').textContent = (insights.cross_domain_bridges || []).length;
+                document.getElementById('costs').textContent = Object.keys(insights.cost_estimates || {}).length;
+            } else {
+                document.getElementById('barriers').textContent = '0';
+                document.getElementById('strategies').textContent = '0';
+                document.getElementById('bridges').textContent = '0';
+                document.getElementById('costs').textContent = '0';
+            }
+
+            // Cycle Analytics
+            if (analyticsResp && analyticsResp.ok) {
+                const analytics = await analyticsResp.json();
+                const records = analytics.records || [];
+                if (records.length > 0) {
+                    const recent = records.slice(-50);
+                    const withQuality = recent.filter(r => r.quality_score > 0);
+                    const avgQ = withQuality.length > 0
+                        ? (withQuality.reduce((s, r) => s + r.quality_score, 0) / withQuality.length).toFixed(3)
+                        : '—';
+                    document.getElementById('avg-quality').textContent = avgQ;
+                    document.getElementById('quality-samples').textContent =
+                        `${withQuality.length} scored cycles (of ${recent.length} recent)`;
+
+                    // Quality trend chart
+                    const last20 = records.slice(-20).filter(r => r.quality_score > 0);
+                    let chartHtml = '';
+                    const maxQ = Math.max(...last20.map(r => r.quality_score), 0.01);
+                    last20.forEach(r => {
+                        const h = Math.max(2, (r.quality_score / maxQ) * 80);
+                        const color = COLORS[r.domain] || '#00d4ff';
+                        chartHtml += `<div class="quality-bar" style="height:${h}px;background:${color}" title="${r.domain}: ${r.quality_score.toFixed(2)}"></div>`;
+                    });
+                    document.getElementById('quality-chart').innerHTML = chartHtml;
+
+                    // Recent cycles
+                    const last10 = records.slice(-10).reverse();
+                    let cyclesHtml = '';
+                    last10.forEach(r => {
+                        const domain = r.domain || '?';
+                        const badge = badgeClass(domain);
+                        const q = r.quality_score > 0 ? r.quality_score.toFixed(2) : '—';
+                        const t = r.theorem_count || 0;
+                        const s = r.sorry_density > 0 ? (r.sorry_density * 100).toFixed(0) + '% sorry' : '';
+                        cyclesHtml += `<div class="cycle-row">
+                            <span class="badge ${badge}">${domain}</span>
+                            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.title || '').substring(0, 50)}</span>
+                            <span>Q:${q}</span>
+                            <span>${t} thms</span>
+                            <span>${s}</span>
+                        </div>`;
+                    });
+                    document.getElementById('cycles-list').innerHTML = cyclesHtml || 'No cycle data';
+
+                    // Domain stats
+                    const domainStats = {};
+                    records.forEach(r => {
+                        if (!r.domain) return;
+                        if (!domainStats[r.domain]) domainStats[r.domain] = {count: 0, quality: 0, theorems: 0};
+                        domainStats[r.domain].count++;
+                        domainStats[r.domain].quality += r.quality_score || 0;
+                        domainStats[r.domain].theorems += r.theorem_count || 0;
+                    });
+                    let statsHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;">';
+                    Object.entries(domainStats).sort((a, b) => b[1].count - a[1].count).forEach(([domain, s]) => {
+                        const avgQ = s.count > 0 ? (s.quality / s.count).toFixed(3) : '—';
+                        const color = COLORS[domain] || '#64748b';
+                        statsHtml += `<div style="background:${color}15;border:1px solid ${color}40;border-radius:8px;padding:0.5rem 0.75rem;">
+                            <div style="font-weight:600;color:${color};font-size:0.85rem">${domain}</div>
+                            <div style="font-size:0.75rem;color:var(--text-dim)">${s.count} cycles · avg Q:${avgQ} · ${s.theorems} thms</div>
+                        </div>`;
+                    });
+                    statsHtml += '</div>';
+                    document.getElementById('domain-stats').innerHTML = statsHtml || 'No domain data';
+                }
+            } else {
+                document.getElementById('avg-quality').textContent = '—';
+                document.getElementById('quality-samples').textContent = 'No analytics data yet';
+                document.getElementById('cycles-list').innerHTML = 'Waiting for cycle data...';
+            }
+
+            document.getElementById('refresh-info').textContent = `Updated ${new Date().toLocaleTimeString()} · refreshes every 60s`;
+        } catch (err) {
+            console.error('Load error:', err);
+            document.getElementById('refresh-info').textContent = `Error: ${err.message}`;
+        }
+    }
+
+    loadData();
+    setInterval(loadData, 60000);
+    </script>
+</body>
+</html>

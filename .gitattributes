@@ -12,4 +12,5 @@ docs/aether_status/inflight_jobs.json merge=ours
 docs/aether_status/insights.json merge=ours
 docs/aether_status/tick_counter.json merge=ours
 Aether/.aether_workspace/future_directions.json merge=ours
-Aether/.aether_workspace/insights.json merge=ours
+Aether/.aether_workspace/insights.json merge=oursAether/.aether_workspace/cycle_analytics.json merge=ours
+docs/aether_status/cycle_analytics.json merge=ours

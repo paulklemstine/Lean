@@ -1030,6 +1030,50 @@ class FutureDirectionsManager:
                 return d
         return None
 
+    def rebalance_domains(self, max_domain_fraction: float = 0.30, prune_bottom_fraction: float = 0.15) -> Dict[str, int]:
+        """Auto-rebalance domain distribution by pruning overrepresented domains.
+
+        If any domain exceeds max_domain_fraction of available directions,
+        prune the bottom prune_bottom_fraction of that domain's lowest-quality directions.
+
+        Returns dict of {domain: count_pruned}.
+        """
+        from collections import Counter
+        available = [d for d in self._directions if d.status == "available"]
+        if not available:
+            return {}
+
+        domain_counts = Counter()
+        for d in available:
+            for dom in d.domains:
+                domain_counts[dom] += 1
+
+        total = sum(domain_counts.values())
+        if total == 0:
+            return {}
+
+        pruned = {}
+        for domain, count in domain_counts.items():
+            fraction = count / total
+            if fraction > max_domain_fraction:
+                # Find directions in this domain that are available
+                domain_dirs = [d for d in available if domain in d.domains]
+                # Sort by priority_score (ascending = lowest quality first)
+                domain_dirs.sort(key=lambda d: d.priority_score)
+                # Prune the bottom prune_bottom_fraction
+                n_prune = max(1, int(len(domain_dirs) * prune_bottom_fraction))
+                # Don't prune Novelty-tagged directions
+                to_prune = [d for d in domain_dirs[:n_prune] if "Novelty" not in d.domains]
+                for d in to_prune:
+                    d.status = "pruned"
+                    d.prune_reason = f"auto-rebalance: {domain} at {fraction:.0%} of available"
+                    d.pruned_at = datetime.now(timezone.utc).isoformat()
+                pruned[domain] = len(to_prune)
+
+        if any(pruned.values()):
+            self._save()
+        return pruned
+
     @staticmethod
     def _tokenize(text: str) -> Set[str]:
         """Extract meaningful tokens from text for Jaccard similarity.

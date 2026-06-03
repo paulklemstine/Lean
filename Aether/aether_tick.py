@@ -47,6 +47,7 @@ CORE_FILES = [
     "Aether/quality_evaluator.py",
     "Aether/lineage_extractor.py",
     "Aether/seed_directions.py",
+    "Aether/cycle_analytics.py",
 ]
 
 
@@ -187,6 +188,30 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     except Exception as e:
         print(f"[Self-heal] Auto-prune failed: {e}")
 
+    # ── Auto-rebalance: prune overrepresented domains ──
+    try:
+        from research_memory import FutureDirectionsManager
+        fd_rebal = FutureDirectionsManager(extractor.workspace)
+        rebal_result = fd_rebal.rebalance_domains(max_domain_fraction=0.30, prune_bottom_fraction=0.15)
+        if rebal_result:
+            pruned_total = sum(rebal_result.values())
+            if pruned_total > 0:
+                print(f"[Rebalance] Pruned {pruned_total} overrepresented directions: {rebal_result}")
+    except Exception as e:
+        print(f"[Rebalance] Domain rebalance failed: {e}")
+
+    # ── Cycle analytics: record per-cycle metrics ──
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(extractor.workspace)
+        for job in completed_jobs:
+            ca.record_cycle(job, insight_extractor=getattr(extractor, 'insight_extractor', None))
+        if completed_jobs:
+            ca._save()
+            print(f"[Analytics] Recorded {len(completed_jobs)} cycle(s), total={len(ca.records)}")
+    except Exception as e:
+        print(f"[Analytics] Cycle recording failed: {e}")
+
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode
     retry_count = 0
@@ -316,7 +341,7 @@ def rebuild_commit_push() -> bool:
     status_dir = docs_dir / "aether_status"
     try:
         status_dir.mkdir(parents=True, exist_ok=True)
-        for status_file in ["inflight_jobs.json", "insights.json", "tick_counter.json"]:
+        for status_file in ["inflight_jobs.json", "insights.json", "tick_counter.json", "cycle_analytics.json"]:
             src = workspace / status_file
             if src.exists():
                 import shutil

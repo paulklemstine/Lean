@@ -2852,12 +2852,12 @@ Research mode: {concept.research_mode}
             # Mark the consumed direction as completed
             for d in fd_manager._directions:
                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                    fd_manager.mark_direction_completed(d.id)
-                    # Quality feedback: record how well this direction performed
+                    # Quality feedback: record how well this direction performed BEFORE saving
                     if job.quality_score > 0:
                         d.outcome_quality = job.quality_score
                         print(f"[Cycle] Direction {d.id} outcome_quality={job.quality_score:.2f}")
-                    print(f"[Cycle] Marked direction {d.id} as completed")
+                    fd_manager.mark_direction_completed(d.id)
+                    print(f"[Cycle] Marked direction {d.id} as completed (quality={d.outcome_quality:.2f})")
                     break
         except Exception as e:
             print(f"[Cycle] Warning: Failed to extract future directions: {e}")
@@ -3067,12 +3067,12 @@ Research mode: {concept.research_mode}
                                 print(f"[Continuous] No future directions found for cycle {job.job_id}")
                             for d in fd_manager._directions:
                                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                                    fd_manager.mark_direction_completed(d.id)
-                                    # Quality feedback: record how well this direction performed
+                                    # Quality feedback: BEFORE saving to persist the score
                                     if job.quality_score > 0:
                                         d.outcome_quality = job.quality_score
                                         print(f"[Continuous] Direction {d.id} outcome_quality={job.quality_score:.2f}")
-                                    print(f"[Continuous] Marked direction {d.id} as completed")
+                                    fd_manager.mark_direction_completed(d.id)
+                                    print(f"[Continuous] Marked direction {d.id} as completed (quality={d.outcome_quality:.2f})")
                                     break
                         except Exception as e:
                             print(f"[Continuous] Warning: Failed to extract future directions: {e}")
