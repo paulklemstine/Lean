@@ -144,6 +144,13 @@
             <h2>Per-Domain Performance</h2>
             <div id="domain-stats" class="domain-stat-grid"><div class="no-data">Waiting for analytics data...</div></div>
         </div>
+        <!-- Direction Lifecycle -->
+        <div class="card full-width">
+            <h2>🔄 Direction Lifecycle</h2>
+            <div id="lifecycle" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;">
+                <div class="no-data">Loading...</div>
+            </div>
+        </div>
     </div>
     <script>
     const COLORS = {
@@ -287,15 +294,18 @@
                     });
                     document.getElementById('breakthroughs-list').innerHTML = btH || '<div class="no-data">No breakthroughs yet (Q > 0.8)</div>';
 
-                    // Recent cycles
+                    // Recent cycles with duration
                     const last10 = recs.slice(-10).reverse();
+                    const avgDuration = recs.filter(r=>r.duration_seconds>0).reduce((s,r)=>s+r.duration_seconds,0)/Math.max(recs.filter(r=>r.duration_seconds>0).length,1);
                     let cyH='';
                     last10.forEach(r=>{
                         const dom=r.domain||'?';
                         const q=r.quality_score>0?r.quality_score.toFixed(2):'—';
                         const t=r.theorem_count||0;
                         const s=r.sorry_density>0?(r.sorry_density*100).toFixed(0)+'% sorry':'';
-                        cyH+=`<div class="cycle-row"><span class="badge ${badgeClass(dom)}">${dom}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.title||'').substring(0,45)}</span><span>Q:${q}</span><span>${t} thms</span><span>${s}</span></div>`;
+                        const dur=r.duration_seconds>0?(r.duration_seconds/60).toFixed(1)+'m':'—';
+                        const slowFlag=(r.duration_seconds>0&&avgDuration>0&&r.duration_seconds>2*avgDuration)?' ⚠️':'';
+                        cyH+=`<div class="cycle-row"><span class="badge ${badgeClass(dom)}">${dom}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.title||'').substring(0,40)}</span><span>Q:${q}</span><span>${t}thms</span><span>${dur}${slowFlag}</span></div>`;
                     });
                     document.getElementById('cycles-list').innerHTML = cyH || '<div class="no-data">No cycles recorded</div>';
 
@@ -318,6 +328,48 @@
                     });
                     document.getElementById('domain-stats').innerHTML = stH || '<div class="no-data">No domain data</div>';
                 }
+            }
+            // Direction lifecycle stats
+            if (fdR && fdR.ok) {
+                const dirs = Array.isArray(fdD) ? fdD : (fdD.directions || []);
+                const lifecycles = {
+                    available: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    in_progress: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    completed: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    pruned: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                };
+                dirs.forEach(d => {
+                    const s = d.status || 'available';
+                    if (!lifecycles[s]) lifecycles[s] = {count: 0, retried: 0, attempts: []};
+                    lifecycles[s].count++;
+                    const ac = d.attempt_count || 0;
+                    if (ac > 1) lifecycles[s].retried++;
+                    if (ac > 0) lifecycles[s].attempts.push(ac);
+                });
+                // Compute avg attempts per status
+                Object.values(lifecycles).forEach(l => {
+                    l.avg_attempts = l.attempts.length ? (l.attempts.reduce((a,b)=>a+b,0)/l.attempts.length).toFixed(2) : '—';
+                });
+                const total = dirs.length || 1;
+                const colors = {available:'#3b82f6',in_progress:'#f59e0b',completed:'#10b981',pruned:'#ef4444'};
+                let lH = '';
+                Object.entries(lifecycles).forEach(([status, data]) => {
+                    const pct = (data.count/total*100).toFixed(1);
+                    const c = colors[status] || '#64748b';
+                    lH += `<div class="domain-stat" style="background:${c}12;border-color:${c}40">
+                        <div class="name" style="color:${c}">${status.replace('_',' ')}</div>
+                        <div class="detail">${data.count} (${pct}%) · retried: ${data.retried} · avg attempts: ${data.avg_attempts}</div>
+                    </div>`;
+                });
+                // Seed vs organic
+                const seedAvail = dirs.filter(d => d.status === 'available' && (d.source_exp_id||'').startsWith('seed')).length;
+                const organicAvail = dirs.filter(d => d.status === 'available' && !(d.source_exp_id||'').startsWith('seed') && d.source_exp_id).length;
+                const freshAvail = dirs.filter(d => d.status === 'available' && !d.source_exp_id).length;
+                lH += `<div class="domain-stat" style="background:#64748b12;border-color:#64748b40">
+                    <div class="name" style="color:#94a3b8">Origin</div>
+                    <div class="detail">seed: ${seedAvail} · organic: ${organicAvail} · fresh: ${freshAvail}</div>
+                </div>`;
+                document.getElementById('lifecycle').innerHTML = lH;
             }
             document.getElementById('refresh-info').textContent = `Updated ${new Date().toLocaleTimeString()} · 60s refresh`;
         } catch(e) { console.error(e); document.getElementById('refresh-info').textContent = `Error: ${e.message}`; }

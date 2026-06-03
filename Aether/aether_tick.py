@@ -13,6 +13,14 @@ Usage:
 import argparse
 import asyncio
 import http.server
+import os
+import sys
+
+# Force unbuffered output so logs stream immediately under nohup/systemd
+os.environ.setdefault("PYTHONUNBUFFERED", "1")
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
 import json
 import os
 import socketserver
@@ -181,6 +189,9 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         from research_memory import FutureDirectionsManager
         fd_heal = FutureDirectionsManager(extractor.workspace)
         stats = fd_heal.get_stats()
+        if stats.get("retried_directions", 0) > 0:
+            print(f"[Retry] {stats['retried_directions']} retried directions, "
+                  f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
         if stats["available"] > 500:  # Only prune when pool is large
             result = fd_heal.prune_directions(cap=400, min_quality=0.30)
             if result["pruned_count"] > 0:
@@ -246,6 +257,25 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             # already considers quality_score per direction
     except Exception as e:
         print(f"[Decay] Quality decay detection failed: {e}")
+
+    # ── Cycle duration analytics: alert on slow cycles ──
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(extractor.workspace)
+        recent = ca.records[-5:] if len(ca.records) >= 5 else ca.records
+        with_dur = [r for r in recent if r.duration_seconds > 0]
+        if with_dur:
+            avg_dur = sum(r.duration_seconds for r in with_dur) / len(with_dur)
+            slow = [r for r in with_dur if r.duration_seconds > 2 * avg_dur and avg_dur > 0]
+            for s in slow:
+                mins = s.duration_seconds / 60
+                avg_mins = avg_dur / 60
+                print(f"[⏱️ Slow] {s.domain or '?'}: {mins:.1f}m (avg {avg_mins:.1f}m) — {(s.title or '?')[:40]}")
+            if not slow and with_dur:
+                avg_mins = avg_dur / 60
+                print(f"[Duration] Avg cycle: {avg_mins:.1f}m across {len(with_dur)} cycles")
+    except Exception as e:
+        print(f"[Duration] Cycle duration analytics failed: {e}")
 
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode

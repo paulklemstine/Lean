@@ -259,6 +259,9 @@ class FutureDirection:
     arc_position: int = 0                                         # 1=foundation, 2=main theorem, 3=applications
     # --- Quality feedback ---
     outcome_quality: float = 0.0                                  # 0-1 score from cycle result (0=untested, 1=excellent)
+    # --- Retry tracking ---
+    attempt_count: int = 0                                         # number of times this direction was dispatched
+    last_attempt_time: str = ""                                    # ISO timestamp of last dispatch attempt
 
     def to_dict(self) -> dict:
         return {
@@ -284,6 +287,8 @@ class FutureDirection:
             "outcome_quality": self.outcome_quality,
             "prune_reason": self.prune_reason,
             "pruned_at": self.pruned_at,
+            "attempt_count": self.attempt_count,
+            "last_attempt_time": self.last_attempt_time,
         }
 
     @classmethod
@@ -880,10 +885,14 @@ class FutureDirectionsManager:
 
     def mark_direction_consumed(self, direction_id: str, exp_id: str) -> None:
         """Mark a direction as in-progress when it's selected for research."""
+        from datetime import datetime, timezone
+        now_iso = datetime.now(timezone.utc).isoformat()
         for d in self._directions:
             if d.id == direction_id:
                 d.status = "in_progress"
                 d.consumed_by_exp_id = exp_id
+                d.attempt_count = d.attempt_count + 1
+                d.last_attempt_time = now_iso
                 break
         self._save()
 
@@ -1149,12 +1158,19 @@ class FutureDirectionsManager:
         """Return stats about direction consumption."""
         from collections import Counter
         statuses = Counter(d.status for d in self._directions)
+        # Retry stats
+        retried = [d for d in self._directions if d.attempt_count > 1]
+        retry_rate = len(retried) / max(len([d for d in self._directions if d.attempt_count > 0]), 1)
+        avg_attempts = sum(d.attempt_count for d in self._directions) / max(len([d for d in self._directions if d.attempt_count > 0]), 1)
         return {
             "total": len(self._directions),
             "available": statuses.get("available", 0),
             "in_progress": statuses.get("in_progress", 0),
             "completed": statuses.get("completed", 0),
             "pruned": len(self._pruned),
+            "retried_directions": len(retried),
+            "retry_rate": round(retry_rate, 3),
+            "avg_attempts": round(avg_attempts, 2),
         }
 
     def reset_directions(self, new_directions: Optional[List["FutureDirection"]] = None) -> dict:

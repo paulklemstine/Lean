@@ -123,7 +123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27b649f9",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -133,7 +133,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.496525+00:00",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -243,7 +243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f41a76e0",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
       "Novelty",
@@ -253,7 +253,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.530929+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
@@ -303,7 +303,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
-    "consumed_by_exp_id": "9af0c72c",
+    "consumed_by_exp_id": "",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domains": [
       "Novelty",
@@ -313,7 +313,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.571054+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
@@ -4037,6 +4037,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0576",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.838633+00:00",
+    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
       "Geometry",
@@ -4202,6 +4217,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0569",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.221954+00:00",
+    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0578",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:37.009964+00:00",
+    "title": "Speculative: Tropical Mathematics of Social Choice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
     "domains": [
       "Bridges",
@@ -4277,6 +4322,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0571",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.398905+00:00",
+    "title": "Speculative: Number Theory as Music Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0574",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.662181+00:00",
+    "title": "Speculative: Category Theory as the DNA of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0579",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:37.096925+00:00",
+    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -4337,6 +4427,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0568",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.123707+00:00",
+    "title": "Speculative: Mathematics as an Evolving Ecosystem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0573",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.577793+00:00",
+    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0577",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.923091+00:00",
+    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -4363,6 +4497,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:08.629188+00:00",
     "title": "Speculative: Mathematics as a Phase Transition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.311824+00:00",
+    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0575",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.748677+00:00",
+    "title": "Speculative: Topological Data Analysis of Theorem Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T23:40:36.486848+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "43e568b9",
@@ -4408,5 +4587,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:58:15.194222+00:00",
     "title": "Rigorous formal foundations for the Collatz conj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Prime Gap Transition Theory\n\n## Synthesis\n\nThis research cycle established the Gap Transition System \u2014 a finite-state automaton framework for studying prime gap sequences \u2014 and proved its core structural theorems. The most powerful insight is that prime gaps are not random inputs to a memoryless process, but rather drive transitions in a deterministic finite-state machine whose states are residue classes modulo primorials. This perspective unifies the no-prime-triplet theorem, the gap rhythm theorem, gap sum divisibility, and the existence of forcing patterns into a single algebraic object.\n\nThe most promising cross-domain connection is between the Gap Transition System and symbolic dynamics. The gap sequence over the mod-30 automaton is a subshift of finite type: the allowed gap words are exactly those accepted by the 8-state automaton. This connects prime gap theory to the rich machinery of symbolic dynamics \u2014 entropy, mixing, zeta functions \u2014 already present in the Catalog (cf. `Shared/SymbolicDynamics.lean`, `realizes_all_patterns`). If the gap sequence can be shown to have positive topological entropy as a subshift, this would provide a new proof that infinitely many distinct gap values occur, and potentially connect to the Cram\u00e9r conjecture.\n\nThe second key connection is to Hardy-Littlewood via the singular series. The transition probabilities of the mod-$M$ automaton, in the limit $M \\to \\infty$ through primorials, should converge to the Hardy-Littlewood singular series $\\mathfrak{S}(g)$. Formalizing this limit would provide the first rigorous bridge between the algebraic (automaton) and analytic (singular series) perspectives on prime gaps.\n\n---\n\n### Direction 1: Gap Transition Entropy and Cram\u00e9r's Conjecture\n\n**Conjecture**: The topological entropy of the prime gap subshift over the mod-30 automaton is $h_{\\mathrm{top}} = \\log \\phi(30) / \\log 30 = \\log 8 / \\log 30 \\approx 0.611$. More precisely, the number of admissible gap words of length $k$ with entries bounded by $B$ grows as $\\Theta(\\lambda^k)$ where $\\lambda$ is the spectral radius of the transition matrix.\n\n**Test**: Compute the transition matrix $T$ for the mod-30 gap automaton with gap bound $B = 30$. The matrix $T$ is $8 \\times 8$, with $T_{ij}$ = number of even gaps $g \\leq B$ such that state $i$ transitions to state $j$. Compute the spectral radius $\\rho(T)$. If $\\rho(T)^k$ matches the count of admissible words of length $k$ (up to polynomial corrections), the conjecture is confirmed.\n\n**Impact**: If true, this provides a lower bound on the number of distinct gap patterns that can appear, which connects to the Cram\u00e9r conjecture ($\\limsup g_n / (\\log p_n)^2 = 1$). The spectral radius determines the \"capacity\" of the gap channel and bounds how much information each gap carries.\n\n**Catalog References**: `Shared/SymbolicDynamics.lean` (SmaleHorseshoe, realizes_all_patterns), `Bridges/PrimeGapCrosswordDeep.lean` (GapAutomatonState)\n\n**Proof Strategy**: Define the transition matrix explicitly for mod-30 with bounded gaps. Use Perron-Frobenius theory to show the matrix is primitive (all entries eventually positive, by strong connectivity). The spectral radius then equals the growth rate. Strong connectivity follows from our mod-6 strong connectivity theorem lifted to mod-30.\n\n**Domain Bridges**: Symbolic dynamics (subshift entropy) <-> Number theory (prime gap distribution) <-> Linear algebra (Perron-Frobenius)\n\n**Lineage**: Builds on `mod6_strongly_connected`, `GapTransitionSystem`, and the existing `SymbolicDynamics.lean` framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Forcing Pattern Density and the Sieve Limit\n\n**Conjecture**: For the mod-30 sieve with gap bound $B = 30$, the fraction of gap words of length $k$ that are \"forcing\" (uniquely determine the next gap) converges to a positive constant $\\delta_{30} > 0$ as $k \\to \\infty$. Computationally, $\\delta_{30} \\approx 0.08$.\n\n**Test**: Enumerate all admissible gap words of length $k = 1, 2, \\ldots, 15$ over the mod-30 automaton with gap entries in $\\{2, 4, 6, \\ldots, 30\\}$. For each word, check if the next gap is uniquely determined. Plot the forcing fraction $F(k)/A(k)$ where $F(k)$ = number of forcing words and $A(k)$ = number of admissible words. If this fraction stabilizes above 0, the conjecture holds.\n\n**Impact**: Positive forcing density would mean that, for a positive fraction of all possible gap histories, the next gap is deterministically known from the sieve alone \u2014 no probabilistic input needed. This would quantify the sense in which the prime gap crossword is \"partially solvable.\"\n\n**Catalog References**: `Bridges/PrimeGapCrosswordDeep.lean` (ForcingNextOver, explicit_forcing_23), `Shared/PrimeGapCrossword.lean` (admissibleGaps, forcingPatternConjecture)\n\n**Proof Strategy**: Use the Markov chain formulation on the 8-state automaton. A word is forcing iff it drives the automaton into a state with exactly one admissible next transition. Compute the set of \"pre-forcing states\" (states from which the next gap is unique) and show the Markov chain hits this set with positive probability from any start state. This reduces to showing the pre-forcing set is non-empty and recurrent.\n\n**Domain Bridges**: Automata theory (forcing states) <-> Sieve theory (admissible patterns) <-> Markov chains (recurrence)\n\n**Lineage**: Builds on `explicit_forcing_23`, `explicit_forcing_23_alt`, `forcing_density_base`.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Hardy-Littlewood Singular Series from Transition Limits\n\n**Conjecture**: Let $\\mathcal{G}(M_k)$ be the gap transition system modulo the $k$-th primorial $M_k = \\prod_{i=1}^{k} p_i$. For each even gap $g > 0$, define $\\pi_k(g) = |\\{s \\in S_{M_k} : \\delta(s, g) \\in S_{M_k}\\}| / |S_{M_k}|$ as the fraction of states admitting gap $g$. Then $\\lim_{k \\to \\infty} \\pi_k(g) \\cdot |S_{M_k}| / |S_{M_k}| = \\mathfrak{S}(g) / 2C_2$ where $\\mathfrak{S}(g)$ is the Hardy-Littlewood singular series for gap $g$.\n\n**Test**: Compute $\\pi_k(g)$ for $k = 1, 2, \\ldots, 8$ (moduli 2, 6, 30, 210, 2310, 30030, 510510, 9699690) and gap values $g = 2, 4, 6, 8, 10, 12$. Compare with the known values of $\\mathfrak{S}(g)$.\n\n**Impact**: This would provide a constructive, algebraic derivation of the Hardy-Littlewood singular series, replacing the analytic definition (infinite product over primes) with a finite-automaton limit. It would bridge the gap between sieve theory and analytic number theory.\n\n**Catalog References**: `Algebra/Conditional.lean` (twin_primes_of_hardy_littlewood), `Cryptography/CramerPrimeGaps.lean`\n\n**Proof Strategy**: Express $\\pi_k(g)$ as a product $\\prod_{i=1}^{k} (1 - \\nu_i(g)/p_i)$ where $\\nu_i(g)$ counts residue classes mod $p_i$ eliminated by gap $g$. For a prime $p$ not dividing $g$, exactly one class is eliminated (the class $-g$ mod $p$), giving factor $(p-1)/p \\cdot p/(p-1) = 1$... The actual computation requires careful inclusion-exclusion. Use the Chinese Remainder Theorem to decompose $\\pi_k(g)$ into local factors.\n\n**Domain Bridges**: Algebraic number theory (Chinese Remainder Theorem) <-> Analytic number theory (singular series) <-> Automata theory (transition probabilities)\n\n**Lineage**: Builds on `GapTransitionSystem`, `hardyLittlewoodSingularSeries`, `twinPrimeConstant`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Mod-30 Transition Graph Spectral Analysis\n\n**Conjecture**: The transition matrix of $\\mathcal{G}(30)$ with even gaps up to 30 has a simple dominant eigenvalue (Perron root), and the corresponding eigenvector has all components equal \u2014 reflecting the equidistribution of primes across residue classes (Dirichlet's theorem).\n\n**Test**: Construct the $8 \\times 8$ transition matrix explicitly. Compute its eigenvalues. Verify the dominant eigenvalue has multiplicity 1 and the corresponding eigenvector is $(1, 1, 1, 1, 1, 1, 1, 1)$ (up to normalization). Compare the second-largest eigenvalue modulus (mixing rate) with empirical convergence rates of mod-30 residue frequencies.\n\n**Impact**: The spectral gap of the transition matrix controls the rate at which the gap sequence \"forgets\" its starting state \u2014 connecting to mixing times in the theory of Markov chains and potentially to error terms in the prime number theorem for arithmetic progressions.\n\n**Catalog References**: `Shared/PrimeGapCrossword.lean` (PrimorialState, admissibleResidues\u2083\u2080, transition), `Shared/PrimeGapTransitions.lean` (GapTransitionSystem, gtsTransition)\n\n**Proof Strategy**: Define the transition matrix as a `Matrix (Fin 8) (Fin 8) \u211d` in Lean. Verify it is doubly stochastic (or regular) using `native_decide` or `norm_num` for the finite entries. Apply Perron-Frobenius to conclude the dominant eigenvector is uniform. The spectral gap requires bounding the second eigenvalue, which may be computationally tractable for an 8\u00d78 matrix.\n\n**Domain Bridges**: Spectral graph theory <-> Markov chain theory <-> Prime distribution\n\n**Lineage**: Builds on `mod6_strongly_connected`, `prime_in_admissible_mod30`, `gap_alphabet_size_mod30`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Gap Transition Monoid and Burnside Groups\n\n**Conjecture**: The transition monoid of $\\mathcal{G}(M)$ \u2014 the monoid generated by the transition maps $\\delta_g : s \\mapsto s + g$ restricted to units of $\\mathbb{Z}/M\\mathbb{Z}$ \u2014 is isomorphic to $(\\mathbb{Z}/M\\mathbb{Z})^\\times$ for $M$ a primorial. In particular, for $M = 30$, the transition monoid is $(\\mathbb{Z}/30\\mathbb{Z})^\\times \\cong \\mathbb{Z}/2\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z}$.\n\n**Test**: Compute the Cayley table of the transition monoid for $M = 30$ by composing all pairs of gap-induced permutations for gaps $g = 2, 4, 6, \\ldots, 28$. Verify the resulting structure is $(\\mathbb{Z}/2)^3$.\n\n**Impact**: Understanding the algebraic structure of the transition monoid constrains which gap words are equivalent (produce the same net state transition). This could classify forcing patterns algebraically rather than computationally, and connect to Burnside's theorem on finite group actions.\n\n**Catalog References**: `Shared/PrimeGapTransitions.lean` (GapTransitionSystem, gtsTransition, reachableFrom)\n\n**Proof Strategy**: Show that the translation maps $\\tau_g : s \\mapsto s + g$ on $(\\mathbb{Z}/M\\mathbb{Z})^\\times$ form a group isomorphic to $\\mathbb{Z}/M\\mathbb{Z}$ when $\\gcd(g, M) = 1$. For gap values, only even $g$ appear, restricting to a subgroup. Compute this subgroup explicitly for $M = 30$.\n\n**Domain Bridges**: Finite group theory <-> Automata theory <-> Sieve theory\n\n**Lineage**: Builds on `GapTransitionSystem`, `mod6_strongly_connected`.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0580",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b081a92c",
+    "status": "available",
+    "timestamp": "2026-06-03T23:42:37.490140+00:00",
+    "title": "Gap Transition System \u2014 a finite-state autom"
   }
 ];
