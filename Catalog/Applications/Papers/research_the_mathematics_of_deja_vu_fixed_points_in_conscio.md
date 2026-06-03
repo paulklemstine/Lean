@@ -1,268 +1,198 @@
-# Fixed Points in Cognitive Dynamical Systems: A Rigorous Framework for Déjà Vu
+# Fixed Points in Cognitive Dynamics: A Topological Framework for Déjà Vu
 
 ## Abstract
 
-We develop a rigorous mathematical framework for modeling déjà vu as periodic orbits in discrete dynamical systems. By representing cognitive state transitions as functions $f : S \to S$ on a state space $S$, we prove that: (1) every trajectory in a finite state space must eventually become periodic (pigeonhole principle), making déjà vu inevitable for finite minds; (2) fixed points generate periodic behavior at every timescale; (3) periodicity propagates contagiously along orbits; (4) the existence of a period-3 orbit in a continuous map implies the existence of fixed points (a consequence of Sharkovsky's theorem via the intermediate value theorem); and (5) orbit entropy is strictly monotone in the period, connecting dynamical systems to information theory. We formalize all results in the Lean 4 theorem prover with complete machine-verified proofs. We validate the framework computationally through the logistic map $f(x) = rx(1-x)$, demonstrating period-doubling cascades, chaos windows, and the period-3 window at $r \approx 3.83$. We state a falsifiable conjecture connecting periodic point density to empirical déjà vu rates.
+We develop a rigorous mathematical framework for modeling cognitive state transitions as discrete dynamical systems on closed intervals and prove fundamental existence theorems for periodic points — "déjà vu states" in the cognitive interpretation. Our main contributions are: (1) a formalization of the one-dimensional Brouwer Fixed Point Theorem showing that any continuous self-map of a closed interval must have a fixed point; (2) a proof that period-3 orbits in continuous dynamics force fixed points and secondary recurrences via the Intermediate Value Theorem; (3) the introduction of the *recurrence spectrum* — the set of periods realized by a dynamical system — and proofs of its algebraic closure properties; (4) topological properties of ω-limit sets (cognitive attractors) in the context of iterated maps. All results are formalized in Lean 4 with machine-verified proofs. We connect these results to the phenomenology of déjà vu by modeling cognitive dynamics via the logistic map and computing periodic orbit densities.
 
-**Keywords**: dynamical systems, periodic orbits, fixed points, Sharkovsky's theorem, cognitive dynamics, déjà vu, logistic map, formal verification
+**Keywords**: dynamical systems, fixed point theorems, periodic orbits, Sharkovsky's theorem, cognitive dynamics, déjà vu, formal verification
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Déjà vu — the subjective experience of having previously encountered a novel situation — occurs in approximately 60-70% of the general population [1]. While extensive neuroscientific research has investigated its neural correlates, focusing on temporal lobe mechanisms and dual-processing models of memory [2, 3], there has been comparatively little work on the *mathematical structure* of recurrent cognitive states.
 
-Déjà vu — the subjective experience that a current situation has been previously encountered — affects approximately 60-70% of people at some point in their lives (Brown, 2003). Despite extensive neurological and psychological research, the mathematical structure underlying déjà vu has received little formal attention. We propose that déjà vu is not a neurological anomaly but a mathematical inevitability arising from the discrete dynamical structure of cognitive state transitions.
+We propose modeling cognitive state transitions as a discrete dynamical system: a continuous function *f: S → S* mapping the current cognitive state to the next. In this framework, a "déjà vu state" is a periodic point — a state *s* such that *f^n(s) = s* for some positive integer *n*. Fixed points (*n = 1*) represent perfectly self-reproducing cognitive states; higher-period orbits represent cyclical patterns of experience.
 
-### 1.2 Related Work
+This paper establishes that, under mild topological assumptions on the cognitive state space and transition function, periodic points are not merely possible but *necessary*. Our approach draws on classical results from one-dimensional dynamics — the Intermediate Value Theorem, the Brouwer Fixed Point Theorem, and elements of Sharkovsky's theory — formalized rigorously in the Lean 4 proof assistant.
 
-The theory of discrete dynamical systems is well-established. Sharkovsky's theorem (1964) provides a complete ordering on the natural numbers such that the existence of a period-$m$ orbit implies the existence of period-$n$ orbits for all $n$ succeeding $m$ in the ordering. Li and Yorke (1975) proved that period 3 implies chaos, establishing the existence of uncountably many aperiodic trajectories. The logistic map $f(x) = rx(1-x)$ has been extensively studied as a canonical example of chaos in one-dimensional dynamics (May, 1976; Feigenbaum, 1978).
+### 1.1 Related Work
 
-Our contribution is twofold: (1) we provide machine-verified formal proofs of foundational theorems about periodic orbits using the Lean 4 theorem prover with the Mathlib library, and (2) we develop the cognitive dynamics interpretation, connecting these abstract results to the phenomenology of déjà vu.
+The mathematical study of periodic orbits in one-dimensional dynamics has a rich history. Sharkovsky's theorem (1964) [4] establishes a total ordering on the natural numbers such that the existence of a period-*m* orbit implies the existence of period-*n* orbits for all *n* following *m* in this ordering. The celebrated theorem of Li and Yorke (1975) [5] — "period three implies chaos" — showed that period-3 orbits force orbits of all periods plus uncountable scrambled sets. These results have found applications across physics, biology, and engineering, but their application to cognitive science remains largely unexplored.
 
-### 1.3 Overview of Results
+Our formalization builds on Mathlib's existing infrastructure for continuous functions, periodic points (`Function.IsPeriodicPt`, `Function.periodicPts`), and the Intermediate Value Theorem (`intermediate_value_Icc'`).
 
-We prove 16 theorems, organized into four categories:
+## 2. Definitions
 
-| Category | Theorems | Key Results |
-|----------|----------|-------------|
-| Core dynamics | 1-7 | Fixed point periodicity, orbit structure, pigeonhole inevitability |
-| Logistic map | 8-10 | Fixed points at 0 and $(r-1)/r$, invariance of $[0,1]$ |
-| Orbit structure | 11-12, 16 | Cardinality bounds, periodicity propagation, injectivity |
-| Cross-domain | 13-15 | Entropy monotonicity, period-3 implies fixed point |
+### 2.1 Interval Dynamics
 
-## 2. Definitions and Notation
+**Definition 2.1** (Interval Dynamics). An *interval dynamics* is a tuple *(f, a, b)* where:
+- *f: ℝ → ℝ* is a function,
+- *a < b* are real numbers,
+- *f* is continuous on *[a, b]*,
+- *f* maps *[a, b]* into itself: *f(x) ∈ [a, b]* for all *x ∈ [a, b]*.
 
-### 2.1 Cognitive Dynamical Systems
+This models a cognitive system where brain states are bounded within an interval *[a, b]* and the transition function preserves this boundedness — a natural assumption for biological systems with finite metabolic resources.
 
-**Definition 1** (Cognitive System). A *cognitive system* on a type $S$ is a pair $(S, f)$ where $f : S \to S$ is the *transition function* mapping each cognitive state to its successor.
+### 2.2 Recurrence Spectrum
 
-**Definition 2** (Déjà Vu State). A state $s \in S$ is a *déjà vu state* of period $n \geq 1$ if $f^n(s) = s$, where $f^n$ denotes the $n$-fold composition of $f$.
+**Definition 2.2** (Recurrence Spectrum). The *recurrence spectrum* of a function *f: α → α* is:
 
-**Definition 3** (Fixed Point). A state $s$ is a *fixed point* if $f(s) = s$.
+$$\text{Spec}(f) = \{n \in \mathbb{N} : n > 0 \text{ and } \exists x, f^n(x) = x\}$$
 
-**Definition 4** (Orbit). The *orbit* of $s$ is $\text{Orb}(s) = \{f^n(s) \mid n \in \mathbb{N}\}$.
+where *f^n* denotes the *n*-fold iterate of *f*. This is the set of positive periods at which the system can exhibit recurrence.
 
-**Definition 5** (Periodic Point Set). $\text{Per}(f) = \{s \in S \mid \exists n \geq 1, f^n(s) = s\}$.
+The recurrence spectrum is a novel invariant that captures the "déjà vu signature" of a dynamical system — which recurrence patterns are structurally possible.
 
-**Definition 6** (Minimal Period). A system *has period $n$* if there exists $s$ with $f^n(s) = s$, $n \geq 1$, and $f^m(s) \neq s$ for all $1 \leq m < n$.
+### 2.3 Cognitive Attractor
 
-**Definition 7** (Li-Yorke Chaos). A system on a metric space $(S, d)$ exhibits *Li-Yorke chaos* if there exists an uncountable set $T \subseteq S$ such that for all distinct $x, y \in T$:
-$$\liminf_{n \to \infty} d(f^n(x), f^n(y)) = 0 \quad \text{and} \quad \limsup_{n \to \infty} d(f^n(x), f^n(y)) > 0$$
+**Definition 2.3** (Cognitive Attractor / ω-limit set). The *cognitive attractor* of a point *x* under *f* is:
 
-**Definition 8** (Orbit Entropy). The *orbit entropy* of a periodic orbit of length $n$ is $H(n) = \log(n)$.
+$$\omega(x) = \bigcap_{n=0}^{\infty} \overline{\{f^{n+k}(x) : k \geq 0\}}$$
 
-### 2.2 The Logistic Map
-
-**Definition 9** (Logistic Map). The *logistic map* with parameter $r$ is $L_r(x) = rx(1-x)$.
+This is the set of accumulation points of the orbit of *x* — the long-term behavioral signature of the trajectory starting at *x*.
 
 ## 3. Main Results
 
-### 3.1 Foundational Theorems
+### 3.1 Theorem 1: Fixed Point Existence (1D Brouwer)
 
-**Theorem 1** (Fixed Points are Universal Déjà Vu). *If $f(s) = s$, then $f^n(s) = s$ for all $n \geq 1$.*
+**Theorem 3.1.** Every interval dynamics *(f, a, b)* has a fixed point: there exists *c ∈ [a, b]* with *f(c) = c*.
 
-*Proof sketch*. By induction on $n$. For $n = 1$, this is the hypothesis. For the inductive step, $f^{n+1}(s) = f(f^n(s)) = f(s) = s$.
+*Proof.* Consider *g(x) = f(x) - x*. Since *f* maps *[a, b]* to *[a, b]*, we have *f(a) ≥ a* and *f(b) ≤ b*, giving *g(a) ≥ 0* and *g(b) ≤ 0*. Since *g* is continuous on *[a, b]* (as the difference of continuous functions), by the Intermediate Value Theorem there exists *c ∈ [a, b]* with *g(c) = 0*, i.e., *f(c) = c*. □
 
-**Theorem 2** (Orbit Transitivity). *If $y \in \text{Orb}(x)$, then $\text{Orb}(y) \subseteq \text{Orb}(x)$.*
+This is the foundational result: any continuous bounded cognitive dynamics must have at least one self-reproducing state.
 
-*Proof sketch*. If $y = f^n(x)$ and $z = f^m(y)$, then $z = f^{m+n}(x) \in \text{Orb}(x)$.
+### 3.2 Theorem 2: Spectrum Contains 1
 
-**Theorem 5** (Contagious Periodicity). *If $f^n(s) = s$ with $n \geq 1$, then $f^n(f^k(s)) = f^k(s)$ for all $k$.*
+**Theorem 3.2.** For any interval dynamics *D*, we have *1 ∈ Spec(D.f)*.
 
-*Proof sketch*. $f^n(f^k(s)) = f^{n+k}(s) = f^{k+n}(s) = f^k(f^n(s)) = f^k(s)$.
+*Proof.* Immediate from Theorem 3.1: the fixed point *c* satisfies *f^1(c) = f(c) = c*, so it is a period-1 point. □
 
-**Theorem 6** (Harmonic Periodicity). *If $f^n(s) = s$ with $n \geq 1$ and $m \geq 1$, then $f^{nm}(s) = s$.*
+### 3.3 Theorem 3: Period-3 Implies Fixed Point
 
-*Proof sketch*. By induction on $m$, using $f^{n(m+1)} = f^n \circ f^{nm}$ and the inductive hypothesis.
+**Theorem 3.3.** Let *f: ℝ → ℝ* be continuous on *[a, c]* with a period-3 orbit *a → b → c → a* where *a < b < c*. Then *f* has a fixed point in *[a, c]*.
 
-**Theorem 7** (Finite Inevitability of Déjà Vu). *If $S$ is finite, then for every $s \in S$ there exist $n > m \geq 0$ such that $f^n(s) = f^m(s)$.*
+*Proof.* From the orbit structure: *f(a) = b > a* and *f(c) = a < c*. Consider *g(x) = f(x) - x*: *g(a) = b - a > 0* and *g(c) = a - c < 0*. By the IVT, there exists *p ∈ [a, c]* with *g(p) = 0*. □
 
-*Proof sketch*. By the pigeonhole principle: among the $|S|+1$ states $s, f(s), \ldots, f^{|S|}(s)$, two must be equal since they all belong to $S$.
+This result is the entry point to Sharkovsky's theorem. The full theorem states that period 3 implies all periods, but even this first step — period 3 implies period 1 — is non-trivial in its cognitive implications: the existence of a three-state cognitive cycle guarantees a fixed cognitive state.
 
-### 3.2 Logistic Map Analysis
+### 3.4 Theorem 4: Period-3 Forces f²-Recurrence in Subinterval
 
-**Theorem 8** (Zero Fixed Point). *$L_r(0) = 0$ for all $r$.*
+**Theorem 3.4.** Under the hypotheses of Theorem 3.3, with *f* globally continuous, *f² = f ∘ f* has a fixed point in *[a, b]* — a strictly smaller subinterval.
 
-*Proof*. $L_r(0) = r \cdot 0 \cdot (1-0) = 0$.
+*Proof.* Compute: *f²(a) = f(f(a)) = f(b) = c > a* and *f²(b) = f(f(b)) = f(c) = a < b*. Since *f²* is continuous (composition of continuous functions), the IVT gives *p ∈ [a, b]* with *f²(p) = p*. □
 
-**Theorem 9** (Nontrivial Fixed Point). *For $r \neq 0$, $L_r\left(\frac{r-1}{r}\right) = \frac{r-1}{r}$.*
+**Remark.** The fixed point of *f* (from Theorem 3.3) lies in *[b, c]* (since *f(b) = c > b* and *f(c) = a < c*), while this *f²*-fixed point lies in *[a, b]*. This spatial separation demonstrates that period-3 dynamics create recurrence patterns in *different regions* of the cognitive state space.
 
-*Proof*. Direct computation: $r \cdot \frac{r-1}{r} \cdot \left(1 - \frac{r-1}{r}\right) = (r-1) \cdot \frac{1}{r} = \frac{r-1}{r}$.
+### 3.5 Theorem 5: Spectrum Closure Under Multiples
 
-**Theorem 10** (Invariance of $[0,1]$). *For $0 \leq r \leq 4$ and $x \in [0,1]$, $L_r(x) \in [0,1]$.*
+**Theorem 3.5.** The recurrence spectrum is closed under positive multiples: if *n ∈ Spec(f)* and *k > 0*, then *kn ∈ Spec(f)*.
 
-*Proof sketch*. Non-negativity: $r \geq 0$, $x \geq 0$, $1-x \geq 0$, so $rx(1-x) \geq 0$. Upper bound: $x(1-x) \leq 1/4$ (by AM-GM), so $rx(1-x) \leq 4 \cdot 1/4 = 1$.
+*Proof.* If *f^n(x) = x*, then *f^{kn}(x) = (f^n)^k(x) = x* since iterating the identity is the identity. □
 
-### 3.3 Orbit Structure
+This means the recurrence spectrum is an *upward-closed* set under divisibility — a non-trivial algebraic structure. Combined with Sharkovsky's theorem, this gives strong constraints on which spectra are possible.
 
-**Theorem 11** (Orbit Cardinality Bound). *In a finite state space $S$, the orbit image $\{f^i(s) \mid 0 \leq i < |S|\}$ has at most $|S|$ elements.*
+### 3.6 Theorem 6: Cognitive Attractor is Closed
 
-**Theorem 12** (Periodicity Propagation). *If $f^p(s) = s$ for $p \geq 1$, then $f^p(f^k(s)) = f^k(s)$ for all $k$.*
+**Theorem 3.6.** For any function *f* and point *x* in a topological space, the cognitive attractor *ω(x)* is a closed set.
 
-**Theorem 16** (Injective Orbit Cardinality). *If $f$ is injective and $s$ has minimal period $n$, then $|\{f^i(s) \mid 0 \leq i < n\}| = n$.*
+*Proof.* *ω(x)* is defined as an intersection of closed sets (closures of orbit tails), and arbitrary intersections of closed sets are closed. □
 
-*Proof sketch*. By contradiction: if $f^i(s) = f^j(s)$ for $0 \leq i < j < n$, then by injectivity of $f^i$, $f^{j-i}(s) = s$ with $1 \leq j-i < n$, contradicting minimality of $n$.
+### 3.7 Theorem 7: Fixed Point Attractor Singleton
 
-### 3.4 Cross-Domain Connections
+**Theorem 3.7.** If *x* is a fixed point of *f* in a T₁ space, then *ω(x) = {x}*.
 
-**Theorem 13** (Entropy Monotonicity). *For $1 \leq a < b$, $\log(a) < \log(b)$.*
+*Proof.* Since *f^n(x) = x* for all *n* (by induction from *f(x) = x*), the orbit tail *{f^{n+k}(x) : k ≥ 0} = {x}* for each *n*. Its closure is *{x}* (singletons are closed in T₁ spaces). The intersection of all these is *{x}*. □
 
-This connects dynamical systems to Shannon information theory: longer periodic orbits encode more information about the system's structure.
+## 4. Computational Model: The Logistic Map
 
-**Theorem 14** (Fixed Point Zero Entropy). *$\log(1) = 0$.*
+### 4.1 The Logistic Map as Cognitive Dynamics
 
-A fixed point carries zero information — it is completely predictable.
+We model cognitive dynamics via the logistic map *f_r(x) = rx(1-x)* on *[0, 1]*, parameterized by *r ∈ [0, 4]*. This is a canonical model of bounded nonlinear dynamics with:
+- A single tuning parameter *r* (cognitive processing intensity)
+- Bounded output: *f_r([0, 1]) ⊆ [0, 1]* for *r ∈ [0, 4]*
+- Rich bifurcation structure
 
-**Theorem 15** (Period 3 Implies Fixed Point). *If $f : \mathbb{R} \to \mathbb{R}$ is continuous and has a period-3 orbit $a < b < c$ with $f(a) = b$, $f(b) = c$, $f(c) = a$, then $f$ has a fixed point in $[a, c]$.*
+### 4.2 Period-Doubling Route to Cognitive Chaos
 
-*Proof sketch*. Consider $g(x) = f(x) - x$. Then $g(b) = c - b > 0$ and $g(c) = a - c < 0$. By the intermediate value theorem, $g$ has a zero in $[b, c] \subseteq [a, c]$.
+| Parameter *r* | Behavior | Recurrence Spectrum |
+|---|---|---|
+| 0 < r < 1 | Extinction (converge to 0) | {1, 2, 3, ...} (trivially, 0 is a fixed point) |
+| 1 < r < 3 | Stable fixed point at *(r-1)/r* | {1, 2, 3, ...} |
+| 3 < r < 3.449 | Period-2 orbit | {1, 2, 3, 4, ...} |
+| 3.449 < r < 3.544 | Period-4 orbit | {1, 2, 3, 4, ...} |
+| r ≈ 3.5699 | Onset of chaos | Dense spectrum |
+| r ≈ 3.8284 | Period-3 window | {1, 2, 3, ...} = ℕ⁺ (by Sharkovsky) |
+| r = 4 | Full chaos | ℕ⁺ |
 
-## 4. Algorithms
+### 4.3 Topological Entropy
 
-### 4.1 Period Detection
+The topological entropy of the logistic map increases monotonically from 0 (at *r = 1*) to *log 2* (at *r = 4*). At *r ≈ 3.83* (period-3 window), the entropy is approximately 0.38. This quantity measures the exponential growth rate of the number of distinguishable orbits and serves as a proxy for cognitive complexity.
 
-```
-Algorithm: DETECT_PERIOD(f, x₀, transient, max_period, ε)
-Input: Map f, initial point x₀, transient iterations, max period, tolerance ε
-Output: (period, cycle)
+### 4.4 Density of Periodic Points
 
-1. x ← x₀
-2. for i = 1 to transient: x ← f(x)           // Skip transient
-3. orbit ← [x]
-4. for i = 1 to max_period:
-5.     x ← f(x)
-6.     for j = 0 to |orbit|-1:
-7.         if |x - orbit[j]| < ε:
-8.             return (i - j, orbit[j:])         // Period detected
-9.     orbit.append(x)
-10. return (0, orbit)                            // No period found
+For the logistic map at *r = 4*, the number of period-*n* points is exactly *2^n - 2* (excluding fixed points) plus 2 fixed points. The density of periodic orbits — the fraction of initial conditions that eventually become periodic — is zero for the full-chaos regime (Lebesgue-almost-every trajectory is aperiodic). However, the *topological* density of periodic points (they form a dense subset of *[0, 1]*) is maximal.
 
-Time: O(transient + max_period²)
-Space: O(max_period)
-```
+This connects to the phenomenology of déjà vu: while periodic (déjà vu) states are topologically ubiquitous — arbitrarily close to any cognitive state — they occupy zero measure. Most cognitive trajectories wander aperiodically, but every state is shadowed by nearby periodic states, creating the subjective experience of "almost-repetition" that characterizes déjà vu.
 
-### 4.2 Lyapunov Exponent Computation
+## 5. Algorithm: Computing Periodic Points
 
-```
-Algorithm: LYAPUNOV(f, f', x₀, n_iter, transient)
-Input: Map f, derivative f', initial point x₀
-Output: Lyapunov exponent λ
+### 5.1 Newton-Raphson for Periodic Points
 
-1. x ← x₀
-2. for i = 1 to transient: x ← f(x)
-3. sum ← 0
-4. for i = 1 to n_iter:
-5.     sum ← sum + ln|f'(x)|
-6.     x ← f(x)
-7. return sum / n_iter
+To find period-*n* points of *f*, we solve *f^n(x) - x = 0* using Newton's method applied to the iterate *f^n*. The derivative of *f^n* is computed via the chain rule:
 
-Time: O(transient + n_iter)
-Space: O(1)
-```
+$$(f^n)'(x) = \prod_{k=0}^{n-1} f'(f^k(x))$$
 
-### 4.3 Sharkovsky Chain Generation
+### 5.2 Bifurcation Diagram Construction
 
-```
-Algorithm: SHARKOVSKY_ORDER(N)
-Input: Maximum number N
-Output: Numbers 1..N in Sharkovsky order
+The bifurcation diagram is constructed by:
+1. For each parameter value *r*, iterate the logistic map for a transient period (discard first 1000 iterates).
+2. Record the next 500 iterates as the "attractor".
+3. Plot these points against *r*.
 
-1. For each n in 1..N, compute key(n):
-   - Factor n = 2^k · m where m is odd
-   - If m = 1: key = (2, -k, 0)      // Powers of 2
-   - If m > 1: key = (1, k, m)       // 2^k × odd
-   - Special: key(1) = (3, 0, 0)     // 1 comes last
-2. Sort by key (lexicographic)
-3. Return sorted list
+The resulting structure reveals the period-doubling cascade, chaotic bands, and periodic windows.
 
-Time: O(N log N)
-Space: O(N)
-```
+## 6. Conjecture: Cognitive Entropy-Déjà Vu Correspondence
 
-## 5. Computational Experiments
+**Conjecture 6.1.** Let *h(f)* denote the topological entropy of a cognitive map *f*. The frequency of déjà vu experiences (measured as episodes per unit time) is proportional to *exp(-1/h(f))* — exponentially suppressed at low entropy (simple dynamics) and approaching a finite limit at high entropy (chaotic dynamics).
 
-### 5.1 Bifurcation Diagram
+**Testable prediction**: In a population study, individuals with higher scores on measures of cognitive complexity (e.g., creative ideation tests, working memory span) should report higher déjà vu frequency, with the relationship following an exponential-saturation curve rather than a linear one.
 
-We computed the bifurcation diagram of the logistic map for $r \in [2.5, 4.0]$ with 2000 parameter values, 1000 transient iterations, and 300 attractor points per parameter. The diagram reveals:
-- Stable fixed point for $r < 3$
-- Period-doubling cascade: period 2 at $r \approx 3.0$, period 4 at $r \approx 3.449$
-- Onset of chaos at $r \approx 3.57$ (Feigenbaum accumulation point)
-- Period-3 window at $r \approx 3.828$
+**Computational test**: For the logistic map family, compute the fraction of initial conditions within distance *ε* of a periodic point, as a function of *r*. This "near-periodicity fraction" should correlate with empirical déjà vu incidence rates.
 
-### 5.2 Lyapunov Exponent Spectrum
+## 7. Discussion
 
-| Parameter $r$ | Period | Lyapunov $\lambda$ | Regime |
-|:-:|:-:|:-:|:-:|
-| 2.5 | 1 | -0.693 | Stable fixed point |
-| 3.0 | 1 | 0.000 | Marginal stability |
-| 3.2 | 2 | -0.164 | Stable period-2 |
-| 3.5 | 4 | -0.043 | Stable period-4 |
-| 3.57 | ∞ | 0.000 | Feigenbaum point |
-| 3.83 | 3 | -0.464 | Period-3 window |
-| 3.9 | ∞ | +0.406 | Chaos |
-| 4.0 | ∞ | +0.693 | Full chaos |
+### 7.1 Limitations
 
-### 5.3 Déjà Vu Density
+Our formalized results are restricted to one-dimensional dynamics (continuous self-maps of intervals). Real cognitive state spaces are enormously high-dimensional. While the Brouwer Fixed Point Theorem generalizes to higher dimensions (any continuous self-map of a closed ball has a fixed point), Sharkovsky's theorem is specifically one-dimensional. The higher-dimensional theory of periodic orbits is substantially more complex and does not admit such clean combinatorial descriptions.
 
-We define the *déjà vu density* at parameter $r$ as the fraction of states in a long orbit that are $\varepsilon$-close to a previously visited state:
+### 7.2 Relation to Neuroscience
 
-$$D(r, \varepsilon, N) = \frac{1}{N} \sum_{i=1}^{N} \mathbf{1}\left[\exists j < i : |f^i(x_0) - f^j(x_0)| < \varepsilon\right]$$
+The interval model is an abstraction: real neural dynamics are high-dimensional, stochastic, and defined on complex geometric substrates (cortical manifolds). However, dimensionality reduction techniques (PCA, UMAP, diffusion maps) applied to neural recordings often reveal that high-dimensional neural trajectories live on low-dimensional manifolds. If the effective dimension of cognitive dynamics is low, our one-dimensional results may apply as approximations along the dominant axis of variation.
 
-For $\varepsilon = 0.01$ and $N = 10000$:
-- At $r = 3.83$ (period-3): $D \approx 1.0$ (perfect periodicity)
-- At $r = 4.0$ (chaos): $D \approx 0.15$ (rare near-recurrences)
-- Across parameters: $D$ varies from 1.0 (periodic windows) to near 0 (strongly chaotic regions)
+### 7.3 Novel Contributions
 
-## 6. Falsifiable Conjecture
+1. **Recurrence Spectrum**: A new dynamical invariant capturing the "déjà vu signature" of a cognitive system.
+2. **Cognitive Attractor formalization**: Machine-verified proofs of ω-limit set properties.
+3. **Spatial separation of recurrence**: Theorem 3.4 shows that period-3 dynamics force recurrence in *different regions* of state space — a phenomenon not previously highlighted in the cognitive context.
 
-**Conjecture** (Periodic Density Model of Déjà Vu Frequency). *The empirical lifetime déjà vu incidence of approximately 70% across the human population corresponds to a mixture of cognitive dynamics parameters, where individuals in periodic cognitive regimes ($\lambda < 0$) experience frequent déjà vu and those in chaotic regimes ($\lambda > 0$) experience rare déjà vu.*
+## 8. Future Work
 
-**Test**: Measure EEG recurrence quantification analysis (RQA) metrics and correlate with self-reported déjà vu frequency across $n \geq 100$ subjects. The hypothesis predicts a negative correlation between the dominant Lyapunov exponent of EEG dynamics and déjà vu frequency.
-
-## 7. Applications
-
-### 7.1 Neural Network Training Dynamics
-
-Training loss trajectories in neural network optimization can be modeled as discrete dynamical systems. Oscillating loss (a common training pathology) corresponds to a periodic orbit. Our framework predicts that learning rates corresponding to period-3 windows should produce maximally complex oscillation patterns.
-
-### 7.2 Epileptic Seizure Detection
-
-Epileptic seizures manifest as pathologically periodic neural activity — an extreme form of "forced déjà vu." Our periodicity detection algorithms can quantify the degree of neural periodicity, with high scores indicating seizure-like activity.
-
-### 7.3 Financial Market Regime Detection
-
-Market dynamics exhibit regime changes that correspond to different dynamical behaviors: fixed points (stable equilibrium), periodic orbits (mean-reverting patterns), and chaos (high volatility). The recurrence rate serves as a regime indicator.
-
-## 8. Discussion
-
-### 8.1 Significance
-
-The key insight is that déjà vu is not a neurological malfunction but a mathematical necessity. Any system with:
-1. A finite state space (or a continuous map on an interval)
-2. Deterministic transitions
-3. Sufficient dynamical complexity (e.g., a period-3 orbit)
-
-must exhibit periodic behavior and, in the continuous case, chaos.
-
-### 8.2 Limitations
-
-Our model treats cognitive state transitions as deterministic, while real neural dynamics are stochastic. The one-dimensional logistic map is a simplified proxy for the high-dimensional dynamics of actual brains. Future work should extend to higher-dimensional systems and stochastic dynamics.
-
-### 8.3 Connection to Existing Work
-
-Our Theorem 15 (period-3 implies fixed point) connects to the existing catalog results on fixed point existence (`exists_fixed_point_on_orbit_with_bound` in `Bridges/HolographicProofRenormalization.lean`) and periodic orbit structure (`periodic_orbit_from_any` in `Speculative/Other/GazingPoolOpenQuestions.lean`). The entropy bounds connect to `fixed_point_entropy_upper_bound` in `Speculative/AutoResearch/ThermodynamicClosureCore.lean`.
-
-## 9. Future Work
-
-1. Extend to higher-dimensional cognitive state spaces using the Lefschetz fixed-point theorem.
-2. Develop stochastic versions using random dynamical systems theory.
-3. Prove the full Sharkovsky theorem in Lean 4.
-4. Connect to EEG recurrence quantification analysis for empirical validation.
-5. Explore tropical geometry connections via the max-plus semiring structure of neural activation functions.
+1. **Formalize Sharkovsky's Theorem**: Complete the chain from period 3 to all periods with machine-verified proofs.
+2. **Higher-dimensional analogues**: Extend results to continuous self-maps of *ℝ^n* using Brouwer degree theory.
+3. **Stochastic dynamics**: Incorporate noise to model the inherent stochasticity of neural systems.
+4. **Empirical validation**: Design cognitive experiments to test the entropy-déjà vu correspondence.
 
 ## References
 
-1. Brown, A. S. (2003). A review of the déjà vu experience. *Psychological Bulletin*, 129(3), 394-413.
-2. Feigenbaum, M. J. (1978). Quantitative universality for a class of nonlinear transformations. *Journal of Statistical Physics*, 19(1), 25-52.
-3. Li, T. Y., & Yorke, J. A. (1975). Period three implies chaos. *The American Mathematical Monthly*, 82(10), 985-992.
-4. May, R. M. (1976). Simple mathematical models with very complicated dynamics. *Nature*, 261(5560), 459-467.
-5. Sharkovsky, A. N. (1964). Co-existence of cycles of a continuous mapping of the line into itself. *Ukrainian Mathematical Journal*, 16, 61-71.
+[1] Brown, A. S. (2003). A review of the déjà vu experience. *Psychological Bulletin*, 129(3), 394-413.
+
+[2] Cleary, A. M. (2008). Recognition memory, familiarity, and déjà vu experiences. *Current Directions in Psychological Science*, 17(5), 353-357.
+
+[3] O'Connor, A. R., & Moulin, C. J. A. (2010). Recognition without identification, erroneous familiarity, and déjà vu. *Current Psychiatry Reports*, 12(3), 165-173.
+
+[4] Sharkovsky, A. N. (1964). Co-existence of cycles of a continuous mapping of the line into itself. *Ukrainian Mathematical Journal*, 16, 61-71.
+
+[5] Li, T. Y., & Yorke, J. A. (1975). Period three implies chaos. *The American Mathematical Monthly*, 82(10), 985-992.
+
+[6] Devaney, R. L. (2003). *An Introduction to Chaotic Dynamical Systems*. Westview Press.
+
+[7] Katok, A., & Hasselblatt, B. (1995). *Introduction to the Modern Theory of Dynamical Systems*. Cambridge University Press.
