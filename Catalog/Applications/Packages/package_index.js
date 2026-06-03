@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9bfa51ff",
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
     "pkg_num": 312,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7007142500000001,
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
@@ -10096,8 +10096,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "tangled_hierarchies_proof_systems_that_reference_t",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7007142500000001,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
