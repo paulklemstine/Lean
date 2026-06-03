@@ -1,163 +1,186 @@
-# Langlands for GL₁: Formalizing the Shape-Color Correspondence
+# Formalizing the GL₁ Langlands Correspondence: Quadratic Characters as a Shape-Color Dictionary
 
 ## Abstract
 
-We formalize key structural properties of the GL₁ Langlands correspondence — the bijection between quadratic number fields and quadratic Dirichlet characters — in the Lean 4 proof assistant with Mathlib. We introduce the abstract notion of a *Shape-Color Pairing*, a bijective correspondence that models the Langlands dictionary at any level. For the concrete GL₁ case, we define the quadratic discriminant map and prove its injectivity, establishing that distinct quadratic fields yield distinct Dirichlet characters. We prove that the Jacobi symbol — the concrete realization of the correspondence — is bi-multiplicative, making it a bilinear pairing that respects tensor products of representations. We reformulate quadratic reciprocity as a *shape-color duality*, showing that the "shape view" and "color view" of the Kronecker symbol are related by a computable sign, and identify the "transparent" cases where this sign vanishes. Finally, we prove the non-triviality of quadratic characters: every odd prime admits a quadratic non-residue.
+We present a formalization in Lean 4 of the GL₁ Langlands correspondence for quadratic extensions, centering on the structural interpretation of the Jacobi symbol as a "shape-color dictionary" connecting quadratic field discriminants to Dirichlet characters. Our formalization introduces the novel structure `QuadraticShapeColorDict` encoding the correspondence for individual fundamental discriminants, defines `IsFundDiscriminant` capturing the classification of discriminants of quadratic number fields, and proves several key theorems: character sum vanishing (color orthogonality), the Gauss sum bridge (g(χ)² = χ(-1)·|F|), Euler's criterion as the computational engine of the correspondence, quadratic reciprocity as self-duality of the bilinear pairing, and the full bilinear expansion of the Jacobi symbol. We verify the injectivity of the shape-color map on concrete examples and state the GL₁ completeness conjecture.
 
-**Keywords**: Langlands program, Jacobi symbol, quadratic reciprocity, Dirichlet characters, formal verification, shape-color correspondence
+**Keywords**: Langlands correspondence, quadratic characters, Jacobi symbol, Gauss sum, formal verification, class field theory
 
 ## 1. Introduction
 
-The Langlands program, initiated by Robert Langlands in 1967, conjectures a profound correspondence between Galois representations and automorphic forms. At GL₁, this reduces to class field theory: one-dimensional representations of Gal(Q̄/Q) correspond to Dirichlet characters. For the quadratic case, this specializes further: quadratic fields Q(√d) correspond to quadratic Dirichlet characters χ_D, where D is the fundamental discriminant.
+The Langlands program, initiated by Robert Langlands in 1967 [1], proposes a profound correspondence between automorphic forms and Galois representations. In its simplest instance — the GL₁ case — this reduces to class field theory: the correspondence between abelian extensions of ℚ and Dirichlet characters.
 
-Despite being the "simplest" case of the Langlands correspondence, the GL₁ theory already exhibits the key structural features that persist at all levels:
+The quadratic case is the most accessible entry point. Each quadratic extension ℚ(√d) for squarefree d ≠ 0,1 has an associated fundamental discriminant D, and the Jacobi symbol J(D, ·) defines a quadratic Dirichlet character χ_D. The GL₁ Langlands correspondence asserts that this map D ↦ χ_D is a bijection between fundamental discriminants and primitive quadratic Dirichlet characters.
 
-1. **Bijectivity**: Different "shapes" (quadratic fields) map to different "colors" (characters)
-2. **Bi-multiplicativity**: The correspondence respects algebraic operations on both sides
-3. **Reciprocity**: A deep symmetry relates the two perspectives
-4. **Non-triviality**: The correspondence carries genuine arithmetic information
+### 1.1 Shape-Color Metaphor
 
-Our contribution is to formalize these four properties as a coherent framework, introducing the abstract `ShapeColorPairing` structure and instantiating it for the GL₁ case.
+We organize the formalization around a "shape-color" metaphor:
+- **Shapes** are fundamental discriminants D, encoding quadratic number fields
+- **Colors** are quadratic Dirichlet characters χ_D, encoding multiplicative functions
+- **The dictionary** is the map D ↦ J(D, ·)
+- **The bridge** is the Gauss sum, connecting additive (shape) and multiplicative (color) structures
+- **Self-duality** is quadratic reciprocity: the dictionary reads the same in both directions
 
-## 2. Definitions
+### 1.2 Contributions
 
-### 2.1 Shape-Color Pairing
+1. **Novel definitions**: `IsFundDiscriminant` (Definition 2.1) and `QuadraticShapeColorDict` (Definition 6.1), not present in Mathlib or the existing Catalog
+2. **Structural theorems**: Character sum vanishing, Gauss sum squared, Euler's criterion, bilinear expansion, and quadratic reciprocity, organized as components of the shape-color dictionary
+3. **Concrete verification**: Four dictionary instances (D = -4, 5, 8, -3) with six computed character values and three injectivity witnesses
+4. **Testable conjecture**: GL₁ shape-color injectivity with explicit computational prediction
 
-**Definition 2.1** (Shape-Color Pairing). A *shape-color pairing* between types S and C is a quadruple (toColor, toShape, σ, γ) where:
-- toColor : S → C
-- toShape : C → S  
-- σ : ∀ s, toShape(toColor(s)) = s
-- γ : ∀ c, toColor(toShape(c)) = c
+## 2. Fundamental Discriminants
 
-This is equivalent to an equivalence S ≃ C, but the presentation emphasizes the "shape → color" and "color → shape" directions as primitive, reflecting the bidirectional nature of the Langlands correspondence.
+**Definition 2.1** (Fundamental Discriminant). An integer D is a *fundamental discriminant* if either:
+- D ≡ 1 (mod 4) and D is squarefree, or
+- D = 4m where m is squarefree, m ≢ 1 (mod 4), and m ≠ 0.
 
-### 2.2 Tensor Product of Pairings
+This definition captures exactly the discriminants of quadratic number fields ℚ(√d):
+- If d ≡ 1 (mod 4), the discriminant is D = d
+- If d ≡ 2 or 3 (mod 4), the discriminant is D = 4d
 
-**Definition 2.2** (Tensor Product). Given pairings P₁ : S₁ ≃ C₁ and P₂ : S₂ ≃ C₂, their tensor product P₁ ⊗ P₂ : (S₁ × S₂) ≃ (C₁ × C₂) is defined componentwise:
-- toColor(s₁, s₂) = (P₁.toColor(s₁), P₂.toColor(s₂))
-- toShape(c₁, c₂) = (P₁.toShape(c₁), P₂.toShape(c₂))
+**Theorem 2.2** (Concrete Examples). The following are fundamental discriminants:
+- D = -4 (for ℚ(i), the Gaussian integers)
+- D = 8 (for ℚ(√2))
+- D = 5 (for ℚ(√5), the golden ratio field)
+- D = -3 (for ℚ(√(-3)), the Eisenstein integers)
 
-This models the tensor product of representations in the Langlands context.
+*Proof sketch.* Each requires verifying squarefreeness of the relevant integer and the appropriate congruence condition. □
 
-### 2.3 Quadratic Discriminant
+## 3. Color Orthogonality
 
-**Definition 2.3** (Quadratic Discriminant). For d ∈ ℤ, the fundamental discriminant is:
+**Theorem 3.1** (Character Sum Vanishing). Let F be a finite commutative monoid, R an integral domain, and χ: F → R a non-trivial multiplicative character. Then
+$$\sum_{a \in F} \chi(a) = 0$$
 
-quadDisc(d) = d,    if d ≡ 1 (mod 4)
-quadDisc(d) = 4d,   otherwise
+*Proof.* This is `MulChar.sum_eq_zero_of_ne_one` in Mathlib. The key idea: if χ(b) ≠ 1 for some b, then multiplication by b permutes F, so the sum equals χ(b) · (sum), forcing (1 - χ(b)) · (sum) = 0. Since χ(b) ≠ 1 and R is a domain, the sum is 0. □
 
-For squarefree d, this gives the discriminant of the ring of integers of Q(√d).
+**Corollary 3.2** (Quadratic Color Orthogonality). For a finite field F of odd characteristic, the sum of the quadratic character over all elements of F is zero:
+$$\sum_{a \in F} \chi_{\text{quad}}(a) = 0$$
 
-## 3. Main Results
+This means the quadratic residues and non-residues are in perfect balance.
 
-### 3.1 Uniqueness of the Inverse (Theorem 3.1)
+## 4. The Gauss Sum Bridge
 
-**Theorem 3.1.** If P and Q are shape-color pairings with P.toColor = Q.toColor, then P.toShape = Q.toShape.
+**Theorem 4.1** (Gauss Sum Squared). Let χ be a non-trivial quadratic character of a finite field F, and ψ a primitive additive character. Then
+$$g(\chi)^2 = \chi(-1) \cdot |F|$$
 
-*Proof sketch.* For any c ∈ C, let s = P.toShape(c). Then P.toColor(s) = c by the round-trip property. Since P.toColor = Q.toColor, we have Q.toColor(s) = c. Applying Q's round-trip: Q.toShape(c) = Q.toShape(Q.toColor(s)) = s = P.toShape(c). □
+where g(χ) = Σ_a χ(a)ψ(a) is the Gauss sum.
 
-This theorem says the Langlands correspondence, if it exists, is unique: the "shape → color" direction completely determines the "color → shape" direction.
+*Proof.* This is `gaussSum_sq` in Mathlib. The proof uses the identity g(χ)·g(χ⁻¹) = |F| (valid for any non-trivial character) combined with χ⁻¹ = χ (since χ is quadratic) and the formula g(χ⁻¹) = χ(-1)·g(χ). □
 
-### 3.2 Discriminant Injectivity (Theorem 3.2)
+**Interpretation.** The Gauss sum is the "bridge" between addition (encoded by ψ) and multiplication (encoded by χ). Its square lands back in the multiplicative world, with the sign χ(-1) measuring the "twist" between the two structures.
 
-**Theorem 3.2.** The map quadDisc : ℤ → ℤ is injective.
+## 5. Euler's Criterion
 
-*Proof sketch.* Case analysis on d₁ % 4 and d₂ % 4. If both are ≡ 1 (mod 4), then quadDisc(d₁) = d₁ and quadDisc(d₂) = d₂, so equality gives d₁ = d₂. If neither is ≡ 1, then 4d₁ = 4d₂ gives d₁ = d₂. The cross cases (one ≡ 1, the other not) lead to d₁ = 4d₂, which contradicts d₁ ≡ 1 (mod 4) since 4d₂ ≡ 0 (mod 4). □
+**Theorem 5.1** (Euler's Criterion). For an odd prime p and a ∈ (ℤ/pℤ)× with a ≠ 0,
+$$\chi_{\text{quad}}(a) = a^{(p-1)/2} \pmod{p}$$
 
-This establishes the "different shapes → different colors" principle for the GL₁ correspondence.
+*Proof.* Uses `quadraticChar_eq_pow_of_char_ne_two` from Mathlib, combined with the observation that (p-1)/2 = p/2 for odd p. □
 
-### 3.3 Bi-multiplicativity (Theorem 3.3)
+**Significance.** This gives an explicit, computable formula for the "color" of any element, reducing character evaluation to exponentiation.
 
-**Theorem 3.3** (Jacobi Bi-multiplicativity). For a₁, a₂ ∈ ℤ and b₁, b₂ ∈ ℕ with b₁, b₂ ≠ 0:
+## 6. The Shape-Color Dictionary
 
-J(a₁a₂, b₁b₂) = J(a₁, b₁) · J(a₁, b₂) · J(a₂, b₁) · J(a₂, b₂)
+**Definition 6.1** (QuadraticShapeColorDict). A quadratic shape-color dictionary consists of:
+- A discriminant D ∈ ℤ
+- A proof that D is a fundamental discriminant
+- The character function colorFun(n) = J(D, n)
 
-*Proof.* Apply left-multiplicativity (J(a₁a₂, n) = J(a₁, n)J(a₂, n)) followed by right-multiplicativity (J(a, b₁b₂) = J(a, b₁)J(a, b₂)) on each factor. □
+**Theorem 6.2** (Multiplicativity). For any dictionary D and nonzero b₁, b₂ ∈ ℕ,
+$$\text{colorFun}(b_1 \cdot b_2) = \text{colorFun}(b_1) \cdot \text{colorFun}(b_2)$$
 
-This is the algebraic core of the GL₁ correspondence: the Jacobi symbol is a bilinear form on ℤ × ℕ. In representation-theoretic terms, the correspondence intertwines the tensor product of Galois representations with the tensor product of automorphic forms.
+*Proof.* Direct from `jacobiSym.mul_right`. □
 
-### 3.4 Quadratic Nature (Theorem 3.4)
+We construct four concrete dictionaries:
+- `gaussianDict`: D = -4 (Gaussian integers)
+- `sqrt2Dict`: D = 8 (field ℚ(√2))
+- `goldenDict`: D = 5 (golden ratio field)
+- `eisensteinDict`: D = -3 (Eisenstein integers)
 
-**Theorem 3.4.** For any a ∈ ℤ and n ∈ ℕ, J(a, n)² ∈ {0, 1}.
+## 7. Self-Duality
 
-*Proof.* The Jacobi symbol takes values in {-1, 0, 1} (the "trichotomy"). Squaring any of these gives 0 or 1. □
+**Theorem 7.1** (Shape-Color Duality = Quadratic Reciprocity). For distinct odd primes p, q,
+$$\left(\frac{p}{q}\right) \cdot \left(\frac{q}{p}\right) = (-1)^{\lfloor p/2 \rfloor \cdot \lfloor q/2 \rfloor}$$
 
-This says that the characters in the GL₁ correspondence are *quadratic*: they are square roots of the trivial character (or zero at ramified places).
+*Proof.* This is `legendreSym.quadratic_reciprocity` in Mathlib. □
 
-### 3.5 Shape-Color Reciprocity (Theorem 3.5)
+**Interpretation.** The dictionary is self-dual: the color of p in shape q times the color of q in shape p equals a simple sign. This sign is +1 unless both primes are ≡ 3 mod 4.
 
-**Theorem 3.5** (Shape-Color Reciprocity). For coprime odd a, b ∈ ℕ:
+## 8. Injectivity
 
-J(a, b) · J(b, a) = (-1)^{(a/2)(b/2)}
+**Theorem 8.1** (Concrete Injectivity). Any two of the four dictionaries (gaussianDict, sqrt2Dict, goldenDict, eisensteinDict) produce distinct character functions. Specifically:
+- gaussianDict and sqrt2Dict differ at p = 5: J(-4, 5) = 1 ≠ -1 = J(8, 5)
+- goldenDict and eisensteinDict differ at p = 7: J(5, 7) = -1 ≠ 1 = J(-3, 7)
+- gaussianDict and goldenDict differ at p = 11: J(-4, 11) = -1 ≠ 1 = J(5, 11)
 
-*Proof.* By Gauss's quadratic reciprocity: J(a, b) = (-1)^{(a/2)(b/2)} · J(b, a). Since a, b are coprime and odd, J(b, a) ∈ {±1} (not 0), so J(b, a)² = 1. Multiplying both sides by J(b, a) yields the result. □
+*Proof.* Each is verified by direct computation of the Jacobi symbol. □
 
-This is quadratic reciprocity reframed as a *duality* between the shape and color perspectives. The product J(a,b) · J(b,a) — viewing a from b's perspective and b from a's perspective simultaneously — equals a computable correction sign.
+## 9. Bilinear Structure
 
-### 3.6 Transparent Reciprocity (Theorem 3.6)
+**Theorem 9.1** (Full Bilinear Expansion). For a₁, a₂ ∈ ℤ and nonzero b₁, b₂ ∈ ℕ,
+$$J(a_1 a_2, b_1 b_2) = J(a_1, b_1) \cdot J(a_1, b_2) \cdot J(a_2, b_1) \cdot J(a_2, b_2)$$
 
-**Theorem 3.6.** If additionally a ≡ 1 (mod 4) or b ≡ 1 (mod 4), then:
+*Proof.* Apply `jacobiSym.mul_left` to separate a₁ and a₂, then apply `jacobiSym.mul_right` to each factor. □
 
-J(a, b) · J(b, a) = 1
+## 10. Character Classification
 
-*Proof.* If a ≡ 1 (mod 4), then a = 4k + 1 and a/2 = 2k, so (a/2)(b/2) is even and (-1)^{even} = 1. Similarly if b ≡ 1 (mod 4). □
+**Theorem 10.1** (Trichotomy). For any element a of a finite field F,
+$$\chi_{\text{quad}}(a) \in \{-1, 0, 1\}$$
 
-The "transparent" case is when the correction sign vanishes: shapes and colors agree perfectly. This occurs precisely when at least one of the participants is ≡ 1 (mod 4).
+**Theorem 10.2** (Unit Dichotomy). If a ≠ 0, then χ_quad(a) ∈ {-1, 1}.
 
-### 3.7 Non-triviality (Theorem 3.7)
+## 11. Conjecture
 
-**Theorem 3.7.** For any odd prime p, there exists a ∈ {1, ..., p-1} with J(a, p) = -1.
+**Conjecture 11.1** (GL₁ Shape-Color Injectivity). If D₁ and D₂ are fundamental discriminants such that J(D₁, p) = J(D₂, p) for every prime p, then D₁ = D₂.
 
-*Proof.* Suppose for contradiction that every element of (ℤ/pℤ)* is a square. Then the squaring map x ↦ x² is surjective on ℤ/pℤ, hence (by finiteness) injective. But x² = y² implies x = ±y, and since p is odd, -1 ≠ 1, giving a contradiction with injectivity. □
+**Testable prediction.** For all pairs of fundamental discriminants D₁ ≠ D₂ with |D₁|, |D₂| ≤ 1000, there exists a prime p ≤ |D₁| · |D₂| such that J(D₁, p) ≠ J(D₂, p).
 
-This ensures the quadratic character is always non-trivial: it genuinely distinguishes between quadratic residues and non-residues.
+This conjecture follows from the Chebotarev density theorem and the theory of L-functions, but a direct elementary proof remains interesting.
 
-## 4. The Correspondence as a Bilinear Form
+## 12. Specific Character Values
 
-The bi-multiplicativity theorem (3.3) reveals that the Jacobi symbol is not merely a function — it is a *bilinear form* on the monoid ℤ × ℕ, taking values in the multiplicative monoid {-1, 0, 1}. This perspective connects the Langlands correspondence to:
+We compute six character values verifying the dictionary:
 
-1. **Weil pairing on elliptic curves**: At GL₂, the analogous bilinear form is the Weil pairing on the torsion points of an elliptic curve.
-
-2. **Tate duality**: The bi-multiplicativity of J(a, n) is a shadow of Tate duality in Galois cohomology.
-
-3. **Tensor categories**: The tensor product of shape-color pairings (Definition 2.2) makes the collection of all pairings into a symmetric monoidal category.
-
-## 5. Computational Verification
-
-We verified the correspondence for small discriminants computationally:
-
-| d | D = quadDisc(d) | Character | Example: χ_D(3) |
+| Discriminant D | Prime p | J(D, p) | Interpretation |
 |---|---|---|---|
-| -1 | -4 | χ₋₄ | -1 |
-| 2 | 8 | χ₈ | -1 |
-| -3 | -3 | χ₋₃ | 0 |
-| 5 | 5 | χ₅ | -1 |
-| -7 | -7 | χ₋₇ | -1 |
-| 13 | 13 | χ₁₃ | 1 |
+| -4 | 3 | -1 | 3 is inert in ℚ(i) |
+| -4 | 5 | +1 | 5 splits in ℚ(i) |
+| 8 | 3 | -1 | 3 is inert in ℚ(√2) |
+| 8 | 7 | +1 | 7 splits in ℚ(√2) |
+| 5 | 3 | -1 | 3 is inert in ℚ(√5) |
+| -3 | 5 | -1 | 5 is inert in ℚ(√(-3)) |
 
-Each row represents a shape (quadratic field Q(√d)) matched with its color (character χ_D). The Jacobi symbol values encode the splitting behavior of primes.
+## 13. Discussion
 
-## 6. Conjecture
+### 13.1 Relation to the Full Langlands Program
 
-**Conjecture 6.1** (Testable prediction). For any fundamental discriminant D with |D| ≤ 10^6 and |D| prime, the partial character sum S_N(D) = Σ_{n=1}^{N} χ_D(n) satisfies |S_N(D)| ≤ √|D| · log(|D|) for all N.
+Our formalization covers the simplest case: GL₁ with quadratic characters. The full Langlands program extends this to:
+- **GL₁ with all characters**: class field theory (Artin reciprocity)
+- **GL₂**: Wiles's modularity theorem (Taniyama-Shimura conjecture)
+- **GL_n**: the general Langlands correspondence
 
-This is a consequence of the Generalized Riemann Hypothesis for quadratic Dirichlet L-functions. Computational tests for |D| ≤ 10000 have not found counterexamples. A violation would disprove GRH.
+Each step up in dimension introduces fundamentally new phenomena: L-functions replace characters, automorphic forms replace multiplicative functions, and the bilinear structure becomes a more complex spectral correspondence.
 
-## 7. Future Directions
+### 13.2 The Bilinear Paradigm
 
-1. **GL₂ formalization**: Extend the ShapeColorPairing framework to capture the correspondence between elliptic curves and modular forms.
+A key insight of this work is that the Jacobi symbol's bilinear structure (Theorem 9.1) is the algebraic foundation of the correspondence. The bilinear expansion shows that the Jacobi symbol is determined by its values on prime inputs — this is why the correspondence is an injection on fundamental discriminants.
 
-2. **Local-global principle**: Formalize how the local Langlands correspondence at each prime p assembles into the global correspondence.
+### 13.3 The Gauss Sum as Fourier Transform
 
-3. **L-function framework**: Define Dirichlet L-functions L(s, χ_D) in Lean and prove the Euler product expansion using Mathlib's infrastructure for Dirichlet series.
+The Gauss sum g(χ) = Σ χ(a)ψ(a) is essentially the Fourier transform of the character χ. Theorem 4.1 (g(χ)² = χ(-1)·p) is the analogue of Plancherel's theorem. This Fourier-analytic viewpoint extends to the higher-rank Langlands correspondence, where the bridge becomes the *trace formula*.
 
-4. **Geometric Langlands**: Explore whether the ShapeColorPairing structure extends to the geometric setting, where number fields are replaced by function fields of algebraic curves.
+## 14. Future Work
+
+1. Formalize the surjectivity of the shape-color map (every primitive quadratic character arises from a fundamental discriminant)
+2. Extend to cubic and higher-degree characters (GL₁ with non-quadratic characters)
+3. Connect to the formalization of modular forms for the GL₂ case
+4. Prove the GL₁ completeness conjecture directly (without Chebotarev)
 
 ## References
 
-1. Langlands, R.P. "Letter to André Weil." 1967.
-2. Gauss, C.F. *Disquisitiones Arithmeticae*. 1801.
-3. Serre, J.-P. *A Course in Arithmetic*. Springer, 1973.
-4. Neukirch, J. *Algebraic Number Theory*. Springer, 1999.
-5. Bump, D. *Automorphic Forms and Representations*. Cambridge, 1997.
-6. Gaitsgory, D. et al. "Proof of the geometric Langlands conjecture." 2024.
+[1] R.P. Langlands, "Problems in the Theory of Automorphic Forms," *Lectures in Modern Analysis and Applications III*, Lecture Notes in Math. 170, Springer, 1970, pp. 18–61.
+
+[2] J.-P. Serre, *A Course in Arithmetic*, Graduate Texts in Mathematics 7, Springer, 1973.
+
+[3] H. Iwaniec and E. Kowalski, *Analytic Number Theory*, AMS Colloquium Publications 53, 2004.
+
+[4] D. Bump, *Automorphic Forms and Representations*, Cambridge Studies in Advanced Mathematics 55, 1997.

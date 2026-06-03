@@ -1,276 +1,282 @@
 #!/usr/bin/env python3
 """
-Algorithms for the GL₁ Langlands Correspondence
+Algorithms for the GL₁ Langlands Shape-Color Dictionary.
 
 Type-hinted implementations of the core algorithms used in the
-shape-color correspondence between quadratic fields and Dirichlet characters.
+Langlands for Toddlers formalization.
 """
 
-from math import gcd, sqrt, log
 from typing import List, Tuple, Dict, Optional
+import math
 
 
 def jacobi_symbol(a: int, n: int) -> int:
     """
-    Compute the Jacobi symbol (a/n) for odd positive n.
-    
-    Algorithm: Binary Jacobi symbol computation.
-    Time complexity: O(log(a) · log(n))
-    
-    The Jacobi symbol generalizes the Legendre symbol to composite
-    odd moduli. It is the "evaluation map" of the shape-color
-    correspondence: J(D, p) tells you how prime p behaves in Q(√d).
-    
+    Compute the Jacobi symbol (a/n).
+
+    Uses the law of quadratic reciprocity and reduction rules:
+    1. (a/n) is multiplicative in both arguments
+    2. (2/n) = (-1)^((n²-1)/8)
+    3. (-1/n) = (-1)^((n-1)/2)
+    4. (a/n)(n/a) = (-1)^((a-1)/2 · (n-1)/2) for odd a,n
+
     Args:
-        a: Integer (the "shape" parameter — discriminant D)
-        n: Odd positive integer (the "color" parameter — prime p)
-    
+        a: Numerator (any integer)
+        n: Denominator (positive odd integer)
+
     Returns:
         -1, 0, or 1
+
+    Raises:
+        ValueError: if n is not positive and odd
     """
     if n <= 0 or n % 2 == 0:
-        raise ValueError(f"n must be odd and positive, got {n}")
+        raise ValueError(f"n must be positive and odd, got {n}")
+
     a = a % n
     result = 1
+
     while a != 0:
+        # Factor out powers of 2
         while a % 2 == 0:
             a //= 2
             if n % 8 in (3, 5):
                 result = -result
+
+        # Quadratic reciprocity flip
         a, n = n, a
         if a % 4 == 3 and n % 4 == 3:
             result = -result
         a = a % n
+
     return result if n == 1 else 0
 
 
-def quad_disc(d: int) -> int:
+def kronecker_symbol(d: int, n: int) -> int:
     """
-    Compute the fundamental discriminant of Q(√d).
-    
-    For squarefree d:
-        D = d    if d ≡ 1 (mod 4)
-        D = 4d   otherwise
-    
-    This is the "shape → color" map: it assigns to each
-    quadratic field its unique discriminant.
-    
+    Compute the Kronecker symbol (d/n), extending the Jacobi symbol
+    to all integer denominators.
+
+    This is the "color function" of the shape-color dictionary:
+    for fundamental discriminant D, χ_D(n) = (D/n).
+
     Args:
-        d: Squarefree integer
-    
+        d: Discriminant (numerator)
+        n: Evaluation point (denominator, any integer)
+
     Returns:
-        Fundamental discriminant D
+        -1, 0, or 1
     """
-    return d if d % 4 == 1 else 4 * d
-
-
-def is_squarefree(n: int) -> bool:
-    """Check whether n is squarefree (not divisible by any perfect square > 1)."""
     if n == 0:
-        return False
-    n = abs(n)
-    for p in range(2, int(n**0.5) + 1):
-        if n % (p * p) == 0:
-            return False
-    return True
+        return 1 if abs(d) == 1 else 0
+    if n < 0:
+        n = -n
+        if d < 0:
+            return -kronecker_symbol(d, n)
+        return kronecker_symbol(d, n)
+    if n == 1:
+        return 1
+
+    result = 1
+
+    # Handle factor of 2
+    while n % 2 == 0:
+        n //= 2
+        if d % 2 == 0:
+            return 0
+        if d % 8 in (3, 5):
+            result = -result
+
+    if n == 1:
+        return result
+
+    return result * jacobi_symbol(d, n)
 
 
-def splitting_type(D: int, p: int) -> str:
+def is_fundamental_discriminant(d: int) -> bool:
     """
-    Determine how prime p behaves in the quadratic field with discriminant D.
-    
-    Returns:
-        "split" if J(D, p) = +1 (p splits into two primes)
-        "inert" if J(D, p) = -1 (p remains prime)
-        "ramified" if J(D, p) = 0 (p divides the discriminant)
-    """
-    if p == 2:
-        if D % 2 == 0:
-            return "ramified"
-        elif D % 8 in (1, 7):
-            return "split"
-        else:
-            return "inert"
-    
-    j = jacobi_symbol(D, p)
-    if j == 1:
-        return "split"
-    elif j == -1:
-        return "inert"
-    else:
-        return "ramified"
+    Check if d is a fundamental discriminant.
 
+    A fundamental discriminant is either:
+    - d ≡ 1 (mod 4) and d is squarefree
+    - d = 4m where m is squarefree and m ≢ 1 (mod 4) and m ≠ 0
 
-def shape_color_dictionary(d_range: Tuple[int, int],
-                           primes: List[int]) -> Dict[int, Dict[str, object]]:
-    """
-    Build the complete shape-color dictionary for squarefree d in range.
-    
-    For each squarefree d, computes:
-    - The discriminant D = quadDisc(d)
-    - The splitting behavior of each prime
-    - The character values χ_D(p)
-    
     Args:
-        d_range: (min_d, max_d) range of squarefree integers to consider
-        primes: List of primes to evaluate the character at
-    
+        d: Integer to check
+
     Returns:
-        Dictionary mapping d to its shape-color data
+        True if d is a fundamental discriminant
     """
-    result: Dict[int, Dict[str, object]] = {}
-    
-    for d in range(d_range[0], d_range[1] + 1):
-        if d == 0 or not is_squarefree(d):
-            continue
-        
-        D = quad_disc(d)
-        character_values: Dict[int, int] = {}
-        splitting: Dict[int, str] = {}
-        
-        for p in primes:
-            splitting[p] = splitting_type(D, p)
-            if p == 2:
-                character_values[p] = {"split": 1, "inert": -1, "ramified": 0}[splitting[p]]
-            elif p % 2 == 1:
-                character_values[p] = jacobi_symbol(D, p)
-        
-        result[d] = {
-            "discriminant": D,
-            "field": f"Q(√{d})",
-            "character_values": character_values,
-            "splitting": splitting,
-        }
-    
+    if d == 0:
+        return False
+
+    def is_squarefree(n: int) -> bool:
+        n = abs(n)
+        if n == 0:
+            return False
+        p = 2
+        while p * p <= n:
+            if n % (p * p) == 0:
+                return False
+            p += 1
+        return True
+
+    if d % 4 == 1:
+        return is_squarefree(d)
+    if d % 4 == 0:
+        m = d // 4
+        return is_squarefree(m) and m % 4 != 1 and m != 0
+    return False
+
+
+def compute_field_discriminant(d: int) -> int:
+    """
+    Compute the fundamental discriminant of Q(√d) for squarefree d.
+
+    If d ≡ 1 (mod 4), the discriminant is d.
+    Otherwise, the discriminant is 4d.
+
+    Args:
+        d: Squarefree nonzero integer
+
+    Returns:
+        The fundamental discriminant D
+    """
+    if d % 4 == 1:
+        return d
+    return 4 * d
+
+
+def character_sum(d: int, n: int) -> int:
+    """
+    Compute Σ_{a=0}^{n-1} (d/a) using the Kronecker symbol.
+
+    For fundamental discriminant d with |d| = n, this sum is 0
+    (color orthogonality).
+
+    Args:
+        d: Discriminant
+        n: Modulus (sum range)
+
+    Returns:
+        The character sum
+    """
+    return sum(kronecker_symbol(d, a) for a in range(n))
+
+
+def gauss_sum(d: int, p: int) -> complex:
+    """
+    Compute the Gauss sum g(χ_d) = Σ_{a=1}^{p-1} (d/a)·e^{2πia/p}.
+
+    This is the "bridge" between multiplicative (color) and additive (shape)
+    structures. Satisfies g(χ)² = χ(-1)·p.
+
+    Args:
+        d: Discriminant
+        p: Odd prime
+
+    Returns:
+        The Gauss sum as a complex number
+    """
+    result = 0j
+    for a in range(1, p):
+        chi_val = jacobi_symbol(d, p) if d != 0 else jacobi_symbol(a, p)
+        # For the character (·/p), use a as input
+        chi_a = jacobi_symbol(a, p)
+        omega = math.e ** (2j * math.pi * a / p)
+        result += chi_a * omega
     return result
 
 
-def verify_bimultiplicativity(a1: int, a2: int, b1: int, b2: int) -> bool:
+def find_splitting_prime(d1: int, d2: int, limit: int = 1000) -> Optional[int]:
     """
-    Verify J(a1·a2, b1·b2) = J(a1,b1)·J(a1,b2)·J(a2,b1)·J(a2,b2)
-    for odd positive b1, b2.
-    
+    Find a prime p where the characters χ_{d1} and χ_{d2} differ.
+
+    By the Chebotarev density theorem, such a prime always exists
+    for distinct fundamental discriminants.
+
     Args:
-        a1, a2: Integer factors for the first argument
-        b1, b2: Odd positive integer factors for the second argument
-    
+        d1: First fundamental discriminant
+        d2: Second fundamental discriminant
+        limit: Search limit
+
     Returns:
-        True if the bi-multiplicativity identity holds
+        A prime p where kronecker_symbol(d1, p) ≠ kronecker_symbol(d2, p),
+        or None if not found within limit
     """
+    for n in range(2, limit):
+        if all(n % d != 0 for d in range(2, int(n**0.5) + 1)):  # is prime
+            if n % 2 == 1:  # odd prime
+                if kronecker_symbol(d1, n) != kronecker_symbol(d2, n):
+                    return n
+    return None
+
+
+def enumerate_fundamental_discriminants(limit: int) -> List[int]:
+    """
+    Enumerate all fundamental discriminants D with |D| ≤ limit.
+
+    Args:
+        limit: Maximum absolute value
+
+    Returns:
+        Sorted list of fundamental discriminants
+    """
+    return sorted(d for d in range(-limit, limit + 1)
+                  if is_fundamental_discriminant(d))
+
+
+def verify_bilinear_expansion(
+    a1: int, a2: int, b1: int, b2: int
+) -> Tuple[int, int, bool]:
+    """
+    Verify the bilinear expansion:
+    J(a1·a2, b1·b2) = J(a1,b1)·J(a1,b2)·J(a2,b1)·J(a2,b2)
+
+    Args:
+        a1, a2: First argument factors
+        b1, b2: Second argument factors (must be odd and positive)
+
+    Returns:
+        Tuple of (LHS, RHS, match)
+    """
+    if b1 * b2 <= 0 or (b1 * b2) % 2 == 0:
+        raise ValueError("b1 * b2 must be positive and odd")
+
     lhs = jacobi_symbol(a1 * a2, b1 * b2)
     rhs = (jacobi_symbol(a1, b1) * jacobi_symbol(a1, b2) *
            jacobi_symbol(a2, b1) * jacobi_symbol(a2, b2))
-    return lhs == rhs
+    return lhs, rhs, lhs == rhs
 
 
-def verify_reciprocity(a: int, b: int) -> Tuple[bool, int, int]:
+def verify_reciprocity(p: int, q: int) -> Tuple[int, int, bool]:
     """
-    Verify J(a,b)·J(b,a) = (-1)^((a//2)·(b//2)) for coprime odd a, b.
-    
-    Returns:
-        (passed, lhs_value, rhs_value)
-    """
-    if a % 2 == 0 or b % 2 == 0 or gcd(a, b) != 1:
-        raise ValueError("a and b must be coprime and odd")
-    
-    lhs = jacobi_symbol(a, b) * jacobi_symbol(b, a)
-    exp = (a // 2) * (b // 2)
-    rhs = (-1) ** exp
-    return (lhs == rhs, lhs, rhs)
+    Verify quadratic reciprocity for odd primes p, q:
+    (p/q)·(q/p) = (-1)^((p-1)/2 · (q-1)/2)
 
-
-def character_partial_sum(D: int, N: int) -> List[int]:
-    """
-    Compute partial sums S_k = Σ_{n=1}^{k} χ_D(n) for k = 1, ..., N.
-    
-    Uses the Jacobi symbol for odd n coprime to D,
-    and the Kronecker extension for even n.
-    
     Args:
-        D: Fundamental discriminant
-        N: Upper bound for partial sums
-    
+        p, q: Distinct odd primes
+
     Returns:
-        List of partial sums [S_1, S_2, ..., S_N]
+        Tuple of (LHS, RHS, match)
     """
-    sums: List[int] = []
-    running_sum = 0
-    for n in range(1, N + 1):
-        if gcd(n, abs(D)) > 1:
-            chi_n = 0
-        elif n % 2 == 0:
-            # Kronecker extension for even n
-            chi_n = 0  # Simplified: χ_D(2) handled separately
-            temp = n
-            twos = 0
-            while temp % 2 == 0:
-                temp //= 2
-                twos += 1
-            if temp == 1:
-                # Pure power of 2
-                chi_2 = 0 if D % 2 == 0 else (1 if D % 8 in (1, 7) else -1)
-                chi_n = chi_2 ** twos
-            else:
-                chi_2 = 0 if D % 2 == 0 else (1 if D % 8 in (1, 7) else -1)
-                chi_n = (chi_2 ** twos) * jacobi_symbol(D, temp)
-        else:
-            chi_n = jacobi_symbol(D, n)
-        running_sum += chi_n
-        sums.append(running_sum)
-    return sums
+    lhs = jacobi_symbol(p, q) * jacobi_symbol(q, p)
+    rhs = (-1) ** ((p - 1) // 2 * (q - 1) // 2)
+    return lhs, rhs, lhs == rhs
 
 
-def find_quadratic_nonresidues(p: int) -> List[int]:
-    """
-    Find all quadratic non-residues modulo an odd prime p.
-    
-    These are the integers a ∈ {1, ..., p-1} with J(a, p) = -1.
-    The non-triviality theorem guarantees this list is non-empty.
-    
-    Returns:
-        List of quadratic non-residues
-    """
-    return [a for a in range(1, p) if jacobi_symbol(a, p) == -1]
-
-
-# ============================================================
-# Main demonstration
-# ============================================================
 if __name__ == "__main__":
-    print("=== Shape-Color Dictionary for d ∈ [-10, 10] ===\n")
-    
-    primes = [2, 3, 5, 7, 11, 13]
-    dictionary = shape_color_dictionary((-10, 10), primes)
-    
-    for d in sorted(dictionary.keys()):
-        entry = dictionary[d]
-        chars = ", ".join(f"χ({p})={v}" for p, v in sorted(entry["character_values"].items()))
-        print(f"  {entry['field']:>10}  D={entry['discriminant']:>4}  {chars}")
-    
-    print("\n=== Bi-multiplicativity Verification ===\n")
-    
-    passed = 0
-    total = 0
-    for a1 in range(-5, 6):
-        for a2 in range(-5, 6):
-            for b1 in [3, 5, 7, 9, 11]:
-                for b2 in [3, 5, 7, 9, 11]:
-                    if verify_bimultiplicativity(a1, a2, b1, b2):
-                        passed += 1
-                    total += 1
-    
-    print(f"  Tested {total} cases, {passed} passed ({100*passed/total:.1f}%)")
-    
-    print("\n=== Reciprocity Verification ===\n")
-    
-    passed = 0
-    total = 0
-    for a in range(3, 50, 2):
-        for b in range(3, 50, 2):
-            if gcd(a, b) == 1:
-                ok, _, _ = verify_reciprocity(a, b)
-                if ok:
-                    passed += 1
-                total += 1
-    
-    print(f"  Tested {total} coprime odd pairs, {passed} passed ({100*passed/total:.1f}%)")
+    # Quick test
+    print("Fundamental discriminants |D| ≤ 20:")
+    print(enumerate_fundamental_discriminants(20))
+
+    print("\nSplitting primes between D=-4 and D=8:")
+    p = find_splitting_prime(-4, 8)
+    print(f"  First splitting prime: {p}")
+    print(f"  χ_{{-4}}({p}) = {kronecker_symbol(-4, p)}")
+    print(f"  χ_8({p}) = {kronecker_symbol(8, p)}")
+
+    print("\nBilinear expansion test:")
+    for a1, a2, b1, b2 in [(3, 7, 5, 11), (-2, 5, 3, 7), (13, -4, 9, 25)]:
+        lhs, rhs, ok = verify_bilinear_expansion(a1, a2, b1, b2)
+        print(f"  J({a1}·{a2}, {b1}·{b2}): LHS={lhs}, RHS={rhs}, {'✓' if ok else '✗'}")
