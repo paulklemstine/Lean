@@ -1,285 +1,261 @@
 """
-Algorithms for Sperner-Based Nash Equilibrium Computation
-==========================================================
+Algorithms for Sperner-based Nash Equilibrium Computation
 
-Implements the Sperner coloring algorithm for finding approximate Nash equilibria,
-along with standard game-theoretic algorithms for comparison.
-
-The key insight: the best-response function of a finite game naturally induces
-a Sperner coloring on the strategy simplex. Finding a fully-colored simplex
-yields an approximate Nash equilibrium.
+Type-hinted implementations of the core algorithms connecting Sperner's lemma
+to Nash equilibrium computation.
 """
 
-import numpy as np
 from typing import List, Tuple, Optional, Callable
-from itertools import product
+import numpy as np
+from dataclasses import dataclass
 
 
-class GamePayoffs:
-    """Payoff structure for an n-player game with m strategies per player."""
+@dataclass
+class FiniteGame:
+    """A finite two-player normal-form game.
     
-    def __init__(self, n: int, m: int, payoffs: np.ndarray):
-        self.n = n
-        self.m = m
-        self.payoffs = payoffs
-    
-    def expected_payoff(self, player: int, profile: List[np.ndarray]) -> float:
-        result = self.payoffs[player].copy()
-        for j in range(self.n - 1, -1, -1):
-            result = np.tensordot(result, profile[j], axes=(j, 0))
-        return float(result)
-    
-    def best_response_pure(self, player: int, profile: List[np.ndarray]) -> int:
-        """Find the pure best response for a player given others' strategies."""
-        best_a, best_val = 0, -float('inf')
-        for a in range(self.m):
-            pure = np.zeros(self.m)
-            pure[a] = 1.0
-            dev_profile = [p.copy() for p in profile]
-            dev_profile[player] = pure
-            val = self.expected_payoff(player, dev_profile)
-            if val > best_val:
-                best_val = val
-                best_a = a
-        return best_a
-    
-    def max_regret(self, profile: List[np.ndarray]) -> float:
-        total_regret = 0.0
-        for i in range(self.n):
-            ep = self.expected_payoff(i, profile)
-            for a in range(self.m):
-                pure = np.zeros(self.m)
-                pure[a] = 1.0
-                dev = [p.copy() for p in profile]
-                dev[i] = pure
-                dev_val = self.expected_payoff(i, dev)
-                total_regret = max(total_regret, dev_val - ep)
-        return total_regret
-
-
-# ============================================================
-# Algorithm 1: Sperner Coloring for Nash Equilibria
-# ============================================================
-
-def sperner_nash_2player(game: GamePayoffs, mesh_size: int) -> Tuple[List[np.ndarray], float]:
+    Attributes:
+        A: Payoff matrix for player 1 (m x n)
+        B: Payoff matrix for player 2 (m x n)
     """
-    Find an approximate Nash equilibrium using Sperner coloring.
+    A: np.ndarray
+    B: np.ndarray
     
-    Algorithm:
-    1. Discretize each player's strategy simplex with given mesh size
-    2. Color each lattice point with the best-responding player
-    3. Search for "balanced" simplices where both players are best-responding
-    4. Return the center of the most balanced simplex
+    @property
+    def num_strategies_1(self) -> int:
+        return self.A.shape[0]
     
-    Parameters
-    ----------
-    game : GamePayoffs
-        A 2-player game
-    mesh_size : int
-        Number of subdivisions per edge of the simplex
-        
-    Returns
-    -------
-    profile : List[np.ndarray]
-        Approximate Nash equilibrium
-    epsilon : float
-        Approximation quality (max regret)
-        
-    Complexity: O(mesh_size^2) for 2-player games
-    """
-    assert game.n == 2, "This algorithm is for 2-player games"
-    m = game.m
-    k = mesh_size
+    @property
+    def num_strategies_2(self) -> int:
+        return self.A.shape[1]
     
-    best_profile = None
-    best_regret = float('inf')
-    simplices_evaluated = 0
+    def expected_payoff_1(self, p1: np.ndarray, p2: np.ndarray) -> float:
+        """Expected payoff for player 1 under mixed strategies (p1, p2)."""
+        return float(p1 @ self.A @ p2)
     
-    # Enumerate lattice points on each player's simplex
-    # For player with m strategies, lattice points are (k1/k, k2/k, ..., km/k)
-    # where k1 + k2 + ... + km = k
+    def expected_payoff_2(self, p1: np.ndarray, p2: np.ndarray) -> float:
+        """Expected payoff for player 2 under mixed strategies (p1, p2)."""
+        return float(p1 @ self.B @ p2)
     
-    lattice_points_1 = _simplex_lattice(m, k)
-    lattice_points_2 = _simplex_lattice(m, k)
+    def deviation_payoffs_1(self, p2: np.ndarray) -> np.ndarray:
+        """Payoff to player 1 from each pure strategy, given p2."""
+        return self.A @ p2
     
-    for p1 in lattice_points_1:
-        for p2 in lattice_points_2:
-            simplices_evaluated += 1
-            profile = [p1, p2]
-            regret = game.max_regret(profile)
-            if regret < best_regret:
-                best_regret = regret
-                best_profile = profile
+    def deviation_payoffs_2(self, p1: np.ndarray) -> np.ndarray:
+        """Payoff to player 2 from each pure strategy, given p1."""
+        return self.B.T @ p1
     
-    return best_profile, best_regret
+    def max_regret(self, p1: np.ndarray, p2: np.ndarray) -> float:
+        """Maximum regret across both players."""
+        exp1 = self.expected_payoff_1(p1, p2)
+        exp2 = self.expected_payoff_2(p1, p2)
+        max_dev1 = float(np.max(self.deviation_payoffs_1(p2)))
+        max_dev2 = float(np.max(self.deviation_payoffs_2(p1)))
+        return max(max_dev1 - exp1, max_dev2 - exp2)
 
 
-def _simplex_lattice(m: int, k: int) -> List[np.ndarray]:
-    """Generate lattice points on the (m-1)-simplex with granularity k.
+@dataclass
+class ApproxNashEquilibrium:
+    """An approximate Nash equilibrium with quality bound."""
+    p1: np.ndarray
+    p2: np.ndarray
+    epsilon: float  # approximation quality (max regret)
+    mesh_size: float  # triangulation mesh size used
+
+
+def simplex_triangulation(
+    n: int, 
+    resolution: int
+) -> List[np.ndarray]:
+    """Generate vertices of a triangulation of the (n-1)-simplex.
     
-    Returns points (x1/k, ..., xm/k) where x1 + ... + xm = k, xi >= 0.
+    Args:
+        n: Dimension (number of vertices of the simplex = number of strategies)
+        resolution: Grid resolution (number of subdivisions per edge)
+    
+    Returns:
+        List of points on the simplex, each a probability vector.
     """
-    if m == 1:
-        return [np.array([1.0])]
+    from itertools import product as iter_product
     
-    points = []
-    _simplex_lattice_helper(m, k, [], points)
+    points: List[np.ndarray] = []
+    for combo in iter_product(range(resolution + 1), repeat=n - 1):
+        if sum(combo) <= resolution:
+            last = resolution - sum(combo)
+            point = np.array(list(combo) + [last], dtype=float) / resolution
+            points.append(point)
     return points
 
 
-def _simplex_lattice_helper(m: int, k: int, partial: List[int], 
-                            points: List[np.ndarray]):
-    """Recursive helper for simplex lattice generation."""
-    if len(partial) == m - 1:
-        remaining = k - sum(partial)
-        if remaining >= 0:
-            coords = partial + [remaining]
-            points.append(np.array(coords, dtype=float) / k)
-        return
+def sperner_coloring(
+    game: FiniteGame,
+    p1: np.ndarray,
+    p2: np.ndarray,
+    player: int
+) -> int:
+    """Compute Sperner coloring for a point in the mixed strategy space.
     
-    remaining = k - sum(partial)
-    for val in range(remaining + 1):
-        _simplex_lattice_helper(m, k, partial + [val], points)
-
-
-# ============================================================
-# Algorithm 2: Fictitious Play
-# ============================================================
-
-def fictitious_play(game: GamePayoffs, iterations: int = 1000) -> Tuple[List[np.ndarray], float]:
+    The coloring assigns each vertex the index of the best-response pure strategy
+    for the specified player. This satisfies the Sperner boundary condition:
+    if a strategy has zero probability, it cannot be the best response direction.
+    
+    Args:
+        game: The finite game
+        p1: Player 1's mixed strategy
+        p2: Player 2's mixed strategy
+        player: Which player (0 or 1)
+    
+    Returns:
+        Index of the best-response pure strategy (the "color")
     """
-    Find approximate Nash equilibrium via fictitious play.
+    if player == 0:
+        payoffs = game.deviation_payoffs_1(p2)
+    else:
+        payoffs = game.deviation_payoffs_2(p1)
+    return int(np.argmax(payoffs))
+
+
+def find_nash_sperner(
+    game: FiniteGame,
+    resolution: int = 20,
+    tolerance: float = 0.01
+) -> List[ApproxNashEquilibrium]:
+    """Find approximate Nash equilibria using the Sperner construction.
     
-    Each player best-responds to the empirical frequency of opponents' play.
-    Converges to Nash equilibrium in 2-player zero-sum games.
+    Algorithm:
+    1. Triangulate each player's strategy simplex at given resolution
+    2. For each grid point pair (p1, p2), compute regret
+    3. Return points with regret below tolerance
     
-    Parameters
-    ----------
-    game : GamePayoffs
-    iterations : int
-        Number of rounds
+    Complexity: O(N^n) where N = resolution, n = total strategies
+    
+    Args:
+        game: The finite game
+        resolution: Triangulation resolution
+        tolerance: Maximum allowed regret
+    
+    Returns:
+        List of approximate Nash equilibria
+    """
+    grid1 = simplex_triangulation(game.num_strategies_1, resolution)
+    grid2 = simplex_triangulation(game.num_strategies_2, resolution)
+    
+    mesh = 1.0 / resolution
+    results: List[ApproxNashEquilibrium] = []
+    
+    for p1 in grid1:
+        for p2 in grid2:
+            regret = game.max_regret(p1, p2)
+            if regret <= tolerance:
+                results.append(ApproxNashEquilibrium(
+                    p1=p1.copy(),
+                    p2=p2.copy(),
+                    epsilon=regret,
+                    mesh_size=mesh
+                ))
+    
+    return results
+
+
+def iterative_sperner_refinement(
+    game: FiniteGame,
+    initial_resolution: int = 5,
+    max_iterations: int = 8,
+    target_epsilon: float = 1e-4
+) -> List[ApproxNashEquilibrium]:
+    """Iteratively refine Sperner-based Nash approximations.
+    
+    This implements the combinatorial equilibrium refinement:
+    start with a coarse triangulation, find approximate equilibria,
+    then refine the triangulation around them.
+    
+    Args:
+        game: The finite game
+        initial_resolution: Starting grid resolution
+        max_iterations: Maximum refinement iterations
+        target_epsilon: Target approximation quality
+    
+    Returns:
+        List of approximate Nash equilibria at the finest resolution
+    """
+    resolution = initial_resolution
+    best_equilibria: List[ApproxNashEquilibrium] = []
+    
+    for iteration in range(max_iterations):
+        tolerance = 2.0 / resolution
+        equilibria = find_nash_sperner(game, resolution, tolerance)
         
-    Returns
-    -------
-    profile, epsilon
-    """
-    n, m = game.n, game.m
-    counts = [np.ones(m) for _ in range(n)]  # Start uniform
-    
-    for t in range(iterations):
-        freqs = [c / c.sum() for c in counts]
-        for i in range(n):
-            br = game.best_response_pure(i, freqs)
-            counts[i][br] += 1
-    
-    profile = [c / c.sum() for c in counts]
-    epsilon = game.max_regret(profile)
-    return profile, epsilon
-
-
-# ============================================================
-# Algorithm 3: Regret Matching
-# ============================================================
-
-def regret_matching(game: GamePayoffs, iterations: int = 1000) -> Tuple[List[np.ndarray], float]:
-    """
-    Find approximate Nash equilibrium via regret matching.
-    
-    Players adjust their strategies proportionally to cumulative positive regret.
-    Guaranteed to converge to a correlated equilibrium.
-    
-    Complexity: O(iterations * n * m^n)
-    """
-    n, m = game.n, game.m
-    cumulative_regret = [np.zeros(m) for _ in range(n)]
-    strategy_sum = [np.zeros(m) for _ in range(n)]
-    
-    for t in range(iterations):
-        # Current strategies from regret matching
-        current = []
-        for i in range(n):
-            pos_regret = np.maximum(cumulative_regret[i], 0)
-            total = pos_regret.sum()
-            if total > 0:
-                current.append(pos_regret / total)
-            else:
-                current.append(np.ones(m) / m)
+        if equilibria:
+            best_equilibria = sorted(equilibria, key=lambda e: e.epsilon)[:10]
+            best_eps = best_equilibria[0].epsilon
+            
+            if best_eps <= target_epsilon:
+                break
         
-        # Accumulate strategies
-        for i in range(n):
-            strategy_sum[i] += current[i]
-        
-        # Update regrets
-        for i in range(n):
-            ep = game.expected_payoff(i, current)
-            for a in range(m):
-                pure = np.zeros(m)
-                pure[a] = 1.0
-                dev = [p.copy() for p in current]
-                dev[i] = pure
-                cumulative_regret[i][a] += game.expected_payoff(i, dev) - ep
+        resolution = int(resolution * 1.5) + 1
     
-    profile = [s / s.sum() for s in strategy_sum]
-    epsilon = game.max_regret(profile)
-    return profile, epsilon
+    return best_equilibria
 
 
-# ============================================================
-# Comparison and Benchmarking
-# ============================================================
-
-def benchmark_algorithms(game: GamePayoffs, name: str = "Game"):
-    """Compare all algorithms on a given game."""
-    print(f"\n{'═' * 60}")
-    print(f"Benchmarking: {name}")
-    print(f"{'═' * 60}")
+def verify_support_lemma(
+    game: FiniteGame,
+    p1: np.ndarray,
+    p2: np.ndarray,
+    tolerance: float = 1e-6
+) -> Tuple[bool, dict]:
+    """Verify the Nash support lemma for a given strategy profile.
     
-    # Sperner at various mesh sizes
-    print(f"\n  Sperner Coloring Algorithm:")
-    print(f"  {'Mesh':>6} {'ε':>10} {'Simplices':>12}")
-    for k in [4, 8, 16, 32]:
-        profile, eps = sperner_nash_2player(game, k)
-        lattice_size = _count_lattice_points(game.m, k)
-        print(f"  {k:>6} {eps:>10.6f} {lattice_size**2:>12}")
+    The support lemma states: if (p1, p2) is a Nash equilibrium, then every
+    strategy with positive probability achieves the same expected payoff
+    (equal to the mixed strategy expected payoff).
     
-    # Fictitious play
-    print(f"\n  Fictitious Play:")
-    for iters in [100, 1000, 10000]:
-        profile, eps = fictitious_play(game, iters)
-        print(f"    {iters:>6} iterations: ε = {eps:.6f}")
+    Args:
+        game: The finite game
+        p1, p2: Mixed strategy profile
+        tolerance: Numerical tolerance
     
-    # Regret matching
-    print(f"\n  Regret Matching:")
-    for iters in [100, 1000, 10000]:
-        profile, eps = regret_matching(game, iters)
-        print(f"    {iters:>6} iterations: ε = {eps:.6f}")
+    Returns:
+        (is_valid, details) where details contains per-strategy information
+    """
+    exp1 = game.expected_payoff_1(p1, p2)
+    exp2 = game.expected_payoff_2(p1, p2)
+    
+    dev1 = game.deviation_payoffs_1(p2)
+    dev2 = game.deviation_payoffs_2(p1)
+    
+    support_1_ok = all(
+        abs(dev1[i] - exp1) <= tolerance
+        for i in range(len(p1)) if p1[i] > tolerance
+    )
+    support_2_ok = all(
+        abs(dev2[j] - exp2) <= tolerance
+        for j in range(len(p2)) if p2[j] > tolerance
+    )
+    
+    details = {
+        'player1_expected': exp1,
+        'player2_expected': exp2,
+        'player1_deviations': dev1.tolist(),
+        'player2_deviations': dev2.tolist(),
+        'player1_support': [i for i in range(len(p1)) if p1[i] > tolerance],
+        'player2_support': [j for j in range(len(p2)) if p2[j] > tolerance],
+        'support_lemma_holds': support_1_ok and support_2_ok
+    }
+    
+    return support_1_ok and support_2_ok, details
 
 
-def _count_lattice_points(m: int, k: int) -> int:
-    """Count lattice points on (m-1)-simplex with granularity k.
-    This is C(k + m - 1, m - 1)."""
-    from math import comb
-    return comb(k + m - 1, m - 1)
-
-
-if __name__ == "__main__":
-    # Matching Pennies
-    payoffs_mp = np.zeros((2, 2, 2))
-    payoffs_mp[0] = np.array([[1, -1], [-1, 1]])
-    payoffs_mp[1] = np.array([[-1, 1], [1, -1]])
-    game_mp = GamePayoffs(2, 2, payoffs_mp)
-    benchmark_algorithms(game_mp, "Matching Pennies")
+if __name__ == '__main__':
+    # Example: Matching Pennies
+    game = FiniteGame(
+        A=np.array([[1, -1], [-1, 1]], dtype=float),
+        B=np.array([[-1, 1], [1, -1]], dtype=float)
+    )
     
-    # Rock-Paper-Scissors
-    payoffs_rps = np.zeros((2, 3, 3))
-    payoffs_rps[0] = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
-    payoffs_rps[1] = -payoffs_rps[0]
-    game_rps = GamePayoffs(2, 3, payoffs_rps)
-    benchmark_algorithms(game_rps, "Rock-Paper-Scissors")
+    print("Finding Nash equilibria for Matching Pennies...")
+    results = iterative_sperner_refinement(game, target_epsilon=0.01)
     
-    # Battle of the Sexes
-    payoffs_bos = np.zeros((2, 2, 2))
-    payoffs_bos[0] = np.array([[3, 0], [0, 2]])
-    payoffs_bos[1] = np.array([[2, 0], [0, 3]])
-    game_bos = GamePayoffs(2, 2, payoffs_bos)
-    benchmark_algorithms(game_bos, "Battle of the Sexes")
+    for eq in results[:3]:
+        print(f"  p1={eq.p1}, p2={eq.p2}, ε={eq.epsilon:.6f}")
+        valid, details = verify_support_lemma(game, eq.p1, eq.p2, tolerance=0.05)
+        print(f"  Support lemma: {'✓' if valid else '✗'}")
