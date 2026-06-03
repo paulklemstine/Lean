@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e2a9a5fb",
     "filename": "the_collatz_conjecture_is_undecidable_what_if_3n1_.json",
     "pkg_num": 296,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7365693548387098,
     "title": "Collatz Undecidability: Orbit Structure, Proof Barriers, and Parity Constraints"
   },
   {
@@ -9554,8 +9554,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_collatz_conjecture_is_undecidable_what_if_3n1_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7365693548387098,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Collatz Undecidability: Orbit Structure, Proof Barriers, and Parity Constraints"
     }

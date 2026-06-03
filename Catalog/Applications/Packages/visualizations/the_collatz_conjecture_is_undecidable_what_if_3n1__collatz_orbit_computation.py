@@ -1,9 +1,6 @@
-def collatz_orbit(n: int, max_steps: int = 10000) -> list[int]:
+def collatz_orbit(n: int, max_steps: int = 100000) -> list[int]:
     orbit = [n]
-    current = n
-    for _ in range(max_steps):
-        if current == 1:
-            break
-        current = current // 2 if current % 2 == 0 else 3 * current + 1
-        orbit.append(current)
+    while n != 1 and len(orbit) < max_steps:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        orbit.append(n)
     return orbit

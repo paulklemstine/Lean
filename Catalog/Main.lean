@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2455 of the highest-quality
+A curated collection of 2460 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2455
+Total files: 2460
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -18,6 +18,7 @@ import FINAL.Algebra.ArtinConjecture
 import FINAL.Algebra.ArtinDeepStructure
 import FINAL.Algebra.ArtinPrimitiveRoot
 import FINAL.Algebra.AttackComposition
+import FINAL.Algebra.AutomaticSequences
 import FINAL.Algebra.AverageCriterion
 import FINAL.Algebra.Barrier
 import FINAL.Algebra.Basic
@@ -154,6 +155,7 @@ import FINAL.Algebra.KernelDensity
 import FINAL.Algebra.Kronecker
 import FINAL.Algebra.Langlands
 import FINAL.Algebra.LanglandsGL1
+import FINAL.Algebra.LanglandsToddlers
 import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.Lehmer
@@ -930,6 +932,7 @@ import FINAL.Bridges.TropicalTopKRobustnessGL3
 import FINAL.Bridges.TropicalUltrametricDuality
 import FINAL.Bridges.TropicalUltrametricQuantumUncertainty
 import FINAL.Bridges.TropicalUnivalence
+import FINAL.Bridges.TropicalValuationClosureBridge
 import FINAL.Bridges.TropicalValuationDistillation
 import FINAL.Bridges.TropicalValuationFunctor
 import FINAL.Bridges.TropicalValuationSecretSharingDuality
@@ -1732,6 +1735,7 @@ import FINAL.MachineLearning.Verified
 import FINAL.MachineLearning.ViralInformationTopology
 import FINAL.MachineLearning.VolcanoDepth
 import FINAL.MachineLearning.WeakChen
+import FINAL.Novelty.SegmentAlgebra
 import FINAL.Physics.Advanced
 import FINAL.Physics.Angular
 import FINAL.Physics.AngularMomentum
@@ -2433,6 +2437,7 @@ import FINAL.Tropical.TropicalSelfReasoning
 import FINAL.Tropical.TropicalSemiring
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
+import FINAL.Tropical.TropicalSurprise
 import FINAL.Tropical.TropicalTrapdoor
 import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
