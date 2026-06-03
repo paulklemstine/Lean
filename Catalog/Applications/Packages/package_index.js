@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1022546f",
     "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
     "pkg_num": 319,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6938035294117646,
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
@@ -10354,8 +10354,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6938035294117646,
+      "quality": "partial",
       "shape": "octahedron",
       "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
