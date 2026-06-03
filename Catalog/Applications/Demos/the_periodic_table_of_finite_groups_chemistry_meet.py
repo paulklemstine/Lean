@@ -1,245 +1,206 @@
-#!/usr/bin/env python3
 """
-Demo: The Periodic Table of Finite Groups
+demo.py — Interactive demonstration of the Periodic Table of Finite Groups
 
-Demonstrates the chemical classification of finite groups,
-the derived depth computation, and the Periodic Law Conjecture verification.
+Shows how finite groups are classified into chemical families and how
+the periodic table analogy works.
 """
 
 from algorithms import (
-    FiniteGroup, make_cyclic_group, make_dihedral_group,
-    big_omega, prime_factorization, verify_periodic_law_conjecture,
-    periodic_table_analysis
+    cyclic_group, symmetric_group, dihedral_group,
+    predict_group_properties, composition_factor_signature,
+    build_periodic_table, prime_factorization
 )
 
 
-def demo_chemical_classification():
-    """Demonstrate chemical series classification for various groups."""
+def demo_chemical_families():
+    """Demonstrate the chemical family classification of groups."""
     print("=" * 70)
-    print("THE PERIODIC TABLE OF FINITE GROUPS")
-    print("Chemical Series Classification")
+    print("CHEMICAL FAMILIES OF FINITE GROUPS")
     print("=" * 70)
 
-    groups = []
+    families = {
+        "Noble Gases (Cyclic)": [],
+        "Alkali Metals (Nilpotent non-cyclic)": [],
+        "Alkaline Earth (Solvable non-nilpotent)": [],
+        "Transition Metals (Simple non-abelian)": [],
+    }
 
-    # Noble Gases: Cyclic groups
-    for n in [2, 3, 5, 7, 11, 13]:
-        g = make_cyclic_group(n)
-        groups.append((f"Z_{n}", n, g))
+    # Classify cyclic groups
+    for n in range(1, 16):
+        zn = cyclic_group(n)
+        family = zn.classify_family()
+        if family == "NobleGas":
+            families["Noble Gases (Cyclic)"].append(f"Z/{n}Z")
 
-    # Alkaline Earths: Products of cyclic groups (Z_2 × Z_2)
-    # Z_2 × Z_2 via multiplication table
-    z2z2_table = [
-        [0, 1, 2, 3],
-        [1, 0, 3, 2],
-        [2, 3, 0, 1],
-        [3, 2, 1, 0],
-    ]
-    groups.append(("Z_2×Z_2", 4, FiniteGroup(z2z2_table)))
+    # Classify dihedral groups
+    for n in range(3, 10):
+        dn = dihedral_group(n)
+        family = dn.classify_family()
+        if family == "AlkalineEarth":
+            families["Alkaline Earth (Solvable non-nilpotent)"].append(f"D_{n}")
+        elif family == "AlkaliMetal":
+            families["Alkali Metals (Nilpotent non-cyclic)"].append(f"D_{n}")
 
-    # Halogens: Dihedral groups (solvable, non-nilpotent for n ≥ 3 odd prime)
-    for n in [3, 5, 7]:
-        d = make_dihedral_group(n)
-        groups.append((f"D_{2*n}", 2 * n, d))
+    # Classify symmetric groups
+    for n in range(2, 5):
+        sn = symmetric_group(n)
+        family = sn.classify_family()
+        for fam_name in families:
+            if family in fam_name.split("(")[1].split(")")[0].lower() or \
+               (family == "NobleGas" and "Noble" in fam_name) or \
+               (family == "AlkaliMetal" and "Alkali M" in fam_name) or \
+               (family == "AlkalineEarth" and "Alkaline" in fam_name) or \
+               (family == "Radioactive" and "Transition" in fam_name):
+                families[fam_name].append(f"S_{n}")
+                break
 
-    # Dihedral D_4 (nilpotent, non-abelian)
-    d4 = make_dihedral_group(4)
-    groups.append(("D_8", 8, d4))
-
-    print(f"\n{'Group':12s} {'Order':>6s} {'Series':18s} {'Cyclic':>7s} "
-          f"{'Abelian':>8s} {'Nilp.':>6s} {'Solv.':>6s} {'Depth':>6s}")
-    print("-" * 75)
-
-    for name, order, g in groups:
-        series = g.classify_chemical_series()
-        depth = g.derived_depth()
-        print(f"{name:12s} {order:6d} {series:18s} "
-              f"{'Yes' if g.is_cyclic() else 'No':>7s} "
-              f"{'Yes' if g.is_abelian() else 'No':>8s} "
-              f"{'Yes' if g.is_nilpotent() else 'No':>6s} "
-              f"{'Yes' if g.is_solvable() else 'No':>6s} "
-              f"{depth if depth is not None else 'N/A':>6}")
+    for fam_name, groups in families.items():
+        print(f"\n{fam_name}:")
+        if groups:
+            print(f"  {', '.join(groups)}")
+        else:
+            print(f"  (none in this range)")
 
 
 def demo_derived_series():
-    """Show the derived series computation step by step."""
+    """Show the derived series computation for several groups."""
     print("\n" + "=" * 70)
-    print("DERIVED SERIES DECOMPOSITION")
+    print("DERIVED SERIES (Solvability Depth)")
     print("=" * 70)
 
-    # S_3 ≅ D_6
-    print("\nS_3 (Symmetric group on 3 elements, order 6):")
-    d3 = make_dihedral_group(3)
-    series = d3.derived_series()
-    for i, s in enumerate(series):
-        print(f"  G^({i}) = {sorted(s)} (order {len(s)})")
-    print(f"  → Derived depth = {len(series) - 1}")
-    print(f"  → Chemical series: {d3.classify_chemical_series()}")
+    groups = [
+        ("Z/6Z (abelian)", cyclic_group(6)),
+        ("S_3 (non-abelian, solvable)", symmetric_group(3)),
+        ("S_4 (non-abelian, solvable)", symmetric_group(4)),
+        ("D_4 (dihedral, nilpotent)", dihedral_group(4)),
+        ("D_5 (dihedral, solvable)", dihedral_group(5)),
+    ]
 
-    # D_8
-    print("\nD_4 (Dihedral group of order 8):")
-    d4 = make_dihedral_group(4)
-    series = d4.derived_series()
-    for i, s in enumerate(series):
-        print(f"  G^({i}) = {sorted(s)} (order {len(s)})")
-    print(f"  → Derived depth = {len(series) - 1}")
-    print(f"  → Chemical series: {d4.classify_chemical_series()}")
-
-    # Z_12
-    print("\nZ_12 (Cyclic group of order 12):")
-    z12 = make_cyclic_group(12)
-    series = z12.derived_series()
-    for i, s in enumerate(series):
-        print(f"  G^({i}) = {sorted(s)} (order {len(s)})")
-    print(f"  → Derived depth = {len(series) - 1}")
-    print(f"  → Chemical series: {z12.classify_chemical_series()}")
+    for name, g in groups:
+        series = g.derived_series()
+        print(f"\n{name} (order {g.order}):")
+        for i, term in enumerate(series):
+            print(f"  G^({i}) has order {len(term)}: {sorted(term)[:10]}{'...' if len(term) > 10 else ''}")
+        print(f"  Derived length: {g.derived_length()}")
+        print(f"  Solvable: {g.is_solvable()}")
 
 
-def demo_big_omega():
-    """Demonstrate the big omega function."""
+def demo_isotope_conjecture():
+    """Demonstrate the falsity of the isotope conjecture."""
     print("\n" + "=" * 70)
-    print("BIG OMEGA FUNCTION Ω(n)")
-    print("(Number of prime factors with multiplicity)")
+    print("THE ISOTOPE CONJECTURE (DISPROVED)")
     print("=" * 70)
 
-    print(f"\n{'n':>6s} {'Factorization':>20s} {'Ω(n)':>6s}")
-    print("-" * 35)
+    print("\nConjecture: Groups of the same order have the same derived length.")
+    print("\nCounterexample: Z/6Z vs S_3")
 
-    for n in range(2, 31):
-        factors = prime_factorization(n)
-        factor_str = " × ".join(
-            f"{p}^{e}" if e > 1 else str(p)
-            for p, e in sorted(factors.items())
-        )
-        print(f"{n:6d} {factor_str:>20s} {big_omega(n):6d}")
+    z6 = cyclic_group(6)
+    s3 = symmetric_group(3)
+
+    print(f"\n  Z/6Z: order = {z6.order}")
+    print(f"    Abelian: {z6.is_abelian()}")
+    print(f"    Derived series: {[len(s) for s in z6.derived_series()]}")
+    print(f"    Derived length: {z6.derived_length()}")
+    print(f"    Family: {z6.classify_family()}")
+
+    print(f"\n  S_3:  order = {s3.order}")
+    print(f"    Abelian: {s3.is_abelian()}")
+    print(f"    Derived series: {[len(s) for s in s3.derived_series()]}")
+    print(f"    Derived length: {s3.derived_length()}")
+    print(f"    Family: {s3.classify_family()}")
+
+    print(f"\n  Both have order 6 but derived lengths {z6.derived_length()} ≠ {s3.derived_length()}")
+    print("  => The Isotope Conjecture is FALSE!")
+
+    print("\n  However, the WEAK Periodic Law holds:")
+    print("  Groups with the same composition factors share SOLVABILITY.")
+    print(f"  Z/6Z composition factors: {composition_factor_signature(6)}")
+    print(f"  Both Z/6Z and S_3 are solvable (all factors are primes).")
 
 
-def demo_periodic_law():
-    """Test the Periodic Law Conjecture."""
+def demo_predictions():
+    """Demonstrate predictive power of the periodic table."""
     print("\n" + "=" * 70)
-    print("PERIODIC LAW CONJECTURE VERIFICATION")
-    print("derivedDepth(G) ≤ Ω(|G|)")
+    print("PREDICTIONS FROM THE PERIODIC TABLE")
     print("=" * 70)
 
-    results = verify_periodic_law_conjecture(20)
+    test_orders = [12, 24, 30, 60, 120, 168, 360]
 
-    solvable_results = [r for r in results if r["derived_depth"] is not None]
-    non_solvable = [r for r in results if r["derived_depth"] is None]
-
-    print(f"\n{'Group':10s} {'Order':>6s} {'Depth':>6s} {'Ω':>4s} "
-          f"{'Gap':>4s} {'Series':18s} {'Status':>8s}")
-    print("-" * 65)
-
-    all_hold = True
-    for r in solvable_results:
-        gap = r["big_omega"] - r["derived_depth"]
-        status = "✓" if r["conjecture_holds"] else "✗"
-        if not r["conjecture_holds"]:
-            all_hold = False
-        print(f"{r['group']:10s} {r['order']:6d} {r['derived_depth']:6d} "
-              f"{r['big_omega']:4d} {gap:4d} {r['chemical_series']:18s} {status:>8s}")
-
-    if non_solvable:
-        print(f"\nNon-solvable groups (excluded from conjecture):")
-        for r in non_solvable:
-            print(f"  {r['group']:10s} order={r['order']:4d} "
-                  f"series={r['chemical_series']}")
-
-    print(f"\n{'CONJECTURE HOLDS' if all_hold else 'COUNTEREXAMPLE FOUND'} "
-          f"for all {len(solvable_results)} solvable groups tested.")
+    for n in test_orders:
+        pred = predict_group_properties(n)
+        print(f"\nOrder {n} = ", end="")
+        factors = pred['prime_factorization']
+        print(" × ".join(f"{p}^{e}" if e > 1 else str(p)
+                        for p, e in sorted(factors.items())))
+        print(f"  Composition factors: {pred['composition_factors']}")
+        print(f"  Guaranteed solvable: {pred['guaranteed_solvable']}")
+        print(f"  Guaranteed nilpotent: {pred['guaranteed_nilpotent']}")
+        print(f"  Predicted family: {pred['predicted_family']}")
+        if pred['sylow_info']:
+            for p, info in pred['sylow_info'].items():
+                print(f"  Sylow {p}-subgroup: order {info['order']}, "
+                      f"possible counts: {info['possible_counts']}, "
+                      f"unique: {info['unique']}")
 
 
 def demo_valence():
-    """Demonstrate group valence computation."""
+    """Show the valence (minimal normal subgroup count) for various groups."""
     print("\n" + "=" * 70)
     print("GROUP VALENCE (Minimal Normal Subgroups)")
     print("=" * 70)
 
     groups = [
-        ("Z_2", make_cyclic_group(2)),
-        ("Z_3", make_cyclic_group(3)),
-        ("Z_6", make_cyclic_group(6)),
-        ("Z_2×Z_2", FiniteGroup([
-            [0, 1, 2, 3], [1, 0, 3, 2],
-            [2, 3, 0, 1], [3, 2, 1, 0]
-        ])),
-        ("D_6", make_dihedral_group(3)),
-        ("D_8", make_dihedral_group(4)),
+        ("Z/2Z", cyclic_group(2)),
+        ("Z/4Z", cyclic_group(4)),
+        ("Z/6Z", cyclic_group(6)),
+        ("S_3", symmetric_group(3)),
+        ("D_4", dihedral_group(4)),
+        ("S_4", symmetric_group(4)),
     ]
 
-    print(f"\n{'Group':12s} {'Order':>6s} {'Valence':>8s} "
-          f"{'Normal Subs':>12s} {'Series':18s}")
-    print("-" * 65)
-
     for name, g in groups:
-        v = g.valence()
-        normals = len(g.normal_subgroups())
-        series = g.classify_chemical_series()
-        print(f"{name:12s} {g.n:6d} {v:8d} {normals:12d} {series:18s}")
+        mns = g.minimal_normal_subgroups()
+        print(f"\n{name} (order {g.order}):")
+        print(f"  Valence: {g.valence()}")
+        for i, ns in enumerate(mns):
+            print(f"  Minimal normal subgroup {i+1}: order {len(ns)}, elements {sorted(ns)}")
 
 
 if __name__ == "__main__":
-    demo_chemical_classification()
+    demo_chemical_families()
     demo_derived_series()
-    demo_big_omega()
-    demo_periodic_law()
+    demo_isotope_conjecture()
+    demo_predictions()
     demo_valence()
 
 
-#!/usr/bin/env python3
 """
-Visualization: The Periodic Table of Finite Groups
+visualize_periodic_table.py — Visualize the Periodic Table of Finite Groups
 
-Creates a visual periodic table showing groups classified by chemical series,
-with derived depth and Ω values displayed.
+Creates a color-coded periodic table showing group families,
+derived lengths, and structural properties.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+from math import factorial, gcd
 
 
-def big_omega(n: int) -> int:
-    """Count prime factors with multiplicity."""
-    if n <= 1:
-        return 0
-    count = 0
-    d = 2
-    temp = n
-    while d * d <= temp:
-        while temp % d == 0:
-            count += 1
-            temp //= d
-        d += 1
-    if temp > 1:
-        count += 1
-    return count
-
-
-def prime_factorization_str(n: int) -> str:
-    """Return a readable prime factorization string."""
-    if n <= 1:
-        return str(n)
+def prime_factorization(n):
     factors = {}
     d = 2
-    temp = n
-    while d * d <= temp:
-        while temp % d == 0:
+    while d * d <= n:
+        while n % d == 0:
             factors[d] = factors.get(d, 0) + 1
-            temp //= d
+            n //= d
         d += 1
-    if temp > 1:
-        factors[temp] = factors.get(temp, 0) + 1
-    parts = []
-    for p in sorted(factors):
-        e = factors[p]
-        parts.append(f"{p}^{e}" if e > 1 else str(p))
-    return "·".join(parts)
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+    return factors
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n):
     if n < 2:
         return False
     for d in range(2, int(n**0.5) + 1):
@@ -248,218 +209,230 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def classify_order(n: int) -> str:
-    """Heuristic classification of groups of order n."""
+def classify_order(n):
+    """Classify groups of order n by their guaranteed family."""
     if n == 1:
-        return "Trivial"
+        return "NobleGas", 1
     if is_prime(n):
-        return "Noble Gas"  # Only cyclic group exists
-    # Check if n is a prime power
-    for p in range(2, n + 1):
-        if not is_prime(p):
-            continue
-        k = 0
-        temp = n
-        while temp % p == 0:
-            k += 1
-            temp //= p
-        if temp == 1:
-            if k == 1:
-                return "Noble Gas"
-            return "Alkali Metal"  # p-groups are nilpotent
-    # Multiple prime factors
-    factors = {}
-    d = 2
-    temp = n
-    while d * d <= temp:
-        while temp % d == 0:
-            factors[d] = factors.get(d, 0) + 1
-            temp //= d
-        d += 1
-    if temp > 1:
-        factors[temp] = factors.get(temp, 0) + 1
-
-    if len(factors) == 2:
-        return "Halogen"  # Burnside: p^a q^b → solvable
-    return "Transition Metal"  # May or may not be solvable
+        return "NobleGas", 1
+    factors = prime_factorization(n)
+    primes = list(factors.keys())
+    if len(primes) == 1:
+        p, k = list(factors.items())[0]
+        if k == 1:
+            return "NobleGas", 1
+        return "AlkaliMetal", 2  # p-groups are nilpotent
+    if len(primes) == 2:
+        return "AlkalineEarth", max(2, sum(factors.values()))  # Burnside: solvable
+    # For 3+ prime factors, might not be solvable
+    # Check if any composition includes A5 (order 60)
+    if n % 60 == 0 and n >= 60:
+        return "Radioactive", -1
+    return "AlkalineEarth", sum(factors.values())
 
 
-# Color scheme
-COLORS = {
-    "Noble Gas": "#4FC3F7",      # Light blue
-    "Alkaline Earth": "#81C784",  # Green
-    "Alkali Metal": "#FFB74D",    # Orange
-    "Halogen": "#E57373",         # Red
-    "Transition Metal": "#9575CD", # Purple
-    "Trivial": "#BDBDBD",         # Grey
-}
+def get_family_color(family):
+    colors = {
+        "NobleGas": "#E8F5E9",       # Light green
+        "AlkaliMetal": "#FFEBEE",     # Light red
+        "AlkalineEarth": "#FFF3E0",   # Light orange
+        "TransitionMetal": "#E3F2FD", # Light blue
+        "Halogen": "#F3E5F5",         # Light purple
+        "Radioactive": "#ECEFF1",     # Light gray
+    }
+    return colors.get(family, "#FFFFFF")
+
+
+def get_family_border(family):
+    colors = {
+        "NobleGas": "#4CAF50",
+        "AlkaliMetal": "#F44336",
+        "AlkalineEarth": "#FF9800",
+        "TransitionMetal": "#2196F3",
+        "Halogen": "#9C27B0",
+        "Radioactive": "#607D8B",
+    }
+    return colors.get(family, "#000000")
 
 
 def create_periodic_table():
-    """Create the periodic table visualization."""
+    """Create a visual periodic table of finite groups."""
     fig, ax = plt.subplots(1, 1, figsize=(16, 10))
     ax.set_xlim(-0.5, 10.5)
-    ax.set_ylim(-0.5, 12.5)
+    ax.set_ylim(-0.5, 10.5)
     ax.set_aspect('equal')
-    ax.invert_yaxis()
     ax.axis('off')
-    ax.set_title("The Periodic Table of Finite Groups\n"
-                 "Groups of Order 1-100, Classified by Chemical Series",
+    ax.set_title("The Periodic Table of Finite Groups (Orders 1-100)",
                  fontsize=16, fontweight='bold', pad=20)
 
-    # Place groups in a grid: rows by order magnitude, columns by type
-    data = []
-    for n in range(1, 101):
-        series = classify_order(n)
-        omega = big_omega(n)
-        data.append({
-            "order": n,
-            "series": series,
-            "omega": omega,
-            "factorization": prime_factorization_str(n),
-        })
+    # Layout: rows = decades of order, columns = family type
+    # We'll show selected representative groups
 
-    # Organize by series for the table
-    series_groups = {}
-    for d in data:
-        s = d["series"]
-        if s not in series_groups:
-            series_groups[s] = []
-        series_groups[s].append(d)
+    groups_data = [
+        # (row, col, order, name, family, derived_length)
+        (0, 0, 1, "{e}", "NobleGas", 0),
+        (0, 1, 2, "Z/2", "NobleGas", 1),
+        (0, 2, 3, "Z/3", "NobleGas", 1),
+        (0, 3, 4, "Z/4", "NobleGas", 1),
+        (0, 4, 4, "V₄", "AlkaliMetal", 1),
+        (0, 5, 5, "Z/5", "NobleGas", 1),
+        (0, 6, 6, "Z/6", "NobleGas", 1),
+        (0, 7, 6, "S₃", "AlkalineEarth", 2),
 
-    # Column positions for each series
-    col_map = {
-        "Noble Gas": 0,
-        "Alkali Metal": 2,
-        "Halogen": 5,
-        "Transition Metal": 8,
-        "Trivial": 0,
-    }
+        (1, 0, 7, "Z/7", "NobleGas", 1),
+        (1, 1, 8, "Z/8", "NobleGas", 1),
+        (1, 2, 8, "D₄", "AlkaliMetal", 2),
+        (1, 3, 8, "Q₈", "AlkaliMetal", 2),
+        (1, 4, 9, "Z/9", "NobleGas", 1),
+        (1, 5, 9, "Z/3²", "AlkaliMetal", 1),
+        (1, 6, 10, "Z/10", "NobleGas", 1),
+        (1, 7, 10, "D₅", "AlkalineEarth", 2),
 
-    # Draw entries
-    row_counters = {k: 0 for k in col_map}
-    cell_size = 0.9
+        (2, 0, 11, "Z/11", "NobleGas", 1),
+        (2, 1, 12, "Z/12", "NobleGas", 1),
+        (2, 2, 12, "A₄", "AlkalineEarth", 3),
+        (2, 3, 12, "D₆", "AlkalineEarth", 2),
+        (2, 4, 13, "Z/13", "NobleGas", 1),
+        (2, 5, 14, "D₇", "AlkalineEarth", 2),
+        (2, 6, 15, "Z/15", "NobleGas", 1),
+        (2, 7, 16, "Z/16", "NobleGas", 1),
 
-    for series_name in ["Noble Gas", "Alkali Metal", "Halogen", "Transition Metal"]:
-        if series_name not in series_groups:
-            continue
-        col = col_map[series_name]
-        groups = series_groups[series_name][:12]  # Limit to 12 per column
+        (3, 0, 16, "D₈", "AlkaliMetal", 2),
+        (3, 1, 17, "Z/17", "NobleGas", 1),
+        (3, 2, 18, "D₉", "AlkalineEarth", 2),
+        (3, 3, 20, "D₁₀", "AlkalineEarth", 2),
+        (3, 4, 21, "Z/21", "NobleGas", 1),
+        (3, 5, 24, "S₄", "AlkalineEarth", 3),
+        (3, 6, 24, "SL₂₃", "AlkalineEarth", 3),
 
-        for i, d in enumerate(groups):
-            x = col
-            y = i + 1
-            color = COLORS.get(series_name, "#BDBDBD")
+        (4, 0, 27, "Z/27", "NobleGas", 1),
+        (4, 1, 30, "Z/30", "NobleGas", 1),
+        (4, 2, 32, "Z/32", "NobleGas", 1),
+        (4, 3, 36, "Z/36", "NobleGas", 1),
+        (4, 4, 48, "GL₂₃", "AlkalineEarth", 3),
 
-            rect = mpatches.FancyBboxPatch(
-                (x - cell_size/2, y - cell_size/2),
-                cell_size * 2, cell_size,
-                boxstyle="round,pad=0.05",
-                facecolor=color, edgecolor='black', linewidth=0.5, alpha=0.8
-            )
-            ax.add_patch(rect)
+        (5, 0, 60, "A₅", "TransitionMetal", -1),
+        (5, 1, 60, "Z/60", "NobleGas", 1),
+        (5, 2, 120, "S₅", "Radioactive", -1),
+        (5, 3, 168, "GL₃₂", "TransitionMetal", -1),
+    ]
 
-            # Order number (like atomic number)
-            ax.text(x - cell_size/2 + 0.1, y - cell_size/2 + 0.15,
-                    str(d["order"]), fontsize=7, fontweight='bold', va='top')
+    for row, col, order, name, family, dl in groups_data:
+        x = col * 1.3
+        y = 9.5 - row * 1.8
 
-            # Omega value
-            ax.text(x + cell_size * 1.5 - 0.1, y - cell_size/2 + 0.15,
-                    f"Ω={d['omega']}", fontsize=6, va='top', ha='right')
+        # Draw cell
+        rect = mpatches.FancyBboxPatch(
+            (x - 0.55, y - 0.75), 1.1, 1.4,
+            boxstyle="round,pad=0.05",
+            facecolor=get_family_color(family),
+            edgecolor=get_family_border(family),
+            linewidth=2
+        )
+        ax.add_patch(rect)
 
-            # Factorization
-            ax.text(x + cell_size/2, y + 0.05,
-                    d["factorization"], fontsize=8, ha='center', va='center',
-                    fontweight='bold')
+        # Order (atomic number)
+        ax.text(x - 0.4, y + 0.45, str(order),
+                fontsize=7, fontweight='bold', color='#333')
 
-    # Column headers
-    headers = {
-        0: "Noble Gas\n(Cyclic/Prime)",
-        2: "Alkali Metal\n(p-groups)",
-        5: "Halogen\n(2-prime)",
-        8: "Transition Metal\n(≥3 primes)",
-    }
-    for col, label in headers.items():
-        ax.text(col + cell_size/2, 0.3, label,
-                fontsize=9, fontweight='bold', ha='center', va='bottom',
-                color=COLORS.get(label.split('\n')[0], 'black'))
+        # Name (element symbol)
+        ax.text(x, y + 0.05, name,
+                fontsize=10, fontweight='bold', ha='center', va='center')
+
+        # Derived length
+        dl_str = f"d={dl}" if dl >= 0 else "∞"
+        ax.text(x, y - 0.45, dl_str,
+                fontsize=7, ha='center', color='#666')
 
     # Legend
     legend_items = [
-        mpatches.Patch(color=COLORS["Noble Gas"], label="Noble Gas (cyclic)"),
-        mpatches.Patch(color=COLORS["Alkali Metal"], label="Alkali Metal (nilpotent)"),
-        mpatches.Patch(color=COLORS["Halogen"], label="Halogen (solvable)"),
-        mpatches.Patch(color=COLORS["Transition Metal"], label="Transition Metal (complex)"),
+        ("Noble Gas (Cyclic)", "NobleGas"),
+        ("Alkali Metal (Nilpotent)", "AlkaliMetal"),
+        ("Alkaline Earth (Solvable)", "AlkalineEarth"),
+        ("Transition Metal (Simple)", "TransitionMetal"),
+        ("Radioactive (Non-solvable)", "Radioactive"),
     ]
-    ax.legend(handles=legend_items, loc='lower right', fontsize=8)
 
+    for i, (label, family) in enumerate(legend_items):
+        y_leg = 1.5 - i * 0.5
+        rect = mpatches.FancyBboxPatch(
+            (10.5, y_leg - 0.15), 0.3, 0.3,
+            boxstyle="round,pad=0.02",
+            facecolor=get_family_color(family),
+            edgecolor=get_family_border(family),
+            linewidth=1.5
+        )
+        ax.add_patch(rect)
+        ax.text(10.95, y_leg, label, fontsize=8, va='center')
+
+    ax.set_xlim(-1, 15)
     plt.tight_layout()
     plt.savefig("periodic_table_groups.png", dpi=150, bbox_inches='tight')
+    plt.close()
     print("Saved: periodic_table_groups.png")
 
 
-def create_omega_vs_depth_plot():
-    """Create a scatter plot of Ω(n) vs known derived depths."""
-    fig, ax = plt.subplots(figsize=(10, 7))
+def create_derived_length_distribution():
+    """Create a bar chart of derived length distribution by order."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Known groups with their derived depths
-    groups = [
-        ("Z_1", 1, 0), ("Z_2", 2, 1), ("Z_3", 3, 1), ("Z_4", 4, 1),
-        ("Z_5", 5, 1), ("Z_6", 6, 1), ("Z_7", 7, 1), ("Z_8", 8, 1),
-        ("Z_12", 12, 1), ("Z_24", 24, 1), ("Z_30", 30, 1),
-        ("S_3", 6, 2), ("D_8", 8, 2), ("D_10", 10, 2),
-        ("A_4", 12, 2), ("D_12", 12, 2),
-        ("S_4", 24, 3), ("D_16", 16, 2),
-        ("Q_8", 8, 2), ("D_24", 24, 2),
-    ]
+    # Left: derived length by order
+    orders = list(range(1, 51))
+    dl_min = []
+    dl_max = []
 
-    omegas = [big_omega(g[1]) for g in groups]
-    depths = [g[2] for g in groups]
-    orders = [g[1] for g in groups]
-    names = [g[0] for g in groups]
-
-    # Color by chemical series
-    colors = []
-    for name in names:
-        if name.startswith("Z_"):
-            colors.append(COLORS["Noble Gas"])
-        elif name.startswith("D_") or name.startswith("Q_"):
-            colors.append(COLORS["Alkali Metal"])
-        elif name.startswith("S_"):
-            colors.append(COLORS["Halogen"])
-        elif name.startswith("A_"):
-            colors.append(COLORS["Halogen"])
+    for n in orders:
+        family, dl = classify_order(n)
+        if family == "NobleGas":
+            dl_min.append(1 if n > 1 else 0)
+            dl_max.append(1 if n > 1 else 0)
+        elif family == "AlkaliMetal":
+            dl_min.append(1)
+            dl_max.append(dl)
+        elif family == "AlkalineEarth":
+            dl_min.append(1)
+            dl_max.append(dl)
         else:
-            colors.append(COLORS["Transition Metal"])
+            dl_min.append(1)
+            dl_max.append(dl if dl > 0 else 5)
 
-    scatter = ax.scatter(omegas, depths, c=colors, s=100, edgecolors='black',
-                         linewidths=0.5, zorder=3)
+    colors = []
+    for n in orders:
+        family, _ = classify_order(n)
+        colors.append(get_family_border(family))
 
-    # Add labels
-    for i, name in enumerate(names):
-        ax.annotate(name, (omegas[i], depths[i]),
-                    textcoords="offset points", xytext=(5, 5),
-                    fontsize=7, alpha=0.8)
+    axes[0].bar(orders, dl_max, color=colors, alpha=0.7, edgecolor='black', linewidth=0.5)
+    axes[0].set_xlabel("Group Order", fontsize=12)
+    axes[0].set_ylabel("Max Derived Length", fontsize=12)
+    axes[0].set_title("Derived Length vs Order", fontsize=14, fontweight='bold')
 
-    # Conjecture line: depth ≤ Ω
-    max_omega = max(omegas) + 1
-    ax.plot([0, max_omega], [0, max_omega], 'r--', alpha=0.5,
-            label='Conjecture bound: depth = Ω')
+    # Right: family distribution
+    family_counts = {"NobleGas": 0, "AlkaliMetal": 0, "AlkalineEarth": 0,
+                     "TransitionMetal": 0, "Radioactive": 0}
+    for n in range(1, 101):
+        family, _ = classify_order(n)
+        family_counts[family] = family_counts.get(family, 0) + 1
 
-    ax.set_xlabel("Ω(|G|) — Prime factors with multiplicity", fontsize=12)
-    ax.set_ylabel("Derived Depth", fontsize=12)
-    ax.set_title("Periodic Law Conjecture: derivedDepth(G) ≤ Ω(|G|)",
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(-0.5, max_omega)
-    ax.set_ylim(-0.5, max(depths) + 1)
+    labels = list(family_counts.keys())
+    values = list(family_counts.values())
+    fcolors = [get_family_border(f) for f in labels]
+
+    axes[1].pie(values, labels=[l.replace("NobleGas", "Noble Gas")
+                                 .replace("AlkaliMetal", "Alkali Metal")
+                                 .replace("AlkalineEarth", "Alkaline Earth")
+                                 .replace("TransitionMetal", "Trans. Metal")
+                                 for l in labels],
+                colors=fcolors, autopct='%1.0f%%', startangle=90,
+                textprops={'fontsize': 9})
+    axes[1].set_title("Family Distribution (Orders 1-100)",
+                      fontsize=14, fontweight='bold')
 
     plt.tight_layout()
-    plt.savefig("omega_vs_depth.png", dpi=150, bbox_inches='tight')
-    print("Saved: omega_vs_depth.png")
+    plt.savefig("derived_length_distribution.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: derived_length_distribution.png")
 
 
 if __name__ == "__main__":
     create_periodic_table()
-    create_omega_vs_depth_plot()
+    create_derived_length_distribution()

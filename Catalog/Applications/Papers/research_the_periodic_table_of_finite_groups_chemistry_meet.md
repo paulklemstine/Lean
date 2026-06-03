@@ -1,216 +1,268 @@
-# The Periodic Table of Finite Groups: Structural Classification via Chemical-Algebraic Invariants
+# The Periodic Table of Finite Groups: A Chemical Classification Framework
 
 ## Abstract
 
-We develop a systematic framework for classifying finite groups using invariants inspired by chemical periodicity. We define **group valence** (the number of minimal normal subgroups), **chemical series** (a taxonomy based on structural type), and **derived depth** (a measure of group reactivity). We establish the **Derived–Central Series Inequality** showing that the derived series decays at least as fast as the lower central series, yielding the bound that derived depth is at most nilpotency class for nilpotent groups. We prove that the derived series of direct products decomposes as a product of derived series (the **Mixture Decomposition Theorem**), that simple groups have valence exactly 1, and that cyclic groups have unique Sylow subgroups (noble gas configuration). We state the **Refined Periodic Law Conjecture**: the derived depth of a solvable group of order n is at most Ω(n), the number of prime factors counted with multiplicity. All structural theorems are machine-verified.
+We develop a systematic classification of finite groups by analogy with the chemical periodic table. Groups are organized into "chemical families" — Noble Gases (cyclic), Alkali Metals (nilpotent), Alkaline Earth (solvable non-nilpotent), Transition Metals (simple non-abelian), and Radioactive (non-solvable composite) — based on their structural properties. We define the group "valence" as the number of minimal normal subgroups and prove that this invariant, together with the derived length and composition factor structure, provides a predictive classification framework.
 
-**Keywords**: finite groups, derived series, lower central series, nilpotency class, Sylow theory, group classification, minimal normal subgroups, socle
+We establish nine formally verified theorems in Lean 4 with Mathlib, including: (1) the antitonicity of the derived series, (2) the product decomposition theorem for derived series, (3) the simplicity of minimal normal subgroups in abelian groups, (4) the simple-solvable dichotomy, and (5) a formal disproof of the "isotope conjecture" (that groups of equal order share derived length). The disproof uses the concrete counterexample of S₃ versus ℤ/6ℤ, both of order 6 but with derived lengths 2 and 1 respectively.
 
----
+**Keywords**: finite groups, composition factors, derived series, solvability, periodic table, formal verification
 
 ## 1. Introduction
 
-The classification of finite groups is one of the great achievements of 20th-century mathematics, culminating in the Classification of Finite Simple Groups (CFSG). However, while the simple groups are completely known, the problem of understanding how they combine to form general finite groups remains formidable. For a given order n, the number of groups can vary from 1 (for n prime) to billions (for n = 2^k).
+The classification of finite groups is one of the central problems in algebra. While the classification of finite simple groups — the "atoms" of group theory — was completed in 2004, the problem of organizing all finite groups remains formidable. The number of groups of order n grows superexponentially: there are approximately 49 billion groups of order 1024 alone.
 
-We propose a structural organization inspired by the periodic table of chemical elements. The key insight is that group-theoretic invariants — derived length, nilpotency class, composition factors, and minimal normal subgroup count — play roles analogous to chemical properties: reactivity, electron shell count, elemental composition, and valence. This analogy is not merely aesthetic: it leads to precise, provable structural theorems and testable conjectures.
+Mendeleev's periodic table of chemical elements (1869) provides a compelling model: elements are organized by atomic number and grouped into families with shared chemical properties. The key insight was that chemical behavior is determined not by mass alone, but by electronic structure — which is itself determined by the arrangement of protons and electrons.
 
-### 1.1 Related Work
+We propose an analogous framework for finite groups. The "atomic number" is the group order, the "electronic structure" is the derived series, and the "chemical family" is determined by the interplay of solvability, nilpotency, and simplicity. The "atoms" are the composition factors (guaranteed unique by the Jordan-Hölder theorem), and the "valence" is the number of minimal normal subgroups.
 
-The idea of organizing groups by structural type has deep roots. The Jordan-Hölder theorem (1870s–1880s) shows that composition factors are an invariant, analogous to elemental composition. The Sylow theorems (1872) constrain the prime-power structure, analogous to electron configuration. Burnside's p^a q^b theorem (1904) shows that two-prime-factor groups are solvable — a "chemical property" determined by the "atomic number."
+### 1.1 Contributions
 
-Our contribution is to:
-1. Formalize the chemical-algebraic dictionary with precise definitions.
-2. Prove structural theorems that justify the analogy.
-3. State falsifiable conjectures that push the analogy to its limits.
-4. Machine-verify all results.
+1. **Chemical Family Classification** (Definition 3.1): A rigorous taxonomy of finite groups into six families by structural type.
 
-## 2. Definitions
+2. **Group Valence** (Definition 3.2): A new invariant — the count of minimal normal subgroups — that measures extension capacity.
 
-### 2.1 Chemical Series Classification
+3. **Derived Series Product Theorem** (Theorem 4.3): The derived series of G × H equals the product of the derived series.
 
-We classify finite groups into five *chemical series*:
+4. **Simple-Solvable Dichotomy** (Theorem 4.5): Simple groups are solvable if and only if they are commutative — there is no middle ground.
 
-| Series | Group Type | Key Property | Chemical Analog |
-|--------|-----------|-------------|----------------|
-| Noble Gas | Cyclic | Abelian, unique Sylow subgroups | Complete electron shell |
-| Alkaline Earth | Abelian non-cyclic | Decomposable | Stable, moderate reactivity |
-| Alkali Metal | Nilpotent non-abelian | Bounded derived depth | Reactive but controlled |
-| Halogen | Solvable non-nilpotent | Solvable tower | High reactivity |
-| Transition Metal | Non-solvable | No abelian decomposition | Complex, catalytic |
+5. **Minimal Normal Simplicity** (Theorem 4.6): Minimal normal subgroups of abelian groups are simple.
 
-### 2.2 Derived Depth
+6. **Isotope Conjecture Disproof** (Theorem 4.9): Groups of equal order need not share derived length.
 
-**Definition (Derived Depth).** For a solvable group G, the *derived depth* is
-$$\text{derivedDepth}(G) = \inf\{n \in \mathbb{N} : G^{(n)} = 1\}$$
-where G^{(n)} denotes the n-th derived subgroup.
+7. **Formal Verification**: All results verified in Lean 4 using Mathlib, with axioms restricted to {propext, Classical.choice, Quot.sound, Lean.ofReduceBool, Lean.trustCompiler}.
 
-### 2.3 Group Valence
+## 2. Background and Notation
 
-**Definition (Minimal Normal Subgroup).** A normal subgroup N of G is *minimal normal* if N ≠ 1 and there is no normal subgroup K of G with 1 < K < N.
+### 2.1 Derived Series
 
-**Definition (Group Valence).** The *valence* of a group G is the number of its minimal normal subgroups.
+For a group G, the **derived series** is defined recursively:
+- G⁽⁰⁾ = G
+- G⁽ⁿ⁺¹⁾ = [G⁽ⁿ⁾, G⁽ⁿ⁾]
 
-**Definition (Socle).** The *socle* of G is the join (generated subgroup) of all minimal normal subgroups.
+where [H, K] denotes the commutator subgroup generated by {hkh⁻¹k⁻¹ : h ∈ H, k ∈ K}.
 
-### 2.4 Big Omega Function
+A group G is **solvable** if G⁽ⁿ⁾ = {1} for some n ∈ ℕ. The minimal such n is the **derived length**.
 
-**Definition.** For n ≥ 2, let Ω(n) denote the number of prime factors of n counted with multiplicity. Set Ω(0) = Ω(1) = 0.
+### 2.2 Composition Series
 
-## 3. Main Results
+A **composition series** for a finite group G is a chain:
+{1} = G₀ ◁ G₁ ◁ ⋯ ◁ Gₖ = G
 
-### 3.1 The Derived–Central Series Inequality
+where each Gᵢ₊₁/Gᵢ is simple. The quotients Gᵢ₊₁/Gᵢ are the **composition factors**.
 
-**Theorem 1 (Derived–Central Series Inequality).** For any group G and any n ∈ ℕ,
-$$G^{(n)} \leq \gamma_n(G)$$
-where γ_n(G) is the n-th term of the lower central series.
+The **Jordan-Hölder theorem** guarantees that the multiset of composition factors is independent of the choice of composition series.
 
-*Proof sketch.* By induction on n. The base case n = 0 is trivial (both are G). For the inductive step, G^{(n+1)} = [G^{(n)}, G^{(n)]} ≤ [γ_n(G), γ_n(G)] ≤ [γ_n(G), G] = γ_{n+1}(G), using the inductive hypothesis and the fact that γ_n(G) ≤ G. □
+### 2.3 Nilpotency
 
-**Corollary (Nilpotent Derived Depth Bound).** If G is nilpotent with nilpotency class c, then derivedDepth(G) ≤ c.
+A group G is **nilpotent** if its upper central series reaches G, or equivalently, if its lower central series reaches {1}. Nilpotent groups are solvable, and every p-group (group of prime-power order) is nilpotent.
 
-*Proof.* By Theorem 1, G^{(c)} ≤ γ_c(G) = 1 since c is the nilpotency class. Therefore derivedDepth(G) ≤ c. □
+## 3. Definitions
 
-### 3.2 Simple Group Valence Theorem
+### 3.1 Chemical Family Classification
 
-**Theorem 2.** A simple group has valence exactly 1.
+**Definition** (GroupChemicalFamily). A finite group G is classified as:
 
-*Proof sketch.* In a simple group G, the only normal subgroups are 1 and G itself. Therefore G is the unique minimal normal subgroup, giving valence 1. □
+| Family | Condition | Chemical Analogue |
+|--------|-----------|-------------------|
+| NobleGas | G is cyclic | Stable, inert |
+| AlkaliMetal | G is nilpotent, not cyclic | Soft, reactive |
+| AlkalineEarth | G is solvable, not nilpotent | Moderate reactivity |
+| TransitionMetal | G is simple, non-abelian | Rare, catalytic |
+| Halogen | G is non-solvable with faithful minimal-degree permutation rep | Highly reactive |
+| Radioactive | G is non-solvable, other | Unstable, complex |
 
-### 3.3 Simple Group Center Dichotomy
+This classification exhausts all finite groups and is mutually exclusive within each tier.
 
-**Theorem 3.** For a simple group G, the center Z(G) satisfies Z(G) = G or Z(G) = 1.
+### 3.2 Minimal Normal Subgroups and Valence
 
-*Proof.* The center is a normal subgroup, and by simplicity every normal subgroup is trivial or the whole group. □
+**Definition** (IsMinNormal). A subgroup N of G is a **minimal normal subgroup** if:
+1. N is normal in G
+2. N ≠ {1}
+3. For every normal subgroup M of G with M ≤ N, either M = {1} or M = N
 
-**Corollary.** A non-abelian simple group has trivial center.
+**Definition** (groupValence). The **valence** of a finite group G is the number of minimal normal subgroups.
 
-### 3.4 Product Decomposition Theorem
+### 3.3 The Isotope Conjecture
 
-**Theorem 4 (Mixture Decomposition).** For any groups G, H and any n ∈ ℕ,
-$$(G \times H)^{(n)} = G^{(n)} \times H^{(n)}$$
+**Conjecture** (Isotope Conjecture, DISPROVED). If G and H are finite groups with |G| = |H|, and G has derived length nG while H has derived length nH, then nG = nH.
 
-*Proof sketch.* By induction on n. The key step uses the commutator product formula: [A × B, A × B] = [A,A] × [B,B] for subgroups A ≤ G and B ≤ H. □
+This conjecture posits that the group order (analogous to atomic mass) determines the derived length (analogous to electronic configuration). We show this is false.
 
-### 3.5 p-Group Center Theorem
+## 4. Main Results
 
-**Theorem 5.** Every nontrivial finite p-group has a nontrivial center.
+### Theorem 4.1 (Antitonicity of Derived Series)
 
-This classical result follows from the class equation and is the foundation for proving that p-groups are nilpotent.
+*For any group G and n ∈ ℕ, G⁽ⁿ⁺¹⁾ ≤ G⁽ⁿ⁾.*
 
-### 3.6 Noble Gas Configuration
+**Proof sketch**. The commutator [H, H] is always contained in H (it is generated by elements of H). Since G⁽ⁿ⁺¹⁾ = [G⁽ⁿ⁾, G⁽ⁿ⁾], we have G⁽ⁿ⁺¹⁾ ≤ G⁽ⁿ⁾. In Lean, this follows directly from `Subgroup.commutator_le_left`. □
 
-**Theorem 6.** In a cyclic group, for each prime p, there is exactly one Sylow p-subgroup.
+### Theorem 4.2 (Abelian Groups Have Trivial Commutator)
 
-*Proof sketch.* Cyclic groups are abelian, so all subgroups are normal. Any Sylow p-subgroup is normal, hence unique by the Sylow uniqueness criterion. □
+*If G is a group where ab = ba for all a, b ∈ G, then [G, G] = {1}.*
 
-### 3.7 Big Omega of Primes
+**Proof sketch**. Every commutator aba⁻¹b⁻¹ = 1 when ab = ba, so the commutator subgroup is generated by {1}. The proof uses the characterization of the commutator as the closure of the centralizer. □
 
-**Theorem 7.** For any prime p, Ω(p) = 1.
+### Theorem 4.3 (Product Decomposition of Derived Series)
 
-## 4. The Refined Periodic Law Conjecture
+*For groups G and H, (G × H)⁽ⁿ⁾ = G⁽ⁿ⁾ × H⁽ⁿ⁾ for all n ∈ ℕ.*
 
-**Conjecture.** For any nontrivial solvable group G,
-$$\text{derivedDepth}(G) \leq \Omega(|G|)$$
+**Proof sketch**. By induction on n. The base case (G × H)⁽⁰⁾ = G × H = G⁽⁰⁾ × H⁽⁰⁾ is trivial. For the inductive step, use the fact that the commutator of a product is the product of commutators: [A × B, A × B] = [A, A] × [B, B]. In Lean, this uses `Subgroup.commutator_prod_prod`. □
 
-### 4.1 Evidence
+This is the group-theoretic analogue of the **law of definite proportions**: the "electronic structure" of a compound group is determined by its components.
 
-| Group | Order | Factorization | Derived Depth | Ω | Bound Holds? |
-|-------|-------|--------------|--------------|---|-------------|
-| Z_6 | 6 | 2·3 | 1 | 2 | ✓ |
-| S_3 | 6 | 2·3 | 2 | 2 | ✓ |
-| A_4 | 12 | 2²·3 | 2 | 3 | ✓ |
-| S_4 | 24 | 2³·3 | 3 | 4 | ✓ |
-| D_8 | 8 | 2³ | 2 | 3 | ✓ |
-| Q_8 | 8 | 2³ | 2 | 3 | ✓ |
+### Theorem 4.4 (Solvability of Products)
 
-### 4.2 Discussion
+*If G and H are solvable, then G × H is solvable.*
 
-The conjecture encodes the intuition that the "complexity budget" of a solvable group is determined by its prime factorization. Each prime factor with multiplicity contributes one possible layer to the derived series. The conjecture has been verified computationally for all solvable groups of order ≤ 200.
+**Proof sketch**. Follows from Theorem 4.3: if G⁽ⁿ⁾ = {1} and H⁽ᵐ⁾ = {1}, then (G × H)⁽ᵐᵃˣ⁽ⁿ'ᵐ⁾⁾ = {1} × {1} = {1}. In Lean, this follows from `inferInstance` as Mathlib already provides the instance. □
 
-The conjecture would imply, for instance, that no solvable group of order p^k (for prime p) can have derived depth exceeding k. This is known to be true and is a consequence of the fact that p-groups are nilpotent with nilpotency class at most k-1.
+### Theorem 4.5 (Simple-Solvable Dichotomy)
 
-A potential counterexample strategy: construct iterated wreath products of cyclic groups to maximize derived depth relative to order. The wreath product C_p ≀ C_p has order p^{p+1} and derived depth 2, well within the bound. Iterated wreath products remain within the bound because the order grows much faster than the derived depth.
+*A simple group G is solvable if and only if it is commutative.*
 
-## 5. The Chemical-Algebraic Dictionary
+This is the fundamental classification result: simple groups divide sharply into "noble gases" (cyclic of prime order, commutative, solvable) and "transition metals" (non-abelian, non-solvable). There is no intermediate behavior.
 
-We summarize the complete dictionary:
+### Theorem 4.6 (Minimal Normal Subgroups of Abelian Groups Are Simple)
 
-| Chemistry | Algebra | Formal Definition |
-|-----------|---------|-------------------|
-| Atomic number | Group order | |G| |
-| Electron shells | Upper central series | γ^i(G) |
-| Valence | Minimal normal subgroup count | GroupValence(G) |
-| Reactivity | Derived depth | derivedDepth(G) |
-| Noble gas | Cyclic group | IsCyclic G |
-| Transition metal | Non-abelian simple group | IsSimpleGroup G ∧ ¬Abelian |
-| Isotopes | Same derived depth | derivedDepth(G) = derivedDepth(H) |
-| Stability | Abelianity | ∀ a b, ab = ba |
-| Chemical bond | Group extension | 1 → N → G → Q → 1 |
-| Mixture | Direct product | G × H |
-| Mixture rule | Product decomposition | (G×H)^(n) = G^(n) × H^(n) |
-| Periodic law | Derived depth ≤ Ω(|G|) | Conjecture |
+*Let G be an abelian group and N a minimal normal subgroup of G. Then N is a simple group.*
 
-## 6. Algorithms
+**Proof sketch**. In an abelian group, every subgroup is normal. If N is a minimal normal subgroup and M is any subgroup of N, then M is also normal in G. By minimality of N, either M = {1} or M = N. Therefore N has no proper non-trivial subgroups, making it simple. □
 
-### 6.1 Chemical Series Classification Algorithm
+This reflects the "noble gas" property: in abelian groups, every bonding site is atomic.
 
-```
-Input: A finite group G (given by generators and relations or multiplication table)
-Output: ChemicalSeries classification
+### Theorem 4.7 (Derived Series Respects Normal Subgroups)
 
-1. If G is cyclic: return NobleGas
-2. If G is abelian (non-cyclic): return AlkalineEarth
-3. If G is nilpotent (non-abelian): return AlkaliMetal
-4. If G is solvable (non-nilpotent): return Halogen
-5. Otherwise: return TransitionMetal
-```
+*If N is a normal subgroup of G, then the image of N⁽ⁿ⁾ in G is contained in G⁽ⁿ⁾.*
 
-### 6.2 Group Valence Algorithm
+**Proof sketch**. By induction on n, using the fact that the map N ↪ G preserves commutators and is monotone with respect to the commutator operation. □
+
+### Theorem 4.8 (Commutator Telescoping)
+
+*If a, b ∈ G⁽ⁿ⁾, then aba⁻¹b⁻¹ ∈ G⁽ⁿ⁺¹⁾.*
+
+**Proof sketch**. By definition, G⁽ⁿ⁺¹⁾ = [G⁽ⁿ⁾, G⁽ⁿ⁾], which contains all commutators of elements in G⁽ⁿ⁾. □
+
+### Theorem 4.9 (Isotope Conjecture is False)
+
+*There exist finite groups G and H with |G| = |H| but different derived lengths.*
+
+**Proof**. Take G = ℤ/6ℤ (cyclic, abelian, derived length 1) and H = S₃ (symmetric group on 3 elements, non-abelian, derived length 2). Both have order 6, but their derived lengths differ. □
+
+This demonstrates that group "mass" (order) does not determine "electronic structure" (derived length). The correct periodic law is weaker: groups with all-abelian composition factors are solvable, but the derived length depends on the assembly.
+
+## 5. Algorithms
+
+### 5.1 Chemical Family Classification Algorithm
 
 ```
-Input: A finite group G
-Output: GroupValence(G)
+Input: Cayley table T of a finite group G of order n
+Output: Chemical family of G
 
-1. Enumerate all normal subgroups N of G
-2. For each normal N ≠ 1, check minimality:
-   - N is minimal normal iff no normal K with 1 < K < N
-3. Return the count of minimal normal subgroups
+1. Check if G is cyclic (exists generator of order n)
+   → If yes, return NobleGas
+2. Check if G is simple (no non-trivial normal subgroups)
+   → If yes and non-abelian, return TransitionMetal
+3. Check if G is nilpotent (center ≠ {1} and quotient is nilpotent)
+   → If yes, return AlkaliMetal
+4. Compute derived series
+   → If it reaches {1}, return AlkalineEarth
+5. Return Radioactive
 ```
 
-### 6.3 Derived Depth Algorithm
+### 5.2 Derived Series Computation
 
 ```
-Input: A solvable group G
-Output: derivedDepth(G)
+Input: Group G (Cayley table)
+Output: Derived series [G⁽⁰⁾, G⁽¹⁾, ...]
 
-1. Set D_0 = G, n = 0
-2. While D_n ≠ 1:
-   a. D_{n+1} = [D_n, D_n] (commutator subgroup)
-   b. n = n + 1
-3. Return n
+series ← [G]
+loop:
+  H ← last element of series
+  C ← {hkh⁻¹k⁻¹ : h, k ∈ H}
+  H' ← subgroup generated by C
+  if H' = H: break
+  series.append(H')
+  if H' = {1}: break
+return series
 ```
 
-## 7. Future Directions
+### 5.3 Valence Computation
 
-1. **Quantitative Periodic Law**: Determine the exact maximum of derivedDepth(G)/Ω(|G|) over all solvable groups G. Is the supremum attained?
+```
+Input: Group G (Cayley table)
+Output: Number of minimal normal subgroups
 
-2. **Valence Theory**: Prove that the socle of a finite group is a direct product of minimal normal subgroups. Characterize groups by their valence and socle structure.
+normal_subs ← all normal subgroups of G with |N| > 1 and |N| < |G|
+minimal ← {}
+for N in normal_subs:
+  if no M in normal_subs with M ⊂ N:
+    minimal.add(N)
+return |minimal|
+```
 
-3. **Chemical Reactivity Index**: Define and study a finer "reactivity" invariant using commutator width (the minimal number of commutators needed to express an element of the derived subgroup). How does commutator width relate to group order?
+## 6. The Periodic Table Structure
 
-4. **Cross-Domain Bridges**: Connect group valence to representation theory (number of irreducible representations) and to number theory (Euler totient function for abelian groups).
+### 6.1 Rows: Order (Atomic Number)
 
-5. **Computational Classification**: Build a complete database of groups of order ≤ 100 classified by chemical series, valence, derived depth, and nilpotency class. Use this to test the Periodic Law Conjecture exhaustively.
+Groups are arranged in rows by order, the "atomic number." Within each row, groups are sorted by increasing derived length (from noble gases at left to radioactive elements at right).
 
-## 8. References
+### 6.2 Columns: Chemical Family
 
-1. Burnside, W. (1904). On groups of order p^α q^β. *Proc. London Math. Soc.* 2(1), 388-392.
-2. Jordan, C. (1870). *Traité des substitutions et des équations algébriques*. Gauthier-Villars.
-3. Hölder, O. (1889). Zurückführung einer beliebigen algebraischen Gleichung auf eine Kette von Gleichungen. *Math. Ann.* 34, 26-56.
-4. Sylow, L. (1872). Théorèmes sur les groupes de substitutions. *Math. Ann.* 5, 584-594.
-5. Gorenstein, D. (1982). *Finite Simple Groups: An Introduction to Their Classification*. Plenum Press.
-6. Robinson, D.J.S. (1996). *A Course in the Theory of Groups*. Springer.
+Groups in the same column share structural properties:
+- **Column 1** (NobleGas): Cyclic groups. Derived length ≤ 1, valence ≤ number of prime factors.
+- **Column 2** (AlkaliMetal): Nilpotent non-cyclic. Includes all p-groups that are not cyclic.
+- **Column 3** (AlkalineEarth): Solvable, not nilpotent. The first interesting column — includes S₃, D₅, and many others.
+- **Column 4** (TransitionMetal): Simple non-abelian. Starts at order 60 (A₅). Very sparse.
+- **Column 5+** (Radioactive): Non-solvable composite. Includes S₅, A₅ × ℤ/2ℤ, etc.
 
----
+### 6.3 Predictions
 
-*All formal theorems in this paper have been machine-verified using the Lean 4 theorem prover with the Mathlib library.*
+The periodic table predicts:
+1. **Noble gas inertness**: Cyclic groups have derived length ≤ 1 and valence equal to the number of distinct prime divisors.
+2. **Transition metal rarity**: Non-abelian simple groups have density zero among all groups.
+3. **Burnside solvability**: Groups of order p^a q^b (two prime factors) are always solvable (Column ≤ 3).
+4. **Sylow nilpotency**: Groups where all Sylow subgroups are normal are nilpotent (Column ≤ 2).
+
+## 7. Discussion
+
+### 7.1 The Correct Periodic Law
+
+The isotope conjecture fails, but a weaker "periodic law" holds:
+
+**Periodic Law for Groups**: A finite group is solvable if and only if all its composition factors are cyclic of prime order.
+
+This is a consequence of the Jordan-Hölder theorem and the simple-solvable dichotomy (Theorem 4.5). It says that solvability — the most fundamental "chemical property" — is determined entirely by the composition factors.
+
+### 7.2 Limitations of the Analogy
+
+The chemical analogy has genuine predictive power but also limitations:
+1. **No unique "bond type"**: Groups of the same composition factors can be assembled in non-isomorphic ways (extensions), unlike atoms which bond via a small number of mechanisms.
+2. **No natural total order**: The periodic table of elements has a natural total order (atomic number). Groups of the same order are not naturally ordered.
+3. **No continuous parameter**: Chemical properties vary continuously with atomic number. Group properties are discrete.
+
+### 7.3 Open Questions
+
+1. Does the valence determine the number of non-isomorphic extensions?
+2. Is there a "periodic law" for nilpotency class, not just solvability?
+3. Can the chemical analogy be extended to profinite groups (inverse limits)?
+
+## 8. Related Work
+
+The classification of finite groups by composition factors goes back to Jordan (1870) and Hölder (1889). The chemical analogy, while informal, draws on the tradition of organizing mathematical objects by structural invariants, as in the classification of finite simple groups (Gorenstein, Lyons, Solomon, 1994-2018).
+
+The formal verification of group-theoretic results in Lean 4 with Mathlib builds on the extensive library of group theory developed by the Mathlib community.
+
+## 9. Conclusion
+
+We have developed a systematic "periodic table" for finite groups, classifying them into chemical families by solvability type and introducing the valence as a measure of extension capacity. Nine theorems have been formally verified, including the disproof of the isotope conjecture, the product decomposition of derived series, and the simplicity of minimal normal subgroups in abelian groups.
+
+The periodic table of groups captures genuine structural patterns and makes testable predictions. While the analogy with chemistry is not perfect, it provides an intuitive framework for understanding the bewildering diversity of finite groups.
+
+## References
+
+1. C. Jordan, *Traité des substitutions et des équations algébriques*, Gauthier-Villars, Paris, 1870.
+2. O. Hölder, "Zurückführung einer beliebigen algebraischen Gleichung auf eine Kette von Gleichungen," *Math. Ann.* 34 (1889), 26–56.
+3. D. Gorenstein, R. Lyons, R. Solomon, *The Classification of the Finite Simple Groups*, AMS Mathematical Surveys and Monographs, 1994–2018.
+4. W. Burnside, "On groups of order pᵃqᵇ," *Proc. London Math. Soc.* 2 (1904), 388–392.
+5. The Mathlib Community, *Mathlib4*, https://github.com/leanprover-community/mathlib4, 2024.
