@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f3d7f1ed",
     "filename": "the_mandelbrot_sets_secret_number_theory_quadratic.json",
     "pkg_num": 326,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71882,
     "title": "Mandelbrot Number Theory: Quadratic Recurrence and Primality"
   },
   {
@@ -10564,8 +10564,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_mandelbrot_sets_secret_number_theory_quadratic",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71882,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Mandelbrot Number Theory: Quadratic Recurrence and Primality"
     }

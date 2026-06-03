@@ -888,7 +888,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "965e6ada",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -898,7 +898,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -2088,6 +2088,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0413",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.339802+00:00",
+    "title": "Quantum Topological Phase Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
     "domains": [
       "EML",
@@ -2220,6 +2235,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.995931+00:00",
     "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0434",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.080762+00:00",
+    "title": "One-Way Functions: Existence and Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0436",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.233759+00:00",
+    "title": "Isogeny-Based Cryptography: CSI-FiSh"
   },
   {
     "consumed_by_exp_id": "",
@@ -2388,6 +2433,81 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0455",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.755100+00:00",
+    "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0456",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.834642+00:00",
+    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that distinguishing a binary Goppa code from a random linear code is NP-hard. Formalize the McEliece cryptosystem and prove IND-CPA security under the Goppa code distinguishing assumption. Analyze resistance to quantum attacks.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0458",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.990665+00:00",
+    "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the SIDH key exchange: two parties compute a shared secret from supersingular isogenies of elliptic curves. Prove that computing the isogeny from j-invariant is as hard as the quaternion isogeny path problem. Analyze the Castryck-Decru attack.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0459",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.072923+00:00",
+    "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0461",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.236800+00:00",
+    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
     "domains": [
       "Physics",
@@ -2553,6 +2673,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0481",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.101987+00:00",
+    "title": "Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
     "domains": [
       "Logic",
@@ -2565,6 +2700,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.689507+00:00",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0490",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.766213+00:00",
+    "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
     "consumed_by_exp_id": "",
@@ -2613,6 +2763,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0500",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.538330+00:00",
+    "title": "Generalization Bounds via Rademacher Complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0503",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.760681+00:00",
+    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
     "domains": [
       "Physics",
@@ -2625,6 +2805,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.905756+00:00",
     "title": "Quantum Gravity as Topological Quantum Field Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0506",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.975605+00:00",
+    "title": "Consciousness as Integrated Information: Mathematical Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **oracle closure algebra framework**, connecting G\u00f6del incompleteness to the theory of closure operators through a precise algebraic characterization. The central discovery is that the oracle jump is a *preclosure operator* \u2014 extensive and monotone but not idempotent \u2014 and that this failure of idempotence is exactly equivalent to the incompleteness phenomenon. We introduced *resolvability degrees* (a preorder on sentences measuring oracle complexity) and proved the *diagonal antichain theorem* (consistency sentences are mutually incomparable), the *strict kernel descent theorem* (incompleteness kernels form a strictly decreasing chain), and the *hierarchy collapse impossibility theorem* (no finite extension reaches the \u03c9-limit).\n\nThe most promising cross-domain connection is between **closure algebras** (from lattice theory/universal algebra) and **proof-theoretic hierarchies** (from mathematical logic). The resolvability preorder on sentences is a proof-theoretic analogue of Turing degrees in computability theory, and the antichain theorem is the proof-theoretic analogue of Post's problem \u2014 but with a cleaner solution. This bridge between algebra, logic, and computability is the key finding. The framework extends the existing Catalog work on reflective oracle hierarchies (`Catalog/Logic/ReflectiveOracleHierarchy.lean`) with new algebraic structure and a concrete model.\n\nThe direction with highest breakthrough potential is **Direction 1 (Transfinite Oracle Closure)**, because extending the hierarchy to ordinal indices would connect our algebraic framework to *ordinal analysis* \u2014 the deepest technique in proof theory for measuring the strength of formal systems. A successful formalization would yield the first machine-verified results relating proof-theoretic ordinals to closure-algebraic fixed points.\n\n---\n\n### Direction 1: Transfinite Oracle Closure and Ordinal Fixed Points\n\n**Conjecture**: The oracle closure algebra framework extends to all countable ordinals \u03b1 by defining Prov(\u03b1) for ordinal \u03b1, where Prov(\u03b1+1) = Prov(\u03b1) + Con(Prov(\u03b1)) for successor ordinals and Prov(\u03bb) = \u22c3_{\u03b2<\u03bb} Prov(\u03b2) for limit ordinals. The first ordinal at which the closure operator stabilizes (if it exists) is the *proof-theoretic ordinal* of the base theory.\n\n**Test**: Formalize the ordinal-indexed hierarchy for the specific case of Peano Arithmetic. Compute (informally) whether the hierarchy stabilizes at \u03b5\u2080 (the proof-theoretic ordinal of PA). If the closure operator does not stabilize at any countable ordinal, this disproves the conjecture.\n\n**Impact**: If true, this provides an algebraic characterization of proof-theoretic ordinals via closure-operator fixed points \u2014 a new bridge between ordinal analysis and universal algebra. If false, it reveals that closure-algebraic structure diverges from proof-theoretic structure at the transfinite level, which is itself informative.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (oracle closure framework), `Catalog/Logic/ReflectiveOracleHierarchy.lean` (base hierarchy)\n\n**Proof Strategy**: (1) Define `OrdinalHierarchy` with `Provable : Ordinal \u2192 Sentence \u2192 Prop` and ordinal-indexed consistency sentences. (2) Prove the successor case preserves all structural properties (mono, strict, con_jump). (3) Define limit-level provability as the union and prove it forms a legitimate level. (4) Investigate whether the closure operator becomes idempotent at any ordinal \u2014 this is the key question.\n\n**Domain Bridges**: Closure algebra (lattice theory) <-> Ordinal analysis (proof theory) <-> Well-orders (set theory)\n\n**Lineage**: Builds on oracle closure framework from this cycle and the existing `ReflectiveOracleHierarchy.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Resolvability Degrees as a Lattice Structure\n\n**Conjecture**: The quotient of sentences by mutual resolvability (\u03c6 ~ \u03c8 iff \u03c6 \u2264\u1d63 \u03c8 and \u03c8 \u2264\u1d63 \u03c6) forms a distributive lattice under the natural join and meet operations. Furthermore, this lattice embeds into the Lindenbaum-Tarski algebra of the union theory.\n\n**Test**: Formalize the quotient construction and attempt to prove distributivity. A concrete counterexample (two sentences whose resolvability meet does not distribute over join) would disprove the conjecture.\n\n**Impact**: If true, the resolvability lattice provides a canonical algebraic invariant of oracle hierarchies, analogous to the lattice of Turing degrees. If false, understanding *where* distributivity fails reveals fine structure in the incompleteness landscape.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (resolvability preorder, antichain theorem)\n\n**Proof Strategy**: (1) Define the equivalence relation \u03c6 ~ \u03c8 iff \u2200n, Provable(n, \u03c6) \u2194 Provable(n, \u03c8). (2) Show the quotient has well-defined \u2264, \u2228, \u2227. (3) Check distributivity: does a \u2227 (b \u2228 c) = (a \u2227 b) \u2228 (a \u2227 c) hold? The key difficulty is defining meet and join \u2014 does Provable(n, \u03c6 \u2227 \u03c8) \u2194 Provable(n, \u03c6) \u2227 Provable(n, \u03c8) hold in natural hierarchies?\n\n**Domain Bridges**: Lattice theory (algebra) <-> Proof theory (logic) <-> Turing degrees (computability)\n\n**Lineage**: Extends the resolvability preorder and antichain theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Modal Logic of Oracle Closure\n\n**Conjecture**: The oracle closure operator induces a natural Kripke frame where worlds are hierarchy levels and the accessibility relation is \"proves the consistency of.\" The modal logic of this frame is precisely GL (G\u00f6del-L\u00f6b logic), and the non-idempotence of oracle closure corresponds to the failure of the S4 axiom \u25a1\u03c6 \u2192 \u25a1\u25a1\u03c6 in GL.\n\n**Test**: Formalize a Kripke frame from the oracle hierarchy. Define \u25a1\u03c6 as \"provable at the current level\" and check whether the GL axiom \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6 holds. If the frame validates a logic strictly between K4 and GL, this partially disproves the conjecture.\n\n**Impact**: A precise connection between oracle closure algebras and provability logic would unify two major branches of mathematical logic, allowing transfer of results between the algebraic and modal frameworks.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/ProvabilityLogic.lean`, `Catalog/Logic/GLKripke.lean`\n\n**Proof Strategy**: (1) Define the Kripke frame: W = \u2115, R(m,n) iff n = m+1 (or n > m). (2) Define valuations from oracle hierarchy provability. (3) Check GL axiom: \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6. The key step is connecting the L\u00f6b derivability conditions to the hierarchy's structural axioms. (4) Prove completeness: every GL-valid formula is validated by the oracle frame.\n\n**Domain Bridges**: Modal logic <-> Closure algebras (algebra) <-> Kripke semantics (model theory)\n\n**Lineage**: Extends oracle closure framework; connects to existing `GLKripke.lean` and `ProvabilityLogic.lean` in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Speed-Up Quantification in Oracle Hierarchies\n\n**Conjecture**: For any oracle hierarchy with a proof complexity measure, the consistency sentence Con(n) has proof length 0 at level n (unprovable) and proof length at most polynomial in the G\u00f6del number of Con(n) at level n+1. More precisely, there exists a polynomial p such that for all n, the shortest proof of Con(n) at level n+1 has length \u2264 p(n).\n\n**Test**: Formalize a proof complexity structure on oracle hierarchies and attempt to bound the proof length of Con(n) at level n+1. A superexponential lower bound would disprove the polynomial conjecture.\n\n**Impact**: If true, this quantifies the \"information content\" of each oracle jump and connects to proof complexity theory. If false, it shows that oracle jumps can provide superpolynomial proof compression, which has implications for computational complexity (the P vs NP problem is connected to proof compression).\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/DynamicalProofComplexity.lean`\n\n**Proof Strategy**: (1) Extend the OracleHierarchy structure with proof length functions. (2) Axiomatize natural proof complexity measures (monotonicity, subadditivity). (3) Derive bounds on Con(n) proof length from structural properties. The key question is whether the jump resolution axiom can be made constructive enough to extract proof length bounds.\n\n**Domain Bridges**: Proof complexity <-> Oracle hierarchies (logic) <-> Computational complexity (CS)\n\n**Lineage**: Extends oracle closure framework; connects to existing `DynamicalProofComplexity.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Density of \u03a3\u2081-Resolvable Sentences\n\n**Conjecture** (Resolvability Density): In any oracle hierarchy, for any \u03a0\u2082-persistent sentence \u03c6 and any level n, there exists a \u03a3\u2081-resolvable true sentence not yet provable at level n. Informally: resolvable incompleteness is dense around permanent incompleteness.\n\n**Test**: Construct a hierarchy where the conjecture can be computationally checked: define a hierarchy over arithmetic sentences with explicit G\u00f6del coding, enumerate true-but-unprovable sentences at each level, and check whether \u03a3\u2081-resolvable ones appear at every level. A hierarchy where some level's kernel consists entirely of \u03a0\u2082-persistent sentences would disprove the conjecture.\n\n**Impact**: If true, this is a deep structural result about the landscape of undecidability: permanent ignorance is always \"approximated\" by temporary ignorance. If false, there exist \"islands of permanent unknowability\" isolated from all resolvable questions, which would have philosophical implications for the nature of mathematical truth.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (sigma1Resolvable, pi2Persistent, resolvabilityDensityConjecture)\n\n**Proof Strategy**: (1) For the positive direction: given a \u03a0\u2082-persistent \u03c6 and level n, construct \u03c8 = Con(n) which is \u03a3\u2081-resolvable, true, and not provable at level n. This actually proves the conjecture! The key insight is that the consistency sentences provide the required witnesses regardless of what \u03c6 is. (2) For a stronger version: require that \u03c8 is \"close\" to \u03c6 in some metric \u2014 this stronger version may fail and is more interesting.\n\n**Domain Bridges**: Descriptive set theory <-> Proof theory <-> Topology of truth\n\n**Lineage**: Extends the quantifier complexity classification from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0517",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "748fe9ae",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:52.357465+00:00",
+    "title": "**oracle closure algebra framework**, connec"
   },
   {
     "consumed_by_exp_id": "",
@@ -2643,18 +2853,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
+    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
-      "Logic"
+      "Computation"
     ],
-    "id": "fd_0456",
+    "id": "fd_0435",
     "priority_score": 0.98,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:29.834642+00:00",
-    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+    "timestamp": "2026-06-03T19:55:28.156517+00:00",
+    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2808,18 +3018,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
+    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
-      "Cryptography",
-      "Algebra"
+      "Geometry",
+      "Cryptography"
     ],
-    "id": "fd_0436",
+    "id": "fd_0419",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:28.233759+00:00",
-    "title": "Isogeny-Based Cryptography: CSI-FiSh"
+    "timestamp": "2026-06-03T19:55:26.828631+00:00",
+    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
   {
     "consumed_by_exp_id": "",
@@ -2838,18 +3048,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the SIDH key exchange: two parties compute a shared secret from supersingular isogenies of elliptic curves. Prove that computing the isogeny from j-invariant is as hard as the quaternion isogeny path problem. Analyze the Castryck-Decru attack.",
+    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
-      "Cryptography",
-      "Algebra"
+      "Speculative",
+      "Logic"
     ],
-    "id": "fd_0459",
+    "id": "fd_0482",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.072923+00:00",
-    "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
+    "timestamp": "2026-06-03T21:01:45.177474+00:00",
+    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -2898,21 +3108,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that distinguishing a binary Goppa code from a random linear code is NP-hard. Formalize the McEliece cryptosystem and prove IND-CPA security under the Goppa code distinguishing assumption. Analyze resistance to quantum attacks.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0458",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.990665+00:00",
-    "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -2940,36 +3135,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.160270+00:00",
     "title": "EML Algebraic Independence: Transcendence Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "fd_0500",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.538330+00:00",
-    "title": "Generalization Bounds via Rademacher Complexity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **oracle closure algebra framework**, connecting G\u00f6del incompleteness to the theory of closure operators through a precise algebraic characterization. The central discovery is that the oracle jump is a *preclosure operator* \u2014 extensive and monotone but not idempotent \u2014 and that this failure of idempotence is exactly equivalent to the incompleteness phenomenon. We introduced *resolvability degrees* (a preorder on sentences measuring oracle complexity) and proved the *diagonal antichain theorem* (consistency sentences are mutually incomparable), the *strict kernel descent theorem* (incompleteness kernels form a strictly decreasing chain), and the *hierarchy collapse impossibility theorem* (no finite extension reaches the \u03c9-limit).\n\nThe most promising cross-domain connection is between **closure algebras** (from lattice theory/universal algebra) and **proof-theoretic hierarchies** (from mathematical logic). The resolvability preorder on sentences is a proof-theoretic analogue of Turing degrees in computability theory, and the antichain theorem is the proof-theoretic analogue of Post's problem \u2014 but with a cleaner solution. This bridge between algebra, logic, and computability is the key finding. The framework extends the existing Catalog work on reflective oracle hierarchies (`Catalog/Logic/ReflectiveOracleHierarchy.lean`) with new algebraic structure and a concrete model.\n\nThe direction with highest breakthrough potential is **Direction 1 (Transfinite Oracle Closure)**, because extending the hierarchy to ordinal indices would connect our algebraic framework to *ordinal analysis* \u2014 the deepest technique in proof theory for measuring the strength of formal systems. A successful formalization would yield the first machine-verified results relating proof-theoretic ordinals to closure-algebraic fixed points.\n\n---\n\n### Direction 1: Transfinite Oracle Closure and Ordinal Fixed Points\n\n**Conjecture**: The oracle closure algebra framework extends to all countable ordinals \u03b1 by defining Prov(\u03b1) for ordinal \u03b1, where Prov(\u03b1+1) = Prov(\u03b1) + Con(Prov(\u03b1)) for successor ordinals and Prov(\u03bb) = \u22c3_{\u03b2<\u03bb} Prov(\u03b2) for limit ordinals. The first ordinal at which the closure operator stabilizes (if it exists) is the *proof-theoretic ordinal* of the base theory.\n\n**Test**: Formalize the ordinal-indexed hierarchy for the specific case of Peano Arithmetic. Compute (informally) whether the hierarchy stabilizes at \u03b5\u2080 (the proof-theoretic ordinal of PA). If the closure operator does not stabilize at any countable ordinal, this disproves the conjecture.\n\n**Impact**: If true, this provides an algebraic characterization of proof-theoretic ordinals via closure-operator fixed points \u2014 a new bridge between ordinal analysis and universal algebra. If false, it reveals that closure-algebraic structure diverges from proof-theoretic structure at the transfinite level, which is itself informative.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (oracle closure framework), `Catalog/Logic/ReflectiveOracleHierarchy.lean` (base hierarchy)\n\n**Proof Strategy**: (1) Define `OrdinalHierarchy` with `Provable : Ordinal \u2192 Sentence \u2192 Prop` and ordinal-indexed consistency sentences. (2) Prove the successor case preserves all structural properties (mono, strict, con_jump). (3) Define limit-level provability as the union and prove it forms a legitimate level. (4) Investigate whether the closure operator becomes idempotent at any ordinal \u2014 this is the key question.\n\n**Domain Bridges**: Closure algebra (lattice theory) <-> Ordinal analysis (proof theory) <-> Well-orders (set theory)\n\n**Lineage**: Builds on oracle closure framework from this cycle and the existing `ReflectiveOracleHierarchy.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Resolvability Degrees as a Lattice Structure\n\n**Conjecture**: The quotient of sentences by mutual resolvability (\u03c6 ~ \u03c8 iff \u03c6 \u2264\u1d63 \u03c8 and \u03c8 \u2264\u1d63 \u03c6) forms a distributive lattice under the natural join and meet operations. Furthermore, this lattice embeds into the Lindenbaum-Tarski algebra of the union theory.\n\n**Test**: Formalize the quotient construction and attempt to prove distributivity. A concrete counterexample (two sentences whose resolvability meet does not distribute over join) would disprove the conjecture.\n\n**Impact**: If true, the resolvability lattice provides a canonical algebraic invariant of oracle hierarchies, analogous to the lattice of Turing degrees. If false, understanding *where* distributivity fails reveals fine structure in the incompleteness landscape.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (resolvability preorder, antichain theorem)\n\n**Proof Strategy**: (1) Define the equivalence relation \u03c6 ~ \u03c8 iff \u2200n, Provable(n, \u03c6) \u2194 Provable(n, \u03c8). (2) Show the quotient has well-defined \u2264, \u2228, \u2227. (3) Check distributivity: does a \u2227 (b \u2228 c) = (a \u2227 b) \u2228 (a \u2227 c) hold? The key difficulty is defining meet and join \u2014 does Provable(n, \u03c6 \u2227 \u03c8) \u2194 Provable(n, \u03c6) \u2227 Provable(n, \u03c8) hold in natural hierarchies?\n\n**Domain Bridges**: Lattice theory (algebra) <-> Proof theory (logic) <-> Turing degrees (computability)\n\n**Lineage**: Extends the resolvability preorder and antichain theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Modal Logic of Oracle Closure\n\n**Conjecture**: The oracle closure operator induces a natural Kripke frame where worlds are hierarchy levels and the accessibility relation is \"proves the consistency of.\" The modal logic of this frame is precisely GL (G\u00f6del-L\u00f6b logic), and the non-idempotence of oracle closure corresponds to the failure of the S4 axiom \u25a1\u03c6 \u2192 \u25a1\u25a1\u03c6 in GL.\n\n**Test**: Formalize a Kripke frame from the oracle hierarchy. Define \u25a1\u03c6 as \"provable at the current level\" and check whether the GL axiom \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6 holds. If the frame validates a logic strictly between K4 and GL, this partially disproves the conjecture.\n\n**Impact**: A precise connection between oracle closure algebras and provability logic would unify two major branches of mathematical logic, allowing transfer of results between the algebraic and modal frameworks.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/ProvabilityLogic.lean`, `Catalog/Logic/GLKripke.lean`\n\n**Proof Strategy**: (1) Define the Kripke frame: W = \u2115, R(m,n) iff n = m+1 (or n > m). (2) Define valuations from oracle hierarchy provability. (3) Check GL axiom: \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6. The key step is connecting the L\u00f6b derivability conditions to the hierarchy's structural axioms. (4) Prove completeness: every GL-valid formula is validated by the oracle frame.\n\n**Domain Bridges**: Modal logic <-> Closure algebras (algebra) <-> Kripke semantics (model theory)\n\n**Lineage**: Extends oracle closure framework; connects to existing `GLKripke.lean` and `ProvabilityLogic.lean` in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Speed-Up Quantification in Oracle Hierarchies\n\n**Conjecture**: For any oracle hierarchy with a proof complexity measure, the consistency sentence Con(n) has proof length 0 at level n (unprovable) and proof length at most polynomial in the G\u00f6del number of Con(n) at level n+1. More precisely, there exists a polynomial p such that for all n, the shortest proof of Con(n) at level n+1 has length \u2264 p(n).\n\n**Test**: Formalize a proof complexity structure on oracle hierarchies and attempt to bound the proof length of Con(n) at level n+1. A superexponential lower bound would disprove the polynomial conjecture.\n\n**Impact**: If true, this quantifies the \"information content\" of each oracle jump and connects to proof complexity theory. If false, it shows that oracle jumps can provide superpolynomial proof compression, which has implications for computational complexity (the P vs NP problem is connected to proof compression).\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/DynamicalProofComplexity.lean`\n\n**Proof Strategy**: (1) Extend the OracleHierarchy structure with proof length functions. (2) Axiomatize natural proof complexity measures (monotonicity, subadditivity). (3) Derive bounds on Con(n) proof length from structural properties. The key question is whether the jump resolution axiom can be made constructive enough to extract proof length bounds.\n\n**Domain Bridges**: Proof complexity <-> Oracle hierarchies (logic) <-> Computational complexity (CS)\n\n**Lineage**: Extends oracle closure framework; connects to existing `DynamicalProofComplexity.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Density of \u03a3\u2081-Resolvable Sentences\n\n**Conjecture** (Resolvability Density): In any oracle hierarchy, for any \u03a0\u2082-persistent sentence \u03c6 and any level n, there exists a \u03a3\u2081-resolvable true sentence not yet provable at level n. Informally: resolvable incompleteness is dense around permanent incompleteness.\n\n**Test**: Construct a hierarchy where the conjecture can be computationally checked: define a hierarchy over arithmetic sentences with explicit G\u00f6del coding, enumerate true-but-unprovable sentences at each level, and check whether \u03a3\u2081-resolvable ones appear at every level. A hierarchy where some level's kernel consists entirely of \u03a0\u2082-persistent sentences would disprove the conjecture.\n\n**Impact**: If true, this is a deep structural result about the landscape of undecidability: permanent ignorance is always \"approximated\" by temporary ignorance. If false, there exist \"islands of permanent unknowability\" isolated from all resolvable questions, which would have philosophical implications for the nature of mathematical truth.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (sigma1Resolvable, pi2Persistent, resolvabilityDensityConjecture)\n\n**Proof Strategy**: (1) For the positive direction: given a \u03a0\u2082-persistent \u03c6 and level n, construct \u03c8 = Con(n) which is \u03a3\u2081-resolvable, true, and not provable at level n. This actually proves the conjecture! The key insight is that the consistency sentences provide the required witnesses regardless of what \u03c6 is. (2) For a stronger version: require that \u03c8 is \"close\" to \u03c6 in some metric \u2014 this stronger version may fail and is more interesting.\n\n**Domain Bridges**: Descriptive set theory <-> Proof theory <-> Topology of truth\n\n**Lineage**: Extends the quantifier complexity classification from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_0517",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "748fe9ae",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:52.357465+00:00",
-    "title": "**oracle closure algebra framework**, connec"
   },
   {
     "consumed_by_exp_id": "",
@@ -3033,21 +3198,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0413",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.339802+00:00",
-    "title": "Quantum Topological Phase Computation"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -3063,21 +3213,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0461",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.236800+00:00",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -3090,21 +3225,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0490",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:45.766213+00:00",
-    "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
     "consumed_by_exp_id": "",
@@ -3183,6 +3303,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0460",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.154076+00:00",
+    "title": "Secure Multi-Party Computation: Theoretical Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domains": [
       "MachineLearning",
@@ -3195,21 +3330,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:44.884438+00:00",
     "title": "Spectral Graph Theory Meets Network Robustness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "fd_0503",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.760681+00:00",
-    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -3348,36 +3468,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0455",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.755100+00:00",
-    "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0434",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.080762+00:00",
-    "title": "One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
       "MachineLearning",
@@ -3390,21 +3480,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.560336+00:00",
     "title": "Grokking: Phase Transitions in Learning"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0481",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:45.101987+00:00",
-    "title": "Consciousness as Integrated Information"
   },
   {
     "consumed_by_exp_id": "",
@@ -3422,36 +3497,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0506",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.975605+00:00",
-    "title": "Consciousness as Integrated Information: Mathematical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "e6f6fb5e",
-    "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A \u2245 B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0448",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:29.204779+00:00",
-    "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
@@ -3464,21 +3509,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.423474+00:00",
     "title": "Integrated Information via Tensor Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0435",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.156517+00:00",
-    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3542,21 +3572,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
-    "domains": [
-      "Geometry",
-      "Cryptography"
-    ],
-    "id": "fd_0419",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.828631+00:00",
-    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
     "domains": [
       "Geometry",
@@ -3569,21 +3584,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.226650+00:00",
     "title": "Inverse Stereographic Neural Field Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0482",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:45.177474+00:00",
-    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -3737,21 +3737,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0460",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.154076+00:00",
-    "title": "Secure Multi-Party Computation: Theoretical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -3794,6 +3779,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Proof Transfer and Univalent Foundations\n\n## Synthesis\n\nThis research cycle established a complete, machine-verified framework for proof transfer across structural equivalences, capturing the computational content of the univalence axiom within classical type theory. The key discoveries are:\n\n1. **Transfer is functorial**: Canonical predicate transport via pullback along inverses composes coherently, forming a functor from the groupoid of type equivalences to the category of predicate transformations. This connects the algebraic structure of equivalences to proof-level operations.\n\n2. **Quantitative compression**: We proved tight bounds on proof compression ratios. Transfer of k theorems through a single equivalence costs O(k), versus O(nk) for direct proofs, with the transition point at k=3 when m=n=2. The asymptotic compression ratio is 1/n, where n is the average proof complexity.\n\n3. **Algebraic property transfer**: Commutativity (and by extension, other first-order algebraic axioms) transfers across multiplicative equivalences. This is the most practically impactful result \u2014 it means algebraic theories can be developed once and transferred to all isomorphic structures.\n\nThe most promising cross-domain connection is between the **categorical functoriality** of transfer pipelines and the **proof compression** analysis. The functoriality theorem implies that transfer through long chains of equivalences decomposes into independent steps, suggesting that the linear cost bound (Conjecture 11.1 in the paper) is tight. Disproving this conjecture \u2014 finding a sub-linear shortcut \u2014 would reveal deep structure in the equivalence groupoid and connect to questions in computational complexity about composition of bijections.\n\nThe highest breakthrough potential lies in **Direction 1** (Higher-Order Transfer), which would extend the framework from first-order predicates to type families, function spaces, and dependent types \u2014 essentially recovering the full power of HoTT transport without the HoTT foundations.\n\n---\n\n### Direction 1: Higher-Order Transfer via Parametricity\n\n**Conjecture**: For any type family F : Type \u2192 Type that is a functor (preserves equivalences), and any equivalence e : A \u2243 B, there exists a canonical equivalence F(A) \u2243 F(B), and the induced transfer on F(A) is compatible with the base transfer on A. Formally:\n\nFor F a functor and e : \u03b1 \u2243 \u03b2, define mapF(e) : F(\u03b1) \u2243 F(\u03b2). Then for any predicate P on F(\u03b1), the transfer of P through mapF(e) equals the \"lifted transfer\" obtained by applying F to the base transfer.\n\n**Test**: Implement the construction for F = List, F = Option, and F = (\u00b7 \u2192 \u2115). Verify that the transferred predicates on List(\u03b2) match the expected behavior on concrete examples (e.g., transfer \"list has length 3\" from List(Fin 5) to List(Fin 5) via a permutation equivalence).\n\n**Impact**: If true, this extends proof transfer from first-order to higher-order settings, enabling transfer of theorems about data structures, function spaces, and dependent types. This would capture most of the practical power of HoTT's univalence axiom. If false for some functors, the failure would identify exactly which type constructors resist transfer \u2014 potentially revealing a hierarchy of \"transfer-friendly\" vs. \"transfer-resistant\" type constructors.\n\n**Catalog References**: `Logic/ProofTransfer.lean` (TransferPipeline, pipeline_functoriality)\n\n**Proof Strategy**: \n1. Define a typeclass `TransferFunctor` for type constructors that preserve equivalences\n2. Prove that List, Option, Prod, Sum are TransferFunctors\n3. Prove that composition of TransferFunctors is a TransferFunctor\n4. State and prove the compatibility theorem relating base transfer to lifted transfer\n5. Key lemma: `List.map` preserves bijectivity when applied to an equivalence\n\n**Domain Bridges**: Category Theory (functors) \u2194 Logic (proof transfer) \u2194 Computer Science (generic programming)\n\n**Lineage**: Builds on pipeline_functoriality and transfer_equivalence_relation from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Approximate Transfer for Quasi-Isomorphisms\n\n**Conjecture**: Given a \"quasi-isomorphism\" f : A \u2192 B with g : B \u2192 A such that g \u2218 f is \u03b5-close to id (in a suitable metric), theorems about A that are \"Lipschitz-stable\" can be approximately transferred to B. Specifically, if P : A \u2192 \u211d is L-Lipschitz and P(a) \u2265 \u03b4 for all a, then P(g(b)) \u2265 \u03b4 - L\u03b5 for all b.\n\n**Test**: Construct quasi-isomorphisms between Fin(n) and Fin(n+1) (with the extra element mapped to 0) and verify the approximate transfer bound on concrete predicates (e.g., \"distance from origin \u2265 3\"). Compare the bound \u03b4 - L\u03b5 to the actual minimum of the transferred predicate.\n\n**Impact**: If true, this extends proof transfer to the much larger class of approximate isomorphisms, relevant in numerical analysis, machine learning (where structures are typically learned up to approximation), and physics (where symmetries are often approximate). If false, it identifies the boundary between exact and approximate transferability.\n\n**Catalog References**: `Logic/ProofTransfer.lean` (transfer_forall), `Bridges/UltrametricTemporalCompression.lean` (temporal_compression_theorem)\n\n**Proof Strategy**:\n1. Define `QuasiEquiv` with fields `toFun`, `invFun`, `approx_left_inv : \u2200 a, d(invFun (toFun a), a) \u2264 \u03b5`, `approx_right_inv : \u2200 b, d(toFun (invFun b), b) \u2264 \u03b5`\n2. Define \"Lipschitz-stable predicate\" as a predicate P with a metric on the truth values\n3. Prove the approximate transfer theorem using triangle inequality\n4. Show that the bound is tight by constructing an example achieving equality\n\n**Domain Bridges**: Analysis (Lipschitz functions) \u2194 Logic (proof transfer) \u2194 Machine Learning (approximate invariants)\n\n**Lineage**: Extends transfer_forall and the compression analysis from this cycle to approximate settings.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Transfer Cost in Equivalence Chains\n\n**Conjecture**: For a chain of k equivalences \u03b1\u2080 \u2243 \u03b1\u2081 \u2243 ... \u2243 \u03b1\u2096, each of proof complexity at most m, the total transfer cost through the chain is exactly k\u00b7m + O(1), and no algorithm can achieve sub-linear dependence on k.\n\nFormally: there exist families of equivalence chains where the transferred proof term has size \u2265 c\u00b7k\u00b7m for some constant c > 0.\n\n**Test**: Construct chains of permutation equivalences on Fin(100) of lengths k = 1, 2, 5, 10, 50, 100. For each, transfer the predicate \"card = 100\" and measure the proof term size. Plot size vs. k and fit a linear model. If R\u00b2 < 0.95 for the linear fit, the conjecture may be wrong.\n\n**Impact**: If confirmed, this establishes a fundamental lower bound on transfer through equivalence chains, analogous to circuit depth lower bounds in complexity theory. If refuted (sub-linear growth observed), it would suggest that \"shortcutting\" is possible \u2014 composing many equivalences can be done more efficiently than applying them sequentially.\n\n**Catalog References**: `Logic/ProofTransfer.lean` (TransferPipeline.compose, pipeline_functoriality), `Logic/SpectralProofSpace.lean` (expansion_proof_length_bound)\n\n**Proof Strategy**:\n1. Formalize proof term size as a measure on Lean expressions\n2. Prove the upper bound k\u00b7m + O(1) using induction on chain length\n3. For the lower bound, use an information-theoretic argument: each equivalence in the chain contributes m bits of \"structural information\" that must be reflected in the proof\n4. Key lemma: the composition of k random permutations of Fin(n) has Kolmogorov complexity \u03a9(k\u00b7log(n!))\n\n**Domain Bridges**: Complexity Theory (circuit depth) \u2194 Logic (proof complexity) \u2194 Information Theory (Kolmogorov complexity)\n\n**Lineage**: Directly extends transfer_chain_cost_linear from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Automatic Commutativity Detection via Transfer\n\n**Conjecture**: Given a finitely-presented group G (by generators and relations) and a multiplicative equivalence f : G \u2243* H, the commutativity of G can be decided in polynomial time in the presentation size, and the transferred proof of commutativity (or non-commutativity) of H has size O(|presentation| + |f|).\n\n**Test**: Implement the detection algorithm for cyclic groups Z/nZ, dihedral groups D_n, and symmetric groups S_n. For each, construct an explicit MulEquiv to an isomorphic copy and measure the transferred proof size. Verify that the size is linear in the input.\n\n**Impact**: If true, this provides a practical algorithm for transferring algebraic properties in automated theorem provers, with guaranteed efficiency bounds. It would bridge the theoretical transfer framework to practical proof automation.\n\n**Catalog References**: `Logic/ProofTransfer.lean` (comm_transfers, mulequiv_preserves_op)\n\n**Proof Strategy**:\n1. Use the Knuth-Bendix completion algorithm to decide word problems in the group\n2. Reduce commutativity to checking [a,b] = e for all generator pairs (a,b)\n3. Prove that the transferred proof size is bounded by the number of generator pairs times the rewriting complexity\n4. Key lemma: the commutator [f\u207b\u00b9(a), f\u207b\u00b9(b)] maps to [a,b] under f\n\n**Domain Bridges**: Computational Group Theory \u2194 Logic (proof transfer) \u2194 Algebra (commutativity)\n\n**Lineage**: Extends comm_transfers from this cycle to an algorithmic setting.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Transfer-Invariant Proof Complexity Classes\n\n**Conjecture**: Define two proof systems as \"transfer-equivalent\" if there is a polynomial-time computable equivalence between their proof spaces that preserves validity. The class of transfer-equivalent proof systems forms a lattice under polynomial simulation, and the transfer compression ratio (from this cycle) is a lattice homomorphism from this lattice to (\u211d\u22650, \u2264).\n\n**Test**: Show that resolution and Frege proof systems are NOT transfer-equivalent (no polynomial bijection between valid proofs), but that resolution and DPLL are transfer-equivalent. Verify by constructing explicit proof-space equivalences for small formulas (3-5 variables).\n\n**Impact**: If confirmed, this establishes a new complexity-theoretic classification of proof systems based on structural isomorphism rather than simulation. It would connect the algebraic transfer framework to the Pudl\u00e1k-Kraj\u00ed\u010dek proof complexity hierarchy, potentially yielding new separation results. If false, the failure would identify which proof system properties resist transfer \u2014 analogous to the P vs. NP barrier for computation.\n\n**Catalog References**: `Logic/ProofTransfer.lean` (transferCost, directCost, asymptotic_compression), `Logic/SpectralProofSpace.lean` (expansion_proof_length_bound), `FINAL/MachineLearning/CompressionPipeline.lean` (pipeline_compression_ratio')\n\n**Proof Strategy**:\n1. Define proof-space equivalence formally as a polynomial-time computable Equiv between valid proof sets\n2. Prove that proof-space equivalence is an equivalence relation on proof systems\n3. Prove that transfer compression ratio is monotone under polynomial simulation\n4. Construct concrete proof-space equivalences for tree-like resolution \u2194 DPLL\n5. Prove separation: construct a formula family where resolution proofs are exponentially larger than Frege proofs, implying no polynomial proof-space equivalence\n\n**Domain Bridges**: Proof Complexity \u2194 Logic (proof transfer) \u2194 Computational Complexity (P vs. NP)\n\n**Lineage**: Extends the quantitative compression analysis (transfer_compression, asymptotic_compression) from this cycle to proof complexity theory.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0523",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e6f6fb5e",
+    "status": "available",
+    "timestamp": "2026-06-03T21:43:15.190938+00:00",
+    "title": "Complete, machine-verified framework for proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Research Directions: Mandelbrot Number Theory\n\n## Synthesis\n\nThis research cycle established a rigorous bridge between the Mandelbrot iteration $z \\to z^2 + c$ and classical number theory. The central discovery is the **GCD Theorem**: the set of \"return times\" (steps $n$ where $f_c^n(0) = 0$) is closed under GCD, meaning the Euclidean algorithm is encoded in the orbit dynamics. This connects to the Catalog's existing work on Berggren lattices (which study integer lattice structures under matrix iteration) and logistic chaos (which studies the degree-2 map $4x(1-x)$). The Mandelbrot iteration sits precisely at the intersection: it is a degree-2 polynomial map (like the logistic map) whose parameter space has lattice-like arithmetic structure (like Berggren trees).\n\nThe most promising cross-domain connection is between **dynatomic polynomials** and **cyclotomic theory**. The divisor-sum identity $\\sum_{d|n} \\text{dynatDegree}(d) = 2^{n-1}$ mirrors $\\sum_{d|n} \\varphi(d) = n$, and the Galois groups of dynatomic polynomials control the splitting of Mandelbrot polynomials modulo primes \u2014 connecting dynamics to algebraic number theory. This opens a path toward understanding the distribution of Mandelbrot orbit periods over finite fields, analogous to Artin's conjecture on primitive roots.\n\nThe highest breakthrough potential lies in Direction 1 (Dynatomic Galois groups), which could establish the Mandelbrot iteration as a new source of Galois representations, connecting it to the Langlands program and modern algebraic number theory.\n\n---\n\n### Direction 1: Dynatomic Galois Groups and Mandelbrot Representations\n\n**Conjecture**: The Galois group of the $n$-th dynatomic polynomial $\\Psi_n$ (the factor of $P_n$ capturing exact period $n$) over $\\mathbb{Q}$ is the full symmetric group $S_d$ where $d = \\text{dynatDegree}(n)$, for all $n \\geq 3$.\n\n**Test**: Compute the discriminant of $\\Psi_n$ for $n = 3, 4, 5, 6$ and verify that it is not a perfect square in $\\mathbb{Q}$ (ruling out alternating groups). Check the cycle structure of the Frobenius at small primes to distinguish $S_d$ from proper subgroups.\n\n**Impact**: If true, this would show that Mandelbrot dynamics generates \"generic\" Galois representations \u2014 the splitting behavior of periods modulo primes would be maximally equidistributed (by Chebotarev). If false, the specific Galois group structure would reveal hidden symmetries in the Mandelbrot set not visible from its geometry.\n\n**Catalog References**: `Cryptography/LogisticChaos/Dynamics.lean`, `Algebra/ArtinPrimitiveRoot.lean`\n\n**Proof Strategy**: \n1. Construct the dynatomic polynomials $\\Psi_n$ explicitly as factors of $P_n$ using the recursive formula and M\u00f6bius inversion.\n2. Verify irreducibility of $\\Psi_n$ over $\\mathbb{Q}$ using Newton polygon methods at specific primes.\n3. Compute the discriminant and use the criterion: if disc($\\Psi_n$) is not a perfect square, the Galois group contains an odd permutation, ruling out $A_d$.\n4. Apply the group-theoretic criterion of Jordan: if the Galois group is primitive and contains a cycle of prime length $p$ with $d/2 < p < d - 2$, then it is $S_d$.\n\n**Domain Bridges**: Mandelbrot dynamics \u2194 Algebraic number theory (Galois representations), Cryptography (pseudorandom sequences from orbit period distribution)\n\n**Lineage**: Builds on dynat_degree_sum and mandelbrotPoly_eval from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Mandelbrot Iteration over p-adic Integers\n\n**Conjecture**: For a prime $p$ and parameter $c \\in \\mathbb{Z}_p$, the Mandelbrot orbit period $\\text{per}_p(c)$ satisfies $\\text{per}_p(c) | p^k \\cdot \\text{per}_{p}(c \\bmod p)$ for all $k \\geq 1$, where $\\text{per}_p(c \\bmod p)$ is the period modulo $p$. Moreover, the \"period-lifting obstruction\" \u2014 the smallest $k$ where the period changes between $\\mathbb{Z}/p^k\\mathbb{Z}$ and $\\mathbb{Z}/p^{k+1}\\mathbb{Z}$ \u2014 is controlled by the $p$-adic valuation of the multiplier.\n\n**Test**: For primes $p \\in \\{3, 5, 7, 11\\}$ and parameters $c \\in \\{0, 1, ..., p-1\\}$, compute the period of the Mandelbrot orbit modulo $p^k$ for $k = 1, 2, ..., 5$ and verify the divisibility $\\text{per}_{p^{k+1}}(c) | p \\cdot \\text{per}_{p^k}(c)$.\n\n**Impact**: Would establish a $p$-adic analytic theory of the Mandelbrot set, connecting to Berkovich spaces and non-archimedean dynamics. The period-lifting obstruction would be a new invariant for classifying hyperbolic components.\n\n**Catalog References**: `Computation/PadicValuationDepth.lean`, `Algebra/MandelbrotNumberTheory.lean`\n\n**Proof Strategy**:\n1. Define the Mandelbrot iteration over $\\mathbb{Z}_p$ using the existing `mandelbrotIter` over commutative rings (applied to `ZMod (p^k)`).\n2. Prove the lift lemma: if $f^n(0) \\equiv 0 \\pmod{p^k}$ and $f^n(0) \\not\\equiv 0 \\pmod{p^{k+1}}$, relate this to the $p$-adic valuation of the orbit derivative.\n3. Use Hensel's lemma (in Mathlib) to lift periodic orbits from $\\mathbb{F}_p$ to $\\mathbb{Z}_p$.\n\n**Domain Bridges**: Mandelbrot dynamics \u2194 $p$-adic analysis, Computation (valuation depth measures)\n\n**Lineage**: Builds on mandelbrot_gcd_return and mandelbrot_return_mod from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Mandelbrot Orbit Counting over Finite Fields\n\n**Conjecture**: For a prime $p > 2^n$, the number of parameters $c \\in \\mathbb{F}_p$ with $f_c^n(0) = 0$ equals exactly $\\deg(P_n) = 2^{n-1}$.\n\n**Test**: Verify computationally for all primes $p \\leq 200$ and $n \\leq 8$. For each counterexample, determine whether it arises from repeated roots of $P_n$ modulo $p$ (i.e., $\\gcd(P_n, P_n') \\neq 1$ mod $p$).\n\n**Impact**: Would provide a complete understanding of Mandelbrot polynomial root distribution, connecting to the Weil conjectures for curves defined by $P_n(c) = 0$. Counterexamples would identify \"special primes\" for the Mandelbrot iteration.\n\n**Catalog References**: `Algebra/MandelbrotNumberTheory.lean` (mandelbrotPoly_natDegree)\n\n**Proof Strategy**:\n1. Show $P_n$ is separable (no repeated roots) over $\\overline{\\mathbb{F}_p}$ for $p > 2$ by computing $\\gcd(P_n, P_n')$ and showing it equals 1 (or equals $P_1 = X$, accounting for the root $c = 0$).\n2. For separable polynomials of degree $d$ over $\\mathbb{F}_p$ with $p > d$, every root over $\\overline{\\mathbb{F}_p}$ lies in $\\mathbb{F}_{p^k}$ for some $k | d$. The count of $\\mathbb{F}_p$-rational roots depends on the Frobenius cycle structure.\n3. Use the Weil bound: the deviation of the root count from $2^{n-1}$ is bounded by $(2^{n-1} - 1) \\cdot p^{-1/2}$ on average.\n\n**Domain Bridges**: Mandelbrot dynamics \u2194 Algebraic geometry (Weil conjectures), Number theory (point counting)\n\n**Lineage**: Builds on mandelbrotPoly_eval and dynat_degree_sum from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Superattracting Parameters and Polynomial Root Rigidity\n\n**Conjecture**: For $n \\geq 2$, the Mandelbrot polynomial $P_n(c) = 0$ has no repeated roots over $\\mathbb{Q}$. Equivalently, $\\gcd(P_n, P_n') = P_1 = X$ in $\\mathbb{Z}[X]$ (the only common root is $c = 0$, which is a root of every $P_n$).\n\n**Test**: Compute $\\gcd(P_n, P_n')$ in $\\mathbb{Z}[X]$ for $n = 2, 3, 4, 5, 6$ and verify it equals $X$.\n\n**Impact**: Root separability of $P_n$ is the key hypothesis needed for Direction 3 (orbit counting over finite fields) and Direction 1 (Galois group computation). It would also confirm that the centers of hyperbolic components of the Mandelbrot set are \"maximally spread out\" algebraically.\n\n**Catalog References**: `Algebra/MandelbrotNumberTheory.lean` (mandelbrotPoly_monic, mandelbrotPoly_natDegree)\n\n**Proof Strategy**:\n1. Compute $P_n'(c)$ using the chain rule on the recursive definition.\n2. Show that if $P_n(c_0) = 0$ and $P_n'(c_0) = 0$ for some $c_0 \\neq 0$, then the orbit $(0, c_0, c_0^2 + c_0, ...)$ has a specific algebraic constraint that forces a contradiction.\n3. The key identity: $P_n'(c) = \\sum_{k=0}^{n-1} \\prod_{j=k+1}^{n-1} 2 P_j(c)$ (by the chain rule applied to the composition). If $P_n(c_0) = 0$, this simplifies.\n\n**Domain Bridges**: Mandelbrot dynamics \u2194 Algebraic geometry (discriminant theory), Cryptography (rigidity of algebraic structures)\n\n**Lineage**: Builds on orbit_multiplier_eq_pow_mul and mandelbrotPoly_eval from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Mandelbrot-Berggren Bridge \u2014 Trees of Quadratic Orbits\n\n**Conjecture**: The \"tree of periodic orbits\" of the Mandelbrot map (organized by period and rational angle) has the same branching structure as the Berggren ternary tree of Pythagorean triples. Specifically, each period-$n$ bulb of the Mandelbrot set spawns 3 sub-bulbs of period $n+1$, analogous to each Pythagorean triple spawning 3 children under the Berggren matrices.\n\n**Test**: Enumerate the first 5 levels of the Mandelbrot bulb tree (main cardioid \u2192 period-2 \u2192 period-3,4,5 \u2192 ...) and the first 5 levels of the Berggren tree. Compare branching patterns and verify or refute the structural isomorphism.\n\n**Impact**: Would establish a deep structural connection between quadratic dynamics (Mandelbrot) and quadratic forms (Pythagorean triples), both governed by degree-2 arithmetic. This could unify two seemingly disparate areas of the Catalog.\n\n**Catalog References**: `Cryptography/BerggrenPythagoreanLattices.lean` (bounded_berggren_orbit_in_lattice), `Cryptography/BerggrenGroupoidOrbit.lean` (berggrenA, berggrenB, berggrenC)\n\n**Proof Strategy**:\n1. Formalize the Mandelbrot bulb tree: each period-$q$ bulb has sub-bulbs at rational angles $p'/q'$ with $q' > q$.\n2. Formalize the Berggren tree branching pattern.\n3. Construct an explicit map between the two trees (if one exists) using the parameterization of bulb centers.\n4. If no exact isomorphism exists, characterize the structural similarities and differences.\n\n**Domain Bridges**: Mandelbrot dynamics \u2194 Berggren lattice theory, Quadratic forms \u2194 Quadratic iteration\n\n**Lineage**: Builds on mandelbrot_gcd_return from this cycle and bounded_berggren_orbit_in_lattice from the Catalog.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0524",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f3d7f1ed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:43:54.763275+00:00",
+    "title": "Rigorous bridge between the Mandelbrot iterati"
   },
   {
     "consumed_by_exp_id": "0734a5d4",
