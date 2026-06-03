@@ -2,42 +2,107 @@
 """
 Retrocausal Mathematics: Numerical Demonstrations
 
-Demonstrates key theorems from the retrocausal logic framework:
-1. Temporal Galois connections on finite lattices
-2. Retrocausal closure operators and their fixed points
-3. CPT symmetry and the reversal property
-4. Temporal coherence laws
+Demonstrates the key results:
+1. Three-element Heyting algebra and LEM failure
+2. Temporal excluded middle on Boolean lattices
+3. Galois connection → nucleus construction
+4. CPT symmetry verification
+5. Nucleus fixed-point enumeration
 """
 
-import itertools
-from typing import Callable, TypeVar
+from itertools import product
+from typing import Callable
 
-T = TypeVar("T")
+# ============================================================
+# 1. Three-element Heyting algebra
+# ============================================================
 
+class Three:
+    """The 3-element Heyting algebra: bot < mid < top."""
+    BOT, MID, TOP = 0, 1, 2
+    
+    @staticmethod
+    def le(a: int, b: int) -> bool:
+        return a <= b
+    
+    @staticmethod
+    def sup(a: int, b: int) -> int:
+        return max(a, b)
+    
+    @staticmethod
+    def inf(a: int, b: int) -> int:
+        return min(a, b)
+    
+    @staticmethod
+    def himp(a: int, b: int) -> int:
+        """Heyting implication: a ⇨ b = max{c | c ⊓ a ≤ b}."""
+        if a <= b:
+            return Three.TOP
+        return b
+    
+    @staticmethod
+    def compl(a: int) -> int:
+        """Heyting complement: ¬a = a ⇨ ⊥."""
+        return Three.himp(a, Three.BOT)
 
-def demo_galois_connection():
-    """Demonstrate a temporal Galois connection on a power set lattice."""
+def demo_lem_failure():
+    """Demonstrate that LEM fails in the 3-element chain."""
     print("=" * 60)
-    print("Demo 1: Temporal Galois Connection on P({0,1,2})")
+    print("1. LEM FAILURE IN 3-ELEMENT HEYTING ALGEBRA")
     print("=" * 60)
+    
+    names = {0: "⊥", 1: "mid", 2: "⊤"}
+    
+    print("\nHeyting implication table (a ⇨ b):")
+    print("      ", "  ".join(f"{names[b]:>3}" for b in range(3)))
+    for a in range(3):
+        row = [Three.himp(a, b) for b in range(3)]
+        print(f"  {names[a]:>3}", "  ".join(f"{names[r]:>3}" for r in row))
+    
+    print("\nLEM check: a ⊔ ¬a for each element:")
+    for a in range(3):
+        neg_a = Three.compl(a)
+        lem = Three.sup(a, neg_a)
+        status = "✓ LEM holds" if lem == Three.TOP else "✗ LEM FAILS"
+        print(f"  {names[a]} ⊔ ¬{names[a]} = {names[a]} ⊔ {names[neg_a]} = {names[lem]}  {status}")
+    
+    print("\nDouble negation check:")
+    for a in range(3):
+        dbl = Three.compl(Three.compl(a))
+        status = "= a" if dbl == a else f"≠ a (got {names[dbl]})"
+        print(f"  ¬¬{names[a]} = {names[dbl]}  {status}")
 
-    # Universe
-    U = frozenset({0, 1, 2})
+# ============================================================
+# 2. Temporal excluded middle on power set
+# ============================================================
 
-    # Forward propagation: add the successor element (mod 3)
-    def T(s: frozenset) -> frozenset:
-        return frozenset((x + 1) % 3 for x in s)
-
-    # Backward propagation: add the predecessor element (mod 3)
-    def R(s: frozenset) -> frozenset:
-        return frozenset((x - 1) % 3 for x in s)
-
-    # Verify Galois connection: T(a) ⊆ b iff a ⊆ R(b)
+def demo_temporal_em():
+    """Temporal EM on the power set of {0,1,2} with a Galois connection."""
+    print("\n" + "=" * 60)
+    print("2. TEMPORAL EXCLUDED MIDDLE")
+    print("=" * 60)
+    
+    universe = frozenset({0, 1, 2})
+    
+    # Define a Galois connection: T maps to the down-closure under ≤
+    # T(S) = {x | ∃ y ∈ S, x ≤ y}  (down-closure)
+    # R(S) = {x | ∀ y ≤ x, y ∈ S}  (up-interior)
+    def T(S: frozenset) -> frozenset:
+        return frozenset(x for x in universe if any(x <= y for y in S))
+    
+    def R(S: frozenset) -> frozenset:
+        return frozenset(x for x in universe if all(y in S for y in universe if y <= x))
+    
+    print(f"\nUniverse: {set(universe)}")
+    print("T = down-closure, R = up-interior")
+    
+    # Verify Galois connection: T(a) ⊆ b ⟺ a ⊆ R(b)
     all_subsets = []
-    for r in range(len(U) + 1):
-        for combo in itertools.combinations(U, r):
+    for r in range(len(universe) + 1):
+        from itertools import combinations
+        for combo in combinations(universe, r):
             all_subsets.append(frozenset(combo))
-
+    
     gc_holds = True
     for a in all_subsets:
         for b in all_subsets:
@@ -45,547 +110,431 @@ def demo_galois_connection():
             rhs = a.issubset(R(b))
             if lhs != rhs:
                 gc_holds = False
-                print(f"  FAIL: T({set(a)}) ⊆ {set(b)} is {lhs}, but {set(a)} ⊆ R({set(b)}) is {rhs}")
+    print(f"Galois connection verified: {gc_holds}")
+    
+    # Temporal EM: R(T(S)) ∪ R(T(Sᶜ)) = universe
+    print("\nTemporal EM check: R(T(S)) ∪ R(T(Sᶜ)) = U for all S:")
+    for S in all_subsets:
+        Sc = universe - S
+        closure_S = R(T(S))
+        closure_Sc = R(T(Sc))
+        union = closure_S | closure_Sc
+        status = "✓" if union == universe else "✗"
+        print(f"  S={str(set(S)):>12}  □S={str(set(closure_S)):>12}  □Sᶜ={str(set(closure_Sc)):>12}  union={str(set(union)):>12}  {status}")
 
-    print(f"\n  Galois connection verified: {gc_holds}")
+# ============================================================
+# 3. CPT symmetry
+# ============================================================
 
-    # Demonstrate closure and interior
-    print("\n  Retrocausal Closure R∘T:")
-    for s in sorted(all_subsets, key=lambda x: (len(x), sorted(x))):
-        cl = R(T(s))
-        print(f"    cl({set(s)}) = {set(cl)}")
-
-    # Verify idempotency
-    print("\n  Idempotency check (cl∘cl = cl):")
-    idempotent = all(R(T(R(T(s)))) == R(T(s)) for s in all_subsets)
-    print(f"    Idempotent: {idempotent}")
-
-    # Fixed points
-    fixed = [s for s in all_subsets if R(T(s)) == s]
-    print(f"\n  Fixed points of closure: {[set(s) for s in fixed]}")
-
-    # Temporal coherence
-    print("\n  Temporal coherence T∘R∘T = T:")
-    coherent_l = all(T(R(T(s))) == T(s) for s in all_subsets)
-    print(f"    T∘R∘T = T: {coherent_l}")
-
-    coherent_r = all(R(T(R(s))) == R(s) for s in all_subsets)
-    print(f"    R∘T∘R = R: {coherent_r}")
-
-
-def demo_temporal_excluded_middle():
-    """Demonstrate the Temporal Excluded Middle on a Boolean algebra."""
+def demo_cpt():
+    """Demonstrate CPT involutivity with commuting involutions."""
     print("\n" + "=" * 60)
-    print("Demo 2: Temporal Excluded Middle")
+    print("3. CPT SYMMETRY")
     print("=" * 60)
-
-    U = frozenset({0, 1, 2, 3})
-
-    # T shifts each element by 1 (mod 4)
-    def T(s: frozenset) -> frozenset:
-        return frozenset((x + 1) % 4 for x in s)
-
-    def R(s: frozenset) -> frozenset:
-        return frozenset((x - 1) % 4 for x in s)
-
-    all_subsets = []
-    for r in range(len(U) + 1):
-        for combo in itertools.combinations(U, r):
-            all_subsets.append(frozenset(combo))
-
-    print("\n  Checking cl(a) ∪ cl(aᶜ) = U for all a:")
-    tem_holds = True
-    for a in all_subsets:
-        a_comp = U - a
-        cl_a = R(T(a))
-        cl_comp = R(T(a_comp))
-        union = cl_a | cl_comp
-        if union != U:
-            tem_holds = False
-            print(f"    FAIL: a={set(a)}, cl(a)∪cl(aᶜ)={set(union)} ≠ U")
-
-    print(f"  Temporal Excluded Middle holds: {tem_holds}")
-
-
-def demo_cpt_symmetry():
-    """Demonstrate CPT reversal and the counterexample to the iff."""
-    print("\n" + "=" * 60)
-    print("Demo 3: CPT Symmetry")
-    print("=" * 60)
-
-    n = 3
-
-    # Counterexample: C = swap(0,1), P = swap(0,2), T = swap(0,1)
-    def C(x: int) -> int:
-        return {0: 1, 1: 0, 2: 2}[x]
-
-    def P(x: int) -> int:
-        return {0: 2, 1: 1, 2: 0}[x]
-
-    def T_rev(x: int) -> int:
-        return {0: 1, 1: 0, 2: 2}[x]
-
-    # Check involutions
-    print(f"\n  C is involution: {all(C(C(x)) == x for x in range(n))}")
-    print(f"  P is involution: {all(P(P(x)) == x for x in range(n))}")
-    print(f"  T is involution: {all(T_rev(T_rev(x)) == x for x in range(n))}")
-
+    
+    # Work on {0,1,2,3}: C = swap(0,1), P = swap(2,3), T = swap(0,2)∘swap(1,3)
+    def C(x): return {0: 1, 1: 0, 2: 2, 3: 3}[x]
+    def P(x): return {0: 0, 1: 1, 2: 3, 3: 2}[x]
+    def T(x): return {0: 2, 1: 3, 2: 0, 3: 1}[x]
+    
+    elements = [0, 1, 2, 3]
+    
+    # Verify involutions
+    print("Involution check:")
+    for name, f in [("C", C), ("P", P), ("T", T)]:
+        is_invol = all(f(f(x)) == x for x in elements)
+        print(f"  {name}∘{name} = id: {is_invol}")
+    
+    # Check commutativity
+    print("\nCommutativity check:")
+    for n1, f1, n2, f2 in [("C", C, "P", P), ("C", C, "T", T), ("P", P, "T", T)]:
+        commutes = all(f1(f2(x)) == f2(f1(x)) for x in elements)
+        print(f"  {n1}∘{n2} = {n2}∘{n1}: {commutes}")
+    
     # CPT composition
-    def CPT(x: int) -> int:
-        return C(P(T_rev(x)))
+    def CPT(x): return C(P(T(x)))
+    def TPC(x): return T(P(C(x)))
+    
+    is_invol = all(CPT(CPT(x)) == x for x in elements)
+    print(f"\nCPT is involution: {is_invol}")
+    
+    equals_tpc = all(CPT(x) == TPC(x) for x in elements)
+    print(f"CPT = TPC: {equals_tpc}")
+    
+    print("\nCPT table:")
+    for x in elements:
+        print(f"  CPT({x}) = {CPT(x)},  TPC({x}) = {TPC(x)}")
 
-    print(f"\n  CPT mapping: {[CPT(x) for x in range(n)]}")
-    print(f"  CPT is involution: {all(CPT(CPT(x)) == x for x in range(n))}")
+# ============================================================
+# 4. Nucleus enumeration on P(Fin(2))
+# ============================================================
 
-    # Check pairwise commutativity
-    cp_commute = all(C(P(x)) == P(C(x)) for x in range(n))
-    ct_commute = all(C(T_rev(x)) == T_rev(C(x)) for x in range(n))
-    pt_commute = all(P(T_rev(x)) == T_rev(P(x)) for x in range(n))
-
-    print(f"\n  C,P commute: {cp_commute}")
-    print(f"  C,T commute: {ct_commute}")
-    print(f"  P,T commute: {pt_commute}")
-
-    # Reversal property: CPT = TPC
-    def TPC(x: int) -> int:
-        return T_rev(P(C(x)))
-
-    reversal = all(CPT(x) == TPC(x) for x in range(n))
-    print(f"\n  CPT reversal (CPT = TPC): {reversal}")
-
-    # Commuting example
-    print("\n  --- Commuting example ---")
-
-    def C2(x: int) -> int:
-        return {0: 1, 1: 0, 2: 2}[x]
-
-    def P2(x: int) -> int:
-        return {0: 0, 1: 2, 2: 1}[x]
-
-    def T2(x: int) -> int:
-        return {0: 0, 1: 1, 2: 2}[x]  # identity
-
-    cp2 = all(C2(P2(x)) == P2(C2(x)) for x in range(n))
-    ct2 = all(C2(T2(x)) == T2(C2(x)) for x in range(n))
-    pt2 = all(P2(T2(x)) == T2(P2(x)) for x in range(n))
-    cpt2_invol = all(C2(P2(T2(C2(P2(T2(x)))))) == x for x in range(n))
-
-    print(f"  All commute: {cp2 and ct2 and pt2}")
-    print(f"  CPT is involution: {cpt2_invol}")
-
-
-def demo_kripke_frame():
-    """Demonstrate a retrocausal Kripke frame with 3 worlds."""
+def demo_nucleus_enumeration():
+    """Enumerate all nuclei on the power set of {0,1} and count fixed points."""
     print("\n" + "=" * 60)
-    print("Demo 4: Retrocausal Kripke Frame")
+    print("4. NUCLEUS ENUMERATION ON P({0,1})")
     print("=" * 60)
+    
+    universe = frozenset({0, 1})
+    subsets = [frozenset(), frozenset({0}), frozenset({1}), universe]
+    
+    def is_nucleus(j: dict) -> bool:
+        # Extensive: S ⊆ j(S)
+        for S in subsets:
+            if not S.issubset(j[S]):
+                return False
+        # Idempotent: j(j(S)) = j(S)
+        for S in subsets:
+            if j[j[S]] != j[S]:
+                return False
+        # Preserves meets: j(S ∩ T) = j(S) ∩ j(T)
+        for S in subsets:
+            for T_set in subsets:
+                meet_input = S & T_set
+                if j[meet_input] != j[S] & j[T_set]:
+                    return False
+        return True
+    
+    nuclei = []
+    # Enumerate all functions j: subsets → subsets
+    for values in product(subsets, repeat=4):
+        j = dict(zip(subsets, values))
+        if is_nucleus(j):
+            fixed = [S for S in subsets if j[S] == S]
+            nuclei.append((j, fixed))
+    
+    print(f"\nFound {len(nuclei)} nuclei on P({{0,1}}):")
+    for i, (j, fixed) in enumerate(nuclei):
+        j_str = {str(set(k)): str(set(v)) for k, v in j.items()}
+        print(f"\n  Nucleus {i+1}:")
+        for k, v in j_str.items():
+            print(f"    j({k}) = {v}")
+        print(f"    Fixed points ({len(fixed)}): {[str(set(s)) for s in fixed]}")
+    
+    max_fixed = max(len(fixed) for _, fixed in nuclei)
+    bound = 2**(2-1) + 1  # 2^(n-1) + 1 for n=2
+    print(f"\nMax fixed points found: {max_fixed}")
+    print(f"Conjectured bound (2^(n-1)+1 = {bound}): {'Holds' if max_fixed <= bound else 'FAILS'}")
 
-    worlds = ["past", "present", "future"]
+# ============================================================
+# 5. S4 Modal Logic verification
+# ============================================================
 
-    # Linear order: past ≤ present ≤ future
-    order = {
-        (0, 0), (0, 1), (0, 2),
-        (1, 1), (1, 2),
-        (2, 2),
-    }
-
-    # Retrocausal access: future can influence past
-    access = {(0, 2)}  # past ← future
-
-    print(f"\n  Worlds: {worlds}")
-    print(f"  Order: {', '.join(f'{worlds[i]}≤{worlds[j]}' for i, j in sorted(order) if i != j)}")
-    print(f"  Retrocausal access: {', '.join(f'{worlds[j]}→{worlds[i]}' for i, j in access)}")
-
-    # Upward-closed sets (intuitionistic propositions)
-    upward_closed = []
+def demo_s4_axioms():
+    """Verify S4 axioms for □ and ◇ on a concrete Galois connection."""
+    print("\n" + "=" * 60)
+    print("5. S4 MODAL AXIOMS VERIFICATION")
+    print("=" * 60)
+    
+    # Work on the power set of {0,1,2} with a simple Galois connection
+    universe = frozenset({0, 1, 2})
+    all_subsets = []
+    from itertools import combinations
     for r in range(4):
-        for combo in itertools.combinations(range(3), r):
-            s = set(combo)
-            is_up = all(
-                (j in s) for i in s for j in range(3) if (i, j) in order
-            )
-            if is_up:
-                upward_closed.append(s)
+        for combo in combinations(universe, r):
+            all_subsets.append(frozenset(combo))
+    
+    # T = down-closure, R = up-interior (same as before)
+    def T(S):
+        return frozenset(x for x in universe if any(x <= y for y in S))
+    def R(S):
+        return frozenset(x for x in universe if all(y in S for y in universe if y <= x))
+    
+    def box(S): return R(T(S))
+    def diamond(S): return T(R(S))
+    
+    # S4 for □: □□ = □
+    s4_box = all(box(box(S)) == box(S) for S in all_subsets)
+    print(f"□□ = □ (S4 for box): {s4_box}")
+    
+    # S4 for ◇: ◇◇ = ◇
+    s4_dia = all(diamond(diamond(S)) == diamond(S) for S in all_subsets)
+    print(f"◇◇ = ◇ (S4 for diamond): {s4_dia}")
+    
+    # Extensiveness: S ⊆ □S
+    ext = all(S.issubset(box(S)) for S in all_subsets)
+    print(f"S ⊆ □S (extensiveness): {ext}")
+    
+    # Contractiveness: ◇S ⊆ S
+    contr = all(diamond(S).issubset(S) for S in all_subsets)
+    print(f"◇S ⊆ S (contractiveness): {contr}")
+    
+    # K axiom: □(S ∩ T) ⊆ □S ∩ □T
+    k_axiom = all(box(S & T_set).issubset(box(S) & box(T_set))
+                  for S in all_subsets for T_set in all_subsets)
+    print(f"□(S∩T) ⊆ □S ∩ □T (K axiom): {k_axiom}")
+    
+    # Coherence: T∘R∘T = T and R∘T∘R = R
+    left_coh = all(T(R(T(S))) == T(S) for S in all_subsets)
+    right_coh = all(R(T(R(S))) == R(S) for S in all_subsets)
+    print(f"T∘R∘T = T (left coherence): {left_coh}")
+    print(f"R∘T∘R = R (right coherence): {right_coh}")
 
-    print(f"\n  Upward-closed sets (intuitionistic propositions):")
-    for s in upward_closed:
-        name = "{" + ", ".join(worlds[i] for i in sorted(s)) + "}" if s else "∅"
-        comp = set(range(3)) - s
-        comp_name = "{" + ", ".join(worlds[i] for i in sorted(comp)) + "}" if comp else "∅"
-        trivial = s == set() or s == set(range(3))
-        lem = s == set(range(3)) or comp == set(range(3))
-        print(f"    {name:30s} complement: {comp_name:30s} trivial: {trivial}")
-
-    # The set {present, future} is upward-closed, non-trivial, with non-trivial complement
-    S = {1, 2}
-    print(f"\n  Proposition {{present, future}}:")
-    print(f"    Non-trivial: {S != set() and S != set(range(3))}")
-    print(f"    Complement non-trivial: {(set(range(3)) - S) != set() and (set(range(3)) - S) != set(range(3))}")
-    print(f"    → Classical LEM fails: neither S nor Sᶜ covers all worlds")
-
-
-def demo_closure_properties():
-    """Demonstrate closure operator properties on a concrete lattice."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Closure Operator Properties")
-    print("=" * 60)
-
-    # Divisibility lattice on {1, 2, 3, 6}
-    # Order: a | b
-    elements = [1, 2, 3, 6]
-
-    def divides(a, b):
-        return b % a == 0
-
-    # T: multiply by 2 (capped at 6)
-    def T(a):
-        return min(2 * a, 6)
-
-    # R: divide by 2 (floor, minimum 1)
-    def R(a):
-        return max(a // 2, 1)
-
-    # Check if this is a Galois connection
-    print("\n  Elements: {1, 2, 3, 6} with divisibility order")
-    print(f"  T(a) = min(2a, 6): {[T(a) for a in elements]}")
-    print(f"  R(a) = max(⌊a/2⌋, 1): {[R(a) for a in elements]}")
-
-    # Closure R∘T
-    print("\n  Retrocausal closure R(T(a)):")
-    for a in elements:
-        cl = R(T(a))
-        cl2 = R(T(cl))
-        print(f"    cl({a}) = {cl}, cl(cl({a})) = {cl2}, idempotent: {cl == cl2}")
-
-    # Verify coherence
-    print("\n  Temporal coherence:")
-    for a in elements:
-        trt = T(R(T(a)))
-        t_a = T(a)
-        rtr = R(T(R(a)))
-        r_a = R(a)
-        print(f"    T(R(T({a})))={trt}, T({a})={t_a}, equal: {trt == t_a}")
-        print(f"    R(T(R({a})))={rtr}, R({a})={r_a}, equal: {rtr == r_a}")
-
+# ============================================================
 
 if __name__ == "__main__":
-    demo_galois_connection()
-    demo_temporal_excluded_middle()
-    demo_cpt_symmetry()
-    demo_kripke_frame()
-    demo_closure_properties()
+    demo_lem_failure()
+    demo_temporal_em()
+    demo_cpt()
+    demo_nucleus_enumeration()
+    demo_s4_axioms()
     print("\n" + "=" * 60)
     print("All demonstrations complete.")
-    print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""
-Visualization: Retrocausal Closure Operator on Power Set Lattice
-
-Shows how the closure operator R∘T maps each element of a power set lattice
-to its closure, highlighting fixed points and the temporal excluded middle.
-"""
-
-import itertools
-
+"""Visualization: 3-element Heyting algebra and LEM failure."""
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-def powerset(universe):
-    """Generate all subsets of universe."""
-    result = []
-    for r in range(len(universe) + 1):
-        for combo in itertools.combinations(sorted(universe), r):
-            result.append(frozenset(combo))
-    return result
+# 1. Hasse diagram of the 3-element chain
+ax = axes[0]
+ax.set_title("3-Element Chain\n(Retrocausal Fixed Points)", fontsize=12, fontweight='bold')
+positions = {0: (0.5, 0.1), 1: (0.5, 0.5), 2: (0.5, 0.9)}
+labels = {0: "⊥ (impossible)", 1: "mid (contingent)", 2: "⊤ (necessary)"}
+colors = {0: '#e74c3c', 1: '#f39c12', 2: '#27ae60'}
 
+for val, (x, y) in positions.items():
+    ax.plot(x, y, 'o', markersize=20, color=colors[val], zorder=5)
+    ax.annotate(labels[val], (x, y), textcoords="offset points",
+                xytext=(60, 0), fontsize=10, va='center')
 
-def hasse_positions(n):
-    """Compute positions for elements of P({0,...,n-1}) in a Hasse diagram."""
-    elements = powerset(range(n))
-    positions = {}
-    by_size = {}
-    for s in elements:
-        sz = len(s)
-        if sz not in by_size:
-            by_size[sz] = []
-        by_size[sz].append(s)
+# Draw edges
+ax.plot([0.5, 0.5], [0.1, 0.5], 'k-', linewidth=2)
+ax.plot([0.5, 0.5], [0.5, 0.9], 'k-', linewidth=2)
+ax.set_xlim(-0.1, 1.5)
+ax.set_ylim(-0.05, 1.05)
+ax.axis('off')
 
-    for sz, elems in by_size.items():
-        count = len(elems)
-        for i, s in enumerate(sorted(elems, key=lambda x: sorted(x))):
-            x = (i - (count - 1) / 2) * 1.5
-            y = sz * 1.5
-            positions[s] = (x, y)
-    return elements, positions
+# 2. LEM failure visualization
+ax = axes[1]
+ax.set_title("Law of Excluded Middle\na ⊔ ¬a = ?", fontsize=12, fontweight='bold')
 
+elements = ['⊥', 'mid', '⊤']
+neg_vals = ['⊤', '⊥', '⊥']
+lem_vals = ['⊤', 'mid', '⊤']
+lem_holds = [True, False, True]
 
-def main():
-    n = 3
-    U = frozenset(range(n))
+bar_colors = ['#27ae60' if h else '#e74c3c' for h in lem_holds]
+bars = ax.bar(range(3), [2, 1, 2], color=bar_colors, alpha=0.7, edgecolor='black')
 
-    # Forward: shift by 1 mod n
-    def T(s):
-        return frozenset((x + 1) % n for x in s)
+ax.set_xticks(range(3))
+ax.set_xticklabels([f'a={e}\n¬a={n}\na⊔¬a={v}' for e, n, v in zip(elements, neg_vals, lem_vals)],
+                   fontsize=9)
+ax.set_yticks([0, 1, 2])
+ax.set_yticklabels(['⊥', 'mid', '⊤'])
+ax.axhline(y=2, color='gray', linestyle='--', alpha=0.5, label='⊤ (needed for LEM)')
+ax.legend(fontsize=9)
 
-    # Backward: shift by -1 mod n
-    def R(s):
-        return frozenset((x - 1) % n for x in s)
+# 3. Double negation failure
+ax = axes[2]
+ax.set_title("Double Negation\n¬¬a vs a", fontsize=12, fontweight='bold')
 
-    elements, positions = hasse_positions(n)
-    closure = {s: R(T(s)) for s in elements}
-    fixed = {s for s in elements if closure[s] == s}
+a_vals = [0, 1, 2]
+dbl_neg = [0, 2, 2]  # ¬¬⊥=⊥, ¬¬mid=⊤, ¬¬⊤=⊤
 
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+x = np.arange(3)
+width = 0.35
+bars1 = ax.bar(x - width/2, a_vals, width, label='a', color='#3498db', alpha=0.7, edgecolor='black')
+bars2 = ax.bar(x + width/2, dbl_neg, width, label='¬¬a', color='#e67e22', alpha=0.7, edgecolor='black')
 
-    for ax_idx, ax in enumerate(axes):
-        ax.set_aspect("equal")
-        ax.set_title(
-            "Retrocausal Closure on P({0,1,2})" if ax_idx == 0
-            else "Fixed Points & Temporal EM",
-            fontsize=14, fontweight="bold"
-        )
+ax.set_xticks(x)
+ax.set_xticklabels(elements)
+ax.set_yticks([0, 1, 2])
+ax.set_yticklabels(['⊥', 'mid', '⊤'])
+ax.legend(fontsize=10)
 
-        # Draw Hasse edges
-        for s1 in elements:
-            for s2 in elements:
-                if s1 < s2 and len(s2) - len(s1) == 1:
-                    x1, y1 = positions[s1]
-                    x2, y2 = positions[s2]
-                    ax.plot([x1, x2], [y1, y2], "k-", alpha=0.3, linewidth=0.8)
+# Highlight mismatch
+ax.annotate('≠', (1, 1.5), fontsize=16, ha='center', color='red', fontweight='bold')
 
-        if ax_idx == 0:
-            # Draw closure arrows
-            for s in elements:
-                if closure[s] != s:
-                    x1, y1 = positions[s]
-                    x2, y2 = positions[closure[s]]
-                    ax.annotate(
-                        "", xy=(x2, y2), xytext=(x1, y1),
-                        arrowprops=dict(arrowstyle="->", color="red", lw=1.5, alpha=0.7),
-                    )
-
-            for s in elements:
-                x, y = positions[s]
-                color = "gold" if s in fixed else "lightblue"
-                label = "{" + ",".join(str(x) for x in sorted(s)) + "}" if s else "∅"
-                ax.plot(x, y, "o", markersize=25, color=color, markeredgecolor="black")
-                ax.text(x, y, label, ha="center", va="center", fontsize=7)
-
-            legend_elements = [
-                mpatches.Patch(facecolor="gold", edgecolor="black", label="Fixed point"),
-                mpatches.Patch(facecolor="lightblue", edgecolor="black", label="Non-fixed"),
-                mpatches.FancyArrowPatch((0, 0), (1, 0), arrowstyle="->", color="red",
-                                         label="Closure map"),
-            ]
-            ax.legend(handles=legend_elements[:2], loc="upper left", fontsize=9)
-
-        else:
-            # Temporal Excluded Middle visualization
-            # Pick a = {0}
-            a = frozenset({0})
-            a_comp = U - a
-            cl_a = closure[a]
-            cl_comp = closure[a_comp]
-
-            for s in elements:
-                x, y = positions[s]
-                if s == cl_a and s == cl_comp:
-                    color = "purple"
-                elif s <= cl_a:
-                    color = "blue"
-                elif s <= cl_comp:
-                    color = "red"
-                else:
-                    color = "lightgray"
-                label = "{" + ",".join(str(x) for x in sorted(s)) + "}" if s else "∅"
-                ax.plot(x, y, "o", markersize=25, color=color, markeredgecolor="black",
-                        alpha=0.7)
-                ax.text(x, y, label, ha="center", va="center", fontsize=7)
-
-            a_label = "{" + ",".join(str(x) for x in sorted(a)) + "}"
-            ax.text(0, -1, f"a = {a_label}\ncl(a) ∪ cl(aᶜ) = U  ✓",
-                    ha="center", fontsize=10, style="italic")
-
-        ax.set_xlim(-3, 3)
-        ax.set_ylim(-1.5, 5.5)
-        ax.axis("off")
-
-    plt.tight_layout()
-    plt.savefig("retrocausal_closure.png", dpi=150, bbox_inches="tight")
-    plt.close()
-    print("Saved retrocausal_closure.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('heyting_lem_failure.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: heyting_lem_failure.png")
 
 
 #!/usr/bin/env python3
-"""
-Visualization: CPT Symmetry and Defect Analysis
+"""Visualization: S4 modal logic structure of temporal operators."""
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+from itertools import combinations
 
-Shows the CPT composition on finite sets, the reversal property,
-and the commutativity defect for all CPT triples.
-"""
+# Setup
+universe = frozenset({0, 1, 2})
+subsets = []
+for r in range(4):
+    for combo in combinations(range(3), r):
+        subsets.append(frozenset(combo))
 
-import itertools
-from typing import List, Optional, Tuple
+def T(S):
+    return frozenset(x for x in universe if any(x <= y for y in S))
 
+def R(S):
+    return frozenset(x for x in universe if all(y in S for y in universe if y <= x))
+
+def box(S): return R(T(S))
+def diamond(S): return T(R(S))
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# 1. Box operator: S → □S
+ax = axes[0, 0]
+ax.set_title("Box Operator □ = R∘T\n(Temporal Necessity)", fontsize=11, fontweight='bold')
+for i, S in enumerate(subsets):
+    bS = box(S)
+    s_label = str(set(S)) if S else '∅'
+    b_label = str(set(bS)) if bS else '∅'
+    y = len(subsets) - i - 1
+    ax.annotate('', xy=(3, y), xytext=(0.5, y),
+                arrowprops=dict(arrowstyle='->', color='#3498db', lw=1.5))
+    ax.text(0.2, y, s_label, ha='right', va='center', fontsize=8,
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+    ax.text(3.3, y, b_label, ha='left', va='center', fontsize=8,
+            bbox=dict(boxstyle='round,pad=0.3', 
+                      facecolor='lightgreen' if S == bS else 'lightyellow'))
+ax.set_xlim(-1, 5)
+ax.set_ylim(-0.5, len(subsets))
+ax.axis('off')
+
+# 2. Diamond operator: S → ◇S
+ax = axes[0, 1]
+ax.set_title("Diamond Operator ◇ = T∘R\n(Temporal Possibility)", fontsize=11, fontweight='bold')
+for i, S in enumerate(subsets):
+    dS = diamond(S)
+    s_label = str(set(S)) if S else '∅'
+    d_label = str(set(dS)) if dS else '∅'
+    y = len(subsets) - i - 1
+    ax.annotate('', xy=(3, y), xytext=(0.5, y),
+                arrowprops=dict(arrowstyle='->', color='#e74c3c', lw=1.5))
+    ax.text(0.2, y, s_label, ha='right', va='center', fontsize=8,
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+    ax.text(3.3, y, d_label, ha='left', va='center', fontsize=8,
+            bbox=dict(boxstyle='round,pad=0.3',
+                      facecolor='lightcoral' if S == dS else 'lightyellow'))
+ax.set_xlim(-1, 5)
+ax.set_ylim(-0.5, len(subsets))
+ax.axis('off')
+
+# 3. S4 axiom verification: □□ = □ and ◇◇ = ◇
+ax = axes[1, 0]
+ax.set_title("S4 Axiom Verification\n□□ = □ and ◇◇ = ◇", fontsize=11, fontweight='bold')
+
+labels_list = [str(set(S)) if S else '∅' for S in subsets]
+box_box_eq = [box(box(S)) == box(S) for S in subsets]
+dia_dia_eq = [diamond(diamond(S)) == diamond(S) for S in subsets]
+
+x = np.arange(len(subsets))
+width = 0.35
+colors_bb = ['#27ae60' if v else '#e74c3c' for v in box_box_eq]
+colors_dd = ['#27ae60' if v else '#e74c3c' for v in dia_dia_eq]
+
+ax.barh(x - width/2, [1]*len(subsets), width, color=colors_bb, alpha=0.7, label='□□=□')
+ax.barh(x + width/2, [1]*len(subsets), width, color=colors_dd, alpha=0.7, label='◇◇=◇')
+ax.set_yticks(x)
+ax.set_yticklabels(labels_list, fontsize=8)
+ax.set_xticks([])
+ax.text(0.5, -1.5, f"□□=□: ALL PASS   ◇◇=◇: ALL PASS", 
+        ha='center', fontsize=10, fontweight='bold', color='#27ae60')
+
+# 4. Coherence laws
+ax = axes[1, 1]
+ax.set_title("Temporal Coherence Laws\nT∘R∘T = T and R∘T∘R = R", fontsize=11, fontweight='bold')
+
+left_coh = [T(R(T(S))) == T(S) for S in subsets]
+right_coh = [R(T(R(S))) == R(S) for S in subsets]
+
+colors_l = ['#27ae60' if v else '#e74c3c' for v in left_coh]
+colors_r = ['#27ae60' if v else '#e74c3c' for v in right_coh]
+
+ax.barh(x - width/2, [1]*len(subsets), width, color=colors_l, alpha=0.7, label='T∘R∘T=T')
+ax.barh(x + width/2, [1]*len(subsets), width, color=colors_r, alpha=0.7, label='R∘T∘R=R')
+ax.set_yticks(x)
+ax.set_yticklabels(labels_list, fontsize=8)
+ax.set_xticks([])
+ax.text(0.5, -1.5, f"Left coherence: ALL PASS   Right coherence: ALL PASS",
+        ha='center', fontsize=10, fontweight='bold', color='#27ae60')
+
+plt.tight_layout()
+plt.savefig('s4_modal.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: s4_modal.png")
+
+
+#!/usr/bin/env python3
+"""Visualization: Temporal excluded middle vs propositional LEM failure."""
 import matplotlib.pyplot as plt
 import numpy as np
+from itertools import combinations
 
+# Setup: Galois connection on P({0,1,2})
+universe = frozenset({0, 1, 2})
+subsets = []
+for r in range(4):
+    for combo in combinations(range(3), r):
+        subsets.append(frozenset(combo))
 
-def generate_involutions(n: int) -> List[List[int]]:
-    """Generate all involutions (self-inverse permutations) on {0,...,n-1}."""
-    result: List[List[int]] = []
+def T(S):
+    return frozenset(x for x in universe if any(x <= y for y in S))
 
-    def backtrack(perm: List[Optional[int]], pos: int):
-        if pos == n:
-            result.append(list(perm))  # type: ignore
-            return
-        if perm[pos] is not None:
-            backtrack(perm, pos + 1)
-            return
-        perm[pos] = pos
-        backtrack(perm, pos + 1)
-        perm[pos] = None
-        for j in range(pos + 1, n):
-            if perm[j] is None:
-                perm[pos] = j
-                perm[j] = pos
-                backtrack(perm, pos + 1)
-                perm[pos] = None
-                perm[j] = None
+def R(S):
+    return frozenset(x for x in universe if all(y in S for y in universe if y <= x))
 
-    backtrack([None] * n, 0)
-    return result
+def box(S):
+    return R(T(S))
 
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-def compose(f: List[int], g: List[int]) -> List[int]:
-    """Compose permutations: (f∘g)(x) = f(g(x))."""
-    return [f[g[x]] for x in range(len(f))]
+# 1. Temporal EM: show R(T(S)) ∪ R(T(Sᶜ)) = U for all S
+ax = axes[0]
+ax.set_title("Temporal Excluded Middle\n□S ∪ □Sᶜ = U always holds", fontsize=12, fontweight='bold')
 
+data = []
+for i, S in enumerate(subsets):
+    Sc = universe - S
+    bS = box(S)
+    bSc = box(Sc)
+    union = bS | bSc
+    data.append((str(set(S) if S else '∅'), len(bS), len(bSc), len(union)))
 
-def is_involution(perm: List[int]) -> bool:
-    """Check if a permutation is an involution."""
-    return all(perm[perm[x]] == x for x in range(len(perm)))
+labels = [d[0] for d in data]
+box_s = [d[1] for d in data]
+box_sc = [d[2] for d in data]
+unions = [d[3] for d in data]
 
+x = np.arange(len(labels))
+width = 0.25
+ax.bar(x - width, box_s, width, label='|□S|', color='#3498db', alpha=0.7)
+ax.bar(x, box_sc, width, label='|□Sᶜ|', color='#e74c3c', alpha=0.7)
+ax.bar(x + width, unions, width, label='|□S ∪ □Sᶜ|', color='#27ae60', alpha=0.7)
+ax.axhline(y=3, color='gray', linestyle='--', alpha=0.5, label='|U| = 3')
+ax.set_xticks(x)
+ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+ax.set_ylabel('Set size')
+ax.legend(fontsize=9)
 
-def commutativity_defect(f: List[int], g: List[int]) -> int:
-    """Count points where f∘g ≠ g∘f."""
-    n = len(f)
-    return sum(1 for x in range(n) if f[g[x]] != g[f[x]])
+# 2. Fixed points and the nucleus
+ax = axes[1]
+ax.set_title("Nucleus Fixed Points\n□S = S (temporally stable propositions)", fontsize=12, fontweight='bold')
 
+fixed = [(str(set(S) if S else '∅'), S == box(S)) for S in subsets]
+colors = ['#27ae60' if f else '#e74c3c' for _, f in fixed]
+bars = ax.barh(range(len(fixed)), [1]*len(fixed), color=colors, alpha=0.7, edgecolor='black')
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+ax.set_yticks(range(len(fixed)))
+ax.set_yticklabels([f[0] for f in fixed], fontsize=9)
+ax.set_xticks([])
 
-    # Panel 1: CPT on Fin 3 (counterexample)
-    ax = axes[0]
-    ax.set_title("CPT on {0,1,2}: Non-commuting Involution", fontsize=12, fontweight="bold")
+legend_elements = [
+    plt.Rectangle((0,0), 1, 1, facecolor='#27ae60', alpha=0.7, edgecolor='black', label='Fixed (□S = S)'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#e74c3c', alpha=0.7, edgecolor='black', label='Not fixed (□S ≠ S)')
+]
+ax.legend(handles=legend_elements, fontsize=9)
 
-    c = [1, 0, 2]  # swap(0,1)
-    p = [2, 1, 0]  # swap(0,2)
-    t = [1, 0, 2]  # swap(0,1)
-    cpt = compose(c, compose(p, t))
-    tpc = compose(t, compose(p, c))
-
-    theta = np.linspace(0, 2 * np.pi, 4)[:-1]
-    points = np.column_stack([np.cos(theta + np.pi / 2), np.sin(theta + np.pi / 2)])
-
-    for i in range(3):
-        ax.plot(*points[i], "ko", markersize=20, zorder=5)
-        ax.text(points[i][0], points[i][1] + 0.15, str(i), ha="center", va="bottom",
-                fontsize=14, fontweight="bold")
-
-    for i in range(3):
-        j = cpt[i]
-        if i != j:
-            ax.annotate("", xy=points[j] * 0.85, xytext=points[i] * 0.85,
-                         arrowprops=dict(arrowstyle="->", color="red", lw=2))
-
-    ax.text(0, -1.3, f"C = swap(0,1), P = swap(0,2), T = swap(0,1)\n"
-                       f"CPT = {cpt} (= swap(1,2))\n"
-                       f"CPT = TPC: {cpt == tpc} ✓\n"
-                       f"C,P commute: {commutativity_defect(c, p) == 0} ✗",
-            ha="center", fontsize=9, family="monospace",
-            bbox=dict(boxstyle="round", facecolor="lightyellow"))
-
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-2, 1.5)
-    ax.set_aspect("equal")
-    ax.axis("off")
-
-    # Panel 2: Defect histogram for n=4
-    ax = axes[1]
-    n = 4
-    involutions = generate_involutions(n)
-    defects = []
-    for c_perm in involutions:
-        for p_perm in involutions:
-            for t_perm in involutions:
-                cpt_comp = compose(c_perm, compose(p_perm, t_perm))
-                if is_involution(cpt_comp):
-                    d = (commutativity_defect(c_perm, p_perm) +
-                         commutativity_defect(c_perm, t_perm) +
-                         commutativity_defect(p_perm, t_perm))
-                    defects.append(d)
-
-    ax.hist(defects, bins=range(max(defects) + 2), color="steelblue",
-            edgecolor="black", alpha=0.8, align="left")
-    ax.axvline(x=2 * n - 2, color="red", linestyle="--", linewidth=2,
-               label=f"Conjectured bound 2n−2 = {2*n-2}")
-    ax.set_xlabel("Commutativity Defect", fontsize=11)
-    ax.set_ylabel("Count", fontsize=11)
-    ax.set_title(f"CPT Defect Distribution (n={n})", fontsize=12, fontweight="bold")
-    ax.legend(fontsize=9)
-
-    # Panel 3: Reversal property verification
-    ax = axes[2]
-    sizes = [2, 3, 4, 5]
-    reversal_rates = []
-    total_triples_list = []
-
-    for n in sizes:
-        invols = generate_involutions(n)
-        total = 0
-        reversal_count = 0
-        for c_perm in invols:
-            for p_perm in invols:
-                for t_perm in invols:
-                    cpt_comp = compose(c_perm, compose(p_perm, t_perm))
-                    if is_involution(cpt_comp):
-                        total += 1
-                        tpc_comp = compose(t_perm, compose(p_perm, c_perm))
-                        if cpt_comp == tpc_comp:
-                            reversal_count += 1
-        reversal_rates.append(reversal_count / total if total > 0 else 0)
-        total_triples_list.append(total)
-
-    bars = ax.bar(range(len(sizes)), reversal_rates, color="forestgreen",
-                  edgecolor="black", alpha=0.8)
-    ax.set_xticks(range(len(sizes)))
-    ax.set_xticklabels([f"n={s}" for s in sizes])
-    ax.set_ylabel("Fraction satisfying CPT = TPC", fontsize=11)
-    ax.set_title("CPT Reversal Property\n(among involutive CPT triples)", fontsize=12,
-                 fontweight="bold")
-    ax.set_ylim(0, 1.15)
-    ax.axhline(y=1.0, color="red", linestyle="--", alpha=0.5, label="100%")
-
-    for bar, rate, total in zip(bars, reversal_rates, total_triples_list):
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.03,
-                f"{rate:.0%}\n({total} triples)", ha="center", fontsize=8)
-    ax.legend(fontsize=9)
-
-    plt.tight_layout()
-    plt.savefig("cpt_symmetry.png", dpi=150, bbox_inches="tight")
-    plt.close()
-    print("Saved cpt_symmetry.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('temporal_em.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: temporal_em.png")

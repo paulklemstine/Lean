@@ -1,271 +1,281 @@
 #!/usr/bin/env python3
 """
-Algorithms for Retrocausal Mathematics
+Retrocausal Mathematics: Core Algorithms
 
-Type-hinted implementations of the core algorithms for:
-1. Computing retrocausal closure operators from Galois connections
-2. Finding fixed points of closure operators
-3. CPT defect computation
-4. Temporal coherence verification
+Type-hinted implementations of the key mathematical structures:
+1. Heyting algebras (general and 3-element)
+2. Nucleus construction and fixed-point computation
+3. Galois connection from adjoint operators
+4. Temporal modalities (box and diamond)
+5. CPT triple verification
 """
 
-from typing import (
-    Callable,
-    FrozenSet,
-    Generic,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    TypeVar,
-)
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import TypeVar, Generic, Callable, Set, FrozenSet, Dict, List, Tuple, Optional
 
-T = TypeVar("T")
+T = TypeVar('T')
 
 
-class GaloisConnection(Generic[T]):
-    """A Galois connection (T_fwd, R_back) on a finite lattice.
+# ============================================================
+# Heyting Algebra
+# ============================================================
 
-    Satisfies: T_fwd(a) <= b  iff  a <= R_back(b)
-    where <= is the lattice ordering.
-    """
+@dataclass
+class HeytingAlgebra(Generic[T]):
+    """A finite Heyting algebra specified by its elements and operations."""
+    elements: List[T]
+    le: Callable[[T, T], bool]
+    sup: Callable[[T, T], T]
+    inf: Callable[[T, T], T]
+    himp: Callable[[T, T], T]
+    bot: T
+    top: T
 
-    def __init__(
-        self,
-        elements: List[T],
-        le: Callable[[T, T], bool],
-        t_fwd: Callable[[T], T],
-        r_back: Callable[[T], T],
-    ):
-        self.elements = elements
-        self.le = le
-        self.t_fwd = t_fwd
-        self.r_back = r_back
+    def compl(self, a: T) -> T:
+        """Heyting complement: ¬a = a ⇨ ⊥."""
+        return self.himp(a, self.bot)
 
-    def verify_galois(self) -> bool:
-        """Verify the Galois connection axiom for all pairs."""
+    def lem_holds(self, a: T) -> bool:
+        """Check if a ⊔ ¬a = ⊤."""
+        return self.sup(a, self.compl(a)) == self.top
+
+    def verify_adjunction(self) -> bool:
+        """Verify: c ⊓ a ≤ b ⟺ c ≤ a ⇨ b for all a, b, c."""
         for a in self.elements:
             for b in self.elements:
-                lhs = self.le(self.t_fwd(a), b)
-                rhs = self.le(a, self.r_back(b))
+                for c in self.elements:
+                    lhs = self.le(self.inf(c, a), b)
+                    rhs = self.le(c, self.himp(a, b))
+                    if lhs != rhs:
+                        return False
+        return True
+
+
+def three_element_heyting() -> HeytingAlgebra[int]:
+    """The 3-element chain {0 < 1 < 2} as a Heyting algebra."""
+    return HeytingAlgebra(
+        elements=[0, 1, 2],
+        le=lambda a, b: a <= b,
+        sup=max,
+        inf=min,
+        himp=lambda a, b: 2 if a <= b else b,
+        bot=0,
+        top=2,
+    )
+
+
+# ============================================================
+# Nucleus
+# ============================================================
+
+@dataclass
+class Nucleus(Generic[T]):
+    """A nucleus on a semilattice: extensive, idempotent, meet-preserving."""
+    j: Callable[[T], T]
+    elements: List[T]
+    inf: Callable[[T, T], T]
+    le: Callable[[T, T], bool]
+
+    def is_valid(self) -> bool:
+        """Verify all nucleus axioms."""
+        for a in self.elements:
+            # Extensive
+            if not self.le(a, self.j(a)):
+                return False
+            # Idempotent
+            if self.j(self.j(a)) != self.j(a):
+                return False
+            for b in self.elements:
+                # Meet preservation
+                if self.j(self.inf(a, b)) != self.inf(self.j(a), self.j(b)):
+                    return False
+        return True
+
+    def fixed_points(self) -> List[T]:
+        """Return the fixed points of the nucleus."""
+        return [a for a in self.elements if self.j(a) == a]
+
+    def fixed_point_count(self) -> int:
+        """Count fixed points."""
+        return len(self.fixed_points())
+
+
+def enumerate_nuclei_powerset(n: int) -> List[Nucleus[FrozenSet[int]]]:
+    """Enumerate all nuclei on the power set P(Fin(n))."""
+    from itertools import combinations, product as iproduct
+
+    universe = frozenset(range(n))
+    subsets: List[FrozenSet[int]] = []
+    for r in range(n + 1):
+        for combo in combinations(range(n), r):
+            subsets.append(frozenset(combo))
+
+    def le(a: FrozenSet[int], b: FrozenSet[int]) -> bool:
+        return a.issubset(b)
+
+    def inf(a: FrozenSet[int], b: FrozenSet[int]) -> FrozenSet[int]:
+        return a & b
+
+    nuclei: List[Nucleus[FrozenSet[int]]] = []
+
+    # For small n, enumerate all functions j: subsets → subsets
+    for values in iproduct(subsets, repeat=len(subsets)):
+        j_dict = dict(zip(subsets, values))
+        j_func = lambda x, d=j_dict: d[x]
+        nuc = Nucleus(j=j_func, elements=subsets, inf=inf, le=le)
+        if nuc.is_valid():
+            nuclei.append(nuc)
+
+    return nuclei
+
+
+# ============================================================
+# Galois Connection
+# ============================================================
+
+@dataclass
+class GaloisConnection(Generic[T]):
+    """A Galois connection T ⊣ R on a partially ordered set."""
+    T_func: Callable[[T], T]
+    R_func: Callable[[T], T]
+    elements: List[T]
+    le: Callable[[T, T], bool]
+
+    def verify(self) -> bool:
+        """Verify: T(a) ≤ b ⟺ a ≤ R(b)."""
+        for a in self.elements:
+            for b in self.elements:
+                lhs = self.le(self.T_func(a), b)
+                rhs = self.le(a, self.R_func(b))
                 if lhs != rhs:
                     return False
         return True
 
-    def closure(self, a: T) -> T:
-        """Compute the retrocausal closure R(T(a))."""
-        return self.r_back(self.t_fwd(a))
+    def box(self, a: T) -> T:
+        """□a = R(T(a))."""
+        return self.R_func(self.T_func(a))
 
-    def interior(self, a: T) -> T:
-        """Compute the retrocausal interior T(R(a))."""
-        return self.t_fwd(self.r_back(a))
+    def diamond(self, a: T) -> T:
+        """◇a = T(R(a))."""
+        return self.T_func(self.R_func(a))
 
-    def fixed_points(self) -> List[T]:
-        """Find all fixed points of the closure operator."""
-        return [a for a in self.elements if self.closure(a) == a]
+    def verify_s4_box(self) -> bool:
+        """□□a = □a for all a."""
+        return all(self.box(self.box(a)) == self.box(a) for a in self.elements)
 
-    def verify_idempotency(self) -> bool:
-        """Verify cl(cl(a)) = cl(a) for all elements."""
+    def verify_s4_diamond(self) -> bool:
+        """◇◇a = ◇a for all a."""
+        return all(self.diamond(self.diamond(a)) == self.diamond(a)
+                   for a in self.elements)
+
+    def verify_left_coherence(self) -> bool:
+        """T(R(T(a))) = T(a) for all a."""
         return all(
-            self.closure(self.closure(a)) == self.closure(a)
+            self.T_func(self.R_func(self.T_func(a))) == self.T_func(a)
             for a in self.elements
         )
 
-    def verify_extensiveness(self) -> bool:
-        """Verify a <= cl(a) for all elements."""
+    def verify_right_coherence(self) -> bool:
+        """R(T(R(a))) = R(a) for all a."""
         return all(
-            self.le(a, self.closure(a)) for a in self.elements
-        )
-
-    def verify_coherence(self) -> Tuple[bool, bool]:
-        """Verify temporal coherence laws T∘R∘T = T and R∘T∘R = R."""
-        left = all(
-            self.t_fwd(self.r_back(self.t_fwd(a))) == self.t_fwd(a)
+            self.R_func(self.T_func(self.R_func(a))) == self.R_func(a)
             for a in self.elements
         )
-        right = all(
-            self.r_back(self.t_fwd(self.r_back(a))) == self.r_back(a)
-            for a in self.elements
-        )
-        return left, right
+
+    def temporal_em(self, a: T, compl: Callable[[T], T], top: T,
+                    sup: Callable[[T, T], T]) -> bool:
+        """Check R(T(a)) ⊔ R(T(aᶜ)) = ⊤."""
+        return sup(self.box(a), self.box(compl(a))) == top
 
 
-class CPTTriple:
-    """A CPT triple of involutions on a finite set."""
+# ============================================================
+# CPT Triple
+# ============================================================
 
-    def __init__(
-        self,
-        n: int,
-        c: Callable[[int], int],
-        p: Callable[[int], int],
-        t: Callable[[int], int],
-    ):
-        self.n = n
-        self.c = c
-        self.p = p
-        self.t = t
+@dataclass
+class CPTTriple(Generic[T]):
+    """A CPT triple: three involutions on a type."""
+    C: Callable[[T], T]
+    P: Callable[[T], T]
+    T_op: Callable[[T], T]  # 'T' conflicts with TypeVar
+    elements: List[T]
 
     def verify_involutions(self) -> Tuple[bool, bool, bool]:
-        """Check that C, P, T are all involutions."""
-        c_inv = all(self.c(self.c(x)) == x for x in range(self.n))
-        p_inv = all(self.p(self.p(x)) == x for x in range(self.n))
-        t_inv = all(self.t(self.t(x)) == x for x in range(self.n))
+        """Check C², P², T² = id."""
+        c_inv = all(self.C(self.C(x)) == x for x in self.elements)
+        p_inv = all(self.P(self.P(x)) == x for x in self.elements)
+        t_inv = all(self.T_op(self.T_op(x)) == x for x in self.elements)
         return c_inv, p_inv, t_inv
 
-    def compose(self, x: int) -> int:
-        """Compute C∘P∘T(x)."""
-        return self.c(self.p(self.t(x)))
+    def compose(self, x: T) -> T:
+        """CPT(x) = C(P(T(x)))."""
+        return self.C(self.P(self.T_op(x)))
 
-    def is_involution(self) -> bool:
-        """Check if C∘P∘T is an involution."""
-        return all(
-            self.compose(self.compose(x)) == x for x in range(self.n)
-        )
+    def is_cpt_involutive(self) -> bool:
+        """Check if CPT is an involution."""
+        return all(self.compose(self.compose(x)) == x for x in self.elements)
 
-    def satisfies_reversal(self) -> bool:
-        """Check CPT = TPC (reversal property)."""
-        return all(
-            self.c(self.p(self.t(x))) == self.t(self.p(self.c(x)))
-            for x in range(self.n)
-        )
-
-    def commutativity_defect(self) -> int:
-        """Compute the CPT defect: number of points where pairs don't commute."""
-        d_cp = sum(
-            1 for x in range(self.n) if self.c(self.p(x)) != self.p(self.c(x))
-        )
-        d_ct = sum(
-            1 for x in range(self.n) if self.c(self.t(x)) != self.t(self.c(x))
-        )
-        d_pt = sum(
-            1 for x in range(self.n) if self.p(self.t(x)) != self.t(self.p(x))
-        )
-        return d_cp + d_ct + d_pt
+    def cpt_equals_tpc(self) -> bool:
+        """Check if CPT = TPC."""
+        def tpc(x: T) -> T:
+            return self.T_op(self.P(self.C(x)))
+        return all(self.compose(x) == tpc(x) for x in self.elements)
 
     def pairwise_commute(self) -> Tuple[bool, bool, bool]:
-        """Check pairwise commutativity."""
-        cp = all(self.c(self.p(x)) == self.p(self.c(x)) for x in range(self.n))
-        ct = all(self.c(self.t(x)) == self.t(self.c(x)) for x in range(self.n))
-        pt = all(self.p(self.t(x)) == self.t(self.p(self.c(x))) for x in range(self.n))
+        """Check pairwise commutativity of C, P, T."""
+        cp = all(self.C(self.P(x)) == self.P(self.C(x)) for x in self.elements)
+        ct = all(self.C(self.T_op(x)) == self.T_op(self.C(x)) for x in self.elements)
+        pt = all(self.P(self.T_op(x)) == self.T_op(self.P(x)) for x in self.elements)
         return cp, ct, pt
 
 
-def compute_retrocausal_closure_on_powerset(
-    universe: FrozenSet[int],
-    t_fwd: Callable[[FrozenSet[int]], FrozenSet[int]],
-    r_back: Callable[[FrozenSet[int]], FrozenSet[int]],
-) -> dict:
-    """Compute the retrocausal closure operator on a power set lattice.
+# ============================================================
+# Algorithm: Retrocausal Heyting Implication
+# ============================================================
 
-    Returns a dictionary with:
-    - closure_map: mapping from each subset to its closure
-    - fixed_points: list of fixed points
-    - idempotent: whether the closure is idempotent
-    - extensive: whether the closure is extensive
+def retrocausal_himp(
+    nucleus_j: Callable[[T], T],
+    himp: Callable[[T, T], T],
+    a: T, b: T
+) -> T:
     """
-    import itertools
+    Compute the retrocausal Heyting implication: j(a ⇨ b).
 
-    all_subsets: List[FrozenSet[int]] = []
-    for r in range(len(universe) + 1):
-        for combo in itertools.combinations(sorted(universe), r):
-            all_subsets.append(frozenset(combo))
-
-    closure_map = {}
-    for s in all_subsets:
-        closure_map[s] = r_back(t_fwd(s))
-
-    fixed_points = [s for s in all_subsets if closure_map[s] == s]
-    idempotent = all(
-        r_back(t_fwd(closure_map[s])) == closure_map[s] for s in all_subsets
-    )
-    extensive = all(s.issubset(closure_map[s]) for s in all_subsets)
-
-    return {
-        "closure_map": closure_map,
-        "fixed_points": fixed_points,
-        "idempotent": idempotent,
-        "extensive": extensive,
-    }
-
-
-def enumerate_cpt_triples(n: int) -> List[CPTTriple]:
-    """Enumerate all CPT triples on {0, ..., n-1} where CPT is an involution.
-
-    Returns triples where:
-    - C, P, T are all involutions (products of disjoint transpositions + fixed points)
-    - C∘P∘T is an involution
+    Algorithm:
+    1. Compute the base Heyting implication a ⇨ b
+    2. Apply the nucleus j to close under temporal completion
+    
+    This is the key operation that lifts intuitionistic implication
+    through the temporal closure operator.
     """
-    import itertools
+    return nucleus_j(himp(a, b))
 
-    def generate_involutions(n: int) -> List[List[int]]:
-        """Generate all involutions on {0, ..., n-1}."""
-        result: List[List[int]] = []
 
-        def backtrack(perm: List[Optional[int]], pos: int):
-            if pos == n:
-                result.append(list(perm))  # type: ignore
-                return
-            if perm[pos] is not None:
-                backtrack(perm, pos + 1)
-                return
-            # Fixed point
-            perm[pos] = pos
-            backtrack(perm, pos + 1)
-            perm[pos] = None
-            # Transposition with a later element
-            for j in range(pos + 1, n):
-                if perm[j] is None:
-                    perm[pos] = j
-                    perm[j] = pos
-                    backtrack(perm, pos + 1)
-                    perm[pos] = None
-                    perm[j] = None
-
-        backtrack([None] * n, 0)
-        return result
-
-    involutions = generate_involutions(n)
-    triples: List[CPTTriple] = []
-
-    for c_perm in involutions:
-        for p_perm in involutions:
-            for t_perm in involutions:
-                c_fn = lambda x, p=c_perm: p[x]
-                p_fn = lambda x, p=p_perm: p[x]
-                t_fn = lambda x, p=t_perm: p[x]
-
-                triple = CPTTriple(n, c_fn, p_fn, t_fn)
-                if triple.is_involution():
-                    triples.append(triple)
-
-    return triples
+def verify_retrocausal_adjunction(
+    ha: HeytingAlgebra[T],
+    nucleus_j: Callable[[T], T],
+) -> bool:
+    """
+    Verify the nucleus Heyting adjunction on fixed points:
+    c ⊓ a ≤ b ⟺ c ≤ j(a ⇨ b) for fixed points a, b, c.
+    """
+    fixed = [x for x in ha.elements if nucleus_j(x) == x]
+    for a in fixed:
+        for b in fixed:
+            for c in fixed:
+                lhs = ha.le(ha.inf(c, a), b)
+                rhs = ha.le(c, retrocausal_himp(nucleus_j, ha.himp, a, b))
+                if lhs != rhs:
+                    return False
+    return True
 
 
 if __name__ == "__main__":
-    # Example: power set Galois connection
-    U = frozenset({0, 1, 2})
-
-    gc = GaloisConnection(
-        elements=[frozenset(c) for r in range(4)
-                  for c in __import__("itertools").combinations(sorted(U), r)],
-        le=lambda a, b: a.issubset(b),
-        t_fwd=lambda s: frozenset((x + 1) % 3 for x in s),
-        r_back=lambda s: frozenset((x - 1) % 3 for x in s),
-    )
-
-    print(f"Galois connection valid: {gc.verify_galois()}")
-    print(f"Idempotent: {gc.verify_idempotency()}")
-    print(f"Extensive: {gc.verify_extensiveness()}")
-    print(f"Coherence: {gc.verify_coherence()}")
-    print(f"Fixed points: {[set(fp) for fp in gc.fixed_points()]}")
-
-    # CPT example
-    triple = CPTTriple(
-        3,
-        c=lambda x: {0: 1, 1: 0, 2: 2}[x],
-        p=lambda x: {0: 2, 1: 1, 2: 0}[x],
-        t=lambda x: {0: 1, 1: 0, 2: 2}[x],
-    )
-    print(f"\nCPT involution: {triple.is_involution()}")
-    print(f"CPT reversal: {triple.satisfies_reversal()}")
-    print(f"Defect: {triple.commutativity_defect()}")
+    # Quick self-test
+    ha = three_element_heyting()
+    assert ha.verify_adjunction(), "Adjunction failed"
+    assert not ha.lem_holds(1), "LEM should fail for mid"
+    assert ha.lem_holds(0), "LEM should hold for bot"
+    assert ha.lem_holds(2), "LEM should hold for top"
+    print("All algorithm self-tests passed.")
