@@ -124,15 +124,18 @@ class CycleAnalytics:
                 pass
 
         # Domain from concept (handle both ResearchConcept object and dict)
+        # Note: serialized concept uses "domain" (singular), object uses "domains" (plural)
         concept = getattr(job, "concept", None)
         if concept:
             if isinstance(concept, dict):
                 domains = concept.get("domains", [])
-                record.domain = domains[0] if domains else ""
+                domain_singular = concept.get("domain", "")
+                record.domain = domains[0] if domains else (domain_singular if domain_singular else "")
                 record.title = concept.get("title", "")[:100]
             else:
                 domains = getattr(concept, "domains", [])
-                record.domain = domains[0] if domains else ""
+                domain_singular = getattr(concept, "domain", "")
+                record.domain = domains[0] if domains else (domain_singular if domain_singular else "")
                 record.title = getattr(concept, "title", "")[:100]
 
         # Quality breakdown from quality_detail
@@ -227,3 +230,77 @@ class CycleAnalytics:
                 "avg_sorry_density": sum(sorry) / len(sorry) if sorry else 0.0,
             }
         return stats
+
+    def get_domain_quality_trend(self, last_n: int = 50) -> Dict[str, List[Dict[str, Any]]]:
+        """Get quality trend over time per domain (rolling window of last_n records).
+
+        Returns dict mapping domain -> list of {cycle, quality, timestamp} entries,
+        sorted chronologically. Useful for dashboard trend charts.
+        """
+        from collections import defaultdict
+        domain_data = defaultdict(list)
+        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        for r in recent:
+            if r.domain and r.quality_score > 0:
+                domain_data[r.domain].append({
+                    "cycle": r.cycle_n,
+                    "quality": r.quality_score,
+                    "timestamp": r.timestamp,
+                })
+        # Sort each domain's entries by cycle
+        for dom in domain_data:
+            domain_data[dom].sort(key=lambda x: x["cycle"])
+        return dict(domain_data)
+
+    def get_sorry_density_trend(self, last_n: int = 50) -> List[Dict[str, Any]]:
+        """Get sorry density trend over recent cycles for dashboard chart."""
+        recent = self.records[-last_n:] if len(self.records) > last_n else self.records
+        return [
+            {"cycle": r.cycle_n, "sorry_density": r.sorry_density, "domain": r.domain}
+            for r in recent
+        ]
+
+    def get_breakthroughs(self, threshold: float = 0.8) -> List[CycleRecord]:
+        """Return cycles with quality_score above threshold (breakthroughs)."""
+        return [r for r in self.records if r.quality_score >= threshold]
+
+    def get_direction_funnel(self) -> Dict[str, Any]:
+        """Compute direction funnel metrics: seeded vs organic, conversion rates.
+
+        Requires FutureDirectionsManager for full data; falls back to cycle records.
+        """
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_mgr = FutureDirectionsManager(self.workspace)
+            all_dirs = fd_mgr._directions
+            available = [d for d in all_dirs if d.status == "available"]
+            completed = [d for d in all_dirs if d.status == "completed"]
+            pruned = [d for d in all_dirs if d.status == "pruned"]
+            in_progress = [d for d in all_dirs if d.status == "in_progress"]
+
+            seed_avail = [d for d in available if (d.source_exp_id or "").startswith("seed")]
+            organic_avail = [d for d in available if not (d.source_exp_id or "").startswith("seed")]
+            seed_comp = [d for d in completed if (d.source_exp_id or "").startswith("seed")]
+            organic_comp = [d for d in completed if not (d.source_exp_id or "").startswith("seed")]
+
+            return {
+                "seed_available": len(seed_avail),
+                "organic_available": len(organic_avail),
+                "in_progress": len(in_progress),
+                "completed": len(completed),
+                "completed_seed": len(seed_comp),
+                "completed_organic": len(organic_comp),
+                "pruned": len(pruned),
+                "total": len(all_dirs),
+                "conversion_rate": len(completed) / max(len(all_dirs), 1),
+                "seed_conversion_rate": len(seed_comp) / max(len(seed_avail) + len(seed_comp), 1),
+                "organic_conversion_rate": len(organic_comp) / max(len(organic_avail) + len(organic_comp), 1),
+            }
+        except Exception:
+            # Fallback: just cycle records
+            return {
+                "total_cycles": len(self.records),
+                "avg_quality": sum(r.quality_score for r in self.records if r.quality_score > 0) / max(
+                    sum(1 for r in self.records if r.quality_score > 0), 1
+                ),
+            }

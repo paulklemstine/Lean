@@ -212,6 +212,27 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     except Exception as e:
         print(f"[Analytics] Cycle recording failed: {e}")
 
+    # ── Breakthrough detection: notify on high-quality cycles ──
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(extractor.workspace)
+        breakthroughs = ca.get_breakthroughs(threshold=0.8)
+        if breakthroughs:
+            # Only notify about new breakthroughs from this tick
+            this_tick_ids = {j.job_id for j in completed_jobs}
+            new_bt = [b for b in breakthroughs if b.job_id in this_tick_ids]
+            for bt in new_bt:
+                print(f"[🌟 BREAKTHROUGH] Q={bt.quality_score:.3f} domain={bt.domain or '?'} "
+                      f"title={bt.title[:50]} theorems={bt.theorem_count} sorry={bt.sorry_density*100:.0f}%")
+            # Also log funnel analytics
+            funnel = ca.get_direction_funnel()
+            if "conversion_rate" in funnel:
+                print(f"[Funnel] total={funnel['total']} completed={funnel['completed']} "
+                      f"seed_conv={funnel.get('seed_conversion_rate',0):.1%} "
+                      f"organic_conv={funnel.get('organic_conversion_rate',0):.1%}")
+    except Exception as e:
+        print(f"[Breakthrough] Detection failed: {e}")
+
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode
     retry_count = 0

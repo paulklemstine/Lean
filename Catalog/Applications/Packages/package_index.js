@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c376d672",
     "filename": "the_collatz_conjecture_is_undecidable_what_if_3n1_.json",
     "pkg_num": 327,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7398390322580646,
     "title": "Collatz Undecidability: Generalized Systems, Contraction Barriers, and Proof Complexity"
   },
   {
@@ -10593,8 +10593,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_collatz_conjecture_is_undecidable_what_if_3n1_",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7398390322580646,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Collatz Undecidability: Generalized Systems, Contraction Barriers, and Proof Complexity"
     }
