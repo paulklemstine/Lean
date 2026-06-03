@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2a38c54d",
     "filename": "quantum_random_walks_on_cayley_graphs_spectral_gap.json",
     "pkg_num": 271,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7144082857142857,
     "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
@@ -8726,8 +8726,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "quantum_random_walks_on_cayley_graphs_spectral_gap",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7144082857142857,
+      "quality": "substantial",
       "shape": "octahedron",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
