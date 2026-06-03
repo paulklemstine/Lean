@@ -1,9 +1,1185 @@
 {
-  "barriers": [],
-  "cost_estimates": {},
-  "cross_domain_bridges": [],
-  "last_scan_cycle": "",
-  "scanned_theorems": [],
-  "strategies": [],
-  "tactic_patterns": {}
+  "barriers": [
+    {
+      "description": "Contains barrier keyword 'obstruction' in Theorems.lean",
+      "domain": "Pythagorean",
+      "id": "b_0",
+      "source_file": "Pythagorean/SizeDepthTradeoff/Theorems.lean",
+      "theorem": "bounded_profiles_card"
+    }
+  ],
+  "cost_estimates": {
+    "Algebra": {
+      "avg_proof_length": 240.9,
+      "cost_score": 0.847,
+      "files": 413,
+      "sorries": 13,
+      "sorry_density": 0.0016,
+      "theorems": 8207
+    },
+    "Bridges": {
+      "avg_proof_length": 347.1,
+      "cost_score": 0.981,
+      "files": 809,
+      "sorries": 27,
+      "sorry_density": 0.0015,
+      "theorems": 17916
+    },
+    "Computation": {
+      "avg_proof_length": 268.9,
+      "cost_score": 0.756,
+      "files": 140,
+      "sorries": 2,
+      "sorry_density": 0.0009,
+      "theorems": 2299
+    },
+    "Cryptography": {
+      "avg_proof_length": 316.3,
+      "cost_score": 0.787,
+      "files": 128,
+      "sorries": 2,
+      "sorry_density": 0.0007,
+      "theorems": 2723
+    },
+    "EML": {
+      "avg_proof_length": 221.4,
+      "cost_score": 0.519,
+      "files": 136,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 2698
+    },
+    "Geometry": {
+      "avg_proof_length": 233.5,
+      "cost_score": 0.536,
+      "files": 98,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 1458
+    },
+    "Logic": {
+      "avg_proof_length": 239.5,
+      "cost_score": 0.545,
+      "files": 124,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 1894
+    },
+    "MachineLearning": {
+      "avg_proof_length": 220.2,
+      "cost_score": 0.555,
+      "files": 473,
+      "sorries": 1,
+      "sorry_density": 0.0002,
+      "theorems": 5908
+    },
+    "Novelty": {
+      "avg_proof_length": 227.0,
+      "cost_score": 0.527,
+      "files": 9,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 128
+    },
+    "Physics": {
+      "avg_proof_length": 276.1,
+      "cost_score": 0.598,
+      "files": 85,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 1618
+    },
+    "Pythagorean": {
+      "avg_proof_length": 299.7,
+      "cost_score": 0.857,
+      "files": 485,
+      "sorries": 10,
+      "sorry_density": 0.0012,
+      "theorems": 8521
+    },
+    "Shared": {
+      "avg_proof_length": 292.8,
+      "cost_score": 0.622,
+      "files": 29,
+      "sorries": 0,
+      "sorry_density": 0.0,
+      "theorems": 531
+    },
+    "Tropical": {
+      "avg_proof_length": 253.5,
+      "cost_score": 0.771,
+      "files": 350,
+      "sorries": 6,
+      "sorry_density": 0.0011,
+      "theorems": 5648
+    }
+  },
+  "cross_domain_bridges": [
+    {
+      "id": "br_0",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/FactorRecoveryReduction.lean",
+      "target_domain": "Tropical"
+    },
+    {
+      "id": "br_1",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/CategoricalBridges.lean",
+      "target_domain": "Logic"
+    },
+    {
+      "id": "br_2",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/TropicalCryptographyBreakthrough.lean",
+      "target_domain": "Algebra"
+    },
+    {
+      "id": "br_3",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/TropicalCryptographyBreakthrough.lean",
+      "target_domain": "Computation"
+    },
+    {
+      "id": "br_4",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/TropicalCryptographyBreakthrough.lean",
+      "target_domain": "Cryptography"
+    },
+    {
+      "id": "br_8",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/ProductApproximation.lean",
+      "target_domain": "EML"
+    },
+    {
+      "id": "br_19",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/Quantum.lean",
+      "target_domain": "Physics"
+    },
+    {
+      "id": "br_21",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/ByzantineCertificate.lean",
+      "target_domain": "Applications"
+    },
+    {
+      "id": "br_25",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/LorentzianBivariateBridge.lean",
+      "target_domain": "Geometry"
+    },
+    {
+      "id": "br_48",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/BerggrenChronometricEntropy.lean",
+      "target_domain": "Pythagorean"
+    },
+    {
+      "id": "br_62",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/LocalizationGeneralization.lean",
+      "target_domain": "MachineLearning"
+    },
+    {
+      "id": "br_477",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/InvertedTreeAdvanced.lean",
+      "target_domain": "Shared"
+    },
+    {
+      "id": "br_770",
+      "source_domain": "Bridges",
+      "source_file": "Bridges/SelfModifyingHalting.lean",
+      "target_domain": "Novelty"
+    }
+  ],
+  "last_scan_cycle": "catalog_manual_scan",
+  "last_updated": "2026-06-03T17:10:45.001471",
+  "strategies": [
+    {
+      "domain": "Algebra",
+      "id": "s_0",
+      "pattern": "induction",
+      "source_file": "Algebra/TropicalDragonDecomposition.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_1",
+      "pattern": "compactness",
+      "source_file": "Algebra/SpectralEvaluationElimination.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_2",
+      "pattern": "isomorphism",
+      "source_file": "Algebra/GaloisObstruction.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_3",
+      "pattern": "embedding",
+      "source_file": "Algebra/Quantum.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_4",
+      "pattern": "bijection",
+      "source_file": "Algebra/Quantum.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_5",
+      "pattern": "homomorphism",
+      "source_file": "Algebra/TransrealArithmetic.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_6",
+      "pattern": "contradiction",
+      "source_file": "Algebra/SpectralGraphTheory.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_7",
+      "pattern": "fixed point",
+      "source_file": "Algebra/Robustness.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_8",
+      "pattern": "construction",
+      "source_file": "Algebra/FactoringViaBerggren.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_9",
+      "pattern": "morphism",
+      "source_file": "Algebra/StableReduction.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_10",
+      "pattern": "diagonal",
+      "source_file": "Algebra/StableReduction.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_11",
+      "pattern": "completeness",
+      "source_file": "Algebra/BinocularGodOracle.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_12",
+      "pattern": "surjection",
+      "source_file": "Algebra/TransfiniteSurface.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_13",
+      "pattern": "minimization",
+      "source_file": "Algebra/TropicalAnalyticDuality.lean"
+    },
+    {
+      "domain": "Algebra",
+      "id": "s_14",
+      "pattern": "functor",
+      "source_file": "Algebra/QuantumProofComplexity.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_15",
+      "pattern": "homomorphism",
+      "source_file": "Bridges/NeuralProofMining.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_16",
+      "pattern": "induction",
+      "source_file": "Bridges/NeuralProofMining.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_17",
+      "pattern": "contradiction",
+      "source_file": "Bridges/NeuralProofMining.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_18",
+      "pattern": "embedding",
+      "source_file": "Bridges/NeuralProofMining.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_19",
+      "pattern": "construction",
+      "source_file": "Bridges/TropicalOperadicKernelDuality.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_20",
+      "pattern": "completeness",
+      "source_file": "Bridges/PrimeSpectrumCodingTheorem.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_21",
+      "pattern": "fixed point",
+      "source_file": "Bridges/AlgebraEMLReconstruction.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_22",
+      "pattern": "morphism",
+      "source_file": "Bridges/AlgebraEMLReconstruction.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_23",
+      "pattern": "isomorphism",
+      "source_file": "Bridges/Quantum.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_24",
+      "pattern": "bijection",
+      "source_file": "Bridges/Quantum.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_25",
+      "pattern": "diagonal",
+      "source_file": "Bridges/TropicalOneWayKernelDuality.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_26",
+      "pattern": "functor",
+      "source_file": "Bridges/DifferentialAlgebraicLearning.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_27",
+      "pattern": "surjection",
+      "source_file": "Bridges/UniversalComplexityBarriers.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_28",
+      "pattern": "minimization",
+      "source_file": "Bridges/BerggrenResidualAutomata.lean"
+    },
+    {
+      "domain": "Bridges",
+      "id": "s_29",
+      "pattern": "compactness",
+      "source_file": "Bridges/ActivationNerveMarginCosheaf.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_30",
+      "pattern": "induction",
+      "source_file": "Computation/WidthToSize.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_31",
+      "pattern": "fixed point",
+      "source_file": "Computation/TropicalCompression.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_32",
+      "pattern": "diagonal",
+      "source_file": "Computation/Theorems.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_33",
+      "pattern": "surjection",
+      "source_file": "Computation/OmniscientOracle.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_34",
+      "pattern": "isomorphism",
+      "source_file": "Computation/ReversibleTropicalMachine.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_35",
+      "pattern": "bijection",
+      "source_file": "Computation/ReversibleTropicalMachine.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_36",
+      "pattern": "construction",
+      "source_file": "Computation/ReversibleTropicalMachine.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_37",
+      "pattern": "morphism",
+      "source_file": "Computation/ReversibleTropicalMachine.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_38",
+      "pattern": "contradiction",
+      "source_file": "Computation/ConfigurationSpace.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_39",
+      "pattern": "embedding",
+      "source_file": "Computation/Compression.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_40",
+      "pattern": "homomorphism",
+      "source_file": "Computation/CellularAlgebraicGeometry.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_41",
+      "pattern": "completeness",
+      "source_file": "Computation/OracleHierarchy.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_42",
+      "pattern": "functor",
+      "source_file": "Computation/SearchInfoIsomorphism.lean"
+    },
+    {
+      "domain": "Computation",
+      "id": "s_43",
+      "pattern": "minimization",
+      "source_file": "Computation/TropicalLossyCompression.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_44",
+      "pattern": "bijection",
+      "source_file": "Cryptography/TropicalCryptographyBreakthrough.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_45",
+      "pattern": "induction",
+      "source_file": "Cryptography/KyberCompress.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_46",
+      "pattern": "diagonal",
+      "source_file": "Cryptography/InfiniteChess.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_47",
+      "pattern": "contradiction",
+      "source_file": "Cryptography/Freeness.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_48",
+      "pattern": "completeness",
+      "source_file": "Cryptography/BerggrenFingerprintRigidity.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_49",
+      "pattern": "embedding",
+      "source_file": "Cryptography/BerggrenLeftOreObstruction.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_50",
+      "pattern": "morphism",
+      "source_file": "Cryptography/IsogenyFoundations.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_51",
+      "pattern": "isomorphism",
+      "source_file": "Cryptography/Foundation.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_52",
+      "pattern": "construction",
+      "source_file": "Cryptography/TropicalMinPlusEncryption.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_53",
+      "pattern": "homomorphism",
+      "source_file": "Cryptography/TropicalMinPlusEncryption.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_54",
+      "pattern": "fixed point",
+      "source_file": "Cryptography/TropicalCryptoPrimitives.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_55",
+      "pattern": "surjection",
+      "source_file": "Cryptography/Commitments.lean"
+    },
+    {
+      "domain": "Cryptography",
+      "id": "s_56",
+      "pattern": "functor",
+      "source_file": "Cryptography/RegevReduction/Theorems.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_57",
+      "pattern": "diagonal",
+      "source_file": "EML/V15Research.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_58",
+      "pattern": "fixed point",
+      "source_file": "EML/V15Research.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_59",
+      "pattern": "contradiction",
+      "source_file": "EML/JigsawAlgebra.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_60",
+      "pattern": "embedding",
+      "source_file": "EML/TransrealArithmetic.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_61",
+      "pattern": "induction",
+      "source_file": "EML/SingleOperatorRepresentability.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_62",
+      "pattern": "functor",
+      "source_file": "EML/PrimewisePersistence.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_63",
+      "pattern": "construction",
+      "source_file": "EML/PrimewisePersistence.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_64",
+      "pattern": "homomorphism",
+      "source_file": "EML/AdvancedTheorems.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_65",
+      "pattern": "morphism",
+      "source_file": "EML/HyperbolicArithmetic.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_66",
+      "pattern": "compactness",
+      "source_file": "EML/CWApprox.lean"
+    },
+    {
+      "domain": "EML",
+      "id": "s_67",
+      "pattern": "completeness",
+      "source_file": "EML/KolmogorovArnoldEMLDeep.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_68",
+      "pattern": "induction",
+      "source_file": "Geometry/PrimewisePersistence.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_69",
+      "pattern": "construction",
+      "source_file": "Geometry/PrimewisePersistence.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_70",
+      "pattern": "morphism",
+      "source_file": "Geometry/TensorHom.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_71",
+      "pattern": "homomorphism",
+      "source_file": "Geometry/StereographicSheaf.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_72",
+      "pattern": "fixed point",
+      "source_file": "Geometry/StereographicSheaf.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_73",
+      "pattern": "contradiction",
+      "source_file": "Geometry/HappyEnd.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_74",
+      "pattern": "completeness",
+      "source_file": "Geometry/SurrealTopology.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_75",
+      "pattern": "functor",
+      "source_file": "Geometry/StereographicSheafAdvanced.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_76",
+      "pattern": "embedding",
+      "source_file": "Geometry/StereographicSheafAdvanced.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_77",
+      "pattern": "diagonal",
+      "source_file": "Geometry/SplitGeometry.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_78",
+      "pattern": "bijection",
+      "source_file": "Geometry/HorseshoeComputation.lean"
+    },
+    {
+      "domain": "Geometry",
+      "id": "s_79",
+      "pattern": "isomorphism",
+      "source_file": "Geometry/HopfFibration/Algebra.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_80",
+      "pattern": "construction",
+      "source_file": "Logic/QuantumMirrorComputation.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_81",
+      "pattern": "induction",
+      "source_file": "Logic/Bisection.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_82",
+      "pattern": "completeness",
+      "source_file": "Logic/Bisection.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_83",
+      "pattern": "bijection",
+      "source_file": "Logic/TropicalHoTT.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_84",
+      "pattern": "morphism",
+      "source_file": "Logic/UniversalPhotonMap.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_85",
+      "pattern": "embedding",
+      "source_file": "Logic/FormalTime.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_86",
+      "pattern": "fixed point",
+      "source_file": "Logic/FormalTime.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_87",
+      "pattern": "contradiction",
+      "source_file": "Logic/FormalTime.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_88",
+      "pattern": "diagonal",
+      "source_file": "Logic/OracleClosureAlgebra.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_89",
+      "pattern": "homomorphism",
+      "source_file": "Logic/ReflectiveTypeTheory.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_90",
+      "pattern": "functor",
+      "source_file": "Logic/TropicalTypeTheory.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_91",
+      "pattern": "isomorphism",
+      "source_file": "Logic/HomotopyTypeTheory.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_92",
+      "pattern": "minimization",
+      "source_file": "Logic/UniversalSATSolver.lean"
+    },
+    {
+      "domain": "Logic",
+      "id": "s_93",
+      "pattern": "surjection",
+      "source_file": "Logic/StrangeLoops/Core.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_94",
+      "pattern": "fixed point",
+      "source_file": "MachineLearning/NeuralRGFlow.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_95",
+      "pattern": "induction",
+      "source_file": "MachineLearning/NeuralRGFlow.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_96",
+      "pattern": "diagonal",
+      "source_file": "MachineLearning/TropicalCausalOptimization.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_97",
+      "pattern": "completeness",
+      "source_file": "MachineLearning/LoebGeneralization.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_98",
+      "pattern": "contradiction",
+      "source_file": "MachineLearning/NNCompilationTheory.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_99",
+      "pattern": "compactness",
+      "source_file": "MachineLearning/NNCompilationTheory.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_100",
+      "pattern": "homomorphism",
+      "source_file": "MachineLearning/BraidGroup.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_101",
+      "pattern": "construction",
+      "source_file": "MachineLearning/MobiusRing.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_102",
+      "pattern": "surjection",
+      "source_file": "MachineLearning/GazingPool.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_103",
+      "pattern": "functor",
+      "source_file": "MachineLearning/GazingPool.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_104",
+      "pattern": "embedding",
+      "source_file": "MachineLearning/MotivicPersistence.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_105",
+      "pattern": "morphism",
+      "source_file": "MachineLearning/MemoryAlgebra.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_106",
+      "pattern": "bijection",
+      "source_file": "MachineLearning/SymmetryTransfer.lean"
+    },
+    {
+      "domain": "MachineLearning",
+      "id": "s_107",
+      "pattern": "isomorphism",
+      "source_file": "MachineLearning/Foundations.lean"
+    },
+    {
+      "domain": "Novelty",
+      "id": "s_108",
+      "pattern": "induction",
+      "source_file": "Novelty/CollatzUndecidability.lean"
+    },
+    {
+      "domain": "Novelty",
+      "id": "s_109",
+      "pattern": "contradiction",
+      "source_file": "Novelty/Basic.lean"
+    },
+    {
+      "domain": "Novelty",
+      "id": "s_110",
+      "pattern": "embedding",
+      "source_file": "Novelty/Basic.lean"
+    },
+    {
+      "domain": "Novelty",
+      "id": "s_111",
+      "pattern": "isomorphism",
+      "source_file": "Novelty/Structural.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_112",
+      "pattern": "induction",
+      "source_file": "Physics/BraidingUniversality.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_113",
+      "pattern": "bijection",
+      "source_file": "Physics/Theorems.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_114",
+      "pattern": "construction",
+      "source_file": "Physics/CechStabilizerCode.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_115",
+      "pattern": "functor",
+      "source_file": "Physics/CechStabilizerCode.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_116",
+      "pattern": "morphism",
+      "source_file": "Physics/CechStabilizerCode.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_117",
+      "pattern": "completeness",
+      "source_file": "Physics/DiscreteNoetherConverse.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_118",
+      "pattern": "embedding",
+      "source_file": "Physics/PersistentHomologicalQEC.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_119",
+      "pattern": "diagonal",
+      "source_file": "Physics/VonNeumannEntropy.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_120",
+      "pattern": "isomorphism",
+      "source_file": "Physics/VonNeumannEntropy.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_121",
+      "pattern": "contradiction",
+      "source_file": "Physics/Spectrum.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_122",
+      "pattern": "fixed point",
+      "source_file": "Physics/PlanckSpacetime.lean"
+    },
+    {
+      "domain": "Physics",
+      "id": "s_123",
+      "pattern": "surjection",
+      "source_file": "Physics/SelfModel/ReflectiveAlgebra.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_124",
+      "pattern": "completeness",
+      "source_file": "Pythagorean/MaxEnvelopeStability.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_125",
+      "pattern": "induction",
+      "source_file": "Pythagorean/MaxEnvelopeStability.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_126",
+      "pattern": "diagonal",
+      "source_file": "Pythagorean/FermionicPlucker.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_127",
+      "pattern": "morphism",
+      "source_file": "Pythagorean/MobiusRingAdvanced.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_128",
+      "pattern": "fixed point",
+      "source_file": "Pythagorean/MobiusRingAdvanced.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_129",
+      "pattern": "isomorphism",
+      "source_file": "Pythagorean/MobiusRingAdvanced.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_130",
+      "pattern": "homomorphism",
+      "source_file": "Pythagorean/MonadAlgebraNormalization.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_131",
+      "pattern": "construction",
+      "source_file": "Pythagorean/NeuralProofGuidance.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_132",
+      "pattern": "embedding",
+      "source_file": "Pythagorean/SandwichDefs.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_133",
+      "pattern": "contradiction",
+      "source_file": "Pythagorean/GrowthRegimeTrichotomy.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_134",
+      "pattern": "bijection",
+      "source_file": "Pythagorean/BerggrenDynamics.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_135",
+      "pattern": "functor",
+      "source_file": "Pythagorean/AdelicPersistentHomology.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_136",
+      "pattern": "compactness",
+      "source_file": "Pythagorean/AsymptoticCompactness.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_137",
+      "pattern": "minimization",
+      "source_file": "Pythagorean/ExchangeDescent.lean"
+    },
+    {
+      "domain": "Pythagorean",
+      "id": "s_138",
+      "pattern": "surjection",
+      "source_file": "Pythagorean/ProbeComplexity/CompressionStability.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_139",
+      "pattern": "homomorphism",
+      "source_file": "Shared/Theorems.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_140",
+      "pattern": "fixed point",
+      "source_file": "Shared/CellularAlgebraicGeometry.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_141",
+      "pattern": "induction",
+      "source_file": "Shared/CellularAlgebraicGeometry.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_142",
+      "pattern": "construction",
+      "source_file": "Shared/SymbolicDynamics.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_143",
+      "pattern": "completeness",
+      "source_file": "Shared/GodelCasinoAdvanced.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_144",
+      "pattern": "minimization",
+      "source_file": "Shared/CrossDomainBridges.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_145",
+      "pattern": "contradiction",
+      "source_file": "Shared/RegisterGraphColoring.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_146",
+      "pattern": "surjection",
+      "source_file": "Shared/EquivariantSpectrum/Filter.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_147",
+      "pattern": "morphism",
+      "source_file": "Shared/HopfEntanglement/Theorems.lean"
+    },
+    {
+      "domain": "Shared",
+      "id": "s_148",
+      "pattern": "diagonal",
+      "source_file": "Shared/TropicalSpectralGraph/Theorems.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_149",
+      "pattern": "embedding",
+      "source_file": "Tropical/OrbitPrefixFiber.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_150",
+      "pattern": "induction",
+      "source_file": "Tropical/TropicalInformationRichness.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_151",
+      "pattern": "diagonal",
+      "source_file": "Tropical/Throughput.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_152",
+      "pattern": "compactness",
+      "source_file": "Tropical/NNCompilationExtended.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_153",
+      "pattern": "contradiction",
+      "source_file": "Tropical/TropicalMorseTheory.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_154",
+      "pattern": "fixed point",
+      "source_file": "Tropical/TropicalFutureDirections.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_155",
+      "pattern": "functor",
+      "source_file": "Tropical/CategoricalSurprise.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_156",
+      "pattern": "homomorphism",
+      "source_file": "Tropical/MinPlusAlgebra.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_157",
+      "pattern": "completeness",
+      "source_file": "Tropical/CertifiedNormalForm.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_158",
+      "pattern": "minimization",
+      "source_file": "Tropical/PolynomialBridge.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_159",
+      "pattern": "construction",
+      "source_file": "Tropical/Closure.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_160",
+      "pattern": "morphism",
+      "source_file": "Tropical/TropicalTypeTheory.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_161",
+      "pattern": "isomorphism",
+      "source_file": "Tropical/HodgeCorrespondence.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_162",
+      "pattern": "bijection",
+      "source_file": "Tropical/AdvancedTheory.lean"
+    },
+    {
+      "domain": "Tropical",
+      "id": "s_163",
+      "pattern": "surjection",
+      "source_file": "Tropical/KineticCertification.lean"
+    }
+  ]
 }

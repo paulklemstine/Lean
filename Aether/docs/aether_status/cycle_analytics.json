@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-03T21:44:05.355785+00:00",
+  "last_updated": "2026-06-03T21:59:26.462386+00:00",
   "records": [
     {
       "barrier_count": 0,
@@ -288,6 +288,70 @@
       "theorem_count": 24,
       "timestamp": "2026-06-03T21:44:05.273147+00:00",
       "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Algebra",
+      "duration_seconds": 3195.817639350891,
+      "end_time": 1780523831.3598502,
+      "files_integrated": 6,
+      "job_id": "0734a5d4",
+      "outcome_quality": 0.70133,
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8356,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.887,
+        "novelty": 0.95,
+        "proof_depth": 0.86,
+        "usefulness": 0.88
+      },
+      "quality_score": 0.70133,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780520635.5422108,
+      "strategy_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-03T21:59:26.388932+00:00",
+      "title": "Musical Counterpoint as Constraint Satisfaction"
+    },
+    {
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 3156.137669801712,
+      "end_time": 1780523831.9828074,
+      "files_integrated": 6,
+      "job_id": "c376d672",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8997,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8989,
+        "novelty": 0.95,
+        "proof_depth": 0.877,
+        "usefulness": 0.9385
+      },
+      "quality_score": 0.7398390322580646,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780520675.8451376,
+      "strategy_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-06-03T21:59:26.431476+00:00",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     }
   ]
 }

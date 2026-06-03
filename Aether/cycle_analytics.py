@@ -304,3 +304,37 @@ class CycleAnalytics:
                     sum(1 for r in self.records if r.quality_score > 0), 1
                 ),
             }
+
+    def detect_quality_decay(self, window: int = 5, threshold: float = -0.05) -> List[Dict[str, Any]]:
+        """Detect domains with declining quality over recent cycles.
+
+        Compares average quality of the last `window` cycles per domain
+        against the prior `window` cycles. If the delta is below `threshold`,
+        the domain is flagged as declining.
+
+        Returns list of dicts: [{domain, recent_avg, prior_avg, delta, count}]
+        """
+        from collections import defaultdict
+        domain_data = defaultdict(list)
+        for r in self.records:
+            if r.domain and r.quality_score > 0:
+                domain_data[r.domain].append(r.quality_score)
+
+        declining = []
+        for domain, scores in domain_data.items():
+            if len(scores) < window * 2:
+                continue  # Not enough data to compare
+            recent = scores[-window:]
+            prior = scores[-window * 2:-window]
+            recent_avg = sum(recent) / len(recent)
+            prior_avg = sum(prior) / len(prior)
+            delta = recent_avg - prior_avg
+            if delta < threshold:
+                declining.append({
+                    "domain": domain,
+                    "recent_avg": round(recent_avg, 4),
+                    "prior_avg": round(prior_avg, 4),
+                    "delta": round(delta, 4),
+                    "count": len(scores),
+                })
+        return sorted(declining, key=lambda x: x["delta"])

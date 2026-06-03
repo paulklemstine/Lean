@@ -41,10 +41,11 @@
         .insight-stat { text-align: center; }
         .insight-stat .num { font-size: 1.4rem; font-weight: 700; }
         .insight-stat .label { font-size: 0.68rem; color: var(--dim); }
-        .domain-stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.4rem; }
+        .domain-stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.4rem; }
         .domain-stat { padding: 0.45rem; border-radius: 8px; border: 1px solid var(--border); }
         .domain-stat .name { font-weight: 600; font-size: 0.8rem; }
         .domain-stat .detail { font-size: 0.68rem; color: var(--dim); }
+        .sparkline { display: inline-block; vertical-align: middle; }
         .funnel-row { display: flex; align-items: center; margin: 0.4rem 0; }
         .funnel-label { width: 120px; font-size: 0.78rem; color: var(--dim); text-align: right; padding-right: 0.5rem; }
         .funnel-track { flex: 1; height: 24px; background: #1a2240; border-radius: 4px; overflow: hidden; position: relative; }
@@ -152,6 +153,18 @@
         'MachineLearning':'#22d3ee','Shared':'#94a3b8','Speculative':'#fb923c'
     };
     function badgeClass(d){d=(d||'').toLowerCase();if(d.includes('algebra'))return'tag-info';if(d.includes('geometry'))return'tag-success';if(d.includes('computation'))return'tag-warning';if(d.includes('novelty'))return'tag-accent';if(d.includes('logic'))return'tag-info';if(d.includes('physics'))return'tag-success';if(d.includes('tropical'))return'tag-warning';return'tag-info';}
+
+    function sparkline(values, color='#00d4ff', w=60, h=20) {
+        if (!values || values.length < 2) return '';
+        const mn = Math.min(...values), mx = Math.max(...values);
+        const range = mx - mn || 1;
+        const pts = values.map((v, i) => {
+            const x = (i / (values.length - 1)) * w;
+            const y = h - ((v - mn) / range) * (h - 2) - 1;
+            return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+        return `<svg class="sparkline" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+    }
 
     async function loadData() {
         try {
@@ -286,20 +299,22 @@
                     });
                     document.getElementById('cycles-list').innerHTML = cyH || '<div class="no-data">No cycles recorded</div>';
 
-                    // Domain stats
+                    // Domain stats with sparklines
                     const ds={};
                     recs.forEach(r=>{
                         if(!r.domain)return;
-                        if(!ds[r.domain])ds[r.domain]={count:0,quality:0,theorems:0,sorry:0};
+                        if(!ds[r.domain])ds[r.domain]={count:0,quality:0,theorems:0,sorry:0,qualities:[]};
                         ds[r.domain].count++; ds[r.domain].quality+=r.quality_score||0;
                         ds[r.domain].theorems+=r.theorem_count||0; ds[r.domain].sorry+=r.sorry_density||0;
+                        if(r.quality_score>0)ds[r.domain].qualities.push(r.quality_score);
                     });
                     let stH='';
                     Object.entries(ds).sort((a,b)=>b[1].count-a[1].count).forEach(([dom,s])=>{
                         const avgQ=s.count>0?(s.quality/s.count).toFixed(3):'—';
                         const avgS=s.count>0?((s.sorry/s.count)*100).toFixed(1)+'% sorry':'—';
                         const color=COLORS[dom]||'#64748b';
-                        stH+=`<div class="domain-stat" style="background:${color}12;border-color:${color}40"><div class="name" style="color:${color}">${dom}</div><div class="detail">${s.count} cycles · Q:${avgQ} · ${s.theorems} thms · ${avgS}</div></div>`;
+                        const sp=sparkline(s.qualities,color);
+                        stH+=`<div class="domain-stat" style="background:${color}12;border-color:${color}40"><div class="name" style="color:${color}">${dom} ${sp}</div><div class="detail">${s.count} cycles · Q:${avgQ} · ${s.theorems} thms · ${avgS}</div></div>`;
                     });
                     document.getElementById('domain-stats').innerHTML = stH || '<div class="no-data">No domain data</div>';
                 }

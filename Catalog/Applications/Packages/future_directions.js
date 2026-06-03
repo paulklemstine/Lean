@@ -3647,6 +3647,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0531",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.221142+00:00",
+    "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
       "Computation",
@@ -3707,6 +3722,111 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0530",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.130772+00:00",
+    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Gelfand duality (commutative C*-algebras \u2245 locally compact Hausdorff spaces) fails for noncommutative C*-algebras, and that this failure defines 'noncommutative topology'. Bridge: the K-theory of a C*-algebra A equals the topological K-theory of its Gelfand spectrum when A is commutative. Prove the Bott periodicity theorem for K_0 and K_1.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "id": "fd_0534",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.470701+00:00",
+    "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.880463+00:00",
+    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
+    "domains": [
+      "Cryptography",
+      "Physics"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.214033+00:00",
+    "title": "Quantum Key Distribution: BB84 Security Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0548",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.620386+00:00",
+    "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "id": "fd_0552",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.956863+00:00",
+    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0557",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.377996+00:00",
+    "title": "ML Attention Mechanism: Formal Properties of Transformers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
       "Geometry",
@@ -3752,6 +3872,141 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0527",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:05.876172+00:00",
+    "title": "Bridge: Category Theory as Universal Language for Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0533",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.384460+00:00",
+    "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
+    "domains": [
+      "Bridges",
+      "Tropical"
+    ],
+    "id": "fd_0536",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.637226+00:00",
+    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0538",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.801510+00:00",
+    "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0541",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.042519+00:00",
+    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0546",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.462910+00:00",
+    "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0550",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.786215+00:00",
+    "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates in polynomial time for rational functions.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0553",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.043679+00:00",
+    "title": "EML Integration in Finite Terms: The Risch Algorithm"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_0555",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.217813+00:00",
+    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
     "domains": [
       "Pythagorean",
@@ -3767,6 +4022,261 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "id": "fd_0529",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.047788+00:00",
+    "title": "Bridge: Fourier Analysis as a Functor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the category of chain complexes is equivalent to the derived category modulo homotopy. Show that Ext and Tor are universal delta-functors. Bridge: singular homology of a space X equals Ext^*(Z, C_*(X)) in the derived category. Prove the universal coefficient theorem as a consequence.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0532",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.303707+00:00",
+    "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0537",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.719659+00:00",
+    "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0544",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.295536+00:00",
+    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0545",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.376136+00:00",
+    "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical linear programming: maximize c^T \u2297 x subject to A \u2297 x \u2264 b in the tropical semiring. Prove that the tropical simplex method finds the optimum in strongly polynomial time. Show that the tropical dual equals the classical dual under the Log transformation. Prove complementary slackness in the tropical setting.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0549",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.703717+00:00",
+    "title": "Tropical Optimization: Linear Programming in the Max-Plus Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.873771+00:00",
+    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0556",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.298113+00:00",
+    "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the policy gradient theorem: the gradient of the expected return equals E[psi(s,a) * Q^pi(s,a)] where psi is the score function. Prove that policy gradient methods converge to a local optimum under the compatible function approximation theorem. Show that the variance of the gradient estimate is O(1/epsilon) for epsilon-greedy exploration.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_0559",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.546271+00:00",
+    "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0561",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.713166+00:00",
+    "title": "Speculative: Computational Complexity as Physical Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "id": "fd_0528",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:05.964661+00:00",
+    "title": "Bridge: Galois Connections Between Order Theory and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Lob's theorem as a fixed-point result: if PA proves \u25a1A \u2192 A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0535",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.553916+00:00",
+    "title": "Bridge: Logic of Provability and Fixed Points in Arithmetic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0542",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.126580+00:00",
+    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0547",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.541008+00:00",
+    "title": "Tropical Differential Equations: Power Series Solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Gamma function Gamma(z) is a meromorphic EML function (it has no algebraic singularities). Show that the Riemann zeta function zeta(s) is not an EML function (it has essential singularities). Formalize the hypergeometric function _2F_1(a,b;c;z) and prove that it satisfies an EML differential equation (Gauss's hypergeometric equation).",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0554",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.127649+00:00",
+    "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for overparameterized neural networks, almost all critical points are saddle points, not local minima. Formalize the Hessian spectrum at critical points. Show that the loss landscape satisfies the strict saddle property: the Hessian has a negative eigenvalue at non-minimum critical points. Prove that SGD escapes strict saddles in polynomial time.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_0558",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.465935+00:00",
+    "title": "ML Loss Landscape: Critical Points and Saddle Points"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0562",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.802713+00:00",
+    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -3779,6 +4289,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.834984+00:00",
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0540",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.964548+00:00",
+    "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0560",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.629188+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "43e568b9",

@@ -233,6 +233,20 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     except Exception as e:
         print(f"[Breakthrough] Detection failed: {e}")
 
+    # ── Quality decay alerting: detect declining domains ──
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(extractor.workspace)
+        declining = ca.detect_quality_decay(window=5, threshold=-0.05)
+        for d in declining:
+            print(f"[⚠️ Decay] {d['domain']}: recent_avg={d['recent_avg']:.3f} "
+                  f"prior_avg={d['prior_avg']:.3f} delta={d['delta']:.3f} (n={d['count']})")
+            # Reduce weight of declining domains in future dispatch
+            # This is informational only for now — the direction weighting
+            # already considers quality_score per direction
+    except Exception as e:
+        print(f"[Decay] Quality decay detection failed: {e}")
+
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode
     retry_count = 0
