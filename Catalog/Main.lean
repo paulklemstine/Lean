@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2476 of the highest-quality
+A curated collection of 2480 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2476
+Total files: 2480
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1446,6 +1446,7 @@ import FINAL.Logic.LogSumExp
 import FINAL.Logic.ModularComposition
 import FINAL.Logic.NoveltyCertification
 import FINAL.Logic.OneGateAgent
+import FINAL.Logic.OracleClosureAlgebra
 import FINAL.Logic.OracleTeamGenesis
 import FINAL.Logic.ParaconsistentParadox
 import FINAL.Logic.ParadoxAlgebra
@@ -1794,6 +1795,7 @@ import FINAL.Physics.PrimeFractalDimension
 import FINAL.Physics.ProofSearchInformation
 import FINAL.Physics.QuantumE8ModularForms
 import FINAL.Physics.QuantumShells
+import FINAL.Physics.ReflectionPositivityMassGap
 import FINAL.Physics.SelbergCensus
 import FINAL.Physics.SelectionRules
 import FINAL.Physics.ShadowingLemma
@@ -2389,6 +2391,7 @@ import FINAL.Tropical.SpectralIdempotentBridge
 import FINAL.Tropical.SpectralTheory
 import FINAL.Tropical.SpectralTransfer
 import FINAL.Tropical.SpectralTropicalBridge
+import FINAL.Tropical.StereographicProjection
 import FINAL.Tropical.Subadditive
 import FINAL.Tropical.Surgery
 import FINAL.Tropical.Surjectivity_of_the_Tropical_Satake_Transform_for_GL₃
@@ -2409,6 +2412,7 @@ import FINAL.Tropical.TropicalBridge
 import FINAL.Tropical.TropicalCells
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension
+import FINAL.Tropical.TropicalConvexHelly
 import FINAL.Tropical.TropicalCuspidalFactorization
 import FINAL.Tropical.TropicalCycleCorrespondence
 import FINAL.Tropical.TropicalDeepLearningFoundations

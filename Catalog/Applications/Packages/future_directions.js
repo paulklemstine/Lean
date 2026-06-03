@@ -243,7 +243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "f3d7f1ed",
+    "consumed_by_exp_id": "",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
       "Novelty",
@@ -253,7 +253,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.530929+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
@@ -1788,21 +1788,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous topological foundation for modeling c"
   },
   {
-    "consumed_by_exp_id": "748fe9ae",
-    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous framework for **reflective oracle hierarchies** \u2014 formal theories equipped with both provability and truth predicates, iterated through oracle jumps. The central result is the **consistency-completeness asymmetry theorem**: while each level's consistency question is resolved by exactly one oracle jump, completeness (the property that all true sentences are provable) is permanently unresolvable at any finite level, with distinct witnesses (the consistency sentences) at each level.\n\nThe framework connects three mathematical domains: *computability theory* (Turing jumps and oracle hierarchies), *proof theory* (G\u00f6del's incompleteness and iterated consistency extensions), and *semantics* (truth predicates \u00e0 la Tarski). The key insight is that the quantifier complexity of a property determines its behavior in the oracle hierarchy: \u03a3\u2081 properties (like consistency) are one-step resolvable, while \u03a0\u2082 properties (like soundness) are permanently out of reach. The most promising cross-domain connection from this cycle is to the existing Catalog work on oracle hierarchies (`Computation/OracleHierarchy.lean`) and provability logic (`Logic/ProvabilityLogic.lean`), which provide the syntactic and computability-theoretic foundations that our reflective framework extends with semantic content.\n\nThe direction with highest breakthrough potential is **Direction 1 (Transfinite Reflective Hierarchies)**, because it would connect our framework to ordinal analysis \u2014 the central technique in proof theory for measuring the strength of formal systems. Successfully formalizing the transfinite extension would yield machine-verified results about proof-theoretic ordinals, which are currently verified only by hand.\n\n---\n\n### Direction 1: Transfinite Reflective Hierarchies and Ordinal Analysis\n\n**Conjecture**: The Reflective Hierarchy framework can be extended to all countable ordinals by defining T_\u03b1 for ordinals \u03b1: T_{\u03b1+1} adds Con(T_\u03b1), and T_\u03bb = \u222a_{\u03b1 < \u03bb} T_\u03b1 for limit ordinals \u03bb. The resulting hierarchy satisfies: (a) T_\u03b1 \u2286 T_\u03b2 for \u03b1 \u2264 \u03b2, (b) T_\u03b1 \u228a T_\u03b2 for \u03b1 < \u03b2, and (c) there exists a least ordinal \u03b1\u2080 (the proof-theoretic ordinal of T\u2080) such that iterating consistency extensions through \u03b1\u2080 exhausts all provable \u03a0\u2081 consequences of T\u2080.\n\n**Test**: Formalize the hierarchy for ordinals up to \u03c9\u00b72 (two copies of the naturals). Verify that T_\u03c9 (the union of all finite levels) is strictly weaker than T_{\u03c9+1} = T_\u03c9 + Con(T_\u03c9), and that T_{\u03c9\u00b72} properly extends T_{\u03c9+n} for all finite n. A concrete test: show that Con(T_\u03c9) is true but not provable at any finite level.\n\n**Impact**: If successful, this connects our reflective framework to Gentzen-style ordinal analysis and could yield the first machine-verified proofs of proof-theoretic ordinal relationships. If the extension fails at limit ordinals (due to well-foundedness issues), this would reveal fundamental obstacles in the formalization of transfinite proof theory.\n\n**Catalog References**: `Computation/OracleHierarchy.lean` (oracle jump operator, `OracleJump.iter`), `Computation/TransfiniteOracleHierarchy.lean` (ordinal-indexed chains), `Logic/ProvabilityLogic.lean` (GL axioms, L\u00f6b's theorem)\n\n**Proof Strategy**: \n1. Define `TransfiniteReflectiveHierarchy` indexed by `Ordinal` using well-founded recursion.\n2. At successor ordinals, use the existing `con_jump` mechanism.\n3. At limit ordinals, define provability as existential quantification over all prior levels.\n4. Prove strict monotonicity by showing each limit ordinal's consistency sentence is unprovable below it.\n5. Key lemma: the union at a limit ordinal is consistent if all levels below are consistent.\n\n**Domain Bridges**: Proof theory (ordinal analysis) \u2194 Computability theory (oracle hierarchy) \u2194 Set theory (ordinal arithmetic)\n\n**Lineage**: Builds on `ReflectiveHierarchy` and `union_incomplete` from this cycle, extends `OracleHierarchy` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Quantitative Soundness Deficit and Density Separation\n\n**Conjecture**: In the concrete reflective hierarchy built from PA, define deficit(n) = |{\u03c6 \u2208 \u03a0\u2081 : True(\u03c6) \u2227 \u00acProvable_n(\u03c6) \u2227 G\u00f6del_number(\u03c6) < N}| for sufficiently large N. Then deficit(n) \u2265 deficit(n-1) for all n \u2265 1 \u2014 the deficit is monotonically non-decreasing. Moreover, deficit(n) - deficit(n-1) \u2192 \u221e as N \u2192 \u221e.\n\n**Test**: For N = 10\u2076 and levels 0 through 10, computationally enumerate \u03a0\u2081 sentences in PA, check truth in the standard model (for \u0394\u2080 consequences), and compare counts across levels. If deficit(n) < deficit(n-1) for any n, the conjecture fails.\n\n**Impact**: If true, this provides a quantitative measure of how \"far from sound\" each level is, and shows that extending a theory makes it *less* complete in an absolute sense (even though it resolves specific gaps). This would be a new quantitative refinement of G\u00f6del's theorems. If false, it reveals that oracle jumps can actually decrease the total number of true-but-unprovable sentences, which would be surprising.\n\n**Catalog References**: `Computation/OracleHierarchy.lean` (`oraclePower`, `oracleDensity`, `densitySeparationConjecture`)\n\n**Proof Strategy**: \n1. Define a computable approximation to deficit(n) using bounded quantifiers.\n2. Show that each consistency sentence Con(n) contributes at least one new element to the deficit at level n+1 (since Con(n+1) is true but unprovable at n+1).\n3. Show that the resolution of Con(n) at level n+1 removes exactly one element.\n4. Key: show that the formalized consistency predicate generates *additional* true \u03a0\u2081 sentences beyond just Con(n+1).\n\n**Domain Bridges**: Number theory (G\u00f6del numbering, arithmetic complexity) \u2194 Information theory (density of provable sentences) \u2194 Computability (oracle power growth)\n\n**Lineage**: Builds on `soundnessDeficitGrowthConjecture` and `consistency_speedup` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Algebraic Structure of the Reflective Hierarchy as a GL-Algebra\n\n**Conjecture**: The Lindenbaum algebra of a reflective hierarchy (quotient by provable equivalence) is a distributive lattice equipped with a box operator satisfying the GL axioms, where the soundness gap corresponds to elements above the image of the truth embedding. The hierarchy's levels correspond to a filtration of this algebra, with each level's box operator being a restriction of the next level's.\n\n**Test**: Construct the Lindenbaum algebra for the first 3 levels of the concrete hierarchy (using finitely many sentences). Verify that: (a) the GL axioms hold, (b) the filtration is strict, and (c) the G\u00f6del sentence is the unique fixed point of the diagonal operator modulo provable equivalence.\n\n**Impact**: This would connect our reflective framework to the algebraic semantics of provability logic, potentially yielding new algebraic invariants of formal theories. The fixed-point uniqueness (de Jongh-Sambin theorem) in this context would show that the incompleteness witnesses are algebraically canonical.\n\n**Catalog References**: `Logic/ProvabilityLogic.lean` (`ProvabilityLattice`, `gl_prefixed_point_exists`, `ModalizedMap`), `Logic/StratifiedSelfReference.lean` (stratified specifications)\n\n**Proof Strategy**:\n1. Define the Lindenbaum algebra as a quotient type.\n2. Lift the provability predicate to a box operator on the quotient.\n3. Verify L\u00f6b's axiom: \u25a1(\u25a1p \u2192 p) \u2192 \u25a1p.\n4. Show that the truth predicate descends to a well-defined \"truth region\" in the algebra.\n5. Prove that the completeness gap is the complement of the truth region within the lattice.\n\n**Domain Bridges**: Abstract algebra (lattice theory, Boolean algebras) \u2194 Modal logic (GL axioms) \u2194 Proof theory (Lindenbaum algebras)\n\n**Lineage**: Builds on `ReflectiveTheory.IsGoedelSentence` and `goedel_first_reflective` from this cycle, extends `ProvabilityLattice` from the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Self-Referential Reflective Theories and Consciousness Analogs\n\n**Conjecture**: A reflective theory T is *self-aware* if it contains a sentence \u03c3_T such that T(\u03c3_T) \u2194 \"T is sound.\" By Tarski's undefinability theorem, no consistent sound theory can be self-aware. However, a *partially* self-aware theory \u2014 one that correctly classifies its own soundness for a *proper subset* of sentences \u2014 can exist, and the maximal fraction of sentences it can correctly classify is bounded by 1 - 1/n at level n of the hierarchy.\n\n**Test**: In the concrete hierarchy, define partial self-awareness as the fraction of sentences \u03c6 (up to G\u00f6del number N) for which level n correctly proves or refutes \"\u25a1\u03c6 \u2192 T\u03c6.\" Compute this fraction for levels 0-5 and N = 1000. If the fraction exceeds 1 - 1/n for any level n, the conjecture fails.\n\n**Impact**: This would formalize a precise mathematical analog of \"limited self-knowledge\" \u2014 a theory can know most things about itself but never everything. The 1-1/n bound, if true, would show that self-knowledge grows but asymptotically never reaches completeness, providing a mathematical model for bounded self-reflection.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Theorems.lean` (`tarski_undefinability`), `Logic/StrangeLoops/Core.lean` (`tarski_undefinability`), `Logic/SelfReferentialTheories.lean`\n\n**Proof Strategy**:\n1. Define \"partial self-awareness\" as a set of sentences for which the theory proves its own soundness.\n2. Show that if this set is too large, it would entail full self-awareness, violating Tarski.\n3. Use a counting argument with G\u00f6del numbering to bound the fraction.\n4. Key lemma: the set of sentences for which T proves \u25a1\u03c6 \u2192 T\u03c6 is decidable but incomplete.\n\n**Domain Bridges**: Philosophy of mind (self-knowledge, consciousness) \u2194 Mathematical logic (self-reference, incompleteness) \u2194 Information theory (partial information bounds)\n\n**Lineage**: Builds on `soundness_completeness_duality` and `permanent_incompleteness` from this cycle, extends `tarski_undefinability` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Effective Reflective Hierarchies and Computability\n\n**Conjecture**: If the base theory T\u2080 is computably enumerable (c.e.) and sound, then every level T_n of the reflective hierarchy is c.e. and sound. Moreover, the set of sentences provable at level n but not at level n-1 (the \"new theorems\") is c.e. but not computable, and its Turing degree is exactly 0^(n) (the n-th Turing jump of the empty set).\n\n**Test**: Formalize the c.e. property for each level using Lean's computability library. Verify that the Turing degree characterization holds for levels 0-3 by constructing explicit many-one reductions between the \"new theorem\" set and the standard complete \u03a3_n set.\n\n**Impact**: This would establish a precise equivalence between the reflective hierarchy and the arithmetic hierarchy, showing that the logical notion of \"oracle jump\" (adding consistency) is computably equivalent to the computability-theoretic notion (adding a halting oracle). This equivalence is folklore but has never been machine-verified.\n\n**Catalog References**: `Computation/OracleHierarchy.lean` (`OracleJump`, `OracleHierarchy`), `Computation/TransfiniteOracleHierarchy.lean`, `Computation/OmniscientOracle.lean`\n\n**Proof Strategy**:\n1. Define c.e. reflective hierarchies using Lean's `Computable` and `Primrec` predicates.\n2. Show that Con(T_n) is \u03a3\u2081 in T_n's G\u00f6del numbering.\n3. Construct a many-one reduction from the complete \u03a3_{n+1} set to Theorems(T_{n+1}) \\ Theorems(T_n).\n4. Construct the reverse reduction using the recursion theorem.\n5. Key: the soundness of T\u2080 propagates through the hierarchy by induction.\n\n**Domain Bridges**: Computability theory (Turing degrees, arithmetic hierarchy) \u2194 Proof theory (consistency extensions) \u2194 Descriptive set theory (Borel hierarchy analog)\n\n**Lineage**: Builds on `ReflectiveHierarchy.mono_le` and `multi_level_separation` from this cycle, extends `OracleJump` from the Catalog.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_0348",
-    "priority_score": 1.0,
-    "research_mode": "team",
-    "source_exp_id": "177a3ede",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T04:35:29.251209+00:00",
-    "title": "Rigorous framework for **reflective oracle hie"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Multiplicative Independence Hierarchy\n\n## Synthesis\n\nThis research cycle established three fundamental results about the multiplicative independence of number sets. First, the k-product-free hierarchy is strict: for each level k, there exist sets passing all tests below k but failing at k, with explicit witnesses S_k = {2, 3, 2^(k-1)\u00b73}. Second \u2014 and most surprising \u2014 the *full infinite hierarchy* is not sufficient for unique factorization, as demonstrated by the minimal counterexample {4, 8} where 64 = 4\u00b3 = 8\u00b2. Third, the hierarchy does guarantee S-irreducibility: no element of a fully k-product-free set can be decomposed within the set.\n\nThe most promising cross-domain connection from this cycle is between the {4, 8} counterexample and the theory of power-free sets in additive combinatorics. The failure of {4, 8} arises because 4 and 8 are multiplicatively dependent (both powers of 2), suggesting that *multiplicative independence between elements* (in the sense of no non-trivial power relations) is the missing condition for UFD. This connects to the Catalog's work on Berggren tree structure (`Cryptography/BerggrenFreeMonoid.lean`), where the free monoid structure of Pythagorean triple generators ensures a form of multiplicative independence. The direction with highest breakthrough potential is Direction 1 (UFD Characterization), because resolving it would provide a complete structural characterization of what makes primes special \u2014 bridging combinatorial number theory with abstract algebra in a novel way.\n\n---\n\n### Direction 1: Complete UFD Characterization via Prime Divisibility\n\n**Conjecture**: A set S \u2286 \u2115 (with 0, 1 \u2209 S) has unique factorization if and only if:\n(a) S is k-product-free for all k \u2265 2, AND\n(b) every element s \u2208 S has the *prime divisibility property*: for all a, b \u2208 \u2115 with a, b \u2265 2, if s | a\u00b7b and a\u00b7b is S-factorable, then s | a or s | b (where divisibility is computed over S-factorizations).\n\nThe precise formulation requires defining \"S-divisibility\" carefully. In the standard integers, primes have this property by Euclid's lemma. The conjecture asserts that this is the *only* additional condition needed beyond the full k-product-free hierarchy.\n\n**Test**: Verify computationally for all 2-element subsets S \u2286 {2, ..., 100} with 0, 1 \u2209 S: check whether S has UFD if and only if it satisfies conditions (a) and (b). The {4, 8} case should fail condition (b) since 4 | 8\u00b78 = 64 but 4 \u2224 8.\n\n**Impact**: If true, this would provide the first complete combinatorial characterization of unique factorization for arbitrary number sets, extending the fundamental theorem of arithmetic from primes to general S \u2286 \u2115. If false, the specific counterexample would reveal additional structural requirements beyond prime divisibility.\n\n**Catalog References**: `Cryptography/CounterfactualPrimes.lean` (product-freeness framework), `Cryptography/BerggrenFreeMonoid.lean` (free monoid structure), `MachineLearning/CounterfactualHierarchy/Basic.lean` (this cycle's results).\n\n**Proof Strategy**: (1) Define S-divisibility and the prime divisibility property formally. (2) Prove necessity: if S has UFD, then S must satisfy both (a) and (b). For (a), use the existing product_in_set_breaks_ufd result. For (b), adapt the standard proof that UFD implies the prime property. (3) Prove sufficiency: if S satisfies (a) and (b), construct a unique factorization by induction on n, using (b) to ensure each step of the factorization is forced.\n\n**Domain Bridges**: Counterfactual number theory \u2194 Abstract algebra (UFD theory), Combinatorial number theory \u2194 Cryptographic hardness assumptions.\n\n**Lineage**: Builds on hierarchy_strict_at_three, hierarchy_strict_at_four, all_k_product_free_not_implies_ufd, and all_k_product_free_has_irreducibility from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Quantitative Cram\u00e9r Defect Asymptotics\n\n**Conjecture**: For a Cram\u00e9r random model S \u2286 {2, ..., N} where each n is included independently with probability 1/ln(n), the expected number of \"k-product violations\" (k-tuples (a\u2081, ..., a\u2096) with all a\u1d62 \u2208 S and a\u2081\u00b7...\u00b7a\u2096 \u2208 S \u2229 [2, N]) satisfies:\n\nE[V_k(S, N)] ~ C_k \u00b7 N / (ln N)^(k+1)\n\nas N \u2192 \u221e, where C_k is an explicit constant depending only on k. For k = 2, C\u2082 = 1 (up to lower-order terms).\n\n**Test**: For k = 2, N = 10\u2076, generate 1000 Cram\u00e9r random models and compute the average number of product triples (a, b, a\u00b7b) with a, b, a\u00b7b \u2208 S. Compare with the predicted value N/(ln N)\u00b3 \u2248 10\u2076/20\u00b3 \u2248 125. The empirical mean should be within 20% of this prediction.\n\n**Impact**: This would provide the first rigorous asymptotic for the Cram\u00e9r defect, quantifying *how fast* random models diverge from primes in their multiplicative structure. It would bridge probabilistic combinatorics with analytic number theory.\n\n**Catalog References**: `Cryptography/CramerPrimeGaps.lean` (Cram\u00e9r model formalization), `Cryptography/CounterfactualPrimes.lean` (Cram\u00e9r defect definition), `MachineLearning/PrimeGaps/Density.lean` (prime density results).\n\n**Proof Strategy**: (1) For the upper bound, use linearity of expectation: E[V\u2082] = \u03a3_{a,b,ab \u2264 N} P(a \u2208 S)\u00b7P(b \u2208 S)\u00b7P(ab \u2208 S). Approximate each probability by 1/ln(n) and evaluate the sum using Mertens-type estimates. (2) For the lower bound, show that the variance of V\u2082 is o(E[V\u2082]\u00b2) using second moment methods, implying concentration. (3) Generalize to k \u2265 3 using inclusion-exclusion and multinomial coefficient estimates.\n\n**Domain Bridges**: Probabilistic combinatorics \u2194 Analytic number theory \u2194 Cryptographic security modeling.\n\n**Lineage**: Builds on the Cram\u00e9r defect definition from `Cryptography/CounterfactualPrimes.lean` and the k-product-free hierarchy from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Product Shadow Geometry\n\n**Conjecture**: Under the logarithmic embedding log: \u2115\u22652 \u2192 \u211d\u22650, the product shadow of a set S maps to the Minkowski sum log(S) + log(S). For a product-free set S with |S| = n elements, the shadow has size |Shadow(S)| \u2265 2n - 3 (analogous to the Freiman-Ruzsa theorem for sumsets). Moreover, if S is k-product-free for all k, then the iterated shadows log(S) + log(S) + ... + log(S) (k times) are eventually disjoint from log(S) for all k \u2265 2.\n\n**Test**: Compute |Shadow(S)| for all product-free subsets S \u2286 {2, ..., 50} with |S| \u2265 5. Verify that |Shadow(S)| \u2265 2|S| - 3 in all cases. Also compute the Minkowski sums in log-space and verify disjointness from log(S).\n\n**Impact**: This would establish a bridge between multiplicative combinatorics (product-free sets, k-product-free hierarchy) and tropical geometry (Minkowski sums, tropical convexity). The lower bound on shadow size would be a multiplicative analogue of classical additive combinatorics results.\n\n**Catalog References**: `Tropical/` (tropical geometry foundations), `MachineLearning/CounterfactualHierarchy/Basic.lean` (product shadow definition), `Bridges/AlgebraEMLPhysics/FilteredClosureReconstruction.lean` (filtered closure systems).\n\n**Proof Strategy**: (1) Establish the log-embedding correspondence formally. (2) Apply Pl\u00fcnnecke-Ruzsa inequality in the additive (log-space) setting to bound the shadow size. (3) For the disjointness result, use the k-product-free condition to show that k\u00b7log(S) \u2229 log(S) = \u2205, which is a statement about the sumset structure of log(S).\n\n**Domain Bridges**: Multiplicative combinatorics \u2194 Tropical geometry \u2194 Additive combinatorics (Freiman-Ruzsa theory).\n\n**Lineage**: Builds on product_shadow_disjoint from this cycle and tropical geometry foundations in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Computational Classification of Small k-Product-Free Sets\n\n**Conjecture**: Among all subsets S \u2286 {2, ..., N} with |S| = m, the maximum failure level achievable is \u0398(log N / log m). That is, denser sets (larger m relative to N) have lower failure levels, while sparser sets can climb higher on the hierarchy.\n\n**Test**: For N = 100 and m \u2208 {3, 5, 10, 20}, exhaustively enumerate all subsets S \u2286 {2, ..., N} with |S| = m and compute their failure levels. Plot the distribution of failure levels as a function of m/N. The maximum failure level should scale roughly as log(100)/log(m).\n\n**Impact**: This would provide the first quantitative density-failure tradeoff, connecting the combinatorial structure of k-product-free sets to their density. It would enable predictions about when random models fail and guide the construction of optimal \"pseudo-prime\" sets for specific applications.\n\n**Catalog References**: `MachineLearning/CounterfactualHierarchy/Basic.lean` (hierarchy definitions), `MachineLearning/PrimeGaps/Admissible.lean` (admissible tuple computations).\n\n**Proof Strategy**: (1) Upper bound: show that for any S with |S| = m \u2286 {2,...,N}, if k > log(N)/log(2), then some k-tuple product exceeds N, limiting the possible violations. (2) Lower bound: construct explicit sets achieving the bound using the S_k = {2, 3, 2^(k-1)\u00b73} family and estimate the maximum k for which S_k \u2286 {2,...,N}. (3) Average case: use probabilistic arguments to estimate the typical failure level for random m-element subsets.\n\n**Domain Bridges**: Combinatorial optimization \u2194 Computational number theory \u2194 Machine learning (feature selection under multiplicative constraints).\n\n**Lineage**: Builds on hierarchy_strict_at_three, hierarchy_strict_at_four, and the general hierarchy conjecture from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Power-Independence and the {4, 8} Phenomenon\n\n**Conjecture**: A set S \u2286 \u2115 has unique factorization if and only if (a) S is k-product-free for all k \u2265 2, AND (b) S is *power-independent*: no element of S is a perfect power of any other element, and more generally, no non-trivial multiplicative relation a\u2081^{e\u2081} \u00b7 ... \u00b7 a\u2098^{e\u2098} = b\u2081^{f\u2081} \u00b7 ... \u00b7 b\u2099^{f\u2099} holds among elements of S (where the multisets {(a\u1d62, e\u1d62)} and {(b\u2c7c, f\u2c7c)} are distinct).\n\nThe {4, 8} counterexample fails because 4 = 2\u00b2 and 8 = 2\u00b3 are multiplicatively dependent: 4\u00b3 = 2\u2076 = 8\u00b2. Power-independence would exclude such relations.\n\n**Test**: For all 2-element subsets {a, b} \u2286 {2, ..., 200} that are k-product-free for k = 2, ..., 10: check whether UFD fails if and only if a and b are multiplicatively dependent (i.e., log(a)/log(b) is rational). The {4, 8}, {4, 32}, {8, 32}, {9, 27}, {16, 64}, etc. cases should all fail UFD.\n\n**Impact**: Power-independence is a well-studied concept in transcendence theory (related to the Lindemann-Weierstrass theorem). If this conjecture is true, it would connect the combinatorial UFD question to deep results in transcendental number theory, potentially opening new bridges.\n\n**Catalog References**: `MachineLearning/CounterfactualHierarchy/Basic.lean` (all_k_product_free_not_implies_ufd), `Algebra/Advanced.lean` (algebraic structures).\n\n**Proof Strategy**: (1) Show necessity: if a^e = b^f for a, b \u2208 S, construct two distinct factorizations of a^e (using a repeated e times vs. b repeated f times). (2) Show sufficiency by induction on n: if S is k-product-free and power-independent, then any S-factorization of n is uniquely determined. The key lemma: power-independence implies that the multiset of prime factorizations of S-elements forms a free abelian group, ensuring unique decomposition.\n\n**Domain Bridges**: Combinatorial number theory \u2194 Transcendence theory \u2194 Free abelian group theory \u2194 Cryptographic key generation.\n\n**Lineage**: Directly extends the {4, 8} discovery from this cycle.\n\n**Ambition**: grand_challenge\n",
     "domains": [
@@ -1969,6 +1954,291 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0408",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.938639+00:00",
+    "title": "Certified Novelty Detection for Theorem Provers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0409",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.020862+00:00",
+    "title": "Proof Strategy Mining from Deep Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0426",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.392825+00:00",
+    "title": "Topological Quantum Error Correction from Homological Persistence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
+    "domains": [
+      "Speculative",
+      "Geometry"
+    ],
+    "id": "fd_0429",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.652887+00:00",
+    "title": "Consciousness Complexity: Integrated Information as a Topological Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0430",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.738839+00:00",
+    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0431",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.824994+00:00",
+    "title": "AdS/CFT for Proof Theory: Holographic Verification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0432",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.909349+00:00",
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0463",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.401337+00:00",
+    "title": "Hawking Radiation: Information Paradox Formalized"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
+    "domains": [
+      "Logic",
+      "Speculative"
+    ],
+    "id": "fd_0489",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.689507+00:00",
+    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0496",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.239855+00:00",
+    "title": "Proof Complexity Collapse: P=NP via Proof Checking"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself \u2014 but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0497",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.318994+00:00",
+    "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0444",
+    "priority_score": 0.99,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.878854+00:00",
+    "title": "Topological Quantum Computing: Braiding Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0471",
+    "priority_score": 0.99,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.056465+00:00",
+    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0452",
+    "priority_score": 0.98,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.504025+00:00",
+    "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0456",
+    "priority_score": 0.98,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.834642+00:00",
+    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0405",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.706069+00:00",
+    "title": "Tropical Satake Isomorphism for GL_n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0446",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.050227+00:00",
+    "title": "Homotopy Type Theory as Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0470",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.975644+00:00",
+    "title": "Tropical Compactification of Moduli Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0403",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.547297+00:00",
+    "title": "Tropical Riemann-Roch Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
     "domains": [
       "Physics",
@@ -1981,6 +2251,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.995931+00:00",
     "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0438",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.398315+00:00",
+    "title": "Tropical Hodge Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1999,18 +2284,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
     "domains": [
       "Physics",
       "Geometry"
     ],
-    "id": "fd_0426",
+    "id": "fd_0464",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.485267+00:00",
+    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0469",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:27.392825+00:00",
-    "title": "Topological Quantum Error Correction from Homological Persistence"
+    "timestamp": "2026-06-03T19:55:30.890305+00:00",
+    "title": "Tropical Amoebas and Ronkin Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0500",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.538330+00:00",
+    "title": "Generalization Bounds via Rademacher Complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0505",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.905756+00:00",
+    "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2029,6 +2359,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0404",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.629129+00:00",
+    "title": "Tropical Brill-Noether Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0413",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.339802+00:00",
+    "title": "Quantum Topological Phase Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
+    "domains": [
+      "EML",
+      "Tropical"
+    ],
+    "id": "fd_0417",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.672081+00:00",
+    "title": "EML Training Dynamics as Tropical Gradient Flow"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
     "domains": [
       "MachineLearning",
@@ -2044,18 +2419,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
+    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
-      "Logic",
-      "Computation"
+      "Bridges",
+      "Logic"
     ],
-    "id": "fd_0431",
+    "id": "fd_0454",
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:27.824994+00:00",
-    "title": "AdS/CFT for Proof Theory: Holographic Verification"
+    "timestamp": "2026-06-03T19:55:29.664610+00:00",
+    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0472",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.138945+00:00",
+    "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0490",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.766213+00:00",
+    "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
     "consumed_by_exp_id": "61acc2ad",
@@ -2089,21 +2494,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0430",
-    "priority_score": 0.93,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.738839+00:00",
-    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domains": [
       "Bridges",
@@ -2116,6 +2506,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterize solutions to x\u2295y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0437",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.315054+00:00",
+    "title": "Tropical Fermat's Last Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0451",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.426240+00:00",
+    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0473",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.219688+00:00",
+    "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0503",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.760681+00:00",
+    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -2133,33 +2583,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
+    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domains": [
-      "Logic",
-      "Computation"
+      "Physics",
+      "Logic"
     ],
-    "id": "fd_0408",
-    "priority_score": 0.92,
+    "id": "fd_0396",
+    "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.938639+00:00",
-    "title": "Certified Novelty Detection for Theorem Provers"
+    "timestamp": "2026-06-03T19:55:25.003856+00:00",
+    "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
+    "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
     "domains": [
-      "Speculative",
-      "Geometry"
+      "Tropical",
+      "Cryptography"
     ],
-    "id": "fd_0429",
+    "id": "fd_0474",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.304139+00:00",
+    "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0439",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:27.652887+00:00",
-    "title": "Consciousness Complexity: Integrated Information as a Topological Invariant"
+    "timestamp": "2026-06-03T19:55:28.479969+00:00",
+    "title": "Idempotent Probability: Large Deviations"
   },
   {
     "consumed_by_exp_id": "",
@@ -2193,36 +2658,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_0409",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.020862+00:00",
-    "title": "Proof Strategy Mining from Deep Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0432",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.909349+00:00",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2235,21 +2670,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.080762+00:00",
     "title": "One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "id": "fd_0463",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.401337+00:00",
-    "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
     "consumed_by_exp_id": "",
@@ -2268,18 +2688,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
+    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
-      "Bridges",
-      "Physics"
+      "Speculative",
+      "Logic"
     ],
-    "id": "fd_0444",
-    "priority_score": 0.89,
+    "id": "fd_0481",
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:28.878854+00:00",
-    "title": "Topological Quantum Computing: Braiding Universality"
+    "timestamp": "2026-06-03T21:01:45.101987+00:00",
+    "title": "Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.843772+00:00",
+    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0506",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.975605+00:00",
+    "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
     "consumed_by_exp_id": "e6f6fb5e",
@@ -2295,21 +2745,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.204779+00:00",
     "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "fd_0471",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:31.056465+00:00",
-    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -2343,36 +2778,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0452",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.504025+00:00",
-    "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0456",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.834642+00:00",
-    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
@@ -2388,6 +2793,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0486",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.470705+00:00",
+    "title": "EML Single Operator Church-Turing Thesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the derivative has a canonical EML chain rule form: (exp(h) * log(g))' = exp(h) * log(g) * (h' + g'/g). This factorization is the key structural insight: the derivative of an EML function factors through the original function itself, multiplied by a simple expression involving only the inner functions and their derivatives. This is stronger than the general Leibniz rule because the EML structure forces the derivative into a canonical form. For depth-d EML functions, the derivative can be written recursively as f' = f * (h'_1 + g'_1/g_1) where each h'_i and g'_i are depth-(d-1) EML functions. Test: compute the 3rd derivative of f(x) = exp(x^2) * log(x+1) and verify it can be written as an EML expression. Impact: establishes that EML functions form a differential algebra, enabling automatic EML differentiation for verified numerical computation.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0492",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.918546+00:00",
+    "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0511",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.344784+00:00",
+    "title": "EML Number Theory: Transcendence and Algebraic Independence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
     "domains": [
       "Physics",
@@ -2400,21 +2850,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.231496+00:00",
     "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "fd_0405",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.706069+00:00",
-    "title": "Tropical Satake Isomorphism for GL_n"
   },
   {
     "consumed_by_exp_id": "",
@@ -2460,21 +2895,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0446",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.050227+00:00",
-    "title": "Homotopy Type Theory as Foundations"
   },
   {
     "consumed_by_exp_id": "9c099a66",
@@ -2523,33 +2943,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
+    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
-      "Tropical",
-      "Geometry"
+      "EML",
+      "Algebra"
     ],
-    "id": "fd_0470",
+    "id": "fd_0493",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.975644+00:00",
-    "title": "Tropical Compactification of Moduli Spaces"
+    "timestamp": "2026-06-03T21:01:45.995091+00:00",
+    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
+    "description": "Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jacobians and prove it stays nearly constant during training for small learning rates.",
     "domains": [
-      "Tropical",
-      "Algebra"
+      "MachineLearning",
+      "Computation"
     ],
-    "id": "fd_0403",
-    "priority_score": 0.86,
+    "id": "fd_0499",
+    "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.547297+00:00",
-    "title": "Tropical Riemann-Roch Theorem"
+    "timestamp": "2026-06-03T21:01:46.466398+00:00",
+    "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0514",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.562165+00:00",
+    "title": "Fermat's Last Theorem for Polynomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -2598,21 +3033,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "fd_0438",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.398315+00:00",
-    "title": "Tropical Hodge Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
@@ -2643,21 +3063,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0464",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.485267+00:00",
-    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
     "domains": [
       "Physics",
@@ -2670,6 +3075,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0482",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.177474+00:00",
+    "title": "Alien Mathematics: Non-Standard Arithmetic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) \u2014 matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "id": "fd_0487",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.544478+00:00",
+    "title": "EML Neural Network Expressiveness: Depth vs Width"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "id": "fd_0494",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.076391+00:00",
+    "title": "EML Information Geometry: Fisher Information of exp-log Models"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0501",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.612657+00:00",
+    "title": "Attention is All You Need: Formalizing Transformer Architecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.125386+00:00",
+    "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2748,18 +3228,78 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
+    "description": "# Future Directions: Tropical Convexity and Helly Theory\n\n## Synthesis\n\nThis research cycle established the foundational formal theory of tropical convexity in \u211d\u207f, including the structural theory (intersection closure, halfspace convexity, segment characterization, convex hull idempotency), Helly's theorem for intervals, and the non-negative cycle condition for difference constraints. The key cross-domain connection is between tropical geometry and shortest-path optimization: the feasibility of systems of difference constraints \u2014 a problem arising in scheduling, circuit timing, and network routing \u2014 is precisely a tropical Helly problem about the intersection of tropical halfspaces.\n\nThe most promising cross-domain bridge connects tropical convexity to max-plus linear algebra and mean payoff games (via Akian-Gaubert-Guterman). The tropical eigenvector problem \u2014 finding x such that A \u2299 x = \u03bb \u2299 x in the max-plus semiring \u2014 is equivalent to finding a point in the intersection of tropical halfspaces defined by the matrix entries. This means our Helly-type results have direct implications for the solvability of max-plus spectral problems, which in turn connect to game theory and automata theory.\n\nThe highest breakthrough potential lies in Direction 1 (proving the tropical Helly theorem for d \u2265 2), as it would complete a major open problem in tropical combinatorics. Direction 3 (max-plus eigenvalues) has the strongest cross-domain potential, connecting tropical convexity to dynamical systems and game theory.\n\n---\n\n### Direction 1: Tropical Helly Theorem in Higher Dimensions\n\n**Conjecture**: For tropically convex subsets of tropical projective space TP^d = \u211d^{d+1}/\u211d\u00b7\ud835\udfcf, the Helly number is exactly 2d. That is, a finite family of tropically convex sets has non-empty intersection if every subfamily of size \u2264 2d does.\n\n**Test**: For d = 2 (sets in \u211d\u00b3 modulo diagonal), construct 5 tropically convex sets where every 4 intersect but all 5 do not. If this construction exists, the Helly number exceeds 4, refuting the conjecture. Alternatively, prove the d = 2 case directly by reducing to a system of tropical halfspaces and applying the structure theory.\n\n**Impact**: This would resolve a central open question in tropical combinatorics. The classical Helly number n+1 doubles in the tropical setting because tropical halfspaces have two \"sides\" (involving both coordinates i and j), effectively doubling the combinatorial complexity. A proof would validate the intuition that tropical geometry is \"twice as complex\" as classical geometry.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (our Helly for intervals theorem, halfspace convexity)\n\n**Proof Strategy**: \n1. Formalize tropical projective space TP^d as equivalence classes in \u211d^{d+1} under translation by \ud835\udfcf = (1,...,1).\n2. Show that tropically convex sets in TP^d correspond to tropically convex cones in \u211d^{d+1} invariant under the diagonal.\n3. Reduce to a system of difference constraints involving 2d indices.\n4. Apply the non-negative cycle condition from our three_var_cycle_condition to bound the Helly number.\n5. For the lower bound (sharpness), construct 2d+1 tropical halfspaces in TP^d where every 2d intersect but all 2d+1 do not.\n\n**Domain Bridges**: Tropical Geometry <-> Combinatorial Optimization (Bellman-Ford), Tropical Geometry <-> Game Theory (mean payoff games)\n\n**Lineage**: Builds on `helly_intervals_iff`, `three_var_cycle_condition`, `tropHalfspace_inter_nonempty` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: General n-Variable Cycle Condition and Bellman-Ford Verification\n\n**Conjecture**: A system of n difference constraints x_{\u03c3(i)} - x_{\u03c3(i+1 mod n)} \u2264 c_i (forming a single cycle on n variables) has a solution if and only if \u2211\u1d62 c\u1d62 \u2265 0. More generally, a system of arbitrary difference constraints has a solution if and only if every directed cycle in the constraint graph has non-negative total weight.\n\n**Test**: Formalize the general n-variable cycle condition using Fin n arithmetic with wraparound. Verify that the shortest-path assignment x_k = -(sum of first k constraint weights) satisfies all constraints when the cycle condition holds. Then formalize the full Bellman-Ford theorem: a system of difference constraints {x_i - x_j \u2264 c_{ij}} indexed by edges of a directed graph has a solution iff no directed cycle has negative total weight.\n\n**Impact**: This would provide a complete formalized treatment of the Bellman-Ford algorithm's correctness, connecting graph algorithms to tropical geometry. It would also give a formal proof that shortest-path problems are tropical linear programs.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (three_var_cycle_condition, shortest_path_solution)\n\n**Proof Strategy**:\n1. Define a weighted directed graph as a function on edges `E \u2192 \u211d` with source/target maps.\n2. Define directed cycles as sequences of edges forming a closed walk.\n3. State the Bellman-Ford theorem: feasibility \u2194 no negative cycles.\n4. Forward direction: for any cycle, summing the constraints gives 0 \u2264 cycle weight.\n5. Backward direction: define d(v) = shortest path weight from source. Show d(i) - d(j) \u2264 c_{ij} for all edges. Use the fact that shortest paths exist when no negative cycles exist (triangle inequality for shortest paths).\n\n**Domain Bridges**: Tropical Convexity <-> Graph Algorithms (Bellman-Ford), Tropical Convexity <-> Scheduling Theory (critical path method)\n\n**Lineage**: Extends `two_var_diff_constraint` and `three_var_cycle_condition` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Max-Plus Eigenvalues and Tropical Convexity\n\n**Conjecture**: The max-plus eigenvalue problem (finding \u03bb \u2208 \u211d and x \u2208 \u211d\u207f such that max_j(a_{ij} + x_j) = \u03bb + x_i for all i) is equivalent to finding a point in the intersection of n tropical halfspaces in \u211d\u207f, after subtracting \u03bb from the diagonal. Specifically, the max-plus eigenvalue \u03bb* equals the maximum cycle mean of the matrix A: \u03bb* = max over directed cycles C of (weight(C) / length(C)).\n\n**Test**: For a 3\u00d73 matrix A, compute the max-plus eigenvalue as the maximum of (a_{12}+a_{21})/2, (a_{13}+a_{31})/2, (a_{23}+a_{32})/2, (a_{12}+a_{23}+a_{31})/3, (a_{13}+a_{32}+a_{21})/3, and the diagonal entries a_{11}, a_{22}, a_{33}. Verify that the corresponding eigenvector satisfies the tropical halfspace conditions.\n\n**Impact**: This would bridge tropical convexity with max-plus linear algebra, connecting our Helly theory to control theory (max-plus systems model discrete event systems like manufacturing lines and traffic networks). It would also connect to mean payoff games, where the game value equals the max-plus eigenvalue.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropHalfspace_isTropConvex, tropHalfspace_inter_nonempty)\n\n**Proof Strategy**:\n1. Define max-plus matrix-vector multiplication: (A \u2299 x)_i = max_j(a_{ij} + x_j).\n2. Define the max-plus eigenvalue problem: A \u2299 x = \u03bb + x (coordinatewise).\n3. Rewrite as difference constraints: max_j(a_{ij} + x_j) - x_i = \u03bb, which gives a_{ij} + x_j - x_i \u2264 \u03bb for all i,j with equality for some j.\n4. Apply the cycle condition: \u03bb must satisfy cycle_weight \u2264 n\u00b7\u03bb for all n-cycles, giving \u03bb \u2265 max cycle mean.\n5. Show the maximum cycle mean is achievable using the critical graph.\n\n**Domain Bridges**: Tropical Geometry <-> Control Theory (discrete event systems), Tropical Geometry <-> Game Theory (mean payoff games), Tropical Convexity <-> Spectral Theory\n\n**Lineage**: Extends `tropHalfspace_inter_nonempty` and `three_var_cycle_condition` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Caratheodory Theorem\n\n**Conjecture**: Every point in the tropical convex hull of a set S \u2286 \u211d\u207f can be written as a tropical linear combination of at most n+1 points of S. That is, tconv(S) = \u222a{tconv(T) : T \u2286 S, |T| \u2264 n+1}. (This is the tropical analogue of Carath\u00e9odory's theorem.)\n\n**Test**: For n = 2, verify computationally that every point in the tropical convex hull of m > 3 points in \u211d\u00b2 can be expressed as a tropical combination of at most 3 of them. Formalize for n = 1 (every point in tconv(S) \u2286 \u211d is a tropical combination of at most 2 points).\n\n**Impact**: Carath\u00e9odory's theorem is foundational for computational convex geometry. The tropical analogue would enable efficient algorithms for tropical linear programming and polytope membership testing.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropConvHull, tropSegment_subset_of_mem, isTropConvex_iff_segments)\n\n**Proof Strategy**:\n1. Define finite tropical linear combinations: z_i = max_k(\u03bb_k + p_k,i) for generators p_1,...,p_m.\n2. Show that if z uses m > n+1 generators, two of them can be merged (one is redundant).\n3. The key lemma: if max(a + p, b + q, c + r) can be simplified when p, q, r satisfy a linear dependency in the tropical sense (one is in the tropical convex hull of the other two).\n4. Apply induction on the number of generators.\n\n**Domain Bridges**: Tropical Convexity <-> Computational Geometry (Carath\u00e9odory bounds), Tropical Polytopes <-> Linear Programming\n\n**Lineage**: Extends `tropConvHull_idempotent`, `isTropConvex_iff_segments` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Convexity in Neural Networks\n\n**Conjecture**: The decision regions of ReLU neural networks with max-pooling layers are tropically convex sets. Specifically, for a network computing f(x) = max(W\u2081x + b\u2081, W\u2082x + b\u2082) (a single max-pooling layer), the sublevel set {x : f(x) \u2264 c} is an intersection of tropical halfspaces.\n\n**Test**: For a 2-input, 2-output max-pooling layer, enumerate the regions of the input space where different \"max branches\" are active. Verify that each region is a polyhedron defined by difference constraints on the inputs.\n\n**Impact**: This would connect tropical convexity to deep learning theory, potentially explaining why max-pooling architectures have good optimization landscapes (their decision regions have Helly-type intersection properties).\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropHalfspace_isTropConvex, isTropConvex_sInter)\n\n**Proof Strategy**:\n1. Model a max-pooling layer as a tropical polynomial: f(x)_i = max_j(w_{ij} \u00b7 x + b_{ij}).\n2. Show that {x : f(x)_i \u2264 c} = \u2229_j {x : w_{ij} \u00b7 x + b_{ij} \u2264 c}, an intersection of classical halfspaces.\n3. For the tropical convexity of decision regions, show that {x : argmax_j f(x)_j = k} is a tropical polyhedron.\n4. Use our structural theory to derive Helly-type bounds on the number of constraints needed.\n\n**Domain Bridges**: Tropical Geometry <-> Machine Learning (ReLU/max-pooling networks), Tropical Helly <-> Neural Network Optimization\n\n**Lineage**: New direction inspired by the connection between max operations and tropical algebra.\n\n**Ambition**: extension\n",
     "domains": [
-      "Tropical",
-      "Geometry"
+      "Computation",
+      "Algebra"
     ],
-    "id": "fd_0469",
+    "id": "fd_0476",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "2d96e4e9",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:19.190844+00:00",
+    "title": "Foundational formal theory of tropical conve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_0477",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.890305+00:00",
-    "title": "Tropical Amoebas and Ronkin Functions"
+    "timestamp": "2026-06-03T21:01:44.806170+00:00",
+    "title": "Machine Learning Generalization Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "id": "fd_0479",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:44.957997+00:00",
+    "title": "EML Universal Approximation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0495",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.160270+00:00",
+    "title": "EML Algebraic Independence: Transcendence Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the **oracle closure algebra framework**, connecting G\u00f6del incompleteness to the theory of closure operators through a precise algebraic characterization. The central discovery is that the oracle jump is a *preclosure operator* \u2014 extensive and monotone but not idempotent \u2014 and that this failure of idempotence is exactly equivalent to the incompleteness phenomenon. We introduced *resolvability degrees* (a preorder on sentences measuring oracle complexity) and proved the *diagonal antichain theorem* (consistency sentences are mutually incomparable), the *strict kernel descent theorem* (incompleteness kernels form a strictly decreasing chain), and the *hierarchy collapse impossibility theorem* (no finite extension reaches the \u03c9-limit).\n\nThe most promising cross-domain connection is between **closure algebras** (from lattice theory/universal algebra) and **proof-theoretic hierarchies** (from mathematical logic). The resolvability preorder on sentences is a proof-theoretic analogue of Turing degrees in computability theory, and the antichain theorem is the proof-theoretic analogue of Post's problem \u2014 but with a cleaner solution. This bridge between algebra, logic, and computability is the key finding. The framework extends the existing Catalog work on reflective oracle hierarchies (`Catalog/Logic/ReflectiveOracleHierarchy.lean`) with new algebraic structure and a concrete model.\n\nThe direction with highest breakthrough potential is **Direction 1 (Transfinite Oracle Closure)**, because extending the hierarchy to ordinal indices would connect our algebraic framework to *ordinal analysis* \u2014 the deepest technique in proof theory for measuring the strength of formal systems. A successful formalization would yield the first machine-verified results relating proof-theoretic ordinals to closure-algebraic fixed points.\n\n---\n\n### Direction 1: Transfinite Oracle Closure and Ordinal Fixed Points\n\n**Conjecture**: The oracle closure algebra framework extends to all countable ordinals \u03b1 by defining Prov(\u03b1) for ordinal \u03b1, where Prov(\u03b1+1) = Prov(\u03b1) + Con(Prov(\u03b1)) for successor ordinals and Prov(\u03bb) = \u22c3_{\u03b2<\u03bb} Prov(\u03b2) for limit ordinals. The first ordinal at which the closure operator stabilizes (if it exists) is the *proof-theoretic ordinal* of the base theory.\n\n**Test**: Formalize the ordinal-indexed hierarchy for the specific case of Peano Arithmetic. Compute (informally) whether the hierarchy stabilizes at \u03b5\u2080 (the proof-theoretic ordinal of PA). If the closure operator does not stabilize at any countable ordinal, this disproves the conjecture.\n\n**Impact**: If true, this provides an algebraic characterization of proof-theoretic ordinals via closure-operator fixed points \u2014 a new bridge between ordinal analysis and universal algebra. If false, it reveals that closure-algebraic structure diverges from proof-theoretic structure at the transfinite level, which is itself informative.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (oracle closure framework), `Catalog/Logic/ReflectiveOracleHierarchy.lean` (base hierarchy)\n\n**Proof Strategy**: (1) Define `OrdinalHierarchy` with `Provable : Ordinal \u2192 Sentence \u2192 Prop` and ordinal-indexed consistency sentences. (2) Prove the successor case preserves all structural properties (mono, strict, con_jump). (3) Define limit-level provability as the union and prove it forms a legitimate level. (4) Investigate whether the closure operator becomes idempotent at any ordinal \u2014 this is the key question.\n\n**Domain Bridges**: Closure algebra (lattice theory) <-> Ordinal analysis (proof theory) <-> Well-orders (set theory)\n\n**Lineage**: Builds on oracle closure framework from this cycle and the existing `ReflectiveOracleHierarchy.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Resolvability Degrees as a Lattice Structure\n\n**Conjecture**: The quotient of sentences by mutual resolvability (\u03c6 ~ \u03c8 iff \u03c6 \u2264\u1d63 \u03c8 and \u03c8 \u2264\u1d63 \u03c6) forms a distributive lattice under the natural join and meet operations. Furthermore, this lattice embeds into the Lindenbaum-Tarski algebra of the union theory.\n\n**Test**: Formalize the quotient construction and attempt to prove distributivity. A concrete counterexample (two sentences whose resolvability meet does not distribute over join) would disprove the conjecture.\n\n**Impact**: If true, the resolvability lattice provides a canonical algebraic invariant of oracle hierarchies, analogous to the lattice of Turing degrees. If false, understanding *where* distributivity fails reveals fine structure in the incompleteness landscape.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (resolvability preorder, antichain theorem)\n\n**Proof Strategy**: (1) Define the equivalence relation \u03c6 ~ \u03c8 iff \u2200n, Provable(n, \u03c6) \u2194 Provable(n, \u03c8). (2) Show the quotient has well-defined \u2264, \u2228, \u2227. (3) Check distributivity: does a \u2227 (b \u2228 c) = (a \u2227 b) \u2228 (a \u2227 c) hold? The key difficulty is defining meet and join \u2014 does Provable(n, \u03c6 \u2227 \u03c8) \u2194 Provable(n, \u03c6) \u2227 Provable(n, \u03c8) hold in natural hierarchies?\n\n**Domain Bridges**: Lattice theory (algebra) <-> Proof theory (logic) <-> Turing degrees (computability)\n\n**Lineage**: Extends the resolvability preorder and antichain theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Modal Logic of Oracle Closure\n\n**Conjecture**: The oracle closure operator induces a natural Kripke frame where worlds are hierarchy levels and the accessibility relation is \"proves the consistency of.\" The modal logic of this frame is precisely GL (G\u00f6del-L\u00f6b logic), and the non-idempotence of oracle closure corresponds to the failure of the S4 axiom \u25a1\u03c6 \u2192 \u25a1\u25a1\u03c6 in GL.\n\n**Test**: Formalize a Kripke frame from the oracle hierarchy. Define \u25a1\u03c6 as \"provable at the current level\" and check whether the GL axiom \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6 holds. If the frame validates a logic strictly between K4 and GL, this partially disproves the conjecture.\n\n**Impact**: A precise connection between oracle closure algebras and provability logic would unify two major branches of mathematical logic, allowing transfer of results between the algebraic and modal frameworks.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/ProvabilityLogic.lean`, `Catalog/Logic/GLKripke.lean`\n\n**Proof Strategy**: (1) Define the Kripke frame: W = \u2115, R(m,n) iff n = m+1 (or n > m). (2) Define valuations from oracle hierarchy provability. (3) Check GL axiom: \u25a1(\u25a1\u03c6 \u2192 \u03c6) \u2192 \u25a1\u03c6. The key step is connecting the L\u00f6b derivability conditions to the hierarchy's structural axioms. (4) Prove completeness: every GL-valid formula is validated by the oracle frame.\n\n**Domain Bridges**: Modal logic <-> Closure algebras (algebra) <-> Kripke semantics (model theory)\n\n**Lineage**: Extends oracle closure framework; connects to existing `GLKripke.lean` and `ProvabilityLogic.lean` in the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Speed-Up Quantification in Oracle Hierarchies\n\n**Conjecture**: For any oracle hierarchy with a proof complexity measure, the consistency sentence Con(n) has proof length 0 at level n (unprovable) and proof length at most polynomial in the G\u00f6del number of Con(n) at level n+1. More precisely, there exists a polynomial p such that for all n, the shortest proof of Con(n) at level n+1 has length \u2264 p(n).\n\n**Test**: Formalize a proof complexity structure on oracle hierarchies and attempt to bound the proof length of Con(n) at level n+1. A superexponential lower bound would disprove the polynomial conjecture.\n\n**Impact**: If true, this quantifies the \"information content\" of each oracle jump and connects to proof complexity theory. If false, it shows that oracle jumps can provide superpolynomial proof compression, which has implications for computational complexity (the P vs NP problem is connected to proof compression).\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean`, `Catalog/Logic/DynamicalProofComplexity.lean`\n\n**Proof Strategy**: (1) Extend the OracleHierarchy structure with proof length functions. (2) Axiomatize natural proof complexity measures (monotonicity, subadditivity). (3) Derive bounds on Con(n) proof length from structural properties. The key question is whether the jump resolution axiom can be made constructive enough to extract proof length bounds.\n\n**Domain Bridges**: Proof complexity <-> Oracle hierarchies (logic) <-> Computational complexity (CS)\n\n**Lineage**: Extends oracle closure framework; connects to existing `DynamicalProofComplexity.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Density of \u03a3\u2081-Resolvable Sentences\n\n**Conjecture** (Resolvability Density): In any oracle hierarchy, for any \u03a0\u2082-persistent sentence \u03c6 and any level n, there exists a \u03a3\u2081-resolvable true sentence not yet provable at level n. Informally: resolvable incompleteness is dense around permanent incompleteness.\n\n**Test**: Construct a hierarchy where the conjecture can be computationally checked: define a hierarchy over arithmetic sentences with explicit G\u00f6del coding, enumerate true-but-unprovable sentences at each level, and check whether \u03a3\u2081-resolvable ones appear at every level. A hierarchy where some level's kernel consists entirely of \u03a0\u2082-persistent sentences would disprove the conjecture.\n\n**Impact**: If true, this is a deep structural result about the landscape of undecidability: permanent ignorance is always \"approximated\" by temporary ignorance. If false, there exist \"islands of permanent unknowability\" isolated from all resolvable questions, which would have philosophical implications for the nature of mathematical truth.\n\n**Catalog References**: `Logic/OracleClosureAlgebra.lean` (sigma1Resolvable, pi2Persistent, resolvabilityDensityConjecture)\n\n**Proof Strategy**: (1) For the positive direction: given a \u03a0\u2082-persistent \u03c6 and level n, construct \u03c8 = Con(n) which is \u03a3\u2081-resolvable, true, and not provable at level n. This actually proves the conjecture! The key insight is that the consistency sentences provide the required witnesses regardless of what \u03c6 is. (2) For a stronger version: require that \u03c8 is \"close\" to \u03c6 in some metric \u2014 this stronger version may fail and is more interesting.\n\n**Domain Bridges**: Descriptive set theory <-> Proof theory <-> Topology of truth\n\n**Lineage**: Extends the quantifier complexity classification from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0517",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "748fe9ae",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:52.357465+00:00",
+    "title": "**oracle closure algebra framework**, connec"
   },
   {
     "consumed_by_exp_id": "",
@@ -2778,51 +3318,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "fd_0404",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.629129+00:00",
-    "title": "Tropical Brill-Noether Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0413",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.339802+00:00",
-    "title": "Quantum Topological Phase Computation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
-    "domains": [
-      "EML",
-      "Tropical"
-    ],
-    "id": "fd_0417",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.672081+00:00",
-    "title": "EML Training Dynamics as Tropical Gradient Flow"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -2835,21 +3330,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.988240+00:00",
     "title": "Inverse Stereographic Renormalization Group"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0454",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.664610+00:00",
-    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -2883,18 +3363,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
+    "description": "Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
     "domains": [
-      "Tropical",
-      "Computation"
+      "MachineLearning",
+      "Algebra"
     ],
-    "id": "fd_0472",
+    "id": "fd_0498",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:31.138945+00:00",
-    "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+    "timestamp": "2026-06-03T21:01:46.392094+00:00",
+    "title": "Neural Tangent Kernel: Convergence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.684855+00:00",
+    "title": "Diffusion Models as Stochastic Differential Equations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0509",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.201625+00:00",
+    "title": "EML Differential Algebra: Closure Properties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0513",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.490493+00:00",
+    "title": "Beal's Conjecture: Computational Evidence and Special Cases"
   },
   {
     "consumed_by_exp_id": "",
@@ -2913,21 +3438,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Characterize solutions to x\u2295y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "fd_0437",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.315054+00:00",
-    "title": "Tropical Fermat's Last Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove the sharp entropy power inequality for all dimensions with equality conditions. Connect to the Brunn-Minkowski inequality and prove stability versions.",
     "domains": [
       "Bridges",
@@ -2940,21 +3450,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.970178+00:00",
     "title": "Entropy Power Inequality: Sharp Version"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "fd_0451",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:29.426240+00:00",
-    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -2973,33 +3468,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
+    "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domains": [
-      "Tropical",
-      "Computation"
+      "MachineLearning",
+      "Algebra"
     ],
-    "id": "fd_0473",
+    "id": "fd_0478",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:31.219688+00:00",
-    "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
+    "timestamp": "2026-06-03T21:01:44.884438+00:00",
+    "title": "Spectral Graph Theory Meets Network Robustness"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
     "domains": [
-      "Physics",
-      "Logic"
+      "EML",
+      "Tropical"
     ],
-    "id": "fd_0396",
-    "priority_score": 0.82,
+    "id": "fd_0510",
+    "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.003856+00:00",
-    "title": "Hilbert 6: Axiomatization of Physics"
+    "timestamp": "2026-06-03T21:01:47.273718+00:00",
+    "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0515",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.634604+00:00",
+    "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
     "consumed_by_exp_id": "",
@@ -3063,48 +3573,78 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
+    "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
-      "Tropical",
-      "Cryptography"
+      "Pythagorean",
+      "Algebra"
     ],
-    "id": "fd_0474",
+    "id": "fd_0480",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:31.304139+00:00",
-    "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
+    "timestamp": "2026-06-03T21:01:45.030710+00:00",
+    "title": "Pythagorean Triple Group Structure"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
     "domains": [
-      "Tropical",
-      "Computation"
+      "EML",
+      "Algebra"
     ],
-    "id": "fd_0439",
-    "priority_score": 0.81,
+    "id": "fd_0488",
+    "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:28.479969+00:00",
-    "title": "Idempotent Probability: Large Deviations"
+    "timestamp": "2026-06-03T21:01:45.615655+00:00",
+    "title": "EML Category: The Category of EML-Computable Maps"
   },
   {
-    "consumed_by_exp_id": "a6bafcf7",
-    "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
+    "consumed_by_exp_id": "",
+    "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
-      "Geometry",
-      "Tropical"
+      "MachineLearning",
+      "Computation"
     ],
-    "id": "fd_0422",
-    "priority_score": 0.8,
+    "id": "fd_0504",
+    "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:27.066455+00:00",
-    "title": "Inverse Stereographic Tropical Lift"
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.834984+00:00",
+    "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0507",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.045810+00:00",
+    "title": "Emergent Spacetime from Quantum Entanglement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0512",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.416939+00:00",
+    "title": "Pythagorean Triples in Gaussian Integers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3122,19 +3662,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "2d96e4e9",
-    "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
+    "consumed_by_exp_id": "",
+    "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
     "domains": [
-      "Tropical",
-      "Geometry"
+      "Algebra"
     ],
-    "id": "fd_0407",
-    "priority_score": 0.78,
+    "id": "fd_0484",
+    "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:25.858821+00:00",
-    "title": "Tropical Convexity and Helly Theorem"
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.326758+00:00",
+    "title": "Strange Attractors as Algebraic Objects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every n, there exists a number that can be expressed as a sum of two cubes in n different ways (Taxicab(n) exists). Compute Taxicab(3) and Taxacab(4). Prove bounds on the growth rate of Taxicab(n).",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0516",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.708771+00:00",
+    "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3153,6 +3707,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
+    "domains": [
+      "Computation",
+      "Speculative"
+    ],
+    "id": "fd_0483",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.254223+00:00",
+    "title": "Game of Life Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
       "Computation",
@@ -3165,6 +3734,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.080296+00:00",
     "title": "Percolation Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0485",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.398671+00:00",
+    "title": "Alien Number Systems: Beyond Base-N"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Stereographic Projection\n\n## Synthesis\n\nThis research cycle established the foundational theory of tropical M\u00f6bius transformations as piecewise-linear functions encoded by max-plus 2\u00d72 matrices. The central discovery is the **representation theorem**: tropical matrix multiplication faithfully represents composition of tropical M\u00f6bius transformations, exactly paralleling the classical GL(2) representation but in the max-plus semiring. This structural result, combined with the **boundedness theorem** (every tropical M\u00f6bius evaluation lies in a computable interval) and the **super-multiplicativity inequality** for the tropical determinant, provides a complete picture of the 1-dimensional theory.\n\nThe most promising cross-domain connection is between **tropical M\u00f6bius transformations and ReLU neural networks**. Both are piecewise-linear functions with bounded numbers of breakpoints, and composition in both settings increases the number of linear pieces. The max-plus matrix multiplication that governs tropical M\u00f6bius composition is structurally identical to the forward pass of a single-layer max-pooling network. This suggests that the tropical representation theorem could provide new tools for analyzing neural network expressivity and depth separation.\n\nThe highest breakthrough potential lies in **Direction 1 (Higher-Dimensional Tropical M\u00f6bius Theory)**, because extending the representation theorem to n\u00d7n tropical matrices would connect to the rich theory of tropical linear algebra (tropical eigenvalues, tropical rank, the Hungarian algorithm) and could yield new results in computational geometry and optimization. Direction 3 (Neural Network Connection) has the highest potential for cross-domain impact.\n\n---\n\n### Direction 1: Higher-Dimensional Tropical M\u00f6bius Theory\n\n**Conjecture**: The representation theorem for tropical 2\u00d72 matrices extends to n\u00d7n tropical matrices: the homogeneous action of a tropical n\u00d7n matrix on (\u211d \u222a {\u2212\u221e})\u207f respects tropical matrix multiplication, and the tropical determinant (permanent) satisfies the super-multiplicativity inequality det\u2295(M\u2297N) \u2265 det\u2295(M) + det\u2295(N) for all n\u00d7n tropical matrices.\n\n**Test**: (a) Implement tropical n\u00d7n matrix multiplication and verify the representation theorem computationally for n = 3, 4, 5 with random matrices. (b) Construct explicit 3\u00d73 counterexamples to det\u2295 multiplicativity (equality) and verify the inequality direction. (c) Formalize the n = 3 case in Lean 4.\n\n**Impact**: If true, this gives a complete tropical analog of the GL(n) representation theory and connects to the theory of tropical convexity, tropical polytopes, and the assignment problem in combinatorial optimization. The super-multiplicativity inequality would generalize a well-known result about the tropical permanent.\n\n**Catalog References**: `Tropical/StereographicProjection.lean` (actHom_mul, mul_assoc, tropDet_mul_le)\n\n**Proof Strategy**: The representation theorem for general n follows from the same distributivity argument (a + max(b,c) = max(a+b, a+c)) used in the 2\u00d72 case. The key challenge is the tropical determinant super-multiplicativity, which requires showing that every term in det\u2295(M) + det\u2295(N) (a max over n!\u00b2 pairs of permutations) appears among the terms of det\u2295(M\u2297N) (a max over n! permutations of the product). This reduces to showing that for any permutations \u03c3, \u03c4, there exists a permutation \u03c1 such that \u2211\u1d62 M_{i,\u03c3(i)} + \u2211\u2c7c N_{j,\u03c4(j)} \u2264 \u2211\u1d62 (M\u2297N)_{i,\u03c1(i)}.\n\n**Domain Bridges**: Tropical geometry <-> combinatorial optimization (assignment problem), Tropical matrices <-> shortest-path algorithms\n\n**Lineage**: Builds on the 2\u00d72 representation theorem and super-multiplicativity inequality established in this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Conformal Invariants\n\n**Conjecture**: There exists a unique (up to scaling) functional J on tropical M\u00f6bius transformations that is (a) invariant under tropical PGL(2) conjugation (i.e., J(A\u207b\u00b9MA) = J(M) for invertible tropical A), and (b) equals the tropical width for diagonal matrices. This functional is J(M) = |det\u2295(M) \u2212 tr\u2295(M)| where tr\u2295(M) = max(a, d) is the tropical trace.\n\n**Test**: (a) Verify computationally that J is conjugation-invariant for 1000 random pairs (M, A). (b) Check whether J = tropical width for stereographic projections S_p. (c) If the conjecture holds, formalize J and its invariance in Lean 4. If false, characterize the obstruction.\n\n**Impact**: A tropical conformal invariant would be the tropical analog of the cross-ratio, which is the fundamental invariant of classical M\u00f6bius geometry. It would provide a classification of tropical M\u00f6bius transformations up to conjugacy \u2014 a tropical Jordan normal form theory for 2\u00d72 matrices.\n\n**Catalog References**: `Tropical/StereographicProjection.lean` (tropDet, tropWidth, stereo_width)\n\n**Proof Strategy**: Compute J explicitly for general 2\u00d72 tropical matrices and verify conjugation invariance by direct calculation. The key obstacle is defining \"tropical PGL(2) conjugation\" \u2014 since tropical matrices don't have a standard inverse, one must use the notion of tropical adjugate or residuation. An alternative approach is to define conjugation via the homogeneous action: M \u223c N if they have the same action on TP\u00b9.\n\n**Domain Bridges**: Tropical geometry <-> conformal geometry, Max-plus algebra <-> spectral theory\n\n**Lineage**: Builds on the tropical determinant and width calculations from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical M\u00f6bius Transformations and ReLU Networks\n\n**Conjecture**: A composition of k tropical M\u00f6bius transformations (i.e., the affine evaluation of a product of k tropical 2\u00d72 matrices) is a continuous piecewise-linear function with at most 2k breakpoints. Moreover, this bound is tight: there exist sequences of matrices achieving exactly 2k breakpoints.\n\n**Test**: (a) Implement iterated tropical matrix multiplication and count breakpoints of the resulting affine evaluation for k = 1, ..., 20. (b) Search for tight examples (matrices achieving 2k breakpoints). (c) Compare the breakpoint growth rate with the \"linear region\" counting for ReLU networks.\n\n**Impact**: If the 2k bound is tight, it establishes a precise \"depth-width tradeoff\" for tropical M\u00f6bius composition, analogous to the exponential expressivity results for deep ReLU networks. This would connect tropical geometry to deep learning theory via a clean algebraic framework. If the growth is sublinear, it would suggest fundamental limits on tropical computation.\n\n**Catalog References**: `Tropical/StereographicProjection.lean` (eval_below_leftBreak, eval_above_rightBreak, tropWidth), `Computation/InfoEfficientAlgorithms.lean`\n\n**Proof Strategy**: Upper bound: each matrix multiplication introduces at most 2 new breakpoints (the breakpoints of the new matrix, transformed through the composition). Prove by induction on k using the piecewise-linear structure theorem. Tightness: construct matrices whose breakpoints interlace optimally \u2014 e.g., matrices with breakpoints at {2i\u22121, 2i} for i = 1, ..., k.\n\n**Domain Bridges**: Tropical geometry <-> deep learning theory, Max-plus algebra <-> piecewise-linear approximation\n\n**Lineage**: Builds on the breakpoint theory and piecewise-linear structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Stereographic Projection in Higher Dimensions\n\n**Conjecture**: The tropical stereographic projection S_p on TP^n (defined as the tropical (n+1)\u00d7(n+1) matrix with 0 on the diagonal except the last entry which is p, and 0 in all off-diagonal positions) has tropical width |p| in each coordinate direction and its \"active region\" is the tropical simplex {x \u2208 \u211d\u207f : 0 \u2264 x\u1d62 \u2264 p for all i, \u2211x\u1d62 \u2264 p}.\n\n**Test**: (a) Implement the n-dimensional tropical stereographic projection for n = 2, 3 and visualize its level sets. (b) Verify the active region characterization computationally. (c) Determine whether the projection is injective on its active region (tropical analog of the bijection property of classical stereographic projection).\n\n**Impact**: If the active region is a tropical simplex, this gives a concrete realization of the tropical analog of the conformal ball model. It would connect tropical stereographic projection to the theory of tropical polytopes and could provide new coordinate systems for tropical varieties.\n\n**Catalog References**: `Tropical/StereographicProjection.lean` (stereo, stereo_linear, stereo_width), `Geometry/UnifiedTheory.lean` (pole_map_fixed_point_equation)\n\n**Proof Strategy**: Reduce the n-dimensional case to n copies of the 1-dimensional case via coordinate projections. The key challenge is understanding how the coordinate-wise stereographic projections interact \u2014 this requires analyzing the joint behavior of multiple max-plus operations.\n\n**Domain Bridges**: Tropical geometry <-> discrete geometry (polytopes), Stereographic projection <-> hyperbolic geometry\n\n**Lineage**: Direct extension of the 1-dimensional stereographic results from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Determinant Gap and Information Theory\n\n**Conjecture**: The \"tropical interaction energy\" \u0394(M, N) = det\u2295(M\u2297N) \u2212 det\u2295(M) \u2212 det\u2295(N) satisfies \u0394(M, N) = max(0, \u03b3(M, N)) where \u03b3(M, N) is an explicitly computable function of the entries. For 2\u00d72 matrices, \u03b3(M, N) = max over certain \"cross terms\" minus the diagonal terms. The gap \u0394 is zero if and only if M and N are \"tropically compatible\" (a condition related to the optimal assignment in the product).\n\n**Test**: (a) Compute \u0394(M, N) for 10,000 random 2\u00d72 matrix pairs and characterize the zero-gap set. (b) Determine whether \u0394 has an information-theoretic interpretation (e.g., as a tropical mutual information). (c) Verify the explicit formula for \u03b3.\n\n**Impact**: Understanding when det\u2295 is multiplicative (\u0394 = 0) would characterize the \"lossless\" compositions in tropical algebra. This connects to the theory of optimal transport (the assignment problem) and could provide new bounds for combinatorial optimization. An information-theoretic interpretation would bridge tropical algebra and coding theory.\n\n**Catalog References**: `Tropical/StereographicProjection.lean` (tropDet_mul_le), `Bridges/TropicalArithmeticCoding.lean` (tropical_and_bound)\n\n**Proof Strategy**: For 2\u00d72 matrices, expand \u0394(M, N) explicitly as max of 8 terms minus max of 4 terms. Characterize the zero set by analyzing which of the 8 terms can dominate over all 4 terms. The connection to optimal assignment: the terms that \"win\" in det\u2295(M\u2297N) correspond to optimal assignments in the product, while det\u2295(M) and det\u2295(N) correspond to optimal assignments in the factors.\n\n**Domain Bridges**: Tropical algebra <-> information theory, Combinatorial optimization <-> coding theory\n\n**Lineage**: Builds on the super-multiplicativity inequality tropDet_mul_le from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0518",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a6bafcf7",
+    "status": "available",
+    "timestamp": "2026-06-03T21:02:28.826725+00:00",
+    "title": "Foundational theory of tropical M\u00f6bius trans"
   },
   {
     "consumed_by_exp_id": "",

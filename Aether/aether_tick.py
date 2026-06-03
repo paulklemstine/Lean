@@ -349,6 +349,15 @@ def rebuild_commit_push() -> bool:
     except Exception as e:
         print(f"[Tick] status sync error: {e}")
 
+    # Sync dashboard HTML from source
+    dashboard_src = Path(__file__).parent / "dashboard_source" / "status.html"
+    if dashboard_src.exists():
+        try:
+            import shutil
+            shutil.copy2(dashboard_src, docs_dir / "status.html")
+        except Exception as e:
+            print(f"[Tick] dashboard sync error: {e}")
+
     def _has_conflict_markers():
         """Check if any tracked file has git merge conflict markers."""
         result = subprocess.run(
