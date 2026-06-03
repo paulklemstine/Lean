@@ -1,275 +1,248 @@
 """
-Algorithms for Prime Fractal Analysis
-======================================
-Implements box-counting dimension estimation, entropy computation,
-and fractal analysis of prime distributions under the logarithmic metric.
+Algorithms for Fractal Number Theory: Prime Logarithmic Image Analysis
+
+Type-hinted implementations of all key algorithms.
 """
 
 import math
-from typing import List, Dict, Tuple, Optional
-from collections import Counter
+from typing import List, Tuple, Dict, Optional
 
 
-def sieve_primes(N: int) -> List[int]:
+def sieve_of_eratosthenes(n: int) -> List[int]:
     """
-    Sieve of Eratosthenes.
-
-    Time: O(N log log N)
-    Space: O(N)
+    Generate all primes up to n using the Sieve of Eratosthenes.
 
     Args:
-        N: Upper bound for primes.
+        n: Upper bound for prime generation.
 
     Returns:
-        Sorted list of primes up to N.
+        Sorted list of primes up to n.
+
+    Time complexity: O(n log log n)
+    Space complexity: O(n)
     """
-    if N < 2:
+    if n < 2:
         return []
-    sieve = [True] * (N + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(N**0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, N + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, N + 1) if sieve[i]]
+    is_prime = bytearray(b'\x01') * (n + 1)
+    is_prime[0] = is_prime[1] = 0
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            is_prime[i*i::i] = bytearray(len(is_prime[i*i::i]))
+    return [i for i in range(2, n + 1) if is_prime[i]]
 
 
-def log_embed(p: int) -> float:
+def log_prime_transform(primes: List[int]) -> List[float]:
     """
-    Logarithmic embedding: p ↦ 1/log(p).
+    Apply the logarithmic transform p ↦ 1/log(p) to a list of primes.
 
-    Maps primes into (0, 1/log(2)] ≈ (0, 1.4427].
-    Larger primes map closer to 0.
+    This is the isometry from (Primes, d_log) to (S, |·|) ⊂ ℝ.
 
     Args:
-        p: A prime number (must be ≥ 2).
+        primes: List of prime numbers (each ≥ 2).
 
     Returns:
-        1/log(p).
+        List of values 1/log(p), in the same order.
     """
-    return 1.0 / math.log(p)
+    return [1.0 / math.log(p) for p in primes]
 
 
-def prime_fractal_dist(p: int, q: int) -> float:
+def log_prime_metric(p: int, q: int) -> float:
     """
-    Prime fractal metric: d(p,q) = |1/log(p) - 1/log(q)|.
+    Compute the logarithmic prime metric d(p, q) = |1/log(p) - 1/log(q)|.
 
-    Properties (proved in Lean):
-    - Symmetric: d(p,q) = d(q,p)
-    - Triangle inequality: d(p,r) ≤ d(p,q) + d(q,r)
-    - Positive definite on primes: d(p,q) = 0 ↔ p = q
+    Satisfies:
+    - Symmetry: d(p, q) = d(q, p)
+    - Triangle inequality: d(p, r) ≤ d(p, q) + d(q, r)
+    - Separation: d(p, q) = 0 ⟺ p = q (for primes)
+
+    Also equals |log(q) - log(p)| / (log(p) · log(q)).
 
     Args:
-        p, q: Prime numbers (must be ≥ 2).
+        p, q: Positive integers ≥ 2.
 
     Returns:
-        The fractal distance between p and q.
+        The logarithmic prime distance.
     """
-    return abs(log_embed(p) - log_embed(q))
+    return abs(1.0 / math.log(p) - 1.0 / math.log(q))
 
 
-def box_counting_dimension(
-    primes: List[int],
-    epsilon_range: Optional[List[float]] = None,
-    num_scales: int = 20
-) -> Tuple[List[float], List[float], float]:
+def box_counting(values: List[float], epsilon: float) -> int:
     """
-    Estimate the box-counting (Minkowski) dimension of the prime fractal.
+    Count the number of ε-boxes needed to cover a set of real values.
 
-    Algorithm:
-    1. Embed primes via p ↦ 1/log(p) into [0, 1/log(2)].
-    2. For each scale ε, count distinct boxes [kε, (k+1)ε) containing embeddings.
-    3. Fit log(box_count) vs log(1/ε) to estimate dimension.
-
-    Time: O(|primes| × num_scales)
-    Space: O(|primes|)
+    For a set S ⊂ ℝ and ε > 0, N(S, ε) counts how many intervals
+    [kε, (k+1)ε) contain at least one point of S.
 
     Args:
-        primes: List of primes.
-        epsilon_range: List of ε values to use. If None, auto-generated.
-        num_scales: Number of scales if epsilon_range is None.
+        values: List of real numbers (the set S).
+        epsilon: Box width (must be positive).
 
     Returns:
-        (epsilons, dimensions, slope): Lists of ε values, dimension estimates,
-        and the fitted slope (overall dimension estimate).
+        N(S, ε) = number of occupied boxes.
     """
-    if not primes:
-        return [], [], 0.0
-
-    embeddings = [log_embed(p) for p in primes]
-
-    if epsilon_range is None:
-        max_embed = max(embeddings)
-        min_eps = max_embed / (len(primes) * 10)
-        max_eps = max_embed / 2
-        epsilon_range = [
-            min_eps * (max_eps / min_eps) ** (i / (num_scales - 1))
-            for i in range(num_scales)
-        ]
-
-    log_inv_eps = []
-    log_counts = []
-    dimensions = []
-
-    for eps in sorted(epsilon_range):
-        boxes = set()
-        for e in embeddings:
-            boxes.add(int(math.floor(e / eps)))
-        bc = len(boxes)
-        if bc > 0 and eps < 1:
-            lie = math.log(1.0 / eps)
-            lbc = math.log(bc)
-            log_inv_eps.append(lie)
-            log_counts.append(lbc)
-            dimensions.append(lbc / lie if lie > 0 else 0.0)
-
-    # Linear regression for slope
-    if len(log_inv_eps) >= 2:
-        n = len(log_inv_eps)
-        sx = sum(log_inv_eps)
-        sy = sum(log_counts)
-        sxx = sum(x * x for x in log_inv_eps)
-        sxy = sum(x * y for x, y in zip(log_inv_eps, log_counts))
-        slope = (n * sxy - sx * sy) / (n * sxx - sx * sx) if (n * sxx - sx * sx) > 0 else 0.0
-    else:
-        slope = dimensions[0] if dimensions else 0.0
-
-    return sorted(epsilon_range), dimensions, slope
+    if epsilon <= 0:
+        raise ValueError("epsilon must be positive")
+    occupied_boxes: set = set()
+    for v in values:
+        occupied_boxes.add(int(math.floor(v / epsilon)))
+    return len(occupied_boxes)
 
 
-def prime_log_entropy(primes: List[int], epsilon: float) -> float:
+def estimate_box_dimension(
+    values: List[float],
+    eps_min: float = 1e-5,
+    eps_max: float = 1e-1,
+    n_samples: int = 100
+) -> Tuple[float, float, List[Tuple[float, float]]]:
     """
-    Shannon entropy of the prime distribution in the logarithmic metric.
+    Estimate the box-counting dimension via log-log linear regression.
 
-    Partitions the embedding space into intervals of width ε and computes
-    H = -Σ (freq_i × log(freq_i)).
-
-    Properties (proved in Lean):
-    - H ≥ 0 (non-negativity of entropy)
-    - H = 0 iff all primes fall in the same box
-    - H ≤ log(box_count) (maximum entropy bound)
-
-    Time: O(|primes|)
-    Space: O(box_count)
+    dim_B ≈ slope of log(N(ε)) vs log(1/ε) plot.
 
     Args:
-        primes: List of primes.
-        epsilon: Box width.
+        values: The set S as a list of real numbers.
+        eps_min: Minimum box size.
+        eps_max: Maximum box size.
+        n_samples: Number of ε values to sample.
 
     Returns:
-        Shannon entropy value.
+        Tuple of (dimension_estimate, r_squared, log_log_data).
     """
-    boxes = [int(math.floor(log_embed(p) / epsilon)) for p in primes]
-    counts = Counter(boxes)
-    total = len(primes)
-    entropy = 0.0
-    for count in counts.values():
-        freq = count / total
-        if freq > 0:
-            entropy -= freq * math.log(freq)
-    return entropy
+    eps_values = [
+        eps_min * (eps_max / eps_min) ** (i / (n_samples - 1))
+        for i in range(n_samples)
+    ]
+
+    log_data: List[Tuple[float, float]] = []
+    for eps in eps_values:
+        n_boxes = box_counting(values, eps)
+        if n_boxes > 1:  # Need at least 2 boxes for meaningful log
+            log_data.append((math.log(1.0 / eps), math.log(n_boxes)))
+
+    if len(log_data) < 2:
+        return 0.0, 0.0, log_data
+
+    # Ordinary least squares
+    n = len(log_data)
+    sx = sum(x for x, _ in log_data)
+    sy = sum(y for _, y in log_data)
+    sxx = sum(x**2 for x, _ in log_data)
+    sxy = sum(x * y for x, y in log_data)
+    syy = sum(y**2 for _, y in log_data)
+
+    denom = n * sxx - sx**2
+    slope = (n * sxy - sx * sy) / denom
+    intercept = (sy - slope * sx) / n
+
+    # R-squared
+    ss_res = sum((y - slope * x - intercept)**2 for x, y in log_data)
+    ss_tot = syy - sy**2 / n
+    r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+
+    return slope, r_squared, log_data
 
 
-def twin_prime_analysis(N: int) -> Dict:
+def prime_gap_energy(primes: List[int], s: float) -> float:
     """
-    Analyze twin prime pairs under the fractal metric.
+    Compute the prime log-gap energy at exponent s.
 
-    For each twin prime pair (p, p+2):
-    - Compute fractal distance d(p, p+2)
-    - Compute theoretical bound 1/log²(p)
-    - Track the ratio d/bound
+    E_s(N) = Σ |1/log(p_k) - 1/log(p_{k+1})|^s
 
-    Time: O(N log log N)
-    Space: O(π(N))
+    For s = 1: total variation of the log-prime image.
+    For s < 1: emphasizes small gaps (twin primes).
+    For s > 1: emphasizes large gaps.
 
     Args:
-        N: Upper bound.
+        primes: Sorted list of primes.
+        s: Exponent (positive real number).
 
     Returns:
-        Dictionary with analysis results.
+        The energy E_s.
     """
-    primes = sieve_primes(N)
-    prime_set = set(primes)
+    energy = 0.0
+    values = log_prime_transform(primes)
+    for i in range(len(values) - 1):
+        gap = abs(values[i] - values[i + 1])
+        energy += gap ** s
+    return energy
 
-    twins = [(p, p + 2) for p in primes if p + 2 in prime_set]
-    distances = []
-    bounds = []
-    ratios = []
 
-    for p, q in twins:
-        d = prime_fractal_dist(p, q)
-        bound = 1.0 / math.log(p) ** 2
-        distances.append(d)
-        bounds.append(bound)
-        ratios.append(d / bound if bound > 0 else 0)
+def twin_prime_analysis(primes: List[int]) -> Dict[str, object]:
+    """
+    Analyze twin primes in the logarithmic metric.
+
+    Returns statistics about twin prime pairs (p, p+2):
+    - count: number of twin prime pairs
+    - distances: list of (p, d(p, p+2))
+    - mean_distance: average log-metric distance
+    - distance_decay_rate: estimated rate of distance decay
+
+    Args:
+        primes: Sorted list of primes.
+
+    Returns:
+        Dictionary of twin prime statistics.
+    """
+    pairs: List[Tuple[int, float]] = []
+    for i in range(len(primes) - 1):
+        if primes[i + 1] - primes[i] == 2:
+            p = primes[i]
+            d = log_prime_metric(p, p + 2)
+            pairs.append((p, d))
+
+    if not pairs:
+        return {"count": 0, "distances": [], "mean_distance": 0.0}
+
+    distances = [d for _, d in pairs]
+    mean_dist = sum(distances) / len(distances)
 
     return {
-        "twin_count": len(twins),
-        "twins": twins,
-        "distances": distances,
-        "bounds": bounds,
-        "ratios": ratios,
-        "mean_ratio": sum(ratios) / len(ratios) if ratios else 0,
-        "max_ratio": max(ratios) if ratios else 0,
-        "all_satisfy_bound": all(d < b for d, b in zip(distances, bounds)),
+        "count": len(pairs),
+        "distances": pairs,
+        "mean_distance": mean_dist,
+        "min_distance": min(distances),
+        "max_distance": max(distances),
     }
 
 
-def multiscale_dimension_analysis(N: int) -> Dict:
+def bertrand_interval_coverage(n_max: int) -> List[Tuple[float, float]]:
     """
-    Multi-scale analysis of the prime fractal dimension.
+    Compute the Bertrand intervals [1/log(2n), 1/log(n+1)] for n = 1, ..., n_max.
 
-    Computes box-counting dimension at multiple scales to detect
-    scale-dependent fractal behavior that might indicate twin prime effects.
-
-    Time: O(π(N) × num_scales)
-    Space: O(π(N))
+    By Bertrand's postulate, each interval contains at least one 1/log(p)
+    for some prime p. The overlap of these intervals shows how the log-prime
+    image covers (0, 1/log(2)].
 
     Args:
-        N: Upper bound for primes.
+        n_max: Maximum value of n.
 
     Returns:
-        Dictionary with dimension estimates at each scale.
+        List of (lower, upper) pairs for each interval.
     """
-    primes = sieve_primes(N)
-
-    # Define scales
-    scales = [10**(-k / 2) for k in range(2, 14)]
-
-    results = []
-    for eps in scales:
-        bc = len(set(int(math.floor(log_embed(p) / eps)) for p in primes))
-        dim = math.log(bc) / math.log(1.0 / eps) if bc > 0 and eps < 1 else 0
-        H = prime_log_entropy(primes, eps)
-        results.append({
-            "epsilon": eps,
-            "box_count": bc,
-            "dimension": dim,
-            "entropy": H,
-        })
-
-    return {
-        "N": N,
-        "num_primes": len(primes),
-        "scales": results,
-    }
+    intervals: List[Tuple[float, float]] = []
+    for n in range(1, n_max + 1):
+        lower = 1.0 / math.log(2 * n)
+        upper = 1.0 / math.log(n + 1)
+        intervals.append((lower, upper))
+    return intervals
 
 
 if __name__ == "__main__":
-    print("=== Box-Counting Dimension Analysis ===\n")
-    for N_exp in [5, 6]:
-        N = 10**N_exp
-        primes = sieve_primes(N)
-        eps_range = [10**(-k/2) for k in range(2, 12)]
-        epsilons, dims, slope = box_counting_dimension(primes, eps_range)
-        print(f"N = 10^{N_exp} ({len(primes)} primes)")
-        print(f"  Fitted dimension (slope): {slope:.6f}")
-        for eps, d in zip(epsilons, dims):
-            print(f"  ε = {eps:.6f}: dim ≈ {d:.6f}")
-        print()
+    # Quick demonstration
+    primes = sieve_of_eratosthenes(1_000_000)
+    values = log_prime_transform(primes)
 
-    print("\n=== Twin Prime Analysis ===\n")
-    result = twin_prime_analysis(100000)
-    print(f"Twin primes up to 100000: {result['twin_count']}")
-    print(f"All satisfy d < 1/log²(p): {result['all_satisfy_bound']}")
-    print(f"Mean ratio d/(1/log²(p)): {result['mean_ratio']:.6f}")
+    print(f"Primes up to 1,000,000: {len(primes)} found")
+    print(f"Log-prime image range: ({min(values):.6f}, {max(values):.6f}]")
+
+    dim, r2, _ = estimate_box_dimension(values)
+    print(f"Box-counting dimension estimate: {dim:.4f} (R² = {r2:.6f})")
+
+    energy_1 = prime_gap_energy(primes[:1000], 1.0)
+    energy_half = prime_gap_energy(primes[:1000], 0.5)
+    print(f"Gap energy E_1 (first 1000 primes): {energy_1:.6f}")
+    print(f"Gap energy E_0.5 (first 1000 primes): {energy_half:.6f}")
+
+    twin_stats = twin_prime_analysis(primes)
+    print(f"Twin primes found: {twin_stats['count']}")
+    print(f"Mean twin distance: {twin_stats['mean_distance']:.2e}")
