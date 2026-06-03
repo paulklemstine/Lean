@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d40ab21f",
     "filename": "rigorous_framework_for_studying_generator_set.json",
     "pkg_num": 269,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7620391428571428,
     "title": "Product Collisions and the Factorization Hierarchy"
   },
   {
@@ -8661,8 +8661,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "rigorous_framework_for_studying_generator_set",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7620391428571428,
+      "quality": "substantial",
       "shape": "star",
       "title": "Product Collisions and the Factorization Hierarchy"
     }
