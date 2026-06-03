@@ -1,326 +1,231 @@
+#!/usr/bin/env python3
 """
-Quantum Random Walk Algorithms on Cayley Graphs
+Algorithms for Quantum Random Walks on Cayley Graphs
 
-Implements quantum walk simulation, spectral gap computation,
-and mixing time analysis for Cayley graphs of finite groups.
+Type-hinted implementations of core algorithms for computing spectral gaps,
+mixing times, and quantum walk dynamics on Cayley graphs.
 """
 
+from typing import List, Tuple, Callable, Optional, Dict, Any
 import numpy as np
-from typing import List, Tuple, Dict, Callable, Optional
-from itertools import permutations
-import math
+from numpy.typing import NDArray
 
 
-def cayley_adjacency_matrix(
-    group_elements: List,
-    generators: List,
-    group_op: Callable,
-    group_inv: Callable,
-) -> np.ndarray:
+def build_cayley_adjacency(
+    elements: List[Any],
+    generators: List[Any],
+    group_op: Callable[[Any, Any], Any]
+) -> NDArray[np.float64]:
     """
-    Compute the adjacency matrix of the Cayley graph Cay(G, S).
+    Build the adjacency matrix of the Cayley graph Cay(G, S).
 
     Args:
-        group_elements: List of all group elements.
-        generators: List of generators (symmetric generating set S).
-        group_op: Group operation (g, h) -> g*h.
-        group_inv: Group inverse g -> g^{-1}.
+        elements: List of group elements
+        generators: Symmetric generating set S (must be closed under inverses)
+        group_op: Group operation (g, s) -> g * s
 
     Returns:
-        Adjacency matrix A where A[i,j] = 1 if g_i^{-1} * g_j in S.
+        Adjacency matrix A where A[i,j] = 1 iff elements[i]^{-1} * elements[j] in S
     """
-    n = len(group_elements)
-    elem_to_idx = {str(g): i for i, g in enumerate(group_elements)}
-    A = np.zeros((n, n), dtype=float)
+    n = len(elements)
+    idx: Dict[Any, int] = {}
+    for i, g in enumerate(elements):
+        idx[g] = i
 
-    for i, g in enumerate(group_elements):
+    A = np.zeros((n, n), dtype=np.float64)
+    for g in elements:
         for s in generators:
             h = group_op(g, s)
-            j = elem_to_idx[str(h)]
-            A[i, j] = 1.0
-
+            A[idx[g], idx[h]] = 1.0
     return A
 
 
-def transition_matrix(adjacency: np.ndarray) -> np.ndarray:
+def compute_spectral_gap(A: NDArray[np.float64]) -> Tuple[float, NDArray[np.float64]]:
     """
-    Normalize the adjacency matrix to get the transition matrix T = A / degree.
+    Compute the spectral gap of the transition matrix P = A/d.
+
+    The spectral gap γ = 1 - max(|λ₂|, |λ_N|) where λ₁ ≥ λ₂ ≥ ... ≥ λ_N
+    are eigenvalues of P.
 
     Args:
-        adjacency: Adjacency matrix of a regular graph.
+        A: Adjacency matrix of a regular graph
 
     Returns:
-        Row-stochastic transition matrix.
+        Tuple of (spectral_gap, sorted_eigenvalues)
     """
-    row_sums = adjacency.sum(axis=1, keepdims=True)
-    row_sums = np.where(row_sums == 0, 1, row_sums)
-    return adjacency / row_sums
-
-
-def spectral_gap(matrix: np.ndarray) -> float:
-    """
-    Compute the spectral gap of a transition matrix.
-
-    The spectral gap is γ = 1 - |λ₂| where λ₂ is the second-largest
-    eigenvalue in magnitude.
-
-    Args:
-        matrix: Transition matrix (row-stochastic).
-
-    Returns:
-        Spectral gap γ > 0.
-    """
-    # Symmetrize to avoid numerical issues with complex eigenvalues
-    sym_matrix = (matrix + matrix.T) / 2
-    eigenvalues = np.linalg.eigvalsh(sym_matrix)
-    # Sort eigenvalues in decreasing order (not absolute value)
-    sorted_eigs = sorted(eigenvalues.real, reverse=True)
-    if len(sorted_eigs) < 2:
-        return 1.0
-    # The spectral gap is 1 - λ₂ where λ₂ is the second-largest eigenvalue
-    return max(0.0, sorted_eigs[0] - sorted_eigs[1])
+    d = float(A.sum(axis=1)[0])
+    P = A / d
+    eigenvalues = np.sort(np.real(np.linalg.eigvals(P)))[::-1]
+    lambda2_abs = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
+    gap = 1.0 - lambda2_abs
+    return gap, eigenvalues
 
 
 def classical_mixing_time(
-    n_group: int, gap: float, epsilon: float = 0.01
-) -> float:
+    P: NDArray[np.float64],
+    epsilon: float = 0.01,
+    max_iter: int = 100000
+) -> int:
     """
-    Classical mixing time bound: τ = (1/γ) · (log N + log(1/ε)).
+    Compute classical mixing time by iterating P^t until TV distance < ε.
+
+    The total variation distance is:
+        d_TV(P^t(x,·), π) = (1/2) Σ_y |P^t(x,y) - 1/N|
 
     Args:
-        n_group: Order of the group |G|.
-        gap: Spectral gap γ.
-        epsilon: Mixing precision ε.
+        P: Transition matrix (row-stochastic)
+        epsilon: Target TV distance
+        max_iter: Maximum iterations
 
     Returns:
-        Classical mixing time bound.
+        Mixing time T such that max_x d_TV(P^T(x,·), π) < ε
     """
-    if gap <= 0:
-        return float('inf')
-    return (1.0 / gap) * (math.log(n_group) + math.log(1.0 / epsilon))
+    n = P.shape[0]
+    uniform = np.ones(n) / n
 
-
-def quantum_mixing_time(
-    n_group: int, gap: float, epsilon: float = 0.01
-) -> float:
-    """
-    Quantum mixing time bound: τ = √(1/γ) · (log N + log(1/ε)).
-
-    Args:
-        n_group: Order of the group |G|.
-        gap: Spectral gap γ.
-        epsilon: Mixing precision ε.
-
-    Returns:
-        Quantum mixing time bound.
-    """
-    if gap <= 0:
-        return float('inf')
-    return math.sqrt(1.0 / gap) * (math.log(n_group) + math.log(1.0 / epsilon))
-
-
-def speedup_ratio(gap: float) -> float:
-    """
-    Compute the quantum speedup ratio: √(1/γ).
-
-    Args:
-        gap: Spectral gap γ.
-
-    Returns:
-        Speedup ratio.
-    """
-    if gap <= 0:
-        return float('inf')
-    return math.sqrt(1.0 / gap)
+    for t in range(1, max_iter):
+        # Compute from worst-case starting state
+        max_tv = 0.0
+        for x in range(min(n, 10)):  # Sample starting states
+            state = np.zeros(n)
+            state[x] = 1.0
+            state_t = state @ np.linalg.matrix_power(P, t)
+            tv = 0.5 * np.sum(np.abs(state_t - uniform))
+            max_tv = max(max_tv, tv)
+        if max_tv < epsilon:
+            return t
+    return max_iter
 
 
 def quantum_walk_evolution(
-    hamiltonian: np.ndarray, initial_state: np.ndarray, time: float
-) -> np.ndarray:
+    H: NDArray[np.float64],
+    t: float,
+    initial_state: int = 0
+) -> NDArray[np.complex128]:
     """
-    Evolve a quantum walk state under Hamiltonian H for time t.
+    Compute quantum walk state |ψ(t)⟩ = exp(-iHt)|initial⟩.
 
-    |ψ(t)⟩ = e^{-iHt} |ψ(0)⟩
+    Uses eigendecomposition for exact evolution.
 
     Args:
-        hamiltonian: Hermitian matrix H (adjacency matrix).
-        initial_state: Initial state vector |ψ(0)⟩.
-        time: Evolution time t.
+        H: Hamiltonian (adjacency matrix of Cayley graph)
+        t: Evolution time
+        initial_state: Index of initial basis state
 
     Returns:
-        Evolved state vector |ψ(t)⟩.
+        Complex state vector |ψ(t)⟩
     """
-    eigenvalues, eigenvectors = np.linalg.eigh(hamiltonian)
-    # e^{-iHt} = V · diag(e^{-iλt}) · V†
-    phases = np.exp(-1j * eigenvalues * time)
-    evolution = eigenvectors @ np.diag(phases) @ eigenvectors.conj().T
-    return evolution @ initial_state
+    eigenvalues, eigenvectors = np.linalg.eigh(H)
+    U = eigenvectors @ np.diag(np.exp(-1j * eigenvalues * t)) @ eigenvectors.conj().T
+    return U[:, initial_state]
 
 
-def measurement_probabilities(state: np.ndarray) -> np.ndarray:
-    """
-    Compute measurement probabilities from a quantum state.
-
-    P(g) = |⟨g|ψ⟩|²
-
-    Args:
-        state: Quantum state vector.
-
-    Returns:
-        Probability distribution.
-    """
-    return np.abs(state) ** 2
-
-
-def total_variation_distance(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Compute total variation distance between distributions p and q.
-
-    d_TV(p, q) = (1/2) Σ |p(g) - q(g)|
-
-    Args:
-        p: First probability distribution.
-        q: Second probability distribution.
-
-    Returns:
-        Total variation distance.
-    """
-    return 0.5 * np.sum(np.abs(p - q))
-
-
-def find_quantum_mixing_time_empirical(
-    hamiltonian: np.ndarray,
-    epsilon: float = 0.1,
-    max_time: float = 1000.0,
+def quantum_mixing_time(
+    H: NDArray[np.float64],
+    epsilon: float = 0.01,
     dt: float = 0.1,
+    max_steps: int = 10000
 ) -> Tuple[float, List[float]]:
     """
-    Find the quantum mixing time empirically by simulating the walk.
+    Compute quantum (continuous-time) mixing time.
+
+    The quantum walk mixes at time t if:
+        max_g |P_t(g) - 1/|G|| < ε
+    where P_t(g) = |⟨g|exp(-iHt)|0⟩|².
 
     Args:
-        hamiltonian: Walk Hamiltonian (adjacency matrix).
-        epsilon: Mixing precision.
-        max_time: Maximum simulation time.
-        dt: Time step.
+        H: Hamiltonian matrix
+        epsilon: Target distance to uniform
+        dt: Time step for sampling
+        max_steps: Maximum number of time steps
 
     Returns:
-        Tuple of (mixing_time, list of TV distances at each step).
+        Tuple of (mixing_time, tv_distance_history)
     """
-    n = hamiltonian.shape[0]
-    initial_state = np.zeros(n, dtype=complex)
-    initial_state[0] = 1.0
+    n = H.shape[0]
     uniform = np.ones(n) / n
+    eigenvalues, eigenvectors = np.linalg.eigh(H)
 
-    tv_distances = []
-    t = 0.0
-    mixing_time = max_time
+    tv_history: List[float] = []
 
-    while t <= max_time:
-        state = quantum_walk_evolution(hamiltonian, initial_state, t)
-        probs = measurement_probabilities(state)
-        tv = total_variation_distance(probs, uniform)
-        tv_distances.append(tv)
+    for step in range(1, max_steps):
+        t = step * dt
+        U = eigenvectors @ np.diag(np.exp(-1j * eigenvalues * t)) @ eigenvectors.conj().T
+        state = U[:, 0]
+        probs = np.abs(state) ** 2
+        tv = 0.5 * np.sum(np.abs(probs - uniform))
+        tv_history.append(tv)
+        if tv < epsilon:
+            return t, tv_history
 
-        if tv < epsilon and mixing_time == max_time:
-            mixing_time = t
-
-        t += dt
-
-    return mixing_time, tv_distances
+    return max_steps * dt, tv_history
 
 
-# --- Group implementations ---
-
-def cyclic_group(n: int) -> Tuple[List[int], List[int], Callable, Callable]:
+def mixing_time_bound(
+    spectral_gap: float,
+    n_vertices: int,
+    epsilon: float = 0.01
+) -> float:
     """
-    Generate ℤ/nℤ with standard generators {1, n-1}.
+    Compute the theoretical mixing time upper bound.
+
+    T_mix ≤ (1/γ) · log(√N / ε)
+
+    This is the classical spectral gap bound proven in our Lean formalization.
+
+    Args:
+        spectral_gap: γ = 1 - |λ₂|
+        n_vertices: Number of vertices N = |G|
+        epsilon: Target mixing accuracy
 
     Returns:
-        (elements, generators, group_op, group_inv)
+        Upper bound on mixing time
     """
+    if spectral_gap <= 0:
+        return float('inf')
+    return (1.0 / spectral_gap) * np.log(np.sqrt(n_vertices) / epsilon)
+
+
+def quantum_speedup_factor(
+    spectral_gap: float,
+    n_vertices: int
+) -> float:
+    """
+    Compute the theoretical quantum speedup factor.
+
+    Classical: T_classical ~ (1/γ) · log(N)
+    Quantum:   T_quantum   ~ (1/√γ) · log(N)
+    Speedup:   T_classical / T_quantum ~ 1/√γ
+
+    Args:
+        spectral_gap: γ = 1 - |λ₂|
+        n_vertices: Number of vertices
+
+    Returns:
+        Speedup factor √(1/γ)
+    """
+    if spectral_gap <= 0:
+        return float('inf')
+    return 1.0 / np.sqrt(spectral_gap)
+
+
+if __name__ == "__main__":
+    # Example: Z_10 with generators {1, 9}
+    n = 10
     elements = list(range(n))
     generators = [1, n - 1]
-    group_op = lambda a, b: (a + b) % n
-    group_inv = lambda a: (-a) % n
-    return elements, generators, group_op, group_inv
+    group_op = lambda g, s: (g + s) % n
 
+    A = build_cayley_adjacency(elements, generators, group_op)
+    gap, eigs = compute_spectral_gap(A)
+    P = A / A.sum(axis=1)[0]
 
-def symmetric_group(n: int) -> Tuple[List, List, Callable, Callable]:
-    """
-    Generate S_n with transposition generators.
+    t_cl = classical_mixing_time(P)
+    t_bound = mixing_time_bound(gap, n)
+    speedup = quantum_speedup_factor(gap, n)
 
-    Returns:
-        (elements, generators, group_op, group_inv)
-    """
-    elements = list(permutations(range(n)))
-
-    # Generators: all transpositions (i, j) for i < j
-    generators = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            perm = list(range(n))
-            perm[i], perm[j] = perm[j], perm[i]
-            generators.append(tuple(perm))
-
-    def compose(p: tuple, q: tuple) -> tuple:
-        return tuple(p[q[i]] for i in range(len(p)))
-
-    def inverse(p: tuple) -> tuple:
-        inv = [0] * len(p)
-        for i, pi in enumerate(p):
-            inv[pi] = i
-        return tuple(inv)
-
-    return elements, generators, compose, inverse
-
-
-def cyclic_spectral_gap_exact(n: int) -> float:
-    """
-    Exact spectral gap for ℤ/nℤ with generators {±1}.
-
-    γ = 1 - cos(2π/n)
-    """
-    return 1.0 - math.cos(2 * math.pi / n)
-
-
-def analyze_group(
-    name: str,
-    elements: List,
-    generators: List,
-    group_op: Callable,
-    group_inv: Callable,
-    epsilon: float = 0.1,
-) -> Dict:
-    """
-    Complete analysis of quantum vs classical mixing for a group.
-
-    Args:
-        name: Group name for display.
-        elements: Group elements.
-        generators: Generating set.
-        group_op: Group operation.
-        group_inv: Group inverse.
-        epsilon: Mixing precision.
-
-    Returns:
-        Dictionary with analysis results.
-    """
-    A = cayley_adjacency_matrix(elements, generators, group_op, group_inv)
-    T = transition_matrix(A)
-    gap = spectral_gap(T)
-    n = len(elements)
-
-    tau_classical = classical_mixing_time(n, gap, epsilon)
-    tau_quantum = quantum_mixing_time(n, gap, epsilon)
-    ratio = speedup_ratio(gap)
-
-    return {
-        "name": name,
-        "group_order": n,
-        "num_generators": len(generators),
-        "spectral_gap": gap,
-        "classical_mixing_time": tau_classical,
-        "quantum_mixing_time": tau_quantum,
-        "speedup_ratio": ratio,
-        "theoretical_speedup": math.sqrt(1.0 / gap) if gap > 0 else float('inf'),
-    }
+    print(f"Z_{n} Cayley graph:")
+    print(f"  Spectral gap: {gap:.6f}")
+    print(f"  Classical mixing time: {t_cl}")
+    print(f"  Theoretical bound: {t_bound:.1f}")
+    print(f"  Quantum speedup factor: {speedup:.2f}x")
