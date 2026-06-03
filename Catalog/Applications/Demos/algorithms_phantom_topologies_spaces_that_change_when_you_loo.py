@@ -1,212 +1,276 @@
+#!/usr/bin/env python3
 """
-Phantom Topology: Algorithms for Observer-Dependent Topological Spaces
+Phantom Chromatic Theory: Core Algorithms
 
-Type-hinted implementations of core phantom topology algorithms.
+Type-hinted implementations of the key algorithms for computing
+phantom topological invariants.
 """
 
-from typing import FrozenSet, Set, List, Tuple, Optional
-from itertools import combinations, chain
+from itertools import combinations
+from typing import FrozenSet, Set, List, Optional, Tuple, Dict
 
 
-# A topology on a finite set X is represented as a frozenset of frozensets.
-Topology = FrozenSet[FrozenSet[int]]
-SetOfInts = FrozenSet[int]
+# Type aliases
+Element = int
+Subset = FrozenSet[Element]
+Topology = FrozenSet[Subset]
 
 
-def is_topology(X: FrozenSet[int], opens: Set[FrozenSet[int]]) -> bool:
-    """Check if a collection of sets forms a valid topology on X."""
-    # Must contain empty set and X
-    if frozenset() not in opens:
+def closure_under_unions_and_intersections(
+    generators: Set[Subset], universe: Subset
+) -> Topology:
+    """Generate the smallest topology containing the given generators.
+
+    Closes under finite intersections and arbitrary unions (finite case).
+    Always includes ∅ and the universe.
+
+    Args:
+        generators: Initial collection of subsets to generate from.
+        universe: The full ground set.
+
+    Returns:
+        The generated topology as a frozenset of frozensets.
+    """
+    opens: Set[Subset] = {frozenset(), universe}
+    opens.update(generators)
+
+    changed = True
+    while changed:
+        changed = False
+        new_opens: Set[Subset] = set(opens)
+
+        # Close under pairwise intersection
+        for a, b in combinations(opens, 2):
+            inter = a & b
+            if inter not in new_opens:
+                new_opens.add(inter)
+                changed = True
+
+        # Close under pairwise union (generates all finite unions)
+        for a, b in combinations(opens, 2):
+            union = a | b
+            if union not in new_opens:
+                new_opens.add(union)
+                changed = True
+
+        opens = new_opens
+
+    return frozenset(opens)
+
+
+def is_topology(opens: Set[Subset], universe: Subset) -> bool:
+    """Verify that a collection of subsets forms a topology.
+
+    Args:
+        opens: Candidate collection of open sets.
+        universe: The ground set.
+
+    Returns:
+        True if opens satisfies the topology axioms.
+    """
+    if frozenset() not in opens or universe not in opens:
         return False
-    if X not in opens:
-        return False
-    # Closed under finite intersection
-    for u in opens:
-        for v in opens:
-            if u & v not in opens:
-                return False
-    # Closed under arbitrary union (for finite case, pairwise suffices
-    # since closure under pairwise union + empty union gives arbitrary)
-    for u in opens:
-        for v in opens:
-            if u | v not in opens:
+    for a, b in combinations(opens, 2):
+        if a & b not in opens:
+            return False
+    opens_list = list(opens)
+    for r in range(2, len(opens_list) + 1):
+        for combo in combinations(opens_list, r):
+            if frozenset().union(*combo) not in opens:
                 return False
     return True
 
 
-def generate_topology(X: FrozenSet[int], generators: Set[FrozenSet[int]]) -> Topology:
-    """Generate the smallest topology on X containing the given generators.
-    
-    Corresponds to TopologicalSpace.generateFrom in Lean/Mathlib.
+def is_strictly_finer(tau1: Topology, tau2: Topology) -> bool:
+    """Check if tau1 is strictly finer than tau2.
+
+    In the lattice of topologies, finer means more open sets.
+
+    Args:
+        tau1: First topology.
+        tau2: Second topology.
+
+    Returns:
+        True if tau1 has strictly more open sets than tau2.
     """
-    opens: Set[FrozenSet[int]] = {frozenset(), X}
-    opens.update(generators)
-    
-    # Close under finite intersection and arbitrary union
-    changed = True
-    while changed:
-        changed = False
-        new_opens: Set[FrozenSet[int]] = set(opens)
-        for u in opens:
-            for v in opens:
-                inter = u & v
-                union = u | v
-                if inter not in new_opens:
-                    new_opens.add(inter)
-                    changed = True
-                if union not in new_opens:
-                    new_opens.add(union)
-                    changed = True
-        opens = new_opens
-    
-    return frozenset(opens)
+    return tau1 > tau2
 
 
-def consensus_topology(X: FrozenSet[int], observers: List[Topology]) -> Topology:
-    """Compute the consensus topology (intersection of open set families).
-    
-    In Mathlib's lattice: this is the supremum ⨆ of the observer topologies.
-    A set is open in the consensus iff it's open for every observer.
+def consensus_topology(topologies: List[Topology]) -> Topology:
+    """Compute the consensus (intersection) of multiple topologies.
+
+    The consensus consists of sets open in ALL given topologies.
+
+    Args:
+        topologies: List of topologies.
+
+    Returns:
+        The consensus topology.
     """
-    if not observers:
-        # Empty family: consensus is indiscrete (only ∅ and X)
-        return frozenset({frozenset(), X})
-    
-    result = set(observers[0])
-    for obs in observers[1:]:
-        result &= set(obs)
-    
+    if not topologies:
+        return frozenset()
+    result: Set[Subset] = set(topologies[0])
+    for t in topologies[1:]:
+        result &= set(t)
     return frozenset(result)
 
 
-def is_strictly_finer(t1: Topology, t2: Topology) -> bool:
-    """Check if t1 is strictly finer than t2 (t1 < t2 in Mathlib).
-    
-    t1 < t2 means t1 has strictly more open sets: t2 ⊂ t1 (proper subset).
-    In Mathlib's convention: t1 ≤ t2 means t1 is finer (more open sets),
-    so t1.IsOpen ⊇ t2.IsOpen.
+def observer_disagreement(
+    observer_topo: Topology, consensus: Topology
+) -> Set[Subset]:
+    """Compute the disagreement set of an observer.
+
+    The disagreement set contains sets that the observer considers open
+    but are NOT open in the consensus.
+
+    Args:
+        observer_topo: The observer's topology.
+        consensus: The consensus topology.
+
+    Returns:
+        Set of subsets in disagreement.
     """
-    return set(t2) < set(t1)  # proper subset: t2's opens ⊊ t1's opens
+    return set(observer_topo) - set(consensus)
 
 
-def is_phantom_decomposition(
-    tau: Topology,
-    observers: List[Topology],
-    strict: bool = True
+def are_observers_independent(
+    obs1: Topology, obs2: Topology, consensus: Topology
 ) -> bool:
-    """Verify if a list of observer topologies forms a (strict) phantom decomposition of tau.
-    
-    Checks:
-    1. Each observer is finer than tau (has more open sets)
-    2. If strict=True, each observer is STRICTLY finer
-    3. The consensus (intersection of opens) equals tau
+    """Check if two observers are independent.
+
+    Two observers are independent iff their disagreement sets are disjoint.
+
+    Args:
+        obs1: First observer's topology.
+        obs2: Second observer's topology.
+        consensus: The consensus topology.
+
+    Returns:
+        True if the observers are independent.
     """
-    if not observers:
-        return False
-    
-    for obs in observers:
-        if strict:
-            if not is_strictly_finer(obs, tau):
-                return False
-        else:
-            if not set(tau).issubset(set(obs)):
-                return False
-    
-    return consensus_topology(
-        max(tau, key=len),  # X is the largest element
-        observers
-    ) == tau
+    dis1 = observer_disagreement(obs1, consensus)
+    dis2 = observer_disagreement(obs2, consensus)
+    return len(dis1 & dis2) == 0
 
 
-def find_phantom_decomposition(
-    X: FrozenSet[int],
+def find_strict_decomposition(
     tau: Topology,
     all_topologies: List[Topology],
-    max_observers: int = 4
+    k: int,
 ) -> Optional[List[Topology]]:
-    """Find a strict phantom decomposition of tau with minimum observers.
-    
-    Returns None if tau is phantom-irreducible (or if max_observers is too small).
+    """Find a k-observer strict phantom decomposition of tau.
+
+    Args:
+        tau: Target topology to decompose.
+        all_topologies: All available topologies on the space.
+        k: Number of observers.
+
+    Returns:
+        A list of k topologies forming a decomposition, or None.
     """
-    # Filter to strictly finer topologies
     finer = [t for t in all_topologies if is_strictly_finer(t, tau)]
-    
-    if not finer:
-        return None  # Phantom-irreducible (no strictly finer topology exists)
-    
-    # Try increasing numbers of observers
-    for k in range(2, max_observers + 1):
-        for combo in combinations(finer, k):
-            observers = list(combo)
-            if is_phantom_decomposition(tau, observers, strict=True):
-                return observers
-    
+    for combo in combinations(finer, k):
+        if consensus_topology(list(combo)) == tau:
+            return list(combo)
     return None
 
 
-def phantom_number(
-    X: FrozenSet[int],
+def phantom_chromatic_number(
     tau: Topology,
-    all_topologies: List[Topology]
+    all_topologies: List[Topology],
+    max_k: int = 10,
 ) -> int:
-    """Compute the phantom number of a topology.
-    
-    Returns 0 if phantom-irreducible, otherwise the minimum number of observers.
+    """Compute the phantom chromatic number of a topology.
+
+    Returns the minimum k >= 2 such that tau admits a k-observer
+    strict decomposition, or -1 if irreducible (up to max_k).
+
+    Args:
+        tau: The topology.
+        all_topologies: All topologies on the space.
+        max_k: Maximum k to check.
+
+    Returns:
+        The phantom chromatic number, or -1 if irreducible.
     """
-    decomp = find_phantom_decomposition(X, tau, all_topologies)
-    if decomp is None:
-        return 0
-    return len(decomp)
+    for k in range(2, max_k + 1):
+        if find_strict_decomposition(tau, all_topologies, k) is not None:
+            return k
+    return -1
 
 
-def enumerate_topologies_on(n: int) -> List[Topology]:
-    """Enumerate all topologies on {0, 1, ..., n-1}.
-    
-    Warning: The number of topologies grows extremely fast.
-    Only practical for n ≤ 4.
+def phantom_spectrum(
+    tau: Topology,
+    all_topologies: List[Topology],
+    max_k: int = 10,
+) -> List[int]:
+    """Compute the phantom spectrum of a topology.
+
+    Args:
+        tau: The topology.
+        all_topologies: All topologies on the space.
+        max_k: Maximum k to check.
+
+    Returns:
+        List of k values for which a decomposition exists.
     """
-    X = frozenset(range(n))
-    subsets = [frozenset(s) for k in range(n + 1) 
-               for s in combinations(range(n), k)]
-    subsets_set = set(subsets)
-    
-    topologies: List[Topology] = []
-    
-    # Generate all possible collections of subsets and check if they're topologies
-    # This is exponential, so we use a smarter approach: build up from generators
-    for num_generators in range(len(subsets) + 1):
-        for gens in combinations(subsets, num_generators):
-            topo = generate_topology(X, set(gens))
-            if topo not in topologies:
-                topologies.append(topo)
-    
-    # Deduplicate
-    return list(set(topologies))
+    return [
+        k for k in range(2, max_k + 1)
+        if find_strict_decomposition(tau, all_topologies, k) is not None
+    ]
 
 
-def sierpinski_decomposition(X: FrozenSet[int], a: int, b: int) -> Tuple[Topology, Topology]:
-    """Construct the Sierpiński-style 2-observer decomposition of the indiscrete topology.
-    
-    Observer 1 sees {a} as open; Observer 2 sees {b} as open.
-    Their consensus is the indiscrete topology {∅, X}.
-    
-    This corresponds to the construction in indiscrete_not_phantomIrreducible.
+def compose_decompositions(
+    level1: List[Topology],
+    level2: Dict[int, List[Topology]],
+) -> List[Topology]:
+    """Compose two levels of phantom decompositions.
+
+    Given a k-observer decomposition (level1) where each observer i
+    has an m_i-observer sub-decomposition (level2[i]), flatten into
+    a single-level decomposition.
+
+    Args:
+        level1: First-level observer topologies.
+        level2: Mapping from level1 index to sub-decomposition.
+
+    Returns:
+        Flattened list of all sub-observer topologies.
     """
-    t1 = generate_topology(X, {frozenset({a})})
-    t2 = generate_topology(X, {frozenset({b})})
-    return t1, t2
+    result: List[Topology] = []
+    for i, obs in enumerate(level1):
+        if i in level2:
+            result.extend(level2[i])
+        else:
+            result.append(obs)
+    return result
 
 
-def phantom_profile(X: FrozenSet[int], all_topos: List[Topology]) -> dict:
-    """Compute the phantom profile of a finite set: 
-    for each topology, compute its phantom number."""
-    profile: dict = {}
-    for tau in all_topos:
-        pn = phantom_number(X, tau, all_topos)
-        key = len(tau)  # Number of open sets as a rough classifier
-        profile[frozenset(tau)] = {
-            'num_opens': len(tau),
-            'phantom_number': pn,
-            'is_irreducible': pn == 0
-        }
-    return profile
+if __name__ == "__main__":
+    # Example: compute phantom chromatic number on Fin 3
+    n = 3
+    universe = frozenset(range(n))
+
+    # Generate all subsets
+    all_subsets: List[Subset] = []
+    for r in range(n + 1):
+        for combo in combinations(range(n), r):
+            all_subsets.append(frozenset(combo))
+
+    # Generate all topologies (brute force for small n)
+    all_topos: List[Topology] = []
+    required = {frozenset(), universe}
+    optional = [s for s in all_subsets if s not in required]
+
+    for r in range(len(optional) + 1):
+        for combo in combinations(optional, r):
+            candidate = required | set(combo)
+            if is_topology(candidate, universe):
+                all_topos.append(frozenset(candidate))
+
+    print(f"Topologies on Fin {n}: {len(all_topos)}")
+
+    for tau in sorted(all_topos, key=len):
+        pcn = phantom_chromatic_number(tau, all_topos, max_k=5)
+        status = f"χ_ph = {pcn}" if pcn > 0 else "irreducible"
+        print(f"  |opens| = {len(tau):2d}: {status}")

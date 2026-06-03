@@ -1,297 +1,390 @@
 #!/usr/bin/env python3
 """
-Phantom Topology: Numerical Demonstrations
+Phantom Chromatic Theory: Demonstrations
 
-Demonstrates the key results of the phantom topology framework on finite sets.
+Demonstrates key results from the phantom chromatic theory:
+1. The indiscrete topology's 2-observer decomposition
+2. Observer disagreement set computation
+3. Phantom spectrum analysis for small topologies
 """
 
-from algorithms import (
-    generate_topology, consensus_topology, is_phantom_decomposition,
-    sierpinski_decomposition, is_strictly_finer, enumerate_topologies_on,
-    phantom_number, find_phantom_decomposition
-)
-from typing import FrozenSet
+from itertools import combinations, product
+from typing import Set, FrozenSet, List, Tuple, Dict
 
 
-def demo_sierpinski_decomposition():
-    """Demonstrate the Sierpiński-style decomposition of the indiscrete topology."""
+def is_topology(opens: Set[FrozenSet], universe: FrozenSet) -> bool:
+    """Check if a collection of sets forms a topology on a universe."""
+    if frozenset() not in opens:
+        return False
+    if universe not in opens:
+        return False
+    # Closed under pairwise intersection
+    for a, b in combinations(opens, 2):
+        if a & b not in opens:
+            return False
+    # Closed under arbitrary union (for finite, pairwise suffices via induction,
+    # but let's check all subsets)
+    opens_list = list(opens)
+    for r in range(1, len(opens_list) + 1):
+        for combo in combinations(opens_list, r):
+            union = frozenset().union(*combo)
+            if union not in opens:
+                return False
+    return True
+
+
+def generate_topologies(n: int) -> List[Set[FrozenSet]]:
+    """Generate all topologies on {0, 1, ..., n-1}."""
+    universe = frozenset(range(n))
+    all_subsets = []
+    for r in range(n + 1):
+        for combo in combinations(range(n), r):
+            all_subsets.append(frozenset(combo))
+
+    topologies = []
+    # Must include empty set and universe
+    required = {frozenset(), universe}
+    optional = [s for s in all_subsets if s not in required]
+
+    for r in range(len(optional) + 1):
+        for combo in combinations(optional, r):
+            candidate = required | set(combo)
+            if is_topology(candidate, universe):
+                topologies.append(candidate)
+
+    return topologies
+
+
+def is_strictly_finer(tau1: Set[FrozenSet], tau2: Set[FrozenSet]) -> bool:
+    """Check if tau1 is strictly finer than tau2 (more open sets)."""
+    return tau1 > tau2  # strict superset
+
+
+def consensus(topos: List[Set[FrozenSet]]) -> Set[FrozenSet]:
+    """Compute consensus: intersection of open set families."""
+    if not topos:
+        return set()
+    result = topos[0]
+    for t in topos[1:]:
+        result = result & t
+    return result
+
+
+def admits_k_decomp(tau: Set[FrozenSet], all_topos: List[Set[FrozenSet]], k: int) -> bool:
+    """Check if tau admits a k-observer strict phantom decomposition."""
+    finer = [t for t in all_topos if is_strictly_finer(t, tau)]
+    for combo in combinations(finer, k):
+        if consensus(list(combo)) == tau:
+            return True
+    return False
+
+
+def phantom_chromatic_number(tau: Set[FrozenSet], all_topos: List[Set[FrozenSet]],
+                              max_k: int = 10) -> int:
+    """Compute the phantom chromatic number of a topology."""
+    for k in range(2, max_k + 1):
+        if admits_k_decomp(tau, all_topos, k):
+            return k
+    return -1  # irreducible (or exceeds max_k)
+
+
+def demo_indiscrete_decomposition():
+    """Demonstrate the 2-observer decomposition of the indiscrete topology."""
     print("=" * 60)
-    print("DEMO 1: Sierpiński Decomposition of the Indiscrete Topology")
+    print("Demo 1: Indiscrete Topology 2-Observer Decomposition")
     print("=" * 60)
-    
-    X = frozenset({0, 1, 2})
-    indiscrete = frozenset({frozenset(), X})
-    
-    print(f"\nX = {set(X)}")
+
+    X = {0, 1, 2}
+    universe = frozenset(X)
+    empty = frozenset()
+
+    # Indiscrete topology
+    indiscrete = {empty, universe}
+
+    # Observer 1: sees {0} as open
+    obs1 = {empty, frozenset({0}), universe}
+    # Observer 2: sees {1} as open
+    obs2 = {empty, frozenset({1}), universe}
+
+    print(f"Universe X = {set(universe)}")
     print(f"Indiscrete topology: {{{', '.join(str(set(s)) for s in sorted(indiscrete, key=len))}}}")
-    
-    # Create two observers: one sees {0}, the other sees {1}
-    t1, t2 = sierpinski_decomposition(X, 0, 1)
-    
-    print(f"\nObserver 1 (sees {{0}}): {{{', '.join(str(set(s)) for s in sorted(t1, key=len))}}}")
-    print(f"Observer 2 (sees {{1}}): {{{', '.join(str(set(s)) for s in sorted(t2, key=len))}}}")
-    
-    # Compute consensus
-    cons = consensus_topology(X, [t1, t2])
-    print(f"\nConsensus (intersection): {{{', '.join(str(set(s)) for s in sorted(cons, key=len))}}}")
-    print(f"Equals indiscrete: {cons == indiscrete}")
-    
-    # Verify strict decomposition
-    print(f"\nObserver 1 strictly finer than indiscrete: {is_strictly_finer(t1, indiscrete)}")
-    print(f"Observer 2 strictly finer than indiscrete: {is_strictly_finer(t2, indiscrete)}")
-    print(f"Valid strict decomposition: {is_phantom_decomposition(indiscrete, [t1, t2])}")
+    print(f"Observer 1 opens:    {{{', '.join(str(set(s)) for s in sorted(obs1, key=len))}}}")
+    print(f"Observer 2 opens:    {{{', '.join(str(set(s)) for s in sorted(obs2, key=len))}}}")
+
+    cons = obs1 & obs2
+    print(f"Consensus (∩):       {{{', '.join(str(set(s)) for s in sorted(cons, key=len))}}}")
+    print(f"Consensus = Indiscrete? {cons == indiscrete}")
+    print(f"Obs1 strictly finer? {is_strictly_finer(obs1, indiscrete)}")
+    print(f"Obs2 strictly finer? {is_strictly_finer(obs2, indiscrete)}")
+    print()
 
 
-def demo_discrete_irreducibility():
-    """Demonstrate that the discrete topology is phantom-irreducible."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Phantom Irreducibility of the Discrete Topology")
+def demo_disagreement_sets():
+    """Demonstrate observer disagreement sets."""
     print("=" * 60)
-    
-    X = frozenset({0, 1, 2})
-    discrete = generate_topology(X, {frozenset({x}) for x in X})
-    
-    print(f"\nX = {set(X)}")
-    print(f"Discrete topology has {len(discrete)} open sets (all {2**len(X)} subsets)")
-    
-    # Try to find any strictly finer topology
-    # Since discrete has ALL subsets open, nothing can have more.
-    all_subsets = frozenset(frozenset(s) for k in range(len(X) + 1) 
-                           for s in __import__('itertools').combinations(X, k))
-    
-    print(f"Number of subsets of X: {len(all_subsets)}")
-    print(f"Discrete has all subsets: {set(discrete) == set(all_subsets)}")
-    print(f"No strictly finer topology exists → phantom-irreducible ✓")
-
-
-def demo_phantom_numbers_on_3_element_set():
-    """Compute phantom numbers for all topologies on a 3-element set."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Phantom Numbers on {0, 1, 2}")
+    print("Demo 2: Observer Disagreement Sets")
     print("=" * 60)
-    
-    X = frozenset({0, 1, 2})
-    
-    # Enumerate topologies on {0, 1, 2}
-    # There are 29 topologies on a 3-element set
-    print(f"\nEnumerating topologies on {set(X)}...")
-    all_topos = enumerate_topologies_on(3)
-    print(f"Found {len(all_topos)} topologies")
-    
-    # Classify by phantom number
-    irreducible = []
-    decomposable = {2: [], 3: [], 4: []}
-    
-    for tau in all_topos:
-        pn = phantom_number(X, tau, all_topos)
-        if pn == 0:
-            irreducible.append(tau)
-        elif pn in decomposable:
-            decomposable[pn].append(tau)
-    
-    print(f"\nPhantom-irreducible topologies: {len(irreducible)}")
-    for tau in irreducible:
-        print(f"  {len(tau)} open sets: {{{', '.join(str(set(s)) for s in sorted(tau, key=len))}}}")
-    
-    for k, topos in decomposable.items():
-        if topos:
-            print(f"\nPhantom number {k}: {len(topos)} topologies")
-            for tau in topos[:3]:  # Show first 3
-                print(f"  {len(tau)} open sets")
+
+    universe = frozenset({0, 1, 2})
+    empty = frozenset()
+
+    # 3 observers on {0, 1, 2}
+    obs1 = {empty, frozenset({0}), universe}
+    obs2 = {empty, frozenset({1}), universe}
+    obs3 = {empty, frozenset({2}), universe}
+
+    consensus_opens = obs1 & obs2 & obs3
+
+    print(f"Consensus: {{{', '.join(str(set(s)) for s in sorted(consensus_opens, key=len))}}}")
+
+    for i, obs in enumerate([obs1, obs2, obs3], 1):
+        disagreement = obs - consensus_opens
+        print(f"Observer {i} disagreement: {{{', '.join(str(set(s)) for s in disagreement)}}}")
+
+    # Check independence
+    for i, j in [(1, 2), (1, 3), (2, 3)]:
+        obs_i = [obs1, obs2, obs3][i-1]
+        obs_j = [obs1, obs2, obs3][j-1]
+        dis_i = obs_i - consensus_opens
+        dis_j = obs_j - consensus_opens
+        independent = len(dis_i & dis_j) == 0
+        print(f"Observers {i},{j} independent? {independent} "
+              f"(disjoint disagreement: {dis_i & dis_j == set()})")
+    print()
 
 
-def demo_agreement_properties():
-    """Demonstrate that phantom agreement satisfies topology axioms."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Agreement Closure Properties")
+def demo_phantom_spectrum():
+    """Compute phantom spectra for topologies on small sets."""
     print("=" * 60)
-    
-    X = frozenset({0, 1, 2, 3})
-    
-    # Create 3 observers with different topologies
-    t1 = generate_topology(X, {frozenset({0, 1})})
-    t2 = generate_topology(X, {frozenset({0, 2})})
-    t3 = generate_topology(X, {frozenset({0, 3})})
-    
-    observers = [t1, t2, t3]
-    
-    print(f"\nX = {set(X)}")
-    print(f"Observer 1 sees {{0,1}} as open")
-    print(f"Observer 2 sees {{0,2}} as open")
-    print(f"Observer 3 sees {{0,3}} as open")
-    
-    # Compute consensus
-    cons = consensus_topology(X, observers)
-    print(f"\nConsensus topology ({len(cons)} open sets):")
-    for s in sorted(cons, key=lambda x: (len(x), sorted(x))):
-        print(f"  {set(s)}")
-    
-    # Verify: empty and univ are in agreement
-    print(f"\n∅ in consensus: {frozenset() in cons}")
-    print(f"X in consensus: {X in cons}")
-    
-    # Check what each observer sees that others don't
-    for i, obs in enumerate(observers):
-        extra = set(obs) - set(cons)
-        print(f"Observer {i+1} sees {len(extra)} extra open sets beyond consensus")
-
-
-def demo_observer_stability():
-    """Demonstrate that adding a finer observer doesn't change consensus."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Observer Stability")
+    print("Demo 3: Phantom Spectra on Fin 3")
     print("=" * 60)
-    
-    X = frozenset({0, 1, 2})
-    
-    # Two initial observers
-    t1 = generate_topology(X, {frozenset({0})})
-    t2 = generate_topology(X, {frozenset({1})})
-    
-    cons_initial = consensus_topology(X, [t1, t2])
-    print(f"\nInitial consensus with 2 observers: {len(cons_initial)} open sets")
-    
-    # Add a finer observer (discrete topology, which is finer than everything)
-    t_discrete = generate_topology(X, {frozenset({x}) for x in X})
-    
-    cons_with_finer = consensus_topology(X, [t1, t2, t_discrete])
-    print(f"Consensus after adding discrete observer: {len(cons_with_finer)} open sets")
-    print(f"Consensus unchanged: {cons_initial == cons_with_finer}")
-    
-    # Add a coarser observer (indiscrete, which makes consensus coarser)
-    t_indiscrete = frozenset({frozenset(), X})
-    
-    cons_with_coarser = consensus_topology(X, [t1, t2, t_indiscrete])
-    print(f"Consensus after adding indiscrete observer: {len(cons_with_coarser)} open sets")
-    print(f"Consensus changed: {cons_initial != cons_with_coarser}")
-    print(f"New consensus is coarser (fewer opens): {len(cons_with_coarser) < len(cons_initial)}")
+
+    n = 3
+    topos = generate_topologies(n)
+    universe = frozenset(range(n))
+    empty = frozenset()
+    discrete = {frozenset(s) for r in range(n+1) for s in combinations(range(n), r)}
+    indiscrete = {empty, universe}
+
+    print(f"Number of topologies on {{0,1,2}}: {len(topos)}")
+    print()
+
+    for tau in sorted(topos, key=len):
+        name = "discrete" if tau == discrete else ("indiscrete" if tau == indiscrete else "")
+        pcn = phantom_chromatic_number(tau, topos, max_k=5)
+
+        spectrum = []
+        for k in range(2, 6):
+            if admits_k_decomp(tau, topos, k):
+                spectrum.append(k)
+
+        label = f" ({name})" if name else ""
+        opens_str = "{" + ", ".join(str(set(s)) for s in sorted(tau, key=lambda s: (len(s), sorted(s)))) + "}"
+        if pcn == -1:
+            print(f"τ = {opens_str}{label}")
+            print(f"  Phantom-irreducible (χ_ph = ∞)")
+        else:
+            print(f"τ = {opens_str}{label}")
+            print(f"  χ_ph = {pcn}, spectrum ⊇ {spectrum}")
+        print()
+
+
+def demo_composition():
+    """Demonstrate phantom refinement composition."""
+    print("=" * 60)
+    print("Demo 4: Phantom Refinement Composition")
+    print("=" * 60)
+
+    universe = frozenset({0, 1, 2, 3})
+    empty = frozenset()
+
+    # Level 1: indiscrete = consensus of two observers
+    indiscrete = {empty, universe}
+    obs1_L1 = {empty, frozenset({0, 1}), universe}
+    obs2_L1 = {empty, frozenset({2, 3}), universe}
+
+    print("Level 1 decomposition of indiscrete on {0,1,2,3}:")
+    print(f"  Observer 1: sees {{{0,1}}} as open")
+    print(f"  Observer 2: sees {{{2,3}}} as open")
+    cons_L1 = obs1_L1 & obs2_L1
+    print(f"  Consensus = {{{', '.join(str(set(s)) for s in sorted(cons_L1, key=len))}}}")
+    print(f"  Matches indiscrete? {cons_L1 == indiscrete}")
+    print()
+
+    # Level 2: decompose each observer
+    # obs1_L1 has opens {∅, {0,1}, X}. Decompose:
+    obs1a = {empty, frozenset({0}), frozenset({0, 1}), universe}
+    obs1b = {empty, frozenset({1}), frozenset({0, 1}), universe}
+    print("Level 2: decompose Observer 1's topology")
+    print(f"  Sub-observer 1a: sees {{0}} and {{{0,1}}} as open")
+    print(f"  Sub-observer 1b: sees {{1}} and {{{0,1}}} as open")
+    cons_sub1 = obs1a & obs1b
+    print(f"  Their consensus: {{{', '.join(str(set(s)) for s in sorted(cons_sub1, key=len))}}}")
+    print(f"  Matches Observer 1? {cons_sub1 == obs1_L1}")
+    print()
+
+    # Flatten: all 4 sub-observers
+    all_obs = [obs1a, obs1b,
+               {empty, frozenset({2}), frozenset({2, 3}), universe},
+               {empty, frozenset({3}), frozenset({2, 3}), universe}]
+
+    flat_consensus = all_obs[0]
+    for o in all_obs[1:]:
+        flat_consensus = flat_consensus & o
+
+    print("Flattened 4-observer decomposition:")
+    for i, obs in enumerate(all_obs):
+        extras = obs - indiscrete
+        print(f"  Sub-observer {i+1}: extra opens = "
+              f"{{{', '.join(str(set(s)) for s in extras)}}}")
+    print(f"  Flat consensus: {{{', '.join(str(set(s)) for s in sorted(flat_consensus, key=len))}}}")
+    print(f"  Matches indiscrete? {flat_consensus == indiscrete}")
 
 
 if __name__ == "__main__":
-    demo_sierpinski_decomposition()
-    demo_discrete_irreducibility()
-    demo_agreement_properties()
-    demo_observer_stability()
-    
-    # The full enumeration is slow, only run if desired
-    print("\n" + "=" * 60)
-    print("DEMO 3: Phantom Numbers (computing...)")
-    print("=" * 60)
-    try:
-        demo_phantom_numbers_on_3_element_set()
-    except Exception as e:
-        print(f"  (Enumeration too slow or error: {e})")
-    
-    print("\n" + "=" * 60)
-    print("All demos complete.")
-    print("=" * 60)
+    demo_indiscrete_decomposition()
+    demo_disagreement_sets()
+    demo_phantom_spectrum()
+    demo_composition()
 
 
 #!/usr/bin/env python3
 """
-Visualization: Phantom Topology Decompositions
+Visualization: Phantom Topology Lattice and Decompositions
 
-Generates a visualization of the topology lattice on a 3-element set,
-colored by phantom number.
+Creates a visualization of the lattice of topologies on a small set,
+highlighting phantom decompositions and the phantom spectrum.
 """
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from algorithms import (
-    generate_topology, enumerate_topologies_on,
-    phantom_number, consensus_topology
-)
+from itertools import combinations
+from typing import FrozenSet, Set, List, Tuple
 
 
-def topology_to_label(tau, X):
-    """Create a compact label for a topology."""
-    opens = sorted(tau, key=lambda s: (len(s), sorted(s)))
-    # Skip empty and full
-    interesting = [s for s in opens if s != frozenset() and s != X]
-    if not interesting:
-        return "indiscrete"
-    if len(tau) == 2**len(X):
-        return "discrete"
-    parts = []
-    for s in interesting:
-        parts.append("{" + ",".join(str(x) for x in sorted(s)) + "}")
-    return " ".join(parts)
+def generate_topologies(n: int) -> List[Set[FrozenSet]]:
+    """Generate all topologies on {0, ..., n-1}."""
+    universe = frozenset(range(n))
+    all_subsets = []
+    for r in range(n + 1):
+        for combo in combinations(range(n), r):
+            all_subsets.append(frozenset(combo))
+
+    topologies = []
+    required = {frozenset(), universe}
+    optional = [s for s in all_subsets if s not in required]
+
+    for r in range(len(optional) + 1):
+        for combo in combinations(optional, r):
+            candidate = required | set(combo)
+            if is_valid_topology(candidate, universe):
+                topologies.append(candidate)
+
+    return topologies
+
+
+def is_valid_topology(opens: Set[FrozenSet], universe: FrozenSet) -> bool:
+    if frozenset() not in opens or universe not in opens:
+        return False
+    for a, b in combinations(opens, 2):
+        if a & b not in opens:
+            return False
+    opens_list = list(opens)
+    for r in range(2, len(opens_list) + 1):
+        for combo in combinations(opens_list, r):
+            if frozenset().union(*combo) not in opens:
+                return False
+    return True
+
+
+def phantom_chromatic_number(tau: Set[FrozenSet],
+                              all_topos: List[Set[FrozenSet]]) -> int:
+    finer = [t for t in all_topos if t > tau]
+    for k in range(2, 6):
+        for combo in combinations(finer, k):
+            consensus = combo[0]
+            for t in combo[1:]:
+                consensus = consensus & t
+            if consensus == tau:
+                return k
+    return -1
 
 
 def main():
-    X = frozenset({0, 1, 2})
-    all_topos = enumerate_topologies_on(3)
-    
-    # Compute phantom numbers
-    pn_data = []
-    for tau in all_topos:
-        pn = phantom_number(X, tau, all_topos)
-        pn_data.append({
-            'topology': tau,
-            'num_opens': len(tau),
-            'phantom_number': pn,
-            'label': topology_to_label(tau, X)
-        })
-    
-    # Sort by number of open sets (inverse of lattice position)
-    pn_data.sort(key=lambda d: d['num_opens'])
-    
-    # Group by num_opens for y-coordinate
-    groups = {}
-    for d in pn_data:
-        n = d['num_opens']
-        if n not in groups:
-            groups[n] = []
-        groups[n].append(d)
-    
-    # Color by phantom number
-    colors = {0: '#e74c3c', 2: '#3498db', 3: '#2ecc71', 4: '#f39c12'}
-    color_labels = {0: 'Irreducible (PN=0)', 2: 'PN=2', 3: 'PN=3', 4: 'PN≥4'}
-    
-    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
-    
-    for num_opens, group in groups.items():
-        y = num_opens
-        n = len(group)
-        for i, d in enumerate(group):
-            x = (i - (n - 1) / 2) * 1.5
-            color = colors.get(d['phantom_number'], '#95a5a6')
-            circle = plt.Circle((x, y), 0.4, color=color, alpha=0.8, ec='black', lw=1)
-            ax.add_patch(circle)
-            ax.text(x, y, str(d['phantom_number']), ha='center', va='center',
-                    fontsize=10, fontweight='bold', color='white')
-    
-    # Labels
-    ax.set_xlabel('Topology Index (within level)', fontsize=12)
-    ax.set_ylabel('Number of Open Sets', fontsize=12)
-    ax.set_title('Phantom Numbers of Topologies on {0, 1, 2}\n'
-                 'Each circle = one topology, number = phantom number',
-                 fontsize=14, fontweight='bold')
-    
-    # Legend
-    legend_patches = [mpatches.Patch(color=colors[k], label=v) 
-                      for k, v in color_labels.items() if k in {d['phantom_number'] for d in pn_data}]
-    ax.legend(handles=legend_patches, loc='upper left', fontsize=11)
-    
-    # Axis limits
-    ax.set_xlim(-8, 8)
-    ax.set_ylim(1, 9)
-    ax.set_yticks(range(2, 9))
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    
+    n = 3
+    topos = generate_topologies(n)
+    universe = frozenset(range(n))
+    discrete = {frozenset(s) for r in range(n+1)
+                for s in combinations(range(n), r)}
+
+    # Compute phantom chromatic numbers
+    pcns = []
+    sizes = []
+    for tau in topos:
+        pcn = phantom_chromatic_number(tau, topos)
+        pcns.append(pcn)
+        sizes.append(len(tau))
+
+    # Sort by size for visualization
+    data = sorted(zip(sizes, pcns, topos), key=lambda x: x[0])
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Plot 1: Phantom chromatic number distribution
+    ax1 = axes[0]
+    irreducible = sum(1 for p in pcns if p == -1)
+    decomposable_2 = sum(1 for p in pcns if p == 2)
+    decomposable_other = sum(1 for p in pcns if p > 2)
+
+    labels = ['Irreducible\n(χ_ph = ∞)', 'χ_ph = 2', 'χ_ph > 2']
+    counts = [irreducible, decomposable_2, decomposable_other]
+    colors = ['#e74c3c', '#2ecc71', '#3498db']
+
+    bars = ax1.bar(labels, counts, color=colors, edgecolor='black', linewidth=1.2)
+    for bar, count in zip(bars, counts):
+        ax1.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.3,
+                str(count), ha='center', va='bottom', fontsize=14, fontweight='bold')
+
+    ax1.set_title(f'Phantom Chromatic Numbers on Fin {n}\n({len(topos)} topologies)',
+                  fontsize=14, fontweight='bold')
+    ax1.set_ylabel('Count', fontsize=12)
+    ax1.set_ylim(0, max(counts) + 3)
+
+    # Plot 2: Phantom chromatic number vs topology size
+    ax2 = axes[1]
+    color_map = {-1: '#e74c3c', 2: '#2ecc71', 3: '#3498db', 4: '#9b59b6'}
+
+    for size, pcn, tau in data:
+        color = color_map.get(pcn, '#95a5a6')
+        label_str = 'irred' if pcn == -1 else f'χ={pcn}'
+        ax2.scatter(size, pcn if pcn > 0 else 0, color=color, s=100,
+                   edgecolor='black', linewidth=0.5, zorder=5)
+
+    ax2.set_xlabel('Number of Open Sets', fontsize=12)
+    ax2.set_ylabel('Phantom Chromatic Number', fontsize=12)
+    ax2.set_title('χ_ph vs Topology Size', fontsize=14, fontweight='bold')
+    ax2.set_yticks([0, 2, 3, 4, 5])
+    ax2.set_yticklabels(['irred', '2', '3', '4', '5'])
+
+    legend_elements = [
+        mpatches.Patch(facecolor='#e74c3c', edgecolor='black', label='Irreducible'),
+        mpatches.Patch(facecolor='#2ecc71', edgecolor='black', label='χ_ph = 2'),
+        mpatches.Patch(facecolor='#3498db', edgecolor='black', label='χ_ph = 3+'),
+    ]
+    ax2.legend(handles=legend_elements, loc='upper right')
+
     plt.tight_layout()
-    plt.savefig('phantom_numbers.png', dpi=150, bbox_inches='tight')
-    print("Saved phantom_numbers.png")
-    
+    plt.savefig('phantom_chromatic_analysis.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved phantom_chromatic_analysis.png")
+
     # Print summary
-    print(f"\nTotal topologies on {{0,1,2}}: {len(all_topos)}")
-    pn_counts = {}
-    for d in pn_data:
-        pn_counts[d['phantom_number']] = pn_counts.get(d['phantom_number'], 0) + 1
-    for pn in sorted(pn_counts):
-        print(f"  Phantom number {pn}: {pn_counts[pn]} topologies")
+    print(f"\nPhantom Chromatic Analysis on Fin {n}:")
+    print(f"  Total topologies: {len(topos)}")
+    print(f"  Irreducible: {irreducible}")
+    print(f"  χ_ph = 2: {decomposable_2}")
+    print(f"  χ_ph > 2: {decomposable_other}")
 
 
 if __name__ == "__main__":
