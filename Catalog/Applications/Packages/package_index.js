@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "02f54c2c",
     "filename": "rigorous_mathematical_foundations_for_the_poinca.json",
     "pkg_num": 287,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7281898048780489,
     "title": "Poincar\u00e9 Threshold for Metric Filtrations"
   },
   {
@@ -9260,8 +9260,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "rigorous_mathematical_foundations_for_the_poinca",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7281898048780489,
+      "quality": "substantial",
       "shape": "star",
       "title": "Poincar\u00e9 Threshold for Metric Filtrations"
     }
