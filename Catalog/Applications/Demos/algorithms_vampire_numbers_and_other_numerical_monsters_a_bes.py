@@ -1,298 +1,224 @@
-#!/usr/bin/env python3
 """
-Arithmetic Monsters: Core Algorithms for Monster Classification
+Vampire Numbers and Arithmetic Creatures: Algorithms
+=====================================================
 
-Implements efficient algorithms for searching and classifying arithmetic monsters
-(vampire numbers, ghost numbers, digit-disjoint pairs) in arbitrary bases.
-
-Time complexity:
-  - find_vampires(N, b): O(N^{3/2} · log_b(N)) 
-  - find_ghosts(N, b): O(N^{3/2} · log_b(N))
-  - digit_disjoint_pairs(N, b): O(N^2 · log_b(N))
-  - mod_sieve_vampires(N, b): O(N^{3/2}) with sieve pre-filtering
-
-Space complexity: O(N) for result storage.
+Type-hinted implementations for detecting and enumerating
+vampire numbers, werewolf numbers, ghost numbers, and spectral numbers.
 """
 
 from collections import Counter
+from typing import List, Tuple, Optional
+from itertools import combinations
 import math
-from typing import Iterator
 
 
-# ─────────────────────────────────────────────────────────────
-# Core digit infrastructure
-# ─────────────────────────────────────────────────────────────
+def digit_multiset(n: int) -> Counter:
+    """Return the multiset (Counter) of decimal digits of n."""
+    return Counter(str(n))
 
-def digits_base(n: int, b: int) -> list[int]:
+
+def num_digits(n: int) -> int:
+    """Return the number of decimal digits of n."""
+    if n == 0:
+        return 1
+    return len(str(n))
+
+
+def digit_sum(n: int) -> int:
+    """Return the sum of decimal digits of n."""
+    return sum(int(d) for d in str(n))
+
+
+def is_vampire(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
     """
-    Return base-b digits of n, least significant first.
-    
-    >>> digits_base(1260, 10)
-    [0, 6, 2, 1]
-    >>> digits_base(5, 2)
-    [1, 0, 1]
+    Check if v is a vampire number.
+
+    A vampire number has 2n digits and can be factored as v = x * y
+    where x and y each have n digits, the digit multiset of v equals
+    the union of digit multisets of x and y, and not both x, y end in 0.
+
+    Returns (True, (x, y)) if vampire, (False, None) otherwise.
     """
-    if n == 0 or b < 2:
-        return []
-    result = []
-    while n > 0:
-        result.append(n % b)
-        n //= b
-    return result
+    s = str(v)
+    d = len(s)
+    if d < 4 or d % 2 != 0:
+        return False, None
+
+    n = d // 2
+    lo = 10 ** (n - 1)
+    hi = 10 ** n
+
+    target = sorted(s)
+
+    for x in range(lo, hi):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y < lo or y >= hi:
+            continue
+        if x % 10 == 0 and y % 10 == 0:
+            continue
+        if sorted(str(x) + str(y)) == target:
+            return True, (x, y)
+
+    return False, None
 
 
-def digit_bag(n: int, b: int) -> Counter:
+def find_all_vampires(limit: int) -> List[Tuple[int, int, int]]:
     """
-    Digit multiset of n in base b.
-    
-    >>> digit_bag(1260, 10)
-    Counter({0: 1, 6: 1, 2: 1, 1: 1})
-    """
-    return Counter(digits_base(n, b))
-
-
-def digit_overlap(m: int, n: int, b: int) -> int:
-    """
-    Count shared digit occurrences: sum_d min(bag_m[d], bag_n[d]).
-    
-    >>> digit_overlap(123, 321, 10)
-    3
-    >>> digit_overlap(12, 34, 10)
-    0
-    """
-    bm, bn = digit_bag(m, b), digit_bag(n, b)
-    return sum(min(bm.get(d, 0), bn.get(d, 0)) for d in range(b))
-
-
-def digit_sum(n: int, b: int) -> int:
-    """Sum of base-b digits of n."""
-    return sum(digits_base(n, b))
-
-
-def digit_len(n: int, b: int) -> int:
-    """Number of base-b digits of n (0 has length 0)."""
-    return len(digits_base(n, b))
-
-
-# ─────────────────────────────────────────────────────────────
-# Monster predicates
-# ─────────────────────────────────────────────────────────────
-
-def is_vampire(v: int, x: int, y: int, b: int = 10) -> bool:
-    """Check vampire condition: v = x*y and digitBag(v) = digitBag(x) + digitBag(y)."""
-    return v == x * y and digit_bag(v, b) == digit_bag(x, b) + digit_bag(y, b)
-
-
-def is_ghost(v: int, x: int, y: int, b: int = 10) -> bool:
-    """Check ghost condition: v = x*y and v shares no digits with x or y."""
-    return (v == x * y and
-            digit_overlap(v, x, b) == 0 and
-            digit_overlap(v, y, b) == 0)
-
-
-def is_digit_disjoint(m: int, n: int, b: int = 10) -> bool:
-    """Check if m and n share no base-b digits."""
-    return digit_overlap(m, n, b) == 0
-
-
-# ─────────────────────────────────────────────────────────────
-# Search algorithms
-# ─────────────────────────────────────────────────────────────
-
-def mod_sieve(x: int, y: int, b: int) -> bool:
-    """
-    Modular sieve for vampire candidates.
-    Returns True if (x,y) passes the necessary condition x*y ≡ x+y (mod b-1).
-    
-    This eliminates ~(1 - 1/(b-1)) fraction of candidates in base b.
-    In base 10, it eliminates about 77.8% of candidate pairs.
-    
-    >>> mod_sieve(15, 93, 10)  # 15*93 = 1395, a vampire number
-    True
-    """
-    m = b - 1
-    return (x * y) % m == (x + y) % m
-
-
-def find_vampires_sieved(N: int, b: int = 10) -> list[tuple[int, int, int]]:
-    """
-    Find all vampire triples (v, x, y) with v ≤ N in base b.
-    Uses the mod-(b-1) sieve to skip impossible pairs.
-    
-    Algorithm:
-    1. For each v in [4, N], compute sqrt(v)
-    2. For each factor x in [2, sqrt(v)], check x | v
-    3. Apply mod-(b-1) sieve to skip pairs early
-    4. Verify full digit-bag condition
-    
-    >>> find_vampires_sieved(2000, 10)
-    [(1260, 21, 60), (1395, 15, 93), (1435, 35, 41), (1530, 30, 51), (1560, 60, 26)]
+    Find all vampire numbers up to limit.
+    Returns list of (v, x, y) tuples.
     """
     results = []
-    for v in range(4, N + 1):
-        sqrt_v = int(math.isqrt(v))
-        for x in range(2, sqrt_v + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            if y < x:
-                continue
-            # Apply sieve first (cheap)
-            if not mod_sieve(x, y, b):
-                continue
-            # Full digit-bag check (expensive)
-            if is_vampire(v, x, y, b):
-                results.append((v, x, y))
-    return results
+    # Vampire numbers have even digit counts, minimum 4 digits
+    for num_d in range(4, len(str(limit)) + 1, 2):
+        n = num_d // 2
+        lo_v = 10 ** (num_d - 1)
+        hi_v = min(10 ** num_d, limit + 1)
+        lo_f = 10 ** (n - 1)
+        hi_f = 10 ** n
+
+        for x in range(lo_f, hi_f):
+            # y must also be n digits: lo_f <= y < hi_f
+            y_lo = max(lo_f, (lo_v + x - 1) // x)  # ceil(lo_v / x)
+            y_hi = min(hi_f, hi_v // x + 1)
+            for y in range(max(y_lo, x), y_hi):  # y >= x to avoid duplicates
+                v = x * y
+                if v >= hi_v:
+                    break
+                if x % 10 == 0 and y % 10 == 0:
+                    continue
+                if sorted(str(v)) == sorted(str(x) + str(y)):
+                    results.append((v, x, y))
+    return sorted(results)
 
 
-def find_ghosts_sieved(N: int, b: int = 10) -> list[tuple[int, int, int]]:
+def is_ghost_number(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
     """
-    Find all ghost triples (v, x, y) with v ≤ N in base b.
-    
-    >>> len(find_ghosts_sieved(100, 2))  # Impossible in base 2
-    0
+    Check if v is a ghost number: v = x * y where the digit SETS
+    of x and y are completely disjoint from the digit set of v.
     """
-    if b == 2:
-        return []  # Theorem 2: impossible in base 2
-    results = []
-    for v in range(4, N + 1):
-        sqrt_v = int(math.isqrt(v))
-        for x in range(2, sqrt_v + 1):
-            if v % x != 0:
-                continue
-            y = v // x
-            if y < x:
-                continue
-            if is_ghost(v, x, y, b):
-                results.append((v, x, y))
-    return results
+    if v < 4:
+        return False, None
+
+    v_digits = set(str(v))
+
+    for x in range(2, int(math.isqrt(v)) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        x_digits = set(str(x))
+        y_digits = set(str(y))
+        if v_digits.isdisjoint(x_digits) and v_digits.isdisjoint(y_digits):
+            return True, (x, y)
+
+    return False, None
 
 
-def digit_disjoint_pairs(N: int, b: int = 10) -> Iterator[tuple[int, int]]:
+def is_werewolf_number(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
     """
-    Yield all digit-disjoint pairs (m, n) with 1 ≤ m < n ≤ N in base b.
-    
-    >>> list(digit_disjoint_pairs(5, 2))  # None in base 2
-    []
+    Check if v is a werewolf number: v = x * y where the combined
+    digit multiset of x and y shares exactly one digit with v's multiset.
     """
-    for m in range(1, N + 1):
-        for n in range(m + 1, N + 1):
-            if is_digit_disjoint(m, n, b):
-                yield (m, n)
+    if v < 4:
+        return False, None
+
+    v_counter = digit_multiset(v)
+
+    for x in range(2, int(math.isqrt(v)) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        combined = digit_multiset(x) + digit_multiset(y)
+        # Count shared elements (intersection with multiplicity)
+        shared = sum((combined & v_counter).values())
+        if shared == 1:
+            return True, (x, y)
+
+    return False, None
 
 
-def repdigit(b: int, d: int, k: int) -> int:
+def is_spectral_number(v: int) -> Tuple[bool, Optional[Tuple[int, int]]]:
     """
-    Construct a repdigit: k copies of digit d in base b.
-    
-    >>> repdigit(10, 1, 4)  # 1111
-    1111
-    >>> repdigit(10, 7, 3)  # 777
-    777
+    Check if v is a spectral number: v = x * y where sorting digits
+    of v matches sorting combined digits of x, y, but multisets differ.
+
+    Our Lean proof shows this set is EMPTY — spectral numbers don't exist,
+    because sorted digits uniquely determine the multiset. This function
+    confirms the theorem computationally.
     """
-    return d * sum(b ** i for i in range(k))
+    if v < 4:
+        return False, None
+
+    v_sorted = sorted(str(v))
+
+    for x in range(2, int(math.isqrt(v)) + 1):
+        if v % x != 0:
+            continue
+        y = v // x
+        if y <= 1:
+            continue
+        combined_sorted = sorted(str(x) + str(y))
+        if combined_sorted == v_sorted:
+            # Check if multisets are different
+            if Counter(str(v)) != Counter(str(x) + str(y)):
+                return True, (x, y)
+
+    return False, None
 
 
-def explicit_disjoint_family(b: int, max_k: int = 10) -> list[tuple[int, int]]:
+def mod9_fang_constraint(x: int, y: int) -> bool:
     """
-    Construct explicit digit-disjoint pairs using b^k and b^(k+1)-1.
-    These use digits {0,1} and {b-1} respectively.
-    
-    >>> explicit_disjoint_family(3, 4)
-    [(3, 8), (9, 26), (27, 80), (81, 242)]
+    Verify the vampire mod-9 constraint: (x-1)(y-1) ≡ 1 (mod 9).
+    This is a necessary condition for x, y to be vampire fangs.
+    """
+    return ((x - 1) * (y - 1)) % 9 == 1
+
+
+def valid_fang_residue_pairs() -> List[Tuple[int, int]]:
+    """
+    Enumerate all pairs (a, b) with 0 ≤ a, b < 9 such that
+    (a)(b) ≡ 1 (mod 9), i.e., valid residue classes for
+    (x-1, y-1) mod 9 in vampire factorizations.
     """
     pairs = []
-    for k in range(1, max_k + 1):
-        m = b ** k
-        n = b ** (k + 1) - 1
-        pairs.append((m, n))
+    for a in range(9):
+        for b in range(9):
+            if (a * b) % 9 == 1:
+                pairs.append(((a + 1) % 9, (b + 1) % 9))
     return pairs
 
 
-# ─────────────────────────────────────────────────────────────
-# Classification
-# ─────────────────────────────────────────────────────────────
-
-def classify_all(N: int, b: int = 10) -> dict[str, list[tuple[int, int, int]]]:
+def vampire_density(num_digits: int) -> float:
     """
-    Classify all monster triples up to N in base b.
-    Returns a dictionary mapping monster kind to list of triples.
-    
-    >>> result = classify_all(2000, 10)
-    >>> len(result['vampire'])
-    5
+    Estimate the density of vampire numbers among all numbers
+    with the given (even) number of digits.
+
+    Uses the heuristic: C(2n, n) / 10^n ≈ 4^n / (sqrt(πn) * 10^n)
+    = (2/5)^n / sqrt(πn), which goes to 0 but slowly.
     """
-    return {
-        'vampire': find_vampires_sieved(N, b),
-        'ghost': find_ghosts_sieved(N, b),
-    }
-
-
-# ─────────────────────────────────────────────────────────────
-# Statistical analysis
-# ─────────────────────────────────────────────────────────────
-
-def sieve_effectiveness(b: int, num_digits: int, sample_size: int = 10000) -> dict:
-    """
-    Measure how effective the mod-(b-1) sieve is at eliminating
-    candidate factor pairs for vampire numbers with a given digit count.
-    
-    Returns dict with 'total', 'passing', 'eliminated_pct' keys.
-    """
-    lo = b ** (num_digits - 1)
-    hi = b ** num_digits - 1
-    fang_digits = num_digits // 2
-    fang_lo = b ** (fang_digits - 1)
-    fang_hi = b ** fang_digits - 1
-
-    total = 0
-    passing = 0
-    import random
-    random.seed(42)
-
-    for _ in range(sample_size):
-        x = random.randint(fang_lo, fang_hi)
-        y = random.randint(x, fang_hi)
-        v = x * y
-        if lo <= v <= hi:
-            total += 1
-            if mod_sieve(x, y, b):
-                passing += 1
-
-    eliminated = (1 - passing / total) * 100 if total > 0 else 0
-    return {
-        'total': total,
-        'passing': passing,
-        'eliminated_pct': eliminated,
-    }
+    if num_digits % 2 != 0 or num_digits < 4:
+        return 0.0
+    n = num_digits // 2
+    # C(2n, n) / 10^n
+    from math import comb
+    return comb(2 * n, n) / (10 ** n)
 
 
 if __name__ == "__main__":
-    print("=== Arithmetic Monsters: Algorithm Demonstrations ===\n")
+    print("=== Vampire Number Algorithms ===")
+    print()
 
-    # Vampire numbers in base 10
-    print("Vampire numbers up to 100000 (base 10):")
-    vamps = find_vampires_sieved(100000, 10)
-    for v, x, y in vamps[:15]:
-        print(f"  {v} = {x} × {y}")
-    print(f"  Total: {len(vamps)}\n")
+    # Valid residue pairs
+    pairs = valid_fang_residue_pairs()
+    print(f"Valid fang residue pairs (x mod 9, y mod 9): {pairs}")
+    print(f"Number of valid pairs: {len(pairs)} out of 81 possible")
+    print()
 
-    # Ghost numbers in base 10
-    print("Ghost numbers up to 10000 (base 10):")
-    ghosts = find_ghosts_sieved(10000, 10)
-    for v, x, y in ghosts[:10]:
-        print(f"  {v} = {x} × {y}")
-    print(f"  Total: {len(ghosts)}\n")
-
-    # Sieve effectiveness
-    print("Mod-9 sieve effectiveness (base 10):")
-    for nd in [4, 6]:
-        stats = sieve_effectiveness(10, nd)
-        print(f"  {nd}-digit: eliminates {stats['eliminated_pct']:.1f}% "
-              f"({stats['passing']}/{stats['total']})")
-
-    # Digit-disjoint family
-    print("\nExplicit digit-disjoint family (base 10):")
-    for m, n in explicit_disjoint_family(10, 5):
-        print(f"  ({m}, {n}): disjoint = {is_digit_disjoint(m, n, 10)}")
+    # Density estimates
+    for d in [4, 6, 8, 10, 12]:
+        print(f"Heuristic density for {d}-digit vampires: {vampire_density(d):.6f}")
