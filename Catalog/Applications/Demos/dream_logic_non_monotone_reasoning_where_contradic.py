@@ -1,431 +1,416 @@
+#!/usr/bin/env python3
 """
-Dream Logic Demo: Paraconsistent Reasoning and Dream Spaces
-============================================================
+Dream Logic: Numerical Demonstrations
 
-Demonstrates:
-1. Belnap's four-valued logic with non-explosion
-2. Closed-world assumption and non-monotonicity
-3. Singleton dream space and union failure
+Demonstrates Belnap's four-valued paraconsistent logic,
+dream belief states, and pre-topological semantics.
 """
 
 from enum import Enum
-from typing import Set, FrozenSet, Dict, List, Tuple
+from typing import Dict, Set, List, Tuple, Optional
+from itertools import product
 
 
 class BelnapVal(Enum):
     """Belnap's four truth values."""
-    NEITHER = "⊥"   # No information
-    TRUE = "T"       # True only
-    FALSE = "F"      # False only
-    BOTH = "⊤"      # Both true and false (contradictory)
+    VERUM = "T"      # true only
+    FALSUM = "F"     # false only
+    BOTH = "B"       # both true and false (glut)
+    NEITHER = "N"    # neither true nor false (gap)
+
+    def is_designated(self) -> bool:
+        """At least true."""
+        return self in (BelnapVal.VERUM, BelnapVal.BOTH)
+
+    def neg(self) -> 'BelnapVal':
+        """Belnap negation."""
+        return {
+            BelnapVal.VERUM: BelnapVal.FALSUM,
+            BelnapVal.FALSUM: BelnapVal.VERUM,
+            BelnapVal.BOTH: BelnapVal.BOTH,
+            BelnapVal.NEITHER: BelnapVal.NEITHER,
+        }[self]
+
+    def conj(self, other: 'BelnapVal') -> 'BelnapVal':
+        """Belnap conjunction (truth-order meet)."""
+        table = {
+            (BelnapVal.VERUM, BelnapVal.VERUM): BelnapVal.VERUM,
+            (BelnapVal.VERUM, BelnapVal.FALSUM): BelnapVal.FALSUM,
+            (BelnapVal.VERUM, BelnapVal.BOTH): BelnapVal.BOTH,
+            (BelnapVal.VERUM, BelnapVal.NEITHER): BelnapVal.NEITHER,
+            (BelnapVal.FALSUM, BelnapVal.VERUM): BelnapVal.FALSUM,
+            (BelnapVal.FALSUM, BelnapVal.FALSUM): BelnapVal.FALSUM,
+            (BelnapVal.FALSUM, BelnapVal.BOTH): BelnapVal.FALSUM,
+            (BelnapVal.FALSUM, BelnapVal.NEITHER): BelnapVal.FALSUM,
+            (BelnapVal.BOTH, BelnapVal.VERUM): BelnapVal.BOTH,
+            (BelnapVal.BOTH, BelnapVal.FALSUM): BelnapVal.FALSUM,
+            (BelnapVal.BOTH, BelnapVal.BOTH): BelnapVal.BOTH,
+            (BelnapVal.BOTH, BelnapVal.NEITHER): BelnapVal.FALSUM,
+            (BelnapVal.NEITHER, BelnapVal.VERUM): BelnapVal.NEITHER,
+            (BelnapVal.NEITHER, BelnapVal.FALSUM): BelnapVal.FALSUM,
+            (BelnapVal.NEITHER, BelnapVal.BOTH): BelnapVal.FALSUM,
+            (BelnapVal.NEITHER, BelnapVal.NEITHER): BelnapVal.NEITHER,
+        }
+        return table[(self, other)]
+
+    def disj(self, other: 'BelnapVal') -> 'BelnapVal':
+        """Belnap disjunction (truth-order join)."""
+        table = {
+            (BelnapVal.VERUM, BelnapVal.VERUM): BelnapVal.VERUM,
+            (BelnapVal.VERUM, BelnapVal.FALSUM): BelnapVal.VERUM,
+            (BelnapVal.VERUM, BelnapVal.BOTH): BelnapVal.VERUM,
+            (BelnapVal.VERUM, BelnapVal.NEITHER): BelnapVal.VERUM,
+            (BelnapVal.FALSUM, BelnapVal.VERUM): BelnapVal.VERUM,
+            (BelnapVal.FALSUM, BelnapVal.FALSUM): BelnapVal.FALSUM,
+            (BelnapVal.FALSUM, BelnapVal.BOTH): BelnapVal.BOTH,
+            (BelnapVal.FALSUM, BelnapVal.NEITHER): BelnapVal.NEITHER,
+            (BelnapVal.BOTH, BelnapVal.VERUM): BelnapVal.VERUM,
+            (BelnapVal.BOTH, BelnapVal.FALSUM): BelnapVal.BOTH,
+            (BelnapVal.BOTH, BelnapVal.BOTH): BelnapVal.BOTH,
+            (BelnapVal.BOTH, BelnapVal.NEITHER): BelnapVal.VERUM,
+            (BelnapVal.NEITHER, BelnapVal.VERUM): BelnapVal.VERUM,
+            (BelnapVal.NEITHER, BelnapVal.FALSUM): BelnapVal.NEITHER,
+            (BelnapVal.NEITHER, BelnapVal.BOTH): BelnapVal.VERUM,
+            (BelnapVal.NEITHER, BelnapVal.NEITHER): BelnapVal.NEITHER,
+        }
+        return table[(self, other)]
+
+    def impl(self, other: 'BelnapVal') -> 'BelnapVal':
+        """Material implication: A → B = ¬A ∨ B."""
+        return self.neg().disj(other)
 
 
-def neg(v: BelnapVal) -> BelnapVal:
-    """Paraconsistent negation."""
-    return {
-        BelnapVal.NEITHER: BelnapVal.NEITHER,
-        BelnapVal.TRUE: BelnapVal.FALSE,
-        BelnapVal.FALSE: BelnapVal.TRUE,
-        BelnapVal.BOTH: BelnapVal.BOTH,
-    }[v]
+def demo_explosion_failure():
+    """Demonstrate that explosion fails in Belnap's logic."""
+    print("=" * 60)
+    print("DEMO 1: Explosion Failure in FDE")
+    print("=" * 60)
+
+    p_val = BelnapVal.BOTH
+    q_val = BelnapVal.FALSUM
+
+    print(f"\nValuation: P = {p_val.value} (both true and false)")
+    print(f"           Q = {q_val.value} (false)")
+    print(f"\nP is designated (at least true): {p_val.is_designated()}")
+    print(f"¬P = {p_val.neg().value}")
+    print(f"¬P is designated: {p_val.neg().is_designated()}")
+    print(f"\nSo P and ¬P are BOTH designated (contradiction exists).")
+    print(f"But Q is designated: {q_val.is_designated()}")
+    print(f"\n→ Explosion FAILS: {p_val.value} ∧ ¬{p_val.value} does NOT entail {q_val.value}")
 
 
-def tconj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
-    """Truth conjunction (generalized AND)."""
-    if a == BelnapVal.FALSE or b == BelnapVal.FALSE:
-        return BelnapVal.FALSE
-    if a == BelnapVal.TRUE:
-        return b
-    if b == BelnapVal.TRUE:
-        return a
-    if a == BelnapVal.NEITHER and b == BelnapVal.NEITHER:
-        return BelnapVal.NEITHER
-    if a == BelnapVal.BOTH and b == BelnapVal.BOTH:
-        return BelnapVal.BOTH
-    return BelnapVal.FALSE  # NEITHER ∧ BOTH or BOTH ∧ NEITHER
+def demo_modus_ponens():
+    """Show when modus ponens works and when it fails."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Modus Ponens — When It Works and When It Fails")
+    print("=" * 60)
+
+    print("\nChecking all 16 cases of modus ponens (A, A→B ⊨ B):")
+    print(f"{'A':>8} {'B':>8} {'A→B':>8} {'A des':>8} {'A→B des':>8} {'B des':>8} {'MP ok?':>8}")
+    print("-" * 60)
+
+    failures = []
+    for a, b in product(BelnapVal, BelnapVal):
+        imp = a.impl(b)
+        a_des = a.is_designated()
+        imp_des = imp.is_designated()
+        b_des = b.is_designated()
+        mp_ok = not (a_des and imp_des) or b_des
+        marker = "✓" if mp_ok else "✗ FAIL"
+        print(f"{a.value:>8} {b.value:>8} {imp.value:>8} {str(a_des):>8} {str(imp_des):>8} {str(b_des):>8} {marker:>8}")
+        if not mp_ok:
+            failures.append((a, b))
+
+    print(f"\nModus ponens failures: {len(failures)}")
+    for a, b in failures:
+        print(f"  A={a.value}, B={b.value}: A and A→B are designated but B is not")
 
 
-def tdisj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
-    """Truth disjunction (generalized OR)."""
-    if a == BelnapVal.TRUE or b == BelnapVal.TRUE:
-        return BelnapVal.TRUE
-    if a == BelnapVal.FALSE:
-        return b
-    if b == BelnapVal.FALSE:
-        return a
-    if a == BelnapVal.NEITHER and b == BelnapVal.NEITHER:
-        return BelnapVal.NEITHER
-    if a == BelnapVal.BOTH and b == BelnapVal.BOTH:
-        return BelnapVal.BOTH
-    return BelnapVal.TRUE  # NEITHER ∨ BOTH or BOTH ∨ NEITHER
+def demo_de_morgan():
+    """Verify De Morgan's law for all value pairs."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: De Morgan's Law ¬(A∧B) = ¬A∨¬B")
+    print("=" * 60)
+
+    all_pass = True
+    for a, b in product(BelnapVal, BelnapVal):
+        lhs = a.conj(b).neg()
+        rhs = a.neg().disj(b.neg())
+        ok = lhs == rhs
+        if not ok:
+            print(f"  FAIL: A={a.value}, B={b.value}: ¬(A∧B)={lhs.value} ≠ ¬A∨¬B={rhs.value}")
+            all_pass = False
+
+    if all_pass:
+        print("✓ De Morgan's law holds for ALL 16 value combinations!")
 
 
-def is_designated(v: BelnapVal) -> bool:
-    """A value is designated if it contains truth."""
-    return v in (BelnapVal.TRUE, BelnapVal.BOTH)
+def demo_dream_state():
+    """Demonstrate dream belief states and retraction."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Dream Belief States and Retraction")
+    print("=" * 60)
+
+    # A dream state where "the cat is alive" is contradictory
+    beliefs: Dict[str, BelnapVal] = {
+        "cat_alive": BelnapVal.BOTH,       # alive AND dead
+        "sky_blue": BelnapVal.VERUM,       # normally true
+        "unicorn": BelnapVal.NEITHER,      # unknown
+        "gravity_up": BelnapVal.FALSUM,    # false
+    }
+
+    print("\nDream state:")
+    for prop, val in beliefs.items():
+        status = "★ contradictory" if val == BelnapVal.BOTH else ""
+        print(f"  {prop}: {val.value} (designated: {val.is_designated()}) {status}")
+
+    # Retract the contradiction
+    prop_to_retract = "cat_alive"
+    print(f"\nRetracting '{prop_to_retract}'...")
+    if beliefs[prop_to_retract] == BelnapVal.BOTH:
+        beliefs[prop_to_retract] = BelnapVal.NEITHER
+
+    print("\nAfter retraction:")
+    for prop, val in beliefs.items():
+        status = "★ contradictory" if val == BelnapVal.BOTH else ""
+        print(f"  {prop}: {val.value} (designated: {val.is_designated()}) {status}")
+
+    contradictions = [p for p, v in beliefs.items() if v == BelnapVal.BOTH]
+    print(f"\nContradictions remaining: {len(contradictions)}")
+    print("→ Retraction successfully removed the contradiction!")
 
 
-def kjoin(a: BelnapVal, b: BelnapVal) -> BelnapVal:
-    """Knowledge join: combine information."""
-    if a == BelnapVal.NEITHER:
-        return b
-    if b == BelnapVal.NEITHER:
-        return a
-    if a == BelnapVal.BOTH or b == BelnapVal.BOTH:
-        return BelnapVal.BOTH
-    if a == b:
-        return a
-    return BelnapVal.BOTH  # TRUE ⊔ FALSE = BOTH
+def demo_pretopology():
+    """Demonstrate the pre-topology that fails to be a topology."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Pre-Topological Space (Dream Geometry)")
+    print("=" * 60)
+
+    # Open sets on {0, 1, 2}
+    open_sets = [
+        frozenset(),           # empty
+        frozenset({0}),        # singleton 0
+        frozenset({1}),        # singleton 1
+        frozenset({0, 1, 2}),  # full set
+    ]
+
+    print("\nOpen sets of the dream pre-topology on {0, 1, 2}:")
+    for s in open_sets:
+        print(f"  {set(s) if s else '∅'}")
+
+    # Check intersection closure
+    print("\nIntersection closure check:")
+    for i, u in enumerate(open_sets):
+        for j, v in enumerate(open_sets):
+            if i <= j:
+                inter = u & v
+                is_open = inter in open_sets
+                print(f"  {set(u) if u else '∅'} ∩ {set(v) if v else '∅'} = {set(inter) if inter else '∅'} — open: {is_open}")
+
+    # Check union failure
+    print("\nUnion closure check (showing failure):")
+    u1 = frozenset({0})
+    u2 = frozenset({1})
+    union = u1 | u2
+    is_open = union in open_sets
+    print(f"  {set(u1)} ∪ {set(u2)} = {set(union)} — open: {is_open}")
+    print(f"\n→ The union {set(union)} is NOT open!")
+    print("→ This pre-topology is NOT a topology.")
+    print("→ This mirrors how individually coherent dream-fragments")
+    print("  can produce incoherent combinations.")
 
 
-# ─── Demo 1: Non-Explosion ───────────────────────────────────────────
+def demo_bilattice():
+    """Demonstrate the independence of truth and information orderings."""
+    print("\n" + "=" * 60)
+    print("DEMO 6: Bilattice Structure — Independent Orderings")
+    print("=" * 60)
 
-print("=" * 60)
-print("DEMO 1: The Non-Explosion Theorem")
-print("=" * 60)
-print()
-print("In classical logic, P ∧ ¬P ⊢ Q for all Q (explosion).")
-print("In Belnap's logic, contradictions are contained.")
-print()
+    # Information ordering: N ≤ T, N ≤ F, T ≤ B, F ≤ B
+    info_order = {
+        (BelnapVal.NEITHER, BelnapVal.VERUM): True,
+        (BelnapVal.NEITHER, BelnapVal.FALSUM): True,
+        (BelnapVal.NEITHER, BelnapVal.BOTH): True,
+        (BelnapVal.VERUM, BelnapVal.BOTH): True,
+        (BelnapVal.FALSUM, BelnapVal.BOTH): True,
+    }
 
-for v in BelnapVal:
-    contradiction = tconj(v, neg(v))
-    print(f"  v = {v.value:2s}:  v ∧ ¬v = {contradiction.value}  "
-          f"(designated: {is_designated(contradiction)})")
+    # Truth ordering: F ≤ N, F ≤ B, N ≤ T, B ≤ T
+    truth_order = {
+        (BelnapVal.FALSUM, BelnapVal.NEITHER): True,
+        (BelnapVal.FALSUM, BelnapVal.BOTH): True,
+        (BelnapVal.FALSUM, BelnapVal.VERUM): True,
+        (BelnapVal.NEITHER, BelnapVal.VERUM): True,
+        (BelnapVal.BOTH, BelnapVal.VERUM): True,
+    }
 
-print()
-print("→ Only BOTH sustains self-contradiction without explosion.")
-print("→ The contradiction is QUARANTINED — it doesn't infect other values.")
+    print("\nCases where info-order holds but truth-order doesn't:")
+    for (a, b), _ in info_order.items():
+        if (a, b) not in truth_order:
+            print(f"  {a.value} ≤ᵢ {b.value}  but  {a.value} ≰ₜ {b.value}")
 
-# ─── Demo 2: Non-Monotonicity ────────────────────────────────────────
+    print("\nCases where truth-order holds but info-order doesn't:")
+    for (a, b), _ in truth_order.items():
+        if (a, b) not in info_order:
+            print(f"  {a.value} ≤ₜ {b.value}  but  {a.value} ≰ᵢ {b.value}")
 
-print()
-print("=" * 60)
-print("DEMO 2: Non-Monotonic Closed-World Reasoning")
-print("=" * 60)
-print()
-
-props = ["rain", "umbrella", "sun"]
-
-def cwa_valuation(known: set, prop: str) -> BelnapVal:
-    """Closed-world assumption: known facts are TRUE, others FALSE."""
-    return BelnapVal.TRUE if prop in known else BelnapVal.FALSE
-
-# Phase 1: Know only "rain"
-known1 = {"rain"}
-print(f"Knowledge base: {known1}")
-for p in props:
-    v = cwa_valuation(known1, p)
-    nv = neg(v)
-    print(f"  {p:10s} → {v.value}   ¬{p:10s} → {nv.value} (designated: {is_designated(nv)})")
-
-print()
-print("→ Under CWA, ¬umbrella and ¬sun are designated (assumed false).")
-
-# Phase 2: Learn "umbrella"
-known2 = {"rain", "umbrella"}
-print(f"\nExpanded knowledge: {known2}")
-for p in props:
-    v = cwa_valuation(known2, p)
-    nv = neg(v)
-    print(f"  {p:10s} → {v.value}   ¬{p:10s} → {nv.value} (designated: {is_designated(nv)})")
-
-print()
-print("→ ¬umbrella was designated, now it's NOT. Belief RETRACTED!")
-print("→ This is NON-MONOTONE: more knowledge → fewer beliefs.")
-
-# ─── Demo 3: Dream Space ─────────────────────────────────────────────
-
-print()
-print("=" * 60)
-print("DEMO 3: The Singleton Dream Space (Not Topological)")
-print("=" * 60)
-print()
-
-def is_singleton_open(s: FrozenSet[int], universe_size: int) -> bool:
-    """Check if s is open in the singleton dream space on {0,...,n-1}."""
-    if len(s) == 0:
-        return True  # Empty set
-    if len(s) == universe_size:
-        return True  # Universe
-    if len(s) == 1:
-        return True  # Singleton
-    return False
-
-N = 10
-print(f"Dream space on {{0, ..., {N-1}}}:")
-print(f"  Open sets: ∅, {{0,...,{N-1}}}, and each singleton {{n}}")
-print()
-
-# Check finite intersection closure
-print("Finite intersection closure:")
-for i in range(min(5, N)):
-    for j in range(i+1, min(5, N)):
-        inter = frozenset({i}) & frozenset({j})
-        print(f"  {{{i}}} ∩ {{{j}}} = {'∅' if not inter else inter}  "
-              f"(open: {is_singleton_open(inter, N)})")
-    if i == 0:
-        print(f"  ... (all singleton intersections are ∅ or the singleton)")
-        break
-
-print()
-print("Union failure (the key!):")
-evens = frozenset(range(0, N, 2))
-print(f"  Even singletons: {{{', '.join(f'{{{n}}}' for n in sorted(evens))}}}")
-print(f"  Each singleton is open: ✓")
-print(f"  Union = {set(sorted(evens))}")
-print(f"  Union is open: {is_singleton_open(evens, N)}")
-print(f"  → The union of infinitely many open sets is NOT open!")
-print(f"  → This dream space is NOT a topological space.")
-
-# ─── Demo 4: Full Truth Table ────────────────────────────────────────
-
-print()
-print("=" * 60)
-print("DEMO 4: Belnap Truth Tables")
-print("=" * 60)
-print()
-
-vals = list(BelnapVal)
-
-print("Conjunction (∧):")
-print("     ", "  ".join(f"{v.value:>3}" for v in vals))
-for a in vals:
-    row = "  ".join(f"{tconj(a, b).value:>3}" for b in vals)
-    print(f"  {a.value:>2}  {row}")
-
-print()
-print("Disjunction (∨):")
-print("     ", "  ".join(f"{v.value:>3}" for v in vals))
-for a in vals:
-    row = "  ".join(f"{tdisj(a, b).value:>3}" for b in vals)
-    print(f"  {a.value:>2}  {row}")
-
-print()
-print("Negation and self-contradiction:")
-print(f"  {'v':>5}  {'¬v':>5}  {'v∧¬v':>5}  {'designated?':>12}")
-for v in vals:
-    nv = neg(v)
-    sc = tconj(v, nv)
-    print(f"  {v.value:>5}  {nv.value:>5}  {sc.value:>5}  {str(is_designated(sc)):>12}")
-
-print()
-print("Knowledge join (⊔_k) — combining information sources:")
-print("     ", "  ".join(f"{v.value:>3}" for v in vals))
-for a in vals:
-    row = "  ".join(f"{kjoin(a, b).value:>3}" for b in vals)
-    print(f"  {a.value:>2}  {row}")
-
-print()
-print("Done! All formal proofs verified in Lean 4.")
+    print("\n→ The orderings are genuinely independent!")
 
 
+if __name__ == "__main__":
+    demo_explosion_failure()
+    demo_modus_ponens()
+    demo_de_morgan()
+    demo_dream_state()
+    demo_pretopology()
+    demo_bilattice()
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
+    print("=" * 60)
+
+
+#!/usr/bin/env python3
 """
-Visualization: Belnap's Four-Valued Bilattice
-==============================================
+Visualization: Belnap's Bilattice Structure
 
-Displays the knowledge ordering and truth operations as a Hasse diagram.
+Shows the two independent orderings (truth and information)
+on the four-valued logic as a Hasse diagram.
 """
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def draw_belnap_bilattice():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+def draw_bilattice():
+    """Draw the bilattice with both orderings overlaid."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    # ── Panel 1: Knowledge Ordering ──
-    ax = axes[0]
-    ax.set_title("Knowledge Ordering ≤_k", fontsize=14, fontweight='bold')
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-0.5, 3.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
+    # Node positions (shared)
     positions = {
-        '⊥ (neither)': (0, 0),
-        'T (true)': (-1, 1.5),
-        'F (false)': (1, 1.5),
-        '⊤ (both)': (0, 3),
+        'T': (0, 1),     # verum (top of truth, middle of info)
+        'F': (0, -1),    # falsum (bottom of truth, middle of info)
+        'B': (1, 0),     # both (top of info, middle of truth)
+        'N': (-1, 0),    # neither (bottom of info, middle of truth)
     }
 
-    colors = {
-        '⊥ (neither)': '#E8E8E8',
-        'T (true)': '#90EE90',
-        'F (false)': '#FFB6C1',
-        '⊤ (both)': '#DDA0DD',
-    }
+    labels = {'T': 'True (⊤)', 'F': 'False (⊥)', 'B': 'Both (B)', 'N': 'Neither (N)'}
+    colors = {'T': '#2ecc71', 'F': '#e74c3c', 'B': '#9b59b6', 'N': '#95a5a6'}
 
-    edges = [
-        ('⊥ (neither)', 'T (true)'),
-        ('⊥ (neither)', 'F (false)'),
-        ('T (true)', '⊤ (both)'),
-        ('F (false)', '⊤ (both)'),
-    ]
+    # Truth ordering edges
+    truth_edges = [('F', 'N'), ('F', 'B'), ('N', 'T'), ('B', 'T')]
+    # Information ordering edges
+    info_edges = [('N', 'T'), ('N', 'F'), ('T', 'B'), ('F', 'B')]
 
-    for (n1, n2) in edges:
-        x1, y1 = positions[n1]
-        x2, y2 = positions[n2]
-        ax.annotate("", xy=(x2, y2 - 0.25), xytext=(x1, y1 + 0.25),
-                     arrowprops=dict(arrowstyle='->', color='#555', lw=1.5))
+    def draw_nodes(ax):
+        for node, (x, y) in positions.items():
+            circle = plt.Circle((x, y), 0.2, color=colors[node], ec='black', lw=2, zorder=5)
+            ax.add_patch(circle)
+            ax.text(x, y, node, ha='center', va='center', fontsize=14, fontweight='bold', zorder=6)
 
-    for name, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.35, color=colors[name], ec='black', lw=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, name.split('(')[0].strip(), ha='center', va='center',
-                fontsize=11, fontweight='bold', zorder=6)
-        ax.text(x, y - 0.55, f"({name.split('(')[1]}", ha='center', va='center',
-                fontsize=8, color='#555', zorder=6)
+    def draw_edges(ax, edges, color, style='-'):
+        for (a, b) in edges:
+            x1, y1 = positions[a]
+            x2, y2 = positions[b]
+            dx, dy = x2 - x1, y2 - y1
+            length = np.sqrt(dx**2 + dy**2)
+            # Shorten by node radius
+            r = 0.22
+            ax.annotate('', xy=(x2 - r*dx/length, y2 - r*dy/length),
+                        xytext=(x1 + r*dx/length, y1 + r*dy/length),
+                        arrowprops=dict(arrowstyle='->', color=color, lw=2, linestyle=style))
 
-    ax.text(0, -0.3, "More knowledge ↑", ha='center', fontsize=9, style='italic', color='#777')
-
-    # ── Panel 2: Truth Table (Conjunction) ──
-    ax = axes[1]
-    ax.set_title("Truth Conjunction (∧)", fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    vals = ['⊥', 'T', 'F', '⊤']
-    table_data = [
-        ['⊥', '⊥', 'F', 'F'],
-        ['⊥', 'T', 'F', '⊤'],
-        ['F', 'F', 'F', 'F'],
-        ['F', '⊤', 'F', '⊤'],
-    ]
-
-    cell_colors_data = []
-    color_map = {'⊥': '#E8E8E8', 'T': '#90EE90', 'F': '#FFB6C1', '⊤': '#DDA0DD'}
-    for row in table_data:
-        cell_colors_data.append([color_map[v] for v in row])
-
-    table = ax.table(cellText=table_data,
-                     rowLabels=vals,
-                     colLabels=vals,
-                     cellColours=cell_colors_data,
-                     loc='center',
-                     cellLoc='center')
-    table.auto_set_font_size(False)
-    table.set_fontsize(12)
-    table.scale(1.2, 1.8)
-
-    # ── Panel 3: Self-Contradiction ──
-    ax = axes[2]
-    ax.set_title("Self-Contradiction v ∧ ¬v", fontsize=14, fontweight='bold')
-    ax.axis('off')
-
-    sc_data = [
-        ['⊥', '⊥', '⊥', '✗'],
-        ['T', 'F', 'F', '✗'],
-        ['F', 'T', 'F', '✗'],
-        ['⊤', '⊤', '⊤', '✓ (!!)'],
-    ]
-
-    sc_colors = []
-    for row in sc_data:
-        colors_row = []
-        for i, v in enumerate(row):
-            if i == 3:
-                colors_row.append('#90EE90' if '✓' in v else '#FFB6C1')
-            else:
-                colors_row.append(color_map.get(v, 'white'))
-        sc_colors.append(colors_row)
-
-    table2 = ax.table(cellText=sc_data,
-                      rowLabels=vals,
-                      colLabels=['v', '¬v', 'v∧¬v', 'Designated?'],
-                      cellColours=sc_colors,
-                      loc='center',
-                      cellLoc='center')
-    table2.auto_set_font_size(False)
-    table2.set_fontsize(11)
-    table2.scale(1.2, 1.8)
-
-    fig.suptitle("Belnap's Four-Valued Paraconsistent Logic",
-                 fontsize=16, fontweight='bold', y=0.98)
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig('belnap_bilattice.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: belnap_bilattice.png")
-
-
-def draw_dream_space():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # ── Panel 1: Singleton Dream Space ──
+    # Panel 1: Truth ordering
     ax = axes[0]
-    ax.set_title("Singleton Dream Space on ℕ", fontsize=14, fontweight='bold')
-
-    # Draw some singletons
-    n_show = 8
-    for i in range(n_show):
-        circle = plt.Circle((i, 0), 0.3, color='#90EE90', ec='black', lw=1.5, alpha=0.8)
-        ax.add_patch(circle)
-        ax.text(i, 0, f"{{{i}}}", ha='center', va='center', fontsize=9)
-
-    # Show union of even singletons
-    for i in range(0, n_show, 2):
-        rect = mpatches.FancyBboxPatch((i - 0.35, -0.8), 0.7, 0.5,
-                                        boxstyle="round,pad=0.1",
-                                        facecolor='#FFB6C1', edgecolor='red',
-                                        lw=2, alpha=0.7)
-        ax.add_patch(rect)
-        ax.text(i, -0.55, f"{{{i}}}", ha='center', va='center', fontsize=8, color='red')
-
-    # Arrow showing union
-    ax.annotate("∪ = {0,2,4,6,...}", xy=(3.5, -1.3), fontsize=11,
-                ha='center', color='red', fontweight='bold')
-    ax.annotate("NOT OPEN!", xy=(3.5, -1.7), fontsize=12,
-                ha='center', color='red', fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFE4E1', edgecolor='red'))
-
-    ax.set_xlim(-1, n_show)
-    ax.set_ylim(-2.2, 1.2)
+    ax.set_xlim(-1.8, 1.8)
+    ax.set_ylim(-1.8, 1.8)
     ax.set_aspect('equal')
+    ax.set_title('Truth Ordering (≤ₜ)', fontsize=14, fontweight='bold')
+    draw_edges(ax, truth_edges, '#e67e22')
+    draw_nodes(ax)
+    ax.text(0, -1.6, 'F ≤ₜ {N,B} ≤ₜ T', ha='center', fontsize=10, style='italic')
     ax.axis('off')
 
-    # ── Panel 2: Topological vs Dream ──
+    # Panel 2: Information ordering
     ax = axes[1]
-    ax.set_title("Topological vs Dream Space", fontsize=14, fontweight='bold')
-
-    # Venn-like diagram
-    theta = np.linspace(0, 2 * np.pi, 100)
-
-    # Large circle: Dream spaces
-    r_dream = 2.5
-    ax.plot(r_dream * np.cos(theta), r_dream * np.sin(theta),
-            color='#DDA0DD', lw=3)
-    ax.fill(r_dream * np.cos(theta), r_dream * np.sin(theta),
-            color='#DDA0DD', alpha=0.15)
-    ax.text(0, 2.8, "Dream Spaces", ha='center', fontsize=12,
-            fontweight='bold', color='#8B008B')
-
-    # Smaller circle: Topological spaces
-    r_topo = 1.5
-    cx, cy = -0.3, -0.3
-    ax.plot(cx + r_topo * np.cos(theta), cy + r_topo * np.sin(theta),
-            color='#4682B4', lw=3)
-    ax.fill(cx + r_topo * np.cos(theta), cy + r_topo * np.sin(theta),
-            color='#4682B4', alpha=0.2)
-    ax.text(cx, cy, "Topological\nSpaces", ha='center', fontsize=11,
-            fontweight='bold', color='#00008B')
-
-    # Mark the singleton dream space
-    ax.plot(1.8, 1.2, 'r*', markersize=20, zorder=5)
-    ax.text(1.8, 0.7, "Singleton\nDream Space", ha='center', fontsize=9,
-            color='red', fontweight='bold')
-
-    ax.set_xlim(-3.5, 3.5)
-    ax.set_ylim(-3.5, 3.5)
+    ax.set_xlim(-1.8, 1.8)
+    ax.set_ylim(-1.8, 1.8)
     ax.set_aspect('equal')
+    ax.set_title('Information Ordering (≤ᵢ)', fontsize=14, fontweight='bold')
+    draw_edges(ax, info_edges, '#3498db')
+    draw_nodes(ax)
+    ax.text(0, -1.6, 'N ≤ᵢ {T,F} ≤ᵢ B', ha='center', fontsize=10, style='italic')
     ax.axis('off')
 
-    fig.suptitle("Dream Spaces Strictly Generalize Topological Spaces",
-                 fontsize=16, fontweight='bold', y=0.98)
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig('dream_space.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: dream_space.png")
+    # Panel 3: Both orderings overlaid
+    ax = axes[2]
+    ax.set_xlim(-1.8, 1.8)
+    ax.set_ylim(-1.8, 1.8)
+    ax.set_aspect('equal')
+    ax.set_title('Bilattice (Both Orderings)', fontsize=14, fontweight='bold')
+    draw_edges(ax, truth_edges, '#e67e22', '-')
+    draw_edges(ax, [e for e in info_edges if e not in truth_edges], '#3498db', '--')
+    draw_nodes(ax)
+    truth_patch = mpatches.Patch(color='#e67e22', label='Truth (≤ₜ)')
+    info_patch = mpatches.Patch(color='#3498db', label='Information (≤ᵢ)')
+    ax.legend(handles=[truth_patch, info_patch], loc='lower center', fontsize=9)
+    ax.axis('off')
+
+    plt.suptitle("Belnap's Four-Valued Bilattice", fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('bilattice.png', dpi=150, bbox_inches='tight')
+    print("Saved bilattice.png")
+
+
+def draw_pretopology():
+    """Draw the dream pre-topology showing union failure."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+
+    # Draw the three elements
+    positions = {0: (0, 0), 1: (2, 0), 2: (1, 1.5)}
+
+    # Draw open sets as colored regions
+    from matplotlib.patches import FancyBboxPatch, Circle, Ellipse
+
+    # Background: full set (open)
+    bg = plt.Rectangle((-0.8, -0.8), 3.6, 3.2, fc='#ecf0f1', ec='#2c3e50', lw=2, zorder=0)
+    ax.add_patch(bg)
+    ax.text(2.5, 2.2, '{0,1,2} ✓ open', fontsize=10, color='#2c3e50')
+
+    # {0} open
+    c0 = Circle((0, 0), 0.5, fc='#a8e6cf', ec='#27ae60', lw=2, alpha=0.7, zorder=1)
+    ax.add_patch(c0)
+    ax.text(-0.7, -0.7, '{0} ✓ open', fontsize=9, color='#27ae60')
+
+    # {1} open
+    c1 = Circle((2, 0), 0.5, fc='#a8d8ea', ec='#2980b9', lw=2, alpha=0.7, zorder=1)
+    ax.add_patch(c1)
+    ax.text(2.3, -0.7, '{1} ✓ open', fontsize=9, color='#2980b9')
+
+    # {0,1} NOT open - shown with dashed red border
+    e01 = Ellipse((1, 0), 3.2, 1.4, fc='#ffcccc', ec='#e74c3c', lw=2, ls='--', alpha=0.3, zorder=0.5)
+    ax.add_patch(e01)
+    ax.text(0.3, -1.2, '{0,1} ✗ NOT open!', fontsize=11, color='#e74c3c', fontweight='bold')
+
+    # Draw points
+    for idx, (x, y) in positions.items():
+        ax.plot(x, y, 'ko', markersize=12, zorder=3)
+        ax.text(x, y + 0.25, str(idx), ha='center', fontsize=14, fontweight='bold', zorder=4)
+
+    ax.set_xlim(-1.2, 3.2)
+    ax.set_ylim(-1.6, 2.6)
+    ax.set_aspect('equal')
+    ax.set_title('Dream Pre-Topology on {0, 1, 2}\n{0}∪{1} = {0,1} breaks the union axiom',
+                 fontsize=13, fontweight='bold')
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.savefig('pretopology.png', dpi=150, bbox_inches='tight')
+    print("Saved pretopology.png")
 
 
 if __name__ == "__main__":
-    draw_belnap_bilattice()
-    draw_dream_space()
+    draw_bilattice()
+    draw_pretopology()
