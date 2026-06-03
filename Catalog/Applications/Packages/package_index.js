@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "95a068f8",
     "filename": "fiber_unity_principle_the_fiber_profile.json",
     "pkg_num": 318,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7399148421052633,
     "title": "The Fiber Unity Principle: Preimage Geometry Governs Complexity, Thermodynamics, and Reversibility"
   },
   {
@@ -10318,8 +10318,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "fiber_unity_principle_the_fiber_profile",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7399148421052633,
+      "quality": "substantial",
       "shape": "octahedron",
       "title": "The Fiber Unity Principle: Preimage Geometry Governs Complexity, Thermodynamics, and Reversibility"
     }
