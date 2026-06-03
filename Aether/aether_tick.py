@@ -311,6 +311,19 @@ def rebuild_commit_push() -> bool:
     except Exception as e:
         print(f"[Tick] docs sync error: {e}")
 
+    # Sync workspace status files for the dashboard
+    workspace = Path(__file__).parent / ".aether_workspace"
+    status_dir = docs_dir / "aether_status"
+    try:
+        status_dir.mkdir(parents=True, exist_ok=True)
+        for status_file in ["inflight_jobs.json", "insights.json", "tick_counter.json"]:
+            src = workspace / status_file
+            if src.exists():
+                import shutil
+                shutil.copy2(src, status_dir / status_file)
+    except Exception as e:
+        print(f"[Tick] status sync error: {e}")
+
     def _has_conflict_markers():
         """Check if any tracked file has git merge conflict markers."""
         result = subprocess.run(
