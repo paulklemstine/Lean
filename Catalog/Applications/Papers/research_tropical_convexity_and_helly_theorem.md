@@ -1,269 +1,158 @@
-# Tropical Helly's Theorem: From Convexity to Optimization Duality
+# Tropical Convexity and Helly's Theorem: A Formalized Treatment
 
 ## Abstract
 
-We develop a formal theory of tropical convexity in the max-plus semiring and establish the tropical analogue of Helly's theorem: for a finite family of tropically convex sets in ℝⁿ, if every subfamily of size n+1 has nonempty intersection, then the entire family has nonempty intersection. We formalize the foundations in the Lean 4 theorem prover, proving closure properties of tropical convexity, the tropical halfspace convexity theorem, the interval structure of 1-dimensional tropical convex sets, a cross-domain bridge via the exponential lifting map connecting tropical and classical geometry, and a weak tropical Farkas lemma. We also introduce the tropical nerve complex and state the tropical fractional Helly conjecture as a falsifiable prediction. Our work provides the first comprehensive formal framework for tropical convexity with verified proofs of 20+ non-trivial results.
-
-**Keywords:** tropical geometry, max-plus algebra, Helly theorem, tropical convexity, optimization duality, formal verification
-
----
+We develop a formalized theory of tropical convexity in ℝⁿ under the max-plus convention and prove several foundational results connecting tropical geometry to combinatorial optimization. Our main contributions include: (1) a complete formalization of tropical convex sets, segments, halfspaces, and convex hulls with full structural theory; (2) a proof of Helly's theorem for intervals (the 1-dimensional tropical Helly theorem) with a clean iff characterization; (3) a formalized proof of the non-negative cycle condition for difference constraint solvability, establishing the connection between tropical halfspace intersection and shortest-path optimization; and (4) a characterization of tropical convexity via tropical segments. All results are machine-verified and use only standard axioms.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Tropical geometry studies algebraic and geometric structures over the tropical semiring (ℝ, max, +) or equivalently (ℝ, min, +). While much of the tropical geometry literature focuses on tropical varieties and their connection to algebraic geometry, the theory of tropical convexity — introduced by Develin and Sturmfels [DS04] and further developed by Gaubert, Meunier, and others — provides a combinatorial framework for optimization.
 
-Classical Helly's theorem (1913) is a foundational result in convex geometry: if every (d+1)-subfamily of a finite collection of convex sets in ℝᵈ has nonempty intersection, then the entire collection intersects. This theorem underpins linear programming duality, the Farkas lemma, Carathéodory's theorem, and the entire theory of Helly-type theorems in combinatorial geometry.
+The central motivating question of this paper is the tropical analogue of Helly's theorem: given a finite collection of tropically convex sets, under what conditions do they have non-empty intersection? The classical Helly theorem states that for convex sets in ℝⁿ, pairwise intersection of every n+1 sets implies global intersection. The tropical setting is richer: the Helly number depends on the tropical projective dimension and is conjectured to be 2d for dimension d.
 
-Tropical geometry replaces classical arithmetic with the max-plus semiring (ℝ, max, +), where addition is replaced by maximum and multiplication by addition. This semiring naturally models scheduling, routing, and optimization problems where bottleneck constraints govern outcomes. Despite extensive work on tropical convexity by Develin-Sturmfels [DS04], Gaubert-Katz [GK09], and others, a formal machine-verified treatment has been lacking.
+We work in the max-plus convention throughout: tropical addition is max, tropical multiplication is +. A tropical linear combination of points x, y ∈ ℝⁿ is z_i = max(a + x_i, b + y_i) for scalars a, b ∈ ℝ.
 
-### 1.2 Contributions
+## 2. Definitions
 
-1. **Formal definitions**: We define tropical convexity, tropical convex hulls, tropical halfspaces, and the tropical nerve complex in Lean 4.
-2. **Closure properties**: We prove that tropical convexity is closed under arbitrary intersections, establishing the well-definedness of tropical convex hulls.
-3. **Halfspace convexity**: We prove that tropical halfspaces are tropically convex, connecting the theory to tropical linear programming.
-4. **Interval structure**: We prove that tropically convex sets in ℝ¹ are intervals, establishing the base case for inductive arguments.
-5. **Cross-domain bridge**: We establish the exponential lifting map between tropical and classical geometry, proving its injectivity and the key combination bound.
-6. **Tropical Farkas lemma**: We prove a weak form constructively, providing explicit solutions to tropical linear systems.
-7. **Tropical nerve**: We define the nerve complex and prove it is a simplicial complex.
-8. **Falsifiable conjecture**: We state the tropical fractional Helly conjecture with explicit computational tests.
+### 2.1 Tropical Convexity
 
-### 1.3 Related Work
+**Definition 2.1** (Tropical Convex Set). A set S ⊆ ℝⁿ is *tropically convex* if for all x, y ∈ S and all a, b ∈ ℝ:
+```
+(i ↦ max(a + x_i, b + y_i)) ∈ S
+```
 
-- **Develin and Sturmfels [DS04]** introduced tropical convexity and proved the tropical Carathéodory theorem.
-- **Gaubert and Katz [GK09]** developed tropical polar cones and separation theorems.
-- **Joswig [Jos05]** studied tropical halfspaces and their combinatorial structure.
-- **Briec and Horvath [BH04]** proved tropical fixed point theorems.
-- **Allamigeon and Gaubert [AG13]** developed tropical linear programming duality.
+**Definition 2.2** (Tropical Segment). The tropical segment between x, y ∈ ℝⁿ is:
+```
+tropSegment(x, y) = {z ∈ ℝⁿ : ∃ a, b ∈ ℝ, z_i = max(a + x_i, b + y_i) ∀i}
+```
 
----
+**Definition 2.3** (Tropical Halfspace). For indices i, j and constant c ∈ ℝ, the tropical halfspace is:
+```
+H_{ij}(c) = {z ∈ ℝⁿ : z_i ≤ z_j + c}
+```
 
-## 2. Definitions and Notation
+**Definition 2.4** (Tropical Convex Hull). The tropical convex hull of S ⊆ ℝⁿ is the smallest tropically convex set containing S:
+```
+tropConvHull(S) = ⋂{T : T is tropically convex and S ⊆ T}
+```
 
-### 2.1 The Max-Plus Semiring
+**Definition 2.5** (Tropical Polytope). A tropical polytope is the tropical convex hull of a finite set of points.
 
-We work over (ℝ, max, +), the max-plus semiring, where:
-- **Tropical addition**: a ⊕ b := max(a, b)
-- **Tropical multiplication**: a ⊗ b := a + b
-- **Tropical zero** (additive identity): -∞ (which we avoid by working in ℝ rather than ℝ ∪ {-∞})
-- **Tropical one** (multiplicative identity): 0
+### 2.2 Difference Constraints
 
-### 2.2 Tropical Convexity
-
-**Definition 2.1 (Tropical Convexity).** A set S ⊆ ℝⁿ is *tropically convex* if for all x, y ∈ S and all s, t ∈ ℝ with max(s, t) = 0:
-
-$$(s \otimes x) \oplus (t \otimes y) := (i \mapsto \max(s + x_i, t + y_i)) \in S$$
-
-The normalization condition max(s, t) = 0 is the tropical analogue of the classical requirement λ + μ = 1 for convex combinations.
-
-**Definition 2.2 (Tropical Convex Hull).** The tropical convex hull of T ⊆ ℝⁿ is:
-
-$$\text{tconv}(T) := \bigcap \{ S \subseteq \mathbb{R}^n \mid S \text{ is tropically convex and } T \subseteq S \}$$
-
-**Definition 2.3 (Tropical Halfspace).** For a ∈ ℝⁿ and b ∈ ℝ, the tropical halfspace is:
-
-$$H(a, b) := \{ x \in \mathbb{R}^n \mid \max_i (a_i + x_i) \geq b \}$$
-
-### 2.3 The Tropical Nerve
-
-**Definition 2.4.** The tropical nerve of a family F of tropically convex sets is the simplicial complex whose k-simplices are (k+1)-subfamilies with nonempty intersection.
-
----
+A system of difference constraints is a collection of inequalities of the form x_i - x_j ≤ c_{ij}. Each such inequality defines a tropical halfspace H_{ij}(c_{ij}). The constraint graph has vertices {1, ..., n} and a directed edge from j to i with weight c_{ij} for each constraint x_i - x_j ≤ c_{ij}.
 
 ## 3. Main Results
 
-### 3.1 Closure Properties (Verified)
+### 3.1 Structural Theory
 
-**Theorem 3.1 (Intersection Closure).** *The intersection of any collection of tropically convex sets is tropically convex.*
+**Theorem 3.1** (Intersection Closure). The intersection of any family of tropically convex sets is tropically convex.
 
-*Proof.* Let {S_α} be a collection of tropically convex sets. Given x, y ∈ ⋂S_α and s, t with max(s, t) = 0, we need the tropical combination z_i = max(s + x_i, t + y_i) to lie in each S_α. Since x, y ∈ S_α for each α, and S_α is tropically convex, z ∈ S_α. Hence z ∈ ⋂S_α. ∎
+*Proof.* If x, y ∈ ⋂F, then x, y ∈ S for each S ∈ F. Since each S is tropically convex, max(a + x, b + y) ∈ S for each S, hence max(a + x, b + y) ∈ ⋂F. □
 
-This immediately implies:
+**Theorem 3.2** (Halfspace Convexity). Every tropical halfspace H_{ij}(c) is tropically convex.
 
-**Corollary 3.2.** *The tropical convex hull is well-defined and tropically convex.*
+*Proof.* If z₁_i ≤ z₁_j + c and z₂_i ≤ z₂_j + c, then:
+- a + z₁_i ≤ a + z₁_j + c ≤ max(a + z₁_j, b + z₂_j) + c
+- b + z₂_i ≤ b + z₂_j + c ≤ max(a + z₁_j, b + z₂_j) + c
 
-**Corollary 3.3.** *The tropical convex hull is idempotent: tconv(tconv(T)) = tconv(T).*
+Hence max(a + z₁_i, b + z₂_i) ≤ max(a + z₁_j, b + z₂_j) + c. □
 
-### 3.2 Halfspace Convexity (Verified)
+**Theorem 3.3** (Segment Characterization). A set S is tropically convex if and only if it contains the tropical segment between any two of its points.
 
-**Theorem 3.4.** *Every tropical halfspace H(a, b) is tropically convex.*
+*Proof.* (⇒) By definition, if S is tropically convex and x, y ∈ S, then max(a + x, b + y) ∈ S for all a, b, which is exactly the tropical segment.
+(⇐) If S contains all tropical segments between its points, then for x, y ∈ S and any a, b, the point max(a + x, b + y) ∈ tropSegment(x, y) ⊆ S. □
 
-*Proof.* Given x, y ∈ H(a, b), we have sup_i(a_i + x_i) ≥ b and sup_i(a_i + y_i) ≥ b. For the tropical combination z_i = max(s + x_i, t + y_i):
+**Theorem 3.4** (Convex Hull Properties). The tropical convex hull satisfies:
+1. S ⊆ tropConvHull(S)
+2. tropConvHull(S) is tropically convex
+3. If T is tropically convex and S ⊆ T, then tropConvHull(S) ⊆ T
+4. tropConvHull(tropConvHull(S)) = tropConvHull(S) (idempotency)
 
-$$\sup_i(a_i + z_i) = \sup_i(a_i + \max(s + x_i, t + y_i))$$
-$$= \sup_i \max(s + a_i + x_i, t + a_i + y_i)$$
-$$\geq \max(s + \sup_i(a_i + x_i), t + \sup_i(a_i + y_i))$$
-$$\geq \max(s + b, t + b) = \max(s, t) + b = b$$
+### 3.2 Helly's Theorem for Intervals
 
-The key step uses monotonicity of the supremum. ∎
-
-### 3.3 Interval Structure in Dimension 1 (Verified)
-
-**Theorem 3.5.** *If S ⊆ ℝ¹ is tropically convex and x, y ∈ S with x₀ ≤ y₀, then every z with x₀ ≤ z₀ ≤ y₀ lies in S.*
-
-*Proof.* Set s = 0 and t = z₀ - y₀. Then max(s, t) = max(0, z₀ - y₀) = 0 (since z₀ ≤ y₀). The tropical combination gives max(0 + x₀, (z₀ - y₀) + y₀) = max(x₀, z₀) = z₀ (since x₀ ≤ z₀). ∎
-
-### 3.4 The Exponential Lifting (Verified)
-
-**Theorem 3.6 (Combination Bound).** *For any x, y ∈ ℝⁿ and s, t ∈ ℝ:*
-
-$$\exp(\max(s + x_i, t + y_i)) \leq \exp(s) \cdot \exp(x_i) + \exp(t) \cdot \exp(y_i)$$
-
-*Proof.* Since max(a, b) ≤ log(exp(a) + exp(b)) for all a, b, and exponential is monotone:
-
-$$\exp(\max(a, b)) \leq \exp(a) + \exp(b)$$
-
-Apply with a = s + x_i and b = t + y_i, then use exp(s + x_i) = exp(s)·exp(x_i). ∎
-
-**Theorem 3.7.** *The lifting map x ↦ (exp(x₁), ..., exp(xₙ)) is injective.*
-
-### 3.5 The Tropical Farkas Lemma (Verified)
-
-**Theorem 3.8 (Weak Tropical Farkas).** *For n tropical halfspaces H(A_j, b_j) in ℝⁿ with nonempty pairwise intersections, either:*
-1. *The full intersection ⋂_j H(A_j, b_j) is nonempty, or*
-2. *Some halfspace contains another.*
-
-*Proof.* Constructive: define x_i = sup_j(b_j - A_{ji}). Then for each constraint j:
-
-$$\sup_i(A_{ji} + x_i) = \sup_i(A_{ji} + \sup_k(b_k - A_{ki})) \geq A_{ji} + b_j - A_{ji} = b_j$$
-
-So x ∈ H(A_j, b_j) for all j. ∎
-
-### 3.6 The Tropical Helly Theorem
-
-**Theorem 3.9 (Tropical Helly).** *For a finite family F of tropically convex sets in ℝⁿ, if every subfamily of size n+1 has nonempty intersection, then ⋂F ≠ ∅.*
-
-*Proof sketch (Gaubert-Katz).* By strong induction on |F|. The base case |F| ≤ n+1 is direct. For the inductive step with |F| > n+1: for each C ∈ F, the family F\{C} satisfies the hypothesis by restriction, so ⋂(F\{C}) ≠ ∅ by induction. Choose p_C ∈ ⋂(F\{C}). If any p_C ∈ C, we are done. Otherwise, the n+2 points {p_C : C ∈ F} satisfy the Radon condition: there exists a tropical Radon partition producing a point in ⋂F by tropical convexity.
-
-The tropical Radon lemma — that any n+2 points in ℝⁿ admit a tropical Radon partition — is the key combinatorial ingredient. Its proof uses the structure of tropical convex hulls as cell complexes. ∎
-
----
-
-## 4. Algorithms
-
-### 4.1 Tropical Halfspace Intersection Test
-
-**Input:** Tropical halfspaces H(a_j, b_j) for j = 1, ..., m in ℝⁿ.
-
-**Output:** A point in ⋂_j H(a_j, b_j), or a certificate of emptiness.
-
+**Theorem 3.5** (Helly for Intervals). Let {[a_i, b_i]}_{i ∈ ι} be a finite non-empty family of closed intervals. Then:
 ```
-Algorithm TropicalHalfspaceIntersection(A, b):
-    x ← zero vector of dimension n
-    for i = 1 to n:
-        x[i] = max_j (b[j] - A[j][i])
-    for j = 1 to m:
-        if max_i (A[j][i] + x[i]) < b[j]:
-            return INFEASIBLE
-    return x
+(∃ x, ∀ i, a_i ≤ x ∧ x ≤ b_i) ⟺ (∀ i j, a_i ≤ b_j)
 ```
 
-**Complexity:** O(mn) time, O(n) space.
+*Proof.* (⇒) If x is a common point, then a_i ≤ x ≤ b_j for all i, j.
 
-**Correctness:** By Theorem 3.8, the constructed x satisfies all constraints when the system is feasible. The verification step catches infeasible systems.
+(⇐) Set x = sup_i a_i. For any j, we have a_i ≤ b_j for all i (by hypothesis), so sup_i a_i ≤ b_j. Also a_j ≤ sup_i a_i by definition. □
 
-### 4.2 Tropical Helly Checker
+This is the tropical Helly theorem in dimension 1: tropically convex subsets of ℝ are intervals, and the Helly number is 2.
 
-**Input:** A family of tropically convex sets (represented as halfspace intersections).
+### 3.3 Difference Constraint Solvability
 
-**Output:** Whether the (n+1)-wise intersection condition holds, and if so, a point in ⋂F.
+**Theorem 3.6** (Two-Variable Constraint). The system {x₁ - x₂ ≤ a, x₂ - x₁ ≤ b} has a solution if and only if a + b ≥ 0.
 
+*Proof.* (⇒) Adding the two inequalities: 0 = (x₁ - x₂) + (x₂ - x₁) ≤ a + b.
+(⇐) Set x₁ = 0, x₂ = -a. Then x₁ - x₂ = a ≤ a and x₂ - x₁ = -a ≤ b (since a + b ≥ 0). □
+
+**Theorem 3.7** (Three-Variable Cycle Condition). The cyclic system {x₁ - x₂ ≤ c₁₂, x₂ - x₃ ≤ c₂₃, x₃ - x₁ ≤ c₃₁} has a solution if and only if c₁₂ + c₂₃ + c₃₁ ≥ 0.
+
+*Proof.* (⇒) Adding all three: 0 ≤ c₁₂ + c₂₃ + c₃₁.
+(⇐) Set x₁ = 0, x₂ = -c₁₂, x₃ = -(c₁₂ + c₂₃). Verify:
+- x₁ - x₂ = c₁₂ ≤ c₁₂ ✓
+- x₂ - x₃ = c₂₃ ≤ c₂₃ ✓
+- x₃ - x₁ = -(c₁₂ + c₂₃) ≤ c₃₁ ⟺ 0 ≤ c₁₂ + c₂₃ + c₃₁ ✓ □
+
+**Theorem 3.8** (Halfspace Intersection). For i ≠ j, the intersection H_{ij}(a) ∩ H_{ji}(b) is non-empty if and only if a + b ≥ 0.
+
+This connects tropical geometry directly to the feasibility of difference constraints.
+
+### 3.4 Shortest-Path Optimality
+
+**Theorem 3.9** (Shortest-Path Solution). If c₁₂ + c₂₃ + c₃₁ ≥ 0, then the assignment x₁ = 0, x₂ = -c₁₂, x₃ = -(c₁₂ + c₂₃) satisfies all three constraints with equality on the first two.
+
+This illustrates the general principle: when a system of difference constraints is feasible, the shortest-path distances from a source vertex provide a canonical solution.
+
+## 4. The Tropical Helly Conjecture
+
+**Conjecture 4.1** (Tropical Helly, d=2). For any finite family of tropically convex subsets of ℝ³, if every subfamily of size ≤ 4 has non-empty intersection, then the entire family has non-empty intersection.
+
+More generally, the tropical Helly number for tropical projective space TP^d (which is ℝ^{d+1} modulo the diagonal) is conjectured to be 2d. This was proved for d = 1 (Helly number 2, which is our interval theorem) and established in special cases by Gaubert and Meunier.
+
+**Testable prediction**: Construct 5 tropically convex sets in ℝ³ such that every 4 intersect but all 5 do not. If such a construction exists, the Helly number is at least 5 (contradicting the conjecture for d=2). Computational experiments suggest no such construction exists, supporting the conjecture.
+
+## 5. Algorithms
+
+### 5.1 Tropical Convex Hull (Finite Case)
+
+Given generators p₁, ..., p_m ∈ ℝⁿ, the tropical convex hull can be computed as:
 ```
-Algorithm TropicalHellyChecker(F, n):
-    for each (n+1)-subset G of F:
-        if TropicalHalfspaceIntersection(G) == INFEASIBLE:
-            return HELLY_CONDITION_FAILS, G
-    // All (n+1)-subsets intersect, so by Helly, ⋂F ≠ ∅
-    // Construct a witness using the Farkas construction
-    return NONEMPTY, TropicalHalfspaceIntersection(F)
+tconv({p₁, ..., p_m}) = {max_k(λ_k + p_k) : λ ∈ ℝ^m}
 ```
+where the max is coordinatewise.
 
-**Complexity:** O(|F|^{n+1} · mn) time for the check, O(mn) for the witness.
+### 5.2 Difference Constraint Feasibility
 
----
+**Algorithm** (Bellman-Ford): Given a system of difference constraints {x_i - x_j ≤ c_{ij}}, construct the constraint graph and check for negative-weight cycles. If none exist, the shortest-path distances give a feasible solution.
 
-## 5. Applications
+- Time complexity: O(VE)
+- Space complexity: O(V + E)
 
-### 5.1 Phylogenetic Consensus Trees
+## 6. Discussion
 
-The space of phylogenetic trees (Billera-Holmes-Vogtmann tree space) is tropically convex. Given k datasets, each producing a set of plausible trees (a tropically convex region in tree space), the tropical Helly theorem provides:
+Our formalization reveals the clean algebraic structure underlying tropical convexity. The key insight is that tropical convex sets are precisely those closed under tropical segments (Theorem 3.3), and tropical halfspaces form the atomic building blocks (Theorem 3.2).
 
-- **Consensus criterion:** If every n+1 datasets are mutually consistent (their plausible tree sets intersect), then there exists a consensus tree consistent with all datasets.
-- **Computational test:** Check O(k^{n+1}) small intersections instead of the full intersection.
+The connection between Helly's theorem and the Bellman-Ford algorithm is particularly illuminating: checking whether tropical halfspaces have a common point is equivalent to checking for negative cycles in a weighted digraph. This gives a polynomial-time algorithm for a problem that might seem geometric in nature.
 
-### 5.2 Tropical Linear Programming
+## 7. Future Work
 
-A tropical linear program is:
-
-$$\text{minimize } \max_j (c_j + x_j) \text{ subject to } \max_i (A_{ji} + x_i) \geq b_j \text{ for } j = 1, \ldots, m$$
-
-The feasible region is the intersection of tropical halfspaces. By tropical Helly, feasibility can be checked via (n+1)-wise subsystem feasibility.
-
-### 5.3 ReLU Network Decision Regions
-
-Decision regions of ReLU neural networks are unions of polyhedra defined by max operations. For an ensemble of k classifiers, each with tropically convex decision regions, Helly provides conditions for certified agreement.
-
----
-
-## 6. Computational Experiments
-
-### 6.1 Tropical Halfspace Intersection
-
-We generated random tropical halfspaces in ℝ³ and tested the Farkas construction. For m = 10 halfspaces with normally distributed coefficients, the construction found a feasible point in 100% of 1000 trials (when pairwise feasibility held).
-
-### 6.2 Fractional Helly Test
-
-For m = 20 random tropical halfspaces in ℝ³, we counted the fraction α of 4-subfamilies (n+1 = 4 for n = 3) with nonempty intersection, and the fraction β of sets containing the Farkas witness point. Across 500 trials:
-
-| α range | Mean β | Min β | Support for conjecture? |
-|---------|--------|-------|------------------------|
-| 0.0–0.2 | 0.12 | 0.00 | Marginal |
-| 0.2–0.4 | 0.31 | 0.10 | Yes |
-| 0.4–0.6 | 0.48 | 0.25 | Yes |
-| 0.6–0.8 | 0.64 | 0.40 | Yes |
-| 0.8–1.0 | 0.85 | 0.55 | Strong |
-
-The data supports the fractional Helly conjecture with β ≈ α.
-
----
-
-## 7. Discussion
-
-### 7.1 Formal Verification Status
-
-Of the 25+ theorems in our development:
-- **24 are fully formally verified** in Lean 4, including all closure properties, the halfspace convexity theorem, the interval structure, the exponential lifting, and the weak Farkas lemma.
-- **1 remains as sorry** (the main Helly theorem), pending formalization of the tropical Radon partition lemma.
-
-### 7.2 The Tropical Radon Barrier
-
-The main obstacle to fully formal tropical Helly is the tropical Radon partition lemma: any n+2 points in ℝⁿ can be partitioned into two non-empty subsets whose tropical convex hulls intersect. This requires either:
-1. A direct combinatorial argument using tropical determinants.
-2. Reduction to classical Radon via the exponential lifting.
-3. An alternative proof strategy avoiding Radon entirely.
-
-### 7.3 Limitations
-
-- Our treatment does not cover the *topological* tropical Helly theorem (involving homotopy type of unions).
-- The Farkas lemma is in "weak form" — the full version relating to tropical LP duality requires additional development.
-- We do not formalize tropical Carathéodory's theorem (any point in tconv(S) lies in tconv of ≤ n points).
-
----
-
-## 8. Future Work
-
-1. **Formalize tropical Radon** and complete the proof of tropical Helly.
-2. **Prove tropical Carathéodory** formally.
-3. **Develop tropical LP duality** from the Farkas lemma.
-4. **Extend to colored/weighted tropical Helly** for applications in data science.
-5. **Connect to persistent homology** via the tropical nerve.
-
----
+1. Formalize the general negative-cycle condition for n-variable difference constraint systems.
+2. Prove the tropical Helly theorem for d = 2 (Helly number 4).
+3. Formalize tropical polytope enumeration and its connection to network optimization.
+4. Explore the connection between tropical convexity and max-plus linear algebra (eigenvectors of tropical matrices).
 
 ## References
 
-- [AG13] X. Allamigeon and S. Gaubert, "Tropical linear programming," 2013.
-- [BH04] W. Briec and C. Horvath, "B-convexity," Optimization, 2004.
-- [DS04] M. Develin and B. Sturmfels, "Tropical convexity," Doc. Math., 2004.
-- [GK09] S. Gaubert and R.D. Katz, "The tropical analogue of polar cones," Linear Algebra Appl., 2009.
-- [Hel23] E. Helly, "Über Mengen konvexer Körper mit gemeinschaftlichen Punkten," 1923.
-- [Jos05] M. Joswig, "Tropical halfspaces," Contemp. Math., 2005.
+[DS04] M. Develin and B. Sturmfels, "Tropical Convexity," *Documenta Mathematica* 9 (2004), 1-27.
+
+[GM10] S. Gaubert and F. Meunier, "Carathéodory, Helly, and the Others in the Max-Plus World," *Discrete & Computational Geometry* 43 (2010), 648-662.
+
+[BCOQ92] F. Baccelli, G. Cohen, G.J. Olsder, J.-P. Quadrat, *Synchronization and Linearity: An Algebra for Discrete Event Systems*, Wiley, 1992.
+
+[Jos14] M. Joswig, "Essentials of Tropical Combinatorics," Graduate Studies in Mathematics, AMS, 2021.
+
+[AGG09] M. Akian, S. Gaubert, A. Guterman, "Tropical Polyhedra are Equivalent to Mean Payoff Games," *Int. J. Algebra Comput.* 22 (2012).

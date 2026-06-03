@@ -1,289 +1,263 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Convexity and the Tropical Helly Theorem
+Algorithms for Tropical Convexity and Helly Theory
 
-Implements:
-1. Tropical halfspace intersection (Farkas construction) — O(mn)
-2. Tropical Helly checker — O(|F|^{n+1} * mn)
-3. Tropical convex hull membership test
-4. Tropical fractional Helly test
-
-All algorithms correspond to theorems verified in the Lean formalization.
+Type-hinted implementations of core algorithms from the research.
 """
 
+from typing import Optional
 import numpy as np
-from itertools import combinations
-from typing import List, Tuple, Optional, Set
 
 
-class TropicalHalfspace:
-    """A tropical halfspace H(a, b) = {x ∈ ℝⁿ | max_i(a_i + x_i) ≥ b}.
-    
-    This is the max-plus analogue of a classical linear inequality aᵀx ≥ b.
-    Corresponds to the Lean definition `TropHalfspace` in TropicalHelly.lean.
+def tropical_add(a: float, b: float) -> float:
+    """Tropical addition: max(a, b)."""
+    return max(a, b)
+
+
+def tropical_mult(a: float, b: float) -> float:
+    """Tropical multiplication: a + b."""
+    return a + b
+
+
+def tropical_linear_combination(
+    x: np.ndarray, y: np.ndarray, a: float, b: float
+) -> np.ndarray:
     """
+    Tropical linear combination: coordinatewise max(a + x_i, b + y_i).
     
-    def __init__(self, a: np.ndarray, b: float):
-        """Initialize a tropical halfspace.
+    Parameters:
+        x, y: Points in ℝⁿ
+        a, b: Tropical coefficients
+    
+    Returns:
+        z where z_i = max(a + x_i, b + y_i)
+    """
+    return np.maximum(a + x, b + y)
+
+
+def is_in_tropical_segment(
+    z: np.ndarray, x: np.ndarray, y: np.ndarray, tol: float = 1e-8
+) -> tuple[bool, Optional[tuple[float, float]]]:
+    """
+    Check if z lies in the tropical segment between x and y.
+    
+    A point z is in tropSegment(x, y) iff there exist a, b such that
+    z_i = max(a + x_i, b + y_i) for all i.
+    
+    Returns:
+        (is_member, (a, b) if found else None)
+    """
+    n = len(z)
+    if n == 0:
+        return True, (0.0, 0.0)
+    
+    # For z to equal max(a + x, b + y), we need for each coordinate i:
+    # either z_i = a + x_i >= b + y_i, or z_i = b + y_i >= a + x_i
+    # This gives a - b >= y_i - x_i (first case) or a - b <= z_i - x_i - (z_i - y_i) = y_i - x_i... 
+    # Actually: try all possible assignments of "which term achieves max"
+    # For efficiency, try a = z_0 - x_0 and check
+    
+    for ref_idx in range(n):
+        # Try a = z[ref_idx] - x[ref_idx]
+        a_try = z[ref_idx] - x[ref_idx]
+        # Then for each i where b + y_i = z_i, b = z_i - y_i
+        # For each i where a + x_i = z_i, a = z_i - x_i should be consistent
         
-        Args:
-            a: Normal vector (n-dimensional)
-            b: Threshold value
-        """
-        self.a = np.asarray(a, dtype=float)
-        self.b = float(b)
-        self.n = len(self.a)
+        for ref_idx2 in range(n):
+            b_try = z[ref_idx2] - y[ref_idx2]
+            # Check if this (a, b) works
+            z_check = np.maximum(a_try + x, b_try + y)
+            if np.allclose(z_check, z, atol=tol):
+                return True, (a_try, b_try)
     
-    def contains(self, x: np.ndarray) -> bool:
-        """Check if x ∈ H(a, b), i.e., max_i(a_i + x_i) ≥ b."""
-        return float(np.max(self.a + x)) >= self.b - 1e-10
-    
-    def __repr__(self):
-        return f"TropHalfspace(a={self.a}, b={self.b})"
+    return False, None
 
 
-def tropical_combination(x: np.ndarray, y: np.ndarray, s: float, t: float) -> np.ndarray:
-    """Compute the tropical convex combination.
-    
-    Returns: i ↦ max(s + x_i, t + y_i)
-    
-    Requires: max(s, t) = 0 (tropical normalization).
-    Corresponds to the definition of IsTropConvex in TropicalHelly.lean.
+def helly_intervals(
+    intervals: list[tuple[float, float]]
+) -> tuple[bool, Optional[float]]:
     """
-    return np.maximum(s + x, t + y)
-
-
-def farkas_construction(halfspaces: List[TropicalHalfspace]) -> Optional[np.ndarray]:
-    """Find a point in the intersection of tropical halfspaces.
+    Helly's theorem for intervals.
     
-    Uses the constructive Farkas method:
-        x_i = max_j (b_j - a_{ji})
+    Given a family of closed intervals [a_i, b_i], determines if they
+    have a common point and returns one if so.
     
-    This is the algorithm behind Theorem 3.8 (tropical_farkas_weak).
+    The family has non-empty intersection iff for all i, j: a_i <= b_j.
+    The common point is max_i(a_i).
     
-    Complexity: O(mn) where m = len(halfspaces), n = dimension.
+    Parameters:
+        intervals: List of (lower, upper) bounds
     
     Returns:
-        A point in ⋂H_j, or None if infeasible.
+        (has_intersection, common_point or None)
     """
-    if not halfspaces:
-        return np.zeros(0)
+    if not intervals:
+        return True, 0.0
     
-    m = len(halfspaces)
-    n = halfspaces[0].n
+    # Check pairwise condition: a_i <= b_j for all i, j
+    max_lower = max(a for a, _ in intervals)
+    min_upper = min(b for _, b in intervals)
     
-    # Construct candidate point: x_i = max_j (b_j - a_{ji})
-    A = np.array([h.a for h in halfspaces])
-    b = np.array([h.b for h in halfspaces])
-    
-    x = np.zeros(n)
-    for i in range(n):
-        x[i] = np.max(b - A[:, i])
-    
-    # Verify feasibility
-    for h in halfspaces:
-        if not h.contains(x):
-            return None
-    
-    return x
+    if max_lower <= min_upper + 1e-12:
+        return True, max_lower
+    else:
+        return False, None
 
 
-def tropical_helly_check(
-    halfspaces: List[TropicalHalfspace],
-    dimension: int
-) -> Tuple[bool, Optional[np.ndarray], List]:
-    """Check the tropical Helly condition and find a witness point.
+def diff_constraint_feasibility(
+    n_vars: int,
+    constraints: list[tuple[int, int, float]]
+) -> tuple[bool, Optional[list[float]]]:
+    """
+    Bellman-Ford algorithm for difference constraint feasibility.
     
-    For a family of m tropical halfspaces in ℝⁿ, checks whether every
-    subfamily of size n+1 has nonempty intersection. If so, by the
-    tropical Helly theorem, the full intersection is nonempty.
+    Given constraints x_i - x_j <= c for each (i, j, c) in constraints,
+    determines feasibility and returns a solution if feasible.
     
-    Corresponds to: tropical_helly in TropicalHelly.lean.
+    The system is feasible iff no negative-weight cycle exists in the
+    constraint graph.
     
-    Args:
-        halfspaces: Family of tropical halfspaces
-        dimension: Ambient dimension n
+    Parameters:
+        n_vars: Number of variables
+        constraints: List of (i, j, c) meaning x_i - x_j <= c
     
     Returns:
-        (helly_holds, witness_point, failing_subfamilies)
-    
-    Complexity: O(m^{n+1} * mn) for the check.
+        (is_feasible, solution or None)
     """
-    m = len(halfspaces)
-    helly_number = dimension + 1
-    failing = []
+    # Initialize distances: d[v] = shortest path from source (extra node)
+    INF = float('inf')
+    dist = [0.0] * n_vars  # Source connects to all with weight 0
     
-    # Check all (n+1)-subfamilies
-    for combo in combinations(range(m), min(helly_number, m)):
-        subset = [halfspaces[i] for i in combo]
-        point = farkas_construction(subset)
-        if point is None:
-            failing.append(list(combo))
+    # Relax edges n_vars times
+    for iteration in range(n_vars):
+        updated = False
+        for i, j, c in constraints:
+            # Edge from j to i with weight c: d[i] <= d[j] + c
+            if dist[j] + c < dist[i] - 1e-12:
+                dist[i] = dist[j] + c
+                updated = True
+        if not updated:
+            break
     
-    if failing:
-        return False, None, failing
+    # Check for negative cycles (one more iteration)
+    for i, j, c in constraints:
+        if dist[j] + c < dist[i] - 1e-12:
+            return False, None
     
-    # Helly condition holds — find witness
-    witness = farkas_construction(halfspaces)
-    return True, witness, []
+    # Negate to get solution: x_v = -dist[v]
+    solution = [-d for d in dist]
+    return True, solution
+
+
+def tropical_halfspace_intersection_nonempty(
+    n: int, i: int, j: int, a: float, b: float
+) -> tuple[bool, Optional[np.ndarray]]:
+    """
+    Check if the intersection of tropical halfspaces
+    H_ij(a) ∩ H_ji(b) = {z : z_i <= z_j + a} ∩ {z : z_j <= z_i + b}
+    is non-empty.
+    
+    Non-empty iff a + b >= 0.
+    
+    Parameters:
+        n: Ambient dimension
+        i, j: Coordinate indices
+        a, b: Halfspace bounds
+    
+    Returns:
+        (is_nonempty, witness point or None)
+    """
+    if a + b < -1e-12:
+        return False, None
+    
+    z = np.zeros(n)
+    z[j] = -a  # Then z_i - z_j = 0 - (-a) = a, so z_i = z_j + a
+    # z_j <= z_i + b becomes -a <= 0 + b, i.e., a + b >= 0 ✓
+    return True, z
+
+
+def cycle_condition_check(weights: list[float]) -> tuple[bool, Optional[list[float]]]:
+    """
+    Check the non-negative cycle condition for a cyclic system
+    x_{k} - x_{k+1 mod n} <= c_k.
+    
+    Feasible iff sum(weights) >= 0.
+    Solution: x_0 = 0, x_k = -sum(c_0, ..., c_{k-1}).
+    
+    Parameters:
+        weights: Cycle edge weights [c_0, c_1, ..., c_{n-1}]
+    
+    Returns:
+        (is_feasible, solution or None)
+    """
+    total = sum(weights)
+    if total < -1e-12:
+        return False, None
+    
+    n = len(weights)
+    solution = [0.0]
+    cumsum = 0.0
+    for k in range(n - 1):
+        cumsum += weights[k]
+        solution.append(-cumsum)
+    
+    return True, solution
 
 
 def tropical_convex_hull_membership(
-    point: np.ndarray,
-    generators: List[np.ndarray],
-    max_depth: int = 20
+    z: np.ndarray,
+    generators: list[np.ndarray],
+    n_attempts: int = 10000,
+    tol: float = 1e-6
 ) -> bool:
-    """Approximate test: is `point` in the tropical convex hull of `generators`?
+    """
+    Approximate membership test for the tropical convex hull.
     
-    Uses iterative tropical combination to approximate the hull.
-    Not guaranteed to find membership in all cases (the hull may
-    require many combinations).
+    Tests whether z can be written as max_k(λ_k + p_k) for some
+    coefficients λ by random search.
+    
+    Parameters:
+        z: Point to test
+        generators: Generator points
+        n_attempts: Number of random coefficient trials
     
     Returns:
-        True if point is found in the hull (within tolerance).
+        True if z appears to be in the tropical convex hull
     """
-    if not generators:
-        return False
+    m = len(generators)
+    dim = len(z)
     
-    n = len(point)
-    tol = 1e-8
-    
-    # Check if point is a generator
-    for g in generators:
-        if np.max(np.abs(point - g)) < tol:
-            return True
-    
-    # Iteratively build hull by tropical combinations
-    hull_points = list(generators)
-    for _ in range(max_depth):
-        new_points = []
-        for x in hull_points:
-            for y in generators:
-                for s in np.linspace(-3, 0, 10):
-                    t = 0.0
-                    z = tropical_combination(x, y, s, t)
-                    if np.max(np.abs(z - point)) < tol:
-                        return True
-                    new_points.append(z)
-                    
-                    z = tropical_combination(x, y, 0.0, s)
-                    if np.max(np.abs(z - point)) < tol:
-                        return True
-                    new_points.append(z)
+    for _ in range(n_attempts):
+        lambdas = np.random.uniform(-5, 5, size=m)
+        # Compute tropical combination
+        result = np.full(dim, -np.inf)
+        for k in range(m):
+            result = np.maximum(result, lambdas[k] + generators[k])
         
-        hull_points = new_points[:1000]  # Keep bounded
+        if np.allclose(result, z, atol=tol):
+            return True
     
     return False
 
 
-def fractional_helly_test(
-    halfspaces: List[TropicalHalfspace],
-    dimension: int,
-    grid_resolution: int = 20
-) -> Tuple[float, float, np.ndarray]:
-    """Test the tropical fractional Helly conjecture.
-    
-    Computes:
-    - α: fraction of (n+1)-subfamilies with nonempty intersection
-    - β: maximum fraction of halfspaces containing any grid point
-    
-    The conjecture predicts β ≥ c·α for some universal constant c > 0.
-    
-    Returns:
-        (alpha, beta, best_point)
-    """
-    m = len(halfspaces)
-    n = dimension
-    helly_number = n + 1
-    
-    # Compute α
-    total = 0
-    intersecting = 0
-    for combo in combinations(range(m), min(helly_number, m)):
-        total += 1
-        subset = [halfspaces[i] for i in combo]
-        if farkas_construction(subset) is not None:
-            intersecting += 1
-    
-    alpha = intersecting / total if total > 0 else 0.0
-    
-    # Compute β via grid search + Farkas point
-    best_count = 0
-    best_point = np.zeros(n)
-    
-    # Try the Farkas construction point first
-    farkas_point = farkas_construction(halfspaces)
-    if farkas_point is not None:
-        count = sum(1 for h in halfspaces if h.contains(farkas_point))
-        if count > best_count:
-            best_count = count
-            best_point = farkas_point
-    
-    # Also try grid points
-    grid = np.linspace(-5, 5, grid_resolution)
-    if n <= 3:
-        for coords in np.ndindex(*([grid_resolution] * n)):
-            x = np.array([grid[c] for c in coords])
-            count = sum(1 for h in halfspaces if h.contains(x))
-            if count > best_count:
-                best_count = count
-                best_point = x.copy()
-    
-    beta = best_count / m if m > 0 else 0.0
-    
-    return alpha, beta, best_point
-
-
-# ============================================================
-# Example usage
-# ============================================================
-
 if __name__ == "__main__":
-    np.random.seed(42)
+    # Quick self-test
+    print("Testing algorithms...")
     
-    # Example 1: Farkas construction
-    print("Example 1: Farkas Construction")
-    print("-" * 40)
-    halfspaces = [
-        TropicalHalfspace([1, 0, 0], 2),
-        TropicalHalfspace([0, 1, 0], 3),
-        TropicalHalfspace([0, 0, 1], 1),
-    ]
+    # Helly intervals
+    assert helly_intervals([(1, 5), (2, 6), (3, 7)])[0] == True
+    assert helly_intervals([(1, 3), (4, 6)])[0] == False
     
-    point = farkas_construction(halfspaces)
-    if point is not None:
-        print(f"Feasible point: {point}")
-        for h in halfspaces:
-            print(f"  {h}: max(a+x) = {np.max(h.a + point):.2f} >= {h.b} ✓")
-    else:
-        print("Infeasible!")
+    # Cycle condition
+    assert cycle_condition_check([2, 3, -4])[0] == True
+    assert cycle_condition_check([1, -3, 1])[0] == False
     
-    # Example 2: Helly checker
-    print("\nExample 2: Tropical Helly Checker")
-    print("-" * 40)
-    n = 3
-    m = 6
-    halfspaces = [
-        TropicalHalfspace(np.random.randn(n), np.random.randn())
-        for _ in range(m)
-    ]
+    # Bellman-Ford
+    feasible, sol = diff_constraint_feasibility(3, [(0, 1, 2), (1, 2, 3), (2, 0, -4)])
+    assert feasible == True
     
-    holds, witness, failing = tropical_helly_check(halfspaces, n)
-    print(f"Helly condition (n+1={n+1}-wise intersection): {'holds' if holds else 'fails'}")
-    if holds and witness is not None:
-        print(f"Witness: {np.round(witness, 3)}")
-    elif failing:
-        print(f"Failing subfamilies: {failing[:3]}...")
+    # Halfspace intersection
+    assert tropical_halfspace_intersection_nonempty(3, 0, 1, 2.0, -1.0)[0] == True
+    assert tropical_halfspace_intersection_nonempty(3, 0, 1, 1.0, -2.0)[0] == False
     
-    # Example 3: Fractional Helly test
-    print("\nExample 3: Fractional Helly Test")
-    print("-" * 40)
-    halfspaces = [
-        TropicalHalfspace(np.random.randn(3) * 2, np.random.randn())
-        for _ in range(12)
-    ]
-    alpha, beta, best = fractional_helly_test(halfspaces, 3, grid_resolution=10)
-    print(f"α (fraction of 4-tuples intersecting): {alpha:.3f}")
-    print(f"β (max fraction of sets containing a point): {beta:.3f}")
-    print(f"Best point: {np.round(best, 3)}")
-    print(f"Fractional Helly supported: {'Yes' if beta >= 0.05 * alpha else 'Unclear'}")
+    print("All tests passed! ✓")
