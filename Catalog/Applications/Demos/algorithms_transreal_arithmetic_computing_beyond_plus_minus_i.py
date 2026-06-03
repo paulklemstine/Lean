@@ -1,245 +1,360 @@
 """
-Transreal Arithmetic: Type-hinted implementations of all operations.
+Transreal Arithmetic: Algorithms and Type-Hinted Implementations
+================================================================
 
-Implements Anderson's transreal number system ℝ ∪ {+∞, -∞, Φ}
-with total division and nullity absorption.
+Provides a complete, type-hinted implementation of transreal arithmetic
+following Anderson's system, plus algorithms for:
+1. Expression evaluation with nullity propagation detection
+2. Algebraic property checking (commutativity, associativity, distributivity)
+3. Transreal interval arithmetic
 """
 
 from __future__ import annotations
+from dataclasses import dataclass
 from enum import Enum, auto
-from typing import Union
-import math
+from typing import Callable, Optional, Sequence
 
 
-class TransrealKind(Enum):
+class Kind(Enum):
+    """Classification of a transreal number."""
     REAL = auto()
     POS_INF = auto()
     NEG_INF = auto()
     NULLITY = auto()
 
 
-class Transreal:
-    """A transreal number: real, +∞, -∞, or Φ (nullity = 0/0)."""
+@dataclass(frozen=True)
+class TR:
+    """
+    Transreal number: ℝ ∪ {+∞, -∞, Φ}.
 
-    def __init__(self, kind: TransrealKind, value: float = 0.0):
-        self.kind = kind
-        self.value = value if kind == TransrealKind.REAL else 0.0
-
-    @staticmethod
-    def real(x: float) -> Transreal:
-        return Transreal(TransrealKind.REAL, x)
-
-    @staticmethod
-    def pos_inf() -> Transreal:
-        return Transreal(TransrealKind.POS_INF)
+    Immutable value type implementing Anderson's transreal arithmetic.
+    All operations are total — no exceptions, no undefined results.
+    """
+    kind: Kind
+    value: float = 0.0
 
     @staticmethod
-    def neg_inf() -> Transreal:
-        return Transreal(TransrealKind.NEG_INF)
+    def real(x: float) -> TR:
+        return TR(Kind.REAL, x)
 
     @staticmethod
-    def nullity() -> Transreal:
-        return Transreal(TransrealKind.NULLITY)
+    def pos_inf() -> TR:
+        return TR(Kind.POS_INF)
+
+    @staticmethod
+    def neg_inf() -> TR:
+        return TR(Kind.NEG_INF)
+
+    @staticmethod
+    def nullity() -> TR:
+        return TR(Kind.NULLITY)
+
+    @staticmethod
+    def zero() -> TR:
+        return TR.real(0.0)
+
+    @staticmethod
+    def one() -> TR:
+        return TR.real(1.0)
 
     def is_finite(self) -> bool:
-        return self.kind == TransrealKind.REAL
+        return self.kind == Kind.REAL
 
-    def is_determinate(self) -> bool:
-        return self.kind != TransrealKind.NULLITY
+    def is_infinite(self) -> bool:
+        return self.kind in (Kind.POS_INF, Kind.NEG_INF)
+
+    def is_nullity(self) -> bool:
+        return self.kind == Kind.NULLITY
+
+    def is_total(self) -> bool:
+        """Total = not nullity (finite or infinite)."""
+        return self.kind != Kind.NULLITY
 
     def __repr__(self) -> str:
-        if self.kind == TransrealKind.REAL:
-            return f"Transreal({self.value})"
-        elif self.kind == TransrealKind.POS_INF:
-            return "Transreal(+∞)"
-        elif self.kind == TransrealKind.NEG_INF:
-            return "Transreal(-∞)"
-        else:
-            return "Transreal(Φ)"
+        match self.kind:
+            case Kind.REAL:
+                v = self.value
+                return str(int(v)) if v == int(v) else str(v)
+            case Kind.POS_INF:
+                return "+∞"
+            case Kind.NEG_INF:
+                return "-∞"
+            case Kind.NULLITY:
+                return "Φ"
+
+    def __neg__(self) -> TR:
+        match self.kind:
+            case Kind.REAL:
+                return TR.real(-self.value)
+            case Kind.POS_INF:
+                return TR.neg_inf()
+            case Kind.NEG_INF:
+                return TR.pos_inf()
+            case Kind.NULLITY:
+                return TR.nullity()
+
+    def __add__(self, other: TR) -> TR:
+        if self.is_nullity() or other.is_nullity():
+            return TR.nullity()
+        if self.is_finite() and other.is_finite():
+            return TR.real(self.value + other.value)
+        if self.is_finite():
+            return other
+        if other.is_finite():
+            return self
+        # Both infinite
+        if self.kind == other.kind:
+            return self
+        return TR.nullity()  # ∞ + (-∞) = Φ
+
+    def __sub__(self, other: TR) -> TR:
+        return self + (-other)
+
+    def __mul__(self, other: TR) -> TR:
+        if self.is_nullity() or other.is_nullity():
+            return TR.nullity()
+        if self.is_finite() and other.is_finite():
+            return TR.real(self.value * other.value)
+        # Handle real × infinite
+        if self.is_finite():
+            if self.value > 0:
+                return other
+            elif self.value < 0:
+                return -other
+            else:
+                return TR.nullity()  # 0 × ∞ = Φ
+        if other.is_finite():
+            if other.value > 0:
+                return self
+            elif other.value < 0:
+                return -self
+            else:
+                return TR.nullity()
+        # Both infinite
+        same_sign = (self.kind == Kind.POS_INF) == (other.kind == Kind.POS_INF)
+        return TR.pos_inf() if same_sign else TR.neg_inf()
+
+    def recip(self) -> TR:
+        """Transreal reciprocal: 1/0 = +∞, 1/∞ = 0, 1/Φ = Φ."""
+        match self.kind:
+            case Kind.NULLITY:
+                return TR.nullity()
+            case Kind.POS_INF | Kind.NEG_INF:
+                return TR.zero()
+            case Kind.REAL:
+                if self.value == 0:
+                    return TR.pos_inf()
+                return TR.real(1.0 / self.value)
+
+    def __truediv__(self, other: TR) -> TR:
+        return self * other.recip()
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Transreal):
+        if not isinstance(other, TR):
             return NotImplemented
         if self.kind != other.kind:
             return False
-        if self.kind == TransrealKind.REAL:
+        if self.kind == Kind.REAL:
             return self.value == other.value
         return True
 
-    def __neg__(self) -> Transreal:
-        """Negation: -∞ ↔ +∞, -Φ = Φ"""
-        if self.kind == TransrealKind.REAL:
-            return Transreal.real(-self.value)
-        elif self.kind == TransrealKind.POS_INF:
-            return Transreal.neg_inf()
-        elif self.kind == TransrealKind.NEG_INF:
-            return Transreal.pos_inf()
-        else:
-            return Transreal.nullity()
-
-    def __add__(self, other: Transreal) -> Transreal:
-        """Transreal addition with nullity absorption and ∞ + (-∞) = Φ."""
-        if self.kind == TransrealKind.NULLITY or other.kind == TransrealKind.NULLITY:
-            return Transreal.nullity()
-
-        if self.kind == TransrealKind.REAL and other.kind == TransrealKind.REAL:
-            return Transreal.real(self.value + other.value)
-
-        if self.kind == TransrealKind.REAL:
-            return Transreal(other.kind)  # real + inf = inf
-        if other.kind == TransrealKind.REAL:
-            return Transreal(self.kind)  # inf + real = inf
-
-        # Both infinite
-        if self.kind == other.kind:
-            return Transreal(self.kind)  # +∞ + +∞ = +∞
-        else:
-            return Transreal.nullity()  # +∞ + -∞ = Φ
-
-    def __mul__(self, other: Transreal) -> Transreal:
-        """Transreal multiplication with sign-dependent infinite products."""
-        if self.kind == TransrealKind.NULLITY or other.kind == TransrealKind.NULLITY:
-            return Transreal.nullity()
-
-        if self.kind == TransrealKind.REAL and other.kind == TransrealKind.REAL:
-            return Transreal.real(self.value * other.value)
-
-        def _sign_mul(sign_a: int, kind_b: TransrealKind) -> Transreal:
-            """Multiply a sign (+1, -1, 0) by an infinite element."""
-            if sign_a == 0:
-                return Transreal.nullity()
-            if kind_b == TransrealKind.POS_INF:
-                return Transreal.pos_inf() if sign_a > 0 else Transreal.neg_inf()
-            else:  # NEG_INF
-                return Transreal.neg_inf() if sign_a > 0 else Transreal.pos_inf()
-
-        def _real_sign(x: float) -> int:
-            if x > 0: return 1
-            if x < 0: return -1
-            return 0
-
-        def _inf_sign(k: TransrealKind) -> int:
-            return 1 if k == TransrealKind.POS_INF else -1
-
-        if self.kind == TransrealKind.REAL:
-            return _sign_mul(_real_sign(self.value), other.kind)
-        if other.kind == TransrealKind.REAL:
-            return _sign_mul(_real_sign(other.value), self.kind)
-
-        # Both infinite
-        s = _inf_sign(self.kind) * _inf_sign(other.kind)
-        return Transreal.pos_inf() if s > 0 else Transreal.neg_inf()
-
-    def __truediv__(self, other: Transreal) -> Transreal:
-        """Total transreal division. 0/0 = Φ, r/0 = ±∞."""
-        if self.kind == TransrealKind.NULLITY or other.kind == TransrealKind.NULLITY:
-            return Transreal.nullity()
-
-        if other.kind in (TransrealKind.POS_INF, TransrealKind.NEG_INF):
-            if self.kind == TransrealKind.REAL:
-                return Transreal.real(0.0)
-            else:
-                return Transreal.nullity()  # ∞/∞ = Φ
-
-        if other.kind == TransrealKind.REAL and other.value == 0:
-            if self.kind == TransrealKind.REAL:
-                if self.value > 0:
-                    return Transreal.pos_inf()
-                elif self.value < 0:
-                    return Transreal.neg_inf()
-                else:
-                    return Transreal.nullity()  # 0/0 = Φ
-            else:
-                return Transreal.nullity()  # ∞/0 = Φ
-
-        if self.kind == TransrealKind.REAL and other.kind == TransrealKind.REAL:
-            return Transreal.real(self.value / other.value)
-
-        # inf / nonzero real
-        if self.kind in (TransrealKind.POS_INF, TransrealKind.NEG_INF):
-            if other.value > 0:
-                return Transreal(self.kind)
-            else:
-                return -Transreal(self.kind)
-
-        return Transreal.nullity()
+    def __hash__(self) -> int:
+        if self.kind == Kind.REAL:
+            return hash((self.kind, self.value))
+        return hash(self.kind)
 
 
-def verify_ring_axiom_failure() -> dict[str, bool]:
-    """Verify which ring axioms hold and which fail for transreals."""
-    results: dict[str, bool] = {}
+# ─── Expression Tree Evaluator ───────────────────────────────────────────
 
-    # Test additive commutativity (should hold)
-    test_elems = [Transreal.real(1), Transreal.real(-2), Transreal.pos_inf(),
-                  Transreal.neg_inf(), Transreal.nullity()]
-    comm_holds = all(a + b == b + a for a in test_elems for b in test_elems)
-    results["additive_commutativity"] = comm_holds
+@dataclass
+class Expr:
+    """Expression tree over transreals."""
+    pass
 
-    # Test additive associativity (should hold)
-    assoc_holds = all(
-        (a + b) + c == a + (b + c)
-        for a in test_elems for b in test_elems for c in test_elems
-    )
-    results["additive_associativity"] = assoc_holds
+@dataclass
+class Lit(Expr):
+    val: TR
 
-    # Test multiplicative commutativity (should hold)
-    mul_comm = all(a * b == b * a for a in test_elems for b in test_elems)
-    results["multiplicative_commutativity"] = mul_comm
+@dataclass
+class Add(Expr):
+    left: Expr
+    right: Expr
 
-    # Test multiplicative associativity (should hold)
-    mul_assoc = all(
-        (a * b) * c == a * (b * c)
-        for a in test_elems for b in test_elems for c in test_elems
-    )
-    results["multiplicative_associativity"] = mul_assoc
+@dataclass
+class Mul(Expr):
+    left: Expr
+    right: Expr
 
-    # Test distributivity (should fail)
-    dist_holds = all(
-        a * (b + c) == a * b + a * c
-        for a in test_elems for b in test_elems for c in test_elems
-    )
-    results["distributivity"] = dist_holds
+@dataclass
+class Neg(Expr):
+    inner: Expr
 
-    # Test additive inverses (should fail for non-reals)
-    zero = Transreal.real(0)
-    has_inverses = all(
-        any(a + b == zero for b in test_elems)
-        for a in test_elems
-    )
-    results["all_additive_inverses_exist"] = has_inverses
-
-    return results
+@dataclass
+class Recip(Expr):
+    inner: Expr
 
 
-def find_distributivity_counterexample() -> tuple[Transreal, Transreal, Transreal] | None:
-    """Find a specific counterexample to distributivity."""
-    test_elems = [Transreal.real(1), Transreal.real(-1), Transreal.real(0),
-                  Transreal.pos_inf(), Transreal.neg_inf(), Transreal.nullity()]
-    for a in test_elems:
-        for b in test_elems:
-            for c in test_elems:
-                if a * (b + c) != a * b + a * c:
-                    return (a, b, c)
-    return None
+def evaluate(expr: Expr) -> TR:
+    """Evaluate a transreal expression tree."""
+    match expr:
+        case Lit(v):
+            return v
+        case Add(l, r):
+            return evaluate(l) + evaluate(r)
+        case Mul(l, r):
+            return evaluate(l) * evaluate(r)
+        case Neg(e):
+            return -evaluate(e)
+        case Recip(e):
+            return evaluate(e).recip()
+    raise ValueError(f"Unknown expression type: {type(expr)}")
+
+
+def contains_nullity(expr: Expr) -> bool:
+    """Check if an expression tree contains a nullity literal."""
+    match expr:
+        case Lit(v):
+            return v.is_nullity()
+        case Add(l, r) | Mul(l, r):
+            return contains_nullity(l) or contains_nullity(r)
+        case Neg(e) | Recip(e):
+            return contains_nullity(e)
+    return False
+
+
+def verify_nullity_collapse(expr: Expr) -> bool:
+    """
+    Verify the Nullity Collapse Conjecture for a given expression:
+    If the expression contains nullity, it should evaluate to nullity.
+
+    Note: This holds for add/mul trees but may fail for recip
+    (since recip(Φ) = Φ, it still holds).
+    """
+    if contains_nullity(expr):
+        result = evaluate(expr)
+        return result.is_nullity()
+    return True  # Vacuously true
+
+
+# ─── Algebraic Property Checker ──────────────────────────────────────────
+
+def check_commutativity(
+    op: Callable[[TR, TR], TR],
+    samples: Sequence[TR]
+) -> tuple[bool, Optional[tuple[TR, TR]]]:
+    """Check if a binary operation is commutative over given samples."""
+    for a in samples:
+        for b in samples:
+            if op(a, b) != op(b, a):
+                return False, (a, b)
+    return True, None
+
+
+def check_associativity(
+    op: Callable[[TR, TR], TR],
+    samples: Sequence[TR]
+) -> tuple[bool, Optional[tuple[TR, TR, TR]]]:
+    """Check if a binary operation is associative over given samples."""
+    for a in samples:
+        for b in samples:
+            for c in samples:
+                if op(op(a, b), c) != op(a, op(b, c)):
+                    return False, (a, b, c)
+    return True, None
+
+
+def check_distributivity(
+    mul_op: Callable[[TR, TR], TR],
+    add_op: Callable[[TR, TR], TR],
+    samples: Sequence[TR]
+) -> tuple[bool, Optional[tuple[TR, TR, TR]]]:
+    """Check left distributivity: a * (b + c) = a*b + a*c."""
+    for a in samples:
+        for b in samples:
+            for c in samples:
+                lhs = mul_op(a, add_op(b, c))
+                rhs = add_op(mul_op(a, b), mul_op(a, c))
+                if lhs != rhs:
+                    return False, (a, b, c)
+    return True, None
+
+
+# ─── Transreal Interval Arithmetic ───────────────────────────────────────
+
+@dataclass(frozen=True)
+class TRInterval:
+    """
+    An interval [lo, hi] in the transreal numbers.
+    If either endpoint is Φ, the interval is degenerate (= {Φ}).
+    """
+    lo: TR
+    hi: TR
+
+    def is_degenerate(self) -> bool:
+        return self.lo.is_nullity() or self.hi.is_nullity()
+
+    def __add__(self, other: TRInterval) -> TRInterval:
+        if self.is_degenerate() or other.is_degenerate():
+            return TRInterval(TR.nullity(), TR.nullity())
+        return TRInterval(self.lo + other.lo, self.hi + other.hi)
+
+    def contains(self, x: TR) -> bool:
+        """Check if x is in the interval (for finite values)."""
+        if x.is_nullity():
+            return self.is_degenerate()
+        if x.is_finite() and self.lo.is_finite() and self.hi.is_finite():
+            return self.lo.value <= x.value <= self.hi.value
+        return False
+
+    def __repr__(self) -> str:
+        if self.is_degenerate():
+            return "{Φ}"
+        return f"[{self.lo}, {self.hi}]"
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Transreal Arithmetic: Ring Axiom Verification")
-    print("=" * 60)
+    # Quick demo
+    samples = [TR.zero(), TR.one(), TR.real(-1), TR.pos_inf(), TR.neg_inf(), TR.nullity()]
 
-    results = verify_ring_axiom_failure()
-    for axiom, holds in results.items():
-        status = "✓ HOLDS" if holds else "✗ FAILS"
-        print(f"  {axiom}: {status}")
+    print("=== Algebraic Property Check ===")
+    comm_add, _ = check_commutativity(TR.__add__, samples)
+    comm_mul, _ = check_commutativity(TR.__mul__, samples)
+    assoc_add, cex_add = check_associativity(TR.__add__, samples)
+    assoc_mul, cex_mul = check_associativity(TR.__mul__, samples)
+    dist, cex_dist = check_distributivity(TR.__mul__, TR.__add__, samples)
 
-    print()
-    ce = find_distributivity_counterexample()
-    if ce:
-        a, b, c = ce
+    print(f"Addition commutative: {comm_add}")
+    print(f"Multiplication commutative: {comm_mul}")
+    print(f"Addition associative: {assoc_add}")
+    if not assoc_add and cex_add:
+        a, b, c = cex_add
+        print(f"  Counterexample: ({a} + {b}) + {c} ≠ {a} + ({b} + {c})")
+    print(f"Multiplication associative: {assoc_mul}")
+    if not assoc_mul and cex_mul:
+        a, b, c = cex_mul
+        print(f"  Counterexample: ({a} × {b}) × {c} ≠ {a} × ({b} × {c})")
+    print(f"Left distributivity: {dist}")
+    if not dist and cex_dist:
+        a, b, c = cex_dist
         lhs = a * (b + c)
         rhs = a * b + a * c
-        print(f"Distributivity counterexample:")
-        print(f"  a = {a}, b = {b}, c = {c}")
-        print(f"  a*(b+c) = {lhs}")
-        print(f"  a*b + a*c = {rhs}")
+        print(f"  Counterexample: {a} × ({b} + {c}) = {lhs} ≠ {rhs} = {a}×{b} + {a}×{c}")
+
+    print("\n=== Nullity Collapse Check ===")
+    # Build random expression trees with nullity
+    phi = Lit(TR.nullity())
+    three = Lit(TR.real(3))
+    inf_lit = Lit(TR.pos_inf())
+
+    exprs = [
+        Add(phi, three),
+        Mul(Add(phi, inf_lit), three),
+        Mul(three, Add(Neg(phi), inf_lit)),
+        Add(Mul(phi, phi), Mul(three, inf_lit)),
+    ]
+
+    for e in exprs:
+        result = evaluate(e)
+        collapsed = verify_nullity_collapse(e)
+        print(f"  Expression evaluates to {result}, collapse verified: {collapsed}")
