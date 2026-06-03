@@ -2,252 +2,198 @@
 
 ## Abstract
 
-We develop a rigorous framework for studying the prime number sequence through the lens of persistent homology. By treating primes as a point cloud on the real line and analyzing the Rips filtration, we formalize the H₀ barcode of primes — a topological invariant that encodes the complete prime gap structure. We prove that the barcode exhibits fundamental monotonicity (the filtration property), that Bertrand's postulate imposes a universal bound on bar persistence (gap ≤ prime), and that the prime gap graph at scale 1 isolates all odd primes from each other. We establish a cross-domain bridge between number theory and graph theory via the PrimeGapGraph construction, and formulate the twin prime conjecture as a statement about barcode persistence. All core theorems are formally verified. Computational experiments with primes up to 10⁶ test the Cramér-Granville conjecture on exponential gap distribution.
+We develop a rigorous framework for studying the prime number sequence through the lens of persistent homology. By treating the primes as a one-dimensional point cloud and constructing the Vietoris-Rips filtration, we establish that the zeroth persistent homology barcode is completely determined by the sequence of prime gaps. We prove the 1D Rips Component Theorem (Theorem 4.1), which expresses the number of connected components at scale ε as the count of gaps exceeding ε plus one. We establish a component derivative formula (Theorem 5.1) showing that the component count drops between integer scales k and k+1 equal the number of gaps of size exactly k+1, directly connecting the twin prime counting function to the topological filtration at scale ε = 2. We prove a barcode stability theorem (Theorem 7.1) bounding the perturbation of bar lengths under pointwise perturbation of the point cloud, yielding a quantitative 1D specialization of the general stability theorem in persistent homology. All results have been formally verified in Lean 4 using the Mathlib library.
+
+**Keywords**: Persistent homology, prime numbers, Rips filtration, prime gaps, barcode, topological data analysis, Cramér's conjecture
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The prime number sequence $p_1 = 2, p_2 = 3, p_3 = 5, \ldots$ is one of the most studied objects in mathematics. The distribution of primes — captured by the prime counting function $\pi(x)$ and the prime gaps $g_n = p_{n+1} - p_n$ — has been the subject of intense study since Euclid.
 
-The distribution of prime numbers has been studied since antiquity, yet fundamental questions remain open. The prime number theorem tells us the average gap between consecutive primes near N is approximately log(N), but the fine structure of the gap sequence — its fluctuations, extremes, and patterns — encodes deep arithmetic information.
+In this paper, we apply the machinery of persistent homology to the prime point cloud $P_N = \{p_1, p_2, \ldots, p_N\} \subset \mathbb{R}$. The Vietoris-Rips filtration $\mathcal{R}_\varepsilon(P_N)$ connects $p_i$ and $p_j$ whenever $|p_i - p_j| \leq \varepsilon$, producing a nested family of simplicial complexes indexed by the scale parameter $\varepsilon \geq 0$.
 
-Persistent homology, developed by Edelsbrunner, Letscher, and Zomorodian (2000) and refined by Carlsson and others, provides a multiscale framework for analyzing the topology of point clouds. The key output is a *barcode*: a collection of intervals encoding the birth and death of topological features across scales.
+Our main contributions are:
 
-We observe that for a 1-dimensional point cloud (such as primes on the number line), the H₀ barcode reduces to the sorted gap sequence. This simplification makes the prime point cloud an ideal test case for connecting persistent homology to number theory.
+1. **The 1D Rips Component Theorem** (Theorem 4.1): For any sorted finite point cloud on the real line with $n$ points, the number of connected components at scale $\varepsilon$ equals $\#\{i : g_i > \varepsilon\} + 1$.
 
-### 1.2 Contributions
+2. **The Component Derivative Formula** (Theorem 5.1): The drop in components between consecutive integer scales $k$ and $k+1$ equals the number of gaps equal to $k+1$.
 
-1. **Formalization**: Complete formalization of the Rips filtration on ℕ, ε-adjacency, ε-chains, and the H₀ barcode structure in Lean 4 with Mathlib.
+3. **The Telescoping Barcode Identity** (Theorem 8.1): The total bar length in the $H_0$ barcode of a strictly increasing sequence equals $f(n-1) - f(0)$.
 
-2. **Core theorems** (all formally verified):
-   - ε-connectivity forms an equivalence relation (reflexivity, symmetry, transitivity)
-   - Monotonicity in scale: ε₁ ≤ ε₂ implies ε₁-connected ⊆ ε₂-connected
-   - Monotonicity in ambient set: S ⊆ T implies S-chains lift to T-chains
-   - Bertrand bar length bound: gap(p) ≤ p for consecutive primes
-   - Odd prime isolation: no two odd primes are ε-adjacent at scale 1
-   - Gap-death correspondence: EpsAdj(ε, p, q) ↔ q - p ≤ ε
+4. **The 1D Barcode Stability Theorem** (Theorem 7.1): If two sequences are $\delta$-close pointwise, their gap functions differ by at most $2\delta$ in absolute value.
 
-3. **Cross-domain bridge**: Construction of the PrimeGapGraph as a SimpleGraph, connecting prime distribution to graph theory.
+5. **Cramér's Conjecture in Barcode Form**: We reformulate Cramér's conjecture as a statement about the asymptotic behavior of the maximum bar length.
 
-4. **Computational experiments**: Testing the Cramér-Granville exponential distribution conjecture for primes up to 10⁶.
+## 2. Preliminaries
 
-## 2. Definitions and Notation
+### 2.1 Sequences and Gaps
 
-### 2.1 The Prime Point Cloud
+**Definition 2.1** (Gap Function). For a sequence $f: \mathbb{N} \to \mathbb{N}$, the *gap function* is $\text{gap}_f(i) = f(i+1) - f(i)$.
 
-Let P = {p₁, p₂, p₃, ...} = {2, 3, 5, 7, 11, ...} denote the set of primes. We embed P into ℕ (and hence into ℝ) via the identity map. The prime counting function π(N) counts primes up to N.
+**Definition 2.2** (Strict Monotonicity). A sequence $f$ is *strictly increasing on* $[0, n)$ if $f(i) < f(j)$ whenever $i < j < n$.
 
-**Definition (primeSetBelow)**. For N ∈ ℕ, define:
-```
-primeSetBelow(N) = {p ∈ ℕ : p < N ∧ p is prime}
-```
+**Theorem 2.1** (Gap Positivity). If $f$ is strictly increasing on $[0, n)$ and $i + 1 < n$, then $\text{gap}_f(i) > 0$.
 
-### 2.2 The Rips Filtration
+### 2.2 Gap Counting Functions
 
-**Definition (natDist)**. The natural number distance:
-```
-natDist(a, b) = |a - b| = if a ≤ b then b - a else a - b
-```
+**Definition 2.3**. For a sequence $f$ with $n$ points:
+- $\text{countGapsLE}(f, n, \varepsilon) = \#\{i < n-1 : \text{gap}_f(i) \leq \varepsilon\}$
+- $\text{countGapsGT}(f, n, \varepsilon) = \#\{i < n-1 : \text{gap}_f(i) > \varepsilon\}$
+- $\text{countGapsEq}(f, n, k) = \#\{i < n-1 : \text{gap}_f(i) = k\}$
 
-We prove natDist is a metric: symmetric (natDist_symm), identity of indiscernibles (natDist_eq_zero_iff), and satisfies the triangle inequality (natDist_triangle).
+**Theorem 2.2** (Gap Partition). $\text{countGapsLE}(f, n, \varepsilon) + \text{countGapsGT}(f, n, \varepsilon) = n - 1$.
 
-**Definition (EpsAdj)**. Two naturals a, b are ε-adjacent if:
-```
-EpsAdj(ε, a, b) ⟺ a ≠ b ∧ natDist(a, b) ≤ ε
-```
+*Proof*. The two filter predicates $\text{gap}(i) \leq \varepsilon$ and $\text{gap}(i) > \varepsilon$ partition the natural numbers, so the filtered sets are complementary subsets of $\{0, \ldots, n-2\}$. ∎
 
-**Definition (EpsChain)**. An ε-chain in S from a to b is inductively defined:
-- `refl`: a ∈ S implies EpsChain(S, ε, a, a)
-- `step`: a ∈ S, b ∈ S, EpsAdj(ε, a, b), EpsChain(S, ε, b, c) implies EpsChain(S, ε, a, c)
+## 3. The Rips Filtration on a 1D Point Cloud
 
-**Definition (EpsConnected)**. EpsConnected(S, ε, a, b) := EpsChain(S, ε, a, b).
+### 3.1 Definition
 
-### 2.3 The H₀ Barcode
+**Definition 3.1** (Rips Components). For a sequence $f$ with $n$ points, the number of Rips-connected components at scale $\varepsilon$ is:
+$$C_\varepsilon(f, n) = n - \text{countGapsLE}(f, n, \varepsilon)$$
 
-**Definition (BarcodeInterval)**. A barcode interval consists of (birth, death) ∈ ℕ × ℕ, where death = 0 encodes infinite persistence (the essential class).
+This definition captures the key 1D insight: in one dimension, two points $f(i)$ and $f(j)$ with $i < j$ are in the same connected component at scale $\varepsilon$ if and only if every consecutive gap between them is at most $\varepsilon$. Adjacent points merge when their gap is bridged, and each bridging reduces the component count by exactly one.
 
-**Definition (primeH0Barcode)**. The H₀ barcode of primes below N is:
-- One essential class bar (0, 0)
-- For each gap g in the sorted prime sequence: one bar (0, g)
+### 3.2 Monotonicity
 
-**Definition (listGaps)**. Gaps between consecutive elements of a sorted list:
-```
-listGaps([]) = []
-listGaps([a]) = []
-listGaps(a :: b :: rest) = (b - a) :: listGaps(b :: rest)
-```
+**Theorem 3.1** (Monotonicity of Gap Counts). $\text{countGapsLE}(f, n, \varepsilon_1) \leq \text{countGapsLE}(f, n, \varepsilon_2)$ whenever $\varepsilon_1 \leq \varepsilon_2$.
 
-## 3. Main Results
+*Proof*. The filter set for $\varepsilon_1$ is a subset of the filter set for $\varepsilon_2$, since $\text{gap}(i) \leq \varepsilon_1 \implies \text{gap}(i) \leq \varepsilon_2$. ∎
 
-### 3.1 ε-Connectivity is an Equivalence Relation
+**Theorem 3.2** (Antitonicity of Components). $C_{\varepsilon_2}(f, n) \leq C_{\varepsilon_1}(f, n)$ whenever $\varepsilon_1 \leq \varepsilon_2$.
 
-**Theorem (epsConnected_refl)**. For a ∈ S: EpsConnected(S, ε, a, a).
+*Proof*. Direct from the definition $C_\varepsilon = n - \text{countGapsLE}(\varepsilon)$ and Theorem 3.1. ∎
 
-**Theorem (epsConnected_symm)**. EpsConnected(S, ε, a, b) → EpsConnected(S, ε, b, a).
+### 3.3 Edge Monotonicity
 
-*Proof sketch*: By induction on the chain. The base case (refl) is immediate. For the step case, given chain a → b → ... → c, we construct the reverse chain by induction on the tail, then append the reversed edge b → a.
+**Definition 3.2** (Rips Edges). The edge set at scale $\varepsilon$ is:
+$$E_\varepsilon(f, n) = \{(i, j) : i < j < n, f(j) - f(i) \leq \varepsilon\}$$
 
-**Theorem (epsConnected_trans)**. EpsConnected(S, ε, a, b) ∧ EpsConnected(S, ε, b, c) → EpsConnected(S, ε, a, c).
+**Theorem 3.3** (Edge Monotonicity). $E_{\varepsilon_1}(f, n) \subseteq E_{\varepsilon_2}(f, n)$ whenever $\varepsilon_1 \leq \varepsilon_2$.
 
-*Proof sketch*: By induction on the first chain. Concatenate the second chain at the end.
+*Proof*. If $(i, j)$ satisfies $f(j) - f(i) \leq \varepsilon_1 \leq \varepsilon_2$, it satisfies the condition for $\varepsilon_2$ by transitivity. ∎
 
-### 3.2 Monotonicity (The Filtration Property)
+## 4. The 1D Rips Component Theorem
 
-**Theorem (epsChain_mono)**. ε₁ ≤ ε₂ ∧ EpsChain(S, ε₁, a, b) → EpsChain(S, ε₂, a, b).
+**Theorem 4.1** (1D Rips Component Theorem). For $n \geq 1$:
+$$C_\varepsilon(f, n) = \text{countGapsGT}(f, n, \varepsilon) + 1$$
 
-*Proof sketch*: By induction on the chain. Each edge has natDist(a, b) ≤ ε₁ ≤ ε₂, so it remains valid at the larger scale.
+*Proof*. By the Gap Partition (Theorem 2.2), $\text{countGapsLE} + \text{countGapsGT} = n - 1$. Since $\text{countGapsLE} \leq n - 1$ (Theorem 2.3, as the filter is a subset of $\{0, \ldots, n-2\}$) and $n \geq 1$, we have:
+$$C_\varepsilon = n - \text{countGapsLE} = n - (n - 1 - \text{countGapsGT}) = \text{countGapsGT} + 1$$
+The subtraction is valid in $\mathbb{N}$ because $\text{countGapsLE} \leq n - 1 \leq n$. ∎
 
-**Theorem (epsChain_subset_mono)**. S ⊆ T ∧ EpsChain(S, ε, a, b) → EpsChain(T, ε, a, b).
+**Remark**. This theorem gives a clean interpretation: at scale $\varepsilon$, there is one component for each unresolved gap (gaps strictly larger than $\varepsilon$), plus the essential component that never dies.
 
-*Proof sketch*: By induction on the chain. Membership in S implies membership in T.
+## 5. The Component Derivative Formula
 
-These two monotonicity properties together establish that the Rips filtration on the prime point cloud is a valid filtration: connectivity only increases with scale and with the addition of new points.
+**Theorem 5.1** (Component Derivative). For $n \geq 1$:
+$$C_k(f, n) - C_{k+1}(f, n) = \text{countGapsEq}(f, n, k+1)$$
 
-### 3.3 Bertrand's Bar Length Bound
+*Proof*. By Theorem 4.1:
+$$C_k - C_{k+1} = (\text{countGapsGT}(k) + 1) - (\text{countGapsGT}(k+1) + 1) = \text{countGapsGT}(k) - \text{countGapsGT}(k+1)$$
+The difference $\text{countGapsGT}(k) - \text{countGapsGT}(k+1)$ counts gaps $g$ satisfying $k < g$ but not $k+1 < g$, i.e., $g = k+1$. ∎
 
-**Theorem (bertrand_bar_length_bound)**. For consecutive primes p < q (no prime between them): q - p ≤ p.
+**Corollary 5.1** (Twin Prime Counting). For the prime point cloud:
+$$C_1(\text{prime}, n) - C_2(\text{prime}, n) = \pi_2(p_n)$$
+where $\pi_2(x)$ is the twin prime counting function (counting pairs with gap exactly 2 among the first $n$ primes, with the special case of the gap $p_2 - p_1 = 1$ excluded).
 
-*Proof*: By Bertrand's postulate (Nat.exists_prime_lt_and_le_two_mul), there exists a prime r with p < r ≤ 2p. Since q is the smallest prime greater than p (by the consecutiveness hypothesis), we have q ≤ r ≤ 2p. Therefore q - p ≤ 2p - p = p. □
+## 6. The H₀ Barcode
 
-**Interpretation**: In the H₀ barcode, no bar has persistence exceeding the value of its left endpoint prime. This gives a sub-linear bound on barcode persistence relative to the position in the point cloud.
+**Definition 6.1** (H₀ Barcode). The $H_0$ barcode of a sequence $f$ with $n$ points is a list of $n-1$ bars, where bar $i$ has:
+- Birth: 0
+- Death: $\text{gap}_f(i)$
+- Length: $\text{gap}_f(i)$
 
-### 3.4 Odd Prime Isolation at Scale 1
+The essential class (the component that never dies) is omitted.
 
-**Theorem (odd_primes_not_adj_at_scale_one)**. For primes p, q > 2 with p ≠ q: ¬EpsAdj(1, p, q).
+**Theorem 6.1** (Bar-Gap Correspondence). Each bar's length equals the corresponding gap: $\text{length}(\text{bar}_i) = \text{gap}_f(i)$.
 
-*Proof*: Since p, q > 2 and both prime, they are both odd (using Nat.Prime.eq_two_or_odd). Two distinct odd numbers differ by at least 2, so natDist(p, q) ≥ 2 > 1. □
+**Theorem 6.2** (Barcode Size). The barcode has exactly $n-1$ bars.
 
-**Interpretation**: At scale ε = 1, the prime gap graph has exactly one edge: {2, 3}. All other primes are isolated. This means the first topological transition in the Rips filtration occurs at scale 2 (when twin primes merge).
+## 7. The 1D Barcode Stability Theorem
 
-### 3.5 Gap-Death Correspondence
+**Definition 7.1** (δ-Closeness). Sequences $f$ and $g$ are *δ-close on* $[0, n)$ if $|f(i) - g(i)| \leq \delta$ for all $i < n$.
 
-**Theorem (gap_determines_bar_death)**. For p < q: EpsAdj(ε, p, q) ↔ q - p ≤ ε.
+**Theorem 7.1** (1D Barcode Stability). If $f$ and $g$ are $\delta$-close on $[0, n)$ and $i + 1 < n$, then:
+$$|\text{gap}_f(i) - \text{gap}_g(i)| \leq 2\delta$$
 
-This establishes the precise correspondence between prime gaps and bar deaths: a bar in the H₀ barcode dies at exactly the scale equal to the corresponding prime gap.
+*Proof*. The gap difference decomposes as:
+$$\text{gap}_f(i) - \text{gap}_g(i) = (f(i+1) - g(i+1)) - (f(i) - g(i))$$
+Each term is bounded by $\delta$ in absolute value, so the difference is bounded by $2\delta$ by the triangle inequality. ∎
 
-### 3.6 Cross-Domain: The Prime Gap Graph
+**Remark**. This is a 1D specialization of the bottleneck stability theorem for persistent homology. In general, the bottleneck distance between barcodes of two point clouds is bounded by the Hausdorff distance between the clouds. Our result gives an explicit, gap-level bound that is sharper in the 1D setting.
 
-**Definition (PrimeGapGraph)**. For N, ε ∈ ℕ, the PrimeGapGraph(N, ε) is a SimpleGraph on ℕ where:
-```
-Adj(a, b) ⟺ a ∈ primeSetBelow(N) ∧ b ∈ primeSetBelow(N) ∧ EpsAdj(ε, a, b)
-```
+## 8. The Telescoping Identity
 
-We verify this is a valid SimpleGraph (symmetric, irreflexive).
+**Theorem 8.1** (Telescoping). For a strictly increasing sequence $f$ on $[0, n+1)$:
+$$\sum_{i=0}^{n-1} \text{gap}_f(i) = f(n) - f(0)$$
 
-**Theorem (primeGapGraph_mono)**. ε₁ ≤ ε₂ implies PrimeGapGraph(N, ε₁).Adj ≤ PrimeGapGraph(N, ε₂).Adj.
+*Proof*. By induction on $n$. The base case $n = 1$ is immediate. For the inductive step:
+$$\sum_{i=0}^{n} \text{gap}_f(i) = \sum_{i=0}^{n-1} \text{gap}_f(i) + \text{gap}_f(n) = (f(n) - f(0)) + (f(n+1) - f(n)) = f(n+1) - f(0)$$
+The subtraction is valid because $f$ is strictly increasing. ∎
 
-**Theorem (primeGapGraph_scale_zero_no_edges)**. PrimeGapGraph(N, 0) has no edges.
+**Corollary 8.1** (Total Bar Length). For a strictly increasing sequence:
+$$\text{totalBarLength}(\text{barcode}(f, n)) = f(n-1) - f(0)$$
 
-## 4. Algorithms
+For primes: the total length of all bars in the prime H₀ barcode equals $p_n - p_1 = p_n - 2$.
 
-### 4.1 H₀ Barcode Computation
+## 9. Cramér's Conjecture in Barcode Language
 
-**Algorithm**: Given a 1D point cloud {x₁, ..., xₙ}:
-1. Sort points: O(n log n)
-2. Compute gaps between consecutive points: O(n)
-3. The H₀ barcode is: {(0, gᵢ) : 1 ≤ i ≤ n-1} ∪ {(0, ∞)}
+**Conjecture 9.1** (Cramér's Barcode Conjecture). The maximum bar length in the $H_0$ barcode of the first $n$ primes satisfies:
+$$\frac{\max_i \text{gap}(p_i)}{\left(\log p_n\right)^2} \to 1 \quad \text{as } n \to \infty$$
 
-**Complexity**: O(n log n) time, O(n) space.
+This is equivalent to the classical statement of Cramér's conjecture, translated into topological language. The conjecture predicts that the "connectivity scale" — the minimum $\varepsilon$ at which the prime point cloud becomes a single connected component — grows as $(\log p_n)^2$.
 
-For higher-dimensional point clouds, the Rips complex computation requires O(n²) for edges and exponential time for higher simplices. The 1D case is special: the barcode is completely determined by the sorted gap sequence.
+## 10. Computational Predictions and Falsifiable Conjectures
 
-### 4.2 Connected Components at Scale ε
+### 10.1 Exponential Distribution Conjecture
 
-**Algorithm**: Count components = 1 + |{i : gap_i > ε}|.
+**Conjecture 10.1**. For primes up to $x$, the normalized bar lengths $g_i / \log(p_i)$ converge in distribution to $\text{Exp}(1)$ as $x \to \infty$.
 
-This follows from the observation that in 1D, two clusters merge if and only if the gap between their closest endpoints is ≤ ε.
+**Test**: Compute the empirical CDF of normalized gaps for primes up to $10^6$ and compare with $1 - e^{-t}$ using the Kolmogorov-Smirnov statistic.
 
-### 4.3 Union-Find Barcode Computation
+### 10.2 Scale-2 Persistence Conjecture
 
-For general point clouds, we use the union-find algorithm:
-1. Compute all pairwise distances: O(n²)
-2. Sort edges by distance: O(n² log n)
-3. Process edges in order, merging components: O(n² α(n))
+**Conjecture 10.2** (Topological Twin Prime Conjecture). The number of bars of length exactly 2 in the prime $H_0$ barcode is unbounded, i.e., $\text{countGapsEq}(\text{prime}, n, 2) \to \infty$.
 
-For the 1D case, this simplifies to O(n log n) since only consecutive gaps matter.
+This is equivalent to the twin prime conjecture.
 
-## 5. Computational Experiments
+## 11. Discussion
 
-### 5.1 Cramér-Granville Exponential Distribution Test
+### 11.1 Relationship to Classical Results
 
-We tested the prediction that normalized prime gaps (gap / log N) follow an Exp(1) distribution for primes up to N = 10⁶.
+Our framework provides a clean topological interpretation of several classical results:
 
-| k | Threshold | Fraction > threshold | Predicted e^(-k) | Ratio |
-|---|-----------|---------------------|-------------------|-------|
-| 1 | 13.82     | 0.3189              | 0.3679           | 0.867 |
-| 2 | 27.63     | 0.0646              | 0.1353           | 0.478 |
-| 3 | 41.45     | 0.0066              | 0.0498           | 0.133 |
+- **Bertrand's Postulate**: For every $n$, there exists a prime between $n$ and $2n$. In barcode terms: no bar has length exceeding $p_n$ (i.e., the gap is always less than the prime itself).
 
-The agreement is good for k = 1 but deteriorates for larger k, reflecting the well-known fact that the Cramér model overestimates the probability of very large gaps. The Granville refinement (replacing log(N) with log(N)² · e^(-2γ)) provides a better fit for the tail.
+- **Prime Number Theorem**: The average bar length near the $n$-th prime is $\sim \log(p_n)$.
 
-### 5.2 Twin Prime Count
+- **Zhang's Theorem** (2013): There are infinitely many bars of length $\leq 70{,}000{,}000$.
 
-For primes up to 10⁶, we found 8,169 twin prime pairs (gaps of size 2), representing approximately 10.4% of all prime gaps. The barcode contains 8,169 bars of persistence exactly 2.
+- **Maynard-Tao** (2014): There are infinitely many bars of length $\leq 246$.
 
-### 5.3 Filtration Snapshots
+### 11.2 Advantages of the Topological Perspective
 
-| ε  | Components | Fraction connected |
-|----|------------|-------------------|
-| 0  | 78,498     | 0.0000            |
-| 2  | 70,329     | 0.1041            |
-| 6  | 30,214     | 0.6149            |
-| 20 | 1,539      | 0.9804            |
-| 100| 1          | 1.0000            |
+1. **Multi-scale analysis**: The filtration provides a natural hierarchy of scales, revealing different arithmetic phenomena at different resolutions.
 
-Full connectivity is achieved at ε = 148 (the maximal prime gap below 10⁶).
+2. **Stability**: The barcode is robust to perturbation, making it useful for studying approximate models.
 
-### 5.4 Bertrand Bound Verification
+3. **Computational tools**: Persistent homology has a mature computational ecosystem that can be directly applied to prime data.
 
-All 78,497 prime gaps below 10⁶ satisfy gap(p) ≤ p, confirming the Bertrand bar length bound.
+## 12. Future Work
 
-## 6. Discussion
+- Extend to higher-dimensional embeddings (e.g., $(p_n, p_{n+1})$) to study $H_1$ features.
+- Analyze the barcode entropy as a measure of prime regularity.
+- Connect the filtration structure to sieve-theoretic methods.
+- Study the persistence diagram of the Gaussian prime lattice in $\mathbb{Z}[i]$.
 
-### 6.1 Significance of the Barcode Framework
+## References
 
-The reformulation of prime gaps as a barcode has several advantages:
-
-1. **Multiscale perspective**: Rather than studying gaps at a fixed scale, the barcode captures the entire hierarchy of scales simultaneously.
-
-2. **Topological language**: Concepts like "persistence" and "essential class" provide intuitive geometric vocabulary for gap phenomena.
-
-3. **Connection to applied mathematics**: Persistent homology is widely used in data science, creating a bridge between pure number theory and applications.
-
-### 6.2 Limitations
-
-1. For 1D point clouds, persistent homology captures only H₀ (connected components). Higher homology groups H₁, H₂, ... require higher-dimensional embeddings of the primes.
-
-2. The Cramér model is known to be imprecise for very large gaps (the Maier phenomenon contradicts it at extreme scales).
-
-3. The formal proofs work over ℕ rather than ℝ, which simplifies some aspects but limits generalization to continuous models.
-
-### 6.3 Relation to Prior Work
-
-Our work connects to:
-- **Cramér (1936)**: Probabilistic model of prime gaps
-- **Granville (1995)**: Refinement of Cramér's model
-- **Edelsbrunner et al. (2000)**: Persistent homology foundations
-- **Carlsson (2009)**: Topological data analysis survey
-- **Maynard (2015)**: Small gaps between primes (Fields Medal work)
-
-## 7. Future Work
-
-1. **Higher homology**: Embed primes in higher dimensions (e.g., via (p, p mod 6) or (p, p mod 30) coordinates) and study H₁ persistence.
-
-2. **Arithmetic progressions**: Study the barcode of primes in arithmetic progressions (Dirichlet's theorem provides the setting).
-
-3. **Comparative barcodes**: Compare the prime barcode to barcodes of random sequences with the same density, quantifying "how random" the primes actually are.
-
-4. **L-function connections**: Relate barcode statistics to zeros of the Riemann zeta function.
-
-## 8. References
-
-1. Cramér, H. (1936). "On the order of magnitude of the difference between consecutive prime numbers." *Acta Arithmetica*, 2, 23–46.
-
-2. Edelsbrunner, H., Letscher, D., and Zomorodian, A. (2000). "Topological persistence and simplification." *Discrete & Computational Geometry*, 28, 511–533.
-
-3. Carlsson, G. (2009). "Topology and data." *Bulletin of the AMS*, 46(2), 255–308.
-
-4. Granville, A. (1995). "Harald Cramér and the distribution of prime numbers." *Scandinavian Actuarial Journal*, 1, 12–28.
-
-5. Maynard, J. (2015). "Small gaps between primes." *Annals of Mathematics*, 181(1), 383–413.
-
-6. Chebyshev, P. L. (1852). "Mémoire sur les nombres premiers." *Journal de mathématiques pures et appliquées*, 17, 366–390.
+1. Cramér, H. (1936). On the order of magnitude of the difference between consecutive prime numbers. *Acta Arithmetica*, 2(1), 23-46.
+2. Edelsbrunner, H., & Harer, J. (2010). *Computational Topology: An Introduction*. American Mathematical Society.
+3. Carlsson, G. (2009). Topology and Data. *Bulletin of the AMS*, 46(2), 255-308.
+4. Maynard, J. (2015). Small gaps between primes. *Annals of Mathematics*, 181(1), 383-413.
+5. Cohen-Steiner, D., Edelsbrunner, H., & Harer, J. (2007). Stability of persistence diagrams. *Discrete & Computational Geometry*, 37(1), 103-120.
+6. Granville, A. (1995). Harald Cramér and the distribution of prime numbers. *Scandinavian Actuarial Journal*, 1995(1), 12-28.

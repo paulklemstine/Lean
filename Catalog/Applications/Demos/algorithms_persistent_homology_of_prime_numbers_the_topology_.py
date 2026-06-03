@@ -1,252 +1,227 @@
+#!/usr/bin/env python3
 """
-Algorithms for Persistent Homology of Prime Point Clouds
+algorithms.py — Core algorithms for persistent homology of 1D point clouds.
 
-Implements:
-1. Rips filtration computation for 1D point clouds
-2. H₀ barcode extraction via union-find
-3. Gap distribution analysis
-4. Poisson process comparison
+Type-hinted implementations of:
+1. Rips component counting for 1D point clouds
+2. H_0 barcode computation
+3. Barcode stability bound computation
+4. Cramér model simulation and comparison
 """
 
+from __future__ import annotations
 import math
-from typing import List, Tuple, Optional, Dict
-from collections import Counter
+import random
+from dataclasses import dataclass, field
+from typing import Sequence
 
 
-class UnionFind:
-    """
-    Union-Find (Disjoint Set Union) data structure for tracking
-    connected components during the Rips filtration.
+@dataclass
+class PH0Bar:
+    """A bar in the H_0 barcode. Birth is always 0 for Rips filtrations."""
+    birth: float = 0.0
+    death: float = 0.0
 
-    Time complexity: O(α(n)) amortized per operation where α is the
-    inverse Ackermann function.
-
-    Space complexity: O(n)
-    """
-
-    def __init__(self, n: int):
-        self.parent = list(range(n))
-        self.rank = [0] * n
-        self.n_components = n
-
-    def find(self, x: int) -> int:
-        """Find root with path compression."""
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
-
-    def union(self, x: int, y: int) -> bool:
-        """Union by rank. Returns True if a merge occurred."""
-        rx, ry = self.find(x), self.find(y)
-        if rx == ry:
-            return False
-        if self.rank[rx] < self.rank[ry]:
-            rx, ry = ry, rx
-        self.parent[ry] = rx
-        if self.rank[rx] == self.rank[ry]:
-            self.rank[rx] += 1
-        self.n_components -= 1
-        return True
+    @property
+    def length(self) -> float:
+        return self.death - self.birth
 
 
-def sieve_primes(n: int) -> List[int]:
-    """Sieve of Eratosthenes. O(n log log n) time, O(n) space."""
-    if n < 2:
+@dataclass
+class BarcodeStats:
+    """Statistics of an H_0 barcode."""
+    num_bars: int = 0
+    total_length: float = 0.0
+    mean_length: float = 0.0
+    max_length: float = 0.0
+    min_length: float = float('inf')
+
+
+def sieve_primes(limit: int) -> list[int]:
+    """Sieve of Eratosthenes returning primes up to limit."""
+    if limit < 2:
         return []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, n + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n + 1) if is_prime[i]]
+    sieve = bytearray(b'\x01') * (limit + 1)
+    sieve[0] = sieve[1] = 0
+    for i in range(2, int(limit**0.5) + 1):
+        if sieve[i]:
+            sieve[i*i::i] = bytearray(len(sieve[i*i::i]))
+    return [i for i, v in enumerate(sieve) if v]
 
 
-def compute_h0_barcode_unionfind(points: List[int]) -> List[Tuple[int, int]]:
+def compute_gaps(points: Sequence[float]) -> list[float]:
+    """Compute consecutive gaps of a sorted sequence."""
+    return [points[i + 1] - points[i] for i in range(len(points) - 1)]
+
+
+def rips_components_1d(gaps: Sequence[float], epsilon: float) -> int:
     """
-    Compute H₀ barcode of a 1D point cloud using union-find.
+    Number of connected components at scale epsilon for a 1D point cloud.
 
-    For a 1D point cloud, the Rips filtration is equivalent to sorting
-    gaps and merging components in order of increasing gap size.
+    By the 1D Rips Component Theorem:
+        C(epsilon) = #{gaps > epsilon} + 1
 
-    Algorithm:
-    1. Sort points (O(n log n))
-    2. Compute gaps between consecutive points (O(n))
-    3. Sort gaps (O(n log n))
-    4. Process gaps in increasing order, merging components (O(n α(n)))
+    Args:
+        gaps: Consecutive gaps of the sorted point cloud.
+        epsilon: The scale parameter.
 
-    Total: O(n log n) time, O(n) space
-
-    Returns: List of (birth, death) pairs. birth=0 for all H₀ bars.
-             One bar has death=∞ (represented as -1) for the essential class.
+    Returns:
+        Number of connected components.
     """
-    if len(points) <= 1:
-        return [(0, -1)]  # Single essential class
-
-    sorted_pts = sorted(points)
-    n = len(sorted_pts)
-
-    # Compute gaps with indices
-    gaps_with_idx = []
-    for i in range(n - 1):
-        gap = sorted_pts[i + 1] - sorted_pts[i]
-        gaps_with_idx.append((gap, i))
-
-    # Sort by gap size
-    gaps_with_idx.sort()
-
-    # Union-find to track merging
-    uf = UnionFind(n)
-    barcode = []
-
-    for gap_size, idx in gaps_with_idx:
-        if uf.union(idx, idx + 1):
-            barcode.append((0, gap_size))  # Component dies at this scale
-
-    # Add essential class
-    barcode.append((0, -1))
-
-    return barcode
+    return sum(1 for g in gaps if g > epsilon) + 1
 
 
-def compute_h0_barcode_direct(points: List[int]) -> List[Tuple[int, int]]:
+def compute_h0_barcode(gaps: Sequence[float]) -> list[PH0Bar]:
     """
-    Direct H₀ barcode computation for 1D point clouds.
+    Compute the H_0 barcode of a 1D point cloud from its gaps.
 
-    For 1D data, the barcode is simply the sorted list of gaps
-    (each gap kills one component). No union-find needed.
+    Each bar has birth = 0 and death = gap_i. The essential bar is omitted.
 
-    O(n log n) time, O(n) space.
+    Args:
+        gaps: Consecutive gaps of the sorted point cloud.
+
+    Returns:
+        List of PH0Bar objects, sorted by death time.
     """
-    if len(points) <= 1:
-        return [(0, -1)]
-
-    sorted_pts = sorted(points)
-    gaps = [sorted_pts[i+1] - sorted_pts[i] for i in range(len(sorted_pts) - 1)]
-
-    barcode = [(0, g) for g in sorted(gaps)]
-    barcode.append((0, -1))  # Essential class
-    return barcode
+    bars = [PH0Bar(birth=0.0, death=float(g)) for g in gaps]
+    bars.sort(key=lambda b: b.death)
+    return bars
 
 
-def gap_distribution_statistics(primes: List[int]) -> Dict[str, float]:
+def barcode_statistics(bars: list[PH0Bar]) -> BarcodeStats:
+    """Compute statistics of an H_0 barcode."""
+    if not bars:
+        return BarcodeStats()
+    lengths = [b.length for b in bars]
+    return BarcodeStats(
+        num_bars=len(bars),
+        total_length=sum(lengths),
+        mean_length=sum(lengths) / len(lengths),
+        max_length=max(lengths),
+        min_length=min(lengths),
+    )
+
+
+def component_drop(gaps: Sequence[float], k: int) -> int:
     """
-    Compute statistics of the prime gap distribution.
+    Compute the component drop between scale k and k+1.
 
-    Returns dict with mean, variance, max, and comparison to log(N) prediction.
+    By the Component Derivative Formula:
+        C(k) - C(k+1) = #{gaps == k+1}
+
+    Args:
+        gaps: Consecutive gaps.
+        k: The scale.
+
+    Returns:
+        Number of gaps equal to k+1.
     """
-    gaps = [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
-    N = primes[-1]
-    log_N = math.log(N)
+    target = k + 1
+    return sum(1 for g in gaps if g == target)
 
-    mean_gap = sum(gaps) / len(gaps)
-    var_gap = sum((g - mean_gap)**2 for g in gaps) / len(gaps)
-    max_gap = max(gaps)
+
+def gap_perturbation_bound(delta: float) -> float:
+    """
+    Maximum gap perturbation for delta-close sequences.
+
+    By the 1D Barcode Stability Theorem:
+        |gap_f(i) - gap_g(i)| <= 2*delta
+
+    Args:
+        delta: Maximum pointwise distance between sequences.
+
+    Returns:
+        The gap perturbation bound 2*delta.
+    """
+    return 2.0 * delta
+
+
+def cramer_model_primes(limit: int, seed: int | None = None) -> list[int]:
+    """
+    Generate "primes" using Cramér's random model.
+
+    Each integer n >= 2 is independently kept with probability 1/log(n).
+
+    Args:
+        limit: Upper bound for generation.
+        seed: Random seed for reproducibility.
+
+    Returns:
+        List of model "primes".
+    """
+    rng = random.Random(seed)
+    model_primes = [2]  # Always include 2
+    for n in range(3, limit + 1):
+        if rng.random() < 1.0 / math.log(n):
+            model_primes.append(n)
+    return model_primes
+
+
+def compare_barcodes(
+    prime_gaps: list[float],
+    model_gaps: list[float],
+) -> dict[str, float]:
+    """
+    Compare prime barcode with Cramér model barcode.
+
+    Returns:
+        Dictionary with comparison metrics.
+    """
+    p_bars = compute_h0_barcode(prime_gaps)
+    m_bars = compute_h0_barcode(model_gaps)
+    p_stats = barcode_statistics(p_bars)
+    m_stats = barcode_statistics(m_bars)
 
     return {
-        "n_primes": len(primes),
-        "n_gaps": len(gaps),
-        "N": N,
-        "log_N": log_N,
-        "mean_gap": mean_gap,
-        "predicted_mean": log_N,
-        "mean_ratio": mean_gap / log_N,
-        "variance": var_gap,
-        "max_gap": max_gap,
-        "max_gap_over_log_N": max_gap / log_N,
-        "max_gap_over_log_N_sq": max_gap / (log_N ** 2),
+        "prime_mean_bar": p_stats.mean_length,
+        "model_mean_bar": m_stats.mean_length,
+        "prime_max_bar": p_stats.max_length,
+        "model_max_bar": m_stats.max_length,
+        "prime_num_bars": p_stats.num_bars,
+        "model_num_bars": m_stats.num_bars,
+        "mean_ratio": p_stats.mean_length / m_stats.mean_length if m_stats.mean_length else 0,
     }
 
 
-def exponential_fit_test(
-    gaps: List[int], log_N: float, k_values: Optional[List[float]] = None
-) -> List[Dict[str, float]]:
+def filtration_step_function(
+    gaps: Sequence[float],
+    max_epsilon: int | None = None,
+) -> list[tuple[int, int]]:
     """
-    Test whether prime gaps follow an exponential distribution with mean log(N).
+    Compute the full filtration: (epsilon, num_components) pairs.
 
-    The Cramér model predicts P(gap > k·log(N)) ≈ e^(-k).
+    Args:
+        gaps: Consecutive gaps.
+        max_epsilon: Maximum scale to compute (default: max gap).
 
-    Returns list of test results for each k value.
+    Returns:
+        List of (epsilon, components) pairs.
     """
-    if k_values is None:
-        k_values = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0]
-
-    n = len(gaps)
-    results = []
-
-    for k in k_values:
-        threshold = k * log_N
-        count_exceeding = sum(1 for g in gaps if g > threshold)
-        observed_fraction = count_exceeding / n
-        expected_fraction = math.exp(-k)
-        ratio = observed_fraction / expected_fraction if expected_fraction > 0 else float('inf')
-
-        results.append({
-            "k": k,
-            "threshold": threshold,
-            "count_exceeding": count_exceeding,
-            "observed_fraction": observed_fraction,
-            "expected_fraction": expected_fraction,
-            "ratio": ratio,
-            "log_ratio": math.log(ratio) if ratio > 0 else float('-inf'),
-        })
-
-    return results
-
-
-def persistence_entropy(barcode: List[Tuple[int, int]]) -> float:
-    """
-    Compute the persistence entropy of a barcode.
-
-    Persistence entropy is defined as:
-        H = -Σ (p_i · log(p_i))
-    where p_i = persistence_i / total_persistence.
-
-    This measures the "spread" of topological features across scales.
-    Higher entropy = more uniform distribution of bar lengths.
-    """
-    # Filter finite bars
-    finite_bars = [(b, d) for b, d in barcode if d >= 0]
-    if not finite_bars:
-        return 0.0
-
-    persistences = [d - b for b, d in finite_bars]
-    total = sum(persistences)
-    if total == 0:
-        return 0.0
-
-    entropy = 0.0
-    for p in persistences:
-        if p > 0:
-            prob = p / total
-            entropy -= prob * math.log(prob)
-
-    return entropy
+    if not gaps:
+        return [(0, 1)]
+    if max_epsilon is None:
+        max_epsilon = int(max(gaps))
+    return [(eps, rips_components_1d(gaps, eps)) for eps in range(max_epsilon + 1)]
 
 
 if __name__ == "__main__":
-    # Example usage
-    print("Computing H₀ barcode for primes up to 100...")
-    primes = sieve_primes(100)
-    print(f"Primes: {primes}")
+    # Quick test
+    primes = sieve_primes(1000)
+    gaps = compute_gaps(primes)
 
-    barcode_uf = compute_h0_barcode_unionfind(primes)
-    barcode_direct = compute_h0_barcode_direct(primes)
+    print("Prime barcode (first 1000):")
+    stats = barcode_statistics(compute_h0_barcode(gaps))
+    print(f"  Bars: {stats.num_bars}, Mean: {stats.mean_length:.2f}, "
+          f"Max: {stats.max_length:.0f}")
 
-    print(f"\nBarcode (union-find): {barcode_uf}")
-    print(f"Barcode (direct):    {barcode_direct}")
+    print("\nFiltration (first 20 scales):")
+    for eps, c in filtration_step_function(gaps)[:20]:
+        print(f"  ε={eps:>3}: {c:>4} components")
 
-    # Statistics for larger N
-    for N in [1000, 10000, 100000, 1000000]:
-        primes = sieve_primes(N)
-        stats = gap_distribution_statistics(primes)
-        print(f"\nN={N}: mean_gap={stats['mean_gap']:.2f}, "
-              f"log(N)={stats['log_N']:.2f}, "
-              f"ratio={stats['mean_ratio']:.4f}, "
-              f"max_gap={stats['max_gap']}")
-
-    # Persistence entropy
-    primes = sieve_primes(100000)
-    barcode = compute_h0_barcode_direct(primes)
-    ent = persistence_entropy(barcode)
-    print(f"\nPersistence entropy for primes up to 100000: {ent:.4f}")
+    print("\nCramér model comparison:")
+    model = cramer_model_primes(1000, seed=42)
+    mgaps = compute_gaps(model)
+    comp = compare_barcodes(gaps, mgaps)
+    print(f"  Prime mean gap: {comp['prime_mean_bar']:.2f}")
+    print(f"  Model mean gap: {comp['model_mean_bar']:.2f}")
+    print(f"  Ratio: {comp['mean_ratio']:.3f}")
