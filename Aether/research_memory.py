@@ -282,6 +282,8 @@ class FutureDirection:
             "arc_id": self.arc_id,
             "arc_position": self.arc_position,
             "outcome_quality": self.outcome_quality,
+            "prune_reason": self.prune_reason,
+            "pruned_at": self.pruned_at,
         }
 
     @classmethod
@@ -1035,6 +1037,7 @@ class FutureDirectionsManager:
 
         If any domain exceeds max_domain_fraction of available directions,
         prune the bottom prune_bottom_fraction of that domain's lowest-quality directions.
+        Uses _compute_quality_score for sorting when all priority_scores are equal.
 
         Returns dict of {domain: count_pruned}.
         """
@@ -1058,8 +1061,9 @@ class FutureDirectionsManager:
             if fraction > max_domain_fraction:
                 # Find directions in this domain that are available
                 domain_dirs = [d for d in available if domain in d.domains]
-                # Sort by priority_score (ascending = lowest quality first)
-                domain_dirs.sort(key=lambda d: d.priority_score)
+                # Sort by computed quality score (ascending = lowest quality first)
+                # Falls back to priority_score when all equal
+                domain_dirs.sort(key=lambda d: (self._compute_quality_score(d), d.priority_score))
                 # Prune the bottom prune_bottom_fraction
                 n_prune = max(1, int(len(domain_dirs) * prune_bottom_fraction))
                 # Don't prune Novelty-tagged directions
