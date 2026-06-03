@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1e7256e7",
     "filename": "complete_structural_framework_for_understandin.json",
     "pkg_num": 282,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6970071764705883,
     "title": "The Multiplicative Independence Hierarchy: Structural Depth Beyond Product-Freeness"
   },
   {
@@ -9094,8 +9094,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "complete_structural_framework_for_understandin",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6970071764705883,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "The Multiplicative Independence Hierarchy: Structural Depth Beyond Product-Freeness"
     }
