@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "965e6ada",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
     "pkg_num": 328,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6879609090909092,
     "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Pre-Topological Semantics"
   },
   {
@@ -10622,8 +10622,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6879609090909092,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Dream Logic: Non-Monotone Paraconsistent Reasoning and Pre-Topological Semantics"
     }
