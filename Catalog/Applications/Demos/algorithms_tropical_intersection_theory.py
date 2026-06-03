@@ -1,362 +1,322 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Tropical Intersection Theory: Core Algorithms
+Tropical Intersection Theory — Algorithm Implementations
 
-Implements the algorithms underlying the tropical Bézout theorem:
-  - Degree simplex construction and lattice point enumeration
-  - Minkowski sum computation for finite lattice point sets
-  - Mixed lattice index (mixed area proxy) computation
-  - Tropical polynomial evaluation and corner locus detection
-  - Stable intersection point detection
-
-All algorithms include type hints, docstrings, and complexity analysis.
+Type-hinted Python implementations of the core algorithms:
+1. Tropical polynomial evaluation and root finding
+2. Tropical curve intersection
+3. Stable intersection multiplicity computation
+4. Tropical resultant computation
 """
 
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
-import itertools
+from typing import List, Tuple, Optional, Dict, Set
+from dataclasses import dataclass
+import math
 
 
 # ============================================================
-# Algorithm 1: Degree Simplex Construction
+# Core Data Structures
 # ============================================================
 
-def degree_simplex(d: int) -> FrozenSet[Tuple[int, int]]:
-    """
-    Construct the degree-d simplex as a set of lattice points.
-    
-    Δ_d = {(i, j) ∈ ℕ² : i + j ≤ d}
-    
-    Args:
-        d: Non-negative integer degree
-        
-    Returns:
-        Frozenset of lattice points in the simplex
-        
-    Complexity:
-        Time: O(d²)  — enumerate all valid (i,j) pairs
-        Space: O(d²) — store (d+1)(d+2)/2 points
-        
-    Examples:
-        >>> sorted(degree_simplex(0))
-        [(0, 0)]
-        >>> sorted(degree_simplex(1))
-        [(0, 0), (0, 1), (1, 0)]
-        >>> len(degree_simplex(5))
-        21
-    """
-    if d < 0:
-        raise ValueError(f"Degree must be non-negative, got {d}")
-    return frozenset((i, j) for i in range(d + 1) for j in range(d - i + 1))
+@dataclass
+class TropMonomial:
+    """A tropical monomial: coeff + exp_x * x + exp_y * y."""
+    coeff: float
+    exp_x: int
+    exp_y: int
 
-
-def degree_simplex_card(d: int) -> int:
-    """
-    Compute |Δ_d| = (d+1)(d+2)/2 directly (without enumeration).
-    
-    This is the closed-form formula proved in our formalization.
-    
-    Args:
-        d: Non-negative integer degree
-        
-    Returns:
-        Number of lattice points in Δ_d
-        
-    Complexity: O(1)
-    
-    Examples:
-        >>> degree_simplex_card(0)
-        1
-        >>> degree_simplex_card(3)
-        10
-        >>> degree_simplex_card(10)
-        66
-    """
-    return (d + 1) * (d + 2) // 2
-
-
-# ============================================================
-# Algorithm 2: Minkowski Sum
-# ============================================================
-
-def minkowski_sum(A: FrozenSet[Tuple[int, int]],
-                  B: FrozenSet[Tuple[int, int]]) -> FrozenSet[Tuple[int, int]]:
-    """
-    Compute the Minkowski sum A ⊕ B = {a + b : a ∈ A, b ∈ B}.
-    
-    Args:
-        A, B: Finite sets of lattice points in ℤ²
-        
-    Returns:
-        Minkowski sum as a frozenset
-        
-    Complexity:
-        Time: O(|A| · |B|)  — enumerate all pairs
-        Space: O(|A| · |B|) — worst case for output size
-        
-    Properties (proved formally):
-        - Δ_{d₁} ⊕ Δ_{d₂} = Δ_{d₁+d₂}
-        - Monotone: A ⊆ A' ∧ B ⊆ B' → A⊕B ⊆ A'⊕B'
-        
-    Examples:
-        >>> sorted(minkowski_sum(frozenset([(0,0)]), frozenset([(1,1)])))
-        [(1, 1)]
-    """
-    return frozenset((a[0] + b[0], a[1] + b[1]) for a in A for b in B)
-
-
-# ============================================================
-# Algorithm 3: Mixed Lattice Index
-# ============================================================
-
-def mixed_lattice_index(A: FrozenSet[Tuple[int, int]],
-                        B: FrozenSet[Tuple[int, int]]) -> int:
-    """
-    Compute the mixed lattice index of two finite lattice point sets.
-    
-    MixedIndex(A, B) = |A ⊕ B| - |A| - |B| + 1
-    
-    For convex lattice polygons, this equals the mixed area.
-    For degree simplices, this equals the product of degrees.
-    
-    Args:
-        A, B: Non-empty finite sets of lattice points
-        
-    Returns:
-        Integer mixed lattice index
-        
-    Complexity:
-        Time: O(|A| · |B|) — dominated by Minkowski sum computation
-        Space: O(|A| · |B|)
-        
-    Key theorem (proved formally):
-        mixed_lattice_index(Δ_{d₁}, Δ_{d₂}) = d₁ · d₂
-        
-    Examples:
-        >>> mixed_lattice_index(degree_simplex(2), degree_simplex(3))
-        6
-        >>> mixed_lattice_index(degree_simplex(5), degree_simplex(5))
-        25
-    """
-    mink = minkowski_sum(A, B)
-    return len(mink) - len(A) - len(B) + 1
-
-
-def bezout_number(d1: int, d2: int) -> int:
-    """
-    Compute the tropical Bézout number for degrees d₁, d₂.
-    
-    This is simply d₁ × d₂, which equals the mixed lattice index
-    of the degree simplices by our main theorem.
-    
-    Args:
-        d1, d2: Positive integer degrees
-        
-    Returns:
-        d1 * d2
-        
-    Complexity: O(1)
-    """
-    return d1 * d2
-
-
-# ============================================================
-# Algorithm 4: Tropical Polynomial Evaluation
-# ============================================================
-
-class TropicalPoly2:
-    """
-    A tropical polynomial in two variables.
-    
-    Represents f(x, y) = max_{(i,j) ∈ support} {a_{ij} + i·x + j·y}
-    
-    Attributes:
-        terms: dict mapping (expX, expY) -> coefficient
-        degree: maximum of expX + expY over all terms
-    """
-    
-    def __init__(self, terms: Dict[Tuple[int, int], float]):
-        """
-        Initialize a tropical polynomial from its terms.
-        
-        Args:
-            terms: Dictionary mapping exponent pairs to coefficients.
-                   Must be non-empty. All exponents must be non-negative.
-        
-        Raises:
-            ValueError: If terms is empty or contains negative exponents.
-        """
-        if not terms:
-            raise ValueError("Tropical polynomial must have at least one term")
-        for (i, j) in terms:
-            if i < 0 or j < 0:
-                raise ValueError(f"Exponents must be non-negative, got ({i}, {j})")
-        self.terms = dict(terms)
-        self.degree = max(i + j for (i, j) in terms)
-    
-    @property
-    def support(self) -> FrozenSet[Tuple[int, int]]:
-        """The exponent support of the polynomial."""
-        return frozenset(self.terms.keys())
-    
-    @property
-    def is_dense(self) -> bool:
-        """Whether the support equals the full degree simplex."""
-        return self.support == degree_simplex(self.degree)
-    
     def eval(self, x: float, y: float) -> float:
+        return self.coeff + self.exp_x * x + self.exp_y * y
+
+    def total_deg(self) -> int:
+        return self.exp_x + self.exp_y
+
+
+@dataclass
+class TropPoly1D:
+    """Univariate tropical polynomial: min_i(coeffs[i] + i*x)."""
+    coeffs: List[float]
+
+    @property
+    def degree(self) -> int:
+        return len(self.coeffs) - 1
+
+    def eval(self, x: float) -> float:
+        """O(d) tropical evaluation."""
+        return min(self.coeffs[i] + i * x for i in range(len(self.coeffs)))
+
+    def slope(self, x: float) -> float:
+        """Discrete derivative Δp(x) = p(x+1) - p(x)."""
+        return self.eval(x + 1) - self.eval(x)
+
+    def active_term(self, x: float) -> int:
+        """Return index of the term achieving the minimum at x."""
+        vals = [self.coeffs[i] + i * x for i in range(len(self.coeffs))]
+        return int(min(range(len(vals)), key=lambda i: vals[i]))
+
+    def find_roots(self, x_min: int = -1000, x_max: int = 1000) -> List[Tuple[int, float]]:
+        """Find all tropical roots (breakpoints) with their slope drops.
+
+        Returns list of (position, drop_magnitude) pairs.
+        Time: O((x_max - x_min) * d).
         """
-        Evaluate the tropical polynomial at (x, y).
-        
-        Computes max_{(i,j)} {a_{ij} + i·x + j·y}.
-        
-        Complexity: O(|support|)
-        """
-        return max(c + i * x + j * y for (i, j), c in self.terms.items())
-    
-    def argmax_terms(self, x: float, y: float,
-                     tol: float = 1e-10) -> List[Tuple[int, int]]:
-        """
-        Find all terms achieving the maximum at (x, y).
-        
-        Returns exponent pairs (i, j) where a_{ij} + ix + jy = f(x,y).
-        
-        Complexity: O(|support|)
-        """
+        roots: List[Tuple[int, float]] = []
+        prev_slope = self.slope(x_min)
+        for x in range(x_min + 1, x_max):
+            curr_slope = self.slope(x)
+            if curr_slope < prev_slope - 1e-10:
+                roots.append((x - 1, prev_slope - curr_slope))
+            prev_slope = curr_slope
+        return roots
+
+    def verify_concavity(self, x_min: int = -100, x_max: int = 100) -> bool:
+        """Verify p(x-1) + p(x+1) ≤ 2p(x) for all x in range."""
+        for x in range(x_min, x_max + 1):
+            if self.eval(x - 1) + self.eval(x + 1) > 2 * self.eval(x) + 1e-10:
+                return False
+        return True
+
+
+@dataclass
+class TropCurve:
+    """A tropical curve in ℝ² defined by monomials."""
+    monomials: List[TropMonomial]
+
+    @property
+    def degree(self) -> int:
+        return max(m.total_deg() for m in self.monomials)
+
+    def eval(self, x: float, y: float) -> float:
+        return min(m.eval(x, y) for m in self.monomials)
+
+    def active_monomials(self, x: float, y: float, tol: float = 1e-8) -> List[int]:
+        """Return indices of monomials achieving the minimum at (x,y)."""
         val = self.eval(x, y)
-        return [(i, j) for (i, j), c in self.terms.items()
-                if abs(c + i * x + j * y - val) < tol]
-    
-    def is_corner_point(self, x: float, y: float,
-                        tol: float = 1e-10) -> bool:
-        """
-        Check if (x, y) is a corner point (on the tropical curve).
-        
-        A point is a corner if at least two terms achieve the maximum.
-        
-        Complexity: O(|support|)
-        """
-        return len(self.argmax_terms(x, y, tol)) >= 2
+        return [i for i, m in enumerate(self.monomials)
+                if abs(m.eval(x, y) - val) < tol]
+
+    def is_corner_point(self, x: float, y: float, tol: float = 1e-8) -> bool:
+        """Check if (x,y) is in the corner locus (min attained ≥ 2 times)."""
+        return len(self.active_monomials(x, y, tol)) >= 2
 
 
 # ============================================================
-# Algorithm 5: Tropical Curve Sampling
+# Intersection Algorithms
 # ============================================================
 
-def sample_tropical_curve(f: TropicalPoly2,
-                          x_range: Tuple[float, float] = (-5.0, 5.0),
-                          y_range: Tuple[float, float] = (-5.0, 5.0),
-                          steps: int = 500,
-                          tol: float = 0.05) -> List[Tuple[float, float]]:
-    """
-    Sample approximate corner points of a tropical curve on a grid.
-    
-    This is a brute-force sampling approach. For a production implementation,
-    one would compute the dual subdivision and extract exact edge/vertex data.
-    
+def lattice_det(u1: int, u2: int, v1: int, v2: int) -> int:
+    """Compute |u₁v₂ - u₂v₁| (absolute lattice determinant)."""
+    return abs(u1 * v2 - u2 * v1)
+
+
+def stable_intersection_mult(
+    u1: int, u2: int, v1: int, v2: int, w1: int, w2: int
+) -> int:
+    """Stable intersection multiplicity at a transverse intersection.
+
     Args:
-        f: Tropical polynomial
-        x_range, y_range: Sampling region
-        steps: Grid resolution in each dimension
-        tol: Tolerance for detecting corner points
-        
+        u1, u2: primitive direction vector of edge from curve 1
+        v1, v2: primitive direction vector of edge from curve 2
+        w1: weight of edge from curve 1
+        w2: weight of edge from curve 2
+
     Returns:
-        List of approximate corner points
-        
-    Complexity:
-        Time: O(steps² · |support|)
-        Space: O(steps²) worst case
+        |u₁v₂ - u₂v₁| * w₁ * w₂
     """
-    corners = []
-    dx = (x_range[1] - x_range[0]) / steps
-    dy = (y_range[1] - y_range[0]) / steps
-    for i in range(steps + 1):
-        for j in range(steps + 1):
-            x = x_range[0] + i * dx
-            y = y_range[0] + j * dy
-            if f.is_corner_point(x, y, tol):
-                corners.append((round(x, 4), round(y, 4)))
-    return corners
+    return lattice_det(u1, u2, v1, v2) * w1 * w2
+
+
+@dataclass
+class TropicalEdge:
+    """An edge of a tropical curve in ℝ²."""
+    start: Tuple[float, float]
+    direction: Tuple[int, int]  # primitive direction vector
+    weight: int
+    length: Optional[float]  # None for unbounded rays
+
+
+def intersect_edges(
+    e1: TropicalEdge, e2: TropicalEdge
+) -> Optional[Tuple[float, float, int]]:
+    """Find intersection point and multiplicity of two tropical edges.
+
+    Returns (x, y, multiplicity) or None if no intersection.
+    """
+    u1, u2 = e1.direction
+    v1, v2 = e2.direction
+
+    det = u1 * v2 - u2 * v1
+    if det == 0:
+        return None  # Parallel edges
+
+    # Solve for intersection parameters
+    dx = e2.start[0] - e1.start[0]
+    dy = e2.start[1] - e1.start[1]
+
+    t = (dx * v2 - dy * v1) / det
+    s = (dx * u2 - dy * u1) / det
+
+    # Check if intersection is on both edges
+    if t < -1e-10 or s < -1e-10:
+        return None
+    if e1.length is not None and t > e1.length + 1e-10:
+        return None
+    if e2.length is not None and s > e2.length + 1e-10:
+        return None
+
+    x = e1.start[0] + t * u1
+    y = e1.start[1] + t * u2
+    mult = stable_intersection_mult(u1, u2, v1, v2, e1.weight, e2.weight)
+
+    return (x, y, mult)
+
+
+def tropical_bezout_verify(
+    edges1: List[TropicalEdge],
+    edges2: List[TropicalEdge],
+    d1: int, d2: int
+) -> Dict:
+    """Verify tropical Bézout theorem for two tropical curves.
+
+    Returns dictionary with intersection points and total multiplicity.
+    """
+    intersections: List[Tuple[float, float, int]] = []
+
+    for e1 in edges1:
+        for e2 in edges2:
+            result = intersect_edges(e1, e2)
+            if result is not None:
+                intersections.append(result)
+
+    total_mult = sum(m for _, _, m in intersections)
+
+    return {
+        "intersections": intersections,
+        "count": len(intersections),
+        "total_multiplicity": total_mult,
+        "expected": d1 * d2,
+        "bezout_satisfied": len(intersections) <= d1 * d2,
+        "bezout_exact": total_mult == d1 * d2,
+    }
 
 
 # ============================================================
-# Algorithm 6: Stable Intersection Detection
+# Tropical Resultant
 # ============================================================
 
-def detect_intersections(f: TropicalPoly2, g: TropicalPoly2,
-                         x_range: Tuple[float, float] = (-5.0, 5.0),
-                         y_range: Tuple[float, float] = (-5.0, 5.0),
-                         steps: int = 500,
-                         tol: float = 0.05) -> List[Tuple[float, float]]:
+def tropical_resultant_entry(
+    p: TropPoly1D, q: TropPoly1D, i: int, j: int
+) -> Optional[float]:
+    """Compute entry (i,j) of the tropical resultant matrix.
+
+    The matrix has size (d₁+d₂) × (d₁+d₂).
     """
-    Detect approximate stable intersection points of two tropical curves.
-    
-    A stable intersection point is a point that lies on both tropical curves.
-    
-    Args:
-        f, g: Tropical polynomials
-        x_range, y_range: Search region
-        steps: Grid resolution
-        tol: Corner detection tolerance
-        
-    Returns:
-        List of approximate intersection points
-        
-    Complexity:
-        Time: O(steps² · (|supp(f)| + |supp(g)|))
+    d1 = p.degree
+    d2 = q.degree
+
+    if i < d2 and 0 <= j - i <= d1:
+        return p.coeffs[j - i]
+    elif i >= d2 and 0 <= j - (i - d2) <= d2:
+        return q.coeffs[j - (i - d2)]
+    else:
+        return None  # Tropical infinity
+
+
+def tropical_det(matrix: List[List[Optional[float]]]) -> Optional[float]:
+    """Compute tropical determinant: min over permutations of sum of entries.
+
+    For an n×n matrix, this is min_{σ ∈ Sₙ} Σᵢ M[i][σ(i)].
+    Returns None if all permutations have a None entry.
     """
-    intersections = []
-    dx = (x_range[1] - x_range[0]) / steps
-    dy = (y_range[1] - y_range[0]) / steps
-    for i in range(steps + 1):
-        for j in range(steps + 1):
-            x = x_range[0] + i * dx
-            y = y_range[0] + j * dy
-            if f.is_corner_point(x, y, tol) and g.is_corner_point(x, y, tol):
-                intersections.append((round(x, 4), round(y, 4)))
-    return intersections
+    from itertools import permutations
+
+    n = len(matrix)
+    best = None
+
+    for perm in permutations(range(n)):
+        val = 0.0
+        valid = True
+        for i in range(n):
+            entry = matrix[i][perm[i]]
+            if entry is None:
+                valid = False
+                break
+            val += entry
+        if valid:
+            if best is None or val < best:
+                best = val
+
+    return best
+
+
+def compute_tropical_resultant(p: TropPoly1D, q: TropPoly1D) -> Optional[float]:
+    """Compute the tropical resultant of two univariate tropical polynomials.
+
+    The tropical resultant is the tropical determinant of the Sylvester-type matrix.
+    """
+    n = p.degree + q.degree
+    matrix = [[tropical_resultant_entry(p, q, i, j) for j in range(n)] for i in range(n)]
+    return tropical_det(matrix)
 
 
 # ============================================================
-# Example Usage
+# Convex Hull / Lower Envelope Algorithm
+# ============================================================
+
+def lower_envelope(coeffs: List[float]) -> List[Tuple[int, int, float]]:
+    """Compute the lower convex hull of points (i, coeffs[i]).
+
+    Returns list of (i_start, i_end, breakpoint_x) for each edge,
+    where breakpoint_x is the x-coordinate where terms i_start and i_end meet.
+
+    Time: O(d) using Andrew's monotone chain variant.
+    """
+    n = len(coeffs)
+    if n <= 1:
+        return []
+
+    # Stack-based lower convex hull
+    hull: List[int] = [0]
+    edges: List[Tuple[int, int, float]] = []
+
+    for i in range(1, n):
+        while len(hull) >= 2:
+            j, k = hull[-2], hull[-1]
+            # Check if k is above the line from j to i
+            # Breakpoint j-k: coeffs[j] + j*x = coeffs[k] + k*x → x = (coeffs[j]-coeffs[k])/(k-j)
+            # Breakpoint k-i: x = (coeffs[k]-coeffs[i])/(i-k)
+            bp_jk = (coeffs[j] - coeffs[k]) / (k - j)
+            bp_ki = (coeffs[k] - coeffs[i]) / (i - k)
+            if bp_ki <= bp_jk:
+                hull.pop()
+            else:
+                break
+        hull.append(i)
+
+    for idx in range(len(hull) - 1):
+        i, j = hull[idx], hull[idx + 1]
+        bp = (coeffs[i] - coeffs[j]) / (j - i)
+        edges.append((i, j, bp))
+
+    return edges
+
+
+# ============================================================
+# Main execution
 # ============================================================
 
 if __name__ == "__main__":
-    print("Tropical Intersection Theory — Algorithm Demonstrations")
-    print("=" * 55)
-    print()
-    
-    # Verify degree simplex formula
-    for d in range(20):
-        assert len(degree_simplex(d)) == degree_simplex_card(d)
-    print("✓ Degree simplex cardinality formula verified for d ≤ 19")
-    
-    # Verify Minkowski sum theorem
-    for d1 in range(8):
-        for d2 in range(8):
-            assert minkowski_sum(degree_simplex(d1), degree_simplex(d2)) == degree_simplex(d1 + d2)
-    print("✓ Minkowski sum theorem verified for d₁, d₂ ≤ 7")
-    
-    # Verify mixed lattice index = d₁ × d₂
-    for d1 in range(1, 8):
-        for d2 in range(1, 8):
-            assert mixed_lattice_index(degree_simplex(d1), degree_simplex(d2)) == d1 * d2
-    print("✓ Mixed lattice index = d₁×d₂ verified for 1 ≤ d₁, d₂ ≤ 7")
-    print()
-    
-    # Tropical line intersection
-    line1 = TropicalPoly2({(1, 0): 0.0, (0, 1): 0.0, (0, 0): 0.0})
-    line2 = TropicalPoly2({(1, 0): 1.0, (0, 1): -1.0, (0, 0): 0.5})
-    
-    print(f"Line 1: degree {line1.degree}, dense: {line1.is_dense}")
-    print(f"Line 2: degree {line2.degree}, dense: {line2.is_dense}")
-    print(f"Bézout number: {bezout_number(line1.degree, line2.degree)}")
-    print()
-    
-    # Conic-cubic intersection
-    conic = TropicalPoly2({(i, j): 0.1 * (i - j) for i, j in degree_simplex(2)})
-    cubic = TropicalPoly2({(i, j): 0.2 * (i + j) for i, j in degree_simplex(3)})
-    
-    print(f"Conic: degree {conic.degree}, {len(conic.terms)} terms, dense: {conic.is_dense}")
-    print(f"Cubic: degree {cubic.degree}, {len(cubic.terms)} terms, dense: {cubic.is_dense}")
-    print(f"Bézout number: {bezout_number(conic.degree, cubic.degree)}")
-    print(f"Expected intersection points (with multiplicity): {conic.degree * cubic.degree}")
+    # Example: degree-3 polynomial
+    p = TropPoly1D([3, 1, 0, 2])
+    print(f"Polynomial: coeffs = {p.coeffs}, degree = {p.degree}")
+    print(f"Concavity: {p.verify_concavity()}")
+    print(f"Roots: {p.find_roots(-10, 10)}")
+
+    # Lower envelope
+    env = lower_envelope(p.coeffs)
+    print(f"Lower envelope edges: {env}")
+
+    # Tropical resultant
+    q = TropPoly1D([0, 2, 1])
+    res = compute_tropical_resultant(p, q)
+    print(f"\nResultant of degree-{p.degree} and degree-{q.degree}: {res}")
