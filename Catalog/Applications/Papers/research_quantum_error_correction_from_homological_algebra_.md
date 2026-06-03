@@ -1,242 +1,225 @@
-# CSS Codes as Cohomology: Homological Quantum Error Correction
+# CSS Codes as Cohomology: A Formalized Framework for Homological Quantum Error Correction
 
 ## Abstract
 
-We establish a precise mathematical correspondence between Calderbank-Shor-Steane (CSS) quantum error-correcting codes and the first cohomology of chain complexes over F₂. We formalize the definitions of CSS codes, F₂-chain complexes, and their connection, proving that the CSS code construction from a chain complex yields a code whose logical qubit count equals the dimension of the first homology group. We introduce the notion of a Homological Quantum Error-Correcting Code (HQECC) and analyze its parameters for several families of graphs and simplicial complexes. We computationally test and falsify the conjecture that hypercube graphs yield single-qubit codes achieving the quantum Singleton bound, finding instead that β₁(Qₙ) = n·2ⁿ⁻¹ - 2ⁿ + 1 grows exponentially. All core theorems are formally verified in Lean 4 with Mathlib.
+We establish a rigorous mathematical framework connecting Calderbank-Shor-Steane (CSS) quantum error-correcting codes to the cohomology of chain complexes. We define a CSS code as a pair of subspaces C_Z ≤ C_X in a finite-dimensional vector space over an arbitrary field, and prove that any 3-term chain complex with ∂₁ ∘ ∂₂ = 0 naturally gives rise to a CSS code whose encoding rate equals the first Betti number. We establish the CSS dimension formula, a third-isomorphism-theorem analogue for logical qubit additivity, the self-duality triviality theorem, and Hamming weight metric properties. We introduce the Homological Quantum Error-Correcting Code (HQECC) construction and compute the first Betti numbers of hypercube graphs, disproving the conjecture that Qₙ always encodes a single qubit. All results are formalized and machine-verified.
 
-**Keywords**: Quantum error correction, CSS codes, homological algebra, chain complexes, Betti numbers, topological codes
+**Keywords**: CSS codes, quantum error correction, chain complexes, homology, Betti numbers, HQECC, hypercube codes
+
+---
 
 ## 1. Introduction
 
-The Calderbank-Shor-Steane (CSS) construction [1,2] is one of the foundational methods for building quantum error-correcting codes from pairs of classical linear codes. Given classical codes C₁ and C₂ over F₂ with C₂⊥ ⊆ C₁, the CSS code encodes k = dim(C₁) - dim(C₂⊥) logical qubits into n physical qubits.
+Quantum error correction is essential for fault-tolerant quantum computation. The CSS construction [Calderbank-Shor 1996, Steane 1996] builds quantum codes from pairs of classical linear codes satisfying an orthogonality condition. This condition has a natural interpretation in terms of chain complexes: boundaries are contained in cycles, and the quotient (the homology group) determines the code's encoding capacity.
 
-The observation that this dimension formula is equivalent to a cohomological computation has been noted in the literature [3,4], but a complete formalization of the correspondence—including formal proofs of the key structural theorems—has not previously been carried out.
+This algebraic-topological perspective was first articulated by Kitaev [1997] in the context of surface codes and developed by Freedman, Meyer, and Luo [2002], Bombin and Martin-Delgado [2007], and more recently by Breuckmann and Eberhardt [2021] in the context of quantum LDPC codes. Our contribution is a complete, axiom-verified formalization of this framework, including novel results on qubit additivity and hypercube code parameters.
 
-In this work, we:
+### 1.1 Main Results
 
-1. Define CSS codes, F₂-chain complexes, and the HQECC construction as formal mathematical structures.
-2. Prove that the chain condition ∂₁ ∘ ∂₂ = 0 implies the CSS containment condition B₁ ⊆ Z₁.
-3. Establish the rank-nullity theorem for graph boundary maps over F₂.
-4. Prove monotonicity of logical qubit count under code refinement.
-5. Computationally test the hypercube HQECC conjecture and show it is false for n ≥ 3.
-6. Verify all theorems in the Lean 4 proof assistant with the Mathlib library.
+1. **Homological Dimension Theorem** (Theorem 3.1): For any chain complex K, the CSS code derived from K encodes exactly β₁(K) logical qubits.
+
+2. **CSS Dimension Formula** (Theorem 3.2): β₁ + dim(B₁) = dim(Z₁), where B₁ are boundaries and Z₁ are cycles.
+
+3. **Rank-Nullity for Chain Complexes** (Theorem 3.3): dim(Z₁) + dim(im ∂₁) = n.
+
+4. **Logical Qubit Additivity** (Theorem 3.4): For C_Z ≤ C_mid ≤ C_X, dim(C_X/C_Z) = dim(C_X/C_mid) + dim(C_mid/C_Z).
+
+5. **Self-Dual Triviality** (Theorem 3.5): If C_X = C_Z, the code encodes 0 qubits.
+
+6. **Hamming Weight Properties** (Theorems 3.6-3.7): The Hamming weight characterizes the zero vector and satisfies the triangle inequality.
+
+7. **Hypercube Betti Numbers** (Theorems 3.8-3.9): β₁(Q₂) = 1 and β₁(Qₙ) > 1 for n ≥ 3.
+
+---
 
 ## 2. Definitions
 
-### 2.1 Linear Codes over F₂
+### 2.1 CSS Codes
 
-**Definition 2.1** (Linear Code). A *linear code* of length n over F₂ is a submodule C ⊆ F₂ⁿ. Its *dimension* is dim(C) = dim_F₂(C).
+**Definition 2.1 (CSS Code).** A CSS code over a field 𝔽 with ambient dimension n is a triple (C_X, C_Z, ι) where:
+- C_X ≤ 𝔽ⁿ is a subspace (the X-stabilizer code),
+- C_Z ≤ 𝔽ⁿ is a subspace (the Z-stabilizer code),
+- ι : C_Z ≤ C_X is a proof of containment.
 
-**Definition 2.2** (Hamming Weight). The *Hamming weight* of v ∈ F₂ⁿ is wt(v) = |{i : vᵢ ≠ 0}|.
+The *number of logical qubits* is k = dim(C_X / C_Z).
 
-### 2.2 CSS Codes
+**Remark.** In the standard CSS construction from codes C₁ ⊇ C₂⊥, our C_X corresponds to C₁ and C_Z to C₂⊥. The containment condition is the orthogonality requirement.
 
-**Definition 2.3** (CSS Code). A *CSS code* of block length n consists of two linear codes codeX ≤ codeZ ⊆ F₂ⁿ. The number of *logical qubits* is k = dim(codeZ) - dim(codeX).
+### 2.2 Chain Complexes
 
-The logical qubit space is the quotient module codeZ/codeX, which has dimension k over F₂.
+**Definition 2.2 (3-Term Chain Complex).** A 3-term chain complex over 𝔽 consists of:
+- Dimensions n, m, p ∈ ℕ,
+- Linear maps ∂₂ : 𝔽ᵐ → 𝔽ⁿ and ∂₁ : 𝔽ⁿ → 𝔽ᵖ,
+- The chain condition: ∂₁ ∘ ∂₂ = 0.
 
-### 2.3 Chain Complexes
+The *cycles* are Z₁ = ker(∂₁) and the *boundaries* are B₁ = im(∂₂).
 
-**Definition 2.4** (F₂-Chain Complex). A *3-term chain complex over F₂* consists of:
-- Vector spaces C₂ = F₂^{d₂}, C₁ = F₂^{d₁}, C₀ = F₂^{d₀}
-- Linear maps ∂₂ : C₂ → C₁ and ∂₁ : C₁ → C₀
-- The *chain condition*: ∂₁ ∘ ∂₂ = 0
+**Definition 2.3 (First Homology).** H₁ = Z₁/B₁ = ker(∂₁)/im(∂₂).
 
-**Definition 2.5** (Cycles, Boundaries, Homology).
-- Z₁ = ker(∂₁) ⊆ C₁ (the 1-cycles)
-- B₁ = im(∂₂) ⊆ C₁ (the 1-boundaries)
-- H₁ = Z₁/B₁ (the first homology group)
+**Definition 2.4 (First Betti Number).** β₁ = dim(H₁).
 
-### 2.4 Graph Chain Data
+### 2.3 Hamming Weight
 
-**Definition 2.6** (Graph Chain Data). A *graph chain data* structure consists of:
-- numVert, numEdge ∈ ℕ
-- edgeSrc, edgeTgt : Fin(numEdge) → Fin(numVert)
-- no_loops : ∀ e, edgeSrc(e) ≠ edgeTgt(e)
+**Definition 2.5 (Hamming Weight).** For v ∈ 𝔽ⁿ, the Hamming weight is wt(v) = |{i : v_i ≠ 0}|.
 
-The *boundary map* ∂₁ : F₂^E → F₂^V sends the indicator vector of edge e to the sum of the indicators of its two endpoints.
+### 2.4 HQECC
 
-### 2.5 HQECC
+**Definition 2.6 (Homological Quantum Error-Correcting Code).** An HQECC over 𝔽 consists of a chain complex K together with the CSS code K.toCSSCode, certified to be derived from K. The *systole* is the minimum Hamming weight of a non-trivial cycle (a cycle that is not a boundary).
 
-**Definition 2.7** (HQECC). A *Homological Quantum Error-Correcting Code* is a CSS code together with parameters [[n, k, d]] where n is the block length, k = logicalQubits(code), and d is the code distance.
+### 2.5 Hypercube Betti Numbers
+
+**Definition 2.7.** For the n-dimensional hypercube graph Qₙ (vertices = {0,1}ⁿ, edges connect vertices differing in one coordinate):
+
+β₁(Qₙ) = n · 2ⁿ⁻¹ − 2ⁿ + 1
+
+This follows from the formula β₁ = |E| − |V| + 1 for connected graphs, with |V| = 2ⁿ and |E| = n · 2ⁿ⁻¹.
+
+---
 
 ## 3. Main Results
 
-### 3.1 Boundaries are Cycles
+### Theorem 3.1 (Boundaries ≤ Cycles)
 
-**Theorem 3.1** (boundaries_le_cycles). *For any F₂-chain complex K with chain condition ∂₁ ∘ ∂₂ = 0, we have im(∂₂) ⊆ ker(∂₁).*
+**Statement.** For any chain complex K, B₁(K) ≤ Z₁(K).
 
-*Proof.* Let v ∈ im(∂₂), so v = ∂₂(w) for some w. Then ∂₁(v) = ∂₁(∂₂(w)) = (∂₁ ∘ ∂₂)(w) = 0 by the chain condition. Hence v ∈ ker(∂₁). □
+**Proof sketch.** If v ∈ B₁, then v = ∂₂(w) for some w. Then ∂₁(v) = ∂₁(∂₂(w)) = (∂₁ ∘ ∂₂)(w) = 0 by the chain condition. Hence v ∈ ker(∂₁) = Z₁. ∎
 
-This is the fundamental theorem that makes the CSS construction from a chain complex valid: it establishes the containment condition codeX = B₁ ≤ Z₁ = codeZ.
+### Theorem 3.2 (Homological Dimension Theorem)
 
-### 3.2 CSS Code from Chain Complex
+**Statement.** K.toCSSCode.logicalQubits = K.betti1.
 
-**Corollary 3.2**. *Every 3-term chain complex K over F₂ yields a CSS code where:*
-- *codeX = B₁ = im(∂₂)*
-- *codeZ = Z₁ = ker(∂₁)*
-- *logicalQubits = dim(Z₁) - dim(B₁) = dim(H₁)*
+**Proof sketch.** By unfolding definitions, logicalQubits of the CSS code constructed from K is finrank(Z₁ ⧸ B₁.comap Z₁.subtype), which is exactly betti1(K) = finrank(H₁). The proof is by definitional equality. ∎
 
-### 3.3 Dimension Bounds
+### Theorem 3.3 (CSS Dimension Formula)
 
-**Theorem 3.3** (code_dim_le_ambient). *For any linear code C ⊆ F₂ⁿ, we have dim(C) ≤ n.*
+**Statement.** β₁ + dim(B₁ ∩ Z₁) = dim(Z₁), i.e., the first Betti number plus the dimension of the boundary submodule (pulled back to cycles) equals the dimension of cycles.
 
-*Proof.* dim(C) ≤ dim(F₂ⁿ) = n by the submodule dimension bound. □
+**Proof sketch.** Direct application of the rank-nullity theorem for quotient modules: dim(M/S) + dim(S) = dim(M), applied with M = Z₁ and S = B₁.comap(Z₁.subtype). ∎
 
-**Theorem 3.4** (css_logicalQubits_le). *For any CSS code C of block length n, logicalQubits(C) ≤ n.*
+### Theorem 3.4 (Rank-Nullity for Chain Complexes)
 
-*Proof.* logicalQubits = dim(codeZ) - dim(codeX) ≤ dim(codeZ) ≤ n. □
+**Statement.** dim(Z₁) + dim(im ∂₁) = n.
 
-### 3.4 Hamming Weight Positivity
+**Proof sketch.** The rank-nullity theorem applied to ∂₁ : 𝔽ⁿ → 𝔽ᵖ gives dim(ker ∂₁) + dim(im ∂₁) = dim(𝔽ⁿ) = n. Since Z₁ = ker ∂₁, the result follows. ∎
 
-**Theorem 3.5** (hammingWeight_pos). *For any nonzero vector v ∈ F₂ⁿ, wt(v) > 0.*
+### Theorem 3.5 (Logical Qubit Additivity)
 
-*Proof.* If wt(v) = 0, then v_i = 0 for all i, so v = 0, contradicting v ≠ 0. □
+**Statement.** For C_Z ≤ C_mid ≤ C_X, all subspaces of 𝔽ⁿ:
 
-### 3.5 Rank-Nullity for Graphs
+dim(C_X / C_Z) = dim(C_X / C_mid) + dim(C_mid / C_Z)
 
-**Theorem 3.6** (graph_cycle_rank_formula). *For any graph G with boundary map ∂₁ : F₂^E → F₂^V:*
-$$\dim(\ker ∂₁) + \dim(\text{im}\, ∂₁) = |E|$$
+**Proof sketch.** This follows from the third isomorphism theorem: (C_X/C_Z) / (C_mid/C_Z) ≅ C_X/C_mid. Taking dimensions: dim(C_X/C_Z) = dim(C_X/C_mid) + dim(C_mid/C_Z). The formal proof uses rank-nullity repeatedly and Submodule.finrank_map_subtype_eq to relate dimensions of comap submodules to their ambient counterparts. ∎
 
-*Proof.* This is the rank-nullity theorem (dim ker + dim im = dim domain) applied to the boundary map ∂₁, using the fact that dim(F₂^E) = |E|. □
+### Theorem 3.6 (Self-Dual Triviality)
 
-**Corollary 3.7.** *For a connected graph G: dim(ker ∂₁) = |E| - |V| + 1 (the cycle rank).*
+**Statement.** If C_X = C_Z, then logicalQubits = 0.
 
-### 3.6 Monotonicity
+**Proof sketch.** When C_X = C_Z, the comap C_Z.comap(C_X.subtype) = ⊤, so the quotient C_X ⧸ ⊤ is the trivial module with dimension 0. ∎
 
-**Theorem 3.8** (subcode_dim_le). *If C₁ ≤ C₂ as submodules of F₂ⁿ, then dim(C₁) ≤ dim(C₂).*
+### Theorem 3.7 (Hamming Weight Characterization)
 
-**Theorem 3.9** (css_logicalQubits_mono_codeX). *If C₁ and C₂ are CSS codes with the same codeZ and C₂.codeX ≤ C₁.codeX, then logicalQubits(C₁) ≤ logicalQubits(C₂).*
+**Statement.** wt(v) = 0 ↔ v = 0.
 
-*Proof.* Since C₂.codeX ≤ C₁.codeX implies dim(C₂.codeX) ≤ dim(C₁.codeX), and both have the same codeZ, we get dim(codeZ) - dim(C₁.codeX) ≤ dim(codeZ) - dim(C₂.codeX). □
+**Proof sketch.** The filter of nonzero coordinates is empty iff all coordinates are zero. ∎
 
-### 3.7 F₂ Orthogonality
+### Theorem 3.8 (Hamming Triangle Inequality)
 
-**Theorem 3.10** (f2_orthogonal_comm). *F₂-orthogonality is symmetric: ⟨u, v⟩ = 0 iff ⟨v, u⟩ = 0.*
+**Statement.** wt(v + w) ≤ wt(v) + wt(w).
 
-**Theorem 3.11** (f2_orthogonal_zero). *The zero vector is orthogonal to every vector.*
+**Proof sketch.** The support of v + w is contained in the union of supports of v and w. Apply Finset.card_mono and Finset.card_union_add_card_inter. ∎
 
-### 3.8 Trivial CSS Code
+### Theorem 3.9 (Hypercube β₁ = 1 for n = 2)
 
-**Theorem 3.12** (css_trivial_zero_qubits). *A CSS code with codeX = codeZ encodes 0 logical qubits.*
+**Statement.** β₁(Q₂) = 1.
 
-## 4. Computational Results
+**Proof sketch.** Direct computation: 2 · 2¹ − 2² + 1 = 4 − 4 + 1 = 1. ∎
 
-### 4.1 Graph-Based HQECC Parameters
+### Theorem 3.10 (Hypercube Multi-Qubit for n ≥ 3)
 
-| Graph | |V| | |E| | β₁ | CSS Code |
-|-------|-----|-----|------|----------|
-| C₄ (square) | 4 | 4 | 1 | [[4, 1]] |
-| C₅ (pentagon) | 5 | 5 | 1 | [[5, 1]] |
-| K₄ (complete) | 4 | 6 | 3 | [[6, 3]] |
-| K₅ (complete) | 5 | 10 | 6 | [[10, 6]] |
-| Petersen | 10 | 15 | 6 | [[15, 6]] |
-| Q₂ (square) | 4 | 4 | 1 | [[4, 1]] |
-| Q₃ (cube) | 8 | 12 | 5 | [[12, 5]] |
-| Q₄ (tesseract) | 16 | 32 | 17 | [[32, 17]] |
+**Statement.** For n ≥ 3, β₁(Qₙ) > 1.
 
-### 4.2 Simplicial Complex HQECC Parameters
+**Proof sketch.** For n ≥ 3: β₁ = n · 2ⁿ⁻¹ − 2ⁿ + 1 = 2ⁿ⁻¹(n − 2) + 1 ≥ 2² · 1 + 1 = 5 > 1. The formal proof proceeds by case analysis on n ≤ 3 and uses nlinarith with pow_pos for the inductive step. ∎
 
-| Complex | |V| | |E| | |T| | β₁ | CSS Code |
-|---------|-----|-----|-----|------|----------|
-| Torus T² | 9 | 27 | 18 | 2 | [[27, 2]] |
+---
 
-### 4.3 Hypercube Conjecture
+## 4. The HQECC Construction Algorithm
 
-**Conjecture** (Falsified). For even n ≥ 2, the HQECC from Q_n has k = 1 and d = 2^(n/2).
+**Input:** A 3-term chain complex (∂₂, ∂₁) over 𝔽₂ with ∂₁ ∘ ∂₂ = 0.
 
-**Computational Test Results:**
+**Output:** CSS code parameters [n, k, d].
 
-| n | |V| | |E| | Actual k = β₁ | Predicted k | Match? |
-|---|------|------|---------------|-------------|--------|
-| 2 | 4 | 4 | 1 | 1 | ✓ |
-| 3 | 8 | 12 | 5 | 1 | ✗ |
-| 4 | 16 | 32 | 17 | 1 | ✗ |
-| 5 | 32 | 80 | 49 | 1 | ✗ |
-| 6 | 64 | 192 | 129 | 1 | ✗ |
+1. Compute Z₁ = ker(∂₁) via Gaussian elimination on ∂₁.
+2. Compute B₁ = im(∂₂) via column space of ∂₂.
+3. Verify B₁ ≤ Z₁ (guaranteed by chain condition).
+4. Compute k = dim(Z₁) − dim(B₁) via rank computations.
+5. For distance: find minimum weight vector in Z₁ \ B₁.
+   - Enumerate coset representatives of Z₁/B₁.
+   - For each non-zero coset, find minimum weight representative.
+   - d = min over all non-zero cosets.
 
-The actual formula is β₁(Qₙ) = n·2ⁿ⁻¹ - 2ⁿ + 1, which grows exponentially. The conjecture fails for all n ≥ 3 because hypercubes have far more independent cycles than expected.
+**Complexity:** O(n³) for steps 1-4 (Gaussian elimination). Step 5 is NP-hard in general but tractable for small codes.
 
-**Rate analysis.** The code rate k/|E| = (n·2ⁿ⁻¹ - 2ⁿ + 1)/(n·2ⁿ⁻¹) approaches 1 - 2/n as n → ∞, so hypercube HQECCs are asymptotically high-rate codes.
+---
 
-## 5. Algorithms
+## 5. Applications
 
-### 5.1 CSS Code Construction from Chain Complex
+### 5.1 Surface Codes
 
-**Input:** Matrices ∂₂ (dim₁ × dim₂) and ∂₁ (dim₀ × dim₁) over F₂.
+The toric code is the HQECC of the torus T². With a square lattice of L × L on the torus:
+- n = 2L² (one qubit per edge)
+- k = 2 (two logical qubits, from H₁(T², 𝔽₂) ≅ 𝔽₂²)
+- d = L (shortest non-contractible cycle)
 
-**Algorithm:**
-1. Verify chain condition: ∂₁ · ∂₂ ≡ 0 (mod 2).
-2. Compute Z₁ = ker(∂₁) via GF(2) row reduction.
-3. Compute B₁ = im(∂₂) via GF(2) row reduction.
-4. Return CSS code with codeX = B₁, codeZ = Z₁.
-5. k = dim(Z₁) - dim(B₁).
+### 5.2 Hypergraph Product Codes
 
-**Complexity:** O(n³) for the GF(2) row reductions, where n = dim₁.
+The hypergraph product construction [Tillich-Zémor 2014] produces CSS codes from two classical codes. In our framework, this is a tensor product of chain complexes, with the Künneth formula giving:
 
-### 5.2 HQECC from Graph
+β₁(K₁ ⊗ K₂) = β₀(K₁)β₁(K₂) + β₁(K₁)β₀(K₂)
 
-**Input:** Graph G = (V, E) with adjacency data.
+### 5.3 Quantum LDPC Codes
 
-**Algorithm:**
-1. Construct boundary matrix ∂₁ (|V| × |E|) over F₂.
-2. Set codeZ = ker(∂₁), codeX = {0}.
-3. k = |E| - rank(∂₁).
-4. For connected G: k = |E| - |V| + 1.
+Recent breakthroughs in quantum LDPC codes [Panteleev-Kalachev 2022, Leverrier-Zémor 2023] construct chain complexes from expander graphs. The HQECC framework provides the theoretical foundation: good expansion implies large systole, hence large distance.
+
+---
 
 ## 6. Discussion
 
-### 6.1 The CSS-Cohomology Dictionary
+### 6.1 Significance
 
-The central insight of this work is a precise dictionary:
+The identification of CSS codes with cohomology is more than a notational convenience. It enables:
 
-| CSS Code Concept | Homological Concept |
-|-------------------|---------------------|
-| Block length n | dim(C₁) |
-| X-stabilizer code | Boundaries B₁ = im(∂₂) |
-| Z-stabilizer code | Cycles Z₁ = ker(∂₁) |
-| Containment condition | Chain condition ∂₁∂₂ = 0 |
-| Logical qubit space | Homology H₁ = Z₁/B₁ |
-| # Logical qubits k | First Betti number β₁ |
-| Code distance | Systole (shortest non-contractible cycle) |
+1. **Systematic construction**: Any topological space gives a quantum code.
+2. **Parameter computation**: Code parameters are topological invariants computable by standard algebraic topology algorithms.
+3. **Compositional reasoning**: The additivity theorem (Theorem 3.5) enables hierarchical code design.
+4. **Duality**: Poincaré duality on closed manifolds relates X-distance and Z-distance.
 
-### 6.2 Significance of the Formalization
+### 6.2 The Hypercube Surprise
 
-All ten theorems in this work have been formally verified in Lean 4 with zero remaining sorries. The formalization covers:
-
-1. The structural theorem that boundaries ⊆ cycles (Theorem 3.1)
-2. Dimension bounds and rank-nullity (Theorems 3.3-3.6)
-3. Monotonicity under code refinement (Theorems 3.8-3.9)
-4. Properties of F₂ inner products (Theorems 3.10-3.11)
+The computation β₁(Qₙ) = n · 2ⁿ⁻¹ − 2ⁿ + 1 shows that hypercube-based HQECCs are multi-qubit codes for n ≥ 3. The original conjecture that Qₙ encodes exactly 1 qubit (with distance 2^{n/2}) is false: the first Betti number grows exponentially. However, the distance question remains open and is likely related to the edge-isoperimetric inequality on the hypercube.
 
 ### 6.3 Limitations
 
-Our formalization covers the algebraic structure but does not yet include:
-- Formal proofs about code distance and systoles
-- The relationship between dual codes and coboundaries
-- Explicit HQECC constructions from specific simplicial complexes
-- The quantum Gilbert-Varshamov bound
+Our formalization treats CSS codes algebraically. The connection to quantum mechanics (Hilbert spaces, unitary operations, measurement) is not formalized here. The distance computation, while defined, requires additional infrastructure (decidability of membership in subspaces) for computational verification in the proof assistant.
+
+---
 
 ## 7. Future Work
 
-1. **Distance bounds from topology.** The code distance of an HQECC equals the systole of the underlying complex. Formalizing this connection would link quantum coding theory to systolic geometry.
+1. **Künneth formula for HQECC**: Formalize the tensor product of chain complexes and prove that code parameters compose via the Künneth formula.
+2. **Surface code parameters**: Formalize the toric code as HQECC(T²) and prove [2L², 2, L].
+3. **Expander-based codes**: Connect spectral gap of the underlying graph to systolic distance.
+4. **Higher-dimensional generalization**: Extend from H₁ to Hₖ for higher-dimensional quantum codes.
 
-2. **Higher-dimensional codes.** Using H₂ instead of H₁ gives codes from 3-complexes. The parameters of such codes are largely unexplored.
+---
 
-3. **Hyperbolic codes.** Surfaces of constant negative curvature can have systole growing logarithmically with area, suggesting families of codes with growing distance.
+## References
 
-4. **Cup product gates.** The cup product on cohomology may implement logical gates on the encoded qubits, connecting code structure to computation.
-
-## 8. References
-
-[1] A.R. Calderbank and P.W. Shor. "Good quantum error-correcting codes exist." *Physical Review A*, 54(2):1098, 1996.
-
-[2] A.M. Steane. "Error correcting codes in quantum theory." *Physical Review Letters*, 77(5):793, 1996.
-
-[3] M.H. Freedman, D.A. Meyer, and F. Luo. "Z₂-systolic freedom and quantum codes." *Mathematics of Quantum Computation*, 287-320, 2002.
-
-[4] S.B. Bravyi and A.Yu. Kitaev. "Quantum codes on a lattice with boundary." *arXiv:quant-ph/9811052*, 1998.
-
-[5] A. Kitaev. "Fault-tolerant quantum computation by anyons." *Annals of Physics*, 303(1):2-30, 2003.
-
-[6] H. Bombin and M.A. Martin-Delgado. "Homological error correction: Classical and quantum codes." *Journal of Mathematical Physics*, 48(5):052105, 2007.
+1. A.R. Calderbank and P.W. Shor. "Good quantum error-correcting codes exist." Physical Review A, 54(2):1098, 1996.
+2. A.M. Steane. "Error correcting codes in quantum theory." Physical Review Letters, 77(5):793, 1996.
+3. A.Y. Kitaev. "Quantum computations: algorithms and error correction." Russian Mathematical Surveys, 52(6):1191, 1997.
+4. M.H. Freedman, D.A. Meyer, F. Luo. "Z₂-systolic freedom and quantum codes." Mathematics of Quantum Computation, 287-320, 2002.
+5. H. Bombin, M.A. Martin-Delgado. "Homological error correction: Classical and quantum codes." Journal of Mathematical Physics, 48(5):052105, 2007.
+6. N.P. Breuckmann, J.N. Eberhardt. "Quantum low-density parity-check codes." PRX Quantum, 2(4):040101, 2021.
+7. P. Panteleev, G. Kalachev. "Asymptotically good quantum and locally testable classical LDPC codes." STOC 2022.
+8. A. Leverrier, G. Zémor. "Quantum Tanner codes." FOCS 2022.
+9. J.-P. Tillich, G. Zémor. "Quantum LDPC codes with positive rate and minimum distance proportional to the square root of the blocklength." IEEE Trans. Inform. Theory, 60(2):1193-1202, 2014.

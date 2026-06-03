@@ -1,375 +1,421 @@
 """
-Algorithms for CSS Codes as Cohomology: Homological Quantum Error Correction
+CSS Codes from Chain Complexes: Core Algorithms
 
-This module implements the core algorithms for constructing CSS quantum
-error-correcting codes from chain complexes and graphs over F₂.
-
-Type-hinted, self-contained implementations.
+Implements the HQECC construction: given a chain complex (boundary matrices
+over GF(2)), compute the CSS code parameters [n, k, d].
 """
 
-from __future__ import annotations
+from typing import List, Tuple, Optional
 import numpy as np
-from typing import Optional
 
 
-def gf2_rref(matrix: np.ndarray) -> tuple[np.ndarray, list[int]]:
+def gf2_rref(matrix: np.ndarray) -> Tuple[np.ndarray, List[int]]:
     """Compute reduced row echelon form over GF(2).
 
     Args:
         matrix: Binary matrix (entries in {0, 1}).
 
     Returns:
-        (rref_matrix, pivot_columns): The RREF and list of pivot column indices.
+        Tuple of (rref matrix, list of pivot column indices).
     """
     M = matrix.copy() % 2
     rows, cols = M.shape
-    pivots: list[int] = []
-    row = 0
+    pivots: List[int] = []
+    row_idx = 0
+
     for col in range(cols):
         # Find pivot
-        found = None
-        for r in range(row, rows):
+        found = False
+        for r in range(row_idx, rows):
             if M[r, col] == 1:
-                found = r
+                found = True
+                M[[row_idx, r]] = M[[r, row_idx]]
                 break
-        if found is None:
+        if not found:
             continue
-        # Swap
-        M[[row, found]] = M[[found, row]]
+
         pivots.append(col)
         # Eliminate
         for r in range(rows):
-            if r != row and M[r, col] == 1:
-                M[r] = (M[r] + M[row]) % 2
-        row += 1
+            if r != row_idx and M[r, col] == 1:
+                M[r] = (M[r] + M[row_idx]) % 2
+        row_idx += 1
+
     return M, pivots
 
 
-def gf2_kernel(matrix: np.ndarray) -> np.ndarray:
-    """Compute a basis for ker(matrix) over GF(2).
-
-    Args:
-        matrix: Binary matrix (m x n).
-
-    Returns:
-        Basis vectors for the kernel, shape (dim_ker x n).
-    """
-    M = matrix.copy() % 2
-    m, n = M.shape
-    # Augment with identity
-    aug = np.hstack([M.T, np.eye(n, dtype=int)]) % 2
-    rref, pivots = gf2_rref(aug)
-
-    kernel_basis: list[np.ndarray] = []
-    for i in range(n):
-        if i not in pivots and np.all(rref[i, :m] == 0):
-            kernel_basis.append(rref[i, m:])
-        elif i >= len(pivots):
-            # Free variable
-            pass
-
-    # Simpler approach: use null space computation
-    rref_M, pivot_cols = gf2_rref(M)
-    rank = len(pivot_cols)
-    nullity = n - rank
-
-    if nullity == 0:
-        return np.zeros((0, n), dtype=int)
-
-    # Build kernel basis from RREF
-    free_cols = [j for j in range(n) if j not in pivot_cols]
-    basis = np.zeros((nullity, n), dtype=int)
-    for idx, fc in enumerate(free_cols):
-        basis[idx, fc] = 1
-        for i, pc in enumerate(pivot_cols):
-            if i < rref_M.shape[0]:
-                basis[idx, pc] = rref_M[i, fc]
-    return basis % 2
-
-
 def gf2_rank(matrix: np.ndarray) -> int:
-    """Compute the rank of a binary matrix over GF(2).
-
-    Args:
-        matrix: Binary matrix.
-
-    Returns:
-        Rank over GF(2).
-    """
-    _, pivots = gf2_rref(matrix % 2)
+    """Compute the rank of a binary matrix over GF(2)."""
+    if matrix.size == 0:
+        return 0
+    _, pivots = gf2_rref(matrix)
     return len(pivots)
 
 
-def hamming_weight(v: np.ndarray) -> int:
-    """Compute the Hamming weight (number of nonzero entries mod 2).
+def gf2_kernel(matrix: np.ndarray) -> np.ndarray:
+    """Compute a basis for the kernel of a binary matrix over GF(2).
 
     Args:
-        v: Binary vector.
+        matrix: Binary matrix of shape (m, n).
 
     Returns:
-        Number of nonzero entries.
+        Matrix whose rows form a basis for ker(matrix) over GF(2).
     """
-    return int(np.sum(v % 2 != 0))
+    m, n = matrix.shape
+    # Augment with identity
+    aug = np.hstack([matrix.T, np.eye(n, dtype=int)]) % 2
+    rref, pivots = gf2_rref(aug)
+
+    kernel_basis = []
+    for i in range(n):
+        if i not in pivots:
+            # This row in the augmented system gives a kernel vector
+            pass
+
+    # Alternative: use null space construction
+    rref_mat, pivots = gf2_rref(matrix)
+    rank = len(pivots)
+    free_cols = [j for j in range(n) if j not in pivots]
+
+    kernel_vectors = []
+    for fc in free_cols:
+        vec = np.zeros(n, dtype=int)
+        vec[fc] = 1
+        for idx, pc in enumerate(pivots):
+            vec[pc] = rref_mat[idx, fc]
+        kernel_vectors.append(vec % 2)
+
+    if kernel_vectors:
+        return np.array(kernel_vectors, dtype=int)
+    return np.zeros((0, n), dtype=int)
+
+
+def hamming_weight(v: np.ndarray) -> int:
+    """Compute the Hamming weight of a binary vector."""
+    return int(np.sum(v != 0))
 
 
 class CSSCode:
-    """A Calderbank-Shor-Steane quantum error-correcting code.
+    """A CSS quantum error-correcting code over GF(2).
 
-    Constructed from two classical codes: codeX (X-stabilizers) and
-    codeZ (Z-stabilizers) with codeX ⊆ codeZ (as row spaces).
+    Constructed from two classical codes satisfying C_Z <= C_X.
 
     Attributes:
         n: Block length (number of physical qubits).
-        hx: Parity check matrix for X-stabilizers (rows span codeX).
-        hz: Parity check matrix for Z-stabilizers (rows span codeZ).
         k: Number of logical qubits.
+        H_X: X-stabilizer parity check matrix.
+        H_Z: Z-stabilizer parity check matrix.
     """
 
-    def __init__(self, n: int, hx: np.ndarray, hz: np.ndarray):
-        """Initialize a CSS code.
+    def __init__(self, H_X: np.ndarray, H_Z: np.ndarray):
+        """Initialize CSS code from parity check matrices.
 
         Args:
-            n: Block length.
-            hx: Generator matrix for codeX (rows are X-stabilizer generators).
-            hz: Generator matrix for codeZ (rows are Z-stabilizer generators).
+            H_X: X-stabilizer parity check matrix (r_X × n over GF(2)).
+            H_Z: Z-stabilizer parity check matrix (r_Z × n over GF(2)).
         """
-        self.n = n
-        self.hx = hx % 2
-        self.hz = hz % 2
+        assert H_X.shape[1] == H_Z.shape[1], "Matrices must have same number of columns"
+        # Verify orthogonality: H_X · H_Z^T = 0 mod 2
+        product = (H_X @ H_Z.T) % 2
+        assert np.all(product == 0), "CSS orthogonality condition H_X · H_Z^T = 0 failed"
 
-        self.dim_x = gf2_rank(self.hx) if hx.size > 0 else 0
-        self.dim_z = gf2_rank(self.hz) if hz.size > 0 else 0
-        self.k = self.dim_z - self.dim_x
+        self.n: int = H_X.shape[1]
+        self.H_X = H_X % 2
+        self.H_Z = H_Z % 2
+        self.k: int = self.n - gf2_rank(H_X) - gf2_rank(H_Z)
 
     def __repr__(self) -> str:
-        return f"CSSCode([[{self.n}, {self.k}]])"
+        return f"CSSCode[[{self.n}, {self.k}]]"
 
-    def verify_containment(self) -> bool:
-        """Verify that codeX ⊆ codeZ (all X-stabilizers are in Z-stabilizer space)."""
-        if self.hx.size == 0:
-            return True
-        # Check each row of hx is in row space of hz
-        combined = np.vstack([self.hz, self.hx]) if self.hz.size > 0 else self.hx
-        return gf2_rank(combined) == gf2_rank(self.hz)
+    def compute_distance(self, max_weight: Optional[int] = None) -> int:
+        """Compute the code distance (minimum weight of a logical operator).
 
-    def minimum_distance_estimate(self, max_weight: int = 20) -> Optional[int]:
-        """Estimate the minimum distance by searching for low-weight codewords
-        in codeZ \\ codeX. This is a brute-force search, exponential in general.
+        This is NP-hard in general; only feasible for small codes.
 
         Args:
-            max_weight: Maximum weight to search.
+            max_weight: Maximum weight to search up to.
 
         Returns:
-            Minimum weight found, or None if no non-trivial coset representative found.
+            The minimum distance, or -1 if not found within max_weight.
         """
-        ker_z = gf2_kernel(self.hz) if self.hz.size > 0 else np.zeros((0, self.n), dtype=int)
-        # Generate coset representatives of codeZ / codeX
-        # For small codes only
-        if self.dim_z > 15:
-            return None
+        if max_weight is None:
+            max_weight = self.n
 
-        min_d = self.n + 1
-        z_basis = self.hz[:self.dim_z]  # Use first dim_z independent rows
+        # X-distance: min weight of v in ker(H_Z) \ rowspan(H_X)
+        ker_Z = gf2_kernel(self.H_Z)
+        if ker_Z.shape[0] == 0:
+            return 0
 
-        # Enumerate codeZ elements
-        for bits in range(1, 2**self.dim_z):
-            coeffs = np.array([(bits >> i) & 1 for i in range(self.dim_z)], dtype=int)
-            v = coeffs @ z_basis % 2
-            w = hamming_weight(v)
+        # Check if each kernel vector is in rowspan of H_X
+        # by checking if augmenting H_X with the vector increases rank
+        rank_HX = gf2_rank(self.H_X)
 
-            # Check if v is NOT in codeX
-            if self.hx.size > 0:
-                combined = np.vstack([self.hx, v.reshape(1, -1)])
-                if gf2_rank(combined) == self.dim_x:
-                    continue  # v is in codeX
-            else:
-                if w == 0:
+        d_X = self.n + 1
+        # Enumerate low-weight combinations
+        for weight in range(1, max_weight + 1):
+            found = False
+            for combo in _weight_combinations(ker_Z, weight):
+                v = combo % 2
+                if hamming_weight(v) != weight:
                     continue
+                aug = np.vstack([self.H_X, v.reshape(1, -1)])
+                if gf2_rank(aug) > rank_HX:
+                    d_X = weight
+                    found = True
+                    break
+            if found:
+                break
 
-            if 0 < w < min_d:
-                min_d = w
+        # Z-distance: min weight of v in ker(H_X) \ rowspan(H_Z)
+        ker_X = gf2_kernel(self.H_X)
+        rank_HZ = gf2_rank(self.H_Z)
 
-        return min_d if min_d <= self.n else None
+        d_Z = self.n + 1
+        for weight in range(1, max_weight + 1):
+            found = False
+            for combo in _weight_combinations(ker_X, weight):
+                v = combo % 2
+                if hamming_weight(v) != weight:
+                    continue
+                aug = np.vstack([self.H_Z, v.reshape(1, -1)])
+                if gf2_rank(aug) > rank_HZ:
+                    d_Z = weight
+                    found = True
+                    break
+            if found:
+                break
+
+        return min(d_X, d_Z)
 
 
-class ChainComplex:
-    """A 3-term chain complex C₂ →[∂₂] C₁ →[∂₁] C₀ over GF(2).
+def _weight_combinations(basis: np.ndarray, max_terms: int):
+    """Generate GF(2) combinations of basis vectors using up to max_terms vectors."""
+    n_basis = basis.shape[0]
+    if max_terms == 0:
+        return
+    for i in range(n_basis):
+        yield basis[i]
+    if max_terms >= 2:
+        for i in range(n_basis):
+            for j in range(i + 1, n_basis):
+                yield (basis[i] + basis[j]) % 2
+    if max_terms >= 3:
+        for i in range(n_basis):
+            for j in range(i + 1, n_basis):
+                for l in range(j + 1, n_basis):
+                    yield (basis[i] + basis[j] + basis[l]) % 2
 
-    The chain condition ∂₁ ∘ ∂₂ = 0 is verified at construction.
 
-    Attributes:
-        d2: Matrix for ∂₂ (dim₁ × dim₂).
-        d1: Matrix for ∂₁ (dim₀ × dim₁).
+class ChainComplex3:
+    """A 3-term chain complex V_2 ->[d2] V_1 ->[d1] V_0 over GF(2).
+
+    The chain condition d1 @ d2 = 0 (mod 2) must hold.
     """
 
     def __init__(self, d2: np.ndarray, d1: np.ndarray):
-        """Initialize a chain complex.
+        """Initialize chain complex.
 
         Args:
-            d2: Boundary map ∂₂ as matrix (dim₁ × dim₂).
-            d1: Boundary map ∂₁ as matrix (dim₀ × dim₁).
+            d2: Boundary matrix from V_2 to V_1 (n × m matrix).
+            d1: Boundary matrix from V_1 to V_0 (p × n matrix).
         """
+        assert d1.shape[1] == d2.shape[0], "Matrix dimensions incompatible"
+        chain_prod = (d1 @ d2) % 2
+        assert np.all(chain_prod == 0), "Chain condition d1 ∘ d2 = 0 failed"
+
         self.d2 = d2 % 2
         self.d1 = d1 % 2
+        self.n: int = d2.shape[0]  # dim V_1
+        self.m: int = d2.shape[1]  # dim V_2
+        self.p: int = d1.shape[0]  # dim V_0
 
-        # Verify chain condition
-        product = (d1 @ d2) % 2
-        if not np.all(product == 0):
-            raise ValueError("Chain condition ∂₁ ∘ ∂₂ = 0 is violated!")
+    def cycles_dim(self) -> int:
+        """Dimension of Z_1 = ker(d1)."""
+        return self.n - gf2_rank(self.d1)
 
-        self.dim2 = d2.shape[1]
-        self.dim1 = d1.shape[1]
-        self.dim0 = d1.shape[0]
+    def boundaries_dim(self) -> int:
+        """Dimension of B_1 = im(d2)."""
+        return gf2_rank(self.d2)
 
-    def cycles(self) -> np.ndarray:
-        """Compute basis for Z₁ = ker(∂₁)."""
-        return gf2_kernel(self.d1)
-
-    def boundaries(self) -> np.ndarray:
-        """Compute basis for B₁ = im(∂₂)."""
-        _, pivots = gf2_rref(self.d2)
-        return self.d2[:, :][pivots] if pivots else np.zeros((0, self.dim1), dtype=int)
-
-    def homology_dim(self) -> int:
-        """Compute dim H₁ = dim(ker ∂₁) - dim(im ∂₂)."""
-        ker_dim = self.dim1 - gf2_rank(self.d1)
-        im_dim = gf2_rank(self.d2)
-        return ker_dim - im_dim
+    def betti1(self) -> int:
+        """First Betti number β_1 = dim(H_1) = dim(Z_1) - dim(B_1)."""
+        return self.cycles_dim() - self.boundaries_dim()
 
     def to_css_code(self) -> CSSCode:
-        """Construct the CSS code from this chain complex.
-
-        codeX = B₁ = im(∂₂), codeZ = Z₁ = ker(∂₁).
-        The CSS code encodes dim(H₁) logical qubits.
-        """
-        z_basis = self.cycles()
-        b_basis_matrix = self.d2.T  # Columns of d2 = image generators
-
-        # Get a proper basis for boundaries
-        rref_d2, pivots = gf2_rref(self.d2.T)
-        b_basis = rref_d2[:len(pivots)] if pivots else np.zeros((0, self.dim1), dtype=int)
-
-        return CSSCode(self.dim1, b_basis, z_basis)
+        """Construct CSS code: H_X = d1, H_Z = d2^T."""
+        return CSSCode(H_X=self.d1, H_Z=self.d2.T)
 
 
-def graph_boundary_matrix(num_vert: int, edges: list[tuple[int, int]]) -> np.ndarray:
-    """Compute the boundary matrix ∂₁ : F₂^E → F₂^V for a graph.
+def hypercube_chain_complex(n: int) -> ChainComplex3:
+    """Construct the chain complex of the n-dimensional hypercube graph Q_n.
 
-    Args:
-        num_vert: Number of vertices.
-        edges: List of (source, target) pairs.
+    Vertices: {0,1}^n (2^n vertices).
+    Edges: pairs differing in exactly one coordinate (n * 2^(n-1) edges).
 
     Returns:
-        Binary matrix of shape (num_vert, num_edges).
+        ChainComplex3 for Q_n with d1 = incidence matrix, d2 = face-edge matrix.
     """
-    num_edge = len(edges)
-    d1 = np.zeros((num_vert, num_edge), dtype=int)
-    for j, (s, t) in enumerate(edges):
-        d1[s, j] = (d1[s, j] + 1) % 2
-        d1[t, j] = (d1[t, j] + 1) % 2
-    return d1
+    num_vertices = 2 ** n
+    edges: List[Tuple[int, int]] = []
+    edge_index = {}
 
-
-def hypercube_graph(n: int) -> tuple[int, list[tuple[int, int]]]:
-    """Construct the n-dimensional hypercube graph Q_n.
-
-    Args:
-        n: Dimension of the hypercube.
-
-    Returns:
-        (num_vertices, edges): vertex count and edge list.
-    """
-    num_vert = 2**n
-    edges: list[tuple[int, int]] = []
-    for v in range(num_vert):
+    for v in range(num_vertices):
         for bit in range(n):
             w = v ^ (1 << bit)
-            if v < w:  # Each edge once
+            if v < w:
+                edge_index[(v, w)] = len(edges)
                 edges.append((v, w))
-    return num_vert, edges
+
+    num_edges = len(edges)
+
+    # d1: incidence matrix (num_vertices × num_edges)
+    d1 = np.zeros((num_vertices, num_edges), dtype=int)
+    for idx, (v, w) in enumerate(edges):
+        d1[v, idx] = 1
+        d1[w, idx] = 1  # Over GF(2), +1 = -1
+
+    # d2: 2-faces (squares) to edges
+    # Squares: for each vertex v and each pair of bit positions (i, j) with i < j,
+    # the four vertices v, v^(1<<i), v^(1<<j), v^(1<<i)^(1<<j) form a square.
+    # We only count each square once (by requiring v to have 0 in both positions i, j).
+    faces: List[Tuple[int, int, int, int]] = []
+
+    for v in range(num_vertices):
+        for i in range(n):
+            if v & (1 << i):
+                continue
+            for j in range(i + 1, n):
+                if v & (1 << j):
+                    continue
+                # Square with corners v, v^(1<<i), v^(1<<j), v^(1<<i)^(1<<j)
+                faces.append((v, i, j, len(faces)))
+
+    num_faces = len(faces)
+    d2 = np.zeros((num_edges, num_faces), dtype=int)
+
+    for face_idx, (v, i, j, _) in enumerate(faces):
+        v_i = v ^ (1 << i)
+        v_j = v ^ (1 << j)
+        v_ij = v ^ (1 << i) ^ (1 << j)
+
+        # Four edges of the square
+        e1 = edge_index[tuple(sorted((v, v_i)))]
+        e2 = edge_index[tuple(sorted((v, v_j)))]
+        e3 = edge_index[tuple(sorted((v_i, v_ij)))]
+        e4 = edge_index[tuple(sorted((v_j, v_ij)))]
+
+        d2[e1, face_idx] = 1
+        d2[e2, face_idx] = 1
+        d2[e3, face_idx] = 1
+        d2[e4, face_idx] = 1
+
+    # Over GF(2), d1 @ d2 = 0 because each edge of a square contributes
+    # to exactly two vertices of that square.
+    return ChainComplex3(d2=d2, d1=d1)
 
 
-def hqecc_from_graph(num_vert: int, edges: list[tuple[int, int]]) -> CSSCode:
-    """Construct an HQECC from a graph.
+def cycle_graph_chain_complex(m: int) -> ChainComplex3:
+    """Chain complex of the cycle graph C_m.
 
-    The chain complex is 0 →[0] F₂^E →[∂₁] F₂^V,
-    so Z₁ = ker(∂₁), B₁ = 0, and the CSS code has k = dim(ker ∂₁).
-
-    For a graph with c connected components:
-    k = |E| - |V| + c (the cycle rank / first Betti number).
-
-    Args:
-        num_vert: Number of vertices.
-        edges: Edge list.
-
-    Returns:
-        The CSS code (HQECC).
+    m vertices, m edges forming a cycle.
     """
-    d1 = graph_boundary_matrix(num_vert, edges)
-    num_edge = len(edges)
+    # d1: incidence matrix (m × m)
+    d1 = np.zeros((m, m), dtype=int)
+    edges = []
+    for i in range(m):
+        j = (i + 1) % m
+        d1[i, len(edges)] = 1
+        d1[j, len(edges)] = 1
+        edges.append((i, j))
 
-    # Z₁ = ker(∂₁)
-    z_basis = gf2_kernel(d1)
+    # d2: no 2-faces
+    d2 = np.zeros((m, 0), dtype=int)
 
-    # B₁ = 0 (no 2-cells in a graph)
-    b_basis = np.zeros((0, num_edge), dtype=int)
-
-    return CSSCode(num_edge, b_basis, z_basis)
+    return ChainComplex3(d2=d2, d1=d1)
 
 
-def hqecc_from_simplicial_complex(
-    num_vert: int,
-    edges: list[tuple[int, int]],
-    triangles: list[tuple[int, int, int]]
-) -> CSSCode:
-    """Construct an HQECC from a 2-dimensional simplicial complex.
+def torus_chain_complex(L: int) -> ChainComplex3:
+    """Chain complex of the L×L torus (square lattice with periodic BC).
 
-    Chain complex: F₂^T →[∂₂] F₂^E →[∂₁] F₂^V
-    CSS code: codeX = im(∂₂), codeZ = ker(∂₁)
-    Logical qubits = dim H₁(K; F₂).
-
-    Args:
-        num_vert: Number of vertices.
-        edges: List of edges (i, j) with i < j.
-        triangles: List of triangles (i, j, k) with i < j < k.
-
-    Returns:
-        The CSS code (HQECC).
+    Vertices: L^2, Edges: 2*L^2, Faces: L^2.
+    Expected: β_1 = 2.
     """
-    num_edge = len(edges)
-    num_tri = len(triangles)
+    n_vert = L * L
 
-    # Build ∂₁ : F₂^E → F₂^V
-    d1 = graph_boundary_matrix(num_vert, edges)
+    def vid(x: int, y: int) -> int:
+        return (x % L) * L + (y % L)
 
-    # Build ∂₂ : F₂^T → F₂^E
-    # Each triangle (i,j,k) maps to edge(i,j) + edge(j,k) + edge(i,k)
-    edge_index = {e: idx for idx, e in enumerate(edges)}
+    # Horizontal and vertical edges
+    edges = []
+    edge_map = {}
+    for x in range(L):
+        for y in range(L):
+            # Horizontal edge (x,y) -> (x, y+1)
+            v1, v2 = vid(x, y), vid(x, y + 1)
+            key = (min(v1, v2), max(v1, v2))
+            if key not in edge_map:
+                edge_map[key] = len(edges)
+                edges.append(key)
+            # Vertical edge (x,y) -> (x+1, y)
+            v1, v2 = vid(x, y), vid(x + 1, y)
+            key = (min(v1, v2), max(v1, v2))
+            if key not in edge_map:
+                edge_map[key] = len(edges)
+                edges.append(key)
 
-    d2 = np.zeros((num_edge, num_tri), dtype=int)
-    for t_idx, (i, j, k) in enumerate(triangles):
-        for e in [(i, j), (j, k), (i, k)]:
-            e_sorted = (min(e), max(e))
-            if e_sorted in edge_index:
-                d2[edge_index[e_sorted], t_idx] = (d2[edge_index[e_sorted], t_idx] + 1) % 2
+    n_edges = len(edges)
 
-    # Verify chain condition
-    product = (d1 @ d2) % 2
-    assert np.all(product == 0), "Chain condition violated!"
+    # d1: incidence matrix
+    d1 = np.zeros((n_vert, n_edges), dtype=int)
+    for idx, (v1, v2) in enumerate(edges):
+        d1[v1, idx] = 1
+        d1[v2, idx] = 1
 
-    cc = ChainComplex(d2, d1)
-    return cc.to_css_code()
+    # Faces: each unit square (x, y) with corners
+    # (x,y), (x,y+1), (x+1,y), (x+1,y+1)
+    n_faces = L * L
+    d2 = np.zeros((n_edges, n_faces), dtype=int)
+    for x in range(L):
+        for y in range(L):
+            face_idx = x * L + y
+            corners = [
+                (vid(x, y), vid(x, y + 1)),
+                (vid(x, y), vid(x + 1, y)),
+                (vid(x, y + 1), vid(x + 1, y + 1)),
+                (vid(x + 1, y), vid(x + 1, y + 1)),
+            ]
+            for v1, v2 in corners:
+                key = (min(v1, v2), max(v1, v2))
+                if key in edge_map:
+                    d2[edge_map[key], face_idx] = (d2[edge_map[key], face_idx] + 1) % 2
+
+    return ChainComplex3(d2=d2, d1=d1)
 
 
-def quantum_singleton_bound(n: int, k: int, d: int) -> bool:
-    """Check if parameters satisfy the quantum Singleton bound: k + 2(d-1) ≤ n.
+if __name__ == "__main__":
+    print("=== CSS Codes from Chain Complexes ===\n")
 
-    Args:
-        n: Block length.
-        k: Number of logical qubits.
-        d: Code distance.
+    # Example 1: Cycle graph C_5
+    print("--- Cycle graph C_5 ---")
+    K = cycle_graph_chain_complex(5)
+    print(f"  n (edges) = {K.n}")
+    print(f"  dim(Z_1) = {K.cycles_dim()}")
+    print(f"  dim(B_1) = {K.boundaries_dim()}")
+    print(f"  β_1 = {K.betti1()}")
 
-    Returns:
-        True if the bound is satisfied.
-    """
-    return k + 2 * (d - 1) <= n
+    # Example 2: Hypercubes
+    for dim in [2, 3, 4, 5]:
+        print(f"\n--- Hypercube Q_{dim} ---")
+        K = hypercube_chain_complex(dim)
+        print(f"  Vertices = {2**dim}, Edges = {K.n}")
+        print(f"  dim(Z_1) = {K.cycles_dim()}")
+        print(f"  dim(B_1) = {K.boundaries_dim()}")
+        print(f"  β_1 = {K.betti1()}")
+        print(f"  Formula: n*2^(n-1) - 2^n + 1 = {dim * 2**(dim-1) - 2**dim + 1}")
+
+    # Example 3: Torus
+    for L in [3, 4, 5]:
+        print(f"\n--- Torus {L}×{L} ---")
+        K = torus_chain_complex(L)
+        print(f"  Edges = {K.n}, Faces = {K.d2.shape[1]}")
+        print(f"  β_1 = {K.betti1()}")
