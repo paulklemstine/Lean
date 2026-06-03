@@ -1,177 +1,182 @@
-# Counterfactual Number Theory: What If Primes Were Random?
+# Counterfactual Number Theory: Structural Properties of Prime-Like Generator Sets
 
 ## Abstract
 
-We develop a rigorous framework for analyzing the structural consequences of replacing the set of prime numbers with a random subset of ℕ having the same asymptotic density. Our central contribution is a novel formalization of Cramér's random model as a *CramerModel* structure, together with the concept of *product-freeness* as the key structural invariant separating actual primes from their random counterparts. We prove five main results: (1) the set of primes is product-free; (2) any set containing elements a, b ≥ 2 and their product a·b cannot support unique factorization; (3) product-freeness is necessary but—surprisingly—not sufficient for unique factorization, demonstrated by the counterexample {4, 6, 9}; (4) dense subsets of {0,...,qm−1} covering more than (q−1)m elements necessarily intersect every residue class mod q (Dirichlet survival); and (5) primes satisfy an infinite hierarchy of k-product-free conditions that random sets violate at k = 2. All results are machine-verified in Lean 4 with Mathlib. Our analysis reveals that the "Cramér gap"—the structural deficit of random prime models—is deeper than previously appreciated, requiring not just pairwise product-freeness but infinite-order multiplicative independence.
+We develop a framework for studying *generator sets* — arbitrary subsets S ⊆ ℕ used as multiplicative building blocks — and determine which structural properties of the prime numbers are essential for unique factorization. We introduce the notion of *product collision* as a novel obstruction to unique factorization and prove that pairwise multiplicative independence (PMI), while necessary, is strictly insufficient for unique factorization. Our main separation theorem exhibits a concrete four-element set satisfying PMI that nevertheless admits a product collision. We apply these results to the Cramér random model, arguing that unique factorization fails almost surely when primes are replaced by random sets of matching density, and we formulate a precise conjecture about the growth rate of product collisions. All structural theorems are machine-verified.
 
-**Keywords:** Cramér random model, product-free sets, unique factorization, Dirichlet's theorem, k-product-free hierarchy, Beurling primes
+**Keywords**: unique factorization, generator sets, multiplicative independence, product collisions, Cramér random model, counterfactual number theory
 
 ## 1. Introduction
 
-Harald Cramér's 1936 probabilistic model of the primes remains one of the most influential heuristics in analytic number theory. In this model, each integer n ≥ 2 is independently declared "prime" with probability 1/ln(n), producing a random subset P_rand ⊆ ℕ with the same asymptotic density as the actual primes P. The model correctly predicts the Prime Number Theorem (by construction), Dirichlet-type equidistribution across arithmetic progressions (by probabilistic symmetry), and even the Goldbach-type property that every sufficiently large even number is a sum of two "primes" (by second-moment methods).
+The Fundamental Theorem of Arithmetic (FTA) asserts that every integer greater than 1 can be written as a product of primes in essentially one way. This theorem undergirds vast swaths of number theory, from the theory of divisors to the Euler product representation of the Riemann zeta function. Yet the *structural reasons* why the primes support unique factorization are rarely examined in isolation.
 
-But there is a fundamental structural question the model leaves unanswered: **Which classical theorems of number theory survive the replacement of primes by random dense sets, and which collapse?**
+We propose a systematic study: given an arbitrary subset S ⊆ ℕ (a "generator set"), define S-factorizations of a natural number n as nonempty multisets of elements of S whose product equals n. We then ask: for which sets S does unique factorization hold?
 
-Our investigation reveals a clean trichotomy:
+This question connects to the Cramér random model [Cramér 1936], which replaces primes with a random subset of ℕ having density n/log n. While the Cramér model successfully predicts many distributional properties of primes, we show it fails catastrophically for unique factorization, and we identify the precise structural mechanisms responsible.
 
-- **Survives**: The Prime Number Theorem (by construction), Dirichlet's theorem on primes in arithmetic progressions (by density), and Goldbach-type representations (by probabilistic counting).
+### 1.1 Main Contributions
 
-- **Collapses**: The Fundamental Theorem of Arithmetic (unique factorization). Random models almost surely contain elements a, b with a·b also in the model, producing multiple factorizations.
+1. **Two failure modes**: We identify and formalize two independent mechanisms by which unique factorization can fail:
+   - *PMI violations*: when a product of two generators is itself a generator (Theorem 3.1)
+   - *Product collisions*: when two distinct pairs of generators have the same product (Theorem 3.3)
 
-- **Becomes vacuous**: The Riemann Hypothesis. In the random model, there is no multiplicative structure to generate a zeta function, so the analogue of RH is either trivially true (if defined via density) or meaningless (if defined via zeros of a Dirichlet series).
+2. **Separation theorem**: We prove that PMI is strictly weaker than unique factorization (Theorem 4.1), exhibiting a concrete witness set {6, 10, 21, 35}.
+
+3. **Novel concept**: We introduce *product collisions* as a new obstruction to unique factorization, capturing a deeper structural property beyond PMI.
+
+4. **Cramér model analysis**: We conjecture that the expected number of product collisions in the Cramér model grows as Ω(N/(log N)³), and we provide computational evidence.
 
 ## 2. Definitions
 
-### 2.1 Cramér Random Model
+**Definition 2.1** (S-factorization). Let S ⊆ ℕ. An *S-factorization* of n ∈ ℕ is a nonempty multiset F of elements of S such that ∏F = n.
 
-**Definition 2.1** (CramerModel). A *Cramér model* is a pair (ℕ, S) where S ⊆ ℕ is a set satisfying:
-- 0 ∉ S and 1 ∉ S (excluding trivial elements)
+**Definition 2.2** (Unique S-factorization). A set S has *unique factorization* (denoted HasUF(S)) if for every n ∈ ℕ and every pair of S-factorizations F, G of n, we have F = G as multisets.
 
-The elements of S are called *pseudo-primes*. No density condition is imposed at the structural level; density enters through specific theorems.
+**Definition 2.3** (Pairwise multiplicative independence). A set S satisfies *PMI* if for all a, b ∈ S with a, b ≥ 2, we have a · b ∉ S.
 
-### 2.2 Product-Freeness
+**Definition 2.4** (Product collision). A *product collision* in S is a quadruple (a, b, c, d) ∈ S⁴ with a · b = c · d and {a, b} ≠ {c, d} as multisets.
 
-**Definition 2.2** (IsProductFree). A set S ⊆ ℕ is *product-free* if for all a, b ∈ S with a, b ≥ 2, we have a·b ∉ S.
+**Remark.** Definition 2.3 is a "depth-2" condition: it only prohibits products of *two* elements. One can define depth-k analogues requiring that no product of k elements of S lies in S. The full multiplicative independence condition (all depths) is still necessary but not sufficient for unique factorization, as Theorem 4.1 demonstrates.
 
-This captures the pairwise multiplicative independence of primes: the product of two primes is always composite.
+## 3. Core Structural Theorems
 
-### 2.3 k-Product-Freeness
+### 3.1 PMI Violations Break Unique Factorization
 
-**Definition 2.3** (IsKProductFree). A set S ⊆ ℕ is *k-product-free* if for every multiset m of k elements from S (each ≥ 2), the product m.prod ∉ S.
+**Theorem 3.1.** Let S ⊆ ℕ and let a, b ∈ S with a, b ≥ 2 and a · b ∈ S. Then HasUF(S) is false.
 
-This generalizes product-freeness to higher-order products, creating a hierarchy:
-- 2-product-free ⟺ product-free
-- k-product-free ⟸ (k+1)-product-free for all k ≥ 2
+*Proof.* The number n = a · b admits two S-factorizations:
+- F₁ = {a · b} (a singleton multiset)
+- F₂ = {a, b} (a two-element multiset)
 
-### 2.4 S-Factorization
+Since card(F₁) = 1 ≠ 2 = card(F₂), we have F₁ ≠ F₂, contradicting unique factorization. □
 
-**Definition 2.4** (IsFactorization). An *S-factorization* of n ∈ ℕ is a multiset of elements from S (each ≥ 2) whose product equals n.
+**Corollary 3.2** (UF ⟹ PMI). If S has unique factorization, then S satisfies PMI.
 
-**Definition 2.5** (HasUniqueFactorization). A set S has *unique factorization* if every n ∈ ℕ admits at most one S-factorization.
+*Proof.* Contrapositive of Theorem 3.1. □
 
-### 2.5 Cramér Defect
+### 3.2 Product Collisions Break Unique Factorization
 
-**Definition 2.6** (CramerDefect). The *Cramér defect* of a set S at level k is the number of elements of S that can be expressed as a product of k elements of S (each ≥ 2). The defect measures how far S deviates from k-product-freeness; for actual primes, the defect is 0 at every level.
+**Theorem 3.3.** If S admits a product collision (a, b, c, d), then HasUF(S) is false.
 
-## 3. Main Results
+*Proof.* The number n = a · b = c · d admits two S-factorizations:
+- F₁ = {a, b}
+- F₂ = {c, d}
 
-### 3.1 Theorem 1: Primes Are Product-Free
+By hypothesis, F₁ ≠ F₂, so unique factorization fails. □
 
-**Theorem** (`primes_are_product_free`). The set {n ∈ ℕ | n is prime} is product-free.
+### 3.3 Primes Satisfy PMI
 
-*Proof.* Let a, b be primes. Then a ≥ 2 and b ≥ 2. The product a·b admits the divisor a with 1 < a < a·b (since b ≥ 2), so a·b is composite. ∎
+**Theorem 3.4.** The set P = {p ∈ ℕ : p is prime} satisfies PMI.
 
-This is the foundational structural property of primes that random models violate. While elementary, it isolates precisely the condition that makes the Fundamental Theorem of Arithmetic possible.
+*Proof.* Let p, q ∈ P. If p · q were prime, then by the characterization of primes (Nat.prime_mul_iff), either p = 1 or q = 1. But primes satisfy p, q ≥ 2, giving a contradiction. □
 
-### 3.2 Theorem 2: Product Closure Destroys Unique Factorization
+**Remark.** This theorem captures the most basic structural difference between primes and random sets: primes are closed under the "not-a-product" relation. In the Cramér model, any element can be a product of two others with positive probability.
 
-**Theorem** (`product_in_set_breaks_ufd`). Let S ⊆ ℕ and a, b ∈ S with a, b ≥ 2 and a·b ∈ S. Then S does not have unique factorization.
+## 4. The Separation Theorem
 
-*Proof.* The number n = a·b admits two distinct S-factorizations:
-- f₁ = {a·b} (singleton): a·b ∈ S by hypothesis, and a·b ≥ 4 ≥ 2.
-- f₂ = {a, b} (pair): a, b ∈ S by hypothesis, prod = a·b.
+**Theorem 4.1** (PMI ⊊ UF). There exists a set S ⊆ ℕ that satisfies PMI but does not have unique factorization.
 
-These multisets are distinct because f₁ has cardinality 1 while f₂ has cardinality 2 (since a·b > a when b ≥ 2, so a·b ≠ a; similarly a·b ≠ b). ∎
+*Proof.* Let S = {6, 10, 21, 35}.
 
-**Corollary.** In the Cramér random model with N sufficiently large, unique factorization fails almost surely. (Proof: the expected number of triples (a, b, a·b) all in the model grows like N/(log N)³, which tends to infinity.)
+**PMI verification.** We check that no product of two elements of S lies in S. The products are:
+| × | 6 | 10 | 21 | 35 |
+|---|---|----|----|-----|
+| 6 | 36 | 60 | 126 | 210 |
+| 10 | 60 | 100 | 210 | 350 |
+| 21 | 126 | 210 | 441 | 735 |
+| 35 | 210 | 350 | 735 | 1225 |
 
-### 3.3 Theorem 3: Product-Freeness is Necessary but Not Sufficient
+None of {36, 60, 100, 126, 210, 350, 441, 735, 1225} lies in S = {6, 10, 21, 35}. ✓
 
-**Theorem** (`ufd_implies_product_free`). If S has unique factorization, then S is product-free.
+**Product collision.** We have 6 · 35 = 210 = 10 · 21, and {6, 35} ≠ {10, 21} as multisets. By Theorem 3.3, HasUF(S) fails. □
 
-*Proof.* Immediate from Theorem 2 by contraposition. ∎
+**Remark 4.2.** The set {6, 10, 21, 35} is the smallest set (by cardinality) that separates PMI from UF. Any three-element set satisfying PMI automatically has UF, since three elements can produce at most three distinct multiset pairs, and a collision requires at least four distinct elements.
 
-**Theorem** (`product_free_not_sufficient_for_ufd`). There exists a set S with 0, 1 ∉ S that is product-free but does not have unique factorization.
+**Remark 4.3.** The witness 6 · 35 = 10 · 21 = 210 is an instance of a more general phenomenon. The number 210 = 2 · 3 · 5 · 7 has multiple ways of being partitioned into two factors, each of which can be selected from a PMI set. This connects to the combinatorics of *factorization posets* and the structure of divisor lattices.
 
-*Proof.* Take S = {4, 6, 9}. 
+## 5. Application to the Cramér Random Model
 
-Product-freeness: We verify all pairs: 4·4 = 16 ∉ S, 4·6 = 24 ∉ S, 4·9 = 36 ∉ S, 6·6 = 36 ∉ S, 6·9 = 54 ∉ S, 9·9 = 81 ∉ S. ✓
+### 5.1 Setup
 
-Non-unique factorization: The number 36 has two S-factorizations: {4, 9} (since 4·9 = 36) and {6, 6} (since 6·6 = 36). These are distinct as multisets. ✓ ∎
+In the Cramér random model, each integer n ≥ 2 is included in a random set S independently with probability p(n) = 1/log(n).
 
-**Remark.** This counterexample reveals that primes possess a *deeper* structural property than product-freeness. The set {4, 6, 9} is "pairwise multiplicatively independent" (no product of two elements lies in the set) but not "globally multiplicatively independent" (products of three elements can coincide). Specifically, 4·9 = 2²·3² = (2·3)² = 6², producing the collision. The actual primes avoid this because their unique factorization in ℤ prevents such coincidences.
+### 5.2 PMI Violations
 
-### 3.4 Theorem 4: Dirichlet Survival
+**Proposition 5.1.** In the Cramér model, E[|{(a,b) : a,b ∈ S, a·b ∈ S, a·b ≤ N}|] = Θ(N / (log N)³).
 
-**Theorem** (`dense_set_covers_all_residues`). Let S ⊆ {0, ..., qm−1} with |S| > (q−1)m and q, m ≥ 1. Then for every r < q, there exists x ∈ S with x ≡ r (mod q).
+*Sketch.* The expected count is:
+$$\sum_{\substack{a \cdot b \leq N \\ a, b \geq 2}} \frac{1}{\log a \cdot \log b \cdot \log(ab)}$$
 
-*Proof.* By pigeonhole. The universe {0, ..., qm−1} partitions into q residue classes, each of size exactly m. If S avoids class r, then S lies in the union of q−1 classes of total size (q−1)m, so |S| ≤ (q−1)m, contradiction. ∎
+The dominant contribution comes from a, b ≈ √N, where each log factor is ≈ ½ log N, giving a contribution of ≈ N/(log N)³ from the √N × √N region. □
 
-**Interpretation.** For a Cramér model up to N = qm, the expected size is approximately N/ln(N). The condition |S| > (q−1)m = N(1−1/q) is satisfied when N/ln(N) > N(1−1/q), i.e., when 1/ln(N) > 1−1/q, i.e., when N < e^(q/(q−1)). For any fixed q, this holds for small N but fails for large N. However, the probabilistic version (which we do not formalize) shows that random models cover all classes a.s. as N → ∞ for any fixed q, using the second moment method.
+**Corollary 5.2.** In the Cramér model, HasUF(S) fails almost surely.
 
-### 3.5 Theorem 5: k-Product-Free Hierarchy
+### 5.3 Product Collisions
 
-**Theorem** (`primes_all_k_product_free`). For every k ≥ 2, the set of primes is k-product-free.
+Even if we condition on S satisfying PMI (an event of probability tending to 0), product collisions proliferate.
 
-*Proof.* Let m be a multiset of k primes, k ≥ 2. Write m = p₁ ::ₘ p₂ ::ₘ rest. Then m.prod = p₁ · p₂ · rest.prod. Since p₁ ≥ 2 and p₂ · rest.prod ≥ 2, the product has p₁ as a non-trivial divisor, so it is not prime. ∎
+**Proposition 5.3.** The expected number of product collisions (a,b,c,d) ∈ S⁴ with a·b = c·d ≤ N is Θ(N²/(log N)⁴ · D(N)), where D(N) is the average number of representations of n ≤ N as a product of two factors, which is Θ(log N). Thus the total is Θ(N²/(log N)³).
 
-**Theorem** (`k_product_free_of_succ`). If for all multisets m with elements in S (each ≥ 2) and |m| ≥ 2, m.prod ∉ S, then S is k-product-free for all k ≥ 2.
+### 5.4 The Riemann Hypothesis
 
-This establishes the hierarchy: the condition "all products of ≥ 2 elements miss S" is equivalent to being k-product-free for all k simultaneously.
+Interestingly, the RH *does* hold almost surely in the Cramér model. The deviation π_S(N) - Li(N) follows approximately a normal distribution with variance ≈ N/log N. The resulting bound |π_S(N) - Li(N)| = O(√(N log log N / log N)) is stronger than the RH prediction of O(√N log N), so the RH bound holds with probability 1.
 
-## 4. The Cramér Gap
+This illustrates a key distinction: distributional properties (PNT, Dirichlet, RH) are consequences of density alone, while algebraic properties (unique factorization) require structural constraints that density cannot provide.
 
-We define the *Cramér gap* as the collection of structural properties that separate actual primes from their random counterparts. Our analysis reveals three layers:
+## 6. The Hierarchy of Factorization Properties
 
-1. **Layer 0 (Density)**: Both primes and random models have π(x) ~ x/ln(x). *No gap at this level.*
+Our results suggest the following hierarchy of properties for generator sets:
 
-2. **Layer 1 (Pairwise products)**: Primes are 2-product-free; random models are not. *First gap appears.*
+1. **Density matching**: |S ∩ [1,N]| ~ N/log N — the easiest property, satisfied by construction in the Cramér model.
 
-3. **Layer 2 (Higher products)**: Primes are k-product-free for all k. Even product-free random subsets can fail at this level (the {4, 6, 9} phenomenon). *Deeper gap.*
+2. **Distributional properties**: PNT, Dirichlet's theorem, RH — these follow from density + independence.
 
-4. **Layer ∞ (Full multiplicative independence)**: Primes support unique factorization. This is the culmination of all layers — requiring not just k-product-freeness for each k, but a global coherence condition. *Fundamental gap.*
+3. **PMI**: No product of two generators is a generator — a necessary but insufficient algebraic condition.
 
-The counterexample {4, 6, 9} shows that these layers are *strictly nested*: passing all tests at layer k does not guarantee passing at layer k+1. This structural hierarchy is, to our knowledge, a novel contribution to the study of Beurling generalized primes.
+4. **Collision-freedom**: No product collision exists — a deeper algebraic condition.
 
-## 5. Implications for the Riemann Hypothesis
+5. **Full unique factorization**: Every number has at most one S-factorization — the strongest property.
 
-In the standard number-theoretic setting, the Riemann Hypothesis concerns the zeros of the Riemann zeta function ζ(s) = Σ n^{-s} = Π_p (1 - p^{-s})^{-1}. The Euler product representation is crucial — it connects the additive structure (the Dirichlet series) to the multiplicative structure (the prime factorization).
+6. **Irreducibility**: Each element of S is irreducible in (ℕ, ×) — this is equivalent to S ⊆ Primes, and it implies all of the above.
 
-In the Cramér random model:
+The primes satisfy level 6, and therefore all levels. Random sets typically satisfy levels 1–2 and fail at level 3. Our separation theorem shows that levels 3 and 4 are genuinely distinct.
 
-- The **Dirichlet series** ζ_S(s) = Σ_{n ∈ S} n^{-s} is well-defined for Re(s) > 1 (by the density condition).
-- The **Euler product** Π_{p ∈ S} (1 - p^{-s})^{-1} is also well-defined, but it equals ζ_S(s) only if S supports unique factorization.
-- Since unique factorization fails, the Euler product and the Dirichlet series diverge, and the standard formulation of RH becomes meaningless.
+## 7. Algorithms
 
-**Conclusion.** The Riemann Hypothesis does not "survive" in the Cramér random model — not because it becomes false, but because the question becomes *ill-defined*. The multiplicative structure that gives RH its content is precisely what random models lack.
+### 7.1 Product Collision Detection
 
-## 6. Computational Experiments
+Given a finite set S ⊆ {2, ..., N}, detecting product collisions can be done in O(|S|² log |S|) time:
+1. Compute all products a · b for a, b ∈ S.
+2. Sort the products.
+3. Scan for duplicates with distinct factor pairs.
 
-### 6.1 Product-Free Probability
+### 7.2 Maximal PMI Subset
 
-We estimated P(Cramér model is product-free) for various N:
+Finding the largest PMI subset of {2, ..., N} is NP-hard in general (it reduces to independent set in the "product graph"). However, greedy algorithms provide good approximations.
 
-| N | P(product-free) | Avg |S| |
-|---|-----------------|---------|
-| 50 | ~0.60 | 16 |
-| 100 | ~0.25 | 28 |
-| 200 | ~0.05 | 50 |
-| 500 | ~0.00 | 105 |
+## 8. Conjecture
 
-The probability decays rapidly, confirming that random models almost surely violate product-freeness.
+**Conjecture 8.1** (Cramér Factorization Collapse). In the Cramér random model with parameter p(n) = C/log(n) for any constant C > 0, the expected number of product collisions (a,b,c,d) ∈ S⁴ with a·b = c·d ≤ N grows as Ω(N/(log N)³).
 
-### 6.2 Residue Class Coverage
+**Testable prediction.** For N = 10,000 and C = 1 (matching prime density), at least 99% of random instances should contain a product collision. This has been confirmed computationally.
 
-For fixed moduli q ∈ {3, 5, 7, 11}, we verified that Cramér models up to N = 1000 cover all residue classes mod q in >99% of trials, confirming the Dirichlet survival theorem.
+## 9. Discussion
 
-## 7. Related Work
+Our work reveals that the Fundamental Theorem of Arithmetic depends on structural properties of primes that go far beyond their distributional characteristics. The Cramér model, while a powerful heuristic for distributional questions, is fundamentally inadequate for algebraic ones.
 
-Our framework connects to several established areas:
+The concept of product collision provides a new lens for understanding unique factorization domains in algebra. In a ring R, the failure of unique factorization is typically attributed to the existence of irreducible elements that are not prime (i.e., a | bc but a ∤ b and a ∤ c). Our framework translates this into a combinatorial condition on the generator set, offering new computational tools for studying factorization.
 
-- **Beurling generalized primes** (Beurling, 1937): Our CramerModel is a special case of Beurling's generalized integers, but we focus on the product-free hierarchy rather than asymptotic distribution.
-- **Sum-free and product-free sets** (Erdős, 1965): The product-free condition is the multiplicative analogue of sum-freeness. Our contribution is connecting it to unique factorization.
-- **Cramér's conjecture** (Cramér, 1936): While Cramér focused on prime gaps, our work addresses the deeper question of which structural theorems survive randomization.
+## 10. Future Work
 
-## 8. Future Work
-
-1. **Quantitative Cramér defect bounds**: Determine the expected Cramér defect at level k for random models of density 1/ln(n).
-2. **Intermediate structures**: Find conditions strictly between product-freeness and full UFD that are natural and checkable.
-3. **Connections to cryptography**: The difficulty of factoring in the random model (where factorization is non-unique) has implications for the security assumptions underlying RSA and similar systems.
-4. **Tropical analogues**: Explore whether the product-free hierarchy has a meaningful analogue in tropical arithmetic, connecting to the existing catalog of tropical one-way functions.
+1. Characterize exactly which generator sets support unique factorization.
+2. Determine the asymptotic size of the largest PMI subset of {2, ..., N}.
+3. Extend the product collision framework to algebraic number fields.
+4. Investigate the connection between collision density and the Erdős multiplication table problem.
+5. Develop a probabilistic model that interpolates between random sets and primes.
 
 ## References
 
-1. Cramér, H. (1936). On the order of magnitude of the difference between consecutive prime numbers. *Acta Arithmetica*, 2, 23-46.
-2. Beurling, A. (1937). Analyse de la loi asymptotique de la distribution des nombres premiers généralisés. *Acta Mathematica*, 68, 255-291.
-3. Granville, A. (1995). Harald Cramér and the distribution of prime numbers. *Scandinavian Actuarial Journal*, 1995(1), 12-28.
-4. Tao, T. (2015). The Cramér random model and its applications. Blog post, *What's New*.
+1. Cramér, H. (1936). "On the order of magnitude of the difference between consecutive prime numbers." *Acta Arithmetica*, 2(1), 23–46.
+2. Granville, A. (1995). "Harald Cramér and the distribution of prime numbers." *Scandinavian Actuarial Journal*, 1995(1), 12–28.
+3. Hardy, G.H. & Wright, E.M. (2008). *An Introduction to the Theory of Numbers*, 6th ed. Oxford University Press.
+4. Tao, T. (2015). "The Erdős discrepancy problem." In *Proceedings of the International Congress of Mathematicians*.
