@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e7f427c0",
     "filename": "foundational_framework_for_studying_primes_t.json",
     "pkg_num": 291,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6617508571428572,
     "title": "The Logarithmic Prime Metric: Dimension Gap and Fractal Signatures"
   },
   {
@@ -9397,8 +9397,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "foundational_framework_for_studying_primes_t",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6617508571428572,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Logarithmic Prime Metric: Dimension Gap and Fractal Signatures"
     }
