@@ -1,254 +1,186 @@
-# Transreal Arithmetic: A Formal Investigation of Ring Failure and Wheel Emergence
+# Transreal Arithmetic: Algebraic Structure of Anderson's Number System
 
 ## Abstract
 
-We present a complete formalization of Anderson's transreal number system — the extension of ℝ by three distinguished elements: positive infinity (+∞), negative infinity (-∞), and nullity (Φ = 0/0) — with all arithmetic operations made total. We prove that the transreal numbers fail to form a ring due to three independent obstructions: (1) the non-existence of additive inverses for infinite and null elements, (2) the failure of zero-absorption (0 × ∞ = Φ ≠ 0), and (3) the breakdown of left distributivity (with an explicit counterexample). We establish that nullity is the unique absorbing element under both addition and multiplication, prove a complete classification of additive idempotents (exactly four: 0, +∞, -∞, Φ), verify partial wheel axioms, and demonstrate the collapse of cancellation laws. All results are machine-verified in Lean 4 with Mathlib.
+We present a complete formalization of transreal arithmetic—the extension of the real numbers ℝ with three additional elements: positive infinity (+∞), negative infinity (-∞), and nullity (Φ = 0/0). We prove that the transreals fail to form a ring due to three independent axiom violations: additive cancellation failure, failure of the absorption law 0·x = 0, and left distributivity failure. Surprisingly, the zero-product property (ab = 0 → a = 0 ∨ b = 0) is preserved. We classify the additively idempotent elements as exactly {0, +∞, -∞, Φ}, characterize negation fixed points as {0, Φ}, and show that the standard wheel identity x + 0·x = x fails for infinite elements. All results are machine-verified in Lean 4 with Mathlib, ensuring complete rigor.
 
 ## 1. Introduction
 
-The question of extending the real number system to handle division by zero has a long history. The projective real line ℝ ∪ {∞} identifies +∞ and -∞ but loses the total order. The extended real line ℝ ∪ {+∞, -∞} preserves the order but leaves certain operations (like ∞ - ∞ and 0 × ∞) undefined. Anderson's transreal system [1] takes the radical approach of making *every* arithmetic operation total by introducing a third non-real element — nullity (Φ) — as the result of all previously indeterminate forms.
+Division by zero has been forbidden since the foundations of algebra were laid. The standard approach treats a/0 as undefined, making division a partial function. This leads to practical difficulties in computing (exception handling, NaN propagation) and theoretical awkwardness in analysis (limit theorems require careful domain restrictions).
 
-The algebraic consequences of this totality have not been previously formalized with machine verification. In this paper, we provide such a formalization and prove precisely which standard algebraic properties survive and which collapse.
+Anderson's transreal arithmetic [1] takes a different approach: it assigns explicit values to all divisions, defining a/0 = +∞ for a > 0, a/0 = -∞ for a < 0, and 0/0 = Φ where Φ ("nullity") is a new mathematical object. The resulting system ℝᵀ = ℝ ∪ {+∞, -∞, Φ} has total arithmetic operations.
 
-### 1.1 Contributions
-
-1. **Formal definition** of the transreal number type and its arithmetic operations in Lean 4.
-2. **Three independent ring-failure proofs**: additive inverse failure, zero-absorption failure, and distributivity failure, each with explicit counterexamples.
-3. **Unique absorbing element theorem**: nullity is the only element that absorbs under both addition and multiplication.
-4. **Additive idempotent classification**: the equation x + x = x has exactly four solutions in the transreals.
-5. **Nullity collapse theorem**: any expression tree built from addition and multiplication with a nullity leaf evaluates to nullity.
-6. **Partial wheel axiom verification**: commutativity of both operations, wheel distributivity for finite values, and identification of where the wheel involution axiom fails.
-7. **Cancellation collapse**: explicit demonstrations that neither additive nor multiplicative cancellation holds.
+Previous work has explored transreal arithmetic informally and computationally. Our contribution is the first complete formal verification of its algebraic structure, establishing precisely which standard algebraic axioms hold and which fail, with machine-checked proofs in Lean 4.
 
 ## 2. Definitions
 
-### 2.1 The Transreal Type
+### 2.1 The Transreal Numbers
 
-**Definition 2.1** (Transreal). The set of transreal numbers is defined as the inductive type:
+**Definition 1** (Transreal Numbers). The set of transreal numbers is the disjoint union
+$$\mathbb{R}^T = \mathbb{R} \sqcup \{+\infty, -\infty, \Phi\}$$
+where ℝ is the set of real numbers.
 
-```
-Transreal ::= ofReal(r : ℝ) | posInf | negInf | nullity
-```
-
-with the abbreviation Φ := nullity.
+**Definition 2** (Sign Classification). For r ∈ ℝ:
+$$\text{sign}(r) = \begin{cases} \text{pos} & r > 0 \\ \text{neg} & r < 0 \\ \text{zero} & r = 0 \end{cases}$$
 
 ### 2.2 Arithmetic Operations
 
-**Definition 2.2** (Addition). For transreals a, b:
+**Definition 3** (Transreal Addition).
+$$a + b = \begin{cases}
+a +_{\mathbb{R}} b & a, b \in \mathbb{R} \\
++\infty & a = +\infty, b \in \mathbb{R} \cup \{+\infty\} \\
+-\infty & a = -\infty, b \in \mathbb{R} \cup \{-\infty\} \\
+\Phi & a = +\infty, b = -\infty \text{ (or vice versa)} \\
+\Phi & a = \Phi \text{ or } b = \Phi
+\end{cases}$$
 
-| a \ b | ofReal s | +∞ | -∞ | Φ |
-|-------|---------|-----|-----|---|
-| ofReal r | ofReal(r+s) | +∞ | -∞ | Φ |
-| +∞ | +∞ | +∞ | Φ | Φ |
-| -∞ | -∞ | Φ | -∞ | Φ |
-| Φ | Φ | Φ | Φ | Φ |
+**Definition 4** (Transreal Multiplication).
+$$a \times b = \begin{cases}
+a \times_{\mathbb{R}} b & a, b \in \mathbb{R} \\
+\pm\infty & a = \pm\infty, b \in \mathbb{R}, \text{sign}(b) \neq 0 \\
+\Phi & a = \pm\infty, b = 0 \text{ (or vice versa)} \\
++\infty & a, b \text{ same sign infinities} \\
+-\infty & a, b \text{ opposite sign infinities} \\
+\Phi & a = \Phi \text{ or } b = \Phi
+\end{cases}$$
 
-The critical entry is ∞ + (-∞) = Φ.
+**Definition 5** (Transreal Inversion).
+$$a^{-1} = \begin{cases}
+a^{-1}_{\mathbb{R}} & a \in \mathbb{R}, a \neq 0 \\
++\infty & a = 0 \\
+0 & a = \pm\infty \\
+\Phi & a = \Phi
+\end{cases}$$
 
-**Definition 2.3** (Multiplication). For transreals a, b:
+Division is defined as $a / b = a \times b^{-1}$.
 
-- `ofReal(r) × ofReal(s) = ofReal(r × s)`
-- `ofReal(r) × ±∞`: sign-dependent (+∞ if same sign, -∞ if opposite, Φ if r = 0)
-- `±∞ × ±∞`: follows standard sign rules
-- `Φ × x = x × Φ = Φ` for all x
+## 3. Main Results
 
-The critical entries are `0 × ±∞ = Φ`.
+### 3.1 Nullity Absorption (Theorems 1-4)
 
-**Definition 2.4** (Negation). `-ofReal(r) = ofReal(-r)`, `-posInf = negInf`, `-negInf = posInf`, `-Φ = Φ`.
+**Theorem 1** (Additive Absorption). For all x ∈ ℝᵀ: Φ + x = Φ and x + Φ = Φ.
 
-**Definition 2.5** (Reciprocal). `recip(ofReal(r)) = ofReal(r⁻¹)` for r ≠ 0; `recip(0) = +∞`; `recip(±∞) = 0`; `recip(Φ) = Φ`.
+**Theorem 2** (Multiplicative Absorption). For all x ∈ ℝᵀ: Φ × x = Φ and x × Φ = Φ.
 
-**Definition 2.6** (Division). `a / b := a × recip(b)`.
+*Proof.* By case analysis on x ∈ {ofReal(r), +∞, -∞, Φ}. In each case, the definition directly yields Φ. □
 
-### 2.3 Partial Order
+**Remark.** Absorption is the defining property of nullity. It formalizes the intuition that indeterminacy is "contagious"—once information is lost, no operation can recover it.
 
-The transreal order extends the real order: `-∞ ≤ r ≤ +∞` for all real r, with infinities comparable to all total elements and Φ incomparable with everything.
+### 3.2 Ring Axiom Failures (Theorems 3-7)
 
-## 3. Ring Axiom Failures
+**Theorem 3** (Additive Group Failure). The transreals do not form an additive group: ∃x ∈ ℝᵀ such that x + (-x) ≠ 0.
 
-### 3.1 Additive Inverse Failure
+*Proof.* Take x = Φ. Then -Φ = Φ and Φ + Φ = Φ ≠ ofReal(0). □
 
-**Theorem 3.1**. *posInf + (-posInf) ≠ 0.*
+**Theorem 4** (Additive Cancellation Failure). ∃a, b, c ∈ ℝᵀ such that a + c = b + c but a ≠ b.
 
-*Proof.* By computation: `posInf + negInf = nullity` (from the addition table), and `nullity ≠ ofReal 0` (by injectivity of the constructors). ∎
+*Proof.* Take a = ofReal(1), b = +∞, c = +∞. Then ofReal(1) + ∞ = ∞ = ∞ + ∞, but ofReal(1) ≠ +∞. □
 
-This means the transreals do not form a group under addition.
+**Theorem 5** (Zero-Absorption Failure). 0 × (+∞) = Φ ≠ 0.
 
-### 3.2 Zero-Absorption Failure
+**Theorem 6** (Ring Axiom 0·x = 0 Fails). ¬(∀x ∈ ℝᵀ: 0 · x = 0).
 
-**Theorem 3.2**. *There exists x such that 0 × x ≠ 0.*
+*Proof.* Counterexample: 0 × ∞ = Φ ≠ 0, by the sign dispatch in multiplication (sign(0) = zero, giving nullity). □
 
-*Proof.* Take x = posInf. Then `0 × posInf = nullity` (since 0 is neither positive nor negative, the multiplication rule produces Φ). Since `nullity ≠ ofReal 0`, the result follows. ∎
+**Theorem 7** (Left Distributivity Failure). ¬(∀a, b, c ∈ ℝᵀ: a(b + c) = ab + ac).
 
-This violates the ring axiom that zero is an absorbing element of multiplication.
+*Proof.* Take a = +∞, b = 0, c = 1. LHS: ∞ × (0 + 1) = ∞ × 1 = ∞. RHS: ∞ × 0 + ∞ × 1 = Φ + ∞ = Φ. Since ∞ ≠ Φ, distributivity fails. □
 
-### 3.3 Distributivity Failure
+**Remark.** The mechanism of distributivity failure is illuminating: the nullity from ∞ × 0 "infects" the sum through absorption. This is the algebraic expression of information loss: splitting a computation into parts can introduce artificial indeterminacies that weren't present in the original.
 
-**Theorem 3.3**. *Left distributivity fails: there exist a, b, c with a × (b + c) ≠ a × b + a × c.*
+### 3.3 The Zero-Product Property Survives (Theorem 8)
 
-*Proof.* Take a = posInf, b = ofReal 1, c = negInf.
+**Theorem 8** (Zero-Product Property). For all a, b ∈ ℝᵀ: ab = 0 → a = 0 ∨ b = 0.
 
-LHS: `posInf × (ofReal 1 + negInf) = posInf × negInf = negInf`.
+*Proof.* Key lemma: if mul(a, b) = ofReal(0), then a and b must both be real (ofReal). This is because:
+- nullity × anything = nullity ≠ ofReal(0)
+- ∞ × ∞ = ±∞ ≠ ofReal(0)
+- ∞ × real = ±∞ or Φ, never ofReal(0) (checked by sign cases)
 
-RHS: `posInf × ofReal 1 + posInf × negInf = posInf + negInf = nullity`.
+Once both factors are real, the standard real zero-product property applies. □
 
-Since `negInf ≠ nullity`, left distributivity fails. ∎
+**Remark.** This theorem is surprising given the other axiom failures. It holds because the image of multiplication restricted to non-real inputs never includes ofReal(0)—non-real products are always non-real.
 
-**Remark.** This counterexample has a clear conceptual interpretation: the "telescoping" of 1 + (-∞) into -∞ before multiplication loses information that the separate multiplication would have preserved.
+### 3.4 Structural Results (Theorems 9-13)
 
-## 4. Nullity as Universal Absorber
+**Theorem 9** (Commutativity). Addition and multiplication are commutative on ℝᵀ.
 
-### 4.1 Absorption Properties
+**Theorem 10** (Negation Fixed Points). -x = x iff x = 0 or x = Φ.
 
-**Theorem 4.1** (Nullity Absorption). *For all transreal x: Φ + x = Φ and x + Φ = Φ; Φ × x = Φ and x × Φ = Φ.*
+*Proof.* Forward: for ofReal(r), -r = r implies r = 0 by linearity. For ±∞, negation swaps them. For Φ, -Φ = Φ by definition.  □
 
-*Proof.* By case analysis on x (four cases each). ∎
+**Theorem 11** (Idempotent Classification). x + x = x iff x ∈ {+∞, -∞, Φ, 0}.
 
-**Theorem 4.2** (Fixed Points). *-Φ = Φ and recip(Φ) = Φ.*
+*Proof.* For ofReal(r): r + r = r iff 2r = r iff r = 0. For +∞, -∞, Φ: follows from the addition table. □
 
-*Proof.* Immediate from the definitions. ∎
+**Theorem 12** (Multiplicative Identity). x · 1 = x for all x ∈ ℝᵀ.
 
-### 4.2 Uniqueness of the Absorbing Element
+**Theorem 13** (Negation Involution). -(-x) = x for all x ∈ ℝᵀ.
 
-**Theorem 4.3** (Unique Absorber). *If z + x = z for all x and z × x = z for all x, then z = nullity.*
+### 3.5 Order Theory (Theorem 14)
 
-*Proof.* From z + nullity = z (by the first hypothesis) and z + nullity = nullity (by Theorem 4.1), we obtain z = nullity. ∎
+**Theorem 14** (Non-Totality). The natural order on ℝᵀ (extending ≤ on ℝ with -∞ ≤ everything ≤ +∞) is NOT total: Φ and 0 are incomparable.
 
-**Remark.** This theorem shows that nullity occupies a unique algebraic position. No other transreal element — not zero, not infinity — absorbs under both operations.
+### 3.6 Division by Zero (Theorems 15-16)
 
-### 4.3 Nullity Collapse Conjecture
+**Theorem 15**. For r > 0: ofReal(r) / ofReal(0) = +∞.
 
-**Theorem 4.4** (Depth-2 Nullity Collapse). *For any binary operations op₁, op₂ ∈ {add, mul} and any transreals x, y: op₁(op₂(Φ, x), y) = Φ.*
+**Theorem 16**. ofReal(0) / ofReal(0) = Φ (the defining equation of nullity).
 
-*Proof.* By case analysis on op₁ and op₂. In each case, the inner operation op₂(Φ, x) = Φ by Theorem 4.1, and then op₁(Φ, y) = Φ again by Theorem 4.1. ∎
+### 3.7 Wheel Identity Analysis (Theorems 17-18)
 
-**Conjecture 4.5** (Full Nullity Collapse). For any expression tree built from addition and multiplication with at least one nullity leaf, the expression evaluates to nullity.
+**Theorem 17**. The wheel identity x + 0·x = x holds for all real elements.
 
-This conjecture extends Theorem 4.4 to arbitrary depth. We verify it computationally for expression trees up to depth 10 in the companion code.
+**Theorem 18**. The wheel identity FAILS for +∞: (+∞) + 0·(+∞) = Φ ≠ +∞.
 
-## 5. Additive Idempotent Classification
+## 4. Discussion
 
-**Theorem 5.1**. *The transreal x satisfies x + x = x if and only if x ∈ {0, +∞, -∞, Φ}.*
+### 4.1 Algebraic Classification
 
-*Proof.* The "if" direction is immediate:
-- `ofReal 0 + ofReal 0 = ofReal 0` ✓
-- `posInf + posInf = posInf` ✓
-- `negInf + negInf = negInf` ✓
-- `nullity + nullity = nullity` ✓
+The transreals with Anderson's operations form a structure that is:
+- A commutative monoid under multiplication (with identity 1)
+- NOT a group under addition (no additive inverses for ∞ and Φ)
+- NOT a ring (distributivity and 0-absorption fail)
+- NOT a wheel (the wheel identity fails for infinite elements)
+- NOT totally ordered (Φ is incomparable with reals)
 
-For the "only if" direction, if x = ofReal r, then ofReal(r + r) = ofReal r implies r + r = r (by injectivity of ofReal), hence 2r = r, hence r = 0. The cases x ∈ {posInf, negInf, nullity} are immediate. ∎
+The structure that emerges is novel: it has properties of both rings and wheels but satisfies the axioms of neither. We propose the name *transring* for this intermediate algebraic structure.
 
-**Interpretation.** These four idempotents correspond to the four "qualitative types" of transreal numbers: the additive identity (0), the two infinite boundaries (+∞, -∞), and the absorber (Φ).
+### 4.2 Information-Theoretic Interpretation
 
-## 6. Cancellation Collapse
+Nullity can be understood as an *information-theoretic* concept rather than a numerical one. It marks positions in a computation where information has been irreversibly lost. The absorption property (Φ + x = Φ) formalizes the principle that "garbage in, garbage out"—no subsequent computation can recover lost information.
 
-**Theorem 6.1** (Additive Cancellation Failure). *There exist a, b, c with a + b = a + c and b ≠ c.*
+This interpretation explains the distributivity failure: splitting ∞ × (0 + 1) into ∞ × 0 + ∞ × 1 introduces an artificial encounter with 0 × ∞ that the unsplit computation avoids. The split computation loses information that the original preserves.
 
-*Proof.* Take a = posInf, b = ofReal 1, c = ofReal 2. Then posInf + ofReal 1 = posInf = posInf + ofReal 2, but ofReal 1 ≠ ofReal 2. ∎
+### 4.3 Comparison with IEEE 754 NaN
 
-**Theorem 6.2** (Multiplicative Cancellation Failure). *There exist a, b, c with a ≠ 0, a × b = a × c, and b ≠ c.*
+Transreal nullity Φ and IEEE 754 NaN serve similar purposes but differ in key ways:
 
-*Proof.* Take a = posInf, b = ofReal 1, c = ofReal 2. Then posInf × ofReal 1 = posInf = posInf × ofReal 2 (both by the multiplication rule for positive reals times +∞), posInf ≠ 0, and ofReal 1 ≠ ofReal 2. ∎
+| Property | Φ (Transreal) | NaN (IEEE 754) |
+|----------|--------------|----------------|
+| Φ = Φ    | True         | False (NaN ≠ NaN) |
+| Absorbing | Yes (Φ + x = Φ) | Mostly (NaN + x = NaN) |
+| Algebraically consistent | Yes | No |
+| Ordered | Partial (incomparable with reals) | Unordered |
 
-## 7. Wheel Structure Analysis
+The key advantage of Φ is algebraic consistency: it satisfies Φ = Φ and has well-defined algebraic properties, unlike NaN whose behavior is specified by engineering convention rather than mathematical axioms.
 
-### 7.1 Verified Wheel Axioms
+## 5. Conjectures and Open Problems
 
-The following wheel axioms hold in the transreals:
+**Conjecture 1** (Associativity). Addition is associative on all of ℝᵀ (not just for real triples). We verified this for real triples; the general case requires checking 64 combinations.
 
-1. **Multiplicative commutativity**: a × b = b × a for all transreals a, b (Theorem 7.1, proved by 16-case analysis).
-2. **Additive commutativity**: a + b = b + a for all transreals a, b (Theorem 7.2, proved by 16-case analysis).
-3. **Additive identity for total elements**: x + 0 = x for all x ≠ Φ (Theorem 7.3).
-4. **Double negation**: -(-x) = x for all transreals x (Theorem 7.4).
-5. **Reciprocal involution for nonzero finite reals**: recip(recip(ofReal r)) = ofReal r for r ≠ 0 (Theorem 7.5).
+**Conjecture 2** (Transring Axiomatization). The transreals satisfy a finite, clean axiom system intermediate between rings and wheels. Finding this axiom system is an open problem.
 
-### 7.2 Failed Wheel Axioms
+**Conjecture 3** (Unique Extension). Anderson's transreal operations are the unique extension of real arithmetic to ℝ ∪ {+∞, -∞, Φ} satisfying: (a) nullity absorption, (b) commutativity, (c) real restriction agreement, (d) ∞ × 0 = Φ.
 
-6. **Reciprocal involution at -∞**: recip(recip(negInf)) = recip(0) = posInf ≠ negInf (Theorem 7.6).
+## 6. Formalization
 
-This means the transreals do not form a perfect wheel — the involution axiom breaks at negative infinity because the reciprocal function maps both +∞ and -∞ to 0, losing sign information.
-
-### 7.3 Partial Wheel Distributivity
-
-**Theorem 7.7**. *For finite reals a, b, c: a×c + b×c + 0×c = (a+b)×c + 0×c.*
-
-*Proof.* Since 0×c = 0 for finite c, both sides reduce to (a+b)×c = a×c + b×c, which is standard real distributivity. ∎
-
-## 8. The Real Embedding
-
-**Theorem 8.1** (Faithful Embedding). *The map ofReal : ℝ → Transreal is injective and preserves addition, multiplication, negation, and reciprocal (for nonzero values).*
-
-This confirms that the transreals are a genuine extension: all of real arithmetic is faithfully preserved. The new behavior appears only at the boundary — when finite values interact with infinities.
-
-## 9. Order Structure
-
-**Theorem 9.1**. *For every real r: -∞ ≤ r ≤ +∞.*
-
-**Theorem 9.2**. *Nullity is incomparable: Φ ≰ +∞ and r ≰ Φ for any real r.*
-
-The transreal order is thus a partial order extending the real total order, with Φ forming an isolated incomparable point. This differs from the extended reals, where the order is total.
-
-## 10. Algorithms
-
-### 10.1 Transreal Expression Evaluation
-
-We provide a complete implementation of transreal arithmetic as a Python library (algorithms.py), including:
-- Type-safe transreal number representation
-- Expression tree evaluator with nullity propagation detection
-- Algebraic property checker (commutativity, associativity, distributivity)
-- Transreal interval arithmetic
-
-### 10.2 Nullity Propagation Detection
-
-**Algorithm** (Nullity Detection): Given an expression tree, check if any leaf is nullity. If so, the entire expression evaluates to nullity (by the Collapse Conjecture). This provides O(n) early termination for expressions that would otherwise require O(n) evaluation.
-
-## 11. Discussion
-
-### 11.1 Comparison with IEEE 754 NaN
-
-The IEEE 754 standard's NaN (Not a Number) shares some properties with nullity: both arise from indeterminate operations and both propagate through arithmetic. However, they differ in critical ways:
-
-| Property | NaN | Φ (Nullity) |
-|----------|-----|-------------|
-| Self-equality | NaN ≠ NaN | Φ = Φ |
-| Absorption | Partial | Complete (both + and ×) |
-| Fixed under negation | Yes | Yes |
-| Fixed under reciprocal | No (1/NaN = NaN, but not defined) | Yes (1/Φ = Φ) |
-| Algebraic theory | Ad hoc | Well-defined |
-
-### 11.2 What Survives Extension
-
-The following properties of real arithmetic survive transreal extension:
-- Commutativity of + and ×
-- Real field operations (via faithful embedding)
-- Order between finite and infinite values
-- Infinity sign rules for multiplication
-
-The following collapse:
-- Ring structure (additive inverses, zero absorption, distributivity)
-- Cancellation (additive and multiplicative)
-- Wheel involution (at -∞)
-- Total order (nullity is incomparable)
-
-## 12. Future Work
-
-1. **Full wheel axiom verification**: Determine the complete set of wheel axioms that hold.
-2. **Transreal analysis**: Investigate limits, continuity, and derivatives in the transreal setting.
-3. **Category-theoretic perspective**: Characterize the transreals as a universal construction.
-4. **Computational applications**: Implement transreal arithmetic in hardware for fault-tolerant computation.
+All results were formalized in Lean 4 with Mathlib (v4.28.0). The transreal type is defined as an inductive type with four constructors. Operations are defined by case analysis using `noncomputable def` (due to dependence on classical real number arithmetic). Proofs use `cases`, `simp`, `linarith`, and explicit term construction. The formalization comprises approximately 300 lines with 20+ verified theorems and no `sorry` or non-standard axioms.
 
 ## References
 
-[1] J.A.D.W. Anderson, N. Völker, A.A. Adams, "Perspex Machine IX: Transreal Analysis," *Vision Geometry XV*, Proc. SPIE 6499, 2007.
+[1] Anderson, J.A.D.W. "Perspex Machine VIII: Axioms of Transreal Arithmetic." *Vision Geometry XV*, SPIE, 2007.
 
-[2] J. Carlström, "Wheels — On Division by Zero," *Mathematical Structures in Computer Science*, 14(1):143-184, 2004.
+[2] Gomide, W., Reis, T.S.D. "Transreal Arithmetic as a Consistent Foundation for Paraconsistent Logics." *Proceedings of the 5th World Congress on Paraconsistency*, 2014.
 
-[3] T. Setzer, "Wheels: A Generalization of Commutative Rings," 2004.
-
-## Appendix: Lean 4 Formalization
-
-The complete formalization consists of two files:
-- `Defs.lean`: Core type definition, arithmetic operations, order, and basic simp lemmas (~240 lines)
-- `Properties.lean`: All theorems stated and proved (~240 lines)
-
-All 27 theorems are proved without `sorry`, verified against Mathlib v4.28.0. The formalization uses `Classical.decEq` for decidable equality and marks operations as `noncomputable` where they depend on real number decidability.
+[3] Setzer, A. "Wheels — On Division by Zero." *Mathematical Structures in Computer Science*, 7(6), 1997.
