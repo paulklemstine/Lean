@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2438 of the highest-quality
+A curated collection of 2443 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2438
+Total files: 2443
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -40,6 +40,7 @@ import FINAL.Algebra.ChainFactoring
 import FINAL.Algebra.Channel5Sedenions
 import FINAL.Algebra.Channel6Research
 import FINAL.Algebra.CharpolyRecognition
+import FINAL.Algebra.ChebTrace
 import FINAL.Algebra.ChimeraFactoring
 import FINAL.Algebra.CircuitDepthLayerProfile
 import FINAL.Algebra.ClosedFormAncestor
@@ -164,10 +165,12 @@ import FINAL.Algebra.LocalObstruction
 import FINAL.Algebra.Lorentz
 import FINAL.Algebra.Los
 import FINAL.Algebra.MDSUncertainty
+import FINAL.Algebra.MarkovSurface
 import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
 import FINAL.Algebra.MatrixGroupGeneration
+import FINAL.Algebra.MatrixTrace
 import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOracleNextSteps
 import FINAL.Algebra.MetaOraclePythagoreanDeep
@@ -1137,6 +1140,7 @@ import FINAL.Cryptography.Divisibility
 import FINAL.Cryptography.Dynamics
 import FINAL.Cryptography.FOTransform
 import FINAL.Cryptography.FactorQuadruples
+import FINAL.Cryptography.FermiPigeonhole
 import FINAL.Cryptography.FiniteStoneClosure
 import FINAL.Cryptography.Foundation
 import FINAL.Cryptography.Freeness
@@ -1347,6 +1351,7 @@ import FINAL.Geometry.HadwigerConjecture
 import FINAL.Geometry.HamiltonianBridge
 import FINAL.Geometry.HappyEnd
 import FINAL.Geometry.HorseshoeComputation
+import FINAL.Geometry.HyperplaneArrangement
 import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
