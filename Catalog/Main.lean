@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2446 of the highest-quality
+A curated collection of 2450 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2446
+Total files: 2450
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1407,6 +1407,7 @@ import FINAL.Logic.Core
 import FINAL.Logic.DarkMathematics
 import FINAL.Logic.DependencyExtraction
 import FINAL.Logic.DimensionalProjection
+import FINAL.Logic.DreamSpace
 import FINAL.Logic.DynamicalProofComplexity
 import FINAL.Logic.EMLSyntax
 import FINAL.Logic.EntanglementDifficulty
@@ -1625,6 +1626,7 @@ import FINAL.MachineLearning.NucleusDefect
 import FINAL.MachineLearning.ObstructionFramework
 import FINAL.MachineLearning.OrbitShadowing
 import FINAL.MachineLearning.OrbitShadowingDeep
+import FINAL.MachineLearning.OrderGap
 import FINAL.MachineLearning.OrdinalResearchGovernance
 import FINAL.MachineLearning.PadicChipFiring
 import FINAL.MachineLearning.PadicCramerRao
@@ -2261,6 +2263,7 @@ import FINAL.Tropical.GL3SatakeFiniteGen
 import FINAL.Tropical.GL3SatakeMixedLeviSeparation
 import FINAL.Tropical.GL3TropicalSatake
 import FINAL.Tropical.GL3_ReconstructionFromRank2LeviProfiles
+import FINAL.Tropical.GapAutomatonSpectral
 import FINAL.Tropical.GaugeInvariance
 import FINAL.Tropical.GumbelFoundations
 import FINAL.Tropical.HardnessAmplification
@@ -2444,6 +2447,7 @@ import FINAL.Tropical.V13Research
 import FINAL.Tropical.V7Theorems
 import FINAL.Tropical.ValuationProfileUniversality
 import FINAL.Tropical.VoiceLeading
+import FINAL.Tropical.WallpaperRhythm
 import FINAL.Tropical.Wasserstein
 import FINAL.Tropical.WeightedBPSimulation
 import FINAL.Tropical.WeightedTraceSemantics

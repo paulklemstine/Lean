@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ac271f1e",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
     "pkg_num": 285,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7080605882352942,
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
@@ -9188,8 +9188,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7080605882352942,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
