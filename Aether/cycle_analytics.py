@@ -123,12 +123,17 @@ class CycleAnalytics:
             except (TypeError, ValueError):
                 pass
 
-        # Domain from concept
+        # Domain from concept (handle both ResearchConcept object and dict)
         concept = getattr(job, "concept", None)
         if concept:
-            domains = getattr(concept, "domains", [])
-            record.domain = domains[0] if domains else ""
-            record.title = getattr(concept, "title", "")[:100]
+            if isinstance(concept, dict):
+                domains = concept.get("domains", [])
+                record.domain = domains[0] if domains else ""
+                record.title = concept.get("title", "")[:100]
+            else:
+                domains = getattr(concept, "domains", [])
+                record.domain = domains[0] if domains else ""
+                record.title = getattr(concept, "title", "")[:100]
 
         # Quality breakdown from quality_detail
         qd = getattr(job, "quality_detail", None)
