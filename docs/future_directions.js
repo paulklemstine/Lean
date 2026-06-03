@@ -78,7 +78,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2b61ad9",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -88,7 +88,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.493320+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -453,7 +453,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a423f34a",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domains": [
       "Novelty",
@@ -463,7 +463,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
@@ -918,7 +918,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef8966b1",
     "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
     "domains": [
       "Novelty",
@@ -928,7 +928,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.006174+00:00",
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
@@ -2492,7 +2492,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "562e1aed",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -2502,12 +2502,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9037b6a3",
     "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
     "domains": [
       "Tropical",
@@ -2517,12 +2517,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.304139+00:00",
     "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dddc94e",
     "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
     "domains": [
       "Computation",
@@ -2532,12 +2532,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.381522+00:00",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b5e46a1b",
     "description": "# Future Directions: Tropical Convexity and Helly Theory\n\n## Synthesis\n\nThis research cycle established the foundational formal theory of tropical convexity in \u211d\u207f, including the structural theory (intersection closure, halfspace convexity, segment characterization, convex hull idempotency), Helly's theorem for intervals, and the non-negative cycle condition for difference constraints. The key cross-domain connection is between tropical geometry and shortest-path optimization: the feasibility of systems of difference constraints \u2014 a problem arising in scheduling, circuit timing, and network routing \u2014 is precisely a tropical Helly problem about the intersection of tropical halfspaces.\n\nThe most promising cross-domain bridge connects tropical convexity to max-plus linear algebra and mean payoff games (via Akian-Gaubert-Guterman). The tropical eigenvector problem \u2014 finding x such that A \u2299 x = \u03bb \u2299 x in the max-plus semiring \u2014 is equivalent to finding a point in the intersection of tropical halfspaces defined by the matrix entries. This means our Helly-type results have direct implications for the solvability of max-plus spectral problems, which in turn connect to game theory and automata theory.\n\nThe highest breakthrough potential lies in Direction 1 (proving the tropical Helly theorem for d \u2265 2), as it would complete a major open problem in tropical combinatorics. Direction 3 (max-plus eigenvalues) has the strongest cross-domain potential, connecting tropical convexity to dynamical systems and game theory.\n\n---\n\n### Direction 1: Tropical Helly Theorem in Higher Dimensions\n\n**Conjecture**: For tropically convex subsets of tropical projective space TP^d = \u211d^{d+1}/\u211d\u00b7\ud835\udfcf, the Helly number is exactly 2d. That is, a finite family of tropically convex sets has non-empty intersection if every subfamily of size \u2264 2d does.\n\n**Test**: For d = 2 (sets in \u211d\u00b3 modulo diagonal), construct 5 tropically convex sets where every 4 intersect but all 5 do not. If this construction exists, the Helly number exceeds 4, refuting the conjecture. Alternatively, prove the d = 2 case directly by reducing to a system of tropical halfspaces and applying the structure theory.\n\n**Impact**: This would resolve a central open question in tropical combinatorics. The classical Helly number n+1 doubles in the tropical setting because tropical halfspaces have two \"sides\" (involving both coordinates i and j), effectively doubling the combinatorial complexity. A proof would validate the intuition that tropical geometry is \"twice as complex\" as classical geometry.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (our Helly for intervals theorem, halfspace convexity)\n\n**Proof Strategy**: \n1. Formalize tropical projective space TP^d as equivalence classes in \u211d^{d+1} under translation by \ud835\udfcf = (1,...,1).\n2. Show that tropically convex sets in TP^d correspond to tropically convex cones in \u211d^{d+1} invariant under the diagonal.\n3. Reduce to a system of difference constraints involving 2d indices.\n4. Apply the non-negative cycle condition from our three_var_cycle_condition to bound the Helly number.\n5. For the lower bound (sharpness), construct 2d+1 tropical halfspaces in TP^d where every 2d intersect but all 2d+1 do not.\n\n**Domain Bridges**: Tropical Geometry <-> Combinatorial Optimization (Bellman-Ford), Tropical Geometry <-> Game Theory (mean payoff games)\n\n**Lineage**: Builds on `helly_intervals_iff`, `three_var_cycle_condition`, `tropHalfspace_inter_nonempty` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: General n-Variable Cycle Condition and Bellman-Ford Verification\n\n**Conjecture**: A system of n difference constraints x_{\u03c3(i)} - x_{\u03c3(i+1 mod n)} \u2264 c_i (forming a single cycle on n variables) has a solution if and only if \u2211\u1d62 c\u1d62 \u2265 0. More generally, a system of arbitrary difference constraints has a solution if and only if every directed cycle in the constraint graph has non-negative total weight.\n\n**Test**: Formalize the general n-variable cycle condition using Fin n arithmetic with wraparound. Verify that the shortest-path assignment x_k = -(sum of first k constraint weights) satisfies all constraints when the cycle condition holds. Then formalize the full Bellman-Ford theorem: a system of difference constraints {x_i - x_j \u2264 c_{ij}} indexed by edges of a directed graph has a solution iff no directed cycle has negative total weight.\n\n**Impact**: This would provide a complete formalized treatment of the Bellman-Ford algorithm's correctness, connecting graph algorithms to tropical geometry. It would also give a formal proof that shortest-path problems are tropical linear programs.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (three_var_cycle_condition, shortest_path_solution)\n\n**Proof Strategy**:\n1. Define a weighted directed graph as a function on edges `E \u2192 \u211d` with source/target maps.\n2. Define directed cycles as sequences of edges forming a closed walk.\n3. State the Bellman-Ford theorem: feasibility \u2194 no negative cycles.\n4. Forward direction: for any cycle, summing the constraints gives 0 \u2264 cycle weight.\n5. Backward direction: define d(v) = shortest path weight from source. Show d(i) - d(j) \u2264 c_{ij} for all edges. Use the fact that shortest paths exist when no negative cycles exist (triangle inequality for shortest paths).\n\n**Domain Bridges**: Tropical Convexity <-> Graph Algorithms (Bellman-Ford), Tropical Convexity <-> Scheduling Theory (critical path method)\n\n**Lineage**: Extends `two_var_diff_constraint` and `three_var_cycle_condition` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Max-Plus Eigenvalues and Tropical Convexity\n\n**Conjecture**: The max-plus eigenvalue problem (finding \u03bb \u2208 \u211d and x \u2208 \u211d\u207f such that max_j(a_{ij} + x_j) = \u03bb + x_i for all i) is equivalent to finding a point in the intersection of n tropical halfspaces in \u211d\u207f, after subtracting \u03bb from the diagonal. Specifically, the max-plus eigenvalue \u03bb* equals the maximum cycle mean of the matrix A: \u03bb* = max over directed cycles C of (weight(C) / length(C)).\n\n**Test**: For a 3\u00d73 matrix A, compute the max-plus eigenvalue as the maximum of (a_{12}+a_{21})/2, (a_{13}+a_{31})/2, (a_{23}+a_{32})/2, (a_{12}+a_{23}+a_{31})/3, (a_{13}+a_{32}+a_{21})/3, and the diagonal entries a_{11}, a_{22}, a_{33}. Verify that the corresponding eigenvector satisfies the tropical halfspace conditions.\n\n**Impact**: This would bridge tropical convexity with max-plus linear algebra, connecting our Helly theory to control theory (max-plus systems model discrete event systems like manufacturing lines and traffic networks). It would also connect to mean payoff games, where the game value equals the max-plus eigenvalue.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropHalfspace_isTropConvex, tropHalfspace_inter_nonempty)\n\n**Proof Strategy**:\n1. Define max-plus matrix-vector multiplication: (A \u2299 x)_i = max_j(a_{ij} + x_j).\n2. Define the max-plus eigenvalue problem: A \u2299 x = \u03bb + x (coordinatewise).\n3. Rewrite as difference constraints: max_j(a_{ij} + x_j) - x_i = \u03bb, which gives a_{ij} + x_j - x_i \u2264 \u03bb for all i,j with equality for some j.\n4. Apply the cycle condition: \u03bb must satisfy cycle_weight \u2264 n\u00b7\u03bb for all n-cycles, giving \u03bb \u2265 max cycle mean.\n5. Show the maximum cycle mean is achievable using the critical graph.\n\n**Domain Bridges**: Tropical Geometry <-> Control Theory (discrete event systems), Tropical Geometry <-> Game Theory (mean payoff games), Tropical Convexity <-> Spectral Theory\n\n**Lineage**: Extends `tropHalfspace_inter_nonempty` and `three_var_cycle_condition` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Tropical Caratheodory Theorem\n\n**Conjecture**: Every point in the tropical convex hull of a set S \u2286 \u211d\u207f can be written as a tropical linear combination of at most n+1 points of S. That is, tconv(S) = \u222a{tconv(T) : T \u2286 S, |T| \u2264 n+1}. (This is the tropical analogue of Carath\u00e9odory's theorem.)\n\n**Test**: For n = 2, verify computationally that every point in the tropical convex hull of m > 3 points in \u211d\u00b2 can be expressed as a tropical combination of at most 3 of them. Formalize for n = 1 (every point in tconv(S) \u2286 \u211d is a tropical combination of at most 2 points).\n\n**Impact**: Carath\u00e9odory's theorem is foundational for computational convex geometry. The tropical analogue would enable efficient algorithms for tropical linear programming and polytope membership testing.\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropConvHull, tropSegment_subset_of_mem, isTropConvex_iff_segments)\n\n**Proof Strategy**:\n1. Define finite tropical linear combinations: z_i = max_k(\u03bb_k + p_k,i) for generators p_1,...,p_m.\n2. Show that if z uses m > n+1 generators, two of them can be merged (one is redundant).\n3. The key lemma: if max(a + p, b + q, c + r) can be simplified when p, q, r satisfy a linear dependency in the tropical sense (one is in the tropical convex hull of the other two).\n4. Apply induction on the number of generators.\n\n**Domain Bridges**: Tropical Convexity <-> Computational Geometry (Carath\u00e9odory bounds), Tropical Polytopes <-> Linear Programming\n\n**Lineage**: Extends `tropConvHull_idempotent`, `isTropConvex_iff_segments` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Tropical Convexity in Neural Networks\n\n**Conjecture**: The decision regions of ReLU neural networks with max-pooling layers are tropically convex sets. Specifically, for a network computing f(x) = max(W\u2081x + b\u2081, W\u2082x + b\u2082) (a single max-pooling layer), the sublevel set {x : f(x) \u2264 c} is an intersection of tropical halfspaces.\n\n**Test**: For a 2-input, 2-output max-pooling layer, enumerate the regions of the input space where different \"max branches\" are active. Verify that each region is a polyhedron defined by difference constraints on the inputs.\n\n**Impact**: This would connect tropical convexity to deep learning theory, potentially explaining why max-pooling architectures have good optimization landscapes (their decision regions have Helly-type intersection properties).\n\n**Catalog References**: `Tropical/TropicalConvexHelly.lean` (tropHalfspace_isTropConvex, isTropConvex_sInter)\n\n**Proof Strategy**:\n1. Model a max-pooling layer as a tropical polynomial: f(x)_i = max_j(w_{ij} \u00b7 x + b_{ij}).\n2. Show that {x : f(x)_i \u2264 c} = \u2229_j {x : w_{ij} \u00b7 x + b_{ij} \u2264 c}, an intersection of classical halfspaces.\n3. For the tropical convexity of decision regions, show that {x : argmax_j f(x)_j = k} is a tropical polyhedron.\n4. Use our structural theory to derive Helly-type bounds on the number of constraints needed.\n\n**Domain Bridges**: Tropical Geometry <-> Machine Learning (ReLU/max-pooling networks), Tropical Helly <-> Neural Network Optimization\n\n**Lineage**: New direction inspired by the connection between max operations and tropical algebra.\n\n**Ambition**: extension\n",
     "domains": [
       "Computation",
@@ -2547,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "2d96e4e9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:19.190844+00:00",
     "title": "Foundational formal theory of tropical conve"
   },
@@ -2702,7 +2702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f5d3755",
     "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
     "domains": [
       "Physics",
@@ -2712,7 +2712,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.97,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.231496+00:00",
     "title": "Quantum Error Correction Bounds"
   },
@@ -3137,7 +3137,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f064f65f",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
@@ -3147,7 +3147,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },
@@ -3436,7 +3436,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
-    "consumed_by_exp_id": "e6f6fb5e",
+    "consumed_by_exp_id": "",
     "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A \u2245 B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
     "domains": [
       "Bridges",
@@ -3446,7 +3446,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.204779+00:00",
     "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
   },
@@ -3496,7 +3496,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Single Operator Church-Turing Thesis"
   },
   {
-    "consumed_by_exp_id": "0edfd7d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Gentry fully homomorphic encryption scheme. Prove that the bootstrapping theorem allows unlimited computation on ciphertexts. Construct a circuit for addition and multiplication under the BGV scheme and verify correctness.",
     "domains": [
       "Cryptography",
@@ -3506,7 +3506,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.910658+00:00",
     "title": "Homomorphic Encryption: Computing on Encrypted Data"
   },
@@ -3796,7 +3796,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Game of Life Universality"
   },
   {
-    "consumed_by_exp_id": "0734a5d4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the rules of species counterpoint as a constraint satisfaction problem. Prove that optimal voice leading minimizes a well-defined cost function and connect to lattice theory.",
     "domains": [
       "Bridges",
@@ -3806,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.100112+00:00",
     "title": "Musical Counterpoint as Constraint Satisfaction"
   }
