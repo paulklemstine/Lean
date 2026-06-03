@@ -1,277 +1,246 @@
-# Cellular Automata as Algebraic Varieties over GF(2): Fixed-Point Dimension and the Polynomial Degree Hierarchy
+# Cellular Automata as Algebraic Geometry over GF(2): Fixed-Point Varieties and the Degree-Complexity Bridge
 
 ## Abstract
 
-We develop a rigorous algebraic-geometric framework for elementary cellular automata (ECAs) by viewing them as polynomial maps over the Galois field GF(2). Each of the 256 ECA rules defines a local update function that can be uniquely expressed as a Zhegalkin (multilinear) polynomial of degree at most 3. The global update on GF(2)^n with cyclic boundary conditions defines a polynomial endomorphism whose fixed-point set is an algebraic variety. We prove that for additive (linear) rules, this variety is a GF(2)-vector subspace, establishing that the fixed-point count is always a power of 2. We establish a complement duality theorem relating the fixed-point varieties of complementary rules via an explicit bijection. We characterize the fixed points of Rule 150 (XOR) in terms of alternating-index constraints. All results are formalized and machine-verified in the Lean 4 theorem prover with the Mathlib library.
+We formalize elementary cellular automata (ECAs) as polynomial dynamical systems over the field GF(2) and study the algebraic geometry of their fixed-point varieties. Each of the 256 ECA rules defines a local polynomial map g : GF(2)³ → GF(2) via the Algebraic Normal Form (ANF), which extends to a global polynomial map f : GF(2)^n → GF(2)^n on cyclic states of length n. We prove three main results: (1) every ECA rule has a unique ANF representation, computed by Möbius inversion; (2) for additive (degree ≤ 1) rules, the fixed-point variety V(f - id) forms a GF(2)-submodule of the state space; (3) Rule 110, the Turing-complete rule, has maximal ANF degree 3 while its nonlinearity prevents subspace structure. We computationally falsify the conjecture that fixed-point variety dimension correlates with Wolfram's complexity classification. All results are machine-verified in Lean 4 with Mathlib.
 
-**Keywords**: Elementary cellular automata, algebraic geometry over finite fields, GF(2), Zhegalkin polynomial, fixed-point variety, polynomial endomorphism, formal verification.
-
----
+**Keywords**: Elementary cellular automata, algebraic normal form, GF(2), fixed-point varieties, polynomial dynamical systems, formal verification
 
 ## 1. Introduction
 
-Elementary cellular automata (ECAs), introduced and systematically studied by Wolfram [1], are among the simplest discrete dynamical systems exhibiting complex behavior. An ECA consists of a one-dimensional array of binary cells updated synchronously according to a local rule that depends on each cell and its two neighbors. The 256 possible rules range from trivially simple (Rule 0: all cells become 0) to Turing-complete (Rule 110, proved by Cook [2]).
+Elementary cellular automata (ECAs) are the 256 rules governing binary one-dimensional cellular automata with nearest-neighbor interactions. Despite their simplicity, they exhibit the full spectrum of dynamical behavior, from trivial convergence (Rule 0) to Turing completeness (Rule 110, proved by Cook [1]).
 
-While ECAs have been extensively studied from computational, dynamical, and statistical perspectives, their algebraic structure over GF(2) has received less attention. In this paper, we develop this algebraic perspective systematically.
+Wolfram [2] classified ECAs into four complexity classes:
+- **Class 1**: Evolution to a homogeneous state
+- **Class 2**: Evolution to periodic structures
+- **Class 3**: Chaotic, apparently random behavior
+- **Class 4**: Complex localized structures; edge of chaos
 
-**Our contributions:**
+The algebraic perspective reinterprets each ECA rule as a polynomial map over the two-element field GF(2) = Z/2Z. Since every Boolean function has a unique multilinear polynomial representation (the Algebraic Normal Form), this reinterpretation is canonical. The polynomial structure opens the door to tools from algebraic geometry: varieties, dimensions, sheaves, and schemes.
 
-1. **Zhegalkin representation theorem**: We prove that every ECA local rule has a unique representation as a multilinear polynomial over GF(2) of degree ≤ 3, and construct the representation explicitly via Möbius inversion (Theorem 3.1).
+### 1.1 Main Results
 
-2. **Linear subspace theorem**: We prove that for additive (GF(2)-linear) local rules, the fixed-point set of the global update is a vector subspace of GF(2)^n, implying that the fixed-point count is always 2^k for some k ≥ 0 (Theorems 4.1–4.3).
+We establish the following, all formally verified in Lean 4:
 
-3. **Complement duality theorem**: We establish a bijection between the fixed-point varieties of a rule and its complement, showing that complementary rules have isomorphic fixed-point structures (Theorem 5.1).
+**Theorem A** (ANF Uniqueness). *Every function g : GF(2)³ → GF(2) has a unique representation as a multilinear polynomial of degree ≤ 3. The coefficients are recovered by Möbius inversion on the Boolean lattice.*
 
-4. **Rule 150 characterization**: We give a complete characterization of fixed points of the XOR rule in terms of alternating-index equality constraints (Theorem 6.1).
+**Theorem B** (Submodule Structure). *If an ECA rule has ANF degree ≤ 1 (additive rule), then for any cycle length n, the fixed-point set {s ∈ GF(2)^n : f(s) = s} is a GF(2)-submodule of GF(2)^n.*
 
-5. **Formal verification**: All theorems are machine-verified in Lean 4 with the Mathlib library, providing the highest standard of mathematical certainty.
+**Theorem C** (Degree-Linearity Bridge). *Every additive ECA rule has ANF degree ≤ 1. Rule 110 has ANF degree exactly 3 and is not additive.*
 
-## 2. Preliminaries
+**Negative Result**. *The dimension of the fixed-point variety does not correlate with Wolfram's complexity classification. Rule 110 (Class 4, Turing-complete) has a single fixed point (dimension 0), while Rule 204 (Class 2, identity) has 2^n fixed points (dimension n).*
 
-### 2.1 The field GF(2)
+## 2. Definitions
 
-Let GF(2) = {0, 1} denote the field with two elements, where addition is XOR and multiplication is AND. We use the notation (ZMod 2) in our formal development.
+### 2.1 The Field GF(2)
 
-**Key properties**: char(GF(2)) = 2, so -x = x and 2x = 0 for all x ∈ GF(2).
+We work over GF(2) = {0, 1} with addition mod 2 and multiplication mod 2. Key properties:
+- **Idempotence**: a² = a for all a ∈ GF(2) (Theorem `zmod2_idempotent`)
+- **Characteristic 2**: a + a = 0 for all a ∈ GF(2) (Theorem `zmod2_self_add`)
 
-### 2.2 Elementary Cellular Automata
+These properties ensure that every polynomial over GF(2) is equivalent to a multilinear polynomial (no squared or higher terms needed).
 
-**Definition 2.1** (Local Rule). A *local rule* is a function g : GF(2)³ → GF(2).
+### 2.2 ECA Local Rules
 
-**Definition 2.2** (State Space). For n ≥ 1, the *state space* is GF(2)^n, the n-dimensional vector space over GF(2). A *state* is a function s : Fin(n) → GF(2).
+An ECA local rule is a function g : GF(2)³ → GF(2). There are 2⁸ = 256 such functions, indexed by Wolfram's rule numbering convention:
 
-**Definition 2.3** (Cyclic Update). Given a local rule g and n ≥ 1, the *global update* f_g : GF(2)^n → GF(2)^n is defined by:
+```
+Rule r ↦ g_r(a, b, c) where g_r at input (a,b,c) is bit (4a + 2b + c) of r
+```
 
-  f_g(s)_i = g(s_{i-1 mod n}, s_i, s_{i+1 mod n})
+### 2.3 Algebraic Normal Form
 
-**Definition 2.4** (Fixed-Point Variety). The *fixed-point variety* of g on n cells is:
+**Definition** (ANF Coefficients). An ANF representation consists of 8 coefficients (c₀, c₁, ..., c₇) ∈ GF(2)⁸ encoding:
 
-  Fix(g, n) = { s ∈ GF(2)^n : f_g(s) = s }
+g(a,b,c) = c₀ + c₁a + c₂b + c₃c + c₄ab + c₅ac + c₆bc + c₇abc
 
-### 2.3 Rule Numbering
+**Definition** (ANF Degree). The degree of an ANF is:
+- 3 if c₇ ≠ 0
+- 2 if c₇ = 0 and some c₄, c₅, c₆ ≠ 0
+- 1 if only linear terms are nonzero
+- 0 if only the constant term is nonzero (or all zero)
 
-Each local rule g is identified with a rule number r ∈ {0, ..., 255} via:
+**Definition** (Möbius Inversion). The ANF coefficients are extracted from the truth table by:
 
-  r = Σ_{(a,b,c) ∈ {0,1}³} g(a,b,c) · 2^{4a+2b+c}
+c₀ = g(0,0,0)
+c₁ = g(1,0,0) + g(0,0,0)
+c₂ = g(0,1,0) + g(0,0,0)
+⋮
+c₇ = g(1,1,1) + g(1,1,0) + g(1,0,1) + g(0,1,1) + g(1,0,0) + g(0,1,0) + g(0,0,1) + g(0,0,0)
 
-### 2.4 Additivity
+This is Möbius inversion on the Boolean lattice {0,1}³ ordered by componentwise ≤.
 
-**Definition 2.5** (Additive Rule). A local rule g is *additive* if for all inputs:
+### 2.4 ECA State Space
 
-  g(a₁+a₂, b₁+b₂, c₁+c₂) = g(a₁,b₁,c₁) + g(a₂,b₂,c₂)
+For cycle length n ≥ 1, the state space is GF(2)^n = Fin(n) → GF(2), the space of functions from {0, 1, ..., n-1} to GF(2). This has the structure of an n-dimensional vector space over GF(2).
 
-An additive rule is a GF(2)-linear map from GF(2)³ to GF(2).
+### 2.5 Global Update
 
-## 3. Zhegalkin Polynomial Representation
+Given local rule g and state s, the global update f(s) is defined by:
 
-### 3.1 Statement and Proof
+f(s)ᵢ = g(s_{(i-1) mod n}, sᵢ, s_{(i+1) mod n})
 
-**Theorem 3.1** (Zhegalkin Representation). Every local rule g : GF(2)³ → GF(2) can be uniquely written as:
+### 2.6 Fixed Points and Varieties
 
-  g(a,b,c) = e₀ + e₁a + e₂b + e₃c + e₄ab + e₅ac + e₆bc + e₇abc
+A state s is a **fixed point** if f(s) = s. The set V(f - id) = {s : f(s) = s} is the **fixed-point variety** of the ECA.
 
-where e₀, ..., e₇ ∈ GF(2). The coefficients are given by Möbius inversion:
+### 2.7 Additive Rules
 
-  e₀ = g(0,0,0)
-  e₁ = g(1,0,0) + g(0,0,0)
-  e₂ = g(0,1,0) + g(0,0,0)
-  e₃ = g(0,0,1) + g(0,0,0)
-  e₄ = g(1,1,0) + g(1,0,0) + g(0,1,0) + g(0,0,0)
-  ...etc.
+A rule g is **additive** if there exist α, β, γ ∈ GF(2) such that g(a,b,c) = αa + βb + γc for all a, b, c.
 
-*Proof sketch.* The existence follows from constructing the coefficients via Möbius inversion over the Boolean lattice. Faithfulness (the polynomial agrees with g on all 8 inputs) is verified by exhaustive computation over all 2^8 × 2^3 = 2048 input-rule pairs. In our formal development, this is proved by `native_decide` after reverting all universally quantified variables. ∎
+## 3. Main Theorems
 
-### 3.2 The Polynomial Degree Hierarchy
+### 3.1 ANF Correctness and Uniqueness (Theorem A)
 
-The *degree* of a rule is the degree of its Zhegalkin polynomial.
+**Theorem** (`anf_eval_correct`). *For every local rule g, the ANF computed by Möbius inversion satisfies (anfFromRule g).eval a b c = g a b c for all inputs.*
 
-| Degree | Count | Examples | Properties |
-|--------|-------|----------|------------|
-| 0 | 2 | Rules 0, 255 | Constant output |
-| 1 | 14 | Rules 90, 150, 204 | Linear/affine; fully tractable |
-| 2 | 84 | Rules 30, 110 | Quadratic; Turing-completeness possible |
-| 3 | 156 | Rules 54, 73 | Maximum nonlinearity |
+**Proof sketch.** By exhaustive evaluation at all 8 inputs. The Möbius inversion formula is designed so that when the polynomial is evaluated, the inclusion-exclusion yields the original truth table value. □
 
-### 3.3 Notable Polynomials
+**Theorem** (`anf_unique`). *If two ANF coefficient sets evaluate to the same function on all inputs, they are identical.*
 
-- **Rule 0**: g(a,b,c) = 0 (degree 0)
-- **Rule 90**: g(a,b,c) = a + c (degree 1, linear)
-- **Rule 110**: g(a,b,c) = b + c + bc (degree 2)
-- **Rule 150**: g(a,b,c) = a + b + c (degree 1, linear)
-- **Rule 204**: g(a,b,c) = b (degree 1, the identity projection)
-- **Rule 30**: g(a,b,c) = a + b + c + ab (degree 2)
+**Proof sketch.** Evaluate both at all 8 inputs. The system c₁.eval(x) = c₂.eval(x) for x ∈ {0,1}³ yields 8 linear equations that uniquely determine each coefficient. □
 
-## 4. The Linear Subspace Theorem
+Together, these establish a canonical bijection between ECA rules and ANF coefficients.
 
-### 4.1 Main Results
+### 3.2 Submodule Structure (Theorem B)
 
-**Theorem 4.1** (Zero Fixed Point). If g is additive, then 0 ∈ Fix(g, n) for all n ≥ 1.
+**Theorem** (`ECAFixedSubmodule`). *For any additive rule g with IsAdditiveRule g, the set {s : IsFixedPoint hn g s} is a Submodule (ZMod 2) (ECAState n).*
 
-*Proof.* By additivity, g(0+0, 0+0, 0+0) = g(0,0,0) + g(0,0,0). Since char(GF(2)) = 2, this gives g(0,0,0) = 0. Therefore f_g(0)_i = g(0,0,0) = 0 = 0_i for all i. ∎
+This is proved by establishing three closure properties:
 
-**Theorem 4.2** (Addition Closure). If g is additive and s, t ∈ Fix(g, n), then s + t ∈ Fix(g, n).
+**Lemma** (`additive_rule_zero_fixed`). *0 is a fixed point of every additive rule.*
 
-*Proof.* For any index i:
+*Proof.* g(0, 0, 0) = α·0 + β·0 + γ·0 = 0. □
 
-  f_g(s+t)_i = g((s+t)_{i-1}, (s+t)_i, (s+t)_{i+1})
-             = g(s_{i-1}+t_{i-1}, s_i+t_i, s_{i+1}+t_{i+1})
-             = g(s_{i-1},s_i,s_{i+1}) + g(t_{i-1},t_i,t_{i+1})     [additivity]
-             = f_g(s)_i + f_g(t)_i
-             = s_i + t_i = (s+t)_i                                   [fixed-point property]
+**Lemma** (`additive_rule_fixed_closed_add`). *If s, t are fixed points of an additive rule, then s + t is a fixed point.*
 
-Therefore f_g(s+t) = s+t. ∎
+*Proof.* For additive g:
+f(s + t)ᵢ = g((s+t)_{i-1}, (s+t)ᵢ, (s+t)_{i+1})
+= α(s_{i-1} + t_{i-1}) + β(sᵢ + tᵢ) + γ(s_{i+1} + t_{i+1})
+= (αs_{i-1} + βsᵢ + γs_{i+1}) + (αt_{i-1} + βtᵢ + γt_{i+1})
+= f(s)ᵢ + f(t)ᵢ = sᵢ + tᵢ = (s + t)ᵢ. □
 
-**Theorem 4.3** (Negation Closure). If g is additive and s ∈ Fix(g, n), then -s ∈ Fix(g, n).
+**Lemma** (`additive_rule_fixed_closed_smul`). *If s is a fixed point and c ∈ GF(2), then c·s is a fixed point.*
 
-*Proof.* Over GF(2), -s = s. The result follows immediately. ∎
+*Proof.* Since GF(2) = {0, 1}, either c = 0 (and 0·s = 0 is fixed) or c = 1 (and 1·s = s is fixed by hypothesis). □
 
-**Corollary 4.4**. For additive g, Fix(g, n) is a GF(2)-vector subspace of GF(2)^n. In particular, |Fix(g, n)| = 2^k for some 0 ≤ k ≤ n.
+### 3.3 Degree Classification (Theorem C)
 
-### 4.2 The Fixed-Point Dimension
+**Theorem** (`additive_degree_le_one`). *Every additive rule has ANF degree ≤ 1.*
 
-**Definition 4.5**. The *fixed-point dimension* of g on n cells is:
+*Proof.* By case analysis on (α, β, γ) ∈ GF(2)³ (8 cases). For each, compute anfFromRule directly and verify that c₄ = c₅ = c₆ = c₇ = 0. The key algebraic fact: for g(a,b,c) = αa + βb + γc, the Möbius inversion formula cancels all degree ≥ 2 terms because in GF(2), x + x = 0. □
 
-  dim(g, n) = log₂ |Fix(g, n)|
+**Theorem** (`rule110_maximal_degree`). *Rule 110 has ANF degree 3.*
 
-For additive rules, this is always a non-negative integer equal to n - rank(M_g), where M_g is the circulant matrix of the linear system.
+*Proof.* The ANF coefficients are c₂ = c₃ = c₆ = c₇ = 1, all others 0. Since c₇ ≠ 0, the degree is 3. □
 
-### 4.3 Verification of Rule 150 Additivity
+**Theorem** (`rule110_not_additive`). *Rule 110 is not additive.*
 
-**Theorem 4.6**. Rule 150 (g(a,b,c) = a+b+c) is additive.
+*Proof.* Suppose g(a,b,c) = αa + βb + γc. From g(0,1,0) = 1: β = 1. From g(0,0,1) = 1: γ = 1. Then g(0,1,1) should be β + γ = 0. But Rule 110 gives g(0,1,1) = 1. Contradiction. □
 
-*Proof.* g(a₁+a₂, b₁+b₂, c₁+c₂) = (a₁+a₂)+(b₁+b₂)+(c₁+c₂) = (a₁+b₁+c₁)+(a₂+b₂+c₂) = g(a₁,b₁,c₁)+g(a₂,b₂,c₂). ∎
+### 3.4 Additional Results
 
-## 5. Complement Duality
+**Theorem** (`rule204_all_fixed`). *Every state is a fixed point of Rule 204 (identity).*
 
-### 5.1 Definitions
+**Theorem** (`rule0_fixed_iff_zero`). *The zero state is the unique fixed point of Rule 0.*
 
-**Definition 5.1** (Complement Rule). The *complement* of a local rule g is:
+**Theorem** (`rule0_nilpotent`). *Rule 0 is nilpotent: one iteration sends every state to zero.*
 
-  g̃(a,b,c) = 1 + g(1+a, 1+b, 1+c)
+**Theorem** (`fixed_point_iterate_invariant`). *Fixed points are invariant under all iterates of the update.*
 
-**Definition 5.2** (Complement State). The *complement* of state s is:
+**Theorem** (`rule204_fixed_submodule_eq_top`). *The fixed-point submodule of Rule 204 is the entire space ⊤.*
 
-  s̃_i = 1 + s_i
+## 4. Computational Analysis
 
-### 5.2 The Duality Theorem
+### 4.1 ANF Degree Distribution
 
-**Theorem 5.1** (Complement Duality). For any local rule g and state s:
+Among all 256 ECA rules:
+| Degree | Count | Percentage |
+|--------|-------|------------|
+| 0      | 2     | 0.8%       |
+| 1      | 14    | 5.5%       |
+| 2      | 112   | 43.8%      |
+| 3      | 128   | 50.0%      |
 
-  s ∈ Fix(g, n)  ⟺  s̃ ∈ Fix(g̃, n)
+The count at each degree follows from the binomial coefficients: there are C(k, d) monomials of degree d in k variables (k = 3 here), and each can independently be 0 or 1.
 
-*Proof.* s ∈ Fix(g, n) means g(s_{i-1}, s_i, s_{i+1}) = s_i for all i. Now s̃ ∈ Fix(g̃, n) means:
+### 4.2 Fixed-Point Counts
 
-  1 + g(1+(1+s_{i-1}), 1+(1+s_i), 1+(1+s_{i+1})) = 1 + s_i
+For cycle length n = 8:
 
-Since 1+(1+x) = x in GF(2), this simplifies to:
+| Rule | Class | Fixed Points | log₂|V| | Degree |
+|------|-------|-------------|---------|--------|
+| 0    | 1     | 1           | 0       | 0      |
+| 30   | 3     | 3           | ~1.58   | 2      |
+| 51   | 2     | 0           | ∅       | 1      |
+| 90   | 3     | 1           | 0       | 1      |
+| 110  | 4     | 1           | 0       | 3      |
+| 150  | 3     | 4           | 2       | 1      |
+| 204  | 2     | 256         | 8       | 1      |
+| 255  | 1     | 1           | 0       | 0      |
 
-  1 + g(s_{i-1}, s_i, s_{i+1}) = 1 + s_i
+### 4.3 Falsification of Dimension-Complexity Conjecture
 
-which is equivalent to g(s_{i-1}, s_i, s_{i+1}) = s_i. ∎
+The conjecture that dim V(f - id) correlates with Wolfram class is falsified:
+- Rule 110 (Class 4, Turing-complete): dim = 0 (1 fixed point)
+- Rule 204 (Class 2, identity): dim = n (2^n fixed points)
+- Rule 30 (Class 3, chaotic): |V| = 3 (not even a subspace)
 
-**Corollary 5.2**. |Fix(g, n)| = |Fix(g̃, n)| for all n.
+The identity rule is the "most geometric" but least interesting dynamically. Computational power resides in transient dynamics, not fixed-point structure.
 
-**Theorem 5.3** (Complement Involution). The complement operation on states is an involution: s̃̃ = s.
+### 4.4 Subspace Verification
 
-*Proof.* (1 + (1 + s_i)) = s_i since 1+1 = 0 in GF(2). ∎
+For all additive rules tested (Rules 90 and 150) at cycle lengths 3-12, the fixed-point count is always a power of 2 and the set is closed under componentwise XOR, confirming the submodule theorem computationally.
 
-## 6. Rule 150 Fixed-Point Characterization
+Rule 90 fixed-point dimensions for n = 3,...,12:
+[2, 0, 0, 2, 0, 0, 2, 0, 0, 2]
 
-**Theorem 6.1** (Rule 150 Fixed Points). A state s is a fixed point of Rule 150 on n cells if and only if s_{i-1} = s_{i+1} for all indices i (computed cyclically).
+This shows a periodic pattern of period 3, connected to the factorization of the polynomial x² + 1 over GF(2) (which is (x+1)², reflecting that the companion matrix has eigenvalue 1 with varying multiplicity depending on n mod 3).
 
-*Proof.* The fixed-point equation is:
+## 5. Discussion
 
-  s_{i-1} + s_i + s_{i+1} = s_i  for all i
+### 5.1 What Fixed-Point Geometry Captures
 
-Cancelling s_i from both sides: s_{i-1} + s_{i+1} = 0, hence s_{i-1} = s_{i+1}. ∎
+The fixed-point variety captures the **equilibrium structure** of the ECA, not its **computational capacity**. This distinction parallels the difference between a dynamical system's attractors and its transient complexity.
 
-**Corollary 6.2**. For even n: |Fix(Rule 150, n)| = 4 (dimension 2). The constraint s_{i-1} = s_{i+1} forces all even-indexed cells to agree and all odd-indexed cells to agree, giving two free binary choices.
+For additive rules, the submodule structure is complete and computable: the dimension equals n minus the rank of the matrix M - I over GF(2), where M is the circulant update matrix. This is a classical result in linear algebra over finite fields.
 
-**Corollary 6.3**. For odd n: |Fix(Rule 150, n)| = 2 (dimension 1). The constraint chain wraps around and forces all cells to be equal, giving one free binary choice.
+For nonlinear rules, the fixed-point set loses its subspace structure. The cardinality can be any integer from 0 to 2^n, and the set can be a genuinely nonlinear variety. The case of Rule 30 with 3 fixed points on an 8-cell cycle is a concrete example.
 
-## 7. Specific Rule Analysis
+### 5.2 The Degree-Complexity Gap
 
-### 7.1 Rule 204: The Identity
+While ANF degree does not directly predict Wolfram class, it plays a structural role: degree ≤ 1 rules are exactly the additive rules, which have well-understood dynamics (linear recurrence over GF(2)). The transition from degree 1 to degree 2 introduces qualitatively new behavior. The 112 quadratic rules and 128 cubic rules contain the full range of Wolfram classes 1-4.
 
-**Theorem 7.1**. Rule 204 acts as the identity: f_{204}(s) = s for all states s.
+### 5.3 Toward Orbit Varieties
 
-*Proof.* The Zhegalkin polynomial is g(a,b,c) = b. Therefore f_{204}(s)_i = s_i. ∎
+The natural extension is to study the **periodic-point varieties**: Vₖ = {s : f^k(s) = s}, the variety of period-k orbits. The growth rate of |Vₖ| as a function of k — the **zeta function** of the dynamical system — is a richer invariant than V₁ alone. For additive rules, this zeta function has a rational expression in terms of the eigenvalues of M.
 
-**Corollary**. Fix(204, n) = GF(2)^n, with dimension n.
+## 6. Formal Verification
 
-### 7.2 Rule 0: The Death Rule
+All theorems in Sections 3.1-3.4 are formally verified in Lean 4 using the Mathlib library. The formalization comprises approximately 320 lines and includes:
 
-**Theorem 7.2**. Rule 0 maps all states to 0. Therefore Fix(0, n) = {0}, with dimension 0.
+- 7 definitions (ECALocalRule, ECAState, ecaUpdate, IsFixedPoint, ANFCoeffs, IsAdditiveRule, ECAFixedSubmodule)
+- 16 theorems, all with complete machine-checked proofs
+- No sorry, no additional axioms beyond the standard ones
 
-### 7.3 Rule 255: The Saturation Rule
+The code is available at `Shared/CellularAlgebraicGeometry.lean`.
 
-**Theorem 7.3**. Rule 255 maps all states to the all-ones state. Therefore Fix(255, n) = {1}, with dimension 0.
+## 7. Future Work
 
-## 8. Iteration and Orbit Structure
+1. **Orbit varieties and zeta functions**: Compute |Vₖ| for k > 1 and all 256 rules. Determine whether the growth rate of |Vₖ| correlates with Wolfram class.
 
-**Theorem 8.1** (Fixed-Point Iteration Invariance). If s ∈ Fix(g, n), then f_g^k(s) = s for all k ≥ 0.
+2. **Scheme structure**: The variety V(f - id) over GF(2) has a scheme structure that remembers more than the set of solutions. Investigate whether the scheme-theoretic invariants distinguish complexity classes.
 
-*Proof.* By induction on k. Base: f_g^0(s) = s. Step: f_g^{k+1}(s) = f_g(f_g^k(s)) = f_g(s) = s. ∎
+3. **GF(2)-cohomology**: Define a sheaf on the state space associated to each ECA rule and compute its cohomology groups. This is the Grothendieck-style approach suggested in the original problem statement.
 
-## 9. Computational Analysis
-
-### 9.1 Fixed-Point Dimension Distribution
-
-We computed |Fix(r, n)| for all 256 rules at n = 4, 6, 8, 10 (where feasible). Key findings:
-
-1. **Degree 0 rules** (2 rules): Always exactly 1 fixed point (dimension 0).
-2. **Degree 1 rules** (14 rules): Fixed-point count is always a power of 2, confirming the linear subspace theorem. Dimension varies from 0 to n.
-3. **Degree 2 rules** (84 rules): Fixed-point count is NOT always a power of 2. The linear subspace theorem genuinely fails for nonlinear rules.
-4. **Degree 3 rules** (156 rules): Similar to degree 2 but with generally more complex fixed-point structures.
-
-### 9.2 Degree-Dimension Correlation
-
-The average fixed-point dimension (at n=8) increases with polynomial degree:
-- Degree 0: mean dim ≈ 0.0
-- Degree 1: mean dim ≈ 2.7
-- Degree 2: mean dim ≈ 1.8
-- Degree 3: mean dim ≈ 1.6
-
-Surprisingly, degree 1 rules have the *highest* average fixed-point dimension, not degree 3. This is because linear rules with the identity component (like Rule 204) can have maximal fixed-point sets.
-
-## 10. Discussion and Conjectures
-
-### 10.1 The Wolfram Class Conjecture (Partially Refuted)
-
-The original research direction conjectured a monotone relationship between Wolfram complexity class and fixed-point dimension: Class 1 → dim 0, Class 4 → dim n. Our analysis shows this is **too simple**: Rule 204 (Class 1, trivial behavior) has maximal dimension n, while Rule 110 (Class 4, Turing-complete) has moderate dimension. The correct relationship involves the *entire orbit structure*, not just fixed points.
-
-### 10.2 Falsifiable Conjecture: Minimum Degree for Universality
-
-**Conjecture**. No ECA rule of polynomial degree ≤ 1 is Turing-complete. Equivalently, Turing-completeness requires nonlinear interaction (degree ≥ 2).
-
-**Test**: Exhaustively verify that all 14 affine rules have eventually periodic dynamics for all finite initial conditions (decidable by matrix power computation).
-
-### 10.3 The Quadratic Threshold
-
-The fact that Rule 110 (degree 2) achieves Turing-completeness while no degree-1 rule does suggests a "quadratic threshold" for computational universality. This echoes similar thresholds in circuit complexity, where quadratic Boolean functions are necessary for universal computation.
-
-## 11. Related Work
-
-- Wolfram [1] introduced the systematic study of ECAs and proposed the 4-class behavioral taxonomy.
-- Cook [2] proved Rule 110 is Turing-complete.
-- Zhegalkin [3] proved the unique multilinear polynomial representation over GF(2).
-- Martin et al. [4] studied linear ECAs (degree 1) using matrix methods.
-- Sutner [5] analyzed reversibility and surjectivity of ECAs using algebraic methods.
-
-## 12. Conclusion
-
-We have established that elementary cellular automata possess a rich algebraic-geometric structure when viewed as polynomial maps over GF(2). The Zhegalkin representation provides a canonical polynomial form for each rule, the linear subspace theorem characterizes fixed-point varieties of additive rules, and the complement duality theorem reveals a natural symmetry between rules. All results are formally verified, providing the highest standard of mathematical certainty.
-
-The key insight is that the polynomial degree of the local rule — a purely algebraic invariant — captures meaningful information about the automaton's computational capacity. The transition from degree 1 (fully analyzable by linear algebra) to degree 2 (where Turing-completeness emerges) identifies a precise algebraic boundary separating simple from complex dynamics.
+4. **Higher-dimensional automata**: Extend the polynomial framework to 2D cellular automata, where the local rule depends on more neighbors and the polynomial degree can be higher.
 
 ## References
 
-[1] S. Wolfram, "Statistical mechanics of cellular automata," Reviews of Modern Physics 55(3): 601–644, 1983.
+[1] Cook, M. "Universality in Elementary Cellular Automata." *Complex Systems* 15(1), 2004.
 
-[2] M. Cook, "Universality in elementary cellular automata," Complex Systems 15(1): 1–40, 2004.
+[2] Wolfram, S. "Statistical Mechanics of Cellular Automata." *Reviews of Modern Physics* 55(3), 1983.
 
-[3] I. Zhegalkin, "On the technique of calculating propositions in symbolic logic," Matematicheskii Sbornik 34: 9–28, 1927.
+[3] Lidl, R., Niederreiter, H. *Finite Fields.* Cambridge University Press, 1997.
 
-[4] O. Martin, A. Odlyzko, S. Wolfram, "Algebraic properties of cellular automata," Communications in Mathematical Physics 93: 219–258, 1984.
-
-[5] K. Sutner, "De Bruijn graphs and linear cellular automata," Complex Systems 5(1): 19–30, 1991.
+[4] Cattaneo, G., Formenti, E., Margara, L., Mauri, G. "On the rank of the reduced transition matrix of linear cellular automata." *Theoretical Computer Science*, 1999.

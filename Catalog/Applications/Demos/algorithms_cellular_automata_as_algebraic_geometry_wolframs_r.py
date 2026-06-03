@@ -1,16 +1,20 @@
 """
-Cellular Automata as Algebraic Geometry over GF(2)
-===================================================
-Type-hinted implementations of ECA analysis algorithms.
+Algorithms for Cellular Automata as Algebraic Geometry over GF(2).
+
+Implements:
+1. Algebraic Normal Form (ANF) computation for ECA rules
+2. Fixed-point variety computation
+3. Fixed-point dimension calculation via rank-nullity
+4. Wolfram complexity classification
 """
 
-from typing import List, Tuple, Dict, Set, Optional
-import numpy as np
+from typing import List, Tuple, Dict, Optional
+from itertools import product
 
 
 def gf2_add(a: int, b: int) -> int:
     """Addition in GF(2) = XOR."""
-    return a ^ b
+    return (a + b) % 2
 
 
 def gf2_mul(a: int, b: int) -> int:
@@ -18,356 +22,269 @@ def gf2_mul(a: int, b: int) -> int:
     return a & b
 
 
-def eca_local_rule(rule_number: int, a: int, b: int, c: int) -> int:
+def rule_truth_table(rule_number: int) -> Dict[Tuple[int, int, int], int]:
     """
-    Extract the local rule output for an elementary cellular automaton.
-
-    Given rule number r and 3-bit input (a, b, c), returns the output bit.
-    The rule number encodes the truth table: bit (4a + 2b + c) of r.
-
+    Compute the truth table of a Wolfram ECA rule.
+    
     Args:
-        rule_number: Rule number 0-255
-        a: Left neighbor (0 or 1)
-        b: Center cell (0 or 1)
-        c: Right neighbor (0 or 1)
-
+        rule_number: Integer 0-255 encoding the rule.
+        
     Returns:
-        Output bit (0 or 1)
+        Dictionary mapping (left, center, right) -> output.
     """
-    idx = 4 * a + 2 * b + c
-    return (rule_number >> idx) & 1
+    table = {}
+    for a, b, c in product([0, 1], repeat=3):
+        idx = 4 * a + 2 * b + c
+        table[(a, b, c)] = (rule_number >> idx) & 1
+    return table
 
 
-def eca_update(rule_number: int, state: List[int]) -> List[int]:
+def compute_anf(rule_number: int) -> List[int]:
     """
-    Apply one step of an ECA with cyclic boundary conditions.
-
+    Compute the Algebraic Normal Form (ANF) coefficients of an ECA rule
+    via Möbius inversion over GF(2).
+    
+    The ANF is: f(a,b,c) = c0 + c1*a + c2*b + c3*c + c4*ab + c5*ac + c6*bc + c7*abc
+    
     Args:
-        rule_number: Rule number 0-255
-        state: Current state as list of 0s and 1s
-
+        rule_number: Integer 0-255 encoding the rule.
+        
     Returns:
-        Updated state
+        List [c0, c1, c2, c3, c4, c5, c6, c7] of GF(2) coefficients.
     """
-    n = len(state)
-    return [
-        eca_local_rule(rule_number, state[(i - 1) % n], state[i], state[(i + 1) % n])
-        for i in range(n)
-    ]
+    g = rule_truth_table(rule_number)
+    
+    c0 = g[(0, 0, 0)]
+    c1 = gf2_add(g[(1, 0, 0)], g[(0, 0, 0)])
+    c2 = gf2_add(g[(0, 1, 0)], g[(0, 0, 0)])
+    c3 = gf2_add(g[(0, 0, 1)], g[(0, 0, 0)])
+    c4 = gf2_add(gf2_add(gf2_add(g[(1, 1, 0)], g[(1, 0, 0)]), g[(0, 1, 0)]), g[(0, 0, 0)])
+    c5 = gf2_add(gf2_add(gf2_add(g[(1, 0, 1)], g[(1, 0, 0)]), g[(0, 0, 1)]), g[(0, 0, 0)])
+    c6 = gf2_add(gf2_add(gf2_add(g[(0, 1, 1)], g[(0, 1, 0)]), g[(0, 0, 1)]), g[(0, 0, 0)])
+    c7 = gf2_add(
+        gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(
+            g[(1, 1, 1)], g[(1, 1, 0)]), g[(1, 0, 1)]), g[(0, 1, 1)]),
+            g[(1, 0, 0)]), g[(0, 1, 0)]), g[(0, 0, 1)]), g[(0, 0, 0)])
+    
+    return [c0, c1, c2, c3, c4, c5, c6, c7]
 
 
-def find_fixed_points(rule_number: int, n: int) -> List[Tuple[int, ...]]:
+def anf_degree(coeffs: List[int]) -> int:
     """
-    Find all fixed points of an ECA rule on n cells by exhaustive search.
-
+    Compute the degree of an ANF polynomial.
+    
     Args:
-        rule_number: Rule number 0-255
-        n: Number of cells
-
+        coeffs: List of 8 GF(2) coefficients [c0..c7].
+        
     Returns:
-        List of fixed-point states (as tuples of 0s and 1s)
+        Degree 0-3.
     """
-    fixed = []
-    for state_int in range(2**n):
-        state = [(state_int >> i) & 1 for i in range(n)]
-        updated = eca_update(rule_number, state)
-        if state == updated:
-            fixed.append(tuple(state))
-    return fixed
-
-
-def fixed_point_dimension(rule_number: int, n: int) -> float:
-    """
-    Compute the fixed-point dimension = log2(|Fix(f)|).
-
-    For linear rules, this is always an integer (the solution space is a
-    GF(2)-vector space). For nonlinear rules, it may be non-integer.
-
-    Args:
-        rule_number: Rule number 0-255
-        n: Number of cells
-
-    Returns:
-        log2 of the number of fixed points, or -inf if no fixed points
-    """
-    count = len(find_fixed_points(rule_number, n))
-    if count == 0:
-        return float('-inf')
-    return np.log2(count)
-
-
-def zhegalkin_coefficients(rule_number: int) -> Dict[str, int]:
-    """
-    Compute the Zhegalkin (multilinear polynomial) coefficients of an ECA rule.
-
-    Every function GF(2)^3 -> GF(2) has a unique representation as:
-      g(a,b,c) = c0 + c1*a + c2*b + c3*c + c4*a*b + c5*a*c + c6*b*c + c7*a*b*c
-
-    Uses Möbius inversion over the Boolean lattice.
-
-    Args:
-        rule_number: Rule number 0-255
-
-    Returns:
-        Dictionary mapping monomial names to GF(2) coefficients
-    """
-    g = lambda a, b, c: eca_local_rule(rule_number, a, b, c)
-
-    c0 = g(0, 0, 0)
-    c1 = (g(1, 0, 0) + g(0, 0, 0)) % 2
-    c2 = (g(0, 1, 0) + g(0, 0, 0)) % 2
-    c3 = (g(0, 0, 1) + g(0, 0, 0)) % 2
-    c4 = (g(1, 1, 0) + g(1, 0, 0) + g(0, 1, 0) + g(0, 0, 0)) % 2
-    c5 = (g(1, 0, 1) + g(1, 0, 0) + g(0, 0, 1) + g(0, 0, 0)) % 2
-    c6 = (g(0, 1, 1) + g(0, 1, 0) + g(0, 0, 1) + g(0, 0, 0)) % 2
-    c7 = (g(1, 1, 1) + g(1, 1, 0) + g(1, 0, 1) + g(0, 1, 1)
-          + g(1, 0, 0) + g(0, 1, 0) + g(0, 0, 1) + g(0, 0, 0)) % 2
-
-    return {
-        '1': c0, 'a': c1, 'b': c2, 'c': c3,
-        'ab': c4, 'ac': c5, 'bc': c6, 'abc': c7
-    }
-
-
-def polynomial_degree(rule_number: int) -> int:
-    """
-    Compute the degree of the Zhegalkin polynomial for an ECA rule.
-
-    The degree measures the algebraic complexity of the rule:
-    - Degree 0: constant rule (rules 0 and 255)
-    - Degree 1: linear/affine rule (e.g., rule 150 = XOR)
-    - Degree 2: quadratic rule
-    - Degree 3: cubic rule (maximally nonlinear)
-
-    Args:
-        rule_number: Rule number 0-255
-
-    Returns:
-        Polynomial degree (0-3)
-    """
-    coeffs = zhegalkin_coefficients(rule_number)
-    if coeffs['abc']:
+    if coeffs[7] != 0:
         return 3
-    if coeffs['ab'] or coeffs['ac'] or coeffs['bc']:
+    if any(coeffs[i] != 0 for i in [4, 5, 6]):
         return 2
-    if coeffs['a'] or coeffs['b'] or coeffs['c']:
+    if any(coeffs[i] != 0 for i in [1, 2, 3]):
         return 1
     return 0
 
 
-def is_linear_rule(rule_number: int) -> bool:
-    """Check if an ECA rule is linear (additive) over GF(2)."""
-    coeffs = zhegalkin_coefficients(rule_number)
-    return coeffs['1'] == 0 and coeffs['ab'] == 0 and coeffs['ac'] == 0 \
-        and coeffs['bc'] == 0 and coeffs['abc'] == 0
+def anf_to_string(coeffs: List[int]) -> str:
+    """Convert ANF coefficients to a human-readable polynomial string."""
+    terms = []
+    labels = ["1", "a", "b", "c", "ab", "ac", "bc", "abc"]
+    for i, (c, label) in enumerate(zip(coeffs, labels)):
+        if c != 0:
+            terms.append(label)
+    if not terms:
+        return "0"
+    return " + ".join(terms)
 
 
-def is_affine_rule(rule_number: int) -> bool:
-    """Check if an ECA rule is affine over GF(2) (linear + constant)."""
-    coeffs = zhegalkin_coefficients(rule_number)
-    return coeffs['ab'] == 0 and coeffs['ac'] == 0 \
-        and coeffs['bc'] == 0 and coeffs['abc'] == 0
+def is_additive(rule_number: int) -> bool:
+    """Check if a rule is additive (linear), i.e., ANF degree <= 1."""
+    return anf_degree(compute_anf(rule_number)) <= 1
 
 
-def fixed_point_matrix(rule_number: int, n: int) -> np.ndarray:
+def eca_update(state: List[int], rule_number: int) -> List[int]:
     """
-    Construct the matrix M such that Fix(f) = ker(M) for affine rules.
-
-    For an affine rule g(a,b,c) = c0 + c1*a + c2*b + c3*c, the fixed-point
-    equation g(s_{i-1}, s_i, s_{i+1}) = s_i becomes:
-      c1*s_{i-1} + (c2-1)*s_i + c3*s_{i+1} = -c0   (mod 2)
-
-    This is a circulant linear system over GF(2).
-
+    Apply one step of an ECA rule to a cyclic state.
+    
     Args:
-        rule_number: Rule number 0-255
-        n: Number of cells
-
+        state: List of 0s and 1s.
+        rule_number: Integer 0-255.
+        
     Returns:
-        n×n matrix over GF(2) (as numpy array of ints mod 2)
+        Updated state.
     """
-    coeffs = zhegalkin_coefficients(rule_number)
-    c1, c2, c3 = coeffs['a'], coeffs['b'], coeffs['c']
-
-    M = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        M[i, (i - 1) % n] = c1
-        M[i, i] = (c2 + 1) % 2  # c2 - 1 = c2 + 1 mod 2
-        M[i, (i + 1) % n] = (M[i, (i + 1) % n] + c3) % 2
-    return M % 2
+    n = len(state)
+    table = rule_truth_table(rule_number)
+    return [table[(state[(i - 1) % n], state[i], state[(i + 1) % n])] for i in range(n)]
 
 
-def gf2_rank(matrix: np.ndarray) -> int:
+def find_fixed_points(rule_number: int, n: int) -> List[Tuple[int, ...]]:
     """
-    Compute the rank of a matrix over GF(2) using Gaussian elimination.
-
+    Find all fixed points of an ECA rule on a cyclic array of length n.
+    Brute-force enumeration over GF(2)^n.
+    
     Args:
-        matrix: numpy array of 0s and 1s
-
+        rule_number: Integer 0-255.
+        n: Length of the cyclic array.
+        
     Returns:
-        Rank over GF(2)
+        List of fixed-point states (as tuples).
     """
-    M = matrix.copy() % 2
-    rows, cols = M.shape
-    rank = 0
-    for col in range(cols):
+    fixed = []
+    for state in product([0, 1], repeat=n):
+        s = list(state)
+        if eca_update(s, rule_number) == s:
+            fixed.append(state)
+    return fixed
+
+
+def fixed_point_dimension(rule_number: int, n: int) -> Optional[int]:
+    """
+    Compute the dimension of the fixed-point variety for an ECA rule.
+    For additive rules, this is the dimension of the kernel of (f - id).
+    For non-additive rules, returns the log2 of the number of fixed points
+    (which may not be an integer if the set is not a subspace).
+    
+    Args:
+        rule_number: Integer 0-255.
+        n: Length of the cyclic array.
+        
+    Returns:
+        Dimension (integer), or None if the count is not a power of 2.
+    """
+    import math
+    count = len(find_fixed_points(rule_number, n))
+    if count == 0:
+        return -1  # empty variety
+    log2 = math.log2(count)
+    if log2 == int(log2):
+        return int(log2)
+    return None  # not a power of 2 => not a subspace
+
+
+def gf2_matrix_kernel_dim(matrix: List[List[int]], n: int) -> int:
+    """
+    Compute the dimension of the kernel of a matrix over GF(2)
+    using Gaussian elimination.
+    
+    Args:
+        matrix: m x n matrix over GF(2).
+        n: Number of columns.
+        
+    Returns:
+        Dimension of the kernel.
+    """
+    m = len(matrix)
+    mat = [row[:] for row in matrix]
+    
+    pivot_cols = []
+    row = 0
+    for col in range(n):
         # Find pivot
-        pivot = None
-        for row in range(rank, rows):
-            if M[row, col] == 1:
-                pivot = row
+        found = False
+        for r in range(row, m):
+            if mat[r][col] == 1:
+                mat[row], mat[r] = mat[r], mat[row]
+                found = True
                 break
-        if pivot is None:
+        if not found:
             continue
-        # Swap
-        M[[rank, pivot]] = M[[pivot, rank]]
+        pivot_cols.append(col)
         # Eliminate
-        for row in range(rows):
-            if row != rank and M[row, col] == 1:
-                M[row] = (M[row] + M[rank]) % 2
-        rank += 1
-    return rank
+        for r in range(m):
+            if r != row and mat[r][col] == 1:
+                mat[r] = [gf2_add(mat[r][j], mat[row][j]) for j in range(n)]
+        row += 1
+    
+    rank = len(pivot_cols)
+    return n - rank
 
 
-def analyze_all_rules(n: int) -> Dict[int, Dict]:
+def build_update_matrix(rule_number: int, n: int) -> List[List[int]]:
     """
-    Analyze all 256 ECA rules for fixed-point properties on n cells.
-
-    Returns a dictionary mapping rule numbers to their analysis:
-    - fixed_point_count: number of fixed points
-    - fixed_point_dim: log2 of fixed point count
-    - polynomial_degree: degree of Zhegalkin polynomial
-    - is_linear: whether the rule is linear
-    - zhegalkin: polynomial coefficients
-
+    For an additive ECA rule, build the n×n matrix M over GF(2) such that
+    the update is f(s) = M·s. The fixed points are ker(M - I).
+    
     Args:
-        n: Number of cells
-
+        rule_number: Integer 0-255.
+        n: Length of cyclic array.
+        
     Returns:
-        Dictionary of analyses indexed by rule number
+        n×n matrix over GF(2), or raises ValueError if rule is not additive.
     """
-    results = {}
-    for r in range(256):
-        fps = find_fixed_points(r, n)
-        count = len(fps)
-        dim = np.log2(count) if count > 0 else -1
+    coeffs = compute_anf(rule_number)
+    if anf_degree(coeffs) > 1:
+        raise ValueError(f"Rule {rule_number} is not additive (degree {anf_degree(coeffs)})")
+    
+    # coeffs: c0 + c1*a + c2*b + c3*c
+    # For additive rule: g(a,b,c) = c1*a + c2*b + c3*c (c0 must be 0 for linearity)
+    alpha, beta, gamma = coeffs[1], coeffs[2], coeffs[3]
+    
+    M = [[0] * n for _ in range(n)]
+    for i in range(n):
+        M[i][(i - 1) % n] = alpha
+        M[i][i] = beta
+        M[i][(i + 1) % n] = gf2_add(M[i][(i + 1) % n], gamma)
+    
+    return M
 
-        results[r] = {
-            'fixed_point_count': count,
-            'fixed_point_dim': dim,
-            'polynomial_degree': polynomial_degree(r),
-            'is_linear': is_linear_rule(r),
-            'is_affine': is_affine_rule(r),
-            'zhegalkin': zhegalkin_coefficients(r),
-        }
-    return results
 
-
-def wolfram_class_heuristic(rule_number: int, n: int = 20, steps: int = 100) -> int:
+def fixed_point_dim_linear(rule_number: int, n: int) -> int:
     """
-    Heuristic classification of an ECA rule into Wolfram's 4 classes.
-
-    Uses entropy and pattern analysis of the spacetime evolution.
-    Classes: 1 (uniform), 2 (periodic), 3 (chaotic), 4 (complex).
-
-    This is approximate — Wolfram's classification is not rigorously defined.
-
+    Compute fixed-point variety dimension for an additive rule using
+    the rank-nullity theorem: dim(ker(M-I)) = n - rank(M-I).
+    
     Args:
-        rule_number: Rule number 0-255
-        n: Number of cells
-        steps: Number of time steps
-
+        rule_number: Integer 0-255.
+        n: Length of cyclic array.
+        
     Returns:
-        Estimated Wolfram class (1-4)
+        Dimension of the fixed-point variety.
     """
-    # Run from random initial condition
-    np.random.seed(42)
-    state = list(np.random.randint(0, 2, n))
-
-    history = [state[:]]
-    for _ in range(steps):
-        state = eca_update(rule_number, state)
-        history.append(state[:])
-
-    # Check if converged to fixed point (Class 1)
-    if history[-1] == history[-2]:
-        return 1
-
-    # Check for short period (Class 2)
-    for period in range(1, min(20, steps)):
-        if history[-1] == history[-1 - period]:
-            return 2
-
-    # Compute column entropy to distinguish Class 3 vs 4
-    arr = np.array(history[steps//2:])
-    col_entropies = []
-    for j in range(n):
-        p1 = arr[:, j].mean()
-        if p1 == 0 or p1 == 1:
-            col_entropies.append(0)
-        else:
-            col_entropies.append(-p1 * np.log2(p1) - (1-p1) * np.log2(1-p1))
-
-    avg_entropy = np.mean(col_entropies)
-    # Class 4 has intermediate entropy; Class 3 has high entropy
-    if avg_entropy > 0.9:
-        return 3
-    elif avg_entropy > 0.3:
-        return 4
-    else:
-        return 2
+    M = build_update_matrix(rule_number, n)
+    # Compute M - I
+    MI = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            MI[i][j] = gf2_add(M[i][j], 1 if i == j else 0)
+    return gf2_matrix_kernel_dim(MI, n)
 
 
-def complement_rule(rule_number: int) -> int:
-    """
-    Compute the complement of an ECA rule.
+# Wolfram complexity classification (approximate, based on common literature)
+WOLFRAM_CLASS: Dict[int, int] = {}
+# Class 1: evolves to uniform state
+CLASS_1 = [0, 8, 32, 40, 64, 96, 128, 136, 160, 168, 192, 224, 234, 235, 238, 239, 248, 249, 252, 253, 254, 255]
+# Class 2: evolves to periodic structures
+CLASS_2 = [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 19, 23, 24, 25, 26, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 46, 50, 51, 56, 57, 58, 62, 72, 73, 74, 76, 77, 78, 94, 104, 108, 130, 132, 134, 138, 140, 142, 152, 154, 156, 162, 164, 170, 172, 174, 178, 184, 200, 204, 232]
+# Class 3: chaotic/random-looking behavior
+CLASS_3 = [18, 22, 30, 45, 60, 90, 105, 122, 126, 146, 150, 161]
+# Class 4: complex localized structures (edge of chaos)
+CLASS_4 = [41, 54, 106, 110]
 
-    The complement maps input (a,b,c) to 1 + g(1+a, 1+b, 1+c) mod 2.
-    This corresponds to flipping all input and output bits.
-
-    Args:
-        rule_number: Rule number 0-255
-
-    Returns:
-        Complement rule number
-    """
-    result = 0
-    for idx in range(8):
-        a, b, c = (idx >> 2) & 1, (idx >> 1) & 1, idx & 1
-        # Complement inputs
-        a_c, b_c, c_c = 1 - a, 1 - b, 1 - c
-        comp_idx = 4 * a_c + 2 * b_c + c_c
-        # Complement output
-        orig_out = (rule_number >> comp_idx) & 1
-        new_out = 1 - orig_out
-        result |= (new_out << idx)
-    return result
+for r in CLASS_1: WOLFRAM_CLASS[r] = 1
+for r in CLASS_2: WOLFRAM_CLASS[r] = 2
+for r in CLASS_3: WOLFRAM_CLASS[r] = 3
+for r in CLASS_4: WOLFRAM_CLASS[r] = 4
 
 
-if __name__ == '__main__':
-    # Quick demonstration
-    print("=== ECA Algebraic Geometry Analysis ===\n")
-
-    # Zhegalkin polynomials for key rules
-    for r in [0, 90, 110, 150, 204, 255]:
-        coeffs = zhegalkin_coefficients(r)
-        deg = polynomial_degree(r)
-        terms = []
-        names = {'1': '1', 'a': 'a', 'b': 'b', 'c': 'c',
-                 'ab': 'ab', 'ac': 'ac', 'bc': 'bc', 'abc': 'abc'}
-        for k, v in coeffs.items():
-            if v:
-                terms.append(names[k])
-        poly = ' + '.join(terms) if terms else '0'
-        print(f"Rule {r:3d}: g(a,b,c) = {poly}  (degree {deg})")
-
-    print()
-
-    # Fixed-point analysis for small n
-    for n in [4, 6, 8]:
-        print(f"--- n = {n} ---")
-        for r in [0, 90, 150, 204, 255]:
-            fps = find_fixed_points(r, n)
-            dim = np.log2(len(fps)) if fps else -1
-            print(f"  Rule {r:3d}: |Fix| = {len(fps):4d}, dim = {dim:.1f}")
-        print()
+if __name__ == "__main__":
+    print("=== Algebraic Normal Forms of Notable Rules ===")
+    for rule_num in [0, 90, 110, 150, 204, 255]:
+        coeffs = compute_anf(rule_num)
+        print(f"Rule {rule_num:3d}: {anf_to_string(coeffs):20s} (degree {anf_degree(coeffs)}, "
+              f"additive={is_additive(rule_num)})")
+    
+    print("\n=== Fixed Points (n=6) ===")
+    for rule_num in [0, 90, 110, 150, 204]:
+        fps = find_fixed_points(rule_num, 6)
+        print(f"Rule {rule_num:3d}: {len(fps)} fixed points")
+    
+    print("\n=== Fixed-Point Dimensions for Additive Rules (n=3..12) ===")
+    for rule_num in [90, 150]:
+        dims = []
+        for n in range(3, 13):
+            dims.append(fixed_point_dim_linear(rule_num, n))
+        print(f"Rule {rule_num}: {dims}")

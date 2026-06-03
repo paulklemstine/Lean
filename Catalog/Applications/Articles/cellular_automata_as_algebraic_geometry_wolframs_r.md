@@ -1,93 +1,80 @@
-# The Hidden Geometry of Simple Machines
+# When Cellular Automata Become Geometry: A New Way to See Computation
 
-*How the simplest possible computers reveal deep algebraic structure*
+## The Simplest Machines That Can Do Anything
 
----
+In 1983, Stephen Wolfram introduced a classification system for one-dimensional cellular automata — arguably the simplest computational systems imaginable. Picture a row of cells, each either black or white. At each tick of a clock, every cell looks at itself and its two neighbors, then decides whether to become black or white according to a fixed rule. There are exactly 256 such rules.
 
-In 1983, Stephen Wolfram proposed a radical idea: take a row of cells, each either black or white, and update them according to a simple rule that looks at each cell and its two neighbors. There are exactly 256 such rules — the elementary cellular automata (ECAs). Some produce blank fields. Some produce stripes. Some produce chaos. And one of them — Rule 110 — can simulate any computer ever built.
+Wolfram noticed something remarkable. Despite their extreme simplicity, these 256 rules produce four qualitatively different types of behavior. Class 1 rules quickly die to uniform stillness. Class 2 rules settle into repeating patterns, like wallpaper. Class 3 rules generate apparent chaos — pseudorandom noise that never repeats. And Class 4 rules, the rarest and most mysterious, produce complex structures that move, interact, and compute.
 
-For forty years, researchers have studied these tiny universes through simulation, watching patterns unfold on screens. But a different lens reveals something unexpected: these rules are not just computational engines. They are polynomial equations over a finite number system. And their behavior can be read from the geometry of their solutions.
+The crown jewel is Rule 110. In 2004, Matthew Cook proved that Rule 110 is Turing-complete — it can simulate any computer program, given enough space and time. This means the boundary between simple repetition and universal computation can be crossed by the tiniest of machines.
 
-## A Number System with Only Two Numbers
+But *why* does Rule 110 compute? What makes it different from Rule 0 (which kills everything) or Rule 204 (which preserves everything)? A new line of research suggests the answer lies not in the dynamic behavior of these automata, but in their algebraic geometry.
 
-The key insight begins with a peculiar number system. In ordinary arithmetic, 1 + 1 = 2. But in the number system called GF(2) — the Galois field with two elements — 1 + 1 = 0. There are only two numbers: 0 and 1. Addition is exclusive-or (XOR). Multiplication is AND. This is the arithmetic that lives inside every digital circuit.
+## Polynomials Over the Simplest Number System
 
-A cellular automaton state — a row of black and white cells — is simply a vector in GF(2)^n: an n-tuple of zeros and ones. The update rule is a function from this vector space to itself. And here is where the algebra becomes beautiful: every function on GF(2) can be written as a polynomial.
+The key insight is to stop thinking of cellular automata as dynamic processes and start thinking of them as polynomial equations.
 
-This is the Zhegalkin representation theorem, named after the Russian logician Ivan Zhegalkin who proved it in 1927. Any Boolean function of three variables — exactly the kind an ECA rule uses — can be written as:
+Consider the two-element number system GF(2), which contains only 0 and 1, where 1 + 1 = 0. This isn't ordinary arithmetic — it's the arithmetic of Boolean logic, where addition is XOR and multiplication is AND. In this miniature number system, every function of three variables can be written as a polynomial of degree at most 3.
 
-g(a, b, c) = e₀ + e₁a + e₂b + e₃c + e₄ab + e₅ac + e₆bc + e₇abc
+Take Rule 110. Its local update — the function that decides each cell's next state from its three-cell neighborhood — turns out to be the polynomial:
 
-where each coefficient e is either 0 or 1. This means every one of the 256 ECA rules is secretly a polynomial over GF(2), and its degree — 0, 1, 2, or 3 — captures something essential about its complexity.
+**g(a, b, c) = b + c + bc + abc**
 
-Rule 204, which simply copies each cell unchanged, has polynomial g(a,b,c) = b — degree 1. Rule 150, the XOR rule, has g(a,b,c) = a + b + c — also degree 1. Rule 110, the universal computer, has g(a,b,c) = b + c + bc — degree 2. Rule 30, Wolfram's favorite source of chaos, has g(a,b,c) = a + b + c + ab — also degree 2. The degree tells you how many variables must interact nonlinearly to produce the rule's behavior.
+This is not a metaphor. This is literally what Rule 110 computes, expressed in the algebra of GF(2). The polynomial has degree 3, the maximum possible for a three-variable function over GF(2).
 
-## Fixed Points as Varieties
+This polynomial representation is called the *Algebraic Normal Form* (ANF), and every one of the 256 ECA rules has a unique ANF. The representation is computed by a discrete version of Möbius inversion — evaluating the rule at all eight possible inputs and extracting coefficients through a systematic inclusion-exclusion.
 
-When algebraic geometers study polynomial equations, they ask: what is the shape of the solution set? Given a polynomial f, the *variety* V(f) is the set of all inputs where f equals zero. These varieties are the fundamental objects of algebraic geometry, the field that Alexander Grothendieck revolutionized in the 1960s.
+## The Fixed-Point Variety
 
-For cellular automata, the natural question is: when does the automaton reach a state that doesn't change? A *fixed point* is a state s where applying the rule produces s again. The fixed-point equation f(s) = s, rewritten as f(s) - s = 0, defines an algebraic variety over GF(2).
+Once we have polynomials, we can do geometry. The central geometric object is the *fixed-point variety*: the set of all states that the automaton leaves unchanged.
 
-Computing these varieties reveals striking patterns.
+When we apply the rule to every cell in a cyclic array of length *n*, we get a polynomial map **f** : GF(2)^*n* → GF(2)^*n*. The fixed points — states where **f**(**s**) = **s** — are the solutions to a system of *n* polynomial equations over GF(2). In algebraic geometry, the solution set of polynomial equations is called a *variety*, and varieties have structure.
 
-**Rule 0** (the "death" rule, which turns all cells to zero) has exactly one fixed point: the all-zero state. Its fixed-point variety is a single point — dimension 0.
+Here is where the mathematics becomes interesting. We discovered that the structure of this variety depends fundamentally on the algebraic degree of the rule:
 
-**Rule 204** (the identity) has every state as a fixed point. Its variety is the entire space — dimension n.
+**For degree ≤ 1 rules (additive rules), the fixed-point variety is a vector subspace.**
 
-**Rule 150** (XOR) has an elegant structure: the fixed-point equation s_{i-1} + s_i + s_{i+1} = s_i simplifies to s_{i-1} = s_{i+1}. This forces cells two positions apart to be equal. On a ring of n cells, this means all even-positioned cells must agree, and all odd-positioned cells must agree. For even n, there are 4 fixed points (dimension 2). For odd n, there are 2 (dimension 1).
+This is a genuine theorem, not an observation. If the local rule can be written as g(a, b, c) = αa + βb + γc — a linear function — then the global update is a linear map, and the set of fixed points is the kernel of a linear transformation. It inherits all the structure of linear algebra: it's closed under addition and scalar multiplication, and its size is always a power of 2.
 
-## The Linear Subspace Theorem
+But for nonlinear rules — those with degree 2 or 3 — the fixed-point set can have any cardinality. Rule 30, a chaotic Class 3 rule, has exactly 3 fixed points on a cycle of length 10. Three is not a power of 2. The fixed-point set of Rule 30 is not a subspace — it is a genuinely nonlinear variety.
 
-The deepest result concerns *linear* rules — those whose Zhegalkin polynomial has degree at most 1 and no constant term. There are exactly 8 such rules (including Rule 0, Rule 150, and Rule 90, which generates the Sierpiński triangle).
+## The Conjecture That Failed
 
-For these rules, something remarkable happens: the fixed-point set is not just a collection of points, but a *vector subspace* of GF(2)^n. This means:
-- The zero state is always a fixed point.
-- If s and t are both fixed points, so is s + t (their XOR).
-- The number of fixed points is always a power of 2.
+The original hypothesis was seductive: perhaps the dimension of the fixed-point variety correlates with the Wolfram complexity class. Class 1 rules (simple death) would have dimension 0. Class 4 rules (universal computation) would have maximal dimension. The geometry of fixed points would *explain* the dynamics of computation.
 
-This is the cellular automaton version of a classical theorem in linear algebra. The fixed-point equation for a linear rule is a system of linear equations over GF(2), and the solution set of a linear system is always a subspace. The "dimension" of the fixed-point variety — the exponent k where the count is 2^k — equals n minus the rank of the system matrix.
+The data demolish this hypothesis. Rule 110 — the Turing-complete rule — has exactly *one* fixed point on cycles of length up to 12. Dimension zero. Meanwhile, Rule 204 — the identity rule, which does absolutely nothing — has 2^*n* fixed points, every possible state. Maximal dimension.
 
-But here is what makes this interesting beyond pure algebra: this subspace structure *breaks* for nonlinear rules. Rule 110 (degree 2) can have fixed-point counts that are not powers of 2. The transition from linear to nonlinear is where computational complexity emerges from algebraic structure.
+Doing nothing is geometrically rich. Computing everything is geometrically sparse.
 
-## The Complement Duality
+This negative result is itself illuminating. It tells us that computational complexity is not stored in the fixed-point variety. The power of Rule 110 lies not in its stable configurations but in its *transient dynamics* — the structures that move, collide, and interact before any fixed point is reached. The geometry of fixed points captures the automaton's *equilibrium*, not its *capacity for computation*.
 
-One of the most elegant results connects pairs of rules through a symmetry operation. Define the *complement* of a rule: flip all inputs and flip the output. In Zhegalkin terms, replace g(a,b,c) with 1 + g(1+a, 1+b, 1+c).
+## What the Algebra Does Reveal
 
-The complement duality theorem states: s is a fixed point of rule g if and only if the bitwise complement of s is a fixed point of the complement of g. This creates a natural bijection between the fixed-point varieties of complementary rules.
+The algebraic framework reveals a different kind of truth. The 256 ECA rules are not equally distributed across the degrees:
 
-Rule 0 (all outputs zero) and Rule 255 (all outputs one) are complements. Rule 0 has one fixed point (all zeros); Rule 255 has one fixed point (all ones). The bijection sends the zero state to the ones state — exactly as the theorem predicts.
+- **Degree 0**: 2 rules (0.8%) — the constant rules
+- **Degree 1**: 14 rules (5.5%) — the linear/additive rules
+- **Degree 2**: 112 rules (43.8%) — quadratic nonlinearity
+- **Degree 3**: 128 rules (50.0%) — maximal nonlinearity
 
-This duality extends across all 256 rules, pairing them into 128 complementary pairs (some rules are self-complementary). The fixed-point varieties of paired rules are always isomorphic as algebraic sets, connected by the complement involution.
+Exactly half of all ECA rules have the maximum possible algebraic degree. This is a reflection of a deeper combinatorial fact about Boolean functions: the majority of functions on three variables are "maximally complex" in their polynomial structure.
 
-## What Dimension Tells Us
+The additive rules form a particularly elegant class. There are only 14 of them (including trivial rules), and they include Rule 90 (the XOR rule, which generates Sierpiński triangles) and Rule 150. For these rules, the fixed-point variety is always a vector subspace, and its dimension can be computed exactly using linear algebra — specifically, by finding the null space of the matrix *M* - *I*, where *M* is the circulant update matrix.
 
-Across all 256 rules and various system sizes, a pattern emerges: the fixed-point dimension correlates with, but does not perfectly predict, the behavioral complexity of the rule.
+For Rule 90 on cycles of various lengths, the fixed-point dimension oscillates in a pattern connected to number-theoretic properties of the cycle length. On length 6, there are 4 fixed points (dimension 2). On length 7, only 1 (dimension 0). This oscillation is governed by the greatest common divisor of the cycle length with certain characteristic polynomials over GF(2).
 
-Rules with many fixed points (high dimension) tend to be "stable" — they have many rest states, many configurations that don't change. Rules with few fixed points are "dynamic" — almost every configuration evolves into something different.
+## A Bridge Between Worlds
 
-But the relationship is not monotone. Rule 110, the universal computer (Wolfram Class 4), has a moderate number of fixed points — neither the most nor the fewest. It sits in a critical regime between too many fixed points (boring stability) and too few (total chaos). This echoes a theme throughout complexity science: the most interesting behavior occurs at the boundary between order and disorder.
+The deeper significance of this work lies in the bridge it builds. Cellular automata have traditionally been studied by dynamicists and computer scientists. Algebraic geometry has been the domain of number theorists and abstract algebraists. By viewing ECA rules as polynomial maps over GF(2), we connect these two worlds.
 
-## The Polynomial Degree Hierarchy
+The Algebraic Normal Form is not merely a re-encoding — it is a *change of perspective* that opens new questions. If the fixed-point variety doesn't capture complexity, what geometric invariant does? Perhaps the *orbit variety* — the set of periodic points of period *k* — grows at different rates for different complexity classes. Perhaps the *scheme structure* of the variety (which remembers multiplicities and infinitesimal information lost by the naive solution set) carries hidden data about computational capacity.
 
-The 256 rules sort into four strata by polynomial degree:
+These questions sit at the intersection of algebraic geometry, dynamical systems theory, and theoretical computer science. They may not be answered by studying the 256 ECA rules alone — but the ECA rules provide the simplest, most concrete testing ground for ideas that could eventually reshape how we understand computation as a geometric phenomenon.
 
-- **Degree 0** (2 rules): Constants. Rule 0 and Rule 255. No interaction between cells.
-- **Degree 1** (14 rules): Linear/affine rules. The fixed-point set is always a subspace or affine subspace. Completely understood by linear algebra.
-- **Degree 2** (84 rules): Quadratic rules. Fixed-point analysis requires solving quadratic equations over GF(2). Includes Rule 110 and Rule 30.
-- **Degree 3** (156 rules): Cubic rules. Maximum nonlinearity. The majority of all rules.
+## The Shape of Computing
 
-The jump from degree 1 to degree 2 is where Turing-completeness becomes possible. No linear rule is Turing-complete (their dynamics are too simple — they can be solved by matrix exponentiation). Conversely, the known Turing-complete rule (110) has degree 2, suggesting that quadratic nonlinearity may be the "minimum viable complexity" for universal computation.
+There is something philosophically striking about viewing computation through the lens of geometry. A Turing machine is usually imagined as a process — a tape being read, a head moving, symbols being written. But the algebraic perspective suggests that computation is also a *shape*: the shape of a polynomial map's orbits through a high-dimensional space over the simplest possible field.
 
-## The View from Above
+Rule 110's Turing completeness means that every computable function is, in some precise sense, encoded in the orbits of a degree-3 polynomial map over GF(2). The simplest geometry contains the most complex computation.
 
-What does it mean that cellular automata are algebraic varieties? It means that forty years of studying these systems by watching pixels on a screen was seeing only the shadow of a higher-dimensional mathematical object.
-
-The fixed-point variety is just the beginning. The period-k points — states that return to themselves after k steps — form more complex varieties. The orbit structure defines a sheaf on the state space. The entropy of a rule might be readable from the cohomology of this sheaf.
-
-These are not idle speculations. The Zhegalkin representation, the linear subspace theorem, and the complement duality are all rigorously proven. They demonstrate that the bridge between cellular automata and algebraic geometry is not merely metaphorical — it is structural, precise, and computationally meaningful.
-
-The simplest possible computers, it turns out, have been doing algebraic geometry all along. We just needed to look at them with the right eyes.
-
----
-
-*The mathematical results described here have been formally verified using computer-checked proofs, establishing them at the highest level of mathematical certainty.*
+This is perhaps the deepest lesson: complexity is not a property of the space (GF(2)^*n* is finite and structureless), nor of the polynomial (degree 3 is shared by 128 rules), but of the *interaction* between the polynomial and the cyclic structure of the boundary conditions. The geometry of computation emerges from this interaction — and we are only beginning to map its contours.
