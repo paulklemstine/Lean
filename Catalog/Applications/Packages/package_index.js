@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c5c88475",
     "filename": "knots_that_think_cognition_as_braiding_in_category.json",
     "pkg_num": 308,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7005935714285714,
     "title": "Cognitive Braids: Braid Group Invariants as Models of Cognitive Process Complexity"
   },
   {
@@ -9965,8 +9965,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "knots_that_think_cognition_as_braiding_in_category",
       "primary_domain": "Speculative",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7005935714285714,
+      "quality": "substantial",
       "shape": "pentagonal_prism",
       "title": "Cognitive Braids: Braid Group Invariants as Models of Cognitive Process Complexity"
     }
