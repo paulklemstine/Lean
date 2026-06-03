@@ -397,10 +397,33 @@ def rebuild_commit_push() -> bool:
         # Pull with merge (not rebase) — .gitattributes marks auto-generated
         # files with merge=ours so they resolve automatically. Merge handles
         # conflicts in one step instead of replaying every local commit.
+        # Pre-merge: stash any uncommitted changes to avoid conflicts
+        subprocess.run(["git", "stash", "--include-untracked"],
+                       cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+
         pull = subprocess.run(
             ["git", "pull", "--no-rebase", "origin", "master"],
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
         )
+
+        # Post-merge: restore stashed changes, handling conflicts gracefully
+        stash_result = subprocess.run(
+            ["git", "stash", "pop"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+        )
+        if stash_result.returncode != 0:
+            # Stash pop conflict — stage everything and commit
+            print("[Tick] Stash pop conflict — auto-resolving")
+            subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+            # If there are real merge conflicts in tracked files, take ours
+            if _has_conflict_markers():
+                subprocess.run(["git", "checkout", "--ours", "."],
+                               cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+            subprocess.run(
+                ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+            )
         if pull.returncode != 0:
             # Check if the conflict is on auto-generated files we can fix
             if _has_conflict_markers():
