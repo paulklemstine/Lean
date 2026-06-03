@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e8c3ad70",
     "filename": "the_prime_number_crossword_filling_the_gaps_in_the.json",
     "pkg_num": 266,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5090451428571429,
     "title": "Prime Gap Crossword: Modular Forcing and Admissibility Theory"
   },
   {
@@ -8553,8 +8553,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_prime_number_crossword_filling_the_gaps_in_the",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5090451428571429,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Prime Gap Crossword: Modular Forcing and Admissibility Theory"
     }
