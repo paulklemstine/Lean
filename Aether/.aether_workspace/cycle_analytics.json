@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-03T22:49:40.952981+00:00",
+  "last_updated": "2026-06-03T23:23:44.622511+00:00",
   "records": [
     {
       "barrier_count": 0,
@@ -480,6 +480,38 @@
       "theorem_count": 15,
       "timestamp": "2026-06-03T22:49:40.913555+00:00",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "barrier_count": 1,
+      "bridge_count": 13,
+      "cycle_n": 2,
+      "domain": "Algebra",
+      "duration_seconds": 1996.1657791137695,
+      "end_time": 1780529001.7425115,
+      "files_integrated": 6,
+      "job_id": "b85a7e02",
+      "outcome_quality": 0.77047,
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8708,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9197,
+        "novelty": 0.95,
+        "proof_depth": 0.9067,
+        "usefulness": 0.9533
+      },
+      "quality_score": 0.77047,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780527005.5767324,
+      "strategy_count": 164,
+      "theorem_count": 30,
+      "timestamp": "2026-06-03T23:23:44.574962+00:00",
+      "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
     }
   ]
 }

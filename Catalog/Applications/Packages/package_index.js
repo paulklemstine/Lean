@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b85a7e02",
     "filename": "isogeny_based_cryptography_supersingular_isogeny_d.json",
     "pkg_num": 329,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.77047,
     "title": "Supersingular Isogeny Diffie-Hellman: Algebraic Foundations and Cryptanalysis"
   },
   {
@@ -10657,8 +10657,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "isogeny_based_cryptography_supersingular_isogeny_d",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.77047,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Supersingular Isogeny Diffie-Hellman: Algebraic Foundations and Cryptanalysis"
     }
