@@ -1,414 +1,470 @@
 #!/usr/bin/env python3
 """
-Demo: Paraconsistent Logic — Paradoxes as Theorems
+Paraconsistent Logic Demo: Paradoxes as Theorems
 
-Demonstrates Belnap's four-valued logic (FDE) and how the Liar sentence,
-Russell's paradox, and Berry's paradox become provable theorems rather than
-contradictions.
+Demonstrates Belnap's four-valued logic and how the Liar, Russell, and Berry
+paradoxes become well-behaved theorems in a paraconsistent framework.
 """
 
 from enum import Enum
-from typing import Callable
+from typing import Callable, Dict, List, Tuple
 
 
 class BelnapVal(Enum):
-    """Belnap's four truth values."""
+    """The four truth values of Belnap's logic."""
     T = "True"
     F = "False"
     B = "Both"
     N = "Neither"
 
-    def is_true(self) -> bool:
-        return self in (BelnapVal.T, BelnapVal.B)
 
-    def is_false(self) -> bool:
-        return self in (BelnapVal.F, BelnapVal.B)
+def is_true(v: BelnapVal) -> bool:
+    """A value is 'at least true' if it is T or B."""
+    return v in (BelnapVal.T, BelnapVal.B)
 
-    def neg(self) -> 'BelnapVal':
-        return {
-            BelnapVal.T: BelnapVal.F,
-            BelnapVal.F: BelnapVal.T,
-            BelnapVal.B: BelnapVal.B,
-            BelnapVal.N: BelnapVal.N,
-        }[self]
 
-    def conj(self, other: 'BelnapVal') -> 'BelnapVal':
-        if self == BelnapVal.T: return other
-        if other == BelnapVal.T: return self
-        if self == BelnapVal.F or other == BelnapVal.F: return BelnapVal.F
-        if self == BelnapVal.B and other == BelnapVal.B: return BelnapVal.B
-        if (self == BelnapVal.B and other == BelnapVal.N) or \
-           (self == BelnapVal.N and other == BelnapVal.B): return BelnapVal.F
-        return BelnapVal.N  # N, N
+def is_false(v: BelnapVal) -> bool:
+    """A value is 'at least false' if it is F or B."""
+    return v in (BelnapVal.F, BelnapVal.B)
 
-    def disj(self, other: 'BelnapVal') -> 'BelnapVal':
-        if self == BelnapVal.F: return other
-        if other == BelnapVal.F: return self
-        if self == BelnapVal.T or other == BelnapVal.T: return BelnapVal.T
-        if self == BelnapVal.B and other == BelnapVal.B: return BelnapVal.B
-        if (self == BelnapVal.B and other == BelnapVal.N) or \
-           (self == BelnapVal.N and other == BelnapVal.B): return BelnapVal.T
-        return BelnapVal.N
+
+def belnap_neg(v: BelnapVal) -> BelnapVal:
+    """Belnap negation: swaps T↔F, fixes B and N."""
+    return {
+        BelnapVal.T: BelnapVal.F,
+        BelnapVal.F: BelnapVal.T,
+        BelnapVal.B: BelnapVal.B,
+        BelnapVal.N: BelnapVal.N,
+    }[v]
+
+
+def belnap_conj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
+    """Belnap conjunction (truth-order meet)."""
+    table = {
+        (BelnapVal.T, BelnapVal.T): BelnapVal.T,
+        (BelnapVal.T, BelnapVal.F): BelnapVal.F,
+        (BelnapVal.T, BelnapVal.B): BelnapVal.B,
+        (BelnapVal.T, BelnapVal.N): BelnapVal.N,
+        (BelnapVal.F, BelnapVal.T): BelnapVal.F,
+        (BelnapVal.F, BelnapVal.F): BelnapVal.F,
+        (BelnapVal.F, BelnapVal.B): BelnapVal.F,
+        (BelnapVal.F, BelnapVal.N): BelnapVal.F,
+        (BelnapVal.B, BelnapVal.T): BelnapVal.B,
+        (BelnapVal.B, BelnapVal.F): BelnapVal.F,
+        (BelnapVal.B, BelnapVal.B): BelnapVal.B,
+        (BelnapVal.B, BelnapVal.N): BelnapVal.F,
+        (BelnapVal.N, BelnapVal.T): BelnapVal.N,
+        (BelnapVal.N, BelnapVal.F): BelnapVal.F,
+        (BelnapVal.N, BelnapVal.B): BelnapVal.F,
+        (BelnapVal.N, BelnapVal.N): BelnapVal.N,
+    }
+    return table[(a, b)]
+
+
+def belnap_disj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
+    """Belnap disjunction (truth-order join)."""
+    table = {
+        (BelnapVal.T, BelnapVal.T): BelnapVal.T,
+        (BelnapVal.T, BelnapVal.F): BelnapVal.T,
+        (BelnapVal.T, BelnapVal.B): BelnapVal.T,
+        (BelnapVal.T, BelnapVal.N): BelnapVal.T,
+        (BelnapVal.F, BelnapVal.T): BelnapVal.T,
+        (BelnapVal.F, BelnapVal.F): BelnapVal.F,
+        (BelnapVal.F, BelnapVal.B): BelnapVal.B,
+        (BelnapVal.F, BelnapVal.N): BelnapVal.N,
+        (BelnapVal.B, BelnapVal.T): BelnapVal.T,
+        (BelnapVal.B, BelnapVal.F): BelnapVal.B,
+        (BelnapVal.B, BelnapVal.B): BelnapVal.B,
+        (BelnapVal.B, BelnapVal.N): BelnapVal.T,
+        (BelnapVal.N, BelnapVal.T): BelnapVal.T,
+        (BelnapVal.N, BelnapVal.F): BelnapVal.N,
+        (BelnapVal.N, BelnapVal.B): BelnapVal.T,
+        (BelnapVal.N, BelnapVal.N): BelnapVal.N,
+    }
+    return table[(a, b)]
 
 
 def demo_liar_paradox():
-    """Demonstrate the Liar sentence in Belnap logic."""
+    """Demonstrate the Liar sentence in four-valued logic."""
     print("=" * 60)
-    print("LIAR PARADOX: 'This sentence is false'")
+    print("DEMO 1: The Liar Paradox")
     print("=" * 60)
     print()
-
+    print("The Liar sentence L says 'L is false'.")
+    print("Formally: truth(L) = truth(neg(L)) = neg(truth(L))")
+    print()
+    print("In classical logic, this leads to contradiction:")
+    print("  If truth(L) = T, then neg(T) = F ≠ T  →  contradiction!")
+    print("  If truth(L) = F, then neg(F) = T ≠ F  →  contradiction!")
+    print()
+    print("In four-valued logic, we check all values:")
     for v in BelnapVal:
-        neg_v = v.neg()
+        neg_v = belnap_neg(v)
         is_fixed = (v == neg_v)
-        print(f"  If Liar = {v.value:8s}: neg(Liar) = {neg_v.value:8s} "
-              f"{'✓ FIXED POINT' if is_fixed else '✗ not a fixed point'}")
-
+        at_least_true = is_true(v)
+        status = "✓ FIXED POINT" if is_fixed else "✗ not a fixed point"
+        if is_fixed:
+            status += f" (at-least-true: {at_least_true})"
+        print(f"  truth(L) = {v.value:8s} → neg(truth(L)) = {neg_v.value:8s}  {status}")
     print()
-    print("  Result: Only B (Both) and N (Neither) are fixed points of negation.")
-    print("  The Liar sentence with positive truth info must be B (a dialetheia).")
+    print("Result: The Liar has value Both — it is simultaneously true and false.")
+    print("        Both is at-least-true, so the Liar is a valid theorem.")
     print()
 
 
 def demo_russell_paradox():
-    """Demonstrate Russell's paradox in Belnap logic."""
+    """Demonstrate Russell's set in four-valued logic."""
     print("=" * 60)
-    print("RUSSELL'S PARADOX: R = {x | x ∉ x}")
+    print("DEMO 2: Russell's Paradox")
     print("=" * 60)
     print()
-
+    print("Russell's set R = {x : x ∉ x}.")
+    print("Self-membership: mem(R,R) = neg(mem(R,R))")
+    print()
+    print("Same fixed-point analysis as the Liar:")
     for v in BelnapVal:
-        neg_v = v.neg()
+        neg_v = belnap_neg(v)
         is_fixed = (v == neg_v)
-        print(f"  If R ∈ R = {v.value:8s}: R ∉ R = neg({v.value}) = {neg_v.value:8s} "
-              f"{'✓ CONSISTENT' if is_fixed else '✗ inconsistent'}")
-
+        if is_fixed:
+            print(f"  mem(R,R) = {v.value:8s} → neg = {neg_v.value:8s}  ✓ CONSISTENT")
+        else:
+            print(f"  mem(R,R) = {v.value:8s} → neg = {neg_v.value:8s}  ✗ inconsistent")
     print()
-    print("  Result: R ∈ R must be B or N. With positive info, R ∈ R = B.")
-    print("  Russell's set both contains and doesn't contain itself.")
+    print("Result: R both contains and doesn't contain itself (value Both).")
     print()
 
 
 def demo_berry_paradox():
     """Demonstrate Berry's paradox via pigeonhole."""
     print("=" * 60)
-    print("BERRY'S PARADOX: More objects than descriptions")
+    print("DEMO 3: Berry's Paradox")
     print("=" * 60)
     print()
-
+    print("'The smallest number not definable in fewer than 20 words'")
+    print()
     n_descriptions = 10
-    n_objects = 15
-
-    print(f"  Descriptions available: {n_descriptions}")
-    print(f"  Objects to describe:    {n_objects}")
-    print(f"  Pigeonhole: {n_objects} > {n_descriptions}")
-    print(f"  → At least {n_objects - n_descriptions} collisions must occur")
-    print(f"  → Some description applies to multiple objects")
+    n_numbers = 15
+    print(f"Suppose we have {n_descriptions} descriptions and {n_numbers} numbers.")
+    print(f"Any definability function f: numbers → descriptions is non-injective.")
     print()
 
-    # Concrete example
+    # Simulate pigeonhole
     import random
     random.seed(42)
-    assignment = {i: random.randint(0, n_descriptions - 1) for i in range(n_objects)}
-    collisions = {}
-    for obj, desc in assignment.items():
-        collisions.setdefault(desc, []).append(obj)
+    f = {i: random.randint(0, n_descriptions - 1) for i in range(n_numbers)}
+    print("Example definability mapping:")
+    for num, desc in f.items():
+        print(f"  number {num:2d} → description {desc}")
 
-    print("  Example assignment (object → description):")
-    for obj, desc in sorted(assignment.items()):
-        print(f"    Object {obj:2d} → Description {desc}")
+    # Find collision
+    reverse: Dict[int, List[int]] = {}
+    for num, desc in f.items():
+        reverse.setdefault(desc, []).append(num)
+
+    for desc, nums in reverse.items():
+        if len(nums) > 1:
+            print(f"\nCollision found! Numbers {nums} all map to description {desc}")
+            break
 
     print()
-    print("  Collisions found:")
-    for desc, objs in sorted(collisions.items()):
-        if len(objs) > 1:
-            print(f"    Description {desc}: objects {objs}")
+    print("Result: Multiple numbers share the same description.")
+    print("        Berry's 'paradox' is just the pigeonhole principle.")
     print()
 
 
 def demo_explosion_failure():
-    """Show that explosion fails in FDE."""
+    """Demonstrate that explosion fails in FDE."""
     print("=" * 60)
-    print("EXPLOSION FAILURE IN FDE")
+    print("DEMO 4: Explosion Failure")
     print("=" * 60)
+    print()
+    print("Classical logic: From p ∧ ¬p, anything follows (ex falso quodlibet).")
+    print("FDE: Contradiction does NOT imply everything.")
+    print()
+    print("Check p ∧ ¬p for each truth value:")
+    for v in BelnapVal:
+        neg_v = belnap_neg(v)
+        conj_v = belnap_conj(v, neg_v)
+        print(f"  p = {v.value:8s} → p ∧ ¬p = {conj_v.value:8s}")
+
+    print()
+    print("When p = Both: p ∧ ¬p = Both (not True!).")
+    print("Contradiction stays contained — no explosion.")
     print()
 
-    print("  Classical logic: (p ∧ ¬p) → q  [ex falso quodlibet]")
-    print("  FDE: Let p = Both, q = False")
+
+def demo_four_value_necessity():
+    """Demonstrate why three values aren't enough."""
+    print("=" * 60)
+    print("DEMO 5: Why Four Values Are Necessary")
+    print("=" * 60)
+    print()
+    print("Three-valued logic has T, F, I (intermediate).")
+    print("Negation: neg(T)=F, neg(F)=T, neg(I)=I")
     print()
 
-    p = BelnapVal.B
-    q = BelnapVal.F
-    contradiction = p.conj(p.neg())
-    print(f"  p = {p.value}")
-    print(f"  ¬p = {p.neg().value}")
-    print(f"  p ∧ ¬p = {contradiction.value}")
-    print(f"  isTrue(p ∧ ¬p) = {contradiction.is_true()}")
-    print(f"  q = {q.value}")
-    print(f"  isTrue(q) = {q.is_true()}")
+    three_vals = {"T": "F", "F": "T", "I": "I"}
+    three_true = {"T": True, "F": False, "I": False}
+
+    print("Fixed points of negation in 3-valued logic:")
+    for v, neg_v in three_vals.items():
+        if v == neg_v:
+            at_true = three_true[v]
+            print(f"  {v} is a fixed point. At-least-true? {at_true}")
     print()
-    print(f"  Result: p ∧ ¬p is true (Both), but q is false.")
-    print(f"  Explosion FAILS: a contradiction does not make everything true.")
+    print("Only I is a fixed point, and I is NOT at-least-true.")
+    print("⟹ Three-valued logic cannot make the Liar a theorem!")
+    print()
+
+    print("Fixed points of negation in 4-valued logic:")
+    for v in BelnapVal:
+        if v == belnap_neg(v):
+            print(f"  {v.value} is a fixed point. At-least-true? {is_true(v)}")
+    print()
+    print("B is a fixed point AND at-least-true.")
+    print("⟹ Four-valued logic CAN make the Liar a theorem!")
     print()
 
 
 def demo_inconsistency_spectrum():
-    """Show the inconsistency spectrum for a theory with paradoxes."""
+    """Demonstrate the inconsistency spectrum of a sample theory."""
     print("=" * 60)
-    print("INCONSISTENCY SPECTRUM")
+    print("DEMO 6: Inconsistency Spectrum")
     print("=" * 60)
     print()
 
-    # A theory on 8 sentences
-    n = 8
-    truth_values = [
-        BelnapVal.T,  # 0: "1 + 1 = 2"
-        BelnapVal.T,  # 1: "The sky is blue"
-        BelnapVal.F,  # 2: "2 + 2 = 5"
-        BelnapVal.F,  # 3: "The Earth is flat"
-        BelnapVal.B,  # 4: "This sentence is false" (Liar)
-        BelnapVal.B,  # 5: "R ∈ R" (Russell's set)
-        BelnapVal.N,  # 6: "The continuum hypothesis" (undecidable)
-        BelnapVal.T,  # 7: "∀x. x = x"
+    # Sample theory: 8 sentences with mixed truth values
+    sentences = ["p", "q", "r", "s", "t", "u", "v", "w"]
+    truth_vals = [
+        BelnapVal.T, BelnapVal.B, BelnapVal.F, BelnapVal.B,
+        BelnapVal.T, BelnapVal.N, BelnapVal.B, BelnapVal.T,
     ]
 
-    names = [
-        "1 + 1 = 2",
-        "The sky is blue",
-        "2 + 2 = 5",
-        "The Earth is flat",
-        "This sentence is false",
-        "R ∈ R",
-        "Continuum hypothesis",
-        "∀x. x = x",
-    ]
+    print("Sample theory with 8 sentences:")
+    for s, v in zip(sentences, truth_vals):
+        marker = " ← DIALETHEIA" if v == BelnapVal.B else ""
+        print(f"  truth({s}) = {v.value}{marker}")
 
-    print(f"  Theory with {n} sentences:")
-    for i, (name, val) in enumerate(zip(names, truth_values)):
-        print(f"    [{i}] {name:30s} → {val.value}")
-
-    spectrum = {v: 0 for v in BelnapVal}
-    for v in truth_values:
-        spectrum[v] += 1
-
+    spectrum = {v: sum(1 for tv in truth_vals if tv == v) for v in BelnapVal}
     print()
-    print(f"  Spectrum: T={spectrum[BelnapVal.T]}, F={spectrum[BelnapVal.F]}, "
-          f"B={spectrum[BelnapVal.B]}, N={spectrum[BelnapVal.N]}")
-    print(f"  Total: {sum(spectrum.values())} = {n}")
-    print(f"  Inconsistency degree (B count): {spectrum[BelnapVal.B]}")
-    print(f"  Tolerance threshold: B ≤ n - 2 = {n - 2}: "
-          f"{'✓' if spectrum[BelnapVal.B] <= n - 2 else '✗'}")
+    print("Inconsistency Spectrum:")
+    for v, count in spectrum.items():
+        bar = "█" * count
+        print(f"  {v.value:8s}: {count} {bar}")
+
+    inc_degree = spectrum[BelnapVal.B]
+    total = len(sentences)
+    print()
+    print(f"Inconsistency degree: {inc_degree}/{total} = {inc_degree/total:.1%}")
+    print(f"Theory is non-trivial: has T ({spectrum[BelnapVal.T]}) and F ({spectrum[BelnapVal.F]})")
+    print(f"Tolerance threshold: ≤ {total - 2} dialetheias ✓ ({inc_degree} ≤ {total - 2})")
     print()
 
 
-def demo_self_soundness():
-    """Demonstrate self-soundness of a paraconsistent theory."""
+def demo_paradox_span():
+    """Demonstrate paradox span closure."""
     print("=" * 60)
-    print("SELF-SOUNDNESS")
+    print("DEMO 7: Paradox Span Closure")
     print("=" * 60)
     print()
-
-    provable = {
-        "1 + 1 = 2": BelnapVal.T,
-        "∀x. x = x": BelnapVal.T,
-        "This sentence is false": BelnapVal.B,  # Liar
-        "This theory is sound": BelnapVal.T,     # Soundness sentence
-    }
-
-    print("  Provable sentences and their truth values:")
-    all_sound = True
-    for name, val in provable.items():
-        is_sound = val.is_true()
-        all_sound = all_sound and is_sound
-        print(f"    {name:30s} → {val.value:8s} isTrue={is_sound} "
-              f"{'✓ sound' if is_sound else '✗ unsound'}")
-
-    print()
-    print(f"  Theory is sound: {all_sound}")
-    print()
-    print("  Key insight: The Liar sentence has value Both, which IS at-least-true.")
-    print("  So the theory proves its own soundness despite containing a paradox!")
-    print("  This is impossible in classical logic (Gödel's 2nd incompleteness theorem).")
+    print("Starting from B-valued seeds, apply connectives:")
     print()
 
-
-def demo_truth_table():
-    """Print the full truth tables for FDE connectives."""
-    print("=" * 60)
-    print("FDE TRUTH TABLES")
-    print("=" * 60)
+    b = BelnapVal.B
+    print(f"  seed: B")
+    print(f"  neg(B) = {belnap_neg(b).value}")
+    print(f"  conj(B, B) = {belnap_conj(b, b).value}")
+    print(f"  disj(B, B) = {belnap_disj(b, b).value}")
+    print(f"  neg(conj(B, B)) = {belnap_neg(belnap_conj(b, b)).value}")
+    print(f"  disj(neg(B), conj(B, B)) = {belnap_disj(belnap_neg(b), belnap_conj(b, b)).value}")
     print()
-
-    vals = list(BelnapVal)
-
-    print("  NEGATION:")
-    print(f"  {'v':>8s} | {'¬v':>8s}")
-    print(f"  {'-'*8}-+-{'-'*8}")
-    for v in vals:
-        print(f"  {v.value:>8s} | {v.neg().value:>8s}")
-
-    print()
-    print("  CONJUNCTION (∧):")
-    header = "  " + " " * 10 + "".join(f"{v.value:>8s}" for v in vals)
-    print(header)
-    print("  " + "-" * (10 + 8 * len(vals)))
-    for a in vals:
-        row = f"  {a.value:>8s} |"
-        for b in vals:
-            row += f"{a.conj(b).value:>8s}"
-        print(row)
-
-    print()
-    print("  DISJUNCTION (∨):")
-    print(header)
-    print("  " + "-" * (10 + 8 * len(vals)))
-    for a in vals:
-        row = f"  {a.value:>8s} |"
-        for b in vals:
-            row += f"{a.disj(b).value:>8s}"
-        print(row)
+    print("Every derived sentence is Both!")
+    print("The paradox span of {B} is closed: inconsistency propagates perfectly.")
+    print("But it never leaks to non-B sentences.")
     print()
 
 
 if __name__ == "__main__":
-    demo_truth_table()
     demo_liar_paradox()
     demo_russell_paradox()
     demo_berry_paradox()
     demo_explosion_failure()
+    demo_four_value_necessity()
     demo_inconsistency_spectrum()
-    demo_self_soundness()
+    demo_paradox_span()
+
+    print("=" * 60)
+    print("SUMMARY")
+    print("=" * 60)
+    print()
+    print("All three classical paradoxes become theorems in 4-valued logic:")
+    print("  • Liar: truth value Both (both true and false)")
+    print("  • Russell: self-membership value Both")
+    print("  • Berry: pigeonhole principle (non-injectivity)")
+    print()
+    print("Key insight: Four values are NECESSARY and SUFFICIENT.")
+    print("Three-valued logic provably cannot do this.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Inconsistency Spectrum of Paraconsistent Theories
+Visualization: Belnap's Four-Valued Logic Lattice and Truth Tables
 
-Shows how the distribution of truth values (T, F, B, N) varies across
-theories with different levels of inconsistency tolerance.
+Generates a visual representation of the Belnap lattice, truth tables
+for all connectives, and the inconsistency spectrum of sample theories.
 """
-import matplotlib
-matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
-def compute_max_both(n: int, has_t: bool, has_f: bool) -> int:
-    """Maximum number of Both-valued sentences in a theory of size n."""
-    if has_t and has_f:
-        return max(0, n - 2)
-    elif has_t or has_f:
-        return max(0, n - 1)
-    else:
-        return n
+def plot_belnap_lattice(ax):
+    """Plot the Belnap bilattice (truth and information orderings)."""
+    # Positions: information ordering vertical, truth ordering horizontal
+    positions = {
+        'N': (0.5, 0.0),   # bottom (least info)
+        'T': (0.0, 0.5),   # left (true)
+        'F': (1.0, 0.5),   # right (false)
+        'B': (0.5, 1.0),   # top (most info)
+    }
 
+    colors = {
+        'T': '#2ecc71',  # green
+        'F': '#e74c3c',  # red
+        'B': '#9b59b6',  # purple
+        'N': '#95a5a6',  # gray
+    }
 
-def plot_tolerance_threshold():
-    """Plot the tolerance threshold: max B-count vs theory size."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    labels = {
+        'T': 'True',
+        'F': 'False',
+        'B': 'Both',
+        'N': 'Neither',
+    }
 
-    # Left: Tolerance threshold
-    ax = axes[0]
-    ns = np.arange(2, 21)
-    max_b_nontrivial = np.array([max(0, n - 2) for n in ns])
-    max_b_trivial = ns.copy()
+    # Draw edges (information ordering)
+    info_edges = [('N', 'T'), ('N', 'F'), ('T', 'B'), ('F', 'B')]
+    for a, b in info_edges:
+        ax.plot([positions[a][0], positions[b][0]],
+                [positions[a][1], positions[b][1]],
+                'k-', linewidth=1.5, alpha=0.4)
 
-    ax.fill_between(ns, 0, max_b_nontrivial, alpha=0.3, color='green',
-                     label='Allowed B-count (non-trivial)')
-    ax.fill_between(ns, max_b_nontrivial, ns, alpha=0.2, color='red',
-                     label='Forbidden zone')
-    ax.plot(ns, max_b_nontrivial, 'g-', linewidth=2, label='Threshold: n − 2')
-    ax.plot(ns, ns, 'k--', linewidth=1, alpha=0.5, label='n (trivial bound)')
-
-    ax.set_xlabel('Number of sentences (n)', fontsize=12)
-    ax.set_ylabel('Maximum Both-valued sentences', fontsize=12)
-    ax.set_title('Inconsistency Tolerance Threshold', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: Example spectra
-    ax = axes[1]
-    theories = [
-        ("Classical\n(all T/F)", [3, 5, 0, 0]),
-        ("Minimal\nparadox", [3, 4, 1, 0]),
-        ("Balanced\nparadox", [2, 2, 2, 2]),
-        ("Heavy\nparadox", [1, 1, 5, 1]),
-        ("Gap-heavy", [2, 2, 1, 3]),
-    ]
-
-    x = np.arange(len(theories))
-    width = 0.2
-    colors = ['#2196F3', '#F44336', '#FF9800', '#9E9E9E']
-    labels = ['True (T)', 'False (F)', 'Both (B)', 'Neither (N)']
-
-    for i, (color, label) in enumerate(zip(colors, labels)):
-        values = [t[1][i] for t in theories]
-        ax.bar(x + i * width, values, width, color=color, label=label, edgecolor='white')
-
-    ax.set_xticks(x + 1.5 * width)
-    ax.set_xticklabels([t[0] for t in theories], fontsize=9)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Example Inconsistency Spectra (n=8)', fontsize=14)
-    ax.legend(fontsize=9, loc='upper right')
-    ax.grid(True, alpha=0.3, axis='y')
-
-    plt.tight_layout()
-    plt.savefig('inconsistency_spectrum.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: inconsistency_spectrum.png")
-
-
-def plot_belnap_lattice():
-    """Plot the Belnap information and truth ordering lattices."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Information ordering
-    ax = axes[0]
-    positions = {'N': (0, 0), 'T': (-1, 1), 'F': (1, 1), 'B': (0, 2)}
-    edges = [('N', 'T'), ('N', 'F'), ('T', 'B'), ('F', 'B')]
-
-    for (a, b) in edges:
-        ax.annotate("", xy=positions[b], xytext=positions[a],
-                     arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
-
-    colors_map = {'T': '#2196F3', 'F': '#F44336', 'B': '#FF9800', 'N': '#9E9E9E'}
+    # Draw nodes
     for name, (x, y) in positions.items():
-        ax.plot(x, y, 'o', markersize=25, color=colors_map[name], zorder=5)
-        ax.text(x, y, name, ha='center', va='center', fontsize=14,
-                fontweight='bold', color='white', zorder=6)
+        circle = plt.Circle((x, y), 0.08, color=colors[name],
+                           ec='black', linewidth=2, zorder=5)
+        ax.add_patch(circle)
+        ax.text(x, y, name, ha='center', va='center',
+               fontsize=14, fontweight='bold', color='white', zorder=6)
+        ax.text(x, y - 0.14, labels[name], ha='center', va='top',
+               fontsize=9, color=colors[name])
 
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-0.5, 2.5)
-    ax.set_title('Information Ordering\n(N = least info, B = most)', fontsize=13)
+    # Labels
+    ax.text(0.5, 1.18, '↑ more information', ha='center', fontsize=8, color='gray')
+    ax.text(0.5, -0.18, '↓ less information', ha='center', fontsize=8, color='gray')
+    ax.text(-0.2, 0.5, '← true', ha='center', va='center', fontsize=8,
+           color='#2ecc71', rotation=90)
+    ax.text(1.2, 0.5, 'false →', ha='center', va='center', fontsize=8,
+           color='#e74c3c', rotation=90)
+
+    ax.set_xlim(-0.4, 1.4)
+    ax.set_ylim(-0.3, 1.3)
     ax.set_aspect('equal')
+    ax.set_title('Belnap Bilattice', fontsize=14, fontweight='bold')
     ax.axis('off')
 
-    # Truth ordering
-    ax = axes[1]
-    positions2 = {'F': (0, 0), 'N': (-1, 1), 'B': (1, 1), 'T': (0, 2)}
-    edges2 = [('F', 'N'), ('F', 'B'), ('N', 'T'), ('B', 'T')]
 
-    for (a, b) in edges2:
-        ax.annotate("", xy=positions2[b], xytext=positions2[a],
-                     arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
+def plot_truth_table(ax, operation, title):
+    """Plot a 4x4 truth table as a colored grid."""
+    vals = ['T', 'F', 'B', 'N']
+    colors_map = {
+        'T': '#2ecc71',
+        'F': '#e74c3c',
+        'B': '#9b59b6',
+        'N': '#95a5a6',
+    }
 
-    for name, (x, y) in positions2.items():
-        ax.plot(x, y, 'o', markersize=25, color=colors_map[name], zorder=5)
-        ax.text(x, y, name, ha='center', va='center', fontsize=14,
-                fontweight='bold', color='white', zorder=6)
+    grid = np.zeros((4, 4, 3))
+    for i, a in enumerate(vals):
+        for j, b in enumerate(vals):
+            result = operation(a, b)
+            r, g, bl = [int(colors_map[result][k:k+2], 16)/255
+                       for k in (1, 3, 5)]
+            grid[i, j] = [r, g, bl]
 
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-0.5, 2.5)
-    ax.set_title('Truth Ordering\n(F = least true, T = most)', fontsize=13)
-    ax.set_aspect('equal')
-    ax.axis('off')
+    ax.imshow(grid, interpolation='nearest', aspect='equal')
 
-    plt.tight_layout()
-    plt.savefig('belnap_lattice.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: belnap_lattice.png")
+    for i, a in enumerate(vals):
+        for j, b in enumerate(vals):
+            result = operation(a, b)
+            ax.text(j, i, result, ha='center', va='center',
+                   fontsize=11, fontweight='bold', color='white')
+
+    ax.set_xticks(range(4))
+    ax.set_yticks(range(4))
+    ax.set_xticklabels(vals)
+    ax.set_yticklabels(vals)
+    ax.set_xlabel('Right operand')
+    ax.set_ylabel('Left operand')
+    ax.set_title(title, fontsize=12, fontweight='bold')
+
+
+def conj_op(a, b):
+    table = {
+        ('T','T'):'T',('T','F'):'F',('T','B'):'B',('T','N'):'N',
+        ('F','T'):'F',('F','F'):'F',('F','B'):'F',('F','N'):'F',
+        ('B','T'):'B',('B','F'):'F',('B','B'):'B',('B','N'):'F',
+        ('N','T'):'N',('N','F'):'F',('N','B'):'F',('N','N'):'N',
+    }
+    return table[(a, b)]
+
+
+def disj_op(a, b):
+    table = {
+        ('T','T'):'T',('T','F'):'T',('T','B'):'T',('T','N'):'T',
+        ('F','T'):'T',('F','F'):'F',('F','B'):'B',('F','N'):'N',
+        ('B','T'):'T',('B','F'):'B',('B','B'):'B',('B','N'):'T',
+        ('N','T'):'T',('N','F'):'N',('N','B'):'T',('N','N'):'N',
+    }
+    return table[(a, b)]
+
+
+def plot_inconsistency_spectrum(ax):
+    """Plot the inconsistency spectrum of a sample theory."""
+    categories = ['True', 'False', 'Both', 'Neither']
+    values = [3, 2, 2, 1]
+    colors = ['#2ecc71', '#e74c3c', '#9b59b6', '#95a5a6']
+
+    bars = ax.bar(categories, values, color=colors, edgecolor='black', linewidth=1.5)
+
+    for bar, val in zip(bars, values):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+               str(val), ha='center', va='bottom', fontweight='bold', fontsize=12)
+
+    ax.set_ylabel('Number of sentences')
+    ax.set_title('Inconsistency Spectrum\n(sample theory, 8 sentences)', fontsize=12, fontweight='bold')
+    ax.set_ylim(0, max(values) + 1)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    # Annotation
+    inc_ratio = values[2] / sum(values)
+    ax.text(0.95, 0.95, f'Inconsistency: {inc_ratio:.0%}',
+           transform=ax.transAxes, ha='right', va='top',
+           fontsize=10, bbox=dict(boxstyle='round', facecolor='#f0e6f6'))
 
 
 if __name__ == "__main__":
-    plot_tolerance_threshold()
-    plot_belnap_lattice()
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    plot_belnap_lattice(axes[0, 0])
+    plot_truth_table(axes[0, 1], conj_op, 'Conjunction (∧)')
+    plot_truth_table(axes[1, 0], disj_op, 'Disjunction (∨)')
+    plot_inconsistency_spectrum(axes[1, 1])
+
+    fig.suptitle("Belnap's Four-Valued Logic: Paradoxes as Theorems",
+                fontsize=16, fontweight='bold', y=0.98)
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig('belnap_visualization.png', dpi=150, bbox_inches='tight')
+    plt.show()

@@ -1,166 +1,244 @@
 #!/usr/bin/env python3
 """
-Algorithms for Paraconsistent Logic and the Inconsistency Spectrum.
+Algorithms for Paraconsistent Logic: Four-Valued Reasoning Engine
 
-Type-hinted implementations of core algorithms for Belnap's four-valued logic,
-FDE formula evaluation, inconsistency spectrum computation, and paradox detection.
+Type-hinted implementations of the core algorithms for Belnap's FDE logic,
+including formula evaluation, satisfiability checking, and inconsistency
+spectrum computation.
 """
 
 from enum import Enum
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Set, Optional, Callable
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
+
+# ═══════════════════════════════════════════════════════════════
+# Core Types
+# ═══════════════════════════════════════════════════════════════
 
 class BelnapVal(Enum):
-    """Belnap's four truth values with associated operations."""
+    """The four truth values of Belnap's logic FDE."""
     T = 0  # True only
     F = 1  # False only
     B = 2  # Both true and false
     N = 3  # Neither true nor false
 
     def is_true(self) -> bool:
+        """Is this value at-least-true?"""
         return self in (BelnapVal.T, BelnapVal.B)
 
     def is_false(self) -> bool:
+        """Is this value at-least-false?"""
         return self in (BelnapVal.F, BelnapVal.B)
 
     def neg(self) -> 'BelnapVal':
+        """Belnap negation."""
         return _NEG_TABLE[self]
 
     def conj(self, other: 'BelnapVal') -> 'BelnapVal':
+        """Belnap conjunction."""
         return _CONJ_TABLE[(self, other)]
 
     def disj(self, other: 'BelnapVal') -> 'BelnapVal':
+        """Belnap disjunction."""
         return _DISJ_TABLE[(self, other)]
 
-    def info_le(self, other: 'BelnapVal') -> bool:
-        """Information ordering: N ≤ everything, T,F ≤ B."""
-        return _INFO_LE[(self, other)]
 
-
-# Precomputed tables for O(1) operations
-_NEG_TABLE = {
-    BelnapVal.T: BelnapVal.F, BelnapVal.F: BelnapVal.T,
-    BelnapVal.B: BelnapVal.B, BelnapVal.N: BelnapVal.N,
+# Lookup tables for efficient computation
+_NEG_TABLE: Dict[BelnapVal, BelnapVal] = {
+    BelnapVal.T: BelnapVal.F,
+    BelnapVal.F: BelnapVal.T,
+    BelnapVal.B: BelnapVal.B,
+    BelnapVal.N: BelnapVal.N,
 }
 
-_CONJ_TABLE = {}
-_DISJ_TABLE = {}
-_INFO_LE = {}
+_CONJ_TABLE: Dict[Tuple[BelnapVal, BelnapVal], BelnapVal] = {
+    (BelnapVal.T, BelnapVal.T): BelnapVal.T,
+    (BelnapVal.T, BelnapVal.F): BelnapVal.F,
+    (BelnapVal.T, BelnapVal.B): BelnapVal.B,
+    (BelnapVal.T, BelnapVal.N): BelnapVal.N,
+    (BelnapVal.F, BelnapVal.T): BelnapVal.F,
+    (BelnapVal.F, BelnapVal.F): BelnapVal.F,
+    (BelnapVal.F, BelnapVal.B): BelnapVal.F,
+    (BelnapVal.F, BelnapVal.N): BelnapVal.F,
+    (BelnapVal.B, BelnapVal.T): BelnapVal.B,
+    (BelnapVal.B, BelnapVal.F): BelnapVal.F,
+    (BelnapVal.B, BelnapVal.B): BelnapVal.B,
+    (BelnapVal.B, BelnapVal.N): BelnapVal.F,
+    (BelnapVal.N, BelnapVal.T): BelnapVal.N,
+    (BelnapVal.N, BelnapVal.F): BelnapVal.F,
+    (BelnapVal.N, BelnapVal.B): BelnapVal.F,
+    (BelnapVal.N, BelnapVal.N): BelnapVal.N,
+}
 
-def _init_tables():
-    T, F, B, N = BelnapVal.T, BelnapVal.F, BelnapVal.B, BelnapVal.N
-    conj_raw = {
-        (T,T):T, (T,F):F, (T,B):B, (T,N):N,
-        (F,T):F, (F,F):F, (F,B):F, (F,N):F,
-        (B,T):B, (B,F):F, (B,B):B, (B,N):F,
-        (N,T):N, (N,F):F, (N,B):F, (N,N):N,
-    }
-    disj_raw = {
-        (T,T):T, (T,F):T, (T,B):T, (T,N):T,
-        (F,T):T, (F,F):F, (F,B):B, (F,N):N,
-        (B,T):T, (B,F):B, (B,B):B, (B,N):T,
-        (N,T):T, (N,F):N, (N,B):T, (N,N):N,
-    }
-    info_le_raw = {
-        (N,N):True,(N,T):True,(N,F):True,(N,B):True,
-        (T,N):False,(T,T):True,(T,F):False,(T,B):True,
-        (F,N):False,(F,T):False,(F,F):True,(F,B):True,
-        (B,N):False,(B,T):False,(B,F):False,(B,B):True,
-    }
-    _CONJ_TABLE.update(conj_raw)
-    _DISJ_TABLE.update(disj_raw)
-    _INFO_LE.update(info_le_raw)
-
-_init_tables()
+_DISJ_TABLE: Dict[Tuple[BelnapVal, BelnapVal], BelnapVal] = {
+    (BelnapVal.T, BelnapVal.T): BelnapVal.T,
+    (BelnapVal.T, BelnapVal.F): BelnapVal.T,
+    (BelnapVal.T, BelnapVal.B): BelnapVal.T,
+    (BelnapVal.T, BelnapVal.N): BelnapVal.T,
+    (BelnapVal.F, BelnapVal.T): BelnapVal.T,
+    (BelnapVal.F, BelnapVal.F): BelnapVal.F,
+    (BelnapVal.F, BelnapVal.B): BelnapVal.B,
+    (BelnapVal.F, BelnapVal.N): BelnapVal.N,
+    (BelnapVal.B, BelnapVal.T): BelnapVal.T,
+    (BelnapVal.B, BelnapVal.F): BelnapVal.B,
+    (BelnapVal.B, BelnapVal.B): BelnapVal.B,
+    (BelnapVal.B, BelnapVal.N): BelnapVal.T,
+    (BelnapVal.N, BelnapVal.T): BelnapVal.T,
+    (BelnapVal.N, BelnapVal.F): BelnapVal.N,
+    (BelnapVal.N, BelnapVal.B): BelnapVal.T,
+    (BelnapVal.N, BelnapVal.N): BelnapVal.N,
+}
 
 
-# ─── FDE Formula AST ──────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
+# Formula AST
+# ═══════════════════════════════════════════════════════════════
 
 @dataclass(frozen=True)
-class Atom:
-    """Propositional atom."""
+class FDEFormula:
+    """Base class for FDE formulas."""
+    pass
+
+
+@dataclass(frozen=True)
+class Atom(FDEFormula):
+    """Atomic proposition."""
     index: int
 
+
 @dataclass(frozen=True)
-class Neg:
+class Neg(FDEFormula):
     """Negation."""
-    sub: 'FDEFormula'
+    sub: FDEFormula
+
 
 @dataclass(frozen=True)
-class Conj:
+class Conj(FDEFormula):
     """Conjunction."""
-    left: 'FDEFormula'
-    right: 'FDEFormula'
+    left: FDEFormula
+    right: FDEFormula
+
 
 @dataclass(frozen=True)
-class Disj:
+class Disj(FDEFormula):
     """Disjunction."""
-    left: 'FDEFormula'
-    right: 'FDEFormula'
-
-FDEFormula = Atom | Neg | Conj | Disj
+    left: FDEFormula
+    right: FDEFormula
 
 
-def eval_formula(v: Callable[[int], BelnapVal], phi: FDEFormula) -> BelnapVal:
-    """Evaluate an FDE formula under a valuation."""
-    match phi:
-        case Atom(i):
-            return v(i)
-        case Neg(sub):
-            return eval_formula(v, sub).neg()
-        case Conj(left, right):
-            return eval_formula(v, left).conj(eval_formula(v, right))
-        case Disj(left, right):
-            return eval_formula(v, left).disj(eval_formula(v, right))
+Valuation = Callable[[int], BelnapVal]
 
 
-def is_fde_tautology(phi: FDEFormula, n_vars: int) -> bool:
-    """Check if a formula is an FDE tautology (at-least-true under all valuations).
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 1: FDE Formula Evaluation
+# ═══════════════════════════════════════════════════════════════
 
-    Exhaustive check over all 4^n_vars valuations.
-    Complexity: O(4^n_vars × |phi|)
+def evaluate(formula: FDEFormula, valuation: Valuation) -> BelnapVal:
     """
-    vals = list(BelnapVal)
-    for assignment in _all_assignments(n_vars, vals):
-        v = lambda i, a=assignment: a.get(i, BelnapVal.N)
-        if not eval_formula(v, phi).is_true():
+    Evaluate an FDE formula under a given valuation.
+
+    Time complexity: O(|formula|)
+    Space complexity: O(depth(formula)) for recursion stack
+
+    Args:
+        formula: The FDE formula to evaluate
+        valuation: Maps atom indices to Belnap values
+
+    Returns:
+        The Belnap truth value of the formula
+    """
+    if isinstance(formula, Atom):
+        return valuation(formula.index)
+    elif isinstance(formula, Neg):
+        return evaluate(formula.sub, valuation).neg()
+    elif isinstance(formula, Conj):
+        return evaluate(formula.left, valuation).conj(
+            evaluate(formula.right, valuation)
+        )
+    elif isinstance(formula, Disj):
+        return evaluate(formula.left, valuation).disj(
+            evaluate(formula.right, valuation)
+        )
+    else:
+        raise ValueError(f"Unknown formula type: {type(formula)}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 2: FDE Satisfiability
+# ═══════════════════════════════════════════════════════════════
+
+def collect_atoms(formula: FDEFormula) -> Set[int]:
+    """Collect all atom indices in a formula."""
+    if isinstance(formula, Atom):
+        return {formula.index}
+    elif isinstance(formula, Neg):
+        return collect_atoms(formula.sub)
+    elif isinstance(formula, (Conj, Disj)):
+        return collect_atoms(formula.left) | collect_atoms(formula.right)
+    return set()
+
+
+def fde_satisfiable(formula: FDEFormula) -> Optional[Dict[int, BelnapVal]]:
+    """
+    Check if an FDE formula is satisfiable (has a valuation making it at-least-true).
+
+    Brute-force search over all 4^n valuations where n = number of atoms.
+
+    Time complexity: O(4^n * |formula|) where n = number of atoms
+    Space complexity: O(n + |formula|)
+
+    Returns:
+        A satisfying valuation dict, or None if unsatisfiable
+    """
+    atoms = sorted(collect_atoms(formula))
+    n = len(atoms)
+
+    # Iterate over all 4^n valuations
+    for code in range(4 ** n):
+        assignment: Dict[int, BelnapVal] = {}
+        c = code
+        for atom in atoms:
+            assignment[atom] = BelnapVal(c % 4)
+            c //= 4
+
+        val = lambda idx, a=assignment: a.get(idx, BelnapVal.N)
+        if evaluate(formula, val).is_true():
+            return assignment
+
+    return None
+
+
+def is_fde_tautology(formula: FDEFormula) -> bool:
+    """
+    Check if a formula is an FDE tautology (true under all valuations).
+
+    Time complexity: O(4^n * |formula|)
+    """
+    atoms = sorted(collect_atoms(formula))
+    n = len(atoms)
+
+    for code in range(4 ** n):
+        assignment: Dict[int, BelnapVal] = {}
+        c = code
+        for atom in atoms:
+            assignment[atom] = BelnapVal(c % 4)
+            c //= 4
+
+        val = lambda idx, a=assignment: a.get(idx, BelnapVal.N)
+        if not evaluate(formula, val).is_true():
             return False
+
     return True
 
 
-def check_entailment(phi: FDEFormula, psi: FDEFormula, n_vars: int) -> bool:
-    """Check if phi FDE-entails psi (truth-preserving).
-
-    φ ⊨ ψ iff for all v: isTrue(φ(v)) → isTrue(ψ(v))
-    """
-    vals = list(BelnapVal)
-    for assignment in _all_assignments(n_vars, vals):
-        v = lambda i, a=assignment: a.get(i, BelnapVal.N)
-        if eval_formula(v, phi).is_true() and not eval_formula(v, psi).is_true():
-            return False
-    return True
-
-
-def _all_assignments(n: int, vals: List[BelnapVal]) -> List[Dict[int, BelnapVal]]:
-    """Generate all possible assignments for n variables."""
-    if n == 0:
-        return [{}]
-    rest = _all_assignments(n - 1, vals)
-    result = []
-    for v in vals:
-        for a in rest:
-            new_a = dict(a)
-            new_a[n - 1] = v
-            result.append(new_a)
-    return result
-
-
-# ─── Inconsistency Spectrum ──────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 3: Inconsistency Spectrum Computation
+# ═══════════════════════════════════════════════════════════════
 
 @dataclass
 class InconsistencySpectrum:
-    """The distribution of truth values in a finite theory."""
+    """The four-component inconsistency spectrum of a theory."""
     n_true: int
     n_false: int
     n_both: int
@@ -176,122 +254,150 @@ class InconsistencySpectrum:
 
     @property
     def inconsistency_ratio(self) -> float:
-        return self.n_both / max(1, self.total)
+        return self.n_both / self.total if self.total > 0 else 0.0
 
     def is_nontrivial(self) -> bool:
         return self.n_true > 0 and self.n_false > 0
 
-    def satisfies_tolerance(self) -> bool:
-        """Check: n_both ≤ total - 2 when non-trivial."""
-        if not self.is_nontrivial():
-            return True
-        return self.n_both <= self.total - 2
-
 
 def compute_spectrum(truth_values: List[BelnapVal]) -> InconsistencySpectrum:
-    """Compute the inconsistency spectrum of a list of truth values."""
+    """
+    Compute the inconsistency spectrum of a theory.
+
+    Time complexity: O(n) where n = number of sentences
+
+    Args:
+        truth_values: List of truth values for each sentence
+
+    Returns:
+        The inconsistency spectrum
+    """
+    counts = {v: 0 for v in BelnapVal}
+    for v in truth_values:
+        counts[v] += 1
     return InconsistencySpectrum(
-        n_true=sum(1 for v in truth_values if v == BelnapVal.T),
-        n_false=sum(1 for v in truth_values if v == BelnapVal.F),
-        n_both=sum(1 for v in truth_values if v == BelnapVal.B),
-        n_neither=sum(1 for v in truth_values if v == BelnapVal.N),
+        n_true=counts[BelnapVal.T],
+        n_false=counts[BelnapVal.F],
+        n_both=counts[BelnapVal.B],
+        n_neither=counts[BelnapVal.N],
     )
 
 
-# ─── Paradox Detection ──────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 4: Paradox Span Computation
+# ═══════════════════════════════════════════════════════════════
 
-def find_negation_fixed_points(vals: List[BelnapVal]) -> List[int]:
-    """Find indices where val == neg(val) (Liar-type fixed points)."""
-    return [i for i, v in enumerate(vals) if v == v.neg()]
-
-
-def detect_berry_collision(
-    objects: List[int],
-    descriptions: List[int],
-    assignment: Dict[int, int]
-) -> Optional[Tuple[int, int]]:
-    """Detect a Berry-type collision: two objects mapped to the same description.
-
-    Returns a pair (o1, o2) with o1 ≠ o2 and assignment[o1] == assignment[o2],
-    or None if no collision exists.
+def compute_paradox_span(
+    truth: Callable[[int], BelnapVal],
+    neg_fn: Callable[[int], int],
+    conj_fn: Callable[[int, int], int],
+    disj_fn: Callable[[int, int], int],
+    seeds: Set[int],
+    universe: Set[int],
+) -> Set[int]:
     """
-    desc_to_obj: Dict[int, int] = {}
-    for obj in objects:
-        desc = assignment.get(obj)
-        if desc is not None and desc in desc_to_obj:
-            return (desc_to_obj[desc], obj)
-        if desc is not None:
-            desc_to_obj[desc] = obj
-    return None
+    Compute the paradox span: closure of seeds under neg, conj, disj.
 
+    Uses a worklist algorithm (BFS-style closure).
 
-# ─── Self-Soundness Check ──────────────────────────────────
+    Time complexity: O(n^2) where n = |universe|
+    Space complexity: O(n)
 
-def check_self_soundness(
-    truth_values: Dict[str, BelnapVal],
-    provable: Set[str],
-    soundness_sentence: str
-) -> Tuple[bool, str]:
-    """Check if a theory is self-sound.
+    Args:
+        truth: Truth valuation function
+        neg_fn: Sentence negation function
+        conj_fn: Sentence conjunction function
+        disj_fn: Sentence disjunction function
+        seeds: Initial set of dialetheia sentence indices
+        universe: All sentence indices
 
-    Returns (is_sound, explanation).
+    Returns:
+        The paradox span (closure of seeds under connectives)
     """
-    # Check all provable sentences are at-least-true
-    for s in provable:
-        if s not in truth_values:
-            return False, f"Provable sentence '{s}' has no truth value"
-        if not truth_values[s].is_true():
-            return False, f"Provable sentence '{s}' has value {truth_values[s].name}, not at-least-true"
+    span = set(seeds)
+    worklist = list(seeds)
 
-    # Check soundness sentence is provable and at-least-true
-    if soundness_sentence not in provable:
-        return False, f"Soundness sentence '{soundness_sentence}' is not provable"
-    if not truth_values[soundness_sentence].is_true():
-        return False, f"Soundness sentence has value {truth_values[soundness_sentence].name}"
+    while worklist:
+        s = worklist.pop()
 
-    return True, "Theory is self-sound"
+        # Apply negation
+        ns = neg_fn(s)
+        if ns in universe and ns not in span:
+            span.add(ns)
+            worklist.append(ns)
 
+        # Apply conjunction and disjunction with all span elements
+        for t in list(span):
+            cs = conj_fn(s, t)
+            if cs in universe and cs not in span:
+                span.add(cs)
+                worklist.append(cs)
 
-# ─── Paradox Endomorphism ──────────────────────────────────
+            ds = disj_fn(s, t)
+            if ds in universe and ds not in span:
+                span.add(ds)
+                worklist.append(ds)
 
-@dataclass
-class ParadoxEndomorphism:
-    """A function BelnapVal → BelnapVal preserving B and N."""
-    fn: Callable[[BelnapVal], BelnapVal]
-    name: str
-
-    def __call__(self, v: BelnapVal) -> BelnapVal:
-        return self.fn(v)
-
-    def compose(self, other: 'ParadoxEndomorphism') -> 'ParadoxEndomorphism':
-        return ParadoxEndomorphism(
-            fn=lambda v, f=self.fn, g=other.fn: f(g(v)),
-            name=f"{self.name} ∘ {other.name}"
-        )
-
-    def is_valid(self) -> bool:
-        return self.fn(BelnapVal.B) == BelnapVal.B and self.fn(BelnapVal.N) == BelnapVal.N
+    return span
 
 
-# Standard paradox endomorphisms
-IDENTITY = ParadoxEndomorphism(lambda v: v, "id")
-NEGATION = ParadoxEndomorphism(lambda v: v.neg(), "neg")
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 5: Negation Fixed Point Finder
+# ═══════════════════════════════════════════════════════════════
 
+def find_negation_fixed_points() -> List[BelnapVal]:
+    """
+    Find all Belnap values that are fixed points of negation.
+
+    Returns: List of fixed points (should be [B, N])
+    """
+    return [v for v in BelnapVal if v.neg() == v]
+
+
+def find_true_fixed_points() -> List[BelnapVal]:
+    """
+    Find all Belnap values that are both negation fixed points
+    and at-least-true.
+
+    Returns: List of true fixed points (should be [B] only)
+    """
+    return [v for v in BelnapVal if v.neg() == v and v.is_true()]
+
+
+# ═══════════════════════════════════════════════════════════════
+# Main: Run all algorithms
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Quick test
-    print("FDE Tautology check: p ∨ ¬p?",
-          is_fde_tautology(Disj(Atom(0), Neg(Atom(0))), 1))
-    print("FDE Tautology check: ¬¬p → p?",
-          check_entailment(Neg(Neg(Atom(0))), Atom(0), 1))
+    print("Paraconsistent Logic Algorithms")
+    print("=" * 50)
 
-    # Inconsistency spectrum
-    spec = compute_spectrum([BelnapVal.T, BelnapVal.T, BelnapVal.F, BelnapVal.B, BelnapVal.N])
-    print(f"Spectrum: T={spec.n_true}, F={spec.n_false}, B={spec.n_both}, N={spec.n_neither}")
-    print(f"Satisfies tolerance: {spec.satisfies_tolerance()}")
+    # Test negation fixed points
+    print("\n1. Negation Fixed Points:")
+    fps = find_negation_fixed_points()
+    print(f"   All fixed points: {[v.name for v in fps]}")
+    tfps = find_true_fixed_points()
+    print(f"   True fixed points: {[v.name for v in tfps]}")
 
-    # Self-soundness
-    tv = {"axiom": BelnapVal.T, "liar": BelnapVal.B, "soundness": BelnapVal.T}
-    prov = {"axiom", "liar", "soundness"}
-    ok, msg = check_self_soundness(tv, prov, "soundness")
-    print(f"Self-sound: {ok} — {msg}")
+    # Test FDE satisfiability
+    print("\n2. FDE Satisfiability:")
+    # p ∨ ¬p (excluded middle) — should be satisfiable but not a tautology
+    em = Disj(Atom(0), Neg(Atom(0)))
+    print(f"   p ∨ ¬p is tautology? {is_fde_tautology(em)}")
+    sat = fde_satisfiable(em)
+    print(f"   p ∨ ¬p is satisfiable? {sat is not None}")
+
+    # p ∧ ¬p (contradiction) — satisfiable in FDE!
+    contra = Conj(Atom(0), Neg(Atom(0)))
+    sat = fde_satisfiable(contra)
+    print(f"   p ∧ ¬p is satisfiable? {sat is not None} (assignment: {sat})")
+
+    # Test inconsistency spectrum
+    print("\n3. Inconsistency Spectrum:")
+    vals = [BelnapVal.T, BelnapVal.B, BelnapVal.F, BelnapVal.B, BelnapVal.T, BelnapVal.N]
+    spec = compute_spectrum(vals)
+    print(f"   True: {spec.n_true}, False: {spec.n_false}, "
+          f"Both: {spec.n_both}, Neither: {spec.n_neither}")
+    print(f"   Inconsistency degree: {spec.inconsistency_degree}")
+    print(f"   Inconsistency ratio: {spec.inconsistency_ratio:.1%}")
+    print(f"   Non-trivial: {spec.is_nontrivial()}")
