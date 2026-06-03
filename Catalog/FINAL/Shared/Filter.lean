@@ -1,0 +1,1 @@
+../../Shared/EquivariantSpectrum/Filter.lean
