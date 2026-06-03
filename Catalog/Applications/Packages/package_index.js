@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "61acc2ad",
     "filename": "yang_mills_mass_gap.json",
     "pkg_num": 323,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7351783898305084,
     "title": "Reflection Positivity, Gauge-Equivariant Filtrations, and the Yang-Mills Mass Gap"
   },
   {
@@ -10477,8 +10477,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "yang_mills_mass_gap",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7351783898305084,
+      "quality": "substantial",
       "shape": "diamond",
       "title": "Reflection Positivity, Gauge-Equivariant Filtrations, and the Yang-Mills Mass Gap"
     }

@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2cd9c3a",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.491025+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -528,7 +528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c376d672",
     "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
     "domains": [
       "Novelty",
@@ -538,7 +538,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.700907+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
@@ -1954,6 +1954,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0395",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:24.924994+00:00",
+    "title": "Navier-Stokes Existence and Smoothness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0396",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.003856+00:00",
+    "title": "Hilbert 6: Axiomatization of Physics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -1996,6 +2026,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.392825+00:00",
     "title": "Topological Quantum Error Correction from Homological Persistence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0427",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.476683+00:00",
+    "title": "Neural Network Training as Renormalization Group Flow"
   },
   {
     "consumed_by_exp_id": "",
@@ -2059,6 +2104,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0433",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.995931+00:00",
+    "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0444",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.878854+00:00",
+    "title": "Topological Quantum Computing: Braiding Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0454",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.664610+00:00",
+    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
     "domains": [
       "Physics",
@@ -2071,6 +2161,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.401337+00:00",
     "title": "Hawking Radiation: Information Paradox Formalized"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0464",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.485267+00:00",
+    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0475",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.381522+00:00",
+    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -2119,18 +2239,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
+    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
     "domains": [
-      "Bridges",
-      "Physics"
+      "Physics",
+      "Geometry"
     ],
-    "id": "fd_0444",
-    "priority_score": 0.99,
+    "id": "fd_0505",
+    "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:28.878854+00:00",
-    "title": "Topological Quantum Computing: Braiding Universality"
+    "timestamp": "2026-06-03T21:01:46.905756+00:00",
+    "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2179,6 +2299,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0467",
+    "priority_score": 0.98,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.732241+00:00",
+    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0399",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.231496+00:00",
+    "title": "Quantum Error Correction Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
     "domains": [
       "Tropical",
@@ -2194,6 +2344,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0423",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.146225+00:00",
+    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -2206,6 +2371,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0462",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.319643+00:00",
+    "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
     "consumed_by_exp_id": "",
@@ -2239,21 +2419,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0433",
-    "priority_score": 0.96,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.995931+00:00",
-    "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Tropical",
@@ -2284,18 +2449,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
+    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
     "domains": [
       "Physics",
-      "Geometry"
+      "Algebra"
     ],
-    "id": "fd_0464",
+    "id": "fd_0468",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.485267+00:00",
-    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
+    "timestamp": "2026-06-03T19:55:30.812055+00:00",
+    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0412",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.259292+00:00",
+    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.651923+00:00",
+    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -2326,36 +2521,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.538330+00:00",
     "title": "Generalization Bounds via Rademacher Complexity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0505",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.905756+00:00",
-    "title": "Quantum Gravity as Topological Quantum Field Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0395",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:24.924994+00:00",
-    "title": "Navier-Stokes Existence and Smoothness"
   },
   {
     "consumed_by_exp_id": "",
@@ -2404,33 +2569,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
+    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
-      "MachineLearning",
+      "Geometry",
       "Physics"
     ],
-    "id": "fd_0427",
+    "id": "fd_0421",
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:27.476683+00:00",
-    "title": "Neural Network Training as Renormalization Group Flow"
+    "timestamp": "2026-06-03T19:55:26.988240+00:00",
+    "title": "Inverse Stereographic Renormalization Group"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
-      "Bridges",
-      "Logic"
+      "Physics",
+      "Computation"
     ],
-    "id": "fd_0454",
+    "id": "fd_0465",
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:29.664610+00:00",
-    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
     "consumed_by_exp_id": "",
@@ -2463,19 +2628,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "61acc2ad",
-    "description": "Prove that for any compact simple gauge group, quantum Yang-Mills theory on R^4 exists and has a mass gap. Formalize the mathematical framework of gauge theory and connect to lattice gauge theory computations.",
+    "consumed_by_exp_id": "",
+    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
-      "Physics",
-      "Algebra"
+      "MachineLearning",
+      "Physics"
     ],
-    "id": "fd_0394",
-    "priority_score": 0.93,
+    "id": "fd_0502",
+    "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:24.838652+00:00",
-    "title": "Yang-Mills Mass Gap"
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.684855+00:00",
+    "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
     "consumed_by_exp_id": "",
@@ -2506,6 +2671,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
+    "domains": [
+      "EML",
+      "Physics"
+    ],
+    "id": "fd_0418",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.751445+00:00",
+    "title": "EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2583,18 +2763,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
     "domains": [
-      "Physics",
-      "Logic"
+      "Computation",
+      "Physics"
     ],
-    "id": "fd_0396",
+    "id": "fd_0402",
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.003856+00:00",
-    "title": "Hilbert 6: Axiomatization of Physics"
+    "timestamp": "2026-06-03T19:55:25.464794+00:00",
+    "title": "Reversible Computing and Thermodynamic Efficiency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0441",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.640557+00:00",
+    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2610,6 +2805,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:31.304139+00:00",
     "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0507",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.045810+00:00",
+    "title": "Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -2673,18 +2883,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
+    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
-      "Computation",
+      "MachineLearning",
       "Physics"
     ],
-    "id": "fd_0475",
+    "id": "fd_0440",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:31.381522+00:00",
-    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
+    "timestamp": "2026-06-03T19:55:28.560336+00:00",
+    "title": "Grokking: Phase Transitions in Learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -2763,6 +2973,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0414",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.423474+00:00",
+    "title": "Integrated Information via Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -2775,21 +3000,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0467",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.732241+00:00",
-    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -2838,21 +3048,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0399",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.231496+00:00",
-    "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -2865,21 +3060,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0423",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.146225+00:00",
-    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2912,7 +3092,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0edfd7d6",
     "description": "Formalize the Gentry fully homomorphic encryption scheme. Prove that the bootstrapping theorem allows unlimited computation on ciphertexts. Construct a circuit for addition and multiplication under the BGV scheme and verify correctness.",
     "domains": [
       "Cryptography",
@@ -2922,24 +3102,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.910658+00:00",
     "title": "Homomorphic Encryption: Computing on Encrypted Data"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0462",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.319643+00:00",
-    "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
     "consumed_by_exp_id": "",
@@ -2985,6 +3150,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.562165+00:00",
     "title": "Fermat's Last Theorem for Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0397",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.080296+00:00",
+    "title": "Percolation Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -3063,21 +3243,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "fd_0468",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.812055+00:00",
-    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -3153,21 +3318,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "fd_0412",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.259292+00:00",
-    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
       "Geometry",
@@ -3210,21 +3360,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.990665+00:00",
     "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0466",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.651923+00:00",
-    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -3303,6 +3438,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Yang-Mills Mass Gap and Gauge Theory Formalization\n\n## Synthesis\n\nThis research cycle established the mathematical chain connecting reflection positivity to the Yang-Mills mass gap through a novel structure \u2014 the gauge-equivariant spectral filtration. The key insight is that the Casimir operator of the gauge group provides an algebraic lower bound on the spectral gap: the mass gap is at least as large as the Casimir eigenvalue of the fundamental representation. This connects representation theory (algebraic) to spectral theory (analytic) to physics (mass gap and confinement).\n\nThe most promising cross-domain connection is between the gauge-equivariant filtration and quantum error correction. The sector decomposition of the gauge-invariant Hilbert space by irreducible representations is structurally identical to the code space decomposition in stabilizer codes (cf. `Physics/PauliClosureFoundations.lean`). This suggests that the mathematical machinery for proving mass gaps could also yield distance bounds for topological quantum codes, and vice versa.\n\nThe highest breakthrough potential lies in **Direction 1** (Uniform Casimir Control), because it addresses the core missing ingredient for the full Millennium Problem: a coupling-independent lower bound on the mass gap. If the Exponential Casimir Suppression Conjecture holds, it would reduce the mass gap problem to a purely representation-theoretic statement about Casimir eigenvalues \u2014 a dramatic simplification.\n\n---\n\n### Direction 1: Uniform Casimir Control Across Couplings\n\n**Conjecture**: For SU(N) lattice Yang-Mills on \u2124^4 with Wilson action at coupling \u03b2 > 0, the transfer matrix sector eigenvalues satisfy:\n\n\u03bb_\u03c3 / \u03bb\u2080 \u2264 exp(\u2212c\u2082(\u03c3) \u00b7 f(\u03b2))\n\nwhere c\u2082(\u03c3) is the Casimir eigenvalue of representation \u03c3, and f : (0,\u221e) \u2192 (0,\u221e) is a universal function with f(\u03b2) ~ 1/\u03b2 as \u03b2 \u2192 0 and f(\u03b2) \u2192 const > 0 as \u03b2 \u2192 \u221e.\n\n**Test**: Compute transfer matrix eigenvalue ratios for SU(2) on a 4\u00b3 \u00d7 T lattice at \u03b2 = 1.0, 2.0, 3.0, 4.0 using Monte Carlo. For each \u03b2, measure \u03bb\u2081/\u03bb\u2080 in the j=1/2 sector (c\u2082 = 3/4) and j=1 sector (c\u2082 = 2). Plot log(\u03bb_\u03c3/\u03bb\u2080) vs c\u2082(\u03c3) \u2014 the conjecture predicts a linear relationship with slope \u2212f(\u03b2). If the data shows nonlinear behavior or positive slope, the conjecture is refuted.\n\n**Impact**: If true, the Yang-Mills mass gap reduces to proving f(\u03b2) > 0 for all \u03b2, which is a purely analytic statement about a single real function. This would be a major simplification of the Millennium Problem.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (casimir_controls_filtration_gap, synthesis_mass_gap_from_filtration), `Physics/CharacterExpansionMassGap.lean` (mass_gap_lower_bound_from_character_suppression)\n\n**Proof Strategy**: \n1. Prove the conjecture at strong coupling (\u03b2 \u2264 \u03b2_c) using the character expansion, where the eigenvalue ratios are explicitly computed as \u03b2^{2c\u2082(\u03c3)} \u00b7 (1 + O(\u03b2)).\n2. Extend to intermediate coupling using cluster expansion techniques.\n3. For weak coupling (\u03b2 \u2192 \u221e), use asymptotic freedom: the running coupling g\u00b2(a) = 1/\u03b2(a) flows to zero, and perturbation theory controls the sector ratios.\n4. Key lemma needed: monotonicity of f(\u03b2) in some regime, which would follow from correlation inequalities.\n\n**Domain Bridges**: Representation theory (Casimir eigenvalues) \u2194 Spectral theory (transfer matrix) \u2194 Statistical mechanics (cluster expansion)\n\n**Lineage**: Builds on this cycle's casimir_controls_filtration_gap theorem and the Exponential Casimir Suppression conjecture.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Gauge-Equivariant Filtration for Topological Quantum Codes\n\n**Conjecture**: The code distance of a topological stabilizer code on a lattice with gauge group G is bounded below by the Casimir gap of G: d \u2265 c\u2082(fund) \u00b7 L, where L is the lattice linear dimension.\n\n**Test**: Compute the code distance of the SU(2) lattice gauge code on L\u00d7L torus for L = 2, 3, 4, 5. The Casimir gap of SU(2) is c\u2082(1/2) = 3/4. Check whether d \u2265 (3/4)L for each L. A single violation disproves the conjecture.\n\n**Impact**: Would establish a new connection between gauge theory and quantum error correction, potentially yielding codes with better distance scaling than known constructions.\n\n**Catalog References**: `Physics/PauliClosureFoundations.lean` (quantum_singleton_bound), `Physics/ReflectionPositivityMassGap.lean` (GaugeEquivariantFiltration), `Physics/GaugeCodeDistance.lean`\n\n**Proof Strategy**:\n1. Define a \"gauge code\" as the ground space of a lattice gauge Hamiltonian restricted to the gauge-invariant sector.\n2. Show that logical operators must create excitations in non-trivial representation sectors.\n3. Use the Casimir control bound to show that such excitations have energy proportional to c\u2082(fund).\n4. Apply the Knill-Laflamme conditions to translate energy gap to code distance.\n\n**Domain Bridges**: Gauge theory (GaugeEquivariantFiltration) \u2194 Quantum error correction (StabilizerCodeParams) \u2194 Representation theory (Casimir eigenvalues)\n\n**Lineage**: Builds on this cycle's GaugeEquivariantFiltration structure and the quantum_singleton_bound from PauliClosureFoundations.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Constructive Continuum Limit via Reflection Positivity\n\n**Conjecture**: For 2D lattice Yang-Mills with gauge group SU(N) and Wilson action, the lattice transfer matrices T_a (indexed by lattice spacing a) converge in the strong operator topology as a \u2192 0, and the limiting operator has a spectral gap \u0394_\u221e satisfying \u0394_\u221e \u2265 c\u2082(fund)/(2\u03c0).\n\n**Test**: Compute the mass gap \u0394(a) for SU(2) lattice Yang-Mills in 2D at lattice spacings a = 0.5, 0.25, 0.125, 0.0625 (using exact solution in 2D). Verify convergence and check the bound \u0394_\u221e \u2265 3/(8\u03c0) \u2248 0.119. In 2D, the exact solution gives \u0394 = -log(I\u2081(\u03b2)/I\u2080(\u03b2)) where I_n are modified Bessel functions, which is computable.\n\n**Impact**: The 2D case is exactly solvable and would provide a complete formal proof of the mass gap in a simplified setting, demonstrating the full chain from lattice to continuum.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ContinuumLimitData, continuum_gap_lower_bound), `Physics/SpectralGap.lean` (uniform_lattice_gap_persists_under_refinement)\n\n**Proof Strategy**:\n1. In 2D, the partition function factors over plaquettes, giving an explicit transfer matrix.\n2. Use the Haar measure and character expansion to diagonalize exactly.\n3. Compute sector eigenvalues as ratios of modified Bessel functions I_{j}(\u03b2)/I\u2080(\u03b2).\n4. Show convergence as \u03b2 \u2192 \u221e (continuum limit in 2D corresponds to \u03b2 \u2192 \u221e).\n5. Verify the Casimir bound \u0394 \u2265 c\u2082(1/2) holds for all \u03b2.\n\n**Domain Bridges**: Special functions (Bessel functions) \u2194 Representation theory (characters of SU(2)) \u2194 Spectral theory (transfer matrix)\n\n**Lineage**: Builds on this cycle's continuum limit framework and the character expansion from CharacterExpansionMassGap.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical Yang-Mills and Combinatorial Mass Gaps\n\n**Conjecture**: The tropical (\u03b2 \u2192 \u221e) limit of the lattice Yang-Mills partition function on a graph G has a combinatorial mass gap equal to the edge connectivity of G.\n\n**Test**: Compute the tropical Yang-Mills partition function on the complete graph K_n for n = 3, 4, 5 and verify that the mass gap equals the edge connectivity \u03ba(K_n) = n-1. Also test on the hypercube graph Q_d for d = 2, 3, 4.\n\n**Impact**: Would connect Yang-Mills theory to combinatorial graph theory, opening new proof techniques for mass gap bounds using graph connectivity results.\n\n**Catalog References**: `Tropical/TropicalDiffusion.lean`, `Physics/ReflectionPositivityMassGap.lean`, `Physics/TropicalBarrier.lean`\n\n**Proof Strategy**:\n1. Define the tropical limit of the Wilson action as the min-plus version: replace sum with min, product with sum.\n2. Show the tropical transfer matrix is a min-plus matrix whose spectral radius equals the maximum flow.\n3. Relate the min-plus spectral gap to the edge connectivity via Menger's theorem.\n4. Key technical lemma: the tropical limit commutes with the spectral gap computation.\n\n**Domain Bridges**: Tropical geometry (min-plus algebra) \u2194 Graph theory (edge connectivity) \u2194 Gauge theory (Wilson action)\n\n**Lineage**: Builds on existing tropical physics work in the catalog and this cycle's spectral gap framework.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Reflection Positivity for Fermionic Systems\n\n**Conjecture**: The ReflectionPositiveForm structure generalizes to graded (super) vector spaces, yielding reflection positivity for lattice QCD with dynamical fermions, and the mass gap bound still holds with a modified Casimir eigenvalue c\u2082^{eff}(fund) = c\u2082(fund) \u2212 m_f where m_f is the fermion mass.\n\n**Test**: Formalize a graded version of ReflectionPositiveForm with a \u2124/2-grading and verify that the physical inner product remains positive semi-definite. Check the modified Casimir bound for SU(3) with N_f = 2 light quarks (m_f \u2248 5 MeV) \u2014 the effective Casimir should be c\u2082(3) \u2212 m_f = 4/3 \u2212 0.005 \u2248 1.328.\n\n**Impact**: Would extend the formal mass gap framework to the physically relevant case of full QCD with quarks, not just pure gauge theory.\n\n**Catalog References**: `Physics/ReflectionPositivityMassGap.lean` (ReflectionPositiveForm), `Physics/SpectralGap.lean`\n\n**Proof Strategy**:\n1. Define GradedReflectionPositiveForm with separate bosonic and fermionic sectors.\n2. Prove that the graded physical inner product \u27e8u,v\u27e9 = B(\u03b8u, v) with appropriate signs for fermion crossings is positive semi-definite.\n3. Extend the transfer matrix analysis to the graded case using Berezin integration.\n4. Derive the modified Casimir bound using the fermion determinant.\n\n**Domain Bridges**: Superalgebra (graded vector spaces) \u2194 Gauge theory (QCD) \u2194 Spectral theory (graded transfer matrix)\n\n**Lineage**: Direct extension of this cycle's ReflectionPositiveForm structure.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0519",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "61acc2ad",
+    "status": "available",
+    "timestamp": "2026-06-03T21:03:05.014054+00:00",
+    "title": "Mathematical chain connecting reflection pos"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domains": [
       "MachineLearning",
@@ -3315,21 +3465,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Physics"
-    ],
-    "id": "fd_0421",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.988240+00:00",
-    "title": "Inverse Stereographic Renormalization Group"
   },
   {
     "consumed_by_exp_id": "",
@@ -3348,21 +3483,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.568365+00:00",
-    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
     "domains": [
       "MachineLearning",
@@ -3375,21 +3495,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.392094+00:00",
     "title": "Neural Tangent Kernel: Convergence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0502",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.684855+00:00",
-    "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
     "consumed_by_exp_id": "",
@@ -3420,21 +3525,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.490493+00:00",
     "title": "Beal's Conjecture: Computational Evidence and Special Cases"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics"
-    ],
-    "id": "fd_0418",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.751445+00:00",
-    "title": "EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3512,21 +3602,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0402",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.464794+00:00",
-    "title": "Reversible Computing and Thermodynamic Efficiency"
-  },
-  {
     "consumed_by_exp_id": "261658b1",
     "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
     "domains": [
@@ -3555,21 +3630,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0441",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.640557+00:00",
-    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -3618,21 +3678,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0507",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:47.045810+00:00",
-    "title": "Emergent Spacetime from Quantum Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
     "domains": [
       "Pythagorean",
@@ -3645,21 +3690,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.416939+00:00",
     "title": "Pythagorean Triples in Gaussian Integers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0440",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.560336+00:00",
-    "title": "Grokking: Phase Transitions in Learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -3692,21 +3722,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0414",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.423474+00:00",
-    "title": "Integrated Information via Tensor Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -3719,21 +3734,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0397",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.080296+00:00",
-    "title": "Percolation Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -3781,7 +3781,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0734a5d4",
     "description": "Formalize the rules of species counterpoint as a constraint satisfaction problem. Prove that optimal voice leading minimizes a well-defined cost function and connect to lattice theory.",
     "domains": [
       "Bridges",
@@ -3791,7 +3791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.100112+00:00",
     "title": "Musical Counterpoint as Constraint Satisfaction"
   }
