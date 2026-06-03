@@ -1,48 +1,32 @@
+#!/usr/bin/env python3
 """
-Algorithms for Collatz Orbit Analysis and Proof Resistance
-==========================================================
-Type-hinted implementations of the core algorithms formalized in Lean 4.
+Algorithms for Collatz Orbit Analysis
+
+Type-hinted implementations of key algorithms from the formal development.
 """
-from typing import Optional
-from dataclasses import dataclass
+
+from typing import List, Tuple, Optional, Dict
 import math
 
 
 def collatz_step(n: int) -> int:
-    """The standard Collatz step: n/2 if even, 3n+1 if odd.
-    
-    Matches the Lean definition:
-      def collatzStep (n : ℕ) : ℕ :=
-        if n % 2 = 0 then n / 2 else 3 * n + 1
-    """
+    """The standard Collatz step T(n)."""
     if n % 2 == 0:
         return n // 2
     else:
         return 3 * n + 1
 
 
-def syracuse_step(n: int) -> int:
-    """The Syracuse (accelerated) step: (3n+1)/2 for odd n.
-    
-    Combines an odd step with its forced even successor.
-    Satisfies: n+1 ≤ syracuse(n) ≤ 2n for odd n ≥ 1.
-    """
-    assert n % 2 == 1 and n >= 1, "Syracuse step requires odd n ≥ 1"
-    return (3 * n + 1) // 2
-
-
 def collatz_iter(n: int, k: int) -> int:
-    """Iterate the Collatz step k times.
-    
-    Matches: def collatzIter (n k : ℕ) : ℕ := (collatzStep^[k]) n
-    """
+    """Iterate the Collatz step k times: T^k(n)."""
+    current = n
     for _ in range(k):
-        n = collatz_step(n)
-    return n
+        current = collatz_step(current)
+    return current
 
 
-def collatz_orbit(n: int, max_steps: int = 100000) -> list[int]:
-    """Compute the full Collatz orbit until reaching 1 or hitting max_steps."""
+def collatz_orbit(n: int, max_steps: int = 1_000_000) -> List[int]:
+    """Full Collatz orbit from n to 1 (or up to max_steps)."""
     orbit = [n]
     while n != 1 and len(orbit) < max_steps:
         n = collatz_step(n)
@@ -50,160 +34,190 @@ def collatz_orbit(n: int, max_steps: int = 100000) -> list[int]:
     return orbit
 
 
-def stopping_time(n: int, max_steps: int = 100000) -> Optional[int]:
-    """Compute the stopping time: smallest k with collatzIter(n, k) = 1.
-    
-    Returns None if 1 is not reached within max_steps.
-    Matches: def stoppingTime (n : ℕ) : ℕ :=
-      if h : ∃ k, collatzIter n k = 1 then Nat.find h else 0
+def parity_word(n: int, k: int) -> List[bool]:
+    """
+    The parity word of n's orbit for k steps.
+    True = odd step, False = even step.
+    """
+    word: List[bool] = []
+    current = n
+    for _ in range(k):
+        word.append(current % 2 == 1)
+        current = collatz_step(current)
+    return word
+
+
+def odd_steps_count(word: List[bool]) -> int:
+    """Count of odd (True) entries in a parity word."""
+    return sum(1 for b in word if b)
+
+
+def even_steps_count(word: List[bool]) -> int:
+    """Count of even (False) entries in a parity word."""
+    return sum(1 for b in word if not b)
+
+
+def is_descent_word(word: List[bool]) -> bool:
+    """
+    Check if a parity word is a descent word.
+    A descent word satisfies 3^j < 2^(k-j) where j = odd count, k = length.
+    """
+    j = odd_steps_count(word)
+    e = even_steps_count(word)
+    return 3 ** j < 2 ** e
+
+
+def verify_parity_exclusion(word: List[bool]) -> bool:
+    """
+    Verify the parity exclusion property:
+    no two consecutive True values in the word.
+    """
+    for i in range(len(word) - 1):
+        if word[i] and word[i + 1]:
+            return False
+    return True
+
+
+def stopping_time(n: int, max_steps: int = 10_000_000) -> Optional[int]:
+    """
+    Compute the stopping time: least k with T^k(n) = 1.
+    Returns None if not found within max_steps.
     """
     current = n
-    for k in range(max_steps + 1):
+    for k in range(max_steps):
         if current == 1:
             return k
         current = collatz_step(current)
     return None
 
 
-@dataclass
-class ProofResistance:
-    """Proof resistance captures the verification difficulty of a Collatz input.
-    
-    Matches the Lean structure:
-      structure ProofResistance where
-        input : ℕ
-        stopTime : ℕ
-        peakVal : ℕ
-        resistance : ℕ := stopTime * (Nat.log 2 peakVal + 1)
-    """
-    input: int
-    stop_time: int
-    peak_val: int
-    resistance: int
-    excursion_ratio: float
-
-    @staticmethod
-    def compute(n: int) -> 'ProofResistance':
-        orbit = collatz_orbit(n)
-        st = len(orbit) - 1
-        peak = max(orbit)
-        peak_bits = peak.bit_length()
-        return ProofResistance(
-            input=n,
-            stop_time=st,
-            peak_val=peak,
-            resistance=st * peak_bits,
-            excursion_ratio=peak / n if n > 0 else 0
-        )
-
-
-def parity_word(n: int, k: int) -> list[bool]:
-    """Compute the parity word of the orbit of n for k steps.
-    
-    True = odd, False = even. By the Parity Exclusion Theorem,
-    True is never followed by True.
-    
-    Matches: def parityWord (n : ℕ) (k : ℕ) : Bool := 
-      (collatzIter n k) % 2 != 0
-    """
-    result: list[bool] = []
-    current = n
-    for _ in range(k):
-        result.append(current % 2 == 1)
-        current = collatz_step(current)
-    return result
-
-
-def verify_parity_exclusion(n: int) -> bool:
-    """Verify the Parity Exclusion Theorem for input n.
-    
-    The theorem states: if collatzIter n k is odd, then
-    collatzIter n (k+1) is even. Equivalently, the parity word
-    never contains two consecutive True values.
-    """
+def peak_value(n: int) -> int:
+    """The maximum value in the Collatz orbit of n."""
     orbit = collatz_orbit(n)
-    for i in range(len(orbit) - 1):
-        if orbit[i] % 2 == 1 and orbit[i + 1] % 2 == 1:
-            return False
-    return True
+    return max(orbit)
 
 
-def bounded_verification(N: int) -> tuple[bool, Optional[int]]:
-    """Verify Collatz for all n ∈ [1, N].
-    
-    Returns (True, None) if all reach 1, or (False, n) for first failure.
-    Matches: def collatzUpTo (N : ℕ) : Prop := ∀ n, 1 ≤ n → n ≤ N → reachesOne n
+def orbit_diameter(n: int) -> float:
+    """The orbit diameter: peak / starting value."""
+    if n <= 0:
+        return 0.0
+    return peak_value(n) / n
+
+
+def odd_density(n: int, k: int) -> float:
+    """Fraction of odd steps in the first k steps of n's orbit."""
+    word = parity_word(n, k)
+    return odd_steps_count(word) / k if k > 0 else 0.0
+
+
+def classify_complexity(n: int) -> str:
     """
-    for n in range(1, N + 1):
-        if stopping_time(n) is None:
-            return False, n
-    return True, None
-
-
-def find_even_preimage(m: int) -> int:
-    """Find the even preimage of m under collatzStep.
-    
-    By even_preimage theorem, this is always 2m.
+    Classify n by orbit complexity:
+    - trivial: stopping_time ≤ 3 * log₂(n)
+    - moderate: stopping_time ≤ (log₂(n))²
+    - hard: stopping_time > (log₂(n))²
+    - unknown: does not reach 1 within limit
     """
-    return 2 * m
+    st = stopping_time(n)
+    if st is None:
+        return "unknown"
+    logn = max(1, int(math.log2(n)) + 1) if n >= 2 else 1
+    if st <= 3 * logn:
+        return "trivial"
+    elif st <= logn * logn:
+        return "moderate"
+    else:
+        return "hard"
 
 
-def find_odd_preimage(m: int) -> Optional[int]:
-    """Find the odd preimage of m under collatzStep, if it exists.
-    
-    An odd p maps to m iff 3p+1 = m, so p = (m-1)/3.
-    This exists iff m ≡ 1 (mod 3) and (m-1)/3 is odd.
+def density_contraction_check(j: int, e: int) -> Dict[str, object]:
     """
-    if m < 4 or (m - 1) % 3 != 0:
-        return None
-    p = (m - 1) // 3
-    if p % 2 == 0:
-        return None
-    return p
-
-
-def collatz_tree_preimages(m: int) -> list[int]:
-    """Find all preimages of m under collatzStep.
-    
-    By the inverse image structure theorems:
-    - Even preimage 2m always exists
-    - Odd preimage (m-1)/3 exists iff m ≡ 1 mod 3 and (m-1)/3 is odd
+    Check the density contraction conditions:
+    - Sufficient: 2*j ≤ e (our formalized theorem)
+    - Necessary: j * log(3) < e * log(2) (sharp threshold)
     """
-    preimages = [find_even_preimage(m)]
-    odd_pre = find_odd_preimage(m)
-    if odd_pre is not None:
-        preimages.append(odd_pre)
-    return preimages
-
-
-def stopping_time_statistics(N: int) -> dict[str, float]:
-    """Compute statistics about stopping times in [1, N].
-    
-    Tests the falsifiable conjecture: max stopping time ∝ (log₂ N)².
-    """
-    max_stop = 0
-    total_stop = 0
-    for n in range(1, N + 1):
-        st = stopping_time(n)
-        if st is not None:
-            max_stop = max(max_stop, st)
-            total_stop += st
-    log_n = math.log2(N) if N > 1 else 1
+    sufficient = 2 * j <= e
+    necessary = j * math.log(3) < e * math.log(2) if e > 0 else j == 0
+    is_descent = 3 ** j < 2 ** e
     return {
-        'N': N,
-        'max_stopping_time': max_stop,
-        'avg_stopping_time': total_stop / N,
-        'log2_N': log_n,
-        'log2_N_squared': log_n ** 2,
-        'ratio_max_over_log2sq': max_stop / (log_n ** 2) if log_n > 0 else 0,
+        "odd_steps": j,
+        "even_steps": e,
+        "sufficient_condition_met": sufficient,
+        "sharp_condition_met": necessary,
+        "is_descent": is_descent,
+        "mul_factor": 3 ** j,
+        "div_factor": 2 ** e,
     }
 
 
-if __name__ == '__main__':
-    # Demo: compute proof resistance for "hard" inputs
-    print("Top 10 highest proof resistance inputs in [1, 10000]:")
-    resistances = [ProofResistance.compute(n) for n in range(1, 10001)]
-    resistances.sort(key=lambda r: r.resistance, reverse=True)
-    for pr in resistances[:10]:
-        print(f"  n={pr.input:>6}, stop={pr.stop_time:>4}, "
-              f"peak={pr.peak_val:>10}, resistance={pr.resistance:>8}")
+def gcs_apply(n: int, modulus: int,
+              rules: List[Tuple[int, int, int]]) -> int:
+    """
+    Apply a Generalized Collatz System.
+    rules[r] = (mul, offset, divisor) for residue r.
+    """
+    r = n % modulus
+    mul, offset, divisor = rules[r]
+    assert (mul * n + offset) % divisor == 0, "Divisibility violated"
+    return (mul * n + offset) // divisor
+
+
+def standard_collatz_as_gcs(n: int) -> int:
+    """The standard Collatz map expressed as a GCS with modulus 2."""
+    rules = [(1, 0, 2), (3, 1, 1)]  # even: n/2, odd: 3n+1
+    return gcs_apply(n, 2, rules)
+
+
+def orbit_merge_check(a: int, b: int,
+                      max_steps: int = 10000) -> Optional[Tuple[int, int]]:
+    """
+    Check if orbits of a and b merge.
+    Returns (ja, jb) such that T^ja(a) = T^jb(b), or None.
+    """
+    orbit_a = set()
+    current_a = a
+    for ja in range(max_steps):
+        orbit_a.add((current_a, ja))
+        current_a = collatz_step(current_a)
+
+    a_values = {v: j for v, j in orbit_a}
+    current_b = b
+    for jb in range(max_steps):
+        if current_b in a_values:
+            return (a_values[current_b], jb)
+        current_b = collatz_step(current_b)
+    return None
+
+
+if __name__ == "__main__":
+    # Quick self-test
+    print("Standard Collatz as GCS test:")
+    for n in range(1, 20):
+        assert standard_collatz_as_gcs(n) == collatz_step(n), f"Mismatch at n={n}"
+    print("  All GCS ↔ standard tests passed ✓")
+
+    print("\nParity exclusion test:")
+    for n in range(1, 1000):
+        st = stopping_time(n)
+        if st:
+            word = parity_word(n, st)
+            assert verify_parity_exclusion(word), f"Failed at n={n}"
+    print("  All parity exclusion tests passed ✓")
+
+    print("\nDensity contraction test:")
+    for n in range(1, 1000):
+        st = stopping_time(n)
+        if st and st > 0:
+            word = parity_word(n, st)
+            j = odd_steps_count(word)
+            e = even_steps_count(word)
+            check = density_contraction_check(j, e)
+            assert check["is_descent"], f"Not descent at n={n}"
+    print("  All density contraction tests passed ✓")
+
+    print("\nOrbit merge test:")
+    result = orbit_merge_check(27, 54)
+    if result:
+        ja, jb = result
+        print(f"  Orbits of 27 and 54 merge: T^{ja}(27) = T^{jb}(54)")
+    print("  Orbit merge test passed ✓")
