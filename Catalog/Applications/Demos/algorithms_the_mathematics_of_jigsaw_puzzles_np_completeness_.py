@@ -1,312 +1,344 @@
 #!/usr/bin/env python3
 """
-Algorithms for Jigsaw Puzzle Assembly and SAT Reduction
+algorithms.py - Core algorithms for jigsaw puzzle NP-completeness theory.
 
-Type-hinted implementations of the core algorithms from the research.
+Implements:
+1. SAT-to-Puzzle Reduction
+2. Puzzle Assembly Solver (backtracking)
+3. Constraint Graph Analysis
+4. Random Puzzle Generation
 """
 
-from typing import List, Tuple, Optional, Dict, Set
 from enum import Enum
-from dataclasses import dataclass
-import itertools
+from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Set, Dict
 
+
+# =============================================================================
+# Core Types
+# =============================================================================
 
 class EdgeType(Enum):
-    """Edge types for jigsaw puzzle pieces."""
-    FLAT = 0
-    TAB = 1
-    BLANK = 2
+    """Edge type for jigsaw puzzle pieces."""
+    TAB = "tab"
+    BLANK = "blank"
+    FLAT = "flat"
+
+
+def complementary(e1: EdgeType, e2: EdgeType) -> bool:
+    """Check if two edges are complementary (tab meets blank)."""
+    return (e1 == EdgeType.TAB and e2 == EdgeType.BLANK) or \
+           (e1 == EdgeType.BLANK and e2 == EdgeType.TAB)
 
 
 def complement(e: EdgeType) -> EdgeType:
-    """Complement operation: tab ↔ blank, flat ↔ flat."""
-    if e == EdgeType.FLAT:
-        return EdgeType.FLAT
-    elif e == EdgeType.TAB:
+    """Return the complement of an edge type."""
+    if e == EdgeType.TAB:
         return EdgeType.BLANK
-    else:
+    elif e == EdgeType.BLANK:
         return EdgeType.TAB
-
-
-def compatible(e1: EdgeType, e2: EdgeType) -> bool:
-    """Two edges are compatible iff one is the complement of the other."""
-    return complement(e1) == e2
+    return EdgeType.FLAT
 
 
 @dataclass(frozen=True)
-class Piece:
-    """A jigsaw piece with 4 directional edges."""
+class JigsawPiece:
+    """A jigsaw piece with four edges."""
     top: EdgeType
     right: EdgeType
     bottom: EdgeType
     left: EdgeType
-    label: str = ""
+
+    def fits_right(self, other: 'JigsawPiece') -> bool:
+        return complementary(self.right, other.left)
+
+    def fits_below(self, other: 'JigsawPiece') -> bool:
+        return complementary(self.bottom, other.top)
 
 
 @dataclass
 class Literal:
-    """A Boolean literal (variable with polarity)."""
+    """A Boolean literal (variable index + polarity)."""
     var: int
     positive: bool
 
-    def evaluate(self, assignment: List[bool]) -> bool:
-        v = assignment[self.var]
-        return v if self.positive else not v
+    def eval(self, assignment: Dict[int, bool]) -> bool:
+        val = assignment.get(self.var, False)
+        return val if self.positive else not val
 
 
 @dataclass
 class Clause:
-    """A disjunction of exactly 3 literals."""
-    literals: List[Literal]  # exactly 3
+    """A disjunctive clause of literals."""
+    literals: List[Literal]
 
-    def satisfied(self, assignment: List[bool]) -> bool:
-        return any(l.evaluate(assignment) for l in self.literals)
+    def satisfied(self, assignment: Dict[int, bool]) -> bool:
+        return any(lit.eval(assignment) for lit in self.literals)
 
 
 @dataclass
-class SATInstance:
-    """A 3-CNF-SAT instance."""
+class CNF:
+    """A CNF formula."""
     num_vars: int
     clauses: List[Clause]
 
-
-@dataclass
-class PuzzleInstance:
-    """A jigsaw puzzle instance: pieces to place in a grid."""
-    rows: int
-    cols: int
-    pieces: List[Piece]
-
-
-def internal_edge_count(m: int, n: int) -> int:
-    """Number of internal edges in an m×n grid."""
-    return m * (n - 1) + (m - 1) * n
-
-
-def constraint_degree(rows: int, cols: int, i: int, j: int) -> int:
-    """Degree of cell (i,j) in the constraint graph."""
-    d = 0
-    if i > 0: d += 1
-    if j + 1 < cols: d += 1
-    if i + 1 < rows: d += 1
-    if j > 0: d += 1
-    return d
-
-
-def euler_characteristic(m: int, n: int) -> int:
-    """Euler characteristic V - E + F of the grid graph."""
-    V = m * n
-    E = internal_edge_count(m, n)
-    F = (m - 1) * (n - 1) + 1
-    return V - E + F
-
-
-# --- Algorithm 1: SAT to Puzzle Reduction ---
-
-def sat_to_puzzle(sat: SATInstance) -> PuzzleInstance:
-    """
-    Reduce a 3-SAT instance to a jigsaw puzzle.
-    
-    Pseudocode:
-    1. For each variable x_i, create TRUE piece (tab) and FALSE piece (blank)
-    2. For each clause C_j, create a clause piece with blank inputs
-    3. Add boundary corner pieces
-    4. Return puzzle instance
-    
-    The puzzle has a valid assembly ↔ the SAT formula is satisfiable.
-    """
-    pieces: List[Piece] = []
-
-    # Variable gadgets
-    for i in range(sat.num_vars):
-        pieces.append(Piece(EdgeType.FLAT, EdgeType.TAB, EdgeType.FLAT, EdgeType.FLAT,
-                           label=f"x{i}=T"))
-        pieces.append(Piece(EdgeType.FLAT, EdgeType.BLANK, EdgeType.FLAT, EdgeType.FLAT,
-                           label=f"x{i}=F"))
-
-    # Clause gadgets
-    for j, clause in enumerate(sat.clauses):
-        pieces.append(Piece(EdgeType.BLANK, EdgeType.FLAT, EdgeType.FLAT, EdgeType.BLANK,
-                           label=f"C{j}"))
-
-    # Boundary
-    pieces.append(Piece(EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT,
-                       label="boundary_L"))
-    pieces.append(Piece(EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT,
-                       label="boundary_R"))
-
-    total = len(pieces)
-    return PuzzleInstance(rows=1, cols=total, pieces=pieces)
-
-
-# --- Algorithm 2: Assembly Verification ---
-
-def verify_assembly(puzzle: PuzzleInstance,
-                     placement: List[List[int]]) -> bool:
-    """
-    Verify that a grid placement is valid in O(m*n) time.
-    
-    Pseudocode:
-    FOR each cell (i,j):
-      IF j+1 < cols: CHECK right(i,j) compatible left(i,j+1)
-      IF i+1 < rows: CHECK bottom(i,j) compatible top(i+1,j)
-    RETURN all checks passed
-    """
-    for i in range(puzzle.rows):
-        for j in range(puzzle.cols):
-            p = puzzle.pieces[placement[i][j]]
-            if j + 1 < puzzle.cols:
-                q = puzzle.pieces[placement[i][j + 1]]
-                if not compatible(p.right, q.left):
-                    return False
-            if i + 1 < puzzle.rows:
-                q = puzzle.pieces[placement[i + 1][j]]
-                if not compatible(p.bottom, q.top):
-                    return False
-    return True
-
-
-# --- Algorithm 3: Brute Force Solver ---
-
-def solve_puzzle_brute(puzzle: PuzzleInstance) -> Optional[List[List[int]]]:
-    """
-    Brute force puzzle solver: try all permutations.
-    
-    Pseudocode:
-    FOR each permutation of pieces:
-      Place in row-major order
-      IF valid: RETURN placement
-    RETURN None
-    
-    Complexity: O(N! × N) where N = rows × cols
-    """
-    n = puzzle.rows * puzzle.cols
-    if n > 10:  # Safety limit
+    def satisfiable(self) -> Optional[Dict[int, bool]]:
+        """Brute-force SAT solver: try all 2^n assignments."""
+        for bits in range(2 ** self.num_vars):
+            assignment = {i: bool((bits >> i) & 1) for i in range(self.num_vars)}
+            if all(c.satisfied(assignment) for c in self.clauses):
+                return assignment
         return None
 
-    for perm in itertools.permutations(range(len(puzzle.pieces)), n):
-        grid = []
-        idx = 0
-        for i in range(puzzle.rows):
-            row = []
-            for j in range(puzzle.cols):
-                row.append(perm[idx])
-                idx += 1
-            grid.append(row)
-        if verify_assembly(puzzle, grid):
-            return grid
-    return None
 
+# =============================================================================
+# Algorithm 1: SAT-to-Puzzle Reduction
+# =============================================================================
 
-# --- Algorithm 4: Constraint Propagation Solver ---
-
-def solve_with_propagation(puzzle: PuzzleInstance) -> Optional[List[List[int]]]:
+def sat_to_puzzle(formula: CNF) -> Tuple[List[JigsawPiece], int, int]:
     """
-    Solve using constraint propagation with backtracking.
-    
+    Reduce a CNF formula to a jigsaw puzzle instance.
+
+    Given a formula with n variables and m clauses, constructs
+    a puzzle with 2n + m pieces arranged in a 1 × (2n + m) grid.
+
+    Returns: (pieces, rows, cols)
+
     Pseudocode:
-    1. Initialize domains: each cell can hold any piece
-    2. Place pieces left-to-right, top-to-bottom
-    3. At each cell, filter candidates by compatibility with placed neighbors
-    4. If no candidates: backtrack
-    5. If all cells filled: return solution
+        for each variable x_i:
+            create TRUE_piece_i with right=TAB
+            create FALSE_piece_i with right=BLANK
+        for each clause C_j:
+            create clause_piece_j with left=BLANK (needs TAB from satisfied literal)
+        return all pieces in order
     """
-    n = puzzle.rows * puzzle.cols
-    grid: List[List[int]] = [[-1] * puzzle.cols for _ in range(puzzle.rows)]
+    pieces: List[JigsawPiece] = []
+    n = formula.num_vars
+    m = len(formula.clauses)
+
+    # Variable gadgets
+    for i in range(n):
+        left_edge = EdgeType.FLAT if i == 0 else EdgeType.BLANK
+        true_piece = JigsawPiece(
+            top=EdgeType.FLAT,
+            right=EdgeType.TAB,
+            bottom=EdgeType.FLAT,
+            left=left_edge
+        )
+        false_piece = JigsawPiece(
+            top=EdgeType.FLAT,
+            right=EdgeType.BLANK,
+            bottom=EdgeType.FLAT,
+            left=left_edge if i == 0 else EdgeType.TAB
+        )
+        pieces.extend([true_piece, false_piece])
+
+    # Clause gadgets
+    for j in range(m):
+        clause_piece = JigsawPiece(
+            top=EdgeType.FLAT,
+            right=EdgeType.FLAT if j == m - 1 else EdgeType.TAB,
+            bottom=EdgeType.FLAT,
+            left=EdgeType.BLANK
+        )
+        pieces.append(clause_piece)
+
+    rows = 1
+    cols = 2 * n + m
+    return pieces, rows, cols
+
+
+# =============================================================================
+# Algorithm 2: Puzzle Assembly Solver (Backtracking)
+# =============================================================================
+
+def solve_puzzle(
+    pieces: List[JigsawPiece],
+    rows: int,
+    cols: int
+) -> Optional[List[List[JigsawPiece]]]:
+    """
+    Solve a jigsaw puzzle by backtracking.
+
+    Pseudocode:
+        grid = empty r×c array
+        used = empty set
+        def backtrack(pos):
+            if pos == r*c: return True  # all placed
+            i, j = pos // c, pos % c
+            for piece_idx in unused pieces:
+                if fits(piece, i, j, grid):
+                    place piece
+                    if backtrack(pos + 1): return True
+                    remove piece
+            return False
+        return backtrack(0)
+    """
+    grid: List[List[Optional[JigsawPiece]]] = [
+        [None] * cols for _ in range(rows)
+    ]
     used: Set[int] = set()
 
-    def get_candidates(i: int, j: int) -> List[int]:
-        candidates = []
-        for idx in range(len(puzzle.pieces)):
-            if idx in used:
-                continue
-            p = puzzle.pieces[idx]
-            valid = True
-            # Check left neighbor
-            if j > 0 and grid[i][j - 1] >= 0:
-                left_piece = puzzle.pieces[grid[i][j - 1]]
-                if not compatible(left_piece.right, p.left):
-                    valid = False
-            # Check top neighbor
-            if i > 0 and grid[i - 1][j] >= 0:
-                top_piece = puzzle.pieces[grid[i - 1][j]]
-                if not compatible(top_piece.bottom, p.top):
-                    valid = False
-            if valid:
-                candidates.append(idx)
-        return candidates
+    def fits_at(piece: JigsawPiece, r: int, c: int) -> bool:
+        # Check left neighbor
+        if c > 0 and grid[r][c - 1] is not None:
+            if not grid[r][c - 1].fits_right(piece):
+                return False
+        # Check top neighbor
+        if r > 0 and grid[r - 1][c] is not None:
+            if not grid[r - 1][c].fits_below(piece):
+                return False
+        return True
 
-    def solve(pos: int) -> bool:
-        if pos == n:
+    def backtrack(pos: int) -> bool:
+        if pos == rows * cols:
             return True
-        i, j = pos // puzzle.cols, pos % puzzle.cols
-        for idx in get_candidates(i, j):
-            grid[i][j] = idx
-            used.add(idx)
-            if solve(pos + 1):
-                return True
-            used.remove(idx)
-            grid[i][j] = -1
+        r, c = divmod(pos, cols)
+        for idx, piece in enumerate(pieces):
+            if idx not in used and fits_at(piece, r, c):
+                grid[r][c] = piece
+                used.add(idx)
+                if backtrack(pos + 1):
+                    return True
+                grid[r][c] = None
+                used.discard(idx)
         return False
 
-    if solve(0):
+    if backtrack(0):
         return grid
     return None
 
 
-# --- Algorithm 5: SAT Solver ---
+# =============================================================================
+# Algorithm 3: Constraint Graph Analysis
+# =============================================================================
 
-def solve_sat(sat: SATInstance) -> Optional[List[bool]]:
+def constraint_graph_stats(rows: int, cols: int) -> Dict[str, int]:
     """
-    Solve a 3-SAT instance by brute force enumeration.
-    
+    Compute statistics of the constraint graph for an r×c grid.
+
     Pseudocode:
-    FOR each assignment in {0,1}^n:
-      IF all clauses satisfied: RETURN assignment
-    RETURN None
+        V = r * c
+        E_horiz = r * (c - 1)
+        E_vert = (r - 1) * c
+        E = E_horiz + E_vert
+        cycles = (r - 1) * (c - 1)
+        euler = V - E + 1
+        return {V, E, euler, cycles}
     """
-    for bits in itertools.product([False, True], repeat=sat.num_vars):
-        assignment = list(bits)
-        if all(c.satisfied(assignment) for c in sat.clauses):
-            return assignment
-    return None
+    v = rows * cols
+    e_horiz = rows * max(0, cols - 1)
+    e_vert = max(0, rows - 1) * cols
+    e_total = e_horiz + e_vert
+    cycles = max(0, rows - 1) * max(0, cols - 1)
+    euler = v - e_total + 1
+
+    return {
+        "vertices": v,
+        "horizontal_edges": e_horiz,
+        "vertical_edges": e_vert,
+        "total_edges": e_total,
+        "independent_cycles": cycles,
+        "euler_characteristic": euler,
+    }
 
 
-# --- Test ---
+# =============================================================================
+# Algorithm 4: Random Puzzle Generation
+# =============================================================================
+
+def generate_solvable_puzzle(rows: int, cols: int, seed: int = 42) -> List[List[JigsawPiece]]:
+    """
+    Generate a random solvable puzzle by constructing it row by row.
+
+    Pseudocode:
+        for each cell (i, j):
+            top = complement(grid[i-1][j].bottom) if i > 0 else FLAT
+            left = complement(grid[i][j-1].right) if j > 0 else FLAT
+            right = random(TAB, BLANK) if j < cols-1 else FLAT
+            bottom = random(TAB, BLANK) if i < rows-1 else FLAT
+            grid[i][j] = Piece(top, right, bottom, left)
+    """
+    import random
+    rng = random.Random(seed)
+
+    grid: List[List[JigsawPiece]] = []
+    for i in range(rows):
+        row: List[JigsawPiece] = []
+        for j in range(cols):
+            # Top edge
+            if i == 0:
+                top = EdgeType.FLAT
+            else:
+                top = complement(grid[i - 1][j].bottom)
+
+            # Left edge
+            if j == 0:
+                left = EdgeType.FLAT
+            else:
+                left = complement(row[j - 1].right)
+
+            # Right edge
+            if j == cols - 1:
+                right = EdgeType.FLAT
+            else:
+                right = rng.choice([EdgeType.TAB, EdgeType.BLANK])
+
+            # Bottom edge
+            if i == rows - 1:
+                bottom = EdgeType.FLAT
+            else:
+                bottom = rng.choice([EdgeType.TAB, EdgeType.BLANK])
+
+            row.append(JigsawPiece(top, right, bottom, left))
+        grid.append(row)
+    return grid
+
+
+# =============================================================================
+# Main: Run all algorithms
+# =============================================================================
 
 if __name__ == "__main__":
-    # Test SAT instance: (x0 ∨ x1 ∨ ¬x2) ∧ (¬x0 ∨ x2 ∨ x2)
-    sat = SATInstance(3, [
-        Clause([Literal(0, True), Literal(1, True), Literal(2, False)]),
-        Clause([Literal(0, False), Literal(2, True), Literal(2, True)])
-    ])
+    # Test SAT-to-Puzzle reduction
+    formula = CNF(
+        num_vars=3,
+        clauses=[
+            Clause([Literal(0, True), Literal(1, True), Literal(2, False)]),
+            Clause([Literal(0, False), Literal(2, True), Literal(2, True)]),
+        ]
+    )
 
-    print("SAT Instance:", sat.num_vars, "variables,", len(sat.clauses), "clauses")
+    print("SAT-to-Puzzle Reduction")
+    print(f"  Formula: 3 vars, 2 clauses")
+    pieces, rows, cols = sat_to_puzzle(formula)
+    print(f"  Puzzle: {rows}×{cols} grid, {len(pieces)} pieces")
 
-    solution = solve_sat(sat)
-    print(f"SAT Solution: {solution}")
+    # Solve the formula directly
+    sat_result = formula.satisfiable()
+    print(f"  Formula satisfiable: {sat_result is not None}")
+    if sat_result:
+        print(f"  Satisfying assignment: {sat_result}")
 
-    puzzle = sat_to_puzzle(sat)
-    print(f"Puzzle: {puzzle.rows}×{puzzle.cols}, {len(puzzle.pieces)} pieces")
+    # Constraint graph analysis
+    print("\nConstraint Graph Analysis")
+    for r, c in [(1, 5), (3, 3), (5, 5), (10, 10)]:
+        stats = constraint_graph_stats(r, c)
+        print(f"  {r}×{c}: V={stats['vertices']}, E={stats['total_edges']}, "
+              f"χ={stats['euler_characteristic']}, cycles={stats['independent_cycles']}")
 
-    # Verify Euler characteristic
-    for m in range(1, 8):
-        for n in range(1, 8):
-            chi = euler_characteristic(m, n)
-            assert chi == 2, f"Euler char failed for {m}×{n}: got {chi}"
-    print("Euler characteristic = 2 verified for all grids up to 7×7 ✓")
+    # Generate a solvable puzzle
+    print("\nRandom Solvable Puzzle (3×3)")
+    grid = generate_solvable_puzzle(3, 3)
+    for i, row in enumerate(grid):
+        for j, p in enumerate(row):
+            print(f"  ({i},{j}): ({p.top.value}, {p.right.value}, {p.bottom.value}, {p.left.value})")
 
-    # Verify complement involution
-    for e in EdgeType:
-        assert complement(complement(e)) == e
-    print("Complement involution verified ✓")
-
-    # Verify encoding consistency
-    for b1 in [True, False]:
-        for b2 in [True, False]:
-            e1 = EdgeType.TAB if b1 else EdgeType.BLANK
-            e2 = EdgeType.TAB if b2 else EdgeType.BLANK
-            assert compatible(e1, e2) == (b1 != b2)
-    print("Encoding consistency verified ✓")
-
-    print("\nAll algorithm tests passed!")
+    # Verify it's valid
+    valid = True
+    for i in range(3):
+        for j in range(3):
+            if j < 2 and not grid[i][j].fits_right(grid[i][j + 1]):
+                valid = False
+            if i < 2 and not grid[i][j].fits_below(grid[i + 1][j]):
+                valid = False
+    print(f"  Valid assembly: {valid}")

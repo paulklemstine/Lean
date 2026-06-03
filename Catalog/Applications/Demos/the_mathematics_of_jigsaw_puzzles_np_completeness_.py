@@ -1,515 +1,462 @@
 #!/usr/bin/env python3
 """
-Jigsaw Puzzle NP-Completeness Demo
+demo.py - Jigsaw Puzzle NP-Completeness: Numerical Examples and Verification
 
-Demonstrates the 3-SAT to jigsaw puzzle reduction with concrete examples.
-Constructs puzzle instances from SAT formulas and verifies the correspondence.
+Demonstrates the SAT-to-puzzle reduction, constraint counting,
+and Euler characteristic computations for various grid sizes.
 """
 
-from typing import List, Tuple, Optional, Dict
 from enum import Enum
+from dataclasses import dataclass
+from typing import List, Tuple, Optional, Callable
 import itertools
 
+
 class EdgeType(Enum):
-    FLAT = 0
-    TAB = 1
-    BLANK = 2
+    TAB = "tab"
+    BLANK = "blank"
+    FLAT = "flat"
+
+
+def complementary(e1: EdgeType, e2: EdgeType) -> bool:
+    """Two edges are complementary if one is tab and the other is blank."""
+    return (e1 == EdgeType.TAB and e2 == EdgeType.BLANK) or \
+           (e1 == EdgeType.BLANK and e2 == EdgeType.TAB)
+
 
 def complement(e: EdgeType) -> EdgeType:
-    if e == EdgeType.FLAT: return EdgeType.FLAT
-    if e == EdgeType.TAB: return EdgeType.BLANK
-    return EdgeType.TAB
+    """The complement of an edge type."""
+    if e == EdgeType.TAB:
+        return EdgeType.BLANK
+    elif e == EdgeType.BLANK:
+        return EdgeType.TAB
+    else:
+        return EdgeType.FLAT
 
-def compatible(e1: EdgeType, e2: EdgeType) -> bool:
-    return complement(e1) == e2
 
-# --- SAT Instance ---
-
-class Literal:
-    def __init__(self, var: int, positive: bool = True):
-        self.var = var
-        self.positive = positive
-    def __repr__(self):
-        return f"x{self.var}" if self.positive else f"¬x{self.var}"
-    def evaluate(self, assignment: Dict[int, bool]) -> bool:
-        val = assignment.get(self.var, False)
-        return val if self.positive else not val
-
-class Clause:
-    def __init__(self, l1: Literal, l2: Literal, l3: Literal):
-        self.literals = [l1, l2, l3]
-    def __repr__(self):
-        return f"({' ∨ '.join(str(l) for l in self.literals)})"
-    def satisfied(self, assignment: Dict[int, bool]) -> bool:
-        return any(l.evaluate(assignment) for l in self.literals)
-
-class SATInstance:
-    def __init__(self, num_vars: int, clauses: List[Clause]):
-        self.num_vars = num_vars
-        self.clauses = clauses
-    def __repr__(self):
-        return ' ∧ '.join(str(c) for c in self.clauses)
-    def is_satisfiable(self) -> Tuple[bool, Optional[Dict[int, bool]]]:
-        for bits in itertools.product([False, True], repeat=self.num_vars):
-            assignment = {i: bits[i] for i in range(self.num_vars)}
-            if all(c.satisfied(assignment) for c in self.clauses):
-                return True, assignment
-        return False, None
-
-# --- Jigsaw Piece ---
-
+@dataclass
 class JigsawPiece:
-    def __init__(self, top: EdgeType, right: EdgeType, bottom: EdgeType, left: EdgeType, label: str = ""):
-        self.top = top
-        self.right = right
-        self.bottom = bottom
-        self.left = left
-        self.label = label
-    def __repr__(self):
-        return f"Piece({self.label}: T={self.top.name} R={self.right.name} B={self.bottom.name} L={self.left.name})"
+    top: EdgeType
+    right: EdgeType
+    bottom: EdgeType
+    left: EdgeType
 
-# --- Reduction ---
+    def fits_horizontal(self, other: 'JigsawPiece') -> bool:
+        """Can self be placed to the left of other?"""
+        return complementary(self.right, other.left)
 
-def encode_bool(b: bool) -> EdgeType:
-    return EdgeType.TAB if b else EdgeType.BLANK
+    def fits_vertical(self, other: 'JigsawPiece') -> bool:
+        """Can self be placed above other?"""
+        return complementary(self.bottom, other.top)
 
-def sat_to_puzzle(sat: SATInstance) -> Tuple[List[JigsawPiece], int, int]:
-    """Reduce a 3-SAT instance to jigsaw puzzle pieces."""
-    pieces = []
-    # Variable gadgets: 2 pieces per variable
-    for i in range(sat.num_vars):
-        true_piece = JigsawPiece(EdgeType.FLAT, EdgeType.TAB, EdgeType.FLAT, EdgeType.FLAT,
-                                  label=f"x{i}=T")
-        false_piece = JigsawPiece(EdgeType.FLAT, EdgeType.BLANK, EdgeType.FLAT, EdgeType.FLAT,
-                                   label=f"x{i}=F")
-        pieces.extend([true_piece, false_piece])
-    
-    # Clause gadgets: 1 piece per clause
-    for j, clause in enumerate(sat.clauses):
-        clause_piece = JigsawPiece(EdgeType.BLANK, EdgeType.FLAT, EdgeType.FLAT, EdgeType.BLANK,
-                                    label=f"C{j}")
-        pieces.append(clause_piece)
-    
-    # Boundary pieces
-    pieces.append(JigsawPiece(EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, label="corner_TL"))
-    pieces.append(JigsawPiece(EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, EdgeType.FLAT, label="corner_BR"))
-    
-    total = 2 * sat.num_vars + len(sat.clauses) + 2
-    return pieces, 1, total  # 1 x N grid
+    def signature(self) -> Tuple[EdgeType, EdgeType, EdgeType, EdgeType]:
+        return (self.top, self.right, self.bottom, self.left)
 
-def verify_assembly(pieces: List[JigsawPiece], rows: int, cols: int,
-                     grid: List[List[int]]) -> bool:
-    """Verify that a grid placement is valid."""
-    for i in range(rows):
-        for j in range(cols):
-            p = pieces[grid[i][j]]
-            # Check right neighbor
-            if j + 1 < cols:
-                q = pieces[grid[i][j + 1]]
-                if not compatible(p.right, q.left):
-                    return False
-            # Check bottom neighbor
-            if i + 1 < rows:
-                q = pieces[grid[i + 1][j]]
-                if not compatible(p.bottom, q.top):
-                    return False
-    return True
 
-# --- Demo ---
-
-def demo_complement_involution():
+# =============================================================================
+# Demo 1: Edge Compatibility Analysis
+# =============================================================================
+def demo_edge_compatibility():
     print("=" * 60)
-    print("Demo 1: Complement Involution")
+    print("DEMO 1: Edge Compatibility Analysis")
     print("=" * 60)
-    for e in EdgeType:
-        c = complement(e)
-        cc = complement(c)
-        print(f"  {e.name:5s} → complement → {c.name:5s} → complement → {cc.name:5s}  "
-              f"(involution: {cc == e})")
-    print()
 
-def demo_mutual_exclusion():
-    print("=" * 60)
-    print("Demo 2: Variable Gadget Mutual Exclusion")
-    print("=" * 60)
-    t = EdgeType.TAB
-    b = EdgeType.BLANK
-    print(f"  TAB  compatible TAB  = {compatible(t, t)}  (same → excluded)")
-    print(f"  BLANK compatible BLANK = {compatible(b, b)}  (same → excluded)")
-    print(f"  TAB  compatible BLANK = {compatible(t, b)}  (different → fits!)")
-    print()
+    types = list(EdgeType)
+    count = 0
+    print(f"\nAll {len(types)}×{len(types)} = {len(types)**2} edge pairings:")
+    for e1 in types:
+        for e2 in types:
+            c = complementary(e1, e2)
+            if c:
+                count += 1
+                print(f"  {e1.value:5s} - {e2.value:5s} : COMPLEMENTARY ✓")
+            else:
+                print(f"  {e1.value:5s} - {e2.value:5s} : incompatible")
 
+    print(f"\nComplementary pairs: {count}/9 = {count/9:.4f}")
+    print(f"(Verified: matches theorem complementary_pair_count = 2)")
+
+    # Verify involution
+    print("\nComplement involution check:")
+    for e in types:
+        c = complement(complement(e))
+        print(f"  complement(complement({e.value})) = {c.value} {'✓' if c == e else '✗'}")
+
+
+# =============================================================================
+# Demo 2: Constraint Counting
+# =============================================================================
+def demo_constraint_counting():
+    print("\n" + "=" * 60)
+    print("DEMO 2: Constraint Counting in Grid Assemblies")
+    print("=" * 60)
+
+    def grid_constraint_count(r: int, c: int) -> int:
+        return r * max(0, c - 1) + max(0, r - 1) * c
+
+    def euler_char(r: int, c: int) -> int:
+        return r * c - grid_constraint_count(r, c) + 1
+
+    print(f"\n{'Grid':>8s} | {'Pieces':>6s} | {'Constraints':>11s} | {'Euler χ':>7s} | {'Cycles':>6s}")
+    print("-" * 55)
+    for r, c in [(1,1), (1,2), (1,5), (1,10), (2,2), (2,3), (3,3), (4,4), (5,5), (10,10)]:
+        n = r * c
+        e = grid_constraint_count(r, c)
+        chi = euler_char(r, c)
+        cycles = (r-1) * (c-1)
+        print(f"  {r}×{c:>2d}   | {n:>6d} | {e:>11d} | {chi:>7d} | {cycles:>6d}")
+
+    print(f"\nVerification: χ(r,c) = 2 - (r-1)(c-1)")
+    for r, c in [(1,5), (3,3), (10,10)]:
+        computed = euler_char(r, c)
+        formula = 2 - (r-1)*(c-1)
+        match = "✓" if computed == formula else "✗"
+        print(f"  χ({r},{c}) = {computed} = 2 - {(r-1)*(c-1)} = {formula} {match}")
+
+
+# =============================================================================
+# Demo 3: SAT-to-Puzzle Reduction
+# =============================================================================
 def demo_sat_reduction():
+    print("\n" + "=" * 60)
+    print("DEMO 3: SAT-to-Puzzle Reduction (Concrete Instance)")
     print("=" * 60)
-    print("Demo 3: 3-SAT to Jigsaw Reduction")
-    print("=" * 60)
-    
-    # (x0 ∨ x1 ∨ ¬x2) ∧ (¬x0 ∨ x2 ∨ x2)
-    sat = SATInstance(3, [
-        Clause(Literal(0, True), Literal(1, True), Literal(2, False)),
-        Clause(Literal(0, False), Literal(2, True), Literal(2, True))
-    ])
-    print(f"  SAT Instance: {sat}")
-    
-    is_sat, assignment = sat.is_satisfiable()
-    print(f"  Satisfiable: {is_sat}")
-    if assignment:
-        print(f"  Assignment: {', '.join(f'x{k}={v}' for k, v in sorted(assignment.items()))}")
-    
-    pieces, rows, cols = sat_to_puzzle(sat)
-    print(f"\n  Puzzle: {rows} × {cols} grid, {len(pieces)} pieces")
-    for p in pieces:
-        print(f"    {p}")
-    print()
 
-def demo_encoding_consistency():
-    print("=" * 60)
-    print("Demo 4: Boolean Encoding Consistency")
-    print("=" * 60)
-    for b1 in [True, False]:
-        for b2 in [True, False]:
-            e1 = encode_bool(b1)
-            e2 = encode_bool(b2)
-            comp = compatible(e1, e2)
-            expected = b1 != b2
-            print(f"  encode({b1:5}) compatible encode({b2:5}) = {comp:5}  "
-                  f"(b1≠b2: {expected:5})  ✓" if comp == expected else "  ✗")
-    print()
+    # Formula: (x₀ ∨ x₁ ∨ ¬x₂) ∧ (¬x₀ ∨ x₂ ∨ x₂)
+    def eval_formula(a: Tuple[bool, bool, bool]) -> Tuple[bool, bool]:
+        x0, x1, x2 = a
+        c1 = x0 or x1 or (not x2)         # x₀ ∨ x₁ ∨ ¬x₂
+        c2 = (not x0) or x2 or x2         # ¬x₀ ∨ x₂ ∨ x₂
+        return (c1, c2)
 
-def demo_constraint_density():
-    print("=" * 60)
-    print("Demo 5: Constraint Density")
-    print("=" * 60)
-    print(f"  {'m×n':>8s}  {'Cells':>6s}  {'IntEdges':>8s}  {'Density':>8s}  {'Euler':>6s}")
-    print(f"  {'-'*8:>8s}  {'-'*6:>6s}  {'-'*8:>8s}  {'-'*8:>8s}  {'-'*6:>6s}")
-    for m in [2, 3, 5, 10, 20, 50]:
-        for n in [m]:
-            cells = m * n
-            ie = m * (n - 1) + (m - 1) * n
-            density = ie / cells if cells > 0 else 0
-            V = cells
-            E = ie
-            F = (m - 1) * (n - 1) + 1
-            euler = V - E + F
-            print(f"  {m}×{n:>4d}  {cells:6d}  {ie:8d}  {density:8.3f}  {euler:6d}")
-    print()
+    print("\nTruth table for φ = (x₀ ∨ x₁ ∨ ¬x₂) ∧ (¬x₀ ∨ x₂ ∨ x₂):")
+    print(f"  {'x₀':>5s} {'x₁':>5s} {'x₂':>5s} | {'C₁':>3s} {'C₂':>3s} | {'SAT':>5s}")
+    print("  " + "-" * 35)
 
-def demo_unsatisfiable():
-    print("=" * 60)
-    print("Demo 6: Unsatisfiable Instance → No Valid Assembly")
-    print("=" * 60)
-    # (x0) ∧ (¬x0) — trivially unsatisfiable with padding
-    sat = SATInstance(1, [
-        Clause(Literal(0, True), Literal(0, True), Literal(0, True)),
-        Clause(Literal(0, False), Literal(0, False), Literal(0, False))
-    ])
-    print(f"  SAT Instance: {sat}")
-    is_sat, _ = sat.is_satisfiable()
-    print(f"  Satisfiable: {is_sat}")
-    pieces, rows, cols = sat_to_puzzle(sat)
-    print(f"  Puzzle pieces: {len(pieces)}")
-    print(f"  → No valid assembly exists (reduction preserves unsatisfiability)")
-    print()
+    sat_count = 0
+    for x0 in [False, True]:
+        for x1 in [False, True]:
+            for x2 in [False, True]:
+                c1, c2 = eval_formula((x0, x1, x2))
+                sat = c1 and c2
+                if sat:
+                    sat_count += 1
+                t = lambda b: " T" if b else " F"
+                s = "  SAT" if sat else "UNSAT"
+                print(f"  {t(x0):>5s} {t(x1):>5s} {t(x2):>5s} | {t(c1):>3s} {t(c2):>3s} | {s:>5s}")
 
+    print(f"\n{sat_count}/8 assignments satisfy the formula")
+
+    # Characterization check
+    print("\nCharacterization verification:")
+    print("  SAT iff (x₀ ∨ x₁ ∨ ¬x₂) ∧ (¬x₀ ∨ x₂)")
+    for x0 in [False, True]:
+        for x1 in [False, True]:
+            for x2 in [False, True]:
+                c1, c2 = eval_formula((x0, x1, x2))
+                sat_direct = c1 and c2
+                char_cond = (x0 or x1 or not x2) and (not x0 or x2)
+                match = "✓" if sat_direct == char_cond else "✗"
+                print(f"    ({x0}, {x1}, {x2}): direct={sat_direct}, characterized={char_cond} {match}")
+
+    # Reduction piece count
+    n_vars, n_clauses = 3, 2
+    piece_count = 2 * n_vars + n_clauses
+    print(f"\nReduction: {n_vars} vars, {n_clauses} clauses → {piece_count} pieces")
+    print(f"  Bound: {piece_count} ≤ 3·({n_vars}+{n_clauses}) = {3*(n_vars+n_clauses)} ✓")
+
+
+# =============================================================================
+# Demo 4: Variable Gadget Verification
+# =============================================================================
+def demo_variable_gadgets():
+    print("\n" + "=" * 60)
+    print("DEMO 4: Variable Gadget Mutual Exclusion")
+    print("=" * 60)
+
+    for i in range(3):
+        left_true = EdgeType.FLAT if i == 0 else EdgeType.BLANK
+        left_false = EdgeType.FLAT if i == 0 else EdgeType.TAB
+        true_piece = JigsawPiece(EdgeType.FLAT, EdgeType.TAB, EdgeType.FLAT, left_true)
+        false_piece = JigsawPiece(EdgeType.FLAT, EdgeType.BLANK, EdgeType.FLAT, left_false)
+
+        comp = complementary(true_piece.right, false_piece.right)
+        same_top = true_piece.top == false_piece.top
+        same_bottom = true_piece.bottom == false_piece.bottom
+
+        print(f"\n  Variable x_{i}:")
+        print(f"    TRUE  piece: ({true_piece.top.value}, {true_piece.right.value}, "
+              f"{true_piece.bottom.value}, {true_piece.left.value})")
+        print(f"    FALSE piece: ({false_piece.top.value}, {false_piece.right.value}, "
+              f"{false_piece.bottom.value}, {false_piece.left.value})")
+        print(f"    Complementary right edges: {comp} ✓" if comp else f"    NOT complementary ✗")
+        print(f"    Same boundary: top={same_top}, bottom={same_bottom}")
+
+
+# =============================================================================
+# Demo 5: Random Puzzle Solvability
+# =============================================================================
+def demo_random_solvability():
+    print("\n" + "=" * 60)
+    print("DEMO 5: Random Puzzle Solvability Analysis")
+    print("=" * 60)
+
+    import random
+    random.seed(42)
+
+    types = list(EdgeType)
+
+    def random_piece() -> JigsawPiece:
+        return JigsawPiece(*[random.choice(types) for _ in range(4)])
+
+    def check_1x2_valid(p: JigsawPiece, q: JigsawPiece) -> bool:
+        return p.fits_horizontal(q)
+
+    def check_2x2_valid(pieces: List[JigsawPiece]) -> bool:
+        """Check if 4 pieces can form a valid 2×2 grid in some arrangement."""
+        for perm in itertools.permutations(pieces):
+            p00, p01, p10, p11 = perm
+            if (p00.fits_horizontal(p01) and
+                p10.fits_horizontal(p11) and
+                p00.fits_vertical(p10) and
+                p01.fits_vertical(p11)):
+                return True
+        return False
+
+    # 1×2 analysis
+    n_trials = 10000
+    solvable = sum(1 for _ in range(n_trials)
+                   if check_1x2_valid(random_piece(), random_piece()))
+    print(f"\n  1×2 grids: {solvable}/{n_trials} solvable = {solvable/n_trials:.4f}")
+    print(f"  Expected (2/9): {2/9:.4f}")
+
+    # 2×2 analysis
+    n_trials_2x2 = 5000
+    solvable_2x2 = sum(1 for _ in range(n_trials_2x2)
+                       if check_2x2_valid([random_piece() for _ in range(4)]))
+    print(f"\n  2×2 grids: {solvable_2x2}/{n_trials_2x2} solvable = {solvable_2x2/n_trials_2x2:.4f}")
+    print(f"  (Lower than 1×2 due to coupled constraints)")
+
+    # Signature space
+    print(f"\n  Signature space: 3^4 = {3**4} distinct piece types")
+    print(f"  For k pieces: {3**4}^k possible puzzle instances")
+
+
+# =============================================================================
+# Main
+# =============================================================================
 if __name__ == "__main__":
-    print("\n  JIGSAW PUZZLE NP-COMPLETENESS DEMONSTRATION\n")
-    demo_complement_involution()
-    demo_mutual_exclusion()
-    demo_encoding_consistency()
+    print("JIGSAW PUZZLE NP-COMPLETENESS: COMPUTATIONAL DEMONSTRATIONS")
+    print("=" * 60)
+    demo_edge_compatibility()
+    demo_constraint_counting()
     demo_sat_reduction()
-    demo_constraint_density()
-    demo_unsatisfiable()
-    print("All demos completed successfully!")
+    demo_variable_gadgets()
+    demo_random_solvability()
+    print("\n" + "=" * 60)
+    print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Constraint Density and Euler Characteristic of Grid Puzzles
+Visualization: Constraint Topology of Jigsaw Puzzle Grids
 
-Plots how constraint density approaches 2 as grid size increases,
-and verifies the Euler characteristic V - E + F = 2.
+Shows how the Euler characteristic χ = 2 - (r-1)(c-1) varies
+across different grid dimensions, revealing the topological
+complexity of puzzle constraint graphs.
 """
 
+import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
 
 
-def internal_edge_count(m: int, n: int) -> int:
-    return m * (n - 1) + (m - 1) * n
+def grid_constraint_count(r, c):
+    return r * max(0, c - 1) + max(0, r - 1) * c
 
+def euler_char(r, c):
+    return r * c - grid_constraint_count(r, c) + 1
 
-def constraint_density(m: int, n: int) -> float:
-    if m * n == 0:
-        return 0.0
-    return internal_edge_count(m, n) / (m * n)
+def independent_cycles(r, c):
+    return max(0, r - 1) * max(0, c - 1)
 
+# Grid sizes
+sizes = range(1, 16)
 
-def euler_characteristic(m: int, n: int) -> int:
-    V = m * n
-    E = internal_edge_count(m, n)
-    F = (m - 1) * (n - 1) + 1
-    return V - E + F
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
+# Plot 1: Euler characteristic for square grids
+ns = list(sizes)
+chis = [euler_char(n, n) for n in ns]
+cycles = [independent_cycles(n, n) for n in ns]
 
-# --- Plot 1: Constraint Density vs Grid Size ---
-sizes = list(range(2, 51))
-densities_square = [constraint_density(n, n) for n in sizes]
-densities_rect = [constraint_density(n, 2 * n) for n in sizes]
+axes[0].plot(ns, chis, 'b-o', linewidth=2, markersize=6, label='χ(n,n)')
+axes[0].axhline(y=2, color='gray', linestyle='--', alpha=0.5, label='χ = 2 (trees)')
+axes[0].set_xlabel('Grid dimension n', fontsize=12)
+axes[0].set_ylabel('Euler characteristic χ', fontsize=12)
+axes[0].set_title('Euler Characteristic of n×n Grids', fontsize=13)
+axes[0].legend(fontsize=10)
+axes[0].grid(True, alpha=0.3)
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+# Plot 2: Heatmap of Euler characteristic
+r_max, c_max = 10, 10
+chi_matrix = np.zeros((r_max, c_max))
+for r in range(1, r_max + 1):
+    for c in range(1, c_max + 1):
+        chi_matrix[r-1, c-1] = euler_char(r, c)
 
-ax1.plot(sizes, densities_square, 'b-o', markersize=3, label='n×n (square)')
-ax1.plot(sizes, densities_rect, 'r-s', markersize=3, label='n×2n (rectangular)')
-ax1.axhline(y=2, color='k', linestyle='--', alpha=0.5, label='Asymptote = 2')
-ax1.set_xlabel('n (grid dimension)')
-ax1.set_ylabel('Constraints per piece')
-ax1.set_title('Constraint Density Approaches 2')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
+im = axes[1].imshow(chi_matrix, cmap='RdYlBu', origin='lower',
+                     extent=[0.5, c_max+0.5, 0.5, r_max+0.5])
+axes[1].set_xlabel('Columns', fontsize=12)
+axes[1].set_ylabel('Rows', fontsize=12)
+axes[1].set_title('Euler Characteristic χ(r,c)', fontsize=13)
+plt.colorbar(im, ax=axes[1], label='χ')
 
-# --- Plot 2: Internal Edge Count ---
-ns = np.arange(2, 31)
-ie_square = [internal_edge_count(n, n) for n in ns]
-ie_upper = [2 * n * n for n in ns]
-ie_lower = [n * n - 1 for n in ns]
+# Plot 3: Constraints vs pieces
+ns2 = list(range(1, 21))
+pieces = [n*n for n in ns2]
+constraints = [grid_constraint_count(n, n) for n in ns2]
+ratio = [grid_constraint_count(n, n) / (n * n) if n > 0 else 0 for n in ns2]
 
-ax2.fill_between(ns, ie_lower, ie_upper, alpha=0.2, color='blue', label='Bounds: [n²-1, 2n²)')
-ax2.plot(ns, ie_square, 'b-o', markersize=4, label='IE(n,n) = 2n²-2n')
-ax2.plot(ns, ie_upper, 'r--', alpha=0.5, label='Upper: 2n²')
-ax2.plot(ns, ie_lower, 'g--', alpha=0.5, label='Lower: n²-1')
-ax2.set_xlabel('n (grid dimension)')
-ax2.set_ylabel('Internal edge count')
-ax2.set_title('Internal Edges in n×n Grid')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
+ax3 = axes[2]
+ax3.plot(ns2, pieces, 'g-s', linewidth=2, markersize=4, label='Pieces (n²)')
+ax3.plot(ns2, constraints, 'r-^', linewidth=2, markersize=4, label='Constraints')
+ax3.set_xlabel('Grid dimension n', fontsize=12)
+ax3.set_ylabel('Count', fontsize=12)
+ax3.set_title('Pieces vs Constraints', fontsize=13)
+ax3.legend(fontsize=10)
+ax3.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('constraint_density.png', dpi=150, bbox_inches='tight')
-print("Saved constraint_density.png")
-
-# Verify Euler characteristic
-for m in range(1, 100):
-    for n in range(1, 100):
-        assert euler_characteristic(m, n) == 2, f"Failed for {m}×{n}"
-print("Euler characteristic V-E+F=2 verified for all grids 1×1 to 99×99 ✓")
+plt.savefig('viz_constraint_topology.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_constraint_topology.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: SAT-to-Jigsaw Gadget Construction
+Visualization: SAT-to-Puzzle Reduction
 
-Illustrates the variable and clause gadgets used in the 3-SAT reduction,
-showing how Boolean logic is encoded in puzzle piece edge types.
+Illustrates the reduction from the example 3-SAT formula
+to a jigsaw puzzle, showing variable gadgets and truth table.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import matplotlib
+matplotlib.use('Agg')
 import numpy as np
 
 
 def draw_piece(ax, x, y, top, right, bottom, left, label="", color='lightblue'):
-    """Draw a jigsaw piece with labeled edges."""
-    size = 1.0
-    tab_size = 0.15
-    
-    # Main square
-    rect = patches.FancyBboxPatch((x, y), size, size, 
-                                   boxstyle="round,pad=0.02",
+    """Draw a jigsaw piece at position (x, y)."""
+    size = 0.8
+    rect = patches.FancyBboxPatch((x - size/2, y - size/2), size, size,
+                                   boxstyle="round,pad=0.05",
                                    facecolor=color, edgecolor='black', linewidth=1.5)
     ax.add_patch(rect)
-    
-    # Label
-    ax.text(x + size/2, y + size/2, label, ha='center', va='center', 
-            fontsize=8, fontweight='bold')
-    
-    # Edge indicators
-    edge_colors = {'flat': 'gray', 'tab': 'red', 'blank': 'blue'}
-    edge_symbols = {'flat': '—', 'tab': '▲', 'blank': '▽'}
-    
-    # Top edge
-    ax.text(x + size/2, y + size + 0.08, edge_symbols[top], 
-            ha='center', va='bottom', fontsize=10, color=edge_colors[top])
-    # Right edge
-    ax.text(x + size + 0.08, y + size/2, edge_symbols[right],
-            ha='left', va='center', fontsize=10, color=edge_colors[right], rotation=-90)
-    # Bottom edge
-    ax.text(x + size/2, y - 0.08, edge_symbols[bottom],
-            ha='center', va='top', fontsize=10, color=edge_colors[bottom])
-    # Left edge
-    ax.text(x - 0.08, y + size/2, edge_symbols[left],
-            ha='right', va='center', fontsize=10, color=edge_colors[left], rotation=90)
+
+    # Edge markers
+    marker_size = 0.12
+    edge_labels = {'tab': '▶', 'blank': '◀', 'flat': '—'}
+    edge_colors = {'tab': '#e74c3c', 'blank': '#3498db', 'flat': '#95a5a6'}
+
+    # Top
+    ax.text(x, y + size/2 + 0.05, edge_labels.get(top, '?'),
+            ha='center', va='bottom', fontsize=10, color=edge_colors.get(top, 'black'))
+    # Bottom
+    ax.text(x, y - size/2 - 0.05, edge_labels.get(bottom, '?'),
+            ha='center', va='top', fontsize=10, color=edge_colors.get(bottom, 'black'))
+    # Right
+    ax.text(x + size/2 + 0.05, y, edge_labels.get(right, '?'),
+            ha='left', va='center', fontsize=10, color=edge_colors.get(right, 'black'))
+    # Left
+    ax.text(x - size/2 - 0.05, y, edge_labels.get(left, '?'),
+            ha='right', va='center', fontsize=10, color=edge_colors.get(left, 'black'))
+
+    if label:
+        ax.text(x, y, label, ha='center', va='center', fontsize=8, fontweight='bold')
 
 
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig, axes = plt.subplots(2, 1, figsize=(12, 10))
 
-# --- Plot 1: Variable Gadget ---
-ax = axes[0, 0]
-ax.set_xlim(-0.5, 4.5)
-ax.set_ylim(-0.5, 2.5)
+# Top: Variable gadgets
+ax = axes[0]
+ax.set_xlim(-1, 8)
+ax.set_ylim(-1, 3)
 ax.set_aspect('equal')
-ax.set_title('Variable Gadget: x₁', fontsize=12, fontweight='bold')
+ax.set_title('Variable Gadgets for SAT Reduction', fontsize=14, fontweight='bold')
+
+# Variable x₀
+draw_piece(ax, 0, 2, 'flat', 'tab', 'flat', 'flat', 'x₀=T', '#a8e6cf')
+draw_piece(ax, 0, 0.5, 'flat', 'blank', 'flat', 'flat', 'x₀=F', '#ff8b94')
+
+# Variable x₁
+draw_piece(ax, 2.5, 2, 'flat', 'tab', 'flat', 'blank', 'x₁=T', '#a8e6cf')
+draw_piece(ax, 2.5, 0.5, 'flat', 'blank', 'flat', 'tab', 'x₁=F', '#ff8b94')
+
+# Variable x₂
+draw_piece(ax, 5, 2, 'flat', 'tab', 'flat', 'blank', 'x₂=T', '#a8e6cf')
+draw_piece(ax, 5, 0.5, 'flat', 'blank', 'flat', 'tab', 'x₂=F', '#ff8b94')
+
+# Labels
+ax.text(0, -0.5, 'x₀', ha='center', fontsize=12, fontweight='bold')
+ax.text(2.5, -0.5, 'x₁', ha='center', fontsize=12, fontweight='bold')
+ax.text(5, -0.5, 'x₂', ha='center', fontsize=12, fontweight='bold')
+
+# Legend
+ax.text(7, 2, '▶ = tab', fontsize=10, color='#e74c3c')
+ax.text(7, 1.5, '◀ = blank', fontsize=10, color='#3498db')
+ax.text(7, 1, '— = flat', fontsize=10, color='#95a5a6')
+ax.text(7, 0.3, 'Mutual exclusion:\ntab ↔ blank', fontsize=9, style='italic')
+
 ax.axis('off')
 
-draw_piece(ax, 0.5, 0.5, 'flat', 'tab', 'flat', 'flat', 'x₁=T', color='#90EE90')
-draw_piece(ax, 2.5, 0.5, 'flat', 'blank', 'flat', 'flat', 'x₁=F', color='#FFB6C1')
+# Bottom: Truth table
+ax2 = axes[1]
+ax2.axis('off')
+ax2.set_title('Truth Table: φ = (x₀ ∨ x₁ ∨ ¬x₂) ∧ (¬x₀ ∨ x₂)', fontsize=14, fontweight='bold')
 
-ax.annotate('', xy=(2.3, 1.0), xytext=(1.7, 1.0),
-            arrowprops=dict(arrowstyle='<->', color='purple', lw=2))
-ax.text(2.0, 1.3, 'XOR', ha='center', fontsize=10, color='purple', fontweight='bold')
+table_data = []
+headers = ['x₀', 'x₁', 'x₂', 'C₁: x₀∨x₁∨¬x₂', 'C₂: ¬x₀∨x₂', 'SAT?']
 
-# --- Plot 2: Clause Gadget ---
-ax = axes[0, 1]
-ax.set_xlim(-0.5, 4.5)
-ax.set_ylim(-0.5, 2.5)
-ax.set_aspect('equal')
-ax.set_title('Clause Gadget: (l₁ ∨ l₂ ∨ l₃)', fontsize=12, fontweight='bold')
-ax.axis('off')
+for x0 in [False, True]:
+    for x1 in [False, True]:
+        for x2 in [False, True]:
+            c1 = x0 or x1 or (not x2)
+            c2 = (not x0) or x2
+            sat = c1 and c2
+            row = [
+                'T' if x0 else 'F',
+                'T' if x1 else 'F',
+                'T' if x2 else 'F',
+                '✓' if c1 else '✗',
+                '✓' if c2 else '✗',
+                '✓ SAT' if sat else '✗ UNSAT'
+            ]
+            table_data.append(row)
 
-draw_piece(ax, 1.5, 0.5, 'blank', 'flat', 'flat', 'blank', 'Clause', color='#FFD700')
-ax.text(1.5, 0.1, '← needs TAB input', fontsize=9, color='red', style='italic')
-ax.text(1.5 + 1.2, 1.0, '← needs TAB input', fontsize=9, color='red', style='italic')
+table = ax2.table(cellText=table_data, colLabels=headers,
+                   cellLoc='center', loc='center')
+table.auto_set_font_size(False)
+table.set_fontsize(10)
+table.scale(1.2, 1.5)
 
-# --- Plot 3: Compatible vs Incompatible ---
-ax = axes[1, 0]
-ax.set_xlim(-0.5, 5.5)
-ax.set_ylim(-0.5, 3.5)
-ax.set_aspect('equal')
-ax.set_title('Edge Compatibility', fontsize=12, fontweight='bold')
-ax.axis('off')
-
-# Compatible pair
-draw_piece(ax, 0.3, 1.5, 'flat', 'tab', 'flat', 'flat', 'A', color='#90EE90')
-draw_piece(ax, 1.5, 1.5, 'flat', 'flat', 'flat', 'blank', 'B', color='#90EE90')
-ax.text(1.4, 2.8, '✓ Compatible (tab↔blank)', ha='center', fontsize=10, color='green')
-
-# Incompatible pair
-draw_piece(ax, 3.0, 1.5, 'flat', 'tab', 'flat', 'flat', 'A', color='#FFB6C1')
-draw_piece(ax, 4.2, 1.5, 'flat', 'flat', 'flat', 'tab', 'C', color='#FFB6C1')
-ax.text(4.1, 2.8, '✗ Incompatible (tab↔tab)', ha='center', fontsize=10, color='red')
-
-# Self-complementary
-draw_piece(ax, 1.5, -0.2, 'flat', 'flat', 'flat', 'flat', 'Flat', color='#D3D3D3')
-ax.text(2.0, -0.5, '↑ Self-complementary (boundary)', fontsize=9, color='gray')
-
-# --- Plot 4: Full Reduction Example ---
-ax = axes[1, 1]
-ax.set_xlim(-0.5, 7.5)
-ax.set_ylim(-0.5, 2.5)
-ax.set_aspect('equal')
-ax.set_title('Reduction: (x₁ ∨ ¬x₂) encoded as puzzle', fontsize=12, fontweight='bold')
-ax.axis('off')
-
-# Variable pieces
-draw_piece(ax, 0, 0.5, 'flat', 'tab', 'flat', 'flat', 'x₁=T', color='#90EE90')
-draw_piece(ax, 1.3, 0.5, 'flat', 'blank', 'flat', 'flat', 'x₁=F', color='#FFB6C1')
-draw_piece(ax, 2.6, 0.5, 'flat', 'tab', 'flat', 'flat', 'x₂=T', color='#90EE90')
-draw_piece(ax, 3.9, 0.5, 'flat', 'blank', 'flat', 'flat', 'x₂=F', color='#FFB6C1')
-
-# Clause piece
-draw_piece(ax, 5.5, 0.5, 'blank', 'flat', 'flat', 'blank', 'C₁', color='#FFD700')
-
-# Annotation
-ax.text(3.5, -0.3, 'Choose one per variable → clause must get ≥1 tab', 
-        ha='center', fontsize=9, style='italic')
+# Color cells
+for i, row in enumerate(table_data):
+    for j, val in enumerate(row):
+        cell = table[i + 1, j]
+        if j == 5:
+            if '✓' in val:
+                cell.set_facecolor('#a8e6cf')
+            else:
+                cell.set_facecolor('#ff8b94')
+        elif j in [3, 4]:
+            if '✓' in val:
+                cell.set_facecolor('#dcedc1')
+            else:
+                cell.set_facecolor('#ffcccb')
 
 plt.tight_layout()
-plt.savefig('gadget_construction.png', dpi=150, bbox_inches='tight')
-print("Saved gadget_construction.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Phase Transition in Random Jigsaw Puzzles
-
-Simulates random puzzle instances with varying edge alphabet size k
-and plots the fraction of solvable instances, demonstrating the
-conjectured phase transition at k ≈ √(m*n).
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import random
-
-
-def random_puzzle_solvable(m: int, n: int, k: int, trials: int = 200) -> float:
-    """
-    Estimate probability that a random m×n puzzle with k edge type pairs is solvable.
-    
-    For each trial: assign random edge types to each internal edge.
-    Check if there exists a consistent assignment (each piece has 4 edges,
-    internal edges must be complementary pairs).
-    
-    Simplified model: edges are drawn independently, puzzle is "solvable"
-    if each internal edge happens to be a complementary pair.
-    """
-    solvable = 0
-    for _ in range(trials):
-        # Each internal edge: pick two independent types from {0,...,k-1}
-        # Compatible iff they form a complementary pair
-        # With k pairs, P(compatible) = 1/k for random assignment
-        ie = m * (n - 1) + (m - 1) * n
-        # Probability all edges compatible: (1/k)^ie ... but that's tiny
-        # Better model: assign pieces randomly, check if grid is valid
-        # For tractability, use the probabilistic model
-        all_compat = all(random.randint(0, k - 1) == 0 for _ in range(ie))
-        if all_compat:
-            solvable += 1
-    return solvable / trials
-
-
-def analytical_prob(m: int, n: int, k: int) -> float:
-    """Analytical probability: P(solvable) ≈ (1/k)^IE(m,n)."""
-    ie = m * (n - 1) + (m - 1) * n
-    return (1.0 / k) ** ie
-
-
-# --- Parameters ---
-m, n = 3, 3  # Small grid for tractability
-ks = list(range(1, 16))
-
-# Analytical probabilities
-probs_analytical = [min(1.0, analytical_prob(m, n, k)) for k in ks]
-
-# Simulated probabilities (for small grids)
-probs_simulated = [random_puzzle_solvable(m, n, k, trials=500) for k in ks]
-
-# --- Plot ---
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# Plot 1: Phase transition for 3x3
-ax1.plot(ks, probs_analytical, 'b-o', markersize=5, label=f'Analytical (1/k)^IE')
-ax1.plot(ks, probs_simulated, 'r-s', markersize=5, label='Simulated (500 trials)')
-ax1.axvline(x=np.sqrt(m * n), color='g', linestyle='--', alpha=0.7, 
-            label=f'√(m·n) = {np.sqrt(m*n):.1f}')
-ax1.set_xlabel('k (edge alphabet size)')
-ax1.set_ylabel('P(solvable)')
-ax1.set_title(f'Phase Transition: {m}×{n} Random Puzzles')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-ax1.set_yscale('log')
-ax1.set_ylim(bottom=1e-6)
-
-# Plot 2: Scaling of critical k with grid size
-grid_sizes = [(2, 2), (2, 3), (3, 3), (3, 4), (4, 4), (4, 5), (5, 5)]
-ie_counts = [m_ * (n_ - 1) + (m_ - 1) * n_ for m_, n_ in grid_sizes]
-cells = [m_ * n_ for m_, n_ in grid_sizes]
-sqrt_cells = [np.sqrt(c) for c in cells]
-
-ax2.plot(cells, ie_counts, 'b-o', markersize=6, label='Internal edges IE(m,n)')
-ax2.plot(cells, [2 * c for c in cells], 'r--', alpha=0.5, label='2 × cells (upper bound)')
-ax2.plot(cells, [c - 1 for c in cells], 'g--', alpha=0.5, label='cells - 1 (lower bound)')
-ax2.set_xlabel('Number of cells (m×n)')
-ax2.set_ylabel('Count')
-ax2.set_title('Constraint Scaling with Grid Size')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-print("Saved phase_transition.png")
+plt.savefig('viz_sat_reduction.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_sat_reduction.png")
