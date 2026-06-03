@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7daf0753",
     "filename": "goldilocks_theorem_dimension_3_is_the_u.json",
     "pkg_num": 306,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6975273333333334,
     "title": "The Goldilocks Theorem: Dimension 3 as the Unique Spatial Dimension for Stable Closed Gravitational Orbits"
   },
   {
@@ -9893,8 +9893,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "goldilocks_theorem_dimension_3_is_the_u",
       "primary_domain": "Speculative",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6975273333333334,
+      "quality": "partial",
       "shape": "pentagonal_prism",
       "title": "The Goldilocks Theorem: Dimension 3 as the Unique Spatial Dimension for Stable Closed Gravitational Orbits"
     }
