@@ -1,265 +1,240 @@
-#!/usr/bin/env python3
 """
-Prime Gap Crossword: Core Algorithms
+Prime Gap Crossword: Algorithms for gap analysis, sieve constraints, and forcing patterns.
 
-Type-hinted implementations of the key algorithms from the prime gap
-crossword theory, including the primorial automaton, forcing pattern
-search, and gap admissibility checking.
+This module implements the core algorithms from the research paper:
+1. Prime sieve and gap computation
+2. Modular constraint checking
+3. Forcing pattern detection
+4. Residue exclusion chain analysis
 """
 
-from typing import Optional
-from dataclasses import dataclass
-from math import gcd
+from typing import List, Tuple, Dict, Set, Optional
+from math import gcd, log, prod
+from itertools import product as cartesian_product
 
 
-@dataclass
-class PrimorialState:
-    """State of the primorial automaton.
-    
-    Tracks the residue of the current prime modulo a primorial
-    (product of the first k primes). Only residues coprime to the
-    primorial are valid states.
+def sieve_of_eratosthenes(n: int) -> List[int]:
+    """Return all primes up to n using the Sieve of Eratosthenes."""
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, n + 1) if is_prime[i]]
+
+
+def prime_gaps(primes: List[int]) -> List[int]:
+    """Compute consecutive prime gaps from a list of primes."""
+    return [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+
+
+def gap_mod6_classify(gaps: List[int]) -> Dict[int, int]:
+    """Classify gaps by their residue mod 6. Returns counts for residues 0, 2, 4."""
+    counts = {0: 0, 2: 0, 4: 0}
+    for g in gaps:
+        r = g % 6
+        if r in counts:
+            counts[r] += 1
+    return counts
+
+
+def is_coprime(a: int, b: int) -> bool:
+    """Check if a and b are coprime."""
+    return gcd(a, b) == 1
+
+
+def coprime_residues(q: int) -> List[int]:
+    """Return residues in [0, q) coprime to q."""
+    return [r for r in range(q) if gcd(r, q) == 1]
+
+
+def euler_totient(n: int) -> int:
+    """Compute Euler's totient function φ(n)."""
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
+
+
+def primorial(n: int) -> int:
+    """Compute the primorial of n: product of all primes up to n."""
+    primes = sieve_of_eratosthenes(n)
+    return prod(primes) if primes else 1
+
+
+class GapConstraintSystem:
     """
-    residue: int
-    modulus: int
+    A gap constraint system over modulus M with sieve primes S.
     
-    def is_valid(self) -> bool:
-        """Check if this is a valid automaton state."""
-        return gcd(self.residue, self.modulus) == 1
+    Tracks which gap residues mod M are admissible from each starting residue.
+    """
     
-    def admissible_gaps(self, bound: int) -> list[int]:
-        """Return all even gaps g with 2 ≤ g ≤ bound such that
-        (residue + g) mod modulus is coprime to modulus."""
-        return [g for g in range(2, bound + 1, 2)
-                if gcd((self.residue + g) % self.modulus, self.modulus) == 1]
+    def __init__(self, sieve_primes: List[int]):
+        """Initialize with a list of sieve primes."""
+        self.sieve_primes = sorted(sieve_primes)
+        self.modulus = prod(sieve_primes)
+        self._admissible_residues = self._compute_admissible()
     
-    def transition(self, gap: int) -> Optional['PrimorialState']:
-        """Apply a gap transition. Returns None if inadmissible."""
-        next_res = (self.residue + gap) % self.modulus
-        if gcd(next_res, self.modulus) == 1:
-            return PrimorialState(next_res, self.modulus)
+    def _compute_admissible(self) -> Set[int]:
+        """Compute residues mod M that avoid all sieve primes."""
+        return {r for r in range(self.modulus) 
+                if all(r % p != 0 for p in self.sieve_primes)}
+    
+    def admissible_gaps(self, start_residue: int, max_gap: int) -> List[int]:
+        """Return admissible even gaps from a given starting residue."""
+        result = []
+        for g in range(2, max_gap + 1, 2):
+            target = (start_residue + g) % self.modulus
+            if target in self._admissible_residues:
+                # Check all intermediate values are hit by some sieve prime
+                all_composite = True
+                for k in range(1, g):
+                    mid = (start_residue + k) % self.modulus
+                    if mid in self._admissible_residues:
+                        all_composite = False
+                        break
+                if all_composite:
+                    result.append(g)
+        return result
+    
+    def is_forcing(self, gap_history: List[int], max_gap: int) -> Optional[int]:
+        """
+        Check if a gap history forces the next gap.
+        
+        Returns the forced gap if unique, None otherwise.
+        """
+        valid_next_gaps: Set[int] = set()
+        
+        for start in self._admissible_residues:
+            # Check if gap_history is admissible from this start
+            pos = start
+            admissible = True
+            for g in gap_history:
+                next_pos = (pos + g) % self.modulus
+                if next_pos not in self._admissible_residues:
+                    admissible = False
+                    break
+                pos = next_pos
+            
+            if admissible:
+                # Find admissible next gaps from pos
+                for g in range(2, max_gap + 1, 2):
+                    next_pos = (pos + g) % self.modulus
+                    if next_pos in self._admissible_residues:
+                        valid_next_gaps.add(g)
+        
+        if len(valid_next_gaps) == 1:
+            return valid_next_gaps.pop()
         return None
 
 
-def compute_admissible_residues(modulus: int) -> list[int]:
-    """Compute all residues coprime to modulus.
-    
-    For modulus = 30, returns [1, 7, 11, 13, 17, 19, 23, 29].
-    
-    Args:
-        modulus: The primorial modulus.
-    
-    Returns:
-        Sorted list of coprime residues.
+class ResidueExclusionChain:
     """
-    return sorted(r for r in range(modulus) if gcd(r, modulus) == 1)
-
-
-def build_transition_matrix(modulus: int, gap_bound: int) -> dict[int, dict[int, list[int]]]:
-    """Build the transition table for the primorial automaton.
-    
-    For each admissible state and each target state, records which
-    gap values (≤ gap_bound) cause that transition.
-    
-    Args:
-        modulus: The primorial modulus (e.g., 30).
-        gap_bound: Maximum gap value to consider.
-    
-    Returns:
-        Nested dict: transitions[from_state][to_state] = [gap_values]
+    Tracks how successive sieve primes eliminate gap candidates.
     """
-    states = compute_admissible_residues(modulus)
-    transitions: dict[int, dict[int, list[int]]] = {}
     
-    for s in states:
-        transitions[s] = {}
-        for g in range(2, gap_bound + 1, 2):
-            target = (s + g) % modulus
-            if target in states:
-                if target not in transitions[s]:
-                    transitions[s][target] = []
-                transitions[s][target].append(g)
+    def __init__(self, primes: List[int]):
+        """Initialize with a sequence of sieve primes."""
+        self.primes = sorted(primes)
     
-    return transitions
+    def survival_count(self, k: int) -> int:
+        """
+        Number of residues surviving after sieving by the first k primes.
+        For k primes p_1, ..., p_k, this is ∏(p_i - 1).
+        """
+        return prod(p - 1 for p in self.primes[:k])
+    
+    def total_count(self, k: int) -> int:
+        """Total number of residues mod ∏p_i for first k primes."""
+        return prod(self.primes[:k])
+    
+    def survival_fraction(self, k: int) -> float:
+        """Fraction of residues surviving: ∏(1 - 1/p_i)."""
+        return self.survival_count(k) / self.total_count(k)
+    
+    def display(self) -> List[Dict[str, float]]:
+        """Return a table of survival statistics."""
+        result = []
+        for k in range(1, len(self.primes) + 1):
+            result.append({
+                'primes_used': self.primes[:k],
+                'modulus': self.total_count(k),
+                'survivors': self.survival_count(k),
+                'fraction': self.survival_fraction(k),
+            })
+        return result
 
 
-@dataclass
-class ForcingPattern:
-    """A gap word that forces the next gap value."""
-    word: list[int]
-    start_state: int
-    forced_gap: int
-    final_state: int
-
-
-def find_forcing_patterns(
-    modulus: int,
-    word_length: int,
-    gap_bound: int,
-    gap_alphabet: Optional[list[int]] = None
-) -> list[ForcingPattern]:
-    """Search for forcing patterns in the primorial automaton.
-    
-    A forcing pattern is a gap word such that from the resulting state,
-    there is exactly one admissible next gap within the bound.
-    
-    Args:
-        modulus: The primorial modulus.
-        word_length: Length of gap words to search.
-        gap_bound: Maximum gap value.
-        gap_alphabet: Allowed gap values (default: all even up to gap_bound).
-    
-    Returns:
-        List of ForcingPattern objects.
+def find_forcing_patterns(sieve_primes: List[int], max_gap: int, 
+                          history_length: int) -> List[Tuple[List[int], int]]:
     """
-    if gap_alphabet is None:
-        gap_alphabet = list(range(2, gap_bound + 1, 2))
+    Find all forcing patterns of given length over a sieve set.
     
-    states = set(compute_admissible_residues(modulus))
-    patterns: list[ForcingPattern] = []
-    
-    def search(state: int, word: list[int], depth: int) -> None:
-        if depth == word_length:
-            # Check if this state is forcing
-            next_gaps = [g for g in gap_alphabet 
-                        if g <= gap_bound and (state + g) % modulus in states]
-            if len(next_gaps) == 1:
-                # Find original start state
-                s = word[0] if word else state  # placeholder
-                patterns.append(ForcingPattern(
-                    word=list(word),
-                    start_state=0,  # will be set properly
-                    forced_gap=next_gaps[0],
-                    final_state=state
-                ))
-            return
-        
-        for g in gap_alphabet:
-            next_state = (state + g) % modulus
-            if next_state in states:
-                word.append(g)
-                search(next_state, word, depth + 1)
-                word.pop()
-    
-    for start in sorted(states):
-        search(start, [], 0)
-        # Update start states
-        for p in patterns:
-            if p.start_state == 0:
-                p.start_state = start
-    
-    return patterns
-
-
-def gap_admissibility_check(
-    sieve_primes: list[int],
-    gap_word: list[int],
-    starting_residue: int
-) -> bool:
-    """Check if a gap word is admissible at a given starting residue.
-    
-    A gap word [g₁, g₂, ..., gₖ] is admissible at residue a if:
-    - a, a+g₁, a+g₁+g₂, ... are all coprime to ∏sieve_primes
-    - All intermediate positions are divisible by some sieve prime
-    
-    Args:
-        sieve_primes: List of small primes for the sieve.
-        gap_word: List of gap values.
-        starting_residue: Starting position modulo the primorial.
-    
-    Returns:
-        True if the word is admissible at this residue.
+    Returns list of (gap_history, forced_next_gap) pairs.
     """
-    modulus = 1
-    for p in sieve_primes:
-        modulus *= p
+    gcs = GapConstraintSystem(sieve_primes)
+    forcing = []
     
-    # Check prime positions are coprime to modulus
-    pos = starting_residue % modulus
-    for g in gap_word:
-        if gcd(pos, modulus) != 1:
-            return False
-        # Check interior positions are hit
-        for k in range(1, g):
-            interior = (pos + k) % modulus
-            if all(interior % p != 0 for p in sieve_primes):
-                return False  # Interior position avoids all sieve primes
-        pos = (pos + g) % modulus
+    # Generate candidate gap histories
+    even_gaps = list(range(2, max_gap + 1, 2))
     
-    # Check final position
-    return gcd(pos, modulus) == 1
+    for history in cartesian_product(even_gaps, repeat=history_length):
+        history_list = list(history)
+        forced = gcs.is_forcing(history_list, max_gap)
+        if forced is not None:
+            forcing.append((history_list, forced))
+    
+    return forcing
 
 
-def prime_gap_mod6_state(p: int) -> int:
-    """Return the mod-6 state of a prime > 3.
-    
-    Args:
-        p: A prime number > 3.
-    
-    Returns:
-        1 or 5 (the residue mod 6).
-    
-    Raises:
-        ValueError: If p ≤ 3 or p mod 6 not in {1, 5}.
+def verify_gap_mod6(bound: int) -> Dict[str, any]:
     """
-    if p <= 3:
-        raise ValueError(f"p = {p} must be > 3")
-    r = p % 6
-    if r not in (1, 5):
-        raise ValueError(f"p = {p} has p % 6 = {r}, not prime")
-    return r
-
-
-def compute_gap_statistics(limit: int) -> dict[str, object]:
-    """Compute comprehensive prime gap statistics up to limit.
-    
-    Args:
-        limit: Upper bound for prime generation.
-    
-    Returns:
-        Dictionary with gap counts, mod-6 distribution, etc.
+    Verify the gap mod 6 constraint for all primes up to bound.
+    Returns statistics on gap residues mod 6.
     """
-    from sympy import primerange
+    primes = sieve_of_eratosthenes(bound)
+    gaps = prime_gaps(primes)
     
-    primes = list(primerange(2, limit))
-    gaps = [primes[i+1] - primes[i] for i in range(len(primes) - 1)]
+    # Skip the first gap (between 2 and 3) and gaps involving p ≤ 3
+    large_gaps = []
+    for i, g in enumerate(gaps):
+        if primes[i] > 3:
+            large_gaps.append(g)
     
-    stats: dict[str, object] = {
-        'num_primes': len(primes),
-        'num_gaps': len(gaps),
-        'max_gap': max(gaps),
-        'gap_counts': dict(sorted(
-            ((g, c) for g, c in 
-             __import__('collections').Counter(gaps).items()),
-            key=lambda x: x[0]
-        )),
-        'mod6_distribution': dict(sorted(
-            ((g % 6, c) for g, c in 
-             __import__('collections').Counter(
-                 g for p, g in zip(primes[1:], gaps[1:]) if p > 3
-             ).items()),
-            key=lambda x: x[0]
-        )),
+    mod6_counts = gap_mod6_classify(large_gaps)
+    total = sum(mod6_counts.values())
+    
+    violations = sum(1 for g in large_gaps if g % 6 not in {0, 2, 4})
+    
+    return {
+        'bound': bound,
+        'total_gaps': total,
+        'mod6_counts': mod6_counts,
+        'mod6_fractions': {k: v / total if total > 0 else 0 
+                          for k, v in mod6_counts.items()},
+        'violations': violations,
     }
-    
-    return stats
 
 
-if __name__ == "__main__":
-    # Quick demonstration
-    print("Admissible residues mod 30:", compute_admissible_residues(30))
-    print("Admissible residues mod 210:", len(compute_admissible_residues(210)), "states")
-    
-    # Build transition table
-    trans = build_transition_matrix(30, 30)
-    for s in [1, 7, 11]:
-        targets = {t: gaps for t, gaps in trans[s].items()}
-        print(f"\nFrom state {s}:")
-        for t in sorted(targets):
-            print(f"  → {t}: gaps {targets[t]}")
-    
-    # Find forcing patterns
-    patterns = find_forcing_patterns(30, 2, 6)
-    print(f"\nForcing patterns (depth 2, bound 6): {len(patterns)}")
-    for p in patterns[:5]:
-        print(f"  word={p.word}, forced_gap={p.forced_gap}, final_state={p.final_state}")
+def verify_triple_theorem(bound: int) -> List[Tuple[int, int, int]]:
+    """
+    Find all prime triples (p, p+2, p+4) up to bound.
+    The theorem predicts only (3, 5, 7).
+    """
+    primes_set = set(sieve_of_eratosthenes(bound))
+    triples = []
+    for p in sorted(primes_set):
+        if p + 2 in primes_set and p + 4 in primes_set:
+            triples.append((p, p + 2, p + 4))
+    return triples
