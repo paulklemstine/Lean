@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "301b6f22",
     "filename": "quantum_error_correction_from_homological_algebra_.json",
     "pkg_num": 273,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.700901076923077,
     "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
   {
@@ -8791,8 +8791,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "quantum_error_correction_from_homological_algebra_",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.700901076923077,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
     }
