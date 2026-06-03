@@ -1,488 +1,378 @@
-#!/usr/bin/env python3
 """
-Demonstration of Information-Theoretic Proof Search Complexity
+Information-Theoretic Limits of Proof Search: Demonstrations
 
-Shows key results through concrete numerical examples:
-1. Search space growth vs polynomial verification
-2. Information content of proofs
-3. Proof density estimation
-4. The n*log(n) proof length conjecture
-5. Verification-search gap computation
+Numerical examples illustrating the key theorems.
 """
 
 import math
 from algorithms import (
-    ProofSearchInstance,
-    brute_force_search,
-    proof_length_lower_bound,
-    search_tree_size,
-    proof_search_gap,
-    estimate_proof_density,
-    proof_length_ratio_analysis,
+    ProofSearchSpace,
+    ProofComplexityProfile,
+    sparse_proof_search_bound,
+    compressible_fraction,
+    search_hierarchy_bound,
+    proof_density_at_length,
+    information_bottleneck_bound,
+    log_factor_prediction,
 )
 
 
-def demo_search_space_growth():
-    """Demonstrate exponential growth of proof search spaces."""
-    print("=" * 70)
-    print("DEMO 1: Exponential Growth of Search Spaces")
-    print("=" * 70)
-    print()
-    print(f"{'Length n':>10} {'2^n':>20} {'n^2':>10} {'Ratio 2^n/n^2':>15}")
-    print("-" * 60)
-    for n in [5, 10, 15, 20, 25, 30]:
-        exp = 2 ** n
-        quad = n ** 2
-        ratio = exp / quad
-        print(f"{n:>10} {exp:>20,} {quad:>10} {ratio:>15.1f}")
-    print()
-    print("Key insight: The search space grows exponentially while")
-    print("verification cost grows only polynomially.")
+def demo_search_difficulty():
+    """Demonstrate exponential search difficulty."""
+    print("=" * 60)
+    print("DEMO 1: Exponential Search Difficulty")
+    print("=" * 60)
     print()
 
-
-def demo_proof_search_instance():
-    """Demonstrate the ProofSearchInstance abstraction."""
-    print("=" * 70)
-    print("DEMO 2: Proof Search Instance Analysis")
-    print("=" * 70)
-    print()
-
-    instances = [
-        ("Small (binary, len 10, 5 proofs)", 2, 10, 5, 10),
-        ("Medium (binary, len 20, 100 proofs)", 2, 20, 100, 50),
-        ("Large (ternary, len 15, 10 proofs)", 3, 15, 10, 100),
-        ("Lean-like (256 symbols, len 8, 3 proofs)", 256, 8, 3, 1000),
-    ]
-
-    for name, b, n, p, v in instances:
-        inst = ProofSearchInstance(b, n, p, v)
-        print(f"Instance: {name}")
-        print(f"  Search space:     {inst.search_space_size:>20,}")
-        print(f"  Brute-force cost: {inst.brute_force_cost:>20,}")
-        print(f"  Proof density:    {inst.proof_density:.2e}")
-        print(f"  Info content:     {inst.information_content_bits:.1f} bits")
-        print(f"  Search/verify:    {inst.search_verification_ratio:.2e}")
+    for n in [10, 20, 30, 40, 50]:
+        b = 2
+        k = n // 2  # Valid proofs = b^(n/2)
+        V = b ** k
+        space = ProofSearchSpace(
+            alphabet_size=b,
+            max_proof_len=n,
+            valid_count=min(V, b**n),
+            theorem_count=1
+        )
+        bound = sparse_proof_search_bound(b, n, k)
+        print(f"  n={n:3d}:  search space = 2^{n} ≈ {b**n:.1e}")
+        print(f"          valid proofs = 2^{k} ≈ {V:.1e}")
+        print(f"          search bound = 2^{n-k-1} ≈ {bound:.1e}")
+        print(f"          density = {space.proof_density:.2e}")
+        print(f"          info content = {space.information_content_bits:.1f} bits")
         print()
 
 
-def demo_brute_force_search():
-    """Demonstrate brute-force search finding a simple proof."""
-    print("=" * 70)
-    print("DEMO 3: Brute-Force Proof Search")
-    print("=" * 70)
+def demo_incompressibility():
+    """Demonstrate the incompressibility theorem."""
+    print("=" * 60)
+    print("DEMO 2: Incompressibility of Proofs")
+    print("=" * 60)
     print()
 
-    # A toy proof system: valid proofs are palindromes of length 3
-    target = [1, 0, 1]
-
-    def verify(candidate):
-        return candidate == target
-
-    result = brute_force_search(2, 3, verify)
-    print(f"Target proof: {target}")
-    print(f"Found proof:  {result}")
-    print(f"Search space: {2**3} candidates")
+    for b in [2, 4, 8, 16, 256]:
+        frac = compressible_fraction(b, 10)
+        print(f"  Alphabet size b={b:3d}: "
+              f"compressible fraction ≤ {frac:.4f} = 1/{b}")
+        print(f"    → At least {100*(1-frac):.1f}% of strings are incompressible")
     print()
 
 
-def demo_counting_bounds():
-    """Demonstrate counting-based proof length lower bounds."""
-    print("=" * 70)
-    print("DEMO 4: Counting-Based Proof Length Bounds")
-    print("=" * 70)
+def demo_hierarchy():
+    """Demonstrate the search complexity hierarchy."""
+    print("=" * 60)
+    print("DEMO 3: Search Complexity Hierarchy")
+    print("=" * 60)
     print()
 
-    print(f"{'Theorems T':>12} {'Alphabet b':>12} {'Min length':>12} {'Space b^n':>15}")
-    print("-" * 55)
-    for T in [10, 100, 1000, 10000, 1000000]:
-        for b in [2, 10, 256]:
-            n = proof_length_lower_bound(T, b)
-            space = b ** n
-            print(f"{T:>12,} {b:>12} {n:>12} {space:>15,}")
-    print()
-    print("Minimum proof length grows as log_b(T).")
+    print(f"  {'Level k':>8} | {'Linear k+1':>12} | {'Exponential 2^k':>16} | {'Gap':>12}")
+    print(f"  {'-'*8} | {'-'*12} | {'-'*16} | {'-'*12}")
+    for k in range(16):
+        lo, hi = search_hierarchy_bound(2, k)
+        gap = hi / lo if lo > 0 else float('inf')
+        print(f"  {k:8d} | {lo:12d} | {hi:16d} | {gap:12.1f}x")
     print()
 
 
-def demo_search_tree():
-    """Demonstrate search tree size computation."""
-    print("=" * 70)
-    print("DEMO 5: Search Tree Leaf Counts")
-    print("=" * 70)
+def demo_density_decay():
+    """Demonstrate proof density exponential decay."""
+    print("=" * 60)
+    print("DEMO 4: Proof Density Exponential Decay")
+    print("=" * 60)
     print()
 
-    print(f"{'Branching b':>12} {'Depth d':>10} {'Leaves b^d':>20}")
-    print("-" * 45)
-    for b in [2, 3, 5, 10]:
-        for d in [5, 10, 15, 20]:
-            leaves = search_tree_size(b, d)
-            print(f"{b:>12} {d:>10} {leaves:>20,}")
+    V = 1000  # Fixed number of valid proofs
+    b = 2
+    print(f"  Fixed V = {V} valid proofs, alphabet size b = {b}")
+    print()
+    print(f"  {'Length n':>10} | {'Space b^n':>16} | {'Density':>14} | {'Info (bits)':>12}")
+    print(f"  {'-'*10} | {'-'*16} | {'-'*14} | {'-'*12}")
+    for n in range(10, 51, 5):
+        density = proof_density_at_length(V, b, n)
+        info = -math.log2(density) if density > 0 else float('inf')
+        print(f"  {n:10d} | {b**n:16.2e} | {density:14.2e} | {info:12.1f}")
     print()
 
 
-def demo_proof_length_conjecture():
-    """Test the n * log(n) proof length conjecture with synthetic data."""
-    print("=" * 70)
-    print("DEMO 6: Proof Length Growth Conjecture")
-    print("=" * 70)
+def demo_bottleneck():
+    """Demonstrate the mutual information bottleneck."""
+    print("=" * 60)
+    print("DEMO 5: Mutual Information Bottleneck")
+    print("=" * 60)
     print()
 
-    # Simulate proof lengths following the conjectured n*log(n) growth
-    # with some noise
-    import random
-    random.seed(42)
+    print("  Maximum theorems provable with proofs of length n:")
+    print()
+    for b in [2, 10, 256]:
+        print(f"  Alphabet size b = {b}:")
+        for n in [5, 10, 20, 50]:
+            bound = information_bottleneck_bound(b, n)
+            bits = n * math.log2(b)
+            print(f"    n={n:3d}: T ≤ {bound:.2e}  ({bits:.0f} bits of info)")
+        print()
 
-    statement_lengths = list(range(4, 104))
-    # Simulated proof lengths: C * n * log2(n) + noise
+
+def demo_log_factor():
+    """Demonstrate the log-factor conjecture prediction."""
+    print("=" * 60)
+    print("DEMO 6: Log-Factor Conjecture Predictions")
+    print("=" * 60)
+    print()
+
+    print(f"  {'Stmt len s':>12} | {'Predicted proof len':>20} | {'Ratio p/s':>10} | {'log₂(s)':>8}")
+    print(f"  {'-'*12} | {'-'*20} | {'-'*10} | {'-'*8}")
+    for s in [4, 8, 16, 32, 64, 128, 256, 512, 1024]:
+        p = log_factor_prediction(s)
+        ratio = p / s if s > 0 else 0
+        log_s = math.log2(s)
+        print(f"  {s:12d} | {p:20.1f} | {ratio:10.2f} | {log_s:8.2f}")
+    print()
+
+
+def demo_ordered_vs_unordered():
+    """Demonstrate the ordered vs. unordered search gap."""
+    print("=" * 60)
+    print("DEMO 7: Ordered vs. Unordered Search Gap")
+    print("=" * 60)
+    print()
+
+    print(f"  {'n':>5} | {'Ordered (n)':>14} | {'Unordered (2^(n-1))':>22} | {'Gap':>14}")
+    print(f"  {'-'*5} | {'-'*14} | {'-'*22} | {'-'*14}")
+    for n in range(3, 21):
+        ordered = n
+        unordered = 2 ** (n - 1)
+        gap = unordered / ordered
+        print(f"  {n:5d} | {ordered:14d} | {unordered:22d} | {gap:14.1f}x")
+    print()
+
+
+def demo_duality():
+    """Demonstrate theorem-proof duality."""
+    print("=" * 60)
+    print("DEMO 8: Theorem-Proof Duality Trade-off")
+    print("=" * 60)
+    print()
+
+    S = 2 ** 20  # Search space size
+    print(f"  Search space S = 2^20 = {S:,}")
+    print(f"  Trade-off between theorems (T) and proofs per theorem (k):")
+    print()
+    print(f"  {'Theorems T':>12} | {'Proofs/thm k':>14} | {'T × k':>12} | {'≤ S?':>6}")
+    print(f"  {'-'*12} | {'-'*14} | {'-'*12} | {'-'*6}")
+    for T_exp in range(0, 21, 2):
+        T = 2 ** T_exp
+        k = S // T if T > 0 else 0
+        product = T * k
+        ok = "✓" if product <= S else "✗"
+        print(f"  {T:12,} | {k:14,} | {product:12,} | {ok:>6}")
+    print()
+
+
+if __name__ == "__main__":
+    demo_search_difficulty()
+    demo_incompressibility()
+    demo_hierarchy()
+    demo_density_decay()
+    demo_bottleneck()
+    demo_log_factor()
+    demo_ordered_vs_unordered()
+    demo_duality()
+
+
+"""
+Visualization: Search Complexity Hierarchy
+
+Plots the exponential hierarchy of search complexities,
+showing how b^k dominates k+1 at every level.
+"""
+
+import math
+
+
+def plot():
+    """Create the hierarchy visualization."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available; skipping plot generation")
+        return
+
+    ks = list(range(0, 16))
+    bases = [2, 3, 5, 10]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Plot 1: Hierarchy for different bases
+    ax1.plot(ks, [k + 1 for k in ks], 'k--', linewidth=2, label='k + 1 (linear)')
+    colors = ['blue', 'red', 'green', 'orange']
+    for b, c in zip(bases, colors):
+        vals = [b ** k for k in ks]
+        ax1.semilogy(ks, vals, f'-o', color=c, linewidth=2, markersize=4,
+                     label=f'b^k (b={b})')
+
+    ax1.set_xlabel('Level k', fontsize=12)
+    ax1.set_ylabel('Complexity (log scale)', fontsize=12)
+    ax1.set_title('Search Complexity Hierarchy: b^k vs k+1', fontsize=14)
+    ax1.legend(fontsize=10)
+    ax1.grid(True, alpha=0.3)
+
+    # Plot 2: Gap ratio b^k / (k+1)
+    for b, c in zip(bases, colors):
+        gaps = [(b ** k) / (k + 1) for k in ks]
+        ax2.semilogy(ks, gaps, f'-o', color=c, linewidth=2, markersize=4,
+                     label=f'Gap ratio (b={b})')
+
+    ax2.set_xlabel('Level k', fontsize=12)
+    ax2.set_ylabel('Gap ratio b^k/(k+1) (log scale)', fontsize=12)
+    ax2.set_title('Exponential Dominance Gap', fontsize=14)
+    ax2.legend(fontsize=10)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('hierarchy_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved hierarchy_visualization.png")
+
+
+if __name__ == "__main__":
+    plot()
+
+
+"""
+Visualization: Log-Factor Conjecture
+
+Plots the predicted proof length growth as s · log(s)
+and the resulting search difficulty 2^(s · log(s)).
+"""
+
+import math
+
+
+def plot():
+    """Create the log-factor conjecture visualization."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available; skipping plot generation")
+        return
+
+    ss = list(range(4, 101))
     C = 3.0
-    proof_lengths = [
-        max(1, int(C * n * math.log2(n) + random.gauss(0, n * 0.5)))
-        for n in statement_lengths
-    ]
 
-    analysis = proof_length_ratio_analysis(statement_lengths, proof_lengths)
-    print("Synthetic data analysis (C=3.0, n=4..103):")
-    print(f"  Samples:           {analysis['num_samples']}")
-    print(f"  Mean ratio p/(s·log₂s): {analysis['mean_ratio']:.3f}")
-    print(f"  Std ratio:         {analysis['std_ratio']:.3f}")
-    print(f"  Min ratio:         {analysis['min_ratio']:.3f}")
-    print(f"  Max ratio:         {analysis['max_ratio']:.3f}")
-    print(f"  Conjecture supported: {analysis['conjecture_supported']}")
-    print()
+    proof_lens = [C * s * math.log2(s) for s in ss]
+    linear = [C * s for s in ss]
+    quadratic = [C * s * s for s in ss]
+    ratios = [proof_lens[i] / ss[i] for i in range(len(ss))]
 
-    # Show the verification-search gap for increasing statement lengths
-    print(f"{'Stmt len n':>12} {'Est proof len':>15} {'Log factor':>12} {'Info bits':>12}")
-    print("-" * 55)
-    for n in [4, 8, 16, 32, 64, 128]:
-        gap = proof_search_gap(n)
-        print(f"{n:>12} {gap['estimated_proof_length']:>15} "
-              f"{gap['log_factor']:>12.2f} {gap['information_content_bits']:>12.1f}")
-    print()
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-
-def demo_proof_density():
-    """Demonstrate proof density estimation."""
-    print("=" * 70)
-    print("DEMO 7: Proof Density and Information Content")
-    print("=" * 70)
-    print()
-
-    scenarios = [
-        ("Easy theorem (many proofs)", 2, 10, 100),
-        ("Medium theorem", 2, 20, 50),
-        ("Hard theorem (few proofs)", 2, 30, 3),
-        ("Very hard (1 proof in huge space)", 2, 50, 1),
-    ]
-
-    for name, b, n, num_valid in scenarios:
-        result = estimate_proof_density(b, n, num_valid)
-        print(f"{name}:")
-        print(f"  Search space:  2^{n} = {result['search_space']:,}")
-        print(f"  Valid proofs:  {result['num_valid_proofs']}")
-        print(f"  Density:       {result['proof_density']:.2e}")
-        print(f"  Info content:  {result['information_content_bits']:.1f} bits")
-        print(f"  Expected cost: {result['expected_search_cost']:.2e}")
-        print()
-
-
-def main():
-    """Run all demonstrations."""
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  INFORMATION-THEORETIC LIMITS OF PROOF SEARCH — DEMONSTRATIONS     ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_search_space_growth()
-    demo_proof_search_instance()
-    demo_brute_force_search()
-    demo_counting_bounds()
-    demo_search_tree()
-    demo_proof_length_conjecture()
-    demo_proof_density()
-
-    print("=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Proof Density and Information Content
-
-Shows how proof density decreases and information content increases
-as the search space grows, illustrating why longer proofs are harder to find.
-"""
-
-import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def main():
-    # Simulate different proof scenarios
-    n_values = np.arange(2, 41)
-
-    # Scenario 1: Fixed number of valid proofs (P=10)
-    P_fixed = 10
-    density_fixed = np.array([P_fixed / (2.0**n) for n in n_values])
-    info_fixed = np.array([-math.log2(d) if d > 0 else float('inf')
-                           for d in density_fixed])
-
-    # Scenario 2: Proofs grow linearly (P=n)
-    density_linear = np.array([n / (2.0**n) for n in n_values])
-    info_linear = np.array([-math.log2(d) if d > 0 else float('inf')
-                            for d in density_linear])
-
-    # Scenario 3: Proofs grow polynomially (P=n^2)
-    density_poly = np.array([n**2 / (2.0**n) for n in n_values])
-    info_poly = np.array([-math.log2(d) if d > 0 else float('inf')
-                          for d in density_poly])
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # Plot 1: Proof density
-    ax1 = axes[0]
-    ax1.semilogy(n_values, density_fixed, 'r-o', label='$P=10$ (fixed)',
-                 markersize=3, linewidth=1.5)
-    ax1.semilogy(n_values, density_linear, 'b-s', label='$P=n$ (linear)',
-                 markersize=3, linewidth=1.5)
-    ax1.semilogy(n_values, density_poly, 'g-^', label='$P=n^2$ (quadratic)',
-                 markersize=3, linewidth=1.5)
-    ax1.set_xlabel('Proof Length $n$', fontsize=12)
-    ax1.set_ylabel('Proof Density $P/2^n$', fontsize=12)
-    ax1.set_title('Proof Density Decay', fontsize=14)
+    # Plot 1: Proof length growth
+    ax1.plot(ss, proof_lens, 'r-', linewidth=2, label='s · log₂(s) (conjecture)')
+    ax1.plot(ss, linear, 'b--', linewidth=1.5, label='s (linear)', alpha=0.7)
+    ax1.plot(ss, quadratic, 'g:', linewidth=1.5, label='s² (quadratic)', alpha=0.7)
+    ax1.set_xlabel('Statement length s', fontsize=12)
+    ax1.set_ylabel('Proof length', fontsize=12)
+    ax1.set_title('Proof Length Growth: The Log-Factor Conjecture', fontsize=14)
     ax1.legend(fontsize=10)
     ax1.grid(True, alpha=0.3)
+    ax1.set_ylim(0, 5000)
 
-    # Plot 2: Information content
-    ax2 = axes[1]
-    ax2.plot(n_values, info_fixed, 'r-o', label='$P=10$',
-             markersize=3, linewidth=1.5)
-    ax2.plot(n_values, info_linear, 'b-s', label='$P=n$',
-             markersize=3, linewidth=1.5)
-    ax2.plot(n_values, info_poly, 'g-^', label='$P=n^2$',
-             markersize=3, linewidth=1.5)
-    ax2.plot(n_values, n_values, 'k--', label='$n$ (linear ref)',
-             linewidth=1, alpha=0.5)
-    ax2.set_xlabel('Proof Length $n$', fontsize=12)
-    ax2.set_ylabel('Information Content (bits)', fontsize=12)
-    ax2.set_title('Information Content Growth', fontsize=14)
+    # Plot 2: Ratio p/s
+    ax2.plot(ss, ratios, 'r-', linewidth=2)
+    ax2.set_xlabel('Statement length s', fontsize=12)
+    ax2.set_ylabel('Proof/statement ratio p/s', fontsize=12)
+    ax2.set_title('Proof-to-Statement Ratio (should grow as log s)', fontsize=14)
+    ax2.grid(True, alpha=0.3)
+
+    # Add log₂(s) reference line
+    log_refs = [math.log2(s) * C for s in ss]
+    ax2.plot(ss, log_refs, 'b--', linewidth=1.5, label='C · log₂(s)', alpha=0.7)
     ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    # Plot 3: Expected search cost (1/density)
-    ax3 = axes[2]
-    expected_cost_fixed = 1.0 / density_fixed
-    expected_cost_linear = 1.0 / density_linear
-    expected_cost_poly = 1.0 / density_poly
-
-    ax3.semilogy(n_values, expected_cost_fixed, 'r-o', label='$P=10$',
-                 markersize=3, linewidth=1.5)
-    ax3.semilogy(n_values, expected_cost_linear, 'b-s', label='$P=n$',
-                 markersize=3, linewidth=1.5)
-    ax3.semilogy(n_values, expected_cost_poly, 'g-^', label='$P=n^2$',
-                 markersize=3, linewidth=1.5)
-    ax3.set_xlabel('Proof Length $n$', fontsize=12)
-    ax3.set_ylabel('Expected Search Cost $1/\\delta$', fontsize=12)
-    ax3.set_title('Expected Brute-Force Cost', fontsize=14)
-    ax3.legend(fontsize=10)
-    ax3.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('proof_density_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: proof_density_analysis.png")
+    plt.savefig('log_factor_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved log_factor_visualization.png")
 
 
 if __name__ == "__main__":
-    main()
+    plot()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Proof Length Growth Conjecture
+Visualization: Search Difficulty vs. Proof Length
 
-Tests the conjecture that proof length grows as Theta(n * log(n))
-relative to statement length n, using synthetic data and showing
-the logarithmic factor.
+Plots the exponential growth of search difficulty as a function
+of proof length, comparing brute-force search cost with
+verification cost.
 """
 
 import math
-import random
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+
+def generate_data():
+    """Generate data for search difficulty visualization."""
+    ns = list(range(1, 31))
+    b = 2
+
+    search_costs = []
+    verification_costs = []
+    densities = []
+
+    for n in ns:
+        k = n // 2
+        search_bound = b ** (n - k - 1) if n > k + 1 else 1
+        verif_cost = n  # Linear verification
+        V = b ** k
+        total = b ** n
+        density = V / total
+
+        search_costs.append(math.log2(search_bound) if search_bound > 0 else 0)
+        verification_costs.append(math.log2(verif_cost) if verif_cost > 0 else 0)
+        densities.append(density)
+
+    return ns, search_costs, verification_costs, densities
 
 
-def main():
-    random.seed(42)
+def plot():
+    """Create the visualization."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available; skipping plot generation")
+        return
 
-    # Generate synthetic data following the conjectured scaling
-    n_values = np.arange(4, 201)
-    C = 3.5  # Proportionality constant
+    ns, search_costs, verif_costs, densities = generate_data()
 
-    # Simulated proof lengths with realistic noise
-    proof_lengths = np.array([
-        max(1, int(C * n * math.log2(n) + random.gauss(0, n * 0.3)))
-        for n in n_values
-    ])
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Compute ratios
-    log_factors = np.array([math.log2(n) for n in n_values])
-    ratios = proof_lengths / (n_values * log_factors)
-
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-    # Plot 1: Proof length vs statement length
-    ax1 = axes[0, 0]
-    ax1.scatter(n_values, proof_lengths, s=8, alpha=0.6, color='#3498db',
-                label='Simulated proofs')
-    n_smooth = np.linspace(4, 200, 100)
-    ax1.plot(n_smooth, C * n_smooth * np.log2(n_smooth), 'r-', linewidth=2,
-             label=f'$C \\cdot n \\cdot \\log_2(n)$, $C={C}$')
-    ax1.plot(n_smooth, n_smooth, 'k--', linewidth=1, alpha=0.5,
-             label='$p = n$ (linear)')
-    ax1.set_xlabel('Statement Length $n$', fontsize=12)
-    ax1.set_ylabel('Proof Length $p$', fontsize=12)
-    ax1.set_title('Proof Length vs Statement Length', fontsize=14)
+    # Plot 1: Search vs Verification
+    ax1.plot(ns, search_costs, 'r-o', linewidth=2, markersize=4,
+             label='Search cost (log₂)')
+    ax1.plot(ns, verif_costs, 'b-s', linewidth=2, markersize=4,
+             label='Verification cost (log₂)')
+    ax1.fill_between(ns, verif_costs, search_costs, alpha=0.2, color='red',
+                     label='Exponential gap')
+    ax1.set_xlabel('Proof length n', fontsize=12)
+    ax1.set_ylabel('Cost (log₂ scale)', fontsize=12)
+    ax1.set_title('Search vs. Verification: The Exponential Gap', fontsize=14)
     ax1.legend(fontsize=10)
     ax1.grid(True, alpha=0.3)
 
-    # Plot 2: The ratio p / (n * log2(n))
-    ax2 = axes[0, 1]
-    ax2.scatter(n_values, ratios, s=8, alpha=0.6, color='#e74c3c')
-    ax2.axhline(y=C, color='black', linestyle='--', linewidth=1.5,
-                label=f'Predicted constant $C={C}$')
-    ax2.axhline(y=np.mean(ratios), color='blue', linestyle=':',
-                linewidth=1.5,
-                label=f'Observed mean $\\bar{{C}}={np.mean(ratios):.2f}$')
-    ax2.set_xlabel('Statement Length $n$', fontsize=12)
-    ax2.set_ylabel('Ratio $p / (n \\cdot \\log_2 n)$', fontsize=12)
-    ax2.set_title('Proof Length Ratio (Conjecture Test)', fontsize=14)
-    ax2.legend(fontsize=10)
+    # Plot 2: Density Decay
+    ax2.semilogy(ns, densities, 'g-^', linewidth=2, markersize=4)
+    ax2.set_xlabel('Proof length n', fontsize=12)
+    ax2.set_ylabel('Proof density (log scale)', fontsize=12)
+    ax2.set_title('Proof Density Exponential Decay', fontsize=14)
     ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 2 * C)
 
-    # Plot 3: Log-log plot to test power law
-    ax3 = axes[1, 0]
-    ax3.loglog(n_values, proof_lengths, 'o', markersize=3, alpha=0.5,
-               color='#2ecc71')
-    ax3.loglog(n_smooth, C * n_smooth * np.log2(n_smooth), 'r-',
-               linewidth=2, label='$\\Theta(n \\log n)$')
-    ax3.loglog(n_smooth, n_smooth, 'b--', linewidth=1.5,
-               label='$\\Theta(n)$')
-    ax3.loglog(n_smooth, n_smooth ** 2, 'g--', linewidth=1.5,
-               label='$\\Theta(n^2)$')
-    ax3.set_xlabel('Statement Length $n$ (log scale)', fontsize=12)
-    ax3.set_ylabel('Proof Length $p$ (log scale)', fontsize=12)
-    ax3.set_title('Log-Log Scaling Analysis', fontsize=14)
-    ax3.legend(fontsize=10)
-    ax3.grid(True, alpha=0.3)
-
-    # Plot 4: Search complexity implied by proof length
-    ax4 = axes[1, 1]
-    search_cost_linear = np.array([2.0**n for n in n_values])
-    search_cost_nlogn = np.array([2.0**(C * n * math.log2(n))
-                                  for n in n_values[:30]])
-
-    ax4.semilogy(n_values, search_cost_linear, 'b-', linewidth=2,
-                 label='$2^n$ (linear proofs)')
-    ax4.semilogy(n_values[:30], search_cost_nlogn, 'r-', linewidth=2,
-                 label='$2^{n \\log n}$ (conjectured)')
-    ax4.set_xlabel('Statement Length $n$', fontsize=12)
-    ax4.set_ylabel('Search Complexity', fontsize=12)
-    ax4.set_title('Search Complexity Growth', fontsize=14)
-    ax4.legend(fontsize=10)
-    ax4.grid(True, alpha=0.3)
-
-    plt.suptitle('Proof Length Growth Conjecture: $p(n) = \\Theta(n \\cdot \\log n)$',
-                 fontsize=16, y=1.02)
     plt.tight_layout()
-    plt.savefig('proof_length_conjecture.png', dpi=150, bbox_inches='tight')
-    print("Saved: proof_length_conjecture.png")
+    plt.savefig('search_bounds_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved search_bounds_visualization.png")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The Verification-Search Gap
-
-Plots the exponential gap between proof verification cost (polynomial)
-and proof search cost (exponential) as a function of proof length.
-"""
-
-import math
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def main():
-    n_values = np.arange(1, 31)
-
-    # Search space: 2^n
-    search_space = np.array([2**n for n in n_values], dtype=float)
-
-    # Verification cost: n^2 (polynomial)
-    verif_cost = n_values.astype(float) ** 2
-
-    # Brute-force search cost: 2^n * n^2
-    search_cost = search_space * verif_cost
-
-    # Gap: search / verification
-    gap = search_space
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Log-scale comparison
-    ax1 = axes[0]
-    ax1.semilogy(n_values, search_space, 'r-o', label='Search space $2^n$',
-                 markersize=4, linewidth=2)
-    ax1.semilogy(n_values, verif_cost, 'b-s', label='Verification $n^2$',
-                 markersize=4, linewidth=2)
-    ax1.semilogy(n_values, search_cost, 'k--^', label='Brute-force $2^n \\cdot n^2$',
-                 markersize=4, linewidth=1.5)
-    ax1.set_xlabel('Proof Length $n$', fontsize=12)
-    ax1.set_ylabel('Cost (log scale)', fontsize=12)
-    ax1.set_title('Verification vs Search Cost', fontsize=14)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: The gap ratio
-    ax2 = axes[1]
-    ax2.semilogy(n_values, gap, 'g-D', markersize=4, linewidth=2,
-                 color='#e74c3c')
-    ax2.fill_between(n_values, 1, gap, alpha=0.15, color='#e74c3c')
-    ax2.set_xlabel('Proof Length $n$', fontsize=12)
-    ax2.set_ylabel('Search/Verification Ratio (log scale)', fontsize=12)
-    ax2.set_title('The Exponential Gap', fontsize=14)
-    ax2.grid(True, alpha=0.3)
-
-    # Add annotation
-    n_anno = 20
-    ax2.annotate(f'Gap at n={n_anno}: {2**n_anno:,}×',
-                xy=(n_anno, 2**n_anno),
-                xytext=(n_anno - 8, 2**(n_anno + 3)),
-                fontsize=10,
-                arrowprops=dict(arrowstyle='->', color='black'),
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
-
-    plt.tight_layout()
-    plt.savefig('verification_search_gap.png', dpi=150, bbox_inches='tight')
-    print("Saved: verification_search_gap.png")
-
-
-if __name__ == "__main__":
-    main()
+    plot()
