@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "69f411ed",
     "filename": "galois_theory_of_cellular_automata_which_rules_hav.json",
     "pkg_num": 325,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.723641,
     "title": "Galois Theory of Cellular Automata: Classification of Reversible Elementary Dynamics"
   },
   {
@@ -10535,8 +10535,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "galois_theory_of_cellular_automata_which_rules_hav",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.723641,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Galois Theory of Cellular Automata: Classification of Reversible Elementary Dynamics"
     }
