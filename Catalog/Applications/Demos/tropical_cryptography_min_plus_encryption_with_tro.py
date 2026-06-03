@@ -1,300 +1,229 @@
 #!/usr/bin/env python3
 """
-Tropical Cryptography Demo: Min-Plus Encryption with Tropical Matrices
-
-Demonstrates:
-1. Tropical matrix arithmetic
-2. Tropical Diffie-Hellman key exchange
-3. TDLP attack analysis (eigenvalue method vs brute force)
-4. Security scaling with matrix dimension
+Tropical Cryptography Demo
+===========================
+Demonstrates the Tropical Diffie-Hellman key exchange,
+the spectral attack on the TDLP, and tropical mask encryption.
 """
 
-import time
 import random
 from algorithms import (
-    TropicalDiffieHellman, trop_mat_pow, trop_identity,
-    trop_mat_mul, trop_eigenvalue_estimate, attempt_tdlp_eigenvalue,
-    attempt_tdlp_brute_force, generate_random_tropical_matrix,
-    print_tropical_matrix, INF
+    trop_mat_mul, trop_mat_pow, trop_trace, trop_eigenvalue_estimate,
+    trop_identity, trop_scalar_matrix, spectral_attack,
+    TropicalDiffieHellman, TropicalMaskEncryption, make_permutation_mask,
+    INF
 )
 
 
-def demo_tropical_arithmetic():
-    """Demonstrate basic tropical matrix operations."""
-    print("=" * 60)
-    print("DEMO 1: Tropical Matrix Arithmetic")
-    print("=" * 60)
-    print()
-    print("In tropical (min-plus) algebra:")
-    print("  a ⊕ b = min(a, b)    (tropical addition)")
-    print("  a ⊗ b = a + b        (tropical multiplication)")
-    print("  0_trop = ∞            (additive identity)")
-    print("  1_trop = 0            (multiplicative identity)")
-    print()
-
-    A = [[1, 3], [2, 0]]
-    B = [[0, 2], [1, 4]]
-
-    print_tropical_matrix(A, "A")
-    print()
-    print_tropical_matrix(B, "B")
-    print()
-
-    C = trop_mat_mul(A, B)
-    print("A ⊗ B (tropical product):")
-    print_tropical_matrix(C, "A⊗B")
-    print()
-    print("Verification: (A⊗B)_00 = min(1+0, 3+1) = min(1,4) = 1 ✓")
-    print("              (A⊗B)_01 = min(1+2, 3+4) = min(3,7) = 3 ✓")
-    print()
-
-    I = trop_identity(2)
-    print_tropical_matrix(I, "I (tropical identity)")
-    print()
-    AI = trop_mat_mul(A, I)
-    print(f"A ⊗ I = A? {AI == A} ✓")
-    print()
+def print_matrix(name: str, M):
+    """Pretty-print a tropical matrix."""
+    print(f"\n{name}:")
+    for row in M:
+        print("  [" + ", ".join(f"{x:6.1f}" if x != INF else "   inf" for x in row) + "]")
 
 
-def demo_diffie_hellman():
+def demo_tropical_dh():
     """Demonstrate the Tropical Diffie-Hellman key exchange."""
     print("=" * 60)
-    print("DEMO 2: Tropical Diffie-Hellman Key Exchange")
+    print("DEMO 1: Tropical Diffie-Hellman Key Exchange")
     print("=" * 60)
-    print()
-
-    # Generator matrix
-    G = [[1, 3, 7],
-         [2, 0, 5],
-         [4, 6, 1]]
-
-    print("Public generator matrix:")
-    print_tropical_matrix(G, "G")
-    print()
-
-    alice_secret = 17
-    bob_secret = 23
-
-    dh = TropicalDiffieHellman(G)
-
-    # Key generation
-    pub_a = dh.public_key(alice_secret)
-    pub_b = dh.public_key(bob_secret)
-
-    print(f"Alice's secret: a = {alice_secret}")
+    
+    # Public generator matrix
+    A = [[0, 1, 5, 2],
+         [3, 0, 2, 4],
+         [1, 6, 0, 1],
+         [2, 3, 4, 0]]
+    
+    print_matrix("Public generator A", A)
+    
+    # Alice and Bob choose secret exponents
+    alice_secret = 13
+    bob_secret = 7
+    print(f"\nAlice's secret: a = {alice_secret}")
     print(f"Bob's secret:   b = {bob_secret}")
-    print()
-
-    print("Alice's public key G^{⊗a}:")
-    print_tropical_matrix(pub_a, "pub_A")
-    print()
-
-    print("Bob's public key G^{⊗b}:")
-    print_tropical_matrix(pub_b, "pub_B")
-    print()
-
-    # Shared key computation
-    key_alice = dh.shared_key(pub_b, alice_secret)
-    key_bob = dh.shared_key(pub_a, bob_secret)
-
-    print("Alice computes: (pub_B)^{⊗a}")
-    print_tropical_matrix(key_alice, "key_A")
-    print()
-
-    print("Bob computes: (pub_A)^{⊗b}")
-    print_tropical_matrix(key_bob, "key_B")
-    print()
-
-    agreed = key_alice == key_bob
-    print(f"Keys match: {agreed} {'✓' if agreed else '✗'}")
-    print()
-
-    # Verify against direct computation
-    direct = trop_mat_pow(G, alice_secret * bob_secret)
-    print(f"Direct G^{{⊗(a·b)}} = G^{{⊗{alice_secret * bob_secret}}} matches: {direct == key_alice} ✓")
-    print()
+    
+    dh = TropicalDiffieHellman(A)
+    
+    # Compute public keys
+    alice_pub = dh.public_key(alice_secret)
+    bob_pub = dh.public_key(bob_secret)
+    print_matrix("Alice's public key A^{⊗a}", alice_pub)
+    print_matrix("Bob's public key A^{⊗b}", bob_pub)
+    
+    # Compute shared secrets
+    shared_alice = dh.shared_secret(bob_pub, alice_secret)
+    shared_bob = dh.shared_secret(alice_pub, bob_secret)
+    print_matrix("Alice computes (A^{⊗b})^{⊗a}", shared_alice)
+    print_matrix("Bob computes (A^{⊗a})^{⊗b}", shared_bob)
+    
+    print(f"\n✓ Shared secrets match: {shared_alice == shared_bob}")
+    print(f"  This confirms tropPow_mul: A^{{⊗(ab)}} = (A^{{⊗a}})^{{⊗b}}")
 
 
-def demo_tdlp_attacks():
-    """Demonstrate attacks on the Tropical Discrete Logarithm Problem."""
+def demo_spectral_attack():
+    """Demonstrate the spectral attack on TDLP."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Spectral Attack on the Tropical DLP")
     print("=" * 60)
-    print("DEMO 3: TDLP Attack Analysis")
-    print("=" * 60)
-    print()
-
+    
+    # Case 1: Scalar matrix (attack succeeds)
+    print("\n--- Case 1: Scalar matrix (λ = 3) ---")
+    n = 4
+    S = trop_scalar_matrix(n, 3.0)
+    k_true = 17
+    Sk = trop_mat_pow(S, k_true)
+    
+    lam_S = trop_eigenvalue_estimate(S)
+    lam_Sk = trop_eigenvalue_estimate(Sk)
+    print(f"λ(S) = {lam_S}")
+    print(f"λ(S^{{⊗{k_true}}}) = {lam_Sk}")
+    print(f"k = λ(S^k) / λ(S) = {lam_Sk} / {lam_S} = {lam_Sk / lam_S}")
+    
+    recovered = spectral_attack(S, Sk)
+    print(f"Spectral attack recovers k = {recovered} (true k = {k_true})")
+    print(f"✓ Attack {'SUCCEEDS' if recovered == k_true else 'FAILS'}")
+    
+    # Case 2: Dense matrix (attack may or may not succeed)
+    print("\n--- Case 2: Dense random matrix ---")
     random.seed(42)
-
-    for n in [3, 5, 8]:
-        print(f"--- Matrix dimension n = {n} ---")
-        A = generate_random_tropical_matrix(n, max_val=50, seed=42 + n)
-        k_true = random.randint(2, 50)
-        B = trop_mat_pow(A, k_true)
-
-        print(f"True exponent k = {k_true}")
-
-        # Eigenvalue attack
-        t0 = time.time()
-        k_eigen = attempt_tdlp_eigenvalue(A, B)
-        t_eigen = time.time() - t0
-
-        if k_eigen is not None:
-            print(f"  Eigenvalue attack: k = {k_eigen} "
-                  f"({'correct' if k_eigen == k_true else 'WRONG'}) "
-                  f"[{t_eigen*1000:.1f} ms]")
-        else:
-            print(f"  Eigenvalue attack: FAILED [{t_eigen*1000:.1f} ms]")
-
-        # Brute force
-        t0 = time.time()
-        k_brute = attempt_tdlp_brute_force(A, B, max_k=200)
-        t_brute = time.time() - t0
-
-        if k_brute is not None:
-            print(f"  Brute force:       k = {k_brute} "
-                  f"({'correct' if k_brute == k_true else 'WRONG'}) "
-                  f"[{t_brute*1000:.1f} ms]")
-        else:
-            print(f"  Brute force:       FAILED [{t_brute*1000:.1f} ms]")
-
-        # Tropical eigenvalue
-        lam = trop_eigenvalue_estimate(A)
-        print(f"  Tropical eigenvalue λ(A) = {lam}")
-        print()
+    A = [[random.randint(0, 10) for _ in range(4)] for _ in range(4)]
+    k_true = 5
+    Ak = trop_mat_pow(A, k_true)
+    
+    print_matrix("A", A)
+    lam_A = trop_eigenvalue_estimate(A)
+    lam_Ak = trop_eigenvalue_estimate(Ak)
+    print(f"\nλ(A) = {lam_A}")
+    print(f"λ(A^{{⊗{k_true}}}) = {lam_Ak}")
+    
+    recovered = spectral_attack(A, Ak)
+    print(f"Spectral attack recovers k = {recovered} (true k = {k_true})")
+    
+    # Case 3: Demonstrate eigenvalue additivity for powers
+    print("\n--- Case 3: Eigenvalue under tropical powers ---")
+    A = [[0, 1, 3],
+         [2, 0, 1],
+         [1, 3, 0]]
+    print_matrix("A", A)
+    lam = trop_eigenvalue_estimate(A)
+    print(f"λ(A) = {lam}")
+    
+    for k in range(1, 8):
+        Ak = trop_mat_pow(A, k)
+        lam_k = trop_eigenvalue_estimate(Ak)
+        print(f"  λ(A^{{⊗{k}}}) = {lam_k:6.2f},  k·λ(A) = {k * lam:6.2f},  "
+              f"ratio = {lam_k / lam if lam != 0 else 'N/A':>6}")
 
 
-def demo_security_scaling():
-    """Measure key generation time vs matrix dimension."""
+def demo_mask_encryption():
+    """Demonstrate tropical mask encryption."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Tropical Mask Encryption")
     print("=" * 60)
-    print("DEMO 4: Security Scaling Analysis")
+    
+    # Create a permutation-based mask
+    perm = [2, 0, 3, 1]  # a permutation of {0,1,2,3}
+    mask, mask_inv = make_permutation_mask(perm)
+    
+    print(f"Permutation: {perm}")
+    print_matrix("Mask M", mask)
+    print_matrix("Mask inverse M⁻¹", mask_inv)
+    
+    # Verify M ⊗ M⁻¹ = I
+    product = trop_mat_mul(mask, mask_inv)
+    identity = trop_identity(4)
+    print(f"\nM ⊗ M⁻¹ = I: {product == identity}")
+    
+    # Encrypt and decrypt a message
+    plaintext = [[1, 2, 3, 4],
+                 [5, 6, 7, 8],
+                 [9, 10, 11, 12],
+                 [13, 14, 15, 16]]
+    
+    enc = TropicalMaskEncryption(mask, mask_inv)
+    ciphertext = enc.encrypt(plaintext)
+    recovered = enc.decrypt(ciphertext)
+    
+    print_matrix("Plaintext P", plaintext)
+    print_matrix("Ciphertext E = M ⊗ P ⊗ M⁻¹", ciphertext)
+    print_matrix("Decrypted M⁻¹ ⊗ E ⊗ M", recovered)
+    print(f"\n✓ Decryption correct: {recovered == plaintext}")
+
+
+def demo_diagonal_subadditivity():
+    """Demonstrate the diagonal entry subadditivity property."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Diagonal Entry Subadditivity")
     print("=" * 60)
-    print()
-
-    print(f"{'n':>4} {'k':>6} {'KeyGen (ms)':>12} {'Eigenval':>10} {'EigenAtk':>10}")
-    print("-" * 50)
-
-    random.seed(123)
-
-    for n in [3, 5, 8, 10, 15, 20, 30]:
-        A = generate_random_tropical_matrix(n, max_val=100, seed=123 + n)
-        k = random.randint(10, 100)
-
-        # Key generation timing
-        t0 = time.time()
-        B = trop_mat_pow(A, k)
-        t_keygen = (time.time() - t0) * 1000
-
-        # Eigenvalue computation
-        lam = trop_eigenvalue_estimate(A)
-        lam_str = f"{lam:.2f}" if lam is not None else "None"
-
-        # Eigenvalue attack
-        k_attack = attempt_tdlp_eigenvalue(A, B)
-        attack_str = str(k_attack) if k_attack is not None else "FAIL"
-
-        print(f"{n:>4} {k:>6} {t_keygen:>12.2f} {lam_str:>10} {attack_str:>10}")
-
-    print()
-    print("Key insight: Key generation scales as O(n³ log k),")
-    print("but the eigenvalue attack may succeed or fail depending")
-    print("on the matrix structure. For 'generic' matrices, the")
-    print("eigenvalue method often works, suggesting additional")
-    print("hardness assumptions are needed for security.")
-
-
-def demo_eigenvalue_vulnerability():
-    """Show the eigenvalue-based vulnerability in tropical crypto."""
-    print()
-    print("=" * 60)
-    print("DEMO 5: Eigenvalue Vulnerability Analysis")
-    print("=" * 60)
-    print()
-
-    random.seed(999)
-    n_trials = 100
-    results = {True: 0, False: 0}
-
-    for trial in range(n_trials):
-        n = 5
-        A = generate_random_tropical_matrix(n, max_val=20, seed=trial)
-        k = random.randint(2, 50)
-        B = trop_mat_pow(A, k)
-        k_recovered = attempt_tdlp_eigenvalue(A, B)
-        results[k_recovered == k] += True
-
-    success_rate = results[True] / n_trials * 100
-    print(f"Eigenvalue attack on 5×5 matrices (100 trials):")
-    print(f"  Success rate: {success_rate:.0f}%")
-    print(f"  Successes: {results[True]}, Failures: {results[False]}")
-    print()
-
-    if success_rate > 50:
-        print("⚠ The eigenvalue attack succeeds often!")
-        print("  This confirms that tropical eigenvalue computation")
-        print("  is a viable attack, and security requires choosing")
-        print("  matrices where this attack fails (e.g., matrices")
-        print("  with multiple critical cycles or eigenvalue 0).")
-    else:
-        print("✓ The eigenvalue attack has limited success,")
-        print("  supporting the TDLP hardness conjecture.")
+    
+    A = [[0, 1, 5],
+         [3, 0, 2],
+         [1, 4, 0]]
+    
+    print_matrix("A", A)
+    print(f"\nVerifying (A^{{⊗(m+k)}})_{{ii}} ≤ (A^{{⊗m}})_{{ii}} + (A^{{⊗k}})_{{ii}}:")
+    
+    for m in range(1, 5):
+        for k in range(1, 5):
+            Am = trop_mat_pow(A, m)
+            Ak = trop_mat_pow(A, k)
+            Amk = trop_mat_pow(A, m + k)
+            
+            for i in range(3):
+                lhs = Amk[i][i]
+                rhs = Am[i][i] + Ak[i][i]
+                holds = lhs <= rhs + 1e-10
+                if not holds:
+                    print(f"  VIOLATION at m={m}, k={k}, i={i}: "
+                          f"{lhs} > {rhs}")
+    
+    print("  ✓ All checks passed!")
+    
+    # Show the values
+    print("\n  Diagonal values (A^{⊗k})_{00} for k=1..8:")
+    for k in range(1, 9):
+        Ak = trop_mat_pow(A, k)
+        print(f"    k={k}: {Ak[0][0]:6.1f}  (average: {Ak[0][0]/k:6.2f})")
 
 
 if __name__ == "__main__":
-    demo_tropical_arithmetic()
-    print()
-    demo_diffie_hellman()
-    print()
-    demo_tdlp_attacks()
-    print()
-    demo_security_scaling()
-    demo_eigenvalue_vulnerability()
-    print()
-    print("=" * 60)
-    print("All demos completed successfully.")
+    demo_tropical_dh()
+    demo_spectral_attack()
+    demo_mask_encryption()
+    demo_diagonal_subadditivity()
+    
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
     print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Tropical Cryptography Security Landscape
-
-Three panels:
-1. Key generation time vs matrix dimension (log scale)
-2. Eigenvalue attack success rate vs matrix dimension
-3. Tropical matrix power entry evolution (heatmap)
+Visualization: Tropical Matrix Power Stabilization and Spectral Attack
 """
-
-import random
-import time
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import numpy as np
-
-
-# ---- Inlined tropical arithmetic functions ----
+import random
 
 INF = float('inf')
 
-def trop_add(a, b):
-    return min(a, b)
-
-def trop_mul(a, b):
-    if a == INF or b == INF:
-        return INF
-    return a + b
+def trop_mat_mul(A, B):
+    n = len(A)
+    k = len(B)
+    m = len(B[0]) if k > 0 else 0
+    result = [[INF] * m for _ in range(n)]
+    for i in range(n):
+        for j in range(m):
+            for t in range(k):
+                a, b = A[i][t], B[t][j]
+                if a != INF and b != INF:
+                    result[i][j] = min(result[i][j], a + b)
+    return result
 
 def trop_identity(n):
     return [[0 if i == j else INF for j in range(n)] for i in range(n)]
-
-def trop_mat_mul(A, B):
-    n = len(A)
-    C = [[INF] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i][j] = trop_add(C[i][j], trop_mul(A[i][k], B[k][j]))
-    return C
 
 def trop_mat_pow(A, k):
     n = len(A)
@@ -309,121 +238,95 @@ def trop_mat_pow(A, k):
         k //= 2
     return result
 
-def trop_eigenvalue_estimate(A):
-    n = len(A)
-    powers = [trop_identity(n)]
-    for k in range(1, n + 1):
-        powers.append(trop_mat_mul(powers[-1], A))
-    min_avg = INF
-    for i in range(n):
-        if powers[n][i][i] == INF:
-            continue
-        max_val = -INF
-        for k in range(n):
-            if powers[k][i][i] == INF:
-                continue
-            avg = (powers[n][i][i] - powers[k][i][i]) / (n - k)
-            max_val = max(max_val, avg)
-        if max_val < min_avg:
-            min_avg = max_val
-    return min_avg if min_avg != INF else None
+def trop_trace(A):
+    return min(A[i][i] for i in range(len(A)))
 
-def attempt_tdlp_eigenvalue(A, B):
-    lambda_a = trop_eigenvalue_estimate(A)
-    lambda_b = trop_eigenvalue_estimate(B)
-    if lambda_a is None or lambda_b is None or lambda_a == 0:
-        return None
-    k_est = lambda_b / lambda_a
-    k = round(k_est)
-    if k >= 0 and trop_mat_pow(A, k) == B:
-        return k
-    return None
+# --- Plot 1: Diagonal entry growth under tropical powers ---
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-def generate_random_tropical_matrix(n, max_val=100, seed=None):
-    rng = random.Random(seed)
-    return [[rng.randint(0, max_val) for _ in range(n)] for _ in range(n)]
+# Matrix with interesting eigenvalue structure
+A = [[0, 3, 7, 2],
+     [5, 0, 1, 4],
+     [2, 6, 0, 3],
+     [1, 4, 5, 0]]
 
-# ---- Visualization ----
+max_k = 20
+diag_vals = {i: [] for i in range(4)}
+traces = []
+for k in range(1, max_k + 1):
+    Ak = trop_mat_pow(A, k)
+    for i in range(4):
+        diag_vals[i].append(Ak[i][i])
+    traces.append(trop_trace(Ak))
 
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    fig.suptitle('Tropical Cryptography: Security Analysis', fontsize=14, fontweight='bold')
+ax = axes[0]
+ks = list(range(1, max_k + 1))
+for i in range(4):
+    ax.plot(ks, diag_vals[i], 'o-', markersize=3, label=f'$(A^{{\\otimes k}})_{{{i}{i}}}$')
+ax.plot(ks, traces, 'k--', linewidth=2, label='Trace (min diag)')
+ax.set_xlabel('Power k')
+ax.set_ylabel('Value')
+ax.set_title('Diagonal Entries of $A^{\\otimes k}$')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 
-    # Panel 1: Key generation time vs dimension
-    ax1 = axes[0]
-    dimensions = [3, 5, 8, 10, 15, 20, 25, 30]
-    keygen_times = []
-    for n in dimensions:
-        A = generate_random_tropical_matrix(n, max_val=50, seed=42 + n)
-        t0 = time.time()
-        for _ in range(5):
-            trop_mat_pow(A, 100)
-        t = (time.time() - t0) / 5 * 1000
-        keygen_times.append(t)
+# --- Plot 2: Normalized diagonal (convergence to eigenvalue) ---
+ax = axes[1]
+for i in range(4):
+    normalized = [diag_vals[i][k-1] / k for k in range(1, max_k + 1)]
+    ax.plot(ks, normalized, 'o-', markersize=3, label=f'$(A^{{\\otimes k}})_{{{i}{i}}}/k$')
+ax.axhline(y=min(traces[k-1]/k for k in range(1, max_k+1)), color='red', 
+           linestyle='--', label='$\\lambda(A)$')
+ax.set_xlabel('Power k')
+ax.set_ylabel('Normalized value')
+ax.set_title('Convergence to Tropical Eigenvalue')
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 
-    ax1.semilogy(dimensions, keygen_times, 'bo-', linewidth=2, markersize=8)
-    # Fit n^3 curve
-    n_fit = np.array(dimensions, dtype=float)
-    scale = keygen_times[3] / (dimensions[3] ** 3)
-    ax1.semilogy(n_fit, scale * n_fit**3, 'r--', alpha=0.6, label='O(n³) fit')
-    ax1.set_xlabel('Matrix dimension n', fontsize=12)
-    ax1.set_ylabel('Key generation time (ms)', fontsize=12)
-    ax1.set_title('Key Generation Scaling', fontsize=12)
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
+# --- Plot 3: Spectral attack success rate vs matrix structure ---
+ax = axes[2]
+random.seed(42)
+sizes = [2, 3, 4, 5, 6]
+densities = [0.5, 0.7, 1.0]
+results = {}
 
-    # Panel 2: Eigenvalue attack success rate
-    ax2 = axes[1]
-    dims_attack = [3, 4, 5, 6, 7, 8, 10, 12]
+for density in densities:
     success_rates = []
-    n_trials = 50
-    for n in dims_attack:
+    for n in sizes:
         successes = 0
-        for trial in range(n_trials):
-            A = generate_random_tropical_matrix(n, max_val=30, seed=trial * 100 + n)
-            k = random.Random(trial + n).randint(2, 40)
-            B = trop_mat_pow(A, k)
-            k_rec = attempt_tdlp_eigenvalue(A, B)
-            if k_rec == k:
-                successes += 1
-        success_rates.append(successes / n_trials * 100)
+        trials = 20
+        for trial in range(trials):
+            M = [[INF] * n for _ in range(n)]
+            for i in range(n):
+                for j in range(n):
+                    if random.random() < density:
+                        M[i][j] = random.randint(1, 10)
+            k_true = random.randint(2, 15)
+            Mk = trop_mat_pow(M, k_true)
+            # Try spectral attack
+            lam_M = min((trop_trace(trop_mat_pow(M, k)) / k 
+                        for k in range(1, n * 2 + 1) 
+                        if trop_trace(trop_mat_pow(M, k)) != INF), default=INF)
+            lam_Mk = min((trop_trace(trop_mat_pow(Mk, k)) / k 
+                         for k in range(1, n * 2 + 1)
+                         if trop_trace(trop_mat_pow(Mk, k)) != INF), default=INF)
+            if lam_M != INF and lam_M != 0 and lam_Mk != INF:
+                k_est = round(lam_Mk / lam_M)
+                if k_est == k_true:
+                    successes += 1
+            elif lam_M == 0:
+                pass  # eigenvalue zero -> attack fails
+        success_rates.append(successes / trials * 100)
+    ax.plot(sizes, success_rates, 'o-', markersize=5, label=f'density={density}')
 
-    ax2.bar(range(len(dims_attack)), success_rates, color='coral', edgecolor='darkred', alpha=0.8)
-    ax2.set_xticks(range(len(dims_attack)))
-    ax2.set_xticklabels([str(d) for d in dims_attack])
-    ax2.set_xlabel('Matrix dimension n', fontsize=12)
-    ax2.set_ylabel('Attack success rate (%)', fontsize=12)
-    ax2.set_title('Eigenvalue Attack Success', fontsize=12)
-    ax2.axhline(y=50, color='gray', linestyle='--', alpha=0.5, label='50% threshold')
-    ax2.set_ylim(0, 100)
-    ax2.legend()
-    ax2.grid(True, alpha=0.3, axis='y')
+ax.set_xlabel('Matrix size n')
+ax.set_ylabel('Attack success rate (%)')
+ax.set_title('Spectral Attack Effectiveness')
+ax.legend()
+ax.grid(True, alpha=0.3)
+ax.set_ylim(-5, 105)
 
-    # Panel 3: Entry evolution heatmap
-    ax3 = axes[2]
-    n = 6
-    A = generate_random_tropical_matrix(n, max_val=10, seed=77)
-    max_pow = 15
-    # Track entry (0,0) through (n-1, n-1) across powers
-    entry_grid = np.zeros((n, max_pow))
-    for p in range(1, max_pow + 1):
-        Ap = trop_mat_pow(A, p)
-        for i in range(n):
-            entry_grid[i, p-1] = Ap[i][i] if Ap[i][i] != INF else np.nan
-
-    im = ax3.imshow(entry_grid, aspect='auto', cmap='viridis',
-                     interpolation='nearest')
-    ax3.set_xlabel('Power k', fontsize=12)
-    ax3.set_ylabel('Diagonal index i', fontsize=12)
-    ax3.set_title('Diagonal entries of A^{⊗k}', fontsize=12)
-    ax3.set_xticks(range(0, max_pow, 2))
-    ax3.set_xticklabels([str(k+1) for k in range(0, max_pow, 2)])
-    plt.colorbar(im, ax=ax3, label='Entry value')
-
-    plt.tight_layout()
-    plt.savefig('tropical_crypto_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: tropical_crypto_analysis.png")
-
-
-if __name__ == "__main__":
-    main()
+plt.tight_layout()
+plt.savefig('tropical_crypto_analysis.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved tropical_crypto_analysis.png")

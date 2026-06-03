@@ -1,216 +1,240 @@
 """
-Tropical (Min-Plus) Matrix Algebra and Cryptographic Primitives
-
-Type-hinted implementations of tropical matrix operations and
-the Tropical Diffie-Hellman key exchange protocol.
+Tropical Cryptography Algorithms
+=================================
+Min-plus matrix algebra and the Tropical Diffie-Hellman protocol.
 """
 
-from __future__ import annotations
-import math
 from typing import List, Optional, Tuple
+import math
 
+# Represent infinity as a large sentinel
 INF = float('inf')
 
-# Type aliases
-TropVal = float  # float('inf') represents tropical zero (infinity)
-TropMatrix = List[List[TropVal]]
-TropVector = List[TropVal]
+# Type alias for tropical matrices
+TropMat = List[List[float]]
 
 
-def trop_add(a: TropVal, b: TropVal) -> TropVal:
+def trop_add(a: float, b: float) -> float:
     """Tropical addition: min(a, b)."""
     return min(a, b)
 
 
-def trop_mul(a: TropVal, b: TropVal) -> TropVal:
-    """Tropical multiplication: a + b (with infinity handling)."""
+def trop_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b (with inf absorbing)."""
     if a == INF or b == INF:
         return INF
     return a + b
 
 
-def trop_identity(n: int) -> TropMatrix:
-    """Tropical identity matrix: 0 on diagonal, INF off diagonal."""
-    return [[0 if i == j else INF for j in range(n)] for i in range(n)]
+def trop_identity(n: int) -> TropMat:
+    """Tropical identity matrix: 0 on diagonal, inf off diagonal."""
+    return [[0.0 if i == j else INF for j in range(n)] for i in range(n)]
 
 
-def trop_mat_mul(A: TropMatrix, B: TropMatrix) -> TropMatrix:
-    """Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
-
-    Time complexity: O(n^3) where n is the matrix dimension.
+def trop_mat_mul(A: TropMat, B: TropMat) -> TropMat:
+    """
+    Tropical (min-plus) matrix multiplication.
+    (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})
+    
+    Time complexity: O(n^2 * k) where A is n×k and B is k×m.
     """
     n = len(A)
-    C: TropMatrix = [[INF] * n for _ in range(n)]
+    k = len(B)
+    m = len(B[0]) if k > 0 else 0
+    result = [[INF] * m for _ in range(n)]
     for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                val = trop_mul(A[i][k], B[k][j])
-                C[i][j] = trop_add(C[i][j], val)
-    return C
+        for j in range(m):
+            for t in range(k):
+                val = trop_mul(A[i][t], B[t][j])
+                result[i][j] = trop_add(result[i][j], val)
+    return result
 
 
-def trop_mat_pow(A: TropMatrix, k: int) -> TropMatrix:
-    """Tropical matrix power A^{⊗k} by repeated squaring.
-
-    Time complexity: O(n^3 * log(k)).
+def trop_mat_pow(A: TropMat, k: int) -> TropMat:
+    """
+    Tropical matrix power by repeated squaring.
+    A^{⊗k} computed in O(n^3 * log(k)) time.
+    
+    Algorithm:
+        result = I (tropical identity)
+        base = A
+        while k > 0:
+            if k is odd: result = result ⊗ base
+            base = base ⊗ base
+            k = k // 2
     """
     n = len(A)
     if k == 0:
         return trop_identity(n)
-    if k == 1:
-        return [row[:] for row in A]
-
+    
     result = trop_identity(n)
-    base = [row[:] for row in A]
+    base = [row[:] for row in A]  # deep copy
+    
     while k > 0:
         if k % 2 == 1:
             result = trop_mat_mul(result, base)
         base = trop_mat_mul(base, base)
         k //= 2
+    
     return result
 
 
-def trop_mat_vec_mul(A: TropMatrix, v: TropVector) -> TropVector:
-    """Tropical matrix-vector multiplication: (A ⊗ v)_i = min_j (A_{ij} + v_j)."""
+def trop_trace(A: TropMat) -> float:
+    """Tropical trace: min_i A_{ii}."""
     n = len(A)
-    result: TropVector = [INF] * n
-    for i in range(n):
-        for j in range(n):
-            result[i] = trop_add(result[i], trop_mul(A[i][j], v[j]))
-    return result
+    return min(A[i][i] for i in range(n))
 
 
-def trop_eigenvalue_estimate(A: TropMatrix) -> Optional[TropVal]:
-    """Estimate the tropical eigenvalue of A using the shortest-path method.
-
-    The tropical eigenvalue is the minimum average weight of a cycle
-    in the directed graph with weight matrix A. This is computed via
-    the Karp/Howard algorithm approach.
-
-    Returns None if the matrix has no finite diagonal cycle.
+def trop_eigenvalue_estimate(A: TropMat, max_k: int = 100) -> float:
+    """
+    Estimate the tropical eigenvalue (minimum cycle mean):
+    λ(A) = inf_{k≥1} tr(A^k) / k
+    
+    This is the minimum average weight of a cycle in the weighted
+    directed graph with adjacency matrix A.
     """
     n = len(A)
-    # Compute A^1, A^2, ..., A^n
-    powers = [trop_identity(n)]
-    for k in range(1, n + 1):
-        powers.append(trop_mat_mul(powers[-1], A))
+    best = INF
+    power = [row[:] for row in A]
+    
+    for k in range(1, max_k + 1):
+        tr = trop_trace(power)
+        if tr != INF:
+            ratio = tr / k
+            best = min(best, ratio)
+        power = trop_mat_mul(power, A)
+    
+    return best
 
-    # Karp's algorithm: λ = min_i max_k (A^n[i][i] - A^k[i][i]) / (n - k)
-    min_avg = INF
-    for i in range(n):
-        if powers[n][i][i] == INF:
-            continue
-        max_val = -INF
-        for k in range(n):
-            if powers[k][i][i] == INF:
-                continue
-            avg = (powers[n][i][i] - powers[k][i][i]) / (n - k)
-            max_val = max(max_val, avg)
-        if max_val < min_avg:
-            min_avg = max_val
 
-    return min_avg if min_avg != INF else None
+def trop_scalar_matrix(n: int, lam: float) -> TropMat:
+    """Create a scalar tropical matrix: λ on diagonal, ∞ off diagonal."""
+    return [[lam if i == j else INF for j in range(n)] for i in range(n)]
 
+
+# ─── Tropical Diffie-Hellman Protocol ───
 
 class TropicalDiffieHellman:
-    """Tropical Diffie-Hellman Key Exchange Protocol.
-
-    Protocol:
-    1. Public parameter: tropical matrix G of dimension n×n
-    2. Alice chooses secret a, publishes pub_A = G^{⊗a}
-    3. Bob chooses secret b, publishes pub_B = G^{⊗b}
-    4. Shared key = G^{⊗(a*b)} = (G^{⊗a})^{⊗b} = (G^{⊗b})^{⊗a}
     """
-
-    def __init__(self, generator: TropMatrix) -> None:
+    Tropical Diffie-Hellman Key Exchange Protocol.
+    
+    Public parameters: generator matrix A of size n×n
+    Alice: secret a, publishes A^{⊗a}
+    Bob:   secret b, publishes A^{⊗b}
+    Shared secret: A^{⊗(ab)} = (A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}
+    """
+    
+    def __init__(self, generator: TropMat):
         self.generator = generator
         self.n = len(generator)
-
-    def public_key(self, secret: int) -> TropMatrix:
-        """Compute public key G^{⊗secret}."""
+    
+    def public_key(self, secret: int) -> TropMat:
+        """Compute public key A^{⊗secret}."""
         return trop_mat_pow(self.generator, secret)
-
-    def shared_key(self, other_public: TropMatrix, my_secret: int) -> TropMatrix:
-        """Compute shared key (other_public)^{⊗my_secret}."""
+    
+    def shared_secret(self, other_public: TropMat, my_secret: int) -> TropMat:
+        """Compute shared secret (other_public)^{⊗my_secret}."""
         return trop_mat_pow(other_public, my_secret)
 
-    def verify_key_agreement(self, alice_secret: int, bob_secret: int) -> bool:
-        """Verify that Alice and Bob compute the same shared key."""
-        pub_a = self.public_key(alice_secret)
-        pub_b = self.public_key(bob_secret)
 
-        key_alice = self.shared_key(pub_b, alice_secret)
-        key_bob = self.shared_key(pub_a, bob_secret)
+# ─── Spectral Attack on TDLP ───
 
-        return key_alice == key_bob
-
-
-def attempt_tdlp_eigenvalue(A: TropMatrix, B: TropMatrix) -> Optional[int]:
-    """Attempt to solve the Tropical Discrete Logarithm Problem
-    using the eigenvalue method.
-
-    Given A and B = A^{⊗k}, try to recover k using:
-    λ(B) = k * λ(A), so k = λ(B) / λ(A).
-
-    Returns the recovered k, or None if the method fails.
+def spectral_attack(A: TropMat, B: TropMat, max_k: int = 1000) -> Optional[int]:
     """
-    lambda_a = trop_eigenvalue_estimate(A)
-    lambda_b = trop_eigenvalue_estimate(B)
-
-    if lambda_a is None or lambda_b is None:
+    Attempt to recover exponent k from (A, B = A^{⊗k}) using the
+    spectral attack: λ(B) = k · λ(A), so k = λ(B) / λ(A).
+    
+    This works when A has a well-defined non-zero tropical eigenvalue.
+    Returns None if the attack fails (eigenvalue is 0 or inf).
+    """
+    lam_A = trop_eigenvalue_estimate(A, max_k=min(max_k, len(A) * 2))
+    lam_B = trop_eigenvalue_estimate(B, max_k=min(max_k, len(B) * 2))
+    
+    if lam_A == INF or lam_A == 0:
         return None
-    if lambda_a == 0:
-        return None  # Division by zero — eigenvalue method fails
-
-    k_est = lambda_b / lambda_a
-    k = round(k_est)
-
+    if lam_B == INF:
+        return None
+    
+    k_est = lam_B / lam_A
+    k_round = round(k_est)
+    
     # Verify
-    if k >= 0 and trop_mat_pow(A, k) == B:
-        return k
+    if k_round >= 0:
+        check = trop_mat_pow(A, k_round)
+        if check == B:
+            return k_round
+    
     return None
 
 
-def attempt_tdlp_brute_force(A: TropMatrix, B: TropMatrix,
-                              max_k: int = 1000) -> Optional[int]:
-    """Brute-force search for k such that A^{⊗k} = B."""
-    current = trop_identity(len(A))
-    for k in range(max_k + 1):
-        if current == B:
-            return k
-        current = trop_mat_mul(current, A)
-    return None
+# ─── Tropical Mask Encryption ───
+
+class TropicalMaskEncryption:
+    """
+    Tropical mask encryption: E = M ⊗ P ⊗ M⁻¹.
+    Decryption: P = M⁻¹ ⊗ E ⊗ M.
+    
+    The mask pair (M, M⁻¹) must satisfy M ⊗ M⁻¹ = I tropically.
+    For permutation-based masks, M⁻¹ is the inverse permutation matrix.
+    """
+    
+    def __init__(self, mask: TropMat, mask_inv: TropMat):
+        self.mask = mask
+        self.mask_inv = mask_inv
+        n = len(mask)
+        # Verify mask property
+        product = trop_mat_mul(mask, mask_inv)
+        identity = trop_identity(n)
+        assert product == identity, "Mask and inverse must satisfy M ⊗ M⁻¹ = I"
+    
+    def encrypt(self, plaintext: TropMat) -> TropMat:
+        """Encrypt: E = M ⊗ P ⊗ M⁻¹."""
+        return trop_mat_mul(trop_mat_mul(self.mask, plaintext), self.mask_inv)
+    
+    def decrypt(self, ciphertext: TropMat) -> TropMat:
+        """Decrypt: P = M⁻¹ ⊗ E ⊗ M."""
+        return trop_mat_mul(trop_mat_mul(self.mask_inv, ciphertext), self.mask)
 
 
-def generate_random_tropical_matrix(n: int, max_val: int = 100,
-                                     seed: Optional[int] = None) -> TropMatrix:
-    """Generate a random n×n tropical matrix with entries in [0, max_val]."""
-    import random
-    if seed is not None:
-        random.seed(seed)
-    return [[random.randint(0, max_val) for _ in range(n)] for _ in range(n)]
-
-
-def print_tropical_matrix(M: TropMatrix, name: str = "M") -> None:
-    """Pretty-print a tropical matrix."""
-    n = len(M)
-    print(f"{name} =")
-    for i in range(n):
-        row_str = "  ["
-        for j in range(n):
-            if M[i][j] == INF:
-                row_str += "  ∞"
-            else:
-                row_str += f"{M[i][j]:3.0f}"
-            if j < n - 1:
-                row_str += ", "
-        row_str += "]"
-        print(row_str)
+def make_permutation_mask(perm: List[int]) -> Tuple[TropMat, TropMat]:
+    """
+    Create a tropical mask pair from a permutation.
+    Permutation masks are tropically invertible since
+    the inverse permutation gives the inverse matrix.
+    """
+    n = len(perm)
+    mask = [[0.0 if j == perm[i] else INF for j in range(n)] for i in range(n)]
+    inv_perm = [0] * n
+    for i, p in enumerate(perm):
+        inv_perm[p] = i
+    mask_inv = [[0.0 if j == inv_perm[i] else INF for j in range(n)] for i in range(n)]
+    return mask, mask_inv
 
 
 if __name__ == "__main__":
-    # Quick test
-    G = [[1, 3], [2, 0]]
-    dh = TropicalDiffieHellman(G)
-    assert dh.verify_key_agreement(5, 7)
-    print("Key agreement verified for 2×2 matrix with secrets (5, 7)")
+    # Quick self-test
+    n = 3
+    A = [[0, 1, 3],
+         [2, 0, 1],
+         [1, 3, 0]]
+    
+    # Test power
+    A2 = trop_mat_pow(A, 2)
+    A3 = trop_mat_pow(A, 3)
+    print("A^2 =", A2)
+    print("A^3 =", A3)
+    print("Eigenvalue estimate:", trop_eigenvalue_estimate(A))
+    
+    # Test DH
+    dh = TropicalDiffieHellman(A)
+    alice_pub = dh.public_key(5)
+    bob_pub = dh.public_key(7)
+    shared_alice = dh.shared_secret(bob_pub, 5)
+    shared_bob = dh.shared_secret(alice_pub, 7)
+    print("\nDH correctness:", shared_alice == shared_bob)
+    
+    # Test spectral attack on scalar matrix
+    S = trop_scalar_matrix(3, 2.0)
+    Sk = trop_mat_pow(S, 17)
+    recovered = spectral_attack(S, Sk)
+    print(f"\nSpectral attack on scalar matrix: k=17, recovered={recovered}")
