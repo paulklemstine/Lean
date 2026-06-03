@@ -693,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb07c7c3",
     "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
@@ -703,7 +703,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.814374+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
@@ -2193,6 +2193,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_0419",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.828631+00:00",
+    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -2340,6 +2355,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.080762+00:00",
     "title": "One-Way Functions: Existence and Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0435",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.156517+00:00",
+    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2580,6 +2610,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.072923+00:00",
     "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0460",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.154076+00:00",
+    "title": "Secure Multi-Party Computation: Theoretical Foundations"
   },
   {
     "consumed_by_exp_id": "",
@@ -3242,21 +3287,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0435",
-    "priority_score": 0.98,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.156517+00:00",
-    "title": "Learning with Errors: Hardness Reductions"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
@@ -3317,21 +3347,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
-    "domains": [
-      "Geometry",
-      "Cryptography"
-    ],
-    "id": "fd_0419",
-    "priority_score": 0.96,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.828631+00:00",
-    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
@@ -3359,6 +3374,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.880463+00:00",
+    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
+    "domains": [
+      "Cryptography",
+      "Physics"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.214033+00:00",
+    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -3422,6 +3467,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0538",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.801510+00:00",
+    "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0541",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.042519+00:00",
+    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -3467,6 +3542,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0544",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.295536+00:00",
+    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -3497,21 +3587,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0460",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.154076+00:00",
-    "title": "Secure Multi-Party Computation: Theoretical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
     "domains": [
       "EML",
@@ -3524,6 +3599,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.273718+00:00",
     "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0542",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.126580+00:00",
+    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0562",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.802713+00:00",
+    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
     "consumed_by_exp_id": "",
@@ -3572,6 +3677,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0540",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.964548+00:00",
+    "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
       "MachineLearning",
@@ -3614,21 +3734,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.470705+00:00",
     "title": "EML Single Operator Church-Turing Thesis"
-  },
-  {
-    "consumed_by_exp_id": "0edfd7d6",
-    "description": "Formalize the Gentry fully homomorphic encryption scheme. Prove that the bootstrapping theorem allows unlimited computation on ciphertexts. Construct a circuit for addition and multiplication under the BGV scheme and verify correctness.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0457",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:29.910658+00:00",
-    "title": "Homomorphic Encryption: Computing on Encrypted Data"
   },
   {
     "consumed_by_exp_id": "",
@@ -3749,36 +3854,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.470701+00:00",
     "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0539",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.880463+00:00",
-    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
-    "domains": [
-      "Cryptography",
-      "Physics"
-    ],
-    "id": "fd_0543",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.214033+00:00",
-    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -3917,36 +3992,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0538",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.801510+00:00",
-    "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0541",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.042519+00:00",
-    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
     "domains": [
       "Tropical",
@@ -4007,6 +4052,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Research Directions\n\n## Synthesis\n\nThis research cycle established the first formal verification of the core algebraic framework underlying fully homomorphic encryption\u2014the noise management argument that transforms \"somewhat homomorphic\" into \"fully homomorphic\" encryption through bootstrapping. Our formalization captures the essential mathematical content of Gentry's 2009 breakthrough and the BGV leveled scheme in a hierarchy of structures (`NoiseBoundedHE \u2192 CorrectHE \u2192 BootstrappableHE`), proving 12 theorems including the central result that refreshed circuit evaluation preserves validity for circuits of arbitrary depth.\n\nThe most promising cross-domain connection is between our noise-bounded encryption framework and the existing tropical homomorphic encryption work in the Catalog (`Cryptography/TropicalHomomorphic.lean`). Tropical semirings provide a concrete, well-understood algebraic setting where the noise axioms can be instantiated, and the idempotence of the tropical min operation provides a natural bootstrapping mechanism (min of a ciphertext with itself resets noise). This connection suggests a broader program: identifying which algebraic structures naturally support bootstrapping.\n\nThe highest breakthrough potential lies in Direction 1 (Concrete LWE Instantiation), because it would bridge the gap between our abstract algebraic framework and the concrete cryptographic constructions used in practice. If successful, it would provide the first end-to-end formally verified FHE scheme, from lattice hardness assumptions through noise management to circuit evaluation correctness.\n\n---\n\n### Direction 1: Concrete LWE Instantiation of the Noise-Bounded Framework\n\n**Conjecture**: The Ring-LWE-based BGV scheme, with ciphertexts as elements of Z_q[X]/(X^n + 1) and noise measured as the infinity norm of the error polynomial, satisfies all axioms of `NoiseBoundedHE` with `freshNoise = B` (the error bound), `maxNoise = q/2`, and noise growth `noise_add(c\u2081, c\u2082) \u2264 noise(c\u2081) + noise(c\u2082)` and `noise_mul(c\u2081, c\u2082) \u2264 n \u00b7 noise(c\u2081) \u00b7 noise(c\u2082)` where n is the ring dimension.\n\n**Test**: Define the Ring-LWE encryption scheme concretely in Lean 4 using `ZMod q` and polynomial quotient rings. Verify that the noise axioms hold by proving the noise growth bounds for polynomial addition and multiplication in the quotient ring Z_q[X]/(X^n + 1). The factor of n in multiplicative noise growth comes from the expansion of the product modulo X^n + 1.\n\n**Impact**: If true, this provides the first formally verified concrete FHE instantiation, bridging abstract noise management with real cryptographic constructions. It would also establish the precise relationship between ring dimension n, modulus q, and achievable circuit depth. If the noise bounds are tighter than expected, it could suggest parameter improvements for practical implementations.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`, `Cryptography/LWE/Defs.lean`\n\n**Proof Strategy**: \n1. Define `Rq := (ZMod q)[X] / (X^n + 1)` using Mathlib's polynomial quotient machinery.\n2. Define encryption as `Enc(m) = (a, a\u00b7s + e + (q/p)\u00b7m)` for random `a`, secret `s`, small error `e`.\n3. Prove noise growth bounds using submultiplicativity of the infinity norm on `Rq`.\n4. Construct an instance of `NoiseBoundedHE` and verify all axioms.\n5. For bootstrapping, prove that the decryption circuit has multiplicative depth O(log n \u00b7 log q).\n\n**Domain Bridges**: Cryptography <-> Algebra (polynomial ring theory), Cryptography <-> Computation (circuit complexity of decryption)\n\n**Lineage**: Builds on the `NoiseBoundedHE` and `CorrectHE` structures defined in this cycle, and the LWE definitions in `Cryptography/LWE/Defs.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Bootstrapping as a Natural FHE Instance\n\n**Conjecture**: The tropical encryption scheme defined in `TropicalHomomorphic.lean` satisfies the axioms of `BootstrappableHE` with `bNoise = 0` (due to the idempotence of min), making it a \"perfect\" bootstrappable scheme\u2014but one where the security guarantee is trivially broken (by the `deterministic_tropical_order_leak` theorem). This provides a formal proof that algebraic bootstrapping capability and cryptographic security are independent properties.\n\n**Test**: Construct a concrete instance of `BootstrappableHE` from `TropicalEncScheme`, where the refresh operation is defined as `refresh(c) = cmin(c, c)` (exploiting min idempotence). Verify all axioms hold. Then formally prove that no `TropicalEncScheme` instance can satisfy IND-CPA security (because ciphertext order reveals plaintext order).\n\n**Impact**: This would provide a clean, constructive example showing that the bootstrapping framework is satisfiable (ruling out vacuous truth concerns about our main theorems) while simultaneously demonstrating that bootstrapping alone is insufficient for security. It would clarify the separation between the algebraic correctness theory (our framework) and the computational hardness theory (security reductions).\n\n**Catalog References**: `Cryptography/TropicalHomomorphic.lean`, `Cryptography/FHE/Defs.lean`, `Cryptography/TropicalPostQuantum.lean`\n\n**Proof Strategy**:\n1. Define a noise function on `TropicalEncScheme.Cipher` (e.g., the encoding offset).\n2. Show `cmin(c, c) = c` implies refresh noise is 0.\n3. Construct the `BootstrappableHE` instance.\n4. Formalize IND-CPA security and prove tropical schemes cannot satisfy it.\n\n**Domain Bridges**: Cryptography <-> Tropical geometry (semiring structure), Cryptography <-> Logic (independence of algebraic and computational properties)\n\n**Lineage**: Builds on `tropical_homomorphic_correctness` and `tropical_min_idempotent_bootstrap` from the existing Catalog, and the `BootstrappableHE` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Circuit Complexity Lower Bounds for Bootstrapping\n\n**Conjecture**: For any `BootstrappableHE` scheme where the plaintext space has size \u2265 2 and the noise function is \"non-degenerate\" (noise of enc(m) depends on m), the bootstrapping circuit (the circuit that homomorphically evaluates decryption) has multiplicative depth at least log\u2082(log\u2082(maxNoise/bNoise)). This would formalize the folklore belief that bootstrapping cannot be made \"too cheap.\"\n\n**Test**: Formalize a notion of \"bootstrapping circuit\" as an `ArithCircuit` that, when evaluated homomorphically on a valid ciphertext and an encrypted secret key, produces a refreshed ciphertext. Prove that if this circuit has depth d, then maxNoise \u2265 bNoise^(2^d) (by the exponential noise growth theorem), which gives d \u2265 log\u2082(log\u2082(maxNoise/bNoise)).\n\n**Impact**: This would establish the first formally verified complexity lower bound for FHE bootstrapping, connecting our noise growth analysis to circuit complexity. It would also provide a formal justification for why practical bootstrapping is expensive.\n\n**Catalog References**: `Cryptography/FHE/Theorems.lean` (specifically `noise_exceeds_any_threshold` and `pow_two_pow_strict_mono`)\n\n**Proof Strategy**:\n1. Define a \"bootstrapping circuit\" predicate: a circuit that, applied homomorphically, converts any valid ciphertext to one with noise \u2264 bNoise.\n2. Use `noise_exceeds_any_threshold` to show that evaluating a depth-d circuit on a ciphertext with noise B yields noise \u2264 B^(2^d).\n3. For the bootstrapping circuit to work, its homomorphic evaluation must succeed, so the noise must stay below maxNoise.\n4. This gives B^(2^d) \u2264 maxNoise, hence d \u2265 log\u2082(log\u2082(maxNoise/B)).\n\n**Domain Bridges**: Cryptography <-> Computation (circuit complexity), Cryptography <-> EML (complexity measures)\n\n**Lineage**: Directly extends the noise growth analysis from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Multi-Key Homomorphic Encryption Framework\n\n**Conjecture**: The `BootstrappableHE` framework can be extended to a multi-key setting where ciphertexts encrypted under different keys can be combined homomorphically, with the decryption requiring all keys. Formally, there exists a `MultiKeyHE` structure with `hAdd : C sk\u2081 \u2192 C sk\u2082 \u2192 C (sk\u2081, sk\u2082)` satisfying analogous correctness and noise bounds, where the noise growth depends on the number of distinct keys involved.\n\n**Test**: Define `MultiKeyHE` extending `BootstrappableHE` with a key-merging operation. Prove that refreshed evaluation over multi-key circuits preserves validity when the number of distinct keys is bounded by some function of the noise parameters. Identify the precise relationship between the number of keys and the achievable circuit depth.\n\n**Impact**: Multi-key FHE is essential for multiparty computation (MPC) applications. Formalizing this would connect our framework to the multiparty CSIDH work already in the Catalog (`Cryptography/CSIFiShAdvanced.lean`).\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/CSIFiShAdvanced.lean` (multiparty key exchange), `Cryptography/CommitmentProtocol.lean`\n\n**Proof Strategy**:\n1. Parameterize ciphertext type by a set of keys: `C : Finset SK \u2192 Type`.\n2. Define `hAdd` and `hMul` that merge key sets.\n3. Noise grows with `|keys|` factor in multiplication.\n4. Prove bootstrapping works when `bNoise^(2 \u00b7 |keys|) < maxNoise`.\n\n**Domain Bridges**: Cryptography <-> Cryptography (connecting FHE with MPC), Cryptography <-> Computation (distributed computation models)\n\n**Lineage**: Extends the single-key `BootstrappableHE` from this cycle; connects to `multiparty_csidh_correctness` in the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Approximate Arithmetic HE (CKKS Formalization)\n\n**Conjecture**: The CKKS scheme for approximate arithmetic can be formalized as a variant of `NoiseBoundedHE` where the correctness condition is relaxed from `dec(enc(m)) = m` to `|dec(enc(m)) - m| \u2264 \u03b5` for some precision parameter \u03b5. The noise management framework extends to this approximate setting with the key modification that the \"noise\" now includes both the encryption error and the approximation error, and these interact multiplicatively.\n\n**Test**: Define `ApproxHE` with `dec_enc_approx : |dec(enc(m)) - m| \u2264 \u03b5`. Prove that after d levels of multiplication, the approximation error is bounded by `\u03b5 \u00b7 (1 + \u03b5)^(2^d) - \u03b5 \u2248 \u03b5 \u00b7 2^d` for small \u03b5. Verify this matches known CKKS error bounds.\n\n**Impact**: CKKS is the most practically important FHE scheme for machine learning and scientific computation. Formalizing its error propagation would provide the first verified error bounds for approximate homomorphic computation.\n\n**Catalog References**: `Cryptography/FHE/Defs.lean`, `Cryptography/FHE/Theorems.lean`\n\n**Proof Strategy**:\n1. Define `ApproxHE` over \u211d with approximate correctness.\n2. Track error and noise separately.\n3. Prove error propagation bounds by induction on circuit depth.\n4. Show bootstrapping in the approximate setting requires rescaling.\n\n**Domain Bridges**: Cryptography <-> MachineLearning (encrypted inference), Cryptography <-> Physics (numerical precision in encrypted simulation)\n\n**Lineage**: Extends the exact `NoiseBoundedHE` framework from this cycle to the approximate setting.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0563",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "0edfd7d6",
+    "status": "available",
+    "timestamp": "2026-06-03T22:15:30.801364+00:00",
+    "title": "First formal verification of the core algebr"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
     "domains": [
       "Pythagorean",
@@ -4064,21 +4124,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.719659+00:00",
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0544",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.295536+00:00",
-    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -4202,21 +4247,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0542",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.126580+00:00",
-    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -4262,21 +4292,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0562",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:08.802713+00:00",
-    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -4289,21 +4304,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.834984+00:00",
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0540",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.964548+00:00",
-    "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
     "consumed_by_exp_id": "",

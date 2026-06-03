@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0edfd7d6",
     "filename": "homomorphic_encryption_computing_on_encrypted_data.json",
     "pkg_num": 328,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7495142857142858,
     "title": "Formal Verification of Noise-Bounded Fully Homomorphic Encryption"
   },
   {
@@ -10622,8 +10622,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "homomorphic_encryption_computing_on_encrypted_data",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7495142857142858,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Formal Verification of Noise-Bounded Fully Homomorphic Encryption"
     }
