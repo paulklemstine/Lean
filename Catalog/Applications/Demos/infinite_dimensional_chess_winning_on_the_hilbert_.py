@@ -1,443 +1,530 @@
 #!/usr/bin/env python3
 """
-Demo: Infinite Chess on the Hilbert Board
+Infinite Chess on the Hilbert Board — Demonstration
 
-Demonstrates key results from the infinite chess formalization:
-1. Chebyshev distance properties
-2. Knight attack coverage and escape
-3. Rook line avoidance
-4. Bishop color invariant
-5. Escape configuration analysis
-6. Knight escape bound conjecture testing
+Demonstrates key results from the formalization:
+1. King neighbor computation and Chebyshev distance
+2. Knight threat radius verification
+3. Retreat theorem illustration
+4. Chain game value computation
+5. Threat configuration analysis
 """
 
-from algorithms import (
-    chebyshev_dist, king_neighbors, knight_targets, attacked_set,
-    escape_radius, find_nearest_safe, construct_king_path,
-    rook_attack_lines, find_rook_safe, square_color,
-    verify_knight_escape_conjecture, EscapeConfig
-)
+import itertools
+from typing import Tuple, Set, List, Optional
+
+# Type aliases
+Square = Tuple[int, int]
 
 
-def demo_chebyshev_distance():
-    """Demonstrate Chebyshev distance properties."""
-    print("=" * 60)
-    print("1. CHEBYSHEV DISTANCE (King Metric)")
-    print("=" * 60)
-
-    pairs = [((0, 0), (3, 5)), ((0, 0), (4, 4)), ((1, 1), (1, 1)),
-             ((-2, 3), (5, -1))]
-
-    for p, q in pairs:
-        d = chebyshev_dist(p, q)
-        path = construct_king_path(p, q)
-        print(f"  d({p}, {q}) = {d}  (path length: {len(path)-1} moves)")
-
-    # Triangle inequality
-    print("\n  Triangle inequality verification:")
-    p, q, r = (0, 0), (3, 1), (5, 5)
-    dpq = chebyshev_dist(p, q)
-    dqr = chebyshev_dist(q, r)
-    dpr = chebyshev_dist(p, r)
-    print(f"  d({p},{r}) = {dpr} ≤ d({p},{q}) + d({q},{r}) = {dpq} + {dqr} = {dpq+dqr}  ✓")
-    print()
+def chebyshev_dist(p: Square, q: Square) -> int:
+    """Chebyshev (L∞) distance on ℤ×ℤ."""
+    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
 
 
-def demo_knight_attacks():
-    """Demonstrate knight attack finiteness and escape."""
-    print("=" * 60)
-    print("2. KNIGHT ATTACKS AND ESCAPE")
-    print("=" * 60)
-
-    # Single knight
-    knight = (0, 0)
-    targets = knight_targets(knight)
-    print(f"  Knight at {knight} attacks {len(targets)} squares:")
-    print(f"    {sorted(targets)}")
-
-    # Multiple knights
-    for n_knights in [1, 3, 5, 8]:
-        knights = [(i * 3, i * 2) for i in range(n_knights)]
-        attacks = attacked_set(knights)
-        print(f"\n  {n_knights} knight(s): {len(attacks)} total attacked squares")
-        print(f"    Ratio: {len(attacks)}/{n_knights*8} = {len(attacks)/(n_knights*8):.2f} "
-              f"(overlap factor)")
-
-    # Escape analysis
-    print("\n  Escape analysis:")
-    king = (0, 0)
-    knights = [(2, 1), (-1, 2), (1, -2)]
-    attacks = attacked_set(knights)
-    safe, dist = find_nearest_safe(king, knights)
-    radius = escape_radius(king, knights)
-    print(f"    King at {king}, {len(knights)} knights")
-    print(f"    Attacked squares near king: "
-          f"{sum(1 for n in king_neighbors(king) if n in attacks)}/8")
-    print(f"    Nearest safe square: {safe} (distance {dist})")
-    print(f"    Escape radius bound: {radius}")
-    print()
+def king_neighbors(p: Square) -> Set[Square]:
+    """The 8 squares reachable by one king move."""
+    offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+    return {(p[0] + dx, p[1] + dy) for dx, dy in offsets}
 
 
-def demo_rook_avoidance():
-    """Demonstrate rook line avoidance."""
-    print("=" * 60)
-    print("3. ROOK LINE AVOIDANCE")
-    print("=" * 60)
-
-    for n_rooks in [1, 5, 10, 50]:
-        rooks = [(i * 7 + 1, i * 11 + 3) for i in range(n_rooks)]
-        rows, cols = rook_attack_lines(rooks)
-        safe = find_rook_safe(rooks)
-        print(f"  {n_rooks} rook(s): {len(rows)} rows + {len(cols)} cols covered")
-        print(f"    Safe position: {safe}")
-
-    print(f"\n  Key insight: n rooks cover only 2n lines, leaving ∞ safe positions")
-    print()
+def knight_attacks(p: Square) -> Set[Square]:
+    """The 8 squares attacked by a knight."""
+    offsets = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+    return {(p[0] + dx, p[1] + dy) for dx, dy in offsets}
 
 
-def demo_bishop_coloring():
-    """Demonstrate bishop color invariant."""
-    print("=" * 60)
-    print("4. BISHOP COLOR INVARIANT")
-    print("=" * 60)
-
-    bishop = (3, 4)
-    bishop_color = square_color(bishop)
-    print(f"  Bishop at {bishop}, color = {bishop_color} "
-          f"({'dark' if bishop_color else 'light'})")
-
-    # Check that all diagonal squares have the same color
-    diag_squares = [(3+d, 4+d) for d in range(-5, 6) if d != 0]
-    anti_diag = [(3+d, 4-d) for d in range(-5, 6) if d != 0]
-    all_diag = diag_squares + anti_diag
-
-    same = sum(1 for s in all_diag if square_color(s) == bishop_color)
-    print(f"  Diagonal squares with same color: {same}/{len(all_diag)} "
-          f"({'all match!' if same == len(all_diag) else 'MISMATCH!'})")
-
-    # Count safe squares in a region
-    region_size = 10
-    total = 0
-    safe = 0
-    for x in range(-region_size, region_size + 1):
-        for y in range(-region_size, region_size + 1):
-            total += 1
-            if square_color((x, y)) != bishop_color:
-                safe += 1
-    print(f"  In {2*region_size+1}×{2*region_size+1} region: "
-          f"{safe}/{total} squares safe by color alone "
-          f"({safe/total*100:.1f}%)")
-    print()
+def retreat_square(p: Square, q: Square) -> Square:
+    """Retreat direction: move away from q."""
+    def sign(x):
+        return (1 if x > 0 else (-1 if x < 0 else 0))
+    return (p[0] + sign(p[0] - q[0]), p[1] + sign(p[1] - q[1]))
 
 
-def demo_escape_config():
-    """Demonstrate the Escape Configuration structure."""
-    print("=" * 60)
-    print("5. ESCAPE CONFIGURATION")
-    print("=" * 60)
-
-    configs = [
-        ("Single knight", (0, 0), [(2, 1)]),
-        ("Ring of knights", (0, 0), [(2, 1), (-2, 1), (2, -1), (-2, -1)]),
-        ("Dense cluster", (0, 0), [(1, 2), (2, 1), (-1, 2), (-2, 1),
-                                    (1, -2), (2, -1), (-1, -2), (-2, -1)]),
-    ]
-
-    for name, king, knights in configs:
-        cfg = EscapeConfig(king, knights)
-        print(f"\n  [{name}]")
-        print(f"  {cfg.summary()}")
-    print()
+def chain_game_value(n: int, k: int) -> int:
+    """Game value of position k in chain game of length n."""
+    assert 0 <= k <= n
+    return k
 
 
-def demo_conjecture_test():
-    """Test the knight escape bound conjecture."""
-    print("=" * 60)
-    print("6. KNIGHT ESCAPE BOUND CONJECTURE")
-    print("=" * 60)
+# ====================
+# Demo 1: King Neighbors
+# ====================
+print("=" * 60)
+print("DEMO 1: King Neighbors on the Infinite Board")
+print("=" * 60)
 
-    print("  Conjecture: ≤6 knights → safe square within distance 3")
-    print("  Testing with 10,000 random configurations...")
+test_positions = [(0, 0), (5, 3), (-10, 7), (1000, -1000)]
+for p in test_positions:
+    neighbors = king_neighbors(p)
+    assert len(neighbors) == 8, f"Expected 8 neighbors, got {len(neighbors)}"
+    for n in neighbors:
+        assert chebyshev_dist(p, n) == 1, f"Neighbor {n} at wrong distance"
+    print(f"  King at {p}: {len(neighbors)} neighbors, all at Chebyshev distance 1 ✓")
 
-    result = verify_knight_escape_conjecture(max_knights=6, escape_bound=3)
-    status = "HOLDS" if result else "DISPROVED"
-    print(f"  Result: Conjecture {status} for all tested configurations")
+print("\n  KEY INSIGHT: Every square has exactly 8 neighbors.")
+print("  On the 8×8 board, corners have 3 and edges have 5.")
 
-    # Test scaling
-    print("\n  Scaling analysis (how escape distance grows with # knights):")
-    import random
-    random.seed(42)
-    for n in [1, 2, 4, 8, 16, 32, 64]:
-        max_escape = 0
-        for _ in range(1000):
-            knights = [(random.randint(-10, 10), random.randint(-10, 10))
-                       for _ in range(n)]
-            _, dist = find_nearest_safe((0, 0), knights)
-            max_escape = max(max_escape, dist)
-        print(f"    {n:3d} knights: max escape distance = {max_escape}")
-    print()
+# ====================
+# Demo 2: Knight Threat Radius
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 2: Knight Threat Radius")
+print("=" * 60)
 
+knight_pos = (0, 0)
+attacks = knight_attacks(knight_pos)
+print(f"  Knight at {knight_pos} attacks: {sorted(attacks)}")
+print(f"  Number of attacked squares: {len(attacks)}")
+max_dist = max(chebyshev_dist(knight_pos, s) for s in attacks)
+print(f"  Maximum Chebyshev distance to attacked square: {max_dist}")
+assert max_dist == 2
+print("  All attacks within Chebyshev distance 2 ✓")
 
-def main():
-    print("\n" + "=" * 60)
-    print("  INFINITE CHESS ON THE HILBERT BOARD — DEMO")
-    print("=" * 60 + "\n")
+# ====================
+# Demo 3: Retreat Theorem
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 3: The Retreat Theorem")
+print("=" * 60)
 
-    demo_chebyshev_distance()
-    demo_knight_attacks()
-    demo_rook_avoidance()
-    demo_bishop_coloring()
-    demo_escape_config()
-    demo_conjecture_test()
+print("  Starting king at (0,0), threat at (3,2)")
+p = (0, 0)
+q = (3, 2)
+print(f"  Initial distance: {chebyshev_dist(p, q)}")
 
-    print("=" * 60)
-    print("  All demos completed successfully.")
-    print("=" * 60)
+trajectory = [p]
+for step in range(8):
+    r = retreat_square(p, q)
+    new_dist = chebyshev_dist(r, q)
+    old_dist = chebyshev_dist(p, q)
+    print(f"  Step {step+1}: {p} → {r}, distance {old_dist} → {new_dist} (+{new_dist - old_dist})")
+    assert new_dist >= old_dist + 1, "Retreat theorem violated!"
+    p = r
+    trajectory.append(p)
 
+print(f"\n  Final position: {p}, distance from threat: {chebyshev_dist(p, q)}")
+print("  Distance increased by at least 1 at every step ✓")
 
-if __name__ == "__main__":
-    main()
+# ====================
+# Demo 4: Pigeonhole Escape
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 4: Pigeonhole King Escape")
+print("=" * 60)
+
+king = (0, 0)
+nbrs = king_neighbors(king)
+
+for num_threats in range(9):
+    threats = set(list(nbrs)[:num_threats])
+    safe_moves = nbrs - threats
+    print(f"  {num_threats} threats → {len(safe_moves)} safe moves", end="")
+    if num_threats <= 7:
+        assert len(safe_moves) >= 1
+        print(" (king escapes ✓)")
+    else:
+        print(" (all blocked — checkmate possible)")
+
+# ====================
+# Demo 5: Chain Game Values
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 5: Chain Game Values")
+print("=" * 60)
+
+for n in range(8):
+    values = [chain_game_value(n, k) for k in range(n + 1)]
+    print(f"  Chain game n={n}: values = {values}, top value = {values[-1]}")
+    assert values[-1] == n
+
+print("\n  For each n, the chain game has value exactly n at the top.")
+print("  This witnesses ω as the supremum of finite game values.")
+
+# ====================
+# Demo 6: Threat Configuration Analysis
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 6: Threat Configuration Safety")
+print("=" * 60)
+
+# 3 knights with max threat radius 2
+knight_positions = [(5, 5), (-3, 7), (10, -2)]
+max_threat_radius = 2
+
+for king_dist in [2, 3, 4, 5, 10]:
+    king_pos = (king_dist + max_threat_radius + 1, 0)
+    # Check if any king neighbor is attacked
+    nbrs = king_neighbors(king_pos)
+    all_attacks = set()
+    for kp in knight_positions:
+        all_attacks |= knight_attacks(kp)
+    
+    threatened_neighbors = nbrs & all_attacks
+    min_dist = min(chebyshev_dist(king_pos, kp) for kp in knight_positions)
+    
+    status = "SAFE ✓" if len(threatened_neighbors) == 0 else f"THREATENED ({len(threatened_neighbors)} neighbors)"
+    print(f"  King at {king_pos}, min dist to knights: {min_dist} → {status}")
+
+print("\n  When min distance > maxThreatRadius + 1, all neighbors are safe.")
+print("  This is the ThreatConfiguration.king_safe_far theorem.")
+
+# ====================
+# Demo 7: Infinite Safety
+# ====================
+print("\n" + "=" * 60)
+print("DEMO 7: Infinite Safety — Safe Squares Are Unbounded")
+print("=" * 60)
+
+threats = {(i, j) for i in range(-5, 6) for j in range(-5, 6)}
+print(f"  Threats: {len(threats)} squares in [-5,5] × [-5,5]")
+
+for R in [10, 100, 1000, 10000]:
+    # Find a safe square at distance > R
+    found = False
+    for x in range(R + 1, R + 100):
+        if (x, 0) not in threats:
+            print(f"  R={R}: safe square ({x}, 0) at distance {chebyshev_dist((x,0),(0,0))} ✓")
+            found = True
+            break
+    assert found
+
+print("\n  No matter how large R, safe squares exist beyond distance R.")
+print("  This is the safe_squares_unbounded theorem.")
+
+print("\n" + "=" * 60)
+print("ALL DEMONSTRATIONS PASSED ✓")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Infinite Chess Attack Patterns
+Visualization: Chain Game Values and the Path to ω
 
-Generates a matplotlib visualization of knight attack patterns,
-escape radii, and safe squares on the infinite board.
+Shows how finite chain games witness every finite ordinal,
+with ω as their supremum.
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
-from typing import List, Tuple, Set
-
-Pos = Tuple[int, int]
 
 
-def knight_targets(p: Pos) -> List[Pos]:
-    x, y = p
-    offsets = [(-2, -1), (-2, 1), (-1, -2), (-1, 2),
-               (1, -2), (1, 2), (2, -1), (2, 1)]
-    return [(x + dx, y + dy) for dx, dy in offsets]
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+# Panel 1: Chain games as trees
+ax = axes[0]
+
+max_n = 6
+y_offset = 0
+
+for n in range(max_n + 1):
+    y = y_offset + n * 1.5
+    # Draw chain: n+1 nodes
+    for k in range(n + 1):
+        x = k * 1.2 + 0.5
+        # Color by game value
+        color = plt.cm.viridis(k / max(max_n, 1))
+        circle = plt.Circle((x, y), 0.3, color=color, ec='black', linewidth=1.5)
+        ax.add_patch(circle)
+        ax.text(x, y, str(k), ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+        
+        # Draw arrow from k to k-1 (move)
+        if k > 0:
+            ax.annotate('', xy=(x - 1.2 + 0.35, y), xytext=(x - 0.35, y),
+                        arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
+    
+    # Label
+    ax.text(-0.5, y, f'n={n}:', ha='right', va='center', fontsize=10, fontweight='bold')
+    ax.text((n + 1) * 1.2 + 0.3, y, f'value = {n}', ha='left', va='center',
+            fontsize=10, color='darkblue', fontstyle='italic')
+
+ax.set_xlim(-1.5, max_n * 1.2 + 3)
+ax.set_ylim(-1, max_n * 1.5 + 1.5)
+ax.set_aspect('equal')
+ax.axis('off')
+ax.set_title('Chain Games: Position k Has Value k\n(arrows show moves)', fontsize=13)
+
+# Panel 2: Game values approaching ω
+ax2 = axes[1]
+
+n_values = list(range(1, 16))
+game_values = n_values  # Chain game n has max value n
+
+# Plot finite values
+bars = ax2.bar(n_values, game_values, color=[plt.cm.viridis(v/15) for v in game_values],
+               edgecolor='black', alpha=0.8, label='Chain game value')
+
+# Add ω line
+ax2.axhline(y=16, color='red', linestyle='--', linewidth=2, alpha=0.7, label='ω (supremum)')
+ax2.text(15.5, 16.3, 'ω', fontsize=16, color='red', fontweight='bold')
+
+# Add "..." indicator
+ax2.text(15.7, 15.2, '...', fontsize=20, color='gray', fontweight='bold')
+
+# Annotations
+ax2.annotate('Every finite value\nis achieved', xy=(8, 8), xytext=(10, 4),
+             fontsize=10, ha='center',
+             arrowprops=dict(arrowstyle='->', color='blue'),
+             bbox=dict(boxstyle='round,pad=0.3', fc='lightyellow', ec='blue'))
+
+ax2.annotate('ω = sup{n : n ∈ ℕ}\nFirst infinite ordinal', xy=(13, 16), xytext=(8, 18),
+             fontsize=10, ha='center',
+             arrowprops=dict(arrowstyle='->', color='red'),
+             bbox=dict(boxstyle='round,pad=0.3', fc='mistyrose', ec='red'))
+
+ax2.set_xlabel('Chain Game Length (n)', fontsize=12)
+ax2.set_ylabel('Game Value at Top Position', fontsize=12)
+ax2.set_title('Finite Game Values Approaching ω\n(transfinite_chess_conjecture_true)', fontsize=13)
+ax2.legend(fontsize=10)
+ax2.set_ylim(0, 20)
+
+plt.tight_layout()
+plt.savefig('viz_game_values.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_game_values.png")
 
 
-def attacked_set(knights: List[Pos]) -> Set[Pos]:
-    result: Set[Pos] = set()
-    for k in knights:
-        result.update(knight_targets(k))
-    return result
+#!/usr/bin/env python3
+"""
+Visualization: The Retreat Theorem on the Infinite Board
+
+Shows the king retreating from a threat, with distance increasing at each step.
+"""
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
 
 
-def chebyshev_dist(p: Pos, q: Pos) -> int:
+def sign(x):
+    return 1 if x > 0 else (-1 if x < 0 else 0)
+
+
+def retreat_square(p, q):
+    return (p[0] + sign(p[0] - q[0]), p[1] + sign(p[1] - q[1]))
+
+
+def chebyshev_dist(p, q):
     return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
 
 
-def plot_knight_escape(knights: List[Pos], king: Pos = (0, 0),
-                        radius: int = 8, title: str = "Knight Escape Analysis"):
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+def king_neighbors(p):
+    offsets = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    return [(p[0]+dx, p[1]+dy) for dx, dy in offsets]
 
-    attacks = attacked_set(knights)
 
-    # Draw board squares
-    for x in range(-radius, radius + 1):
-        for y in range(-radius, radius + 1):
-            color = '#f0d9b5' if (x + y) % 2 == 0 else '#b58863'
-            if (x, y) in attacks:
-                color = '#ff6b6b'
-            elif (x, y) in set(knights):
-                color = '#4a4a4a'
-            elif (x, y) == king:
-                color = '#4ecdc4'
-            rect = plt.Rectangle((x - 0.5, y - 0.5), 1, 1,
-                                  facecolor=color, edgecolor='#333', linewidth=0.3)
-            ax.add_patch(rect)
+# Generate retreat path
+king_start = (0, 0)
+threat = (3, 2)
+steps = 8
 
-    # Draw escape radius circle
-    max_dist = max((chebyshev_dist(king, a) for a in attacks), default=0)
-    esc_radius = max_dist + 1
-    for d in [esc_radius]:
-        rect = plt.Rectangle((king[0] - d - 0.5, king[1] - d - 0.5),
-                              2 * d + 1, 2 * d + 1,
-                              facecolor='none', edgecolor='blue',
-                              linewidth=2, linestyle='--')
+path = [king_start]
+current = king_start
+for _ in range(steps):
+    current = retreat_square(current, threat)
+    path.append(current)
+
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+# Left: Board view with path
+ax = axes[0]
+ax.set_aspect('equal')
+
+# Draw grid
+for x in range(-3, 12):
+    for y in range(-5, 10):
+        rect = patches.Rectangle((x - 0.5, y - 0.5), 1, 1,
+                                  linewidth=0.5, edgecolor='gray',
+                                  facecolor='#f0f0f0' if (x + y) % 2 == 0 else 'white')
         ax.add_patch(rect)
 
-    # Mark pieces
-    for k in knights:
-        if -radius <= k[0] <= radius and -radius <= k[1] <= radius:
-            ax.text(k[0], k[1], '♞', fontsize=20, ha='center', va='center',
-                    color='white', fontweight='bold')
+# Draw Chebyshev distance circles around threat
+for r in [1, 2, 3, 5, 8]:
+    rect = patches.Rectangle((threat[0] - r - 0.5, threat[1] - r - 0.5),
+                              2 * r + 1, 2 * r + 1,
+                              linewidth=1, edgecolor='red', facecolor='none',
+                              alpha=0.3, linestyle='--')
+    ax.add_patch(rect)
+    ax.text(threat[0] + r + 0.6, threat[1], f'd={r}', fontsize=7, color='red', alpha=0.6)
 
-    ax.text(king[0], king[1], '♚', fontsize=22, ha='center', va='center',
-            color='#2c3e50', fontweight='bold')
+# Draw path
+path_x = [p[0] for p in path]
+path_y = [p[1] for p in path]
+ax.plot(path_x, path_y, 'b-', linewidth=2, alpha=0.7, zorder=3)
 
-    # Legend
-    legend_elements = [
-        mpatches.Patch(facecolor='#ff6b6b', label='Attacked'),
-        mpatches.Patch(facecolor='#4ecdc4', label='King'),
-        mpatches.Patch(facecolor='#4a4a4a', label='Knight'),
-        mpatches.Patch(facecolor='#f0d9b5', label='Safe (light)'),
-        mpatches.Patch(facecolor='#b58863', label='Safe (dark)'),
-        mpatches.Patch(facecolor='none', edgecolor='blue',
-                       linestyle='--', label=f'Escape radius = {esc_radius}'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper right', fontsize=9)
+# Draw path points
+for i, p in enumerate(path):
+    color = plt.cm.Blues(0.3 + 0.7 * i / len(path))
+    ax.plot(p[0], p[1], 'o', color=color, markersize=10, zorder=4)
+    ax.text(p[0] + 0.15, p[1] + 0.3, f'{i}', fontsize=8, fontweight='bold', zorder=5)
 
-    ax.set_xlim(-radius - 1, radius + 1)
-    ax.set_ylim(-radius - 1, radius + 1)
-    ax.set_aspect('equal')
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    ax.set_xlabel('File (x)')
-    ax.set_ylabel('Rank (y)')
+# Draw threat
+ax.plot(threat[0], threat[1], 'rx', markersize=15, markeredgewidth=3, zorder=4)
+ax.text(threat[0] + 0.3, threat[1] + 0.3, 'Threat', fontsize=9, color='red', fontweight='bold')
 
-    plt.tight_layout()
-    plt.savefig('knight_escape.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: knight_escape.png")
+# Draw king neighbors at start
+for n in king_neighbors(king_start):
+    ax.plot(n[0], n[1], 's', color='lightblue', markersize=8, alpha=0.5, zorder=2)
 
+ax.set_xlim(-3.5, 11.5)
+ax.set_ylim(-5.5, 9.5)
+ax.set_title('King Retreat Path on ℤ × ℤ\n(Chebyshev distance circles shown)', fontsize=12)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
 
-def plot_attack_density():
-    """Plot how attack density scales with number of knights."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+# Right: Distance vs step
+ax2 = axes[1]
+distances = [chebyshev_dist(p, threat) for p in path]
+step_nums = list(range(len(path)))
 
-    # Left: attack count vs number of knights
-    ns = list(range(1, 51))
-    import random
-    random.seed(42)
+ax2.bar(step_nums, distances, color=[plt.cm.Blues(0.3 + 0.7 * i / len(path)) for i in step_nums],
+        edgecolor='navy', alpha=0.8)
+ax2.plot(step_nums, distances, 'ko-', markersize=5, zorder=3)
 
-    actual_attacks = []
-    theoretical_max = []
-    for n in ns:
-        counts = []
-        for _ in range(100):
-            knights = [(random.randint(-20, 20), random.randint(-20, 20))
-                       for _ in range(n)]
-            counts.append(len(attacked_set(knights)))
-        actual_attacks.append(np.mean(counts))
-        theoretical_max.append(8 * n)
+# Show the +1 increments
+for i in range(1, len(distances)):
+    ax2.annotate('', xy=(i, distances[i]), xytext=(i, distances[i-1]),
+                 arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+    ax2.text(i + 0.1, (distances[i] + distances[i-1]) / 2, '+1',
+             fontsize=8, color='red', fontweight='bold')
 
-    ax1.plot(ns, actual_attacks, 'b-', linewidth=2, label='Average attacked squares')
-    ax1.plot(ns, theoretical_max, 'r--', linewidth=1.5, label='Theoretical max (8n)')
-    ax1.fill_between(ns, actual_attacks, theoretical_max, alpha=0.2, color='green',
-                     label='Overlap savings')
-    ax1.set_xlabel('Number of Knights', fontsize=12)
-    ax1.set_ylabel('Attacked Squares', fontsize=12)
-    ax1.set_title('Knight Attack Coverage Scaling', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
+ax2.set_xlabel('Step')
+ax2.set_ylabel('Chebyshev Distance from Threat')
+ax2.set_title('Distance Increases by ≥1 at Each Step\n(Retreat Theorem)', fontsize=12)
+ax2.set_xticks(step_nums)
 
-    # Right: escape distance vs number of knights
-    escape_dists_max = []
-    escape_dists_mean = []
-    for n in ns:
-        dists = []
-        for _ in range(200):
-            knights = [(random.randint(-10, 10), random.randint(-10, 10))
-                       for _ in range(n)]
-            attacks = attacked_set(knights)
-            # BFS from origin
-            from collections import deque
-            if (0, 0) not in attacks:
-                dists.append(0)
-                continue
-            visited = {(0, 0)}
-            queue = deque([((0, 0), 0)])
-            found = False
-            while queue:
-                pos, d = queue.popleft()
-                if pos not in attacks:
-                    dists.append(d)
-                    found = True
-                    break
-                for dx in [-1, 0, 1]:
-                    for dy in [-1, 0, 1]:
-                        if (dx, dy) == (0, 0):
-                            continue
-                        nb = (pos[0] + dx, pos[1] + dy)
-                        if nb not in visited:
-                            visited.add(nb)
-                            queue.append((nb, d + 1))
-            if not found:
-                dists.append(0)
-
-        escape_dists_max.append(max(dists) if dists else 0)
-        escape_dists_mean.append(np.mean(dists) if dists else 0)
-
-    ax2.plot(ns, escape_dists_max, 'r-', linewidth=2, label='Max escape distance')
-    ax2.plot(ns, escape_dists_mean, 'b-', linewidth=2, label='Mean escape distance')
-    ax2.axhline(y=3, color='green', linestyle='--', alpha=0.7,
-                label='Conjectured bound (≤6 knights)')
-    ax2.set_xlabel('Number of Knights', fontsize=12)
-    ax2.set_ylabel('Escape Distance', fontsize=12)
-    ax2.set_title('Escape Distance Scaling', fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('attack_density.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: attack_density.png")
+plt.tight_layout()
+plt.savefig('viz_retreat.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_retreat.png")
 
 
-def plot_bishop_coloring():
-    """Visualize the bishop color invariant."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+#!/usr/bin/env python3
+"""
+Visualization: Knight Threat Radius and King Safety
 
-    bishop = (3, 3)
-    radius = 6
+Shows knight attack patterns and the safety radius theorem.
+"""
 
-    for x in range(-radius, radius + 1):
-        for y in range(-radius, radius + 1):
-            base_color = '#f0d9b5' if (x + y) % 2 == 0 else '#b58863'
-            # Highlight bishop diagonals
-            if abs(x - bishop[0]) == abs(y - bishop[1]) and (x, y) != bishop:
-                base_color = '#ff9999' if (x + y) % 2 == (bishop[0] + bishop[1]) % 2 else base_color
-            # Highlight opposite color squares as safe
-            if (x + y) % 2 != (bishop[0] + bishop[1]) % 2:
-                base_color = '#99ff99' if (x + y) % 2 != 0 else '#ccffcc'
-
-            rect = plt.Rectangle((x - 0.5, y - 0.5), 1, 1,
-                                  facecolor=base_color, edgecolor='#333', linewidth=0.3)
-            ax.add_patch(rect)
-
-    ax.text(bishop[0], bishop[1], '♝', fontsize=24, ha='center', va='center',
-            color='#2c3e50')
-
-    legend_elements = [
-        mpatches.Patch(facecolor='#ff9999', label='Bishop attacks (same color)'),
-        mpatches.Patch(facecolor='#99ff99', label='Safe (opposite color)'),
-        mpatches.Patch(facecolor='#f0d9b5', label='Same color, not on diagonal'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper right', fontsize=9)
-
-    ax.set_xlim(-radius - 1, radius + 1)
-    ax.set_ylim(-radius - 1, radius + 1)
-    ax.set_aspect('equal')
-    ax.set_title('Bishop Color Invariant: Half the Board is Always Safe',
-                 fontsize=13, fontweight='bold')
-    ax.set_xlabel('File (x)')
-    ax.set_ylabel('Rank (y)')
-
-    plt.tight_layout()
-    plt.savefig('bishop_coloring.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: bishop_coloring.png")
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
 
 
-if __name__ == "__main__":
-    # Demo 1: Knight escape from specific configuration
-    plot_knight_escape(
-        knights=[(2, 1), (-1, 2), (1, -2), (-2, -1)],
-        king=(0, 0),
-        radius=7,
-        title="Knight Escape: 4 Knights vs Lone King"
-    )
+def chebyshev_dist(p, q):
+    return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
 
-    # Demo 2: Attack density scaling
-    plot_attack_density()
 
-    # Demo 3: Bishop coloring
-    plot_bishop_coloring()
+def king_neighbors(p):
+    offsets = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    return [(p[0]+dx, p[1]+dy) for dx, dy in offsets]
 
-    print("\nAll visualizations generated.")
+
+def knight_attacks(p):
+    offsets = [(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)]
+    return [(p[0]+dx, p[1]+dy) for dx, dy in offsets]
+
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Panel 1: Knight attack pattern
+ax = axes[0]
+knight = (0, 0)
+attacks = knight_attacks(knight)
+
+for x in range(-4, 5):
+    for y in range(-4, 5):
+        color = '#f0f0f0' if (x+y) % 2 == 0 else 'white'
+        if (x, y) in attacks:
+            color = '#ff6b6b'
+        elif (x, y) == knight:
+            color = '#4ecdc4'
+        rect = patches.Rectangle((x-0.5, y-0.5), 1, 1,
+                                  linewidth=0.5, edgecolor='gray', facecolor=color)
+        ax.add_patch(rect)
+
+# Chebyshev distance 2 box
+rect = patches.Rectangle((-2.5, -2.5), 5, 5,
+                          linewidth=2, edgecolor='blue', facecolor='none',
+                          linestyle='--', label='Chebyshev dist ≤ 2')
+ax.add_patch(rect)
+
+ax.set_xlim(-4.5, 4.5)
+ax.set_ylim(-4.5, 4.5)
+ax.set_aspect('equal')
+ax.set_title('Knight Attack Pattern\n(all within Chebyshev dist 2)', fontsize=11)
+ax.legend(loc='upper right', fontsize=8)
+
+# Panel 2: King at distance 3 (unsafe)
+ax = axes[1]
+knight = (0, 0)
+king_pos = (3, 0)  # distance 3
+
+attacks = set(knight_attacks(knight))
+nbrs = set(king_neighbors(king_pos))
+overlap = nbrs & attacks
+
+for x in range(-3, 7):
+    for y in range(-4, 5):
+        color = '#f0f0f0' if (x+y) % 2 == 0 else 'white'
+        if (x, y) in overlap:
+            color = '#ff0000'  # Overlap = danger!
+        elif (x, y) in attacks:
+            color = '#ffcccc'
+        elif (x, y) in nbrs:
+            color = '#ccffcc'
+        elif (x, y) == knight:
+            color = '#4ecdc4'
+        elif (x, y) == king_pos:
+            color = '#ffd700'
+        rect = patches.Rectangle((x-0.5, y-0.5), 1, 1,
+                                  linewidth=0.5, edgecolor='gray', facecolor=color)
+        ax.add_patch(rect)
+
+ax.text(knight[0], knight[1], '♞', fontsize=20, ha='center', va='center')
+ax.text(king_pos[0], king_pos[1], '♔', fontsize=20, ha='center', va='center')
+
+ax.set_xlim(-3.5, 6.5)
+ax.set_ylim(-4.5, 4.5)
+ax.set_aspect('equal')
+ax.set_title(f'King at dist 3: {len(overlap)} threatened neighbor(s)\n(UNSAFE)', fontsize=11, color='red')
+
+# Panel 3: King at distance 4 (safe)
+ax = axes[2]
+knight = (0, 0)
+king_pos = (4, 0)  # distance 4 > 3
+
+attacks = set(knight_attacks(knight))
+nbrs = set(king_neighbors(king_pos))
+overlap = nbrs & attacks
+
+for x in range(-3, 8):
+    for y in range(-4, 5):
+        color = '#f0f0f0' if (x+y) % 2 == 0 else 'white'
+        if (x, y) in overlap:
+            color = '#ff0000'
+        elif (x, y) in attacks:
+            color = '#ffcccc'
+        elif (x, y) in nbrs:
+            color = '#ccffcc'
+        elif (x, y) == knight:
+            color = '#4ecdc4'
+        elif (x, y) == king_pos:
+            color = '#ffd700'
+        rect = patches.Rectangle((x-0.5, y-0.5), 1, 1,
+                                  linewidth=0.5, edgecolor='gray', facecolor=color)
+        ax.add_patch(rect)
+
+ax.text(knight[0], knight[1], '♞', fontsize=20, ha='center', va='center')
+ax.text(king_pos[0], king_pos[1], '♔', fontsize=20, ha='center', va='center')
+
+ax.set_xlim(-3.5, 7.5)
+ax.set_ylim(-4.5, 4.5)
+ax.set_aspect('equal')
+ax.set_title(f'King at dist 4: {len(overlap)} threatened neighbor(s)\n(SAFE ✓)', fontsize=11, color='green')
+
+plt.tight_layout()
+plt.savefig('viz_threat_radius.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_threat_radius.png")

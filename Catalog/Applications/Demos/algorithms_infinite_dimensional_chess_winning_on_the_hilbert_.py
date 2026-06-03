@@ -1,270 +1,322 @@
+#!/usr/bin/env python3
 """
-Algorithms for Infinite Chess: The Hilbert Board
+Algorithms for Infinite Chess on the Hilbert Board
 
-Type-hinted implementations of escape analysis algorithms
-for chess on the infinite board ℤ × ℤ.
+Type-hinted implementations of the core algorithms from the formalization.
 """
 
-from typing import List, Tuple, Set, Optional
-from collections import deque
+from typing import Tuple, Set, List, Dict, Optional, FrozenSet
+from dataclasses import dataclass
+from enum import Enum, auto
 
-Pos = Tuple[int, int]
+
+# ============================================================
+# Core Types
+# ============================================================
+
+Square = Tuple[int, int]
 
 
-def chebyshev_dist(p: Pos, q: Pos) -> int:
-    """Chebyshev (L∞) distance between two board positions.
+class PieceType(Enum):
+    """Standard chess piece types."""
+    KING = auto()
+    QUEEN = auto()
+    ROOK = auto()
+    BISHOP = auto()
+    KNIGHT = auto()
+    PAWN = auto()
 
-    This equals the minimum number of king moves between p and q.
 
-    >>> chebyshev_dist((0, 0), (3, 5))
-    5
-    >>> chebyshev_dist((1, 1), (1, 1))
-    0
+@dataclass(frozen=True)
+class Piece:
+    """A chess piece with type and position."""
+    piece_type: PieceType
+    position: Square
+
+
+@dataclass
+class ThreatConfiguration:
+    """A finite configuration of threatening pieces with bounded threat radii."""
+    pieces: List[Square]
+    threat_sets: Dict[Square, Set[Square]]
+    max_threat_radius: int
+    max_threats_per_piece: int
+
+
+# ============================================================
+# Algorithm 1: Chebyshev Distance
+# ============================================================
+
+def chebyshev_distance(p: Square, q: Square) -> int:
+    """
+    Compute the Chebyshev (L∞) distance between two squares.
+    
+    This equals the minimum number of king moves from p to q.
+    
+    Time: O(1)
+    Space: O(1)
     """
     return max(abs(p[0] - q[0]), abs(p[1] - q[1]))
 
 
-def king_neighbors(p: Pos) -> List[Pos]:
-    """Return the 8 king-adjacent positions.
+# ============================================================
+# Algorithm 2: King Escape (Pigeonhole)
+# ============================================================
 
-    >>> sorted(king_neighbors((0, 0)))
-    [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+KING_OFFSETS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+
+
+def king_neighbors(p: Square) -> List[Square]:
+    """Return the 8 king-adjacent squares."""
+    return [(p[0] + dx, p[1] + dy) for dx, dy in KING_OFFSETS]
+
+
+def find_safe_move(king_pos: Square, threats: Set[Square]) -> Optional[Square]:
     """
-    x, y = p
-    return [(x + dx, y + dy) for dx in [-1, 0, 1] for dy in [-1, 0, 1]
-            if (dx, dy) != (0, 0)]
-
-
-def knight_targets(p: Pos) -> List[Pos]:
-    """Return the 8 squares attacked by a knight at position p.
-
-    >>> len(knight_targets((0, 0)))
-    8
-    >>> (1, 2) in knight_targets((0, 0))
-    True
+    Find a safe king move avoiding all threats.
+    
+    By the Pigeonhole Escape Theorem, this always succeeds when |threats| ≤ 7.
+    
+    Time: O(1) (always checks at most 8 neighbors)
+    Space: O(1)
     """
-    x, y = p
-    offsets = [(-2, -1), (-2, 1), (-1, -2), (-1, 2),
-               (1, -2), (1, 2), (2, -1), (2, 1)]
-    return [(x + dx, y + dy) for dx, dy in offsets]
+    for neighbor in king_neighbors(king_pos):
+        if neighbor not in threats:
+            return neighbor
+    return None  # Only possible if all 8 neighbors are threatened
 
 
-def attacked_set(knights: List[Pos]) -> Set[Pos]:
-    """Compute the set of all squares attacked by the given knights.
+# ============================================================
+# Algorithm 3: Retreat Strategy
+# ============================================================
 
-    >>> attacked = attacked_set([(0, 0)])
-    >>> len(attacked)
-    8
-    >>> (1, 2) in attacked
-    True
+def sign(x: int) -> int:
+    """Sign function: returns -1, 0, or 1."""
+    return (1 if x > 0 else (-1 if x < 0 else 0))
+
+
+def retreat_square(king: Square, threat: Square) -> Square:
     """
-    result: Set[Pos] = set()
-    for k in knights:
-        result.update(knight_targets(k))
-    return result
-
-
-def is_safe(pos: Pos, attack_set: Set[Pos]) -> bool:
-    """Check if a position is safe (not attacked)."""
-    return pos not in attack_set
-
-
-def escape_radius(king: Pos, knights: List[Pos]) -> int:
-    """Compute the escape radius for a king against knights.
-
-    The escape radius is the maximum Chebyshev distance from the king
-    to any attacked square, plus 1. Beyond this radius, safety is guaranteed.
-
-    >>> escape_radius((0, 0), [(3, 3)])
-    6
+    Compute the retreat square: the king move that maximizes
+    distance from the threat.
+    
+    Guarantees: chebyshev_distance(result, threat) >= chebyshev_distance(king, threat) + 1
+    
+    Time: O(1)
+    Space: O(1)
     """
-    attacks = attacked_set(knights)
-    if not attacks:
-        return 0
-    max_dist = max(chebyshev_dist(king, a) for a in attacks)
-    return max_dist + 1
+    return (
+        king[0] + sign(king[0] - threat[0]),
+        king[1] + sign(king[1] - threat[1])
+    )
 
 
-def find_nearest_safe(king: Pos, knights: List[Pos]) -> Tuple[Pos, int]:
-    """Find the nearest safe square using BFS.
-
-    Returns (safe_position, distance).
-
-    >>> pos, dist = find_nearest_safe((0, 0), [])
-    >>> dist
-    0
+def retreat_path(king: Square, threat: Square, steps: int) -> List[Square]:
     """
-    attacks = attacked_set(knights)
-    if king not in attacks:
-        return king, 0
-
-    visited: Set[Pos] = set()
-    queue: deque[Tuple[Pos, int]] = deque([(king, 0)])
-    visited.add(king)
-
-    while queue:
-        pos, dist = queue.popleft()
-        if pos not in attacks:
-            return pos, dist
-        for neighbor in king_neighbors(pos):
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append((neighbor, dist + 1))
-
-    # This should never happen on an infinite board
-    raise RuntimeError("No safe square found (impossible on infinite board)")
-
-
-def construct_king_path(p: Pos, q: Pos) -> List[Pos]:
-    """Construct an optimal king path from p to q.
-
-    The path has length chebyshev_dist(p, q) + 1 (including both endpoints).
-    Moves diagonally when possible, then straight.
-
-    >>> construct_king_path((0, 0), (3, 1))
-    [(0, 0), (1, 1), (2, 1), (3, 1)]
+    Generate a retreat path of given length.
+    Each step increases Chebyshev distance from the threat by exactly 1.
+    
+    Time: O(steps)
+    Space: O(steps)
     """
-    path = [p]
-    current = list(p)
-    target = list(q)
-
-    while current != target:
-        for i in range(2):
-            if current[i] < target[i]:
-                current[i] += 1
-            elif current[i] > target[i]:
-                current[i] -= 1
-        path.append(tuple(current))
-
+    path = [king]
+    current = king
+    for _ in range(steps):
+        current = retreat_square(current, threat)
+        path.append(current)
     return path
 
 
-def rook_attack_lines(rooks: List[Pos]) -> Tuple[Set[int], Set[int]]:
-    """Return the set of rows and columns controlled by rooks.
+# ============================================================
+# Algorithm 4: Knight Attack Computation
+# ============================================================
 
-    >>> rows, cols = rook_attack_lines([(1, 2), (3, 4)])
-    >>> sorted(rows)
-    [2, 4]
-    >>> sorted(cols)
-    [1, 3]
+KNIGHT_OFFSETS = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+
+
+def knight_attacks(pos: Square) -> List[Square]:
+    """Return the 8 squares attacked by a knight at pos."""
+    return [(pos[0] + dx, pos[1] + dy) for dx, dy in KNIGHT_OFFSETS]
+
+
+def is_knight_safe(king: Square, knights: List[Square]) -> bool:
     """
-    rows = {r[1] for r in rooks}
-    cols = {r[0] for r in rooks}
-    return rows, cols
-
-
-def find_rook_safe(rooks: List[Pos]) -> Pos:
-    """Find a position safe from all rooks.
-
-    >>> pos = find_rook_safe([(1, 2), (3, 4)])
-    >>> pos[0] not in {1, 3} and pos[1] not in {2, 4}
-    True
+    Check if the king is safe from all knights.
+    
+    By the Knight Safety theorem, safe iff chebyshev_distance(king, knight) > 3
+    for all knights. More precisely, none of king's neighbors are knight-attacked.
+    
+    Time: O(|knights|)
+    Space: O(|knights|)
     """
-    rows, cols = rook_attack_lines(rooks)
-    x = 0
-    while x in cols:
-        x += 1
-    y = 0
-    while y in rows:
-        y += 1
-    return (x, y)
-
-
-def square_color(p: Pos) -> int:
-    """Return the color of a square (0 or 1).
-
-    >>> square_color((0, 0))
-    0
-    >>> square_color((1, 0))
-    1
-    """
-    return (p[0] + p[1]) % 2
-
-
-def verify_knight_escape_conjecture(max_knights: int = 6,
-                                     search_radius: int = 5,
-                                     escape_bound: int = 3) -> bool:
-    """Test the knight escape bound conjecture.
-
-    For up to max_knights knights placed within search_radius of the origin,
-    verify that the king at (0,0) can always find a safe square within
-    escape_bound moves.
-
-    Note: Full enumeration is combinatorially explosive for large parameters.
-    This tests a random sample.
-
-    Returns True if no counterexample found.
-    """
-    import random
-    king = (0, 0)
-    positions = [(x, y) for x in range(-search_radius, search_radius + 1)
-                 for y in range(-search_radius, search_radius + 1)
-                 if (x, y) != king]
-
-    neighborhood = set()
-    for dx in range(-escape_bound, escape_bound + 1):
-        for dy in range(-escape_bound, escape_bound + 1):
-            neighborhood.add((dx, dy))
-
-    num_tests = 10000
-    for _ in range(num_tests):
-        n = random.randint(1, max_knights)
-        knights = random.sample(positions, min(n, len(positions)))
-        attacks = attacked_set(knights)
-        safe_nearby = [q for q in neighborhood if q not in attacks]
-        if not safe_nearby:
-            print(f"COUNTEREXAMPLE FOUND: knights = {knights}")
+    king_nbrs = set(king_neighbors(king))
+    for k in knights:
+        if king_nbrs & set(knight_attacks(k)):
             return False
     return True
 
 
-class EscapeConfig:
-    """Escape configuration for analysis of king safety.
+# ============================================================
+# Algorithm 5: Threat Configuration Analysis
+# ============================================================
 
-    Packages together king position, attacker positions, and attack relation
-    with computed escape analysis.
+def build_knight_threat_config(knight_positions: List[Square]) -> ThreatConfiguration:
+    """Build a threat configuration from knight positions."""
+    threat_sets = {}
+    for pos in knight_positions:
+        threat_sets[pos] = set(knight_attacks(pos))
+    return ThreatConfiguration(
+        pieces=knight_positions,
+        threat_sets=threat_sets,
+        max_threat_radius=2,
+        max_threats_per_piece=8
+    )
+
+
+def total_threats(config: ThreatConfiguration) -> Set[Square]:
+    """Compute the total threat set of a configuration."""
+    result: Set[Square] = set()
+    for threats in config.threat_sets.values():
+        result |= threats
+    return result
+
+
+def find_safe_region(config: ThreatConfiguration) -> Square:
     """
+    Find a square guaranteed safe from all threats.
+    
+    By the king_safe_far theorem, any square at Chebyshev distance 
+    > maxThreatRadius + 1 from all pieces is safe.
+    
+    Time: O(|pieces|)
+    Space: O(1)
+    """
+    if not config.pieces:
+        return (0, 0)
+    
+    # Find the bounding box of all pieces
+    max_coord = max(
+        max(abs(p[0]), abs(p[1])) for p in config.pieces
+    )
+    
+    # Go beyond max_coord + maxThreatRadius + 2 to guarantee safety
+    safe_coord = max_coord + config.max_threat_radius + 2
+    return (safe_coord, safe_coord)
 
-    def __init__(self, king: Pos, attackers: List[Pos],
-                 attack_fn=knight_targets):
-        self.king = king
-        self.attackers = attackers
-        self.attack_fn = attack_fn
-        self._attacked: Optional[Set[Pos]] = None
 
-    @property
-    def attacked_squares(self) -> Set[Pos]:
-        if self._attacked is None:
-            self._attacked = set()
-            for a in self.attackers:
-                self._attacked.update(self.attack_fn(a))
-        return self._attacked
+# ============================================================
+# Algorithm 6: Chain Game Value Computation
+# ============================================================
 
-    @property
-    def escape_radius(self) -> int:
-        attacks = self.attacked_squares
-        if not attacks:
-            return 0
-        return max(chebyshev_dist(self.king, a) for a in attacks) + 1
+def chain_game_value(n: int) -> List[int]:
+    """
+    Compute game values for all positions in the chain game of length n.
+    
+    Position k has value k (proved in chainGame_top_value).
+    
+    Time: O(n)
+    Space: O(n)
+    """
+    return list(range(n + 1))
 
-    def find_escape(self) -> Tuple[Pos, List[Pos]]:
-        """Find nearest safe square and path to it."""
-        safe_pos, _ = find_nearest_safe(self.king, self.attackers)
-        path = construct_king_path(self.king, safe_pos)
-        return safe_pos, path
 
-    def summary(self) -> str:
-        attacks = self.attacked_squares
-        safe_pos, path = self.find_escape()
-        return (
-            f"King at {self.king}, {len(self.attackers)} attackers\n"
-            f"Attacked squares: {len(attacks)}\n"
-            f"Escape radius: {self.escape_radius}\n"
-            f"Nearest safe square: {safe_pos} (distance {chebyshev_dist(self.king, safe_pos)})\n"
-            f"Escape path length: {len(path) - 1} moves"
+def verify_game_value_monotonicity(values: List[int]) -> bool:
+    """
+    Verify that game values are strictly decreasing along moves.
+    In the chain game, position k+1 moves to position k,
+    so value(k) < value(k+1) for all k.
+    """
+    return all(values[i] < values[i + 1] for i in range(len(values) - 1))
+
+
+# ============================================================
+# Algorithm 7: Escape Strategy Computation
+# ============================================================
+
+def compute_escape_strategy(
+    king: Square,
+    threats: List[Square],
+    max_threat_radius: int,
+    max_steps: int = 100
+) -> List[Square]:
+    """
+    Compute an escape path for the king to reach safety.
+    
+    Strategy: retreat from the nearest threat at each step.
+    By the Retreat Theorem and king_safe_far, the king eventually
+    reaches a safe distance from all threats.
+    
+    Time: O(max_steps * |threats|)
+    Space: O(max_steps)
+    """
+    path = [king]
+    current = king
+    
+    for _ in range(max_steps):
+        # Check if we're safe
+        min_dist = min(
+            (chebyshev_distance(current, t) for t in threats),
+            default=float('inf')
         )
+        if min_dist > max_threat_radius + 1:
+            break  # Safe!
+        
+        # Find nearest threat
+        nearest_threat = min(threats, key=lambda t: chebyshev_distance(current, t))
+        
+        # Retreat from nearest threat
+        next_pos = retreat_square(current, nearest_threat)
+        path.append(next_pos)
+        current = next_pos
+    
+    return path
 
+
+# ============================================================
+# Main: Run all algorithms
+# ============================================================
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+    print("Infinite Chess Algorithms — Test Suite")
+    print("=" * 50)
+    
+    # Test Chebyshev distance
+    assert chebyshev_distance((0, 0), (3, 5)) == 5
+    assert chebyshev_distance((1, 2), (1, 2)) == 0
+    assert chebyshev_distance((0, 0), (1, 1)) == 1
+    print("✓ Chebyshev distance")
+    
+    # Test king escape
+    assert find_safe_move((0, 0), set()) is not None
+    assert find_safe_move((0, 0), {(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0)}) is not None
+    print("✓ King escape (pigeonhole)")
+    
+    # Test retreat
+    r = retreat_square((0, 0), (3, 3))
+    assert chebyshev_distance(r, (3, 3)) >= chebyshev_distance((0, 0), (3, 3)) + 1
+    print("✓ Retreat theorem")
+    
+    # Test knight safety
+    assert is_knight_safe((0, 0), [(5, 5)])  # Far knight
+    assert not is_knight_safe((0, 0), [(1, 2)])  # Adjacent knight
+    print("✓ Knight safety")
+    
+    # Test chain game
+    values = chain_game_value(10)
+    assert values[-1] == 10
+    assert verify_game_value_monotonicity(values)
+    print("✓ Chain game values")
+    
+    # Test escape strategy
+    path = compute_escape_strategy((0, 0), [(3, 3), (-2, 5)], 2)
+    final = path[-1]
+    assert all(chebyshev_distance(final, t) > 3 for t in [(3, 3), (-2, 5)])
+    print(f"✓ Escape strategy (escaped in {len(path)-1} steps)")
+    
+    # Test threat configuration
+    config = build_knight_threat_config([(5, 5), (-3, 7)])
+    safe = find_safe_region(config)
+    assert all(chebyshev_distance(safe, p) > 3 for p in config.pieces)
+    print("✓ Threat configuration analysis")
+    
+    print("\nAll tests passed!")
