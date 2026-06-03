@@ -1,273 +1,334 @@
+#!/usr/bin/env python3
 """
-Algorithms for Tangled Hierarchies: Proof Systems That Reference Their Own Soundness
+Algorithms for Tangled Hierarchies and Provability Logic
 
-Type-hinted implementations of core algorithms from the formalization.
+Type-hinted implementations of key algorithms for:
+1. GL frame construction and validation
+2. Modal formula evaluation (model checking)
+3. Tangling depth computation
+4. Soundness and consistency verification
 """
 
-from typing import List, Tuple, Dict, Set, Optional, Callable
-from dataclasses import dataclass
+from __future__ import annotations
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import FrozenSet
 
 
-# ============================================================
-# Algorithm 1: GL Formula Construction and Modal Depth
-# ============================================================
-
-@dataclass
-class GLFormula:
-    """Modal formula for provability logic GL."""
-    pass
-
-@dataclass
-class Var(GLFormula):
-    index: int
-
-@dataclass
-class Bot(GLFormula):
-    pass
-
-@dataclass
-class Imp(GLFormula):
-    left: GLFormula
-    right: GLFormula
-
-@dataclass
-class Box(GLFormula):
-    inner: GLFormula
+class FormulaTag(Enum):
+    VAR = auto()
+    BOT = auto()
+    IMP = auto()
+    BOX = auto()
 
 
-def neg(phi: GLFormula) -> GLFormula:
-    """Negation: ¬φ := φ → ⊥"""
-    return Imp(phi, Bot())
+@dataclass(frozen=True)
+class Formula:
+    """Modal formula in propositional modal logic."""
+    tag: FormulaTag
+    var_name: str = ""
+    left: Formula | None = None
+    right: Formula | None = None
 
-def modal_depth(phi: GLFormula) -> int:
-    """Compute the modal depth of a GL formula."""
-    if isinstance(phi, Var) or isinstance(phi, Bot):
-        return 0
-    elif isinstance(phi, Imp):
-        return max(modal_depth(phi.left), modal_depth(phi.right))
-    elif isinstance(phi, Box):
-        return modal_depth(phi.inner) + 1
-    raise TypeError(f"Unknown formula type: {type(phi)}")
+    @staticmethod
+    def var(name: str) -> Formula:
+        return Formula(tag=FormulaTag.VAR, var_name=name)
 
+    @staticmethod
+    def bot() -> Formula:
+        return Formula(tag=FormulaTag.BOT)
 
-def soundness_op(phi: GLFormula) -> GLFormula:
-    """The soundness operator: □φ → φ"""
-    return Imp(Box(phi), phi)
+    @staticmethod
+    def imp(left: Formula, right: Formula) -> Formula:
+        return Formula(tag=FormulaTag.IMP, left=left, right=right)
 
+    @staticmethod
+    def box(inner: Formula) -> Formula:
+        return Formula(tag=FormulaTag.BOX, left=inner)
 
-def iterated_soundness(n: int, phi: GLFormula) -> GLFormula:
-    """Apply the soundness operator n times."""
-    result = phi
-    for _ in range(n):
-        result = soundness_op(result)
-    return result
+    @staticmethod
+    def neg(inner: Formula) -> Formula:
+        return Formula.imp(inner, Formula.bot())
 
+    @staticmethod
+    def top() -> Formula:
+        return Formula.neg(Formula.bot())
 
-def con_formula(n: int) -> GLFormula:
-    """The n-th consistency formula.
-    Con_0 = ¬⊥, Con_{n+1} = ¬□¬Con_n
-    """
-    if n == 0:
-        return neg(Bot())
-    return neg(Box(neg(con_formula(n - 1))))
+    @staticmethod
+    def con() -> Formula:
+        """Consistency formula: ¬□⊥"""
+        return Formula.neg(Formula.box(Formula.bot()))
 
+    @staticmethod
+    def loeb(phi: Formula) -> Formula:
+        """Löb formula: □(□φ → φ) → □φ"""
+        return Formula.imp(
+            Formula.box(Formula.imp(Formula.box(phi), phi)),
+            Formula.box(phi)
+        )
 
-def entanglement_depth(phi: GLFormula) -> int:
-    """Compute the entanglement depth: counts nested □φ → φ patterns."""
-    if isinstance(phi, Var) or isinstance(phi, Bot):
-        return 0
-    elif isinstance(phi, Box):
-        return entanglement_depth(phi.inner)
-    elif isinstance(phi, Imp):
-        if isinstance(phi.left, Box) and phi.left.inner == phi.right:
-            return entanglement_depth(phi.right) + 1
-        return max(entanglement_depth(phi.left), entanglement_depth(phi.right))
-    raise TypeError(f"Unknown formula type: {type(phi)}")
+    @staticmethod
+    def soundness(phi: Formula) -> Formula:
+        """Soundness formula for φ: □φ → φ"""
+        return Formula.imp(Formula.box(phi), phi)
 
+    def __repr__(self) -> str:
+        if self.tag == FormulaTag.VAR:
+            return self.var_name
+        elif self.tag == FormulaTag.BOT:
+            return "⊥"
+        elif self.tag == FormulaTag.IMP:
+            if self.right and self.right.tag == FormulaTag.BOT:
+                return f"¬{self.left}"
+            return f"({self.left} → {self.right})"
+        elif self.tag == FormulaTag.BOX:
+            return f"□{self.left}"
+        return "?"
 
-# ============================================================
-# Algorithm 2: Kripke Frame Evaluation
-# ============================================================
 
 @dataclass
 class GLFrame:
-    """A GL-frame: finite, transitive, irreflexive accessibility."""
-    num_worlds: int
-    R: List[List[bool]]  # R[i][j] = True iff world i sees world j
+    """A GL frame: a finite Kripke frame with transitive, converse well-founded R.
 
-    def is_valid(self) -> bool:
-        """Check that R is transitive and irreflexive."""
-        n = self.num_worlds
-        # Irreflexivity
-        for i in range(n):
-            if self.R[i][i]:
-                return False
-        # Transitivity
-        for i in range(n):
-            for j in range(n):
-                for k in range(n):
-                    if self.R[i][j] and self.R[j][k] and not self.R[i][k]:
-                        return False
+    Attributes:
+        worlds: Set of world identifiers
+        relation: Set of (w, v) pairs where w R v
+    """
+    worlds: FrozenSet[int]
+    relation: FrozenSet[tuple[int, int]]
+
+    @staticmethod
+    def linear(n: int) -> GLFrame:
+        """Construct a linear GL frame: 0 < 1 < ... < (n-1)."""
+        worlds = frozenset(range(n))
+        relation = frozenset((i, j) for i in range(n) for j in range(n) if i < j)
+        return GLFrame(worlds=worlds, relation=relation)
+
+    @staticmethod
+    def tree(edges: list[tuple[int, int]]) -> GLFrame:
+        """Construct a GL frame from edges, computing transitive closure."""
+        all_worlds: set[int] = set()
+        for u, v in edges:
+            all_worlds.add(u)
+            all_worlds.add(v)
+
+        # Compute transitive closure
+        adj: dict[int, set[int]] = {w: set() for w in all_worlds}
+        for u, v in edges:
+            adj[u].add(v)
+
+        changed = True
+        while changed:
+            changed = False
+            for u in all_worlds:
+                new_succs = set()
+                for v in adj[u]:
+                    for w in adj[v]:
+                        if w not in adj[u]:
+                            new_succs.add(w)
+                if new_succs:
+                    adj[u].update(new_succs)
+                    changed = True
+
+        relation = frozenset((u, v) for u in all_worlds for v in adj[u])
+        return GLFrame(worlds=frozenset(all_worlds), relation=relation)
+
+    def successors(self, w: int) -> FrozenSet[int]:
+        """Get all worlds accessible from w."""
+        return frozenset(v for (u, v) in self.relation if u == w)
+
+    def is_transitive(self) -> bool:
+        """Check transitivity of R."""
+        for u, v in self.relation:
+            for w in self.successors(v):
+                if (u, w) not in self.relation:
+                    return False
         return True
 
+    def is_irreflexive(self) -> bool:
+        """Check irreflexivity of R."""
+        return all((w, w) not in self.relation for w in self.worlds)
 
-def linear_chain_frame(n: int) -> GLFrame:
-    """Construct a linear chain frame with n worlds."""
-    R = [[i < j for j in range(n)] for i in range(n)]
-    return GLFrame(num_worlds=n, R=R)
+    def is_acyclic(self) -> bool:
+        """Check acyclicity (equivalent to converse well-foundedness for finite frames)."""
+        visited: set[int] = set()
+        in_stack: set[int] = set()
+
+        def dfs(node: int) -> bool:
+            if node in in_stack:
+                return False  # Cycle found
+            if node in visited:
+                return True
+            visited.add(node)
+            in_stack.add(node)
+            for succ in self.successors(node):
+                if not dfs(succ):
+                    return False
+            in_stack.discard(node)
+            return True
+
+        return all(dfs(w) for w in self.worlds if w not in visited)
+
+    def is_gl_frame(self) -> bool:
+        """Verify all GL frame conditions."""
+        return self.is_transitive() and self.is_irreflexive() and self.is_acyclic()
+
+    def tangling_depth(self, w: int) -> int:
+        """Compute the tangling depth of world w.
+
+        The tangling depth is the length of the longest R-chain from w.
+        Uses memoized DFS.
+        """
+        memo: dict[int, int] = {}
+
+        def depth(v: int) -> int:
+            if v in memo:
+                return memo[v]
+            succs = self.successors(v)
+            if not succs:
+                memo[v] = 0
+            else:
+                memo[v] = 1 + max(depth(u) for u in succs)
+            return memo[v]
+
+        return depth(w)
+
+    def all_depths(self) -> dict[int, int]:
+        """Compute tangling depth for all worlds."""
+        return {w: self.tangling_depth(w) for w in sorted(self.worlds)}
 
 
-def forces(frame: GLFrame, valuation: Dict[int, List[bool]],
-           world: int, phi: GLFormula) -> bool:
-    """Evaluate whether world forces phi under valuation."""
-    if isinstance(phi, Var):
-        return valuation.get(phi.index, [False] * frame.num_worlds)[world]
-    elif isinstance(phi, Bot):
-        return False
-    elif isinstance(phi, Imp):
-        return (not forces(frame, valuation, world, phi.left) or
-                forces(frame, valuation, world, phi.right))
-    elif isinstance(phi, Box):
+@dataclass
+class KripkeModel:
+    """A Kripke model: a GL frame with a valuation."""
+    frame: GLFrame
+    valuation: dict[str, FrozenSet[int]] = field(default_factory=dict)
+
+    def forces(self, world: int, formula: Formula) -> bool:
+        """Evaluate whether world forces formula.
+
+        Implements the recursive forcing relation:
+        - w ⊨ var(p)   iff  V(p)(w)
+        - w ⊨ ⊥        never
+        - w ⊨ φ → ψ    iff  w ⊭ φ or w ⊨ ψ
+        - w ⊨ □φ       iff  ∀v. wRv → v ⊨ φ
+
+        Time complexity: O(|W|^depth(φ)) in the worst case,
+        but O(|W|² · |φ|) with memoization.
+        """
+        if formula.tag == FormulaTag.VAR:
+            return world in self.valuation.get(formula.var_name, frozenset())
+        elif formula.tag == FormulaTag.BOT:
+            return False
+        elif formula.tag == FormulaTag.IMP:
+            assert formula.left is not None and formula.right is not None
+            return (not self.forces(world, formula.left)) or self.forces(
+                world, formula.right
+            )
+        elif formula.tag == FormulaTag.BOX:
+            assert formula.left is not None
+            return all(
+                self.forces(v, formula.left)
+                for v in self.frame.successors(world)
+            )
+        else:
+            raise ValueError(f"Unknown formula tag: {formula.tag}")
+
+    def forcing_set(self, formula: Formula) -> FrozenSet[int]:
+        """Compute the set of all worlds that force the formula."""
+        return frozenset(w for w in self.frame.worlds if self.forces(w, formula))
+
+    def is_valid(self, formula: Formula) -> bool:
+        """Check if formula is valid (forced at every world)."""
+        return all(self.forces(w, formula) for w in self.frame.worlds)
+
+    def is_world_sound(self, world: int, formulas: list[Formula]) -> bool:
+        """Check if world is sound for a list of formulas.
+
+        A world w is sound for φ if w ⊨ □φ → φ.
+        """
         return all(
-            not frame.R[world][w2] or forces(frame, valuation, w2, phi.inner)
-            for w2 in range(frame.num_worlds)
+            self.forces(world, Formula.soundness(phi)) for phi in formulas
         )
-    raise TypeError(f"Unknown formula type: {type(phi)}")
 
 
-def is_valid_in_frame(frame: GLFrame, phi: GLFormula) -> bool:
-    """Check if phi is valid in the frame (for small frames, brute-force)."""
-    # Only practical for very small frames and formulas with few variables
-    var_indices = collect_variables(phi)
-    if not var_indices:
-        return all(forces(frame, {}, w, phi)
-                   for w in range(frame.num_worlds))
-    # Enumerate all valuations
-    n = frame.num_worlds
-    for bits in range(2 ** (len(var_indices) * n)):
-        val: Dict[int, List[bool]] = {}
-        for idx_i, var_idx in enumerate(var_indices):
-            val[var_idx] = []
-            for w in range(n):
-                bit_pos = idx_i * n + w
-                val[var_idx].append(bool((bits >> bit_pos) & 1))
-        if not all(forces(frame, val, w, phi)
-                   for w in range(n)):
+def verify_loeb_theorem(frame: GLFrame, max_vars: int = 2) -> bool:
+    """Verify Löb's theorem on a frame by checking all valuations.
+
+    For each subset of worlds as the valuation of each variable,
+    checks that □(□p → p) → □p holds everywhere.
+
+    Returns True if the Löb formula is valid for all valuations.
+    """
+    worlds_list = sorted(frame.worlds)
+    n = len(worlds_list)
+
+    for mask in range(2**n):
+        val_set = frozenset(worlds_list[i] for i in range(n) if (mask >> i) & 1)
+        model = KripkeModel(frame=frame, valuation={"p": val_set})
+        p = Formula.var("p")
+        loeb_p = Formula.loeb(p)
+
+        if not model.is_valid(loeb_p):
             return False
     return True
 
 
-def collect_variables(phi: GLFormula) -> List[int]:
-    """Collect all variable indices appearing in a formula."""
-    if isinstance(phi, Var):
-        return [phi.index]
-    elif isinstance(phi, Bot):
-        return []
-    elif isinstance(phi, Imp):
-        left_vars = collect_variables(phi.left)
-        right_vars = collect_variables(phi.right)
-        return list(set(left_vars + right_vars))
-    elif isinstance(phi, Box):
-        return collect_variables(phi.inner)
-    return []
+def verify_second_incompleteness(frame: GLFrame) -> dict[int, dict[str, bool]]:
+    """Verify the second incompleteness theorem on each world.
 
+    For each world, checks:
+    - Is it sound? (□⊥ → ⊥)
+    - Can it prove consistency? (□(□⊥ → ⊥))
+    - Does it have successors?
 
-# ============================================================
-# Algorithm 3: Tangling Level Computation
-# ============================================================
-
-def compute_tangling_levels(frame: GLFrame,
-                            valuation: Dict[int, List[bool]],
-                            max_depth: int) -> Dict[int, List[int]]:
-    """For each depth k, find worlds that witness tangling at depth k.
-
-    A world witnesses tangling at depth k if it forces Con_k but not Con_{k+1}.
+    Returns a report for each world.
     """
-    levels: Dict[int, List[int]] = {}
-    for k in range(max_depth):
-        witnesses = []
-        con_k = con_formula(k)
-        con_k1 = con_formula(k + 1)
-        for w in range(frame.num_worlds):
-            if (forces(frame, valuation, w, con_k) and
-                    not forces(frame, valuation, w, con_k1)):
-                witnesses.append(w)
-        if witnesses:
-            levels[k] = witnesses
-    return levels
+    model = KripkeModel(frame=frame)
+    con_formula = Formula.con()  # □⊥ → ⊥
+    box_con = Formula.box(con_formula)  # □(□⊥ → ⊥)
+
+    report: dict[int, dict[str, bool]] = {}
+    for w in sorted(frame.worlds):
+        is_sound = model.forces(w, con_formula)
+        proves_con = model.forces(w, box_con)
+        has_succ = bool(frame.successors(w))
+        report[w] = {
+            "sound": is_sound,
+            "proves_consistency": proves_con,
+            "has_successors": has_succ,
+            "violates_2nd_incompleteness": is_sound and proves_con and has_succ,
+        }
+    return report
 
 
-def box_orbit(box_fn: Callable[[int], int], x: int,
-              carrier_size: int) -> Tuple[int, int]:
-    """Find cycle in box orbit using Floyd's algorithm.
+def find_tangling_witness(
+    frame: GLFrame, world: int
+) -> Formula | None:
+    """Find a formula whose soundness the given world cannot prove.
 
-    Returns (mu, lam) where mu is the index of the first repeated element
-    and lam is the cycle length.
+    If the world has successors and is sound, returns □⊥ → ⊥
+    (the consistency formula), which cannot be proved by a sound world.
+
+    Returns None if the world has no successors (trivial case).
     """
-    # Phase 1: Find meeting point
-    tortoise = box_fn(x)
-    hare = box_fn(box_fn(x))
-    steps = 0
-    while tortoise != hare and steps < carrier_size + 1:
-        tortoise = box_fn(tortoise)
-        hare = box_fn(box_fn(hare))
-        steps += 1
-
-    # Phase 2: Find start of cycle
-    mu = 0
-    tortoise = x
-    while tortoise != hare and mu < carrier_size + 1:
-        tortoise = box_fn(tortoise)
-        hare = box_fn(hare)
-        mu += 1
-
-    # Phase 3: Find cycle length
-    lam = 1
-    hare = box_fn(tortoise)
-    while tortoise != hare:
-        hare = box_fn(hare)
-        lam += 1
-
-    return mu, lam
+    if not frame.successors(world):
+        return None
+    return Formula.imp(Formula.box(Formula.bot()), Formula.bot())
 
 
-# ============================================================
-# Algorithm 4: Optimal Tangling Bound Verification
-# ============================================================
+if __name__ == "__main__":
+    # Quick test
+    frame = GLFrame.linear(5)
+    assert frame.is_gl_frame(), "Linear frame should be GL"
+    assert verify_loeb_theorem(frame), "Löb should hold on linear GL frame"
 
-def enumerate_gl_frames(n: int) -> List[GLFrame]:
-    """Enumerate all transitive, irreflexive relations on n elements.
-    Warning: exponential in n — only for small n.
-    """
-    frames: List[GLFrame] = []
-    # There are n*(n-1)/2 possible directed edges (excluding self-loops)
-    edges = [(i, j) for i in range(n) for j in range(n) if i != j]
-    num_edges = len(edges)
+    report = verify_second_incompleteness(frame)
+    for w, info in report.items():
+        assert not info["violates_2nd_incompleteness"], (
+            f"World {w} violates 2nd incompleteness!"
+        )
 
-    for bits in range(2 ** num_edges):
-        R = [[False] * n for _ in range(n)]
-        for idx, (i, j) in enumerate(edges):
-            if (bits >> idx) & 1:
-                R[i][j] = True
-
-        frame = GLFrame(num_worlds=n, R=R)
-        if frame.is_valid():
-            frames.append(frame)
-
-    return frames
-
-
-def verify_tangling_bound(n: int, max_depth: int = 10) -> bool:
-    """Verify the optimal tangling bound conjecture for frames of size n.
-
-    Returns True if for all GL-frames of size n and all valuations,
-    the number of tangling levels is at most n.
-    """
-    frames = enumerate_gl_frames(n)
-    for frame in frames:
-        # Test with the trivial valuation
-        val: Dict[int, List[bool]] = {}
-        levels = compute_tangling_levels(frame, val, max_depth)
-        if len(levels) > n:
-            return False
-    return True
+    print("All algorithm tests passed ✓")
+    print(f"Frame depths: {frame.all_depths()}")
+    print(f"2nd incompleteness report: {report}")

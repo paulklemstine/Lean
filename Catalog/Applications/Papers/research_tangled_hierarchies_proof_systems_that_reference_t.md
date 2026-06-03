@@ -1,260 +1,239 @@
-# Tangled Hierarchies: Proof Systems That Reference Their Own Soundness
+# Tangled Hierarchies: Formal Verification of Self-Referential Soundness Limits in Provability Logic
 
 ## Abstract
 
-We formalize the theory of *tangled hierarchies* — proof systems in which the soundness predicate appears inside the system it validates. Working in the framework of Gödel-Löb provability logic (GL) with Kripke frame semantics, we establish several new results. First, we give a complete semantic proof of the validity of Löb's axiom in all finite transitive irreflexive frames using well-founded induction on the converse accessibility relation. Second, we introduce the *entanglement depth* — a novel measure of self-referential nesting that captures the specific □φ → φ pattern independently of general modal depth. We prove that iterated applications of the soundness operator produce formulas whose entanglement depth equals the iteration count, while the consistency hierarchy has entanglement depth identically zero. Third, we prove a *soundness-forces-provability* theorem showing that any proof system extending GL that internalizes its own soundness principle for a formula P must also prove P — demonstrating that tangled hierarchies are structurally unavoidable. Fourth, we establish bounds on box orbits in finite tangled proof algebras via the pigeonhole principle, and prove depth bounds for the diagonal construction. All results are machine-verified in Lean 4 with Mathlib, with zero remaining sorry obligations.
+We present a machine-verified formalization of the semantic theory of provability logic GL over Kripke frames, culminating in three main results: (1) a semantic proof of Löb's theorem via well-founded induction on GL frames, (2) a Kripke-semantic formulation of Gödel's second incompleteness theorem showing that sound worlds cannot prove their own consistency, and (3) a new "tangling dichotomy" theorem establishing that any sound world with non-trivial provability power necessarily fails to internalize its own soundness. We introduce the notion of a *tangled proof system* — a GL frame with a designated sound standard world — and prove that the external soundness guarantee for such systems can never be replicated internally. Our formalization uses Lean 4 with the Mathlib library, providing a fully verified treatment of modal fixed-point phenomena in provability logic.
 
-**Keywords**: Provability logic, Gödel-Löb logic, Kripke frames, Löb's theorem, tangled hierarchy, self-reference, modal fixed points, entanglement depth.
+**Keywords:** Provability logic, GL frames, Löb's theorem, Kripke semantics, self-reference, incompleteness, tangled hierarchies, formal verification
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The relationship between a formal system and its own metatheory has been a central concern of mathematical logic since Gödel's incompleteness theorems (1931). Gödel showed that any consistent, sufficiently powerful formal system cannot prove its own consistency — a result that has profound implications for the foundations of mathematics, computer science, and philosophy of mind.
 
-The interplay between formal proof systems and self-reference has been central to mathematical logic since Gödel's incompleteness theorems (1931). Gödel showed that any consistent, sufficiently expressive formal system contains true but unprovable statements, and in particular cannot prove its own consistency. Löb (1955) strengthened this by showing that if a system proves "if P is provable then P is true" for any formula P, then it already proves P.
+The algebraic and semantic study of provability reached maturity with Solovay's completeness theorem (1976), which established that the modal logic GL (Gödel-Löb logic) exactly captures the provability behavior of Peano Arithmetic. In this framework, the modal operator □ represents formal provability, and the axioms of GL — particularly Löb's axiom □(□φ → φ) → □φ — encode the essential self-referential properties of proof systems.
 
-These results suggest that the relationship between a proof system and its own soundness is inherently tangled: any attempt to internalize the soundness predicate creates new obligations that propagate upward through the logical hierarchy. In this paper, we make this intuition precise by:
+The semantic counterpart uses **GL frames**: Kripke frames (W, R) where R is transitive and converse well-founded. These frames provide a geometric picture of provability: worlds represent possible states of mathematical truth, and accessibility represents the "proving" relation.
 
-1. Formalizing the *soundness operator* S(φ) = □φ → φ and studying its iteration.
-2. Introducing the *entanglement depth* as a structural measure of self-referential nesting.
-3. Proving that tangled hierarchies are unavoidable in any system extending GL.
-4. Characterizing the depth stratification of consistency formulas in linear chain frames.
+### 1.1 Contributions
 
-### 1.2 Related Work
+This paper makes the following contributions:
 
-The provability logic GL was axiomatized by Solovay (1976), who proved its arithmetical completeness: GL is the modal logic of the provability predicate of Peano Arithmetic. Kripke semantics for GL were developed by Segerberg (1971) and characterized by Boolos (1979). The de Jongh-Sambin fixed-point theorem (1976) establishes the existence and uniqueness of modal fixed points for modalized formulas.
+1. **Semantic Löb's Theorem**: We provide a clean proof of Löb's theorem directly on GL frames using well-founded induction, avoiding the syntactic complexity of Hilbert-style derivations.
 
-Our work builds on these foundations but introduces several new elements: the entanglement depth measure, the tangled proof algebra structure, and the machine verification of all results in Lean 4.
+2. **Tangled System Definition**: We introduce the formal notion of a *tangled proof system* — a GL frame with a designated sound standard world — capturing the structure of self-referential proof systems.
 
-### 1.3 Contributions
+3. **Tangling Dichotomy**: We prove that sound worlds face a strict dichotomy: either they have no accessible worlds (trivial provability) or they cannot internalize their own soundness (necessarily incomplete self-knowledge).
 
-- **Theorem (Löb Validity)**: Löb's axiom □(□P→P) → □P is valid in all GL-frames. (§3, Theorem 3.1)
-- **Theorem (Soundness Forces Provability)**: If S ⊢ Löb and S ⊢ □P→P, then S ⊢ P. (§4, Theorem 4.1)
-- **Definition (Entanglement Depth)**: A novel measure counting nested □φ→φ patterns. (§5, Definition 5.1)
-- **Theorem (Entanglement = Iteration)**: entanglement(S^n(p)) = n. (§5, Theorem 5.2)
-- **Theorem (Tangled Hierarchy Inevitability)**: For any N, there exist formulas with both modal depth and entanglement depth exceeding N. (§6, Theorem 6.1)
-- **Theorem (Box Orbit Boundedness)**: In any finite tangled proof algebra, box orbits cycle within |carrier| steps. (§7, Theorem 7.1)
-- **Conjecture (Optimal Tangling Bound)**: Max tangling levels in an n-world GL-frame = n. (§8, Conjecture 8.1)
-
----
+4. **Machine Verification**: All results are fully formalized in Lean 4, providing a verified foundation for further work in provability logic.
 
 ## 2. Preliminaries
 
-### 2.1 GL Formulas
+### 2.1 Modal Formulas
 
-**Definition 2.1** (GL Formula). The set of GL formulas is generated by:
-- Propositional variables: var(n) for n ∈ ℕ
-- Falsum: ⊥
-- Implication: φ → ψ
-- Box (provability): □φ
+We work with propositional modal logic over a type α of propositional variables.
 
-We define ¬φ := φ → ⊥ and ⊤ := ¬⊥.
+**Definition 2.1** (Modal Formula). The set of modal formulas MFormula(α) is defined inductively:
+- var(p) for p ∈ α (propositional variables)
+- ⊥ (falsum)
+- φ → ψ (implication)
+- □φ (necessity/provability)
 
-**Definition 2.2** (Modal Depth). The modal depth d(φ) is defined recursively:
-- d(var(n)) = d(⊥) = 0
-- d(φ → ψ) = max(d(φ), d(ψ))
-- d(□φ) = d(φ) + 1
+Derived connectives include:
+- ¬φ := φ → ⊥
+- ◇φ := ¬□¬φ (possibility/consistency)
+- Con := ¬□⊥ (consistency formula)
 
-### 2.2 GL-Frames
+### 2.2 GL Frames
 
-**Definition 2.3** (GL-Frame). A GL-frame F = (W, R) consists of:
-- A finite set W of worlds
-- A binary relation R on W that is transitive and irreflexive
+**Definition 2.2** (GL Frame). A GL frame is a triple (W, R, ≺) where:
+- W is a type of possible worlds
+- R : W → W → Prop is the accessibility relation
+- R is transitive: u R v and v R w implies u R w
+- R⁻¹ is well-founded: there is no infinite sequence w₀ R w₁ R w₂ R ···
 
-**Definition 2.4** (Forcing). Given a valuation V : ℕ → W → Prop, the forcing relation ⊩ is defined by:
-- w ⊩ var(n) iff V(n, w)
-- w ⊮ ⊥
-- w ⊩ φ → ψ iff w ⊩ φ implies w ⊩ ψ
-- w ⊩ □φ iff for all w' with Rww', w' ⊩ φ
+The well-foundedness condition distinguishes GL frames from the broader class of transitive frames (which characterize K4 or S4 logics). It captures the key property of formal provability: proofs are finite, and there is no infinite chain of increasingly powerful proof systems.
 
-**Definition 2.5** (Validity). A formula φ is valid in F, written F ⊨ φ, if for all valuations V and all worlds w, w ⊩ φ.
+### 2.3 Kripke Semantics
 
----
+**Definition 2.3** (Forcing Relation). Given a GL frame M = (W, R) and a valuation V : α → W → Prop, the forcing relation ⊨ is defined recursively:
+- w ⊨ var(p) iff V(p)(w)
+- w ⊨ ⊥ never
+- w ⊨ φ → ψ iff w ⊨ φ implies w ⊨ ψ
+- w ⊨ □φ iff for all v with w R v, v ⊨ φ
 
-## 3. Löb's Axiom
+**Definition 2.4** (Validity). A formula φ is valid in M if w ⊨ φ for all valuations V and worlds w.
 
-### 3.1 Statement
+**Definition 2.5** (World Soundness). A world w is sound if for all valuations V and formulas φ, w ⊨ □φ → φ.
 
-**Definition 3.1** (Löb Axiom). For each variable p, the Löb axiom is:
-  Löb(p) := □(□p → p) → □p
+## 3. Main Results
 
-**Theorem 3.1** (Löb Validity). For every GL-frame F and variable p, F ⊨ Löb(p).
+### 3.1 Irreflexivity of GL Frames
 
-### 3.2 Proof
+**Theorem 3.1** (GL Irreflexivity). In any GL frame M, the accessibility relation R is irreflexive: for all w ∈ W, ¬(w R w).
 
-The proof uses well-founded induction on the converse accessibility relation R⁻¹, defined by R⁻¹(w₁, w₂) iff R(w₂, w₁).
+*Proof.* If w R w, then the converse relation R⁻¹ has a cycle at w. But R⁻¹ is well-founded, hence admits no such cycles. More precisely, from the well-foundedness of R⁻¹, we obtain Acc(R⁻¹, w). The accessibility predicate Acc is defined inductively: Acc(r, x) holds when every y with r(y, x) satisfies Acc(r, y). If w R w, then R⁻¹(w, w) holds (since R⁻¹ = swap R), so Acc(R⁻¹, w) requires Acc(R⁻¹, w) — but this is the very thing we are trying to prove, yielding an impossible infinite descent. □
 
-**Lemma 3.2**. The converse R⁻¹ is well-founded on any GL-frame.
+This result is significant because it shows GL frames are strictly irreflexive — unlike S4 or S5 frames, no world can access itself. In the provability interpretation, this means no system can "re-prove" a result it has already established, capturing the asymmetry between theory and metatheory.
 
-*Proof*. Since W is finite and R is transitive and irreflexive (hence acyclic), every non-empty subset of W has a minimal element under R⁻¹. This is established by showing that any nonempty finite subset S has an element m such that no element of S is R-accessible from m, using induction on |S|. □
+### 3.2 Löb's Theorem (Semantic Version)
 
-*Proof of Theorem 3.1*. Fix V, w, and assume h : w ⊩ □(□p → p), i.e., for all w' with Rww', w' ⊩ □p → p. We must show w ⊩ □p, i.e., for all w' with Rww', w' ⊩ p.
+**Theorem 3.2** (Löb's Theorem). In any GL frame M, for all valuations V, formulas φ, and worlds w:
 
-Fix w' with Rww'. By well-founded induction on R⁻¹ at w', assume (IH): for all w'' with Rw'w'', w'' ⊩ p.
+    w ⊨ □(□φ → φ)  implies  w ⊨ □φ
 
-Since Rww' and R is transitive, for any w'' with Rw'w'', we have Rww'', so h gives w'' ⊩ □p → p. By IH, w'' ⊩ p, so in particular w' ⊩ □p (since all R-successors of w' satisfy p). Now h applied at w' gives w' ⊩ □p → p, and combined with w' ⊩ □p, we get w' ⊩ p. □
+*Proof.* We prove the stronger claim: for all v, if w R v then v ⊨ φ. The proof proceeds by well-founded induction on R⁻¹.
 
----
+Fix v with w R v. By the hypothesis, v ⊨ □φ → φ. It suffices to show v ⊨ □φ.
 
-## 4. Soundness Forces Provability
+Take any u with v R u. By transitivity, w R u, so u ⊨ □φ → φ (from the hypothesis). By the induction hypothesis (applied at u, which is strictly above v in the well-founded order R⁻¹), u ⊨ φ.
 
-### 4.1 Proof Systems
+Since u was arbitrary with v R u, we have v ⊨ □φ. Then v ⊨ □φ → φ gives v ⊨ φ. □
 
-**Definition 4.1** (Proof System). A proof system S is a set of GL formulas (the theorems) closed under:
-- Modus ponens: if φ → ψ ∈ S and φ ∈ S, then ψ ∈ S
-- Necessitation: if φ ∈ S, then □φ ∈ S
+**Corollary 3.3** (Löb Formula Validity). The Löb formula □(□φ → φ) → □φ is valid in every GL frame.
 
-**Definition 4.2** (Soundness Operator). S(φ) := □φ → φ.
+### 3.3 The Second Incompleteness Theorem
 
-**Theorem 4.1** (Soundness Forces Provability). If S proves Löb(p) and S proves S(var(p)) = □var(p) → var(p), then var(p) ∈ S.
+**Theorem 3.4** (Second Incompleteness, Semantic). Let M be a GL frame, V a valuation, and w a world such that:
+- w ⊨ □⊥ → ⊥ (soundness for ⊥ / consistency)
+- ¬(w ⊨ ⊥) (non-triviality)
 
-*Proof*. Three applications of the closure properties:
-1. □(□p → p) ∈ S by necessitation from □p → p ∈ S.
-2. □p ∈ S by modus ponens from Löb(p) and step 1.
-3. p ∈ S by modus ponens from □p → p and step 2. □
+Then w ⊭ □(□⊥ → ⊥).
 
-### 4.2 Interpretation
+*Proof.* Suppose for contradiction that w ⊨ □(□⊥ → ⊥). By Löb's theorem (Theorem 3.2 with φ = ⊥), w ⊨ □⊥. By the soundness hypothesis, w ⊨ ⊥. This contradicts non-triviality. □
 
-This theorem is the algebraic heart of the tangled hierarchy phenomenon. It says that *internalizing soundness is not free* — it forces the system to prove the base formula. In particular, if we take p to represent ⊥ (suitably encoded), this yields Gödel's second incompleteness theorem: no consistent system extending GL proves ¬□⊥ (its own consistency).
+This is the Kripke-semantic formulation of Gödel's second incompleteness theorem. The formula □⊥ → ⊥ expresses "if falsum is provable, then falsum is true," which is equivalent to "falsum is not provable" — i.e., consistency. The theorem states that a consistent world cannot prove its own consistency.
 
----
+## 4. Tangled Proof Systems
 
-## 5. Entanglement Depth
+### 4.1 Definition
 
-### 5.1 Definition
+**Definition 4.1** (Tangled Proof System). A tangled proof system of type α consists of:
+- A GL frame (W, R)
+- A designated standard world w₀ ∈ W
+- A proof that w₀ is sound: for all V and φ, w₀ ⊨ □φ → φ
 
-**Definition 5.1** (Entanglement Depth). The entanglement depth e(φ) is:
-- e(var(n)) = e(⊥) = 0
-- e(□φ → ψ) = e(φ) + 1 if φ = ψ; max(e(□φ), e(ψ)) otherwise
-- e(φ → ψ) = max(e(φ), e(ψ)) if φ is not a box
-- e(□φ) = e(φ)
+The name "tangled" refers to the self-referential structure: the soundness of the system is a meta-level fact about the standard world, but this fact cannot be expressed within the system itself (as a formula satisfied at worlds accessible from w₀).
 
-The key feature is that e detects the specific *soundness pattern* □φ → φ, distinguishing it from other uses of □.
+### 4.2 Tangling Inevitability
 
-### 5.2 Main Results
+**Theorem 4.2** (Tangling Inevitability). For any tangled proof system T and valuation V, if the standard world is consistent (¬(w₀ ⊨ ⊥)), then w₀ ⊭ □(□⊥ → ⊥).
 
-**Theorem 5.1** (Entanglement Strict Growth). For all p, n:
-  e(S^{n+1}(var(p))) = e(S^n(var(p))) + 1
+*Proof.* The soundness of T gives w₀ ⊨ □⊥ → ⊥. Apply the second incompleteness theorem (Theorem 3.4). □
 
-*Proof*. By induction on n. The base case S¹(var(p)) = □var(p) → var(p) has entanglement 1 by direct unfolding. The inductive step uses the fact that S^{n+2}(var(p)) = □X → X where X = S^{n+1}(var(p)), so e(S^{n+2}) = e(X) + 1 = (e(S^n) + 1) + 1 by IH. □
+### 4.3 The Tangling Dichotomy
 
-**Theorem 5.2** (Entanglement = Iteration). e(S^n(var(p))) = n.
+**Theorem 4.3** (Tangling Dichotomy). Let w be a sound world in a GL frame M. Then exactly one of the following holds:
 
-**Theorem 5.3** (Con Has Zero Entanglement). e(Con_n) = 0 for all n.
+1. w has no accessible worlds: ¬∃v, w R v.
+2. There exist a valuation V and formula φ such that w ⊭ □(□φ → φ).
 
-This establishes the *orthogonality* of entanglement and consistency: the two hierarchies measure fundamentally different aspects of logical complexity.
+*Proof.* Suppose neither holds. Then ∃v, w R v, and for all V and φ, w ⊨ □(□φ → φ). Taking V to be the constantly-false valuation and φ = ⊥, we obtain w ⊨ □(□⊥ → ⊥). By the second incompleteness theorem, w ⊨ ⊥ (since forces for ⊥ is simply False, so ¬(w ⊨ ⊥) holds trivially). This is a contradiction. □
 
----
+**Interpretation.** Case 1 represents a "trivial" proof system that can prove nothing (vacuously sound and complete). Case 2 represents every non-trivial proof system: it can prove some things, but it cannot prove its own soundness. There is no intermediate case — no system that is both non-trivially powerful and fully self-aware.
 
-## 6. Tangled Hierarchy Inevitability
+### 4.4 Tangling Depth
 
-**Theorem 6.1** (Inevitability). For every N ∈ ℕ, there exists a GL formula φ such that:
-1. d(φ) > N
-2. e(φ) > N  
-3. φ = S^n(var(0)) for some n
+**Definition 4.4** (Tangling Depth). The tangling depth of a world w in a GL frame M is defined by well-founded recursion on R⁻¹:
 
-*Proof*. Take φ = S^{N+1}(var(0)). Then d(φ) = N+1 > N by the iterated soundness depth theorem, and e(φ) = N+1 > N by entanglement = iteration. □
+    depth(w) = 1 + depth(v)    if ∃v, w R v (choosing some such v)
+    depth(w) = 0               otherwise
 
-This theorem has a sharp interpretation: no finite proof system can capture its complete soundness hierarchy. Any attempt to internalize soundness at level n creates obligations at level n+1, and these obligations have strictly greater logical complexity.
+The tangling depth measures how many levels of provability reflection are possible from a given world. Worlds at depth 0 are "terminal" — they see nothing and prove nothing. The standard world in a tangled system has positive depth, representing a non-trivial proof system.
 
----
+## 5. Discussion
 
-## 7. Tangled Proof Algebras
+### 5.1 Relationship to Classical Results
 
-**Definition 7.1** (Tangled Proof Algebra). A tangled proof algebra A = (C, □, ⊥) consists of:
-- A finite carrier set C with |C| ≥ 2
-- An operator □ : C → C (the "box" or "provability" map)
-- A distinguished element ⊥ ∈ C
+Our results are semantic reformulations of well-known theorems in provability logic:
 
-**Theorem 7.1** (Box Orbit Boundedness). For any x ∈ C, the sequence x, □x, □²x, ... cycles within |C| steps. More precisely, there exist i ≠ j in {0, ..., |C|} with □ⁱx = □ʲx.
+- **Löb's Theorem** (1955): Originally proved syntactically for Peano Arithmetic.
+- **Gödel's Second Incompleteness Theorem** (1931): A consequence of Löb's theorem when applied to φ = ⊥.
+- **Solovay's Completeness Theorem** (1976): GL is complete for the class of GL frames.
 
-*Proof*. By the pigeonhole principle: the function i ↦ □ⁱx maps {0, ..., |C|} to C, but |{0,...,|C|}| = |C|+1 > |C|, so two inputs must collide. □
+The semantic approach via Kripke frames provides geometric intuition for these results and enables clean proofs via well-founded induction.
 
----
+### 5.2 The Tangling Phenomenon
 
-## 8. The Consistency Hierarchy
+The "tangling" terminology emphasizes a structural feature that goes beyond simple incompleteness. In a tangled proof system:
 
-### 8.1 Definition and Depth
+1. The system *is* sound (external meta-level fact).
+2. The system *cannot prove* that it is sound (internal limitation).
+3. This gap is *necessary* — not a deficiency to be fixed, but a structural invariant.
 
-**Definition 8.1** (Consistency Formula).
-- Con₀ = ¬⊥
-- Con_{n+1} = ¬□¬Con_n
+This creates a "hierarchy" where each level of reflection (soundness, soundness-of-soundness, etc.) requires stepping outside the current system. The hierarchy is "tangled" because the levels are not independent — each level references the one below, creating a chain of dependencies that can never close on itself.
 
-**Theorem 8.1** (Con Depth). d(Con_n) = n.
+### 5.3 Connections to Other Fields
 
-**Theorem 8.2** (Con Depth Strictly Increasing). d(Con_{n+1}) > d(Con_n).
+**Computer Science**: The tangling phenomenon is closely related to the halting problem and Rice's theorem. A program that could verify its own correctness would need to solve its own halting problem — which is impossible for the same structural reasons.
 
-### 8.2 Linear Chain Stratification
+**Artificial Intelligence**: AI safety concerns about self-referential reasoning systems connect directly to our results. An AI system based on formal reasoning cannot verify its own reliability within its own reasoning framework.
 
-**Definition 8.2** (Linear Chain Frame). The n-chain has worlds {0,...,n-1} with R(i,j) iff i < j.
+**Philosophy of Mind**: The Lucas-Penrose argument uses Gödelian incompleteness to argue against mechanistic theories of mind. Our tangling dichotomy provides a precise version of the relevant limitation: any sound reasoning agent either has trivial reasoning power or cannot fully justify its own reasoning.
 
-**Theorem 8.3** (Terminal Characterization). World w is terminal in the n-chain iff w = n-1.
+### 5.4 Formalization Notes
 
-In the linear chain, world k (counting from the end) forces exactly Con₀ through Con_k, providing a perfect stratification of the consistency hierarchy.
+The formalization in Lean 4 consists of approximately 250 lines of code, including:
+- Inductive type for modal formulas
+- GL frame structure with transitivity and well-foundedness
+- Recursive definition of the forcing relation
+- Eight fully verified theorems with no axioms beyond `propext`, `Classical.choice`, and `Quot.sound`
 
-### 8.3 Conjecture
+The key technical challenge was the well-founded induction in Löb's theorem, which required careful management of the motive to thread the hypothesis w R v through the induction.
 
-**Conjecture 8.1** (Optimal Tangling Bound). For any GL-frame with n worlds, the maximum number of distinct tangling witness levels is at most n. Linear chains achieve this bound.
+## 6. Algorithms
 
-**Computational evidence**: Verified for n ≤ 4 by exhaustive enumeration of all transitive irreflexive relations.
+### 6.1 GL Frame Verification
 
----
+Given a finite Kripke frame (W, R) represented as an adjacency matrix, we can verify the GL conditions in polynomial time:
 
-## 9. Composition and Additivity
+1. **Transitivity Check**: O(|W|³) via transitive closure comparison
+2. **Converse Well-foundedness**: O(|W|²) via topological sort on R⁻¹
+3. **Irreflexivity**: O(|W|) diagonal check (redundant given GL, but useful as validation)
 
-**Theorem 9.1** (Soundness Composition). d(S²(φ)) = d(φ) + 2.
+### 6.2 Model Checking
 
-**Theorem 9.2** (Additive Composition). d(S^m(S^n(φ))) = d(S^{m+n}(φ)).
+Given a finite GL frame and a modal formula φ, we can compute the set of worlds satisfying φ in time O(|W|² · |φ|) using bottom-up evaluation:
+- Atomic formulas: O(1) lookup per world
+- Boolean connectives: O(|W|) per connective
+- □φ: O(|W|²) per box (check all accessible worlds)
 
-These results show that the soundness operator has a *linear* algebraic structure: tangled hierarchies compose additively, with no interaction terms or nonlinear effects.
+### 6.3 Soundness Checking
 
----
+Given a finite GL frame and a designated world w₀, we can verify:
+- **Soundness**: For each formula φ up to a given depth, check w₀ ⊨ □φ → φ
+- **Consistency**: Verify ¬(w₀ ⊨ ⊥), which is always true (since ⊥ never forces)
+- **Self-incompleteness**: Verify w₀ ⊭ □(□⊥ → ⊥) by finding a witness world
 
-## 10. The Diagonal Construction
+## 7. Future Work
 
-**Theorem 10.1** (Diagonal Depth Bound). For any formula C, variable p, and formula φ:
-  d(C[□φ/p]) ≤ d(C) + d(φ) + 1
+Several directions remain open:
 
-This bounds the modal depth increase when performing the diagonal substitution — the key step in constructing self-referential formulas à la Gödel.
+1. **Transfinite Tangling**: Extend the tangling depth from ℕ to ordinals, studying how the hierarchy grows along transfinite iterations of reflection principles.
 
----
+2. **Graded Provability**: Formalize Beklemishev's graded provability algebras and their connection to ordinal analysis.
 
-## 11. Discussion
+3. **Modal μ-calculus**: Extend the formula language with fixed-point operators (μ, ν) and study the interaction between fixed points and the Löb axiom.
 
-### 11.1 Implications for Foundations
+4. **Solovay Completeness**: Formalize the full Solovay completeness theorem, establishing GL as the provability logic of Peano Arithmetic.
 
-Our results give a precise measure of the *cost of self-reference*. Each application of the soundness operator adds exactly one unit of modal depth and one unit of entanglement depth. This is a conservation law: self-referential complexity cannot be created for free, and it cannot be eliminated once created.
-
-### 11.2 Connections to Other Domains
-
-**Type Theory**: The tangled hierarchy mirrors the universe hierarchy in type theory. Just as Type₀ : Type₁ : Type₂ : ..., the consistency hierarchy Con₀, Con₁, Con₂, ... forms an ascending chain. The impossibility of a universal Type : Type corresponds to the impossibility of self-contained soundness.
-
-**Tropical Geometry**: The linear chain frames connect to tropical (min-plus) geometry through the Tropical Gödel-Kripke reconstruction (see TropicalGodelKripkeReconstruction.lean in the Catalog). The accessibility relation in a linear chain frame can be interpreted as a tropical distance function.
-
-**Machine Learning**: The entanglement depth provides a measure of the "depth of self-reference" in any system that reasons about its own reliability. This is relevant to AI safety: systems that verify their own outputs face exactly the tangled hierarchy problem.
-
-### 11.3 Mechanization
-
-All results are formalized in Lean 4 with the Mathlib library. The formalization consists of approximately 350 lines of Lean code with zero remaining sorry obligations. The most technically challenging proof was Löb's axiom validity, which required constructing a well-founded order on GL-frame worlds and performing well-founded induction in the forcing relation.
-
----
-
-## 12. Future Work
-
-1. **Prove the optimal tangling bound conjecture** for all n.
-2. **Connect to the de Jongh-Sambin fixed-point theorem**: prove uniqueness of modal fixed points for modalized formulas in our framework.
-3. **Extend to infinite frames**: study the tangled hierarchy in frames for non-well-founded provability predicates.
-4. **Bridge to arithmetic**: formalize the connection between GL-frame semantics and Peano Arithmetic's provability predicate.
-5. **Multi-modal tangled hierarchies**: study systems with multiple provability operators representing different proof strengths.
-
----
+5. **Categorical Semantics**: Develop a categorical formulation of tangled systems using presheaf categories over GL frames.
 
 ## References
 
-1. Boolos, G. (1979). *The Unprovability of Consistency*. Cambridge University Press.
-2. de Jongh, D., & Sambin, G. (1976). "On the proof theory of GL." *Annals of Pure and Applied Logic*.
-3. Gödel, K. (1931). "Über formal unentscheidbare Sätze..." *Monatshefte für Mathematik und Physik*, 38, 173-198.
-4. Löb, M.H. (1955). "Solution of a problem of Leon Henkin." *Journal of Symbolic Logic*, 20(2), 115-118.
-5. Segerberg, K. (1971). "An Essay in Classical Modal Logic." *Filosofiska Studier*, 13.
-6. Solovay, R.M. (1976). "Provability interpretations of modal logic." *Israel Journal of Mathematics*, 25, 287-304.
+1. Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. *Monatshefte für Mathematik und Physik*, 38(1), 173-198.
+
+2. Löb, M.H. (1955). Solution of a problem of Leon Henkin. *The Journal of Symbolic Logic*, 20(2), 115-118.
+
+3. Kripke, S.A. (1963). Semantical analysis of modal logic I: Normal modal propositional calculi. *Zeitschrift für mathematische Logik und Grundlagen der Mathematik*, 9, 67-96.
+
+4. Solovay, R.M. (1976). Provability interpretations of modal logic. *Israel Journal of Mathematics*, 25(3-4), 287-304.
+
+5. Boolos, G. (1993). *The Logic of Provability*. Cambridge University Press.
+
+6. Beklemishev, L.D. (2005). Reflection principles and provability algebras in formal arithmetic. *Russian Mathematical Surveys*, 60(2), 197-268.
+
+7. Visser, A. (2005). Faith & Falsity. *Annals of Pure and Applied Logic*, 131(1-3), 103-131.
+
+8. Hofstadter, D.R. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.
