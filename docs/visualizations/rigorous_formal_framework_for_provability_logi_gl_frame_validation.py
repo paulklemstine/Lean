@@ -1,0 +1,1 @@
+algorithms.py (TransitiveFrame.is_gl_frame)

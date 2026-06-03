@@ -1,0 +1,1 @@
+algorithms.py (LoebAlgebra.consistency_hierarchy)

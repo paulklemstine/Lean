@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "177a3ede",
     "filename": "rigorous_framework_for_understanding_oracle_hi.json",
     "pkg_num": 281,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7929760869565218,
     "title": "Reflective Oracle Hierarchies: The Consistency-Soundness Asymmetry"
   },
   {
@@ -9058,8 +9058,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "rigorous_framework_for_understanding_oracle_hi",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7929760869565218,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Reflective Oracle Hierarchies: The Consistency-Soundness Asymmetry"
     }
