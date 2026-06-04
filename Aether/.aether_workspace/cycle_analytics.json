@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T18:44:26.586847+00:00",
+  "last_updated": "2026-06-04T19:01:57.053868+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3453,6 +3453,41 @@
       "theorem_count": 4,
       "timestamp": "2026-06-04T18:44:26.548139+00:00",
       "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7064,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 10737.63611650467,
+      "end_time": 1780599656.7271712,
+      "files_integrated": 5,
+      "job_id": "07d252b0",
+      "outcome_quality": 0.32704,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8804,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8786,
+        "novelty": 0.95,
+        "proof_depth": 0.8481,
+        "usefulness": 0.899
+      },
+      "quality_score": 0.32704,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780588919.0910547,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-04T19:01:57.007949+00:00",
+      "title": "Gap Transition System \u2014 a finite-state autom"
     }
   ]
 }

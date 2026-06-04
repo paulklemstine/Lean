@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "07d252b0",
     "filename": "gap_transition_system__a_finite_state_autom.json",
     "pkg_num": 365,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.32704,
     "title": "Gap Transition System: A Finite-State Automaton Framework for Prime Gap Analysis"
   },
   {
@@ -11722,8 +11722,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "gap_transition_system__a_finite_state_autom",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.32704,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "Gap Transition System: A Finite-State Automaton Framework for Prime Gap Analysis"
     }
