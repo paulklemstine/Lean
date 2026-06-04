@@ -1108,7 +1108,7 @@ Research mode: {concept.research_mode}
             # Blend heuristic and structural scores using direction-driven weights
             concept_domains = getattr(job.concept, 'domains', []) if job.concept else []
             composite = qscore.composite_with_domains(domains=concept_domains) if hasattr(qscore, 'composite_with_domains') else qscore.composite
-            job.quality_score = 0.4 * heuristic_score + 0.6 * composite
+            job.quality_score = 0.3 * heuristic_score + 0.7 * composite
         except Exception as e:
             print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
             job.quality_score = heuristic_score
@@ -1174,7 +1174,7 @@ Research mode: {concept.research_mode}
         - HTML packages → Applications/Packages/
         - Discussion → Applications/Articles/
         """
-        if job.quality_score < 0.05:
+        if job.quality_score < 0.15:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
             job.status = "rejected"
             return job

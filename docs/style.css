@@ -1944,8 +1944,27 @@ body.light-theme .direction-card:hover .direction-card-title {
     -webkit-text-fill-color: transparent;
 }
 
+body.light-theme .tabs-container {
+    border-bottom-color: var(--border-color);
+}
+
+body.light-theme .tab-btn {
+    color: #475569;
+    background: rgba(241, 245, 249, 0.5);
+}
+
+body.light-theme .tab-btn:hover {
+    color: #1e293b;
+    background-color: #e2e8f0;
+}
+
 body.light-theme .tab-btn.active {
     -webkit-text-fill-color: transparent;
+    border-bottom-color: #7c3aed;
+}
+
+body.light-theme .tab-content-container {
+    background-color: transparent;
 }
 
 body.light-theme #pkg-title {

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9d1a0bce",
     "filename": "galois_theory_of_cellular_automata_which_rules_hav.json",
     "pkg_num": 337,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7547335,
     "title": "Galois Theory of Cellular Automata: Reversibility Groups"
   },
   {
@@ -10896,8 +10896,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "galois_theory_of_cellular_automata_which_rules_hav",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7547335,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "Galois Theory of Cellular Automata: Reversibility Groups"
     }

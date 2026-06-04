@@ -311,7 +311,7 @@
                     const breakthroughs = recs.filter(r=>r.quality_score>0.8);
                     let btH='';
                     breakthroughs.slice(-5).reverse().forEach(r=>{
-                        btH+=`<div class="breakthrough"><div class="title">Q=${r.quality_score.toFixed(3)} — ${(r.title||'?').substring(0,50)}</div><div class="detail">${r.domain||'?'} · ${r.theorem_count||0} theorems · ${(r.sorry_density||0)*100).toFixed(0)}% sorry</div></div>`;
+                        btH+=`<div class="breakthrough"><div class="title">Q=${r.quality_score.toFixed(3)} — ${(r.title||'?').substring(0,50)}</div><div class="detail">${r.domain||'?'} · ${r.theorem_count||0} theorems · ${((r.sorry_density||0)*100).toFixed(0)}% sorry</div></div>`;
                     });
                     document.getElementById('breakthroughs-list').innerHTML = btH || '<div class="no-data">No breakthroughs yet (Q > 0.8)</div>';
 

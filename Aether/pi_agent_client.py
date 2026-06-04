@@ -1704,31 +1704,42 @@ class PiAgentClient:
             "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
             "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
             "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
-            "team": "Lead a research team to maximize scientific output per cycle. ORGANIZE as: (1) Hypothesis Team — brainstorm 3-5 bold, falsifiable conjectures; (2) Experiment Team — prove or disprove each hypothesis in Lean 4; (3) Analysis Team — examine what survived, what failed, and WHY failures failed — failures teach as much as successes; (4) Writing Team — produce all deliverables (article, paper, demos, HTML widgets) from the team's findings. SCIENCE IS A LOOP: explore → identify patterns → hypothesize → validate → upgrade knowledge → repeat. Each subagent contributes its expertise; the Writing Team synthesizes everything into polished output. More minds = more compute = deeper results.",
+            "team": "Lead a research team to maximize scientific output per cycle. ORGANIZE as: (1) Hypothesis Team — brainstorm 5-7 bold, falsifiable conjectures (at least 2 should be surprising or counterintuitive); (2) Experiment Team — prove or disprove each hypothesis in Lean 4, prioritizing the most surprising ones; (3) Analysis Team — examine what survived, what failed, and WHY failures failed — failures teach as much as successes; (4) Writing Team — produce all deliverables (article, paper, demos, HTML widgets) from the team's findings. SCIENCE IS A LOOP: explore → identify patterns → hypothesize → validate → upgrade knowledge → repeat. Each subagent contributes its expertise; the Writing Team synthesizes everything into polished output. More minds = more compute = deeper results. The goal is not to formalize known results — it's to discover new ones.",
         }
 
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
 
         # Depth Requirements: reject trivial mathematics
         depth_requirements = textwrap.dedent("""\
-            ## Depth Requirements (MANDATORY)
+            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
 
-            Your output must satisfy ALL of these:
+            Your output must satisfy ALL of these. This is not incremental work.
+            This is the frontier. Act accordingly.
 
             1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
                `norm_num`, or `rfl` unless the statement itself is genuinely important.
                If the only proof tactic is enumeration, the theorem is not worth formalizing.
 
-            2. **At least 3 theorems that demonstrate genuine mathematical insight**:
-               Your file must contain at least 3 theorems where removing any key step
-               would cause the proof to fail. Depth is measured by insight, not tactic count.
+            2. **At least 5 theorems that demonstrate genuine mathematical insight**:
+               Your file must contain at least 5 theorems where removing any key step
+               would cause the proof to fail. At least 2 of these must be results that
+               a graduate student would find surprising or non-obvious. Depth is measured
+               by insight, not tactic count. A result is "deep" if someone reading it
+               would need to think before seeing why it's true.
 
-            3. **Novel definitions**: Define at least one new mathematical structure or concept
-               that does not already exist in the Catalog. Check the catalog references to
-               confirm novelty.
+            3. **Novel definitions with mathematical substance**: Define at least one new
+               mathematical structure or concept that does not already exist in the Catalog.
+               The definition must come with at least one non-trivial theorem ABOUT the
+               structure (not just "this exists"). Check the catalog references to confirm novelty.
 
             4. **Conjecture with testable prediction**: State at least one falsifiable
                conjecture with a clear computational test that could disprove it.
+
+            5. **PROVE SOMETHING THAT MATTERS**: At least one theorem should connect two
+               previously disconnected areas, generalize a classical result, or settle a
+               concrete open question. "We formalized X" is not enough — we need "we
+               discovered/proved/generalized X". The result should be the kind that would
+               appear in a research paper, not a textbook exercise.
         """)
 
         # Build the streamlined prompt
@@ -1770,19 +1781,30 @@ class PiAgentClient:
             Your FUTURE_DIRECTIONS.md determines what the next cycle investigates.
             The quality of your directions determines the quality of future research.
 
+            AMBITION STANDARD: You are not doing textbook exercises. You are extending
+            the frontier of mathematical knowledge. Every theorem should be the kind of
+            result that would make a mathematician say "I didn't know that." Connect
+            unexpected areas. Prove things that seem surprising. Generalize beyond the
+            obvious. If a result could appear in an undergraduate homework assignment, it
+            is not ambitious enough.
+
             Follow this cycle model:
-            1. **Explore** — Survey what exists, find gaps, identify anomalies.
-            2. **Pattern** — Detect structures, connections, and regularities.
+            1. **Explore** — Survey what exists, find gaps, identify anomalies and
+               connections nobody has made yet.
+            2. **Pattern** — Detect structures, hidden symmetries, and deep regularities.
             3. **Hypothesize** — Propose falsifiable conjectures bold enough to matter
                and specific enough to fail. "Study X further" is not a hypothesis.
+               A good hypothesis would make a researcher say "that would be surprising
+               if true, and informative if false."
             4. **Validate** — Prove or disprove. Failures teach as much as successes.
+               A disproof can be as groundbreaking as a proof.
             5. **Upgrade** — Integrate what you learned into the knowledge base.
             6. **Repeat** — Your FUTURE_DIRECTIONS.md prescribes the next cycle's
                best, most fruitful research directions.
 
             The Aristotle prompt drives the research directions, which drive results,
             which drive the next Aristotle prompt — a positive, self-aware, intelligent
-            feedback loop. Make each cycle count.
+            feedback loop. Make each cycle count. Make each theorem matter.
 
             {depth_requirements}
 

@@ -1,5 +1,6 @@
+Removed 2 zero-quality records, 32 remaining
 {
-  "last_updated": "2026-06-04T02:14:50.633330+00:00",
+  "last_updated": "2026-06-04T02:44:38.349270+00:00",
   "records": [
     {
       "barrier_count": 0,
@@ -516,25 +517,6 @@
     {
       "barrier_count": 1,
       "bridge_count": 13,
-      "cycle_n": 2,
-      "domain": "Geometry",
-      "duration_seconds": 6119.610961675644,
-      "end_time": 1780530126.7890396,
-      "files_integrated": 0,
-      "job_id": "21a6826e",
-      "outcome_quality": 0.0,
-      "quality_score": 0.0,
-      "sorry_count": 0,
-      "sorry_density": 0.0,
-      "start_time": 1780524007.178078,
-      "strategy_count": 164,
-      "theorem_count": 0,
-      "timestamp": "2026-06-03T23:43:10.172105+00:00",
-      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-    },
-    {
-      "barrier_count": 1,
-      "bridge_count": 13,
       "cycle_n": 3,
       "domain": "Shared",
       "duration_seconds": 3102.241596221924,
@@ -691,25 +673,6 @@
       "theorem_count": 22,
       "timestamp": "2026-06-04T00:13:54.221310+00:00",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
-      "barrier_count": 370,
-      "bridge_count": 13,
-      "cycle_n": 5,
-      "domain": "MachineLearning",
-      "duration_seconds": 5885.1749584674835,
-      "end_time": 1780534926.865247,
-      "files_integrated": 0,
-      "job_id": "9af0c72c",
-      "outcome_quality": 0.0,
-      "quality_score": 0.0,
-      "sorry_count": 0,
-      "sorry_density": 0.0,
-      "start_time": 1780529041.6902885,
-      "strategy_count": 187,
-      "theorem_count": 0,
-      "timestamp": "2026-06-04T01:04:53.633129+00:00",
-      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     },
     {
       "barrier_count": 370,
@@ -998,6 +961,70 @@
       "theorem_count": 57,
       "timestamp": "2026-06-04T02:14:50.589909+00:00",
       "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
+    },
+    {
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 4,
+      "domain": "Cryptography",
+      "duration_seconds": 5664.9519963264465,
+      "end_time": 1780540851.236481,
+      "files_integrated": 8,
+      "job_id": "ad6b3e03",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.874,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8958,
+        "novelty": 0.9435,
+        "proof_depth": 0.8753,
+        "usefulness": 0.9377
+      },
+      "quality_score": 0.7617761730205278,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780535186.2844846,
+      "strategy_count": 187,
+      "theorem_count": 64,
+      "timestamp": "2026-06-04T02:44:38.263414+00:00",
+      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+    },
+    {
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 6,
+      "domain": "Geometry",
+      "duration_seconds": 3612.0800030231476,
+      "end_time": 1780540852.039874,
+      "files_integrated": 6,
+      "job_id": "9d1a0bce",
+      "outcome_quality": 0.0,
+      "quality_breakdown": {
+        "actionability": 0.74,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8639,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8787,
+        "novelty": 0.934,
+        "proof_depth": 0.855,
+        "usefulness": 0.9275
+      },
+      "quality_score": 0.7547335,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780537239.959871,
+      "strategy_count": 187,
+      "theorem_count": 26,
+      "timestamp": "2026-06-04T02:44:38.307941+00:00",
+      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ]
 }
