@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T22:52:55.013845+00:00",
+  "last_updated": "2026-06-04T23:26:10.728142+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -3803,6 +3803,41 @@
       "theorem_count": 4,
       "timestamp": "2026-06-04T22:52:54.953565+00:00",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4723,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 9,
+      "domain": "Bridges",
+      "duration_seconds": 3961.20121383667,
+      "end_time": 1780615542.3914309,
+      "files_integrated": 5,
+      "job_id": "3b2d31f3",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8473,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8815,
+        "novelty": 0.937,
+        "proof_depth": 0.8577,
+        "usefulness": 0.9288
+      },
+      "quality_score": 0.46896,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780611581.190217,
+      "strategy_count": 187,
+      "theorem_count": 7,
+      "timestamp": "2026-06-04T23:26:10.664308+00:00",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ]
 }

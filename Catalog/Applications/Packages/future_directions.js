@@ -394,6 +394,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a rigorous connection between jigsaw puzzle assembly, Boolean satisfiability, and the algebraic topology of grid constraint graphs. The central discovery is that the complement involution on edge types is the structural bridge connecting all three domains: it simultaneously encodes Boolean negation, determines the topological invariants of the constraint graph, and guarantees cycle consistency through its order-2 property.\n\nThe most promising cross-domain connection is between the Betti number of the constraint graph and computational complexity. We proved that \u03b2\u2081 = 0 (tree constraint graph) implies polynomial-time solvability, while \u03b2\u2081 \u2265 1 introduces cycles that require search. This suggests a quantitative complexity-topology correspondence: the *difficulty* of a constraint satisfaction problem scales with the topological complexity of its constraint graph. This principle, if extended to general CSPs, could provide a new lens for understanding computational hardness.\n\nThe involution parity theorem (|S| \u2261 |Fix(compl)| mod 2) connects to the broader Burnside counting framework and suggests that puzzle alphabets with specific fixed-point structures may have qualitatively different phase transition behaviors. The category of puzzle alphabets provides a natural setting for studying how algebraic structure constrains computational complexity.\n\n---\n\n### Direction 1: Spectral Gap and Puzzle Phase Transition\n\n**Conjecture**: For an n\u00d7n random jigsaw puzzle with k complementary edge pairs (alphabet size 2k+1), there exists a sharp threshold k*(n) \u2248 c\u00b7n such that for k < k*(n), random puzzles almost surely have multiple valid assemblies, while for k > k*(n), they almost surely have a unique valid assembly. The threshold is determined by the spectral gap of the complement graph's adjacency matrix.\n\n**Test**: Compute the expected number of valid assemblies for random n\u00d7n puzzles with varying k using the constraint density formula E = 2n(n-1). If the expected count crosses 1 near k \u2248 c\u00b7n for some constant c, the conjecture is supported. Formalize the first and second moment bounds.\n\n**Impact**: Would establish the first rigorous phase transition result for jigsaw puzzles, connecting puzzle solvability to random graph theory and the satisfiability threshold phenomenon.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean`, `Catalog/EML/JigsawAlgebra.lean`\n\n**Proof Strategy**: Use the second moment method. The first moment (expected assemblies) is E[X] = k^V / (2k)^E where V = n\u00b2 and E = 2n(n-1). The ratio E/V \u2192 2 determines the threshold. Show E[X\u00b2]/E[X]\u00b2 \u2192 1 in the appropriate regime.\n\n**Domain Bridges**: Jigsaw puzzles <-> Random graph theory <-> Statistical physics (spin glass models)\n\n**Lineage**: Builds on grid_euler_poincare, square_constraint_count, constraint_gap_linear from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Non-Rectangular Grid Topology\n\n**Conjecture**: For a triangular grid with n rows (total cells n(n+1)/2), the first Betti number is \u03b2\u2081 = (n-1)(n-2)/2, and the complement operation on a hexagonal alphabet (with 3 complementary pairs) has order 2, so cycle consistency is automatic if and only if all cycle lengths are even.\n\n**Test**: Define the triangular grid graph formally. Compute its Euler characteristic. Verify that the cycle lengths in a triangular grid are all multiples of 3, not 2, which would break the parity theorem. If cycles have odd length, the complement parity theorem fails, and additional constraints beyond local compatibility are needed for global consistency.\n\n**Impact**: If triangular grids have odd-length cycles, they exhibit *topological obstructions* to assembly that rectangular grids lack. This would demonstrate that puzzle difficulty depends not just on the Betti number but on the parity of cycle lengths\u2014a qualitatively new phenomenon.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean` (grid_euler_characteristic), `Bridges/JigsawTopology.lean` (compl_even_identity)\n\n**Proof Strategy**: Construct the triangular grid graph as a simplicial complex. Compute \u03b2\u2081 using the Euler-Poincar\u00e9 formula. Check whether all minimal cycles have even or odd length.\n\n**Domain Bridges**: Jigsaw puzzles <-> Simplicial homology <-> Tiling theory\n\n**Lineage**: Extends grid_euler_poincare and compl_even_identity from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Puzzle Alphabet Category and Functorial Reduction\n\n**Conjecture**: The category of puzzle alphabets (finite types with involution) is equivalent to the category of finite \u2124/2\u2124-sets. Under this equivalence, the SAT-to-puzzle reduction is a natural transformation from the Boolean constraint functor to the puzzle assembly functor. Specifically, the forgetful functor from PAlphabet to FinSet factors through \u2124/2\u2124-Set.\n\n**Test**: Formalize the category of \u2124/2\u2124-sets in Lean 4. Construct the equivalence functor. Verify that the Bool \u2192 JEdge map is a morphism of \u2124/2\u2124-sets (where \u2124/2\u2124 acts on Bool by negation and on JEdge by complement).\n\n**Impact**: Would provide a category-theoretic foundation for puzzle complexity, showing that the hardness of puzzle assembly is a consequence of the structure of the \u2124/2\u2124-action. Could lead to a classification of \"puzzle-hard\" problems via the representation theory of \u2124/2\u2124.\n\n**Catalog References**: `Bridges/JigsawTopology.lean` (PAlphabet, PAlphabetHom, hom_preserves_fixed)\n\n**Proof Strategy**: Use Mathlib's category theory library (CategoryTheory.Category). Define \u2124/2\u2124-Set as a category of functors from B\u2124/2\u2124 to FinSet. Construct the equivalence explicitly.\n\n**Domain Bridges**: Jigsaw puzzles <-> Category theory <-> Representation theory of finite groups\n\n**Lineage**: Extends PAlphabetHom.comp, hom_preserves_fixed, involution_parity from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Constraint Density and Coloring Bridge\n\n**Conjecture**: For any graph G with chromatic number \u03c7(G), there exists a puzzle alphabet A with |A| = 2\u03c7(G) - 1 such that the valid colorings of G with \u03c7(G) colors correspond bijectively to valid puzzle assemblies over A with constraint graph G. The constraint density threshold for puzzle solvability is related to the fractional chromatic number.\n\n**Test**: Construct the puzzle alphabet for small graphs (complete graphs K\u2083, K\u2084; cycles C\u2085, C\u2087). Verify the bijection between proper colorings and valid assemblies. Test whether the constraint density 2 - 2/n (for n\u00d7n grids) relates to the chromatic number of the grid graph (which is 2 for bipartite grids, 3 for odd cycles).\n\n**Impact**: Would establish a formal bridge between graph coloring and puzzle assembly, unifying two major areas of combinatorial optimization. The fractional chromatic number connection could provide new bounds on puzzle solvability.\n\n**Catalog References**: `Catalog/Bridges/JigsawNPComplete.lean`, `Bridges/JigsawTopology.lean` (encoding_compl_iff)\n\n**Proof Strategy**: For each color c, create two edge labels (c\u207a, c\u207b) with complement c\u207a \u2194 c\u207b, plus one boundary label. The coloring condition \"adjacent vertices have different colors\" becomes \"adjacent edges are complementary.\"\n\n**Domain Bridges**: Jigsaw puzzles <-> Graph coloring <-> Chromatic polynomial theory\n\n**Lineage**: Extends encoding_compl_iff, boolToEdge_injective from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Higher-Dimensional Puzzle Assembly\n\n**Conjecture**: For a 3-dimensional puzzle assembly on an m\u00d7n\u00d7p grid, the first Betti number is \u03b2\u2081 = (m-1)(n-1) + (m-1)(p-1) + (n-1)(p-1), and the second Betti number \u03b2\u2082 = (m-1)(n-1)(p-1) counts the number of independent \"cage constraints\" that are qualitatively harder than cycle constraints.\n\n**Test**: Define the 3D grid graph. Compute its homology groups. Verify the Betti number formula. Show that the complement parity theorem still applies (all 2D cycles have length 4, which is even) but that \u03b2\u2082 introduces a new type of constraint not present in 2D.\n\n**Impact**: Would demonstrate that puzzle complexity has a rich multi-scale structure: \u03b2\u2081 constrains 1-cycles, \u03b2\u2082 constrains 2-cycles (surfaces), and so on. The hierarchy \u03b2\u2080, \u03b2\u2081, \u03b2\u2082, ... provides a graded measure of puzzle difficulty.\n\n**Catalog References**: `Bridges/JigsawTopology.lean` (grid_euler_poincare, gridBetti1)\n\n**Proof Strategy**: Generalize gridBetti1 to gridBetti_k for arbitrary k. Use the Euler-Poincar\u00e9 formula for CW-complexes. Compute the face lattice of the 3D grid.\n\n**Domain Bridges**: Jigsaw puzzles <-> Algebraic topology (higher homology) <-> Higher-dimensional constraint satisfaction\n\n**Lineage**: Extends grid_euler_poincare from 2D to 3D from this cycle.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0667",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3b2d31f3",
+    "status": "available",
+    "timestamp": "2026-06-04T23:26:09.222560+00:00",
+    "title": "Rigorous connection between jigsaw puzzle asse"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical",
@@ -1936,7 +1951,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mathematical foundations of a holographic co"
   },
   {
-    "consumed_by_exp_id": "83361e38",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -1946,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5199999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
   },
@@ -3645,7 +3660,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "177306c3",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -3655,7 +3670,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.557538+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
@@ -3765,7 +3780,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "c53a9916",
+    "consumed_by_exp_id": "",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
       "Novelty",
@@ -3775,7 +3790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.755927+00:00",
     "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
   },
@@ -3840,7 +3855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "3437c40f",
+    "consumed_by_exp_id": "",
     "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty",
@@ -3850,7 +3865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.018128+00:00",
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
@@ -4110,7 +4125,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "9bb6f622",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself \u2014 but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
     "domains": [
       "Logic",
@@ -4120,7 +4135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.318994+00:00",
     "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
   },
