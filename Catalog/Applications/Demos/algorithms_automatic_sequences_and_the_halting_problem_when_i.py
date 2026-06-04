@@ -1,204 +1,183 @@
 """
-Algorithms for k-automatic sequences and the decidability boundary.
+Algorithms for automatic sequences and decidability.
 
-This module implements:
-1. DFAO (Deterministic Finite Automaton with Output) simulation
-2. Thue-Morse sequence generation via popcount parity
-3. BFS-based reachability for the decidability algorithm
-4. k-kernel computation
-5. Uniform morphism iteration
+Implements DFAOs, k-automatic sequence generation, k-kernel computation,
+and the zero-in-sequence decision procedure.
 """
 
 from typing import List, Dict, Set, Tuple, Optional, Callable
-from collections import deque
+from dataclasses import dataclass
 
 
+@dataclass
 class DFAO:
     """Deterministic Finite Automaton with Output.
 
-    A DFAO over alphabet {0, ..., k-1} with states {0, ..., n-1}.
-    Given a natural number m, writes it in base k and feeds the digits
-    (least significant first) through the automaton.
-
     Attributes:
-        n_states: Number of states.
-        k: Size of input alphabet (base).
-        transition: transition[state][digit] -> next_state
-        initial: Initial state.
-        output: output[state] -> output value
+        states: Number of states (states are 0..states-1)
+        k: Base / alphabet size
+        transition: transition[s][d] = next state
+        initial: Initial state
+        output: output[s] = output value at state s
     """
+    states: int
+    k: int
+    transition: List[List[int]]
+    initial: int
+    output: List[int]
 
-    def __init__(
-        self,
-        n_states: int,
-        k: int,
-        transition: List[List[int]],
-        initial: int,
-        output: List[int],
-    ):
-        self.n_states = n_states
-        self.k = k
-        self.transition = transition
-        self.initial = initial
-        self.output = output
+    def run(self, word: List[int]) -> int:
+        """Run the DFAO on a word, returning the final state."""
+        s = self.initial
+        for d in word:
+            s = self.transition[s][d]
+        return s
 
-    def run(self, digits: List[int]) -> int:
-        """Run the DFAO on a sequence of digits, returning the final state."""
-        state = self.initial
-        for d in digits:
-            state = self.transition[state][d]
-        return state
+    def eval(self, word: List[int]) -> int:
+        """Evaluate the DFAO on a word, returning the output."""
+        return self.output[self.run(word)]
 
-    def eval(self, digits: List[int]) -> int:
-        """Evaluate the DFAO on a digit sequence, returning the output."""
-        return self.output[self.run(digits)]
-
-    def to_base_k(self, m: int) -> List[int]:
-        """Convert m to base-k digits (least significant first)."""
-        if m == 0:
+    def to_base_k(self, n: int) -> List[int]:
+        """Convert n to base-k digits (least significant first)."""
+        if n == 0:
             return []
         digits = []
-        while m > 0:
-            digits.append(m % self.k)
-            m //= self.k
+        while n > 0:
+            digits.append(n % self.k)
+            n //= self.k
         return digits
 
-    def sequence(self, m: int) -> int:
-        """Compute the m-th term of the generated sequence."""
-        return self.eval(self.to_base_k(m))
+    def sequence(self, n: int) -> int:
+        """Get the n-th element of the generated sequence."""
+        return self.eval(self.to_base_k(n))
 
     def reachable_states(self) -> Set[int]:
-        """Compute the set of all reachable states via BFS.
-
-        This is the core of the decidability algorithm: by computing
-        the (finite) reachable set, we can decide all properties that
-        depend only on which states are visited.
-        """
-        visited: Set[int] = set()
-        queue = deque([self.initial])
-        while queue:
-            state = queue.popleft()
-            if state in visited:
-                continue
-            visited.add(state)
-            for d in range(self.k):
-                next_state = self.transition[state][d]
-                if next_state not in visited:
-                    queue.append(next_state)
+        """Compute the set of reachable states via BFS."""
+        visited: Set[int] = {self.initial}
+        frontier: List[int] = [self.initial]
+        while frontier:
+            next_frontier: List[int] = []
+            for s in frontier:
+                for d in range(self.k):
+                    t = self.transition[s][d]
+                    if t not in visited:
+                        visited.add(t)
+                        next_frontier.append(t)
+            frontier = next_frontier
         return visited
 
-    def value_appears(self, v: int) -> bool:
-        """Decide whether value v appears in the generated sequence.
+    def output_values(self) -> Set[int]:
+        """Compute the set of output values for reachable states."""
+        return {self.output[s] for s in self.reachable_states()}
 
-        This is the zero-in-sequence decision procedure:
-        v appears iff some reachable state has output v.
-        Runs in O(n * k) time where n = number of states.
+    def zero_in_sequence(self, target: int = 0) -> bool:
+        """Decide whether the target value appears in the sequence.
+
+        This is the zero-in-sequence decision procedure.
+        For k-automatic sequences, this is always decidable.
         """
-        reachable = self.reachable_states()
-        return any(self.output[s] == v for s in reachable)
-
-    def output_range(self) -> Set[int]:
-        """Compute the set of all values that appear in the sequence."""
-        reachable = self.reachable_states()
-        return {self.output[s] for s in reachable}
+        return target in self.output_values()
 
 
 def thue_morse_dfao() -> DFAO:
-    """Construct the 2-state DFAO generating the Thue-Morse sequence.
+    """The Thue-Morse DFAO: 2 states, base 2.
 
-    States: 0 (even parity), 1 (odd parity)
-    Transitions: digit d from state s goes to (s + d) mod 2
-    Output: state itself (0 or 1)
+    State 0: even popcount (output 0)
+    State 1: odd popcount (output 1)
     """
     return DFAO(
-        n_states=2,
+        states=2,
         k=2,
         transition=[[0, 1], [1, 0]],
         initial=0,
-        output=[0, 1],
+        output=[0, 1]
     )
 
 
 def rudin_shapiro_dfao() -> DFAO:
-    """Construct the 4-state DFAO generating the Rudin-Shapiro sequence.
+    """The Rudin-Shapiro DFAO: 4 states, base 2.
 
-    The Rudin-Shapiro sequence counts the number of (possibly overlapping)
-    occurrences of '11' in the binary expansion of n, modulo 2.
+    Counts overlapping 11 pairs in binary representation modulo 2.
     """
-    # States track the last digit and running parity
-    # State 0: last=0, parity=0; State 1: last=1, parity=0
-    # State 2: last=0, parity=1; State 3: last=1, parity=1
     return DFAO(
-        n_states=4,
+        states=4,
         k=2,
-        transition=[
-            [0, 1],  # state 0: see 0 -> state 0, see 1 -> state 1
-            [2, 0],  # state 1: see 0 -> state 2 (11 seen, flip), see 1 -> state 0
-            # Wait, this isn't right. Let me reconsider.
-            # Actually for LSB-first we need to track differently.
-            [2, 3],  # state 2
-            [0, 1],  # state 3
-        ],
+        transition=[[0, 1], [2, 3], [0, 1], [2, 3]],
         initial=0,
-        output=[0, 0, 1, 1],  # parity of count of '11' patterns
+        output=[1, 1, 1, -1]
     )
 
 
-def bit_sum(n: int) -> int:
-    """Count the number of 1-bits in n (popcount)."""
-    count = 0
-    while n > 0:
-        count += n & 1
-        n >>= 1
-    return count
+def paperfolding_dfao() -> DFAO:
+    """The regular paperfolding sequence DFAO: 4 states, base 2."""
+    return DFAO(
+        states=4,
+        k=2,
+        transition=[[1, 2], [3, 0], [3, 0], [1, 2]],
+        initial=0,
+        output=[0, 1, 0, 0]
+    )
 
 
-def thue_morse(n: int) -> int:
-    """Compute the n-th term of the Thue-Morse sequence: popcount(n) mod 2."""
-    return bit_sum(n) % 2
+def compute_k_kernel(seq: Callable[[int], int], k: int,
+                     max_e: int = 5, max_check: int = 100) -> List[Tuple[int, int]]:
+    """Compute the k-kernel of a sequence up to depth max_e.
 
-
-def k_kernel(k: int, seq: Callable[[int], int], max_e: int = 5) -> List[Tuple[int, int]]:
-    """Compute elements of the k-kernel up to exponent max_e.
-
-    The k-kernel of seq is {n -> seq(k^e * n + r) : e >= 0, 0 <= r < k^e}.
-
-    Returns a list of (e, r) pairs representing distinct kernel elements,
-    identified by their first few values.
-
-    Args:
-        k: Base.
-        seq: The sequence function.
-        max_e: Maximum exponent to consider.
-
-    Returns:
-        List of (e, r) pairs for distinct kernel elements.
+    Returns list of (e, r) pairs representing distinct subsequences
+    n -> seq(k^e * n + r).
     """
-    seen_fingerprints: Dict[tuple, Tuple[int, int]] = {}
-    result = []
-    test_length = 20  # Number of values to check for distinctness
+    seen_sigs: Dict[tuple, Tuple[int, int]] = {}
+    kernel_elements: List[Tuple[int, int]] = []
 
     for e in range(max_e + 1):
-        ke = k**e
+        ke = k ** e
         for r in range(ke):
-            fingerprint = tuple(seq(ke * n + r) for n in range(test_length))
-            if fingerprint not in seen_fingerprints:
-                seen_fingerprints[fingerprint] = (e, r)
-                result.append((e, r))
+            sig = tuple(seq(ke * n + r) for n in range(max_check))
+            if sig not in seen_sigs:
+                seen_sigs[sig] = (e, r)
+                kernel_elements.append((e, r))
 
-    return result
+    return kernel_elements
 
 
-class UniformMorphism:
-    """A k-uniform morphism on an alphabet {0, ..., k-1}.
+def product_dfao(m1: DFAO, m2: DFAO) -> DFAO:
+    """Construct the product DFAO of two DFAOs with the same base k.
 
-    Each letter maps to a word of length exactly k.
+    The product DFAO runs both automata simultaneously, producing
+    paired output (encoded as m1.output * max_out2 + m2.output).
     """
+    assert m1.k == m2.k
+    k = m1.k
+    n1, n2 = m1.states, m2.states
+    states = n1 * n2
 
-    def __init__(self, k: int, images: List[List[int]]):
-        self.k = k
+    transition = [[0] * k for _ in range(states)]
+    output = [0] * states
+
+    for s1 in range(n1):
+        for s2 in range(n2):
+            s = s1 * n2 + s2
+            for d in range(k):
+                t1 = m1.transition[s1][d]
+                t2 = m2.transition[s2][d]
+                transition[s][d] = t1 * n2 + t2
+            output[s] = (m1.output[s1], m2.output[s2])
+
+    return DFAO(
+        states=states,
+        k=k,
+        transition=transition,
+        initial=m1.initial * n2 + m2.initial,
+        output=output
+    )
+
+
+class AlphabetMorphism:
+    """A morphism on a finite alphabet."""
+
+    def __init__(self, images: Dict[int, List[int]]):
         self.images = images
-        assert all(len(img) == k for img in images), "Morphism must be uniform"
+        self.alphabet_size = len(images)
 
     def apply_word(self, word: List[int]) -> List[int]:
         """Apply the morphism to a word."""
@@ -207,74 +186,57 @@ class UniformMorphism:
             result.extend(self.images[letter])
         return result
 
-    def iterate(self, letter: int, n: int) -> List[int]:
-        """Compute σⁿ(letter)."""
-        word = [letter]
+    def iterate(self, start: int, n: int) -> List[int]:
+        """Apply the morphism n times starting from a single letter."""
+        word = [start]
         for _ in range(n):
             word = self.apply_word(word)
         return word
 
-    def is_prolongable(self, letter: int) -> bool:
-        """Check if the morphism is prolongable on the given letter."""
-        img = self.images[letter]
-        return len(img) >= 2 and img[0] == letter
+    def is_prolongable(self, a: int) -> bool:
+        """Check if the morphism is prolongable on letter a."""
+        img = self.images[a]
+        return len(img) >= 2 and img[0] == a
 
-    def fixed_point_prefix(self, letter: int, length: int) -> List[int]:
-        """Compute a prefix of the fixed point (if prolongable)."""
-        if not self.is_prolongable(letter):
-            raise ValueError("Morphism not prolongable on this letter")
-        word = [letter]
-        while len(word) < length:
-            word = self.apply_word(word)
-        return word[:length]
+    def is_uniform(self, target_len: Optional[int] = None) -> bool:
+        """Check if the morphism is k-uniform."""
+        lengths = [len(v) for v in self.images.values()]
+        if target_len is not None:
+            return all(l == target_len for l in lengths)
+        return len(set(lengths)) <= 1
+
+    def zero_in_morphic_word(self, start: int, target: int,
+                             max_iterations: int = 1000000) -> Optional[bool]:
+        """Attempt to decide if target appears in the fixed point.
+
+        Returns True if found, False if provably absent, None if undecided.
+        For uniform morphisms, always terminates.
+        """
+        if not self.is_prolongable(start):
+            return None
+
+        seen_letters: Set[int] = set()
+        frontier: Set[int] = {start}
+
+        while frontier:
+            if target in frontier:
+                return True
+            new_frontier: Set[int] = set()
+            for letter in frontier:
+                for c in self.images[letter]:
+                    if c not in seen_letters:
+                        seen_letters.add(c)
+                        new_frontier.add(c)
+            frontier = new_frontier
+
+        return target not in seen_letters
 
 
-def thue_morse_morphism() -> UniformMorphism:
+def thue_morse_morphism() -> AlphabetMorphism:
     """The Thue-Morse morphism: 0 -> 01, 1 -> 10."""
-    return UniformMorphism(2, [[0, 1], [1, 0]])
+    return AlphabetMorphism({0: [0, 1], 1: [1, 0]})
 
 
-def decide_zero_in_automatic_sequence(
-    dfao: DFAO, target_value: int = 0
-) -> Tuple[bool, Optional[int]]:
-    """Decide if target_value appears in the DFAO-generated sequence.
-
-    This is the main decidability algorithm. It:
-    1. Computes the reachable states via BFS
-    2. Checks if any reachable state has the target output
-
-    Returns:
-        (appears, witness): Whether the value appears, and if so,
-        the smallest index where it appears (found by brute force search
-        up to a bound).
-    """
-    appears = dfao.value_appears(target_value)
-
-    witness = None
-    if appears:
-        # Find smallest witness by brute force
-        for n in range(10000):
-            if dfao.sequence(n) == target_value:
-                witness = n
-                break
-
-    return appears, witness
-
-
-def is_eventually_periodic(
-    seq: Callable[[int], int], max_period: int = 100, max_offset: int = 200
-) -> Optional[Tuple[int, int]]:
-    """Test if a sequence appears eventually periodic.
-
-    Returns (period, offset) if found, None otherwise.
-    """
-    for N in range(max_offset):
-        for p in range(1, max_period + 1):
-            periodic = True
-            for m in range(N, N + 100):
-                if seq(m + p) != seq(m):
-                    periodic = False
-                    break
-            if periodic:
-                return (p, N)
-    return None
+def fibonacci_morphism() -> AlphabetMorphism:
+    """The Fibonacci morphism: 0 -> 01, 1 -> 0."""
+    return AlphabetMorphism({0: [0, 1], 1: [0]})
