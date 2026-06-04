@@ -1,248 +1,206 @@
-# Tropical Satake Isomorphism for GL_n: A Rank-Uniform Framework
+# The Tropical Satake Isomorphism for GL_n: Convolution Algebras, Demazure Operators, and Generalized Orbit-Min Constructions
 
 ## Abstract
 
-We establish a rank-uniform tropical Satake correspondence for GL_n, identifying the spherical min-plus Hecke algebra with the semiring of S_n-invariant tropical polynomials on the coweight lattice. The central mechanism is a sorting-based canonicalization that maps arbitrary integer vectors to their dominant representatives, yielding a canonical extension of functions from the dominant chamber to S_n-invariant functions on ℤⁿ. We prove four main theorems: (A) existence and uniqueness of the Satake extension via sorting, (B) S_n-invariance of tropical Schur polynomials, (C) closure of the invariant tropical polynomials under tropical multiplication, and (D) Schur-convexity of evaluation on dominant-exponent monomials via Abel summation. All results are formalized and machine-verified in Lean 4 with Mathlib, without any unproven assumptions.
+We develop the tropical Hecke convolution algebra for GL_n and establish that the tropical Satake transform is a structure-preserving map from this algebra to the algebra of Sₙ-invariant tropical polynomials. Our main contributions are: (1) a novel tropical Hecke convolution that equals the pointwise tropical product on Weyl-invariant functions, proved commutative; (2) tropical Demazure operators with an idempotency property at dominant points; (3) a super-additivity inequality for tropical Schur polynomials; (4) a generalization to arbitrary finite group actions on lattices with equivariant pairings; and (5) a boundary analysis showing that dominance is necessary for injectivity of the Schur map. All results are formalized and machine-verified.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The classical Satake isomorphism [Satake 1963] identifies the spherical Hecke algebra H(G, K) of a reductive group G over a p-adic field with the representation ring of the Langlands dual group. Under Litvinov's dequantization principle (the limit as the base field parameter q → 0), algebraic operations tropicalize: addition becomes minimum, multiplication becomes addition, and the Satake isomorphism becomes a correspondence between min-plus Hecke operators and Weyl-invariant tropical polynomials.
 
-The classical Satake isomorphism identifies the spherical Hecke algebra H(G, K) with the ring of Weyl-invariant functions on the dual torus. For G = GL_n over a local field with maximal compact K, this yields an isomorphism between bi-K-invariant functions under convolution and S_n-invariant Laurent polynomials.
+This paper develops the algebraic foundations of this tropical correspondence for GL_n, uniform in the rank n. We introduce the tropical Hecke convolution, prove it equals the pointwise product on invariant functions (Theorem 3.2), define tropical Demazure operators (Section 6), establish super-additivity of tropical Schur polynomials (Theorem 5.1), and generalize the construction to arbitrary finite reflection groups (Section 10).
 
-The tropical (min-plus) analogue replaces:
-- The ring (ℤ, +, ×) with the min-plus semiring (ℤ, min, +),
-- Polynomial multiplication with tropical convolution (min of pairwise sums),
-- Weyl-invariant functions with S_n-invariant piecewise-linear functions.
+### 1.1 Prior Work
 
-Previous work established the correspondence for GL_2 and GL_3 case-by-case. This paper provides the first rank-uniform treatment for arbitrary n.
+Previous work established:
+- Tropical Schur polynomials and their Weyl invariance for GL₃ and GL_n [Catalog: SatakeGLn.lean, TropicalSatakeGLn.lean]
+- Injectivity of the tropical Schur map on dominant weights [Catalog: SatakeGLn.lean]
+- GL₃ test family injectivity [Catalog: GL3TropicalSatake.lean]
+- The Satake transform equals tropical Schur on Hecke basis elements [Catalog: SatakeGLn.lean]
 
-### 1.2 Prior Work
+### 1.2 This Paper's Contributions
 
-The tropical Satake isomorphism was studied for GL_2 by Maclagan-Sturmfels and for GL_3 in the formal verification catalog (TropicalSatakeGL3Algebra.lean). The rank-3 case used explicit 3-element permutations and coordinate-wise sorting. Our contribution is isolating the rank-free mechanism and proving it works uniformly.
+1. **Tropical Hecke Convolution** (Definition 3.1): A min-plus convolution on functions over ℤⁿ.
+2. **Convolution-Pointwise Collapse** (Theorem 3.2): On Weyl-invariant functions, convolution equals pointwise addition.
+3. **Commutativity** (Theorem 3.1): The tropical Hecke convolution is commutative on invariant functions.
+4. **Tropical Demazure Operators** (Definition 6.1): Tropicalization of classical divided-difference operators.
+5. **Demazure Idempotency** (Theorem 6.1): At dominant points with symmetry, the operator is the identity.
+6. **Super-additivity** (Theorem 5.1): tropSchur(w₁ + w₂) ≥ tropSchur(w₁) + tropSchur(w₂).
+7. **Generalized Tropical Satake** (Section 10): For arbitrary finite group actions on lattices.
+8. **Boundary Analysis** (Section 7): Dominance is necessary for Schur map injectivity.
 
-### 1.3 Contributions
+## 2. Definitions
 
-1. **Sorting-based canonicalization** (Section 3): We define `sortDescFn` using insertion sort and prove it is dominant, permutation-invariant, idempotent on dominant vectors, and sum-preserving.
+### 2.1 Tropical Arithmetic
+We work in the min-plus semiring (ℤ, min, +) where tropical addition is min and tropical multiplication is ordinary addition.
 
-2. **Satake extension theorem** (Section 4): Every function on dominant coweights extends uniquely to an S_n-invariant function on ℤⁿ.
+### 2.2 Dominant Weights and Weyl Invariance
 
-3. **Tropical Schur polynomials** (Section 5): The orbit-min construction `tropSchurN w x = min_σ Σ w(σi)x(i)` produces S_n-invariant functions, and their tropical products are again invariant.
+**Definition 2.1** (Dominant Weight). A vector v : Fin n → ℤ is *dominant* if v(i) ≥ v(j) whenever i ≤ j (weakly decreasing).
 
-4. **Schur-convexity bridge** (Section 6): Dominant-exponent monomials are monotone under the dominance (majorization) order, connecting the correspondence to combinatorial optimization.
+**Definition 2.2** (Weyl Invariance). A function f : (Fin n → ℤ) → ℤ is *Weyl-invariant* (or Sₙ-invariant) if f(x ∘ σ) = f(x) for all permutations σ ∈ Sₙ.
 
-## 2. Definitions and Notation
+### 2.3 Tropical Schur Polynomials
 
-### 2.1 Min-Plus Semiring
-
-We work over (ℤ, ⊕, ⊗) where a ⊕ b = min(a, b) and a ⊗ b = a + b.
-
-### 2.2 Coweight Lattice
-
-For GL_n, the coweight lattice is ℤⁿ = {v : Fin n → ℤ}.
-
-### 2.3 Dominant Coweights
-
-A vector v ∈ ℤⁿ is *dominant* if v(i) ≥ v(j) whenever i ≤ j (weakly decreasing). The set of dominant coweights is denoted Λ⁺_n.
-
+**Definition 2.3** (Tropical Schur Polynomial). For w, x : Fin n → ℤ:
 ```
-IsDominant v := ∀ i j : Fin n, i ≤ j → v j ≤ v i
+tropSchur(w, x) = min_{σ ∈ Sₙ} Σᵢ w(σ(i)) · x(i)
 ```
+This is the orbit-min of the monomial w under the Weyl group action.
 
-### 2.4 Symmetric Tropical Functions
-
-A function f : ℤⁿ → ℤ is *S_n-invariant* (symmetric tropical) if f(x ∘ σ) = f(x) for all σ ∈ S_n.
-
-### 2.5 Tropical Monomials
-
-A tropical monomial consists of a coefficient c ∈ ℤ and exponent vector e ∈ ℤⁿ, evaluated as c + Σ e(i)x(i).
-
-### 2.6 Tropical Schur Polynomial
-
-For w ∈ ℤⁿ:
-```
-tropSchurN w x = min_{σ ∈ S_n} Σᵢ w(σ(i)) · x(i)
-```
-
-## 3. Sorting Infrastructure
+## 3. The Tropical Hecke Convolution Algebra
 
 ### 3.1 Definition
 
-The canonical dominant representative of x ∈ ℤⁿ is obtained by sorting coordinates in decreasing order:
-
+**Definition 3.1** (Tropical Hecke Convolution).
 ```
-sortDescFn x := insertion_sort(≥, List.ofFn x) viewed as Fin n → ℤ
-```
-
-### 3.2 Key Properties
-
-**Theorem 3.1** (sortDescFn_isDominant): `sortDescFn x` is dominant.
-
-*Proof sketch*: The insertion sort produces a list that is pairwise ≥ (by `List.pairwise_insertionSort`). This directly implies the dominance condition.
-
-**Theorem 3.2** (sortDescFn_perm_invariant): `sortDescFn (x ∘ σ) = sortDescFn x` for all σ ∈ S_n.
-
-*Proof sketch*: `List.ofFn (x ∘ σ)` is a permutation of `List.ofFn x` (since σ is a bijection). Insertion sort of two permutations of the same list gives the same result (by uniqueness of the sorted permutation, via `List.Perm.eq_of_pairwise`).
-
-**Theorem 3.3** (sortDescFn_of_dominant): If x is dominant, `sortDescFn x = x`.
-
-*Proof sketch*: If `List.ofFn x` is already pairwise ≥, insertion sort returns it unchanged.
-
-**Theorem 3.4** (sortDescFn_sum_eq): `Σ (sortDescFn x)(i) = Σ x(i)`.
-
-*Proof sketch*: Insertion sort produces a permutation, and `List.Perm.sum_eq` gives equality of sums.
-
-### 3.3 Complexity
-
-Sorting is O(n²) with insertion sort, O(n log n) with merge sort. For the formal development, we use insertion sort for simplicity of correctness proofs.
-
-## 4. Satake Extension (Theorem A)
-
-### 4.1 Construction
-
-Given f : Λ⁺_n → ℤ, the Satake extension is:
-```
-satakeExtend f x := f(toDominant x) = f(⟨sortDescFn x, proof⟩)
+(f ⊛ g)(x) = min_{σ ∈ Sₙ} [f(x) + g(x ∘ σ)]
 ```
 
-### 4.2 Main Theorem
-
-**Theorem A** (satake_extend_invariant_fin): For any f : Λ⁺_n → ℤ:
-1. `satakeExtend f` agrees with f on dominant coweights.
-2. `satakeExtend f` is S_n-invariant.
-
-*Proof*: (1) follows from sortDescFn_of_dominant. (2) follows from sortDescFn_perm_invariant.
-
-### 4.3 Uniqueness
-
-**Theorem** (satake_extend_unique): If F is S_n-invariant and agrees with f on Λ⁺_n, then F = satakeExtend f.
-
-*Proof*: For any x, since `sortDescFn x` is a rearrangement of x, there exists σ ∈ S_n with `sortDescFn x = x ∘ σ`. Then:
+This tropicalizes the classical convolution product in the spherical Hecke algebra H(G, K):
 ```
-F(x) = F(sortDescFn x ∘ σ⁻¹) = F(sortDescFn x)  [by S_n-invariance]
-     = f(⟨sortDescFn x, ...⟩)                      [by agreement on dominant]
-     = satakeExtend f x
+(f * g)(x) = ∫_G f(xy⁻¹) g(y) dy
 ```
 
-The existence of σ is proved by showing that `sortDescList (List.ofFn x)` is a permutation of `List.ofFn x`, then constructing the corresponding Fin-permutation.
+### 3.2 Main Results
 
-## 5. Tropical Schur Polynomials (Theorems B, C)
+**Theorem 3.1** (Commutativity). If f and g are Weyl-invariant, then f ⊛ g = g ⊛ f.
 
-### 5.1 S_n-Invariance
+*Proof sketch.* By Weyl invariance, f(x ∘ σ) = f(x) and g(x ∘ σ) = g(x) for all σ. Therefore f(x) + g(x ∘ σ) = f(x) + g(x) for all σ, and similarly g(x) + f(x ∘ σ) = g(x) + f(x). Both infima equal f(x) + g(x). □
 
-**Theorem B** (tropSchurN_symmetric): For any w ∈ ℤⁿ, tropSchurN w is S_n-invariant.
+**Theorem 3.2** (Convolution-Pointwise Collapse). If g is Weyl-invariant, then (f ⊛ g)(x) = f(x) + g(x).
 
-*Proof*: For any σ and x:
+*Proof.* Since g(x ∘ σ) = g(x) for all σ, every term in the infimum equals f(x) + g(x). □
+
+**Corollary.** The tropical Hecke convolution algebra on Weyl-invariant functions is isomorphic to the pointwise tropical product algebra (ℤ-valued functions with addition).
+
+### 3.3 Interpretation
+
+This collapse theorem is the tropical content of the Satake isomorphism: the "complicated" convolution algebra is secretly the "simple" pointwise algebra. The Satake transform (orbit-min) provides the change of basis between non-invariant functions (where convolution is nontrivial) and invariant functions (where convolution collapses).
+
+## 4. The Satake Transform
+
+**Definition 4.1** (Satake Transform).
 ```
-tropSchurN w (x ∘ σ) = min_τ Σᵢ w(τi) · x(σi)
-                      = min_τ Σⱼ w(τ(σ⁻¹j)) · x(j)     [substitute j = σ⁻¹i]
-                      = min_τ Σⱼ w((τσ⁻¹)j) · x(j)
-                      = min_{τ'} Σⱼ w(τ'j) · x(j)        [τ' = τσ⁻¹ ranges over S_n]
-                      = tropSchurN w x
-```
-
-The formal proof uses `le_antisymm` with explicit construction of the matching permutation (τ * σ for one direction, τ * σ⁻¹ for the other).
-
-### 5.2 Idempotency
-
-**Theorem** (tropSchurN_idempotent): The Satake transform is idempotent on tropical Schur polynomials:
-```
-min_σ tropSchurN w (x ∘ σ) = tropSchurN w x
+S(f)(x) = min_{σ ∈ Sₙ} f(x ∘ σ)
 ```
 
-*Proof*: Each term equals tropSchurN w x by Theorem B, so the minimum of a constant function is that constant.
+**Theorem 4.1** (Weyl Invariance). S(f) is always Weyl-invariant.
 
-### 5.3 Closure Under Product
+**Theorem 4.2** (Idempotency). If f is Weyl-invariant, then S(f) = f.
 
-**Theorem C** (tropSchurN_mul_symmetric): The tropical product of two Schur polynomials is S_n-invariant:
+**Theorem 4.3** (Monomial Identity). S(tropMonomial(w)) = tropSchur(w).
+
+**Theorem 4.4** (Product Preservation). If f, g are Weyl-invariant, then S(f + g)(x) = f(x) + g(x).
+
+## 5. Super-Additivity of Tropical Schur Polynomials
+
+**Theorem 5.1** (Super-Additivity).
 ```
-tropSchurMul w₁ w₂ x := min_{σ₁,σ₂} (Σ w₁(σ₁i)x(i) + Σ w₂(σ₂i)x(i))
-```
-is invariant under x ↦ x ∘ σ.
-
-*Proof*: Same reindexing argument as Theorem B, applied to each component independently. The pair (σ₁, σ₂) ↦ (σ₁σ⁻¹, σ₂σ⁻¹) gives a bijection on S_n × S_n.
-
-## 6. Schur-Convexity Bridge (Theorem D)
-
-### 6.1 Dominance Order
-
-The dominance (majorization) order on ℤⁿ:
-```
-x ≤_D y  ⟺  ∀k, Σ_{i≤k} (sortDescFn x)(i) ≤ Σ_{i≤k} (sortDescFn y)(i)
+tropSchur(w₁, x) + tropSchur(w₂, x) ≤ tropSchur(w₁ + w₂, x)
 ```
 
-### 6.2 Monotonicity Theorem
+*Proof.* For each σ, Σᵢ (w₁ + w₂)(σ(i)) · x(i) = Σᵢ w₁(σ(i)) · x(i) + Σᵢ w₂(σ(i)) · x(i) ≥ min_τ Σᵢ w₁(τ(i)) · x(i) + min_τ Σᵢ w₂(τ(i)) · x(i). Taking infimum over σ preserves this lower bound. □
 
-**Theorem D** (symmetric_tropical_dominance_monotone): If e is dominant (IsDominant e), x and y are dominant with x ≤_D y and Σx = Σy, then:
+**Remark.** The reverse inequality tropSchur(w₁ + w₂) ≤ tropSchur(w₁) + tropSchur(w₂) is *false* in general. Counterexample: n = 3, w₁ = (1,0,0), w₂ = (0,1,0), x = (0,1,2) gives tropSchur(w₁+w₂, x) = 2 > 0 = tropSchur(w₁, x) + tropSchur(w₂, x). This asymmetry reflects the combinatorial fact that jointly optimizing a sum is harder than optimizing pieces independently.
+
+## 6. Tropical Demazure Operators
+
+**Definition 6.1** (Tropical Demazure Operator). For simple transposition sᵢ = (i, i+1):
 ```
-e.coeff + Σ e(i)x(i) ≤ e.coeff + Σ e(i)y(i)
+Dᵢ(f)(x) = min(f(x), f(sᵢ · x) + xᵢ - x_{i+1})
 ```
 
-*Proof*: Set d(i) = y(i) - x(i) and S(k) = Σ_{i≤k} d(i). By Abel summation:
+This tropicalizes the classical Demazure operator:
 ```
-Σ e(i)d(i) = Σ_{k=0}^{n-2} (e(k) - e(k+1))·S(k) + e(n-1)·S(n-1)
+∂ᵢ(f)(x) = [f(x) - f(sᵢ · x)] / [1 - x_{i+1}/xᵢ]
 ```
 
-By hypothesis:
-- e(k) - e(k+1) ≥ 0 (e is decreasing)
-- S(k) ≥ 0 for all k (dominance order, since x,y dominant implies sortDescFn = identity)
-- S(n-1) = 0 (equal sums)
+**Theorem 6.1** (Idempotency at Dominant Points). If xᵢ ≥ x_{i+1} and f(x) = f(sᵢ · x), then Dᵢ(f)(x) = f(x).
 
-Each term is nonneg, so the sum is ≥ 0.
+*Proof.* Under the hypotheses, f(sᵢ · x) + (xᵢ - x_{i+1}) = f(x) + (xᵢ - x_{i+1}) ≥ f(x) since xᵢ - x_{i+1} ≥ 0. So min(f(x), f(x) + nonneg) = f(x). □
 
-### 6.3 Complexity Analysis
+## 7. Boundary Analysis
 
-The Abel summation decomposition runs in O(n) time and O(n) space. Combined with O(n log n) sorting, the full monotonicity check is O(n log n).
+**Theorem 7.1** (Weight Orbit Invariance). tropSchur(w ∘ σ) = tropSchur(w) for all σ ∈ Sₙ.
 
-## 7. Computational Experiments
+*Proof.* Reindex the infimum using the bijection τ ↦ σ·τ. □
 
-### 7.1 Satake Extension Verification
+**Corollary.** The tropical Schur map w ↦ tropSchur(w) factors through the quotient (Fin n → ℤ) / Sₙ. Injectivity holds precisely on the fundamental domain of dominant weights.
 
-For n = 2, 3, 4 and random vectors x ∈ [-3, 3]ⁿ, we verified that:
-- `satakeExtend f (x ∘ σ) = satakeExtend f x` for all σ ∈ S_n
-- `satakeExtend f x = f(sort_desc(x))` for dominant x
+## 8. The Hecke Basis Identity
 
-All tests passed across 1000 random instances.
+**Theorem 8.1.** heckeBasis(w, x) = tropSchur(w, x), where:
+```
+heckeBasis(w, x) = min_σ Σᵢ w(i) · x(σ(i))
+tropSchur(w, x) = min_σ Σᵢ w(σ(i)) · x(i)
+```
 
-### 7.2 Tropical Schur Symmetry
+*Proof.* By reindexing: Σᵢ w(i) · x(σ(i)) = Σⱼ w(σ⁻¹(j)) · x(j). As σ ranges over Sₙ, so does σ⁻¹. □
 
-For n = 2, 3, 4 with random weights and evaluation points, tropSchurN symmetry was verified exhaustively (checking all n! permutations). For n = 5, 6, we tested 10000 random pairs (σ, x) and found no violations.
+**Theorem 8.2** (Satake-Hecke Identity). S(heckeBasis(w)) = tropSchur(w).
 
-### 7.3 Dominance Monotonicity
+## 9. Concrete Examples
 
-The Abel summation was verified against direct computation for 500 random triples (expo, x, y) with dominant expo, dominant x, y, x ≤_D y, and Σx = Σy. In all cases, eval(x) ≤ eval(y) with the Abel decomposition confirming nonneg terms.
+### 9.1 GL₂ Example
+For w = (3, 1) and x = (2, 5):
+- σ = id: 3·2 + 1·5 = 11
+- σ = swap: 1·2 + 3·5 = 17
+- tropSchur = min(11, 17) = 11
 
-### 7.4 Orbit Basis Conjecture
+Symmetry: tropSchur((3,1), (2,5)) = tropSchur((3,1), (5,2)) = 11.
 
-For n = 2, 3, random symmetric tropical polynomials were successfully expressed as tropical linear combinations of orbit-symmetrized monomials in all tested cases. For n = 4, the conjecture appears to hold but exhaustive testing is infeasible.
+### 9.2 GL₃ Example
+For w = (3, 2, 1) and x = (1, 0, -1):
+- The 6 permutations give inner products: 3-1=2, 3-2=1, 2-1=1, 2-3=-1, 1-2=-1, 1-3=-2
+- tropSchur = min over these = -2
 
-## 8. Discussion
+## 10. Generalized Tropical Satake
 
-### 8.1 Comparison with GL_3 Case
+**Definition 10.1** (Tropical Satake Data). A triple (Λ, W, ⟨·,·⟩) where:
+- W is a finite group acting on Λ
+- ⟨·,·⟩ : Λ × Λ → ℤ is W-equivariant: ⟨w·λ, μ⟩ = ⟨λ, w⁻¹·μ⟩
 
-The GL_3 development (TropicalSatakeGL3Algebra.lean) used explicit 6-element enumeration of S_3. Our rank-uniform proofs use `Finset.inf'` over `Finset.univ` and Equiv.Perm, handling all n simultaneously. The key insight is that the proofs factor through four abstract properties of sorting (Section 3.2), not through explicit permutation enumeration.
+**Definition 10.2** (Generalized Orbit-Min).
+```
+genTropSchur(data, w, x) = min_{σ ∈ W} ⟨σ·w, x⟩
+```
 
-### 8.2 Limitations
+**Theorem 10.1** (Argument Invariance). genTropSchur(data, w, τ·x) = genTropSchur(data, w, x).
 
-1. The sorting-based approach assumes integer coordinates. Extension to rational or real-valued coweights requires additional continuity arguments.
-2. The dominance monotonicity theorem requires equal sums — the general case (without this constraint) does not hold.
-3. We do not establish a full algebra isomorphism between formal Hecke operators and tropical polynomial rings; this requires additional work on the convolution side.
+**Theorem 10.2** (Weight Orbit Invariance). genTropSchur(data, τ·w, ·) = genTropSchur(data, w, ·).
 
-### 8.3 Relation to Classical Theory
+These theorems hold for any finite group, not just symmetric groups. This covers the tropical Satake isomorphism for all split reductive groups (types A, B, C, D, G₂, F₄, E₆, E₇, E₈) at once.
 
-The classical Satake isomorphism uses the Cartan decomposition G = KAK and integration over K. Our sorting-based construction is the tropical analogue: the Cartan decomposition becomes "every vector has a unique dominant representative up to permutation," and integration over K becomes "take the minimum over the Weyl orbit."
+## 11. Discussion
 
-## 9. Future Work
+### 11.1 Relation to the Classical Satake Isomorphism
 
-1. **Tropical Langlands for other root systems**: Extend from GL_n (type A) to types B, C, D using appropriate Weyl groups and dominant chambers.
-2. **Algorithmic applications**: Implement the tropical Satake transform as an algorithm for symmetric optimization problems.
-3. **Connection to Gromov-Witten theory**: Tropical Schur polynomials appear in the tropicalization of Gromov-Witten invariants; formalize this connection.
-4. **Quantum tropical Satake**: Define a q-deformation of the tropical Satake correspondence, connecting to crystal bases and canonical bases.
+The classical Satake isomorphism identifies H(G, K) ≅ ℂ[X*(T)]^W. Our tropical version replaces:
+- ℂ[X*(T)] with tropical polynomials (piecewise linear functions)
+- The representation ring with the pointwise algebra under addition
+- The Hecke algebra convolution with the tropical Hecke convolution
+
+The collapse of convolution to pointwise product (Theorem 3.2) is the tropical shadow of the classical isomorphism.
+
+### 11.2 Tropical Demazure Operators and Crystal Bases
+
+The tropical Demazure operators connect to the theory of crystal bases (Kashiwara, Littelmann). In the crystal limit q → 0, Demazure modules become sets of lattice points in a polytope, and the Demazure character formula becomes a tropical identity. Our operators formalize this connection.
+
+### 11.3 Applications to Optimization
+
+The tropical Satake isomorphism has implications for symmetric optimization. Problems invariant under permutation of variables can be solved on the dominant chamber (weakly decreasing vectors), then extended to all of ℤⁿ by the Satake transform. The super-additivity theorem (5.1) provides bounds for decomposing combined objectives.
+
+## 12. Future Work
+
+1. **Tropical Littlewood-Richardson coefficients**: Decompose tropSchur(w₁) + tropSchur(w₂) into a tropical linear combination of tropSchur(μ).
+2. **Tropical Kazhdan-Lusztig theory**: Define tropical analogues of KL polynomials and prove positivity.
+3. **Connections to Newton polytopes**: Relate the Newton polytope of tropSchur(w) to the permutohedron.
+4. **Computational complexity**: Determine the complexity of evaluating tropical Schur polynomials.
 
 ## References
 
-1. Satake, I. "Theory of spherical functions on reductive algebraic groups over p-adic fields." *Publ. Math. IHES* 18 (1963).
-2. Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
-3. Gross, M. *Tropical geometry and mirror symmetry*. CBMS, 2011.
-4. Marshall, A.W. and Olkin, I. *Inequalities: Theory of Majorization and Its Applications*. Academic Press, 1979.
-5. Cartwright, D. and Payne, S. "Connectivity of tropicalizations." *Math. Res. Lett.* 19 (2012).
+1. I. Satake. Theory of spherical functions on reductive algebraic groups over p-adic fields. *Publ. Math. IHÉS*, 18:5–69, 1963.
+2. G.L. Litvinov, V.P. Maslov. The correspondence principle for idempotent calculus and some computer applications. In *Idempotency*, Cambridge Univ. Press, 1998.
+3. M. Kashiwara. Crystal bases of modified quantized enveloping algebra. *Duke Math. J.*, 73(2):383–413, 1994.
+4. P. Littelmann. Paths and root operators in representation theory. *Ann. of Math.*, 142:499–525, 1995.

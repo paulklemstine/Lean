@@ -1,316 +1,215 @@
 #!/usr/bin/env python3
 """
-Algorithms for the Tropical Satake Isomorphism for GL_n
+Algorithms for Tropical Satake Isomorphism
 
-Implements the core computational methods backed by the formal theorems:
-1. Dominant representative computation (sorting)
-2. Tropical Schur polynomial evaluation
-3. Satake transform construction
-4. Dominance order comparison
-5. Abel summation for monotonicity verification
+Type-hinted implementations of key algorithms from the tropical Satake theory.
 """
 
-import itertools
-from typing import List, Tuple, Callable, Optional
+from itertools import permutations
+from typing import List, Callable, Tuple, Optional
+from functools import lru_cache
 
 
-def dominant_representative(v: List[int]) -> List[int]:
-    """Compute the canonical dominant representative of a weight vector.
-
-    The dominant representative is the unique weakly decreasing rearrangement.
-    Formally verified as `sortDescFn` in the Lean development.
-
-    Time complexity: O(n log n)
-    Space complexity: O(n)
-
-    Args:
-        v: Integer weight vector of length n.
-
-    Returns:
-        Weakly decreasing rearrangement of v.
-
-    Examples:
-        >>> dominant_representative([3, 1, 4, 1, 5])
-        [5, 4, 3, 1, 1]
-        >>> dominant_representative([2, 2, 2])
-        [2, 2, 2]
+def tropical_schur(w: List[int], x: List[int]) -> int:
     """
-    return sorted(v, reverse=True)
+    Compute the tropical Schur polynomial.
 
+    tropSchur(w, x) = min_{σ ∈ Sₙ} Σᵢ w(σ(i)) · x(i)
 
-def is_dominant(v: List[int]) -> bool:
-    """Check whether a weight vector is dominant (weakly decreasing).
+    This is the orbit-min construction: minimize the inner product ⟨σ(w), x⟩
+    over all permutations σ of the weight vector w.
 
-    Time complexity: O(n)
-
-    Args:
-        v: Integer weight vector.
-
-    Returns:
-        True if v[0] >= v[1] >= ... >= v[n-1].
-
-    Examples:
-        >>> is_dominant([5, 3, 1])
-        True
-        >>> is_dominant([1, 3, 5])
-        False
-    """
-    return all(v[i] >= v[i + 1] for i in range(len(v) - 1))
-
-
-def tropical_schur_eval(w: List[int], x: List[int]) -> int:
-    """Evaluate the tropical Schur polynomial tropSchur(w, x).
-
-    Computes min_{σ ∈ S_n} Σ_i w(σ(i)) · x(i).
-
-    Formally verified property: this is S_n-invariant in x
-    (tropSchurN_symmetric in the Lean development).
-
-    Time complexity: O(n! · n) — exact for small n.
-    Space complexity: O(n)
-
-    For large n, use tropical_schur_eval_fast which exploits
-    the rearrangement inequality.
+    Time complexity: O(n! · n) — exhaustive search over permutations.
+    For practical use with large n, approximate algorithms or the
+    Hungarian algorithm provide polynomial-time alternatives.
 
     Args:
-        w: Weight vector (typically dominant).
-        x: Evaluation point.
+        w: Weight vector (list of integers)
+        x: Evaluation point (list of integers, same length as w)
 
     Returns:
-        The tropical Schur polynomial value.
-
-    Examples:
-        >>> tropical_schur_eval([2, 1], [3, 5])
-        11
+        The minimum inner product over all permutations of w
     """
     n = len(w)
-    assert len(x) == n, "Vectors must have same length"
-    return min(
-        sum(w[sigma[i]] * x[i] for i in range(n))
-        for sigma in itertools.permutations(range(n))
-    )
+    assert len(x) == n, "Weight and evaluation vectors must have the same length"
+
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        val = sum(w[perm[i]] * x[i] for i in range(n))
+        if val < min_val:
+            min_val = val
+    return int(min_val)
 
 
-def tropical_schur_eval_fast(w: List[int], x: List[int]) -> int:
-    """Fast evaluation of tropical Schur polynomial using rearrangement inequality.
-
-    When both w and x are dominant (sorted descending), the minimum of
-    Σ w(σ(i)) x(i) over all σ is achieved by the reverse permutation:
-    pair the largest w with the smallest x.
-
-    Time complexity: O(n log n)
-    Space complexity: O(n)
-
-    Args:
-        w: Weight vector.
-        x: Evaluation point.
-
-    Returns:
-        tropSchur(w, x).
-
-    Examples:
-        >>> tropical_schur_eval_fast([3, 2, 1], [5, 3, 1])
-        16
+def satake_transform(
+    f: Callable[[List[int]], int],
+    x: List[int]
+) -> int:
     """
-    n = len(w)
-    w_sorted = sorted(w, reverse=True)
-    x_sorted = sorted(x)  # ascending — pairs large w with small x
-    return sum(w_sorted[i] * x_sorted[i] for i in range(n))
+    Compute the Satake transform (orbit-min symmetrization).
 
+    S(f)(x) = min_{σ ∈ Sₙ} f(x ∘ σ)
 
-def satake_extend(f: Callable[[List[int]], int],
-                  x: List[int]) -> int:
-    """Satake extension of a function on dominant coweights.
-
-    Given f defined on dominant vectors, extend to all vectors
-    by composing with the canonical dominant representative.
-
-    Formally verified properties (satake_extend_invariant_fin):
-    1. Agrees with f on dominant vectors.
-    2. Is S_n-invariant.
+    Symmetrizes any function by minimizing over the Weyl group orbit of x.
 
     Args:
-        f: Function on dominant weight vectors.
-        x: Any weight vector.
+        f: A function from ℤⁿ to ℤ
+        x: Evaluation point
 
     Returns:
-        f(sort_desc(x)).
-
-    Examples:
-        >>> satake_extend(lambda v: sum(v), [3, 1, 2])
-        6
-    """
-    return f(dominant_representative(x))
-
-
-def dominance_order(x: List[int], y: List[int]) -> bool:
-    """Check if x ≤_D y in the dominance (majorization) order.
-
-    x ≤_D y iff for all k, the sum of the k largest entries of x
-    is ≤ the sum of the k largest entries of y.
-
-    Time complexity: O(n log n)
-    Space complexity: O(n)
-
-    Args:
-        x, y: Integer vectors of equal length.
-
-    Returns:
-        True if x is majorized by y.
-
-    Examples:
-        >>> dominance_order([2, 2, 2], [3, 2, 1])
-        True
-        >>> dominance_order([3, 2, 1], [2, 2, 2])
-        False
+        The minimum of f over all permutations of x
     """
     n = len(x)
-    assert len(y) == n
-    sx = sorted(x, reverse=True)
-    sy = sorted(y, reverse=True)
-    return all(
-        sum(sx[:k + 1]) <= sum(sy[:k + 1])
-        for k in range(n)
-    )
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        permuted_x = [x[perm[i]] for i in range(n)]
+        val = f(permuted_x)
+        if val < min_val:
+            min_val = val
+    return int(min_val)
 
 
-def abel_summation(weights: List[int], values: List[int]) -> int:
-    """Compute Σ weights[i] * values[i] via Abel summation.
-
-    Decomposes as: Σ_{k=0}^{n-2} (w[k]-w[k+1]) * S[k] + w[n-1] * S[n-1]
-    where S[k] = Σ_{i≤k} values[i].
-
-    This is the computational backbone of the Schur-convexity bridge
-    (symmetric_tropical_dominance_monotone).
-
-    Time complexity: O(n)
-    Space complexity: O(n)
-
-    Args:
-        weights: Weakly decreasing weight vector.
-        values: Value vector (typically y[i] - x[i]).
-
-    Returns:
-        The inner product Σ weights[i] * values[i].
+def tropical_hecke_conv(
+    f: Callable[[List[int]], int],
+    g: Callable[[List[int]], int],
+    x: List[int]
+) -> int:
     """
-    n = len(weights)
-    assert len(values) == n
+    Compute the tropical Hecke convolution.
 
-    # Compute partial sums
-    partial_sums = []
-    s = 0
-    for v in values:
-        s += v
-        partial_sums.append(s)
+    (f ⊛ g)(x) = min_{σ ∈ Sₙ} [f(x) + g(x ∘ σ)]
 
-    # Abel summation formula
-    result = 0
-    for k in range(n - 1):
-        result += (weights[k] - weights[k + 1]) * partial_sums[k]
-    if n > 0:
-        result += weights[n - 1] * partial_sums[n - 1]
-    return result
-
-
-def tropical_schur_product(w1: List[int], w2: List[int],
-                           x: List[int]) -> int:
-    """Tropical product of two Schur polynomials at x.
-
-    Computes min_{σ₁,σ₂ ∈ S_n} (Σ w1(σ₁(i))x(i) + Σ w2(σ₂(i))x(i)).
-
-    Formally verified to be S_n-invariant (tropSchurN_mul_symmetric).
-
-    Time complexity: O((n!)² · n)
+    For Weyl-invariant g, this collapses to f(x) + g(x).
 
     Args:
-        w1, w2: Weight vectors.
-        x: Evaluation point.
+        f, g: Functions from ℤⁿ to ℤ
+        x: Evaluation point
 
     Returns:
-        The tropical product value.
+        The tropical convolution value
+    """
+    n = len(x)
+    f_val = f(x)
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        permuted_x = [x[perm[i]] for i in range(n)]
+        val = f_val + g(permuted_x)
+        if val < min_val:
+            min_val = val
+    return int(min_val)
+
+
+def tropical_demazure(
+    i: int,
+    f: Callable[[List[int]], int],
+    x: List[int]
+) -> int:
+    """
+    Apply the tropical Demazure operator Dᵢ.
+
+    Dᵢ(f)(x) = min(f(x), f(sᵢ·x) + xᵢ - x_{i+1})
+
+    where sᵢ swaps coordinates i and i+1.
+
+    Args:
+        i: Index of the simple transposition (0-indexed)
+        f: Function from ℤⁿ to ℤ
+        x: Evaluation point
+
+    Returns:
+        The Demazure-transformed value
+    """
+    n = len(x)
+    assert 0 <= i < n - 1, f"Index {i} out of range for dimension {n}"
+
+    si_x = list(x)
+    si_x[i], si_x[i + 1] = si_x[i + 1], si_x[i]
+
+    return min(f(x), f(si_x) + x[i] - x[i + 1])
+
+
+def is_dominant(w: List[int]) -> bool:
+    """Check if a weight vector is dominant (weakly decreasing)."""
+    return all(w[i] >= w[i + 1] for i in range(len(w) - 1))
+
+
+def dominant_representative(w: List[int]) -> List[int]:
+    """Return the dominant (weakly decreasing) representative of the Weyl orbit."""
+    return sorted(w, reverse=True)
+
+
+def weyl_rho(n: int) -> List[int]:
+    """The Weyl rho vector ρ = (n-1, n-2, ..., 1, 0)."""
+    return [n - 1 - i for i in range(n)]
+
+
+def verify_super_additivity(
+    w1: List[int],
+    w2: List[int],
+    x: List[int]
+) -> Tuple[int, int, int, bool]:
+    """
+    Verify the super-additivity inequality:
+    tropSchur(w₁) + tropSchur(w₂) ≤ tropSchur(w₁ + w₂)
+
+    Returns:
+        (lhs, rhs, gap, holds) where gap = rhs - lhs
     """
     n = len(w1)
-    perms = list(itertools.permutations(range(n)))
-    return min(
-        sum(w1[s1[i]] * x[i] for i in range(n)) +
-        sum(w2[s2[i]] * x[i] for i in range(n))
-        for s1 in perms for s2 in perms
-    )
+    w_sum = [w1[i] + w2[i] for i in range(n)]
+    lhs = tropical_schur(w1, x) + tropical_schur(w2, x)
+    rhs = tropical_schur(w_sum, x)
+    return lhs, rhs, rhs - lhs, lhs <= rhs
 
 
-def verify_monotonicity(expo: List[int], x: List[int],
-                        y: List[int]) -> dict:
-    """Verify the dominance monotonicity theorem (Theorem D).
-
-    For dominant expo and dominant x, y with x ≤_D y and Σx = Σy,
-    verifies that Σ expo[i]*x[i] ≤ Σ expo[i]*y[i].
-
-    Returns a diagnostic dictionary with the Abel summation breakdown.
-
-    Args:
-        expo: Dominant exponent vector.
-        x, y: Dominant vectors with same sum.
-
-    Returns:
-        Dictionary with verification details.
-    """
-    n = len(expo)
-    d = [y[i] - x[i] for i in range(n)]
-    partial_sums = []
-    s = 0
-    for v in d:
-        s += v
-        partial_sums.append(s)
-
-    terms = []
-    for k in range(n - 1):
-        coeff = expo[k] - expo[k + 1]
-        term = coeff * partial_sums[k]
-        terms.append({
-            'k': k,
-            'diff_expo': coeff,
-            'partial_sum': partial_sums[k],
-            'term': term,
-            'nonneg': term >= 0
-        })
-
-    if n > 0:
-        last_term = expo[n - 1] * partial_sums[n - 1]
-        terms.append({
-            'k': n - 1,
-            'last_expo': expo[n - 1],
-            'total_sum': partial_sums[n - 1],
-            'term': last_term,
-            'nonneg': last_term >= 0
-        })
-
-    total = sum(t['term'] for t in terms)
-
-    return {
-        'expo': expo,
-        'x': x,
-        'y': y,
-        'differences': d,
-        'partial_sums': partial_sums,
-        'abel_terms': terms,
-        'total': total,
-        'monotone': total >= 0
-    }
+def verify_weyl_invariance(
+    w: List[int],
+    x: List[int]
+) -> bool:
+    """Verify that tropSchur(w, ·) is Weyl-invariant at x."""
+    base = tropical_schur(w, x)
+    for perm in permutations(range(len(x))):
+        px = [x[perm[i]] for i in range(len(x))]
+        if tropical_schur(w, px) != base:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    # Quick test
-    print("Tropical Schur eval: tropSchur([3,2,1], [1,2,3]) =",
-          tropical_schur_eval([3, 2, 1], [1, 2, 3]))
-    print("Fast eval:          ", tropical_schur_eval_fast([3, 2, 1], [1, 2, 3]))
+    # Quick self-test
+    print("Running self-tests...")
 
-    print("\nDominance: [2,2,2] ≤_D [3,2,1]:",
-          dominance_order([2, 2, 2], [3, 2, 1]))
+    # Test 1: GL₂ example
+    assert tropical_schur([3, 1], [2, 5]) == 11
+    assert tropical_schur([3, 1], [5, 2]) == 11  # Symmetry
+    print("  ✓ GL₂ example")
 
-    print("\nAbel summation test:",
-          abel_summation([5, 3, 1], [1, -1, 0]))
+    # Test 2: Weyl invariance
+    assert verify_weyl_invariance([5, 3, 1], [2, 7, 4])
+    print("  ✓ Weyl invariance")
 
-    result = verify_monotonicity([5, 3, 1], [2, 2, 2], [3, 2, 1])
-    print("\nMonotonicity verification:", result['monotone'])
-    for t in result['abel_terms']:
-        print(f"  Term: {t}")
+    # Test 3: Super-additivity
+    for _ in range(10):
+        import random
+        n = 3
+        w1 = [random.randint(-5, 5) for _ in range(n)]
+        w2 = [random.randint(-5, 5) for _ in range(n)]
+        x = [random.randint(-5, 5) for _ in range(n)]
+        _, _, _, holds = verify_super_additivity(w1, w2, x)
+        assert holds, f"Super-additivity failed for w1={w1}, w2={w2}, x={x}"
+    print("  ✓ Super-additivity (10 random tests)")
+
+    # Test 4: Satake = tropSchur
+    w = [4, 2, 1]
+    mono = lambda x: sum(w[i] * x[i] for i in range(len(w)))
+    for x in [[1, 0, -1], [2, 3, 1]]:
+        assert satake_transform(mono, x) == tropical_schur(w, x)
+    print("  ✓ Satake transform = tropSchur")
+
+    # Test 5: Dominant representative
+    assert dominant_representative([1, 5, 3]) == [5, 3, 1]
+    assert is_dominant([5, 3, 1])
+    assert not is_dominant([1, 5, 3])
+    print("  ✓ Dominant representative")
+
+    print("\nAll self-tests passed!")

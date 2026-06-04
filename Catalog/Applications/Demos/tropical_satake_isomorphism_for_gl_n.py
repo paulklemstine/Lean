@@ -1,514 +1,294 @@
 #!/usr/bin/env python3
 """
-Applications of the Tropical Satake Isomorphism
+Tropical Satake Isomorphism for GL_n: Numerical Demonstrations
 
-Demonstrates real-world connections:
-1. Optimization: permutation-invariant cost landscapes
-2. Statistical mechanics: zero-temperature partition functions
-3. Combinatorics: tropical characters and Young diagrams
+Demonstrates:
+1. Tropical Schur polynomial computation
+2. Weyl invariance verification
+3. Super-additivity of tropical Schur
+4. Tropical Hecke convolution collapse
+5. Tropical Demazure operator
 """
 
-import itertools
-from typing import List, Tuple
-from algorithms import (
-    dominant_representative, tropical_schur_eval,
-    tropical_schur_eval_fast, dominance_order,
-    abel_summation, verify_monotonicity
-)
+from itertools import permutations
+from typing import List, Tuple, Callable
+import math
 
 
-# ─────────────────────────────────────────────────────────────────────
-#  Application 1: Assignment Problem via Tropical Schur
-# ─────────────────────────────────────────────────────────────────────
-
-def assignment_problem():
-    """The tropical Schur polynomial solves the assignment problem.
-
-    Given costs w[i] for tasks and capacities x[j] for workers,
-    tropSchur(w, x) = min over assignments of total cost.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Assignment Problem via Tropical Schur")
-    print("=" * 70)
-    print()
-
-    # Task difficulties (costs)
-    w = [10, 7, 3, 1]
-    # Worker capacities
-    x = [8, 5, 4, 2]
-
-    val = tropical_schur_eval(w, x)
-    val_fast = tropical_schur_eval_fast(w, x)
-
-    print(f"  Task costs:      w = {w}")
-    print(f"  Worker capacity: x = {x}")
-    print(f"  Optimal cost (exact):  {val}")
-    print(f"  Optimal cost (fast):   {val_fast}")
-    print(f"  Match: {val == val_fast} ✓")
-    print()
-
-    # The S_n-invariance means the optimal cost doesn't depend on
-    # which worker label we assign to which capacity
-    print("  Key insight: The optimal assignment cost is invariant under")
-    print("  relabeling workers (Theorem B: tropSchurN_symmetric).")
-    print()
+def tropical_schur(w: List[int], x: List[int]) -> int:
+    """Compute tropSchur(w, x) = min_{σ ∈ Sₙ} Σᵢ w(σ(i)) * x(i)."""
+    n = len(w)
+    assert len(x) == n
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        val = sum(w[perm[i]] * x[i] for i in range(n))
+        min_val = min(min_val, val)
+    return min_val
 
 
-# ─────────────────────────────────────────────────────────────────────
-#  Application 2: Zero-Temperature Partition Function
-# ─────────────────────────────────────────────────────────────────────
-
-def statistical_mechanics():
-    """Min-plus convolution as zero-temperature partition function.
-
-    In statistical mechanics, the partition function Z = Σ exp(-βE)
-    becomes min(E) as β → ∞ (zero temperature). The tropical Schur
-    polynomial is exactly this zero-temperature limit for a system
-    with Weyl group symmetry.
-    """
-    print("=" * 70)
-    print("APPLICATION 2: Zero-Temperature Statistical Mechanics")
-    print("=" * 70)
-    print()
-
-    # Energy levels for a system with 4 indistinguishable particles
-    energies = [5, 3, 2, 1]  # available energy states
-
-    # External field coupling
-    field = [4, 3, 2, 1]
-
-    # The ground state energy (zero-temperature limit)
-    # is the tropical Schur polynomial
-    ground_state = tropical_schur_eval(energies, field)
-
-    print(f"  Energy states:   {energies}")
-    print(f"  External field:  {field}")
-    print(f"  Ground state energy: {ground_state}")
-    print()
-
-    # Dominance monotonicity (Theorem D) says:
-    # A more "spread out" field (in majorization sense) gives higher energy
-    field_uniform = [2, 2, 3, 3]  # more uniform, sum = 10
-    field_spread = [5, 3, 1, 1]   # more spread, sum = 10
-
-    e_uniform = tropical_schur_eval(energies, field_uniform)
-    e_spread = tropical_schur_eval(energies, field_spread)
-
-    print(f"  Uniform field {field_uniform}: energy = {e_uniform}")
-    print(f"  Spread field  {field_spread}:  energy = {e_spread}")
-    print(f"  Uniform ≤_D Spread: {dominance_order(field_uniform, field_spread)}")
-    print(f"  Energy monotone:    {e_uniform <= e_spread} ✓")
-    print()
-    print("  Key insight: More 'ordered' (majorized) configurations have")
-    print("  lower ground state energy — the Schur-convexity bridge.")
-    print()
+def tropical_monomial(w: List[int], x: List[int]) -> int:
+    """Compute tropMonomial(w, x) = Σᵢ w(i) * x(i)."""
+    return sum(w[i] * x[i] for i in range(len(w)))
 
 
-# ─────────────────────────────────────────────────────────────────────
-#  Application 3: Tropical Characters and Partitions
-# ─────────────────────────────────────────────────────────────────────
-
-def tropical_characters():
-    """Connection to partitions and Young diagrams.
-
-    Dominant coweights for GL_n correspond to integer partitions.
-    The tropical Schur polynomial is a tropicalized Schur function.
-    """
-    print("=" * 70)
-    print("APPLICATION 3: Tropical Characters and Partitions")
-    print("=" * 70)
-    print()
-
-    # Partitions of k with at most n parts correspond to dominant
-    # coweights with sum k
-    n = 4
-    k = 6
-
-    print(f"  Partitions of {k} with at most {n} parts:")
-    print(f"  (These are dominant coweights for GL_{n} with sum {k})")
-    print()
-
-    partitions = []
-    for p in itertools.combinations_with_replacement(range(k + 1), n):
-        if sum(p) == k:
-            part = sorted(p, reverse=True)
-            if part not in partitions:
-                partitions.append(part)
-
-    for p in partitions:
-        # Evaluate tropical Schur at x = (1,1,...,1)
-        x_ones = [1] * n
-        ts = tropical_schur_eval(p, x_ones)
-        # At x = (n-1, n-2, ..., 0) — the half-sum of positive roots
-        x_rho = list(range(n - 1, -1, -1))
-        ts_rho = tropical_schur_eval(p, x_rho)
-        print(f"    λ = {p}  →  tropSchur(λ, 1) = {ts},  "
-              f"tropSchur(λ, ρ) = {ts_rho}")
-
-    print()
-    print("  The tropical Schur at ρ gives the 'tropical dimension'")
-    print("  of the corresponding representation.")
-    print()
+def satake_transform(f: Callable, x: List[int]) -> int:
+    """Compute S(f)(x) = min_{σ ∈ Sₙ} f(x ∘ σ)."""
+    n = len(x)
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        permuted_x = [x[perm[i]] for i in range(n)]
+        min_val = min(min_val, f(permuted_x))
+    return min_val
 
 
-# ─────────────────────────────────────────────────────────────────────
-#  Application 4: Dynamic Programming / Shortest Paths
-# ─────────────────────────────────────────────────────────────────────
-
-def dynamic_programming():
-    """Hecke convolution as dynamic programming composition.
-
-    In the tropical semiring, min-plus convolution corresponds to
-    composing shortest-path computations. The Satake transform
-    converts this into symmetric tropical polynomial multiplication.
-    """
-    print("=" * 70)
-    print("APPLICATION 4: Hecke Convolution as Shortest Paths")
-    print("=" * 70)
-    print()
-
-    # Two stages of a shortest path problem
-    w1 = [3, 1]  # costs for stage 1
-    w2 = [2, 1]  # costs for stage 2
-
-    print(f"  Stage 1 costs: w1 = {w1}")
-    print(f"  Stage 2 costs: w2 = {w2}")
-    print()
-
-    # The tropical product gives the two-stage optimal cost
-    x_values = [[1, 0], [0, 1], [1, 1], [2, 1], [1, 2]]
-
-    print("  Evaluation at various points:")
-    for x in x_values:
-        s1 = tropical_schur_eval(w1, x)
-        s2 = tropical_schur_eval(w2, x)
-
-        # Product: min over pairs
-        perms = list(itertools.permutations(range(len(w1))))
-        product = min(
-            sum(w1[s1p[i]] * x[i] for i in range(len(w1))) +
-            sum(w2[s2p[i]] * x[i] for i in range(len(w2)))
-            for s1p in perms for s2p in perms
-        )
-
-        print(f"    x={x}: S1={s1}, S2={s2}, Product={product}, "
-              f"S1+S2={s1+s2}")
-
-    print()
-    print("  Note: Product ≤ S1+S2 always (independent optimization ≤ joint).")
-    print("  This is the min-plus triangle inequality.")
-    print()
+def trop_hecke_conv(f: Callable, g: Callable, x: List[int]) -> int:
+    """Compute (f ⊛ g)(x) = min_{σ ∈ Sₙ} [f(x) + g(x ∘ σ)]."""
+    n = len(x)
+    min_val = float('inf')
+    for perm in permutations(range(n)):
+        permuted_x = [x[perm[i]] for i in range(n)]
+        min_val = min(min_val, f(x) + g(permuted_x))
+    return min_val
 
 
-if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║  TROPICAL SATAKE — APPLICATIONS                                ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
+def trop_demazure(i: int, f: Callable, x: List[int]) -> int:
+    """Compute Dᵢ(f)(x) = min(f(x), f(sᵢ·x) + xᵢ - x_{i+1})."""
+    n = len(x)
+    assert i + 1 < n
+    si_x = list(x)
+    si_x[i], si_x[i + 1] = si_x[i + 1], si_x[i]
+    return min(f(x), f(si_x) + x[i] - x[i + 1])
 
-    assignment_problem()
-    statistical_mechanics()
-    tropical_characters()
-    dynamic_programming()
 
-    print("All applications demonstrated successfully.")
+def weyl_rho(n: int) -> List[int]:
+    """The Weyl rho vector: ρ = (n-1, n-2, ..., 1, 0)."""
+    return [n - 1 - i for i in range(n)]
+
+
+# ============================================================
+# DEMO 1: Tropical Schur Polynomial for GL₂
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Tropical Schur Polynomial for GL₂")
+print("=" * 60)
+
+w = [3, 1]
+test_points = [[2, 5], [5, 2], [1, 1], [0, 10], [10, 0]]
+
+for x in test_points:
+    val = tropical_schur(w, x)
+    perms = []
+    for p in permutations(range(2)):
+        v = sum(w[p[i]] * x[i] for i in range(2))
+        perms.append(f"{'⟨' + ','.join(str(w[p[i]]) for i in range(2)) + '⟩·⟨' + ','.join(str(xi) for xi in x) + '⟩'}={v}")
+    print(f"  tropSchur({w}, {x}) = min({', '.join(str(sum(w[p[i]]*x[i] for i in range(2))) for p in permutations(range(2)))}) = {val}")
+
+print()
+
+# ============================================================
+# DEMO 2: Weyl Invariance Verification
+# ============================================================
+print("=" * 60)
+print("DEMO 2: Weyl Invariance Verification for GL₃")
+print("=" * 60)
+
+w = [5, 3, 1]
+x = [2, 7, 4]
+base_val = tropical_schur(w, x)
+print(f"  w = {w}, x = {x}")
+print(f"  tropSchur(w, x) = {base_val}")
+
+for perm in permutations(range(3)):
+    permuted_x = [x[perm[i]] for i in range(3)]
+    val = tropical_schur(w, permuted_x)
+    status = "✓" if val == base_val else "✗"
+    print(f"  tropSchur(w, {permuted_x}) = {val} {status}")
+
+print()
+
+# ============================================================
+# DEMO 3: Super-Additivity
+# ============================================================
+print("=" * 60)
+print("DEMO 3: Super-Additivity of Tropical Schur")
+print("=" * 60)
+
+w1 = [3, 1]
+w2 = [2, 0]
+w_sum = [w1[i] + w2[i] for i in range(2)]
+
+test_x = [[1, 0], [0, 1], [2, 5], [3, -1], [1, 1]]
+
+for x in test_x:
+    ts1 = tropical_schur(w1, x)
+    ts2 = tropical_schur(w2, x)
+    ts_sum = tropical_schur(w_sum, x)
+    gap = ts_sum - (ts1 + ts2)
+    status = "✓" if ts1 + ts2 <= ts_sum else "✗"
+    print(f"  x={x}: tropSchur(w₁+w₂)={ts_sum}, tropSchur(w₁)+tropSchur(w₂)={ts1}+{ts2}={ts1+ts2}, gap={gap} {status}")
+
+print()
+
+# ============================================================
+# DEMO 4: Convolution Collapse
+# ============================================================
+print("=" * 60)
+print("DEMO 4: Tropical Hecke Convolution Collapse")
+print("=" * 60)
+
+w_f = [3, 1]
+w_g = [2, 0]
+
+# f = tropSchur(w_f), g = tropSchur(w_g) are Weyl-invariant
+f = lambda x: tropical_schur(w_f, x)
+g = lambda x: tropical_schur(w_g, x)
+
+for x in [[1, 0], [2, 5], [3, -1], [1, 1]]:
+    conv = trop_hecke_conv(f, g, x)
+    pointwise = f(x) + g(x)
+    status = "✓" if conv == pointwise else "✗"
+    print(f"  x={x}: (f⊛g)(x)={conv}, f(x)+g(x)={pointwise} {status}")
+
+print()
+
+# ============================================================
+# DEMO 5: Tropical Demazure Operator
+# ============================================================
+print("=" * 60)
+print("DEMO 5: Tropical Demazure Operator")
+print("=" * 60)
+
+w_mono = [3, 1, 0]
+mono = lambda x: tropical_monomial(w_mono, x)
+
+print(f"  Monomial w = {w_mono}")
+print(f"  D₀(mono)(x) = min(mono(x), mono(s₀·x) + x₀ - x₁)")
+print()
+
+for x in [[5, 3, 1], [1, 3, 5], [2, 2, 2], [4, 2, 0]]:
+    mono_val = mono(x)
+    dema_val = trop_demazure(0, mono, x)
+    si_x = [x[1], x[0], x[2]]
+    mono_si = mono(si_x)
+    correction = x[0] - x[1]
+    print(f"  x={x}: mono={mono_val}, mono(s₀·x)={mono_si}, correction={correction}")
+    print(f"    D₀(mono)(x) = min({mono_val}, {mono_si}+{correction}={mono_si+correction}) = {dema_val}")
+
+print()
+
+# ============================================================
+# DEMO 6: Weight Orbit Invariance (Boundary)
+# ============================================================
+print("=" * 60)
+print("DEMO 6: Weight Orbit Invariance (Boundary)")
+print("=" * 60)
+
+w = [5, 3, 1]
+x = [2, 7, 4]
+
+print(f"  Base weight w = {w}")
+for perm in permutations(range(3)):
+    perm_w = [w[perm[i]] for i in range(3)]
+    val = tropical_schur(perm_w, x)
+    print(f"  tropSchur({perm_w}, {x}) = {val}")
+
+print()
+
+# ============================================================
+# DEMO 7: Satake Transform Verification
+# ============================================================
+print("=" * 60)
+print("DEMO 7: Satake Transform = Tropical Schur")
+print("=" * 60)
+
+w = [4, 2, 1]
+mono_w = lambda x: tropical_monomial(w, x)
+
+for x in [[1, 0, -1], [2, 3, 1], [5, 5, 5]]:
+    satake_val = satake_transform(mono_w, x)
+    schur_val = tropical_schur(w, x)
+    status = "✓" if satake_val == schur_val else "✗"
+    print(f"  x={x}: S(mono)(x)={satake_val}, tropSchur(w,x)={schur_val} {status}")
+
+print()
+print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Tropical Satake Isomorphism for GL_n — Interactive Demonstration
+Visualization: Tropical Schur Polynomial Surface for GL₂
 
-This script demonstrates the key constructions of the tropical Satake
-correspondence: sorting-based Weyl chamber canonicalization, tropical Schur
-polynomials, orbit-min construction, and the Schur-convexity bridge.
+Plots the piecewise-linear surface tropSchur((a,b), (x₁, x₂)) as a function
+of (x₁, x₂) for fixed weight (a, b).
 """
+import numpy as np
+import matplotlib.pyplot as plt
+from itertools import permutations
 
-import itertools
-import random
-from typing import List, Tuple
-from functools import reduce
 
-# ─────────────────────────────────────────────────────────────────────
-#  Core definitions
-# ─────────────────────────────────────────────────────────────────────
+def tropical_schur_2d(a: int, b: int, x1: float, x2: float) -> float:
+    """tropSchur((a,b), (x1,x2)) = min(a*x1 + b*x2, b*x1 + a*x2)"""
+    return min(a * x1 + b * x2, b * x1 + a * x2)
 
-def sort_desc(v: List[int]) -> List[int]:
-    """Canonical dominant representative: sort coordinates in decreasing order."""
-    return sorted(v, reverse=True)
 
-def is_dominant(v: List[int]) -> bool:
-    """Check if a vector is weakly decreasing (dominant)."""
-    return all(v[i] >= v[i+1] for i in range(len(v)-1))
-
-def trop_monomial_eval(coeff: int, expo: List[int], x: List[int]) -> int:
-    """Evaluate tropical monomial: coeff + sum(expo[i]*x[i])."""
-    return coeff + sum(e*xi for e, xi in zip(expo, x))
-
-def trop_schur(w: List[int], x: List[int]) -> int:
-    """Tropical Schur polynomial: min over all permutations of w."""
+def tropical_schur_nd(w, x):
+    """General tropSchur for any dimension."""
     n = len(w)
-    perms = itertools.permutations(range(n))
-    return min(sum(w[sigma[i]] * x[i] for i in range(n)) for sigma in perms)
+    return min(
+        sum(w[p[i]] * x[i] for i in range(n))
+        for p in permutations(range(n))
+    )
 
-def satake_extend(f, x: List[int]) -> int:
-    """Satake extension: apply f to the dominant representative of x."""
-    return f(sort_desc(x))
 
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 1: Satake Extension (Theorem A)
-# ─────────────────────────────────────────────────────────────────────
+# Create figure with two subplots
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-def demo_satake_extension():
-    print("=" * 70)
-    print("DEMO 1: Satake Extension (Theorem A)")
-    print("=" * 70)
-    print()
-    print("Any function on dominant coweights extends to an S_n-invariant")
-    print("function on all of Z^n by sorting coordinates.")
-    print()
+# ---- Plot 1: GL₂ Tropical Schur Surface ----
+ax1 = axes[0]
+x1_range = np.linspace(-3, 3, 200)
+x2_range = np.linspace(-3, 3, 200)
+X1, X2 = np.meshgrid(x1_range, x2_range)
 
-    # Define a simple function on dominant coweights
-    def f_dominant(v: List[int]) -> int:
-        """Example function: sum of squares."""
-        return sum(x**2 for x in v)
+a, b = 3, 1
+Z = np.vectorize(lambda x1, x2: tropical_schur_2d(a, b, x1, x2))(X1, X2)
 
-    for n in [2, 3, 4]:
-        print(f"  n = {n}:")
-        # Generate a random vector and all its permutations
-        x = [random.randint(-3, 3) for _ in range(n)]
-        print(f"    x = {x}, sorted = {sort_desc(x)}")
+contour = ax1.contourf(X1, X2, Z, levels=20, cmap='viridis')
+plt.colorbar(contour, ax=ax1, label='tropSchur((3,1), (x₁, x₂))')
+ax1.plot([-3, 3], [-3, 3], 'r--', linewidth=2, label='Ridge: x₁ = x₂')
+ax1.set_xlabel('x₁')
+ax1.set_ylabel('x₂')
+ax1.set_title('GL₂ Tropical Schur: tropSchur((3,1), x)')
+ax1.legend()
+ax1.set_aspect('equal')
 
-        # Check that all permutations give the same value
-        vals = set()
-        for perm in itertools.permutations(x):
-            val = satake_extend(f_dominant, list(perm))
-            vals.add(val)
+# ---- Plot 2: Super-Additivity Gap ----
+ax2 = axes[1]
+w1 = [3, 1]
+w2 = [2, 0]
+w_sum = [5, 1]
 
-        print(f"    f(sort(x)) = {satake_extend(f_dominant, x)}")
-        print(f"    All permutations give same value: {len(vals) == 1} ✓")
-        print()
+gaps = []
+x1_vals = np.linspace(-3, 3, 100)
+x2_vals = np.linspace(-3, 3, 100)
+X1g, X2g = np.meshgrid(x1_vals, x2_vals)
 
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 2: Tropical Schur Symmetry (Theorem B)
-# ─────────────────────────────────────────────────────────────────────
+def gap_func(x1, x2):
+    ts1 = tropical_schur_2d(w1[0], w1[1], x1, x2)
+    ts2 = tropical_schur_2d(w2[0], w2[1], x1, x2)
+    ts_sum = tropical_schur_2d(w_sum[0], w_sum[1], x1, x2)
+    return ts_sum - (ts1 + ts2)
 
-def demo_trop_schur_symmetry():
-    print("=" * 70)
-    print("DEMO 2: Tropical Schur Polynomial Symmetry (Theorem B)")
-    print("=" * 70)
-    print()
-    print("tropSchur(w, x) = min_{sigma in S_n} sum_i w(sigma(i)) * x(i)")
-    print("is invariant under permuting x.")
-    print()
+Zgap = np.vectorize(gap_func)(X1g, X2g)
 
-    for n in [2, 3, 4]:
-        w = list(range(n, 0, -1))  # dominant weight [n, n-1, ..., 1]
-        x = [random.randint(-2, 5) for _ in range(n)]
-        val = trop_schur(w, x)
-        print(f"  n={n}, w={w}, x={x}")
-        print(f"    tropSchur(w, x) = {val}")
+contour2 = ax2.contourf(X1g, X2g, Zgap, levels=20, cmap='RdYlGn')
+plt.colorbar(contour2, ax=ax2, label='Gap: tropSchur(w₁+w₂) - [tropSchur(w₁) + tropSchur(w₂)]')
+ax2.contour(X1g, X2g, Zgap, levels=[0], colors='black', linewidths=2)
+ax2.set_xlabel('x₁')
+ax2.set_ylabel('x₂')
+ax2.set_title('Super-Additivity Gap (w₁=(3,1), w₂=(2,0))')
+ax2.set_aspect('equal')
 
-        # Check invariance under all permutations of x
-        all_equal = True
-        for perm in itertools.permutations(x):
-            if trop_schur(w, list(perm)) != val:
-                all_equal = False
-                break
-        print(f"    Invariant under all permutations of x: {all_equal} ✓")
-
-        # Show the achieving permutation
-        n_perms = len(list(itertools.permutations(range(n))))
-        print(f"    Minimum over {n_perms} permutations of w")
-        print()
-
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 3: Tropical Product Symmetry (Theorem C)
-# ─────────────────────────────────────────────────────────────────────
-
-def demo_trop_product_symmetry():
-    print("=" * 70)
-    print("DEMO 3: Tropical Product of Schur Polynomials (Theorem C)")
-    print("=" * 70)
-    print()
-    print("The tropical product of two Schur polynomials:")
-    print("  (S_w1 ⊗ S_w2)(x) = min_{σ1,σ2} (⟨w1∘σ1, x⟩ + ⟨w2∘σ2, x⟩)")
-    print("is also S_n-invariant.")
-    print()
-
-    def trop_schur_mul(w1, w2, x):
-        n = len(w1)
-        perms = list(itertools.permutations(range(n)))
-        return min(
-            sum(w1[s1[i]] * x[i] for i in range(n)) +
-            sum(w2[s2[i]] * x[i] for i in range(n))
-            for s1 in perms for s2 in perms
-        )
-
-    for n in [2, 3, 4]:
-        w1 = list(range(n, 0, -1))
-        w2 = [n - i for i in range(n)]
-        x = [random.randint(-2, 4) for _ in range(n)]
-        val = trop_schur_mul(w1, w2, x)
-        print(f"  n={n}, w1={w1}, w2={w2}")
-        print(f"    x={x}, product value = {val}")
-
-        all_equal = all(
-            trop_schur_mul(w1, w2, list(p)) == val
-            for p in itertools.permutations(x)
-        )
-        print(f"    Invariant: {all_equal} ✓")
-        print()
-
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 4: Schur-Convexity / Dominance Monotonicity (Theorem D)
-# ─────────────────────────────────────────────────────────────────────
-
-def demo_dominance_monotonicity():
-    print("=" * 70)
-    print("DEMO 4: Dominance Order Monotonicity (Theorem D)")
-    print("=" * 70)
-    print()
-    print("For dominant exponent vectors, tropical monomials are monotone")
-    print("under the dominance (majorization) order when sums are equal.")
-    print()
-
-    def dominance_order(x, y):
-        """x ≤_D y iff partial sums of sorted x ≤ partial sums of sorted y."""
-        sx, sy = sort_desc(x), sort_desc(y)
-        return all(
-            sum(sx[:k+1]) <= sum(sy[:k+1])
-            for k in range(len(x))
-        )
-
-    # Test cases: vectors with same sum
-    test_cases = [
-        ([2, 2, 2], [3, 2, 1]),
-        ([3, 3, 3, 3], [5, 4, 2, 1]),
-        ([1, 1, 1, 1, 1], [3, 1, 1, 0, 0]),
-    ]
-
-    expo = [5, 3, 1]  # dominant exponent vector
-
-    for x, y in test_cases:
-        n = len(x)
-        if n > len(expo):
-            e = list(range(n, 0, -1))
-        else:
-            e = expo[:n]
-
-        val_x = trop_monomial_eval(0, e, x)
-        val_y = trop_monomial_eval(0, e, y)
-        dom = dominance_order(x, y)
-        print(f"  expo={e}, x={x}, y={y}")
-        print(f"    sum(x)={sum(x)}, sum(y)={sum(y)}")
-        print(f"    x ≤_D y: {dom}")
-        print(f"    eval(x)={val_x} ≤ eval(y)={val_y}: {val_x <= val_y} ✓")
-        print()
-
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 5: Orbit-Basis Conjecture Test
-# ─────────────────────────────────────────────────────────────────────
-
-def demo_orbit_basis_conjecture():
-    print("=" * 70)
-    print("DEMO 5: Orbit-Generated Basis Conjecture")
-    print("=" * 70)
-    print()
-    print("Conjecture: Every Weyl-invariant tropical polynomial is the")
-    print("tropical linear combination of orbit-symmetrized monomials.")
-    print()
-
-    def orbit_symmetrize(expo, x):
-        """min over all permutations of expo of sum(expo[sigma(i)] * x[i])."""
-        n = len(expo)
-        return min(
-            sum(expo[sigma[i]] * x[i] for i in range(n))
-            for sigma in itertools.permutations(range(n))
-        )
-
-    # Test: can we express a random symmetric function as min of orbit-monomials?
-    for n in [2, 3]:
-        print(f"  n = {n}:")
-        # Generate random dominant exponent vectors
-        num_basis = 3
-        basis_expos = []
-        for _ in range(num_basis):
-            e = sorted([random.randint(0, 4) for _ in range(n)], reverse=True)
-            basis_expos.append(e)
-
-        # The symmetric function: min of orbit-symmetrized basis elements
-        def sym_func(x):
-            return min(orbit_symmetrize(e, x) for e in basis_expos)
-
-        # Verify symmetry on random points
-        test_points = [[random.randint(-3, 3) for _ in range(n)] for _ in range(20)]
-        all_symmetric = True
-        for x in test_points:
-            val = sym_func(x)
-            for perm in itertools.permutations(x):
-                if sym_func(list(perm)) != val:
-                    all_symmetric = False
-                    break
-
-        print(f"    Basis exponents: {basis_expos}")
-        print(f"    Symmetry verified on 20 random points: {all_symmetric} ✓")
-        print()
-
-# ─────────────────────────────────────────────────────────────────────
-#  Demo 6: Chamberwise Linear Regions
-# ─────────────────────────────────────────────────────────────────────
-
-def demo_chamberwise():
-    print("=" * 70)
-    print("DEMO 6: Chamberwise Linear Structure (n=3)")
-    print("=" * 70)
-    print()
-    print("Tropical Schur polynomials are piecewise linear.")
-    print("On each Weyl chamber, the function is affine.")
-    print()
-
-    w = [3, 2, 1]
-    print(f"  Weight w = {w}")
-    print(f"  Chambers and achieving permutations:")
-    print()
-
-    # For each chamber (sorted order of x), find which permutation achieves min
-    chambers = list(itertools.permutations(range(3)))
-    for chamber in chambers:
-        # x in this chamber: x[chamber[0]] >= x[chamber[1]] >= x[chamber[2]]
-        x = [0, 0, 0]
-        x[chamber[0]] = 10
-        x[chamber[1]] = 5
-        x[chamber[2]] = 1
-
-        val = trop_schur(w, x)
-        # Find achieving permutation
-        for sigma in itertools.permutations(range(3)):
-            inner = sum(w[sigma[i]] * x[i] for i in range(3))
-            if inner == val:
-                print(f"    Chamber x[{chamber[0]}] >= x[{chamber[1]}] >= x[{chamber[2]}]: "
-                      f"achieved by σ = {sigma}, value = {val}")
-                break
-    print()
-
-# ─────────────────────────────────────────────────────────────────────
-#  Main
-# ─────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    random.seed(42)
-    print()
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║  TROPICAL SATAKE ISOMORPHISM FOR GL_n — DEMONSTRATION          ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_satake_extension()
-    demo_trop_schur_symmetry()
-    demo_trop_product_symmetry()
-    demo_dominance_monotonicity()
-    demo_orbit_basis_conjecture()
-    demo_chamberwise()
-
-    print("All demonstrations completed successfully.")
+plt.tight_layout()
+plt.savefig('tropical_schur_visualization.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved: tropical_schur_visualization.png")
