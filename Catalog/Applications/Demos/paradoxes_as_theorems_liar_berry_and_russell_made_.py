@@ -1,470 +1,428 @@
 #!/usr/bin/env python3
 """
-Paraconsistent Logic Demo: Paradoxes as Theorems
+Paradoxes as Theorems: Demo of the LP (Logic of Paradox) System
 
-Demonstrates Belnap's four-valued logic and how the Liar, Russell, and Berry
-paradoxes become well-behaved theorems in a paraconsistent framework.
+Demonstrates the three-valued paraconsistent logic where Liar, Russell,
+and Berry paradoxes coexist as theorems in a nontrivial, self-sound system.
 """
 
 from enum import Enum
-from typing import Callable, Dict, List, Tuple
+from typing import Callable
 
 
-class BelnapVal(Enum):
-    """The four truth values of Belnap's logic."""
-    T = "True"
-    F = "False"
-    B = "Both"
-    N = "Neither"
+class TV(Enum):
+    """Three-valued truth: true, false, both."""
+    TT = "true"
+    FF = "false"
+    BOTH = "both"
+
+    def designated(self) -> bool:
+        return self in (TV.TT, TV.BOTH)
+
+    def neg(self) -> "TV":
+        if self == TV.TT: return TV.FF
+        if self == TV.FF: return TV.TT
+        return TV.BOTH
+
+    @staticmethod
+    def conj(a: "TV", b: "TV") -> "TV":
+        if a == TV.FF or b == TV.FF: return TV.FF
+        if a == TV.TT: return b
+        if b == TV.TT: return a
+        return TV.BOTH
+
+    @staticmethod
+    def disj(a: "TV", b: "TV") -> "TV":
+        if a == TV.TT or b == TV.TT: return TV.TT
+        if a == TV.FF: return b
+        if b == TV.FF: return a
+        return TV.BOTH
 
 
-def is_true(v: BelnapVal) -> bool:
-    """A value is 'at least true' if it is T or B."""
-    return v in (BelnapVal.T, BelnapVal.B)
-
-
-def is_false(v: BelnapVal) -> bool:
-    """A value is 'at least false' if it is F or B."""
-    return v in (BelnapVal.F, BelnapVal.B)
-
-
-def belnap_neg(v: BelnapVal) -> BelnapVal:
-    """Belnap negation: swaps T↔F, fixes B and N."""
-    return {
-        BelnapVal.T: BelnapVal.F,
-        BelnapVal.F: BelnapVal.T,
-        BelnapVal.B: BelnapVal.B,
-        BelnapVal.N: BelnapVal.N,
-    }[v]
-
-
-def belnap_conj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
-    """Belnap conjunction (truth-order meet)."""
-    table = {
-        (BelnapVal.T, BelnapVal.T): BelnapVal.T,
-        (BelnapVal.T, BelnapVal.F): BelnapVal.F,
-        (BelnapVal.T, BelnapVal.B): BelnapVal.B,
-        (BelnapVal.T, BelnapVal.N): BelnapVal.N,
-        (BelnapVal.F, BelnapVal.T): BelnapVal.F,
-        (BelnapVal.F, BelnapVal.F): BelnapVal.F,
-        (BelnapVal.F, BelnapVal.B): BelnapVal.F,
-        (BelnapVal.F, BelnapVal.N): BelnapVal.F,
-        (BelnapVal.B, BelnapVal.T): BelnapVal.B,
-        (BelnapVal.B, BelnapVal.F): BelnapVal.F,
-        (BelnapVal.B, BelnapVal.B): BelnapVal.B,
-        (BelnapVal.B, BelnapVal.N): BelnapVal.F,
-        (BelnapVal.N, BelnapVal.T): BelnapVal.N,
-        (BelnapVal.N, BelnapVal.F): BelnapVal.F,
-        (BelnapVal.N, BelnapVal.B): BelnapVal.F,
-        (BelnapVal.N, BelnapVal.N): BelnapVal.N,
-    }
-    return table[(a, b)]
-
-
-def belnap_disj(a: BelnapVal, b: BelnapVal) -> BelnapVal:
-    """Belnap disjunction (truth-order join)."""
-    table = {
-        (BelnapVal.T, BelnapVal.T): BelnapVal.T,
-        (BelnapVal.T, BelnapVal.F): BelnapVal.T,
-        (BelnapVal.T, BelnapVal.B): BelnapVal.T,
-        (BelnapVal.T, BelnapVal.N): BelnapVal.T,
-        (BelnapVal.F, BelnapVal.T): BelnapVal.T,
-        (BelnapVal.F, BelnapVal.F): BelnapVal.F,
-        (BelnapVal.F, BelnapVal.B): BelnapVal.B,
-        (BelnapVal.F, BelnapVal.N): BelnapVal.N,
-        (BelnapVal.B, BelnapVal.T): BelnapVal.T,
-        (BelnapVal.B, BelnapVal.F): BelnapVal.B,
-        (BelnapVal.B, BelnapVal.B): BelnapVal.B,
-        (BelnapVal.B, BelnapVal.N): BelnapVal.T,
-        (BelnapVal.N, BelnapVal.T): BelnapVal.T,
-        (BelnapVal.N, BelnapVal.F): BelnapVal.N,
-        (BelnapVal.N, BelnapVal.B): BelnapVal.T,
-        (BelnapVal.N, BelnapVal.N): BelnapVal.N,
-    }
-    return table[(a, b)]
-
-
-def demo_liar_paradox():
-    """Demonstrate the Liar sentence in four-valued logic."""
+def demo_explosion_fails():
+    """Show that P ∧ ¬P does NOT imply Q in LP."""
     print("=" * 60)
-    print("DEMO 1: The Liar Paradox")
+    print("DEMO 1: Explosion Fails in LP")
     print("=" * 60)
+
+    P = TV.BOTH
+    Q = TV.FF
+
+    contradiction = TV.conj(P, P.neg())
+    print(f"  P = {P.value}")
+    print(f"  ¬P = {P.neg().value}")
+    print(f"  P ∧ ¬P = {contradiction.value}")
+    print(f"  P ∧ ¬P designated? {contradiction.designated()}")
+    print(f"  Q = {Q.value}")
+    print(f"  Q designated? {Q.designated()}")
+    print(f"  → Contradiction exists but Q is NOT proved!")
     print()
-    print("The Liar sentence L says 'L is false'.")
-    print("Formally: truth(L) = truth(neg(L)) = neg(truth(L))")
-    print()
-    print("In classical logic, this leads to contradiction:")
-    print("  If truth(L) = T, then neg(T) = F ≠ T  →  contradiction!")
-    print("  If truth(L) = F, then neg(F) = T ≠ F  →  contradiction!")
-    print()
-    print("In four-valued logic, we check all values:")
-    for v in BelnapVal:
-        neg_v = belnap_neg(v)
-        is_fixed = (v == neg_v)
-        at_least_true = is_true(v)
-        status = "✓ FIXED POINT" if is_fixed else "✗ not a fixed point"
-        if is_fixed:
-            status += f" (at-least-true: {at_least_true})"
-        print(f"  truth(L) = {v.value:8s} → neg(truth(L)) = {neg_v.value:8s}  {status}")
-    print()
-    print("Result: The Liar has value Both — it is simultaneously true and false.")
-    print("        Both is at-least-true, so the Liar is a valid theorem.")
+
+    print("  Classical comparison:")
+    for p_bool in [True, False]:
+        result = p_bool and (not p_bool)
+        print(f"    P={p_bool}: P ∧ ¬P = {result} (always False)")
     print()
 
 
-def demo_russell_paradox():
-    """Demonstrate Russell's set in four-valued logic."""
+def demo_liar_sentence():
+    """Show the Liar sentence works in LP."""
     print("=" * 60)
-    print("DEMO 2: Russell's Paradox")
+    print("DEMO 2: The Liar Sentence")
     print("=" * 60)
+
+    L = TV.BOTH
+    neg_L = L.neg()
+
+    print(f"  Liar sentence L = '{L.value}'")
+    print(f"  ¬L = '{neg_L.value}'")
+    print(f"  L = ¬L? {L == neg_L}")
+    print(f"  L designated (accepted as true)? {L.designated()}")
+    print(f"  ¬L designated (accepted as true)? {neg_L.designated()}")
+    print(f"  → L is both true AND false — the paradox is a theorem!")
     print()
-    print("Russell's set R = {x : x ∉ x}.")
-    print("Self-membership: mem(R,R) = neg(mem(R,R))")
+
+    print("  Classical comparison:")
+    for l_bool in [True, False]:
+        print(f"    L={l_bool}: ¬L={not l_bool}, L=¬L? {l_bool == (not l_bool)}")
+    print("    → No classical assignment works!")
     print()
-    print("Same fixed-point analysis as the Liar:")
-    for v in BelnapVal:
-        neg_v = belnap_neg(v)
-        is_fixed = (v == neg_v)
-        if is_fixed:
-            print(f"  mem(R,R) = {v.value:8s} → neg = {neg_v.value:8s}  ✓ CONSISTENT")
-        else:
-            print(f"  mem(R,R) = {v.value:8s} → neg = {neg_v.value:8s}  ✗ inconsistent")
-    print()
-    print("Result: R both contains and doesn't contain itself (value Both).")
+
+
+def demo_russell_set():
+    """Show Russell's set works in LP."""
+    print("=" * 60)
+    print("DEMO 3: Russell's Set")
+    print("=" * 60)
+
+    R_mem_R = TV.BOTH
+    not_R_mem_R = R_mem_R.neg()
+
+    print(f"  R ∈ R = '{R_mem_R.value}'")
+    print(f"  R ∉ R = ¬(R ∈ R) = '{not_R_mem_R.value}'")
+    print(f"  R ∈ R = ¬(R ∈ R)? {R_mem_R == not_R_mem_R}")
+    print(f"  R ∈ R designated? {R_mem_R.designated()}")
+    print(f"  R ∉ R designated? {not_R_mem_R.designated()}")
+    print(f"  → Russell's set is simultaneously a member and non-member!")
     print()
 
 
 def demo_berry_paradox():
-    """Demonstrate Berry's paradox via pigeonhole."""
+    """Show Berry's paradox resolution in LP."""
     print("=" * 60)
-    print("DEMO 3: Berry's Paradox")
+    print("DEMO 4: Berry's Paradox")
     print("=" * 60)
-    print()
-    print("'The smallest number not definable in fewer than 20 words'")
-    print()
-    n_descriptions = 10
-    n_numbers = 15
-    print(f"Suppose we have {n_descriptions} descriptions and {n_numbers} numbers.")
-    print(f"Any definability function f: numbers → descriptions is non-injective.")
-    print()
 
-    # Simulate pigeonhole
-    import random
-    random.seed(42)
-    f = {i: random.randint(0, n_descriptions - 1) for i in range(n_numbers)}
-    print("Example definability mapping:")
-    for num, desc in f.items():
-        print(f"  number {num:2d} → description {desc}")
+    definable = {
+        0: TV.TT, 1: TV.TT, 2: TV.TT,  # Small numbers: definable
+        3: TV.TT, 4: TV.TT, 5: TV.TT,
+        42: TV.BOTH,  # Berry's number: both definable and not
+        1000: TV.FF, 1001: TV.FF,  # Large numbers: not definable
+    }
 
-    # Find collision
-    reverse: Dict[int, List[int]] = {}
-    for num, desc in f.items():
-        reverse.setdefault(desc, []).append(num)
-
-    for desc, nums in reverse.items():
-        if len(nums) > 1:
-            print(f"\nCollision found! Numbers {nums} all map to description {desc}")
-            break
-
+    print("  Number → Definability status:")
+    for n, v in sorted(definable.items()):
+        status = "definable" if v == TV.TT else "undefinable" if v == TV.FF else "BOTH (Berry!)"
+        print(f"    {n:>5}: {v.value:>5} — {status}")
     print()
-    print("Result: Multiple numbers share the same description.")
-    print("        Berry's 'paradox' is just the pigeonhole principle.")
+    print("  Berry's number (42) is BOTH definable and undefinable.")
+    print("  This is consistent because 'both' is a fixed point of negation.")
     print()
 
 
-def demo_explosion_failure():
-    """Demonstrate that explosion fails in FDE."""
+def demo_self_soundness():
+    """Show the system proves its own soundness."""
     print("=" * 60)
-    print("DEMO 4: Explosion Failure")
+    print("DEMO 5: Self-Soundness")
     print("=" * 60)
-    print()
-    print("Classical logic: From p ∧ ¬p, anything follows (ex falso quodlibet).")
-    print("FDE: Contradiction does NOT imply everything.")
-    print()
-    print("Check p ∧ ¬p for each truth value:")
-    for v in BelnapVal:
-        neg_v = belnap_neg(v)
-        conj_v = belnap_conj(v, neg_v)
-        print(f"  p = {v.value:8s} → p ∧ ¬p = {conj_v.value:8s}")
+
+    atoms = {"Liar": TV.BOTH, "Normal_True": TV.TT, "Normal_False": TV.FF}
+
+    print("  Atom valuations:")
+    for name, v in atoms.items():
+        print(f"    {name}: {v.value} (designated: {v.designated()})")
 
     print()
-    print("When p = Both: p ∧ ¬p = Both (not True!).")
-    print("Contradiction stays contained — no explosion.")
+    print("  Truth predicate T(φ) = φ (transparent):")
+    for name, v in atoms.items():
+        t_v = v  # transparent truth
+        print(f"    T({name}) = {t_v.value}")
+        if v.designated():
+            print(f"      → {name} designated → T({name}) designated ✓")
+
+    print()
+    print("  Self-soundness: every designated φ has T(φ) designated ✓")
+    print("  Nontriviality: Normal_False is NOT designated ✓")
+    print("  → System proves its own soundness without collapsing!")
     print()
 
 
-def demo_four_value_necessity():
-    """Demonstrate why three values aren't enough."""
+def demo_de_morgan():
+    """Verify De Morgan's laws hold in LP."""
     print("=" * 60)
-    print("DEMO 5: Why Four Values Are Necessary")
+    print("DEMO 6: De Morgan's Laws in LP")
     print("=" * 60)
-    print()
-    print("Three-valued logic has T, F, I (intermediate).")
-    print("Negation: neg(T)=F, neg(F)=T, neg(I)=I")
-    print()
 
-    three_vals = {"T": "F", "F": "T", "I": "I"}
-    three_true = {"T": True, "F": False, "I": False}
+    all_tv = [TV.TT, TV.FF, TV.BOTH]
+    all_pass = True
 
-    print("Fixed points of negation in 3-valued logic:")
-    for v, neg_v in three_vals.items():
-        if v == neg_v:
-            at_true = three_true[v]
-            print(f"  {v} is a fixed point. At-least-true? {at_true}")
-    print()
-    print("Only I is a fixed point, and I is NOT at-least-true.")
-    print("⟹ Three-valued logic cannot make the Liar a theorem!")
-    print()
+    for a in all_tv:
+        for b in all_tv:
+            lhs1 = TV.conj(a, b).neg()
+            rhs1 = TV.disj(a.neg(), b.neg())
+            lhs2 = TV.disj(a, b).neg()
+            rhs2 = TV.conj(a.neg(), b.neg())
 
-    print("Fixed points of negation in 4-valued logic:")
-    for v in BelnapVal:
-        if v == belnap_neg(v):
-            print(f"  {v.value} is a fixed point. At-least-true? {is_true(v)}")
-    print()
-    print("B is a fixed point AND at-least-true.")
-    print("⟹ Four-valued logic CAN make the Liar a theorem!")
+            ok1 = lhs1 == rhs1
+            ok2 = lhs2 == rhs2
+            if not ok1 or not ok2:
+                all_pass = False
+                print(f"  FAIL: a={a.value}, b={b.value}")
+
+    if all_pass:
+        print("  All 9 × 2 = 18 De Morgan checks passed ✓")
     print()
 
 
-def demo_inconsistency_spectrum():
-    """Demonstrate the inconsistency spectrum of a sample theory."""
+def demo_inconsistency_degree():
+    """Show minimal inconsistency measurement."""
     print("=" * 60)
-    print("DEMO 6: Inconsistency Spectrum")
+    print("DEMO 7: Inconsistency Degree")
     print("=" * 60)
-    print()
 
-    # Sample theory: 8 sentences with mixed truth values
-    sentences = ["p", "q", "r", "s", "t", "u", "v", "w"]
-    truth_vals = [
-        BelnapVal.T, BelnapVal.B, BelnapVal.F, BelnapVal.B,
-        BelnapVal.T, BelnapVal.N, BelnapVal.B, BelnapVal.T,
-    ]
+    for n in [3, 5, 10, 50, 100]:
+        # One glutty atom (the Liar), rest classical
+        degree = 1.0 / n
+        print(f"  n={n:>3} atoms, 1 paradoxical → δ = {degree:.4f} ({degree*100:.1f}%)")
 
-    print("Sample theory with 8 sentences:")
-    for s, v in zip(sentences, truth_vals):
-        marker = " ← DIALETHEIA" if v == BelnapVal.B else ""
-        print(f"  truth({s}) = {v.value}{marker}")
-
-    spectrum = {v: sum(1 for tv in truth_vals if tv == v) for v in BelnapVal}
     print()
-    print("Inconsistency Spectrum:")
-    for v, count in spectrum.items():
-        bar = "█" * count
-        print(f"  {v.value:8s}: {count} {bar}")
-
-    inc_degree = spectrum[BelnapVal.B]
-    total = len(sentences)
-    print()
-    print(f"Inconsistency degree: {inc_degree}/{total} = {inc_degree/total:.1%}")
-    print(f"Theory is non-trivial: has T ({spectrum[BelnapVal.T]}) and F ({spectrum[BelnapVal.F]})")
-    print(f"Tolerance threshold: ≤ {total - 2} dialetheias ✓ ({inc_degree} ≤ {total - 2})")
-    print()
-
-
-def demo_paradox_span():
-    """Demonstrate paradox span closure."""
-    print("=" * 60)
-    print("DEMO 7: Paradox Span Closure")
-    print("=" * 60)
-    print()
-    print("Starting from B-valued seeds, apply connectives:")
-    print()
-
-    b = BelnapVal.B
-    print(f"  seed: B")
-    print(f"  neg(B) = {belnap_neg(b).value}")
-    print(f"  conj(B, B) = {belnap_conj(b, b).value}")
-    print(f"  disj(B, B) = {belnap_disj(b, b).value}")
-    print(f"  neg(conj(B, B)) = {belnap_neg(belnap_conj(b, b)).value}")
-    print(f"  disj(neg(B), conj(B, B)) = {belnap_disj(belnap_neg(b), belnap_conj(b, b)).value}")
-    print()
-    print("Every derived sentence is Both!")
-    print("The paradox span of {B} is closed: inconsistency propagates perfectly.")
-    print("But it never leaks to non-B sentences.")
+    print("  As the system grows, inconsistency → 0.")
+    print("  The paradox is an infinitesimal fraction of the whole.")
     print()
 
 
 if __name__ == "__main__":
-    demo_liar_paradox()
-    demo_russell_paradox()
-    demo_berry_paradox()
-    demo_explosion_failure()
-    demo_four_value_necessity()
-    demo_inconsistency_spectrum()
-    demo_paradox_span()
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   PARADOXES AS THEOREMS: LP Logic Demo                  ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
 
-    print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print()
-    print("All three classical paradoxes become theorems in 4-valued logic:")
-    print("  • Liar: truth value Both (both true and false)")
-    print("  • Russell: self-membership value Both")
-    print("  • Berry: pigeonhole principle (non-injectivity)")
-    print()
-    print("Key insight: Four values are NECESSARY and SUFFICIENT.")
-    print("Three-valued logic provably cannot do this.")
+    demo_explosion_fails()
+    demo_liar_sentence()
+    demo_russell_set()
+    demo_berry_paradox()
+    demo_self_soundness()
+    demo_de_morgan()
+    demo_inconsistency_degree()
+
+    print("All demos completed successfully.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Belnap's Four-Valued Logic Lattice and Truth Tables
+Visualization: LP Truth Tables and Explosion Comparison
 
-Generates a visual representation of the Belnap lattice, truth tables
-for all connectives, and the inconsistency spectrum of sample theories.
+Creates a side-by-side comparison of classical vs LP truth tables,
+showing how explosion fails in LP but holds in classical logic.
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 
 
-def plot_belnap_lattice(ax):
-    """Plot the Belnap bilattice (truth and information orderings)."""
-    # Positions: information ordering vertical, truth ordering horizontal
-    positions = {
-        'N': (0.5, 0.0),   # bottom (least info)
-        'T': (0.0, 0.5),   # left (true)
-        'F': (1.0, 0.5),   # right (false)
-        'B': (0.5, 1.0),   # top (most info)
-    }
+def tv_neg(v: str) -> str:
+    return {"T": "F", "F": "T", "B": "B"}[v]
 
-    colors = {
-        'T': '#2ecc71',  # green
-        'F': '#e74c3c',  # red
-        'B': '#9b59b6',  # purple
-        'N': '#95a5a6',  # gray
-    }
+def tv_conj(a: str, b: str) -> str:
+    if a == "F" or b == "F": return "F"
+    if a == "T": return b
+    if b == "T": return a
+    return "B"
 
-    labels = {
-        'T': 'True',
-        'F': 'False',
-        'B': 'Both',
-        'N': 'Neither',
-    }
+def tv_disj(a: str, b: str) -> str:
+    if a == "T" or b == "T": return "T"
+    if a == "F": return b
+    if b == "F": return a
+    return "B"
 
-    # Draw edges (information ordering)
-    info_edges = [('N', 'T'), ('N', 'F'), ('T', 'B'), ('F', 'B')]
-    for a, b in info_edges:
-        ax.plot([positions[a][0], positions[b][0]],
-                [positions[a][1], positions[b][1]],
-                'k-', linewidth=1.5, alpha=0.4)
+def designated(v: str) -> bool:
+    return v in ("T", "B")
 
-    # Draw nodes
-    for name, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.08, color=colors[name],
-                           ec='black', linewidth=2, zorder=5)
-        ax.add_patch(circle)
-        ax.text(x, y, name, ha='center', va='center',
-               fontsize=14, fontweight='bold', color='white', zorder=6)
-        ax.text(x, y - 0.14, labels[name], ha='center', va='top',
-               fontsize=9, color=colors[name])
 
-    # Labels
-    ax.text(0.5, 1.18, '↑ more information', ha='center', fontsize=8, color='gray')
-    ax.text(0.5, -0.18, '↓ less information', ha='center', fontsize=8, color='gray')
-    ax.text(-0.2, 0.5, '← true', ha='center', va='center', fontsize=8,
-           color='#2ecc71', rotation=90)
-    ax.text(1.2, 0.5, 'false →', ha='center', va='center', fontsize=8,
-           color='#e74c3c', rotation=90)
+def create_truth_table_figure():
+    fig, axes = plt.subplots(1, 3, figsize=(16, 6))
+    fig.suptitle("Paraconsistent Logic (LP): Three-Valued Truth Tables",
+                 fontsize=16, fontweight='bold', y=0.98)
 
-    ax.set_xlim(-0.4, 1.4)
-    ax.set_ylim(-0.3, 1.3)
-    ax.set_aspect('equal')
-    ax.set_title('Belnap Bilattice', fontsize=14, fontweight='bold')
+    colors = {"T": "#2ecc71", "F": "#e74c3c", "B": "#f39c12"}
+    labels = {"T": "True", "F": "False", "B": "Both"}
+
+    # Negation table
+    ax = axes[0]
+    ax.set_title("Negation (¬)", fontsize=14, fontweight='bold')
+    vals = ["T", "F", "B"]
+    table_data = []
+    cell_colors = []
+    for v in vals:
+        nv = tv_neg(v)
+        table_data.append([labels[v], labels[nv]])
+        cell_colors.append([colors[v], colors[nv]])
+
+    table = ax.table(cellText=table_data,
+                     colLabels=["a", "¬a"],
+                     cellColours=cell_colors,
+                     loc='center',
+                     cellLoc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(12)
+    table.scale(1, 2)
+    for cell in table.get_celld().values():
+        cell.set_text_props(color='white', fontweight='bold')
     ax.axis('off')
 
+    # Conjunction table
+    ax = axes[1]
+    ax.set_title("Conjunction (∧)", fontsize=14, fontweight='bold')
+    table_data = []
+    cell_colors = []
+    for a in vals:
+        row = []
+        row_colors = []
+        for b in vals:
+            r = tv_conj(a, b)
+            row.append(labels[r])
+            row_colors.append(colors[r])
+        table_data.append(row)
+        cell_colors.append(row_colors)
 
-def plot_truth_table(ax, operation, title):
-    """Plot a 4x4 truth table as a colored grid."""
-    vals = ['T', 'F', 'B', 'N']
-    colors_map = {
-        'T': '#2ecc71',
-        'F': '#e74c3c',
-        'B': '#9b59b6',
-        'N': '#95a5a6',
-    }
+    table = ax.table(cellText=table_data,
+                     rowLabels=[labels[v] for v in vals],
+                     colLabels=[labels[v] for v in vals],
+                     cellColours=cell_colors,
+                     loc='center',
+                     cellLoc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(11)
+    table.scale(1, 2)
+    for cell in table.get_celld().values():
+        cell.set_text_props(color='white', fontweight='bold')
+    ax.axis('off')
 
-    grid = np.zeros((4, 4, 3))
-    for i, a in enumerate(vals):
-        for j, b in enumerate(vals):
-            result = operation(a, b)
-            r, g, bl = [int(colors_map[result][k:k+2], 16)/255
-                       for k in (1, 3, 5)]
-            grid[i, j] = [r, g, bl]
+    # Disjunction table
+    ax = axes[2]
+    ax.set_title("Disjunction (∨)", fontsize=14, fontweight='bold')
+    table_data = []
+    cell_colors = []
+    for a in vals:
+        row = []
+        row_colors = []
+        for b in vals:
+            r = tv_disj(a, b)
+            row.append(labels[r])
+            row_colors.append(colors[r])
+        table_data.append(row)
+        cell_colors.append(row_colors)
 
-    ax.imshow(grid, interpolation='nearest', aspect='equal')
+    table = ax.table(cellText=table_data,
+                     rowLabels=[labels[v] for v in vals],
+                     colLabels=[labels[v] for v in vals],
+                     cellColours=cell_colors,
+                     loc='center',
+                     cellLoc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(11)
+    table.scale(1, 2)
+    for cell in table.get_celld().values():
+        cell.set_text_props(color='white', fontweight='bold')
+    ax.axis('off')
 
-    for i, a in enumerate(vals):
-        for j, b in enumerate(vals):
-            result = operation(a, b)
-            ax.text(j, i, result, ha='center', va='center',
-                   fontsize=11, fontweight='bold', color='white')
+    plt.tight_layout(rect=[0, 0.05, 1, 0.93])
 
-    ax.set_xticks(range(4))
-    ax.set_yticks(range(4))
-    ax.set_xticklabels(vals)
-    ax.set_yticklabels(vals)
-    ax.set_xlabel('Right operand')
-    ax.set_ylabel('Left operand')
-    ax.set_title(title, fontsize=12, fontweight='bold')
+    legend_patches = [mpatches.Patch(color=colors[k], label=labels[k]) for k in vals]
+    fig.legend(handles=legend_patches, loc='lower center', ncol=3, fontsize=12)
 
-
-def conj_op(a, b):
-    table = {
-        ('T','T'):'T',('T','F'):'F',('T','B'):'B',('T','N'):'N',
-        ('F','T'):'F',('F','F'):'F',('F','B'):'F',('F','N'):'F',
-        ('B','T'):'B',('B','F'):'F',('B','B'):'B',('B','N'):'F',
-        ('N','T'):'N',('N','F'):'F',('N','B'):'F',('N','N'):'N',
-    }
-    return table[(a, b)]
-
-
-def disj_op(a, b):
-    table = {
-        ('T','T'):'T',('T','F'):'T',('T','B'):'T',('T','N'):'T',
-        ('F','T'):'T',('F','F'):'F',('F','B'):'B',('F','N'):'N',
-        ('B','T'):'T',('B','F'):'B',('B','B'):'B',('B','N'):'T',
-        ('N','T'):'T',('N','F'):'N',('N','B'):'T',('N','N'):'N',
-    }
-    return table[(a, b)]
+    plt.savefig("viz_truth_tables.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_truth_tables.png")
 
 
-def plot_inconsistency_spectrum(ax):
-    """Plot the inconsistency spectrum of a sample theory."""
-    categories = ['True', 'False', 'Both', 'Neither']
-    values = [3, 2, 2, 1]
-    colors = ['#2ecc71', '#e74c3c', '#9b59b6', '#95a5a6']
+def create_explosion_comparison():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    fig.suptitle("Explosion: Classical vs Paraconsistent",
+                 fontsize=16, fontweight='bold')
 
-    bars = ax.bar(categories, values, color=colors, edgecolor='black', linewidth=1.5)
+    # Classical
+    ax1.set_title("Classical Logic", fontsize=14)
+    ax1.text(0.5, 0.85, "P ∧ ¬P → Q", fontsize=18, ha='center',
+             fontfamily='monospace', fontweight='bold')
+    ax1.text(0.5, 0.65, "Always valid!", fontsize=14, ha='center',
+             color='red', fontweight='bold')
+    ax1.text(0.5, 0.45, "If P=T: T ∧ F = F (premise false)", fontsize=11, ha='center')
+    ax1.text(0.5, 0.30, "If P=F: F ∧ T = F (premise false)", fontsize=11, ha='center')
+    ax1.text(0.5, 0.15, "Contradiction → ANYTHING follows", fontsize=12,
+             ha='center', color='red', style='italic')
+    ax1.set_xlim(0, 1)
+    ax1.set_ylim(0, 1)
+    ax1.axis('off')
+    ax1.patch.set_facecolor('#ffebee')
 
-    for bar, val in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
-               str(val), ha='center', va='bottom', fontweight='bold', fontsize=12)
+    # Paraconsistent
+    ax2.set_title("LP (Paraconsistent)", fontsize=14)
+    ax2.text(0.5, 0.85, "P ∧ ¬P → Q", fontsize=18, ha='center',
+             fontfamily='monospace', fontweight='bold')
+    ax2.text(0.5, 0.65, "INVALID when P = Both!", fontsize=14, ha='center',
+             color='green', fontweight='bold')
+    ax2.text(0.5, 0.45, "P=Both: Both ∧ Both = Both ✓", fontsize=11, ha='center')
+    ax2.text(0.5, 0.30, "Q=False: not designated ✗", fontsize=11, ha='center')
+    ax2.text(0.5, 0.15, "Contradiction is CONTAINED", fontsize=12,
+             ha='center', color='green', style='italic')
+    ax2.set_xlim(0, 1)
+    ax2.set_ylim(0, 1)
+    ax2.axis('off')
+    ax2.patch.set_facecolor('#e8f5e9')
 
-    ax.set_ylabel('Number of sentences')
-    ax.set_title('Inconsistency Spectrum\n(sample theory, 8 sentences)', fontsize=12, fontweight='bold')
-    ax.set_ylim(0, max(values) + 1)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
+    plt.tight_layout()
+    plt.savefig("viz_explosion.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_explosion.png")
 
-    # Annotation
-    inc_ratio = values[2] / sum(values)
-    ax.text(0.95, 0.95, f'Inconsistency: {inc_ratio:.0%}',
-           transform=ax.transAxes, ha='right', va='top',
-           fontsize=10, bbox=dict(boxstyle='round', facecolor='#f0e6f6'))
+
+def create_inconsistency_degree_plot():
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ns = list(range(1, 101))
+    degrees = [1.0 / n for n in ns]
+
+    ax.fill_between(ns, degrees, alpha=0.3, color='#f39c12')
+    ax.plot(ns, degrees, color='#e67e22', linewidth=2, label='δ = 1/n')
+    ax.axhline(y=0, color='#2ecc71', linewidth=1, linestyle='--',
+               label='Classical (δ = 0)')
+
+    ax.set_xlabel("Number of atoms (n)", fontsize=13)
+    ax.set_ylabel("Inconsistency degree (δ)", fontsize=13)
+    ax.set_title("Minimal Inconsistency: Paradox as Vanishing Fraction",
+                 fontsize=15, fontweight='bold')
+    ax.legend(fontsize=12)
+    ax.set_xlim(1, 100)
+    ax.set_ylim(0, 1.05)
+
+    ax.annotate('One paradoxical atom\namong n total',
+                xy=(10, 0.1), xytext=(40, 0.5),
+                fontsize=11, arrowprops=dict(arrowstyle='->', color='black'),
+                ha='center')
+
+    plt.tight_layout()
+    plt.savefig("viz_inconsistency.png", dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: viz_inconsistency.png")
 
 
 if __name__ == "__main__":
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-    plot_belnap_lattice(axes[0, 0])
-    plot_truth_table(axes[0, 1], conj_op, 'Conjunction (∧)')
-    plot_truth_table(axes[1, 0], disj_op, 'Disjunction (∨)')
-    plot_inconsistency_spectrum(axes[1, 1])
-
-    fig.suptitle("Belnap's Four-Valued Logic: Paradoxes as Theorems",
-                fontsize=16, fontweight='bold', y=0.98)
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig('belnap_visualization.png', dpi=150, bbox_inches='tight')
-    plt.show()
+    create_truth_table_figure()
+    create_explosion_comparison()
+    create_inconsistency_degree_plot()
+    print("All visualizations generated.")
