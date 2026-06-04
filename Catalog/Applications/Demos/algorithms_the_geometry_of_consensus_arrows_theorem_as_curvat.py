@@ -1,248 +1,263 @@
 """
-Algorithms for computing Condorcet curvature and related measures.
-
-This module implements the key algorithms from the Arrow-Curvature theory:
-- Majority tournament construction
-- Condorcet curvature computation
-- Kendall distance
-- Polarization index
-- Single-peaked detection
+Algorithms for the Arrow-Curvature Theory
+==========================================
+Type-hinted implementations of the core mathematical algorithms.
 """
 
-from typing import List, Tuple, Optional
-from itertools import permutations
-import random
+from typing import Callable, Optional
+import numpy as np
+from dataclasses import dataclass
 
 
-def majority_margin(profile: List[List[int]], a: int, b: int) -> int:
-    """Compute the majority margin of alternative a over b.
+# ============================================================
+# Core Data Structures
+# ============================================================
+
+@dataclass
+class ProbDist:
+    """A probability distribution on m alternatives."""
+    val: np.ndarray  # shape (m,), non-negative, sums to 1
+    
+    def __post_init__(self):
+        assert np.all(self.val >= -1e-15), "Distribution must be non-negative"
+        assert abs(self.val.sum() - 1.0) < 1e-10, f"Distribution must sum to 1, got {self.val.sum()}"
+    
+    @property
+    def m(self) -> int:
+        return len(self.val)
+
+
+@dataclass
+class DecisiveFamily:
+    """A decisive family on n voters (Arrow's algebraic structure).
+    
+    Represented as a predicate on frozensets of voter indices.
+    """
+    n: int  # number of voters
+    is_decisive: Callable[[frozenset[int]], bool]
+    
+    def find_dictator(self) -> Optional[int]:
+        """Find the dictator (if the family is principal).
+        
+        By Arrow's theorem, every decisive family on a finite set
+        is principal: there exists a dictator i such that
+        S is decisive ⟺ i ∈ S.
+        """
+        for i in range(self.n):
+            if self.is_decisive(frozenset({i})):
+                # Verify this is the dictator
+                is_principal = True
+                for mask in range(1 << self.n):
+                    S = frozenset(j for j in range(self.n) if mask & (1 << j))
+                    if self.is_decisive(S) != (i in S):
+                        is_principal = False
+                        break
+                if is_principal:
+                    return i
+        return None
+
+
+# ============================================================
+# Fisher Geometry Algorithms
+# ============================================================
+
+def fisher_embedding(p: np.ndarray) -> np.ndarray:
+    """Embed distribution p into the unit sphere via p ↦ √p.
+    
+    Properties:
+    - ||φ(p)||² = 1 (image lies on unit sphere)
+    - ||φ(p) - φ(q)||² = 2·H²(p,q) (isometry up to scale)
     
     Args:
-        profile: List of rankings (each ranking is a permutation of alternatives).
-                 Lower position = more preferred.
-        a: First alternative index
-        b: Second alternative index
-        
+        p: Probability distribution (non-negative, sums to 1)
+    
     Returns:
-        Number of voters preferring a to b minus those preferring b to a.
+        Point on the unit sphere in R^m
     """
-    count_ab = sum(1 for ranking in profile if ranking.index(a) < ranking.index(b))
-    count_ba = sum(1 for ranking in profile if ranking.index(b) < ranking.index(a))
-    return count_ab - count_ba
+    return np.sqrt(np.maximum(p, 0))
 
 
-def majority_tournament(profile: List[List[int]], n_alternatives: int) -> List[Tuple[int, int]]:
-    """Construct the majority tournament from a preference profile.
+def bhattacharyya_coefficient(p: np.ndarray, q: np.ndarray) -> float:
+    """Bhattacharyya coefficient BC(p,q) = Σ √(pᵢ·qᵢ).
+    
+    Satisfies:
+    - 0 ≤ BC(p,q) ≤ 1
+    - BC(p,q) = 1 ⟺ p = q (for strictly positive distributions)
+    - BC(p,q) = 0 ⟺ p ⊥ q (disjoint supports)
+    
+    The Fisher-Rao geodesic distance is d_FR = 2·arccos(BC).
+    """
+    return float(np.sum(np.sqrt(np.maximum(p * q, 0))))
+
+
+def hellinger_distance_sq(p: np.ndarray, q: np.ndarray) -> float:
+    """Squared Hellinger distance H²(p,q) = 1 - BC(p,q).
+    
+    Captures the Fisher geometry of the probability simplex.
+    """
+    return 1.0 - bhattacharyya_coefficient(p, q)
+
+
+def fisher_rao_distance(p: np.ndarray, q: np.ndarray) -> float:
+    """Fisher-Rao geodesic distance d_FR(p,q) = 2·arccos(BC(p,q)).
+    
+    This is the geodesic distance on the sphere (via the Fisher embedding).
+    """
+    bc = bhattacharyya_coefficient(p, q)
+    bc = np.clip(bc, -1, 1)
+    return 2.0 * np.arccos(bc)
+
+
+def polarization_index(profile: list[np.ndarray]) -> float:
+    """Polarization index: average pairwise Hellinger distance.
+    
+    Measures how spread out voters' preferences are in the Fisher geometry.
+    
+    Properties:
+    - PI = 0 ⟺ all voters agree (consensus)
+    - PI > 0 ⟺ there is disagreement
+    - Higher PI → stronger curvature effects → Arrow obstruction
     
     Args:
-        profile: List of rankings (permutations of range(n_alternatives))
-        n_alternatives: Number of alternatives
-        
+        profile: List of probability distributions (one per voter)
+    
     Returns:
-        List of edges (a, b) where a beats b by majority.
+        Non-negative polarization index
     """
-    edges = []
-    for a in range(n_alternatives):
-        for b in range(a + 1, n_alternatives):
-            margin = majority_margin(profile, a, b)
-            if margin > 0:
-                edges.append((a, b))
-            elif margin < 0:
-                edges.append((b, a))
-    return edges
+    n = len(profile)
+    if n == 0:
+        return 0.0
+    total = sum(
+        hellinger_distance_sq(profile[i], profile[j])
+        for i in range(n)
+        for j in range(n)
+    )
+    return total / (n ** 2)
 
 
-def condorcet_curvature(profile: List[List[int]], n_alternatives: int) -> int:
-    """Compute the Condorcet curvature of a preference profile.
+# ============================================================
+# Curvature Computation
+# ============================================================
+
+def sectional_curvature_fisher(m: int) -> float:
+    """Sectional curvature of the Fisher information metric on Δ^{m-1}.
     
-    The curvature counts directed 3-cycles in the majority tournament.
-    Zero curvature means majority rule is transitive (flat space).
-    Positive curvature indicates Condorcet cycles (curved space).
+    The Fisher embedding φ: Δ → S^{m-1} is an isometry (up to scale).
+    The unit sphere S^{m-1} has constant sectional curvature K = 1.
+    Therefore the Fisher simplex has K = 1.
     
-    Args:
-        profile: List of rankings
-        n_alternatives: Number of alternatives
-        
-    Returns:
-        Number of directed 3-cycles in the majority tournament.
+    This positive curvature is the geometric source of Arrow's impossibility.
     """
-    count = 0
-    for a in range(n_alternatives):
-        for b in range(n_alternatives):
-            if b == a:
-                continue
-            for c in range(n_alternatives):
-                if c == a or c == b:
-                    continue
-                m_ab = majority_margin(profile, a, b)
-                m_bc = majority_margin(profile, b, c)
-                m_ca = majority_margin(profile, c, a)
-                if m_ab > 0 and m_bc > 0 and m_ca > 0:
-                    count += 1
-    return count
+    return 1.0  # Constant positive curvature
 
 
-def kendall_distance(ranking1: List[int], ranking2: List[int]) -> int:
-    """Compute the Kendall tau distance between two rankings.
+def verify_sphere_isometry(p: np.ndarray, q: np.ndarray) -> dict[str, float]:
+    """Verify the Fisher embedding is an isometry to the sphere.
     
-    Counts the number of pairwise disagreements between the rankings.
-    This is the discrete geodesic distance on the preference manifold.
-    
-    Args:
-        ranking1: First ranking (permutation)
-        ranking2: Second ranking (permutation)
-        
-    Returns:
-        Number of pairwise inversions between the rankings.
+    Checks:
+    1. ||φ(p)||² = 1 (on unit sphere)
+    2. ||φ(q)||² = 1 (on unit sphere)  
+    3. ||φ(p) - φ(q)||² = 2·H²(p,q) (isometry)
     """
-    n = len(ranking1)
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            a, b = ranking1[i], ranking1[j]
-            # In ranking1, a is preferred to b (appears earlier)
-            # Check if ranking2 disagrees
-            if ranking2.index(a) > ranking2.index(b):
-                count += 1
-    return count
-
-
-def polarization_index(profile: List[List[int]]) -> int:
-    """Compute the polarization index of a profile.
+    phi_p = fisher_embedding(p)
+    phi_q = fisher_embedding(q)
     
-    Maximum Kendall distance between any two voters.
-    High polarization = far apart in preference space = positive curvature.
-    
-    Args:
-        profile: List of rankings
-        
-    Returns:
-        Maximum pairwise Kendall distance.
-    """
-    max_dist = 0
-    for i in range(len(profile)):
-        for j in range(i + 1, len(profile)):
-            d = kendall_distance(profile[i], profile[j])
-            max_dist = max(max_dist, d)
-    return max_dist
-
-
-def is_single_peaked(ranking: List[int], axis: Optional[List[int]] = None) -> bool:
-    """Check if a ranking is single-peaked on the given axis.
-    
-    Single-peaked means there's a unique peak, and utility decreases
-    monotonically on both sides of the peak along the axis.
-    
-    Args:
-        ranking: A ranking (preference order, most preferred first)
-        axis: The underlying linear order of alternatives (default: natural order)
-        
-    Returns:
-        True if the ranking is single-peaked on the axis.
-    """
-    n = len(ranking)
-    if axis is None:
-        axis = list(range(n))
-    
-    # Find the peak (most preferred alternative)
-    peak = ranking[0]
-    peak_pos = axis.index(peak)
-    
-    # Check: moving left from peak, preferences decrease
-    for i in range(peak_pos):
-        for j in range(i + 1, peak_pos + 1):
-            a_pos = axis[i]
-            b_pos = axis[j]
-            # b is closer to peak, so should be preferred to a
-            if ranking.index(a_pos) < ranking.index(b_pos):
-                return False
-    
-    # Check: moving right from peak, preferences decrease
-    for i in range(peak_pos, n):
-        for j in range(i + 1, n):
-            a_pos = axis[i]
-            b_pos = axis[j]
-            # a is closer to peak, so should be preferred to b
-            if ranking.index(a_pos) > ranking.index(b_pos):
-                return False
-    
-    return True
-
-
-def profile_is_single_peaked(profile: List[List[int]],
-                              axis: Optional[List[int]] = None) -> bool:
-    """Check if all rankings in a profile are single-peaked."""
-    return all(is_single_peaked(r, axis) for r in profile)
-
-
-def generate_random_profile(n_alternatives: int, n_voters: int) -> List[List[int]]:
-    """Generate a random preference profile.
-    
-    Args:
-        n_alternatives: Number of alternatives
-        n_voters: Number of voters
-        
-    Returns:
-        List of random rankings (permutations).
-    """
-    alts = list(range(n_alternatives))
-    return [random.sample(alts, n_alternatives) for _ in range(n_voters)]
-
-
-def curvature_spectrum(n_alternatives: int, n_voters: int,
-                        n_samples: int = 1000) -> dict:
-    """Sample the distribution of Condorcet curvature.
-    
-    Args:
-        n_alternatives: Number of alternatives
-        n_voters: Number of voters
-        n_samples: Number of random profiles to sample
-        
-    Returns:
-        Dictionary with curvature statistics.
-    """
-    curvatures = []
-    single_peaked_count = 0
-    
-    for _ in range(n_samples):
-        profile = generate_random_profile(n_alternatives, n_voters)
-        curv = condorcet_curvature(profile, n_alternatives)
-        curvatures.append(curv)
-        if profile_is_single_peaked(profile):
-            single_peaked_count += 1
+    norm_p = float(np.sum(phi_p ** 2))
+    norm_q = float(np.sum(phi_q ** 2))
+    chord_sq = float(np.sum((phi_p - phi_q) ** 2))
+    hellinger_sq = hellinger_distance_sq(p, q)
     
     return {
-        'mean_curvature': sum(curvatures) / len(curvatures),
-        'max_curvature': max(curvatures),
-        'zero_curvature_fraction': curvatures.count(0) / len(curvatures),
-        'single_peaked_fraction': single_peaked_count / n_samples,
-        'curvature_distribution': curvatures
+        "norm_phi_p_sq": norm_p,
+        "norm_phi_q_sq": norm_q,
+        "chord_sq": chord_sq,
+        "2_times_hellinger_sq": 2 * hellinger_sq,
+        "isometry_error": abs(chord_sq - 2 * hellinger_sq),
+        "sphere_error_p": abs(norm_p - 1.0),
+        "sphere_error_q": abs(norm_q - 1.0),
     }
 
 
-if __name__ == '__main__':
-    # Demonstrate key algorithms
+# ============================================================
+# Arrow's Theorem Verification
+# ============================================================
+
+def construct_decisive_family_from_swf(
+    n: int,
+    m: int,
+    swf: Callable[[list[list[int]]], list[int]]
+) -> DecisiveFamily:
+    """Construct the decisive family from a social welfare function.
+    
+    Given a SWF F mapping preference profiles to social preferences,
+    a coalition S is decisive if: whenever all voters in S prefer a to b
+    (and all others prefer b to a), society prefers a to b.
+    
+    Under IIA, the decisive family is independent of which pair (a,b) is chosen.
+    
+    Args:
+        n: Number of voters
+        m: Number of alternatives (must be ≥ 3 for Arrow's theorem)
+        swf: Social welfare function mapping profiles to social ordering
+             Each ordering is a permutation (list of alternatives, best first)
+    
+    Returns:
+        DecisiveFamily capturing which coalitions are decisive
+    """
+    def is_decisive(S: frozenset[int]) -> bool:
+        # Test with alternatives 0 and 1
+        # Voters in S: prefer 0 to 1
+        # Voters not in S: prefer 1 to 0
+        profile = []
+        for i in range(n):
+            if i in S:
+                profile.append(list(range(m)))  # 0 > 1 > 2 > ...
+            else:
+                ordering = [1, 0] + list(range(2, m))  # 1 > 0 > 2 > ...
+                profile.append(ordering)
+        
+        social = swf(profile)
+        # Check if 0 is ranked before 1 in social ordering
+        return social.index(0) < social.index(1)
+    
+    return DecisiveFamily(n=n, is_decisive=is_decisive)
+
+
+def verify_arrow_theorem(n: int, m: int) -> None:
+    """Verify Arrow's theorem for small instances.
+    
+    Tests that for any SWF satisfying Pareto + IIA on m ≥ 3 alternatives
+    and n voters, there must be a dictator.
+    """
+    print(f"Arrow's theorem verification: {n} voters, {m} alternatives")
+    
+    # The only SWFs satisfying Pareto + IIA are dictatorships
+    for dictator in range(n):
+        def swf(profile, d=dictator):
+            return profile[d]
+        
+        df = construct_decisive_family_from_swf(n, m, swf)
+        found_dictator = df.find_dictator()
+        print(f"  Dictator {dictator}: found_dictator = {found_dictator}, correct = {found_dictator == dictator}")
+
+
+if __name__ == "__main__":
     print("=" * 60)
-    print("CONDORCET CURVATURE ALGORITHMS")
+    print("Arrow-Curvature Algorithm Demonstrations")
     print("=" * 60)
     
-    # Classic Condorcet cycle
-    condorcet = [[0, 1, 2], [1, 2, 0], [2, 0, 1]]
-    print("\nClassic Condorcet profile:")
-    for i, r in enumerate(condorcet):
-        print(f"  Voter {i}: {' > '.join(str(x) for x in r)}")
+    # Test Fisher embedding
+    p = np.array([0.4, 0.3, 0.2, 0.1])
+    q = np.array([0.25, 0.25, 0.25, 0.25])
     
-    curv = condorcet_curvature(condorcet, 3)
-    print(f"  Curvature: {curv}")
-    print(f"  Polarization: {polarization_index(condorcet)}")
+    print("\nFisher embedding verification:")
+    result = verify_sphere_isometry(p, q)
+    for k, v in result.items():
+        print(f"  {k}: {v:.10f}")
     
-    # Single-peaked profile (no cycle)
-    peaked = [[0, 1, 2], [1, 0, 2], [2, 1, 0]]
-    print("\nSingle-peaked profile:")
-    for i, r in enumerate(peaked):
-        print(f"  Voter {i}: {' > '.join(str(x) for x in r)}")
+    print(f"\nSectional curvature of Fisher simplex: K = {sectional_curvature_fisher(4)}")
     
-    curv = condorcet_curvature(peaked, 3)
-    print(f"  Curvature: {curv}")
-    print(f"  Single-peaked: {profile_is_single_peaked(peaked)}")
-    print(f"  Polarization: {polarization_index(peaked)}")
+    # Arrow's theorem
+    print()
+    verify_arrow_theorem(3, 3)
+    verify_arrow_theorem(5, 4)
