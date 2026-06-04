@@ -1,362 +1,365 @@
+#!/usr/bin/env python3
 """
-Algorithms for Topological Quantum Compiling
-=============================================
+Algorithms for Topological Quantum Compiling with Fibonacci Anyons
 
-Implements the core algorithms from the research paper:
-1. Solovay-Kitaev gate approximation using braid words
-2. Fibonacci anyon fusion tree enumeration
-3. Jones representation computation
-4. Braid word optimization (cancellation of inverse pairs)
+Type-hinted implementations of the core algorithms used in our
+formalization of quantum braid universality.
 """
 
-import numpy as np
 from typing import List, Tuple, Optional
+import numpy as np
 from dataclasses import dataclass
-from enum import Enum
 
 
-class Sign(Enum):
-    POS = 1
-    NEG = -1
-
+# ============================================================
+# Algorithm 1: Fusion Path Enumeration
+# ============================================================
 
 @dataclass
-class BraidGenerator:
-    """A braid generator σ_i^{±1} in B_n."""
-    index: int
-    sign: Sign
-
-    def inverse(self) -> 'BraidGenerator':
-        return BraidGenerator(
-            self.index,
-            Sign.NEG if self.sign == Sign.POS else Sign.POS
-        )
-
-    def __repr__(self):
-        s = "" if self.sign == Sign.POS else "⁻¹"
-        return f"σ_{self.index}{s}"
-
-
-BraidWord = List[BraidGenerator]
-
-
-# ============================================================
-# Algorithm 1: Braid Word Algebra
-# ============================================================
-
-def compose(w1: BraidWord, w2: BraidWord) -> BraidWord:
-    """Compose two braid words. O(|w1| + |w2|)."""
-    return w1 + w2
+class FusionSystem:
+    """A fusion system with n particle types."""
+    n_types: int
+    fusion_coeffs: np.ndarray  # shape (n, n, n): N[i,j,k]
+    vacuum: int
+    
+    def verify_associativity(self) -> bool:
+        """Verify fusion associativity: Σ_m N[i,j,m]·N[m,k,l] = Σ_m N[j,k,m]·N[i,m,l]."""
+        n = self.n_types
+        N = self.fusion_coeffs
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    for l in range(n):
+                        lhs = sum(N[i,j,m] * N[m,k,l] for m in range(n))
+                        rhs = sum(N[j,k,m] * N[i,m,l] for m in range(n))
+                        if lhs != rhs:
+                            return False
+        return True
+    
+    def is_multiplicity_free(self) -> bool:
+        """Check if all fusion coefficients are 0 or 1."""
+        return bool(np.all(self.fusion_coeffs <= 1))
 
 
-def inverse_word(w: BraidWord) -> BraidWord:
-    """Compute the inverse of a braid word. O(|w|)."""
-    return [g.inverse() for g in reversed(w)]
-
-
-def exponent_sum(w: BraidWord) -> int:
-    """Compute the exponent sum (abelianization homomorphism B_n → ℤ). O(|w|)."""
-    return sum(g.sign.value for g in w)
-
-
-def word_length(w: BraidWord) -> int:
-    """Word length of a braid word. O(1)."""
-    return len(w)
-
-
-# ============================================================
-# Algorithm 2: Free Cancellation (Braid Word Reduction)
-# ============================================================
-
-def free_reduce(w: BraidWord) -> BraidWord:
-    """Free reduction of a braid word: cancel adjacent σ_i · σ_i^{-1} pairs.
-
-    Time complexity: O(|w|)
-    Space complexity: O(|w|)
-
-    This is a greedy algorithm that processes generators left to right,
-    maintaining a stack. When the new generator cancels with the top of
-    the stack, both are removed.
-
-    Note: This does NOT produce a fully reduced braid word (that requires
-    solving the word problem in B_n, which needs Garside's algorithm).
-    It only performs free cancellations.
-
-    Returns:
-        A freely reduced braid word equivalent to w in the free group.
+def fibonacci_fusion_system() -> FusionSystem:
+    """Construct the Fibonacci anyon fusion system.
+    
+    Particle types: {0 = vacuum, 1 = τ}
+    Fusion rule: τ ⊗ τ = 1 ⊕ τ
     """
-    stack: BraidWord = []
-    for g in w:
-        if stack and stack[-1].index == g.index and stack[-1].sign != g.sign:
-            stack.pop()
-        else:
-            stack.append(g)
-    return stack
+    N = np.zeros((2, 2, 2), dtype=int)
+    N[0, 0, 0] = 1  # 1 ⊗ 1 = 1
+    N[0, 1, 1] = 1  # 1 ⊗ τ = τ
+    N[1, 0, 1] = 1  # τ ⊗ 1 = τ
+    N[1, 1, 0] = 1  # τ ⊗ τ → 1
+    N[1, 1, 1] = 1  # τ ⊗ τ → τ
+    return FusionSystem(n_types=2, fusion_coeffs=N, vacuum=0)
 
 
-# ============================================================
-# Algorithm 3: Fibonacci Dimension Computation
-# ============================================================
-
-def fibonacci_dim(n: int) -> int:
-    """Compute the Fibonacci anyon fusion space dimension.
-
-    Uses the recurrence: fibDim(0) = 1, fibDim(1) = 1,
-    fibDim(n+2) = fibDim(n) + fibDim(n+1).
-
-    Time complexity: O(n)
-    Space complexity: O(1)
-
+def enumerate_fusion_paths(n_anyons: int, target: int = -1) -> List[List[int]]:
+    """Enumerate all fusion paths for n τ-anyons.
+    
+    A fusion path is a sequence of intermediate fusion outcomes
+    [c₁, c₂, ..., c_{n-1}] where cᵢ is the outcome of fusing
+    the first i+1 anyons.
+    
     Args:
-        n: Number of anyons (non-negative integer)
-
+        n_anyons: Number of τ-anyons
+        target: Target outcome (-1 for all outcomes)
+    
     Returns:
-        Dimension of the fusion space for n Fibonacci anyons
+        List of fusion paths (each a list of intermediate outcomes)
     """
-    if n <= 1:
-        return 1
-    a, b = 1, 1
+    if n_anyons == 0:
+        return [[0]] if target in (-1, 0) else []
+    if n_anyons == 1:
+        return [[1]] if target in (-1, 1) else []
+    
+    N = fibonacci_fusion_system().fusion_coeffs
+    
+    # Build paths incrementally
+    paths: List[List[int]] = [[1]]  # Start with single τ
+    
+    for step in range(n_anyons - 1):
+        new_paths = []
+        for path in paths:
+            current = path[-1]
+            # τ fuses with current outcome
+            for outcome in range(2):
+                if N[1, current, outcome] > 0:
+                    new_paths.append(path + [outcome])
+        paths = new_paths
+    
+    if target >= 0:
+        paths = [p for p in paths if p[-1] == target]
+    
+    return paths
+
+
+# ============================================================
+# Algorithm 2: Quantum Dimension Computation
+# ============================================================
+
+def compute_quantum_dimensions(fs: FusionSystem) -> np.ndarray:
+    """Compute quantum dimensions via Perron-Frobenius eigenvalue.
+    
+    The quantum dimensions are the components of the Perron-Frobenius
+    eigenvector of the fusion matrix N_τ[i,j] = N[τ,i,j].
+    """
+    # For a 2-type system, use the τ-fusion matrix
+    tau = 1  # τ particle index
+    fusion_matrix = fs.fusion_coeffs[tau, :, :]
+    
+    eigenvalues, eigenvectors = np.linalg.eig(fusion_matrix.T)
+    
+    # Find Perron-Frobenius eigenvalue (largest real)
+    pf_idx = np.argmax(np.real(eigenvalues))
+    pf_eigenvalue = np.real(eigenvalues[pf_idx])
+    pf_eigenvector = np.real(eigenvectors[:, pf_idx])
+    
+    # Normalize so d_vacuum = 1
+    pf_eigenvector = pf_eigenvector / pf_eigenvector[0]
+    
+    return pf_eigenvector
+
+
+# ============================================================
+# Algorithm 3: Fibonacci Anyon Braid Matrices
+# ============================================================
+
+def fibonacci_f_matrix() -> np.ndarray:
+    """The F-matrix (6j symbol) for Fibonacci anyons.
+    
+    F[τ,τ,τ,τ] = [[φ⁻¹, φ^{-1/2}],
+                   [φ^{-1/2}, -φ⁻¹]]
+    
+    This is the change-of-basis matrix between the two fusion
+    orderings (τ⊗τ)⊗τ and τ⊗(τ⊗τ).
+    """
+    phi = (1 + np.sqrt(5)) / 2
+    phi_inv = 1 / phi
+    phi_sqrt_inv = 1 / np.sqrt(phi)
+    return np.array([
+        [phi_inv, phi_sqrt_inv],
+        [phi_sqrt_inv, -phi_inv]
+    ])
+
+
+def fibonacci_r_matrix() -> np.ndarray:
+    """The R-matrix (braiding eigenvalues) for Fibonacci anyons.
+    
+    R = diag(e^{-4πi/5}, e^{3πi/5})
+    where the first eigenvalue is for the vacuum channel
+    and the second for the τ channel.
+    """
+    R_vac = np.exp(-4j * np.pi / 5)
+    R_tau = np.exp(3j * np.pi / 5)
+    return np.diag([R_vac, R_tau])
+
+
+def braid_generator(strand: int, n_strands: int) -> np.ndarray:
+    """Compute the braid generator σ_strand for n_strands Fibonacci anyons.
+    
+    For n_strands anyons, the Hilbert space dimension is Fib(n_strands+1).
+    The braid generator σᵢ acts locally on strands i and i+1.
+    
+    This implements the Jones representation at k=5 (Fibonacci anyons).
+    
+    Args:
+        strand: Which generator (0-indexed, 0 to n_strands-2)
+        n_strands: Total number of strands/anyons
+    
+    Returns:
+        Unitary matrix representing the braid generator
+    """
+    if n_strands < 3:
+        raise ValueError("Need at least 3 strands for non-trivial braiding")
+    if strand < 0 or strand >= n_strands - 1:
+        raise ValueError(f"strand must be in [0, {n_strands-2}]")
+    
+    # For 3 strands, the representation is 2D
+    if n_strands == 3:
+        F = fibonacci_f_matrix()
+        R = fibonacci_r_matrix()
+        if strand == 0:
+            return R
+        else:  # strand == 1
+            return F @ R @ F
+    
+    # For more strands, build recursively using F and R matrices
+    # This is a simplified version for demonstration
+    dim = _fibonacci(n_strands + 1)
+    
+    # Build the braid matrix using the local R and F matrices
+    # (Full implementation requires tracking fusion tree structure)
+    result = np.eye(dim, dtype=complex)
+    
+    # For the demo, we use the 3-strand version embedded in higher dimensions
+    # A full implementation would need the fusion tree basis
+    if strand == 0:
+        R = fibonacci_r_matrix()
+        result[:2, :2] = R
+    elif strand == n_strands - 2:
+        F = fibonacci_f_matrix()
+        R = fibonacci_r_matrix()
+        result[-2:, -2:] = F @ R @ F
+    else:
+        F = fibonacci_f_matrix()
+        R = fibonacci_r_matrix()
+        mid = strand
+        result[mid:mid+2, mid:mid+2] = F @ R @ F
+    
+    return result
+
+
+def _fibonacci(n: int) -> int:
+    """Compute n-th Fibonacci number."""
+    if n <= 0:
+        return 0
+    a, b = 0, 1
     for _ in range(n - 1):
         a, b = b, a + b
     return b
 
 
 # ============================================================
-# Algorithm 4: Jones Representation Matrices
+# Algorithm 4: Solovay-Kitaev Approximation
 # ============================================================
 
-def jones_rep_fibonacci(n_strands: int) -> List[np.ndarray]:
-    """Compute the Jones representation matrices for B_n with Fibonacci anyons.
-
-    At level k=5 (Fibonacci anyons), the braiding matrices are determined by
-    the F-matrices and R-matrices of the Fibonacci fusion category.
-
-    For the 3-dimensional representation (n=4 strands), we use the explicit
-    construction from the Fibonacci anyon model.
-
-    Time complexity: O(d^3) per generator where d = fibDim(n-1)
-    Space complexity: O(d^2 * (n-1)) for storing all generators
-
-    Args:
-        n_strands: Number of strands (must be >= 2)
-
-    Returns:
-        List of (n-1) unitary matrices representing σ_1, ..., σ_{n-1}
+def solovay_kitaev_depth(epsilon: float, dim: int = 2) -> int:
+    """Estimate the circuit depth needed to approximate a target
+    unitary to precision ε using the Solovay-Kitaev algorithm.
+    
+    The Solovay-Kitaev theorem guarantees:
+      depth = O(log^c(1/ε)) where c ≈ 3.97
+    
+    For Fibonacci anyons, each "gate" is a braid crossing.
     """
-    phi = (1 + np.sqrt(5)) / 2
-    tau = 1 / phi
-
-    # R-matrix eigenvalues for Fibonacci anyons
-    r_1 = np.exp(-4j * np.pi / 5)   # trivial channel
-    r_tau = np.exp(3j * np.pi / 5)  # Fibonacci channel
-
-    if n_strands == 4:
-        # 3-dimensional representation
-        # F-matrix for the Fibonacci category
-        F = np.array([
-            [tau, np.sqrt(tau)],
-            [np.sqrt(tau), -tau]
-        ], dtype=complex)
-
-        # Build the three generators
-        R_diag = np.diag([r_tau, r_1])
-
-        # σ₁ acts on the first two anyons
-        sigma1 = np.zeros((3, 3), dtype=complex)
-        sigma1[0, 0] = r_tau
-        block = F @ R_diag @ np.linalg.inv(F)
-        sigma1[1:, 1:] = block
-
-        # σ₂ acts on the middle two anyons
-        sigma2 = np.zeros((3, 3), dtype=complex)
-        block2 = F @ R_diag @ np.linalg.inv(F)
-        sigma2[:2, :2] = block2
-        sigma2[2, 2] = r_tau
-
-        # σ₃ acts on the last two anyons
-        sigma3 = np.zeros((3, 3), dtype=complex)
-        sigma3[0, 0] = r_tau
-        sigma3[1, 1] = r_tau
-        sigma3[2, 2] = r_1
-
-        return [sigma1, sigma2, sigma3]
-
-    elif n_strands == 3:
-        # 2-dimensional representation
-        F = np.array([
-            [tau, np.sqrt(tau)],
-            [np.sqrt(tau), -tau]
-        ], dtype=complex)
-
-        R_diag = np.diag([r_tau, r_1])
-        sigma1 = F @ R_diag @ np.linalg.inv(F)
-        sigma2 = R_diag
-
-        return [sigma1, sigma2]
-
-    else:
-        raise NotImplementedError(
-            f"Jones representation for {n_strands} strands not yet implemented. "
-            f"Only 3 and 4 strands are currently supported."
-        )
+    c = 3.97  # Solovay-Kitaev constant
+    return int(np.ceil(np.log(1/epsilon) ** c))
 
 
-def evaluate_braid_word(word: BraidWord, matrices: List[np.ndarray]) -> np.ndarray:
-    """Evaluate a braid word as a matrix product using the Jones representation.
-
-    Time complexity: O(|word| * d^3) where d is the matrix dimension
-
-    Args:
-        word: Braid word to evaluate
-        matrices: List of generator matrices [σ_1, σ_2, ..., σ_{n-1}]
-
-    Returns:
-        Product matrix ρ(word)
-    """
-    d = matrices[0].shape[0]
-    result = np.eye(d, dtype=complex)
-    for g in word:
-        M = matrices[g.index]
-        if g.sign == Sign.NEG:
-            M = np.linalg.inv(M)
-        result = result @ M
-    return result
-
-
-# ============================================================
-# Algorithm 5: Solovay-Kitaev Approximation (Simplified)
-# ============================================================
-
-def solovay_kitaev_search(
-    target: np.ndarray,
-    generators: List[np.ndarray],
-    max_length: int = 10,
-    tolerance: float = 0.1
-) -> Tuple[Optional[BraidWord], float]:
+def approximate_unitary(target: np.ndarray, generators: List[np.ndarray],
+                        max_length: int = 100) -> Tuple[List[int], float]:
     """Brute-force search for a braid word approximating a target unitary.
-
-    This is a simplified version of the Solovay-Kitaev algorithm that uses
-    exhaustive search over short braid words. The full SK algorithm achieves
-    O(log^c(1/ε)) word length for precision ε, where c ≈ 3.97.
-
-    Time complexity: O((2g)^L * d^3) where g = number of generators, L = max_length
-    Space complexity: O(d^2 * (2g)^L) for storing all matrices
-
+    
     Args:
-        target: Target unitary matrix to approximate
-        generators: Braid generator matrices
+        target: Target unitary matrix
+        generators: List of braid generator matrices
         max_length: Maximum braid word length to search
-        tolerance: Required approximation precision (operator norm)
-
+    
     Returns:
-        Tuple of (best_word, best_distance) or (None, inf) if no good approximation found
+        (best_word, best_error) where word is a list of generator indices
     """
-    d = target.shape[0]
-    n_gens = len(generators)
-
-    # Precompute inverse generators
-    all_gens = []
-    for i, g in enumerate(generators):
-        all_gens.append((BraidGenerator(i, Sign.POS), g))
-        all_gens.append((BraidGenerator(i, Sign.NEG), np.linalg.inv(g)))
-
-    best_word: Optional[BraidWord] = None
-    best_dist = float('inf')
-
-    # BFS over braid words of increasing length
-    queue: List[Tuple[BraidWord, np.ndarray]] = [([], np.eye(d, dtype=complex))]
-
-    for length in range(max_length + 1):
-        next_queue = []
+    dim = target.shape[0]
+    best_word: List[int] = []
+    best_error = float('inf')
+    
+    # BFS over braid words
+    queue: List[Tuple[List[int], np.ndarray]] = [([], np.eye(dim, dtype=complex))]
+    
+    for length in range(max_length):
+        next_queue: List[Tuple[List[int], np.ndarray]] = []
         for word, matrix in queue:
-            dist = np.linalg.norm(matrix - target, ord=2)
-            if dist < best_dist:
-                best_dist = dist
-                best_word = word
-                if dist < tolerance:
-                    return best_word, best_dist
-
-            if length < max_length:
-                for gen, gen_mat in all_gens:
-                    new_word = word + [gen]
-                    new_mat = matrix @ gen_mat
-                    next_queue.append((new_word, new_mat))
-
+            for g_idx, gen in enumerate(generators):
+                new_word = word + [g_idx]
+                new_matrix = matrix @ gen
+                
+                # Frobenius norm error (up to global phase)
+                error = min(
+                    np.linalg.norm(new_matrix - target * np.exp(1j * phase), 'fro')
+                    for phase in np.linspace(0, 2*np.pi, 36)
+                )
+                
+                if error < best_error:
+                    best_error = error
+                    best_word = new_word
+                
+                if error < 1e-10:
+                    return best_word, best_error
+                
+                next_queue.append((new_word, new_matrix))
+        
         queue = next_queue
-
-    return best_word, best_dist
+        if len(queue) > 10000:  # Prune
+            queue = sorted(queue, key=lambda x: np.linalg.norm(
+                x[1] - target, 'fro'))[:1000]
+    
+    return best_word, best_error
 
 
 # ============================================================
-# Algorithm 6: Infinite Order Test
+# Algorithm 5: Topological Entanglement Entropy
 # ============================================================
 
-def test_infinite_order(
-    matrix: np.ndarray,
-    max_power: int = 1000,
-    tolerance: float = 1e-8
-) -> Tuple[bool, int]:
-    """Test whether a unitary matrix has infinite order.
-
-    Checks if M^m = I for any 1 ≤ m ≤ max_power.
-
-    Time complexity: O(max_power * d^3)
-    Space complexity: O(d^2)
-
-    Args:
-        matrix: Unitary matrix to test
-        max_power: Maximum power to check
-        tolerance: Tolerance for identity check
-
-    Returns:
-        Tuple of (is_infinite_order, first_identity_power_or_0)
+def topological_entropy(fusion_system: FusionSystem) -> float:
+    """Compute the topological entanglement entropy S = log(D).
+    
+    D² = Σᵢ dᵢ² where dᵢ are the quantum dimensions.
     """
-    d = matrix.shape[0]
-    identity = np.eye(d, dtype=complex)
-    power = np.eye(d, dtype=complex)
-
-    for m in range(1, max_power + 1):
-        power = power @ matrix
-        if np.allclose(power, identity, atol=tolerance):
-            return False, m
-
-    return True, 0
+    dims = compute_quantum_dimensions(fusion_system)
+    D_sq = np.sum(dims ** 2)
+    return np.log(np.sqrt(D_sq))
 
 
 # ============================================================
-# Demo
+# Main demonstration
 # ============================================================
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ALGORITHMS DEMO")
+    print("ALGORITHMS DEMONSTRATION")
     print("=" * 60)
-
-    # Fibonacci dimensions
-    print("\nFibonacci dimensions for 1-10 anyons:")
-    for n in range(1, 11):
-        print(f"  {n} anyons: dim = {fibonacci_dim(n)}")
-
-    # Braid word algebra
-    w = [BraidGenerator(0, Sign.POS), BraidGenerator(1, Sign.POS),
-         BraidGenerator(0, Sign.NEG), BraidGenerator(1, Sign.POS)]
-    print(f"\nBraid word: {w}")
-    print(f"  Length: {word_length(w)}")
-    print(f"  Exponent sum: {exponent_sum(w)}")
-    print(f"  Free reduced: {free_reduce(w)}")
-
-    # Jones representation
-    print("\nJones representation (k=5, B_4):")
-    gens = jones_rep_fibonacci(4)
-    for i, g in enumerate(gens):
-        print(f"  σ_{i+1}:")
-        for row in g:
-            print(f"    [{', '.join(f'{x.real:+.4f}{x.imag:+.4f}i' for x in row)}]")
-
-    # Infinite order test
-    product = gens[0] @ gens[1] @ gens[2]
-    is_inf, order = test_infinite_order(product)
-    print(f"\nInfinite order test for σ₁σ₂σ₃:")
-    print(f"  Infinite order (up to m=1000): {is_inf}")
-    if not is_inf:
-        print(f"  Finite order: {order}")
+    
+    # 1. Fusion system
+    fs = fibonacci_fusion_system()
+    print(f"\nFibonacci fusion system:")
+    print(f"  Associative: {fs.verify_associativity()}")
+    print(f"  Multiplicity-free: {fs.is_multiplicity_free()}")
+    
+    # 2. Quantum dimensions
+    dims = compute_quantum_dimensions(fs)
+    phi = (1 + np.sqrt(5)) / 2
+    print(f"\nQuantum dimensions:")
+    print(f"  d_vacuum = {dims[0]:.6f}")
+    print(f"  d_τ = {dims[1]:.6f}")
+    print(f"  φ = {phi:.6f}")
+    print(f"  d_τ = φ: {np.isclose(dims[1], phi)}")
+    
+    # 3. Fusion paths
+    for n in range(1, 7):
+        paths = enumerate_fusion_paths(n)
+        vac_paths = enumerate_fusion_paths(n, target=0)
+        tau_paths = enumerate_fusion_paths(n, target=1)
+        fib_n1 = _fibonacci(n + 1)
+        print(f"\nn={n}: {len(paths)} paths (Fib({n+1})={fib_n1}), "
+              f"{len(vac_paths)} to vacuum, {len(tau_paths)} to τ")
+        if n <= 4:
+            for p in paths:
+                labels = ['1' if x == 0 else 'τ' for x in p]
+                print(f"  {'→'.join(labels)}")
+    
+    # 4. Braid generators (3 strands)
+    print(f"\nBraid generators for 3-strand Fibonacci anyons:")
+    F = fibonacci_f_matrix()
+    R = fibonacci_r_matrix()
+    sigma1 = R
+    sigma2 = F @ R @ F
+    print(f"σ₁ = {sigma1}")
+    print(f"σ₂ = {sigma2}")
+    
+    # Verify Yang-Baxter
+    yb_lhs = sigma1 @ sigma2 @ sigma1
+    yb_rhs = sigma2 @ sigma1 @ sigma2
+    print(f"Yang-Baxter σ₁σ₂σ₁ = σ₂σ₁σ₂: {np.allclose(yb_lhs, yb_rhs)}")
+    
+    # 5. Topological entropy
+    S = topological_entropy(fs)
+    print(f"\nTopological entanglement entropy: S = {S:.6f}")
+    print(f"Expected: ln(√(2+φ)) = {np.log(np.sqrt(2+phi)):.6f}")
+    
+    # 6. Solovay-Kitaev depth estimates
+    print(f"\nSolovay-Kitaev depth estimates:")
+    for eps in [0.1, 0.01, 0.001, 1e-6, 1e-10]:
+        depth = solovay_kitaev_depth(eps)
+        print(f"  ε = {eps:.0e}: depth ≈ {depth}")
