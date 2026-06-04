@@ -1,327 +1,342 @@
 #!/usr/bin/env python3
 """
-Demo: Cellular Automata as Algebraic Geometry over GF(2)
+Cellular Automata as Algebraic Geometry over GF(2) — Demonstrations
 
-Demonstrates the key results:
-1. ANF computation for all 256 rules
-2. Fixed-point variety dimension computation
-3. Correlation between algebraic degree and Wolfram complexity class
-4. Subspace structure verification for additive rules
+Computes fixed-point varieties for all 256 ECA rules on cyclic arrays,
+verifies the complementation duality theorem, and analyzes the correlation
+between ANF degree and fixed-point variety dimension.
 """
 
-from itertools import product
-from collections import Counter
-import math
+import itertools
+from typing import List, Tuple, Dict
 
 
-# ─── GF(2) Arithmetic ───
-
-def gf2_add(a, b):
-    return (a + b) % 2
-
-def gf2_mul(a, b):
-    return a & b
+def eca_local_rule(rule_num: int, a: int, b: int, c: int) -> int:
+    """Evaluate ECA rule on three binary inputs."""
+    index = 4 * a + 2 * b + c
+    return (rule_num >> index) & 1
 
 
-# ─── ECA Rule Functions ───
-
-def rule_truth_table(r):
-    return {(a, b, c): (r >> (4*a + 2*b + c)) & 1
-            for a, b, c in product([0, 1], repeat=3)}
-
-def eca_update(state, rule_num):
+def eca_global_update(rule_num: int, state: Tuple[int, ...]) -> Tuple[int, ...]:
+    """Apply ECA rule to cyclic state."""
     n = len(state)
-    table = rule_truth_table(rule_num)
-    return [table[(state[(i-1) % n], state[i], state[(i+1) % n])]
-            for i in range(n)]
+    return tuple(
+        eca_local_rule(rule_num, state[(i - 1) % n], state[i], state[(i + 1) % n])
+        for i in range(n)
+    )
 
 
-# ─── ANF Computation ───
-
-def compute_anf(r):
-    g = rule_truth_table(r)
-    c0 = g[(0,0,0)]
-    c1 = gf2_add(g[(1,0,0)], g[(0,0,0)])
-    c2 = gf2_add(g[(0,1,0)], g[(0,0,0)])
-    c3 = gf2_add(g[(0,0,1)], g[(0,0,0)])
-    c4 = gf2_add(gf2_add(gf2_add(g[(1,1,0)], g[(1,0,0)]), g[(0,1,0)]), g[(0,0,0)])
-    c5 = gf2_add(gf2_add(gf2_add(g[(1,0,1)], g[(1,0,0)]), g[(0,0,1)]), g[(0,0,0)])
-    c6 = gf2_add(gf2_add(gf2_add(g[(0,1,1)], g[(0,1,0)]), g[(0,0,1)]), g[(0,0,0)])
-    c7 = gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(
-        g[(1,1,1)], g[(1,1,0)]), g[(1,0,1)]), g[(0,1,1)]),
-        g[(1,0,0)]), g[(0,1,0)]), g[(0,0,1)]), g[(0,0,0)])
-    return [c0, c1, c2, c3, c4, c5, c6, c7]
-
-def anf_degree(coeffs):
-    if coeffs[7]: return 3
-    if any(coeffs[i] for i in [4,5,6]): return 2
-    if any(coeffs[i] for i in [1,2,3]): return 1
-    return 0
-
-def anf_str(coeffs):
-    labels = ["1", "a", "b", "c", "ab", "ac", "bc", "abc"]
-    terms = [l for c, l in zip(coeffs, labels) if c]
-    return " + ".join(terms) if terms else "0"
-
-
-# ─── Fixed Point Analysis ───
-
-def find_fixed_points(rule_num, n):
+def find_fixed_points(rule_num: int, n: int) -> List[Tuple[int, ...]]:
+    """Find all fixed points of an ECA rule on a cycle of length n."""
     fixed = []
-    for state in product([0, 1], repeat=n):
-        s = list(state)
-        if eca_update(s, rule_num) == s:
+    for state in itertools.product([0, 1], repeat=n):
+        if eca_global_update(rule_num, state) == state:
             fixed.append(state)
     return fixed
 
 
-def log2_if_power(x):
-    if x == 0: return None
-    l = math.log2(x)
-    return int(l) if l == int(l) else None
+def anf_coefficients(rule_num: int) -> Dict[str, int]:
+    """Compute algebraic normal form coefficients over GF(2)."""
+    # Truth table values
+    f = {}
+    for a, b, c in itertools.product([0, 1], repeat=3):
+        f[(a, b, c)] = eca_local_rule(rule_num, a, b, c)
+
+    # Möbius inversion for ANF
+    a0 = f[(0, 0, 0)]
+    a_c = f[(0, 0, 0)] ^ f[(0, 0, 1)]
+    a_b = f[(0, 0, 0)] ^ f[(0, 1, 0)]
+    a_bc = f[(0, 0, 0)] ^ f[(0, 0, 1)] ^ f[(0, 1, 0)] ^ f[(0, 1, 1)]
+    a_a = f[(0, 0, 0)] ^ f[(1, 0, 0)]
+    a_ac = f[(0, 0, 0)] ^ f[(0, 0, 1)] ^ f[(1, 0, 0)] ^ f[(1, 0, 1)]
+    a_ab = f[(0, 0, 0)] ^ f[(0, 1, 0)] ^ f[(1, 0, 0)] ^ f[(1, 1, 0)]
+    a_abc = (f[(0, 0, 0)] ^ f[(0, 0, 1)] ^ f[(0, 1, 0)] ^ f[(0, 1, 1)] ^
+             f[(1, 0, 0)] ^ f[(1, 0, 1)] ^ f[(1, 1, 0)] ^ f[(1, 1, 1)])
+
+    return {
+        '1': a0, 'c': a_c, 'b': a_b, 'bc': a_bc,
+        'a': a_a, 'ac': a_ac, 'ab': a_ab, 'abc': a_abc
+    }
 
 
-# ─── Wolfram Classes (partial) ───
-
-WOLFRAM_CLASS = {}
-for r in [0, 8, 32, 40, 64, 96, 128, 136, 160, 168, 192, 224, 234, 235, 238, 239, 248, 249, 252, 253, 254, 255]:
-    WOLFRAM_CLASS[r] = 1
-for r in [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 19, 23, 24, 25, 26, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 46, 50, 51, 56, 57, 58, 62, 72, 73, 74, 76, 77, 78, 94, 104, 108, 130, 132, 134, 138, 140, 142, 152, 154, 156, 162, 164, 170, 172, 174, 178, 184, 200, 204, 232]:
-    WOLFRAM_CLASS[r] = 2
-for r in [18, 22, 30, 45, 60, 90, 105, 122, 126, 146, 150, 161]:
-    WOLFRAM_CLASS[r] = 3
-for r in [41, 54, 106, 110]:
-    WOLFRAM_CLASS[r] = 4
-
-
-# ─── DEMO ───
-
-def main():
-    print("=" * 72)
-    print("CELLULAR AUTOMATA AS ALGEBRAIC GEOMETRY OVER GF(2)")
-    print("=" * 72)
-
-    # Demo 1: ANF of notable rules
-    print("\n─── Demo 1: Algebraic Normal Form ───")
-    print(f"{'Rule':>6} {'ANF Polynomial':>25} {'Degree':>8} {'Additive':>10}")
-    print("-" * 55)
-    notable = [0, 30, 60, 90, 110, 150, 204, 255]
-    for r in notable:
-        c = compute_anf(r)
-        print(f"{r:>6} {anf_str(c):>25} {anf_degree(c):>8} {'Yes' if anf_degree(c) <= 1 else 'No':>10}")
-
-    # Demo 2: Degree distribution
-    print("\n─── Demo 2: ANF Degree Distribution ───")
-    degrees = [anf_degree(compute_anf(r)) for r in range(256)]
-    for d in range(4):
-        count = degrees.count(d)
-        print(f"  Degree {d}: {count:3d} rules ({100*count/256:.1f}%)")
-
-    # Demo 3: Fixed points for small n
-    print("\n─── Demo 3: Fixed Point Counts (n=8) ───")
-    print(f"{'Rule':>6} {'Class':>6} {'#FP':>6} {'log₂(#FP)':>10} {'Degree':>8}")
-    print("-" * 42)
-    for r in [0, 30, 51, 90, 110, 150, 204, 255]:
-        fps = find_fixed_points(r, 8)
-        nfp = len(fps)
-        l = log2_if_power(nfp)
-        cls = WOLFRAM_CLASS.get(r, "?")
-        deg = anf_degree(compute_anf(r))
-        l_str = str(l) if l is not None else f"~{math.log2(nfp):.2f}" if nfp > 0 else "∅"
-        print(f"{r:>6} {cls:>6} {nfp:>6} {l_str:>10} {deg:>8}")
-
-    # Demo 4: Verify subspace structure for additive rules
-    print("\n─── Demo 4: Subspace Structure Verification ───")
-    print("For additive rules, fixed points should form a vector subspace.")
-    for r in [90, 150]:
-        for n in [4, 5, 6, 7, 8]:
-            fps = find_fixed_points(r, n)
-            nfp = len(fps)
-            is_power_2 = (nfp & (nfp - 1) == 0) if nfp > 0 else True
-            # Verify closure under XOR
-            closed = True
-            for s1 in fps:
-                for s2 in fps:
-                    xor = tuple(gf2_add(a, b) for a, b in zip(s1, s2))
-                    if xor not in fps:
-                        closed = False
-                        break
-                if not closed:
-                    break
-            dim = log2_if_power(nfp) if nfp > 0 else 0
-            status = "✓" if (is_power_2 and closed) else "✗"
-            print(f"  Rule {r}, n={n}: |V| = {nfp:4d}, dim = {dim}, "
-                  f"subspace = {status}")
-
-    # Demo 5: Degree vs Wolfram class correlation
-    print("\n─── Demo 5: Degree-Complexity Correlation ───")
-    print("Average ANF degree by Wolfram complexity class:")
-    class_degrees = {1: [], 2: [], 3: [], 4: []}
-    for r in range(256):
-        if r in WOLFRAM_CLASS:
-            class_degrees[WOLFRAM_CLASS[r]].append(anf_degree(compute_anf(r)))
-    for cls in [1, 2, 3, 4]:
-        degs = class_degrees[cls]
-        if degs:
-            avg = sum(degs) / len(degs)
-            print(f"  Class {cls}: avg degree = {avg:.2f} "
-                  f"(n={len(degs)}, deg distribution: {dict(Counter(degs))})")
-
-    # Demo 6: Fixed-point dimension vs Wolfram class
-    print("\n─── Demo 6: Fixed-Point Dimension vs Wolfram Class (n=10) ───")
-    n = 10
-    class_dims = {1: [], 2: [], 3: [], 4: []}
-    for r in [0, 90, 110, 150, 204, 255, 30, 51, 60, 105, 54, 41]:
-        if r in WOLFRAM_CLASS:
-            fps = find_fixed_points(r, n)
-            nfp = len(fps)
-            dim = log2_if_power(nfp)
-            cls = WOLFRAM_CLASS[r]
-            if dim is not None:
-                class_dims[cls].append(dim)
-            print(f"  Rule {r:3d} (Class {cls}): "
-                  f"|V| = {nfp:5d}, dim = {dim if dim is not None else '?'}")
-
-    print("\n" + "=" * 72)
-    print("KEY FINDINGS:")
-    print("  1. Every ECA rule has a unique ANF polynomial over GF(2)")
-    print("  2. Additive rules (degree ≤ 1) have subspace fixed-point varieties")
-    print("  3. Rule 110 (Turing-complete) has maximal ANF degree 3")
-    print("  4. Non-additive rules can have non-subspace fixed-point sets")
-    print("=" * 72)
+def anf_degree(rule_num: int) -> int:
+    """Compute the algebraic degree of the rule's ANF."""
+    coeffs = anf_coefficients(rule_num)
+    deg = -1  # for the zero polynomial
+    if coeffs['abc']:
+        deg = 3
+    elif coeffs['ab'] or coeffs['ac'] or coeffs['bc']:
+        deg = 2
+    elif coeffs['a'] or coeffs['b'] or coeffs['c']:
+        deg = 1
+    elif coeffs['1']:
+        deg = 0
+    return deg
 
 
-if __name__ == "__main__":
-    main()
+def complement_rule(rule_num: int) -> int:
+    """Compute the complement rule number."""
+    result = 0
+    for a, b, c in itertools.product([0, 1], repeat=3):
+        idx = 4 * a + 2 * b + c
+        comp_val = 1 ^ eca_local_rule(rule_num, 1 ^ a, 1 ^ b, 1 ^ c)
+        result |= (comp_val << idx)
+    return result
+
+
+def is_linear_rule(rule_num: int) -> bool:
+    """Check if the rule is GF(2)-linear."""
+    if eca_local_rule(rule_num, 0, 0, 0) != 0:
+        return False
+    for a1, a2, b1, b2, c1, c2 in itertools.product([0, 1], repeat=6):
+        lhs = eca_local_rule(rule_num, a1 ^ a2, b1 ^ b2, c1 ^ c2)
+        rhs = eca_local_rule(rule_num, a1, b1, c1) ^ eca_local_rule(rule_num, a2, b2, c2)
+        if lhs != rhs:
+            return False
+    return True
+
+
+def log2_or_none(x: int) -> str:
+    """Return log2 if x is a power of 2, else the count."""
+    if x == 0:
+        return "∅"
+    import math
+    if x & (x - 1) == 0:
+        return f"2^{int(math.log2(x))}"
+    return str(x)
+
+
+# ============================
+# DEMONSTRATIONS
+# ============================
+
+print("=" * 70)
+print("CELLULAR AUTOMATA AS ALGEBRAIC GEOMETRY OVER GF(2)")
+print("=" * 70)
+
+# Demo 1: Specific rule analysis
+print("\n--- Demo 1: Key Rule Analysis ---\n")
+key_rules = [0, 90, 110, 150, 204, 255]
+for r in key_rules:
+    coeffs = anf_coefficients(r)
+    terms = []
+    for name in ['1', 'a', 'b', 'c', 'ab', 'ac', 'bc', 'abc']:
+        if coeffs[name]:
+            terms.append(name)
+    anf_str = ' + '.join(terms) if terms else '0'
+    deg = anf_degree(r)
+    is_lin = is_linear_rule(r)
+    comp = complement_rule(r)
+
+    fps = {n: find_fixed_points(r, n) for n in range(1, 9)}
+    fp_counts = {n: len(fps[n]) for n in fps}
+
+    print(f"Rule {r:3d}: ANF = {anf_str:20s}  deg = {deg}  linear = {is_lin}  complement = Rule {comp}")
+    print(f"         |Fix(n)|: {', '.join(f'n={n}:{log2_or_none(fp_counts[n])}' for n in range(1, 9))}")
+    print()
+
+# Demo 2: Complementation duality verification
+print("\n--- Demo 2: Complementation Duality Verification ---\n")
+duality_verified = True
+for r in range(256):
+    comp_r = complement_rule(r)
+    for n in range(1, 7):
+        fps_r = set(find_fixed_points(r, n))
+        fps_comp = set(find_fixed_points(comp_r, n))
+        # Check: s in Fix(r) iff complement(s) in Fix(comp_r)
+        for s in fps_r:
+            cs = tuple(1 ^ x for x in s)
+            if cs not in fps_comp:
+                print(f"DUALITY FAILED: Rule {r}, n={n}, s={s}")
+                duality_verified = False
+        for t in fps_comp:
+            ct = tuple(1 ^ x for x in t)
+            if ct not in fps_r:
+                print(f"DUALITY FAILED: Rule {comp_r}, n={n}, t={t}")
+                duality_verified = False
+print(f"Complementation duality verified for all 256 rules, n=1..6: {duality_verified}")
+
+# Demo 3: Linear rules have power-of-2 fixed-point counts
+print("\n--- Demo 3: Linear Rules → Power-of-2 Fixed-Point Counts ---\n")
+linear_rules = [r for r in range(256) if is_linear_rule(r)]
+print(f"Linear rules: {linear_rules}")
+all_pow2 = True
+for r in linear_rules:
+    for n in range(1, 10):
+        count = len(find_fixed_points(r, n))
+        if count & (count - 1) != 0:  # not a power of 2
+            print(f"NOT pow2: Rule {r}, n={n}, |Fix|={count}")
+            all_pow2 = False
+print(f"All linear rules have power-of-2 fixed-point counts (n=1..9): {all_pow2}")
+
+# Demo 4: Rule 150 fixed-point characterization
+print("\n--- Demo 4: Rule 150 Fixed-Point Characterization ---\n")
+for n in range(1, 9):
+    fps = find_fixed_points(150, n)
+    print(f"n={n}: {len(fps)} fixed points: ", end="")
+    if n <= 6:
+        print([list(s) for s in fps])
+    else:
+        print(f"(count = {len(fps)})")
+
+print("\nRule 150 fixed points satisfy s[i-1] = s[i+1] for all i:")
+print("  n odd  → all entries equal → |Fix| = 2")
+print("  n even → evens equal, odds equal → |Fix| = 4")
+
+# Demo 5: ANF degree vs fixed-point dimension correlation
+print("\n--- Demo 5: ANF Degree vs Fixed-Point Dimension ---\n")
+import math
+n_test = 8
+degree_to_dims = {0: [], 1: [], 2: [], 3: []}
+for r in range(256):
+    deg = anf_degree(r)
+    if deg < 0:
+        continue
+    count = len(find_fixed_points(r, n_test))
+    dim = math.log2(count) if count > 0 else -1
+    degree_to_dims[deg].append((r, count, dim))
+
+for deg in range(4):
+    entries = degree_to_dims[deg]
+    if entries:
+        dims = [e[2] for e in entries]
+        avg_dim = sum(d for d in dims if d >= 0) / max(1, len([d for d in dims if d >= 0]))
+        print(f"ANF degree {deg}: {len(entries)} rules, avg fixed-point dim (n={n_test}): {avg_dim:.2f}")
+        print(f"  dim range: [{min(d for d in dims if d >= 0):.1f}, {max(dims):.1f}]")
+
+# Demo 6: Self-complementary rules
+print("\n--- Demo 6: Self-Complementary Rules ---\n")
+self_comp = [r for r in range(256) if complement_rule(r) == r]
+print(f"Self-complementary rules ({len(self_comp)} total): {self_comp}")
+print("\nVerifying fixed-point count is even for n >= 1:")
+all_even = True
+for r in self_comp:
+    for n in range(1, 9):
+        count = len(find_fixed_points(r, n))
+        if count % 2 != 0:
+            print(f"  NOT even: Rule {r}, n={n}, |Fix|={count}")
+            all_even = False
+print(f"All self-complementary rules have even |Fix| for n=1..8: {all_even}")
+
+print("\n" + "=" * 70)
+print("All demonstrations complete.")
+print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Visualization: ANF Degree Distribution and Fixed-Point Counts for all 256 ECA Rules.
-Standalone script using matplotlib.
+Visualization: ECA Fixed-Point Variety Dimensions across all 256 rules.
+Standalone matplotlib script — no local imports.
 """
-
-import matplotlib
-matplotlib.use('Agg')
+import itertools
+import math
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import product
 
 
-def gf2_add(a, b):
-    return (a + b) % 2
+def eca_local_rule(rule_num, a, b, c):
+    return (rule_num >> (4 * a + 2 * b + c)) & 1
 
 
-def rule_truth_table(r):
-    return {(a, b, c): (r >> (4*a + 2*b + c)) & 1
-            for a, b, c in product([0, 1], repeat=3)}
-
-
-def compute_anf(r):
-    g = rule_truth_table(r)
-    c0 = g[(0,0,0)]
-    c1 = gf2_add(g[(1,0,0)], g[(0,0,0)])
-    c2 = gf2_add(g[(0,1,0)], g[(0,0,0)])
-    c3 = gf2_add(g[(0,0,1)], g[(0,0,0)])
-    c4 = gf2_add(gf2_add(gf2_add(g[(1,1,0)], g[(1,0,0)]), g[(0,1,0)]), g[(0,0,0)])
-    c5 = gf2_add(gf2_add(gf2_add(g[(1,0,1)], g[(1,0,0)]), g[(0,0,1)]), g[(0,0,0)])
-    c6 = gf2_add(gf2_add(gf2_add(g[(0,1,1)], g[(0,1,0)]), g[(0,0,1)]), g[(0,0,0)])
-    c7 = gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(gf2_add(
-        g[(1,1,1)], g[(1,1,0)]), g[(1,0,1)]), g[(0,1,1)]),
-        g[(1,0,0)]), g[(0,1,0)]), g[(0,0,1)]), g[(0,0,0)])
-    return [c0, c1, c2, c3, c4, c5, c6, c7]
-
-
-def anf_degree(coeffs):
-    if coeffs[7]: return 3
-    if any(coeffs[i] for i in [4,5,6]): return 2
-    if any(coeffs[i] for i in [1,2,3]): return 1
-    return 0
-
-
-def eca_update(state, rule_num):
+def eca_update(rule_num, state):
     n = len(state)
-    table = rule_truth_table(rule_num)
-    return [table[(state[(i-1)%n], state[i], state[(i+1)%n])] for i in range(n)]
+    return tuple(
+        eca_local_rule(rule_num, state[(i-1)%n], state[i], state[(i+1)%n])
+        for i in range(n)
+    )
 
 
 def count_fixed_points(rule_num, n):
     count = 0
-    for state in product([0, 1], repeat=n):
-        s = list(state)
-        if eca_update(s, rule_num) == s:
+    for state in itertools.product([0, 1], repeat=n):
+        if eca_update(rule_num, state) == state:
             count += 1
     return count
 
 
-def main():
-    # Compute ANF degrees
-    degrees = [anf_degree(compute_anf(r)) for r in range(256)]
-    
-    # Compute fixed-point counts for n=8
-    fp_counts = [count_fixed_points(r, 8) for r in range(256)]
-    
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Cellular Automata as Algebraic Geometry over GF(2)', fontsize=16, fontweight='bold')
-    
-    # Plot 1: ANF degree distribution
-    ax = axes[0, 0]
-    counts = [degrees.count(d) for d in range(4)]
-    colors = ['#2ecc71', '#3498db', '#e74c3c', '#9b59b6']
-    bars = ax.bar(range(4), counts, color=colors, edgecolor='black', linewidth=0.5)
-    ax.set_xlabel('ANF Degree')
-    ax.set_ylabel('Number of Rules')
-    ax.set_title('ANF Degree Distribution (256 Rules)')
-    for bar, count in zip(bars, counts):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 2,
-                f'{count}\n({100*count/256:.1f}%)', ha='center', va='bottom', fontsize=9)
-    ax.set_xticks(range(4))
-    
-    # Plot 2: Fixed-point count vs rule number
-    ax = axes[0, 1]
-    color_map = [colors[d] for d in degrees]
-    ax.scatter(range(256), fp_counts, c=color_map, s=8, alpha=0.7)
-    ax.set_xlabel('Rule Number')
-    ax.set_ylabel('Fixed Points (n=8)')
-    ax.set_title('Fixed-Point Count by Rule')
-    ax.set_yscale('symlog', linthresh=1)
-    
-    # Plot 3: Fixed-point count vs ANF degree
-    ax = axes[1, 0]
-    for d in range(4):
-        fps = [fp_counts[r] for r in range(256) if degrees[r] == d]
-        if fps:
-            positions = np.random.normal(d, 0.12, len(fps))
-            ax.scatter(positions, fps, c=colors[d], s=15, alpha=0.5, label=f'Degree {d}')
-    ax.set_xlabel('ANF Degree')
-    ax.set_ylabel('Fixed Points (n=8)')
-    ax.set_title('Fixed Points vs ANF Degree')
-    ax.set_yscale('symlog', linthresh=1)
-    ax.legend()
-    
-    # Plot 4: Rule 90 fixed-point dimension vs cycle length
-    ax = axes[1, 1]
-    ns = list(range(3, 25))
-    dims_90 = []
-    dims_150 = []
-    for n in ns:
-        fp90 = count_fixed_points(90, n)
-        fp150 = count_fixed_points(150, n)
-        import math
-        dims_90.append(int(math.log2(fp90)) if fp90 > 0 else -1)
-        dims_150.append(int(math.log2(fp150)) if fp150 > 0 else -1)
-    ax.plot(ns, dims_90, 'o-', color='#e74c3c', label='Rule 90', markersize=5)
-    ax.plot(ns, dims_150, 's-', color='#3498db', label='Rule 150', markersize=5)
-    ax.set_xlabel('Cycle Length n')
-    ax.set_ylabel('Fixed-Point Variety Dimension')
-    ax.set_title('Fixed-Point Dimension vs Cycle Length')
-    ax.legend()
-    ax.set_ylim(-0.5, max(max(dims_90), max(dims_150)) + 1)
-    
-    plt.tight_layout()
-    plt.savefig('eca_algebraic_geometry.png', dpi=150, bbox_inches='tight')
-    print("Saved: eca_algebraic_geometry.png")
+def anf_degree(rule_num):
+    tt = {}
+    for a, b, c in itertools.product([0, 1], repeat=3):
+        tt[(a,b,c)] = eca_local_rule(rule_num, a, b, c)
+    a0 = tt[(0,0,0)]
+    ac = tt[(0,0,0)] ^ tt[(0,0,1)]
+    ab_ = tt[(0,0,0)] ^ tt[(0,1,0)]
+    abc_c = tt[(0,0,0)] ^ tt[(0,0,1)] ^ tt[(0,1,0)] ^ tt[(0,1,1)]
+    aa = tt[(0,0,0)] ^ tt[(1,0,0)]
+    aac = tt[(0,0,0)] ^ tt[(0,0,1)] ^ tt[(1,0,0)] ^ tt[(1,0,1)]
+    aab = tt[(0,0,0)] ^ tt[(0,1,0)] ^ tt[(1,0,0)] ^ tt[(1,1,0)]
+    aabc = (tt[(0,0,0)] ^ tt[(0,0,1)] ^ tt[(0,1,0)] ^ tt[(0,1,1)] ^
+            tt[(1,0,0)] ^ tt[(1,0,1)] ^ tt[(1,1,0)] ^ tt[(1,1,1)])
+    if aabc: return 3
+    if aab or aac or abc_c: return 2
+    if aa or ab_ or ac: return 1
+    if a0: return 0
+    return -1
 
 
-if __name__ == "__main__":
-    main()
+# Compute data
+n = 8
+rules = list(range(256))
+fp_counts = [count_fixed_points(r, n) for r in rules]
+fp_dims = [math.log2(c) if c > 0 else -0.5 for c in fp_counts]
+degrees = [anf_degree(r) for r in rules]
+
+# Color map by ANF degree
+colors = {-1: '#333333', 0: '#e74c3c', 1: '#3498db', 2: '#2ecc71', 3: '#f39c12'}
+rule_colors = [colors[d] for d in degrees]
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle('ECA Fixed-Point Varieties over GF(2)', fontsize=16, fontweight='bold')
+
+# Plot 1: Fixed-point dimension for all 256 rules
+ax1 = axes[0, 0]
+ax1.bar(rules, fp_dims, color=rule_colors, width=1.0, edgecolor='none')
+ax1.set_xlabel('Rule Number')
+ax1.set_ylabel(f'dim(Fix), n={n}')
+ax1.set_title(f'Fixed-Point Variety Dimension (n={n})')
+ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+# Legend
+from matplotlib.patches import Patch
+legend_elements = [Patch(facecolor=colors[d], label=f'deg {d}') for d in [-1, 0, 1, 2, 3]]
+ax1.legend(handles=legend_elements, loc='upper right', fontsize=8)
+
+# Plot 2: Distribution of fixed-point counts
+ax2 = axes[0, 1]
+unique_counts = sorted(set(fp_counts))
+count_freq = [fp_counts.count(c) for c in unique_counts]
+ax2.bar([math.log2(c) if c > 0 else -0.5 for c in unique_counts],
+        count_freq, width=0.3, color='#8e44ad', edgecolor='white')
+ax2.set_xlabel(f'log₂|Fix|, n={n}')
+ax2.set_ylabel('Number of Rules')
+ax2.set_title('Distribution of Fixed-Point Counts')
+
+# Plot 3: Average dim by ANF degree
+ax3 = axes[1, 0]
+for d in range(4):
+    d_dims = [fp_dims[r] for r in range(256) if degrees[r] == d and fp_dims[r] >= 0]
+    if d_dims:
+        ax3.bar(d, np.mean(d_dims), yerr=np.std(d_dims) if len(d_dims) > 1 else 0,
+                color=colors[d], capsize=5, edgecolor='white', linewidth=1.5)
+ax3.set_xlabel('ANF Degree')
+ax3.set_ylabel(f'Mean dim(Fix), n={n}')
+ax3.set_title('ANF Degree vs Mean Fixed-Point Dimension')
+ax3.set_xticks([0, 1, 2, 3])
+
+# Plot 4: Fixed-point counts for key rules across n
+ax4 = axes[1, 1]
+key_rules = [(90, 'Rule 90 (XOR)'), (110, 'Rule 110 (Turing-complete)'),
+             (150, 'Rule 150 (total XOR)'), (204, 'Rule 204 (identity)')]
+ns = range(1, 11)
+for r, label in key_rules:
+    counts = [count_fixed_points(r, n_) for n_ in ns]
+    dims = [math.log2(c) if c > 0 else 0 for c in counts]
+    ax4.plot(list(ns), dims, 'o-', label=label, markersize=5)
+ax4.set_xlabel('Cycle Length n')
+ax4.set_ylabel('dim(Fix)')
+ax4.set_title('Fixed-Point Dimension vs Cycle Length')
+ax4.legend(fontsize=8)
+
+plt.tight_layout()
+plt.savefig('eca_varieties.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved eca_varieties.png")
